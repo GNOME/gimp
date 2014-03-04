@@ -327,7 +327,7 @@ gimp_tile_handler_projection_invalidate (GimpTileHandlerProjection *projection,
       gint tile_y;
       gint tile_z;
 
-      for (tile_z = 1; tile_z < projection->max_z; tile_z++)
+      for (tile_z = 1; tile_z <= projection->max_z; tile_z++)
         {
           tile_y1 = tile_y1 / 2;
           tile_y2 = (tile_y2 + 1) / 2;
