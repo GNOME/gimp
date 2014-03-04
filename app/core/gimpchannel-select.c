@@ -83,7 +83,7 @@ gimp_channel_select_rectangle (GimpChannel    *channel,
       gimp_gegl_mask_combine_rect (add_on, GIMP_CHANNEL_OP_ADD, x, y, w, h);
 
       if (feather)
-        gimp_gegl_apply_feather (add_on, NULL, NULL, add_on,
+        gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
                                  feather_radius_x,
                                  feather_radius_y);
 
@@ -136,7 +136,7 @@ gimp_channel_select_ellipse (GimpChannel    *channel,
                                       x, y, w, h, antialias);
 
       if (feather)
-        gimp_gegl_apply_feather (add_on, NULL, NULL, add_on,
+        gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
                                  feather_radius_x,
                                  feather_radius_y);
 
@@ -193,7 +193,7 @@ gimp_channel_select_round_rect (GimpChannel         *channel,
                                            antialias);
 
       if (feather)
-        gimp_gegl_apply_feather (add_on, NULL, NULL, add_on,
+        gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
                                  feather_radius_x,
                                  feather_radius_y);
 
@@ -249,7 +249,7 @@ gimp_channel_select_scan_convert (GimpChannel     *channel,
                             offset_x, offset_y, antialias);
 
   if (feather)
-    gimp_gegl_apply_feather (add_on, NULL, NULL, add_on,
+    gimp_gegl_apply_feather (add_on, NULL, NULL, add_on, NULL,
                              feather_radius_x,
                              feather_radius_y);
 
@@ -363,7 +363,7 @@ gimp_channel_select_buffer (GimpChannel    *channel,
                                      offset_x, offset_y);
 
       if (feather)
-        gimp_gegl_apply_feather (add_on2, NULL, NULL, add_on2,
+        gimp_gegl_apply_feather (add_on2, NULL, NULL, add_on2, NULL,
                                  feather_radius_x,
                                  feather_radius_y);
 

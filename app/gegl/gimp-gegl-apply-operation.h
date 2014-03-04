@@ -53,13 +53,42 @@ void   gimp_gegl_apply_feather         (GeglBuffer            *src_buffer,
                                         GimpProgress          *progress,
                                         const gchar           *undo_desc,
                                         GeglBuffer            *dest_buffer,
+                                        const GeglRectangle   *dest_rect,
                                         gdouble                radius_x,
                                         gdouble                radius_y);
+
+void   gimp_gegl_apply_border          (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer,
+                                        const GeglRectangle   *dest_rect,
+                                        gint                   radius_x,
+                                        gint                   radius_y,
+                                        gboolean               feather,
+                                        gboolean               edge_lock);
+
+void   gimp_gegl_apply_grow            (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer,
+                                        const GeglRectangle   *dest_rect,
+                                        gint                   radius_x,
+                                        gint                   radius_y);
+
+void   gimp_gegl_apply_shrink          (GeglBuffer            *src_buffer,
+                                        GimpProgress          *progress,
+                                        const gchar           *undo_desc,
+                                        GeglBuffer            *dest_buffer,
+                                        const GeglRectangle   *dest_rect,
+                                        gint                   radius_x,
+                                        gint                   radius_y,
+                                        gboolean               edge_lock);
 
 void   gimp_gegl_apply_gaussian_blur   (GeglBuffer            *src_buffer,
                                         GimpProgress          *progress,
                                         const gchar           *undo_desc,
                                         GeglBuffer            *dest_buffer,
+                                        const GeglRectangle   *dest_rect,
                                         gdouble                std_dev_x,
                                         gdouble                std_dev_y);
 
