@@ -5092,7 +5092,7 @@ msgid ""
 "Illegal number of colormap entries: %ld"
 msgstr ""
 "“%s”:\n"
-"Neatļauts krāsu kartes ierakstu skaits — %u"
+"Neatļauts krāsu kartes ierakstu skaits — %ld"
 
 #: ../plug-ins/common/file-xwd.c:477
 #, c-format
