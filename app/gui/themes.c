@@ -19,6 +19,7 @@
 
 #include <errno.h>
 #include <stdarg.h>
+#include <stdlib.h>
 
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
@@ -46,6 +47,8 @@ static void   themes_directories_foreach (const GimpDatafileData *file_data,
 static void   themes_list_themes_foreach (gpointer                key,
                                           gpointer                value,
                                           gpointer                data);
+static gint   themes_name_compare        (const void             *p1,
+                                          const void             *p2);
 static void   themes_theme_change_notify (GimpGuiConfig          *config,
                                           GParamSpec             *pspec,
                                           Gimp                   *gimp);
@@ -134,6 +137,8 @@ themes_list_themes (Gimp *gimp,
       index = themes;
 
       g_hash_table_foreach (themes_hash, themes_list_themes_foreach, &index);
+
+      qsort (themes, *n_themes, sizeof (gchar *), themes_name_compare);
 
       return themes;
     }
@@ -302,6 +307,13 @@ themes_list_themes_foreach (gpointer key,
   **index = g_strdup ((gchar *) key);
 
   (*index)++;
+}
+
+static gint
+themes_name_compare (const void *p1,
+                     const void *p2)
+{
+  return strcmp (* (char **) p1, * (char **) p2);
 }
 
 static void
