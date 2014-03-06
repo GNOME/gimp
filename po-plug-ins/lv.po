@@ -3,139 +3,140 @@
 #
 #
 # Rūdofls Mazurs <rudolfs.mazurs@gmail.com>, 2011, 2012.
-# Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>, 2012.
+# Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>, 2012, 2014.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-28 13:19+0300\n"
-"PO-Revision-Date: 2012-09-29 13:45+0300\n"
+"POT-Creation-Date: 2014-03-06 15:24+0200\n"
+"PO-Revision-Date: 2014-03-06 15:26+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
-"Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
+"Language-Team: Latviešu <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
 "2);\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:118
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:120
 msgid "Original"
 msgstr "Oriģināls"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:136
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:138
 msgid "Rotated"
 msgstr "Pagriezts"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:154
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:156
 msgid "Continuous update"
 msgstr "Atjaunināt uzreiz"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:167
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:169
 msgid "Area:"
 msgstr "Laukums:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:171
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:173
 msgid "Entire Layer"
 msgstr "Viss slānis"
 
 #. Create selection
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:172
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:174
 #: ../plug-ins/common/film.c:965 ../plug-ins/imagemap/imap_selection.c:339
 #: ../plug-ins/selection-to-path/selection-to-path.c:434
 msgid "Selection"
 msgstr "Iezīmējums"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:173
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:175
 msgid "Context"
 msgstr "Konteksts"
 
 #. spinbutton 1
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:297
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:299
 msgctxt "color-range"
 msgid "From:"
 msgstr "No:"
 
 #. spinbutton 2
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:323
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:326
 msgctxt "color-range"
 msgid "To:"
 msgstr "Līdz:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:375
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:377
 msgctxt "color-rotate"
 msgid "From:"
 msgstr "No:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:376
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:378
 msgctxt "color-rotate"
 msgid "To:"
 msgstr "Uz:"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:416
-#: ../plug-ins/common/file-ps.c:3096 ../plug-ins/imagemap/imap_menu.c:213
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:418
+#: ../plug-ins/common/file-ps.c:3101 ../plug-ins/imagemap/imap_menu.c:213
 msgid "Gray"
 msgstr "Pelēks"
 
 #. Gray: Circle: Spinbutton 1
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:464
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:466
 msgid "Hue:"
 msgstr "Tonis:"
 
 #. Gray: Circle: Spinbutton 2
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:491
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:553
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:493
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:555
 msgid "Saturation:"
 msgstr "Piesātinājums:"
 
 #. * Gray: Operation-Mode *
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:511
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:513
 msgid "Gray Mode"
 msgstr "Opciju režīms"
 
 #. Gray: Operation-Mode: two radio buttons
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:520
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:522
 msgid "Treat as this"
 msgstr "Izmantot kā šo"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:532
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:534
 msgid "Change to this"
 msgstr "Mainīt uz šo"
 
 #. * Gray: What is gray? *
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:545
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:547
 msgid "Gray Threshold"
 msgstr "Pelēkā slieksnis"
 
 #. * Misc: Used unit selection *
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:585
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:695
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:587
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:697
 msgid "Units"
 msgstr "Vienības"
 
 #. Misc: Used unit selection: 3 radio buttons
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:594
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:596
 msgid "Radians"
 msgstr "Radiāni"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:606
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:608
 msgid "Radians/Pi"
 msgstr "Radiāni/π"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:618
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:620
 msgid "Degrees"
 msgstr "Grādi"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:649
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:651
 msgid "Rotate Colors"
 msgstr "Rotēt krāsas"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:689
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:691
 msgid "Main Options"
 msgstr "Galvenās opcijas"
 
-#: ../plug-ins/color-rotate/color-rotate-dialog.c:692
+#: ../plug-ins/color-rotate/color-rotate-dialog.c:694
 msgid "Gray Options"
 msgstr "Pelēkā opcijas"
 
@@ -280,97 +281,97 @@ msgstr "_RGB krāsu modelis"
 msgid "_HSL color model"
 msgstr "_HSL krāsu modelis"
 
-#: ../plug-ins/common/align-layers.c:128
+#: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
 msgstr "Līdzināt visus redzamos attēla slāņus"
 
-#: ../plug-ins/common/align-layers.c:133
+#: ../plug-ins/common/align-layers.c:163
 msgid "Align Visi_ble Layers..."
 msgstr "Līdzināt red_zamos slāņus..."
 
-#: ../plug-ins/common/align-layers.c:173
+#: ../plug-ins/common/align-layers.c:207
 msgid "There are not enough layers to align."
 msgstr "Nav pietiekami daudz slāņu, lai līdzinātu."
 
-#: ../plug-ins/common/align-layers.c:400
+#: ../plug-ins/common/align-layers.c:627
 msgid "Align Visible Layers"
 msgstr "Līdzināt redzamos slāņus"
 
-#: ../plug-ins/common/align-layers.c:424 ../plug-ins/common/align-layers.c:455
+#: ../plug-ins/common/align-layers.c:651 ../plug-ins/common/align-layers.c:682
 msgctxt "align-style"
 msgid "None"
 msgstr "Nekāds"
 
-#: ../plug-ins/common/align-layers.c:425 ../plug-ins/common/align-layers.c:456
+#: ../plug-ins/common/align-layers.c:652 ../plug-ins/common/align-layers.c:683
 msgid "Collect"
 msgstr "Savākt"
 
-#: ../plug-ins/common/align-layers.c:426
+#: ../plug-ins/common/align-layers.c:653
 msgid "Fill (left to right)"
 msgstr "Aizpildīt (no kreisās uz labo)"
 
-#: ../plug-ins/common/align-layers.c:427
+#: ../plug-ins/common/align-layers.c:654
 msgid "Fill (right to left)"
 msgstr "Aizpildīt (no labās uz kreiso)"
 
-#: ../plug-ins/common/align-layers.c:428 ../plug-ins/common/align-layers.c:459
+#: ../plug-ins/common/align-layers.c:655 ../plug-ins/common/align-layers.c:686
 msgid "Snap to grid"
 msgstr "Pievilkt pie režģa"
 
-#: ../plug-ins/common/align-layers.c:437
+#: ../plug-ins/common/align-layers.c:664
 msgid "_Horizontal style:"
 msgstr "_Horizontālais stils:"
 
-#: ../plug-ins/common/align-layers.c:441
+#: ../plug-ins/common/align-layers.c:668
 msgid "Left edge"
 msgstr "Kreisā mala"
 
-#: ../plug-ins/common/align-layers.c:442 ../plug-ins/common/align-layers.c:472
+#: ../plug-ins/common/align-layers.c:669 ../plug-ins/common/align-layers.c:699
 #: ../plug-ins/gradient-flare/gradient-flare.c:2712
 msgid "Center"
 msgstr "Vidus"
 
-#: ../plug-ins/common/align-layers.c:443
+#: ../plug-ins/common/align-layers.c:670
 msgid "Right edge"
 msgstr "Labā mala"
 
-#: ../plug-ins/common/align-layers.c:452
+#: ../plug-ins/common/align-layers.c:679
 msgid "Ho_rizontal base:"
 msgstr "Ho_rizontālā bāze:"
 
-#: ../plug-ins/common/align-layers.c:457
+#: ../plug-ins/common/align-layers.c:684
 msgid "Fill (top to bottom)"
 msgstr "Apmest (no augšas uz leju)"
 
-#: ../plug-ins/common/align-layers.c:458
+#: ../plug-ins/common/align-layers.c:685
 msgid "Fill (bottom to top)"
 msgstr "Apmest (no lejas uz augšu)"
 
-#: ../plug-ins/common/align-layers.c:468
+#: ../plug-ins/common/align-layers.c:695
 msgid "_Vertical style:"
 msgstr "_Vertikālais stils:"
 
-#: ../plug-ins/common/align-layers.c:471
+#: ../plug-ins/common/align-layers.c:698
 msgid "Top edge"
 msgstr "Augšējā mala"
 
-#: ../plug-ins/common/align-layers.c:473
+#: ../plug-ins/common/align-layers.c:700
 msgid "Bottom edge"
 msgstr "Apakšējā mala"
 
-#: ../plug-ins/common/align-layers.c:482
+#: ../plug-ins/common/align-layers.c:709
 msgid "Ver_tical base:"
 msgstr "Ver_tikālā bāze:"
 
-#: ../plug-ins/common/align-layers.c:486
+#: ../plug-ins/common/align-layers.c:713
 msgid "_Grid size:"
 msgstr "_Režģa izmērs:"
 
-#: ../plug-ins/common/align-layers.c:495
+#: ../plug-ins/common/align-layers.c:722
 msgid "_Ignore the bottom layer even if visible"
 msgstr "_Ignorēt apakšējo slāni, pat ja tas ir redzams"
 
-#: ../plug-ins/common/align-layers.c:505
+#: ../plug-ins/common/align-layers.c:732
 msgid "_Use the (invisible) bottom layer as the base"
 msgstr "_Lietot (neredzamo) apakšējo slāni kā bāzi"
 
@@ -603,21 +604,21 @@ msgstr "_Vertikāls"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:441
-#: ../plug-ins/common/file-cel.c:444 ../plug-ins/common/file-dicom.c:612
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:442
+#: ../plug-ins/common/file-cel.c:445 ../plug-ins/common/file-dicom.c:612
 #: ../plug-ins/common/file-gif-load.c:943
-#: ../plug-ins/common/file-jp2-load.c:354 ../plug-ins/common/file-pcx.c:425
-#: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
-#: ../plug-ins/common/file-png.c:891 ../plug-ins/common/file-pnm.c:583
-#: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:977
-#: ../plug-ins/common/file-tga.c:1064 ../plug-ins/common/file-tiff-load.c:1005
-#: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
+#: ../plug-ins/common/file-jp2-load.c:356 ../plug-ins/common/file-pcx.c:426
+#: ../plug-ins/common/file-pcx.c:432 ../plug-ins/common/file-pix.c:384
+#: ../plug-ins/common/file-png.c:897 ../plug-ins/common/file-pnm.c:585
+#: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:979
+#: ../plug-ins/common/file-tga.c:1073 ../plug-ins/common/file-tiff-load.c:1010
+#: ../plug-ins/common/file-xbm.c:898 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
-#: ../plug-ins/file-bmp/bmp-read.c:380 ../plug-ins/file-bmp/bmp-read.c:647
-#: ../plug-ins/file-faxg3/faxg3.c:474 ../plug-ins/file-fits/fits.c:530
-#: ../plug-ins/file-jpeg/jpeg-load.c:255 ../plug-ins/file-jpeg/jpeg-load.c:819
+#: ../plug-ins/file-bmp/bmp-read.c:680 ../plug-ins/file-faxg3/faxg3.c:474
+#: ../plug-ins/file-fits/fits.c:532 ../plug-ins/file-jpeg/jpeg-load.c:260
+#: ../plug-ins/file-jpeg/jpeg-load.c:824
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
-#: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:407
+#: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:409
 #: ../plug-ins/gfig/gfig-dialog.c:1321
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
@@ -656,7 +657,7 @@ msgstr "Selektīvā Gausa aizmiglošana"
 #: ../plug-ins/common/edge-dog.c:269 ../plug-ins/common/edge-neon.c:228
 #: ../plug-ins/common/edge-sobel.c:212 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
-#: ../plug-ins/file-sgi/sgi.c:558 ../plug-ins/file-xjt/xjt.c:1687
+#: ../plug-ins/file-sgi/sgi.c:560 ../plug-ins/file-xjt/xjt.c:1687
 #: ../plug-ins/gradient-flare/gradient-flare.c:966
 msgid "Cannot operate on indexed color images."
 msgstr "Nevar darboties ar indeksētiem krāsu attēliem."
@@ -793,7 +794,7 @@ msgstr "Vienkārša aizmiglošana; ātra, bet ne ļoti spēcīga"
 msgid "_Blur"
 msgstr "_Aizmiglošana"
 
-#: ../plug-ins/common/blur.c:177 ../plug-ins/common/unsharp-mask.c:582
+#: ../plug-ins/common/blur.c:177 ../plug-ins/common/unsharp-mask.c:589
 msgid "Blurring"
 msgstr "Aizmiglo"
 
@@ -894,7 +895,7 @@ msgstr "_Azimuts:"
 msgid "_Elevation:"
 msgstr "_Augstums:"
 
-#: ../plug-ins/common/bump-map.c:936 ../plug-ins/common/file-ps.c:3250
+#: ../plug-ins/common/bump-map.c:936 ../plug-ins/common/file-ps.c:3255
 msgid "_X offset:"
 msgstr "_X nobīde:"
 
@@ -904,7 +905,7 @@ msgid ""
 "button."
 msgstr "Nobīdi var mainīt, velkot priekšskatījumu ar vidējo peles pogu."
 
-#: ../plug-ins/common/bump-map.c:950 ../plug-ins/common/file-ps.c:3259
+#: ../plug-ins/common/bump-map.c:950 ../plug-ins/common/file-ps.c:3264
 msgid "_Y offset:"
 msgstr "_Y nobīde:"
 
@@ -1012,27 +1013,27 @@ msgstr "Ielādēt kanālu miksera iestatījumus"
 
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
-#: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:892
-#: ../plug-ins/common/file-cel.c:296 ../plug-ins/common/file-cel.c:348
-#: ../plug-ins/common/file-cel.c:579 ../plug-ins/common/file-dicom.c:340
-#: ../plug-ins/common/file-gbr.c:368 ../plug-ins/common/file-gif-load.c:355
-#: ../plug-ins/common/file-gih.c:640 ../plug-ins/common/file-jp2-load.c:194
-#: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
-#: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:361
-#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:756
-#: ../plug-ins/common/file-pnm.c:494 ../plug-ins/common/file-ps.c:1014
-#: ../plug-ins/common/file-ps.c:2910 ../plug-ins/common/file-psp.c:1717
+#: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:891
+#: ../plug-ins/common/file-cel.c:297 ../plug-ins/common/file-cel.c:349
+#: ../plug-ins/common/file-cel.c:580 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/file-gbr.c:370 ../plug-ins/common/file-gif-load.c:355
+#: ../plug-ins/common/file-gih.c:642 ../plug-ins/common/file-jp2-load.c:196
+#: ../plug-ins/common/file-jp2-load.c:205 ../plug-ins/common/file-mng.c:1156
+#: ../plug-ins/common/file-pat.c:339 ../plug-ins/common/file-pcx.c:362
+#: ../plug-ins/common/file-pix.c:345 ../plug-ins/common/file-png.c:762
+#: ../plug-ins/common/file-pnm.c:496 ../plug-ins/common/file-ps.c:1019
+#: ../plug-ins/common/file-ps.c:2915 ../plug-ins/common/file-psp.c:1717
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
-#: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
-#: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:442
-#: ../plug-ins/common/file-xbm.c:737 ../plug-ins/common/file-xmc.c:663
-#: ../plug-ins/common/file-xmc.c:848 ../plug-ins/common/file-xwd.c:433
+#: ../plug-ins/common/file-sunras.c:393 ../plug-ins/common/file-svg.c:333
+#: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:443
+#: ../plug-ins/common/file-xbm.c:738 ../plug-ins/common/file-xmc.c:657
+#: ../plug-ins/common/file-xmc.c:842 ../plug-ins/common/file-xwd.c:437
 #: ../plug-ins/common/sphere-designer.c:2010
-#: ../plug-ins/file-bmp/bmp-read.c:153 ../plug-ins/file-faxg3/faxg3.c:229
-#: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:459
-#: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:651
-#: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:117
-#: ../plug-ins/file-jpeg/jpeg-load.c:889 ../plug-ins/file-psd/psd-load.c:130
+#: ../plug-ins/file-bmp/bmp-read.c:206 ../plug-ins/file-faxg3/faxg3.c:229
+#: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:461
+#: ../plug-ins/file-fli/fli-gimp.c:498 ../plug-ins/file-ico/ico-load.c:651
+#: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:122
+#: ../plug-ins/file-jpeg/jpeg-load.c:894 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:193
 #: ../plug-ins/file-xjt/xjt.c:2529 ../plug-ins/file-xjt/xjt.c:2537
@@ -1051,22 +1052,22 @@ msgid "Save Channel Mixer Settings"
 msgstr "Saglabāt kanālu miksera iestatījumus"
 
 #: ../plug-ins/common/channel-mixer.c:1058
-#: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:840
-#: ../plug-ins/common/file-cel.c:772 ../plug-ins/common/file-csource.c:407
-#: ../plug-ins/common/file-dicom.c:1351 ../plug-ins/common/file-gbr.c:663
-#: ../plug-ins/common/file-gif-save.c:782 ../plug-ins/common/file-gih.c:1258
+#: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
+#: ../plug-ins/common/file-cel.c:773 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-gbr.c:665
+#: ../plug-ins/common/file-gif-save.c:792 ../plug-ins/common/file-gih.c:1260
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
-#: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:486
-#: ../plug-ins/common/file-pcx.c:712 ../plug-ins/common/file-pix.c:526
-#: ../plug-ins/common/file-png.c:1358 ../plug-ins/common/file-pnm.c:1010
-#: ../plug-ins/common/file-ps.c:1190 ../plug-ins/common/file-raw.c:591
-#: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:565
-#: ../plug-ins/common/file-tga.c:1171 ../plug-ins/common/file-tiff-save.c:710
-#: ../plug-ins/common/file-xbm.c:1036 ../plug-ins/common/file-xmc.c:1455
-#: ../plug-ins/common/file-xwd.c:619 ../plug-ins/common/sphere-designer.c:2121
-#: ../plug-ins/file-bmp/bmp-write.c:309 ../plug-ins/file-fits/fits.c:476
-#: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1007
-#: ../plug-ins/file-jpeg/jpeg-save.c:332 ../plug-ins/file-psd/psd-save.c:1652
+#: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:488
+#: ../plug-ins/common/file-pcx.c:713 ../plug-ins/common/file-pix.c:528
+#: ../plug-ins/common/file-png.c:1369 ../plug-ins/common/file-pnm.c:1012
+#: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-raw.c:591
+#: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:567
+#: ../plug-ins/common/file-tga.c:1180 ../plug-ins/common/file-tiff-save.c:710
+#: ../plug-ins/common/file-xbm.c:1037 ../plug-ins/common/file-xmc.c:1449
+#: ../plug-ins/common/file-xwd.c:637 ../plug-ins/common/sphere-designer.c:2121
+#: ../plug-ins/file-bmp/bmp-write.c:309 ../plug-ins/file-fits/fits.c:478
+#: ../plug-ins/file-fli/fli-gimp.c:752 ../plug-ins/file-ico/ico-save.c:1007
+#: ../plug-ins/file-jpeg/jpeg-save.c:355 ../plug-ins/file-psd/psd-save.c:1653
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1715
 #: ../plug-ins/flame/flame.c:442
@@ -1099,7 +1100,7 @@ msgstr "Pievieno dambretes galdiņu"
 msgid "Checkerboard"
 msgstr "Dambretes galdiņš"
 
-#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1162
+#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1156
 #: ../plug-ins/gimpressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "Izmēr_s:"
@@ -1221,7 +1222,7 @@ msgstr "Min. (x-d, -), (x < 0.5)"
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min. (x-d, -), (0.5 < x)"
 
-#: ../plug-ins/common/cml-explorer.c:200 ../plug-ins/common/file-sunras.c:1635
+#: ../plug-ins/common/cml-explorer.c:200 ../plug-ins/common/file-sunras.c:1637
 msgid "Standard"
 msgstr "Standarta"
 
@@ -2132,35 +2133,35 @@ msgstr "Kanāli"
 msgid "Remove empty borders from the image"
 msgstr "Izņemt tukšās malas no attēla"
 
-#: ../plug-ins/common/crop-auto.c:89
+#: ../plug-ins/common/crop-auto.c:94
 msgid "Autocrop Imag_e"
 msgstr "Au_tomātiski apcirst attēlu"
 
-#: ../plug-ins/common/crop-auto.c:98
+#: ../plug-ins/common/crop-auto.c:103
 msgid "Remove empty borders from the layer"
 msgstr "Izņemt tukšās malas no slāņa"
 
-#: ../plug-ins/common/crop-auto.c:103
+#: ../plug-ins/common/crop-auto.c:108
 msgid "Autocrop Lay_er"
 msgstr "Au_tomātiski apcirst slāni"
 
-#: ../plug-ins/common/crop-auto.c:150
+#: ../plug-ins/common/crop-auto.c:155
 msgid "Cropping"
 msgstr "Apcērt"
 
-#: ../plug-ins/common/crop-zealous.c:84
+#: ../plug-ins/common/crop-zealous.c:68
 msgid "Autocrop unused space from edges and middle"
 msgstr "Automātiski apcirst neizmantoto telpu no malām un vidus"
 
-#: ../plug-ins/common/crop-zealous.c:89
+#: ../plug-ins/common/crop-zealous.c:73
 msgid "_Zealous Crop"
 msgstr "_Dedzīgā apciršana"
 
-#: ../plug-ins/common/crop-zealous.c:137
+#: ../plug-ins/common/crop-zealous.c:121
 msgid "Zealous cropping"
 msgstr "Apcērt ar degsmi"
 
-#: ../plug-ins/common/crop-zealous.c:238
+#: ../plug-ins/common/crop-zealous.c:252
 msgid "Nothing to crop."
 msgstr "Nav ko apcirst."
 
@@ -2192,40 +2193,40 @@ msgstr "Lietot fona krās_u"
 msgid "Cubistic transformation"
 msgstr "Kubisma transformācija"
 
-#: ../plug-ins/common/curve-bend.c:527
+#: ../plug-ins/common/curve-bend.c:526
 msgid "Bend the image using two control curves"
 msgstr "Saliekt attēlu, lietojot divas vadības līknes"
 
-#: ../plug-ins/common/curve-bend.c:548
+#: ../plug-ins/common/curve-bend.c:547
 msgid "_Curve Bend..."
 msgstr "_Liekšana ar līknēm..."
 
-#: ../plug-ins/common/curve-bend.c:684 ../plug-ins/common/edge-dog.c:178
+#: ../plug-ins/common/curve-bend.c:683 ../plug-ins/common/edge-dog.c:178
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Strādā tikai ar slāņiem (bet tika izsaukt uz kanālu vai masku)."
 
-#: ../plug-ins/common/curve-bend.c:694
+#: ../plug-ins/common/curve-bend.c:693
 msgid "Cannot operate on layers with masks."
 msgstr "Nevar darboties uz slāņa ar masku."
 
-#: ../plug-ins/common/curve-bend.c:706
+#: ../plug-ins/common/curve-bend.c:705
 msgid "Cannot operate on empty selections."
 msgstr "Nevar darboties ar tukšu iezīmējumu."
 
-#: ../plug-ins/common/curve-bend.c:902
+#: ../plug-ins/common/curve-bend.c:901
 #, c-format
 msgid "Error while reading '%s': %s"
 msgstr "Kļūda, lasot “%s” — %s"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve-bend.c:1225 ../plug-ins/common/curve-bend.c:2956
+#: ../plug-ins/common/curve-bend.c:1224 ../plug-ins/common/curve-bend.c:2955
 msgid "Curve Bend"
 msgstr "Liekšana ar līknēm"
 
 #. Preview area, top of column
 #. preview
-#: ../plug-ins/common/curve-bend.c:1262
+#: ../plug-ins/common/curve-bend.c:1261
 #: ../plug-ins/gimpressionist/orientmap.c:590
 #: ../plug-ins/gimpressionist/sizemap.c:459
 #: ../plug-ins/print/print-page-layout.c:175
@@ -2233,116 +2234,116 @@ msgid "Preview"
 msgstr "Priekšskatījums"
 
 #. The preview button
-#: ../plug-ins/common/curve-bend.c:1291
+#: ../plug-ins/common/curve-bend.c:1290
 msgid "_Preview Once"
 msgstr "_Priekšskatīt vienreiz"
 
 #. The preview toggle
-#: ../plug-ins/common/curve-bend.c:1300
+#: ../plug-ins/common/curve-bend.c:1299
 msgid "Automatic pre_view"
 msgstr "A_utomātiskais priekšskatījums"
 
 #. Options area, bottom of column
 #. Options section
-#: ../plug-ins/common/curve-bend.c:1310 ../plug-ins/common/ripple.c:523
+#: ../plug-ins/common/curve-bend.c:1309 ../plug-ins/common/ripple.c:523
 #: ../plug-ins/gfig/gfig-dialog.c:1243
 msgid "Options"
 msgstr "Opcijas"
 
 #. Rotate spinbutton
-#: ../plug-ins/common/curve-bend.c:1324
+#: ../plug-ins/common/curve-bend.c:1323
 msgid "Rotat_e:"
 msgstr "Pagri_ezt:"
 
 #. The smoothing toggle
-#: ../plug-ins/common/curve-bend.c:1343
+#: ../plug-ins/common/curve-bend.c:1342
 msgid "Smoo_thing"
 msgstr "G_ludināšana"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve-bend.c:1353 ../plug-ins/common/mosaic.c:729
+#: ../plug-ins/common/curve-bend.c:1352 ../plug-ins/common/mosaic.c:733
 #: ../plug-ins/common/qbist.c:858 ../plug-ins/common/ripple.c:532
 msgid "_Antialiasing"
 msgstr "Nogludināš_ana"
 
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve-bend.c:1363
+#: ../plug-ins/common/curve-bend.c:1362
 msgid "Work on cop_y"
 msgstr "Darboties ar kopi_ju"
 
 #. The curves graph
-#: ../plug-ins/common/curve-bend.c:1373
+#: ../plug-ins/common/curve-bend.c:1372
 msgid "Modify Curves"
 msgstr "Mainīt līknes"
 
-#: ../plug-ins/common/curve-bend.c:1401
+#: ../plug-ins/common/curve-bend.c:1400
 msgid "Curve for Border"
 msgstr "Malas līkne"
 
-#: ../plug-ins/common/curve-bend.c:1405
+#: ../plug-ins/common/curve-bend.c:1404
 msgid "_Upper"
 msgstr "_Augšējā"
 
-#: ../plug-ins/common/curve-bend.c:1406
+#: ../plug-ins/common/curve-bend.c:1405
 msgid "_Lower"
 msgstr "A_pakšējā"
 
-#: ../plug-ins/common/curve-bend.c:1416
+#: ../plug-ins/common/curve-bend.c:1415
 msgid "Curve Type"
 msgstr "Līknes veids"
 
-#: ../plug-ins/common/curve-bend.c:1420
+#: ../plug-ins/common/curve-bend.c:1419
 msgid "Smoot_h"
 msgstr "Gluda"
 
-#: ../plug-ins/common/curve-bend.c:1421
+#: ../plug-ins/common/curve-bend.c:1420
 msgid "_Free"
 msgstr "_Brīva"
 
 #. The Copy button
-#: ../plug-ins/common/curve-bend.c:1436
+#: ../plug-ins/common/curve-bend.c:1435
 msgid "_Copy"
 msgstr "_Kopēt"
 
-#: ../plug-ins/common/curve-bend.c:1441
+#: ../plug-ins/common/curve-bend.c:1440
 msgid "Copy the active curve to the other border"
 msgstr "Kopēt aktīvo līkni uz citām malām"
 
 #. The CopyInv button
-#: ../plug-ins/common/curve-bend.c:1448
+#: ../plug-ins/common/curve-bend.c:1447
 msgid "_Mirror"
 msgstr "_Spoguļot"
 
-#: ../plug-ins/common/curve-bend.c:1453
+#: ../plug-ins/common/curve-bend.c:1452
 msgid "Mirror the active curve to the other border"
 msgstr "Spoguļot aktīvo līkni uz citām malām"
 
 #. The Swap button
-#: ../plug-ins/common/curve-bend.c:1461
+#: ../plug-ins/common/curve-bend.c:1460
 msgid "S_wap"
 msgstr "Ap_mainīt"
 
-#: ../plug-ins/common/curve-bend.c:1466
+#: ../plug-ins/common/curve-bend.c:1465
 msgid "Swap the two curves"
 msgstr "Apmainīt līknes vietām"
 
-#: ../plug-ins/common/curve-bend.c:1478
+#: ../plug-ins/common/curve-bend.c:1477
 msgid "Reset the active curve"
 msgstr "Atstatīt aktīvo līkni"
 
-#: ../plug-ins/common/curve-bend.c:1495
+#: ../plug-ins/common/curve-bend.c:1494
 msgid "Load the curves from a file"
 msgstr "Ielādēt līknes no datnes"
 
-#: ../plug-ins/common/curve-bend.c:1507
+#: ../plug-ins/common/curve-bend.c:1506
 msgid "Save the curves to a file"
 msgstr "Saglabāt līknes datnē"
 
-#: ../plug-ins/common/curve-bend.c:2063
+#: ../plug-ins/common/curve-bend.c:2062
 msgid "Load Curve Points from File"
 msgstr "Ielādēt līknes punktus no datnes"
 
-#: ../plug-ins/common/curve-bend.c:2098
+#: ../plug-ins/common/curve-bend.c:2097
 msgid "Save Curve Points to File"
 msgstr "Saglabāt līknes punktus datnē"
 
@@ -2625,9 +2626,9 @@ msgstr "_Adaptīvā"
 msgid "R_ecursive"
 msgstr "R_ekursīvā"
 
-#: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:734
+#: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:735
 #: ../plug-ins/common/nl-filter.c:1091 ../plug-ins/common/nova.c:362
-#: ../plug-ins/common/unsharp-mask.c:865 ../plug-ins/common/whirl-pinch.c:591
+#: ../plug-ins/common/unsharp-mask.c:872 ../plug-ins/common/whirl-pinch.c:591
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:277
 msgid "_Radius:"
@@ -2658,7 +2659,7 @@ msgid "Destripe"
 msgstr "Noņemt strīpas"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:584
-#: ../plug-ins/common/file-ps.c:3034 ../plug-ins/common/file-ps.c:3232
+#: ../plug-ins/common/file-ps.c:3039 ../plug-ins/common/file-ps.c:3237
 #: ../plug-ins/common/file-raw.c:1134 ../plug-ins/common/smooth-palette.c:437
 #: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
@@ -2845,11 +2846,11 @@ msgstr "_Neons..."
 msgid "Neon"
 msgstr "Neons"
 
-#: ../plug-ins/common/edge-neon.c:696
+#: ../plug-ins/common/edge-neon.c:697
 msgid "Neon Detection"
 msgstr "Neona noteikšana"
 
-#: ../plug-ins/common/edge-neon.c:749 ../plug-ins/common/unsharp-mask.c:878
+#: ../plug-ins/common/edge-neon.c:750 ../plug-ins/common/unsharp-mask.c:885
 msgid "_Amount:"
 msgstr "_Apjoms:"
 
@@ -2970,7 +2971,7 @@ msgid "Engrave"
 msgstr "Gravēt"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/file-html-table.c:600
-#: ../plug-ins/common/file-ps.c:3044 ../plug-ins/common/file-ps.c:3241
+#: ../plug-ins/common/file-ps.c:3049 ../plug-ins/common/file-ps.c:3246
 #: ../plug-ins/common/file-raw.c:1147 ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:442 ../plug-ins/common/tile-paper.c:314
 #: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:174
@@ -2988,11 +2989,11 @@ msgid "ASCII art"
 msgstr "ASCII māksla"
 
 #. Create the actual window.
-#: ../plug-ins/common/file-aa.c:349
+#: ../plug-ins/common/file-aa.c:351
 msgid "Text"
 msgstr "Teksts"
 
-#: ../plug-ins/common/file-aa.c:357
+#: ../plug-ins/common/file-aa.c:359
 msgid "_Format:"
 msgstr "_Formāts:"
 
@@ -3004,8 +3005,8 @@ msgstr "KISS CEL"
 msgid "Load KISS Palette"
 msgstr "Ielādēt KISS paleti"
 
-#: ../plug-ins/common/file-cel.c:308 ../plug-ins/common/file-cel.c:363
-#: ../plug-ins/common/file-cel.c:383
+#: ../plug-ins/common/file-cel.c:309 ../plug-ins/common/file-cel.c:364
+#: ../plug-ins/common/file-cel.c:384
 #, c-format
 msgid "EOF or error while reading image header"
 msgstr "EOF (datnes beigas) kļūda, lasot attēla galveni"
@@ -3014,36 +3015,36 @@ msgstr "EOF (datnes beigas) kļūda, lasot attēla galveni"
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:353 ../plug-ins/common/file-dicom.c:345
-#: ../plug-ins/common/file-gbr.c:373 ../plug-ins/common/file-gif-load.c:360
-#: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
-#: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
-#: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:348
-#: ../plug-ins/common/file-png.c:763 ../plug-ins/common/file-pnm.c:499
-#: ../plug-ins/common/file-ps.c:1020 ../plug-ins/common/file-raw.c:716
-#: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
+#: ../plug-ins/common/file-cel.c:354 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-gbr.c:375 ../plug-ins/common/file-gif-load.c:360
+#: ../plug-ins/common/file-gih.c:647 ../plug-ins/common/file-jp2-load.c:189
+#: ../plug-ins/common/file-pat.c:344 ../plug-ins/common/file-pcx.c:367
+#: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:350
+#: ../plug-ins/common/file-png.c:769 ../plug-ins/common/file-pnm.c:501
+#: ../plug-ins/common/file-ps.c:1025 ../plug-ins/common/file-raw.c:716
+#: ../plug-ins/common/file-sunras.c:489 ../plug-ins/common/file-tga.c:448
 #: ../plug-ins/common/file-tiff-load.c:611 ../plug-ins/common/file-wmf.c:994
-#: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:675
-#: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:524
-#: ../plug-ins/file-bmp/bmp-read.c:158 ../plug-ins/file-faxg3/faxg3.c:213
-#: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:644
-#: ../plug-ins/file-jpeg/jpeg-load.c:123 ../plug-ins/file-psd/psd-load.c:135
-#: ../plug-ins/file-sgi/sgi.c:330 ../plug-ins/file-xjt/xjt.c:3333
+#: ../plug-ins/common/file-xbm.c:743 ../plug-ins/common/file-xmc.c:669
+#: ../plug-ins/common/file-xpm.c:353 ../plug-ins/common/file-xwd.c:534
+#: ../plug-ins/file-bmp/bmp-read.c:211 ../plug-ins/file-faxg3/faxg3.c:213
+#: ../plug-ins/file-fli/fli-gimp.c:503 ../plug-ins/file-ico/ico-load.c:644
+#: ../plug-ins/file-jpeg/jpeg-load.c:128 ../plug-ins/file-psd/psd-load.c:135
+#: ../plug-ins/file-sgi/sgi.c:332 ../plug-ins/file-xjt/xjt.c:3333
 #, c-format
 msgid "Opening '%s'"
 msgstr "Atver “%s”"
 
-#: ../plug-ins/common/file-cel.c:391
+#: ../plug-ins/common/file-cel.c:392
 #, c-format
 msgid "is not a CEL image file"
 msgstr "nav CEL attēla datne"
 
-#: ../plug-ins/common/file-cel.c:405
+#: ../plug-ins/common/file-cel.c:406
 #, c-format
 msgid "illegal bpp value in image: %hhu"
 msgstr "neatļauta bpp vērtība attēlā — %hhu"
 
-#: ../plug-ins/common/file-cel.c:419
+#: ../plug-ins/common/file-cel.c:420
 #, c-format
 msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
@@ -3052,63 +3053,63 @@ msgstr ""
 "neatļauti attēla izmēri — platums: %d, horizontālā nobīde: %d, augstums: %d, "
 "vertikālā nobīde: %d"
 
-#: ../plug-ins/common/file-cel.c:432
+#: ../plug-ins/common/file-cel.c:433
 #, c-format
 msgid "Can't create a new image"
 msgstr "Nevar izveidot jaunu attēlu"
 
-#: ../plug-ins/common/file-cel.c:470 ../plug-ins/common/file-cel.c:505
-#: ../plug-ins/common/file-cel.c:530
+#: ../plug-ins/common/file-cel.c:471 ../plug-ins/common/file-cel.c:506
+#: ../plug-ins/common/file-cel.c:531
 #, c-format
 msgid "EOF or error while reading image data"
 msgstr "EOF (datnes beigas) kļūda, lasot attēla datus"
 
-#: ../plug-ins/common/file-cel.c:547
+#: ../plug-ins/common/file-cel.c:548
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Neatbalstīts bitu dziļums (%d)!"
 
-#: ../plug-ins/common/file-cel.c:629 ../plug-ins/common/file-cel.c:641
+#: ../plug-ins/common/file-cel.c:630 ../plug-ins/common/file-cel.c:642
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
 msgstr "“%s” — EOF (datnes beigas) kļūda, lasot paletes galveni"
 
-#: ../plug-ins/common/file-cel.c:650
+#: ../plug-ins/common/file-cel.c:651
 #, c-format
 msgid "'%s': is not a KCF palette file"
 msgstr "“%s” — nav KCF paletes datne"
 
-#: ../plug-ins/common/file-cel.c:659
+#: ../plug-ins/common/file-cel.c:660
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr "“%s” — neatļauta bpp vērtība paletē — %hhu"
 
-#: ../plug-ins/common/file-cel.c:668
+#: ../plug-ins/common/file-cel.c:669
 #, c-format
 msgid "'%s': illegal number of colors: %u"
-msgstr "“%s” — neatļaut krāsu skaits — %u"
+msgstr "“%s” — neatļauts krāsu skaits — %u"
 
-#: ../plug-ins/common/file-cel.c:683 ../plug-ins/common/file-cel.c:700
-#: ../plug-ins/common/file-cel.c:720
+#: ../plug-ins/common/file-cel.c:684 ../plug-ins/common/file-cel.c:701
+#: ../plug-ins/common/file-cel.c:721
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr "“%s” — EOF (datnes beigas) kļūda, lasot paletes datus"
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:777 ../plug-ins/common/file-gbr.c:668
-#: ../plug-ins/common/file-gif-save.c:789 ../plug-ins/common/file-gih.c:1263
-#: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:491
-#: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
-#: ../plug-ins/common/file-png.c:1365 ../plug-ins/common/file-pnm.c:1015
-#: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-sunras.c:570
-#: ../plug-ins/common/file-tga.c:1176 ../plug-ins/common/file-tiff-save.c:718
-#: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1460
-#: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:624
-#: ../plug-ins/file-bmp/bmp-write.c:320 ../plug-ins/file-fits/fits.c:481
-#: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1001
-#: ../plug-ins/file-jpeg/jpeg-save.c:289 ../plug-ins/file-psd/psd-save.c:1657
-#: ../plug-ins/file-sgi/sgi.c:576 ../plug-ins/file-xjt/xjt.c:1696
+#: ../plug-ins/common/file-cel.c:778 ../plug-ins/common/file-gbr.c:670
+#: ../plug-ins/common/file-gif-save.c:799 ../plug-ins/common/file-gih.c:1265
+#: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:493
+#: ../plug-ins/common/file-pcx.c:645 ../plug-ins/common/file-pix.c:533
+#: ../plug-ins/common/file-png.c:1376 ../plug-ins/common/file-pnm.c:1017
+#: ../plug-ins/common/file-ps.c:1200 ../plug-ins/common/file-sunras.c:572
+#: ../plug-ins/common/file-tga.c:1185 ../plug-ins/common/file-tiff-save.c:718
+#: ../plug-ins/common/file-xbm.c:1042 ../plug-ins/common/file-xmc.c:1454
+#: ../plug-ins/common/file-xpm.c:639 ../plug-ins/common/file-xwd.c:642
+#: ../plug-ins/file-bmp/bmp-write.c:320 ../plug-ins/file-fits/fits.c:483
+#: ../plug-ins/file-fli/fli-gimp.c:720 ../plug-ins/file-ico/ico-save.c:1001
+#: ../plug-ins/file-jpeg/jpeg-save.c:312 ../plug-ins/file-psd/psd-save.c:1658
+#: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-xjt/xjt.c:1696
 #, c-format
 msgid "Saving '%s'"
 msgstr "Saglabā “%s”"
@@ -3185,14 +3186,14 @@ msgstr "Digital Imaging and Communications in Medicine attēls"
 msgid "'%s' is not a DICOM file."
 msgstr "“%s” nav DICOM datne."
 
-#: ../plug-ins/common/file-dicom.c:1319 ../plug-ins/common/file-pcx.c:676
-#: ../plug-ins/common/file-pnm.c:1000
+#: ../plug-ins/common/file-dicom.c:1339 ../plug-ins/common/file-pcx.c:677
+#: ../plug-ins/common/file-pnm.c:1002
 msgid "Cannot save images with alpha channel."
 msgstr "Nevar saglabāt attēlus ar alfa kanālu."
 
-#: ../plug-ins/common/file-dicom.c:1334 ../plug-ins/common/file-ps.c:1180
-#: ../plug-ins/common/file-ps.c:1212 ../plug-ins/common/file-xwd.c:609
-#: ../plug-ins/file-fits/fits.c:466 ../plug-ins/file-xjt/xjt.c:1691
+#: ../plug-ins/common/file-dicom.c:1354 ../plug-ins/common/file-ps.c:1185
+#: ../plug-ins/common/file-ps.c:1217 ../plug-ins/common/file-xwd.c:627
+#: ../plug-ins/file-fits/fits.c:468 ../plug-ins/file-xjt/xjt.c:1691
 msgid "Cannot operate on unknown image types."
 msgstr "Nevar darboties ar nezināmiem attēlu veidiem."
 
@@ -3200,46 +3201,46 @@ msgstr "Nevar darboties ar nezināmiem attēlu veidiem."
 msgid "GIMP brush"
 msgstr "GIMP ota"
 
-#: ../plug-ins/common/file-gbr.c:399 ../plug-ins/common/file-pat.c:418
+#: ../plug-ins/common/file-gbr.c:401 ../plug-ins/common/file-pat.c:420
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr "“%s” ir nederīgi galveņu dati — platums=%lu, augstums=%lu, baiti=%lu"
 
-#: ../plug-ins/common/file-gbr.c:423 ../plug-ins/common/file-gbr.c:435
+#: ../plug-ins/common/file-gbr.c:425 ../plug-ins/common/file-gbr.c:437
 msgid "Unsupported brush format"
 msgstr "Neatbalstīts otas formāts"
 
-#: ../plug-ins/common/file-gbr.c:447
+#: ../plug-ins/common/file-gbr.c:449
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Kļūda GIMP otas datnē “%s”"
 
-#: ../plug-ins/common/file-gbr.c:455
+#: ../plug-ins/common/file-gbr.c:457
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Nederīga UTF-8 rinda otas datnē “%s”."
 
-#: ../plug-ins/common/file-gbr.c:461 ../plug-ins/common/file-gih.c:487
-#: ../plug-ins/common/file-gih.c:1137
+#: ../plug-ins/common/file-gbr.c:463 ../plug-ins/common/file-gih.c:489
+#: ../plug-ins/common/file-gih.c:1139
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
 msgstr "Bez nosaukuma"
 
-#: ../plug-ins/common/file-gbr.c:653
+#: ../plug-ins/common/file-gbr.c:655
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "GIMP otas ir vai nu GRAYSCALE vai arī RGBA"
 
-#: ../plug-ins/common/file-gbr.c:770
+#: ../plug-ins/common/file-gbr.c:772
 msgid "Brush"
 msgstr "Ota"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:784 ../plug-ins/common/grid.c:792
+#: ../plug-ins/common/file-gbr.c:786 ../plug-ins/common/grid.c:792
 msgid "Spacing:"
 msgstr "Atstatums:"
 
-#: ../plug-ins/common/file-gbr.c:795 ../plug-ins/common/file-gih.c:888
-#: ../plug-ins/common/file-pat.c:568 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-gbr.c:797 ../plug-ins/common/file-gih.c:890
+#: ../plug-ins/common/file-pat.c:570 ../plug-ins/gimpressionist/presets.c:666
 msgid "Description:"
 msgstr "Apraksts:"
 
@@ -3286,11 +3287,11 @@ msgstr ""
 "GIF — neatbalstīts GIF kompozīta tips %d nav apstrādāts. Animācija varētu "
 "neatskaņoties vai netikt saglabāta perfekti."
 
-#: ../plug-ins/common/file-gif-save.c:468
+#: ../plug-ins/common/file-gif-save.c:476
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr "Nevarēja vienkārši reducēt krāsas tālāk. Saglabā kā necaurredzamu."
 
-#: ../plug-ins/common/file-gif-save.c:583
+#: ../plug-ins/common/file-gif-save.c:591
 #, c-format
 msgid ""
 "Unable to save '%s'.  The GIF file format does not support images that are "
@@ -3299,7 +3300,7 @@ msgstr ""
 "Nevar saglabāt “%s”.  GIF datnes formāts neatbalsta attēlus, kas ir vairāk "
 "kā %d pikseļus plati vai augsti."
 
-#: ../plug-ins/common/file-gif-save.c:694
+#: ../plug-ins/common/file-gif-save.c:704
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -3307,18 +3308,18 @@ msgstr ""
 "GIF datnes formāts komentārus atbalsta tikai 7 bitu ASCII kodējumā. "
 "Komentārs nav saglabāts."
 
-#: ../plug-ins/common/file-gif-save.c:753
+#: ../plug-ins/common/file-gif-save.c:763
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nevar saglabāt RGB krāsu attēlus. Vispirms pārveidojiet uz indeksētām krāsām "
 "vai pelēktoņiem."
 
-#: ../plug-ins/common/file-gif-save.c:931
+#: ../plug-ins/common/file-gif-save.c:941
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Aizkave ievietota, lai animācija nepārslogo CPU"
 
-#: ../plug-ins/common/file-gif-save.c:972
+#: ../plug-ins/common/file-gif-save.c:982
 msgid ""
 "The image you are trying to save as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -3326,7 +3327,7 @@ msgstr ""
 "Attēls, ko mēģināt saglabāt kā GIF, satur slāņus, kas iziet ārpus attēla "
 "faktiskajām robežām."
 
-#: ../plug-ins/common/file-gif-save.c:989
+#: ../plug-ins/common/file-gif-save.c:999
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this save."
@@ -3334,11 +3335,11 @@ msgstr ""
 "GIF datnes formāts to neļauj. Jūs varat izvēlēties, vai apcirst visus slāņus "
 "līdz attēla robežām, vai atcelt šo saglabāšanu."
 
-#: ../plug-ins/common/file-gif-save.c:1125
+#: ../plug-ins/common/file-gif-save.c:1135
 msgid "GIF"
 msgstr "GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1133
+#: ../plug-ins/common/file-gif-save.c:1143
 #, c-format
 msgid ""
 "Error loading UI file '%s':\n"
@@ -3347,19 +3348,19 @@ msgstr ""
 "Kļūda, ielādējot UI datni “%s”:\n"
 "%s"
 
-#: ../plug-ins/common/file-gif-save.c:1187
+#: ../plug-ins/common/file-gif-save.c:1197
 msgid "I don't care"
 msgstr "Mani tas neuztrauc"
 
-#: ../plug-ins/common/file-gif-save.c:1189
+#: ../plug-ins/common/file-gif-save.c:1199
 msgid "Cumulative layers (combine)"
 msgstr "Kumulatīvie slāņi (apvienot)"
 
-#: ../plug-ins/common/file-gif-save.c:1191
+#: ../plug-ins/common/file-gif-save.c:1201
 msgid "One frame per layer (replace)"
 msgstr "Slānim viens kadrs (aizvietot)"
 
-#: ../plug-ins/common/file-gif-save.c:1208
+#: ../plug-ins/common/file-gif-save.c:1218
 msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
@@ -3367,12 +3368,12 @@ msgstr ""
 "Var eksportēt kā animāciju tika, kad attēlam ir ne vairāk kā viens slānis. "
 "Attēlam, ko mēģināt eksportēt, ir tikai viens slānis."
 
-#: ../plug-ins/common/file-gif-save.c:2312
+#: ../plug-ins/common/file-gif-save.c:2322
 msgid "Error writing output file."
 msgstr "Kļūda, rakstot izvades datni."
 
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2385
+#: ../plug-ins/common/file-gif-save.c:2395
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Noklusējuma komentārs nevar pārsniegt %d rakstzīmes."
@@ -3381,63 +3382,63 @@ msgstr "Noklusējuma komentārs nevar pārsniegt %d rakstzīmes."
 msgid "GIMP brush (animated)"
 msgstr "GIMP ota (animēta)"
 
-#: ../plug-ins/common/file-gih.c:480
+#: ../plug-ins/common/file-gih.c:482
 msgid "Error in GIMP brush pipe file."
 msgstr "Kļūda, GIMP otu virtenes datnē."
 
-#: ../plug-ins/common/file-gih.c:546
+#: ../plug-ins/common/file-gih.c:548
 msgid "GIMP brush file appears to be corrupted."
 msgstr "Izskatās, ka GIMP otu datne ir bojāta."
 
-#: ../plug-ins/common/file-gih.c:696
+#: ../plug-ins/common/file-gih.c:698
 msgid "Couldn't load one brush in the pipe, giving up."
 msgstr "Neizdevās ielādēt vienu otu virtenē, padodos."
 
-#: ../plug-ins/common/file-gih.c:857
+#: ../plug-ins/common/file-gih.c:859
 msgid "Brush Pipe"
 msgstr "Otu virtene"
 
-#: ../plug-ins/common/file-gih.c:874
+#: ../plug-ins/common/file-gih.c:876
 msgid "Spacing (percent):"
 msgstr "Atstatums (procenti):"
 
-#: ../plug-ins/common/file-gih.c:941
+#: ../plug-ins/common/file-gih.c:943
 msgid "Pixels"
 msgstr "Pikseļi"
 
-#: ../plug-ins/common/file-gih.c:946
+#: ../plug-ins/common/file-gih.c:948
 msgid "Cell size:"
 msgstr "Šūnas izmērs:"
 
-#: ../plug-ins/common/file-gih.c:958
+#: ../plug-ins/common/file-gih.c:960
 msgid "Number of cells:"
 msgstr "Šūnu skaits:"
 
-#: ../plug-ins/common/file-gih.c:983
+#: ../plug-ins/common/file-gih.c:985
 msgid " Rows of "
 msgstr " rindas no "
 
-#: ../plug-ins/common/file-gih.c:995
+#: ../plug-ins/common/file-gih.c:997
 msgid " Columns on each layer"
 msgstr " kolonnas katram slānim"
 
-#: ../plug-ins/common/file-gih.c:999
+#: ../plug-ins/common/file-gih.c:1001
 msgid " (Width Mismatch!) "
 msgstr " (platumu neatbilstība!) "
 
-#: ../plug-ins/common/file-gih.c:1003
+#: ../plug-ins/common/file-gih.c:1005
 msgid " (Height Mismatch!) "
 msgstr " (augstumu neatbilstība!) "
 
-#: ../plug-ins/common/file-gih.c:1008
+#: ../plug-ins/common/file-gih.c:1010
 msgid "Display as:"
 msgstr "Rādīt kā:"
 
-#: ../plug-ins/common/file-gih.c:1017
+#: ../plug-ins/common/file-gih.c:1019
 msgid "Dimension:"
 msgstr "Dimensija:"
 
-#: ../plug-ins/common/file-gih.c:1092
+#: ../plug-ins/common/file-gih.c:1094
 msgid "Ranks:"
 msgstr "Pakāpes:"
 
@@ -3572,22 +3573,22 @@ msgstr "Šūnu atstatumu apjoms."
 msgid "JPEG 2000 image"
 msgstr "JPEG 2000 attēls"
 
-#: ../plug-ins/common/file-jp2-load.c:212
+#: ../plug-ins/common/file-jp2-load.c:214
 #, c-format
 msgid "Couldn't decode '%s'."
 msgstr "Nevarēja atkodēt “%s”."
 
-#: ../plug-ins/common/file-jp2-load.c:235
+#: ../plug-ins/common/file-jp2-load.c:237
 #, c-format
 msgid "The image '%s' is in grayscale but does not contain any gray component."
 msgstr "Attēls “%s” ir pelēktoņu, bet nesatur nevienu pelēku komponenti."
 
-#: ../plug-ins/common/file-jp2-load.c:261
+#: ../plug-ins/common/file-jp2-load.c:263
 #, c-format
 msgid "The image '%s' is in RGB, but is missing some of the components."
 msgstr "Attēls “%s” ir RGB, bet tam trūkst dažas komponentes."
 
-#: ../plug-ins/common/file-jp2-load.c:287
+#: ../plug-ins/common/file-jp2-load.c:289
 #, c-format
 msgid ""
 "The image '%s' is in the CIEXYZ color space, but there is no code in place "
@@ -3596,7 +3597,7 @@ msgstr ""
 "Attēlam “%s” ir CIEXYZ krāsu telpa, bet tam nav koda, ar ko to pārveidot uz "
 "RGB."
 
-#: ../plug-ins/common/file-jp2-load.c:294
+#: ../plug-ins/common/file-jp2-load.c:296
 #, c-format
 msgid ""
 "The image '%s' is in the CIELAB color space, but there is no code in place "
@@ -3605,7 +3606,7 @@ msgstr ""
 "Attēlam “%s” ir CIELAB krāsu telpa, bet tam nav koda, ar ko to pārveidot uz "
 "RGB."
 
-#: ../plug-ins/common/file-jp2-load.c:301
+#: ../plug-ins/common/file-jp2-load.c:303
 #, c-format
 msgid ""
 "The image '%s' is in the YCbCr color space, but there is no code in place to "
@@ -3614,12 +3615,12 @@ msgstr ""
 "Attēlam “%s” ir YCbCr krāsu telpa, bet tam nav koda, ar ko to pārveidot uz "
 "RGB."
 
-#: ../plug-ins/common/file-jp2-load.c:309
+#: ../plug-ins/common/file-jp2-load.c:311
 #, c-format
 msgid "The image '%s' is in an unknown color space."
 msgstr "Attēlam “%s” ir nezināma krāsu telpa."
 
-#: ../plug-ins/common/file-jp2-load.c:323
+#: ../plug-ins/common/file-jp2-load.c:325
 #, c-format
 msgid ""
 "Image component %d of image '%s' does not have the same size as the image. "
@@ -3628,12 +3629,12 @@ msgstr ""
 "Attēla komponentei %d attēlam “%s” nav tāds pat izmērs kā attēlam. Pašlaik "
 "tas nav atbalstīts."
 
-#: ../plug-ins/common/file-jp2-load.c:334
+#: ../plug-ins/common/file-jp2-load.c:336
 #, c-format
 msgid "Image component %d of image '%s' does not have both a hstep and vstep."
 msgstr "Attēla komponentei %d attēlam “%s” nav gan hstep gan vstep."
 
-#: ../plug-ins/common/file-jp2-load.c:343
+#: ../plug-ins/common/file-jp2-load.c:345
 #, c-format
 msgid ""
 "Image component %d of image '%s' is signed. This is currently not supported."
@@ -3642,7 +3643,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1902
+#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1913
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Nevarēja bez zudumiem saglabāt caurspīdīgumu, tā vietā saglabā blīvumu."
@@ -3676,7 +3677,7 @@ msgid "Save creation time"
 msgstr "Saglabāt izveidošanas laiku"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1951
+#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1962
 msgid "PNG"
 msgstr "PNG"
 
@@ -3765,12 +3766,12 @@ msgstr "MNG animācija"
 msgid "GIMP pattern"
 msgstr "GIMP raksts"
 
-#: ../plug-ins/common/file-pat.c:378
+#: ../plug-ins/common/file-pat.c:380
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Nederīga UTF-8 rinda rakstu datnē “%s”."
 
-#: ../plug-ins/common/file-pat.c:553
+#: ../plug-ins/common/file-pat.c:555
 msgid "Pattern"
 msgstr "Raksts"
 
@@ -3778,62 +3779,62 @@ msgstr "Raksts"
 msgid "ZSoft PCX image"
 msgstr "ZSoft PCX attēls"
 
-#: ../plug-ins/common/file-pcx.c:372
+#: ../plug-ins/common/file-pcx.c:373
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Nevar nolasīt galveni no “%s”"
 
-#: ../plug-ins/common/file-pcx.c:383
+#: ../plug-ins/common/file-pcx.c:384
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "“%s” nav PCX datne"
 
-#: ../plug-ins/common/file-pcx.c:397 ../plug-ins/file-bmp/bmp-read.c:636
+#: ../plug-ins/common/file-pcx.c:398 ../plug-ins/file-bmp/bmp-read.c:669
 #: ../plug-ins/file-psd/psd-load.c:301
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Neatbalstīts vai nederīgs attēla platums — %d"
 
-#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/file-bmp/bmp-read.c:642
+#: ../plug-ins/common/file-pcx.c:404 ../plug-ins/file-bmp/bmp-read.c:675
 #: ../plug-ins/file-psd/psd-load.c:293
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Neatbalstīts vai nederīgs attēla augstums — %d"
 
-#: ../plug-ins/common/file-pcx.c:409
+#: ../plug-ins/common/file-pcx.c:410
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Nederīgs baitu skaits uz rindu PCX galvenē"
 
-#: ../plug-ins/common/file-pcx.c:417
+#: ../plug-ins/common/file-pcx.c:418
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Attēla dimensijas pārāk lielas — platums %d x augstums %d"
 
-#: ../plug-ins/common/file-pcx.c:466
+#: ../plug-ins/common/file-pcx.c:467
 msgid "Unusual PCX flavour, giving up"
 msgstr "Netipisks PCX paveids, padodos"
 
-#: ../plug-ins/common/file-pcx.c:685
+#: ../plug-ins/common/file-pcx.c:686
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Nederīga X nobīde — %d"
 
-#: ../plug-ins/common/file-pcx.c:691
+#: ../plug-ins/common/file-pcx.c:692
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Nederīga Y nobīde — %d"
 
-#: ../plug-ins/common/file-pcx.c:697
+#: ../plug-ins/common/file-pcx.c:698
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Labā mala ir ārpus robežām (vajag būt < %d) — %d"
 
-#: ../plug-ins/common/file-pcx.c:704
+#: ../plug-ins/common/file-pcx.c:705
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Apakšējā mala ir ārpus robežām (vajag būt < %d) — %d"
 
-#: ../plug-ins/common/file-pcx.c:769
+#: ../plug-ins/common/file-pcx.c:770
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Neizdevās rakstīt datnē “%s” — %s"
@@ -3854,7 +3855,7 @@ msgstr "Nevarēja ielādēt “%s” — %s"
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:897 ../plug-ins/common/file-ps.c:1102
+#: ../plug-ins/common/file-pdf-load.c:897 ../plug-ins/common/file-ps.c:1107
 #, c-format
 msgid "%s-pages"
 msgstr "%s lapas"
@@ -3863,7 +3864,7 @@ msgstr "%s lapas"
 msgid "Import from PDF"
 msgstr "Importēt no PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1093 ../plug-ins/common/file-ps.c:2962
+#: ../plug-ins/common/file-pdf-load.c:1093 ../plug-ins/common/file-ps.c:2967
 #: ../plug-ins/common/file-tiff-load.c:491
 msgid "_Import"
 msgstr "_Importēt"
@@ -3970,50 +3971,50 @@ msgstr "Alias Pix attēls"
 msgid "PNG image"
 msgstr "PNG attēls"
 
-#: ../plug-ins/common/file-png.c:644
+#: ../plug-ins/common/file-png.c:645
 #, c-format
 msgid "Error loading PNG file: %s"
 msgstr "Kļūda, ielādējot PNG datni — %s"
 
-#: ../plug-ins/common/file-png.c:732
+#: ../plug-ins/common/file-png.c:733
 #, c-format
 msgid "Error creating PNG read struct while saving '%s'."
 msgstr "Kļūda, veidojot PNG lasīšanas struktūru, saglabājot “%s”."
 
-#: ../plug-ins/common/file-png.c:742
+#: ../plug-ins/common/file-png.c:743
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Kļūda, lasot “%s” — vai datne ir bojāta?"
 
-#: ../plug-ins/common/file-png.c:871
+#: ../plug-ins/common/file-png.c:877
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Nezināms krāsu modelis PNG datnē “%s”."
 
-#: ../plug-ins/common/file-png.c:882
+#: ../plug-ins/common/file-png.c:888
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Neizdevās izveidot jaunu “%s” attēlu — %s"
 
-#: ../plug-ins/common/file-png.c:936
+#: ../plug-ins/common/file-png.c:942
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr "PNG datne norāda nobīdi, kuras dēļ slānis tika novietots ārpus attēla."
 
-#: ../plug-ins/common/file-png.c:1238
+#: ../plug-ins/common/file-png.c:1244
 msgid "Apply PNG Offset"
 msgstr "Pielietot PNG nobīdi"
 
-#: ../plug-ins/common/file-png.c:1242
+#: ../plug-ins/common/file-png.c:1248
 msgid "Ignore PNG offset"
 msgstr "Ignorēt PNG nobīdi"
 
-#: ../plug-ins/common/file-png.c:1243
+#: ../plug-ins/common/file-png.c:1249
 msgid "Apply PNG offset to layer"
 msgstr "Pielietot PNG nobīdi slānim"
 
-#: ../plug-ins/common/file-png.c:1267
+#: ../plug-ins/common/file-png.c:1273
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -4022,22 +4023,22 @@ msgstr ""
 "PNG attēlam, ko importējat,  ir norādīta nobīde %d, %d. Vai vēlaties "
 "pielietot šo nobīdi slānim?"
 
-#: ../plug-ins/common/file-png.c:1335
+#: ../plug-ins/common/file-png.c:1341
 #, c-format
 msgid "Error creating PNG write struct while saving '%s'."
 msgstr "Kļūda, veidojot PNG rakstīšanas struktūru, saglabājot “%s”."
 
-#: ../plug-ins/common/file-png.c:1345
+#: ../plug-ins/common/file-png.c:1351
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Kļūda, saglabājot “%s”. Neizdevās saglabāt attēlu."
 
-#: ../plug-ins/common/file-png.c:1968
+#: ../plug-ins/common/file-png.c:1979
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Kļūda, ielādējot UI datni “%s” — %s"
 
-#: ../plug-ins/common/file-png.c:1969
+#: ../plug-ins/common/file-png.c:1980
 msgid "Unknown error"
 msgstr "Nezināma kļūda"
 
@@ -4061,189 +4062,189 @@ msgstr "PGM attēls"
 msgid "PPM image"
 msgstr "PPM attēls"
 
-#: ../plug-ins/common/file-pnm.c:528 ../plug-ins/common/file-pnm.c:550
-#: ../plug-ins/common/file-pnm.c:559 ../plug-ins/common/file-pnm.c:570
-#: ../plug-ins/common/file-pnm.c:656 ../plug-ins/common/file-pnm.c:738
+#: ../plug-ins/common/file-pnm.c:530 ../plug-ins/common/file-pnm.c:552
+#: ../plug-ins/common/file-pnm.c:561 ../plug-ins/common/file-pnm.c:572
+#: ../plug-ins/common/file-pnm.c:658 ../plug-ins/common/file-pnm.c:740
 msgid "Premature end of file."
 msgstr "Priekšlaicīgas datnes beigas."
 
-#: ../plug-ins/common/file-pnm.c:530
+#: ../plug-ins/common/file-pnm.c:532
 msgid "Invalid file."
 msgstr "Nederīga datne."
 
-#: ../plug-ins/common/file-pnm.c:544
+#: ../plug-ins/common/file-pnm.c:546
 msgid "File not in a supported format."
 msgstr "Datne nav atbalstītā formātā."
 
-#: ../plug-ins/common/file-pnm.c:553
+#: ../plug-ins/common/file-pnm.c:555
 msgid "Invalid X resolution."
 msgstr "Nederīga X izšķirtspēja."
 
-#: ../plug-ins/common/file-pnm.c:555
+#: ../plug-ins/common/file-pnm.c:557
 msgid "Image width is larger than GIMP can handle."
 msgstr "Attēla platums ir lielāks, nekā GIMP var pavilkt."
 
-#: ../plug-ins/common/file-pnm.c:562
+#: ../plug-ins/common/file-pnm.c:564
 msgid "Invalid Y resolution."
 msgstr "Nederīga Y izšķirtspēja."
 
-#: ../plug-ins/common/file-pnm.c:564
+#: ../plug-ins/common/file-pnm.c:566
 msgid "Image height is larger than GIMP can handle."
 msgstr "Attēla augstums ir lielāks, nekā GIMP var pavilkt."
 
-#: ../plug-ins/common/file-pnm.c:574
+#: ../plug-ins/common/file-pnm.c:576
 msgid "Unsupported maximum value."
 msgstr "Neatbalstīta maksimālā vērtība."
 
-#: ../plug-ins/common/file-pnm.c:814
+#: ../plug-ins/common/file-pnm.c:816
 msgid "Error reading file."
 msgstr "Kļūda, lasot datni."
 
-#: ../plug-ins/common/file-pnm.c:1219
+#: ../plug-ins/common/file-pnm.c:1221
 msgid "PNM"
 msgstr "PNM"
 
 #. file save type
-#: ../plug-ins/common/file-pnm.c:1222
+#: ../plug-ins/common/file-pnm.c:1224
 msgid "Data formatting"
 msgstr "Datu formatēšana"
 
-#: ../plug-ins/common/file-pnm.c:1226
+#: ../plug-ins/common/file-pnm.c:1228
 msgid "Raw"
 msgstr "Raw"
 
-#: ../plug-ins/common/file-pnm.c:1227
+#: ../plug-ins/common/file-pnm.c:1229
 msgid "ASCII"
 msgstr "ASCII"
 
-#: ../plug-ins/common/file-ps.c:579 ../plug-ins/common/file-ps.c:671
+#: ../plug-ins/common/file-ps.c:581 ../plug-ins/common/file-ps.c:673
 msgid "PostScript document"
 msgstr "PostScript dokuments"
 
-#: ../plug-ins/common/file-ps.c:598 ../plug-ins/common/file-ps.c:687
+#: ../plug-ins/common/file-ps.c:600 ../plug-ins/common/file-ps.c:689
 msgid "Encapsulated PostScript image"
 msgstr "Encapsulated PostScript attēls"
 
-#: ../plug-ins/common/file-ps.c:618
+#: ../plug-ins/common/file-ps.c:620
 msgid "PDF document"
 msgstr "PDF dokuments"
 
-#: ../plug-ins/common/file-ps.c:1027
+#: ../plug-ins/common/file-ps.c:1032
 #, c-format
 msgid "Could not interpret Postscript file '%s'"
 msgstr "Neizdevās interpretēt Postscript datni “%s”"
 
-#: ../plug-ins/common/file-ps.c:1169
+#: ../plug-ins/common/file-ps.c:1174
 #, c-format
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "PostScript saglabāšana nevar apstrādāt datnes ar alfa kanāliem"
 
-#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:1007
+#: ../plug-ins/common/file-ps.c:1809 ../plug-ins/common/file-tiff-load.c:1012
 #, c-format
 msgid "Page %d"
 msgstr "Lapa %d"
 
-#: ../plug-ins/common/file-ps.c:2469 ../plug-ins/common/file-ps.c:2600
-#: ../plug-ins/common/file-ps.c:2749 ../plug-ins/common/file-ps.c:2873
-#: ../plug-ins/common/file-sunras.c:1504 ../plug-ins/common/file-sunras.c:1610
-#: ../plug-ins/file-fits/fits.c:850 ../plug-ins/file-fits/fits.c:973
+#: ../plug-ins/common/file-ps.c:2474 ../plug-ins/common/file-ps.c:2605
+#: ../plug-ins/common/file-ps.c:2754 ../plug-ins/common/file-ps.c:2878
+#: ../plug-ins/common/file-sunras.c:1506 ../plug-ins/common/file-sunras.c:1612
+#: ../plug-ins/file-fits/fits.c:852 ../plug-ins/file-fits/fits.c:975
 msgid "Write error occurred"
 msgstr "Gadījās rakstīšanas kļūda"
 
-#: ../plug-ins/common/file-ps.c:2957
+#: ../plug-ins/common/file-ps.c:2962
 msgid "Import from PostScript"
 msgstr "Importēt no PostScript"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3001
+#: ../plug-ins/common/file-ps.c:3006
 msgid "Rendering"
 msgstr "Renderē"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3017 ../plug-ins/common/file-svg.c:911
+#: ../plug-ins/common/file-ps.c:3023 ../plug-ins/common/file-svg.c:911
 #: ../plug-ins/common/file-wmf.c:692
 msgid "Resolution:"
 msgstr "Izšķirtspēja:"
 
-#: ../plug-ins/common/file-ps.c:3056
+#: ../plug-ins/common/file-ps.c:3061
 msgid "Pages:"
 msgstr "Lapas:"
 
-#: ../plug-ins/common/file-ps.c:3063
+#: ../plug-ins/common/file-ps.c:3068
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Lapas, ko ielādēt (piemēram, 1-4 vai 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3068 ../plug-ins/common/sphere-designer.c:2657
+#: ../plug-ins/common/file-ps.c:3073 ../plug-ins/common/sphere-designer.c:2657
 msgid "Layers"
 msgstr "Slāņi"
 
-#: ../plug-ins/common/file-ps.c:3071
+#: ../plug-ins/common/file-ps.c:3076
 msgid "Images"
 msgstr "Attēli"
 
-#: ../plug-ins/common/file-ps.c:3074
+#: ../plug-ins/common/file-ps.c:3079
 msgid "Open as"
 msgstr "Atvērt kā"
 
-#: ../plug-ins/common/file-ps.c:3078
+#: ../plug-ins/common/file-ps.c:3083
 msgid "Try Bounding Box"
 msgstr "Mēģināt malu kasti"
 
 #. Colouring
-#: ../plug-ins/common/file-ps.c:3091
+#: ../plug-ins/common/file-ps.c:3096
 msgid "Coloring"
 msgstr "Krāsošana"
 
-#: ../plug-ins/common/file-ps.c:3095
+#: ../plug-ins/common/file-ps.c:3100
 msgid "B/W"
 msgstr "M/B"
 
-#: ../plug-ins/common/file-ps.c:3097 ../plug-ins/common/file-xpm.c:479
+#: ../plug-ins/common/file-ps.c:3102 ../plug-ins/common/file-xpm.c:480
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:212
 msgid "Color"
 msgstr "Krāsa"
 
-#: ../plug-ins/common/file-ps.c:3098 ../plug-ins/file-fits/fits.c:1032
+#: ../plug-ins/common/file-ps.c:3103 ../plug-ins/file-fits/fits.c:1034
 msgid "Automatic"
 msgstr "Automātisks"
 
-#: ../plug-ins/common/file-ps.c:3109
+#: ../plug-ins/common/file-ps.c:3114
 msgid "Text antialiasing"
 msgstr "Teksta nogludināšana"
 
-#: ../plug-ins/common/file-ps.c:3113 ../plug-ins/common/file-ps.c:3125
+#: ../plug-ins/common/file-ps.c:3118 ../plug-ins/common/file-ps.c:3130
 msgctxt "antialiasing"
 msgid "None"
 msgstr "Nekāda"
 
-#: ../plug-ins/common/file-ps.c:3114 ../plug-ins/common/file-ps.c:3126
+#: ../plug-ins/common/file-ps.c:3119 ../plug-ins/common/file-ps.c:3131
 msgid "Weak"
 msgstr "Vāja"
 
-#: ../plug-ins/common/file-ps.c:3115 ../plug-ins/common/file-ps.c:3127
+#: ../plug-ins/common/file-ps.c:3120 ../plug-ins/common/file-ps.c:3132
 msgid "Strong"
 msgstr "Stipra"
 
-#: ../plug-ins/common/file-ps.c:3121
+#: ../plug-ins/common/file-ps.c:3126
 msgid "Graphic antialiasing"
 msgstr "Grafikas nogludināšana"
 
-#: ../plug-ins/common/file-ps.c:3199
+#: ../plug-ins/common/file-ps.c:3204
 msgid "PostScript"
 msgstr "PostScript"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3216
+#: ../plug-ins/common/file-ps.c:3221
 msgid "Image Size"
 msgstr "Attēla izmērs"
 
-#: ../plug-ins/common/file-ps.c:3265
+#: ../plug-ins/common/file-ps.c:3270
 msgid "_Keep aspect ratio"
 msgstr "_Paturēt izmēru attiecību"
 
-#: ../plug-ins/common/file-ps.c:3271
+#: ../plug-ins/common/file-ps.c:3276
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -4252,42 +4253,42 @@ msgstr ""
 "izmērā, nemainot izmēru attiecību."
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3281
+#: ../plug-ins/common/file-ps.c:3286
 msgid "Unit"
 msgstr "Vienība"
 
-#: ../plug-ins/common/file-ps.c:3285
+#: ../plug-ins/common/file-ps.c:3290
 msgid "_Inch"
 msgstr "_Colla"
 
-#: ../plug-ins/common/file-ps.c:3286
+#: ../plug-ins/common/file-ps.c:3291
 msgid "_Millimeter"
 msgstr "_Milimetrs"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3297
+#: ../plug-ins/common/file-ps.c:3302
 #: ../plug-ins/map-object/map-object-ui.c:989
 msgid "Rotation"
 msgstr "Rotācija"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3312
+#: ../plug-ins/common/file-ps.c:3317
 msgid "Output"
 msgstr "Izvade"
 
-#: ../plug-ins/common/file-ps.c:3318
+#: ../plug-ins/common/file-ps.c:3323
 msgid "_PostScript level 2"
 msgstr "_PostScript level 2"
 
-#: ../plug-ins/common/file-ps.c:3327
+#: ../plug-ins/common/file-ps.c:3332
 msgid "_Encapsulated PostScript"
 msgstr "_Encapsulated PostScript"
 
-#: ../plug-ins/common/file-ps.c:3336
+#: ../plug-ins/common/file-ps.c:3341
 msgid "P_review"
 msgstr "P_riekšskatījums"
 
-#: ../plug-ins/common/file-ps.c:3358
+#: ../plug-ins/common/file-ps.c:3363
 msgid "Preview _size:"
 msgstr "Priekš_skatījuma izmērs:"
 
@@ -4405,26 +4406,26 @@ msgstr "Indeksēts paletes tips"
 msgid "SUN Rasterfile image"
 msgstr "SUN Rasterfile attēls"
 
-#: ../plug-ins/common/file-sunras.c:402
+#: ../plug-ins/common/file-sunras.c:404
 #, c-format
 msgid "Could not open '%s' as SUN-raster-file"
 msgstr "Nevarēja atvērt “%s” kā SUN rastra datni"
 
-#: ../plug-ins/common/file-sunras.c:412
+#: ../plug-ins/common/file-sunras.c:414
 msgid "The type of this SUN-rasterfile is not supported"
 msgstr "Šī SUN-rasterfile tips nav atbalstīts"
 
-#: ../plug-ins/common/file-sunras.c:441
+#: ../plug-ins/common/file-sunras.c:443
 #, c-format
 msgid "Could not read color entries from '%s'"
 msgstr "Neizdevās nolasīt krāsu ierakstus no “%s”"
 
-#: ../plug-ins/common/file-sunras.c:450
+#: ../plug-ins/common/file-sunras.c:452
 msgid "Type of colormap not supported"
 msgstr "Krāsu kartes tips nav atbalstīts"
 
-#: ../plug-ins/common/file-sunras.c:457 ../plug-ins/common/file-xbm.c:827
-#: ../plug-ins/common/file-xwd.c:489
+#: ../plug-ins/common/file-sunras.c:459 ../plug-ins/common/file-xbm.c:828
+#: ../plug-ins/common/file-xwd.c:507
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4433,8 +4434,8 @@ msgstr ""
 "“%s”:\n"
 "Nav norādīts attēla platums"
 
-#: ../plug-ins/common/file-sunras.c:465 ../plug-ins/common/file-xbm.c:834
-#: ../plug-ins/common/file-xwd.c:499
+#: ../plug-ins/common/file-sunras.c:467 ../plug-ins/common/file-xbm.c:835
+#: ../plug-ins/common/file-xwd.c:515
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4443,8 +4444,8 @@ msgstr ""
 "“%s”:\n"
 "Attēla platums ir lielāks, nekā GIMP var pavilkt"
 
-#: ../plug-ins/common/file-sunras.c:473 ../plug-ins/common/file-xbm.c:841
-#: ../plug-ins/common/file-xwd.c:508
+#: ../plug-ins/common/file-sunras.c:475 ../plug-ins/common/file-xbm.c:842
+#: ../plug-ins/common/file-xwd.c:522
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4453,8 +4454,8 @@ msgstr ""
 "“%s”:\n"
 "Nav norādīts attēla platums"
 
-#: ../plug-ins/common/file-sunras.c:481 ../plug-ins/common/file-xbm.c:848
-#: ../plug-ins/common/file-xwd.c:517
+#: ../plug-ins/common/file-sunras.c:483 ../plug-ins/common/file-xbm.c:849
+#: ../plug-ins/common/file-xwd.c:529
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4463,37 +4464,37 @@ msgstr ""
 "“%s”:\n"
 "Attēla augstums ir lielāks, nekā GIMP var pavilkt"
 
-#: ../plug-ins/common/file-sunras.c:520
+#: ../plug-ins/common/file-sunras.c:522
 msgid "This image depth is not supported"
 msgstr "Šī attēla dziļums nav atbalstīts"
 
-#: ../plug-ins/common/file-sunras.c:544
+#: ../plug-ins/common/file-sunras.c:546
 #, c-format
 msgid "SUNRAS save cannot handle images with alpha channels"
 msgstr "SUNRAS saglabāšana nevar apstrādāt datnes ar alfa kanāliem"
 
-#: ../plug-ins/common/file-sunras.c:555
+#: ../plug-ins/common/file-sunras.c:557
 msgid "Can't operate on unknown image types"
 msgstr "Nevar darboties ar nezināmiem attēlu veidiem"
 
-#: ../plug-ins/common/file-sunras.c:1084 ../plug-ins/common/file-sunras.c:1175
-#: ../plug-ins/common/file-sunras.c:1256 ../plug-ins/common/file-sunras.c:1351
-#: ../plug-ins/common/file-xwd.c:1357 ../plug-ins/common/file-xwd.c:1458
-#: ../plug-ins/common/file-xwd.c:1616 ../plug-ins/common/file-xwd.c:1817
-#: ../plug-ins/common/file-xwd.c:2069 ../plug-ins/file-fits/fits.c:698
+#: ../plug-ins/common/file-sunras.c:1086 ../plug-ins/common/file-sunras.c:1177
+#: ../plug-ins/common/file-sunras.c:1258 ../plug-ins/common/file-sunras.c:1353
+#: ../plug-ins/common/file-xwd.c:1375 ../plug-ins/common/file-xwd.c:1476
+#: ../plug-ins/common/file-xwd.c:1634 ../plug-ins/common/file-xwd.c:1846
+#: ../plug-ins/common/file-xwd.c:2109 ../plug-ins/file-fits/fits.c:700
 msgid "EOF encountered on reading"
 msgstr "Lasot sastapts EOF"
 
-#: ../plug-ins/common/file-sunras.c:1627
+#: ../plug-ins/common/file-sunras.c:1629
 msgid "SUNRAS"
 msgstr "SUNRAS"
 
 #. file save type
-#: ../plug-ins/common/file-sunras.c:1630
+#: ../plug-ins/common/file-sunras.c:1632
 msgid "Data Formatting"
 msgstr "Datu formatēšana"
 
-#: ../plug-ins/common/file-sunras.c:1634
+#: ../plug-ins/common/file-sunras.c:1636
 msgid "RunLength Encoded"
 msgstr "Secīgā atkārtojumu kodēšana"
 
@@ -4571,39 +4572,39 @@ msgstr "Apvienot importētos ceļus"
 msgid "TarGA image"
 msgstr "TarGA attēls"
 
-#: ../plug-ins/common/file-tga.c:455
+#: ../plug-ins/common/file-tga.c:456
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Nevar nolasīt kājeni no “%s”"
 
-#: ../plug-ins/common/file-tga.c:473
+#: ../plug-ins/common/file-tga.c:474
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Nevar nolasīt paplašinājumu no “%s”"
 
-#: ../plug-ins/common/file-tga.c:485
+#: ../plug-ins/common/file-tga.c:486
 #, c-format
 msgid "Cannot read header from '%s'"
 msgstr "Nevar nolasīt galveni no “%s”"
 
-#: ../plug-ins/common/file-tga.c:1372
+#: ../plug-ins/common/file-tga.c:1381
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1381
+#: ../plug-ins/common/file-tga.c:1390
 msgid "_RLE compression"
 msgstr "_RLE saspiešana"
 
-#: ../plug-ins/common/file-tga.c:1395
+#: ../plug-ins/common/file-tga.c:1404
 msgid "Or_igin:"
 msgstr "_Izcelsme:"
 
-#: ../plug-ins/common/file-tga.c:1399
+#: ../plug-ins/common/file-tga.c:1408
 msgid "Bottom left"
 msgstr "Apakšējais kreisais"
 
-#: ../plug-ins/common/file-tga.c:1400
+#: ../plug-ins/common/file-tga.c:1409
 msgid "Top left"
 msgstr "Augšējais kreisais"
 
@@ -4622,16 +4623,16 @@ msgstr "TIFF “%s” nesatur direktorijas"
 msgid "Import from TIFF"
 msgstr "Importēt no TIFF"
 
-#: ../plug-ins/common/file-tiff-load.c:788
+#: ../plug-ins/common/file-tiff-load.c:818
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-no-%d-lapām"
 
-#: ../plug-ins/common/file-tiff-load.c:1023
+#: ../plug-ins/common/file-tiff-load.c:1028
 msgid "TIFF Channel"
 msgstr "TIFF kanāls"
 
-#: ../plug-ins/common/file-tiff-load.c:1032
+#: ../plug-ins/common/file-tiff-load.c:1037
 #: ../plug-ins/file-psd/psd-load.c:333
 msgid ""
 "Warning:\n"
@@ -4693,7 +4694,7 @@ msgstr "CCITT Group _4 fakss"
 msgid "Save _color values from transparent pixels"
 msgstr "Saglabāt krāsu vērtības no _caurspīdīgajiem pikseļiem"
 
-#: ../plug-ins/common/file-tiff-save.c:1141 ../plug-ins/common/file-xbm.c:1235
+#: ../plug-ins/common/file-tiff-save.c:1141 ../plug-ins/common/file-xbm.c:1236
 msgid "Comment:"
 msgstr "Komentārs:"
 
@@ -4726,7 +4727,7 @@ msgstr "Renderēts WMF"
 msgid "X BitMap image"
 msgstr "X BitMap attēls"
 
-#: ../plug-ins/common/file-xbm.c:820
+#: ../plug-ins/common/file-xbm.c:821
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4735,7 +4736,7 @@ msgstr ""
 "“%s”:\n"
 "Nevarēja nolasīt galveni (ftell == %ld)"
 
-#: ../plug-ins/common/file-xbm.c:855
+#: ../plug-ins/common/file-xbm.c:856
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4745,7 +4746,7 @@ msgstr ""
 "Nav norādīts attēla datu tips"
 
 #. The image is not black-and-white.
-#: ../plug-ins/common/file-xbm.c:999
+#: ../plug-ins/common/file-xbm.c:1000
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
 "colors.\n"
@@ -4756,7 +4757,7 @@ msgstr ""
 "\n"
 "Pārveidojiet to par melnbaltu (1-bita) indeksētu attēlu un mēģiniet vēlreiz."
 
-#: ../plug-ins/common/file-xbm.c:1010
+#: ../plug-ins/common/file-xbm.c:1011
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
@@ -4764,56 +4765,56 @@ msgstr ""
 "Nevar saglabāt kursora masku attēlam,\n"
 "kuram nav alfa kanāla."
 
-#: ../plug-ins/common/file-xbm.c:1188
+#: ../plug-ins/common/file-xbm.c:1189
 msgid "XBM"
 msgstr "XBM"
 
 #. parameter settings
-#: ../plug-ins/common/file-xbm.c:1191
+#: ../plug-ins/common/file-xbm.c:1192
 msgid "XBM Options"
 msgstr "XBM opcijas"
 
 #. X10 format
-#: ../plug-ins/common/file-xbm.c:1201
+#: ../plug-ins/common/file-xbm.c:1202
 msgid "_X10 format bitmap"
 msgstr "_X10 formāta bitkarte"
 
-#: ../plug-ins/common/file-xbm.c:1221
+#: ../plug-ins/common/file-xbm.c:1222
 msgid "_Identifier prefix:"
 msgstr "_Identifikatora prefikss:"
 
 #. hotspot toggle
-#: ../plug-ins/common/file-xbm.c:1243
+#: ../plug-ins/common/file-xbm.c:1244
 msgid "_Write hot spot values"
 msgstr "_Rakstīt karstvietas vērtības"
 
-#: ../plug-ins/common/file-xbm.c:1266 ../plug-ins/common/file-xmc.c:1089
+#: ../plug-ins/common/file-xbm.c:1267 ../plug-ins/common/file-xmc.c:1083
 msgid "Hot spot _X:"
 msgstr "Karstvieta _X:"
 
-#: ../plug-ins/common/file-xbm.c:1276
+#: ../plug-ins/common/file-xbm.c:1277
 msgid "Hot spot _Y:"
 msgstr "Karstvieta _Y:"
 
 #. mask file
-#: ../plug-ins/common/file-xbm.c:1283
+#: ../plug-ins/common/file-xbm.c:1284
 msgid "Mask File"
 msgstr "Maskas datne"
 
-#: ../plug-ins/common/file-xbm.c:1293
+#: ../plug-ins/common/file-xbm.c:1294
 msgid "W_rite extra mask file"
 msgstr "_Rakstīt papildu maskas datni"
 
-#: ../plug-ins/common/file-xbm.c:1306
+#: ../plug-ins/common/file-xbm.c:1307
 msgid "_Mask file extension:"
 msgstr "_Maskas datnes paplašinājums:"
 
-#: ../plug-ins/common/file-xmc.c:333 ../plug-ins/common/file-xmc.c:373
-#: ../plug-ins/common/file-xmc.c:1052
+#: ../plug-ins/common/file-xmc.c:331 ../plug-ins/common/file-xmc.c:369
+#: ../plug-ins/common/file-xmc.c:1046
 msgid "X11 Mouse Cursor"
 msgstr "X11 peles kursors"
 
-#: ../plug-ins/common/file-xmc.c:481
+#: ../plug-ins/common/file-xmc.c:473
 #, c-format
 msgid ""
 "Cannot set the hot spot!\n"
@@ -4822,37 +4823,37 @@ msgstr ""
 "Nevar iestatīt karstvietu!\n"
 "Slāņi jāizkārto tā, lai tiem visiem būtu šķēlums."
 
-#: ../plug-ins/common/file-xmc.c:670
+#: ../plug-ins/common/file-xmc.c:664
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "“%s” nav derīgs X kursors."
 
-#: ../plug-ins/common/file-xmc.c:686
+#: ../plug-ins/common/file-xmc.c:680
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "%d platums ietvaram “%s” ir pārāk liels X kursoram."
 
-#: ../plug-ins/common/file-xmc.c:693
+#: ../plug-ins/common/file-xmc.c:687
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "%d augstums ietvaram “%s” ir pārāk liels X kursoram."
 
-#: ../plug-ins/common/file-xmc.c:896
+#: ../plug-ins/common/file-xmc.c:890
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "“%s” nesatur attēla gabalus."
 
-#: ../plug-ins/common/file-xmc.c:938
+#: ../plug-ins/common/file-xmc.c:932
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "“%s” platums ir pārāk liels X kursoram."
 
-#: ../plug-ins/common/file-xmc.c:945
+#: ../plug-ins/common/file-xmc.c:939
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "“%s” augstums ir pārāk liels X kursoram."
 
-#: ../plug-ins/common/file-xmc.c:1015
+#: ../plug-ins/common/file-xmc.c:1009
 #, c-format
 msgid "A read error occurred."
 msgstr "Gadījās lasīšanas kļūda."
@@ -4860,27 +4861,27 @@ msgstr "Gadījās lasīšanas kļūda."
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1057
+#: ../plug-ins/common/file-xmc.c:1051
 msgid "XMC Options"
 msgstr "XMC opcijas"
 
-#: ../plug-ins/common/file-xmc.c:1085
+#: ../plug-ins/common/file-xmc.c:1079
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Ievadiet karstvietas X koordinātu. Sākuma punkts ir augšējais kreisais "
 "stūris."
 
-#: ../plug-ins/common/file-xmc.c:1103
+#: ../plug-ins/common/file-xmc.c:1097
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Ievadiet karstvietas Y koordinātu. Sākuma punkts ir augšējais kreisais "
 "stūris."
 
-#: ../plug-ins/common/file-xmc.c:1114
+#: ../plug-ins/common/file-xmc.c:1108
 msgid "_Auto-Crop all frames."
 msgstr "_Automātiski apcirst visus kadrus."
 
-#: ../plug-ins/common/file-xmc.c:1127
+#: ../plug-ins/common/file-xmc.c:1121
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4891,7 +4892,7 @@ msgstr ""
 "Tas samazina datņu izmēru un var salabot problēmas ar lieliem kursoriem.\n"
 "Noņemiet atzīmi, ja plānojat rediģēt vai eksportēt kursoru ar citu programmu."
 
-#: ../plug-ins/common/file-xmc.c:1150
+#: ../plug-ins/common/file-xmc.c:1144
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4909,55 +4910,55 @@ msgstr ""
 "un kura secība tiek izmantota, balstoties uz “gtk-cursor-theme-size” "
 "vērtības."
 
-#: ../plug-ins/common/file-xmc.c:1167
+#: ../plug-ins/common/file-xmc.c:1161
 msgid "_Use this value only for a frame which size is not specified."
 msgstr "Lietot šo vērtīb_u tikai kadriem, kuru izmērs nav norādīts."
 
-#: ../plug-ins/common/file-xmc.c:1170
+#: ../plug-ins/common/file-xmc.c:1164
 msgid "_Replace the size of all frames even if it is specified."
 msgstr "Aizvietot visu kad_ru izmērus, pat ja tas ir norādīts."
 
-#: ../plug-ins/common/file-xmc.c:1204
+#: ../plug-ins/common/file-xmc.c:1198
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr "Ievadiet laika sprīdi milisekundēs, kurā kadrs ir jāattēlo."
 
-#: ../plug-ins/common/file-xmc.c:1207
+#: ../plug-ins/common/file-xmc.c:1201
 msgid "_Delay:"
 msgstr "Ai_zture:"
 
-#: ../plug-ins/common/file-xmc.c:1212
+#: ../plug-ins/common/file-xmc.c:1206
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr "Lietot šo vērtīb_u tikai kadriem, kuru aizture nav norādīta."
 
-#: ../plug-ins/common/file-xmc.c:1215
+#: ../plug-ins/common/file-xmc.c:1209
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr "Aizvietot visu kad_ru aiztures, pat ja tās ir norādītas."
 
-#: ../plug-ins/common/file-xmc.c:1240
+#: ../plug-ins/common/file-xmc.c:1234
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
 "Autortiesību informācijas daļa, kas pārsniedz 65535 rakstzīmes, tika izņemta."
 
-#: ../plug-ins/common/file-xmc.c:1250
+#: ../plug-ins/common/file-xmc.c:1244
 msgid "Enter copyright information."
 msgstr "Ievadiet autortiesību informāciju."
 
-#: ../plug-ins/common/file-xmc.c:1252
+#: ../plug-ins/common/file-xmc.c:1246
 msgid "_Copyright:"
 msgstr "_Autortiesības:"
 
-#: ../plug-ins/common/file-xmc.c:1268
+#: ../plug-ins/common/file-xmc.c:1262
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
 msgstr ""
 "Licences informācijas daļa, kas pārsniedz 65535 rakstzīmes, tika izņemta."
 
-#: ../plug-ins/common/file-xmc.c:1278
+#: ../plug-ins/common/file-xmc.c:1272
 msgid "Enter license information."
 msgstr "Ievadiet informāciju par licenci."
 
-#: ../plug-ins/common/file-xmc.c:1280
+#: ../plug-ins/common/file-xmc.c:1274
 msgid "_License:"
 msgstr "_Licenci:"
 
@@ -4966,43 +4967,43 @@ msgstr "_Licenci:"
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1287
+#: ../plug-ins/common/file-xmc.c:1281
 msgid "_Other:"
 msgstr "_Cits:"
 
-#: ../plug-ins/common/file-xmc.c:1321
+#: ../plug-ins/common/file-xmc.c:1315
 msgid "Enter other comment if you want."
 msgstr "Ja vēlaties, ievadiet citu komentāru."
 
-#: ../plug-ins/common/file-xmc.c:1371
+#: ../plug-ins/common/file-xmc.c:1365
 #, c-format
 msgid "Comment is limited to %d characters."
 msgstr "Komentārs nevar pārsniegt %d rakstzīmes."
 
-#: ../plug-ins/common/file-xmc.c:1489
+#: ../plug-ins/common/file-xmc.c:1483
 #, c-format
 msgid "This plug-in can only handle RGBA image files with 8bit color depth."
 msgstr ""
 "Šis spraudnis var apstrādāt tikai RGB attēlu datni ar 8 bitu krāsu dziļumu."
 
-#: ../plug-ins/common/file-xmc.c:1507
+#: ../plug-ins/common/file-xmc.c:1501
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr ""
 "“%s” ietvars ir pārāk plats. Lūdzu, samaziniet to uz ne vairāk kā %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1514
+#: ../plug-ins/common/file-xmc.c:1508
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr ""
 "“%s” ietvars ir pārāk augsts. Lūdzu, samaziniet to uz ne vairāk kā %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1521
+#: ../plug-ins/common/file-xmc.c:1515
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "Ietvara “%s” platums un/vai augstums ir nulle!"
 
-#: ../plug-ins/common/file-xmc.c:1561
+#: ../plug-ins/common/file-xmc.c:1555
 #, c-format
 msgid ""
 "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
@@ -5013,7 +5014,7 @@ msgstr ""
 "Mēģiniet mainīt karstvietas novietojumu, slāņu ģeometriju vai saglabājiet "
 "bet automātiskās apciršanas."
 
-#: ../plug-ins/common/file-xmc.c:1718
+#: ../plug-ins/common/file-xmc.c:1712
 #, c-format
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
@@ -5024,7 +5025,7 @@ msgstr ""
 "platums vai augstums ir lielāks kā %ipx.\n"
 "Dažās vidēs tas var aizņem pārāk daudz ekrāna vietas."
 
-#: ../plug-ins/common/file-xmc.c:1725
+#: ../plug-ins/common/file-xmc.c:1719
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
 "nominal size is not supported by GNOME settings.\n"
@@ -5036,7 +5037,7 @@ msgstr ""
 "To var labot, atzīmējot “Aizvietot visu kadru izmērus...” saglabāšanas "
 "dialoglodziņā, vai jūsu kursors var neparādīties GNOME iestatījumos."
 
-#: ../plug-ins/common/file-xmc.c:1962
+#: ../plug-ins/common/file-xmc.c:1956
 #, c-format
 msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
@@ -5045,7 +5046,7 @@ msgstr ""
 "“%s” troksnis ir pārāk liels X kursoram. Tas tika apgriezts, lai iekļautos."
 
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2165
+#: ../plug-ins/common/file-xmc.c:2159
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -5058,37 +5059,55 @@ msgstr ""
 msgid "X PixMap image"
 msgstr "X PixMap attēls"
 
-#: ../plug-ins/common/file-xpm.c:363 ../plug-ins/common/file-xpm.c:775
+#: ../plug-ins/common/file-xpm.c:364 ../plug-ins/common/file-xpm.c:776
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Kļūda, atverot datni “%s”"
 
-#: ../plug-ins/common/file-xpm.c:369 ../plug-ins/common/file-xpm.c:781
+#: ../plug-ins/common/file-xpm.c:370 ../plug-ins/common/file-xpm.c:782
 msgid "XPM file invalid"
 msgstr "XPM datne nav derīga"
 
-#: ../plug-ins/common/file-xpm.c:807
+#: ../plug-ins/common/file-xpm.c:808
 msgid "XPM"
 msgstr "XPM"
 
-#: ../plug-ins/common/file-xpm.c:817
+#: ../plug-ins/common/file-xpm.c:818
 msgid "_Alpha threshold:"
 msgstr "_Alfa slieksnis:"
 
-#: ../plug-ins/common/file-xwd.c:278 ../plug-ins/common/file-xwd.c:298
+#: ../plug-ins/common/file-xwd.c:280 ../plug-ins/common/file-xwd.c:300
 msgid "X window dump"
 msgstr "X loga izmetne"
 
-#: ../plug-ins/common/file-xwd.c:442
+#: ../plug-ins/common/file-xwd.c:446
 #, c-format
 msgid "Could not read XWD header from '%s'"
 msgstr "Nevar nolasīt XWD galveni no “%s”"
 
-#: ../plug-ins/common/file-xwd.c:480
+#: ../plug-ins/common/file-xwd.c:467
+#, c-format
+msgid ""
+"'%s':\n"
+"Illegal number of colormap entries: %ld"
+msgstr ""
+"“%s”:\n"
+"Neatļauts krāsu kartes ierakstu skaits — %u"
+
+#: ../plug-ins/common/file-xwd.c:477
+#, c-format
+msgid ""
+"'%s':\n"
+"Number of colormap entries < number of colors"
+msgstr ""
+"'%s':\n"
+"Krāsu kartes ierakstu skaits ir mazāks kā krāsu skaits"
+
+#: ../plug-ins/common/file-xwd.c:500
 msgid "Can't read color entries"
 msgstr "Nevar nolasīt krāsu ierakstus"
 
-#: ../plug-ins/common/file-xwd.c:575
+#: ../plug-ins/common/file-xwd.c:582
 #, c-format
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
@@ -5097,15 +5116,20 @@ msgstr ""
 "XWD datnei %s ir formāts %d, dziļums %d un %d biti pikselī. Tas pašlaik nav "
 "atbalstīts."
 
-#: ../plug-ins/common/file-xwd.c:598
+#: ../plug-ins/common/file-xwd.c:616
 msgid "Cannot save images with alpha channels."
 msgstr "Nevar saglabāt attēlus ar alfa kanāliem."
 
-#: ../plug-ins/common/file-xwd.c:2198
+#: ../plug-ins/common/file-xwd.c:1706 ../plug-ins/common/file-xwd.c:1944
+#, c-format
+msgid "XWD-file %s is corrupt."
+msgstr "XWD datne %s ir bojāta."
+
+#: ../plug-ins/common/file-xwd.c:2238
 msgid "Error during writing indexed/gray image"
 msgstr "Kļūda, rakstot indeksētu / pelēku attēlu"
 
-#: ../plug-ins/common/file-xwd.c:2294
+#: ../plug-ins/common/file-xwd.c:2334
 msgid "Error during writing rgb image"
 msgstr "Kļūda, rakstot rgb attēlu"
 
@@ -5769,144 +5793,144 @@ msgstr "Katram kauliņam ir taisnas malas"
 msgid "Each piece has curved sides"
 msgstr "Katram kauliņam ir izliektas malas"
 
-#: ../plug-ins/common/lcms.c:218
+#: ../plug-ins/common/lcms.c:229
 msgid "Set a color profile on the image"
 msgstr "Iestatīt krāsu profilu attēlam"
 
-#: ../plug-ins/common/lcms.c:225
+#: ../plug-ins/common/lcms.c:236
 msgid "_Assign Color Profile..."
 msgstr "_Piešķirt krāsu profilu..."
 
-#: ../plug-ins/common/lcms.c:241
+#: ../plug-ins/common/lcms.c:252
 msgid "Assign default RGB Profile"
 msgstr "Piešķirt noklusējuma RGB profilu"
 
-#: ../plug-ins/common/lcms.c:248
+#: ../plug-ins/common/lcms.c:259
 msgid "Apply a color profile on the image"
 msgstr "Uzlikt krāsu profilu attēlam"
 
-#: ../plug-ins/common/lcms.c:258
+#: ../plug-ins/common/lcms.c:269
 msgid "_Convert to Color Profile..."
 msgstr "_Pārveidot uz krāsu profilu..."
 
-#: ../plug-ins/common/lcms.c:276
+#: ../plug-ins/common/lcms.c:287
 msgid "Convert to default RGB Profile"
 msgstr "Pārveidot uz noklusējuma RGB profilu"
 
-#: ../plug-ins/common/lcms.c:290
+#: ../plug-ins/common/lcms.c:301
 msgid "Image Color Profile Information"
 msgstr "Attēla krāsu profila informācija"
 
-#: ../plug-ins/common/lcms.c:304
+#: ../plug-ins/common/lcms.c:315
 msgid "Color Profile Information"
 msgstr "Krāsu profila informācija"
 
-#: ../plug-ins/common/lcms.c:572
+#: ../plug-ins/common/lcms.c:656
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Krāsu profilam “%s” nav RGB krāsu telpas."
 
-#: ../plug-ins/common/lcms.c:679
+#: ../plug-ins/common/lcms.c:763
 msgid "Default RGB working space"
 msgstr "Noklusējuma RGB darba telpa"
 
-#: ../plug-ins/common/lcms.c:775
+#: ../plug-ins/common/lcms.c:865
 msgid ""
 "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr "Dati, kas pievienoti kā “icc-profile”, neizskatās kā ICC krāsu profils"
 
-#: ../plug-ins/common/lcms.c:825
+#: ../plug-ins/common/lcms.c:915
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "“%s” neizskatās kā ICC krāsu profils"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:885
+#: ../plug-ins/common/lcms.c:975
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Pārveido no “%s” uz “%s”"
 
-#: ../plug-ins/common/lcms.c:1129
+#: ../plug-ins/common/lcms.c:1248
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Nevarēja ielādēt ICC profilu no “%s”"
 
-#: ../plug-ins/common/lcms.c:1151
+#: ../plug-ins/common/lcms.c:1270
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Attēlam “%s” ir iegults krāsu profils:"
 
-#: ../plug-ins/common/lcms.c:1195
+#: ../plug-ins/common/lcms.c:1314
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Pārveidot attēlu uz RGB darba telpu (%s)?"
 
-#: ../plug-ins/common/lcms.c:1226
+#: ../plug-ins/common/lcms.c:1345
 msgid "Convert to RGB working space?"
 msgstr "Pārveidot uz RGB darba telpu?"
 
-#: ../plug-ins/common/lcms.c:1231
+#: ../plug-ins/common/lcms.c:1350
 msgid "_Keep"
 msgstr "Pa_turēt"
 
-#: ../plug-ins/common/lcms.c:1236
+#: ../plug-ins/common/lcms.c:1355
 msgid "_Convert"
 msgstr "Pārveid_ot"
 
-#: ../plug-ins/common/lcms.c:1264 ../plug-ins/file-jpeg/jpeg-exif.c:436
+#: ../plug-ins/common/lcms.c:1383 ../plug-ins/file-jpeg/jpeg-exif.c:436
 msgid "_Don't ask me again"
 msgstr "_Vairs man neprasīt"
 
-#: ../plug-ins/common/lcms.c:1328
+#: ../plug-ins/common/lcms.c:1450
 msgid "Select destination profile"
 msgstr "Izvēlieties mērķa profilu"
 
-#: ../plug-ins/common/lcms.c:1355
+#: ../plug-ins/common/lcms.c:1477
 msgid "All files (*.*)"
 msgstr "Visas datnes (*.*)"
 
-#: ../plug-ins/common/lcms.c:1360
+#: ../plug-ins/common/lcms.c:1482
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC krāsu profils (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1403
+#: ../plug-ins/common/lcms.c:1526
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "RGB darbvirsma (%s)"
 
-#: ../plug-ins/common/lcms.c:1453
+#: ../plug-ins/common/lcms.c:1576
 msgid "Convert to ICC Color Profile"
 msgstr "Pārveidot par ICC krāsu profilu"
 
-#: ../plug-ins/common/lcms.c:1454
+#: ../plug-ins/common/lcms.c:1577
 msgid "Assign ICC Color Profile"
 msgstr "Piešķirt ICC krāsu profilu"
 
-#: ../plug-ins/common/lcms.c:1462
+#: ../plug-ins/common/lcms.c:1585
 msgid "_Assign"
 msgstr "_Piešķirt"
 
-#: ../plug-ins/common/lcms.c:1480
+#: ../plug-ins/common/lcms.c:1603
 msgid "Current Color Profile"
 msgstr "Pašreizējais krāsu profils"
 
-#: ../plug-ins/common/lcms.c:1495
+#: ../plug-ins/common/lcms.c:1618
 msgid "Convert to"
 msgstr "Pārveidot uz"
 
-#: ../plug-ins/common/lcms.c:1495
+#: ../plug-ins/common/lcms.c:1618
 msgid "Assign"
 msgstr "Piešķirt"
 
-#: ../plug-ins/common/lcms.c:1519
+#: ../plug-ins/common/lcms.c:1642
 msgid "_Rendering Intent:"
 msgstr "_Renderēšanas nodoms:"
 
-#: ../plug-ins/common/lcms.c:1535
+#: ../plug-ins/common/lcms.c:1658
 msgid "_Black Point Compensation"
 msgstr "_Melno punktu kompensācija"
 
-#: ../plug-ins/common/lcms.c:1577
+#: ../plug-ins/common/lcms.c:1700
 msgid "Destination profile is not for RGB color space."
 msgstr "Mērķa profils nav RGB krāsu telpai."
 
@@ -6081,85 +6105,85 @@ msgstr "_Paturēt maksimālos kanālus"
 msgid "Ho_ld the minimal channels"
 msgstr "Paturēt minimā_los kanālus"
 
-#: ../plug-ins/common/mosaic.c:359
+#: ../plug-ins/common/mosaic.c:363
 msgid "Convert the image into irregular tiles"
 msgstr "Konvertēt attēlu uz neregulārām flīzēm"
 
-#: ../plug-ins/common/mosaic.c:364
+#: ../plug-ins/common/mosaic.c:368
 msgid "_Mosaic..."
 msgstr "_Mozaīka..."
 
 #. progress bar for gradient finding
-#: ../plug-ins/common/mosaic.c:505
+#: ../plug-ins/common/mosaic.c:509
 msgid "Finding edges"
 msgstr "Meklē malas"
 
 #. Progress bar for rendering tiles
-#: ../plug-ins/common/mosaic.c:557
+#: ../plug-ins/common/mosaic.c:561
 msgid "Rendering tiles"
 msgstr "Renderē flīzes"
 
-#: ../plug-ins/common/mosaic.c:590
+#: ../plug-ins/common/mosaic.c:594
 msgid "Mosaic"
 msgstr "Mozaīka"
 
-#: ../plug-ins/common/mosaic.c:631
+#: ../plug-ins/common/mosaic.c:635
 msgid "Squares"
 msgstr "Kvadrāti"
 
-#: ../plug-ins/common/mosaic.c:632
+#: ../plug-ins/common/mosaic.c:636
 msgid "Hexagons"
 msgstr "Sešstūri"
 
-#: ../plug-ins/common/mosaic.c:633
+#: ../plug-ins/common/mosaic.c:637
 msgid "Octagons & squares"
 msgstr "Astoņstūri un kvadrāti"
 
-#: ../plug-ins/common/mosaic.c:634
+#: ../plug-ins/common/mosaic.c:638
 msgid "Triangles"
 msgstr "Trijstūri"
 
-#: ../plug-ins/common/mosaic.c:642
+#: ../plug-ins/common/mosaic.c:646
 msgid "_Tiling primitives:"
 msgstr "Flīzē primi_tīvus:"
 
-#: ../plug-ins/common/mosaic.c:650
+#: ../plug-ins/common/mosaic.c:654
 msgid "Tile _size:"
 msgstr "Flīze_s izmērs:"
 
-#: ../plug-ins/common/mosaic.c:662 ../plug-ins/common/tile-glass.c:304
+#: ../plug-ins/common/mosaic.c:666 ../plug-ins/common/tile-glass.c:304
 msgid "Tile _height:"
 msgstr "Flīzes au_gstums:"
 
-#: ../plug-ins/common/mosaic.c:675
+#: ../plug-ins/common/mosaic.c:679
 msgid "Til_e spacing:"
 msgstr "Flīz_es atstatums:"
 
-#: ../plug-ins/common/mosaic.c:687
+#: ../plug-ins/common/mosaic.c:691
 msgid "Tile _neatness:"
 msgstr "Flīžu _sakārtotība:"
 
-#: ../plug-ins/common/mosaic.c:700
+#: ../plug-ins/common/mosaic.c:704
 msgid "Light _direction:"
 msgstr "_Gaismas virziens:"
 
-#: ../plug-ins/common/mosaic.c:712
+#: ../plug-ins/common/mosaic.c:716
 msgid "Color _variation:"
 msgstr "Krāsas _variācija:"
 
-#: ../plug-ins/common/mosaic.c:741
+#: ../plug-ins/common/mosaic.c:745
 msgid "Co_lor averaging"
 msgstr "Krāsu vidē_jais"
 
-#: ../plug-ins/common/mosaic.c:754
+#: ../plug-ins/common/mosaic.c:758
 msgid "Allo_w tile splitting"
 msgstr "Ļaut flīžu šķelšanos"
 
-#: ../plug-ins/common/mosaic.c:767
+#: ../plug-ins/common/mosaic.c:771
 msgid "_Pitted surfaces"
 msgstr "G_raudaina virsma"
 
-#: ../plug-ins/common/mosaic.c:780
+#: ../plug-ins/common/mosaic.c:784
 msgid "_FG/BG lighting"
 msgstr "Priekšpl./_fona gaismošana"
 
@@ -6800,7 +6824,7 @@ msgid "Red Eye Removal"
 msgstr "Sarkano acu noņemšana"
 
 #: ../plug-ins/common/red-eye-removal.c:171
-#: ../plug-ins/common/unsharp-mask.c:891 ../plug-ins/common/wind.c:1006
+#: ../plug-ins/common/unsharp-mask.c:898 ../plug-ins/common/wind.c:1006
 #: ../plug-ins/imagemap/imap_preferences.c:455
 #: ../plug-ins/map-object/map-object-ui.c:539
 msgid "_Threshold:"
@@ -6970,83 +6994,83 @@ msgstr "Parauga analīze"
 msgid "Remap colorized"
 msgstr "Pārkartēt tonējumu"
 
-#: ../plug-ins/common/screenshot.c:240
+#: ../plug-ins/common/screenshot.c:250
 msgid "Create an image from an area of the screen"
 msgstr "Izveidot attēlu no ekrāna apgabala"
 
-#: ../plug-ins/common/screenshot.c:253
+#: ../plug-ins/common/screenshot.c:272
 msgid "_Screenshot..."
 msgstr "Ekrānuzņēmum_s..."
 
-#: ../plug-ins/common/screenshot.c:418
+#: ../plug-ins/common/screenshot.c:445
 msgid "Error selecting the window"
 msgstr "Kļūda, izvēloties logu"
 
-#: ../plug-ins/common/screenshot.c:786
+#: ../plug-ins/common/screenshot.c:813
 msgid "Importing screenshot"
 msgstr "Importē ekrānuzņēmumu"
 
-#: ../plug-ins/common/screenshot.c:812 ../plug-ins/common/screenshot.c:1085
+#: ../plug-ins/common/screenshot.c:839 ../plug-ins/common/screenshot.c:1204
 msgid "Screenshot"
 msgstr "Ekrānuzņēmums"
 
-#: ../plug-ins/common/screenshot.c:853
+#: ../plug-ins/common/screenshot.c:880
 msgid "Mouse Pointer"
 msgstr "Peles rādītājs"
 
-#: ../plug-ins/common/screenshot.c:972
+#: ../plug-ins/common/screenshot.c:1014
 msgid "Specified window not found"
 msgstr "Norādītais logs nav atrasts"
 
-#: ../plug-ins/common/screenshot.c:1094
+#: ../plug-ins/common/screenshot.c:1213
 msgid "S_nap"
 msgstr "_Uzņemt"
 
-#: ../plug-ins/common/screenshot.c:1124
+#: ../plug-ins/common/screenshot.c:1243
 msgid "After the delay, the screenshot is taken."
 msgstr "Pēc aiztures, tiek uzņemts ekrānuzņēmums"
 
-#: ../plug-ins/common/screenshot.c:1126
+#: ../plug-ins/common/screenshot.c:1245
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr "Pēc aiztures, velciet peli, lai izvēlētos apgabalu ekrānuzņēmumam."
 
-#: ../plug-ins/common/screenshot.c:1129
+#: ../plug-ins/common/screenshot.c:1248
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Pēc aiztures, klikšķiniet uz logu, lai to uzņemtu."
 
 #. Area
-#: ../plug-ins/common/screenshot.c:1135
+#: ../plug-ins/common/screenshot.c:1254
 msgid "Area"
 msgstr "Laukums:"
 
-#: ../plug-ins/common/screenshot.c:1146
+#: ../plug-ins/common/screenshot.c:1265
 msgid "Take a screenshot of a single _window"
 msgstr "Uzņemt _viena loga ekrānuzņēmumu"
 
-#: ../plug-ins/common/screenshot.c:1165
+#: ../plug-ins/common/screenshot.c:1284
 msgid "Include window _decoration"
 msgstr "Iekļaut loga ap_dari"
 
-#: ../plug-ins/common/screenshot.c:1185
+#: ../plug-ins/common/screenshot.c:1304
 msgid "Take a screenshot of the entire _screen"
 msgstr "Uzņemt vi_sa ekrāna ekrānuzņēmumu"
 
-#: ../plug-ins/common/screenshot.c:1204
+#: ../plug-ins/common/screenshot.c:1323
 msgid "Include _mouse pointer"
 msgstr "Iekļaut peles _rādītāju"
 
-#: ../plug-ins/common/screenshot.c:1225
+#: ../plug-ins/common/screenshot.c:1344
 msgid "Select a _region to grab"
 msgstr "Izvēlieties _apgabalu, ko uzņemt"
 
 #. Delay
-#: ../plug-ins/common/screenshot.c:1240
+#: ../plug-ins/common/screenshot.c:1359
 msgid "Delay"
 msgstr "Aizture"
 
 #. this is the unit label of a spinbutton
-#: ../plug-ins/common/screenshot.c:1262
+#: ../plug-ins/common/screenshot.c:1381
 msgid "seconds"
 msgstr "sekundes"
 
@@ -7944,11 +7968,11 @@ msgstr "Visnoderīgākā metode attēla asināšanai"
 msgid "_Unsharp Mask..."
 msgstr "I_zplūduma maska..."
 
-#: ../plug-ins/common/unsharp-mask.c:684
+#: ../plug-ins/common/unsharp-mask.c:691
 msgid "Merging"
 msgstr "Apvieno"
 
-#: ../plug-ins/common/unsharp-mask.c:828
+#: ../plug-ins/common/unsharp-mask.c:835
 msgid "Unsharp Mask"
 msgstr "Izplūduma maska"
 
@@ -8240,7 +8264,7 @@ msgstr "Aplauzt"
 msgid "Smear"
 msgstr "Izsmērēt"
 
-#: ../plug-ins/common/warp.c:502 ../plug-ins/file-fits/fits.c:1020
+#: ../plug-ins/common/warp.c:502 ../plug-ins/file-fits/fits.c:1022
 #: ../plug-ins/flame/flame.c:1174 ../plug-ins/gfig/gfig-dialog.c:1497
 msgid "Black"
 msgstr "Melns"
@@ -8584,37 +8608,42 @@ msgstr "_Stiprums:"
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Lielāka vērtība palielina efekta apjomu"
 
-#: ../plug-ins/file-bmp/bmp-read.c:85
+#: ../plug-ins/file-bmp/bmp-read.c:138
 msgid "Bad colormap"
 msgstr "Slikta krāsu karte"
 
-#: ../plug-ins/file-bmp/bmp-read.c:169 ../plug-ins/file-bmp/bmp-read.c:180
-#: ../plug-ins/file-bmp/bmp-read.c:187 ../plug-ins/file-bmp/bmp-read.c:196
-#: ../plug-ins/file-bmp/bmp-read.c:211 ../plug-ins/file-bmp/bmp-read.c:416
-#: ../plug-ins/file-bmp/bmp-read.c:437 ../plug-ins/file-bmp/bmp-read.c:448
-#: ../plug-ins/file-bmp/bmp-read.c:456 ../plug-ins/file-bmp/bmp-read.c:464
-#: ../plug-ins/file-bmp/bmp-read.c:476
+#: ../plug-ins/file-bmp/bmp-read.c:222 ../plug-ins/file-bmp/bmp-read.c:232
+#: ../plug-ins/file-bmp/bmp-read.c:239 ../plug-ins/file-bmp/bmp-read.c:248
+#: ../plug-ins/file-bmp/bmp-read.c:263 ../plug-ins/file-bmp/bmp-read.c:445
+#: ../plug-ins/file-bmp/bmp-read.c:466 ../plug-ins/file-bmp/bmp-read.c:477
+#: ../plug-ins/file-bmp/bmp-read.c:485 ../plug-ins/file-bmp/bmp-read.c:493
+#: ../plug-ins/file-bmp/bmp-read.c:505
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "“%s” nav derīga BMP datne"
 
-#: ../plug-ins/file-bmp/bmp-read.c:225 ../plug-ins/file-bmp/bmp-read.c:252
-#: ../plug-ins/file-bmp/bmp-read.c:280 ../plug-ins/file-bmp/bmp-read.c:345
-#: ../plug-ins/file-bmp/bmp-read.c:395
+#: ../plug-ins/file-bmp/bmp-read.c:277 ../plug-ins/file-bmp/bmp-read.c:304
+#: ../plug-ins/file-bmp/bmp-read.c:332 ../plug-ins/file-bmp/bmp-read.c:361
+#: ../plug-ins/file-bmp/bmp-read.c:391 ../plug-ins/file-bmp/bmp-read.c:425
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Kļūda, nolasot BMP datnes galveni no “%s”"
 
-#: ../plug-ins/file-bmp/bmp-read.c:588
+#: ../plug-ins/file-bmp/bmp-read.c:350
+#, c-format
+msgid "Unsupported compression (%lu) in BMP file from '%s'"
+msgstr "Neatbalstīta saspiešana (%lu) BMP datnē no “%s”"
+
+#: ../plug-ins/file-bmp/bmp-read.c:621
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Neatpazīts vai nederīgs BMP saspiešanas formāts."
 
-#: ../plug-ins/file-bmp/bmp-read.c:630
+#: ../plug-ins/file-bmp/bmp-read.c:663
 msgid "Unsupported or invalid bitdepth."
 msgstr "Neatbalstīts vai nederīgs bitu dziļums."
 
-#: ../plug-ins/file-bmp/bmp-read.c:818 ../plug-ins/file-bmp/bmp-read.c:859
-#: ../plug-ins/file-bmp/bmp-read.c:909
+#: ../plug-ins/file-bmp/bmp-read.c:815 ../plug-ins/file-bmp/bmp-read.c:856
+#: ../plug-ins/file-bmp/bmp-read.c:906
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitu karte negaidīti aprāvusies."
 
@@ -8651,7 +8680,7 @@ msgstr ""
 "opcijas aktivēšana liks GIMP nerakstīt krāsu telpas informāciju datnē."
 
 #. Advanced Options
-#: ../plug-ins/file-bmp/bmp-write.c:905 ../plug-ins/file-jpeg/jpeg-save.c:901
+#: ../plug-ins/file-bmp/bmp-write.c:905 ../plug-ins/file-jpeg/jpeg-save.c:924
 msgid "_Advanced Options"
 msgstr "P_apildu opcijas"
 
@@ -8695,44 +8724,44 @@ msgstr "G3 faksa attēls"
 msgid "Flexible Image Transport System"
 msgstr "Flexible Image Transport System"
 
-#: ../plug-ins/file-fits/fits.c:368
+#: ../plug-ins/file-fits/fits.c:370
 msgid "Error during open of FITS file"
 msgstr "Kļūda, atverot FITS datni"
 
-#: ../plug-ins/file-fits/fits.c:374
+#: ../plug-ins/file-fits/fits.c:376
 msgid "FITS file keeps no displayable images"
 msgstr "FITS datne nesatur attēlojamās datnes"
 
-#: ../plug-ins/file-fits/fits.c:455
+#: ../plug-ins/file-fits/fits.c:457
 msgid "FITS save cannot handle images with alpha channels"
 msgstr "FITS saglabāšana nevar apstrādāt datnes ar alfa kanāliem"
 
-#: ../plug-ins/file-fits/fits.c:992
+#: ../plug-ins/file-fits/fits.c:994
 msgid "Load FITS File"
 msgstr "Ielādēt FITS datni"
 
-#: ../plug-ins/file-fits/fits.c:1016
+#: ../plug-ins/file-fits/fits.c:1018
 msgid "Replacement for undefined pixels"
 msgstr "Aizvietojums nedefinētiem pikseļiem"
 
-#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1323
+#: ../plug-ins/file-fits/fits.c:1023 ../plug-ins/gfig/gfig-dialog.c:1323
 #: ../plug-ins/gfig/gfig-dialog.c:1498
 msgid "White"
 msgstr "Balts"
 
-#: ../plug-ins/file-fits/fits.c:1028
+#: ../plug-ins/file-fits/fits.c:1030
 msgid "Pixel value scaling"
 msgstr "Pikseļu vērtību mērogošana"
 
-#: ../plug-ins/file-fits/fits.c:1033
+#: ../plug-ins/file-fits/fits.c:1035
 msgid "By DATAMIN/DATAMAX"
 msgstr "Par DATAMIN/DATAMAX"
 
-#: ../plug-ins/file-fits/fits.c:1040
+#: ../plug-ins/file-fits/fits.c:1042
 msgid "Image Composing"
 msgstr "Attēla komponēšana"
 
-#: ../plug-ins/file-fits/fits.c:1044
+#: ../plug-ins/file-fits/fits.c:1046
 msgctxt "composing"
 msgid "None"
 msgstr "Nekāda"
@@ -8741,30 +8770,30 @@ msgstr "Nekāda"
 msgid "AutoDesk FLIC animation"
 msgstr "AutoDesk FLIC animācija"
 
-#: ../plug-ins/file-fli/fli-gimp.c:561
+#: ../plug-ins/file-fli/fli-gimp.c:563
 #, c-format
 msgid "Frame (%i)"
 msgstr "Kadrs (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:714
+#: ../plug-ins/file-fli/fli-gimp.c:716
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr "Diemžēl var saglabāt tikai INDEXED un GRAY attēlus."
 
-#: ../plug-ins/file-fli/fli-gimp.c:847
+#: ../plug-ins/file-fli/fli-gimp.c:849
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - ielādēt kadru steku"
 
-#: ../plug-ins/file-fli/fli-gimp.c:876 ../plug-ins/file-fli/fli-gimp.c:932
+#: ../plug-ins/file-fli/fli-gimp.c:878 ../plug-ins/file-fli/fli-gimp.c:934
 msgctxt "frame-range"
 msgid "From:"
 msgstr "No:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:885 ../plug-ins/file-fli/fli-gimp.c:941
+#: ../plug-ins/file-fli/fli-gimp.c:887 ../plug-ins/file-fli/fli-gimp.c:943
 msgctxt "frame-range"
 msgid "To:"
 msgstr "Līdz:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:915
+#: ../plug-ins/file-fli/fli-gimp.c:917
 msgid "GFLI 1.3"
 msgstr "GFLI 1.3"
 
@@ -8814,7 +8843,7 @@ msgstr "Saspiests (PNG)"
 msgid "Icon #%i"
 msgstr "Ikona #%i"
 
-#: ../plug-ins/file-ico/ico-load.c:722 ../plug-ins/file-jpeg/jpeg-load.c:691
+#: ../plug-ins/file-ico/ico-load.c:722 ../plug-ins/file-jpeg/jpeg-load.c:696
 #: ../plug-ins/file-psd/psd-thumb-load.c:84
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -8840,80 +8869,81 @@ msgstr "Spriežot pēc EXIF datiem, attēls ir pagriezts."
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Vai vēlaties, lai GIMP šo attēlu pagriež standarta virzienā?"
 
-#: ../plug-ins/file-jpeg/jpeg-load.c:247
+#: ../plug-ins/file-jpeg/jpeg-load.c:252
 msgid "JPEG preview"
 msgstr "JPEG priekšskatījums"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:206
+#: ../plug-ins/file-jpeg/jpeg-save.c:215
 #, c-format
 msgid "File size: %s"
 msgstr "Datnes izmērs — %s"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:690
-msgid "Calculating file size..."
-msgstr "Rēķina datnes izmēru..."
-
-#: ../plug-ins/file-jpeg/jpeg-save.c:782 ../plug-ins/file-jpeg/jpeg-save.c:877
+#: ../plug-ins/file-jpeg/jpeg-save.c:225 ../plug-ins/file-jpeg/jpeg-save.c:233
+#: ../plug-ins/file-jpeg/jpeg-save.c:805 ../plug-ins/file-jpeg/jpeg-save.c:900
 msgid "File size: unknown"
 msgstr "Datnes izmērs — nezināms"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:840
+#: ../plug-ins/file-jpeg/jpeg-save.c:713
+msgid "Calculating file size..."
+msgstr "Rēķina datnes izmēru..."
+
+#: ../plug-ins/file-jpeg/jpeg-save.c:863
 msgid "JPEG"
 msgstr "JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:863
+#: ../plug-ins/file-jpeg/jpeg-save.c:886
 msgid "_Quality:"
 msgstr "_Kvalitāte:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:867
+#: ../plug-ins/file-jpeg/jpeg-save.c:890
 msgid "JPEG quality parameter"
 msgstr "JPEG kvalitātes parametrs"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:886
+#: ../plug-ins/file-jpeg/jpeg-save.c:909
 msgid "Enable preview to obtain the file size."
 msgstr "Aktivēt priekšskatījumu, lai iegūtu datnes izmēru."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:889
+#: ../plug-ins/file-jpeg/jpeg-save.c:912
 msgid "Sho_w preview in image window"
 msgstr "_Rādīt priekšskatījumu attēla logā"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:930
+#: ../plug-ins/file-jpeg/jpeg-save.c:953
 msgid "S_moothing:"
 msgstr "G_ludināšana:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:943
+#: ../plug-ins/file-jpeg/jpeg-save.c:966
 msgid "Interval (MCU rows):"
 msgstr "Intervāls (MCU rindas):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:960
+#: ../plug-ins/file-jpeg/jpeg-save.c:983
 msgid "Use _restart markers"
 msgstr "Lietot pā_rstartēšanas marķierus"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:976
+#: ../plug-ins/file-jpeg/jpeg-save.c:999
 msgid "_Optimize"
 msgstr "_Optimizēt"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:990
+#: ../plug-ins/file-jpeg/jpeg-save.c:1013
 msgid "_Progressive"
 msgstr "_Progresīvs"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1006
+#: ../plug-ins/file-jpeg/jpeg-save.c:1029
 msgid "Save _EXIF data"
 msgstr "Saglabāt _EXIF datus"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1023
+#: ../plug-ins/file-jpeg/jpeg-save.c:1046
 msgid "Save _thumbnail"
 msgstr "Saglabāt sīk_tēlu"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1040
+#: ../plug-ins/file-jpeg/jpeg-save.c:1063
 msgid "Save _XMP data"
 msgstr "Saglabāt _XMP datus"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1055
+#: ../plug-ins/file-jpeg/jpeg-save.c:1081
 msgid "_Use quality settings from original image"
 msgstr "Izmantot oriģinālā attēla kvalitātes iestatījum_us"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1061
+#: ../plug-ins/file-jpeg/jpeg-save.c:1087
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -8924,53 +8954,53 @@ msgstr ""
 "apmēram to pašu kvalitāti un datnes izmēru."
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1085
+#: ../plug-ins/file-jpeg/jpeg-save.c:1111
 msgid "Su_bsampling:"
 msgstr "A_pakštvērums:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1092
+#: ../plug-ins/file-jpeg/jpeg-save.c:1118
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (labākā kvalitāte)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1094
+#: ../plug-ins/file-jpeg/jpeg-save.c:1120
 msgid "4:2:2 horizontal (chroma halved)"
 msgstr "4:2:2 horizontāli (nokrāsa uz pusi samazināta)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1096
+#: ../plug-ins/file-jpeg/jpeg-save.c:1122
 msgid "4:2:2 vertical (chroma halved)"
 msgstr "4:2:2 vertikāli (nokrāsa uz pusi samazināta)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1098
+#: ../plug-ins/file-jpeg/jpeg-save.c:1124
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (nokrāsa samazināta četras reizes)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1128
+#: ../plug-ins/file-jpeg/jpeg-save.c:1154
 msgid "_DCT method:"
 msgstr "_DCT metode:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1134
+#: ../plug-ins/file-jpeg/jpeg-save.c:1160
 msgid "Fast Integer"
 msgstr "Ātrs vesels skaitlis"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1135
+#: ../plug-ins/file-jpeg/jpeg-save.c:1161
 msgid "Integer"
 msgstr "Vesels skaitlis"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1136
+#: ../plug-ins/file-jpeg/jpeg-save.c:1162
 msgid "Floating-Point"
 msgstr "Peldošais komats"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1152
+#: ../plug-ins/file-jpeg/jpeg-save.c:1178
 msgid "Comment"
 msgstr "Komentārs"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1189
+#: ../plug-ins/file-jpeg/jpeg-save.c:1215
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
 msgid "_Load Defaults"
 msgstr "Ie_lādēt noklusējumus"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1198
+#: ../plug-ins/file-jpeg/jpeg-save.c:1224
 msgid "Sa_ve Defaults"
 msgstr "Sa_glabāt noklusējumus"
 
@@ -8978,7 +9008,7 @@ msgstr "Sa_glabāt noklusējumus"
 msgid "JPEG image"
 msgstr "JPEG attēls"
 
-#: ../plug-ins/file-jpeg/jpeg.c:303
+#: ../plug-ins/file-jpeg/jpeg.c:305
 msgid "Export Preview"
 msgstr "Eksportēt priekšskatījumu"
 
@@ -9078,7 +9108,7 @@ msgstr "Neatbalstīts vai nederīgs kanāla izmērs"
 msgid "Photoshop image"
 msgstr "Photoshop attēls"
 
-#: ../plug-ins/file-psd/psd-save.c:374
+#: ../plug-ins/file-psd/psd-save.c:375
 #, c-format
 msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
@@ -9087,11 +9117,11 @@ msgstr ""
 "Nevar saglabāt slāni ar režīmu “%s”.  Vai nu PSD datņu formāts vai arī "
 "spraudnis to neatbalsta; tā vietā lietojiet parasto režīmu."
 
-#: ../plug-ins/file-psd/psd-save.c:634
+#: ../plug-ins/file-psd/psd-save.c:635
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Kļūda — nevar pārveidot GIMP pamata attēla tipu uz PSD režīmu"
 
-#: ../plug-ins/file-psd/psd-save.c:1622
+#: ../plug-ins/file-psd/psd-save.c:1623
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images that are "
@@ -9100,7 +9130,7 @@ msgstr ""
 "Nevar saglabāt “%s”. PSD datņu formāts neatbalsta attēlus, kas ir vairāk kā "
 "30,000 pikseļus plati vai augsti."
 
-#: ../plug-ins/file-psd/psd-save.c:1637
+#: ../plug-ins/file-psd/psd-save.c:1638
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images with "
@@ -9117,48 +9147,48 @@ msgstr "Negaidītas datnes beigas"
 msgid "Silicon Graphics IRIS image"
 msgstr "Silicon Graphics IRIS attēls"
 
-#: ../plug-ins/file-sgi/sgi.c:325
+#: ../plug-ins/file-sgi/sgi.c:327
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "Nevar atvērt “%s” lasīšanai."
 
-#: ../plug-ins/file-sgi/sgi.c:343
+#: ../plug-ins/file-sgi/sgi.c:345
 #, c-format
 msgid "Invalid width: %hu"
 msgstr "Nederīgs platums — %hu"
 
-#: ../plug-ins/file-sgi/sgi.c:350
+#: ../plug-ins/file-sgi/sgi.c:352
 #, c-format
 msgid "Invalid height: %hu"
 msgstr "Nederīgs augstums: %hu"
 
-#: ../plug-ins/file-sgi/sgi.c:357
+#: ../plug-ins/file-sgi/sgi.c:359
 #, c-format
 msgid "Invalid number of channels: %hu"
 msgstr "Nederīgs kanālu skaits — %hu"
 
-#: ../plug-ins/file-sgi/sgi.c:571
+#: ../plug-ins/file-sgi/sgi.c:573
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Nevar atvērt “%s” rakstīšanai."
 
-#: ../plug-ins/file-sgi/sgi.c:652
+#: ../plug-ins/file-sgi/sgi.c:654
 msgid "SGI"
 msgstr "SGI"
 
-#: ../plug-ins/file-sgi/sgi.c:654
+#: ../plug-ins/file-sgi/sgi.c:656
 msgid "Compression type"
 msgstr "Saspiešanas veids"
 
-#: ../plug-ins/file-sgi/sgi.c:658
+#: ../plug-ins/file-sgi/sgi.c:660
 msgid "No compression"
 msgstr "Bez saspiešanas"
 
-#: ../plug-ins/file-sgi/sgi.c:660
+#: ../plug-ins/file-sgi/sgi.c:662
 msgid "RLE compression"
 msgstr "RLE saspiešana"
 
-#: ../plug-ins/file-sgi/sgi.c:662
+#: ../plug-ins/file-sgi/sgi.c:664
 msgid ""
 "Aggressive RLE\n"
 "(not supported by SGI)"
@@ -9249,6 +9279,11 @@ msgstr "Lejupielādē nezināmu attēla datu apjomu"
 #: ../plug-ins/file-uri/uri.c:122 ../plug-ins/file-uri/uri.c:143
 msgid "URI"
 msgstr "URI"
+
+#: ../plug-ins/file-uri/uri.c:318
+#, c-format
+msgid "Failed to save to temporary file '%s'"
+msgstr "Neizdevās saglabāt pagaidu datni “%s”"
 
 #: ../plug-ins/file-xjt/xjt.c:485 ../plug-ins/file-xjt/xjt.c:503
 msgid "GIMP compressed XJT image"
@@ -10706,7 +10741,7 @@ msgid "Reread the folder of Presets"
 msgstr "Atkārtoti nolasa regulējumu mapi"
 
 #: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1182
+#: ../plug-ins/gimpressionist/repaint.c:1197
 #: ../plug-ins/imagemap/imap_polygon.c:515
 #: ../plug-ins/lighting/lighting-ui.c:1082
 msgid "_Update"
