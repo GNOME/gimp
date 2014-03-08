@@ -222,7 +222,19 @@ static const GimpRadioActionEntry image_convert_precision_actions[] =
     NC_("image-convert-action", "32 bit floating point (gamma)"), NULL,
     NC_("image-convert-action",
         "Convert the image to 32 bit gamma-corrected floating point"),
-    GIMP_PRECISION_FLOAT_GAMMA, GIMP_HELP_IMAGE_CONVERT_FLOAT }
+    GIMP_PRECISION_FLOAT_GAMMA, GIMP_HELP_IMAGE_CONVERT_FLOAT },
+
+  { "image-convert-double-linear", NULL,
+    NC_("image-convert-action", "64 bit floating point (linear)"), NULL,
+    NC_("image-convert-action",
+        "Convert the image to 64 bit linear floating point"),
+    GIMP_PRECISION_DOUBLE_LINEAR, GIMP_HELP_IMAGE_CONVERT_DOUBLE },
+
+  { "image-convert-double-gamma", NULL,
+    NC_("image-convert-action", "64 bit floating point (gamma)"), NULL,
+    NC_("image-convert-action",
+        "Convert the image to 64 bit gamma-corrected floating point"),
+    GIMP_PRECISION_DOUBLE_GAMMA, GIMP_HELP_IMAGE_CONVERT_DOUBLE }
 };
 
 static const GimpEnumActionEntry image_flip_actions[] =
@@ -358,6 +370,12 @@ image_actions_update (GimpActionGroup *group,
           break;
         case GIMP_PRECISION_FLOAT_GAMMA:
           action = "image-convert-float-gamma";
+          break;
+        case GIMP_PRECISION_DOUBLE_LINEAR:
+          action = "image-convert-double-linear";
+          break;
+        case GIMP_PRECISION_DOUBLE_GAMMA:
+          action = "image-convert-double-gamma";
           break;
         }
 

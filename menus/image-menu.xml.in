@@ -338,6 +338,8 @@
         <menuitem action="image-convert-half-gamma" />
         <menuitem action="image-convert-float-linear" />
         <menuitem action="image-convert-float-gamma" />
+        <menuitem action="image-convert-double-linear" />
+        <menuitem action="image-convert-double-gamma" />
         <separator />
       </menu>
       <menu action="image-transform-menu" name="Transform">

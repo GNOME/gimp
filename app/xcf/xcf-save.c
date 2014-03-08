@@ -223,6 +223,10 @@ xcf_save_choose_format (XcfInfo   *info,
   if (gimp_image_get_metadata (image))
     save_version = MAX (6, save_version);
 
+  /* need version 7 for double precision images */
+  if (gimp_image_get_component_type (image) != GIMP_COMPONENT_TYPE_DOUBLE)
+    save_version = MAX (7, save_version);
+
   info->file_version = save_version;
 }
 

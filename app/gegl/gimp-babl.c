@@ -212,6 +212,36 @@ gimp_babl_init (void)
                    babl_component ("A"),
                    NULL);
 
+  babl_format_new ("name", "R double",
+                   babl_model ("RGBA"),
+                   babl_type ("double"),
+                   babl_component ("R"),
+                   NULL);
+  babl_format_new ("name", "R' double",
+                   babl_model ("R'G'B'A"),
+                   babl_type ("double"),
+                   babl_component ("R'"),
+                   NULL);
+  babl_format_new ("name", "G double",
+                   babl_model ("RGBA"),
+                   babl_type ("double"),
+                   babl_component ("G"),
+                   NULL);
+  babl_format_new ("name", "G' double",
+                   babl_model ("R'G'B'A"),
+                   babl_type ("double"),
+                   babl_component ("G'"),
+                   NULL);
+  babl_format_new ("name", "B double",
+                   babl_model ("RGBA"),
+                   babl_type ("double"),
+                   babl_component ("B"),
+                   NULL);
+  babl_format_new ("name", "B' double",
+                   babl_model ("R'G'B'A"),
+                   babl_type ("double"),
+                   babl_component ("B'"),
+                   NULL);
   babl_format_new ("name", "A double",
                    babl_model ("RGBA"),
                    babl_type ("double"),
@@ -226,82 +256,96 @@ static const struct
 }
 babl_descriptions[] =
 {
-  { "RGB u8",        N_("RGB") },
-  { "R'G'B' u8",     N_("RGB") },
-  { "RGB u16",       N_("RGB") },
-  { "R'G'B' u16",    N_("RGB") },
-  { "RGB u32",       N_("RGB") },
-  { "R'G'B' u32",    N_("RGB") },
-  { "RGB half",      N_("RGB") },
-  { "R'G'B' half",   N_("RGB") },
-  { "RGB float",     N_("RGB") },
-  { "R'G'B' float",  N_("RGB") },
+  { "RGB u8",         N_("RGB") },
+  { "R'G'B' u8",      N_("RGB") },
+  { "RGB u16",        N_("RGB") },
+  { "R'G'B' u16",     N_("RGB") },
+  { "RGB u32",        N_("RGB") },
+  { "R'G'B' u32",     N_("RGB") },
+  { "RGB half",       N_("RGB") },
+  { "R'G'B' half",    N_("RGB") },
+  { "RGB float",      N_("RGB") },
+  { "R'G'B' float",   N_("RGB") },
+  { "RGB double",     N_("RGB") },
+  { "R'G'B' double",  N_("RGB") },
 
-  { "RGBA u8",       N_("RGB-alpha") },
-  { "R'G'B'A u8",    N_("RGB-alpha") },
-  { "RGBA u16",      N_("RGB-alpha") },
-  { "R'G'B'A u16",   N_("RGB-alpha") },
-  { "RGBA u32",      N_("RGB-alpha") },
-  { "R'G'B'A u32",   N_("RGB-alpha") },
-  { "RGBA half",     N_("RGB-alpha") },
-  { "R'G'B'A half",  N_("RGB-alpha") },
-  { "RGBA float",    N_("RGB-alpha") },
-  { "R'G'B'A float", N_("RGB-alpha") },
+  { "RGBA u8",        N_("RGB-alpha") },
+  { "R'G'B'A u8",     N_("RGB-alpha") },
+  { "RGBA u16",       N_("RGB-alpha") },
+  { "R'G'B'A u16",    N_("RGB-alpha") },
+  { "RGBA u32",       N_("RGB-alpha") },
+  { "R'G'B'A u32",    N_("RGB-alpha") },
+  { "RGBA half",      N_("RGB-alpha") },
+  { "R'G'B'A half",   N_("RGB-alpha") },
+  { "RGBA float",     N_("RGB-alpha") },
+  { "R'G'B'A float",  N_("RGB-alpha") },
+  { "RGBA double",    N_("RGB-alpha") },
+  { "R'G'B'A double", N_("RGB-alpha") },
 
-  { "Y u8",          N_("Grayscale") },
-  { "Y' u8",         N_("Grayscale") },
-  { "Y u16",         N_("Grayscale") },
-  { "Y' u16",        N_("Grayscale") },
-  { "Y u32",         N_("Grayscale") },
-  { "Y' u32",        N_("Grayscale") },
-  { "Y half",        N_("Grayscale") },
-  { "Y' half",       N_("Grayscale") },
-  { "Y float",       N_("Grayscale") },
-  { "Y' float",      N_("Grayscale") },
+  { "Y u8",           N_("Grayscale") },
+  { "Y' u8",          N_("Grayscale") },
+  { "Y u16",          N_("Grayscale") },
+  { "Y' u16",         N_("Grayscale") },
+  { "Y u32",          N_("Grayscale") },
+  { "Y' u32",         N_("Grayscale") },
+  { "Y half",         N_("Grayscale") },
+  { "Y' half",        N_("Grayscale") },
+  { "Y float",        N_("Grayscale") },
+  { "Y' float",       N_("Grayscale") },
+  { "Y double",       N_("Grayscale") },
+  { "Y' double",      N_("Grayscale") },
 
-  { "YA u8",         N_("Grayscale-alpha") },
-  { "Y'A u8",        N_("Grayscale-alpha") },
-  { "YA u16",        N_("Grayscale-alpha") },
-  { "Y'A u16",       N_("Grayscale-alpha") },
-  { "YA u32",        N_("Grayscale-alpha") },
-  { "Y'A u32",       N_("Grayscale-alpha") },
-  { "YA half",       N_("Grayscale-alpha") },
-  { "Y'A half",      N_("Grayscale-alpha") },
-  { "YA float",      N_("Grayscale-alpha") },
-  { "Y'A float",     N_("Grayscale-alpha") },
+  { "YA u8",          N_("Grayscale-alpha") },
+  { "Y'A u8",         N_("Grayscale-alpha") },
+  { "YA u16",         N_("Grayscale-alpha") },
+  { "Y'A u16",        N_("Grayscale-alpha") },
+  { "YA u32",         N_("Grayscale-alpha") },
+  { "Y'A u32",        N_("Grayscale-alpha") },
+  { "YA half",        N_("Grayscale-alpha") },
+  { "Y'A half",       N_("Grayscale-alpha") },
+  { "YA float",       N_("Grayscale-alpha") },
+  { "Y'A float",      N_("Grayscale-alpha") },
+  { "YA double",      N_("Grayscale-alpha") },
+  { "Y'A double",     N_("Grayscale-alpha") },
 
-  { "R u8",          N_("Red component") },
-  { "R' u8",         N_("Red component") },
-  { "R u16",         N_("Red component") },
-  { "R' u16",        N_("Red component") },
-  { "R u32",         N_("Red component") },
-  { "R' u32",        N_("Red component") },
-  { "R half",        N_("Red component") },
-  { "R' half",       N_("Red component") },
-  { "R float",       N_("Red component") },
-  { "R' float",      N_("Red component") },
+  { "R u8",           N_("Red component") },
+  { "R' u8",          N_("Red component") },
+  { "R u16",          N_("Red component") },
+  { "R' u16",         N_("Red component") },
+  { "R u32",          N_("Red component") },
+  { "R' u32",         N_("Red component") },
+  { "R half",         N_("Red component") },
+  { "R' half",        N_("Red component") },
+  { "R float",        N_("Red component") },
+  { "R' float",       N_("Red component") },
+  { "R double",       N_("Red component") },
+  { "R' double",      N_("Red component") },
 
-  { "G u8",          N_("Green component") },
-  { "G' u8",         N_("Green component") },
-  { "G u16",         N_("Green component") },
-  { "G' u16",        N_("Green component") },
-  { "G u32",         N_("Green component") },
-  { "G' u32",        N_("Green component") },
-  { "G half",        N_("Green component") },
-  { "G' half",       N_("Green component") },
-  { "G float",       N_("Green component") },
-  { "G' float",      N_("Green component") },
+  { "G u8",           N_("Green component") },
+  { "G' u8",          N_("Green component") },
+  { "G u16",          N_("Green component") },
+  { "G' u16",         N_("Green component") },
+  { "G u32",          N_("Green component") },
+  { "G' u32",         N_("Green component") },
+  { "G half",         N_("Green component") },
+  { "G' half",        N_("Green component") },
+  { "G float",        N_("Green component") },
+  { "G' float",       N_("Green component") },
+  { "G double",       N_("Green component") },
+  { "G' double",      N_("Green component") },
 
-  { "B u8",          N_("Blue component") },
-  { "B' u8",         N_("Blue component") },
-  { "B u16",         N_("Blue component") },
-  { "B' u16",        N_("Blue component") },
-  { "B u32",         N_("Blue component") },
-  { "B' u32",        N_("Blue component") },
-  { "B half",        N_("Blue component") },
-  { "B' half",       N_("Blue component") },
-  { "B float",       N_("Blue component") },
-  { "B' float",      N_("Blue component") },
+  { "B u8",           N_("Blue component") },
+  { "B' u8",          N_("Blue component") },
+  { "B u16",          N_("Blue component") },
+  { "B' u16",         N_("Blue component") },
+  { "B u32",          N_("Blue component") },
+  { "B' u32",         N_("Blue component") },
+  { "B half",         N_("Blue component") },
+  { "B' half",        N_("Blue component") },
+  { "B float",        N_("Blue component") },
+  { "B' float",       N_("Blue component") },
+  { "B double",       N_("Blue component") },
+  { "B' double",      N_("Blue component") },
 
   { "A u8",          N_("Alpha component") },
   { "A u16",         N_("Alpha component") },
@@ -401,6 +445,8 @@ gimp_babl_format_get_component_type (const Babl *format)
     return GIMP_COMPONENT_TYPE_HALF;
   else if (type == babl_type ("float"))
     return GIMP_COMPONENT_TYPE_FLOAT;
+  else if (type == babl_type ("double"))
+    return GIMP_COMPONENT_TYPE_DOUBLE;
 
   g_return_val_if_reached (-1);
 }
@@ -426,6 +472,8 @@ gimp_babl_format_get_precision (const Babl *format)
         return GIMP_PRECISION_HALF_LINEAR;
       else if (type == babl_type ("float"))
         return GIMP_PRECISION_FLOAT_LINEAR;
+      else if (type == babl_type ("double"))
+        return GIMP_PRECISION_DOUBLE_LINEAR;
     }
   else
     {
@@ -439,6 +487,8 @@ gimp_babl_format_get_precision (const Babl *format)
         return GIMP_PRECISION_HALF_GAMMA;
       else if (type == babl_type ("float"))
         return GIMP_PRECISION_FLOAT_GAMMA;
+      else if (type == babl_type ("double"))
+        return GIMP_PRECISION_DOUBLE_GAMMA;
     }
 
   g_return_val_if_reached (-1);
@@ -499,6 +549,10 @@ gimp_babl_component_type (GimpPrecision precision)
     case GIMP_PRECISION_FLOAT_LINEAR:
     case GIMP_PRECISION_FLOAT_GAMMA:
       return GIMP_COMPONENT_TYPE_FLOAT;
+
+    case GIMP_PRECISION_DOUBLE_LINEAR:
+    case GIMP_PRECISION_DOUBLE_GAMMA:
+      return GIMP_COMPONENT_TYPE_DOUBLE;
     }
 
   g_return_val_if_reached (-1);
@@ -524,7 +578,7 @@ gimp_babl_precision (GimpComponentType component,
 
     case GIMP_COMPONENT_TYPE_U32:
       if (linear)
-         return GIMP_PRECISION_U32_LINEAR;
+        return GIMP_PRECISION_U32_LINEAR;
       else
         return GIMP_PRECISION_U32_GAMMA;
 
@@ -539,6 +593,12 @@ gimp_babl_precision (GimpComponentType component,
         return GIMP_PRECISION_FLOAT_LINEAR;
       else
         return GIMP_PRECISION_FLOAT_GAMMA;
+
+    case GIMP_COMPONENT_TYPE_DOUBLE:
+      if (linear)
+        return GIMP_PRECISION_DOUBLE_LINEAR;
+      else
+        return GIMP_PRECISION_DOUBLE_GAMMA;
 
     default:
       break;
@@ -617,6 +677,18 @@ gimp_babl_format (GimpImageBaseType  base_type,
           else
             return babl_format ("R'G'B' float");
 
+        case GIMP_PRECISION_DOUBLE_LINEAR:
+          if (with_alpha)
+            return babl_format ("RGBA double");
+          else
+            return babl_format ("RGB double");
+
+        case GIMP_PRECISION_DOUBLE_GAMMA:
+          if (with_alpha)
+            return babl_format ("R'G'B'A double");
+          else
+            return babl_format ("R'G'B' double");
+
         default:
           break;
         }
@@ -685,6 +757,18 @@ gimp_babl_format (GimpImageBaseType  base_type,
           else
             return babl_format ("Y' float");
 
+        case GIMP_PRECISION_DOUBLE_LINEAR:
+          if (with_alpha)
+            return babl_format ("YA double");
+          else
+            return babl_format ("Y double");
+
+        case GIMP_PRECISION_DOUBLE_GAMMA:
+          if (with_alpha)
+            return babl_format ("Y'A double");
+          else
+            return babl_format ("Y' double");
+
         default:
           break;
         }
@@ -703,11 +787,12 @@ gimp_babl_mask_format (GimpPrecision precision)
 {
   switch (gimp_babl_component_type (precision))
     {
-    case GIMP_COMPONENT_TYPE_U8:    return babl_format ("Y u8");
-    case GIMP_COMPONENT_TYPE_U16:   return babl_format ("Y u16");
-    case GIMP_COMPONENT_TYPE_U32:   return babl_format ("Y u32");
-    case GIMP_COMPONENT_TYPE_HALF:  return babl_format ("Y half");
-    case GIMP_COMPONENT_TYPE_FLOAT: return babl_format ("Y float");
+    case GIMP_COMPONENT_TYPE_U8:     return babl_format ("Y u8");
+    case GIMP_COMPONENT_TYPE_U16:    return babl_format ("Y u16");
+    case GIMP_COMPONENT_TYPE_U32:    return babl_format ("Y u32");
+    case GIMP_COMPONENT_TYPE_HALF:   return babl_format ("Y half");
+    case GIMP_COMPONENT_TYPE_FLOAT:  return babl_format ("Y float");
+    case GIMP_COMPONENT_TYPE_DOUBLE: return babl_format ("Y double");
     }
 
   g_return_val_if_reached (NULL);
@@ -843,6 +928,30 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
+        case GIMP_PRECISION_DOUBLE_LINEAR:
+          switch (index)
+            {
+            case 0: return babl_format ("R double");
+            case 1: return babl_format ("G double");
+            case 2: return babl_format ("B double");
+            case 3: return babl_format ("A double");
+            default:
+              break;
+            }
+          break;
+
+        case GIMP_PRECISION_DOUBLE_GAMMA:
+          switch (index)
+            {
+            case 0: return babl_format ("R' double");
+            case 1: return babl_format ("G' double");
+            case 2: return babl_format ("B' double");
+            case 3: return babl_format ("A double");
+            default:
+              break;
+            }
+          break;
+
         default:
           break;
         }
@@ -951,6 +1060,26 @@ gimp_babl_component_format (GimpImageBaseType base_type,
             }
           break;
 
+        case GIMP_PRECISION_DOUBLE_LINEAR:
+          switch (index)
+            {
+            case 0: return babl_format ("Y double");
+            case 1: return babl_format ("A double");
+            default:
+              break;
+            }
+          break;
+
+        case GIMP_PRECISION_DOUBLE_GAMMA:
+          switch (index)
+            {
+            case 0: return babl_format ("Y' double");
+            case 1: return babl_format ("A double");
+            default:
+              break;
+            }
+          break;
+
         default:
           break;
         }
@@ -1047,6 +1176,16 @@ gimp_babl_print_pixel (const Babl *format,
       {
         gfloat *color = pixel;
         gint    i;
+
+        for (i = 0; i < n_components; i++)
+          strings[i] = g_strdup_printf ("%0.6f", color[i]);
+      }
+      break;
+
+    case GIMP_COMPONENT_TYPE_DOUBLE:
+      {
+        gdouble *color = pixel;
+        gint     i;
 
         for (i = 0; i < n_components; i++)
           strings[i] = g_strdup_printf ("%0.6f", color[i]);

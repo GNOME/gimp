@@ -1230,6 +1230,10 @@ gimp_image_real_precision_changed (GimpImage *image)
         case GIMP_COMPONENT_TYPE_FLOAT:
           gimp_metadata_set_bits_per_sample (metadata, 32);
           break;
+
+        case GIMP_COMPONENT_TYPE_DOUBLE:
+          gimp_metadata_set_bits_per_sample (metadata, 64);
+          break;
         }
     }
 

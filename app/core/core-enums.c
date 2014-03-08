@@ -53,6 +53,7 @@ gimp_component_type_get_type (void)
     { GIMP_COMPONENT_TYPE_U32, "GIMP_COMPONENT_TYPE_U32", "u32" },
     { GIMP_COMPONENT_TYPE_HALF, "GIMP_COMPONENT_TYPE_HALF", "half" },
     { GIMP_COMPONENT_TYPE_FLOAT, "GIMP_COMPONENT_TYPE_FLOAT", "float" },
+    { GIMP_COMPONENT_TYPE_DOUBLE, "GIMP_COMPONENT_TYPE_DOUBLE", "double" },
     { 0, NULL, NULL }
   };
 
@@ -63,6 +64,7 @@ gimp_component_type_get_type (void)
     { GIMP_COMPONENT_TYPE_U32, NC_("component-type", "32-bit integer"), NULL },
     { GIMP_COMPONENT_TYPE_HALF, NC_("component-type", "16-bit floating point"), NULL },
     { GIMP_COMPONENT_TYPE_FLOAT, NC_("component-type", "32-bit floating point"), NULL },
+    { GIMP_COMPONENT_TYPE_DOUBLE, NC_("component-type", "64-bit floating point"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -798,6 +800,8 @@ gimp_precision_get_type (void)
     { GIMP_PRECISION_HALF_GAMMA, "GIMP_PRECISION_HALF_GAMMA", "half-gamma" },
     { GIMP_PRECISION_FLOAT_LINEAR, "GIMP_PRECISION_FLOAT_LINEAR", "float-linear" },
     { GIMP_PRECISION_FLOAT_GAMMA, "GIMP_PRECISION_FLOAT_GAMMA", "float-gamma" },
+    { GIMP_PRECISION_DOUBLE_LINEAR, "GIMP_PRECISION_DOUBLE_LINEAR", "double-linear" },
+    { GIMP_PRECISION_DOUBLE_GAMMA, "GIMP_PRECISION_DOUBLE_GAMMA", "double-gamma" },
     { 0, NULL, NULL }
   };
 
@@ -813,6 +817,8 @@ gimp_precision_get_type (void)
     { GIMP_PRECISION_HALF_GAMMA, NC_("precision", "16-bit gamma floating point"), NULL },
     { GIMP_PRECISION_FLOAT_LINEAR, NC_("precision", "32-bit linear floating point"), NULL },
     { GIMP_PRECISION_FLOAT_GAMMA, NC_("precision", "32-bit gamma floating point"), NULL },
+    { GIMP_PRECISION_DOUBLE_LINEAR, NC_("precision", "64-bit linear floating point"), NULL },
+    { GIMP_PRECISION_DOUBLE_GAMMA, NC_("precision", "64-bit gamma floating point"), NULL },
     { 0, NULL, NULL }
   };
 
