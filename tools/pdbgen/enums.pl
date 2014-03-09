@@ -425,9 +425,9 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_COMPONENT_TYPE_U8 => '100',
 		       GIMP_COMPONENT_TYPE_U16 => '200',
 		       GIMP_COMPONENT_TYPE_U32 => '300',
-		       GIMP_COMPONENT_TYPE_HALF => '400',
-		       GIMP_COMPONENT_TYPE_FLOAT => '500',
-		       GIMP_COMPONENT_TYPE_DOUBLE => '600' }
+		       GIMP_COMPONENT_TYPE_HALF => '500',
+		       GIMP_COMPONENT_TYPE_FLOAT => '600',
+		       GIMP_COMPONENT_TYPE_DOUBLE => '700' }
 	},
     GimpConvertDitherType =>
 	{ contig => 1,
@@ -573,12 +573,12 @@ package Gimp::CodeGen::enums;
 		       GIMP_PRECISION_U16_GAMMA => '250',
 		       GIMP_PRECISION_U32_LINEAR => '300',
 		       GIMP_PRECISION_U32_GAMMA => '350',
-		       GIMP_PRECISION_HALF_LINEAR => '400',
-		       GIMP_PRECISION_HALF_GAMMA => '450',
-		       GIMP_PRECISION_FLOAT_LINEAR => '500',
-		       GIMP_PRECISION_FLOAT_GAMMA => '550',
-		       GIMP_PRECISION_DOUBLE_LINEAR => '600',
-		       GIMP_PRECISION_DOUBLE_GAMMA => '650' }
+		       GIMP_PRECISION_HALF_LINEAR => '500',
+		       GIMP_PRECISION_HALF_GAMMA => '550',
+		       GIMP_PRECISION_FLOAT_LINEAR => '600',
+		       GIMP_PRECISION_FLOAT_GAMMA => '650',
+		       GIMP_PRECISION_DOUBLE_LINEAR => '700',
+		       GIMP_PRECISION_DOUBLE_GAMMA => '750' }
 	},
     GimpRotationType =>
 	{ contig => 1,

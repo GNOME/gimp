@@ -174,6 +174,25 @@ xcf_load_image (Gimp     *gimp,
               goto hard_error;
             }
         }
+      else if (info->file_version == 5 ||
+               info->file_version == 6)
+        {
+          switch (p)
+            {
+            case 100: precision = GIMP_PRECISION_U8_LINEAR; break;
+            case 150: precision = GIMP_PRECISION_U8_GAMMA; break;
+            case 200: precision = GIMP_PRECISION_U16_LINEAR; break;
+            case 250: precision = GIMP_PRECISION_U16_GAMMA; break;
+            case 300: precision = GIMP_PRECISION_U32_LINEAR; break;
+            case 350: precision = GIMP_PRECISION_U32_GAMMA; break;
+            case 400: precision = GIMP_PRECISION_HALF_LINEAR; break;
+            case 450: precision = GIMP_PRECISION_HALF_GAMMA; break;
+            case 500: precision = GIMP_PRECISION_FLOAT_LINEAR; break;
+            case 550: precision = GIMP_PRECISION_FLOAT_GAMMA; break;
+            default:
+              goto hard_error;
+            }
+        }
       else
         {
           precision = p;
