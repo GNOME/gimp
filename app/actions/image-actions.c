@@ -400,16 +400,18 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-convert-grayscale", image);
   SET_SENSITIVE ("image-convert-indexed",   image && !groups && is_u8_gamma);
 
-  SET_SENSITIVE ("image-convert-u8-gamma",     image);
-  SET_SENSITIVE ("image-convert-u8-linear",    image && !is_indexed);
-  SET_SENSITIVE ("image-convert-u16-gamma",    image && !is_indexed);
-  SET_SENSITIVE ("image-convert-u16-linear",   image && !is_indexed);
-  SET_SENSITIVE ("image-convert-u32-gamma",    image && !is_indexed);
-  SET_SENSITIVE ("image-convert-u32-linear",   image && !is_indexed);
-  SET_SENSITIVE ("image-convert-half-gamma",   image && !is_indexed);
-  SET_SENSITIVE ("image-convert-half-linear",  image && !is_indexed);
-  SET_SENSITIVE ("image-convert-float-gamma",  image && !is_indexed);
-  SET_SENSITIVE ("image-convert-float-linear", image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u8-gamma",      image);
+  SET_SENSITIVE ("image-convert-u8-linear",     image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u16-gamma",     image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u16-linear",    image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u32-gamma",     image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u32-linear",    image && !is_indexed);
+  SET_SENSITIVE ("image-convert-half-gamma",    image && !is_indexed);
+  SET_SENSITIVE ("image-convert-half-linear",   image && !is_indexed);
+  SET_SENSITIVE ("image-convert-float-gamma",   image && !is_indexed);
+  SET_SENSITIVE ("image-convert-float-linear",  image && !is_indexed);
+  SET_SENSITIVE ("image-convert-double-gamma",  image && !is_indexed);
+  SET_SENSITIVE ("image-convert-double-linear", image && !is_indexed);
 
   SET_SENSITIVE ("image-flip-horizontal", image);
   SET_SENSITIVE ("image-flip-vertical",   image);
