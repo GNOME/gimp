@@ -122,7 +122,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
                    MIN (scale_x, scale_y),
                    gimp_temp_buf_get_format (buf),
                    gimp_temp_buf_get_data (buf),
-                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
 
   return buf;
 }

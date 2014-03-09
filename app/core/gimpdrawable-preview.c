@@ -129,7 +129,7 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
                    scale,
                    gimp_temp_buf_get_format (preview),
                    gimp_temp_buf_get_data (preview),
-                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_CLAMP);
 
   return preview;
 }
