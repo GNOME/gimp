@@ -105,6 +105,8 @@ void            gimp_unit_store_get_values       (GimpUnitStore *store,
                                                   gdouble       *first_value,
                                                   ...);
 
+void            _gimp_unit_store_sync_units      (GimpUnitStore *store);
+
 
 G_END_DECLS
 
