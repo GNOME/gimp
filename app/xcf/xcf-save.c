@@ -219,7 +219,7 @@ xcf_save_choose_format (XcfInfo   *info,
   if (gimp_image_get_metadata (image))
     save_version = MAX (6, save_version);
 
-  /* need version 5 for high bit depth images */
+  /* need version 7 for high bit depth images */
   if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_GAMMA)
     save_version = MAX (7, save_version);
 
