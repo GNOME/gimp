@@ -51,6 +51,8 @@ typedef struct
 
   gdouble  *values;
   gdouble  *resolutions;
+
+  GimpUnit  synced_unit;
 } GimpUnitStorePrivate;
 
 #define GET_PRIVATE(obj) G_TYPE_INSTANCE_GET_PRIVATE (obj, \
@@ -177,6 +179,7 @@ gimp_unit_store_init (GimpUnitStore *store)
   private->has_percent  = FALSE;
   private->short_format = g_strdup ("%a");
   private->long_format  = g_strdup ("%p");
+  private->synced_unit  = gimp_unit_get_number_of_units () - 1;
 }
 
 static void
@@ -895,4 +898,41 @@ gimp_unit_store_get_values (GimpUnitStore *store,
     }
 
   va_end (args);
+}
+
+void
+_gimp_unit_store_sync_units (GimpUnitStore *store)
+{
+  GimpUnitStorePrivate *private;
+  GtkTreeModel         *model;
+  GtkTreeIter           iter;
+  gboolean              iter_valid;
+
+  g_return_if_fail (GIMP_IS_UNIT_STORE (store));
+
+  private = GET_PRIVATE (store);
+  model   = GTK_TREE_MODEL (store);
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      gint unit;
+
+      gtk_tree_model_get (model, &iter,
+                          GIMP_UNIT_STORE_UNIT, &unit,
+                          -1);
+
+      if (unit > private->synced_unit)
+        {
+          GtkTreePath *path;
+
+          path = gtk_tree_model_get_path (model, &iter);
+          gtk_tree_model_row_inserted (model, path, &iter);
+          gtk_tree_path_free (path);
+        }
+    }
+
+
+  private->synced_unit = gimp_unit_get_number_of_units () - 1;
 }
