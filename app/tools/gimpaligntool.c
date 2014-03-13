@@ -740,6 +740,8 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
     case GIMP_ARRANGE_TOP:
     case GIMP_ARRANGE_VCENTER:
     case GIMP_ARRANGE_BOTTOM:
+    case GIMP_ARRANGE_HFILL:
+    case GIMP_ARRANGE_VFILL:
       offset = options->offset_x;
       break;
     }

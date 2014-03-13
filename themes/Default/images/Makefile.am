@@ -178,6 +178,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-hcenter-24.png			\
 	stock-hchain-24.png			\
 	stock-hchain-broken-24.png		\
+	stock-hfill-24.png			\
 	stock-histogram-22.png			\
 	stock-image-24.png			\
 	stock-images-24.png			\
@@ -219,6 +220,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-vcenter-24.png			\
 	stock-vchain-24.png			\
 	stock-vchain-broken-24.png		\
+	stock-vfill-24.png			\
 	stock-video-24.png			\
 	stock-warning-24.png			\
 	stock-web-24.png			\

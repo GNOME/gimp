@@ -229,6 +229,12 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
     case GIMP_ARRANGE_BOTTOM:
       stock_id = GIMP_STOCK_GRAVITY_SOUTH;
       break;
+    case GIMP_ARRANGE_HFILL:
+        stock_id = GIMP_STOCK_HFILL;
+        break;
+    case GIMP_ARRANGE_VFILL:
+        stock_id = GIMP_STOCK_VFILL;
+        break;
     default:
       g_return_val_if_reached (NULL);
       break;
@@ -340,6 +346,10 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
     gimp_align_options_button_new (options, GIMP_ARRANGE_RIGHT, hbox,
                                    _("Distribute right edges of targets"));
 
+  options->button[n++] =
+    gimp_align_options_button_new (options, GIMP_ARRANGE_HFILL, hbox,
+                                   _("Distribute targets evenly in the horizontal"));
+
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -355,6 +365,10 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   options->button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_BOTTOM, hbox,
                                    _("Distribute bottoms of targets"));
+
+  options->button[n++] =
+    gimp_align_options_button_new (options, GIMP_ARRANGE_VFILL, hbox,
+                                   _("Distribute targets evenly in the vertical"));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);

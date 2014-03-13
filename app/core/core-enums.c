@@ -450,6 +450,8 @@ gimp_alignment_type_get_type (void)
     { GIMP_ARRANGE_TOP, "GIMP_ARRANGE_TOP", "arrange-top" },
     { GIMP_ARRANGE_VCENTER, "GIMP_ARRANGE_VCENTER", "arrange-vcenter" },
     { GIMP_ARRANGE_BOTTOM, "GIMP_ARRANGE_BOTTOM", "arrange-bottom" },
+    { GIMP_ARRANGE_HFILL, "GIMP_ARRANGE_HFILL", "arrange-hfill" },
+    { GIMP_ARRANGE_VFILL, "GIMP_ARRANGE_VFILL", "arrange-vfill" },
     { 0, NULL, NULL }
   };
 
@@ -467,6 +469,8 @@ gimp_alignment_type_get_type (void)
     { GIMP_ARRANGE_TOP, "GIMP_ARRANGE_TOP", NULL },
     { GIMP_ARRANGE_VCENTER, "GIMP_ARRANGE_VCENTER", NULL },
     { GIMP_ARRANGE_BOTTOM, "GIMP_ARRANGE_BOTTOM", NULL },
+    { GIMP_ARRANGE_HFILL, "GIMP_ARRANGE_HFILL", NULL },
+    { GIMP_ARRANGE_VFILL, "GIMP_ARRANGE_VFILL", NULL },
     { 0, NULL, NULL }
   };
 

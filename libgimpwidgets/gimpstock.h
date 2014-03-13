@@ -67,6 +67,9 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_HCENTER                  "gimp-hcenter"
 #define GIMP_STOCK_VCENTER                  "gimp-vcenter"
 
+#define GIMP_STOCK_HFILL                    "gimp-hfill"
+#define GIMP_STOCK_VFILL                    "gimp-vfill"
+
 #define GIMP_STOCK_HCHAIN                   "gimp-hchain"
 #define GIMP_STOCK_HCHAIN_BROKEN            "gimp-hchain-broken"
 #define GIMP_STOCK_VCHAIN                   "gimp-vchain"
