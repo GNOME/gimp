@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
@@ -153,6 +154,11 @@ static gboolean  gimp_image_window_window_state_event  (GtkWidget           *wid
                                                         GdkEventWindowState *event);
 static void      gimp_image_window_style_set           (GtkWidget           *widget,
                                                         GtkStyle            *prev_style);
+
+static void      gimp_image_window_monitor_changed     (GimpWindow          *window,
+                                                        GdkScreen           *screen,
+                                                        gint                 monitor);
+
 static GList *   gimp_image_window_get_docks           (GimpDockContainer   *dock_container);
 static GimpUIManager *
                  gimp_image_window_dock_container_get_ui_manager
@@ -245,8 +251,9 @@ static const gchar image_window_rc_style[] =
 static void
 gimp_image_window_class_init (GimpImageWindowClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass    *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass  *widget_class = GTK_WIDGET_CLASS (klass);
+  GimpWindowClass *window_class = GIMP_WINDOW_CLASS (klass);
 
   object_class->constructed        = gimp_image_window_constructed;
   object_class->dispose            = gimp_image_window_dispose;
@@ -258,6 +265,8 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
   widget_class->configure_event    = gimp_image_window_configure_event;
   widget_class->window_state_event = gimp_image_window_window_state_event;
   widget_class->style_set          = gimp_image_window_style_set;
+
+  window_class->monitor_changed    = gimp_image_window_monitor_changed;
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -709,6 +718,21 @@ gimp_image_window_style_set (GtkWidget *widget,
   gimp_dialog_factory_set_has_min_size (GTK_WINDOW (widget), TRUE);
 }
 
+static void
+gimp_image_window_monitor_changed (GimpWindow *window,
+                                   GdkScreen  *screen,
+                                   gint        monitor)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GList                  *list;
+
+  for (list = private->shells; list; list = g_list_next (list))
+    {
+      /*  make it fetch the right monitor profile  */
+      gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (list->data));
+    }
+}
+
 static GList *
 gimp_image_window_get_docks (GimpDockContainer *dock_container)
 {
@@ -1072,6 +1096,9 @@ gimp_image_window_add_shell (GimpImageWindow  *window,
                                     GTK_WIDGET (shell), TRUE);
 
   gtk_widget_show (GTK_WIDGET (shell));
+
+  /*  make it fetch the right monitor profile  */
+  gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
 }
 
 GimpDisplayShell *
