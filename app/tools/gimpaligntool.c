@@ -789,7 +789,7 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
       break;
 
     case GIMP_ALIGN_REFERENCE_ACTIVE_PATH:
-      g_print ("reference = active path not yet handled.\n");
+      reference_object = G_OBJECT (gimp_image_get_active_vectors (image));
       break;
     }
 
