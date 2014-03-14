@@ -42,6 +42,18 @@ enum
 };
 
 
+struct _GimpProfileChooserDialogPrivate
+{
+  Gimp          *gimp;
+  GtkTextBuffer *buffer;
+
+  gchar         *filename;
+  gchar         *desc;
+
+  guint          idle_id;
+};
+
+
 static void   gimp_profile_chooser_dialog_constructed    (GObject                  *object);
 static void   gimp_profile_chooser_dialog_dispose        (GObject                  *object);
 static void   gimp_profile_chooser_dialog_finalize       (GObject                  *object);
@@ -84,20 +96,34 @@ gimp_profile_chooser_dialog_class_init (GimpProfileChooserDialogClass *klass)
                                                         GIMP_TYPE_GIMP,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_type_class_add_private (klass, sizeof (GimpProfileChooserDialogPrivate));
 }
 
 static void
 gimp_profile_chooser_dialog_init (GimpProfileChooserDialog *dialog)
 {
-  dialog->idle_id = 0;
-  dialog->buffer  = gtk_text_buffer_new (NULL);
+  dialog->private = G_TYPE_INSTANCE_GET_PRIVATE (dialog,
+                                                 GIMP_TYPE_PROFILE_CHOOSER_DIALOG,
+                                                 GimpProfileChooserDialogPrivate);
+
+  dialog->private->buffer = gtk_text_buffer_new (NULL);
+
+  gtk_text_buffer_create_tag (dialog->private->buffer, "strong",
+                              "weight", PANGO_WEIGHT_BOLD,
+                              "scale",  PANGO_SCALE_LARGE,
+                              NULL);
+  gtk_text_buffer_create_tag (dialog->private->buffer, "emphasis",
+                              "style",  PANGO_STYLE_OBLIQUE,
+                              NULL);
 }
 
 static void
 gimp_profile_chooser_dialog_constructed (GObject *object)
 {
-  GimpProfileChooserDialog *dialog = GIMP_PROFILE_CHOOSER_DIALOG (object);
-  GtkFileFilter            *filter;
+  GimpProfileChooserDialog        *dialog  = GIMP_PROFILE_CHOOSER_DIALOG (object);
+  GimpProfileChooserDialogPrivate *private = dialog->private;
+  GtkFileFilter                   *filter;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
@@ -131,7 +157,7 @@ gimp_profile_chooser_dialog_constructed (GObject *object)
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
 
   gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog),
-                                       gimp_profile_view_new (dialog->buffer));
+                                       gimp_profile_view_new (private->buffer));
 
   g_signal_connect (dialog, "update-preview",
                     G_CALLBACK (gimp_profile_chooser_dialog_update_preview),
@@ -143,10 +169,10 @@ gimp_profile_chooser_dialog_dispose (GObject *object)
 {
   GimpProfileChooserDialog *dialog = GIMP_PROFILE_CHOOSER_DIALOG (object);
 
-  if (dialog->idle_id)
+  if (dialog->private->idle_id)
     {
-      g_source_remove (dialog->idle_id);
-      dialog->idle_id = 0;
+      g_source_remove (dialog->private->idle_id);
+      dialog->private->idle_id = 0;
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -157,10 +183,10 @@ gimp_profile_chooser_dialog_finalize (GObject *object)
 {
   GimpProfileChooserDialog *dialog = GIMP_PROFILE_CHOOSER_DIALOG (object);
 
-  if (dialog->buffer)
+  if (dialog->private->buffer)
     {
-      g_object_unref (dialog->buffer);
-      dialog->buffer = NULL;
+      g_object_unref (dialog->private->buffer);
+      dialog->private->buffer = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -177,7 +203,7 @@ gimp_profile_chooser_dialog_set_property (GObject      *object,
   switch (prop_id)
     {
     case PROP_GIMP:
-      dialog->gimp = g_value_get_object (value);
+      dialog->private->gimp = g_value_get_object (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -196,7 +222,7 @@ gimp_profile_chooser_dialog_get_property (GObject    *object,
   switch (prop_id)
     {
     case PROP_GIMP:
-      g_value_set_object (value, dialog->gimp);
+      g_value_set_object (value, dialog->private->gimp);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -222,8 +248,11 @@ gimp_profile_chooser_dialog_get_desc (GimpProfileChooserDialog *dialog,
 {
   g_return_val_if_fail (GIMP_IS_PROFILE_CHOOSER_DIALOG (dialog), NULL);
 
-  if (filename && dialog->filename && strcmp (filename, dialog->filename) == 0)
-    return g_strdup (dialog->desc);
+  if (filename && dialog->private->filename &&
+      strcmp (filename, dialog->private->filename) == 0)
+    {
+      return g_strdup (dialog->private->desc);
+    }
 
   return NULL;
 }
@@ -262,19 +291,19 @@ gimp_profile_chooser_dialog_add_shortcut (GimpProfileChooserDialog *dialog)
 static void
 gimp_profile_chooser_dialog_update_preview (GimpProfileChooserDialog *dialog)
 {
-  gtk_text_buffer_set_text (dialog->buffer, "", 0);
+  gtk_text_buffer_set_text (dialog->private->buffer, "", 0);
 
-  g_free (dialog->filename);
-  dialog->filename = NULL;
+  g_free (dialog->private->filename);
+  dialog->private->filename = NULL;
 
-  g_free (dialog->desc);
-  dialog->desc = NULL;
+  g_free (dialog->private->desc);
+  dialog->private->desc = NULL;
 
-  if (dialog->idle_id)
-    g_source_remove (dialog->idle_id);
+  if (dialog->private->idle_id)
+    g_source_remove (dialog->private->idle_id);
 
-  dialog->idle_id = g_idle_add ((GSourceFunc) gimp_profile_view_query,
-                                dialog);
+  dialog->private->idle_id = g_idle_add ((GSourceFunc) gimp_profile_view_query,
+                                         dialog);
 }
 
 static GtkWidget *
@@ -299,14 +328,14 @@ gimp_profile_view_new (GtkTextBuffer *buffer)
   gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
 
-  gtk_text_view_set_pixels_above_lines (GTK_TEXT_VIEW (text_view), 2);
+  gtk_text_view_set_pixels_above_lines (GTK_TEXT_VIEW (text_view), 6);
   gtk_text_view_set_left_margin (GTK_TEXT_VIEW (text_view), 2);
   gtk_text_view_set_right_margin (GTK_TEXT_VIEW (text_view), 2);
 
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
 
-  gtk_widget_set_size_request (scrolled_window, 200, -1);
+  gtk_widget_set_size_request (scrolled_window, 300, -1);
 
   return frame;
 }
@@ -320,52 +349,65 @@ gimp_profile_view_query (GimpProfileChooserDialog *dialog)
 
   if (filename)
     {
-      gchar *name = NULL;
-      gchar *desc = NULL;
-      gchar *info = NULL;
+      gchar       *name  = NULL;
+      gchar       *desc  = NULL;
+      gchar       *info  = NULL;
+      GError      *error = NULL;
+      GtkTextIter  iter;
 
-      if (plug_in_icc_profile_file_info (dialog->gimp,
-                                         gimp_get_user_context (dialog->gimp),
+      gtk_text_buffer_get_start_iter (dialog->private->buffer, &iter);
+
+      if (plug_in_icc_profile_file_info (dialog->private->gimp,
+                                         gimp_get_user_context (dialog->private->gimp),
                                          NULL,
                                          filename,
                                          &name, &desc, &info,
-                                         NULL))
+                                         &error))
         {
-          gsize info_len = info ? strlen (info) : 0;
-          gsize name_len = strlen (filename);
-
-          /*  lcms tends to adds the filename at the end of the info string.
-           *  Since this is redundant information here, we remove it.
-           */
-          if (info_len > name_len &&
-              strcmp (info + info_len - name_len, filename) == 0)
+          if ((desc && strlen (desc)) ||
+              (name && strlen (name)))
             {
-              info_len -= name_len;
+              if (desc && strlen (desc))
+                {
+                  dialog->private->desc = desc;
+                  desc = NULL;
+                }
+              else
+                {
+                  dialog->private->desc = name;
+                  name = NULL;
+                }
+
+              gtk_text_buffer_insert_with_tags_by_name (dialog->private->buffer,
+                                                        &iter,
+                                                        dialog->private->desc, -1,
+                                                        "strong", NULL);
+              gtk_text_buffer_insert (dialog->private->buffer, &iter, "\n", 1);
             }
 
-          gtk_text_buffer_set_text (dialog->buffer, info ? info : "", info_len);
+          if (info)
+            gtk_text_buffer_insert (dialog->private->buffer, &iter, info, -1);
 
-          if (desc)
-            {
-              dialog->desc = desc;
-              desc = NULL;
-            }
-          else if (name)
-            {
-              dialog->desc = name;
-              name = NULL;
-            }
-
-          dialog->filename = filename;
+          dialog->private->filename = filename;
           filename = NULL;
 
           g_free (name);
           g_free (desc);
           g_free (info);
         }
+      else
+        {
+          gtk_text_buffer_insert_with_tags_by_name (dialog->private->buffer,
+                                                    &iter,
+                                                    error->message, -1,
+                                                    "emphasis", NULL);
+          g_clear_error (&error);
+        }
 
       g_free (filename);
     }
+
+  dialog->private->idle_id = 0;
 
   return FALSE;
 }

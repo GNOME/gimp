@@ -32,19 +32,14 @@ G_BEGIN_DECLS
 #define GIMP_PROFILE_CHOOSER_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROFILE_CHOOSER_DIALOG, GimpProfileChooserDialogClass))
 
 
-typedef struct _GimpProfileChooserDialogClass  GimpProfileChooserDialogClass;
+typedef struct _GimpProfileChooserDialogClass   GimpProfileChooserDialogClass;
+typedef struct _GimpProfileChooserDialogPrivate GimpProfileChooserDialogPrivate;
 
 struct _GimpProfileChooserDialog
 {
-  GtkFileChooserDialog  parent_instance;
+  GtkFileChooserDialog             parent_instance;
 
-  Gimp                 *gimp;
-  GtkTextBuffer        *buffer;
-
-  gchar                *filename;
-  gchar                *desc;
-
-  guint                 idle_id;
+  GimpProfileChooserDialogPrivate *private;
 };
 
 struct _GimpProfileChooserDialogClass
@@ -59,6 +54,6 @@ GtkWidget * gimp_profile_chooser_dialog_new      (Gimp        *gimp,
                                                   const gchar *title);
 
 gchar     * gimp_profile_chooser_dialog_get_desc (GimpProfileChooserDialog *dialog,
-                                                  const gchar              *uri);
+                                                  const gchar              *filename);
 
 #endif /* __GIMP_PROFILE_CHOOSER_DIALOG_H__ */
