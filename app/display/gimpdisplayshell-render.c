@@ -142,7 +142,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                        h * window_scale),
                        shell->scale_x * window_scale,
                        filter_format, shell->filter_data,
-                       shell->filter_stride, GEGL_ABYSS_NONE);
+                       shell->filter_stride, GEGL_ABYSS_CLAMP);
 
 
       gimp_color_display_stack_convert_buffer (shell->filter_stack,
@@ -158,7 +158,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                        1.0,
                        babl_format ("cairo-ARGB32"),
                        data, stride,
-                       GEGL_ABYSS_NONE);
+                       GEGL_ABYSS_CLAMP);
     }
   else
     {
@@ -170,7 +170,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                        shell->scale_x * window_scale,
                        babl_format ("cairo-ARGB32"),
                        data, stride,
-                       GEGL_ABYSS_NONE);
+                       GEGL_ABYSS_CLAMP);
     }
 
   if (shell->mask)
@@ -201,7 +201,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                        shell->scale_x * window_scale,
                        babl_format ("Y u8"),
                        data, stride,
-                       GEGL_ABYSS_NONE);
+                       GEGL_ABYSS_CLAMP);
 
       /* invert the mask so what is *not* the foreground object is masked */
       mask_height = h * window_scale;
