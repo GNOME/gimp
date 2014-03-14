@@ -1361,54 +1361,6 @@ lcms_icc_file_chooser_dialog_response (GtkFileChooser           *dialog,
 }
 
 static GtkWidget *
-lcms_icc_file_chooser_dialog_new (void)
-{
-  GtkWidget     *dialog;
-  GtkFileFilter *filter;
-
-  dialog = gtk_file_chooser_dialog_new (_("Select destination profile"),
-                                        NULL,
-                                        GTK_FILE_CHOOSER_ACTION_OPEN,
-
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
-
-                                        NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_ACCEPT,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
-
-#ifndef G_OS_WIN32
-  {
-    const gchar folder[] = "/usr/share/color/icc";
-
-    if (g_file_test (folder, G_FILE_TEST_IS_DIR))
-      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
-                                            folder, NULL);
-  }
-#endif
-
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All files (*.*)"));
-  gtk_file_filter_add_pattern (filter, "*");
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("ICC color profile (*.icc, *.icm)"));
-  gtk_file_filter_add_pattern (filter, "*.[Ii][Cc][Cc]");
-  gtk_file_filter_add_pattern (filter, "*.[Ii][Cc][Mm]");
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  return dialog;
-}
-
-static GtkWidget *
 lcms_icc_combo_box_new (GimpColorConfig *config,
                         const gchar     *filename)
 {
@@ -1419,7 +1371,7 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   gchar       *name;
   cmsHPROFILE  profile = NULL;
 
-  dialog = lcms_icc_file_chooser_dialog_new ();
+  dialog = gimp_color_profile_chooser_dialog_new (_("Select destination profile"));
   history = gimp_personal_rc_file ("profilerc");
 
   combo = gimp_color_profile_combo_box_new (dialog, history);

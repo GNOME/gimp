@@ -302,54 +302,6 @@ cdisplay_proof_file_chooser_dialog_response (GtkFileChooser           *dialog,
   gtk_widget_hide (GTK_WIDGET (dialog));
 }
 
-static GtkWidget *
-cdisplay_proof_file_chooser_dialog_new (void)
-{
-  GtkWidget     *dialog;
-  GtkFileFilter *filter;
-
-  dialog = gtk_file_chooser_dialog_new (_("Choose an ICC Color Profile"),
-                                        NULL,
-                                        GTK_FILE_CHOOSER_ACTION_OPEN,
-
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
-
-                                        NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_ACCEPT,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
-
-#ifndef G_OS_WIN32
-  {
-    const gchar folder[] = "/usr/share/color/icc";
-
-    if (g_file_test (folder, G_FILE_TEST_IS_DIR))
-      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
-                                            folder, NULL);
-  }
-#endif
-
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All files (*.*)"));
-  gtk_file_filter_add_pattern (filter, "*");
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("ICC color profile (*.icc, *.icm)"));
-  gtk_file_filter_add_pattern (filter, "*.[Ii][Cc][Cc]");
-  gtk_file_filter_add_pattern (filter, "*.[Ii][Cc][Mm]");
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  return dialog;
-}
-
 static void
 cdisplay_proof_profile_changed (GtkWidget     *combo,
                                 CdisplayProof *proof)
@@ -379,7 +331,7 @@ cdisplay_proof_configure (GimpColorDisplay *display)
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
 
-  dialog = cdisplay_proof_file_chooser_dialog_new ();
+  dialog = gimp_color_profile_chooser_dialog_new (_("Choose an ICC Color Profile"));
 
   history = gimp_personal_rc_file ("profilerc");
   combo = gimp_color_profile_combo_box_new (dialog, history);
