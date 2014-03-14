@@ -509,14 +509,10 @@ lcms_icc_set (GimpColorConfig *config,
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (image != -1, GIMP_PDB_CALLING_ERROR);
 
-  if (filename)
-    {
-      success = lcms_image_set_profile (image, NULL, filename, TRUE);
-    }
-  else
-    {
-      success = lcms_image_set_profile (image, NULL, config->rgb_profile, TRUE);
-    }
+  if (! filename)
+    filename = config->rgb_profile;
+
+  success = lcms_image_set_profile (image, NULL, filename, TRUE);
 
   return success ? GIMP_PDB_SUCCESS : GIMP_PDB_EXECUTION_ERROR;
 }
@@ -646,20 +642,14 @@ lcms_icc_info (GimpColorConfig *config,
       profile = NULL;
     }
 
-  if (profile)
-    {
-      if (name) *name = gimp_lcms_profile_get_model (profile);
-      if (desc) *desc = gimp_lcms_profile_get_description (profile);
-      if (info) *info = gimp_lcms_profile_get_summary (profile);
+  if (! profile)
+    profile = gimp_lcms_create_srgb_profile ();
 
-      cmsCloseProfile (profile);
-    }
-  else
-    {
-      if (name) *name = g_strdup ("sRGB");
-      if (desc) *desc = g_strdup ("GIMP built-in sRGB");
-      if (info) *info = g_strdup (_("Default GIMP RGB working space"));
-    }
+  if (name) *name = gimp_lcms_profile_get_model (profile);
+  if (desc) *desc = gimp_lcms_profile_get_description (profile);
+  if (info) *info = gimp_lcms_profile_get_summary (profile);
+
+  cmsCloseProfile (profile);
 
   return GIMP_PDB_SUCCESS;
 }
@@ -1122,7 +1112,6 @@ lcms_image_transform_indexed (gint32                    image,
       cmsDoTransform (transform, cmap, cmap, n_cmap_bytes / 3);
       cmsDeleteTransform (transform);
     }
-
   else
     {
       g_warning ("cmsCreateTransform() failed!");
