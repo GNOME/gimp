@@ -32,7 +32,15 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gpointer   gimp_lcms_create_srgb_profile (void);
+typedef gpointer GimpColorProfile;
+
+
+gchar            * gimp_lcms_profile_get_description  (GimpColorProfile profile);
+gchar            * gimp_lcms_profile_get_manufacturer (GimpColorProfile profile);
+gchar            * gimp_lcms_profile_get_model        (GimpColorProfile profile);
+gchar            * gimp_lcms_profile_get_copyright    (GimpColorProfile profile);
+
+GimpColorProfile   gimp_lcms_create_srgb_profile      (void);
 
 
 G_END_DECLS

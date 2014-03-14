@@ -26,7 +26,10 @@
 
 #include <lcms2.h>
 
+#include <gio/gio.h>
 #include <gegl.h>
+
+#include "libgimpbase/gimpbase.h"
 
 #include "gimpcolortypes.h"
 
@@ -41,6 +44,106 @@
  * Definitions and Functions relating to LCMS.
  **/
 
+
+gchar *
+gimp_lcms_profile_get_description (GimpColorProfile profile)
+{
+  cmsUInt32Number  size;
+  gchar           *desc = NULL;
+
+  g_return_val_if_fail (profile != NULL, NULL);
+
+  size = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
+                                 "en", "US", NULL, 0);
+  if (size > 0)
+    {
+      gchar *data = g_new (gchar, size + 1);
+
+      size = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
+                                     "en", "US", data, size);
+      if (size > 0)
+        desc = gimp_any_to_utf8 (data, -1, NULL);
+
+      g_free (data);
+    }
+
+  return desc;
+}
+
+gchar *
+gimp_lcms_profile_get_manufacturer (GimpColorProfile profile)
+{
+  cmsUInt32Number  size;
+  gchar           *info = NULL;
+
+  g_return_val_if_fail (profile != NULL, NULL);
+
+  size = cmsGetProfileInfoASCII (profile, cmsInfoManufacturer,
+                                 "en", "US", NULL, 0);
+  if (size > 0)
+    {
+      gchar *data = g_new (gchar, size + 1);
+
+      size = cmsGetProfileInfoASCII (profile, cmsInfoManufacturer,
+                                     "en", "US", data, size);
+      if (size > 0)
+        info = gimp_any_to_utf8 (data, -1, NULL);
+
+      g_free (data);
+    }
+
+  return info;
+}
+
+gchar *
+gimp_lcms_profile_get_model (GimpColorProfile profile)
+{
+  cmsUInt32Number  size;
+  gchar           *name = NULL;
+
+  g_return_val_if_fail (profile != NULL, NULL);
+
+  size = cmsGetProfileInfoASCII (profile, cmsInfoModel,
+                                 "en", "US", NULL, 0);
+  if (size > 0)
+    {
+      gchar *data = g_new (gchar, size + 1);
+
+      size = cmsGetProfileInfoASCII (profile, cmsInfoModel,
+                                     "en", "US", data, size);
+      if (size > 0)
+        name = gimp_any_to_utf8 (data, -1, NULL);
+
+      g_free (data);
+    }
+
+  return name;
+}
+
+gchar *
+gimp_lcms_profile_get_copyright (GimpColorProfile profile)
+{
+  cmsUInt32Number  size;
+  gchar           *info = NULL;
+
+  g_return_val_if_fail (profile != NULL, NULL);
+
+  size = cmsGetProfileInfoASCII (profile, cmsInfoCopyright,
+                                 "en", "US", NULL, 0);
+  if (size > 0)
+    {
+      gchar *data = g_new (gchar, size + 1);
+
+      size = cmsGetProfileInfoASCII (profile, cmsInfoCopyright,
+                                     "en", "US", data, size);
+      if (size > 0)
+        info = gimp_any_to_utf8 (data, -1, NULL);
+
+      g_free (data);
+    }
+
+  return info;
+}
 
 /**
  * gimp_lcms_create_srgb_profile:
@@ -73,7 +176,7 @@
  *
  * Since: GIMP 2.10
  **/
-gpointer
+GimpColorProfile
 gimp_lcms_create_srgb_profile (void)
 {
   cmsHPROFILE      srgb_profile;

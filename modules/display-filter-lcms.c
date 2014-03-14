@@ -172,43 +172,9 @@ cdisplay_lcms_profile_get_info (cmsHPROFILE   profile,
 {
   if (profile)
     {
-      cmsUInt32Number  descSize;
-      gchar           *descData;
-
-      descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
-                                         "en", "US", NULL, 0);
-      if (descSize > 0)
-        {
-          descData = g_new (gchar, descSize + 1);
-          descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
-                                             "en", "US", descData, descSize);
-          if (descSize > 0)
-            *name = descData;
-          else
-            g_free (descData);
-        }
-
+      *name = gimp_lcms_profile_get_description (profile);
       if (! *name)
-        {
-          descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
-                                             "en", "US", NULL, 0);
-          if (descSize > 0)
-            {
-              descData = g_new (gchar, descSize + 1);
-              descSize = cmsGetProfileInfoASCII(profile, cmsInfoModel,
-                                                "en", "US", descData, descSize);
-              if (descSize > 0)
-                *name = descData;
-              else
-                g_free (descData);
-            }
-        }
-
-      if (*name && ! g_utf8_validate (*name, -1, NULL))
-        {
-          g_free (*name);
-          *name = g_strdup (_("(invalid UTF-8 string)"));
-        }
+        *name = gimp_lcms_profile_get_model (profile);
 
       if (! *name)
         {
@@ -216,24 +182,7 @@ cdisplay_lcms_profile_get_info (cmsHPROFILE   profile,
           *name = g_strdup (_("(unnamed profile)"));
         }
 
-      descSize = cmsGetProfileInfoASCII (profile, cmsInfoManufacturer,
-                                         "en", "US", NULL, 0);
-      if (descSize > 0)
-        {
-          descData = g_new (gchar, descSize + 1);
-          descSize = cmsGetProfileInfoASCII (profile, cmsInfoManufacturer,
-                                             "en", "US", descData, descSize);
-          if (descSize > 0)
-            *info = descData;
-          else
-            g_free (descData);
-        }
-
-      if (*info && ! g_utf8_validate (*info, -1, NULL))
-        {
-          g_free (*info);
-          *info = NULL;
-        }
+      *info = gimp_lcms_profile_get_manufacturer (profile);
     }
   else
     {

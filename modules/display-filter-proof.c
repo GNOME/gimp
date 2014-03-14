@@ -271,37 +271,9 @@ cdisplay_proof_combo_box_set_active (GimpColorProfileComboBox *combo,
 
   if (profile)
     {
-      cmsUInt32Number  descSize;
-      gchar           *descData;
-
-      descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
-                                         "en", "US", NULL, 0);
-      if (descSize > 0)
-        {
-          descData = g_new (gchar, descSize + 1);
-          descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
-                                             "en", "US", descData, descSize);
-          if (descSize > 0)
-            label = gimp_any_to_utf8 (descData, -1, NULL);
-
-          g_free (descData);
-        }
-
+      label = gimp_lcms_profile_get_description (profile);
       if (! label)
-        {
-          descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
-                                             "en", "US", NULL, 0);
-          if (descSize > 0)
-            {
-              descData = g_new (gchar, descSize + 1);
-              descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
-                                                 "en", "US", descData, descSize);
-              if (descSize > 0)
-                label = gimp_any_to_utf8 (descData, -1, NULL);
-
-              g_free (descData);
-            }
-        }
+        label = gimp_lcms_profile_get_model (profile);
 
       cmsCloseProfile (profile);
     }

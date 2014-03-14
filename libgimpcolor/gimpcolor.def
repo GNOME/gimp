@@ -38,6 +38,10 @@ EXPORTS
 	gimp_hsva_set
 	gimp_hwb_to_rgb
 	gimp_lcms_create_srgb_profile
+	gimp_lcms_profile_get_copyright
+	gimp_lcms_profile_get_description
+	gimp_lcms_profile_get_manufacturer
+	gimp_lcms_profile_get_model
 	gimp_param_rgb_get_type
 	gimp_param_spec_rgb
 	gimp_param_spec_rgb_has_alpha

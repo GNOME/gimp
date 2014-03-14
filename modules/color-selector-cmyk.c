@@ -366,7 +366,6 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (module);
   GimpColorConfig   *config   = module->config;
   cmsUInt32Number    flags    = 0;
-  cmsUInt32Number    descSize = 0;
   cmsHPROFILE        rgb_profile;
   cmsHPROFILE        cmyk_profile;
   gchar             *descData = NULL;
@@ -395,50 +394,9 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
       ! (cmyk_profile = cmsOpenProfileFromFile (config->cmyk_profile, "r")))
     goto out;
 
-  descSize = cmsGetProfileInfoASCII (cmyk_profile, cmsInfoDescription,
-                                     "en", "US", NULL, 0);
-  if (descSize > 0)
-    {
-      descData = g_new (gchar, descSize + 1);
-      descSize = cmsGetProfileInfoASCII (cmyk_profile, cmsInfoDescription,
-                                         "en", "US", descData, descSize);
-      if (descSize > 0)
-        {
-          name = descData;
-        }
-      else
-        {
-          g_free (descData);
-          descData = NULL;
-        }
-    }
-
-  if (name && ! g_utf8_validate (name, -1, NULL))
-    name = _("(invalid UTF-8 string)");
-
+  name = gimp_lcms_profile_get_description (cmyk_profile);
   if (! name)
-    {
-      descSize = cmsGetProfileInfoASCII (cmyk_profile, cmsInfoModel,
-                                         "en", "US", NULL, 0);
-      if (descSize > 0)
-        {
-          descData = g_new (gchar, descSize + 1);
-          descSize = cmsGetProfileInfoASCII (cmyk_profile, cmsInfoModel,
-                                             "en", "US", descData, descSize);
-          if (descSize > 0)
-            {
-              name = descData;
-            }
-          else
-            {
-              g_free (descData);
-              descData = NULL;
-            }
-        }
-
-      if (name && ! g_utf8_validate (name, -1, NULL))
-        name = _("(invalid UTF-8 string)");
-    }
+    name = gimp_lcms_profile_get_model (cmyk_profile);
 
   text = g_strdup_printf (_("Profile: %s"), name);
   gtk_label_set_text (GTK_LABEL (module->name_label), text);
