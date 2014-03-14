@@ -129,6 +129,7 @@ TESTS = test-color-parser$(EXEEXT)
 EXTRA_PROGRAMS = test-color-parser
 
 test_color_parser_DEPENDENCIES = \
+	$(libgimpbase)	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 
 test_color_parser_LDADD = \
