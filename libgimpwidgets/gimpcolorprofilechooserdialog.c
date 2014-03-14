@@ -360,8 +360,8 @@ gimp_color_profile_view_new (GtkTextBuffer *buffer)
   gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
 
   gtk_text_view_set_pixels_above_lines (GTK_TEXT_VIEW (text_view), 6);
-  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (text_view), 2);
-  gtk_text_view_set_right_margin (GTK_TEXT_VIEW (text_view), 2);
+  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (text_view), 6);
+  gtk_text_view_set_right_margin (GTK_TEXT_VIEW (text_view), 6);
 
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
