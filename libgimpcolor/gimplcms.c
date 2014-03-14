@@ -142,6 +142,19 @@ gimp_lcms_profile_get_summary (GimpColorProfile profile)
   return g_string_free (string, FALSE);
 }
 
+static void
+gimp_lcms_profile_set_tag (cmsHPROFILE      profile,
+                           cmsTagSignature  sig,
+                           const gchar     *tag)
+{
+  cmsMLU *mlu;
+
+  mlu = cmsMLUalloc (NULL, 1);
+  cmsMLUsetASCII (mlu, "en", "US", tag);
+  cmsWriteTag (profile, sig, mlu);
+  cmsMLUfree (mlu);
+}
+
 /**
  * gimp_lcms_create_srgb_profile:
  *
@@ -176,11 +189,10 @@ gimp_lcms_profile_get_summary (GimpColorProfile profile)
 GimpColorProfile
 gimp_lcms_create_srgb_profile (void)
 {
-  cmsHPROFILE      srgb_profile;
-  cmsMLU          *description;
-  cmsCIExyY        d65_srgb_specs = { 0.3127, 0.3290, 1.0 };
+  cmsHPROFILE srgb_profile;
+  cmsCIExyY   d65_srgb_specs = { 0.3127, 0.3290, 1.0 };
 
-  cmsCIExyYTRIPLE  srgb_primaries_pre_quantized =
+  cmsCIExyYTRIPLE srgb_primaries_pre_quantized =
     {
       { 0.639998686, 0.330010138, 1.0 },
       { 0.300003784, 0.600003357, 1.0 },
@@ -203,12 +215,14 @@ gimp_lcms_create_srgb_profile (void)
 
   cmsFreeToneCurve (srgb_parametric_curve);
 
-  description = cmsMLUalloc (NULL, 1);
-  cmsMLUsetASCII (description,
-                  "en", "US",
-                  "GIMP built-in sRGB");
-  cmsWriteTag (srgb_profile, cmsSigProfileDescriptionTag, description);
-  cmsMLUfree (description);
+  gimp_lcms_profile_set_tag (srgb_profile, cmsSigProfileDescriptionTag,
+                             "GIMP built-in sRGB");
+  gimp_lcms_profile_set_tag (srgb_profile, cmsSigDeviceMfgDescTag,
+                             "GIMP");
+  gimp_lcms_profile_set_tag (srgb_profile, cmsSigDeviceModelDescTag,
+                             "sRGB");
+  gimp_lcms_profile_set_tag (srgb_profile, cmsSigCopyrightTag,
+                             "Public Domain");
 
   /**
    * The following line produces a V2 profile with a point curve TRC.
