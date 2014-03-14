@@ -108,11 +108,10 @@ libgimpcolor_@GIMP_API_VERSION@_la_LDFLAGS = \
 	$(no_undefined) 			\
 	$(libgimpcolor_export_symbols)
 
-libgimpcolor_@GIMP_API_VERSION@_la_DEPENDENCIES = \
-	$(gimpcolor_def)	\
-	$(libgimpbase)
+libgimpcolor_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpcolor_def)
 
 libgimpcolor_@GIMP_API_VERSION@_la_LIBADD = \
+	$(libgimpbase)		\
 	$(GEGL_LIBS)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\

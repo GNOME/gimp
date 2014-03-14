@@ -256,20 +256,20 @@ libgimpwidgetsinclude_HEADERS = \
 	gimp3migration.h
 
 libgimpwidgets_@GIMP_API_VERSION@_la_LDFLAGS = \
-	-version-info $(LT_VERSION_INFO)\
-	$(no_undefined) 		\
+	-version-info $(LT_VERSION_INFO)	\
+	$(no_undefined) 			\
 	$(libgimpwidgets_export_symbols)
 
+libgimpwidgets_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpwidgets_def)
+
 libgimpwidgets_@GIMP_API_VERSION@_la_LIBADD = \
+	$(libgimpbase)		\
 	$(libgimpcolor)		\
 	$(libgimpconfig)	\
-	$(libgimpbase)		\
 	$(LCMS_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
 	$(libm)
-
-libgimpwidgets_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpwidgets_def)
 
 
 ## Wilber icons for the window managaer, compiled in
@@ -345,11 +345,11 @@ EXTRA_PROGRAMS = \
 test_preview_area_SOURCES = test-preview-area.c 
 
 test_preview_area_DEPENDENCIES = \
-	$(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la	\
+	$(libgimpbase)	\
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 
 test_preview_area_LDADD = \
-	$(GTK_LIBS) \
+	$(GTK_LIBS)	\
 	$(test_preview_area_DEPENDENCIES)
 
 
@@ -360,7 +360,7 @@ test_eevl_DEPENDENCIES = \
 	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 
 test_eevl_LDADD = \
-	$(GLIB_LIBS) 		\
+	$(GLIB_LIBS)	\
 	$(test_eevl_DEPENDENCIES)
 
 
