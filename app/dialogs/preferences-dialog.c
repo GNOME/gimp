@@ -48,7 +48,6 @@
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimpprefsbox.h"
-#include "widgets/gimpprofilechooserdialog.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimptooleditor.h"
@@ -777,9 +776,9 @@ prefs_table_new (gint          rows,
 }
 
 static void
-prefs_profile_combo_dialog_response (GimpProfileChooserDialog *dialog,
-                                     gint                      response,
-                                     GimpColorProfileComboBox *combo)
+prefs_profile_combo_dialog_response (GimpColorProfileChooserDialog *dialog,
+                                     gint                           response,
+                                     GimpColorProfileComboBox      *combo)
 {
   if (response == GTK_RESPONSE_ACCEPT)
     {
@@ -789,8 +788,8 @@ prefs_profile_combo_dialog_response (GimpProfileChooserDialog *dialog,
 
       if (filename)
         {
-          gchar *label = gimp_profile_chooser_dialog_get_desc (dialog,
-                                                               filename);
+          gchar *label = gimp_color_profile_chooser_dialog_get_desc (dialog,
+                                                                     filename);
 
           gimp_color_profile_combo_box_set_active (combo, filename, label);
 
@@ -836,13 +835,12 @@ prefs_profile_combo_add_tooltip (GtkWidget   *combo,
 }
 
 static GtkWidget *
-prefs_profile_combo_box_new (Gimp         *gimp,
-                             GObject      *config,
+prefs_profile_combo_box_new (GObject      *config,
                              GtkListStore *store,
                              const gchar  *label,
                              const gchar  *property_name)
 {
-  GtkWidget *dialog = gimp_profile_chooser_dialog_new (gimp, label);
+  GtkWidget *dialog = gimp_color_profile_chooser_dialog_new (label);
   GtkWidget *combo;
   gchar     *filename;
 
@@ -2340,8 +2338,7 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0; i < G_N_ELEMENTS (profiles); i++)
       {
-        button = prefs_profile_combo_box_new (gimp,
-                                              color_config,
+        button = prefs_profile_combo_box_new (color_config,
                                               store,
                                               gettext (profiles[i].fs_label),
                                               profiles[i].property_name);

@@ -52,6 +52,7 @@ AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpWidgets\"	\
 	-DGIMP_WIDGETS_COMPILATION		\
 	-I$(top_srcdir)				\
+	$(LCMS_CFLAGS)				\
 	$(GEGL_CFLAGS)				\
 	$(GTK_CFLAGS)				\
 	-I$(includedir)
@@ -83,6 +84,8 @@ libgimpwidgets_sources = \
 	gimpcolorhexentry.h		\
 	gimpcolornotebook.c		\
 	gimpcolornotebook.h		\
+	gimpcolorprofilechooserdialog.c	\
+	gimpcolorprofilechooserdialog.h	\
 	gimpcolorprofilecombobox.c	\
 	gimpcolorprofilecombobox.h	\
 	gimpcolorprofilestore-private.h	\
@@ -204,6 +207,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpcolordisplaystack.h		\
 	gimpcolorhexentry.h		\
 	gimpcolornotebook.h		\
+	gimpcolorprofilechooserdialog.h	\
 	gimpcolorprofilecombobox.h	\
 	gimpcolorprofilestore.h		\
 	gimpcolorscale.h		\
@@ -260,6 +264,7 @@ libgimpwidgets_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpcolor)		\
 	$(libgimpconfig)	\
 	$(libgimpbase)		\
+	$(LCMS_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
 	$(libm)

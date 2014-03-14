@@ -267,8 +267,6 @@ libappwidgets_a_sources = \
 	gimppluginaction.h		\
 	gimpprefsbox.c			\
 	gimpprefsbox.h			\
-	gimpprofilechooserdialog.c	\
-	gimpprofilechooserdialog.h	\
 	gimpprogressbox.c		\
 	gimpprogressbox.h		\
 	gimpprogressdialog.c		\
