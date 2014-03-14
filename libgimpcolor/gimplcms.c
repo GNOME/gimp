@@ -45,104 +45,101 @@
  **/
 
 
-gchar *
-gimp_lcms_profile_get_description (GimpColorProfile profile)
+static gchar *
+gimp_lcms_profile_get_info (GimpColorProfile profile,
+                            cmsInfoType      info)
 {
   cmsUInt32Number  size;
-  gchar           *desc = NULL;
+  gchar           *text = NULL;
 
   g_return_val_if_fail (profile != NULL, NULL);
 
-  size = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
+  size = cmsGetProfileInfoASCII (profile, info,
                                  "en", "US", NULL, 0);
   if (size > 0)
     {
       gchar *data = g_new (gchar, size + 1);
 
-      size = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
+      size = cmsGetProfileInfoASCII (profile, info,
                                      "en", "US", data, size);
       if (size > 0)
-        desc = gimp_any_to_utf8 (data, -1, NULL);
+        text = gimp_any_to_utf8 (data, -1, NULL);
 
       g_free (data);
     }
 
-  return desc;
+  return text;
+}
+
+gchar *
+gimp_lcms_profile_get_description (GimpColorProfile profile)
+{
+  return gimp_lcms_profile_get_info (profile, cmsInfoDescription);
 }
 
 gchar *
 gimp_lcms_profile_get_manufacturer (GimpColorProfile profile)
 {
-  cmsUInt32Number  size;
-  gchar           *info = NULL;
-
-  g_return_val_if_fail (profile != NULL, NULL);
-
-  size = cmsGetProfileInfoASCII (profile, cmsInfoManufacturer,
-                                 "en", "US", NULL, 0);
-  if (size > 0)
-    {
-      gchar *data = g_new (gchar, size + 1);
-
-      size = cmsGetProfileInfoASCII (profile, cmsInfoManufacturer,
-                                     "en", "US", data, size);
-      if (size > 0)
-        info = gimp_any_to_utf8 (data, -1, NULL);
-
-      g_free (data);
-    }
-
-  return info;
+  return gimp_lcms_profile_get_info (profile, cmsInfoManufacturer);
 }
 
 gchar *
 gimp_lcms_profile_get_model (GimpColorProfile profile)
 {
-  cmsUInt32Number  size;
-  gchar           *name = NULL;
-
-  g_return_val_if_fail (profile != NULL, NULL);
-
-  size = cmsGetProfileInfoASCII (profile, cmsInfoModel,
-                                 "en", "US", NULL, 0);
-  if (size > 0)
-    {
-      gchar *data = g_new (gchar, size + 1);
-
-      size = cmsGetProfileInfoASCII (profile, cmsInfoModel,
-                                     "en", "US", data, size);
-      if (size > 0)
-        name = gimp_any_to_utf8 (data, -1, NULL);
-
-      g_free (data);
-    }
-
-  return name;
+  return gimp_lcms_profile_get_info (profile, cmsInfoModel);
 }
 
 gchar *
 gimp_lcms_profile_get_copyright (GimpColorProfile profile)
 {
-  cmsUInt32Number  size;
-  gchar           *info = NULL;
+  return gimp_lcms_profile_get_info (profile, cmsInfoCopyright);
+}
+
+gchar *
+gimp_lcms_profile_get_summary (GimpColorProfile profile)
+{
+  GString *string;
+  gchar   *text;
 
   g_return_val_if_fail (profile != NULL, NULL);
 
-  size = cmsGetProfileInfoASCII (profile, cmsInfoCopyright,
-                                 "en", "US", NULL, 0);
-  if (size > 0)
+  string = g_string_new (NULL);
+
+  text = gimp_lcms_profile_get_description (profile);
+  if (text)
     {
-      gchar *data = g_new (gchar, size + 1);
-
-      size = cmsGetProfileInfoASCII (profile, cmsInfoCopyright,
-                                     "en", "US", data, size);
-      if (size > 0)
-        info = gimp_any_to_utf8 (data, -1, NULL);
-
-      g_free (data);
+      g_string_append (string, text);
+      g_free (text);
     }
 
-  return info;
+  text = gimp_lcms_profile_get_model (profile);
+  if (text)
+    {
+      if (string->len > 0)
+        g_string_append (string, "\n");
+
+      g_string_append (string, text);
+    }
+
+  text = gimp_lcms_profile_get_manufacturer (profile);
+  if (text)
+    {
+      if (string->len > 0)
+        g_string_append (string, "\n");
+
+      g_string_append (string, text);
+    }
+
+  text = gimp_lcms_profile_get_copyright (profile);
+  if (text)
+    {
+      if (string->len > 0)
+        g_string_append (string, "\n");
+
+      g_string_append (string, text);
+    }
+
+  return g_string_free (string, FALSE);
 }
 
 /**

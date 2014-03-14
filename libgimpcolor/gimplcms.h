@@ -40,6 +40,8 @@ gchar            * gimp_lcms_profile_get_manufacturer (GimpColorProfile profile)
 gchar            * gimp_lcms_profile_get_model        (GimpColorProfile profile);
 gchar            * gimp_lcms_profile_get_copyright    (GimpColorProfile profile);
 
+gchar            * gimp_lcms_profile_get_summary      (GimpColorProfile profile);
+
 GimpColorProfile   gimp_lcms_create_srgb_profile      (void);
 
 
