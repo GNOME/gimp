@@ -155,7 +155,8 @@ gimp_image_profile_view_query (GimpImageProfileView *view)
                                 &name, &desc, &info,
                                 &error))
     {
-      if (desc || name)
+      if ((desc && strlen (desc)) ||
+          (name && strlen (name)))
         {
           const gchar *title;
 
@@ -178,7 +179,7 @@ gimp_image_profile_view_query (GimpImageProfileView *view)
       gtk_text_buffer_insert_with_tags_by_name (view->buffer, &iter,
                                                 error->message, -1,
                                                 "emphasis", NULL);
-      g_error_free (error);
+      g_clear_error (&error);
     }
 
   g_free (name);
