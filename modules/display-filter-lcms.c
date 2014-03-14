@@ -182,7 +182,7 @@ cdisplay_lcms_profile_get_info (cmsHPROFILE   profile,
           *name = g_strdup (_("(unnamed profile)"));
         }
 
-      *info = gimp_lcms_profile_get_manufacturer (profile);
+      *info = gimp_lcms_profile_get_summary (profile);
     }
   else
     {
