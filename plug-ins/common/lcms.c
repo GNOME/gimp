@@ -650,7 +650,7 @@ lcms_icc_info (GimpColorConfig *config,
     {
       if (name) *name = gimp_lcms_profile_get_model (profile);
       if (desc) *desc = gimp_lcms_profile_get_description (profile);
-      if (info) *info = gimp_lcms_profile_get_copyright (profile);
+      if (info) *info = gimp_lcms_profile_get_summary (profile);
 
       cmsCloseProfile (profile);
     }
@@ -682,7 +682,7 @@ lcms_icc_file_info (const gchar  *filename,
 
   *name = gimp_lcms_profile_get_model (profile);
   *desc = gimp_lcms_profile_get_description (profile);
-  *info = gimp_lcms_profile_get_copyright (profile);
+  *info = gimp_lcms_profile_get_summary (profile);
 
   cmsCloseProfile (profile);
 
