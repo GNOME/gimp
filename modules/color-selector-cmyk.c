@@ -352,12 +352,23 @@ colorsel_cmyk_adj_update (GtkAdjustment *adj,
 static cmsHPROFILE
 color_config_get_rgb_profile (GimpColorConfig *config)
 {
-  cmsHPROFILE  profile = NULL;
+  cmsHPROFILE profile = NULL;
 
   if (config->rgb_profile)
     profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
 
   return profile ? profile : gimp_lcms_create_srgb_profile ();
+}
+
+static cmsHPROFILE
+color_config_get_cmyk_profile (GimpColorConfig *config)
+{
+  cmsHPROFILE profile = NULL;
+
+  if (config->cmyk_profile)
+    profile = cmsOpenProfileFromFile (config->cmyk_profile, "r");
+
+  return profile;
 }
 
 static void
@@ -368,8 +379,8 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   cmsUInt32Number    flags    = 0;
   cmsHPROFILE        rgb_profile;
   cmsHPROFILE        cmyk_profile;
-  gchar             *descData = NULL;
-  const gchar       *name     = NULL;
+  gchar             *name;
+  gchar             *summary;
   gchar             *text;
 
   if (module->rgb2cmyk)
@@ -390,23 +401,25 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   if (! config)
     goto out;
 
-  if (! config->cmyk_profile ||
-      ! (cmyk_profile = cmsOpenProfileFromFile (config->cmyk_profile, "r")))
+  rgb_profile  = color_config_get_rgb_profile (config);
+  cmyk_profile = color_config_get_cmyk_profile (config);
+
+  if (! cmyk_profile)
     goto out;
 
   name = gimp_lcms_profile_get_description (cmyk_profile);
   if (! name)
     name = gimp_lcms_profile_get_model (cmyk_profile);
 
+  summary = gimp_lcms_profile_get_summary (cmyk_profile);
+
   text = g_strdup_printf (_("Profile: %s"), name);
   gtk_label_set_text (GTK_LABEL (module->name_label), text);
-  gimp_help_set_help_data (module->name_label, text, NULL);
+  gimp_help_set_help_data (module->name_label, summary, NULL);
+
   g_free (text);
-
-  if (descData)
-    g_free (descData);
-
-  rgb_profile = color_config_get_rgb_profile (config);
+  g_free (name);
+  g_free (summary);
 
   if (config->display_intent ==
       GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
