@@ -35,15 +35,26 @@ G_BEGIN_DECLS
 typedef gpointer GimpColorProfile;
 
 
-gchar            * gimp_lcms_profile_get_description  (GimpColorProfile profile);
-gchar            * gimp_lcms_profile_get_manufacturer (GimpColorProfile profile);
-gchar            * gimp_lcms_profile_get_model        (GimpColorProfile profile);
-gchar            * gimp_lcms_profile_get_copyright    (GimpColorProfile profile);
+#define GIMP_LCMS_MD5_DIGEST_LENGTH 16
 
-gchar            * gimp_lcms_profile_get_summary      (GimpColorProfile profile);
 
-gboolean           gimp_lcms_profile_is_rgb           (GimpColorProfile profile);
-gboolean           gimp_lcms_profile_is_cmyk          (GimpColorProfile profile);
+GimpColorProfile   gimp_lcms_profile_open_from_file   (const gchar       *filename,
+                                                       guint8            *md5_digest,
+                                                       GError           **error);
+GimpColorProfile   gimp_lcms_profile_open_from_data   (const guint8      *data,
+                                                       gsize              length,
+                                                       guint8            *md5_digest,
+                                                       GError           **error);
+
+gchar            * gimp_lcms_profile_get_description  (GimpColorProfile   profile);
+gchar            * gimp_lcms_profile_get_manufacturer (GimpColorProfile   profile);
+gchar            * gimp_lcms_profile_get_model        (GimpColorProfile   profile);
+gchar            * gimp_lcms_profile_get_copyright    (GimpColorProfile   profile);
+
+gchar            * gimp_lcms_profile_get_summary      (GimpColorProfile   profile);
+
+gboolean           gimp_lcms_profile_is_rgb           (GimpColorProfile   profile);
+gboolean           gimp_lcms_profile_is_cmyk          (GimpColorProfile   profile);
 
 GimpColorProfile   gimp_lcms_create_srgb_profile      (void);
 

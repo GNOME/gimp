@@ -26,6 +26,8 @@ libgimpbase/gimpmemsize.c
 libgimpbase/gimpmetadata.c
 libgimpbase/gimputils.c
 
+libgimpcolor/gimplcms.c
+
 libgimpconfig/gimpcolorconfig.c
 libgimpconfig/gimpcolorconfig-enums.c
 libgimpconfig/gimpconfig-deserialize.c

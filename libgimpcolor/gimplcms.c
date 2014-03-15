@@ -35,6 +35,8 @@
 
 #include "gimplcms.h"
 
+#include "libgimp/libgimp-intl.h"
+
 
 /**
  * SECTION: gimplcms
@@ -44,6 +46,98 @@
  * Definitions and Functions relating to LCMS.
  **/
 
+static GQuark
+gimp_lcms_error_quark (void)
+{
+  static GQuark quark = 0;
+
+  if (G_UNLIKELY (quark == 0))
+    quark = g_quark_from_static_string ("gimp-lcms-error-quark");
+
+  return quark;
+}
+
+static void
+gimp_lcms_calculate_checksum (const guint8 *data,
+                              gsize         length,
+                              guint8       *md5_digest)
+{
+  GChecksum *md5 = g_checksum_new (G_CHECKSUM_MD5);
+
+  g_checksum_update (md5,
+                     (const guchar *) data + sizeof (cmsICCHeader),
+                     length - sizeof (cmsICCHeader));
+
+  length = GIMP_LCMS_MD5_DIGEST_LENGTH;
+  g_checksum_get_digest (md5, md5_digest, &length);
+  g_checksum_free (md5);
+}
+
+GimpColorProfile
+gimp_lcms_profile_open_from_file (const gchar  *filename,
+                                  guint8       *md5_digest,
+                                  GError      **error)
+{
+  GimpColorProfile  profile;
+  GMappedFile      *file;
+  const guint8     *data;
+  gsize             length;
+
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  file = g_mapped_file_new (filename, FALSE, error);
+
+  if (! file)
+    return NULL;
+
+  data   = (const guint8 *) g_mapped_file_get_contents (file);
+  length = g_mapped_file_get_length (file);
+
+  profile = cmsOpenProfileFromMem (data, length);
+
+  if (! profile)
+    {
+      g_set_error (error, gimp_lcms_error_quark (), 0,
+                   _("'%s' does not appear to be an ICC color profile"),
+                   gimp_filename_to_utf8 (filename));
+    }
+  else if (md5_digest)
+    {
+      gimp_lcms_calculate_checksum (data, length, md5_digest);
+    }
+
+  g_mapped_file_unref (file);
+
+  return profile;
+}
+
+GimpColorProfile
+gimp_lcms_profile_open_from_data (const guint8  *data,
+                                  gsize          length,
+                                  guint8        *md5_digest,
+                                  GError       **error)
+{
+  GimpColorProfile  profile;
+
+  g_return_val_if_fail (data != NULL, NULL);
+  g_return_val_if_fail (length > 0, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  profile = cmsOpenProfileFromMem (data, length);
+
+  if (! profile)
+    {
+      g_set_error_literal (error, gimp_lcms_error_quark (), 0,
+                           _("Data does not appear to be an ICC color profile"));
+    }
+  else if (md5_digest)
+    {
+      gimp_lcms_calculate_checksum (data, length, md5_digest);
+    }
+
+  return profile;
+}
 
 static gchar *
 gimp_lcms_profile_get_info (GimpColorProfile profile,

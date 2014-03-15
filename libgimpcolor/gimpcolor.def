@@ -45,6 +45,8 @@ EXPORTS
 	gimp_lcms_profile_get_summary
 	gimp_lcms_profile_is_cmyk
 	gimp_lcms_profile_is_rgb
+	gimp_lcms_profile_open_from_data
+	gimp_lcms_profile_open_from_file
 	gimp_param_rgb_get_type
 	gimp_param_spec_rgb
 	gimp_param_spec_rgb_has_alpha
