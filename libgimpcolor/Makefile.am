@@ -108,7 +108,7 @@ libgimpcolor_@GIMP_API_VERSION@_la_LDFLAGS = \
 	$(no_undefined) 			\
 	$(libgimpcolor_export_symbols)
 
-libgimpcolor_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpcolor_def)
+EXTRA_libgimpcolor_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpcolor_def)
 
 libgimpcolor_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpbase)		\

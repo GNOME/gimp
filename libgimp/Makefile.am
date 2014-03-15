@@ -377,7 +377,7 @@ libgimp_@GIMP_API_VERSION@_la_LDFLAGS = \
 	$(libgimp_export_symbols)		\
 	$(framework_cocoa)
 
-libgimp_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimp_def)
+EXTRA_libgimp_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimp_def)
 
 libgimp_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpconfig)	\
@@ -394,7 +394,7 @@ libgimpui_@GIMP_API_VERSION@_la_LDFLAGS = \
 	$(libgimpui_export_symbols)		\
 	$(framework_cocoa)
 
-libgimpui_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpui_def)
+EXTRA_libgimpui_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpui_def)
 
 libgimpui_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimp)		\

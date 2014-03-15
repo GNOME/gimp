@@ -260,7 +260,7 @@ libgimpwidgets_@GIMP_API_VERSION@_la_LDFLAGS = \
 	$(no_undefined) 			\
 	$(libgimpwidgets_export_symbols)
 
-libgimpwidgets_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpwidgets_def)
+EXTRA_libgimpwidgets_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpwidgets_def)
 
 libgimpwidgets_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpbase)		\

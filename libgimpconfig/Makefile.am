@@ -110,7 +110,7 @@ libgimpconfig_@GIMP_API_VERSION@_la_LDFLAGS = \
 	$(no_undefined) 			\
 	$(libgimpconfig_export_symbols)
 
-libgimpconfig_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpconfig_def)
+EXTRA_libgimpconfig_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpconfig_def)
 
 libgimpconfig_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpbase)	\

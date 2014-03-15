@@ -80,7 +80,7 @@ libgimpmath_@GIMP_API_VERSION@_la_LDFLAGS = \
 	$(no_undefined)				\
 	$(libgimpmath_export_symbols)
 
-libgimpmath_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpmath_def)
+EXTRA_libgimpmath_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpmath_def)
 
 libgimpmath_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpbase)	\
