@@ -372,8 +372,8 @@ static void
 cdisplay_proof_changed (GimpColorDisplay *display)
 {
   CdisplayProof *proof = CDISPLAY_PROOF (display);
-  cmsHPROFILE    rgbProfile;
-  cmsHPROFILE    proofProfile;
+  cmsHPROFILE    rgb_profile;
+  cmsHPROFILE    proof_profile;
 
   if (proof->transform)
     {
@@ -384,26 +384,26 @@ cdisplay_proof_changed (GimpColorDisplay *display)
   if (! proof->profile)
     return;
 
-  rgbProfile = gimp_lcms_create_srgb_profile ();
+  rgb_profile = gimp_lcms_create_srgb_profile ();
 
-  proofProfile = cmsOpenProfileFromFile (proof->profile, "r");
+  proof_profile = cmsOpenProfileFromFile (proof->profile, "r");
 
-  if (proofProfile)
+  if (proof_profile)
     {
       cmsUInt32Number flags = cmsFLAGS_SOFTPROOFING;
 
       if (proof->bpc)
         flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
 
-      proof->transform = cmsCreateProofingTransform (rgbProfile, TYPE_RGBA_FLT,
-                                                     rgbProfile, TYPE_RGBA_FLT,
-                                                     proofProfile,
+      proof->transform = cmsCreateProofingTransform (rgb_profile, TYPE_RGBA_FLT,
+                                                     rgb_profile, TYPE_RGBA_FLT,
+                                                     proof_profile,
                                                      proof->intent,
                                                      proof->intent,
                                                      flags);
 
-      cmsCloseProfile (proofProfile);
+      cmsCloseProfile (proof_profile);
     }
 
-  cmsCloseProfile (rgbProfile);
+  cmsCloseProfile (rgb_profile);
 }
