@@ -2288,9 +2288,13 @@ CODE
 sub image_get_name {
     $blurb = "Returns the specified image's name.";
     $help  =  <<'HELP';
-This procedure returns the image's name. If the image has a filename or
-an URI, then this is the base name (the last component of the path).
-Otherwise it is the translated string "Untitled".
+This procedure returns the image's name. If the image has a filename
+or an URI, then the returned name contains the filename's or URI's
+base name (the last component of the path). Otherwise it is the
+translated string "Untitled". The returned name is formatted like the
+image name in the image window title, it may contain '[]',
+'(imported)' etc. and should only be used to label user interface
+elements. Never use it to construct filenames.
 HELP
 
     &std_pdb_misc;
@@ -2308,11 +2312,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  /* XXX do we really want to return this, or the name as in the title? */
-
-  const gchar *uri = gimp_image_get_uri_or_untitled (image);
-
-  name = file_utils_uri_display_basename (uri);
+  name = g_strdup (gimp_image_get_display_name (image));
 }
 CODE
     );

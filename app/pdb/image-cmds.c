@@ -2287,11 +2287,7 @@ image_get_name_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      /* XXX do we really want to return this, or the name as in the title? */
-
-      const gchar *uri = gimp_image_get_uri_or_untitled (image);
-
-      name = file_utils_uri_display_basename (uri);
+      name = g_strdup (gimp_image_get_display_name (image));
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -5034,7 +5030,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-name",
                                      "Returns the specified image's name.",
-                                     "This procedure returns the image's name. If the image has a filename or an URI, then this is the base name (the last component of the path). Otherwise it is the translated string \"Untitled\".",
+                                     "This procedure returns the image's name. If the image has a filename or an URI, then the returned name contains the filename's or URI's base name (the last component of the path). Otherwise it is the translated string \"Untitled\". The returned name is formatted like the image name in the image window title, it may contain '[]', '(imported)' etc. and should only be used to label user interface elements. Never use it to construct filenames.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
