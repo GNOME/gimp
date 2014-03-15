@@ -142,6 +142,22 @@ gimp_lcms_profile_get_summary (GimpColorProfile profile)
   return g_string_free (string, FALSE);
 }
 
+gboolean
+gimp_lcms_profile_is_rgb (GimpColorProfile profile)
+{
+  g_return_val_if_fail (profile != NULL, FALSE);
+
+  return (cmsGetColorSpace (profile) == cmsSigRgbData);
+}
+
+gboolean
+gimp_lcms_profile_is_cmyk (GimpColorProfile profile)
+{
+  g_return_val_if_fail (profile != NULL, FALSE);
+
+  return (cmsGetColorSpace (profile) == cmsSigCmykData);
+}
+
 static void
 gimp_lcms_profile_set_tag (cmsHPROFILE      profile,
                            cmsTagSignature  sig,

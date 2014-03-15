@@ -493,12 +493,6 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static gboolean
-lcms_icc_profile_is_rgb (cmsHPROFILE profile)
-{
-  return (cmsGetColorSpace (profile) == cmsSigRgbData);
-}
-
 static GimpPDBStatusType
 lcms_icc_set (GimpColorConfig *config,
               gint32           image,
@@ -545,7 +539,7 @@ lcms_icc_apply (GimpColorConfig          *config,
       if (! dest_profile)
         return GIMP_PDB_EXECUTION_ERROR;
 
-      if (! lcms_icc_profile_is_rgb (dest_profile))
+      if (! gimp_lcms_profile_is_rgb (dest_profile))
         {
           g_message (_("Color profile '%s' is not for RGB color space."),
                      gimp_filename_to_utf8 (filename));
@@ -557,7 +551,7 @@ lcms_icc_apply (GimpColorConfig          *config,
 
   src_profile = lcms_image_get_profile (config, image, src_md5);
 
-  if (src_profile && ! lcms_icc_profile_is_rgb (src_profile))
+  if (src_profile && ! gimp_lcms_profile_is_rgb (src_profile))
     {
       g_printerr ("lcms: attached color profile is not for RGB color space "
                   "(skipping)\n");
@@ -633,7 +627,7 @@ lcms_icc_info (GimpColorConfig *config,
 
   profile = lcms_image_get_profile (config, image, NULL);
 
-  if (profile && ! lcms_icc_profile_is_rgb (profile))
+  if (profile && ! gimp_lcms_profile_is_rgb (profile))
     {
       g_printerr ("lcms: attached color profile is not for RGB color space "
                   "(skipping)\n");
@@ -1418,7 +1412,7 @@ lcms_dialog (GimpColorConfig *config,
 
   src_profile = lcms_image_get_profile (config, image, NULL);
 
-  if (src_profile && ! lcms_icc_profile_is_rgb (src_profile))
+  if (src_profile && ! gimp_lcms_profile_is_rgb (src_profile))
     {
       g_printerr ("lcms: attached color profile is not for RGB color space "
                   "(skipping)\n");
@@ -1543,7 +1537,7 @@ lcms_dialog (GimpColorConfig *config,
 
       if (dest_profile)
         {
-          if (lcms_icc_profile_is_rgb (dest_profile))
+          if (gimp_lcms_profile_is_rgb (dest_profile))
             {
               if (apply)
                 success = lcms_image_apply_profile (image,

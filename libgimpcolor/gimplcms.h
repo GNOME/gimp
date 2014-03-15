@@ -42,6 +42,9 @@ gchar            * gimp_lcms_profile_get_copyright    (GimpColorProfile profile)
 
 gchar            * gimp_lcms_profile_get_summary      (GimpColorProfile profile);
 
+gboolean           gimp_lcms_profile_is_rgb           (GimpColorProfile profile);
+gboolean           gimp_lcms_profile_is_cmyk          (GimpColorProfile profile);
+
 GimpColorProfile   gimp_lcms_create_srgb_profile      (void);
 
 

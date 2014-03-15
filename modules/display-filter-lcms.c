@@ -381,12 +381,6 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
     cmsCloseProfile (src_profile);
 }
 
-static gboolean
-cdisplay_lcms_profile_is_rgb (cmsHPROFILE profile)
-{
-  return (cmsGetColorSpace (profile) == cmsSigRgbData);
-}
-
 static cmsHPROFILE
 cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
 {
@@ -404,8 +398,7 @@ cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
       if (data)
         profile = cmsOpenProfileFromMem ((gpointer) data, len);
 
-      if (profile &&
-          ! cdisplay_lcms_profile_is_rgb (profile))
+      if (profile && ! gimp_lcms_profile_is_rgb (profile))
         {
           cmsCloseProfile (profile);
           profile = NULL;
