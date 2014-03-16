@@ -83,6 +83,10 @@ EXPORTS
 	gimp_color_profile_store_add
 	gimp_color_profile_store_get_type
 	gimp_color_profile_store_new
+	gimp_color_profile_view_get_type
+	gimp_color_profile_view_new
+	gimp_color_profile_view_set_error
+	gimp_color_profile_view_set_profile
 	gimp_color_scale_entry_new
 	gimp_color_scale_get_type
 	gimp_color_scale_new

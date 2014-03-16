@@ -44,6 +44,7 @@ typedef struct _GimpColorNotebook             GimpColorNotebook;
 typedef struct _GimpColorProfileChooserDialog GimpColorProfileChooserDialog;
 typedef struct _GimpColorProfileComboBox      GimpColorProfileComboBox;
 typedef struct _GimpColorProfileStore         GimpColorProfileStore;
+typedef struct _GimpColorProfileView          GimpColorProfileView;
 typedef struct _GimpColorScale                GimpColorScale;
 typedef struct _GimpColorScales               GimpColorScales;
 typedef struct _GimpColorSelector             GimpColorSelector;

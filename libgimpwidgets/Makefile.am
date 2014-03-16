@@ -91,6 +91,8 @@ libgimpwidgets_sources = \
 	gimpcolorprofilestore-private.h	\
 	gimpcolorprofilestore.c		\
 	gimpcolorprofilestore.h		\
+	gimpcolorprofileview.c		\
+	gimpcolorprofileview.h		\
 	gimpcolorscale.c		\
 	gimpcolorscale.h		\
 	gimpcolorscales.c		\
@@ -210,6 +212,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpcolorprofilechooserdialog.h	\
 	gimpcolorprofilecombobox.h	\
 	gimpcolorprofilestore.h		\
+	gimpcolorprofileview.h		\
 	gimpcolorscale.h		\
 	gimpcolorscales.h		\
 	gimpcolorselect.h		\
