@@ -126,6 +126,7 @@ LDADD = \
 	$(GEGL_LIBS)						\
 	$(GIO_LIBS)						\
 	$(GEXIV2_LIBS)						\
+	$(LCMS_LIBS)						\
 	$(INTLLIBS)						\
 	$(RT_LIBS)
 
