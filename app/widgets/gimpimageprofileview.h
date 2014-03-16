@@ -39,9 +39,7 @@ struct _GimpImageProfileView
 {
   GimpImageParasiteView  parent_instance;
 
-  GtkTextBuffer         *buffer;
-
-  guint                  idle_id;
+  GimpColorProfileView  *profile_view;
 };
 
 struct _GimpImageProfileViewClass

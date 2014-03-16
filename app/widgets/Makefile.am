@@ -8,6 +8,7 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)						\
 	-I$(top_builddir)/app					\
 	-I$(top_srcdir)/app					\
+	$(LCMS_CFLAGS)						\
 	$(GEGL_CFLAGS)						\
 	$(GTK_CFLAGS)						\
 	-I$(includedir)
