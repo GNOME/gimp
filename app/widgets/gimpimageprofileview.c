@@ -40,6 +40,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-profile.h"
 
 #include "gimpimageprofileview.h"
 
@@ -96,7 +97,7 @@ gimp_image_profile_view_new (GimpImage *image)
 
   return g_object_new (GIMP_TYPE_IMAGE_PROFILE_VIEW,
                        "image",    image,
-                       "parasite", "icc-profile",
+                       "parasite", GIMP_ICC_PROFILE_PARASITE_NAME,
                        NULL);
 }
 

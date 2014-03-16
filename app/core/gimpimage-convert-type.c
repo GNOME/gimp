@@ -149,6 +149,7 @@
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
+#include "gimpimage-profile.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
@@ -1082,10 +1083,10 @@ gimp_image_convert_type (GimpImage               *image,
     case GIMP_RGB:
     case GIMP_INDEXED:
       if (old_type == GIMP_GRAY)
-        gimp_image_parasite_detach (image, "icc-profile");
+        gimp_image_set_icc_profile (image, NULL);
       break;
     case GIMP_GRAY:
-      gimp_image_parasite_detach (image, "icc-profile");
+        gimp_image_set_icc_profile (image, NULL);
       break;
     default:
       break;

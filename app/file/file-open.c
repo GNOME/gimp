@@ -55,6 +55,7 @@
 #include "core/gimpdocumentlist.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
+#include "core/gimpimage-profile.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimagefile.h"
 #include "core/gimplayer.h"
@@ -780,7 +781,7 @@ file_open_handle_color_profile (GimpImage    *image,
                                 GimpProgress *progress,
                                 GimpRunMode   run_mode)
 {
-  if (gimp_image_parasite_find (image, "icc-profile"))
+  if (gimp_image_get_icc_profile (image))
     {
       gimp_image_undo_disable (image);
 
