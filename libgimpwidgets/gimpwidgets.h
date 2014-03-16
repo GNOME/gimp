@@ -41,6 +41,7 @@
 #include <libgimpwidgets/gimpcolorprofilechooserdialog.h>
 #include <libgimpwidgets/gimpcolorprofilecombobox.h>
 #include <libgimpwidgets/gimpcolorprofilestore.h>
+#include <libgimpwidgets/gimpcolorprofileview.h>
 #include <libgimpwidgets/gimpcolorscale.h>
 #include <libgimpwidgets/gimpcolorscales.h>
 #include <libgimpwidgets/gimpcolorselector.h>
