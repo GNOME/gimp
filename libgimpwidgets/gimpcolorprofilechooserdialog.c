@@ -263,6 +263,7 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
   gchar       *desc;
   gchar       *model;
   gchar       *summary;
+  GError      *error = NULL;
 
   gtk_text_buffer_set_text (dialog->private->buffer, "", 0);
 
@@ -274,26 +275,20 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
 
   filename = gtk_file_chooser_get_preview_filename (GTK_FILE_CHOOSER (dialog));
 
+  if (! filename)
+    return;
+
   gtk_text_buffer_get_start_iter (dialog->private->buffer, &iter);
 
-  if (! g_file_test (filename, G_FILE_TEST_IS_REGULAR))
-    {
-      gtk_text_buffer_insert_with_tags_by_name (dialog->private->buffer,
-                                                &iter,
-                                                _("Not a regular file"), -1,
-                                                "emphasis", NULL);
-      g_free (filename);
-      return;
-    }
-
-  profile = cmsOpenProfileFromFile (filename, "r");
+  profile = gimp_lcms_profile_open_from_file (filename, NULL, &error);
 
   if (! profile)
     {
       gtk_text_buffer_insert_with_tags_by_name (dialog->private->buffer,
                                                 &iter,
-                                                _("Cannot open profile"), -1,
+                                                error->message, -1,
                                                 "emphasis", NULL);
+      g_clear_error (&error);
       g_free (filename);
       return;
     }
@@ -329,12 +324,10 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
     gtk_text_buffer_insert (dialog->private->buffer, &iter, summary, -1);
 
   dialog->private->filename = filename;
-  filename = NULL;
 
   g_free (desc);
   g_free (model);
   g_free (summary);
-  g_free (filename);
 }
 
 static GtkWidget *
