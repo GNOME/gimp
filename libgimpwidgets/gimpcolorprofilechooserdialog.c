@@ -35,39 +35,22 @@
 #include "gimpwidgetstypes.h"
 
 #include "gimpcolorprofilechooserdialog.h"
+#include "gimpcolorprofileview.h"
 
 #include "libgimp/libgimp-intl.h"
 
 
-enum
-{
-  PROP_0
-};
-
-
 struct _GimpColorProfileChooserDialogPrivate
 {
-  GtkTextBuffer *buffer;
-  gchar         *filename;
-  gchar         *desc;
+  GimpColorProfileView *profile_view;
+  gchar                *filename;
+  gchar                *desc;
 };
 
 
-static void   gimp_color_profile_chooser_dialog_constructed    (GObject                  *object);
-static void   gimp_color_profile_chooser_dialog_finalize       (GObject                  *object);
-static void   gimp_color_profile_chooser_dialog_set_property   (GObject                  *object,
-                                                                guint                     prop_id,
-                                                                const GValue             *value,
-                                                                GParamSpec               *pspec);
-static void   gimp_color_profile_chooser_dialog_get_property   (GObject                  *object,
-                                                                guint                     prop_id,
-                                                                GValue                   *value,
-                                                                GParamSpec               *pspec);
-
+static void   gimp_color_profile_chooser_dialog_constructed    (GObject                       *object);
 static void   gimp_color_profile_chooser_dialog_add_shortcut   (GimpColorProfileChooserDialog *dialog);
 static void   gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog *dialog);
-
-static GtkWidget * gimp_color_profile_view_new                 (GtkTextBuffer            *buffer);
 
 
 G_DEFINE_TYPE (GimpColorProfileChooserDialog, gimp_color_profile_chooser_dialog,
@@ -81,10 +64,7 @@ gimp_color_profile_chooser_dialog_class_init (GimpColorProfileChooserDialogClass
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->constructed  = gimp_color_profile_chooser_dialog_constructed;
-  object_class->finalize     = gimp_color_profile_chooser_dialog_finalize;
-  object_class->get_property = gimp_color_profile_chooser_dialog_get_property;
-  object_class->set_property = gimp_color_profile_chooser_dialog_set_property;
+  object_class->constructed = gimp_color_profile_chooser_dialog_constructed;
 
   g_type_class_add_private (klass, sizeof (GimpColorProfileChooserDialogPrivate));
 }
@@ -96,16 +76,6 @@ gimp_color_profile_chooser_dialog_init (GimpColorProfileChooserDialog *dialog)
     G_TYPE_INSTANCE_GET_PRIVATE (dialog,
                                  GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG,
                                  GimpColorProfileChooserDialogPrivate);
-
-  dialog->private->buffer = gtk_text_buffer_new (NULL);
-
-  gtk_text_buffer_create_tag (dialog->private->buffer, "strong",
-                              "weight", PANGO_WEIGHT_BOLD,
-                              "scale",  PANGO_SCALE_LARGE,
-                              NULL);
-  gtk_text_buffer_create_tag (dialog->private->buffer, "emphasis",
-                              "style",  PANGO_STYLE_OBLIQUE,
-                              NULL);
 }
 
 static void
@@ -113,6 +83,9 @@ gimp_color_profile_chooser_dialog_constructed (GObject *object)
 {
   GimpColorProfileChooserDialog *dialog;
   GtkFileFilter                 *filter;
+  GtkWidget                     *frame;
+  GtkWidget                     *scrolled_window;
+  GtkWidget                     *profile_view;
 
   dialog  = GIMP_COLOR_PROFILE_CHOOSER_DIALOG (object);
 
@@ -147,56 +120,30 @@ gimp_color_profile_chooser_dialog_constructed (GObject *object)
 
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
 
-  gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog),
-                                       gimp_color_profile_view_new (dialog->private->buffer));
+  /*  the preview widget  */
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_widget_set_size_request (frame, 300, -1);
+
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
+  gtk_widget_show (scrolled_window);
+
+  profile_view = gimp_color_profile_view_new ();
+  gtk_container_add (GTK_CONTAINER (scrolled_window), profile_view);
+  gtk_widget_show (profile_view);
+
+  dialog->private->profile_view = GIMP_COLOR_PROFILE_VIEW (profile_view);
+
+  gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog), frame);
 
   g_signal_connect (dialog, "update-preview",
                     G_CALLBACK (gimp_color_profile_chooser_dialog_update_preview),
                     NULL);
-}
-
-static void
-gimp_color_profile_chooser_dialog_finalize (GObject *object)
-{
-  GimpColorProfileChooserDialog *dialog;
-
-  dialog = GIMP_COLOR_PROFILE_CHOOSER_DIALOG (object);
-
-  if (dialog->private->buffer)
-    {
-      g_object_unref (dialog->private->buffer);
-      dialog->private->buffer = NULL;
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-static void
-gimp_color_profile_chooser_dialog_set_property (GObject      *object,
-                                                guint         prop_id,
-                                                const GValue *value,
-                                                GParamSpec   *pspec)
-{
-  switch (prop_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_color_profile_chooser_dialog_get_property (GObject    *object,
-                                                guint       prop_id,
-                                                GValue     *value,
-                                                GParamSpec *pspec)
-{
-  switch (prop_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-      break;
-    }
 }
 
 GtkWidget *
@@ -257,109 +204,52 @@ gimp_color_profile_chooser_dialog_add_shortcut (GimpColorProfileChooserDialog *d
 static void
 gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog *dialog)
 {
-  cmsHPROFILE  profile;
-  gchar       *filename;
-  GtkTextIter  iter;
-  gchar       *desc;
-  gchar       *model;
-  gchar       *summary;
-  GError      *error = NULL;
-
-  gtk_text_buffer_set_text (dialog->private->buffer, "", 0);
-
-  g_free (dialog->private->filename);
-  dialog->private->filename = NULL;
-
-  g_free (dialog->private->desc);
-  dialog->private->desc = NULL;
+  GimpColorProfile  profile;
+  gchar            *filename;
+  gchar            *desc;
+  gchar            *model;
+  GError           *error = NULL;
 
   filename = gtk_file_chooser_get_preview_filename (GTK_FILE_CHOOSER (dialog));
 
   if (! filename)
-    return;
-
-  gtk_text_buffer_get_start_iter (dialog->private->buffer, &iter);
+    {
+      gimp_color_profile_view_set_profile (dialog->private->profile_view, NULL);
+      return;
+    }
 
   profile = gimp_lcms_profile_open_from_file (filename, NULL, &error);
 
   if (! profile)
     {
-      gtk_text_buffer_insert_with_tags_by_name (dialog->private->buffer,
-                                                &iter,
-                                                error->message, -1,
-                                                "emphasis", NULL);
+      gimp_color_profile_view_set_error (dialog->private->profile_view,
+                                         error->message);
       g_clear_error (&error);
       g_free (filename);
       return;
     }
 
-  desc    = gimp_lcms_profile_get_description (profile);
-  model   = gimp_lcms_profile_get_model (profile);
-  summary = gimp_lcms_profile_get_summary (profile);
+  gimp_color_profile_view_set_profile (dialog->private->profile_view,
+                                       profile);
+
+  desc  = gimp_lcms_profile_get_description (profile);
+  model = gimp_lcms_profile_get_model (profile);
 
   cmsCloseProfile (profile);
 
-  if ((desc  && strlen (desc)) ||
-      (model && strlen (model)))
+  if (desc && strlen (desc))
     {
-      if (desc && strlen (desc))
-        {
-          dialog->private->desc = desc;
-          desc = NULL;
-        }
-      else
-        {
-          dialog->private->desc = model;
-          model = NULL;
-        }
-
-      gtk_text_buffer_insert_with_tags_by_name (dialog->private->buffer,
-                                                &iter,
-                                                dialog->private->desc, -1,
-                                                "strong", NULL);
-      gtk_text_buffer_insert (dialog->private->buffer, &iter, "\n", 1);
+      dialog->private->desc = desc;
+      desc = NULL;
     }
-
-  if (summary)
-    gtk_text_buffer_insert (dialog->private->buffer, &iter, summary, -1);
+  else if (model && strlen (model))
+    {
+      dialog->private->desc = model;
+      model = NULL;
+    }
 
   dialog->private->filename = filename;
 
   g_free (desc);
   g_free (model);
-  g_free (summary);
-}
-
-static GtkWidget *
-gimp_color_profile_view_new (GtkTextBuffer *buffer)
-{
-  GtkWidget *frame;
-  GtkWidget *scrolled_window;
-  GtkWidget *text_view;
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-
-  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-                                  GTK_POLICY_AUTOMATIC,
-                                  GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
-  gtk_widget_show (scrolled_window);
-
-  text_view = gtk_text_view_new_with_buffer (buffer);
-
-  gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
-  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
-
-  gtk_text_view_set_pixels_above_lines (GTK_TEXT_VIEW (text_view), 6);
-  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (text_view), 6);
-  gtk_text_view_set_right_margin (GTK_TEXT_VIEW (text_view), 6);
-
-  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
-  gtk_widget_show (text_view);
-
-  gtk_widget_set_size_request (scrolled_window, 300, -1);
-
-  return frame;
 }
