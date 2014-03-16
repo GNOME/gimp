@@ -5,7 +5,9 @@ desktop
 desktop/gimp.desktop.in
 libgimp
 libgimpbase
+libgimpcolor
 libgimpconfig
+libgimpmath
 libgimpmodule
 libgimpthumb
 libgimpwidgets
