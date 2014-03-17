@@ -140,6 +140,7 @@ gimp_param_parasite_validate (GParamSpec *pspec,
       return TRUE;
     }
   else if (parasite->name == NULL                          ||
+           *parasite->name == '\0'                         ||
            ! g_utf8_validate (parasite->name, -1, NULL)    ||
            (parasite->size == 0 && parasite->data != NULL) ||
            (parasite->size >  0 && parasite->data == NULL))
@@ -216,7 +217,7 @@ gimp_parasite_new (const gchar    *name,
 {
   GimpParasite *parasite;
 
-  if (!name)
+  if (! (name && *name))
     return NULL;
 
   parasite = g_slice_new (GimpParasite);
