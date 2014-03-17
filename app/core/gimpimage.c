@@ -3087,9 +3087,9 @@ gimp_image_parasite_attach (GimpImage          *image,
     }
 
   g_signal_emit (image, gimp_image_signals[PARASITE_ATTACHED], 0,
-                 parasite->name);
+                 gimp_parasite_name (parasite));
 
-  if (strcmp (parasite->name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
+  if (strcmp (gimp_parasite_name (parasite), GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
 }
 
