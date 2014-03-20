@@ -347,24 +347,19 @@ EXTRA_PROGRAMS = \
 
 test_preview_area_SOURCES = test-preview-area.c 
 
-test_preview_area_DEPENDENCIES = \
-	$(libgimpbase)	\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-
 test_preview_area_LDADD = \
 	$(GTK_LIBS)	\
-	$(test_preview_area_DEPENDENCIES)
+	$(libgimpbase)	\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 
 
 test_eevl_SOURCES = \
 	test-eevl.c
 
-test_eevl_DEPENDENCIES = \
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-
 test_eevl_LDADD = \
 	$(GLIB_LIBS)	\
-	$(test_eevl_DEPENDENCIES)
+	$(libgimpcolor)		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 
 
 #

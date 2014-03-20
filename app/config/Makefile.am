@@ -107,6 +107,7 @@ test_config_LDADD = \
 	$(libgimpmath)				\
 	$(libgimpconfig)			\
 	$(libgimpbase)				\
+	$(LCMS_LIBS)				\
 	$(PANGOCAIRO_LIBS)			\
 	$(GDK_PIXBUF_LIBS)			\
 	$(GEGL_LIBS)				\
