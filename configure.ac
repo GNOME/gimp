@@ -64,7 +64,7 @@ m4_define([exif_required_version], [0.6.15])
 m4_define([lcms1_required_version], [1.16])
 m4_define([lcms2_required_version], [2.2])
 m4_define([libpng_required_version], [1.2.37])
-m4_define([gtk_mac_integration_required_version], [1.0.1])
+m4_define([gtk_mac_integration_required_version], [2.0.0])
 
 
 # Current test considers only 2 version numbers. If we update the recommended
@@ -1936,9 +1936,19 @@ AM_CONDITIONAL(PLATFORM_OSX, test "x$platform_osx" = xyes)
 # Check for GTK Mac Integration
 ###############################
 
+gtk_mac_integration_ok=no
 if test "x$platform_osx" != xno &&
    test "x`$PKG_CONFIG --variable=target gtk+-2.0`" == "xquartz"; then
-  PKG_CHECK_MODULES(GTK_MAC_INTEGRATION, gtk-mac-integration >= gtk_mac_integration_required_version)
+
+  PKG_CHECK_MODULES(GTK_MAC_INTEGRATION, gtk-mac-integration-gtk2 >= gtk_mac_integration_required_version,
+    gtk_mac_integration_ok=yes,
+    gtk_mac_integration_ok=no)
+
+  if test "x$gtk_mac_integration_ok" != "xyes"; then
+    PKG_CHECK_MODULES(GTK_MAC_INTEGRATION, gtk-mac-integration >= gtk_mac_integration_required_version,
+      gtk_mac_integration_ok=yes,
+      gtk_mac_integration_ok=no)
+  fi
 fi
 
 
