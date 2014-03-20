@@ -9,14 +9,15 @@
 # Gabor Kelemen <kelemeng@gnome.hu>, 2008.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2010.
 # Balázs Úr <urbalazs at gmail dot com>, 2013.
+# Balázs Úr <urbalazs@gmail.com>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.gimp-2-6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-03-27 15:31+0000\n"
-"PO-Revision-Date: 2013-09-22 10:32+0200\n"
-"Last-Translator: Balázs Úr <urbalazs at gmail dot com>\n"
+"POT-Creation-Date: 2014-03-20 06:24+0000\n"
+"PO-Revision-Date: 2014-03-20 16:07+0100\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <gnome at fsf dot hu>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -1065,7 +1066,7 @@ msgstr "Csatornakeverő beállításainak mentése"
 #: ../plug-ins/common/file-raw.c:548 ../plug-ins/common/file-raw.c:576
 #: ../plug-ins/common/file-sunras.c:563 ../plug-ins/common/file-tga.c:1170
 #: ../plug-ins/common/file-tiff-save.c:683 ../plug-ins/common/file-xbm.c:1034
-#: ../plug-ins/common/file-xwd.c:618 ../plug-ins/common/sphere-designer.c:2114
+#: ../plug-ins/common/file-xwd.c:634 ../plug-ins/common/sphere-designer.c:2114
 #: ../plug-ins/file-bmp/bmp-write.c:296 ../plug-ins/file-fits/fits.c:476
 #: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1008
 #: ../plug-ins/file-jpeg/jpeg-save.c:325 ../plug-ins/file-psd/psd-save.c:1635
@@ -3009,7 +3010,6 @@ msgstr "KISS paletta betöltése"
 #: ../plug-ins/common/file-cel.c:308 ../plug-ins/common/file-cel.c:363
 #: ../plug-ins/common/file-cel.c:383
 #, c-format
-#| msgid "Error while reading '%s'. File corrupted?"
 msgid "EOF or error while reading image header"
 msgstr "Fájl vége vagy hiba a képfejléc olvasása közben"
 
@@ -3026,7 +3026,7 @@ msgstr "Fájl vége vagy hiba a képfejléc olvasása közben"
 #: ../plug-ins/common/file-raw.c:673 ../plug-ins/common/file-sunras.c:486
 #: ../plug-ins/common/file-tga.c:447 ../plug-ins/common/file-tiff-load.c:603
 #: ../plug-ins/common/file-wmf.c:994 ../plug-ins/common/file-xbm.c:741
-#: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:522
+#: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:532
 #: ../plug-ins/file-bmp/bmp-read.c:161 ../plug-ins/file-faxg3/faxg3.c:217
 #: ../plug-ins/file-fli/fli-gimp.c:502 ../plug-ins/file-ico/ico-load.c:654
 #: ../plug-ins/file-jpeg/jpeg-load.c:115 ../plug-ins/file-psd/psd-load.c:136
@@ -3037,7 +3037,6 @@ msgstr "„%s” megnyitása"
 
 #: ../plug-ins/common/file-cel.c:391
 #, c-format
-#| msgid "'%s' is not a PCX file"
 msgid "is not a CEL image file"
 msgstr "ez nem egy CEL képfájl"
 
@@ -3052,8 +3051,8 @@ msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
 "vertical offset: %d"
 msgstr ""
-"érvénytelen képdimenziók: szélesség: %d, vízszintes eltolás: %d, magasság: %"
-"d, függőleges eltolás: %d"
+"érvénytelen képdimenziók: szélesség: %d, vízszintes eltolás: %d, magasság: "
+"%d, függőleges eltolás: %d"
 
 #: ../plug-ins/common/file-cel.c:432
 #, c-format
@@ -3063,7 +3062,6 @@ msgstr "Nem lehet új képet létrehozni"
 #: ../plug-ins/common/file-cel.c:470 ../plug-ins/common/file-cel.c:505
 #: ../plug-ins/common/file-cel.c:530
 #, c-format
-#| msgid "Error while reading '%s'. File corrupted?"
 msgid "EOF or error while reading image data"
 msgstr "Fájl vége vagy hiba a képadatok olvasása közben"
 
@@ -3079,7 +3077,6 @@ msgstr "„%s”: fájl vége vagy hiba a palettafejléc olvasása közben"
 
 #: ../plug-ins/common/file-cel.c:649
 #, c-format
-#| msgid "'%s' is not a PCX file"
 msgid "'%s': is not a KCF palette file"
 msgstr "„%s”: ez nem egy KCF palettafájl"
 
@@ -3090,7 +3087,6 @@ msgstr "„%s”: érvénytelen bpp érték a palettán: %hhu"
 
 #: ../plug-ins/common/file-cel.c:667
 #, c-format
-#| msgid "Number of colors:"
 msgid "'%s': illegal number of colors: %u"
 msgstr "„%s”: a színek száma érvénytelen: %u"
 
@@ -3110,7 +3106,7 @@ msgstr "„%s”: fájl vége vagy hiba a palettaadatok olvasása közben"
 #: ../plug-ins/common/file-ps.c:1218 ../plug-ins/common/file-sunras.c:568
 #: ../plug-ins/common/file-tga.c:1175 ../plug-ins/common/file-tiff-save.c:693
 #: ../plug-ins/common/file-xbm.c:1039 ../plug-ins/common/file-xpm.c:637
-#: ../plug-ins/common/file-xwd.c:623 ../plug-ins/file-bmp/bmp-write.c:307
+#: ../plug-ins/common/file-xwd.c:639 ../plug-ins/file-bmp/bmp-write.c:307
 #: ../plug-ins/file-fits/fits.c:481 ../plug-ins/file-fli/fli-gimp.c:718
 #: ../plug-ins/file-ico/ico-save.c:1002 ../plug-ins/file-jpeg/jpeg-save.c:282
 #: ../plug-ins/file-psd/psd-save.c:1640 ../plug-ins/file-sgi/sgi.c:574
@@ -3217,7 +3213,7 @@ msgid "Cannot save images with alpha channel."
 msgstr "Az alfa-csatornás képek nem menthetők el."
 
 #: ../plug-ins/common/file-dicom.c:784 ../plug-ins/common/file-ps.c:1203
-#: ../plug-ins/common/file-xwd.c:608 ../plug-ins/file-fits/fits.c:466
+#: ../plug-ins/common/file-xwd.c:624 ../plug-ins/file-fits/fits.c:466
 #: ../plug-ins/file-xjt/xjt.c:1705
 msgid "Cannot operate on unknown image types."
 msgstr "Ismeretlen képtípusok nem kezelhetők."
@@ -4336,7 +4332,7 @@ msgid "Type of colormap not supported"
 msgstr "A színtérkép típusa nem támogatott"
 
 #: ../plug-ins/common/file-sunras.c:456 ../plug-ins/common/file-xbm.c:826
-#: ../plug-ins/common/file-xwd.c:491
+#: ../plug-ins/common/file-xwd.c:505
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4346,7 +4342,7 @@ msgstr ""
 "Képszélesség nincs megadva"
 
 #: ../plug-ins/common/file-sunras.c:464 ../plug-ins/common/file-xbm.c:833
-#: ../plug-ins/common/file-xwd.c:500
+#: ../plug-ins/common/file-xwd.c:513
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4356,7 +4352,7 @@ msgstr ""
 "A képszélesség nagyobb, mint amekkorát a GIMP kezelni tud"
 
 #: ../plug-ins/common/file-sunras.c:472 ../plug-ins/common/file-xbm.c:840
-#: ../plug-ins/common/file-xwd.c:508
+#: ../plug-ins/common/file-xwd.c:520
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4366,7 +4362,7 @@ msgstr ""
 "Képmagasság nincs megadva"
 
 #: ../plug-ins/common/file-sunras.c:480 ../plug-ins/common/file-xbm.c:847
-#: ../plug-ins/common/file-xwd.c:516
+#: ../plug-ins/common/file-xwd.c:527
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4390,9 +4386,9 @@ msgstr "Ismeretlen képtípusok nem dolgozhatók fel"
 
 #: ../plug-ins/common/file-sunras.c:1082 ../plug-ins/common/file-sunras.c:1173
 #: ../plug-ins/common/file-sunras.c:1254 ../plug-ins/common/file-sunras.c:1349
-#: ../plug-ins/common/file-xwd.c:1352 ../plug-ins/common/file-xwd.c:1453
-#: ../plug-ins/common/file-xwd.c:1611 ../plug-ins/common/file-xwd.c:1822
-#: ../plug-ins/common/file-xwd.c:2085 ../plug-ins/file-fits/fits.c:697
+#: ../plug-ins/common/file-xwd.c:1368 ../plug-ins/common/file-xwd.c:1469
+#: ../plug-ins/common/file-xwd.c:1627 ../plug-ins/common/file-xwd.c:1838
+#: ../plug-ins/common/file-xwd.c:2101 ../plug-ins/file-fits/fits.c:697
 msgid "EOF encountered on reading"
 msgstr "Fájl vége olvasás közben"
 
@@ -4758,11 +4754,30 @@ msgstr "X Window, formázatlan"
 msgid "Could not read XWD header from '%s'"
 msgstr "Nem sikerült beolvasni az XWD-fejlécet innen: „%s”"
 
-#: ../plug-ins/common/file-xwd.c:482
+#: ../plug-ins/common/file-xwd.c:465
+#, c-format
+#| msgid "'%s': illegal number of colors: %u"
+msgid ""
+"'%s':\n"
+"Illegal number of colormap entries: %ld"
+msgstr ""
+"„%s”:\n"
+"A színtérkép bejegyzések száma érvénytelen: %ld"
+
+#: ../plug-ins/common/file-xwd.c:475
+#, c-format
+msgid ""
+"'%s':\n"
+"Number of colormap entries < number of colors"
+msgstr ""
+"„%s”:\n"
+"A színtérkép bejegyzések száma < színek száma"
+
+#: ../plug-ins/common/file-xwd.c:498
 msgid "Can't read color entries"
 msgstr "Színbejegyzések olvasása sikertelen"
 
-#: ../plug-ins/common/file-xwd.c:574
+#: ../plug-ins/common/file-xwd.c:579
 #, c-format
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
@@ -4771,21 +4786,20 @@ msgstr ""
 "A(z) „%s” XWD-fájl formátuma „%d”, mélysége „%d”, képpontonkénti bitszáma "
 "„%d”. Jelenleg ez nem támogatott."
 
-#: ../plug-ins/common/file-xwd.c:597
+#: ../plug-ins/common/file-xwd.c:613
 msgid "Cannot save images with alpha channels."
 msgstr "Alfacsatornás képek nem menthetők el."
 
-#: ../plug-ins/common/file-xwd.c:1683 ../plug-ins/common/file-xwd.c:1920
+#: ../plug-ins/common/file-xwd.c:1699 ../plug-ins/common/file-xwd.c:1936
 #, c-format
-#| msgid "The file is corrupt!"
 msgid "XWD-file %s is corrupt."
 msgstr "A(z) %s XWD-fájl sérült."
 
-#: ../plug-ins/common/file-xwd.c:2216
+#: ../plug-ins/common/file-xwd.c:2232
 msgid "Error during writing indexed/gray image"
 msgstr "Hiba az indexelt/szürkeárnyalatos kép írása közben"
 
-#: ../plug-ins/common/file-xwd.c:2314
+#: ../plug-ins/common/file-xwd.c:2330
 msgid "Error during writing rgb image"
 msgstr "Hiba az RGB-kép írása közben"
 
