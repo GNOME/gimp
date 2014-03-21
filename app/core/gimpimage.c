@@ -3050,6 +3050,18 @@ gimp_image_parasite_list (const GimpImage *image,
   return list;
 }
 
+gboolean
+gimp_image_parasite_validate (GimpImage           *image,
+                              const GimpParasite  *parasite,
+                              GError             **error)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (parasite != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  return TRUE;
+}
+
 void
 gimp_image_parasite_attach (GimpImage          *image,
                             const GimpParasite *parasite)

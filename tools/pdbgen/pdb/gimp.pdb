@@ -106,7 +106,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_parasite_attach (gimp, parasite);
+  if (gimp_parasite_validate (gimp, parasite, error))
+    gimp_parasite_attach (gimp, parasite);
+  else
+    success = FALSE;
 }
 CODE
     );

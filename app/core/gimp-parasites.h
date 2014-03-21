@@ -20,6 +20,9 @@
 
 /* some wrappers to access gimp->parasites, mainly for the PDB */
 
+gboolean              gimp_parasite_validate     (Gimp               *gimp,
+                                                  const GimpParasite *parasite,
+                                                  GError            **error);
 void                  gimp_parasite_attach       (Gimp               *gimp,
                                                   const GimpParasite *parasite);
 void                  gimp_parasite_detach       (Gimp               *gimp,

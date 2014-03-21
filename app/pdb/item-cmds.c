@@ -785,7 +785,10 @@ item_attach_parasite_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gimp_item_parasite_attach (item, parasite, TRUE);
+      if (gimp_item_parasite_validate (item, parasite, error))
+        gimp_item_parasite_attach (item, parasite, TRUE);
+      else
+        success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,

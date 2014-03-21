@@ -1798,6 +1798,18 @@ gimp_item_get_parasites (const GimpItem *item)
   return GET_PRIVATE (item)->parasites;
 }
 
+gboolean
+gimp_item_parasite_validate (GimpItem            *item,
+                             const GimpParasite  *parasite,
+                             GError             **error)
+{
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (parasite != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  return TRUE;
+}
+
 void
 gimp_item_parasite_attach (GimpItem           *item,
                            const GimpParasite *parasite,

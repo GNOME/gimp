@@ -274,6 +274,9 @@ void               gimp_item_set_parasites   (GimpItem           *item,
                                               GimpParasiteList   *parasites);
 GimpParasiteList * gimp_item_get_parasites   (const GimpItem     *item);
 
+gboolean        gimp_item_parasite_validate  (GimpItem           *item,
+                                              const GimpParasite *parasite,
+                                              GError            **error);
 void            gimp_item_parasite_attach    (GimpItem           *item,
                                               const GimpParasite *parasite,
                                               gboolean            push_undo);

@@ -286,6 +286,9 @@ const GimpParasite * gimp_image_parasite_find    (const GimpImage    *image,
                                                   const gchar        *name);
 gchar        ** gimp_image_parasite_list         (const GimpImage    *image,
                                                   gint               *count);
+gboolean        gimp_image_parasite_validate     (GimpImage           *image,
+                                                  const GimpParasite  *parasite,
+                                                  GError             **error);
 void            gimp_image_parasite_attach       (GimpImage          *image,
                                                   const GimpParasite *parasite);
 void            gimp_image_parasite_detach       (GimpImage          *image,
