@@ -573,15 +573,6 @@ lcms_icc_apply (GimpColorConfig          *config,
       g_clear_error (&error);
     }
 
-  if (src_profile && ! gimp_lcms_profile_is_rgb (src_profile))
-    {
-      g_printerr ("lcms: attached color profile is not for RGB color space "
-                  "(skipping)\n");
-
-      cmsCloseProfile (src_profile);
-      src_profile = NULL;
-    }
-
   if (! src_profile && ! dest_profile)
     return GIMP_PDB_SUCCESS;
 
@@ -654,15 +645,6 @@ lcms_icc_info (GimpColorConfig *config,
     {
       g_message ("%s", error->message);
       g_clear_error (&error);
-    }
-
-  if (profile && ! gimp_lcms_profile_is_rgb (profile))
-    {
-      g_printerr ("lcms: attached color profile is not for RGB color space "
-                  "(skipping)\n");
-
-      cmsCloseProfile (profile);
-      profile = NULL;
     }
 
   if (! profile)
@@ -748,6 +730,15 @@ lcms_image_get_profile (GimpColorConfig  *config,
     {
       profile = gimp_lcms_profile_open_from_file (config->rgb_profile,
                                                   checksum, error);
+
+      if (profile && ! gimp_lcms_profile_is_rgb (profile))
+        {
+          g_set_error (error, 0, 0,
+                       _("Color profile '%s' is not for RGB color space"),
+                       gimp_filename_to_utf8 (config->rgb_profile));
+          cmsCloseProfile (profile);
+          profile = NULL;
+        }
     }
 
   return profile;
@@ -1397,15 +1388,6 @@ lcms_dialog (GimpColorConfig *config,
     {
       g_message ("%s", error->message);
       g_clear_error (&error);
-    }
-
-  if (src_profile && ! gimp_lcms_profile_is_rgb (src_profile))
-    {
-      g_printerr ("lcms: attached color profile is not for RGB color space "
-                  "(skipping)\n");
-
-      cmsCloseProfile (src_profile);
-      src_profile = NULL;
     }
 
   if (! src_profile)
