@@ -151,22 +151,9 @@ gimp_image_get_profile (GimpImage  *image,
 
   if (parasite)
     {
-      profile = gimp_lcms_profile_open_from_data (gimp_parasite_data (parasite),
-                                                  gimp_parasite_data_size (parasite),
-                                                  md5_digest, error);
-
-      if (! profile)
-        g_prefix_error (error,
-                        _("Error parsing data attached as 'icc-profile': "));
-
-      if (profile && ! gimp_lcms_profile_is_rgb (profile))
-        {
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                               _("Color profile attached as 'icc-profile' is "
-                                 "not for RGB color space"));
-          cmsCloseProfile (profile);
-          profile = NULL;
-        }
+      return gimp_lcms_profile_open_from_data (gimp_parasite_data (parasite),
+                                               gimp_parasite_data_size (parasite),
+                                               md5_digest, error);
     }
   else if (config->rgb_profile)
     {
