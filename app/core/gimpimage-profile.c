@@ -35,7 +35,7 @@
 
 #include "config/gimpcoreconfig.h"
 
-#include "core/gimp.h"
+#include "gimp.h"
 #include "gimperror.h"
 #include "gimpimage.h"
 #include "gimpimage-profile.h"
@@ -44,6 +44,67 @@
 
 
 /* public functions */
+
+gboolean
+gimp_image_validate_icc_profile (GimpImage           *image,
+                                 const GimpParasite  *icc_profile,
+                                 GError             **error)
+{
+  GimpColorProfile *profile;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (icc_profile != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (strcmp (gimp_parasite_name (icc_profile),
+              GIMP_ICC_PROFILE_PARASITE_NAME) != 0)
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("ICC profile validation failed: "
+                             "Parasite's name is not 'icc-profile'"));
+      return FALSE;
+    }
+
+  if (gimp_parasite_flags (icc_profile) != (GIMP_PARASITE_PERSISTENT |
+                                            GIMP_PARASITE_UNDOABLE))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("ICC profile validation failed: "
+                             "Parasite's flags are not (PERSISTENT | UNDOABLE)"));
+      return FALSE;
+    }
+
+  if (gimp_image_get_base_type (image) == GIMP_GRAY)
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("ICC profile validation failed: "
+                             "Cannot attach a color profile to a GRAY image"));
+      return FALSE;
+    }
+
+  profile = gimp_lcms_profile_open_from_data (gimp_parasite_data (icc_profile),
+                                              gimp_parasite_data_size (icc_profile),
+                                              NULL, error);
+
+  if (! profile)
+    {
+      g_prefix_error (error, _("ICC profile validation failed: "));
+      return FALSE;
+    }
+
+  if (! gimp_lcms_profile_is_rgb (profile))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("ICC profile validation failed: "
+                             "Color profile is not for RGB color space"));
+      cmsCloseProfile (profile);
+      return FALSE;
+    }
+
+  cmsCloseProfile (profile);
+
+  return TRUE;
+}
 
 const GimpParasite *
 gimp_image_get_icc_profile (GimpImage *image)
@@ -61,11 +122,8 @@ gimp_image_set_icc_profile (GimpImage          *image,
 
   if (icc_profile)
     {
-      g_return_if_fail (strcmp (gimp_parasite_name (icc_profile),
-                                GIMP_ICC_PROFILE_PARASITE_NAME) == 0);
-      g_return_if_fail (gimp_parasite_flags (icc_profile) ==
-                        (GIMP_PARASITE_PERSISTENT |
-                         GIMP_PARASITE_UNDOABLE));
+      g_return_if_fail (gimp_image_validate_icc_profile (image, icc_profile,
+                                                         NULL) == TRUE);
 
       gimp_image_parasite_attach (image, icc_profile);
     }

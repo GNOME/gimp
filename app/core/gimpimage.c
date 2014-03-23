@@ -3055,9 +3055,18 @@ gimp_image_parasite_validate (GimpImage           *image,
                               const GimpParasite  *parasite,
                               GError             **error)
 {
+  const gchar *name;
+
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (parasite != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  name = gimp_parasite_name (parasite);
+
+  if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
+    {
+      return gimp_image_validate_icc_profile (image, parasite, error);
+    }
 
   return TRUE;
 }
