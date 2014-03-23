@@ -43,8 +43,6 @@
 struct _GimpColorProfileChooserDialogPrivate
 {
   GimpColorProfileView *profile_view;
-  gchar                *filename;
-  gchar                *desc;
 };
 
 
@@ -155,21 +153,6 @@ gimp_color_profile_chooser_dialog_new (const gchar *title)
                        NULL);
 }
 
-gchar *
-gimp_color_profile_chooser_dialog_get_desc (GimpColorProfileChooserDialog *dialog,
-                                            const gchar                   *filename)
-{
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE_CHOOSER_DIALOG (dialog), NULL);
-
-  if (filename && dialog->private->filename &&
-      strcmp (filename, dialog->private->filename) == 0)
-    {
-      return g_strdup (dialog->private->desc);
-    }
-
-  return NULL;
-}
-
 /* Add shortcut for default ICC profile location */
 static void
 gimp_color_profile_chooser_dialog_add_shortcut (GimpColorProfileChooserDialog *dialog)
@@ -206,8 +189,6 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
 {
   GimpColorProfile  profile;
   gchar            *filename;
-  gchar            *desc;
-  gchar            *model;
   GError           *error = NULL;
 
   filename = gtk_file_chooser_get_preview_filename (GTK_FILE_CHOOSER (dialog));
@@ -225,31 +206,13 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
       gimp_color_profile_view_set_error (dialog->private->profile_view,
                                          error->message);
       g_clear_error (&error);
-      g_free (filename);
-      return;
     }
-
-  gimp_color_profile_view_set_profile (dialog->private->profile_view,
-                                       profile);
-
-  desc  = gimp_lcms_profile_get_description (profile);
-  model = gimp_lcms_profile_get_model (profile);
-
-  cmsCloseProfile (profile);
-
-  if (desc && strlen (desc))
+  else
     {
-      dialog->private->desc = desc;
-      desc = NULL;
-    }
-  else if (model && strlen (model))
-    {
-      dialog->private->desc = model;
-      model = NULL;
+      gimp_color_profile_view_set_profile (dialog->private->profile_view,
+                                           profile);
+      cmsCloseProfile (profile);
     }
 
-  dialog->private->filename = filename;
-
-  g_free (desc);
-  g_free (model);
+  g_free (filename);
 }

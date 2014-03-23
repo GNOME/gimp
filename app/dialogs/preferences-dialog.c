@@ -19,11 +19,16 @@
 
 #include <string.h>
 
+#include <glib.h>  /* lcms.h uses the "inline" keyword */
+
+#include <lcms2.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -776,6 +781,29 @@ prefs_table_new (gint          rows,
 }
 
 static void
+prefs_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
+                                    const gchar              *filename)
+{
+  cmsHPROFILE  profile = NULL;
+  gchar       *label   = NULL;
+
+  if (filename)
+    profile = cmsOpenProfileFromFile (filename, "r");
+
+  if (profile)
+    {
+      label = gimp_lcms_profile_get_description (profile);
+      if (! label)
+        label = gimp_lcms_profile_get_model (profile);
+
+      cmsCloseProfile (profile);
+    }
+
+  gimp_color_profile_combo_box_set_active (combo, filename, label);
+  g_free (label);
+}
+
+static void
 prefs_profile_combo_dialog_response (GimpColorProfileChooserDialog *dialog,
                                      gint                           response,
                                      GimpColorProfileComboBox      *combo)
@@ -788,12 +816,9 @@ prefs_profile_combo_dialog_response (GimpColorProfileChooserDialog *dialog,
 
       if (filename)
         {
-          gchar *label = gimp_color_profile_chooser_dialog_get_desc (dialog,
-                                                                     filename);
+          prefs_profile_combo_box_set_active (combo, filename);
 
-          gimp_color_profile_combo_box_set_active (combo, filename, label);
-
-          g_free (label);
+          g_free (filename);
         }
     }
 

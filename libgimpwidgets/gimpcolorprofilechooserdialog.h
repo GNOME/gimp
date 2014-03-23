@@ -53,7 +53,5 @@ GType       gimp_color_profile_chooser_dialog_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_color_profile_chooser_dialog_new      (const gchar *title);
 
-gchar     * gimp_color_profile_chooser_dialog_get_desc (GimpColorProfileChooserDialog *dialog,
-                                                        const gchar              *filename);
 
 #endif /* __GIMP_COLOR_PROFILE_CHOOSER_DIALOG_H__ */
