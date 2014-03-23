@@ -411,6 +411,12 @@ cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
 
       if (config->rgb_profile)
         profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
+
+      if (profile && ! gimp_lcms_profile_is_rgb (profile))
+        {
+          cmsCloseProfile (profile);
+          profile = NULL;
+        }
     }
 
   return profile;
