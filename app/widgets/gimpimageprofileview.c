@@ -120,7 +120,7 @@ gimp_image_profile_view_update (GimpImageParasiteView *view)
     }
 
   if (! profile)
-    profile = gimp_lcms_create_srgb_profile ();
+    profile = gimp_lcms_create_srgb_profile (NULL);
 
   gimp_color_profile_view_set_profile (profile_view->profile_view, profile);
 

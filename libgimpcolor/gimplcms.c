@@ -297,7 +297,7 @@ gimp_lcms_profile_set_tag (cmsHPROFILE      profile,
  * Since: GIMP 2.10
  **/
 GimpColorProfile
-gimp_lcms_create_srgb_profile (void)
+gimp_lcms_create_srgb_profile (guint8 *md5_digest)
 {
   cmsHPROFILE srgb_profile;
   cmsCIExyY   d65_srgb_specs = { 0.3127, 0.3290, 1.0 };
@@ -344,6 +344,26 @@ gimp_lcms_create_srgb_profile (void)
    *
    * cmsSetProfileVersion (srgb_profile, 2.1);
    **/
+
+  if (md5_digest)
+    {
+      md5_digest[0]  = 0xcb;
+      md5_digest[1]  = 0x63;
+      md5_digest[2]  = 0x14;
+      md5_digest[3]  = 0x56;
+      md5_digest[4]  = 0xd4;
+      md5_digest[5]  = 0x0a;
+      md5_digest[6]  = 0x01;
+      md5_digest[7]  = 0x62;
+      md5_digest[8]  = 0xa0;
+      md5_digest[9]  = 0xdb;
+      md5_digest[10] = 0xe6;
+      md5_digest[11] = 0x32;
+      md5_digest[12] = 0x8b;
+      md5_digest[13] = 0xea;
+      md5_digest[14] = 0x1a;
+      md5_digest[15] = 0x89;
+    }
 
   return srgb_profile;
 }
