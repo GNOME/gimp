@@ -880,6 +880,8 @@ prefs_profile_combo_box_new (GObject      *config,
   gimp_color_profile_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
                                            filename, NULL);
 
+  g_free (filename);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (prefs_profile_combo_dialog_response),
                     combo);
