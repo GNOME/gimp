@@ -30,7 +30,6 @@ void                 gimp_image_set_icc_profile      (GimpImage           *image
                                                       const GimpParasite  *icc_profile);
 
 GimpColorProfile     gimp_image_get_profile          (GimpImage           *image,
-                                                      guint8              *md5_digest,
                                                       GError             **error);
 
 

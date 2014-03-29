@@ -44,6 +44,7 @@ EXPORTS
 	gimp_lcms_profile_get_model
 	gimp_lcms_profile_get_summary
 	gimp_lcms_profile_is_cmyk
+	gimp_lcms_profile_is_equal
 	gimp_lcms_profile_is_rgb
 	gimp_lcms_profile_open_from_data
 	gimp_lcms_profile_open_from_file

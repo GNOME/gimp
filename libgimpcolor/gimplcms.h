@@ -36,11 +36,9 @@ G_BEGIN_DECLS
 
 
 GimpColorProfile   gimp_lcms_profile_open_from_file   (const gchar       *filename,
-                                                       guint8            *md5_digest,
                                                        GError           **error);
 GimpColorProfile   gimp_lcms_profile_open_from_data   (const guint8      *data,
                                                        gsize              length,
-                                                       guint8            *md5_digest,
                                                        GError           **error);
 
 gchar            * gimp_lcms_profile_get_description  (GimpColorProfile   profile);
@@ -50,10 +48,13 @@ gchar            * gimp_lcms_profile_get_copyright    (GimpColorProfile   profil
 
 gchar            * gimp_lcms_profile_get_summary      (GimpColorProfile   profile);
 
+gboolean           gimp_lcms_profile_is_equal         (GimpColorProfile   profile1,
+                                                       GimpColorProfile   profile2);
+
 gboolean           gimp_lcms_profile_is_rgb           (GimpColorProfile   profile);
 gboolean           gimp_lcms_profile_is_cmyk          (GimpColorProfile   profile);
 
-GimpColorProfile   gimp_lcms_create_srgb_profile      (guint8            *md5_digest);
+GimpColorProfile   gimp_lcms_create_srgb_profile      (void);
 
 
 G_END_DECLS

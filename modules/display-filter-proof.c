@@ -384,7 +384,7 @@ cdisplay_proof_changed (GimpColorDisplay *display)
   if (! proof->profile)
     return;
 
-  rgb_profile = gimp_lcms_create_srgb_profile (NULL);
+  rgb_profile = gimp_lcms_create_srgb_profile ();
 
   proof_profile = cmsOpenProfileFromFile (proof->profile, "r");
 

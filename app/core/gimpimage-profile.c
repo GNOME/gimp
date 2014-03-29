@@ -84,7 +84,7 @@ gimp_image_validate_icc_profile (GimpImage           *image,
 
   profile = gimp_lcms_profile_open_from_data (gimp_parasite_data (icc_profile),
                                               gimp_parasite_data_size (icc_profile),
-                                              NULL, error);
+                                              error);
 
   if (! profile)
     {
@@ -135,7 +135,6 @@ gimp_image_set_icc_profile (GimpImage          *image,
 
 GimpColorProfile
 gimp_image_get_profile (GimpImage  *image,
-                        guint8     *md5_digest,
                         GError    **error)
 {
   GimpColorConfig    *config;
@@ -153,12 +152,11 @@ gimp_image_get_profile (GimpImage  *image,
     {
       return gimp_lcms_profile_open_from_data (gimp_parasite_data (parasite),
                                                gimp_parasite_data_size (parasite),
-                                               md5_digest, error);
+                                               error);
     }
   else if (config->rgb_profile)
     {
-      profile = gimp_lcms_profile_open_from_file (config->rgb_profile,
-                                                  md5_digest, error);
+      profile = gimp_lcms_profile_open_from_file (config->rgb_profile, error);
 
       if (profile && ! gimp_lcms_profile_is_rgb (profile))
         {

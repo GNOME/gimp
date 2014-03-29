@@ -357,7 +357,7 @@ color_config_get_rgb_profile (GimpColorConfig *config)
   if (config->rgb_profile)
     profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
 
-  return profile ? profile : gimp_lcms_create_srgb_profile (NULL);
+  return profile ? profile : gimp_lcms_create_srgb_profile ();
 }
 
 static cmsHPROFILE

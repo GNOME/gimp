@@ -199,7 +199,7 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
       return;
     }
 
-  profile = gimp_lcms_profile_open_from_file (filename, NULL, &error);
+  profile = gimp_lcms_profile_open_from_file (filename, &error);
 
   if (! profile)
     {

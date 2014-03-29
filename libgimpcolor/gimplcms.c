@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib.h>  /* lcms.h uses the "inline" keyword */
 
 #include <lcms2.h>
@@ -57,25 +59,8 @@ gimp_lcms_error_quark (void)
   return quark;
 }
 
-static void
-gimp_lcms_calculate_checksum (const guint8 *data,
-                              gsize         length,
-                              guint8       *md5_digest)
-{
-  GChecksum *md5 = g_checksum_new (G_CHECKSUM_MD5);
-
-  g_checksum_update (md5,
-                     (const guchar *) data + sizeof (cmsICCHeader),
-                     length - sizeof (cmsICCHeader));
-
-  length = GIMP_LCMS_MD5_DIGEST_LENGTH;
-  g_checksum_get_digest (md5, md5_digest, &length);
-  g_checksum_free (md5);
-}
-
 GimpColorProfile
 gimp_lcms_profile_open_from_file (const gchar  *filename,
-                                  guint8       *md5_digest,
                                   GError      **error)
 {
   GimpColorProfile  profile;
@@ -97,15 +82,9 @@ gimp_lcms_profile_open_from_file (const gchar  *filename,
   profile = cmsOpenProfileFromMem (data, length);
 
   if (! profile)
-    {
-      g_set_error (error, gimp_lcms_error_quark (), 0,
-                   _("'%s' does not appear to be an ICC color profile"),
-                   gimp_filename_to_utf8 (filename));
-    }
-  else if (md5_digest)
-    {
-      gimp_lcms_calculate_checksum (data, length, md5_digest);
-    }
+    g_set_error (error, gimp_lcms_error_quark (), 0,
+                 _("'%s' does not appear to be an ICC color profile"),
+                 gimp_filename_to_utf8 (filename));
 
   g_mapped_file_unref (file);
 
@@ -115,7 +94,6 @@ gimp_lcms_profile_open_from_file (const gchar  *filename,
 GimpColorProfile
 gimp_lcms_profile_open_from_data (const guint8  *data,
                                   gsize          length,
-                                  guint8        *md5_digest,
                                   GError       **error)
 {
   GimpColorProfile  profile;
@@ -127,14 +105,8 @@ gimp_lcms_profile_open_from_data (const guint8  *data,
   profile = cmsOpenProfileFromMem (data, length);
 
   if (! profile)
-    {
-      g_set_error_literal (error, gimp_lcms_error_quark (), 0,
-                           _("Data does not appear to be an ICC color profile"));
-    }
-  else if (md5_digest)
-    {
-      gimp_lcms_calculate_checksum (data, length, md5_digest);
-    }
+    g_set_error_literal (error, gimp_lcms_error_quark (), 0,
+                         _("Data does not appear to be an ICC color profile"));
 
   return profile;
 }
@@ -237,6 +209,28 @@ gimp_lcms_profile_get_summary (GimpColorProfile profile)
 }
 
 gboolean
+gimp_lcms_profile_is_equal (GimpColorProfile profile1,
+                            GimpColorProfile profile2)
+{
+  cmsUInt8Number digest1[GIMP_LCMS_MD5_DIGEST_LENGTH];
+  cmsUInt8Number digest2[GIMP_LCMS_MD5_DIGEST_LENGTH];
+
+  g_return_val_if_fail (profile1 != NULL, FALSE);
+  g_return_val_if_fail (profile2 != NULL, FALSE);
+
+  if (! cmsMD5computeID (profile1) ||
+      ! cmsMD5computeID (profile2))
+    {
+      return FALSE;
+    }
+
+  cmsGetHeaderProfileID (profile1, digest1);
+  cmsGetHeaderProfileID (profile2, digest2);
+
+  return (memcmp (digest1, digest2, GIMP_LCMS_MD5_DIGEST_LENGTH) == 0);
+}
+
+gboolean
 gimp_lcms_profile_is_rgb (GimpColorProfile profile)
 {
   g_return_val_if_fail (profile != NULL, FALSE);
@@ -297,7 +291,7 @@ gimp_lcms_profile_set_tag (cmsHPROFILE      profile,
  * Since: GIMP 2.10
  **/
 GimpColorProfile
-gimp_lcms_create_srgb_profile (guint8 *md5_digest)
+gimp_lcms_create_srgb_profile (void)
 {
   cmsHPROFILE srgb_profile;
   cmsCIExyY   d65_srgb_specs = { 0.3127, 0.3290, 1.0 };
@@ -344,26 +338,6 @@ gimp_lcms_create_srgb_profile (guint8 *md5_digest)
    *
    * cmsSetProfileVersion (srgb_profile, 2.1);
    **/
-
-  if (md5_digest)
-    {
-      md5_digest[0]  = 0xcb;
-      md5_digest[1]  = 0x63;
-      md5_digest[2]  = 0x14;
-      md5_digest[3]  = 0x56;
-      md5_digest[4]  = 0xd4;
-      md5_digest[5]  = 0x0a;
-      md5_digest[6]  = 0x01;
-      md5_digest[7]  = 0x62;
-      md5_digest[8]  = 0xa0;
-      md5_digest[9]  = 0xdb;
-      md5_digest[10] = 0xe6;
-      md5_digest[11] = 0x32;
-      md5_digest[12] = 0x8b;
-      md5_digest[13] = 0xea;
-      md5_digest[14] = 0x1a;
-      md5_digest[15] = 0x89;
-    }
 
   return srgb_profile;
 }
