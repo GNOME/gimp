@@ -578,18 +578,18 @@ lcms_icc_apply (GimpColorConfig          *config,
 
   if (gimp_lcms_profile_is_equal (src_profile, dest_profile))
     {
-      gchar *src_desc  = gimp_lcms_profile_get_description (src_profile);
-      gchar *dest_desc = gimp_lcms_profile_get_description (dest_profile);
+      gchar *src_label  = gimp_lcms_profile_get_label (src_profile);
+      gchar *dest_label = gimp_lcms_profile_get_label (dest_profile);
 
       cmsCloseProfile (src_profile);
       cmsCloseProfile (dest_profile);
 
       g_printerr ("lcms: skipping conversion because profiles seem to be equal:\n");
-      g_printerr (" %s\n", src_desc);
-      g_printerr (" %s\n", dest_desc);
+      g_printerr (" %s\n", src_label);
+      g_printerr (" %s\n", dest_label);
 
-      g_free (src_desc);
-      g_free (dest_desc);
+      g_free (src_label);
+      g_free (dest_label);
 
       return GIMP_PDB_SUCCESS;
     }
@@ -785,8 +785,8 @@ lcms_image_apply_profile (gint32                    image,
                           GimpColorRenderingIntent  intent,
                           gboolean                  bpc)
 {
-  gchar  *src_desc;
-  gchar  *dest_desc;
+  gchar  *src_label;
+  gchar  *dest_label;
   gint32  saved_selection = -1;
 
   gimp_image_undo_group_start (image);
@@ -798,21 +798,16 @@ lcms_image_apply_profile (gint32                    image,
       return FALSE;
     }
 
-  src_desc = gimp_lcms_profile_get_description (src_profile);
-  if (! src_desc)
-    src_desc = gimp_lcms_profile_get_model (src_profile);
-
-  dest_desc = gimp_lcms_profile_get_description (dest_profile);
-  if (! dest_desc)
-    dest_desc = gimp_lcms_profile_get_model (dest_profile);
+  src_label  = gimp_lcms_profile_get_label (src_profile);
+  dest_label = gimp_lcms_profile_get_label (dest_profile);
 
   gimp_progress_init_printf (_("Converting from '%s' to '%s'"),
-                             src_desc, dest_desc);
+                             src_label, dest_label);
 
-  g_printerr ("lcms: converting from '%s' to '%s'\n", src_desc, dest_desc);
+  g_printerr ("lcms: converting from '%s' to '%s'\n", src_label, dest_label);
 
-  g_free (dest_desc);
-  g_free (src_desc);
+  g_free (dest_label);
+  g_free (src_label);
 
   if (! gimp_selection_is_empty (image))
     {
@@ -1079,7 +1074,6 @@ lcms_icc_profile_src_label_new (gint32       image,
   GtkWidget *vbox;
   GtkWidget *label;
   gchar     *name;
-  gchar     *desc;
   gchar     *text;
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
@@ -1101,16 +1095,16 @@ lcms_icc_profile_src_label_new (gint32       image,
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  desc = gimp_lcms_profile_get_description (profile);
+  name = gimp_lcms_profile_get_label (profile);
   label = g_object_new (GTK_TYPE_LABEL,
-                        "label",   desc,
+                        "label",   name,
                         "wrap",    TRUE,
                         "justify", GTK_JUSTIFY_LEFT,
                         "xalign",  0.0,
                         "yalign",  0.0,
                         "xpad",    24,
                         NULL);
-  g_free (desc);
+  g_free (name);
 
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
@@ -1125,13 +1119,13 @@ static GtkWidget *
 lcms_icc_profile_dest_label_new (cmsHPROFILE  profile)
 {
   GtkWidget *label;
-  gchar     *desc;
+  gchar     *name;
   gchar     *text;
 
-  desc = gimp_lcms_profile_get_description (profile);
+  name = gimp_lcms_profile_get_label (profile);
   text = g_strdup_printf (_("Convert the image to the RGB working space (%s)?"),
-                          desc);
-  g_free (desc);
+                          name);
+  g_free (name);
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "label",   text,
@@ -1238,10 +1232,7 @@ lcms_icc_combo_box_set_active (GimpColorProfileComboBox *combo,
 
   if (profile)
     {
-      label = gimp_lcms_profile_get_description (profile);
-      if (! label)
-        label = gimp_lcms_profile_get_model (profile);
-
+      label = gimp_lcms_profile_get_label (profile);
       cmsCloseProfile (profile);
     }
 
@@ -1319,14 +1310,11 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   if (! profile)
     profile = gimp_lcms_create_srgb_profile ();
 
-  name = gimp_lcms_profile_get_description (profile);
-  if (! name)
-    name = gimp_lcms_profile_get_model (profile);
-
-  cmsCloseProfile (profile);
-
+  name = gimp_lcms_profile_get_label (profile);
   label = g_strdup_printf (_("RGB workspace (%s)"), name);
   g_free (name);
+
+  cmsCloseProfile (profile);
 
   gimp_color_profile_combo_box_add (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
                                     rgb_filename, label);
@@ -1404,9 +1392,7 @@ lcms_dialog (GimpColorConfig *config,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  name = gimp_lcms_profile_get_description (src_profile);
-  if (! name)
-    name = gimp_lcms_profile_get_model (src_profile);
+  name = gimp_lcms_profile_get_label (src_profile);
 
   label = gtk_label_new (name);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);

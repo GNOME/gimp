@@ -379,7 +379,7 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   cmsUInt32Number    flags    = 0;
   cmsHPROFILE        rgb_profile;
   cmsHPROFILE        cmyk_profile;
-  gchar             *name;
+  gchar             *label;
   gchar             *summary;
   gchar             *text;
 
@@ -407,18 +407,15 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   if (! cmyk_profile)
     goto out;
 
-  name = gimp_lcms_profile_get_description (cmyk_profile);
-  if (! name)
-    name = gimp_lcms_profile_get_model (cmyk_profile);
-
+  label   = gimp_lcms_profile_get_label (cmyk_profile);
   summary = gimp_lcms_profile_get_summary (cmyk_profile);
 
-  text = g_strdup_printf (_("Profile: %s"), name);
+  text = g_strdup_printf (_("Profile: %s"), label);
   gtk_label_set_text (GTK_LABEL (module->name_label), text);
   gimp_help_set_help_data (module->name_label, summary, NULL);
 
   g_free (text);
-  g_free (name);
+  g_free (label);
   g_free (summary);
 
   if (config->display_intent ==

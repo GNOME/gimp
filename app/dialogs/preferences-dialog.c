@@ -792,10 +792,7 @@ prefs_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
 
   if (profile)
     {
-      label = gimp_lcms_profile_get_description (profile);
-      if (! label)
-        label = gimp_lcms_profile_get_model (profile);
-
+      label = gimp_lcms_profile_get_label (profile);
       cmsCloseProfile (profile);
     }
 

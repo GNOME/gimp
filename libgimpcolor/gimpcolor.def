@@ -40,6 +40,7 @@ EXPORTS
 	gimp_lcms_create_srgb_profile
 	gimp_lcms_profile_get_copyright
 	gimp_lcms_profile_get_description
+	gimp_lcms_profile_get_label
 	gimp_lcms_profile_get_manufacturer
 	gimp_lcms_profile_get_model
 	gimp_lcms_profile_get_summary

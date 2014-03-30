@@ -167,27 +167,18 @@ cdisplay_lcms_finalize (GObject *object)
 
 static void
 cdisplay_lcms_profile_get_info (cmsHPROFILE   profile,
-                                gchar       **name,
-                                gchar       **info)
+                                gchar       **label,
+                                gchar       **summary)
 {
   if (profile)
     {
-      *name = gimp_lcms_profile_get_description (profile);
-      if (! *name)
-        *name = gimp_lcms_profile_get_model (profile);
-
-      if (! *name)
-        {
-          /* a color profile without a name */
-          *name = g_strdup (_("(unnamed profile)"));
-        }
-
-      *info = gimp_lcms_profile_get_summary (profile);
+      *label   = gimp_lcms_profile_get_label (profile);
+      *summary = gimp_lcms_profile_get_summary (profile);
     }
   else
     {
-      *name = g_strdup (_("None"));
-      *info = NULL;
+      *label   = g_strdup (_("None"));
+      *summary = NULL;
     }
 }
 

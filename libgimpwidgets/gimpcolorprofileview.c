@@ -106,8 +106,7 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
 {
   GtkTextBuffer *buffer;
   GtkTextIter    iter;
-  gchar         *desc;
-  gchar         *model;
+  gchar         *label;
   gchar         *summary;
 
   g_return_if_fail (GIMP_IS_COLOR_PROFILE_VIEW (view));
@@ -123,22 +122,13 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
 
   gtk_text_buffer_get_start_iter (buffer, &iter);
 
-  desc    = gimp_lcms_profile_get_description (profile);
-  model   = gimp_lcms_profile_get_model (profile);
+  label   = gimp_lcms_profile_get_label (profile);
   summary = gimp_lcms_profile_get_summary (profile);
 
-  if ((desc  && strlen (desc)) ||
-      (model && strlen (model)))
+  if (label && strlen (label))
     {
-      gchar *title;
-
-      if (desc && strlen (desc))
-        title = desc;
-      else
-        title = model;
-
       gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
-                                                title, -1,
+                                                label, -1,
                                                 "strong", NULL);
       gtk_text_buffer_insert (buffer, &iter, "\n", 1);
     }
@@ -146,8 +136,7 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
   if (summary)
     gtk_text_buffer_insert (buffer, &iter, summary, -1);
 
-  g_free (desc);
-  g_free (model);
+  g_free (label);
   g_free (summary);
 }
 

@@ -46,6 +46,7 @@ gchar            * gimp_lcms_profile_get_manufacturer (GimpColorProfile   profil
 gchar            * gimp_lcms_profile_get_model        (GimpColorProfile   profile);
 gchar            * gimp_lcms_profile_get_copyright    (GimpColorProfile   profile);
 
+gchar            * gimp_lcms_profile_get_label        (GimpColorProfile   profile);
 gchar            * gimp_lcms_profile_get_summary      (GimpColorProfile   profile);
 
 gboolean           gimp_lcms_profile_is_equal         (GimpColorProfile   profile1,

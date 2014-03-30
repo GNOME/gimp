@@ -162,6 +162,36 @@ gimp_lcms_profile_get_copyright (GimpColorProfile profile)
 }
 
 gchar *
+gimp_lcms_profile_get_label (GimpColorProfile profile)
+{
+  gchar *label;
+
+  g_return_val_if_fail (profile != NULL, NULL);
+
+  label = gimp_lcms_profile_get_description (profile);
+
+  if (label && ! strlen (label))
+    {
+      g_free (label);
+      label = NULL;
+    }
+
+  if (! label)
+    label = gimp_lcms_profile_get_model (profile);
+
+  if (label && ! strlen (label))
+    {
+      g_free (label);
+      label = NULL;
+    }
+
+  if (! label)
+    label = g_strdup (_("(unnamed profile)"));
+
+  return label;
+}
+
+gchar *
 gimp_lcms_profile_get_summary (GimpColorProfile profile)
 {
   GString *string;
