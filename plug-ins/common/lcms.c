@@ -1278,7 +1278,8 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   gchar       *history;
   gchar       *label;
   gchar       *name;
-  cmsHPROFILE  profile = NULL;
+  const gchar *rgb_filename = NULL;
+  cmsHPROFILE  profile      = NULL;
 
   dialog = gimp_color_profile_chooser_dialog_new (_("Select destination profile"));
   history = gimp_personal_rc_file ("profilerc");
@@ -1302,6 +1303,17 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
           g_message ("%s", error->message);
           g_clear_error (&error);
         }
+      else if (! gimp_lcms_profile_is_rgb (profile))
+        {
+          g_message (_("Color profile '%s' is not for RGB color space."),
+                     gimp_filename_to_utf8 (config->rgb_profile));
+          cmsCloseProfile (profile);
+          profile = NULL;
+        }
+      else
+        {
+          rgb_filename = config->rgb_profile;
+        }
     }
 
   if (! profile)
@@ -1317,7 +1329,7 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   g_free (name);
 
   gimp_color_profile_combo_box_add (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                    config->rgb_profile, label);
+                                    rgb_filename, label);
   g_free (label);
 
   if (filename)
