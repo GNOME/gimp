@@ -4,7 +4,7 @@
 # This file is distributed under the same licence as the libgimp package.
 #
 # Nedeljko Grabant <nedeljkograbant@gmail.com>, 2007.
-# Martin Srebotnjak <miles@filmsi.net>, 2007, 2013.
+# Martin Srebotnjak <miles@filmsi.net>, 2007, 2013-2014.
 #
 msgid ""
 msgstr ""
@@ -12,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2014-02-08 18:37+0000\n"
-"PO-Revision-Date: 2014-02-09 00:35+0100\n"
+"PO-Revision-Date: 2014-02-11 10:50+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl_SI\n"
@@ -1007,6 +1007,8 @@ msgstr ""
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to). "
 msgstr ""
+"Uporabi kompenzacijo črne točke (razen če veste za razlog, da tega ne bi "
+"uporabili)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:76
 msgid ""
@@ -1014,6 +1016,9 @@ msgid ""
 "simulation device (usually your monitor). Try them all and choose what looks "
 "the best. "
 msgstr ""
+"Kako so barve iz barvnega prostora vaše slike pretvorjene v simuliran barvni "
+"prostor izhodne naprave (običajno vaš zaslon). Poskusite vse in izberite "
+"tisto nastavitev, ki je videti najboljša."
 
 #: ../libgimpconfig/gimpcolorconfig.c:80
 msgid ""
