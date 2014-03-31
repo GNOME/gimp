@@ -930,10 +930,10 @@ lcms_layers_transform_rgb (gint                     *layers,
               iter_format = babl_format ("R'G'B' u16");
             }
         }
-#ifdef TYPE_RGB_HALF_FLT
-      /* half float types are only in lcms 2.4 and newer */
       else if (type == babl_type ("half")) /* 16-bit floating point (half) */
         {
+#ifdef TYPE_RGB_HALF_FLT
+          /* half float types are only in lcms 2.4 and newer */
           if (has_alpha)
             {
               lcms_format = TYPE_RGBA_HALF_FLT;
@@ -942,10 +942,23 @@ lcms_layers_transform_rgb (gint                     *layers,
           else
             {
               lcms_format = TYPE_RGB_HALF_FLT;
+              iter_format = babl_format ("R'G'B' float");
+            }
+#else /* ! TYPE_RGB_HALF_FLT */
+          g_printerr ("lcms: half float not supported, falling back to float\n");
+
+          if (has_alpha)
+            {
+              lcms_format = TYPE_RGBA_FLT;
+              iter_format = babl_format ("R'G'B'A float");
+            }
+          else
+            {
+              lcms_format = TYPE_RGB_FLT;
               iter_format = babl_format ("R'G'B' half");
             }
-        }
 #endif /* TYPE_RGB_HALF_FLT */
+        }
       else if (type == babl_type ("float"))
         {
           if (has_alpha)
@@ -959,9 +972,41 @@ lcms_layers_transform_rgb (gint                     *layers,
               iter_format = babl_format ("R'G'B' float");
             }
         }
+      else if (type == babl_type ("double"))
+        {
+          if (has_alpha)
+            {
+#ifdef TYPE_RGBA_DBL
+              /* RGBA double not implemented in lcms */
+              lcms_format = TYPE_RGBA_DBL;
+              iter_format = babl_format ("R'G'B'A double");
+#else /* ! TYPE_RGBA_DBL */
+              g_printerr ("lcms: RGBA double not supported, falling back to float\n");
+
+              lcms_format = TYPE_RGBA_FLT;
+              iter_format = babl_format ("R'G'B'A float");
+#endif /* TYPE_RGBA_DBL */
+            }
+          else
+            {
+              lcms_format = TYPE_RGB_DBL;
+              iter_format = babl_format ("R'G'B' double");
+            }
+        }
       else
         {
-          g_warning ("layer format has not been coded yet; unable to create transform");
+          g_printerr ("lcms: layer format not supported, falling back to float\n");
+
+          if (has_alpha)
+            {
+              lcms_format = TYPE_RGBA_FLT;
+              iter_format = babl_format ("R'G'B'A float");
+            }
+          else
+            {
+              lcms_format = TYPE_RGB_FLT;
+              iter_format = babl_format ("R'G'B' float");
+            }
         }
 
       if (lcms_format != 0)
