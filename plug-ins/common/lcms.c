@@ -873,19 +873,19 @@ lcms_layers_transform_rgb (gint                     *layers,
                            GimpColorRenderingIntent  intent,
                            gboolean                  bpc)
 {
-  cmsHTRANSFORM    transform   = NULL;
-  cmsUInt32Number  lcms_format = 0;
-  gint             i;
+  gint i;
 
   for (i = 0; i < num_layers; i++)
     {
-      gint32      layer_id = layers[i];
-      const Babl *layer_format;
-      gboolean    has_alpha;
-      const Babl *type;
-      const Babl *iter_format = NULL;
-      gint       *children;
-      gint        num_children;
+      gint32           layer_id = layers[i];
+      const Babl      *layer_format;
+      gboolean         has_alpha;
+      const Babl      *type;
+      const Babl      *iter_format = NULL;
+      cmsUInt32Number  lcms_format = 0;
+      cmsHTRANSFORM    transform   = NULL;
+      gint            *children;
+      gint             num_children;
 
       children = gimp_item_get_children (layer_id, &num_children);
 
@@ -944,19 +944,6 @@ lcms_layers_transform_rgb (gint                     *layers,
               lcms_format = TYPE_RGB_HALF_FLT;
               iter_format = babl_format ("R'G'B' float");
             }
-#else /* ! TYPE_RGB_HALF_FLT */
-          g_printerr ("lcms: half float not supported, falling back to float\n");
-
-          if (has_alpha)
-            {
-              lcms_format = TYPE_RGBA_FLT;
-              iter_format = babl_format ("R'G'B'A float");
-            }
-          else
-            {
-              lcms_format = TYPE_RGB_FLT;
-              iter_format = babl_format ("R'G'B' half");
-            }
 #endif /* TYPE_RGB_HALF_FLT */
         }
       else if (type == babl_type ("float"))
@@ -980,11 +967,6 @@ lcms_layers_transform_rgb (gint                     *layers,
               /* RGBA double not implemented in lcms */
               lcms_format = TYPE_RGBA_DBL;
               iter_format = babl_format ("R'G'B'A double");
-#else /* ! TYPE_RGBA_DBL */
-              g_printerr ("lcms: RGBA double not supported, falling back to float\n");
-
-              lcms_format = TYPE_RGBA_FLT;
-              iter_format = babl_format ("R'G'B'A float");
 #endif /* TYPE_RGBA_DBL */
             }
           else
@@ -993,9 +975,12 @@ lcms_layers_transform_rgb (gint                     *layers,
               iter_format = babl_format ("R'G'B' double");
             }
         }
-      else
+
+      if (lcms_format == 0)
         {
-          g_printerr ("lcms: layer format not supported, falling back to float\n");
+          g_printerr ("lcms: layer format %s not supported, "
+                      "falling back to float\n",
+                      babl_get_name (layer_format));
 
           if (has_alpha)
             {
@@ -1009,72 +994,69 @@ lcms_layers_transform_rgb (gint                     *layers,
             }
         }
 
-      if (lcms_format != 0)
+      transform = cmsCreateTransform (src_profile,  lcms_format,
+                                      dest_profile, lcms_format,
+                                      intent,
+                                      cmsFLAGS_NOOPTIMIZE |
+                                      bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0);
+
+      if (transform)
         {
-          transform = cmsCreateTransform (src_profile,  lcms_format,
-                                          dest_profile, lcms_format,
-                                          intent,
-                                          cmsFLAGS_NOOPTIMIZE |
-                                          bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0);
+          GeglBuffer         *src_buffer;
+          GeglBuffer         *dest_buffer;
+          GeglBufferIterator *iter;
+          gint                layer_width;
+          gint                layer_height;
+          gint                layer_bpp;
+          gboolean            layer_alpha;
+          gdouble             progress_start = (gdouble) i / num_layers;
+          gdouble             progress_end   = (gdouble) (i + 1) / num_layers;
+          gdouble             range          = progress_end - progress_start;
+          gint                count          = 0;
+          gint                done           = 0;
 
-          if (transform)
+          src_buffer   = gimp_drawable_get_buffer (layer_id);
+          dest_buffer  = gimp_drawable_get_shadow_buffer (layer_id);
+          layer_width  = gegl_buffer_get_width (src_buffer);
+          layer_height = gegl_buffer_get_height (src_buffer);
+          layer_bpp    = babl_format_get_bytes_per_pixel (iter_format);
+          layer_alpha  = babl_format_has_alpha (iter_format);
+
+          iter = gegl_buffer_iterator_new (src_buffer, NULL, 0,
+                                           iter_format,
+                                           GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+
+          gegl_buffer_iterator_add (iter, dest_buffer, NULL, 0,
+                                    iter_format,
+                                    GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+
+          while (gegl_buffer_iterator_next (iter))
             {
-              GeglBuffer         *src_buffer;
-              GeglBuffer         *dest_buffer;
-              GeglBufferIterator *iter;
-              gint                layer_width;
-              gint                layer_height;
-              gint                layer_bpp;
-              gboolean            layer_alpha;
-              gdouble             progress_start = (gdouble) i / num_layers;
-              gdouble             progress_end   = (gdouble) (i + 1) / num_layers;
-              gdouble             range          = progress_end - progress_start;
-              gint                count          = 0;
-              gint                done           = 0;
+              /*  lcms doesn't touch the alpha channel, simply
+               *  copy everything to dest before the transform
+               */
+              if (layer_alpha)
+                memcpy (iter->data[1], iter->data[0],
+                        iter->length * layer_bpp);
 
-              src_buffer   = gimp_drawable_get_buffer (layer_id);
-              dest_buffer  = gimp_drawable_get_shadow_buffer (layer_id);
-              layer_width  = gegl_buffer_get_width (src_buffer);
-              layer_height = gegl_buffer_get_height (src_buffer);
-              layer_bpp    = babl_format_get_bytes_per_pixel (iter_format);
-              layer_alpha  = babl_format_has_alpha (iter_format);
-
-              iter = gegl_buffer_iterator_new (src_buffer, NULL, 0,
-                                               iter_format,
-                                               GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
-
-              gegl_buffer_iterator_add (iter, dest_buffer, NULL, 0,
-                                        iter_format,
-                                        GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
-
-              while (gegl_buffer_iterator_next (iter))
-                {
-                  /*  lcms doesn't touch the alpha channel, simply
-                   *  copy everything to dest before the transform
-                   */
-                  if (layer_alpha)
-                    memcpy (iter->data[1], iter->data[0],
-                            iter->length * layer_bpp);
-
-                  cmsDoTransform (transform,
-                                  iter->data[0], iter->data[1], iter->length);
-                }
-
-              g_object_unref (src_buffer);
-              g_object_unref (dest_buffer);
-
-              gimp_drawable_merge_shadow (layer_id, TRUE);
-              gimp_drawable_update (layer_id, 0, 0, layer_width, layer_height);
-
-              if (count++ % 32 == 0)
-                {
-                  gimp_progress_update (progress_start +
-                                        (gdouble) done /
-                                        (layer_width * layer_height) * range);
-                }
-
-              cmsDeleteTransform (transform);
+              cmsDoTransform (transform,
+                              iter->data[0], iter->data[1], iter->length);
             }
+
+          g_object_unref (src_buffer);
+          g_object_unref (dest_buffer);
+
+          gimp_drawable_merge_shadow (layer_id, TRUE);
+          gimp_drawable_update (layer_id, 0, 0, layer_width, layer_height);
+
+          if (count++ % 32 == 0)
+            {
+              gimp_progress_update (progress_start +
+                                    (gdouble) done /
+                                    (layer_width * layer_height) * range);
+            }
+
+          cmsDeleteTransform (transform);
         }
     }
 }
