@@ -138,7 +138,7 @@ action_search_dialog_create (Gimp *gimp)
       gtk_window_set_title (GTK_WINDOW (action_search_dialog),
                             _("Search Actions"));
 
-      main_vbox = gtk_vbox_new (FALSE, 2);
+      main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
       gtk_container_add (GTK_CONTAINER (action_search_dialog), main_vbox);
       gtk_widget_show (main_vbox);
 
@@ -154,8 +154,10 @@ action_search_dialog_create (Gimp *gimp)
       gtk_box_pack_start (GTK_BOX (main_vbox), private->list_view, TRUE, TRUE, 0);
 
       gtk_widget_set_events (private->dialog,
-                             GDK_KEY_RELEASE_MASK | GDK_KEY_PRESS_MASK |
-                             GDK_BUTTON_PRESS_MASK | GDK_SCROLL_MASK);
+                             GDK_KEY_RELEASE_MASK  |
+                             GDK_KEY_PRESS_MASK    |
+                             GDK_BUTTON_PRESS_MASK |
+                             GDK_SCROLL_MASK);
 
       g_signal_connect (private->keyword_entry, "key-release-event",
                         G_CALLBACK (action_search_entry_key_released),
@@ -197,11 +199,11 @@ action_search_entry_key_released (GtkWidget    *widget,
 
   switch (event->keyval)
     {
-    case GDK_Escape:
+    case GDK_KEY_Escape:
       action_search_hide (private);
       return;
 
-    case GDK_Return:
+    case GDK_KEY_Return:
       action_search_run_selected (private);
       return;
     }
@@ -216,7 +218,7 @@ action_search_entry_key_released (GtkWidget    *widget,
       gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree_view),
                                       gtk_tree_path_new_from_string ("0"));
     }
-  else if (strcmp (entry_text, "") == 0 && (event->keyval == GDK_Down))
+  else if (strcmp (entry_text, "") == 0 && (event->keyval == GDK_KEY_Down))
     {
       gtk_window_resize (GTK_WINDOW (private->dialog),
                          width, private->window_height);
@@ -259,17 +261,17 @@ action_search_list_key_pressed (GtkWidget    *widget,
 {
   switch (kevent->keyval)
     {
-    case GDK_Return:
+    case GDK_KEY_Return:
       {
         action_search_run_selected (private);
         break;
       }
-    case GDK_Escape:
+    case GDK_KEY_Escape:
       {
         action_search_hide (private);
         return TRUE;
       }
-    case GDK_Up:
+    case GDK_KEY_Up:
       {
         gboolean          event_processed = FALSE;
         GtkTreeSelection *selection;
@@ -302,7 +304,7 @@ action_search_list_key_pressed (GtkWidget    *widget,
 
         return event_processed;
       }
-    case GDK_Down:
+    case GDK_KEY_Down:
       {
         return FALSE;
       }
