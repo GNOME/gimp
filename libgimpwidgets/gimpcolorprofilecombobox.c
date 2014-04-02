@@ -21,7 +21,14 @@
 
 #include "config.h"
 
+#include <glib.h>  /* lcms.h uses the "inline" keyword */
+
+#include <lcms2.h>
+
+#include <gegl.h>
 #include <gtk/gtk.h>
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "gimpwidgetstypes.h"
 
@@ -388,14 +395,42 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
+  gchar        *l = NULL;
 
   g_return_if_fail (GIMP_IS_COLOR_PROFILE_COMBO_BOX (combo));
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
 
+  if (filename && ! (label && *label))
+    {
+      cmsHPROFILE  profile;
+      GError      *error = NULL;
+
+      profile = gimp_lcms_profile_open_from_file (filename, &error);
+
+      if (! profile)
+        {
+          g_message ("%s", error->message);
+          g_clear_error (&error);
+        }
+      else
+        {
+          l = gimp_lcms_profile_get_label (profile);
+          cmsCloseProfile (profile);
+        }
+    }
+  else
+    {
+      l = g_strdup (label);
+    }
+
   if (_gimp_color_profile_store_history_add (GIMP_COLOR_PROFILE_STORE (model),
-                                             filename, label, &iter))
-    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
+                                             filename, l, &iter))
+    {
+      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
+    }
+
+  g_free (l);
 }
 
 /**

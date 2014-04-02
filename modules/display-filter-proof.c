@@ -260,26 +260,6 @@ cdisplay_proof_convert_buffer (GimpColorDisplay *display,
 }
 
 static void
-cdisplay_proof_combo_box_set_active (GimpColorProfileComboBox *combo,
-                                     const gchar              *filename)
-{
-  cmsHPROFILE  profile = NULL;
-  gchar       *label   = NULL;
-
-  if (filename)
-    profile = cmsOpenProfileFromFile (filename, "r");
-
-  if (profile)
-    {
-      label = gimp_lcms_profile_get_label (profile);
-      cmsCloseProfile (profile);
-    }
-
-  gimp_color_profile_combo_box_set_active (combo, filename, label);
-  g_free (label);
-}
-
-static void
 cdisplay_proof_file_chooser_dialog_response (GtkFileChooser           *dialog,
                                              gint                      response,
                                              GimpColorProfileComboBox *combo)
@@ -290,7 +270,7 @@ cdisplay_proof_file_chooser_dialog_response (GtkFileChooser           *dialog,
 
       if (filename)
         {
-          cdisplay_proof_combo_box_set_active (combo, filename);
+          gimp_color_profile_combo_box_set_active (combo, filename, NULL);
 
           g_free (filename);
         }
@@ -343,8 +323,8 @@ cdisplay_proof_configure (GimpColorDisplay *display)
                     proof);
 
   if (proof->profile)
-    cdisplay_proof_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                         proof->profile);
+    gimp_color_profile_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                             proof->profile, NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("_Profile:"), 0.0, 0.5,
