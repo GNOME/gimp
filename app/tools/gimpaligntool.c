@@ -193,6 +193,9 @@ gimp_align_tool_control (GimpTool       *tool,
     case GIMP_TOOL_ACTION_HALT:
       gimp_align_tool_clear_selected (align_tool);
       break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      break;
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);

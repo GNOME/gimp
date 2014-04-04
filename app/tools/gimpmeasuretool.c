@@ -183,6 +183,9 @@ gimp_measure_tool_control (GimpTool       *tool,
       if (measure->gui)
         g_object_unref (measure->gui);
       break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      break;
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);

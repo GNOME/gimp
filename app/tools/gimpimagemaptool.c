@@ -104,6 +104,9 @@ static void      gimp_image_map_tool_color_picked   (GimpColorTool    *color_too
                                                      const GimpRGB    *color,
                                                      gint              color_index);
 
+static void      gimp_image_map_tool_halt           (GimpImageMapTool *im_tool);
+static void      gimp_image_map_tool_commit         (GimpImageMapTool *im_tool);
+
 static void      gimp_image_map_tool_map            (GimpImageMapTool *im_tool);
 static void      gimp_image_map_tool_dialog         (GimpImageMapTool *im_tool);
 static void      gimp_image_map_tool_dialog_unmap   (GtkWidget        *dialog,
@@ -416,21 +419,11 @@ gimp_image_map_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      if (image_map_tool->gui)
-        gimp_tool_gui_hide (image_map_tool->gui);
+      gimp_image_map_tool_halt (image_map_tool);
+      break;
 
-      if (image_map_tool->image_map)
-        {
-          gimp_tool_control_push_preserve (tool->control, TRUE);
-
-          gimp_image_map_abort (image_map_tool->image_map);
-          g_object_unref (image_map_tool->image_map);
-          image_map_tool->image_map = NULL;
-
-          gimp_tool_control_pop_preserve (tool->control);
-        }
-
-      tool->drawable = NULL;
+    case GIMP_TOOL_ACTION_COMMIT:
+      gimp_image_map_tool_commit (image_map_tool);
       break;
     }
 
@@ -552,6 +545,67 @@ gimp_image_map_tool_color_picked (GimpColorTool      *color_tool,
 }
 
 static void
+gimp_image_map_tool_halt (GimpImageMapTool *im_tool)
+{
+  GimpTool *tool = GIMP_TOOL (im_tool);
+
+  if (im_tool->gui)
+    gimp_tool_gui_hide (im_tool->gui);
+
+  if (im_tool->image_map)
+    {
+      gimp_tool_control_push_preserve (tool->control, TRUE);
+
+      gimp_image_map_abort (im_tool->image_map);
+      g_object_unref (im_tool->image_map);
+      im_tool->image_map = NULL;
+
+      gimp_tool_control_pop_preserve (tool->control);
+    }
+
+  tool->drawable = NULL;
+}
+
+static void
+gimp_image_map_tool_commit (GimpImageMapTool *im_tool)
+{
+  GimpTool *tool = GIMP_TOOL (im_tool);
+
+  if (im_tool->gui)
+    gimp_tool_gui_hide (im_tool->gui);
+
+  if (im_tool->image_map)
+    {
+      GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
+
+      gimp_tool_control_push_preserve (tool->control, TRUE);
+
+      if (! options->preview)
+        gimp_image_map_tool_map (im_tool);
+
+      gimp_image_map_commit (im_tool->image_map,
+                             GIMP_PROGRESS (tool));
+      g_object_unref (im_tool->image_map);
+      im_tool->image_map = NULL;
+
+      gimp_tool_control_pop_preserve (tool->control);
+
+      gimp_image_flush (gimp_display_get_image (tool->display));
+
+      if (im_tool->config && im_tool->settings_box)
+        {
+          GimpGuiConfig *config = GIMP_GUI_CONFIG (tool->tool_info->gimp->config);
+
+          gimp_settings_box_add_current (GIMP_SETTINGS_BOX (im_tool->settings_box),
+                                         config->image_map_tool_max_recent);
+        }
+    }
+
+  tool->display  = NULL;
+  tool->drawable = NULL;
+}
+
+static void
 gimp_image_map_tool_map (GimpImageMapTool *tool)
 {
   if (GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->map)
@@ -661,34 +715,7 @@ gimp_image_map_tool_response (GimpToolGui      *gui,
       break;
 
     case GTK_RESPONSE_OK:
-      if (image_map_tool->gui)
-        gimp_tool_gui_hide (image_map_tool->gui);
-
-      if (image_map_tool->image_map)
-        {
-          GimpImageMapOptions *options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
-
-          gimp_tool_control_push_preserve (tool->control, TRUE);
-
-          if (! options->preview)
-            gimp_image_map_tool_map (image_map_tool);
-
-          gimp_image_map_commit (image_map_tool->image_map,
-                                 GIMP_PROGRESS (tool));
-          g_object_unref (image_map_tool->image_map);
-          image_map_tool->image_map = NULL;
-
-          gimp_tool_control_pop_preserve (tool->control);
-
-          gimp_image_flush (gimp_display_get_image (tool->display));
-
-          if (image_map_tool->config && image_map_tool->settings_box)
-            gimp_settings_box_add_current (GIMP_SETTINGS_BOX (image_map_tool->settings_box),
-                                           GIMP_GUI_CONFIG (tool->tool_info->gimp->config)->image_map_tool_max_recent);
-        }
-
-      tool->display  = NULL;
-      tool->drawable = NULL;
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, tool->display);
       break;
 
     default:

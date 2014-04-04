@@ -334,6 +334,9 @@ gimp_text_tool_control (GimpTool       *tool,
       gimp_text_tool_editor_halt (text_tool);
       gimp_text_tool_set_drawable (text_tool, NULL, FALSE);
       break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      break;
     }
 
   gimp_rectangle_tool_control (tool, action, display);

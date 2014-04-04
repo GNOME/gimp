@@ -347,6 +347,10 @@ gimp_transform_tool_control (GimpTool       *tool,
     case GIMP_TOOL_ACTION_HALT:
       gimp_transform_tool_halt (tr_tool);
      break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      gimp_transform_tool_transform (tr_tool, display);
+      break;
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
@@ -1352,7 +1356,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
     {
       gimp_tool_message_literal (tool, display, error->message);
       g_clear_error (&error);
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       return;
     }
 
@@ -1449,8 +1452,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
    *  the image gets dirty while the tool exists
    */
   gimp_tool_control_pop_preserve (tool->control);
-
-  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
   gimp_unset_busy (display->gimp);
 
@@ -1754,8 +1755,9 @@ gimp_transform_tool_response (GimpToolGui       *gui,
 
     case GTK_RESPONSE_OK:
       g_return_if_fail (display != NULL);
-      gimp_transform_tool_transform (tr_tool, display);
-      break;
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+     break;
 
     default:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);

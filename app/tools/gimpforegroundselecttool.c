@@ -267,13 +267,14 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      {
-        gimp_foreground_select_tool_drop_masks (fg_select, display);
-        tool->display = NULL;
+      gimp_foreground_select_tool_drop_masks (fg_select, display);
+      tool->display = NULL;
 
-        if (fg_select->gui)
-          gimp_tool_gui_hide (fg_select->gui);
-      }
+      if (fg_select->gui)
+        gimp_tool_gui_hide (fg_select->gui);
+      break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
       break;
     }
 

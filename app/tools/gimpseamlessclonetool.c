@@ -246,6 +246,9 @@ gimp_seamless_clone_tool_control (GimpTool       *tool,
        *       a good place to do so.
        */
       break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      break;
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);

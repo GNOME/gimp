@@ -171,6 +171,9 @@ gimp_draw_tool_control (GimpTool       *tool,
       if (gimp_draw_tool_is_active (draw_tool))
         gimp_draw_tool_stop (draw_tool);
       break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      break;
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);

@@ -160,6 +160,9 @@ gimp_source_tool_control (GimpTool       *tool,
                     "src-drawable", NULL,
                     NULL);
       break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      break;
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);

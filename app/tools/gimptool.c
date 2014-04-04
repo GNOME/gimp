@@ -333,6 +333,9 @@ gimp_tool_real_control (GimpTool       *tool,
     case GIMP_TOOL_ACTION_HALT:
       tool->display = NULL;
       break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      break;
     }
 }
 
@@ -594,6 +597,10 @@ gimp_tool_control (GimpTool       *tool,
         gimp_tool_control_halt (tool->control);
 
       gimp_tool_clear_status (tool);
+      break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      GIMP_TOOL_GET_CLASS (tool)->control (tool, action, display);
       break;
     }
 }

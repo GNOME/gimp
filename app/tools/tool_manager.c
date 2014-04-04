@@ -686,12 +686,25 @@ tool_manager_tool_changed (GimpContext     *user_context,
       return;
     }
 
-  /*  disconnect the old tool's context  */
-  if (tool_manager->active_tool &&
-      tool_manager->active_tool->tool_info)
+  if (tool_manager->active_tool)
     {
-      tool_manager_disconnect_options (tool_manager, user_context,
-                                       tool_manager->active_tool->tool_info);
+      GimpTool    *active_tool = tool_manager->active_tool;
+      GimpDisplay *display;
+
+      /*  NULL image returns any display (if there is any)  */
+      display = gimp_tool_has_image (active_tool, NULL);
+
+      /*  commit the old tool's operation  */
+      if (display)
+        tool_manager_control_active (user_context->gimp, GIMP_TOOL_ACTION_COMMIT,
+                                     display);
+
+      /*  disconnect the old tool's context  */
+      if (active_tool->tool_info)
+        {
+          tool_manager_disconnect_options (tool_manager, user_context,
+                                           active_tool->tool_info);
+        }
     }
 
   /*  connect the new tool's context  */

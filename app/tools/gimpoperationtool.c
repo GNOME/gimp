@@ -204,6 +204,9 @@ gimp_operation_tool_control (GimpTool       *tool,
         gimp_pickable_button_set_pickable (GIMP_PICKABLE_BUTTON (op_tool->aux_input_button),
                                            NULL);
       break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      break;
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
