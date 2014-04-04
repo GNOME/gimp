@@ -260,26 +260,6 @@ cdisplay_proof_convert_buffer (GimpColorDisplay *display,
 }
 
 static void
-cdisplay_proof_file_chooser_dialog_response (GtkFileChooser           *dialog,
-                                             gint                      response,
-                                             GimpColorProfileComboBox *combo)
-{
-  if (response == GTK_RESPONSE_ACCEPT)
-    {
-      gchar *filename = gtk_file_chooser_get_filename (dialog);
-
-      if (filename)
-        {
-          gimp_color_profile_combo_box_set_active (combo, filename, NULL);
-
-          g_free (filename);
-        }
-    }
-
-  gtk_widget_hide (GTK_WIDGET (dialog));
-}
-
-static void
 cdisplay_proof_profile_changed (GtkWidget     *combo,
                                 CdisplayProof *proof)
 {
@@ -313,10 +293,6 @@ cdisplay_proof_configure (GimpColorDisplay *display)
   history = gimp_personal_rc_file ("profilerc");
   combo = gimp_color_profile_combo_box_new (dialog, history);
   g_free (history);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (cdisplay_proof_file_chooser_dialog_response),
-                    combo);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (cdisplay_proof_profile_changed),

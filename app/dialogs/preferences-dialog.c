@@ -777,28 +777,6 @@ prefs_table_new (gint          rows,
 }
 
 static void
-prefs_profile_combo_dialog_response (GimpColorProfileChooserDialog *dialog,
-                                     gint                           response,
-                                     GimpColorProfileComboBox      *combo)
-{
-  if (response == GTK_RESPONSE_ACCEPT)
-    {
-      gchar *filename;
-
-      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-
-      if (filename)
-        {
-          gimp_color_profile_combo_box_set_active (combo, filename, NULL);
-
-          g_free (filename);
-        }
-    }
-
-  gtk_widget_hide (GTK_WIDGET (dialog));
-}
-
-static void
 prefs_profile_combo_changed (GimpColorProfileComboBox *combo,
                              GObject                  *config)
 {
@@ -854,10 +832,6 @@ prefs_profile_combo_box_new (GObject      *config,
                                            filename, NULL);
 
   g_free (filename);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (prefs_profile_combo_dialog_response),
-                    combo);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (prefs_profile_combo_changed),

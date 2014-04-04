@@ -1237,26 +1237,6 @@ lcms_icc_apply_dialog (gint32       image,
   return run;
 }
 
-static void
-lcms_icc_file_chooser_dialog_response (GtkFileChooser           *dialog,
-                                       gint                      response,
-                                       GimpColorProfileComboBox *combo)
-{
-  if (response == GTK_RESPONSE_ACCEPT)
-    {
-      gchar *filename = gtk_file_chooser_get_filename (dialog);
-
-      if (filename)
-        {
-          gimp_color_profile_combo_box_set_active (combo, filename, NULL);
-
-          g_free (filename);
-        }
-    }
-
-  gtk_widget_hide (GTK_WIDGET (dialog));
-}
-
 static GtkWidget *
 lcms_icc_combo_box_new (GimpColorConfig *config,
                         const gchar     *filename)
@@ -1270,15 +1250,10 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   cmsHPROFILE  profile      = NULL;
 
   dialog = gimp_color_profile_chooser_dialog_new (_("Select destination profile"));
+
   history = gimp_personal_rc_file ("profilerc");
-
   combo = gimp_color_profile_combo_box_new (dialog, history);
-
   g_free (history);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (lcms_icc_file_chooser_dialog_response),
-                    combo);
 
   if (config->rgb_profile)
     {
