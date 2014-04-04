@@ -62,6 +62,8 @@ struct _GimpToolManager
 static GimpToolManager * tool_manager_get     (Gimp            *gimp);
 static void              tool_manager_set     (Gimp            *gimp,
                                                GimpToolManager *tool_manager);
+static void   tool_manager_select_tool        (Gimp            *gimp,
+                                               GimpTool        *tool);
 static void   tool_manager_tool_changed       (GimpContext     *user_context,
                                                GimpToolInfo    *tool_info,
                                                GimpToolManager *tool_manager);
@@ -168,39 +170,6 @@ tool_manager_get_active (Gimp *gimp)
   tool_manager = tool_manager_get (gimp);
 
   return tool_manager->active_tool;
-}
-
-void
-tool_manager_select_tool (Gimp     *gimp,
-                          GimpTool *tool)
-{
-  GimpToolManager *tool_manager;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GIMP_IS_TOOL (tool));
-
-  tool_manager = tool_manager_get (gimp);
-
-  /*  reset the previously selected tool, but only if it is not only
-   *  temporarily pushed to the tool stack
-   */
-  if (tool_manager->active_tool &&
-      ! (tool_manager->tool_stack &&
-         tool_manager->active_tool == tool_manager->tool_stack->data))
-    {
-      GimpTool    *active_tool = tool_manager->active_tool;
-      GimpDisplay *display;
-
-      /*  NULL image returns any display (if there is any)  */
-      display = gimp_tool_has_image (active_tool, NULL);
-
-      tool_manager_control_active (gimp, GIMP_TOOL_ACTION_HALT, display);
-      tool_manager_focus_display_active (gimp, NULL);
-
-      g_object_unref (tool_manager->active_tool);
-    }
-
-  tool_manager->active_tool = g_object_ref (tool);
 }
 
 void
@@ -632,6 +601,39 @@ tool_manager_set (Gimp            *gimp,
     tool_manager_quark = g_quark_from_static_string ("gimp-tool-manager");
 
   g_object_set_qdata (G_OBJECT (gimp), tool_manager_quark, tool_manager);
+}
+
+static void
+tool_manager_select_tool (Gimp     *gimp,
+                          GimpTool *tool)
+{
+  GimpToolManager *tool_manager;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  tool_manager = tool_manager_get (gimp);
+
+  /*  reset the previously selected tool, but only if it is not only
+   *  temporarily pushed to the tool stack
+   */
+  if (tool_manager->active_tool &&
+      ! (tool_manager->tool_stack &&
+         tool_manager->active_tool == tool_manager->tool_stack->data))
+    {
+      GimpTool    *active_tool = tool_manager->active_tool;
+      GimpDisplay *display;
+
+      /*  NULL image returns any display (if there is any)  */
+      display = gimp_tool_has_image (active_tool, NULL);
+
+      tool_manager_control_active (gimp, GIMP_TOOL_ACTION_HALT, display);
+      tool_manager_focus_display_active (gimp, NULL);
+
+      g_object_unref (tool_manager->active_tool);
+    }
+
+  tool_manager->active_tool = g_object_ref (tool);
 }
 
 static void
