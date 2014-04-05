@@ -1,25 +1,25 @@
 # Serbian translation of gimp
-# Courtesy of Prevod.org team (http://www.prevod.org/) -- 2003, 2004.
-#
+# Courtesy of Prevod.org team (http://www.prevod.org/) -- 2003—2014.
 # This file is distributed under the same license as the gimp package.
-#
 # Maintainer: Милош Поповић <gpopac@gmail.com>
 # Милош Поповић <gpopac@gmail.com>, 2011.
-#
+# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2011-08-25 19:40+0000\n"
-"PO-Revision-Date: 2011-08-28 08:41+0200\n"
-"Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
+"eywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-03-26 18:39+0000\n"
+"PO-Revision-Date: 2014-03-27 09:31+0200\n"
+"Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <gnom@prevod.org>\n"
+"Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4;    plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 :    n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : "
+"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Project-Style: gnome\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
@@ -27,9 +27,8 @@ msgstr "Недостају подаци о изузецима"
 
 #: ../plug-ins/pygimp/gimpfu.py:403
 #, python-format
-#| msgid "An error occured running %s"
 msgid "An error occurred running %s"
-msgstr "Грешка при раду са %s"
+msgstr "Грешка при раду са „%s“"
 
 #: ../plug-ins/pygimp/gimpfu.py:414
 msgid "_More Information"
@@ -44,15 +43,15 @@ msgstr "Не"
 msgid "Yes"
 msgstr "Да"
 
-#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:597 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Питонов избор датотеке"
 
-#: ../plug-ins/pygimp/gimpfu.py:607
+#: ../plug-ins/pygimp/gimpfu.py:643
 msgid "Python-Fu Folder Selection"
 msgstr "Питонов избор фасцикле"
 
-#: ../plug-ins/pygimp/gimpfu.py:696
+#: ../plug-ins/pygimp/gimpfu.py:732
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Није исправан унос за „%s“"
@@ -63,15 +62,15 @@ msgstr "Питонов избор боје"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
-msgstr "Чувам као XHTML у боји"
+msgstr "Чувам као ИксХТМЛ у боји"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
 msgid "Save as colored XHTML"
-msgstr "Сачувај као XHTML у боји"
+msgstr "Сачувајте као ИксХТМЛ у боји"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
 msgid "Colored XHTML"
-msgstr "XHTML у боји"
+msgstr "ИксХТМЛ у боји"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Character _source"
@@ -83,7 +82,7 @@ msgstr "Изворни код"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "Text file"
-msgstr "Текстуална датотека"
+msgstr "Датотека текста"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Entry box"
@@ -95,23 +94,23 @@ msgstr "_Датотека за читање или знакови за упот�
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
-msgstr "Величина _фонта и пиксела"
+msgstr "Величина _слова у тачкицама"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
-msgstr "_Упиши засебну CSS датотеку"
+msgstr "_Упиши засебну ЦСС датотеку"
 
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
 msgid "Gradient to use"
-msgstr "Прелив који се користи"
+msgstr "Прелив за коришћење"
 
 #: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
 msgid "File Name"
-msgstr "Име датотеке"
+msgstr "Назив датотеке"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
-msgstr "Додаје слој са ефектом магле"
+msgstr "Додајте слој са ефектом магле"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "_Fog..."
@@ -139,7 +138,7 @@ msgstr "_Непровидност"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:44
 msgid "Offset the colors in a palette"
-msgstr "Помера боје у палети"
+msgstr "Померите боје у палети"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
@@ -158,7 +157,7 @@ msgstr "По_мерај"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
 msgid "Sort the colors in a palette"
-msgstr "Уређује распоред боја у палети"
+msgstr "Уредите распоред боја у палети"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
 msgid "_Sort Palette..."
@@ -174,7 +173,7 @@ msgstr "РГБ"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "HSV"
-msgstr "ХСВ"
+msgstr "НЗВ"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
 msgid "Channel to _sort"
@@ -198,15 +197,15 @@ msgstr "_Растуће"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
-msgstr "Прави прелив који се понавља на основу боја из палете"
+msgstr "Направите прелив који се понавља на основу боја из палете"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
-msgstr "Палета у понов_љени прелив"
+msgstr "Палета у поновљени п_релив"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
-msgstr "Прави прелив на основу боја из палете"
+msgstr "Направите прелив на основу боја из палете"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
@@ -219,7 +218,7 @@ msgstr "Парче"
 #. table snippet means a small piece of HTML code here
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:420
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Исеца слику по вођицама, правећи слике и исечке за ХТМЛ табелу"
+msgstr "Исеците слику по вођицама, правећи слике и исечке за ХТМЛ табелу"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:431
 msgid "_Slice..."
@@ -231,15 +230,15 @@ msgstr "Путања за извоз ХТМЛ-а"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Filename for export"
-msgstr "Име датотеке за извоз"
+msgstr "Назив датотеке за извоз"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Image name prefix"
-msgstr "Префикс имена слике"
+msgstr "Префикс назива слике"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image format"
-msgstr "Формат слике"
+msgstr "Запис слике"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Separate image folder"
@@ -255,12 +254,12 @@ msgstr "Размак измеђи елемената у табели"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
-msgstr "Јаваскрипт за „onmouseover“ и „clicked“"
+msgstr "Јаваскрипт за „на_прелет_миша“ и „притиснуто“"
 
 #. table caps are table cells on the edge of the table
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:448
 msgid "Skip animation for table caps"
-msgstr "Искључи анимацију за ивична поља табеле"
+msgstr "Искључите анимацију за ивична поља табеле"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:56
 msgid "Python Console"
@@ -272,25 +271,25 @@ msgstr "_Разгледај..."
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:138
 msgid "Python Procedure Browser"
-msgstr "Разгледач Питонових процедура"
+msgstr "Прегледник Питонових поступака"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:167
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Не могу да отворим „%s“ за упис: %s"
+msgstr "Не могу да отворим „%s“ за писање: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:182
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr "Не могу да упишем у „%s“: %s"
+msgstr "Не могу да пишем у „%s“: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:190
 msgid "Save Python-Fu Console Output"
-msgstr "Сачувај излаз Питонове конзоле"
+msgstr "Сачувајте излаз Питонове конзоле"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:216
 msgid "Interactive GIMP Python interpreter"
-msgstr "Покреће интерактивни интерпретер за Гимпов Питон"
+msgstr "Покрените међудејственог тумача Гимпог Питона"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:221
 msgid "_Console"
@@ -298,7 +297,7 @@ msgstr "_Конзола"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:60
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Додаје сенку на слој и испупчење по жељу"
+msgstr "Додајте сенку на слој и испупчење по жељу"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
@@ -314,32 +313,32 @@ msgstr "_Испупчење"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "_Drop shadow"
-msgstr "Д_одај сенку"
+msgstr "_Додај сенку"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow _X displacement"
-msgstr "По_мерај сенке по X оси"
+msgstr "Померај сенке по _водоравној оси"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _Y displacement"
-msgstr "Пом_ерај сенке по Y оси"
+msgstr "Померај сенке по _усправној оси"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:76
 msgid "Create a new brush with characters from a text sequence"
-msgstr "Прави нову четкицу на основу слова из дела текста"
+msgstr "Направите нову четкицу на основу слова из дела текста"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:82
 msgid "New Brush from _Text..."
 msgstr "Нова четкица из _текста..."
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
-msgid "Font"
-msgstr "Фонт"
-
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:85
-msgid "Pixel Size"
-msgstr "Величина пиксела"
+msgid "Font"
+msgstr "Слова"
 
 #: ../plug-ins/pygimp/plug-ins/text-brush.py:86
+msgid "Pixel Size"
+msgstr "Величина тачкице"
+
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:87
 msgid "Text"
 msgstr "Текст"
