@@ -1,17 +1,55 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Paint\"	\
-	-I$(top_builddir)		\
-	-I$(top_srcdir)			\
-	-I$(top_builddir)/app		\
-	-I$(top_srcdir)/app		\
-	$(CAIRO_CFLAGS)			\
-	$(GEGL_CFLAGS)			\
-	$(GDK_PIXBUF_CFLAGS)		\
+	-DG_LOG_DOMAIN=\"Gimp-Paint\"		\
+	-I$(top_builddir)			\
+	-I$(top_srcdir)				\
+	-I$(top_builddir)/app			\
+	-I$(top_srcdir)/app			\
+	-I$(top_srcdir)/app/paint/libmypaint	\
+	-std=c99				\
+	-DHAVE_JSON_C=1				\
+	$(JSON_C_CFLAGS)			\
+	$(CAIRO_CFLAGS)				\
+	$(GEGL_CFLAGS)				\
+	$(GDK_PIXBUF_CFLAGS)			\
 	-I$(includedir)
 
-noinst_LIBRARIES = libapppaint.a
+noinst_LIBRARIES = libmypaint.a libapppaint.a
+
+libmypaint_a_SOURCES = \
+	libmypaint/mapping.c				\
+	libmypaint/mapping.h				\
+	libmypaint/helpers.c				\
+	libmypaint/helpers.h				\
+	libmypaint/brushmodes.c				\
+	libmypaint/brushmodes.h				\
+	libmypaint/fifo.c				\
+	libmypaint/fifo.h				\
+	libmypaint/operationqueue.c			\
+	libmypaint/operationqueue.h			\
+	libmypaint/rng-double.c				\
+	libmypaint/rng-double.h				\
+	libmypaint/utils.c				\
+	libmypaint/utils.h				\
+	libmypaint/tilemap.c				\
+	libmypaint/tilemap.h				\
+	libmypaint/mypaint.c				\
+	libmypaint/mypaint.h				\
+	libmypaint/mypaint-brush.c			\
+	libmypaint/mypaint-brush.h			\
+	libmypaint/mypaint-brush-settings.c		\
+	libmypaint/mypaint-brush-settings.h		\
+	libmypaint/mypaint-fixed-tiled-surface.c	\
+	libmypaint/mypaint-fixed-tiled-surface.h	\
+	libmypaint/mypaint-surface.c			\
+	libmypaint/mypaint-surface.h			\
+	libmypaint/mypaint-tiled-surface.c		\
+	libmypaint/mypaint-tiled-surface.h		\
+	libmypaint/mypaint-rectangle.c			\
+	libmypaint/mypaint-rectangle.h			\
+	libmypaint/gegl/mypaint-gegl-surface.c		\
+	libmypaint/gegl/mypaint-gegl-surface.h
 
 libapppaint_a_sources = \
 	paint-enums.h			\
@@ -51,6 +89,10 @@ libapppaint_a_sources = \
 	gimpinkoptions.h		\
 	gimpinkundo.c			\
 	gimpinkundo.h			\
+	gimpmybrush.c			\
+	gimpmybrush.h			\
+	gimpmybrushoptions.c		\
+	gimpmybrushoptions.h		\
 	gimppaintcore.c			\
 	gimppaintcore.h			\
 	gimppaintcore-loops.c		\
