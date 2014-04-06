@@ -34,6 +34,7 @@
 #include "gimperaser.h"
 #include "gimpheal.h"
 #include "gimpink.h"
+#include "gimpmybrush.h"
 #include "gimppaintoptions.h"
 #include "gimppaintbrush.h"
 #include "gimppencil.h"
@@ -64,6 +65,7 @@ gimp_paint_init (Gimp *gimp)
     gimp_perspective_clone_register,
     gimp_heal_register,
     gimp_clone_register,
+    gimp_mybrush_register,
     gimp_ink_register,
     gimp_airbrush_register,
     gimp_eraser_register,
