@@ -395,6 +395,8 @@ action_data_get_display (gpointer data)
     context = gimp_dock_get_context ((GimpDock *) data);
   else if (GIMP_IS_DOCK_WINDOW (data))
     context = gimp_dock_window_get_context (((GimpDockWindow *) data));
+  else if (GIMP_IS_IMAGE_EDITOR (data))
+    context = ((GimpImageEditor *) data)->context;
   else if (GIMP_IS_NAVIGATION_EDITOR (data))
     context = ((GimpNavigationEditor *) data)->context;
 
