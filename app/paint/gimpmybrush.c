@@ -112,13 +112,22 @@ gimp_mybrush_paint (GimpPaintCore    *paint_core,
 {
   GimpMybrush        *mybrush = GIMP_MYBRUSH (paint_core);
   GimpMybrushOptions *options = GIMP_MYBRUSH_OPTIONS (paint_options);
+  GeglBuffer         *buffer;
 
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_INIT:
       mybrush->private->surface = mypaint_gegl_tiled_surface_new ();
-      mypaint_gegl_tiled_surface_set_buffer (mybrush->private->surface,
-                                             gimp_drawable_get_buffer (drawable));
+
+      buffer = mypaint_gegl_tiled_surface_get_buffer (mybrush->private->surface);
+      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                gimp_item_get_width (GIMP_ITEM (drawable)),
+                                                gimp_item_get_height (GIMP_ITEM (drawable))),
+                                gegl_buffer_get_format (buffer));
+      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                        buffer, NULL);
+      mypaint_gegl_tiled_surface_set_buffer (mybrush->private->surface, buffer);
+      g_object_unref (buffer);
 
       mybrush->private->brush = mypaint_brush_new ();
       mypaint_brush_from_defaults (mybrush->private->brush);
@@ -217,10 +226,22 @@ gimp_mybrush_motion (GimpPaintCore    *paint_core,
   g_printerr ("painted rect: %d %d %d %d\n",
               rect.x, rect.y, rect.width, rect.height);
 
-  paint_core->x1 = MIN (paint_core->x1, rect.x);
-  paint_core->y1 = MIN (paint_core->y1, rect.y);
-  paint_core->x2 = MAX (paint_core->x2, rect.x + rect.width);
-  paint_core->y2 = MAX (paint_core->y2, rect.y + rect.height);
+  if (rect.width > 0 && rect.height > 0)
+    {
+      GeglBuffer *src;
 
-  gimp_drawable_update (drawable, rect.x, rect.y, rect.width, rect.height);
+      src = mypaint_gegl_tiled_surface_get_buffer (mybrush->private->surface);
+
+      gegl_buffer_copy (src,
+                        (GeglRectangle *) &rect,
+                        gimp_drawable_get_buffer (drawable),
+                        NULL);
+
+      paint_core->x1 = MIN (paint_core->x1, rect.x);
+      paint_core->y1 = MIN (paint_core->y1, rect.y);
+      paint_core->x2 = MAX (paint_core->x2, rect.x + rect.width);
+      paint_core->y2 = MAX (paint_core->y2, rect.y + rect.height);
+
+      gimp_drawable_update (drawable, rect.x, rect.y, rect.width, rect.height);
+    }
 }
