@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -38,6 +39,9 @@
 G_DEFINE_TYPE (GimpMybrushTool, gimp_mybrush_tool, GIMP_TYPE_PAINT_TOOL)
 
 #define parent_class gimp_mybrush_tool_parent_class
+
+
+static void   gimp_mybrush_tool_draw (GimpDrawTool *draw_tool);
 
 
 void
@@ -63,6 +67,9 @@ gimp_mybrush_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_mybrush_tool_class_init (GimpMybrushToolClass *klass)
 {
+  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+
+  draw_tool_class->draw = gimp_mybrush_tool_draw;
 }
 
 static void
@@ -74,4 +81,16 @@ gimp_mybrush_tool_init (GimpMybrushTool *mybrush_tool)
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (mybrush_tool),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);
+}
+
+static void
+gimp_mybrush_tool_draw (GimpDrawTool *draw_tool)
+{
+  GimpPaintTool      *paint_tool = GIMP_PAINT_TOOL (draw_tool);
+  GimpMybrushOptions *options    = GIMP_MYBRUSH_TOOL_GET_OPTIONS (draw_tool);
+
+  gimp_paint_tool_set_draw_circle (paint_tool, TRUE,
+                                   exp (options->radius));
+
+  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }
