@@ -29,6 +29,8 @@
 #define GIMP_IS_MYBRUSH_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MYBRUSH_TOOL))
 #define GIMP_MYBRUSH_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MYBRUSH_TOOL, GimpMybrushToolClass))
 
+#define GIMP_MYBRUSH_TOOL_GET_OPTIONS(t)  (GIMP_MYBRUSH_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpMybrushTool      GimpMybrushTool;
 typedef struct _GimpMybrushToolClass GimpMybrushToolClass;
