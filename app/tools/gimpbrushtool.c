@@ -290,8 +290,18 @@ gimp_brush_tool_draw (GimpDrawTool *draw_tool)
   item = gimp_brush_tool_create_outline (brush_tool,
                                          draw_tool->display,
                                          brush_tool->brush_x,
-                                         brush_tool->brush_y,
-                                         ! brush_tool->show_cursor);
+                                         brush_tool->brush_y);
+
+  if (! item && ! brush_tool->show_cursor)
+    {
+      item = gimp_canvas_handle_new (gimp_display_get_shell (draw_tool->display),
+                                     GIMP_HANDLE_CROSS,
+                                     GIMP_HANDLE_ANCHOR_CENTER,
+                                     brush_tool->brush_x,
+                                     brush_tool->brush_y,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL);
+    }
 
   if (item)
     {
@@ -304,8 +314,7 @@ GimpCanvasItem *
 gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
                                 GimpDisplay   *display,
                                 gdouble        x,
-                                gdouble        y,
-                                gboolean       draw_fallback)
+                                gdouble        y)
 {
   GimpBrushCore        *brush_core;
   GimpPaintOptions     *options;
@@ -358,15 +367,6 @@ gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
 
       return gimp_canvas_path_new (shell, boundary, x, y, FALSE,
                                    GIMP_PATH_STYLE_OUTLINE);
-    }
-  else if (draw_fallback)
-    {
-      return gimp_canvas_handle_new (shell,
-                                     GIMP_HANDLE_CROSS,
-                                     GIMP_HANDLE_ANCHOR_CENTER,
-                                     x, y,
-                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
-                                     GIMP_TOOL_HANDLE_SIZE_SMALL);
     }
 
   return NULL;

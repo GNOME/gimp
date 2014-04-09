@@ -394,8 +394,7 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
             gimp_brush_tool_create_outline (GIMP_BRUSH_TOOL (source_tool),
                                             source_tool->src_display,
                                             source_tool->src_x + off_x,
-                                            source_tool->src_y + off_y,
-                                            FALSE);
+                                            source_tool->src_y + off_y);
 
           if (source_tool->src_outline)
             {
@@ -405,25 +404,37 @@ gimp_source_tool_draw (GimpDrawTool *draw_tool)
             }
         }
 
-      if (! source_tool->src_handle)
+      if (source_tool->src_outline)
         {
-          source_tool->src_handle =
-            gimp_canvas_handle_new (src_shell,
-                                    GIMP_HANDLE_CROSS,
-                                    GIMP_HANDLE_ANCHOR_CENTER,
-                                    source_tool->src_x + off_x,
-                                    source_tool->src_y + off_y,
-                                    GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                    GIMP_TOOL_HANDLE_SIZE_CROSS);
-          gimp_display_shell_add_tool_item (src_shell,
-                                            source_tool->src_handle);
-          g_object_unref (source_tool->src_handle);
+          if (source_tool->src_handle)
+            {
+              gimp_display_shell_remove_tool_item (src_shell,
+                                                   source_tool->src_handle);
+              source_tool->src_handle = NULL;
+            }
         }
       else
         {
-          gimp_canvas_handle_set_position (source_tool->src_handle,
-                                           source_tool->src_x + off_x,
-                                           source_tool->src_y + off_y);
+          if (! source_tool->src_handle)
+            {
+              source_tool->src_handle =
+                gimp_canvas_handle_new (src_shell,
+                                        GIMP_HANDLE_CROSS,
+                                        GIMP_HANDLE_ANCHOR_CENTER,
+                                        source_tool->src_x + off_x,
+                                        source_tool->src_y + off_y,
+                                        GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                        GIMP_TOOL_HANDLE_SIZE_CROSS);
+              gimp_display_shell_add_tool_item (src_shell,
+                                                source_tool->src_handle);
+              g_object_unref (source_tool->src_handle);
+            }
+          else
+            {
+              gimp_canvas_handle_set_position (source_tool->src_handle,
+                                               source_tool->src_x + off_x,
+                                               source_tool->src_y + off_y);
+            }
         }
     }
 }
