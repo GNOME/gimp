@@ -132,8 +132,10 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
   gimp_tool_control_set_action_value_1 (tool->control,
                                         "context/context-opacity-set");
 
-  paint_tool->pick_colors = FALSE;
-  paint_tool->draw_line   = FALSE;
+  paint_tool->pick_colors   = FALSE;
+  paint_tool->draw_line     = FALSE;
+  paint_tool->draw_circle   = FALSE;
+  paint_tool->circle_radius = 0.0;
 
   paint_tool->status      = _("Click to paint");
   paint_tool->status_line = _("Click to draw the line");
@@ -182,27 +184,6 @@ gimp_paint_tool_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-/**
- * gimp_paint_tool_enable_color_picker:
- * @tool: a #GimpPaintTool
- * @mode: the #GimpColorPickMode to set
- *
- * This is a convenience function used from the init method of paint
- * tools that want the color picking functionality. The @mode that is
- * set here is used to decide what cursor modifier to draw and if the
- * picked color goes to the foreground or background color.
- **/
-void
-gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
-                                     GimpColorPickMode  mode)
-{
-  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
-
-  tool->pick_colors = TRUE;
-
-  GIMP_COLOR_TOOL (tool)->pick_mode = mode;
 }
 
 static void
@@ -604,6 +585,14 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
   if (drawable && proximity)
     {
       gboolean constrain_mask = gimp_get_constrain_behavior_mask ();
+      gint     off_x, off_y;
+
+      core->cur_coords = *coords;
+
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+      core->cur_coords.x -= off_x;
+      core->cur_coords.y -= off_y;
 
       if (display == tool->display && (state & GDK_SHIFT_MASK))
         {
@@ -613,14 +602,6 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
 
           gchar   *status_help;
           gdouble  dx, dy, dist;
-          gint     off_x, off_y;
-
-          core->cur_coords = *coords;
-
-          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-
-          core->cur_coords.x -= off_x;
-          core->cur_coords.y -= off_y;
 
           gimp_paint_core_round_line (core, paint_options,
                                       (state & constrain_mask) != 0);
@@ -715,17 +696,16 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
   if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
     {
       GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (draw_tool);
+      GimpPaintCore *core       = paint_tool->core;
+      GimpImage     *image      = gimp_display_get_image (draw_tool->display);
+      GimpDrawable  *drawable   = gimp_image_get_active_drawable (image);
+      gint           off_x, off_y;
+
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
       if (paint_tool->draw_line &&
           ! gimp_tool_control_is_active (GIMP_TOOL (draw_tool)->control))
         {
-          GimpPaintCore *core       = paint_tool->core;
-          GimpImage     *image      = gimp_display_get_image (draw_tool->display);
-          GimpDrawable  *drawable   = gimp_image_get_active_drawable (image);
-          gint           off_x, off_y;
-
-          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-
           /*  Draw the line between the start and end coords  */
           gimp_draw_tool_add_line (draw_tool,
                                    core->last_coords.x + off_x,
@@ -751,6 +731,18 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                      GIMP_TOOL_HANDLE_SIZE_CROSS,
                                      GIMP_HANDLE_ANCHOR_CENTER);
         }
+
+      if (paint_tool->draw_circle)
+        {
+          gint size = MAX (3, paint_tool->circle_radius * 2);
+
+          gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_CIRCLE,
+                                     core->cur_coords.x + off_x,
+                                     core->cur_coords.y + off_y,
+                                     size, size,
+                                     GIMP_HANDLE_ANCHOR_CENTER);
+        }
     }
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
@@ -765,4 +757,36 @@ gimp_paint_tool_hard_notify (GimpPaintOptions *options,
                                    options->hard ?
                                    GIMP_CURSOR_PRECISION_PIXEL_CENTER :
                                    GIMP_CURSOR_PRECISION_SUBPIXEL);
+}
+
+/**
+ * gimp_paint_tool_enable_color_picker:
+ * @tool: a #GimpPaintTool
+ * @mode: the #GimpColorPickMode to set
+ *
+ * This is a convenience function used from the init method of paint
+ * tools that want the color picking functionality. The @mode that is
+ * set here is used to decide what cursor modifier to draw and if the
+ * picked color goes to the foreground or background color.
+ **/
+void
+gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
+                                     GimpColorPickMode  mode)
+{
+  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
+
+  tool->pick_colors = TRUE;
+
+  GIMP_COLOR_TOOL (tool)->pick_mode = mode;
+}
+
+void
+gimp_paint_tool_set_draw_circle (GimpPaintTool *tool,
+                                 gboolean       draw_circle,
+                                 gint           circle_radius)
+{
+  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
+
+  tool->draw_circle   = draw_circle;
+  tool->circle_radius = circle_radius;
 }
