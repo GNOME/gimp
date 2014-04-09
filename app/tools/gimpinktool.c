@@ -40,6 +40,9 @@ G_DEFINE_TYPE (GimpInkTool, gimp_ink_tool, GIMP_TYPE_PAINT_TOOL)
 #define parent_class gimp_ink_tool_parent_class
 
 
+static void   gimp_ink_tool_draw (GimpDrawTool *draw_tool);
+
+
 void
 gimp_ink_tool_register (GimpToolRegisterCallback  callback,
                         gpointer                  data)
@@ -63,6 +66,9 @@ gimp_ink_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_ink_tool_class_init (GimpInkToolClass *klass)
 {
+  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+
+  draw_tool_class->draw = gimp_ink_tool_draw;
 }
 
 static void
@@ -80,4 +86,16 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (ink_tool),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);
+}
+
+static void
+gimp_ink_tool_draw (GimpDrawTool *draw_tool)
+{
+  GimpPaintTool  *paint_tool = GIMP_PAINT_TOOL (draw_tool);
+  GimpInkOptions *options    = GIMP_INK_TOOL_GET_OPTIONS (draw_tool);
+
+  gimp_paint_tool_set_draw_circle (paint_tool, TRUE,
+                                   options->size);
+
+  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }

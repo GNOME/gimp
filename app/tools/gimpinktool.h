@@ -29,6 +29,8 @@
 #define GIMP_IS_INK_TOOL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_INK_TOOL))
 #define GIMP_INK_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_INK_TOOL, GimpInkToolClass))
 
+#define GIMP_INK_TOOL_GET_OPTIONS(t)  (GIMP_INK_OPTIONS (gimp_tool_get_options (GIMP_TOOL (t))))
+
 
 typedef struct _GimpInkTool      GimpInkTool;
 typedef struct _GimpInkToolClass GimpInkToolClass;
