@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#include <glib.h>  /* lcms.h uses the "inline" keyword */
-
 #include <string.h>
 
 #ifdef G_OS_WIN32

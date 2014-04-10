@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <glib.h>  /* lcms.h uses the "inline" keyword */
-
 #include <lcms2.h>
 
 #include <gegl.h>
