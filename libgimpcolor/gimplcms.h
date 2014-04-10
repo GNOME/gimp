@@ -40,6 +40,9 @@ GimpColorProfile   gimp_lcms_profile_open_from_file   (const gchar       *filena
 GimpColorProfile   gimp_lcms_profile_open_from_data   (const guint8      *data,
                                                        gsize              length,
                                                        GError           **error);
+guint8           * gimp_lcms_profile_save_to_data     (GimpColorProfile   profile,
+                                                       gsize             *length,
+                                                       GError           **error);
 
 gchar            * gimp_lcms_profile_get_description  (GimpColorProfile   profile);
 gchar            * gimp_lcms_profile_get_manufacturer (GimpColorProfile   profile);

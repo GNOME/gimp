@@ -111,6 +111,37 @@ gimp_lcms_profile_open_from_data (const guint8  *data,
   return profile;
 }
 
+guint8 *
+gimp_lcms_profile_save_to_data (GimpColorProfile   profile,
+                                gsize             *length,
+                                GError           **error)
+{
+  cmsUInt32Number size;
+
+  g_return_val_if_fail (profile != NULL, NULL);
+  g_return_val_if_fail (length != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (cmsSaveProfileToMem (profile, NULL, &size))
+    {
+      guint8 *data = g_malloc (size);
+
+      if (cmsSaveProfileToMem (profile, data, &size))
+        {
+          *length = size;
+
+          return data;
+        }
+
+      g_free (data);
+    }
+
+  g_set_error_literal (error, gimp_lcms_error_quark (), 0,
+                       _("Could not save color profile to memory"));
+
+  return NULL;
+}
+
 static gchar *
 gimp_lcms_profile_get_info (GimpColorProfile profile,
                             cmsInfoType      info)
@@ -289,39 +320,8 @@ gimp_lcms_profile_set_tag (cmsHPROFILE      profile,
   cmsMLUfree (mlu);
 }
 
-/**
- * gimp_lcms_create_srgb_profile:
- *
- * This function is a replacement for cmsCreate_sRGBProfile() and
- * returns an sRGB profile that is functionally the same as the
- * ArgyllCMS sRGB.icm profile. "Functionally the same" means it has
- * the same red, green, and blue colorants and the V4 "chad"
- * equivalent of the ArgyllCMS V2 white point. The profile TRC is also
- * functionally equivalent to the ArgyllCMS sRGB.icm TRC and is the
- * same as the LCMS sRGB built-in profile TRC.
- *
- * The actual primaries in the sRGB specification are
- * red xy:   {0.6400, 0.3300, 1.0}
- * green xy: {0.3000, 0.6000, 1.0}
- * blue xy:  {0.1500, 0.0600, 1.0}
- *
- * The sRGB primaries given below are "pre-quantized" to compensate
- * for hexadecimal quantization during the profile-making process.
- * Unless the profile-making code compensates for this quantization,
- * the resulting profile's red, green, and blue colorants will deviate
- * slightly from the correct XYZ values.
- *
- * LCMS2 doesn't compensate for hexadecimal quantization. The
- * "pre-quantized" primaries below were back-calculated from the
- * ArgyllCMS sRGB.icm profile. The resulting sRGB profile's colorants
- * exactly matches the ArgyllCMS sRGB.icm profile colorants.
- *
- * Return value: the sRGB cmsHPROFILE.
- *
- * Since: GIMP 2.10
- **/
-GimpColorProfile
-gimp_lcms_create_srgb_profile (void)
+static GimpColorProfile
+gimp_lcms_create_srgb_profile_internal (void)
 {
   cmsHPROFILE srgb_profile;
   cmsCIExyY   d65_srgb_specs = { 0.3127, 0.3290, 1.0 };
@@ -370,4 +370,56 @@ gimp_lcms_create_srgb_profile (void)
    **/
 
   return srgb_profile;
+}
+
+/**
+ * gimp_lcms_create_srgb_profile:
+ *
+ * This function is a replacement for cmsCreate_sRGBProfile() and
+ * returns an sRGB profile that is functionally the same as the
+ * ArgyllCMS sRGB.icm profile. "Functionally the same" means it has
+ * the same red, green, and blue colorants and the V4 "chad"
+ * equivalent of the ArgyllCMS V2 white point. The profile TRC is also
+ * functionally equivalent to the ArgyllCMS sRGB.icm TRC and is the
+ * same as the LCMS sRGB built-in profile TRC.
+ *
+ * The actual primaries in the sRGB specification are
+ * red xy:   {0.6400, 0.3300, 1.0}
+ * green xy: {0.3000, 0.6000, 1.0}
+ * blue xy:  {0.1500, 0.0600, 1.0}
+ *
+ * The sRGB primaries given below are "pre-quantized" to compensate
+ * for hexadecimal quantization during the profile-making process.
+ * Unless the profile-making code compensates for this quantization,
+ * the resulting profile's red, green, and blue colorants will deviate
+ * slightly from the correct XYZ values.
+ *
+ * LCMS2 doesn't compensate for hexadecimal quantization. The
+ * "pre-quantized" primaries below were back-calculated from the
+ * ArgyllCMS sRGB.icm profile. The resulting sRGB profile's colorants
+ * exactly matches the ArgyllCMS sRGB.icm profile colorants.
+ *
+ * Return value: the sRGB cmsHPROFILE.
+ *
+ * Since: GIMP 2.10
+ **/
+GimpColorProfile
+gimp_lcms_create_srgb_profile (void)
+{
+  static guint8 *profile_data   = NULL;
+  static gsize   profile_length = 0;
+
+  if (G_UNLIKELY (profile_data == NULL))
+    {
+      GimpColorProfile profile;
+
+      profile = gimp_lcms_create_srgb_profile_internal ();
+
+      profile_data = gimp_lcms_profile_save_to_data (profile, &profile_length,
+                                                     NULL);
+
+      cmsCloseProfile (profile);
+    }
+
+  return gimp_lcms_profile_open_from_data (profile_data, profile_length, NULL);
 }
