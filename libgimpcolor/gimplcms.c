@@ -48,6 +48,10 @@
  * Definitions and Functions relating to LCMS.
  **/
 
+
+#define GIMP_LCMS_MD5_DIGEST_LENGTH 16
+
+
 static GQuark
 gimp_lcms_error_quark (void)
 {

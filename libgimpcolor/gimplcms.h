@@ -32,9 +32,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-#define GIMP_LCMS_MD5_DIGEST_LENGTH 16
-
-
 GimpColorProfile   gimp_lcms_profile_open_from_file   (const gchar       *filename,
                                                        GError           **error);
 GimpColorProfile   gimp_lcms_profile_open_from_data   (const guint8      *data,
