@@ -41,8 +41,9 @@ gimp_text_layout_render (GimpTextLayout    *layout,
   g_return_if_fail (GIMP_IS_TEXT_LAYOUT (layout));
   g_return_if_fail (cr != NULL);
 
-  gimp_text_layout_get_offsets (layout, &x, &y);
+  cairo_save (cr);
 
+  gimp_text_layout_get_offsets (layout, &x, &y);
   cairo_translate (cr, x, y);
 
   gimp_text_layout_get_transform (layout, &trafo);
@@ -54,4 +55,6 @@ gimp_text_layout_render (GimpTextLayout    *layout,
     pango_cairo_layout_path (cr, pango_layout);
   else
     pango_cairo_show_layout (cr, pango_layout);
+
+  cairo_restore (cr);
 }
