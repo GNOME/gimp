@@ -553,8 +553,9 @@ save_image (const gchar  *filename,
 
       for (i = 0; i < drawable->height;)
         {
-          rectHeight = (tile_height < (drawable->height - i - 1)) ?
-            tile_height : (drawable->height - i - 1);
+          rectHeight = (tile_height < (drawable->height - i)) ?
+                        tile_height : (drawable->height - i);
+
           gimp_pixel_rgn_get_rect (&pixel_rgn, src_base, 0, i,
                                    drawable->width, rectHeight);
 
@@ -605,8 +606,9 @@ save_image (const gchar  *filename,
 
       for (i = 0; i < drawable->height;)
         {
-          rectHeight = (tile_height < (drawable->height - i - 1)) ?
-            tile_height : (drawable->height - i - 1);
+          rectHeight = (tile_height < (drawable->height - i)) ?
+                        tile_height : (drawable->height - i);
+
           gimp_pixel_rgn_get_rect (&pixel_rgn, src_base, 0, i,
                                    drawable->width, rectHeight);
 
