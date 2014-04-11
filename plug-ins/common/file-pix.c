@@ -157,7 +157,7 @@ query (void)
                           "Michael Taylor",
                           "1997",
                           N_("Alias Pix image"),
-                          "RGB*, GRAY*",
+                          "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
@@ -236,8 +236,9 @@ run (const gchar      *name,
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
           export = gimp_export_image (&image_ID, &drawable_ID, "PIX",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY);
+                                      GIMP_EXPORT_CAN_HANDLE_RGB  |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY |
+                                      GIMP_EXPORT_CAN_HANDLE_INDEXED);
 
           if (export == GIMP_EXPORT_CANCEL)
             {
@@ -548,14 +549,14 @@ save_image (GFile   *file,
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
-  savingColor = gimp_drawable_is_rgb (drawable_ID);
+  savingColor = ! gimp_drawable_is_gray (drawable_ID);
 
   if (savingColor)
     format = babl_format ("R'G'B' u8");
   else
     format = babl_format ("Y' u8");
 
-  depth = gimp_drawable_bpp (drawable_ID);
+  depth = babl_format_get_bytes_per_pixel (format);
 
   /* Write the image header */
   PIX_DEBUG_PRINT ("Width %hu\n",  width);
