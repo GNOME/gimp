@@ -584,8 +584,8 @@ save_image (GFile   *file,
 
       for (i = 0; i < height;)
         {
-          rectHeight = (tile_height < (height - i - 1)) ?
-                        tile_height : (height - i - 1);
+          rectHeight = (tile_height < (height - i)) ?
+                        tile_height : (height - i);
 
           gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, rectHeight), 1.0,
                            format, src_base,
@@ -658,8 +658,8 @@ save_image (GFile   *file,
 
       for (i = 0; i < height;)
         {
-          rectHeight = (tile_height < (height - i - 1)) ?
-                        tile_height : (height - i - 1);
+          rectHeight = (tile_height < (height - i)) ?
+                        tile_height : (height - i);
 
           gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, rectHeight), 1.0,
                            format, src_base,
