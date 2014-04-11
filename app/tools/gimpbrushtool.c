@@ -279,28 +279,59 @@ static void
 gimp_brush_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpBrushTool  *brush_tool = GIMP_BRUSH_TOOL (draw_tool);
-  GimpCanvasItem *item;
+  GimpCanvasItem *item       = NULL;
+
+  gimp_paint_tool_set_draw_circle (GIMP_PAINT_TOOL (brush_tool),
+                                   FALSE, 0.0);
+
+  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
+    {
+      item = gimp_brush_tool_create_outline (brush_tool,
+                                             draw_tool->display,
+                                             brush_tool->brush_x,
+                                             brush_tool->brush_y);
+
+      if (! item)
+        {
+          GimpBrushCore *brush_core;
+
+          brush_core = GIMP_BRUSH_CORE (GIMP_PAINT_TOOL (brush_tool)->core);
+
+          if (brush_tool->draw_brush &&
+              brush_core->main_brush &&
+              brush_core->dynamics)
+            {
+              /*  if an outline was expected, but got scaled away by
+               *  transform/dynamics, draw a circle in the "normal" size.
+               */
+              GimpPaintOptions *options;
+
+              options = GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool);
+
+              gimp_paint_tool_set_draw_circle (GIMP_PAINT_TOOL (brush_tool),
+                                               TRUE, options->brush_size);
+            }
+          else if (! brush_tool->show_cursor)
+            {
+              /*  don't leave the user without any indication and draw
+               *  a fallback crosshair
+               */
+              GimpDisplayShell *shell;
+
+              shell = gimp_display_get_shell (draw_tool->display);
+
+              item = gimp_canvas_handle_new (shell,
+                                             GIMP_HANDLE_CROSS,
+                                             GIMP_HANDLE_ANCHOR_CENTER,
+                                             brush_tool->brush_x,
+                                             brush_tool->brush_y,
+                                             GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                             GIMP_TOOL_HANDLE_SIZE_SMALL);
+            }
+        }
+    }
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
-
-  if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
-    return;
-
-  item = gimp_brush_tool_create_outline (brush_tool,
-                                         draw_tool->display,
-                                         brush_tool->brush_x,
-                                         brush_tool->brush_y);
-
-  if (! item && ! brush_tool->show_cursor)
-    {
-      item = gimp_canvas_handle_new (gimp_display_get_shell (draw_tool->display),
-                                     GIMP_HANDLE_CROSS,
-                                     GIMP_HANDLE_ANCHOR_CENTER,
-                                     brush_tool->brush_x,
-                                     brush_tool->brush_y,
-                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
-                                     GIMP_TOOL_HANDLE_SIZE_SMALL);
-    }
 
   if (item)
     {
