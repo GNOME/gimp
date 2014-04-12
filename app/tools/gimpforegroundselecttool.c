@@ -752,7 +752,7 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                            gimp_image_get_mask_format (image));
 
       gimp_scan_convert_render_value (scan_convert, fg_select->trimap,
-                                      0, 0, 1.0);
+                                      0, 0, 0.5);
       gimp_scan_convert_free (scan_convert);
 
       gimp_foreground_select_tool_set_trimap (fg_select, display);
