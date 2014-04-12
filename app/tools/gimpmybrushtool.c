@@ -41,7 +41,10 @@ G_DEFINE_TYPE (GimpMybrushTool, gimp_mybrush_tool, GIMP_TYPE_PAINT_TOOL)
 #define parent_class gimp_mybrush_tool_parent_class
 
 
-static void   gimp_mybrush_tool_draw (GimpDrawTool *draw_tool);
+static GimpCanvasItem * gimp_mybrush_tool_get_outline (GimpPaintTool *paint_tool,
+                                                       GimpDisplay   *display,
+                                                       gdouble        x,
+                                                       gdouble        y);
 
 
 void
@@ -67,9 +70,9 @@ gimp_mybrush_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_mybrush_tool_class_init (GimpMybrushToolClass *klass)
 {
-  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
 
-  draw_tool_class->draw = gimp_mybrush_tool_draw;
+  paint_tool_class->get_outline = gimp_mybrush_tool_get_outline;
 }
 
 static void
@@ -83,14 +86,16 @@ gimp_mybrush_tool_init (GimpMybrushTool *mybrush_tool)
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);
 }
 
-static void
-gimp_mybrush_tool_draw (GimpDrawTool *draw_tool)
+static GimpCanvasItem *
+gimp_mybrush_tool_get_outline (GimpPaintTool *paint_tool,
+                               GimpDisplay   *display,
+                               gdouble        x,
+                               gdouble        y)
 {
-  GimpPaintTool      *paint_tool = GIMP_PAINT_TOOL (draw_tool);
-  GimpMybrushOptions *options    = GIMP_MYBRUSH_TOOL_GET_OPTIONS (draw_tool);
+  GimpMybrushOptions *options = GIMP_MYBRUSH_TOOL_GET_OPTIONS (paint_tool);
 
   gimp_paint_tool_set_draw_circle (paint_tool, TRUE,
                                    exp (options->radius));
 
-  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+  return NULL;
 }
