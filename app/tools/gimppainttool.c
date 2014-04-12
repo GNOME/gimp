@@ -738,25 +738,30 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
       GimpImage      *image      = gimp_display_get_image (draw_tool->display);
       GimpDrawable   *drawable   = gimp_image_get_active_drawable (image);
       GimpCanvasItem *outline    = NULL;
+      gboolean        line_drawn = FALSE;
+      gdouble         last_x, last_y;
+      gdouble         cur_x, cur_y;
       gint            off_x, off_y;
 
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+      last_x = core->last_coords.x + off_x;
+      last_y = core->last_coords.y + off_y;
+      cur_x  = core->cur_coords.x + off_x;
+      cur_y  = core->cur_coords.y + off_y;
 
       if (paint_tool->draw_line &&
           ! gimp_tool_control_is_active (GIMP_TOOL (draw_tool)->control))
         {
           /*  Draw the line between the start and end coords  */
           gimp_draw_tool_add_line (draw_tool,
-                                   core->last_coords.x + off_x,
-                                   core->last_coords.y + off_y,
-                                   core->cur_coords.x + off_x,
-                                   core->cur_coords.y + off_y);
+                                   last_x, last_y,
+                                   cur_x, cur_y);
 
           /*  Draw start target  */
           gimp_draw_tool_add_handle (draw_tool,
                                      GIMP_HANDLE_CROSS,
-                                     core->last_coords.x + off_x,
-                                     core->last_coords.y + off_y,
+                                     last_x, last_y,
                                      GIMP_TOOL_HANDLE_SIZE_CROSS,
                                      GIMP_TOOL_HANDLE_SIZE_CROSS,
                                      GIMP_HANDLE_ANCHOR_CENTER);
@@ -764,11 +769,12 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
           /*  Draw end target  */
           gimp_draw_tool_add_handle (draw_tool,
                                      GIMP_HANDLE_CROSS,
-                                     core->cur_coords.x + off_x,
-                                     core->cur_coords.y + off_y,
+                                     cur_x, cur_y,
                                      GIMP_TOOL_HANDLE_SIZE_CROSS,
                                      GIMP_TOOL_HANDLE_SIZE_CROSS,
                                      GIMP_HANDLE_ANCHOR_CENTER);
+
+          line_drawn = TRUE;
         }
 
       gimp_paint_tool_set_draw_circle (paint_tool, FALSE, 0.0);
@@ -776,8 +782,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
       if (paint_tool->draw_brush)
         outline = gimp_paint_tool_get_outline (paint_tool,
                                                draw_tool->display,
-                                               core->cur_coords.x + off_x,
-                                               core->cur_coords.y + off_y);
+                                               cur_x, cur_y);
 
       if (outline)
         {
@@ -790,8 +795,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 
           gimp_draw_tool_add_handle (draw_tool,
                                      GIMP_HANDLE_CIRCLE,
-                                     core->cur_coords.x + off_x,
-                                     core->cur_coords.y + off_y,
+                                     cur_x, cur_y,
                                      size, size,
                                      GIMP_HANDLE_ANCHOR_CENTER);
         }
@@ -800,13 +804,13 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
           /*  don't leave the user without any indication and draw
            *  a fallback crosshair
            */
-          gimp_draw_tool_add_handle (draw_tool,
-                                     GIMP_HANDLE_CROSS,
-                                     core->cur_coords.x + off_x,
-                                     core->cur_coords.y + off_y,
-                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
-                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
-                                     GIMP_HANDLE_ANCHOR_CENTER);
+          if (! line_drawn)
+            gimp_draw_tool_add_handle (draw_tool,
+                                       GIMP_HANDLE_CROSS,
+                                       cur_x, cur_y,
+                                       GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                       GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                       GIMP_HANDLE_ANCHOR_CENTER);
         }
     }
 
