@@ -384,19 +384,21 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
 static void
 gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (draw_tool);
+  GimpBlendTool   *blend_tool = GIMP_BLEND_TOOL (draw_tool);
+  GimpCanvasGroup *group;
 
-  /*  Draw start target  */
+  group = gimp_draw_tool_add_stroke_group (draw_tool);
+  gimp_draw_tool_push_group (draw_tool, group);
+
   blend_tool->start_handle =
     gimp_draw_tool_add_handle (draw_tool,
-                               GIMP_HANDLE_CROSS,
+                               GIMP_HANDLE_CIRCLE,
                                blend_tool->start_x,
                                blend_tool->start_y,
-                               GIMP_TOOL_HANDLE_SIZE_CROSS,
-                               GIMP_TOOL_HANDLE_SIZE_CROSS,
+                               GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                               GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                GIMP_HANDLE_ANCHOR_CENTER);
 
-  /*  Draw the line between the start and end coords  */
   blend_tool->line =
     gimp_draw_tool_add_line (draw_tool,
                              blend_tool->start_x,
@@ -404,15 +406,16 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
                              blend_tool->end_x,
                              blend_tool->end_y);
 
-  /*  Draw end target  */
   blend_tool->end_handle =
     gimp_draw_tool_add_handle (draw_tool,
-                               GIMP_HANDLE_CROSS,
+                               GIMP_HANDLE_CIRCLE,
                                blend_tool->end_x,
                                blend_tool->end_y,
-                               GIMP_TOOL_HANDLE_SIZE_CROSS,
-                               GIMP_TOOL_HANDLE_SIZE_CROSS,
+                               GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                               GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                GIMP_HANDLE_ANCHOR_CENTER);
+
+  gimp_draw_tool_pop_group (draw_tool);
 }
 
 static void

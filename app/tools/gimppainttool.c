@@ -753,26 +753,30 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
       if (paint_tool->draw_line &&
           ! gimp_tool_control_is_active (GIMP_TOOL (draw_tool)->control))
         {
-          /*  Draw the line between the start and end coords  */
+          GimpCanvasGroup *group;
+
+          group = gimp_draw_tool_add_stroke_group (draw_tool);
+          gimp_draw_tool_push_group (draw_tool, group);
+
+          gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_CIRCLE,
+                                     last_x, last_y,
+                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                     GIMP_HANDLE_ANCHOR_CENTER);
+
           gimp_draw_tool_add_line (draw_tool,
                                    last_x, last_y,
                                    cur_x, cur_y);
 
-          /*  Draw start target  */
           gimp_draw_tool_add_handle (draw_tool,
-                                     GIMP_HANDLE_CROSS,
-                                     last_x, last_y,
-                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
+                                     GIMP_HANDLE_CIRCLE,
+                                     cur_x, cur_y,
+                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                                     GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                      GIMP_HANDLE_ANCHOR_CENTER);
 
-          /*  Draw end target  */
-          gimp_draw_tool_add_handle (draw_tool,
-                                     GIMP_HANDLE_CROSS,
-                                     cur_x, cur_y,
-                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                     GIMP_TOOL_HANDLE_SIZE_CROSS,
-                                     GIMP_HANDLE_ANCHOR_CENTER);
+          gimp_draw_tool_pop_group (draw_tool);
 
           line_drawn = TRUE;
         }
