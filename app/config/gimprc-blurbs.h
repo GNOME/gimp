@@ -322,7 +322,7 @@ N_("When enabled, dialogs will show a help button that gives access to " \
 
 #define SHOW_PAINT_TOOL_CURSOR_BLURB \
 N_("When enabled, the mouse pointer will be shown over the image while " \
-    "using a brush-based paint tool.")
+   "using a paint tool.")
 
 #define SHOW_MENUBAR_BLURB \
 N_("When enabled, the menubar is visible by default. This can also be " \

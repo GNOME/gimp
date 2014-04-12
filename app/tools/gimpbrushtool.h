@@ -36,7 +36,6 @@ struct _GimpBrushTool
 {
   GimpPaintTool  parent_instance;
 
-  gboolean       show_cursor;
   gboolean       draw_brush;
   gdouble        brush_x;
   gdouble        brush_y;

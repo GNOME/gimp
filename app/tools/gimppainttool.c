@@ -25,6 +25,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpdisplayconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 #include "core/gimpdrawable.h"
@@ -94,6 +96,9 @@ static void   gimp_paint_tool_draw           (GimpDrawTool          *draw_tool);
 static void   gimp_paint_tool_hard_notify    (GimpPaintOptions      *options,
                                               const GParamSpec      *pspec,
                                               GimpTool              *tool);
+static void   gimp_paint_tool_cursor_notify  (GimpDisplayConfig     *config,
+                                              GParamSpec            *pspec,
+                                              GimpPaintTool         *paint_tool);
 
 
 G_DEFINE_TYPE (GimpPaintTool, gimp_paint_tool, GIMP_TYPE_COLOR_TOOL)
@@ -134,6 +139,8 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 
   paint_tool->pick_colors   = FALSE;
   paint_tool->draw_line     = FALSE;
+
+  paint_tool->show_cursor   = TRUE;
   paint_tool->draw_circle   = FALSE;
   paint_tool->circle_radius = 0.0;
 
@@ -147,15 +154,18 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 static void
 gimp_paint_tool_constructed (GObject *object)
 {
-  GimpTool         *tool       = GIMP_TOOL (object);
-  GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (object);
-  GimpPaintOptions *options    = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
-  GimpPaintInfo    *paint_info;
+  GimpTool          *tool       = GIMP_TOOL (object);
+  GimpPaintTool     *paint_tool = GIMP_PAINT_TOOL (object);
+  GimpPaintOptions  *options    = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
+  GimpDisplayConfig *display_config;
+  GimpPaintInfo     *paint_info;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_TOOL_INFO (tool->tool_info));
   g_assert (GIMP_IS_PAINT_INFO (tool->tool_info->paint_info));
+
+  display_config = GIMP_DISPLAY_CONFIG (tool->tool_info->gimp->config);
 
   paint_info = tool->tool_info->paint_info;
 
@@ -170,6 +180,12 @@ gimp_paint_tool_constructed (GObject *object)
                            tool, 0);
 
   gimp_paint_tool_hard_notify (options, NULL, tool);
+
+  paint_tool->show_cursor = display_config->show_paint_tool_cursor;
+
+  g_signal_connect_object (display_config, "notify::show-paint-tool-cursor",
+                           G_CALLBACK (gimp_paint_tool_cursor_notify),
+                           paint_tool, 0);
 }
 
 static void
@@ -497,6 +513,7 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
                                GdkModifierType   state,
                                GimpDisplay      *display)
 {
+  GimpPaintTool      *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpCursorModifier  modifier;
   GimpCursorModifier  toggle_modifier;
   GimpCursorModifier  old_modifier;
@@ -519,6 +536,16 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
         {
           modifier        = GIMP_CURSOR_MODIFIER_BAD;
           toggle_modifier = GIMP_CURSOR_MODIFIER_BAD;
+        }
+
+      if (! paint_tool->show_cursor &&
+          modifier != GIMP_CURSOR_MODIFIER_BAD)
+        {
+          gimp_tool_set_cursor (tool, display,
+                                GIMP_CURSOR_NONE,
+                                GIMP_TOOL_CURSOR_NONE,
+                                GIMP_CURSOR_MODIFIER_NONE);
+          return;
         }
 
       gimp_tool_control_set_cursor_modifier        (tool->control,
@@ -757,6 +784,18 @@ gimp_paint_tool_hard_notify (GimpPaintOptions *options,
                                    options->hard ?
                                    GIMP_CURSOR_PRECISION_PIXEL_CENTER :
                                    GIMP_CURSOR_PRECISION_SUBPIXEL);
+}
+
+static void
+gimp_paint_tool_cursor_notify (GimpDisplayConfig *config,
+                               GParamSpec        *pspec,
+                               GimpPaintTool     *paint_tool)
+{
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (paint_tool));
+
+  paint_tool->show_cursor = config->show_paint_tool_cursor;
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (paint_tool));
 }
 
 /**

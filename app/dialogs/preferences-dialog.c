@@ -1948,7 +1948,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Show _brush outline"),
                           GTK_BOX (vbox2));
   prefs_check_button_add (object, "show-paint-tool-cursor",
-                          _("Show pointer for brush _tools"),
+                          _("Show pointer for paint _tools"),
                           GTK_BOX (vbox2));
 
   table = prefs_table_new (2, GTK_CONTAINER (vbox2));

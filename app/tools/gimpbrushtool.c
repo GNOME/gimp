@@ -115,7 +115,6 @@ gimp_brush_tool_init (GimpBrushTool *brush_tool)
   gimp_tool_control_set_action_object_1 (tool->control,
                                          "context/context-brush-select-set");
 
-  brush_tool->show_cursor = TRUE;
   brush_tool->draw_brush  = TRUE;
   brush_tool->brush_x     = 0.0;
   brush_tool->brush_y     = 0.0;
@@ -135,12 +134,8 @@ gimp_brush_tool_constructed (GObject *object)
 
   display_config = GIMP_DISPLAY_CONFIG (tool->tool_info->gimp->config);
 
-  brush_tool->show_cursor = display_config->show_paint_tool_cursor;
   brush_tool->draw_brush  = display_config->show_brush_outline;
 
-  g_signal_connect_object (display_config, "notify::show-paint-tool-cursor",
-                           G_CALLBACK (gimp_brush_tool_notify_brush),
-                           brush_tool, 0);
   g_signal_connect_object (display_config, "notify::show-brush-outline",
                            G_CALLBACK (gimp_brush_tool_notify_brush),
                            brush_tool, 0);
@@ -241,16 +236,6 @@ gimp_brush_tool_cursor_update (GimpTool         *tool,
                                 GIMP_CURSOR_MODIFIER_BAD);
           return;
         }
-      else if (! brush_tool->show_cursor &&
-               gimp_tool_control_get_cursor_modifier (tool->control) !=
-               GIMP_CURSOR_MODIFIER_BAD)
-        {
-          gimp_tool_set_cursor (tool, display,
-                                GIMP_CURSOR_NONE,
-                                GIMP_TOOL_CURSOR_NONE,
-                                GIMP_CURSOR_MODIFIER_NONE);
-          return;
-        }
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool,  coords, state, display);
@@ -311,7 +296,7 @@ gimp_brush_tool_draw (GimpDrawTool *draw_tool)
               gimp_paint_tool_set_draw_circle (GIMP_PAINT_TOOL (brush_tool),
                                                TRUE, options->brush_size);
             }
-          else if (! brush_tool->show_cursor)
+          else if (! GIMP_PAINT_TOOL (brush_tool)->show_cursor)
             {
               /*  don't leave the user without any indication and draw
                *  a fallback crosshair
@@ -441,8 +426,7 @@ gimp_brush_tool_notify_brush (GimpDisplayConfig *config,
 {
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (brush_tool));
 
-  brush_tool->show_cursor = config->show_paint_tool_cursor;
-  brush_tool->draw_brush  = config->show_brush_outline;
+  brush_tool->draw_brush = config->show_brush_outline;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (brush_tool));
 }
