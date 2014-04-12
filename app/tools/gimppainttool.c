@@ -810,7 +810,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
            */
           if (! line_drawn)
             gimp_draw_tool_add_handle (draw_tool,
-                                       GIMP_HANDLE_CROSS,
+                                       GIMP_HANDLE_CIRCLE,
                                        cur_x, cur_y,
                                        GIMP_TOOL_HANDLE_SIZE_SMALL,
                                        GIMP_TOOL_HANDLE_SIZE_SMALL,
