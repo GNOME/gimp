@@ -93,6 +93,12 @@ static void   gimp_paint_tool_oper_update    (GimpTool              *tool,
 
 static void   gimp_paint_tool_draw           (GimpDrawTool          *draw_tool);
 
+static GimpCanvasItem *
+              gimp_paint_tool_get_outline    (GimpPaintTool         *paint_tool,
+                                              GimpDisplay           *display,
+                                              gdouble                x,
+                                              gdouble                y);
+
 static void   gimp_paint_tool_hard_notify    (GimpPaintOptions      *options,
                                               const GParamSpec      *pspec,
                                               GimpTool              *tool);
@@ -141,6 +147,7 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
   paint_tool->draw_line     = FALSE;
 
   paint_tool->show_cursor   = TRUE;
+  paint_tool->draw_brush    = TRUE;
   paint_tool->draw_circle   = FALSE;
   paint_tool->circle_radius = 0.0;
 
@@ -182,8 +189,12 @@ gimp_paint_tool_constructed (GObject *object)
   gimp_paint_tool_hard_notify (options, NULL, tool);
 
   paint_tool->show_cursor = display_config->show_paint_tool_cursor;
+  paint_tool->draw_brush  = display_config->show_brush_outline;
 
   g_signal_connect_object (display_config, "notify::show-paint-tool-cursor",
+                           G_CALLBACK (gimp_paint_tool_cursor_notify),
+                           paint_tool, 0);
+  g_signal_connect_object (display_config, "notify::show-brush-outline",
                            G_CALLBACK (gimp_paint_tool_cursor_notify),
                            paint_tool, 0);
 }
@@ -722,11 +733,12 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 {
   if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
     {
-      GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (draw_tool);
-      GimpPaintCore *core       = paint_tool->core;
-      GimpImage     *image      = gimp_display_get_image (draw_tool->display);
-      GimpDrawable  *drawable   = gimp_image_get_active_drawable (image);
-      gint           off_x, off_y;
+      GimpPaintTool  *paint_tool = GIMP_PAINT_TOOL (draw_tool);
+      GimpPaintCore  *core       = paint_tool->core;
+      GimpImage      *image      = gimp_display_get_image (draw_tool->display);
+      GimpDrawable   *drawable   = gimp_image_get_active_drawable (image);
+      GimpCanvasItem *outline    = NULL;
+      gint            off_x, off_y;
 
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
@@ -759,7 +771,20 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                      GIMP_HANDLE_ANCHOR_CENTER);
         }
 
-      if (paint_tool->draw_circle)
+      gimp_paint_tool_set_draw_circle (paint_tool, FALSE, 0.0);
+
+      if (paint_tool->draw_brush)
+        outline = gimp_paint_tool_get_outline (paint_tool,
+                                               draw_tool->display,
+                                               core->cur_coords.x + off_x,
+                                               core->cur_coords.y + off_y);
+
+      if (outline)
+        {
+          gimp_draw_tool_add_item (draw_tool, outline);
+          g_object_unref (outline);
+        }
+      else if (paint_tool->draw_circle)
         {
           gint size = MAX (3, paint_tool->circle_radius * 2);
 
@@ -770,9 +795,35 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                      size, size,
                                      GIMP_HANDLE_ANCHOR_CENTER);
         }
+      else if (! paint_tool->show_cursor)
+        {
+          /*  don't leave the user without any indication and draw
+           *  a fallback crosshair
+           */
+          gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_CROSS,
+                                     core->cur_coords.x + off_x,
+                                     core->cur_coords.y + off_y,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                     GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                     GIMP_HANDLE_ANCHOR_CENTER);
+        }
     }
 
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+}
+
+static GimpCanvasItem *
+gimp_paint_tool_get_outline (GimpPaintTool *paint_tool,
+                             GimpDisplay   *display,
+                             gdouble        x,
+                             gdouble        y)
+{
+  if (GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->get_outline)
+    return GIMP_PAINT_TOOL_GET_CLASS (paint_tool)->get_outline (paint_tool,
+                                                                display, x, y);
+
+  return NULL;
 }
 
 static void
@@ -794,6 +845,7 @@ gimp_paint_tool_cursor_notify (GimpDisplayConfig *config,
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (paint_tool));
 
   paint_tool->show_cursor = config->show_paint_tool_cursor;
+  paint_tool->draw_brush  = config->show_brush_outline;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (paint_tool));
 }

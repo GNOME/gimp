@@ -40,7 +40,10 @@ G_DEFINE_TYPE (GimpInkTool, gimp_ink_tool, GIMP_TYPE_PAINT_TOOL)
 #define parent_class gimp_ink_tool_parent_class
 
 
-static void   gimp_ink_tool_draw (GimpDrawTool *draw_tool);
+static GimpCanvasItem * gimp_ink_tool_get_outline (GimpPaintTool *paint_tool,
+                                                   GimpDisplay   *display,
+                                                   gdouble        x,
+                                                   gdouble        y);
 
 
 void
@@ -66,9 +69,9 @@ gimp_ink_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_ink_tool_class_init (GimpInkToolClass *klass)
 {
-  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
 
-  draw_tool_class->draw = gimp_ink_tool_draw;
+  paint_tool_class->get_outline = gimp_ink_tool_get_outline;
 }
 
 static void
@@ -88,14 +91,16 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);
 }
 
-static void
-gimp_ink_tool_draw (GimpDrawTool *draw_tool)
+static GimpCanvasItem *
+gimp_ink_tool_get_outline (GimpPaintTool *paint_tool,
+                           GimpDisplay   *display,
+                           gdouble        x,
+                           gdouble        y)
 {
-  GimpPaintTool  *paint_tool = GIMP_PAINT_TOOL (draw_tool);
-  GimpInkOptions *options    = GIMP_INK_TOOL_GET_OPTIONS (draw_tool);
+  GimpInkOptions *options = GIMP_INK_TOOL_GET_OPTIONS (paint_tool);
 
   gimp_paint_tool_set_draw_circle (paint_tool, TRUE,
                                    options->size);
 
-  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+  return NULL;
 }

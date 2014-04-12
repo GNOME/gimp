@@ -312,7 +312,7 @@ N_("Save the tool options when GIMP exits.")
 "This path will be searched for scripts when the Script-Fu plug-in is run."
 
 #define SHOW_BRUSH_OUTLINE_BLURB \
-N_("When enabled, all brush-based paint tools will show a preview of the current " \
+N_("When enabled, all paint tools will show a preview of the current " \
    "brush's outline.")
 
 #define SHOW_HELP_BUTTON_BLURB \

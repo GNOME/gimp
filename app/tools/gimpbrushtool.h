@@ -35,10 +35,6 @@ typedef struct _GimpBrushToolClass GimpBrushToolClass;
 struct _GimpBrushTool
 {
   GimpPaintTool  parent_instance;
-
-  gboolean       draw_brush;
-  gdouble        brush_x;
-  gdouble        brush_y;
 };
 
 struct _GimpBrushToolClass

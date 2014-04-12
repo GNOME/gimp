@@ -48,11 +48,6 @@
 
 static void   gimp_brush_tool_constructed     (GObject           *object);
 
-static void   gimp_brush_tool_motion          (GimpTool          *tool,
-                                               const GimpCoords  *coords,
-                                               guint32            time,
-                                               GdkModifierType    state,
-                                               GimpDisplay       *display);
 static void   gimp_brush_tool_oper_update     (GimpTool          *tool,
                                                const GimpCoords  *coords,
                                                GdkModifierType    state,
@@ -66,16 +61,17 @@ static void   gimp_brush_tool_options_notify  (GimpTool          *tool,
                                                GimpToolOptions   *options,
                                                const GParamSpec  *pspec);
 
-static void   gimp_brush_tool_draw            (GimpDrawTool      *draw_tool);
+static GimpCanvasItem *
+              gimp_brush_tool_get_outline     (GimpPaintTool     *paint_tool,
+                                               GimpDisplay       *display,
+                                               gdouble            x,
+                                               gdouble            y);
 
 static void   gimp_brush_tool_brush_changed   (GimpContext       *context,
                                                GimpBrush         *brush,
                                                GimpBrushTool     *brush_tool);
 static void   gimp_brush_tool_set_brush       (GimpBrushCore     *brush_core,
                                                GimpBrush         *brush,
-                                               GimpBrushTool     *brush_tool);
-static void   gimp_brush_tool_notify_brush    (GimpDisplayConfig *config,
-                                               GParamSpec        *pspec,
                                                GimpBrushTool     *brush_tool);
 
 
@@ -87,18 +83,17 @@ G_DEFINE_TYPE (GimpBrushTool, gimp_brush_tool, GIMP_TYPE_PAINT_TOOL)
 static void
 gimp_brush_tool_class_init (GimpBrushToolClass *klass)
 {
-  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
-  GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
-  GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+  GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
+  GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
+  GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
 
-  object_class->constructed  = gimp_brush_tool_constructed;
+  object_class->constructed     = gimp_brush_tool_constructed;
 
-  tool_class->motion         = gimp_brush_tool_motion;
-  tool_class->oper_update    = gimp_brush_tool_oper_update;
-  tool_class->cursor_update  = gimp_brush_tool_cursor_update;
-  tool_class->options_notify = gimp_brush_tool_options_notify;
+  tool_class->oper_update       = gimp_brush_tool_oper_update;
+  tool_class->cursor_update     = gimp_brush_tool_cursor_update;
+  tool_class->options_notify    = gimp_brush_tool_options_notify;
 
-  draw_tool_class->draw      = gimp_brush_tool_draw;
+  paint_tool_class->get_outline = gimp_brush_tool_get_outline;
 }
 
 static void
@@ -114,61 +109,25 @@ gimp_brush_tool_init (GimpBrushTool *brush_tool)
                                          "context/context-brush-angle-set");
   gimp_tool_control_set_action_object_1 (tool->control,
                                          "context/context-brush-select-set");
-
-  brush_tool->draw_brush  = TRUE;
-  brush_tool->brush_x     = 0.0;
-  brush_tool->brush_y     = 0.0;
 }
 
 static void
 gimp_brush_tool_constructed (GObject *object)
 {
-  GimpTool          *tool       = GIMP_TOOL (object);
-  GimpPaintTool     *paint_tool = GIMP_PAINT_TOOL (object);
-  GimpBrushTool     *brush_tool = GIMP_BRUSH_TOOL (object);
-  GimpDisplayConfig *display_config;
+  GimpTool      *tool       = GIMP_TOOL (object);
+  GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (object);
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_BRUSH_CORE (paint_tool->core));
 
-  display_config = GIMP_DISPLAY_CONFIG (tool->tool_info->gimp->config);
-
-  brush_tool->draw_brush  = display_config->show_brush_outline;
-
-  g_signal_connect_object (display_config, "notify::show-brush-outline",
-                           G_CALLBACK (gimp_brush_tool_notify_brush),
-                           brush_tool, 0);
-
   g_signal_connect_object (gimp_tool_get_options (tool), "brush-changed",
                            G_CALLBACK (gimp_brush_tool_brush_changed),
-                           brush_tool, 0);
+                           paint_tool, 0);
 
   g_signal_connect_object (paint_tool->core, "set-brush",
                            G_CALLBACK (gimp_brush_tool_set_brush),
-                           brush_tool, 0);
-}
-
-static void
-gimp_brush_tool_motion (GimpTool         *tool,
-                        const GimpCoords *coords,
-                        guint32           time,
-                        GdkModifierType   state,
-                        GimpDisplay      *display)
-{
-  GimpBrushTool *brush_tool = GIMP_BRUSH_TOOL (tool);
-
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-  GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
-
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
-    {
-      brush_tool->brush_x = coords->x;
-      brush_tool->brush_y = coords->y;
-    }
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+                           paint_tool, 0);
 }
 
 static void
@@ -178,7 +137,6 @@ gimp_brush_tool_oper_update (GimpTool         *tool,
                              gboolean          proximity,
                              GimpDisplay      *display)
 {
-  GimpBrushTool    *brush_tool    = GIMP_BRUSH_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
   GimpDrawable     *drawable;
 
@@ -195,9 +153,6 @@ gimp_brush_tool_oper_update (GimpTool         *tool,
       GimpContext   *context    = GIMP_CONTEXT (paint_options);
       GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
       GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
-
-      brush_tool->brush_x = coords->x;
-      brush_tool->brush_y = coords->y;
 
       gimp_brush_core_set_brush (brush_core,
                                  gimp_context_get_brush (context));
@@ -260,69 +215,36 @@ gimp_brush_tool_options_notify (GimpTool         *tool,
     }
 }
 
-static void
-gimp_brush_tool_draw (GimpDrawTool *draw_tool)
+static GimpCanvasItem *
+gimp_brush_tool_get_outline (GimpPaintTool *paint_tool,
+                             GimpDisplay   *display,
+                             gdouble        x,
+                             gdouble        y)
 {
-  GimpBrushTool  *brush_tool = GIMP_BRUSH_TOOL (draw_tool);
-  GimpCanvasItem *item       = NULL;
+  GimpBrushTool  *brush_tool = GIMP_BRUSH_TOOL (paint_tool);
+  GimpCanvasItem *item;
 
-  gimp_paint_tool_set_draw_circle (GIMP_PAINT_TOOL (brush_tool),
-                                   FALSE, 0.0);
+  item = gimp_brush_tool_create_outline (brush_tool, display, x, y);
 
-  if (! gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
+  if (! item)
     {
-      item = gimp_brush_tool_create_outline (brush_tool,
-                                             draw_tool->display,
-                                             brush_tool->brush_x,
-                                             brush_tool->brush_y);
+      GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_tool->core);
 
-      if (! item)
+      if (brush_core->main_brush && brush_core->dynamics)
         {
-          GimpBrushCore *brush_core;
+          /*  if an outline was expected, but got scaled away by
+           *  transform/dynamics, draw a circle in the "normal" size.
+           */
+          GimpPaintOptions *options;
 
-          brush_core = GIMP_BRUSH_CORE (GIMP_PAINT_TOOL (brush_tool)->core);
+          options = GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool);
 
-          if (brush_tool->draw_brush &&
-              brush_core->main_brush &&
-              brush_core->dynamics)
-            {
-              /*  if an outline was expected, but got scaled away by
-               *  transform/dynamics, draw a circle in the "normal" size.
-               */
-              GimpPaintOptions *options;
-
-              options = GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool);
-
-              gimp_paint_tool_set_draw_circle (GIMP_PAINT_TOOL (brush_tool),
-                                               TRUE, options->brush_size);
-            }
-          else if (! GIMP_PAINT_TOOL (brush_tool)->show_cursor)
-            {
-              /*  don't leave the user without any indication and draw
-               *  a fallback crosshair
-               */
-              GimpDisplayShell *shell;
-
-              shell = gimp_display_get_shell (draw_tool->display);
-
-              item = gimp_canvas_handle_new (shell,
-                                             GIMP_HANDLE_CROSS,
-                                             GIMP_HANDLE_ANCHOR_CENTER,
-                                             brush_tool->brush_x,
-                                             brush_tool->brush_y,
-                                             GIMP_TOOL_HANDLE_SIZE_SMALL,
-                                             GIMP_TOOL_HANDLE_SIZE_SMALL);
-            }
+          gimp_paint_tool_set_draw_circle (paint_tool,
+                                           TRUE, options->brush_size);
         }
     }
 
-  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
-
-  if (item)
-    {
-      gimp_draw_tool_add_item (draw_tool, item);
-      g_object_unref (item);
-    }
+  return item;
 }
 
 GimpCanvasItem *
@@ -341,7 +263,7 @@ gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
   g_return_val_if_fail (GIMP_IS_BRUSH_TOOL (brush_tool), NULL);
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
 
-  if (! brush_tool->draw_brush)
+  if (! GIMP_PAINT_TOOL (brush_tool)->draw_brush)
     return NULL;
 
   brush_core = GIMP_BRUSH_CORE (GIMP_PAINT_TOOL (brush_tool)->core);
@@ -415,18 +337,6 @@ gimp_brush_tool_set_brush (GimpBrushCore *brush_core,
                                                GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool),
                                                &paint_core->cur_coords);
     }
-
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (brush_tool));
-}
-
-static void
-gimp_brush_tool_notify_brush (GimpDisplayConfig *config,
-                              GParamSpec        *pspec,
-                              GimpBrushTool     *brush_tool)
-{
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (brush_tool));
-
-  brush_tool->draw_brush = config->show_brush_outline;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (brush_tool));
 }

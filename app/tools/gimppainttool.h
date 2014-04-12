@@ -42,6 +42,7 @@ struct _GimpPaintTool
   gboolean       draw_line;
 
   gboolean       show_cursor;
+  gboolean       draw_brush;
   gboolean       draw_circle;
   gint           circle_radius;
 
@@ -55,6 +56,11 @@ struct _GimpPaintTool
 struct _GimpPaintToolClass
 {
   GimpColorToolClass  parent_class;
+
+  GimpCanvasItem * (* get_outline) (GimpPaintTool *paint_tool,
+                                    GimpDisplay   *display,
+                                    gdouble        x,
+                                    gdouble        y);
 };
 
 
