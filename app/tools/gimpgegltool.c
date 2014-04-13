@@ -116,6 +116,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
      */
     "gegl:alien-map",
     "gegl:antialias",
+    "gegl:apply-lens",
     "gegl:bump-map",
     "gegl:c2g",
     "gegl:cartoon",

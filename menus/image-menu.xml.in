@@ -646,6 +646,7 @@
         <menuitem action="filters-unsharp-mask" />
       </menu>
       <menu action="plug-in-distorts-menu" name="Distorts">
+      	<menuitem action="filters-apply-lens" />
       	<menuitem action="filters-emboss" />
         <menuitem action="filters-lens-distortion" />
         <menuitem action="filters-mosaic" />
