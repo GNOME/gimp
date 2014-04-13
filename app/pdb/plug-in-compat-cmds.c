@@ -203,6 +203,65 @@ plug_in_apply_canvas_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_applylens_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble refraction;
+  gint32 keep_surroundings;
+  gint32 set_background;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  refraction = g_value_get_double (gimp_value_array_index (args, 3));
+  keep_surroundings = g_value_get_int (gimp_value_array_index (args, 4));
+  set_background = g_value_get_int (gimp_value_array_index (args, 5));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GimpRGB    color;
+          GeglColor *gegl_color;
+          GeglNode  *node;
+
+          if (set_background)
+            gimp_context_get_background (context, &color);
+          else
+            gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+
+          gegl_color = gimp_gegl_color_new (&color);
+
+          node = gegl_node_new_child (NULL,
+                                     "operation",          "gegl:apply-lens",
+                                     "refraction-index",   refraction,
+                                     "keep-surroundings",  keep_surroundings,
+                                     "background-color",   gegl_color,
+                                     NULL);
+
+          g_object_unref (gegl_color);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Apply Lens"),
+                                         node);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_autocrop_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
@@ -1911,6 +1970,66 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "depth",
                                                       "Texture depth (1 - 50)",
                                                       1, 50, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-applylens
+   */
+  procedure = gimp_procedure_new (plug_in_applylens_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-applylens");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-applylens",
+                                     "Simulate an elliptical lens over the image",
+                                     "This plug-in uses Snell's law to draw an ellipsoid lens over the image",
+                                     "Compatibility procedure. Please see 'gegl:apply-lens' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:apply-lens' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("refraction",
+                                                    "refraction",
+                                                    "Lens refraction index",
+                                                    1.0, 100.0, 1.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("keep-surroundings",
+                                                      "keep surroundings",
+                                                      "Keep lens surroundings { TRUE, FALSE }",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("set-background",
+                                                      "set background",
+                                                      "Set lens surroundings to BG value { TRUE, FALSE }",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("set-transparent",
+                                                      "set transparent",
+                                                      "Set lens surroundings transparent { TRUE, FALSE }",
+                                                      0, 1, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

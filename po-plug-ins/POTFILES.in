@@ -89,7 +89,6 @@ plug-ins/common/illusion.c
 plug-ins/common/iwarp.c
 plug-ins/common/jigsaw.c
 plug-ins/common/lcms.c
-plug-ins/common/lens-apply.c
 plug-ins/common/lens-flare.c
 plug-ins/common/mail.c
 plug-ins/common/max-rgb.c

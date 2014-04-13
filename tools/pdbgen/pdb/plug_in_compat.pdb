@@ -184,6 +184,73 @@ CODE
     );
 }
 
+sub plug_in_applylens {
+    $blurb = 'Simulate an elliptical lens over the image';
+
+    $help = <<'HELP';
+This plug-in uses Snell's law to draw an ellipsoid lens over the image
+HELP
+
+    &std_pdb_compat('gegl:apply-lens');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'refraction', type => '1.0 <= float <= 100.0',
+	  desc => 'Lens refraction index' },
+	{ name => 'keep_surroundings', type => '0 <= int32 <= 1',
+	  desc => 'Keep lens surroundings { TRUE, FALSE }' },
+	{ name => 'set_background', type => '0 <= int32 <= 1',
+	  desc => 'Set lens surroundings to BG value { TRUE, FALSE }' },
+	{ name => 'set_transparent', type => '0 <= int32 <= 1', dead => 1,
+	  desc => 'Set lens surroundings transparent { TRUE, FALSE }' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GimpRGB    color;
+      GeglColor *gegl_color;
+      GeglNode  *node;
+
+      if (set_background)
+        gimp_context_get_background (context, &color);
+      else
+        gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+
+      gegl_color = gimp_gegl_color_new (&color);
+
+      node = gegl_node_new_child (NULL,
+                                 "operation",          "gegl:apply-lens",
+                                 "refraction-index",   refraction,
+                                 "keep-surroundings",  keep_surroundings,
+                                 "background-color",   gegl_color,
+                                 NULL);
+
+      g_object_unref (gegl_color);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Apply Lens"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_autocrop {
     $blurb = 'Remove empty borders from the image';
 
@@ -1947,6 +2014,7 @@ CODE
 @procs = qw(plug_in_alienmap2
             plug_in_antialias
             plug_in_apply_canvas
+            plug_in_applylens
             plug_in_autocrop
             plug_in_autocrop_layer
             plug_in_autostretch_hsv

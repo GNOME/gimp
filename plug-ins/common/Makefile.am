@@ -127,7 +127,6 @@ libexec_PROGRAMS = \
 	iwarp \
 	jigsaw \
 	lcms \
-	lens-apply \
 	lens-flare \
 	$(MAIL) \
 	max-rgb \
@@ -1657,23 +1656,6 @@ lcms_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(lcms_RC)
-
-lens_apply_SOURCES = \
-	lens-apply.c
-
-lens_apply_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(lens_apply_RC)
 
 lens_flare_SOURCES = \
 	lens-flare.c
