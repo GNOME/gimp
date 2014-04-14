@@ -213,13 +213,13 @@ plug_in_applylens_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gdouble refraction;
-  gint32 keep_surroundings;
-  gint32 set_background;
+  gboolean keep_surroundings;
+  gboolean set_background;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
   refraction = g_value_get_double (gimp_value_array_index (args, 3));
-  keep_surroundings = g_value_get_int (gimp_value_array_index (args, 4));
-  set_background = g_value_get_int (gimp_value_array_index (args, 5));
+  keep_surroundings = g_value_get_boolean (gimp_value_array_index (args, 4));
+  set_background = g_value_get_boolean (gimp_value_array_index (args, 5));
 
   if (success)
     {
@@ -239,10 +239,10 @@ plug_in_applylens_invoker (GimpProcedure         *procedure,
           gegl_color = gimp_gegl_color_new (&color);
 
           node = gegl_node_new_child (NULL,
-                                     "operation",          "gegl:apply-lens",
-                                     "refraction-index",   refraction,
-                                     "keep-surroundings",  keep_surroundings,
-                                     "background-color",   gegl_color,
+                                     "operation",         "gegl:apply-lens",
+                                     "refraction-index",  refraction,
+                                     "keep-surroundings", keep_surroundings,
+                                     "background-color",  gegl_color,
                                      NULL);
 
           g_object_unref (gegl_color);
@@ -1983,7 +1983,7 @@ register_plug_in_compat_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "plug-in-applylens",
                                      "Simulate an elliptical lens over the image",
-                                     "This plug-in uses Snell's law to draw an ellipsoid lens over the image",
+                                     "This plug-in uses Snell's law to draw an ellipsoid lens over the image.",
                                      "Compatibility procedure. Please see 'gegl:apply-lens' for credits.",
                                      "Compatibility procedure. Please see 'gegl:apply-lens' for credits.",
                                      "2014",
@@ -2014,23 +2014,23 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     1.0, 100.0, 1.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("keep-surroundings",
-                                                      "keep surroundings",
-                                                      "Keep lens surroundings { TRUE, FALSE }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_boolean ("keep-surroundings",
+                                                     "keep surroundings",
+                                                     "Keep lens surroundings",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("set-background",
-                                                      "set background",
-                                                      "Set lens surroundings to BG value { TRUE, FALSE }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_boolean ("set-background",
+                                                     "set background",
+                                                     "Set lens surroundings to BG value",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("set-transparent",
-                                                      "set transparent",
-                                                      "Set lens surroundings transparent { TRUE, FALSE }",
-                                                      0, 1, 0,
-                                                      GIMP_PARAM_READWRITE));
+                               g_param_spec_boolean ("set-transparent",
+                                                     "set transparent",
+                                                     "Set lens surroundings transparent",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

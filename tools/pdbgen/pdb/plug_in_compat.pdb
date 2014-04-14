@@ -188,7 +188,7 @@ sub plug_in_applylens {
     $blurb = 'Simulate an elliptical lens over the image';
 
     $help = <<'HELP';
-This plug-in uses Snell's law to draw an ellipsoid lens over the image
+This plug-in uses Snell's law to draw an ellipsoid lens over the image.
 HELP
 
     &std_pdb_compat('gegl:apply-lens');
@@ -203,12 +203,12 @@ HELP
 	  desc => 'Input drawable' },
 	{ name => 'refraction', type => '1.0 <= float <= 100.0',
 	  desc => 'Lens refraction index' },
-	{ name => 'keep_surroundings', type => '0 <= int32 <= 1',
-	  desc => 'Keep lens surroundings { TRUE, FALSE }' },
-	{ name => 'set_background', type => '0 <= int32 <= 1',
-	  desc => 'Set lens surroundings to BG value { TRUE, FALSE }' },
-	{ name => 'set_transparent', type => '0 <= int32 <= 1', dead => 1,
-	  desc => 'Set lens surroundings transparent { TRUE, FALSE }' }
+	{ name => 'keep_surroundings', type => 'boolean',
+	  desc => 'Keep lens surroundings' },
+	{ name => 'set_background', type => 'boolean',
+	  desc => 'Set lens surroundings to BG value' },
+	{ name => 'set_transparent', type => 'boolean', dead => 1,
+	  desc => 'Set lens surroundings transparent' }
     );
 
     %invoke = (
@@ -230,10 +230,10 @@ HELP
       gegl_color = gimp_gegl_color_new (&color);
 
       node = gegl_node_new_child (NULL,
-                                 "operation",          "gegl:apply-lens",
-                                 "refraction-index",   refraction,
-                                 "keep-surroundings",  keep_surroundings,
-                                 "background-color",   gegl_color,
+                                 "operation",         "gegl:apply-lens",
+                                 "refraction-index",  refraction,
+                                 "keep-surroundings", keep_surroundings,
+                                 "background-color",  gegl_color,
                                  NULL);
 
       g_object_unref (gegl_color);
