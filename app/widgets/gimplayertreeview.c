@@ -266,9 +266,10 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
   /*  Paint mode menu  */
 
   view->priv->paint_mode_menu = gimp_paint_mode_menu_new (FALSE, FALSE);
+  gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (view->priv->paint_mode_menu),
+                                _("Mode"));
   gimp_item_tree_view_add_options (GIMP_ITEM_TREE_VIEW (view),
-                                   _("Mode:"),
-                                   view->priv->paint_mode_menu);
+                                   NULL, view->priv->paint_mode_menu);
 
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (view->priv->paint_mode_menu),
                               GIMP_NORMAL_MODE,
