@@ -97,6 +97,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
+      tool_type == GIMP_TYPE_HEAL_TOOL       ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
       gtk_widget_set_sensitive (menu, FALSE);
