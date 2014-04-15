@@ -8,8 +8,6 @@
 		href="http://pkg-isocodes.alioth.debian.org/downloads/" />
 	<repository type="tarball" name="poppler"
 		href="http://poppler.freedesktop.org/" />
-	<repository type="tarball" name="yorba"
-		href="http://www.yorba.org/download/" />
 	<repository type="tarball" name="exiv2"
 		href="http://www.exiv2.org/" />
 
@@ -144,9 +142,9 @@
 </cmake>
 
 <autotools id="libgexiv2" autogen-sh="|| autoreconf --force --install; ./configure">
-	<branch version="0.7.0" repo="yorba"
-			module="gexiv2/0.7/libgexiv2-0.7.0.tar.xz"
-			hash="sha1:cae01960735e819e17f0c7fe28aca058efe45385">
+	<branch version="0.7.0" repo="gnome.org"
+			module="gexiv2/0.7/gexiv2-0.7.0.tar.xz"
+			hash="sha256:b631fe02402014cb52f22647b384972776ada31cbd3c3f187014b6535461ee8a">
 		<!-- http://redmine.yorba.org/issues/7660 -->
 		<patch file="0001-Port-GExiv2-to-autotools-build-system.patch" strip="1"/>
 	</branch>
