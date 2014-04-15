@@ -41,6 +41,7 @@
 #include "gimperasertool.h"
 #include "gimphealtool.h"
 #include "gimpinktool.h"
+#include "gimpmybrushtool.h"
 #include "gimppaintoptions-gui.h"
 #include "gimppenciltool.h"
 #include "gimpperspectiveclonetool.h"
@@ -115,6 +116,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
       tool_type == GIMP_TYPE_HEAL_TOOL       ||
+      tool_type == GIMP_TYPE_MYBRUSH_TOOL    ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
       gtk_widget_set_sensitive (menu, FALSE);
@@ -129,7 +131,8 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (scale);
 
   /*  temp debug foo  */
-  if (g_type_is_a (tool_type, GIMP_TYPE_PAINT_TOOL))
+  if (g_type_is_a (tool_type, GIMP_TYPE_PAINT_TOOL) &&
+      tool_type != GIMP_TYPE_MYBRUSH_TOOL)
     {
       GtkWidget *button;
 
