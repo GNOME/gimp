@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <glib.h>
+
 #include <string.h>
 
 #ifdef G_OS_WIN32
