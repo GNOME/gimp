@@ -414,11 +414,9 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
 {
   GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
 
-  if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
+  if (fg_select->state == MATTING_STATE_FREE_SELECT)
     {
-      return GIMP_TOOL_CLASS (parent_class)->key_press (tool,
-                                                        kevent,
-                                                        display);
+      return GIMP_TOOL_CLASS (parent_class)->key_press (tool, kevent, display);
     }
   else
     {
