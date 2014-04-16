@@ -131,21 +131,20 @@ static void   gimp_foreground_select_tool_set_preview    (GimpForegroundSelectTo
 static void   gimp_foreground_select_tool_drop_masks     (GimpForegroundSelectTool *fg_select,
                                                           GimpDisplay              *display);
 
-static void   gimp_foreground_select_tool_apply          (GimpForegroundSelectTool *fg_select,
-                                                          GimpDisplay              *display);
 static void   gimp_foreground_select_tool_preview        (GimpForegroundSelectTool *fg_select,
+                                                          GimpDisplay              *display);
+static void   gimp_foreground_select_tool_apply          (GimpForegroundSelectTool *fg_select,
                                                           GimpDisplay              *display);
 
 static void   gimp_foreground_select_tool_stroke_paint   (GimpForegroundSelectTool    *fg_select,
                                                           GimpDisplay                 *display,
                                                           GimpForegroundSelectOptions *options);
 
-static void   gimp_foreground_select_tool_update_gui     (GimpForegroundSelectTool *fg_select);
-
-
 static void   gimp_foreground_select_tool_response       (GimpToolGui              *gui,
                                                           gint                      response_id,
                                                           GimpForegroundSelectTool *fg_select);
+
+static void   gimp_foreground_select_tool_update_gui     (GimpForegroundSelectTool *fg_select);
 
 
 G_DEFINE_TYPE (GimpForegroundSelectTool, gimp_foreground_select_tool,
@@ -1042,5 +1041,4 @@ gimp_foreground_select_tool_stroke_paint (GimpForegroundSelectTool    *fg_select
 
   g_array_free (fg_select->stroke, TRUE);
   fg_select->stroke = NULL;
-
 }
