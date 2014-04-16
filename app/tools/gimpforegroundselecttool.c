@@ -527,8 +527,6 @@ gimp_foreground_select_tool_button_release (GimpTool              *tool,
       else
         gimp_foreground_select_tool_set_trimap (fg_select, display);
 
-      gimp_free_select_tool_select (GIMP_FREE_SELECT_TOOL (tool), display);
-
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
 }
