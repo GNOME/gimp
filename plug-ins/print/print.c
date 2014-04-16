@@ -40,7 +40,6 @@
 #define PRINT_TEMP_PROC_NAME "file-print-gtk-page-setup-notify-temp"
 #endif
 
-
 static void        query (void);
 static void        run   (const gchar       *name,
                           gint               nparams,
@@ -369,7 +368,7 @@ print_show_error (const gchar *message)
   dialog = gtk_message_dialog_new (NULL, 0,
                                    GTK_MESSAGE_ERROR,
                                    GTK_BUTTONS_OK,
-				   "%s",
+                                   "%s",
                                    _("An error occurred while trying to print:"));
 
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
@@ -424,10 +423,19 @@ draw_page (GtkPrintOperation *operation,
            gint               page_nr,
            PrintData         *data)
 {
-  print_draw_page (context, data);
+  GError *error = NULL;
 
-  gimp_progress_update (1.0);
+  if (print_draw_page (context, data, &error))
+    {
+      gimp_progress_update (1.0);
+    }
+  else
+    {
+      print_show_error (error->message);
+      g_error_free (error);
+    }
 }
+
 
 /*
  * This callback creates a "custom" widget that gets inserted into the
