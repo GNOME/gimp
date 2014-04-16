@@ -369,7 +369,7 @@ print_show_error (const gchar *message)
   dialog = gtk_message_dialog_new (NULL, 0,
                                    GTK_MESSAGE_ERROR,
                                    GTK_BUTTONS_OK,
-				                           "%s",
+                                   "%s",
                                    _("An error occurred while trying to print:"));
 
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
