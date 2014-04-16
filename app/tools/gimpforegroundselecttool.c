@@ -520,12 +520,20 @@ gimp_foreground_select_tool_button_release (GimpTool              *tool,
 
       gimp_tool_control_halt (tool->control);
 
-      gimp_foreground_select_tool_stroke_paint (fg_select, display, options);
-
-      if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
-        gimp_foreground_select_tool_preview (fg_select, display);
+      if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
+        {
+          g_array_free (fg_select->stroke, TRUE);
+          fg_select->stroke = NULL;
+        }
       else
-        gimp_foreground_select_tool_set_trimap (fg_select, display);
+        {
+          gimp_foreground_select_tool_stroke_paint (fg_select, display, options);
+
+          if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
+            gimp_foreground_select_tool_preview (fg_select, display);
+          else
+            gimp_foreground_select_tool_set_trimap (fg_select, display);
+        }
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
