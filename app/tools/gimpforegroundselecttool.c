@@ -136,9 +136,8 @@ static void   gimp_foreground_select_tool_preview        (GimpForegroundSelectTo
 static void   gimp_foreground_select_tool_apply          (GimpForegroundSelectTool *fg_select,
                                                           GimpDisplay              *display);
 
-static void   gimp_foreground_select_tool_stroke_paint   (GimpForegroundSelectTool    *fg_select,
-                                                          GimpDisplay                 *display,
-                                                          GimpForegroundSelectOptions *options);
+static void   gimp_foreground_select_tool_stroke_paint   (GimpForegroundSelectTool *fg_select);
+static void   gimp_foreground_select_tool_cancel_paint   (GimpForegroundSelectTool *fg_select);
 
 static void   gimp_foreground_select_tool_response       (GimpToolGui              *gui,
                                                           gint                      response_id,
@@ -512,22 +511,17 @@ gimp_foreground_select_tool_button_release (GimpTool              *tool,
     }
   else
     {
-      GimpForegroundSelectOptions *options;
-
-      options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
-
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
       gimp_tool_control_halt (tool->control);
 
       if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
         {
-          g_array_free (fg_select->stroke, TRUE);
-          fg_select->stroke = NULL;
+          gimp_foreground_select_tool_cancel_paint (fg_select);
         }
       else
         {
-          gimp_foreground_select_tool_stroke_paint (fg_select, display, options);
+          gimp_foreground_select_tool_stroke_paint (fg_select);
 
           if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
             gimp_foreground_select_tool_preview (fg_select, display);
@@ -994,13 +988,14 @@ gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
 }
 
 static void
-gimp_foreground_select_tool_stroke_paint (GimpForegroundSelectTool    *fg_select,
-                                          GimpDisplay                 *display,
-                                          GimpForegroundSelectOptions *options)
+gimp_foreground_select_tool_stroke_paint (GimpForegroundSelectTool *fg_select)
 {
-  GimpScanConvert *scan_convert;
-  gint             width;
-  gdouble          opacity;
+  GimpForegroundSelectOptions *options;
+  GimpScanConvert             *scan_convert;
+  gint                         width;
+  gdouble                      opacity;
+
+  options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (fg_select);
 
   g_return_if_fail (fg_select->stroke != NULL);
 
@@ -1044,6 +1039,15 @@ gimp_foreground_select_tool_stroke_paint (GimpForegroundSelectTool    *fg_select
                                    opacity);
 
   gimp_scan_convert_free (scan_convert);
+
+  g_array_free (fg_select->stroke, TRUE);
+  fg_select->stroke = NULL;
+}
+
+static void
+gimp_foreground_select_tool_cancel_paint (GimpForegroundSelectTool *fg_select)
+{
+  g_return_if_fail (fg_select->stroke != NULL);
 
   g_array_free (fg_select->stroke, TRUE);
   fg_select->stroke = NULL;
