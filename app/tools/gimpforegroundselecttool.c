@@ -575,6 +575,8 @@ gimp_foreground_select_tool_update_gui (GimpForegroundSelectTool *fg_select)
                                           GIMP_STOCK_RESET,    RESPONSE_RESET,
                                           NULL);
 
+      gimp_tool_gui_set_overlay (fg_select->gui, TRUE);
+
       g_signal_connect (fg_select->gui, "response",
                         G_CALLBACK (gimp_foreground_select_tool_response),
                         fg_select);
