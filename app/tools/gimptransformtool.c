@@ -115,13 +115,13 @@ static void      gimp_transform_tool_cursor_update          (GimpTool           
                                                              const GimpCoords      *coords,
                                                              GdkModifierType        state,
                                                              GimpDisplay           *display);
-const gchar    * gimp_transform_tool_get_undo_desc          (GimpTool              *tool,
+static const gchar * gimp_transform_tool_get_undo_desc      (GimpTool              *tool,
                                                              GimpDisplay           *display);
-const gchar    * gimp_transform_tool_get_redo_desc          (GimpTool              *tool,
+static const gchar * gimp_transform_tool_get_redo_desc      (GimpTool              *tool,
                                                              GimpDisplay           *display);
-gboolean         gimp_transform_tool_undo                   (GimpTool              *tool,
+static gboolean  gimp_transform_tool_undo                   (GimpTool              *tool,
                                                              GimpDisplay           *display);
-gboolean         gimp_transform_tool_redo                   (GimpTool              *tool,
+static gboolean  gimp_transform_tool_redo                   (GimpTool              *tool,
                                                              GimpDisplay           *display);
 static void      gimp_transform_tool_options_notify         (GimpTool              *tool,
                                                              GimpToolOptions       *options,
@@ -774,7 +774,7 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
-const gchar *
+static const gchar *
 gimp_transform_tool_get_undo_desc (GimpTool    *tool,
                                    GimpDisplay *display)
 {
@@ -788,7 +788,7 @@ gimp_transform_tool_get_undo_desc (GimpTool    *tool,
   return _("Transform Step");
 }
 
-const gchar *
+static const gchar *
 gimp_transform_tool_get_redo_desc (GimpTool    *tool,
                                    GimpDisplay *display)
 {
@@ -801,7 +801,7 @@ gimp_transform_tool_get_redo_desc (GimpTool    *tool,
   return _("Transform Step");
 }
 
-gboolean
+static gboolean
 gimp_transform_tool_undo (GimpTool    *tool,
                           GimpDisplay *display)
 {
@@ -841,7 +841,7 @@ gimp_transform_tool_undo (GimpTool    *tool,
   return TRUE;
 }
 
-gboolean
+static gboolean
 gimp_transform_tool_redo (GimpTool    *tool,
                           GimpDisplay *display)
 {
