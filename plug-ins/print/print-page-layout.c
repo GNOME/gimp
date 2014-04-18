@@ -337,7 +337,8 @@ print_size_frame (PrintData    *data,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1, data->yres);
 
   chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
+  if (ABS (data->xres - data->yres) < GIMP_MIN_RESOLUTION)
+    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
   gtk_table_attach (GTK_TABLE (entry), chain, 2, 3, 0, 2,
                     GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (chain);
@@ -767,18 +768,18 @@ print_size_info_set_resolution (PrintSizeInfo *info,
                                 gdouble        xres,
                                 gdouble        yres)
 {
-  PrintData    *data = info->data;
-  gdouble       offset_x;
-  gdouble       offset_y;
-  gdouble       offset_x_max;
-  gdouble       offset_y_max;
+  PrintData *data = info->data;
+  gdouble    offset_x;
+  gdouble    offset_y;
+  gdouble    offset_x_max;
+  gdouble    offset_y_max;
 
   if (info->chain && gimp_chain_button_get_active (info->chain))
     {
       if (xres != data->xres)
-          yres = xres;
+        yres = xres;
       else
-          xres = yres;
+        xres = yres;
     }
 
   data->xres = xres;
