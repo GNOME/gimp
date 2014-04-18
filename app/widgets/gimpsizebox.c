@@ -244,14 +244,19 @@ gimp_size_box_constructed (GObject *object)
 
   if (box->edit_resolution)
     {
+      gboolean chain_active;
+
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
       gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
+      chain_active = ABS (box->xresolution -
+                          box->yresolution) < GIMP_MIN_RESOLUTION;
+
       entry = gimp_coordinates_new (box->resolution_unit, _("pixels/%a"),
                                     FALSE, FALSE, SB_WIDTH,
                                     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
-                                    TRUE, FALSE,
+                                    chain_active, FALSE,
                                     _("_X resolution:"),
                                     box->xresolution, 1.0,
                                     1, 1, 1, 10,
