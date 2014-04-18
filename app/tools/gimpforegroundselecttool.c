@@ -78,29 +78,6 @@ static gboolean  gimp_foreground_select_tool_initialize  (GimpTool         *tool
 static void   gimp_foreground_select_tool_control        (GimpTool         *tool,
                                                           GimpToolAction    action,
                                                           GimpDisplay      *display);
-static void   gimp_foreground_select_tool_oper_update    (GimpTool         *tool,
-                                                          const GimpCoords *coords,
-                                                          GdkModifierType   state,
-                                                          gboolean          proximity,
-                                                          GimpDisplay      *display);
-static void   gimp_foreground_select_tool_modifier_key   (GimpTool         *tool,
-                                                          GdkModifierType   key,
-                                                          gboolean          press,
-                                                          GdkModifierType   state,
-                                                          GimpDisplay      *display);
-static void   gimp_foreground_select_tool_active_modifier_key
-                                                         (GimpTool         *tool,
-                                                          GdkModifierType   key,
-                                                          gboolean          press,
-                                                          GdkModifierType   state,
-                                                          GimpDisplay      *display);
-static void   gimp_foreground_select_tool_cursor_update  (GimpTool         *tool,
-                                                          const GimpCoords *coords,
-                                                          GdkModifierType   state,
-                                                          GimpDisplay      *display);
-static gboolean  gimp_foreground_select_tool_key_press   (GimpTool         *tool,
-                                                          GdkEventKey      *kevent,
-                                                          GimpDisplay      *display);
 static void   gimp_foreground_select_tool_button_press   (GimpTool         *tool,
                                                           const GimpCoords *coords,
                                                           guint32           time,
@@ -116,6 +93,29 @@ static void   gimp_foreground_select_tool_button_release (GimpTool         *tool
 static void   gimp_foreground_select_tool_motion         (GimpTool         *tool,
                                                           const GimpCoords *coords,
                                                           guint32           time,
+                                                          GdkModifierType   state,
+                                                          GimpDisplay      *display);
+static gboolean  gimp_foreground_select_tool_key_press   (GimpTool         *tool,
+                                                          GdkEventKey      *kevent,
+                                                          GimpDisplay      *display);
+static void   gimp_foreground_select_tool_modifier_key   (GimpTool         *tool,
+                                                          GdkModifierType   key,
+                                                          gboolean          press,
+                                                          GdkModifierType   state,
+                                                          GimpDisplay      *display);
+static void   gimp_foreground_select_tool_active_modifier_key
+                                                         (GimpTool         *tool,
+                                                          GdkModifierType   key,
+                                                          gboolean          press,
+                                                          GdkModifierType   state,
+                                                          GimpDisplay      *display);
+static void   gimp_foreground_select_tool_oper_update    (GimpTool         *tool,
+                                                          const GimpCoords *coords,
+                                                          GdkModifierType   state,
+                                                          gboolean          proximity,
+                                                          GimpDisplay      *display);
+static void   gimp_foreground_select_tool_cursor_update  (GimpTool         *tool,
+                                                          const GimpCoords *coords,
                                                           GdkModifierType   state,
                                                           GimpDisplay      *display);
 static void   gimp_foreground_select_tool_options_notify (GimpTool         *tool,
@@ -186,14 +186,14 @@ gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
 
   tool_class->initialize          = gimp_foreground_select_tool_initialize;
   tool_class->control             = gimp_foreground_select_tool_control;
-  tool_class->oper_update         = gimp_foreground_select_tool_oper_update;
-  tool_class->modifier_key        = gimp_foreground_select_tool_modifier_key;
-  tool_class->active_modifier_key = gimp_foreground_select_tool_active_modifier_key;
-  tool_class->cursor_update       = gimp_foreground_select_tool_cursor_update;
-  tool_class->key_press           = gimp_foreground_select_tool_key_press;
   tool_class->button_press        = gimp_foreground_select_tool_button_press;
   tool_class->button_release      = gimp_foreground_select_tool_button_release;
   tool_class->motion              = gimp_foreground_select_tool_motion;
+  tool_class->key_press           = gimp_foreground_select_tool_key_press;
+  tool_class->modifier_key        = gimp_foreground_select_tool_modifier_key;
+  tool_class->active_modifier_key = gimp_foreground_select_tool_active_modifier_key;
+  tool_class->oper_update         = gimp_foreground_select_tool_oper_update;
+  tool_class->cursor_update       = gimp_foreground_select_tool_cursor_update;
   tool_class->options_notify      = gimp_foreground_select_tool_options_notify;
 
   draw_tool_class->draw           = gimp_foreground_select_tool_draw;
@@ -335,176 +335,6 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_foreground_select_tool_oper_update (GimpTool         *tool,
-                                         const GimpCoords *coords,
-                                         GdkModifierType   state,
-                                         gboolean          proximity,
-                                         GimpDisplay      *display)
-{
-  GimpForegroundSelectTool    *fg_select    = GIMP_FOREGROUND_SELECT_TOOL (tool);
-  GimpForegroundSelectOptions *options;
-  const gchar                 *status_stage = NULL;
-  const gchar                 *status_mode  = NULL;
-
-  options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (fg_select);
-
-  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
-                                               display);
-
-  if (fg_select->state == MATTING_STATE_FREE_SELECT)
-    {
-      if (GIMP_SELECTION_TOOL (tool)->function == SELECTION_SELECT)
-        status_stage = _("Roughly outline the object to extract");
-    }
-  else
-    {
-      GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
-
-      gimp_draw_tool_pause (draw_tool);
-
-      fg_select->last_coords = *coords;
-
-      gimp_draw_tool_resume (draw_tool);
-
-      if (options->draw_mode == GIMP_MATTING_DRAW_MODE_FOREGROUND)
-        status_mode = _("Selecting foreground,");
-      else if (options->draw_mode == GIMP_MATTING_DRAW_MODE_BACKGROUND)
-        status_mode = _("Selecting background,");
-      else
-        status_mode = _("Selecting unknown,");
-
-      if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
-        status_stage = _("press Enter to preview.");
-      else
-        status_stage = _("press Escape to exit preview or Enter to apply.");
-    }
-
-  if (proximity && status_stage)
-    {
-      if (status_mode)
-        gimp_tool_replace_status (tool, display, "%s %s", status_mode, status_stage);
-      else
-        gimp_tool_replace_status (tool, display, "%s", status_stage);
-    }
-}
-
-static void
-gimp_foreground_select_tool_modifier_key (GimpTool        *tool,
-                                          GdkModifierType  key,
-                                          gboolean         press,
-                                          GdkModifierType  state,
-                                          GimpDisplay     *display)
-{
-  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
-
-  if (fg_select->state == MATTING_STATE_FREE_SELECT)
-    {
-      GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
-                                                    display);
-    }
-  else
-    {
-#if 0
-      if (key == gimp_get_toggle_behavior_mask ())
-        {
-          GimpForegroundSelectOptions *options;
-
-          options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
-
-          g_object_set (options,
-                        "background", ! options->background,
-                        NULL);
-        }
-#endif
-    }
-}
-
-static void
-gimp_foreground_select_tool_active_modifier_key (GimpTool        *tool,
-                                                 GdkModifierType  key,
-                                                 gboolean         press,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *display)
-{
-  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
-
-  if (fg_select->state == MATTING_STATE_FREE_SELECT)
-    {
-      GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool, key, press,
-                                                           state, display);
-    }
-}
-
-static void
-gimp_foreground_select_tool_cursor_update (GimpTool         *tool,
-                                           const GimpCoords *coords,
-                                           GdkModifierType   state,
-                                           GimpDisplay      *display)
-{
-  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
-
-  if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
-    {
-      switch (GIMP_SELECTION_TOOL (tool)->function)
-        {
-        case SELECTION_MOVE_MASK:
-        case SELECTION_MOVE:
-        case SELECTION_MOVE_COPY:
-        case SELECTION_ANCHOR:
-          return;
-        default:
-          break;
-        }
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
-}
-
-static gboolean
-gimp_foreground_select_tool_key_press (GimpTool    *tool,
-                                       GdkEventKey *kevent,
-                                       GimpDisplay *display)
-{
-  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
-
-  if (fg_select->state == MATTING_STATE_FREE_SELECT)
-    {
-      return GIMP_TOOL_CLASS (parent_class)->key_press (tool, kevent, display);
-    }
-  else
-    {
-      if (display != tool->display)
-        return FALSE;
-
-      switch (kevent->keyval)
-        {
-        case GDK_KEY_Return:
-        case GDK_KEY_KP_Enter:
-        case GDK_KEY_ISO_Enter:
-          if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
-            gimp_foreground_select_tool_response (fg_select->gui,
-                                                  RESPONSE_PREVIEW, fg_select);
-          else
-            gimp_foreground_select_tool_response (fg_select->gui,
-                                                  RESPONSE_APPLY, fg_select);
-          return TRUE;
-
-        case GDK_KEY_Escape:
-          if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
-            gimp_foreground_select_tool_response (fg_select->gui,
-                                                  GTK_RESPONSE_CANCEL, fg_select);
-          else
-            gimp_foreground_select_tool_response (fg_select->gui,
-                                                  RESPONSE_PREVIEW, fg_select);
-          return TRUE;
-
-        default:
-          return FALSE;
-        }
-    }
-}
-
-static void
 gimp_foreground_select_tool_button_press (GimpTool            *tool,
                                           const GimpCoords    *coords,
                                           guint32              time,
@@ -585,51 +415,6 @@ gimp_foreground_select_tool_button_release (GimpTool              *tool,
 }
 
 static void
-gimp_foreground_select_tool_response (GimpToolGui              *gui,
-                                      gint                      response_id,
-                                      GimpForegroundSelectTool *fg_select)
-{
-  GimpTool    *tool    = GIMP_TOOL (fg_select);
-  GimpDisplay *display = tool->display;
-
-  switch (response_id)
-    {
-    case RESPONSE_PREVIEW:
-      if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
-        gimp_foreground_select_tool_set_trimap (fg_select, display);
-      else
-        gimp_foreground_select_tool_preview (fg_select, display);
-      break;
-
-    case RESPONSE_APPLY:
-      if (fg_select->state != MATTING_STATE_PREVIEW_MASK)
-        gimp_foreground_select_tool_preview (fg_select, display);
-      gimp_foreground_select_tool_apply (fg_select, display);
-      break;
-
-    default:
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-      break;
-    }
-}
-
-static void
-gimp_foreground_select_tool_update_gui (GimpForegroundSelectTool *fg_select)
-{
-  if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
-    {
-      gimp_tool_gui_set_description (fg_select->gui, _("Paint mask"));
-    }
-  else if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
-    {
-      gimp_tool_gui_set_description (fg_select->gui, _("Preview"));
-    }
-
-  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_PREVIEW, TRUE);
-  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_APPLY,   TRUE);
-}
-
-static void
 gimp_foreground_select_tool_motion (GimpTool         *tool,
                                     const GimpCoords *coords,
                                     guint32           time,
@@ -662,6 +447,176 @@ gimp_foreground_select_tool_motion (GimpTool         *tool,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
+}
+
+static gboolean
+gimp_foreground_select_tool_key_press (GimpTool    *tool,
+                                       GdkEventKey *kevent,
+                                       GimpDisplay *display)
+{
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
+  if (fg_select->state == MATTING_STATE_FREE_SELECT)
+    {
+      return GIMP_TOOL_CLASS (parent_class)->key_press (tool, kevent, display);
+    }
+  else
+    {
+      if (display != tool->display)
+        return FALSE;
+
+      switch (kevent->keyval)
+        {
+        case GDK_KEY_Return:
+        case GDK_KEY_KP_Enter:
+        case GDK_KEY_ISO_Enter:
+          if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
+            gimp_foreground_select_tool_response (fg_select->gui,
+                                                  RESPONSE_PREVIEW, fg_select);
+          else
+            gimp_foreground_select_tool_response (fg_select->gui,
+                                                  RESPONSE_APPLY, fg_select);
+          return TRUE;
+
+        case GDK_KEY_Escape:
+          if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
+            gimp_foreground_select_tool_response (fg_select->gui,
+                                                  GTK_RESPONSE_CANCEL, fg_select);
+          else
+            gimp_foreground_select_tool_response (fg_select->gui,
+                                                  RESPONSE_PREVIEW, fg_select);
+          return TRUE;
+
+        default:
+          return FALSE;
+        }
+    }
+}
+
+static void
+gimp_foreground_select_tool_modifier_key (GimpTool        *tool,
+                                          GdkModifierType  key,
+                                          gboolean         press,
+                                          GdkModifierType  state,
+                                          GimpDisplay     *display)
+{
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
+  if (fg_select->state == MATTING_STATE_FREE_SELECT)
+    {
+      GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state,
+                                                    display);
+    }
+  else
+    {
+#if 0
+      if (key == gimp_get_toggle_behavior_mask ())
+        {
+          GimpForegroundSelectOptions *options;
+
+          options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
+
+          g_object_set (options,
+                        "background", ! options->background,
+                        NULL);
+        }
+#endif
+    }
+}
+
+static void
+gimp_foreground_select_tool_active_modifier_key (GimpTool        *tool,
+                                                 GdkModifierType  key,
+                                                 gboolean         press,
+                                                 GdkModifierType  state,
+                                                 GimpDisplay     *display)
+{
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
+  if (fg_select->state == MATTING_STATE_FREE_SELECT)
+    {
+      GIMP_TOOL_CLASS (parent_class)->active_modifier_key (tool, key, press,
+                                                           state, display);
+    }
+}
+
+static void
+gimp_foreground_select_tool_oper_update (GimpTool         *tool,
+                                         const GimpCoords *coords,
+                                         GdkModifierType   state,
+                                         gboolean          proximity,
+                                         GimpDisplay      *display)
+{
+  GimpForegroundSelectTool    *fg_select    = GIMP_FOREGROUND_SELECT_TOOL (tool);
+  GimpForegroundSelectOptions *options;
+  const gchar                 *status_stage = NULL;
+  const gchar                 *status_mode  = NULL;
+
+  options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (fg_select);
+
+  GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
+                                               display);
+
+  if (fg_select->state == MATTING_STATE_FREE_SELECT)
+    {
+      if (GIMP_SELECTION_TOOL (tool)->function == SELECTION_SELECT)
+        status_stage = _("Roughly outline the object to extract");
+    }
+  else
+    {
+      GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (tool);
+
+      gimp_draw_tool_pause (draw_tool);
+
+      fg_select->last_coords = *coords;
+
+      gimp_draw_tool_resume (draw_tool);
+
+      if (options->draw_mode == GIMP_MATTING_DRAW_MODE_FOREGROUND)
+        status_mode = _("Selecting foreground,");
+      else if (options->draw_mode == GIMP_MATTING_DRAW_MODE_BACKGROUND)
+        status_mode = _("Selecting background,");
+      else
+        status_mode = _("Selecting unknown,");
+
+      if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
+        status_stage = _("press Enter to preview.");
+      else
+        status_stage = _("press Escape to exit preview or Enter to apply.");
+    }
+
+  if (proximity && status_stage)
+    {
+      if (status_mode)
+        gimp_tool_replace_status (tool, display, "%s %s", status_mode, status_stage);
+      else
+        gimp_tool_replace_status (tool, display, "%s", status_stage);
+    }
+}
+
+static void
+gimp_foreground_select_tool_cursor_update (GimpTool         *tool,
+                                           const GimpCoords *coords,
+                                           GdkModifierType   state,
+                                           GimpDisplay      *display)
+{
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
+  if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
+    {
+      switch (GIMP_SELECTION_TOOL (tool)->function)
+        {
+        case SELECTION_MOVE_MASK:
+        case SELECTION_MOVE:
+        case SELECTION_MOVE_COPY:
+        case SELECTION_ANCHOR:
+          return;
+        default:
+          break;
+        }
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
 static void
@@ -1076,4 +1031,49 @@ gimp_foreground_select_tool_cancel_paint (GimpForegroundSelectTool *fg_select)
 
   g_array_free (fg_select->stroke, TRUE);
   fg_select->stroke = NULL;
+}
+
+static void
+gimp_foreground_select_tool_response (GimpToolGui              *gui,
+                                      gint                      response_id,
+                                      GimpForegroundSelectTool *fg_select)
+{
+  GimpTool    *tool    = GIMP_TOOL (fg_select);
+  GimpDisplay *display = tool->display;
+
+  switch (response_id)
+    {
+    case RESPONSE_PREVIEW:
+      if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
+        gimp_foreground_select_tool_set_trimap (fg_select, display);
+      else
+        gimp_foreground_select_tool_preview (fg_select, display);
+      break;
+
+    case RESPONSE_APPLY:
+      if (fg_select->state != MATTING_STATE_PREVIEW_MASK)
+        gimp_foreground_select_tool_preview (fg_select, display);
+      gimp_foreground_select_tool_apply (fg_select, display);
+      break;
+
+    default:
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+      break;
+    }
+}
+
+static void
+gimp_foreground_select_tool_update_gui (GimpForegroundSelectTool *fg_select)
+{
+  if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
+    {
+      gimp_tool_gui_set_description (fg_select->gui, _("Paint mask"));
+    }
+  else if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
+    {
+      gimp_tool_gui_set_description (fg_select->gui, _("Preview"));
+    }
+
+  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_PREVIEW, TRUE);
+  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_APPLY,   TRUE);
 }
