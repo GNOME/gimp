@@ -378,7 +378,26 @@ gimp_overlay_dialog_set_response_sensitive (GimpOverlayDialog *overlay,
                                             gint               response_id,
                                             gboolean           sensitive)
 {
-  /* TODO */
+  GList *children;
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_OVERLAY_DIALOG (overlay));
+
+  children = gtk_container_get_children (GTK_CONTAINER (overlay->action_area));
+
+  for (list = children; list; list = g_list_next (list))
+    {
+      GtkWidget    *child = list->data;
+      ResponseData *ad    = get_response_data (child, FALSE);
+
+      if (ad && ad->response_id == response_id)
+        {
+          gtk_widget_set_sensitive (child, sensitive);
+          break;
+        }
+    }
+
+  g_list_free (children);
 }
 
 static void
