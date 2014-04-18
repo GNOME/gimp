@@ -127,16 +127,14 @@ static void   gimp_foreground_select_tool_draw           (GimpDrawTool     *draw
 static void   gimp_foreground_select_tool_select         (GimpFreeSelectTool *free_sel,
                                                           GimpDisplay        *display);
 
+static void   gimp_foreground_select_tool_halt           (GimpForegroundSelectTool *fg_select);
+static void   gimp_foreground_select_tool_commit         (GimpForegroundSelectTool *fg_select);
+
 static void   gimp_foreground_select_tool_set_trimap     (GimpForegroundSelectTool *fg_select,
                                                           GimpDisplay              *display);
 static void   gimp_foreground_select_tool_set_preview    (GimpForegroundSelectTool *fg_select,
                                                           GimpDisplay              *display);
-static void   gimp_foreground_select_tool_drop_masks     (GimpForegroundSelectTool *fg_select,
-                                                          GimpDisplay              *display);
-
 static void   gimp_foreground_select_tool_preview        (GimpForegroundSelectTool *fg_select,
-                                                          GimpDisplay              *display);
-static void   gimp_foreground_select_tool_apply          (GimpForegroundSelectTool *fg_select,
                                                           GimpDisplay              *display);
 
 static void   gimp_foreground_select_tool_stroke_paint   (GimpForegroundSelectTool *fg_select);
@@ -319,15 +317,11 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      gimp_foreground_select_tool_drop_masks (fg_select, display);
-      tool->display  = NULL;
-      tool->drawable = NULL;
-
-      if (fg_select->gui)
-        gimp_tool_gui_hide (fg_select->gui);
+      gimp_foreground_select_tool_halt (fg_select);
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
+      gimp_foreground_select_tool_commit (fg_select);
       break;
     }
 
@@ -761,6 +755,70 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 }
 
 static void
+gimp_foreground_select_tool_halt (GimpForegroundSelectTool *fg_select)
+{
+  GimpTool *tool = GIMP_TOOL (fg_select);
+
+  if (fg_select->trimap)
+    {
+      g_object_unref (fg_select->trimap);
+      fg_select->trimap = NULL;
+    }
+
+  if (fg_select->mask)
+    {
+      g_object_unref (fg_select->mask);
+      fg_select->mask = NULL;
+    }
+
+  if (tool->display)
+    gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
+                                 NULL, NULL);
+
+  gimp_tool_control_set_tool_cursor        (tool->control,
+                                            GIMP_TOOL_CURSOR_FREE_SELECT);
+  gimp_tool_control_set_toggle_tool_cursor (tool->control,
+                                            GIMP_TOOL_CURSOR_FREE_SELECT);
+
+  gimp_tool_control_set_toggled (tool->control, FALSE);
+
+  fg_select->state = MATTING_STATE_FREE_SELECT;
+
+  tool->display  = NULL;
+  tool->drawable = NULL;
+
+  if (fg_select->gui)
+    gimp_tool_gui_hide (fg_select->gui);
+}
+
+static void
+gimp_foreground_select_tool_commit (GimpForegroundSelectTool *fg_select)
+{
+  GimpTool             *tool    = GIMP_TOOL (fg_select);
+  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (fg_select);
+
+  if (tool->display && fg_select->state != MATTING_STATE_FREE_SELECT)
+    {
+      GimpImage *image = gimp_display_get_image (tool->display);
+
+      if (fg_select->state != MATTING_STATE_PREVIEW_MASK)
+        gimp_foreground_select_tool_preview (fg_select, tool->display);
+
+      gimp_channel_select_buffer (gimp_image_get_mask (image),
+                                  C_("command", "Foreground Select"),
+                                  fg_select->mask,
+                                  0, /* x offset */
+                                  0, /* y offset */
+                                  options->operation,
+                                  options->feather,
+                                  options->feather_radius,
+                                  options->feather_radius);
+
+      gimp_image_flush (image);
+    }
+}
+
+static void
 gimp_foreground_select_tool_set_trimap (GimpForegroundSelectTool *fg_select,
                                         GimpDisplay              *display)
 {
@@ -815,39 +873,6 @@ gimp_foreground_select_tool_set_preview (GimpForegroundSelectTool *fg_select,
   fg_select->state = MATTING_STATE_PREVIEW_MASK;
 
   gimp_foreground_select_tool_update_gui (fg_select);
-}
-
-static void
-gimp_foreground_select_tool_drop_masks (GimpForegroundSelectTool *fg_select,
-                                        GimpDisplay              *display)
-{
-  GimpTool *tool = GIMP_TOOL (fg_select);
-
-  if (fg_select->trimap)
-    {
-      g_object_unref (fg_select->trimap);
-      fg_select->trimap = NULL;
-    }
-
-  if (fg_select->mask)
-    {
-      g_object_unref (fg_select->mask);
-      fg_select->mask = NULL;
-    }
-
-  if (GIMP_IS_DISPLAY (display))
-    {
-      gimp_display_shell_set_mask (gimp_display_get_shell (display),
-                                   NULL, NULL);
-    }
-
-  gimp_tool_control_set_tool_cursor        (tool->control,
-                                            GIMP_TOOL_CURSOR_FREE_SELECT);
-  gimp_tool_control_set_toggle_tool_cursor (tool->control,
-                                            GIMP_TOOL_CURSOR_FREE_SELECT);
-
-  gimp_tool_control_set_toggled (tool->control, FALSE);
-  fg_select->state = MATTING_STATE_FREE_SELECT;
 }
 
 static void
@@ -943,31 +968,6 @@ gimp_foreground_select_tool_preview (GimpForegroundSelectTool *fg_select,
 }
 
 static void
-gimp_foreground_select_tool_apply (GimpForegroundSelectTool *fg_select,
-                                   GimpDisplay              *display)
-{
-  GimpTool             *tool    = GIMP_TOOL (fg_select);
-  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (fg_select);
-  GimpImage            *image   = gimp_display_get_image (display);
-
-  g_return_if_fail (fg_select->mask != NULL);
-
-  gimp_channel_select_buffer (gimp_image_get_mask (image),
-                              C_("command", "Foreground Select"),
-                              fg_select->mask,
-                              0, /* x offset */
-                              0, /* y offset */
-                              options->operation,
-                              options->feather,
-                              options->feather_radius,
-                              options->feather_radius);
-
-  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-
-  gimp_image_flush (image);
-}
-
-static void
 gimp_foreground_select_tool_stroke_paint (GimpForegroundSelectTool *fg_select)
 {
   GimpForegroundSelectOptions *options;
@@ -1051,10 +1051,8 @@ gimp_foreground_select_tool_response (GimpToolGui              *gui,
       break;
 
     case RESPONSE_APPLY:
-      if (fg_select->state != MATTING_STATE_PREVIEW_MASK)
-        gimp_foreground_select_tool_preview (fg_select, display);
-      gimp_foreground_select_tool_apply (fg_select, display);
-      break;
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+      /* fallthru */
 
     default:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
