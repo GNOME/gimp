@@ -58,7 +58,6 @@
 #include "gimp-intl.h"
 
 
-#define RESPONSE_RESET    1
 #define RESPONSE_PREVIEW  2
 #define RESPONSE_APPLY    3
 
@@ -276,13 +275,14 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
 
   if (! fg_select->gui)
     {
-      fg_select->gui = gimp_tool_gui_new (tool->tool_info,
-                                          _("Dialog for foreground select"),
-                                          FALSE,
-                                          _("Toggle Preview"), RESPONSE_PREVIEW,
-                                          _("Apply"),          RESPONSE_APPLY,
-                                          GIMP_STOCK_RESET,    RESPONSE_RESET,
-                                          NULL);
+      fg_select->gui =
+        gimp_tool_gui_new (tool->tool_info,
+                           _("Dialog for foreground select"),
+                           FALSE,
+                           GTK_STOCK_CANCEL,    GTK_RESPONSE_CANCEL,
+                           _("Toggle Preview"), RESPONSE_PREVIEW,
+                           _("Apply"),          RESPONSE_APPLY,
+                           NULL);
 
       gimp_tool_gui_set_overlay (fg_select->gui, TRUE);
 
@@ -295,7 +295,7 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
                                  _("Select foreground pixels"));
 
   gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_PREVIEW, FALSE);
-  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_APPLY, FALSE);
+  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_APPLY,   FALSE);
 
   gimp_tool_gui_set_shell (fg_select->gui, shell);
   gimp_tool_gui_set_viewable (fg_select->gui, GIMP_VIEWABLE (drawable));
@@ -492,7 +492,7 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
         case GDK_KEY_Escape:
           if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
             gimp_foreground_select_tool_response (fg_select->gui,
-                                                  RESPONSE_RESET, fg_select);
+                                                  GTK_RESPONSE_CANCEL, fg_select);
           else
             gimp_foreground_select_tool_response (fg_select->gui,
                                                   RESPONSE_PREVIEW, fg_select);
@@ -592,25 +592,25 @@ gimp_foreground_select_tool_response (GimpToolGui              *gui,
   GimpTool    *tool    = GIMP_TOOL (fg_select);
   GimpDisplay *display = tool->display;
 
-  if (response_id == RESPONSE_PREVIEW)
+  switch (response_id)
     {
+    case RESPONSE_PREVIEW:
       if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
         gimp_foreground_select_tool_set_trimap (fg_select, display);
       else
         gimp_foreground_select_tool_preview (fg_select, display);
-    }
-  else if (response_id == RESPONSE_APPLY)
-    {
+      break;
+
+    case RESPONSE_APPLY:
       if (fg_select->state != MATTING_STATE_PREVIEW_MASK)
         gimp_foreground_select_tool_preview (fg_select, display);
       gimp_foreground_select_tool_apply (fg_select, display);
-    }
-  else if (response_id == RESPONSE_RESET)
-    {
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-    }
+      break;
 
-  gimp_foreground_select_tool_update_gui (fg_select);
+    default:
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+      break;
+    }
 }
 
 static void
@@ -626,7 +626,7 @@ gimp_foreground_select_tool_update_gui (GimpForegroundSelectTool *fg_select)
     }
 
   gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_PREVIEW, TRUE);
-  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_APPLY, TRUE);
+  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_APPLY,   TRUE);
 }
 
 static void
@@ -829,6 +829,8 @@ gimp_foreground_select_tool_set_trimap (GimpForegroundSelectTool *fg_select,
   gimp_tool_control_set_toggled (tool->control, FALSE);
 
   fg_select->state = MATTING_STATE_PAINT_TRIMAP;
+
+  gimp_foreground_select_tool_update_gui (fg_select);
 }
 
 static void
@@ -856,6 +858,8 @@ gimp_foreground_select_tool_set_preview (GimpForegroundSelectTool *fg_select,
   gimp_tool_control_set_toggled (tool->control, FALSE);
 
   fg_select->state = MATTING_STATE_PREVIEW_MASK;
+
+  gimp_foreground_select_tool_update_gui (fg_select);
 }
 
 static void
