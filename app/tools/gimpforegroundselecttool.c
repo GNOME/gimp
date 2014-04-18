@@ -27,6 +27,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -58,13 +59,16 @@
 #include "gimp-intl.h"
 
 
-typedef struct
+typedef struct _StrokeUndo StrokeUndo;
+
+struct _StrokeUndo
 {
-  gint         width;
-  gboolean     background;
-  gint         num_points;
-  GimpVector2 *points;
-} FgSelectStroke;
+  GeglBuffer          *saved_trimap;
+  gint                 trimap_x;
+  gint                 trimap_y;
+  GimpMattingDrawMode  draw_mode;
+  gint                 stroke_width;
+};
 
 
 static void   gimp_foreground_select_tool_finalize       (GObject          *object);
@@ -115,6 +119,16 @@ static void   gimp_foreground_select_tool_cursor_update  (GimpTool         *tool
                                                           const GimpCoords *coords,
                                                           GdkModifierType   state,
                                                           GimpDisplay      *display);
+static const gchar * gimp_foreground_select_tool_get_undo_desc
+                                                         (GimpTool         *tool,
+                                                          GimpDisplay      *display);
+static const gchar * gimp_foreground_select_tool_get_redo_desc
+                                                         (GimpTool         *tool,
+                                                          GimpDisplay      *display);
+static gboolean   gimp_foreground_select_tool_undo       (GimpTool         *tool,
+                                                          GimpDisplay      *display);
+static gboolean   gimp_foreground_select_tool_redo       (GimpTool         *tool,
+                                                          GimpDisplay      *display);
 static void   gimp_foreground_select_tool_options_notify (GimpTool         *tool,
                                                           GimpToolOptions  *options,
                                                           const GParamSpec *pspec);
@@ -144,6 +158,14 @@ static void   gimp_foreground_select_tool_preview_toggled(GtkToggleButton       
                                                           GimpForegroundSelectTool *fg_select);
 
 static void   gimp_foreground_select_tool_update_gui     (GimpForegroundSelectTool *fg_select);
+
+static StrokeUndo * gimp_foreground_select_undo_new      (GeglBuffer               *trimap,
+                                                          GArray                   *stroke,
+                                                          GimpMattingDrawMode       draw_mode,
+                                                          gint                      stroke_width);
+static void         gimp_foreground_select_undo_pop      (StrokeUndo               *undo,
+                                                          GeglBuffer               *trimap);
+static void         gimp_foreground_select_undo_free     (StrokeUndo               *undo);
 
 
 G_DEFINE_TYPE (GimpForegroundSelectTool, gimp_foreground_select_tool,
@@ -191,6 +213,10 @@ gimp_foreground_select_tool_class_init (GimpForegroundSelectToolClass *klass)
   tool_class->active_modifier_key = gimp_foreground_select_tool_active_modifier_key;
   tool_class->oper_update         = gimp_foreground_select_tool_oper_update;
   tool_class->cursor_update       = gimp_foreground_select_tool_cursor_update;
+  tool_class->get_undo_desc       = gimp_foreground_select_tool_get_undo_desc;
+  tool_class->get_redo_desc       = gimp_foreground_select_tool_get_redo_desc;
+  tool_class->undo                = gimp_foreground_select_tool_undo;
+  tool_class->redo                = gimp_foreground_select_tool_redo;
   tool_class->options_notify      = gimp_foreground_select_tool_options_notify;
 
   draw_tool_class->draw           = gimp_foreground_select_tool_draw;
@@ -622,6 +648,100 @@ gimp_foreground_select_tool_cursor_update (GimpTool         *tool,
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
+static const gchar *
+gimp_foreground_select_tool_get_undo_desc (GimpTool    *tool,
+                                           GimpDisplay *display)
+{
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
+  if (fg_select->undo_stack)
+    {
+      StrokeUndo  *undo = fg_select->undo_stack->data;
+      const gchar *desc;
+
+      if (gimp_enum_get_value (GIMP_TYPE_MATTING_DRAW_MODE, undo->draw_mode,
+                               NULL, NULL, &desc, NULL))
+        {
+          return desc;
+        }
+    }
+
+  return NULL;
+}
+
+static const gchar *
+gimp_foreground_select_tool_get_redo_desc (GimpTool    *tool,
+                                           GimpDisplay *display)
+{
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
+  if (fg_select->redo_stack)
+    {
+      StrokeUndo  *undo = fg_select->redo_stack->data;
+      const gchar *desc;
+
+      if (gimp_enum_get_value (GIMP_TYPE_MATTING_DRAW_MODE, undo->draw_mode,
+                               NULL, NULL, &desc, NULL))
+        {
+          return desc;
+        }
+    }
+
+  return NULL;
+}
+
+static gboolean
+gimp_foreground_select_tool_undo (GimpTool    *tool,
+                                  GimpDisplay *display)
+{
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
+  if (fg_select->undo_stack)
+    {
+      StrokeUndo *undo = fg_select->undo_stack->data;
+
+      gimp_foreground_select_undo_pop (undo, fg_select->trimap);
+
+      fg_select->undo_stack = g_list_remove (fg_select->undo_stack, undo);
+      fg_select->redo_stack = g_list_prepend (fg_select->redo_stack, undo);
+
+      if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
+        gimp_foreground_select_tool_preview (fg_select, display);
+      else
+        gimp_foreground_select_tool_set_trimap (fg_select, display);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_foreground_select_tool_redo (GimpTool    *tool,
+                                  GimpDisplay *display)
+{
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+
+  if (fg_select->redo_stack)
+    {
+      StrokeUndo *undo = fg_select->redo_stack->data;
+
+      gimp_foreground_select_undo_pop (undo, fg_select->trimap);
+
+      fg_select->redo_stack = g_list_remove (fg_select->redo_stack, undo);
+      fg_select->undo_stack = g_list_prepend (fg_select->undo_stack, undo);
+
+      if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
+        gimp_foreground_select_tool_preview (fg_select, display);
+      else
+        gimp_foreground_select_tool_set_trimap (fg_select, display);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 static void
 gimp_foreground_select_tool_options_notify (GimpTool         *tool,
                                             GimpToolOptions  *options,
@@ -780,6 +900,20 @@ gimp_foreground_select_tool_halt (GimpForegroundSelectTool *fg_select)
       fg_select->mask = NULL;
     }
 
+  if (fg_select->undo_stack)
+    {
+      g_list_free_full (fg_select->undo_stack,
+                        (GDestroyNotify) gimp_foreground_select_undo_free);
+      fg_select->undo_stack = NULL;
+    }
+
+  if (fg_select->redo_stack)
+    {
+      g_list_free_full (fg_select->redo_stack,
+                        (GDestroyNotify) gimp_foreground_select_undo_free);
+      fg_select->redo_stack = NULL;
+    }
+
   if (tool->display)
     gimp_display_shell_set_mask (gimp_display_get_shell (tool->display),
                                  NULL, NULL);
@@ -792,6 +926,10 @@ gimp_foreground_select_tool_halt (GimpForegroundSelectTool *fg_select)
   gimp_tool_control_set_toggled (tool->control, FALSE);
 
   fg_select->state = MATTING_STATE_FREE_SELECT;
+
+  /*  update the undo actions / menu items  */
+  if (tool->display)
+    gimp_image_flush (gimp_display_get_image (tool->display));
 
   tool->display  = NULL;
   tool->drawable = NULL;
@@ -981,12 +1119,28 @@ gimp_foreground_select_tool_stroke_paint (GimpForegroundSelectTool *fg_select)
 {
   GimpForegroundSelectOptions *options;
   GimpScanConvert             *scan_convert;
+  StrokeUndo                  *undo;
   gint                         width;
   gdouble                      opacity;
 
   options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (fg_select);
 
   g_return_if_fail (fg_select->stroke != NULL);
+
+  width = ROUND ((gdouble) options->stroke_width);
+
+  if (fg_select->redo_stack)
+    {
+      g_list_free_full (fg_select->redo_stack,
+                        (GDestroyNotify) gimp_foreground_select_undo_free);
+      fg_select->redo_stack = NULL;
+    }
+
+  undo = gimp_foreground_select_undo_new (fg_select->trimap,
+                                          fg_select->stroke,
+                                          options->draw_mode, width);
+
+  fg_select->undo_stack = g_list_prepend (fg_select->undo_stack, undo);
 
   scan_convert = gimp_scan_convert_new ();
 
@@ -1009,8 +1163,6 @@ gimp_foreground_select_tool_stroke_paint (GimpForegroundSelectTool *fg_select)
                                       FALSE);
     }
 
-  width = ROUND ((gdouble) options->stroke_width);
-
   gimp_scan_convert_stroke (scan_convert,
                             width,
                             GIMP_JOIN_ROUND, GIMP_CAP_ROUND, 10.0,
@@ -1031,6 +1183,9 @@ gimp_foreground_select_tool_stroke_paint (GimpForegroundSelectTool *fg_select)
 
   g_array_free (fg_select->stroke, TRUE);
   fg_select->stroke = NULL;
+
+  /*  update the undo actions / menu items  */
+  gimp_image_flush (gimp_display_get_image (GIMP_TOOL (fg_select)->display));
 }
 
 static void
@@ -1097,4 +1252,98 @@ gimp_foreground_select_tool_update_gui (GimpForegroundSelectTool *fg_select)
   gimp_tool_gui_set_response_sensitive (fg_select->gui, GTK_RESPONSE_APPLY,
                                         TRUE);
   gtk_widget_set_sensitive (fg_select->preview_toggle, TRUE);
+}
+
+static StrokeUndo *
+gimp_foreground_select_undo_new (GeglBuffer          *trimap,
+                                 GArray              *stroke,
+                                 GimpMattingDrawMode draw_mode,
+                                 gint                stroke_width)
+
+{
+  StrokeUndo *undo = g_slice_new0 (StrokeUndo);
+  gint        x1, y1, x2, y2;
+  gint        width, height;
+  gint        i;
+
+  x1 = G_MAXINT;
+  y1 = G_MAXINT;
+  x2 = G_MININT;
+  y2 = G_MININT;
+
+  for (i = 0; i < stroke->len; i++)
+    {
+      GimpVector2 *point = &g_array_index (stroke, GimpVector2, i);
+
+      x1 = MIN (x1, floor (point->x));
+      y1 = MIN (y1, floor (point->y));
+      x2 = MAX (x2, ceil (point->x));
+      y2 = MAX (y2, ceil (point->y));
+    }
+
+  x1 -= stroke_width;
+  y1 -= stroke_width;
+  x2 += stroke_width;
+  y2 += stroke_width;
+
+  x1 = MAX (x1, 0);
+  y1 = MAX (y1, 0);
+  x2 = MIN (x2, gegl_buffer_get_width  (trimap));
+  y2 = MIN (y2, gegl_buffer_get_height (trimap));
+
+  width  = x2 - x1;
+  height = y2 - y1;
+
+  undo->saved_trimap = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                                        gegl_buffer_get_format (trimap));
+
+  gegl_buffer_copy (trimap,             GEGL_RECTANGLE (x1, y1, width, height),
+                    undo->saved_trimap, GEGL_RECTANGLE (0, 0, width, height));
+
+  undo->trimap_x = x1;
+  undo->trimap_y = y1;
+
+  undo->draw_mode    = draw_mode;
+  undo->stroke_width = stroke_width;
+
+  return undo;
+}
+
+static void
+gimp_foreground_select_undo_pop (StrokeUndo *undo,
+                                 GeglBuffer *trimap)
+{
+  GeglBuffer *buffer;
+  gint        width, height;
+
+  buffer = gegl_buffer_dup (undo->saved_trimap);
+
+  width  = gegl_buffer_get_width  (buffer);
+  height = gegl_buffer_get_height (buffer);
+
+  gegl_buffer_copy (trimap,
+                    GEGL_RECTANGLE (undo->trimap_x, undo->trimap_y,
+                                    width, height),
+                    undo->saved_trimap,
+                    GEGL_RECTANGLE (0, 0, width, height));
+
+  gegl_buffer_copy (buffer,
+                    GEGL_RECTANGLE (0, 0, width, height),
+                    trimap,
+                    GEGL_RECTANGLE (undo->trimap_x, undo->trimap_y,
+                                    width, height));
+
+  g_object_unref (buffer);
+}
+
+static void
+gimp_foreground_select_undo_free (StrokeUndo *undo)
+{
+  if (undo->saved_trimap)
+    {
+      g_object_unref (undo->saved_trimap);
+      undo->saved_trimap = NULL;
+    }
+
+  g_slice_free (StrokeUndo, undo);
 }

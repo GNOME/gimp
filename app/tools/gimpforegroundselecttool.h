@@ -54,6 +54,9 @@ struct _GimpForegroundSelectTool
   GeglBuffer         *trimap;
   GeglBuffer         *mask;
 
+  GList              *undo_stack;
+  GList              *redo_stack;
+
   GimpToolGui        *gui;
   GtkWidget          *preview_toggle;
 };
