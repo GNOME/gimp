@@ -58,8 +58,7 @@
 #include "gimp-intl.h"
 
 
-#define RESPONSE_PREVIEW  2
-#define RESPONSE_APPLY    3
+#define RESPONSE_PREVIEW 1
 
 typedef struct
 {
@@ -277,9 +276,9 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
         gimp_tool_gui_new (tool->tool_info,
                            _("Dialog for foreground select"),
                            FALSE,
-                           GTK_STOCK_CANCEL,    GTK_RESPONSE_CANCEL,
-                           _("Toggle Preview"), RESPONSE_PREVIEW,
-                           _("Apply"),          RESPONSE_APPLY,
+                           GTK_STOCK_CANCEL,                  GTK_RESPONSE_CANCEL,
+                           _("Toggle Preview"),               RESPONSE_PREVIEW,
+                           GIMP_STOCK_TOOL_FOREGROUND_SELECT, GTK_RESPONSE_APPLY,
                            NULL);
 
       gimp_tool_gui_set_overlay (fg_select->gui, TRUE);
@@ -292,8 +291,10 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
   gimp_tool_gui_set_description (fg_select->gui,
                                  _("Select foreground pixels"));
 
-  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_PREVIEW, FALSE);
-  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_APPLY,   FALSE);
+  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_PREVIEW,
+                                        FALSE);
+  gimp_tool_gui_set_response_sensitive (fg_select->gui, GTK_RESPONSE_APPLY,
+                                        FALSE);
 
   gimp_tool_gui_set_shell (fg_select->gui, shell);
   gimp_tool_gui_set_viewable (fg_select->gui, GIMP_VIEWABLE (drawable));
@@ -469,7 +470,7 @@ gimp_foreground_select_tool_key_press (GimpTool    *tool,
                                                   RESPONSE_PREVIEW, fg_select);
           else
             gimp_foreground_select_tool_response (fg_select->gui,
-                                                  RESPONSE_APPLY, fg_select);
+                                                  GTK_RESPONSE_APPLY, fg_select);
           return TRUE;
 
         case GDK_KEY_Escape:
@@ -1050,7 +1051,7 @@ gimp_foreground_select_tool_response (GimpToolGui              *gui,
         gimp_foreground_select_tool_preview (fg_select, display);
       break;
 
-    case RESPONSE_APPLY:
+    case GTK_RESPONSE_APPLY:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
       /* fallthru */
 
@@ -1072,6 +1073,8 @@ gimp_foreground_select_tool_update_gui (GimpForegroundSelectTool *fg_select)
       gimp_tool_gui_set_description (fg_select->gui, _("Preview"));
     }
 
-  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_PREVIEW, TRUE);
-  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_APPLY,   TRUE);
+  gimp_tool_gui_set_response_sensitive (fg_select->gui, RESPONSE_PREVIEW,
+                                        TRUE);
+  gimp_tool_gui_set_response_sensitive (fg_select->gui, GTK_RESPONSE_APPLY,
+                                        TRUE);
 }
