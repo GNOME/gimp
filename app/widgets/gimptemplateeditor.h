@@ -54,6 +54,10 @@ GimpTemplate * gimp_template_editor_get_template  (GimpTemplateEditor *editor);
 void           gimp_template_editor_show_advanced (GimpTemplateEditor *editor,
                                                    gboolean            expanded);
 GtkWidget    * gimp_template_editor_get_size_se   (GimpTemplateEditor *editor);
+GtkWidget    * gimp_template_editor_get_resolution_se
+                                                  (GimpTemplateEditor *editor);
+GtkWidget    * gimp_template_editor_get_resolution_chain
+                                                  (GimpTemplateEditor *editor);
 
 
 #endif  /*  __GIMP_TEMPLATE_EDITOR_H__  */

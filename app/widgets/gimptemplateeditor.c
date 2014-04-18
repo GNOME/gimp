@@ -63,6 +63,7 @@ struct _GimpTemplateEditorPrivate
   GtkWidget     *pixel_label;
   GtkWidget     *more_label;
   GtkWidget     *resolution_se;
+  GtkWidget     *chain_button;
 };
 
 #define GET_PRIVATE(editor) \
@@ -139,7 +140,6 @@ gimp_template_editor_constructed (GObject *object)
   GtkWidget                 *height;
   GtkWidget                 *xres;
   GtkWidget                 *yres;
-  GtkWidget                 *chainbutton;
   GtkWidget                 *combo;
   GtkWidget                 *scrolled_window;
   GtkWidget                 *text_view;
@@ -359,20 +359,20 @@ gimp_template_editor_constructed (GObject *object)
                                   FALSE);
 
   /*  the resolution chainbutton  */
-  chainbutton = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  gtk_table_attach_defaults (GTK_TABLE (private->resolution_se), chainbutton,
-                             1, 2, 0, 2);
-  gtk_widget_show (chainbutton);
+  private->chain_button = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+  gtk_table_attach_defaults (GTK_TABLE (private->resolution_se),
+                             private->chain_button, 1, 2, 0, 2);
+  gtk_widget_show (private->chain_button);
 
   gimp_prop_coordinates_connect (G_OBJECT (template),
                                  "xresolution", "yresolution",
                                  "resolution-unit",
-                                 private->resolution_se, chainbutton,
+                                 private->resolution_se, private->chain_button,
                                  1.0, 1.0);
 
   focus_chain = g_list_prepend (focus_chain,
                                 GIMP_SIZE_ENTRY (private->resolution_se)->unitmenu);
-  focus_chain = g_list_prepend (focus_chain, chainbutton);
+  focus_chain = g_list_prepend (focus_chain, private->chain_button);
   focus_chain = g_list_prepend (focus_chain, yres);
   focus_chain = g_list_prepend (focus_chain, xres);
 
@@ -550,6 +550,22 @@ gimp_template_editor_get_size_se (GimpTemplateEditor *editor)
   g_return_val_if_fail (GIMP_IS_TEMPLATE_EDITOR (editor), NULL);
 
   return GET_PRIVATE (editor)->size_se;
+}
+
+GtkWidget *
+gimp_template_editor_get_resolution_se (GimpTemplateEditor *editor)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE_EDITOR (editor), NULL);
+
+  return GET_PRIVATE (editor)->resolution_se;
+}
+
+GtkWidget *
+gimp_template_editor_get_resolution_chain (GimpTemplateEditor *editor)
+{
+  g_return_val_if_fail (GIMP_IS_TEMPLATE_EDITOR (editor), NULL);
+
+  return GET_PRIVATE (editor)->chain_button;
 }
 
 
