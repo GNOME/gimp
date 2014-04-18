@@ -811,7 +811,7 @@ gimp_image_map_tool_edit_as (GimpImageMapTool *im_tool,
   GimpTool     *new_tool;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (im_tool));
-  g_return_if_fail (new_tool_id);
+  g_return_if_fail (new_tool_id != NULL);
   g_return_if_fail (GIMP_IS_CONFIG (config));
 
   display = GIMP_TOOL (im_tool)->display;
@@ -822,6 +822,7 @@ gimp_image_map_tool_edit_as (GimpImageMapTool *im_tool,
     gimp_container_get_child_by_name (display->gimp->tool_info_list,
                                       new_tool_id);
 
+  gimp_tool_control (GIMP_TOOL (im_tool), GIMP_TOOL_ACTION_HALT, display);
   gimp_context_set_tool (user_context, tool_info);
   tool_manager_initialize_active (display->gimp, display);
 
