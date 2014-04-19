@@ -56,16 +56,16 @@ void   tools_transform_preview_opacity_cmd_callback (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
 
-void   tools_value_1_cmd_callback                   (GtkAction   *action,
+void   tools_opacity_cmd_callback                   (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
-void   tools_value_2_cmd_callback                   (GtkAction   *action,
+void   tools_size_cmd_callback                      (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
-void   tools_value_3_cmd_callback                   (GtkAction   *action,
+void   tools_aspect_cmd_callback                    (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
-void   tools_value_4_cmd_callback                   (GtkAction   *action,
+void   tools_angle_cmd_callback                     (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
 

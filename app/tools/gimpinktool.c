@@ -79,13 +79,13 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
 {
   GimpTool *tool = GIMP_TOOL (ink_tool);
 
-  gimp_tool_control_set_tool_cursor    (tool->control, GIMP_TOOL_CURSOR_INK);
-  gimp_tool_control_set_action_value_2 (tool->control,
-                                        "tools/tools-ink-blob-size-set");
-  gimp_tool_control_set_action_value_3 (tool->control,
-                                        "tools/tools-ink-blob-aspect-set");
-  gimp_tool_control_set_action_value_4 (tool->control,
-                                        "tools/tools-ink-blob-angle-set");
+  gimp_tool_control_set_tool_cursor   (tool->control, GIMP_TOOL_CURSOR_INK);
+  gimp_tool_control_set_action_size   (tool->control,
+                                       "tools/tools-ink-blob-size-set");
+  gimp_tool_control_set_action_aspect (tool->control,
+                                       "tools/tools-ink-blob-aspect-set");
+  gimp_tool_control_set_action_angle  (tool->control,
+                                       "tools/tools-ink-blob-angle-set");
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (ink_tool),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);

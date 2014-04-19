@@ -225,7 +225,7 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 {
   GimpTool *tool = GIMP_TOOL (tr_tool);
 
-  gimp_tool_control_set_action_value_1 (tool->control,
+  gimp_tool_control_set_action_opacity (tool->control,
                                         "tools/tools-transform-preview-opacity-set");
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);

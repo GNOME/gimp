@@ -292,7 +292,7 @@ tools_transform_preview_opacity_cmd_callback (GtkAction *action,
 }
 
 void
-tools_value_1_cmd_callback (GtkAction *action,
+tools_opacity_cmd_callback (GtkAction *action,
                             gint       value,
                             gpointer   data)
 {
@@ -306,7 +306,7 @@ tools_value_1_cmd_callback (GtkAction *action,
     {
       const gchar *action_desc;
 
-      action_desc = gimp_tool_control_get_action_value_1 (tool->control);
+      action_desc = gimp_tool_control_get_action_opacity (tool->control);
 
       if (action_desc)
         tools_activate_enum_action (action_desc, value);
@@ -314,9 +314,9 @@ tools_value_1_cmd_callback (GtkAction *action,
 }
 
 void
-tools_value_2_cmd_callback (GtkAction *action,
-                            gint       value,
-                            gpointer   data)
+tools_size_cmd_callback (GtkAction *action,
+                         gint       value,
+                         gpointer   data)
 {
   GimpContext *context;
   GimpTool    *tool;
@@ -328,7 +328,7 @@ tools_value_2_cmd_callback (GtkAction *action,
     {
       const gchar *action_desc;
 
-      action_desc = gimp_tool_control_get_action_value_2 (tool->control);
+      action_desc = gimp_tool_control_get_action_size (tool->control);
 
       if (action_desc)
         tools_activate_enum_action (action_desc, value);
@@ -336,9 +336,9 @@ tools_value_2_cmd_callback (GtkAction *action,
 }
 
 void
-tools_value_3_cmd_callback (GtkAction *action,
-                            gint       value,
-                            gpointer   data)
+tools_aspect_cmd_callback (GtkAction *action,
+                           gint       value,
+                           gpointer   data)
 {
   GimpContext *context;
   GimpTool    *tool;
@@ -350,7 +350,7 @@ tools_value_3_cmd_callback (GtkAction *action,
     {
       const gchar *action_desc;
 
-      action_desc = gimp_tool_control_get_action_value_3 (tool->control);
+      action_desc = gimp_tool_control_get_action_aspect (tool->control);
 
       if (action_desc)
         tools_activate_enum_action (action_desc, value);
@@ -358,9 +358,9 @@ tools_value_3_cmd_callback (GtkAction *action,
 }
 
 void
-tools_value_4_cmd_callback (GtkAction *action,
-                            gint       value,
-                            gpointer   data)
+tools_angle_cmd_callback (GtkAction *action,
+                          gint       value,
+                          gpointer   data)
 {
   GimpContext *context;
   GimpTool    *tool;
@@ -372,7 +372,7 @@ tools_value_4_cmd_callback (GtkAction *action,
     {
       const gchar *action_desc;
 
-      action_desc = gimp_tool_control_get_action_value_4 (tool->control);
+      action_desc = gimp_tool_control_get_action_angle (tool->control);
 
       if (action_desc)
         tools_activate_enum_action (action_desc, value);

@@ -76,10 +76,10 @@ gimp_tool_control_init (GimpToolControl *control)
   control->toggle_tool_cursor     = -1;
   control->toggle_cursor_modifier = -1;
 
-  control->action_value_1         = NULL;
-  control->action_value_2         = NULL;
-  control->action_value_3         = NULL;
-  control->action_value_4         = NULL;
+  control->action_opacity         = NULL;
+  control->action_size            = NULL;
+  control->action_aspect          = NULL;
+  control->action_size            = NULL;
 
   control->action_object_1        = NULL;
   control->action_object_2        = NULL;
@@ -92,10 +92,10 @@ gimp_tool_control_finalize (GObject *object)
 
   g_slist_free (control->preserve_stack);
 
-  g_free (control->action_value_1);
-  g_free (control->action_value_2);
-  g_free (control->action_value_3);
-  g_free (control->action_value_4);
+  g_free (control->action_opacity);
+  g_free (control->action_size);
+  g_free (control->action_aspect);
+  g_free (control->action_angle);
   g_free (control->action_object_1);
   g_free (control->action_object_2);
 
@@ -504,87 +504,87 @@ gimp_tool_control_get_cursor_modifier (GimpToolControl *control)
 }
 
 void
-gimp_tool_control_set_action_value_1 (GimpToolControl *control,
+gimp_tool_control_set_action_opacity (GimpToolControl *control,
                                       const gchar     *action)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  if (action != control->action_value_1)
+  if (action != control->action_opacity)
     {
-      g_free (control->action_value_1);
-      control->action_value_1 = g_strdup (action);
+      g_free (control->action_opacity);
+      control->action_opacity = g_strdup (action);
     }
 }
 
 const gchar *
-gimp_tool_control_get_action_value_1 (GimpToolControl *control)
+gimp_tool_control_get_action_opacity (GimpToolControl *control)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
 
-  return control->action_value_1;
+  return control->action_opacity;
 }
 
 void
-gimp_tool_control_set_action_value_2 (GimpToolControl *control,
+gimp_tool_control_set_action_size (GimpToolControl *control,
                                       const gchar     *action)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  if (action != control->action_value_2)
+  if (action != control->action_size)
     {
-      g_free (control->action_value_2);
-      control->action_value_2 = g_strdup (action);
+      g_free (control->action_size);
+      control->action_size = g_strdup (action);
     }
 }
 
 const gchar *
-gimp_tool_control_get_action_value_2 (GimpToolControl *control)
+gimp_tool_control_get_action_size (GimpToolControl *control)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
 
-  return control->action_value_2;
+  return control->action_size;
 }
 
 void
-gimp_tool_control_set_action_value_3 (GimpToolControl *control,
-                                      const gchar     *action)
+gimp_tool_control_set_action_aspect (GimpToolControl *control,
+                                     const gchar     *action)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  if (action != control->action_value_3)
+  if (action != control->action_aspect)
     {
-      g_free (control->action_value_3);
-      control->action_value_3 = g_strdup (action);
+      g_free (control->action_aspect);
+      control->action_aspect = g_strdup (action);
     }
 }
 
 const gchar *
-gimp_tool_control_get_action_value_3 (GimpToolControl *control)
+gimp_tool_control_get_action_aspect (GimpToolControl *control)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
 
-  return control->action_value_3;
+  return control->action_aspect;
 }
 
 void
-gimp_tool_control_set_action_value_4 (GimpToolControl *control,
-                                      const gchar     *action)
+gimp_tool_control_set_action_angle (GimpToolControl *control,
+                                    const gchar     *action)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  if (action != control->action_value_4)
+  if (action != control->action_angle)
     {
-      g_free (control->action_value_4);
-      control->action_value_4 = g_strdup (action);
+      g_free (control->action_angle);
+      control->action_angle = g_strdup (action);
     }
 }
 
 const gchar *
-gimp_tool_control_get_action_value_4 (GimpToolControl *control)
+gimp_tool_control_get_action_angle (GimpToolControl *control)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
 
-  return control->action_value_4;
+  return control->action_angle;
 }
 
 void
