@@ -747,17 +747,36 @@ gimp_foreground_select_tool_options_notify (GimpTool         *tool,
                                             GimpToolOptions  *options,
                                             const GParamSpec *pspec)
 {
+  GimpForegroundSelectTool    *fg_select  = GIMP_FOREGROUND_SELECT_TOOL (tool);
+  GimpForegroundSelectOptions *fg_options = GIMP_FOREGROUND_SELECT_OPTIONS (options);
+
+  if (! tool->display)
+    return;
+
   if (! strcmp (pspec->name, "mask-color"))
     {
-      GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
-
-      if (tool->display)
-        {
-          if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
-            gimp_foreground_select_tool_set_trimap (fg_select, tool->display);
-          else if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
-            gimp_foreground_select_tool_set_preview (fg_select, tool->display);
-        }
+      if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
+        gimp_foreground_select_tool_set_trimap (fg_select, tool->display);
+      else if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
+        gimp_foreground_select_tool_set_preview (fg_select, tool->display);
+    }
+  else if (! strcmp (pspec->name, "engine"))
+    {
+      if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
+        gimp_foreground_select_tool_preview (fg_select, tool->display);
+    }
+  else if (! strcmp (pspec->name, "iterations"))
+    {
+      if (fg_options->engine == GIMP_MATTING_ENGINE_GLOBAL &&
+          fg_select->state   == MATTING_STATE_PREVIEW_MASK)
+        gimp_foreground_select_tool_preview (fg_select, tool->display);
+    }
+  else if (! strcmp (pspec->name, "levels") ||
+           ! strcmp (pspec->name, "active-levels"))
+    {
+      if (fg_options->engine == GIMP_MATTING_ENGINE_LEVIN &&
+          fg_select->state   == MATTING_STATE_PREVIEW_MASK)
+        gimp_foreground_select_tool_preview (fg_select, tool->display);
     }
 }
 
