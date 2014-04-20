@@ -797,11 +797,12 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
         {
           gint size = MAX (3, paint_tool->circle_radius * 2);
 
-          gimp_draw_tool_add_handle (draw_tool,
-                                     GIMP_HANDLE_CIRCLE,
-                                     cur_x, cur_y,
-                                     size, size,
-                                     GIMP_HANDLE_ANCHOR_CENTER);
+          gimp_draw_tool_add_arc (draw_tool,
+                                  FALSE,
+                                  cur_x - (size / 2.0),
+                                  cur_y - (size / 2.0),
+                                  size, size,
+                                  0.0, 2.0 * G_PI);
         }
       else if (! paint_tool->show_cursor)
         {
