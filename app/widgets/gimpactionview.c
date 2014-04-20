@@ -251,9 +251,7 @@ gimp_action_view_new (GimpUIManager *manager,
           GClosure        *accel_closure = NULL;
           GtkTreeIter      action_iter;
 
-          if (strstr (name, "-menu")  ||
-              strstr (name, "-popup") ||
-              name[0] == '<')
+          if (gimp_action_is_gui_blacklisted (name))
             continue;
 
           label = gimp_strip_uline (gtk_action_get_label (action));

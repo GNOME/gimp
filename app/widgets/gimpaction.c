@@ -317,6 +317,49 @@ gimp_action_name_compare (GimpAction  *action1,
                  gtk_action_get_name ((GtkAction *) action2));
 }
 
+gboolean
+gimp_action_is_gui_blacklisted (const gchar *action_name)
+{
+  static const gchar *suffixes[] =
+    {
+      "-menu",
+      "-popup"
+    };
+
+  static const gchar *prefixes[] =
+    {
+      "<",
+      "tools-color-average-radius-",
+      "tools-paint-brush-size-",
+      "tools-paint-brush-angle-",
+      "tools-paint-brush-aspect-ratio-",
+      "tools-ink-blob-size-",
+      "tools-ink-blob-aspect-",
+      "tools-ink-blob-angle-",
+      "tools-foreground-select-brush-size-",
+      "tools-transform-preview-opacity-"
+    };
+
+  gint i;
+
+  if (! (action_name && *action_name))
+    return TRUE;
+
+  for (i = 0; i < G_N_ELEMENTS (suffixes); i++)
+    {
+      if (g_str_has_suffix (action_name, suffixes[i]))
+        return TRUE;
+    }
+
+  for (i = 0; i < G_N_ELEMENTS (prefixes); i++)
+    {
+      if (g_str_has_prefix (action_name, prefixes[i]))
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
 
 /*  private functions  */
 
