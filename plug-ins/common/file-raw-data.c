@@ -453,11 +453,38 @@ run (const gchar      *name,
             status = GIMP_PDB_CANCEL;
           break;
 
-        default:
-          /* we want to make sure we always do save-as for raw images
-           * to avoid confusion and data loss
+        case GIMP_RUN_NONINTERACTIVE:
+          /*
+           * Make sure all the arguments are there!
            */
-          status = GIMP_PDB_CALLING_ERROR;
+          if (nparams != 5)
+            {
+              if (nparams != 7)
+                {
+                  status = GIMP_PDB_CALLING_ERROR;
+                }
+              else
+                {
+                  rawvals.image_type   = param[5].data.d_int32;
+                  rawvals.palette_type = param[6].data.d_int32;
+
+                  if (((rawvals.image_type != RAW_RGB) && (rawvals.image_type != RAW_PLANAR)) ||
+                      ((rawvals.palette_type != RAW_PALETTE_RGB) && (rawvals.palette_type != RAW_PALETTE_BGR)))
+                    {
+                      status = GIMP_PDB_CALLING_ERROR;
+                    }
+                }
+            }
+          break;
+
+        case GIMP_RUN_WITH_LAST_VALS:
+          /*
+           * Possibly retrieve data...
+           */
+          gimp_get_data (SAVE_PROC, &rawvals);
+          break;
+
+        default:
           break;
         }
 
