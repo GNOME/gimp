@@ -79,7 +79,7 @@ gimp_tool_control_init (GimpToolControl *control)
   control->action_opacity         = NULL;
   control->action_size            = NULL;
   control->action_aspect          = NULL;
-  control->action_size            = NULL;
+  control->action_angle           = NULL;
 
   control->action_object_1        = NULL;
   control->action_object_2        = NULL;
@@ -526,7 +526,7 @@ gimp_tool_control_get_action_opacity (GimpToolControl *control)
 
 void
 gimp_tool_control_set_action_size (GimpToolControl *control,
-                                      const gchar     *action)
+                                   const gchar     *action)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
