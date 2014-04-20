@@ -137,6 +137,8 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
 {
   gint x1, y1, x2, y2;
   gint i, j;
+  gint chunk_width;
+  gint chunk_height;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (gimp_display_get_image (shell->display));
@@ -180,14 +182,28 @@ gimp_display_shell_draw_image (GimpDisplayShell *shell,
   /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT
    *  sized chunks
    */
-  for (i = y1; i < y2; i += GIMP_DISPLAY_RENDER_BUF_HEIGHT)
+  chunk_width  = GIMP_DISPLAY_RENDER_BUF_WIDTH;
+  chunk_height = GIMP_DISPLAY_RENDER_BUF_HEIGHT;
+
+  if ((shell->scale_x / shell->scale_y) > 2.0)
     {
-      for (j = x1; j < x2; j += GIMP_DISPLAY_RENDER_BUF_WIDTH)
+      while ((chunk_width / chunk_height) < (shell->scale_x / shell->scale_y))
+        chunk_height /= 2;
+    }
+  else if ((shell->scale_y / shell->scale_x) > 2.0)
+    {
+      while ((chunk_height / chunk_width) < (shell->scale_y / shell->scale_x))
+        chunk_width /= 2;
+    }
+
+  for (i = y1; i < y2; i += chunk_height)
+    {
+      for (j = x1; j < x2; j += chunk_width)
         {
           gint dx, dy;
 
-          dx = MIN (x2 - j, GIMP_DISPLAY_RENDER_BUF_WIDTH);
-          dy = MIN (y2 - i, GIMP_DISPLAY_RENDER_BUF_HEIGHT);
+          dx = MIN (x2 - j, chunk_width);
+          dy = MIN (y2 - i, chunk_height);
 
           gimp_display_shell_render (shell, cr, j, i, dx, dy);
         }
