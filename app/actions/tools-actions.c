@@ -71,7 +71,7 @@ static const GimpEnumActionEntry tools_color_average_radius_actions[] =
     "Set Color Picker Radius", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
-  { "tools-color-average-set-to-default", GIMP_STOCK_TOOL_COLOR_PICKER,
+  { "tools-color-average-radius-set-to-default", GIMP_STOCK_TOOL_COLOR_PICKER,
     "Set Color Picker Radius To Default Value", NULL, NULL,
     GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
     NULL },
