@@ -1718,14 +1718,6 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_title_update (shell);
-
-  /* make sure the information is up-to-date */
-  gimp_display_shell_scale_changed (shell);
-
-  gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
-                                        gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
-
   if (now)
     {
       gdk_window_process_updates (gtk_widget_get_window (shell->canvas),
@@ -1735,6 +1727,14 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
     {
       GimpImageWindow *window = gimp_display_shell_get_window (shell);
       GimpContext     *context;
+
+      gimp_display_shell_title_update (shell);
+
+      /* make sure the information is up-to-date */
+      gimp_display_shell_scale_changed (shell);
+
+      gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
+                                            gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
 
       if (window && gimp_image_window_get_active_shell (window) == shell)
         {
