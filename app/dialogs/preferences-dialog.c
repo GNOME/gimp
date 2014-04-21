@@ -2008,7 +2008,8 @@ prefs_dialog_new (Gimp       *gimp,
       NULL,
       "%f-%p.%i (%t) %z%%",
       "%f-%p.%i (%t) %d:%s",
-      "%f-%p.%i (%t) %wx%h"
+      "%f-%p.%i (%t) %wx%h",
+      "%f-%p-%i (%t) %wx%h (%xx%y)"
     };
 
     const gchar *format_names[] =
@@ -2017,7 +2018,8 @@ prefs_dialog_new (Gimp       *gimp,
       N_("Default format"),
       N_("Show zoom percentage"),
       N_("Show zoom ratio"),
-      N_("Show image size")
+      N_("Show image size"),
+      N_("Show drawable size")
     };
 
     struct

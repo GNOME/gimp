@@ -410,11 +410,87 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                           gimp_unit_get_abbreviation (shell->unit));
               break;
 
+            case 'X': /* drawable width in real world units */
+              if (shell->unit != GIMP_UNIT_PIXEL)
+                {
+                  gdouble xres;
+                  gdouble yres;
+                  gchar   unit_format[8];
+                  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+
+                  gimp_image_get_resolution (image, &xres, &yres);
+
+                  g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
+                              gimp_unit_get_digits (shell->unit) + 1);
+                  i += print (title, title_len, i, unit_format,
+                              gimp_pixels_to_units (gimp_item_get_width
+                                                     (GIMP_ITEM (drawable)),
+                                                    shell->unit, yres));
+                  break;
+                }
+              /* else fallthru */
+            case 'x': /* drawable width in pixels */
+              {
+                GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+                i += print (title, title_len, i, "%d",
+                            gimp_item_get_width (GIMP_ITEM (drawable)));
+              }
+              break;
+
+            case 'Y': /* drawable height in real world units */
+              if (shell->unit != GIMP_UNIT_PIXEL)
+                {
+                  gdouble xres;
+                  gdouble yres;
+                  gchar   unit_format[8];
+                  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+
+                  gimp_image_get_resolution (image, &xres, &yres);
+
+                  g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
+                              gimp_unit_get_digits (shell->unit) + 1);
+                  i += print (title, title_len, i, unit_format,
+                              gimp_pixels_to_units (gimp_item_get_height
+                                                     (GIMP_ITEM (drawable)),
+                                                    shell->unit, yres));
+                  break;
+                }
+              /* else fallthru */
+            case 'y': /* drawable height in pixels */
+              {
+                GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+                i += print (title, title_len, i, "%d",
+                            gimp_item_get_height (GIMP_ITEM (drawable)));
+              }
+              break;
+
+            case '\xc3': /* utf-8 extended char */
+              {
+                format ++;
+                switch (*format)
+                  {
+                  case '\xbe':
+                      {
+                        /* line actually written at 23:55 on an Easter Sunday */
+                        i+= print(title, title_len, i, "42");
+                      }
+                      break;
+
+                  default:
+                    /* in the case of an unhandled utf-8 extended char format
+                     * leave the format string parsing as it was
+                    */
+                    format --;
+                    break;
+                  }
+              }
+              break;
+
               /* Other cool things to be added:
                * %r = xresolution
                * %R = yresolution
                * %ø = image's fractal dimension
-               * %þ = the answer to everything
+               * # %þ = the answer to everything - (implemented)
                */
 
             default:
