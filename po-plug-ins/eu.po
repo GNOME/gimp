@@ -1,18 +1,19 @@
-# translation of gimp-plug-ins.master.po to Basque
+# Basque translation of gimp-plug-ins.
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
 #
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
-# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2005, 2006, 2008, 2010.
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007, 2011, 2013.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2005, 2006, 2007, 2008, 2010.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2011, 2013, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-plug-ins.master\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-28 21:07+0200\n"
-"PO-Revision-Date: 2013-08-27 22:48+0200\n"
-"Last-Translator: \n"
-"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"Project-Id-Version: gimp-plug-ins gimp-2-8\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-04-21 11:07+0200\n"
+"PO-Revision-Date: 2014-04-21 11:09+0200\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
+"Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -75,7 +76,7 @@ msgid "To:"
 msgstr "Nora:"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:418
-#: ../plug-ins/common/file-ps.c:3096 ../plug-ins/imagemap/imap_menu.c:213
+#: ../plug-ins/common/file-ps.c:3101 ../plug-ins/imagemap/imap_menu.c:213
 msgid "Gray"
 msgstr "Grisa"
 
@@ -604,21 +605,21 @@ msgstr "_Bertikala"
 #. * Create the "background" layer to hold the image...
 #.
 #: ../plug-ins/common/blinds.c:279 ../plug-ins/common/compose.c:936
-#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:441
-#: ../plug-ins/common/file-cel.c:444 ../plug-ins/common/file-dicom.c:612
+#: ../plug-ins/common/decompose.c:729 ../plug-ins/common/file-cel.c:442
+#: ../plug-ins/common/file-cel.c:445 ../plug-ins/common/file-dicom.c:612
 #: ../plug-ins/common/file-gif-load.c:943
-#: ../plug-ins/common/file-jp2-load.c:354 ../plug-ins/common/file-pcx.c:425
-#: ../plug-ins/common/file-pcx.c:431 ../plug-ins/common/file-pix.c:382
-#: ../plug-ins/common/file-png.c:891 ../plug-ins/common/file-pnm.c:585
-#: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:977
-#: ../plug-ins/common/file-tga.c:1072 ../plug-ins/common/file-tiff-load.c:1010
-#: ../plug-ins/common/file-xbm.c:897 ../plug-ins/common/film.c:745
+#: ../plug-ins/common/file-jp2-load.c:356 ../plug-ins/common/file-pcx.c:426
+#: ../plug-ins/common/file-pcx.c:432 ../plug-ins/common/file-pix.c:384
+#: ../plug-ins/common/file-png.c:897 ../plug-ins/common/file-pnm.c:585
+#: ../plug-ins/common/file-raw.c:763 ../plug-ins/common/file-sunras.c:979
+#: ../plug-ins/common/file-tga.c:1073 ../plug-ins/common/file-tiff-load.c:1010
+#: ../plug-ins/common/file-xbm.c:898 ../plug-ins/common/film.c:745
 #: ../plug-ins/common/smooth-palette.c:257 ../plug-ins/common/tile.c:262
-#: ../plug-ins/file-bmp/bmp-read.c:677 ../plug-ins/file-faxg3/faxg3.c:474
-#: ../plug-ins/file-fits/fits.c:530 ../plug-ins/file-jpeg/jpeg-load.c:255
-#: ../plug-ins/file-jpeg/jpeg-load.c:819
+#: ../plug-ins/file-bmp/bmp-read.c:680 ../plug-ins/file-faxg3/faxg3.c:474
+#: ../plug-ins/file-fits/fits.c:532 ../plug-ins/file-jpeg/jpeg-load.c:260
+#: ../plug-ins/file-jpeg/jpeg-load.c:824
 #: ../plug-ins/file-psd/psd-image-res-load.c:1001
-#: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:407
+#: ../plug-ins/file-psd/psd-load.c:1637 ../plug-ins/file-sgi/sgi.c:409
 #: ../plug-ins/gfig/gfig-dialog.c:1321
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
@@ -657,7 +658,7 @@ msgstr "Gauss-en lausotze selektiboa"
 #: ../plug-ins/common/edge-dog.c:269 ../plug-ins/common/edge-neon.c:228
 #: ../plug-ins/common/edge-sobel.c:212 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
-#: ../plug-ins/file-sgi/sgi.c:558 ../plug-ins/file-xjt/xjt.c:1687
+#: ../plug-ins/file-sgi/sgi.c:560 ../plug-ins/file-xjt/xjt.c:1687
 #: ../plug-ins/gradient-flare/gradient-flare.c:966
 msgid "Cannot operate on indexed color images."
 msgstr "Ezin da kolore-irudi indexatuekin erabili."
@@ -895,7 +896,7 @@ msgstr "_Azimuta:"
 msgid "_Elevation:"
 msgstr "_Goratzea:"
 
-#: ../plug-ins/common/bump-map.c:936 ../plug-ins/common/file-ps.c:3250
+#: ../plug-ins/common/bump-map.c:936 ../plug-ins/common/file-ps.c:3255
 msgid "_X offset:"
 msgstr "_X desplazamendua:"
 
@@ -907,7 +908,7 @@ msgstr ""
 "Desplazamendua egokitu daiteke aurrebista arrastatuz saguaren erdiko botoia "
 "erabiliz."
 
-#: ../plug-ins/common/bump-map.c:950 ../plug-ins/common/file-ps.c:3259
+#: ../plug-ins/common/bump-map.c:950 ../plug-ins/common/file-ps.c:3264
 msgid "_Y offset:"
 msgstr "_Y desplazamendua:"
 
@@ -1016,26 +1017,26 @@ msgstr "Kargatu kanal-nahasgailuaren ezarpenak"
 #. stat error (file does not exist)
 #: ../plug-ins/common/channel-mixer.c:980
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-cel.c:296 ../plug-ins/common/file-cel.c:348
-#: ../plug-ins/common/file-cel.c:579 ../plug-ins/common/file-dicom.c:340
-#: ../plug-ins/common/file-gbr.c:368 ../plug-ins/common/file-gif-load.c:355
-#: ../plug-ins/common/file-gih.c:640 ../plug-ins/common/file-jp2-load.c:194
-#: ../plug-ins/common/file-jp2-load.c:203 ../plug-ins/common/file-mng.c:1156
-#: ../plug-ins/common/file-pat.c:337 ../plug-ins/common/file-pcx.c:361
-#: ../plug-ins/common/file-pix.c:343 ../plug-ins/common/file-png.c:756
-#: ../plug-ins/common/file-pnm.c:496 ../plug-ins/common/file-ps.c:1014
-#: ../plug-ins/common/file-ps.c:2910 ../plug-ins/common/file-psp.c:1717
+#: ../plug-ins/common/file-cel.c:297 ../plug-ins/common/file-cel.c:349
+#: ../plug-ins/common/file-cel.c:580 ../plug-ins/common/file-dicom.c:340
+#: ../plug-ins/common/file-gbr.c:370 ../plug-ins/common/file-gif-load.c:355
+#: ../plug-ins/common/file-gih.c:642 ../plug-ins/common/file-jp2-load.c:196
+#: ../plug-ins/common/file-jp2-load.c:205 ../plug-ins/common/file-mng.c:1156
+#: ../plug-ins/common/file-pat.c:339 ../plug-ins/common/file-pcx.c:362
+#: ../plug-ins/common/file-pix.c:345 ../plug-ins/common/file-png.c:762
+#: ../plug-ins/common/file-pnm.c:496 ../plug-ins/common/file-ps.c:1019
+#: ../plug-ins/common/file-ps.c:2915 ../plug-ins/common/file-psp.c:1717
 #: ../plug-ins/common/file-raw.c:256 ../plug-ins/common/file-raw.c:711
-#: ../plug-ins/common/file-sunras.c:391 ../plug-ins/common/file-svg.c:333
-#: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:442
-#: ../plug-ins/common/file-xbm.c:737 ../plug-ins/common/file-xmc.c:655
-#: ../plug-ins/common/file-xmc.c:840 ../plug-ins/common/file-xwd.c:435
+#: ../plug-ins/common/file-sunras.c:393 ../plug-ins/common/file-svg.c:333
+#: ../plug-ins/common/file-svg.c:713 ../plug-ins/common/file-tga.c:443
+#: ../plug-ins/common/file-xbm.c:738 ../plug-ins/common/file-xmc.c:657
+#: ../plug-ins/common/file-xmc.c:842 ../plug-ins/common/file-xwd.c:437
 #: ../plug-ins/common/sphere-designer.c:2010
 #: ../plug-ins/file-bmp/bmp-read.c:206 ../plug-ins/file-faxg3/faxg3.c:229
-#: ../plug-ins/file-fits/fits.c:358 ../plug-ins/file-fli/fli-gimp.c:459
-#: ../plug-ins/file-fli/fli-gimp.c:496 ../plug-ins/file-ico/ico-load.c:651
-#: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:117
-#: ../plug-ins/file-jpeg/jpeg-load.c:889 ../plug-ins/file-psd/psd-load.c:130
+#: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:461
+#: ../plug-ins/file-fli/fli-gimp.c:498 ../plug-ins/file-ico/ico-load.c:651
+#: ../plug-ins/file-ico/ico-load.c:729 ../plug-ins/file-jpeg/jpeg-load.c:122
+#: ../plug-ins/file-jpeg/jpeg-load.c:894 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:193
 #: ../plug-ins/file-xjt/xjt.c:2529 ../plug-ins/file-xjt/xjt.c:2537
@@ -1055,21 +1056,21 @@ msgstr "Gorde kanal-nahastailea ezarpenak"
 
 #: ../plug-ins/common/channel-mixer.c:1058
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
-#: ../plug-ins/common/file-cel.c:772 ../plug-ins/common/file-csource.c:407
-#: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-gbr.c:663
-#: ../plug-ins/common/file-gif-save.c:792 ../plug-ins/common/file-gih.c:1258
+#: ../plug-ins/common/file-cel.c:773 ../plug-ins/common/file-csource.c:407
+#: ../plug-ins/common/file-dicom.c:1371 ../plug-ins/common/file-gbr.c:665
+#: ../plug-ins/common/file-gif-save.c:792 ../plug-ins/common/file-gih.c:1260
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
-#: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:486
-#: ../plug-ins/common/file-pcx.c:712 ../plug-ins/common/file-pix.c:526
-#: ../plug-ins/common/file-png.c:1358 ../plug-ins/common/file-pnm.c:1012
-#: ../plug-ins/common/file-ps.c:1190 ../plug-ins/common/file-raw.c:591
-#: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:565
-#: ../plug-ins/common/file-tga.c:1179 ../plug-ins/common/file-tiff-save.c:708
-#: ../plug-ins/common/file-xbm.c:1036 ../plug-ins/common/file-xmc.c:1447
-#: ../plug-ins/common/file-xwd.c:623 ../plug-ins/common/sphere-designer.c:2121
-#: ../plug-ins/file-bmp/bmp-write.c:309 ../plug-ins/file-fits/fits.c:476
-#: ../plug-ins/file-fli/fli-gimp.c:750 ../plug-ins/file-ico/ico-save.c:1007
-#: ../plug-ins/file-jpeg/jpeg-save.c:332 ../plug-ins/file-psd/psd-save.c:1652
+#: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:488
+#: ../plug-ins/common/file-pcx.c:713 ../plug-ins/common/file-pix.c:528
+#: ../plug-ins/common/file-png.c:1369 ../plug-ins/common/file-pnm.c:1012
+#: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-raw.c:591
+#: ../plug-ins/common/file-raw.c:619 ../plug-ins/common/file-sunras.c:567
+#: ../plug-ins/common/file-tga.c:1180 ../plug-ins/common/file-tiff-save.c:710
+#: ../plug-ins/common/file-xbm.c:1037 ../plug-ins/common/file-xmc.c:1449
+#: ../plug-ins/common/file-xwd.c:637 ../plug-ins/common/sphere-designer.c:2121
+#: ../plug-ins/file-bmp/bmp-write.c:309 ../plug-ins/file-fits/fits.c:478
+#: ../plug-ins/file-fli/fli-gimp.c:752 ../plug-ins/file-ico/ico-save.c:1007
+#: ../plug-ins/file-jpeg/jpeg-save.c:355 ../plug-ins/file-psd/psd-save.c:1653
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
 #: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1715
 #: ../plug-ins/flame/flame.c:442
@@ -1102,7 +1103,7 @@ msgstr "Xake-taula gehitzen"
 msgid "Checkerboard"
 msgstr "Xake-taula"
 
-#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1154
+#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1156
 #: ../plug-ins/gimpressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "Ta_maina:"
@@ -1224,7 +1225,7 @@ msgstr "Min (x-d, -), (x < 0,5)"
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0,5 < x)"
 
-#: ../plug-ins/common/cml-explorer.c:200 ../plug-ins/common/file-sunras.c:1635
+#: ../plug-ins/common/cml-explorer.c:200 ../plug-ins/common/file-sunras.c:1637
 msgid "Standard"
 msgstr "Estandarra"
 
@@ -2269,7 +2270,7 @@ msgid "Smoo_thing"
 msgstr "_Leuntzea"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve-bend.c:1352 ../plug-ins/common/mosaic.c:729
+#: ../plug-ins/common/curve-bend.c:1352 ../plug-ins/common/mosaic.c:733
 #: ../plug-ins/common/qbist.c:858 ../plug-ins/common/ripple.c:532
 msgid "_Antialiasing"
 msgstr "_Antialiasing-a"
@@ -2668,7 +2669,7 @@ msgid "Destripe"
 msgstr "Kendu marrak"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:584
-#: ../plug-ins/common/file-ps.c:3034 ../plug-ins/common/file-ps.c:3232
+#: ../plug-ins/common/file-ps.c:3039 ../plug-ins/common/file-ps.c:3237
 #: ../plug-ins/common/file-raw.c:1134 ../plug-ins/common/smooth-palette.c:437
 #: ../plug-ins/common/tile-paper.c:303 ../plug-ins/common/tile.c:428
 #: ../plug-ins/imagemap/imap_cmd_guides.c:164
@@ -2980,7 +2981,7 @@ msgid "Engrave"
 msgstr "Grabatua"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/file-html-table.c:600
-#: ../plug-ins/common/file-ps.c:3044 ../plug-ins/common/file-ps.c:3241
+#: ../plug-ins/common/file-ps.c:3049 ../plug-ins/common/file-ps.c:3246
 #: ../plug-ins/common/file-raw.c:1147 ../plug-ins/common/film.c:1002
 #: ../plug-ins/common/smooth-palette.c:442 ../plug-ins/common/tile-paper.c:314
 #: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:174
@@ -2998,11 +2999,11 @@ msgid "ASCII art"
 msgstr "ASCII artea"
 
 #. Create the actual window.
-#: ../plug-ins/common/file-aa.c:349
+#: ../plug-ins/common/file-aa.c:351
 msgid "Text"
 msgstr "Testua"
 
-#: ../plug-ins/common/file-aa.c:357
+#: ../plug-ins/common/file-aa.c:359
 msgid "_Format:"
 msgstr "_Formatua:"
 
@@ -3014,8 +3015,8 @@ msgstr "KISS CEL"
 msgid "Load KISS Palette"
 msgstr "Kargatu KISS paleta"
 
-#: ../plug-ins/common/file-cel.c:308 ../plug-ins/common/file-cel.c:363
-#: ../plug-ins/common/file-cel.c:383
+#: ../plug-ins/common/file-cel.c:309 ../plug-ins/common/file-cel.c:364
+#: ../plug-ins/common/file-cel.c:384
 #, c-format
 msgid "EOF or error while reading image header"
 msgstr "EOF edo errorea irudiaren goiburua irakurtzean"
@@ -3024,36 +3025,36 @@ msgstr "EOF edo errorea irudiaren goiburua irakurtzean"
 #. column, highest column ever used
 #. -1  assume fsel is not available (and not attached to any drawable)
 #. -1  assume there is no floating selection
-#: ../plug-ins/common/file-cel.c:353 ../plug-ins/common/file-dicom.c:345
-#: ../plug-ins/common/file-gbr.c:373 ../plug-ins/common/file-gif-load.c:360
-#: ../plug-ins/common/file-gih.c:645 ../plug-ins/common/file-jp2-load.c:187
-#: ../plug-ins/common/file-pat.c:342 ../plug-ins/common/file-pcx.c:366
-#: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:348
-#: ../plug-ins/common/file-png.c:763 ../plug-ins/common/file-pnm.c:501
-#: ../plug-ins/common/file-ps.c:1020 ../plug-ins/common/file-raw.c:716
-#: ../plug-ins/common/file-sunras.c:487 ../plug-ins/common/file-tga.c:447
+#: ../plug-ins/common/file-cel.c:354 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-gbr.c:375 ../plug-ins/common/file-gif-load.c:360
+#: ../plug-ins/common/file-gih.c:647 ../plug-ins/common/file-jp2-load.c:189
+#: ../plug-ins/common/file-pat.c:344 ../plug-ins/common/file-pcx.c:367
+#: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:350
+#: ../plug-ins/common/file-png.c:769 ../plug-ins/common/file-pnm.c:501
+#: ../plug-ins/common/file-ps.c:1025 ../plug-ins/common/file-raw.c:716
+#: ../plug-ins/common/file-sunras.c:489 ../plug-ins/common/file-tga.c:448
 #: ../plug-ins/common/file-tiff-load.c:611 ../plug-ins/common/file-wmf.c:994
-#: ../plug-ins/common/file-xbm.c:742 ../plug-ins/common/file-xmc.c:667
-#: ../plug-ins/common/file-xpm.c:352 ../plug-ins/common/file-xwd.c:526
+#: ../plug-ins/common/file-xbm.c:743 ../plug-ins/common/file-xmc.c:669
+#: ../plug-ins/common/file-xpm.c:353 ../plug-ins/common/file-xwd.c:534
 #: ../plug-ins/file-bmp/bmp-read.c:211 ../plug-ins/file-faxg3/faxg3.c:213
-#: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:644
-#: ../plug-ins/file-jpeg/jpeg-load.c:123 ../plug-ins/file-psd/psd-load.c:135
-#: ../plug-ins/file-sgi/sgi.c:330 ../plug-ins/file-xjt/xjt.c:3333
+#: ../plug-ins/file-fli/fli-gimp.c:503 ../plug-ins/file-ico/ico-load.c:644
+#: ../plug-ins/file-jpeg/jpeg-load.c:128 ../plug-ins/file-psd/psd-load.c:135
+#: ../plug-ins/file-sgi/sgi.c:332 ../plug-ins/file-xjt/xjt.c:3333
 #, c-format
 msgid "Opening '%s'"
 msgstr "'%s' irekitzen"
 
-#: ../plug-ins/common/file-cel.c:391
+#: ../plug-ins/common/file-cel.c:392
 #, c-format
 msgid "is not a CEL image file"
 msgstr "ez da CEL irudi-fitxategia"
 
-#: ../plug-ins/common/file-cel.c:405
+#: ../plug-ins/common/file-cel.c:406
 #, c-format
 msgid "illegal bpp value in image: %hhu"
 msgstr "bpp balio ilegala irudian: %hhu"
 
-#: ../plug-ins/common/file-cel.c:419
+#: ../plug-ins/common/file-cel.c:420
 #, c-format
 msgid ""
 "illegal image dimensions: width: %d, horizontal offset: %d, height: %d, "
@@ -3062,63 +3063,63 @@ msgstr ""
 "irudiaren dimentsio ilegala: zabalera: %d; desplazamendu horizontala: %d; "
 "altuera: %d; desplazamendu bertikala: %d"
 
-#: ../plug-ins/common/file-cel.c:432
+#: ../plug-ins/common/file-cel.c:433
 #, c-format
 msgid "Can't create a new image"
 msgstr "Ezin da irudi berria sortu"
 
-#: ../plug-ins/common/file-cel.c:470 ../plug-ins/common/file-cel.c:505
-#: ../plug-ins/common/file-cel.c:530
+#: ../plug-ins/common/file-cel.c:471 ../plug-ins/common/file-cel.c:506
+#: ../plug-ins/common/file-cel.c:531
 #, c-format
 msgid "EOF or error while reading image data"
 msgstr "EOF edo errorea irudiaren datuak irakurtzean"
 
-#: ../plug-ins/common/file-cel.c:547
+#: ../plug-ins/common/file-cel.c:548
 #, c-format
 msgid "Unsupported bit depth (%d)!"
 msgstr "Kolore-sakonera (%d) ez da onartzen"
 
-#: ../plug-ins/common/file-cel.c:629 ../plug-ins/common/file-cel.c:641
+#: ../plug-ins/common/file-cel.c:630 ../plug-ins/common/file-cel.c:642
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
 msgstr "'%s': EOF edo errorea paletaren goiburua irakurtzean"
 
-#: ../plug-ins/common/file-cel.c:650
+#: ../plug-ins/common/file-cel.c:651
 #, c-format
 msgid "'%s': is not a KCF palette file"
 msgstr "'%s':  ez da KCF paleta-fitxategia"
 
-#: ../plug-ins/common/file-cel.c:659
+#: ../plug-ins/common/file-cel.c:660
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
 msgstr "'%s': bpp balio ilegala paletan: %hhu"
 
-#: ../plug-ins/common/file-cel.c:668
+#: ../plug-ins/common/file-cel.c:669
 #, c-format
 msgid "'%s': illegal number of colors: %u"
 msgstr "'%s': kolore kopuru ilegala: %u"
 
-#: ../plug-ins/common/file-cel.c:683 ../plug-ins/common/file-cel.c:700
-#: ../plug-ins/common/file-cel.c:720
+#: ../plug-ins/common/file-cel.c:684 ../plug-ins/common/file-cel.c:701
+#: ../plug-ins/common/file-cel.c:721
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
 msgstr "'%s': EOF edo errorea paletaren datuak irakurtzean"
 
 #. init the progress meter
 #. And let's begin the progress
-#: ../plug-ins/common/file-cel.c:777 ../plug-ins/common/file-gbr.c:668
-#: ../plug-ins/common/file-gif-save.c:799 ../plug-ins/common/file-gih.c:1263
-#: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:491
-#: ../plug-ins/common/file-pcx.c:644 ../plug-ins/common/file-pix.c:531
-#: ../plug-ins/common/file-png.c:1365 ../plug-ins/common/file-pnm.c:1017
-#: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-sunras.c:570
-#: ../plug-ins/common/file-tga.c:1184 ../plug-ins/common/file-tiff-save.c:716
-#: ../plug-ins/common/file-xbm.c:1041 ../plug-ins/common/file-xmc.c:1452
-#: ../plug-ins/common/file-xpm.c:638 ../plug-ins/common/file-xwd.c:628
-#: ../plug-ins/file-bmp/bmp-write.c:320 ../plug-ins/file-fits/fits.c:481
-#: ../plug-ins/file-fli/fli-gimp.c:718 ../plug-ins/file-ico/ico-save.c:1001
-#: ../plug-ins/file-jpeg/jpeg-save.c:289 ../plug-ins/file-psd/psd-save.c:1657
-#: ../plug-ins/file-sgi/sgi.c:576 ../plug-ins/file-xjt/xjt.c:1696
+#: ../plug-ins/common/file-cel.c:778 ../plug-ins/common/file-gbr.c:670
+#: ../plug-ins/common/file-gif-save.c:799 ../plug-ins/common/file-gih.c:1265
+#: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:493
+#: ../plug-ins/common/file-pcx.c:645 ../plug-ins/common/file-pix.c:533
+#: ../plug-ins/common/file-png.c:1376 ../plug-ins/common/file-pnm.c:1017
+#: ../plug-ins/common/file-ps.c:1200 ../plug-ins/common/file-sunras.c:572
+#: ../plug-ins/common/file-tga.c:1185 ../plug-ins/common/file-tiff-save.c:718
+#: ../plug-ins/common/file-xbm.c:1042 ../plug-ins/common/file-xmc.c:1454
+#: ../plug-ins/common/file-xpm.c:639 ../plug-ins/common/file-xwd.c:642
+#: ../plug-ins/file-bmp/bmp-write.c:320 ../plug-ins/file-fits/fits.c:483
+#: ../plug-ins/file-fli/fli-gimp.c:720 ../plug-ins/file-ico/ico-save.c:1001
+#: ../plug-ins/file-jpeg/jpeg-save.c:312 ../plug-ins/file-psd/psd-save.c:1658
+#: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-xjt/xjt.c:1696
 #, c-format
 msgid "Saving '%s'"
 msgstr "'%s' gordetzen"
@@ -3195,14 +3196,14 @@ msgstr "'Digital Imaging and Communications in Medicine' irudia"
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' ez da DICOM fitxategia"
 
-#: ../plug-ins/common/file-dicom.c:1339 ../plug-ins/common/file-pcx.c:676
+#: ../plug-ins/common/file-dicom.c:1339 ../plug-ins/common/file-pcx.c:677
 #: ../plug-ins/common/file-pnm.c:1002
 msgid "Cannot save images with alpha channel."
 msgstr "Ezin izan da alfa kanalak dituzten irudiak gorde."
 
-#: ../plug-ins/common/file-dicom.c:1354 ../plug-ins/common/file-ps.c:1180
-#: ../plug-ins/common/file-ps.c:1212 ../plug-ins/common/file-xwd.c:613
-#: ../plug-ins/file-fits/fits.c:466 ../plug-ins/file-xjt/xjt.c:1691
+#: ../plug-ins/common/file-dicom.c:1354 ../plug-ins/common/file-ps.c:1185
+#: ../plug-ins/common/file-ps.c:1217 ../plug-ins/common/file-xwd.c:627
+#: ../plug-ins/file-fits/fits.c:468 ../plug-ins/file-xjt/xjt.c:1691
 msgid "Cannot operate on unknown image types."
 msgstr "Ezin izan da irudi-mota ezezagunekin lan egin"
 
@@ -3210,47 +3211,47 @@ msgstr "Ezin izan da irudi-mota ezezagunekin lan egin"
 msgid "GIMP brush"
 msgstr "GIMPen brotxa"
 
-#: ../plug-ins/common/file-gbr.c:399 ../plug-ins/common/file-pat.c:418
+#: ../plug-ins/common/file-gbr.c:401 ../plug-ins/common/file-pat.c:420
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr ""
 "Goiburuko datu baliogabeak '%s'(e)n: zabalera=%lu, altuera=%lu, byteak=%lu"
 
-#: ../plug-ins/common/file-gbr.c:423 ../plug-ins/common/file-gbr.c:435
+#: ../plug-ins/common/file-gbr.c:425 ../plug-ins/common/file-gbr.c:437
 msgid "Unsupported brush format"
 msgstr "Brotxa formatua ez da onartzen "
 
-#: ../plug-ins/common/file-gbr.c:447
+#: ../plug-ins/common/file-gbr.c:449
 #, c-format
 msgid "Error in GIMP brush file '%s'"
 msgstr "Errorea GIMPen brotxa-fitxategian '%s'"
 
-#: ../plug-ins/common/file-gbr.c:455
+#: ../plug-ins/common/file-gbr.c:457
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "UTF-8 kate baliogabea '%s' brotxa-fitxategian."
 
-#: ../plug-ins/common/file-gbr.c:461 ../plug-ins/common/file-gih.c:487
-#: ../plug-ins/common/file-gih.c:1137
+#: ../plug-ins/common/file-gbr.c:463 ../plug-ins/common/file-gih.c:489
+#: ../plug-ins/common/file-gih.c:1139
 #: ../plug-ins/gradient-flare/gradient-flare.c:3064
 msgid "Unnamed"
 msgstr "Izengabea"
 
-#: ../plug-ins/common/file-gbr.c:653
+#: ../plug-ins/common/file-gbr.c:655
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
 msgstr "GIMP brotxak gris-eskalakoak edo GBUA dira"
 
-#: ../plug-ins/common/file-gbr.c:770
+#: ../plug-ins/common/file-gbr.c:772
 msgid "Brush"
 msgstr "Brotxa"
 
 #. attach labels
-#: ../plug-ins/common/file-gbr.c:784 ../plug-ins/common/grid.c:792
+#: ../plug-ins/common/file-gbr.c:786 ../plug-ins/common/grid.c:792
 msgid "Spacing:"
 msgstr "Tartea:"
 
-#: ../plug-ins/common/file-gbr.c:795 ../plug-ins/common/file-gih.c:888
-#: ../plug-ins/common/file-pat.c:568 ../plug-ins/gimpressionist/presets.c:666
+#: ../plug-ins/common/file-gbr.c:797 ../plug-ins/common/file-gih.c:890
+#: ../plug-ins/common/file-pat.c:570 ../plug-ins/gimpressionist/presets.c:666
 msgid "Description:"
 msgstr "Azalpena:"
 
@@ -3394,63 +3395,63 @@ msgstr "Iruzkin lehenetsiak gehienez %d karaktere izan ditzake."
 msgid "GIMP brush (animated)"
 msgstr "GIMPeko brotxa (animatua)"
 
-#: ../plug-ins/common/file-gih.c:480
+#: ../plug-ins/common/file-gih.c:482
 msgid "Error in GIMP brush pipe file."
 msgstr "Errorea GIMPeko brotxa animatuan."
 
-#: ../plug-ins/common/file-gih.c:546
+#: ../plug-ins/common/file-gih.c:548
 msgid "GIMP brush file appears to be corrupted."
 msgstr "GIMPeko brotxa-fitxategia hondatuta dagoela ematen du."
 
-#: ../plug-ins/common/file-gih.c:696
+#: ../plug-ins/common/file-gih.c:698
 msgid "Couldn't load one brush in the pipe, giving up."
 msgstr "Ezin izan da animazioan brotxa bat kargatu, amore emango da."
 
-#: ../plug-ins/common/file-gih.c:857
+#: ../plug-ins/common/file-gih.c:859
 msgid "Brush Pipe"
 msgstr "Brotxa animatu gisa"
 
-#: ../plug-ins/common/file-gih.c:874
+#: ../plug-ins/common/file-gih.c:876
 msgid "Spacing (percent):"
 msgstr "Tartea (ehunekoa):"
 
-#: ../plug-ins/common/file-gih.c:941
+#: ../plug-ins/common/file-gih.c:943
 msgid "Pixels"
 msgstr "Pixelak"
 
-#: ../plug-ins/common/file-gih.c:946
+#: ../plug-ins/common/file-gih.c:948
 msgid "Cell size:"
 msgstr "Gelaxka-tamaina:"
 
-#: ../plug-ins/common/file-gih.c:958
+#: ../plug-ins/common/file-gih.c:960
 msgid "Number of cells:"
 msgstr "Gelaxka-kopurua:"
 
-#: ../plug-ins/common/file-gih.c:983
+#: ../plug-ins/common/file-gih.c:985
 msgid " Rows of "
 msgstr " Errenkadak: "
 
-#: ../plug-ins/common/file-gih.c:995
+#: ../plug-ins/common/file-gih.c:997
 msgid " Columns on each layer"
 msgstr " Geruza bakoitzeko zutabeak"
 
-#: ../plug-ins/common/file-gih.c:999
+#: ../plug-ins/common/file-gih.c:1001
 msgid " (Width Mismatch!) "
 msgstr " (zabalera ez dator bat!) "
 
-#: ../plug-ins/common/file-gih.c:1003
+#: ../plug-ins/common/file-gih.c:1005
 msgid " (Height Mismatch!) "
 msgstr " (altuera ez dator bat!) "
 
-#: ../plug-ins/common/file-gih.c:1008
+#: ../plug-ins/common/file-gih.c:1010
 msgid "Display as:"
 msgstr "Bistaratu honela:"
 
-#: ../plug-ins/common/file-gih.c:1017
+#: ../plug-ins/common/file-gih.c:1019
 msgid "Dimension:"
 msgstr "Neurria:"
 
-#: ../plug-ins/common/file-gih.c:1092
+#: ../plug-ins/common/file-gih.c:1094
 msgid "Ranks:"
 msgstr "Heinak:"
 
@@ -3592,22 +3593,22 @@ msgstr "Gelaxka-tartearen kopurua."
 msgid "JPEG 2000 image"
 msgstr "JPEG 2000 irudia"
 
-#: ../plug-ins/common/file-jp2-load.c:212
+#: ../plug-ins/common/file-jp2-load.c:214
 #, c-format
 msgid "Couldn't decode '%s'."
 msgstr "Ezin izan da '%s' dekodetu"
 
-#: ../plug-ins/common/file-jp2-load.c:235
+#: ../plug-ins/common/file-jp2-load.c:237
 #, c-format
 msgid "The image '%s' is in grayscale but does not contain any gray component."
 msgstr "'%s' irudia gris-eskalan egon arren ez dauka gris osagairik."
 
-#: ../plug-ins/common/file-jp2-load.c:261
+#: ../plug-ins/common/file-jp2-load.c:263
 #, c-format
 msgid "The image '%s' is in RGB, but is missing some of the components."
 msgstr "'%s' irudia GBUn dago, hala ere osagaietariko batzuk falta zaizkio."
 
-#: ../plug-ins/common/file-jp2-load.c:287
+#: ../plug-ins/common/file-jp2-load.c:289
 #, c-format
 msgid ""
 "The image '%s' is in the CIEXYZ color space, but there is no code in place "
@@ -3616,7 +3617,7 @@ msgstr ""
 "'%s' irudia CIEXYZ kolore-espazioan dago, baina ez dago koderik hura GBUra "
 "bihurtzeko."
 
-#: ../plug-ins/common/file-jp2-load.c:294
+#: ../plug-ins/common/file-jp2-load.c:296
 #, c-format
 msgid ""
 "The image '%s' is in the CIELAB color space, but there is no code in place "
@@ -3625,7 +3626,7 @@ msgstr ""
 "'%s' irudia CIELAB kolore-espazioan dago, baina ez dago koderik hura GBUra "
 "bihurtzeko."
 
-#: ../plug-ins/common/file-jp2-load.c:301
+#: ../plug-ins/common/file-jp2-load.c:303
 #, c-format
 msgid ""
 "The image '%s' is in the YCbCr color space, but there is no code in place to "
@@ -3634,12 +3635,12 @@ msgstr ""
 "'%s' irudia YCbCr kolore-espazioan dago, baina ez dago koderik hura GBUra "
 "bihurtzeko."
 
-#: ../plug-ins/common/file-jp2-load.c:309
+#: ../plug-ins/common/file-jp2-load.c:311
 #, c-format
 msgid "The image '%s' is in an unknown color space."
 msgstr "'%s' irudiak kolore-espazio ezezaguna du."
 
-#: ../plug-ins/common/file-jp2-load.c:323
+#: ../plug-ins/common/file-jp2-load.c:325
 #, c-format
 msgid ""
 "Image component %d of image '%s' does not have the same size as the image. "
@@ -3648,12 +3649,12 @@ msgstr ""
 "'%2$s' irudiaren %1$d irudi-osagaiak ez dauka irudiaren tamaina berdina. Hau "
 "oraingoz ez dago onartuta."
 
-#: ../plug-ins/common/file-jp2-load.c:334
+#: ../plug-ins/common/file-jp2-load.c:336
 #, c-format
 msgid "Image component %d of image '%s' does not have both a hstep and vstep."
 msgstr "'%2$s' irudiaren %1$d irudi-osagaiak ez dauka hstep ezta vstep ere."
 
-#: ../plug-ins/common/file-jp2-load.c:343
+#: ../plug-ins/common/file-jp2-load.c:345
 #, c-format
 msgid ""
 "Image component %d of image '%s' is signed. This is currently not supported."
@@ -3663,7 +3664,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1902
+#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1913
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Ezin izan da gardentasuna galerarik gabe gorde, horren ordez opakutasuna "
@@ -3698,7 +3699,7 @@ msgid "Save creation time"
 msgstr "Gorde sortze-denbora"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1951
+#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1962
 msgid "PNG"
 msgstr "PNG"
 
@@ -3786,12 +3787,12 @@ msgstr "MNG animazioa"
 msgid "GIMP pattern"
 msgstr "GIMPen eredua"
 
-#: ../plug-ins/common/file-pat.c:378
+#: ../plug-ins/common/file-pat.c:380
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "UTF-8 jkate baliogabea '%s' eredu-fitxategian."
 
-#: ../plug-ins/common/file-pat.c:553
+#: ../plug-ins/common/file-pat.c:555
 msgid "Pattern"
 msgstr "Eredua"
 
@@ -3799,62 +3800,62 @@ msgstr "Eredua"
 msgid "ZSoft PCX image"
 msgstr "ZSoft PCX irudia"
 
-#: ../plug-ins/common/file-pcx.c:372
+#: ../plug-ins/common/file-pcx.c:373
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Ezin da goiburua irakurri '%s'(e)tik"
 
-#: ../plug-ins/common/file-pcx.c:383
+#: ../plug-ins/common/file-pcx.c:384
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "'%s' ez da PCX fitxategia"
 
-#: ../plug-ins/common/file-pcx.c:397 ../plug-ins/file-bmp/bmp-read.c:666
+#: ../plug-ins/common/file-pcx.c:398 ../plug-ins/file-bmp/bmp-read.c:669
 #: ../plug-ins/file-psd/psd-load.c:301
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Ez da onartzen edo irudiaren zabalera baliogabea da: %d"
 
-#: ../plug-ins/common/file-pcx.c:403 ../plug-ins/file-bmp/bmp-read.c:672
+#: ../plug-ins/common/file-pcx.c:404 ../plug-ins/file-bmp/bmp-read.c:675
 #: ../plug-ins/file-psd/psd-load.c:293
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Ez da onartzen edo irudiaren altuera baliogabea da: %d"
 
-#: ../plug-ins/common/file-pcx.c:409
+#: ../plug-ins/common/file-pcx.c:410
 msgid "Invalid number of bytes per line in PCX header"
 msgstr "Byte kopuru baliogabea lerroko PCX goiburuan"
 
-#: ../plug-ins/common/file-pcx.c:417
+#: ../plug-ins/common/file-pcx.c:418
 #, c-format
 msgid "Image dimensions too large: width %d x height %d"
 msgstr "Irudiaren dimentsioak handiegiak: zabalera=%d x altuera=%d"
 
-#: ../plug-ins/common/file-pcx.c:466
+#: ../plug-ins/common/file-pcx.c:467
 msgid "Unusual PCX flavour, giving up"
 msgstr "ezohiko PCX bertsioa, utzi egingo da"
 
-#: ../plug-ins/common/file-pcx.c:685
+#: ../plug-ins/common/file-pcx.c:686
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "X desplazamendu baliogabea: %d"
 
-#: ../plug-ins/common/file-pcx.c:691
+#: ../plug-ins/common/file-pcx.c:692
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Y desplazamendu baliogabea: %d"
 
-#: ../plug-ins/common/file-pcx.c:697
+#: ../plug-ins/common/file-pcx.c:698
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Eskuineko ertza barrutitik kanpo (< %d izan behar ): %d"
 
-#: ../plug-ins/common/file-pcx.c:704
+#: ../plug-ins/common/file-pcx.c:705
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Azpiko ertza barrutitik kanpo (< %d izan behar ): %d"
 
-#: ../plug-ins/common/file-pcx.c:769
+#: ../plug-ins/common/file-pcx.c:770
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Errorea '%s' fitxategian idaztean: %s"
@@ -3875,7 +3876,7 @@ msgstr "Ezin izan da '%s' fitxategia kargatu: %s"
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:897 ../plug-ins/common/file-ps.c:1102
+#: ../plug-ins/common/file-pdf-load.c:897 ../plug-ins/common/file-ps.c:1107
 #, c-format
 msgid "%s-pages"
 msgstr "%s-orriak"
@@ -3884,7 +3885,7 @@ msgstr "%s-orriak"
 msgid "Import from PDF"
 msgstr "Inportatu PDF-tik"
 
-#: ../plug-ins/common/file-pdf-load.c:1093 ../plug-ins/common/file-ps.c:2962
+#: ../plug-ins/common/file-pdf-load.c:1093 ../plug-ins/common/file-ps.c:2967
 #: ../plug-ins/common/file-tiff-load.c:491
 msgid "_Import"
 msgstr "_Inportatu"
@@ -3992,32 +3993,32 @@ msgstr "Alias Pix irudia"
 msgid "PNG image"
 msgstr "PNG irudia"
 
-#: ../plug-ins/common/file-png.c:644
+#: ../plug-ins/common/file-png.c:645
 #, c-format
 msgid "Error loading PNG file: %s"
 msgstr "Errorea PNG fitxategia kargatzean: %s"
 
-#: ../plug-ins/common/file-png.c:732
+#: ../plug-ins/common/file-png.c:733
 #, c-format
 msgid "Error creating PNG read struct while saving '%s'."
 msgstr "Errorea PNGaren irakurtzeko egitura sortzean '%s' gordetzean."
 
-#: ../plug-ins/common/file-png.c:742
+#: ../plug-ins/common/file-png.c:743
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Errorea '%s' irakurtzean. Fitxategia hondatuta dago?"
 
-#: ../plug-ins/common/file-png.c:871
+#: ../plug-ins/common/file-png.c:877
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Kolore modelu ezezaguna '%s' PNG fitxategian."
 
-#: ../plug-ins/common/file-png.c:882
+#: ../plug-ins/common/file-png.c:888
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Ezin izan da '%s'(r)en irudi berria sortu: %s"
 
-#: ../plug-ins/common/file-png.c:936
+#: ../plug-ins/common/file-png.c:942
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -4025,43 +4026,43 @@ msgstr ""
 "PNG fitxategiak desplazamendu bat zehazten du, geruza irudiaren kanpoan "
 "kokatu dezakelarik."
 
-#: ../plug-ins/common/file-png.c:1238
+#: ../plug-ins/common/file-png.c:1244
 msgid "Apply PNG Offset"
 msgstr "Aplikatu PNGren desplazamendua"
 
-#: ../plug-ins/common/file-png.c:1242
+#: ../plug-ins/common/file-png.c:1248
 msgid "Ignore PNG offset"
 msgstr "Ez ikusi egin PNGren desplazamenduari"
 
-#: ../plug-ins/common/file-png.c:1243
+#: ../plug-ins/common/file-png.c:1249
 msgid "Apply PNG offset to layer"
 msgstr "Aplikatu PNGren desplazamendua geruzari"
 
-#: ../plug-ins/common/file-png.c:1267
+#: ../plug-ins/common/file-png.c:1273
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
 "to apply this offset to the layer?"
 msgstr ""
-"Inportatzen ari zaren PNG irudiak '%d, %d'(e)ko desplazamendua zehazten du. Nahi "
-"duzu desplazamendu hori geruzari aplikatzea?"
+"Inportatzen ari zaren PNG irudiak '%d, %d'(e)ko desplazamendua zehazten du. "
+"Nahi duzu desplazamendu hori geruzari aplikatzea?"
 
-#: ../plug-ins/common/file-png.c:1335
+#: ../plug-ins/common/file-png.c:1341
 #, c-format
 msgid "Error creating PNG write struct while saving '%s'."
 msgstr "Errorea PNGaren idazteko egitura sortzean '%s' gordetzean."
 
-#: ../plug-ins/common/file-png.c:1345
+#: ../plug-ins/common/file-png.c:1351
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Errorea '%s' gordetzean. Ezin izan da irudia gorde."
 
-#: ../plug-ins/common/file-png.c:1968
+#: ../plug-ins/common/file-png.c:1979
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Errorea interfazeko '%s' fitxategia kargatzean: %s"
 
-#: ../plug-ins/common/file-png.c:1969
+#: ../plug-ins/common/file-png.c:1980
 msgid "Unknown error"
 msgstr "Errore ezezaguna"
 
@@ -4140,134 +4141,134 @@ msgstr "Formaturik gabe"
 msgid "ASCII"
 msgstr "ASCII"
 
-#: ../plug-ins/common/file-ps.c:579 ../plug-ins/common/file-ps.c:671
+#: ../plug-ins/common/file-ps.c:581 ../plug-ins/common/file-ps.c:673
 msgid "PostScript document"
 msgstr "PostScript dokumentua"
 
-#: ../plug-ins/common/file-ps.c:598 ../plug-ins/common/file-ps.c:687
+#: ../plug-ins/common/file-ps.c:600 ../plug-ins/common/file-ps.c:689
 msgid "Encapsulated PostScript image"
 msgstr "PostScript kapsulatutako irudia"
 
-#: ../plug-ins/common/file-ps.c:618
+#: ../plug-ins/common/file-ps.c:620
 msgid "PDF document"
 msgstr "PDF dokumentua"
 
-#: ../plug-ins/common/file-ps.c:1027
+#: ../plug-ins/common/file-ps.c:1032
 #, c-format
 msgid "Could not interpret Postscript file '%s'"
 msgstr "Ezin izan da '%s' Postscript fitxategia interpretatu"
 
-#: ../plug-ins/common/file-ps.c:1169
+#: ../plug-ins/common/file-ps.c:1174
 #, c-format
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Alfa kanalak dituzten irudiak ezin dira PostScript gisa gorde"
 
-#: ../plug-ins/common/file-ps.c:1804 ../plug-ins/common/file-tiff-load.c:1012
+#: ../plug-ins/common/file-ps.c:1809 ../plug-ins/common/file-tiff-load.c:1012
 #, c-format
 msgid "Page %d"
 msgstr "%d. orrialdea"
 
-#: ../plug-ins/common/file-ps.c:2469 ../plug-ins/common/file-ps.c:2600
-#: ../plug-ins/common/file-ps.c:2749 ../plug-ins/common/file-ps.c:2873
-#: ../plug-ins/common/file-sunras.c:1504 ../plug-ins/common/file-sunras.c:1610
-#: ../plug-ins/file-fits/fits.c:850 ../plug-ins/file-fits/fits.c:973
+#: ../plug-ins/common/file-ps.c:2474 ../plug-ins/common/file-ps.c:2605
+#: ../plug-ins/common/file-ps.c:2754 ../plug-ins/common/file-ps.c:2878
+#: ../plug-ins/common/file-sunras.c:1506 ../plug-ins/common/file-sunras.c:1612
+#: ../plug-ins/file-fits/fits.c:852 ../plug-ins/file-fits/fits.c:975
 msgid "Write error occurred"
 msgstr "Errorea gertatu da idaztean"
 
-#: ../plug-ins/common/file-ps.c:2957
+#: ../plug-ins/common/file-ps.c:2962
 msgid "Import from PostScript"
 msgstr "Inportatu PostScript-etik"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3001
+#: ../plug-ins/common/file-ps.c:3006
 msgid "Rendering"
 msgstr "Errendatzen"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3017 ../plug-ins/common/file-svg.c:911
+#: ../plug-ins/common/file-ps.c:3023 ../plug-ins/common/file-svg.c:911
 #: ../plug-ins/common/file-wmf.c:692
 msgid "Resolution:"
 msgstr "Bereizmena:"
 
-#: ../plug-ins/common/file-ps.c:3056
+#: ../plug-ins/common/file-ps.c:3061
 msgid "Pages:"
 msgstr "Orrialdeak:"
 
-#: ../plug-ins/common/file-ps.c:3063
+#: ../plug-ins/common/file-ps.c:3068
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Orrialdeak kargatzeko (adib.: 1-4 edo 1,3,5-7)"
 
-#: ../plug-ins/common/file-ps.c:3068 ../plug-ins/common/sphere-designer.c:2657
+#: ../plug-ins/common/file-ps.c:3073 ../plug-ins/common/sphere-designer.c:2657
 msgid "Layers"
 msgstr "Geruzak"
 
-#: ../plug-ins/common/file-ps.c:3071
+#: ../plug-ins/common/file-ps.c:3076
 msgid "Images"
 msgstr "Irudiak"
 
-#: ../plug-ins/common/file-ps.c:3074
+#: ../plug-ins/common/file-ps.c:3079
 msgid "Open as"
 msgstr "Ireki honela"
 
-#: ../plug-ins/common/file-ps.c:3078
+#: ../plug-ins/common/file-ps.c:3083
 msgid "Try Bounding Box"
 msgstr "Probatu muga-koadroa "
 
 #. Colouring
-#: ../plug-ins/common/file-ps.c:3091
+#: ../plug-ins/common/file-ps.c:3096
 msgid "Coloring"
 msgstr "Koloreztatzea"
 
-#: ../plug-ins/common/file-ps.c:3095
+#: ../plug-ins/common/file-ps.c:3100
 msgid "B/W"
 msgstr "Z/B"
 
-#: ../plug-ins/common/file-ps.c:3097 ../plug-ins/common/file-xpm.c:479
+#: ../plug-ins/common/file-ps.c:3102 ../plug-ins/common/file-xpm.c:480
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:212
 msgid "Color"
 msgstr "Kolorea"
 
-#: ../plug-ins/common/file-ps.c:3098 ../plug-ins/file-fits/fits.c:1032
+#: ../plug-ins/common/file-ps.c:3103 ../plug-ins/file-fits/fits.c:1034
 msgid "Automatic"
 msgstr "Automatikoa"
 
-#: ../plug-ins/common/file-ps.c:3109
+#: ../plug-ins/common/file-ps.c:3114
 msgid "Text antialiasing"
 msgstr "Testuaren antialiasing-a"
 
-#: ../plug-ins/common/file-ps.c:3113 ../plug-ins/common/file-ps.c:3125
+#: ../plug-ins/common/file-ps.c:3118 ../plug-ins/common/file-ps.c:3130
 msgctxt "antialiasing"
 msgid "None"
 msgstr "Bat ere ez"
 
-#: ../plug-ins/common/file-ps.c:3114 ../plug-ins/common/file-ps.c:3126
+#: ../plug-ins/common/file-ps.c:3119 ../plug-ins/common/file-ps.c:3131
 msgid "Weak"
 msgstr "Ahula"
 
-#: ../plug-ins/common/file-ps.c:3115 ../plug-ins/common/file-ps.c:3127
+#: ../plug-ins/common/file-ps.c:3120 ../plug-ins/common/file-ps.c:3132
 msgid "Strong"
 msgstr "Indartsua"
 
-#: ../plug-ins/common/file-ps.c:3121
+#: ../plug-ins/common/file-ps.c:3126
 msgid "Graphic antialiasing"
 msgstr "Irudiaren antialiasing-a"
 
-#: ../plug-ins/common/file-ps.c:3199
+#: ../plug-ins/common/file-ps.c:3204
 msgid "PostScript"
 msgstr "PostScript"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3216
+#: ../plug-ins/common/file-ps.c:3221
 msgid "Image Size"
 msgstr "Irudiaren tamaina"
 
-#: ../plug-ins/common/file-ps.c:3265
+#: ../plug-ins/common/file-ps.c:3270
 msgid "_Keep aspect ratio"
 msgstr "_Mantendu aspektu-erlazioa"
 
-#: ../plug-ins/common/file-ps.c:3271
+#: ../plug-ins/common/file-ps.c:3276
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -4276,42 +4277,42 @@ msgstr ""
 "aspektu-erlazioa aldatu gabe."
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3281
+#: ../plug-ins/common/file-ps.c:3286
 msgid "Unit"
 msgstr "Unitatea"
 
-#: ../plug-ins/common/file-ps.c:3285
+#: ../plug-ins/common/file-ps.c:3290
 msgid "_Inch"
 msgstr "_Hazbete"
 
-#: ../plug-ins/common/file-ps.c:3286
+#: ../plug-ins/common/file-ps.c:3291
 msgid "_Millimeter"
 msgstr "_Milimetro"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3297
+#: ../plug-ins/common/file-ps.c:3302
 #: ../plug-ins/map-object/map-object-ui.c:989
 msgid "Rotation"
 msgstr "Biraketa"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3312
+#: ../plug-ins/common/file-ps.c:3317
 msgid "Output"
 msgstr "Irteera"
 
-#: ../plug-ins/common/file-ps.c:3318
+#: ../plug-ins/common/file-ps.c:3323
 msgid "_PostScript level 2"
 msgstr "_PostScript 2. maila"
 
-#: ../plug-ins/common/file-ps.c:3327
+#: ../plug-ins/common/file-ps.c:3332
 msgid "_Encapsulated PostScript"
 msgstr "_PostScript kapsulatua"
 
-#: ../plug-ins/common/file-ps.c:3336
+#: ../plug-ins/common/file-ps.c:3341
 msgid "P_review"
 msgstr "A_urrebista"
 
-#: ../plug-ins/common/file-ps.c:3358
+#: ../plug-ins/common/file-ps.c:3363
 msgid "Preview _size:"
 msgstr "Aurrebistaren _tamaina:"
 
@@ -4429,26 +4430,26 @@ msgstr "Indexatutako paleta-mota"
 msgid "SUN Rasterfile image"
 msgstr "SUN-raster irudia"
 
-#: ../plug-ins/common/file-sunras.c:402
+#: ../plug-ins/common/file-sunras.c:404
 #, c-format
 msgid "Could not open '%s' as SUN-raster-file"
 msgstr "Ezin da '%s' SUN-raster fitxategi gisa ireki"
 
-#: ../plug-ins/common/file-sunras.c:412
+#: ../plug-ins/common/file-sunras.c:414
 msgid "The type of this SUN-rasterfile is not supported"
 msgstr "SUN-raster fitxategi-mota hori ez da onartzen"
 
-#: ../plug-ins/common/file-sunras.c:441
+#: ../plug-ins/common/file-sunras.c:443
 #, c-format
 msgid "Could not read color entries from '%s'"
 msgstr "Ezin dira kolore-sarrerak '%s'(e)tik irakurri"
 
-#: ../plug-ins/common/file-sunras.c:450
+#: ../plug-ins/common/file-sunras.c:452
 msgid "Type of colormap not supported"
 msgstr "Kolore-mapa mota hori ez da onartzen"
 
-#: ../plug-ins/common/file-sunras.c:457 ../plug-ins/common/file-xbm.c:827
-#: ../plug-ins/common/file-xwd.c:491
+#: ../plug-ins/common/file-sunras.c:459 ../plug-ins/common/file-xbm.c:828
+#: ../plug-ins/common/file-xwd.c:507
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4457,8 +4458,8 @@ msgstr ""
 "'%s':\n"
 "Ez da irudi-zabalerarik zehaztu"
 
-#: ../plug-ins/common/file-sunras.c:465 ../plug-ins/common/file-xbm.c:834
-#: ../plug-ins/common/file-xwd.c:501
+#: ../plug-ins/common/file-sunras.c:467 ../plug-ins/common/file-xbm.c:835
+#: ../plug-ins/common/file-xwd.c:515
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4467,8 +4468,8 @@ msgstr ""
 "'%s':\n"
 "Irudiaren zabalera handiegia da GIMPek kudeatzeko"
 
-#: ../plug-ins/common/file-sunras.c:473 ../plug-ins/common/file-xbm.c:841
-#: ../plug-ins/common/file-xwd.c:510
+#: ../plug-ins/common/file-sunras.c:475 ../plug-ins/common/file-xbm.c:842
+#: ../plug-ins/common/file-xwd.c:522
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4477,8 +4478,8 @@ msgstr ""
 "'%s':\n"
 "Ez da irudi-altuerarik zehaztu"
 
-#: ../plug-ins/common/file-sunras.c:481 ../plug-ins/common/file-xbm.c:848
-#: ../plug-ins/common/file-xwd.c:519
+#: ../plug-ins/common/file-sunras.c:483 ../plug-ins/common/file-xbm.c:849
+#: ../plug-ins/common/file-xwd.c:529
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4487,37 +4488,37 @@ msgstr ""
 "'%s':\n"
 "Irudiaren altuera handiegia da GIMPek kudeatzeko"
 
-#: ../plug-ins/common/file-sunras.c:520
+#: ../plug-ins/common/file-sunras.c:522
 msgid "This image depth is not supported"
 msgstr "Irudi-sakonera hori ez da onartzen"
 
-#: ../plug-ins/common/file-sunras.c:544
+#: ../plug-ins/common/file-sunras.c:546
 #, c-format
 msgid "SUNRAS save cannot handle images with alpha channels"
 msgstr "Alfa kanalak dituzten irudiak ezin dira SUNRAS gisa gorde."
 
-#: ../plug-ins/common/file-sunras.c:555
+#: ../plug-ins/common/file-sunras.c:557
 msgid "Can't operate on unknown image types"
 msgstr "Ezin da irudi-mota ezezagunekin lan egin"
 
-#: ../plug-ins/common/file-sunras.c:1084 ../plug-ins/common/file-sunras.c:1175
-#: ../plug-ins/common/file-sunras.c:1256 ../plug-ins/common/file-sunras.c:1351
-#: ../plug-ins/common/file-xwd.c:1361 ../plug-ins/common/file-xwd.c:1462
-#: ../plug-ins/common/file-xwd.c:1620 ../plug-ins/common/file-xwd.c:1832
-#: ../plug-ins/common/file-xwd.c:2095 ../plug-ins/file-fits/fits.c:698
+#: ../plug-ins/common/file-sunras.c:1086 ../plug-ins/common/file-sunras.c:1177
+#: ../plug-ins/common/file-sunras.c:1258 ../plug-ins/common/file-sunras.c:1353
+#: ../plug-ins/common/file-xwd.c:1375 ../plug-ins/common/file-xwd.c:1476
+#: ../plug-ins/common/file-xwd.c:1634 ../plug-ins/common/file-xwd.c:1846
+#: ../plug-ins/common/file-xwd.c:2109 ../plug-ins/file-fits/fits.c:700
 msgid "EOF encountered on reading"
 msgstr "EOF aurkitu da irakurtzean"
 
-#: ../plug-ins/common/file-sunras.c:1627
+#: ../plug-ins/common/file-sunras.c:1629
 msgid "SUNRAS"
 msgstr "SUNRAS"
 
 #. file save type
-#: ../plug-ins/common/file-sunras.c:1630
+#: ../plug-ins/common/file-sunras.c:1632
 msgid "Data Formatting"
 msgstr "Datu-formateatzea"
 
-#: ../plug-ins/common/file-sunras.c:1634
+#: ../plug-ins/common/file-sunras.c:1636
 msgid "RunLength Encoded"
 msgstr "RunLength kodetzea"
 
@@ -4597,39 +4598,39 @@ msgstr "Batu inportatutako bideak"
 msgid "TarGA image"
 msgstr "TarGA irudia"
 
-#: ../plug-ins/common/file-tga.c:455
+#: ../plug-ins/common/file-tga.c:456
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Ezin da oin-oharra irakurri '%s'(e)tik"
 
-#: ../plug-ins/common/file-tga.c:473
+#: ../plug-ins/common/file-tga.c:474
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Ezin da luzapena irakurri '%s'(e)tik"
 
-#: ../plug-ins/common/file-tga.c:485
+#: ../plug-ins/common/file-tga.c:486
 #, c-format
 msgid "Cannot read header from '%s'"
 msgstr "Ezin da goiburua irakurri '%s'(e)tik"
 
-#: ../plug-ins/common/file-tga.c:1380
+#: ../plug-ins/common/file-tga.c:1381
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1389
+#: ../plug-ins/common/file-tga.c:1390
 msgid "_RLE compression"
 msgstr "_RLE konprimatzea"
 
-#: ../plug-ins/common/file-tga.c:1403
+#: ../plug-ins/common/file-tga.c:1404
 msgid "Or_igin:"
 msgstr "_Jatorria:"
 
-#: ../plug-ins/common/file-tga.c:1407
+#: ../plug-ins/common/file-tga.c:1408
 msgid "Bottom left"
 msgstr "Behean ezkerrean"
 
-#: ../plug-ins/common/file-tga.c:1408
+#: ../plug-ins/common/file-tga.c:1409
 msgid "Top left"
 msgstr "Goian ezkerrean"
 
@@ -4670,7 +4671,7 @@ msgstr ""
 "kudea ditzakeenez, bihurtu egingo du. Bihurketa horren ondorioz, informazioa "
 "galduko da."
 
-#: ../plug-ins/common/file-tiff-save.c:910
+#: ../plug-ins/common/file-tiff-save.c:912
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -4678,48 +4679,48 @@ msgstr ""
 "TIFF formatuak 7 biteko ASCII kodetzea duten\n"
 "iruzkinak bakarrik onartzen ditu. Ez da iradokizunik gorde."
 
-#: ../plug-ins/common/file-tiff-save.c:1083
+#: ../plug-ins/common/file-tiff-save.c:1085
 msgid "TIFF"
 msgstr "TIFF"
 
 #. compression
-#: ../plug-ins/common/file-tiff-save.c:1091
+#: ../plug-ins/common/file-tiff-save.c:1093
 msgid "Compression"
 msgstr "Konpresioa"
 
-#: ../plug-ins/common/file-tiff-save.c:1095
+#: ../plug-ins/common/file-tiff-save.c:1097
 msgid "_None"
 msgstr "_Bat ere ez"
 
-#: ../plug-ins/common/file-tiff-save.c:1096
+#: ../plug-ins/common/file-tiff-save.c:1098
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/file-tiff-save.c:1097
+#: ../plug-ins/common/file-tiff-save.c:1099
 msgid "_Pack Bits"
 msgstr "_Paketatu bitak"
 
-#: ../plug-ins/common/file-tiff-save.c:1098
+#: ../plug-ins/common/file-tiff-save.c:1100
 msgid "_Deflate"
 msgstr "_Hustu"
 
-#: ../plug-ins/common/file-tiff-save.c:1099
+#: ../plug-ins/common/file-tiff-save.c:1101
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/file-tiff-save.c:1100
+#: ../plug-ins/common/file-tiff-save.c:1102
 msgid "CCITT Group _3 fax"
 msgstr "CCITT Group _3 faxa"
 
-#: ../plug-ins/common/file-tiff-save.c:1101
+#: ../plug-ins/common/file-tiff-save.c:1103
 msgid "CCITT Group _4 fax"
 msgstr "CCITT Group _4 faxa"
 
-#: ../plug-ins/common/file-tiff-save.c:1123
+#: ../plug-ins/common/file-tiff-save.c:1125
 msgid "Save _color values from transparent pixels"
 msgstr "Gorde _kolore-balioak pixel gardenetik"
 
-#: ../plug-ins/common/file-tiff-save.c:1139 ../plug-ins/common/file-xbm.c:1235
+#: ../plug-ins/common/file-tiff-save.c:1141 ../plug-ins/common/file-xbm.c:1236
 msgid "Comment:"
 msgstr "Iruzkina:"
 
@@ -4752,7 +4753,7 @@ msgstr "WMF errendatua"
 msgid "X BitMap image"
 msgstr "X Bitmap irudia"
 
-#: ../plug-ins/common/file-xbm.c:820
+#: ../plug-ins/common/file-xbm.c:821
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4761,7 +4762,7 @@ msgstr ""
 "'%s':\n"
 "Ezin da goiburua irakurri (ftell == %ld)"
 
-#: ../plug-ins/common/file-xbm.c:855
+#: ../plug-ins/common/file-xbm.c:856
 #, c-format
 msgid ""
 "'%s':\n"
@@ -4771,7 +4772,7 @@ msgstr ""
 "Ez da irudi-motarik zehaztu"
 
 #. The image is not black-and-white.
-#: ../plug-ins/common/file-xbm.c:999
+#: ../plug-ins/common/file-xbm.c:1000
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
 "colors.\n"
@@ -4782,7 +4783,7 @@ msgstr ""
 "\n"
 "Bihur ezazu irudi indexatu zuri-beltz (bit 1ekoa) eta saiatu berriro."
 
-#: ../plug-ins/common/file-xbm.c:1010
+#: ../plug-ins/common/file-xbm.c:1011
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
@@ -4790,52 +4791,52 @@ msgstr ""
 "Ezin duzu kurtsore-maskararik gorde alfa-kanalik\n"
 "ez duen irudi baterako."
 
-#: ../plug-ins/common/file-xbm.c:1188
+#: ../plug-ins/common/file-xbm.c:1189
 msgid "XBM"
 msgstr "XBM"
 
 #. parameter settings
-#: ../plug-ins/common/file-xbm.c:1191
+#: ../plug-ins/common/file-xbm.c:1192
 msgid "XBM Options"
 msgstr "XBM aukerak"
 
 #. X10 format
-#: ../plug-ins/common/file-xbm.c:1201
+#: ../plug-ins/common/file-xbm.c:1202
 msgid "_X10 format bitmap"
 msgstr "_X10 formatuko bit-mapa"
 
-#: ../plug-ins/common/file-xbm.c:1221
+#: ../plug-ins/common/file-xbm.c:1222
 msgid "_Identifier prefix:"
 msgstr "_Identifikatzaile-aurrizkia:"
 
 #. hotspot toggle
-#: ../plug-ins/common/file-xbm.c:1243
+#: ../plug-ins/common/file-xbm.c:1244
 msgid "_Write hot spot values"
 msgstr "_Idatzi Hot Spot balioak"
 
-#: ../plug-ins/common/file-xbm.c:1266 ../plug-ins/common/file-xmc.c:1081
+#: ../plug-ins/common/file-xbm.c:1267 ../plug-ins/common/file-xmc.c:1083
 msgid "Hot spot _X:"
 msgstr "Hot Spot _X:"
 
-#: ../plug-ins/common/file-xbm.c:1276
+#: ../plug-ins/common/file-xbm.c:1277
 msgid "Hot spot _Y:"
 msgstr "Hot Spot _X:"
 
 #. mask file
-#: ../plug-ins/common/file-xbm.c:1283
+#: ../plug-ins/common/file-xbm.c:1284
 msgid "Mask File"
 msgstr "Maskara-fitxategia"
 
-#: ../plug-ins/common/file-xbm.c:1293
+#: ../plug-ins/common/file-xbm.c:1294
 msgid "W_rite extra mask file"
 msgstr "I_datzi maskara-fitxategi estra"
 
-#: ../plug-ins/common/file-xbm.c:1306
+#: ../plug-ins/common/file-xbm.c:1307
 msgid "_Mask file extension:"
 msgstr "_Maskara-fitxategiaren luzapena:"
 
 #: ../plug-ins/common/file-xmc.c:331 ../plug-ins/common/file-xmc.c:369
-#: ../plug-ins/common/file-xmc.c:1044
+#: ../plug-ins/common/file-xmc.c:1046
 msgid "X11 Mouse Cursor"
 msgstr "X11 saguaren kurtsorea"
 
@@ -4848,37 +4849,37 @@ msgstr ""
 "Ezin da puntu aktiboa ezarri.\n"
 "Geruzak antolatu behar dituzu guzti haiek gurutzapen bat edukitzeko."
 
-#: ../plug-ins/common/file-xmc.c:662
+#: ../plug-ins/common/file-xmc.c:664
 #, c-format
 msgid "'%s' is not a valid X cursor."
 msgstr "'%s' ez da baliozko X kurtsorea."
 
-#: ../plug-ins/common/file-xmc.c:678
+#: ../plug-ins/common/file-xmc.c:680
 #, c-format
 msgid "Frame %d of '%s' is too wide for an X cursor."
 msgstr "'%2$s'(r)en %1$dfotograma zabalegia da X kurtsorearentzako."
 
-#: ../plug-ins/common/file-xmc.c:685
+#: ../plug-ins/common/file-xmc.c:687
 #, c-format
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "'%2$s'(r)en %1$d. fotograma altuegia da X kurtsorearentzako."
 
-#: ../plug-ins/common/file-xmc.c:888
+#: ../plug-ins/common/file-xmc.c:890
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "ez dago irudi zatirik '%s'(e)n."
 
-#: ../plug-ins/common/file-xmc.c:930
+#: ../plug-ins/common/file-xmc.c:932
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "'%s' zabalegia da X kurtsorearentzako."
 
-#: ../plug-ins/common/file-xmc.c:937
+#: ../plug-ins/common/file-xmc.c:939
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "'%s' altuegia da X kurtsorearentzako."
 
-#: ../plug-ins/common/file-xmc.c:1007
+#: ../plug-ins/common/file-xmc.c:1009
 #, c-format
 msgid "A read error occurred."
 msgstr "Errorea gertatu da irakurtzean."
@@ -4886,25 +4887,25 @@ msgstr "Errorea gertatu da irakurtzean."
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1049
+#: ../plug-ins/common/file-xmc.c:1051
 msgid "XMC Options"
 msgstr "XMC aukerak"
 
-#: ../plug-ins/common/file-xmc.c:1077
+#: ../plug-ins/common/file-xmc.c:1079
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Sartu puntu aktiboaren X koordenatua. Jatorria goiko ezkerreko izkina da."
 
-#: ../plug-ins/common/file-xmc.c:1095
+#: ../plug-ins/common/file-xmc.c:1097
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Sartu puntu aktiboaren Y koordenatua. Jatorria goiko ezkerreko izkina da."
 
-#: ../plug-ins/common/file-xmc.c:1106
+#: ../plug-ins/common/file-xmc.c:1108
 msgid "_Auto-Crop all frames."
 msgstr "Marko guztien mozketa _automatikoa."
 
-#: ../plug-ins/common/file-xmc.c:1119
+#: ../plug-ins/common/file-xmc.c:1121
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4917,7 +4918,7 @@ msgstr ""
 "Desgaitu hau esportatutako kurtsorea beste programa batzuekin erabiltzeko "
 "asmoa baduzu."
 
-#: ../plug-ins/common/file-xmc.c:1142
+#: ../plug-ins/common/file-xmc.c:1144
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4936,57 +4937,57 @@ msgstr ""
 "erabiltzen da, eta zein sekuentzia erabiltzen den \"gtk-cursor-theme-size\" "
 "balioan oinarrituta."
 
-#: ../plug-ins/common/file-xmc.c:1159
+#: ../plug-ins/common/file-xmc.c:1161
 msgid "_Use this value only for a frame which size is not specified."
 msgstr "_Erabili balio hau tamaina zehaztu ez zaion markoan soilik."
 
-#: ../plug-ins/common/file-xmc.c:1162
+#: ../plug-ins/common/file-xmc.c:1164
 msgid "_Replace the size of all frames even if it is specified."
 msgstr "_Ordeztu marko guztien tamaina nahiz eta zehaztuta egon."
 
-#: ../plug-ins/common/file-xmc.c:1196
+#: ../plug-ins/common/file-xmc.c:1198
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr "Sartu marko bakoitza errendatzen den bitartea milisegundotan."
 
-#: ../plug-ins/common/file-xmc.c:1199
+#: ../plug-ins/common/file-xmc.c:1201
 msgid "_Delay:"
 msgstr "_Atzerapena:"
 
-#: ../plug-ins/common/file-xmc.c:1204
+#: ../plug-ins/common/file-xmc.c:1206
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr "_Erabili balio hau atzerapena zehaztu ez zaion markoan soilik."
 
-#: ../plug-ins/common/file-xmc.c:1207
+#: ../plug-ins/common/file-xmc.c:1209
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr "_Ordeztu marko guztien atzerapena nahiz eta zehaztuta egon."
 
-#: ../plug-ins/common/file-xmc.c:1232
+#: ../plug-ins/common/file-xmc.c:1234
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
 "65535 karaktere baino luzeagoa den Copyright-aren informazioaren zatia kendu "
 "egin da."
 
-#: ../plug-ins/common/file-xmc.c:1242
+#: ../plug-ins/common/file-xmc.c:1244
 msgid "Enter copyright information."
 msgstr "Sartu Copyrightaren informazioa."
 
-#: ../plug-ins/common/file-xmc.c:1244
+#: ../plug-ins/common/file-xmc.c:1246
 msgid "_Copyright:"
 msgstr "_Copyright-a:"
 
-#: ../plug-ins/common/file-xmc.c:1260
+#: ../plug-ins/common/file-xmc.c:1262
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
 msgstr ""
 "65535 karaktere baino luzeagoa den lizentziaren informazioaren zatia kendu "
 "egin da."
 
-#: ../plug-ins/common/file-xmc.c:1270
+#: ../plug-ins/common/file-xmc.c:1272
 msgid "Enter license information."
 msgstr "Sartu lizentziaren informazioa."
 
-#: ../plug-ins/common/file-xmc.c:1272
+#: ../plug-ins/common/file-xmc.c:1274
 msgid "_License:"
 msgstr "_Lizentzia:"
 
@@ -4995,42 +4996,42 @@ msgstr "_Lizentzia:"
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1279
+#: ../plug-ins/common/file-xmc.c:1281
 msgid "_Other:"
 msgstr "_Bestelakoa:"
 
-#: ../plug-ins/common/file-xmc.c:1313
+#: ../plug-ins/common/file-xmc.c:1315
 msgid "Enter other comment if you want."
 msgstr "Sartu bestelako iruzkina nahi baduzu."
 
-#: ../plug-ins/common/file-xmc.c:1363
+#: ../plug-ins/common/file-xmc.c:1365
 #, c-format
 msgid "Comment is limited to %d characters."
 msgstr "Iruzkinak gehienez %d karaktere izan ditzake."
 
-#: ../plug-ins/common/file-xmc.c:1481
+#: ../plug-ins/common/file-xmc.c:1483
 #, c-format
 msgid "This plug-in can only handle RGBA image files with 8bit color depth."
 msgstr ""
 "Plugin honek soilik GBUA irudien fitxategiak kudea ditzake, 8 biteko kolore-"
 "sakonerarekin."
 
-#: ../plug-ins/common/file-xmc.c:1499
+#: ../plug-ins/common/file-xmc.c:1501
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr "'%s' fotograma zabalegia da. Txikiagotu %d px baino gutxiago."
 
-#: ../plug-ins/common/file-xmc.c:1506
+#: ../plug-ins/common/file-xmc.c:1508
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr "'%s' fotograma altuegia da. Txikiagotu %d px baino gutxiago."
 
-#: ../plug-ins/common/file-xmc.c:1513
+#: ../plug-ins/common/file-xmc.c:1515
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "'%s' fotogramaren zabalera eta edo altuera zero da."
 
-#: ../plug-ins/common/file-xmc.c:1553
+#: ../plug-ins/common/file-xmc.c:1555
 #, c-format
 msgid ""
 "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
@@ -5041,7 +5042,7 @@ msgstr ""
 "Saia zaitez puntu aktiboa posizioz, geruzaren geometria aldatzen, edo gorde "
 "mozketa automatikorik gabe."
 
-#: ../plug-ins/common/file-xmc.c:1710
+#: ../plug-ins/common/file-xmc.c:1712
 #, c-format
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
@@ -5052,7 +5053,7 @@ msgstr ""
 "handiagoak diren zabalera edo altuerarekin.\n"
 "Ingurune batzuetan, pantaila ankazgora jarri dezake."
 
-#: ../plug-ins/common/file-xmc.c:1717
+#: ../plug-ins/common/file-xmc.c:1719
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
 "nominal size is not supported by GNOME settings.\n"
@@ -5065,7 +5066,7 @@ msgstr ""
 "koadroan hauek onartzeko, edo zure kurtsorea ez da GNOMEren ezarpenetan "
 "agertuko."
 
-#: ../plug-ins/common/file-xmc.c:1954
+#: ../plug-ins/common/file-xmc.c:1956
 #, c-format
 msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
@@ -5075,7 +5076,7 @@ msgstr ""
 "Moztu egin da da doitzeko."
 
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2157
+#: ../plug-ins/common/file-xmc.c:2159
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -5088,20 +5089,20 @@ msgstr ""
 msgid "X PixMap image"
 msgstr "X PixMap irudia"
 
-#: ../plug-ins/common/file-xpm.c:363 ../plug-ins/common/file-xpm.c:775
+#: ../plug-ins/common/file-xpm.c:364 ../plug-ins/common/file-xpm.c:776
 #, c-format
 msgid "Error opening file '%s'"
 msgstr "Errorea '%s' fitxategia irekitzean"
 
-#: ../plug-ins/common/file-xpm.c:369 ../plug-ins/common/file-xpm.c:781
+#: ../plug-ins/common/file-xpm.c:370 ../plug-ins/common/file-xpm.c:782
 msgid "XPM file invalid"
 msgstr "XPM fitxategi baliogabea"
 
-#: ../plug-ins/common/file-xpm.c:807
+#: ../plug-ins/common/file-xpm.c:808
 msgid "XPM"
 msgstr "XPM"
 
-#: ../plug-ins/common/file-xpm.c:817
+#: ../plug-ins/common/file-xpm.c:818
 msgid "_Alpha threshold:"
 msgstr "_Alfa muga:"
 
@@ -5109,16 +5110,34 @@ msgstr "_Alfa muga:"
 msgid "X window dump"
 msgstr "X window-ren iraulia"
 
-#: ../plug-ins/common/file-xwd.c:444
+#: ../plug-ins/common/file-xwd.c:446
 #, c-format
 msgid "Could not read XWD header from '%s'"
 msgstr "Ezin da XWD goiburua irakurri '%s'(e)tik"
 
-#: ../plug-ins/common/file-xwd.c:482
+#: ../plug-ins/common/file-xwd.c:467
+#, c-format
+msgid ""
+"'%s':\n"
+"Illegal number of colormap entries: %ld"
+msgstr ""
+"'%s':\n"
+"kolore-mapako sarreren kopuru ilegala: %ld"
+
+#: ../plug-ins/common/file-xwd.c:477
+#, c-format
+msgid ""
+"'%s':\n"
+"Number of colormap entries < number of colors"
+msgstr ""
+"'%s':\n"
+"Kolore-mapako sarreren kopurua < koloreen kopurua"
+
+#: ../plug-ins/common/file-xwd.c:500
 msgid "Can't read color entries"
 msgstr "ezin dira kolore-sarrerak irakurri"
 
-#: ../plug-ins/common/file-xwd.c:579
+#: ../plug-ins/common/file-xwd.c:582
 #, c-format
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
@@ -5127,20 +5146,20 @@ msgstr ""
 "%s XWD fitxategiak %d formatua, %d sakoneraeta %d bit pixeleko ditu.Une "
 "honetan hori ez da onartzen."
 
-#: ../plug-ins/common/file-xwd.c:602
+#: ../plug-ins/common/file-xwd.c:616
 msgid "Cannot save images with alpha channels."
 msgstr "Ezin izan dira alfa kanalak dituzten irudiak gorde."
 
-#: ../plug-ins/common/file-xwd.c:1692 ../plug-ins/common/file-xwd.c:1930
+#: ../plug-ins/common/file-xwd.c:1706 ../plug-ins/common/file-xwd.c:1944
 #, c-format
 msgid "XWD-file %s is corrupt."
 msgstr "%s XWD-fitxategia hondatuta dago."
 
-#: ../plug-ins/common/file-xwd.c:2224
+#: ../plug-ins/common/file-xwd.c:2238
 msgid "Error during writing indexed/gray image"
 msgstr "Errorea irudi indexatu/grisa idaztean"
 
-#: ../plug-ins/common/file-xwd.c:2320
+#: ../plug-ins/common/file-xwd.c:2334
 msgid "Error during writing rgb image"
 msgstr "Errorea GBU irudia idaztean"
 
@@ -5804,145 +5823,145 @@ msgstr "Pieza bakoitzak albo zuzenak ditu"
 msgid "Each piece has curved sides"
 msgstr "Pieza bakoitzak albo kurbatuak ditu"
 
-#: ../plug-ins/common/lcms.c:218
+#: ../plug-ins/common/lcms.c:229
 msgid "Set a color profile on the image"
 msgstr "Ezarri kolorearen profila irudian"
 
-#: ../plug-ins/common/lcms.c:225
+#: ../plug-ins/common/lcms.c:236
 msgid "_Assign Color Profile..."
 msgstr "_Esleitu kolore-profila..."
 
-#: ../plug-ins/common/lcms.c:241
+#: ../plug-ins/common/lcms.c:252
 msgid "Assign default RGB Profile"
 msgstr "Esleitu GBU profila lehenetsia"
 
-#: ../plug-ins/common/lcms.c:248
+#: ../plug-ins/common/lcms.c:259
 msgid "Apply a color profile on the image"
 msgstr "Aplikatu kolorearen profila irudiari"
 
-#: ../plug-ins/common/lcms.c:258
+#: ../plug-ins/common/lcms.c:269
 msgid "_Convert to Color Profile..."
 msgstr "_Bihurtu kolore-profila..."
 
-#: ../plug-ins/common/lcms.c:276
+#: ../plug-ins/common/lcms.c:287
 msgid "Convert to default RGB Profile"
 msgstr "Bihurtu GBU profila lehenetsira"
 
-#: ../plug-ins/common/lcms.c:290
+#: ../plug-ins/common/lcms.c:301
 msgid "Image Color Profile Information"
 msgstr "Irudiaren kolore-profilaren informazioa"
 
-#: ../plug-ins/common/lcms.c:304
+#: ../plug-ins/common/lcms.c:315
 msgid "Color Profile Information"
 msgstr "Kolore-profilaren informazioa"
 
-#: ../plug-ins/common/lcms.c:572
+#: ../plug-ins/common/lcms.c:656
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "'%s' kolore-profila ez da GBU kolore-espaziokoa."
 
-#: ../plug-ins/common/lcms.c:679
+#: ../plug-ins/common/lcms.c:763
 msgid "Default RGB working space"
 msgstr "GBU laneko espazio lehenetsia"
 
-#: ../plug-ins/common/lcms.c:775
+#: ../plug-ins/common/lcms.c:865
 msgid ""
 "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr ""
 "Erantsitako 'icc-profile' datuak ez dirudite ICC kolore-profila direnik"
 
-#: ../plug-ins/common/lcms.c:825
+#: ../plug-ins/common/lcms.c:915
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "Ez dirudi '%s' ICC kolore-profila denik."
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:885
+#: ../plug-ins/common/lcms.c:975
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "'%s'(e)tik '%s'(e)ra bihurtzen"
 
-#: ../plug-ins/common/lcms.c:1129
+#: ../plug-ins/common/lcms.c:1248
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Ezin izan da '%s'(e)tik ICC profila kargatu"
 
-#: ../plug-ins/common/lcms.c:1151
+#: ../plug-ins/common/lcms.c:1270
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "'%s' irudiak kapsulatutako kolore-profila du:"
 
-#: ../plug-ins/common/lcms.c:1195
+#: ../plug-ins/common/lcms.c:1314
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Bihurtu irudia GBU laneko espaziora (%s)?"
 
-#: ../plug-ins/common/lcms.c:1226
+#: ../plug-ins/common/lcms.c:1345
 msgid "Convert to RGB working space?"
 msgstr "Bihurtu GBU laneko espaziora?"
 
-#: ../plug-ins/common/lcms.c:1231
+#: ../plug-ins/common/lcms.c:1350
 msgid "_Keep"
 msgstr "_Mantendu"
 
-#: ../plug-ins/common/lcms.c:1236
+#: ../plug-ins/common/lcms.c:1355
 msgid "_Convert"
 msgstr "_Bihurtu"
 
-#: ../plug-ins/common/lcms.c:1264 ../plug-ins/file-jpeg/jpeg-exif.c:436
+#: ../plug-ins/common/lcms.c:1383 ../plug-ins/file-jpeg/jpeg-exif.c:436
 msgid "_Don't ask me again"
 msgstr "_Ez galdetu berriro"
 
-#: ../plug-ins/common/lcms.c:1328
+#: ../plug-ins/common/lcms.c:1450
 msgid "Select destination profile"
 msgstr "Hautatu helburuko profila"
 
-#: ../plug-ins/common/lcms.c:1355
+#: ../plug-ins/common/lcms.c:1477
 msgid "All files (*.*)"
 msgstr "Fitxategi denak (*.*)"
 
-#: ../plug-ins/common/lcms.c:1360
+#: ../plug-ins/common/lcms.c:1482
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC kolore-profila (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1403
+#: ../plug-ins/common/lcms.c:1526
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "GBU laneko espazioa (%s)"
 
-#: ../plug-ins/common/lcms.c:1453
+#: ../plug-ins/common/lcms.c:1576
 msgid "Convert to ICC Color Profile"
 msgstr "Bihurtu ICC kolore-profilara"
 
-#: ../plug-ins/common/lcms.c:1454
+#: ../plug-ins/common/lcms.c:1577
 msgid "Assign ICC Color Profile"
 msgstr "Esleitu ICC kolore-profila"
 
-#: ../plug-ins/common/lcms.c:1462
+#: ../plug-ins/common/lcms.c:1585
 msgid "_Assign"
 msgstr "_Esleitu"
 
-#: ../plug-ins/common/lcms.c:1480
+#: ../plug-ins/common/lcms.c:1603
 msgid "Current Color Profile"
 msgstr "Uneko kolore-profila"
 
-#: ../plug-ins/common/lcms.c:1495
+#: ../plug-ins/common/lcms.c:1618
 msgid "Convert to"
 msgstr "_Bihurtu hona"
 
-#: ../plug-ins/common/lcms.c:1495
+#: ../plug-ins/common/lcms.c:1618
 msgid "Assign"
 msgstr "Esleitu"
 
-#: ../plug-ins/common/lcms.c:1519
+#: ../plug-ins/common/lcms.c:1642
 msgid "_Rendering Intent:"
 msgstr "_Errendatze-saiakera:"
 
-#: ../plug-ins/common/lcms.c:1535
+#: ../plug-ins/common/lcms.c:1658
 msgid "_Black Point Compensation"
 msgstr "_Puntu beltzaren konpentsazioa"
 
-#: ../plug-ins/common/lcms.c:1577
+#: ../plug-ins/common/lcms.c:1700
 msgid "Destination profile is not for RGB color space."
 msgstr "Helburuko kolore-profila ez da GBU kolore-espaziokoa."
 
@@ -6117,85 +6136,85 @@ msgstr "_Eutsi gehienezko kanalei"
 msgid "Ho_ld the minimal channels"
 msgstr "Eu_tsi gutxieneko kanalei"
 
-#: ../plug-ins/common/mosaic.c:359
+#: ../plug-ins/common/mosaic.c:363
 msgid "Convert the image into irregular tiles"
 msgstr "Bihurtu irudia fitxa irregularretan"
 
-#: ../plug-ins/common/mosaic.c:364
+#: ../plug-ins/common/mosaic.c:368
 msgid "_Mosaic..."
 msgstr "_Mosaikoa..."
 
 #. progress bar for gradient finding
-#: ../plug-ins/common/mosaic.c:505
+#: ../plug-ins/common/mosaic.c:509
 msgid "Finding edges"
 msgstr "Ertzak aurkitzen"
 
 #. Progress bar for rendering tiles
-#: ../plug-ins/common/mosaic.c:557
+#: ../plug-ins/common/mosaic.c:561
 msgid "Rendering tiles"
 msgstr "Lauzak errendatzen"
 
-#: ../plug-ins/common/mosaic.c:590
+#: ../plug-ins/common/mosaic.c:594
 msgid "Mosaic"
 msgstr "Mosaikoa"
 
-#: ../plug-ins/common/mosaic.c:631
+#: ../plug-ins/common/mosaic.c:635
 msgid "Squares"
 msgstr "Karratuak"
 
-#: ../plug-ins/common/mosaic.c:632
+#: ../plug-ins/common/mosaic.c:636
 msgid "Hexagons"
 msgstr "Hexagonoak"
 
-#: ../plug-ins/common/mosaic.c:633
+#: ../plug-ins/common/mosaic.c:637
 msgid "Octagons & squares"
 msgstr "Oktagonoak eta karratuak"
 
-#: ../plug-ins/common/mosaic.c:634
+#: ../plug-ins/common/mosaic.c:638
 msgid "Triangles"
 msgstr "Triangeluak"
 
-#: ../plug-ins/common/mosaic.c:642
+#: ../plug-ins/common/mosaic.c:646
 msgid "_Tiling primitives:"
 msgstr "_Lauzen formak:"
 
-#: ../plug-ins/common/mosaic.c:650
+#: ../plug-ins/common/mosaic.c:654
 msgid "Tile _size:"
 msgstr "Mosaiko-_tamaina:"
 
-#: ../plug-ins/common/mosaic.c:662 ../plug-ins/common/tile-glass.c:304
+#: ../plug-ins/common/mosaic.c:666 ../plug-ins/common/tile-glass.c:304
 msgid "Tile _height:"
 msgstr "Mosaikoaren _altuera:"
 
-#: ../plug-ins/common/mosaic.c:675
+#: ../plug-ins/common/mosaic.c:679
 msgid "Til_e spacing:"
 msgstr "_Mosaiko-tartea:"
 
-#: ../plug-ins/common/mosaic.c:687
+#: ../plug-ins/common/mosaic.c:691
 msgid "Tile _neatness:"
 msgstr "Mosaikoaren tx_ukuntasuna:"
 
-#: ../plug-ins/common/mosaic.c:700
+#: ../plug-ins/common/mosaic.c:704
 msgid "Light _direction:"
 msgstr "A_rgiaren noranzkoa:"
 
-#: ../plug-ins/common/mosaic.c:712
+#: ../plug-ins/common/mosaic.c:716
 msgid "Color _variation:"
 msgstr "Kolore-al_dakuntza:"
 
-#: ../plug-ins/common/mosaic.c:741
+#: ../plug-ins/common/mosaic.c:745
 msgid "Co_lor averaging"
 msgstr "_Kolorearen batez bestekoa"
 
-#: ../plug-ins/common/mosaic.c:754
+#: ../plug-ins/common/mosaic.c:758
 msgid "Allo_w tile splitting"
 msgstr "_Baimendu lauza-banatzea"
 
-#: ../plug-ins/common/mosaic.c:767
+#: ../plug-ins/common/mosaic.c:771
 msgid "_Pitted surfaces"
 msgstr "_Gainazal zulodunak"
 
-#: ../plug-ins/common/mosaic.c:780
+#: ../plug-ins/common/mosaic.c:784
 msgid "_FG/BG lighting"
 msgstr "_AurPl-aren/AtzPl-aren argiztapena"
 
@@ -8278,7 +8297,7 @@ msgstr "Itzulbiratu"
 msgid "Smear"
 msgstr "Lohitu"
 
-#: ../plug-ins/common/warp.c:502 ../plug-ins/file-fits/fits.c:1020
+#: ../plug-ins/common/warp.c:502 ../plug-ins/file-fits/fits.c:1022
 #: ../plug-ins/flame/flame.c:1174 ../plug-ins/gfig/gfig-dialog.c:1497
 msgid "Black"
 msgstr "Beltza"
@@ -8628,38 +8647,38 @@ msgstr "Balio handiek efektuaren magnitudea handitzen dute"
 msgid "Bad colormap"
 msgstr "Kolore-mapa okerra"
 
-#: ../plug-ins/file-bmp/bmp-read.c:222 ../plug-ins/file-bmp/bmp-read.c:233
-#: ../plug-ins/file-bmp/bmp-read.c:240 ../plug-ins/file-bmp/bmp-read.c:249
-#: ../plug-ins/file-bmp/bmp-read.c:264 ../plug-ins/file-bmp/bmp-read.c:446
-#: ../plug-ins/file-bmp/bmp-read.c:467 ../plug-ins/file-bmp/bmp-read.c:478
-#: ../plug-ins/file-bmp/bmp-read.c:486 ../plug-ins/file-bmp/bmp-read.c:494
-#: ../plug-ins/file-bmp/bmp-read.c:506
+#: ../plug-ins/file-bmp/bmp-read.c:222 ../plug-ins/file-bmp/bmp-read.c:232
+#: ../plug-ins/file-bmp/bmp-read.c:239 ../plug-ins/file-bmp/bmp-read.c:248
+#: ../plug-ins/file-bmp/bmp-read.c:263 ../plug-ins/file-bmp/bmp-read.c:445
+#: ../plug-ins/file-bmp/bmp-read.c:466 ../plug-ins/file-bmp/bmp-read.c:477
+#: ../plug-ins/file-bmp/bmp-read.c:485 ../plug-ins/file-bmp/bmp-read.c:493
+#: ../plug-ins/file-bmp/bmp-read.c:505
 #, c-format
 msgid "'%s' is not a valid BMP file"
 msgstr "'%s' ez da baliozko BMP fitxategia."
 
-#: ../plug-ins/file-bmp/bmp-read.c:278 ../plug-ins/file-bmp/bmp-read.c:305
-#: ../plug-ins/file-bmp/bmp-read.c:333 ../plug-ins/file-bmp/bmp-read.c:362
-#: ../plug-ins/file-bmp/bmp-read.c:392 ../plug-ins/file-bmp/bmp-read.c:426
+#: ../plug-ins/file-bmp/bmp-read.c:277 ../plug-ins/file-bmp/bmp-read.c:304
+#: ../plug-ins/file-bmp/bmp-read.c:332 ../plug-ins/file-bmp/bmp-read.c:361
+#: ../plug-ins/file-bmp/bmp-read.c:391 ../plug-ins/file-bmp/bmp-read.c:425
 #, c-format
 msgid "Error reading BMP file header from '%s'"
 msgstr "Errorea BMP fitxategi-goiburua '%s'tik irakurtzean"
 
-#: ../plug-ins/file-bmp/bmp-read.c:351
+#: ../plug-ins/file-bmp/bmp-read.c:350
 #, c-format
 msgid "Unsupported compression (%lu) in BMP file from '%s'"
 msgstr "Onartu gabeko konpresioa (%lu) BMP fitxategian '%s'(e)tik"
 
-#: ../plug-ins/file-bmp/bmp-read.c:618
+#: ../plug-ins/file-bmp/bmp-read.c:621
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "BMP konpresio-formatu ezezagune edo baliogabea."
 
-#: ../plug-ins/file-bmp/bmp-read.c:660
+#: ../plug-ins/file-bmp/bmp-read.c:663
 msgid "Unsupported or invalid bitdepth."
 msgstr "Kolore-sakonera ez da onartzen edo ez da baliagarria."
 
-#: ../plug-ins/file-bmp/bmp-read.c:812 ../plug-ins/file-bmp/bmp-read.c:853
-#: ../plug-ins/file-bmp/bmp-read.c:903
+#: ../plug-ins/file-bmp/bmp-read.c:815 ../plug-ins/file-bmp/bmp-read.c:856
+#: ../plug-ins/file-bmp/bmp-read.c:906
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitmapa ustekabean amaitu da."
 
@@ -8698,7 +8717,7 @@ msgstr ""
 "informaziorik idatziko fitxategian."
 
 #. Advanced Options
-#: ../plug-ins/file-bmp/bmp-write.c:905 ../plug-ins/file-jpeg/jpeg-save.c:901
+#: ../plug-ins/file-bmp/bmp-write.c:905 ../plug-ins/file-jpeg/jpeg-save.c:924
 msgid "_Advanced Options"
 msgstr "_Aukera aurreratuak"
 
@@ -8743,44 +8762,44 @@ msgstr "G3 fax irudia"
 msgid "Flexible Image Transport System"
 msgstr "FITS: Irudi Malguaren Garraio Sistema"
 
-#: ../plug-ins/file-fits/fits.c:368
+#: ../plug-ins/file-fits/fits.c:370
 msgid "Error during open of FITS file"
 msgstr "Errorea FITS fitxategia irekitzean"
 
-#: ../plug-ins/file-fits/fits.c:374
+#: ../plug-ins/file-fits/fits.c:376
 msgid "FITS file keeps no displayable images"
 msgstr "FITS fitxategiak bistaratu ezin diren irudiak gordetzen ditu"
 
-#: ../plug-ins/file-fits/fits.c:455
+#: ../plug-ins/file-fits/fits.c:457
 msgid "FITS save cannot handle images with alpha channels"
 msgstr "Alfa kanalak dituzten irudiak ezin dira FITS gisa gorde."
 
-#: ../plug-ins/file-fits/fits.c:992
+#: ../plug-ins/file-fits/fits.c:994
 msgid "Load FITS File"
 msgstr "Kargatu FITS fitxategia"
 
-#: ../plug-ins/file-fits/fits.c:1016
+#: ../plug-ins/file-fits/fits.c:1018
 msgid "Replacement for undefined pixels"
 msgstr "Definitu gabeko pixelak ordeztea"
 
-#: ../plug-ins/file-fits/fits.c:1021 ../plug-ins/gfig/gfig-dialog.c:1323
+#: ../plug-ins/file-fits/fits.c:1023 ../plug-ins/gfig/gfig-dialog.c:1323
 #: ../plug-ins/gfig/gfig-dialog.c:1498
 msgid "White"
 msgstr "Zuria"
 
-#: ../plug-ins/file-fits/fits.c:1028
+#: ../plug-ins/file-fits/fits.c:1030
 msgid "Pixel value scaling"
 msgstr "Pixel-balioen eskala"
 
-#: ../plug-ins/file-fits/fits.c:1033
+#: ../plug-ins/file-fits/fits.c:1035
 msgid "By DATAMIN/DATAMAX"
 msgstr "DATAMIN/DATAMAXen arabera"
 
-#: ../plug-ins/file-fits/fits.c:1040
+#: ../plug-ins/file-fits/fits.c:1042
 msgid "Image Composing"
 msgstr "Irudi-konposizioa"
 
-#: ../plug-ins/file-fits/fits.c:1044
+#: ../plug-ins/file-fits/fits.c:1046
 msgctxt "composing"
 msgid "None"
 msgstr "Bat ere ez"
@@ -8789,30 +8808,30 @@ msgstr "Bat ere ez"
 msgid "AutoDesk FLIC animation"
 msgstr "AutoDesk FLIC animazioa"
 
-#: ../plug-ins/file-fli/fli-gimp.c:561
+#: ../plug-ins/file-fli/fli-gimp.c:563
 #, c-format
 msgid "Frame (%i)"
 msgstr "Markoa (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:714
+#: ../plug-ins/file-fli/fli-gimp.c:716
 msgid "Sorry, I can save only INDEXED and GRAY images."
 msgstr "Zoritxarrez, irudi INDEXATUAK eta GRISAK bakarrik gorde ditzaket."
 
-#: ../plug-ins/file-fli/fli-gimp.c:847
+#: ../plug-ins/file-fli/fli-gimp.c:849
 msgid "GFLI 1.3 - Load framestack"
 msgstr "GFLI 1.3 - Kargatu marko-piloa"
 
-#: ../plug-ins/file-fli/fli-gimp.c:876 ../plug-ins/file-fli/fli-gimp.c:932
+#: ../plug-ins/file-fli/fli-gimp.c:878 ../plug-ins/file-fli/fli-gimp.c:934
 msgctxt "frame-range"
 msgid "From:"
 msgstr "Nondik:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:885 ../plug-ins/file-fli/fli-gimp.c:941
+#: ../plug-ins/file-fli/fli-gimp.c:887 ../plug-ins/file-fli/fli-gimp.c:943
 msgctxt "frame-range"
 msgid "To:"
 msgstr "Nora:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:915
+#: ../plug-ins/file-fli/fli-gimp.c:917
 msgid "GFLI 1.3"
 msgstr "GFLI 1.3"
 
@@ -8862,7 +8881,7 @@ msgstr "Konprimituta (PNG)"
 msgid "Icon #%i"
 msgstr "Ikonoa: #%i"
 
-#: ../plug-ins/file-ico/ico-load.c:722 ../plug-ins/file-jpeg/jpeg-load.c:691
+#: ../plug-ins/file-ico/ico-load.c:722 ../plug-ins/file-jpeg/jpeg-load.c:696
 #: ../plug-ins/file-psd/psd-thumb-load.c:84
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -8888,80 +8907,81 @@ msgstr "EXIF datuek diotenez irudia biratuta dago."
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Nahi duzu GIMPek orientazio estandarrera biratzea?"
 
-#: ../plug-ins/file-jpeg/jpeg-load.c:247
+#: ../plug-ins/file-jpeg/jpeg-load.c:252
 msgid "JPEG preview"
 msgstr "JPEGren aurrebista"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:206
+#: ../plug-ins/file-jpeg/jpeg-save.c:215
 #, c-format
 msgid "File size: %s"
 msgstr "Fitxategi-tamaina: %s"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:690
-msgid "Calculating file size..."
-msgstr "Fitxategi-tamaina kalkulatzen..."
-
-#: ../plug-ins/file-jpeg/jpeg-save.c:782 ../plug-ins/file-jpeg/jpeg-save.c:877
+#: ../plug-ins/file-jpeg/jpeg-save.c:225 ../plug-ins/file-jpeg/jpeg-save.c:233
+#: ../plug-ins/file-jpeg/jpeg-save.c:805 ../plug-ins/file-jpeg/jpeg-save.c:900
 msgid "File size: unknown"
 msgstr "Fitxategi-tamaina: ezezaguna"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:840
+#: ../plug-ins/file-jpeg/jpeg-save.c:713
+msgid "Calculating file size..."
+msgstr "Fitxategi-tamaina kalkulatzen..."
+
+#: ../plug-ins/file-jpeg/jpeg-save.c:863
 msgid "JPEG"
 msgstr "JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:863
+#: ../plug-ins/file-jpeg/jpeg-save.c:886
 msgid "_Quality:"
 msgstr "_Kalitatea:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:867
+#: ../plug-ins/file-jpeg/jpeg-save.c:890
 msgid "JPEG quality parameter"
 msgstr "JPEG kalitare-parametroa"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:886
+#: ../plug-ins/file-jpeg/jpeg-save.c:909
 msgid "Enable preview to obtain the file size."
 msgstr "Gaitu aurrebista fitxategi-tamaina lortzeko."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:889
+#: ../plug-ins/file-jpeg/jpeg-save.c:912
 msgid "Sho_w preview in image window"
 msgstr "Erakutsi _aurrebista irudi-leihoan"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:930
+#: ../plug-ins/file-jpeg/jpeg-save.c:953
 msgid "S_moothing:"
 msgstr "_Leuntzea:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:943
+#: ../plug-ins/file-jpeg/jpeg-save.c:966
 msgid "Interval (MCU rows):"
 msgstr "Bitartea (MCU errenkadak):"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:960
+#: ../plug-ins/file-jpeg/jpeg-save.c:983
 msgid "Use _restart markers"
 msgstr "Erabili _berrabiarazte-markatzaileak"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:976
+#: ../plug-ins/file-jpeg/jpeg-save.c:999
 msgid "_Optimize"
 msgstr "_Optimizatu"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:990
+#: ../plug-ins/file-jpeg/jpeg-save.c:1013
 msgid "_Progressive"
 msgstr "_Pixkanaka"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1006
+#: ../plug-ins/file-jpeg/jpeg-save.c:1029
 msgid "Save _EXIF data"
 msgstr "Gorde _EXIF datuak"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1023
+#: ../plug-ins/file-jpeg/jpeg-save.c:1046
 msgid "Save _thumbnail"
 msgstr "Gorde _koadro txikia"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1040
+#: ../plug-ins/file-jpeg/jpeg-save.c:1063
 msgid "Save _XMP data"
 msgstr "Gorde _XMP datuak"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1058
+#: ../plug-ins/file-jpeg/jpeg-save.c:1081
 msgid "_Use quality settings from original image"
 msgstr "_Erabili jatorrizko irudiaren kalitate-ezarpenak"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1064
+#: ../plug-ins/file-jpeg/jpeg-save.c:1087
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -8972,53 +8992,53 @@ msgstr ""
 "berdintsuena izateko."
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1088
+#: ../plug-ins/file-jpeg/jpeg-save.c:1111
 msgid "Su_bsampling:"
 msgstr "A_zpilaginketa:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1095
+#: ../plug-ins/file-jpeg/jpeg-save.c:1118
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (kalitate onena)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1097
+#: ../plug-ins/file-jpeg/jpeg-save.c:1120
 msgid "4:2:2 horizontal (chroma halved)"
 msgstr "4:2:2 horizontala (chroma erdia)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1099
+#: ../plug-ins/file-jpeg/jpeg-save.c:1122
 msgid "4:2:2 vertical (chroma halved)"
 msgstr "4:2:2 bertikala (chroma erdia)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1101
+#: ../plug-ins/file-jpeg/jpeg-save.c:1124
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (chroma laurdena)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1131
+#: ../plug-ins/file-jpeg/jpeg-save.c:1154
 msgid "_DCT method:"
 msgstr "_DCT metodoa:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1137
+#: ../plug-ins/file-jpeg/jpeg-save.c:1160
 msgid "Fast Integer"
 msgstr "Osoko bizkorra"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1138
+#: ../plug-ins/file-jpeg/jpeg-save.c:1161
 msgid "Integer"
 msgstr "Osokoa"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1139
+#: ../plug-ins/file-jpeg/jpeg-save.c:1162
 msgid "Floating-Point"
 msgstr "Koma mugikorra"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1155
+#: ../plug-ins/file-jpeg/jpeg-save.c:1178
 msgid "Comment"
 msgstr "Iruzkina"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1192
+#: ../plug-ins/file-jpeg/jpeg-save.c:1215
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
 msgid "_Load Defaults"
 msgstr "_Kargatu lehenetsiak"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1201
+#: ../plug-ins/file-jpeg/jpeg-save.c:1224
 msgid "Sa_ve Defaults"
 msgstr "_Gorde lehenetsiak"
 
@@ -9026,7 +9046,7 @@ msgstr "_Gorde lehenetsiak"
 msgid "JPEG image"
 msgstr "JPEG irudia"
 
-#: ../plug-ins/file-jpeg/jpeg.c:303
+#: ../plug-ins/file-jpeg/jpeg.c:305
 msgid "Export Preview"
 msgstr "Esportatu aurrebista"
 
@@ -9126,7 +9146,7 @@ msgstr "Ez da onartzen edo kanalaren tamaina baliogabea da"
 msgid "Photoshop image"
 msgstr "Photoshop irudia"
 
-#: ../plug-ins/file-psd/psd-save.c:374
+#: ../plug-ins/file-psd/psd-save.c:375
 #, c-format
 msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
@@ -9135,11 +9155,11 @@ msgstr ""
 "Ezin da geruza gorde '%s' moduarekin. PSD fitxategi-formatuak edo pluginak "
 "ez dute onartzen, modu normala erabiltzen ari da horren ordez."
 
-#: ../plug-ins/file-psd/psd-save.c:634
+#: ../plug-ins/file-psd/psd-save.c:635
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Errorea: ezin da GIMP oinarriko irudi-mota PSD modura bihurtu"
 
-#: ../plug-ins/file-psd/psd-save.c:1622
+#: ../plug-ins/file-psd/psd-save.c:1623
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images that are "
@@ -9148,7 +9168,7 @@ msgstr ""
 "Ezin izan da '%s' gorde. PSD fitxategi-formatuak ez du luzeran edo zabaleran "
 "30000 pixel gainditzen duten irudirik onartzen."
 
-#: ../plug-ins/file-psd/psd-save.c:1637
+#: ../plug-ins/file-psd/psd-save.c:1638
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images with "
@@ -9165,48 +9185,48 @@ msgstr "Fitxategiaren uste baino lehenagoko amaiera"
 msgid "Silicon Graphics IRIS image"
 msgstr "Silicon Graphics IRIS irudia"
 
-#: ../plug-ins/file-sgi/sgi.c:325
+#: ../plug-ins/file-sgi/sgi.c:327
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "Ezin da '%s' irakurtzeko ireki."
 
-#: ../plug-ins/file-sgi/sgi.c:343
+#: ../plug-ins/file-sgi/sgi.c:345
 #, c-format
 msgid "Invalid width: %hu"
 msgstr "Zabalera baliogabea: %hu"
 
-#: ../plug-ins/file-sgi/sgi.c:350
+#: ../plug-ins/file-sgi/sgi.c:352
 #, c-format
 msgid "Invalid height: %hu"
 msgstr "Altuera baliogabea: %hu"
 
-#: ../plug-ins/file-sgi/sgi.c:357
+#: ../plug-ins/file-sgi/sgi.c:359
 #, c-format
 msgid "Invalid number of channels: %hu"
 msgstr "Kanal kopuru baliogabea: %hu"
 
-#: ../plug-ins/file-sgi/sgi.c:571
+#: ../plug-ins/file-sgi/sgi.c:573
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Ezin da '%s' idazteko ireki."
 
-#: ../plug-ins/file-sgi/sgi.c:652
+#: ../plug-ins/file-sgi/sgi.c:654
 msgid "SGI"
 msgstr "SGI"
 
-#: ../plug-ins/file-sgi/sgi.c:654
+#: ../plug-ins/file-sgi/sgi.c:656
 msgid "Compression type"
 msgstr "Konprimatze-mota"
 
-#: ../plug-ins/file-sgi/sgi.c:658
+#: ../plug-ins/file-sgi/sgi.c:660
 msgid "No compression"
 msgstr "Konprimatzerik ez"
 
-#: ../plug-ins/file-sgi/sgi.c:660
+#: ../plug-ins/file-sgi/sgi.c:662
 msgid "RLE compression"
 msgstr "RLE konprimatzea"
 
-#: ../plug-ins/file-sgi/sgi.c:662
+#: ../plug-ins/file-sgi/sgi.c:664
 msgid ""
 "Aggressive RLE\n"
 "(not supported by SGI)"
@@ -10767,7 +10787,7 @@ msgid "Reread the folder of Presets"
 msgstr "Irakurri berriro aurrezarpenen karpeta"
 
 #: ../plug-ins/gimpressionist/preview.c:174
-#: ../plug-ins/gimpressionist/repaint.c:1182
+#: ../plug-ins/gimpressionist/repaint.c:1197
 #: ../plug-ins/imagemap/imap_polygon.c:515
 #: ../plug-ins/lighting/lighting-ui.c:1082
 msgid "_Update"
@@ -12421,7 +12441,7 @@ msgstr "Argiaren intentsitatea"
 #: ../plug-ins/lighting/lighting-ui.c:469
 #: ../plug-ins/map-object/map-object-ui.c:613
 #: ../plug-ins/map-object/map-object-ui.c:940
-#: ../plug-ins/print/print-page-layout.c:371
+#: ../plug-ins/print/print-page-layout.c:372
 msgid "Position"
 msgstr "Kokalekua"
 
@@ -12818,12 +12838,12 @@ msgid "Z scale (size)"
 msgstr "Z eskala (tamaina)"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
-#: ../plug-ins/print/print-page-layout.c:430
+#: ../plug-ins/print/print-page-layout.c:431
 msgid "_Top:"
 msgstr "_Goian:"
 
 #: ../plug-ins/map-object/map-object-ui.c:1147
-#: ../plug-ins/print/print-page-layout.c:449
+#: ../plug-ins/print/print-page-layout.c:450
 msgid "_Bottom:"
 msgstr "_Behean:"
 
@@ -13148,6 +13168,10 @@ msgstr "Kiribilaren geruza"
 msgid "Page Curl"
 msgstr "Kiribildu orrialdea"
 
+#: ../plug-ins/print/print-draw-page.c:223
+msgid "Cannot handle the size (either width or height) of the image."
+msgstr "Ezin du irudiaren tamaina (zabalera edo altuera) kudeatu."
+
 #: ../plug-ins/print/print-page-layout.c:153
 msgid "Ignore Page _Margins"
 msgstr "Ez ikusi egin orrialdeko _marjinei"
@@ -13165,61 +13189,61 @@ msgstr "_X bereizmena:"
 msgid "_Y resolution:"
 msgstr "_Y bereizmena:"
 
-#: ../plug-ins/print/print-page-layout.c:397
+#: ../plug-ins/print/print-page-layout.c:398
 msgid "_Left:"
 msgstr "E_zkerrean:"
 
-#: ../plug-ins/print/print-page-layout.c:416
+#: ../plug-ins/print/print-page-layout.c:417
 msgid "_Right:"
 msgstr "E_skuinean:"
 
-#: ../plug-ins/print/print-page-layout.c:470
+#: ../plug-ins/print/print-page-layout.c:471
 msgid "C_enter:"
 msgstr "_Zentratuta:"
 
 #. if and how to center the image on the page
-#: ../plug-ins/print/print-page-layout.c:477
+#: ../plug-ins/print/print-page-layout.c:478
 msgctxt "center-mode"
 msgid "None"
 msgstr "Bat ere ez"
 
-#: ../plug-ins/print/print-page-layout.c:478
+#: ../plug-ins/print/print-page-layout.c:479
 msgid "Horizontally"
 msgstr "Horizontalki"
 
-#: ../plug-ins/print/print-page-layout.c:479
+#: ../plug-ins/print/print-page-layout.c:480
 msgid "Vertically"
 msgstr "Bertikalki"
 
-#: ../plug-ins/print/print-page-layout.c:480
+#: ../plug-ins/print/print-page-layout.c:481
 msgid "Both"
 msgstr "Biak"
 
-#: ../plug-ins/print/print.c:107
+#: ../plug-ins/print/print.c:106
 msgid "Print the image"
 msgstr "Inprimatu irudia"
 
-#: ../plug-ins/print/print.c:112
+#: ../plug-ins/print/print.c:111
 msgid "_Print..."
 msgstr "_Inprimatu..."
 
-#: ../plug-ins/print/print.c:124
+#: ../plug-ins/print/print.c:123
 msgid "Adjust page size and orientation for printing"
 msgstr "Doitu orrialdearen tamaina eta orientazioa inprimatzeko"
 
-#: ../plug-ins/print/print.c:130
+#: ../plug-ins/print/print.c:129
 msgid "Page Set_up"
 msgstr "Orrialdearen _konfigurazioa"
 
-#: ../plug-ins/print/print.c:275
+#: ../plug-ins/print/print.c:274
 msgid "Image Settings"
 msgstr "Irudiaren ezarpenak"
 
-#: ../plug-ins/print/print.c:373
+#: ../plug-ins/print/print.c:372
 msgid "An error occurred while trying to print:"
 msgstr "Errorea gertatu da inprimatzen saiatzean:"
 
-#: ../plug-ins/print/print.c:400
+#: ../plug-ins/print/print.c:399
 msgid "Printing"
 msgstr "Inprimatzen"
 
