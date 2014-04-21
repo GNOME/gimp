@@ -317,7 +317,11 @@ static const gchar display_format_description[] =
 "%H  image height in real-world units\n"
 "%M  the image size expressed in megapixels\n"
 "%u  unit symbol\n"
-"%U  unit abbreviation\n\n";
+"%U  unit abbreviation\n"
+"%x  the width of the active layer/channel in pixels\n"
+"%X  the width of the active layer/channel in real-world units\n"
+"%y  the height of the active layer/channel in pixels\n"
+"%Y  the height of the active layer/channel in real-world units\n\n";
 
 
 static gchar *
