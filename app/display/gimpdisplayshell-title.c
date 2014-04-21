@@ -173,9 +173,10 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                                  gint              title_len,
                                  const gchar      *format)
 {
-  GimpImage *image;
-  gint       num, denom;
-  gint       i = 0;
+  GimpImage    *image;
+  GimpDrawable *drawable;
+  gint          num, denom;
+  gint          i = 0;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), 0);
 
@@ -186,6 +187,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
       title[0] = '\n';
       return 0;
     }
+
+  drawable = gimp_image_get_active_drawable (image);
 
   gimp_zoom_model_get_fraction (shell->zoom, &num, &denom);
 
@@ -230,14 +233,13 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'T': /* drawable type */
-              {
-                GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-                const Babl   *format   = gimp_drawable_get_format (drawable);
+              if (drawable)
+                {
+                  const Babl *format = gimp_drawable_get_format (drawable);
 
-                if (drawable)
                   i += print (title, title_len, i, "%s",
                               gimp_babl_get_description (format));
-              }
+                }
               break;
 
             case 's': /* user source zoom factor */
@@ -323,37 +325,27 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'n': /* active drawable name */
-              {
-                GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+              if (drawable)
+                {
+                  gchar *desc;
 
-                if (drawable)
-                  {
-                    gchar *desc;
-
-                    desc = gimp_viewable_get_description (GIMP_VIEWABLE (drawable),
-                                                          NULL);
-
-                    i += print (title, title_len, i, "%s", desc);
-
-                    g_free (desc);
-                  }
-                else
-                  {
-                    i += print (title, title_len, i, "%s", _("(none)"));
-                  }
-              }
+                  desc = gimp_viewable_get_description (GIMP_VIEWABLE (drawable),
+                                                        NULL);
+                  i += print (title, title_len, i, "%s", desc);
+                  g_free (desc);
+                }
+              else
+                {
+                  i += print (title, title_len, i, "%s", _("(none)"));
+                }
               break;
 
             case 'P': /* active drawable PDB id */
-              {
-                GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-
-                if (drawable)
-                  i += print (title, title_len, i, "%d",
-                              gimp_item_get_ID (GIMP_ITEM (drawable)));
-                else
-                  i += print (title, title_len, i, "%s", _("(none)"));
-              }
+              if (drawable)
+                i += print (title, title_len, i, "%d",
+                            gimp_item_get_ID (GIMP_ITEM (drawable)));
+              else
+                i += print (title, title_len, i, "%s", _("(none)"));
               break;
 
             case 'W': /* width in real-world units */
@@ -411,12 +403,11 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               break;
 
             case 'X': /* drawable width in real world units */
-              if (shell->unit != GIMP_UNIT_PIXEL)
+              if (drawable && shell->unit != GIMP_UNIT_PIXEL)
                 {
                   gdouble xres;
                   gdouble yres;
                   gchar   unit_format[8];
-                  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
                   gimp_image_get_resolution (image, &xres, &yres);
 
@@ -424,26 +415,23 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                               gimp_unit_get_digits (shell->unit) + 1);
                   i += print (title, title_len, i, unit_format,
                               gimp_pixels_to_units (gimp_item_get_width
-                                                     (GIMP_ITEM (drawable)),
-                                                    shell->unit, yres));
+                                                    (GIMP_ITEM (drawable)),
+                                                    shell->unit, xres));
                   break;
                 }
               /* else fallthru */
             case 'x': /* drawable width in pixels */
-              {
-                GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+              if (drawable)
                 i += print (title, title_len, i, "%d",
                             gimp_item_get_width (GIMP_ITEM (drawable)));
-              }
               break;
 
             case 'Y': /* drawable height in real world units */
-              if (shell->unit != GIMP_UNIT_PIXEL)
+              if (drawable && shell->unit != GIMP_UNIT_PIXEL)
                 {
                   gdouble xres;
                   gdouble yres;
                   gchar   unit_format[8];
-                  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
                   gimp_image_get_resolution (image, &xres, &yres);
 
@@ -451,17 +439,15 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                               gimp_unit_get_digits (shell->unit) + 1);
                   i += print (title, title_len, i, unit_format,
                               gimp_pixels_to_units (gimp_item_get_height
-                                                     (GIMP_ITEM (drawable)),
+                                                    (GIMP_ITEM (drawable)),
                                                     shell->unit, yres));
                   break;
                 }
               /* else fallthru */
             case 'y': /* drawable height in pixels */
-              {
-                GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+              if (drawable)
                 i += print (title, title_len, i, "%d",
                             gimp_item_get_height (GIMP_ITEM (drawable)));
-              }
               break;
 
             case '\xc3': /* utf-8 extended char */
