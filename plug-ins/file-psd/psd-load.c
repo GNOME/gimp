@@ -1476,26 +1476,33 @@ add_layers (gint32     image_id,
                         lm_h = l_h - lm_y;
                     }
                   else
-                    memcpy (pixels, lyr_chn[user_mask_chn]->data, layer_size);
+                    {
+                      memcpy (pixels, lyr_chn[user_mask_chn]->data, layer_size);
+                      i = layer_size;
+                    }
                   g_free (lyr_chn[user_mask_chn]->data);
-                  /* Draw layer mask data */
-                  IFDBG(3) g_debug ("Layer %d %d %d %d", l_x, l_y, l_w, l_h);
-                  IFDBG(3) g_debug ("Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
+                  /* Draw layer mask data, if any */
+                  if (i > 0)
+                    {
+                      IFDBG(3) g_debug ("Layer %d %d %d %d", l_x, l_y, l_w, l_h);
+                      IFDBG(3) g_debug ("Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
 
-                  if (lyr_a[lidx]->layer_mask.def_color == 255)
-                    mask_id = gimp_layer_create_mask (layer_id, GIMP_ADD_WHITE_MASK);
-                  else
-                    mask_id = gimp_layer_create_mask (layer_id, GIMP_ADD_BLACK_MASK);
+                      if (lyr_a[lidx]->layer_mask.def_color == 255)
+                        mask_id = gimp_layer_create_mask (layer_id, GIMP_ADD_WHITE_MASK);
+                      else
+                        mask_id = gimp_layer_create_mask (layer_id, GIMP_ADD_BLACK_MASK);
 
-                  IFDBG(3) g_debug ("New layer mask %d", mask_id);
-                  gimp_layer_add_mask (layer_id, mask_id);
-		  buffer = gimp_drawable_get_buffer (mask_id);
-		  gegl_buffer_set (buffer, GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h), 0,
-				   get_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
-                  g_object_unref (buffer);
-                  gimp_layer_set_apply_mask (layer_id,
-                    ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
-                  g_free (pixels);
+                      IFDBG(3) g_debug ("New layer mask %d", mask_id);
+                      gimp_layer_add_mask (layer_id, mask_id);
+                      buffer = gimp_drawable_get_buffer (mask_id);
+                      gegl_buffer_set (buffer, GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h), 0,
+                                       get_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
+                      g_object_unref (buffer);
+                      gimp_layer_set_apply_mask (layer_id,
+                                                 ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
+                    }
+                  if (pixels)
+                    g_free (pixels);
                 }
             }
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
