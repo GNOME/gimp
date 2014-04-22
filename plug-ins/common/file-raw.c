@@ -205,7 +205,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_save_handler (SAVE_DEFAULTS, "data", "");
+  gimp_register_save_handler (SAVE_PROC, "data", "");
 }
 
 static void
