@@ -251,11 +251,11 @@ script_fu_server_run (const gchar      *name,
       server_mode = TRUE;
 
       /*  Start the server  */
-      server_start ((params[3].data.d_string &&
-                     strlen (params[3].data.d_string)) ?
-                    params[3].data.d_string : "127.0.0.1",
-                    params[1].data.d_int32,
-                    params[2].data.d_string);
+      server_start ((params[1].data.d_string &&
+                     strlen (params[1].data.d_string)) ?
+                    params[1].data.d_string : "127.0.0.1",
+                    params[2].data.d_int32,
+                    params[3].data.d_string);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
