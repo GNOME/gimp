@@ -280,10 +280,10 @@ GType gimp_repeat_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_REPEAT_TRUNCATE,   /*< desc="Truncate blending" >*/
-  GIMP_REPEAT_NONE,       /*< desc="None"            >*/
+  GIMP_REPEAT_NONE,       /*< desc="None (extend)"   >*/
   GIMP_REPEAT_SAWTOOTH,   /*< desc="Sawtooth wave"   >*/
-  GIMP_REPEAT_TRIANGULAR  /*< desc="Triangular wave" >*/
+  GIMP_REPEAT_TRIANGULAR, /*< desc="Triangular wave" >*/
+  GIMP_REPEAT_TRUNCATE    /*< desc="Truncate"        >*/
 } GimpRepeatMode;
 
 
