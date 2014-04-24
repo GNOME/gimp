@@ -40,7 +40,7 @@ struct _GimpColorProfileChooserDialog
 {
   GtkFileChooserDialog                  parent_instance;
 
-  GimpColorProfileChooserDialogPrivate *private;
+  GimpColorProfileChooserDialogPrivate *priv;
 };
 
 struct _GimpColorProfileChooserDialogClass
@@ -59,5 +59,6 @@ GType       gimp_color_profile_chooser_dialog_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_color_profile_chooser_dialog_new      (const gchar *title);
 
+G_END_DECLS
 
 #endif /* __GIMP_COLOR_PROFILE_CHOOSER_DIALOG_H__ */

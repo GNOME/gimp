@@ -62,9 +62,9 @@ gimp_color_profile_view_class_init (GimpColorProfileViewClass *klass)
 static void
 gimp_color_profile_view_init (GimpColorProfileView *view)
 {
-  view->private = G_TYPE_INSTANCE_GET_PRIVATE (view,
-                                               GIMP_TYPE_COLOR_PROFILE_VIEW,
-                                               GimpColorProfileViewPrivate);
+  view->priv = G_TYPE_INSTANCE_GET_PRIVATE (view,
+                                            GIMP_TYPE_COLOR_PROFILE_VIEW,
+                                            GimpColorProfileViewPrivate);
 }
 
 static void
@@ -113,7 +113,7 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
 
   gtk_text_buffer_set_text (buffer, "", 0);
 
-  view->private->profile = profile;
+  view->priv->profile = profile;
 
   if (! profile)
     return;

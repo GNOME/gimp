@@ -39,7 +39,7 @@ struct _GimpColorProfileView
 {
   GtkTextView                  parent_instance;
 
-  GimpColorProfileViewPrivate *private;
+  GimpColorProfileViewPrivate *priv;
 };
 
 struct _GimpColorProfileViewClass
@@ -63,5 +63,6 @@ void        gimp_color_profile_view_set_profile (GimpColorProfileView *view,
 void        gimp_color_profile_view_set_error   (GimpColorProfileView *view,
                                                  const gchar          *message);
 
+G_END_DECLS
 
 #endif /* __GIMP_COLOR_PROFILE_VIEW_H__ */

@@ -68,7 +68,7 @@ gimp_color_profile_chooser_dialog_class_init (GimpColorProfileChooserDialogClass
 static void
 gimp_color_profile_chooser_dialog_init (GimpColorProfileChooserDialog *dialog)
 {
-  dialog->private =
+  dialog->priv =
     G_TYPE_INSTANCE_GET_PRIVATE (dialog,
                                  GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG,
                                  GimpColorProfileChooserDialogPrivate);
@@ -133,7 +133,7 @@ gimp_color_profile_chooser_dialog_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (scrolled_window), profile_view);
   gtk_widget_show (profile_view);
 
-  dialog->private->profile_view = GIMP_COLOR_PROFILE_VIEW (profile_view);
+  dialog->priv->profile_view = GIMP_COLOR_PROFILE_VIEW (profile_view);
 
   gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog), frame);
 
@@ -193,7 +193,7 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
 
   if (! filename)
     {
-      gimp_color_profile_view_set_profile (dialog->private->profile_view, NULL);
+      gimp_color_profile_view_set_profile (dialog->priv->profile_view, NULL);
       return;
     }
 
@@ -201,13 +201,13 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
 
   if (! profile)
     {
-      gimp_color_profile_view_set_error (dialog->private->profile_view,
+      gimp_color_profile_view_set_error (dialog->priv->profile_view,
                                          error->message);
       g_clear_error (&error);
     }
   else
     {
-      gimp_color_profile_view_set_profile (dialog->private->profile_view,
+      gimp_color_profile_view_set_profile (dialog->priv->profile_view,
                                            profile);
       cmsCloseProfile (profile);
     }
