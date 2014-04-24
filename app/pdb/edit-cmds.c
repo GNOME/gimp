@@ -1495,7 +1495,7 @@ register_edit_procs (GimpPDB *pdb)
                                                   "repeat",
                                                   "Repeat mode",
                                                   GIMP_TYPE_REPEAT_MODE,
-                                                  GIMP_REPEAT_NONE,
+                                                  GIMP_REPEAT_TRUNCATE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("reverse",

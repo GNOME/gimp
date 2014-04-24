@@ -635,6 +635,7 @@ gimp_repeat_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
+    { GIMP_REPEAT_TRUNCATE, "GIMP_REPEAT_TRUNCATE", "truncate" },
     { GIMP_REPEAT_NONE, "GIMP_REPEAT_NONE", "none" },
     { GIMP_REPEAT_SAWTOOTH, "GIMP_REPEAT_SAWTOOTH", "sawtooth" },
     { GIMP_REPEAT_TRIANGULAR, "GIMP_REPEAT_TRIANGULAR", "triangular" },
@@ -643,6 +644,7 @@ gimp_repeat_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
+    { GIMP_REPEAT_TRUNCATE, NC_("repeat-mode", "Truncate blending"), NULL },
     { GIMP_REPEAT_NONE, NC_("repeat-mode", "None"), NULL },
     { GIMP_REPEAT_SAWTOOTH, NC_("repeat-mode", "Sawtooth wave"), NULL },
     { GIMP_REPEAT_TRIANGULAR, NC_("repeat-mode", "Triangular wave"), NULL },

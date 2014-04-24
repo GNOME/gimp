@@ -724,6 +724,8 @@ gradient_render_pixel (gdouble   x,
 
   switch (rbd->repeat)
     {
+    case GIMP_REPEAT_TRUNCATE:
+      break;
     case GIMP_REPEAT_NONE:
       factor = CLAMP (factor, 0.0, 1.0);
       break;
@@ -750,7 +752,12 @@ gradient_render_pixel (gdouble   x,
 
   /* Blend the colors */
 
-  if (rbd->blend_mode == GIMP_CUSTOM_MODE)
+  if (factor < 0.0 || factor > 1.0)
+    {
+      color->r = color->g = color->b = 0;
+      color->a = GIMP_OPACITY_TRANSPARENT;
+    }
+  else if (rbd->blend_mode == GIMP_CUSTOM_MODE)
     {
 #ifdef USE_GRADIENT_CACHE
       *color = rbd->gradient_cache[(gint) (factor * (rbd->gradient_cache_size - 1))];

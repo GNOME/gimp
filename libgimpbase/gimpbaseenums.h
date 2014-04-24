@@ -171,7 +171,7 @@ GType gimp_foreground_extract_mode_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_FOREGROUND_EXTRACT_SIOX,
-  GIMP_FOREGROUND_EXTRACT_MATTING 
+  GIMP_FOREGROUND_EXTRACT_MATTING
 } GimpForegroundExtractMode;
 
 
@@ -259,7 +259,7 @@ typedef enum
   GIMP_INTERPOLATION_CUBIC,  /*< desc="Cubic"  >*/
   GIMP_INTERPOLATION_NOHALO, /*< desc="NoHalo" >*/
   GIMP_INTERPOLATION_LOHALO, /*< desc="LoHalo" >*/
-  GIMP_INTERPOLATION_LANCZOS = GIMP_INTERPOLATION_NOHALO /*< skip */
+  GIMP_INTERPOLATION_LANCZOS = GIMP_INTERPOLATION_NOHALO /*< skip >*/
 } GimpInterpolationType;
 
 
@@ -280,6 +280,7 @@ GType gimp_repeat_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
+  GIMP_REPEAT_TRUNCATE,   /*< desc="Truncate blending" >*/
   GIMP_REPEAT_NONE,       /*< desc="None"            >*/
   GIMP_REPEAT_SAWTOOTH,   /*< desc="Sawtooth wave"   >*/
   GIMP_REPEAT_TRIANGULAR  /*< desc="Triangular wave" >*/

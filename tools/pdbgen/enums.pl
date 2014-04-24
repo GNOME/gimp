@@ -175,16 +175,18 @@ package Gimp::CodeGen::enums;
 		       GIMP_INDEXEDA_IMAGE => '5' }
 	},
     GimpInterpolationType =>
-	{ contig => 1,
+	{ contig => 0,
 	  header => 'libgimpbase/gimpbaseenums.h',
 	  symbols => [ qw(GIMP_INTERPOLATION_NONE GIMP_INTERPOLATION_LINEAR
 			  GIMP_INTERPOLATION_CUBIC GIMP_INTERPOLATION_NOHALO
-			  GIMP_INTERPOLATION_LOHALO) ],
+			  GIMP_INTERPOLATION_LOHALO
+			  GIMP_INTERPOLATION_LANCZOS) ],
 	  mapping => { GIMP_INTERPOLATION_NONE => '0',
 		       GIMP_INTERPOLATION_LINEAR => '1',
 		       GIMP_INTERPOLATION_CUBIC => '2',
 		       GIMP_INTERPOLATION_NOHALO => '3',
-		       GIMP_INTERPOLATION_LOHALO => '4' }
+		       GIMP_INTERPOLATION_LOHALO => '4',
+		       GIMP_INTERPOLATION_LANCZOS => 'GIMP_INTERPOLATION_NOHALO' }
 	},
     GimpPaintApplicationMode =>
 	{ contig => 1,
@@ -196,11 +198,12 @@ package Gimp::CodeGen::enums;
     GimpRepeatMode =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_REPEAT_NONE GIMP_REPEAT_SAWTOOTH
-			  GIMP_REPEAT_TRIANGULAR) ],
-	  mapping => { GIMP_REPEAT_NONE => '0',
-		       GIMP_REPEAT_SAWTOOTH => '1',
-		       GIMP_REPEAT_TRIANGULAR => '2' }
+	  symbols => [ qw(GIMP_REPEAT_TRUNCATE GIMP_REPEAT_NONE
+			  GIMP_REPEAT_SAWTOOTH GIMP_REPEAT_TRIANGULAR) ],
+	  mapping => { GIMP_REPEAT_TRUNCATE => '0',
+		       GIMP_REPEAT_NONE => '1',
+		       GIMP_REPEAT_SAWTOOTH => '2',
+		       GIMP_REPEAT_TRIANGULAR => '3' }
 	},
     GimpRunMode =>
 	{ contig => 1,
