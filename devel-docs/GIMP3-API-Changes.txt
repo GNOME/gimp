@@ -1,0 +1,6 @@
+This file contains a list of changes that can/must be done when
+we break API/ABI for 3.x.
+
+
+- move GIMP_REPEAT_TRUNCATE to the start of the enum and rename it
+  to NONE. Rename the current NONE to EXTEND or something.
