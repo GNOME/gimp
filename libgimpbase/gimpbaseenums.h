@@ -259,7 +259,7 @@ typedef enum
   GIMP_INTERPOLATION_CUBIC,  /*< desc="Cubic"  >*/
   GIMP_INTERPOLATION_NOHALO, /*< desc="NoHalo" >*/
   GIMP_INTERPOLATION_LOHALO, /*< desc="LoHalo" >*/
-  GIMP_INTERPOLATION_LANCZOS = GIMP_INTERPOLATION_NOHALO /*< skip >*/
+  GIMP_INTERPOLATION_LANCZOS = GIMP_INTERPOLATION_NOHALO /*< skip, pdb-skip >*/
 } GimpInterpolationType;
 
 
