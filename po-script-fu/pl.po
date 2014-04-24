@@ -5,17 +5,17 @@
 # gnomepl@aviary.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
-# Artur Polaczyński <artie@kmfms.com>, 1999, 2000.
-# Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005, 2007.
+# Artur Polaczyński <artie@kmfms.com>, 1999-2000.
+# Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2007.
 # Łukasz Jernaś <deejay1@srem.org>, 2010.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011, 2012.
-# Aviary.pl <gnomepl@aviary.pl>, 2011, 2012.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2014.
+# Aviary.pl <gnomepl@aviary.pl>, 2011-2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-09 22:14+0100\n"
-"PO-Revision-Date: 2012-02-09 22:15+0100\n"
+"PO-Revision-Date: 2014-04-24 04:00+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -2865,3 +2865,14 @@ msgstr "Krycie podświetlenia"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:14
 msgid "_Xach-Effect..."
 msgstr "_Efekt Xach..."
+
+msgid "Listen on IP:"
+msgstr "Nasłuchiwanie na adresie IP:"
+
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
+"allow attackers to remotely execute arbitrary code on this machine."
+msgstr ""
+"Nasłuchiwanie na adresie IP innym niż 127.0.0.1 (zwłaszcza 0.0.0.0) może "
+"umożliwić osobom niepowołanym na zdalne wykonywanie dowolnego kodu na tym "
+"komputerze."
