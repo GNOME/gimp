@@ -739,7 +739,7 @@ msgstr "I_nverter o relevo"
 #. Tile bumpmap
 #: ../plug-ins/common/bump-map.c:883
 msgid "_Tile bumpmap"
-msgstr "_Ladrilhar mapeamento de relevo"
+msgstr "_Ladrilhar mapa de relevo"
 
 #: ../plug-ins/common/bump-map.c:898 ../plug-ins/common/emboss.c:501
 msgid "_Azimuth:"
