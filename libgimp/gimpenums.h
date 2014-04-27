@@ -89,18 +89,6 @@ typedef enum
 } GimpConvertPaletteType;
 
 
-#define GIMP_TYPE_CONVOLUTION_TYPE (gimp_convolution_type_get_type ())
-
-GType gimp_convolution_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_NORMAL_CONVOL,
-  GIMP_ABSOLUTE_CONVOL,
-  GIMP_NEGATIVE_CONVOL
-} GimpConvolutionType;
-
-
 #define GIMP_TYPE_CONVOLVE_TYPE (gimp_convolve_type_get_type ())
 
 GType gimp_convolve_type_get_type (void) G_GNUC_CONST;

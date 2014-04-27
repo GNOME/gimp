@@ -452,15 +452,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_MONO_PALETTE => '3',
 		       GIMP_CUSTOM_PALETTE => '4' }
 	},
-    GimpConvolutionType =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_NORMAL_CONVOL GIMP_ABSOLUTE_CONVOL
-			  GIMP_NEGATIVE_CONVOL) ],
-	  mapping => { GIMP_NORMAL_CONVOL => '0',
-		       GIMP_ABSOLUTE_CONVOL => '1',
-		       GIMP_NEGATIVE_CONVOL => '2' }
-	},
     GimpHistogramChannel =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',

@@ -112,7 +112,7 @@ typedef enum
 
 GType gimp_convolution_type_get_type (void) G_GNUC_CONST;
 
-typedef enum
+typedef enum  /*< pdb-skip >*/
 {
   GIMP_NORMAL_CONVOL,      /*  Negative numbers truncated  */
   GIMP_ABSOLUTE_CONVOL,    /*  Absolute value              */

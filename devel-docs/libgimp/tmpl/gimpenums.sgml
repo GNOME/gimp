@@ -66,15 +66,6 @@ The possible shapes generated brushes can take.
 @GIMP_MONO_PALETTE: 
 @GIMP_CUSTOM_PALETTE: 
 
-<!-- ##### ENUM GimpConvolutionType ##### -->
-<para>
-
-</para>
-
-@GIMP_NORMAL_CONVOL: 
-@GIMP_ABSOLUTE_CONVOL: 
-@GIMP_NEGATIVE_CONVOL: 
-
 <!-- ##### ENUM GimpConvolveType ##### -->
 <para>
 Operation modes of the convolve tool.
