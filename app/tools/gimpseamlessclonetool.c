@@ -158,7 +158,7 @@ static void       gimp_seamless_clone_tool_stop               (GimpSeamlessClone
 static void       gimp_seamless_clone_tool_commit             (GimpSeamlessCloneTool *sc);
 
 static void       gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc);
-static void       gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc);
+static gboolean   gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc);
 static void       gimp_seamless_clone_tool_create_image_map   (GimpSeamlessCloneTool *sc,
                                                                GimpDrawable          *drawable);
 static void       gimp_seamless_clone_tool_image_map_flush    (GimpImageMap          *image_map,
@@ -421,7 +421,11 @@ gimp_seamless_clone_tool_button_press (GimpTool            *tool,
       sc->yclick = coords->y;
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-      gimp_seamless_clone_tool_image_map_update (sc);
+
+      if (gimp_seamless_clone_tool_render_node_update (sc))
+        {
+          gimp_seamless_clone_tool_image_map_update (sc);
+        }
 
       sc->tool_state = SC_STATE_RENDER_MOTION;
 
@@ -442,11 +446,11 @@ gimp_seamless_clone_tool_button_release (GimpTool              *tool,
 {
   GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
 
+  gimp_tool_control_halt (tool->control);
+
   /* There is nothing to do, unless we were actually moving a paste */
   if (sc->tool_state == SC_STATE_RENDER_MOTION)
     {
-      gimp_tool_control_halt (tool->control);
-
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (sc));
 
       if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
@@ -462,8 +466,10 @@ gimp_seamless_clone_tool_button_release (GimpTool              *tool,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
-      gimp_seamless_clone_tool_render_node_update (sc);
-      gimp_seamless_clone_tool_image_map_update (sc);
+      if (gimp_seamless_clone_tool_render_node_update (sc))
+        {
+          gimp_seamless_clone_tool_image_map_update (sc);
+        }
 
       sc->tool_state = SC_STATE_RENDER_WAIT;
     }
@@ -487,8 +493,10 @@ gimp_seamless_clone_tool_motion (GimpTool         *tool,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
-      gimp_seamless_clone_tool_render_node_update (sc);
-      gimp_seamless_clone_tool_image_map_update (sc);
+      if (gimp_seamless_clone_tool_render_node_update (sc))
+        {
+          gimp_seamless_clone_tool_image_map_update (sc);
+        }
     }
 }
 
@@ -605,8 +613,10 @@ gimp_seamless_clone_tool_options_notify (GimpTool         *tool,
 
   if (! strcmp (pspec->name, "max-refine-steps"))
     {
-      gimp_seamless_clone_tool_render_node_update (sc);
-      gimp_seamless_clone_tool_image_map_update (sc);
+      if (gimp_seamless_clone_tool_render_node_update (sc))
+        {
+          gimp_seamless_clone_tool_image_map_update (sc);
+        }
     }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -696,16 +706,29 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
 
   sc->render_node = node;
   sc->sc_node     = op;
-
-  gimp_seamless_clone_tool_render_node_update (sc);
 }
 
-static void
+/* gimp_seamless_clone_tool_render_node_update:
+ * sc: the Seamless Clone tool whose render has to be updated.
+ *
+ * Returns: TRUE if any property changed.
+ */
+static gboolean
 gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
 {
+  static gint rendered__max_refine_steps = -1;
+  static gint rendered_xoff              = G_MAXINT;
+  static gint rendered_yoff              = G_MAXINT;
+
   GimpSeamlessCloneOptions *options = GIMP_SEAMLESS_CLONE_TOOL_GET_OPTIONS (sc);
   GimpDrawable *bg = GIMP_TOOL (sc)->drawable;
   gint          off_x, off_y;
+
+  /* All properties stay the same. No need to update. */
+  if (rendered__max_refine_steps == options->max_refine_steps &&
+      rendered_xoff == sc->xoff                               &&
+      rendered_yoff == sc->yoff)
+    return FALSE;
 
   gimp_item_get_offset (GIMP_ITEM (bg), &off_x, &off_y);
 
@@ -714,6 +737,12 @@ gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
                  "yoff", (gint) sc->yoff - off_y,
                  "max-refine-steps", (gint) options->max_refine_steps,
                  NULL);
+
+  rendered__max_refine_steps = options->max_refine_steps;
+  rendered_xoff              = sc->xoff;
+  rendered_yoff              = sc->yoff;
+
+  return TRUE;
 }
 
 static void
@@ -726,7 +755,7 @@ gimp_seamless_clone_tool_create_image_map (GimpSeamlessCloneTool *sc,
   sc->image_map = gimp_image_map_new (drawable,
                                       _("Seamless Clone"),
                                       sc->render_node,
-				      GIMP_STOCK_TOOL_SEAMLESS_CLONE);
+                                      GIMP_STOCK_TOOL_SEAMLESS_CLONE);
 
   gimp_image_map_set_region (sc->image_map, GIMP_IMAGE_MAP_REGION_DRAWABLE);
 
@@ -755,6 +784,15 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
   gint              off_x, off_y;
   GeglRectangle     visible;
   GeglOperation    *op = NULL;
+
+  GimpProgress     *progress;
+  GeglNode         *output;
+  GeglProcessor    *processor;
+  gdouble           value;
+
+  progress = gimp_progress_start (GIMP_PROGRESS (sc),
+                                  _("Cloning the foreground object..."),
+                                  FALSE);
 
   /* Find out at which x,y is the top left corner of the currently
    * displayed part */
@@ -792,4 +830,19 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
 
   /* Now update the image map and show this area */
   gimp_image_map_apply (sc->image_map, NULL);
+
+  /* Show update progress. */
+  output = gegl_node_get_output_proxy (sc->render_node, "output");
+  processor = gegl_node_new_processor (output, NULL);
+
+  while (gegl_processor_work (processor, &value))
+    {
+      if (progress)
+        gimp_progress_set_value (progress, value);
+    }
+
+  if (progress)
+    gimp_progress_end (progress);
+
+  g_object_unref (processor);
 }
