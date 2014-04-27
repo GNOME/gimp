@@ -2,107 +2,107 @@
 # Copyright (C) 2001, 2002 Free Software Foundation.
 # Simos Xenitellis <simos@hellug.gr>, 2001, 2002.
 # Vasilis Kontogiannis <vasilisk@ics.forth.gr>, 2009
-# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2011, 2012.
+# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2011, 2012, 2014.
 # Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.0\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-04-16 18:55+0000\n"
-"PO-Revision-Date: 2012-04-16 20:36+0300\n"
-"Last-Translator: Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>\n"
-"Language-Team: team@gnome.gr\n"
+"POT-Creation-Date: 2014-04-27 12:35+0000\n"
+"PO-Revision-Date: 2014-04-26 15:07+0300\n"
+"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
+"Language-Team: www.gnome.gr\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.0\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Project-Style: gnome\n"
 
-#: ../plug-ins/script-fu/script-fu.c:110
+#: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
 msgstr "Διαδραστική κονσόλα για την ανάπτυξη του Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:116
+#: ../plug-ins/script-fu/script-fu.c:117
 msgid "_Console"
 msgstr "_Κονσόλα"
 
-#: ../plug-ins/script-fu/script-fu.c:140
+#: ../plug-ins/script-fu/script-fu.c:141
 msgid "Server for remote Script-Fu operation"
 msgstr "Εξυπηρετητής για απομακρυσμένη λειτουργία Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:145
+#: ../plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
 msgstr "_Εκκίνηση εξυπηρετητή..."
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_GIMP Online"
 msgstr "Το _GIMP στο διαδίκτυο"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:308
 msgid "_User Manual"
 msgstr "_Εγχειρίδιο χρήστη"
 
-#: ../plug-ins/script-fu/script-fu.c:305
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
 #
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Test"
 msgstr "Έ_λεγχος"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:316
 msgid "_Buttons"
 msgstr "_Κουμπιά"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:318
 msgid "_Logos"
 msgstr "_Λογότυποι"
 
-#: ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:320
 msgid "_Patterns"
 msgstr "_Μοτίβα"
 
-#: ../plug-ins/script-fu/script-fu.c:317
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Web Page Themes"
 msgstr "_Θέματα ιστοσελίδων"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Alien Glow"
 msgstr "Παρά_ξενη λάμψη"
 
-#: ../plug-ins/script-fu/script-fu.c:321
+#: ../plug-ins/script-fu/script-fu.c:327
 msgid "_Beveled Pattern"
 msgstr "Υπόδειγμα λοξό_τμησης"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:326
+#: ../plug-ins/script-fu/script-fu.c:332
 msgid "Alpha to _Logo"
 msgstr "Άλφα σε _λογότυπο"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:335
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Ξαναδιάβασμα όλων των διαθέσιμων σεναρίων Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:334
+#: ../plug-ins/script-fu/script-fu.c:340
 msgid "_Refresh Scripts"
 msgstr "_Ανανέωση σεναρίων"
 
-#: ../plug-ins/script-fu/script-fu.c:357
+#: ../plug-ins/script-fu/script-fu.c:363
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
 msgstr ""
 "Δεν μπορείτε να χρησιμοποιήσετε \"ανανέωση σεναρίων\" ενώ το πλαίσιο "
-"διαλόγου του Script-Fu είναι ανοιχτό. Παρακαλώ κλείστε όλα τα παράθυρα "
+"διαλόγου του Script-Fu είναι ανοιχτό. Παρακαλούμε κλείστε όλα τα παράθυρα "
 "Script-Fu και προσπαθήστε ξανά."
 
 #: ../plug-ins/script-fu/script-fu-console.c:130
@@ -141,16 +141,16 @@ msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Η κατάσταση αξιολόγησης του Script-Fu επιτρέπει μόνο μη διαδραστική κλήση"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:194
+#: ../plug-ins/script-fu/script-fu-interface.c:198
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Αδυναμία επεξεργασίας δύο σεναρίων την ίδια στιγμή από το Script-Fu."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:196
+#: ../plug-ins/script-fu/script-fu-interface.c:200
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Εκτελείται ήδη το σενάριο \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:222
+#: ../plug-ins/script-fu/script-fu-interface.c:226
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
@@ -158,46 +158,46 @@ msgstr "Script-Fu: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:286
+#: ../plug-ins/script-fu/script-fu-interface.c:290
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
 #
-#: ../plug-ins/script-fu/script-fu-interface.c:333
+#: ../plug-ins/script-fu/script-fu-interface.c:337
 msgid "Script-Fu Color Selection"
 msgstr "Επιλογή χρώματος Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:442
+#: ../plug-ins/script-fu/script-fu-interface.c:446
 msgid "Script-Fu File Selection"
 msgstr "Επιλογή αρχείου Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:445
+#: ../plug-ins/script-fu/script-fu-interface.c:449
 msgid "Script-Fu Folder Selection"
 msgstr "Επιλογή φακέλου Script-Fu"
 
 #
-#: ../plug-ins/script-fu/script-fu-interface.c:458
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Font Selection"
 msgstr "Επιλογή γραμματοσειράς Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:466
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-Fu Palette Selection"
 msgstr "Επιλογή παλέτας Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Pattern Selection"
 msgstr "Επιλογή μοτίβου Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:484
+#: ../plug-ins/script-fu/script-fu-interface.c:488
 msgid "Script-Fu Gradient Selection"
 msgstr "Επιλογή διαβάθμισης Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:493
+#: ../plug-ins/script-fu/script-fu-interface.c:497
 msgid "Script-Fu Brush Selection"
 msgstr "Επιλογή πινέλου Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:824
+#: ../plug-ins/script-fu/script-fu-interface.c:840
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Σφάλμα εκτέλεσης %s:"
@@ -211,33 +211,35 @@ msgstr "Πολύ λίγα ορίσματα κατά την κλήση του 'sc
 msgid "Error while loading %s:"
 msgstr "Σφάλμα φόρτωσης %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:807
+#: ../plug-ins/script-fu/script-fu-server.c:827
 msgid "Script-Fu Server Options"
 msgstr "Επιλογές εξυπηρετητή Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:812
+#: ../plug-ins/script-fu/script-fu-server.c:832
 msgid "_Start Server"
 msgstr "Εκκίνη_ση εξυπηρετητή"
 
-#: ../plug-ins/script-fu/script-fu-server.c:840
+#: ../plug-ins/script-fu/script-fu-server.c:865
+msgid "Listen on IP:"
+msgstr "Ακρόαση σε IP:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:872
 msgid "Server port:"
 msgstr "Θύρα εξυπηρετητή:"
 
 #
-#: ../plug-ins/script-fu/script-fu-server.c:846
+#: ../plug-ins/script-fu/script-fu-server.c:878
 msgid "Server logfile:"
 msgstr "Αρχείο ημερολογίου εξυπηρετητή:"
 
-#
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:182
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:156
-msgid "Right"
-msgstr "Δεξιά"
-
-#: ../plug-ins/script-fu/scripts/blended-logo.scm:136
-#: ../plug-ins/script-fu/scripts/blended-logo.scm:195
-msgid "FG-BG-RGB"
-msgstr "ΠΡΟΣΚΗΝΙΟ-ΠΑΡΑΣΚΗΝΙΟ-RGB"
+#: ../plug-ins/script-fu/script-fu-server.c:890
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
+"allow attackers to remotely execute arbitrary code on this machine."
+msgstr ""
+"Ακρόαση σε μια διεύθυνση IP διαφορετική από 127.0.0.1 (ιδιαίτερα 0.0.0.0) "
+"μπορεί να επιτρέψει σε επιτιθέμενους να εκτελέσουν απομακρυσμένα τυχαίο "
+"κώδικα σε αυτήν την μηχανή."
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:47
 msgid "Rows"
@@ -260,10 +262,6 @@ msgstr "Μαύρο σε λευκό"
 msgid "Horizontal"
 msgstr "Οριζόντιο"
 
-#: ../plug-ins/script-fu/scripts/rendermap.scm:90
-msgid "Tile"
-msgstr "Παράθεση"
-
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
 msgid "Wrap"
 msgstr "Αναδίπλωση"
@@ -284,14 +282,22 @@ msgstr "Μολύβι"
 msgid "Solid Color"
 msgstr "Συμπαγές χρώμα"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm:129
-#: ../plug-ins/script-fu/scripts/textured-logo.scm:171
-msgid "Squares"
-msgstr "Τετράγωνα"
-
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "IIR"
 msgstr "IIR"
+
+#
+#~ msgid "Right"
+#~ msgstr "Δεξιά"
+
+#~ msgid "FG-BG-RGB"
+#~ msgstr "ΠΡΟΣΚΗΝΙΟ-ΠΑΡΑΣΚΗΝΙΟ-RGB"
+
+#~ msgid "Tile"
+#~ msgstr "Παράθεση"
+
+#~ msgid "Squares"
+#~ msgstr "Τετράγωνα"
 
 #~ msgid "3D _Outline..."
 #~ msgstr "3Δ _Περίγραμμα"
