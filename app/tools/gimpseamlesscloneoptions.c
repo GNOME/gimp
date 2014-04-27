@@ -27,6 +27,8 @@
 
 #include "tools-types.h"
 
+#include "widgets/gimpspinscale.h"
+
 #include "gimpseamlesscloneoptions.h"
 #include "gimptooloptions-gui.h"
 
@@ -36,7 +38,7 @@
 enum
 {
   PROP_0,
-  PROP_TEMP
+  PROP_MAX_REFINE_STEPS,
 };
 
 
@@ -64,10 +66,11 @@ gimp_seamless_clone_options_class_init (GimpSeamlessCloneOptionsClass *klass)
   object_class->set_property = gimp_seamless_clone_options_set_property;
   object_class->get_property = gimp_seamless_clone_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TEMP,
-                                    "temp", NULL,
-                                    FALSE,
-                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_MAX_REFINE_STEPS,
+                                 "max-refine-steps",
+                                 N_("Maximal amount of refinement points to be used for the interpolation mesh"),
+                                 0, 100000, 2000,
+                                 GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -85,8 +88,8 @@ gimp_seamless_clone_options_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_TEMP:
-      options->temp = g_value_get_boolean (value);
+    case PROP_MAX_REFINE_STEPS:
+      options->max_refine_steps = g_value_get_int (value);
       break;
 
     default:
@@ -105,8 +108,8 @@ gimp_seamless_clone_options_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_TEMP:
-      g_value_set_boolean (value, options->temp);
+    case PROP_MAX_REFINE_STEPS:
+      g_value_set_int (value, options->max_refine_steps);
       break;
 
     default:
@@ -120,12 +123,14 @@ gimp_seamless_clone_options_gui (GimpToolOptions *tool_options)
 {
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget *button;
+  GtkWidget *scale;
 
-  button = gimp_prop_check_button_new (config, "temp",
-                                       _("Temp property"));
-  gtk_box_pack_start (GTK_BOX (vbox),  button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  scale = gimp_prop_spin_scale_new (config, "max-refine-steps",
+                                    _("Refinement points"),
+                                    1.0, 10.0, 0);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 100000.0);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   return vbox;
 }

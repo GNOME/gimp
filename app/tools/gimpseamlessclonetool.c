@@ -572,6 +572,8 @@ gimp_seamless_clone_tool_options_notify (GimpTool         *tool,
                                          GimpToolOptions  *options,
                                          const GParamSpec *pspec)
 {
+  GimpSeamlessCloneTool *sc = GIMP_SEAMLESS_CLONE_TOOL (tool);
+
   GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
 
   if (! tool->display)
@@ -579,7 +581,11 @@ gimp_seamless_clone_tool_options_notify (GimpTool         *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  /* TODO: Modify data here */
+  if (! strcmp (pspec->name, "max-refine-steps"))
+    {
+      gimp_seamless_clone_tool_render_node_update (sc);
+      gimp_seamless_clone_tool_image_map_update (sc);
+    }
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -627,6 +633,7 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
    * +----+------------------------+
    *   <output>
    */
+  GimpSeamlessCloneOptions *options = GIMP_SEAMLESS_CLONE_TOOL_GET_OPTIONS (sc);
   GeglNode *node;
   GeglNode *op, *paste, *overlay;
   GeglNode *input, *output;
@@ -642,7 +649,8 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
                                NULL);
 
   op = gegl_node_new_child (node,
-                            "operation", "gegl:seamless-clone",
+                            "operation",         "gegl:seamless-clone",
+                            "max-refine-steps",  options->max_refine_steps,
                             NULL);
 
   overlay = gegl_node_new_child (node,
@@ -673,6 +681,7 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
 static void
 gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
 {
+  GimpSeamlessCloneOptions *options = GIMP_SEAMLESS_CLONE_TOOL_GET_OPTIONS (sc);
   GimpDrawable *bg = GIMP_TOOL (sc)->drawable;
   gint          off_x, off_y;
 
@@ -681,6 +690,7 @@ gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
   gegl_node_set (sc->sc_node,
                  "xoff", (gint) sc->xoff - off_x,
                  "yoff", (gint) sc->yoff - off_y,
+                 "max-refine-steps", (gint) options->max_refine_steps,
                  NULL);
 }
 
