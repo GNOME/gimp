@@ -316,7 +316,7 @@ run (const gchar      *name,
       drawable_id = param[2].data.d_int32;
 
       /* export the image */
-      export = gimp_export_image (&image_id, &drawable_id, NULL,
+      export = gimp_export_image (&image_id, &drawable_id, "RAW",
                                   GIMP_EXPORT_CAN_HANDLE_RGB     |
                                   GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                   GIMP_EXPORT_CAN_HANDLE_INDEXED |
