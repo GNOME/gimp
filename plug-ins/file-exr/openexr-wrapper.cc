@@ -1,5 +1,13 @@
 #include "config.h"
 
+/*  These libgimp includes are not needed here at all, but this is a
+ *  convenient place to make sure the public libgimp headers are
+ *  C++-clean. The C++ compiler will choke on stuff like naming
+ *  a struct member or parameter "private".
+ */
+#include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
+
 #include "openexr-wrapper.h"
 
 #include <ImfInputFile.h>
