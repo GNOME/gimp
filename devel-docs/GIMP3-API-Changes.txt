@@ -2,5 +2,13 @@ This file contains a list of changes that can/must be done when
 we break API/ABI for 3.x.
 
 
-- move GIMP_REPEAT_TRUNCATE to the start of the enum and rename it
+- Move GIMP_REPEAT_TRUNCATE to the start of the enum and rename it
   to NONE. Rename the current NONE to EXTEND or something.
+
+- Add padding to all public class structs.
+
+- Have private pointers in all public instance structs, not just
+  GET_PRIVATE() macros, in order to inspect the private structs
+  easily in the debugger.
+
+- Remove compat values from all enums.
