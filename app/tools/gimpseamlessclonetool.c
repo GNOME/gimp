@@ -155,6 +155,8 @@ static void       gimp_seamless_clone_tool_start              (GimpSeamlessClone
 static void       gimp_seamless_clone_tool_stop               (GimpSeamlessCloneTool *sc,
                                                                gboolean               display_change_only);
 
+static void       gimp_seamless_clone_tool_commit             (GimpSeamlessCloneTool *sc);
+
 static void       gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc);
 static void       gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc);
 static void       gimp_seamless_clone_tool_create_image_map   (GimpSeamlessCloneTool *sc,
@@ -248,6 +250,7 @@ gimp_seamless_clone_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
+      gimp_seamless_clone_tool_commit (sc);
       break;
     }
 
@@ -360,6 +363,25 @@ gimp_seamless_clone_tool_stop (GimpSeamlessCloneTool *sc,
     }
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (sc));
+}
+
+static void
+gimp_seamless_clone_tool_commit (GimpSeamlessCloneTool *sc)
+{
+  GimpTool *tool = GIMP_TOOL (sc);
+
+  if (sc->image_map)
+    {
+      gimp_tool_control_push_preserve (tool->control, TRUE);
+
+      gimp_image_map_commit (sc->image_map, GIMP_PROGRESS (tool));
+      g_object_unref (sc->image_map);
+      sc->image_map = NULL;
+
+      gimp_tool_control_pop_preserve (tool->control);
+
+      gimp_image_flush (gimp_display_get_image (tool->display));
+    }
 }
 
 static void
