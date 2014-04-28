@@ -286,8 +286,12 @@ gimp_seamless_clone_tool_start (GimpSeamlessCloneTool *sc,
       GimpBuffer *buffer = gimp_clipboard_get_buffer (tool->tool_info->gimp);
 
       if (! buffer)
-        /* TODO: prompt for some error message */
-        return;
+        {
+          gimp_tool_push_status (tool, display,
+                                 "%s",
+                                 _("There is no image data in the clipboard to paste."));
+          return;
+        }
 
       sc->paste = gegl_buffer_dup (gimp_buffer_get_buffer (buffer));
       g_object_unref (buffer);
