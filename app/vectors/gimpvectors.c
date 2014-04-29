@@ -1044,7 +1044,7 @@ gimp_vectors_bounds (GimpVectors *vectors,
 
       vectors->bounds_empty = TRUE;
       vectors->bounds_x1 = vectors->bounds_x2 = 0.0;
-      vectors->bounds_x1 = vectors->bounds_x2 = 0.0;
+      vectors->bounds_y1 = vectors->bounds_y2 = 0.0;
 
       for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
            stroke;

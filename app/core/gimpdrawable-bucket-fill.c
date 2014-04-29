@@ -75,7 +75,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                            gdouble               y,
                            GError              **error)
 {
-  GimpRGB      color;
+  GimpRGB      color   = { 0, };
   GimpPattern *pattern = NULL;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);

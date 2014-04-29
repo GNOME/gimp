@@ -648,16 +648,15 @@ dx_dinput_event_dispatch (GSource     *source,
   GimpController                  *controller = &input->parent_instance;
   const DIDATAFORMAT * const       format = input->format;
   const DIOBJECTDATAFORMAT        *rgodf = format->rgodf;
-  HRESULT                          hresult;
   guchar                          *data;
   gint                             i;
   GimpControllerEvent              cevent = { 0, };
 
   data = g_alloca (format->dwDataSize);
 
-  if (FAILED ((hresult = IDirectInputDevice8_GetDeviceState (input->didevice8,
-                                                             format->dwDataSize,
-                                                             data))))
+  if (FAILED (IDirectInputDevice8_GetDeviceState (input->didevice8,
+                                                  format->dwDataSize,
+                                                  data)))
     {
       return TRUE;
     }

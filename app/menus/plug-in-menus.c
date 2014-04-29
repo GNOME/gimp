@@ -495,12 +495,15 @@ plug_in_menus_build_path (GimpUIManager *manager,
       gchar *menu_item_name;
 
       menu_item_name = strrchr (parent_menu_path, '/');
-      *menu_item_name++ = '\0';
 
       if (menu_item_name)
-        parent_action_path = plug_in_menus_build_path (manager,
-                                                       ui_path, merge_id,
-                                                       parent_menu_path, TRUE);
+        {
+          *menu_item_name++ = '\0';
+
+          parent_action_path = plug_in_menus_build_path (manager,
+                                                         ui_path, merge_id,
+                                                         parent_menu_path, TRUE);
+        }
 
       if (parent_action_path)
         {

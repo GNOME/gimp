@@ -119,7 +119,6 @@ gimp_pdb_dialog_class_init (GimpPdbDialogClass *klass)
   object_class->constructed  = gimp_pdb_dialog_constructed;
   object_class->dispose      = gimp_pdb_dialog_dispose;
   object_class->set_property = gimp_pdb_dialog_set_property;
-  object_class->set_property = gimp_pdb_dialog_set_property;
 
   dialog_class->response     = gimp_pdb_dialog_response;
 
