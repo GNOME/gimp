@@ -40,10 +40,10 @@ EXPORTS
 	gimp_grid_style_get_type
 	gimp_gtkrc
 	gimp_icon_type_get_type
+	gimp_ink_blob_type_get_type
 	gimp_image_base_type_get_type
 	gimp_image_type_get_type
 	gimp_installation_directory
-	gimp_ink_blob_type_get_type
 	gimp_interpolation_type_get_type
 	gimp_locale_directory
 	gimp_major_version
