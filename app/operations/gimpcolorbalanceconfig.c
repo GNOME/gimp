@@ -93,7 +93,7 @@ gimp_color_balance_config_class_init (GimpColorBalanceConfigClass *klass)
                                  "range",
                                  "The affected range",
                                  GIMP_TYPE_TRANSFER_MODE,
-                                 GIMP_MIDTONES, 0);
+                                 GIMP_TRANSFER_MIDTONES, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CYAN_RED,
                                    "cyan-red",
@@ -222,7 +222,9 @@ gimp_color_balance_config_serialize (GimpConfig       *config,
 
   old_range = bc_config->range;
 
-  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+  for (range = GIMP_TRANSFER_SHADOWS;
+       range <= GIMP_TRANSFER_HIGHLIGHTS;
+       range++)
     {
       bc_config->range = range;
 
@@ -280,7 +282,9 @@ gimp_color_balance_config_equal (GimpConfig *a,
   GimpColorBalanceConfig *config_b = GIMP_COLOR_BALANCE_CONFIG (b);
   GimpTransferMode        range;
 
-  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+  for (range = GIMP_TRANSFER_SHADOWS;
+       range <= GIMP_TRANSFER_HIGHLIGHTS;
+       range++)
     {
       if (config_a->cyan_red[range]      != config_b->cyan_red[range]      ||
           config_a->magenta_green[range] != config_b->magenta_green[range] ||
@@ -302,7 +306,9 @@ gimp_color_balance_config_reset (GimpConfig *config)
   GimpColorBalanceConfig *cb_config = GIMP_COLOR_BALANCE_CONFIG (config);
   GimpTransferMode        range;
 
-  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+  for (range = GIMP_TRANSFER_SHADOWS;
+       range <= GIMP_TRANSFER_HIGHLIGHTS;
+       range++)
     {
       cb_config->range = range;
       gimp_color_balance_config_reset_range (cb_config);
@@ -321,7 +327,9 @@ gimp_color_balance_config_copy (GimpConfig  *src,
   GimpColorBalanceConfig *dest_config = GIMP_COLOR_BALANCE_CONFIG (dest);
   GimpTransferMode        range;
 
-  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+  for (range = GIMP_TRANSFER_SHADOWS;
+       range <= GIMP_TRANSFER_HIGHLIGHTS;
+       range++)
     {
       dest_config->cyan_red[range]      = src_config->cyan_red[range];
       dest_config->magenta_green[range] = src_config->magenta_green[range];

@@ -22,36 +22,36 @@ package Gimp::CodeGen::enums;
     GimpAddMaskType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_ADD_WHITE_MASK GIMP_ADD_BLACK_MASK
-			  GIMP_ADD_ALPHA_MASK GIMP_ADD_ALPHA_TRANSFER_MASK
-			  GIMP_ADD_SELECTION_MASK GIMP_ADD_COPY_MASK
-			  GIMP_ADD_CHANNEL_MASK) ],
-	  mapping => { GIMP_ADD_WHITE_MASK => '0',
-		       GIMP_ADD_BLACK_MASK => '1',
-		       GIMP_ADD_ALPHA_MASK => '2',
-		       GIMP_ADD_ALPHA_TRANSFER_MASK => '3',
-		       GIMP_ADD_SELECTION_MASK => '4',
-		       GIMP_ADD_COPY_MASK => '5',
-		       GIMP_ADD_CHANNEL_MASK => '6' }
+	  symbols => [ qw(GIMP_ADD_MASK_WHITE GIMP_ADD_MASK_BLACK
+			  GIMP_ADD_MASK_ALPHA GIMP_ADD_MASK_ALPHA_TRANSFER
+			  GIMP_ADD_MASK_SELECTION GIMP_ADD_MASK_COPY
+			  GIMP_ADD_MASK_CHANNEL) ],
+	  mapping => { GIMP_ADD_MASK_WHITE => '0',
+		       GIMP_ADD_MASK_BLACK => '1',
+		       GIMP_ADD_MASK_ALPHA => '2',
+		       GIMP_ADD_MASK_ALPHA_TRANSFER => '3',
+		       GIMP_ADD_MASK_SELECTION => '4',
+		       GIMP_ADD_MASK_COPY => '5',
+		       GIMP_ADD_MASK_CHANNEL => '6' }
 	},
     GimpBlendMode =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_FG_BG_RGB_MODE GIMP_FG_BG_HSV_MODE
-			  GIMP_FG_TRANSPARENT_MODE GIMP_CUSTOM_MODE) ],
-	  mapping => { GIMP_FG_BG_RGB_MODE => '0',
-		       GIMP_FG_BG_HSV_MODE => '1',
-		       GIMP_FG_TRANSPARENT_MODE => '2',
-		       GIMP_CUSTOM_MODE => '3' }
+	  symbols => [ qw(GIMP_BLEND_FG_BG_RGB GIMP_BLEND_FG_BG_HSV
+			  GIMP_BLEND_FG_TRANSPARENT GIMP_BLEND_CUSTOM) ],
+	  mapping => { GIMP_BLEND_FG_BG_RGB => '0',
+		       GIMP_BLEND_FG_BG_HSV => '1',
+		       GIMP_BLEND_FG_TRANSPARENT => '2',
+		       GIMP_BLEND_CUSTOM => '3' }
 	},
     GimpBucketFillMode =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_FG_BUCKET_FILL GIMP_BG_BUCKET_FILL
-			  GIMP_PATTERN_BUCKET_FILL) ],
-	  mapping => { GIMP_FG_BUCKET_FILL => '0',
-		       GIMP_BG_BUCKET_FILL => '1',
-		       GIMP_PATTERN_BUCKET_FILL => '2' }
+	  symbols => [ qw(GIMP_BUCKET_FILL_FG GIMP_BUCKET_FILL_BG
+			  GIMP_BUCKET_FILL_PATTERN) ],
+	  mapping => { GIMP_BUCKET_FILL_FG => '0',
+		       GIMP_BUCKET_FILL_BG => '1',
+		       GIMP_BUCKET_FILL_PATTERN => '2' }
 	},
     GimpChannelOps =>
 	{ contig => 1,
@@ -79,9 +79,9 @@ package Gimp::CodeGen::enums;
     GimpCloneType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_IMAGE_CLONE GIMP_PATTERN_CLONE) ],
-	  mapping => { GIMP_IMAGE_CLONE => '0',
-		       GIMP_PATTERN_CLONE => '1' }
+	  symbols => [ qw(GIMP_CLONE_IMAGE GIMP_CLONE_PATTERN) ],
+	  mapping => { GIMP_CLONE_IMAGE => '0',
+		       GIMP_CLONE_PATTERN => '1' }
 	},
     GimpDesaturateMode =>
 	{ contig => 1,
@@ -95,9 +95,10 @@ package Gimp::CodeGen::enums;
     GimpDodgeBurnType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_DODGE GIMP_BURN) ],
-	  mapping => { GIMP_DODGE => '0',
-		       GIMP_BURN => '1' }
+	  symbols => [ qw(GIMP_DODGE_BURN_TYPE_DODGE
+			  GIMP_DODGE_BURN_TYPE_BURN) ],
+	  mapping => { GIMP_DODGE_BURN_TYPE_DODGE => '0',
+		       GIMP_DODGE_BURN_TYPE_BURN => '1' }
 	},
     GimpForegroundExtractMode =>
 	{ contig => 1,
@@ -222,10 +223,11 @@ package Gimp::CodeGen::enums;
     GimpTransferMode =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_SHADOWS GIMP_MIDTONES GIMP_HIGHLIGHTS) ],
-	  mapping => { GIMP_SHADOWS => '0',
-		       GIMP_MIDTONES => '1',
-		       GIMP_HIGHLIGHTS => '2' }
+	  symbols => [ qw(GIMP_TRANSFER_SHADOWS GIMP_TRANSFER_MIDTONES
+			  GIMP_TRANSFER_HIGHLIGHTS) ],
+	  mapping => { GIMP_TRANSFER_SHADOWS => '0',
+		       GIMP_TRANSFER_MIDTONES => '1',
+		       GIMP_TRANSFER_HIGHLIGHTS => '2' }
 	},
     GimpTransformDirection =>
 	{ contig => 1,

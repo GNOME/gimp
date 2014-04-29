@@ -1439,7 +1439,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
   GimpRGB        black = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
-  g_return_val_if_fail (add_mask_type != GIMP_ADD_CHANNEL_MASK ||
+  g_return_val_if_fail (add_mask_type != GIMP_ADD_MASK_CHANNEL ||
                         GIMP_IS_CHANNEL (channel), NULL);
 
   drawable = GIMP_DRAWABLE (layer);
@@ -1458,11 +1458,11 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
   switch (add_mask_type)
     {
-    case GIMP_ADD_WHITE_MASK:
+    case GIMP_ADD_MASK_WHITE:
       gimp_channel_all (GIMP_CHANNEL (mask), FALSE);
       return mask;
 
-    case GIMP_ADD_BLACK_MASK:
+    case GIMP_ADD_MASK_BLACK:
       gimp_channel_clear (GIMP_CHANNEL (mask), NULL, FALSE);
       return mask;
 
@@ -1472,12 +1472,12 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
   switch (add_mask_type)
     {
-    case GIMP_ADD_WHITE_MASK:
-    case GIMP_ADD_BLACK_MASK:
+    case GIMP_ADD_MASK_WHITE:
+    case GIMP_ADD_MASK_BLACK:
       break;
 
-    case GIMP_ADD_ALPHA_MASK:
-    case GIMP_ADD_ALPHA_TRANSFER_MASK:
+    case GIMP_ADD_MASK_ALPHA:
+    case GIMP_ADD_MASK_ALPHA_TRANSFER:
       if (gimp_drawable_has_alpha (drawable))
         {
           GeglBuffer *dest_buffer;
@@ -1493,7 +1493,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
                             dest_buffer, NULL);
           gegl_buffer_set_format (dest_buffer, NULL);
 
-          if (add_mask_type == GIMP_ADD_ALPHA_TRANSFER_MASK)
+          if (add_mask_type == GIMP_ADD_MASK_ALPHA_TRANSFER)
             {
               gimp_drawable_push_undo (drawable,
                                        C_("undo-type", "Transfer Alpha to Mask"),
@@ -1510,15 +1510,15 @@ gimp_layer_create_mask (const GimpLayer *layer,
         }
       break;
 
-    case GIMP_ADD_SELECTION_MASK:
-    case GIMP_ADD_CHANNEL_MASK:
+    case GIMP_ADD_MASK_SELECTION:
+    case GIMP_ADD_MASK_CHANNEL:
       {
         gboolean channel_empty;
         gint     offset_x, offset_y;
         gint     copy_x, copy_y;
         gint     copy_width, copy_height;
 
-        if (add_mask_type == GIMP_ADD_SELECTION_MASK)
+        if (add_mask_type == GIMP_ADD_MASK_SELECTION)
           channel = GIMP_CHANNEL (gimp_image_get_mask (image));
 
         channel_empty = gimp_channel_is_empty (channel);
@@ -1559,7 +1559,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
       }
       break;
 
-    case GIMP_ADD_COPY_MASK:
+    case GIMP_ADD_MASK_COPY:
       {
         GeglBuffer *src_buffer;
         GeglBuffer *dest_buffer;

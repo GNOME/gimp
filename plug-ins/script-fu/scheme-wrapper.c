@@ -151,21 +151,21 @@ static const NamedConstant const old_constants[] =
   { "BLUR",                 GIMP_BLUR_CONVOLVE     },
   { "SHARPEN",              GIMP_SHARPEN_CONVOLVE  },
 
-  { "WHITE-MASK",           GIMP_ADD_WHITE_MASK     },
-  { "BLACK-MASK",           GIMP_ADD_BLACK_MASK     },
-  { "ALPHA-MASK",           GIMP_ADD_ALPHA_MASK     },
-  { "SELECTION-MASK",       GIMP_ADD_SELECTION_MASK },
-  { "COPY-MASK",            GIMP_ADD_COPY_MASK      },
+  { "WHITE-MASK",           GIMP_ADD_MASK_WHITE     },
+  { "BLACK-MASK",           GIMP_ADD_MASK_BLACK     },
+  { "ALPHA-MASK",           GIMP_ADD_MASK_ALPHA     },
+  { "SELECTION-MASK",       GIMP_ADD_MASK_SELECTION },
+  { "COPY-MASK",            GIMP_ADD_MASK_COPY      },
 
   { "ADD",                  GIMP_CHANNEL_OP_ADD       },
   { "SUB",                  GIMP_CHANNEL_OP_SUBTRACT  },
   { "REPLACE",              GIMP_CHANNEL_OP_REPLACE   },
   { "INTERSECT",            GIMP_CHANNEL_OP_INTERSECT },
 
-  { "FG-BG-RGB",            GIMP_FG_BG_RGB_MODE       },
-  { "FG-BG-HSV",            GIMP_FG_BG_HSV_MODE       },
-  { "FG-TRANS",             GIMP_FG_TRANSPARENT_MODE  },
-  { "CUSTOM",               GIMP_CUSTOM_MODE          },
+  { "FG-BG-RGB",            GIMP_BLEND_FG_BG_RGB       },
+  { "FG-BG-HSV",            GIMP_BLEND_FG_BG_HSV       },
+  { "FG-TRANS",             GIMP_BLEND_FG_TRANSPARENT  },
+  { "CUSTOM",               GIMP_BLEND_CUSTOM          },
 
   { "FG-IMAGE-FILL",        GIMP_FOREGROUND_FILL  },
   { "BG-IMAGE-FILL",        GIMP_BACKGROUND_FILL  },
@@ -202,6 +202,35 @@ static const NamedConstant const old_constants[] =
   { "GREEN-LUT",            GIMP_HISTOGRAM_GREEN },
   { "BLUE-LUT",             GIMP_HISTOGRAM_BLUE  },
   { "ALPHA-LUT",            GIMP_HISTOGRAM_ALPHA },
+
+  /*  the following enums got cleaned up with properly named values in 2.10  */
+
+  { "ADD-WHITE-MASK",          GIMP_ADD_MASK_WHITE          },
+  { "ADD-BLACK-MASK",          GIMP_ADD_MASK_BLACK          },
+  { "ADD-ALPHA-MASK",          GIMP_ADD_MASK_ALPHA          },
+  { "ADD-ALPHA-TRANSFER-MASK", GIMP_ADD_MASK_ALPHA_TRANSFER },
+  { "ADD-SELECTION-MASK",      GIMP_ADD_MASK_SELECTION      },
+  { "ADD-COPY-MASK",           GIMP_ADD_MASK_COPY           },
+  { "ADD-CHANNEL-MASK",        GIMP_ADD_MASK_CHANNEL        },
+
+  { "FG-BG-RGB-MODE",          GIMP_BLEND_FG_BG_RGB      },
+  { "FG-BG-HSV-MODE",          GIMP_BLEND_FG_BG_HSV      },
+  { "FG-TRANSPARENT-MODE",     GIMP_BLEND_FG_TRANSPARENT },
+  { "CUSTOM-MODE",             GIMP_BLEND_CUSTOM         },
+
+  { "FG-BUCKET_FILL",          GIMP_BUCKET_FILL_FG      },
+  { "BG-BUCKET_FILL",          GIMP_BUCKET_FILL_BG      },
+  { "PATTERN-BUCKET_FILL",     GIMP_BUCKET_FILL_PATTERN },
+
+  { "IMAGE-CLONE",             GIMP_CLONE_IMAGE   },
+  { "PATTERN-CLONE",           GIMP_CLONE_PATTERN },
+
+  { "DODGE",                   GIMP_DODGE_BURN_TYPE_DODGE },
+  { "BURN",                    GIMP_DODGE_BURN_TYPE_BURN  },
+
+  { "SHADOWS",                 GIMP_TRANSFER_SHADOWS    },
+  { "MIDTONES",                GIMP_TRANSFER_MIDTONES   },
+  { "HIGHLIGHTS",              GIMP_TRANSFER_HIGHLIGHTS },
 
   { NULL, 0 }
 };

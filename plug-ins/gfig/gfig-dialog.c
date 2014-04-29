@@ -1784,7 +1784,7 @@ gfig_paint (BrushType brush_type,
     case BRUSH_PATTERN_TYPE:
       gimp_clone (drawable_ID,
                   drawable_ID,
-                  GIMP_PATTERN_CLONE,
+                  GIMP_CLONE_PATTERN,
                   0.0, 0.0,
                   seg_count, line_pnts);
       break;
@@ -1912,16 +1912,16 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
       return;
 
     case FILL_COLOR:
-      fill_mode = GIMP_BG_BUCKET_FILL;
+      fill_mode = GIMP_BUCKET_FILL_FG;
       break;
 
     case FILL_PATTERN:
-      fill_mode = GIMP_PATTERN_BUCKET_FILL;
+      fill_mode = GIMP_BUCKET_FILL_PATTERN;
       break;
 
     case FILL_GRADIENT:
       gimp_edit_blend (gfig_context->drawable_id,
-                       GIMP_CUSTOM_MODE,
+                       GIMP_BLEND_CUSTOM,
                        GIMP_NORMAL_MODE,
                        GIMP_GRADIENT_SHAPEBURST_DIMPLED,
                        100.0,             /* opacity            */
@@ -1937,7 +1937,7 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
       return;
     case FILL_VERTICAL:
       gimp_edit_blend (gfig_context->drawable_id,
-                       GIMP_CUSTOM_MODE,
+                       GIMP_BLEND_CUSTOM,
                        GIMP_NORMAL_MODE,
                        GIMP_GRADIENT_LINEAR,
                        100.0,
@@ -1953,7 +1953,7 @@ paint_layer_fill (gdouble x1, gdouble y1, gdouble x2, gdouble y2)
       return;
     case FILL_HORIZONTAL:
       gimp_edit_blend (gfig_context->drawable_id,
-                       GIMP_CUSTOM_MODE,
+                       GIMP_BLEND_CUSTOM,
                        GIMP_NORMAL_MODE,
                        GIMP_GRADIENT_LINEAR,
                        100.0,

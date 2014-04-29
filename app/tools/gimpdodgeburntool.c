@@ -99,7 +99,7 @@ gimp_dodge_burn_tool_init (GimpDodgeBurnTool *dodgeburn)
   gimp_tool_control_set_toggle_tool_cursor (tool->control,
                                             GIMP_TOOL_CURSOR_BURN);
 
-  gimp_dodge_burn_tool_status_update (tool, GIMP_BURN);
+  gimp_dodge_burn_tool_status_update (tool, GIMP_DODGE_BURN_TYPE_BURN);
 }
 
 static void
@@ -130,12 +130,12 @@ gimp_dodge_burn_tool_modifier_key (GimpTool        *tool,
 
       switch (options->type)
         {
-        case GIMP_DODGE:
-          g_object_set (options, "type", GIMP_BURN, NULL);
+        case GIMP_DODGE_BURN_TYPE_DODGE:
+          g_object_set (options, "type", GIMP_DODGE_BURN_TYPE_BURN, NULL);
           break;
 
-        case GIMP_BURN:
-          g_object_set (options, "type", GIMP_DODGE, NULL);
+        case GIMP_DODGE_BURN_TYPE_BURN:
+          g_object_set (options, "type", GIMP_DODGE_BURN_TYPE_DODGE, NULL);
           break;
 
         default:
@@ -155,7 +155,8 @@ gimp_dodge_burn_tool_cursor_update (GimpTool         *tool,
 {
   GimpDodgeBurnOptions *options = GIMP_DODGE_BURN_TOOL_GET_OPTIONS (tool);
 
-  gimp_tool_control_set_toggled (tool->control, (options->type == GIMP_BURN));
+  gimp_tool_control_set_toggled (tool->control,
+                                 options->type == GIMP_DODGE_BURN_TYPE_BURN);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state,
                                                  display);
@@ -184,13 +185,13 @@ gimp_dodge_burn_tool_status_update (GimpTool          *tool,
 
   switch (type)
     {
-    case GIMP_DODGE:
+    case GIMP_DODGE_BURN_TYPE_DODGE:
       paint_tool->status      = _("Click to dodge");
       paint_tool->status_line = _("Click to dodge the line");
       paint_tool->status_ctrl = _("%s to burn");
       break;
 
-    case GIMP_BURN:
+    case GIMP_DODGE_BURN_TYPE_BURN:
       paint_tool->status      = _("Click to burn");
       paint_tool->status_line = _("Click to burn the line");
       paint_tool->status_ctrl = _("%s to dodge");

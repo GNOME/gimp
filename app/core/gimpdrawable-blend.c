@@ -757,7 +757,7 @@ gradient_render_pixel (gdouble   x,
       color->r = color->g = color->b = 0;
       color->a = GIMP_OPACITY_TRANSPARENT;
     }
-  else if (rbd->blend_mode == GIMP_CUSTOM_MODE)
+  else if (rbd->blend_mode == GIMP_BLEND_CUSTOM)
     {
 #ifdef USE_GRADIENT_CACHE
       *color = rbd->gradient_cache[(gint) (factor * (rbd->gradient_cache_size - 1))];
@@ -778,7 +778,7 @@ gradient_render_pixel (gdouble   x,
       color->b = rbd->fg.b + (rbd->bg.b - rbd->fg.b) * factor;
       color->a = rbd->fg.a + (rbd->bg.a - rbd->fg.a) * factor;
 
-      if (rbd->blend_mode == GIMP_FG_BG_HSV_MODE)
+      if (rbd->blend_mode == GIMP_BLEND_FG_BG_HSV)
         {
           GimpHSV hsv = *((GimpHSV *) color);
 
@@ -878,10 +878,10 @@ gradient_fill_region (GimpImage           *image,
 
   switch (blend_mode)
     {
-    case GIMP_FG_BG_RGB_MODE:
+    case GIMP_BLEND_FG_BG_RGB:
       break;
 
-    case GIMP_FG_BG_HSV_MODE:
+    case GIMP_BLEND_FG_BG_HSV:
       /* Convert to HSV */
       {
         GimpHSV fg_hsv;
@@ -895,14 +895,14 @@ gradient_fill_region (GimpImage           *image,
       }
       break;
 
-    case GIMP_FG_TRANSPARENT_MODE:
+    case GIMP_BLEND_FG_TRANSPARENT:
       /* Color does not change, just the opacity */
 
       rbd.bg   = rbd.fg;
       rbd.bg.a = GIMP_OPACITY_TRANSPARENT;
       break;
 
-    case GIMP_CUSTOM_MODE:
+    case GIMP_BLEND_CUSTOM:
       break;
 
     default:

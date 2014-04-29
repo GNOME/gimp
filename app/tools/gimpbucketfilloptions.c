@@ -87,7 +87,7 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_MODE,
                                  "fill-mode", NULL,
                                  GIMP_TYPE_BUCKET_FILL_MODE,
-                                 GIMP_FG_BUCKET_FILL,
+                                 GIMP_BUCKET_FILL_FG,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FILL_SELECTION,
                                     "fill-selection",
@@ -238,7 +238,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
                                     NULL, 2,
                                     "pattern-view-type", "pattern-view-size");
   gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox,
-                             GIMP_PATTERN_BUCKET_FILL, TRUE);
+                             GIMP_BUCKET_FILL_PATTERN, TRUE);
 
   /*  fill selection  */
   str = g_strdup_printf (_("Affected Area  (%s)"),

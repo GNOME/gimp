@@ -252,7 +252,7 @@ gimp_blend_tool_button_release (GimpTool              *tool,
 
       gimp_drawable_blend (drawable,
                            context,
-                           GIMP_CUSTOM_MODE,
+                           GIMP_BLEND_CUSTOM,
                            gimp_context_get_paint_mode (context),
                            options->gradient_type,
                            gimp_context_get_opacity (context),

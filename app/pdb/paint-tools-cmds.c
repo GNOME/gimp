@@ -1049,7 +1049,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                                   "clone type",
                                                   "The type of clone",
                                                   GIMP_TYPE_CLONE_TYPE,
-                                                  GIMP_IMAGE_CLONE,
+                                                  GIMP_CLONE_IMAGE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("src-x",
@@ -1223,14 +1223,14 @@ register_paint_tools_procs (GimpPDB *pdb)
                                                   "dodgeburn type",
                                                   "The type either dodge or burn",
                                                   GIMP_TYPE_DODGE_BURN_TYPE,
-                                                  GIMP_DODGE,
+                                                  GIMP_DODGE_BURN_TYPE_DODGE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("dodgeburn-mode",
                                                   "dodgeburn mode",
                                                   "The mode",
                                                   GIMP_TYPE_TRANSFER_MODE,
-                                                  GIMP_SHADOWS,
+                                                  GIMP_TRANSFER_SHADOWS,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-strokes",

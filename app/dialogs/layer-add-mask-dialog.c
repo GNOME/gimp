@@ -125,7 +125,7 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
                                         context,
                                         GIMP_VIEW_SIZE_SMALL, 1);
   gimp_enum_radio_frame_add (GTK_FRAME (frame), combo,
-                             GIMP_ADD_CHANNEL_MASK, TRUE);
+                             GIMP_ADD_MASK_CHANNEL, TRUE);
   gtk_widget_show (combo);
 
   g_signal_connect (combo, "select-item",

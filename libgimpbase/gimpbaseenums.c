@@ -13,25 +13,25 @@ gimp_add_mask_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_ADD_WHITE_MASK, "GIMP_ADD_WHITE_MASK", "white-mask" },
-    { GIMP_ADD_BLACK_MASK, "GIMP_ADD_BLACK_MASK", "black-mask" },
-    { GIMP_ADD_ALPHA_MASK, "GIMP_ADD_ALPHA_MASK", "alpha-mask" },
-    { GIMP_ADD_ALPHA_TRANSFER_MASK, "GIMP_ADD_ALPHA_TRANSFER_MASK", "alpha-transfer-mask" },
-    { GIMP_ADD_SELECTION_MASK, "GIMP_ADD_SELECTION_MASK", "selection-mask" },
-    { GIMP_ADD_COPY_MASK, "GIMP_ADD_COPY_MASK", "copy-mask" },
-    { GIMP_ADD_CHANNEL_MASK, "GIMP_ADD_CHANNEL_MASK", "channel-mask" },
+    { GIMP_ADD_MASK_WHITE, "GIMP_ADD_MASK_WHITE", "white-mask" },
+    { GIMP_ADD_MASK_BLACK, "GIMP_ADD_MASK_BLACK", "black-mask" },
+    { GIMP_ADD_MASK_ALPHA, "GIMP_ADD_MASK_ALPHA", "alpha-mask" },
+    { GIMP_ADD_MASK_ALPHA_TRANSFER, "GIMP_ADD_MASK_ALPHA_TRANSFER", "alpha-transfer-mask" },
+    { GIMP_ADD_MASK_SELECTION, "GIMP_ADD_MASK_SELECTION", "selection-mask" },
+    { GIMP_ADD_MASK_COPY, "GIMP_ADD_MASK_COPY", "copy-mask" },
+    { GIMP_ADD_MASK_CHANNEL, "GIMP_ADD_MASK_CHANNEL", "channel-mask" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_ADD_WHITE_MASK, NC_("add-mask-type", "_White (full opacity)"), NULL },
-    { GIMP_ADD_BLACK_MASK, NC_("add-mask-type", "_Black (full transparency)"), NULL },
-    { GIMP_ADD_ALPHA_MASK, NC_("add-mask-type", "Layer's _alpha channel"), NULL },
-    { GIMP_ADD_ALPHA_TRANSFER_MASK, NC_("add-mask-type", "_Transfer layer's alpha channel"), NULL },
-    { GIMP_ADD_SELECTION_MASK, NC_("add-mask-type", "_Selection"), NULL },
-    { GIMP_ADD_COPY_MASK, NC_("add-mask-type", "_Grayscale copy of layer"), NULL },
-    { GIMP_ADD_CHANNEL_MASK, NC_("add-mask-type", "C_hannel"), NULL },
+    { GIMP_ADD_MASK_WHITE, NC_("add-mask-type", "_White (full opacity)"), NULL },
+    { GIMP_ADD_MASK_BLACK, NC_("add-mask-type", "_Black (full transparency)"), NULL },
+    { GIMP_ADD_MASK_ALPHA, NC_("add-mask-type", "Layer's _alpha channel"), NULL },
+    { GIMP_ADD_MASK_ALPHA_TRANSFER, NC_("add-mask-type", "_Transfer layer's alpha channel"), NULL },
+    { GIMP_ADD_MASK_SELECTION, NC_("add-mask-type", "_Selection"), NULL },
+    { GIMP_ADD_MASK_COPY, NC_("add-mask-type", "_Grayscale copy of layer"), NULL },
+    { GIMP_ADD_MASK_CHANNEL, NC_("add-mask-type", "C_hannel"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -53,19 +53,19 @@ gimp_blend_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_FG_BG_RGB_MODE, "GIMP_FG_BG_RGB_MODE", "fg-bg-rgb-mode" },
-    { GIMP_FG_BG_HSV_MODE, "GIMP_FG_BG_HSV_MODE", "fg-bg-hsv-mode" },
-    { GIMP_FG_TRANSPARENT_MODE, "GIMP_FG_TRANSPARENT_MODE", "fg-transparent-mode" },
-    { GIMP_CUSTOM_MODE, "GIMP_CUSTOM_MODE", "custom-mode" },
+    { GIMP_BLEND_FG_BG_RGB, "GIMP_BLEND_FG_BG_RGB", "fg-bg-rgb-mode" },
+    { GIMP_BLEND_FG_BG_HSV, "GIMP_BLEND_FG_BG_HSV", "fg-bg-hsv-mode" },
+    { GIMP_BLEND_FG_TRANSPARENT, "GIMP_BLEND_FG_TRANSPARENT", "fg-transparent-mode" },
+    { GIMP_BLEND_CUSTOM, "GIMP_BLEND_CUSTOM", "custom-mode" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_FG_BG_RGB_MODE, NC_("blend-mode", "FG to BG (RGB)"), NULL },
-    { GIMP_FG_BG_HSV_MODE, NC_("blend-mode", "FG to BG (HSV)"), NULL },
-    { GIMP_FG_TRANSPARENT_MODE, NC_("blend-mode", "FG to transparent"), NULL },
-    { GIMP_CUSTOM_MODE, NC_("blend-mode", "Custom gradient"), NULL },
+    { GIMP_BLEND_FG_BG_RGB, NC_("blend-mode", "FG to BG (RGB)"), NULL },
+    { GIMP_BLEND_FG_BG_HSV, NC_("blend-mode", "FG to BG (HSV)"), NULL },
+    { GIMP_BLEND_FG_TRANSPARENT, NC_("blend-mode", "FG to transparent"), NULL },
+    { GIMP_BLEND_CUSTOM, NC_("blend-mode", "Custom gradient"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -87,17 +87,17 @@ gimp_bucket_fill_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_FG_BUCKET_FILL, "GIMP_FG_BUCKET_FILL", "fg-bucket-fill" },
-    { GIMP_BG_BUCKET_FILL, "GIMP_BG_BUCKET_FILL", "bg-bucket-fill" },
-    { GIMP_PATTERN_BUCKET_FILL, "GIMP_PATTERN_BUCKET_FILL", "pattern-bucket-fill" },
+    { GIMP_BUCKET_FILL_FG, "GIMP_BUCKET_FILL_FG", "fg-bucket-fill" },
+    { GIMP_BUCKET_FILL_BG, "GIMP_BUCKET_FILL_BG", "bg-bucket-fill" },
+    { GIMP_BUCKET_FILL_PATTERN, "GIMP_BUCKET_FILL_PATTERN", "pattern-bucket-fill" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_FG_BUCKET_FILL, NC_("bucket-fill-mode", "FG color fill"), NULL },
-    { GIMP_BG_BUCKET_FILL, NC_("bucket-fill-mode", "BG color fill"), NULL },
-    { GIMP_PATTERN_BUCKET_FILL, NC_("bucket-fill-mode", "Pattern fill"), NULL },
+    { GIMP_BUCKET_FILL_FG, NC_("bucket-fill-mode", "FG color fill"), NULL },
+    { GIMP_BUCKET_FILL_BG, NC_("bucket-fill-mode", "BG color fill"), NULL },
+    { GIMP_BUCKET_FILL_PATTERN, NC_("bucket-fill-mode", "Pattern fill"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -261,15 +261,15 @@ gimp_clone_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_IMAGE_CLONE, "GIMP_IMAGE_CLONE", "image-clone" },
-    { GIMP_PATTERN_CLONE, "GIMP_PATTERN_CLONE", "pattern-clone" },
+    { GIMP_CLONE_IMAGE, "GIMP_CLONE_IMAGE", "image-clone" },
+    { GIMP_CLONE_PATTERN, "GIMP_CLONE_PATTERN", "pattern-clone" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_IMAGE_CLONE, NC_("clone-type", "Image"), NULL },
-    { GIMP_PATTERN_CLONE, NC_("clone-type", "Pattern"), NULL },
+    { GIMP_CLONE_IMAGE, NC_("clone-type", "Image"), NULL },
+    { GIMP_CLONE_PATTERN, NC_("clone-type", "Pattern"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -323,15 +323,15 @@ gimp_dodge_burn_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_DODGE, "GIMP_DODGE", "dodge" },
-    { GIMP_BURN, "GIMP_BURN", "burn" },
+    { GIMP_DODGE_BURN_TYPE_DODGE, "GIMP_DODGE_BURN_TYPE_DODGE", "dodge" },
+    { GIMP_DODGE_BURN_TYPE_BURN, "GIMP_DODGE_BURN_TYPE_BURN", "burn" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_DODGE, NC_("dodge-burn-type", "Dodge"), NULL },
-    { GIMP_BURN, NC_("dodge-burn-type", "Burn"), NULL },
+    { GIMP_DODGE_BURN_TYPE_DODGE, NC_("dodge-burn-type", "Dodge"), NULL },
+    { GIMP_DODGE_BURN_TYPE_BURN, NC_("dodge-burn-type", "Burn"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -731,17 +731,17 @@ gimp_transfer_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_SHADOWS, "GIMP_SHADOWS", "shadows" },
-    { GIMP_MIDTONES, "GIMP_MIDTONES", "midtones" },
-    { GIMP_HIGHLIGHTS, "GIMP_HIGHLIGHTS", "highlights" },
+    { GIMP_TRANSFER_SHADOWS, "GIMP_TRANSFER_SHADOWS", "shadows" },
+    { GIMP_TRANSFER_MIDTONES, "GIMP_TRANSFER_MIDTONES", "midtones" },
+    { GIMP_TRANSFER_HIGHLIGHTS, "GIMP_TRANSFER_HIGHLIGHTS", "highlights" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_SHADOWS, NC_("transfer-mode", "Shadows"), NULL },
-    { GIMP_MIDTONES, NC_("transfer-mode", "Midtones"), NULL },
-    { GIMP_HIGHLIGHTS, NC_("transfer-mode", "Highlights"), NULL },
+    { GIMP_TRANSFER_SHADOWS, NC_("transfer-mode", "Shadows"), NULL },
+    { GIMP_TRANSFER_MIDTONES, NC_("transfer-mode", "Midtones"), NULL },
+    { GIMP_TRANSFER_HIGHLIGHTS, NC_("transfer-mode", "Highlights"), NULL },
     { 0, NULL, NULL }
   };
 

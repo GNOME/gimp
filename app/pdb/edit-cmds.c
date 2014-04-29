@@ -603,19 +603,19 @@ edit_bucket_fill_invoker (GimpProcedure         *procedure,
 
           if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
             {
-              GimpFillType fill_type = GIMP_FG_BUCKET_FILL;
+              GimpFillType fill_type = GIMP_FOREGROUND_FILL;
 
               switch (fill_mode)
                 {
-                case GIMP_FG_BUCKET_FILL:
+                case GIMP_BUCKET_FILL_FG:
                   fill_type = GIMP_FOREGROUND_FILL;
                   break;
 
-                case GIMP_BG_BUCKET_FILL:
+                case GIMP_BUCKET_FILL_BG:
                   fill_type = GIMP_BACKGROUND_FILL;
                   break;
 
-                case GIMP_PATTERN_BUCKET_FILL:
+                case GIMP_BUCKET_FILL_PATTERN:
                   fill_type = GIMP_PATTERN_FILL;
                   break;
                 }
@@ -683,19 +683,19 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
 
           if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
             {
-              GimpFillType fill_type = GIMP_FG_BUCKET_FILL;
+              GimpFillType fill_type = GIMP_FOREGROUND_FILL;
 
               switch (fill_mode)
                 {
-                case GIMP_FG_BUCKET_FILL:
+                case GIMP_BUCKET_FILL_FG:
                   fill_type = GIMP_FOREGROUND_FILL;
                   break;
 
-                case GIMP_BG_BUCKET_FILL:
+                case GIMP_BUCKET_FILL_BG:
                   fill_type = GIMP_BACKGROUND_FILL;
                   break;
 
-                case GIMP_PATTERN_BUCKET_FILL:
+                case GIMP_BUCKET_FILL_PATTERN:
                   fill_type = GIMP_PATTERN_FILL;
                   break;
                 }
@@ -1315,7 +1315,7 @@ register_edit_procs (GimpPDB *pdb)
                                                   "fill mode",
                                                   "The type of fill",
                                                   GIMP_TYPE_BUCKET_FILL_MODE,
-                                                  GIMP_FG_BUCKET_FILL,
+                                                  GIMP_BUCKET_FILL_FG,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("paint-mode",
@@ -1382,7 +1382,7 @@ register_edit_procs (GimpPDB *pdb)
                                                   "fill mode",
                                                   "The type of fill",
                                                   GIMP_TYPE_BUCKET_FILL_MODE,
-                                                  GIMP_FG_BUCKET_FILL,
+                                                  GIMP_BUCKET_FILL_FG,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("paint-mode",
@@ -1462,7 +1462,7 @@ register_edit_procs (GimpPDB *pdb)
                                                   "blend mode",
                                                   "The type of blend",
                                                   GIMP_TYPE_BLEND_MODE,
-                                                  GIMP_FG_BG_RGB_MODE,
+                                                  GIMP_BLEND_FG_BG_RGB,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("paint-mode",

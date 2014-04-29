@@ -620,7 +620,7 @@ layer_create_mask_invoker (GimpProcedure         *procedure,
     {
       GimpChannel *channel = NULL;
 
-      if (mask_type == GIMP_ADD_CHANNEL_MASK)
+      if (mask_type == GIMP_ADD_MASK_CHANNEL)
         {
           channel = gimp_image_get_active_channel (gimp_item_get_image (GIMP_ITEM (layer)));
 
@@ -1660,7 +1660,7 @@ register_layer_procs (GimpPDB *pdb)
                                                   "mask type",
                                                   "The type of mask",
                                                   GIMP_TYPE_ADD_MASK_TYPE,
-                                                  GIMP_ADD_WHITE_MASK,
+                                                  GIMP_ADD_MASK_WHITE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer_mask_id ("mask",

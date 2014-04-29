@@ -40,13 +40,22 @@ GType gimp_add_mask_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ADD_WHITE_MASK,          /*< desc="_White (full opacity)"           >*/
-  GIMP_ADD_BLACK_MASK,          /*< desc="_Black (full transparency)"      >*/
-  GIMP_ADD_ALPHA_MASK,          /*< desc="Layer's _alpha channel"          >*/
-  GIMP_ADD_ALPHA_TRANSFER_MASK, /*< desc="_Transfer layer's alpha channel" >*/
-  GIMP_ADD_SELECTION_MASK,      /*< desc="_Selection"                      >*/
-  GIMP_ADD_COPY_MASK,           /*< desc="_Grayscale copy of layer"        >*/
-  GIMP_ADD_CHANNEL_MASK         /*< desc="C_hannel"                        >*/
+  GIMP_ADD_MASK_WHITE,     /*< nick=white-mask,     desc="_White (full opacity)"        >*/
+  GIMP_ADD_MASK_BLACK,     /*< nick=black-mask,     desc="_Black (full transparency)"   >*/
+  GIMP_ADD_MASK_ALPHA,     /*< nick=alpha-mask,     desc="Layer's _alpha channel"       >*/
+  GIMP_ADD_MASK_ALPHA_TRANSFER, /*< nick=alpha-transfer-mask, desc="_Transfer layer's alpha channel" >*/
+  GIMP_ADD_MASK_SELECTION, /*< nick=selection-mask, desc="_Selection"                   >*/
+  GIMP_ADD_MASK_COPY,      /*< nick=copy-mask,      desc="_Grayscale copy of layer"     >*/
+  GIMP_ADD_MASK_CHANNEL,   /*< nick=channel-mask,   desc="C_hannel"                     >*/
+
+  /*  the following aliases are deprecated  */
+  GIMP_ADD_WHITE_MASK          = GIMP_ADD_MASK_WHITE,     /*< skip, pdb-skip >*/
+  GIMP_ADD_BLACK_MASK          = GIMP_ADD_MASK_BLACK,     /*< skip, pdb-skip >*/
+  GIMP_ADD_ALPHA_MASK          = GIMP_ADD_MASK_ALPHA,     /*< skip, pdb-skip >*/
+  GIMP_ADD_ALPHA_TRANSFER_MASK = GIMP_ADD_MASK_ALPHA_TRANSFER, /*< skip, pdb-skip >*/
+  GIMP_ADD_SELECTION_MASK      = GIMP_ADD_MASK_SELECTION, /*< skip, pdb-skip >*/
+  GIMP_ADD_COPY_MASK           = GIMP_ADD_MASK_COPY,      /*< skip, pdb-skip >*/
+  GIMP_ADD_CHANNEL_MASK        = GIMP_ADD_MASK_CHANNEL    /*< skip, pdb-skip >*/
 } GimpAddMaskType;
 
 
@@ -56,10 +65,16 @@ GType gimp_blend_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_FG_BG_RGB_MODE,         /*< desc="FG to BG (RGB)"    >*/
-  GIMP_FG_BG_HSV_MODE,         /*< desc="FG to BG (HSV)"    >*/
-  GIMP_FG_TRANSPARENT_MODE,    /*< desc="FG to transparent" >*/
-  GIMP_CUSTOM_MODE             /*< desc="Custom gradient"   >*/
+  GIMP_BLEND_FG_BG_RGB,      /*< nick=fg-bg-rgb-mode, desc="FG to BG (RGB)"  >*/
+  GIMP_BLEND_FG_BG_HSV,      /*< nick=fg-bg-hsv-mode, desc="FG to BG (HSV)"  >*/
+  GIMP_BLEND_FG_TRANSPARENT, /*< nick=fg-transparent-mode, desc="FG to transparent" >*/
+  GIMP_BLEND_CUSTOM,         /*< nick=custom-mode,    desc="Custom gradient" >*/
+
+  /*  the following aliases are deprecated  */
+  GIMP_FG_BG_RGB_MODE      = GIMP_BLEND_FG_BG_RGB,      /*< skip, pdb-skip >*/
+  GIMP_FG_BG_HSV_MODE      = GIMP_BLEND_FG_BG_HSV,      /*< skip, pdb-skip >*/
+  GIMP_FG_TRANSPARENT_MODE = GIMP_BLEND_FG_TRANSPARENT, /*< skip, pdb-skip >*/
+  GIMP_CUSTOM_MODE         = GIMP_BLEND_CUSTOM          /*< skip, pdb-skip >*/
 } GimpBlendMode;
 
 
@@ -69,9 +84,14 @@ GType gimp_bucket_fill_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_FG_BUCKET_FILL,      /*< desc="FG color fill" >*/
-  GIMP_BG_BUCKET_FILL,      /*< desc="BG color fill" >*/
-  GIMP_PATTERN_BUCKET_FILL  /*< desc="Pattern fill"  >*/
+  GIMP_BUCKET_FILL_FG,      /*< nick=fg-bucket-fill,      desc="FG color fill" >*/
+  GIMP_BUCKET_FILL_BG,      /*< nick=bg-bucket-fill,      desc="BG color fill" >*/
+  GIMP_BUCKET_FILL_PATTERN, /*< nick=pattern-bucket-fill, desc="Pattern fill"  >*/
+
+  /*  the following aliases are deprecated  */
+  GIMP_FG_BUCKET_FILL      = GIMP_BUCKET_FILL_FG,     /*< skip, pdb-skip >*/
+  GIMP_BG_BUCKET_FILL      = GIMP_BUCKET_FILL_BG,     /*< skip, pdb-skip >*/
+  GIMP_PATTERN_BUCKET_FILL = GIMP_BUCKET_FILL_PATTERN /*< skip, pdb-skip >*/
 } GimpBucketFillMode;
 
 
@@ -136,8 +156,12 @@ GType gimp_clone_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_IMAGE_CLONE,   /*< desc="Image"   >*/
-  GIMP_PATTERN_CLONE  /*< desc="Pattern" >*/
+  GIMP_CLONE_IMAGE,    /*< nick=image-clone,   desc="Image"   >*/
+  GIMP_CLONE_PATTERN,  /*< nick=pattern-clone, desc="Pattern" >*/
+
+  /*  the following aliases are deprecated  */
+  GIMP_IMAGE_CLONE   = GIMP_CLONE_IMAGE,  /*< skip, pdb-skip >*/
+  GIMP_PATTERN_CLONE = GIMP_CLONE_PATTERN /*< skip, pdb-skip >*/
 } GimpCloneType;
 
 
@@ -159,8 +183,12 @@ GType gimp_dodge_burn_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_DODGE,  /*< desc="Dodge" >*/
-  GIMP_BURN    /*< desc="Burn"  >*/
+  GIMP_DODGE_BURN_TYPE_DODGE,  /*< desc="Dodge" >*/
+  GIMP_DODGE_BURN_TYPE_BURN,   /*< desc="Burn"  >*/
+
+  /*  the following aliases are deprecated  */
+  GIMP_DODGE = GIMP_DODGE_BURN_TYPE_DODGE, /*< skip, pdb-skip >*/
+  GIMP_BURN  = GIMP_DODGE_BURN_TYPE_BURN   /*< skip, pdb-skip >*/
 } GimpDodgeBurnType;
 
 
@@ -259,6 +287,8 @@ typedef enum
   GIMP_INTERPOLATION_CUBIC,  /*< desc="Cubic"  >*/
   GIMP_INTERPOLATION_NOHALO, /*< desc="NoHalo" >*/
   GIMP_INTERPOLATION_LOHALO, /*< desc="LoHalo" >*/
+
+  /*  the following aliases are deprecated  */
   GIMP_INTERPOLATION_LANCZOS = GIMP_INTERPOLATION_NOHALO /*< skip, pdb-skip >*/
 } GimpInterpolationType;
 
@@ -316,9 +346,14 @@ GType gimp_transfer_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_SHADOWS,     /*< desc="Shadows"    >*/
-  GIMP_MIDTONES,    /*< desc="Midtones"   >*/
-  GIMP_HIGHLIGHTS   /*< desc="Highlights" >*/
+  GIMP_TRANSFER_SHADOWS,     /*< desc="Shadows"    >*/
+  GIMP_TRANSFER_MIDTONES,    /*< desc="Midtones"   >*/
+  GIMP_TRANSFER_HIGHLIGHTS,  /*< desc="Highlights" >*/
+
+  /*  the following aliases are deprecated  */
+  GIMP_SHADOWS    = GIMP_TRANSFER_SHADOWS,   /*< skip, pdb-skip >*/
+  GIMP_MIDTONES   = GIMP_TRANSFER_MIDTONES,  /*< skip, pdb-skip >*/
+  GIMP_HIGHLIGHTS = GIMP_TRANSFER_HIGHLIGHTS /*< skip, pdb-skip >*/
 } GimpTransferMode;
 
 

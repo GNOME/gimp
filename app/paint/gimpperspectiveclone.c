@@ -171,7 +171,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
 
           switch (clone_options->clone_type)
             {
-            case GIMP_IMAGE_CLONE:
+            case GIMP_CLONE_IMAGE:
               {
                 GimpPickable *src_pickable;
                 GimpImage    *src_image;
@@ -208,7 +208,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
               }
               break;
 
-            case GIMP_PATTERN_CLONE:
+            case GIMP_CLONE_PATTERN:
               {
                 GimpPattern *pattern = gimp_context_get_pattern (context);
 
@@ -395,7 +395,7 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
 
   switch (clone_options->clone_type)
     {
-    case GIMP_IMAGE_CLONE:
+    case GIMP_CLONE_IMAGE:
       if (! gimp_rectangle_intersect (xmin, ymin,
                                       xmax - xmin, ymax - ymin,
                                       0, 0,
@@ -408,7 +408,7 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
         }
       break;
 
-    case GIMP_PATTERN_CLONE:
+    case GIMP_CLONE_PATTERN:
       gegl_node_set (clone->crop,
                      "x",      (gdouble) xmin,
                      "y",      (gdouble) ymin,

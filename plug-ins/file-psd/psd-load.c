@@ -1402,9 +1402,11 @@ add_layers (gint32     image_id,
                 {
                   IFDBG(3) g_debug ("Create empty mask");
                   if (lyr_a[lidx]->layer_mask.def_color == 255)
-                    mask_id = gimp_layer_create_mask (layer_id, GIMP_ADD_WHITE_MASK);
+                    mask_id = gimp_layer_create_mask (layer_id,
+                                                      GIMP_ADD_MASK_WHITE);
                   else
-                    mask_id = gimp_layer_create_mask (layer_id, GIMP_ADD_BLACK_MASK);
+                    mask_id = gimp_layer_create_mask (layer_id,
+                                                      GIMP_ADD_MASK_BLACK);
                   gimp_layer_add_mask (layer_id, mask_id);
                   gimp_layer_set_apply_mask (layer_id,
                     ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
@@ -1488,9 +1490,11 @@ add_layers (gint32     image_id,
                       IFDBG(3) g_debug ("Mask %d %d %d %d", lm_x, lm_y, lm_w, lm_h);
 
                       if (lyr_a[lidx]->layer_mask.def_color == 255)
-                        mask_id = gimp_layer_create_mask (layer_id, GIMP_ADD_WHITE_MASK);
+                        mask_id = gimp_layer_create_mask (layer_id,
+                                                          GIMP_ADD_MASK_WHITE);
                       else
-                        mask_id = gimp_layer_create_mask (layer_id, GIMP_ADD_BLACK_MASK);
+                        mask_id = gimp_layer_create_mask (layer_id,
+                                                          GIMP_ADD_MASK_BLACK);
 
                       IFDBG(3) g_debug ("New layer mask %d", mask_id);
                       gimp_layer_add_mask (layer_id, mask_id);

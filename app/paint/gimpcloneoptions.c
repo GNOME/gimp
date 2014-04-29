@@ -62,7 +62,7 @@ gimp_clone_options_class_init (GimpCloneOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CLONE_TYPE,
                                  "clone-type", NULL,
                                  GIMP_TYPE_CLONE_TYPE,
-                                 GIMP_IMAGE_CLONE,
+                                 GIMP_CLONE_IMAGE,
                                  GIMP_PARAM_STATIC_STRINGS);
 }
 

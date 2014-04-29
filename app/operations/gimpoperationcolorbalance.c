@@ -146,19 +146,19 @@ gimp_operation_color_balance_process (GeglOperation       *operation,
       gimp_rgb_to_hsl (&rgb, &hsl);
 
       r_n = gimp_operation_color_balance_map (r, hsl.l,
-                                              config->cyan_red[GIMP_SHADOWS],
-                                              config->cyan_red[GIMP_MIDTONES],
-                                              config->cyan_red[GIMP_HIGHLIGHTS]);
+                                              config->cyan_red[GIMP_TRANSFER_SHADOWS],
+                                              config->cyan_red[GIMP_TRANSFER_MIDTONES],
+                                              config->cyan_red[GIMP_TRANSFER_HIGHLIGHTS]);
 
       g_n = gimp_operation_color_balance_map (g, hsl.l,
-                                              config->magenta_green[GIMP_SHADOWS],
-                                              config->magenta_green[GIMP_MIDTONES],
-                                              config->magenta_green[GIMP_HIGHLIGHTS]);
+                                              config->magenta_green[GIMP_TRANSFER_SHADOWS],
+                                              config->magenta_green[GIMP_TRANSFER_MIDTONES],
+                                              config->magenta_green[GIMP_TRANSFER_HIGHLIGHTS]);
 
       b_n = gimp_operation_color_balance_map (b, hsl.l,
-                                              config->yellow_blue[GIMP_SHADOWS],
-                                              config->yellow_blue[GIMP_MIDTONES],
-                                              config->yellow_blue[GIMP_HIGHLIGHTS]);
+                                              config->yellow_blue[GIMP_TRANSFER_SHADOWS],
+                                              config->yellow_blue[GIMP_TRANSFER_MIDTONES],
+                                              config->yellow_blue[GIMP_TRANSFER_HIGHLIGHTS]);
 
       if (config->preserve_luminosity)
         {

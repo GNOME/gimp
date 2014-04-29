@@ -776,7 +776,7 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   "transfer mode",
                                                   "Transfer mode",
                                                   GIMP_TYPE_TRANSFER_MODE,
-                                                  GIMP_SHADOWS,
+                                                  GIMP_TRANSFER_SHADOWS,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("preserve-lum",
