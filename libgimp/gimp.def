@@ -147,7 +147,6 @@ EXPORTS
 	gimp_context_swap_colors
 	gimp_convert_dither_type_get_type
 	gimp_convert_palette_type_get_type
-	gimp_convolution_type_get_type
 	gimp_convolve
 	gimp_convolve_default
 	gimp_convolve_type_get_type
