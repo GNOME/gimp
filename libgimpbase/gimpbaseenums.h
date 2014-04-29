@@ -150,6 +150,21 @@ typedef enum  /*< pdb-skip >*/
 } GimpCheckType;
 
 
+#define GIMP_TYPE_CONVOLVE_TYPE (gimp_convolve_type_get_type ())
+
+GType gimp_convolve_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_CONVOLVE_BLUR,    /*< nick=blur-convolve,    desc="Blur"    >*/
+  GIMP_CONVOLVE_SHARPEN, /*< nick=sharpen-convolve, desc="Sharpen" >*/
+
+  /*  the following aliases are deprecated  */
+  GIMP_BLUR_CONVOLVE    = GIMP_CONVOLVE_BLUR,   /*< skip, pdb-skip >*/
+  GIMP_SHARPEN_CONVOLVE = GIMP_CONVOLVE_SHARPEN /*< skip, pdb-skip >*/
+} GimpConvolveType;
+
+
 #define GIMP_TYPE_CLONE_TYPE (gimp_clone_type_get_type ())
 
 GType gimp_clone_type_get_type (void) G_GNUC_CONST;
@@ -274,6 +289,18 @@ typedef enum
   GIMP_INDEXED_IMAGE,  /*< desc="Indexed"         >*/
   GIMP_INDEXEDA_IMAGE  /*< desc="Indexed-alpha"   >*/
 } GimpImageType;
+
+
+#define GIMP_TYPE_INK_BLOB_TYPE (gimp_ink_blob_type_get_type ())
+
+GType gimp_ink_blob_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_INK_BLOB_TYPE_CIRCLE,  /*< desc="Circle"  >*/
+  GIMP_INK_BLOB_TYPE_SQUARE,  /*< desc="Square"  >*/
+  GIMP_INK_BLOB_TYPE_DIAMOND  /*< desc="Diamond" >*/
+} GimpInkBlobType;
 
 
 #define GIMP_TYPE_INTERPOLATION_TYPE (gimp_interpolation_type_get_type ())

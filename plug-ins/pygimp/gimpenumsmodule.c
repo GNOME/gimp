@@ -120,6 +120,11 @@ add_compat_enums(PyObject *m)
     PyModule_AddIntConstant(m, "PATTERN_BUCKET_FILL",
 			    GIMP_BUCKET_FILL_PATTERN);
 
+    PyModule_AddIntConstant(m, "BLUR_CONVOLVE",
+			    GIMP_CONVOLVE_BLUR);
+    PyModule_AddIntConstant(m, "SHARPEN_CONVOLVE",
+			    GIMP_CONVOLVE_SHARPEN);
+
     PyModule_AddIntConstant(m, "IMAGE_CLONE",
 			    GIMP_CLONE_IMAGE);
     PyModule_AddIntConstant(m, "PATTERN_CLONE",

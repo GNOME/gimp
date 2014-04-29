@@ -31,7 +31,7 @@
 
 
 /*
- * these enums that are registered with the type system
+ * enums that are registered with the type system
  */
 
 #define GIMP_TYPE_BRUSH_APPLICATION_MODE (gimp_brush_application_mode_get_type ())
@@ -68,29 +68,6 @@ typedef enum /*< pdb-skip >*/
   GIMP_SOURCE_ALIGN_REGISTERED,  /*< desc="Registered"  >*/
   GIMP_SOURCE_ALIGN_FIXED        /*< desc="Fixed"       >*/
 } GimpSourceAlignMode;
-
-
-#define GIMP_TYPE_CONVOLVE_TYPE (gimp_convolve_type_get_type ())
-
-GType gimp_convolve_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_BLUR_CONVOLVE,    /*< desc="Blur"    >*/
-  GIMP_SHARPEN_CONVOLVE  /*< desc="Sharpen" >*/
-} GimpConvolveType;
-
-
-#define GIMP_TYPE_INK_BLOB_TYPE (gimp_ink_blob_type_get_type ())
-
-GType gimp_ink_blob_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_INK_BLOB_TYPE_CIRCLE,  /*< desc="Circle"  >*/
-  GIMP_INK_BLOB_TYPE_SQUARE,  /*< desc="Square"  >*/
-  GIMP_INK_BLOB_TYPE_DIAMOND  /*< desc="Diamond" >*/
-} GimpInkBlobType;
 
 
 /*

@@ -76,6 +76,13 @@ package Gimp::CodeGen::enums;
 		       GIMP_INDEXED_CHANNEL => '4',
 		       GIMP_ALPHA_CHANNEL => '5' }
 	},
+    GimpConvolveType =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_CONVOLVE_BLUR GIMP_CONVOLVE_SHARPEN) ],
+	  mapping => { GIMP_CONVOLVE_BLUR => '0',
+		       GIMP_CONVOLVE_SHARPEN => '1' }
+	},
     GimpCloneType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
@@ -174,6 +181,16 @@ package Gimp::CodeGen::enums;
 		       GIMP_GRAYA_IMAGE => '3',
 		       GIMP_INDEXED_IMAGE => '4',
 		       GIMP_INDEXEDA_IMAGE => '5' }
+	},
+    GimpInkBlobType =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_INK_BLOB_TYPE_CIRCLE
+			  GIMP_INK_BLOB_TYPE_SQUARE
+			  GIMP_INK_BLOB_TYPE_DIAMOND) ],
+	  mapping => { GIMP_INK_BLOB_TYPE_CIRCLE => '0',
+		       GIMP_INK_BLOB_TYPE_SQUARE => '1',
+		       GIMP_INK_BLOB_TYPE_DIAMOND => '2' }
 	},
     GimpInterpolationType =>
 	{ contig => 1,
@@ -651,23 +668,6 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_BRUSH_HARD GIMP_BRUSH_SOFT) ],
 	  mapping => { GIMP_BRUSH_HARD => '0',
 		       GIMP_BRUSH_SOFT => '1' }
-	},
-    GimpConvolveType =>
-	{ contig => 1,
-	  header => 'paint/paint-enums.h',
-	  symbols => [ qw(GIMP_BLUR_CONVOLVE GIMP_SHARPEN_CONVOLVE) ],
-	  mapping => { GIMP_BLUR_CONVOLVE => '0',
-		       GIMP_SHARPEN_CONVOLVE => '1' }
-	},
-    GimpInkBlobType =>
-	{ contig => 1,
-	  header => 'paint/paint-enums.h',
-	  symbols => [ qw(GIMP_INK_BLOB_TYPE_CIRCLE
-			  GIMP_INK_BLOB_TYPE_SQUARE
-			  GIMP_INK_BLOB_TYPE_DIAMOND) ],
-	  mapping => { GIMP_INK_BLOB_TYPE_CIRCLE => '0',
-		       GIMP_INK_BLOB_TYPE_SQUARE => '1',
-		       GIMP_INK_BLOB_TYPE_DIAMOND => '2' }
 	}
 );
 

@@ -27,7 +27,7 @@
 #include "gimpconvolveoptions.h"
 
 
-#define DEFAULT_CONVOLVE_TYPE  GIMP_BLUR_CONVOLVE
+#define DEFAULT_CONVOLVE_TYPE  GIMP_CONVOLVE_BLUR
 #define DEFAULT_CONVOLVE_RATE  50.0
 
 

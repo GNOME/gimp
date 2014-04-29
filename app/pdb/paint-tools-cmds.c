@@ -1142,7 +1142,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                                   "convolve type",
                                                   "Convolve type",
                                                   GIMP_TYPE_CONVOLVE_TYPE,
-                                                  GIMP_BLUR_CONVOLVE,
+                                                  GIMP_CONVOLVE_BLUR,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-strokes",

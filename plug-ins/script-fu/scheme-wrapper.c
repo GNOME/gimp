@@ -148,8 +148,8 @@ static const NamedConstant const old_constants[] =
   { "VALUE",                GIMP_VALUE_MODE        },
   { "DIVIDE",               GIMP_DIVIDE_MODE       },
 
-  { "BLUR",                 GIMP_BLUR_CONVOLVE     },
-  { "SHARPEN",              GIMP_SHARPEN_CONVOLVE  },
+  { "BLUR",                 GIMP_CONVOLVE_BLUR    },
+  { "SHARPEN",              GIMP_CONVOLVE_SHARPEN },
 
   { "WHITE-MASK",           GIMP_ADD_MASK_WHITE     },
   { "BLACK-MASK",           GIMP_ADD_MASK_BLACK     },
@@ -162,10 +162,10 @@ static const NamedConstant const old_constants[] =
   { "REPLACE",              GIMP_CHANNEL_OP_REPLACE   },
   { "INTERSECT",            GIMP_CHANNEL_OP_INTERSECT },
 
-  { "FG-BG-RGB",            GIMP_BLEND_FG_BG_RGB       },
-  { "FG-BG-HSV",            GIMP_BLEND_FG_BG_HSV       },
-  { "FG-TRANS",             GIMP_BLEND_FG_TRANSPARENT  },
-  { "CUSTOM",               GIMP_BLEND_CUSTOM          },
+  { "FG-BG-RGB",            GIMP_BLEND_FG_BG_RGB      },
+  { "FG-BG-HSV",            GIMP_BLEND_FG_BG_HSV      },
+  { "FG-TRANS",             GIMP_BLEND_FG_TRANSPARENT },
+  { "CUSTOM",               GIMP_BLEND_CUSTOM         },
 
   { "FG-IMAGE-FILL",        GIMP_FOREGROUND_FILL  },
   { "BG-IMAGE-FILL",        GIMP_BACKGROUND_FILL  },
@@ -221,6 +221,9 @@ static const NamedConstant const old_constants[] =
   { "FG-BUCKET_FILL",          GIMP_BUCKET_FILL_FG      },
   { "BG-BUCKET_FILL",          GIMP_BUCKET_FILL_BG      },
   { "PATTERN-BUCKET_FILL",     GIMP_BUCKET_FILL_PATTERN },
+
+  { "BLUR-CONVOLVE",           GIMP_CONVOLVE_BLUR    },
+  { "SHARPEN-CONVOLVE",        GIMP_CONVOLVE_SHARPEN },
 
   { "IMAGE-CLONE",             GIMP_CLONE_IMAGE   },
   { "PATTERN-CLONE",           GIMP_CLONE_PATTERN },

@@ -11,6 +11,7 @@ EXPORTS
 	gimp_check_type_get_type
 	gimp_checks_get_shades
 	gimp_clone_type_get_type
+	gimp_convolve_type_get_type
 	gimp_cpu_accel_get_support
 	gimp_cpu_accel_set_use
 	gimp_data_directory
@@ -42,6 +43,7 @@ EXPORTS
 	gimp_image_base_type_get_type
 	gimp_image_type_get_type
 	gimp_installation_directory
+	gimp_ink_blob_type_get_type
 	gimp_interpolation_type_get_type
 	gimp_locale_directory
 	gimp_major_version

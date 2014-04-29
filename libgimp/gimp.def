@@ -149,7 +149,6 @@ EXPORTS
 	gimp_convert_palette_type_get_type
 	gimp_convolve
 	gimp_convolve_default
-	gimp_convolve_type_get_type
 	gimp_curves_explicit
 	gimp_curves_spline
 	gimp_default_display
@@ -511,7 +510,6 @@ EXPORTS
 	gimp_image_undo_thaw
 	gimp_image_unset_active_channel
 	gimp_image_width
-	gimp_ink_blob_type_get_type
 	gimp_install_cmap
 	gimp_install_procedure
 	gimp_install_temp_proc

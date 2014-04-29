@@ -66,14 +66,6 @@ The possible shapes generated brushes can take.
 @GIMP_MONO_PALETTE: 
 @GIMP_CUSTOM_PALETTE: 
 
-<!-- ##### ENUM GimpConvolveType ##### -->
-<para>
-Operation modes of the convolve tool.
-</para>
-
-@GIMP_BLUR_CONVOLVE:    Blur the drawable.
-@GIMP_SHARPEN_CONVOLVE: Sharpen the drawable.
-
 <!-- ##### ENUM GimpFillType ##### -->
 <para>
 
@@ -128,15 +120,6 @@ Operation modes of the convolve tool.
 @GIMP_CYAN_HUES: 
 @GIMP_BLUE_HUES: 
 @GIMP_MAGENTA_HUES: 
-
-<!-- ##### ENUM GimpInkBlobType ##### -->
-<para>
-
-</para>
-
-@GIMP_INK_BLOB_TYPE_CIRCLE: 
-@GIMP_INK_BLOB_TYPE_SQUARE: 
-@GIMP_INK_BLOB_TYPE_DIAMOND: 
 
 <!-- ##### ENUM GimpLayerModeEffects ##### -->
 <para>
