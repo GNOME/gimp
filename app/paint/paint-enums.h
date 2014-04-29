@@ -76,9 +76,8 @@ GType gimp_convolve_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_BLUR_CONVOLVE,     /*< desc="Blur"    >*/
-  GIMP_SHARPEN_CONVOLVE,  /*< desc="Sharpen" >*/
-  GIMP_CUSTOM_CONVOLVE    /*< pdb-skip, skip >*/
+  GIMP_BLUR_CONVOLVE,    /*< desc="Blur"    >*/
+  GIMP_SHARPEN_CONVOLVE  /*< desc="Sharpen" >*/
 } GimpConvolveType;
 
 

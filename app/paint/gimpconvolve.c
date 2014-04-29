@@ -230,9 +230,6 @@ gimp_convolve_calculate_matrix (GimpConvolve    *convolve,
     case GIMP_SHARPEN_CONVOLVE:
       convolve->matrix[4] = MIN_SHARPEN + percent * (MAX_SHARPEN - MIN_SHARPEN);
       break;
-
-    case GIMP_CUSTOM_CONVOLVE:
-      break;
     }
 
   convolve->matrix[5] = (radius_x)             ? 1.0 : 0.0;
