@@ -127,6 +127,14 @@
 #define THUMB_WIDTH              90
 #define THUMB_HEIGHT             120
 
+#define GIMP_PLUGIN_PDF_SAVE_ERROR gimp_plugin_pdf_save_error_quark ()
+
+typedef enum
+{
+  GIMP_PLUGIN_PDF_SAVE_ERROR_FAILED
+} GimpPluginPrintError;
+
+GQuark gimp_plugin_pdf_save_error_quark (void);
 
 typedef enum
 {
@@ -193,6 +201,7 @@ typedef struct
 
 
 static void              query                      (void);
+
 static void              run                        (const gchar     *name,
                                                      gint             nparams,
                                                      const GimpParam *param,
@@ -211,12 +220,14 @@ static void              init_image_list_defaults   (gint32           image);
 static void              validate_image_list        (void);
 
 static gboolean          gui_single                 (void);
+
 static gboolean          gui_multi                  (void);
 
 static void              choose_file_call           (GtkWidget       *browse_button,
                                                      gpointer         file_entry);
 
 static gboolean          get_image_list             (void);
+
 static GtkTreeModel    * create_model               (void);
 
 static void              add_image_call             (GtkWidget       *widget,
@@ -228,15 +239,17 @@ static void              remove_call                (GtkTreeModel    *tree_model
                                                      gpointer         user_data);
 static void              recount_pages              (void);
 
-static cairo_surface_t * get_drawable_image         (gint32           drawable_ID);
+static cairo_surface_t * get_drawable_image         (gint32           drawable_ID,
+                                                     GError         **error);
+
 static GimpRGB           get_layer_color            (gint32           layer_ID,
                                                      gboolean        *single);
+
 static void              drawText                   (gint32           text_id,
                                                      gdouble          opacity,
                                                      cairo_t         *cr,
                                                      gdouble          x_res,
                                                      gdouble          y_res);
-
 
 static gboolean     dnd_remove = TRUE;
 static PdfMultiPage multi_page;
@@ -260,6 +273,8 @@ GimpPlugInInfo PLUG_IN_INFO =
   query,
   run
 };
+
+G_DEFINE_QUARK (gimp-plugin-pdf-save-error-quark, gimp_plugin_pdf_save_error)
 
 MAIN()
 
@@ -355,6 +370,7 @@ run (const gchar      *name,
   GimpExportCapabilities  capabilities;
   FILE                   *fp;
   gint                    i;
+  GError                 *error = NULL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -495,8 +511,24 @@ run (const gchar      *name,
             {
               mask_ID = gimp_layer_get_mask (layer_ID);
               if (mask_ID != -1)
-                mask_image = get_drawable_image (mask_ID);
+                {
+                  mask_image = get_drawable_image (mask_ID, &error);
+                  if (error != NULL)
+                    {
+                      *nreturn_vals = 2;
 
+                      /* free the resources */
+                      cairo_surface_destroy (pdf_file);
+                      cairo_destroy (cr);
+                      fclose (fp);
+
+                      values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+
+                      values[1].type          = GIMP_PDB_STRING;
+                      values[1].data.d_string = error->message;
+                      return;
+                    }
+                }
               gimp_drawable_offsets (layer_ID, &x, &y);
 
               if (! gimp_item_is_text_layer (layer_ID))
@@ -527,7 +559,22 @@ run (const gchar      *name,
                     {
                       cairo_surface_t *layer_image;
 
-                      layer_image = get_drawable_image (layer_ID);
+                      layer_image = get_drawable_image (layer_ID, &error);
+                      if (error != NULL)
+                        {
+                          *nreturn_vals = 2;
+
+                          /* free the resources */
+                          cairo_surface_destroy (pdf_file);
+                          cairo_destroy (cr);
+                          fclose (fp);
+
+                          values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+
+                          values[1].type          = GIMP_PDB_STRING;
+                          values[1].data.d_string = error->message;
+                          return;
+                        }
 
                       cairo_clip (cr);
 
@@ -1161,11 +1208,13 @@ recount_pages (void)
 /******************************************************/
 
 static cairo_surface_t *
-get_drawable_image (gint32 drawable_ID)
+get_drawable_image (gint32 drawable_ID,
+                    GError **error)
 {
   GeglBuffer      *src_buffer;
   GeglBuffer      *dest_buffer;
   cairo_surface_t *surface;
+  cairo_status_t   status;
   cairo_format_t   format;
   gint             width;
   gint             height;
@@ -1181,6 +1230,29 @@ get_drawable_image (gint32 drawable_ID)
     format = CAIRO_FORMAT_RGB24;
 
   surface = cairo_image_surface_create (format, width, height);
+
+  status = cairo_surface_status (surface);
+  if (status != CAIRO_STATUS_SUCCESS)
+    {
+      switch (status)
+        {
+        case CAIRO_STATUS_INVALID_SIZE:
+          g_set_error_literal (error,
+                               GIMP_PLUGIN_PDF_SAVE_ERROR,
+                               GIMP_PLUGIN_PDF_SAVE_ERROR_FAILED,
+                               _("Cannot handle the size (either width or height) of the Image."));
+          break;
+        default:
+          g_set_error (error,
+                       GIMP_PLUGIN_PDF_SAVE_ERROR,
+                       GIMP_PLUGIN_PDF_SAVE_ERROR_FAILED,
+                       "Cairo error: %s",
+                       cairo_status_to_string (status));
+          break;
+        }
+
+      return NULL;
+    }
 
   dest_buffer = gimp_cairo_surface_create_buffer (surface);
 
