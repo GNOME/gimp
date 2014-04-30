@@ -107,6 +107,38 @@ gimp_gradients_init (Gimp *gimp)
   gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT;
 }
 
+GimpGradient *
+gimp_gradients_get_fg_bg_rgb (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return g_object_get_data (G_OBJECT (gimp), FG_BG_RGB_KEY);
+}
+
+GimpGradient *
+gimp_gradients_get_fg_bg_hsv_ccw (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return g_object_get_data (G_OBJECT (gimp), FG_BG_HSV_CCW_KEY);
+}
+
+GimpGradient *
+gimp_gradients_get_fg_bg_hsv_cw (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return g_object_get_data (G_OBJECT (gimp), FG_BG_HSV_CW_KEY);
+}
+
+GimpGradient *
+gimp_gradients_get_fg_transparent (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return g_object_get_data (G_OBJECT (gimp), FG_TRANSPARENT_KEY);
+}
+
 
 /*  private functions  */
 
