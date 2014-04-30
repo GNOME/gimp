@@ -353,9 +353,9 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! (flags & (GIMP_METADATA_SAVE_EXIF ||
-                  GIMP_METADATA_SAVE_XMP  ||
-                  GIMP_METADATA_SAVE_IPTC ||
+  if (! (flags & (GIMP_METADATA_SAVE_EXIF |
+                  GIMP_METADATA_SAVE_XMP  |
+                  GIMP_METADATA_SAVE_IPTC |
                   GIMP_METADATA_SAVE_THUMBNAIL)))
     return TRUE;
 
