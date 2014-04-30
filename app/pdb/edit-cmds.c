@@ -32,6 +32,7 @@
 #include "pdb-types.h"
 
 #include "core/gimp-edit.h"
+#include "core/gimp-gradients.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-blend.h"
@@ -782,12 +783,34 @@ edit_blend_invoker (GimpProcedure         *procedure,
 
       if (success)
         {
+          GimpGradient *gradient;
+
           if (progress)
             gimp_progress_start (progress, _("Blending"), FALSE);
 
+          switch (blend_mode)
+            {
+            case GIMP_BLEND_FG_BG_RGB:
+              gradient = gimp_gradients_get_fg_bg_rgb (context->gimp);
+              break;
+
+            case GIMP_BLEND_FG_BG_HSV:
+              gradient = gimp_gradients_get_fg_bg_hsv_cw (context->gimp);
+              break;
+
+            case GIMP_BLEND_FG_TRANSPARENT:
+              gradient = gimp_gradients_get_fg_transparent (context->gimp);
+              break;
+
+            case GIMP_BLEND_CUSTOM:
+            default:
+              gradient = gimp_context_get_gradient (context);
+              break;
+            }
+
           gimp_drawable_blend (drawable,
                                context,
-                               blend_mode,
+                               gradient,
                                paint_mode,
                                gradient_type,
                                opacity / 100.0,
