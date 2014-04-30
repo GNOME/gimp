@@ -35,7 +35,7 @@
 
 
 #define FG_BG_RGB_KEY      "gimp-gradient-fg-bg-rgb"
-#define FG_BG_HARDEDGE_KEY "gimp-gradient-fg-bg-rgb"
+#define FG_BG_HARDEDGE_KEY "gimp-gradient-fg-bg-rgb-hardedge"
 #define FG_BG_HSV_CCW_KEY  "gimp-gradient-fg-bg-hsv-ccw"
 #define FG_BG_HSV_CW_KEY   "gimp-gradient-fg-bg-hsv-cw"
 #define FG_TRANSPARENT_KEY "gimp-gradient-fg-transparent"
