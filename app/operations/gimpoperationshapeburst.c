@@ -35,7 +35,7 @@
 enum
 {
   PROP_0,
-  PROP_MAX_ITERATIONS,
+  PROP_NORMALIZE,
   PROP_PROGRESS
 };
 
@@ -92,12 +92,12 @@ gimp_operation_shapeburst_class_init (GimpOperationShapeburstClass *klass)
 
   filter_class->process                    = gimp_operation_shapeburst_process;
 
-  g_object_class_install_property (object_class, PROP_MAX_ITERATIONS,
-                                   g_param_spec_double ("max-iterations",
-                                                        "Max Iterations",
-                                                        "Max Iterations",
-                                                        0.0, G_MAXFLOAT, 0.0,
-                                                        G_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_NORMALIZE,
+                                   g_param_spec_boolean ("normalize",
+                                                         "Normalize",
+                                                         "Normalize",
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_PROGRESS,
                                    g_param_spec_double ("progress",
@@ -122,8 +122,8 @@ gimp_operation_shapeburst_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_MAX_ITERATIONS:
-      g_value_set_double (value, self->max_iterations);
+    case PROP_NORMALIZE:
+      g_value_set_boolean (value, self->normalize);
       break;
 
     case PROP_PROGRESS:
@@ -146,8 +146,8 @@ gimp_operation_shapeburst_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_MAX_ITERATIONS:
-      self->max_iterations = g_value_get_double (value);
+    case PROP_NORMALIZE:
+      self->normalize = g_value_get_boolean (value);
       break;
 
     case PROP_PROGRESS:
@@ -312,9 +312,23 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
 
   g_free (memory);
 
-  g_object_set (operation,
-                "max-iterations", (gdouble) max_iterations,
-                NULL);
+  if (GIMP_OPERATION_SHAPEBURST (operation)->normalize &&
+      max_iterations > 0.0)
+    {
+      GeglBufferIterator *iter;
+
+      iter = gegl_buffer_iterator_new (output, NULL, 0, NULL,
+                                       GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          gint    count = iter->length;
+          gfloat *data  = iter->data[0];
+
+          while (count--)
+            *data++ /= max_iterations;
+        }
+    }
 
   return TRUE;
 }

@@ -539,8 +539,6 @@ gradient_precalc_shapeburst (GimpImage           *image,
   GeglBuffer  *dist_buffer;
   GeglBuffer  *temp_buffer;
   GeglNode    *shapeburst;
-  gdouble      max;
-  gfloat       max_iteration;
 
   gimp_progress_set_text (progress, _("Calculating distance map"));
 
@@ -602,6 +600,7 @@ gradient_precalc_shapeburst (GimpImage           *image,
 
   shapeburst = gegl_node_new_child (NULL,
                                     "operation", "gimp:shapeburst",
+                                    "normalize", TRUE,
                                     NULL);
 
   gimp_gegl_progress_connect (shapeburst, progress, NULL);
@@ -610,31 +609,9 @@ gradient_precalc_shapeburst (GimpImage           *image,
                              shapeburst,
                              dist_buffer, NULL);
 
-  gegl_node_get (shapeburst, "max-iterations", &max, NULL);
-
   g_object_unref (shapeburst);
 
-  max_iteration = max;
-
   g_object_unref (temp_buffer);
-
-  /*  normalize the shapeburst with the max iteration  */
-  if (max_iteration > 0)
-    {
-      GeglBufferIterator *iter;
-
-      iter = gegl_buffer_iterator_new (dist_buffer, NULL, 0, NULL,
-                                       GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
-
-      while (gegl_buffer_iterator_next (iter))
-        {
-          gint    count = iter->length;
-          gfloat *data  = iter->data[0];
-
-          while (count--)
-            *data++ /= max_iteration;
-        }
-    }
 
   return dist_buffer;
 }
