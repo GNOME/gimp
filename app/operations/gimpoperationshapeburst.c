@@ -247,18 +247,12 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
 
               while (y >= end)
                 {
-#if 1
-                  /* FIXME: this should be much faster, it converts
-                   * to 32 bit rgba intermediately, bah...
+                  /* FIXME: this should be much faster, it converts to
+                   * 32 bit rgba intermediately, bah...
                    */
                   gegl_buffer_sample (input, x, y, NULL, &src,
                                       input_format,
                                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-#else
-                  gegl_buffer_get (input, GEGL_RECTANGLE (x, y, 1, 1), 1.0,
-                                   input_format, &src,
-                                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-#endif
 
                   if (ABS (src) < EPSILON)
                     {
