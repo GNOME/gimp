@@ -339,7 +339,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam        values[1];
+  static GimpParam        values[2];
   GimpPDBStatusType       status = GIMP_PDB_SUCCESS;
   GimpRunMode             run_mode;
 
@@ -385,7 +385,7 @@ run (const gchar      *name,
   *nreturn_vals = 1;
   *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /* Initializing all the settings */
