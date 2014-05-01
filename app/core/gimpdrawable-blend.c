@@ -550,12 +550,10 @@ gradient_precalc_shapeburst (GimpImage           *image,
                                  babl_format ("Y float"));
 
   /*  allocate the selection mask copy
-   *  XXX: its format should be the same of gimp:shapeburst input buffer
-   *       porting the op to 'float' should be reflected here as well
    */
   temp_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                  region->width, region->height),
-                                 babl_format ("Y u8"));
+                                 babl_format ("Y float"));
 
   mask = gimp_image_get_mask (image);
 
@@ -581,7 +579,7 @@ gradient_precalc_shapeburst (GimpImage           *image,
         {
           const Babl *component_format;
 
-          component_format = babl_format ("A u8");
+          component_format = babl_format ("A float");
 
           /*  extract the aplha into the temp mask  */
           gegl_buffer_set_format (temp_buffer, component_format);
