@@ -1240,7 +1240,7 @@ get_drawable_image (gint32 drawable_ID,
           g_set_error_literal (error,
                                GIMP_PLUGIN_PDF_SAVE_ERROR,
                                GIMP_PLUGIN_PDF_SAVE_ERROR_FAILED,
-                               _("Cannot handle the size (either width or height) of the Image."));
+                               _("Cannot handle the size (either width or height) of the image."));
           break;
         default:
           g_set_error (error,
