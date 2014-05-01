@@ -1330,7 +1330,7 @@ get_drawable_image (GimpDrawable  *drawable,
           g_set_error_literal (error,
                                1,
                                0,
-                               _("Cannot handle the size (either width or height) of the Image."));
+                               _("Cannot handle the size (either width or height) of the image."));
           break;
         default:
           g_set_error (error,
