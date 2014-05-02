@@ -316,14 +316,12 @@ session_exit (Gimp *gimp)
 }
 
 void
-session_restore (Gimp *gimp)
+session_restore (Gimp      *gimp,
+                 GdkScreen *screen,
+                 gint       monitor)
 {
-  GdkScreen *screen;
-  gint       monitor;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  monitor = gimp_get_monitor_at_pointer (&screen);
+  g_return_if_fail (GDK_IS_SCREEN (screen));
 
   gimp_dialog_factory_restore (gimp_dialog_factory_get_singleton (),
                                screen, monitor);
