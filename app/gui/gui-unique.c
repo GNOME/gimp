@@ -141,7 +141,7 @@ gui_unique_win32_idle_open (IdleOpenData *data)
 
   if (data->name)
     {
-      file_open_from_command_line (unique_gimp, data->name, data->as_new);
+      file_open_from_command_line (unique_gimp, data->name, data->as_new, NULL, 0);
     }
   else
     {
