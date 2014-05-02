@@ -8,6 +8,7 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)/app		\
 	$(GEGL_CFLAGS)			\
 	$(PANGOCAIRO_CFLAGS)		\
+	$(HARFBUZZ_CFLAGS)		\
 	$(GDK_PIXBUF_CFLAGS)		\
 	-I$(includedir)
 

@@ -57,6 +57,11 @@ header files installed.
      and fontconfig @FONTCONFIG_REQUIRED_VERSION@ or newer. Older versions are known to have
      bugs that seriously affect the stability of GIMP.
 
+     We also require HarfBuzz @HARFBUZZ_REQUIRED_VERSION@ or newer, an
+     OpenType text shaping tool. As this is a dependency for Pango, you
+     will likely have it installed, but you may have to install a
+     development package for the headers.
+
   7. Access of remote files is implemented in the URI plug-in. There
      are several possible implementations for this. The implementation
      used is determined when you configure GIMP. By default the

@@ -51,6 +51,7 @@ m4_define([cairo_pdf_required_version], [1.12.2])
 m4_define([pangocairo_required_version], [1.29.4])
 m4_define([fontconfig_required_version], [2.2.0])
 m4_define([freetype2_required_version], [2.1.7])
+m4_define([harfbuzz_required_version], [0.9.27])
 m4_define([gtkdoc_required_version], [1.0])
 m4_define([webkit_required_version], [1.6.1])
 m4_define([alsa_required_version], [1.0.0])
@@ -130,6 +131,7 @@ PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
 BABL_REQUIRED_VERSION=babl_required_version
 FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
 FREETYPE2_REQUIRED_VERSION=freetype2_required_version
+HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
 ATK_REQUIRED_VERSION=atk_required_version
 INTLTOOL_REQUIRED_VERSION=intltool_required_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
@@ -142,6 +144,7 @@ AC_SUBST(PANGOCAIRO_REQUIRED_VERSION)
 AC_SUBST(BABL_REQUIRED_VERSION)
 AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
 AC_SUBST(FREETYPE2_REQUIRED_VERSION)
+AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
 AC_SUBST(ATK_REQUIRED_VERSION)
 AC_SUBST(INTLTOOL_REQUIRED_VERSION)
 
@@ -623,6 +626,8 @@ if test "x$FREETYPE_CONFIG" != "xno" ; then
   AC_MSG_RESULT($FREETYPE_LIBS)
 fi
 AC_SUBST(FREETYPE_LIBS)
+
+PKG_CHECK_MODULES(HARFBUZZ, harfbuzz >= harfbuzz_required_version)
 
 PKG_CHECK_MODULES(GEXIV2, gexiv2 >= gexiv2_required_version)
 
