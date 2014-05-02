@@ -105,6 +105,7 @@ void              gimp_session_write_position      (GimpConfigWriter     *writer
                                                     gint                  position);
 
 gint              gimp_widget_get_monitor          (GtkWidget            *widget);
+gint              gimp_get_monitor_at_pointer      (GdkScreen           **screen);
 
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

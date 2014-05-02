@@ -252,11 +252,7 @@ gui_get_display_name (Gimp *gimp,
     }
   else
     {
-      gint x, y;
-
-      gdk_display_get_pointer (gdk_display_get_default (),
-                               &screen, &x, &y, NULL);
-      monitor = gdk_screen_get_monitor_at_point (screen, x, y);
+      monitor = gimp_get_monitor_at_pointer (&screen);
     }
 
   *monitor_number = monitor;

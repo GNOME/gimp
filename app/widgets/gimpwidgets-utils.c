@@ -1366,3 +1366,17 @@ gimp_widget_get_monitor (GtkWidget *widget)
 
   return gdk_screen_get_monitor_at_point (screen, x, y);
 }
+
+gint
+gimp_get_monitor_at_pointer (GdkScreen **screen)
+{
+  gint x, y;
+  gint monitor;
+
+  g_return_val_if_fail (screen != NULL, 0);
+
+  gdk_display_get_pointer (gdk_display_get_default (),
+                           screen, &x, &y, NULL);
+
+  return gdk_screen_get_monitor_at_point (*screen, x, y);
+}

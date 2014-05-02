@@ -38,6 +38,7 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "dialogs/dialogs.h"
 
@@ -318,14 +319,11 @@ void
 session_restore (Gimp *gimp)
 {
   GdkScreen *screen;
-  gint       x, y;
   gint       monitor;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gdk_display_get_pointer (gdk_display_get_default (),
-                           &screen, &x, &y, NULL);
-  monitor = gdk_screen_get_monitor_at_point (screen, x, y);
+  monitor = gimp_get_monitor_at_pointer (&screen);
 
   gimp_dialog_factory_restore (gimp_dialog_factory_get_singleton (),
                                screen, monitor);
