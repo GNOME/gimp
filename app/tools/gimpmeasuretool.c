@@ -1046,7 +1046,7 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   GtkWidget        *table;
   GtkWidget        *label;
 
-  g_return_if_fail (tool->display != NULL);
+  g_return_val_if_fail (tool->display != NULL, NULL);
 
   shell = gimp_display_get_shell (tool->display);
 
