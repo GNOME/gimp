@@ -409,7 +409,9 @@ gui_restore_callback (Gimp               *gimp,
     {
       gdouble xres, yres;
 
-      gimp_get_screen_resolution (NULL, &xres, &yres);
+      gimp_get_monitor_resolution (initial_screen,
+                                   initial_monitor,
+                                   &xres, &yres);
 
       g_object_set (gimp->config,
                     "monitor-xresolution",                      xres,

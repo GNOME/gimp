@@ -406,8 +406,9 @@ gimp_display_shell_constructed (GObject *object)
 
   if (config->monitor_res_from_gdk)
     {
-      gimp_get_screen_resolution (screen,
-                                  &shell->monitor_xres, &shell->monitor_yres);
+      gimp_get_monitor_resolution (screen, /* FIXME monitor */
+                                   0, /* FIXME monitor */
+                                   &shell->monitor_xres, &shell->monitor_yres);
     }
   else
     {
@@ -990,9 +991,10 @@ gimp_display_shell_screen_changed (GtkWidget *widget,
 
   if (shell->display->config->monitor_res_from_gdk)
     {
-      gimp_get_screen_resolution (gtk_widget_get_screen (widget),
-                                  &shell->monitor_xres,
-                                  &shell->monitor_yres);
+      gimp_get_monitor_resolution (gtk_widget_get_screen (widget),
+                                   gimp_widget_get_monitor (widget),
+                                   &shell->monitor_xres,
+                                   &shell->monitor_yres);
     }
   else
     {

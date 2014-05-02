@@ -450,7 +450,9 @@ prefs_resolution_source_callback (GtkWidget *widget,
 
   if (from_gdk)
     {
-      gimp_get_screen_resolution (NULL, &xres, &yres);
+      gimp_get_monitor_resolution (gtk_widget_get_screen (widget),
+                                   gimp_widget_get_monitor (widget),
+                                   &xres, &yres);
     }
   else
     {
@@ -2204,7 +2206,9 @@ prefs_dialog_new (Gimp       *gimp,
     gdouble  xres, yres;
     gchar   *str;
 
-    gimp_get_screen_resolution (NULL, &xres, &yres);
+    gimp_get_monitor_resolution (gdk_screen_get_default (), /* FIXME monitor */
+                                 0, /* FIXME monitor */
+                                 &xres, &yres);
 
     str = g_strdup_printf (_("_Detect automatically (currently %d × %d ppi)"),
                            ROUND (xres), ROUND (yres));

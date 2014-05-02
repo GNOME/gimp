@@ -724,36 +724,33 @@ gimp_get_all_modifiers_mask (void)
 }
 
 /**
- * gimp_get_screen_resolution:
- * @screen: a #GdkScreen or %NULL
- * @xres: returns the horizontal screen resolution (in dpi)
- * @yres: returns the vertical screen resolution (in dpi)
+ * gimp_get_monitor_resolution:
+ * @screen: a #GdkScreen
+ * @monitor: a monitor number
+ * @xres: returns the horizontal monitor resolution (in dpi)
+ * @yres: returns the vertical monitor resolution (in dpi)
  *
- * Retrieves the screen resolution from GDK. If @screen is %NULL, the
- * default screen is used.
+ * Retrieves the monitor's resolution from GDK.
  **/
 void
-gimp_get_screen_resolution (GdkScreen *screen,
-                            gdouble   *xres,
-                            gdouble   *yres)
+gimp_get_monitor_resolution (GdkScreen *screen,
+                             gint       monitor,
+                             gdouble   *xres,
+                             gdouble   *yres)
 {
-  gint    width, height;
-  gint    width_mm, height_mm;
-  gdouble x = 0.0;
-  gdouble y = 0.0;
+  GdkRectangle size_pixels;
+  gint         width_mm, height_mm;
+  gdouble      x = 0.0;
+  gdouble      y = 0.0;
 
-  g_return_if_fail (screen == NULL || GDK_IS_SCREEN (screen));
+  g_return_if_fail (GDK_IS_SCREEN (screen));
   g_return_if_fail (xres != NULL);
   g_return_if_fail (yres != NULL);
 
-  if (!screen)
-    screen = gdk_screen_get_default ();
+  gdk_screen_get_monitor_geometry (screen, monitor, &size_pixels);
 
-  width  = gdk_screen_get_width (screen);
-  height = gdk_screen_get_height (screen);
-
-  width_mm  = gdk_screen_get_width_mm (screen);
-  height_mm = gdk_screen_get_height_mm (screen);
+  width_mm  = gdk_screen_get_monitor_width_mm  (screen, monitor);
+  height_mm = gdk_screen_get_monitor_height_mm (screen, monitor);
 
   /*
    * From xdpyinfo.c:
@@ -767,14 +764,14 @@ gimp_get_screen_resolution (GdkScreen *screen,
 
   if (width_mm > 0 && height_mm > 0)
     {
-      x = (width  * 25.4) / (gdouble) width_mm;
-      y = (height * 25.4) / (gdouble) height_mm;
+      x = (size_pixels.width  * 25.4) / (gdouble) width_mm;
+      y = (size_pixels.height * 25.4) / (gdouble) height_mm;
     }
 
   if (x < GIMP_MIN_RESOLUTION || x > GIMP_MAX_RESOLUTION ||
       y < GIMP_MIN_RESOLUTION || y > GIMP_MAX_RESOLUTION)
     {
-      g_warning ("GDK returned bogus values for the screen resolution, "
+      g_warning ("GDK returned bogus values for the monitor resolution, "
                  "using 96 dpi instead.");
 
       x = 96.0;

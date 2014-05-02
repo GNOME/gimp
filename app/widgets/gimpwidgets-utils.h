@@ -66,7 +66,8 @@ GdkModifierType   gimp_get_toggle_behavior_mask    (void);
 GdkModifierType   gimp_get_constrain_behavior_mask (void);
 GdkModifierType   gimp_get_all_modifiers_mask      (void);
 
-void              gimp_get_screen_resolution       (GdkScreen            *screen,
+void              gimp_get_monitor_resolution      (GdkScreen            *screen,
+                                                    gint                  monitor,
                                                     gdouble              *xres,
                                                     gdouble              *yres);
 void              gimp_rgb_get_gdk_color           (const GimpRGB        *rgb,
