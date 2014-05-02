@@ -52,6 +52,8 @@ struct _GimpDisplayShell
   GimpDisplay       *display;
 
   GimpUIManager     *popup_manager;
+  GdkScreen         *initial_screen;
+  gint               initial_monitor;
 
   GimpDisplayOptions *options;
   GimpDisplayOptions *fullscreen_options;
@@ -214,7 +216,9 @@ GType             gimp_display_shell_get_type      (void) G_GNUC_CONST;
 GtkWidget       * gimp_display_shell_new           (GimpDisplay        *display,
                                                     GimpUnit            unit,
                                                     gdouble             scale,
-                                                    GimpUIManager      *popup_manager);
+                                                    GimpUIManager      *popup_manager,
+                                                    GdkScreen          *screen,
+                                                    gint                monitor);
 
 void              gimp_display_shell_add_overlay   (GimpDisplayShell   *shell,
                                                     GtkWidget          *child,

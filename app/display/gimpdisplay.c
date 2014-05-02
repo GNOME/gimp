@@ -453,7 +453,9 @@ gimp_display_new (Gimp              *gimp,
 
   /*  create the shell for the image  */
   private->shell = gimp_display_shell_new (display, unit, scale,
-                                           popup_manager);
+                                           popup_manager,
+                                           screen,
+                                           monitor);
 
   shell = gimp_display_get_shell (display);
 

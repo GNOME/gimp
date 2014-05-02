@@ -44,7 +44,8 @@ struct _GimpGui
   const gchar  * (* get_program_class)     (Gimp                *gimp);
   gchar        * (* get_display_name)      (Gimp                *gimp,
                                             gint                 display_ID,
-                                            gint                *monitor_number);
+                                            GObject            **screen,
+                                            gint                *monitor);
   guint32        (* get_user_time)         (Gimp                *gimp);
 
   const gchar  * (* get_theme_dir)         (Gimp                *gimp);
@@ -144,7 +145,8 @@ void           gimp_free_progress         (Gimp                *gimp,
 const gchar  * gimp_get_program_class     (Gimp                *gimp);
 gchar        * gimp_get_display_name      (Gimp                *gimp,
                                            gint                 display_ID,
-                                           gint                *monitor_number);
+                                           GObject            **screen,
+                                           gint                *monitor);
 guint32        gimp_get_user_time         (Gimp                *gimp);
 const gchar  * gimp_get_theme_dir         (Gimp                *gimp);
 

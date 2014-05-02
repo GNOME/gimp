@@ -96,6 +96,8 @@ enum
 {
   PROP_0,
   PROP_POPUP_MANAGER,
+  PROP_INITIAL_SCREEN,
+  PROP_INITIAL_MONITOR,
   PROP_DISPLAY,
   PROP_UNIT,
   PROP_TITLE,
@@ -257,6 +259,20 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_INITIAL_SCREEN,
+                                   g_param_spec_object ("initial-screen",
+                                                        NULL, NULL,
+                                                        GDK_TYPE_SCREEN,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_INITIAL_MONITOR,
+                                   g_param_spec_int ("initial-monitor",
+                                                     NULL, NULL,
+                                                     0, 16, 0,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_DISPLAY,
                                    g_param_spec_object ("display", NULL, NULL,
                                                         GIMP_TYPE_DISPLAY,
@@ -370,7 +386,6 @@ gimp_display_shell_constructed (GObject *object)
   GtkWidget             *lower_hbox;
   GtkWidget             *inner_table;
   GtkWidget             *gtk_image;
-  GdkScreen             *screen;
   GtkAction             *action;
   gint                   image_width;
   gint                   image_height;
@@ -402,12 +417,10 @@ gimp_display_shell_constructed (GObject *object)
 
   shell->dot_for_dot = config->default_dot_for_dot;
 
-  screen = gtk_widget_get_screen (GTK_WIDGET (shell));
-
   if (config->monitor_res_from_gdk)
     {
-      gimp_get_monitor_resolution (screen, /* FIXME monitor */
-                                   0, /* FIXME monitor */
+      gimp_get_monitor_resolution (shell->initial_screen,
+                                   shell->initial_monitor,
                                    &shell->monitor_xres, &shell->monitor_yres);
     }
   else
@@ -908,6 +921,12 @@ gimp_display_shell_set_property (GObject      *object,
     case PROP_POPUP_MANAGER:
       shell->popup_manager = g_value_get_object (value);
       break;
+    case PROP_INITIAL_SCREEN:
+      shell->initial_screen = g_value_get_object (value);
+      break;
+    case PROP_INITIAL_MONITOR:
+      shell->initial_monitor = g_value_get_int (value);
+      break;
     case PROP_DISPLAY:
       shell->display = g_value_get_object (value);
       break;
@@ -946,6 +965,12 @@ gimp_display_shell_get_property (GObject    *object,
     {
     case PROP_POPUP_MANAGER:
       g_value_set_object (value, shell->popup_manager);
+      break;
+    case PROP_INITIAL_SCREEN:
+      g_value_set_object (value, shell->initial_screen);
+      break;
+    case PROP_INITIAL_MONITOR:
+      g_value_set_int (value, shell->initial_monitor);
       break;
     case PROP_DISPLAY:
       g_value_set_object (value, shell->display);
@@ -1176,18 +1201,23 @@ gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
 /*  public functions  */
 
 GtkWidget *
-gimp_display_shell_new (GimpDisplay       *display,
-                        GimpUnit           unit,
-                        gdouble            scale,
-                        GimpUIManager     *popup_manager)
+gimp_display_shell_new (GimpDisplay   *display,
+                        GimpUnit       unit,
+                        gdouble        scale,
+                        GimpUIManager *popup_manager,
+                        GdkScreen     *screen,
+                        gint           monitor)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (popup_manager), NULL);
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
   return g_object_new (GIMP_TYPE_DISPLAY_SHELL,
-                       "popup-manager", popup_manager,
-                       "display",       display,
-                       "unit",          unit,
+                       "popup-manager",   popup_manager,
+                       "initial-screen",  screen,
+                       "initial-monitor", monitor,
+                       "display",         display,
+                       "unit",            unit,
                        NULL);
 }
 

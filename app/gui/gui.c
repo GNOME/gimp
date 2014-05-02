@@ -141,7 +141,7 @@ static Gimp             *the_gui_gimp     = NULL;
 static GimpUIManager    *image_ui_manager = NULL;
 static GimpUIConfigurer *ui_configurer    = NULL;
 static GdkScreen        *initial_screen   = NULL;
-static gint              initial_monitor  = 0;
+static gint              initial_monitor  = -1;
 
 
 /*  public functions  */
@@ -264,6 +264,18 @@ gui_init (Gimp     *gimp,
   return status_callback;
 }
 
+gint
+gui_get_initial_monitor (Gimp       *gimp,
+                         GdkScreen **screen)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), 0);
+  g_return_val_if_fail (screen != NULL, 0);
+
+  *screen = initial_screen;
+
+  return initial_monitor;
+}
+
 
 /*  private functions  */
 
@@ -299,7 +311,6 @@ gui_sanity_check (void)
 
   return NULL;
 }
-
 
 static void
 gui_help_func (const gchar *help_id,
@@ -595,6 +606,10 @@ gui_restore_after_callback (Gimp               *gimp,
 
   /*  indicate that the application has finished loading  */
   gdk_notify_startup_complete ();
+
+  /*  clear startup monitor variables  */
+  initial_screen  = NULL;
+  initial_monitor = -1;
 }
 
 static gboolean

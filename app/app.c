@@ -70,12 +70,20 @@
 
 /*  local prototypes  */
 
-static void       app_init_update_noop    (const gchar  *text1,
-                                           const gchar  *text2,
-                                           gdouble       percentage);
-static gboolean   app_exit_after_callback (Gimp         *gimp,
-                                           gboolean      kill_it,
-                                           GMainLoop   **loop);
+static void       app_init_update_noop       (const gchar        *text1,
+                                              const gchar        *text2,
+                                              gdouble             percentage);
+static void       app_restore_after_callback (Gimp               *gimp,
+                                              GimpInitStatusFunc  status_callback);
+static gboolean   app_exit_after_callback    (Gimp               *gimp,
+                                              gboolean            kill_it,
+                                              GMainLoop         **loop);
+
+
+/*  local variables  */
+
+static GObject *initial_screen  = NULL;
+static gint     initial_monitor = 0;
 
 
 /*  public functions  */
@@ -224,6 +232,14 @@ app_run (const gchar         *full_prog_name,
   /*  initialize lowlevel stuff  */
   gimp_gegl_init (gimp);
 
+  /*  Connect our restore_after callback before gui_init() connects
+   *  theirs, so ours runs first and can grab the initial monitor
+   *  before the GUI's restore_after callback resets it.
+   */
+  g_signal_connect_after (gimp, "restore",
+                          G_CALLBACK (app_restore_after_callback),
+                          NULL);
+
 #ifndef GIMP_CONSOLE_COMPILATION
   if (! no_interface)
     update_status_func = gui_init (gimp, no_splash);
@@ -262,8 +278,8 @@ app_run (const gchar         *full_prog_name,
         {
           if (run_loop)
             file_open_from_command_line (gimp, filenames[i], as_new,
-                                         NULL, /* FIXME monitor */
-                                         0 /* FIXME monitor */);
+                                         initial_screen,
+                                         initial_monitor);
         }
     }
 
@@ -296,6 +312,18 @@ app_init_update_noop (const gchar *text1,
                       gdouble      percentage)
 {
   /*  deliberately do nothing  */
+}
+
+static void
+app_restore_after_callback (Gimp               *gimp,
+                            GimpInitStatusFunc  status_callback)
+{
+  /*  Getting the display name for a -1 display returns the initial
+   *  monitor during startup. Need to call this from a restore_after
+   *  callback, because before restore(), the GUI can't return anything,
+   *  after after restore() the initial monitor gets reset.
+   */
+  g_free (gimp_get_display_name (gimp, -1, &initial_screen, &initial_monitor));
 }
 
 static gboolean
