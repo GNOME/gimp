@@ -47,10 +47,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_COMPONENT_BLUE  = 1 << 2,
   GIMP_COMPONENT_ALPHA = 1 << 3,
 
-  GIMP_COMPONENT_ALL = (GIMP_COMPONENT_RED   |
-                        GIMP_COMPONENT_GREEN |
-                        GIMP_COMPONENT_BLUE  |
-                        GIMP_COMPONENT_ALPHA)
+  GIMP_COMPONENT_ALL = (GIMP_COMPONENT_RED | GIMP_COMPONENT_GREEN | GIMP_COMPONENT_BLUE | GIMP_COMPONENT_ALPHA)
 } GimpComponentMask;
 
 
