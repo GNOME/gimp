@@ -91,6 +91,7 @@ void              gimp_highlight_widget            (GtkWidget            *widget
                                                     gboolean              highlight);
 GtkWidget       * gimp_dock_with_window_new        (GimpDialogFactory    *factory,
                                                     GdkScreen            *screen,
+                                                    gint                  monitor,
                                                     gboolean              toolbox);
 GtkWidget *       gimp_tools_get_tool_options_gui  (GimpToolOptions      *tool_options);
 void              gimp_tools_set_tool_options_gui  (GimpToolOptions      *tool_options,
@@ -99,8 +100,11 @@ void              gimp_tools_set_tool_options_gui  (GimpToolOptions      *tool_o
 void              gimp_widget_flush_expose         (GtkWidget            *widget);
 
 const gchar     * gimp_print_event                 (const GdkEvent       *event);
+
 void              gimp_session_write_position      (GimpConfigWriter     *writer,
                                                     gint                  position);
+
+gint              gimp_widget_get_monitor          (GtkWidget            *widget);
 
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

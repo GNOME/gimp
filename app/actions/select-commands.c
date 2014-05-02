@@ -33,6 +33,7 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpdisplay.h"
@@ -322,6 +323,7 @@ select_save_cmd_callback (GtkAction *action,
                                              image->gimp,
                                              gimp_dialog_factory_get_singleton (),
                                              gtk_widget_get_screen (widget),
+                                             gimp_widget_get_monitor (widget),
                                              "gimp-channel-list");
 }
 

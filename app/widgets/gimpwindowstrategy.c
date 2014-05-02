@@ -71,6 +71,7 @@ gimp_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
                                            Gimp               *gimp,
                                            GimpDialogFactory  *factory,
                                            GdkScreen          *screen,
+                                           gint                monitor,
                                            const gchar        *identifiers)
 {
   GimpWindowStrategyInterface *iface;
@@ -84,6 +85,7 @@ gimp_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
                                         gimp,
                                         factory,
                                         screen,
+                                        monitor,
                                         identifiers);
 
   return NULL;

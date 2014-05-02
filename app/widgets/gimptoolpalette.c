@@ -31,7 +31,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
 
-#include "gimpdialogfactory.h"
 #include "gimptoolbox.h"
 #include "gimptoolpalette.h"
 #include "gimpuimanager.h"
@@ -361,6 +360,7 @@ gimp_tool_palette_tool_button_press (GtkWidget       *widget,
                                                  context->gimp,
                                                  gimp_dock_get_dialog_factory (dock),
                                                  gtk_widget_get_screen (widget),
+                                                 gimp_widget_get_monitor (widget),
                                                  "gimp-tool-options");
     }
 

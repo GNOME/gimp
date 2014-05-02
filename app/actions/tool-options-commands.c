@@ -42,6 +42,7 @@
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimptooloptionseditor.h"
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
 
 #include "dialogs/data-delete-dialog.h"
@@ -243,6 +244,7 @@ tool_options_show_preset_editor (Gimp           *gimp,
                                                gimp,
                                                gimp_dialog_factory_get_singleton (),
                                                gtk_widget_get_screen (GTK_WIDGET (editor)),
+                                               gimp_widget_get_monitor (GTK_WIDGET (editor)),
                                                "gimp-tool-preset-editor");
 
   gimp_data_editor_set_data (GIMP_DATA_EDITOR (gtk_bin_get_child (GTK_BIN (dockable))),

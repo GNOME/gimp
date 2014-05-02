@@ -864,6 +864,7 @@ gimp_dockable_detach (GimpDockable *dockable)
 
   dock = gimp_dock_with_window_new (gimp_dialog_factory_get_singleton (),
                                     gtk_widget_get_screen (GTK_WIDGET (dockable)),
+                                    gimp_widget_get_monitor (GTK_WIDGET (dockable)),
                                     FALSE /*toolbox*/);
   dock_window = gimp_dock_window_from_dock (GIMP_DOCK (dock));
   gtk_window_set_position (GTK_WINDOW (dock_window), GTK_WIN_POS_MOUSE);

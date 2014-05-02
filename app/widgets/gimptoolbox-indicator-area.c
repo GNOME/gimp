@@ -33,11 +33,11 @@
 #include "core/gimpgradient.h"
 #include "core/gimppattern.h"
 
-#include "gimpdialogfactory.h"
 #include "gimpdnd.h"
 #include "gimpview.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-indicator-area.h"
+#include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
@@ -60,6 +60,7 @@ brush_preview_clicked (GtkWidget       *widget,
                                              context->gimp,
                                              gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
                                              gtk_widget_get_screen (widget),
+                                             gimp_widget_get_monitor (widget),
                                              "gimp-brush-grid|gimp-brush-list");
 }
 
@@ -86,6 +87,7 @@ pattern_preview_clicked (GtkWidget       *widget,
                                              context->gimp,
                                              gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
                                              gtk_widget_get_screen (widget),
+                                             gimp_widget_get_monitor (widget),
                                              "gimp-pattern-grid|gimp-pattern-list");
 }
 
@@ -112,6 +114,7 @@ gradient_preview_clicked (GtkWidget       *widget,
                                              context->gimp,
                                              gimp_dock_get_dialog_factory (GIMP_DOCK (toolbox)),
                                              gtk_widget_get_screen (widget),
+                                             gimp_widget_get_monitor (widget),
                                              "gimp-gradient-list|gimp-gradient-grid");
 }
 

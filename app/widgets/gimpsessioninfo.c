@@ -54,6 +54,7 @@ enum
   SESSION_INFO_FACTORY_ENTRY,
   SESSION_INFO_POSITION,
   SESSION_INFO_SIZE,
+  SESSION_INFO_MONITOR,
   SESSION_INFO_OPEN,
   SESSION_INFO_AUX,
   SESSION_INFO_DOCK,
@@ -62,6 +63,7 @@ enum
 };
 
 #define DEFAULT_SCREEN  -1
+#define DEFAULT_MONITOR -1
 
 
 typedef struct
@@ -69,6 +71,7 @@ typedef struct
   GimpSessionInfo   *info;
   GimpDialogFactory *factory;
   GdkScreen         *screen;
+  gint               monitor;
   GtkWidget         *dialog;
 } GimpRestoreDocksData;
 
@@ -116,7 +119,9 @@ gimp_session_info_init (GimpSessionInfo *info)
   info->p = G_TYPE_INSTANCE_GET_PRIVATE (info,
                                          GIMP_TYPE_SESSION_INFO,
                                          GimpSessionInfoPrivate);
-  info->p->screen = DEFAULT_SCREEN;
+
+  info->p->monitor = DEFAULT_MONITOR;
+  info->p->screen  = DEFAULT_SCREEN;
 }
 
 static void
@@ -191,6 +196,13 @@ gimp_session_info_serialize (GimpConfig       *config,
       gimp_config_writer_close (writer);
     }
 
+  if (info->p->monitor != DEFAULT_MONITOR)
+    {
+      gimp_config_writer_open (writer, "monitor");
+      gimp_config_writer_printf (writer, "%d", info->p->monitor);
+      gimp_config_writer_close (writer);
+    }
+
   if (info->p->open)
     {
       gimp_config_writer_open (writer, "open-on-exit");
@@ -262,6 +274,8 @@ gimp_session_info_deserialize (GimpConfig *config,
                               GINT_TO_POINTER (SESSION_INFO_POSITION));
   g_scanner_scope_add_symbol (scanner, scope_id, "size",
                               GINT_TO_POINTER (SESSION_INFO_SIZE));
+  g_scanner_scope_add_symbol (scanner, scope_id, "monitor",
+                              GINT_TO_POINTER (SESSION_INFO_MONITOR));
   g_scanner_scope_add_symbol (scanner, scope_id, "open-on-exit",
                               GINT_TO_POINTER (SESSION_INFO_OPEN));
   g_scanner_scope_add_symbol (scanner, scope_id, "aux-info",
@@ -327,6 +341,12 @@ gimp_session_info_deserialize (GimpConfig *config,
               if (! gimp_scanner_parse_int (scanner, &info->p->width))
                 goto error;
               if (! gimp_scanner_parse_int (scanner, &info->p->height))
+                goto error;
+              break;
+
+            case SESSION_INFO_MONITOR:
+              token = G_TOKEN_INT;
+              if (! gimp_scanner_parse_int (scanner, &info->p->monitor))
                 goto error;
               break;
 
@@ -466,6 +486,7 @@ gimp_session_info_restore_docks (GimpRestoreDocksData *data)
   GimpSessionInfo     *info    = data->info;
   GimpDialogFactory   *factory = data->factory;
   GdkScreen           *screen  = data->screen;
+  gint                 monitor = data->monitor;
   GtkWidget           *dialog  = data->dialog;
   GList               *iter;
 
@@ -484,6 +505,7 @@ gimp_session_info_restore_docks (GimpRestoreDocksData *data)
             GTK_WIDGET (gimp_session_info_dock_restore (dock_info,
                                                         factory,
                                                         screen,
+                                                        monitor,
                                                         GIMP_DOCK_CONTAINER (dialog)));
 
           if (dock && dock_info->position != 0)
@@ -524,25 +546,30 @@ gimp_session_info_new (void)
 
 void
 gimp_session_info_restore (GimpSessionInfo   *info,
-                           GimpDialogFactory *factory)
+                           GimpDialogFactory *factory,
+                           GdkScreen         *screen,
+                           gint               monitor)
 {
-  GtkWidget            *dialog  = NULL;
-  GdkDisplay           *display = NULL;
-  GdkScreen            *screen  = NULL;
-  GimpRestoreDocksData *data    = NULL;
+  GtkWidget            *dialog = NULL;
+  GimpRestoreDocksData *data;
 
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
+  g_return_if_fail (GDK_IS_SCREEN (screen));
 
   g_object_ref (info);
 
-  display = gdk_display_get_default ();
-
   if (info->p->screen != DEFAULT_SCREEN)
-    screen = gdk_display_get_screen (display, info->p->screen);
+    {
+      GdkDisplay *display;
+      GdkScreen  *info_screen;
 
-  if (! screen)
-    screen = gdk_display_get_default_screen (display);
+      display = gdk_display_get_default ();
+      info_screen = gdk_display_get_screen (display, info->p->screen);
+
+      if (info_screen)
+        screen = info_screen;
+    }
 
   info->p->open   = FALSE;
   info->p->screen = DEFAULT_SCREEN;
@@ -552,6 +579,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
     {
       dialog = info->p->factory_entry->restore_func (factory,
                                                      screen,
+                                                     monitor,
                                                      info);
     }
 
@@ -571,106 +599,69 @@ gimp_session_info_restore (GimpSessionInfo   *info,
   data->info    = g_object_ref (info);
   data->factory = g_object_ref (factory);
   data->screen  = g_object_ref (screen);
-  data->dialog  = g_object_ref (dialog);
+  data->monitor = monitor;
+  data->dialog  = dialog ? g_object_ref (dialog) : NULL;
 
   g_idle_add ((GSourceFunc) gimp_session_info_restore_docks, data);
 
   g_object_unref (info);
 }
 
-/* This function mostly lifted from
- * gtk+/gdk/gdkscreen.c:gdk_screen_get_monitor_at_window()
- */
-static gint
-gimp_session_info_get_appropriate_monitor (GdkScreen *screen,
-                                           gint       x,
-                                           gint       y,
-                                           gint       w,
-                                           gint       h)
-{
-  GdkRectangle rect;
-  gint         area    = 0;
-  gint         monitor = -1;
-  gint         num_monitors;
-  gint         i;
-
-  rect.x      = x;
-  rect.y      = y;
-  rect.width  = w;
-  rect.height = h;
-
-  num_monitors = gdk_screen_get_n_monitors (screen);
-
-  for (i = 0; i < num_monitors; i++)
-    {
-      GdkRectangle geometry;
-
-      gdk_screen_get_monitor_geometry (screen, i, &geometry);
-
-      if (gdk_rectangle_intersect (&rect, &geometry, &geometry) &&
-          geometry.width * geometry.height > area)
-        {
-          area = geometry.width * geometry.height;
-          monitor = i;
-        }
-    }
-
-  if (monitor >= 0)
-    return monitor;
-  else
-    return gdk_screen_get_monitor_at_point (screen,
-                                            rect.x + rect.width / 2,
-                                            rect.y + rect.height / 2);
-}
-
 /**
  * gimp_session_info_apply_geometry:
  * @info:
+ * @screen:
+ * @current_monitor:
  *
  * Apply the geometry stored in the session info object to the
  * associated widget.
  **/
 void
-gimp_session_info_apply_geometry (GimpSessionInfo *info)
+gimp_session_info_apply_geometry (GimpSessionInfo *info,
+                                  GdkScreen       *screen,
+                                  gint             current_monitor,
+                                  gboolean         apply_stored_monitor)
 {
-  GdkScreen   *screen;
   GdkRectangle rect;
   gchar        geom[32];
   gint         monitor;
-  gboolean     use_size;
 
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GTK_IS_WINDOW (info->p->widget));
+  g_return_if_fail (GDK_IS_SCREEN (screen));
 
-  screen = gtk_widget_get_screen (info->p->widget);
+  monitor = current_monitor;
 
-  use_size = (gimp_session_info_get_remember_size (info) &&
-              info->p->width  > 0 &&
-              info->p->height > 0);
-
-  if (use_size)
+  if (apply_stored_monitor)
     {
-      monitor = gimp_session_info_get_appropriate_monitor (screen,
-                                                           info->p->x,
-                                                           info->p->y,
-                                                           info->p->width,
-                                                           info->p->height);
-    }
-  else
-    {
-      monitor = gdk_screen_get_monitor_at_point (screen, info->p->x, info->p->y);
+      gint n_monitors;
+
+      n_monitors = gdk_screen_get_n_monitors (screen);
+
+      if (info->p->monitor != DEFAULT_MONITOR &&
+          info->p->monitor < n_monitors)
+        {
+          monitor = info->p->monitor;
+        }
+      else
+        {
+          monitor = gdk_screen_get_primary_monitor (screen);
+        }
     }
 
   gdk_screen_get_monitor_geometry (screen, monitor, &rect);
 
+  info->p->x += rect.x;
+  info->p->y += rect.y;
+
   info->p->x = CLAMP (info->p->x,
-                   rect.x,
-                   rect.x + rect.width - (info->p->width > 0 ?
-                                          info->p->width : 128));
+                      rect.x,
+                      rect.x + rect.width - (info->p->width > 0 ?
+                                             info->p->width : 128));
   info->p->y = CLAMP (info->p->y,
-                   rect.y,
-                   rect.y + rect.height - (info->p->height > 0 ?
-                                           info->p->height : 128));
+                      rect.y,
+                      rect.y + rect.height - (info->p->height > 0 ?
+                                              info->p->height : 128));
 
   if (info->p->right_align && info->p->bottom_align)
     {
@@ -691,15 +682,19 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info)
 
   gtk_window_parse_geometry (GTK_WINDOW (info->p->widget), geom);
 
-  if (use_size)
-    gtk_window_set_default_size (GTK_WINDOW (info->p->widget),
-                                 info->p->width, info->p->height);
+  if (gimp_session_info_get_remember_size (info) &&
+      info->p->width  > 0 &&
+      info->p->height > 0)
+    {
+      gtk_window_set_default_size (GTK_WINDOW (info->p->widget),
+                                   info->p->width, info->p->height);
+    }
 
   /*  Window managers and windowing systems suck. They have their own
    *  ideas about WM standards and when it's appropriate to honor
    *  user/application-set window positions and when not. Therefore,
    *  use brute force and "manually" position dialogs whenever they
-   *  are shown. This is important especially for transient dialog,
+   *  are shown. This is important especially for transient dialogs,
    *  because window managers behave even "smarter" then...
    */
   if (GTK_IS_DIALOG (info->p->widget))
@@ -721,15 +716,19 @@ gimp_session_info_read_geometry (GimpSessionInfo   *info,
                                  GdkEventConfigure *cevent)
 {
   GdkWindow *window;
+  GdkScreen *screen  = gtk_widget_get_screen (info->p->widget);
 
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GTK_IS_WINDOW (info->p->widget));
 
   window = gtk_widget_get_window (info->p->widget);
+  screen = gtk_widget_get_screen (info->p->widget);
 
   if (window)
     {
-      gint x, y;
+      gint         x, y;
+      gint         monitor;
+      GdkRectangle geometry;
 
       gdk_window_get_root_origin (window, &x, &y);
 
@@ -739,6 +738,14 @@ gimp_session_info_read_geometry (GimpSessionInfo   *info,
        */
       info->p->x = MAX (0, x);
       info->p->y = MAX (0, y);
+
+      monitor = gdk_screen_get_monitor_at_point (screen,
+                                                 info->p->x, info->p->y);
+      gdk_screen_get_monitor_geometry (screen, monitor, &geometry);
+
+      /* Always store window coordinates relative to the monitor */
+      info->p->x -= geometry.x;
+      info->p->y -= geometry.y;
 
       if (gimp_session_info_get_remember_size (info))
         {
@@ -768,6 +775,11 @@ gimp_session_info_read_geometry (GimpSessionInfo   *info,
           info->p->width  = 0;
           info->p->height = 0;
         }
+
+      info->p->monitor = DEFAULT_MONITOR;
+
+      if (monitor != gdk_screen_get_primary_monitor (screen))
+        info->p->monitor = monitor;
     }
 
   info->p->open = FALSE;
@@ -806,7 +818,6 @@ gimp_session_info_read_geometry (GimpSessionInfo   *info,
   if (info->p->open)
     {
       GdkDisplay *display = gtk_widget_get_display (info->p->widget);
-      GdkScreen  *screen  = gtk_widget_get_screen (info->p->widget);
 
       if (screen != gdk_display_get_default_screen (display))
         info->p->screen = gdk_screen_get_number (screen);

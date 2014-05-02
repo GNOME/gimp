@@ -303,15 +303,21 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
 static void
 gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
 {
-  GimpTool  *tool = GIMP_TOOL (picker_tool);
-  GtkWidget *hbox;
-  GtkWidget *frame;
-  GimpRGB    color;
+  GimpTool         *tool = GIMP_TOOL (picker_tool);
+  GimpDisplayShell *shell;
+  GtkWidget        *hbox;
+  GtkWidget        *frame;
+  GimpRGB           color;
 
+  g_return_if_fail (tool->display != NULL);
   g_return_if_fail (tool->drawable != NULL);
+
+  shell = gimp_display_get_shell (tool->display);
 
   picker_tool->gui = gimp_tool_gui_new (tool->tool_info,
                                         _("Color Picker Information"),
+                                        gtk_widget_get_screen (GTK_WIDGET (shell)),
+                                        gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                         FALSE,
 
                                         GTK_STOCK_CLOSE,

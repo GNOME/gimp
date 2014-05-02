@@ -1628,12 +1628,17 @@ gimp_transform_tool_handles_recalc (GimpTransformTool *tr_tool,
 static void
 gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 {
-  GimpTool     *tool      = GIMP_TOOL (tr_tool);
-  GimpToolInfo *tool_info = tool->tool_info;
-  const gchar  *stock_id;
+  GimpTool         *tool      = GIMP_TOOL (tr_tool);
+  GimpToolInfo     *tool_info = tool->tool_info;
+  GimpDisplayShell *shell;
+  const gchar      *stock_id;
 
   if (! GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog)
     return;
+
+  g_return_if_fail (tool->display != NULL);
+
+  shell = gimp_display_get_shell (tool->display);
 
   stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
 
@@ -1641,6 +1646,8 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 
   tr_tool->gui = gimp_tool_gui_new (tool_info,
                                     tool_info->blurb,
+                                    gtk_widget_get_screen (GTK_WIDGET (shell)),
+                                    gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                     tr_tool->overlay,
 
                                     GIMP_STOCK_WILBER_EEK, RESPONSE_EEK,
@@ -1713,7 +1720,11 @@ gimp_transform_tool_response (GimpToolGui       *gui,
     case RESPONSE_EEK:
       if (tr_tool->gui)
         {
+          GimpDisplayShell *shell = gimp_display_get_shell (display);
+
           gimp_tool_gui_set_overlay (tr_tool->gui,
+                                     gtk_widget_get_screen (GTK_WIDGET (shell)),
+                                     gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                      ! gimp_tool_gui_get_overlay (tr_tool->gui));
         }
       break;

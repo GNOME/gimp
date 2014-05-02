@@ -49,6 +49,7 @@ enum
   PROP_SAVE_DEVICE_STATUS,
   PROP_SAVE_SESSION_INFO,
   PROP_RESTORE_SESSION,
+  PROP_RESTORE_MONITOR,
   PROP_SAVE_TOOL_OPTIONS,
   PROP_SHOW_TOOLTIPS,
   PROP_TEAROFF_MENUS,
@@ -145,6 +146,10 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESTORE_SESSION,
                                     "restore-session", RESTORE_SESSION_BLURB,
                                     TRUE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_RESTORE_MONITOR,
+                                    "restore-monitor", RESTORE_MONITOR_BLURB,
+                                    FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAVE_TOOL_OPTIONS,
                                     "save-tool-options",
@@ -386,6 +391,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_RESTORE_SESSION:
       gui_config->restore_session = g_value_get_boolean (value);
       break;
+    case PROP_RESTORE_MONITOR:
+      gui_config->restore_monitor = g_value_get_boolean (value);
+      break;
     case PROP_SAVE_TOOL_OPTIONS:
       gui_config->save_tool_options = g_value_get_boolean (value);
       break;
@@ -520,6 +528,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_RESTORE_SESSION:
       g_value_set_boolean (value, gui_config->restore_session);
+      break;
+    case PROP_RESTORE_MONITOR:
+      g_value_set_boolean (value, gui_config->restore_monitor);
       break;
     case PROP_SAVE_TOOL_OPTIONS:
       g_value_set_boolean (value, gui_config->save_tool_options);

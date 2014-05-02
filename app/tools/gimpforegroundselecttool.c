@@ -295,12 +295,12 @@ gimp_foreground_select_tool_initialize (GimpTool     *tool,
       fg_select->gui =
         gimp_tool_gui_new (tool->tool_info,
                            _("Dialog for foreground select"),
-                           FALSE,
+                           gtk_widget_get_screen (GTK_WIDGET (shell)),
+                           gimp_widget_get_monitor (GTK_WIDGET (shell)),
+                           TRUE,
                            GTK_STOCK_CANCEL,                  GTK_RESPONSE_CANCEL,
                            GIMP_STOCK_TOOL_FOREGROUND_SELECT, GTK_RESPONSE_APPLY,
                            NULL);
-
-      gimp_tool_gui_set_overlay (fg_select->gui, TRUE);
 
       g_signal_connect (fg_select->gui, "response",
                         G_CALLBACK (gimp_foreground_select_tool_response),

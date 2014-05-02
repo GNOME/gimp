@@ -41,6 +41,7 @@
 #include "gimpcontainerview.h"
 #include "gimpdialogfactory.h"
 #include "gimpviewrenderer.h"
+#include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
@@ -663,6 +664,7 @@ gimp_container_popup_dialog_clicked (GtkWidget          *button,
                                              popup->context->gimp,
                                              popup->dialog_factory,
                                              gtk_widget_get_screen (button),
+                                             gimp_widget_get_monitor (button),
                                              popup->dialog_identifier);
   g_signal_emit (popup, popup_signals[CONFIRM], 0);
 }

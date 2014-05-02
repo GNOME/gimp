@@ -34,6 +34,7 @@
 #include "widgets/gimpdockcontainer.h"
 #include "widgets/gimpdockwindow.h"
 #include "widgets/gimptoolbox.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -332,6 +333,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
                                          GimpAlignmentType  screen_side_destination)
 {
   GdkScreen    *screen           = gtk_widget_get_screen (GTK_WIDGET (dock_columns));
+  gint          monitor          = gimp_widget_get_monitor (GTK_WIDGET (dock_columns));
   GList        *docks            = g_list_copy (gimp_dock_columns_get_docks (dock_columns));
   GList        *iter             = NULL;
   gboolean      contains_toolbox = FALSE;
@@ -367,6 +369,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
   dock_window =
     gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                     screen,
+                                    monitor,
                                     NULL /*ui_manager*/,
                                     (contains_toolbox ?
                                      "gimp-toolbox-window" :

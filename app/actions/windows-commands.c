@@ -167,7 +167,9 @@ windows_open_recent_cmd_callback (GtkAction *action,
   GimpSessionInfo        *info;
   GimpDialogFactoryEntry *entry;
   Gimp                   *gimp;
+  GtkWidget              *widget;
   return_if_no_gimp (gimp, data);
+  return_if_no_widget (widget, data);
 
   info  = g_object_get_data (G_OBJECT (action), "info");
   entry = gimp_session_info_get_factory_entry (info);
@@ -190,7 +192,9 @@ windows_open_recent_cmd_callback (GtkAction *action,
   gimp_dialog_factory_add_session_info (gimp_dialog_factory_get_singleton (),
                                         info);
 
-  gimp_session_info_restore (info, gimp_dialog_factory_get_singleton ());
+  gimp_session_info_restore (info, gimp_dialog_factory_get_singleton (),
+                             gtk_widget_get_screen (widget),
+                             gimp_widget_get_monitor (widget));
 
   g_object_unref (info);
 }

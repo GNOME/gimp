@@ -441,6 +441,7 @@ gimp_dialog_factory_dialog_sane (GimpDialogFactory      *factory,
 static GtkWidget *
 gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                                          GdkScreen         *screen,
+                                         gint               monitor,
                                          GimpContext       *context,
                                          GimpUIManager     *ui_manager,
                                          const gchar       *identifier,
@@ -500,6 +501,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                */
               dock     = gimp_dock_with_window_new (factory,
                                                     screen,
+                                                    monitor,
                                                     FALSE /*toolbox*/);
               dockbook = gimp_dockbook_new (factory->p->menu_factory);
 
@@ -513,6 +515,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 
               dock_window = gimp_dialog_factory_dialog_new (factory,
                                                             screen,
+                                                            monitor,
                                                             NULL /*ui_manager*/,
                                                             "gimp-toolbox-window",
                                                             -1 /*view_size*/,
@@ -618,7 +621,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
         }
 
       if (dialog)
-        gimp_dialog_factory_add_dialog (factory, dialog);
+        gimp_dialog_factory_add_dialog (factory, dialog, screen, monitor);
     }
 
   /*  Finally, if we found an existing dialog or created a new one, raise it.
@@ -689,6 +692,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
 GtkWidget *
 gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
                                 GdkScreen         *screen,
+                                gint               monitor,
                                 GimpUIManager     *ui_manager,
                                 const gchar       *identifier,
                                 gint               view_size,
@@ -700,6 +704,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
 
   return gimp_dialog_factory_dialog_new_internal (factory,
                                                   screen,
+                                                  monitor,
                                                   factory->p->context,
                                                   ui_manager,
                                                   identifier,
@@ -774,6 +779,7 @@ gimp_dialog_factory_add_session_info (GimpDialogFactory *factory,
 GtkWidget *
 gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
                                   GdkScreen         *screen,
+                                  gint               monitor,
                                   const gchar       *identifiers,
                                   gint               view_size)
 {
@@ -800,6 +806,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
 
   dialog = gimp_dialog_factory_dialog_new_internal (factory,
                                                     screen,
+                                                    monitor,
                                                     NULL,
                                                     NULL,
                                                     ids[i] ? ids[i] : ids[0],
@@ -842,6 +849,7 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
 
   return gimp_dialog_factory_dialog_new_internal (factory,
                                                   gtk_widget_get_screen (GTK_WIDGET (dock)),
+                                                  0,
                                                   gimp_dock_get_context (dock),
                                                   gimp_dock_get_ui_manager (dock),
                                                   identifier,
@@ -853,7 +861,9 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
 
 void
 gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
-                                GtkWidget         *dialog)
+                                GtkWidget         *dialog,
+                                GdkScreen         *screen,
+                                gint               monitor)
 {
   GimpDialogFactory      *dialog_factory = NULL;
   GimpDialogFactoryEntry *entry          = NULL;
@@ -863,6 +873,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
   g_return_if_fail (GTK_IS_WIDGET (dialog));
+  g_return_if_fail (GDK_IS_SCREEN (screen));
 
   if (g_list_find (factory->p->open_dialogs, dialog))
     {
@@ -925,7 +936,13 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
                   gimp_session_info_is_session_managed (current_info) &&
                   ! gtk_widget_get_visible (dialog))
                 {
-                  gimp_session_info_apply_geometry (current_info);
+                  GimpGuiConfig *gui_config;
+
+                  gui_config = GIMP_GUI_CONFIG (factory->p->context->gimp->config);
+
+                  gimp_session_info_apply_geometry (current_info,
+                                                    screen, monitor,
+                                                    gui_config->restore_monitor);
                 }
 
               info = current_info;
@@ -993,7 +1010,9 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 void
 gimp_dialog_factory_add_foreign (GimpDialogFactory *factory,
                                  const gchar       *identifier,
-                                 GtkWidget         *dialog)
+                                 GtkWidget         *dialog,
+                                 GdkScreen         *screen,
+                                 gint               monitor)
 {
   GimpDialogFactory      *dialog_factory;
   GimpDialogFactoryEntry *entry;
@@ -1002,6 +1021,7 @@ gimp_dialog_factory_add_foreign (GimpDialogFactory *factory,
   g_return_if_fail (identifier != NULL);
   g_return_if_fail (GTK_IS_WIDGET (dialog));
   g_return_if_fail (gtk_widget_is_toplevel (dialog));
+  g_return_if_fail (GDK_IS_SCREEN (screen));
 
   dialog_factory = gimp_dialog_factory_from_widget (dialog, &entry);
 
@@ -1030,7 +1050,7 @@ gimp_dialog_factory_add_foreign (GimpDialogFactory *factory,
 
   gimp_dialog_factory_set_widget_data (dialog, factory, entry);
 
-  gimp_dialog_factory_add_dialog (factory, dialog);
+  gimp_dialog_factory_add_dialog (factory, dialog, screen, monitor);
 }
 
 void
@@ -1423,7 +1443,9 @@ gimp_dialog_factory_save (GimpDialogFactory *factory,
 }
 
 void
-gimp_dialog_factory_restore (GimpDialogFactory *factory)
+gimp_dialog_factory_restore (GimpDialogFactory *factory,
+                             GdkScreen         *screen,
+                             gint               monitor)
 {
   GList *infos;
 
@@ -1433,7 +1455,7 @@ gimp_dialog_factory_restore (GimpDialogFactory *factory)
 
       if (gimp_session_info_get_open (info))
         {
-          gimp_session_info_restore (info, factory);
+          gimp_session_info_restore (info, factory, screen, monitor);
         }
       else
         {

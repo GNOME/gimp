@@ -103,6 +103,8 @@ gimp_tool_dialog_dispose (GObject *object)
  **/
 GtkWidget *
 gimp_tool_dialog_new (GimpToolInfo *tool_info,
+                      GdkScreen    *screen,
+                      gint          monitor,
                       const gchar  *desc,
                       ...)
 {
@@ -132,7 +134,9 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
 
   gimp_dialog_factory_add_foreign (gimp_dialog_factory_get_singleton (),
                                    identifier,
-                                   dialog);
+                                   dialog,
+                                   screen,
+                                   monitor);
 
   g_free (identifier);
 

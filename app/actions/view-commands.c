@@ -38,6 +38,7 @@
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpdisplay.h"
@@ -392,6 +393,7 @@ view_navigation_window_cmd_callback (GtkAction *action,
                                              gimp,
                                              gimp_dialog_factory_get_singleton (),
                                              gtk_widget_get_screen (GTK_WIDGET (shell)),
+                                             gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                              "gimp-navigation-view");
 }
 

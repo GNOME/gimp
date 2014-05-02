@@ -39,6 +39,7 @@ struct _GimpWindowStrategyInterface
                                         Gimp               *gimp,
                                         GimpDialogFactory  *factory,
                                         GdkScreen          *screen,
+                                        gint                monitor,
                                         const gchar        *identifiers);
 };
 
@@ -48,6 +49,7 @@ GtkWidget * gimp_window_strategy_show_dockable_dialog (GimpWindowStrategy *strat
                                                        Gimp               *gimp,
                                                        GimpDialogFactory  *factory,
                                                        GdkScreen          *screen,
+                                                       gint                monitor,
                                                        const gchar        *identifiers);
 
 

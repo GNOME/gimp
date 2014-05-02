@@ -492,6 +492,7 @@ prefs_input_devices_dialog (GtkWidget *widget,
 {
   gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                     gtk_widget_get_screen (widget),
+                                    gimp_widget_get_monitor (widget),
                                     "gimp-input-devices-dialog", 0);
 }
 
@@ -501,6 +502,7 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
 {
   gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                     gtk_widget_get_screen (widget),
+                                    gimp_widget_get_monitor (widget),
                                     "gimp-keyboard-shortcuts-dialog", 0);
 }
 
@@ -2508,6 +2510,9 @@ prefs_dialog_new (Gimp       *gimp,
 
   prefs_check_button_add (object, "save-session-info",
                           _("_Save window positions on exit"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (object, "restore-monitor",
+                          _("Open windows on the same _monitor they were open before"),
                           GTK_BOX (vbox2));
 
   button = prefs_button_add (GTK_STOCK_SAVE,

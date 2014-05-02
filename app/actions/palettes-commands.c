@@ -34,6 +34,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpview.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "actions.h"
 #include "palettes-commands.h"
@@ -59,6 +60,7 @@ palettes_import_cmd_callback (GtkAction *action,
 
   gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                   gtk_widget_get_screen (widget),
+                                  gimp_widget_get_monitor (widget),
                                   NULL /*ui_manager*/,
                                   "gimp-palette-import-dialog", -1, TRUE);
 }

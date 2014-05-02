@@ -1040,13 +1040,20 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
 static GimpToolGui *
 gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
 {
-  GimpTool    *tool = GIMP_TOOL (measure);
-  GimpToolGui *gui;
-  GtkWidget   *table;
-  GtkWidget   *label;
+  GimpTool         *tool = GIMP_TOOL (measure);
+  GimpDisplayShell *shell;
+  GimpToolGui      *gui;
+  GtkWidget        *table;
+  GtkWidget        *label;
+
+  g_return_if_fail (tool->display != NULL);
+
+  shell = gimp_display_get_shell (tool->display);
 
   gui = gimp_tool_gui_new (tool->tool_info,
                            _("Measure Distances and Angles"),
+                           gtk_widget_get_screen (GTK_WIDGET (shell)),
+                           gimp_widget_get_monitor (GTK_WIDGET (shell)),
                            FALSE,
 
                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,

@@ -44,6 +44,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
+#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpdisplay.h"
@@ -468,6 +469,7 @@ edit_named_paste_cmd_callback (GtkAction *action,
                                              gimp,
                                              gimp_dialog_factory_get_singleton (),
                                              gtk_widget_get_screen (widget),
+                                             gimp_widget_get_monitor (widget),
                                              "gimp-buffer-list|gimp-buffer-grid");
 }
 

@@ -38,6 +38,7 @@ static GtkWidget * gimp_multi_window_strategy_show_dockable_dialog       (GimpWi
                                                                           Gimp                        *gimp,
                                                                           GimpDialogFactory           *factory,
                                                                           GdkScreen                   *screen,
+                                                                          gint                         monitor,
                                                                           const gchar                 *identifiers);
 
 
@@ -69,9 +70,11 @@ gimp_multi_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
                                                  Gimp               *gimp,
                                                  GimpDialogFactory  *factory,
                                                  GdkScreen          *screen,
+                                                 gint                monitor,
                                                  const gchar        *identifiers)
 {
-  return gimp_dialog_factory_dialog_raise (factory, screen, identifiers, -1);
+  return gimp_dialog_factory_dialog_raise (factory, screen, monitor,
+                                           identifiers, -1);
 }
 
 GimpObject *

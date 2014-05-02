@@ -54,6 +54,8 @@ GType         gimp_tool_gui_get_type               (void) G_GNUC_CONST;
 
 GimpToolGui * gimp_tool_gui_new                    (GimpToolInfo     *tool_info,
                                                     const gchar      *description,
+                                                    GdkScreen        *screen,
+                                                    gint              monitor,
                                                     gboolean          overlay,
                                                     ...) G_GNUC_NULL_TERMINATED;
 
@@ -72,6 +74,8 @@ void          gimp_tool_gui_show                   (GimpToolGui      *gui);
 void          gimp_tool_gui_hide                   (GimpToolGui      *gui);
 
 void          gimp_tool_gui_set_overlay            (GimpToolGui      *gui,
+                                                    GdkScreen        *screen,
+                                                    gint              monitor,
                                                     gboolean          overlay);
 gboolean      gimp_tool_gui_get_overlay            (GimpToolGui      *gui);
 

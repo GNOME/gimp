@@ -42,6 +42,7 @@
 #include "gimphelp-ids.h"
 #include "gimpuimanager.h"
 #include "gimpviewabledialog.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -678,7 +679,9 @@ gimp_controller_editor_edit_clicked (GtkWidget            *button,
 
       gimp_dialog_factory_add_foreign (gimp_dialog_factory_get_singleton (),
                                        "gimp-controller-action-dialog",
-                                       editor->edit_dialog);
+                                       editor->edit_dialog,
+                                       gtk_widget_get_screen (button),
+                                       gimp_widget_get_monitor (button));
 
       g_signal_connect (editor->edit_dialog, "response",
                         G_CALLBACK (gimp_controller_editor_edit_response),

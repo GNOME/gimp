@@ -46,6 +46,7 @@
 #include "gimpdialogfactory.h"
 #include "gimppropwidgets.h"
 #include "gimpview.h"
+#include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
@@ -465,5 +466,6 @@ gimp_device_status_view_clicked (GtkWidget       *widget,
                                              status->gimp,
                                              dialog_factory,
                                              gtk_widget_get_screen (widget),
+                                             gimp_widget_get_monitor (widget),
                                              identifier);
 }

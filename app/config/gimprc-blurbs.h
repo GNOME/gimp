@@ -294,6 +294,11 @@ N_("When enabled, the image window will automatically resize itself " \
 #define RESTORE_SESSION_BLURB \
 N_("Let GIMP try to restore your last saved session on each startup.")
 
+#define RESTORE_MONITOR_BLURB \
+N_("When enabled, GIMP will try to restore windows on the monitor they " \
+   "were open before.  When disabled, windows will appear on the currently " \
+   "used monitor.")
+
 #define SAVE_DEVICE_STATUS_BLURB \
 N_("Remember the current tool, pattern, color, and brush across GIMP " \
    "sessions.")

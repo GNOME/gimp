@@ -280,7 +280,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
   GimpToolInfo     *tool_info      = tool->tool_info;
   GimpImage        *image          = gimp_display_get_image (display);
   GimpDrawable     *drawable       = gimp_image_get_active_drawable (image);
-  GimpDisplayShell *display_shell  = gimp_display_get_shell (display);
+  GimpDisplayShell *shell          = gimp_display_get_shell (display);
 
   if (! drawable)
     return FALSE;
@@ -330,6 +330,8 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       image_map_tool->gui =
         gimp_tool_gui_new (tool_info,
                            klass->dialog_desc,
+                           gtk_widget_get_screen (GTK_WIDGET (shell)),
+                           gimp_widget_get_monitor (GTK_WIDGET (shell)),
                            image_map_tool->overlay,
 
                            GIMP_STOCK_RESET, RESPONSE_RESET,
@@ -392,7 +394,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       gimp_image_map_tool_dialog (image_map_tool);
     }
 
-  gimp_tool_gui_set_shell (image_map_tool->gui, display_shell);
+  gimp_tool_gui_set_shell (image_map_tool->gui, shell);
   gimp_tool_gui_set_viewable (image_map_tool->gui, GIMP_VIEWABLE (drawable));
 
   gimp_tool_gui_show (image_map_tool->gui);

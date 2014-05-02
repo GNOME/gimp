@@ -265,6 +265,7 @@ typedef struct _GimpDialogFactoryEntry       GimpDialogFactoryEntry;
 
 typedef GtkWidget * (* GimpDialogRestoreFunc)        (GimpDialogFactory *factory,
                                                       GdkScreen         *screen,
+                                                      gint               monitor,
                                                       GimpSessionInfo   *info);
 typedef void        (* GimpActionGroupSetupFunc)     (GimpActionGroup   *group);
 typedef void        (* GimpActionGroupUpdateFunc)    (GimpActionGroup   *group,

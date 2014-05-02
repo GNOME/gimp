@@ -1145,6 +1145,7 @@ gimp_highlight_widget (GtkWidget *widget,
 GtkWidget *
 gimp_dock_with_window_new (GimpDialogFactory *factory,
                            GdkScreen         *screen,
+                           gint               monitor,
                            gboolean           toolbox)
 {
   GtkWidget         *dock_window;
@@ -1159,7 +1160,7 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
    * dock window before the dock because the dock has a dependency to
    * the ui manager in the dock window
    */
-  dock_window = gimp_dialog_factory_dialog_new (factory, screen,
+  dock_window = gimp_dialog_factory_dialog_new (factory, screen, monitor,
                                                 NULL /*ui_manager*/,
                                                 (toolbox ?
                                                  "gimp-toolbox-window" :
@@ -1171,6 +1172,7 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
   ui_manager     = gimp_dock_container_get_ui_manager (dock_container);
   dock           = gimp_dialog_factory_dialog_new (factory,
                                                    screen,
+                                                   monitor,
                                                    ui_manager,
                                                    (toolbox ?
                                                     "gimp-toolbox" :
@@ -1336,4 +1338,31 @@ gimp_session_write_position (GimpConfigWriter *writer,
   gimp_config_writer_close (writer);
 
   g_type_class_unref (klass);
+}
+
+gint
+gimp_widget_get_monitor (GtkWidget *widget)
+{
+  GdkWindow     *window;
+  GdkScreen     *screen;
+  GtkAllocation  allocation;
+  gint           x, y;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), 0);
+
+  window = gtk_widget_get_window (widget);
+  screen = gtk_widget_get_screen (widget);
+
+  gtk_widget_get_allocation (widget, &allocation);
+
+  if (window)
+    gdk_window_get_origin (window, &x, &y);
+  else
+    gdk_display_get_pointer (gdk_display_get_default (),
+                             NULL, &x, &y, NULL);
+
+  x += allocation.x + allocation.width  / 2;
+  y += allocation.y + allocation.height / 2;
+
+  return gdk_screen_get_monitor_at_point (screen, x, y);
 }

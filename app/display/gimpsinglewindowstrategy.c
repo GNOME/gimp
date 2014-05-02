@@ -44,6 +44,7 @@ static GtkWidget * gimp_single_window_strategy_show_dockable_dialog       (GimpW
                                                                            Gimp                        *gimp,
                                                                            GimpDialogFactory           *factory,
                                                                            GdkScreen                   *screen,
+                                                                           gint                         monitor,
                                                                            const gchar                 *identifiers);
 
 
@@ -75,6 +76,7 @@ gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
                                                   Gimp               *gimp,
                                                   GimpDialogFactory  *factory,
                                                   GdkScreen          *screen,
+                                                  gint                monitor,
                                                   const gchar        *identifiers)
 {
   GList           *windows = gimp_get_image_windows (gimp);
@@ -96,6 +98,7 @@ gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
 
           widget = gimp_dialog_factory_dialog_new (factory,
                                                    screen,
+                                                   monitor,
                                                    ui_manager,
                                                    "gimp-toolbox",
                                                    -1 /*view_size*/,
@@ -111,7 +114,8 @@ gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
   else if (gimp_dialog_factory_find_widget (factory, identifiers))
     {
       /* if the dialog is already open, simply raise it */
-      return gimp_dialog_factory_dialog_raise (factory, screen, identifiers, -1);
+      return gimp_dialog_factory_dialog_raise (factory, screen, monitor,
+                                               identifiers, -1);
    }
   else
     {
@@ -131,8 +135,8 @@ gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
         }
 
       widget = gimp_dockbook_add_from_dialog_factory (GIMP_DOCKBOOK (dockbook),
-                                                        identifiers,
-                                                        -1 /*index*/);
+                                                      identifiers,
+                                                      -1 /*index*/);
     }
 
 
