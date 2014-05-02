@@ -449,7 +449,7 @@ gimp_image_metadata_save_finish (gint32                  image_ID,
       else
         {
           thumbh = EXIF_THUMBNAIL_SIZE;
-          thumbw = EXIF_THUMBNAIL_SIZE * image_height / image_width;
+          thumbw = EXIF_THUMBNAIL_SIZE * image_width / image_height;
         }
 
       thumb_pixbuf = gimp_image_get_thumbnail (image_ID, thumbw, thumbh,
