@@ -138,7 +138,8 @@ gimp_test_utils_create_image (Gimp *gimp,
   gimp_create_display (gimp,
                        image,
                        GIMP_UNIT_PIXEL,
-                       1.0 /*scale*/);
+                       1.0 /*scale*/,
+                       NULL, 0);
 }
 
 /**

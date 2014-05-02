@@ -261,7 +261,9 @@ app_run (const gchar         *full_prog_name,
       for (i = 0; filenames[i] != NULL; i++)
         {
           if (run_loop)
-            file_open_from_command_line (gimp, filenames[i], as_new);
+            file_open_from_command_line (gimp, filenames[i], as_new,
+                                         NULL, /* FIXME monitor */
+                                         0 /* FIXME monitor */);
         }
     }
 

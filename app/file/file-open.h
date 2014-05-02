@@ -49,6 +49,8 @@ GimpImage * file_open_with_display          (Gimp                *gimp,
                                              GimpProgress        *progress,
                                              const gchar         *uri,
                                              gboolean             as_new,
+                                             GObject             *screen,
+                                             gint                 monitor,
                                              GimpPDBStatusType   *status,
                                              GError             **error);
 
@@ -59,6 +61,8 @@ GimpImage * file_open_with_proc_and_display (Gimp                *gimp,
                                              const gchar         *entered_filename,
                                              gboolean             as_new,
                                              GimpPlugInProcedure *file_proc,
+                                             GObject             *screen,
+                                             gint                 monitor,
                                              GimpPDBStatusType   *status,
                                              GError             **error);
 
@@ -75,7 +79,9 @@ GList     * file_open_layers                (Gimp                *gimp,
 
 gboolean    file_open_from_command_line     (Gimp                *gimp,
                                              const gchar         *filename,
-                                             gboolean             as_new);
+                                             gboolean             as_new,
+                                             GObject             *screen,
+                                             gint                 monitor);
 
 
 #endif /* __FILE_OPEN_H__ */

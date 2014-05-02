@@ -551,10 +551,10 @@ image_duplicate_cmd_callback (GtkAction *action,
 
   new_image = gimp_image_duplicate (image);
 
-  gimp_create_display (new_image->gimp,
-                       new_image,
-                       shell->unit,
-                       gimp_zoom_model_get_factor (shell->zoom));
+  gimp_create_display (new_image->gimp, new_image, shell->unit,
+                       gimp_zoom_model_get_factor (shell->zoom),
+                       G_OBJECT (gtk_widget_get_screen (GTK_WIDGET (shell))),
+                       gimp_widget_get_monitor (GTK_WIDGET (shell)));
 
   g_object_unref (new_image);
 }

@@ -86,6 +86,8 @@ enum
   PROP_GIMP,
   PROP_MENU_FACTORY,
   PROP_DIALOG_FACTORY,
+  PROP_INITIAL_SCREEN,
+  PROP_INITIAL_MONITOR
 };
 
 
@@ -112,6 +114,9 @@ struct _GimpImageWindowPrivate
   GdkWindowState     window_state;
 
   const gchar       *entry_id;
+
+  GdkScreen         *initial_screen;
+  gint               initial_monitor;
 };
 
 typedef struct
@@ -293,6 +298,19 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_INITIAL_SCREEN,
+                                   g_param_spec_object ("initial-screen",
+                                                        NULL, NULL,
+                                                        GDK_TYPE_SCREEN,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_INITIAL_MONITOR,
+                                   g_param_spec_int ("initial-monitor",
+                                                     NULL, NULL,
+                                                     0, 16, 0,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT_ONLY));
+
   g_type_class_add_private (klass, sizeof (GimpImageWindowPrivate));
 
   gtk_rc_parse_string (image_window_rc_style);
@@ -460,8 +478,8 @@ gimp_image_window_constructed (GObject *object)
   gimp_image_window_session_update (window,
                                     NULL /*new_display*/,
                                     gimp_image_window_config_to_entry_id (config),
-                                    gdk_screen_get_default (), /* FIXME monitor */
-                                    0 /* FIXME monitor */);
+                                    private->initial_screen,
+                                    private->initial_monitor);
 }
 
 static void
@@ -527,6 +545,12 @@ gimp_image_window_set_property (GObject      *object,
     case PROP_DIALOG_FACTORY:
       private->dialog_factory = g_value_get_object (value);
       break;
+    case PROP_INITIAL_SCREEN:
+      private->initial_screen = g_value_get_object (value);
+      break;
+    case PROP_INITIAL_MONITOR:
+      private->initial_monitor = g_value_get_int (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -550,6 +574,12 @@ gimp_image_window_get_property (GObject    *object,
       break;
     case PROP_DIALOG_FACTORY:
       g_value_set_object (value, private->dialog_factory);
+      break;
+    case PROP_INITIAL_SCREEN:
+      g_value_set_object (value, private->initial_screen);
+      break;
+    case PROP_INITIAL_MONITOR:
+      g_value_set_int (value, private->initial_monitor);
       break;
 
     case PROP_MENU_FACTORY:
@@ -1002,7 +1032,9 @@ GimpImageWindow *
 gimp_image_window_new (Gimp              *gimp,
                        GimpImage         *image,
                        GimpMenuFactory   *menu_factory,
-                       GimpDialogFactory *dialog_factory)
+                       GimpDialogFactory *dialog_factory,
+                       GdkScreen         *screen,
+                       gint               monitor)
 {
   GimpImageWindow *window;
 
@@ -1010,11 +1042,14 @@ gimp_image_window_new (Gimp              *gimp,
   g_return_val_if_fail (GIMP_IS_IMAGE (image) || image == NULL, NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
   window = g_object_new (GIMP_TYPE_IMAGE_WINDOW,
                          "gimp",            gimp,
                          "menu-factory",    menu_factory,
                          "dialog-factory",  dialog_factory,
+                         "initial-screen",  screen,
+                         "initial-monitor", monitor,
                          /* The window position will be overridden by the
                           * dialog factory, it is only really used on first
                           * startup.

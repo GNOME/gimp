@@ -104,7 +104,9 @@ static guint32        gui_display_get_window_id (GimpObject          *display);
 static GimpObject   * gui_display_create        (Gimp                *gimp,
                                                  GimpImage           *image,
                                                  GimpUnit             unit,
-                                                 gdouble              scale);
+                                                 gdouble              scale,
+                                                 GObject             *screen,
+                                                 gint                 monitor);
 static void           gui_display_delete        (GimpObject          *display);
 static void           gui_displays_reconnect    (Gimp                *gimp,
                                                  GimpImage           *old_image,
@@ -340,10 +342,15 @@ static GimpObject *
 gui_display_create (Gimp      *gimp,
                     GimpImage *image,
                     GimpUnit   unit,
-                    gdouble    scale)
+                    gdouble    scale,
+                    GObject   *screen,
+                    gint       monitor)
 {
   GimpContext *context = gimp_get_user_context (gimp);
   GimpDisplay *display = GIMP_DISPLAY (gui_get_empty_display (gimp));
+
+  if (! screen)
+    monitor = gimp_get_monitor_at_pointer ((GdkScreen **) &screen);
 
   if (display)
     {
@@ -358,7 +365,9 @@ gui_display_create (Gimp      *gimp,
       display = gimp_display_new (gimp, image, unit, scale,
                                   global_menu_factory,
                                   image_managers->data,
-                                  gimp_dialog_factory_get_singleton ());
+                                  gimp_dialog_factory_get_singleton (),
+                                  GDK_SCREEN (screen),
+                                  monitor);
    }
 
   if (gimp_context_get_display (context) == display)

@@ -55,7 +55,9 @@ GimpDisplay      * gimp_display_new             (Gimp              *gimp,
                                                  gdouble            scale,
                                                  GimpMenuFactory   *menu_factory,
                                                  GimpUIManager     *popup_manager,
-                                                 GimpDialogFactory *dialog_factory);
+                                                 GimpDialogFactory *dialog_factory,
+                                                 GdkScreen         *screen,
+                                                 gint               monitor);
 void               gimp_display_delete          (GimpDisplay       *display);
 void               gimp_display_close           (GimpDisplay       *display);
 

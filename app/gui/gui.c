@@ -572,10 +572,10 @@ gui_restore_after_callback (Gimp               *gimp,
       GimpDisplayShell *shell;
 
       /*  create the empty display  */
-      display = GIMP_DISPLAY (gimp_create_display (gimp,
-                                                   NULL,
-                                                   GIMP_UNIT_PIXEL,
-                                                   1.0));
+      display = GIMP_DISPLAY (gimp_create_display (gimp, NULL,
+                                                   GIMP_UNIT_PIXEL, 1.0,
+                                                   NULL, /* FIXME monitor */
+                                                   0 /* FIXME monitor */));
 
       shell = gimp_display_get_shell (display);
 

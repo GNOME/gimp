@@ -58,7 +58,9 @@ struct _GimpGui
   GimpObject   * (* display_create)        (Gimp                *gimp,
                                             GimpImage           *image,
                                             GimpUnit             unit,
-                                            gdouble              scale);
+                                            gdouble              scale,
+                                            GObject             *screen,
+                                            gint                 monitor);
   void           (* display_delete)        (GimpObject          *display);
   void           (* displays_reconnect)    (Gimp                *gimp,
                                             GimpImage           *old_image,
@@ -111,7 +113,9 @@ guint32        gimp_get_display_window_id (Gimp                *gimp,
 GimpObject   * gimp_create_display        (Gimp                *gimp,
                                            GimpImage           *image,
                                            GimpUnit             unit,
-                                           gdouble              scale);
+                                           gdouble              scale,
+                                           GObject             *screen,
+                                           gint                 monitor);
 void           gimp_delete_display        (Gimp                *gimp,
                                            GimpObject          *display);
 void           gimp_reconnect_displays    (Gimp                *gimp,

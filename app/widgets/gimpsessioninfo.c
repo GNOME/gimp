@@ -582,6 +582,8 @@ gimp_session_info_restore (GimpSessionInfo   *info,
                                                      monitor,
                                                      info);
     }
+  else
+    g_printerr ("EEEEK\n");
 
   if (GIMP_IS_SESSION_MANAGED (dialog) && info->p->aux_info)
     gimp_session_managed_set_aux_info (GIMP_SESSION_MANAGED (dialog),

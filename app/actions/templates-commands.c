@@ -40,6 +40,7 @@
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimptemplateview.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "dialogs/template-options-dialog.h"
 
@@ -82,7 +83,7 @@ templates_create_image_cmd_callback (GtkAction *action,
   GimpContainer       *container;
   GimpContext         *context;
   GimpTemplate        *template;
-  return_if_no_gimp(gimp,data);
+  return_if_no_gimp (gimp, data);
 
   container = gimp_container_view_get_container (editor->view);
   context   = gimp_container_view_get_context (editor->view);
@@ -91,10 +92,13 @@ templates_create_image_cmd_callback (GtkAction *action,
 
   if (template && gimp_container_have (container, GIMP_OBJECT (template)))
     {
+      GtkWidget *widget = GTK_WIDGET (editor);
       GimpImage *image;
 
       image = gimp_image_new_from_template (gimp, template, context);
-      gimp_create_display (gimp, image, gimp_template_get_unit (template), 1.0);
+      gimp_create_display (gimp, image, gimp_template_get_unit (template), 1.0,
+                           G_OBJECT (gtk_widget_get_screen (widget)),
+                           gimp_widget_get_monitor (widget));
       g_object_unref (image);
 
       gimp_image_new_set_last_template (gimp, template);

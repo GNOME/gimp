@@ -43,6 +43,7 @@
 #include "widgets/gimpdocumentview.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -343,6 +344,8 @@ documents_open_image (GtkWidget     *editor,
   uri = gimp_object_get_name (imagefile);
 
   image = file_open_with_display (context->gimp, context, NULL, uri, FALSE,
+                                  G_OBJECT (gtk_widget_get_screen (editor)),
+                                  gimp_widget_get_monitor (editor),
                                   &status, &error);
 
   if (! image && status != GIMP_PDB_CANCEL)

@@ -393,7 +393,9 @@ gimp_display_new (Gimp              *gimp,
                   gdouble            scale,
                   GimpMenuFactory   *menu_factory,
                   GimpUIManager     *popup_manager,
-                  GimpDialogFactory *dialog_factory)
+                  GimpDialogFactory *dialog_factory,
+                  GdkScreen         *screen,
+                  gint               monitor)
 {
   GimpDisplay        *display;
   GimpDisplayPrivate *private;
@@ -402,6 +404,7 @@ gimp_display_new (Gimp              *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
   /*  If there isn't an interface, never create a display  */
   if (gimp->no_interface)
@@ -443,7 +446,9 @@ gimp_display_new (Gimp              *gimp,
       window = gimp_image_window_new (gimp,
                                       private->image,
                                       menu_factory,
-                                      dialog_factory);
+                                      dialog_factory,
+                                      screen,
+                                      monitor);
     }
 
   /*  create the shell for the image  */

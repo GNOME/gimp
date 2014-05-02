@@ -431,7 +431,9 @@ gimp_ui_configurer_separate_shells (GimpUIConfigurer *ui_configurer,
       new_image_window = gimp_image_window_new (ui_configurer->p->gimp,
                                                 NULL,
                                                 global_menu_factory,
-                                                gimp_dialog_factory_get_singleton ());
+                                                gimp_dialog_factory_get_singleton (),
+                                                gtk_widget_get_screen (GTK_WIDGET (source_image_window)),
+                                                gimp_widget_get_monitor (GTK_WIDGET (source_image_window)));
       /* Move the shell there */
       shell = gimp_image_window_get_shell (source_image_window, 1);
 

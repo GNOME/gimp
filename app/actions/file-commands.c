@@ -177,11 +177,13 @@ file_open_recent_cmd_callback (GtkAction *action,
   if (imagefile)
     {
       GimpDisplay       *display;
+      GtkWidget         *widget;
       GimpProgress      *progress;
       GimpImage         *image;
       GimpPDBStatusType  status;
       GError            *error = NULL;
       return_if_no_display (display, data);
+      return_if_no_widget (widget, data);
 
       g_object_ref (display);
       g_object_ref (imagefile);
@@ -192,6 +194,8 @@ file_open_recent_cmd_callback (GtkAction *action,
       image = file_open_with_display (gimp, action_data_get_context (data),
                                       progress,
                                       gimp_object_get_name (imagefile), FALSE,
+                                      G_OBJECT (gtk_widget_get_screen (widget)),
+                                      gimp_widget_get_monitor (widget),
                                       &status, &error);
 
       if (! image && status != GIMP_PDB_CANCEL)

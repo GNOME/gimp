@@ -41,6 +41,7 @@
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimptemplateeditor.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "image-new-dialog.h"
 
@@ -360,12 +361,16 @@ image_new_create_image (ImageNewDialog *dialog)
   Gimp         *gimp     = dialog->context->gimp;
   GimpImage    *image;
 
-  gtk_widget_destroy (dialog->dialog);
+  gtk_widget_hide (dialog->dialog);
 
   image = gimp_image_new_from_template (gimp, template,
                                         gimp_get_user_context (gimp));
-  gimp_create_display (gimp, image, gimp_template_get_unit (template), 1.0);
+  gimp_create_display (gimp, image, gimp_template_get_unit (template), 1.0,
+                       G_OBJECT (gtk_widget_get_screen (dialog->dialog)),
+                       gimp_widget_get_monitor (dialog->dialog));
   g_object_unref (image);
+
+  gtk_widget_destroy (dialog->dialog);
 
   gimp_image_new_set_last_template (gimp, template);
 

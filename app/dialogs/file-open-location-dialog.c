@@ -37,6 +37,7 @@
 #include "widgets/gimpcontainerentry.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpprogressbox.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "file-open-location-dialog.h"
 
@@ -204,6 +205,8 @@ file_open_location_response (GtkDialog *dialog,
                                                    gimp_get_user_context (gimp),
                                                    GIMP_PROGRESS (box),
                                                    uri, text, FALSE, NULL,
+                                                   G_OBJECT (gtk_widget_get_screen (entry)),
+                                                   gimp_widget_get_monitor (entry),
                                                    &status, &error);
 
           if (image == NULL && status != GIMP_PDB_CANCEL)

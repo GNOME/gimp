@@ -42,6 +42,7 @@
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "dialogs/data-delete-dialog.h"
 
@@ -74,12 +75,15 @@ data_open_as_image_cmd_callback (GtkAction *action,
 
       if (uri)
         {
+          GtkWidget         *widget = GTK_WIDGET (view);
           GimpImage         *image;
           GimpPDBStatusType  status;
           GError            *error = NULL;
 
           image = file_open_with_display (context->gimp, context, NULL,
                                           uri, FALSE,
+                                          G_OBJECT (gtk_widget_get_screen (widget)),
+                                          gimp_widget_get_monitor (widget),
                                           &status, &error);
 
           if (! image && status != GIMP_PDB_CANCEL)

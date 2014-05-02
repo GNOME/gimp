@@ -92,7 +92,9 @@ view_new_cmd_callback (GtkAction *action,
 
   gimp_create_display (display->gimp,
                        gimp_display_get_image (display),
-                       shell->unit, gimp_zoom_model_get_factor (shell->zoom));
+                       shell->unit, gimp_zoom_model_get_factor (shell->zoom),
+                       G_OBJECT (gtk_widget_get_screen (GTK_WIDGET (shell))),
+                       gimp_widget_get_monitor (GTK_WIDGET (shell)));
 }
 
 void
