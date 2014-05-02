@@ -764,7 +764,9 @@ gimp_uninstall_temp_proc (const gchar *name)
  * passes them to gimp_run_procedure2(). Please look there for further
  * information.
  *
- * Return value: the procedure's return values.
+ * Return value: the procedure's return values unless there was an error,
+ * in which case the zero-th return value will be the error status, and
+ * the first return value will be a string detailing the error.
  **/
 GimpParam *
 gimp_run_procedure (const gchar *name,
@@ -990,7 +992,9 @@ gimp_read_expect_msg (GimpWireMessage *msg,
  * As soon as you don't need the return values any longer, you should
  * free them using gimp_destroy_params().
  *
- * Return value: the procedure's return values.
+ * Return value: the procedure's return values unless there was an error,
+ * in which case the zero-th return value will be the error status, and
+ * the first return value will be a string detailing the error.
  **/
 GimpParam *
 gimp_run_procedure2 (const gchar     *name,
