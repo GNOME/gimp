@@ -1427,7 +1427,7 @@ gimp_dnd_get_stream_data (GtkWidget        *widget,
   stream = (* (GimpDndDragStreamFunc) get_stream_func) (widget, &stream_length,
                                                         get_stream_data);
 
-  GIMP_LOG (DND, "stream %p, length %d", stream, stream_length);
+  GIMP_LOG (DND, "stream %p, length %" G_GSIZE_FORMAT, stream, stream_length);
 
   if (stream)
     {
@@ -1449,7 +1449,7 @@ gimp_dnd_set_stream_data (GtkWidget        *widget,
 
   stream = gimp_selection_data_get_stream (selection, &stream_length);
 
-  GIMP_LOG (DND, "stream %p, length %d", stream, stream_length);
+  GIMP_LOG (DND, "stream %p, length %" G_GSIZE_FORMAT, stream, stream_length);
 
   if (! stream)
     return FALSE;
