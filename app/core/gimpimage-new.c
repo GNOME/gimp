@@ -144,10 +144,6 @@ gimp_image_new_from_template (Gimp         *gimp,
   gimp_image_undo_enable (image);
   gimp_image_clean_all (image);
 
-  gimp_create_display (gimp, image, gimp_template_get_unit (template), 1.0);
-
-  g_object_unref (image);
-
   return image;
 }
 

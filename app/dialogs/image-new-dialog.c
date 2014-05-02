@@ -358,10 +358,15 @@ image_new_create_image (ImageNewDialog *dialog)
 {
   GimpTemplate *template = g_object_ref (dialog->template);
   Gimp         *gimp     = dialog->context->gimp;
+  GimpImage    *image;
 
   gtk_widget_destroy (dialog->dialog);
 
-  gimp_image_new_from_template (gimp, template, gimp_get_user_context (gimp));
+  image = gimp_image_new_from_template (gimp, template,
+                                        gimp_get_user_context (gimp));
+  gimp_create_display (gimp, image, gimp_template_get_unit (template), 1.0);
+  g_object_unref (image);
+
   gimp_image_new_set_last_template (gimp, template);
 
   g_object_unref (template);

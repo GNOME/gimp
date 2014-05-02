@@ -91,7 +91,12 @@ templates_create_image_cmd_callback (GtkAction *action,
 
   if (template && gimp_container_have (container, GIMP_OBJECT (template)))
     {
-      gimp_image_new_from_template (gimp, template, context);
+      GimpImage *image;
+
+      image = gimp_image_new_from_template (gimp, template, context);
+      gimp_create_display (gimp, image, gimp_template_get_unit (template), 1.0);
+      g_object_unref (image);
+
       gimp_image_new_set_last_template (gimp, template);
     }
 }
