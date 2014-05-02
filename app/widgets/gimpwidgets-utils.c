@@ -1371,7 +1371,6 @@ gint
 gimp_get_monitor_at_pointer (GdkScreen **screen)
 {
   gint x, y;
-  gint monitor;
 
   g_return_val_if_fail (screen != NULL, 0);
 
