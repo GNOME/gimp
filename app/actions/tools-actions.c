@@ -185,6 +185,14 @@ static const GimpEnumActionEntry tools_airbrush_flow_actions[] =
     NULL }
 };
 
+static const GimpEnumActionEntry tools_mybrush_radius_actions[] =
+{
+  { "tools-mybrush-radius-set", GIMP_STOCK_TOOL_MYBRUSH,
+    "Set MyPaint Brush Radius", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL }
+};
+
 static const GimpEnumActionEntry tools_foreground_select_brush_size_actions[] =
 {
   { "tools-foreground-select-brush-size-set",
@@ -496,6 +504,11 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_airbrush_flow_actions,
                                       G_N_ELEMENTS (tools_airbrush_flow_actions),
                                       G_CALLBACK (tools_airbrush_flow_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group, NULL,
+                                      tools_mybrush_radius_actions,
+                                      G_N_ELEMENTS (tools_mybrush_radius_actions),
+                                      G_CALLBACK (tools_mybrush_radius_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_foreground_select_brush_size_actions,
