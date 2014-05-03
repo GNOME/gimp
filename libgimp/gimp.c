@@ -994,7 +994,8 @@ gimp_read_expect_msg (GimpWireMessage *msg,
  *
  * Return value: the procedure's return values unless there was an error,
  * in which case the zero-th return value will be the error status, and
- * the first return value will be a string detailing the error.
+ * if there are two values returned, the other return value will be a
+ * string detailing the error.
  **/
 GimpParam *
 gimp_run_procedure2 (const gchar     *name,
