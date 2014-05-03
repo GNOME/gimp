@@ -1036,10 +1036,11 @@ gimp_image_window_new (Gimp              *gimp,
                        GdkScreen         *screen,
                        gint               monitor)
 {
-  GimpImageWindow *window;
+  GimpImageWindow        *window;
+  GimpImageWindowPrivate *private;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (image) || image == NULL, NULL);
+  g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
@@ -1058,7 +1059,40 @@ gimp_image_window_new (Gimp              *gimp,
                          GTK_WIN_POS_CENTER,
                          NULL);
 
+  private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+
   gimp->image_windows = g_list_append (gimp->image_windows, window);
+
+  if (! GIMP_GUI_CONFIG (private->gimp->config)->single_window_mode)
+    {
+      GdkScreen *pointer_screen;
+      gint       pointer_monitor;
+
+      pointer_monitor = gimp_get_monitor_at_pointer (&pointer_screen);
+
+      /*  If we are supposed to go to a monitor other than where the
+       *  pointer is, place the window on that monitor manually,
+       *  otherwise simply let the window manager place the window on
+       *  the poiner's monitor.
+       */
+      if (pointer_screen  != screen ||
+          pointer_monitor != monitor)
+        {
+          GdkRectangle rect;
+          gchar        geom[32];
+
+          gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+
+          /*  FIXME: image window placement
+           *
+           *  This is ugly beyond description but better than showing
+           *  the window on the wrong monitor
+           */
+          g_snprintf (geom, sizeof (geom), "%+d%+d",
+                      rect.x + 300, rect.y + 30);
+          gtk_window_parse_geometry (GTK_WINDOW (window), geom);
+        }
+    }
 
   return window;
 }
@@ -1807,11 +1841,28 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
 
   gimp_display_shell_appearance_update (private->active_shell);
 
-  gimp_image_window_session_update (window,
-                                    active_display,
-                                    NULL /*new_entry_id*/,
-                                    gtk_widget_get_screen (GTK_WIDGET (window)),
-                                    gimp_widget_get_monitor (GTK_WIDGET (window)));
+  if (gtk_widget_get_window (GTK_WIDGET (window)))
+    {
+      /*  we are fully initialized, use the window's current monitor
+       */
+      gimp_image_window_session_update (window,
+                                        active_display,
+                                        NULL /*new_entry_id*/,
+                                        gtk_widget_get_screen (GTK_WIDGET (window)),
+                                        gimp_widget_get_monitor (GTK_WIDGET (window)));
+    }
+  else
+    {
+      /*  we are in construction, use the initial monitor; calling
+       *  gimp_widget_get_monitor() would get us the monitor where the
+       *  pointer is
+       */
+      gimp_image_window_session_update (window,
+                                        active_display,
+                                        NULL /*new_entry_id*/,
+                                        private->initial_screen,
+                                        private->initial_monitor);
+    }
 
   gimp_context_set_display (gimp_get_user_context (private->gimp),
                             active_display);
