@@ -771,8 +771,8 @@ gimp_get_monitor_resolution (GdkScreen *screen,
   if (x < GIMP_MIN_RESOLUTION || x > GIMP_MAX_RESOLUTION ||
       y < GIMP_MIN_RESOLUTION || y > GIMP_MAX_RESOLUTION)
     {
-      g_warning ("GDK returned bogus values for the monitor resolution, "
-                 "using 96 dpi instead.");
+      g_printerr ("gimp_get_monitor_resolution(): GDK returned bogus "
+                  "values for the monitor resolution, using 96 dpi instead.");
 
       x = 96.0;
       y = 96.0;
