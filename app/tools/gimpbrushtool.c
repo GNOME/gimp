@@ -102,11 +102,11 @@ gimp_brush_tool_init (GimpBrushTool *brush_tool)
   GimpTool *tool = GIMP_TOOL (brush_tool);
 
   gimp_tool_control_set_action_size     (tool->control,
-                                         "tools/tools-paint-brush-size-set");
+                                         "tools/tools-paintbrush-size-set");
   gimp_tool_control_set_action_aspect   (tool->control,
-                                         "tools/tools-paint-brush-aspect-ratio-set");
+                                         "tools/tools-paintbrush-aspect-ratio-set");
   gimp_tool_control_set_action_angle    (tool->control,
-                                         "tools/tools-paint-brush-angle-set");
+                                         "tools/tools-paintbrush-angle-set");
   gimp_tool_control_set_action_object_1 (tool->control,
                                          "context/context-brush-select-set");
 }

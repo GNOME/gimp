@@ -73,25 +73,25 @@ static const GimpEnumActionEntry tools_color_average_radius_actions[] =
     NULL }
 };
 
-static const GimpEnumActionEntry tools_paint_brush_size_actions[] =
+static const GimpEnumActionEntry tools_paintbrush_size_actions[] =
 {
-  { "tools-paint-brush-size-set", GIMP_STOCK_TOOL_PAINTBRUSH,
+  { "tools-paintbrush-size-set", GIMP_STOCK_TOOL_PAINTBRUSH,
     "Set Brush Size", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL }
 };
 
-static const GimpEnumActionEntry tools_paint_brush_angle_actions[] =
+static const GimpEnumActionEntry tools_paintbrush_angle_actions[] =
 {
-  { "tools-paint-brush-angle-set", GIMP_STOCK_TOOL_PAINTBRUSH,
+  { "tools-paintbrush-angle-set", GIMP_STOCK_TOOL_PAINTBRUSH,
     "Set Brush Angle", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL }
 };
 
-static const GimpEnumActionEntry tools_paint_brush_aspect_ratio_actions[] =
+static const GimpEnumActionEntry tools_paintbrush_aspect_ratio_actions[] =
 {
-  { "tools-paint-brush-aspect-ratio-set", GIMP_STOCK_TOOL_PAINTBRUSH,
+  { "tools-paintbrush-aspect-ratio-set", GIMP_STOCK_TOOL_PAINTBRUSH,
     "Set Brush Aspect Ratio", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL }
@@ -397,19 +397,19 @@ tools_actions_setup (GimpActionGroup *group)
                                       G_CALLBACK (tools_color_average_radius_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, NULL,
-                                      tools_paint_brush_size_actions,
-                                      G_N_ELEMENTS (tools_paint_brush_size_actions),
-                                      G_CALLBACK (tools_paint_brush_size_cmd_callback));
+                                      tools_paintbrush_size_actions,
+                                      G_N_ELEMENTS (tools_paintbrush_size_actions),
+                                      G_CALLBACK (tools_paintbrush_size_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, NULL,
-                                      tools_paint_brush_angle_actions,
-                                      G_N_ELEMENTS (tools_paint_brush_angle_actions),
-                                      G_CALLBACK (tools_paint_brush_angle_cmd_callback));
+                                      tools_paintbrush_angle_actions,
+                                      G_N_ELEMENTS (tools_paintbrush_angle_actions),
+                                      G_CALLBACK (tools_paintbrush_angle_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, NULL,
-                                      tools_paint_brush_aspect_ratio_actions,
-                                      G_N_ELEMENTS (tools_paint_brush_aspect_ratio_actions),
-                                      G_CALLBACK (tools_paint_brush_aspect_ratio_cmd_callback));
+                                      tools_paintbrush_aspect_ratio_actions,
+                                      G_N_ELEMENTS (tools_paintbrush_aspect_ratio_actions),
+                                      G_CALLBACK (tools_paintbrush_aspect_ratio_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_ink_blob_size_actions,

@@ -125,9 +125,9 @@ tools_color_average_radius_cmd_callback (GtkAction *action,
 }
 
 void
-tools_paint_brush_size_cmd_callback (GtkAction *action,
-                                     gint       value,
-                                     gpointer   data)
+tools_paintbrush_size_cmd_callback (GtkAction *action,
+                                    gint       value,
+                                    gpointer   data)
 {
   GimpContext  *context;
   GimpToolInfo *tool_info;
@@ -146,9 +146,9 @@ tools_paint_brush_size_cmd_callback (GtkAction *action,
 }
 
 void
-tools_paint_brush_angle_cmd_callback (GtkAction *action,
-                                      gint       value,
-                                      gpointer   data)
+tools_paintbrush_angle_cmd_callback (GtkAction *action,
+                                     gint       value,
+                                     gpointer   data)
 {
   GimpContext  *context;
   GimpToolInfo *tool_info;
@@ -167,9 +167,9 @@ tools_paint_brush_angle_cmd_callback (GtkAction *action,
 }
 
 void
-tools_paint_brush_aspect_ratio_cmd_callback (GtkAction *action,
-                                             gint       value,
-                                             gpointer   data)
+tools_paintbrush_aspect_ratio_cmd_callback (GtkAction *action,
+                                            gint       value,
+                                            gpointer   data)
 {
   GimpContext  *context;
   GimpToolInfo *tool_info;

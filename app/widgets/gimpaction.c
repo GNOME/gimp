@@ -330,9 +330,9 @@ gimp_action_is_gui_blacklisted (const gchar *action_name)
     {
       "<",
       "tools-color-average-radius-",
-      "tools-paint-brush-size-",
-      "tools-paint-brush-angle-",
-      "tools-paint-brush-aspect-ratio-",
+      "tools-paintbrush-size-",
+      "tools-paintbrush-angle-",
+      "tools-paintbrush-aspect-ratio-",
       "tools-ink-blob-size-",
       "tools-ink-blob-aspect-",
       "tools-ink-blob-angle-",
