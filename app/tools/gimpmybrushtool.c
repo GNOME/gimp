@@ -80,7 +80,9 @@ gimp_mybrush_tool_init (GimpMybrushTool *mybrush_tool)
 {
   GimpTool *tool = GIMP_TOOL (mybrush_tool);
 
-  gimp_tool_control_set_tool_cursor   (tool->control, GIMP_TOOL_CURSOR_INK);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_INK);
+  gimp_tool_control_set_action_size (tool->control,
+                                     "tools/tools-mybrush-radius-set");
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (mybrush_tool),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);

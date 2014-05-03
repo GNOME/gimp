@@ -54,6 +54,10 @@ void   tools_airbrush_flow_cmd_callback             (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
 
+void   tools_mybrush_radius_cmd_callback            (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+
 void   tools_fg_select_brush_size_cmd_callback      (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
