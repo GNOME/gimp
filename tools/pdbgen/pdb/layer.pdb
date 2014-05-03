@@ -164,6 +164,9 @@ This procedure creates a new layer group. Attributes such as layer mode
 and opacity should be set with explicit procedure calls. Add the new
 layer group (which is a kind of layer) with the
 gimp_image_insert_layer() command.
+
+Other procedures useful with layer groups: gimp_image_reorder_item(),
+gimp_item_get_parent(), gimp_item_get_children(), gimp_item_is_group().
 HELP
 
     &barak_pdb_misc('2010', '2.8');
