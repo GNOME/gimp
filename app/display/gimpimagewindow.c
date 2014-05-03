@@ -765,6 +765,15 @@ gimp_image_window_monitor_changed (GimpWindow *window,
 
   for (list = private->shells; list; list = g_list_next (list))
     {
+      /*  hack, this should live here, and screen_changed call
+       *  monitor_changed
+       */
+      g_signal_emit_by_name (list->data, "screen-changed",
+                             gtk_widget_get_screen (list->data));
+
+      /*  make it fetch the new monitor's resolution  */
+      gimp_display_shell_scale_changed (GIMP_DISPLAY_SHELL (list->data));
+
       /*  make it fetch the right monitor profile  */
       gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (list->data));
     }
