@@ -67,6 +67,10 @@ m4_define([libpng_required_version], [1.2.37])
 m4_define([gtk_mac_integration_required_version], [1.0.1])
 
 
+# Current test considers only 2 version numbers. If we update the recommended
+# version of gettext with more version numbers, please update the tests.
+m4_define([xgettext_recommended_version], [0.19])
+
 AC_INIT([GIMP], [gimp_version],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP],
         [gimp])
@@ -453,6 +457,40 @@ fi
 IT_PROG_INTLTOOL(0.40.1)
 AM_GLIB_GNU_GETTEXT
 
+# Testing xgettext version since we had some problem with localizing script-fu. See bug 720052.
+AC_MSG_CHECKING([for recommended xgettext version (>= xgettext_recommended_version)])
+XGETTEXT_RECOMMENDED_VERSION=xgettext_recommended_version
+XGETTEXT_RECOMMENDED_VERSION_MAJOR=`echo $XGETTEXT_RECOMMENDED_VERSION | awk -F. '{ print $ 1; }'`
+XGETTEXT_RECOMMENDED_VERSION_MINOR_1=`echo $XGETTEXT_RECOMMENDED_VERSION | awk -F. '{ print $ 2; }'`
+
+XGETTEXT_APPLIED_VERSION=`$XGETTEXT --version | head -1 | cut -d" " -f4`
+XGETTEXT_APPLIED_VERSION_MAJOR=`echo $XGETTEXT_APPLIED_VERSION | awk -F. '{ print $ 1; }'`
+XGETTEXT_APPLIED_VERSION_MINOR_1=`echo $XGETTEXT_APPLIED_VERSION | awk -F. '{ print $ 2; }'`
+
+have_recommended_xgettext="no"
+if test -n "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
+    echo "major is: $XGETTEXT_APPLIED_VERSION_MAJOR"
+    if test "$XGETTEXT_RECOMMENDED_VERSION_MAJOR" -lt "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
+        have_recommended_xgettext="yes"
+    elif test "$XGETTEXT_RECOMMENDED_VERSION_MAJOR" -eq "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
+        if test -n "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
+        echo "major is: $XGETTEXT_APPLIED_VERSION_MINOR_1"
+            if test "$XGETTEXT_RECOMMENDED_VERSION_MINOR_1" -le "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
+                have_recommended_xgettext="yes"
+            fi
+        fi
+    fi
+fi
+AC_MSG_RESULT($have_recommended_xgettext)
+
+if test "x$have_recommended_xgettext" = "xno"; then
+    have_recommended_xgettext="
+WARNING: Your gettext version is $XGETTEXT_APPLIED_VERSION.
+         The recommended gettext version is $XGETTEXT_RECOMMENDED_VERSION or over.
+         If you continue without updating gettext, your build will have partially broken localization."
+else
+    have_recommended_xgettext=""
+fi
 
 ###########
 # iso-codes
@@ -2422,4 +2460,5 @@ Optional Modules:
 
 Tests:
   Use xvfb-run         $have_xvfb_run
+$have_recommended_xgettext
 ]);
