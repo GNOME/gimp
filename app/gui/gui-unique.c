@@ -243,7 +243,7 @@ gui_unique_quartz_idle_open (gchar *path)
 
   if (path)
     {
-      file_open_from_command_line (unique_gimp, path, FALSE);
+      file_open_from_command_line (unique_gimp, path, FALSE, NULL, 0);
     }
 
   return FALSE;
