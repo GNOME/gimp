@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-01 01:23+0200\n"
+"POT-Creation-Date: 2014-05-03 22:00+1200\n"
 "PO-Revision-Date: 2011-02-19 18:27+0300\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
@@ -18,79 +18,79 @@ msgstr ""
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Virtaal 0.6.1\n"
 
-#: ../plug-ins/script-fu/script-fu.c:110
+#: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
 msgstr "معراض تفاعلي لتطوير سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu.c:116
+#: ../plug-ins/script-fu/script-fu.c:117
 msgid "_Console"
 msgstr "ال_معراض"
 
-#: ../plug-ins/script-fu/script-fu.c:140
+#: ../plug-ins/script-fu/script-fu.c:141
 msgid "Server for remote Script-Fu operation"
 msgstr "خادوم لعمليات سكربت-فو البعيدة"
 
-#: ../plug-ins/script-fu/script-fu.c:145
+#: ../plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
 msgstr "اب_دأ الخادوم..."
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_GIMP Online"
 msgstr "_جمب على الخط"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:308
 msgid "_User Manual"
 msgstr "د_ليل المستخدم"
 
-#: ../plug-ins/script-fu/script-fu.c:305
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Script-Fu"
 msgstr "_سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Test"
 msgstr "اخ_تبار"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:316
 msgid "_Buttons"
 msgstr "الأ_زرار"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:318
 msgid "_Logos"
 msgstr "ال_شعارات"
 
-#: ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:320
 msgid "_Patterns"
 msgstr "الن_ماذج"
 
-#: ../plug-ins/script-fu/script-fu.c:317
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Web Page Themes"
 msgstr "_سمات صفحات الوب"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Alien Glow"
 msgstr "تو_هج غريب"
 
-#: ../plug-ins/script-fu/script-fu.c:321
+#: ../plug-ins/script-fu/script-fu.c:327
 msgid "_Beveled Pattern"
 msgstr "نموذج ال_زاوية المنحرفة"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:326
+#: ../plug-ins/script-fu/script-fu.c:332
 msgid "Alpha to _Logo"
 msgstr "ألفا إلى ش_عار"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:335
 msgid "Re-read all available Script-Fu scripts"
 msgstr "أعد قراءة سكربتات سكربت-فو المتاحة"
 
-#: ../plug-ins/script-fu/script-fu.c:334
+#: ../plug-ins/script-fu/script-fu.c:340
 msgid "_Refresh Scripts"
 msgstr "حدّث السكرب_تات"
 
-#: ../plug-ins/script-fu/script-fu.c:357
+#: ../plug-ins/script-fu/script-fu.c:363
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -132,16 +132,16 @@ msgstr "مستعرض إجراءات سكربت-فو"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "نمط سكربت-فو التقييمي يسمح فقط بالاستدعاءات غير التفاعلية"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:194
+#: ../plug-ins/script-fu/script-fu-interface.c:198
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "سكربت-فو لا يمكنه إجراء أكثر من سكربت في وقت واحد."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:196
+#: ../plug-ins/script-fu/script-fu-interface.c:200
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "أنت تشغل حاليًا السكربت \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:222
+#: ../plug-ins/script-fu/script-fu-interface.c:226
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "سكربت-فو: %s"
@@ -149,44 +149,44 @@ msgstr "سكربت-فو: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:286
+#: ../plug-ins/script-fu/script-fu-interface.c:290
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:333
+#: ../plug-ins/script-fu/script-fu-interface.c:337
 msgid "Script-Fu Color Selection"
 msgstr "اختيار اللون في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:442
+#: ../plug-ins/script-fu/script-fu-interface.c:446
 msgid "Script-Fu File Selection"
 msgstr "اختيار الملف في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:445
+#: ../plug-ins/script-fu/script-fu-interface.c:449
 msgid "Script-Fu Folder Selection"
 msgstr "اختيار المجلد في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:458
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Font Selection"
 msgstr "اختيار الخط في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:466
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-Fu Palette Selection"
 msgstr "اختيار لوحة الألوان في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Pattern Selection"
 msgstr "اختيار النمط في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:484
+#: ../plug-ins/script-fu/script-fu-interface.c:488
 msgid "Script-Fu Gradient Selection"
 msgstr "تحديد تدرج الألوان في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:493
+#: ../plug-ins/script-fu/script-fu-interface.c:497
 msgid "Script-Fu Brush Selection"
 msgstr "اختيار الفرشاة في سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:824
+#: ../plug-ins/script-fu/script-fu-interface.c:840
 #, c-format
 msgid "Error while executing %s:"
 msgstr "خطأ أثناء تنفيذ %s:"
@@ -200,85 +200,1451 @@ msgstr "معطيات قليلة جدا لاستدعاء 'سكربت-فو'"
 msgid "Error while loading %s:"
 msgstr "خطأ أثناء تحميل %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:807
+#: ../plug-ins/script-fu/script-fu-server.c:827
 msgid "Script-Fu Server Options"
 msgstr "خيارات خادوم سكربت-فو"
 
-#: ../plug-ins/script-fu/script-fu-server.c:812
+#: ../plug-ins/script-fu/script-fu-server.c:832
 msgid "_Start Server"
 msgstr "ا_بدأ الخادوم"
 
-#: ../plug-ins/script-fu/script-fu-server.c:840
+#: ../plug-ins/script-fu/script-fu-server.c:865
+msgid "Listen on IP:"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu-server.c:872
 msgid "Server port:"
 msgstr "منفذ الخادوم:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:846
+#: ../plug-ins/script-fu/script-fu-server.c:878
 msgid "Server logfile:"
 msgstr "ملف سجل الخادوم:"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:182
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:156
-msgid "Right"
-msgstr "يمين"
+#: ../plug-ins/script-fu/script-fu-server.c:890
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
+"allow attackers to remotely execute arbitrary code on this machine."
+msgstr ""
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm:136
-#: ../plug-ins/script-fu/scripts/blended-logo.scm:195
-msgid "FG-BG-RGB"
-msgstr "ألوان RGB لصدر وخلفية الصورة"
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+msgid "Bumpmap"
+msgstr "خريطة نتوءات"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:185
+msgid "Add B_evel..."
+msgstr "إضافة _زاوية منحرفة..."
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:186
+msgid "Add a beveled border to an image"
+msgstr "إضافة حدود منحرفة إلى صورة"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:193
+msgid "Thickness"
+msgstr "السمك"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:194
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#: ../plug-ins/script-fu/scripts/old-photo.scm:104
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/slide.scm:248
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
+msgid "Work on copy"
+msgstr "العمل على نسخة"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:195
+msgid "Keep bump layer"
+msgstr "الحفاظ على طبقة النتوءات"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:108
+msgid "Border Layer"
+msgstr "طبقة الحدود"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:160
+msgid "Add _Border..."
+msgstr "إضافة _حدود..."
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:161
+msgid "Add a border around an image"
+msgstr "أضف حدودًا حول صورة"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:168
+msgid "Border X size"
+msgstr "طول الحد في X"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:169
+msgid "Border Y size"
+msgstr "طول الحد في Y"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:170
+msgid "Border color"
+msgstr "لون الحد"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:171
+msgid "Delta value on color"
+msgstr "قيمة دلتا للون"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+msgid "Frame"
+msgstr "إطار"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+msgid "Blend Animation needs at least three source layers"
+msgstr "رسوم الخليط المتحركة تحتاج على الأقل ثلاثة طبقات مصدرية"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+msgid "_Blend..."
+msgstr "مز_ج..."
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr "إنشاء طبقات وسيطة لمزج طبقتين أو أكثر فوق خلفية كرسوم متحركة"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+msgid "Intermediate frames"
+msgstr "طبقات وسيطة"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+msgid "Max. blur radius"
+msgstr "نصف-قطر الغشاوة الأكبر"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+msgid "Looped"
+msgstr "مكررة"
+
+#. --- false form of "if-1"
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:212
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr "الحرق يحتاج طبقتين. الطبقة الأمامية مع شفافية وطبقة الخلفية."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:219
+msgid "B_urn-In..."
+msgstr "_حرق..."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:220
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr "إنشاء طبقات وسيطة لإنتاج عملية حرق تحريكية بين طبقتين"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:227
+msgid "Glow color"
+msgstr "لون التوهج"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:228
+msgid "Fadeout"
+msgstr "زوال لون الأطراف"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:229
+msgid "Fadeout width"
+msgstr "مقدار زوال لون الأطراف"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:230
+msgid "Corona width"
+msgstr "عرض الوهج"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:231
+msgid "After glow"
+msgstr "بعد التوهج"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+msgid "Add glowing"
+msgstr "أضف توهجًا"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+msgid "Prepare for GIF"
+msgstr "التحضير لـ GIF"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+msgid "Speed (pixels/frame)"
+msgstr "السرعة (بكسل في المشهد)"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+msgid "Carved Surface"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:169
+#, fuzzy
+msgid "Bevel Shadow"
+msgstr "ظل"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:170
+#, fuzzy
+msgid "Bevel Highlight"
+msgstr "عرض الانحراف"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:171
+#, fuzzy
+msgid "Cast Shadow"
+msgstr "إنشاء ظل"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+#, fuzzy
+msgid "Inset"
+msgstr "اعكس"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+msgid "Stencil C_arve..."
+msgstr "قطع الم_عدن..."
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:183
+msgid ""
+"Use the specified drawable as a stencil to carve from the specified image."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:190
+msgid "Image to carve"
+msgstr "الصورة التي ينبغي قطعها"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:191
+msgid "Carve white areas"
+msgstr "مساحات بيضاء مقطوعة"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
+msgid "Background"
+msgstr "خلفية"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+#, fuzzy
+msgid "Layer 1"
+msgstr "طبقة 1"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+msgid "Layer 2"
+msgstr "طبقة 2"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+msgid "Layer 3"
+msgstr "طبقة 3"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+msgid "Drop Shadow"
+msgstr "ظل ساقط"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:201
+msgid "Chrome"
+msgstr "كروم"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:202
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
+msgid "Highlight"
+msgstr "إبراز"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:214
+msgid "Stencil C_hrome..."
+msgstr "_كروم معدني..."
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:215
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
+msgstr ""
+"إضافة تأثير الكروم إلى المنطقة المحددة (أو ألفا) باستخدام تدرج معدن فضي"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:222
+msgid "Chrome saturation"
+msgstr "إشباع الكروم"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:223
+msgid "Chrome lightness"
+msgstr "إضاءة الكروم"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:224
+msgid "Chrome factor"
+msgstr "معامل الكروم"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:225
+msgid "Environment map"
+msgstr "خريطة البيئة"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:228
+msgid "Highlight balance"
+msgstr "توازن التمييز اللوني"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:229
+msgid "Chrome balance"
+msgstr "ميزان الكروم"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
+msgid "Chrome white areas"
+msgstr "مناطق الكروم البيضاء"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:81
+msgid "Effect layer"
+msgstr "طبقة تأثيرات"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:134
+msgid "_Circuit..."
+msgstr "_دائرة"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:135
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr "املأ المنطقة المحددة (أو ألفا) بآثار كالموجودة على لوح الدائرة"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:142
+msgid "Oilify mask size"
+msgstr "حجم قناع التزييت"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:143
+msgid "Circuit seed"
+msgstr "بذرة الدائرة"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:144
+msgid "No background (only for separate layer)"
+msgstr "بدون خلفية (فقط للطبقات المنفصلة)"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:145
+#: ../plug-ins/script-fu/scripts/lava.scm:129
+#: ../plug-ins/script-fu/scripts/predator.scm:132
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+msgid "Keep selection"
+msgstr "احتفظ بالتحديد"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:146
+#: ../plug-ins/script-fu/scripts/lava.scm:130
+#: ../plug-ins/script-fu/scripts/predator.scm:133
+msgid "Separate layer"
+msgstr "الطبقة المنفصلة"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:51
+msgid "_Clothify..."
+msgstr "تنسي_ج..."
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:52
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr "إضافة شكل نسيجي إلى المنطقة المحددة (أو ألفا)"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:59
+msgid "Blur X"
+msgstr "X الغشاوة"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:60
+msgid "Blur Y"
+msgstr "Y الغشاوة"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:61
+msgid "Azimuth"
+msgstr "السمت"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:62
+msgid "Elevation"
+msgstr "الارتفاع"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:63
+msgid "Depth"
+msgstr "العمق"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:36
+msgid "Stain"
+msgstr "بقعة"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:81
+msgid "_Coffee Stain..."
+msgstr "بقعة ق_هوة..."
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:82
+msgid "Add realistic looking coffee stains to the image"
+msgstr "إضافة بقع قهوة حقيقية إلى الصورة"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:89
+msgid "Stains"
+msgstr "بقع"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:90
+msgid "Darken only"
+msgstr "غامق فقط"
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:67
+msgid "Difference Clouds..."
+msgstr "غيوم متباينة..."
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:68
+msgid "Solid noise applied with Difference layer mode"
+msgstr "ضجيج مادي مطبق مع نمط الطبقة المتباين"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:102
+msgid "_Distort..."
+msgstr "ت_شويه..."
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:103
+msgid "Distress the selection"
+msgstr "تضييق التحديد"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:110
+#, fuzzy
+msgid "Threshold (bigger 1<-->254 smaller)"
+msgstr "العتبة (الأكبر 1 <--> الأصغر 255"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:111
+msgid "Spread"
+msgstr "نشر"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:112
+msgid "Granularity (1 is low)"
+msgstr "الحبيبيات (1 هو نسبة قليلة)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
+msgid "Smooth"
+msgstr "مصقول"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+msgid "Smooth horizontally"
+msgstr "صقل أفقيًا"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+msgid "Smooth vertically"
+msgstr "صقل عموديًا"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
+msgid "_Drop Shadow..."
+msgstr "ظل _ساقط..."
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "إضافة ظل إلى المنطقة المحددة (أو ألفا)"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+msgid "Offset X"
+msgstr "الإزاحة X"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+msgid "Offset Y"
+msgstr "الإزاحة Y"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+msgid "Blur radius"
+msgstr "نصف-قطر الغشاوة"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+msgid "Color"
+msgstr "اللون"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+msgid "Opacity"
+msgstr "مقدار العتمة"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
+msgid "Allow resizing"
+msgstr "السماح بتغيير الحجم"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:39
+msgid "_Erase Every Other Row..."
+msgstr "_محو كل الصفوف الأخرى..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:40
+msgid "Erase every other row or column"
+msgstr "محل الصفوف أو الأعمدة الأخرى"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+msgid "Rows/cols"
+msgstr "صفوف/أعمدة"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:47
 msgid "Rows"
 msgstr "صفوف"
 
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+msgid "Columns"
+msgstr "الأعمدة"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Even/odd"
+msgstr "زوجي/فردي"
+
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:48
 msgid "Even"
 msgstr "زوجي"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Odd"
+msgstr "فردي"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Erase/fill"
+msgstr "محو/ملء"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:49
 msgid "Erase"
 msgstr "محو"
 
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Fill with BG"
+msgstr "املأ بالخلفية"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:152
+msgid "Render _Font Map..."
+msgstr "تصيير خريطة الخط_وط..."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:153
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
+msgstr "أنشئ صورة مملوءة بعروض مسبقة لخطوط وفقًا لمصفي أسماء الخطوط"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:158
+msgid "_Text"
+msgstr "_نص"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:159
+msgid "Use font _name as text"
+msgstr "استخدم اسم الخط كن_ص"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:160
+msgid "_Labels"
+msgstr "مل_صقات"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:161
+msgid "_Filter (regexp)"
+msgstr "فلتر )regexp)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:162
+msgid "Font _size (pixels)"
+msgstr "حجم ال_خط (بالبكسل)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:163
+msgid "_Border (pixels)"
+msgstr "ال_حدود (بالبكسل)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "_Color scheme"
+msgstr "مخطط ال_لون"
+
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Black on white"
 msgstr "أسود على أبيض"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "Active colors"
+msgstr "الألوان النشطة"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:146
+msgid "_Fuzzy Border..."
+msgstr "ال_ظل المبهم..."
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:147
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "إضافة حدودًا محزوزة مبهمة إلى صورة"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:155
+#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+msgid "Border size"
+msgstr "حجم الحدود"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:156
+msgid "Blur border"
+msgstr "حدود الغشاوة"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
+msgid "Granularity (1 is Low)"
+msgstr "الحبيبيات (1 هو نسبة قليلة)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
+msgid "Add shadow"
+msgstr "أضف ظلًا"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+msgid "Shadow weight (%)"
+msgstr "وزن الظل (%)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+msgid "Flatten image"
+msgstr "تسطيح الصورة"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+msgid "Using _Paths"
+msgstr "استخدا_م المسارات"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+msgid "Bookmark to the user manual"
+msgstr "وضع علامة مرجعية على دليل المستخدم"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+msgid "_Preparing your Images for the Web"
+msgstr "تحضي_ر صورك للوب"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+msgid "_Working with Digital Camera Photos"
+msgstr "ال_عمل مع صور الكاميرا الرقمية"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+msgid "Create, Open and Save _Files"
+msgstr "إنشاء، فتح، وحفظ الملفات"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+msgid "_Basic Concepts"
+msgstr "مفا_هيم أساسية"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+msgid "How to Use _Dialogs"
+msgstr "كيفية استخدام الجدا_ول"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+msgid "Drawing _Simple Objects"
+msgstr "رسم أش_كال بسيطة"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+msgid "Create and Use _Selections"
+msgstr "إنشاء واستخدام التح_ديدات"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+msgid "_Main Web Site"
+msgstr "موقع الوب الر_ئيسي"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
+msgid "Bookmark to the GIMP web site"
+msgstr "وضع علامة مرجعية على موقع وب GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+msgid "_Developer Web Site"
+msgstr "موقع وب الت_طوير"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+msgid "_User Manual Web Site"
+msgstr "موقع وب دليل المست_خدم"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+msgid "Plug-in _Registry"
+msgstr "س_جل الملحقات"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:63
+msgid "Custom _Gradient..."
+msgstr "تدرج مخ_صص..."
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:64
+msgid "Create an image filled with an example of the current gradient"
+msgstr "أنشئ صورة مملوءة بمثال عن التدرج الحالي"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:138
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:194
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:263
+msgid "Width"
+msgstr "العرض"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+msgid "Height"
+msgstr "الارتفاع"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:71
+msgid "Gradient reverse"
+msgstr "عكس التدرج"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:84
+msgid "_Grid..."
+msgstr "_شبكة..."
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:85
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current "
+"brush"
+msgstr "رسم شبكة كما هو محد من قبل لائحات مواقع X و Y باستخدام الفرشاة الحالية"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:92
+msgid "X divisions"
+msgstr "X تقسيمًا"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:93
+msgid "Y divisions"
+msgstr "Y تقسيمًا"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+msgid "New Guides from _Selection"
+msgstr "أدلة جديدة من الا_ختيار"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#, fuzzy
+msgid "Create four guides around the bounding box of the current selection"
+msgstr "تدوير زوايا التحديد الحالي"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+msgid "New Guide (by _Percent)..."
+msgstr "دليل جديد (بالنسبة الم_ئوية)..."
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr "إضافة دليل عند الموقع المحدد كنسبة مئوية لحجم الصورة"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Direction"
+msgstr "الاتجاه"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Horizontal"
 msgstr "أفقي"
 
-#: ../plug-ins/script-fu/scripts/rendermap.scm:90
-msgid "Tile"
-msgstr "بلاط"
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Vertical"
+msgstr "عامودي"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
+msgid "Position (in %)"
+msgstr "الموقع (%)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+msgid "New _Guide..."
+msgstr "دليل _جديد..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr "إضافة دليل عند الاتجاه والموقع المحددين (بالبكسل)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:36
+msgid "Position"
+msgstr "الموقع"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+msgid "_Remove all Guides"
+msgstr "إ_زالة كل الأدلة"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+msgid "Remove all horizontal and vertical guides"
+msgstr "إزالة جميع الأدلة الأفقية والعمودية"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:117
+msgid "_Lava..."
+msgstr "ال_حمم..."
+
+#: ../plug-ins/script-fu/scripts/lava.scm:118
+msgid "Fill the current selection with lava"
+msgstr "ملء المساحة المحددة بالحمم"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:125
+msgid "Seed"
+msgstr "البذرة"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:126
+msgid "Size"
+msgstr "الحجم"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:127
+msgid "Roughness"
+msgstr "الخشونة"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:128
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+msgid "Gradient"
+msgstr "التدرج"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:131
+msgid "Use current gradient"
+msgstr "استخدم التدرج الحالي"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:106
+msgid "Line _Nova..."
+msgstr "خطوط نو_فا..."
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:107
+#, fuzzy
+msgid ""
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
+msgstr ""
+"ملء الطبقة بالأشعة المنبعثة من المركز إلى الخارج باستخدام لون الطبقة الأمامية"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:114
+msgid "Number of lines"
+msgstr "عدد الخطوط"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:115
+msgid "Sharpness (degrees)"
+msgstr "الحدة (بالدرجات)"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:116
+msgid "Offset radius"
+msgstr "نصف-قطر الإزاحة"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:117
+msgid "Randomness"
+msgstr "العشوائية"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+msgid "_Rectangular..."
+msgstr "مستط_يلة..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+msgid "Create a rectangular brush"
+msgstr "أنشئ فرشاة مستطيلة"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:137
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:193
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:262
+msgid "Name"
+msgstr "الاسم"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+msgid "Spacing"
+msgstr "التباعد"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:131
+msgid "Re_ctangular, Feathered..."
+msgstr "مستطي_لة، حادة الحواف..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:132
+msgid "Create a rectangular brush with feathered edges"
+msgstr "إنشء فرشاة مستطيلة ذات حواف حادة"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+msgid "Feathering"
+msgstr "حواف حادة"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:187
+msgid "_Elliptical..."
+msgstr "_بيضاوية..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:188
+msgid "Create an elliptical brush"
+msgstr "أنشئ فرشاة بيضاوية"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:256
+msgid "Elli_ptical, Feathered..."
+msgstr "بيضا_وية، حادة الحواف..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:257
+msgid "Create an elliptical brush with feathered edges"
+msgstr "إنشاء فرشاة بيضاوية ذات حواف حادة"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+msgid "_Old Photo..."
+msgstr "صورة _قديمة..."
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+msgid "Make an image look like an old photo"
+msgstr "جعل صورة تظهر كصورة قديمة"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+msgid "Defocus"
+msgstr "أزل التركيز"
+
+#. since this plug-in uses the fuzzy-border plug-in, I used the
+#. values of the latter, with the exception of the initial value
+#. and the 'minimum' value.
+#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+msgid "Sepia"
+msgstr "نقط بنية"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+msgid "Mottle"
+msgstr "بقع"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+msgid "Folder for the output file"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:236
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:244
+msgid "The filename you entered is not a suitable name for a file."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:246
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:274
+msgid ""
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:300
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:332
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:361
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:408
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+msgid "There is no image data in the clipboard to paste."
+msgstr "لا توجد صورة في الحافظة للصق."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
+msgid "New _Brush..."
+msgstr "_فرشاة جديدة..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+msgid "Paste the clipboard contents into a new brush"
+msgstr "لصق محتويات الحافظة في فرشاة جديدة"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+msgid "Brush name"
+msgstr "اسم الفرشاة"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
+msgid "File name"
+msgstr "اسم الملف"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
+msgid "New _Pattern..."
+msgstr "نمو_ذج جديد..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "ألصق محتويات الحافظة في نموذج جديد"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
+msgid "Pattern name"
+msgstr "اسم النموذج"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+msgid "_Perspective..."
+msgstr "_هندسة المنظور..."
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr "إضافة ظل هندسي إلى المنطقة المحددة (أو ألفا)"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+msgid "Angle"
+msgstr "زاوية"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+msgid "Relative distance of horizon"
+msgstr "البعد النسبي للأفق"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+msgid "Relative length of shadow"
+msgstr "الطول النسبي للظل"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+msgid "Interpolation"
+msgstr "توليد"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:121
+msgid "_Predator..."
+msgstr "_ضاري..."
+
+#: ../plug-ins/script-fu/scripts/predator.scm:122
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr "إضافة تأثير ضاري إلى المنطقة المحددة (أو ألفا)"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:129
+msgid "Edge amount"
+msgstr "مقدار الحافة"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:130
+msgid "Pixelize"
+msgstr "بكسلة"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:131
+msgid "Pixel amount"
+msgstr "كمية البكسل"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
+msgid "Reverse Layer Order"
+msgstr "عكس ترتيب الطبقات"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+msgid "Reverse the order of layers in the image"
+msgstr "عكس ترتيب الطبقات في الصورة"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:119
+msgid "_Rippling..."
+msgstr "تمو_ج..."
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:120
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current image"
+msgstr "أنشئ صورة متعددة الطبقات بإضافة تأثير متموج إلى الصورة الحالية"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:127
+msgid "Rippling strength"
+msgstr "شدة التموج"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:128
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "عدد الإطارات"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+msgid "Edge behavior"
+msgstr "مظهر الحافة"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
 msgid "Wrap"
 msgstr "تغطية"
 
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+msgid "Smear"
+msgstr "طلاء"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+msgid "Black"
+msgstr "أسود"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+msgid "_Round Corners..."
+msgstr "زوايا _دائرية..."
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and background"
+msgstr "تدوير زوايا صورة وإضافة ظل ساقط وخلفية بشكل اختياري"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+msgid "Edge radius"
+msgstr "نصف-قطر الحافة"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+msgid "Add drop-shadow"
+msgstr "إضافة ظل ساقط"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+msgid "Shadow X offset"
+msgstr "إزاحة ظل في X"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+msgid "Shadow Y offset"
+msgstr "إزاحة ظل في Y"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+msgid "Add background"
+msgstr "إضافة خلفية"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+msgid "Se_t Colormap..."
+msgstr "_حدد خارطة الألوان"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr "غير خارطة الألوان للصورة للألوان المحددة في اللوحة."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+msgid "Palette"
+msgstr "لوحة ألوان"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+msgid "Rounded R_ectangle..."
+msgstr "م_ستطيل مُدوّر..."
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+msgid "Round the corners of the current selection"
+msgstr "تدوير زوايا التحديد الحالي"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:147
+msgid "Radius (%)"
+msgstr "نصف-القطر (%)"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:148
+msgid "Concave"
+msgstr "مقعر"
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+msgid "To _Brush..."
+msgstr "إلى ال_فرشاة..."
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+msgid "Convert a selection to a brush"
+msgstr "تحويل المحدد إلى الفرشاة"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
+msgid "To _Image"
+msgstr "إلى ال_صورة..."
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
+msgid "Convert a selection to an image"
+msgstr "تحويل المحدد إلى صورة"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
+msgid "To _Pattern..."
+msgstr "إلى النمو_ذج..."
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
+msgid "Convert a selection to a pattern"
+msgstr "تحويل المحدد إلى نموذج"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:236
+msgid "_Slide..."
+msgstr "_شريحة..."
+
+#: ../plug-ins/script-fu/scripts/slide.scm:237
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr "إضافة شريط مصور كإطار، مع ثقوب مسلسلة وملصقات، إلى صورة"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:244
+msgid "Text"
+msgstr "نص"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:245
+msgid "Number"
+msgstr "العدد"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:246
+msgid "Font"
+msgstr "الخط"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:247
+msgid "Font color"
+msgstr "لون الخط"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+msgid "_Spinning Globe..."
+msgstr "كر_ة دائرية..."
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr "أنشئ رسومًا متحركة من خلال تحويل الصورة الحالية إلى كرة دائرية"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+msgid "Frames"
+msgstr "الإطارات"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+msgid "Turn from left to right"
+msgstr "اقلب من اليسار إلى اليمين"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+msgid "Transparent background"
+msgstr "خلفية شفافة"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "فهرس n لونًا (0 = البقاء كـ RGB)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+msgid "Rendering Spyro"
+msgstr "تصيير التكرار الرسومي"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
+msgid "_Spyrogimp..."
+msgstr "_جيمب اللولبي..."
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+msgid ""
+"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgstr "إضافة انحناءات لولبية، حلقية، وشبكية إلى الطبقة الحالية"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+msgid "Type"
+msgstr "النوع"
+
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Spyrograph"
 msgstr "التكرار الرسومي"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+msgid "Epitrochoid"
+msgstr "حلقية"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+msgid "Lissajous"
+msgstr "شبكية"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+msgid "Shape"
+msgstr "الشكل"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
 msgid "Circle"
 msgstr "دائرة"
 
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+msgid "Triangle"
+msgstr "مثلث"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+msgid "Square"
+msgstr "مربع"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+msgid "Pentagon"
+msgstr "مخمس"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+msgid "Hexagon"
+msgstr "مسدس"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+msgid "Polygon: 7 sides"
+msgstr "مضلع: 7 أضلع"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+msgid "Polygon: 8 sides"
+msgstr "مضلع: 8 أضلع"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+msgid "Polygon: 9 sides"
+msgstr "مضلع: 9 أضلع"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+msgid "Polygon: 10 sides"
+msgstr "مضلع: 10 أضلع"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+msgid "Outer teeth"
+msgstr "الأسنان الخارجية"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+msgid "Inner teeth"
+msgstr "الأسنان الداخلية"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+msgid "Margin (pixels)"
+msgstr "الهامش (بالبكسل)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+msgid "Hole ratio"
+msgstr "نسبة الحفرة"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+msgid "Start angle"
+msgstr "زاوية البداية"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+msgid "Tool"
+msgstr "الأداة"
+
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
 msgid "Pencil"
 msgstr "قلم رصاص"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+msgid "Brush"
+msgstr "فرشاة"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+msgid "Airbrush"
+msgstr "فرشاة هوائية"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+msgid "Color method"
+msgstr "طريقة الألوان"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
 msgid "Solid Color"
 msgstr "لون صلب"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm:129
-#: ../plug-ins/script-fu/scripts/textured-logo.scm:171
-msgid "Squares"
-msgstr "مربعات"
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+msgid "Gradient: Loop Sawtooth"
+msgstr "التدرج: تكرار أسنان منشورة"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+msgid "Gradient: Loop Triangle"
+msgstr "التدرج: تكرار مثلثي"
+
+#: ../plug-ins/script-fu/scripts/test-sphere.scm:267
+#, fuzzy
+msgid "_Sphere..."
+msgstr "ك_روم..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+msgid "_Tileable Blur..."
+msgstr "_غشاوة تبليطية..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr "إضافة غشاوة على أطراف صورة ليتم تبليط الناتج بدون درز الحواف"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:76
+msgid "Radius"
+msgstr "نصف-القطر"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:77
+msgid "Blur vertically"
+msgstr "غشاوة عامودية"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:78
+msgid "Blur horizontally"
+msgstr "غشاوة أفقية"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Blur type"
+msgstr "نوع الغشاوة"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "IIR"
 msgstr "IIR"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "RLE"
+msgstr "RLE"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+msgid "Mask size"
+msgstr "حجم القناع"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+msgid "Mask opacity"
+msgstr "عتمة القناع"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+msgid "_Waves..."
+msgstr "أ_مواج..."
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr "أنشئ صورة متعددة الطبقات مع تاُثير يشبه رمي حجر داخل الصورة الحالية"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+msgid "Amplitude"
+msgstr "الارتفاع"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+msgid "Wavelength"
+msgstr "طول الموجة"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+msgid "Invert direction"
+msgstr "اتجاه القلب"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:389
+msgid "_Weave..."
+msgstr "ن_سيج..."
+
+#: ../plug-ins/script-fu/scripts/weave.scm:390
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr "أنشئ طبقة جديدة مملوءة بتأثير النسيج لاستخدامها كغطاء أو خريطة نتوءات"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:397
+msgid "Ribbon width"
+msgstr "عرض الغرزات"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:398
+msgid "Ribbon spacing"
+msgstr "تباعد الغرزات"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:399
+msgid "Shadow darkness"
+msgstr "إظلام الظل"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:400
+msgid "Shadow depth"
+msgstr "عمق الظل"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:401
+msgid "Thread length"
+msgstr "طول الخيط"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:402
+msgid "Thread density"
+msgstr "كثافة الخيط"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:403
+msgid "Thread intensity"
+msgstr "شدة الخيط"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+msgid "Shadow"
+msgstr "ظل"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+msgid "_Xach-Effect..."
+msgstr "تأثير-_Xach..."
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr "إضافة تأثير شفاف خفي ثلاثي الأبعاد إلى المنطقة المحددة (أو ألفا)"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+msgid "Highlight X offset"
+msgstr "إزاحة X للتمييز اللوني"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+msgid "Highlight Y offset"
+msgstr "إزاحة Y للتمييز اللوني"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+msgid "Highlight color"
+msgstr "لون التحديد"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+msgid "Highlight opacity"
+msgstr "إعتام التمييز اللوني"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+msgid "Drop shadow color"
+msgstr "لون الظل الساقط"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+msgid "Drop shadow opacity"
+msgstr "إعتام الظل الساقط"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+msgid "Drop shadow blur radius"
+msgstr "نصف-قطر غشاوة الظل الساقط"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+msgid "Drop shadow X offset"
+msgstr "إزاحة X للظل الساقط"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+msgid "Drop shadow Y offset"
+msgstr "إزاحة Y للظل الساقط"
+
+#~ msgid "Right"
+#~ msgstr "يمين"
+
+#~ msgid "FG-BG-RGB"
+#~ msgstr "ألوان RGB لصدر وخلفية الصورة"
+
+#~ msgid "Tile"
+#~ msgstr "بلاط"
+
+#~ msgid "Squares"
+#~ msgstr "مربعات"
 
 #~ msgid "3D _Outline..."
 #~ msgstr "حدود ثلاثية الأب_عاد..."
@@ -291,9 +1657,6 @@ msgstr "IIR"
 
 #~ msgid "Default bumpmap settings"
 #~ msgstr "إعدادات خريطة النتوءات الافتراضية"
-
-#~ msgid "Font"
-#~ msgstr "الخط"
 
 #~ msgid "Font size (pixels)"
 #~ msgstr "حجم الخط (بالبكسل)"
@@ -310,17 +1673,8 @@ msgstr "IIR"
 #~ msgid "Pattern"
 #~ msgstr "نموذج"
 
-#~ msgid "Shadow X offset"
-#~ msgstr "إزاحة ظل في X"
-
-#~ msgid "Shadow Y offset"
-#~ msgstr "إزاحة ظل في Y"
-
 #~ msgid "Shadow blur radius"
 #~ msgstr "نصف-قطر غشاوة الظل"
-
-#~ msgid "Text"
-#~ msgstr "نص"
 
 #~ msgid "3_D Truchet..."
 #~ msgstr "Truchet ثلاثية الأبعا_د..."
@@ -349,53 +1703,11 @@ msgstr "IIR"
 #~ msgid "Supersample"
 #~ msgstr "نموذج سوبر"
 
-#~ msgid "Thickness"
-#~ msgstr "السمك"
-
-#~ msgid "Add B_evel..."
-#~ msgstr "إضافة _زاوية منحرفة..."
-
-#~ msgid "Add a beveled border to an image"
-#~ msgstr "إضافة حدود منحرفة إلى صورة"
-
-#~ msgid "Bumpmap"
-#~ msgstr "خريطة نتوءات"
-
-#~ msgid "Keep bump layer"
-#~ msgstr "الحفاظ على طبقة النتوءات"
-
-#~ msgid "Work on copy"
-#~ msgstr "العمل على نسخة"
-
-#~ msgid "Add _Border..."
-#~ msgstr "إضافة _حدود..."
-
-#~ msgid "Add a border around an image"
-#~ msgstr "أضف حدودًا حول صورة"
-
-#~ msgid "Border Layer"
-#~ msgstr "طبقة الحدود"
-
-#~ msgid "Border X size"
-#~ msgstr "طول الحد في X"
-
-#~ msgid "Border Y size"
-#~ msgstr "طول الحد في Y"
-
-#~ msgid "Border color"
-#~ msgstr "لون الحد"
-
-#~ msgid "Delta value on color"
-#~ msgstr "قيمة دلتا للون"
-
 #~ msgid "Alien Glow"
 #~ msgstr "توهج غريب"
 
 #~ msgid "Arrow"
 #~ msgstr "سهم"
-
-#~ msgid "Background"
-#~ msgstr "خلفية"
 
 #~ msgid "Create an arrow graphic with an eerie glow for web pages"
 #~ msgstr "رسم سهم مع توهج خفي لصفحات الوب"
@@ -403,20 +1715,11 @@ msgstr "IIR"
 #~ msgid "Down"
 #~ msgstr "تحت"
 
-#~ msgid "Flatten image"
-#~ msgstr "تسطيح الصورة"
-
-#~ msgid "Glow color"
-#~ msgstr "لون التوهج"
-
 #~ msgid "Left"
 #~ msgstr "يسار"
 
 #~ msgid "Orientation"
 #~ msgstr "الاتجاه"
-
-#~ msgid "Size"
-#~ msgstr "الحجم"
 
 #~ msgid "Up"
 #~ msgstr "فوق"
@@ -444,9 +1747,6 @@ msgstr "IIR"
 
 #~ msgid "Create a bullet graphic with an eerie glow for web pages"
 #~ msgstr "رسم نقطة فقرة مع توهج خفي لصفحات الوب"
-
-#~ msgid "Radius"
-#~ msgstr "نصف-القطر"
 
 #~ msgid "_Bullet..."
 #~ msgstr "ن_قطة فقرة..."
@@ -533,9 +1833,6 @@ msgstr "IIR"
 #~ msgid "Create a simple, beveled button graphic for webpages"
 #~ msgstr "رسم زر بسيط منحرف لصفحات الوب"
 
-#~ msgid "Gradient"
-#~ msgstr "التدرج"
-
 #~ msgid "Lower-right color"
 #~ msgstr "اللون الأيمن السفلي"
 
@@ -557,9 +1854,6 @@ msgstr "IIR"
 #~ msgid "Diameter"
 #~ msgstr "القطر"
 
-#~ msgid "Transparent background"
-#~ msgstr "خلفية شفافة"
-
 #~ msgid "Create a beveled pattern button for webpages"
 #~ msgstr "إنشاء نموذج زر منحرف لصفحات الوب"
 
@@ -572,37 +1866,8 @@ msgstr "IIR"
 #~ msgid "Create a beveled pattern hrule for webpages"
 #~ msgstr "إنشاء نموذج فاصل أفقي منحرف لصفحات الوب"
 
-#~ msgid "Height"
-#~ msgstr "الارتفاع"
-
 #~ msgid "Rule"
 #~ msgstr "مسطرة"
-
-#~ msgid "Width"
-#~ msgstr "العرض"
-
-#~ msgid "Blend Animation needs at least three source layers"
-#~ msgstr "رسوم الخليط المتحركة تحتاج على الأقل ثلاثة طبقات مصدرية"
-
-#~ msgid ""
-#~ "Create intermediate layers to blend two or more layers over a background "
-#~ "as an animation"
-#~ msgstr "إنشاء طبقات وسيطة لمزج طبقتين أو أكثر فوق خلفية كرسوم متحركة"
-
-#~ msgid "Frame"
-#~ msgstr "إطار"
-
-#~ msgid "Intermediate frames"
-#~ msgstr "طبقات وسيطة"
-
-#~ msgid "Looped"
-#~ msgstr "مكررة"
-
-#~ msgid "Max. blur radius"
-#~ msgstr "نصف-قطر الغشاوة الأكبر"
-
-#~ msgid "_Blend..."
-#~ msgstr "مز_ج..."
 
 #~ msgid ""
 #~ "Add blended backgrounds, highlights, and shadows to the selected region "
@@ -629,9 +1894,6 @@ msgstr "IIR"
 #~ msgid "FG-Transparent"
 #~ msgstr "شفافية صدر الصورة"
 
-#~ msgid "Gradient reverse"
-#~ msgstr "عكس التدرج"
-
 #~ msgid "Offset (pixels)"
 #~ msgstr "الإزاحة (بالبكسل)"
 
@@ -653,40 +1915,6 @@ msgstr "IIR"
 #~ msgid "Spots density Y"
 #~ msgstr "كثافة البقع في Y"
 
-#~ msgid "Add glowing"
-#~ msgstr "أضف توهجًا"
-
-#~ msgid "After glow"
-#~ msgstr "بعد التوهج"
-
-#~ msgid "B_urn-In..."
-#~ msgstr "_حرق..."
-
-#~ msgid "Corona width"
-#~ msgstr "عرض الوهج"
-
-#~ msgid ""
-#~ "Create intermediate layers to produce an animated 'burn-in' transition "
-#~ "between two layers"
-#~ msgstr "إنشاء طبقات وسيطة لإنتاج عملية حرق تحريكية بين طبقتين"
-
-#~ msgid "Fadeout"
-#~ msgstr "زوال لون الأطراف"
-
-#~ msgid "Fadeout width"
-#~ msgstr "مقدار زوال لون الأطراف"
-
-#~ msgid "Prepare for GIF"
-#~ msgstr "التحضير لـ GIF"
-
-#~ msgid "Speed (pixels/frame)"
-#~ msgstr "السرعة (بكسل في المشهد)"
-
-#~ msgid ""
-#~ "The Burn-In script needs two layers in total. A foreground layer with "
-#~ "transparency and a background layer."
-#~ msgstr "الحرق يحتاج طبقتين. الطبقة الأمامية مع شفافية وطبقة الخلفية."
-
 #~ msgid "Color 1"
 #~ msgstr "اللون 1"
 
@@ -705,36 +1933,8 @@ msgstr "IIR"
 #~ msgid "Image size"
 #~ msgstr "حجم الصورة"
 
-#~ msgid "Smooth"
-#~ msgstr "مصقول"
-
 #~ msgid "_Camouflage..."
 #~ msgstr "تموي_ه..."
-
-#, fuzzy
-#~ msgid "Bevel Highlight"
-#~ msgstr "عرض الانحراف"
-
-#, fuzzy
-#~ msgid "Bevel Shadow"
-#~ msgstr "ظل"
-
-#~ msgid "Carve white areas"
-#~ msgstr "مساحات بيضاء مقطوعة"
-
-#, fuzzy
-#~ msgid "Cast Shadow"
-#~ msgstr "إنشاء ظل"
-
-#~ msgid "Image to carve"
-#~ msgstr "الصورة التي ينبغي قطعها"
-
-#, fuzzy
-#~ msgid "Inset"
-#~ msgstr "اعكس"
-
-#~ msgid "Stencil C_arve..."
-#~ msgstr "قطع الم_عدن..."
 
 #~ msgid "Background Image"
 #~ msgstr "صورة الخلفية"
@@ -792,127 +1992,14 @@ msgstr "IIR"
 #~ msgid "Keep background"
 #~ msgstr "احتفظ بالخلفية"
 
-#~ msgid ""
-#~ "Add a chrome effect to the selected region (or alpha) using a specified "
-#~ "(grayscale) stencil"
-#~ msgstr ""
-#~ "إضافة تأثير الكروم إلى المنطقة المحددة (أو ألفا) باستخدام تدرج معدن فضي"
-
-#~ msgid "Chrome"
-#~ msgstr "كروم"
-
-#~ msgid "Chrome balance"
-#~ msgstr "ميزان الكروم"
-
-#~ msgid "Chrome factor"
-#~ msgstr "معامل الكروم"
-
-#~ msgid "Chrome lightness"
-#~ msgstr "إضاءة الكروم"
-
-#~ msgid "Chrome saturation"
-#~ msgstr "إشباع الكروم"
-
-#~ msgid "Chrome white areas"
-#~ msgstr "مناطق الكروم البيضاء"
-
-#~ msgid "Drop Shadow"
-#~ msgstr "ظل ساقط"
-
-#~ msgid "Environment map"
-#~ msgstr "خريطة البيئة"
-
-#~ msgid "Highlight"
-#~ msgstr "إبراز"
-
-#~ msgid "Highlight balance"
-#~ msgstr "توازن التمييز اللوني"
-
-#~ msgid "Layer 2"
-#~ msgstr "طبقة 2"
-
-#~ msgid "Layer 3"
-#~ msgstr "طبقة 3"
-
-#~ msgid "Layer1"
-#~ msgstr "طبقة 1"
-
-#~ msgid "Stencil C_hrome..."
-#~ msgstr "_كروم معدني..."
-
 #~ msgid "Add a simple chrome effect to the selected region (or alpha)"
 #~ msgstr "أضف تأثير كروم بسيط إلى المنطقة المحددة (أو ألفا)"
-
-#~ msgid "C_hrome..."
-#~ msgstr "ك_روم..."
 
 #~ msgid "Create a simplistic, but cool, chromed logo"
 #~ msgstr "أنشئ شعار كروم بسيطًا ولطيفًا"
 
 #~ msgid "Offsets (pixels * 2)"
 #~ msgstr "الإزاحات (بكسل * 2)"
-
-#~ msgid "Circuit seed"
-#~ msgstr "بذرة الدائرة"
-
-#~ msgid "Effect layer"
-#~ msgstr "طبقة تأثيرات"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with traces like those on a circuit "
-#~ "board"
-#~ msgstr "املأ المنطقة المحددة (أو ألفا) بآثار كالموجودة على لوح الدائرة"
-
-#~ msgid "Keep selection"
-#~ msgstr "احتفظ بالتحديد"
-
-#~ msgid "No background (only for separate layer)"
-#~ msgstr "بدون خلفية (فقط للطبقات المنفصلة)"
-
-#~ msgid "Oilify mask size"
-#~ msgstr "حجم قناع التزييت"
-
-#~ msgid "Separate layer"
-#~ msgstr "الطبقة المنفصلة"
-
-#~ msgid "_Circuit..."
-#~ msgstr "_دائرة"
-
-#~ msgid "Add a cloth-like texture to the selected region (or alpha)"
-#~ msgstr "إضافة شكل نسيجي إلى المنطقة المحددة (أو ألفا)"
-
-#~ msgid "Azimuth"
-#~ msgstr "السمت"
-
-#~ msgid "Blur X"
-#~ msgstr "X الغشاوة"
-
-#~ msgid "Blur Y"
-#~ msgstr "Y الغشاوة"
-
-#~ msgid "Depth"
-#~ msgstr "العمق"
-
-#~ msgid "Elevation"
-#~ msgstr "الارتفاع"
-
-#~ msgid "_Clothify..."
-#~ msgstr "تنسي_ج..."
-
-#~ msgid "Add realistic looking coffee stains to the image"
-#~ msgstr "إضافة بقع قهوة حقيقية إلى الصورة"
-
-#~ msgid "Darken only"
-#~ msgstr "غامق فقط"
-
-#~ msgid "Stain"
-#~ msgstr "بقعة"
-
-#~ msgid "Stains"
-#~ msgstr "بقع"
-
-#~ msgid "_Coffee Stain..."
-#~ msgstr "بقعة ق_هوة..."
 
 #~ msgid ""
 #~ "Add a comic-book effect to the selected region (or alpha) by outlining "
@@ -961,81 +2048,6 @@ msgstr "IIR"
 #~ msgid "Crystal..."
 #~ msgstr "كريستال..."
 
-#~ msgid "Difference Clouds..."
-#~ msgstr "غيوم متباينة..."
-
-#~ msgid "Solid noise applied with Difference layer mode"
-#~ msgstr "ضجيج مادي مطبق مع نمط الطبقة المتباين"
-
-#~ msgid "Distress the selection"
-#~ msgstr "تضييق التحديد"
-
-#~ msgid "Granularity (1 is low)"
-#~ msgstr "الحبيبيات (1 هو نسبة قليلة)"
-
-#~ msgid "Smooth horizontally"
-#~ msgstr "صقل أفقيًا"
-
-#~ msgid "Smooth vertically"
-#~ msgstr "صقل عموديًا"
-
-#~ msgid "Spread"
-#~ msgstr "نشر"
-
-#~ msgid "Threshold (bigger 1<-->255 smaller)"
-#~ msgstr "العتبة (الأكبر 1 <--> الأصغر 255"
-
-#~ msgid "_Distort..."
-#~ msgstr "ت_شويه..."
-
-#~ msgid "Add a drop shadow to the selected region (or alpha)"
-#~ msgstr "إضافة ظل إلى المنطقة المحددة (أو ألفا)"
-
-#~ msgid "Allow resizing"
-#~ msgstr "السماح بتغيير الحجم"
-
-#~ msgid "Blur radius"
-#~ msgstr "نصف-قطر الغشاوة"
-
-#~ msgid "Color"
-#~ msgstr "اللون"
-
-#~ msgid "Offset X"
-#~ msgstr "الإزاحة X"
-
-#~ msgid "Offset Y"
-#~ msgstr "الإزاحة Y"
-
-#~ msgid "Opacity"
-#~ msgstr "مقدار العتمة"
-
-#~ msgid "_Drop Shadow..."
-#~ msgstr "ظل _ساقط..."
-
-#~ msgid "Columns"
-#~ msgstr "الأعمدة"
-
-#~ msgid "Erase every other row or column"
-#~ msgstr "محل الصفوف أو الأعمدة الأخرى"
-
-#~ msgid "Erase/fill"
-#~ msgstr "محو/ملء"
-
-#~ msgid "Even/odd"
-#~ msgstr "زوجي/فردي"
-
-#~ msgid "Fill with BG"
-#~ msgstr "املأ بالخلفية"
-
-#~ msgid "Odd"
-#~ msgstr "فردي"
-
-#~ msgid "Rows/cols"
-#~ msgstr "صفوف/أعمدة"
-
-#~ msgid "_Erase Every Other Row..."
-#~ msgstr "_محو كل الصفوف الأخرى..."
-
 #~ msgid "Create an image filled with a Land Pattern"
 #~ msgstr "أنشئ صورة مملوءة بنموذج الأرض"
 
@@ -1060,37 +2072,6 @@ msgstr "IIR"
 #~ msgid "_Flatland..."
 #~ msgstr "أرض مس_طحة..."
 
-#~ msgid "Active colors"
-#~ msgstr "الألوان النشطة"
-
-#~ msgid ""
-#~ "Create an image filled with previews of fonts matching a fontname filter"
-#~ msgstr "أنشئ صورة مملوءة بعروض مسبقة لخطوط وفقًا لمصفي أسماء الخطوط"
-
-#~ msgid "Font _size (pixels)"
-#~ msgstr "حجم ال_خط (بالبكسل)"
-
-#~ msgid "Render _Font Map..."
-#~ msgstr "تصيير خريطة الخط_وط..."
-
-#~ msgid "Use font _name as text"
-#~ msgstr "استخدم اسم الخط كن_ص"
-
-#~ msgid "_Border (pixels)"
-#~ msgstr "ال_حدود (بالبكسل)"
-
-#~ msgid "_Color scheme"
-#~ msgstr "مخطط ال_لون"
-
-#~ msgid "_Filter (regexp)"
-#~ msgstr "فلتر )regexp)"
-
-#~ msgid "_Labels"
-#~ msgstr "مل_صقات"
-
-#~ msgid "_Text"
-#~ msgstr "_نص"
-
 #~ msgid ""
 #~ "Add a frost effect to the selected region (or alpha) with an added drop "
 #~ "shadow"
@@ -1101,69 +2082,6 @@ msgstr "IIR"
 
 #~ msgid "_Frosty..."
 #~ msgstr "_جليدي..."
-
-#~ msgid "Add a jagged, fuzzy border to an image"
-#~ msgstr "إضافة حدودًا محزوزة مبهمة إلى صورة"
-
-#~ msgid "Add shadow"
-#~ msgstr "أضف ظلًا"
-
-#~ msgid "Blur border"
-#~ msgstr "حدود الغشاوة"
-
-#~ msgid "Border size"
-#~ msgstr "حجم الحدود"
-
-#~ msgid "Granularity (1 is Low)"
-#~ msgstr "الحبيبيات (1 هو نسبة قليلة)"
-
-#~ msgid "Shadow weight (%)"
-#~ msgstr "وزن الظل (%)"
-
-#~ msgid "_Fuzzy Border..."
-#~ msgstr "ال_ظل المبهم..."
-
-#~ msgid "Bookmark to the GIMP web site"
-#~ msgstr "وضع علامة مرجعية على موقع وب GIMP"
-
-#~ msgid "Bookmark to the user manual"
-#~ msgstr "وضع علامة مرجعية على دليل المستخدم"
-
-#~ msgid "Create and Use _Selections"
-#~ msgstr "إنشاء واستخدام التح_ديدات"
-
-#~ msgid "Create, Open and Save _Files"
-#~ msgstr "إنشاء، فتح، وحفظ الملفات"
-
-#~ msgid "Drawing _Simple Objects"
-#~ msgstr "رسم أش_كال بسيطة"
-
-#~ msgid "How to Use _Dialogs"
-#~ msgstr "كيفية استخدام الجدا_ول"
-
-#~ msgid "Plug-in _Registry"
-#~ msgstr "س_جل الملحقات"
-
-#~ msgid "Using _Paths"
-#~ msgstr "استخدا_م المسارات"
-
-#~ msgid "_Basic Concepts"
-#~ msgstr "مفا_هيم أساسية"
-
-#~ msgid "_Developer Web Site"
-#~ msgstr "موقع وب الت_طوير"
-
-#~ msgid "_Main Web Site"
-#~ msgstr "موقع الوب الر_ئيسي"
-
-#~ msgid "_Preparing your Images for the Web"
-#~ msgstr "تحضي_ر صورك للوب"
-
-#~ msgid "_User Manual Web Site"
-#~ msgstr "موقع وب دليل المست_خدم"
-
-#~ msgid "_Working with Digital Camera Photos"
-#~ msgstr "ال_عمل مع صور الكاميرا الرقمية"
 
 #~ msgid ""
 #~ "Add gradients, patterns, shadows, and bump maps to the selected region "
@@ -1194,9 +2112,6 @@ msgstr "IIR"
 
 #~ msgid "Pattern (text)"
 #~ msgstr "نموذج (نص)"
-
-#~ msgid "Shadow"
-#~ msgstr "ظل"
 
 #~ msgid "Text gradient reverse"
 #~ msgstr "عكس تدرج ألوان النص"
@@ -1234,61 +2149,6 @@ msgstr "IIR"
 #~ msgid "Gradient Beve_l..."
 #~ msgstr "انحرا_ف التدرج..."
 
-#~ msgid "Create an image filled with an example of the current gradient"
-#~ msgstr "أنشئ صورة مملوءة بمثال عن التدرج الحالي"
-
-#~ msgid "Custom _Gradient..."
-#~ msgstr "تدرج مخ_صص..."
-
-#~ msgid ""
-#~ "Draw a grid as specified by the lists of X and Y locations using the "
-#~ "current brush"
-#~ msgstr ""
-#~ "رسم شبكة كما هو محد من قبل لائحات مواقع X و Y باستخدام الفرشاة الحالية"
-
-#~ msgid "X divisions"
-#~ msgstr "X تقسيمًا"
-
-#~ msgid "Y divisions"
-#~ msgstr "Y تقسيمًا"
-
-#~ msgid "_Grid..."
-#~ msgstr "_شبكة..."
-
-#~ msgid "New Guides from _Selection"
-#~ msgstr "أدلة جديدة من الا_ختيار"
-
-#~ msgid ""
-#~ "Add a guide at the position specified as a percentage of the image size"
-#~ msgstr "إضافة دليل عند الموقع المحدد كنسبة مئوية لحجم الصورة"
-
-#~ msgid "Direction"
-#~ msgstr "الاتجاه"
-
-#~ msgid "New Guide (by _Percent)..."
-#~ msgstr "دليل جديد (بالنسبة الم_ئوية)..."
-
-#~ msgid "Position (in %)"
-#~ msgstr "الموقع (%)"
-
-#~ msgid "Vertical"
-#~ msgstr "عامودي"
-
-#~ msgid "Add a guide at the orientation and position specified (in pixels)"
-#~ msgstr "إضافة دليل عند الاتجاه والموقع المحددين (بالبكسل)"
-
-#~ msgid "New _Guide..."
-#~ msgstr "دليل _جديد..."
-
-#~ msgid "Position"
-#~ msgstr "الموقع"
-
-#~ msgid "Remove all horizontal and vertical guides"
-#~ msgstr "إزالة جميع الأدلة الأفقية والعمودية"
-
-#~ msgid "_Remove all Guides"
-#~ msgstr "إ_زالة كل الأدلة"
-
 #~ msgid "Create a logo in a two-color, scribbled text style"
 #~ msgstr "أنشئ شعارًا من خلال نمط نص مخربش ذي لونين"
 
@@ -1313,76 +2173,6 @@ msgstr "IIR"
 #~ msgid "_Land..."
 #~ msgstr "أر_ض..."
 
-#~ msgid "Fill the current selection with lava"
-#~ msgstr "ملء المساحة المحددة بالحمم"
-
-#~ msgid "Roughness"
-#~ msgstr "الخشونة"
-
-#~ msgid "Seed"
-#~ msgstr "البذرة"
-
-#~ msgid "Use current gradient"
-#~ msgstr "استخدم التدرج الحالي"
-
-#~ msgid "_Lava..."
-#~ msgstr "ال_حمم..."
-
-#~ msgid ""
-#~ "Fill a layer with rays emanating outward from its center using the FG "
-#~ "color"
-#~ msgstr ""
-#~ "ملء الطبقة بالأشعة المنبعثة من المركز إلى الخارج باستخدام لون الطبقة "
-#~ "الأمامية"
-
-#~ msgid "Line _Nova..."
-#~ msgstr "خطوط نو_فا..."
-
-#~ msgid "Number of lines"
-#~ msgstr "عدد الخطوط"
-
-#~ msgid "Offset radius"
-#~ msgstr "نصف-قطر الإزاحة"
-
-#~ msgid "Randomness"
-#~ msgstr "العشوائية"
-
-#~ msgid "Sharpness (degrees)"
-#~ msgstr "الحدة (بالدرجات)"
-
-#~ msgid "Create a rectangular brush"
-#~ msgstr "أنشئ فرشاة مستطيلة"
-
-#~ msgid "Create a rectangular brush with feathered edges"
-#~ msgstr "إنشء فرشاة مستطيلة ذات حواف حادة"
-
-#~ msgid "Create an elliptical brush"
-#~ msgstr "أنشئ فرشاة بيضاوية"
-
-#~ msgid "Create an elliptical brush with feathered edges"
-#~ msgstr "إنشاء فرشاة بيضاوية ذات حواف حادة"
-
-#~ msgid "Elli_ptical, Feathered..."
-#~ msgstr "بيضا_وية، حادة الحواف..."
-
-#~ msgid "Feathering"
-#~ msgstr "حواف حادة"
-
-#~ msgid "Name"
-#~ msgstr "الاسم"
-
-#~ msgid "Re_ctangular, Feathered..."
-#~ msgstr "مستطي_لة، حادة الحواف..."
-
-#~ msgid "Spacing"
-#~ msgstr "التباعد"
-
-#~ msgid "_Elliptical..."
-#~ msgstr "_بيضاوية..."
-
-#~ msgid "_Rectangular..."
-#~ msgstr "مستط_يلة..."
-
 #~ msgid "Convert the selected region (or alpha) into a neon-sign like object"
 #~ msgstr "تحويل المنطقة المحددة (أو ألفا) إلى إشارة نيون كشكل"
 
@@ -1406,78 +2196,6 @@ msgstr "IIR"
 
 #~ msgid "Newsprint Te_xt..."
 #~ msgstr "نص مطبو_ع..."
-
-#~ msgid "Defocus"
-#~ msgstr "أزل التركيز"
-
-#~ msgid "Make an image look like an old photo"
-#~ msgstr "جعل صورة تظهر كصورة قديمة"
-
-#~ msgid "Mottle"
-#~ msgstr "بقع"
-
-#~ msgid "Sepia"
-#~ msgstr "نقط بنية"
-
-#~ msgid "_Old Photo..."
-#~ msgstr "صورة _قديمة..."
-
-#~ msgid "Brush name"
-#~ msgstr "اسم الفرشاة"
-
-#~ msgid "File name"
-#~ msgstr "اسم الملف"
-
-#~ msgid "New _Brush..."
-#~ msgstr "_فرشاة جديدة..."
-
-#~ msgid "Paste the clipboard contents into a new brush"
-#~ msgstr "لصق محتويات الحافظة في فرشاة جديدة"
-
-#~ msgid "There is no image data in the clipboard to paste."
-#~ msgstr "لا توجد صورة في الحافظة للصق."
-
-#~ msgid "New _Pattern..."
-#~ msgstr "نمو_ذج جديد..."
-
-#~ msgid "Paste the clipboard contents into a new pattern"
-#~ msgstr "ألصق محتويات الحافظة في نموذج جديد"
-
-#~ msgid "Pattern name"
-#~ msgstr "اسم النموذج"
-
-#~ msgid "Add a perspective shadow to the selected region (or alpha)"
-#~ msgstr "إضافة ظل هندسي إلى المنطقة المحددة (أو ألفا)"
-
-#~ msgid "Angle"
-#~ msgstr "زاوية"
-
-#~ msgid "Interpolation"
-#~ msgstr "توليد"
-
-#~ msgid "Relative distance of horizon"
-#~ msgstr "البعد النسبي للأفق"
-
-#~ msgid "Relative length of shadow"
-#~ msgstr "الطول النسبي للظل"
-
-#~ msgid "_Perspective..."
-#~ msgstr "_هندسة المنظور..."
-
-#~ msgid "Add a 'Predator' effect to the selected region (or alpha)"
-#~ msgstr "إضافة تأثير ضاري إلى المنطقة المحددة (أو ألفا)"
-
-#~ msgid "Edge amount"
-#~ msgstr "مقدار الحافة"
-
-#~ msgid "Pixel amount"
-#~ msgstr "كمية البكسل"
-
-#~ msgid "Pixelize"
-#~ msgstr "بكسلة"
-
-#~ msgid "_Predator..."
-#~ msgstr "_ضاري..."
 
 #~ msgid "Create images, each containing an oval button graphic"
 #~ msgstr "أنشئ صورًا، تحتوي كل منها على رسم زر بيضاوي"
@@ -1527,103 +2245,6 @@ msgstr "IIR"
 #~ msgid "Render _Map..."
 #~ msgstr "خري_طة التصيير..."
 
-#~ msgid "Reverse Layer Order"
-#~ msgstr "عكس ترتيب الطبقات"
-
-#~ msgid "Reverse the order of layers in the image"
-#~ msgstr "عكس ترتيب الطبقات في الصورة"
-
-#~ msgid "Black"
-#~ msgstr "أسود"
-
-#~ msgid ""
-#~ "Create a multi-layer image by adding a ripple effect to the current image"
-#~ msgstr "أنشئ صورة متعددة الطبقات بإضافة تأثير متموج إلى الصورة الحالية"
-
-#~ msgid "Edge behavior"
-#~ msgstr "مظهر الحافة"
-
-#~ msgid "Number of frames"
-#~ msgstr "عدد الإطارات"
-
-#~ msgid "Rippling strength"
-#~ msgstr "شدة التموج"
-
-#~ msgid "Smear"
-#~ msgstr "طلاء"
-
-#~ msgid "_Rippling..."
-#~ msgstr "تمو_ج..."
-
-#~ msgid "Add background"
-#~ msgstr "إضافة خلفية"
-
-#~ msgid "Add drop-shadow"
-#~ msgstr "إضافة ظل ساقط"
-
-#~ msgid "Edge radius"
-#~ msgstr "نصف-قطر الحافة"
-
-#~ msgid ""
-#~ "Round the corners of an image and optionally add a drop-shadow and "
-#~ "background"
-#~ msgstr "تدوير زوايا صورة وإضافة ظل ساقط وخلفية بشكل اختياري"
-
-#~ msgid "_Round Corners..."
-#~ msgstr "زوايا _دائرية..."
-
-#~ msgid ""
-#~ "Change the colormap of an image to the colors in a specified palette."
-#~ msgstr "غير خارطة الألوان للصورة للألوان المحددة في اللوحة."
-
-#~ msgid "Palette"
-#~ msgstr "لوحة ألوان"
-
-#~ msgid "Se_t Colormap..."
-#~ msgstr "_حدد خارطة الألوان"
-
-#~ msgid "Convert a selection to a brush"
-#~ msgstr "تحويل المحدد إلى الفرشاة"
-
-#~ msgid "To _Brush..."
-#~ msgstr "إلى ال_فرشاة..."
-
-#~ msgid "Convert a selection to an image"
-#~ msgstr "تحويل المحدد إلى صورة"
-
-#~ msgid "To _Image"
-#~ msgstr "إلى ال_صورة..."
-
-#~ msgid "Convert a selection to a pattern"
-#~ msgstr "تحويل المحدد إلى نموذج"
-
-#~ msgid "To _Pattern..."
-#~ msgstr "إلى النمو_ذج..."
-
-#~ msgid "Concave"
-#~ msgstr "مقعر"
-
-#~ msgid "Radius (%)"
-#~ msgstr "نصف-القطر (%)"
-
-#~ msgid "Round the corners of the current selection"
-#~ msgstr "تدوير زوايا التحديد الحالي"
-
-#~ msgid "Rounded R_ectangle..."
-#~ msgstr "م_ستطيل مُدوّر..."
-
-#~ msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-#~ msgstr "إضافة شريط مصور كإطار، مع ثقوب مسلسلة وملصقات، إلى صورة"
-
-#~ msgid "Font color"
-#~ msgstr "لون الخط"
-
-#~ msgid "Number"
-#~ msgstr "العدد"
-
-#~ msgid "_Slide..."
-#~ msgstr "_شريحة..."
-
 #~ msgid "Create a State Of The Art chromed logo"
 #~ msgstr "أنشئ شعار 'حالة الفن' كرومي"
 
@@ -1635,101 +2256,6 @@ msgstr "IIR"
 
 #~ msgid "Speed Text..."
 #~ msgstr "نص سريع..."
-
-#~ msgid ""
-#~ "Create an animation by mapping the current image onto a spinning sphere"
-#~ msgstr "أنشئ رسومًا متحركة من خلال تحويل الصورة الحالية إلى كرة دائرية"
-
-#~ msgid "Frames"
-#~ msgstr "الإطارات"
-
-#~ msgid "Index to n colors (0 = remain RGB)"
-#~ msgstr "فهرس n لونًا (0 = البقاء كـ RGB)"
-
-#~ msgid "Turn from left to right"
-#~ msgstr "اقلب من اليسار إلى اليمين"
-
-#~ msgid "_Spinning Globe..."
-#~ msgstr "كر_ة دائرية..."
-
-#~ msgid ""
-#~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-#~ msgstr "إضافة انحناءات لولبية، حلقية، وشبكية إلى الطبقة الحالية"
-
-#~ msgid "Airbrush"
-#~ msgstr "فرشاة هوائية"
-
-#~ msgid "Brush"
-#~ msgstr "فرشاة"
-
-#~ msgid "Color method"
-#~ msgstr "طريقة الألوان"
-
-#~ msgid "Epitrochoid"
-#~ msgstr "حلقية"
-
-#~ msgid "Gradient: Loop Sawtooth"
-#~ msgstr "التدرج: تكرار أسنان منشورة"
-
-#~ msgid "Gradient: Loop Triangle"
-#~ msgstr "التدرج: تكرار مثلثي"
-
-#~ msgid "Hexagon"
-#~ msgstr "مسدس"
-
-#~ msgid "Hole ratio"
-#~ msgstr "نسبة الحفرة"
-
-#~ msgid "Inner teeth"
-#~ msgstr "الأسنان الداخلية"
-
-#~ msgid "Lissajous"
-#~ msgstr "شبكية"
-
-#~ msgid "Margin (pixels)"
-#~ msgstr "الهامش (بالبكسل)"
-
-#~ msgid "Outer teeth"
-#~ msgstr "الأسنان الخارجية"
-
-#~ msgid "Pentagon"
-#~ msgstr "مخمس"
-
-#~ msgid "Polygon: 10 sides"
-#~ msgstr "مضلع: 10 أضلع"
-
-#~ msgid "Polygon: 7 sides"
-#~ msgstr "مضلع: 7 أضلع"
-
-#~ msgid "Polygon: 8 sides"
-#~ msgstr "مضلع: 8 أضلع"
-
-#~ msgid "Polygon: 9 sides"
-#~ msgstr "مضلع: 9 أضلع"
-
-#~ msgid "Rendering Spyro"
-#~ msgstr "تصيير التكرار الرسومي"
-
-#~ msgid "Shape"
-#~ msgstr "الشكل"
-
-#~ msgid "Square"
-#~ msgstr "مربع"
-
-#~ msgid "Start angle"
-#~ msgstr "زاوية البداية"
-
-#~ msgid "Tool"
-#~ msgstr "الأداة"
-
-#~ msgid "Triangle"
-#~ msgstr "مثلث"
-
-#~ msgid "Type"
-#~ msgstr "النوع"
-
-#~ msgid "_Spyrogimp..."
-#~ msgstr "_جيمب اللولبي..."
 
 #~ msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
 #~ msgstr "أنشئ شعارًا باستخدام نقش صخري، توهج نوفا، وظل"
@@ -1827,24 +2353,6 @@ msgstr "IIR"
 #~ msgid "_Textured..."
 #~ msgstr "من_قوش..."
 
-#~ msgid "Blur horizontally"
-#~ msgstr "غشاوة أفقية"
-
-#~ msgid "Blur the edges of an image so the result tiles seamlessly"
-#~ msgstr "إضافة غشاوة على أطراف صورة ليتم تبليط الناتج بدون درز الحواف"
-
-#~ msgid "Blur type"
-#~ msgstr "نوع الغشاوة"
-
-#~ msgid "Blur vertically"
-#~ msgstr "غشاوة عامودية"
-
-#~ msgid "RLE"
-#~ msgstr "RLE"
-
-#~ msgid "_Tileable Blur..."
-#~ msgstr "_غشاوة تبليطية..."
-
 #~ msgid "Create a decorative web title header"
 #~ msgstr "أنشئ ترويسة عنوان وب مزخرفة"
 
@@ -1859,92 +2367,6 @@ msgstr "IIR"
 
 #~ msgid "T_ruchet..."
 #~ msgstr "T_ruchet..."
-
-#~ msgid "Mask opacity"
-#~ msgstr "عتمة القناع"
-
-#~ msgid "Mask size"
-#~ msgstr "حجم القناع"
-
-#~ msgid "Amplitude"
-#~ msgstr "الارتفاع"
-
-#~ msgid ""
-#~ "Create a multi-layer image with an effect like a stone was thrown into "
-#~ "the current image"
-#~ msgstr "أنشئ صورة متعددة الطبقات مع تاُثير يشبه رمي حجر داخل الصورة الحالية"
-
-#~ msgid "Invert direction"
-#~ msgstr "اتجاه القلب"
-
-#~ msgid "Wavelength"
-#~ msgstr "طول الموجة"
-
-#~ msgid "_Waves..."
-#~ msgstr "أ_مواج..."
-
-#~ msgid ""
-#~ "Create a new layer filled with a weave effect to be used as an overlay or "
-#~ "bump map"
-#~ msgstr ""
-#~ "أنشئ طبقة جديدة مملوءة بتأثير النسيج لاستخدامها كغطاء أو خريطة نتوءات"
-
-#~ msgid "Ribbon spacing"
-#~ msgstr "تباعد الغرزات"
-
-#~ msgid "Ribbon width"
-#~ msgstr "عرض الغرزات"
-
-#~ msgid "Shadow darkness"
-#~ msgstr "إظلام الظل"
-
-#~ msgid "Shadow depth"
-#~ msgstr "عمق الظل"
-
-#~ msgid "Thread density"
-#~ msgstr "كثافة الخيط"
-
-#~ msgid "Thread intensity"
-#~ msgstr "شدة الخيط"
-
-#~ msgid "Thread length"
-#~ msgstr "طول الخيط"
-
-#~ msgid "_Weave..."
-#~ msgstr "ن_سيج..."
-
-#~ msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-#~ msgstr "إضافة تأثير شفاف خفي ثلاثي الأبعاد إلى المنطقة المحددة (أو ألفا)"
-
-#~ msgid "Drop shadow X offset"
-#~ msgstr "إزاحة X للظل الساقط"
-
-#~ msgid "Drop shadow Y offset"
-#~ msgstr "إزاحة Y للظل الساقط"
-
-#~ msgid "Drop shadow blur radius"
-#~ msgstr "نصف-قطر غشاوة الظل الساقط"
-
-#~ msgid "Drop shadow color"
-#~ msgstr "لون الظل الساقط"
-
-#~ msgid "Drop shadow opacity"
-#~ msgstr "إعتام الظل الساقط"
-
-#~ msgid "Highlight X offset"
-#~ msgstr "إزاحة X للتمييز اللوني"
-
-#~ msgid "Highlight Y offset"
-#~ msgstr "إزاحة Y للتمييز اللوني"
-
-#~ msgid "Highlight color"
-#~ msgstr "لون التحديد"
-
-#~ msgid "Highlight opacity"
-#~ msgstr "إعتام التمييز اللوني"
-
-#~ msgid "_Xach-Effect..."
-#~ msgstr "تأثير-_Xach..."
 
 #~ msgid "Autocrop"
 #~ msgstr "اقتطاع تلقائي"

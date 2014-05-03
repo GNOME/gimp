@@ -5,2501 +5,2710 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2001-09-23 20:12-0400\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-03 22:00+1200\n"
 "PO-Revision-Date: 2001-12-21 17:40GMT+0200\n"
 "Last-Translator: Vasif İsmayıloğlu MD <azerb_linux@hotmail.com>\n"
 "Language-Team: Azerbaijani Turkic <linuxaz@azerimail.net>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 0.9.5\n"
 
-#: plug-ins/script-fu/script-fu-console.c:156
-#, fuzzy
-msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "Skript mod"
+#: ../plug-ins/script-fu/script-fu.c:111
+msgid "Interactive console for Script-Fu development"
+msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:186
+#: ../plug-ins/script-fu/script-fu.c:117
+msgid "_Console"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:141
+msgid "Server for remote Script-Fu operation"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:151
+msgid "_Start Server..."
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:307
+msgid "_GIMP Online"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:308
+msgid "_User Manual"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:311
+#, fuzzy
+msgid "_Script-Fu"
+msgstr "/Script-Fu/"
+
+#: ../plug-ins/script-fu/script-fu.c:313
+msgid "_Test"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:316
+msgid "_Buttons"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:318
+msgid "_Logos"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:320
+#, fuzzy
+msgid "_Patterns"
+msgstr "Naxış"
+
+#: ../plug-ins/script-fu/script-fu.c:323
+msgid "_Web Page Themes"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:325
+msgid "_Alien Glow"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:327
+#, fuzzy
+msgid "_Beveled Pattern"
+msgstr "Mətn"
+
+#: ../plug-ins/script-fu/script-fu.c:329
+msgid "_Classic.Gimp.Org"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:332
+msgid "Alpha to _Logo"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:335
+#, fuzzy
+msgid "Re-read all available Script-Fu scripts"
+msgstr "Bütün mövcud skriptləri oxu"
+
+#: ../plug-ins/script-fu/script-fu.c:340
+msgid "_Refresh Scripts"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:363
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
 msgid "Script-Fu Console"
 msgstr "Script-Fu Konsolu"
 
-#. Action area
-#: plug-ins/script-fu/script-fu-console.c:199
-#: plug-ins/script-fu/script-fu-scripts.c:2033
-msgid "Close"
-msgstr "Qapat"
+#: ../plug-ins/script-fu/script-fu-console.c:193
+msgid "Welcome to TinyScheme"
+msgstr ""
 
-#. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:207
-msgid "SIOD Output"
-msgstr "SIOD Yekunu"
+#: ../plug-ins/script-fu/script-fu-console.c:199
+msgid "Interactive Scheme Development"
+msgstr ""
 
-#. The current command
-#: plug-ins/script-fu/script-fu-console.c:286
-msgid "Current Command"
-msgstr "Hazırkı Əmr"
-
-#: plug-ins/script-fu/script-fu-console.c:307
-msgid "Browse..."
+#: ../plug-ins/script-fu/script-fu-console.c:235
+#, fuzzy
+msgid "_Browse..."
 msgstr "Gəz..."
 
-#: plug-ins/script-fu/script-fu-console.c:579
+#: ../plug-ins/script-fu/script-fu-console.c:293
 #, fuzzy
-msgid "Unable to open SIOD output pipe"
-msgstr "a(ə) aç"
+msgid "Save Script-Fu Console Output"
+msgstr "Script-Fu Konsolu"
 
-#: plug-ins/script-fu/script-fu-console.c:583
-#, fuzzy
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "a(ə) aç a ..da"
+#: ../plug-ins/script-fu/script-fu-console.c:340
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr ""
 
-#: plug-ins/script-fu/script-fu-console.c:628
+#: ../plug-ins/script-fu/script-fu-console.c:369
 #, fuzzy
-msgid "Script-Fu evaluate mode allows only noninteractive invocation"
+msgid "Script-Fu Procedure Browser"
+msgstr "Skript-Fu Verici Seçənəkləri"
+
+#: ../plug-ins/script-fu/script-fu-eval.c:60
+#, fuzzy
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Skript mod"
 
-#. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1206
-#: plug-ins/script-fu/script-fu-scripts.c:1209
-msgid "/Script-Fu/"
-msgstr "/Script-Fu/"
+#: ../plug-ins/script-fu/script-fu-interface.c:198
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1208
-#: plug-ins/script-fu/script-fu-scripts.c:1211
+#: ../plug-ins/script-fu/script-fu-interface.c:200
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu-interface.c:226
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1234
-msgid "Script Arguments"
-msgstr "Skript Arqumentləri"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1257
+#. we add a colon after the label;
+#. *  some languages want an extra space here
+#.
+#: ../plug-ins/script-fu/script-fu-interface.c:290
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1304
+#: ../plug-ins/script-fu/script-fu-interface.c:337
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu Rəng Seçkisi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1374
+#: ../plug-ins/script-fu/script-fu-interface.c:446
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu Fayl Seçkisi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1406
-msgid "Script-fu Pattern Selection"
-msgstr "Script-fu Naxış Seçkisi"
+#: ../plug-ins/script-fu/script-fu-interface.c:449
+#, fuzzy
+msgid "Script-Fu Folder Selection"
+msgstr "Script-Fu Fayl Seçkisi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1413
-msgid "Script-Fu Gradient Selection"
-msgstr "Script-Fu Qradiyent Seçkisi"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1421
-msgid "Script-Fu Brush Selection"
-msgstr "Script-Fu Fırça Seçkisi"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1467
-msgid "Reset to Defaults"
-msgstr "Əsaslara Keç"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1493
-msgid "About"
-msgstr "Haqqında"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1507
-#: plug-ins/script-fu/script-fu-server.c:544
-msgid "OK"
-msgstr "Oldu"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1516
-#: plug-ins/script-fu/script-fu-server.c:546
-msgid "Cancel"
-msgstr "Ləğv Et"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1682
-msgid "NOT SET"
-msgstr "SEÇİLİ DEYİL"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1711
-msgid ""
-"At least one font you've chosen is invalid.\n"
-"Please check your settings.\n"
-msgstr ""
-"Seçdiklərinizdən ən az biri hökmsüzdür.\n"
-"Lütfən, qurğularınızı yoxlayın.\n"
-
-#: plug-ins/script-fu/script-fu-scripts.c:2004
-msgid "Author:"
-msgstr "Müəllif:"
-
-#: plug-ins/script-fu/script-fu-scripts.c:2010
-msgid "Copyright:"
-msgstr "Təlif haqqı:"
-
-#: plug-ins/script-fu/script-fu-scripts.c:2016
-msgid "Date:"
-msgstr "Tarix:"
-
-#: plug-ins/script-fu/script-fu-scripts.c:2024
-msgid "Image Types:"
-msgstr "Rəsm Növləri:"
-
-#: plug-ins/script-fu/script-fu-scripts.c:2189
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Font Selection"
 msgstr "Skript Yazı Növü Seçkisi"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2256
-#, c-format
-msgid ""
-"Script-Fu Error while executing\n"
-" %s\n"
-"%s"
+#: ../plug-ins/script-fu/script-fu-interface.c:470
+#, fuzzy
+msgid "Script-Fu Palette Selection"
+msgstr "Script-fu Naxış Seçkisi"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:479
+#, fuzzy
+msgid "Script-Fu Pattern Selection"
+msgstr "Script-fu Naxış Seçkisi"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:488
+msgid "Script-Fu Gradient Selection"
+msgstr "Script-Fu Qradiyent Seçkisi"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:497
+msgid "Script-Fu Brush Selection"
+msgstr "Script-Fu Fırça Seçkisi"
+
+#: ../plug-ins/script-fu/script-fu-interface.c:840
+#, fuzzy, c-format
+msgid "Error while executing %s:"
 msgstr ""
 "İcra sırasında Script-Fu xətası\n"
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:539
+#: ../plug-ins/script-fu/script-fu-scripts.c:146
+msgid "Too few arguments to 'script-fu-register' call"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu-scripts.c:605
+#, c-format
+msgid "Error while loading %s:"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu-server.c:827
 msgid "Script-Fu Server Options"
 msgstr "Skript-Fu Verici Seçənəkləri"
 
-#: plug-ins/script-fu/script-fu-server.c:566
-msgid "Server Port:"
+#: ../plug-ins/script-fu/script-fu-server.c:832
+#, fuzzy
+msgid "_Start Server"
+msgstr "Başla"
+
+#: ../plug-ins/script-fu/script-fu-server.c:865
+msgid "Listen on IP:"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu-server.c:872
+#, fuzzy
+msgid "Server port:"
 msgstr "Verici Qapısı:"
 
-#: plug-ins/script-fu/script-fu-server.c:572
-msgid "Server Logfile:"
+#: ../plug-ins/script-fu/script-fu-server.c:878
+#, fuzzy
+msgid "Server logfile:"
 msgstr "Verici Qeyd Faylı:"
 
-#: plug-ins/script-fu/script-fu.c:165
-msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Konsol..."
-
-#: plug-ins/script-fu/script-fu.c:178
-msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Verici..."
-
-#: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
-msgid "Re-read all available scripts"
-msgstr "Bütün mövcud skriptləri oxu"
-
-#: plug-ins/script-fu/script-fu.c:1110
-msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-msgstr "<Toolbox>/Xtns/Script-Fu/Yenilə"
-
-#: plug-ins/script-fu/scripts/copy-visible.scm:0
-msgid "<Image>/Edit/Copy Visible"
-msgstr "<Image>/Düzəlt/Görünəni Köçür"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "<Image>/Filters/Blur/Tileable Blur..."
-msgstr "<Image>/Süzgəclər/Duman/Döşənən Duman..."
-
-#: plug-ins/script-fu/scripts/clothify.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Clothify..."
-msgstr "<Image>/Skript-Fu/Əlkimya/Ört..."
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
-msgstr "<Image>/Skript-Fu/Əlkimya/Hər başqa sətiri poz..."
-
-#: plug-ins/script-fu/scripts/predator.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Predator..."
-msgstr "<Image>/Skript-Fu/Əlkimya/Predator..."
-
-#: plug-ins/script-fu/scripts/unsharp-mask.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
-msgstr "<Image>/Skript-Fu/Əlkimya/Maskanı Küntləşdir..."
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Weave..."
-msgstr "<Image>/Skript-Fu/Əlkimya/Toxuma..."
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/3D Xarici Görünüşü..."
-
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Alien Qızarması..."
-
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Alien Neonu..."
-
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Beyzik I..."
-
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Beyzik II..."
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Qarışıq..."
-
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Durğunlaşdırma.."
-
-#: plug-ins/script-fu/scripts/chalk.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Təbaşir..."
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Yonqala..."
-
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Xrom..."
-
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Məzəli Kitab..."
-
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Xoş Metal..."
-
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Donma..."
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Parlaq..."
-
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Əhatə Edən İsti..."
-
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Qradiyent Bevel..."
-
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Neon..."
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Parçalar İzi..."
-
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Ulduz Tozu..."
-
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Ulduz İzi..."
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
-msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Teksturalı..."
-
-#: plug-ins/script-fu/scripts/blend-anim.scm:0
-msgid "<Image>/Script-Fu/Animators/Blend..."
-msgstr "<Image>/Skript-Fu/Animatorlar/Qarışdır..."
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm:0
-msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr "<Image>/Skript-Fu/Animatorlar/Yarma..."
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-msgstr "<Image>/Skript-Fu/Animatorlar/Canlı Şəkildə Seçki..."
-
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
-msgstr "<Image>/Skript-Fu/Animatorlar/Fırlanan Kürə..."
-
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-msgid "<Image>/Script-Fu/Animators/Waves..."
-msgstr "<Image>/Skript-Fu/Animatorlar/Dalğalar.."
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:0
-msgid "<Image>/Script-Fu/Decor/Add Bevel..."
-msgstr "<Image>/Skript-Fu/Bəzək/Əyim Əlavə Et..."
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-msgid "<Image>/Script-Fu/Decor/Add Border..."
-msgstr "<Image>/Skript-Fu/Bəzək/Kənar Əlavə Et..."
-
-#: plug-ins/script-fu/scripts/coffee.scm:0
-msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
-msgstr "<Image>/Skript-Fu/Bəzək/Qəhvə Ləkəsi..."
-
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
-msgstr "<Image>/Skript-Fu/Bəzək/Kirli Kənar..."
-
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-msgid "<Image>/Script-Fu/Decor/Old Photo..."
-msgstr "<Image>/Skript-Fu/Bəzək/Köhnə Fotoqrafiya..."
-
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-msgid "<Image>/Script-Fu/Decor/Round Corners..."
-msgstr "<Image>/Skript-Fu/Bəzək/Yuvarlaq Bucaqlar.."
-
-#: plug-ins/script-fu/scripts/slide.scm:0
-msgid "<Image>/Script-Fu/Decor/Slide..."
-msgstr "<Image>/Skript-Fu/Bəzək/Dilim..."
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-msgid "<Image>/Script-Fu/Render/Circuit..."
-msgstr "<Image>/Skript-Fu/Render/Dairə..."
-
-#: plug-ins/script-fu/scripts/lava.scm:0
-msgid "<Image>/Script-Fu/Render/Lava..."
-msgstr "<Image>/Skript-Fu/Render/Lava..."
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-msgid "<Image>/Script-Fu/Render/Line Nova..."
-msgstr "<Image>/Skript-Fu/Render/Layn Nova..."
-
-#: plug-ins/script-fu/scripts/grid-system.scm:0
-msgid "<Image>/Script-Fu/Render/Make Grid System..."
-msgstr "<Image>/Skript-Fu/Render/Tor Sistemi Yarat..."
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-msgid "<Image>/Script-Fu/Selection/Distress Selection..."
-msgstr "<Image>/Skript-Fu/Seçki/Seçkini Basqıla..."
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-msgid "<Image>/Script-Fu/Selection/Fade Outline..."
-msgstr "<Image>/Skript-Fu/Seçki/Xaricini Solğunlaşdır..."
-
-#: plug-ins/script-fu/scripts/selection-round.scm:0
-msgid "<Image>/Script-Fu/Selection/Round..."
-msgstr "<Image>/Skript-Fu/Seçki/Yuvarlat..."
-
-#: plug-ins/script-fu/scripts/select_to_brush.scm:0
-msgid "<Image>/Script-Fu/Selection/To Brush..."
-msgstr "<Image>/Skript-Fu/Seçki/Fırçaya..."
-
-#: plug-ins/script-fu/scripts/select_to_image.scm:0
-msgid "<Image>/Script-Fu/Selection/To Image"
-msgstr "<Image>/Skript-Fu/Seçki/Şəklə.."
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
-msgstr "<Image>/Skript-Fu/Kölgə/Kölgə Düşür..."
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "<Image>/Script-Fu/Shadow/Perspective..."
-msgstr "<Image>/Skript-Fu/Kölgə/Perspektiv..."
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
-msgstr "<Image>/Skript-Fu/Kölgə/Xach Effekti..."
-
-#: plug-ins/script-fu/scripts/carve-it.scm:0
-msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
-msgstr "<Image>/Skript-Fu/Stensil Əməl/Oy..."
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
-msgstr "<Image>/Skript-Fu/Stensil Əməl/Xromlaşdır..."
-
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
-msgstr "<Image>/Skript-Fu/Ləvazimatlar/ACSII-dən Rəsm Layına..."
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
-msgstr "<Image>/Skript-Fu/Ləvazimatlar/HSV Qrafikası Çək..."
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
-msgstr "<Image>/Skript-Fu/Ləvazimatlar/Rəsm Quruluşunu Göstər..."
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Düymələr/Yuvarlaq Düymə..."
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Düymələr/Sadə Əyilmiş Düymə..."
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Loqolar/3D Kənar..."
-
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
-msgstr "<Toolbox>/Xtns/Skript-Fu/Loqolar/Alien Qızarması..."
-
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Alien Neon..."
-
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Əsas I..."
-
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Əsas II..."
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Qarışıq..."
-
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Bovinasiya..."
-
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Oyulmuş..."
-
-#: plug-ins/script-fu/scripts/chalk.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Təbaşir..."
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Yonqala..."
-
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Xrom..."
-
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Məzəli Kitab..."
-
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Xoş Metal..."
-
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Kristal..."
-
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Donmuş..."
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Parlaq..."
-
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Qızarmış Kömür..."
-
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Qradiyent bevel..."
-
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Imigre-26..."
-
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Neon..."
-
-#: plug-ins/script-fu/scripts/news-text.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Xəbər Mətni..."
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Parçacıq İzi..."
-
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/SOTA Xrom..."
-
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Sürətli Mətn..."
-
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Ulduz Tozu..."
-
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Ulduz Axımı..."
-
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Mətn Dairəsi..."
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Teksturalı..."
-
-#: plug-ins/script-fu/scripts/title-header.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Veb Başlığı..."
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
+#: ../plug-ins/script-fu/script-fu-server.c:890
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
+"allow attackers to remotely execute arbitrary code on this machine."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+msgid "Bumpmap"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:185
+msgid "Add B_evel..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:186
+msgid "Add a beveled border to an image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:193
+msgid "Thickness"
+msgstr "İncəlik"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:194
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#: ../plug-ins/script-fu/scripts/old-photo.scm:104
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/slide.scm:248
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr "<Toolbox> Skript Fırçala."
+msgid "Work on copy"
+msgstr "Nüsxədə İşlə"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:195
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
-msgstr "<Toolbox> Skript Fırçala."
+msgid "Keep bump layer"
+msgstr "Qoru"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
+#: ../plug-ins/script-fu/scripts/addborder.scm:108
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
-msgstr "<Toolbox> Skript Fırçala."
+msgid "Border Layer"
+msgstr "Kənar"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
+#: ../plug-ins/script-fu/scripts/addborder.scm:160
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
-msgstr "<Toolbox> Skript Fırçala."
+msgid "Add _Border..."
+msgstr "Kənar"
 
-#: plug-ins/script-fu/scripts/sphere.scm:0
+#: ../plug-ins/script-fu/scripts/addborder.scm:161
+msgid "Add a border around an image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:168
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr "<Toolbox> Skript Qarışıq Kürə."
+msgid "Border X size"
+msgstr "Kənar X"
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
+#: ../plug-ins/script-fu/scripts/addborder.scm:169
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr "<Toolbox> Skript Patern 3D Truçet."
+msgid "Border Y size"
+msgstr "Kənar Y"
 
-#: plug-ins/script-fu/scripts/camo.scm:0
+#: ../plug-ins/script-fu/scripts/addborder.scm:170
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr "<Toolbox> Skript Patern Kamuflyaj."
+msgid "Border color"
+msgstr "Kənar Rəngi"
 
-#: plug-ins/script-fu/scripts/flatland.scm:0
+#: ../plug-ins/script-fu/scripts/addborder.scm:171
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
-msgstr "<Toolbox> Skript Patern."
+msgid "Delta value on color"
+msgstr "Qiymət ..da"
 
-#: plug-ins/script-fu/scripts/land.scm:0
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr "<Toolbox> Skript Patern."
+msgid "Frame"
+msgstr "Çərçivələr"
 
-#: plug-ins/script-fu/scripts/rendermap.scm:0
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+msgid "Blend Animation needs at least three source layers"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+msgid "_Blend..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr "<Toolbox> Skript Patern Xəritə."
+msgid "Intermediate frames"
+msgstr "Orta Səviyyəli"
 
-#: plug-ins/script-fu/scripts/swirltile.scm:0
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
-msgstr "<Toolbox> Skript Patern Burulğan Kirəmit."
+msgid "Max. blur radius"
+msgstr "ƏnÇox Dumanlı"
 
-#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+msgid "Looped"
+msgstr ""
+
+#. --- false form of "if-1"
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:212
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:219
+msgid "B_urn-In..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:220
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:227
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
-msgstr "<Toolbox> Skript Patern."
+msgid "Glow color"
+msgstr "Qızarmış"
 
-#: plug-ins/script-fu/scripts/trochoid.scm:0
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:228
+msgid "Fadeout"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:229
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr "<Toolbox> Skript Patern."
+msgid "Fadeout width"
+msgstr "Kənar Eni"
 
-#: plug-ins/script-fu/scripts/truchet.scm:0
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:230
+msgid "Corona width"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:231
+msgid "After glow"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+msgid "Add glowing"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+msgid "Prepare for GIF"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+msgid "Speed (pixels/frame)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+msgid "Carved Surface"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:169
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr "<Toolbox> Skript Patern Truçet."
+msgid "Bevel Shadow"
+msgstr "Yarat"
 
-#: plug-ins/script-fu/scripts/asc2img.scm:0
+#: ../plug-ins/script-fu/scripts/carve-it.scm:170
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr "<Toolbox> Skript ASCII a(ə) Rəsm."
+msgid "Bevel Highlight"
+msgstr "İşarətlə"
 
-#: plug-ins/script-fu/scripts/gradient-example.scm:0
+#: ../plug-ins/script-fu/scripts/carve-it.scm:171
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr "<Toolbox> Skript Xüsusi Qradiyent."
+msgid "Cast Shadow"
+msgstr "Yarat"
 
-#: plug-ins/script-fu/scripts/font-map.scm:0
+#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+msgid "Inset"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+msgid "Stencil C_arve..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:183
+msgid ""
+"Use the specified drawable as a stencil to carve from the specified image."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:190
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
-msgstr "<Toolbox> Skript Yazı növü Xəritə."
+msgid "Image to carve"
+msgstr "Rəsm a(ə)"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
+#: ../plug-ins/script-fu/scripts/carve-it.scm:191
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Qızarmış Ox."
+msgid "Carve white areas"
+msgstr "Ağ"
 
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Qızarmış Maddə."
-
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Qızarmış Düymə."
-
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Qızarmış."
-
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Naxış Ox."
-
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Naxış Maddə."
-
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Naxış Düymə."
-
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Naxış."
-
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Naxış."
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Qur Böyük Başlıq."
-
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Qur Ümumi Etiketlər."
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Qur Dar Başlıq."
-
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Qur Düymə Etiket."
-
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Qur Baz. Düymə Etiket."
-
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button Label..."
-msgstr "<Toolbox> Skript Səhifə Örtülər Qur Baz. Baz. Düymə Etiket."
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox> Səyyah"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr "<Toolbox> Səyyah Taxma İçəri"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-#, fuzzy
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox> Səyyah İstifadəçi"
-
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-msgid "Add Background"
+msgid "Background"
 msgstr "Arxa Plan Əlavə Et"
 
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#, fuzzy
-msgid "Add Drop-Shadow"
-msgstr "Əlavə Et Düşür"
-
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#, fuzzy
-msgid "Add Shadow"
-msgstr "Əlavə Et"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-#, fuzzy
-msgid "Allow Resizing"
-msgstr "Qəbul Et"
-
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-msgid "Amplitude"
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+msgid "Layer 1"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Angle"
-msgstr "Bucaq"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#, fuzzy
-msgid "Anim-Filter for all Copies"
-msgstr "Süzgəc üçün hamısı"
-
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-msgid "Antialias"
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+msgid "Layer 2"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-#, fuzzy
-msgid "Apply Generated Layermask"
-msgstr "Əlavə Et"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#, fuzzy
-msgid "Apply Layer Mask (or discard)"
-msgstr "Əlavə Et Lay"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-msgid "AutoCrop"
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+msgid "Layer 3"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/clothify.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Azimuth"
-msgstr "Azimut"
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+msgid "Drop Shadow"
+msgstr "Kölgə Düşür"
 
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "BG Opacity"
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:201
+msgid "Chrome"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#: plug-ins/script-fu/scripts/sphere.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-msgid "Background Color"
-msgstr "Arxa Plan Rəngi"
-
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-msgid "Background Image"
-msgstr "Arxaplan Rəsmi"
-
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:202
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
 #, fuzzy
-msgid "Bar Height"
-msgstr "Çubuq"
+msgid "Highlight"
+msgstr "İşarətlə"
 
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#, fuzzy
-msgid "Bar Length"
-msgstr "Çubuq"
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#, fuzzy
-msgid "Base Color"
-msgstr "Əsas"
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-#, fuzzy
-msgid "Base Radius (pixels)"
-msgstr "Əsas Radius piksel"
-
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "Behaviour"
-msgstr "Davranış"
-
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#, fuzzy
-msgid "Bevel Height (Sharpness)"
-msgstr "Hündürlük"
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Bevel Width"
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:214
+msgid "Stencil C_hrome..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#, fuzzy
-msgid "Blend Gradient (Outline)"
-msgstr "Qarışdır Qradiyent Xarici"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#, fuzzy
-msgid "Blend Gradient (Text)"
-msgstr "Qarışdır Qradiyent Mətn"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
-msgid "Blend Mode"
-msgstr "Qarışdır"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-msgid "Block Size"
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:215
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#, fuzzy
-msgid "Blur Amount"
-msgstr "Dumanlı"
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:222
+msgid "Chrome saturation"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:223
 #, fuzzy
-msgid "Blur Border"
-msgstr "Dumanlı"
+msgid "Chrome lightness"
+msgstr "Ağ"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:0
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:224
+msgid "Chrome factor"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:225
 #, fuzzy
-msgid "Blur Horizontally"
-msgstr "Dumanlı"
+msgid "Environment map"
+msgstr "Mühit Xəritəsi"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:228
 #, fuzzy
-msgid "Blur Radius"
-msgstr "Dumanlı"
+msgid "Highlight balance"
+msgstr "İşarətlə"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:0
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:229
+msgid "Chrome balance"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
 #, fuzzy
-msgid "Blur Type"
-msgstr "Dumanlı"
+msgid "Chrome white areas"
+msgstr "Ağ"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:0
+#: ../plug-ins/script-fu/scripts/circuit.scm:81
+msgid "Effect layer"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:134
 #, fuzzy
-msgid "Blur Vertically"
-msgstr "Dumanlı"
+msgid "_Circuit..."
+msgstr "Dövrə"
 
-#: plug-ins/script-fu/scripts/clothify.scm:0
+#: ../plug-ins/script-fu/scripts/circuit.scm:135
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:142
+msgid "Oilify mask size"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:143
+#, fuzzy
+msgid "Circuit seed"
+msgstr "Dövrə"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:144
+#, fuzzy
+msgid "No background (only for separate layer)"
+msgstr "Xeyr Arxa plan üçün"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:145
+#: ../plug-ins/script-fu/scripts/lava.scm:129
+#: ../plug-ins/script-fu/scripts/predator.scm:132
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+#, fuzzy
+msgid "Keep selection"
+msgstr "Qoru"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:146
+#: ../plug-ins/script-fu/scripts/lava.scm:130
+#: ../plug-ins/script-fu/scripts/predator.scm:133
+#, fuzzy
+msgid "Separate layer"
+msgstr "Ayır"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:51
+msgid "_Clothify..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:52
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:59
 #, fuzzy
 msgid "Blur X"
 msgstr "Dumanlı"
 
-#: plug-ins/script-fu/scripts/clothify.scm:0
+#: ../plug-ins/script-fu/scripts/clothify.scm:60
 #, fuzzy
 msgid "Blur Y"
 msgstr "Dumanlı"
 
-#: plug-ins/script-fu/scripts/addborder.scm:0
-msgid "Border Color"
-msgstr "Kənar Rəngi"
+#: ../plug-ins/script-fu/scripts/clothify.scm:61
+msgid "Azimuth"
+msgstr "Azimut"
 
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#, fuzzy
-msgid "Border Size (pixels)"
-msgstr "Kənar Böyüklük piksel"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#, fuzzy
-msgid "Border Size"
-msgstr "Kənar"
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-#, fuzzy
-msgid "Border X Size"
-msgstr "Kənar X"
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-#, fuzzy
-msgid "Border Y Size"
-msgstr "Kənar Y"
-
-#: plug-ins/script-fu/scripts/font-map.scm:0
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-msgid "Border"
-msgstr "Kənar"
-
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#, fuzzy
-msgid "Buffer Amount (% Height of Text)"
-msgstr "Bufer Hündürlük Mətn"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#, fuzzy
-msgid "Bumpmap (Alpha Layer) Blur Radius"
-msgstr "Alfa Lay Dumanlı"
-
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-msgid "Burst Color"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-msgid "Carve Raised Text"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/carve-it.scm:0
-#, fuzzy
-msgid "Carve White Areas"
-msgstr "Ağ"
-
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#, fuzzy
-msgid "Cell Size (pixels)"
-msgstr "Hücrə Böyüklük piksel"
-
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#, fuzzy
-msgid "Chalk Color"
-msgstr "Təbaşir"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "Chip Amount"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-msgid "Chrome Balance"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-msgid "Chrome Factor"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-msgid "Chrome Lightness"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-msgid "Chrome Saturation"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#, fuzzy
-msgid "Chrome White Areas"
-msgstr "Ağ"
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-#, fuzzy
-msgid "Circuit Seed"
-msgstr "Dövrə"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-#, fuzzy
-msgid "Clear Unselected Maskarea"
-msgstr "Təmizlə"
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-msgid "Color 1"
-msgstr "Rəng 1"
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-msgid "Color 2"
-msgstr "Rəng 2"
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-#, fuzzy
-msgid "Color 3"
-msgstr "Rəng"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Color"
-msgstr "Rəng"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Columns"
-msgstr "Sütunlar"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#, fuzzy
-msgid "Create New Image"
-msgstr "Yarat Yeni"
-
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#, fuzzy
-msgid "Create Shadow"
-msgstr "Yarat"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "Custom Gradient"
-msgstr "Xüsusi Qradiyent"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#, fuzzy
-msgid "Dark Color"
-msgstr "Tünd"
-
-#: plug-ins/script-fu/scripts/coffee.scm:0
-#, fuzzy
-msgid "Darken Only\n(Better, but only for Images with alot of White)"
-msgstr "x üçün Rəsmlər birlikdə Ağ"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#, fuzzy
-msgid "Default Bumpmap Settings"
-msgstr "Əsas"
-
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-msgid "Defocus"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-#, fuzzy
-msgid "Delta Value on Color"
-msgstr "Qiymət ..da"
-
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-msgid "Density (%)"
-msgstr "Doymuşluq (%)"
-
-#: plug-ins/script-fu/scripts/clothify.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Depth"
-msgstr "Dərinlik"
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/select_to_brush.scm:0
-msgid "Description"
-msgstr "İzahat"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-#, fuzzy
-msgid "Detail Level"
-msgstr "Təfsilat"
-
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-#, fuzzy
-msgid "Detail in Middle"
-msgstr "Təfsilat in"
-
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
-msgid "Diameter"
-msgstr "Diametr"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-msgid "Down"
-msgstr "Aşağı"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-msgid "Drop Shadow Blur Radius"
-msgstr "Kölgə Düşürmə Dumanlama Radiusu"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-msgid "Drop Shadow Color"
-msgstr "Kölgə Düşürmə Rəngi"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-msgid "Drop Shadow Opacity"
-msgstr "Kölgə Düşürmə Matlığı"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-msgid "Drop Shadow X Offset"
-msgstr "Kölgə Düşürmə X Ofseti"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-msgid "Drop Shadow Y Offset"
-msgstr "Kölgə Düşürmə Y Ofseti"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "Drop Shadow"
-msgstr "Kölgə Düşür"
-
-#: plug-ins/script-fu/scripts/predator.scm:0
-msgid "Edge Amount"
-msgstr "Kənar Tamamı"
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-msgid "Edge Only"
-msgstr "Təkcə Kənar"
-
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-msgid "Edge Radius"
-msgstr "Kənar Radiusu"
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-msgid "Edge Width"
-msgstr "Kənar Eni"
-
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-msgid "Effect Size (pixels * 3)"
-msgstr "Effekt Böyüklüyü (piksel * 3)"
-
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-msgid "Effect Size (pixels * 30)"
-msgstr "Effekt Böyüklüyü (piksel * 30)"
-
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-msgid "Effect Size (pixels * 4)"
-msgstr "Effekt Böyüklüyü (piksel * 4)"
-
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-msgid "Effect Size (pixels * 5)"
-msgstr "Effekt Böyüklüyü (piksel * 5)"
-
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-msgid "Effect Size (pixels)"
-msgstr "Effekt Böyüklüyü (piksel)"
-
-#: plug-ins/script-fu/scripts/clothify.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
+#: ../plug-ins/script-fu/scripts/clothify.scm:62
 msgid "Elevation"
 msgstr "Qaldırma"
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
-msgid "End Blend"
-msgstr "Bitiş"
+#: ../plug-ins/script-fu/scripts/clothify.scm:63
+msgid "Depth"
+msgstr "Dərinlik"
 
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-#, fuzzy
-msgid "End X"
-msgstr "Bitiş"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-#, fuzzy
-msgid "End Y"
-msgstr "Bitiş"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Ending Blend"
+#: ../plug-ins/script-fu/scripts/coffee.scm:36
+msgid "Stain"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-msgid "Environment Map"
-msgstr "Mühit Xəritəsi"
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-#, fuzzy
-msgid "Erase before Draw"
-msgstr "Poz əvvəl"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Erase"
-msgstr "Poz"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Erase/Fill"
-msgstr "Poz/Doldur"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Even"
+#: ../plug-ins/script-fu/scripts/coffee.scm:81
+msgid "_Coffee Stain..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Even/Odd"
+#: ../plug-ins/script-fu/scripts/coffee.scm:82
+msgid "Add realistic looking coffee stains to the image"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "FG-BG-HSV"
+#: ../plug-ins/script-fu/scripts/coffee.scm:89
+msgid "Stains"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "FG-BG-RGB"
+#: ../plug-ins/script-fu/scripts/coffee.scm:90
+#, fuzzy
+msgid "Darken only"
+msgstr "Tünd"
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:67
+msgid "Difference Clouds..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "FG-Transparent"
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:68
+msgid "Solid noise applied with Difference layer mode"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "Fade Away"
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:102
+msgid "_Distort..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:103
 #, fuzzy
-msgid "Fade From %"
-msgstr "Yazan"
+msgid "Distress the selection"
+msgstr "Qoru"
 
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:110
 #, fuzzy
-msgid "Fade To   %"
-msgstr "Göndərilən"
+msgid "Threshold (bigger 1<-->254 smaller)"
+msgstr "Aralıq Daha Dar"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-msgid "Feathering"
-msgstr ""
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:111
+msgid "Spread"
+msgstr "Saçılma"
 
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/select_to_brush.scm:0
-msgid "Filename"
-msgstr "Fayl adı"
-
-#: plug-ins/script-fu/scripts/text-circle.scm:0
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:112
 #, fuzzy
-msgid "Fill Angle"
-msgstr "Doldur"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#, fuzzy
-msgid "Fill BG with Pattern"
-msgstr "Doldur birlikdə"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#, fuzzy
-msgid "Fill with BG Color"
-msgstr "Doldur birlikdə"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-#, fuzzy
-msgid "Fill with BG"
-msgstr "Doldur birlikdə"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/camo.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-msgid "Flatten Image"
-msgstr "Rəsmi Sər"
-
-#: plug-ins/script-fu/scripts/slide.scm:0
-#, fuzzy
-msgid "Font Color"
-msgstr "Yazı növü"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/font-map.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/title-header.scm:0
-#, fuzzy
-msgid "Font Size (pixels)"
-msgstr "Yazı növü Böyüklük piksel"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#: plug-ins/script-fu/scripts/slide.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/title-header.scm:0
-msgid "Font"
-msgstr "Yazı növü"
-
-#: plug-ins/script-fu/scripts/font-map.scm:0
-msgid "Fonts"
-msgstr "Yazı növləri"
-
-#: plug-ins/script-fu/scripts/truchet.scm:0
-msgid "Foreground Color"
-msgstr "Ön plan Rəngi"
-
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#, fuzzy
-msgid "Frame Color"
-msgstr "Çərçivə növü"
-
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#, fuzzy
-msgid "Frame Size"
-msgstr "Çərçivə növü"
-
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-msgid "Frames"
-msgstr "Çərçivələr"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-#, fuzzy
-msgid "From Top-Left to Bottom-Right"
-msgstr "Yazan Üst Sol a(ə) Alt"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#, fuzzy
-msgid "Glow Color"
-msgstr "Qızarmış"
-
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#, fuzzy
-msgid "Glow Radius"
-msgstr "Qızarmış"
-
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#, fuzzy
-msgid "Glow Size (pixels * 4)"
-msgstr "Qızarmış Böyüklük piksel"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-#: plug-ins/script-fu/scripts/lava.scm:0
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "Gradient"
-msgstr "Qradiyent"
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#, fuzzy
-msgid "Granularity (1 is Low)"
+msgid "Granularity (1 is low)"
 msgstr "dir(dır) Alçaq"
 
-#: plug-ins/script-fu/scripts/camo.scm:0
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "Granularity"
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
+msgid "Smooth"
+msgstr "Düzgün"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+#, fuzzy
+msgid "Smooth horizontally"
+msgstr "Düzgün"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+#, fuzzy
+msgid "Smooth vertically"
+msgstr "Düzgün"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
+#, fuzzy
+msgid "_Drop Shadow..."
+msgstr "Kölgə Düşür"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-#, fuzzy
-msgid "Graph Scale"
-msgstr "Göstərici"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:0
-msgid "Grids X"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/grid-system.scm:0
-msgid "Grids Y"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/gradient-example.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Height"
-msgstr "Hündürlük"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Hexagons"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#, fuzzy
-msgid "Highlight Balance"
-msgstr "İşarətlə"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Highlight Color"
-msgstr "İşarətlə"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Highlight Opacity"
-msgstr "İşarətlə"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Highlight X Offset"
-msgstr "İşarətlə X"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Highlight Y Offset"
-msgstr "İşarətlə Y"
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-msgid "Hit Rate"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-#, fuzzy
-msgid "Hue Rate"
-msgstr "Çöhrə"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "IIR"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-msgid "Image Height"
-msgstr "Rəsm Hündürlüyü"
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-#, fuzzy
-msgid "Image Size"
-msgstr "Rəsm"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-msgid "Image Width"
-msgstr "Rəsm Nümayişcisi"
-
-#: plug-ins/script-fu/scripts/carve-it.scm:0
-#, fuzzy
-msgid "Image to Carve"
-msgstr "Rəsm a(ə)"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#, fuzzy
-msgid "Index Image"
-msgstr "İndeks"
-
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-#, fuzzy
-msgid "Index to n Colors (0 = Remain RGB)"
-msgstr "İndeks a(ə) x Rənglər Qalan RGB"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#, fuzzy
-msgid "Insert Layer Names"
-msgstr "Daxil Et Lay"
-
-#: plug-ins/script-fu/scripts/blend-anim.scm:0
-#, fuzzy
-msgid "Intermediate Frames"
-msgstr "Orta Səviyyəli"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Interpolate"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-#, fuzzy
-msgid "Invert direction"
-msgstr "Tərs çevir"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "Invert"
-msgstr "Tərs çevir"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#, fuzzy
-msgid "Keep Background"
-msgstr "Qoru"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#, fuzzy
-msgid "Keep Bump Layer"
-msgstr "Qoru"
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-#: plug-ins/script-fu/scripts/lava.scm:0
-#: plug-ins/script-fu/scripts/predator.scm:0
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#, fuzzy
-msgid "Keep Selection"
-msgstr "Qoru"
-
-#: plug-ins/script-fu/scripts/land.scm:0
-msgid "Land Height"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-msgid "Left"
-msgstr "Sol"
-
-#: plug-ins/script-fu/scripts/sphere.scm:0
-#, fuzzy
-msgid "Lighting (degrees)"
-msgstr "derece"
-
-#: plug-ins/script-fu/scripts/blend-anim.scm:0
-msgid "Looped"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
-msgid "Lower Color (Active)"
-msgstr "Alçalt Rəng Fəal"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
-msgid "Lower Color"
-msgstr "Alçalt"
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#, fuzzy
-msgid "Lower-Right color"
-msgstr "Alçalt Sağ"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#, fuzzy
-msgid "Make New Background"
-msgstr "Yeni"
-
-#: plug-ins/script-fu/scripts/unsharp-mask.scm:0
-msgid "Mask Opacity"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/unsharp-mask.scm:0
-msgid "Mask Size"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/blend-anim.scm:0
-#, fuzzy
-msgid "Max. Blur Radius"
-msgstr "ƏnÇox Dumanlı"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#, fuzzy
-msgid "Mosaic Tile Type"
-msgstr "Kirəmit"
-
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-msgid "Mottle"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-#, fuzzy
-msgid "No Background (only for separate layer)"
-msgstr "Xeyr Arxa plan üçün"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
-msgid "Not Pressed (Active)"
-msgstr "Yox Fəal"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
-msgid "Not Pressed"
-msgstr "Yox"
-
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#, fuzzy
-msgid "Number of Bands"
-msgstr "Rəqəm"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "Number of Colors"
-msgstr "Rəng Sayı"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#, fuzzy
-msgid "Number of Copies"
-msgstr "Rəqəm"
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm:0
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-#, fuzzy
-msgid "Number of Frames"
-msgstr "Rəqəm"
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-#, fuzzy
-msgid "Number of Lines"
-msgstr "Rəqəm"
-
-#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
-#, fuzzy
-msgid "Number of Times to Whirl"
-msgstr "Rəqəm a(ə)"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-#, fuzzy
-msgid "Number of X Tiles"
-msgstr "Rəqəm X"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-#, fuzzy
-msgid "Number of Y Tiles"
-msgstr "Rəqəm Y"
-
-#: plug-ins/script-fu/scripts/slide.scm:0
-msgid "Number"
-msgstr "Rəqəm"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Octagons"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Odd"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
-msgid "Offset (pixels)"
-msgstr "Bədəl piksel"
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-#, fuzzy
-msgid "Offset Radius"
-msgstr "Bədəl"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
 #, fuzzy
 msgid "Offset X"
 msgstr "Bədəl"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
 #, fuzzy
 msgid "Offset Y"
 msgstr "Bədəl"
 
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
 #, fuzzy
-msgid "Offsets (pixels * 2)"
-msgstr "piksel"
+msgid "Blur radius"
+msgstr "Dumanlı"
 
-#: plug-ins/script-fu/scripts/circuit.scm:0
-msgid "Oilify Mask Size"
-msgstr ""
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+msgid "Color"
+msgstr "Rəng"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
 msgid "Opacity"
 msgstr "Matlıq"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-msgid "Orientation"
-msgstr "İstiqamət"
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
+#, fuzzy
+msgid "Allow resizing"
+msgstr "Qəbul Et"
 
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Outer Border"
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:39
+msgid "_Erase Every Other Row..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#, fuzzy
-msgid "Outline Blur Radius"
-msgstr "Xarici Dumanlı"
-
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-msgid "Outline Color"
-msgstr "Kənar Rəngi"
-
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#, fuzzy
-msgid "Outline Size"
-msgstr "Xarici"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Pad Color"
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:40
+msgid "Erase every other row or column"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Pad Opacity"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
 #, fuzzy
-msgid "Padding Around Text"
-msgstr "Kənarlama"
+msgid "Rows/cols"
+msgstr "Sətirlər"
 
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
-msgid "Padding X"
-msgstr "Kənarlama"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
-msgid "Padding Y"
-msgstr "Kənarlama"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#, fuzzy
-msgid "Padding for Transparent Regions"
-msgstr "Kənarlama üçün Şəffaf"
-
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-msgid "Padding"
-msgstr "Kənarlama"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#, fuzzy
-msgid "Pattern (Outline)"
-msgstr "Naxış Xarici"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#, fuzzy
-msgid "Pattern (Overlay)"
-msgstr "Naxış Qabla"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#, fuzzy
-msgid "Pattern (Text)"
-msgstr "Naxış Mətn"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Pattern"
-msgstr "Naxış"
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-#, fuzzy
-msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr "Qələm Çərx"
-
-#: plug-ins/script-fu/scripts/predator.scm:0
-#, fuzzy
-msgid "Pixel Amount"
-msgstr "Bənək"
-
-#: plug-ins/script-fu/scripts/predator.scm:0
-msgid "Pixelize"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Pressed"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
-msgid "Quarter Size"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "RLE"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/sphere.scm:0
-#, fuzzy
-msgid "Radius (pixels)"
-msgstr "Radius piksel"
-
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "Radius"
-msgstr "Radius"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-#, fuzzy
-msgid "Random Seed"
-msgstr "Təsadüfi"
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-msgid "Randomness"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-#, fuzzy
-msgid "Relative Distance of Horizon"
-msgstr "Məsafə"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-#, fuzzy
-msgid "Relative Length of Shadow"
-msgstr "Uzunluq"
-
-#: plug-ins/script-fu/scripts/selection-round.scm:0
-msgid "Relative Radius"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#, fuzzy
-msgid "Remove Background"
-msgstr "Sil"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "Ribbon Spacing"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "Ribbon Width"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-msgid "Right"
-msgstr "Sağ"
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm:0
-msgid "Rippling Strength"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/lava.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Roughness"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Round Ratio"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
 msgid "Rows"
 msgstr "Sətirlər"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-#, fuzzy
-msgid "Rows/Cols"
-msgstr "Sətirlər"
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+msgid "Columns"
+msgstr "Sütunlar"
 
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-#, fuzzy
-msgid "Scale X"
-msgstr "Miqyas"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-#, fuzzy
-msgid "Scale Y"
-msgstr "Miqyas"
-
-#: plug-ins/script-fu/scripts/land.scm:0
-msgid "Sea Depth"
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Even/odd"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/lava.scm:0
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Even"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Odd"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#, fuzzy
+msgid "Erase/fill"
+msgstr "Poz/Doldur"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Erase"
+msgstr "Poz"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#, fuzzy
+msgid "Fill with BG"
+msgstr "Doldur birlikdə"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:152
+msgid "Render _Font Map..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:153
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:158
+#, fuzzy
+msgid "_Text"
+msgstr "Mətn"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:159
+msgid "Use font _name as text"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:160
+msgid "_Labels"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:161
+msgid "_Filter (regexp)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:162
+#, fuzzy
+msgid "Font _size (pixels)"
+msgstr "Yazı növü Böyüklük piksel"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:163
+#, fuzzy
+msgid "_Border (pixels)"
+msgstr "Kənar Böyüklük piksel"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#, fuzzy
+msgid "_Color scheme"
+msgstr "Rəng 1"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "Black on white"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+#, fuzzy
+msgid "Active colors"
+msgstr "Kənar Rəngi"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:146
+msgid "_Fuzzy Border..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:147
+msgid "Add a jagged, fuzzy border to an image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:155
+#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+#, fuzzy
+msgid "Border size"
+msgstr "Kənar"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:156
+#, fuzzy
+msgid "Blur border"
+msgstr "Dumanlı"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
+#, fuzzy
+msgid "Granularity (1 is Low)"
+msgstr "dir(dır) Alçaq"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
+#, fuzzy
+msgid "Add shadow"
+msgstr "Əlavə Et"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+#, fuzzy
+msgid "Shadow weight (%)"
+msgstr "Çəki"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+#, fuzzy
+msgid "Flatten image"
+msgstr "Rəsmi Sər"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+msgid "Using _Paths"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+msgid "Bookmark to the user manual"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+msgid "_Preparing your Images for the Web"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+msgid "_Working with Digital Camera Photos"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+msgid "Create, Open and Save _Files"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+msgid "_Basic Concepts"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+msgid "How to Use _Dialogs"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+msgid "Drawing _Simple Objects"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+#, fuzzy
+msgid "Create and Use _Selections"
+msgstr "Qoru"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+msgid "_Main Web Site"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
+msgid "Bookmark to the GIMP web site"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+msgid "_Developer Web Site"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+msgid "_User Manual Web Site"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+msgid "Plug-in _Registry"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:63
+#, fuzzy
+msgid "Custom _Gradient..."
+msgstr "Xüsusi Qradiyent"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:64
+msgid "Create an image filled with an example of the current gradient"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:138
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:194
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:263
+msgid "Width"
+msgstr "En"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+msgid "Height"
+msgstr "Hündürlük"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:71
+#, fuzzy
+msgid "Gradient reverse"
+msgstr "Qradiyent"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:84
+msgid "_Grid..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:85
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current "
+"brush"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:92
+msgid "X divisions"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:93
+msgid "Y divisions"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+#, fuzzy
+msgid "New Guides from _Selection"
+msgstr "İşlət"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+msgid "Create four guides around the bounding box of the current selection"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+msgid "New Guide (by _Percent)..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#, fuzzy
+msgid "Direction"
+msgstr "İzahat"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#, fuzzy
+msgid "Horizontal"
+msgstr "Dumanlı"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+#, fuzzy
+msgid "Vertical"
+msgstr "Dumanlı"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
+msgid "Position (in %)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+msgid "New _Guide..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:36
+#, fuzzy
+msgid "Position"
+msgstr "İzahat"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+msgid "_Remove all Guides"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+msgid "Remove all horizontal and vertical guides"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/lava.scm:117
+msgid "_Lava..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/lava.scm:118
+msgid "Fill the current selection with lava"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/lava.scm:125
 msgid "Seed"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#, fuzzy
-msgid "Select-By-Color Threshold"
-msgstr "Seç Rəng"
+#: ../plug-ins/script-fu/scripts/lava.scm:126
+msgid "Size"
+msgstr "Böyüklük"
 
-#: plug-ins/script-fu/scripts/circuit.scm:0
-#: plug-ins/script-fu/scripts/lava.scm:0
-#: plug-ins/script-fu/scripts/predator.scm:0
-#, fuzzy
-msgid "Separate Layer"
-msgstr "Ayır"
-
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-msgid "Sepia"
+#: ../plug-ins/script-fu/scripts/lava.scm:127
+msgid "Roughness"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#, fuzzy
-msgid "Shadow Blur Radius"
-msgstr "Dumanlı"
+#: ../plug-ins/script-fu/scripts/lava.scm:128
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+msgid "Gradient"
+msgstr "Qradiyent"
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "Shadow Color"
+#: ../plug-ins/script-fu/scripts/lava.scm:131
+#, fuzzy
+msgid "Use current gradient"
+msgstr "Hazırkı Qradiyenti İşlət"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:106
+msgid "Line _Nova..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "Shadow Darkness"
+#: ../plug-ins/script-fu/scripts/line-nova.scm:107
+msgid ""
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "Shadow Depth"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
+#: ../plug-ins/script-fu/scripts/line-nova.scm:114
 #, fuzzy
-msgid "Shadow Weight (%)"
-msgstr "Çəki"
+msgid "Number of lines"
+msgstr "Rəqəm"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#, fuzzy
-msgid "Shadow X Offset"
-msgstr "X"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#, fuzzy
-msgid "Shadow Y Offset"
-msgstr "Y"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/sphere.scm:0
-msgid "Shadow"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
+#: ../plug-ins/script-fu/scripts/line-nova.scm:115
 #, fuzzy
 msgid "Sharpness (degrees)"
 msgstr "derece"
 
-#: plug-ins/script-fu/scripts/image-structure.scm:0
+#: ../plug-ins/script-fu/scripts/line-nova.scm:116
 #, fuzzy
-msgid "Shear Length"
-msgstr "Doğra"
+msgid "Offset radius"
+msgstr "Bədəl"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-#: plug-ins/script-fu/scripts/lava.scm:0
-msgid "Size"
-msgstr "Böyüklük"
+#: ../plug-ins/script-fu/scripts/line-nova.scm:117
+msgid "Randomness"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-#, fuzzy
-msgid "Smooth Horizontally"
-msgstr "Düzgün"
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+msgid "_Rectangular..."
+msgstr ""
 
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-#, fuzzy
-msgid "Smooth Vertically"
-msgstr "Düzgün"
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+msgid "Create a rectangular brush"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/camo.scm:0
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-msgid "Smooth"
-msgstr "Düzgün"
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:137
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:193
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:262
+msgid "Name"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#, fuzzy
-msgid "Space Between Layers"
-msgstr "Speys"
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/select_to_brush.scm:0
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
 msgid "Spacing"
 msgstr "Boşluq"
 
-#: plug-ins/script-fu/scripts/sphere.scm:0
-#, fuzzy
-msgid "Sphere Color"
-msgstr "Kürə"
-
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-msgid "Spots density X"
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:131
+msgid "Re_ctangular, Feathered..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-msgid "Spots density Y"
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:132
+msgid "Create a rectangular brush with feathered edges"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-msgid "Spread"
-msgstr "Saçılma"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Squares"
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+msgid "Feathering"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/coffee.scm:0
-msgid "Stains"
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:187
+msgid "_Elliptical..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#, fuzzy
-msgid "Start Angle"
-msgstr "Başla"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#, fuzzy
-msgid "Start Blend"
-msgstr "Başla"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-#, fuzzy
-msgid "Start X"
-msgstr "Başla"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-#, fuzzy
-msgid "Start Y"
-msgstr "Başla"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#, fuzzy
-msgid "Starting Blend"
-msgstr "Başladılır"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-msgid "Supersample"
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:188
+msgid "Create an elliptical brush"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#, fuzzy
-msgid "Text Color (Active)"
-msgstr "Mətn Rəng Fəal"
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:256
+msgid "Elli_ptical, Feathered..."
+msgstr ""
 
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-msgid "Text Color"
-msgstr "Mətn Rəngi"
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:257
+msgid "Create an elliptical brush with feathered edges"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
+#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+msgid "_Old Photo..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+msgid "Make an image look like an old photo"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+msgid "Defocus"
+msgstr ""
+
+#. since this plug-in uses the fuzzy-border plug-in, I used the
+#. values of the latter, with the exception of the initial value
+#. and the 'minimum' value.
+#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+msgid "Sepia"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+msgid "Mottle"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+msgid "Folder for the output file"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:236
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:244
+msgid "The filename you entered is not a suitable name for a file."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:246
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:274
+msgid ""
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:300
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:332
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:361
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:408
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+msgid "There is no image data in the clipboard to paste."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
 #, fuzzy
-msgid "Text Pattern"
+msgid "New _Brush..."
+msgstr "Fırça İşlət"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+msgid "Paste the clipboard contents into a new brush"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+msgid "Brush name"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
+#, fuzzy
+msgid "File name"
+msgstr "Fayl adı"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
+#, fuzzy
+msgid "New _Pattern..."
 msgstr "Mətn"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#: plug-ins/script-fu/scripts/slide.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/title-header.scm:0
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+msgid "Paste the clipboard contents into a new pattern"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
+#, fuzzy
+msgid "Pattern name"
+msgstr "Naxış"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+msgid "_Perspective..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+msgid "Angle"
+msgstr "Bucaq"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+#, fuzzy
+msgid "Relative distance of horizon"
+msgstr "Məsafə"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+#, fuzzy
+msgid "Relative length of shadow"
+msgstr "Uzunluq"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+msgid "Interpolation"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/predator.scm:121
+msgid "_Predator..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/predator.scm:122
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/predator.scm:129
+#, fuzzy
+msgid "Edge amount"
+msgstr "Kənar Tamamı"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:130
+msgid "Pixelize"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/predator.scm:131
+#, fuzzy
+msgid "Pixel amount"
+msgstr "Bənək"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
+msgid "Reverse Layer Order"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+msgid "Reverse the order of layers in the image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:119
+msgid "_Rippling..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:120
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:127
+msgid "Rippling strength"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:128
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
+#, fuzzy
+msgid "Number of frames"
+msgstr "Rəqəm"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+#, fuzzy
+msgid "Edge behavior"
+msgstr "Davranış"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+msgid "Wrap"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+msgid "Smear"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+msgid "Black"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+msgid "_Round Corners..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and background"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+#, fuzzy
+msgid "Edge radius"
+msgstr "Kənar Radiusu"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#, fuzzy
+msgid "Add drop-shadow"
+msgstr "Əlavə Et Düşür"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#, fuzzy
+msgid "Shadow X offset"
+msgstr "X"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#, fuzzy
+msgid "Shadow Y offset"
+msgstr "Y"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#, fuzzy
+msgid "Add background"
+msgstr "Arxa Plan Əlavə Et"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+#, fuzzy
+msgid "Se_t Colormap..."
+msgstr "Mətn Rəngi"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+msgid "Palette"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+msgid "Rounded R_ectangle..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+msgid "Round the corners of the current selection"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:147
+#, fuzzy
+msgid "Radius (%)"
+msgstr "Radius"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:148
+msgid "Concave"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+msgid "To _Brush..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+msgid "Convert a selection to a brush"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
+#, fuzzy
+msgid "To _Image"
+msgstr "İndeks"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
+msgid "Convert a selection to an image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
+#, fuzzy
+msgid "To _Pattern..."
+msgstr "Mətn"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
+msgid "Convert a selection to a pattern"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/slide.scm:236
+msgid "_Slide..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/slide.scm:237
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/slide.scm:244
 msgid "Text"
 msgstr "Mətn"
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/add-bevel.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-msgid "Thickness"
-msgstr "İncəlik"
+#: ../plug-ins/script-fu/scripts/slide.scm:245
+msgid "Number"
+msgstr "Rəqəm"
 
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "Thread Density"
-msgstr ""
+#: ../plug-ins/script-fu/scripts/slide.scm:246
+msgid "Font"
+msgstr "Yazı növü"
 
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "Thread Intensity"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "Thread Length"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
+#: ../plug-ins/script-fu/scripts/slide.scm:247
 #, fuzzy
-msgid "Threshold (Bigger 1<-->255 Smaller)"
-msgstr "Aralıq Daha Dar"
+msgid "Font color"
+msgstr "Yazı növü"
 
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "Tile"
-msgstr "Kirəmit"
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+msgid "_Spinning Globe..."
+msgstr ""
 
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-msgid "Transparent Background"
-msgstr "Şəffaf Arxa Plan"
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+msgid "Frames"
+msgstr "Çərçivələr"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
 #, fuzzy
-msgid "Turn from Left to Right"
+msgid "Turn from left to right"
 msgstr "Döndər dan(dən) Sol a(ə)"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-msgid "Up"
-msgstr "Yuxarı"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
 #, fuzzy
-msgid "Upper Color (Active)"
-msgstr "Qaldır Rəng Fəal"
+msgid "Transparent background"
+msgstr "Şəffaf Arxa Plan"
 
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Upper Color"
-msgstr "Üst Rəng"
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
 #, fuzzy
-msgid "Upper-Left color"
-msgstr "Qaldır Sol"
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "İndeks a(ə) x Rənglər Qalan RGB"
 
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Use Brush"
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+msgid "Rendering Spyro"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
+msgid "_Spyrogimp..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+msgid ""
+"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+#, fuzzy
+msgid "Type"
+msgstr "Dumanlı"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+msgid "Spyrograph"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+msgid "Epitrochoid"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+msgid "Lissajous"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+msgid "Shape"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+msgid "Circle"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+#, fuzzy
+msgid "Triangle"
+msgstr "Bucaq"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+msgid "Square"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+#, fuzzy
+msgid "Pentagon"
+msgstr "İstiqamət"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+msgid "Hexagon"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+msgid "Polygon: 7 sides"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+msgid "Polygon: 8 sides"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+msgid "Polygon: 9 sides"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+msgid "Polygon: 10 sides"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+msgid "Outer teeth"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+msgid "Inner teeth"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+#, fuzzy
+msgid "Margin (pixels)"
+msgstr "Radius piksel"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+#, fuzzy
+msgid "Hole ratio"
+msgstr "Qaldırma"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+#, fuzzy
+msgid "Start angle"
+msgstr "Başla"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+msgid "Tool"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+msgid "Pencil"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+#, fuzzy
+msgid "Brush"
 msgstr "Fırça İşlət"
 
-#: plug-ins/script-fu/scripts/lava.scm:0
-msgid "Use Current Gradient"
-msgstr "Hazırkı Qradiyenti İşlət"
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+msgid "Airbrush"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
 #, fuzzy
-msgid "Use Growing Selection"
-msgstr "İşlət"
+msgid "Color method"
+msgstr "Rəng 1"
 
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
 #, fuzzy
-msgid "Use Pattern Overlay"
-msgstr "İşlət Naxış"
+msgid "Solid Color"
+msgstr "Kənar Rəngi"
 
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+msgid "Gradient: Loop Sawtooth"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+msgid "Gradient: Loop Triangle"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/test-sphere.scm:267
+msgid "_Sphere..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+msgid "_Tileable Blur..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:76
+msgid "Radius"
+msgstr "Radius"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:77
 #, fuzzy
-msgid "Use Pattern for Outline instead of Gradient"
-msgstr "İşlət Naxış üçün Xarici"
+msgid "Blur vertically"
+msgstr "Dumanlı"
 
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
+#: ../plug-ins/script-fu/scripts/tileblur.scm:78
 #, fuzzy
-msgid "Use Pattern for Text instead of Gradient"
-msgstr "İşlət Naxış üçün Mətn"
+msgid "Blur horizontally"
+msgstr "Dumanlı"
 
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
 #, fuzzy
-msgid "Use Selection Bounds Instead of Belows"
-msgstr "İşlət Seçki"
+msgid "Blur type"
+msgstr "Dumanlı"
 
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "IIR"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "RLE"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+msgid "Mask size"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+#, fuzzy
+msgid "Mask opacity"
+msgstr "Matlıq"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+msgid "_Waves..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+msgid "Amplitude"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
 msgid "Wavelength"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Wheel Radius (hypo < 0 < epi)"
-msgstr "Fırlanan Radius (hypo < 0 < epi)"
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+#, fuzzy
+msgid "Invert direction"
+msgstr "Tərs çevir"
 
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Whirl Amount"
-msgstr "Fırlanan Məzmun"
+#: ../plug-ins/script-fu/scripts/weave.scm:389
+msgid "_Weave..."
+msgstr ""
 
-#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
-msgid "Whirl Angle"
-msgstr "Fırlanan Bucaq"
+#: ../plug-ins/script-fu/scripts/weave.scm:390
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "Width of Bands"
-msgstr "Band Eni"
+#: ../plug-ins/script-fu/scripts/weave.scm:397
+msgid "Ribbon width"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "Width of Gaps"
-msgstr "Qep Eni"
+#: ../plug-ins/script-fu/scripts/weave.scm:398
+msgid "Ribbon spacing"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
-#: plug-ins/script-fu/scripts/gradient-example.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Width"
-msgstr "En"
+#: ../plug-ins/script-fu/scripts/weave.scm:399
+msgid "Shadow darkness"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#: plug-ins/script-fu/scripts/slide.scm:0
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-msgid "Work on Copy"
-msgstr "Nüsxədə İşlə"
+#: ../plug-ins/script-fu/scripts/weave.scm:400
+#, fuzzy
+msgid "Shadow depth"
+msgstr "X"
 
+#: ../plug-ins/script-fu/scripts/weave.scm:401
+#, fuzzy
+msgid "Thread length"
+msgstr "Doğra"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:402
+msgid "Thread density"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/weave.scm:403
+msgid "Thread intensity"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+msgid "Shadow"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+msgid "_Xach-Effect..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+#, fuzzy
+msgid "Highlight X offset"
+msgstr "İşarətlə X"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+#, fuzzy
+msgid "Highlight Y offset"
+msgstr "İşarətlə Y"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+#, fuzzy
+msgid "Highlight color"
+msgstr "İşarətlə"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+#, fuzzy
+msgid "Highlight opacity"
+msgstr "İşarətlə"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+#, fuzzy
+msgid "Drop shadow color"
+msgstr "Kölgə Düşürmə Rəngi"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+#, fuzzy
+msgid "Drop shadow opacity"
+msgstr "Kölgə Düşürmə Matlığı"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+#, fuzzy
+msgid "Drop shadow blur radius"
+msgstr "Kölgə Düşürmə Dumanlama Radiusu"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+#, fuzzy
+msgid "Drop shadow X offset"
+msgstr "Kölgə Düşürmə X Ofseti"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+#, fuzzy
+msgid "Drop shadow Y offset"
+msgstr "Kölgə Düşürmə Y Ofseti"
+
+#, fuzzy
+#~ msgid "Script-Fu console mode allows only interactive invocation"
+#~ msgstr "Skript mod"
+
+#~ msgid "Close"
+#~ msgstr "Qapat"
+
+#~ msgid "SIOD Output"
+#~ msgstr "SIOD Yekunu"
+
+#~ msgid "Current Command"
+#~ msgstr "Hazırkı Əmr"
+
+#, fuzzy
+#~ msgid "Unable to open SIOD output pipe"
+#~ msgstr "a(ə) aç"
+
+#, fuzzy
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "a(ə) aç a ..da"
+
+#~ msgid "Script Arguments"
+#~ msgstr "Skript Arqumentləri"
+
+#~ msgid "Reset to Defaults"
+#~ msgstr "Əsaslara Keç"
+
+#~ msgid "About"
+#~ msgstr "Haqqında"
+
+#~ msgid "OK"
+#~ msgstr "Oldu"
+
+#~ msgid "Cancel"
+#~ msgstr "Ləğv Et"
+
+#~ msgid "NOT SET"
+#~ msgstr "SEÇİLİ DEYİL"
+
+#~ msgid ""
+#~ "At least one font you've chosen is invalid.\n"
+#~ "Please check your settings.\n"
+#~ msgstr ""
+#~ "Seçdiklərinizdən ən az biri hökmsüzdür.\n"
+#~ "Lütfən, qurğularınızı yoxlayın.\n"
+
+#~ msgid "Author:"
+#~ msgstr "Müəllif:"
+
+#~ msgid "Copyright:"
+#~ msgstr "Təlif haqqı:"
+
+#~ msgid "Date:"
+#~ msgstr "Tarix:"
+
+#~ msgid "Image Types:"
+#~ msgstr "Rəsm Növləri:"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Console..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Konsol..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Server..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Verici..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Yenilə"
+
+#~ msgid "<Image>/Edit/Copy Visible"
+#~ msgstr "<Image>/Düzəlt/Görünəni Köçür"
+
+#~ msgid "<Image>/Filters/Blur/Tileable Blur..."
+#~ msgstr "<Image>/Süzgəclər/Duman/Döşənən Duman..."
+
+#~ msgid "<Image>/Script-Fu/Alchemy/Clothify..."
+#~ msgstr "<Image>/Skript-Fu/Əlkimya/Ört..."
+
+#~ msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
+#~ msgstr "<Image>/Skript-Fu/Əlkimya/Hər başqa sətiri poz..."
+
+#~ msgid "<Image>/Script-Fu/Alchemy/Predator..."
+#~ msgstr "<Image>/Skript-Fu/Əlkimya/Predator..."
+
+#~ msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
+#~ msgstr "<Image>/Skript-Fu/Əlkimya/Maskanı Küntləşdir..."
+
+#~ msgid "<Image>/Script-Fu/Alchemy/Weave..."
+#~ msgstr "<Image>/Skript-Fu/Əlkimya/Toxuma..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/3D Xarici Görünüşü..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Alien Qızarması..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Alien Neonu..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Beyzik I..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Beyzik II..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Qarışıq..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Durğunlaşdırma.."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Təbaşir..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Yonqala..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Xrom..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Məzəli Kitab..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Xoş Metal..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Donma..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Parlaq..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Əhatə Edən İsti..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Qradiyent Bevel..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Neon..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Parçalar İzi..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Ulduz Tozu..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Ulduz İzi..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
+#~ msgstr "<Image>/Skript-Fu/Alfadan Loqoya/Teksturalı..."
+
+#~ msgid "<Image>/Script-Fu/Animators/Blend..."
+#~ msgstr "<Image>/Skript-Fu/Animatorlar/Qarışdır..."
+
+#~ msgid "<Image>/Script-Fu/Animators/Rippling..."
+#~ msgstr "<Image>/Skript-Fu/Animatorlar/Yarma..."
+
+#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+#~ msgstr "<Image>/Skript-Fu/Animatorlar/Canlı Şəkildə Seçki..."
+
+#~ msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
+#~ msgstr "<Image>/Skript-Fu/Animatorlar/Fırlanan Kürə..."
+
+#~ msgid "<Image>/Script-Fu/Animators/Waves..."
+#~ msgstr "<Image>/Skript-Fu/Animatorlar/Dalğalar.."
+
+#~ msgid "<Image>/Script-Fu/Decor/Add Bevel..."
+#~ msgstr "<Image>/Skript-Fu/Bəzək/Əyim Əlavə Et..."
+
+#~ msgid "<Image>/Script-Fu/Decor/Add Border..."
+#~ msgstr "<Image>/Skript-Fu/Bəzək/Kənar Əlavə Et..."
+
+#~ msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
+#~ msgstr "<Image>/Skript-Fu/Bəzək/Qəhvə Ləkəsi..."
+
+#~ msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
+#~ msgstr "<Image>/Skript-Fu/Bəzək/Kirli Kənar..."
+
+#~ msgid "<Image>/Script-Fu/Decor/Old Photo..."
+#~ msgstr "<Image>/Skript-Fu/Bəzək/Köhnə Fotoqrafiya..."
+
+#~ msgid "<Image>/Script-Fu/Decor/Round Corners..."
+#~ msgstr "<Image>/Skript-Fu/Bəzək/Yuvarlaq Bucaqlar.."
+
+#~ msgid "<Image>/Script-Fu/Decor/Slide..."
+#~ msgstr "<Image>/Skript-Fu/Bəzək/Dilim..."
+
+#~ msgid "<Image>/Script-Fu/Render/Circuit..."
+#~ msgstr "<Image>/Skript-Fu/Render/Dairə..."
+
+#~ msgid "<Image>/Script-Fu/Render/Lava..."
+#~ msgstr "<Image>/Skript-Fu/Render/Lava..."
+
+#~ msgid "<Image>/Script-Fu/Render/Line Nova..."
+#~ msgstr "<Image>/Skript-Fu/Render/Layn Nova..."
+
+#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
+#~ msgstr "<Image>/Skript-Fu/Render/Tor Sistemi Yarat..."
+
+#~ msgid "<Image>/Script-Fu/Selection/Distress Selection..."
+#~ msgstr "<Image>/Skript-Fu/Seçki/Seçkini Basqıla..."
+
+#~ msgid "<Image>/Script-Fu/Selection/Fade Outline..."
+#~ msgstr "<Image>/Skript-Fu/Seçki/Xaricini Solğunlaşdır..."
+
+#~ msgid "<Image>/Script-Fu/Selection/Round..."
+#~ msgstr "<Image>/Skript-Fu/Seçki/Yuvarlat..."
+
+#~ msgid "<Image>/Script-Fu/Selection/To Brush..."
+#~ msgstr "<Image>/Skript-Fu/Seçki/Fırçaya..."
+
+#~ msgid "<Image>/Script-Fu/Selection/To Image"
+#~ msgstr "<Image>/Skript-Fu/Seçki/Şəklə.."
+
+#~ msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
+#~ msgstr "<Image>/Skript-Fu/Kölgə/Kölgə Düşür..."
+
+#~ msgid "<Image>/Script-Fu/Shadow/Perspective..."
+#~ msgstr "<Image>/Skript-Fu/Kölgə/Perspektiv..."
+
+#~ msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
+#~ msgstr "<Image>/Skript-Fu/Kölgə/Xach Effekti..."
+
+#~ msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
+#~ msgstr "<Image>/Skript-Fu/Stensil Əməl/Oy..."
+
+#~ msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
+#~ msgstr "<Image>/Skript-Fu/Stensil Əməl/Xromlaşdır..."
+
+#~ msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
+#~ msgstr "<Image>/Skript-Fu/Ləvazimatlar/ACSII-dən Rəsm Layına..."
+
+#~ msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
+#~ msgstr "<Image>/Skript-Fu/Ləvazimatlar/HSV Qrafikası Çək..."
+
+#~ msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
+#~ msgstr "<Image>/Skript-Fu/Ləvazimatlar/Rəsm Quruluşunu Göstər..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
+#~ msgstr "<Toolbox>/Xtns/Skript-Fu/Düymələr/Yuvarlaq Düymə..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
+#~ msgstr "<Toolbox>/Xtns/Skript-Fu/Düymələr/Sadə Əyilmiş Düymə..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
+#~ msgstr "<Toolbox>/Xtns/Skript-Fu/Loqolar/3D Kənar..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
+#~ msgstr "<Toolbox>/Xtns/Skript-Fu/Loqolar/Alien Qızarması..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Alien Neon..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Əsas I..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Əsas II..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Qarışıq..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Bovinasiya..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Oyulmuş..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Təbaşir..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Yonqala..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Xrom..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Məzəli Kitab..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Xoş Metal..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Kristal..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Donmuş..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Parlaq..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Qızarmış Kömür..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Qradiyent bevel..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Imigre-26..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Neon..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Xəbər Mətni..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Parçacıq İzi..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/SOTA Xrom..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Sürətli Mətn..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Ulduz Tozu..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Ulduz Axımı..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Mətn Dairəsi..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Teksturalı..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Loqolar/Veb Başlığı..."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
+#~ msgstr "<Toolbox> Skript Fırçala."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
+#~ msgstr "<Toolbox> Skript Fırçala."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
+#~ msgstr "<Toolbox> Skript Fırçala."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
+#~ msgstr "<Toolbox> Skript Fırçala."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
+#~ msgstr "<Toolbox> Skript Qarışıq Kürə."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
+#~ msgstr "<Toolbox> Skript Patern 3D Truçet."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
+#~ msgstr "<Toolbox> Skript Patern Kamuflyaj."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
+#~ msgstr "<Toolbox> Skript Patern."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
+#~ msgstr "<Toolbox> Skript Patern."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
+#~ msgstr "<Toolbox> Skript Patern Xəritə."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
+#~ msgstr "<Toolbox> Skript Patern Burulğan Kirəmit."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
+#~ msgstr "<Toolbox> Skript Patern."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+#~ msgstr "<Toolbox> Skript Patern."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
+#~ msgstr "<Toolbox> Skript Patern Truçet."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
+#~ msgstr "<Toolbox> Skript ASCII a(ə) Rəsm."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
+#~ msgstr "<Toolbox> Skript Xüsusi Qradiyent."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
+#~ msgstr "<Toolbox> Skript Yazı növü Xəritə."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Qızarmış Ox."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Qızarmış Maddə."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Qızarmış Düymə."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Qızarmış."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Naxış Ox."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Naxış Maddə."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Naxış Düymə."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Naxış."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Naxış."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Qur Böyük Başlıq."
+
+#, fuzzy
+#~ msgid ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Qur Ümumi Etiketlər."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Qur Dar Başlıq."
+
+#, fuzzy
+#~ msgid ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Qur Düymə Etiket."
+
+#, fuzzy
+#~ msgid ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Qur Baz. Düymə Etiket."
+
+#, fuzzy
+#~ msgid ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
+#~ "Label..."
+#~ msgstr "<Toolbox> Skript Səhifə Örtülər Qur Baz. Baz. Düymə Etiket."
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+#~ msgstr "<Toolbox> Səyyah"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
+#~ msgstr "<Toolbox> Səyyah Taxma İçəri"
+
+#, fuzzy
+#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+#~ msgstr "<Toolbox> Səyyah İstifadəçi"
+
+#, fuzzy
+#~ msgid "Anim-Filter for all Copies"
+#~ msgstr "Süzgəc üçün hamısı"
+
+#, fuzzy
+#~ msgid "Apply Generated Layermask"
+#~ msgstr "Əlavə Et"
+
+#, fuzzy
+#~ msgid "Apply Layer Mask (or discard)"
+#~ msgstr "Əlavə Et Lay"
+
+#~ msgid "Background Color"
+#~ msgstr "Arxa Plan Rəngi"
+
+#~ msgid "Background Image"
+#~ msgstr "Arxaplan Rəsmi"
+
+#, fuzzy
+#~ msgid "Bar Height"
+#~ msgstr "Çubuq"
+
+#, fuzzy
+#~ msgid "Bar Length"
+#~ msgstr "Çubuq"
+
+#, fuzzy
+#~ msgid "Base Color"
+#~ msgstr "Əsas"
+
+#, fuzzy
+#~ msgid "Base Radius (pixels)"
+#~ msgstr "Əsas Radius piksel"
+
+#, fuzzy
+#~ msgid "Bevel Height (Sharpness)"
+#~ msgstr "Hündürlük"
+
+#, fuzzy
+#~ msgid "Blend Gradient (Outline)"
+#~ msgstr "Qarışdır Qradiyent Xarici"
+
+#, fuzzy
+#~ msgid "Blend Gradient (Text)"
+#~ msgstr "Qarışdır Qradiyent Mətn"
+
+#, fuzzy
+#~ msgid "Blend Mode"
+#~ msgstr "Qarışdır"
+
+#, fuzzy
+#~ msgid "Blur Amount"
+#~ msgstr "Dumanlı"
+
+#, fuzzy
+#~ msgid "Buffer Amount (% Height of Text)"
+#~ msgstr "Bufer Hündürlük Mətn"
+
+#, fuzzy
+#~ msgid "Bumpmap (Alpha Layer) Blur Radius"
+#~ msgstr "Alfa Lay Dumanlı"
+
+#, fuzzy
+#~ msgid "Cell Size (pixels)"
+#~ msgstr "Hücrə Böyüklük piksel"
+
+#, fuzzy
+#~ msgid "Chalk Color"
+#~ msgstr "Təbaşir"
+
+#, fuzzy
+#~ msgid "Clear Unselected Maskarea"
+#~ msgstr "Təmizlə"
+
+#~ msgid "Color 2"
+#~ msgstr "Rəng 2"
+
+#, fuzzy
+#~ msgid "Color 3"
+#~ msgstr "Rəng"
+
+#, fuzzy
+#~ msgid "Create New Image"
+#~ msgstr "Yarat Yeni"
+
+#, fuzzy
+#~ msgid ""
+#~ "Darken Only\n"
+#~ "(Better, but only for Images with alot of White)"
+#~ msgstr "x üçün Rəsmlər birlikdə Ağ"
+
+#, fuzzy
+#~ msgid "Default Bumpmap Settings"
+#~ msgstr "Əsas"
+
+#~ msgid "Density (%)"
+#~ msgstr "Doymuşluq (%)"
+
+#, fuzzy
+#~ msgid "Detail Level"
+#~ msgstr "Təfsilat"
+
+#, fuzzy
+#~ msgid "Detail in Middle"
+#~ msgstr "Təfsilat in"
+
+#~ msgid "Diameter"
+#~ msgstr "Diametr"
+
+#~ msgid "Down"
+#~ msgstr "Aşağı"
+
+#~ msgid "Edge Only"
+#~ msgstr "Təkcə Kənar"
+
+#~ msgid "Effect Size (pixels * 3)"
+#~ msgstr "Effekt Böyüklüyü (piksel * 3)"
+
+#~ msgid "Effect Size (pixels * 30)"
+#~ msgstr "Effekt Böyüklüyü (piksel * 30)"
+
+#~ msgid "Effect Size (pixels * 4)"
+#~ msgstr "Effekt Böyüklüyü (piksel * 4)"
+
+#~ msgid "Effect Size (pixels * 5)"
+#~ msgstr "Effekt Böyüklüyü (piksel * 5)"
+
+#~ msgid "Effect Size (pixels)"
+#~ msgstr "Effekt Böyüklüyü (piksel)"
+
+#, fuzzy
+#~ msgid "End Blend"
+#~ msgstr "Bitiş"
+
+#, fuzzy
+#~ msgid "End X"
+#~ msgstr "Bitiş"
+
+#, fuzzy
+#~ msgid "End Y"
+#~ msgstr "Bitiş"
+
+#, fuzzy
+#~ msgid "Erase before Draw"
+#~ msgstr "Poz əvvəl"
+
+#, fuzzy
+#~ msgid "Fade From %"
+#~ msgstr "Yazan"
+
+#, fuzzy
+#~ msgid "Fade To   %"
+#~ msgstr "Göndərilən"
+
+#, fuzzy
+#~ msgid "Fill Angle"
+#~ msgstr "Doldur"
+
+#, fuzzy
+#~ msgid "Fill BG with Pattern"
+#~ msgstr "Doldur birlikdə"
+
+#, fuzzy
+#~ msgid "Fill with BG Color"
+#~ msgstr "Doldur birlikdə"
+
+#~ msgid "Fonts"
+#~ msgstr "Yazı növləri"
+
+#~ msgid "Foreground Color"
+#~ msgstr "Ön plan Rəngi"
+
+#, fuzzy
+#~ msgid "Frame Color"
+#~ msgstr "Çərçivə növü"
+
+#, fuzzy
+#~ msgid "Frame Size"
+#~ msgstr "Çərçivə növü"
+
+#, fuzzy
+#~ msgid "From Top-Left to Bottom-Right"
+#~ msgstr "Yazan Üst Sol a(ə) Alt"
+
+#, fuzzy
+#~ msgid "Glow Radius"
+#~ msgstr "Qızarmış"
+
+#, fuzzy
+#~ msgid "Glow Size (pixels * 4)"
+#~ msgstr "Qızarmış Böyüklük piksel"
+
+#, fuzzy
+#~ msgid "Graph Scale"
+#~ msgstr "Göstərici"
+
+#, fuzzy
+#~ msgid "Hue Rate"
+#~ msgstr "Çöhrə"
+
+#~ msgid "Image Height"
+#~ msgstr "Rəsm Hündürlüyü"
+
+#, fuzzy
+#~ msgid "Image Size"
+#~ msgstr "Rəsm"
+
+#~ msgid "Image Width"
+#~ msgstr "Rəsm Nümayişcisi"
+
+#, fuzzy
+#~ msgid "Insert Layer Names"
+#~ msgstr "Daxil Et Lay"
+
+#~ msgid "Invert"
+#~ msgstr "Tərs çevir"
+
+#, fuzzy
+#~ msgid "Keep Background"
+#~ msgstr "Qoru"
+
+#~ msgid "Left"
+#~ msgstr "Sol"
+
+#, fuzzy
+#~ msgid "Lighting (degrees)"
+#~ msgstr "derece"
+
+#, fuzzy
+#~ msgid "Lower Color (Active)"
+#~ msgstr "Alçalt Rəng Fəal"
+
+#, fuzzy
+#~ msgid "Lower Color"
+#~ msgstr "Alçalt"
+
+#, fuzzy
+#~ msgid "Lower-Right color"
+#~ msgstr "Alçalt Sağ"
+
+#, fuzzy
+#~ msgid "Make New Background"
+#~ msgstr "Yeni"
+
+#, fuzzy
+#~ msgid "Mosaic Tile Type"
+#~ msgstr "Kirəmit"
+
+#, fuzzy
+#~ msgid "Not Pressed (Active)"
+#~ msgstr "Yox Fəal"
+
+#, fuzzy
+#~ msgid "Not Pressed"
+#~ msgstr "Yox"
+
+#, fuzzy
+#~ msgid "Number of Bands"
+#~ msgstr "Rəqəm"
+
+#~ msgid "Number of Colors"
+#~ msgstr "Rəng Sayı"
+
+#, fuzzy
+#~ msgid "Number of Copies"
+#~ msgstr "Rəqəm"
+
+#, fuzzy
+#~ msgid "Number of Times to Whirl"
+#~ msgstr "Rəqəm a(ə)"
+
+#, fuzzy
+#~ msgid "Number of X Tiles"
+#~ msgstr "Rəqəm X"
+
+#, fuzzy
+#~ msgid "Number of Y Tiles"
+#~ msgstr "Rəqəm Y"
+
+#, fuzzy
+#~ msgid "Offset (pixels)"
+#~ msgstr "Bədəl piksel"
+
+#, fuzzy
+#~ msgid "Offsets (pixels * 2)"
+#~ msgstr "piksel"
+
+#, fuzzy
+#~ msgid "Outline Blur Radius"
+#~ msgstr "Xarici Dumanlı"
+
+#, fuzzy
+#~ msgid "Outline Size"
+#~ msgstr "Xarici"
+
+#, fuzzy
+#~ msgid "Padding Around Text"
+#~ msgstr "Kənarlama"
+
+#, fuzzy
+#~ msgid "Padding X"
+#~ msgstr "Kənarlama"
+
+#, fuzzy
+#~ msgid "Padding Y"
+#~ msgstr "Kənarlama"
+
+#, fuzzy
+#~ msgid "Padding for Transparent Regions"
+#~ msgstr "Kənarlama üçün Şəffaf"
+
+#~ msgid "Padding"
+#~ msgstr "Kənarlama"
+
+#, fuzzy
+#~ msgid "Pattern (Outline)"
+#~ msgstr "Naxış Xarici"
+
+#, fuzzy
+#~ msgid "Pattern (Overlay)"
+#~ msgstr "Naxış Qabla"
+
+#, fuzzy
+#~ msgid "Pattern (Text)"
+#~ msgstr "Naxış Mətn"
+
+#, fuzzy
+#~ msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
+#~ msgstr "Qələm Çərx"
+
+#, fuzzy
+#~ msgid "Random Seed"
+#~ msgstr "Təsadüfi"
+
+#, fuzzy
+#~ msgid "Remove Background"
+#~ msgstr "Sil"
+
+#~ msgid "Right"
+#~ msgstr "Sağ"
+
+#, fuzzy
+#~ msgid "Scale X"
+#~ msgstr "Miqyas"
+
+#, fuzzy
+#~ msgid "Scale Y"
+#~ msgstr "Miqyas"
+
+#, fuzzy
+#~ msgid "Select-By-Color Threshold"
+#~ msgstr "Seç Rəng"
+
+#, fuzzy
+#~ msgid "Shadow Blur Radius"
+#~ msgstr "Dumanlı"
+
+#, fuzzy
+#~ msgid "Space Between Layers"
+#~ msgstr "Speys"
+
+#, fuzzy
+#~ msgid "Sphere Color"
+#~ msgstr "Kürə"
+
+#, fuzzy
+#~ msgid "Start Blend"
+#~ msgstr "Başla"
+
+#, fuzzy
+#~ msgid "Start Y"
+#~ msgstr "Başla"
+
+#, fuzzy
+#~ msgid "Starting Blend"
+#~ msgstr "Başladılır"
+
+#, fuzzy
+#~ msgid "Text Color (Active)"
+#~ msgstr "Mətn Rəng Fəal"
+
+#~ msgid "Tile"
+#~ msgstr "Kirəmit"
+
+#~ msgid "Up"
+#~ msgstr "Yuxarı"
+
+#, fuzzy
+#~ msgid "Upper Color (Active)"
+#~ msgstr "Qaldır Rəng Fəal"
+
+#~ msgid "Upper Color"
+#~ msgstr "Üst Rəng"
+
+#, fuzzy
+#~ msgid "Upper-Left color"
+#~ msgstr "Qaldır Sol"
+
+#, fuzzy
+#~ msgid "Use Pattern Overlay"
+#~ msgstr "İşlət Naxış"
+
+#, fuzzy
+#~ msgid "Use Pattern for Outline instead of Gradient"
+#~ msgstr "İşlət Naxış üçün Xarici"
+
+#, fuzzy
+#~ msgid "Use Pattern for Text instead of Gradient"
+#~ msgstr "İşlət Naxış üçün Mətn"
+
+#, fuzzy
+#~ msgid "Use Selection Bounds Instead of Belows"
+#~ msgstr "İşlət Seçki"
+
+#~ msgid "Wheel Radius (hypo < 0 < epi)"
+#~ msgstr "Fırlanan Radius (hypo < 0 < epi)"
+
+#~ msgid "Whirl Amount"
+#~ msgstr "Fırlanan Məzmun"
+
+#~ msgid "Whirl Angle"
+#~ msgstr "Fırlanan Bucaq"
+
+#~ msgid "Width of Bands"
+#~ msgstr "Band Eni"
+
+#~ msgid "Width of Gaps"
+#~ msgstr "Qep Eni"

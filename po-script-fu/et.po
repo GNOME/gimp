@@ -10,9 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-12-19 17:12+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-03 22:00+1200\n"
 "PO-Revision-Date: 2012-11-02 22:40+0300\n"
 "Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
@@ -23,60 +22,79 @@ msgstr ""
 "X-Generator: Emacs\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
 msgstr "Interaktiivne konsool Script-Fu arenduse jaoks"
 
+#: ../plug-ins/script-fu/script-fu.c:117
 msgid "_Console"
 msgstr "_Konsool"
 
+#: ../plug-ins/script-fu/script-fu.c:141
 msgid "Server for remote Script-Fu operation"
 msgstr "Server Script-Fu kaugoperatsioonie jaoks"
 
+#: ../plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
 msgstr "_Käivita server..."
 
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_GIMP Online"
 msgstr "_GIMP veebis"
 
+#: ../plug-ins/script-fu/script-fu.c:308
 msgid "_User Manual"
 msgstr "Kas_utamisjuhend"
 
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Test"
 msgstr "_Test"
 
+#: ../plug-ins/script-fu/script-fu.c:316
 msgid "_Buttons"
 msgstr "_Nupud"
 
+#: ../plug-ins/script-fu/script-fu.c:318
 msgid "_Logos"
 msgstr "_Logod"
 
+#: ../plug-ins/script-fu/script-fu.c:320
 msgid "_Patterns"
 msgstr "_Mustrid"
 
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Web Page Themes"
 msgstr "_Veebilehe teemad"
 
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Alien Glow"
 msgstr "_Tulnukate helendus"
 
+#: ../plug-ins/script-fu/script-fu.c:327
 msgid "_Beveled Pattern"
 msgstr "_Viltulõigatud muster"
 
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
+#: ../plug-ins/script-fu/script-fu.c:332
 msgid "Alpha to _Logo"
 msgstr "Alfa _logoks"
 
+#: ../plug-ins/script-fu/script-fu.c:335
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Kõikide kättesaadavate Script-Fu skriptide uuesti sisse lugemine"
 
+#: ../plug-ins/script-fu/script-fu.c:340
 msgid "_Refresh Scripts"
 msgstr "_Värskenda skripte"
 
+#: ../plug-ins/script-fu/script-fu.c:363
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -84,38 +102,50 @@ msgstr ""
 "Sa ei saa kasutada \"Värskenda skripte\" kuni Script-Fu dialoogiaken on "
 "avatud. Palun sulge kõik Script-Fu aknad ja proovi uuesti."
 
+#: ../plug-ins/script-fu/script-fu-console.c:130
+#: ../plug-ins/script-fu/script-fu-console.c:197
 msgid "Script-Fu Console"
 msgstr "Script-Fu konsool"
 
+#: ../plug-ins/script-fu/script-fu-console.c:193
 msgid "Welcome to TinyScheme"
 msgstr "Tere tulemas TinyScheme'i kasutama"
 
+#: ../plug-ins/script-fu/script-fu-console.c:199
 msgid "Interactive Scheme Development"
 msgstr "Interaktiivne Scheme arendus"
 
+#: ../plug-ins/script-fu/script-fu-console.c:235
 msgid "_Browse..."
 msgstr "_Sirvi..."
 
+#: ../plug-ins/script-fu/script-fu-console.c:293
 msgid "Save Script-Fu Console Output"
 msgstr "Salvesta Script-Fu konsooli väljund"
 
+#: ../plug-ins/script-fu/script-fu-console.c:340
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Ei suutnud '%s' kirjutamiseks avada: %s"
 
+#: ../plug-ins/script-fu/script-fu-console.c:369
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu protseduuride sirvija"
 
+#: ../plug-ins/script-fu/script-fu-eval.c:60
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu hinnangurežiim võimaldab ainult inaktiivset jälgimist"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:198
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu ei suuda töödelda kahte skripti samaaegselt."
 
+#: ../plug-ins/script-fu/script-fu-interface.c:200
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Skript nimega \"%s\" sul juba töötab."
 
+#: ../plug-ins/script-fu/script-fu-interface.c:226
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
@@ -123,89 +153,1528 @@ msgstr "Script-Fu: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
+#: ../plug-ins/script-fu/script-fu-interface.c:290
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:337
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu värvivalik"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:446
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu faili valik"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:449
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu kausta valik"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu fondi valik"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu värvipaleti valik"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-fu mustri valik"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:488
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu spektrikomplekti valik"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:497
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu pintsli valik"
 
+#: ../plug-ins/script-fu/script-fu-interface.c:840
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Viga %s käivitamisel:"
 
+#: ../plug-ins/script-fu/script-fu-scripts.c:146
 msgid "Too few arguments to 'script-fu-register' call"
 msgstr "'script-fu-register' päringul on liiga vähe argumente"
 
+#: ../plug-ins/script-fu/script-fu-scripts.c:605
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Viga %s laadimisel:"
 
+#: ../plug-ins/script-fu/script-fu-server.c:827
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu serveri võimalused"
 
+#: ../plug-ins/script-fu/script-fu-server.c:832
 msgid "_Start Server"
 msgstr "_Käivita server"
 
+#: ../plug-ins/script-fu/script-fu-server.c:865
+msgid "Listen on IP:"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu-server.c:872
 msgid "Server port:"
 msgstr "Serveri port:"
 
+#: ../plug-ins/script-fu/script-fu-server.c:878
 msgid "Server logfile:"
 msgstr "Serveri logifail:"
 
+#: ../plug-ins/script-fu/script-fu-server.c:890
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
+"allow attackers to remotely execute arbitrary code on this machine."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+msgid "Bumpmap"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:185
+msgid "Add B_evel..."
+msgstr "_Lisa viltulõige..."
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:186
+msgid "Add a beveled border to an image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:193
+msgid "Thickness"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:194
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#: ../plug-ins/script-fu/scripts/old-photo.scm:104
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/slide.scm:248
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
+msgid "Work on copy"
+msgstr "Tööta koopiaga"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:195
+msgid "Keep bump layer"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:108
+#, fuzzy
+msgid "Border Layer"
+msgstr "Äärise suurus"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:160
+msgid "Add _Border..."
+msgstr "Lisa ääri_s..."
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:161
+msgid "Add a border around an image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:168
+msgid "Border X size"
+msgstr "X äärise suurus"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:169
+msgid "Border Y size"
+msgstr "Y äärise suurus"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:170
+msgid "Border color"
+msgstr "Äärise värv"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:171
+msgid "Delta value on color"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+msgid "Frame"
+msgstr "Raam"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+msgid "Blend Animation needs at least three source layers"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+msgid "_Blend..."
+msgstr "_Sega kokku..."
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+msgid "Intermediate frames"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+msgid "Max. blur radius"
+msgstr "Maksim. udu raadius"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+msgid "Looped"
+msgstr ""
+
+#. --- false form of "if-1"
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:212
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:219
+#, fuzzy
+msgid "B_urn-In..."
+msgstr "N_upp..."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:220
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:227
+msgid "Glow color"
+msgstr "Hõõguv värv"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:228
+msgid "Fadeout"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:229
+#, fuzzy
+msgid "Fadeout width"
+msgstr "Serva laius"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:230
+#, fuzzy
+msgid "Corona width"
+msgstr "Pildi laius"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:231
+msgid "After glow"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+msgid "Add glowing"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+msgid "Prepare for GIF"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+msgid "Speed (pixels/frame)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+msgid "Carved Surface"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:169
+#, fuzzy
+msgid "Bevel Shadow"
+msgstr "Vari"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:170
+#, fuzzy
+msgid "Bevel Highlight"
+msgstr "Esiletõstetud värv"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:171
+#, fuzzy
+msgid "Cast Shadow"
+msgstr "Tekita vari"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+msgid "Inset"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+msgid "Stencil C_arve..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:183
+msgid ""
+"Use the specified drawable as a stencil to carve from the specified image."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:190
+msgid "Image to carve"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:191
+msgid "Carve white areas"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
+#, fuzzy
+msgid "Background"
+msgstr "Tagapõhja värv"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+msgid "Layer 1"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+msgid "Layer 2"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+msgid "Layer 3"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+#, fuzzy
+msgid "Drop Shadow"
+msgstr "Vari"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:201
+msgid "Chrome"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:202
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
+#, fuzzy
+msgid "Highlight"
+msgstr "Esiletõstetud värv"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:214
+msgid "Stencil C_hrome..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:215
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:222
+msgid "Chrome saturation"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:223
+msgid "Chrome lightness"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:224
+msgid "Chrome factor"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:225
+msgid "Environment map"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:228
+#, fuzzy
+msgid "Highlight balance"
+msgstr "Esiletõstetud värv"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:229
+msgid "Chrome balance"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
+msgid "Chrome white areas"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:81
+msgid "Effect layer"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:134
+#, fuzzy
+msgid "_Circuit..."
+msgstr "_Moonuta..."
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:135
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:142
+#, fuzzy
+msgid "Oilify mask size"
+msgstr "Maski suurus"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:143
+msgid "Circuit seed"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:144
+msgid "No background (only for separate layer)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:145
+#: ../plug-ins/script-fu/scripts/lava.scm:129
+#: ../plug-ins/script-fu/scripts/predator.scm:132
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+#, fuzzy
+msgid "Keep selection"
+msgstr "Valikujoone piinamine"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:146
+#: ../plug-ins/script-fu/scripts/lava.scm:130
+#: ../plug-ins/script-fu/scripts/predator.scm:133
+msgid "Separate layer"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:51
+msgid "_Clothify..."
+msgstr "_Riidele..."
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:52
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:59
+msgid "Blur X"
+msgstr "Udu X"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:60
+msgid "Blur Y"
+msgstr "Udu Y"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:61
+msgid "Azimuth"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:62
+msgid "Elevation"
+msgstr "Ülestõstmine"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:63
+msgid "Depth"
+msgstr "Sügavus"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:36
+msgid "Stain"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:81
+msgid "_Coffee Stain..."
+msgstr "_Kohviplekid..."
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:82
+msgid "Add realistic looking coffee stains to the image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:89
+msgid "Stains"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:90
+#, fuzzy
+msgid "Darken only"
+msgstr "Tume värv"
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:67
+msgid "Difference Clouds..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:68
+msgid "Solid noise applied with Difference layer mode"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:102
+msgid "_Distort..."
+msgstr "_Moonuta..."
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:103
+msgid "Distress the selection"
+msgstr "Valikujoone piinamine"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:110
+msgid "Threshold (bigger 1<-->254 smaller)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:111
+msgid "Spread"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:112
+msgid "Granularity (1 is low)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
+msgid "Smooth"
+msgstr "Mahenda"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+msgid "Smooth horizontally"
+msgstr "Mahenda horisontaalselt"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+msgid "Smooth vertically"
+msgstr "Mahenda vertikaalselt"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
+msgid "_Drop Shadow..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+msgid "Offset X"
+msgstr "Nihe X"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+msgid "Offset Y"
+msgstr "Nihe Y"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+msgid "Blur radius"
+msgstr "Udu raadius"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+msgid "Color"
+msgstr "Värv"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+msgid "Opacity"
+msgstr "Läbipaistmatus"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
+msgid "Allow resizing"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:39
+msgid "_Erase Every Other Row..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:40
+msgid "Erase every other row or column"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+#, fuzzy
+msgid "Rows/cols"
+msgstr "Read"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
 msgid "Rows"
 msgstr "Read"
 
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+msgid "Columns"
+msgstr "Veerud"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+#, fuzzy
+msgid "Even/odd"
+msgstr "Paaris"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
 msgid "Even"
 msgstr "Paaris"
 
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Odd"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#, fuzzy
+msgid "Erase/fill"
+msgstr "Kstuta"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
 msgid "Erase"
 msgstr "Kstuta"
 
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Fill with BG"
+msgstr "Täida BG värviga"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:152
+msgid "Render _Font Map..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:153
+#, fuzzy
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
+msgstr "Loo pilt mis on täidetud topograafilise kaardi mustriga"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:158
+msgid "_Text"
+msgstr "_Tekst"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:159
+msgid "Use font _name as text"
+msgstr "Kasuta fondi_nime tekstina"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:160
+msgid "_Labels"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:161
+msgid "_Filter (regexp)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:162
+msgid "Font _size (pixels)"
+msgstr "Fondi _suurus (pikslites)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:163
+msgid "_Border (pixels)"
+msgstr "Ääri_s (pikslit)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "_Color scheme"
+msgstr "_Värviskeem"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Black on white"
 msgstr "Must valgel"
 
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "Active colors"
+msgstr "Aktiivsed värvid"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:146
+#, fuzzy
+msgid "_Fuzzy Border..."
+msgstr "Lisa ääri_s..."
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:147
+msgid "Add a jagged, fuzzy border to an image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:155
+#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+msgid "Border size"
+msgstr "Äärise suurus"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:156
+msgid "Blur border"
+msgstr "Udusta ääris"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
+msgid "Granularity (1 is Low)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
+msgid "Add shadow"
+msgstr "Lisa vari"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+msgid "Shadow weight (%)"
+msgstr "Varju kaal (%)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+msgid "Flatten image"
+msgstr "Ühenda kõik kihid"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+msgid "Using _Paths"
+msgstr "Vektor_joonte kasutamine"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+msgid "Bookmark to the user manual"
+msgstr "Järjehoidja kasutamisjuhendisse"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+msgid "_Preparing your Images for the Web"
+msgstr "_Piltide ettevalmistamine internetilehele panemiseks"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+msgid "_Working with Digital Camera Photos"
+msgstr "_Digitaalkaamera fotodega töötamine"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+msgid "Create, Open and Save _Files"
+msgstr "_Failide loomine, avamine ja salvestamine"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+msgid "_Basic Concepts"
+msgstr "Üldised _mõisted"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+msgid "How to Use _Dialogs"
+msgstr "Kuidas _dialooge kasutada"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+msgid "Drawing _Simple Objects"
+msgstr "Liht_sate objektide joonistamine"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+msgid "Create and Use _Selections"
+msgstr "_Valikute loomine ja kasutamine"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+msgid "_Main Web Site"
+msgstr "_Pealehekülg"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
+msgid "Bookmark to the GIMP web site"
+msgstr "Järjehoidja GIMPi kodulehele"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+msgid "_Developer Web Site"
+msgstr "_Arendajate lehekülg"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+msgid "_User Manual Web Site"
+msgstr "Kas_utamisjuhendi kodulehekülg"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+msgid "Plug-in _Registry"
+msgstr "Pistikute _register"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:63
+msgid "Custom _Gradient..."
+msgstr "Omatehtud _spektrikomplekt..."
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:64
+#, fuzzy
+msgid "Create an image filled with an example of the current gradient"
+msgstr "Loo pilt mis on täidetud topograafilise kaardi mustriga"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:138
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:194
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:263
+msgid "Width"
+msgstr "Laius"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+msgid "Height"
+msgstr "Kõrgus"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:71
+msgid "Gradient reverse"
+msgstr "Pööra ümber"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:84
+msgid "_Grid..."
+msgstr "_Abijoon..."
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:85
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current "
+"brush"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:92
+msgid "X divisions"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:93
+msgid "Y divisions"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+msgid "New Guides from _Selection"
+msgstr "Uued abijooned _valikust"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#, fuzzy
+msgid "Create four guides around the bounding box of the current selection"
+msgstr "Muuda valitud ala nurgad ümaramaks"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+msgid "New Guide (by _Percent)..."
+msgstr "Uus abijoon (_protsendi järgi)..."
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Direction"
+msgstr "Suund"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Horizontal"
 msgstr "Horisontaalne"
 
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Vertical"
+msgstr "Vertikaalne"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
+#, fuzzy
+msgid "Position (in %)"
+msgstr "Positsioon"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+msgid "New _Guide..."
+msgstr "_Uus abijoon..."
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:36
+msgid "Position"
+msgstr "Positsioon"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+msgid "_Remove all Guides"
+msgstr "_Eemalda kõik abijooned"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+msgid "Remove all horizontal and vertical guides"
+msgstr "Eemalda kõik horisontaalsed ja vertikaalsed abijooned"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:117
+msgid "_Lava..."
+msgstr "_Laava..."
+
+#: ../plug-ins/script-fu/scripts/lava.scm:118
+msgid "Fill the current selection with lava"
+msgstr "Täida aktiivne valik laavaga"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:125
+msgid "Seed"
+msgstr "Seeme"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:126
+msgid "Size"
+msgstr "Suurus"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:127
+msgid "Roughness"
+msgstr "Karedus"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:128
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+msgid "Gradient"
+msgstr "Spektrikomplekt"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:131
+msgid "Use current gradient"
+msgstr "Kasuta aktiivset spektrikomplekti"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:106
+msgid "Line _Nova..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:107
+msgid ""
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:114
+msgid "Number of lines"
+msgstr "Ridade arv"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:115
+msgid "Sharpness (degrees)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:116
+msgid "Offset radius"
+msgstr "Nihke raadius"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:117
+#, fuzzy
+msgid "Randomness"
+msgstr "Juhuslikkuse seeme"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+msgid "_Rectangular..."
+msgstr "_Ristkülikukujuline..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+msgid "Create a rectangular brush"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:137
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:193
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:262
+msgid "Name"
+msgstr "Nimi"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+msgid "Spacing"
+msgstr "Vahemaa"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:131
+msgid "Re_ctangular, Feathered..."
+msgstr "Ristkülik, _pehmendatud..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:132
+msgid "Create a rectangular brush with feathered edges"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+msgid "Feathering"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:187
+msgid "_Elliptical..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:188
+msgid "Create an elliptical brush"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:256
+#, fuzzy
+msgid "Elli_ptical, Feathered..."
+msgstr "Ristkülik, _pehmendatud..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:257
+msgid "Create an elliptical brush with feathered edges"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+msgid "_Old Photo..."
+msgstr "_Vana foto..."
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+msgid "Make an image look like an old photo"
+msgstr "Pane pilt vana fotona välja nägema"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+msgid "Defocus"
+msgstr ""
+
+#. since this plug-in uses the fuzzy-border plug-in, I used the
+#. values of the latter, with the exception of the initial value
+#. and the 'minimum' value.
+#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+msgid "Sepia"
+msgstr "Seepia"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+msgid "Mottle"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+msgid "Folder for the output file"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:236
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:244
+msgid "The filename you entered is not a suitable name for a file."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:246
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:274
+msgid ""
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:300
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:332
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:361
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:408
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+msgid "There is no image data in the clipboard to paste."
+msgstr "Lõikelaual pole asetamiseks pildiandmeid."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
+msgid "New _Brush..."
+msgstr "Uus pi_ntsel..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+msgid "Paste the clipboard contents into a new brush"
+msgstr "Tee lõikelaua sisu alusel uus pintsel"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+msgid "Brush name"
+msgstr "Pintsli nimi"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
+msgid "File name"
+msgstr "Faili nimi"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
+msgid "New _Pattern..."
+msgstr "Uus _muster..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "Tee lõikelaua sisu alusel uus muster"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
+msgid "Pattern name"
+msgstr "Mustri nimi"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+msgid "_Perspective..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+msgid "Angle"
+msgstr "Nurk"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+msgid "Relative distance of horizon"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+msgid "Relative length of shadow"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+msgid "Interpolation"
+msgstr "Interpoleerimine"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:121
+msgid "_Predator..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/predator.scm:122
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/predator.scm:129
+#, fuzzy
+msgid "Edge amount"
+msgstr "Ainult servad"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:130
+msgid "Pixelize"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/predator.scm:131
+msgid "Pixel amount"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
+msgid "Reverse Layer Order"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+msgid "Reverse the order of layers in the image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:119
+#, fuzzy
+msgid "_Rippling..."
+msgstr "P_ealkiri..."
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:120
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:127
+msgid "Rippling strength"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:128
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "Raamide arv"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+msgid "Edge behavior"
+msgstr "Serva käitumine"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
 msgid "Wrap"
 msgstr "Reamurdmine"
 
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+msgid "Smear"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+msgid "Black"
+msgstr "Must"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+msgid "_Round Corners..."
+msgstr "Üma_rda nurgad..."
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and background"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+msgid "Edge radius"
+msgstr "Serva raadius"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#, fuzzy
+msgid "Add drop-shadow"
+msgstr "Lisa vari"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+msgid "Shadow X offset"
+msgstr "Varju X nihe"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+msgid "Shadow Y offset"
+msgstr "Varju Y nihe"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+msgid "Add background"
+msgstr "Lisa tagapõhi"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+msgid "Se_t Colormap..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+#, fuzzy
+msgid "Palette"
+msgstr "Muster"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+msgid "Rounded R_ectangle..."
+msgstr "Ümarnurkne ristkülik..."
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+msgid "Round the corners of the current selection"
+msgstr "Muuda valitud ala nurgad ümaramaks"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:147
+msgid "Radius (%)"
+msgstr "Raadius (%)"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:148
+msgid "Concave"
+msgstr "Nõgus"
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+#, fuzzy
+msgid "To _Brush..."
+msgstr "Uus pi_ntsel..."
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+msgid "Convert a selection to a brush"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
+msgid "To _Image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
+msgid "Convert a selection to an image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
+#, fuzzy
+msgid "To _Pattern..."
+msgstr "Uus _muster..."
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
+msgid "Convert a selection to a pattern"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/slide.scm:236
+#, fuzzy
+msgid "_Slide..."
+msgstr "_Uus abijoon..."
+
+#: ../plug-ins/script-fu/scripts/slide.scm:237
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/slide.scm:244
+msgid "Text"
+msgstr "Tekst"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:245
+msgid "Number"
+msgstr "Arv"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:246
+msgid "Font"
+msgstr "Font"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:247
+msgid "Font color"
+msgstr "Fondi värv"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+msgid "_Spinning Globe..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+msgid "Frames"
+msgstr "Raamid"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+msgid "Turn from left to right"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+msgid "Transparent background"
+msgstr "Läbipaistev tagapõhi"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+msgid "Index to n colors (0 = remain RGB)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+msgid "Rendering Spyro"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
+#, fuzzy
+msgid "_Spyrogimp..."
+msgstr "Spirograaf"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+msgid ""
+"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+msgid "Type"
+msgstr "Tüüp"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Spyrograph"
 msgstr "Spirograaf"
 
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+msgid "Epitrochoid"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+msgid "Lissajous"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+msgid "Shape"
+msgstr "Kuju"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
 msgid "Circle"
 msgstr "Ring"
 
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+msgid "Triangle"
+msgstr "Kolmnurk"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+#, fuzzy
+msgid "Square"
+msgstr "Ruudud"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+msgid "Pentagon"
+msgstr "Viisnurk"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+#, fuzzy
+msgid "Hexagon"
+msgstr "Viisnurk"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+msgid "Polygon: 7 sides"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+msgid "Polygon: 8 sides"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+msgid "Polygon: 9 sides"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+msgid "Polygon: 10 sides"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+msgid "Outer teeth"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+msgid "Inner teeth"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+#, fuzzy
+msgid "Margin (pixels)"
+msgstr "Raadius (pikslites)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+#, fuzzy
+msgid "Hole ratio"
+msgstr "Ülestõstmine"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+msgid "Start angle"
+msgstr "Algusnurk"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+msgid "Tool"
+msgstr "Tööriist"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
 msgid "Pencil"
 msgstr "Pliiats"
 
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+msgid "Brush"
+msgstr "Pintsel"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+msgid "Airbrush"
+msgstr "Aerosoolvärv"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+msgid "Color method"
+msgstr "Värvimise viis"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
 msgid "Solid Color"
 msgstr "Ühtlane värv"
 
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+msgid "Gradient: Loop Sawtooth"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+msgid "Gradient: Loop Triangle"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/test-sphere.scm:267
+msgid "_Sphere..."
+msgstr "_Kera..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+msgid "_Tileable Blur..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:76
+msgid "Radius"
+msgstr "Raadius"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:77
+#, fuzzy
+msgid "Blur vertically"
+msgstr "Mahenda vertikaalselt"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:78
+#, fuzzy
+msgid "Blur horizontally"
+msgstr "Mahenda horisontaalselt"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+#, fuzzy
+msgid "Blur type"
+msgstr "Udu X"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "IIR"
 msgstr "IIR"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "RLE"
+msgstr "RLE"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+msgid "Mask size"
+msgstr "Maski suurus"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+msgid "Mask opacity"
+msgstr "Maski läbipaistmatus"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+msgid "_Waves..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+msgid "Amplitude"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+msgid "Wavelength"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+#, fuzzy
+msgid "Invert direction"
+msgstr "Suund"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:389
+#, fuzzy
+msgid "_Weave..."
+msgstr "_Kera..."
+
+#: ../plug-ins/script-fu/scripts/weave.scm:390
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/weave.scm:397
+msgid "Ribbon width"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/weave.scm:398
+msgid "Ribbon spacing"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/weave.scm:399
+msgid "Shadow darkness"
+msgstr "Varju tumedus"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:400
+msgid "Shadow depth"
+msgstr "Varju sügavus"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:401
+msgid "Thread length"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/weave.scm:402
+msgid "Thread density"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/weave.scm:403
+msgid "Thread intensity"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+msgid "Shadow"
+msgstr "Vari"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+msgid "_Xach-Effect..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+#, fuzzy
+msgid "Highlight X offset"
+msgstr "Esiletõstetud värv"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+#, fuzzy
+msgid "Highlight Y offset"
+msgstr "Esiletõstetud värv"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+msgid "Highlight color"
+msgstr "Esiletõstetud värv"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+#, fuzzy
+msgid "Highlight opacity"
+msgstr "Esiletõstetud värv"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+#, fuzzy
+msgid "Drop shadow color"
+msgstr "Varju värv"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+msgid "Drop shadow opacity"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+#, fuzzy
+msgid "Drop shadow blur radius"
+msgstr "Varju udustamise raadius"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+#, fuzzy
+msgid "Drop shadow X offset"
+msgstr "Varju X nihe"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+#, fuzzy
+msgid "Drop shadow Y offset"
+msgstr "Varju Y nihe"
 
 #~ msgid "Right"
 #~ msgstr "Parem"
@@ -215,9 +1684,6 @@ msgstr "IIR"
 
 #~ msgid "Tile"
 #~ msgstr "Klots"
-
-#~ msgid "Squares"
-#~ msgstr "Ruudud"
 
 #~ msgid "_Misc"
 #~ msgstr "_Mitmesugust"
@@ -250,9 +1716,6 @@ msgstr "IIR"
 #~ msgid "Default bumpmap settings"
 #~ msgstr "Vaikimisi kühmulisuse seaded"
 
-#~ msgid "Font"
-#~ msgstr "Font"
-
 #~ msgid "Font size (pixels)"
 #~ msgstr "Fondi suurus (pikslites)"
 
@@ -261,21 +1724,6 @@ msgstr "IIR"
 
 #~ msgid "Pattern"
 #~ msgstr "Muster"
-
-#~ msgid "Shadow X offset"
-#~ msgstr "Varju X nihe"
-
-#~ msgid "Shadow Y offset"
-#~ msgstr "Varju Y nihe"
-
-#~ msgid "Shadow blur radius"
-#~ msgstr "Varju udustamise raadius"
-
-#~ msgid "Text"
-#~ msgstr "Tekst"
-
-#~ msgid "Background color"
-#~ msgstr "Tagapõhja värv"
 
 #~ msgid "Block size"
 #~ msgstr "Ploki suurus"
@@ -292,32 +1740,8 @@ msgstr "IIR"
 #~ msgid "Start blend"
 #~ msgstr "Alusta kokkusegamine"
 
-#~ msgid "Add B_evel..."
-#~ msgstr "_Lisa viltulõige..."
-
-#~ msgid "Work on copy"
-#~ msgstr "Tööta koopiaga"
-
-#~ msgid "Add _Border..."
-#~ msgstr "Lisa ääri_s..."
-
-#~ msgid "Border X size"
-#~ msgstr "X äärise suurus"
-
-#~ msgid "Border Y size"
-#~ msgstr "Y äärise suurus"
-
-#~ msgid "Border color"
-#~ msgstr "Äärise värv"
-
 #~ msgid "Down"
 #~ msgstr "Alumine"
-
-#~ msgid "Flatten image"
-#~ msgstr "Ühenda kõik kihid"
-
-#~ msgid "Glow color"
-#~ msgstr "Hõõguv värv"
 
 #~ msgid "Left"
 #~ msgstr "Vasak"
@@ -325,20 +1749,11 @@ msgstr "IIR"
 #~ msgid "Orientation"
 #~ msgstr "Suund"
 
-#~ msgid "Size"
-#~ msgstr "Suurus"
-
 #~ msgid "Up"
 #~ msgstr "Ülemine"
 
 #~ msgid "_Arrow..."
 #~ msgstr "_Nool..."
-
-#~ msgid "Radius"
-#~ msgstr "Raadius"
-
-#~ msgid "B_utton..."
-#~ msgstr "N_upp..."
 
 #~ msgid "Padding"
 #~ msgstr "Polsterdus"
@@ -352,24 +1767,6 @@ msgstr "IIR"
 #~ msgid "Diameter"
 #~ msgstr "Läbimõõt"
 
-#~ msgid "Transparent background"
-#~ msgstr "Läbipaistev tagapõhi"
-
-#~ msgid "H_eading..."
-#~ msgstr "P_ealkiri..."
-
-#~ msgid "Height"
-#~ msgstr "Kõrgus"
-
-#~ msgid "Width"
-#~ msgstr "Laius"
-
-#~ msgid "Max. blur radius"
-#~ msgstr "Maksim. udu raadius"
-
-#~ msgid "_Blend..."
-#~ msgstr "_Sega kokku..."
-
 #~ msgid "Blen_ded..."
 #~ msgstr "Se_gatud..."
 
@@ -378,12 +1775,6 @@ msgstr "IIR"
 
 #~ msgid "Custom Gradient"
 #~ msgstr "Omatehtud spektrikomplekt"
-
-#~ msgid "Gradient"
-#~ msgstr "Spektrikomplekt"
-
-#~ msgid "Gradient reverse"
-#~ msgstr "Pööra ümber"
 
 #~ msgid "Offset (pixels)"
 #~ msgstr "Nihe (pikslites)"
@@ -404,9 +1795,6 @@ msgstr "IIR"
 #~ msgid "Image size"
 #~ msgstr "Pildi suurus"
 
-#~ msgid "Smooth"
-#~ msgstr "Mahenda"
-
 #, fuzzy
 #~ msgid "Background Image"
 #~ msgstr "Taustapilt"
@@ -417,24 +1805,6 @@ msgstr "IIR"
 #~ msgid "Invert"
 #~ msgstr "Pööra pahupidi"
 
-#~ msgid "Blur X"
-#~ msgstr "Udu X"
-
-#~ msgid "Blur Y"
-#~ msgstr "Udu Y"
-
-#~ msgid "Depth"
-#~ msgstr "Sügavus"
-
-#~ msgid "Elevation"
-#~ msgstr "Ülestõstmine"
-
-#~ msgid "_Clothify..."
-#~ msgstr "_Riidele..."
-
-#~ msgid "_Coffee Stain..."
-#~ msgstr "_Kohviplekid..."
-
 #~ msgid "Cool _Metal..."
 #~ msgstr "Külm _metall..."
 
@@ -444,53 +1814,11 @@ msgstr "IIR"
 #~ msgid "Background image"
 #~ msgstr "Taustapilt"
 
-#~ msgid "Distress the selection"
-#~ msgstr "Valikujoone piinamine"
-
-#~ msgid "Smooth horizontally"
-#~ msgstr "Mahenda horisontaalselt"
-
-#~ msgid "Smooth vertically"
-#~ msgstr "Mahenda vertikaalselt"
-
-#~ msgid "_Distort..."
-#~ msgstr "_Moonuta..."
-
-#~ msgid "Blur radius"
-#~ msgstr "Udu raadius"
-
-#~ msgid "Color"
-#~ msgstr "Värv"
-
-#~ msgid "Offset X"
-#~ msgstr "Nihe X"
-
-#~ msgid "Offset Y"
-#~ msgstr "Nihe Y"
-
-#~ msgid "Opacity"
-#~ msgstr "Läbipaistmatus"
-
-#~ msgid "Columns"
-#~ msgstr "Veerud"
-
-#~ msgid "Fill with BG"
-#~ msgstr "Täida BG värviga"
-
-#~ msgid "Border size"
-#~ msgstr "Äärise suurus"
-
 #~ msgid "_Fade to Layer Mask..."
 #~ msgstr "_Kihi server läbipaistvaks..."
 
 #~ msgid "Image height"
 #~ msgstr "Pildi kõrgus"
-
-#~ msgid "Image width"
-#~ msgstr "Pildi laius"
-
-#~ msgid "Random seed"
-#~ msgstr "Juhuslikkuse seeme"
 
 #~ msgid "Scale X"
 #~ msgstr "X mõõtmed"
@@ -498,44 +1826,11 @@ msgstr "IIR"
 #~ msgid "Scale Y"
 #~ msgstr "Y mõõtmed"
 
-#~ msgid "Active colors"
-#~ msgstr "Aktiivsed värvid"
-
-#~ msgid "Font _size (pixels)"
-#~ msgstr "Fondi _suurus (pikslites)"
-
-#~ msgid "Use font _name as text"
-#~ msgstr "Kasuta fondi_nime tekstina"
-
-#~ msgid "_Border (pixels)"
-#~ msgstr "Ääri_s (pikslit)"
-
-#~ msgid "_Color scheme"
-#~ msgstr "_Värviskeem"
-
-#~ msgid "_Text"
-#~ msgstr "_Tekst"
-
 #~ msgid "_Frosty..."
 #~ msgstr "_Härmane..."
 
-#~ msgid "Add shadow"
-#~ msgstr "Lisa vari"
-
-#~ msgid "Blur border"
-#~ msgstr "Udusta ääris"
-
-#~ msgid "Shadow weight (%)"
-#~ msgstr "Varju kaal (%)"
-
 #~ msgid "Autocrop"
 #~ msgstr "Automaatkärbe"
-
-#~ msgid "Dark color"
-#~ msgstr "Tume värv"
-
-#~ msgid "Highlight color"
-#~ msgstr "Esiletõstetud värv"
 
 #~ msgid "Index image"
 #~ msgstr "Indekspilt"
@@ -546,47 +1841,11 @@ msgstr "IIR"
 #~ msgid "Remove background"
 #~ msgstr "Eemalda tagapõhi"
 
-#~ msgid "Shadow color"
-#~ msgstr "Varju värv"
-
-#~ msgid "Shadow"
-#~ msgstr "Vari"
-
 #~ msgid "Effect size (pixels * 3)"
 #~ msgstr "Effekti suurus (pikslid * 3)"
 
 #~ msgid "Border size (pixels)"
 #~ msgstr "Äärise suurus (pikslites)"
-
-#~ msgid "Custom _Gradient..."
-#~ msgstr "Omatehtud _spektrikomplekt..."
-
-#~ msgid "_Grid..."
-#~ msgstr "_Abijoon..."
-
-#~ msgid "New Guides from _Selection"
-#~ msgstr "Uued abijooned _valikust"
-
-#~ msgid "Direction"
-#~ msgstr "Suund"
-
-#~ msgid "New Guide (by _Percent)..."
-#~ msgstr "Uus abijoon (_protsendi järgi)..."
-
-#~ msgid "Vertical"
-#~ msgstr "Vertikaalne"
-
-#~ msgid "New _Guide..."
-#~ msgstr "_Uus abijoon..."
-
-#~ msgid "Position"
-#~ msgstr "Positsioon"
-
-#~ msgid "Remove all horizontal and vertical guides"
-#~ msgstr "Eemalda kõik horisontaalsed ja vertikaalsed abijooned"
-
-#~ msgid "_Remove all Guides"
-#~ msgstr "_Eemalda kõik abijooned"
 
 #~ msgid "BG opacity"
 #~ msgstr "Tausta läbipaistmatus"
@@ -597,9 +1856,6 @@ msgstr "IIR"
 #~ msgid "Frame size"
 #~ msgstr "Raami suurus"
 
-#~ msgid "Create an image filled with a topographic map pattern"
-#~ msgstr "Loo pilt mis on täidetud topograafilise kaardi mustriga"
-
 #~ msgid "Land height"
 #~ msgstr "Maa kõrgus"
 
@@ -608,42 +1864,6 @@ msgstr "IIR"
 
 #~ msgid "_Land..."
 #~ msgstr "_Maa..."
-
-#~ msgid "Fill the current selection with lava"
-#~ msgstr "Täida aktiivne valik laavaga"
-
-#~ msgid "Roughness"
-#~ msgstr "Karedus"
-
-#~ msgid "Seed"
-#~ msgstr "Seeme"
-
-#~ msgid "Use current gradient"
-#~ msgstr "Kasuta aktiivset spektrikomplekti"
-
-#~ msgid "_Lava..."
-#~ msgstr "_Laava..."
-
-#~ msgid "Number of lines"
-#~ msgstr "Ridade arv"
-
-#~ msgid "Offset radius"
-#~ msgstr "Nihke raadius"
-
-#~ msgid "Name"
-#~ msgstr "Nimi"
-
-#~ msgid "Re_ctangular, Feathered..."
-#~ msgstr "Ristkülik, _pehmendatud..."
-
-#~ msgid "Spacing"
-#~ msgstr "Vahemaa"
-
-#~ msgid "_Rectangular..."
-#~ msgstr "_Ristkülikukujuline..."
-
-#~ msgid "Create shadow"
-#~ msgstr "Tekita vari"
 
 #~ msgid "Effect size (pixels * 5)"
 #~ msgstr "Effekri suurus (pikslid * 5)"
@@ -660,45 +1880,6 @@ msgstr "IIR"
 #, fuzzy
 #~ msgid "Newsprint Te_xt..."
 #~ msgstr "Ajalehepaberi tekst..."
-
-#~ msgid "Make an image look like an old photo"
-#~ msgstr "Pane pilt vana fotona välja nägema"
-
-#~ msgid "Sepia"
-#~ msgstr "Seepia"
-
-#~ msgid "_Old Photo..."
-#~ msgstr "_Vana foto..."
-
-#~ msgid "Brush name"
-#~ msgstr "Pintsli nimi"
-
-#~ msgid "File name"
-#~ msgstr "Faili nimi"
-
-#~ msgid "New _Brush..."
-#~ msgstr "Uus pi_ntsel..."
-
-#~ msgid "Paste the clipboard contents into a new brush"
-#~ msgstr "Tee lõikelaua sisu alusel uus pintsel"
-
-#~ msgid "There is no image data in the clipboard to paste."
-#~ msgstr "Lõikelaual pole asetamiseks pildiandmeid."
-
-#~ msgid "New _Pattern..."
-#~ msgstr "Uus _muster..."
-
-#~ msgid "Paste the clipboard contents into a new pattern"
-#~ msgstr "Tee lõikelaua sisu alusel uus muster"
-
-#~ msgid "Pattern name"
-#~ msgstr "Mustri nimi"
-
-#~ msgid "Angle"
-#~ msgstr "Nurk"
-
-#~ msgid "Interpolation"
-#~ msgstr "Interpoleerimine"
 
 #~ msgid "Lower color"
 #~ msgstr "Alumine värv"
@@ -733,159 +1914,17 @@ msgstr "IIR"
 #~ msgid "Behavior"
 #~ msgstr "Käitumine"
 
-#~ msgid "Black"
-#~ msgstr "Must"
-
-#~ msgid "Edge behavior"
-#~ msgstr "Serva käitumine"
-
-#~ msgid "Number of frames"
-#~ msgstr "Raamide arv"
-
-#~ msgid "Add background"
-#~ msgstr "Lisa tagapõhi"
-
-#~ msgid "Edge radius"
-#~ msgstr "Serva raadius"
-
-#~ msgid "_Round Corners..."
-#~ msgstr "Üma_rda nurgad..."
-
-#, fuzzy
-#~ msgid "Palette"
-#~ msgstr "Muster"
-
-#~ msgid "Concave"
-#~ msgstr "Nõgus"
-
-#~ msgid "Radius (%)"
-#~ msgstr "Raadius (%)"
-
-#~ msgid "Round the corners of the current selection"
-#~ msgstr "Muuda valitud ala nurgad ümaramaks"
-
-#~ msgid "Rounded R_ectangle..."
-#~ msgstr "Ümarnurkne ristkülik..."
-
-#~ msgid "Font color"
-#~ msgstr "Fondi värv"
-
-#~ msgid "Number"
-#~ msgstr "Arv"
-
 #~ msgid "Speed Text..."
 #~ msgstr "Kiirtekst..."
-
-#~ msgid "Radius (pixels)"
-#~ msgstr "Raadius (pikslites)"
 
 #~ msgid "Sphere color"
 #~ msgstr "Kera värv"
 
-#~ msgid "_Sphere..."
-#~ msgstr "_Kera..."
-
-#~ msgid "Frames"
-#~ msgstr "Raamid"
-
-#~ msgid "Airbrush"
-#~ msgstr "Aerosoolvärv"
-
-#~ msgid "Brush"
-#~ msgstr "Pintsel"
-
-#~ msgid "Color method"
-#~ msgstr "Värvimise viis"
-
-#~ msgid "Frame"
-#~ msgstr "Raam"
-
-#~ msgid "Pentagon"
-#~ msgstr "Viisnurk"
-
-#~ msgid "Shape"
-#~ msgstr "Kuju"
-
-#~ msgid "Start angle"
-#~ msgstr "Algusnurk"
-
-#~ msgid "Tool"
-#~ msgstr "Tööriist"
-
-#~ msgid "Triangle"
-#~ msgstr "Kolmnurk"
-
-#~ msgid "Type"
-#~ msgstr "Tüüp"
-
 #~ msgid "Base color"
 #~ msgstr "Baasvärv"
 
-#~ msgid "Edge only"
-#~ msgstr "Ainult servad"
-
-#~ msgid "Edge width"
-#~ msgstr "Serva laius"
-
-#~ msgid "RLE"
-#~ msgstr "RLE"
-
 #~ msgid "Foreground color"
 #~ msgstr "Esiplaani värv"
-
-#~ msgid "Mask opacity"
-#~ msgstr "Maski läbipaistmatus"
-
-#~ msgid "Mask size"
-#~ msgstr "Maski suurus"
-
-#~ msgid "Shadow darkness"
-#~ msgstr "Varju tumedus"
-
-#~ msgid "Shadow depth"
-#~ msgstr "Varju sügavus"
-
-#~ msgid "Bookmark to the GIMP web site"
-#~ msgstr "Järjehoidja GIMPi kodulehele"
-
-#~ msgid "Bookmark to the user manual"
-#~ msgstr "Järjehoidja kasutamisjuhendisse"
-
-#~ msgid "Create and Use _Selections"
-#~ msgstr "_Valikute loomine ja kasutamine"
-
-#~ msgid "Create, Open and Save _Files"
-#~ msgstr "_Failide loomine, avamine ja salvestamine"
-
-#~ msgid "Drawing _Simple Objects"
-#~ msgstr "Liht_sate objektide joonistamine"
-
-#~ msgid "How to Use _Dialogs"
-#~ msgstr "Kuidas _dialooge kasutada"
-
-#~ msgid "Plug-in _Registry"
-#~ msgstr "Pistikute _register"
-
-#~ msgid "Using _Paths"
-#~ msgstr "Vektor_joonte kasutamine"
-
-#~ msgid "_Basic Concepts"
-#~ msgstr "Üldised _mõisted"
-
-#~ msgid "_Developer Web Site"
-#~ msgstr "_Arendajate lehekülg"
-
-#~ msgid "_Main Web Site"
-#~ msgstr "_Pealehekülg"
-
-#~ msgid "_Preparing your Images for the Web"
-#~ msgstr "_Piltide ettevalmistamine internetilehele panemiseks"
-
-#~ msgid "_User Manual Web Site"
-#~ msgstr "Kas_utamisjuhendi kodulehekülg"
-
-#~ msgid "_Working with Digital Camera Photos"
-#~ msgstr "_Digitaalkaamera fotodega töötamine"
 
 #~ msgid "/Script-Fu/"
 #~ msgstr "/Script-Fu/"
