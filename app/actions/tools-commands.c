@@ -43,6 +43,7 @@
 #include "tools/gimpimagemaptool.h"
 #include "tools/gimptoolcontrol.h"
 #include "tools/gimptransformoptions.h"
+#include "tools/gimpwarpoptions.h"
 #include "tools/tool_manager.h"
 
 #include "actions.h"
@@ -288,6 +289,27 @@ tools_transform_preview_opacity_cmd_callback (GtkAction *action,
                               G_OBJECT (tool_info->tool_options),
                               "preview-opacity",
                               0.01, 0.1, 0.5, 0.1, FALSE);
+    }
+}
+
+void
+tools_warp_effect_size_cmd_callback (GtkAction *action,
+                                     gint       value,
+                                     gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_WARP_OPTIONS (tool_info->tool_options))
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
+                              G_OBJECT (tool_info->tool_options),
+                              "effect-size",
+                              1.0, 4.0, 16.0, 0.1, FALSE);
     }
 }
 

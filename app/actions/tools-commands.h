@@ -52,7 +52,12 @@ void   tools_ink_blob_angle_cmd_callback            (GtkAction   *action,
 void   tools_fg_select_brush_size_cmd_callback      (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
+
 void   tools_transform_preview_opacity_cmd_callback (GtkAction   *action,
+                                                     gint         value,
+                                                     gpointer     data);
+
+void   tools_warp_effect_size_cmd_callback          (GtkAction   *action,
                                                      gint         value,
                                                      gpointer     data);
 

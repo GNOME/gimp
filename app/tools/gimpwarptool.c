@@ -171,6 +171,8 @@ gimp_warp_tool_init (GimpWarpTool *self)
   gimp_tool_control_set_wants_click (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
+  gimp_tool_control_set_action_size (tool->control,
+                                     "tools/tools-warp-effect-size-set");
 }
 
 static void
