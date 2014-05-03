@@ -1340,26 +1340,37 @@ gimp_session_write_position (GimpConfigWriter *writer,
 gint
 gimp_widget_get_monitor (GtkWidget *widget)
 {
-  GdkWindow     *window;
-  GdkScreen     *screen;
-  GtkAllocation  allocation;
-  gint           x, y;
+  GdkWindow *window;
+  GdkScreen *screen;
+  gint       x, y;
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), 0);
 
   window = gtk_widget_get_window (widget);
   screen = gtk_widget_get_screen (widget);
 
-  gtk_widget_get_allocation (widget, &allocation);
-
   if (window)
-    gdk_window_get_origin (window, &x, &y);
-  else
-    gdk_display_get_pointer (gdk_display_get_default (),
-                             NULL, &x, &y, NULL);
+    {
+      GtkAllocation  allocation;
 
-  x += allocation.x + allocation.width  / 2;
-  y += allocation.y + allocation.height / 2;
+      gtk_widget_get_allocation (widget, &allocation);
+
+      gdk_window_get_origin (window, &x, &y);
+
+      if (! gtk_widget_get_has_window (widget))
+        {
+          x += allocation.x;
+          y += allocation.y;
+        }
+
+      x += allocation.x + allocation.width  / 2;
+      y += allocation.y + allocation.height / 2;
+    }
+  else
+    {
+      gdk_display_get_pointer (gtk_widget_get_display (widget),
+                               NULL, &x, &y, NULL);
+    }
 
   return gdk_screen_get_monitor_at_point (screen, x, y);
 }
