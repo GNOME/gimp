@@ -627,6 +627,8 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
   GdkRectangle rect;
   gchar        geom[32];
   gint         monitor;
+  gint         width;
+  gint         height;
 
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GTK_IS_WINDOW (info->p->widget));
@@ -656,14 +658,25 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
   info->p->x += rect.x;
   info->p->y += rect.y;
 
-  info->p->x = CLAMP (info->p->x,
-                      rect.x,
-                      rect.x + rect.width - (info->p->width > 0 ?
-                                             info->p->width : 128));
-  info->p->y = CLAMP (info->p->y,
-                      rect.y,
-                      rect.y + rect.height - (info->p->height > 0 ?
-                                              info->p->height : 128));
+  if (gimp_session_info_get_remember_size (info) &&
+      info->p->width  > 0 &&
+      info->p->height > 0)
+    {
+      width  = info->p->width;
+      height = info->p->height;
+    }
+  else
+    {
+      GtkRequisition requisition;
+
+      gtk_widget_size_request (info->p->widget, &requisition);
+
+      width  = requisition.width;
+      height = requisition.height;
+    }
+
+  info->p->x = CLAMP (info->p->x, rect.x, rect.x + rect.width  - width);
+  info->p->y = CLAMP (info->p->y, rect.y, rect.y + rect.height - height);
 
   if (info->p->right_align && info->p->bottom_align)
     {
