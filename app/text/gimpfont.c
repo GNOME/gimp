@@ -676,7 +676,7 @@ gimp_font_get_sample_string (PangoContext         *context,
       unsigned int count;
       PangoOTTag *slist;
 
-      tag = get_hb_table_type(tt);
+      tag = get_hb_table_type (tt);
       count = hb_ot_layout_table_get_script_tags (hb_face, tag, 0, NULL, NULL);
       slist = g_new (PangoOTTag, count + 1);
       hb_ot_layout_table_get_script_tags (hb_face, tag, 0, &count, slist);
