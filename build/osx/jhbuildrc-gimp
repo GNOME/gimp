@@ -27,7 +27,11 @@ tarballdir = os.path.expanduser("~/gimp/pkgs")
 # Main setup
 setup_sdk(target=_gsdk, sdk_version=_sdkversion, architectures=[_architecture])
 
-_xcodepath = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX" + _sdkversion + ".sdk"
+# set XCode path
+# fallback value:
+# _xcodepath = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX" + _sdkversion + ".sdk"
+# this works for OS X 10.9 (64 bit):
+_xcodepath = "/Applications/Xcode.app/Contents/Developer"
 
 # Set OBJCFLAGS
 _sdkdir = get_sdkdir(make_sdk_name(_sdkversion), _xcodepath, _sdkversion)
