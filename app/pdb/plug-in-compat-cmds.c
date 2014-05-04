@@ -42,6 +42,7 @@
 #include "core/gimpparamspecs.h"
 #include "core/gimppickable-auto-shrink.h"
 #include "core/gimppickable.h"
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimppdb.h"
@@ -51,6 +52,95 @@
 
 #include "gimp-intl.h"
 
+
+static GeglNode *
+wrap_in_gamma_cast (GeglNode     *node,
+                    GimpDrawable *drawable)
+{
+  if (! gimp_drawable_get_linear (drawable))
+    {
+      const Babl *drawable_format;
+      const Babl *cast_format;
+      GeglNode   *new_node;
+      GeglNode   *input;
+      GeglNode   *output;
+      GeglNode   *cast_before;
+      GeglNode   *cast_after;
+
+      drawable_format = gimp_drawable_get_format (drawable);
+
+      cast_format =
+        gimp_babl_format (gimp_babl_format_get_base_type (drawable_format),
+                          gimp_babl_precision (gimp_babl_format_get_component_type (drawable_format),
+                                               TRUE),
+                          babl_format_has_alpha (drawable_format));
+
+      new_node = gegl_node_new ();
+
+      gegl_node_add_child (new_node, node);
+      g_object_unref (node);
+
+      input  = gegl_node_get_input_proxy  (new_node, "input");
+      output = gegl_node_get_output_proxy (new_node, "output");
+
+      cast_before = gegl_node_new_child (new_node,
+                                         "operation",     "gimp:cast-format",
+                                         "input-format",  drawable_format,
+                                         "output-format", cast_format,
+                                         NULL);
+      cast_after  = gegl_node_new_child (new_node,
+                                         "operation",     "gimp:cast-format",
+                                         "input-format",  cast_format,
+                                         "output-format", drawable_format,
+                                         NULL);
+
+      gegl_node_link_many (input,
+                           cast_before,
+                           node,
+                           cast_after,
+                           output,
+                           NULL);
+
+      return new_node;
+    }
+  else
+    {
+      return node;
+    }
+}
+
+static gboolean
+gaussian_blur (GimpDrawable  *drawable,
+               gdouble        horizontal,
+               gdouble        vertical,
+               GimpProgress  *progress,
+               GError       **error)
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      node = gegl_node_new_child (NULL,
+                                  "operation", "gegl:gaussian-blur",
+                                  "std-dev-x", horizontal * 0.32,
+                                  "std-dev-y", vertical   * 0.32,
+                                  NULL);
+
+      node = wrap_in_gamma_cast (node, drawable);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Gaussian Blur"),
+                                     node);
+
+      g_object_unref (node);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
 
 static GimpValueArray *
 plug_in_alienmap2_invoker (GimpProcedure         *procedure,
@@ -606,6 +696,146 @@ plug_in_cubism_invoker (GimpProcedure         *procedure,
         }
       else
         success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_gauss_invoker (GimpProcedure         *procedure,
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble horizontal;
+  gdouble vertical;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  horizontal = g_value_get_double (gimp_value_array_index (args, 3));
+  vertical = g_value_get_double (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      success = gaussian_blur (drawable, horizontal, vertical, progress, error);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_gauss_iir_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble radius;
+  gboolean horizontal;
+  gboolean vertical;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  radius = g_value_get_double (gimp_value_array_index (args, 3));
+  horizontal = g_value_get_boolean (gimp_value_array_index (args, 4));
+  vertical = g_value_get_boolean (gimp_value_array_index (args, 5));
+
+  if (success)
+    {
+      success = gaussian_blur (drawable,
+                               horizontal ? radius : 0.0,
+                               vertical   ? radius : 0.0,
+                               progress, error);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_gauss_iir2_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble horizontal;
+  gdouble vertical;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  horizontal = g_value_get_double (gimp_value_array_index (args, 3));
+  vertical = g_value_get_double (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      success = gaussian_blur (drawable, horizontal, vertical, progress, error);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_gauss_rle_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble radius;
+  gboolean horizontal;
+  gboolean vertical;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  radius = g_value_get_double (gimp_value_array_index (args, 3));
+  horizontal = g_value_get_boolean (gimp_value_array_index (args, 4));
+  vertical = g_value_get_boolean (gimp_value_array_index (args, 5));
+
+  if (success)
+    {
+      success = gaussian_blur (drawable,
+                               horizontal ? radius : 0.0,
+                               vertical   ? radius : 0.0,
+                               progress, error);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_gauss_rle2_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble horizontal;
+  gdouble vertical;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  horizontal = g_value_get_double (gimp_value_array_index (args, 3));
+  vertical = g_value_get_double (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      success = gaussian_blur (drawable, horizontal, vertical, progress, error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -2368,6 +2598,264 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Background color { BLACK (0), BG (1) }",
                                                       0, 1, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-gauss
+   */
+  procedure = gimp_procedure_new (plug_in_gauss_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-gauss");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-gauss",
+                                     "Simplest, most commonly used way of blurring",
+                                     "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run. The 'method' parameter is ignored.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("horizontal",
+                                                    "horizontal",
+                                                    "Horizontal radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("vertical",
+                                                    "vertical",
+                                                    "Vertical radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("method",
+                                                      "method",
+                                                      "Blur method { IIR (0), RLE (1) }",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-gauss-iir
+   */
+  procedure = gimp_procedure_new (plug_in_gauss_iir_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-gauss-iir");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-gauss-iir",
+                                     "Apply a gaussian blur",
+                                     "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("radius",
+                                                    "radius",
+                                                    "Radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("horizontal",
+                                                     "horizontal",
+                                                     "Blur in horizontal direction",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("vertical",
+                                                     "vertical",
+                                                     "Blur in vertical direction",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-gauss-iir2
+   */
+  procedure = gimp_procedure_new (plug_in_gauss_iir2_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-gauss-iir2");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-gauss-iir2",
+                                     "Apply a gaussian blur",
+                                     "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("horizontal",
+                                                    "horizontal",
+                                                    "Horizontal radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("vertical",
+                                                    "vertical",
+                                                    "Vertical radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-gauss-rle
+   */
+  procedure = gimp_procedure_new (plug_in_gauss_rle_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-gauss-rle");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-gauss-rle",
+                                     "Apply a gaussian blur",
+                                     "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("radius",
+                                                    "radius",
+                                                    "Radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("horizontal",
+                                                     "horizontal",
+                                                     "Blur in horizontal direction",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("vertical",
+                                                     "vertical",
+                                                     "Blur in vertical direction",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-gauss-rle2
+   */
+  procedure = gimp_procedure_new (plug_in_gauss_rle2_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-gauss-rle2");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-gauss-rle2",
+                                     "Apply a gaussian blur",
+                                     "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("horizontal",
+                                                    "horizontal",
+                                                    "Horizontal radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("vertical",
+                                                    "vertical",
+                                                    "Vertical radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

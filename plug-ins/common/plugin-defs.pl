@@ -4,7 +4,6 @@
     'animation-play' => { ui => 1, gegl => 1 },
     'blinds' => { ui => 1 },
     'blur' => {},
-    'blur-gauss' => { ui => 1 },
     'blur-gauss-selective' => { ui => 1, cflags => 'MMX_EXTRA_CFLAGS' },
     'border-average' => { ui => 1, gegl => 1 },
     'bump-map' => { ui => 1 },

@@ -651,6 +651,194 @@ CODE
     );
 }
 
+sub plug_in_gauss {
+    $blurb = 'Simplest, most commonly used way of blurring';
+
+    $help = <<'HELP';
+Applies a gaussian blur to the drawable, with specified radius of affect.
+The standard deviation of the normal distribution used to modify pixel
+values is calculated based on the supplied radius.
+Horizontal and vertical blurring can be independently invoked by specifying
+only one to run. The 'method' parameter is ignored.
+HELP
+
+    &std_pdb_compat('gegl:gaussian-blur');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'horizontal', type => '0.0 <= float <= 500.0',
+	  desc => 'Horizontal radius of gaussian blur (in pixels' },
+	{ name => 'vertical', type => '0.0 <= float <= 500.0',
+	  desc => 'Vertical radius of gaussian blur (in pixels' },
+	{ name => 'method', type => '0 <= int32 <= 1', dead => 1,
+	  desc => 'Blur method { IIR (0), RLE (1) }' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gaussian_blur (drawable, horizontal, vertical, progress, error);
+}
+CODE
+    );
+}
+
+sub plug_in_gauss_iir {
+    $blurb = 'Apply a gaussian blur';
+
+    $help = <<'HELP';
+Applies a gaussian blur to the drawable, with specified radius of affect.
+The standard deviation of the normal distribution used to modify pixel
+values is calculated based on the supplied radius. Horizontal and vertical
+blurring can be independently invoked by specifying only one to run.
+HELP
+
+    &std_pdb_compat('gegl:gaussian-blur');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'radius', type => '0.0 <= float <= 500.0',
+	  desc => 'Radius of gaussian blur (in pixels' },
+	{ name => 'horizontal', type => 'boolean',
+	  desc => 'Blur in horizontal direction' },
+	{ name => 'vertical', type => 'boolean',
+	  desc => 'Blur in vertical direction' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gaussian_blur (drawable,
+                           horizontal ? radius : 0.0,
+                           vertical   ? radius : 0.0,
+                           progress, error);
+}
+CODE
+    );
+}
+
+sub plug_in_gauss_iir2 {
+    $blurb = 'Apply a gaussian blur';
+
+    $help = <<'HELP';
+Applies a gaussian blur to the drawable, with specified radius of affect.
+The standard deviation of the normal distribution used to modify pixel
+values is calculated based on the supplied radius. Horizontal and vertical
+blurring can be independently invoked by specifying only one to run.
+HELP
+
+    &std_pdb_compat('gegl:gaussian-blur');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'horizontal', type => '0.0 <= float <= 500.0',
+	  desc => 'Horizontal radius of gaussian blur (in pixels' },
+	{ name => 'vertical', type => '0.0 <= float <= 500.0',
+	  desc => 'Vertical radius of gaussian blur (in pixels' },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gaussian_blur (drawable, horizontal, vertical, progress, error);
+}
+CODE
+    );
+}
+
+sub plug_in_gauss_rle {
+    $blurb = 'Apply a gaussian blur';
+
+    $help = <<'HELP';
+Applies a gaussian blur to the drawable, with specified radius of affect.
+The standard deviation of the normal distribution used to modify pixel
+values is calculated based on the supplied radius. Horizontal and vertical
+blurring can be independently invoked by specifying only one to run.
+HELP
+
+    &std_pdb_compat('gegl:gaussian-blur');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'radius', type => '0.0 <= float <= 500.0',
+	  desc => 'Radius of gaussian blur (in pixels' },
+	{ name => 'horizontal', type => 'boolean',
+	  desc => 'Blur in horizontal direction' },
+	{ name => 'vertical', type => 'boolean',
+	  desc => 'Blur in vertical direction' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gaussian_blur (drawable,
+                           horizontal ? radius : 0.0,
+                           vertical   ? radius : 0.0,
+                           progress, error);
+}
+CODE
+    );
+}
+
+sub plug_in_gauss_rle2 {
+    $blurb = 'Apply a gaussian blur';
+
+    $help = <<'HELP';
+Applies a gaussian blur to the drawable, with specified radius of affect.
+The standard deviation of the normal distribution used to modify pixel
+values is calculated based on the supplied radius. Horizontal and vertical
+blurring can be independently invoked by specifying only one to run.
+HELP
+
+    &std_pdb_compat('gegl:gaussian-blur');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'horizontal', type => '0.0 <= float <= 500.0',
+	  desc => 'Horizontal radius of gaussian blur (in pixels' },
+	{ name => 'vertical', type => '0.0 <= float <= 500.0',
+	  desc => 'Vertical radius of gaussian blur (in pixels' },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  success = gaussian_blur (drawable, horizontal, vertical, progress, error);
+}
+CODE
+    );
+}
+
 sub plug_in_hsv_noise {
     $blurb = 'Randomize hue, saturation and value independently';
 
@@ -1997,9 +2185,100 @@ CODE
     );
 }
 
+$extra{app}->{code} = <<'CODE';
+static GeglNode *
+wrap_in_gamma_cast (GeglNode     *node,
+                    GimpDrawable *drawable)
+{
+  if (! gimp_drawable_get_linear (drawable))
+    {
+      const Babl *drawable_format;
+      const Babl *cast_format;
+      GeglNode   *new_node;
+      GeglNode   *input;
+      GeglNode   *output;
+      GeglNode   *cast_before;
+      GeglNode   *cast_after;
+
+      drawable_format = gimp_drawable_get_format (drawable);
+
+      cast_format =
+        gimp_babl_format (gimp_babl_format_get_base_type (drawable_format),
+                          gimp_babl_precision (gimp_babl_format_get_component_type (drawable_format),
+                                               TRUE),
+                          babl_format_has_alpha (drawable_format));
+
+      new_node = gegl_node_new ();
+
+      gegl_node_add_child (new_node, node);
+      g_object_unref (node);
+
+      input  = gegl_node_get_input_proxy  (new_node, "input");
+      output = gegl_node_get_output_proxy (new_node, "output");
+
+      cast_before = gegl_node_new_child (new_node,
+                                         "operation",     "gimp:cast-format",
+                                         "input-format",  drawable_format,
+                                         "output-format", cast_format,
+                                         NULL);
+      cast_after  = gegl_node_new_child (new_node,
+                                         "operation",     "gimp:cast-format",
+                                         "input-format",  cast_format,
+                                         "output-format", drawable_format,
+                                         NULL);
+
+      gegl_node_link_many (input,
+                           cast_before,
+                           node,
+                           cast_after,
+                           output,
+                           NULL);
+
+      return new_node;
+    }
+  else
+    {
+      return node;
+    }
+}
+
+static gboolean
+gaussian_blur (GimpDrawable  *drawable,
+               gdouble        horizontal,
+               gdouble        vertical,
+               GimpProgress  *progress,
+               GError       **error)
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      node = gegl_node_new_child (NULL,
+                                  "operation", "gegl:gaussian-blur",
+                                  "std-dev-x", horizontal * 0.32,
+                                  "std-dev-y", vertical   * 0.32,
+                                  NULL);
+
+      node = wrap_in_gamma_cast (node, drawable);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Gaussian Blur"),
+                                     node);
+
+      g_object_unref (node);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+CODE
 
 @headers = qw("libgimpbase/gimpbase.h"
               "libgimpmath/gimpmath.h"
+              "gegl/gimp-babl.h"
               "gegl/gimp-gegl-utils.h"
               "core/gimpcontext.h"
               "core/gimpdrawable.h"
@@ -2022,6 +2301,11 @@ CODE
             plug_in_colors_channel_mixer
             plug_in_colortoalpha
 	    plug_in_cubism
+	    plug_in_gauss
+	    plug_in_gauss_iir
+	    plug_in_gauss_iir2
+	    plug_in_gauss_rle
+	    plug_in_gauss_rle2
 	    plug_in_hsv_noise
             plug_in_laplace
             plug_in_lens_distortion

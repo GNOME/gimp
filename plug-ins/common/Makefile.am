@@ -49,7 +49,6 @@ libexec_PROGRAMS = \
 	animation-play \
 	blinds \
 	blur \
-	blur-gauss \
 	blur-gauss-selective \
 	border-average \
 	bump-map \
@@ -275,23 +274,6 @@ blur_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(blur_RC)
-
-blur_gauss_SOURCES = \
-	blur-gauss.c
-
-blur_gauss_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(blur_gauss_RC)
 
 blur_gauss_selective_CFLAGS = $(MMX_EXTRA_CFLAGS)
 
