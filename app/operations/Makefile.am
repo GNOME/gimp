@@ -46,6 +46,8 @@ libappoperations_generic_a_sources = \
 	\
 	gimpoperationborder.c			\
 	gimpoperationborder.h			\
+	gimpoperationcastformat.c		\
+	gimpoperationcastformat.h		\
 	gimpoperationcagecoefcalc.c		\
 	gimpoperationcagecoefcalc.h		\
 	gimpoperationcagetransform.c		\
