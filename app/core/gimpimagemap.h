@@ -63,6 +63,8 @@ GimpImageMap * gimp_image_map_new        (GimpDrawable        *drawable,
 
 void           gimp_image_map_set_region (GimpImageMap        *image_map,
                                           GimpImageMapRegion   region);
+void       gimp_image_map_set_gamma_hack (GimpImageMap        *image_map,
+                                          gboolean             gamma_hack);
 
 void           gimp_image_map_apply      (GimpImageMap        *image_map,
                                           const GeglRectangle *area);
