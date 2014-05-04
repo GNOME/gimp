@@ -120,6 +120,13 @@
 
   <!-- Translation filenames-->
   <translations name="gtk20">${prefix}/share/locale</translations>
+  <translations name="gegl-0.2.mo">${prefix}/share/locale</translations>
+  <translations name="gimp20-libgimp.mo">${prefix}/share/locale</translations>
+  <translations name="gimp20.mo">${prefix}/share/locale</translations>
+  <translations name="gimp20-python.mo">${prefix}/share/locale</translations>
+  <translations name="gimp20-script-fu.mo">${prefix}/share/locale</translations>
+  <translations name="gimp20-std-plug-ins.mo">${prefix}/share/locale</translations>
+  <translations name="gimp20-tips.mo">${prefix}/share/locale</translations>
 
   <!-- Copy in mime data -->
   <!-- Used for opening up help in browser -->
