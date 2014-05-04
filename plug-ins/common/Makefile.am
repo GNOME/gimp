@@ -132,7 +132,6 @@ libexec_PROGRAMS = \
 	metadata \
 	newsprint \
 	nl-filter \
-	noise-rgb \
 	noise-solid \
 	nova \
 	oilify \
@@ -1743,23 +1742,6 @@ nl_filter_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(nl_filter_RC)
-
-noise_rgb_SOURCES = \
-	noise-rgb.c
-
-noise_rgb_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(noise_rgb_RC)
 
 noise_solid_SOURCES = \
 	noise-solid.c

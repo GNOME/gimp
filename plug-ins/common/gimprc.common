@@ -86,7 +86,6 @@ max_rgb_RC = max-rgb.rc.o
 metadata_RC = metadata.rc.o
 newsprint_RC = newsprint.rc.o
 nl_filter_RC = nl-filter.rc.o
-noise_rgb_RC = noise-rgb.rc.o
 noise_solid_RC = noise-solid.rc.o
 nova_RC = nova.rc.o
 oilify_RC = oilify.rc.o

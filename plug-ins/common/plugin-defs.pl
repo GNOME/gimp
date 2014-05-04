@@ -87,7 +87,6 @@
     'metadata' => { ui => 1, libs => 'GEXIV2_LIBS', cflags => 'GEXIV2_CFLAGS' },
     'newsprint' => { ui => 1 },
     'nl-filter' => { ui => 1 },
-    'noise-rgb' => { ui => 1 },
     'noise-solid' => { ui => 1 },
     'nova' => { ui => 1 },
     'oilify' => { ui => 1 },
