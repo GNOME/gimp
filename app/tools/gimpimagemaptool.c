@@ -269,6 +269,25 @@ gimp_image_map_tool_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+static void
+gamma_hack (GtkToggleButton  *button,
+            GimpImageMapTool *image_map_tool)
+{
+  if (image_map_tool->image_map)
+    {
+      GimpTool *tool = GIMP_TOOL (image_map_tool);
+
+      gimp_tool_control_push_preserve (tool->control, TRUE);
+
+      gimp_image_map_tool_create_map (image_map_tool);
+      gimp_image_map_set_gamma_hack (image_map_tool->image_map,
+                                     gtk_toggle_button_get_active (button));
+      gimp_image_map_tool_preview (image_map_tool);
+
+      gimp_tool_control_pop_preserve (tool->control);
+    }
+}
+
 #define RESPONSE_RESET 1
 
 static gboolean
@@ -381,6 +400,15 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
           gtk_box_pack_start (GTK_BOX (vbox), settings_ui, FALSE, FALSE, 0);
           gtk_widget_show (settings_ui);
         }
+
+      /*  The hack toggle  */
+      toggle = gtk_check_button_new_with_label ("Gamma hack (temp hack, please ignore)");
+      gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+      gtk_widget_show (toggle);
+
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (gamma_hack),
+                        image_map_tool);
 
       /*  The preview toggle  */
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
