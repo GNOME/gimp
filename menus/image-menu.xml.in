@@ -642,6 +642,7 @@
       <menu action="plug-in-enhance-menu" name="Enhance">
         <menuitem action="filters-antialias" />
         <menuitem action="filters-deinterlace" />
+        <menuitem action="filters-noise-reduction" />
         <menuitem action="filters-red-eye-removal" />
         <menuitem action="filters-unsharp-mask" />
       </menu>
@@ -698,6 +699,7 @@
       </menu>
       <menu action="plug-in-render-menu" name="Render">
         <menu action="plug-in-render-clouds-menu" name="Clouds">
+	  <menuitem action="filters-noise-cell" />
 	  <menuitem action="filters-plasma" />
 	</menu>
         <menu action="plug-in-render-nature-menu" name="Nature" />

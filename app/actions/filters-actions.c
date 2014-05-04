@@ -185,6 +185,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:motion-blur-zoom",
     NULL /* FIXME GIMP_HELP_FILTER_MOTION_BLUR_ZOOM */ },
 
+  { "filters-noise-cell", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Cell Noise..."), NULL, NULL,
+    "gegl:noise-cell",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_CELL */ },
+
   { "filters-noise-cie-lch", GIMP_STOCK_GEGL,
     NC_("filters-action", "CIE lch Noise..."), NULL, NULL,
     "gegl:noise-cie-lch",
@@ -209,6 +214,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "_RGB Noise..."), NULL, NULL,
     "gegl:noise-rgb",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_RGB */ },
+
+  { "filters-noise-reduction", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Noise R_eduction..."), NULL, NULL,
+    "gegl:noise-reduction",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_REDUCTION */ },
 
   { "filters-noise-slur", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Slur..."), NULL, NULL,
@@ -399,10 +409,12 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-motion-blur-circular",    writable);
   SET_SENSITIVE ("filters-motion-blur-linear",      writable);
   SET_SENSITIVE ("filters-motion-blur-zoom",        writable);
+  SET_SENSITIVE ("filters-noise-cell",              writable);
   SET_SENSITIVE ("filters-noise-cie-lch",           writable);
   SET_SENSITIVE ("filters-noise-hsv",               writable && !gray);
   SET_SENSITIVE ("filters-noise-hurl",              writable);
   SET_SENSITIVE ("filters-noise-pick",              writable);
+  SET_SENSITIVE ("filters-noise-reduction",         writable);
   SET_SENSITIVE ("filters-noise-rgb",               writable);
   SET_SENSITIVE ("filters-noise-slur",              writable);
   SET_SENSITIVE ("filters-noise-spread",            writable);
