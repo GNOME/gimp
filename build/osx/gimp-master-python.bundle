@@ -1,0 +1,205 @@
+<?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
+<app-bundle>
+  <meta>
+    <prefix name="default">${env:JHBUILD_PREFIX}</prefix>
+
+    <destination overwrite="yes">${env:HOME}</destination>
+
+    <image> <!-- Not yet implemented --> </image>
+
+    <run-install-name-tool/>
+
+    <launcher-script>${project}/launcher-python.sh</launcher-script>
+
+    <gtk>gtk+-2.0</gtk>
+  </meta>
+
+  <!-- Copy in .plist file -->
+  <plist>${project}/info-master-python.plist</plist>
+
+  <binary>
+    ${prefix}/lib/libgtk-quartz-${gtkversion}.0.dylib
+  </binary>
+
+  <!-- Copy in python -->
+  <binary dest="${bundle}/Contents/MacOS">
+    ${prefix}/bin/python
+  </binary>
+
+  <binary>
+    ${prefix}/lib/libpyglib-2.0-python.0.dylib
+  </binary>
+
+  <!-- Pull in all python modules -->
+
+  <data>${prefix}/lib/pygtk/2.0/*.py</data>
+  <data>${prefix}/lib/pygtk/2.0/demos/*.py</data>
+  <data>${prefix}/lib/python2.7/*.py</data>
+  <data>${prefix}/lib/python2.7/bsddb/*.py</data>
+  <data>${prefix}/lib/python2.7/compiler/*.py</data>
+  <data>${prefix}/lib/python2.7/ctypes/*.py</data>
+  <data>${prefix}/lib/python2.7/ctypes/macholib/*.py</data>
+  <data>${prefix}/lib/python2.7/curses*.py</data>
+  <data>${prefix}/lib/python2.7/distutils/*.py</data>
+  <data>${prefix}/lib/python2.7/distutils/command/*.py</data>
+  <data>${prefix}/lib/python2.7/email/*.py</data>
+  <data>${prefix}/lib/python2.7/email/mime/*.py</data>
+  <data>${prefix}/lib/python2.7/encodings/*.py</data>
+  <data>${prefix}/lib/python2.7/hotshot/*.py</data>
+  <data>${prefix}/lib/python2.7/idlelib/*.py</data>
+  <data>${prefix}/lib/python2.7/idlelib/Icons/*</data>
+  <data>${prefix}/lib/python2.7/importlib/*.py</data>
+  <data>${prefix}/lib/python2.7/json/*.py</data>
+  <data>${prefix}/lib/python2.7/lib-tk/*.py</data>
+  <data>${prefix}/lib/python2.7/logging/*.py</data>
+  <data>${prefix}/lib/python2.7/multiprocessing/*.py</data>
+  <data>${prefix}/lib/python2.7/plat-darwin/*.py</data>
+  <data>${prefix}/lib/python2.7/plat-mac/*.py</data>
+  <data>${prefix}/lib/python2.7/pydoc_data/*.py</data>
+  <data>${prefix}/lib/python2.7/site-packages/*.py</data>
+  <data>${prefix}/lib/python2.7/site-packages/cairo/*.py</data>
+  <data>${prefix}/lib/python2.7/site-packages/glib/*.py</data>
+  <data>${prefix}/lib/python2.7/site-packages/gobject/*.py</data>
+  <data>${prefix}/lib/python2.7/site-packages/gtk-2.0/*.py</data>
+  <data>${prefix}/lib/python2.7/site-packages/gtk-2.0/gio/*.py</data>
+  <data>${prefix}/lib/python2.7/site-packages/gtk-2.0/gtk/*.py</data>
+  <data>${prefix}/lib/python2.7/site-packages/gtkosx_application/*.py</data>
+  <data>${prefix}/lib/python2.7/sqlite3/*.py</data>
+  <data>${prefix}/lib/python2.7/wsgiref/*.py</data>
+  <data>${prefix}/lib/python2.7/xml/*.py</data>
+  <data>${prefix}/lib/python2.7/xml/dom/*.py</data>
+  <data>${prefix}/lib/python2.7/xml/etree/*.py</data>
+  <data>${prefix}/lib/python2.7/xml/parsers/*.py</data>
+  <data>${prefix}/lib/python2.7/xml/sax/*.py</data>
+
+  <!-- Pull in all python binaries -->
+
+  <binary>${prefix}/lib/python2.7/lib-dynload/*.so</binary>
+  <binary>${prefix}/lib/python2.7/site-packages/*.so</binary>
+  <binary>${prefix}/lib/python2.7/site-packages/cairo/*.so</binary>
+  <binary>${prefix}/lib/python2.7/site-packages/glib/*.so</binary>
+  <binary>${prefix}/lib/python2.7/site-packages/gobject/*.so</binary>
+  <binary>${prefix}/lib/python2.7/site-packages/gtk-2.0/*.so</binary>
+  <binary>${prefix}/lib/python2.7/site-packages/gtk-2.0/gio/*.so</binary>
+  <binary>${prefix}/lib/python2.7/site-packages/gtk-2.0/gtk/*.so</binary>
+  <binary>${prefix}/lib/python2.7/site-packages/gtkosx_application/*.so</binary>
+
+  <!-- Main binary -->
+
+  <main-binary>${prefix}/bin/gimp-2.9</main-binary>
+
+  <!-- Copy in gimp plugins and modules -->
+  <binary>${prefix}/lib/gimp/2.0/plug-ins/*</binary>
+  <binary>${prefix}/lib/gimp/2.0/modules/*.so</binary>
+  <data>${prefix}/lib/gimp/2.0/python/*py</data>
+  <binary>${prefix}/lib/gimp/2.0/python/*.so</binary>
+
+  <!-- Copy in GTK+ modules -->
+  <binary>${prefix}/lib/${gtkdir}/modules/*.so</binary>
+
+  <!-- Copy in babl modules -->
+  <binary>${prefix}/lib/babl-0.1/*.so</binary>
+
+  <!-- Copy in gegl modules -->
+  <binary>${prefix}/lib/gegl-0.3/*.so</binary>
+
+  <!-- Copy in GTK+ theming engines and modules -->
+  <binary>${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/engines/*.so</binary>
+  <binary>${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/printbackends/*.so</binary>
+  <binary>${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/immodules/*.so</binary>
+
+  <!-- Copy in gdk-pifbuf modules and loader file-->
+  <binary>
+    ${prefix}/lib/gdk-pixbuf-2.0/${pkg:gdk-pixbuf-2.0:gdk_pixbuf_binary_version}/
+  </binary>
+
+  <!-- Copy in pango modules -->
+  <binary>
+    ${prefix}/lib/pango/${pkg:pango:pango_module_version}/modules/*.so
+  </binary>
+
+  <!-- Translation filenames-->
+  <translations name="gtk20">${prefix}/share/locale</translations>
+  <translations name="gegl-0.2.mo">${prefix}/share/locale</translations>
+  <translations name="gimp20-libgimp.mo">${prefix}/share/locale</translations>
+  <translations name="gimp20.mo">${prefix}/share/locale</translations>
+  <translations name="gimp20-python.mo">${prefix}/share/locale</translations>
+  <translations name="gimp20-script-fu.mo">${prefix}/share/locale</translations>
+  <translations name="gimp20-std-plug-ins.mo">${prefix}/share/locale</translations>
+  <translations name="gimp20-tips.mo">${prefix}/share/locale</translations>
+
+  <!-- Copy in mime data -->
+  <!-- Used for opening up help in browser -->
+  <!--<data dest="${bundle}/Contents/Resources/share/applications/gimp.desktop">
+    ${project}/custom/gimp.desktop
+  </data>-->
+  <data>${prefix}/share/applications/gimp.desktop</data>
+  <data dest="${bundle}/Contents/Resources/share/applications/open.desktop">
+    ${project}/custom/open.desktop
+  </data>
+  <data dest="${bundle}/Contents/Resources/share/applications/mimeinfo.cache">
+    ${project}/custom/mimeinfo.cache
+  </data>
+
+  <data>
+    ${prefix}/share/mime/*
+  </data>
+ <!--<data>
+    ${prefix}/share/mime-info/*
+  </data>-->
+
+  <!-- Copy in dbus Launch session support -->
+  <data>${prefix}/etc/dbus-1/system.conf</data>
+  <data>${prefix}/etc/dbus-1/session.d/</data>
+  <data>${prefix}/etc/dbus-1/system.d/</data>
+  <data dest="${bundle}/Contents/Resources/etc/dbus-1/session.conf">
+    ${project}/custom/session.conf
+  </data>
+  <!--<binary>${prefix}/bin/dbus-</binary>-->
+  <binary>${prefix}/bin/dbus-*</binary>
+
+  <!-- Copy in gvfs file support -->
+  <binary>${prefix}/bin/gvfs-*</binary>
+
+  <!-- Copy in gtk+-2.0 data -->
+  <data>${prefix}/etc/gtk-2.0/*</data>
+
+  <!-- Copy in fontconfig data -->
+  <data>${prefix}/etc/fonts/conf.d/*</data>
+  <data>${prefix}/etc/fonts/fonts.conf</data>
+
+  <!-- Gimp data -->
+  <data>${prefix}/etc/gimp/2.0/*</data>
+  <data dest="${bundle}/Contents/Resources/share/gimp">${prefix}/share/gimp</data>
+
+  <!-- Copy in XML data -->
+  <data>${prefix}/etc/xml/catalog</data>
+
+  <!-- Copy in themes -->
+  <data>${prefix}/share/themes</data>
+
+  <!-- Copy in gtk+ theme data -->
+  <!-- data>${prefix}/share/gtk-engines/*.xml</data -->
+
+  <!-- Change default theme -->
+  <data dest="${bundle}/Contents/Resources/etc/${gtkdir}/gtkrc">
+    ${project}/custom/gtkrc
+  </data>
+
+  <!-- Copy in better defaults -->
+  <!--<data dest="${bundle}/Contents/Resources/etc/gimp/2.0/gimprc">
+    ${project}/custom/gimprc
+  </data>-->
+
+  <!-- Copy in better fontconfig defaults -->
+  <!--<data dest="${bundle}/Contents/Resources/etc/fonts/fonts.conf">
+    ${project}/custom/fonts.conf
+  </data>-->
+
+  <!-- Copy in icons -->
+  <data dest="${bundle}/Contents/Resources">${project}/gimp.icns</data>
+  <data dest="${bundle}/Contents/Resources">${project}/xcf.icns</data>
+
+  <!-- Copy in base icon theme -->
+  <icon-theme icons="auto">Tango</icon-theme>
+</app-bundle>
