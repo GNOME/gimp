@@ -15,7 +15,7 @@
   </meta>
 
   <!-- Copy in .plist file -->
-  <plist>${project}/info-2.8.8-python.plist</plist>
+  <plist>${project}/info-2.8-python.plist</plist>
 
   <binary>
     ${prefix}/lib/libgtk-quartz-${gtkversion}.0.dylib
