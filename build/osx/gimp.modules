@@ -233,11 +233,11 @@
 
 <patch file="https://dl.dropboxusercontent.com/u/942685/files/gtk%2B-3/smooth-scroll.patch" strip="1"/>
 
-      <patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/0001-Bug-708998-Avoid-infinite-loop.patch" strip="1"/>
-      <patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/0004-Ensure-src-and-dest-are-GdkWindows-in-_gdk_sythesize.patch" strip="1"/>
-      <patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/0003-Fix-double-free-introduced-in-f86dc163.patch" strip="1"/>
-      <patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/0003-quartz-NULL-check-on-default-keymap.patch" strip="1"/>
-      <patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/0001-Bug-709939-quartz-window-pos.patch" strip="1"/>
+      <patch file="https://git.gnome.org/browse/gtk-osx/plain/patches/0001-Bug-708998-Avoid-infinite-loop.patch" strip="1"/>
+      <patch file="https://git.gnome.org/browse/gtk-osx/plain/patches/0004-Ensure-src-and-dest-are-GdkWindows-in-_gdk_sythesize.patch" strip="1"/>
+      <patch file="https://git.gnome.org/browse/gtk-osx/plain/patches/0003-Fix-double-free-introduced-in-f86dc163.patch" strip="1"/>
+      <patch file="https://git.gnome.org/browse/gtk-osx/plain/patches/0003-quartz-NULL-check-on-default-keymap.patch" strip="1"/>
+      <patch file="https://git.gnome.org/browse/gtk-osx/plain/patches/0001-Bug-709939-quartz-window-pos.patch" strip="1"/>
     </branch>
     <dependencies>
       <dep package="glib"/>
@@ -377,12 +377,14 @@
   </autotools>
 
   <autotools id="glib"
-             autogen-sh="configure"
              autogenargs="--with-libiconv=native">
-    <branch module="glib/2.39/glib-2.39.1.tar.xz"
+    <!-- branch module="glib/2.39/glib-2.39.1.tar.xz"
             version="2.39.1"
             hash="sha256:d08c976f5560693946251361f186e3c9243c8195a95417127c1b1970c8371153">
-    </branch>
+    </branch -->
+    <branch repo="git.gnome.org"
+            module="glib"
+            revision="glib-2-38"/>
     <dependencies>
       <dep package="libffi"/>
       <!-- <dep package="python"/> -->
@@ -728,8 +730,6 @@
   <autotools id="gegl-master"
              autogen-sh="autogen.sh"
              autogenargs="--disable-docs --enable-introspection=no">
-    <!--<branch repo="ftp.gtk.org" version="0.2.0"
-            module="gegl/0.2/gegl-0.2.0.tar.bz2"/>-->
     <branch repo="git.gnome.org"
             module="gegl"
             revision="master"
@@ -795,11 +795,11 @@
 
 <!-- Somehow incorperate this make install PREFIX=/Users/claytonwalker/gimp/10.9/inst -->
   <autotools id="gexiv2"
-             autogen-sh="configure">
-    <branch module="gexiv2/0.6/libgexiv2_0.6.1.tar.xz"
-            version="0.6.1"
-	    checkoutdir="libgexiv2-0.6.1"
-            repo="yorba"/>
+    autogen-sh="configure --prefix=$JHBUILD_PREFIX --libdir $JHBUILD_LIBDIR">
+    <branch repo="git.gnome.org"
+            module="gexiv2"
+            revision="gexiv2-0.7"/>
+    <patch file="https://git.gnome.org/browse/gimp/plain/build/windows/jhbuild/patches/0001-Port-GExiv2-to-autotools-build-system.patch" strip="1"/>
     <dependencies>
       <dep package="exiv2"/>
       <dep package="glib"/>
@@ -846,9 +846,9 @@
     <branch module="dbus/dbus-1.7.4.tar.gz"
             version="1.7.4"
             repo="dbus">
-      <!--<patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/dbus-install.patch"/>
-      <patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/dbus-msg-nosignal.patch" strip="1"/>
-      <patch file="http://git.gnome.org/browse/gedit/plain/osx/jhbuild/patches/dbus-relocatable-services.patch" strip="1"/>-->
+      <!--<patch file="https://git.gnome.org/browse/gtk-osx/plain/patches/dbus-install.patch"/>
+      <patch file="https://git.gnome.org/browse/gtk-osx/plain/patches/dbus-msg-nosignal.patch" strip="1"/>
+      <patch file="https://git.gnome.org/browse/gedit/plain/osx/jhbuild/patches/dbus-relocatable-services.patch" strip="1"/>-->
     </branch>
     <dependencies>
     </dependencies>
@@ -967,6 +967,7 @@
             module="gimp"
             revision="master"
             checkoutdir="gimp-master"/>
+    <patch file="https://gist.github.com/su-v/7731b74f712d0a32dc11/raw/deed3b1656dd2c90e1018a101b5a243b2d4acb6d/fix-osx-build.diff" strip="0"/>
     <dependencies>
       <dep package="libpng"/>
       <dep package="gexiv2"/>
@@ -1238,7 +1239,7 @@ module="2.7.5/Python-2.7.5.tar.xz" version="2.7.5">
     <branch version="2.24.0"
             module="pygtk/2.24/pygtk-2.24.0.tar.bz2"
             hash="sha256:cd1c1ea265bd63ff669e92a2d3c2a88eb26bcd9e5363e0f82c896e649f206912">
-      <patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/pygtk-libtool.patch" strip="1"/>
+      <patch file="https://git.gnome.org/browse/gtk-osx/plain/patches/pygtk-libtool.patch" strip="1"/>
     </branch>
     <dependencies>
       <dep package="gtk+-2.24"/>
@@ -1289,8 +1290,8 @@ module="2.7.5/Python-2.7.5.tar.xz" version="2.7.5">
 
   <autotools id="iso-codes"
              autogen-sh="configure">
-    <branch module="iso-codes-3.47.tar.xz"
-            version="3.47"
+    <branch module="iso-codes-3.49.tar.xz"
+            version="3.49"
             repo="iso-codes"/>
   </autotools>
 
