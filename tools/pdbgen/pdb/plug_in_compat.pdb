@@ -2383,12 +2383,12 @@ wrap_in_gamma_cast (GeglNode     *node,
       output = gegl_node_get_output_proxy (new_node, "output");
 
       cast_before = gegl_node_new_child (new_node,
-                                         "operation",     "gimp:cast-format",
+                                         "operation",     "gegl:cast-format",
                                          "input-format",  drawable_format,
                                          "output-format", cast_format,
                                          NULL);
       cast_after  = gegl_node_new_child (new_node,
-                                         "operation",     "gimp:cast-format",
+                                         "operation",     "gegl:cast-format",
                                          "input-format",  cast_format,
                                          "output-format", drawable_format,
                                          NULL);

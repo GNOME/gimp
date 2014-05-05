@@ -28,7 +28,6 @@
 #include "gimp-operations.h"
 
 #include "gimpoperationborder.h"
-#include "gimpoperationcastformat.h"
 #include "gimpoperationcagecoefcalc.h"
 #include "gimpoperationcagetransform.h"
 #include "gimpoperationequalize.h"
@@ -84,7 +83,6 @@ void
 gimp_operations_init (void)
 {
   g_type_class_ref (GIMP_TYPE_OPERATION_BORDER);
-  g_type_class_ref (GIMP_TYPE_OPERATION_CAST_FORMAT);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_COEF_CALC);
   g_type_class_ref (GIMP_TYPE_OPERATION_CAGE_TRANSFORM);
   g_type_class_ref (GIMP_TYPE_OPERATION_EQUALIZE);

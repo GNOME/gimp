@@ -313,12 +313,12 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                               babl_format_has_alpha (drawable_format));
 
           image_map->cast_before = gegl_node_new_child (filter_node,
-                                                        "operation",     "gimp:cast-format",
+                                                        "operation",     "gegl:cast-format",
                                                         "input-format",  drawable_format,
                                                         "output-format", cast_format,
                                                         NULL);
           image_map->cast_after = gegl_node_new_child (filter_node,
-                                                       "operation",     "gimp:cast-format",
+                                                       "operation",     "gegl:cast-format",
                                                        "input-format",  cast_format,
                                                        "output-format", drawable_format,
                                                         NULL);
