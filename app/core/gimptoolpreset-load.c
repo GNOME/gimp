@@ -19,6 +19,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
@@ -26,6 +27,8 @@
 #include "gimpcontext.h"
 #include "gimptoolpreset.h"
 #include "gimptoolpreset-load.h"
+
+#include "gimp-intl.h"
 
 
 GList *
@@ -48,7 +51,16 @@ gimp_tool_preset_load (GimpContext  *context,
                                     filename,
                                     NULL, error))
     {
-      return g_list_prepend (NULL, tool_preset);
+      if (GIMP_IS_CONTEXT (tool_preset->tool_options))
+        {
+          return g_list_prepend (NULL, tool_preset);
+        }
+      else
+        {
+          g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+                       _("Error while parsing '%s'"),
+                       gimp_filename_to_utf8 (filename));
+        }
     }
 
   g_object_unref (tool_preset);

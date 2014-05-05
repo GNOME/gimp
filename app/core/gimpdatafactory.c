@@ -931,6 +931,10 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
       g_list_free (data_list);
     }
 
+  /*  not else { ... } because loader->load_func() can return a list
+   *  of data objects *and* an error message if loading failed after
+   *  something was already loaded
+   */
   if (G_UNLIKELY (error))
     {
       gimp_message (factory->priv->gimp, NULL, GIMP_MESSAGE_ERROR,
