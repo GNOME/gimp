@@ -289,22 +289,16 @@ GimpAction *
 gimp_action_new (const gchar *name,
                  const gchar *label,
                  const gchar *tooltip,
-                 const gchar *stock_id)
+                 const gchar *icon_name)
 {
   GimpAction *action;
 
   action = g_object_new (GIMP_TYPE_ACTION,
-                         "name",     name,
-                         "label",    label,
-                         "tooltip",  tooltip,
-                         "stock-id", stock_id,
+                         "name",      name,
+                         "label",     label,
+                         "tooltip",   tooltip,
+                         "icon-name", icon_name,
                          NULL);
-
-  if (stock_id)
-    {
-      if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (), stock_id))
-        gtk_action_set_icon_name (GTK_ACTION (action), stock_id);
-    }
 
   return action;
 }
@@ -446,7 +440,7 @@ gimp_action_set_proxy (GimpAction *action,
       if (GIMP_IS_VIEW (image) || GIMP_IS_COLOR_AREA (image))
         {
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), NULL);
-          g_object_notify (G_OBJECT (action), "stock-id");
+          g_object_notify (G_OBJECT (action), "icon-name");
         }
     }
 

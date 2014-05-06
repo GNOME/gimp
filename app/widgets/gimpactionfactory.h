@@ -31,7 +31,7 @@ struct _GimpActionFactoryEntry
 {
   gchar                     *identifier;
   gchar                     *label;
-  gchar                     *stock_id;
+  gchar                     *icon_name;
   GimpActionGroupSetupFunc   setup_func;
   GimpActionGroupUpdateFunc  update_func;
 };
@@ -68,7 +68,7 @@ GimpActionFactory * gimp_action_factory_new      (Gimp              *gimp);
 void          gimp_action_factory_group_register (GimpActionFactory *factory,
                                                   const gchar       *identifier,
                                                   const gchar       *label,
-                                                  const gchar       *stock_id,
+                                                  const gchar       *icon_name,
                                                   GimpActionGroupSetupFunc  setup_func,
                                                   GimpActionGroupUpdateFunc update_func);
 

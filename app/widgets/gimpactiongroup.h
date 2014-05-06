@@ -38,7 +38,7 @@ struct _GimpActionGroup
 
   Gimp                      *gimp;
   gchar                     *label;
-  gchar                     *stock_id;
+  gchar                     *icon_name;
 
   gpointer                   user_data;
 
@@ -55,7 +55,7 @@ struct _GimpActionGroupClass
 struct _GimpActionEntry
 {
   const gchar *name;
-  const gchar *stock_id;
+  const gchar *icon_name;
   const gchar *label;
   const gchar *accelerator;
   const gchar *tooltip;
@@ -67,7 +67,7 @@ struct _GimpActionEntry
 struct _GimpToggleActionEntry
 {
   const gchar *name;
-  const gchar *stock_id;
+  const gchar *icon_name;
   const gchar *label;
   const gchar *accelerator;
   const gchar *tooltip;
@@ -80,7 +80,7 @@ struct _GimpToggleActionEntry
 struct _GimpRadioActionEntry
 {
   const gchar *name;
-  const gchar *stock_id;
+  const gchar *icon_name;
   const gchar *label;
   const gchar *accelerator;
   const gchar *tooltip;
@@ -92,7 +92,7 @@ struct _GimpRadioActionEntry
 struct _GimpEnumActionEntry
 {
   const gchar *name;
-  const gchar *stock_id;
+  const gchar *icon_name;
   const gchar *label;
   const gchar *accelerator;
   const gchar *tooltip;
@@ -105,7 +105,7 @@ struct _GimpEnumActionEntry
 struct _GimpStringActionEntry
 {
   const gchar *name;
-  const gchar *stock_id;
+  const gchar *icon_name;
   const gchar *label;
   const gchar *accelerator;
   const gchar *tooltip;
@@ -117,7 +117,7 @@ struct _GimpStringActionEntry
 struct _GimpPlugInActionEntry
 {
   const gchar         *name;
-  const gchar         *stock_id;
+  const gchar         *icon_name;
   const gchar         *label;
   const gchar         *accelerator;
   const gchar         *tooltip;
@@ -132,7 +132,7 @@ GType            gimp_action_group_get_type   (void) G_GNUC_CONST;
 GimpActionGroup *gimp_action_group_new        (Gimp                  *gimp,
                                                const gchar           *name,
                                                const gchar           *label,
-                                               const gchar           *stock_id,
+                                               const gchar           *icon_name,
                                                gpointer               user_data,
                                                GimpActionGroupUpdateFunc update_func);
 

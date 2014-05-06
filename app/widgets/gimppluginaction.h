@@ -56,7 +56,7 @@ GType              gimp_plug_in_action_get_type (void) G_GNUC_CONST;
 GimpPlugInAction * gimp_plug_in_action_new      (const gchar         *name,
                                                  const gchar         *label,
                                                  const gchar         *tooltip,
-                                                 const gchar         *stock_id,
+                                                 const gchar         *icon_name,
                                                  GimpPlugInProcedure *procedure);
 void               gimp_plug_in_action_selected (GimpPlugInAction    *action,
                                                  GimpPlugInProcedure *procedure);

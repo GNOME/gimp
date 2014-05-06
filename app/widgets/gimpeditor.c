@@ -476,7 +476,7 @@ gimp_editor_popup_menu (GimpEditor           *editor,
 
 GtkWidget *
 gimp_editor_add_button (GimpEditor  *editor,
-                        const gchar *stock_id,
+                        const gchar *icon_name,
                         const gchar *tooltip,
                         const gchar *help_id,
                         GCallback    callback,
@@ -489,13 +489,11 @@ gimp_editor_add_button (GimpEditor  *editor,
   GtkReliefStyle  button_relief;
 
   g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
-  g_return_val_if_fail (stock_id != NULL, NULL);
+  g_return_val_if_fail (icon_name != NULL, NULL);
 
   button_icon_size = gimp_editor_ensure_button_box (editor, &button_relief);
 
-  button = g_object_new (GIMP_TYPE_BUTTON,
-                         "use-stock", TRUE,
-                         NULL);
+  button = gimp_button_new ();
   gtk_button_set_relief (GTK_BUTTON (button), button_relief);
   gtk_box_pack_start (GTK_BOX (editor->priv->button_box), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
@@ -513,7 +511,7 @@ gimp_editor_add_button (GimpEditor  *editor,
                       extended_callback,
                       callback_data);
 
-  image = gtk_image_new_from_stock (stock_id, button_icon_size);
+  image = gtk_image_new_from_icon_name (icon_name, button_icon_size);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
@@ -523,7 +521,7 @@ gimp_editor_add_button (GimpEditor  *editor,
 GtkWidget *
 gimp_editor_add_stock_box (GimpEditor  *editor,
                            GType        enum_type,
-                           const gchar *stock_prefix,
+                           const gchar *icon_prefix,
                            GCallback    callback,
                            gpointer     callback_data)
 {
@@ -536,11 +534,11 @@ gimp_editor_add_stock_box (GimpEditor  *editor,
 
   g_return_val_if_fail (GIMP_IS_EDITOR (editor), NULL);
   g_return_val_if_fail (g_type_is_a (enum_type, G_TYPE_ENUM), NULL);
-  g_return_val_if_fail (stock_prefix != NULL, NULL);
+  g_return_val_if_fail (icon_prefix != NULL, NULL);
 
   button_icon_size = gimp_editor_ensure_button_box (editor, &button_relief);
 
-  hbox = gimp_enum_stock_box_new (enum_type, stock_prefix, button_icon_size,
+  hbox = gimp_enum_stock_box_new (enum_type, icon_prefix, button_icon_size,
                                   callback, callback_data,
                                   &first_button);
 
@@ -621,7 +619,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
   GtkWidget       *image;
   GtkIconSize      button_icon_size;
   GtkReliefStyle   button_relief;
-  const gchar     *stock_id;
+  const gchar     *icon_name;
   gchar           *tooltip;
   const gchar     *help_id;
   GList           *extended = NULL;
@@ -650,16 +648,16 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
   gtk_button_set_relief (GTK_BUTTON (button), button_relief);
 
-  stock_id = gtk_action_get_stock_id (action);
-  tooltip  = g_strdup (gtk_action_get_tooltip (action));
-  help_id  = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
+  icon_name = gtk_action_get_icon_name (action);
+  tooltip   = g_strdup (gtk_action_get_tooltip (action));
+  help_id   = g_object_get_qdata (G_OBJECT (action), GIMP_HELP_ID);
 
   old_child = gtk_bin_get_child (GTK_BIN (button));
 
   if (old_child)
     gtk_widget_destroy (old_child);
 
-  image = gtk_image_new_from_stock (stock_id, button_icon_size);
+  image = gtk_image_new_from_icon_name (icon_name, button_icon_size);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
@@ -783,13 +781,22 @@ gimp_editor_set_box_style (GimpEditor *editor,
           if (GTK_IS_IMAGE (child))
             {
               GtkIconSize  old_size;
-              gchar       *stock_id;
+              const gchar *icon_name;
 
-              gtk_image_get_stock (GTK_IMAGE (child), &stock_id, &old_size);
+              /* FIXME icon_name */
+              if (gtk_image_get_storage_type (GTK_IMAGE (child)) == GTK_IMAGE_STOCK)
+                {
+                  gtk_image_get_stock (GTK_IMAGE (child), &icon_name, &old_size);
+                  g_printerr ("EEEEK: %s used in GimpEditor\n", icon_name);
+                }
+              else
+                {
+                  gtk_image_get_icon_name (GTK_IMAGE (child), &icon_name, &old_size);
+                }
 
               if (button_icon_size != old_size)
-                gtk_image_set_from_stock (GTK_IMAGE (child),
-                                          stock_id, button_icon_size);
+                gtk_image_set_from_icon_name (GTK_IMAGE (child),
+                                              icon_name, button_icon_size);
             }
         }
     }

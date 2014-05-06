@@ -185,7 +185,7 @@ file_actions_setup (GimpActionGroup *group)
     {
       entries[i].name           = g_strdup_printf ("file-open-recent-%02d",
                                                    i + 1);
-      entries[i].stock_id       = GTK_STOCK_OPEN;
+      entries[i].icon_name      = GTK_STOCK_OPEN;
       entries[i].label          = entries[i].name;
       entries[i].tooltip        = NULL;
       entries[i].value          = i;

@@ -143,8 +143,8 @@ action_search_dialog_create (Gimp *gimp)
       gtk_widget_show (main_vbox);
 
       private->keyword_entry = gtk_entry_new ();
-      gtk_entry_set_icon_from_stock (GTK_ENTRY (private->keyword_entry),
-                                     GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_FIND);
+      gtk_entry_set_icon_from_icon_name (GTK_ENTRY (private->keyword_entry),
+                                         GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_FIND);
       gtk_box_pack_start (GTK_BOX (main_vbox), private->keyword_entry,
                           FALSE, FALSE, 0);
       gtk_widget_show (private->keyword_entry);
@@ -398,7 +398,7 @@ action_search_add_to_results_list (GtkAction    *action,
   gchar        *action_name;
   gchar        *label;
   gchar        *escaped_label = NULL;
-  const gchar  *stock_id;
+  const gchar  *icon_name;
   gchar        *accel_string;
   gchar        *escaped_accel = NULL;
   gboolean      has_shortcut = FALSE;
@@ -419,13 +419,13 @@ action_search_add_to_results_list (GtkAction    *action,
   if (GTK_IS_TOGGLE_ACTION (action))
     {
       if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)))
-        stock_id = GTK_STOCK_OK;
+        icon_name = GTK_STOCK_OK;
       else
-        stock_id = GTK_STOCK_NO;
+        icon_name = GTK_STOCK_NO;
     }
   else
     {
-      stock_id = gtk_action_get_stock_id (action);
+      icon_name = gtk_action_get_icon_name (action);
     }
 
   accel_string = action_search_find_accel_label (action);
@@ -479,7 +479,7 @@ action_search_add_to_results_list (GtkAction    *action,
     }
 
   gtk_list_store_set (store, &iter,
-                      COLUMN_ICON,      stock_id,
+                      COLUMN_ICON,      icon_name,
                       COLUMN_MARKUP,    markup,
                       COLUMN_TOOLTIP,   action_name,
                       COLUMN_ACTION,    action,
@@ -846,7 +846,7 @@ action_search_setup_results_list (GtkWidget **results_list,
 
   cell = gtk_cell_renderer_pixbuf_new ();
   column = gtk_tree_view_column_new_with_attributes (NULL, cell,
-                                                     "stock-id",  COLUMN_ICON,
+                                                     "icon-name", COLUMN_ICON,
                                                      "sensitive", COLUMN_SENSITIVE,
                                                      NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (*results_list), column);

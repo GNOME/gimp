@@ -254,7 +254,7 @@ actions_init (Gimp *gimp)
     gimp_action_factory_group_register (global_action_factory,
                                         action_groups[i].identifier,
                                         gettext (action_groups[i].label),
-                                        action_groups[i].stock_id,
+                                        action_groups[i].icon_name,
                                         action_groups[i].setup_func,
                                         action_groups[i].update_func);
 }
@@ -685,22 +685,22 @@ action_message (GimpDisplay *display,
 {
   GimpDisplayShell *shell     = gimp_display_get_shell (display);
   GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
-  const gchar      *stock_id  = NULL;
+  const gchar      *icon_name = NULL;
   va_list           args;
 
   if (GIMP_IS_TOOL_OPTIONS (object))
     {
       GimpToolInfo *tool_info = GIMP_TOOL_OPTIONS (object)->tool_info;
 
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+      icon_name = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
     }
   else if (GIMP_IS_VIEWABLE (object))
     {
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (object));
+      icon_name = gimp_viewable_get_stock_id (GIMP_VIEWABLE (object));
     }
 
   va_start (args, format);
   gimp_statusbar_push_temp_valist (statusbar, GIMP_MESSAGE_INFO,
-                                   stock_id, format, args);
+                                   icon_name, format, args);
   va_end (args);
 }

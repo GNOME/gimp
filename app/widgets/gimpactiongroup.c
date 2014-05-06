@@ -47,7 +47,7 @@ enum
   PROP_0,
   PROP_GIMP,
   PROP_LABEL,
-  PROP_STOCK_ID
+  PROP_ICON_NAME
 };
 
 
@@ -94,8 +94,8 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class, PROP_STOCK_ID,
-                                   g_param_spec_string ("stock-id",
+  g_object_class_install_property (object_class, PROP_ICON_NAME,
+                                   g_param_spec_string ("icon-name",
                                                         NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
@@ -177,10 +177,10 @@ gimp_action_group_finalize (GObject *object)
       group->label = NULL;
     }
 
-  if (group->stock_id)
+  if (group->icon_name)
     {
-      g_free (group->stock_id);
-      group->stock_id = NULL;
+      g_free (group->icon_name);
+      group->icon_name = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -202,8 +202,8 @@ gimp_action_group_set_property (GObject      *object,
     case PROP_LABEL:
       group->label = g_value_dup_string (value);
       break;
-    case PROP_STOCK_ID:
-      group->stock_id = g_value_dup_string (value);
+    case PROP_ICON_NAME:
+      group->icon_name = g_value_dup_string (value);
       break;
 
     default:
@@ -228,8 +228,8 @@ gimp_action_group_get_property (GObject    *object,
     case PROP_LABEL:
       g_value_set_string (value, group->label);
       break;
-    case PROP_STOCK_ID:
-      g_value_set_string (value, group->stock_id);
+    case PROP_ICON_NAME:
+      g_value_set_string (value, group->icon_name);
       break;
 
     default:
@@ -260,7 +260,7 @@ gimp_action_group_check_unique_action (GimpActionGroup *group,
  * @gimp:        the @Gimp instance this action group belongs to
  * @name:        the name of the action group.
  * @label:       the user visible label of the action group.
- * @stock_id:    the icon of the action group.
+ * @icon_name:   the icon of the action group.
  * @user_data:   the user_data for #GtkAction callbacks.
  * @update_func: the function that will be called on
  *               gimp_action_group_update().
@@ -275,7 +275,7 @@ GimpActionGroup *
 gimp_action_group_new (Gimp                      *gimp,
                        const gchar               *name,
                        const gchar               *label,
-                       const gchar               *stock_id,
+                       const gchar               *icon_name,
                        gpointer                   user_data,
                        GimpActionGroupUpdateFunc  update_func)
 {
@@ -288,7 +288,7 @@ gimp_action_group_new (Gimp                      *gimp,
                         "gimp",      gimp,
                         "name",      name,
                         "label",     label,
-                        "stock-id",  stock_id,
+                        "icon-name", icon_name,
                         NULL);
 
   group->user_data   = user_data;
@@ -357,7 +357,7 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
         }
 
       action = gimp_action_new (entries[i].name, label, tooltip,
-                                entries[i].stock_id);
+                                entries[i].icon_name);
 
       if (entries[i].callback)
         g_signal_connect (action, "activate",
@@ -410,7 +410,7 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
         }
 
       action = gimp_toggle_action_new (entries[i].name, label, tooltip,
-                                       entries[i].stock_id);
+                                       entries[i].icon_name);
 
       gtk_toggle_action_set_active (action, entries[i].is_active);
 
@@ -469,7 +469,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
         }
 
       action = gimp_radio_action_new (entries[i].name, label, tooltip,
-                                      entries[i].stock_id,
+                                      entries[i].icon_name,
                                       entries[i].value);
 
       if (i == 0)
@@ -535,7 +535,7 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
         }
 
       action = gimp_enum_action_new (entries[i].name, label, tooltip,
-                                     entries[i].stock_id,
+                                     entries[i].icon_name,
                                      entries[i].value,
                                      entries[i].value_variable);
 
@@ -591,7 +591,7 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
         }
 
       action = gimp_string_action_new (entries[i].name, label, tooltip,
-                                       entries[i].stock_id,
+                                       entries[i].icon_name,
                                        entries[i].value);
 
       if (callback)
@@ -632,7 +632,7 @@ gimp_action_group_add_plug_in_actions (GimpActionGroup             *group,
       action = gimp_plug_in_action_new (entries[i].name,
                                         entries[i].label,
                                         entries[i].tooltip,
-                                        entries[i].stock_id,
+                                        entries[i].icon_name,
                                         entries[i].procedure);
 
       if (callback)

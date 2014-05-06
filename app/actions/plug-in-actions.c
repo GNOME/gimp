@@ -208,7 +208,7 @@ plug_in_actions_setup (GimpActionGroup *group)
   for (i = 0; i < n_entries; i++)
     {
       entries[i].name        = g_strdup_printf ("plug-in-recent-%02d", i + 1);
-      entries[i].stock_id    = NULL;
+      entries[i].icon_name   = NULL;
       entries[i].label       = "";
       entries[i].accelerator = "";
       entries[i].tooltip     = NULL;
@@ -459,7 +459,7 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
     }
 
   entry.name        = gimp_object_get_name (proc);
-  entry.stock_id    = gimp_plug_in_procedure_get_stock_id (proc);
+  entry.icon_name   = gimp_plug_in_procedure_get_stock_id (proc);
   entry.label       = label;
   entry.accelerator = NULL;
   entry.tooltip     = gimp_plug_in_procedure_get_blurb (proc);
@@ -608,7 +608,7 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
                     "sensitive", sensitive,
                     "procedure", proc,
                     "label",     label,
-                    "stock-id",  gimp_plug_in_procedure_get_stock_id (proc),
+                    "icon-name", gimp_plug_in_procedure_get_stock_id (proc),
                     "tooltip",   gimp_plug_in_procedure_get_blurb (proc),
                     NULL);
     }

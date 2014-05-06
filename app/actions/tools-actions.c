@@ -474,12 +474,12 @@ tools_actions_setup (GimpActionGroup *group)
       if (tool_info->menu_label)
         {
           GimpStringActionEntry  entry;
-          const gchar           *stock_id;
+          const gchar           *icon_name;
           const gchar           *identifier;
           gchar                 *tmp;
           gchar                 *name;
 
-          stock_id   = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+          icon_name  = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
           identifier = gimp_object_get_name (tool_info);
 
           tmp = g_strndup (identifier + strlen ("gimp-"),
@@ -488,7 +488,7 @@ tools_actions_setup (GimpActionGroup *group)
           g_free (tmp);
 
           entry.name        = name;
-          entry.stock_id    = stock_id;
+          entry.icon_name   = icon_name;
           entry.label       = tool_info->menu_label;
           entry.accelerator = tool_info->menu_accel;
           entry.tooltip     = tool_info->help;

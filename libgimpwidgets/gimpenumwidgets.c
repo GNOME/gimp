@@ -369,7 +369,10 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
 
       stock_id = g_strconcat (stock_prefix, "-", value->value_nick, NULL);
 
-      image = gtk_image_new_from_stock (stock_id, icon_size);
+      if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (), stock_id))
+        image = gtk_image_new_from_icon_name (stock_id, icon_size);
+      else
+        image = gtk_image_new_from_stock (stock_id, icon_size);
 
       g_free (stock_id);
 

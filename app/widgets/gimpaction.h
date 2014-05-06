@@ -55,7 +55,7 @@ GType        gimp_action_get_type           (void) G_GNUC_CONST;
 GimpAction * gimp_action_new                (const gchar *name,
                                              const gchar *label,
                                              const gchar *tooltip,
-                                             const gchar *stock_id);
+                                             const gchar *icon_name);
 
 gint         gimp_action_name_compare       (GimpAction  *action1,
                                              GimpAction  *action2);

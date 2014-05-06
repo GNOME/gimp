@@ -77,23 +77,16 @@ GtkToggleAction *
 gimp_toggle_action_new (const gchar *name,
                         const gchar *label,
                         const gchar *tooltip,
-                        const gchar *stock_id)
+                        const gchar *icon_name)
 {
   GtkToggleAction *action;
 
   action = g_object_new (GIMP_TYPE_TOGGLE_ACTION,
-                         "name",    name,
-                         "label",   label,
-                         "tooltip", tooltip,
+                         "name",      name,
+                         "label",     label,
+                         "tooltip",   tooltip,
+                         "icon-name", icon_name,
                          NULL);
-
-  if (stock_id)
-    {
-      if (gtk_icon_factory_lookup_default (stock_id))
-        gtk_action_set_stock_id (GTK_ACTION (action), stock_id);
-      else
-        gtk_action_set_icon_name (GTK_ACTION (action), stock_id);
-    }
 
   return action;
 }

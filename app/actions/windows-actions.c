@@ -344,7 +344,7 @@ windows_actions_image_notify (GimpDisplay      *display,
           GimpActionEntry entry;
 
           entry.name        = action_name;
-          entry.stock_id    = GIMP_STOCK_IMAGE;
+          entry.icon_name   = GIMP_STOCK_IMAGE;
           entry.label       = "";
           entry.accelerator = NULL;
           entry.tooltip     = NULL;
@@ -447,7 +447,7 @@ windows_actions_dock_window_added (GimpDialogFactory *factory,
   gchar           *action_name = windows_actions_dock_window_to_action_name (dock_window);
 
   entry.name        = action_name;
-  entry.stock_id    = NULL;
+  entry.icon_name   = NULL;
   entry.label       = "";
   entry.accelerator = NULL;
   entry.tooltip     = NULL;
@@ -535,7 +535,7 @@ windows_actions_recent_add (GimpContainer   *container,
   action_name = g_strdup_printf ("windows-recent-%04d", info_id);
 
   entry.name        = action_name;
-  entry.stock_id    = NULL;
+  entry.icon_name   = NULL;
   entry.label       = gimp_object_get_name (info);
   entry.accelerator = NULL;
   entry.tooltip     = gimp_object_get_name (info);

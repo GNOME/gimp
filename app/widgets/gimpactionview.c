@@ -209,7 +209,7 @@ gimp_action_view_new (GimpUIManager *manager,
   store = gtk_tree_store_new (GIMP_ACTION_VIEW_N_COLUMNS,
                               G_TYPE_BOOLEAN,         /* COLUMN_VISIBLE        */
                               GTK_TYPE_ACTION,        /* COLUMN_ACTION         */
-                              G_TYPE_STRING,          /* COLUMN_STOCK_ID       */
+                              G_TYPE_STRING,          /* COLUMN_ICON_NAME      */
                               G_TYPE_STRING,          /* COLUMN_LABEL          */
                               G_TYPE_STRING,          /* COLUMN_LABEL_CASEFOLD */
                               G_TYPE_STRING,          /* COLUMN_NAME           */
@@ -231,8 +231,8 @@ gimp_action_view_new (GimpUIManager *manager,
       gtk_tree_store_append (store, &group_iter, NULL);
 
       gtk_tree_store_set (store, &group_iter,
-                          GIMP_ACTION_VIEW_COLUMN_STOCK_ID, group->stock_id,
-                          GIMP_ACTION_VIEW_COLUMN_LABEL,    group->label,
+                          GIMP_ACTION_VIEW_COLUMN_ICON_NAME, group->icon_name,
+                          GIMP_ACTION_VIEW_COLUMN_LABEL,     group->label,
                           -1);
 
       actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
@@ -243,7 +243,7 @@ gimp_action_view_new (GimpUIManager *manager,
         {
           GtkAction       *action        = list2->data;
           const gchar     *name          = gtk_action_get_name (action);
-          const gchar     *stock_id      = gtk_action_get_stock_id (action);
+          const gchar     *icon_name     = gtk_action_get_icon_name (action);
           gchar           *label;
           gchar           *label_casefold;
           guint            accel_key     = 0;
@@ -291,7 +291,7 @@ gimp_action_view_new (GimpUIManager *manager,
           gtk_tree_store_set (store, &action_iter,
                               GIMP_ACTION_VIEW_COLUMN_VISIBLE,        TRUE,
                               GIMP_ACTION_VIEW_COLUMN_ACTION,         action,
-                              GIMP_ACTION_VIEW_COLUMN_STOCK_ID,       stock_id,
+                              GIMP_ACTION_VIEW_COLUMN_ICON_NAME,      icon_name,
                               GIMP_ACTION_VIEW_COLUMN_LABEL,          label,
                               GIMP_ACTION_VIEW_COLUMN_LABEL_CASEFOLD, label_casefold,
                               GIMP_ACTION_VIEW_COLUMN_NAME,           name,
@@ -339,8 +339,8 @@ gimp_action_view_new (GimpUIManager *manager,
   cell = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start (column, cell, FALSE);
   gtk_tree_view_column_set_attributes (column, cell,
-                                       "stock-id",
-                                       GIMP_ACTION_VIEW_COLUMN_STOCK_ID,
+                                       "icon-name",
+                                       GIMP_ACTION_VIEW_COLUMN_ICON_NAME,
                                        NULL);
 
   cell = gtk_cell_renderer_text_new ();

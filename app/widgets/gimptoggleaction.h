@@ -50,7 +50,7 @@ GType             gimp_toggle_action_get_type (void) G_GNUC_CONST;
 GtkToggleAction * gimp_toggle_action_new      (const gchar *name,
                                                const gchar *label,
                                                const gchar *tooltip,
-                                               const gchar *stock_id);
+                                               const gchar *icon_name);
 
 
 #endif  /* __GIMP_TOGGLE_ACTION_H__ */
