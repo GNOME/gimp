@@ -23,6 +23,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "gimpstock.h"
 
 #include "themes/Default/images/gimp-stock-pixbufs.h"
@@ -781,7 +783,8 @@ gimp_stock_init (void)
 {
   static gboolean initialized = FALSE;
 
-  gint i;
+  gchar *icons_dir;
+  gint   i;
 
   if (initialized)
     return;
@@ -836,6 +839,12 @@ gimp_stock_init (void)
   gtk_icon_factory_add_default (gimp_stock_factory);
 
   gtk_stock_add_static (gimp_stock_items, G_N_ELEMENTS (gimp_stock_items));
+
+  icons_dir = g_build_filename (gimp_data_directory (),
+                                "themes", "Default", "icons", NULL);
+  gtk_icon_theme_append_search_path (gtk_icon_theme_get_default (),
+                                     icons_dir);
+  g_free (icons_dir);
 
   initialized = TRUE;
 }
