@@ -647,11 +647,11 @@
 
   <autotools id="openssl"
              autogen-sh="Configure"
-    <branch module="openssl-1.0.1e.tar.gz"
-            version="1.0.1e"
              autogen-template="%(srcdir)s/%(autogen-sh)s --prefix=%(prefix)s --install_prefix= -L%(libdir)s %(autogenargs)s"
              autogenargs="zlib shared darwin64-x86_64-cc"
              makeinstallargs="install_sw">
+        <branch module="openssl-1.0.1g.tar.gz"
+            version="1.0.1g"
             repo="openssl"/>
     <dependencies>
       <dep package="zlib"/>
