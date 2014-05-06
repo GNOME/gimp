@@ -1081,7 +1081,7 @@ gimp_viewable_get_dummy_pixbuf (GimpViewable  *viewable,
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  icon = gdk_pixbuf_new_from_inline (-1, stock_question_64, FALSE, NULL);
+  icon = gdk_pixbuf_new_from_inline (-1, gimp_question_64, FALSE, NULL);
 
   g_return_val_if_fail (icon != NULL, NULL);
 
