@@ -765,7 +765,8 @@
   </autotools>
 
   <autotools id="poppler"
-             autogen-sh="configure">
+             autogen-sh="configure"
+             autogenargs="--enable-compile-warnings=no">
     <branch module="poppler-0.24.3.tar.xz"
             version="0.24.3"
             repo="poppler"/>
