@@ -583,6 +583,11 @@ AC_PATH_XTRA
 AM_PATH_GTK_2_0(gtk_required_version, :,
   AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.))
 
+AC_PATH_PROG(GTK_UPDATE_ICON_CACHE, gtk-update-icon-cache, no)
+if test "x$GTK_UPDATE_ICON_CACHE" = xno; then
+  AC_MSG_ERROR(Could not find gtk-update-icon-cache in your PATH)
+fi
+
 # GTK+ 2.26.0 will never be released, we keep the check around anyway
 # because we will need it again after the switch to GTK+ 3.x
 AC_MSG_CHECKING([if GTK+ is version 2.26.0 or newer (bogus placeholder check)])
