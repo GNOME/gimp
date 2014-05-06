@@ -647,9 +647,11 @@
 
   <autotools id="openssl"
              autogen-sh="Configure"
-             autogenargs="--prefix=/Users/claytonwalker/gimp/10.9/inst zlib no-krb5 shared darwin64-x86_64-cc">
     <branch module="openssl-1.0.1e.tar.gz"
             version="1.0.1e"
+             autogen-template="%(srcdir)s/%(autogen-sh)s --prefix=%(prefix)s --install_prefix= -L%(libdir)s %(autogenargs)s"
+             autogenargs="zlib shared darwin64-x86_64-cc"
+             makeinstallargs="install_sw">
             repo="openssl"/>
     <dependencies>
       <dep package="zlib"/>
@@ -793,9 +795,9 @@
 	      href="http://yorba.org/download/"/>
 
 
-<!-- Somehow incorperate this make install PREFIX=/Users/claytonwalker/gimp/10.9/inst -->
   <autotools id="gexiv2"
-    autogen-sh="configure --prefix=$JHBUILD_PREFIX --libdir $JHBUILD_LIBDIR">
+       autogen-sh="configure"
+       autogen-template="%(srcdir)s/%(autogen-sh)s --prefix=%(prefix)s --libdir %(libdir)s %(autogenargs)s">
     <branch repo="git.gnome.org"
             module="gexiv2"
             revision="gexiv2-0.7"/>

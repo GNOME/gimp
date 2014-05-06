@@ -85,6 +85,15 @@ $ JHB=gimp GIMP_SDK=10.6 jhbuild build gimp-2.8
 For GIMP master enter
 $ JHB=gimp GIMP_SDK=10.6 jhbuild build gimp-master
 
+6. The build might faijl on openssl with a message like this: 
+cp openssl.pc .../inst/lib/pkgconfig
+chmod 644 .../inst/lib/pkgconfig/openssl.pc
+*** Error during phase install of openssl: Module failed to install into DESTDIR u'.../inst/_jhbuild/root-openssl-broken' *** [2/2]
+
+This error is irrelevant. The OpenSSL install procedure failes erroneously although
+all library parts were installed successfully. Thus you can continue to the next
+module by choosing option 2.
+
 6. If you would like the GTK Murrine theme, you can install it as well
 # JHB=gimp GIMP_SDK=10.6 jhbuild build murrine-engine
 
