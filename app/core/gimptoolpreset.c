@@ -498,7 +498,7 @@ gimp_tool_preset_new (GimpContext *context,
                       const gchar *unused)
 {
   GimpToolInfo *tool_info;
-  const gchar  *stock_id;
+  const gchar  *icon_name;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
@@ -506,11 +506,11 @@ gimp_tool_preset_new (GimpContext *context,
 
   g_return_val_if_fail (tool_info != NULL, NULL);
 
-  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
 
   return g_object_new (GIMP_TYPE_TOOL_PRESET,
                        "name",         tool_info->blurb,
-                       "stock-id",     stock_id,
+                       "icon-name",    icon_name,
                        "gimp",         context->gimp,
                        "tool-options", tool_info->tool_options,
                        NULL);

@@ -251,14 +251,14 @@ gimp_channel_class_init (GimpChannelClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize           = gimp_channel_finalize;
+  object_class->finalize            = gimp_channel_finalize;
 
-  gimp_object_class->get_memsize   = gimp_channel_get_memsize;
+  gimp_object_class->get_memsize    = gimp_channel_get_memsize;
 
-  viewable_class->get_description  = gimp_channel_get_description;
-  viewable_class->default_stock_id = "gimp-channel";
+  viewable_class->get_description   = gimp_channel_get_description;
+  viewable_class->default_icon_name = "gimp-channel";
 
-  filter_class->get_node           = gimp_channel_get_node;
+  filter_class->get_node            = gimp_channel_get_node;
 
   item_class->is_attached          = gimp_channel_is_attached;
   item_class->get_tree             = gimp_channel_get_tree;

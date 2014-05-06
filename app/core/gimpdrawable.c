@@ -933,8 +933,8 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
           gboolean  linear;
 
           private->fs_filter = gimp_filter_new ("Floating Selection");
-          gimp_viewable_set_stock_id (GIMP_VIEWABLE (private->fs_filter),
-                                      "gimp-floating-selection");
+          gimp_viewable_set_icon_name (GIMP_VIEWABLE (private->fs_filter),
+                                       "gimp-floating-selection");
 
           node = gimp_filter_get_node (private->fs_filter);
 

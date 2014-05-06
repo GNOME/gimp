@@ -65,7 +65,7 @@ struct _GimpImageMap
   GimpDrawable       *drawable;
   gchar              *undo_desc;
   GeglNode           *operation;
-  gchar              *stock_id;
+  gchar              *icon_name;
   GimpImageMapRegion  region;
   gboolean            gamma_hack;
 
@@ -150,10 +150,10 @@ gimp_image_map_finalize (GObject *object)
       image_map->operation = NULL;
     }
 
-  if (image_map->stock_id)
+  if (image_map->icon_name)
     {
-      g_free (image_map->stock_id);
-      image_map->stock_id = NULL;
+      g_free (image_map->icon_name);
+      image_map->icon_name = NULL;
     }
 
   if (image_map->filter)
@@ -181,7 +181,7 @@ GimpImageMap *
 gimp_image_map_new (GimpDrawable *drawable,
                     const gchar  *undo_desc,
                     GeglNode     *operation,
-                    const gchar  *stock_id)
+                    const gchar  *icon_name)
 {
   GimpImageMap *image_map;
 
@@ -195,7 +195,7 @@ gimp_image_map_new (GimpDrawable *drawable,
   image_map->undo_desc = g_strdup (undo_desc);
 
   image_map->operation = g_object_ref (operation);
-  image_map->stock_id  = g_strdup (stock_id);
+  image_map->icon_name = g_strdup (icon_name);
 
   gimp_viewable_preview_freeze (GIMP_VIEWABLE (drawable));
 
@@ -278,8 +278,8 @@ gimp_image_map_apply (GimpImageMap        *image_map,
       GeglNode *input;
 
       image_map->filter = gimp_filter_new (image_map->undo_desc);
-      gimp_viewable_set_stock_id (GIMP_VIEWABLE (image_map->filter),
-                                  image_map->stock_id);
+      gimp_viewable_set_icon_name (GIMP_VIEWABLE (image_map->filter),
+                                   image_map->icon_name);
 
       filter_node = gimp_filter_get_node (image_map->filter);
 

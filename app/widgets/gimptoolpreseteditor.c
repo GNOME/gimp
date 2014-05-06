@@ -271,7 +271,7 @@ gimp_tool_preset_editor_sync_data (GimpToolPresetEditor *editor)
   GimpToolPreset              *preset;
   GimpToolInfo                *tool_info;
   GimpContextPropMask          serialize_props;
-  const gchar                 *stock_id;
+  const gchar                 *icon_name;
   gchar                       *label;
 
   g_signal_handlers_block_by_func (priv->tool_preset_model,
@@ -288,11 +288,11 @@ gimp_tool_preset_editor_sync_data (GimpToolPresetEditor *editor)
 
   tool_info = priv->tool_preset_model->tool_options->tool_info;
 
-  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
-  label    = g_strdup_printf (_("%s Preset"), tool_info->blurb);
+  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
+  label     = g_strdup_printf (_("%s Preset"), tool_info->blurb);
 
-  gtk_image_set_from_stock (GTK_IMAGE (priv->tool_icon),
-                            stock_id, GTK_ICON_SIZE_MENU);
+  gtk_image_set_from_icon_name (GTK_IMAGE (priv->tool_icon),
+                                icon_name, GTK_ICON_SIZE_MENU);
   gtk_label_set_text (GTK_LABEL (priv->tool_label), label);
 
   g_free (label);

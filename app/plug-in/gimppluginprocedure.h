@@ -108,7 +108,7 @@ void          gimp_plug_in_procedure_set_icon        (GimpPlugInProcedure       
                                                       GimpIconType               type,
                                                       const guint8              *data,
                                                       gint                       data_length);
-const gchar * gimp_plug_in_procedure_get_stock_id    (const GimpPlugInProcedure *proc);
+const gchar * gimp_plug_in_procedure_get_icon_name   (const GimpPlugInProcedure *proc);
 GdkPixbuf   * gimp_plug_in_procedure_get_pixbuf      (const GimpPlugInProcedure *proc);
 
 gchar       * gimp_plug_in_procedure_get_help_id     (const GimpPlugInProcedure *proc);

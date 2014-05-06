@@ -123,7 +123,7 @@ gimp_dynamics_class_init (GimpDynamicsClass *klass)
   object_class->get_property                = gimp_dynamics_get_property;
   object_class->dispatch_properties_changed = gimp_dynamics_dispatch_properties_changed;
 
-  viewable_class->default_stock_id          = "gimp-dynamics";
+  viewable_class->default_icon_name         = "gimp-dynamics";
 
   data_class->save                          = gimp_dynamics_save;
   data_class->get_extension                 = gimp_dynamics_get_extension;

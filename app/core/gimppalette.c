@@ -90,19 +90,19 @@ gimp_palette_class_init (GimpPaletteClass *klass)
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
 
-  object_class->finalize           = gimp_palette_finalize;
+  object_class->finalize            = gimp_palette_finalize;
 
-  gimp_object_class->get_memsize   = gimp_palette_get_memsize;
+  gimp_object_class->get_memsize    = gimp_palette_get_memsize;
 
-  viewable_class->default_stock_id = "gtk-select-color";
-  viewable_class->get_preview_size = gimp_palette_get_preview_size;
-  viewable_class->get_popup_size   = gimp_palette_get_popup_size;
-  viewable_class->get_new_preview  = gimp_palette_get_new_preview;
-  viewable_class->get_description  = gimp_palette_get_description;
+  viewable_class->default_icon_name = "gtk-select-color";
+  viewable_class->get_preview_size  = gimp_palette_get_preview_size;
+  viewable_class->get_popup_size    = gimp_palette_get_popup_size;
+  viewable_class->get_new_preview   = gimp_palette_get_new_preview;
+  viewable_class->get_description   = gimp_palette_get_description;
 
-  data_class->save                 = gimp_palette_save;
-  data_class->get_extension        = gimp_palette_get_extension;
-  data_class->duplicate            = gimp_palette_duplicate;
+  data_class->save                  = gimp_palette_save;
+  data_class->get_extension         = gimp_palette_get_extension;
+  data_class->duplicate             = gimp_palette_duplicate;
 }
 
 static void

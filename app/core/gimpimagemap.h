@@ -59,7 +59,7 @@ GType          gimp_image_map_get_type   (void) G_GNUC_CONST;
 GimpImageMap * gimp_image_map_new        (GimpDrawable        *drawable,
                                           const gchar         *undo_desc,
                                           GeglNode            *operation,
-                                          const gchar         *stock_id);
+                                          const gchar         *icon_name);
 
 void           gimp_image_map_set_region (GimpImageMap        *image_map,
                                           GimpImageMapRegion   region);

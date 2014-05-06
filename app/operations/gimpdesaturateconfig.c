@@ -60,11 +60,11 @@ gimp_desaturate_config_class_init (GimpDesaturateConfigClass *klass)
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->set_property       = gimp_desaturate_config_set_property;
-  object_class->get_property       = gimp_desaturate_config_get_property;
+  object_class->set_property        = gimp_desaturate_config_set_property;
+  object_class->get_property        = gimp_desaturate_config_get_property;
 
   /*FIXME: change string when a desaturate icon gets added */
-  viewable_class->default_stock_id = "gimp-convert-grayscale";
+  viewable_class->default_icon_name = "gimp-convert-grayscale";
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MODE,
                                  "mode",

@@ -1631,7 +1631,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
   GimpTool         *tool      = GIMP_TOOL (tr_tool);
   GimpToolInfo     *tool_info = tool->tool_info;
   GimpDisplayShell *shell;
-  const gchar      *stock_id;
+  const gchar      *icon_name;
 
   if (! GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog)
     return;
@@ -1640,7 +1640,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 
   shell = gimp_display_get_shell (tool->display);
 
-  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
 
   tr_tool->overlay = FALSE;
 
@@ -1653,7 +1653,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                                     GIMP_STOCK_WILBER_EEK, RESPONSE_EEK,
                                     GIMP_STOCK_RESET, RESPONSE_RESET,
                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                    stock_id,         GTK_RESPONSE_OK,
+                                    icon_name,        GTK_RESPONSE_OK,
 
                                     NULL);
 

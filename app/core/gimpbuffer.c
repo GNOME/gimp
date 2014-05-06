@@ -73,16 +73,16 @@ gimp_buffer_class_init (GimpBufferClass *klass)
   GimpObjectClass   *gimp_object_class = GIMP_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->finalize           = gimp_buffer_finalize;
+  object_class->finalize            = gimp_buffer_finalize;
 
-  gimp_object_class->get_memsize   = gimp_buffer_get_memsize;
+  gimp_object_class->get_memsize    = gimp_buffer_get_memsize;
 
-  viewable_class->default_stock_id = "gtk-paste";
-  viewable_class->get_size         = gimp_buffer_get_size;
-  viewable_class->get_preview_size = gimp_buffer_get_preview_size;
-  viewable_class->get_popup_size   = gimp_buffer_get_popup_size;
-  viewable_class->get_new_preview  = gimp_buffer_get_new_preview;
-  viewable_class->get_description  = gimp_buffer_get_description;
+  viewable_class->default_icon_name = "gtk-paste";
+  viewable_class->get_size          = gimp_buffer_get_size;
+  viewable_class->get_preview_size  = gimp_buffer_get_preview_size;
+  viewable_class->get_popup_size    = gimp_buffer_get_popup_size;
+  viewable_class->get_new_preview   = gimp_buffer_get_new_preview;
+  viewable_class->get_description   = gimp_buffer_get_description;
 }
 
 static void

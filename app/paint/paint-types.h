@@ -71,7 +71,7 @@ typedef void (* GimpPaintRegisterCallback) (Gimp        *gimp,
                                             GType        paint_options_type,
                                             const gchar *identifier,
                                             const gchar *blurb,
-                                            const gchar *stock_id);
+                                            const gchar *icon_name);
 
 typedef void (* GimpPaintRegisterFunc)     (Gimp                      *gimp,
                                             GimpPaintRegisterCallback  callback);

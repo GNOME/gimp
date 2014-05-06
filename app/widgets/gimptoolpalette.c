@@ -391,12 +391,12 @@ gimp_tool_palette_initialize_tools (GimpToolPalette *palette)
     {
       GimpToolInfo  *tool_info = list->data;
       GtkToolItem   *item;
-      const gchar   *stock_id;
+      const gchar   *icon_name;
       GimpUIManager *ui_manager;
 
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+      icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
 
-      item = gtk_radio_tool_button_new_from_stock (item_group, stock_id);
+      item = gtk_radio_tool_button_new_from_stock (item_group, icon_name);
       item_group = gtk_radio_tool_button_get_group (GTK_RADIO_TOOL_BUTTON (item));
       gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (group), item, -1);
       gtk_widget_show (GTK_WIDGET (item));

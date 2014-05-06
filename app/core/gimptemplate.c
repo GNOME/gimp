@@ -119,7 +119,7 @@ gimp_template_class_init (GimpTemplateClass *klass)
   object_class->get_property = gimp_template_get_property;
   object_class->notify       = gimp_template_notify;
 
-  viewable_class->default_stock_id = "gimp-template";
+  viewable_class->default_icon_name = "gimp-template";
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_WIDTH, "width",
                                 NULL,
@@ -346,7 +346,7 @@ gimp_template_notify (GObject    *object,
                                       private->precision,
                                       private->width, private->height);
 
-  if (! strcmp (pspec->name, "stock-id"))
+  if (! strcmp (pspec->name, "icon-name"))
     gimp_viewable_invalidate_preview (GIMP_VIEWABLE (object));
 }
 

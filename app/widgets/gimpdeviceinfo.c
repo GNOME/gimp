@@ -102,12 +102,12 @@ gimp_device_info_class_init (GimpDeviceInfoClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->constructed        = gimp_device_info_constructed;
-  object_class->finalize           = gimp_device_info_finalize;
-  object_class->set_property       = gimp_device_info_set_property;
-  object_class->get_property       = gimp_device_info_get_property;
+  object_class->constructed         = gimp_device_info_constructed;
+  object_class->finalize            = gimp_device_info_finalize;
+  object_class->set_property        = gimp_device_info_set_property;
+  object_class->get_property        = gimp_device_info_get_property;
 
-  viewable_class->default_stock_id = GIMP_STOCK_INPUT_DEVICE;
+  viewable_class->default_icon_name = GIMP_STOCK_INPUT_DEVICE;
 
   g_object_class_install_property (object_class, PROP_DEVICE,
                                    g_param_spec_object ("device",
@@ -487,24 +487,24 @@ gimp_device_info_guess_icon (GimpDeviceInfo *info)
   GimpViewable *viewable = GIMP_VIEWABLE (info);
 
   if (gimp_object_get_name (viewable) &&
-      ! strcmp (gimp_viewable_get_stock_id (viewable),
-                GIMP_VIEWABLE_GET_CLASS (viewable)->default_stock_id))
+      ! strcmp (gimp_viewable_get_icon_name (viewable),
+                GIMP_VIEWABLE_GET_CLASS (viewable)->default_icon_name))
     {
-      const gchar *stock_id = NULL;
-      gchar       *down     = g_ascii_strdown (gimp_object_get_name (viewable),
-                                               -1);
+      const gchar *icon_name = NULL;
+      gchar       *down      = g_ascii_strdown (gimp_object_get_name (viewable),
+                                                -1);
 
       if (strstr (down, "eraser"))
         {
-          stock_id = GIMP_STOCK_TOOL_ERASER;
+          icon_name = GIMP_STOCK_TOOL_ERASER;
         }
       else if (strstr (down, "pen"))
         {
-          stock_id = GIMP_STOCK_TOOL_PAINTBRUSH;
+          icon_name = GIMP_STOCK_TOOL_PAINTBRUSH;
         }
       else if (strstr (down, "airbrush"))
         {
-          stock_id = GIMP_STOCK_TOOL_AIRBRUSH;
+          icon_name = GIMP_STOCK_TOOL_AIRBRUSH;
         }
       else if (strstr (down, "cursor")   ||
                strstr (down, "mouse")    ||
@@ -512,13 +512,13 @@ gimp_device_info_guess_icon (GimpDeviceInfo *info)
                strstr (down, "touchpad") ||
                strstr (down, "trackpoint"))
         {
-          stock_id = GIMP_STOCK_CURSOR;
+          icon_name = GIMP_STOCK_CURSOR;
         }
 
       g_free (down);
 
-      if (stock_id)
-        gimp_viewable_set_stock_id (viewable, stock_id);
+      if (icon_name)
+        gimp_viewable_set_icon_name (viewable, icon_name);
     }
 }
 

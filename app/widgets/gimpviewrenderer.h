@@ -59,7 +59,7 @@ struct _GimpViewRenderer
   /*< private >*/
   cairo_pattern_t    *pattern;
   GdkPixbuf          *pixbuf;
-  gchar              *bg_stock_id;
+  gchar              *bg_icon_name;
 
   gint                size;
   gboolean            needs_render;
@@ -125,7 +125,7 @@ void   gimp_view_renderer_set_border_type  (GimpViewRenderer   *renderer,
 void   gimp_view_renderer_set_border_color (GimpViewRenderer   *renderer,
                                             const GimpRGB      *border_color);
 void   gimp_view_renderer_set_background   (GimpViewRenderer   *renderer,
-                                            const gchar        *stock_id);
+                                            const gchar        *icon_name);
 
 void   gimp_view_renderer_invalidate       (GimpViewRenderer   *renderer);
 void   gimp_view_renderer_update           (GimpViewRenderer   *renderer);
@@ -151,9 +151,9 @@ void   gimp_view_renderer_render_temp_buf        (GimpViewRenderer *renderer,
                                                   GimpViewBG        outside_bg);
 void   gimp_view_renderer_render_pixbuf          (GimpViewRenderer *renderer,
                                                   GdkPixbuf        *pixbuf);
-void   gimp_view_renderer_render_stock           (GimpViewRenderer *renderer,
+void   gimp_view_renderer_render_icon            (GimpViewRenderer *renderer,
                                                   GtkWidget        *widget,
-                                                  const gchar      *stock_id);
+                                                  const gchar      *icon_name);
 
 
 

@@ -101,11 +101,11 @@ gimp_controller_info_class_init (GimpControllerInfoClass *klass)
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->finalize           = gimp_controller_info_finalize;
-  object_class->set_property       = gimp_controller_info_set_property;
-  object_class->get_property       = gimp_controller_info_get_property;
+  object_class->finalize            = gimp_controller_info_finalize;
+  object_class->set_property        = gimp_controller_info_set_property;
+  object_class->get_property        = gimp_controller_info_get_property;
 
-  viewable_class->default_stock_id = GIMP_STOCK_CONTROLLER;
+  viewable_class->default_icon_name = GIMP_STOCK_CONTROLLER;
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ENABLED,
                                     "enabled", NULL,
@@ -211,8 +211,9 @@ gimp_controller_info_set_property (GObject      *object,
                                    0);
 
           controller_class = GIMP_CONTROLLER_GET_CLASS (info->controller);
-          gimp_viewable_set_stock_id (GIMP_VIEWABLE (info),
-                                      controller_class->stock_id);
+          gimp_viewable_set_icon_name (GIMP_VIEWABLE (info),
+                                       /* FIXME icon name */
+                                       controller_class->stock_id);
         }
       break;
     case PROP_MAPPING:

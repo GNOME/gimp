@@ -44,7 +44,8 @@
 enum
 {
   PROP_0,
-  PROP_STOCK_ID,
+  PROP_STOCK_ID, /* compat */
+  PROP_ICON_NAME,
   PROP_ICON_PIXBUF,
   PROP_FROZEN
 };
@@ -61,7 +62,7 @@ typedef struct _GimpViewablePrivate GimpViewablePrivate;
 
 struct _GimpViewablePrivate
 {
-  gchar        *stock_id;
+  gchar        *icon_name;
   GdkPixbuf    *icon_pixbuf;
   gint          freeze_count;
   GimpViewable *parent;
@@ -164,7 +165,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 
   gimp_object_class->get_memsize = gimp_viewable_get_memsize;
 
-  klass->default_stock_id        = "gimp-question";
+  klass->default_icon_name       = "gimp-question";
   klass->name_changed_signal     = "name-changed";
 
   klass->invalidate_preview      = gimp_viewable_real_invalidate_preview;
@@ -182,7 +183,12 @@ gimp_viewable_class_init (GimpViewableClass *klass)
   klass->set_expanded            = NULL;
   klass->get_expanded            = NULL;
 
+  /* compat property */
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_STOCK_ID, "stock-id",
+                                   NULL, NULL,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_ICON_NAME, "icon-name",
                                    NULL, NULL,
                                    GIMP_PARAM_STATIC_STRINGS);
 
@@ -218,10 +224,10 @@ gimp_viewable_finalize (GObject *object)
 {
   GimpViewablePrivate *private = GET_PRIVATE (object);
 
-  if (private->stock_id)
+  if (private->icon_name)
     {
-      g_free (private->stock_id);
-      private->stock_id = NULL;
+      g_free (private->icon_name);
+      private->icon_name = NULL;
     }
 
   if (private->icon_pixbuf)
@@ -257,7 +263,8 @@ gimp_viewable_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_STOCK_ID:
-      gimp_viewable_set_stock_id (viewable, g_value_get_string (value));
+    case PROP_ICON_NAME:
+      gimp_viewable_set_icon_name (viewable, g_value_get_string (value));
       break;
     case PROP_ICON_PIXBUF:
       if (private->icon_pixbuf)
@@ -286,7 +293,8 @@ gimp_viewable_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_STOCK_ID:
-      g_value_set_string (value, gimp_viewable_get_stock_id (viewable));
+    case PROP_ICON_NAME:
+      g_value_set_string (value, gimp_viewable_get_icon_name (viewable));
       break;
     case PROP_ICON_PIXBUF:
       g_value_set_object (value, private->icon_pixbuf);
@@ -426,10 +434,13 @@ gimp_viewable_serialize_property (GimpConfig       *config,
   switch (property_id)
     {
     case PROP_STOCK_ID:
-      if (private->stock_id)
+      return TRUE;
+
+    case PROP_ICON_NAME:
+      if (private->icon_name)
         {
           gimp_config_writer_open (writer, pspec->name);
-          gimp_config_writer_string (writer, private->stock_id);
+          gimp_config_writer_string (writer, private->icon_name);
           gimp_config_writer_close (writer);
         }
       return TRUE;
@@ -1134,17 +1145,17 @@ gimp_viewable_get_description (GimpViewable  *viewable,
 }
 
 /**
- * gimp_viewable_get_stock_id:
- * @viewable: viewable object for which to retrieve a stock ID.
+ * gimp_viewable_get_icon_name:
+ * @viewable: viewable object for which to retrieve a icon name.
  *
- * Gets the current value of the object's stock ID, for use in
+ * Gets the current value of the object's icon name, for use in
  * constructing an iconic representation of the object.
  *
- * Returns: a pointer to the string containing the stock ID.  The
+ * Returns: a pointer to the string containing the icon name.  The
  *          contents must not be altered or freed.
  **/
 const gchar *
-gimp_viewable_get_stock_id (GimpViewable *viewable)
+gimp_viewable_get_icon_name (GimpViewable *viewable)
 {
   GimpViewablePrivate *private;
 
@@ -1152,24 +1163,24 @@ gimp_viewable_get_stock_id (GimpViewable *viewable)
 
   private = GET_PRIVATE (viewable);
 
-  if (private->stock_id)
-    return (const gchar *) private->stock_id;
+  if (private->icon_name)
+    return (const gchar *) private->icon_name;
 
-  return GIMP_VIEWABLE_GET_CLASS (viewable)->default_stock_id;
+  return GIMP_VIEWABLE_GET_CLASS (viewable)->default_icon_name;
 }
 
 /**
- * gimp_viewable_set_stock_id:
- * @viewable: viewable object to assign the specified stock ID.
- * @stock_id: string containing a stock identifier.
+ * gimp_viewable_set_icon_name:
+ * @viewable: viewable object to assign the specified icon name.
+ * @icon_name: string containing an icon name identifier.
  *
- * Seta the object's stock ID, for use in constructing iconic smbols
- * of the object.  The contents of @stock_id are copied, so you can
+ * Seta the object's icon name, for use in constructing iconic smbols
+ * of the object.  The contents of @icon_name are copied, so you can
  * free it when you are done with it.
  **/
 void
-gimp_viewable_set_stock_id (GimpViewable *viewable,
-                            const gchar  *stock_id)
+gimp_viewable_set_icon_name (GimpViewable *viewable,
+                             const gchar  *icon_name)
 {
   GimpViewablePrivate *private;
   GimpViewableClass   *viewable_class;
@@ -1178,21 +1189,21 @@ gimp_viewable_set_stock_id (GimpViewable *viewable,
 
   private = GET_PRIVATE (viewable);
 
-  g_free (private->stock_id);
-  private->stock_id = NULL;
+  g_free (private->icon_name);
+  private->icon_name = NULL;
 
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
 
-  if (stock_id)
+  if (icon_name)
     {
-      if (viewable_class->default_stock_id == NULL ||
-          strcmp (stock_id, viewable_class->default_stock_id))
-        private->stock_id = g_strdup (stock_id);
+      if (viewable_class->default_icon_name == NULL ||
+          strcmp (icon_name, viewable_class->default_icon_name))
+        private->icon_name = g_strdup (icon_name);
     }
 
   gimp_viewable_invalidate_preview (viewable);
 
-  g_object_notify (G_OBJECT (viewable), "stock-id");
+  g_object_notify (G_OBJECT (viewable), "icon-name");
 }
 
 void

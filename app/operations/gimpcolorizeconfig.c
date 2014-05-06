@@ -67,10 +67,10 @@ gimp_colorize_config_class_init (GimpColorizeConfigClass *klass)
   GimpHSL            hsl;
   GimpRGB            rgb;
 
-  object_class->set_property       = gimp_colorize_config_set_property;
-  object_class->get_property       = gimp_colorize_config_get_property;
+  object_class->set_property        = gimp_colorize_config_set_property;
+  object_class->get_property        = gimp_colorize_config_get_property;
 
-  viewable_class->default_stock_id = "gimp-tool-colorize";
+  viewable_class->default_icon_name = "gimp-tool-colorize";
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HUE,
                                    "hue",

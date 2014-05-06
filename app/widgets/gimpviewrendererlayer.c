@@ -61,26 +61,26 @@ static void
 gimp_view_renderer_layer_render (GimpViewRenderer *renderer,
                                  GtkWidget        *widget)
 {
-  const gchar *stock_id = NULL;
+  const gchar *icon_name = NULL;
 
   if (gimp_layer_is_floating_sel (GIMP_LAYER (renderer->viewable)))
     {
-      stock_id = GIMP_STOCK_FLOATING_SELECTION;
+      icon_name = GIMP_STOCK_FLOATING_SELECTION;
     }
   else if (gimp_item_is_text_layer (GIMP_ITEM (renderer->viewable)))
     {
-      stock_id = gimp_viewable_get_stock_id (renderer->viewable);
+      icon_name = gimp_viewable_get_icon_name (renderer->viewable);
     }
   else
     {
       GimpContainer *children = gimp_viewable_get_children (renderer->viewable);
 
       if (children && gimp_container_get_n_children (children) == 0)
-        stock_id = GTK_STOCK_DIRECTORY;
+        icon_name = GTK_STOCK_DIRECTORY;
     }
 
-  if (stock_id)
-    gimp_view_renderer_render_stock (renderer, widget, stock_id);
+  if (icon_name)
+    gimp_view_renderer_render_icon (renderer, widget, icon_name);
   else
     GIMP_VIEW_RENDERER_CLASS (parent_class)->render (renderer, widget);
 }

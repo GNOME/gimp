@@ -103,7 +103,7 @@ static void   gimp_tools_register (GType                   tool_type,
                                    const gchar            *menu_accel,
                                    const gchar            *help_domain,
                                    const gchar            *help_data,
-                                   const gchar            *stock_id,
+                                   const gchar            *icon_name,
                                    gpointer                data);
 
 
@@ -475,7 +475,7 @@ gimp_tools_register (GType                   tool_type,
                      const gchar            *menu_accel,
                      const gchar            *help_domain,
                      const gchar            *help_data,
-                     const gchar            *stock_id,
+                     const gchar            *icon_name,
                      gpointer                data)
 {
   Gimp         *gimp = (Gimp *) data;
@@ -552,7 +552,7 @@ gimp_tools_register (GType                   tool_type,
                                   help_domain,
                                   help_data,
                                   paint_core_name,
-                                  stock_id);
+                                  icon_name);
 
   visible = (! g_type_is_a (tool_type, GIMP_TYPE_IMAGE_MAP_TOOL));
 

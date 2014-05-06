@@ -185,60 +185,60 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize           = gimp_vectors_finalize;
+  object_class->finalize            = gimp_vectors_finalize;
 
-  gimp_object_class->get_memsize   = gimp_vectors_get_memsize;
+  gimp_object_class->get_memsize    = gimp_vectors_get_memsize;
 
-  viewable_class->get_new_preview  = gimp_vectors_get_new_preview;
-  viewable_class->default_stock_id = "gimp-path";
+  viewable_class->get_new_preview   = gimp_vectors_get_new_preview;
+  viewable_class->default_icon_name = "gimp-path";
 
-  item_class->is_attached          = gimp_vectors_is_attached;
-  item_class->get_tree             = gimp_vectors_get_tree;
-  item_class->duplicate            = gimp_vectors_duplicate;
-  item_class->convert              = gimp_vectors_convert;
-  item_class->translate            = gimp_vectors_translate;
-  item_class->scale                = gimp_vectors_scale;
-  item_class->resize               = gimp_vectors_resize;
-  item_class->flip                 = gimp_vectors_flip;
-  item_class->rotate               = gimp_vectors_rotate;
-  item_class->transform            = gimp_vectors_transform;
-  item_class->stroke               = gimp_vectors_stroke;
-  item_class->to_selection         = gimp_vectors_to_selection;
-  item_class->default_name         = _("Path");
-  item_class->rename_desc          = C_("undo-type", "Rename Path");
-  item_class->translate_desc       = C_("undo-type", "Move Path");
-  item_class->scale_desc           = C_("undo-type", "Scale Path");
-  item_class->resize_desc          = C_("undo-type", "Resize Path");
-  item_class->flip_desc            = C_("undo-type", "Flip Path");
-  item_class->rotate_desc          = C_("undo-type", "Rotate Path");
-  item_class->transform_desc       = C_("undo-type", "Transform Path");
-  item_class->stroke_desc          = C_("undo-type", "Stroke Path");
-  item_class->to_selection_desc    = C_("undo-type", "Path to Selection");
-  item_class->reorder_desc         = C_("undo-type", "Reorder Path");
-  item_class->raise_desc           = C_("undo-type", "Raise Path");
-  item_class->raise_to_top_desc    = C_("undo-type", "Raise Path to Top");
-  item_class->lower_desc           = C_("undo-type", "Lower Path");
-  item_class->lower_to_bottom_desc = C_("undo-type", "Lower Path to Bottom");
-  item_class->raise_failed         = _("Path cannot be raised higher.");
-  item_class->lower_failed         = _("Path cannot be lowered more.");
+  item_class->is_attached           = gimp_vectors_is_attached;
+  item_class->get_tree              = gimp_vectors_get_tree;
+  item_class->duplicate             = gimp_vectors_duplicate;
+  item_class->convert               = gimp_vectors_convert;
+  item_class->translate             = gimp_vectors_translate;
+  item_class->scale                 = gimp_vectors_scale;
+  item_class->resize                = gimp_vectors_resize;
+  item_class->flip                  = gimp_vectors_flip;
+  item_class->rotate                = gimp_vectors_rotate;
+  item_class->transform             = gimp_vectors_transform;
+  item_class->stroke                = gimp_vectors_stroke;
+  item_class->to_selection          = gimp_vectors_to_selection;
+  item_class->default_name          = _("Path");
+  item_class->rename_desc           = C_("undo-type", "Rename Path");
+  item_class->translate_desc        = C_("undo-type", "Move Path");
+  item_class->scale_desc            = C_("undo-type", "Scale Path");
+  item_class->resize_desc           = C_("undo-type", "Resize Path");
+  item_class->flip_desc             = C_("undo-type", "Flip Path");
+  item_class->rotate_desc           = C_("undo-type", "Rotate Path");
+  item_class->transform_desc        = C_("undo-type", "Transform Path");
+  item_class->stroke_desc           = C_("undo-type", "Stroke Path");
+  item_class->to_selection_desc     = C_("undo-type", "Path to Selection");
+  item_class->reorder_desc          = C_("undo-type", "Reorder Path");
+  item_class->raise_desc            = C_("undo-type", "Raise Path");
+  item_class->raise_to_top_desc     = C_("undo-type", "Raise Path to Top");
+  item_class->lower_desc            = C_("undo-type", "Lower Path");
+  item_class->lower_to_bottom_desc  = C_("undo-type", "Lower Path to Bottom");
+  item_class->raise_failed          = _("Path cannot be raised higher.");
+  item_class->lower_failed          = _("Path cannot be lowered more.");
 
-  klass->freeze                    = gimp_vectors_real_freeze;
-  klass->thaw                      = gimp_vectors_real_thaw;
+  klass->freeze                     = gimp_vectors_real_freeze;
+  klass->thaw                       = gimp_vectors_real_thaw;
 
-  klass->stroke_add                = gimp_vectors_real_stroke_add;
-  klass->stroke_remove             = gimp_vectors_real_stroke_remove;
-  klass->stroke_get                = gimp_vectors_real_stroke_get;
-  klass->stroke_get_next           = gimp_vectors_real_stroke_get_next;
-  klass->stroke_get_length         = gimp_vectors_real_stroke_get_length;
+  klass->stroke_add                 = gimp_vectors_real_stroke_add;
+  klass->stroke_remove              = gimp_vectors_real_stroke_remove;
+  klass->stroke_get                 = gimp_vectors_real_stroke_get;
+  klass->stroke_get_next            = gimp_vectors_real_stroke_get_next;
+  klass->stroke_get_length          = gimp_vectors_real_stroke_get_length;
 
-  klass->anchor_get                = gimp_vectors_real_anchor_get;
-  klass->anchor_delete             = gimp_vectors_real_anchor_delete;
+  klass->anchor_get                 = gimp_vectors_real_anchor_get;
+  klass->anchor_delete              = gimp_vectors_real_anchor_delete;
 
-  klass->get_length                = gimp_vectors_real_get_length;
-  klass->get_distance              = gimp_vectors_real_get_distance;
-  klass->interpolate               = gimp_vectors_real_interpolate;
+  klass->get_length                 = gimp_vectors_real_get_length;
+  klass->get_distance               = gimp_vectors_real_get_distance;
+  klass->interpolate                = gimp_vectors_real_interpolate;
 
-  klass->make_bezier               = gimp_vectors_real_make_bezier;
+  klass->make_bezier                = gimp_vectors_real_make_bezier;
 }
 
 static void

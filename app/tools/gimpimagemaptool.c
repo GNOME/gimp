@@ -705,7 +705,7 @@ gimp_image_map_tool_create_map (GimpImageMapTool *tool)
   tool->image_map = gimp_image_map_new (tool->drawable,
                                         tool->undo_desc,
                                         tool->operation,
-                                        gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info)));
+                                        gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info)));
 
   g_signal_connect (tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),
@@ -910,20 +910,20 @@ gimp_image_map_tool_color_picker_toggled (GtkWidget        *widget,
 GtkWidget *
 gimp_image_map_tool_add_color_picker (GimpImageMapTool *tool,
                                       gpointer          identifier,
-                                      const gchar      *stock_id,
+                                      const gchar      *icon_name,
                                       const gchar      *tooltip)
 {
   GtkWidget *button;
   GtkWidget *image;
 
   g_return_val_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool), NULL);
-  g_return_val_if_fail (stock_id != NULL, NULL);
+  g_return_val_if_fail (icon_name != NULL, NULL);
 
   button = g_object_new (GTK_TYPE_TOGGLE_BUTTON,
                          "draw-indicator", FALSE,
                          NULL);
 
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
   gtk_misc_set_padding (GTK_MISC (image), 2, 2);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);

@@ -1126,7 +1126,7 @@ gimp_tool_push_status (GimpTool    *tool,
                        ...)
 {
   GimpDisplayShell *shell;
-  const gchar      *stock_id;
+  const gchar      *icon_name;
   va_list           args;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -1135,12 +1135,12 @@ gimp_tool_push_status (GimpTool    *tool,
 
   shell = gimp_display_get_shell (display);
 
-  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
+  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool->tool_info));
 
   va_start (args, format);
 
   gimp_statusbar_push_valist (gimp_display_shell_get_statusbar (shell),
-                              G_OBJECT_TYPE_NAME (tool), stock_id,
+                              G_OBJECT_TYPE_NAME (tool), icon_name,
                               format, args);
 
   va_end (args);
@@ -1160,17 +1160,17 @@ gimp_tool_push_status_coords (GimpTool            *tool,
                               const gchar         *help)
 {
   GimpDisplayShell *shell;
-  const gchar      *stock_id;
+  const gchar      *icon_name;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
   shell = gimp_display_get_shell (display);
 
-  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
+  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool->tool_info));
 
   gimp_statusbar_push_coords (gimp_display_shell_get_statusbar (shell),
-                              G_OBJECT_TYPE_NAME (tool), stock_id,
+                              G_OBJECT_TYPE_NAME (tool), icon_name,
                               precision, title, x, separator, y,
                               help);
 
@@ -1187,17 +1187,17 @@ gimp_tool_push_status_length (GimpTool            *tool,
                               const gchar         *help)
 {
   GimpDisplayShell *shell;
-  const gchar      *stock_id;
+  const gchar      *icon_name;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
   shell = gimp_display_get_shell (display);
 
-  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
+  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool->tool_info));
 
   gimp_statusbar_push_length (gimp_display_shell_get_statusbar (shell),
-                              G_OBJECT_TYPE_NAME (tool), stock_id,
+                              G_OBJECT_TYPE_NAME (tool), icon_name,
                               title, axis, value, help);
 
   tool->status_displays = g_list_remove (tool->status_displays, display);
@@ -1211,7 +1211,7 @@ gimp_tool_replace_status (GimpTool    *tool,
                           ...)
 {
   GimpDisplayShell *shell;
-  const gchar      *stock_id;
+  const gchar      *icon_name;
   va_list           args;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
@@ -1220,12 +1220,12 @@ gimp_tool_replace_status (GimpTool    *tool,
 
   shell = gimp_display_get_shell (display);
 
-  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
+  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool->tool_info));
 
   va_start (args, format);
 
   gimp_statusbar_replace_valist (gimp_display_shell_get_statusbar (shell),
-                                 G_OBJECT_TYPE_NAME (tool), stock_id,
+                                 G_OBJECT_TYPE_NAME (tool), icon_name,
                                  format, args);
 
   va_end (args);

@@ -104,18 +104,18 @@ gimp_paint_info_new (Gimp        *gimp,
                      GType        paint_options_type,
                      const gchar *identifier,
                      const gchar *blurb,
-                     const gchar *stock_id)
+                     const gchar *icon_name)
 {
   GimpPaintInfo *paint_info;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
   g_return_val_if_fail (blurb != NULL, NULL);
-  g_return_val_if_fail (stock_id != NULL, NULL);
+  g_return_val_if_fail (icon_name != NULL, NULL);
 
   paint_info = g_object_new (GIMP_TYPE_PAINT_INFO,
-                             "name",     identifier,
-                             "stock-id", stock_id,
+                             "name",      identifier,
+                             "icon-name", icon_name,
                              NULL);
 
   paint_info->gimp               = gimp;

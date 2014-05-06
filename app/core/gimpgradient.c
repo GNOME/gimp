@@ -99,18 +99,18 @@ gimp_gradient_class_init (GimpGradientClass *klass)
   GimpViewableClass *viewable_class    = GIMP_VIEWABLE_CLASS (klass);
   GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
 
-  object_class->finalize           = gimp_gradient_finalize;
+  object_class->finalize            = gimp_gradient_finalize;
 
-  gimp_object_class->get_memsize   = gimp_gradient_get_memsize;
+  gimp_object_class->get_memsize    = gimp_gradient_get_memsize;
 
-  viewable_class->default_stock_id = "gimp-gradient";
-  viewable_class->get_preview_size = gimp_gradient_get_preview_size;
-  viewable_class->get_popup_size   = gimp_gradient_get_popup_size;
-  viewable_class->get_new_preview  = gimp_gradient_get_new_preview;
+  viewable_class->default_icon_name = "gimp-gradient";
+  viewable_class->get_preview_size  = gimp_gradient_get_preview_size;
+  viewable_class->get_popup_size    = gimp_gradient_get_popup_size;
+  viewable_class->get_new_preview   = gimp_gradient_get_new_preview;
 
-  data_class->save                 = gimp_gradient_save;
-  data_class->get_extension        = gimp_gradient_get_extension;
-  data_class->duplicate            = gimp_gradient_duplicate;
+  data_class->save                  = gimp_gradient_save;
+  data_class->get_extension         = gimp_gradient_get_extension;
+  data_class->duplicate             = gimp_gradient_duplicate;
 }
 
 static void

@@ -58,7 +58,7 @@ typedef void (* GimpToolRegisterCallback) (GType                     tool_type,
                                            const gchar              *menu_accel,
                                            const gchar              *help_domain,
                                            const gchar              *help_data,
-                                           const gchar              *stock_id,
+                                           const gchar              *icon_name,
                                            gpointer                  register_data);
 
 typedef void (* GimpToolRegisterFunc)     (GimpToolRegisterCallback  callback,

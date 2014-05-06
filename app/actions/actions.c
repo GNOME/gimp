@@ -692,11 +692,11 @@ action_message (GimpDisplay *display,
     {
       GimpToolInfo *tool_info = GIMP_TOOL_OPTIONS (object)->tool_info;
 
-      icon_name = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+      icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
     }
   else if (GIMP_IS_VIEWABLE (object))
     {
-      icon_name = gimp_viewable_get_stock_id (GIMP_VIEWABLE (object));
+      icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (object));
     }
 
   va_start (args, format);

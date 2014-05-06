@@ -115,14 +115,14 @@ gimp_font_class_init (GimpFontClass *klass)
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->finalize     = gimp_font_finalize;
-  object_class->set_property = gimp_font_set_property;
+  object_class->finalize            = gimp_font_finalize;
+  object_class->set_property        = gimp_font_set_property;
 
-  viewable_class->get_preview_size = gimp_font_get_preview_size;
-  viewable_class->get_popup_size   = gimp_font_get_popup_size;
-  viewable_class->get_new_preview  = gimp_font_get_new_preview;
+  viewable_class->get_preview_size  = gimp_font_get_preview_size;
+  viewable_class->get_popup_size    = gimp_font_get_popup_size;
+  viewable_class->get_new_preview   = gimp_font_get_new_preview;
 
-  viewable_class->default_stock_id = "gtk-select-font";
+  viewable_class->default_icon_name = "gtk-select-font";
 
   g_object_class_install_property (object_class, PROP_PANGO_CONTEXT,
                                    g_param_spec_object ("pango-context",

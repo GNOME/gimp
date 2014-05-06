@@ -131,22 +131,22 @@ gimp_curve_class_init (GimpCurveClass *klass)
   GimpDataClass     *data_class        = GIMP_DATA_CLASS (klass);
   GParamSpec        *array_spec;
 
-  object_class->finalize           = gimp_curve_finalize;
-  object_class->set_property       = gimp_curve_set_property;
-  object_class->get_property       = gimp_curve_get_property;
+  object_class->finalize            = gimp_curve_finalize;
+  object_class->set_property        = gimp_curve_set_property;
+  object_class->get_property        = gimp_curve_get_property;
 
-  gimp_object_class->get_memsize   = gimp_curve_get_memsize;
+  gimp_object_class->get_memsize    = gimp_curve_get_memsize;
 
-  viewable_class->default_stock_id = "FIXME";
-  viewable_class->get_preview_size = gimp_curve_get_preview_size;
-  viewable_class->get_popup_size   = gimp_curve_get_popup_size;
-  viewable_class->get_new_preview  = gimp_curve_get_new_preview;
-  viewable_class->get_description  = gimp_curve_get_description;
+  viewable_class->default_icon_name = "FIXME icon name";
+  viewable_class->get_preview_size  = gimp_curve_get_preview_size;
+  viewable_class->get_popup_size    = gimp_curve_get_popup_size;
+  viewable_class->get_new_preview   = gimp_curve_get_new_preview;
+  viewable_class->get_description   = gimp_curve_get_description;
 
-  data_class->dirty                = gimp_curve_dirty;
-  data_class->save                 = gimp_curve_save;
-  data_class->get_extension        = gimp_curve_get_extension;
-  data_class->duplicate            = gimp_curve_duplicate;
+  data_class->dirty                 = gimp_curve_dirty;
+  data_class->save                  = gimp_curve_save;
+  data_class->get_extension         = gimp_curve_get_extension;
+  data_class->duplicate             = gimp_curve_duplicate;
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURVE_TYPE,
                                  "curve-type",

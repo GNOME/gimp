@@ -59,7 +59,7 @@ GimpPaintInfo * gimp_paint_info_new          (Gimp          *gimp,
                                               GType          paint_options_type,
                                               const gchar   *identifier,
                                               const gchar   *blurb,
-                                              const gchar   *stock_id);
+                                              const gchar   *icon_name);
 
 void            gimp_paint_info_set_standard (Gimp          *gimp,
                                               GimpPaintInfo *paint_info);

@@ -618,7 +618,7 @@ gimp_plug_in_procedure_set_icon (GimpPlugInProcedure *proc,
 }
 
 const gchar *
-gimp_plug_in_procedure_get_stock_id (const GimpPlugInProcedure *proc)
+gimp_plug_in_procedure_get_icon_name (const GimpPlugInProcedure *proc)
 {
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 

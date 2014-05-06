@@ -119,29 +119,29 @@ gimp_brush_class_init (GimpBrushClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  object_class->finalize           = gimp_brush_finalize;
-  object_class->get_property       = gimp_brush_get_property;
-  object_class->set_property       = gimp_brush_set_property;
+  object_class->finalize            = gimp_brush_finalize;
+  object_class->get_property        = gimp_brush_get_property;
+  object_class->set_property        = gimp_brush_set_property;
 
-  gimp_object_class->get_memsize   = gimp_brush_get_memsize;
+  gimp_object_class->get_memsize    = gimp_brush_get_memsize;
 
-  viewable_class->default_stock_id = "gimp-tool-paintbrush";
-  viewable_class->get_size         = gimp_brush_get_size;
-  viewable_class->get_new_preview  = gimp_brush_get_new_preview;
-  viewable_class->get_description  = gimp_brush_get_description;
+  viewable_class->default_icon_name = "gimp-tool-paintbrush";
+  viewable_class->get_size          = gimp_brush_get_size;
+  viewable_class->get_new_preview   = gimp_brush_get_new_preview;
+  viewable_class->get_description   = gimp_brush_get_description;
 
-  data_class->dirty                = gimp_brush_dirty;
-  data_class->get_extension        = gimp_brush_get_extension;
+  data_class->dirty                 = gimp_brush_dirty;
+  data_class->get_extension         = gimp_brush_get_extension;
 
-  klass->begin_use                 = gimp_brush_real_begin_use;
-  klass->end_use                   = gimp_brush_real_end_use;
-  klass->select_brush              = gimp_brush_real_select_brush;
-  klass->want_null_motion          = gimp_brush_real_want_null_motion;
-  klass->transform_size            = gimp_brush_real_transform_size;
-  klass->transform_mask            = gimp_brush_real_transform_mask;
-  klass->transform_pixmap          = gimp_brush_real_transform_pixmap;
-  klass->transform_boundary        = gimp_brush_real_transform_boundary;
-  klass->spacing_changed           = NULL;
+  klass->begin_use                  = gimp_brush_real_begin_use;
+  klass->end_use                    = gimp_brush_real_end_use;
+  klass->select_brush               = gimp_brush_real_select_brush;
+  klass->want_null_motion           = gimp_brush_real_want_null_motion;
+  klass->transform_size             = gimp_brush_real_transform_size;
+  klass->transform_mask             = gimp_brush_real_transform_mask;
+  klass->transform_pixmap           = gimp_brush_real_transform_pixmap;
+  klass->transform_boundary         = gimp_brush_real_transform_boundary;
+  klass->spacing_changed            = NULL;
 
   g_object_class_install_property (object_class, PROP_SPACING,
                                    g_param_spec_double ("spacing", NULL,

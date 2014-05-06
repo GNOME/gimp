@@ -479,7 +479,7 @@ tools_actions_setup (GimpActionGroup *group)
           gchar                 *tmp;
           gchar                 *name;
 
-          icon_name  = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+          icon_name  = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
           identifier = gimp_object_get_name (tool_info);
 
           tmp = g_strndup (identifier + strlen ("gimp-"),

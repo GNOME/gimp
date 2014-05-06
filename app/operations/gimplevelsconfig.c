@@ -96,10 +96,10 @@ gimp_levels_config_class_init (GimpLevelsConfigClass *klass)
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->set_property       = gimp_levels_config_set_property;
-  object_class->get_property       = gimp_levels_config_get_property;
+  object_class->set_property        = gimp_levels_config_set_property;
+  object_class->get_property        = gimp_levels_config_get_property;
 
-  viewable_class->default_stock_id = "gimp-tool-levels";
+  viewable_class->default_icon_name = "gimp-tool-levels";
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CHANNEL,
                                  "channel",

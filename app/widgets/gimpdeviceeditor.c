@@ -446,9 +446,9 @@ gimp_device_editor_switch_page (GtkNotebook      *notebook,
 
   gtk_label_set_text (GTK_LABEL (private->label),
                       gimp_object_get_name (info));
-  gtk_image_set_from_stock (GTK_IMAGE (private->image),
-                            gimp_viewable_get_stock_id (GIMP_VIEWABLE (info)),
-                            GTK_ICON_SIZE_BUTTON);
+  gtk_image_set_from_icon_name (GTK_IMAGE (private->image),
+                                gimp_viewable_get_icon_name (GIMP_VIEWABLE (info)),
+                                GTK_ICON_SIZE_BUTTON);
 
   if (! gimp_device_info_get_device (info, NULL))
     delete_sensitive = TRUE;

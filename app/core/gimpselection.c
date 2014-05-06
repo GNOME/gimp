@@ -148,7 +148,7 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   GimpDrawableClass *drawable_class = GIMP_DRAWABLE_CLASS (klass);
   GimpChannelClass  *channel_class  = GIMP_CHANNEL_CLASS (klass);
 
-  viewable_class->default_stock_id    = "gimp-selection";
+  viewable_class->default_icon_name   = "gimp-selection";
 
   item_class->is_attached             = gimp_selection_is_attached;
   item_class->get_tree                = gimp_selection_get_tree;

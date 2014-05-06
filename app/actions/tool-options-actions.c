@@ -209,7 +209,7 @@ tool_options_actions_update_presets (GimpActionGroup *group,
 
           entry.name      = g_strdup_printf ("%s-%03d", action_prefix, i);
           entry.label     = gimp_object_get_name (preset);
-          entry.icon_name = gimp_viewable_get_stock_id (GIMP_VIEWABLE (preset));
+          entry.icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (preset));
           entry.value     = i;
 
           gimp_action_group_add_enum_actions (group, NULL, &entry, 1, callback);
