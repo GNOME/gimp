@@ -15,19 +15,19 @@ style "gimp-default-style"
 {
   stock["gtk-dialog-error"] =
     {
-      { "../Default/images/stock-error-64.png", *, *, "gtk-dialog" }
+      { "../Default/icons/hicolor/64x64/apps/gimp-error.png", *, *, "gtk-dialog" }
     }
   stock["gtk-dialog-info"] =
     {
-      { "../Default/images/stock-info-64.png", *, *, "gtk-dialog" }
+      { "../Default/icons/hicolor/64x64/apps/gimp-info.png", *, *, "gtk-dialog" }
     }
   stock["gtk-dialog-question"] =
     {
-      { "../Default/images/stock-question-64.png", *, *, "gtk-dialog" }
+      { "../Default/icons/hicolor/64x64/apps/gimp-question.png", *, *, "gtk-dialog" }
     }
   stock["gtk-dialog-warning"] =
     {
-      { "../Default/images/stock-warning-64.png", *, *, "gtk-dialog" }
+      { "../Default/icons/hicolor/64x64/apps/gimp-warning.png", *, *, "gtk-dialog" }
     }
 
 # Uncommenting this line allows to set a different (smaller) font for GIMP.
