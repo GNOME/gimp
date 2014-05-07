@@ -574,17 +574,19 @@
 		</dependencies>
 	</autotools>
 
-	<autotools id="libgcrypt" autogen-sh="configure" autogenargs="">
-		<branch module="gcrypt/libgcrypt/libgcrypt-1.5.3.tar.gz"
-			version="1.5.3" repo="gnupg" />
+	<autotools id="libgcrypt" autogen-sh="configure" autogenargs="--disable-asm">
+		<branch module="gcrypt/libgcrypt/libgcrypt-1.6.1.tar.gz"
+			version="" repo="gnupg" />
 		<dependencies>
+			<dep package="libgpg-error" />
 		</dependencies>
+		<patch file="0001-libgcrypt-build-without-docs.patch" strip="1"/>
 	</autotools>
 
 	<autotools id="libgpg-error" autogen-sh="configure"
 		autogenargs="">
-		<branch module="libgpg-error/libgpg-error-1.12.tar.bz2"
-			version="1.12" repo="gnutls" />
+		<branch module="libgpg-error/libgpg-error-1.13.tar.bz2"
+			version="1.13" repo="gnutls" />
 		<dependencies>
 		</dependencies>
 	</autotools>
