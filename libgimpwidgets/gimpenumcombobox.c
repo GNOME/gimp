@@ -211,9 +211,7 @@ gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
  * gimp_enum_store_set_icon_prefix() to find out what to use as
  * @icon_prefix.
  *
- * Since: GIMP 2.4
- *
- * Deprecated: GIMP 2.10
+ * Since: GIMP 2.10
  **/
 void
 gimp_enum_combo_box_set_icon_prefix (GimpEnumComboBox *combo_box,
