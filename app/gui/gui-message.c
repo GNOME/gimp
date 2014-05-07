@@ -253,7 +253,7 @@ gui_message_error_dialog (Gimp                *gimp,
   if (dialog)
     {
       gimp_error_dialog_add (GIMP_ERROR_DIALOG (dialog),
-                             gimp_get_message_stock_id (severity),
+                             gimp_get_message_icon_name (severity),
                              domain, message);
       gtk_window_present (GTK_WINDOW (dialog));
 

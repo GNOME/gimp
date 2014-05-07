@@ -47,7 +47,7 @@ struct _GimpViewableButton
 
   GimpDialogFactory *dialog_factory;
   gchar             *dialog_identifier;
-  gchar             *dialog_stock_id;
+  gchar             *dialog_icon_name;
   gchar             *dialog_tooltip;
 
   GtkWidget         *view;
@@ -69,7 +69,7 @@ GtkWidget * gimp_viewable_button_new      (GimpContainer      *container,
                                            gint                view_border_width,
                                            GimpDialogFactory  *dialog_factory,
                                            const gchar        *dialog_identifier,
-                                           const gchar        *dialog_stock_id,
+                                           const gchar        *dialog_icon_name,
                                            const gchar        *dialog_tooltip);
 
 GimpViewType gimp_viewable_button_get_view_type (GimpViewableButton *button);

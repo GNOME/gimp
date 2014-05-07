@@ -591,11 +591,11 @@ gimp_display_shell_quick_mask_changed_handler (GimpImage        *image,
                                 quick_mask_state);
 
   if (quick_mask_state)
-    gtk_image_set_from_stock (gtk_image, GIMP_STOCK_QUICK_MASK_ON,
-                              GTK_ICON_SIZE_MENU);
+    gtk_image_set_from_icon_name (gtk_image, GIMP_STOCK_QUICK_MASK_ON,
+                                  GTK_ICON_SIZE_MENU);
   else
-    gtk_image_set_from_stock (gtk_image, GIMP_STOCK_QUICK_MASK_OFF,
-                              GTK_ICON_SIZE_MENU);
+    gtk_image_set_from_icon_name (gtk_image, GIMP_STOCK_QUICK_MASK_OFF,
+                                  GTK_ICON_SIZE_MENU);
 
   g_signal_handlers_unblock_by_func (shell->quick_mask_button,
                                      gimp_display_shell_quick_mask_toggled,

@@ -2208,8 +2208,8 @@ gimp_image_window_create_tab_label (GimpImageWindow  *window,
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gtk_image = gtk_image_new_from_stock (GIMP_STOCK_CLOSE,
-                                        GTK_ICON_SIZE_MENU);
+  gtk_image = gtk_image_new_from_icon_name (GIMP_STOCK_CLOSE,
+                                            GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), gtk_image);
   gtk_widget_show (gtk_image);
 

@@ -71,7 +71,7 @@ static void      gimp_text_style_editor_get_property      (GObject             *
 
 static GtkWidget * gimp_text_style_editor_create_toggle   (GimpTextStyleEditor *editor,
                                                            GtkTextTag          *tag,
-                                                           const gchar         *stock_id,
+                                                           const gchar         *icon_name,
                                                            const gchar         *tooltip);
 
 static void      gimp_text_style_editor_clear_tags        (GtkButton           *button,
@@ -239,7 +239,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                     G_CALLBACK (gimp_text_style_editor_clear_tags),
                     editor);
 
-  image = gtk_image_new_from_stock (GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name (GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (editor->clear_button), image);
   gtk_widget_show (image);
 
@@ -631,7 +631,7 @@ gimp_text_style_editor_list_tags (GimpTextStyleEditor  *editor,
 static GtkWidget *
 gimp_text_style_editor_create_toggle (GimpTextStyleEditor *editor,
                                       GtkTextTag          *tag,
-                                      const gchar         *stock_id,
+                                      const gchar         *icon_name,
                                       const gchar         *tooltip)
 {
   GtkWidget *toggle;
@@ -651,7 +651,7 @@ gimp_text_style_editor_create_toggle (GimpTextStyleEditor *editor,
                     G_CALLBACK (gimp_text_style_editor_tag_toggled),
                     editor);
 
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (toggle), image);
   gtk_widget_show (image);
 

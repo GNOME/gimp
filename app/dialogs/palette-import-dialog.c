@@ -163,8 +163,8 @@ palette_import_dialog_new (GimpContext *context)
   button = gtk_dialog_add_button (GTK_DIALOG (dialog->dialog),
                                   _("_Import"), GTK_RESPONSE_OK);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_stock (GTK_STOCK_CONVERT,
-                                                  GTK_ICON_SIZE_BUTTON));
+                        gtk_image_new_from_icon_name (GTK_STOCK_CONVERT,
+                                                      GTK_ICON_SIZE_BUTTON));
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
                                            GTK_RESPONSE_OK,

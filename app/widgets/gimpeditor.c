@@ -519,11 +519,11 @@ gimp_editor_add_button (GimpEditor  *editor,
 }
 
 GtkWidget *
-gimp_editor_add_stock_box (GimpEditor  *editor,
-                           GType        enum_type,
-                           const gchar *icon_prefix,
-                           GCallback    callback,
-                           gpointer     callback_data)
+gimp_editor_add_icon_box (GimpEditor  *editor,
+                          GType        enum_type,
+                          const gchar *icon_prefix,
+                          GCallback    callback,
+                          gpointer     callback_data)
 {
   GtkWidget      *hbox;
   GtkWidget      *first_button;
@@ -783,16 +783,7 @@ gimp_editor_set_box_style (GimpEditor *editor,
               GtkIconSize  old_size;
               const gchar *icon_name;
 
-              /* FIXME icon_name */
-              if (gtk_image_get_storage_type (GTK_IMAGE (child)) == GTK_IMAGE_STOCK)
-                {
-                  gtk_image_get_stock (GTK_IMAGE (child), &icon_name, &old_size);
-                  g_printerr ("EEEEK: %s used in GimpEditor\n", icon_name);
-                }
-              else
-                {
-                  gtk_image_get_icon_name (GTK_IMAGE (child), &icon_name, &old_size);
-                }
+              gtk_image_get_icon_name (GTK_IMAGE (child), &icon_name, &old_size);
 
               if (button_icon_size != old_size)
                 gtk_image_set_from_icon_name (GTK_IMAGE (child),

@@ -57,7 +57,7 @@ channel_options_dialog_new (GimpImage     *image,
                             const gchar   *channel_name,
                             const gchar   *title,
                             const gchar   *role,
-                            const gchar   *stock_id,
+                            const gchar   *icon_name,
                             const gchar   *desc,
                             const gchar   *help_id,
                             const gchar   *color_label,
@@ -78,7 +78,7 @@ channel_options_dialog_new (GimpImage     *image,
   g_return_val_if_fail (channel_color != NULL, NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
-  g_return_val_if_fail (stock_id != NULL, NULL);
+  g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (desc != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (color_label != NULL, NULL);
@@ -104,7 +104,7 @@ channel_options_dialog_new (GimpImage     *image,
 
   options->dialog =
     gimp_viewable_dialog_new (viewable, context,
-                              title, role, stock_id, desc,
+                              title, role, icon_name, desc,
                               parent,
                               gimp_standard_help_func, help_id,
 

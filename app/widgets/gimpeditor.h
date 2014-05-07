@@ -66,9 +66,9 @@ GtkWidget * gimp_editor_add_button        (GimpEditor           *editor,
                                            GCallback             callback,
                                            GCallback             extended_callback,
                                            gpointer              callback_data);
-GtkWidget * gimp_editor_add_stock_box     (GimpEditor           *editor,
+GtkWidget * gimp_editor_add_icon_box      (GimpEditor           *editor,
                                            GType                 enum_type,
-                                           const gchar          *stock_prefix,
+                                           const gchar          *icon_prefix,
                                            GCallback             callback,
                                            gpointer              callback_data);
 

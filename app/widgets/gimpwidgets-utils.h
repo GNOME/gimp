@@ -30,9 +30,9 @@ void              gimp_button_menu_position        (GtkWidget            *button
                                                     GtkPositionType       position,
                                                     gint                 *x,
                                                     gint                 *y);
-void              gimp_table_attach_stock          (GtkTable             *table,
+void              gimp_table_attach_icon           (GtkTable             *table,
                                                     gint                  row,
-                                                    const gchar          *stock_id,
+                                                    const gchar          *icon_name,
                                                     GtkWidget            *widget,
                                                     gint                  colspan,
                                                     gboolean              left_align);
@@ -45,7 +45,7 @@ void              gimp_enum_radio_frame_add        (GtkFrame             *frame,
                                                     gint                  enum_value,
                                                     gboolean              below);
 GtkIconSize       gimp_get_icon_size               (GtkWidget            *widget,
-                                                    const gchar          *stock_id,
+                                                    const gchar          *icon_name,
                                                     GtkIconSize           max_size,
                                                     gint                  width,
                                                     gint                  height);
@@ -83,7 +83,7 @@ void              gimp_toggle_button_set_visible   (GtkToggleButton      *toggle
                                                     GtkWidget            *widget);
 void              gimp_widget_set_accel_help       (GtkWidget            *widget,
                                                     GtkAction            *action);
-const gchar     * gimp_get_message_stock_id        (GimpMessageSeverity   severity);
+const gchar     * gimp_get_message_icon_name       (GimpMessageSeverity   severity);
 void              gimp_pango_layout_set_scale      (PangoLayout          *layout,
                                                     double                scale);
 void              gimp_pango_layout_set_weight     (PangoLayout          *layout,

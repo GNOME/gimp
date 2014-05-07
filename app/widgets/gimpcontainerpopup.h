@@ -50,7 +50,7 @@ struct _GimpContainerPopup
 
   GimpDialogFactory   *dialog_factory;
   gchar               *dialog_identifier;
-  gchar               *dialog_stock_id;
+  gchar               *dialog_icon_name;
   gchar               *dialog_tooltip;
 };
 
@@ -73,7 +73,7 @@ GtkWidget * gimp_container_popup_new      (GimpContainer      *container,
                                            gint                view_border_width,
                                            GimpDialogFactory  *dialog_factory,
                                            const gchar        *dialog_identifier,
-                                           const gchar        *dialog_stock_id,
+                                           const gchar        *dialog_icon_name,
                                            const gchar        *dialog_tooltip);
 void        gimp_container_popup_show     (GimpContainerPopup *popup,
                                            GtkWidget          *widget);

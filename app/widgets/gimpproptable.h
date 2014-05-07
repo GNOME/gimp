@@ -26,7 +26,7 @@
 
 typedef GtkWidget * (* GimpCreatePickerFunc) (gpointer     creator,
                                               const gchar *property_name,
-                                              const gchar *stock_id,
+                                              const gchar *icon_name,
                                               const gchar *tooltip);
 
 GtkWidget * gimp_prop_table_new (GObject              *config,

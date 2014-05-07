@@ -62,7 +62,7 @@ GimpContainer *global_recent_docks = NULL;
   { id                     /* identifier       */, \
     NULL                   /* name             */, \
     NULL                   /* blurb            */, \
-    NULL                   /* stock_id         */, \
+    NULL                   /* icon_name        */, \
     NULL                   /* help_id          */, \
     NULL                   /* new_func         */, \
     dialogs_restore_dialog /* restore_func     */, \
@@ -79,7 +79,7 @@ GimpContainer *global_recent_docks = NULL;
   { id                     /* identifier       */, \
     NULL                   /* name             */, \
     NULL                   /* blurb            */, \
-    NULL                   /* stock_id         */, \
+    NULL                   /* icon_name        */, \
     NULL                   /* help_id          */, \
     NULL                   /* new_func         */, \
     dialogs_restore_window /* restore_func     */, \
@@ -96,7 +96,7 @@ GimpContainer *global_recent_docks = NULL;
   { id                     /* identifier       */, \
     NULL                   /* name             */, \
     NULL                   /* blurb            */, \
-    NULL                   /* stock_id         */, \
+    NULL                   /* icon_name        */, \
     NULL                   /* help_id          */, \
     new_func               /* new_func         */, \
     dialogs_restore_dialog /* restore_func     */, \
@@ -109,11 +109,11 @@ GimpContainer *global_recent_docks = NULL;
     FALSE                  /* image_window     */, \
     FALSE                  /* dockable         */}
 
-#define DOCKABLE(id, name, blurb, stock_id, help_id, new_func, view_size, singleton) \
+#define DOCKABLE(id, name, blurb, icon_name, help_id, new_func, view_size, singleton) \
   { id                     /* identifier       */, \
     name                   /* name             */, \
     blurb                  /* blurb            */, \
-    stock_id               /* stock_id         */, \
+    icon_name              /* icon_name        */, \
     help_id                /* help_id          */, \
     new_func               /* new_func         */, \
     NULL                   /* restore_func     */, \
@@ -130,7 +130,7 @@ GimpContainer *global_recent_docks = NULL;
   { id                     /* identifier       */, \
     NULL                   /* name             */, \
     NULL                   /* blurb            */, \
-    NULL                   /* stock_id         */, \
+    NULL                   /* icon_name        */, \
     NULL                   /* help_id          */, \
     new_func               /* new_func         */, \
     dialogs_restore_dialog /* restore_func     */, \
@@ -147,7 +147,7 @@ GimpContainer *global_recent_docks = NULL;
   { id                     /* identifier       */, \
     NULL                   /* name             */, \
     NULL                   /* blurb            */, \
-    NULL                   /* stock_id         */, \
+    NULL                   /* icon_name        */, \
     NULL                   /* help_id          */, \
     new_func               /* new_func         */, \
     dialogs_restore_dialog /* restore_func     */, \
@@ -160,11 +160,11 @@ GimpContainer *global_recent_docks = NULL;
     FALSE                  /* image_window     */, \
     FALSE                  /* dockable         */}
 
-#define LISTGRID(id, name, blurb, stock_id, help_id, view_size) \
+#define LISTGRID(id, name, blurb, icon_name, help_id, view_size) \
   { "gimp-"#id"-list"             /* identifier       */,  \
     name                          /* name             */,  \
     blurb                         /* blurb            */,  \
-    stock_id                      /* stock_id         */,  \
+    icon_name                     /* icon_name        */,  \
     help_id                       /* help_id          */,  \
     dialogs_##id##_list_view_new  /* new_func         */,  \
     NULL                          /* restore_func     */,  \
@@ -179,7 +179,7 @@ GimpContainer *global_recent_docks = NULL;
   { "gimp-"#id"-grid"             /* identifier       */,  \
     name                          /* name             */,  \
     blurb                         /* blurb            */,  \
-    stock_id                      /* stock_id         */,  \
+    icon_name                     /* icon_name        */,  \
     help_id                       /* help_id          */,  \
     dialogs_##id##_grid_view_new  /* new_func         */,  \
     NULL                          /* restore_func     */,  \
@@ -192,11 +192,11 @@ GimpContainer *global_recent_docks = NULL;
     FALSE                         /* image_window     */,  \
     TRUE                          /* dockable         */}
 
-#define LIST(id, new_func, name, blurb, stock_id, help_id, view_size) \
+#define LIST(id, new_func, name, blurb, icon_name, help_id, view_size) \
   { "gimp-"#id"-list"                   /* identifier       */, \
     name                                /* name             */, \
     blurb                               /* blurb            */, \
-    stock_id                            /* stock_id         */, \
+    icon_name                            /* icon_name         */, \
     help_id                             /* help_id          */, \
     dialogs_##new_func##_list_view_new  /* new_func         */, \
     NULL                                /* restore_func     */, \
@@ -513,7 +513,7 @@ dialogs_init (Gimp            *gimp,
                                         entries[i].identifier,
                                         gettext (entries[i].name),
                                         gettext (entries[i].blurb),
-                                        entries[i].stock_id,
+                                        entries[i].icon_name,
                                         entries[i].help_id,
                                         entries[i].new_func,
                                         entries[i].restore_func,

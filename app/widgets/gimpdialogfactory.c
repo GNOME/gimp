@@ -213,7 +213,7 @@ gimp_dialog_factory_finalize (GObject *object)
       g_free (entry->identifier);
       g_free (entry->name);
       g_free (entry->blurb);
-      g_free (entry->stock_id);
+      g_free (entry->icon_name);
       g_free (entry->help_id);
 
       g_slice_free (GimpDialogFactoryEntry, entry);
@@ -265,7 +265,7 @@ gimp_dialog_factory_register_entry (GimpDialogFactory    *factory,
                                     const gchar          *identifier,
                                     const gchar          *name,
                                     const gchar          *blurb,
-                                    const gchar          *stock_id,
+                                    const gchar          *icon_name,
                                     const gchar          *help_id,
                                     GimpDialogNewFunc     new_func,
                                     GimpDialogRestoreFunc restore_func,
@@ -288,7 +288,7 @@ gimp_dialog_factory_register_entry (GimpDialogFactory    *factory,
   entry->identifier       = g_strdup (identifier);
   entry->name             = g_strdup (name);
   entry->blurb            = g_strdup (blurb);
-  entry->stock_id         = g_strdup (stock_id);
+  entry->icon_name        = g_strdup (icon_name);
   entry->help_id          = g_strdup (help_id);
   entry->new_func         = new_func;
   entry->restore_func     = restore_func;
@@ -1265,7 +1265,7 @@ gimp_dialog_factory_constructor (GimpDialogFactory      *factory,
       GtkWidget *dockable = NULL;
 
       dockable = gimp_dockable_new (entry->name, entry->blurb,
-                                    entry->stock_id, entry->help_id);
+                                    entry->icon_name, entry->help_id);
       gtk_container_add (GTK_CONTAINER (dockable), widget);
       gtk_widget_show (widget);
 

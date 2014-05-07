@@ -90,9 +90,9 @@ gimp_combo_tag_entry_init (GimpComboTagEntry *entry)
                          GDK_BUTTON_PRESS_MASK |
                          GDK_POINTER_MOTION_MASK);
 
-  gtk_entry_set_icon_from_stock (GTK_ENTRY (entry),
-                                 GTK_ENTRY_ICON_SECONDARY,
-                                 GTK_STOCK_GO_DOWN);
+  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (entry),
+                                     GTK_ENTRY_ICON_SECONDARY,
+                                     GTK_STOCK_GO_DOWN);
 
   g_signal_connect (entry, "icon-press",
                     G_CALLBACK (gimp_combo_tag_entry_icon_press),

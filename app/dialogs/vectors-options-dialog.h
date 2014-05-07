@@ -38,7 +38,7 @@ VectorsOptionsDialog * vectors_options_dialog_new (GimpImage   *image,
                                                    const gchar *vectors_name,
                                                    const gchar *title,
                                                    const gchar *role,
-                                                   const gchar *stock_id,
+                                                   const gchar *icon_name,
                                                    const gchar *desc,
                                                    const gchar *help_id);
 

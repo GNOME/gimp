@@ -575,19 +575,19 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
 
   spinbutton = gimp_prop_spin_button_new (config, "indent", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_stock (GTK_TABLE (table), row++,
-                           GTK_STOCK_INDENT, spinbutton, 1, TRUE);
+  gimp_table_attach_icon (GTK_TABLE (table), row++,
+                          GTK_STOCK_INDENT, spinbutton, 1, TRUE);
 
   spinbutton = gimp_prop_spin_button_new (config, "line-spacing", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_stock (GTK_TABLE (table), row++,
-                           GIMP_STOCK_LINE_SPACING, spinbutton, 1, TRUE);
+  gimp_table_attach_icon (GTK_TABLE (table), row++,
+                          GIMP_STOCK_LINE_SPACING, spinbutton, 1, TRUE);
 
   spinbutton = gimp_prop_spin_button_new (config,
                                           "letter-spacing", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_stock (GTK_TABLE (table), row++,
-                           GIMP_STOCK_LETTER_SPACING, spinbutton, 1, TRUE);
+  gimp_table_attach_icon (GTK_TABLE (table), row++,
+                          GIMP_STOCK_LETTER_SPACING, spinbutton, 1, TRUE);
 
   combo = gimp_prop_enum_combo_box_new (config, "box-mode", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,

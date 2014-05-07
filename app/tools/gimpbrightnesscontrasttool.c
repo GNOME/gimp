@@ -267,8 +267,8 @@ gimp_brightness_contrast_tool_dialog (GimpImageMapTool *image_map_tool)
 
   bc_tool->contrast_scale = scale;
 
-  button = gimp_stock_button_new (GIMP_STOCK_TOOL_LEVELS,
-                                  _("Edit these Settings as Levels"));
+  button = gimp_icon_button_new (GIMP_STOCK_TOOL_LEVELS,
+                                 _("Edit these Settings as Levels"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

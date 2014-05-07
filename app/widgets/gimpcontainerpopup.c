@@ -166,10 +166,10 @@ gimp_container_popup_finalize (GObject *object)
       popup->dialog_identifier = NULL;
     }
 
-  if (popup->dialog_stock_id)
+  if (popup->dialog_icon_name)
     {
-      g_free (popup->dialog_stock_id);
-      popup->dialog_stock_id = NULL;
+      g_free (popup->dialog_icon_name);
+      popup->dialog_icon_name = NULL;
     }
 
   if (popup->dialog_tooltip)
@@ -370,7 +370,7 @@ gimp_container_popup_new (GimpContainer     *container,
                           gint               view_border_width,
                           GimpDialogFactory *dialog_factory,
                           const gchar       *dialog_identifier,
-                          const gchar       *dialog_stock_id,
+                          const gchar       *dialog_icon_name,
                           const gchar       *dialog_tooltip)
 {
   GimpContainerPopup *popup;
@@ -390,7 +390,7 @@ gimp_container_popup_new (GimpContainer     *container,
   if (dialog_factory)
     {
       g_return_val_if_fail (dialog_identifier != NULL, NULL);
-      g_return_val_if_fail (dialog_stock_id != NULL, NULL);
+      g_return_val_if_fail (dialog_icon_name != NULL, NULL);
       g_return_val_if_fail (dialog_tooltip != NULL, NULL);
     }
 
@@ -417,7 +417,7 @@ gimp_container_popup_new (GimpContainer     *container,
     {
       popup->dialog_factory    = dialog_factory;
       popup->dialog_identifier = g_strdup (dialog_identifier);
-      popup->dialog_stock_id   = g_strdup (dialog_stock_id);
+      popup->dialog_icon_name  = g_strdup (dialog_icon_name);
       popup->dialog_tooltip    = g_strdup (dialog_tooltip);
     }
 
@@ -604,13 +604,13 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
                           NULL,
                           popup);
 
-  button = gimp_editor_add_stock_box (editor, GIMP_TYPE_VIEW_TYPE, "gimp",
-                                      G_CALLBACK (gimp_container_popup_view_type_toggled),
-                                      popup);
+  button = gimp_editor_add_icon_box (editor, GIMP_TYPE_VIEW_TYPE, "gimp",
+                                     G_CALLBACK (gimp_container_popup_view_type_toggled),
+                                     popup);
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), popup->view_type);
 
   if (popup->dialog_factory)
-    gimp_editor_add_button (editor, popup->dialog_stock_id,
+    gimp_editor_add_button (editor, popup->dialog_icon_name,
                             popup->dialog_tooltip, NULL,
                             G_CALLBACK (gimp_container_popup_dialog_clicked),
                             NULL,

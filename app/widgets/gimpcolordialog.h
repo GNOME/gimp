@@ -61,7 +61,7 @@ GType       gimp_color_dialog_get_type  (void) G_GNUC_CONST;
 GtkWidget * gimp_color_dialog_new       (GimpViewable      *viewable,
                                          GimpContext       *context,
                                          const gchar       *title,
-                                         const gchar       *stock_id,
+                                         const gchar       *icon_name,
                                          const gchar       *desc,
                                          GtkWidget         *parent,
                                          GimpDialogFactory *dialog_factory,

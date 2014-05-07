@@ -285,7 +285,9 @@ gimp_dockbook_init (GimpDockbook *dockbook)
                                   GTK_PACK_END);
   gtk_widget_show (dockbook->p->menu_button);
 
-  image = gtk_image_new_from_stock (GIMP_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
+  gtk_image_set_from_icon_name (GTK_IMAGE (image), GIMP_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (dockbook->p->menu_button), image);
   gtk_widget_show (image);
 
@@ -535,22 +537,12 @@ gimp_dockbook_show_menu (GimpDockbook *dockbook)
                     NULL);
 
       g_object_set (parent_menu_action,
-                    "label",    label,
-                    "stock-id", gimp_dockable_get_stock_id (dockable),
-                    "visible",  TRUE,
+                    "label",     label,
+                    "icon-name", gimp_dockable_get_icon_name (dockable),
+                    "visible",   TRUE,
                     NULL);
 
       g_free (label);
-
-      if (gimp_dockable_get_stock_id (dockable))
-        {
-          if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (),
-                                       gimp_dockable_get_stock_id (dockable)))
-            {
-              gtk_action_set_icon_name (parent_menu_action,
-                                        gimp_dockable_get_stock_id (dockable));
-            }
-        }
 
       if (! GTK_IS_MENU (child_menu_widget))
         {

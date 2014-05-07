@@ -210,20 +210,20 @@ gimp_button_menu_position (GtkWidget       *button,
 }
 
 void
-gimp_table_attach_stock (GtkTable    *table,
-                         gint         row,
-                         const gchar *stock_id,
-                         GtkWidget   *widget,
-                         gint         colspan,
-                         gboolean     left_align)
+gimp_table_attach_icon (GtkTable    *table,
+                        gint         row,
+                        const gchar *icon_name,
+                        GtkWidget   *widget,
+                        gint         colspan,
+                        gboolean     left_align)
 {
   GtkWidget *image;
 
   g_return_if_fail (GTK_IS_TABLE (table));
-  g_return_if_fail (stock_id != NULL);
+  g_return_if_fail (icon_name != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
   gtk_misc_set_alignment (GTK_MISC (image), 1.0, 0.5);
   gtk_table_attach (table, image, 0, 1, row, row + 1,
                     GTK_FILL, GTK_FILL, 0, 0);
@@ -366,7 +366,7 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
 
 GtkIconSize
 gimp_get_icon_size (GtkWidget   *widget,
-                    const gchar *stock_id,
+                    const gchar *icon_name,
                     GtkIconSize  max_size,
                     gint         width,
                     gint         height)
@@ -383,12 +383,12 @@ gimp_get_icon_size (GtkWidget   *widget,
   GtkSettings  *settings;
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), icon_size);
-  g_return_val_if_fail (stock_id != NULL, icon_size);
+  g_return_val_if_fail (icon_name != NULL, icon_size);
   g_return_val_if_fail (width > 0, icon_size);
   g_return_val_if_fail (height > 0, icon_size);
 
   icon_set = gtk_style_lookup_icon_set (gtk_widget_get_style (widget),
-                                        stock_id);
+                                        icon_name);
 
   if (! icon_set)
     return GTK_ICON_SIZE_INVALID;
@@ -1052,7 +1052,7 @@ gimp_widget_set_accel_help (GtkWidget *widget,
 }
 
 const gchar *
-gimp_get_message_stock_id (GimpMessageSeverity severity)
+gimp_get_message_icon_name (GimpMessageSeverity severity)
 {
   switch (severity)
     {

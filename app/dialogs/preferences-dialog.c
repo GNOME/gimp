@@ -845,13 +845,13 @@ prefs_profile_combo_box_new (GObject      *config,
 }
 
 static GtkWidget *
-prefs_button_add (const gchar *stock_id,
+prefs_button_add (const gchar *icon_name,
                   const gchar *label,
                   GtkBox      *box)
 {
   GtkWidget *button;
 
-  button = gimp_stock_button_new (stock_id, label);
+  button = gimp_icon_button_new (icon_name, label);
   gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -881,7 +881,7 @@ static GtkWidget *
 prefs_check_button_add_with_icon (GObject      *config,
                                   const gchar  *property_name,
                                   const gchar  *label,
-                                  const gchar  *stock_id,
+                                  const gchar  *icon_name,
                                   GtkBox       *vbox,
                                   GtkSizeGroup *group)
 {
@@ -897,7 +897,7 @@ prefs_check_button_add_with_icon (GObject      *config,
   gtk_box_pack_start (vbox, hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
   gtk_misc_set_padding (GTK_MISC (image), 2, 2);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
@@ -1633,7 +1633,7 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 1, 2);
     gtk_widget_show (hbox);
 
-    image = gtk_image_new_from_stock (icon, GTK_ICON_SIZE_BUTTON);
+    image = gtk_image_new_from_icon_name (icon, GTK_ICON_SIZE_BUTTON);
     gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
     gtk_widget_show (image);
 

@@ -170,7 +170,7 @@ gui_abort (const gchar *abort_message)
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
   box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
-                      "stock-id",     GIMP_STOCK_WILBER_EEK,
+                      "icon-name",    GIMP_STOCK_WILBER_EEK,
                       "border-width", 12,
                       NULL);
 
@@ -494,6 +494,11 @@ gui_restore_after_callback (Gimp               *gimp,
     g_print ("INIT: %s\n", G_STRFUNC);
 
   gimp->message_handler = GIMP_MESSAGE_BOX;
+
+  g_object_set (G_OBJECT (gtk_settings_get_default ()),
+                "gtk-button-images", TRUE,
+                "gtk-menu-images", TRUE,
+                NULL);
 
   if (gui_config->restore_accels)
     menus_restore (gimp);

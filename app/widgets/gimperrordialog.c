@@ -123,7 +123,7 @@ gimp_error_dialog_new (const gchar *title)
 
 void
 gimp_error_dialog_add (GimpErrorDialog *dialog,
-                       const gchar     *stock_id,
+                       const gchar     *icon_name,
                        const gchar     *domain,
                        const gchar     *message)
 {
@@ -146,10 +146,10 @@ gimp_error_dialog_add (GimpErrorDialog *dialog,
     {
       g_printerr ("%s: %s\n\n", domain, message);
 
-      overflow = TRUE;
-      stock_id = GIMP_STOCK_WILBER_EEK;
-      domain   = _("Too many error messages!");
-      message  = _("Messages are redirected to stderr.");
+      overflow  = TRUE;
+      icon_name = GIMP_STOCK_WILBER_EEK;
+      domain    = _("Too many error messages!");
+      message   = _("Messages are redirected to stderr.");
 
       if (dialog->last_domain  && strcmp (dialog->last_domain,  domain)  == 0 &&
           dialog->last_message && strcmp (dialog->last_message, message) == 0)
@@ -159,7 +159,7 @@ gimp_error_dialog_add (GimpErrorDialog *dialog,
     }
 
   box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
-                      "stock-id", stock_id,
+                      "icon-name", icon_name,
                       NULL);
 
   dialog->num_messages++;

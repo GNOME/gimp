@@ -181,8 +181,8 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
 }
 
 GtkWidget *
-gimp_stock_button_new (const gchar *stock_id,
-                       const gchar *label)
+gimp_icon_button_new (const gchar *icon_name,
+                      const gchar *label)
 {
   GtkWidget *button;
   GtkWidget *image;
@@ -198,7 +198,7 @@ gimp_stock_button_new (const gchar *stock_id,
       gtk_container_add (GTK_CONTAINER (button), hbox);
       gtk_widget_show (hbox);
 
-      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+      image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
       gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
       gtk_widget_show (image);
 
@@ -209,7 +209,7 @@ gimp_stock_button_new (const gchar *stock_id,
     }
   else
     {
-      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+      image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
       gtk_container_add (GTK_CONTAINER (button), image);
       gtk_widget_show (image);
     }

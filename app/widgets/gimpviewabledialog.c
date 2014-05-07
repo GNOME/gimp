@@ -43,7 +43,7 @@ enum
   PROP_0,
   PROP_VIEWABLE,
   PROP_CONTEXT,
-  PROP_STOCK_ID,
+  PROP_ICON_NAME,
   PROP_DESC
 };
 
@@ -87,8 +87,8 @@ gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
                                                         GIMP_TYPE_CONTEXT,
                                                         GIMP_PARAM_READWRITE));
 
-  g_object_class_install_property (object_class, PROP_STOCK_ID,
-                                   g_param_spec_string ("stock-id", NULL, NULL,
+  g_object_class_install_property (object_class, PROP_ICON_NAME,
+                                   g_param_spec_string ("icon-name", NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_WRITABLE |
                                                         G_PARAM_CONSTRUCT_ONLY));
@@ -183,10 +183,10 @@ gimp_viewable_dialog_set_property (GObject      *object,
                                          g_value_get_object (value));
       break;
 
-    case PROP_STOCK_ID:
-      gtk_image_set_from_stock (GTK_IMAGE (dialog->icon),
-                                g_value_get_string (value),
-                                GTK_ICON_SIZE_LARGE_TOOLBAR);
+    case PROP_ICON_NAME:
+      gtk_image_set_from_icon_name (GTK_IMAGE (dialog->icon),
+                                    g_value_get_string (value),
+                                    GTK_ICON_SIZE_LARGE_TOOLBAR);
       break;
 
     case PROP_DESC:
@@ -231,7 +231,7 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
                           GimpContext  *context,
                           const gchar  *title,
                           const gchar  *role,
-                          const gchar  *stock_id,
+                          const gchar  *icon_name,
                           const gchar  *desc,
                           GtkWidget    *parent,
                           GimpHelpFunc  help_func,
@@ -257,7 +257,7 @@ gimp_viewable_dialog_new (GimpViewable *viewable,
                          "role",        role,
                          "help-func",   help_func,
                          "help-id",     help_id,
-                         "stock-id",    stock_id,
+                         "icon-name",   icon_name,
                          "description", desc,
                          "parent",      parent,
                          NULL);

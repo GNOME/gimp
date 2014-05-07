@@ -275,22 +275,22 @@ static GtkWidget *
 gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
                                    guint           value)
 {
-  const gchar *stock_id;
+  const gchar *icon_name;
   const gchar *help;
 
   switch (value & 0xF)
     {
     case PICK_LOW_INPUT:
-      stock_id = GIMP_STOCK_COLOR_PICKER_BLACK;
-      help     = _("Pick black point");
+      icon_name = GIMP_STOCK_COLOR_PICKER_BLACK;
+      help      = _("Pick black point");
       break;
     case PICK_GAMMA:
-      stock_id = GIMP_STOCK_COLOR_PICKER_GRAY;
-      help     = _("Pick gray point");
+      icon_name = GIMP_STOCK_COLOR_PICKER_GRAY;
+      help      = _("Pick gray point");
       break;
     case PICK_HIGH_INPUT:
-      stock_id = GIMP_STOCK_COLOR_PICKER_WHITE;
-      help     = _("Pick white point");
+      icon_name = GIMP_STOCK_COLOR_PICKER_WHITE;
+      help      = _("Pick white point");
       break;
     default:
       return NULL;
@@ -298,7 +298,7 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
 
   return gimp_image_map_tool_add_color_picker (GIMP_IMAGE_MAP_TOOL (tool),
                                                GUINT_TO_POINTER (value),
-                                               stock_id,
+                                               icon_name,
                                                help);
 }
 
@@ -586,8 +586,8 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_stock_button_new (GIMP_STOCK_TOOL_CURVES,
-                                  _("Edit these Settings as Curves"));
+  button = gimp_icon_button_new (GIMP_STOCK_TOOL_CURVES,
+                                 _("Edit these Settings as Curves"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

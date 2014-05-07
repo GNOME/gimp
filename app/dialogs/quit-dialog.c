@@ -336,8 +336,8 @@ quit_close_all_dialog_container_changed (GimpContainer  *images,
 
       gtk_widget_show (dialog->lost_label);
 
-      icon = gtk_image_new_from_stock (GTK_STOCK_DELETE,
-                                       GTK_ICON_SIZE_BUTTON);
+      icon = gtk_image_new_from_icon_name (GTK_STOCK_DELETE,
+                                           GTK_ICON_SIZE_BUTTON);
       g_object_set (dialog->ok_button,
                     "label",     _("_Discard Changes"),
                     "use-stock", FALSE,

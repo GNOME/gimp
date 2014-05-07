@@ -189,51 +189,51 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
 {
   GtkWidget   *button;
   GtkWidget   *image;
-  const gchar *stock_id = NULL;
+  const gchar *icon_name = NULL;
 
   switch (action)
     {
     case GIMP_ALIGN_LEFT:
-      stock_id = GIMP_STOCK_GRAVITY_WEST;
+      icon_name = GIMP_STOCK_GRAVITY_WEST;
       break;
     case GIMP_ALIGN_HCENTER:
-      stock_id = GIMP_STOCK_HCENTER;
+      icon_name = GIMP_STOCK_HCENTER;
       break;
     case GIMP_ALIGN_RIGHT:
-      stock_id = GIMP_STOCK_GRAVITY_EAST;
+      icon_name = GIMP_STOCK_GRAVITY_EAST;
       break;
     case GIMP_ALIGN_TOP:
-      stock_id = GIMP_STOCK_GRAVITY_NORTH;
+      icon_name = GIMP_STOCK_GRAVITY_NORTH;
       break;
     case GIMP_ALIGN_VCENTER:
-      stock_id = GIMP_STOCK_VCENTER;
+      icon_name = GIMP_STOCK_VCENTER;
       break;
     case GIMP_ALIGN_BOTTOM:
-      stock_id = GIMP_STOCK_GRAVITY_SOUTH;
+      icon_name = GIMP_STOCK_GRAVITY_SOUTH;
       break;
     case GIMP_ARRANGE_LEFT:
-      stock_id = GIMP_STOCK_GRAVITY_WEST;
+      icon_name = GIMP_STOCK_GRAVITY_WEST;
       break;
     case GIMP_ARRANGE_HCENTER:
-      stock_id = GIMP_STOCK_HCENTER;
+      icon_name = GIMP_STOCK_HCENTER;
       break;
     case GIMP_ARRANGE_RIGHT:
-      stock_id = GIMP_STOCK_GRAVITY_EAST;
+      icon_name = GIMP_STOCK_GRAVITY_EAST;
       break;
     case GIMP_ARRANGE_TOP:
-      stock_id = GIMP_STOCK_GRAVITY_NORTH;
+      icon_name = GIMP_STOCK_GRAVITY_NORTH;
       break;
     case GIMP_ARRANGE_VCENTER:
-      stock_id = GIMP_STOCK_VCENTER;
+      icon_name = GIMP_STOCK_VCENTER;
       break;
     case GIMP_ARRANGE_BOTTOM:
-      stock_id = GIMP_STOCK_GRAVITY_SOUTH;
+      icon_name = GIMP_STOCK_GRAVITY_SOUTH;
       break;
     case GIMP_ARRANGE_HFILL:
-        stock_id = GIMP_STOCK_HFILL;
+        icon_name = GIMP_STOCK_HFILL;
         break;
     case GIMP_ARRANGE_VFILL:
-        stock_id = GIMP_STOCK_VFILL;
+        icon_name = GIMP_STOCK_VFILL;
         break;
     default:
       g_return_val_if_reached (NULL);
@@ -244,7 +244,7 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
   gtk_widget_set_sensitive (button, FALSE);
   gtk_widget_show (button);
 
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 

@@ -42,7 +42,7 @@ enum
 {
   COLUMN_NAME,
   COLUMN_LABEL,
-  COLUMN_STOCK_ID,
+  COLUMN_ICON_NAME,
   N_COLUMNS
 };
 
@@ -320,24 +320,24 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   for (iter = opclasses; iter; iter = iter->next)
     {
       GeglOperationClass *opclass = GEGL_OPERATION_CLASS (iter->data);
-      const gchar        *stock_id;
+      const gchar        *icon_name;
       const gchar        *label;
 
       if (g_str_has_prefix (opclass->name, "gegl:"))
         {
-          label    = opclass->name + strlen ("gegl:");
-          stock_id = GIMP_STOCK_GEGL;
+          label     = opclass->name + strlen ("gegl:");
+          icon_name = GIMP_STOCK_GEGL;
         }
       else
         {
-          label    = opclass->name;
-          stock_id = NULL;
+          label     = opclass->name;
+          icon_name = NULL;
         }
 
       gtk_list_store_insert_with_values (store, NULL, -1,
-                                         COLUMN_NAME,     opclass->name,
-                                         COLUMN_LABEL,    label,
-                                         COLUMN_STOCK_ID, stock_id,
+                                         COLUMN_NAME,      opclass->name,
+                                         COLUMN_LABEL,     label,
+                                         COLUMN_ICON_NAME, icon_name,
                                          -1);
     }
 
@@ -351,7 +351,7 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   cell = gtk_cell_renderer_pixbuf_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, FALSE);
   gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (combo), cell,
-                                 "stock-id", COLUMN_STOCK_ID);
+                                 "icon-name", COLUMN_ICON_NAME);
 
   cell = gtk_cell_renderer_text_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, TRUE);

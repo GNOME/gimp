@@ -51,7 +51,7 @@ struct _GimpDialogFactoryEntry
   gchar                *identifier;
   gchar                *name;
   gchar                *blurb;
-  gchar                *stock_id;
+  gchar                *icon_name;
   gchar                *help_id;
 
   GimpDialogNewFunc     new_func;
@@ -118,7 +118,7 @@ void                gimp_dialog_factory_register_entry       (GimpDialogFactory 
                                                               const gchar             *identifier,
                                                               const gchar             *name,
                                                               const gchar             *blurb,
-                                                              const gchar             *stock_id,
+                                                              const gchar             *icon_name,
                                                               const gchar             *help_id,
                                                               GimpDialogNewFunc        new_func,
                                                               GimpDialogRestoreFunc    restore_func,

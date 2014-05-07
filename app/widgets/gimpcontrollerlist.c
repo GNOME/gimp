@@ -186,7 +186,7 @@ gimp_controller_list_init (GimpControllerList *list)
   cell = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start (column, cell, FALSE);
   gtk_tree_view_column_set_attributes (column, cell,
-                                       "stock-id", COLUMN_ICON,
+                                       "icon-name", COLUMN_ICON,
                                        NULL);
 
   g_object_get (cell, "stock-size", &icon_size, NULL);
@@ -243,7 +243,8 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->add_button, FALSE);
   gtk_widget_show (list->add_button);
 
-  image = gtk_image_new_from_stock (GTK_STOCK_GO_FORWARD, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (GTK_STOCK_GO_FORWARD,
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->add_button), image);
   gtk_widget_show (image);
 
@@ -259,7 +260,8 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->remove_button, FALSE);
   gtk_widget_show (list->remove_button);
 
-  image = gtk_image_new_from_stock (GTK_STOCK_GO_BACK, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (GTK_STOCK_GO_BACK,
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->remove_button), image);
   gtk_widget_show (image);
 
