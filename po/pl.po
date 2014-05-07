@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-05 21:01+0200\n"
-"PO-Revision-Date: 2014-05-05 21:02+0200\n"
+"POT-Creation-Date: 2014-05-07 18:44+0200\n"
+"PO-Revision-Date: 2014-05-07 18:45+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -2980,7 +2980,7 @@ msgstr "Menu obrazu"
 #: ../app/actions/image-actions.c:55
 msgctxt "image-action"
 msgid "_Image"
-msgstr "_Obraz"
+msgstr "O_braz"
 
 #: ../app/actions/image-actions.c:56
 msgctxt "image-action"
@@ -3316,7 +3316,7 @@ msgstr "Menu warstw"
 #: ../app/actions/layers-actions.c:53
 msgctxt "layers-action"
 msgid "_Layer"
-msgstr "_Warstwa"
+msgstr "W_arstwa"
 
 #: ../app/actions/layers-actions.c:55
 msgctxt "layers-action"
