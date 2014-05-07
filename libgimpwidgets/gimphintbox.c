@@ -114,7 +114,7 @@ static void
 gimp_hint_box_constructed (GObject *object)
 {
   GimpHintBox *box   = GIMP_HINT_BOX (object);
-  GtkImage    *image = NULL;
+  GtkWidget   *image = NULL;
   GtkWidget   *label;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
