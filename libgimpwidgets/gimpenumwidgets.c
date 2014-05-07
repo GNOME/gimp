@@ -276,6 +276,8 @@ gimp_enum_radio_frame_new_with_range (GType       enum_type,
  * Return value: a new #GtkHBox holding a group of #GtkRadioButtons.
  *
  * Since: GIMP 2.4
+ *
+ * Deprecated: GIMP 2.10
  **/
 GtkWidget *
 gimp_enum_stock_box_new (GType         enum_type,
@@ -285,23 +287,9 @@ gimp_enum_stock_box_new (GType         enum_type,
                          gpointer      callback_data,
                          GtkWidget   **first_button)
 {
-  GEnumClass *enum_class;
-  GtkWidget  *box;
-
-  g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
-
-  enum_class = g_type_class_ref (enum_type);
-
-  box = gimp_enum_stock_box_new_with_range (enum_type,
-                                            enum_class->minimum,
-                                            enum_class->maximum,
-                                            stock_prefix, icon_size,
-                                            callback, callback_data,
-                                            first_button);
-
-  g_type_class_unref (enum_class);
-
-  return box;
+  return gimp_enum_icon_box_new (enum_type, stock_prefix, icon_size,
+                                 callback, callback_data,
+                                 first_button);
 }
 
 /**
@@ -323,6 +311,8 @@ gimp_enum_stock_box_new (GType         enum_type,
  * Return value: a new #GtkHBox holding a group of #GtkRadioButtons.
  *
  * Since: GIMP 2.4
+ *
+ * Deprecated: GIMP 2.10
  **/
 GtkWidget *
 gimp_enum_stock_box_new_with_range (GType         enum_type,
@@ -334,16 +324,118 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
                                     gpointer      callback_data,
                                     GtkWidget   **first_button)
 {
+  return gimp_enum_icon_box_new_with_range (enum_type, minimum, maximum,
+                                            stock_prefix, icon_size,
+                                            callback, callback_data,
+                                            first_button);
+}
+
+/**
+ * gimp_enum_stock_box_set_child_padding:
+ * @stock_box: a stock box widget
+ * @xpad:      horizontal padding
+ * @ypad:      vertical padding
+ *
+ * Sets the padding of all buttons in a box created by
+ * gimp_enum_stock_box_new().
+ *
+ * Since: GIMP 2.4
+ *
+ * Deprecated: GIMP 2.10
+ **/
+void
+gimp_enum_stock_box_set_child_padding (GtkWidget *stock_box,
+                                       gint       xpad,
+                                       gint       ypad)
+{
+  gimp_enum_icon_box_set_child_padding (stock_box, xpad, ypad);
+}
+
+/**
+ * gimp_enum_icon_box_new:
+ * @enum_type:     the #GType of an enum.
+ * @icon_prefix:   the prefix of the group of icon names to use.
+ * @icon_size:     the icon size for the icons
+ * @callback:      a callback to connect to the "toggled" signal of each
+ *                 #GtkRadioButton that is created.
+ * @callback_data: data to pass to the @callback.
+ * @first_button:  returns the first button in the created group.
+ *
+ * Creates a horizontal box of radio buttons with named icons. The
+ * icon name for each icon is created by appending the enum_value's
+ * nick to the given @icon_prefix.
+ *
+ * Return value: a new #GtkHBox holding a group of #GtkRadioButtons.
+ *
+ * Since: GIMP 2.10
+ **/
+GtkWidget *
+gimp_enum_icon_box_new (GType         enum_type,
+                        const gchar  *icon_prefix,
+                        GtkIconSize   icon_size,
+                        GCallback     callback,
+                        gpointer      callback_data,
+                        GtkWidget   **first_button)
+{
+  GEnumClass *enum_class;
+  GtkWidget  *box;
+
+  g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
+
+  enum_class = g_type_class_ref (enum_type);
+
+  box = gimp_enum_icon_box_new_with_range (enum_type,
+                                           enum_class->minimum,
+                                           enum_class->maximum,
+                                           icon_prefix, icon_size,
+                                           callback, callback_data,
+                                           first_button);
+
+  g_type_class_unref (enum_class);
+
+  return box;
+}
+
+/**
+ * gimp_enum_icon_box_new_with_range:
+ * @enum_type:     the #GType of an enum.
+ * @minimum:       the minumim enum value
+ * @maximum:       the maximum enum value
+ * @icon_prefix:   the prefix of the group of icon names to use.
+ * @icon_size:     the icon size for the icons
+ * @callback:      a callback to connect to the "toggled" signal of each
+ *                 #GtkRadioButton that is created.
+ * @callback_data: data to pass to the @callback.
+ * @first_button:  returns the first button in the created group.
+ *
+ * Just like gimp_enum_icon_box_new(), this function creates a group
+ * of radio buttons, but additionally it supports limiting the range
+ * of available enum values.
+ *
+ * Return value: a new #GtkHBox holding a group of #GtkRadioButtons.
+ *
+ * Since: GIMP 2.10
+ **/
+GtkWidget *
+gimp_enum_icon_box_new_with_range (GType         enum_type,
+                                   gint          minimum,
+                                   gint          maximum,
+                                   const gchar  *icon_prefix,
+                                   GtkIconSize   icon_size,
+                                   GCallback     callback,
+                                   gpointer      callback_data,
+                                   GtkWidget   **first_button)
+{
   GtkWidget  *hbox;
   GtkWidget  *button;
   GtkWidget  *image;
   GEnumClass *enum_class;
   GEnumValue *value;
-  gchar      *stock_id;
+  gchar      *icon_name;
   GSList     *group = NULL;
 
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
-  g_return_val_if_fail (stock_prefix != NULL, NULL);
+  g_return_val_if_fail (icon_prefix != NULL, NULL);
 
   enum_class = g_type_class_ref (enum_type);
 
@@ -367,14 +459,11 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
       if (first_button && *first_button == NULL)
         *first_button = button;
 
-      stock_id = g_strconcat (stock_prefix, "-", value->value_nick, NULL);
+      icon_name = g_strconcat (icon_prefix, "-", value->value_nick, NULL);
 
-      if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (), stock_id))
-        image = gtk_image_new_from_icon_name (stock_id, icon_size);
-      else
-        image = gtk_image_new_from_stock (stock_id, icon_size);
+      image = gtk_image_new_from_icon_name (icon_name, icon_size);
 
-      g_free (stock_id);
+      g_free (icon_name);
 
       if (image)
         {
@@ -403,27 +492,27 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
 }
 
 /**
- * gimp_enum_stock_box_set_child_padding:
- * @stock_box: a stock box widget
- * @xpad:      horizontal padding
- * @ypad:      vertical padding
+ * gimp_enum_icon_box_set_child_padding:
+ * @icon_box: an icon box widget
+ * @xpad:     horizontal padding
+ * @ypad:     vertical padding
  *
  * Sets the padding of all buttons in a box created by
- * gimp_enum_stock_box_new().
+ * gimp_enum_icon_box_new().
  *
- * Since: GIMP 2.4
+ * Since: GIMP 2.10
  **/
 void
-gimp_enum_stock_box_set_child_padding (GtkWidget *stock_box,
-                                       gint       xpad,
-                                       gint       ypad)
+gimp_enum_icon_box_set_child_padding (GtkWidget *icon_box,
+                                      gint       xpad,
+                                      gint       ypad)
 {
   GList *children;
   GList *list;
 
-  g_return_if_fail (GTK_IS_CONTAINER (stock_box));
+  g_return_if_fail (GTK_IS_CONTAINER (icon_box));
 
-  children = gtk_container_get_children (GTK_CONTAINER (stock_box));
+  children = gtk_container_get_children (GTK_CONTAINER (icon_box));
 
   for (list = children; list; list = g_list_next (list))
     {

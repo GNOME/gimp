@@ -78,7 +78,15 @@ GtkWidget     * gimp_prop_enum_radio_box_new      (GObject      *config,
                                                    const gchar  *property_name,
                                                    gint          minimum,
                                                    gint          maximum);
+
+GIMP_DEPRECATED_FOR(gimp_prop_enum_icon_box_new)
 GtkWidget     * gimp_prop_enum_stock_box_new      (GObject      *config,
+                                                   const gchar  *property_name,
+                                                   const gchar  *stock_prefix,
+                                                   gint          minimum,
+                                                   gint          maximum);
+
+GtkWidget     * gimp_prop_enum_icon_box_new       (GObject      *config,
                                                    const gchar  *property_name,
                                                    const gchar  *stock_prefix,
                                                    gint          minimum,

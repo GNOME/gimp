@@ -331,10 +331,10 @@ gimp_color_button_init (GimpColorButton      *button,
       GtkAction   *action;
 
       action = g_object_new (klass->get_action_type (button),
-                             "name",     actions[i].name,
-                             "label",    label,
-                             "tooltip",  tooltip,
-                             "stock-id", actions[i].stock_id,
+                             "name",      actions[i].name,
+                             "label",     label,
+                             "tooltip",   tooltip,
+                             "icon-name", actions[i].stock_id,
                              NULL);
 
       if (actions[i].callback)

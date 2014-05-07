@@ -915,6 +915,8 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
  * Return value: A #libgimpwidgets-gimpenumstockbox containing the radio buttons.
  *
  * Since GIMP 2.4
+ *
+ * Deprecated: GIMP 2.10
  */
 GtkWidget *
 gimp_prop_enum_stock_box_new (GObject     *config,
@@ -922,6 +924,35 @@ gimp_prop_enum_stock_box_new (GObject     *config,
                               const gchar *stock_prefix,
                               gint         minimum,
                               gint         maximum)
+{
+  return gimp_prop_enum_icon_box_new (config, property_name,
+                                      stock_prefix, minimum, maximum);
+}
+
+/**
+ * gimp_prop_enum_icon_box_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of enum property controlled by the radio buttons.
+ * @icon_prefix:   The prefix of the group of icon names to use.
+ * @minimum:       Smallest value of enum to be included.
+ * @maximum:       Largest value of enum to be included.
+ *
+ * Creates a horizontal box of radio buttons with named icons, which
+ * function to set and display the value of the specified Enum
+ * property.  The icon name for each icon is created by appending the
+ * enum_value's nick to the given @icon_prefix.  See
+ * gimp_enum_icon_box_new() for more information.
+ *
+ * Return value: A #libgimpwidgets-gimpenumiconbox containing the radio buttons.
+ *
+ * Since GIMP 2.10
+ */
+GtkWidget *
+gimp_prop_enum_icon_box_new (GObject     *config,
+                             const gchar *property_name,
+                             const gchar *icon_prefix,
+                             gint         minimum,
+                             gint         maximum)
 {
   GParamSpec *param_spec;
   GtkWidget  *box;
@@ -942,22 +973,22 @@ gimp_prop_enum_stock_box_new (GObject     *config,
 
   if (minimum != maximum)
     {
-      box = gimp_enum_stock_box_new_with_range (param_spec->value_type,
-                                                minimum, maximum,
-                                                stock_prefix,
-                                                GTK_ICON_SIZE_MENU,
-                                                G_CALLBACK (gimp_prop_radio_button_callback),
-                                                config,
-                                                &button);
+      box = gimp_enum_icon_box_new_with_range (param_spec->value_type,
+                                               minimum, maximum,
+                                               icon_prefix,
+                                               GTK_ICON_SIZE_MENU,
+                                               G_CALLBACK (gimp_prop_radio_button_callback),
+                                               config,
+                                               &button);
     }
   else
     {
-      box = gimp_enum_stock_box_new (param_spec->value_type,
-                                     stock_prefix,
-                                     GTK_ICON_SIZE_MENU,
-                                     G_CALLBACK (gimp_prop_radio_button_callback),
-                                     config,
-                                     &button);
+      box = gimp_enum_icon_box_new (param_spec->value_type,
+                                    icon_prefix,
+                                    GTK_ICON_SIZE_MENU,
+                                    G_CALLBACK (gimp_prop_radio_button_callback),
+                                    config,
+                                    &button);
     }
 
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);

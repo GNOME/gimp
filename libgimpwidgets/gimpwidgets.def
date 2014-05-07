@@ -136,7 +136,11 @@ EXPORTS
 	gimp_enum_combo_box_get_type
 	gimp_enum_combo_box_new
 	gimp_enum_combo_box_new_with_model
+	gimp_enum_combo_box_set_icon_prefix
 	gimp_enum_combo_box_set_stock_prefix
+	gimp_enum_icon_box_new
+	gimp_enum_icon_box_new_with_range
+	gimp_enum_icon_box_set_child_padding
 	gimp_enum_label_get_type
 	gimp_enum_label_new
 	gimp_enum_label_set_value
@@ -152,6 +156,7 @@ EXPORTS
 	gimp_enum_store_new_with_range
 	gimp_enum_store_new_with_values
 	gimp_enum_store_new_with_values_valist
+	gimp_enum_store_set_icon_prefix
 	gimp_enum_store_set_stock_prefix
 	gimp_file_entry_get_filename
 	gimp_file_entry_get_type
@@ -284,6 +289,7 @@ EXPORTS
 	gimp_prop_entry_new
 	gimp_prop_enum_check_button_new
 	gimp_prop_enum_combo_box_new
+	gimp_prop_enum_icon_box_new
 	gimp_prop_enum_label_new
 	gimp_prop_enum_radio_box_new
 	gimp_prop_enum_radio_frame_new

@@ -192,10 +192,32 @@ gimp_enum_combo_box_new_with_model (GimpEnumStore *enum_store)
  * @stock_prefix.
  *
  * Since: GIMP 2.4
+ *
+ * Deprecated: GIMP 2.10
  **/
 void
 gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
                                       const gchar      *stock_prefix)
+{
+  gimp_enum_combo_box_set_icon_prefix (combo_box, stock_prefix);
+}
+
+/**
+ * gimp_enum_combo_box_set_icon_prefix:
+ * @combo_box:   a #GimpEnumComboBox
+ * @icon_prefix: a prefix to create icon names from enum values
+ *
+ * Attempts to create icons for all items in the @combo_box. See
+ * gimp_enum_store_set_icon_prefix() to find out what to use as
+ * @icon_prefix.
+ *
+ * Since: GIMP 2.4
+ *
+ * Deprecated: GIMP 2.10
+ **/
+void
+gimp_enum_combo_box_set_icon_prefix (GimpEnumComboBox *combo_box,
+                                     const gchar      *icon_prefix)
 {
   GtkTreeModel *model;
 
@@ -203,5 +225,5 @@ gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 
-  gimp_enum_store_set_stock_prefix (GIMP_ENUM_STORE (model), stock_prefix);
+  gimp_enum_store_set_icon_prefix (GIMP_ENUM_STORE (model), icon_prefix);
 }
