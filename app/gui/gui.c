@@ -495,10 +495,13 @@ gui_restore_after_callback (Gimp               *gimp,
 
   gimp->message_handler = GIMP_MESSAGE_BOX;
 
+#if 0
+  /*  enable this to always have icons everywhere  */
   g_object_set (G_OBJECT (gtk_settings_get_default ()),
                 "gtk-button-images", TRUE,
                 "gtk-menu-images", TRUE,
                 NULL);
+#endif
 
   if (gui_config->restore_accels)
     menus_restore (gimp);
