@@ -842,8 +842,8 @@ gimp_stock_init (void)
 
   icons_dir = g_build_filename (gimp_data_directory (),
                                 "themes", "Default", "icons", NULL);
-  gtk_icon_theme_append_search_path (gtk_icon_theme_get_default (),
-                                     icons_dir);
+  gtk_icon_theme_prepend_search_path (gtk_icon_theme_get_default (),
+                                      icons_dir);
   g_free (icons_dir);
 
   initialized = TRUE;

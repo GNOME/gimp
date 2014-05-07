@@ -3,15 +3,17 @@
 SUBDIRS = preferences
 
 themedatadir = $(gimpdatadir)/themes/Default/images
-themedata12dir = $(gimpdatadir)/themes/Default/icons/hicolor/12x12/apps
-themedata16dir = $(gimpdatadir)/themes/Default/icons/hicolor/16x16/apps
-themedata18dir = $(gimpdatadir)/themes/Default/icons/hicolor/18x18/apps
-themedata20dir = $(gimpdatadir)/themes/Default/icons/hicolor/20x20/apps
-themedata22dir = $(gimpdatadir)/themes/Default/icons/hicolor/22x22/apps
-themedata24dir = $(gimpdatadir)/themes/Default/icons/hicolor/24x24/apps
-themedata32dir = $(gimpdatadir)/themes/Default/icons/hicolor/32x32/apps
-themedata48dir = $(gimpdatadir)/themes/Default/icons/hicolor/48x48/apps
-themedata64dir = $(gimpdatadir)/themes/Default/icons/hicolor/64x64/apps
+
+iconsdir   = $(gimpdatadir)/themes/Default/icons/hicolor
+icons12dir = $(gimpdatadir)/themes/Default/icons/hicolor/12x12/apps
+icons16dir = $(gimpdatadir)/themes/Default/icons/hicolor/16x16/apps
+icons18dir = $(gimpdatadir)/themes/Default/icons/hicolor/18x18/apps
+icons20dir = $(gimpdatadir)/themes/Default/icons/hicolor/20x20/apps
+icons22dir = $(gimpdatadir)/themes/Default/icons/hicolor/22x22/apps
+icons24dir = $(gimpdatadir)/themes/Default/icons/hicolor/24x24/apps
+icons32dir = $(gimpdatadir)/themes/Default/icons/hicolor/32x32/apps
+icons48dir = $(gimpdatadir)/themes/Default/icons/hicolor/48x48/apps
+icons64dir = $(gimpdatadir)/themes/Default/icons/hicolor/64x64/apps
 
 
 ## A warning Wilber that is used from the core
@@ -25,7 +27,10 @@ CORE_VARIABLES = \
 
 ## Compiled in stock icons
 
-themedata12_DATA = \
+icons_DATA = \
+	index.theme
+
+icons12_DATA = \
 	12/gimp-close.png			\
 	12/gimp-default-colors.png		\
 	12/gimp-eye.png				\
@@ -37,7 +42,7 @@ themedata12_DATA = \
 	12/gimp-swap-colors.png			\
 	12/gimp-zoom-follow-window.png
 
-themedata16_DATA = \
+icons16_DATA = \
 	16/gimp-anchor.png				\
 	16/gimp-cap-butt.png				\
 	16/gimp-cap-round.png				\
@@ -202,16 +207,16 @@ themedata16_DATA = \
 	16/gimp-web.png					\
 	16/gimp-wilber.png
 
-themedata18_DATA = \
+icons18_DATA = \
 	18/gimp-color-picker-black.png		\
 	18/gimp-color-picker-gray.png		\
 	18/gimp-color-picker-white.png
 
-themedata20_DATA = \
+icons20_DATA = \
 	20/gimp-eye.png				\
 	20/gimp-linked.png
 
-themedata22_DATA = \
+icons22_DATA = \
 	22/gimp-char-picker.png			\
 	22/gimp-dynamics.png			\
 	22/gimp-gegl.png			\
@@ -269,7 +274,7 @@ themedata22_DATA = \
 	22/gimp-tool-zoom.png			\
 	22/gimp-wilber.png
 
-themedata24_DATA = \
+icons24_DATA = \
 	24/gimp-center.png			\
 	24/gimp-channel-alpha.png		\
 	24/gimp-channel-blue.png		\
@@ -333,7 +338,7 @@ themedata24_DATA = \
 	24/gimp-warning.png			\
 	24/gimp-web.png
 
-themedata32_DATA = \
+icons32_DATA = \
 	32/gimp-channel-alpha.png	\
 	32/gimp-channel-blue.png	\
 	32/gimp-channel-gray.png	\
@@ -348,7 +353,7 @@ themedata32_DATA = \
 	32/gimp-text-layer.png		\
 	32/gimp-user-manual.png
 
-themedata48_DATA = \
+icons48_DATA = \
 	48/gimp-channel-alpha.png	\
 	48/gimp-channel-blue.png	\
 	48/gimp-channel-gray.png	\
@@ -362,7 +367,7 @@ themedata48_DATA = \
 	48/gimp-layer.png		\
 	48/gimp-text-layer.png
 
-themedata64_DATA = \
+icons64_DATA = \
 	64/gimp-error.png		\
 	64/gimp-frame.png		\
 	64/gimp-info.png		\
@@ -374,17 +379,18 @@ themedata64_DATA = \
 	64/gimp-wilber.png
 
 ICON_IMAGES = \
-	$(themedata12_DATA)	\
-	$(themedata16_DATA)	\
-	$(themedata18_DATA)	\
-	$(themedata20_DATA)	\
-	$(themedata22_DATA)	\
-	$(themedata24_DATA)	\
-	$(themedata32_DATA)	\
-	$(themedata48_DATA)	\
-	$(themedata64_DATA)
+	$(icons12_DATA)	\
+	$(icons16_DATA)	\
+	$(icons18_DATA)	\
+	$(icons20_DATA)	\
+	$(icons22_DATA)	\
+	$(icons24_DATA)	\
+	$(icons32_DATA)	\
+	$(icons48_DATA)	\
+	$(icons64_DATA)
 
 EXTRA_DIST = \
+	$(icons_DATA)		\
 	$(ICON_IMAGES)		\
 	gimp-dialog-icons.xcf.gz
 
