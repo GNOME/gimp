@@ -125,8 +125,8 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   editor->menu = menu = gimp_prop_enum_combo_box_new (G_OBJECT (view),
                                                       "histogram-channel",
                                                       0, 0);
-  gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (menu),
-                                        "gimp-channel");
+  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (menu),
+                                       "gimp-channel");
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (editor->menu),
                                       gimp_histogram_menu_sensitivity,
                                       editor, NULL);
@@ -135,9 +135,9 @@ gimp_histogram_editor_init (GimpHistogramEditor *editor)
   gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
-  menu = gimp_prop_enum_stock_box_new (G_OBJECT (view),
-                                       "histogram-scale", "gimp-histogram",
-                                       0, 0);
+  menu = gimp_prop_enum_icon_box_new (G_OBJECT (view),
+                                      "histogram-scale", "gimp-histogram",
+                                      0, 0);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 

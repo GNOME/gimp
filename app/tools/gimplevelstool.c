@@ -354,8 +354,8 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   g_signal_connect (menu, "changed",
                     G_CALLBACK (levels_channel_callback),
                     tool);
-  gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (menu),
-                                        "gimp-channel");
+  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (menu),
+                                       "gimp-channel");
   gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
@@ -371,9 +371,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (levels_channel_reset_callback),
                     tool);
 
-  menu = gimp_prop_enum_stock_box_new (G_OBJECT (tool_options),
-                                       "histogram-scale", "gimp-histogram",
-                                       0, 0);
+  menu = gimp_prop_enum_icon_box_new (G_OBJECT (tool_options),
+                                      "histogram-scale", "gimp-histogram",
+                                      0, 0);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 

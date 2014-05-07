@@ -199,9 +199,9 @@ gimp_threshold_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  menu = gimp_prop_enum_stock_box_new (G_OBJECT (tool_options),
-                                       "histogram-scale", "gimp-histogram",
-                                       0, 0);
+  menu = gimp_prop_enum_icon_box_new (G_OBJECT (tool_options),
+                                      "histogram-scale", "gimp-histogram",
+                                      0, 0);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 

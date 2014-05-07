@@ -435,8 +435,8 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
                                  config->channel);
-  gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (tool->channel_menu),
-                                        "gimp-channel");
+  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (tool->channel_menu),
+                                       "gimp-channel");
   gtk_box_pack_start (GTK_BOX (hbox), tool->channel_menu, FALSE, FALSE, 0);
   gtk_widget_show (tool->channel_menu);
 
@@ -455,9 +455,9 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
                     tool);
 
   /*  The histogram scale radio buttons  */
-  hbox2 = gimp_prop_enum_stock_box_new (G_OBJECT (tool_options),
-                                        "histogram-scale", "gimp-histogram",
-                                        0, 0);
+  hbox2 = gimp_prop_enum_icon_box_new (G_OBJECT (tool_options),
+                                       "histogram-scale", "gimp-histogram",
+                                       0, 0);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 
@@ -545,8 +545,8 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (label);
 
   tool->curve_type = combo = gimp_enum_combo_box_new (GIMP_TYPE_CURVE_TYPE);
-  gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (combo),
-                                        "gimp-curve");
+  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
+                                       "gimp-curve");
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), 0,
                               G_CALLBACK (curves_curve_type_callback),
                               tool);

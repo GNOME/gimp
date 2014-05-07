@@ -464,8 +464,8 @@ gimp_device_info_editor_constructed (GObject *object)
 
           combo = gimp_prop_enum_combo_box_new (G_OBJECT (curve),
                                                 "curve-type", 0, 0);
-          gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (combo),
-                                                "gimp-curve");
+          gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (combo),
+                                               "gimp-curve");
           gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
           gtk_widget_show (combo);
 

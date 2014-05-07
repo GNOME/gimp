@@ -538,9 +538,9 @@ gimp_editor_add_icon_box (GimpEditor  *editor,
 
   button_icon_size = gimp_editor_ensure_button_box (editor, &button_relief);
 
-  hbox = gimp_enum_stock_box_new (enum_type, icon_prefix, button_icon_size,
-                                  callback, callback_data,
-                                  &first_button);
+  hbox = gimp_enum_icon_box_new (enum_type, icon_prefix, button_icon_size,
+                                 callback, callback_data,
+                                 &first_button);
 
   children = gtk_container_get_children (GTK_CONTAINER (hbox));
 

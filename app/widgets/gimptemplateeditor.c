@@ -232,11 +232,11 @@ gimp_template_editor_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  aspect_box = gimp_enum_stock_box_new (GIMP_TYPE_ASPECT_TYPE,
-                                        "gimp", GTK_ICON_SIZE_MENU,
-                                        G_CALLBACK (gimp_template_editor_aspect_callback),
-                                        editor,
-                                        &private->aspect_button);
+  aspect_box = gimp_enum_icon_box_new (GIMP_TYPE_ASPECT_TYPE,
+                                       "gimp", GTK_ICON_SIZE_MENU,
+                                       G_CALLBACK (gimp_template_editor_aspect_callback),
+                                       editor,
+                                       &private->aspect_button);
   gtk_widget_hide (private->aspect_button); /* hide "square" */
 
   gtk_box_pack_start (GTK_BOX (vbox), aspect_box, FALSE, FALSE, 0);
