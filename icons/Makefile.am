@@ -1,0 +1,412 @@
+## Process this file with automake to produce Makefile.in
+
+iconsdir   = $(gimpdatadir)/icons/hicolor
+icons12dir = $(gimpdatadir)/icons/hicolor/12x12/apps
+icons16dir = $(gimpdatadir)/icons/hicolor/16x16/apps
+icons18dir = $(gimpdatadir)/icons/hicolor/18x18/apps
+icons20dir = $(gimpdatadir)/icons/hicolor/20x20/apps
+icons22dir = $(gimpdatadir)/icons/hicolor/22x22/apps
+icons24dir = $(gimpdatadir)/icons/hicolor/24x24/apps
+icons32dir = $(gimpdatadir)/icons/hicolor/32x32/apps
+icons48dir = $(gimpdatadir)/icons/hicolor/48x48/apps
+icons64dir = $(gimpdatadir)/icons/hicolor/64x64/apps
+
+
+## A warning Wilber that is used from the core
+
+CORE_IMAGES = \
+	64/gimp-question.png
+
+CORE_VARIABLES = \
+	gimp_question_64 $(srcdir)/64/gimp-question.png
+
+
+## Compiled in stock icons
+
+icons_DATA = \
+	index.theme
+
+icons12_DATA = \
+	12/gimp-close.png			\
+	12/gimp-default-colors.png		\
+	12/gimp-eye.png				\
+	12/gimp-linked.png			\
+	12/gimp-menu-left.png			\
+	12/gimp-menu-right.png			\
+	12/gimp-quick-mask-off.png		\
+	12/gimp-quick-mask-on.png		\
+	12/gimp-swap-colors.png			\
+	12/gimp-zoom-follow-window.png
+
+icons16_DATA = \
+	16/gimp-anchor.png				\
+	16/gimp-cap-butt.png				\
+	16/gimp-cap-round.png				\
+	16/gimp-cap-square.png				\
+	16/gimp-center.png				\
+	16/gimp-channel-alpha.png			\
+	16/gimp-channel-blue.png			\
+	16/gimp-channel-gray.png			\
+	16/gimp-channel-green.png			\
+	16/gimp-channel-indexed.png			\
+	16/gimp-channel-red.png				\
+	16/gimp-channel.png				\
+	16/gimp-channels.png				\
+	16/gimp-color-pick-from-screen.png		\
+	16/gimp-color-triangle.png			\
+	16/gimp-colormap.png				\
+	16/gimp-controller-keyboard.png			\
+	16/gimp-controller-linux-input.png		\
+	16/gimp-controller-midi.png			\
+	16/gimp-controller-wheel.png			\
+	16/gimp-controller.png				\
+	16/gimp-convert-grayscale.png			\
+	16/gimp-convert-indexed.png			\
+	16/gimp-convert-rgb.png				\
+	16/gimp-cursor.png				\
+	16/gimp-curve-free.png				\
+	16/gimp-curve-smooth.png			\
+	16/gimp-device-status.png			\
+	16/gimp-display-filter-colorblind.png		\
+	16/gimp-display-filter-contrast.png		\
+	16/gimp-display-filter-gamma.png		\
+	16/gimp-display-filter-lcms.png			\
+	16/gimp-display-filter-proof.png		\
+	16/gimp-display-filter.png			\
+	16/gimp-duplicate.png				\
+	16/gimp-dynamics.png				\
+	16/gimp-edit.png				\
+	16/gimp-flip-horizontal.png			\
+	16/gimp-flip-vertical.png			\
+	16/gimp-floating-selection.png			\
+	16/gimp-gegl.png				\
+	16/gimp-gradient-bilinear.png			\
+	16/gimp-gradient-conical-asymmetric.png		\
+	16/gimp-gradient-conical-symmetric.png		\
+	16/gimp-gradient-linear.png			\
+	16/gimp-gradient-radial.png			\
+	16/gimp-gradient-shapeburst-angular.png		\
+	16/gimp-gradient-shapeburst-dimpled.png		\
+	16/gimp-gradient-shapeburst-spherical.png	\
+	16/gimp-gradient-spiral-anticlockwise.png	\
+	16/gimp-gradient-spiral-clockwise.png		\
+	16/gimp-gradient-square.png			\
+	16/gimp-grid.png				\
+	16/gimp-histogram-linear.png			\
+	16/gimp-histogram-logarithmic.png		\
+	16/gimp-histogram.png				\
+	16/gimp-image.png				\
+	16/gimp-images.png				\
+	16/gimp-info.png				\
+	16/gimp-input-device.png			\
+	16/gimp-invert.png				\
+	16/gimp-join-bevel.png				\
+	16/gimp-join-miter.png				\
+	16/gimp-join-round.png				\
+	16/gimp-landscape.png				\
+	16/gimp-layer-mask.png				\
+	16/gimp-layer-to-imagesize.png			\
+	16/gimp-layer.png				\
+	16/gimp-layers.png				\
+	16/gimp-list.png				\
+	16/gimp-merge-down.png				\
+	16/gimp-move-to-screen.png			\
+	16/gimp-navigation.png				\
+	16/gimp-paste-as-new.png			\
+	16/gimp-paste-into.png				\
+	16/gimp-path-stroke.png				\
+	16/gimp-path.png				\
+	16/gimp-paths.png				\
+	16/gimp-plugin.png				\
+	16/gimp-portrait.png				\
+	16/gimp-print-resolution.png			\
+	16/gimp-reset.png				\
+	16/gimp-reshow-filter.png			\
+	16/gimp-resize.png				\
+	16/gimp-rotate-180.png				\
+	16/gimp-rotate-270.png				\
+	16/gimp-rotate-90.png				\
+	16/gimp-sample-point.png			\
+	16/gimp-scale.png				\
+	16/gimp-selection-add.png			\
+	16/gimp-selection-all.png			\
+	16/gimp-selection-border.png			\
+	16/gimp-selection-grow.png			\
+	16/gimp-selection-intersect.png			\
+	16/gimp-selection-none.png			\
+	16/gimp-selection-replace.png			\
+	16/gimp-selection-shrink.png			\
+	16/gimp-selection-stroke.png			\
+	16/gimp-selection-subtract.png			\
+	16/gimp-selection-to-channel.png		\
+	16/gimp-selection-to-path.png			\
+	16/gimp-selection.png				\
+	16/gimp-shape-circle.png			\
+	16/gimp-shape-diamond.png			\
+	16/gimp-shape-square.png			\
+	16/gimp-template.png				\
+	16/gimp-text-layer.png				\
+	16/gimp-toilet-paper.png			\
+	16/gimp-tool-airbrush.png			\
+	16/gimp-tool-align.png				\
+	16/gimp-tool-blend.png				\
+	16/gimp-tool-blur.png				\
+	16/gimp-tool-brightness-contrast.png		\
+	16/gimp-tool-bucket-fill.png			\
+	16/gimp-tool-by-color-select.png		\
+	16/gimp-tool-cage.png 				\
+	16/gimp-tool-clone.png				\
+	16/gimp-tool-color-balance.png			\
+	16/gimp-tool-color-picker.png			\
+	16/gimp-tool-colorize.png			\
+	16/gimp-tool-crop.png				\
+	16/gimp-tool-curves.png				\
+	16/gimp-tool-desaturate.png			\
+	16/gimp-tool-dodge.png				\
+	16/gimp-tool-ellipse-select.png			\
+	16/gimp-tool-eraser.png				\
+	16/gimp-tool-flip.png				\
+	16/gimp-tool-foreground-select.png		\
+	16/gimp-tool-free-select.png			\
+	16/gimp-tool-fuzzy-select.png			\
+	16/gimp-tool-heal.png				\
+	16/gimp-tool-hue-saturation.png			\
+	16/gimp-tool-ink.png				\
+	16/gimp-tool-iscissors.png			\
+	16/gimp-tool-levels.png				\
+	16/gimp-tool-measure.png			\
+	16/gimp-tool-move.png				\
+	16/gimp-tool-options.png			\
+	16/gimp-tool-paintbrush.png			\
+	16/gimp-tool-path.png				\
+	16/gimp-tool-pencil.png				\
+	16/gimp-tool-perspective-clone.png		\
+	16/gimp-tool-perspective.png			\
+	16/gimp-tool-posterize.png			\
+	16/gimp-tool-preset.png				\
+	16/gimp-tool-rect-select.png			\
+	16/gimp-tool-rotate.png				\
+	16/gimp-tool-scale.png				\
+	16/gimp-tool-shear.png				\
+	16/gimp-tool-smudge.png				\
+	16/gimp-tool-text.png				\
+	16/gimp-tool-threshold.png			\
+	16/gimp-tool-unified-transform.png		\
+	16/gimp-tool-warp.png				\
+	16/gimp-tool-zoom.png				\
+	16/gimp-tools.png				\
+	16/gimp-transparency.png			\
+	16/gimp-undo-history.png			\
+	16/gimp-user-manual.png				\
+	16/gimp-video.png				\
+	16/gimp-warning.png				\
+	16/gimp-web.png					\
+	16/gimp-wilber.png
+
+icons18_DATA = \
+	18/gimp-color-picker-black.png		\
+	18/gimp-color-picker-gray.png		\
+	18/gimp-color-picker-white.png
+
+icons20_DATA = \
+	20/gimp-eye.png				\
+	20/gimp-linked.png
+
+icons22_DATA = \
+	22/gimp-char-picker.png			\
+	22/gimp-dynamics.png			\
+	22/gimp-gegl.png			\
+	22/gimp-histogram.png			\
+	22/gimp-input-device.png		\
+	22/gimp-letter-spacing.png		\
+	22/gimp-line-spacing.png		\
+	22/gimp-path.png			\
+	22/gimp-paths.png			\
+	22/gimp-tool-airbrush.png		\
+	22/gimp-tool-align.png			\
+	22/gimp-tool-blend.png			\
+	22/gimp-tool-blur.png			\
+	22/gimp-tool-brightness-contrast.png	\
+	22/gimp-tool-bucket-fill.png		\
+	22/gimp-tool-by-color-select.png	\
+	22/gimp-tool-cage.png			\
+	22/gimp-tool-clone.png			\
+	22/gimp-tool-color-balance.png		\
+	22/gimp-tool-color-picker.png		\
+	22/gimp-tool-colorize.png		\
+	22/gimp-tool-crop.png			\
+	22/gimp-tool-curves.png			\
+	22/gimp-tool-desaturate.png		\
+	22/gimp-tool-dodge.png			\
+	22/gimp-tool-ellipse-select.png		\
+	22/gimp-tool-eraser.png			\
+	22/gimp-tool-flip.png			\
+	22/gimp-tool-foreground-select.png	\
+	22/gimp-tool-free-select.png		\
+	22/gimp-tool-fuzzy-select.png		\
+	22/gimp-tool-heal.png			\
+	22/gimp-tool-hue-saturation.png		\
+	22/gimp-tool-ink.png			\
+	22/gimp-tool-iscissors.png		\
+	22/gimp-tool-levels.png			\
+	22/gimp-tool-measure.png		\
+	22/gimp-tool-move.png			\
+	22/gimp-tool-paintbrush.png		\
+	22/gimp-tool-path.png			\
+	22/gimp-tool-pencil.png			\
+	22/gimp-tool-perspective-clone.png	\
+	22/gimp-tool-perspective.png		\
+	22/gimp-tool-posterize.png		\
+	22/gimp-tool-preset.png			\
+	22/gimp-tool-rect-select.png		\
+	22/gimp-tool-rotate.png			\
+	22/gimp-tool-scale.png			\
+	22/gimp-tool-shear.png			\
+	22/gimp-tool-smudge.png			\
+	22/gimp-tool-text.png			\
+	22/gimp-tool-threshold.png		\
+	22/gimp-tool-unified-transform.png	\
+	22/gimp-tool-warp.png			\
+	22/gimp-tool-zoom.png			\
+	22/gimp-wilber.png
+
+icons24_DATA = \
+	24/gimp-center.png			\
+	24/gimp-channel-alpha.png		\
+	24/gimp-channel-blue.png		\
+	24/gimp-channel-gray.png		\
+	24/gimp-channel-green.png		\
+	24/gimp-channel-indexed.png		\
+	24/gimp-channel-red.png			\
+	24/gimp-channel.png			\
+	24/gimp-channels.png			\
+	24/gimp-colormap.png			\
+	24/gimp-controller-keyboard.png		\
+	24/gimp-controller-linux-input.png	\
+	24/gimp-controller-midi.png		\
+	24/gimp-controller-wheel.png		\
+	24/gimp-controller.png			\
+	24/gimp-cursor.png			\
+	24/gimp-device-status.png		\
+	24/gimp-display-filter-colorblind.png	\
+	24/gimp-display-filter-contrast.png	\
+	24/gimp-display-filter-gamma.png	\
+	24/gimp-display-filter-lcms.png		\
+	24/gimp-display-filter-proof.png	\
+	24/gimp-display-filter.png		\
+	24/gimp-floating-selection.png		\
+	24/gimp-gravity-east.png		\
+	24/gimp-gravity-north-east.png		\
+	24/gimp-gravity-north-west.png		\
+	24/gimp-gravity-north.png		\
+	24/gimp-gravity-south-east.png		\
+	24/gimp-gravity-south-west.png		\
+	24/gimp-gravity-south.png		\
+	24/gimp-gravity-west.png		\
+	24/gimp-hcenter.png			\
+	24/gimp-hchain-broken.png		\
+	24/gimp-hchain.png			\
+	24/gimp-hfill.png			\
+	24/gimp-image.png			\
+	24/gimp-images.png			\
+	24/gimp-info.png			\
+	24/gimp-layer-mask.png			\
+	24/gimp-layer.png			\
+	24/gimp-layers.png			\
+	24/gimp-move-to-screen.png		\
+	24/gimp-print-resolution.png		\
+	24/gimp-sample-point.png		\
+	24/gimp-template.png			\
+	24/gimp-text-dir-ltr.png		\
+	24/gimp-text-dir-rtl.png		\
+	24/gimp-text-layer.png			\
+	24/gimp-toilet-paper.png		\
+	24/gimp-tool-options.png		\
+	24/gimp-tools.png			\
+	24/gimp-transparency.png		\
+	24/gimp-undo-history.png		\
+	24/gimp-user-manual.png			\
+	24/gimp-vcenter.png			\
+	24/gimp-vchain-broken.png		\
+	24/gimp-vchain.png			\
+	24/gimp-vfill.png			\
+	24/gimp-video.png			\
+	24/gimp-warning.png			\
+	24/gimp-web.png
+
+icons32_DATA = \
+	32/gimp-channel-alpha.png	\
+	32/gimp-channel-blue.png	\
+	32/gimp-channel-gray.png	\
+	32/gimp-channel-green.png	\
+	32/gimp-channel-indexed.png	\
+	32/gimp-channel-red.png		\
+	32/gimp-channel.png		\
+	32/gimp-floating-selection.png	\
+	32/gimp-image.png		\
+	32/gimp-layer-mask.png		\
+	32/gimp-layer.png		\
+	32/gimp-text-layer.png		\
+	32/gimp-user-manual.png
+
+icons48_DATA = \
+	48/gimp-channel-alpha.png	\
+	48/gimp-channel-blue.png	\
+	48/gimp-channel-gray.png	\
+	48/gimp-channel-green.png	\
+	48/gimp-channel-indexed.png	\
+	48/gimp-channel-red.png		\
+	48/gimp-channel.png		\
+	48/gimp-floating-selection.png	\
+	48/gimp-image.png		\
+	48/gimp-layer-mask.png		\
+	48/gimp-layer.png		\
+	48/gimp-text-layer.png
+
+icons64_DATA = \
+	64/gimp-error.png		\
+	64/gimp-frame.png		\
+	64/gimp-info.png		\
+	64/gimp-question.png		\
+	64/gimp-texture.png		\
+	64/gimp-user-manual.png		\
+	64/gimp-warning.png		\
+	64/gimp-wilber-eek.png		\
+	64/gimp-wilber.png
+
+ICON_IMAGES = \
+	$(icons12_DATA)	\
+	$(icons16_DATA)	\
+	$(icons18_DATA)	\
+	$(icons20_DATA)	\
+	$(icons22_DATA)	\
+	$(icons24_DATA)	\
+	$(icons32_DATA)	\
+	$(icons48_DATA)	\
+	$(icons64_DATA)
+
+EXTRA_DIST = \
+	$(icons_DATA)		\
+	$(ICON_IMAGES)		\
+	gimp-dialog-icons.xcf.gz
+
+noinst_DATA = \
+	gimp-core-pixbufs.h	\
+	gimp-stock-pixbufs.h
+
+CLEANFILES = $(noinst_DATA) stock-icons.list
+
+
+stock-icons.list: $(ICON_IMAGES) Makefile.am
+	$(AM_V_GEN) ( rm -f $@; \
+          for image in $(ICON_IMAGES); do \
+            echo $$image | \
+              sed -e 's|\(.*\)/\(.*\).png|\2-\1.png|' -e 's|-|_|g' -e 's|\.png$$||' >> $@; \
+	    echo "  $(srcdir)/$$image" >> $@; \
+	  done )
+
+gimp-core-pixbufs.h: $(CORE_IMAGES) Makefile.am
+	$(AM_V_GEN) $(GDK_PIXBUF_CSOURCE) --raw --build-list $(CORE_VARIABLES) > $(@F)
+
+gimp-stock-pixbufs.h: stock-icons.list
+	$(AM_V_GEN) $(GDK_PIXBUF_CSOURCE) --raw --build-list `cat $<` > $(@F)

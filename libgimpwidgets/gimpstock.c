@@ -27,7 +27,7 @@
 
 #include "gimpstock.h"
 
-#include "themes/Default/images/gimp-stock-pixbufs.h"
+#include "icons/gimp-stock-pixbufs.h"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -840,8 +840,7 @@ gimp_stock_init (void)
 
   gtk_stock_add_static (gimp_stock_items, G_N_ELEMENTS (gimp_stock_items));
 
-  icons_dir = g_build_filename (gimp_data_directory (),
-                                "themes", "Default", "icons", NULL);
+  icons_dir = g_build_filename (gimp_data_directory (), "icons", NULL);
   gtk_icon_theme_prepend_search_path (gtk_icon_theme_get_default (),
                                       icons_dir);
   g_free (icons_dir);

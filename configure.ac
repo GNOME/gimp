@@ -2274,6 +2274,7 @@ devel-docs/tools/Makefile
 docs/Makefile
 menus/Makefile
 cursors/Makefile
+icons/Makefile
 themes/Makefile
 themes/Default/Makefile
 themes/Default/images/Makefile
