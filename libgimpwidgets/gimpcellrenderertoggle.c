@@ -51,6 +51,7 @@ enum
 enum
 {
   PROP_0,
+  PROP_ICON_NAME,
   PROP_STOCK_ID,
   PROP_STOCK_SIZE
 };
@@ -124,6 +125,13 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
   cell_class->activate       = gimp_cell_renderer_toggle_activate;
 
   g_object_class_install_property (object_class,
+                                   PROP_ICON_NAME,
+                                   g_param_spec_string ("icon-name",
+                                                        NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+  g_object_class_install_property (object_class,
                                    PROP_STOCK_ID,
                                    g_param_spec_string ("stock-id",
                                                         NULL, NULL,
@@ -175,6 +183,10 @@ gimp_cell_renderer_toggle_get_property (GObject    *object,
 
   switch (param_id)
     {
+    case PROP_ICON_NAME:
+      /* FIXME icon name */
+      g_value_set_string (value, toggle->stock_id);
+      break;
     case PROP_STOCK_ID:
       g_value_set_string (value, toggle->stock_id);
       break;
@@ -198,6 +210,12 @@ gimp_cell_renderer_toggle_set_property (GObject      *object,
 
   switch (param_id)
     {
+    case PROP_ICON_NAME:
+      /* FIXME icon name */
+      if (toggle->stock_id)
+        g_free (toggle->stock_id);
+      toggle->stock_id = g_value_dup_string (value);
+      break;
     case PROP_STOCK_ID:
       if (toggle->stock_id)
         g_free (toggle->stock_id);
@@ -434,9 +452,16 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
   if (toggle->pixbuf)
     g_object_unref (toggle->pixbuf);
 
-  toggle->pixbuf = gtk_widget_render_icon (widget,
-                                           toggle->stock_id,
-                                           toggle->stock_size, NULL);
+  if (FALSE)
+    {
+      /* FIXME icon name */
+    }
+  else
+    {
+      toggle->pixbuf = gtk_widget_render_icon (widget,
+                                               toggle->stock_id,
+                                               toggle->stock_size, NULL);
+    }
 }
 
 
@@ -458,7 +483,7 @@ GtkCellRenderer *
 gimp_cell_renderer_toggle_new (const gchar *stock_id)
 {
   return g_object_new (GIMP_TYPE_CELL_RENDERER_TOGGLE,
-                       "stock_id", stock_id,
+                       "stock-id", stock_id,
                        NULL);
 }
 
