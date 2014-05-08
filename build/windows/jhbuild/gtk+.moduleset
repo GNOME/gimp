@@ -156,9 +156,9 @@
 </autotools>
 
 <autotools id="gtk2" autogen-sh="|| rm -f gtk/gtk.def; ./configure" makeinstallargs="install -j1">
-	<branch version="2.24.22" repo="gnome.org"
-			module="gtk+/2.24/gtk+-2.24.22.tar.xz"
-			hash="sha256:b114b6e9fb389bf3aa8a6d09576538f58dce740779653084046852fb4140ae7f">
+	<branch version="2.24.23" repo="gnome.org"
+			module="gtk+/2.24/gtk+-2.24.23.tar.xz"
+			hash="sha256:a0a406e27e9b5e7d6b2c4334212706ed5cdcd41e713e66c9ae950655dd61517c">
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>
