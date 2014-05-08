@@ -879,8 +879,7 @@ gimp_view_renderer_render_icon (GimpViewRenderer *renderer,
                                 GtkWidget        *widget,
                                 const gchar      *icon_name)
 {
-  GdkPixbuf   *pixbuf = NULL;
-  GtkIconSize  icon_size;
+  GdkPixbuf *pixbuf;
 
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
   g_return_if_fail (GTK_IS_WIDGET (widget));
@@ -898,11 +897,8 @@ gimp_view_renderer_render_icon (GimpViewRenderer *renderer,
       renderer->surface = NULL;
     }
 
-  icon_size = gimp_get_icon_size (widget, icon_name, GTK_ICON_SIZE_INVALID,
-                                  renderer->width, renderer->height);
-
-  if (icon_size)
-    pixbuf = gtk_widget_render_icon (widget, icon_name, icon_size, NULL);
+  pixbuf = gimp_widget_load_icon (widget, icon_name,
+                                  MIN (renderer->width, renderer->height));
 
   if (pixbuf)
     {
@@ -1148,9 +1144,8 @@ gimp_view_renderer_create_background (GimpViewRenderer *renderer,
 
   if (renderer->bg_icon_name)
     {
-      GdkPixbuf *pixbuf = gtk_widget_render_icon (widget,
-                                                  renderer->bg_icon_name,
-                                                  GTK_ICON_SIZE_DIALOG, NULL);
+      GdkPixbuf *pixbuf = gimp_widget_load_icon (widget,
+                                                 renderer->bg_icon_name, 64);
 
       if (pixbuf)
         {

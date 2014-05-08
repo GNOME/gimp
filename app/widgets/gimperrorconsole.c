@@ -191,9 +191,8 @@ gimp_error_console_add (GimpErrorConsole    *console,
 
   gtk_text_buffer_get_end_iter (console->text_buffer, &end);
 
-  pixbuf = gtk_widget_render_icon (console->text_view,
-                                   gimp_get_message_icon_name (severity),
-                                   GTK_ICON_SIZE_BUTTON, NULL);
+  pixbuf = gimp_widget_load_icon (GTK_WIDGET (console),
+                                  gimp_get_message_icon_name (severity), 20);
   gtk_text_buffer_insert_pixbuf (console->text_buffer, &end, pixbuf);
   g_object_unref (pixbuf);
 

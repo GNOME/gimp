@@ -44,6 +44,9 @@ void              gimp_enum_radio_frame_add        (GtkFrame             *frame,
                                                     GtkWidget            *widget,
                                                     gint                  enum_value,
                                                     gboolean              below);
+GdkPixbuf       * gimp_widget_load_icon            (GtkWidget            *widget,
+                                                    const gchar          *icon_name,
+                                                    gint                  size);
 GtkIconSize       gimp_get_icon_size               (GtkWidget            *widget,
                                                     const gchar          *icon_name,
                                                     GtkIconSize           max_size,

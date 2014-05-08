@@ -551,8 +551,7 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
             {
               GdkPixbuf *pixbuf;
 
-              pixbuf = gtk_widget_render_icon (statusbar->label, icon_name,
-                                               GTK_ICON_SIZE_MENU, NULL);
+              pixbuf = gimp_widget_load_icon (statusbar->label, icon_name, 16);
 
               width += ICON_SPACING + gdk_pixbuf_get_width (pixbuf);
 
@@ -596,14 +595,14 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
   else
     {
       if (statusbar->icon)
-        g_object_unref (statusbar->icon);
+        {
+          g_object_unref (statusbar->icon);
+          statusbar->icon = NULL;
+        }
 
       if (icon_name)
-        statusbar->icon = gtk_widget_render_icon (statusbar->label,
-                                                  icon_name,
-                                                  GTK_ICON_SIZE_MENU, NULL);
-      else
-        statusbar->icon = NULL;
+        statusbar->icon = gimp_widget_load_icon (statusbar->label,
+                                                 icon_name, 16);
 
       if (statusbar->icon)
         {

@@ -364,6 +364,55 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
   gimp_enum_radio_box_add (GTK_BOX (box), widget, enum_value, below);
 }
 
+GdkPixbuf *
+gimp_widget_load_icon (GtkWidget   *widget,
+                       const gchar *icon_name,
+                       gint         size)
+{
+  GtkIconTheme *icon_theme;
+  gint         *icon_sizes;
+  gint          closest_size = -1;
+  gint          min_diff     = G_MAXINT;
+  gint          i;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
+  g_return_val_if_fail (icon_name != NULL, NULL);
+
+  icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget));
+
+  if (! gtk_icon_theme_has_icon (icon_theme, icon_name))
+    {
+      g_printerr ("gimp_widget_load_icon (): icon theme has no icon '%s'\n",
+                  icon_name);
+
+      return gtk_icon_theme_load_icon (icon_theme, GIMP_STOCK_WILBER_EEK,
+                                       size, 0, NULL);
+    }
+
+  icon_sizes = gtk_icon_theme_get_icon_sizes (icon_theme, icon_name);
+
+  for (i = 0; icon_sizes[i]; i++)
+    {
+      if (icon_sizes[i] > 0 &&
+          icon_sizes[i] <= size)
+        {
+          if (size - icon_sizes[i] < min_diff)
+            {
+              min_diff     = size - icon_sizes[i];
+              closest_size = icon_sizes[i];
+            }
+        }
+    }
+
+  g_free (icon_sizes);
+
+  if (closest_size != -1)
+    size = closest_size;
+
+  return gtk_icon_theme_load_icon (icon_theme, icon_name, size,
+                                   GTK_ICON_LOOKUP_USE_BUILTIN, NULL);
+}
+
 GtkIconSize
 gimp_get_icon_size (GtkWidget   *widget,
                     const gchar *icon_name,

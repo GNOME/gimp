@@ -34,6 +34,7 @@
 
 #include "gimpviewrendererimagefile.h"
 #include "gimpviewrenderer-frame.h"
+#include "gimpwidgets-utils.h"
 
 
 static void        gimp_view_renderer_imagefile_render   (GimpViewRenderer *renderer,
@@ -98,8 +99,8 @@ gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
 /* The code to get an icon for a mime-type is lifted from GtkRecentManager. */
 
 static GdkPixbuf *
-get_icon_for_mime_type (const char *mime_type,
-			gint        pixel_size)
+get_icon_for_mime_type (const gchar *mime_type,
+			gint         pixel_size)
 {
   GtkIconTheme *icon_theme;
   const gchar  *separator;
@@ -120,9 +121,7 @@ get_icon_for_mime_type (const char *mime_type,
   g_string_append_c (icon_name, '-');
   g_string_append (icon_name, separator + 1);
   pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name->str,
-                                     pixel_size,
-                                     0,
-                                     NULL);
+                                     pixel_size, 0, NULL);
   g_string_free (icon_name, TRUE);
   if (pixbuf)
     return pixbuf;
@@ -133,9 +132,7 @@ get_icon_for_mime_type (const char *mime_type,
   g_string_append_c (icon_name, '-');
   g_string_append (icon_name, separator + 1);
   pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name->str,
-                                     pixel_size,
-                                     0,
-                                     NULL);
+                                     pixel_size, 0, NULL);
   g_string_free (icon_name, TRUE);
   if (pixbuf)
     return pixbuf;
@@ -144,9 +141,7 @@ get_icon_for_mime_type (const char *mime_type,
   icon_name = g_string_new ("gnome-mime-");
   g_string_append_len (icon_name, mime_type, separator - mime_type);
   pixbuf = gtk_icon_theme_load_icon (icon_theme, icon_name->str,
-                                     pixel_size,
-                                     0,
-                                     NULL);
+                                     pixel_size, 0, NULL);
   g_string_free (icon_name, TRUE);
 
   return pixbuf;
@@ -186,8 +181,7 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
 
   if (! pixbuf && thumbnail->image_mimetype)
     {
-      pixbuf = get_icon_for_mime_type (thumbnail->image_mimetype,
-                                       size);
+      pixbuf = get_icon_for_mime_type (thumbnail->image_mimetype, size);
     }
 
   if (! pixbuf)
