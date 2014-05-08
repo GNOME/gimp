@@ -120,7 +120,7 @@
     (image-type rgb)
     (fill-type background-fill))
 (GimpTemplate "Toilet paper (US, 300ppi)"
-    (stock-id "gimp-toilet-paper")
+    (icon-name "gimp-toilet-paper")
     (width 1350)
     (height 1350)
     (unit inches)
@@ -130,7 +130,7 @@
     (image-type rgb)
     (fill-type background-fill))
 (GimpTemplate "CD cover (300ppi)"
-    (stock-id "gtk-cdrom")
+    (icon-name "gtk-cdrom")
     (width 1429)
     (height 1417)
     (unit millimeters)
@@ -140,7 +140,7 @@
     (image-type rgb)
     (fill-type background-fill))
 (GimpTemplate "Floppy label (300ppi)"
-    (stock-id "gtk-floppy")
+    (icon-name "gtk-floppy")
     (width 825)
     (height 825)
     (unit millimeters)
@@ -150,7 +150,7 @@
     (image-type rgb)
     (fill-type background-fill))
 (GimpTemplate "Web banner common 468x60"
-    (stock-id "gimp-web")
+    (icon-name "gimp-web")
     (width 468)
     (height 60)
     (unit pixels)
@@ -160,7 +160,7 @@
     (image-type rgb)
     (fill-type background-fill))
 (GimpTemplate "Web banner huge 728x90"
-    (stock-id "gimp-web")
+    (icon-name "gimp-web")
     (width 728)
     (height 90)
     (unit pixels)
@@ -170,7 +170,7 @@
     (image-type rgb)
     (fill-type background-fill))
 (GimpTemplate "PAL - 720x576"
-    (stock-id "gimp-video")
+    (icon-name "gimp-video")
     (width 720)
     (height 576)
     (unit pixels)
@@ -180,7 +180,7 @@
     (image-type rgb)
     (fill-type background-fill))
 (GimpTemplate "NTSC - 720x486"
-    (stock-id "gimp-video")
+    (icon-name "gimp-video")
     (width 720)
     (height 486)
     (unit pixels)
