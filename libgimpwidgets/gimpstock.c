@@ -462,7 +462,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_TRANSPARENCY,             gimp_transparency_24             },
 
   { GIMP_STOCK_LINKED,                   gimp_linked_20                   },
-  { GIMP_STOCK_VISIBLE,                  gimp_eye_20                      },
+  { GIMP_STOCK_VISIBLE,                  gimp_visible_20                  },
 
   { GIMP_STOCK_MOVE_TO_SCREEN,           gimp_move_to_screen_24           },
 
@@ -598,7 +598,7 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_TRANSPARENCY,             gimp_transparency_16             },
 
   { GIMP_STOCK_LINKED,                   gimp_linked_12                   },
-  { GIMP_STOCK_VISIBLE,                  gimp_eye_12                      },
+  { GIMP_STOCK_VISIBLE,                  gimp_visible_12                  },
 
   { GIMP_STOCK_SELECTION_ALL,            gimp_selection_all_16            },
   { GIMP_STOCK_SELECTION_NONE,           gimp_selection_none_16           },

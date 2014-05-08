@@ -29,13 +29,13 @@ icons_DATA = \
 icons12_DATA = \
 	12/gimp-close.png			\
 	12/gimp-default-colors.png		\
-	12/gimp-eye.png				\
 	12/gimp-linked.png			\
 	12/gimp-menu-left.png			\
 	12/gimp-menu-right.png			\
 	12/gimp-quick-mask-off.png		\
 	12/gimp-quick-mask-on.png		\
 	12/gimp-swap-colors.png			\
+	12/gimp-visible.png			\
 	12/gimp-zoom-follow-window.png
 
 icons16_DATA = \
@@ -209,8 +209,8 @@ icons18_DATA = \
 	18/gimp-color-picker-white.png
 
 icons20_DATA = \
-	20/gimp-eye.png				\
-	20/gimp-linked.png
+	20/gimp-linked.png			\
+	20/gimp-visible.png
 
 icons22_DATA = \
 	22/gimp-char-picker.png			\
