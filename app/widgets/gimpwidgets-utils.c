@@ -382,7 +382,7 @@ gimp_widget_load_icon (GtkWidget   *widget,
 
   if (! gtk_icon_theme_has_icon (icon_theme, icon_name))
     {
-      g_printerr ("gimp_widget_load_icon (): icon theme has no icon '%s'\n",
+      g_printerr ("gimp_widget_load_icon(): icon theme has no icon '%s'.\n",
                   icon_name);
 
       return gtk_icon_theme_load_icon (icon_theme, GIMP_STOCK_WILBER_EEK,
@@ -821,7 +821,7 @@ gimp_get_monitor_resolution (GdkScreen *screen,
       y < GIMP_MIN_RESOLUTION || y > GIMP_MAX_RESOLUTION)
     {
       g_printerr ("gimp_get_monitor_resolution(): GDK returned bogus "
-                  "values for the monitor resolution, using 96 dpi instead.");
+                  "values for the monitor resolution, using 96 dpi instead.\n");
 
       x = 96.0;
       y = 96.0;
