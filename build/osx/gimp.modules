@@ -824,10 +824,11 @@
 		</dependencies>
 	</autotools>
 
-	<autotools id="gimp-2.8.8" autogen-sh="configure"
-		autogenargs="--without-x --enable-gtk-doc=no --without-dbus --without-wmf --enable-binreloc --without-gs">
-		<branch module="gimp/v2.8/gimp-2.8.8.tar.bz2" repo="gimp"
-			hash="md5:ef2547c3514a1096931637bd6250635a" version="2.8.8" />
+	<autotools id="gimp-osx" autogen-sh="autogen.sh"
+		autogenargs="--without-x --enable-gtk-doc=no --without-dbus --without-wmf --enable-binreloc --without-gs"
+		skip-autogen="never">
+		<branch repo="git.gnome.org" module="gimp" revision="osx-build"
+			checkoutdir="gimp-osx" />
 		<dependencies>
 			<dep package="libpng" />
 			<dep package="libjpeg" />
