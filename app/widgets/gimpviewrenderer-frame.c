@@ -33,6 +33,7 @@
 
 #include "gimpviewrenderer.h"
 #include "gimpviewrenderer-frame.h"
+#include "gimpwidgets-utils.h"
 
 
 /* utility to stretch a frame to the desired size */
