@@ -396,7 +396,8 @@ gimp_tool_palette_initialize_tools (GimpToolPalette *palette)
 
       icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
 
-      item = gtk_radio_tool_button_new_from_stock (item_group, icon_name);
+      item = gtk_radio_tool_button_new (item_group);
+      gtk_tool_button_set_icon_name (GTK_TOOL_BUTTON (item), icon_name);
       item_group = gtk_radio_tool_button_get_group (GTK_RADIO_TOOL_BUTTON (item));
       gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (group), item, -1);
       gtk_widget_show (GTK_WIDGET (item));
