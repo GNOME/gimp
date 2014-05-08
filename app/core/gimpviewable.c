@@ -263,6 +263,8 @@ gimp_viewable_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_STOCK_ID:
+      if (! g_value_get_string (value))
+        break;
     case PROP_ICON_NAME:
       gimp_viewable_set_icon_name (viewable, g_value_get_string (value));
       break;
