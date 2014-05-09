@@ -212,8 +212,7 @@ gimp_controller_info_set_property (GObject      *object,
 
           controller_class = GIMP_CONTROLLER_GET_CLASS (info->controller);
           gimp_viewable_set_icon_name (GIMP_VIEWABLE (info),
-                                       /* FIXME icon name */
-                                       controller_class->stock_id);
+                                       controller_class->icon_name);
         }
       break;
     case PROP_MAPPING:
