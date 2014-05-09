@@ -1,6 +1,6 @@
 # GIMP tool preset file
 
-(stock-id "gimp-color-triangle")
+(icon-name "gimp-color-triangle")
 (name "Glow Lights (Addition !)")
 (tool-options "GimpPaintOptions"
     (tool "gimp-paintbrush-tool")

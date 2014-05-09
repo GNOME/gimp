@@ -1,6 +1,6 @@
 # GIMP tool preset file
 
-(stock-id "gimp-tool-ellipse-select")
+(icon-name "gimp-tool-ellipse-select")
 (name "Circle 200px")
 (tool-options "GimpRectangleSelectOptions"
     (aspect-denominator 200.000000)

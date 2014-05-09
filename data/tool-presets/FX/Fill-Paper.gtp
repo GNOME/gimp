@@ -1,6 +1,6 @@
 # GIMP tool preset file
 
-(stock-id "gimp-tool-bucket-fill")
+(icon-name "gimp-tool-bucket-fill")
 (name "Fill Paper (Multiply ! Sel.Pattern)")
 (tool-options "GimpBucketFillOptions"
     (tool "gimp-bucket-fill-tool")

@@ -1,6 +1,6 @@
 # GIMP tool preset file
 
-(stock-id "gimp-tool-pencil")
+(icon-name "gimp-tool-pencil")
 (name "Pencil (Color From Gradient)")
 (tool-options "GimpPencilOptions"
     (tool "gimp-pencil-tool")

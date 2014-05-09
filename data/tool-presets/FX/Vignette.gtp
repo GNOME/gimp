@@ -1,6 +1,6 @@
 # GIMP tool preset file
 
-(stock-id "gimp-tool-blend")
+(icon-name "gimp-tool-blend")
 (name "Vignette")
 (tool-options "GimpBlendOptions"
     (tool "gimp-blend-tool")

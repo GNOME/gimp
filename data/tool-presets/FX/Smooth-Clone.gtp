@@ -1,6 +1,6 @@
 # GIMP tool preset file
 
-(stock-id "gimp-tool-clone")
+(icon-name "gimp-tool-clone")
 (name "Smooth Clone (Press.Ctrl)")
 (tool-options "GimpCloneOptions"
     (tool "gimp-clone-tool")

@@ -1,6 +1,6 @@
 # GIMP tool preset file
 
-(stock-id "gimp-tool-crop")
+(icon-name "gimp-tool-crop")
 (name "Crop Composition")
 (tool-options "GimpCropOptions"
     (aspect-denominator 1251.403099)

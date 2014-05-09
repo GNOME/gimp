@@ -1,6 +1,6 @@
 # GIMP tool preset file
 
-(stock-id "gimp-tool-paintbrush")
+(icon-name "gimp-tool-paintbrush")
 (name "Noise")
 (tool-options "GimpPaintOptions"
     (tool "gimp-paintbrush-tool")
