@@ -707,8 +707,8 @@ gimp_int_combo_box_create_cells (GimpIntComboBox *combo_box)
 
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box),
                                   priv->pixbuf_renderer,
-                                  "stock-id", GIMP_INT_STORE_STOCK_ID,
-                                  "pixbuf",   GIMP_INT_STORE_PIXBUF,
+                                  "icon-name", GIMP_INT_STORE_ICON_NAME,
+                                  "pixbuf",    GIMP_INT_STORE_PIXBUF,
                                   NULL);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box),
                                   priv->text_renderer,
