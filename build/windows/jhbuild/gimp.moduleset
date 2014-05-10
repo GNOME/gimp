@@ -67,6 +67,7 @@
 		<dep package="lcms2"/>
 		<dep package="libgexiv2"/>
 		<dep package="gegl"/>
+		<dep package="gnome-icon-theme"/>
 	</dependencies>
 </autotools>
 

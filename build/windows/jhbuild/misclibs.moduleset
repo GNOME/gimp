@@ -2,6 +2,10 @@
 <moduleset>
 	<repository type="tarball" name="gnome.org"
 		href="http://ftp.gnome.org/pub/gnome/sources/" />
+	<repository type="tarball" name="icon-theme.freedesktop.org"
+		href="http://icon-theme.freedesktop.org/releases/" />
+	<repository type="tarball" name="tango.freedesktop.org"
+		href="http://tango.freedesktop.org/releases/" />
 	<repository type="tarball" name="sf.net"
 		href="http://downloads.sourceforge.net/project/" />
 	<repository type="tarball" name="pkg-isocodes"
@@ -151,6 +155,31 @@
 	<dependencies>
 		<dep package="exiv2"/>
 		<dep package="glib2"/>
+	</dependencies>
+</autotools>
+
+<autotools id="hicolor-icon-theme" autogen-sh="configure">
+	<branch version="0.13" repo="icon-theme.freedesktop.org"
+			module="hicolor-icon-theme-0.13.tar.gz"
+			hash="sha256:a38b038915480d1ddd4e3c421562560a14d42ace0449a5acc07c50f57f9c3406">
+	</branch>
+</autotools>
+
+<autotools id="icon-naming-utils" autogen-sh="configure">
+	<branch version="0.8.90" repo="tango.freedesktop.org"
+			module="icon-naming-utils-0.8.90.tar.bz2"
+			hash="sha256:b1378679df4485b4459f609a3304238b3e92d91e43744c47b70abbe690d883d5">
+	</branch>
+</autotools>
+
+<autotools id="gnome-icon-theme" autogen-sh="configure">
+	<branch version="3.12.0" repo="gnome.org"
+			module="gnome-icon-theme/3.12/gnome-icon-theme-3.12.0.tar.xz"
+			hash="sha256:359e720b9202d3aba8d477752c4cd11eced368182281d51ffd64c8572b4e503a">
+	</branch>
+	<dependencies>
+		<dep package="icon-naming-utils"/>
+		<dep package="hicolor-icon-theme"/>
 	</dependencies>
 </autotools>
 
