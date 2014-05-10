@@ -21,7 +21,6 @@ import xml.etree.ElementTree as ET
 
 layermodes_map = {
     "svg:src-over": NORMAL_MODE,
-    "svg:plus": ADDITION_MODE,
     "svg:multiply": MULTIPLY_MODE,
     "svg:screen": SCREEN_MODE,
     "svg:overlay": OVERLAY_MODE,
@@ -32,6 +31,11 @@ layermodes_map = {
     "svg:hard-light": HARDLIGHT_MODE,
     "svg:soft-light": SOFTLIGHT_MODE,
     "svg:difference": DIFFERENCE_MODE,
+    "svg:color": COLOR_MODE,
+    "svg:luminosity": VALUE_MODE,
+    "svg:hue": HUE_MODE,
+    "svg:saturation": SATURATION_MODE,
+    "svg:plus": ADDITION_MODE,
 }
 
 def reverse_map(mapping):
