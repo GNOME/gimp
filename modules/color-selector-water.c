@@ -115,9 +115,9 @@ colorsel_water_class_init (ColorselWaterClass *klass)
 {
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
-  selector_class->name     = _("Watercolor");
-  selector_class->help_id  = "gimp-colorselector-watercolor";
-  selector_class->stock_id = GIMP_STOCK_TOOL_PAINTBRUSH;
+  selector_class->name      = _("Watercolor");
+  selector_class->help_id   = "gimp-colorselector-watercolor";
+  selector_class->icon_name = GIMP_STOCK_TOOL_PAINTBRUSH;
 }
 
 static void

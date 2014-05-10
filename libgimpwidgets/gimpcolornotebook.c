@@ -203,7 +203,8 @@ gimp_color_notebook_style_set (GtkWidget *widget,
 
       selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (list->data);
 
-      image = gtk_image_new_from_icon_name (selector_class->stock_id, icon_size);
+      image = gtk_image_new_from_icon_name (selector_class->icon_name,
+                                            icon_size);
 
       gtk_notebook_set_tab_label (GTK_NOTEBOOK (notebook->notebook),
                                   GTK_WIDGET (list->data),
@@ -392,7 +393,7 @@ gimp_color_notebook_add_page (GimpColorNotebook *notebook,
 
   menu_widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
-  image = gtk_image_new_from_icon_name (selector_class->stock_id,
+  image = gtk_image_new_from_icon_name (selector_class->icon_name,
                                         GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (menu_widget), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
@@ -401,7 +402,7 @@ gimp_color_notebook_add_page (GimpColorNotebook *notebook,
   gtk_box_pack_start (GTK_BOX (menu_widget), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  image = gtk_image_new_from_icon_name (selector_class->stock_id,
+  image = gtk_image_new_from_icon_name (selector_class->icon_name,
                                         DEFAULT_TAB_ICON_SIZE);
 
   gtk_notebook_append_page_menu (GTK_NOTEBOOK (notebook->notebook),
