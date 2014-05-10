@@ -401,7 +401,7 @@ gimp_color_display_editor_new (GimpColorDisplayStack *stack,
       gtk_list_store_append (editor->src, &iter);
 
       gtk_list_store_set (editor->src, &iter,
-                          SRC_COLUMN_ICON, display_class->stock_id,
+                          SRC_COLUMN_ICON, display_class->icon_name,
                           SRC_COLUMN_NAME, display_class->name,
                           SRC_COLUMN_TYPE, display_types[i],
                           -1);
@@ -422,7 +422,7 @@ gimp_color_display_editor_new (GimpColorDisplayStack *stack,
       enabled = gimp_color_display_get_enabled (display);
 
       name      = GIMP_COLOR_DISPLAY_GET_CLASS (display)->name;
-      icon_name = GIMP_COLOR_DISPLAY_GET_CLASS (display)->stock_id;
+      icon_name = GIMP_COLOR_DISPLAY_GET_CLASS (display)->icon_name;
 
       gtk_list_store_append (editor->dest, &iter);
 
@@ -625,7 +625,7 @@ gimp_color_display_editor_added (GimpColorDisplayStack  *stack,
   enabled = gimp_color_display_get_enabled (display);
 
   name      = GIMP_COLOR_DISPLAY_GET_CLASS (display)->name;
-  icon_name = GIMP_COLOR_DISPLAY_GET_CLASS (display)->stock_id;
+  icon_name = GIMP_COLOR_DISPLAY_GET_CLASS (display)->icon_name;
 
   gtk_list_store_insert (editor->dest, &iter, position);
 
