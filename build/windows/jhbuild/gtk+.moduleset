@@ -55,9 +55,9 @@
 </autotools>
 
 <autotools id="atk" autogen-sh="configure" makeinstallargs="install -j1">
-	<branch version="2.10.0" repo="gnome.org"
-			module="atk/2.10/atk-2.10.0.tar.xz"
-			hash="sha256:636917a5036bc851d8491194645d284798ec118919a828be5e713b6ecc5b50b0">
+	<branch version="2.12.0" repo="gnome.org"
+			module="atk/2.12/atk-2.12.0.tar.xz"
+			hash="sha256:48a8431974639c5a59c24fcd3ece1a19709872d5dfe78907524d9f5e9993f18f">
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>
