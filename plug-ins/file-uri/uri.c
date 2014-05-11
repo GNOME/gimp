@@ -126,7 +126,7 @@ query (void)
                               G_N_ELEMENTS (load_return_vals),
                               load_args, load_return_vals);
 
-      gimp_plugin_icon_register (LOAD_PROC, GIMP_ICON_TYPE_STOCK_ID,
+      gimp_plugin_icon_register (LOAD_PROC, GIMP_ICON_TYPE_ICON_NAME,
                                  (const guint8 *) GIMP_STOCK_WEB);
       gimp_register_load_handler (LOAD_PROC,
                                   "", uri_backend_get_load_protocols ());
@@ -146,7 +146,7 @@ query (void)
                               G_N_ELEMENTS (save_args), 0,
                               save_args, NULL);
 
-      gimp_plugin_icon_register (SAVE_PROC, GIMP_ICON_TYPE_STOCK_ID,
+      gimp_plugin_icon_register (SAVE_PROC, GIMP_ICON_TYPE_ICON_NAME,
                                  (const guint8 *) GIMP_STOCK_WEB);
       gimp_register_save_handler (SAVE_PROC,
                                   "", uri_backend_get_save_protocols ());

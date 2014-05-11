@@ -148,7 +148,7 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Help/Programming");
-  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_STOCK_ID,
+  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_ICON_NAME,
                              (const guint8 *) GIMP_STOCK_PLUGIN);
 }
 

@@ -219,8 +219,8 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Animation");
-  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_STOCK_ID,
-                             (const guint8 *) GTK_STOCK_MEDIA_PLAY);
+  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_ICON_NAME,
+                             (const guint8 *) "media-playback-start");
 }
 
 static void

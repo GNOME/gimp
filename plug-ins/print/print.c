@@ -117,8 +117,8 @@ query (void)
                           print_args, NULL);
 
   gimp_plugin_menu_register (PRINT_PROC_NAME, "<Image>/File/Send");
-  gimp_plugin_icon_register (PRINT_PROC_NAME, GIMP_ICON_TYPE_STOCK_ID,
-                             (const guint8 *) GTK_STOCK_PRINT);
+  gimp_plugin_icon_register (PRINT_PROC_NAME, GIMP_ICON_TYPE_ICON_NAME,
+                             (const guint8 *) "document-print");
 
 #ifndef EMBED_PAGE_SETUP
   gimp_install_procedure (PAGE_SETUP_PROC_NAME,
@@ -135,8 +135,8 @@ query (void)
                           print_args, NULL);
 
   gimp_plugin_menu_register (PAGE_SETUP_PROC_NAME, "<Image>/File/Send");
-  gimp_plugin_icon_register (PAGE_SETUP_PROC_NAME, GIMP_ICON_TYPE_STOCK_ID,
-                             (const guint8 *) GTK_STOCK_PAGE_SETUP);
+  gimp_plugin_icon_register (PAGE_SETUP_PROC_NAME, GIMP_ICON_TYPE_ICON_NAME,
+                             (const guint8 *) "document-page-setup");
 #endif
 }
 

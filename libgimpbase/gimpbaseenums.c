@@ -497,7 +497,7 @@ gimp_icon_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_ICON_TYPE_STOCK_ID, "GIMP_ICON_TYPE_STOCK_ID", "stock-id" },
+    { GIMP_ICON_TYPE_ICON_NAME, "GIMP_ICON_TYPE_ICON_NAME", "icon-name" },
     { GIMP_ICON_TYPE_INLINE_PIXBUF, "GIMP_ICON_TYPE_INLINE_PIXBUF", "inline-pixbuf" },
     { GIMP_ICON_TYPE_IMAGE_FILE, "GIMP_ICON_TYPE_IMAGE_FILE", "image-file" },
     { 0, NULL, NULL }
@@ -505,7 +505,7 @@ gimp_icon_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_ICON_TYPE_STOCK_ID, NC_("icon-type", "Stock ID"), NULL },
+    { GIMP_ICON_TYPE_ICON_NAME, NC_("icon-type", "Icon name"), NULL },
     { GIMP_ICON_TYPE_INLINE_PIXBUF, NC_("icon-type", "Inline pixbuf"), NULL },
     { GIMP_ICON_TYPE_IMAGE_FILE, NC_("icon-type", "Image file"), NULL },
     { 0, NULL, NULL }

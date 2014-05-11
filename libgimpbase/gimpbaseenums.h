@@ -258,9 +258,13 @@ GType gimp_icon_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_ICON_TYPE_STOCK_ID,      /*< desc="Stock ID"      >*/
+  GIMP_ICON_TYPE_ICON_NAME,     /*< desc="Icon name"     >*/
   GIMP_ICON_TYPE_INLINE_PIXBUF, /*< desc="Inline pixbuf" >*/
-  GIMP_ICON_TYPE_IMAGE_FILE     /*< desc="Image file"    >*/
+  GIMP_ICON_TYPE_IMAGE_FILE,    /*< desc="Image file"    >*/
+
+#ifndef GIMP_DISABLE_DEPRECATED
+  GIMP_ICON_TYPE_STOCK_ID = GIMP_ICON_TYPE_ICON_NAME  /*< skip, pdb-skip >*/
+#endif
 } GimpIconType;
 
 
