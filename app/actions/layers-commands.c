@@ -204,7 +204,7 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
                                      layer_fill_type,
                                      _("Layer Attributes"),
                                      "gimp-layer-edit",
-                                     GTK_STOCK_EDIT,
+                                     "gtk-edit",
                                      _("Edit Layer Attributes"),
                                      GIMP_HELP_LAYER_EDIT);
 

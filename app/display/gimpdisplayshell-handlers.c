@@ -793,7 +793,7 @@ gimp_display_shell_saved_handler (GimpImage        *image,
   gchar         *filename  = file_utils_uri_display_name (uri);
 
   gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
-                            GTK_STOCK_SAVE, _("Image saved to '%s'"),
+                            "document-save", _("Image saved to '%s'"),
                             filename);
   g_free (filename);
 }
@@ -807,7 +807,7 @@ gimp_display_shell_exported_handler (GimpImage        *image,
   gchar         *filename  = file_utils_uri_display_name (uri);
 
   gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
-                            GTK_STOCK_SAVE, _("Image exported to '%s'"),
+                            "document-save", _("Image exported to '%s'"),
                             filename);
   g_free (filename);
 }

@@ -78,7 +78,7 @@ gimp_action_editor_init (GimpActionEditor *editor)
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
 
   gtk_entry_set_icon_from_icon_name (GTK_ENTRY (entry),
-                                     GTK_ENTRY_ICON_SECONDARY, GTK_STOCK_CLEAR);
+                                     GTK_ENTRY_ICON_SECONDARY, "edit-clear");
   gtk_entry_set_icon_activatable (GTK_ENTRY (entry),
                                   GTK_ENTRY_ICON_SECONDARY, TRUE);
   gtk_entry_set_icon_sensitive (GTK_ENTRY (entry),

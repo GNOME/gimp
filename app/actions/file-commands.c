@@ -419,7 +419,7 @@ file_revert_cmd_callback (GtkAction *action,
       gchar *filename;
 
       dialog =
-        gimp_message_dialog_new (_("Revert Image"), GTK_STOCK_REVERT_TO_SAVED,
+        gimp_message_dialog_new (_("Revert Image"), "document-revert",
                                  GTK_WIDGET (gimp_display_get_shell (display)),
                                  0,
                                  gimp_standard_help_func, GIMP_HELP_FILE_REVERT,

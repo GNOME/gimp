@@ -198,7 +198,7 @@ gimp_tool_options_editor_constructed (GObject *object)
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   editor->p->save_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor), GTK_STOCK_SAVE,
+    gimp_editor_add_button (GIMP_EDITOR (editor), "document-save",
                             _("Save Tool Preset..."),
                             GIMP_HELP_TOOL_OPTIONS_SAVE,
                             G_CALLBACK (gimp_tool_options_editor_save_clicked),
@@ -206,7 +206,7 @@ gimp_tool_options_editor_constructed (GObject *object)
                             editor);
 
   editor->p->restore_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor), GTK_STOCK_REVERT_TO_SAVED,
+    gimp_editor_add_button (GIMP_EDITOR (editor), "document-revert",
                             _("Restore Tool Preset..."),
                             GIMP_HELP_TOOL_OPTIONS_RESTORE,
                             G_CALLBACK (gimp_tool_options_editor_restore_clicked),
@@ -214,7 +214,7 @@ gimp_tool_options_editor_constructed (GObject *object)
                             editor);
 
   editor->p->delete_button =
-    gimp_editor_add_button (GIMP_EDITOR (editor), GTK_STOCK_DELETE,
+    gimp_editor_add_button (GIMP_EDITOR (editor), "edit-delete",
                             _("Delete Tool Preset..."),
                             GIMP_HELP_TOOL_OPTIONS_DELETE,
                             G_CALLBACK (gimp_tool_options_editor_delete_clicked),

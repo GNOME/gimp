@@ -188,7 +188,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_widget_set_sensitive (editor->add_button, FALSE);
   gtk_widget_show (editor->add_button);
 
-  image = gtk_image_new_from_icon_name (GTK_STOCK_GO_FORWARD,
+  image = gtk_image_new_from_icon_name ("go-next",
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (editor->add_button), image);
   gtk_widget_show (image);
@@ -202,7 +202,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_widget_set_sensitive (editor->remove_button, FALSE);
   gtk_widget_show (editor->remove_button);
 
-  image = gtk_image_new_from_icon_name (GTK_STOCK_GO_BACK,
+  image = gtk_image_new_from_icon_name ("go-previous",
                                         GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (editor->remove_button), image);
   gtk_widget_show (image);
@@ -217,7 +217,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 
   editor->up_button =
     gimp_editor_add_button (GIMP_EDITOR (ed),
-                            GTK_STOCK_GO_UP,
+                            "go-up",
                             _("Move the selected filter up"),
                             NULL,
                             G_CALLBACK (gimp_color_display_editor_up_clicked),
@@ -226,7 +226,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 
   editor->down_button =
     gimp_editor_add_button (GIMP_EDITOR (ed),
-                            GTK_STOCK_GO_DOWN,
+                            "go-down",
                             _("Move the selected filter down"),
                             NULL,
                             G_CALLBACK (gimp_color_display_editor_down_clicked),

@@ -76,7 +76,7 @@ gimp_view_renderer_layer_render (GimpViewRenderer *renderer,
       GimpContainer *children = gimp_viewable_get_children (renderer->viewable);
 
       if (children && gimp_container_get_n_children (children) == 0)
-        icon_name = GTK_STOCK_DIRECTORY;
+        icon_name = "folder";
     }
 
   if (icon_name)

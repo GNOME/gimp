@@ -144,7 +144,7 @@ action_search_dialog_create (Gimp *gimp)
 
       private->keyword_entry = gtk_entry_new ();
       gtk_entry_set_icon_from_icon_name (GTK_ENTRY (private->keyword_entry),
-                                         GTK_ENTRY_ICON_PRIMARY, GTK_STOCK_FIND);
+                                         GTK_ENTRY_ICON_PRIMARY, "edit-find");
       gtk_box_pack_start (GTK_BOX (main_vbox), private->keyword_entry,
                           FALSE, FALSE, 0);
       gtk_widget_show (private->keyword_entry);
@@ -419,9 +419,9 @@ action_search_add_to_results_list (GtkAction    *action,
   if (GTK_IS_TOGGLE_ACTION (action))
     {
       if (gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action)))
-        icon_name = GTK_STOCK_OK;
+        icon_name = "gtk-ok";
       else
-        icon_name = GTK_STOCK_NO;
+        icon_name = "gtk-no";
     }
   else
     {

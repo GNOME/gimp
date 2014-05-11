@@ -239,7 +239,7 @@ gimp_text_style_editor_init (GimpTextStyleEditor *editor)
                     G_CALLBACK (gimp_text_style_editor_clear_tags),
                     editor);
 
-  image = gtk_image_new_from_icon_name (GTK_STOCK_CLEAR, GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name ("edit-clear", GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (editor->clear_button), image);
   gtk_widget_show (image);
 
@@ -323,16 +323,16 @@ gimp_text_style_editor_constructed (GObject *object)
                                    editor->context);
 
   gimp_text_style_editor_create_toggle (editor, editor->buffer->bold_tag,
-                                        GTK_STOCK_BOLD,
+                                        "format-text-bold",
                                         _("Bold"));
   gimp_text_style_editor_create_toggle (editor, editor->buffer->italic_tag,
-                                        GTK_STOCK_ITALIC,
+                                        "format-text-italic",
                                         _("Italic"));
   gimp_text_style_editor_create_toggle (editor, editor->buffer->underline_tag,
-                                        GTK_STOCK_UNDERLINE,
+                                        "format-text-underline",
                                         _("Underline"));
   gimp_text_style_editor_create_toggle (editor, editor->buffer->strikethrough_tag,
-                                        GTK_STOCK_STRIKETHROUGH,
+                                        "format-edit-strikethrough",
                                         _("Strikethrough"));
 
   g_signal_connect_swapped (editor->text, "notify::font",

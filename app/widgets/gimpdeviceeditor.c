@@ -162,7 +162,7 @@ gimp_device_editor_init (GimpDeviceEditor *editor)
 
   private->delete_button =
     gimp_editor_add_button (GIMP_EDITOR (private->treeview),
-                            GTK_STOCK_DELETE,
+                            "edit-delete",
                             _("Delete the selected device"),
                             NULL,
                             G_CALLBACK (gimp_device_editor_delete_clicked),

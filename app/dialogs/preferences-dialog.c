@@ -1440,7 +1440,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("_Use dynamic keyboard shortcuts"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add (GTK_STOCK_PREFERENCES,
+  button = prefs_button_add ("preferences-system",
                              _("Configure _Keyboard Shortcuts..."),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
@@ -1451,7 +1451,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("_Save keyboard shortcuts on exit"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add (GTK_STOCK_SAVE,
+  button = prefs_button_add ("document-save",
                              _("Save Keyboard Shortcuts _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
@@ -1467,7 +1467,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
-  button = prefs_button_add (GTK_STOCK_CLEAR,
+  button = prefs_button_add ("edit-clear",
                              _("Remove _All Keyboard Shortcuts"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
@@ -1569,7 +1569,7 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = prefs_button_add (GTK_STOCK_REFRESH,
+  button = prefs_button_add ("view-refresh",
                              _("Reload C_urrent Theme"),
                              GTK_BOX (hbox));
   g_signal_connect (button, "clicked",
@@ -1667,7 +1667,7 @@ prefs_dialog_new (Gimp       *gimp,
                          _("Maximum History Size:"),
                          GTK_TABLE (table), 0, size_group);
 
-  button = prefs_button_add (GTK_STOCK_CLEAR,
+  button = prefs_button_add ("edit-clear",
                              _("Clear Action History"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
@@ -1700,7 +1700,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("_Save tool options on exit"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add (GTK_STOCK_SAVE,
+  button = prefs_button_add ("document-save",
                              _("Save Tool Options _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
@@ -2433,7 +2433,7 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Extended Input Devices"),
                            GTK_CONTAINER (vbox), FALSE);
 
-  button = prefs_button_add (GTK_STOCK_PREFERENCES,
+  button = prefs_button_add ("preferences-system",
                              _("Configure E_xtended Input Devices..."),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
@@ -2444,7 +2444,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("_Save input device settings on exit"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add (GTK_STOCK_SAVE,
+  button = prefs_button_add ("document-save",
                              _("Save Input Device Settings _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
@@ -2519,7 +2519,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Open windows on the same _monitor they were open before"),
                           GTK_BOX (vbox2));
 
-  button = prefs_button_add (GTK_STOCK_SAVE,
+  button = prefs_button_add ("document-save",
                              _("Save Window Positions _Now"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",

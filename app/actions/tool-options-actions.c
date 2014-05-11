@@ -57,35 +57,35 @@ static const GimpActionEntry tool_options_actions[] =
     NC_("tool-options-action", "Tool Options Menu"), NULL, NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_DIALOG },
 
-  { "tool-options-save-preset-menu", GTK_STOCK_SAVE,
+  { "tool-options-save-preset-menu", "document-save",
     NC_("tool-options-action", "_Save Tool Preset"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_SAVE },
 
-  { "tool-options-restore-preset-menu", GTK_STOCK_REVERT_TO_SAVED,
+  { "tool-options-restore-preset-menu", "document-revert",
     NC_("tool-options-action", "_Restore Tool Preset"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_RESTORE },
 
-  { "tool-options-edit-preset-menu", GTK_STOCK_EDIT,
+  { "tool-options-edit-preset-menu", "gtk-edit",
     NC_("tool-options-action", "E_dit Tool Preset"), NULL, NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_EDIT },
 
-  { "tool-options-delete-preset-menu", GTK_STOCK_DELETE,
+  { "tool-options-delete-preset-menu", "edit-delete",
     NC_("tool-options-action", "_Delete Tool Preset"), "", NULL, NULL,
     GIMP_HELP_TOOL_OPTIONS_DELETE },
 
-  { "tool-options-save-new-preset", GTK_STOCK_NEW,
+  { "tool-options-save-new-preset", "document-new",
     NC_("tool-options-action", "_New Tool Preset..."), "", NULL,
     G_CALLBACK (tool_options_save_new_preset_cmd_callback),
     GIMP_HELP_TOOL_OPTIONS_SAVE },
 
   { "tool-options-reset", GIMP_STOCK_RESET,
-    NC_("tool-options-action", "R_eset Tool Options"), "",
+    NC_("tool-options-action", "R_eset Tool Options"), NULL,
     NC_("tool-options-action", "Reset to default values"),
     G_CALLBACK (tool_options_reset_cmd_callback),
     GIMP_HELP_TOOL_OPTIONS_RESET },
 
   { "tool-options-reset-all", GIMP_STOCK_RESET,
-    NC_("tool-options-action", "Reset _all Tool Options"), "",
+    NC_("tool-options-action", "Reset _all Tool Options"), NULL,
     NC_("tool-options-action", "Reset all tool options"),
     G_CALLBACK (tool_options_reset_all_cmd_callback),
     GIMP_HELP_TOOL_OPTIONS_RESET }

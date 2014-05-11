@@ -284,7 +284,7 @@ gimp_settings_box_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  image = gtk_image_new_from_icon_name (GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
@@ -315,20 +315,20 @@ gimp_settings_box_constructed (GObject *object)
 
   private->import_item =
     gimp_settings_box_menu_item_add (box,
-                                     GTK_STOCK_OPEN,
+                                     "document-open",
                                      _("_Import Settings from File..."),
                                      G_CALLBACK (gimp_settings_box_import_activate));
 
   private->export_item =
     gimp_settings_box_menu_item_add (box,
-                                     GTK_STOCK_SAVE,
+                                     "document-save",
                                      _("_Export Settings to File..."),
                                      G_CALLBACK (gimp_settings_box_export_activate));
 
   gimp_settings_box_menu_item_add (box, NULL, NULL, NULL);
 
   gimp_settings_box_menu_item_add (box,
-                                   GTK_STOCK_EDIT,
+                                   "gtk-edit",
                                    _("_Manage Settings..."),
                                    G_CALLBACK (gimp_settings_box_manage_activate));
 }
@@ -682,8 +682,9 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
                                             "gimp-settings-editor-dialog",
                                             toplevel, 0,
                                             NULL, NULL,
-                                            GTK_STOCK_CLOSE,
-                                            GTK_RESPONSE_CLOSE,
+
+                                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+
                                             NULL);
 
   g_object_add_weak_pointer (G_OBJECT (private->editor_dialog),

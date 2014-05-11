@@ -43,8 +43,8 @@ static const GimpActionEntry dynamics_actions[] =
     NC_("dynamics-action", "Paint Dynamics Menu"), NULL, NULL, NULL,
     GIMP_HELP_DYNAMICS_DIALOG },
 
-  { "dynamics-new", GTK_STOCK_NEW,
-    NC_("dynamics-action", "_New Dynamics"), "",
+  { "dynamics-new", "document-new",
+    NC_("dynamics-action", "_New Dynamics"), NULL,
     NC_("dynamics-action", "Create a new dynamics"),
     G_CALLBACK (data_new_cmd_callback),
     GIMP_HELP_DYNAMICS_NEW },
@@ -55,20 +55,20 @@ static const GimpActionEntry dynamics_actions[] =
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_DYNAMICS_DUPLICATE },
 
-  { "dynamics-copy-location", GTK_STOCK_COPY,
-    NC_("dynamics-action", "Copy Dynamics _Location"), "",
+  { "dynamics-copy-location", "edit-copy",
+    NC_("dynamics-action", "Copy Dynamics _Location"), NULL,
     NC_("dynamics-action", "Copy dynamics file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_DYNAMICS_COPY_LOCATION },
 
-  { "dynamics-delete", GTK_STOCK_DELETE,
-    NC_("dynamics-action", "_Delete Dynamics"), "",
+  { "dynamics-delete", "edit-delete",
+    NC_("dynamics-action", "_Delete Dynamics"), NULL,
     NC_("dynamics-action", "Delete this dynamics"),
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_DYNAMICS_DELETE },
 
-  { "dynamics-refresh", GTK_STOCK_REFRESH,
-    NC_("dynamics-action", "_Refresh Dynamics"), "",
+  { "dynamics-refresh", "view-refresh",
+    NC_("dynamics-action", "_Refresh Dynamics"), NULL,
     NC_("dynamics-action", "Refresh dynamics"),
     G_CALLBACK (data_refresh_cmd_callback),
     GIMP_HELP_DYNAMICS_REFRESH }
@@ -76,7 +76,7 @@ static const GimpActionEntry dynamics_actions[] =
 
 static const GimpStringActionEntry dynamics_edit_actions[] =
 {
-  { "dynamics-edit", GTK_STOCK_EDIT,
+  { "dynamics-edit", "gtk-edit",
     NC_("dynamics-action", "_Edit Dynamics..."), NULL,
     NC_("dynamics-action", "Edit dynamics"),
     "gimp-dynamics-editor",

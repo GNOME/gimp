@@ -320,8 +320,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
                                         gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                         FALSE,
 
-                                        GTK_STOCK_CLOSE,
-                                        GTK_RESPONSE_CLOSE,
+                                        GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
                                         NULL);
 

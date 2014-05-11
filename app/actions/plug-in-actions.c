@@ -129,7 +129,7 @@ static const GimpActionEntry plug_in_actions[] =
 
 static const GimpEnumActionEntry plug_in_repeat_actions[] =
 {
-  { "plug-in-repeat", GTK_STOCK_EXECUTE,
+  { "plug-in-repeat", "system-run",
     NC_("plug-in-action", "Re_peat Last"), "<primary>F",
     NC_("plug-in-action",
         "Rerun the last used plug-in using the same settings"),

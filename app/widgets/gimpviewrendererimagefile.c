@@ -186,10 +186,10 @@ gimp_view_renderer_imagefile_get_icon (GimpImagefile *imagefile,
 
   if (! pixbuf)
     {
-      const gchar *icon_name = GTK_STOCK_FILE;
+      const gchar *icon_name = "text-x-generic";
 
       if (thumbnail->image_state == GIMP_THUMB_STATE_FOLDER)
-        icon_name = GTK_STOCK_DIRECTORY;
+        icon_name = "folder";
 
       pixbuf = gtk_icon_theme_load_icon (icon_theme,
                                          icon_name, size,

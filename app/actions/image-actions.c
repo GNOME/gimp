@@ -65,7 +65,7 @@ static const GimpActionEntry image_actions[] =
   { "colors-components-menu", NULL, NC_("image-action", "C_omponents") },
   { "colors-desaturate-menu", NULL, NC_("image-action", "D_esaturate") },
 
-  { "image-new", GTK_STOCK_NEW,
+  { "image-new", "document-new",
     NC_("image-action", "_New..."), "<primary>N",
     NC_("image-action", "Create a new image"),
     G_CALLBACK (image_new_cmd_callback),
@@ -137,7 +137,7 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_configure_grid_cmd_callback),
     GIMP_HELP_IMAGE_GRID },
 
-  { "image-properties", GTK_STOCK_INFO,
+  { "image-properties", "dialog-information",
     NC_("image-action", "Image Pr_operties"), "<alt>Return",
     NC_("image-action", "Display information about this image"),
     G_CALLBACK (image_properties_cmd_callback),
