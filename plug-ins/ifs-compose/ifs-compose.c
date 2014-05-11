@@ -1023,19 +1023,19 @@ design_op_menu_create (GtkWidget *window)
   {
     { "ifs-compose-menu", NULL, "IFS Fractal Menu" },
 
-    { "new", GTK_STOCK_NEW,
+    { "new", "document-new",
       NULL, "<control>N", NULL,
       G_CALLBACK (ifs_compose_new_callback) },
 
-    { "delete", GTK_STOCK_DELETE,
+    { "delete", "edit-delete",
       NULL, "<control>D", NULL,
       G_CALLBACK (ifs_compose_delete_callback) },
 
-    { "undo", GTK_STOCK_UNDO,
+    { "undo", "edit-undo",
       NULL, "<control>Z", NULL,
       G_CALLBACK (undo) },
 
-    { "redo", GTK_STOCK_REDO,
+    { "redo", "edit-redo",
       NULL, "<control>Y", NULL,
       G_CALLBACK (redo) },
 
@@ -1047,7 +1047,7 @@ design_op_menu_create (GtkWidget *window)
       N_("Re_center"), "<control>C", N_("Recompute Center"),
       G_CALLBACK (recompute_center_cb) },
 
-    { "options", GTK_STOCK_PREFERENCES,
+    { "options", "preferences-system",
       N_("Render Options"), NULL, NULL,
       G_CALLBACK (ifs_compose_options_callback) }
   };

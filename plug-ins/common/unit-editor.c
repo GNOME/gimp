@@ -116,7 +116,7 @@ static GtkActionEntry actions[] =
     "Unit Editor Toolbar", NULL, NULL, NULL
   },
 
-  { "unit-editor-new", GTK_STOCK_NEW,
+  { "unit-editor-new", "document-new",
     NULL, "<control>N",
     N_("Create a new unit from scratch"),
     G_CALLBACK (new_callback)
