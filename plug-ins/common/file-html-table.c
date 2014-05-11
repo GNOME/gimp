@@ -430,8 +430,8 @@ save_dialog (gint32 image_ID)
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
       gtk_container_add (GTK_CONTAINER (frame), hbox);
 
-      eek = gtk_image_new_from_stock (GIMP_STOCK_WILBER_EEK,
-                                      GTK_ICON_SIZE_DIALOG);
+      eek = gtk_image_new_from_icon_name (GIMP_STOCK_WILBER_EEK,
+                                          GTK_ICON_SIZE_DIALOG);
       gtk_box_pack_start (GTK_BOX (hbox), eek, FALSE, FALSE, 0);
 
       label = gtk_label_new (_("You are about to create a huge\n"
