@@ -335,18 +335,16 @@ browser_dialog_load (const gchar *uri)
 static void
 window_set_icons (GtkWidget *window)
 {
-  const GtkIconSize sizes[] = { GTK_ICON_SIZE_MENU,
-                                GTK_ICON_SIZE_BUTTON,
-                                GTK_ICON_SIZE_DND,
-                                GTK_ICON_SIZE_DIALOG };
-  GList *list = NULL;
-  gint   i;
+  GtkIconTheme *theme   = gtk_icon_theme_get_default ();
+  gint          sizes[] = { 16, 24, 32, 64 };
+  GList        *list    = NULL;
+  gint          i;
 
   for (i = 0; i < G_N_ELEMENTS (sizes); i++)
     list = g_list_prepend (list,
-                           gtk_widget_render_icon (window,
-                                                   GIMP_STOCK_USER_MANUAL,
-                                                   sizes[i], NULL));
+                           gtk_icon_theme_load_icon (theme,
+                                                     GIMP_STOCK_USER_MANUAL,
+                                                     sizes[i], 0, NULL));
 
   gtk_window_set_icon_list (GTK_WINDOW (window), list);
 
@@ -576,53 +574,53 @@ ui_manager_new (GtkWidget *window)
   static const GtkActionEntry actions[] =
   {
     {
-      "back", GTK_STOCK_GO_BACK,
+      "back", "go-previous",
       NULL, "<alt>Left", N_("Go back one page"),
       G_CALLBACK (back_callback)
     },
     {
-      "forward", GTK_STOCK_GO_FORWARD,
+      "forward", "go-next",
       NULL, "<alt>Right", N_("Go forward one page"),
       G_CALLBACK (forward_callback)
     },
     {
-      "reload", GTK_STOCK_REFRESH,
+      "reload", "view-refresh",
        N_("_Reload"), "<control>R", N_("Reload current page"),
       G_CALLBACK (reload_callback)
     },
     {
-      "stop", GTK_STOCK_CANCEL,
+      "stop", "process-stop",
        N_("_Stop"), "Escape", N_("Stop loading this page"),
       G_CALLBACK (stop_callback)
     },
     {
-      "home", GTK_STOCK_HOME,
+      "home", "go-home",
       NULL, "<alt>Home", N_("Go to the index page"),
       G_CALLBACK (home_callback)
     },
     {
-      "copy-location", GTK_STOCK_COPY,
+      "copy-location", "edit-copy",
       N_("C_opy location"), "",
       N_("Copy the location of this page to the clipboard"),
       G_CALLBACK (copy_location_callback)
     },
     {
-      "copy-selection", GTK_STOCK_COPY,
+      "copy-selection", "edit-copy",
       NULL, "<control>C", NULL,
       G_CALLBACK (copy_selection_callback)
     },
     {
-      "zoom-in", GTK_STOCK_ZOOM_IN,
+      "zoom-in", "zoom-in",
       NULL, "<control>plus", NULL,
       G_CALLBACK (zoom_in_callback)
     },
     {
-      "zoom-out", GTK_STOCK_ZOOM_OUT,
+      "zoom-out", "zoom-out",
       NULL, "<control>minus", NULL,
       G_CALLBACK (zoom_out_callback)
     },
     {
-      "find", GTK_STOCK_FIND,
+      "find", "edit-find",
       NULL, "<control>F", N_("Find text in current page"),
       G_CALLBACK (find_callback)
     },
@@ -632,12 +630,12 @@ ui_manager_new (GtkWidget *window)
       G_CALLBACK (find_again_callback)
     },
     {
-      "close", GTK_STOCK_CLOSE,
+      "close", "window-close",
       NULL, "<control>W", NULL,
       G_CALLBACK (close_callback)
     },
     {
-      "quit", GTK_STOCK_QUIT,
+      "quit", "application-exit",
       NULL, "<control>Q", NULL,
       G_CALLBACK (close_callback)
     }
@@ -1189,8 +1187,8 @@ build_searchbar (void)
   button = gtk_button_new_with_mnemonic (C_("search", "_Previous"));
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_stock (GTK_STOCK_GO_BACK,
-                                                  GTK_ICON_SIZE_BUTTON));
+                        gtk_image_new_from_icon_name ("go-previous",
+                                                      GTK_ICON_SIZE_BUTTON));
   gtk_widget_show (button);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
@@ -1201,8 +1199,8 @@ build_searchbar (void)
   button = gtk_button_new_with_mnemonic (C_("search", "_Next"));
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_stock (GTK_STOCK_GO_FORWARD,
-                                                  GTK_ICON_SIZE_BUTTON));
+                        gtk_image_new_from_icon_name ("go-next",
+                                                      GTK_ICON_SIZE_BUTTON));
   gtk_widget_show (button);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 

@@ -90,10 +90,10 @@ gimp_throbber_action_connect_proxy (GtkAction *action,
       GParamSpec *pspec;
 
       pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (action),
-                                            "stock-id");
+                                            "icon-name");
 
       gimp_throbber_action_sync_property (action, pspec, proxy);
-      g_signal_connect_object (action, "notify::stock-id",
+      g_signal_connect_object (action, "notify::icon-name",
                                G_CALLBACK (gimp_throbber_action_sync_property),
                                proxy, 0);
 
@@ -122,12 +122,12 @@ GtkAction *
 gimp_throbber_action_new (const gchar *name,
                           const gchar *label,
                           const gchar *tooltip,
-                          const gchar *stock_id)
+                          const gchar *icon_name)
 {
   return g_object_new (GIMP_TYPE_THROBBER_ACTION,
-                       "name",     name,
-                       "label",    label,
-                       "tooltip",  tooltip,
-                       "stock-id", stock_id,
+                       "name",      name,
+                       "label",     label,
+                       "tooltip",   tooltip,
+                       "icon-name", icon_name,
                        NULL);
 }

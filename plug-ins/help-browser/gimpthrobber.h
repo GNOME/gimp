@@ -54,10 +54,10 @@ struct _GimpThrobberClass
 
 GType         gimp_throbber_get_type      (void) G_GNUC_CONST;
 
-GtkToolItem * gimp_throbber_new           (const gchar  *stock_id);
-void          gimp_throbber_set_stock_id  (GimpThrobber *button,
-                                           const gchar  *stock_id);
-const gchar * gimp_throbber_get_stock_id  (GimpThrobber *button);
+GtkToolItem * gimp_throbber_new           (const gchar  *icon_name);
+void          gimp_throbber_set_icon_name (GimpThrobber *button,
+                                           const gchar  *icon_name);
+const gchar * gimp_throbber_get_icon_name (GimpThrobber *button);
 void          gimp_throbber_set_image     (GimpThrobber *button,
                                            GtkWidget    *image);
 GtkWidget   * gimp_throbber_get_image     (GimpThrobber *button);

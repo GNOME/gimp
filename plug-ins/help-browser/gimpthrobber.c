@@ -34,7 +34,7 @@ enum
 enum
 {
   PROP_0,
-  PROP_STOCK_ID,
+  PROP_ICON_NAME,
   PROP_IMAGE
 };
 
@@ -72,7 +72,7 @@ struct _GimpThrobberPrivate
 {
   GtkWidget *button;
   GtkWidget *image;
-  gchar     *stock_id;
+  gchar     *icon_name;
 };
 
 
@@ -120,8 +120,8 @@ gimp_throbber_class_init (GimpThrobberClass *klass)
   tool_item_class->toolbar_reconfigured = gimp_throbber_toolbar_reconfigured;
 
   g_object_class_install_property (object_class,
-                                   PROP_STOCK_ID,
-                                   g_param_spec_string ("stock-id", NULL, NULL,
+                                   PROP_ICON_NAME,
+                                   g_param_spec_string ("icon-name", NULL, NULL,
                                                         NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
@@ -184,13 +184,13 @@ gimp_throbber_construct_contents (GtkToolItem *tool_item)
 
   if (style == GTK_TOOLBAR_TEXT)
     {
-      image = gtk_image_new_from_stock (button->priv->stock_id,
-                                        GTK_ICON_SIZE_MENU);
+      image = gtk_image_new_from_icon_name (button->priv->icon_name,
+                                            GTK_ICON_SIZE_MENU);
     }
   else if (style == GTK_TOOLBAR_ICONS)
     {
-      image = gtk_image_new_from_stock (button->priv->stock_id,
-                                        GTK_ICON_SIZE_LARGE_TOOLBAR);
+      image = gtk_image_new_from_icon_name (button->priv->icon_name,
+                                            GTK_ICON_SIZE_LARGE_TOOLBAR);
     }
   else if (button->priv->image)
     {
@@ -198,8 +198,8 @@ gimp_throbber_construct_contents (GtkToolItem *tool_item)
     }
   else
     {
-      image = gtk_image_new_from_stock (button->priv->stock_id,
-                                        GTK_ICON_SIZE_DND);
+      image = gtk_image_new_from_icon_name (button->priv->icon_name,
+                                            GTK_ICON_SIZE_DND);
     }
 
   gtk_container_add (GTK_CONTAINER (button->priv->button), image);
@@ -221,8 +221,8 @@ gimp_throbber_set_property (GObject      *object,
 
   switch (prop_id)
     {
-    case PROP_STOCK_ID:
-      gimp_throbber_set_stock_id (button, g_value_get_string (value));
+    case PROP_ICON_NAME:
+      gimp_throbber_set_icon_name (button, g_value_get_string (value));
       break;
 
     case PROP_IMAGE:
@@ -245,8 +245,8 @@ gimp_throbber_get_property (GObject         *object,
 
   switch (prop_id)
     {
-    case PROP_STOCK_ID:
-      g_value_set_string (value, button->priv->stock_id);
+    case PROP_ICON_NAME:
+      g_value_set_string (value, button->priv->icon_name);
       break;
 
     case PROP_IMAGE:
@@ -264,8 +264,8 @@ gimp_throbber_finalize (GObject *object)
 {
   GimpThrobber *button = GIMP_THROBBER (object);
 
-  if (button->priv->stock_id)
-    g_free (button->priv->stock_id);
+  if (button->priv->icon_name)
+    g_free (button->priv->icon_name);
 
   if (button->priv->image)
     g_object_unref (button->priv->image);
@@ -295,37 +295,37 @@ gimp_throbber_toolbar_reconfigured (GtkToolItem *tool_item)
 }
 
 GtkToolItem *
-gimp_throbber_new (const gchar *stock_id)
+gimp_throbber_new (const gchar *icon_name)
 {
   return g_object_new (GIMP_TYPE_THROBBER,
-                       "stock-id", stock_id,
+                       "icon-name", icon_name,
                        NULL);
 }
 
 void
-gimp_throbber_set_stock_id (GimpThrobber *button,
-                            const gchar  *stock_id)
+gimp_throbber_set_icon_name (GimpThrobber *button,
+                             const gchar  *icon_name)
 {
-  gchar *old_stock_id;
+  gchar *old_icon_name;
 
   g_return_if_fail (GIMP_IS_THROBBER (button));
 
-  old_stock_id = button->priv->stock_id;
+  old_icon_name = button->priv->icon_name;
 
-  button->priv->stock_id = g_strdup (stock_id);
+  button->priv->icon_name = g_strdup (icon_name);
   gimp_throbber_construct_contents (GTK_TOOL_ITEM (button));
 
-  g_object_notify (G_OBJECT (button), "stock-id");
+  g_object_notify (G_OBJECT (button), "icon-name");
 
-  g_free (old_stock_id);
+  g_free (old_icon_name);
 }
 
 const gchar *
-gimp_throbber_get_stock_id (GimpThrobber *button)
+gimp_throbber_get_icon_name (GimpThrobber *button)
 {
   g_return_val_if_fail (GIMP_IS_THROBBER (button), NULL);
 
-  return button->priv->stock_id;
+  return button->priv->icon_name;
 }
 
 void
