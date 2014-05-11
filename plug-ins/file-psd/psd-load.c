@@ -1132,19 +1132,28 @@ add_layers (gint32     image_id,
             {
               if (lyr_a[lidx]->group_type == 3)
                 {
-                /* the </Layer group> marker layers are used to
-                   assemble the layer structure in a single pass */
-                layer_id = gimp_layer_group_new (image_id);
+                  /* the </Layer group> marker layers are used to
+                   * assemble the layer structure in a single pass
+                   */
+                  layer_id = gimp_layer_group_new (image_id);
                 }
               else /* group-type == 1 || group_type == 2 */
                 {
-                  layer_id = g_array_index (parent_group_stack, gint32,
-                                            parent_group_stack->len-1);
-                  /* since the layers are stored in reverse, the group
-                     layer start marker actually means we're done with
-                     that layer group */
-                  g_array_remove_index (parent_group_stack,
-                                        parent_group_stack->len-1);
+                  if (parent_group_stack->len)
+                    {
+                      layer_id = g_array_index (parent_group_stack, gint32,
+                                                parent_group_stack->len - 1);
+                      /* since the layers are stored in reverse, the group
+                       * layer start marker actually means we're done with
+                       * that layer group
+                       */
+                      g_array_remove_index (parent_group_stack,
+                                            parent_group_stack->len - 1);
+                    }
+                  else
+                    {
+                      layer_id = -1;
+                    }
                 }
             }
 
@@ -1287,8 +1296,11 @@ add_layers (gint32     image_id,
           l_y = 0;
           l_w = img_a->columns;
           l_h = img_a->rows;
-          parent_group_id = g_array_index (parent_group_stack, gint32,
-                                           parent_group_stack->len-1);
+          if (parent_group_stack->len > 0)
+            parent_group_id = g_array_index (parent_group_stack, gint32,
+                                             parent_group_stack->len - 1);
+          else
+            parent_group_id = -1; /* root */
 
           IFDBG(3) g_debug ("Re-hash channel indices");
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
@@ -1328,15 +1340,19 @@ add_layers (gint32     image_id,
               else
                 {
                   IFDBG(2) g_debug ("End group layer id %d.", layer_id);
-                  layer_mode = psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode);
-                  gimp_layer_set_mode (layer_id, layer_mode);
-                  gimp_layer_set_opacity (layer_id, 
-                                          lyr_a[lidx]->opacity * 100 / 255);
-                  gimp_item_set_name (layer_id, lyr_a[lidx]->name);
-                  g_free (lyr_a[lidx]->name);
-                  gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
-                  if (lyr_a[lidx]->id)
-                    gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
+                  if (layer_id != -1)
+                    {
+                      layer_mode = psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode);
+                      gimp_layer_set_mode (layer_id, layer_mode);
+                      gimp_layer_set_opacity (layer_id,
+                                              lyr_a[lidx]->opacity * 100 / 255);
+                      gimp_item_set_name (layer_id, lyr_a[lidx]->name);
+                      g_free (lyr_a[lidx]->name);
+                      gimp_item_set_visible (layer_id,
+                                             lyr_a[lidx]->layer_flags.visible);
+                      if (lyr_a[lidx]->id)
+                        gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
+                    }
                 }
             }
           else if (empty)
