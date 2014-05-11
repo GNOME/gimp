@@ -101,7 +101,7 @@
   <binary>${prefix}/lib/babl-0.1/*.so</binary>
 
   <!-- Copy in GEGL modules -->
-  <binary>${prefix}/lib/gegl-0.3/*.so</binary>
+  <binary>${prefix}/lib/gegl-0.2/*.so</binary>
 
   <!-- Copy in GTK+ theming engines and modules -->
   <binary>${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/engines/*.so</binary>
@@ -118,15 +118,48 @@
     ${prefix}/lib/pango/${pkg:pango:pango_module_version}/modules/*.so
   </binary>
 
-  <!-- Translation filenames-->
+  <!-- Translations -->
+  <!-- - GIMP and GEGL translations - -->
+  <translations name="gegl-0.3">${prefix}/share/locale</translations>
+  <translations name="gimp20-libgimp">${prefix}/share/locale</translations>
+  <translations name="gimp20-python">${prefix}/share/locale</translations>
+  <translations name="gimp20-script-fu">${prefix}/share/locale</translations>
+  <translations name="gimp20-std-plug-ins">${prefix}/share/locale</translations>
+  <translations name="gimp20-tips">${prefix}/share/locale</translations>
+  <translations name="gimp20">${prefix}/share/locale</translations>
+
+  <!-- - ISO-Code Package translations - -->
+  <translations name="iso_15924">${prefix}/share/locale</translations>
+  <translations name="iso_3166">${prefix}/share/locale</translations>
+  <translations name="iso_3166_2">${prefix}/share/locale</translations>
+  <translations name="iso_4217">${prefix}/share/locale</translations>
+  <translations name="iso_639">${prefix}/share/locale</translations>
+  <translations name="iso_639_3">${prefix}/share/locale</translations>
+
+  <!-- - miscellanous translations- -->
+  <translations name="atk10">${prefix}/share/locale</translations>
+  <translations name="exiv2">${prefix}/share/locale</translations>  
+  <translations name="gdk-pixbuf">${prefix}/share/locale</translations>
+  <translations name="gettext-tools">${prefix}/share/locale</translations>
+  <translations name="glib-networking">${prefix}/share/locale</translations>
+  <translations name="glib20">${prefix}/share/locale</translations>
+  <translations name="gnutls">${prefix}/share/locale</translations>
+  <translations name="gtk20-properties">${prefix}/share/locale</translations>
   <translations name="gtk20">${prefix}/share/locale</translations>
-  <translations name="gegl-0.2.mo">${prefix}/share/locale</translations>
-  <translations name="gimp20-libgimp.mo">${prefix}/share/locale</translations>
-  <translations name="gimp20.mo">${prefix}/share/locale</translations>
-  <translations name="gimp20-python.mo">${prefix}/share/locale</translations>
-  <translations name="gimp20-script-fu.mo">${prefix}/share/locale</translations>
-  <translations name="gimp20-std-plug-ins.mo">${prefix}/share/locale</translations>
-  <translations name="gimp20-tips.mo">${prefix}/share/locale</translations>
+  <translations name="gvfs">${prefix}/share/locale</translations>
+  <translations name="libexif-12">${prefix}/share/locale</translations>
+  <translations name="libgpg-error">${prefix}/share/locale</translations>
+  <translations name="libsecret">${prefix}/share/locale</translations>
+  <translations name="libsoup">${prefix}/share/locale</translations>
+  <translations name="shared-mime-info">${prefix}/share/locale</translations>
+
+	<!-- preparation to copy the GTK-Mac-Integration translation strings (Services, 
+		Hide, Show all, Quit etc.) in the 'GIMP' menu to the same place where Simone (skl) 
+		puts them. 
+		TODO: examine, understand and apply her solution. See also: 
+		http://sourceforge.net/p/gimponosx/code/HEAD/tree/GimpPorts/ports/graphics/gimp2/files/app-gui-gui-unique.c.diff 
+		https://github.com/jralls/gtk-mac-integration/blob/master/README -->
+	<!-- data dest="${bundle}/Contents/Resources">${prefix}/share/strings</data -->
 
   <!-- Copy in mime data -->
   <!-- Used for opening up help in browser -->
