@@ -9,7 +9,7 @@
 
     <run-install-name-tool/>
 
-    <launcher-script>${project}/launcher-python.sh</launcher-script>
+    <launcher-script>${project}/launcher-2.8-python.sh</launcher-script>
 
     <gtk>gtk+-2.0</gtk>
   </meta>

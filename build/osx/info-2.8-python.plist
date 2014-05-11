@@ -9,7 +9,7 @@
 	<key>CFBundleName</key>
 	<string>GIMP</string>
 	<key>CFBundleGetInfoString</key>
-	<string>2.8, © 1995-2013 The GIMP Development Team</string>
+	<string>2.8, © 1995-2014 The GIMP Development Team</string>
 	<key>CFBundleIconFile</key>
 	<string>gimp.icns</string>
 	<key>CFBundleIdentifier</key>

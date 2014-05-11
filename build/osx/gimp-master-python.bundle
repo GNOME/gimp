@@ -9,7 +9,7 @@
 
     <run-install-name-tool/>
 
-    <launcher-script>${project}/launcher-python.sh</launcher-script>
+    <launcher-script>${project}/launcher-master-python.sh</launcher-script>
 
     <gtk>gtk+-2.0</gtk>
   </meta>
@@ -30,7 +30,7 @@
     ${prefix}/lib/libpyglib-2.0-python.0.dylib
   </binary>
 
-  <!-- Pull in all python modules -->
+  <!-- Pull in all Python modules -->
 
   <data>${prefix}/lib/pygtk/2.0/*.py</data>
   <data>${prefix}/lib/pygtk/2.0/demos/*.py</data>
@@ -72,7 +72,7 @@
   <data>${prefix}/lib/python2.7/xml/parsers/*.py</data>
   <data>${prefix}/lib/python2.7/xml/sax/*.py</data>
 
-  <!-- Pull in all python binaries -->
+  <!-- Pull in all Python binaries -->
 
   <binary>${prefix}/lib/python2.7/lib-dynload/*.so</binary>
   <binary>${prefix}/lib/python2.7/site-packages/*.so</binary>
@@ -88,7 +88,7 @@
 
   <main-binary>${prefix}/bin/gimp-2.9</main-binary>
 
-  <!-- Copy in gimp plugins and modules -->
+  <!-- Copy in GIMP plugins and modules -->
   <binary>${prefix}/lib/gimp/2.0/plug-ins/*</binary>
   <binary>${prefix}/lib/gimp/2.0/modules/*.so</binary>
   <data>${prefix}/lib/gimp/2.0/python/*py</data>
@@ -97,10 +97,10 @@
   <!-- Copy in GTK+ modules -->
   <binary>${prefix}/lib/${gtkdir}/modules/*.so</binary>
 
-  <!-- Copy in babl modules -->
+  <!-- Copy in Babl modules -->
   <binary>${prefix}/lib/babl-0.1/*.so</binary>
 
-  <!-- Copy in gegl modules -->
+  <!-- Copy in GEGL modules -->
   <binary>${prefix}/lib/gegl-0.3/*.so</binary>
 
   <!-- Copy in GTK+ theming engines and modules -->
@@ -108,7 +108,7 @@
   <binary>${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/printbackends/*.so</binary>
   <binary>${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/immodules/*.so</binary>
 
-  <!-- Copy in gdk-pifbuf modules and loader file-->
+  <!-- Copy in GDK-Pixbuf modules and loader file-->
   <binary>
     ${prefix}/lib/gdk-pixbuf-2.0/${pkg:gdk-pixbuf-2.0:gdk_pixbuf_binary_version}/
   </binary>
@@ -148,7 +148,7 @@
     ${prefix}/share/mime-info/*
   </data>-->
 
-  <!-- Copy in dbus Launch session support -->
+  <!-- Copy in D-Bus Launch session support -->
   <data>${prefix}/etc/dbus-1/system.conf</data>
   <data>${prefix}/etc/dbus-1/session.d/</data>
   <data>${prefix}/etc/dbus-1/system.d/</data>
@@ -158,17 +158,17 @@
   <!--<binary>${prefix}/bin/dbus-</binary>-->
   <binary>${prefix}/bin/dbus-*</binary>
 
-  <!-- Copy in gvfs file support -->
+  <!-- Copy in GVFS file support -->
   <binary>${prefix}/bin/gvfs-*</binary>
 
-  <!-- Copy in gtk+-2.0 data -->
+  <!-- Copy in GTK+-2.0 data -->
   <data>${prefix}/etc/gtk-2.0/*</data>
 
-  <!-- Copy in fontconfig data -->
+  <!-- Copy in FontConfig data -->
   <data>${prefix}/etc/fonts/conf.d/*</data>
   <data>${prefix}/etc/fonts/fonts.conf</data>
 
-  <!-- Gimp data -->
+  <!-- GIMP data -->
   <data>${prefix}/etc/gimp/2.0/*</data>
   <data dest="${bundle}/Contents/Resources/share/gimp">${prefix}/share/gimp</data>
 
@@ -178,7 +178,7 @@
   <!-- Copy in themes -->
   <data>${prefix}/share/themes</data>
 
-  <!-- Copy in gtk+ theme data -->
+  <!-- Copy in GTK+ theme data -->
   <!-- data>${prefix}/share/gtk-engines/*.xml</data -->
 
   <!-- Change default theme -->
@@ -191,7 +191,7 @@
     ${project}/custom/gimprc
   </data>-->
 
-  <!-- Copy in better fontconfig defaults -->
+  <!-- Copy in better FontConfig defaults -->
   <!--<data dest="${bundle}/Contents/Resources/etc/fonts/fonts.conf">
     ${project}/custom/fonts.conf
   </data>-->
