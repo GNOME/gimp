@@ -2,6 +2,9 @@
 <!DOCTYPE moduleset SYSTEM "moduleset.dtd">
 <?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
 <moduleset>
+	<repository type="git" name="github"
+		href="https://github.com/" />
+
 	<repository type="tarball" name="sourceforge"
 		href="http://downloads.sourceforge.net/sourceforge/" />
 
@@ -367,7 +370,7 @@
 			version="3.0.13" checkoutdir="libffi-3.0.13" />
 	</autotools>
 
-	<autotools id="glib" autogenargs="--with-libiconv=native">
+	<autotools id="glib" autogenargs="--with-libiconv=native --enable-gtk-doc=no">
 		<!-- branch module="glib/2.39/glib-2.39.1.tar.xz" version="2.39.1" hash="sha256:d08c976f5560693946251361f186e3c9243c8195a95417127c1b1970c8371153"> 
 			</branch -->
 		<branch repo="git.gnome.org" module="glib" revision="glib-2-40" />
@@ -986,8 +989,7 @@
 	</autotools>
 
 	<autotools id="gtk-quartz-engine" autogen-sh="autogen.sh">
-		<branch module="gtk-osx/gtk-quartz-engine-0.2.tar.gz" repo="sourceforge"
-			version="0.2" />
+		<branch module="jralls/gtk-quartz-engine.git" repo="github" revision="master" />
 		<after>
 			<dep package="gtk+-2.24" />
 		</after>
