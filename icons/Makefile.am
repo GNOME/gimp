@@ -514,8 +514,7 @@ NOSTOCK_IMAGES = \
 EXTRA_DIST = \
 	$(icons_DATA)		\
 	$(STOCK_IMAGES)		\
-	$(NOSTOCK_IMAGES)	\
-	gimp-dialog-icons.xcf.gz
+	$(NOSTOCK_IMAGES)
 
 noinst_DATA = \
 	gimp-core-pixbufs.h	\
