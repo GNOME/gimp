@@ -7,7 +7,6 @@ EXPORTS
 	gimp_brush_application_mode_get_type
 	gimp_brush_delete
 	gimp_brush_duplicate
-	gimp_brush_generated_shape_get_type
 	gimp_brush_get_angle
 	gimp_brush_get_aspect_ratio
 	gimp_brush_get_hardness
@@ -69,7 +68,6 @@ EXPORTS
 	gimp_clone_default
 	gimp_color_balance
 	gimp_colorize
-	gimp_component_type_get_type
 	gimp_context_get_antialias
 	gimp_context_get_background
 	gimp_context_get_brush
@@ -283,7 +281,6 @@ EXPORTS
 	gimp_file_load_layers
 	gimp_file_save
 	gimp_file_save_thumbnail
-	gimp_fill_type_get_type
 	gimp_flip
 	gimp_floating_sel_anchor
 	gimp_floating_sel_attach
@@ -324,7 +321,6 @@ EXPORTS
 	gimp_gradient_is_editable
 	gimp_gradient_new
 	gimp_gradient_rename
-	gimp_gradient_segment_color_get_type
 	gimp_gradient_segment_get_blending_function
 	gimp_gradient_segment_get_coloring_type
 	gimp_gradient_segment_get_left_color
@@ -348,7 +344,6 @@ EXPORTS
 	gimp_gradient_segment_set_middle_pos
 	gimp_gradient_segment_set_right_color
 	gimp_gradient_segment_set_right_pos
-	gimp_gradient_segment_type_get_type
 	gimp_gradient_select_destroy
 	gimp_gradient_select_new
 	gimp_gradients_close_popup
@@ -592,15 +587,11 @@ EXPORTS
 	gimp_levels_auto
 	gimp_levels_stretch
 	gimp_main
-	gimp_mask_apply_mode_get_type
-	gimp_merge_type_get_type
 	gimp_message
 	gimp_message_get_handler
 	gimp_message_set_handler
 	gimp_min_colors
 	gimp_monitor_number
-	gimp_offset_type_get_type
-	gimp_orientation_type_get_type
 	gimp_paintbrush
 	gimp_paintbrush_default
 	gimp_palette_add_entry
@@ -695,7 +686,6 @@ EXPORTS
 	gimp_plugin_precision_enabled
 	gimp_plugin_set_pdb_error_handler
 	gimp_posterize
-	gimp_precision_get_type
 	gimp_procedural_db_dump
 	gimp_procedural_db_get_data
 	gimp_procedural_db_get_data_size
@@ -735,12 +725,10 @@ EXPORTS
 	gimp_rgn_iterator_src
 	gimp_rgn_iterator_src_dest
 	gimp_rotate
-	gimp_rotation_type_get_type
 	gimp_round_rect_select
 	gimp_run_procedure
 	gimp_run_procedure2
 	gimp_scale
-	gimp_select_criterion_get_type
 	gimp_selection_all
 	gimp_selection_border
 	gimp_selection_bounds
