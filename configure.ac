@@ -2277,8 +2277,6 @@ cursors/Makefile
 icons/Makefile
 themes/Makefile
 themes/Default/Makefile
-themes/Default/images/Makefile
-themes/Default/images/preferences/Makefile
 themes/Small/Makefile
 data/Makefile
 data/brushes/Makefile

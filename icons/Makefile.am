@@ -26,7 +26,7 @@ CORE_VARIABLES = \
 icons_DATA = \
 	index.theme
 
-icons12_DATA = \
+icons12_IMAGES = \
 	12/gimp-close.png			\
 	12/gimp-default-colors.png		\
 	12/gimp-linked.png			\
@@ -38,7 +38,10 @@ icons12_DATA = \
 	12/gimp-visible.png			\
 	12/gimp-zoom-follow-window.png
 
-icons16_DATA = \
+icons12_DATA = \
+	$(icons12_IMAGES)
+
+icons16_IMAGES = \
 	16/gimp-anchor.png				\
 	16/gimp-cap-butt.png				\
 	16/gimp-cap-round.png				\
@@ -203,16 +206,48 @@ icons16_DATA = \
 	16/gimp-web.png					\
 	16/gimp-wilber.png
 
-icons18_DATA = \
+icons16_NOSTOCK_IMAGES = \
+	16/gimp-prefs-folders-brushes.png	\
+	16/gimp-prefs-folders-dynamics.png	\
+	16/gimp-prefs-folders-environ.png	\
+	16/gimp-prefs-folders-fonts.png		\
+	16/gimp-prefs-folders-gradients.png	\
+	16/gimp-prefs-folders-interp.png	\
+	16/gimp-prefs-folders-modules.png	\
+	16/gimp-prefs-folders-palettes.png	\
+	16/gimp-prefs-folders-patterns.png	\
+	16/gimp-prefs-folders-plug-ins.png	\
+	16/gimp-prefs-folders-scripts.png	\
+	16/gimp-prefs-folders-themes.png	\
+	16/gimp-prefs-folders-tool-plug-ins.png	\
+	16/gimp-prefs-folders-tool-presets.png	\
+	16/gimp-prefs-folders-tools.png		\
+	16/gimp-prefs-image-windows.png		\
+	16/gimp-prefs-interface.png		\
+	16/gimp-prefs-theme.png			\
+	16/gimp-prefs-toolbox.png		\
+	16/gimp-prefs-window-management.png
+
+icons16_DATA = \
+	$(icons16_IMAGES)			\
+	$(icons16_NOSTOCK_IMAGES)
+
+icons18_IMAGES = \
 	18/gimp-color-picker-black.png		\
 	18/gimp-color-picker-gray.png		\
 	18/gimp-color-picker-white.png
 
-icons20_DATA = \
+icons18_DATA = \
+	$(icons18_IMAGES)
+
+icons20_IMAGES = \
 	20/gimp-linked.png			\
 	20/gimp-visible.png
 
-icons22_DATA = \
+icons20_DATA = \
+	$(icons20_IMAGES)
+
+icons22_IMAGES = \
 	22/gimp-char-picker.png			\
 	22/gimp-dynamics.png			\
 	22/gimp-gegl.png			\
@@ -270,7 +305,45 @@ icons22_DATA = \
 	22/gimp-tool-zoom.png			\
 	22/gimp-wilber.png
 
-icons24_DATA = \
+icons22_NOSTOCK_IMAGES = \
+	22/gimp-prefs-color-management.png	\
+	22/gimp-prefs-controllers.png		\
+	22/gimp-prefs-default-grid.png		\
+	22/gimp-prefs-display.png		\
+	22/gimp-prefs-environment.png		\
+	22/gimp-prefs-folders-brushes.png	\
+	22/gimp-prefs-folders-dynamics.png	\
+	22/gimp-prefs-folders-environ.png	\
+	22/gimp-prefs-folders-fonts.png		\
+	22/gimp-prefs-folders-gradients.png	\
+	22/gimp-prefs-folders-interp.png	\
+	22/gimp-prefs-folders-modules.png	\
+	22/gimp-prefs-folders-palettes.png	\
+	22/gimp-prefs-folders-patterns.png	\
+	22/gimp-prefs-folders-plug-ins.png	\
+	22/gimp-prefs-folders-scripts.png	\
+	22/gimp-prefs-folders-themes.png	\
+	22/gimp-prefs-folders-tool-plug-ins.png	\
+	22/gimp-prefs-folders-tool-presets.png	\
+	22/gimp-prefs-folders-tools.png		\
+	22/gimp-prefs-folders.png		\
+	22/gimp-prefs-help-system.png		\
+	22/gimp-prefs-image-title.png		\
+	22/gimp-prefs-image-windows.png		\
+	22/gimp-prefs-input-devices.png		\
+	22/gimp-prefs-interface.png		\
+	22/gimp-prefs-new-image.png		\
+	22/gimp-prefs-session.png		\
+	22/gimp-prefs-theme.png			\
+	22/gimp-prefs-tool-options.png		\
+	22/gimp-prefs-toolbox.png		\
+	22/gimp-prefs-window-management.png
+
+icons22_DATA = \
+	$(icons22_IMAGES)			\
+	$(icons22_NOSTOCK_IMAGES)
+
+icons24_IMAGES = \
 	24/gimp-center.png			\
 	24/gimp-channel-alpha.png		\
 	24/gimp-channel-blue.png		\
@@ -334,7 +407,10 @@ icons24_DATA = \
 	24/gimp-warning.png			\
 	24/gimp-web.png
 
-icons32_DATA = \
+icons24_DATA = \
+	$(icons24_IMAGES)
+
+icons32_IMAGES = \
 	32/gimp-channel-alpha.png	\
 	32/gimp-channel-blue.png	\
 	32/gimp-channel-gray.png	\
@@ -349,7 +425,10 @@ icons32_DATA = \
 	32/gimp-text-layer.png		\
 	32/gimp-user-manual.png
 
-icons48_DATA = \
+icons32_DATA = \
+	$(icons32_IMAGES)
+
+icons48_IMAGES = \
 	48/gimp-channel-alpha.png	\
 	48/gimp-channel-blue.png	\
 	48/gimp-channel-gray.png	\
@@ -363,7 +442,46 @@ icons48_DATA = \
 	48/gimp-layer.png		\
 	48/gimp-text-layer.png
 
-icons64_DATA = \
+icons48_NOSTOCK_IMAGES = \
+	48/gimp-prefs-color-management.png	\
+	48/gimp-prefs-controllers.png		\
+	48/gimp-prefs-default-comment.png	\
+	48/gimp-prefs-default-grid.png		\
+	48/gimp-prefs-display.png		\
+	48/gimp-prefs-environment.png		\
+	48/gimp-prefs-folders-brushes.png	\
+	48/gimp-prefs-folders-dynamics.png	\
+	48/gimp-prefs-folders-environ.png	\
+	48/gimp-prefs-folders-fonts.png		\
+	48/gimp-prefs-folders-gradients.png	\
+	48/gimp-prefs-folders-interp.png	\
+	48/gimp-prefs-folders-modules.png	\
+	48/gimp-prefs-folders-palettes.png	\
+	48/gimp-prefs-folders-patterns.png	\
+	48/gimp-prefs-folders-plug-ins.png	\
+	48/gimp-prefs-folders-scripts.png	\
+	48/gimp-prefs-folders-themes.png	\
+	48/gimp-prefs-folders-tool-plug-ins.png	\
+	48/gimp-prefs-folders-tool-presets.png	\
+	48/gimp-prefs-folders-tools.png		\
+	48/gimp-prefs-folders.png		\
+	48/gimp-prefs-help-system.png		\
+	48/gimp-prefs-image-title.png		\
+	48/gimp-prefs-image-windows.png		\
+	48/gimp-prefs-input-devices.png		\
+	48/gimp-prefs-interface.png		\
+	48/gimp-prefs-new-image.png		\
+	48/gimp-prefs-session.png		\
+	48/gimp-prefs-theme.png			\
+	48/gimp-prefs-tool-options.png		\
+	48/gimp-prefs-toolbox.png		\
+	48/gimp-prefs-window-management.png
+
+icons48_DATA = \
+	$(icons48_IMAGES)		\
+	$(icons48_NOSTOCK_IMAGES)
+
+icons64_IMAGES = \
 	64/gimp-error.png		\
 	64/gimp-frame.png		\
 	64/gimp-info.png		\
@@ -374,20 +492,29 @@ icons64_DATA = \
 	64/gimp-wilber-eek.png		\
 	64/gimp-wilber.png
 
-ICON_IMAGES = \
-	$(icons12_DATA)	\
-	$(icons16_DATA)	\
-	$(icons18_DATA)	\
-	$(icons20_DATA)	\
-	$(icons22_DATA)	\
-	$(icons24_DATA)	\
-	$(icons32_DATA)	\
-	$(icons48_DATA)	\
-	$(icons64_DATA)
+icons64_DATA = \
+	$(icons64_IMAGES)
+
+STOCK_IMAGES = \
+	$(icons12_IMAGES)	\
+	$(icons16_IMAGES)	\
+	$(icons18_IMAGES)	\
+	$(icons20_IMAGES)	\
+	$(icons22_IMAGES)	\
+	$(icons24_IMAGES)	\
+	$(icons32_IMAGES)	\
+	$(icons48_IMAGES)	\
+	$(icons64_IMAGES)
+
+NOSTOCK_IMAGES = \
+	$(icons16_NOSTOCK_IMAGES)	\
+	$(icons48_NOSTOCK_IMAGES)	\
+	$(icons22_NOSTOCK_IMAGES)
 
 EXTRA_DIST = \
 	$(icons_DATA)		\
-	$(ICON_IMAGES)		\
+	$(STOCK_IMAGES)		\
+	$(NOSTOCK_IMAGES)	\
 	gimp-dialog-icons.xcf.gz
 
 noinst_DATA = \
@@ -397,9 +524,9 @@ noinst_DATA = \
 CLEANFILES = $(noinst_DATA) stock-icons.list
 
 
-stock-icons.list: $(ICON_IMAGES) Makefile.am
+stock-icons.list: $(STOCK_IMAGES) Makefile.am
 	$(AM_V_GEN) ( rm -f $@; \
-          for image in $(ICON_IMAGES); do \
+          for image in $(STOCK_IMAGES); do \
             echo $$image | \
               sed -e 's|\(.*\)/\(.*\).png|\2-\1.png|' -e 's|-|_|g' -e 's|\.png$$||' >> $@; \
 	    echo "  $(srcdir)/$$image" >> $@; \
