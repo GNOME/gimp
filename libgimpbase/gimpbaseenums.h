@@ -48,7 +48,7 @@ typedef enum
   GIMP_ADD_MASK_COPY,      /*< nick=copy-mask,      desc="_Grayscale copy of layer"     >*/
   GIMP_ADD_MASK_CHANNEL,   /*< nick=channel-mask,   desc="C_hannel"                     >*/
 
-  /*  the following aliases are deprecated  */
+#ifndef GIMP_DISABLE_DEPRECATED
   GIMP_ADD_WHITE_MASK          = GIMP_ADD_MASK_WHITE,     /*< skip, pdb-skip >*/
   GIMP_ADD_BLACK_MASK          = GIMP_ADD_MASK_BLACK,     /*< skip, pdb-skip >*/
   GIMP_ADD_ALPHA_MASK          = GIMP_ADD_MASK_ALPHA,     /*< skip, pdb-skip >*/
@@ -56,6 +56,7 @@ typedef enum
   GIMP_ADD_SELECTION_MASK      = GIMP_ADD_MASK_SELECTION, /*< skip, pdb-skip >*/
   GIMP_ADD_COPY_MASK           = GIMP_ADD_MASK_COPY,      /*< skip, pdb-skip >*/
   GIMP_ADD_CHANNEL_MASK        = GIMP_ADD_MASK_CHANNEL    /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpAddMaskType;
 
 
@@ -70,11 +71,12 @@ typedef enum
   GIMP_BLEND_FG_TRANSPARENT, /*< nick=fg-transparent-mode, desc="FG to transparent" >*/
   GIMP_BLEND_CUSTOM,         /*< nick=custom-mode,    desc="Custom gradient" >*/
 
-  /*  the following aliases are deprecated  */
+#ifndef GIMP_DISABLE_DEPRECATED
   GIMP_FG_BG_RGB_MODE      = GIMP_BLEND_FG_BG_RGB,      /*< skip, pdb-skip >*/
   GIMP_FG_BG_HSV_MODE      = GIMP_BLEND_FG_BG_HSV,      /*< skip, pdb-skip >*/
   GIMP_FG_TRANSPARENT_MODE = GIMP_BLEND_FG_TRANSPARENT, /*< skip, pdb-skip >*/
   GIMP_CUSTOM_MODE         = GIMP_BLEND_CUSTOM          /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpBlendMode;
 
 
@@ -88,10 +90,11 @@ typedef enum
   GIMP_BUCKET_FILL_BG,      /*< nick=bg-bucket-fill,      desc="BG color fill" >*/
   GIMP_BUCKET_FILL_PATTERN, /*< nick=pattern-bucket-fill, desc="Pattern fill"  >*/
 
-  /*  the following aliases are deprecated  */
+#ifndef GIMP_DISABLE_DEPRECATED
   GIMP_FG_BUCKET_FILL      = GIMP_BUCKET_FILL_FG,     /*< skip, pdb-skip >*/
   GIMP_BG_BUCKET_FILL      = GIMP_BUCKET_FILL_BG,     /*< skip, pdb-skip >*/
   GIMP_PATTERN_BUCKET_FILL = GIMP_BUCKET_FILL_PATTERN /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpBucketFillMode;
 
 
@@ -159,9 +162,10 @@ typedef enum
   GIMP_CONVOLVE_BLUR,    /*< nick=blur-convolve,    desc="Blur"    >*/
   GIMP_CONVOLVE_SHARPEN, /*< nick=sharpen-convolve, desc="Sharpen" >*/
 
-  /*  the following aliases are deprecated  */
+#ifndef GIMP_DISABLE_DEPRECATED
   GIMP_BLUR_CONVOLVE    = GIMP_CONVOLVE_BLUR,   /*< skip, pdb-skip >*/
   GIMP_SHARPEN_CONVOLVE = GIMP_CONVOLVE_SHARPEN /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpConvolveType;
 
 
@@ -174,9 +178,10 @@ typedef enum
   GIMP_CLONE_IMAGE,    /*< nick=image-clone,   desc="Image"   >*/
   GIMP_CLONE_PATTERN,  /*< nick=pattern-clone, desc="Pattern" >*/
 
-  /*  the following aliases are deprecated  */
+#ifndef GIMP_DISABLE_DEPRECATED
   GIMP_IMAGE_CLONE   = GIMP_CLONE_IMAGE,  /*< skip, pdb-skip >*/
   GIMP_PATTERN_CLONE = GIMP_CLONE_PATTERN /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpCloneType;
 
 
@@ -201,9 +206,10 @@ typedef enum
   GIMP_DODGE_BURN_TYPE_DODGE,  /*< desc="Dodge" >*/
   GIMP_DODGE_BURN_TYPE_BURN,   /*< desc="Burn"  >*/
 
-  /*  the following aliases are deprecated  */
+#ifndef GIMP_DISABLE_DEPRECATED
   GIMP_DODGE = GIMP_DODGE_BURN_TYPE_DODGE, /*< skip, pdb-skip >*/
   GIMP_BURN  = GIMP_DODGE_BURN_TYPE_BURN   /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpDodgeBurnType;
 
 
@@ -264,7 +270,7 @@ typedef enum
 
 #ifndef GIMP_DISABLE_DEPRECATED
   GIMP_ICON_TYPE_STOCK_ID = GIMP_ICON_TYPE_ICON_NAME  /*< skip, pdb-skip >*/
-#endif
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpIconType;
 
 
@@ -319,8 +325,9 @@ typedef enum
   GIMP_INTERPOLATION_NOHALO, /*< desc="NoHalo" >*/
   GIMP_INTERPOLATION_LOHALO, /*< desc="LoHalo" >*/
 
-  /*  the following aliases are deprecated  */
+#ifndef GIMP_DISABLE_DEPRECATED
   GIMP_INTERPOLATION_LANCZOS = GIMP_INTERPOLATION_NOHALO /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpInterpolationType;
 
 
@@ -381,10 +388,11 @@ typedef enum
   GIMP_TRANSFER_MIDTONES,    /*< desc="Midtones"   >*/
   GIMP_TRANSFER_HIGHLIGHTS,  /*< desc="Highlights" >*/
 
-  /*  the following aliases are deprecated  */
+#ifndef GIMP_DISABLE_DEPRECATED
   GIMP_SHADOWS    = GIMP_TRANSFER_SHADOWS,   /*< skip, pdb-skip >*/
   GIMP_MIDTONES   = GIMP_TRANSFER_MIDTONES,  /*< skip, pdb-skip >*/
   GIMP_HIGHLIGHTS = GIMP_TRANSFER_HIGHLIGHTS /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpTransferMode;
 
 
@@ -457,10 +465,11 @@ typedef enum
   GIMP_PDB_STATUS,
   GIMP_PDB_END,
 
-  /*  the following aliases are deprecated  */
+#ifndef GIMP_DISABLE_DEPRECATED
   GIMP_PDB_PATH     = GIMP_PDB_VECTORS,     /*< skip >*/
   GIMP_PDB_BOUNDARY = GIMP_PDB_COLORARRAY,  /*< skip >*/
   GIMP_PDB_REGION   = GIMP_PDB_ITEM         /*< skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpPDBArgType;
 
 
