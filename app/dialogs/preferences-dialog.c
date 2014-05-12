@@ -1210,8 +1210,7 @@ prefs_idle_unref (gpointer data)
 }
 
 static GdkPixbuf *
-prefs_get_pixbufs (Gimp         *gimp,
-                   GtkWidget    *widget,
+prefs_get_pixbufs (GtkWidget    *widget,
                    const gchar  *name,
                    GdkPixbuf   **small_pixbuf)
 {
@@ -1301,7 +1300,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*****************/
   /*  Environment  */
   /*****************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "environment", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "environment", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Environment"),
                                   pixbuf,
@@ -1376,7 +1375,7 @@ prefs_dialog_new (Gimp       *gimp,
   /***************/
   /*  Interface  */
   /***************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "interface", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "interface", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("User Interface"),
                                   pixbuf,
@@ -1457,7 +1456,7 @@ prefs_dialog_new (Gimp       *gimp,
   /***********/
   /*  Theme  */
   /***********/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "theme", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "theme", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Theme"),
                                   pixbuf,
@@ -1559,7 +1558,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*****************/
   /*  Help System  */
   /*****************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "help-system", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "help-system", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Help System"),
                                   pixbuf,
@@ -1660,7 +1659,7 @@ prefs_dialog_new (Gimp       *gimp,
   /******************/
   /*  Tool Options  */
   /******************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "tool-options", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "tool-options", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   C_("preferences", "Tool Options"),
                                   pixbuf,
@@ -1749,7 +1748,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*************/
   /*  Toolbox  */
   /*************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "toolbox", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "toolbox", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Toolbox"),
                                   pixbuf,
@@ -1795,7 +1794,7 @@ prefs_dialog_new (Gimp       *gimp,
   /***********************/
   /*  Default New Image  */
   /***********************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "new-image", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "new-image", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Default New Image"),
                                   pixbuf,
@@ -1847,7 +1846,7 @@ prefs_dialog_new (Gimp       *gimp,
   /******************/
   /*  Default Grid  */
   /******************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "default-grid", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "default-grid", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Default Image Grid"),
                                   pixbuf,
@@ -1869,7 +1868,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*******************/
   /*  Image Windows  */
   /*******************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "image-windows", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "image-windows", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Image Windows"),
                                   pixbuf,
@@ -1950,7 +1949,7 @@ prefs_dialog_new (Gimp       *gimp,
   /********************************/
   /*  Image Windows / Appearance  */
   /********************************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "image-windows", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "image-windows", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Image Window Appearance"),
                                   pixbuf,
@@ -1974,7 +1973,7 @@ prefs_dialog_new (Gimp       *gimp,
   /****************************************************/
   /*  Image Windows / Image Title & Statusbar Format  */
   /****************************************************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "image-title", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "image-title", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Image Title & Statusbar Format"),
                                   pixbuf,
@@ -2099,7 +2098,7 @@ prefs_dialog_new (Gimp       *gimp,
   /********************************/
   /*  Image Windows / Behavior  */
   /********************************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "tool-options", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "tool-options", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Image Window Drawing Behavior"),
                                   pixbuf,
@@ -2122,7 +2121,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*************/
   /*  Display  */
   /*************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "display", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "display", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Display"),
                                   pixbuf,
@@ -2248,7 +2247,7 @@ prefs_dialog_new (Gimp       *gimp,
   /**********************/
   /*  Color Management  */
   /**********************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "color-management", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "color-management", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Color Management"),
                                   pixbuf,
@@ -2398,7 +2397,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*******************/
   /*  Input Devices  */
   /*******************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "input-devices", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "input-devices", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Input Devices"),
                                   pixbuf,
@@ -2444,7 +2443,7 @@ prefs_dialog_new (Gimp       *gimp,
   /****************************/
   /*  Additional Controllers  */
   /****************************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "controllers", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "controllers", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Additional Input Controllers"),
                                   pixbuf,
@@ -2462,7 +2461,7 @@ prefs_dialog_new (Gimp       *gimp,
   /***********************/
   /*  Window Management  */
   /***********************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "window-management", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "window-management", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Window Management"),
                                   pixbuf,
@@ -2519,7 +2518,7 @@ prefs_dialog_new (Gimp       *gimp,
   /*************/
   /*  Folders  */
   /*************/
-  pixbuf = prefs_get_pixbufs (gimp, dialog, "folders", &small_pixbuf);
+  pixbuf = prefs_get_pixbufs (dialog, "folders", &small_pixbuf);
   vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                   _("Folders"),
                                   pixbuf,
@@ -2639,7 +2638,7 @@ prefs_dialog_new (Gimp       *gimp,
       {
         GtkWidget *editor;
 
-        pixbuf = prefs_get_pixbufs (gimp, dialog, paths[i].icon, &small_pixbuf);
+        pixbuf = prefs_get_pixbufs (dialog, paths[i].icon, &small_pixbuf);
         vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                         gettext (paths[i].label),
                                         pixbuf,
