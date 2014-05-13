@@ -1121,14 +1121,19 @@ gimp_channel_real_bounds (GimpChannel *channel,
            */
           if (data[0] && data[maskPR.rowstride*(maskPR.h - 1) + maskPR.w - 1])
             {
+              /*  "ex/ey - 1" because the internal variables are the
+               *  right/bottom pixel of the mask's contents, not one
+               *  right/below it like the return values.
+               */
+
               if (maskPR.x < tx1)
                 tx1 = maskPR.x;
               if (ex > tx2)
-                tx2 = ex;
+                tx2 = ex - 1;
               if (maskPR.y < ty1)
                 ty1 = maskPR.y;
               if (ey > ty2)
-                ty2 = ey;
+                ty2 = ey - 1;
             }
           else
             {
