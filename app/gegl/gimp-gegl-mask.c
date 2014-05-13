@@ -70,11 +70,16 @@ gimp_gegl_mask_bounds (GeglBuffer *buffer,
            */
           if (data[0] && data[iter->length - 1])
             {
+              /*  "ex/ey - 1" because the internal variables are the
+               *  right/bottom pixel of the mask's contents, not one
+               *  right/below it like the return values.
+               */
+
               if (roi->x < tx1) tx1 = roi->x;
-              if (ex > tx2)     tx2 = ex;
+              if (ex > tx2)     tx2 = ex - 1;
 
               if (roi->y < ty1) ty1 = roi->y;
-              if (ey > ty2)     ty2 = ey;
+              if (ey > ty2)     ty2 = ey - 1;
             }
           else
             {
