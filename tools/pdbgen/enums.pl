@@ -107,6 +107,18 @@ package Gimp::CodeGen::enums;
 		       GIMP_COMPONENT_TYPE_FLOAT => '600',
 		       GIMP_COMPONENT_TYPE_DOUBLE => '700' }
 	},
+    GimpConvertPaletteType =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_MAKE_PALETTE GIMP_REUSE_PALETTE
+			  GIMP_WEB_PALETTE GIMP_MONO_PALETTE
+			  GIMP_CUSTOM_PALETTE) ],
+	  mapping => { GIMP_MAKE_PALETTE => '0',
+		       GIMP_REUSE_PALETTE => '1',
+		       GIMP_WEB_PALETTE => '2',
+		       GIMP_MONO_PALETTE => '3',
+		       GIMP_CUSTOM_PALETTE => '4' }
+	},
     GimpConvolveType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
@@ -210,6 +222,20 @@ package Gimp::CodeGen::enums;
 		       GIMP_GRID_ON_OFF_DASH => '2',
 		       GIMP_GRID_DOUBLE_DASH => '3',
 		       GIMP_GRID_SOLID => '4' }
+	},
+    GimpHueRange =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_ALL_HUES GIMP_RED_HUES GIMP_YELLOW_HUES
+			  GIMP_GREEN_HUES GIMP_CYAN_HUES GIMP_BLUE_HUES
+			  GIMP_MAGENTA_HUES) ],
+	  mapping => { GIMP_ALL_HUES => '0',
+		       GIMP_RED_HUES => '1',
+		       GIMP_YELLOW_HUES => '2',
+		       GIMP_GREEN_HUES => '3',
+		       GIMP_CYAN_HUES => '4',
+		       GIMP_BLUE_HUES => '5',
+		       GIMP_MAGENTA_HUES => '6' }
 	},
     GimpIconType =>
 	{ contig => 1,
@@ -586,18 +612,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_FSLOWBLEED_DITHER => '2',
 		       GIMP_FIXED_DITHER => '3' }
 	},
-    GimpConvertPaletteType =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_MAKE_PALETTE GIMP_REUSE_PALETTE
-			  GIMP_WEB_PALETTE GIMP_MONO_PALETTE
-			  GIMP_CUSTOM_PALETTE) ],
-	  mapping => { GIMP_MAKE_PALETTE => '0',
-		       GIMP_REUSE_PALETTE => '1',
-		       GIMP_WEB_PALETTE => '2',
-		       GIMP_MONO_PALETTE => '3',
-		       GIMP_CUSTOM_PALETTE => '4' }
-	},
     GimpHistogramChannel =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -609,20 +623,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_HISTOGRAM_GREEN => '2',
 		       GIMP_HISTOGRAM_BLUE => '3',
 		       GIMP_HISTOGRAM_ALPHA => '4' }
-	},
-    GimpHueRange =>
-	{ contig => 1,
-	  header => 'core/core-enums.h',
-	  symbols => [ qw(GIMP_ALL_HUES GIMP_RED_HUES GIMP_YELLOW_HUES
-			  GIMP_GREEN_HUES GIMP_CYAN_HUES GIMP_BLUE_HUES
-			  GIMP_MAGENTA_HUES) ],
-	  mapping => { GIMP_ALL_HUES => '0',
-		       GIMP_RED_HUES => '1',
-		       GIMP_YELLOW_HUES => '2',
-		       GIMP_GREEN_HUES => '3',
-		       GIMP_CYAN_HUES => '4',
-		       GIMP_BLUE_HUES => '5',
-		       GIMP_MAGENTA_HUES => '6' }
 	},
     GimpLayerModeEffects =>
 	{ contig => 1,

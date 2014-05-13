@@ -106,39 +106,6 @@ gimp_convert_dither_type_get_type (void)
 }
 
 GType
-gimp_convert_palette_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_MAKE_PALETTE, "GIMP_MAKE_PALETTE", "make-palette" },
-    { GIMP_WEB_PALETTE, "GIMP_WEB_PALETTE", "web-palette" },
-    { GIMP_MONO_PALETTE, "GIMP_MONO_PALETTE", "mono-palette" },
-    { GIMP_CUSTOM_PALETTE, "GIMP_CUSTOM_PALETTE", "custom-palette" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_MAKE_PALETTE, NC_("convert-palette-type", "Generate optimum palette"), NULL },
-    { GIMP_WEB_PALETTE, NC_("convert-palette-type", "Use web-optimized palette"), NULL },
-    { GIMP_MONO_PALETTE, NC_("convert-palette-type", "Use black and white (1-bit) palette"), NULL },
-    { GIMP_CUSTOM_PALETTE, NC_("convert-palette-type", "Use custom palette"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpConvertPaletteType", values);
-      gimp_type_set_translation_context (type, "convert-palette-type");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_convolution_type_get_type (void)
 {
   static const GEnumValue values[] =
@@ -274,45 +241,6 @@ gimp_histogram_channel_get_type (void)
     {
       type = g_enum_register_static ("GimpHistogramChannel", values);
       gimp_type_set_translation_context (type, "histogram-channel");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
-gimp_hue_range_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_ALL_HUES, "GIMP_ALL_HUES", "all-hues" },
-    { GIMP_RED_HUES, "GIMP_RED_HUES", "red-hues" },
-    { GIMP_YELLOW_HUES, "GIMP_YELLOW_HUES", "yellow-hues" },
-    { GIMP_GREEN_HUES, "GIMP_GREEN_HUES", "green-hues" },
-    { GIMP_CYAN_HUES, "GIMP_CYAN_HUES", "cyan-hues" },
-    { GIMP_BLUE_HUES, "GIMP_BLUE_HUES", "blue-hues" },
-    { GIMP_MAGENTA_HUES, "GIMP_MAGENTA_HUES", "magenta-hues" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_ALL_HUES, "GIMP_ALL_HUES", NULL },
-    { GIMP_RED_HUES, "GIMP_RED_HUES", NULL },
-    { GIMP_YELLOW_HUES, "GIMP_YELLOW_HUES", NULL },
-    { GIMP_GREEN_HUES, "GIMP_GREEN_HUES", NULL },
-    { GIMP_CYAN_HUES, "GIMP_CYAN_HUES", NULL },
-    { GIMP_BLUE_HUES, "GIMP_BLUE_HUES", NULL },
-    { GIMP_MAGENTA_HUES, "GIMP_MAGENTA_HUES", NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpHueRange", values);
-      gimp_type_set_translation_context (type, "hue-range");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

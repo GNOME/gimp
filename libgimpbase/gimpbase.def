@@ -13,6 +13,7 @@ EXPORTS
 	gimp_checks_get_shades
 	gimp_clone_type_get_type
 	gimp_component_type_get_type
+	gimp_convert_palette_type_get_type
 	gimp_convolve_type_get_type
 	gimp_cpu_accel_get_support
 	gimp_cpu_accel_set_use
@@ -44,6 +45,7 @@ EXPORTS
 	gimp_gradient_type_get_type
 	gimp_grid_style_get_type
 	gimp_gtkrc
+	gimp_hue_range_get_type
 	gimp_icon_type_get_type
 	gimp_image_base_type_get_type
 	gimp_image_type_get_type

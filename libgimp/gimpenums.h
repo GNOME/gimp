@@ -48,20 +48,6 @@ typedef enum
 } GimpConvertDitherType;
 
 
-#define GIMP_TYPE_CONVERT_PALETTE_TYPE (gimp_convert_palette_type_get_type ())
-
-GType gimp_convert_palette_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_MAKE_PALETTE,
-  GIMP_REUSE_PALETTE,
-  GIMP_WEB_PALETTE,
-  GIMP_MONO_PALETTE,
-  GIMP_CUSTOM_PALETTE
-} GimpConvertPaletteType;
-
-
 #define GIMP_TYPE_HISTOGRAM_CHANNEL (gimp_histogram_channel_get_type ())
 
 GType gimp_histogram_channel_get_type (void) G_GNUC_CONST;
@@ -74,22 +60,6 @@ typedef enum
   GIMP_HISTOGRAM_BLUE,
   GIMP_HISTOGRAM_ALPHA
 } GimpHistogramChannel;
-
-
-#define GIMP_TYPE_HUE_RANGE (gimp_hue_range_get_type ())
-
-GType gimp_hue_range_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_ALL_HUES,
-  GIMP_RED_HUES,
-  GIMP_YELLOW_HUES,
-  GIMP_GREEN_HUES,
-  GIMP_CYAN_HUES,
-  GIMP_BLUE_HUES,
-  GIMP_MAGENTA_HUES
-} GimpHueRange;
 
 
 #define GIMP_TYPE_LAYER_MODE_EFFECTS (gimp_layer_mode_effects_get_type ())

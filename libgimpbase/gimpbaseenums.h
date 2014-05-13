@@ -196,6 +196,20 @@ typedef enum
 } GimpComponentType;
 
 
+#define GIMP_TYPE_CONVERT_PALETTE_TYPE (gimp_convert_palette_type_get_type ())
+
+GType gimp_convert_palette_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_MAKE_PALETTE,    /*< desc="Generate optimum palette"            >*/
+  GIMP_REUSE_PALETTE,   /*< skip >*/
+  GIMP_WEB_PALETTE,     /*< desc="Use web-optimized palette"           >*/
+  GIMP_MONO_PALETTE,    /*< desc="Use black and white (1-bit) palette" >*/
+  GIMP_CUSTOM_PALETTE   /*< desc="Use custom palette"                  >*/
+} GimpConvertPaletteType;
+
+
 #define GIMP_TYPE_CONVOLVE_TYPE (gimp_convolve_type_get_type ())
 
 GType gimp_convolve_type_get_type (void) G_GNUC_CONST;
@@ -323,6 +337,22 @@ typedef enum
   GIMP_GRID_DOUBLE_DASH,    /*< desc="Double dashed"              >*/
   GIMP_GRID_SOLID           /*< desc="Solid"                      >*/
 } GimpGridStyle;
+
+
+#define GIMP_TYPE_HUE_RANGE (gimp_hue_range_get_type ())
+
+GType gimp_hue_range_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ALL_HUES,
+  GIMP_RED_HUES,
+  GIMP_YELLOW_HUES,
+  GIMP_GREEN_HUES,
+  GIMP_CYAN_HUES,
+  GIMP_BLUE_HUES,
+  GIMP_MAGENTA_HUES
+} GimpHueRange;
 
 
 #define GIMP_TYPE_ICON_TYPE (gimp_icon_type_get_type ())

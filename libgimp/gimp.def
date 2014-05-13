@@ -144,7 +144,6 @@ EXPORTS
 	gimp_context_set_transform_resize
 	gimp_context_swap_colors
 	gimp_convert_dither_type_get_type
-	gimp_convert_palette_type_get_type
 	gimp_convolve
 	gimp_convolve_default
 	gimp_curves_explicit
@@ -361,7 +360,6 @@ EXPORTS
 	gimp_help
 	gimp_histogram
 	gimp_histogram_channel_get_type
-	gimp_hue_range_get_type
 	gimp_hue_saturation
 	gimp_image_add_channel
 	gimp_image_add_hguide
