@@ -470,7 +470,7 @@ gimp_template_get_precision (GimpTemplate *template)
 GimpFillType
 gimp_template_get_fill_type (GimpTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_NO_FILL);
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_BACKGROUND_FILL);
 
   return GET_PRIVATE (template)->fill_type;
 }

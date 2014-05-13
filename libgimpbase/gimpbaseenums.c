@@ -458,7 +458,6 @@ gimp_fill_type_get_type (void)
     { GIMP_WHITE_FILL, "GIMP_WHITE_FILL", "white-fill" },
     { GIMP_TRANSPARENT_FILL, "GIMP_TRANSPARENT_FILL", "transparent-fill" },
     { GIMP_PATTERN_FILL, "GIMP_PATTERN_FILL", "pattern-fill" },
-    { GIMP_NO_FILL, "GIMP_NO_FILL", "no-fill" },
     { 0, NULL, NULL }
   };
 
@@ -469,7 +468,6 @@ gimp_fill_type_get_type (void)
     { GIMP_WHITE_FILL, NC_("fill-type", "White"), NULL },
     { GIMP_TRANSPARENT_FILL, NC_("fill-type", "Transparency"), NULL },
     { GIMP_PATTERN_FILL, NC_("fill-type", "Pattern"), NULL },
-    { GIMP_NO_FILL, NC_("fill-type", "None"), NULL },
     { 0, NULL, NULL }
   };
 

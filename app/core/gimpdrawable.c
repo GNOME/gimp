@@ -1558,9 +1558,6 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
       pattern = gimp_context_get_pattern (context);
       break;
 
-    case GIMP_NO_FILL:
-      return;
-
     default:
       g_warning ("%s: unknown fill type %d", G_STRFUNC, fill_type);
       return;

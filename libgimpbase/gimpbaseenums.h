@@ -250,8 +250,7 @@ typedef enum
   GIMP_BACKGROUND_FILL,   /*< desc="Background color" >*/
   GIMP_WHITE_FILL,        /*< desc="White"            >*/
   GIMP_TRANSPARENT_FILL,  /*< desc="Transparency"     >*/
-  GIMP_PATTERN_FILL,      /*< desc="Pattern"          >*/
-  GIMP_NO_FILL            /*< desc="None",   pdb-skip >*/
+  GIMP_PATTERN_FILL       /*< desc="Pattern"          >*/
 } GimpFillType;
 
 

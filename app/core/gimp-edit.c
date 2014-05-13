@@ -463,9 +463,6 @@ gimp_edit_fill (GimpImage            *image,
       undo_desc = C_("undo-type", "Fill with Pattern");
       break;
 
-    case GIMP_NO_FILL:
-      return TRUE;  /*  nothing to do, but the fill succeeded  */
-
     default:
       g_warning ("%s: unknown fill type", G_STRFUNC);
       return gimp_edit_fill (image, drawable,
