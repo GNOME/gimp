@@ -165,6 +165,22 @@ typedef enum  /*< pdb-skip >*/
 } GimpCheckType;
 
 
+#define GIMP_TYPE_CLONE_TYPE (gimp_clone_type_get_type ())
+
+GType gimp_clone_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_CLONE_IMAGE,    /*< nick=image-clone,   desc="Image"   >*/
+  GIMP_CLONE_PATTERN,  /*< nick=pattern-clone, desc="Pattern" >*/
+
+#ifndef GIMP_DISABLE_DEPRECATED
+  GIMP_IMAGE_CLONE   = GIMP_CLONE_IMAGE,  /*< skip, pdb-skip >*/
+  GIMP_PATTERN_CLONE = GIMP_CLONE_PATTERN /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
+} GimpCloneType;
+
+
 #define GIMP_TYPE_COMPONENT_TYPE (gimp_component_type_get_type ())
 
 GType gimp_component_type_get_type (void) G_GNUC_CONST;
@@ -194,22 +210,6 @@ typedef enum
   GIMP_SHARPEN_CONVOLVE = GIMP_CONVOLVE_SHARPEN /*< skip, pdb-skip >*/
 #endif /* GIMP_DISABLE_DEPRECATED */
 } GimpConvolveType;
-
-
-#define GIMP_TYPE_CLONE_TYPE (gimp_clone_type_get_type ())
-
-GType gimp_clone_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_CLONE_IMAGE,    /*< nick=image-clone,   desc="Image"   >*/
-  GIMP_CLONE_PATTERN,  /*< nick=pattern-clone, desc="Pattern" >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_IMAGE_CLONE   = GIMP_CLONE_IMAGE,  /*< skip, pdb-skip >*/
-  GIMP_PATTERN_CLONE = GIMP_CLONE_PATTERN /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
-} GimpCloneType;
 
 
 #define GIMP_TYPE_DESATURATE_MODE (gimp_desaturate_mode_get_type ())
@@ -265,26 +265,6 @@ typedef enum
 } GimpForegroundExtractMode;
 
 
-#define GIMP_TYPE_GRADIENT_TYPE (gimp_gradient_type_get_type ())
-
-GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_GRADIENT_LINEAR,                /*< desc="Linear"            >*/
-  GIMP_GRADIENT_BILINEAR,              /*< desc="Bi-linear"         >*/
-  GIMP_GRADIENT_RADIAL,                /*< desc="Radial"            >*/
-  GIMP_GRADIENT_SQUARE,                /*< desc="Square"            >*/
-  GIMP_GRADIENT_CONICAL_SYMMETRIC,     /*< desc="Conical (sym)"     >*/
-  GIMP_GRADIENT_CONICAL_ASYMMETRIC,    /*< desc="Conical (asym)"    >*/
-  GIMP_GRADIENT_SHAPEBURST_ANGULAR,    /*< desc="Shaped (angular)"  >*/
-  GIMP_GRADIENT_SHAPEBURST_SPHERICAL,  /*< desc="Shaped (spherical)">*/
-  GIMP_GRADIENT_SHAPEBURST_DIMPLED,    /*< desc="Shaped (dimpled)"  >*/
-  GIMP_GRADIENT_SPIRAL_CLOCKWISE,      /*< desc="Spiral (cw)"       >*/
-  GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE   /*< desc="Spiral (ccw)"      >*/
-} GimpGradientType;
-
-
 #define GIMP_TYPE_GRADIENT_SEGMENT_COLOR (gimp_gradient_segment_color_get_type ())
 
 GType gimp_gradient_segment_color_get_type (void) G_GNUC_CONST;
@@ -309,6 +289,26 @@ typedef enum
   GIMP_GRADIENT_SEGMENT_SPHERE_INCREASING,
   GIMP_GRADIENT_SEGMENT_SPHERE_DECREASING
 } GimpGradientSegmentType;
+
+
+#define GIMP_TYPE_GRADIENT_TYPE (gimp_gradient_type_get_type ())
+
+GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_GRADIENT_LINEAR,                /*< desc="Linear"            >*/
+  GIMP_GRADIENT_BILINEAR,              /*< desc="Bi-linear"         >*/
+  GIMP_GRADIENT_RADIAL,                /*< desc="Radial"            >*/
+  GIMP_GRADIENT_SQUARE,                /*< desc="Square"            >*/
+  GIMP_GRADIENT_CONICAL_SYMMETRIC,     /*< desc="Conical (sym)"     >*/
+  GIMP_GRADIENT_CONICAL_ASYMMETRIC,    /*< desc="Conical (asym)"    >*/
+  GIMP_GRADIENT_SHAPEBURST_ANGULAR,    /*< desc="Shaped (angular)"  >*/
+  GIMP_GRADIENT_SHAPEBURST_SPHERICAL,  /*< desc="Shaped (spherical)">*/
+  GIMP_GRADIENT_SHAPEBURST_DIMPLED,    /*< desc="Shaped (dimpled)"  >*/
+  GIMP_GRADIENT_SPIRAL_CLOCKWISE,      /*< desc="Spiral (cw)"       >*/
+  GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE   /*< desc="Spiral (ccw)"      >*/
+} GimpGradientType;
 
 
 #define GIMP_TYPE_GRID_STYLE (gimp_grid_style_get_type ())
@@ -422,6 +422,18 @@ typedef enum
 } GimpMergeType;
 
 
+#define GIMP_TYPE_MESSAGE_HANDLER_TYPE (gimp_message_handler_type_get_type ())
+
+GType gimp_message_handler_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_MESSAGE_BOX,
+  GIMP_CONSOLE,
+  GIMP_ERROR_CONSOLE
+} GimpMessageHandlerType;
+
+
 #define GIMP_TYPE_OFFSET_TYPE (gimp_offset_type_get_type ())
 
 GType gimp_offset_type_get_type (void) G_GNUC_CONST;
@@ -454,148 +466,6 @@ typedef enum
   GIMP_PAINT_CONSTANT,    /*< desc="Constant"    >*/
   GIMP_PAINT_INCREMENTAL  /*< desc="Incremental" >*/
 } GimpPaintApplicationMode;
-
-
-#define GIMP_TYPE_PRECISION (gimp_precision_get_type ())
-
-GType gimp_precision_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_PRECISION_U8_LINEAR     = 100, /*< desc="8-bit linear integer"         >*/
-  GIMP_PRECISION_U8_GAMMA      = 150, /*< desc="8-bit gamma integer"          >*/
-  GIMP_PRECISION_U16_LINEAR    = 200, /*< desc="16-bit linear integer"        >*/
-  GIMP_PRECISION_U16_GAMMA     = 250, /*< desc="16-bit gamma integer"         >*/
-  GIMP_PRECISION_U32_LINEAR    = 300, /*< desc="32-bit linear integer"        >*/
-  GIMP_PRECISION_U32_GAMMA     = 350, /*< desc="32-bit gamma integer"         >*/
-  GIMP_PRECISION_HALF_LINEAR   = 500, /*< desc="16-bit linear floating point" >*/
-  GIMP_PRECISION_HALF_GAMMA    = 550, /*< desc="16-bit gamma floating point"  >*/
-  GIMP_PRECISION_FLOAT_LINEAR  = 600, /*< desc="32-bit linear floating point" >*/
-  GIMP_PRECISION_FLOAT_GAMMA   = 650, /*< desc="32-bit gamma floating point"  >*/
-  GIMP_PRECISION_DOUBLE_LINEAR = 700, /*< desc="64-bit linear floating point" >*/
-  GIMP_PRECISION_DOUBLE_GAMMA  = 750  /*< desc="64-bit gamma floating point"  >*/
-} GimpPrecision;
-
-
-#define GIMP_TYPE_REPEAT_MODE (gimp_repeat_mode_get_type ())
-
-GType gimp_repeat_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_REPEAT_NONE,       /*< desc="None (extend)"   >*/
-  GIMP_REPEAT_SAWTOOTH,   /*< desc="Sawtooth wave"   >*/
-  GIMP_REPEAT_TRIANGULAR, /*< desc="Triangular wave" >*/
-  GIMP_REPEAT_TRUNCATE    /*< desc="Truncate"        >*/
-} GimpRepeatMode;
-
-
-#define GIMP_TYPE_ROTATION_TYPE (gimp_rotation_type_get_type ())
-
-GType gimp_rotation_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_ROTATE_90,
-  GIMP_ROTATE_180,
-  GIMP_ROTATE_270
-} GimpRotationType;
-
-
-#define GIMP_TYPE_RUN_MODE (gimp_run_mode_get_type ())
-
-GType gimp_run_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_RUN_INTERACTIVE,     /*< desc="Run interactively"         >*/
-  GIMP_RUN_NONINTERACTIVE,  /*< desc="Run non-interactively"     >*/
-  GIMP_RUN_WITH_LAST_VALS   /*< desc="Run with last used values" >*/
-} GimpRunMode;
-
-
-#define GIMP_TYPE_SELECT_CRITERION (gimp_select_criterion_get_type ())
-
-GType gimp_select_criterion_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_SELECT_CRITERION_COMPOSITE,  /*< desc="Composite"  >*/
-  GIMP_SELECT_CRITERION_R,          /*< desc="Red"        >*/
-  GIMP_SELECT_CRITERION_G,          /*< desc="Green"      >*/
-  GIMP_SELECT_CRITERION_B,          /*< desc="Blue"       >*/
-  GIMP_SELECT_CRITERION_H,          /*< desc="Hue"        >*/
-  GIMP_SELECT_CRITERION_S,          /*< desc="Saturation" >*/
-  GIMP_SELECT_CRITERION_V           /*< desc="Value"      >*/
-} GimpSelectCriterion;
-
-
-#define GIMP_TYPE_SIZE_TYPE (gimp_size_type_get_type ())
-
-GType gimp_size_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_PIXELS,  /*< desc="Pixels" >*/
-  GIMP_POINTS   /*< desc="Points" >*/
-} GimpSizeType;
-
-
-#define GIMP_TYPE_TRANSFER_MODE (gimp_transfer_mode_get_type ())
-
-GType gimp_transfer_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_TRANSFER_SHADOWS,     /*< desc="Shadows"    >*/
-  GIMP_TRANSFER_MIDTONES,    /*< desc="Midtones"   >*/
-  GIMP_TRANSFER_HIGHLIGHTS,  /*< desc="Highlights" >*/
-
-#ifndef GIMP_DISABLE_DEPRECATED
-  GIMP_SHADOWS    = GIMP_TRANSFER_SHADOWS,   /*< skip, pdb-skip >*/
-  GIMP_MIDTONES   = GIMP_TRANSFER_MIDTONES,  /*< skip, pdb-skip >*/
-  GIMP_HIGHLIGHTS = GIMP_TRANSFER_HIGHLIGHTS /*< skip, pdb-skip >*/
-#endif /* GIMP_DISABLE_DEPRECATED */
-} GimpTransferMode;
-
-
-#define GIMP_TYPE_TRANSFORM_DIRECTION (gimp_transform_direction_get_type ())
-
-GType gimp_transform_direction_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_TRANSFORM_FORWARD,   /*< desc="Normal (Forward)" >*/
-  GIMP_TRANSFORM_BACKWARD   /*< desc="Corrective (Backward)" >*/
-} GimpTransformDirection;
-
-
-#define GIMP_TYPE_TRANSFORM_RESIZE (gimp_transform_resize_get_type ())
-
-GType gimp_transform_resize_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_TRANSFORM_RESIZE_ADJUST           = 0, /*< desc="Adjust" >*/
-  GIMP_TRANSFORM_RESIZE_CLIP             = 1, /*< desc="Clip" >*/
-  GIMP_TRANSFORM_RESIZE_CROP,                 /*< desc="Crop to result" >*/
-  GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT      /*< desc="Crop with aspect" >*/
-} GimpTransformResize;
-
-
-typedef enum /*< skip >*/
-{
-  GIMP_UNIT_PIXEL   = 0,
-
-  GIMP_UNIT_INCH    = 1,
-  GIMP_UNIT_MM      = 2,
-  GIMP_UNIT_POINT   = 3,
-  GIMP_UNIT_PICA    = 4,
-
-  GIMP_UNIT_END     = 5,
-
-  GIMP_UNIT_PERCENT = 65536 /*< pdb-skip >*/
-} GimpUnit;
 
 
 #define GIMP_TYPE_PDB_ARG_TYPE (gimp_pdb_arg_type_get_type ())
@@ -674,28 +544,25 @@ typedef enum
 } GimpPDBStatusType;
 
 
-#define GIMP_TYPE_MESSAGE_HANDLER_TYPE (gimp_message_handler_type_get_type ())
+#define GIMP_TYPE_PRECISION (gimp_precision_get_type ())
 
-GType gimp_message_handler_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_MESSAGE_BOX,
-  GIMP_CONSOLE,
-  GIMP_ERROR_CONSOLE
-} GimpMessageHandlerType;
-
-
-#define GIMP_TYPE_STACK_TRACE_MODE (gimp_stack_trace_mode_get_type ())
-
-GType gimp_stack_trace_mode_get_type (void) G_GNUC_CONST;
+GType gimp_precision_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_STACK_TRACE_NEVER,
-  GIMP_STACK_TRACE_QUERY,
-  GIMP_STACK_TRACE_ALWAYS
-} GimpStackTraceMode;
+  GIMP_PRECISION_U8_LINEAR     = 100, /*< desc="8-bit linear integer"         >*/
+  GIMP_PRECISION_U8_GAMMA      = 150, /*< desc="8-bit gamma integer"          >*/
+  GIMP_PRECISION_U16_LINEAR    = 200, /*< desc="16-bit linear integer"        >*/
+  GIMP_PRECISION_U16_GAMMA     = 250, /*< desc="16-bit gamma integer"         >*/
+  GIMP_PRECISION_U32_LINEAR    = 300, /*< desc="32-bit linear integer"        >*/
+  GIMP_PRECISION_U32_GAMMA     = 350, /*< desc="32-bit gamma integer"         >*/
+  GIMP_PRECISION_HALF_LINEAR   = 500, /*< desc="16-bit linear floating point" >*/
+  GIMP_PRECISION_HALF_GAMMA    = 550, /*< desc="16-bit gamma floating point"  >*/
+  GIMP_PRECISION_FLOAT_LINEAR  = 600, /*< desc="32-bit linear floating point" >*/
+  GIMP_PRECISION_FLOAT_GAMMA   = 650, /*< desc="32-bit gamma floating point"  >*/
+  GIMP_PRECISION_DOUBLE_LINEAR = 700, /*< desc="64-bit linear floating point" >*/
+  GIMP_PRECISION_DOUBLE_GAMMA  = 750  /*< desc="64-bit gamma floating point"  >*/
+} GimpPrecision;
 
 
 #define GIMP_TYPE_PROGRESS_COMMAND (gimp_progress_command_get_type ())
@@ -711,6 +578,82 @@ typedef enum
   GIMP_PROGRESS_COMMAND_PULSE,
   GIMP_PROGRESS_COMMAND_GET_WINDOW
 } GimpProgressCommand;
+
+
+#define GIMP_TYPE_REPEAT_MODE (gimp_repeat_mode_get_type ())
+
+GType gimp_repeat_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_REPEAT_NONE,       /*< desc="None (extend)"   >*/
+  GIMP_REPEAT_SAWTOOTH,   /*< desc="Sawtooth wave"   >*/
+  GIMP_REPEAT_TRIANGULAR, /*< desc="Triangular wave" >*/
+  GIMP_REPEAT_TRUNCATE    /*< desc="Truncate"        >*/
+} GimpRepeatMode;
+
+
+#define GIMP_TYPE_ROTATION_TYPE (gimp_rotation_type_get_type ())
+
+GType gimp_rotation_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ROTATE_90,
+  GIMP_ROTATE_180,
+  GIMP_ROTATE_270
+} GimpRotationType;
+
+
+#define GIMP_TYPE_RUN_MODE (gimp_run_mode_get_type ())
+
+GType gimp_run_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_RUN_INTERACTIVE,     /*< desc="Run interactively"         >*/
+  GIMP_RUN_NONINTERACTIVE,  /*< desc="Run non-interactively"     >*/
+  GIMP_RUN_WITH_LAST_VALS   /*< desc="Run with last used values" >*/
+} GimpRunMode;
+
+
+#define GIMP_TYPE_SELECT_CRITERION (gimp_select_criterion_get_type ())
+
+GType gimp_select_criterion_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_SELECT_CRITERION_COMPOSITE,  /*< desc="Composite"  >*/
+  GIMP_SELECT_CRITERION_R,          /*< desc="Red"        >*/
+  GIMP_SELECT_CRITERION_G,          /*< desc="Green"      >*/
+  GIMP_SELECT_CRITERION_B,          /*< desc="Blue"       >*/
+  GIMP_SELECT_CRITERION_H,          /*< desc="Hue"        >*/
+  GIMP_SELECT_CRITERION_S,          /*< desc="Saturation" >*/
+  GIMP_SELECT_CRITERION_V           /*< desc="Value"      >*/
+} GimpSelectCriterion;
+
+
+#define GIMP_TYPE_SIZE_TYPE (gimp_size_type_get_type ())
+
+GType gimp_size_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_PIXELS,  /*< desc="Pixels" >*/
+  GIMP_POINTS   /*< desc="Points" >*/
+} GimpSizeType;
+
+
+#define GIMP_TYPE_STACK_TRACE_MODE (gimp_stack_trace_mode_get_type ())
+
+GType gimp_stack_trace_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_STACK_TRACE_NEVER,
+  GIMP_STACK_TRACE_QUERY,
+  GIMP_STACK_TRACE_ALWAYS
+} GimpStackTraceMode;
 
 
 #define GIMP_TYPE_TEXT_DIRECTION (gimp_text_direction_get_type ())
@@ -748,6 +691,63 @@ typedef enum
   GIMP_TEXT_JUSTIFY_CENTER,  /*< desc="Centered"        >*/
   GIMP_TEXT_JUSTIFY_FILL     /*< desc="Filled"          >*/
 } GimpTextJustification;
+
+
+#define GIMP_TYPE_TRANSFER_MODE (gimp_transfer_mode_get_type ())
+
+GType gimp_transfer_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TRANSFER_SHADOWS,     /*< desc="Shadows"    >*/
+  GIMP_TRANSFER_MIDTONES,    /*< desc="Midtones"   >*/
+  GIMP_TRANSFER_HIGHLIGHTS,  /*< desc="Highlights" >*/
+
+#ifndef GIMP_DISABLE_DEPRECATED
+  GIMP_SHADOWS    = GIMP_TRANSFER_SHADOWS,   /*< skip, pdb-skip >*/
+  GIMP_MIDTONES   = GIMP_TRANSFER_MIDTONES,  /*< skip, pdb-skip >*/
+  GIMP_HIGHLIGHTS = GIMP_TRANSFER_HIGHLIGHTS /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
+} GimpTransferMode;
+
+
+#define GIMP_TYPE_TRANSFORM_DIRECTION (gimp_transform_direction_get_type ())
+
+GType gimp_transform_direction_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TRANSFORM_FORWARD,   /*< desc="Normal (Forward)" >*/
+  GIMP_TRANSFORM_BACKWARD   /*< desc="Corrective (Backward)" >*/
+} GimpTransformDirection;
+
+
+#define GIMP_TYPE_TRANSFORM_RESIZE (gimp_transform_resize_get_type ())
+
+GType gimp_transform_resize_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TRANSFORM_RESIZE_ADJUST           = 0, /*< desc="Adjust" >*/
+  GIMP_TRANSFORM_RESIZE_CLIP             = 1, /*< desc="Clip" >*/
+  GIMP_TRANSFORM_RESIZE_CROP,                 /*< desc="Crop to result" >*/
+  GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT      /*< desc="Crop with aspect" >*/
+} GimpTransformResize;
+
+
+typedef enum /*< skip >*/
+{
+  GIMP_UNIT_PIXEL   = 0,
+
+  GIMP_UNIT_INCH    = 1,
+  GIMP_UNIT_MM      = 2,
+  GIMP_UNIT_POINT   = 3,
+  GIMP_UNIT_PICA    = 4,
+
+  GIMP_UNIT_END     = 5,
+
+  GIMP_UNIT_PERCENT = 65536 /*< pdb-skip >*/
+} GimpUnit;
 
 
 #ifndef GIMP_DISABLE_DEPRECATED
