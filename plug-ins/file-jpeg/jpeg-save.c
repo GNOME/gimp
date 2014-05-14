@@ -707,7 +707,8 @@ toggle_arithmetic_coding (GtkToggleButton *togglebutton,
 {
   GtkWidget *optimize = GTK_WIDGET (user_data);
 
-  gtk_widget_set_sensitive (optimize, !jsvals.arithmetic_coding);
+  gtk_widget_set_sensitive (optimize,
+                            !gtk_toggle_button_get_active (togglebutton));
 }
 #endif /* C_ARITH_CODING_SUPPORTED */
 
