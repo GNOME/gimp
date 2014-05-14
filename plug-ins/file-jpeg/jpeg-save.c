@@ -1248,7 +1248,6 @@ load_defaults (void)
                        &tmpvals.quality,
                        &tmpvals.smoothing,
                        &tmpvals.optimize,
-                       &tmpvals.arithmetic_coding,
                        &tmpvals.progressive,
                        &subsampling,
                        &tmpvals.baseline,
@@ -1259,7 +1258,8 @@ load_defaults (void)
                        &tmpvals.save_thumbnail,
                        &tmpvals.save_xmp,
                        &tmpvals.use_orig_quality,
-                       &tmpvals.save_iptc);
+                       &tmpvals.save_iptc,
+                       &tmpvals.arithmetic_coding);
 
   tmpvals.subsmp = subsampling;
 
@@ -1281,7 +1281,6 @@ save_defaults (void)
                              jsvals.quality,
                              jsvals.smoothing,
                              jsvals.optimize,
-                             jsvals.arithmetic_coding,
                              jsvals.progressive,
                              (gint) jsvals.subsmp,
                              jsvals.baseline,
@@ -1292,7 +1291,8 @@ save_defaults (void)
                              jsvals.save_thumbnail,
                              jsvals.save_xmp,
                              jsvals.use_orig_quality,
-                             jsvals.save_iptc);
+                             jsvals.save_iptc,
+                             jsvals.arithmetic_coding);
   parasite = gimp_parasite_new (JPEG_DEFAULTS_PARASITE,
                                 GIMP_PARASITE_PERSISTENT,
                                 strlen (def_str), def_str);
