@@ -39,7 +39,12 @@
 GParamSpec *
 gimp_param_spec_duplicate (GParamSpec *pspec)
 {
+  GParamSpec  *copy = NULL;
+  GParamFlags  flags;
+
   g_return_val_if_fail (pspec != NULL, NULL);
+
+  flags = pspec->flags | GIMP_CONFIG_PARAM_SERIALIZE;
 
   if (G_IS_PARAM_SPEC_STRING (pspec))
     {
@@ -47,67 +52,60 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
 
       if (GEGL_IS_PARAM_SPEC_FILE_PATH (pspec))
         {
-          return gimp_param_spec_config_path (pspec->name,
+          copy = gimp_param_spec_config_path (pspec->name,
                                               g_param_spec_get_nick (pspec),
                                               g_param_spec_get_blurb (pspec),
                                               GIMP_CONFIG_PATH_FILE,
                                               spec->default_value,
-                                              pspec->flags |
-                                              GIMP_CONFIG_PARAM_SERIALIZE);
+                                              flags);
         }
       else
         {
-          static GQuark  multiline_quark = 0;
-          GParamSpec    *new;
+          static GQuark multiline_quark = 0;
 
           if (! multiline_quark)
             multiline_quark = g_quark_from_static_string ("multiline");
 
-          new = g_param_spec_string (pspec->name,
-                                     g_param_spec_get_nick (pspec),
-                                     g_param_spec_get_blurb (pspec),
-                                     spec->default_value,
-                                     pspec->flags |
-                                     GIMP_CONFIG_PARAM_SERIALIZE);
+          copy = g_param_spec_string (pspec->name,
+                                      g_param_spec_get_nick (pspec),
+                                      g_param_spec_get_blurb (pspec),
+                                      spec->default_value,
+                                      flags);
 
           if (GEGL_IS_PARAM_SPEC_MULTILINE (pspec))
             {
-              g_param_spec_set_qdata (new, multiline_quark,
+              g_param_spec_set_qdata (copy, multiline_quark,
                                       GINT_TO_POINTER (TRUE));
             }
-
-          return new;
         }
     }
   else if (G_IS_PARAM_SPEC_BOOLEAN (pspec))
     {
       GParamSpecBoolean *spec = G_PARAM_SPEC_BOOLEAN (pspec);
 
-      return g_param_spec_boolean (pspec->name,
+      copy = g_param_spec_boolean (pspec->name,
                                    g_param_spec_get_nick (pspec),
                                    g_param_spec_get_blurb (pspec),
                                    spec->default_value,
-                                   pspec->flags |
-                                   GIMP_CONFIG_PARAM_SERIALIZE);
+                                   flags);
     }
   else if (G_IS_PARAM_SPEC_ENUM (pspec))
     {
       GParamSpecEnum *spec = G_PARAM_SPEC_ENUM (pspec);
 
-      return g_param_spec_enum (pspec->name,
+      copy = g_param_spec_enum (pspec->name,
                                 g_param_spec_get_nick (pspec),
                                 g_param_spec_get_blurb (pspec),
                                 G_TYPE_FROM_CLASS (spec->enum_class),
                                 spec->default_value,
-                                pspec->flags |
-                                GIMP_CONFIG_PARAM_SERIALIZE);
+                                flags);
     }
   else if (GEGL_IS_PARAM_SPEC_DOUBLE (pspec))
     {
       GeglParamSpecDouble *gspec = GEGL_PARAM_SPEC_DOUBLE (pspec);
       GParamSpecDouble    *spec = G_PARAM_SPEC_DOUBLE (pspec);
 
-      return gegl_param_spec_double (pspec->name,
+      copy = gegl_param_spec_double (pspec->name,
                                      g_param_spec_get_nick (pspec),
                                      g_param_spec_get_blurb (pspec),
                                      spec->minimum,
@@ -116,41 +114,38 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                      gspec->ui_minimum,
                                      gspec->ui_maximum,
                                      gspec->ui_gamma,
-                                     pspec->flags |
-                                     GIMP_CONFIG_PARAM_SERIALIZE);
+                                     flags);
     }
   else if (G_IS_PARAM_SPEC_DOUBLE (pspec))
     {
       GParamSpecDouble *spec = G_PARAM_SPEC_DOUBLE (pspec);
 
-      return g_param_spec_double (pspec->name,
+      copy = g_param_spec_double (pspec->name,
                                   g_param_spec_get_nick (pspec),
                                   g_param_spec_get_blurb (pspec),
                                   spec->minimum,
                                   spec->maximum,
                                   spec->default_value,
-                                  pspec->flags |
-                                  GIMP_CONFIG_PARAM_SERIALIZE);
+                                  flags);
     }
   else if (G_IS_PARAM_SPEC_FLOAT (pspec))
     {
       GParamSpecFloat *spec = G_PARAM_SPEC_FLOAT (pspec);
 
-      return g_param_spec_float (pspec->name,
+      copy = g_param_spec_float (pspec->name,
                                  g_param_spec_get_nick (pspec),
                                  g_param_spec_get_blurb (pspec),
                                  spec->minimum,
                                  spec->maximum,
                                  spec->default_value,
-                                 pspec->flags |
-                                 GIMP_CONFIG_PARAM_SERIALIZE);
+                                 flags);
     }
   else if (GEGL_IS_PARAM_SPEC_INT (pspec))
     {
       GeglParamSpecInt *gspec = GEGL_PARAM_SPEC_INT (pspec);
-      GParamSpecInt *spec = G_PARAM_SPEC_INT (pspec);
+      GParamSpecInt    *spec  = G_PARAM_SPEC_INT (pspec);
 
-      return gegl_param_spec_int (pspec->name,
+      copy = gegl_param_spec_int (pspec->name,
                                   g_param_spec_get_nick (pspec),
                                   g_param_spec_get_blurb (pspec),
                                   spec->minimum,
@@ -159,12 +154,11 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                   gspec->ui_minimum,
                                   gspec->ui_maximum,
                                   gspec->ui_gamma,
-                                  pspec->flags |
-                                  GIMP_CONFIG_PARAM_SERIALIZE);
+                                  flags);
     }
   else if (GEGL_IS_PARAM_SPEC_SEED (pspec))
     {
-      return gegl_param_spec_seed (pspec->name,
+      copy = gegl_param_spec_seed (pspec->name,
                                    g_param_spec_get_nick (pspec),
                                    g_param_spec_get_blurb (pspec),
                                    pspec->flags |
@@ -174,27 +168,25 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
     {
       GParamSpecInt *spec = G_PARAM_SPEC_INT (pspec);
 
-      return g_param_spec_int (pspec->name,
+      copy = g_param_spec_int (pspec->name,
                                g_param_spec_get_nick (pspec),
                                g_param_spec_get_blurb (pspec),
                                spec->minimum,
                                spec->maximum,
                                spec->default_value,
-                               pspec->flags |
-                               GIMP_CONFIG_PARAM_SERIALIZE);
+                               flags);
     }
   else if (G_IS_PARAM_SPEC_UINT (pspec))
     {
       GParamSpecUInt *spec = G_PARAM_SPEC_UINT (pspec);
 
-      return g_param_spec_uint (pspec->name,
+      copy = g_param_spec_uint (pspec->name,
                                 g_param_spec_get_nick (pspec),
                                 g_param_spec_get_blurb (pspec),
                                 spec->minimum,
                                 spec->maximum,
                                 spec->default_value,
-                                pspec->flags |
-                                GIMP_CONFIG_PARAM_SERIALIZE);
+                                flags);
     }
   else if (GIMP_IS_PARAM_SPEC_RGB (pspec))
     {
@@ -206,13 +198,12 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
       gimp_value_get_rgb (&value, &color);
       g_value_unset (&value);
 
-      return gimp_param_spec_rgb (pspec->name,
+      copy = gimp_param_spec_rgb (pspec->name,
                                   g_param_spec_get_nick (pspec),
                                   g_param_spec_get_blurb (pspec),
                                   gimp_param_spec_rgb_has_alpha (pspec),
                                   &color,
-                                  pspec->flags |
-                                  GIMP_CONFIG_PARAM_SERIALIZE);
+                                  flags);
     }
   else if (GEGL_IS_PARAM_SPEC_COLOR (pspec))
     {
@@ -235,23 +226,23 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
 
       g_value_unset (&value);
 
-      return gimp_param_spec_rgb (pspec->name,
+      copy = gimp_param_spec_rgb (pspec->name,
                                   g_param_spec_get_nick (pspec),
                                   g_param_spec_get_blurb (pspec),
                                   TRUE,
                                   &gimp_color,
-                                  pspec->flags |
-                                  GIMP_CONFIG_PARAM_SERIALIZE);
+                                  flags);
     }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) ||
            G_IS_PARAM_SPEC_POINTER (pspec))
     {
-      /*  ignore object properties  */
-      return NULL;
+      /*  silently ignore object properties  */
+    }
+  else
+    {
+      g_warning ("%s: not supported: %s (%s)\n", G_STRFUNC,
+                 g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name);
     }
 
-  g_warning ("%s: not supported: %s (%s)\n", G_STRFUNC,
-             g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name);
-
-  return NULL;
+  return copy;
 }
