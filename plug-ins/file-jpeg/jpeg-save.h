@@ -23,6 +23,7 @@ typedef struct
   gdouble          quality;
   gdouble          smoothing;
   gboolean         optimize;
+  gboolean         arithmetic_coding;
   gboolean         progressive;
   gboolean         baseline;
   JpegSubsampling  subsmp;
