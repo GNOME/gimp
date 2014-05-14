@@ -103,33 +103,33 @@ gimp_levels_config_class_init (GimpLevelsConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CHANNEL,
                                  "channel",
-                                 "The affected channel",
+                                 _("The affected channel"),
                                  GIMP_TYPE_HISTOGRAM_CHANNEL,
                                  GIMP_HISTOGRAM_VALUE, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GAMMA,
                                    "gamma",
-                                   "Gamma",
+                                   _("Gamma"),
                                    0.1, 10.0, 1.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LOW_INPUT,
                                    "low-input",
-                                   "Low Input",
+                                   _("Low Input"),
                                    0.0, 1.0, 0.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HIGH_INPUT,
                                    "high-input",
-                                   "High Input",
+                                   _("High Input"),
                                    0.0, 1.0, 1.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LOW_OUTPUT,
                                    "low-output",
-                                   "Low Output",
+                                   _("Low Output"),
                                    0.0, 1.0, 0.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HIGH_OUTPUT,
                                    "high-output",
-                                   "High Output",
+                                   _("High Output"),
                                    0.0, 1.0, 1.0, 0);
 }
 

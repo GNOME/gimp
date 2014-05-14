@@ -1225,8 +1225,7 @@ gimp_prop_scale_entry_new (GObject     *config,
                             param_spec, &value, &lower, &upper, G_STRFUNC))
     return NULL;
 
-  tooltip = dgettext (gimp_type_get_translation_domain (G_OBJECT_TYPE (config)),
-                      g_param_spec_get_blurb (param_spec));
+  tooltip = g_param_spec_get_blurb (param_spec);
 
   if (! limit_scale)
     {
@@ -3921,12 +3920,7 @@ set_param_spec (GObject     *object,
       const gchar *blurb = g_param_spec_get_blurb (param_spec);
 
       if (blurb)
-        {
-          const gchar *domain;
-
-          domain = gimp_type_get_translation_domain (param_spec->owner_type);
-          gimp_help_set_help_data (widget, dgettext (domain, blurb), NULL);
-        }
+        gimp_help_set_help_data (widget, blurb, NULL);
     }
 }
 

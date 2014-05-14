@@ -29,6 +29,8 @@
 
 #include "gimpdesaturateconfig.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -68,7 +70,7 @@ gimp_desaturate_config_class_init (GimpDesaturateConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MODE,
                                  "mode",
-                                 "Desaturate mode",
+                                 _("Desaturate mode"),
                                  GIMP_TYPE_DESATURATE_MODE,
                                  GIMP_DESATURATE_LIGHTNESS, 0);
 }

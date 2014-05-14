@@ -32,6 +32,8 @@
 
 #include "gimpcolorbalanceconfig.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -91,28 +93,28 @@ gimp_color_balance_config_class_init (GimpColorBalanceConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_RANGE,
                                  "range",
-                                 "The affected range",
+                                 _("The affected range"),
                                  GIMP_TYPE_TRANSFER_MODE,
                                  GIMP_TRANSFER_MIDTONES, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CYAN_RED,
                                    "cyan-red",
-                                   "Cyan-Red",
+                                   _("Cyan-Red"),
                                    -1.0, 1.0, 0.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MAGENTA_GREEN,
                                    "magenta-green",
-                                   "Magenta-Green",
+                                   _("Magenta-Green"),
                                    -1.0, 1.0, 0.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_YELLOW_BLUE,
                                    "yellow-blue",
-                                   "Yellow-Blue",
+                                   _("Yellow-Blue"),
                                    -1.0, 1.0, 0.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESERVE_LUMINOSITY,
                                     "preserve-luminosity",
-                                    "Preserve Luminosity",
+                                    _("Preserve Luminosity"),
                                     TRUE, 0);
 }
 

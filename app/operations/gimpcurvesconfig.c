@@ -40,6 +40,8 @@
 
 #include "gimp-intl.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -101,13 +103,13 @@ gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CHANNEL,
                                  "channel",
-                                 "The affected channel",
+                                 _("The affected channel"),
                                  GIMP_TYPE_HISTOGRAM_CHANNEL,
                                  GIMP_HISTOGRAM_VALUE, 0);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_CURVE,
                                    "curve",
-                                   "Curve",
+                                   _("Curve"),
                                    GIMP_TYPE_CURVE,
                                    GIMP_CONFIG_PARAM_AGGREGATE);
 }

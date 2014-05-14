@@ -1516,7 +1516,7 @@ set_param_spec (GObject     *object,
       const gchar *blurb = g_param_spec_get_blurb (param_spec);
 
       if (blurb)
-        gimp_help_set_help_data (widget, gettext (blurb), NULL);
+        gimp_help_set_help_data (widget, blurb, NULL);
     }
 }
 

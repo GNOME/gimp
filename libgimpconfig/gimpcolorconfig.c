@@ -50,41 +50,40 @@
 
 
 #define COLOR_MANAGEMENT_MODE_BLURB \
-  N_("Mode of operation for color management.")
+  _("Mode of operation for color management.")
 #define DISPLAY_PROFILE_BLURB \
-  N_("The color profile of your (primary) monitor.")
+  _("The color profile of your (primary) monitor.")
 #define DISPLAY_PROFILE_FROM_GDK_BLURB \
-  N_("When enabled, GIMP will try to use the display color profile from " \
-     "the windowing system.  The configured monitor profile is then only " \
-     "used as a fallback.")
+  _("When enabled, GIMP will try to use the display color profile from " \
+    "the windowing system.  The configured monitor profile is then only " \
+    "used as a fallback.")
 #define RGB_PROFILE_BLURB \
-  N_("The default RGB working space color profile.")
+  _("The default RGB working space color profile.")
 #define CMYK_PROFILE_BLURB \
-  N_("The CMYK color profile used to convert between RGB and CMYK.")
+  _("The CMYK color profile used to convert between RGB and CMYK.")
 #define PRINTER_PROFILE_BLURB \
-  N_("The color profile to use for soft proofing from your image's " \
-     "color space to some other color space, including " \
-     "soft proofing to a printer or other output device profile. ")
+  _("The color profile to use for soft proofing from your image's " \
+    "color space to some other color space, including "             \
+    "soft proofing to a printer or other output device profile. ")
 #define DISPLAY_RENDERING_INTENT_BLURB \
-  N_("How colors are converted from your image's color space to your display device. " \
-     "Relative colorimetric is usually the best choice. " \
-     "Unless you use a LUT monitor profile (most monitor profiles are matrix), " \
-     "choosing perceptual intent really gives you relative colorimetric." )
+  _("How colors are converted from your image's color space to your display device. " \
+    "Relative colorimetric is usually the best choice. "                \
+    "Unless you use a LUT monitor profile (most monitor profiles are matrix), " \
+    "choosing perceptual intent really gives you relative colorimetric." )
 #define DISPLAY_USE_BPC_BLURB \
-  N_("Do use black point compensation (unless you know you have a reason not to). ")
-#define SIMULATION_RENDERING_INTENT_BLURB \
-  N_("How colors are converted from your image's color space to the " \
-     "output simulation device (usually your monitor). " \
-     "Try them all and choose what looks the best. ")
-#define SIMULATION_USE_BPC_BLURB \
-  N_("Try with and without black point compensation "\
-     "and choose what looks best. ")
-#define SIMULATION_GAMUT_CHECK_BLURB \
-  N_("When enabled, the print simulation will mark colors " \
-     "which can not be represented in the target color space.")
-#define OUT_OF_GAMUT_COLOR_BLURB \
-  N_("The color to use for marking colors which are out of gamut.")
-
+  _("Do use black point compensation (unless you know you have a reason not to). ")
+#define SIMULATION_RENDERING_INTENT_BLURB                             \
+  _("How colors are converted from your image's color space to the "  \
+    "output simulation device (usually your monitor). "               \
+    "Try them all and choose what looks the best. ")
+#define SIMULATION_USE_BPC_BLURB                        \
+  _("Try with and without black point compensation "\
+    "and choose what looks best. ")
+#define SIMULATION_GAMUT_CHECK_BLURB                        \
+  _("When enabled, the print simulation will mark colors " \
+    "which can not be represented in the target color space.")
+#define OUT_OF_GAMUT_COLOR_BLURB                                        \
+  _("The color to use for marking colors which are out of gamut.")
 
 
 enum

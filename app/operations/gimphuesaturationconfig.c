@@ -30,6 +30,8 @@
 
 #include "gimphuesaturationconfig.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -89,28 +91,28 @@ gimp_hue_saturation_config_class_init (GimpHueSaturationConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_RANGE,
                                  "range",
-                                 "The affected range",
+                                 _("The affected range"),
                                  GIMP_TYPE_HUE_RANGE,
                                  GIMP_ALL_HUES, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HUE,
                                    "hue",
-                                   "Hue",
+                                   _("Hue"),
                                    -1.0, 1.0, 0.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_SATURATION,
                                    "saturation",
-                                   "Saturation",
+                                   _("Saturation"),
                                    -1.0, 1.0, 0.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LIGHTNESS,
                                    "lightness",
-                                   "Lightness",
+                                   _("Lightness"),
                                    -1.0, 1.0, 0.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OVERLAP,
                                    "overlap",
-                                   "Overlap",
+                                   _("Overlap"),
                                    0.0, 1.0, 0.0, 0);
 }
 

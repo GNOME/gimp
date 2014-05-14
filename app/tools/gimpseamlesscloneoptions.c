@@ -69,7 +69,7 @@ gimp_seamless_clone_options_class_init (GimpSeamlessCloneOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_MAX_REFINE_STEPS,
                                  "max-refine-steps",
-                                 N_("Maximal amount of refinement points to be used for the interpolation mesh"),
+                                 _("Maximal amount of refinement points to be used for the interpolation mesh"),
                                  0, 100000, 2000,
                                  GIMP_PARAM_STATIC_STRINGS);
 }

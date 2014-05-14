@@ -807,9 +807,7 @@ prefs_profile_combo_add_tooltip (GtkWidget   *combo,
   blurb = g_param_spec_get_blurb (param_spec);
 
   if (blurb)
-    gimp_help_set_help_data (combo,
-                             dgettext (GETTEXT_PACKAGE "-libgimp", blurb),
-                             NULL);
+    gimp_help_set_help_data (combo, blurb, NULL);
 
   return combo;
 }

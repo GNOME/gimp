@@ -72,23 +72,26 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BEHAVIOR,
                                  "behavior",
-                                 N_("Behavior"),
+                                 _("Behavior"),
                                  GIMP_TYPE_WARP_BEHAVIOR,
                                  GIMP_WARP_BEHAVIOR_MOVE,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_EFFECT_STRENGTH,
-                                   "effect-strength", _("Effect Strength"),
+                                   "effect-strength",
+                                   _("Effect Strength"),
                                    1.0, 100.0, 50.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_EFFECT_SIZE,
-                                   "effect-size", _("Effect Size"),
+                                   "effect-size",
+                                   _("Effect Size"),
                                    1.0, 10000.0, 40.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_EFFECT_HARDNESS,
-                                   "effect-hardness", _("Effect Hardness"),
+                                   "effect-hardness",
+                                   _("Effect Hardness"),
                                    0.0, 1.0, 0.5,
                                    GIMP_PARAM_STATIC_STRINGS);
 }

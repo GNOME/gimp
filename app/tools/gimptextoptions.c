@@ -129,12 +129,12 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT,
                                  "font-size-unit",
-                                 N_("Font size unit"),
+                                 _("Font size unit"),
                                  TRUE, FALSE, GIMP_UNIT_PIXEL,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
                                    "font-size",
-                                   N_("Font size"),
+                                   _("Font size"),
                                    0.0, 8192.0, 18.0,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
@@ -143,16 +143,16 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_HINT_STYLE,
                                  "hint-style",
-                                 N_("Hinting alters the font outline to "
-                                    "produce a crisp bitmap at small "
-                                    "sizes"),
+                                 _("Hinting alters the font outline to "
+                                   "produce a crisp bitmap at small "
+                                   "sizes"),
                                  GIMP_TYPE_TEXT_HINT_STYLE,
                                  GIMP_TEXT_HINT_STYLE_MEDIUM,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
                                    "language",
-                                   N_("The text language may have an effect "
-                                      "on the way the text is rendered."),
+                                   _("The text language may have an effect "
+                                     "on the way the text is rendered."),
                                    (const gchar *) gtk_get_default_language (),
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_DIR,
@@ -162,40 +162,40 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JUSTIFICATION,
                                 "justify",
-                                N_("Text alignment"),
+                                _("Text alignment"),
                                  GIMP_TYPE_TEXT_JUSTIFICATION,
                                  GIMP_TEXT_JUSTIFY_LEFT,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_INDENTATION,
                                    "indent",
-                                   N_("Indentation of the first line"),
+                                   _("Indentation of the first line"),
                                    -8192.0, 8192.0, 0.0,
                                    GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
                                    "line-spacing",
-                                   N_("Adjust line spacing"),
+                                   _("Adjust line spacing"),
                                    -8192.0, 8192.0, 0.0,
                                    GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
                                    "letter-spacing",
-                                   N_("Adjust letter spacing"),
+                                   _("Adjust letter spacing"),
                                    -8192.0, 8192.0, 0.0,
                                    GIMP_PARAM_STATIC_STRINGS |
                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BOX_MODE,
                                 "box-mode",
-                                 N_("Whether text flows into rectangular shape or "
-                                    "moves into a new line when you press Enter"),
+                                 _("Whether text flows into rectangular shape or "
+                                   "moves into a new line when you press Enter"),
                                  GIMP_TYPE_TEXT_BOX_MODE,
                                  GIMP_TEXT_BOX_DYNAMIC,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_EDITOR,
                                     "use-editor",
-                                    N_("Use an external editor window for text "
-                                       "entry"),
+                                    _("Use an external editor window for text "
+                                      "entry"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 

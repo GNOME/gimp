@@ -29,6 +29,8 @@
 
 #include "gimpthresholdconfig.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -68,12 +70,12 @@ gimp_threshold_config_class_init (GimpThresholdConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LOW,
                                    "low",
-                                   "Low threshold",
+                                   _("Low threshold"),
                                    0.0, 1.0, 0.5, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_HIGH,
                                    "high",
-                                   "High threshold",
+                                   _("High threshold"),
                                    0.0, 1.0, 1.0, 0);
 }
 

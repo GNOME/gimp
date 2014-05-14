@@ -81,47 +81,47 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DRAW_MODE,
                                  "draw-mode",
-                                 N_("Paint over areas to mark color values for "
-                                    "inclusion or exclusion from selection"),
+                                 _("Paint over areas to mark color values for "
+                                   "inclusion or exclusion from selection"),
                                  GIMP_TYPE_MATTING_DRAW_MODE,
                                  GIMP_MATTING_DRAW_MODE_FOREGROUND,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_STROKE_WIDTH,
                                  "stroke-width",
-                                 N_("Size of the brush used for refinements"),
+                                 _("Size of the brush used for refinements"),
                                  1, 6000, 10,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MASK_COLOR,
                                  "mask-color",
-                                 N_("Color of selection preview mask"),
+                                 _("Color of selection preview mask"),
                                  GIMP_TYPE_CHANNEL_TYPE,
                                  GIMP_BLUE_CHANNEL,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ENGINE,
                                  "engine",
-                                 N_("Matting engine to use"),
+                                 _("Matting engine to use"),
                                  GIMP_TYPE_MATTING_ENGINE,
                                  GIMP_MATTING_ENGINE_GLOBAL,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_LEVELS,
                                  "levels",
-                                 N_("Parameter for matting-levin"),
+                                 _("Parameter for matting-levin"),
                                  1, 10, 2,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_ACTIVE_LEVELS,
                                  "active-levels",
-                                 N_("Parameter for matting-levin"),
+                                 _("Parameter for matting-levin"),
                                  1, 10, 2,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_ITERATIONS,
                                  "iterations",
-                                 N_("Parameter for matting-global"),
+                                 _("Parameter for matting-global"),
                                  1, 10, 2,
                                  GIMP_PARAM_STATIC_STRINGS);
 }
