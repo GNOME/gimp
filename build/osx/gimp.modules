@@ -2,8 +2,7 @@
 <!DOCTYPE moduleset SYSTEM "moduleset.dtd">
 <?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
 <moduleset>
-	<repository type="git" name="github"
-		href="https://github.com/" />
+	<repository type="git" name="github" href="https://github.com/" />
 
 	<repository type="tarball" name="sourceforge"
 		href="http://downloads.sourceforge.net/sourceforge/" />
@@ -339,7 +338,11 @@
 		autogenargs="--with-gtk=gtk+-2.0">
 		<branch module="gtk-mac-integration/2.0/gtk-mac-integration-2.0.5.tar.xz"
 			version="2.0.5"
-			hash="sha256:6c4ff7501d7ff35e49068052d80fcf76ce494e5953c5f3967e4958b1b0c67b9f" />
+			hash="sha256:6c4ff7501d7ff35e49068052d80fcf76ce494e5953c5f3967e4958b1b0c67b9f">
+			<patch
+				file="0002-Improve-internationalization-of-App-menu-and-other-s.patch"
+				strip="1" />
+		</branch>
 		<dependencies>
 			<!--<dep package="gtk-2.24"/> -->
 		</dependencies>
@@ -989,7 +992,8 @@
 	</autotools>
 
 	<autotools id="gtk-quartz-engine" autogen-sh="autogen.sh">
-		<branch module="jralls/gtk-quartz-engine.git" repo="github" revision="master" />
+		<branch module="jralls/gtk-quartz-engine.git" repo="github"
+			revision="master" />
 		<after>
 			<dep package="gtk+-2.24" />
 		</after>
@@ -1119,7 +1123,11 @@
 		autogenargs="--enable-python --with-gtk=gtk+-2.0">
 		<branch module="gtk-mac-integration/2.0/gtk-mac-integration-2.0.5.tar.xz"
 			version="2.0.5"
-			hash="sha256:6c4ff7501d7ff35e49068052d80fcf76ce494e5953c5f3967e4958b1b0c67b9f" />
+			hash="sha256:6c4ff7501d7ff35e49068052d80fcf76ce494e5953c5f3967e4958b1b0c67b9f">
+			<patch
+				file="0002-Improve-internationalization-of-App-menu-and-other-s.patch"
+				strip="1" />
+		</branch>
 		<dependencies>
 		</dependencies>
 		<after>

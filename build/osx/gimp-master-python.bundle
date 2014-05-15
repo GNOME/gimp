@@ -159,13 +159,7 @@
 	<translations name="libsecret">${prefix}/share/locale</translations>
 	<translations name="libsoup">${prefix}/share/locale</translations>
 	<translations name="shared-mime-info">${prefix}/share/locale</translations>
-
-	<!-- preparation to copy the GTK-Mac-Integration translation strings (Services, 
-		Hide, Show all, Quit etc.) in the 'GIMP' menu to the same place where Simone 
-		(skl) puts them. TODO: examine, understand and apply her solution. See also: 
-		http://sourceforge.net/p/gimponosx/code/HEAD/tree/GimpPorts/ports/graphics/gimp2/files/app-gui-gui-unique.c.diff 
-		https://github.com/jralls/gtk-mac-integration/blob/master/README -->
-	<!-- data dest="${bundle}/Contents/Resources">${prefix}/share/strings</data -->
+	<data dest="${bundle}/Contents/Resources">${prefix}/share/strings</data>
 
 	<!-- Copy in mime data -->
 	<!-- Used for opening up help in browser -->
