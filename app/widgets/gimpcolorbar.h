@@ -26,6 +26,7 @@
 #define GIMP_IS_COLOR_BAR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLOR_BAR))
 #define GIMP_COLOR_BAR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLOR_BAR, GimpColorBarClass))
 
+#define GIMP_COLOR_BAR_SAMPLES         256
 
 typedef struct _GimpColorBarClass  GimpColorBarClass;
 
@@ -34,7 +35,12 @@ struct _GimpColorBar
   GtkEventBox     parent_class;
 
   GtkOrientation  orientation;
-  guchar          buf[3 * 256];
+  guchar          buf[3 * GIMP_COLOR_BAR_SAMPLES];
+
+  GimpRGB         color;
+
+  gdouble         starting;
+  gdouble         ending;
 };
 
 struct _GimpColorBarClass
@@ -43,18 +49,22 @@ struct _GimpColorBarClass
 };
 
 
-GType       gimp_color_bar_get_type    (void) G_GNUC_CONST;
+GType       gimp_color_bar_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_bar_new         (GtkOrientation        orientation);
+GtkWidget * gimp_color_bar_new          (GtkOrientation        orientation);
 
-void        gimp_color_bar_set_color   (GimpColorBar         *bar,
-                                        const GimpRGB        *color);
-void        gimp_color_bar_set_channel (GimpColorBar         *bar,
-                                        GimpHistogramChannel  channel);
-void        gimp_color_bar_set_buffers (GimpColorBar         *bar,
-                                        const guchar         *red,
-                                        const guchar         *green,
-                                        const guchar         *blue);
+void        gimp_color_bar_set_color    (GimpColorBar         *bar,
+                                         const GimpRGB        *color);
+void        gimp_color_bar_set_channel  (GimpColorBar         *bar,
+                                         GimpHistogramChannel  channel);
+void        gimp_color_bar_set_buffers  (GimpColorBar         *bar,
+                                         const guchar         *red,
+                                         const guchar         *green,
+                                         const guchar         *blue);
+void        gimp_color_bar_set_starting (GimpColorBar        *bar,
+                                         gdouble             starting);
+void        gimp_color_bar_set_ending   (GimpColorBar        *bar,
+                                         gdouble             ending);
 
 
 #endif  /*  __GIMP_COLOR_BAR_H__  */

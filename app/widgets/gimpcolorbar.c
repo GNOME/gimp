@@ -32,13 +32,14 @@
 
 #include "gimpcolorbar.h"
 
-
 enum
 {
   PROP_0,
   PROP_ORIENTATION,
   PROP_COLOR,
-  PROP_CHANNEL
+  PROP_CHANNEL,
+  PROP_STARTING,
+  PROP_ENDING
 };
 
 
@@ -95,6 +96,20 @@ gimp_color_bar_class_init (GimpColorBarClass *klass)
                                                       GIMP_TYPE_HISTOGRAM_CHANNEL,
                                                       GIMP_HISTOGRAM_VALUE,
                                                       GIMP_PARAM_WRITABLE));
+
+  g_object_class_install_property (object_class, PROP_STARTING,
+                                   g_param_spec_double ("starting",
+                                                        NULL, NULL,
+                                                        0.0, 1.0,
+                                                        0.0,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_ENDING,
+                                   g_param_spec_double ("ending",
+                                                        NULL, NULL,
+                                                        0.0, 1.0,
+                                                        1.0,
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -103,6 +118,8 @@ gimp_color_bar_init (GimpColorBar *bar)
   gtk_event_box_set_visible_window (GTK_EVENT_BOX (bar), FALSE);
 
   bar->orientation = GTK_ORIENTATION_HORIZONTAL;
+  bar->starting = 0.0;
+  bar->ending = 1.0;
 }
 
 
@@ -124,6 +141,12 @@ gimp_color_bar_set_property (GObject      *object,
       break;
     case PROP_CHANNEL:
       gimp_color_bar_set_channel (bar, g_value_get_enum (value));
+      break;
+    case PROP_STARTING:
+      gimp_color_bar_set_starting (bar, g_value_get_double (value));
+      break;
+    case PROP_ENDING:
+      gimp_color_bar_set_ending (bar, g_value_get_double (value));
       break;
 
     default:
@@ -186,10 +209,11 @@ gimp_color_bar_expose (GtkWidget      *widget,
   cairo_rectangle (cr, 0, 0, width, height);
   cairo_clip (cr);
 
-  surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, 256, 1);
+  surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24,
+                                        GIMP_COLOR_BAR_SAMPLES, 1);
 
   for (i = 0, src = bar->buf, dest = cairo_image_surface_get_data (surface);
-       i < 256;
+       i < GIMP_COLOR_BAR_SAMPLES;
        i++, src += 3, dest += 4)
     {
       GIMP_CAIRO_RGB24_SET_PIXEL(dest, src[0], src[1], src[2]);
@@ -203,12 +227,12 @@ gimp_color_bar_expose (GtkWidget      *widget,
 
   if (bar->orientation == GTK_ORIENTATION_HORIZONTAL)
     {
-      cairo_scale (cr, (gdouble) width / 256.0, 1.0);
+      cairo_scale (cr, (gdouble) width / GIMP_COLOR_BAR_SAMPLES, 1.0);
     }
   else
     {
       cairo_translate (cr, 0, height);
-      cairo_scale (cr, 1.0, (gdouble) height / 256.0);
+      cairo_scale (cr, 1.0, (gdouble) height / GIMP_COLOR_BAR_SAMPLES);
       cairo_rotate (cr, - G_PI / 2);
     }
 
@@ -247,8 +271,9 @@ gimp_color_bar_new (GtkOrientation  orientation)
  * @bar:   a #GimpColorBar widget
  * @color: a #GimpRGB color
  *
- * Makes the @bar display a gradient from black (on the left or the
- * bottom), to the given @color (on the right or at the top).
+ * Makes the @bar display a gradient from dark (on the left or the
+ * bottom), to the given @color (on the right or at the top), limited by
+ * the starting and ending offsets of the bar.
  **/
 void
 gimp_color_bar_set_color (GimpColorBar  *bar,
@@ -256,18 +281,69 @@ gimp_color_bar_set_color (GimpColorBar  *bar,
 {
   guchar *buf;
   gint    i;
+  gdouble color_offset;
 
   g_return_if_fail (GIMP_IS_COLOR_BAR (bar));
   g_return_if_fail (color != NULL);
 
-  for (i = 0, buf = bar->buf; i < 256; i++, buf += 3)
-    {
-      buf[0] = ROUND (color->r * (gdouble) i);
-      buf[1] = ROUND (color->g * (gdouble) i);
-      buf[2] = ROUND (color->b * (gdouble) i);
-    }
+  /* destination color have to be recorded so that it is preserved on
+   * zoom in and out
+   */
+  bar->color = *color;
 
+  for (i = 0, buf = bar->buf; i < GIMP_COLOR_BAR_SAMPLES; i++, buf += 3)
+    {
+      color_offset = (((gdouble) i) * (bar->ending - bar->starting) /
+                      GIMP_COLOR_BAR_SAMPLES  + bar->starting) * 256.0;
+      buf[0] = ROUND (color->r * color_offset);
+      buf[1] = ROUND (color->g * color_offset);
+      buf[2] = ROUND (color->b * color_offset);
+    }
   gtk_widget_queue_draw (GTK_WIDGET (bar));
+}
+
+/**
+ * gimp_color_bar_set_starting:
+ * @bar:   a #GimpColorBar widget
+ * @starting: a #gdouble ranging from 0.0 to 1.0 to mark the starting offset
+ *
+ * Changes the @bar gradient to start from the proportional position,
+ * instead of 0.0 (for black)
+ *
+ **/
+
+void
+gimp_color_bar_set_starting (GimpColorBar *bar,
+                             gdouble starting)
+{
+  g_return_if_fail (GIMP_IS_COLOR_BAR (bar));
+  g_return_if_fail (starting >= 0.0 && starting <= 1.0);
+  /* g_return_if_fail (starting <= bar->ending); */
+
+  bar->starting = starting;
+
+  gimp_color_bar_set_color (bar, &(bar->color));
+}
+
+/**
+ * gimp_color_bar_set_ending:
+ * @bar:   a #GimpColorBar widget
+ * @ending: a #gdouble ranging from 0.0 to 1.0 to mark the ending offset
+ *
+ * Changes the @bar gradient to end at the relative position @ending
+ *
+ **/
+void
+gimp_color_bar_set_ending (GimpColorBar *bar,
+                           gdouble ending)
+{
+  g_return_if_fail (GIMP_IS_COLOR_BAR (bar));
+  g_return_if_fail (ending >= 0.0 && ending <= 1.0);
+  /* g_return_if_fail (ending >= bar->starting); */
+
+  bar->ending = ending;
+
+  gimp_color_bar_set_color (bar, &(bar->color));
 }
 
 /**
@@ -333,7 +409,7 @@ gimp_color_bar_set_buffers (GimpColorBar *bar,
   g_return_if_fail (green != NULL);
   g_return_if_fail (blue != NULL);
 
-  for (i = 0, buf = bar->buf; i < 256; i++, buf += 3)
+  for (i = 0, buf = bar->buf; i < GIMP_COLOR_BAR_SAMPLES; i++, buf += 3)
     {
       buf[0] = red[i];
       buf[1] = green[i];
