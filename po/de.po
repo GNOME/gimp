@@ -13,7 +13,7 @@
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2011, 2012.
 # Daniel Winzen <d@winzen4.de>, 2013.
 # Christian Kirbach <christian.kirbach@gmail.com>, 2011, 2012, 2013.
-# Sven Claussner <sclaussner@src.gnome.org>, 2013.
+# Sven Claussner <sclaussner@src.gnome.org>, 2013, 2014.
 #
 msgid ""
 msgstr ""
@@ -21,8 +21,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2014-02-26 18:28+0000\n"
-"PO-Revision-Date: 2014-02-27 19:34+0100\n"
-"Last-Translator: Christian Kirbach <christian.kirbach@gmail.com>\n"
+"PO-Revision-Date: 2014-05-15 07:08+0100\n"
+"Last-Translator: Sven Claussner <sclaussner@src.gnome.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -1359,15 +1359,20 @@ msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Zeigt hilfreiche Tipps zur Benutzung von GIMP"
 
-#: ../app/actions/dialogs-actions.c:264
+#: ../app/actions/dialogs-actions.c:245 ../app/actions/dialogs-actions.c:251
+msgctxt "dialogs-action"
+msgid "About GIMP"
+msgstr "Über GIMP"
+
+#: ../app/actions/dialogs-actions.c:247
+msgctxt "dialogs-action"
+msgid "About"
+msgstr "Über"
+
+#: ../app/actions/dialogs-actions.c:249
 msgctxt "dialogs-action"
 msgid "_About"
 msgstr "_Info"
-
-#: ../app/actions/dialogs-actions.c:265
-msgctxt "dialogs-action"
-msgid "About GIMP"
-msgstr "Informationen zu GIMP"
 
 #: ../app/actions/dialogs-actions.c:328
 #: ../app/dialogs/preferences-dialog.c:1937 ../app/widgets/gimptoolbox.c:540
