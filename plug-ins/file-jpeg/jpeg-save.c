@@ -44,8 +44,13 @@
 #include "jpeg-save.h"
 #include "jpeg-settings.h"
 
-#define SCALE_WIDTH         125
+#ifdef C_ARITH_CODING_SUPPORTED
+static gboolean arithc_supported = TRUE;
+#else
+static gboolean arithc_supported = FALSE;
+#endif
 
+#define SCALE_WIDTH         125
 
 /* See bugs #63610 and #61088 for a discussion about the quality settings */
 #define DEFAULT_QUALITY          90.0
@@ -401,13 +406,14 @@ save_image (const gchar  *filename,
         }
     }
 
-#ifdef C_ARITH_CODING_SUPPORTED
-  cinfo.arith_code = jsvals.arithmetic_coding;
-  if (!jsvals.arithmetic_coding)
+  if (arithc_supported)
+    {
+      cinfo.arith_code = jsvals.arithmetic_coding;
+      if (!jsvals.arithmetic_coding)
+        cinfo.optimize_coding = jsvals.optimize;
+    }
+  else
     cinfo.optimize_coding = jsvals.optimize;
-#else
-  cinfo.optimize_coding = jsvals.optimize;
-#endif /* C_ARITH_CODING_SUPPORTED */
 
   subsampling = (gimp_drawable_is_rgb (drawable_ID) ?
                  jsvals.subsmp : JPEG_SUBSAMPLING_1x1_1x1_1x1);
@@ -700,7 +706,6 @@ destroy_preview (void)
     }
 }
 
-#ifdef C_ARITH_CODING_SUPPORTED
 static void
 toggle_arithmetic_coding (GtkToggleButton *togglebutton,
                           gpointer         user_data)
@@ -710,7 +715,6 @@ toggle_arithmetic_coding (GtkToggleButton *togglebutton,
   gtk_widget_set_sensitive (optimize,
                             !gtk_toggle_button_get_active (togglebutton));
 }
-#endif /* C_ARITH_CODING_SUPPORTED */
 
 gboolean
 save_dialog (void)
@@ -889,37 +893,37 @@ save_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
 
-#ifdef C_ARITH_CODING_SUPPORTED
-  gtk_widget_set_sensitive (toggle, !jsvals.arithmetic_coding);
-#endif /* C_ARITH_CODING_SUPPORTED */
+  if (arithc_supported)
+    gtk_widget_set_sensitive (toggle, !jsvals.arithmetic_coding);
 
   row++;
 
-#ifdef C_ARITH_CODING_SUPPORTED
-  /* Arithmetic coding */
-  pg.arithmetic_coding = toggle = gtk_check_button_new_with_mnemonic
-    (_("Use arithmetic _coding"));
-  gtk_widget_set_tooltip_text
-    (toggle, _("Older software may have trouble opening "
-               "arithmetic-coded images"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
-                    row, row + 1, GTK_FILL, 0, 0, 0);
-  gtk_widget_show (toggle);
+  if (arithc_supported)
+    {
+      /* Arithmetic coding */
+      pg.arithmetic_coding = toggle = gtk_check_button_new_with_mnemonic
+        (_("Use arithmetic _coding"));
+      gtk_widget_set_tooltip_text
+        (toggle, _("Older software may have trouble opening "
+                   "arithmetic-coded images"));
+      gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
+                        row, row + 1, GTK_FILL, 0, 0, 0);
+      gtk_widget_show (toggle);
 
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &jsvals.arithmetic_coding);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (make_preview),
-                    NULL);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (toggle_arithmetic_coding),
-                    pg.optimize);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                jsvals.arithmetic_coding);
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &jsvals.arithmetic_coding);
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (make_preview),
+                        NULL);
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (toggle_arithmetic_coding),
+                        pg.optimize);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                    jsvals.arithmetic_coding);
 
-  row++;
-#endif /* C_ARITH_CODING_SUPPORTED */
+      row++;
+    }
 
   /* Progressive */
   pg.progressive = toggle =
