@@ -783,8 +783,9 @@ gimp_stock_init (void)
 {
   static gboolean initialized = FALSE;
 
-  gchar *icons_dir;
-  gint   i;
+  GdkPixbuf *pixbuf;
+  gchar     *icons_dir;
+  gint       i;
 
   if (initialized)
     return;
@@ -844,6 +845,10 @@ gimp_stock_init (void)
   gtk_icon_theme_prepend_search_path (gtk_icon_theme_get_default (),
                                       icons_dir);
   g_free (icons_dir);
+
+  pixbuf = gdk_pixbuf_new_from_inline (-1, gimp_wilber_eek_64, FALSE, NULL);
+  gtk_icon_theme_add_builtin_icon (GIMP_STOCK_WILBER_EEK, 64, pixbuf);
+  g_object_unref (pixbuf);
 
   initialized = TRUE;
 }
