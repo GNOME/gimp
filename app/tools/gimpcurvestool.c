@@ -59,6 +59,8 @@
 #define BAR_SIZE    12
 #define RADIUS       4
 
+#define CURVES_SCROLLBAR_STEP_SIZE 0.05
+#define CURVES_SCROLLBAR_PAGE_SIZE 0.75
 
 /*  local function prototypes  */
 
@@ -67,15 +69,25 @@ static void       gimp_curves_tool_constructed     (GObject              *object
 static gboolean   gimp_curves_tool_initialize      (GimpTool             *tool,
                                                     GimpDisplay          *display,
                                                     GError              **error);
+
+static gboolean   gimp_curves_tool_key_press       (GimpTool             *tool,
+                                                    GdkEventKey          *kevent,
+                                                    GimpDisplay          *display);
+
 static void       gimp_curves_tool_button_release  (GimpTool             *tool,
                                                     const GimpCoords     *coords,
                                                     guint32               time,
                                                     GdkModifierType       state,
                                                     GimpButtonReleaseType release_type,
                                                     GimpDisplay          *display);
-static gboolean   gimp_curves_tool_key_press       (GimpTool             *tool,
-                                                    GdkEventKey          *kevent,
-                                                    GimpDisplay          *display);
+
+static gboolean   gimp_curves_tool_control_events  (GtkWidget            *widget,
+                                                    GdkEvent             *event,
+                                                    GimpCurvesTool       *tool);
+
+static void       gimp_curves_tool_zoom            (GimpCurvesTool       *tool,
+                                                    GimpZoomType         zoom_type);
+
 static void       gimp_curves_tool_oper_update     (GimpTool             *tool,
                                                     const GimpCoords     *coords,
                                                     GdkModifierType       state,
@@ -105,6 +117,8 @@ static void       gimp_curves_tool_reset           (GimpFilterTool       *filter
 static gboolean   gimp_curves_tool_settings_import (GimpFilterTool       *filter_tool,
                                                     GInputStream         *input,
                                                     GError              **error);
+
+
 static gboolean   gimp_curves_tool_settings_export (GimpFilterTool       *filter_tool,
                                                     GOutputStream        *output,
                                                     GError              **error);
@@ -117,6 +131,13 @@ static void       gimp_curves_tool_update_channel  (GimpCurvesTool       *tool);
 static void       gimp_curves_tool_config_notify   (GObject              *object,
                                                     GParamSpec           *pspec,
                                                     GimpCurvesTool       *tool);
+
+
+static void       gimp_curves_tool_scrollbar_update(GtkAdjustment       *adjustment,
+                                                    GimpCurvesTool      *tool);
+static void       gimp_curves_tool_set_offsets     (GimpCurvesTool      *tool,
+                                                    gdouble             starting_offset,
+                                                    gdouble             ending_offset);
 
 static void       curves_channel_callback          (GtkWidget            *widget,
                                                     GimpCurvesTool       *tool);
@@ -133,6 +154,7 @@ static gboolean   curves_get_channel_color         (GtkWidget            *widget
                                                     GimpHistogramChannel  channel,
                                                     GimpRGB              *color);
 
+static const GimpRGB * curves_get_channel_color    (GimpHistogramChannel  channel);
 
 G_DEFINE_TYPE (GimpCurvesTool, gimp_curves_tool, GIMP_TYPE_FILTER_TOOL)
 
@@ -315,6 +337,111 @@ gimp_curves_tool_key_press (GimpTool    *tool,
 
   return GIMP_TOOL_CLASS (parent_class)->key_press (tool, kevent, display);
 }
+
+/* Zoom Control */
+static gboolean
+gimp_curves_tool_control_events (GtkWidget          *widget,
+                                 GdkEvent           *event,
+                                 GimpCurvesTool     *tool)
+
+{
+  if (event->type == GDK_SCROLL)
+    {
+      GdkEventScroll *sevent = (GdkEventScroll *) event;
+
+      if (sevent->state & gimp_get_toggle_behavior_mask ())
+        {
+          if (sevent->direction == GDK_SCROLL_UP)
+            gimp_curves_tool_zoom (tool, GIMP_ZOOM_IN);
+          else
+            gimp_curves_tool_zoom (tool, GIMP_ZOOM_OUT);
+        }
+      else
+        {
+          GtkAdjustment *adj = tool->scroll_data;
+          gfloat new_value;
+          new_value = (gtk_adjustment_get_value (adj) +
+                       ((sevent->direction == GDK_SCROLL_UP) ?
+                        - gtk_adjustment_get_page_increment (adj) / 2 :
+                        gtk_adjustment_get_page_increment (adj) / 2));
+          new_value = CLAMP (new_value,
+                             gtk_adjustment_get_lower (adj),
+                             gtk_adjustment_get_upper (adj) -
+                             gtk_adjustment_get_page_size (adj));
+          gtk_adjustment_set_value (adj, new_value);
+        }
+
+      return TRUE;
+    }
+  return FALSE;
+}
+
+/* FIXME: As of now, almost a verbatim copy
+ * of gimp_gradient_editor_zoom -
+ * maybe it should be factored-out
+ */
+static void
+gimp_curves_tool_zoom (GimpCurvesTool *tool,
+                       GimpZoomType    zoom_type)
+{
+  GtkAdjustment *adjustment;
+  gdouble        old_value;
+  gdouble        old_page_size;
+  gdouble        value     = 0.0;
+  gdouble        page_size = 1.0;
+
+  g_return_if_fail (GIMP_IS_CURVES_TOOL (tool));
+
+  adjustment = tool->scroll_data;
+
+  old_value     = gtk_adjustment_get_value (adjustment);
+  old_page_size = gtk_adjustment_get_page_size (adjustment);
+
+    switch (zoom_type)
+    {
+    case GIMP_ZOOM_IN_MAX:
+    case GIMP_ZOOM_IN_MORE:
+    case GIMP_ZOOM_IN:
+      tool->zoom_factor++;
+
+      page_size = 1.0 / tool->zoom_factor;
+      value     = old_value + (old_page_size - page_size) / 2.0;
+      break;
+
+    case GIMP_ZOOM_OUT_MORE:
+    case GIMP_ZOOM_OUT:
+      if (tool->zoom_factor <= 1)
+        return;
+
+      tool->zoom_factor--;
+
+      page_size = 1.0 / tool->zoom_factor;
+      value     = old_value - (page_size - old_page_size) / 2.0;
+
+      if (value < 0.0)
+        value = 0.0;
+      else if ((value + page_size) > 1.0)
+        value = 1.0 - page_size;
+      break;
+
+    case GIMP_ZOOM_OUT_MAX:
+    case GIMP_ZOOM_TO: /* abused as ZOOM_ALL */
+      tool->zoom_factor = 1;
+
+      value     = 0.0;
+      page_size = 1.0;
+      break;
+    }
+
+  gtk_adjustment_configure (adjustment,
+                            value,
+                            gtk_adjustment_get_lower (adjustment),
+                            gtk_adjustment_get_upper (adjustment),
+                            page_size * CURVES_SCROLLBAR_STEP_SIZE,
+                            page_size * CURVES_SCROLLBAR_PAGE_SIZE,
+                            page_size);
+}
+
 
 static void
 gimp_curves_tool_oper_update (GimpTool         *tool,
@@ -554,6 +681,12 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
                           G_OBJECT (tool->graph),  "histogram-scale",
                           G_BINDING_SYNC_CREATE |
                           G_BINDING_BIDIRECTIONAL);
+  g_signal_connect (tool->graph, "event",
+                    G_CALLBACK (gimp_curves_tool_control_events),
+                    tool);
+
+  gimp_histogram_options_connect_view (GIMP_HISTOGRAM_OPTIONS (tool_options),
+                                       GIMP_HISTOGRAM_VIEW (tool->graph));
 
   /*  The bottom color bar  */
   hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
@@ -576,9 +709,29 @@ gimp_curves_tool_dialog (GimpFilterTool *filter_tool)
   gtk_box_pack_start (GTK_BOX (vbox), tool->xrange, TRUE, TRUE, 0);
   gtk_widget_show (tool->xrange);
 
-  bar = gimp_color_bar_new (GTK_ORIENTATION_HORIZONTAL);
-  gtk_box_pack_start (GTK_BOX (vbox), bar, TRUE, TRUE, 0);
-  gtk_widget_show (bar);
+  tool->horizontal_scale = gimp_color_bar_new (GTK_ORIENTATION_HORIZONTAL);
+  gtk_box_pack_start (GTK_BOX (vbox), tool->horizontal_scale, TRUE, TRUE, 0);
+  gtk_widget_show (tool->horizontal_scale);
+
+  /* Scrollbar */
+
+  tool->zoom_factor = 1;
+
+  tool->scroll_data = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 1.0,
+                                                          CURVES_SCROLLBAR_STEP_SIZE,
+                                                          CURVES_SCROLLBAR_PAGE_SIZE,
+                                                          1.0));
+  g_signal_connect (tool->scroll_data, "value-changed",
+                    G_CALLBACK (gimp_curves_tool_scrollbar_update),
+                    tool);
+  g_signal_connect (tool->scroll_data, "changed",
+                    G_CALLBACK (gimp_curves_tool_scrollbar_update),
+                    tool);
+
+  tool->scrollbar = gtk_scrollbar_new (GTK_ORIENTATION_HORIZONTAL,
+                                       tool->scroll_data);
+  gtk_box_pack_start (GTK_BOX (vbox), tool->scrollbar, FALSE, FALSE, 0);
+  gtk_widget_show (tool->scrollbar);
 
   gtk_widget_show (table);
 
@@ -803,6 +956,31 @@ gimp_curves_tool_config_notify (GObject        *object,
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->curve_type),
                                      curve->curve_type);
     }
+}
+
+static void
+gimp_curves_tool_scrollbar_update (GtkAdjustment      *adj,
+                                   GimpCurvesTool *tool)
+{
+  gimp_curves_tool_set_offsets (tool,
+                                gtk_adjustment_get_value (adj),
+                                gtk_adjustment_get_value (adj) +
+                                gtk_adjustment_get_page_size (adj));
+}
+
+static void
+gimp_curves_tool_set_offsets (GimpCurvesTool *tool,
+                              gdouble starting_offset,
+                              gdouble ending_offset)
+{
+
+  gimp_curve_view_set_left_offset (tool->graph, starting_offset);
+  gimp_curve_view_set_right_offset (tool->graph, ending_offset);
+
+  gimp_color_bar_set_starting (GIMP_COLOR_BAR (tool->horizontal_scale),
+                               starting_offset);
+  gimp_color_bar_set_ending  (GIMP_COLOR_BAR (tool->horizontal_scale),
+                              ending_offset);
 }
 
 static void

@@ -39,11 +39,18 @@ struct _GimpCurvesTool
   /* dialog */
   gdouble           picked_color[5];
 
-  GtkWidget        *channel_menu;
-  GtkWidget        *xrange;
-  GtkWidget        *yrange;
-  GtkWidget        *graph;
-  GtkWidget        *curve_type;
+ GtkWidget            *channel_menu;
+  GtkWidget            *xrange;
+  GtkWidget            *yrange;
+  GtkWidget            *graph;
+  GtkWidget            *curve_type;
+  GtkWidget            *horizontal_scale;
+  GtkWidget            *scrollbar;
+
+  /* zoom and scroll control */
+
+  guint                 zoom_factor;
+  GtkAdjustment        *scroll_data;
 
   /* export dialog */
   gboolean          export_old_format;

@@ -65,6 +65,14 @@ struct _GimpCurveView
   gdouble            range_y_min;
   gdouble            range_y_max;
 
+  /* Used for showing a partial curve when zooming in */
+  gdouble            left_offset;
+  gdouble            right_offset;
+
+  /*
+   *gdouble          top_offset;
+   *gdouble          bottom_offset;
+   */
   gdouble            cursor_x;
   gdouble            cursor_y;
   PangoLayout       *cursor_layout;
@@ -116,6 +124,9 @@ void        gimp_curve_view_set_x_axis_label  (GimpCurveView *view,
                                                const gchar   *label);
 void        gimp_curve_view_set_y_axis_label  (GimpCurveView *view,
                                                const gchar   *label);
-
+void        gimp_curve_view_set_left_offset   (GimpCurveView *view,
+                                              gdouble         value);
+void        gimp_curve_view_set_right_offset  (GimpCurveView *view,
+                                              gdouble         value);
 
 #endif /* __GIMP_CURVE_VIEW_H__ */

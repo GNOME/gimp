@@ -47,7 +47,9 @@ enum
   PROP_GRID_ROWS,
   PROP_GRID_COLUMNS,
   PROP_X_AXIS_LABEL,
-  PROP_Y_AXIS_LABEL
+  PROP_Y_AXIS_LABEL,
+  PROP_LEFT_OFFSET,
+  PROP_RIGHT_OFFSET
 };
 
 enum
@@ -100,7 +102,7 @@ static void       gimp_curve_view_paste_clipboard (GimpCurveView    *view);
 static void       gimp_curve_view_set_cursor      (GimpCurveView    *view,
                                                    gdouble           x,
                                                    gdouble           y);
-static void       gimp_curve_view_unset_cursor    (GimpCurveView *view);
+static void       gimp_curve_view_unset_cursor    (GimpCurveView    *view);
 
 
 G_DEFINE_TYPE (GimpCurveView, gimp_curve_view,
@@ -170,6 +172,19 @@ gimp_curve_view_class_init (GimpCurveViewClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_LEFT_OFFSET,
+                                   g_param_spec_double ("left-offset", NULL, NULL,
+                                                        -1000000.0, 1000000.0,
+                                                        0.0,
+                                                        GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_RIGHT_OFFSET,
+                                   g_param_spec_double ("right-offset", NULL, NULL,
+                                                        -1000000.0, 1000000.0,
+                                                        255.0,
+                                                        GIMP_PARAM_READWRITE));
+
+
   curve_view_signals[CUT_CLIPBOARD] =
     g_signal_new ("cut-clipboard",
                   G_TYPE_FROM_CLASS (klass),
@@ -222,6 +237,8 @@ gimp_curve_view_init (GimpCurveView *view)
   view->range_x_max = 1.0;
   view->range_y_min = 0.0;
   view->range_y_max = 1.0;
+  view->left_offset = 0.0;
+  view->right_offset= 1.0;
 
   view->x_axis_label = NULL;
   view->y_axis_label = NULL;
@@ -309,6 +326,12 @@ gimp_curve_view_set_property (GObject      *object,
     case PROP_Y_AXIS_LABEL:
       gimp_curve_view_set_y_axis_label (view, g_value_get_string (value));
       break;
+    case PROP_LEFT_OFFSET:
+        gimp_curve_view_set_left_offset (view, g_value_get_double (value));
+        break;
+    case PROP_RIGHT_OFFSET:
+        gimp_curve_view_set_right_offset (view, g_value_get_double (value));
+        break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -343,10 +366,71 @@ gimp_curve_view_get_property (GObject    *object,
     case PROP_Y_AXIS_LABEL:
       g_value_set_string (value, view->y_axis_label);
       break;
+    case PROP_LEFT_OFFSET:
+      g_value_set_double (value, view->left_offset);
+      break;
+    case PROP_RIGHT_OFFSET:
+      g_value_set_double (value, view->right_offset);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gdouble
+gimp_curve_view_x_to_curve_coord (GimpCurveView *view,
+                                  gdouble x_value)
+{
+  gdouble range = view->right_offset - view->left_offset;
+  return view->left_offset + x_value * range;
+}
+
+static gdouble
+gimp_curve_view_x_to_display_coord (GimpCurveView *view,
+                                    gdouble x_value)
+{
+  gdouble range = view->right_offset - view->left_offset;
+  if (range == 0.0)
+    return 0;
+  return (x_value - view->left_offset) / range;
+
+}
+
+static void
+gimp_curve_view_set_point_with_offsets (GimpCurveView *view,
+                                        GimpCurve     *curve,
+                                        gint           point,
+                                        gdouble        x,
+                                        gdouble        y)
+{
+  gdouble fixed_x = gimp_curve_view_x_to_curve_coord (view, x);
+
+  gimp_curve_set_point (curve, point, fixed_x, y);
+}
+
+static void
+gimp_curve_view_get_point_with_offsets (GimpCurveView *view,
+                                        GimpCurve     *curve,
+                                        gint           point,
+                                        gdouble        *x,
+                                        gdouble        *y)
+{
+  gimp_curve_get_point (curve, point, x, y);
+  if (x != NULL)
+    {
+      *x = gimp_curve_view_x_to_display_coord (view, *x);
+    }
+}
+
+static gdouble
+gimp_curve_view_map_value_with_offsets (GimpCurveView *view,
+                                        GimpCurve *curve,
+                                        gdouble value)
+{
+  return gimp_curve_map_value (curve,
+                               gimp_curve_view_x_to_curve_coord (view,
+                                                                 value));
 }
 
 static void
@@ -392,9 +476,16 @@ gimp_curve_view_draw_grid (GimpCurveView *view,
 
   for (i = 1; i < view->grid_columns; i++)
     {
-      gint x = i * (width - 1) / view->grid_columns;
+      /* TODO: subdivide the grid when using large zoom levels */
 
-      if ((view->grid_columns % 2) == 0 && (i == view->grid_columns / 2))
+      gdouble curve_x = (gdouble) i / view->grid_columns;
+      gdouble display_x = gimp_curve_view_x_to_display_coord(view, curve_x);
+      gint x = display_x * (width - 1);
+
+      /* if ((view->grid_columns % 2) == 0 && (i == view->grid_columns / 2))
+        continue; */
+
+      if (display_x < 0.0 || display_x > 1.0)
         continue;
 
       cairo_move_to (cr, border + x, border);
@@ -418,13 +509,18 @@ gimp_curve_view_draw_grid (GimpCurveView *view,
       cairo_line_to (cr, border + width - 1, border + y);
     }
 
-  if ((view->grid_columns % 2) == 0)
+  /* without the zoom code this was special cased,
+   * I could not figure out why
+   */
+
+  /* if ((view->grid_columns % 2) == 0)
     {
       gint x = (width - 1) / 2;
 
       cairo_move_to (cr, border + x, border);
       cairo_line_to (cr, border + x, border + height - 1);
     }
+  */
 
   cairo_set_line_width (cr, 1.0);
   cairo_stroke (cr);
@@ -440,7 +536,7 @@ gimp_curve_view_draw_point (GimpCurveView *view,
 {
   gdouble x, y;
 
-  gimp_curve_get_point (view->curve, i, &x, &y);
+  gimp_curve_view_get_point_with_offsets (view, view->curve, i, &x, &y);
 
   if (x < 0.0)
     return;
@@ -471,7 +567,7 @@ gimp_curve_view_draw_curve (GimpCurveView *view,
   gint    i;
 
   x = 0.0;
-  y = 1.0 - gimp_curve_map_value (curve, 0.0);
+  y = 1.0 - gimp_curve_view_map_value_with_offsets (view, curve, 0.0);
 
   cairo_move_to (cr,
                  border + (gdouble) (width  - 1) * x,
@@ -480,7 +576,7 @@ gimp_curve_view_draw_curve (GimpCurveView *view,
   for (i = 1; i < 256; i++)
     {
       x = (gdouble) i / 255.0;
-      y = 1.0 - gimp_curve_map_value (curve, x);
+      y = 1.0 - gimp_curve_view_map_value_with_offsets (view, curve, x);
 
       cairo_line_to (cr,
                      border + (gdouble) (width  - 1) * x,
@@ -507,6 +603,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
   gint           layout_y;
   gdouble        x, y;
   gint           i;
+  gdouble        display_xpos;
 
   GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
 
@@ -641,8 +738,9 @@ gimp_curve_view_expose (GtkWidget      *widget,
           cairo_fill (cr);
        }
     }
+  display_xpos = gimp_curve_view_x_to_display_coord(view, view->xpos);
 
-  if (view->xpos >= 0.0)
+  if (display_xpos >= 0.0 && display_xpos <= 1.0)
     {
       gchar buf[32];
 
@@ -650,10 +748,10 @@ gimp_curve_view_expose (GtkWidget      *widget,
 
       /* draw the color line */
       cairo_move_to (cr,
-                     border + ROUND ((gdouble) (width - 1) * view->xpos),
+                     border + ROUND ((gdouble) (width - 1) * display_xpos),
                      border + 1);
       cairo_line_to (cr,
-                     border + ROUND ((gdouble) (width - 1) * view->xpos),
+                     border + ROUND ((gdouble) (width - 1) * display_xpos),
                      border + height - 1);
       cairo_stroke (cr);
 
@@ -689,13 +787,13 @@ gimp_curve_view_expose (GtkWidget      *widget,
       pango_layout_set_text (view->layout, buf, -1);
       pango_layout_get_pixel_size (view->layout, &layout_x, &layout_y);
 
-      if (view->xpos < 0.5)
+      if (display_xpos < 0.5)
         layout_x = border;
       else
         layout_x = -(layout_x + border);
 
       cairo_move_to (cr,
-                     border + (gdouble) width * view->xpos + layout_x,
+                     border + (gdouble) width * display_xpos + layout_x,
                      border + height - border - layout_y);
       pango_cairo_show_layout (cr, view->layout);
     }
@@ -705,6 +803,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
     {
       gchar  buf[32];
       gint   w, h;
+      gdouble curve_x = gimp_curve_view_x_to_curve_coord (view, view->cursor_x);
 
       if (! view->cursor_layout)
         view->cursor_layout = gtk_widget_create_pango_layout (widget, NULL);
@@ -715,7 +814,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
           /*  stupid heuristic: special-case for 0..255  */
 
           g_snprintf (buf, sizeof (buf), "x:%3d y:%3d",
-                      (gint) (view->cursor_x *
+                      (gint) (curve_x *
                               (view->range_x_max - view->range_x_min) +
                               view->range_x_min),
                       (gint) ((1.0 - view->cursor_y) *
@@ -728,7 +827,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
           /*  and for 0..100  */
 
           g_snprintf (buf, sizeof (buf), "x:%0.2f y:%0.2f",
-                      view->cursor_x *
+                      curve_x *
                       (view->range_x_max - view->range_x_min) +
                       view->range_x_min,
                       (1.0 - view->cursor_y) *
@@ -738,7 +837,7 @@ gimp_curve_view_expose (GtkWidget      *widget,
       else
         {
           g_snprintf (buf, sizeof (buf), "x:%0.3f y:%0.3f",
-                      view->cursor_x *
+                      curve_x *
                       (view->range_x_max - view->range_x_min) +
                       view->range_x_min,
                       (1.0 - view->cursor_y) *
@@ -826,7 +925,9 @@ gimp_curve_view_button_press (GtkWidget      *widget,
   x = CLAMP (x, 0.0, 1.0);
   y = CLAMP (y, 0.0, 1.0);
 
-  closest_point = gimp_curve_get_closest_point (curve, x);
+  closest_point = gimp_curve_get_closest_point (
+                                  curve,
+                                  gimp_curve_view_x_to_curve_coord(view, x));
 
   view->grabbed = TRUE;
 
@@ -835,7 +936,7 @@ gimp_curve_view_button_press (GtkWidget      *widget,
   switch (gimp_curve_get_curve_type (curve))
     {
     case GIMP_CURVE_SMOOTH:
-      /*  determine the leftmost and rightmost points  */
+      /*  determine the leftmost and rightmost points of the curve (not display) */
       view->leftmost = -1.0;
       for (i = closest_point - 1; i >= 0; i--)
         {
@@ -866,14 +967,18 @@ gimp_curve_view_button_press (GtkWidget      *widget,
 
       gimp_curve_view_set_selected (view, closest_point);
 
-      gimp_curve_set_point (curve, view->selected, x, 1.0 - y);
+      gimp_curve_view_set_point_with_offsets (view,
+                                              curve,
+                                              view->selected, x, 1.0 - y);
       break;
 
     case GIMP_CURVE_FREE:
       view->last_x = x;
       view->last_y = y;
 
-      gimp_curve_set_curve (curve, x, 1.0 - y);
+      gimp_curve_set_curve (curve,
+                            gimp_curve_view_x_to_curve_coord (view, x),
+                            1.0 - y);
       break;
     }
 
@@ -929,14 +1034,19 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
   x = CLAMP (x, 0.0, 1.0);
   y = CLAMP (y, 0.0, 1.0);
 
-  closest_point = gimp_curve_get_closest_point (curve, x);
+  closest_point = gimp_curve_get_closest_point (
+                                  curve,
+                                  gimp_curve_view_x_to_curve_coord(view, x));
 
   switch (gimp_curve_get_curve_type (curve))
     {
     case GIMP_CURVE_SMOOTH:
       if (! view->grabbed) /*  If no point is grabbed...  */
         {
-          gimp_curve_get_point (curve, closest_point, &point_x, NULL);
+          gimp_curve_view_get_point_with_offsets (view,
+                                                  curve,
+                                                  closest_point,
+                                                  &point_x, NULL);
 
           if (point_x >= 0.0)
             new_cursor = GDK_FLEUR;
@@ -945,24 +1055,26 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
         }
       else /*  Else, drag the grabbed point  */
         {
+          gdouble curve_x = gimp_curve_view_x_to_curve_coord(view, x);
+
           new_cursor = GDK_TCROSS;
 
           gimp_data_freeze (GIMP_DATA (curve));
 
           gimp_curve_set_point (curve, view->selected, -1.0, -1.0);
 
-          if (x > view->leftmost && x < view->rightmost)
+          if (curve_x > view->leftmost && curve_x < view->rightmost)
             {
               gint n_points = gimp_curve_get_n_points (curve);
 
-              closest_point = ROUND (x * (gdouble) (n_points - 1));
+              closest_point = ROUND (curve_x * (gdouble) (n_points - 1));
 
               gimp_curve_get_point (curve, closest_point, &point_x, NULL);
 
               if (point_x < 0.0)
                 gimp_curve_view_set_selected (view, closest_point);
 
-              gimp_curve_set_point (curve, view->selected, x, 1.0 - y);
+              gimp_curve_set_point (curve, view->selected, curve_x, 1.0 - y);
             }
 
           gimp_data_thaw (GIMP_DATA (curve));
@@ -1004,7 +1116,9 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
                   gdouble xpos = (gdouble) i / (gdouble) (n_samples - 1);
                   gdouble ypos = (y1 + ((y2 - y1) * (xpos - x1)) / (x2 - x1));
 
-                  xpos = CLAMP (xpos, 0.0, 1.0);
+                  xpos = gimp_curve_view_x_to_curve_coord(
+                                                     view,
+                                                     CLAMP (xpos, 0.0, 1.0));
                   ypos = CLAMP (ypos, 0.0, 1.0);
 
                   gimp_curve_set_curve (curve, xpos, 1.0 - ypos);
@@ -1061,14 +1175,15 @@ gimp_curve_view_key_press (GtkWidget   *widget,
       gint    i = view->selected;
       gdouble x, y;
 
-      gimp_curve_get_point (curve, i, NULL, &y);
+      gimp_curve_view_get_point_with_offsets (view, curve, i, NULL, &y);
 
       switch (kevent->keyval)
         {
         case GDK_KEY_Left:
           for (i = i - 1; i >= 0 && ! handled; i--)
             {
-              gimp_curve_get_point (curve, i, &x, NULL);
+              gimp_curve_view_get_point_with_offsets (view,
+                                                      curve, i, &x, NULL);
 
               if (x >= 0.0)
                 {
@@ -1082,7 +1197,8 @@ gimp_curve_view_key_press (GtkWidget   *widget,
         case GDK_KEY_Right:
           for (i = i + 1; i < curve->n_points && ! handled; i++)
             {
-              gimp_curve_get_point (curve, i, &x, NULL);
+              gimp_curve_view_get_point_with_offsets (view,
+                                                      curve, i, &x, NULL);
 
               if (x >= 0.0)
                 {
@@ -1371,6 +1487,14 @@ gimp_curve_view_set_range_x (GimpCurveView *view,
   view->range_x_min = min;
   view->range_x_max = max;
 
+  /* Reset the viewing slice as if zoom factor is 1.0
+   * if this causes strange behavior, if that
+   * is not the case, calling code should set
+   * left_ and right_ offsets after setting the range
+   */
+  view->left_offset = 0.0;
+  view->right_offset = 1.0;
+
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
@@ -1430,6 +1554,23 @@ gimp_curve_view_set_y_axis_label (GimpCurveView *view,
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
 
+void
+gimp_curve_view_set_left_offset (GimpCurveView *view,
+                                 gdouble value)
+{
+  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+  view->left_offset = value;
+  gtk_widget_queue_draw (GTK_WIDGET (view));
+}
+
+void
+gimp_curve_view_set_right_offset (GimpCurveView *view,
+                                  gdouble value)
+{
+  g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
+  view->right_offset = value;
+  gtk_widget_queue_draw (GTK_WIDGET (view));
+}
 
 /*  private functions  */
 
@@ -1454,3 +1595,4 @@ gimp_curve_view_unset_cursor (GimpCurveView *view)
   /* TODO: only invalidate the cursor label area */
   gtk_widget_queue_draw (GTK_WIDGET (view));
 }
+
