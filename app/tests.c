@@ -82,6 +82,8 @@ gimp_init_for_testing (void)
 
 #ifndef GIMP_CONSOLE_COMPILATION
 
+#ifndef G_OS_WIN32
+
 static void
 gimp_init_icon_theme_for_testing (void)
 {
@@ -143,6 +145,8 @@ gimp_init_icon_theme_for_testing (void)
   g_free (icon_root);
 }
 
+#endif /* G_OS_WIN32 */
+
 static Gimp *
 gimp_init_for_gui_testing_internal (gboolean     show_gui,
                                     const gchar *gimprc)
@@ -166,7 +170,9 @@ gimp_init_for_gui_testing_internal (gboolean     show_gui,
   gimp_load_config (gimp, gimprc, NULL);
   gimp_gegl_init (gimp);
   gui_init (gimp, TRUE);
+#ifndef G_OS_WIN32
   gimp_init_icon_theme_for_testing ();
+#endif
   gimp_initialize (gimp, gimp_status_func_dummy);
   gimp_restore (gimp, gimp_status_func_dummy);
 
