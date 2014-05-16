@@ -104,6 +104,8 @@ static void      gimp_image_map_tool_color_picked   (GimpColorTool    *color_too
                                                      const GimpRGB    *color,
                                                      gint              color_index);
 
+static void      gimp_image_map_tool_real_reset     (GimpImageMapTool *im_tool);
+
 static void      gimp_image_map_tool_halt           (GimpImageMapTool *im_tool);
 static void      gimp_image_map_tool_commit         (GimpImageMapTool *im_tool);
 
@@ -185,7 +187,7 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
   klass->get_operation       = NULL;
   klass->map                 = NULL;
   klass->dialog              = NULL;
-  klass->reset               = NULL;
+  klass->reset               = gimp_image_map_tool_real_reset;
   klass->get_settings_ui     = gimp_image_map_tool_real_get_settings_ui;
   klass->settings_import     = gimp_image_map_tool_real_settings_import;
   klass->settings_export     = gimp_image_map_tool_real_settings_export;
@@ -575,6 +577,24 @@ gimp_image_map_tool_color_picked (GimpColorTool      *color_tool,
 }
 
 static void
+gimp_image_map_tool_real_reset (GimpImageMapTool *im_tool)
+{
+  if (im_tool->config)
+    {
+      if (im_tool->default_config)
+        {
+          gimp_config_copy (GIMP_CONFIG (im_tool->default_config),
+                            GIMP_CONFIG (im_tool->config),
+                            0);
+        }
+      else
+        {
+          gimp_config_reset (GIMP_CONFIG (im_tool->config));
+        }
+    }
+}
+
+static void
 gimp_image_map_tool_halt (GimpImageMapTool *im_tool)
 {
   GimpTool *tool = GIMP_TOOL (im_tool);
@@ -666,23 +686,13 @@ gimp_image_map_tool_dialog_unmap (GtkWidget        *dialog,
 static void
 gimp_image_map_tool_reset (GimpImageMapTool *tool)
 {
-  if (GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->reset)
-    {
-      GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->reset (tool);
-    }
-  else if (tool->config)
-    {
-      if (tool->default_config)
-        {
-          gimp_config_copy (GIMP_CONFIG (tool->default_config),
-                            GIMP_CONFIG (tool->config),
-                            0);
-        }
-      else
-        {
-          gimp_config_reset (GIMP_CONFIG (tool->config));
-        }
-    }
+  if (tool->config)
+    g_object_freeze_notify (tool->config);
+
+  GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool)->reset (tool);
+
+  if (tool->config)
+    g_object_thaw_notify (tool->config);
 }
 
 static void

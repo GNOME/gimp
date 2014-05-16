@@ -605,24 +605,11 @@ gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
   GimpLevelsTool       *tool    = GIMP_LEVELS_TOOL (image_map_tool);
   GimpHistogramChannel  channel = tool->config->channel;
 
-  g_object_freeze_notify (image_map_tool->config);
-
-  if (image_map_tool->default_config)
-    {
-      gimp_config_copy (GIMP_CONFIG (image_map_tool->default_config),
-                        GIMP_CONFIG (image_map_tool->config),
-                        0);
-    }
-  else
-    {
-      gimp_config_reset (GIMP_CONFIG (image_map_tool->config));
-    }
+  GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->reset (image_map_tool);
 
   g_object_set (tool->config,
                 "channel", channel,
                 NULL);
-
-  g_object_thaw_notify (image_map_tool->config);
 }
 
 static gboolean
