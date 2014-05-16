@@ -40,6 +40,7 @@
 
 
 #define SAVE_PROC      "file-gif-save"
+#define SAVE2_PROC     "file-gif-save2"
 #define PLUG_IN_BINARY "file-gif-save"
 #define PLUG_IN_ROLE   "gimp-file-gif-save"
 
@@ -128,20 +129,31 @@ static GIFSaveVals gsvals =
 
 MAIN ()
 
+#define COMMON_SAVE_ARGS \
+    { GIMP_PDB_INT32,    "run-mode",        "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" }, \
+    { GIMP_PDB_IMAGE,    "image",           "Image to save" }, \
+    { GIMP_PDB_DRAWABLE, "drawable",        "Drawable to save" }, \
+    { GIMP_PDB_STRING,   "filename",        "The name of the file to save the image in" }, \
+    { GIMP_PDB_STRING,   "raw-filename",    "The name entered" }, \
+    { GIMP_PDB_INT32,    "interlace",       "Try to save as interlaced" }, \
+    { GIMP_PDB_INT32,    "loop",            "(animated gif) loop infinitely" }, \
+    { GIMP_PDB_INT32,    "default-delay",   "(animated gif) Default delay between framese in milliseconds" }, \
+    { GIMP_PDB_INT32,    "default-dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
+
 static void
 query (void)
 {
   static const GimpParamDef save_args[] =
   {
-    { GIMP_PDB_INT32,    "run-mode",        "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",           "Image to save" },
-    { GIMP_PDB_DRAWABLE, "drawable",        "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",        "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename",    "The name entered" },
-    { GIMP_PDB_INT32,    "interlace",       "Try to save as interlaced" },
-    { GIMP_PDB_INT32,    "loop",            "(animated gif) loop infinitely" },
-    { GIMP_PDB_INT32,    "default-delay",   "(animated gif) Default delay between framese in milliseconds" },
-    { GIMP_PDB_INT32,    "default-dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
+    COMMON_SAVE_ARGS
+  };
+
+  static const GimpParamDef save2_args[] =
+  {
+    COMMON_SAVE_ARGS,
+    { GIMP_PDB_INT32,    "as-animation", "Save GIF as animation?" },
+    { GIMP_PDB_INT32,    "force-delay", "(animated gif) Use specified delay for all frames?" },
+    { GIMP_PDB_INT32,    "force-dispose", "(animated gif) Use specified disposal for all frames?" }
   };
 
   gimp_install_procedure (SAVE_PROC,
@@ -149,7 +161,7 @@ query (void)
                           "Save a file in Compuserve GIF format, with "
                           "possible animation, transparency, and comment.  "
                           "To save an animation, operate on a multi-layer "
-                          "file.  The plug-in will intrepret <50% alpha as "
+                          "file.  The plug-in will interpret <50% alpha as "
                           "transparent.  When run non-interactively, the "
                           "value for the comment is taken from the "
                           "'gimp-comment' parasite.  ",
@@ -161,6 +173,25 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
+
+  gimp_install_procedure (SAVE2_PROC,
+                          "saves files in Compuserve GIF file format",
+                          "Save a file in Compuserve GIF format, with "
+                          "possible animation, transparency, and comment.  "
+                          "To save an animation, operate on a multi-layer "
+                          "file and give the 'as-animation' parameter "
+                          "as TRUE.  The plug-in will interpret <50% "
+                          "alpha as transparent.  When run "
+                          "non-interactively, the value for the comment "
+                          "is taken from the 'gimp-comment' parasite.  ",
+                          "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
+                          "Spencer Kimball, Peter Mattis, Adam Moss, David Koblas",
+                          "1995-1997",
+                          N_("GIF image"),
+                          "INDEXED*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save2_args), 0,
+                          save2_args, NULL);
 
   gimp_register_file_handler_mime (SAVE_PROC, "image/gif");
   gimp_register_save_handler (SAVE_PROC, "gif", "");
@@ -189,7 +220,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (strcmp (name, SAVE_PROC) == 0)
+  if (strcmp (name, SAVE_PROC) == 0 || strcmp (name, SAVE2_PROC) == 0)
     {
       const gchar *filename;
       gint32       image_ID, sanitized_image_ID = 0;
@@ -226,7 +257,7 @@ run (const gchar      *name,
 
             case GIMP_RUN_NONINTERACTIVE:
               /*  Make sure all the arguments are there!  */
-              if (nparams != 9)
+              if (nparams != 9 && nparams != 12)
                 {
                   status = GIMP_PDB_CALLING_ERROR;
                 }
@@ -237,6 +268,12 @@ run (const gchar      *name,
                   gsvals.loop            = (param[6].data.d_int32) ? TRUE : FALSE;
                   gsvals.default_delay   = param[7].data.d_int32;
                   gsvals.default_dispose = param[8].data.d_int32;
+		  if (nparams == 12)
+		    {
+		      gsvals.as_animation = (param[9].data.d_int32) ? TRUE : FALSE;
+		      gsvals.always_use_default_delay = (param[10].data.d_int32) ? TRUE : FALSE;
+		      gsvals.always_use_default_dispose = (param[11].data.d_int32) ? TRUE : FALSE;
+		    }
                 }
               break;
 
