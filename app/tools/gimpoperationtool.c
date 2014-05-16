@@ -519,14 +519,14 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
               g_object_set (op_tool->config, pspec->name, bounds_height, NULL);
             }
         }
-      else if (HAS_KEY (pspec, "role", "foreground"))
+      else if (HAS_KEY (pspec, "role", "color-primary"))
         {
           GimpRGB color;
 
           gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
           g_object_set (op_tool->config, pspec->name, &color, NULL);
         }
-      else if (HAS_KEY (pspec, "role", "background"))
+      else if (HAS_KEY (pspec, "role", "color-secondary"))
         {
           GimpRGB color;
 
