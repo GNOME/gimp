@@ -332,7 +332,7 @@ gimp_text_style_editor_constructed (GObject *object)
                                         "format-text-underline",
                                         _("Underline"));
   gimp_text_style_editor_create_toggle (editor, editor->buffer->strikethrough_tag,
-                                        "format-edit-strikethrough",
+                                        "format-text-strikethrough",
                                         _("Strikethrough"));
 
   g_signal_connect_swapped (editor->text, "notify::font",
