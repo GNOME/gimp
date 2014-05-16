@@ -21,6 +21,7 @@
 #include "config.h"
 
 #include <gegl.h>
+#include <gegl-plugin.h>
 
 #include "gimp-gegl-types.h"
 
@@ -123,4 +124,17 @@ gimp_gegl_progress_connect (GeglNode     *node,
                             (GDestroyNotify) g_free);
 
   g_object_unref (operation);
+}
+
+gboolean
+gimp_gegl_param_spec_has_key (GParamSpec  *pspec,
+                              const gchar *key,
+                              const gchar *value)
+{
+  const gchar *v = gegl_param_spec_get_property_key (pspec, key);
+
+  if (v && ! strcmp (v, value))
+    return TRUE;
+
+  return FALSE;
 }

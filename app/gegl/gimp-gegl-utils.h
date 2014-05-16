@@ -31,5 +31,9 @@ void          gimp_gegl_progress_connect        (GeglNode              *node,
                                                  GimpProgress          *progress,
                                                  const gchar           *text);
 
+gboolean      gimp_gegl_param_spec_has_key      (GParamSpec            *pspec,
+                                                 const gchar           *key,
+                                                 const gchar           *value);
+
 
 #endif /* __GIMP_GEGL_UTILS_H__ */

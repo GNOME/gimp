@@ -488,39 +488,46 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
 
   for (i = 0; i < n_pspecs; i++)
     {
-      GParamSpec  *pspec = pspecs[i];
-      const gchar *role  = gegl_param_spec_get_property_key (pspec, "role");
+      GParamSpec *pspec = pspecs[i];
 
-      if (role)
+#define HAS_KEY(p,k,v) gimp_gegl_param_spec_has_key (p, k, v)
+
+      if (HAS_KEY (pspec, "role", "output-extent"))
         {
-          if (! strcmp (role, "source-x"))
+          if (HAS_KEY (pspec, "unit", "pixel-coordinate") &&
+              HAS_KEY (pspec, "axis", "x"))
             {
               g_object_set (op_tool->config, pspec->name, 0, NULL);
             }
-          else if (! strcmp (role, "source-y"))
+          else if (HAS_KEY (pspec, "unit", "pixel-coordinate") &&
+                   HAS_KEY (pspec, "axis", "y"))
             {
               g_object_set (op_tool->config, pspec->name, 0, NULL);
             }
-          else if (! strcmp (role, "source-width"))
+          else if (HAS_KEY (pspec, "unit", "pixel-distance") &&
+                   HAS_KEY (pspec, "axis", "x"))
             {
               g_object_set (op_tool->config, pspec->name, bounds_width, NULL);
             }
-          else if (! strcmp (role, "source-height"))
+          else if (HAS_KEY (pspec, "unit", "pixel-distance") &&
+                   HAS_KEY (pspec, "axis", "x"))
             {
               g_object_set (op_tool->config, pspec->name, bounds_height, NULL);
             }
-          else if (! strcmp (role, "foreground") ||
-                   ! strcmp (role, "background"))
-            {
-              GimpRGB color;
+        }
+      else if (HAS_KEY (pspec, "role", "foreground"))
+        {
+          GimpRGB color;
 
-              if (! strcmp (role, "foreground"))
-                gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
-              else
-                gimp_context_get_background (GIMP_CONTEXT (options), &color);
+          gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+          g_object_set (op_tool->config, pspec->name, &color, NULL);
+        }
+      else if (HAS_KEY (pspec, "role", "background"))
+        {
+          GimpRGB color;
 
-              g_object_set (op_tool->config, pspec->name, &color, NULL);
-            }
+          gimp_context_get_background (GIMP_CONTEXT (options), &color);
+          g_object_set (op_tool->config, pspec->name, &color, NULL);
         }
     }
 
