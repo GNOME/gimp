@@ -244,5 +244,14 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                  g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name);
     }
 
+  if (copy)
+    {
+      GQuark      quark = g_quark_from_static_string ("gegl-property-keys");
+      GHashTable *keys  = g_param_spec_get_qdata (pspec, quark);
+
+      if (keys)
+        g_param_spec_set_qdata (copy, quark, g_hash_table_ref (keys));
+    }
+
   return copy;
 }
