@@ -240,6 +240,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:noise-spread",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_SPREAD */ },
 
+  { "filters-panorama-projection", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Panorama Projection..."), NULL, NULL,
+    "gegl:panorama-projection",
+    NULL /* FIXME GIMP_HELP_FILTER_PANORAMA_PROJECTION */ },
+
   { "filters-photocopy", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Photocopy..."), NULL, NULL,
     "gegl:photocopy",
@@ -436,6 +441,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-noise-slur",              writable);
   SET_SENSITIVE ("filters-noise-spread",            writable);
   SET_SENSITIVE ("filters-lens-distortion",         writable);
+  SET_SENSITIVE ("filters-panorama-projection",     writable);
   SET_SENSITIVE ("filters-photocopy",               writable);
   SET_SENSITIVE ("filters-pixelize",                writable);
   SET_SENSITIVE ("filters-plasma",                  writable);

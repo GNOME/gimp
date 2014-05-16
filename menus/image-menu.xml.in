@@ -696,6 +696,7 @@
       <menu action="plug-in-map-menu" name="Map">
         <menuitem action="filters-bump-map" />
         <menuitem action="filters-fractal-trace" />
+        <menuitem action="filters-panorama-projection" />
         <menuitem action="filters-tile-seamless" />
       </menu>
       <menu action="plug-in-render-menu" name="Render">

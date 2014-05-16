@@ -515,6 +515,7 @@ sanity_check_gegl_ops (void)
     "gegl:noise-spread",
     "gegl:opacity",
     "gegl:over",
+    "gegl:panorama-projection",
     "gegl:perlin-noise",
     "gegl:photocopy",
     "gegl:pixelize",
