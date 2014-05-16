@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpparamspecs-duplicate.c
- * Copyright (C) 2008-2009 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2008-2014 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-gegl-utils.h"
+
 #include "gimpparamspecs.h"
 #include "gimpparamspecs-duplicate.h"
 
@@ -44,7 +46,10 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
 
   g_return_val_if_fail (pspec != NULL, NULL);
 
-  flags = pspec->flags | GIMP_CONFIG_PARAM_SERIALIZE;
+  flags = pspec->flags;
+
+  if (! gimp_gegl_param_spec_has_key (pspec, "role", "output-extent"))
+    flags |= GIMP_CONFIG_PARAM_SERIALIZE;
 
   if (G_IS_PARAM_SPEC_STRING (pspec))
     {
