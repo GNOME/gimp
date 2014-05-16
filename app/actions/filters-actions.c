@@ -290,6 +290,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gimp:threshold-alpha",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
 
+  { "filters-tile-glass", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Glass Tile..."), NULL, NULL,
+    "gegl:tile-glass",
+    NULL /* FIXME GIMP_HELP_FILTER_TILE_GLASS */ },
+
   { "filters-tile-seamless", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Tile Seamless..."), NULL, NULL,
     "gegl:tile-seamless",
@@ -431,6 +436,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-stretch-contrast",        writable);
   SET_SENSITIVE ("filters-stretch-contrast-hsv",    writable);
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
+  SET_SENSITIVE ("filters-tile-glass",              writable);
   SET_SENSITIVE ("filters-tile-seamless",           writable);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);
   SET_SENSITIVE ("filters-vignette",                writable);
