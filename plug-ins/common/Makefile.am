@@ -150,7 +150,6 @@ libexec_PROGRAMS = \
 	sparkle \
 	sphere-designer \
 	tile \
-	tile-glass \
 	tile-paper \
 	tile-small \
 	unit-editor \
@@ -2050,23 +2049,6 @@ tile_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(tile_RC)
-
-tile_glass_SOURCES = \
-	tile-glass.c
-
-tile_glass_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(tile_glass_RC)
 
 tile_paper_SOURCES = \
 	tile-paper.c

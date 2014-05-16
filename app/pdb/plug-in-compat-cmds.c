@@ -843,6 +843,51 @@ plug_in_gauss_rle2_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_glasstile_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 tilex;
+  gint32 tiley;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  tilex = g_value_get_int (gimp_value_array_index (args, 3));
+  tiley = g_value_get_int (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",   "gegl:tile-glass",
+                                      "tile-width",  tilex,
+                                      "tile-height", tiley,
+                                      NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Glass Tile"),
+                                         node);
+
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_hsv_noise_invoker (GimpProcedure         *procedure,
                            Gimp                  *gimp,
                            GimpContext           *context,
@@ -3006,6 +3051,54 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     "Vertical radius of gaussian blur (in pixels",
                                                     0.0, 500.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-glasstile
+   */
+  procedure = gimp_procedure_new (plug_in_glasstile_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-glasstile");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-glasstile",
+                                     "Simulate distortion caused by square glass tiles",
+                                     "Divide the image into square glassblocks in which the image is refracted.",
+                                     "Compatibility procedure. Please see 'gegl:tile-glass' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:tile-glass' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("tilex",
+                                                      "tilex",
+                                                      "Tile width",
+                                                      10, 500, 10,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("tiley",
+                                                      "tiley",
+                                                      "Tile height",
+                                                      10, 500, 10,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -105,7 +105,6 @@
     'sparkle' => { ui => 1 },
     'sphere-designer' => { ui => 1 },
     'tile' => { ui => 1 },
-    'tile-glass' => { ui => 1 },
     'tile-paper' => { ui => 1 },
     'tile-small' => { ui => 1 },
     'unit-editor' => { ui => 1 },

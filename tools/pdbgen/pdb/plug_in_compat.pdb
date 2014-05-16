@@ -839,6 +839,58 @@ CODE
     );
 }
 
+sub plug_in_glasstile {
+    $blurb = 'Simulate distortion caused by square glass tiles';
+
+    $help = <<'HELP';
+Divide the image into square glassblocks in which the image is
+refracted.
+HELP
+
+    &std_pdb_compat('gegl:tile-glass');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'tilex', type => '10 <= int32 <= 500',
+	  desc => 'Tile width' },
+	{ name => 'tiley', type => '10 <= int32 <= 500',
+	  desc => 'Tile height' },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",   "gegl:tile-glass",
+                                  "tile-width",  tilex,
+                                  "tile-height", tiley,
+                                  NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Glass Tile"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_hsv_noise {
     $blurb = 'Randomize hue, saturation and value independently';
 
@@ -2472,6 +2524,7 @@ CODE
             plug_in_gauss_iir2
             plug_in_gauss_rle
             plug_in_gauss_rle2
+            plug_in_glasstile
             plug_in_hsv_noise
             plug_in_laplace
             plug_in_lens_distortion
