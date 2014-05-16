@@ -31,6 +31,7 @@
 #include "tools-types.h"
 
 #include "gegl/gimp-gegl-config-proxy.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
@@ -89,6 +90,9 @@ static void        gimp_operation_tool_color_picked    (GimpImageMapTool  *im_to
                                                         const Babl        *sample_format,
                                                         const GimpRGB     *color);
 
+static void        gimp_operation_tool_sync_op         (GimpOperationTool *op_tool,
+                                                        GimpDrawable      *drawable);
+
 
 G_DEFINE_TYPE (GimpOperationTool, gimp_operation_tool,
                GIMP_TYPE_IMAGE_MAP_TOOL)
@@ -103,7 +107,8 @@ gimp_operation_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_OPERATION_TOOL,
                 GIMP_TYPE_COLOR_OPTIONS,
                 gimp_color_options_gui,
-                0,
+                GIMP_CONTEXT_FOREGROUND_MASK |
+                GIMP_CONTEXT_BACKGROUND_MASK,
                 "gimp-operation-tool",
                 _("GEGL Operation"),
                 _("Operation Tool: Use an arbitrary GEGL operation"),
@@ -180,6 +185,11 @@ gimp_operation_tool_initialize (GimpTool     *tool,
 {
   if (GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
+      GimpImage    *image    = gimp_display_get_image (display);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+
+      gimp_operation_tool_sync_op (GIMP_OPERATION_TOOL (tool), drawable);
+
       return TRUE;
     }
 
@@ -456,6 +466,67 @@ gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
   g_strfreev (pspecs);
 }
 
+static void
+gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
+                             GimpDrawable      *drawable)
+{
+  GimpToolOptions  *options = GIMP_TOOL_GET_OPTIONS (op_tool);
+  GParamSpec      **pspecs;
+  guint             n_pspecs;
+  gint              bounds_x;
+  gint              bounds_y;
+  gint              bounds_width;
+  gint              bounds_height;
+  gint              i;
+
+  gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                            &bounds_x, &bounds_y,
+                            &bounds_width, &bounds_height);
+
+  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (op_tool->config),
+                                           &n_pspecs);
+
+  for (i = 0; i < n_pspecs; i++)
+    {
+      GParamSpec  *pspec = pspecs[i];
+      const gchar *role  = gegl_param_spec_get_property_key (pspec, "role");
+
+      if (role)
+        {
+          if (! strcmp (role, "source-x"))
+            {
+              g_object_set (op_tool->config, pspec->name, 0, NULL);
+            }
+          else if (! strcmp (role, "source-y"))
+            {
+              g_object_set (op_tool->config, pspec->name, 0, NULL);
+            }
+          else if (! strcmp (role, "source-width"))
+            {
+              g_object_set (op_tool->config, pspec->name, bounds_width, NULL);
+            }
+          else if (! strcmp (role, "source-height"))
+            {
+              g_object_set (op_tool->config, pspec->name, bounds_height, NULL);
+            }
+          else if (! strcmp (role, "foreground") ||
+                   ! strcmp (role, "background"))
+            {
+              GimpRGB color;
+
+              if (! strcmp (role, "foreground"))
+                gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+              else
+                gimp_context_get_background (GIMP_CONTEXT (options), &color);
+
+              g_object_set (op_tool->config, pspec->name, &color, NULL);
+            }
+        }
+    }
+
+  g_free (pspecs);
+}
+
 static gboolean
 gimp_operation_tool_aux_notify (GimpPickableButton *button,
                                 const GParamSpec   *pspec,
@@ -596,5 +667,8 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
     gimp_tool_gui_set_description (im_tool->gui, undo_desc);
 
   if (GIMP_TOOL (tool)->drawable)
-    gimp_image_map_tool_preview (im_tool);
+    {
+      gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable);
+      gimp_image_map_tool_preview (im_tool);
+    }
 }
