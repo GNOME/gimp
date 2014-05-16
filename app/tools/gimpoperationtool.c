@@ -185,10 +185,12 @@ gimp_operation_tool_initialize (GimpTool     *tool,
 {
   if (GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
-      GimpImage    *image    = gimp_display_get_image (display);
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+      GimpOperationTool *op_tool  = GIMP_OPERATION_TOOL (tool);
+      GimpImage         *image    = gimp_display_get_image (display);
+      GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
 
-      gimp_operation_tool_sync_op (GIMP_OPERATION_TOOL (tool), drawable);
+      if (op_tool->config)
+        gimp_operation_tool_sync_op (op_tool, drawable);
 
       return TRUE;
     }
