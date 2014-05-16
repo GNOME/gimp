@@ -26,6 +26,7 @@
 
 #include <gegl.h>
 #include <gegl-paramspecs.h>
+#include <gegl-plugin.h>
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -84,6 +85,19 @@ gimp_prop_table_new_seed_clicked (GtkButton     *button,
   gtk_adjustment_set_value (adj, value);
 }
 
+static gboolean
+param_spec_has_key (GParamSpec  *pspec,
+                    const gchar *key,
+                    const gchar *value)
+{
+  const gchar *v = gegl_param_spec_get_property_key (pspec, key);
+
+  if (v && ! strcmp (v, value))
+    return TRUE;
+
+  return FALSE;
+}
+
 GtkWidget *
 gimp_prop_table_new (GObject              *config,
                      GType                 owner_type,
@@ -116,12 +130,24 @@ gimp_prop_table_new (GObject              *config,
   for (i = 0; i < n_param_specs; i++)
     {
       GParamSpec  *pspec  = param_specs[i];
+      const gchar *role   = gegl_param_spec_get_property_key (pspec, "role");
       GtkWidget   *widget = NULL;
       const gchar *label  = NULL;
 
       /*  ignore properties of parent classes of owner_type  */
       if (! g_type_is_a (pspec->owner_type, owner_type))
         continue;
+
+      if (role)
+        {
+          if (! strcmp (role, "source-x")     ||
+              ! strcmp (role, "source-y")     ||
+              ! strcmp (role, "source-width") ||
+              ! strcmp (role, "source-height"))
+            {
+              continue;
+            }
+        }
 
       if (G_IS_PARAM_SPEC_STRING (pspec))
         {
@@ -243,18 +269,30 @@ gimp_prop_table_new (GObject              *config,
 
           adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget));
 
-          if (g_str_has_suffix (pspec->name, "x") ||
-              g_str_has_suffix (pspec->name, "width"))
+          if (param_spec_has_key (pspec, "unit", "pixel-coordinate") &&
+              param_spec_has_key (pspec, "axis", "x"))
             {
               last_pspec = pspec;
               last_x_adj = adj;
               last_x_row = row;
             }
-          else if ((g_str_has_suffix (pspec->name, "y") ||
-                    g_str_has_suffix (pspec->name, "height")) &&
-                   last_pspec != NULL &&
-                   last_x_adj != NULL &&
-                   last_x_row == row - 1)
+          else if (param_spec_has_key (pspec, "unit", "pixel-distance") &&
+                   param_spec_has_key (pspec, "axis", "x"))
+            {
+              last_pspec = pspec;
+              last_x_adj = adj;
+              last_x_row = row;
+            }
+          else if (last_pspec != NULL    &&
+                   last_x_adj != NULL    &&
+                   last_x_row == row - 1 &&
+                   param_spec_has_key (pspec, "axis", "y") &&
+
+                   ((param_spec_has_key (pspec, "unit", "pixel-coordinate") &&
+                     param_spec_has_key (last_pspec, "unit", "pixel-coordinate"))
+                    ||
+                    (param_spec_has_key (pspec, "unit", "pixel-distance") &&
+                     param_spec_has_key (last_pspec, "unit", "pixel-distance"))))
             {
               GtkWidget *chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
 
@@ -284,7 +322,8 @@ gimp_prop_table_new (GObject              *config,
 
               g_object_set_data (G_OBJECT (last_x_adj), "y-adjustment", adj);
 
-              if (create_picker_func)
+              if (create_picker_func &&
+                  param_spec_has_key (pspec, "unit", "pixel-coordinate"))
                 {
                   GtkWidget *button;
                   gchar     *pspec_name;
