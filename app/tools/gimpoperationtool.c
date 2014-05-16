@@ -510,7 +510,7 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
               g_object_set (op_tool->config, pspec->name, bounds_width, NULL);
             }
           else if (HAS_KEY (pspec, "unit", "pixel-distance") &&
-                   HAS_KEY (pspec, "axis", "x"))
+                   HAS_KEY (pspec, "axis", "y"))
             {
               g_object_set (op_tool->config, pspec->name, bounds_height, NULL);
             }
