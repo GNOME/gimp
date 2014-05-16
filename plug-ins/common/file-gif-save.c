@@ -268,12 +268,12 @@ run (const gchar      *name,
                   gsvals.loop            = (param[6].data.d_int32) ? TRUE : FALSE;
                   gsvals.default_delay   = param[7].data.d_int32;
                   gsvals.default_dispose = param[8].data.d_int32;
-		  if (nparams == 12)
-		    {
-		      gsvals.as_animation = (param[9].data.d_int32) ? TRUE : FALSE;
-		      gsvals.always_use_default_delay = (param[10].data.d_int32) ? TRUE : FALSE;
-		      gsvals.always_use_default_dispose = (param[11].data.d_int32) ? TRUE : FALSE;
-		    }
+                  if (nparams == 12)
+                    {
+                      gsvals.as_animation = (param[9].data.d_int32) ? TRUE : FALSE;
+                      gsvals.always_use_default_delay = (param[10].data.d_int32) ? TRUE : FALSE;
+                      gsvals.always_use_default_dispose = (param[11].data.d_int32) ? TRUE : FALSE;
+                    }
                 }
               break;
 
