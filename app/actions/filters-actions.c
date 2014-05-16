@@ -205,6 +205,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:noise-hurl",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_HURL */ },
 
+  { "filters-noise-perlin", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Perlin Noise..."), NULL, NULL,
+    "gegl:perlin-noise",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_PERLIIN */ },
+
   { "filters-noise-pick", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Pick..."), NULL, NULL,
     "gegl:noise-pick",
@@ -219,6 +224,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "Noise R_eduction..."), NULL, NULL,
     "gegl:noise-reduction",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_REDUCTION */ },
+
+  { "filters-noise-simplex", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Simplex Noise..."), NULL, NULL,
+    "gegl:simplex-noise",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_SIMPLEX */ },
 
   { "filters-noise-slur", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Slur..."), NULL, NULL,
@@ -418,9 +428,11 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-noise-cie-lch",           writable);
   SET_SENSITIVE ("filters-noise-hsv",               writable && !gray);
   SET_SENSITIVE ("filters-noise-hurl",              writable);
+  SET_SENSITIVE ("filters-noise-perlin",            writable);
   SET_SENSITIVE ("filters-noise-pick",              writable);
   SET_SENSITIVE ("filters-noise-reduction",         writable);
   SET_SENSITIVE ("filters-noise-rgb",               writable);
+  SET_SENSITIVE ("filters-noise-simplex",           writable);
   SET_SENSITIVE ("filters-noise-slur",              writable);
   SET_SENSITIVE ("filters-noise-spread",            writable);
   SET_SENSITIVE ("filters-lens-distortion",         writable);
