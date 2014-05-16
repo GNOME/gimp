@@ -292,8 +292,10 @@ gimp_operation_tool_reset (GimpImageMapTool *image_map_tool)
 {
   GimpOperationTool *tool = GIMP_OPERATION_TOOL (image_map_tool);
 
-  if (tool->config)
-    gimp_config_reset (GIMP_CONFIG (tool->config));
+  GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->reset (image_map_tool);
+
+  if (tool->config && GIMP_TOOL (tool)->drawable)
+    gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable);
 }
 
 static GtkWidget *
