@@ -1121,6 +1121,9 @@ plug_in_mblur_invoker (GimpProcedure         *procedure,
         {
           GeglNode *node = NULL;
 
+          if (angle > 180.0)
+            angle -= 360.0;
+
           if (type == 0)
             {
               node =  gegl_node_new_child (NULL,
