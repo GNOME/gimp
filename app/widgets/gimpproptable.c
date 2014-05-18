@@ -179,26 +179,27 @@ gimp_prop_table_new (GObject              *config,
       else if (GEGL_IS_PARAM_SPEC_SEED (pspec))
         {
           GtkAdjustment *adj;
-          GtkWidget     *scale;
+          GtkWidget     *spin;
           GtkWidget     *button;
 
           widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
-          scale = gimp_prop_spin_scale_new (config, pspec->name,
-                                            g_param_spec_get_nick (pspec),
+          spin = gimp_prop_spin_button_new (config, pspec->name,
                                             1.0, 10.0, 0);
-          gtk_box_pack_start (GTK_BOX (widget), scale, TRUE, TRUE, 0);
-          gtk_widget_show (scale);
+          gtk_box_pack_start (GTK_BOX (widget), spin, TRUE, TRUE, 0);
+          gtk_widget_show (spin);
 
           button = gtk_button_new_with_label (_("New Seed"));
           gtk_box_pack_start (GTK_BOX (widget), button, FALSE, FALSE, 0);
           gtk_widget_show (button);
 
-          adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (scale));
+          adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spin));
 
           g_signal_connect (button, "clicked",
                             G_CALLBACK (gimp_prop_table_new_seed_clicked),
                             adj);
+
+          label  = g_param_spec_get_nick (pspec);
         }
       else if (G_IS_PARAM_SPEC_INT (pspec)   ||
                G_IS_PARAM_SPEC_UINT (pspec)  ||
