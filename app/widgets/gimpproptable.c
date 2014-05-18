@@ -276,30 +276,16 @@ gimp_prop_table_new (GObject              *config,
             {
               gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (widget), TRUE);
             }
-          else if (HAS_KEY (pspec, "unit", "pixel-coordinate") &&
-                   HAS_KEY (pspec, "axis", "x"))
+          else if (HAS_KEY (pspec, "axis", "x"))
             {
               last_pspec = pspec;
               last_x_adj = adj;
               last_x_row = row;
             }
-          else if (HAS_KEY (pspec, "unit", "pixel-distance") &&
-                   HAS_KEY (pspec, "axis", "x"))
-            {
-              last_pspec = pspec;
-              last_x_adj = adj;
-              last_x_row = row;
-            }
-          else if (last_pspec != NULL    &&
-                   last_x_adj != NULL    &&
-                   last_x_row == row - 1 &&
-                   HAS_KEY (pspec, "axis", "y") &&
-
-                   ((HAS_KEY (pspec, "unit", "pixel-coordinate") &&
-                     HAS_KEY (last_pspec, "unit", "pixel-coordinate"))
-                    ||
-                    (HAS_KEY (pspec, "unit", "pixel-distance") &&
-                     HAS_KEY (last_pspec, "unit", "pixel-distance"))))
+          else if (HAS_KEY (pspec, "axis", "y") &&
+                   last_pspec != NULL           &&
+                   last_x_adj != NULL           &&
+                   last_x_row == row - 1)
             {
               GtkWidget *chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
 
@@ -309,7 +295,7 @@ gimp_prop_table_new (GObject              *config,
                                 0, 0);
               gtk_widget_show (chain);
 
-              if (HAS_KEY (pspec, "unit", "pixel-distance") &&
+              if (! HAS_KEY (pspec, "unit", "pixel-coordinate") &&
                   gtk_adjustment_get_value (last_x_adj) ==
                   gtk_adjustment_get_value (adj))
                 {
