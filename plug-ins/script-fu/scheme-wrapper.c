@@ -218,9 +218,9 @@ static const NamedConstant const old_constants[] =
   { "FG-TRANSPARENT-MODE",     GIMP_BLEND_FG_TRANSPARENT },
   { "CUSTOM-MODE",             GIMP_BLEND_CUSTOM         },
 
-  { "FG-BUCKET_FILL",          GIMP_BUCKET_FILL_FG      },
-  { "BG-BUCKET_FILL",          GIMP_BUCKET_FILL_BG      },
-  { "PATTERN-BUCKET_FILL",     GIMP_BUCKET_FILL_PATTERN },
+  { "FG-BUCKET-FILL",          GIMP_BUCKET_FILL_FG      },
+  { "BG-BUCKET-FILL",          GIMP_BUCKET_FILL_BG      },
+  { "PATTERN-BUCKET-FILL",     GIMP_BUCKET_FILL_PATTERN },
 
   { "BLUR-CONVOLVE",           GIMP_CONVOLVE_BLUR    },
   { "SHARPEN-CONVOLVE",        GIMP_CONVOLVE_SHARPEN },
