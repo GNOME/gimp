@@ -113,6 +113,8 @@ static const GimpActionEntry plug_in_actions[] =
                                              "_Clouds")           },
   { "plug-in-render-nature-menu",  NULL, NC_("plug-in-action",
                                              "_Nature")           },
+  { "plug-in-render-noise-menu",   NULL, NC_("plug-in-action",
+                                             "N_oise")            },
   { "plug-in-render-pattern-menu", NULL, NC_("plug-in-action",
                                              "_Pattern")          },
   { "plug-in-web-menu",            NULL, NC_("plug-in-action",
