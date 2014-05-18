@@ -235,13 +235,34 @@ gimp_prop_table_new (GObject              *config,
                                                      G_STRFUNC);
             }
 
-          if ((upper - lower < 10.0) &&
-              (G_IS_PARAM_SPEC_FLOAT (pspec) ||
-               G_IS_PARAM_SPEC_DOUBLE (pspec)))
+          if (HAS_KEY (pspec, "unit", "degree"))
+            {
+              step   = 1.0;
+              page   = 15.0;
+              digits = 2;
+            }
+          else if ((upper - lower <= 1.0) &&
+                   (G_IS_PARAM_SPEC_FLOAT (pspec) ||
+                    G_IS_PARAM_SPEC_DOUBLE (pspec)))
+            {
+              step   = 0.01;
+              page   = 0.1;
+              digits = 4;
+            }
+          else if ((upper - lower <= 10.0) &&
+                   (G_IS_PARAM_SPEC_FLOAT (pspec) ||
+                    G_IS_PARAM_SPEC_DOUBLE (pspec)))
             {
               step   = 0.1;
               page   = 1.0;
               digits = 3;
+            }
+          else
+            {
+              step   = 1.0;
+              page   = 10.0;
+              digits = (G_IS_PARAM_SPEC_FLOAT (pspec) ||
+                        G_IS_PARAM_SPEC_DOUBLE (pspec)) ? 2 : 0;
             }
 
           widget = gimp_prop_spin_scale_new (config, pspec->name,
