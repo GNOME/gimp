@@ -477,6 +477,7 @@ sanity_check_gegl_ops (void)
     "gegl:buffer-source",
     "gegl:c2g",
     "gegl:cartoon",
+    "gegl:cell-noise",
     "gegl:checkerboard",
     "gegl:color",
     "gegl:color-reduction",
