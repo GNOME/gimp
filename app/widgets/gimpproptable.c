@@ -60,7 +60,7 @@ gimp_prop_table_chain_toggled (GimpChainButton *chain,
       GBinding *binding;
 
       binding = g_object_bind_property (x_adj, "value",
-                                        y_adj,   "value",
+                                        y_adj, "value",
                                         G_BINDING_BIDIRECTIONAL);
 
       g_object_set_data (G_OBJECT (chain), "binding", binding);
@@ -309,7 +309,8 @@ gimp_prop_table_new (GObject              *config,
                                 0, 0);
               gtk_widget_show (chain);
 
-              if (gtk_adjustment_get_value (last_x_adj) ==
+              if (HAS_KEY (pspec, "unit", "pixel-distance") &&
+                  gtk_adjustment_get_value (last_x_adj) ==
                   gtk_adjustment_get_value (adj))
                 {
                   GBinding *binding;
