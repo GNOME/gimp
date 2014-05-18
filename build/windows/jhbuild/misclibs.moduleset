@@ -145,12 +145,10 @@
 	</dependencies>
 </cmake>
 
-<autotools id="libgexiv2" autogen-sh="|| autoreconf --force --install; ./configure">
-	<branch version="0.7.0" repo="gnome.org"
-			module="gexiv2/0.7/gexiv2-0.7.0.tar.xz"
-			hash="sha256:b631fe02402014cb52f22647b384972776ada31cbd3c3f187014b6535461ee8a">
-		<!-- http://redmine.yorba.org/issues/7660 -->
-		<patch file="0001-Port-GExiv2-to-autotools-build-system.patch" strip="1"/>
+<autotools id="libgexiv2" autogen-sh="configure">
+	<branch version="0.10.1" repo="gnome.org"
+			module="gexiv2/0.10/gexiv2-0.10.1.tar.xz"
+			hash="sha256:7675752a59c2f091560be1f39514ef492ec705b9fdea5f52281672e6b3eba2c7">
 	</branch>
 	<dependencies>
 		<dep package="exiv2"/>
