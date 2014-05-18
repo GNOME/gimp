@@ -206,13 +206,11 @@ gimp_prop_table_new (GObject              *config,
                G_IS_PARAM_SPEC_DOUBLE (pspec))
         {
           GtkAdjustment *adj;
-          gdouble        value;
           gdouble        lower;
           gdouble        upper;
-          gdouble        step   = 1.0;
-          gdouble        page   = 10.0;
-          gint           digits = (G_IS_PARAM_SPEC_FLOAT (pspec) ||
-                                   G_IS_PARAM_SPEC_DOUBLE (pspec)) ? 2 : 0;
+          gdouble        step;
+          gdouble        page;
+          gint           digits;
 
           if (GEGL_IS_PARAM_SPEC_DOUBLE (pspec))
             {
@@ -230,6 +228,8 @@ gimp_prop_table_new (GObject              *config,
             }
           else
             {
+              gdouble value;
+
               _gimp_prop_widgets_get_numeric_values (config, pspec,
                                                      &value, &lower, &upper,
                                                      G_STRFUNC);
@@ -271,8 +271,13 @@ gimp_prop_table_new (GObject              *config,
 
           adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget));
 
-          if (HAS_KEY (pspec, "unit", "pixel-coordinate") &&
-              HAS_KEY (pspec, "axis", "x"))
+          if (HAS_KEY (pspec, "unit", "degree") &&
+              (upper - lower) == 360.0)
+            {
+              gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (widget), TRUE);
+            }
+          else if (HAS_KEY (pspec, "unit", "pixel-coordinate") &&
+                   HAS_KEY (pspec, "axis", "x"))
             {
               last_pspec = pspec;
               last_x_adj = adj;
