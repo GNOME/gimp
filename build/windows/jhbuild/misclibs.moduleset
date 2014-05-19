@@ -118,9 +118,9 @@
 </autotools>
 
 <autotools id="poppler" autogen-sh="configure">
-	<branch version="0.24.5" repo="poppler"
-			module="poppler-0.24.5.tar.xz"
-			hash="sha1:7b7cabee85bd81a7e55c939740d5d7ccd7c0dda5">
+	<branch version="0.26.0" repo="poppler"
+			module="poppler-0.26.0.tar.xz"
+			hash="sha1:1f5d08ee01683c309688f17116d18bf47b13f001">
 	</branch>
 	<dependencies>
 		<dep package="freetype2"/>
