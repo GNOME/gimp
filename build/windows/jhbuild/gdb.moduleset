@@ -13,9 +13,9 @@
 </autotools>
 
 <autotools id="gdb" autogen-sh="configure" makeargs="-j1">
-	<branch version="7.5.1" repo="ftp.gnu.org"
-			module="gdb/gdb-7.5.1.tar.bz2"
-			hash="sha1:d04c832698ac470a88788e719d19ca7c1d4d803d">
+	<branch version="7.7.1" repo="ftp.gnu.org"
+			module="gdb/gdb-7.7.1.tar.bz2"
+			hash="sha1:35228319f7c715074a80be42fff64c7645227a80">
 	</branch>
 	<dependencies>
 		<dep package="expat"/>
