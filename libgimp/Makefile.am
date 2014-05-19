@@ -184,7 +184,6 @@ PDB_WRAPPERS_H = \
 libgimp_sources = \
 	gimp.c			\
 	gimp.h			\
-	gimpcompat.h		\
 	gimptypes.h		\
 	gimpenums.h		\
 	${PDB_WRAPPERS_C}	\
@@ -316,7 +315,6 @@ libgimpui_@GIMP_API_VERSION@_la_SOURCES = \
 
 gimpinclude_HEADERS = \
 	gimp.h				\
-	gimpcompat.h			\
 	gimptypes.h			\
 	gimpenums.h			\
 	${PDB_WRAPPERS_H}		\
