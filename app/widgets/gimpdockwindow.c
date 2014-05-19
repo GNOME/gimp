@@ -253,21 +253,19 @@ gimp_dock_window_init (GimpDockWindow *dock_window)
   static gint  dock_window_ID = 1;
   gchar       *name           = NULL;
 
-  /* Initialize members */
   dock_window->p = G_TYPE_INSTANCE_GET_PRIVATE (dock_window,
                                                 GIMP_TYPE_DOCK_WINDOW,
                                                 GimpDockWindowPrivate);
   dock_window->p->ID                 = dock_window_ID++;
   dock_window->p->auto_follow_active = TRUE;
 
-  /* Initialize theming and style-setting stuff */
   name = g_strdup_printf ("gimp-dock-%d", dock_window->p->ID);
   gtk_widget_set_name (GTK_WIDGET (dock_window), name);
   g_free (name);
 
-  /* Misc */
   gtk_window_set_resizable (GTK_WINDOW (dock_window), TRUE);
   gtk_window_set_focus_on_map (GTK_WINDOW (dock_window), FALSE);
+  gtk_window_set_skip_taskbar_hint (GTK_WINDOW (dock_window), FALSE);
 }
 
 static void
