@@ -1090,7 +1090,7 @@ gimp_image_window_new (Gimp              *gimp,
           GdkRectangle rect;
           gchar        geom[32];
 
-          gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+          gdk_screen_get_monitor_workarea (screen, monitor, &rect);
 
           /*  FIXME: image window placement
            *
@@ -1415,7 +1415,7 @@ gimp_image_window_shrink_wrap (GimpImageWindow *window,
 
   monitor = gdk_screen_get_monitor_at_window (screen,
                                               gtk_widget_get_window (widget));
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
 
   width  = SCALEX (active_shell, gimp_image_get_width  (image));
   height = SCALEY (active_shell, gimp_image_get_height (image));

@@ -813,7 +813,7 @@ gimp_ui_manager_menu_position (GtkMenu  *menu,
                            &screen, &pointer_x, &pointer_y, NULL);
 
   monitor = gdk_screen_get_monitor_at_point (screen, pointer_x, pointer_y);
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
 
   gtk_menu_set_screen (menu, screen);
 

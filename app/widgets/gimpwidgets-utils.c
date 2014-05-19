@@ -91,7 +91,7 @@ gimp_menu_position (GtkMenu *menu,
   screen = gtk_widget_get_screen (widget);
 
   monitor = gdk_screen_get_monitor_at_point (screen, *x, *y);
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
 
   gtk_menu_set_screen (menu, screen);
 
@@ -177,7 +177,7 @@ gimp_button_menu_position (GtkWidget       *button,
   screen = gtk_widget_get_screen (button);
 
   monitor = gdk_screen_get_monitor_at_point (screen, *x, *y);
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
 
   gtk_menu_set_screen (menu, screen);
 

@@ -23,6 +23,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "gui-types.h"
 
 #include "core/gimp.h"
@@ -348,7 +350,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
   screen  = gtk_widget_get_screen (GTK_WIDGET (dock_columns));
   monitor = gimp_widget_get_monitor (GTK_WIDGET (dock_columns));
 
-  gdk_screen_get_monitor_geometry (screen, monitor, &monitor_rect);
+  gdk_screen_get_monitor_workarea (screen, monitor, &monitor_rect);
 
   /* Remember the size so we can set the new dock window to the same
    * size

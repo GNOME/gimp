@@ -2,6 +2,7 @@ EXPORTS
 	gdk_cairo_get_clip_rectangle
 	gdk_event_triggers_context_menu
 	gdk_keymap_get_modifier_mask
+	gdk_screen_get_monitor_workarea
 	gimp_aspect_type_get_type
 	gimp_browser_add_search_types
 	gimp_browser_get_type

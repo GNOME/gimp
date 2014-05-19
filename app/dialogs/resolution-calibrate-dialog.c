@@ -86,7 +86,7 @@ resolution_calibrate_dialog (GtkWidget *resolution_entry,
   screen = gtk_widget_get_screen (dialog);
   monitor = gdk_screen_get_monitor_at_window (screen,
                                               gtk_widget_get_window (resolution_entry));
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
 
   ruler_width  = rect.width  - 300 - (rect.width  % 100);
   ruler_height = rect.height - 300 - (rect.height % 100);

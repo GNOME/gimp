@@ -229,7 +229,7 @@ gimp_view_popup_timeout (GimpViewPopup *popup)
   y = popup->button_y - (popup->popup_height / 2);
 
   monitor = gdk_screen_get_monitor_at_point (screen, x, y);
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
 
   x = CLAMP (x, rect.x, rect.x + rect.width  - popup->popup_width);
   y = CLAMP (y, rect.y, rect.y + rect.height - popup->popup_height);

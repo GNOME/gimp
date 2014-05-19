@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpconfig/gimpconfig.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
@@ -625,6 +626,7 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
                                   gboolean         apply_stored_monitor)
 {
   GdkRectangle rect;
+  GdkRectangle work_rect;
   gchar        geom[32];
   gint         monitor;
   gint         width;
@@ -654,6 +656,7 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
     }
 
   gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+  gdk_screen_get_monitor_workarea (screen, monitor, &work_rect);
 
   info->p->x += rect.x;
   info->p->y += rect.y;
@@ -675,8 +678,12 @@ gimp_session_info_apply_geometry (GimpSessionInfo *info,
       height = requisition.height;
     }
 
-  info->p->x = CLAMP (info->p->x, rect.x, rect.x + rect.width  - width);
-  info->p->y = CLAMP (info->p->y, rect.y, rect.y + rect.height - height);
+  info->p->x = CLAMP (info->p->x,
+                      work_rect.x,
+                      work_rect.x + work_rect.width  - width);
+  info->p->y = CLAMP (info->p->y,
+                      work_rect.y,
+                      work_rect.y + work_rect.height - height);
 
   if (info->p->right_align && info->p->bottom_align)
     {

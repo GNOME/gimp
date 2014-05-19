@@ -457,7 +457,7 @@ gimp_container_popup_show (GimpContainerPopup *popup,
   screen = gtk_widget_get_screen (widget);
 
   monitor = gdk_screen_get_monitor_at_point (screen, orig_x, orig_y);
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
 
   if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
     {
