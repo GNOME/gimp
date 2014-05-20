@@ -67,7 +67,6 @@ libexec_PROGRAMS = \
 	crop-zealous \
 	curve-bend \
 	decompose \
-	deinterlace \
 	depth-merge \
 	despeckle \
 	destripe \
@@ -580,23 +579,6 @@ decompose_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(decompose_RC)
-
-deinterlace_SOURCES = \
-	deinterlace.c
-
-deinterlace_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(deinterlace_RC)
 
 depth_merge_SOURCES = \
 	depth-merge.c

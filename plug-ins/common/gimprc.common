@@ -21,7 +21,6 @@ convolution_matrix_RC = convolution-matrix.rc.o
 crop_zealous_RC = crop-zealous.rc.o
 curve_bend_RC = curve-bend.rc.o
 decompose_RC = decompose.rc.o
-deinterlace_RC = deinterlace.rc.o
 depth_merge_RC = depth-merge.rc.o
 despeckle_RC = despeckle.rc.o
 destripe_RC = destripe.rc.o

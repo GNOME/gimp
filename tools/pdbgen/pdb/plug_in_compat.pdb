@@ -651,6 +651,60 @@ CODE
     );
 }
 
+sub plug_in_deinterlace {
+    $blurb = 'Fix images where every other row is missing';
+
+    $help = <<'HELP';
+Deinterlace is useful for processing images from video capture
+cards. When only the odd or even fields get captured, deinterlace can
+be used to interpolate between the existing fields to correct this.
+HELP
+
+    &std_pdb_compat('gegl:deinterlace');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'evenodd', type => '0 <= int32 <= 1',
+	  desc => 'Which lines to keep { KEEP-ODD (0), KEEP-EVEN (1)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",   "gegl:deinterlace",
+                                  "keep",        evenodd ? 0 : 1,
+                                  "orientation", 0, /* HORIZONTAL */
+                                  "size",        1,
+                                  NULL);
+
+      node = wrap_in_gamma_cast (node, drawable);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Deinterlace"),
+                                     node);
+
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_gauss {
     $blurb = 'Simplest, most commonly used way of blurring';
 
@@ -2522,6 +2576,7 @@ CODE
             plug_in_colors_channel_mixer
             plug_in_colortoalpha
             plug_in_cubism
+            plug_in_deinterlace
             plug_in_gauss
             plug_in_gauss_iir
             plug_in_gauss_iir2
