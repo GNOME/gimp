@@ -505,6 +505,7 @@ gimp_prop_spin_scale_new (GObject     *config,
   if (GEGL_IS_PARAM_SPEC_DOUBLE (param_spec))
     {
       GeglParamSpecDouble *gspec = GEGL_PARAM_SPEC_DOUBLE (param_spec);
+
       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),
                                         gspec->ui_minimum, gspec->ui_maximum);
       gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), gspec->ui_gamma);
@@ -512,6 +513,7 @@ gimp_prop_spin_scale_new (GObject     *config,
   else if (GEGL_IS_PARAM_SPEC_INT (param_spec))
     {
       GeglParamSpecInt *gspec = GEGL_PARAM_SPEC_INT (param_spec);
+
       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),
                                         gspec->ui_minimum, gspec->ui_maximum);
       gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), gspec->ui_gamma);

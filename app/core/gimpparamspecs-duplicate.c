@@ -66,10 +66,6 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
         }
       else
         {
-          static GQuark multiline_quark = 0;
-
-          if (! multiline_quark)
-            multiline_quark = g_quark_from_static_string ("multiline");
 
           copy = g_param_spec_string (pspec->name,
                                       g_param_spec_get_nick (pspec),
@@ -79,6 +75,11 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
 
           if (GEGL_IS_PARAM_SPEC_MULTILINE (pspec))
             {
+              static GQuark multiline_quark = 0;
+
+              if (! multiline_quark)
+                multiline_quark = g_quark_from_static_string ("multiline");
+
               g_param_spec_set_qdata (copy, multiline_quark,
                                       GINT_TO_POINTER (TRUE));
             }
@@ -108,7 +109,7 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
   else if (GEGL_IS_PARAM_SPEC_DOUBLE (pspec))
     {
       GeglParamSpecDouble *gspec = GEGL_PARAM_SPEC_DOUBLE (pspec);
-      GParamSpecDouble    *spec = G_PARAM_SPEC_DOUBLE (pspec);
+      GParamSpecDouble    *spec  = G_PARAM_SPEC_DOUBLE (pspec);
 
       copy = gegl_param_spec_double (pspec->name,
                                      g_param_spec_get_nick (pspec),

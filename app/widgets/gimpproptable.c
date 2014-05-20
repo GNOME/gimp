@@ -239,6 +239,7 @@ gimp_prop_table_new (GObject              *config,
           if (GEGL_IS_PARAM_SPEC_DOUBLE (pspec))
             {
               GeglParamSpecDouble *gspec = GEGL_PARAM_SPEC_DOUBLE (pspec);
+
               step   = gspec->ui_step_small;
               page   = gspec->ui_step_big;
               digits = gspec->ui_digits;
@@ -246,6 +247,7 @@ gimp_prop_table_new (GObject              *config,
           else if (GEGL_IS_PARAM_SPEC_INT (pspec))
             {
               GeglParamSpecInt *gspec = GEGL_PARAM_SPEC_INT (pspec);
+
               step   = gspec->ui_step_small;
               page   = gspec->ui_step_big;
               digits = 0;
