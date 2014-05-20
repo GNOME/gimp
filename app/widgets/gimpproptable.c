@@ -236,11 +236,19 @@ gimp_prop_table_new (GObject              *config,
                                                      G_STRFUNC);
             }
 
-          if (HAS_KEY (pspec, "unit", "degree"))
+          if (GEGL_IS_PARAM_SPEC_DOUBLE (pspec))
             {
-              step   = 1.0;
-              page   = 15.0;
-              digits = 2;
+              GeglParamSpecDouble *gspec = GEGL_PARAM_SPEC_DOUBLE (pspec);
+              step   = gspec->ui_step_small;
+              page   = gspec->ui_step_big;
+              digits = gspec->ui_digits;
+            }
+          else if (GEGL_IS_PARAM_SPEC_INT (pspec))
+            {
+              GeglParamSpecInt *gspec = GEGL_PARAM_SPEC_INT (pspec);
+              step   = gspec->ui_step_small;
+              page   = gspec->ui_step_big;
+              digits = 0;
             }
           else if ((upper - lower <= 1.0) &&
                    (G_IS_PARAM_SPEC_FLOAT (pspec) ||

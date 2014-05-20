@@ -120,6 +120,11 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                      gspec->ui_maximum,
                                      gspec->ui_gamma,
                                      flags);
+      gegl_param_spec_double_set_steps (GEGL_PARAM_SPEC_DOUBLE (copy),
+                                        gspec->ui_step_small,
+                                        gspec->ui_step_big);
+      gegl_param_spec_double_set_digits (GEGL_PARAM_SPEC_DOUBLE (copy),
+                                         gspec->ui_digits);
     }
   else if (G_IS_PARAM_SPEC_DOUBLE (pspec))
     {
@@ -160,6 +165,9 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
                                   gspec->ui_maximum,
                                   gspec->ui_gamma,
                                   flags);
+      gegl_param_spec_int_set_steps (GEGL_PARAM_SPEC_INT (copy),
+                                     gspec->ui_step_small,
+                                     gspec->ui_step_big);
     }
   else if (GEGL_IS_PARAM_SPEC_SEED (pspec))
     {
