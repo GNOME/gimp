@@ -452,6 +452,8 @@ gimp_layer_dispose (GObject *object)
        */
       if (gimp_drawable_get_floating_sel (fs_drawable) == layer)
         gimp_drawable_detach_floating_sel (fs_drawable);
+
+      gimp_layer_set_floating_sel_drawable (layer, NULL);
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -466,13 +468,6 @@ gimp_layer_finalize (GObject *object)
     {
       g_object_unref (layer->mask);
       layer->mask = NULL;
-    }
-
-  if (layer->fs.segs)
-    {
-      g_free (layer->fs.segs);
-      layer->fs.segs     = NULL;
-      layer->fs.num_segs = 0;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -1992,7 +1987,13 @@ gimp_layer_set_floating_sel_drawable (GimpLayer    *layer,
           layer->fs.num_segs = 0;
         }
 
+      if (layer->fs.drawable)
+        g_object_unref (layer->fs.drawable);
+
       layer->fs.drawable = drawable;
+
+      if (layer->fs.drawable)
+        g_object_ref (layer->fs.drawable);
 
       g_object_notify (G_OBJECT (layer), "floating-selection");
     }
