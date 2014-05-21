@@ -602,12 +602,6 @@ gimp_image_map_tool_halt (GimpImageMapTool *im_tool)
   if (im_tool->gui)
     gimp_tool_gui_hide (im_tool->gui);
 
-  if (im_tool->notify_timeout_id)
-    {
-      g_source_remove (im_tool->notify_timeout_id);
-      im_tool->notify_timeout_id = 0;
-    }
-
   if (im_tool->image_map)
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
@@ -629,12 +623,6 @@ gimp_image_map_tool_commit (GimpImageMapTool *im_tool)
 
   if (im_tool->gui)
     gimp_tool_gui_hide (im_tool->gui);
-
-  if (im_tool->notify_timeout_id)
-    {
-      g_source_remove (im_tool->notify_timeout_id);
-      im_tool->notify_timeout_id = 0;
-    }
 
   if (im_tool->image_map)
     {
@@ -744,26 +732,12 @@ gimp_image_map_tool_flush (GimpImageMap     *image_map,
   gimp_projection_flush (gimp_image_get_projection (image));
 }
 
-static gboolean
-gimp_image_map_tool_config_notify_timeout (GimpImageMapTool *image_map_tool)
-{
-  gimp_image_map_tool_preview (image_map_tool);
-
-  return FALSE;
-}
-
 static void
 gimp_image_map_tool_config_notify (GObject          *object,
                                    const GParamSpec *pspec,
                                    GimpImageMapTool *image_map_tool)
 {
-  if (image_map_tool->notify_timeout_id)
-    g_source_remove (image_map_tool->notify_timeout_id);
-
-  image_map_tool->notify_timeout_id =
-    g_timeout_add (150,
-                   (GSourceFunc) gimp_image_map_tool_config_notify_timeout,
-                   image_map_tool);
+  gimp_image_map_tool_preview (image_map_tool);
 }
 
 static void
@@ -855,12 +829,6 @@ gimp_image_map_tool_preview (GimpImageMapTool *image_map_tool)
 
   tool    = GIMP_TOOL (image_map_tool);
   options = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
-
-  if (image_map_tool->notify_timeout_id)
-    {
-      g_source_remove (image_map_tool->notify_timeout_id);
-      image_map_tool->notify_timeout_id = 0;
-    }
 
   if (image_map_tool->image_map && options->preview)
     {
