@@ -24,6 +24,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimpgrid.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
 #include "gimpimage-grid.h"
@@ -100,16 +101,8 @@ gimp_image_snap_x (GimpImage *image,
       gdouble   xoffset;
       gdouble   i;
 
-      g_object_get (grid,
-                    "xspacing", &xspacing,
-                    "xoffset",  &xoffset,
-                    NULL);
-
-      /* FIXME subpixel grid */
-      xspacing = RINT (xspacing);
-      xoffset  = RINT (xoffset);
-
-      g_printerr ("snap: spacing = %f  offset = %f\n", xspacing, xoffset);
+      gimp_grid_get_spacing (grid, &xspacing, NULL);
+      gimp_grid_get_offset  (grid, &xoffset,  NULL);
 
       /* the snap-to-grid part could probably be rewritten */
       while (xoffset > xspacing)
@@ -193,14 +186,8 @@ gimp_image_snap_y (GimpImage *image,
       gdouble    yoffset;
       gdouble    i;
 
-      g_object_get (grid,
-                    "yspacing", &yspacing,
-                    "yoffset",  &yoffset,
-                    NULL);
-
-      /* FIXME subpixel grid */
-      yspacing = RINT (yspacing);
-      yoffset  = RINT (yoffset);
+      gimp_grid_get_spacing (grid, NULL, &yspacing);
+      gimp_grid_get_offset  (grid, NULL, &yoffset);
 
       while (yoffset > yspacing)
         yoffset -= yspacing;
@@ -305,18 +292,8 @@ gimp_image_snap_point (GimpImage *image,
       gdouble   xoffset, yoffset;
       gdouble   i;
 
-      g_object_get (grid,
-                    "xspacing", &xspacing,
-                    "yspacing", &yspacing,
-                    "xoffset",  &xoffset,
-                    "yoffset",  &yoffset,
-                    NULL);
-
-      /* FIXME subpixel grid */
-      xspacing = RINT (xspacing);
-      yspacing = RINT (yspacing);
-      xoffset  = RINT (xoffset);
-      yoffset  = RINT (yoffset);
+      gimp_grid_get_spacing (grid, &xspacing, &yspacing);
+      gimp_grid_get_offset  (grid, &xoffset,  &yoffset);
 
       while (xoffset > xspacing)
         xoffset -= xspacing;
