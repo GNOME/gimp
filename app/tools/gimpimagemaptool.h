@@ -47,6 +47,8 @@ struct _GimpImageMapTool
 
   GimpImageMap          *image_map;
 
+  guint                  notify_timeout_id;
+
   /* dialog */
   gboolean               overlay;
   GimpToolGui           *gui;
