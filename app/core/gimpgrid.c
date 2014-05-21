@@ -226,6 +226,37 @@ gimp_grid_set_property (GObject      *object,
     }
 }
 
+
+/*  public functions  */
+
+GimpGridStyle
+gimp_grid_get_style (GimpGrid *grid)
+{
+  g_return_val_if_fail (GIMP_IS_GRID (grid), GIMP_GRID_SOLID);
+
+  return grid->style;
+}
+
+void
+gimp_grid_get_fgcolor (GimpGrid *grid,
+                       GimpRGB  *fgcolor)
+{
+  g_return_if_fail (GIMP_IS_GRID (grid));
+  g_return_if_fail (fgcolor != NULL);
+
+  *fgcolor = grid->fgcolor;
+}
+
+void
+gimp_grid_get_bgcolor (GimpGrid *grid,
+                       GimpRGB  *bgcolor)
+{
+  g_return_if_fail (GIMP_IS_GRID (grid));
+  g_return_if_fail (bgcolor != NULL);
+
+  *bgcolor = grid->bgcolor;
+}
+
 void
 gimp_grid_get_spacing (GimpGrid *grid,
                        gdouble  *xspacing,

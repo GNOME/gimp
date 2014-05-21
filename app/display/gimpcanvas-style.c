@@ -122,13 +122,18 @@ gimp_canvas_set_grid_style (GtkWidget *canvas,
                             cairo_t   *cr,
                             GimpGrid  *grid)
 {
+  GimpRGB fg;
+  GimpRGB bg;
+
   g_return_if_fail (GTK_IS_WIDGET (canvas));
   g_return_if_fail (cr != NULL);
   g_return_if_fail (GIMP_IS_GRID (grid));
 
   cairo_set_line_width (cr, 1.0);
 
-  switch (grid->style)
+  gimp_grid_get_fgcolor (grid, &fg);
+
+  switch (gimp_grid_get_style (grid))
     {
       cairo_pattern_t *pattern;
 
@@ -136,17 +141,15 @@ gimp_canvas_set_grid_style (GtkWidget *canvas,
     case GIMP_GRID_DOUBLE_DASH:
       if (grid->style == GIMP_GRID_DOUBLE_DASH)
         {
-          pattern = gimp_cairo_stipple_pattern_create (&grid->fgcolor,
-                                                       &grid->bgcolor,
-                                                       0);
+          gimp_grid_get_bgcolor (grid, &bg);
+
+          pattern = gimp_cairo_stipple_pattern_create (&fg, &bg, 0);
         }
       else
         {
-          GimpRGB bg = { 0.0, 0.0, 0.0, 0.0 };
+          gimp_rgba_set (&bg, 0.0, 0.0, 0.0, 0.0);
 
-          pattern = gimp_cairo_stipple_pattern_create (&grid->fgcolor,
-                                                       &bg,
-                                                       0);
+          pattern = gimp_cairo_stipple_pattern_create (&fg, &bg, 0);
         }
 
       cairo_set_source (cr, pattern);
@@ -156,7 +159,7 @@ gimp_canvas_set_grid_style (GtkWidget *canvas,
     case GIMP_GRID_DOTS:
     case GIMP_GRID_INTERSECTIONS:
     case GIMP_GRID_SOLID:
-      gimp_cairo_set_source_rgb (cr, &grid->fgcolor);
+      gimp_cairo_set_source_rgb (cr, &fg);
       break;
     }
 }

@@ -229,7 +229,7 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
   while (yoffset > 0)
     yoffset -= yspacing;
 
-  switch (private->grid->style)
+  switch (gimp_grid_get_style (private->grid))
     {
     case GIMP_GRID_DOTS:
       for (x = xoffset; x <= width; x += xspacing)
