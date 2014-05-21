@@ -105,6 +105,12 @@ gimp_image_snap_x (GimpImage *image,
                     "xoffset",  &xoffset,
                     NULL);
 
+      /* FIXME subpixel grid */
+      xspacing = RINT (xspacing);
+      xoffset  = RINT (xoffset);
+
+      g_printerr ("snap: spacing = %f  offset = %f\n", xspacing, xoffset);
+
       /* the snap-to-grid part could probably be rewritten */
       while (xoffset > xspacing)
         xoffset -= xspacing;
@@ -191,6 +197,10 @@ gimp_image_snap_y (GimpImage *image,
                     "yspacing", &yspacing,
                     "yoffset",  &yoffset,
                     NULL);
+
+      /* FIXME subpixel grid */
+      yspacing = RINT (yspacing);
+      yoffset  = RINT (yoffset);
 
       while (yoffset > yspacing)
         yoffset -= yspacing;
@@ -301,6 +311,12 @@ gimp_image_snap_point (GimpImage *image,
                     "xoffset",  &xoffset,
                     "yoffset",  &yoffset,
                     NULL);
+
+      /* FIXME subpixel grid */
+      xspacing = RINT (xspacing);
+      yspacing = RINT (yspacing);
+      xoffset  = RINT (xoffset);
+      yoffset  = RINT (yoffset);
 
       while (xoffset > xspacing)
         xoffset -= xspacing;
