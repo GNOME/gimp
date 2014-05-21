@@ -200,18 +200,8 @@ gimp_canvas_grid_draw (GimpCanvasItem *item,
 
 #define CROSSHAIR 2
 
-  g_object_get (private->grid,
-                "xspacing", &xspacing,
-                "yspacing", &yspacing,
-                "xoffset",  &xoffset,
-                "yoffset",  &yoffset,
-                NULL);
-
-  /* FIXME subpixel grid */
-  xspacing = RINT (xspacing);
-  yspacing = RINT (yspacing);
-  xoffset  = RINT (xoffset);
-  yoffset  = RINT (yoffset);
+  gimp_grid_get_spacing (private->grid, &xspacing, &yspacing);
+  gimp_grid_get_offset  (private->grid, &xoffset,  &yoffset);
 
   g_return_if_fail (xspacing > 0.0 &&
                     yspacing > 0.0);
