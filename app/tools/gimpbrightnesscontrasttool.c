@@ -205,7 +205,6 @@ gimp_brightness_contrast_tool_button_release (GimpTool              *tool,
                                               GimpDisplay           *display)
 {
   GimpBrightnessContrastTool *bc_tool = GIMP_BRIGHTNESS_CONTRAST_TOOL (tool);
-  GimpImageMapTool           *im_tool = GIMP_IMAGE_MAP_TOOL (tool);
 
   gimp_tool_control_halt (tool->control);
 
@@ -214,8 +213,6 @@ gimp_brightness_contrast_tool_button_release (GimpTool              *tool,
 
   if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     gimp_config_reset (GIMP_CONFIG (bc_tool->config));
-
-  gimp_image_map_tool_preview (im_tool);
 }
 
 static void
