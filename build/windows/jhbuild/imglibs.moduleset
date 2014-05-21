@@ -31,9 +31,9 @@
 </autotools>
 
 <autotools id="libjpeg-turbo" autogen-sh="configure">
-	<branch version="1.3.0" repo="sf.net"
-			module="libjpeg-turbo/1.3.0/libjpeg-turbo-1.3.0.tar.gz"
-			hash="sha1:1792c964b35604cebd3a8846f1ca6de5976e9c28">
+	<branch version="1.3.1" repo="sf.net"
+			module="libjpeg-turbo/1.3.1/libjpeg-turbo-1.3.1.tar.gz"
+			hash="sha1:5fa19252e5ca992cfa40446a0210ceff55fbe468">
 		<patch file="libjpeg-turbo-int32.patch" strip="1"/>
 		<patch file="libjpeg-turbo-boolean.patch" strip="1"/>
 	</branch>
