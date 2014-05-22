@@ -1155,6 +1155,15 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
       width  != old_width            ||
       height != old_height)
     {
+      /* set the offset first, so the graph is in the right state when
+       * the projection is reallocated, see bug #730550.
+       */
+      if (private->offset_node)
+        gegl_node_set (private->offset_node,
+                       "x", (gdouble) -x,
+                       "y", (gdouble) -y,
+                       NULL);
+
       if (private->reallocate_projection ||
           width  != old_width            ||
           height != old_height)
@@ -1195,12 +1204,6 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
           gimp_projectable_invalidate (GIMP_PROJECTABLE (group),
                                        x, y, width, height);
         }
-
-      if (private->offset_node)
-        gegl_node_set (private->offset_node,
-                       "x", (gdouble) -x,
-                       "y", (gdouble) -y,
-                       NULL);
     }
 }
 
