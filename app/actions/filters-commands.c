@@ -86,7 +86,8 @@ filters_filter_cmd_callback (GtkAction   *action,
         }
 
       gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (active_tool),
-                                         operation, label);
+                                         operation, label,
+                                         gtk_action_get_icon_name (action));
       tool_manager_initialize_active (image->gimp, display);
 
       g_free (label);

@@ -421,7 +421,7 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
         }
 
       gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (tool),
-                                         operation, NULL);
+                                         operation, NULL, NULL);
       g_free (operation);
     }
 }

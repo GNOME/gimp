@@ -163,6 +163,12 @@ gimp_operation_tool_finalize (GObject *object)
       tool->undo_desc = NULL;
     }
 
+  if (tool->icon_name)
+    {
+      g_free (tool->icon_name);
+      tool->icon_name = NULL;
+    }
+
   if (tool->config)
     {
       g_object_unref (tool->config);
@@ -285,6 +291,10 @@ gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
   if (tool->undo_desc)
     gimp_tool_gui_set_description (GIMP_IMAGE_MAP_TOOL (tool)->gui,
                                    tool->undo_desc);
+
+  if (tool->icon_name)
+    gimp_tool_gui_set_icon_name (GIMP_IMAGE_MAP_TOOL (tool)->gui,
+                                 tool->icon_name);
 }
 
 static void
@@ -559,7 +569,8 @@ gimp_operation_tool_aux_notify (GimpPickableButton *button,
 void
 gimp_operation_tool_set_operation (GimpOperationTool *tool,
                                    const gchar       *operation,
-                                   const gchar       *undo_desc)
+                                   const gchar       *undo_desc,
+                                   const gchar       *icon_name)
 {
   GimpImageMapTool *im_tool;
 
@@ -574,8 +585,12 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   if (tool->undo_desc)
     g_free (tool->undo_desc);
 
+  if (tool->icon_name)
+    g_free (tool->icon_name);
+
   tool->operation = g_strdup (operation);
   tool->undo_desc = g_strdup (undo_desc);
+  tool->icon_name = g_strdup (icon_name);
 
   if (tool->config)
     g_object_unref (tool->config);
@@ -674,8 +689,14 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
         }
     }
 
-  if (undo_desc && im_tool->gui)
-    gimp_tool_gui_set_description (im_tool->gui, undo_desc);
+  if (im_tool->gui)
+    {
+      if (undo_desc)
+        gimp_tool_gui_set_description (im_tool->gui, undo_desc);
+
+      if (icon_name)
+        gimp_tool_gui_set_icon_name (im_tool->gui, icon_name);
+    }
 
   if (GIMP_TOOL (tool)->drawable)
     {
