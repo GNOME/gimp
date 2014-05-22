@@ -61,6 +61,8 @@ GimpToolGui * gimp_tool_gui_new                    (GimpToolInfo     *tool_info,
 
 void          gimp_tool_gui_set_description        (GimpToolGui      *gui,
                                                     const gchar      *description);
+void          gimp_tool_gui_set_icon_name          (GimpToolGui      *gui,
+                                                    const gchar      *icon_name);
 
 void          gimp_tool_gui_set_shell              (GimpToolGui      *gui,
                                                     GimpDisplayShell *shell);
