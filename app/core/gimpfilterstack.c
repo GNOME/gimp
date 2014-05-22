@@ -129,7 +129,6 @@ gimp_filter_stack_remove (GimpContainer *container,
 
   if (stack->graph)
     {
-
       gimp_filter_stack_remove_node (stack, filter);
       gegl_node_remove_child (stack->graph, gimp_filter_get_node (filter));
     }
