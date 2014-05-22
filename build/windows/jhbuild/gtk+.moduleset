@@ -41,9 +41,9 @@
 </autotools>
 
 <autotools id="pango" autogen-sh="configure">
-	<branch version="1.36.2" repo="gnome.org"
-			module="pango/1.36/pango-1.36.2.tar.xz"
-			hash="sha256:f07f9392c9cf20daf5c17a210b2c3f3823d517e1917b72f20bb19353b2bc2c63">
+	<branch version="1.36.3" repo="gnome.org"
+			module="pango/1.36/pango-1.36.3.tar.xz"
+			hash="sha256:ad48e32917f94aa9d507486d44366e59355fcfd46ef86d119ddcba566ada5d22">
 	</branch>
 	<dependencies>
 		<dep package="cairo"/>
