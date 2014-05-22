@@ -150,7 +150,7 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:gaussian-blur",
     NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_BLUR */ },
 
-  { "filters-grid", GIMP_STOCK_GEGL,
+  { "filters-grid", GIMP_STOCK_GRID,
     NC_("filters-action", "_Grid..."), NULL, NULL,
     "gegl:grid",
     NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_GRID */ },
