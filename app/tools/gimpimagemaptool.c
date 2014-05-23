@@ -341,6 +341,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
     {
       GimpImageMapToolClass *klass;
       GtkWidget             *vbox;
+      GtkWidget             *combo;
       GtkWidget             *toggle;
 
       klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
@@ -403,7 +404,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
           gtk_widget_show (settings_ui);
         }
 
-      /*  The hack toggle  */
+      /*  The gamma hack toggle  */
       toggle = gtk_check_button_new_with_label ("Gamma hack (temp hack, please ignore)");
       gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
@@ -416,9 +417,15 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
                                            "preview",
                                            _("_Preview"));
-
       gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
+
+      /*  The area combo  */
+      combo = gimp_prop_enum_combo_box_new (G_OBJECT (tool_info->tool_options),
+                                            "region",
+                                            0, 0);
+      gtk_box_pack_end (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
+      gtk_widget_show (combo);
 
       /*  Fill in subclass widgets  */
       gimp_image_map_tool_dialog (image_map_tool);
@@ -526,6 +533,16 @@ gimp_image_map_tool_options_notify (GimpTool         *tool,
 
           gimp_tool_control_pop_preserve (tool->control);
         }
+    }
+  else if (! strcmp (pspec->name, "region") &&
+           image_map_tool->image_map)
+    {
+      gimp_tool_control_push_preserve (tool->control, TRUE);
+
+      gimp_image_map_tool_create_map (image_map_tool);
+      gimp_image_map_tool_preview (image_map_tool);
+
+      gimp_tool_control_pop_preserve (tool->control);
     }
 }
 
@@ -698,9 +715,8 @@ gimp_image_map_tool_reset (GimpImageMapTool *tool)
 static void
 gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 {
-  GimpToolInfo *tool_info;
-
-  g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (tool));
+  GimpImageMapOptions *options   = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
+  GimpToolInfo        *tool_info = GIMP_TOOL (tool)->tool_info;
 
   if (tool->image_map)
     {
@@ -710,12 +726,12 @@ gimp_image_map_tool_create_map (GimpImageMapTool *tool)
 
   g_assert (tool->operation);
 
-  tool_info = GIMP_TOOL (tool)->tool_info;
-
   tool->image_map = gimp_image_map_new (tool->drawable,
                                         tool->undo_desc,
                                         tool->operation,
                                         gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info)));
+
+  gimp_image_map_set_region (tool->image_map, options->region);
 
   g_signal_connect (tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),

@@ -543,6 +543,17 @@ typedef enum  /*< pdb-skip >*/
 } GimpDynamicsOutputType;
 
 
+#define GIMP_TYPE_IMAGE_MAP_REGION (gimp_image_map_region_get_type ())
+
+GType gimp_image_map_region_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_IMAGE_MAP_REGION_SELECTION, /*< desc="Use the selection as input"    >*/
+  GIMP_IMAGE_MAP_REGION_DRAWABLE   /*< desc="Use the entire layer as input" >*/
+} GimpImageMapRegion;
+
+
 /*
  * non-registered enums; register them if needed
  */

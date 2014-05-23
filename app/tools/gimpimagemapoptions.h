@@ -34,10 +34,11 @@ typedef struct _GimpToolOptionsClass  GimpImageMapOptionsClass;
 
 struct _GimpImageMapOptions
 {
-  GimpToolOptions  parent_instance;
+  GimpToolOptions     parent_instance;
 
-  gboolean         preview;
-  gchar           *settings;
+  gboolean            preview;
+  GimpImageMapRegion  region;
+  gchar              *settings;
 };
 
 

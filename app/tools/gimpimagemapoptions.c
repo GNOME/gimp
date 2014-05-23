@@ -31,6 +31,7 @@ enum
 {
   PROP_0,
   PROP_PREVIEW,
+  PROP_REGION,
   PROP_SETTINGS
 };
 
@@ -65,6 +66,15 @@ gimp_image_map_options_class_init (GimpImageMapOptionsClass *klass)
                                     "preview", NULL,
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_property (object_class, PROP_REGION,
+                                   g_param_spec_enum ("region",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_IMAGE_MAP_REGION,
+                                                      GIMP_IMAGE_MAP_REGION_SELECTION,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_SETTINGS,
                                    g_param_spec_string ("settings",
                                                         NULL, NULL,
@@ -105,10 +115,16 @@ gimp_image_map_options_set_property (GObject      *object,
     case PROP_PREVIEW:
       options->preview = g_value_get_boolean (value);
       break;
+
+    case PROP_REGION:
+      options->region = g_value_get_enum (value);
+      break;
+
     case PROP_SETTINGS:
       g_free (options->settings);
       options->settings = g_value_dup_string (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -128,9 +144,15 @@ gimp_image_map_options_get_property (GObject    *object,
     case PROP_PREVIEW:
       g_value_set_boolean (value, options->preview);
       break;
+
+    case PROP_REGION:
+      g_value_set_enum (value, options->region);
+      break;
+
     case PROP_SETTINGS:
       g_value_set_string (value, options->settings);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

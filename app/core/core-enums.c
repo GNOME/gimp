@@ -1179,6 +1179,35 @@ gimp_dynamics_output_type_get_type (void)
   return type;
 }
 
+GType
+gimp_image_map_region_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_IMAGE_MAP_REGION_SELECTION, "GIMP_IMAGE_MAP_REGION_SELECTION", "selection" },
+    { GIMP_IMAGE_MAP_REGION_DRAWABLE, "GIMP_IMAGE_MAP_REGION_DRAWABLE", "drawable" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_IMAGE_MAP_REGION_SELECTION, NC_("image-map-region", "Use the selection as input"), NULL },
+    { GIMP_IMAGE_MAP_REGION_DRAWABLE, NC_("image-map-region", "Use the entire layer as input"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpImageMapRegion", values);
+      gimp_type_set_translation_context (type, "image-map-region");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 
