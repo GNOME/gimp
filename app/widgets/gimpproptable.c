@@ -306,7 +306,8 @@ gimp_prop_table_new (GObject              *config,
                                 0, 0);
               gtk_widget_show (chain);
 
-              if (! HAS_KEY (pspec, "unit", "pixel-coordinate") &&
+              if (! HAS_KEY (pspec, "unit", "pixel-coordinate")    &&
+                  ! HAS_KEY (pspec, "unit", "relative-coordinate") &&
                   gtk_adjustment_get_value (last_x_adj) ==
                   gtk_adjustment_get_value (adj))
                 {
@@ -328,7 +329,8 @@ gimp_prop_table_new (GObject              *config,
               g_object_set_data (G_OBJECT (last_x_adj), "y-adjustment", adj);
 
               if (create_picker_func &&
-                  HAS_KEY (pspec, "unit", "pixel-coordinate"))
+                  (HAS_KEY (pspec, "unit", "pixel-coordinate") ||
+                   HAS_KEY (pspec, "unit", "relative-coordinate")))
                 {
                   GtkWidget *button;
                   gchar     *pspec_name;
