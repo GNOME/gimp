@@ -54,6 +54,63 @@
 
 
 static GeglNode *
+wrap_in_selection_bounds (GeglNode     *node,
+                          GimpDrawable *drawable)
+{
+  gint x, y;
+  gint width, height;
+
+  if (gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                &x, &y, &width, &height))
+    {
+      GeglNode *new_node;
+      GeglNode *input;
+      GeglNode *output;
+      GeglNode *translate_before;
+      GeglNode *crop;
+      GeglNode *translate_after;
+
+      new_node = gegl_node_new ();
+
+      gegl_node_add_child (new_node, node);
+      g_object_unref (node);
+
+      input  = gegl_node_get_input_proxy  (new_node, "input");
+      output = gegl_node_get_output_proxy (new_node, "output");
+
+      translate_before = gegl_node_new_child (new_node,
+                                              "operation", "gegl:translate",
+                                              "x",         (gdouble) -x,
+                                              "y",         (gdouble) -y,
+                                              NULL);
+      crop = gegl_node_new_child (new_node,
+                                  "operation", "gegl:crop",
+                                  "width",     (gdouble) width,
+                                  "height",    (gdouble) height,
+                                  NULL);
+      translate_after = gegl_node_new_child (new_node,
+                                             "operation", "gegl:translate",
+                                             "x",         (gdouble) x,
+                                             "y",         (gdouble) y,
+                                             NULL);
+
+      gegl_node_link_many (input,
+                           translate_before,
+                           crop,
+                           node,
+                           translate_after,
+                           output,
+                           NULL);
+
+      return new_node;
+    }
+  else
+    {
+      return node;
+    }
+}
+
+static GeglNode *
 wrap_in_gamma_cast (GeglNode     *node,
                     GimpDrawable *drawable)
 {
@@ -133,7 +190,6 @@ gaussian_blur (GimpDrawable  *drawable,
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Gaussian Blur"),
                                      node);
-
       g_object_unref (node);
 
       return TRUE;
@@ -199,7 +255,6 @@ plug_in_alienmap2_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Alien Map"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -237,7 +292,6 @@ plug_in_antialias_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Antialias"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -281,7 +335,6 @@ plug_in_apply_canvas_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Apply Canvas"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -337,10 +390,11 @@ plug_in_applylens_invoker (GimpProcedure         *procedure,
 
           g_object_unref (gegl_color);
 
+          node = wrap_in_selection_bounds (node, drawable);
+
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Apply Lens"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -515,7 +569,6 @@ plug_in_c_astretch_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Stretch Contrast"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -583,7 +636,6 @@ plug_in_colors_channel_mixer_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Channel Mixer"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -628,7 +680,6 @@ plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Color to Alpha"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -691,7 +742,6 @@ plug_in_cubism_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Cubism"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -737,7 +787,6 @@ plug_in_deinterlace_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Deinterlace"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -922,7 +971,6 @@ plug_in_glasstile_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Glass Tile"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -976,7 +1024,6 @@ plug_in_hsv_noise_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Noise HSV"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1083,10 +1130,13 @@ plug_in_lens_distortion_invoker (GimpProcedure         *procedure,
                                        "background", gegl_color,
                                        NULL);
 
+          g_object_unref (gegl_color);
+
+          node = wrap_in_selection_bounds (node, drawable);
+
           gimp_drawable_apply_operation (drawable, progress,
                                         C_("undo-type", "Lens Distortion"),
                                         node);
-          g_object_unref (gegl_color);
           g_object_unref (node);
 
         }
@@ -1122,10 +1172,11 @@ plug_in_make_seamless_invoker (GimpProcedure         *procedure,
                                  "operation", "gegl:tile-seamless",
                                  NULL);
 
+          node = wrap_in_selection_bounds (node, drawable);
+
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Tile Seamless"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1165,7 +1216,12 @@ plug_in_mblur_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GeglNode *node = NULL;
+          GeglNode *node   = NULL;
+          gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+          gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+          center_x /= (gdouble) width;
+          center_y /= (gdouble) height;
 
           if (angle > 180.0)
             angle -= 360.0;
@@ -1190,6 +1246,7 @@ plug_in_mblur_invoker (GimpProcedure         *procedure,
           else if (type == 2)
             {
               gdouble factor = CLAMP (length / 256.0, 0.0, 1.0);
+
               node =  gegl_node_new_child (NULL,
                                            "operation", "gegl:motion-blur-zoom",
                                            "center-x",  center_x,
@@ -1203,7 +1260,6 @@ plug_in_mblur_invoker (GimpProcedure         *procedure,
               gimp_drawable_apply_operation (drawable, progress,
                                              C_("undo-type", "Motion Blur"),
                                              node);
-
               g_object_unref (node);
             }
           else
@@ -1247,7 +1303,12 @@ plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GeglNode *node = NULL;
+          GeglNode *node   = NULL;
+          gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+          gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+          center_x /= (gdouble) width;
+          center_y /= (gdouble) height;
 
           if (type == 0)
             {
@@ -1269,6 +1330,7 @@ plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
           else if (type == 2)
             {
               gdouble factor = CLAMP (-length / (256.0 - length), -10.0, 0.0);
+
               node =  gegl_node_new_child (NULL,
                                            "operation", "gegl:motion-blur-zoom",
                                            "center-x",  center_x,
@@ -1282,7 +1344,6 @@ plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
               gimp_drawable_apply_operation (drawable, progress,
                                              C_("undo-type", "Motion Blur"),
                                              node);
-
               g_object_unref (node);
             }
           else
@@ -1425,7 +1486,6 @@ plug_in_pixelize_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Pixelize"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1469,7 +1529,6 @@ plug_in_pixelize2_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Pixelize"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1521,7 +1580,6 @@ plug_in_plasma_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Plasma"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1571,10 +1629,11 @@ plug_in_polar_coords_invoker (GimpProcedure         *procedure,
                                  "polar",     polrec,
                                  NULL);
 
+          node = wrap_in_selection_bounds (node, drawable);
+
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Polar Coordinates"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1615,7 +1674,6 @@ plug_in_red_eye_removal_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Red Eye Removal"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1669,7 +1727,6 @@ plug_in_randomize_hurl_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Random Hurl"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1723,7 +1780,6 @@ plug_in_randomize_pick_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Random Pick"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1777,7 +1833,6 @@ plug_in_randomize_slur_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Random Slur"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1853,7 +1908,6 @@ plug_in_rgb_noise_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "RGB Noise"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1927,7 +1981,6 @@ plug_in_noisify_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Noisify"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1972,7 +2025,6 @@ plug_in_semiflatten_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Semi-Flatten"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -2016,7 +2068,6 @@ plug_in_shift_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Shift"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -2061,7 +2112,6 @@ plug_in_spread_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Spread"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -2103,7 +2153,6 @@ plug_in_threshold_alpha_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Threshold Alpha"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -2141,7 +2190,6 @@ plug_in_vinvert_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Value Invert"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -2193,8 +2241,8 @@ plug_in_waves_invoker (GimpProcedure         *procedure,
 
           node = gegl_node_new_child (NULL,
                                      "operation", "gegl:waves",
-                                     "x",         width  / 2.0,
-                                     "y",         height / 2.0,
+                                     "x",         0.5,
+                                     "y",         0.5,
                                      "amplitude", amplitude,
                                      "phi",       (phase - 180.0) / 180.0,
                                      "period",    wavelength * 2.0,
@@ -2205,7 +2253,6 @@ plug_in_waves_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Waves"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -2249,10 +2296,11 @@ plug_in_whirl_pinch_invoker (GimpProcedure         *procedure,
                                  "radius",    radius,
                                  NULL);
 
+          node = wrap_in_selection_bounds (node, drawable);
+
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Whirl and Pinch"),
                                          node);
-
           g_object_unref (node);
         }
       else

@@ -80,7 +80,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Alien Map"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -124,7 +123,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Antialias"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -174,7 +172,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Apply Canvas"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -238,10 +235,11 @@ HELP
 
       g_object_unref (gegl_color);
 
+      node = wrap_in_selection_bounds (node, drawable);
+
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Apply Lens"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -446,7 +444,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Stretch Contrast"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -520,7 +517,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Channel Mixer"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -572,7 +568,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Color to Alpha"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -641,7 +636,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Cubism"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -695,7 +689,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Deinterlace"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -935,7 +928,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Glass Tile"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -996,7 +988,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Noise HSV"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -1119,11 +1110,14 @@ HELP
                                    "brighten",   (gdouble) brighten,
                                    "background", gegl_color,
                                    NULL);
+
+      g_object_unref (gegl_color);
+
+      node = wrap_in_selection_bounds (node, drawable);
  
       gimp_drawable_apply_operation (drawable, progress,
                                     C_("undo-type", "Lens Distortion"),
                                     node);
-      g_object_unref (gegl_color);
       g_object_unref (node);
 
     }
@@ -1165,10 +1159,11 @@ HELP
                              "operation", "gegl:tile-seamless",
                              NULL);
 
+      node = wrap_in_selection_bounds (node, drawable);
+
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Tile Seamless"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -1216,7 +1211,12 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
-      GeglNode *node = NULL;
+      GeglNode *node   = NULL;
+      gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+      gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+      center_x /= (gdouble) width;
+      center_y /= (gdouble) height;
 
       if (angle > 180.0)
         angle -= 360.0;
@@ -1241,6 +1241,7 @@ HELP
       else if (type == 2)
         {
 	  gdouble factor = CLAMP (length / 256.0, 0.0, 1.0);
+
           node =  gegl_node_new_child (NULL,
                                        "operation", "gegl:motion-blur-zoom",
                                        "center-x",  center_x,
@@ -1254,7 +1255,6 @@ HELP
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Motion Blur"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1305,7 +1305,12 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
-      GeglNode *node = NULL;
+      GeglNode *node   = NULL;
+      gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+      gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+      center_x /= (gdouble) width;
+      center_y /= (gdouble) height;
 
       if (type == 0)
         {
@@ -1327,6 +1332,7 @@ HELP
       else if (type == 2)
         {
           gdouble factor = CLAMP (-length / (256.0 - length), -10.0, 0.0);
+
           node =  gegl_node_new_child (NULL,
                                        "operation", "gegl:motion-blur-zoom",
                                        "center-x",  center_x,
@@ -1340,7 +1346,6 @@ HELP
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Motion Blur"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1498,7 +1503,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Pixelize"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -1549,7 +1553,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Pixelize"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -1607,7 +1610,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Plasma"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -1664,10 +1666,11 @@ HELP
                              "polar",     polrec,
                              NULL);
 
+      node = wrap_in_selection_bounds (node, drawable);
+
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Polar Coordinates"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -1729,7 +1732,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Random Hurl"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -1791,7 +1793,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Random Pick"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -1853,7 +1854,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Random Slur"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -1903,7 +1903,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Red Eye Removal"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -1988,7 +1987,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "RGB Noise"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -2069,7 +2067,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Noisify"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -2121,7 +2118,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Semi-Flatten"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -2172,7 +2168,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Shift"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -2225,7 +2220,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Spread"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -2273,7 +2267,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Threshold Alpha"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -2321,7 +2314,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Value Invert"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -2381,8 +2373,8 @@ HELP
 
       node = gegl_node_new_child (NULL,
                                  "operation", "gegl:waves",
-                                 "x",         width  / 2.0,
-                                 "y",         height / 2.0,
+                                 "x",         0.5,
+                                 "y",         0.5,
                                  "amplitude", amplitude,
                                  "phi",       (phase - 180.0) / 180.0,
                                  "period",    wavelength * 2.0,
@@ -2393,7 +2385,6 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Waves"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -2447,10 +2438,11 @@ HELP
                              "radius",    radius,
                              NULL);
 
+      node = wrap_in_selection_bounds (node, drawable);
+
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Whirl and Pinch"),
                                      node);
-
       g_object_unref (node);
     }
   else
@@ -2461,6 +2453,63 @@ CODE
 }
 
 $extra{app}->{code} = <<'CODE';
+static GeglNode *
+wrap_in_selection_bounds (GeglNode     *node,
+                          GimpDrawable *drawable)
+{
+  gint x, y;
+  gint width, height;
+
+  if (gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                &x, &y, &width, &height))
+    {
+      GeglNode *new_node;
+      GeglNode *input;
+      GeglNode *output;
+      GeglNode *translate_before;
+      GeglNode *crop;
+      GeglNode *translate_after;
+
+      new_node = gegl_node_new ();
+
+      gegl_node_add_child (new_node, node);
+      g_object_unref (node);
+
+      input  = gegl_node_get_input_proxy  (new_node, "input");
+      output = gegl_node_get_output_proxy (new_node, "output");
+
+      translate_before = gegl_node_new_child (new_node,
+                                              "operation", "gegl:translate",
+                                              "x",         (gdouble) -x,
+                                              "y",         (gdouble) -y,
+                                              NULL);
+      crop = gegl_node_new_child (new_node,
+                                  "operation", "gegl:crop",
+                                  "width",     (gdouble) width,
+                                  "height",    (gdouble) height,
+                                  NULL);
+      translate_after = gegl_node_new_child (new_node,
+                                             "operation", "gegl:translate",
+                                             "x",         (gdouble) x,
+                                             "y",         (gdouble) y,
+                                             NULL);
+
+      gegl_node_link_many (input,
+                           translate_before,
+                           crop,
+                           node,
+                           translate_after,
+                           output,
+                           NULL);
+
+      return new_node;
+    }
+  else
+    {
+      return node;
+    }
+}
+
 static GeglNode *
 wrap_in_gamma_cast (GeglNode     *node,
                     GimpDrawable *drawable)
@@ -2541,7 +2590,6 @@ gaussian_blur (GimpDrawable  *drawable,
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Gaussian Blur"),
                                      node);
-
       g_object_unref (node);
 
       return TRUE;
