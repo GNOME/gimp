@@ -1342,6 +1342,8 @@ gimp_wm_class (void)
  * Returns the display to be used for plug-in windows.
  *
  * This is a constant value given at plug-in configuration time.
+ * Will return #NULL if GIMP has been started with no GUI, either
+ * via "--no-interface" flag, or a console build.
  *
  * Return value: the display name
  **/
