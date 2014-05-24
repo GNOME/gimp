@@ -373,8 +373,6 @@
 	</autotools>
 
 	<autotools id="glib" autogenargs="--with-libiconv=native --enable-gtk-doc=no">
-		<!-- branch module="glib/2.39/glib-2.39.1.tar.xz" version="2.39.1" hash="sha256:d08c976f5560693946251361f186e3c9243c8195a95417127c1b1970c8371153"> 
-			</branch -->
 		<branch repo="git.gnome.org" module="glib" revision="glib-2-40" />
 		<dependencies>
 			<dep package="libffi" />
@@ -494,9 +492,9 @@
 	</autotools>
 
 	<autotools id="gvfs" autogen-sh="configure"
-		autogenargs="--disable-avahi --disable-fuse --disable-hal --disable-cdda --disable-obexftp --disable-gphoto2 --disable-samba --disable-udev --disable-gdu --disable-udisks2 --disable-libsystemd-login --disable-gudev --disable-afc --disable-goa --disable-bluray --disable-libmtp --enable-http --enable-archive --enable-afp --disable-silent-rules">
-		<branch module="gvfs/1.19/gvfs-1.19.1.tar.xz" version="1.19.1"
-			hash="sha256:014ea3b244cb6bb6d375f3751c35aad86abbbd7353e9761581e750f3c11d5db3">
+		autogenargs="--disable-avahi --disable-fuse --disable-hal --disable-cdda --disable-obexftp --disable-gphoto2 --enable-samba --disable-udev --disable-gdu --disable-udisks2 --disable-libsystemd-login --disable-gudev --disable-afc --disable-goa --disable-bluray --disable-libmtp --enable-http --enable-archive --enable-afp --disable-silent-rules">
+		<branch module="gvfs/1.21/gvfs-1.21.2.tar.xz" version="1.21.2"
+			hash="sha256:aadf18dea818bdd1fd14856e56a30171bd9f89ce5e36591ab8c74d10199e0142">
 			<!--<patch file="https://dl.dropboxusercontent.com/u/942685/files/gvfs/patch-gconf-gapplookupgconf.h.diff" 
 				strip="0"/> -->
 		</branch>
@@ -745,7 +743,7 @@
 
 	<autotools id="dbus" autogen-sh="configure"
 		autogenargs="--disable-doxygen-docs --disable-xml-docs --disable-selinux --without-x --disable-tests --enable-verbose-mode --enable-asserts">
-		<branch module="dbus/dbus-1.7.8.tar.gz" version="1.7.8" repo="dbus">
+		<branch module="dbus/dbus-1.8.2.tar.gz" version="1.8.2" repo="dbus">
 		</branch>
 		<dependencies>
 		</dependencies>
@@ -765,7 +763,7 @@
 
 	<autotools id="dbus-glib" autogen-sh="configure"
 		autogenargs="--enable-asserts --enable-verbose-mode">
-		<branch module="dbus-glib/dbus-glib-0.100.tar.gz" version="0.100"
+		<branch module="dbus-glib/dbus-glib-0.102.tar.gz" version="0.102"
 			repo="dbus" />
 		<dependencies>
 			<dep package="dbus" />
@@ -1038,14 +1036,14 @@
 	<autotools id="berkeleydb" autogen-sh="dist/configure"
 		autogen-template="pwd; cd build_unix; pwd; ../%(autogen-sh)s --prefix %(prefix)s --libdir %(libdir)s %(autogenargs)s"
 		makeargs="-C build_unix" makeinstallargs="-C build_unix install">
-		<branch module="berkeley-db/db-6.0.20.tar.gz" version="6.0.20"
-			repo="oracle" checkoutdir="db-6.0.20" />
+		<branch module="berkeley-db/db-6.0.30.tar.gz" version="6.0.30"
+			repo="oracle" checkoutdir="db-6.0.30" />
 	</autotools>
 
 	<autotools id="python" autogenargs="--enable-shared"
 		autogen-sh="configure">
-		<branch repo="python" module="2.7.5/Python-2.7.5.tar.xz"
-			version="2.7.5">
+		<branch repo="python" module="2.7.6/Python-2.7.6.tar.xz"
+			version="2.7.6">
 		</branch>
 		<dependencies>
 			<dep package="berkeleydb" />
@@ -1066,9 +1064,8 @@
 
 	<autotools id="gobject-introspection">
 		<branch
-			module="gobject-introspection/1.38/gobject-introspection-1.38.0.tar.xz"
-			version="1.38.0"
-			hash="sha256:3575e5d353c17a567fdf7ffaaa7aebe9347b5b0eee8e69d612ba56a9def67d73">
+			module="gobject-introspection/1.40/gobject-introspection-1.40.0.tar.xz"
+			version="1.40.0">
 		</branch>
 		<dependencies>
 			<dep package="glib" />
