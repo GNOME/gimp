@@ -94,10 +94,7 @@ This error is irrelevant. The OpenSSL install procedure failes erroneously altho
 all library parts were installed successfully. Thus you can continue to the next
 module by choosing option 2.
 
-6. If you would like the GTK Murrine theme, you can install it as well
-# JHB=gimp GIMP_SDK=10.6 jhbuild build murrine-engine
-
-7. In order to run GIMP with D-Bus support (required for GVFS and GIO)
+6. In order to run GIMP with D-Bus support (required for GVFS and GIO)
 $ dbus-launch gimp-2.8
 
 This will generate a D-Bus session. If you continuously run GIMP using this method, 

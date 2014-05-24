@@ -124,8 +124,8 @@
 		${prefix}/lib/pango/${pkg:pango:pango_module_version}/modules/*.so
 	</binary>
 
-	<!-- Copy in translations -->
-	<!-- - copy in GIMP and GEGL translations - -->
+	<!-- Translations -->
+	<!-- - GIMP and GEGL translations - -->
 	<translations name="gegl-0.2">${prefix}/share/locale</translations>
 	<translations name="gimp20-libgimp">${prefix}/share/locale</translations>
 	<translations name="gimp20-python">${prefix}/share/locale</translations>
@@ -134,7 +134,7 @@
 	<translations name="gimp20-tips">${prefix}/share/locale</translations>
 	<translations name="gimp20">${prefix}/share/locale</translations>
 
-	<!-- - copy in ISO-Code Package translations (language names) - -->
+	<!-- - ISO-Code Package translations (language names) - -->
 	<translations name="iso_15924">${prefix}/share/locale</translations>
 	<translations name="iso_3166">${prefix}/share/locale</translations>
 	<translations name="iso_3166_2">${prefix}/share/locale</translations>
@@ -142,7 +142,7 @@
 	<translations name="iso_639">${prefix}/share/locale</translations>
 	<translations name="iso_639_3">${prefix}/share/locale</translations>
 
-	<!-- - copy in miscellanous translations- -->
+	<!-- - miscellanous translations- -->
 	<translations name="atk10">${prefix}/share/locale</translations>
 	<translations name="gdk-pixbuf">${prefix}/share/locale</translations>
 	<translations name="gettext-tools">${prefix}/share/locale</translations>
@@ -204,10 +204,10 @@
 	<data>${prefix}/etc/xml/catalog</data>
 
 	<!-- Copy in themes -->
-	<data>${prefix}/share/themes</data>
+	<data>${prefix}/share/themes/Mac</data>
 
 	<!-- Copy in GTK+ theme data -->
-	<!-- data>${prefix}/share/gtk-engines/*.xml</data -->
+	<data>${prefix}/share/gtk-engines/*.xml</data>
 
 	<!-- Change default theme -->
 	<data dest="${bundle}/Contents/Resources/etc/${gtkdir}/gtkrc">

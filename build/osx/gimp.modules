@@ -853,6 +853,7 @@
 			<dep package="jasper" />
 			<dep package="meta-gtk-osx-python" />
 			<dep package="tango-icon-theme" />
+			<dep package="gimp-osx-theme" />
 			<dep package="gvfs" />
 			<dep package="curl" />
 			<dep package="gtk-mac-integration-python2" />
@@ -919,6 +920,15 @@
 	<autotools id="xamarin-gtk-theme" autogen-sh="autogen.sh">
 		<branch repo="github-git" module="mono/xamarin-gtk-theme"
 			revision="master" />
+		<dependencies>
+			<dep package="murrine-engine" />
+		</dependencies>
+	</autotools>
+
+	<autotools id="gimp-osx-theme" autogen-sh="autogen.sh">
+		<branch repo="github-git" module="scit2010/gimp-osx-theme"
+			revision="master">
+		</branch>
 		<dependencies>
 			<dep package="murrine-engine" />
 		</dependencies>

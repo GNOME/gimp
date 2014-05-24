@@ -135,7 +135,7 @@
 	<translations name="gimp20-tips">${prefix}/share/locale</translations>
 	<translations name="gimp20">${prefix}/share/locale</translations>
 
-	<!-- - ISO-Code Package translations - -->
+	<!-- - ISO-Code Package translations (language names) - -->
 	<translations name="iso_15924">${prefix}/share/locale</translations>
 	<translations name="iso_3166">${prefix}/share/locale</translations>
 	<translations name="iso_3166_2">${prefix}/share/locale</translations>
@@ -206,10 +206,10 @@
 	<data>${prefix}/etc/xml/catalog</data>
 
 	<!-- Copy in themes -->
-	<data>${prefix}/share/themes</data>
+	<data>${prefix}/share/themes/Mac</data>
 
 	<!-- Copy in GTK+ theme data -->
-	<!-- data>${prefix}/share/gtk-engines/*.xml</data -->
+	<data>${prefix}/share/gtk-engines/*.xml</data>
 
 	<!-- Change default theme -->
 	<data dest="${bundle}/Contents/Resources/etc/${gtkdir}/gtkrc">
