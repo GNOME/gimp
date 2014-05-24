@@ -1,0 +1,30 @@
+From c0d51b2863789ebda9b98e8a55a52af32c0974b7 Mon Sep 17 00:00:00 2001
+From: Sven Claussner <sclaussner@src.gnome.org>
+Date: Fri, 23 May 2014 05:17:08 +0200
+Subject: [PATCH] Keep separators between placeholders.
+
+Don't remove adjacent separators.
+---
+ src/cocoa_menu_item.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/src/cocoa_menu_item.c b/src/cocoa_menu_item.c
+index 793c254..aebf364 100644
+--- a/src/cocoa_menu_item.c
++++ b/src/cocoa_menu_item.c
+@@ -665,10 +665,8 @@ cocoa_menu_item_add_submenu (GtkMenuShell *menu_shell,
+         /* Don't want separators on the menubar */
+         continue;
+ 
+-      if (GTK_IS_SEPARATOR_MENU_ITEM (menu_item) &&
+-	  (last_item == NULL || GTK_IS_SEPARATOR_MENU_ITEM (last_item)))
+-	/* Don't put a separator at the top, nor make separators with
+-	 * nothing between them.
++      if (GTK_IS_SEPARATOR_MENU_ITEM (menu_item) && (last_item == NULL))
++	/* Don't put a separator at the top.
+ 	 */
+ 	continue;
+ 
+-- 
+1.9.2
+

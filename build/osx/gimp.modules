@@ -342,10 +342,9 @@
 			<patch
 				file="0002-Improve-internationalization-of-App-menu-and-other-s.patch"
 				strip="1" />
+			<patch file="0003-Keep-separators-between-placeholders.patch"
+				strip="1" />
 		</branch>
-		<dependencies>
-			<!--<dep package="gtk-2.24"/> -->
-		</dependencies>
 	</autotools>
 
 	<autotools id="libcroco" autogen-sh="configure"
