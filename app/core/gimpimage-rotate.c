@@ -210,6 +210,22 @@ gimp_image_rotate (GimpImage        *image,
         gimp_image_set_resolution (image, yres, xres);
     }
 
+  /*  Notify guide movements  */
+  for (list = gimp_image_get_guides (image);
+       list;
+       list = g_list_next (list))
+    {
+      gimp_image_guide_moved (image, list->data);
+    }
+
+  /*  Notify sample point movements  */
+  for (list = gimp_image_get_sample_points (image);
+       list;
+       list = g_list_next (list))
+    {
+      gimp_image_sample_point_moved (image, list->data);
+    }
+
   gimp_image_undo_group_end (image);
 
   if (size_changed)
@@ -364,18 +380,18 @@ gimp_image_rotate_sample_points (GimpImage        *image,
       switch (rotate_type)
         {
         case GIMP_ROTATE_90:
-          sample_point->x = old_y;
-          sample_point->y = gimp_image_get_height (image) - old_x;
+          sample_point->x = gimp_image_get_height (image) - old_y;
+          sample_point->y = old_x;
           break;
 
         case GIMP_ROTATE_180:
-          sample_point->x = gimp_image_get_height (image) - old_x;
-          sample_point->y = gimp_image_get_width  (image) - old_y;
+          sample_point->x = gimp_image_get_width  (image) - old_x;
+          sample_point->y = gimp_image_get_height (image) - old_y;
           break;
 
         case GIMP_ROTATE_270:
-          sample_point->x = gimp_image_get_width (image) - old_y;
-          sample_point->y = old_x;
+          sample_point->x = old_y;
+          sample_point->y = gimp_image_get_width (image) - old_x;
           break;
         }
     }
