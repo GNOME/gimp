@@ -1996,6 +1996,62 @@ CODE
     );
 }
 
+sub plug_in_rotate {
+    $blurb = 'Rotates a layer or the whole image by 90, 180 or 270 degrees';
+
+    $help = <<'HELP';
+This plug-in does rotate the active layer or the whole image clockwise
+by multiples of 90 degrees.  When the whole image is chosen, the image
+is resized if necessary.
+HELP
+
+    &neo_pdb_misc;
+    $date = '2014';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image',
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'angle', type => '1 <= int32 <= 3',
+          desc => 'Angle { 90 (1), 180 (2), 270 (3) } degrees' },
+        { name => 'everything', type => 'boolean',
+          desc => 'Rotate the whole image' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpRotationType rotate_type = angle - 1;
+
+  if (everything)
+    {
+      gimp_image_rotate (image, context, rotate_type, progress);
+    }
+  else if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                      GIMP_PDB_ITEM_CONTENT, error))
+    {
+      GimpItem *item = GIMP_ITEM (drawable);
+      gint      off_x, off_y;
+      gdouble   center_x, center_y;
+
+      gimp_item_get_offset (item, &off_x, &off_y);
+
+      center_x = ((gdouble) off_x + (gdouble) gimp_item_get_width  (item) / 2.0);
+      center_y = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
+
+      gimp_item_rotate (item, context, rotate_type, center_x, center_y,
+                        GIMP_IS_CHANNEL (drawable));
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_noisify {
     $blurb = 'Adds random noise to image channels';
 
@@ -2603,10 +2659,11 @@ CODE
               "libgimpmath/gimpmath.h"
               "gegl/gimp-babl.h"
               "gegl/gimp-gegl-utils.h"
+              "core/gimpchannel.h"
               "core/gimpcontext.h"
-              "core/gimpdrawable.h"
               "core/gimpdrawable-operation.h"
               "core/gimpimage-crop.h"
+              "core/gimpimage-rotate.h"
               "core/gimpimage-undo.h"
               "core/gimppickable.h"
               "core/gimppickable-auto-shrink.h"
@@ -2647,6 +2704,7 @@ CODE
             plug_in_randomize_pick
             plug_in_randomize_slur
             plug_in_rgb_noise
+            plug_in_rotate
             plug_in_noisify
             plug_in_semiflatten
             plug_in_shift
@@ -2661,6 +2719,6 @@ CODE
 $desc = 'Plug-In Compat';
 $doc_title = 'plugincolor';
 $doc_short_desc = 'Compatibility for removed plug-ins.';
-$doc_long_desc = 'Functions that perform the operation of removed plug-ins using GEGL operations.';
+$doc_long_desc = 'Functions that perform the operation of removed plug-ins using GEGL operations or other GIMP internal functions.';
 
 1;

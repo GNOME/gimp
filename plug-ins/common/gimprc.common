@@ -93,7 +93,6 @@ plugin_browser_RC = plugin-browser.rc.o
 procedure_browser_RC = procedure-browser.rc.o
 qbist_RC = qbist.rc.o
 ripple_RC = ripple.rc.o
-rotate_RC = rotate.rc.o
 sample_colorize_RC = sample-colorize.rc.o
 screenshot_RC = screenshot.rc.o
 sharpen_RC = sharpen.rc.o

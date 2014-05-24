@@ -139,7 +139,6 @@ libexec_PROGRAMS = \
 	procedure-browser \
 	qbist \
 	ripple \
-	rotate \
 	sample-colorize \
 	$(SCREENSHOT) \
 	sharpen \
@@ -1859,21 +1858,6 @@ ripple_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(ripple_RC)
-
-rotate_SOURCES = \
-	rotate.c
-
-rotate_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(rotate_RC)
 
 sample_colorize_SOURCES = \
 	sample-colorize.c
