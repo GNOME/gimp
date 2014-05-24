@@ -51,6 +51,7 @@ struct _GimpImageMapTool
   gboolean               overlay;
   GimpToolGui           *gui;
   GtkWidget             *settings_box;
+  GtkWidget             *region_combo;
   GtkSizeGroup          *label_group;
   GtkWidget             *active_picker;
 };

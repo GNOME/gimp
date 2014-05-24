@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include <gegl.h>
+#include <gegl-plugin.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -341,8 +342,8 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
     {
       GimpImageMapToolClass *klass;
       GtkWidget             *vbox;
-      GtkWidget             *combo;
       GtkWidget             *toggle;
+      gchar                 *operation_name;
 
       klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (image_map_tool);
 
@@ -421,11 +422,24 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       gtk_widget_show (toggle);
 
       /*  The area combo  */
-      combo = gimp_prop_enum_combo_box_new (G_OBJECT (tool_info->tool_options),
-                                            "region",
-                                            0, 0);
-      gtk_box_pack_end (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
-      gtk_widget_show (combo);
+      gegl_node_get (image_map_tool->operation,
+                     "operation", &operation_name,
+                     NULL);
+
+      image_map_tool->region_combo =
+        gimp_prop_enum_combo_box_new (G_OBJECT (tool_info->tool_options),
+                                      "region",
+                                      0, 0);
+      gtk_box_pack_end (GTK_BOX (vbox), image_map_tool->region_combo,
+                        FALSE, FALSE, 0);
+
+      if (operation_name &&
+          gegl_operation_get_key (operation_name, "position-dependent"))
+        {
+          gtk_widget_show (image_map_tool->region_combo);
+        }
+
+      g_free (operation_name);
 
       /*  Fill in subclass widgets  */
       gimp_image_map_tool_dialog (image_map_tool);
@@ -784,6 +798,7 @@ void
 gimp_image_map_tool_get_operation (GimpImageMapTool *image_map_tool)
 {
   GimpImageMapToolClass *klass;
+  gchar                 *operation_name;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (image_map_tool));
 
@@ -825,6 +840,28 @@ gimp_image_map_tool_get_operation (GimpImageMapTool *image_map_tool)
   if (! image_map_tool->undo_desc)
     image_map_tool->undo_desc =
       g_strdup (GIMP_TOOL (image_map_tool)->tool_info->blurb);
+
+  gegl_node_get (image_map_tool->operation,
+                 "operation", &operation_name,
+                 NULL);
+
+  if (operation_name &&
+      gegl_operation_get_key (operation_name, "position-dependent"))
+    {
+      if (image_map_tool->region_combo)
+        gtk_widget_show (image_map_tool->region_combo);
+    }
+  else
+    {
+      if (image_map_tool->region_combo)
+        gtk_widget_show (image_map_tool->region_combo);
+
+      g_object_set (GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (image_map_tool),
+                    "region", GIMP_IMAGE_MAP_REGION_SELECTION,
+                    NULL);
+    }
+
+  g_free (operation_name);
 
   if (image_map_tool->config)
     g_signal_connect_object (image_map_tool->config, "notify",
