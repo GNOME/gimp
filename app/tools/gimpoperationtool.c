@@ -248,7 +248,9 @@ gimp_operation_tool_get_operation (GimpImageMapTool  *im_tool,
                                 "operation", tool->operation,
                                 NULL);
 
-  return g_object_new (GEGL_TYPE_NODE, NULL);
+  return gegl_node_new_child (NULL,
+                              "operation", "gegl:nop",
+                              NULL);
 }
 
 static void
