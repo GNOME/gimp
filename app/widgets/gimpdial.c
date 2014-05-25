@@ -398,7 +398,7 @@ gimp_dial_expose_event (GtkWidget      *widget,
 }
 
 static gdouble
-angle_mod_2PI (gdouble angle)
+normalize_angle (gdouble angle)
 {
   if (angle < 0)
     return angle + 2 * G_PI;
@@ -412,8 +412,8 @@ static gdouble
 get_angle_distance (gdouble alpha,
                     gdouble beta)
 {
-  return ABS (MIN (angle_mod_2PI (alpha - beta),
-                   2 * G_PI - angle_mod_2PI (alpha - beta)));
+  return ABS (MIN (normalize_angle (alpha - beta),
+                   2 * G_PI - normalize_angle (alpha - beta)));
 }
 
 static gdouble
@@ -548,8 +548,8 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
 
             case DIAL_TARGET_BOTH:
               g_object_set (dial,
-                            "alpha", angle_mod_2PI (dial->priv->alpha + delta),
-                            "beta",  angle_mod_2PI (dial->priv->beta  + delta),
+                            "alpha", normalize_angle (dial->priv->alpha + delta),
+                            "beta",  normalize_angle (dial->priv->beta  + delta),
                             NULL);
               break;
 
