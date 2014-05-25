@@ -884,6 +884,7 @@
 			<dep package="jasper" />
 			<dep package="meta-gtk-osx-python" />
 			<dep package="tango-icon-theme" />
+			<dep package="gnome-themes" />
 			<dep package="gvfs" />
 		</dependencies>
 	</autotools>
@@ -953,14 +954,15 @@
 
 	<autotools id="gnome-themes" autogen-sh="configure"
 		autogenargs="--enable-shared --enable-all-themes">
-		<branch module="gnome-themes/2.30/gnome-themes-2.30.2.tar.gz"
-			version="2.30.2"
-			hash="sha256:928c114940c16cde6e25f3ac80b5b9dfef836d88a78461f79e016103a44f100e" />
+		<branch module="gnome-themes/2.32/gnome-themes-2.32.1.tar.gz"
+			version="2.32.1"
+			hash="sha256:cb7b01e99dfcd2a69416bcf42811e8adbed816f16dd8d91a898084b202f3a1d7" />
 		<dependencies>
 			<dep package="gtk-engines2" />
 		</dependencies>
 	</autotools>
 
+	<!-- GNOME 3 theme -->
 	<autotools id="gnome-themes-standard" autogen-sh="configure"
 		autogenargs="--enable-shared --disable-gtk2-engine">
 		<branch
