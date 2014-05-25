@@ -40,6 +40,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcolorpanel.h"
+#include "gimpdial.h"
 #include "gimpdnd.h"
 #include "gimpiconpicker.h"
 #include "gimplanguagecombobox.h"
@@ -725,9 +726,125 @@ gimp_prop_adjustment_notify (GObject       *config,
 }
 
 
-/*************/
+/************/
+/*  angles  */
+/************/
+
+static gboolean
+deg_to_rad (GBinding     *binding,
+            const GValue *from_value,
+            GValue       *to_value,
+            gpointer      user_data)
+{
+  gdouble *lower = user_data;
+  gdouble  value = g_value_get_double (from_value);
+
+  if (*lower != 0.0)
+    {
+      if (value < 0.0)
+        value += 360.0;
+    }
+
+  value *= G_PI / 180.0;
+
+  g_value_set_double (to_value, value);
+
+  return TRUE;
+}
+
+static gboolean
+rad_to_deg (GBinding     *binding,
+            const GValue *from_value,
+            GValue       *to_value,
+            gpointer      user_data)
+{
+  gdouble *lower = user_data;
+  gdouble  value = g_value_get_double (from_value);
+
+  value *= 180.0 / G_PI;
+
+  if (*lower != 0.0)
+    {
+      if (value > (*lower + 360.0))
+        value -= 360.0;
+    }
+
+  g_value_set_double (to_value, value);
+
+  return TRUE;
+}
+
+/**
+ * gimp_prop_angle_dial_new:
+ * @config:        #GimpConfig object to which property is attached.
+ * @property_name: Name of gdouble property
+ *
+ * Creates a #GimpDial to set and display the value of a
+ * gdouble property that represents an angle.
+ *
+ * Return value:  A new #GimpDial widget.
+ *
+ * Since GIMP 2.10
+ */
+GtkWidget *
+gimp_prop_angle_dial_new (GObject     *config,
+                          const gchar *property_name)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *dial;
+  gdouble     value;
+  gdouble     lower;
+  gdouble     upper;
+
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  if (! _gimp_prop_widgets_get_numeric_values (config, param_spec,
+                                               &value, &lower, &upper,
+                                               G_STRFUNC))
+    return NULL;
+
+  dial = gimp_dial_new ();
+
+  g_object_set (dial,
+                "size",         32,
+                "border-width", 0,
+                "draw-beta",    FALSE,
+                "background",   GIMP_DIAL_BACKGROUND_PLAIN,
+                NULL);
+
+  set_param_spec (G_OBJECT (dial), dial, param_spec);
+
+  if (lower == 0.0 && upper == 2 * G_PI)
+    {
+      g_object_bind_property (config, property_name,
+                              dial,   "alpha",
+                              G_BINDING_BIDIRECTIONAL |
+                              G_BINDING_SYNC_CREATE);
+    }
+  else if ((upper - lower) == 360.0)
+    {
+      gdouble *l = g_new0 (gdouble, 1);
+
+      *l = lower;
+
+      g_object_bind_property_full (config, property_name,
+                                   dial,   "alpha",
+                                   G_BINDING_BIDIRECTIONAL |
+                                   G_BINDING_SYNC_CREATE,
+                                   deg_to_rad,
+                                   rad_to_deg,
+                                   l, (GDestroyNotify) g_free);
+    }
+
+  return dial;
+}
+
+
+/**********/
 /*  view  */
-/*************/
+/**********/
 
 static void   gimp_prop_view_drop   (GtkWidget    *menu,
                                      gint          x,

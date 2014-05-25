@@ -66,6 +66,9 @@ void        gimp_prop_widget_set_factor     (GtkWidget     *widget,
                                              gdouble        page_increment,
                                              gint           digits);
 
+GtkWidget * gimp_prop_angle_dial_new        (GObject       *config,
+                                             const gchar   *property_name);
+
 
 /*  GParamObject (GimpViewable)  */
 
