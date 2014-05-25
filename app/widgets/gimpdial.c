@@ -44,7 +44,8 @@ enum
 {
   PROP_0,
   PROP_ALPHA,
-  PROP_BETA
+  PROP_BETA,
+  PROP_CLOCKWISE
 };
 
 enum
@@ -87,7 +88,7 @@ static void        gimp_dial_draw_arrows          (cairo_t          *cr,
                                                    gint              size,
                                                    gdouble           alpha,
                                                    gdouble           beta,
-                                                   DialDirection     direction);
+                                                   gboolean          clockwise);
 
 
 G_DEFINE_TYPE (GimpDial, gimp_dial, GTK_TYPE_WIDGET)
@@ -131,6 +132,13 @@ gimp_dial_class_init (GimpDialClass *klass)
                                                         0.0, 2 * G_PI, G_PI,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_CLOCKWISE,
+                                   g_param_spec_boolean ("clockwise",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 }
 
 static void
@@ -143,7 +151,6 @@ gimp_dial_init (GimpDial *dial)
                          GDK_BUTTON1_MOTION_MASK);
 
   dial->border_width = 4;
-  dial->direction    = DIAL_DIRECTION_CW;
 }
 
 static void
@@ -172,6 +179,11 @@ gimp_dial_set_property (GObject      *object,
       gtk_widget_queue_draw (GTK_WIDGET (dial));
       break;
 
+    case PROP_CLOCKWISE:
+      dial->clockwise = g_value_get_boolean (value);
+      gtk_widget_queue_draw (GTK_WIDGET (dial));
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -194,6 +206,10 @@ gimp_dial_get_property (GObject    *object,
 
     case PROP_BETA:
       g_value_set_double (value, dial->beta);
+      break;
+
+    case PROP_CLOCKWISE:
+      g_value_set_boolean (value, dial->clockwise);
       break;
 
     default:
@@ -327,7 +343,7 @@ gimp_dial_expose_event (GtkWidget      *widget,
                        allocation.y + dial->border_width + y);
 
       gimp_dial_draw_background (cr, size);
-      gimp_dial_draw_arrows (cr, size, dial->alpha, dial->beta, dial->direction);
+      gimp_dial_draw_arrows (cr, size, dial->alpha, dial->beta, dial->clockwise);
 
       cairo_destroy (cr);
     }
@@ -565,20 +581,15 @@ gimp_dial_draw_background (cairo_t *cr,
 }
 
 static void
-gimp_dial_draw_arrows (cairo_t      *cr,
-                       gint          size,
-                       gdouble       alpha,
-                       gdouble       beta,
-                       DialDirection direction)
+gimp_dial_draw_arrows (cairo_t  *cr,
+                       gint      size,
+                       gdouble   alpha,
+                       gdouble   beta,
+                       gboolean  clockwise)
 {
   gint     radius = size / 2.0;
   gint     dist;
-  gdouble  delta;
-
-  delta = angle_mod_2PI (beta - alpha);
-
-  if (direction == DIAL_DIRECTION_CCW)
-    delta = delta - 2 * G_PI;
+  gint     direction = clockwise ? -1 : 1;
 
   cairo_move_to (cr, radius, radius);
   cairo_line_to (cr,
@@ -633,7 +644,7 @@ gimp_dial_draw_arrows (cairo_t      *cr,
 
   cairo_new_sub_path (cr);
 
-  if (direction == DIAL_DIRECTION_CW)
+  if (! clockwise)
     {
       cairo_arc_negative (cr,
                           radius,

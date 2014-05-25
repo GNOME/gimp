@@ -24,12 +24,6 @@
 
 typedef enum
 {
-  DIAL_DIRECTION_CW  = 1,
-  DIAL_DIRECTION_CCW = -1
-} DialDirection;
-
-typedef enum
-{
   DIAL_TARGET_ALPHA,
   DIAL_TARGET_BETA,
   DIAL_TARGET_BOTH
@@ -52,7 +46,7 @@ struct _GimpDial
 
   gdouble           alpha;
   gdouble           beta;
-  DialDirection     direction;
+  gboolean          clockwise;
 
   GdkWindow        *event_window;
 
