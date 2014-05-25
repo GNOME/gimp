@@ -46,6 +46,7 @@ typedef void (* GimpDialBGFunc) (gdouble  angle,
 enum
 {
   PROP_0,
+  PROP_BORDER_WIDTH,
   PROP_ALPHA,
   PROP_BETA,
   PROP_CLOCKWISE
@@ -142,6 +143,13 @@ gimp_dial_class_init (GimpDialClass *klass)
   widget_class->button_release_event = gimp_dial_button_release_event;
   widget_class->motion_notify_event  = gimp_dial_motion_notify_event;
 
+  g_object_class_install_property (object_class, PROP_BORDER_WIDTH,
+                                   g_param_spec_int ("border-width",
+                                                     NULL, NULL,
+                                                     0, 64, 0,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_ALPHA,
                                    g_param_spec_double ("alpha",
                                                         NULL, NULL,
@@ -178,8 +186,6 @@ gimp_dial_init (GimpDial *dial)
                          GDK_BUTTON_PRESS_MASK   |
                          GDK_BUTTON_RELEASE_MASK |
                          GDK_BUTTON1_MOTION_MASK);
-
-  dial->priv->border_width = 4;
 }
 
 static void
@@ -198,6 +204,11 @@ gimp_dial_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_BORDER_WIDTH:
+      dial->priv->border_width = g_value_get_int (value);
+      gtk_widget_queue_resize (GTK_WIDGET (dial));
+      break;
+
     case PROP_ALPHA:
       dial->priv->alpha = g_value_get_double (value);
       gtk_widget_queue_draw (GTK_WIDGET (dial));
@@ -229,6 +240,10 @@ gimp_dial_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_BORDER_WIDTH:
+      g_value_set_int (value, dial->priv->border_width);
+      break;
+
     case PROP_ALPHA:
       g_value_set_double (value, dial->priv->alpha);
       break;
