@@ -285,7 +285,16 @@ gimp_prop_table_new (GObject              *config,
           if (HAS_KEY (pspec, "unit", "degree") &&
               (upper - lower) == 360.0)
             {
+              GtkWidget *dial;
+
               gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (widget), TRUE);
+
+              dial = gimp_prop_angle_dial_new (config, pspec->name);
+              gtk_table_attach (GTK_TABLE (table), dial,
+                                4, 5, row, row + 1,
+                                GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL,
+                                0, 0);
+              gtk_widget_show (dial);
             }
           else if (HAS_KEY (pspec, "axis", "x"))
             {
