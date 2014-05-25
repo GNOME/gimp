@@ -83,6 +83,17 @@ typedef enum
 } GimpColorPickState;
 
 
+#define GIMP_TYPE_DIAL_BACKGROUND (gimp_dial_background_get_type ())
+
+GType gimp_dial_background_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_DIAL_BACKGROUND_PLAIN, /*< desc="Plain" >*/
+  GIMP_DIAL_BACKGROUND_HSV    /*< desc="HSV"   >*/
+} GimpDialBackground;
+
+
 #define GIMP_TYPE_HISTOGRAM_SCALE (gimp_histogram_scale_get_type ())
 
 GType gimp_histogram_scale_get_type (void) G_GNUC_CONST;

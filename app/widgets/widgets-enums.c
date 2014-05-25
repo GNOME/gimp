@@ -164,6 +164,35 @@ gimp_color_pick_state_get_type (void)
 }
 
 GType
+gimp_dial_background_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_DIAL_BACKGROUND_PLAIN, "GIMP_DIAL_BACKGROUND_PLAIN", "plain" },
+    { GIMP_DIAL_BACKGROUND_HSV, "GIMP_DIAL_BACKGROUND_HSV", "hsv" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_DIAL_BACKGROUND_PLAIN, NC_("dial-background", "Plain"), NULL },
+    { GIMP_DIAL_BACKGROUND_HSV, NC_("dial-background", "HSV"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpDialBackground", values);
+      gimp_type_set_translation_context (type, "dial-background");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_histogram_scale_get_type (void)
 {
   static const GEnumValue values[] =

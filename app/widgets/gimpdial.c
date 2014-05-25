@@ -38,14 +38,12 @@
 
 #define SEGMENT_FRACTION 0.3
 
-typedef void (* GimpDialBGFunc) (gdouble  angle,
-                                 gdouble  distance,
-                                 guchar  *rgb);
 
 enum
 {
   PROP_0,
   PROP_BORDER_WIDTH,
+  PROP_BACKGROUND,
   PROP_ALPHA,
   PROP_BETA,
   PROP_CLOCKWISE
@@ -61,59 +59,59 @@ typedef enum
 
 struct _GimpDialPrivate
 {
-  gdouble           alpha;
-  gdouble           beta;
-  gboolean          clockwise;
+  gint                border_width;
+  GimpDialBackground  background;
+
+  gdouble             alpha;
+  gdouble             beta;
+  gboolean            clockwise;
 
   GdkWindow        *event_window;
-
   DialTarget        target;
   gdouble           last_angle;
-
-  gint              border_width;
   guint             has_grab : 1;
 };
 
 
-static void        gimp_dial_dispose              (GObject          *object);
-static void        gimp_dial_set_property         (GObject          *object,
-                                                   guint             property_id,
-                                                   const GValue     *value,
-                                                   GParamSpec       *pspec);
-static void        gimp_dial_get_property         (GObject          *object,
-                                                   guint             property_id,
-                                                   GValue           *value,
-                                                   GParamSpec       *pspec);
+static void        gimp_dial_dispose              (GObject            *object);
+static void        gimp_dial_set_property         (GObject            *object,
+                                                   guint               property_id,
+                                                   const GValue       *value,
+                                                   GParamSpec         *pspec);
+static void        gimp_dial_get_property         (GObject            *object,
+                                                   guint               property_id,
+                                                   GValue             *value,
+                                                   GParamSpec         *pspec);
 
-static void        gimp_dial_realize              (GtkWidget        *widget);
-static void        gimp_dial_unrealize            (GtkWidget        *widget);
-static void        gimp_dial_map                  (GtkWidget        *widget);
-static void        gimp_dial_unmap                (GtkWidget        *widget);
-static void        gimp_dial_size_request         (GtkWidget        *widget,
-                                                   GtkRequisition   *requisition);
-static void        gimp_dial_size_allocate        (GtkWidget        *widget,
-                                                   GtkAllocation    *allocation);
-static gboolean    gimp_dial_expose_event         (GtkWidget        *widget,
-                                                   GdkEventExpose   *event);
-static gboolean    gimp_dial_button_press_event   (GtkWidget        *widget,
-                                                   GdkEventButton   *bevent);
-static gboolean    gimp_dial_button_release_event (GtkWidget        *widget,
-                                                   GdkEventButton   *bevent);
-static gboolean    gimp_dial_motion_notify_event  (GtkWidget        *widget,
-                                                   GdkEventMotion   *mevent);
+static void        gimp_dial_realize              (GtkWidget          *widget);
+static void        gimp_dial_unrealize            (GtkWidget          *widget);
+static void        gimp_dial_map                  (GtkWidget          *widget);
+static void        gimp_dial_unmap                (GtkWidget          *widget);
+static void        gimp_dial_size_request         (GtkWidget          *widget,
+                                                   GtkRequisition     *requisition);
+static void        gimp_dial_size_allocate        (GtkWidget          *widget,
+                                                   GtkAllocation      *allocation);
+static gboolean    gimp_dial_expose_event         (GtkWidget          *widget,
+                                                   GdkEventExpose     *event);
+static gboolean    gimp_dial_button_press_event   (GtkWidget          *widget,
+                                                   GdkEventButton     *bevent);
+static gboolean    gimp_dial_button_release_event (GtkWidget          *widget,
+                                                   GdkEventButton     *bevent);
+static gboolean    gimp_dial_motion_notify_event  (GtkWidget          *widget,
+                                                   GdkEventMotion     *mevent);
 
-static void        gimp_dial_background_func_hsv  (gdouble           angle,
-                                                   gdouble           distance,
-                                                   guchar           *rgb);
+static void        gimp_dial_background_hsv       (gdouble             angle,
+                                                   gdouble             distance,
+                                                   guchar             *rgb);
 
-static void        gimp_dial_draw_background      (cairo_t          *cr,
-                                                   gint              size,
-                                                   GimpDialBGFunc    bg_func);
-static void        gimp_dial_draw_arrows          (cairo_t          *cr,
-                                                   gint              size,
-                                                   gdouble           alpha,
-                                                   gdouble           beta,
-                                                   gboolean          clockwise);
+static void        gimp_dial_draw_background      (cairo_t            *cr,
+                                                   gint                size,
+                                                   GimpDialBackground  background);
+static void        gimp_dial_draw_arrows          (cairo_t            *cr,
+                                                   gint                size,
+                                                   gdouble             alpha,
+                                                   gdouble             beta,
+                                                   gboolean            clockwise);
 
 
 G_DEFINE_TYPE (GimpDial, gimp_dial, GTK_TYPE_WIDGET)
@@ -148,6 +146,14 @@ gimp_dial_class_init (GimpDialClass *klass)
                                                      0, 64, 0,
                                                      GIMP_PARAM_READWRITE |
                                                      G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_BACKGROUND,
+                                   g_param_spec_enum ("background",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_DIAL_BACKGROUND,
+                                                      GIMP_DIAL_BACKGROUND_HSV,
+                                                      GIMP_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ALPHA,
                                    g_param_spec_double ("alpha",
@@ -208,6 +214,11 @@ gimp_dial_set_property (GObject      *object,
       gtk_widget_queue_resize (GTK_WIDGET (dial));
       break;
 
+    case PROP_BACKGROUND:
+      dial->priv->background = g_value_get_enum (value);
+      gtk_widget_queue_draw (GTK_WIDGET (dial));
+      break;
+
     case PROP_ALPHA:
       dial->priv->alpha = g_value_get_double (value);
       gtk_widget_queue_draw (GTK_WIDGET (dial));
@@ -241,6 +252,10 @@ gimp_dial_get_property (GObject    *object,
     {
     case PROP_BORDER_WIDTH:
       g_value_set_int (value, dial->priv->border_width);
+      break;
+
+    case PROP_BACKGROUND:
+      g_value_set_enum (value, dial->priv->background);
       break;
 
     case PROP_ALPHA:
@@ -386,7 +401,7 @@ gimp_dial_expose_event (GtkWidget      *widget,
                        allocation.x + border_width + x,
                        allocation.y + border_width + y);
 
-      gimp_dial_draw_background (cr, size, gimp_dial_background_func_hsv);
+      gimp_dial_draw_background (cr, size, dial->priv->background);
       gimp_dial_draw_arrows (cr, size,
                              dial->priv->alpha, dial->priv->beta,
                              dial->priv->clockwise);
@@ -575,9 +590,9 @@ gimp_dial_new (void)
 /*  private functions  */
 
 static void
-gimp_dial_background_func_hsv (gdouble  angle,
-                               gdouble  distance,
-                               guchar  *rgb)
+gimp_dial_background_hsv (gdouble  angle,
+                          gdouble  distance,
+                          guchar  *rgb)
 {
   gdouble v = 1 - sqrt (distance) / 4; /* it just looks nicer this way */
 
@@ -585,53 +600,74 @@ gimp_dial_background_func_hsv (gdouble  angle,
 }
 
 static void
-gimp_dial_draw_background (cairo_t        *cr,
-                           gint            size,
-                           GimpDialBGFunc  bg_func)
+gimp_dial_draw_background (cairo_t            *cr,
+                           gint                size,
+                           GimpDialBackground  background)
 {
-  cairo_surface_t *surface;
-  guchar          *data;
-  gint             stride;
-  gint             x, y;
-
-  surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, size, size);
-
-  data   = cairo_image_surface_get_data (surface);
-  stride = cairo_image_surface_get_stride (surface);
-
-  for (y = 0; y < size; y++)
-    {
-      for (x = 0; x < size; x++)
-        {
-          gdouble angle;
-          gdouble distance;
-          guchar  rgb[3];
-
-          angle = get_angle_and_distance (size / 2.0, size / 2.0, size / 2.0,
-                                          x, y,
-                                          &distance);
-
-          bg_func (angle, MIN (1.0, distance), rgb);
-
-          GIMP_CAIRO_ARGB32_SET_PIXEL (data + y * stride + x * 4,
-                                       rgb[0], rgb[1], rgb[2], 255);
-        }
-    }
-
-  cairo_surface_mark_dirty (surface);
-
   cairo_save (cr);
 
-  cairo_set_source_surface (cr, surface, 0.0, 0.0);
+  if (background == GIMP_DIAL_BACKGROUND_PLAIN)
+    {
+      cairo_arc (cr, size / 2.0, size / 2.0, size / 2.0 - 1.5, 0.0, 2 * G_PI);
 
-  cairo_arc (cr, size / 2.0, size / 2.0, size / 2.0, 0.0, 2 * G_PI);
-  cairo_clip (cr);
+      cairo_set_line_width (cr, 3.0);
+      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
+      cairo_stroke_preserve (cr);
 
-  cairo_paint (cr);
+      cairo_set_line_width (cr, 1.0);
+      cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 0.8);
+      cairo_stroke (cr);
+    }
+  else
+    {
+      cairo_surface_t *surface;
+      guchar          *data;
+      gint             stride;
+      gint             x, y;
+
+      surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, size, size);
+
+      data   = cairo_image_surface_get_data (surface);
+      stride = cairo_image_surface_get_stride (surface);
+
+      for (y = 0; y < size; y++)
+        {
+          for (x = 0; x < size; x++)
+            {
+              gdouble angle;
+              gdouble distance;
+              guchar  rgb[3] = { 0, };
+
+              angle = get_angle_and_distance (size / 2.0, size / 2.0, size / 2.0,
+                                              x, y,
+                                              &distance);
+
+              switch (background)
+                {
+                case GIMP_DIAL_BACKGROUND_HSV:
+                  gimp_dial_background_hsv (angle, distance, rgb);
+                  break;
+
+                default:
+                  break;
+                }
+
+              GIMP_CAIRO_ARGB32_SET_PIXEL (data + y * stride + x * 4,
+                                           rgb[0], rgb[1], rgb[2], 255);
+            }
+        }
+
+      cairo_surface_mark_dirty (surface);
+      cairo_set_source_surface (cr, surface, 0.0, 0.0);
+      cairo_surface_destroy (surface);
+
+      cairo_arc (cr, size / 2.0, size / 2.0, size / 2.0, 0.0, 2 * G_PI);
+      cairo_clip (cr);
+
+      cairo_paint (cr);
+    }
 
   cairo_restore (cr);
-
-  cairo_surface_destroy (surface);
 }
 
 static void
@@ -641,7 +677,7 @@ gimp_dial_draw_arrows (cairo_t  *cr,
                        gdouble   beta,
                        gboolean  clockwise)
 {
-  gint radius = size / 2.0;
+  gint radius = size / 2.0 - 1.5;
   gint dist;
   gint direction = clockwise ? -1 : 1;
 
@@ -650,6 +686,8 @@ gimp_dial_draw_arrows (cairo_t  *cr,
 #define TICK 10
 
   cairo_save (cr);
+
+  cairo_translate (cr, 1.5, 1.5); /* half the broad line width */
 
   cairo_move_to (cr, radius, radius);
   cairo_line_to (cr,
@@ -697,7 +735,7 @@ gimp_dial_draw_arrows (cairo_t  *cr,
                  radius + dist * cos (beta),
                  radius - dist * sin (beta));
   cairo_line_to (cr,
-                 ROUND (radius + dist * cos(beta) +
+                 ROUND (radius + dist * cos (beta) +
                         direction * TICK * sin (beta)),
                  ROUND (radius - dist * sin(beta) +
                         direction * TICK * cos (beta)));
