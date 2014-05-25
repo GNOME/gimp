@@ -33,7 +33,12 @@
 #include "gimp-intl.h"
 
 
+#ifdef HAVE_WEBKIT
 #define DEFAULT_HELP_BROWSER   GIMP_HELP_BROWSER_GIMP
+#else
+#define DEFAULT_HELP_BROWSER   GIMP_HELP_BROWSER_WEB_BROWSER
+#endif
+
 #define DEFAULT_THEME          "Default"
 
 #define DEFAULT_USER_MANUAL_ONLINE_URI \
