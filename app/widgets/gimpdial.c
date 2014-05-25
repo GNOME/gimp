@@ -408,33 +408,11 @@ angle_mod_2PI (gdouble angle)
 }
 
 static gdouble
-min_prox (gdouble alpha,
-	  gdouble beta,
-	  gdouble angle)
+get_angle_distance (gdouble alpha,
+                    gdouble beta)
 {
-  gdouble temp1 = MIN (angle_mod_2PI (alpha - angle),
-                       2 * G_PI - angle_mod_2PI (alpha - angle));
-  gdouble temp2 = MIN (angle_mod_2PI (beta - angle),
-                       2 * G_PI - angle_mod_2PI (beta - angle));
-
-  return MIN (temp1, temp2);
-}
-
-static DialTarget
-closest (gdouble alpha,
-	 gdouble beta,
-	 gdouble angle)
-{
-  gdouble temp_alpha = MIN (angle_mod_2PI (alpha - angle),
-                            2 * G_PI - angle_mod_2PI (alpha - angle));
-
-  gdouble temp_beta  = MIN (angle_mod_2PI (beta - angle),
-                            2 * G_PI - angle_mod_2PI (beta - angle));
-
-  if (temp_alpha - temp_beta < 0)
-    return DIAL_TARGET_ALPHA;
-  else
-    return DIAL_TARGET_BETA;
+  return ABS (MIN (angle_mod_2PI (alpha - beta),
+                   2 * G_PI - angle_mod_2PI (alpha - beta)));
 }
 
 static gdouble
@@ -499,15 +477,20 @@ gimp_dial_button_press_event (GtkWidget      *widget,
           dial->priv->press_angle = angle;
 
           if (distance > SEGMENT_FRACTION &&
-              min_prox (dial->priv->alpha, dial->priv->beta, angle) < G_PI / 12)
+              MIN (get_angle_distance (dial->priv->alpha, angle),
+                   get_angle_distance (dial->priv->beta,  angle)) < G_PI / 12)
             {
-              dial->priv->target = closest (dial->priv->alpha, dial->priv->beta,
-                                            angle);
-
-              if (dial->priv->target == DIAL_TARGET_ALPHA)
-                g_object_set (dial, "alpha", angle, NULL);
+              if (get_angle_distance (dial->priv->alpha, angle) <=
+                  get_angle_distance (dial->priv->beta,  angle))
+                {
+                  dial->priv->target = DIAL_TARGET_ALPHA;
+                  g_object_set (dial, "alpha", angle, NULL);
+                }
               else
-                g_object_set (dial, "beta", angle, NULL);
+                {
+                  dial->priv->target = DIAL_TARGET_BETA;
+                  g_object_set (dial, "beta", angle, NULL);
+                }
             }
           else
             {
