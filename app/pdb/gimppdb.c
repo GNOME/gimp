@@ -238,6 +238,16 @@ gimp_pdb_unregister_procedure (GimpPDB       *pdb,
                  procedure);
 }
 
+/**
+ * gimp_pdb_lookup_procedure:
+ * @pdb    the Plug-in Database to query
+ * @name name of the requested procedure
+ *
+ * Returns: a pointer to the struct with procedure data
+ *
+ * Look up the plug-in database for a procedure with
+ * the given name.
+ */
 GimpProcedure *
 gimp_pdb_lookup_procedure (GimpPDB     *pdb,
                            const gchar *name)

@@ -34,6 +34,8 @@
 #include "core/gimplist.h"
 #include "core/gimptemplate.h"
 
+#include "pdb/gimppdb.h"
+
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerview.h"
@@ -1347,6 +1349,15 @@ prefs_message (GtkMessageType  type,
   gtk_widget_show (dialog);
 }
 
+/**
+ * prefs_dialog_new:
+ * @gimp:  the GIMP instance
+ * @config: the configuration model
+ *
+ * build the Preferences dialog
+ *
+ * TODO: split into smaller, easy maintainable pieces
+ */
 static GtkWidget *
 prefs_dialog_new (Gimp       *gimp,
                   GimpConfig *config)
@@ -1828,12 +1839,15 @@ prefs_dialog_new (Gimp       *gimp,
   }
 
   /*  Help Browser  */
-  vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox), FALSE);
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+  if (gimp_pdb_lookup_procedure (gimp->pdb,
+                                 "extension-gimp-help-browser")) {
+    vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox), FALSE);
+    table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
-  prefs_enum_combo_box_add (object, "help-browser", 0, 0,
-                            _("H_elp browser to use:"),
-                            GTK_TABLE (table), 0, size_group);
+    prefs_enum_combo_box_add (object, "help-browser", 0, 0,
+                              _("H_elp browser to use:"),
+                              GTK_TABLE (table), 0, size_group);
+  }
 
   g_object_unref (size_group);
   size_group = NULL;

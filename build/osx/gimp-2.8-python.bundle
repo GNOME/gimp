@@ -197,8 +197,22 @@
 	<data>${prefix}/etc/fonts/fonts.conf</data>
 
 	<!-- GIMP data -->
-	<data>${prefix}/etc/gimp/2.0/*</data>
-	<data dest="${bundle}/Contents/Resources/share/gimp">${prefix}/share/gimp</data>
+	<data dest="${bundle}/Contents/Resources/share/gimp">
+		${prefix}/share/gimp
+	</data>
+	<!-- We have to copy the files from gimp/2.0 one by one, otherwise gtk-mac-bundler 
+		overwrites the platform specific custom modifications with the unadapted 
+		files -->
+	<data>${prefix}/etc/gimp/2.0/controllerrc</data>
+	<data>${prefix}/etc/gimp/2.0/gtkrc</data>
+	<data>${prefix}/etc/gimp/2.0/menurc</data>
+	<data>${prefix}/etc/gimp/2.0/sessionrc</data>
+	<data>${prefix}/etc/gimp/2.0/templaterc</data>
+	<data>${prefix}/etc/gimp/2.0/unitrc</data>
+	<!-- take GIMP's own defaults platform specific adaptions -->
+	<data dest="${bundle}/Contents/Resources/etc/gimp/2.0/gimprc">
+		${project}/custom/gimprc
+	</data>
 
 	<!-- Copy in XML data -->
 	<data>${prefix}/etc/xml/catalog</data>
@@ -214,10 +228,6 @@
 		${project}/custom/gtkrc
 	</data>
 
-	<!-- Copy in better defaults -->
-	<data dest="${bundle}/Contents/Resources/etc/gimp/2.0/gimprc">
-		${project}/custom/gimprc
-	</data>
 
 	<!-- Copy in better FontConfig defaults -->
 	<!--<data dest="${bundle}/Contents/Resources/etc/fonts/fonts.conf"> ${project}/custom/fonts.conf 

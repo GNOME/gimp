@@ -1,16 +1,3 @@
-(dock-window-hint normal)
-
-# Sets the browser used by the help system.  
-# Because the OS X build doesn't ship with WebKit, we use the system's
-# web browser by default:
-(help-browser web-browser)
-
-# Because the user manual is not shipped with GIMP by default, we first try to
-# access the online help.
-(user-manual-online yes)
-
-# The location of the online user manual. 
-(user-manual-online-uri "http://docs.gimp.org/2.8")
 # This is the system-wide gimprc file.  Any change made in this file will
 # affect all users of this system, provided that they are not overriding the
 # default values in their personal gimprc file.
