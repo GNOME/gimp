@@ -165,9 +165,9 @@ gimp_warp_tool_init (GimpWarpTool *self)
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
   gimp_tool_control_set_dirty_mask  (tool->control,
                                      GIMP_DIRTY_IMAGE           |
-                                     GIMP_DIRTY_IMAGE_STRUCTURE |
                                      GIMP_DIRTY_DRAWABLE        |
-                                     GIMP_DIRTY_SELECTION);
+                                     GIMP_DIRTY_SELECTION       |
+                                     GIMP_DIRTY_ACTIVE_DRAWABLE);
   gimp_tool_control_set_wants_click (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
