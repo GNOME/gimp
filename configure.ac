@@ -1392,6 +1392,9 @@ else
 fi
 
 AC_SUBST(WEB_PAGE)
+if test "x$have_webkit" = "xyes"; then
+  AC_DEFINE(HAVE_WEBKIT, 1, [Define to 1 if webkit is available])
+fi
 AM_CONDITIONAL(HAVE_WEBKIT, test "x$have_webkit" = xyes)
 
 
