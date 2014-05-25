@@ -33,6 +33,8 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp-cairo.h"
+
 #include "gimpdial.h"
 
 
@@ -677,9 +679,10 @@ gimp_dial_draw_arrows (cairo_t  *cr,
                        gdouble   beta,
                        gboolean  clockwise)
 {
-  gint radius = size / 2.0 - 1.5;
-  gint dist;
-  gint direction = clockwise ? -1 : 1;
+  gint    radius    = size / 2.0 - 1.5;
+  gint    direction = clockwise ? -1 : 1;
+  gint    slice_dist;
+  gdouble slice;
 
 #define REL  0.8
 #define DEL  0.1
@@ -708,9 +711,7 @@ gimp_dial_draw_arrows (cairo_t  *cr,
                  ROUND (radius + radius * REL * cos (alpha + DEL)),
                  ROUND (radius - radius * REL * sin (alpha + DEL)));
 
-  cairo_move_to (cr,
-                 radius,
-                 radius);
+  cairo_move_to (cr, radius, radius);
   cairo_line_to (cr,
                  ROUND (radius + radius * cos (beta)),
                  ROUND (radius - radius * sin (beta)));
@@ -729,37 +730,26 @@ gimp_dial_draw_arrows (cairo_t  *cr,
                  ROUND (radius + radius * REL * cos (beta + DEL)),
                  ROUND (radius - radius * REL * sin (beta + DEL)));
 
-  dist = radius * SEGMENT_FRACTION;
+  slice_dist = radius * SEGMENT_FRACTION;
 
   cairo_move_to (cr,
-                 radius + dist * cos (beta),
-                 radius - dist * sin (beta));
+                 radius + slice_dist * cos (beta),
+                 radius - slice_dist * sin (beta));
   cairo_line_to (cr,
-                 ROUND (radius + dist * cos (beta) +
+                 ROUND (radius + slice_dist * cos (beta) +
                         direction * TICK * sin (beta)),
-                 ROUND (radius - dist * sin(beta) +
+                 ROUND (radius - slice_dist * sin(beta) +
                         direction * TICK * cos (beta)));
 
   cairo_new_sub_path (cr);
 
-  if (! clockwise)
-    {
-      cairo_arc_negative (cr,
-                          radius,
-                          radius,
-                          dist,
-                          -alpha,
-                          -beta);
-    }
+  if (clockwise)
+    slice = -normalize_angle (alpha - beta);
   else
-    {
-      cairo_arc (cr,
-                 radius,
-                 radius,
-                 dist,
-                 -alpha,
-                 -beta);
-    }
+    slice = normalize_angle (beta - alpha);
+
+  gimp_cairo_add_arc (cr, radius, radius, slice_dist,
+                      alpha, slice);
 
   cairo_set_line_width (cr, 3.0);
   cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
