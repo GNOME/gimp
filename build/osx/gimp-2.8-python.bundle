@@ -215,8 +215,9 @@
 	</data>
 
 	<!-- Copy in better defaults -->
-	<!--<data dest="${bundle}/Contents/Resources/etc/gimp/2.0/gimprc"> ${project}/custom/gimprc 
-		</data> -->
+	<data dest="${bundle}/Contents/Resources/etc/gimp/2.0/gimprc">
+		${project}/custom/gimprc
+	</data>
 
 	<!-- Copy in better FontConfig defaults -->
 	<!--<data dest="${bundle}/Contents/Resources/etc/fonts/fonts.conf"> ${project}/custom/fonts.conf 
