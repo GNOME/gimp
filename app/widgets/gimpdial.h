@@ -22,14 +22,6 @@
 #define __GIMP_DIAL_H__
 
 
-typedef enum
-{
-  DIAL_TARGET_ALPHA,
-  DIAL_TARGET_BETA,
-  DIAL_TARGET_BOTH
-} DialTarget;
-
-
 #define GIMP_TYPE_DIAL            (gimp_dial_get_type ())
 #define GIMP_DIAL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DIAL, GimpDial))
 #define GIMP_DIAL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DIAL, GimpDialClass))
@@ -38,24 +30,14 @@ typedef enum
 #define GIMP_DIAL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DIAL, GimpDialClass))
 
 
-typedef struct _GimpDialClass  GimpDialClass;
+typedef struct _GimpDialPrivate GimpDialPrivate;
+typedef struct _GimpDialClass   GimpDialClass;
 
 struct _GimpDial
 {
-  GtkWidget         parent_instance;
+  GtkWidget        parent_instance;
 
-  gdouble           alpha;
-  gdouble           beta;
-  gboolean          clockwise;
-
-  GdkWindow        *event_window;
-
-  DialTarget        target;
-  gdouble           press_angle;
-
-  gint              border_width;
-  guint             has_grab : 1;
-  GdkModifierType   press_state;
+  GimpDialPrivate *priv;
 };
 
 struct _GimpDialClass
