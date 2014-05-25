@@ -678,12 +678,12 @@
 # Because the user manual is not shipped with GIMP by default, we set this
 # value to 'yes'. 
 #
-(user-manual-online yes)
+# (user-manual-online yes)
 
 # The location of the online user manual. This is used if
 # 'user-manual-online' is enabled.  This is a string value.
 # 
-(user-manual-online-uri "http://docs.gimp.org/2.8")
+# (user-manual-online-uri "http://docs.gimp.org/2.8")
 
 # The window type hint that is set on dock windows and the toolbox window.
 # This may affect the way your window manager decorates and handles these
