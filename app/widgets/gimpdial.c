@@ -46,6 +46,7 @@ enum
   PROP_0,
   PROP_BORDER_WIDTH,
   PROP_BACKGROUND,
+  PROP_DRAW_BETA,
   PROP_ALPHA,
   PROP_BETA,
   PROP_CLOCKWISE
@@ -63,6 +64,7 @@ struct _GimpDialPrivate
 {
   gint                border_width;
   GimpDialBackground  background;
+  gboolean            draw_beta;
 
   gdouble             alpha;
   gdouble             beta;
@@ -113,7 +115,8 @@ static void        gimp_dial_draw_arrows          (cairo_t            *cr,
                                                    gint                size,
                                                    gdouble             alpha,
                                                    gdouble             beta,
-                                                   gboolean            clockwise);
+                                                   gboolean            clockwise,
+                                                   gboolean            draw_beta);
 
 
 G_DEFINE_TYPE (GimpDial, gimp_dial, GTK_TYPE_WIDGET)
@@ -156,6 +159,13 @@ gimp_dial_class_init (GimpDialClass *klass)
                                                       GIMP_DIAL_BACKGROUND_HSV,
                                                       GIMP_PARAM_READWRITE |
                                                       G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class, PROP_DRAW_BETA,
+                                   g_param_spec_boolean ("draw-beta",
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ALPHA,
                                    g_param_spec_double ("alpha",
@@ -221,6 +231,11 @@ gimp_dial_set_property (GObject      *object,
       gtk_widget_queue_draw (GTK_WIDGET (dial));
       break;
 
+    case PROP_DRAW_BETA:
+      dial->priv->draw_beta = g_value_get_boolean (value);
+      gtk_widget_queue_draw (GTK_WIDGET (dial));
+      break;
+
     case PROP_ALPHA:
       dial->priv->alpha = g_value_get_double (value);
       gtk_widget_queue_draw (GTK_WIDGET (dial));
@@ -258,6 +273,10 @@ gimp_dial_get_property (GObject    *object,
 
     case PROP_BACKGROUND:
       g_value_set_enum (value, dial->priv->background);
+      break;
+
+    case PROP_DRAW_BETA:
+      g_value_set_boolean (value, dial->priv->draw_beta);
       break;
 
     case PROP_ALPHA:
@@ -406,7 +425,8 @@ gimp_dial_expose_event (GtkWidget      *widget,
       gimp_dial_draw_background (cr, size, dial->priv->background);
       gimp_dial_draw_arrows (cr, size,
                              dial->priv->alpha, dial->priv->beta,
-                             dial->priv->clockwise);
+                             dial->priv->clockwise,
+                             dial->priv->draw_beta);
 
       cairo_destroy (cr);
     }
@@ -485,7 +505,8 @@ gimp_dial_button_press_event (GtkWidget      *widget,
                                       &distance);
       dial->priv->last_angle = angle;
 
-      if (distance > SEGMENT_FRACTION &&
+      if (dial->priv->draw_beta       &&
+          distance > SEGMENT_FRACTION &&
           MIN (get_angle_distance (dial->priv->alpha, angle),
                get_angle_distance (dial->priv->beta,  angle)) < G_PI / 12)
         {
@@ -677,16 +698,14 @@ gimp_dial_draw_arrows (cairo_t  *cr,
                        gint      size,
                        gdouble   alpha,
                        gdouble   beta,
-                       gboolean  clockwise)
+                       gboolean  clockwise,
+                       gboolean  draw_beta)
 {
-  gint    radius    = size / 2.0 - 1.5;
-  gint    direction = clockwise ? -1 : 1;
-  gint    slice_dist;
-  gdouble slice;
+  gint radius    = size / 2.0 - 1.5;
+  gint direction = clockwise ? -1 : 1;
 
-#define REL  0.8
-#define DEL  0.1
-#define TICK 10
+#define REL 0.8
+#define DEL 0.1
 
   cairo_save (cr);
 
@@ -711,45 +730,53 @@ gimp_dial_draw_arrows (cairo_t  *cr,
                  ROUND (radius + radius * REL * cos (alpha + DEL)),
                  ROUND (radius - radius * REL * sin (alpha + DEL)));
 
-  cairo_move_to (cr, radius, radius);
-  cairo_line_to (cr,
-                 ROUND (radius + radius * cos (beta)),
-                 ROUND (radius - radius * sin (beta)));
+  if (draw_beta)
+    {
+      gint    slice_dist;
+      gdouble slice;
 
-  cairo_move_to (cr,
-                 radius + radius * cos (beta),
-                 radius - radius * sin (beta));
-  cairo_line_to (cr,
-                 ROUND (radius + radius * REL * cos (beta - DEL)),
-                 ROUND (radius - radius * REL * sin (beta - DEL)));
+#define TICK 10
 
-  cairo_move_to (cr,
-                 radius + radius * cos (beta),
-                 radius - radius * sin (beta));
-  cairo_line_to (cr,
-                 ROUND (radius + radius * REL * cos (beta + DEL)),
-                 ROUND (radius - radius * REL * sin (beta + DEL)));
+      cairo_move_to (cr, radius, radius);
+      cairo_line_to (cr,
+                     ROUND (radius + radius * cos (beta)),
+                     ROUND (radius - radius * sin (beta)));
 
-  slice_dist = radius * SEGMENT_FRACTION;
+      cairo_move_to (cr,
+                     radius + radius * cos (beta),
+                     radius - radius * sin (beta));
+      cairo_line_to (cr,
+                     ROUND (radius + radius * REL * cos (beta - DEL)),
+                     ROUND (radius - radius * REL * sin (beta - DEL)));
 
-  cairo_move_to (cr,
-                 radius + slice_dist * cos (beta),
-                 radius - slice_dist * sin (beta));
-  cairo_line_to (cr,
-                 ROUND (radius + slice_dist * cos (beta) +
-                        direction * TICK * sin (beta)),
-                 ROUND (radius - slice_dist * sin(beta) +
-                        direction * TICK * cos (beta)));
+      cairo_move_to (cr,
+                     radius + radius * cos (beta),
+                     radius - radius * sin (beta));
+      cairo_line_to (cr,
+                     ROUND (radius + radius * REL * cos (beta + DEL)),
+                     ROUND (radius - radius * REL * sin (beta + DEL)));
 
-  cairo_new_sub_path (cr);
+      slice_dist = radius * SEGMENT_FRACTION;
 
-  if (clockwise)
-    slice = -normalize_angle (alpha - beta);
-  else
-    slice = normalize_angle (beta - alpha);
+      cairo_move_to (cr,
+                     radius + slice_dist * cos (beta),
+                     radius - slice_dist * sin (beta));
+      cairo_line_to (cr,
+                     ROUND (radius + slice_dist * cos (beta) +
+                            direction * TICK * sin (beta)),
+                     ROUND (radius - slice_dist * sin(beta) +
+                            direction * TICK * cos (beta)));
 
-  gimp_cairo_add_arc (cr, radius, radius, slice_dist,
-                      alpha, slice);
+      cairo_new_sub_path (cr);
+
+      if (clockwise)
+        slice = -normalize_angle (alpha - beta);
+      else
+        slice = normalize_angle (beta - alpha);
+
+      gimp_cairo_add_arc (cr, radius, radius, slice_dist,
+                          alpha, slice);
+    }
 
   cairo_set_line_width (cr, 3.0);
   cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.6);
