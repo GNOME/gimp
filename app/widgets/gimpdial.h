@@ -4,6 +4,10 @@
  * gimpdial.h
  * Copyright (C) 2014 Michael Natterer <mitch@gimp.org>
  *
+ * Based on code from the color-rotate plug-in
+ * Copyright (C) 1997-1999 Sven Anders (anderss@fmi.uni-passau.de)
+ *                         Based on code from Pavel Grinfeld (pavel@ml.com)
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
