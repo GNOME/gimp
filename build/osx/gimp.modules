@@ -2,6 +2,8 @@
 <!DOCTYPE moduleset SYSTEM "moduleset.dtd">
 <?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
 <moduleset>
+	<repository type="git" name="webkit" href="git://git.webkit.org/" />
+
 	<repository type="git" name="github" href="https://github.com/" />
 
 	<repository type="tarball" name="sourceforge"
@@ -103,7 +105,7 @@
 		href="http://curl.haxx.se/download/" />
 
 	<repository type="tarball" name="sqlite"
-		href="http://www.sqlite.org/2013/" />
+		href="http://www.sqlite.org/2014/" />
 
 	<repository type="tarball" name="icu"
 		href="http://download.icu-project.org/files/" />
@@ -122,7 +124,7 @@
 
 	<autotools id="libpng" autogenargs="--enable-shared"
 		autogen-sh="configure">
-		<branch module="libpng/libpng-1.6.6.tar.xz" version="1.6.6"
+		<branch module="libpng/libpng-1.6.10.tar.xz" version="1.6.10"
 			repo="sourceforge" />
 	</autotools>
 
@@ -149,7 +151,7 @@
 
 	<autotools id="libtiff" autogen-sh="configure"
 		autogenargs="--without-x --without-apple-opengl-framework">
-		<branch version="4.0.2" module="libtiff/tiff-4.0.2.tar.gz"
+		<branch version="4.0.3" module="libtiff/tiff-4.0.3.tar.gz"
 			repo="libtiff" />
 		<dependencies>
 			<dep package="libjpeg" />
@@ -168,8 +170,8 @@
 	</autotools>
 
 	<autotools id="hicolor-icon-theme" autogen-sh="configure">
-		<branch module="hicolor-icon-theme-0.12.tar.gz" repo="icon-theme"
-			version="0.12" />
+		<branch module="hicolor-icon-theme-0.13.tar.gz" repo="icon-theme"
+			version="0.13" />
 	</autotools>
 
 	<autotools id="libxml2" autogen-sh="configure">
@@ -187,7 +189,7 @@
 	</autotools>
 
 	<autotools id="freetype" autogen-sh="configure">
-		<branch module="freetype/freetype-2.5.0.1.tar.gz" version="2.5.0.1"
+		<branch module="freetype/freetype-2.5.3.tar.gz" version="2.5.3"
 			repo="sourceforge">
 		</branch>
 		<dependencies>
@@ -197,7 +199,7 @@
 
 	<autotools id="fontconfig" autogen-sh="configure"
 		autogenargs="--disable-docs --with-add-fonts=~/Library/Fonts,/Library/Fonts,/System/Library/Fonts">
-		<branch repo="fontconfig" version="2.11.0" module="fontconfig-2.11.0.tar.bz2" />
+		<branch repo="fontconfig" version="2.11.1" module="fontconfig-2.11.1.tar.bz2" />
 		<dependencies>
 			<dep package="freetype" />
 			<dep package="libxml2" />
@@ -325,8 +327,8 @@
 
 	<autotools id="librsvg" autogen-sh="configure"
 		autogenargs="--disable-static --disable-Bsymbolic --enable-introspection=no">
-		<branch module="librsvg/2.36/librsvg-2.36.4.tar.xz" version="2.36.4"
-			hash="sha256:1021935204798f4f0ad3004a09b583668ea94a48593461b147fdcff68a18e6c2" />
+		<branch module="librsvg/2.40/librsvg-2.40.2.tar.xz" version="2.40.2"
+			hash="sha256:48049b643294636df7de1a4b997414d699666f5dc44776945c218a257d2a291c" />
 		<dependencies>
 			<dep package="libcroco" />
 			<!--<dep package="gtk+-2.24"/> -->
@@ -369,8 +371,8 @@
 	</autotools>
 
 	<autotools id="libffi" autogenargs="--disable-builddir">
-		<branch module="libffi/libffi-3.0.13.tar.gz" repo="sourceware.org"
-			version="3.0.13" checkoutdir="libffi-3.0.13" />
+		<branch module="libffi/libffi-3.1.tar.gz" repo="sourceware.org"
+			version="3.1" checkoutdir="libffi-3.1" />
 	</autotools>
 
 	<autotools id="glib" autogenargs="--with-libiconv=native --enable-gtk-doc=no">
@@ -392,8 +394,8 @@
 	</autotools>
 
 	<autotools id="desktop-file-utils" autogen-sh="configure">
-		<branch version="0.20"
-			module="software/desktop-file-utils/releases/desktop-file-utils-0.20.tar.xz"
+		<branch version="0.22"
+			module="software/desktop-file-utils/releases/desktop-file-utils-0.22.tar.xz"
 			repo="freedesktop" />
 		<dependencies>
 			<dep package="glib" />
@@ -409,8 +411,8 @@
 	</autotools>
 
 	<autotools id="atk" autogen-sh="configure">
-		<branch module="atk/2.11/atk-2.11.1.tar.xz" version="2.11.1"
-			hash="sha256:89f4df87268f1bd7ff65087762909a350a918e83c3bce8e1a2ed4450056bbf02" />
+		<branch module="atk/2.13/atk-2.13.1.tar.xz" version="2.13.1"
+			hash="sha256:71baf41d5b01f550e63601baf8589cacf9ccec7f3fa6638924d9100def51fa62" />
 		<dependencies>
 			<dep package="glib" />
 			<dep package="shared-mime-info" />
@@ -421,8 +423,8 @@
 
 	<autotools id="pixman" autogenargs="--disable-gtk"
 		autogen-sh="configure">
-		<branch version="0.32.2" module="pixman-0.32.2.tar.gz" repo="cairographics"
-			hash="sha1:83a0e491542509e5c83382b9cd63bee565377f11" />
+		<branch version="0.32.4" module="pixman-0.32.4.tar.gz" repo="cairographics"
+			hash="sha1:54be89b3453109be0930400e5b13c35c9e9d5e3a" />
 		<dependencies>
 			>
 			<dep package="fontconfig" />
@@ -443,7 +445,7 @@
 
 	<autotools id="icu" autogen-sh="source/configure"
 		autogenargs="" makeargs="-k -C modules; make">
-		<branch version="50.1.2" repo="icu" module="icu4c/52.1/icu4c-52_1-src.tgz"
+		<branch version="53.1" repo="icu" module="icu4c/53.1/icu4c-53_1-src.tgz"
 			checkoutdir="icu">
 		</branch>
 		<dependencies>
@@ -451,8 +453,8 @@
 	</autotools>
 
 	<autotools id="harfbuzz" autogen-sh="configure" autogenargs="">
-		<branch version="0.9.22" repo="harfbuzz" module="harfbuzz-0.9.22.tar.bz2"
-			hash="sha256:989680807e76197418338e44f226e02f155f33031efd9aff14dbc4dc14af71da">
+		<branch version="0.9.28" repo="harfbuzz" module="harfbuzz-0.9.28.tar.bz2"
+			hash="sha256:a567f7c58018af0a9751e18641fd8434bfcef8307122dabe47dd652ce8bde048">
 		</branch>
 		<dependencies>
 			<dep package="cairo" />
@@ -463,8 +465,8 @@
 
 	<autotools id="pango" autogen-sh="configure"
 		autogenargs="--enable-shared --disable-silent-rules --with-cairo">
-		<branch version="1.36.0" module="pango/1.36/pango-1.36.0.tar.xz"
-			hash="sha256:bb41d1b26ee7450e5430a7d2765f38c51ebe72db9fce616a9ee52611b55906a0">
+		<branch version="1.36.0" module="pango/1.36/pango-1.36.3.tar.xz"
+			hash="sha256:ad48e32917f94aa9d507486d44366e59355fcfd46ef86d119ddcba566ada5d22">
 		</branch>
 		<dependencies>
 			<dep package="cairo" />
@@ -478,9 +480,9 @@
 
 	<autotools id="gdk-pixbuf" autogen-sh="configure"
 		autogenargs="">
-		<branch module="gdk-pixbuf/2.30/gdk-pixbuf-2.30.1.tar.xz"
-			version="2.30.1"
-			hash="sha256:a3263b1e15668c009313bf04ab67420bec9f2b167c402a71a486307cadee8d30" />
+		<branch module="gdk-pixbuf/2.30/gdk-pixbuf-2.30.7.tar.xz"
+			version="2.30.7"
+			hash="sha256:0aafc365eab1083a53f15e4828333b968219ffcb1a995ac6289c0147c9ffad06" />
 		<dependencies>
 			<dep package="libpng" />
 			<dep package="libjpeg" />
@@ -535,8 +537,8 @@
 	</autotools>
 
 	<autotools id="libsecret" autogen-sh="configure" autogenargs="">
-		<branch module="libsecret/0.16/libsecret-0.16.tar.xz" version="0.16.0"
-			hash="sha256:b859406c490a2011b35f5940235304315b343f2efd554800285f24b95e14f218" />
+		<branch module="libsecret/0.18/libsecret-0.18.tar.xz" version="0.18.0"
+			hash="sha256:0c73aa762dbd1e38ba7b03de350e23ce818cb810b0784375e95ef61e004b02e3" />
 		<dependencies>
 			<dep package="sqlite" />
 			<dep package="gobject-introspection" />
@@ -560,7 +562,7 @@
 	</autotools>
 
 	<autotools id="gnutls" autogen-sh="configure" autogenargs="--disable-cxx">
-		<branch module="gnutls/v3.2/gnutls-3.2.6.tar.xz" version="3.2.6"
+		<branch module="gnutls/v3.3/gnutls-3.3.2.tar.xz" version="3.3.2"
 			repo="gnutls" />
 		<dependencies>
 			<dep package="nettle" />
@@ -569,7 +571,7 @@
 	</autotools>
 
 	<autotools id="curl" autogen-sh="configure" autogenargs="">
-		<branch module="curl-7.33.0.tar.gz" version="7.33.0" repo="curl" />
+		<branch module="curl-7.37.0.tar.gz" version="7.37.0" repo="curl" />
 		<dependencies>
 			<dep package="gnutls" />
 		</dependencies>
@@ -577,11 +579,12 @@
 
 	<autotools id="libgcrypt" autogen-sh="configure" autogenargs="--disable-asm">
 		<branch module="gcrypt/libgcrypt/libgcrypt-1.6.1.tar.gz"
-			version="" repo="gnupg" />
+			version="" repo="gnupg">
+			<patch file="0001-libgcrypt-build-without-docs.patch" strip="1" />
+		</branch>
 		<dependencies>
 			<dep package="libgpg-error" />
 		</dependencies>
-		<patch file="0001-libgcrypt-build-without-docs.patch" strip="1" />
 	</autotools>
 
 	<autotools id="libgpg-error" autogen-sh="configure"
@@ -603,7 +606,9 @@
 	<autotools id="openssl" autogen-sh="Configure"
 		autogen-template="%(srcdir)s/%(autogen-sh)s --prefix=%(prefix)s --install_prefix= -L%(libdir)s %(autogenargs)s"
 		autogenargs="zlib shared darwin64-x86_64-cc" makeinstallargs="install_sw">
-		<branch module="openssl-1.0.1g.tar.gz" version="1.0.1g" repo="openssl" />
+		<branch module="openssl-1.0.1g.tar.gz" version="1.0.1g" repo="openssl">
+			<patch file="0005-OpenSSL_install_to_DESTDIR.patch" strip="1" />
+		</branch>
 		<dependencies>
 			<dep package="zlib" />
 		</dependencies>
@@ -616,7 +621,7 @@
 	</autotools>
 
 	<autotools id="sqlite" autogen-sh="configure" autogenargs="">
-		<branch module="sqlite-autoconf-3071602.tar.gz" version="3071602"
+		<branch module="sqlite-autoconf-3080403.tar.gz" version="3.8.4.3"
 			repo="sqlite" />
 		<dependencies>
 		</dependencies>
@@ -686,12 +691,12 @@
 	</autotools>
 
 	<autotools id="lcms2" autogen-sh="configure">
-		<branch module="lcms/lcms2-2.5.tar.gz" version="2.5" repo="sourceforge" />
+		<branch module="lcms/lcms2-2.6.tar.gz" version="2.6" repo="sourceforge" />
 	</autotools>
 
 	<autotools id="poppler" autogen-sh="configure"
 		autogenargs="--enable-compile-warnings=no">
-		<branch module="poppler-0.24.3.tar.xz" version="0.24.3" repo="poppler" />
+		<branch module="poppler-0.26.1.tar.xz" version="0.26.1" repo="poppler" />
 		<dependencies>
 			<dep package="lcms" />
 			<dep package="lcms2" />
@@ -1170,7 +1175,7 @@
 		href="http://pkg-isocodes.alioth.debian.org/downloads/" />
 
 	<autotools id="iso-codes" autogen-sh="configure">
-		<branch module="iso-codes-3.49.tar.xz" version="3.49" repo="iso-codes" />
+		<branch module="iso-codes-3.53.tar.xz" version="3.53" repo="iso-codes" />
 	</autotools>
 
 	<!-- Ufraw plugin -->
@@ -1211,10 +1216,16 @@
 	</autotools>
 
 	<!-- Webkit browser -->
+	<autotools id="webkit" autogen-sh="autogen.sh">
+		<branch repo="webkit" />
+		<dependencies>
+			<!-- dep package="" / -->
+		</dependencies>
+	</autotools>
 
 	<autotools id="zlib" autogen-sh="configure">
-		<branch repo="sourceforge" module="libpng/zlib-1.2.7.tar.bz2"
-			version="1.2.7" />
+		<branch repo="sourceforge" module="libpng/zlib-1.2.8.tar.bz2"
+			version="1.2.8" />
 	</autotools>
 
 	<!-- Web plugin -->
