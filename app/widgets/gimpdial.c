@@ -281,8 +281,8 @@ gimp_dial_expose_event (GtkWidget      *widget,
       gtk_widget_get_allocation (widget, &allocation);
 
       cairo_translate (cr,
-                       allocation.x + (allocation.width  - size) / 2,
-                       allocation.y + (allocation.height - size) / 2);
+                       (gdouble) allocation.x + (allocation.width  - size) / 2.0,
+                       (gdouble) allocation.y + (allocation.height - size) / 2.0);
 
       gimp_dial_draw_arrows (cr, size,
                              dial->priv->alpha, dial->priv->beta,
@@ -535,7 +535,7 @@ gimp_dial_new (void)
 
 static void
 gimp_dial_draw_arrow (cairo_t *cr,
-                      gint     radius,
+                      gdouble  radius,
                       gdouble  angle)
 {
 #define REL 0.8
@@ -543,30 +543,30 @@ gimp_dial_draw_arrow (cairo_t *cr,
 
   cairo_move_to (cr, radius, radius);
   cairo_line_to (cr,
-                 ROUND (radius + radius * cos (angle)),
-                 ROUND (radius - radius * sin (angle)));
+                 radius + radius * cos (angle),
+                 radius - radius * sin (angle));
 
   cairo_move_to (cr,
                  radius + radius * cos (angle),
                  radius - radius * sin (angle));
   cairo_line_to (cr,
-                 ROUND (radius + radius * REL * cos (angle - DEL)),
-                 ROUND (radius - radius * REL * sin (angle - DEL)));
+                 radius + radius * REL * cos (angle - DEL),
+                 radius - radius * REL * sin (angle - DEL));
 
   cairo_move_to (cr,
                  radius + radius * cos (angle),
                  radius - radius * sin (angle));
   cairo_line_to (cr,
-                 ROUND (radius + radius * REL * cos (angle + DEL)),
-                 ROUND (radius - radius * REL * sin (angle + DEL)));
+                 radius + radius * REL * cos (angle + DEL),
+                 radius - radius * REL * sin (angle + DEL));
 }
 
 static void
 gimp_dial_draw_segment (cairo_t  *cr,
-                        gint      radius,
-                        gboolean  clockwise,
+                        gdouble   radius,
                         gdouble   alpha,
-                        gdouble   beta)
+                        gdouble   beta,
+                        gboolean  clockwise)
 {
   gint    direction = clockwise ? -1 : 1;
   gint    segment_dist;
@@ -580,10 +580,10 @@ gimp_dial_draw_segment (cairo_t  *cr,
                  radius + segment_dist * cos (beta),
                  radius - segment_dist * sin (beta));
   cairo_line_to (cr,
-                 ROUND (radius + segment_dist * cos (beta) +
-                        direction * tick * sin (beta)),
-                 ROUND (radius - segment_dist * sin (beta) +
-                        direction * tick * cos (beta)));
+                 radius + segment_dist * cos (beta) +
+                 direction * tick * sin (beta),
+                 radius - segment_dist * sin (beta) +
+                 direction * tick * cos (beta));
 
   cairo_new_sub_path (cr);
 
@@ -605,11 +605,11 @@ gimp_dial_draw_arrows (cairo_t    *cr,
                        DialTarget  highlight,
                        gboolean    draw_beta)
 {
-  gint radius = size / 2.0 - 1.5;
+  gdouble radius = size / 2.0 - 2.0; /* half the broad line with and half a px */
 
   cairo_save (cr);
 
-  cairo_translate (cr, 1.5, 1.5); /* half the broad line width */
+  cairo_translate (cr, 2.0, 2.0); /* half the broad line width and half a px*/
 
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_ROUND);
   cairo_set_line_join (cr, CAIRO_LINE_JOIN_ROUND);
@@ -625,7 +625,7 @@ gimp_dial_draw_arrows (cairo_t    *cr,
             gimp_dial_draw_arrow (cr, radius, beta);
 
           if ((highlight & DIAL_TARGET_BOTH) != DIAL_TARGET_BOTH)
-            gimp_dial_draw_segment (cr, radius, clockwise, alpha, beta);
+            gimp_dial_draw_segment (cr, radius, alpha, beta, clockwise);
         }
 
       cairo_set_line_width (cr, 3.0);
@@ -648,7 +648,7 @@ gimp_dial_draw_arrows (cairo_t    *cr,
             gimp_dial_draw_arrow (cr, radius, beta);
 
           if ((highlight & DIAL_TARGET_BOTH) == DIAL_TARGET_BOTH)
-            gimp_dial_draw_segment (cr, radius, clockwise, alpha, beta);
+            gimp_dial_draw_segment (cr, radius, alpha, beta, clockwise);
         }
 
       cairo_set_line_width (cr, 3.0);
