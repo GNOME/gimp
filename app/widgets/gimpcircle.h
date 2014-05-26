@@ -50,9 +50,14 @@ struct _GimpCircleClass
 };
 
 
-GType          gimp_circle_get_type          (void) G_GNUC_CONST;
+GType          gimp_circle_get_type                (void) G_GNUC_CONST;
 
-GtkWidget    * gimp_circle_new               (void);
+GtkWidget    * gimp_circle_new                     (void);
+
+gdouble        _gimp_circle_get_angle_and_distance (GimpCircle *circle,
+                                                    gdouble     event_x,
+                                                    gdouble     event_y,
+                                                    gdouble    *distance);
 
 
 #endif /* __GIMP_CIRCLE_H__ */

@@ -104,6 +104,10 @@ static void        gimp_dial_draw_arrows          (cairo_t            *cr,
                                                    DialTarget          highlight,
                                                    gboolean            draw_beta);
 
+static gdouble     gimp_dial_normalize_angle      (gdouble             angle);
+static gdouble     gimp_dial_get_angle_distance   (gdouble             alpha,
+                                                   gdouble             beta);
+
 
 G_DEFINE_TYPE (GimpDial, gimp_dial, GIMP_TYPE_CIRCLE)
 
@@ -296,46 +300,6 @@ gimp_dial_expose_event (GtkWidget      *widget,
   return FALSE;
 }
 
-static gdouble
-normalize_angle (gdouble angle)
-{
-  if (angle < 0)
-    return angle + 2 * G_PI;
-  else if (angle > 2 * G_PI)
-    return angle - 2 * G_PI;
-  else
-    return angle;
-}
-
-static gdouble
-get_angle_distance (gdouble alpha,
-                    gdouble beta)
-{
-  return ABS (MIN (normalize_angle (alpha - beta),
-                   2 * G_PI - normalize_angle (alpha - beta)));
-}
-
-static gdouble
-get_angle_and_distance (gdouble  center_x,
-                        gdouble  center_y,
-                        gdouble  radius,
-                        gdouble  x,
-                        gdouble  y,
-                        gdouble *distance)
-{
-  gdouble angle = atan2 (center_y - y,
-                         x - center_x);
-
-  if (angle < 0)
-    angle += 2 * G_PI;
-
-  if (distance)
-    *distance = sqrt ((SQR (x - center_x) +
-                       SQR (y - center_y)) / SQR (radius));
-
-  return angle;
-}
-
 static gboolean
 gimp_dial_button_press_event (GtkWidget      *widget,
                               GdkEventButton *bevent)
@@ -346,22 +310,14 @@ gimp_dial_button_press_event (GtkWidget      *widget,
       bevent->button == 1              &&
       dial->priv->target != DIAL_TARGET_NONE)
     {
-      GtkAllocation allocation;
-      gdouble       center_x;
-      gdouble       center_y;
-      gdouble       angle;
+      gdouble angle;
 
       gtk_grab_add (widget);
       dial->priv->has_grab = TRUE;
 
-      gtk_widget_get_allocation (widget, &allocation);
-
-      center_x = allocation.width  / 2.0;
-      center_y = allocation.height / 2.0;
-
-      angle = get_angle_and_distance (center_x, center_y, 1.0,
-                                      bevent->x, bevent->y,
-                                      NULL);
+      angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (dial),
+                                                   bevent->x, bevent->y,
+                                                   NULL);
       dial->priv->last_angle = angle;
 
       switch (dial->priv->target)
@@ -407,24 +363,13 @@ static gboolean
 gimp_dial_motion_notify_event (GtkWidget      *widget,
                                GdkEventMotion *mevent)
 {
-  GimpDial      *dial = GIMP_DIAL (widget);
-  GtkAllocation  allocation;
-  gdouble        center_x;
-  gdouble        center_y;
-  gint           size;
-  gdouble        angle;
-  gdouble        distance;
+  GimpDial *dial = GIMP_DIAL (widget);
+  gdouble   angle;
+  gdouble   distance;
 
-  gtk_widget_get_allocation (widget, &allocation);
-
-  center_x = allocation.width  / 2.0;
-  center_y = allocation.height / 2.0;
-
-  g_object_get (widget, "size", &size, NULL);
-
-  angle = get_angle_and_distance (center_x, center_y, size / 2.0,
-                                  mevent->x, mevent->y,
-                                  &distance);
+  angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (dial),
+                                               mevent->x, mevent->y,
+                                               &distance);
 
   if (dial->priv->has_grab)
     {
@@ -447,8 +392,8 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
 
             case DIAL_TARGET_BOTH:
               g_object_set (dial,
-                            "alpha", normalize_angle (dial->priv->alpha + delta),
-                            "beta",  normalize_angle (dial->priv->beta  + delta),
+                            "alpha", gimp_dial_normalize_angle (dial->priv->alpha + delta),
+                            "beta",  gimp_dial_normalize_angle (dial->priv->beta  + delta),
                             NULL);
               break;
 
@@ -460,14 +405,17 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
   else
     {
       DialTarget target;
+      gdouble    dist_alpha;
+      gdouble    dist_beta;
+
+      dist_alpha = gimp_dial_get_angle_distance (dial->priv->alpha, angle);
+      dist_beta  = gimp_dial_get_angle_distance (dial->priv->beta, angle);
 
       if (dial->priv->draw_beta       &&
           distance > SEGMENT_FRACTION &&
-          MIN (get_angle_distance (dial->priv->alpha, angle),
-               get_angle_distance (dial->priv->beta,  angle)) < G_PI / 12)
+          MIN (dist_alpha, dist_beta) < G_PI / 12)
         {
-          if (get_angle_distance (dial->priv->alpha, angle) <
-              get_angle_distance (dial->priv->beta,  angle))
+          if (dist_alpha < dist_beta)
             {
               target = DIAL_TARGET_ALPHA;
             }
@@ -588,9 +536,9 @@ gimp_dial_draw_segment (cairo_t  *cr,
   cairo_new_sub_path (cr);
 
   if (clockwise)
-    slice = -normalize_angle (alpha - beta);
+    slice = -gimp_dial_normalize_angle (alpha - beta);
   else
-    slice = normalize_angle (beta - alpha);
+    slice = gimp_dial_normalize_angle (beta - alpha);
 
   gimp_cairo_add_arc (cr, radius, radius, segment_dist,
                       alpha, slice);
@@ -661,4 +609,23 @@ gimp_dial_draw_arrows (cairo_t    *cr,
     }
 
   cairo_restore (cr);
+}
+
+static gdouble
+gimp_dial_normalize_angle (gdouble angle)
+{
+  if (angle < 0)
+    return angle + 2 * G_PI;
+  else if (angle > 2 * G_PI)
+    return angle - 2 * G_PI;
+  else
+    return angle;
+}
+
+static gdouble
+gimp_dial_get_angle_distance (gdouble alpha,
+                              gdouble beta)
+{
+  return ABS (MIN (gimp_dial_normalize_angle (alpha - beta),
+                   2 * G_PI - gimp_dial_normalize_angle (alpha - beta)));
 }

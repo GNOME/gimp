@@ -359,17 +359,7 @@ gimp_circle_new (void)
 }
 
 
-/*  private functions  */
-
-static void
-gimp_circle_background_hsv (gdouble  angle,
-                            gdouble  distance,
-                            guchar  *rgb)
-{
-  gdouble v = 1 - sqrt (distance) / 4; /* it just looks nicer this way */
-
-  gimp_hsv_to_rgb4 (rgb, angle / (2.0 * G_PI), distance, v);
-}
+/*  protected functions  */
 
 static gdouble
 get_angle_and_distance (gdouble  center_x,
@@ -390,6 +380,41 @@ get_angle_and_distance (gdouble  center_x,
                        SQR (y - center_y)) / SQR (radius));
 
   return angle;
+}
+
+gdouble
+_gimp_circle_get_angle_and_distance (GimpCircle *circle,
+                                     gdouble     event_x,
+                                     gdouble     event_y,
+                                     gdouble    *distance)
+{
+  GtkAllocation allocation;
+  gdouble       center_x;
+  gdouble       center_y;
+
+  g_return_val_if_fail (GIMP_IS_CIRCLE (circle), 0.0);
+
+  gtk_widget_get_allocation (GTK_WIDGET (circle), &allocation);
+
+  center_x = allocation.width  / 2.0;
+  center_y = allocation.height / 2.0;
+
+  return get_angle_and_distance (center_x, center_y, circle->priv->size / 2.0,
+                                 event_x, event_y,
+                                 distance);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_circle_background_hsv (gdouble  angle,
+                            gdouble  distance,
+                            guchar  *rgb)
+{
+  gdouble v = 1 - sqrt (distance) / 4; /* it just looks nicer this way */
+
+  gimp_hsv_to_rgb4 (rgb, angle / (2.0 * G_PI), distance, v);
 }
 
 static void
