@@ -810,8 +810,8 @@ gimp_prop_angle_dial_new (GObject     *config,
   g_object_set (dial,
                 "size",         32,
                 "border-width", 0,
+                "background",   GIMP_CIRCLE_BACKGROUND_PLAIN,
                 "draw-beta",    FALSE,
-                "background",   GIMP_DIAL_BACKGROUND_PLAIN,
                 NULL);
 
   set_param_spec (G_OBJECT (dial), dial, param_spec);

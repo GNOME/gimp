@@ -46,6 +46,8 @@ libappwidgets_a_sources = \
 	gimpcellrendererdashes.h	\
 	gimpcellrendererviewable.c	\
 	gimpcellrendererviewable.h	\
+	gimpcircle.c			\
+	gimpcircle.h			\
 	gimpchanneltreeview.c		\
 	gimpchanneltreeview.h		\
 	gimpclipboard.c			\
