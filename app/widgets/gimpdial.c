@@ -67,7 +67,7 @@ struct _GimpDialPrivate
 
   DialTarget  target;
   gdouble     last_angle;
-  guint       has_grab : 1;
+  gboolean    has_grab;
 };
 
 
@@ -81,6 +81,7 @@ static void        gimp_dial_get_property         (GObject            *object,
                                                    GValue             *value,
                                                    GParamSpec         *pspec);
 
+static void        gimp_dial_unmap                (GtkWidget          *widget);
 static gboolean    gimp_dial_expose_event         (GtkWidget          *widget,
                                                    GdkEventExpose     *event);
 static gboolean    gimp_dial_button_press_event   (GtkWidget          *widget,
@@ -113,6 +114,7 @@ gimp_dial_class_init (GimpDialClass *klass)
   object_class->get_property         = gimp_dial_get_property;
   object_class->set_property         = gimp_dial_set_property;
 
+  widget_class->unmap                = gimp_dial_unmap;
   widget_class->expose_event         = gimp_dial_expose_event;
   widget_class->button_press_event   = gimp_dial_button_press_event;
   widget_class->button_release_event = gimp_dial_button_release_event;
@@ -236,6 +238,20 @@ gimp_dial_get_property (GObject    *object,
     }
 }
 
+static void
+gimp_dial_unmap (GtkWidget *widget)
+{
+  GimpDial *dial = GIMP_DIAL (widget);
+
+  if (dial->priv->has_grab)
+    {
+      gtk_grab_remove (widget);
+      dial->priv->has_grab = FALSE;
+    }
+
+  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
+}
+
 static gboolean
 gimp_dial_expose_event (GtkWidget      *widget,
                         GdkEventExpose *event)
@@ -249,7 +265,6 @@ gimp_dial_expose_event (GtkWidget      *widget,
       GtkAllocation  allocation;
       gint           size;
       cairo_t       *cr;
-      gint           x, y;
 
       g_object_get (widget,
                     "size", &size,

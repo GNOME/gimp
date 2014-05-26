@@ -52,7 +52,6 @@ struct _GimpCirclePrivate
   GimpCircleBackground  background;
 
   GdkWindow            *event_window;
-  guint                 has_grab : 1;
 };
 
 
@@ -266,12 +265,6 @@ static void
 gimp_circle_unmap (GtkWidget *widget)
 {
   GimpCircle *circle = GIMP_CIRCLE (widget);
-
-  if (circle->priv->has_grab)
-    {
-      gtk_grab_remove (widget);
-      circle->priv->has_grab = FALSE;
-    }
 
   if (circle->priv->event_window)
     gdk_window_hide (circle->priv->event_window);
