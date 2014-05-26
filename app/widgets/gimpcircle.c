@@ -52,6 +52,7 @@ struct _GimpCirclePrivate
   GimpCircleBackground  background;
 
   GdkWindow            *event_window;
+  cairo_surface_t      *surface;
 };
 
 
@@ -80,7 +81,8 @@ static void        gimp_circle_background_hsv  (gdouble               angle,
                                                 gdouble               distance,
                                                 guchar               *rgb);
 
-static void        gimp_circle_draw_background (cairo_t              *cr,
+static void        gimp_circle_draw_background (GimpCircle           *circle,
+                                                cairo_t              *cr,
                                                 gint                  size,
                                                 GimpCircleBackground  background);
 
@@ -146,6 +148,14 @@ gimp_circle_init (GimpCircle *circle)
 static void
 gimp_circle_dispose (GObject *object)
 {
+  GimpCircle *circle = GIMP_CIRCLE (object);
+
+  if (circle->priv->surface)
+    {
+      cairo_surface_destroy (circle->priv->surface);
+      circle->priv->surface = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
@@ -171,6 +181,11 @@ gimp_circle_set_property (GObject      *object,
 
     case PROP_BACKGROUND:
       circle->priv->background = g_value_get_enum (value);
+      if (circle->priv->surface)
+        {
+          cairo_surface_destroy (circle->priv->surface);
+          circle->priv->surface = NULL;
+        }
       gtk_widget_queue_draw (GTK_WIDGET (circle));
       break;
 
@@ -296,6 +311,12 @@ gimp_circle_size_allocate (GtkWidget     *widget,
                             allocation->y,
                             allocation->width,
                             allocation->height);
+
+  if (circle->priv->surface)
+    {
+      cairo_surface_destroy (circle->priv->surface);
+      circle->priv->surface = NULL;
+    }
 }
 
 static gboolean
@@ -320,7 +341,7 @@ gimp_circle_expose_event (GtkWidget      *widget,
                        allocation.x + (allocation.width  - size) / 2,
                        allocation.y + (allocation.height - size) / 2);
 
-      gimp_circle_draw_background (cr, size, circle->priv->background);
+      gimp_circle_draw_background (circle, cr, size, circle->priv->background);
 
       cairo_destroy (cr);
     }
@@ -372,7 +393,8 @@ get_angle_and_distance (gdouble  center_x,
 }
 
 static void
-gimp_circle_draw_background (cairo_t              *cr,
+gimp_circle_draw_background (GimpCircle           *circle,
+                             cairo_t              *cr,
                              gint                  size,
                              GimpCircleBackground  background)
 {
@@ -392,46 +414,50 @@ gimp_circle_draw_background (cairo_t              *cr,
     }
   else
     {
-      cairo_surface_t *surface;
-      guchar          *data;
-      gint             stride;
-      gint             x, y;
-
-      surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, size, size);
-
-      data   = cairo_image_surface_get_data (surface);
-      stride = cairo_image_surface_get_stride (surface);
-
-      for (y = 0; y < size; y++)
+      if (! circle->priv->surface)
         {
-          for (x = 0; x < size; x++)
+          guchar *data;
+          gint    stride;
+          gint    x, y;
+
+          circle->priv->surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32,
+                                                              size, size);
+
+          data   = cairo_image_surface_get_data (circle->priv->surface);
+          stride = cairo_image_surface_get_stride (circle->priv->surface);
+
+          for (y = 0; y < size; y++)
             {
-              gdouble angle;
-              gdouble distance;
-              guchar  rgb[3] = { 0, };
-
-              angle = get_angle_and_distance (size / 2.0, size / 2.0, size / 2.0,
-                                              x, y,
-                                              &distance);
-
-              switch (background)
+              for (x = 0; x < size; x++)
                 {
-                case GIMP_CIRCLE_BACKGROUND_HSV:
-                  gimp_circle_background_hsv (angle, distance, rgb);
-                  break;
+                  gdouble angle;
+                  gdouble distance;
+                  guchar  rgb[3] = { 0, };
 
-                default:
-                  break;
+                  angle = get_angle_and_distance (size / 2.0, size / 2.0,
+                                                  size / 2.0,
+                                                  x, y,
+                                                  &distance);
+
+                  switch (background)
+                    {
+                    case GIMP_CIRCLE_BACKGROUND_HSV:
+                      gimp_circle_background_hsv (angle, distance, rgb);
+                      break;
+
+                    default:
+                      break;
+                    }
+
+                  GIMP_CAIRO_ARGB32_SET_PIXEL (data + y * stride + x * 4,
+                                               rgb[0], rgb[1], rgb[2], 255);
                 }
-
-              GIMP_CAIRO_ARGB32_SET_PIXEL (data + y * stride + x * 4,
-                                           rgb[0], rgb[1], rgb[2], 255);
             }
+
+          cairo_surface_mark_dirty (circle->priv->surface);
         }
 
-      cairo_surface_mark_dirty (surface);
-      cairo_set_source_surface (cr, surface, 0.0, 0.0);
-      cairo_surface_destroy (surface);
+      cairo_set_source_surface (cr, circle->priv->surface, 0.0, 0.0);
 
       cairo_arc (cr, size / 2.0, size / 2.0, size / 2.0, 0.0, 2 * G_PI);
       cairo_clip (cr);
