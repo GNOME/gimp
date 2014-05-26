@@ -16,7 +16,7 @@
  */
 
 #ifndef __GIMP_TRANSFORM_OPTIONS_H__
-#define __GIMP_TRANSFORM_OPTIONS_H_
+#define __GIMP_TRANSFORM_OPTIONS_H__
 
 
 #include "core/gimptooloptions.h"

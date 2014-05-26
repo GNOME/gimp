@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CANVAS_POLYGON_H__
+#ifndef __GIMP_CANVAS_PATH_H__
 #define __GIMP_CANVAS_PATH_H__
 
 
