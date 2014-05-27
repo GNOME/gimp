@@ -42,6 +42,7 @@
 #include "gimpcolorpanel.h"
 #include "gimpspinscale.h"
 #include "gimppropgui.h"
+#include "gimppropgui-constructors.h"
 #include "gimppropwidgets.h"
 
 #include "gimp-intl.h"
@@ -52,8 +53,6 @@
 
 static void   gimp_prop_widget_new_seed_clicked (GtkButton       *button,
                                                  GtkAdjustment   *adj);
-static void   gimp_prop_table_chain_toggled     (GimpChainButton *chain,
-                                                 GtkAdjustment   *x_adj);
 
 
 /*  public functions  */
@@ -271,6 +270,27 @@ gimp_prop_widget_new (GObject               *config,
   return widget;
 }
 
+
+typedef GtkWidget * (* GimpPropGuiNewFunc) (GObject              *config,
+                                            GParamSpec          **param_specs,
+                                            guint                 n_param_specs,
+                                            GimpContext          *context,
+                                            GimpCreatePickerFunc  create_picker_func,
+                                            gpointer              picker_creator);
+
+static const struct
+{
+  const gchar        *config_type;
+  GimpPropGuiNewFunc  gui_new_func;
+}
+gui_new_funcs[] =
+{
+  { "GimpGegl-gegl-color-rotate-config",       _gimp_prop_gui_new_generic },
+  { "GimpGegl-gegl-convolution-matrix-config", _gimp_prop_gui_new_generic },
+  { NULL,                                      _gimp_prop_gui_new_generic }
+};
+
+
 GtkWidget *
 gimp_prop_gui_new (GObject              *config,
                    GType                 owner_type,
@@ -278,11 +298,11 @@ gimp_prop_gui_new (GObject              *config,
                    GimpCreatePickerFunc  create_picker_func,
                    gpointer              picker_creator)
 {
-  GtkWidget     *main_vbox;
-  GtkSizeGroup  *label_group;
-  GParamSpec   **param_specs;
-  guint          n_param_specs;
-  gint           i;
+  GtkWidget    *gui = NULL;
+  GParamSpec  **param_specs;
+  guint         n_param_specs;
+  const gchar  *config_type_name;
+  gint          i, j;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -290,14 +310,9 @@ gimp_prop_gui_new (GObject              *config,
   param_specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
                                                 &n_param_specs);
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-
-  label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-
-  for (i = 0; i < n_param_specs; i++)
+  for (i = 0, j = 0; i < n_param_specs; i++)
     {
-      GParamSpec  *pspec      = param_specs[i];
-      GParamSpec  *next_pspec = NULL;
+      GParamSpec *pspec = param_specs[i];
 
       /*  ignore properties of parent classes of owner_type  */
       if (! g_type_is_a (pspec->owner_type, owner_type))
@@ -306,136 +321,35 @@ gimp_prop_gui_new (GObject              *config,
       if (HAS_KEY (pspec, "role", "output-extent"))
         continue;
 
-      if (i < n_param_specs - 1)
-        next_pspec = param_specs[i + 1];
+      param_specs[j] = param_specs[i];
+      j++;
+    }
 
-      if (next_pspec                        &&
-          HAS_KEY (pspec,      "axis", "x") &&
-          HAS_KEY (next_pspec, "axis", "y"))
+  n_param_specs = j;
+
+  config_type_name = G_OBJECT_TYPE_NAME (config);
+
+  for (i = 0; i < G_N_ELEMENTS (gui_new_funcs); i++)
+    {
+      if (! gui_new_funcs[i].config_type ||
+          ! strcmp (gui_new_funcs[i].config_type, config_type_name))
         {
-          GtkWidget     *widget_x;
-          GtkWidget     *widget_y;
-          const gchar   *label_x;
-          const gchar   *label_y;
-          GtkAdjustment *adj_x;
-          GtkAdjustment *adj_y;
-          GtkWidget     *hbox;
-          GtkWidget     *vbox;
-          GtkWidget     *chain;
+          g_printerr ("GUI new func match: %s\n",
+                      gui_new_funcs[i].config_type ?
+                      gui_new_funcs[i].config_type : "generic fallback");
 
-          i++;
-
-          widget_x = gimp_prop_widget_new (config, pspec, context,
-                                           create_picker_func, picker_creator,
-                                           &label_x);
-          widget_y = gimp_prop_widget_new (config, next_pspec, context,
-                                           create_picker_func, picker_creator,
-                                           &label_y);
-
-          adj_x = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget_x));
-          adj_y = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget_y));
-
-          hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-          gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-          gtk_widget_show (hbox);
-
-          vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
-          gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-          gtk_widget_show (vbox);
-
-          gtk_box_pack_start (GTK_BOX (vbox), widget_x, FALSE, FALSE, 0);
-          gtk_widget_show (widget_x);
-
-          gtk_box_pack_start (GTK_BOX (vbox), widget_y, FALSE, FALSE, 0);
-          gtk_widget_show (widget_y);
-
-          chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-          gtk_box_pack_end (GTK_BOX (hbox), chain, FALSE, FALSE, 0);
-          gtk_widget_show (chain);
-
-          if (! HAS_KEY (pspec, "unit", "pixel-coordinate")    &&
-              ! HAS_KEY (pspec, "unit", "relative-coordinate") &&
-              gtk_adjustment_get_value (adj_x) ==
-              gtk_adjustment_get_value (adj_y))
-            {
-              GBinding *binding;
-
-              gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
-
-              binding = g_object_bind_property (adj_x, "value",
-                                                adj_y, "value",
-                                                G_BINDING_BIDIRECTIONAL);
-
-              g_object_set_data (G_OBJECT (chain), "binding", binding);
-            }
-
-          g_signal_connect (chain, "toggled",
-                            G_CALLBACK (gimp_prop_table_chain_toggled),
-                            adj_x);
-
-          g_object_set_data (G_OBJECT (adj_x), "y-adjustment", adj_y);
-
-          if (create_picker_func &&
-              (HAS_KEY (pspec, "unit", "pixel-coordinate") ||
-               HAS_KEY (pspec, "unit", "relative-coordinate")))
-            {
-              GtkWidget *button;
-              gchar     *pspec_name;
-
-              pspec_name = g_strconcat (pspec->name, ":",
-                                        next_pspec->name, NULL);
-
-              button = create_picker_func (picker_creator,
-                                           pspec_name,
-                                           GIMP_STOCK_CURSOR,
-                                           _("Pick coordinates from the image"));
-              gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-              gtk_widget_show (button);
-
-              g_object_weak_ref (G_OBJECT (button),
-                                 (GWeakNotify) g_free, pspec_name);
-            }
-        }
-      else
-        {
-          GtkWidget   *widget;
-          const gchar *label;
-
-          widget = gimp_prop_widget_new (config, pspec, context,
-                                         create_picker_func, picker_creator,
-                                         &label);
-
-          if (widget && label)
-            {
-              GtkWidget *hbox;
-              GtkWidget *l;
-
-              hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-              gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-              gtk_widget_show (hbox);
-
-              l = gtk_label_new_with_mnemonic (label);
-              gtk_misc_set_alignment (GTK_MISC (l), 0.0, 0.5);
-              gtk_size_group_add_widget (label_group, l);
-              gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
-              gtk_widget_show (l);
-
-              gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
-              gtk_widget_show (widget);
-            }
-          else if (widget)
-            {
-              gtk_box_pack_start (GTK_BOX (main_vbox), widget, FALSE, FALSE, 0);
-              gtk_widget_show (widget);
-            }
+          gui = gui_new_funcs[i].gui_new_func (config,
+                                               param_specs, n_param_specs,
+                                               context,
+                                               create_picker_func,
+                                               picker_creator);
+          break;
         }
     }
 
-  g_object_unref (label_group);
-
   g_free (param_specs);
 
-  return main_vbox;
+  return gui;
 }
 
 
@@ -449,33 +363,4 @@ gimp_prop_widget_new_seed_clicked (GtkButton     *button,
                                       gtk_adjustment_get_upper (adj));
 
   gtk_adjustment_set_value (adj, value);
-}
-
-static void
-gimp_prop_table_chain_toggled (GimpChainButton *chain,
-                               GtkAdjustment   *x_adj)
-{
-  GtkAdjustment *y_adj;
-
-  y_adj = g_object_get_data (G_OBJECT (x_adj), "y-adjustment");
-
-  if (gimp_chain_button_get_active (chain))
-    {
-      GBinding *binding;
-
-      binding = g_object_bind_property (x_adj, "value",
-                                        y_adj, "value",
-                                        G_BINDING_BIDIRECTIONAL);
-
-      g_object_set_data (G_OBJECT (chain), "binding", binding);
-    }
-  else
-    {
-      GBinding *binding;
-
-      binding = g_object_get_data (G_OBJECT (chain), "binding");
-
-      g_object_unref (binding);
-      g_object_set_data (G_OBJECT (chain), "binding", NULL);
-    }
 }
