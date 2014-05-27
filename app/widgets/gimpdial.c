@@ -96,6 +96,9 @@ static gboolean    gimp_dial_enter_notify_event   (GtkWidget          *widget,
 static gboolean    gimp_dial_leave_notify_event   (GtkWidget          *widget,
                                                    GdkEventCrossing   *event);
 
+static void        gimp_dial_set_target           (GimpDial           *dial,
+                                                   DialTarget          target);
+
 static void        gimp_dial_draw_arrows          (cairo_t            *cr,
                                                    gint                size,
                                                    gdouble             alpha,
@@ -350,10 +353,7 @@ gimp_dial_button_release_event (GtkWidget      *widget,
       dial->priv->has_grab = FALSE;
 
       if (! dial->priv->in_widget)
-        {
-          dial->priv->target = DIAL_TARGET_NONE;
-          gtk_widget_queue_draw (widget);
-        }
+        gimp_dial_set_target (dial, DIAL_TARGET_NONE);
     }
 
   return FALSE;
@@ -429,11 +429,7 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
           target = DIAL_TARGET_BOTH;
         }
 
-      if (target != dial->priv->target)
-        {
-          dial->priv->target = target;
-          gtk_widget_queue_draw (widget);
-        }
+      gimp_dial_set_target (dial, target);
     }
 
   gdk_event_request_motions (mevent);
@@ -461,10 +457,7 @@ gimp_dial_leave_notify_event (GtkWidget        *widget,
   dial->priv->in_widget = FALSE;
 
   if (! dial->priv->has_grab)
-    {
-      dial->priv->target = DIAL_TARGET_NONE;
-      gtk_widget_queue_draw (widget);
-    }
+    gimp_dial_set_target (dial, DIAL_TARGET_NONE);
 
   return FALSE;
 }
@@ -480,6 +473,17 @@ gimp_dial_new (void)
 
 
 /*  private functions  */
+
+static void
+gimp_dial_set_target (GimpDial   *dial,
+                      DialTarget  target)
+{
+  if (target != dial->priv->target)
+    {
+      dial->priv->target = target;
+      gtk_widget_queue_draw (GTK_WIDGET (dial));
+    }
+}
 
 static void
 gimp_dial_draw_arrow (cairo_t *cr,
