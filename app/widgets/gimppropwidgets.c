@@ -739,7 +739,7 @@ deg_to_rad (GBinding     *binding,
   gdouble *lower = user_data;
   gdouble  value = g_value_get_double (from_value);
 
-  if (*lower != 0.0)
+  if (lower && *lower != 0.0)
     {
       if (value < 0.0)
         value += 360.0;
@@ -763,7 +763,7 @@ rad_to_deg (GBinding     *binding,
 
   value *= 180.0 / G_PI;
 
-  if (*lower != 0.0)
+  if (lower && *lower != 0.0)
     {
       if (value > (*lower + 360.0))
         value -= 360.0;
@@ -837,6 +837,61 @@ gimp_prop_angle_dial_new (GObject     *config,
                                    rad_to_deg,
                                    l, (GDestroyNotify) g_free);
     }
+
+  return dial;
+}
+
+GtkWidget *
+gimp_prop_angle_range_dial_new  (GObject     *config,
+                                 const gchar *alpha_property_name,
+                                 const gchar *beta_property_name,
+                                 const gchar *clockwise_property_name)
+{
+  GParamSpec *alpha_param_spec;
+  GParamSpec *beta_param_spec;
+  GParamSpec *clockwise_param_spec;
+  GtkWidget  *dial;
+
+  alpha_param_spec = find_param_spec (config, alpha_property_name, G_STRFUNC);
+  if (! alpha_param_spec)
+    return NULL;
+
+  beta_param_spec = find_param_spec (config, beta_property_name, G_STRFUNC);
+  if (! beta_param_spec)
+    return NULL;
+
+  clockwise_param_spec = find_param_spec (config, clockwise_property_name, G_STRFUNC);
+  if (! clockwise_param_spec)
+    return NULL;
+
+  dial = gimp_dial_new ();
+
+  g_object_set (dial,
+                "size",         96,
+                "border-width", 0,
+                "background",   GIMP_CIRCLE_BACKGROUND_HSV,
+                NULL);
+
+  g_object_bind_property_full (config, alpha_property_name,
+                               dial,   "alpha",
+                               G_BINDING_BIDIRECTIONAL |
+                               G_BINDING_SYNC_CREATE,
+                               deg_to_rad,
+                               rad_to_deg,
+                               NULL, NULL);
+
+  g_object_bind_property_full (config, beta_property_name,
+                               dial,   "beta",
+                               G_BINDING_BIDIRECTIONAL |
+                               G_BINDING_SYNC_CREATE,
+                               deg_to_rad,
+                               rad_to_deg,
+                               NULL, NULL);
+
+  g_object_bind_property (config, clockwise_property_name,
+                          dial,   "clockwise",
+                          G_BINDING_BIDIRECTIONAL |
+                          G_BINDING_SYNC_CREATE);
 
   return dial;
 }

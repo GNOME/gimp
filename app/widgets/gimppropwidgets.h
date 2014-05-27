@@ -68,6 +68,10 @@ void        gimp_prop_widget_set_factor     (GtkWidget     *widget,
 
 GtkWidget * gimp_prop_angle_dial_new        (GObject       *config,
                                              const gchar   *property_name);
+GtkWidget * gimp_prop_angle_range_dial_new  (GObject       *config,
+                                             const gchar   *alpha_property_name,
+                                             const gchar   *beta_property_name,
+                                             const gchar   *clockwise_property_name);
 
 
 /*  GParamObject (GimpViewable)  */
