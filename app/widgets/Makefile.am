@@ -276,8 +276,8 @@ libappwidgets_a_sources = \
 	gimpprogressbox.h		\
 	gimpprogressdialog.c		\
 	gimpprogressdialog.h		\
-	gimpproptable.c			\
-	gimpproptable.h			\
+	gimppropgui.c			\
+	gimppropgui.h			\
 	gimppropwidgets.c		\
 	gimppropwidgets.h		\
 	gimpradioaction.c		\

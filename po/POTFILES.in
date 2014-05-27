@@ -480,7 +480,7 @@ app/widgets/gimppaletteeditor.c
 app/widgets/gimppanedbox.c
 app/widgets/gimppdbdialog.c
 app/widgets/gimpprogressdialog.c
-app/widgets/gimpproptable.c
+app/widgets/gimppropgui.c
 app/widgets/gimppropwidgets.c
 app/widgets/gimpselectiondata.c
 app/widgets/gimpselectioneditor.c

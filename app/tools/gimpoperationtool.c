@@ -47,7 +47,7 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppickablebutton.h"
-#include "widgets/gimpproptable.h"
+#include "widgets/gimppropgui.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimptoolgui.h"
@@ -283,11 +283,11 @@ gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
       gtk_widget_show (tool->aux_input_box);
     }
 
-  if (tool->options_table)
+  if (tool->options_gui)
     {
-      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_table,
+      gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_gui,
                           FALSE, FALSE, 0);
-      gtk_widget_show (tool->options_table);
+      gtk_widget_show (tool->options_gui);
     }
 
   if (tool->undo_desc)
@@ -612,10 +612,10 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
       tool->aux_input_box    = NULL;
     }
 
-  if (tool->options_table)
+  if (tool->options_gui)
     {
-      gtk_widget_destroy (tool->options_table);
-      tool->options_table = NULL;
+      gtk_widget_destroy (tool->options_gui);
+      tool->options_gui = NULL;
 
       if (im_tool->active_picker)
         {
@@ -668,18 +668,18 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
 
   if (tool->config)
     {
-      tool->options_table =
-        gimp_prop_table_new (G_OBJECT (tool->config),
-                             G_TYPE_FROM_INSTANCE (tool->config),
-                             GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)),
-                             (GimpCreatePickerFunc) gimp_image_map_tool_add_color_picker,
-                             tool);
+      tool->options_gui =
+        gimp_prop_gui_new (G_OBJECT (tool->config),
+                           G_TYPE_FROM_INSTANCE (tool->config),
+                           GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)),
+                           (GimpCreatePickerFunc) gimp_image_map_tool_add_color_picker,
+                           tool);
 
       if (tool->options_box)
         {
-          gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_table,
+          gtk_box_pack_start (GTK_BOX (tool->options_box), tool->options_gui,
                               FALSE, FALSE, 0);
-          gtk_widget_show (tool->options_table);
+          gtk_widget_show (tool->options_gui);
         }
     }
 

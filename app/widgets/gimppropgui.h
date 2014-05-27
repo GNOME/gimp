@@ -1,8 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimpproptable.h
- * Copyright (C) 2002-2013 Michael Natterer <mitch@gimp.org>
+ * gimppropgui.h
+ * Copyright (C) 2002-2014 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_PROP_TABLE_H__
-#define __GIMP_PROP_TABLE_H__
+#ifndef __GIMP_PROP_GUI_H__
+#define __GIMP_PROP_GUI_H__
 
 
 /*  A view on all of an object's properties  */
@@ -35,7 +35,7 @@ GtkWidget * gimp_prop_widget_new (GObject              *config,
                                   GimpCreatePickerFunc  create_picker_func,
                                   gpointer              picker_creator,
                                   const gchar         **label);
-GtkWidget * gimp_prop_table_new  (GObject              *config,
+GtkWidget * gimp_prop_gui_new    (GObject              *config,
                                   GType                 owner_type,
                                   GimpContext          *context,
                                   GimpCreatePickerFunc  create_picker_func,
@@ -43,4 +43,4 @@ GtkWidget * gimp_prop_table_new  (GObject              *config,
 
 
 
-#endif /* __GIMP_PROP_TABLE_H__ */
+#endif /* __GIMP_PROP_GUI_H__ */

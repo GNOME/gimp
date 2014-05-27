@@ -376,15 +376,15 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_reorder_child (GTK_BOX (main_vbox), tool->description_label, 1);
 
   /*  The options vbox  */
-  o_tool->options_table =
+  o_tool->options_gui =
     gtk_label_new (_("Select an operation from the list above"));
-  gimp_label_set_attributes (GTK_LABEL (o_tool->options_table),
+  gimp_label_set_attributes (GTK_LABEL (o_tool->options_gui),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gtk_misc_set_padding (GTK_MISC (o_tool->options_table), 0, 4);
+  gtk_misc_set_padding (GTK_MISC (o_tool->options_gui), 0, 4);
   gtk_container_add (GTK_CONTAINER (o_tool->options_box),
-                     o_tool->options_table);
-  gtk_widget_show (o_tool->options_table);
+                     o_tool->options_gui);
+  gtk_widget_show (o_tool->options_gui);
 }
 
 static void

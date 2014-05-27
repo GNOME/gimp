@@ -1,8 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimppropwidgets.c
- * Copyright (C) 2002-2004  Michael Natterer <mitch@gimp.org>
+ * gimppropgui.c
+ * Copyright (C) 2002-2014  Michael Natterer <mitch@gimp.org>
  *                          Sven Neumann <sven@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@
 
 #include "gimpcolorpanel.h"
 #include "gimpspinscale.h"
-#include "gimpproptable.h"
+#include "gimppropgui.h"
 #include "gimppropwidgets.h"
 
 #include "gimp-intl.h"
@@ -272,11 +272,11 @@ gimp_prop_widget_new (GObject               *config,
 }
 
 GtkWidget *
-gimp_prop_table_new (GObject              *config,
-                     GType                 owner_type,
-                     GimpContext          *context,
-                     GimpCreatePickerFunc  create_picker_func,
-                     gpointer              picker_creator)
+gimp_prop_gui_new (GObject              *config,
+                   GType                 owner_type,
+                   GimpContext          *context,
+                   GimpCreatePickerFunc  create_picker_func,
+                   gpointer              picker_creator)
 {
   GtkWidget     *table;
   GParamSpec   **param_specs;
