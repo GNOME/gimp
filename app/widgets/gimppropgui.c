@@ -76,10 +76,35 @@ gimp_prop_widget_new (GObject               *config,
 
   *label = NULL;
 
-  if (G_IS_PARAM_SPEC_INT (pspec)   ||
-      G_IS_PARAM_SPEC_UINT (pspec)  ||
-      G_IS_PARAM_SPEC_FLOAT (pspec) ||
-      G_IS_PARAM_SPEC_DOUBLE (pspec))
+  if (GEGL_IS_PARAM_SPEC_SEED (pspec))
+    {
+      GtkAdjustment *adj;
+      GtkWidget     *spin;
+      GtkWidget     *button;
+
+      widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+
+      spin = gimp_prop_spin_button_new (config, pspec->name,
+                                        1.0, 10.0, 0);
+      gtk_box_pack_start (GTK_BOX (widget), spin, TRUE, TRUE, 0);
+      gtk_widget_show (spin);
+
+      button = gtk_button_new_with_label (_("New Seed"));
+      gtk_box_pack_start (GTK_BOX (widget), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spin));
+
+      g_signal_connect (button, "clicked",
+                        G_CALLBACK (gimp_prop_widget_new_seed_clicked),
+                        adj);
+
+      *label = g_param_spec_get_nick (pspec);
+    }
+  else if (G_IS_PARAM_SPEC_INT (pspec)   ||
+           G_IS_PARAM_SPEC_UINT (pspec)  ||
+           G_IS_PARAM_SPEC_FLOAT (pspec) ||
+           G_IS_PARAM_SPEC_DOUBLE (pspec))
     {
       gdouble lower;
       gdouble upper;
@@ -210,31 +235,6 @@ gimp_prop_widget_new (GObject               *config,
       gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (widget),
                                     g_param_spec_get_nick (pspec));
     }
-  else if (GEGL_IS_PARAM_SPEC_SEED (pspec))
-    {
-      GtkAdjustment *adj;
-      GtkWidget     *spin;
-      GtkWidget     *button;
-
-      widget = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-
-      spin = gimp_prop_spin_button_new (config, pspec->name,
-                                        1.0, 10.0, 0);
-      gtk_box_pack_start (GTK_BOX (widget), spin, TRUE, TRUE, 0);
-      gtk_widget_show (spin);
-
-      button = gtk_button_new_with_label (_("New Seed"));
-      gtk_box_pack_start (GTK_BOX (widget), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
-      adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spin));
-
-      g_signal_connect (button, "clicked",
-                        G_CALLBACK (gimp_prop_widget_new_seed_clicked),
-                        adj);
-
-      *label = g_param_spec_get_nick (pspec);
-    }
   else if (GIMP_IS_PARAM_SPEC_RGB (pspec))
     {
       GtkWidget *button;
@@ -278,10 +278,11 @@ gimp_prop_gui_new (GObject              *config,
                    GimpCreatePickerFunc  create_picker_func,
                    gpointer              picker_creator)
 {
-  GtkWidget   *main_vbox;
-  GParamSpec **param_specs;
-  guint        n_param_specs;
-  gint         i;
+  GtkWidget     *main_vbox;
+  GtkSizeGroup  *label_group;
+  GParamSpec   **param_specs;
+  guint          n_param_specs;
+  gint           i;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -290,6 +291,8 @@ gimp_prop_gui_new (GObject              *config,
                                                 &n_param_specs);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+
+  label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   for (i = 0; i < n_param_specs; i++)
     {
@@ -412,6 +415,8 @@ gimp_prop_gui_new (GObject              *config,
               gtk_widget_show (hbox);
 
               l = gtk_label_new_with_mnemonic (label);
+              gtk_misc_set_alignment (GTK_MISC (l), 0.0, 0.5);
+              gtk_size_group_add_widget (label_group, l);
               gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
               gtk_widget_show (l);
 
@@ -425,6 +430,8 @@ gimp_prop_gui_new (GObject              *config,
             }
         }
     }
+
+  g_object_unref (label_group);
 
   g_free (param_specs);
 
