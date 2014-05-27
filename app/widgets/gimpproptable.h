@@ -29,11 +29,18 @@ typedef GtkWidget * (* GimpCreatePickerFunc) (gpointer     creator,
                                               const gchar *icon_name,
                                               const gchar *tooltip);
 
-GtkWidget * gimp_prop_table_new (GObject              *config,
-                                 GType                 owner_type,
-                                 GimpContext          *context,
-                                 GimpCreatePickerFunc  create_picker_func,
-                                 gpointer              picker_creator);
+GtkWidget * gimp_prop_widget_new (GObject              *config,
+                                  GParamSpec           *pspec,
+                                  GimpContext          *context,
+                                  GimpCreatePickerFunc  create_picker_func,
+                                  gpointer              picker_creator,
+                                  const gchar         **label);
+GtkWidget * gimp_prop_table_new  (GObject              *config,
+                                  GType                 owner_type,
+                                  GimpContext          *context,
+                                  GimpCreatePickerFunc  create_picker_func,
+                                  gpointer              picker_creator);
+
 
 
 #endif /* __GIMP_PROP_TABLE_H__ */
