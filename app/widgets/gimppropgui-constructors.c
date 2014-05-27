@@ -211,6 +211,96 @@ _gimp_prop_gui_new_generic (GObject              *config,
   return main_vbox;
 }
 
+GtkWidget *
+_gimp_prop_gui_new_convolution_matrix (GObject              *config,
+                                       GParamSpec          **param_specs,
+                                       guint                 n_param_specs,
+                                       GimpContext          *context,
+                                       GimpCreatePickerFunc  create_picker_func,
+                                       gpointer              picker_creator)
+{
+  GtkWidget   *main_vbox;
+  GtkWidget   *table;
+  GtkWidget   *hbox;
+  GtkWidget   *scale;
+  GtkWidget   *vbox;
+  const gchar *label;
+  gint          x, y;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (param_specs != NULL, NULL);
+  g_return_val_if_fail (n_param_specs > 0, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+
+  table = gtk_table_new (5, 5, TRUE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  for (y = 0; y < 5; y++)
+    {
+      for (x = 0; x < 5; x++)
+        {
+          GtkWidget *spin;
+          gchar      prop_name[3] = { 0, };
+
+          prop_name[0] = "abcde"[y];
+          prop_name[1] = "12345"[x];
+
+          spin = gimp_prop_spin_button_new (config, prop_name,
+                                            1.0, 10.0, 2);
+          gtk_entry_set_width_chars (GTK_ENTRY (spin), 8);
+          gtk_table_attach (GTK_TABLE (table), spin,
+                            x, x + 1, y, y + 1,
+                            GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND,
+                            0, 0);
+          gtk_widget_show (spin);
+        }
+    }
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  scale = gimp_prop_widget_new (config, param_specs[25],
+                                context, NULL, NULL, &label);
+  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
+  gtk_widget_show (scale);
+
+  scale = gimp_prop_widget_new (config, param_specs[26],
+                                context, NULL, NULL, &label);
+  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
+  gtk_widget_show (scale);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  vbox = _gimp_prop_gui_new_generic (config,
+                                     param_specs + 27, 4,
+                                     context,
+                                     create_picker_func,
+                                     picker_creator);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  vbox = _gimp_prop_gui_new_generic (config,
+                                     param_specs + 31,
+                                     n_param_specs - 31,
+                                     context,
+                                     create_picker_func,
+                                     picker_creator);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  return main_vbox;
+}
+
 
 /*  private functions  */
 

@@ -285,9 +285,12 @@ static const struct
 }
 gui_new_funcs[] =
 {
-  { "GimpGegl-gegl-color-rotate-config",       _gimp_prop_gui_new_generic },
-  { "GimpGegl-gegl-convolution-matrix-config", _gimp_prop_gui_new_generic },
-  { NULL,                                      _gimp_prop_gui_new_generic }
+  { "GimpGegl-gegl-color-rotate-config",
+    _gimp_prop_gui_new_generic },
+  { "GimpGegl-gegl-convolution-matrix-config",
+    _gimp_prop_gui_new_convolution_matrix },
+  { NULL,
+    _gimp_prop_gui_new_generic }
 };
 
 
