@@ -520,9 +520,13 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
     gint           height;
     gdouble        scale;
 
-    layout = gtk_widget_create_pango_layout (shell->canvas,
-                                             _("Unstable Development\n"
-                                               "Version"));
+    layout = gtk_widget_create_pango_layout (shell->canvas, NULL);
+    pango_layout_set_markup (layout,
+                             _("<big>Unstable Development Version</big>\n\n"
+                               "<small>Please build latest "
+                               "git master before\n"
+                               "reporting any bugs against "
+                               "this version</small>"), -1);
     pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
 
     pango_layout_get_pixel_size (layout, &width, &height);
