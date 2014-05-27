@@ -211,6 +211,132 @@ _gimp_prop_gui_new_generic (GObject              *config,
   return main_vbox;
 }
 
+static void
+invert_segment_clicked (GtkWidget *button,
+                        GtkWidget *dial)
+{
+  gdouble  alpha, beta;
+  gboolean clockwise;
+
+  g_object_get (dial,
+                "alpha",     &alpha,
+                "beta",      &beta,
+                "clockwise", &clockwise,
+                NULL);
+
+  g_object_set (dial,
+                "alpha",     beta,
+                "beta",      alpha,
+                "clockwise", ! clockwise,
+                NULL);
+}
+
+static GtkWidget *
+gimp_prop_angle_range_box_new (GObject    *config,
+                               GParamSpec *alpha_pspec,
+                               GParamSpec *beta_pspec,
+                               GParamSpec *clockwise_pspec)
+{
+  GtkWidget *main_hbox;
+  GtkWidget *vbox;
+  GtkWidget *scale;
+  GtkWidget *hbox;
+  GtkWidget *button;
+  GtkWidget *dial;
+
+  main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  scale = gimp_prop_spin_scale_new (config, alpha_pspec->name,
+                                    g_param_spec_get_nick (alpha_pspec),
+                                    1.0, 15.0, 2);
+  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  scale = gimp_prop_spin_scale_new (config, beta_pspec->name,
+                                    g_param_spec_get_nick (alpha_pspec),
+                                    1.0, 15.0, 2);
+  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+  gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gimp_prop_check_button_new (config, clockwise_pspec->name,
+                                       g_param_spec_get_nick (clockwise_pspec));
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label ("Invert Segment");
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  dial = gimp_prop_angle_range_dial_new (config,
+                                         alpha_pspec->name,
+                                         beta_pspec->name,
+                                         clockwise_pspec->name);
+  gtk_box_pack_start (GTK_BOX (main_hbox), dial, FALSE, FALSE, 0);
+  gtk_widget_show (dial);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (invert_segment_clicked),
+                    dial);
+
+  return main_hbox;
+}
+
+GtkWidget *
+_gimp_prop_gui_new_color_rotate (GObject              *config,
+                                 GParamSpec          **param_specs,
+                                 guint                 n_param_specs,
+                                 GimpContext          *context,
+                                 GimpCreatePickerFunc  create_picker_func,
+                                 gpointer              picker_creator)
+{
+  GtkWidget *main_vbox;
+  GtkWidget *hbox;
+  GtkWidget *vbox;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (param_specs != NULL, NULL);
+  g_return_val_if_fail (n_param_specs > 0, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+
+  hbox = gimp_prop_angle_range_box_new (config,
+                                        param_specs[1],
+                                        param_specs[2],
+                                        param_specs[0]);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  hbox = gimp_prop_angle_range_box_new (config,
+                                        param_specs[4],
+                                        param_specs[5],
+                                        param_specs[3]);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  vbox = _gimp_prop_gui_new_generic (config,
+                                     param_specs + 6,
+                                     n_param_specs - 6,
+                                     context,
+                                     create_picker_func,
+                                     picker_creator);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  return main_vbox;
+}
+
 GtkWidget *
 _gimp_prop_gui_new_convolution_matrix (GObject              *config,
                                        GParamSpec          **param_specs,
