@@ -372,7 +372,10 @@
 
 	<autotools id="libffi" autogenargs="--disable-builddir">
 		<branch module="libffi/libffi-3.1.tar.gz" repo="sourceware.org"
-			version="3.1" checkoutdir="libffi-3.1" />
+			version="3.1" checkoutdir="libffi-3.1">
+			<patch file="0004-Fix-wrong-variable-substitution-in-configure.patch"
+				strip="1" />
+		</branch>
 	</autotools>
 
 	<autotools id="glib" autogenargs="--with-libiconv=native --enable-gtk-doc=no">
