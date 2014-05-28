@@ -258,7 +258,7 @@ gimp_prop_angle_range_box_new (GObject    *config,
   gtk_widget_show (scale);
 
   scale = gimp_prop_spin_scale_new (config, beta_pspec->name,
-                                    g_param_spec_get_nick (alpha_pspec),
+                                    g_param_spec_get_nick (beta_pspec),
                                     1.0, 15.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
@@ -301,38 +301,50 @@ _gimp_prop_gui_new_color_rotate (GObject              *config,
                                  gpointer              picker_creator)
 {
   GtkWidget *main_vbox;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
+  GtkWidget *frame;
+  GtkWidget *box;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (param_specs != NULL, NULL);
   g_return_val_if_fail (n_param_specs > 0, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
 
-  hbox = gimp_prop_angle_range_box_new (config,
-                                        param_specs[1],
-                                        param_specs[2],
-                                        param_specs[0]);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  frame = gimp_frame_new (_("Source Range"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  hbox = gimp_prop_angle_range_box_new (config,
-                                        param_specs[4],
-                                        param_specs[5],
-                                        param_specs[3]);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  box = gimp_prop_angle_range_box_new (config,
+                                       param_specs[1],
+                                       param_specs[2],
+                                       param_specs[0]);
+  gtk_container_add (GTK_CONTAINER (frame), box);
+  gtk_widget_show (box);
 
-  vbox = _gimp_prop_gui_new_generic (config,
-                                     param_specs + 6,
-                                     n_param_specs - 6,
-                                     context,
-                                     create_picker_func,
-                                     picker_creator);
-  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  frame = gimp_frame_new (_("Destination Range"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  box = gimp_prop_angle_range_box_new (config,
+                                       param_specs[4],
+                                       param_specs[5],
+                                       param_specs[3]);
+  gtk_container_add (GTK_CONTAINER (frame), box);
+  gtk_widget_show (box);
+
+  frame = gimp_frame_new (_("Gray Handling"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  box = _gimp_prop_gui_new_generic (config,
+                                    param_specs + 6,
+                                    n_param_specs - 6,
+                                    context,
+                                    create_picker_func,
+                                    picker_creator);
+  gtk_container_add (GTK_CONTAINER (frame), box);
+  gtk_widget_show (box);
 
   return main_vbox;
 }
