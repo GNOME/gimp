@@ -385,8 +385,8 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
           GtkWidget *spin;
           gchar      prop_name[3] = { 0, };
 
-          prop_name[0] = "abcde"[y];
-          prop_name[1] = "12345"[x];
+          prop_name[0] = "abcde"[x];
+          prop_name[1] = "12345"[y];
 
           spin = gimp_prop_spin_button_new (config, prop_name,
                                             1.0, 10.0, 2);
