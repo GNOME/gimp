@@ -339,7 +339,7 @@ gimp_polar_motion_notify_event (GtkWidget      *widget,
       dist_radius = ABS (polar->priv->radius - radius);
 
       if ((radius < 0.2 && polar->priv->radius < 0.2) ||
-          dist_angle  < (G_PI / 12) && dist_radius < 0.2)
+          (dist_angle  < (G_PI / 12) && dist_radius < 0.2))
         {
           target = POLAR_TARGET_CIRCLE;
         }
