@@ -231,6 +231,31 @@ invert_segment_clicked (GtkWidget *button,
                 NULL);
 }
 
+static void
+select_all_clicked (GtkWidget *button,
+                    GtkWidget *dial)
+{
+  gdouble  alpha, beta;
+  gboolean clockwise;
+
+  g_object_get (dial,
+                "alpha",     &alpha,
+                "clockwise", &clockwise,
+                NULL);
+
+  beta = alpha - (clockwise ? -1 : 1) * 0.00001;
+
+  if (beta < 0)
+    beta += 2 * G_PI;
+
+  if (beta > 2 * G_PI)
+    beta -= 2 * G_PI;
+
+  g_object_set (dial,
+                "beta", beta,
+                NULL);
+}
+
 static GtkWidget *
 gimp_prop_angle_range_box_new (GObject    *config,
                                GParamSpec *alpha_pspec,
@@ -242,6 +267,8 @@ gimp_prop_angle_range_box_new (GObject    *config,
   GtkWidget *scale;
   GtkWidget *hbox;
   GtkWidget *button;
+  GtkWidget *invert_button;
+  GtkWidget *all_button;
   GtkWidget *dial;
 
   main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
@@ -274,9 +301,13 @@ gimp_prop_angle_range_box_new (GObject    *config,
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Invert Range");
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  invert_button = gtk_button_new_with_label ("Invert Range");
+  gtk_box_pack_start (GTK_BOX (hbox), invert_button, TRUE, TRUE, 0);
+  gtk_widget_show (invert_button);
+
+  all_button = gtk_button_new_with_label ("Select All");
+  gtk_box_pack_start (GTK_BOX (hbox), all_button, TRUE, TRUE, 0);
+  gtk_widget_show (all_button);
 
   dial = gimp_prop_angle_range_dial_new (config,
                                          alpha_pspec->name,
@@ -285,8 +316,12 @@ gimp_prop_angle_range_box_new (GObject    *config,
   gtk_box_pack_start (GTK_BOX (main_hbox), dial, FALSE, FALSE, 0);
   gtk_widget_show (dial);
 
-  g_signal_connect (button, "clicked",
+  g_signal_connect (invert_button, "clicked",
                     G_CALLBACK (invert_segment_clicked),
+                    dial);
+
+  g_signal_connect (all_button, "clicked",
+                    G_CALLBACK (select_all_clicked),
                     dial);
 
   return main_hbox;
