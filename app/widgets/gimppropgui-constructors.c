@@ -274,7 +274,7 @@ gimp_prop_angle_range_box_new (GObject    *config,
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Invert Segment");
+  button = gtk_button_new_with_label ("Invert Range");
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
