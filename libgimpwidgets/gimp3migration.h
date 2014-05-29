@@ -45,8 +45,6 @@ GtkWidget * gtk_scrollbar_new  (GtkOrientation  orientation,
                                 GtkAdjustment  *adjustment);
 GtkWidget * gtk_separator_new  (GtkOrientation  orientation);
 
-#endif
-
 
 typedef enum
 {
@@ -76,6 +74,8 @@ gfloat          gtk_label_get_xalign            (GtkLabel          *label);
 void            gtk_label_set_yalign            (GtkLabel          *label,
                                                  gfloat             yalign);
 gfloat          gtk_label_get_yalign            (GtkLabel          *label);
+
+#endif
 
 
 #endif /* __GIMP_3_MIGRATION_H__ */
