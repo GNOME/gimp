@@ -539,9 +539,12 @@
 		</dependencies>
 	</autotools>
 
-	<autotools id="libsecret" autogen-sh="configure" autogenargs="">
+	<autotools id="libsecret" autogen-sh="configure" autogenargs="--disable-manpages">
 		<branch module="libsecret/0.18/libsecret-0.18.tar.xz" version="0.18.0"
-			hash="sha256:0c73aa762dbd1e38ba7b03de350e23ce818cb810b0784375e95ef61e004b02e3" />
+			hash="sha256:0c73aa762dbd1e38ba7b03de350e23ce818cb810b0784375e95ef61e004b02e3">
+			<patch file="libsecret-fix-secret-dbus-generation.c.patch"
+				strip="1" />
+		</branch>
 		<dependencies>
 			<dep package="sqlite" />
 			<dep package="gobject-introspection" />
