@@ -36,7 +36,7 @@
 
 
 #define FG_BG_RGB_KEY      "gimp-gradient-fg-bg-rgb"
-#define FG_BG_HARDEDGE_KEY "gimp-gradient-fg-bg-rgb"
+#define FG_BG_HARDEDGE_KEY "gimp-gradient-fg-bg-rgb-hardedge"
 #define FG_BG_HSV_CCW_KEY  "gimp-gradient-fg-bg-hsv-ccw"
 #define FG_BG_HSV_CW_KEY   "gimp-gradient-fg-bg-hsv-cw"
 #define FG_TRANSPARENT_KEY "gimp-gradient-fg-transparent"
@@ -105,6 +105,38 @@ gimp_gradients_init (Gimp *gimp)
                                           FG_TRANSPARENT_KEY);
   gradient->segments->left_color_type  = GIMP_GRADIENT_COLOR_FOREGROUND;
   gradient->segments->right_color_type = GIMP_GRADIENT_COLOR_FOREGROUND_TRANSPARENT;
+}
+
+GimpGradient *
+gimp_gradients_get_fg_bg_rgb (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return g_object_get_data (G_OBJECT (gimp), FG_BG_RGB_KEY);
+}
+
+GimpGradient *
+gimp_gradients_get_fg_bg_hsv_ccw (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return g_object_get_data (G_OBJECT (gimp), FG_BG_HSV_CCW_KEY);
+}
+
+GimpGradient *
+gimp_gradients_get_fg_bg_hsv_cw (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return g_object_get_data (G_OBJECT (gimp), FG_BG_HSV_CW_KEY);
+}
+
+GimpGradient *
+gimp_gradients_get_fg_transparent (Gimp *gimp)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  return g_object_get_data (G_OBJECT (gimp), FG_TRANSPARENT_KEY);
 }
 
 

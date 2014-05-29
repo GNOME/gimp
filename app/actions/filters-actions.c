@@ -55,6 +55,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:texturize-canvas",
     NULL /* FIXME GIMP_HELP_FILTER_APPLY_CANVAS */ },
 
+  { "filters-apply-lens", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Apply _Lens..."), NULL, NULL,
+    "gegl:apply-lens",
+    NULL /* FIXME GIMP_HELP_FILTER_APPLY_LENS */ },
+
   { "filters-bump-map", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Bump Map..."), NULL, NULL,
     "gegl:bump-map",
@@ -94,6 +99,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "Color to _Alpha..."), NULL, NULL,
     "gegl:color-to-alpha",
     NULL /* FIXME GIMP_HELP_FILTER_COLOR_TO_ALPHA */ },
+
+  { "filters-convolution-matrix", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Convolution Matrix..."), NULL, NULL,
+    "gegl:convolution-matrix",
+    NULL /* FIXME GIMP_HELP_FILTER_CONVOLUTION_MATRIX */ },
 
   { "filters-cubism", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Cubism..."), NULL, NULL,
@@ -145,7 +155,7 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:gaussian-blur",
     NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_BLUR */ },
 
-  { "filters-grid", GIMP_STOCK_GEGL,
+  { "filters-grid", GIMP_STOCK_GRID,
     NC_("filters-action", "_Grid..."), NULL, NULL,
     "gegl:grid",
     NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_GRID */ },
@@ -180,6 +190,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:motion-blur-zoom",
     NULL /* FIXME GIMP_HELP_FILTER_MOTION_BLUR_ZOOM */ },
 
+  { "filters-noise-cell", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Cell Noise..."), NULL, NULL,
+    "gegl:cell-noise",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_CELL */ },
+
   { "filters-noise-cie-lch", GIMP_STOCK_GEGL,
     NC_("filters-action", "CIE lch Noise..."), NULL, NULL,
     "gegl:noise-cie-lch",
@@ -195,6 +210,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:noise-hurl",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_HURL */ },
 
+  { "filters-noise-perlin", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Perlin Noise..."), NULL, NULL,
+    "gegl:perlin-noise",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_PERLIIN */ },
+
   { "filters-noise-pick", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Pick..."), NULL, NULL,
     "gegl:noise-pick",
@@ -205,6 +225,16 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:noise-rgb",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_RGB */ },
 
+  { "filters-noise-reduction", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Noise R_eduction..."), NULL, NULL,
+    "gegl:noise-reduction",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_REDUCTION */ },
+
+  { "filters-noise-simplex", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Simplex Noise..."), NULL, NULL,
+    "gegl:simplex-noise",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_SIMPLEX */ },
+
   { "filters-noise-slur", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Slur..."), NULL, NULL,
     "gegl:noise-slur",
@@ -214,6 +244,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "Sp_read..."), NULL, NULL,
     "gegl:noise-spread",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_SPREAD */ },
+
+  { "filters-panorama-projection", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Panorama Projection..."), NULL, NULL,
+    "gegl:panorama-projection",
+    NULL /* FIXME GIMP_HELP_FILTER_PANORAMA_PROJECTION */ },
 
   { "filters-photocopy", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Photocopy..."), NULL, NULL,
@@ -274,6 +309,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "_Threshold Alpha..."), NULL, NULL,
     "gimp:threshold-alpha",
     NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
+
+  { "filters-tile-glass", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Glass Tile..."), NULL, NULL,
+    "gegl:tile-glass",
+    NULL /* FIXME GIMP_HELP_FILTER_TILE_GLASS */ },
 
   { "filters-tile-seamless", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Tile Seamless..."), NULL, NULL,
@@ -370,6 +410,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-alien-map",               writable);
   SET_SENSITIVE ("filters-antialias",               writable);
   SET_SENSITIVE ("filters-apply-canvas",            writable);
+  SET_SENSITIVE ("filters-apply-lens",              writable);
   SET_SENSITIVE ("filters-bump-map",                writable);
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
   SET_SENSITIVE ("filters-cartoon",                 writable);
@@ -377,6 +418,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-color-reduction",         writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
   SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);
+  SET_SENSITIVE ("filters-convolution-matrix",      writable);
   SET_SENSITIVE ("filters-cubism",                  writable);
   SET_SENSITIVE ("filters-deinterlace",             writable);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
@@ -393,14 +435,19 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-motion-blur-circular",    writable);
   SET_SENSITIVE ("filters-motion-blur-linear",      writable);
   SET_SENSITIVE ("filters-motion-blur-zoom",        writable);
+  SET_SENSITIVE ("filters-noise-cell",              writable);
   SET_SENSITIVE ("filters-noise-cie-lch",           writable);
   SET_SENSITIVE ("filters-noise-hsv",               writable && !gray);
   SET_SENSITIVE ("filters-noise-hurl",              writable);
+  SET_SENSITIVE ("filters-noise-perlin",            writable);
   SET_SENSITIVE ("filters-noise-pick",              writable);
+  SET_SENSITIVE ("filters-noise-reduction",         writable);
   SET_SENSITIVE ("filters-noise-rgb",               writable);
+  SET_SENSITIVE ("filters-noise-simplex",           writable);
   SET_SENSITIVE ("filters-noise-slur",              writable);
   SET_SENSITIVE ("filters-noise-spread",            writable);
   SET_SENSITIVE ("filters-lens-distortion",         writable);
+  SET_SENSITIVE ("filters-panorama-projection",     writable);
   SET_SENSITIVE ("filters-photocopy",               writable);
   SET_SENSITIVE ("filters-pixelize",                writable);
   SET_SENSITIVE ("filters-plasma",                  writable);
@@ -413,6 +460,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-stretch-contrast",        writable);
   SET_SENSITIVE ("filters-stretch-contrast-hsv",    writable);
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
+  SET_SENSITIVE ("filters-tile-glass",              writable);
   SET_SENSITIVE ("filters-tile-seamless",           writable);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);
   SET_SENSITIVE ("filters-vignette",                writable);

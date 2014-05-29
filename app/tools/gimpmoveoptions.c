@@ -180,7 +180,7 @@ gimp_move_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  box = gimp_prop_enum_stock_box_new (config, "move-type", "gimp", 0, 0);
+  box = gimp_prop_enum_icon_box_new (config, "move-type", "gimp", 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 

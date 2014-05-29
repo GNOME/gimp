@@ -33,6 +33,7 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpdisplay.h"
@@ -322,6 +323,7 @@ select_save_cmd_callback (GtkAction *action,
                                              image->gimp,
                                              gimp_dialog_factory_get_singleton (),
                                              gtk_widget_get_screen (widget),
+                                             gimp_widget_get_monitor (widget),
                                              "gimp-channel-list");
 }
 
@@ -387,7 +389,8 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
     options = gimp_stroke_options_new (image->gimp, context, TRUE);
 
   if (! gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
-                          drawable, context, options, FALSE, TRUE, NULL, &error))
+                          drawable, context, options, NULL,
+                          TRUE, NULL, &error))
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,

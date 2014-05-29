@@ -465,23 +465,19 @@ gimp_zoom_model_get_fraction (GimpZoomModel *model,
 }
 
 static GtkWidget *
-zoom_button_new (const gchar *stock_id,
+zoom_button_new (const gchar *icon_name,
                  GtkIconSize  icon_size)
 {
   GtkWidget *button;
+  GtkWidget *image;
 
-  if (icon_size > 0)
-    {
-      GtkWidget *image = gtk_image_new_from_stock (stock_id, icon_size);
+  image = gtk_image_new_from_icon_name (icon_name,
+                                        icon_size > 0 ?
+                                        icon_size : GTK_ICON_SIZE_BUTTON);
 
-      button = gtk_button_new ();
-      gtk_container_add (GTK_CONTAINER (button), image);
-      gtk_widget_show (image);
-    }
-  else
-    {
-      button = gtk_button_new_from_stock (stock_id);
-    }
+  button = gtk_button_new ();
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
 
   return button;
 }
@@ -530,7 +526,7 @@ gimp_zoom_button_new (GimpZoomModel *model,
   switch (zoom_type)
     {
     case GIMP_ZOOM_IN:
-      button = zoom_button_new (GTK_STOCK_ZOOM_IN, icon_size);
+      button = zoom_button_new ("zoom-in", icon_size);
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (gimp_zoom_model_zoom_in),
                                 model);
@@ -540,7 +536,7 @@ gimp_zoom_button_new (GimpZoomModel *model,
       break;
 
     case GIMP_ZOOM_OUT:
-      button = zoom_button_new (GTK_STOCK_ZOOM_OUT, icon_size);
+      button = zoom_button_new ("zoom-out", icon_size);
       g_signal_connect_swapped (button, "clicked",
                                 G_CALLBACK (gimp_zoom_model_zoom_out),
                                 model);

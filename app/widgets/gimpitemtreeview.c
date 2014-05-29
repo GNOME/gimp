@@ -273,11 +273,11 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->duplicate_action        = NULL;
   klass->delete_action           = NULL;
 
-  klass->lock_content_stock_id   = NULL;
+  klass->lock_content_icon_name  = NULL;
   klass->lock_content_tooltip    = NULL;
   klass->lock_content_help_id    = NULL;
 
-  klass->lock_position_stock_id   = NULL;
+  klass->lock_position_icon_name  = NULL;
   klass->lock_position_tooltip    = NULL;
   klass->lock_position_help_id    = NULL;
 
@@ -482,8 +482,8 @@ gimp_item_tree_view_constructed (GObject *object)
                         "button-icon-size", &icon_size,
                         NULL);
 
-  image = gtk_image_new_from_stock (item_view_class->lock_content_stock_id,
-                                    icon_size);
+  image = gtk_image_new_from_icon_name (item_view_class->lock_content_icon_name,
+                                        icon_size);
   gtk_container_add (GTK_CONTAINER (item_view->priv->lock_content_toggle),
                      image);
   gtk_widget_show (image);
@@ -504,8 +504,8 @@ gimp_item_tree_view_constructed (GObject *object)
                            item_view_class->lock_position_tooltip,
                            item_view_class->lock_position_help_id);
 
-  image = gtk_image_new_from_stock (item_view_class->lock_position_stock_id,
-                                    icon_size);
+  image = gtk_image_new_from_icon_name (item_view_class->lock_position_icon_name,
+                                        icon_size);
   gtk_container_add (GTK_CONTAINER (item_view->priv->lock_position_toggle),
                      image);
   gtk_widget_show (image);
@@ -581,13 +581,14 @@ gimp_item_tree_view_style_set (GtkWidget *widget,
               if (GTK_IS_IMAGE (image))
                 {
                   GtkIconSize  old_size;
-                  gchar       *stock_id;
+                  const gchar *icon_name;
 
-                  gtk_image_get_stock (GTK_IMAGE (image), &stock_id, &old_size);
+                  gtk_image_get_icon_name (GTK_IMAGE (image),
+                                           &icon_name, &old_size);
 
                   if (button_icon_size != old_size)
-                    gtk_image_set_from_stock (GTK_IMAGE (image),
-                                              stock_id, button_icon_size);
+                    gtk_image_set_from_icon_name (GTK_IMAGE (image),
+                                                  icon_name, button_icon_size);
                 }
             }
         }

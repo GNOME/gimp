@@ -2199,7 +2199,7 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
                       snprintf(p,STRBUFFSIZE,"#\\x%x",c); break;
                     }
 #endif
-                    snprintf(p,STRBUFFSIZE,"#\\x%c",c); break;
+                    snprintf(p,STRBUFFSIZE,"#\\%c",c); break;
                }
           }
      } else if (is_symbol(l)) {

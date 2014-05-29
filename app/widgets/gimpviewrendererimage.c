@@ -63,7 +63,7 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 {
   GimpViewRendererImage *rendererimage = GIMP_VIEW_RENDERER_IMAGE (renderer);
   GimpImage             *image         = GIMP_IMAGE (renderer->viewable);
-  const gchar           *stock_id;
+  const gchar           *icon_name;
 
   /* The conditions checked here are mostly a hack to hide the fact that
    * we are creating the channel preview from the image preview and turning
@@ -158,17 +158,17 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
 
   switch (rendererimage->channel)
     {
-    case GIMP_RED_CHANNEL:     stock_id = GIMP_STOCK_CHANNEL_RED;     break;
-    case GIMP_GREEN_CHANNEL:   stock_id = GIMP_STOCK_CHANNEL_GREEN;   break;
-    case GIMP_BLUE_CHANNEL:    stock_id = GIMP_STOCK_CHANNEL_BLUE;    break;
-    case GIMP_GRAY_CHANNEL:    stock_id = GIMP_STOCK_CHANNEL_GRAY;    break;
-    case GIMP_INDEXED_CHANNEL: stock_id = GIMP_STOCK_CHANNEL_INDEXED; break;
-    case GIMP_ALPHA_CHANNEL:   stock_id = GIMP_STOCK_CHANNEL_ALPHA;   break;
+    case GIMP_RED_CHANNEL:     icon_name = GIMP_STOCK_CHANNEL_RED;     break;
+    case GIMP_GREEN_CHANNEL:   icon_name = GIMP_STOCK_CHANNEL_GREEN;   break;
+    case GIMP_BLUE_CHANNEL:    icon_name = GIMP_STOCK_CHANNEL_BLUE;    break;
+    case GIMP_GRAY_CHANNEL:    icon_name = GIMP_STOCK_CHANNEL_GRAY;    break;
+    case GIMP_INDEXED_CHANNEL: icon_name = GIMP_STOCK_CHANNEL_INDEXED; break;
+    case GIMP_ALPHA_CHANNEL:   icon_name = GIMP_STOCK_CHANNEL_ALPHA;   break;
 
     default:
-      stock_id = gimp_viewable_get_stock_id (renderer->viewable);
+      icon_name = gimp_viewable_get_icon_name (renderer->viewable);
       break;
     }
 
-  gimp_view_renderer_render_stock (renderer, widget, stock_id);
+  gimp_view_renderer_render_icon (renderer, widget, icon_name);
 }

@@ -135,22 +135,22 @@ static const GimpToggleActionEntry windows_toggle_actions[] =
 
 static const GimpRadioActionEntry windows_tabs_position_actions[] =
 {
-  { "windows-tabs-position-top", GTK_STOCK_GOTO_TOP,
+  { "windows-tabs-position-top", "to-top",
     NC_("windows-tabs-position-action", "_Top"), NULL,
     NC_("windows-tabs-position-action", "Position the tabs on the top"),
     GIMP_POSITION_TOP, GIMP_HELP_WINDOWS_TABS_POSITION },
 
-  { "windows-tabs-position-bottom", GTK_STOCK_GOTO_BOTTOM,
+  { "windows-tabs-position-bottom", "go-bottom",
     NC_("windows-tabs-position-action", "_Bottom"), NULL,
     NC_("windows-tabs-position-action", "Position the tabs on the bottom"),
     GIMP_POSITION_BOTTOM, GIMP_HELP_WINDOWS_TABS_POSITION },
 
-  { "windows-tabs-position-left", GTK_STOCK_GOTO_FIRST,
+  { "windows-tabs-position-left", "go-first",
     NC_("windows-tabs-position-action", "_Left"), NULL,
     NC_("windows-tabs-position-action", "Position the tabs on the left"),
     GIMP_POSITION_LEFT, GIMP_HELP_WINDOWS_TABS_POSITION },
 
-  { "windows-tabs-position-right", GTK_STOCK_GOTO_LAST,
+  { "windows-tabs-position-right", "go-last",
     NC_("windows-tabs-position-action", "_Right"), NULL,
     NC_("windows-tabs-position-action", "Position the tabs on the right"),
     GIMP_POSITION_RIGHT, GIMP_HELP_WINDOWS_TABS_POSITION },
@@ -344,7 +344,7 @@ windows_actions_image_notify (GimpDisplay      *display,
           GimpActionEntry entry;
 
           entry.name        = action_name;
-          entry.stock_id    = GIMP_STOCK_IMAGE;
+          entry.icon_name   = GIMP_STOCK_IMAGE;
           entry.label       = "";
           entry.accelerator = NULL;
           entry.tooltip     = NULL;
@@ -447,7 +447,7 @@ windows_actions_dock_window_added (GimpDialogFactory *factory,
   gchar           *action_name = windows_actions_dock_window_to_action_name (dock_window);
 
   entry.name        = action_name;
-  entry.stock_id    = NULL;
+  entry.icon_name   = NULL;
   entry.label       = "";
   entry.accelerator = NULL;
   entry.tooltip     = NULL;
@@ -535,7 +535,7 @@ windows_actions_recent_add (GimpContainer   *container,
   action_name = g_strdup_printf ("windows-recent-%04d", info_id);
 
   entry.name        = action_name;
-  entry.stock_id    = NULL;
+  entry.icon_name   = NULL;
   entry.label       = gimp_object_get_name (info);
   entry.accelerator = NULL;
   entry.tooltip     = gimp_object_get_name (info);

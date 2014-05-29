@@ -56,7 +56,7 @@ GType              gimp_string_action_get_type (void) G_GNUC_CONST;
 GimpStringAction * gimp_string_action_new      (const gchar      *name,
                                                 const gchar      *label,
                                                 const gchar      *tooltip,
-                                                const gchar      *stock_id,
+                                                const gchar      *icon_name,
                                                 const gchar      *value);
 void               gimp_string_action_selected (GimpStringAction *action,
                                                 const gchar      *value);

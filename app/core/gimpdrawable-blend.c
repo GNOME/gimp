@@ -59,9 +59,7 @@ typedef struct
 #endif
   gdouble           offset;
   gdouble           sx, sy;
-  GimpBlendMode     blend_mode;
   GimpGradientType  gradient_type;
-  GimpRGB           fg, bg;
   gdouble           dist;
   gdouble           vec[2];
   GimpRepeatMode    repeat;
@@ -145,7 +143,7 @@ static void     gradient_fill_region        (GimpImage           *image,
                                              GimpContext         *context,
                                              GeglBuffer          *buffer,
                                              const GeglRectangle *buffer_region,
-                                             GimpBlendMode        blend_mode,
+                                             GimpGradient        *gradient,
                                              GimpGradientType     gradient_type,
                                              gdouble              offset,
                                              GimpRepeatMode       repeat,
@@ -166,7 +164,7 @@ static void     gradient_fill_region        (GimpImage           *image,
 void
 gimp_drawable_blend (GimpDrawable         *drawable,
                      GimpContext          *context,
-                     GimpBlendMode         blend_mode,
+                     GimpGradient         *gradient,
                      GimpLayerModeEffects  paint_mode,
                      GimpGradientType      gradient_type,
                      gdouble               opacity,
@@ -183,13 +181,14 @@ gimp_drawable_blend (GimpDrawable         *drawable,
                      gdouble               endy,
                      GimpProgress         *progress)
 {
-  GimpImage   *image;
-  GeglBuffer  *buffer;
-  gint         x, y, width, height;
+  GimpImage  *image;
+  GeglBuffer *buffer;
+  gint        x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (GIMP_IS_GRADIENT (gradient));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -205,7 +204,7 @@ gimp_drawable_blend (GimpDrawable         *drawable,
 
   gradient_fill_region (image, drawable, context,
                         buffer, GEGL_RECTANGLE (0, 0, width, height),
-                        blend_mode, gradient_type, offset, repeat, reverse,
+                        gradient, gradient_type, offset, repeat, reverse,
                         supersample, max_depth, threshold, dither,
                         (startx - x), (starty - y),
                         (endx - x), (endy - y),
@@ -540,8 +539,6 @@ gradient_precalc_shapeburst (GimpImage           *image,
   GeglBuffer  *dist_buffer;
   GeglBuffer  *temp_buffer;
   GeglNode    *shapeburst;
-  gdouble      max;
-  gfloat       max_iteration;
 
   gimp_progress_set_text (progress, _("Calculating distance map"));
 
@@ -551,12 +548,10 @@ gradient_precalc_shapeburst (GimpImage           *image,
                                  babl_format ("Y float"));
 
   /*  allocate the selection mask copy
-   *  XXX: its format should be the same of gimp:shapeburst input buffer
-   *       porting the op to 'float' should be reflected here as well
    */
   temp_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                  region->width, region->height),
-                                 babl_format ("Y u8"));
+                                 babl_format ("Y float"));
 
   mask = gimp_image_get_mask (image);
 
@@ -582,7 +577,7 @@ gradient_precalc_shapeburst (GimpImage           *image,
         {
           const Babl *component_format;
 
-          component_format = babl_format ("A u8");
+          component_format = babl_format ("A float");
 
           /*  extract the aplha into the temp mask  */
           gegl_buffer_set_format (temp_buffer, component_format);
@@ -605,6 +600,7 @@ gradient_precalc_shapeburst (GimpImage           *image,
 
   shapeburst = gegl_node_new_child (NULL,
                                     "operation", "gimp:shapeburst",
+                                    "normalize", TRUE,
                                     NULL);
 
   gimp_gegl_progress_connect (shapeburst, progress, NULL);
@@ -613,31 +609,9 @@ gradient_precalc_shapeburst (GimpImage           *image,
                              shapeburst,
                              dist_buffer, NULL);
 
-  gegl_node_get (shapeburst, "max-iterations", &max, NULL);
-
   g_object_unref (shapeburst);
 
-  max_iteration = max;
-
   g_object_unref (temp_buffer);
-
-  /*  normalize the shapeburst with the max iteration  */
-  if (max_iteration > 0)
-    {
-      GeglBufferIterator *iter;
-
-      iter = gegl_buffer_iterator_new (dist_buffer, NULL, 0, NULL,
-                                       GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
-
-      while (gegl_buffer_iterator_next (iter))
-        {
-          gint    count = iter->length;
-          gfloat *data  = iter->data[0];
-
-          while (count--)
-            *data++ /= max_iteration;
-        }
-    }
 
   return dist_buffer;
 }
@@ -724,6 +698,8 @@ gradient_render_pixel (gdouble   x,
 
   switch (rbd->repeat)
     {
+    case GIMP_REPEAT_TRUNCATE:
+      break;
     case GIMP_REPEAT_NONE:
       factor = CLAMP (factor, 0.0, 1.0);
       break;
@@ -750,7 +726,12 @@ gradient_render_pixel (gdouble   x,
 
   /* Blend the colors */
 
-  if (rbd->blend_mode == GIMP_CUSTOM_MODE)
+  if (factor < 0.0 || factor > 1.0)
+    {
+      color->r = color->g = color->b = 0;
+      color->a = GIMP_OPACITY_TRANSPARENT;
+    }
+  else
     {
 #ifdef USE_GRADIENT_CACHE
       *color = rbd->gradient_cache[(gint) (factor * (rbd->gradient_cache_size - 1))];
@@ -758,25 +739,6 @@ gradient_render_pixel (gdouble   x,
       gimp_gradient_get_color_at (rbd->gradient, rbd->context, NULL,
                                   factor, rbd->reverse, color);
 #endif
-    }
-  else
-    {
-      /* Blend values */
-
-      if (rbd->reverse)
-        factor = 1.0 - factor;
-
-      color->r = rbd->fg.r + (rbd->bg.r - rbd->fg.r) * factor;
-      color->g = rbd->fg.g + (rbd->bg.g - rbd->fg.g) * factor;
-      color->b = rbd->fg.b + (rbd->bg.b - rbd->fg.b) * factor;
-      color->a = rbd->fg.a + (rbd->bg.a - rbd->fg.a) * factor;
-
-      if (rbd->blend_mode == GIMP_FG_BG_HSV_MODE)
-        {
-          GimpHSV hsv = *((GimpHSV *) color);
-
-          gimp_hsv_to_rgb (&hsv, color);
-        }
     }
 }
 
@@ -820,7 +782,7 @@ gradient_fill_region (GimpImage           *image,
                       GimpContext         *context,
                       GeglBuffer          *buffer,
                       const GeglRectangle *buffer_region,
-                      GimpBlendMode        blend_mode,
+                      GimpGradient        *gradient,
                       GimpGradientType     gradient_type,
                       gdouble              offset,
                       GimpRepeatMode       repeat,
@@ -839,7 +801,7 @@ gradient_fill_region (GimpImage           *image,
 
   GIMP_TIMER_START();
 
-  rbd.gradient = gimp_context_get_gradient (context);
+  rbd.gradient = gradient;
   rbd.context  = context;
   rbd.reverse  = reverse;
 
@@ -865,43 +827,6 @@ gradient_fill_region (GimpImage           *image,
     rbd.gradient = gimp_gradient_flatten (rbd.gradient, context);
   else
     rbd.gradient = g_object_ref (rbd.gradient);
-
-  gimp_context_get_foreground (context, &rbd.fg);
-  gimp_context_get_background (context, &rbd.bg);
-
-  switch (blend_mode)
-    {
-    case GIMP_FG_BG_RGB_MODE:
-      break;
-
-    case GIMP_FG_BG_HSV_MODE:
-      /* Convert to HSV */
-      {
-        GimpHSV fg_hsv;
-        GimpHSV bg_hsv;
-
-        gimp_rgb_to_hsv (&rbd.fg, &fg_hsv);
-        gimp_rgb_to_hsv (&rbd.bg, &bg_hsv);
-
-        memcpy (&rbd.fg, &fg_hsv, sizeof (GimpRGB));
-        memcpy (&rbd.bg, &bg_hsv, sizeof (GimpRGB));
-      }
-      break;
-
-    case GIMP_FG_TRANSPARENT_MODE:
-      /* Color does not change, just the opacity */
-
-      rbd.bg   = rbd.fg;
-      rbd.bg.a = GIMP_OPACITY_TRANSPARENT;
-      break;
-
-    case GIMP_CUSTOM_MODE:
-      break;
-
-    default:
-      g_assert_not_reached ();
-      break;
-    }
 
   /* Calculate type-specific parameters */
 
@@ -951,7 +876,6 @@ gradient_fill_region (GimpImage           *image,
   rbd.offset        = offset;
   rbd.sx            = sx;
   rbd.sy            = sy;
-  rbd.blend_mode    = blend_mode;
   rbd.gradient_type = gradient_type;
   rbd.repeat        = repeat;
 

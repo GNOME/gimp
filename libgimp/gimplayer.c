@@ -150,15 +150,15 @@ gimp_layer_new_from_pixbuf (gint32                image_ID,
 
   if (gimp_plugin_precision_enabled ())
     {
-      GeglBuffer *src_buffer;
       GeglBuffer *dest_buffer;
 
-      src_buffer = gimp_pixbuf_create_buffer (pixbuf);
       dest_buffer = gimp_drawable_get_buffer (layer);
 
-      gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
+      gegl_buffer_set (dest_buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                       gimp_pixbuf_get_format (pixbuf),
+                       gdk_pixbuf_get_pixels (pixbuf),
+                       gdk_pixbuf_get_rowstride (pixbuf));
 
-      g_object_unref (src_buffer);
       g_object_unref (dest_buffer);
     }
   else

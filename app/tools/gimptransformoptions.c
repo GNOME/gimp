@@ -107,41 +107,42 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DIRECTION,
                                  "direction",
-                                 N_("Direction of transformation"),
+                                 _("Direction of transformation"),
                                  GIMP_TYPE_TRANSFORM_DIRECTION,
                                  GIMP_TRANSFORM_FORWARD,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_INTERPOLATION,
                                  "interpolation",
-                                 N_("Interpolation method"),
+                                 _("Interpolation method"),
                                  GIMP_TYPE_INTERPOLATION_TYPE,
                                  GIMP_INTERPOLATION_LINEAR,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CLIP,
                                  "clip",
-                                 N_("How to clip"),
+                                 _("How to clip"),
                                  GIMP_TYPE_TRANSFORM_RESIZE,
                                  GIMP_TRANSFORM_RESIZE_ADJUST,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_PREVIEW,
                                     "show-preview",
-                                    N_("Show a preview of the transformed image"),
+                                    _("Show a preview of the transformed image"),
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_PREVIEW_OPACITY,
                                    "preview-opacity",
-                                   N_("Opacity of the preview image"),
+                                   _("Opacity of the preview image"),
                                    0.0, 1.0, 1.0,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRID_TYPE,
                                  "grid-type",
-                                 N_("Composition guides such as rule of thirds"),
+                                 _("Composition guides such as rule of thirds"),
                                  GIMP_TYPE_GUIDES_TYPE,
                                  GIMP_GUIDES_N_LINES,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_GRID_SIZE,
                                 "grid-size",
-                                N_("Size of a grid cell for variable number of composition guides"),
+                                _("Size of a grid cell for variable number "
+                                  "of composition guides"),
                                 1, 128, 15,
                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONSTRAIN_MOVE,
@@ -388,7 +389,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  box = gimp_prop_enum_stock_box_new (config, "type", "gimp", 0, 0);
+  box = gimp_prop_enum_icon_box_new (config, "type", "gimp", 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
@@ -415,7 +416,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   scale = gimp_prop_spin_scale_new (config, "preview-opacity",
                                     _("Image opacity"),
                                     0.01, 0.1, 0);
-  gimp_prop_widget_set_factor (scale, 100.0, 1);
+  gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   frame = gimp_prop_expanding_frame_new (config, "show-preview",
                                          _("Show image preview"),
                                          scale, NULL);

@@ -176,6 +176,9 @@ gimp_layer_new_from_drawable (gint32 drawable_ID,
  * mode and opacity should be set with explicit procedure calls. Add
  * the new layer group (which is a kind of layer) with the
  * gimp_image_insert_layer() command.
+ * Other procedures useful with layer groups:
+ * gimp_image_reorder_item(), gimp_item_get_parent(),
+ * gimp_item_get_children(), gimp_item_is_group().
  *
  * Returns: The newly created layer group.
  *

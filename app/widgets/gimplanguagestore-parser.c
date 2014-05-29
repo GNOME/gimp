@@ -92,7 +92,7 @@ void
 gimp_language_store_parser_init (void)
 {
   GHashTable     *base_lang_list;
-  gchar          *current_env    = g_strdup (g_getenv ("LANGUAGE"));
+  gchar          *current_env;
   GDir           *locales_dir;
   GHashTableIter  lang_iter;
   gpointer        key;
@@ -102,6 +102,8 @@ gimp_language_store_parser_init (void)
       g_warning ("gimp_language_store_parser_init() must be run only once.");
       return;
     }
+
+  current_env = g_strdup (g_getenv ("LANGUAGE"));
 
   l10n_lang_list = g_hash_table_new_full (g_str_hash, g_str_equal,
                                           (GDestroyNotify) g_free,

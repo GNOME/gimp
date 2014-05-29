@@ -90,6 +90,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
+      tool_type == GIMP_TYPE_HEAL_TOOL       ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
       gtk_widget_set_sensitive (menu, FALSE);
@@ -99,7 +100,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   scale = gimp_prop_spin_scale_new (config, "opacity",
                                     _("Opacity"),
                                     0.01, 0.1, 0);
-  gimp_prop_widget_set_factor (scale, 100.0, 1);
+  gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
@@ -140,10 +141,10 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
       gtk_widget_show (scale);
 
-      button = gimp_stock_button_new (GIMP_STOCK_RESET, NULL);
+      button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
       gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-      gtk_image_set_from_stock (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
+      gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
+                                    GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
@@ -164,10 +165,10 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
       gtk_widget_show (scale);
 
-      button = gimp_stock_button_new (GIMP_STOCK_RESET, NULL);
+      button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
       gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-      gtk_image_set_from_stock (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
+      gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
+                                    GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
@@ -188,10 +189,10 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
       gtk_widget_show (scale);
 
-      button = gimp_stock_button_new (GIMP_STOCK_RESET, NULL);
+      button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
       gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-      gtk_image_set_from_stock (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
+      gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
+                                    GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 

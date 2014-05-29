@@ -72,8 +72,8 @@ static const GimpActionEntry file_actions[] =
   { "file-create-menu",      NULL, NC_("file-action", "Crea_te")      },
   { "file-open-recent-menu", NULL, NC_("file-action", "Open _Recent") },
 
-  { "file-open", GTK_STOCK_OPEN,
-    NC_("file-action", "_Open..."), NULL,
+  { "file-open", "document-open",
+    NC_("file-action", "_Open..."), "<primary>O",
     NC_("file-action", "Open an image file"),
     G_CALLBACK (file_open_cmd_callback),
     GIMP_HELP_FILE_OPEN },
@@ -96,19 +96,19 @@ static const GimpActionEntry file_actions[] =
     G_CALLBACK (file_create_template_cmd_callback),
     GIMP_HELP_FILE_CREATE_TEMPLATE },
 
-  { "file-revert", GTK_STOCK_REVERT_TO_SAVED,
+  { "file-revert", "document-revert",
     NC_("file-action", "Re_vert"), NULL,
     NC_("file-action", "Reload the image file from disk"),
     G_CALLBACK (file_revert_cmd_callback),
     GIMP_HELP_FILE_REVERT },
 
-  { "file-close-all", GTK_STOCK_CLOSE,
+  { "file-close-all", "window-close",
     NC_("file-action", "Close all"), "<primary><shift>W",
     NC_("file-action", "Close all opened images"),
     G_CALLBACK (file_close_all_cmd_callback),
     GIMP_HELP_FILE_CLOSE_ALL },
 
-  { "file-quit", GTK_STOCK_QUIT,
+  { "file-quit", "application-exit",
     NC_("file-action", "_Quit"), "<primary>Q",
     NC_("file-action", "Quit the GNU Image Manipulation Program"),
     G_CALLBACK (file_quit_cmd_callback),
@@ -117,13 +117,13 @@ static const GimpActionEntry file_actions[] =
 
 static const GimpEnumActionEntry file_save_actions[] =
 {
-  { "file-save", GTK_STOCK_SAVE,
+  { "file-save", "document-save",
     NC_("file-action", "_Save"), "<primary>S",
     NC_("file-action", "Save this image"),
     GIMP_SAVE_MODE_SAVE, FALSE,
     GIMP_HELP_FILE_SAVE },
 
-  { "file-save-as", GTK_STOCK_SAVE_AS,
+  { "file-save-as", "document-save-as",
     NC_("file-action", "Save _As..."), "<primary><shift>S",
     NC_("file-action", "Save this image with a different name"),
     GIMP_SAVE_MODE_SAVE_AS, FALSE,
@@ -132,7 +132,8 @@ static const GimpEnumActionEntry file_save_actions[] =
   { "file-save-a-copy", NULL,
     NC_("file-action", "Save a Cop_y..."), NULL,
     NC_("file-action",
-        "Save a copy of this image, without affecting the source file (if any) or the current state of the image"),
+        "Save a copy of this image, without affecting the source file "
+        "(if any) or the current state of the image"),
     GIMP_SAVE_MODE_SAVE_A_COPY, FALSE,
     GIMP_HELP_FILE_SAVE_A_COPY },
 
@@ -185,7 +186,7 @@ file_actions_setup (GimpActionGroup *group)
     {
       entries[i].name           = g_strdup_printf ("file-open-recent-%02d",
                                                    i + 1);
-      entries[i].stock_id       = GTK_STOCK_OPEN;
+      entries[i].icon_name      = "document-open";
       entries[i].label          = entries[i].name;
       entries[i].tooltip        = NULL;
       entries[i].value          = i;
@@ -194,9 +195,9 @@ file_actions_setup (GimpActionGroup *group)
       if (i < 9)
         entries[i].accelerator = g_strdup_printf ("<primary>%d", i + 1);
       else if (i == 9)
-        entries[i].accelerator = "<primary>0";
+        entries[i].accelerator = g_strdup ("<primary>0");
       else
-        entries[i].accelerator = "";
+        entries[i].accelerator = NULL;
     }
 
   gimp_action_group_add_enum_actions (group, NULL, entries, n_entries,
@@ -217,7 +218,7 @@ file_actions_setup (GimpActionGroup *group)
                     NULL);
 
       g_free ((gchar *) entries[i].name);
-      if (i < 9)
+      if (entries[i].accelerator)
         g_free ((gchar *) entries[i].accelerator);
     }
 

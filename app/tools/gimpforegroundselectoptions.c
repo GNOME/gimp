@@ -81,47 +81,47 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DRAW_MODE,
                                  "draw-mode",
-                                 N_("Paint over areas to mark color values for "
-                                 "inclusion or exclusion from selection"),
+                                 _("Paint over areas to mark color values for "
+                                   "inclusion or exclusion from selection"),
                                  GIMP_TYPE_MATTING_DRAW_MODE,
-                                 GIMP_MATTING_DRAW_MODE_UNKNOWN,
+                                 GIMP_MATTING_DRAW_MODE_FOREGROUND,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_STROKE_WIDTH,
                                  "stroke-width",
-                                 N_("Size of the brush used for refinements"),
+                                 _("Size of the brush used for refinements"),
                                  1, 6000, 10,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_MASK_COLOR,
                                  "mask-color",
-                                 N_("Color of selection preview mask"),
+                                 _("Color of selection preview mask"),
                                  GIMP_TYPE_CHANNEL_TYPE,
                                  GIMP_BLUE_CHANNEL,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ENGINE,
                                  "engine",
-                                 N_("Matting engine to use"),
+                                 _("Matting engine to use"),
                                  GIMP_TYPE_MATTING_ENGINE,
                                  GIMP_MATTING_ENGINE_GLOBAL,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_LEVELS,
                                  "levels",
-                                 N_("Parameter for matting-levin"),
+                                 _("Parameter for matting-levin"),
                                  1, 10, 2,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_ACTIVE_LEVELS,
                                  "active-levels",
-                                 N_("Parameter for matting-levin"),
+                                 _("Parameter for matting-levin"),
                                  1, 10, 2,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_ITERATIONS,
                                  "iterations",
-                                 N_("Parameter for matting-global"),
+                                 _("Parameter for matting-global"),
                                  1, 10, 2,
                                  GIMP_PARAM_STATIC_STRINGS);
 }
@@ -279,10 +279,10 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_widget_show (scale);
 
-  button = gimp_stock_button_new (GIMP_STOCK_RESET, NULL);
+  button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_image_set_from_stock (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                            GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
+  gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
+                                GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

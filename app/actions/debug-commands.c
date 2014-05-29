@@ -37,13 +37,13 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplayshell.h"
-#include "display/gimpimagewindow.h"
-
 #include "widgets/gimpaction.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpuimanager.h"
+
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpimagewindow.h"
 
 #include "menus/menus.h"
 
@@ -314,7 +314,7 @@ debug_show_image_graph (GimpImage *source_image)
                                       1.0,
                                       GIMP_NORMAL_MODE);
   gimp_image_add_layer (new_image, layer, NULL, 0, FALSE);
-  gimp_create_display (gimp, new_image, GIMP_UNIT_PIXEL, 1.0);
+  gimp_create_display (gimp, new_image, GIMP_UNIT_PIXEL, 1.0, NULL, 0);
 
   /* Cleanup */
   g_object_unref (new_image);

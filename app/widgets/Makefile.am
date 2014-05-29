@@ -8,6 +8,7 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)						\
 	-I$(top_builddir)/app					\
 	-I$(top_srcdir)/app					\
+	$(LCMS_CFLAGS)						\
 	$(GEGL_CFLAGS)						\
 	$(GTK_CFLAGS)						\
 	-I$(includedir)
@@ -19,6 +20,8 @@ libappwidgets_a_sources = \
 	widgets-types.h			\
 	gimpaction.c			\
 	gimpaction.h			\
+	gimpaction-history.c		\
+	gimpaction-history.h		\
 	gimpactioneditor.c		\
 	gimpactioneditor.h		\
 	gimpactionfactory.c		\
@@ -43,6 +46,8 @@ libappwidgets_a_sources = \
 	gimpcellrendererdashes.h	\
 	gimpcellrendererviewable.c	\
 	gimpcellrendererviewable.h	\
+	gimpcircle.c			\
+	gimpcircle.h			\
 	gimpchanneltreeview.c		\
 	gimpchanneltreeview.h		\
 	gimpclipboard.c			\
@@ -130,6 +135,8 @@ libappwidgets_a_sources = \
 	gimpdevices.h			\
 	gimpdevicestatus.c		\
 	gimpdevicestatus.h		\
+	gimpdial.c			\
+	gimpdial.h			\
 	gimpdialogfactory.c		\
 	gimpdialogfactory.h		\
 	gimpdnd.c			\
@@ -265,14 +272,14 @@ libappwidgets_a_sources = \
 	gimppluginaction.h		\
 	gimpprefsbox.c			\
 	gimpprefsbox.h			\
-	gimpprofilechooserdialog.c	\
-	gimpprofilechooserdialog.h	\
 	gimpprogressbox.c		\
 	gimpprogressbox.h		\
 	gimpprogressdialog.c		\
 	gimpprogressdialog.h		\
-	gimpproptable.c			\
-	gimpproptable.h			\
+	gimppropgui.c			\
+	gimppropgui.h			\
+	gimppropgui-constructors.c	\
+	gimppropgui-constructors.h	\
 	gimppropwidgets.c		\
 	gimppropwidgets.h		\
 	gimpradioaction.c		\

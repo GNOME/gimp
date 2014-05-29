@@ -265,7 +265,9 @@ gimp_dbus_service_open_idle (GimpDBusService *service)
 
   if (data)
     {
-      file_open_from_command_line (service->gimp, data->uri, data->as_new);
+      file_open_from_command_line (service->gimp, data->uri, data->as_new,
+                                   NULL, /* FIXME monitor */
+                                   0 /* FIXME monitor */);
 
       gimp_dbus_service_open_data_free (data);
 

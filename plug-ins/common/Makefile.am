@@ -49,7 +49,6 @@ libexec_PROGRAMS = \
 	animation-play \
 	blinds \
 	blur \
-	blur-gauss \
 	blur-gauss-selective \
 	border-average \
 	bump-map \
@@ -68,7 +67,6 @@ libexec_PROGRAMS = \
 	crop-zealous \
 	curve-bend \
 	decompose \
-	deinterlace \
 	depth-merge \
 	despeckle \
 	destripe \
@@ -103,7 +101,7 @@ libexec_PROGRAMS = \
 	file-png \
 	file-pnm \
 	$(FILE_PS) \
-	$(FILE_PSP) \
+	file-psp \
 	file-raw-data \
 	file-sunras \
 	$(FILE_SVG) \
@@ -127,14 +125,12 @@ libexec_PROGRAMS = \
 	iwarp \
 	jigsaw \
 	lcms \
-	lens-apply \
 	lens-flare \
 	$(MAIL) \
 	max-rgb \
 	metadata \
 	newsprint \
 	nl-filter \
-	noise-rgb \
 	noise-solid \
 	nova \
 	oilify \
@@ -143,7 +139,6 @@ libexec_PROGRAMS = \
 	procedure-browser \
 	qbist \
 	ripple \
-	rotate \
 	sample-colorize \
 	$(SCREENSHOT) \
 	sharpen \
@@ -153,7 +148,6 @@ libexec_PROGRAMS = \
 	sparkle \
 	sphere-designer \
 	tile \
-	tile-glass \
 	tile-paper \
 	tile-small \
 	unit-editor \
@@ -173,7 +167,6 @@ EXTRA_PROGRAMS = \
 	file-pdf-load \
 	file-pdf-save \
 	file-ps \
-	file-psp \
 	file-svg \
 	file-tiff-load \
 	file-tiff-save \
@@ -277,23 +270,6 @@ blur_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(blur_RC)
-
-blur_gauss_SOURCES = \
-	blur-gauss.c
-
-blur_gauss_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(blur_gauss_RC)
 
 blur_gauss_selective_CFLAGS = $(MMX_EXTRA_CFLAGS)
 
@@ -602,23 +578,6 @@ decompose_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(decompose_RC)
-
-deinterlace_SOURCES = \
-	deinterlace.c
-
-deinterlace_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(deinterlace_RC)
 
 depth_merge_SOURCES = \
 	depth-merge.c
@@ -1659,23 +1618,6 @@ lcms_LDADD = \
 	$(INTLLIBS)		\
 	$(lcms_RC)
 
-lens_apply_SOURCES = \
-	lens-apply.c
-
-lens_apply_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(lens_apply_RC)
-
 lens_flare_SOURCES = \
 	lens-flare.c
 
@@ -1780,23 +1722,6 @@ nl_filter_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(nl_filter_RC)
-
-noise_rgb_SOURCES = \
-	noise-rgb.c
-
-noise_rgb_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(noise_rgb_RC)
 
 noise_solid_SOURCES = \
 	noise-solid.c
@@ -1933,21 +1858,6 @@ ripple_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(ripple_RC)
-
-rotate_SOURCES = \
-	rotate.c
-
-rotate_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(CAIRO_LIBS)		\
-	$(GDK_PIXBUF_LIBS)	\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(rotate_RC)
 
 sample_colorize_SOURCES = \
 	sample-colorize.c
@@ -2105,23 +2015,6 @@ tile_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(tile_RC)
-
-tile_glass_SOURCES = \
-	tile-glass.c
-
-tile_glass_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(tile_glass_RC)
 
 tile_paper_SOURCES = \
 	tile-paper.c

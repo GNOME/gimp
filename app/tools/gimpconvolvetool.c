@@ -99,7 +99,7 @@ gimp_convolve_tool_init (GimpConvolveTool *convolve)
   gimp_tool_control_set_toggle_cursor_modifier (tool->control,
                                                 GIMP_CURSOR_MODIFIER_MINUS);
 
-  gimp_convolve_tool_status_update (tool, GIMP_BLUR_CONVOLVE);
+  gimp_convolve_tool_status_update (tool, GIMP_CONVOLVE_BLUR);
 }
 
 static void
@@ -130,15 +130,12 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
 
       switch (options->type)
         {
-        case GIMP_BLUR_CONVOLVE:
-          g_object_set (options, "type", GIMP_SHARPEN_CONVOLVE, NULL);
+        case GIMP_CONVOLVE_BLUR:
+          g_object_set (options, "type", GIMP_CONVOLVE_SHARPEN, NULL);
           break;
 
-        case GIMP_SHARPEN_CONVOLVE:
-          g_object_set (options, "type", GIMP_BLUR_CONVOLVE, NULL);
-          break;
-
-        default:
+        case GIMP_CONVOLVE_SHARPEN:
+          g_object_set (options, "type", GIMP_CONVOLVE_BLUR, NULL);
           break;
         }
     }
@@ -153,7 +150,7 @@ gimp_convolve_tool_cursor_update (GimpTool         *tool,
   GimpConvolveOptions *options = GIMP_CONVOLVE_TOOL_GET_OPTIONS (tool);
 
   gimp_tool_control_set_toggled (tool->control,
-                                 (options->type == GIMP_SHARPEN_CONVOLVE));
+                                 options->type == GIMP_CONVOLVE_SHARPEN);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
@@ -181,13 +178,13 @@ gimp_convolve_tool_status_update (GimpTool         *tool,
 
   switch (type)
     {
-    case GIMP_BLUR_CONVOLVE:
+    case GIMP_CONVOLVE_BLUR:
       paint_tool->status      = _("Click to blur");
       paint_tool->status_line = _("Click to blur the line");
       paint_tool->status_ctrl = _("%s to sharpen");
       break;
 
-    case GIMP_SHARPEN_CONVOLVE:
+    case GIMP_CONVOLVE_SHARPEN:
       paint_tool->status      = _("Click to sharpen");
       paint_tool->status_line = _("Click to sharpen the line");
       paint_tool->status_ctrl = _("%s to blur");

@@ -338,6 +338,8 @@
         <menuitem action="image-convert-half-gamma" />
         <menuitem action="image-convert-float-linear" />
         <menuitem action="image-convert-float-gamma" />
+        <menuitem action="image-convert-double-linear" />
+        <menuitem action="image-convert-double-gamma" />
         <separator />
       </menu>
       <menu action="image-transform-menu" name="Transform">
@@ -640,10 +642,12 @@
       <menu action="plug-in-enhance-menu" name="Enhance">
         <menuitem action="filters-antialias" />
         <menuitem action="filters-deinterlace" />
+        <menuitem action="filters-noise-reduction" />
         <menuitem action="filters-red-eye-removal" />
         <menuitem action="filters-unsharp-mask" />
       </menu>
       <menu action="plug-in-distorts-menu" name="Distorts">
+      	<menuitem action="filters-apply-lens" />
       	<menuitem action="filters-emboss" />
         <menuitem action="filters-lens-distortion" />
         <menuitem action="filters-mosaic" />
@@ -678,12 +682,15 @@
         <menuitem action="filters-edge-laplace" />
         <menuitem action="filters-edge-sobel" />
       </menu>
-      <menu action="plug-in-generic-menu" name="Generic" />
+      <menu action="plug-in-generic-menu" name="Generic">
+        <menuitem action="filters-convolution-matrix" />
+      </menu>
       <menu action="plug-in-combine-menu" name="Combine" />
       <menu action="plug-in-artistic-menu" name="Artistic">
 	<menuitem action="filters-apply-canvas" />
 	<menuitem action="filters-cartoon" />
 	<menuitem action="filters-cubism" />
+	<menuitem action="filters-tile-glass" />
 	<menuitem action="filters-photocopy" />
 	<menuitem action="filters-softglow" />
       </menu>
@@ -691,13 +698,18 @@
       <menu action="plug-in-map-menu" name="Map">
         <menuitem action="filters-bump-map" />
         <menuitem action="filters-fractal-trace" />
+        <menuitem action="filters-panorama-projection" />
         <menuitem action="filters-tile-seamless" />
       </menu>
       <menu action="plug-in-render-menu" name="Render">
-        <menu action="plug-in-render-clouds-menu" name="Clouds">
-	  <menuitem action="filters-plasma" />
-	</menu>
+        <menu action="plug-in-render-clouds-menu" name="Clouds" />
         <menu action="plug-in-render-nature-menu" name="Nature" />
+        <menu action="plug-in-render-noise-menu" name="Noise">
+	  <menuitem action="filters-noise-cell" />
+	  <menuitem action="filters-noise-perlin" />
+	  <menuitem action="filters-plasma" />
+	  <menuitem action="filters-noise-simplex" />
+	</menu>
         <menu action="plug-in-render-pattern-menu" name="Pattern">
 	  <menuitem action="filters-checkerboard" />
 	  <menuitem action="filters-grid" />
@@ -749,6 +761,8 @@
       <menuitem action="help-context-help" />
       <menuitem action="dialogs-tips" />
       <menuitem action="dialogs-about" />
+      <separator />
+      <menuitem action="help-action-search" />
       <separator />
       <placeholder name="Programming" />
       <separator />

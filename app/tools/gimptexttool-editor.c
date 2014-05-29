@@ -44,6 +44,7 @@
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimptextproxy.h"
 #include "widgets/gimptextstyleeditor.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -1205,7 +1206,13 @@ gimp_text_tool_editor_dialog (GimpTextTool *text_tool)
 
   gimp_dialog_factory_add_foreign (dialog_factory,
                                    "gimp-text-tool-dialog",
-                                   text_tool->editor_dialog);
+                                   text_tool->editor_dialog,
+                                   parent ?
+                                   gtk_widget_get_screen (GTK_WIDGET (parent)) :
+                                   gdk_screen_get_default (), /* FIXME monitor */
+                                   parent ?
+                                   gimp_widget_get_monitor (GTK_WIDGET (parent)) :
+                                   0 /* FIXME monitor */);
 
   g_signal_connect (text_tool->editor_dialog, "destroy",
                     G_CALLBACK (gimp_text_tool_editor_destroy),

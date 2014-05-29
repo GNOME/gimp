@@ -124,8 +124,8 @@ gimp_browser_init (GimpBrowser *browser)
                     G_CALLBACK (gimp_browser_entry_changed),
                     browser);
 
-  gtk_entry_set_icon_from_stock (GTK_ENTRY (browser->search_entry),
-                                 GTK_ENTRY_ICON_SECONDARY, GTK_STOCK_CLEAR);
+  gtk_entry_set_icon_from_icon_name (GTK_ENTRY (browser->search_entry),
+                                     GTK_ENTRY_ICON_SECONDARY, "edit-clear");
   gtk_entry_set_icon_activatable (GTK_ENTRY (browser->search_entry),
                                   GTK_ENTRY_ICON_SECONDARY, TRUE);
   gtk_entry_set_icon_sensitive (GTK_ENTRY (browser->search_entry),

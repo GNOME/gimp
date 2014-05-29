@@ -197,39 +197,39 @@ gimp_group_layer_class_init (GimpGroupLayerClass *klass)
   GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
   GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
 
-  object_class->set_property       = gimp_group_layer_set_property;
-  object_class->get_property       = gimp_group_layer_get_property;
-  object_class->finalize           = gimp_group_layer_finalize;
+  object_class->set_property        = gimp_group_layer_set_property;
+  object_class->get_property        = gimp_group_layer_get_property;
+  object_class->finalize            = gimp_group_layer_finalize;
 
-  gimp_object_class->get_memsize   = gimp_group_layer_get_memsize;
+  gimp_object_class->get_memsize    = gimp_group_layer_get_memsize;
 
-  viewable_class->default_stock_id = "gtk-directory";
-  viewable_class->get_size         = gimp_group_layer_get_size;
-  viewable_class->get_children     = gimp_group_layer_get_children;
-  viewable_class->set_expanded     = gimp_group_layer_set_expanded;
-  viewable_class->get_expanded     = gimp_group_layer_get_expanded;
+  viewable_class->default_icon_name = "gtk-directory";
+  viewable_class->get_size          = gimp_group_layer_get_size;
+  viewable_class->get_children      = gimp_group_layer_get_children;
+  viewable_class->set_expanded      = gimp_group_layer_set_expanded;
+  viewable_class->get_expanded      = gimp_group_layer_get_expanded;
 
-  item_class->is_position_locked   = gimp_group_layer_is_position_locked;
-  item_class->duplicate            = gimp_group_layer_duplicate;
-  item_class->convert              = gimp_group_layer_convert;
-  item_class->translate            = gimp_group_layer_translate;
-  item_class->scale                = gimp_group_layer_scale;
-  item_class->resize               = gimp_group_layer_resize;
-  item_class->flip                 = gimp_group_layer_flip;
-  item_class->rotate               = gimp_group_layer_rotate;
-  item_class->transform            = gimp_group_layer_transform;
+  item_class->is_position_locked    = gimp_group_layer_is_position_locked;
+  item_class->duplicate             = gimp_group_layer_duplicate;
+  item_class->convert               = gimp_group_layer_convert;
+  item_class->translate             = gimp_group_layer_translate;
+  item_class->scale                 = gimp_group_layer_scale;
+  item_class->resize                = gimp_group_layer_resize;
+  item_class->flip                  = gimp_group_layer_flip;
+  item_class->rotate                = gimp_group_layer_rotate;
+  item_class->transform             = gimp_group_layer_transform;
 
-  item_class->default_name         = _("Layer Group");
-  item_class->rename_desc          = C_("undo-type", "Rename Layer Group");
-  item_class->translate_desc       = C_("undo-type", "Move Layer Group");
-  item_class->scale_desc           = C_("undo-type", "Scale Layer Group");
-  item_class->resize_desc          = C_("undo-type", "Resize Layer Group");
-  item_class->flip_desc            = C_("undo-type", "Flip Layer Group");
-  item_class->rotate_desc          = C_("undo-type", "Rotate Layer Group");
-  item_class->transform_desc       = C_("undo-type", "Transform Layer Group");
+  item_class->default_name          = _("Layer Group");
+  item_class->rename_desc           = C_("undo-type", "Rename Layer Group");
+  item_class->translate_desc        = C_("undo-type", "Move Layer Group");
+  item_class->scale_desc            = C_("undo-type", "Scale Layer Group");
+  item_class->resize_desc           = C_("undo-type", "Resize Layer Group");
+  item_class->flip_desc             = C_("undo-type", "Flip Layer Group");
+  item_class->rotate_desc           = C_("undo-type", "Rotate Layer Group");
+  item_class->transform_desc        = C_("undo-type", "Transform Layer Group");
 
-  drawable_class->estimate_memsize = gimp_group_layer_estimate_memsize;
-  drawable_class->convert_type     = gimp_group_layer_convert_type;
+  drawable_class->estimate_memsize  = gimp_group_layer_estimate_memsize;
+  drawable_class->convert_type      = gimp_group_layer_convert_type;
 
   g_type_class_add_private (klass, sizeof (GimpGroupLayerPrivate));
 }
@@ -1155,6 +1155,15 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
       width  != old_width            ||
       height != old_height)
     {
+      /* set the offset first, so the graph is in the right state when
+       * the projection is reallocated, see bug #730550.
+       */
+      if (private->offset_node)
+        gegl_node_set (private->offset_node,
+                       "x", (gdouble) -x,
+                       "y", (gdouble) -y,
+                       NULL);
+
       if (private->reallocate_projection ||
           width  != old_width            ||
           height != old_height)
@@ -1195,12 +1204,6 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
           gimp_projectable_invalidate (GIMP_PROJECTABLE (group),
                                        x, y, width, height);
         }
-
-      if (private->offset_node)
-        gegl_node_set (private->offset_node,
-                       "x", (gdouble) -x,
-                       "y", (gdouble) -y,
-                       NULL);
     }
 }
 

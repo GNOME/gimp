@@ -6,6 +6,7 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)			\
 	-I$(top_builddir)/app		\
 	-I$(top_srcdir)/app		\
+	$(LCMS_CFLAGS)			\
 	$(GEGL_CFLAGS)			\
 	$(GTK_CFLAGS)			\
 	-I$(includedir)
@@ -21,6 +22,8 @@ libappdialogs_a_sources = \
 	\
 	about-dialog.c			\
 	about-dialog.h			\
+	action-search-dialog.c		\
+	action-search-dialog.h		\
 	channel-options-dialog.c	\
 	channel-options-dialog.h	\
 	convert-precision-dialog.c	\

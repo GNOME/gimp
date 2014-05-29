@@ -74,25 +74,25 @@ static const GimpActionEntry view_actions[] =
     NC_("view-action", "Move to Screen"), NULL, NULL, NULL,
     GIMP_HELP_VIEW_CHANGE_SCREEN },
 
-  { "view-new", GTK_STOCK_NEW,
-    NC_("view-action", "_New View"), "",
+  { "view-new", "window-new",
+    NC_("view-action", "_New View"), NULL,
     NC_("view-action", "Create another view on this image"),
     G_CALLBACK (view_new_cmd_callback),
     GIMP_HELP_VIEW_NEW },
 
-  { "view-close", GTK_STOCK_CLOSE,
+  { "view-close", "window-close",
     NC_("view-action",  "_Close View"), "<primary>W",
     NC_("view-action", "Close the active image view"),
     G_CALLBACK (view_close_cmd_callback),
     GIMP_HELP_FILE_CLOSE },
 
-  { "view-zoom-fit-in", GTK_STOCK_ZOOM_FIT,
+  { "view-zoom-fit-in", "zoom-fit-best",
     NC_("view-action", "_Fit Image in Window"), "<primary><shift>J",
     NC_("view-action", "Adjust the zoom ratio so that the image becomes fully visible"),
     G_CALLBACK (view_zoom_fit_in_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_IN },
 
-  { "view-zoom-fill", GTK_STOCK_ZOOM_FIT,
+  { "view-zoom-fill", "zoom-fit-best",
     NC_("view-action", "Fi_ll Window"), NULL,
     NC_("view-action", "Adjust the zoom ratio so that the entire window is used"),
     G_CALLBACK (view_zoom_fill_cmd_callback),
@@ -128,7 +128,7 @@ static const GimpActionEntry view_actions[] =
     G_CALLBACK (view_display_filters_cmd_callback),
     GIMP_HELP_DISPLAY_FILTER_DIALOG },
 
-  { "view-shrink-wrap", GTK_STOCK_ZOOM_FIT,
+  { "view-shrink-wrap", "zoom-fit-best",
     NC_("view-action", "Shrink _Wrap"), "<primary>J",
     NC_("view-action", "Reduce the image window to the size of the image display"),
     G_CALLBACK (view_shrink_wrap_cmd_callback),
@@ -241,7 +241,7 @@ static const GimpToggleActionEntry view_toggle_actions[] =
     TRUE,
     GIMP_HELP_VIEW_SHOW_STATUSBAR },
 
-  { "view-fullscreen", GTK_STOCK_FULLSCREEN,
+  { "view-fullscreen", "view-fullscreen",
     NC_("view-action", "Fullscr_een"), "F11",
     NC_("view-action", "Toggle fullscreen view"),
     G_CALLBACK (view_fullscreen_cmd_callback),
@@ -256,23 +256,23 @@ static const GimpEnumActionEntry view_zoom_actions[] =
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
 
-  { "view-zoom-minimum", GTK_STOCK_ZOOM_OUT,
+  { "view-zoom-minimum", "zoom-out",
     "Zoom out as far as possible", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
-  { "view-zoom-maximum", GTK_STOCK_ZOOM_IN,
+  { "view-zoom-maximum", "zoom-in",
     "Zoom in as far as possible", NULL, NULL,
     GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
-  { "view-zoom-out", GTK_STOCK_ZOOM_OUT,
+  { "view-zoom-out", "zoom-out",
     NC_("view-zoom-action", "Zoom _Out"), "minus",
     NC_("view-zoom-action", "Zoom out"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
-  { "view-zoom-in", GTK_STOCK_ZOOM_IN,
+  { "view-zoom-in", "zoom-in",
     NC_("view-zoom-action", "Zoom _In"), "plus",
     NC_("view-zoom-action", "Zoom in"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
@@ -290,12 +290,12 @@ static const GimpEnumActionEntry view_zoom_actions[] =
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
-  { "view-zoom-out-skip", GTK_STOCK_ZOOM_OUT,
+  { "view-zoom-out-skip", "zoom-out",
     "Zoom out a lot", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
-  { "view-zoom-in-skip", GTK_STOCK_ZOOM_IN,
+  { "view-zoom-in-skip", "zoom-in",
     "Zoom in a lot", NULL, NULL,
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN }
@@ -351,13 +351,13 @@ static const GimpRadioActionEntry view_zoom_explicit_actions[] =
     20000,
     GIMP_HELP_VIEW_ZOOM_IN },
 
-  { "view-zoom-1-1", GTK_STOCK_ZOOM_100,
+  { "view-zoom-1-1", "zoom-original",
     NC_("view-zoom-action", "_1:1  (100%)"), "1",
     NC_("view-zoom-action", "Zoom 1:1"),
     10000,
     GIMP_HELP_VIEW_ZOOM_100 },
 
-  { "view-zoom-1-1-accel", GTK_STOCK_ZOOM_100,
+  { "view-zoom-1-1-accel", "zoom-original",
     NC_("view-zoom-action", "_1:1  (100%)"), "KP_1",
     NC_("view-zoom-action", "Zoom 1:1"),
     10000,
@@ -435,7 +435,7 @@ static const GimpEnumActionEntry view_padding_color_actions[] =
     GIMP_CANVAS_PADDING_MODE_DARK_CHECK, FALSE,
     GIMP_HELP_VIEW_PADDING_COLOR },
 
-  { "view-padding-color-custom", GTK_STOCK_SELECT_COLOR,
+  { "view-padding-color-custom", "gtk-select-color",
     NC_("view-padding-color", "Select _Custom Color..."), NULL,
     NC_("view-padding-color", "Use an arbitrary color"),
     GIMP_CANVAS_PADDING_MODE_CUSTOM, FALSE,

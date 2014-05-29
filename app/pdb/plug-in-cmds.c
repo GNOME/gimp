@@ -645,7 +645,7 @@ register_plug_in_procs (GimpPDB *pdb)
                                                   "icon type",
                                                   "The type of the icon",
                                                   GIMP_TYPE_ICON_TYPE,
-                                                  GIMP_ICON_TYPE_STOCK_ID,
+                                                  GIMP_ICON_TYPE_ICON_NAME,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("icon-data-length",

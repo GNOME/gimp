@@ -65,7 +65,7 @@ static const GimpActionEntry image_actions[] =
   { "colors-components-menu", NULL, NC_("image-action", "C_omponents") },
   { "colors-desaturate-menu", NULL, NC_("image-action", "D_esaturate") },
 
-  { "image-new", GTK_STOCK_NEW,
+  { "image-new", "document-new",
     NC_("image-action", "_New..."), "<primary>N",
     NC_("image-action", "Create a new image"),
     G_CALLBACK (image_new_cmd_callback),
@@ -137,7 +137,7 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_configure_grid_cmd_callback),
     GIMP_HELP_IMAGE_GRID },
 
-  { "image-properties", GTK_STOCK_INFO,
+  { "image-properties", "dialog-information",
     NC_("image-action", "Image Pr_operties"), "<alt>Return",
     NC_("image-action", "Display information about this image"),
     G_CALLBACK (image_properties_cmd_callback),
@@ -222,7 +222,19 @@ static const GimpRadioActionEntry image_convert_precision_actions[] =
     NC_("image-convert-action", "32 bit floating point (gamma)"), NULL,
     NC_("image-convert-action",
         "Convert the image to 32 bit gamma-corrected floating point"),
-    GIMP_PRECISION_FLOAT_GAMMA, GIMP_HELP_IMAGE_CONVERT_FLOAT }
+    GIMP_PRECISION_FLOAT_GAMMA, GIMP_HELP_IMAGE_CONVERT_FLOAT },
+
+  { "image-convert-double-linear", NULL,
+    NC_("image-convert-action", "64 bit floating point (linear)"), NULL,
+    NC_("image-convert-action",
+        "Convert the image to 64 bit linear floating point"),
+    GIMP_PRECISION_DOUBLE_LINEAR, GIMP_HELP_IMAGE_CONVERT_DOUBLE },
+
+  { "image-convert-double-gamma", NULL,
+    NC_("image-convert-action", "64 bit floating point (gamma)"), NULL,
+    NC_("image-convert-action",
+        "Convert the image to 64 bit gamma-corrected floating point"),
+    GIMP_PRECISION_DOUBLE_GAMMA, GIMP_HELP_IMAGE_CONVERT_DOUBLE }
 };
 
 static const GimpEnumActionEntry image_flip_actions[] =
@@ -359,6 +371,12 @@ image_actions_update (GimpActionGroup *group,
         case GIMP_PRECISION_FLOAT_GAMMA:
           action = "image-convert-float-gamma";
           break;
+        case GIMP_PRECISION_DOUBLE_LINEAR:
+          action = "image-convert-double-linear";
+          break;
+        case GIMP_PRECISION_DOUBLE_GAMMA:
+          action = "image-convert-double-gamma";
+          break;
         }
 
       gimp_action_group_set_action_active (group, action, TRUE);
@@ -382,16 +400,18 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-convert-grayscale", image);
   SET_SENSITIVE ("image-convert-indexed",   image && !groups && is_u8_gamma);
 
-  SET_SENSITIVE ("image-convert-u8-gamma",     image);
-  SET_SENSITIVE ("image-convert-u8-linear",    image && !is_indexed);
-  SET_SENSITIVE ("image-convert-u16-gamma",    image && !is_indexed);
-  SET_SENSITIVE ("image-convert-u16-linear",   image && !is_indexed);
-  SET_SENSITIVE ("image-convert-u32-gamma",    image && !is_indexed);
-  SET_SENSITIVE ("image-convert-u32-linear",   image && !is_indexed);
-  SET_SENSITIVE ("image-convert-half-gamma",   image && !is_indexed);
-  SET_SENSITIVE ("image-convert-half-linear",  image && !is_indexed);
-  SET_SENSITIVE ("image-convert-float-gamma",  image && !is_indexed);
-  SET_SENSITIVE ("image-convert-float-linear", image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u8-gamma",      image);
+  SET_SENSITIVE ("image-convert-u8-linear",     image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u16-gamma",     image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u16-linear",    image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u32-gamma",     image && !is_indexed);
+  SET_SENSITIVE ("image-convert-u32-linear",    image && !is_indexed);
+  SET_SENSITIVE ("image-convert-half-gamma",    image && !is_indexed);
+  SET_SENSITIVE ("image-convert-half-linear",   image && !is_indexed);
+  SET_SENSITIVE ("image-convert-float-gamma",   image && !is_indexed);
+  SET_SENSITIVE ("image-convert-float-linear",  image && !is_indexed);
+  SET_SENSITIVE ("image-convert-double-gamma",  image && !is_indexed);
+  SET_SENSITIVE ("image-convert-double-linear", image && !is_indexed);
 
   SET_SENSITIVE ("image-flip-horizontal", image);
   SET_SENSITIVE ("image-flip-vertical",   image);

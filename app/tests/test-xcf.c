@@ -395,7 +395,7 @@ gimp_create_mainimage (Gimp     *gimp,
 
   /* Layer mask */
   layer_mask = gimp_layer_create_mask (layer,
-                                       GIMP_ADD_BLACK_MASK,
+                                       GIMP_ADD_MASK_BLACK,
                                        NULL /*channel*/);
   gimp_layer_add_mask (layer,
                        layer_mask,

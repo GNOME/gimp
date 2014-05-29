@@ -44,6 +44,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
+#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpdisplay.h"
@@ -316,7 +317,9 @@ edit_paste_as_new_cmd_callback (GtkAction *action,
 {
   Gimp       *gimp;
   GimpBuffer *buffer;
+  GtkWidget  *widget;
   return_if_no_gimp (gimp, data);
+  return_if_no_widget (widget, data);
 
   buffer = gimp_clipboard_get_buffer (gimp);
 
@@ -328,7 +331,9 @@ edit_paste_as_new_cmd_callback (GtkAction *action,
                                           buffer);
       g_object_unref (buffer);
 
-      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+      gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
+                           G_OBJECT (gtk_widget_get_screen (widget)),
+                           gimp_widget_get_monitor (widget));
       g_object_unref (image);
     }
   else
@@ -468,6 +473,7 @@ edit_named_paste_cmd_callback (GtkAction *action,
                                              gimp,
                                              gimp_dialog_factory_get_singleton (),
                                              gtk_widget_get_screen (widget),
+                                             gimp_widget_get_monitor (widget),
                                              "gimp-buffer-list|gimp-buffer-grid");
 }
 

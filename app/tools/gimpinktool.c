@@ -40,6 +40,12 @@ G_DEFINE_TYPE (GimpInkTool, gimp_ink_tool, GIMP_TYPE_PAINT_TOOL)
 #define parent_class gimp_ink_tool_parent_class
 
 
+static GimpCanvasItem * gimp_ink_tool_get_outline (GimpPaintTool *paint_tool,
+                                                   GimpDisplay   *display,
+                                                   gdouble        x,
+                                                   gdouble        y);
+
+
 void
 gimp_ink_tool_register (GimpToolRegisterCallback  callback,
                         gpointer                  data)
@@ -63,6 +69,9 @@ gimp_ink_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_ink_tool_class_init (GimpInkToolClass *klass)
 {
+  GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
+
+  paint_tool_class->get_outline = gimp_ink_tool_get_outline;
 }
 
 static void
@@ -70,14 +79,28 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
 {
   GimpTool *tool = GIMP_TOOL (ink_tool);
 
-  gimp_tool_control_set_tool_cursor    (tool->control, GIMP_TOOL_CURSOR_INK);
-  gimp_tool_control_set_action_value_2 (tool->control,
-                                        "tools/tools-ink-blob-size-set");
-  gimp_tool_control_set_action_value_3 (tool->control,
-                                        "tools/tools-ink-blob-aspect-set");
-  gimp_tool_control_set_action_value_4 (tool->control,
-                                        "tools/tools-ink-blob-angle-set");
+  gimp_tool_control_set_tool_cursor   (tool->control, GIMP_TOOL_CURSOR_INK);
+  gimp_tool_control_set_action_size   (tool->control,
+                                       "tools/tools-ink-blob-size-set");
+  gimp_tool_control_set_action_aspect (tool->control,
+                                       "tools/tools-ink-blob-aspect-set");
+  gimp_tool_control_set_action_angle  (tool->control,
+                                       "tools/tools-ink-blob-angle-set");
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (ink_tool),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);
+}
+
+static GimpCanvasItem *
+gimp_ink_tool_get_outline (GimpPaintTool *paint_tool,
+                           GimpDisplay   *display,
+                           gdouble        x,
+                           gdouble        y)
+{
+  GimpInkOptions *options = GIMP_INK_TOOL_GET_OPTIONS (paint_tool);
+
+  gimp_paint_tool_set_draw_circle (paint_tool, TRUE,
+                                   options->size);
+
+  return NULL;
 }

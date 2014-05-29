@@ -11,7 +11,6 @@ plug-ins/common/animation-optimize.c
 plug-ins/common/animation-play.c
 plug-ins/common/blinds.c
 plug-ins/common/blur.c
-plug-ins/common/blur-gauss.c
 plug-ins/common/blur-gauss-selective.c
 plug-ins/common/border-average.c
 plug-ins/common/bump-map.c
@@ -30,7 +29,6 @@ plug-ins/common/convolution-matrix.c
 plug-ins/common/crop-zealous.c
 plug-ins/common/curve-bend.c
 plug-ins/common/decompose.c
-plug-ins/common/deinterlace.c
 plug-ins/common/depth-merge.c
 plug-ins/common/despeckle.c
 plug-ins/common/destripe.c
@@ -89,14 +87,12 @@ plug-ins/common/illusion.c
 plug-ins/common/iwarp.c
 plug-ins/common/jigsaw.c
 plug-ins/common/lcms.c
-plug-ins/common/lens-apply.c
 plug-ins/common/lens-flare.c
 plug-ins/common/mail.c
 plug-ins/common/max-rgb.c
 plug-ins/common/metadata.c
 plug-ins/common/newsprint.c
 plug-ins/common/nl-filter.c
-plug-ins/common/noise-rgb.c
 plug-ins/common/noise-solid.c
 plug-ins/common/nova.c
 plug-ins/common/oilify.c
@@ -105,7 +101,6 @@ plug-ins/common/plugin-browser.c
 plug-ins/common/procedure-browser.c
 plug-ins/common/qbist.c
 plug-ins/common/ripple.c
-plug-ins/common/rotate.c
 plug-ins/common/sample-colorize.c
 plug-ins/common/screenshot.c
 plug-ins/common/sharpen.c
@@ -115,7 +110,6 @@ plug-ins/common/softglow.c
 plug-ins/common/sparkle.c
 plug-ins/common/sphere-designer.c
 plug-ins/common/tile.c
-plug-ins/common/tile-glass.c
 plug-ins/common/tile-paper.c
 plug-ins/common/tile-small.c
 plug-ins/common/unit-editor.c

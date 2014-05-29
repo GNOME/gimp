@@ -626,8 +626,8 @@ gimp_help_query_user_manual_online (GimpIdleHelp *idle_help)
   button = gtk_dialog_add_button (GTK_DIALOG (dialog),
                                   _("_Read Online"), GTK_RESPONSE_ACCEPT);
   gtk_button_set_image (GTK_BUTTON (button),
-                        gtk_image_new_from_stock (GIMP_STOCK_WEB,
-                                                  GTK_ICON_SIZE_BUTTON));
+                        gtk_image_new_from_icon_name (GIMP_STOCK_WEB,
+                                                      GTK_ICON_SIZE_BUTTON));
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_ACCEPT,

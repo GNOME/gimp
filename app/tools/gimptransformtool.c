@@ -115,13 +115,13 @@ static void      gimp_transform_tool_cursor_update          (GimpTool           
                                                              const GimpCoords      *coords,
                                                              GdkModifierType        state,
                                                              GimpDisplay           *display);
-const gchar    * gimp_transform_tool_get_undo_desc          (GimpTool              *tool,
+static const gchar * gimp_transform_tool_get_undo_desc      (GimpTool              *tool,
                                                              GimpDisplay           *display);
-const gchar    * gimp_transform_tool_get_redo_desc          (GimpTool              *tool,
+static const gchar * gimp_transform_tool_get_redo_desc      (GimpTool              *tool,
                                                              GimpDisplay           *display);
-gboolean         gimp_transform_tool_undo                   (GimpTool              *tool,
+static gboolean  gimp_transform_tool_undo                   (GimpTool              *tool,
                                                              GimpDisplay           *display);
-gboolean         gimp_transform_tool_redo                   (GimpTool              *tool,
+static gboolean  gimp_transform_tool_redo                   (GimpTool              *tool,
                                                              GimpDisplay           *display);
 static void      gimp_transform_tool_options_notify         (GimpTool              *tool,
                                                              GimpToolOptions       *options,
@@ -170,6 +170,11 @@ static void      gimp_transform_tool_response               (GimpToolGui        
 
 static void      gimp_transform_tool_free_trans             (gpointer               data);
 static void      gimp_transform_tool_update_sensitivity     (GimpTransformTool     *tr_tool);
+static GimpItem *gimp_transform_tool_get_active_item        (GimpTransformTool     *tr_tool,
+                                                             GimpImage             *image);
+static GimpItem *gimp_transform_tool_check_active_item      (GimpTransformTool     *tr_tool,
+                                                             GimpImage             *display,
+                                                             GError               **error);
 
 
 G_DEFINE_TYPE (GimpTransformTool, gimp_transform_tool, GIMP_TYPE_DRAW_TOOL)
@@ -220,7 +225,7 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 {
   GimpTool *tool = GIMP_TOOL (tr_tool);
 
-  gimp_tool_control_set_action_value_1 (tool->control,
+  gimp_tool_control_set_action_opacity (tool->control,
                                         "tools/tools-transform-preview-opacity-set");
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
@@ -261,32 +266,17 @@ gimp_transform_tool_initialize (GimpTool     *tool,
   GimpTransformTool *tr_tool  = GIMP_TRANSFORM_TOOL (tool);
   GimpImage         *image    = gimp_display_get_image (display);
   GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
+  GimpItem          *item;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
       return FALSE;
     }
 
-  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("The active layer's pixels are locked."));
-      return FALSE;
-    }
+  item = gimp_transform_tool_check_active_item (tr_tool, image, error);
 
-  if (gimp_item_is_position_locked (GIMP_ITEM (drawable)))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("The active layer's position and size are locked."));
-      return FALSE;
-    }
-
-  if (! gimp_item_is_visible (GIMP_ITEM (drawable)))
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("The active layer is not visible."));
-      return FALSE;
-    }
+  if (! item)
+    return FALSE;
 
   if (display != tool->display)
     {
@@ -357,6 +347,10 @@ gimp_transform_tool_control (GimpTool       *tool,
     case GIMP_TOOL_ACTION_HALT:
       gimp_transform_tool_halt (tr_tool);
      break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      gimp_transform_tool_transform (tr_tool, display);
+      break;
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
@@ -712,13 +706,10 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
                                    GdkModifierType   state,
                                    GimpDisplay      *display)
 {
-  GimpTransformTool    *tr_tool = GIMP_TRANSFORM_TOOL (tool);
-  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
-  GimpCursorType        cursor;
-  GimpCursorModifier    modifier = GIMP_CURSOR_MODIFIER_NONE;
-  GimpImage            *image    = gimp_display_get_image (display);
-
-  cursor = gimp_tool_control_get_cursor (tool->control);
+  GimpTransformTool  *tr_tool  = GIMP_TRANSFORM_TOOL (tool);
+  GimpImage          *image    = gimp_display_get_image (display);
+  GimpCursorType      cursor   = gimp_tool_control_get_cursor (tool->control);
+  GimpCursorModifier  modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   if (tr_tool->use_handles)
     {
@@ -774,30 +765,8 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
                                                               &modifier);
     }
 
-  switch (options->type)
-    {
-      GimpDrawable *drawable = NULL;
-      GimpVectors  *vectors  = NULL;
-
-    case GIMP_TRANSFORM_TYPE_LAYER:
-      drawable = gimp_image_get_active_drawable (image);
-      if (gimp_item_is_content_locked (GIMP_ITEM (drawable))  ||
-          gimp_item_is_position_locked (GIMP_ITEM (drawable)) ||
-          ! gimp_item_is_visible (GIMP_ITEM (drawable)))
-        modifier = GIMP_CURSOR_MODIFIER_BAD;
-      break;
-
-    case GIMP_TRANSFORM_TYPE_SELECTION:
-      break;
-
-    case GIMP_TRANSFORM_TYPE_PATH:
-      vectors = gimp_image_get_active_vectors (image);
-      if (! vectors ||
-          gimp_item_is_content_locked (GIMP_ITEM (vectors)) ||
-          gimp_item_is_position_locked (GIMP_ITEM (vectors)))
-        modifier = GIMP_CURSOR_MODIFIER_BAD;
-      break;
-    }
+  if (! gimp_transform_tool_check_active_item (tr_tool, image, NULL))
+    modifier = GIMP_CURSOR_MODIFIER_BAD;
 
   gimp_tool_control_set_cursor          (tool->control, cursor);
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
@@ -805,7 +774,7 @@ gimp_transform_tool_cursor_update (GimpTool         *tool,
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
-const gchar *
+static const gchar *
 gimp_transform_tool_get_undo_desc (GimpTool    *tool,
                                    GimpDisplay *display)
 {
@@ -819,7 +788,7 @@ gimp_transform_tool_get_undo_desc (GimpTool    *tool,
   return _("Transform Step");
 }
 
-const gchar *
+static const gchar *
 gimp_transform_tool_get_redo_desc (GimpTool    *tool,
                                    GimpDisplay *display)
 {
@@ -832,7 +801,7 @@ gimp_transform_tool_get_redo_desc (GimpTool    *tool,
   return _("Transform Step");
 }
 
-gboolean
+static gboolean
 gimp_transform_tool_undo (GimpTool    *tool,
                           GimpDisplay *display)
 {
@@ -872,7 +841,7 @@ gimp_transform_tool_undo (GimpTool    *tool,
   return TRUE;
 }
 
-gboolean
+static gboolean
 gimp_transform_tool_redo (GimpTool    *tool,
                           GimpDisplay *display)
 {
@@ -921,12 +890,17 @@ gimp_transform_tool_options_notify (GimpTool         *tool,
 
   GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
 
+  if (! strcmp (pspec->name, "type"))
+    {
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, tool->display);
+      return;
+    }
+
   if (tr_tool->use_grid)
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tr_tool));
 
-      if (! strcmp (pspec->name, "type") ||
-          ! strcmp (pspec->name, "direction"))
+      if (! strcmp (pspec->name, "direction"))
         {
           if (tr_tool->function != TRANSFORM_CREATING)
             {
@@ -1365,64 +1339,23 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
   GimpTransformOptions *options        = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpContext          *context        = GIMP_CONTEXT (options);
   GimpImage            *image          = gimp_display_get_image (display);
-  GimpItem             *active_item    = NULL;
+  GimpItem             *active_item;
   GeglBuffer           *orig_buffer    = NULL;
   gint                  orig_offset_x  = 0;
   gint                  orig_offset_y  = 0;
   GeglBuffer           *new_buffer;
   gint                  new_offset_x;
   gint                  new_offset_y;
-  const gchar          *null_message   = NULL;
-  const gchar          *locked_message = NULL;
   gchar                *undo_desc      = NULL;
   gboolean              new_layer      = FALSE;
+  GError               *error          = NULL;
 
-  switch (options->type)
-    {
-    case GIMP_TRANSFORM_TYPE_LAYER:
-      active_item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
-      null_message = _("There is no layer to transform.");
-
-      if (gimp_item_is_content_locked (active_item))
-        locked_message = _("The active layer's pixels are locked.");
-      else
-        locked_message = _("The active layer's position and size are locked.");
-      break;
-
-    case GIMP_TRANSFORM_TYPE_SELECTION:
-      active_item  = GIMP_ITEM (gimp_image_get_mask (image));
-      /* cannot happen, so don't translate these messages */
-      null_message = "There is no selection to transform.";
-
-      if (gimp_item_is_content_locked (active_item))
-        locked_message = "The selection's pixels are locked.";
-      else
-        locked_message = "The selection's position and size are locked.";
-      break;
-
-    case GIMP_TRANSFORM_TYPE_PATH:
-      active_item  = GIMP_ITEM (gimp_image_get_active_vectors (image));
-      null_message = _("There is no path to transform.");
-
-      if (gimp_item_is_content_locked (active_item))
-        locked_message = _("The active path's strokes are locked.");
-      else
-        locked_message = _("The active path's position is locked.");
-      break;
-    }
+  active_item = gimp_transform_tool_check_active_item (tr_tool, image, &error);
 
   if (! active_item)
     {
-      gimp_tool_message_literal (tool, display, null_message);
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-      return;
-    }
-
-  if (gimp_item_is_content_locked (active_item) ||
-      gimp_item_is_position_locked (active_item))
-    {
-      gimp_tool_message_literal (tool, display, locked_message);
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+      gimp_tool_message_literal (tool, display, error->message);
+      g_clear_error (&error);
       return;
     }
 
@@ -1519,8 +1452,6 @@ gimp_transform_tool_transform (GimpTransformTool *tr_tool,
    *  the image gets dirty while the tool exists
    */
   gimp_tool_control_pop_preserve (tool->control);
-
-  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
   gimp_unset_busy (display->gimp);
 
@@ -1697,25 +1628,32 @@ gimp_transform_tool_handles_recalc (GimpTransformTool *tr_tool,
 static void
 gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 {
-  GimpTool     *tool      = GIMP_TOOL (tr_tool);
-  GimpToolInfo *tool_info = tool->tool_info;
-  const gchar  *stock_id;
+  GimpTool         *tool      = GIMP_TOOL (tr_tool);
+  GimpToolInfo     *tool_info = tool->tool_info;
+  GimpDisplayShell *shell;
+  const gchar      *icon_name;
 
   if (! GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog)
     return;
 
-  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+  g_return_if_fail (tool->display != NULL);
+
+  shell = gimp_display_get_shell (tool->display);
+
+  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
 
   tr_tool->overlay = FALSE;
 
   tr_tool->gui = gimp_tool_gui_new (tool_info,
                                     tool_info->blurb,
+                                    gtk_widget_get_screen (GTK_WIDGET (shell)),
+                                    gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                     tr_tool->overlay,
 
                                     GIMP_STOCK_WILBER_EEK, RESPONSE_EEK,
                                     GIMP_STOCK_RESET, RESPONSE_RESET,
                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                    stock_id,         GTK_RESPONSE_OK,
+                                    icon_name,        GTK_RESPONSE_OK,
 
                                     NULL);
 
@@ -1741,11 +1679,11 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
 {
   if (tr_tool->gui)
     {
-      GimpImage    *image    = gimp_display_get_image (display);
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+      GimpImage *image = gimp_display_get_image (display);
+      GimpItem  *item  = gimp_transform_tool_get_active_item (tr_tool, image);
 
       gimp_tool_gui_set_shell (tr_tool->gui, gimp_display_get_shell (display));
-      gimp_tool_gui_set_viewable (tr_tool->gui, GIMP_VIEWABLE (drawable));
+      gimp_tool_gui_set_viewable (tr_tool->gui, GIMP_VIEWABLE (item));
     }
 
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->prepare)
@@ -1782,7 +1720,11 @@ gimp_transform_tool_response (GimpToolGui       *gui,
     case RESPONSE_EEK:
       if (tr_tool->gui)
         {
+          GimpDisplayShell *shell = gimp_display_get_shell (display);
+
           gimp_tool_gui_set_overlay (tr_tool->gui,
+                                     gtk_widget_get_screen (GTK_WIDGET (shell)),
+                                     gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                      ! gimp_tool_gui_get_overlay (tr_tool->gui));
         }
       break;
@@ -1824,8 +1766,9 @@ gimp_transform_tool_response (GimpToolGui       *gui,
 
     case GTK_RESPONSE_OK:
       g_return_if_fail (display != NULL);
-      gimp_transform_tool_transform (tr_tool, display);
-      break;
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+     break;
 
     default:
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
@@ -1851,4 +1794,91 @@ gimp_transform_tool_update_sensitivity (GimpTransformTool *tr_tool)
 
   gimp_tool_gui_set_response_sensitive (tr_tool->gui, RESPONSE_RESET,
                                         g_list_next (tr_tool->undo_list) != NULL);
+}
+
+static GimpItem *
+gimp_transform_tool_get_active_item (GimpTransformTool *tr_tool,
+                                     GimpImage         *image)
+{
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+
+  switch (options->type)
+    {
+    case GIMP_TRANSFORM_TYPE_LAYER:
+      return GIMP_ITEM (gimp_image_get_active_drawable (image));
+
+    case GIMP_TRANSFORM_TYPE_SELECTION:
+      return GIMP_ITEM (gimp_image_get_mask (image));
+
+    case GIMP_TRANSFORM_TYPE_PATH:
+      return GIMP_ITEM (gimp_image_get_active_vectors (image));
+    }
+
+  return NULL;
+}
+
+static GimpItem *
+gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
+                                       GimpImage          *image,
+                                       GError            **error)
+{
+  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpItem             *item;
+  const gchar          *null_message   = NULL;
+  const gchar          *locked_message = NULL;
+
+  item = gimp_transform_tool_get_active_item (tr_tool, image);
+
+  switch (options->type)
+    {
+    case GIMP_TRANSFORM_TYPE_LAYER:
+      null_message = _("There is no layer to transform.");
+
+      if (item && gimp_item_is_content_locked (item))
+        locked_message = _("The active layer's pixels are locked.");
+      else
+        locked_message = _("The active layer's position and size are locked.");
+
+      if (item && ! gimp_item_is_visible (item))
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                               _("The active layer is not visible."));
+          return NULL;
+        }
+      break;
+
+    case GIMP_TRANSFORM_TYPE_SELECTION:
+      /* cannot happen, so don't translate these messages */
+      null_message = "There is no selection to transform.";
+
+      if (item && gimp_item_is_content_locked (item))
+        locked_message = "The selection's pixels are locked.";
+      else
+        locked_message = "The selection's position and size are locked.";
+      break;
+
+    case GIMP_TRANSFORM_TYPE_PATH:
+      null_message = _("There is no path to transform.");
+
+      if (item && gimp_item_is_content_locked (item))
+        locked_message = _("The active path's strokes are locked.");
+      else
+        locked_message = _("The active path's position is locked.");
+      break;
+    }
+
+  if (! item)
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, null_message);
+      return NULL;
+    }
+
+  if (gimp_item_is_content_locked (item) ||
+      gimp_item_is_position_locked (item))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, locked_message);
+      return NULL;
+    }
+
+  return item;
 }

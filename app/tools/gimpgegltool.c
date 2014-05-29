@@ -42,7 +42,7 @@ enum
 {
   COLUMN_NAME,
   COLUMN_LABEL,
-  COLUMN_STOCK_ID,
+  COLUMN_ICON_NAME,
   N_COLUMNS
 };
 
@@ -116,15 +116,18 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
      */
     "gegl:alien-map",
     "gegl:antialias",
+    "gegl:apply-lens",
     "gegl:bump-map",
     "gegl:c2g",
     "gegl:cartoon",
+    "gegl:cell-noise",
     "gegl:channel-mixer",
     "gegl:checkerboard",
     "gegl:color",
     "gegl:color-reduction",
     "gegl:color-temperature",
     "gegl:color-to-alpha",
+    "gegl:convolution-matrix",
     "gegl:cubism",
     "gegl:deinterlace",
     "gegl:difference-of-gaussians",
@@ -148,20 +151,25 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:noise-hsv",
     "gegl:noise-hurl",
     "gegl:noise-pick",
+    "gegl:noise-reduction",
     "gegl:noise-rgb",
     "gegl:noise-slur",
     "gegl:noise-spread",
+    "gegl:panorama-projection",
+    "gegl:perlin-noise",
     "gegl:photocopy",
     "gegl:pixelize",
     "gegl:plasma",
     "gegl:polar-coordinates",
     "gegl:red-eye-removal",
     "gegl:ripple",
+    "gegl:simplex-noise",
     "gegl:shift",
     "gegl:softglow",
     "gegl:stretch-contrast",
     "gegl:stretch-contrast-hsv",
     "gegl:texturize-canvas",
+    "gegl:tile-glass",
     "gegl:tile-seamless",
     "gegl:unsharp-mask",
     "gegl:value-invert",
@@ -317,24 +325,24 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   for (iter = opclasses; iter; iter = iter->next)
     {
       GeglOperationClass *opclass = GEGL_OPERATION_CLASS (iter->data);
-      const gchar        *stock_id;
+      const gchar        *icon_name;
       const gchar        *label;
 
       if (g_str_has_prefix (opclass->name, "gegl:"))
         {
-          label    = opclass->name + strlen ("gegl:");
-          stock_id = GIMP_STOCK_GEGL;
+          label     = opclass->name + strlen ("gegl:");
+          icon_name = GIMP_STOCK_GEGL;
         }
       else
         {
-          label    = opclass->name;
-          stock_id = NULL;
+          label     = opclass->name;
+          icon_name = NULL;
         }
 
       gtk_list_store_insert_with_values (store, NULL, -1,
-                                         COLUMN_NAME,     opclass->name,
-                                         COLUMN_LABEL,    label,
-                                         COLUMN_STOCK_ID, stock_id,
+                                         COLUMN_NAME,      opclass->name,
+                                         COLUMN_LABEL,     label,
+                                         COLUMN_ICON_NAME, icon_name,
                                          -1);
     }
 
@@ -348,7 +356,7 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   cell = gtk_cell_renderer_pixbuf_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, FALSE);
   gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (combo), cell,
-                                 "stock-id", COLUMN_STOCK_ID);
+                                 "icon-name", COLUMN_ICON_NAME);
 
   cell = gtk_cell_renderer_text_new ();
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, TRUE);
@@ -369,15 +377,15 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_reorder_child (GTK_BOX (main_vbox), tool->description_label, 1);
 
   /*  The options vbox  */
-  o_tool->options_table =
+  o_tool->options_gui =
     gtk_label_new (_("Select an operation from the list above"));
-  gimp_label_set_attributes (GTK_LABEL (o_tool->options_table),
+  gimp_label_set_attributes (GTK_LABEL (o_tool->options_gui),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-  gtk_misc_set_padding (GTK_MISC (o_tool->options_table), 0, 4);
+  gtk_misc_set_padding (GTK_MISC (o_tool->options_gui), 0, 4);
   gtk_container_add (GTK_CONTAINER (o_tool->options_box),
-                     o_tool->options_table);
-  gtk_widget_show (o_tool->options_table);
+                     o_tool->options_gui);
+  gtk_widget_show (o_tool->options_gui);
 }
 
 static void
@@ -414,7 +422,7 @@ gimp_gegl_tool_operation_changed (GtkWidget    *widget,
         }
 
       gimp_operation_tool_set_operation (GIMP_OPERATION_TOOL (tool),
-                                         operation, NULL);
+                                         operation, NULL, NULL);
       g_free (operation);
     }
 }

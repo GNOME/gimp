@@ -35,11 +35,6 @@ typedef struct _GimpBrushToolClass GimpBrushToolClass;
 struct _GimpBrushTool
 {
   GimpPaintTool  parent_instance;
-
-  gboolean       show_cursor;
-  gboolean       draw_brush;
-  gdouble        brush_x;
-  gdouble        brush_y;
 };
 
 struct _GimpBrushToolClass
@@ -53,8 +48,7 @@ GType            gimp_brush_tool_get_type       (void) G_GNUC_CONST;
 GimpCanvasItem * gimp_brush_tool_create_outline (GimpBrushTool *brush_tool,
                                                  GimpDisplay   *display,
                                                  gdouble        x,
-                                                 gdouble        y,
-                                                 gboolean       draw_fallback);
+                                                 gdouble        y);
 
 
 #endif  /*  __GIMP_BRUSH_TOOL_H__  */

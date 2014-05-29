@@ -118,7 +118,7 @@ struct _GimpControllerClass
   gboolean      (* event)           (GimpController            *controller,
                                      const GimpControllerEvent *event);
 
-  const gchar  *stock_id;
+  const gchar  *icon_name;
 
   /* Padding for future expansion */
   void (* _gimp_reserved2) (void);

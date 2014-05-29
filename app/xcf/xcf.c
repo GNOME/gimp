@@ -73,7 +73,8 @@ static GimpXcfLoaderFunc * const xcf_loaders[] =
   xcf_load_image,   /* version 3 */
   xcf_load_image,   /* version 4 */
   xcf_load_image,   /* version 5 */
-  xcf_load_image    /* version 6 */
+  xcf_load_image,   /* version 6 */
+  xcf_load_image    /* version 7 */
 };
 
 
@@ -101,7 +102,7 @@ xcf_init (Gimp *gimp)
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
   proc->menu_label = g_strdup (N_("GIMP XCF image"));
-  gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_STOCK_ID,
+  gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-wilber",
                                    strlen ("gimp-wilber") + 1);
   gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
@@ -172,7 +173,7 @@ xcf_init (Gimp *gimp)
 
   proc = GIMP_PLUG_IN_PROCEDURE (procedure);
   proc->menu_label = g_strdup (N_("GIMP XCF image"));
-  gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_STOCK_ID,
+  gimp_plug_in_procedure_set_icon (proc, GIMP_ICON_TYPE_ICON_NAME,
                                    (const guint8 *) "gimp-wilber",
                                    strlen ("gimp-wilber") + 1);
   gimp_plug_in_procedure_set_image_types (proc, NULL);

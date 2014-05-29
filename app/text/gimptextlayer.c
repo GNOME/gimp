@@ -126,36 +126,36 @@ gimp_text_layer_class_init (GimpTextLayerClass *klass)
   GimpItemClass     *item_class        = GIMP_ITEM_CLASS (klass);
   GimpDrawableClass *drawable_class    = GIMP_DRAWABLE_CLASS (klass);
 
-  object_class->finalize           = gimp_text_layer_finalize;
-  object_class->get_property       = gimp_text_layer_get_property;
-  object_class->set_property       = gimp_text_layer_set_property;
+  object_class->finalize            = gimp_text_layer_finalize;
+  object_class->get_property        = gimp_text_layer_get_property;
+  object_class->set_property        = gimp_text_layer_set_property;
 
-  gimp_object_class->get_memsize   = gimp_text_layer_get_memsize;
+  gimp_object_class->get_memsize    = gimp_text_layer_get_memsize;
 
-  viewable_class->default_stock_id = "gimp-text-layer";
+  viewable_class->default_icon_name = "gimp-text-layer";
 
-  item_class->duplicate            = gimp_text_layer_duplicate;
-  item_class->rename               = gimp_text_layer_rename;
+  item_class->duplicate             = gimp_text_layer_duplicate;
+  item_class->rename                = gimp_text_layer_rename;
 
 #if 0
-  item_class->scale                = gimp_text_layer_scale;
-  item_class->flip                 = gimp_text_layer_flip;
-  item_class->rotate               = gimp_text_layer_rotate;
-  item_class->transform            = gimp_text_layer_transform;
+  item_class->scale                 = gimp_text_layer_scale;
+  item_class->flip                  = gimp_text_layer_flip;
+  item_class->rotate                = gimp_text_layer_rotate;
+  item_class->transform             = gimp_text_layer_transform;
 #endif
 
-  item_class->default_name         = _("Text Layer");
-  item_class->rename_desc          = _("Rename Text Layer");
-  item_class->translate_desc       = _("Move Text Layer");
-  item_class->scale_desc           = _("Scale Text Layer");
-  item_class->resize_desc          = _("Resize Text Layer");
-  item_class->flip_desc            = _("Flip Text Layer");
-  item_class->rotate_desc          = _("Rotate Text Layer");
-  item_class->transform_desc       = _("Transform Text Layer");
+  item_class->default_name          = _("Text Layer");
+  item_class->rename_desc           = _("Rename Text Layer");
+  item_class->translate_desc        = _("Move Text Layer");
+  item_class->scale_desc            = _("Scale Text Layer");
+  item_class->resize_desc           = _("Resize Text Layer");
+  item_class->flip_desc             = _("Flip Text Layer");
+  item_class->rotate_desc           = _("Rotate Text Layer");
+  item_class->transform_desc        = _("Transform Text Layer");
 
-  drawable_class->convert_type     = gimp_text_layer_convert_type;
-  drawable_class->set_buffer       = gimp_text_layer_set_buffer;
-  drawable_class->push_undo        = gimp_text_layer_push_undo;
+  drawable_class->convert_type      = gimp_text_layer_convert_type;
+  drawable_class->set_buffer        = gimp_text_layer_set_buffer;
+  drawable_class->push_undo         = gimp_text_layer_push_undo;
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TEXT,
                                    "text", NULL,

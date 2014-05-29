@@ -21,10 +21,16 @@
 
 #include "config.h"
 
+#include <lcms2.h>
+
+#include <gegl.h>
 #include <gtk/gtk.h>
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "gimpwidgetstypes.h"
 
+#include "gimpcolorprofilechooserdialog.h"
 #include "gimpcolorprofilecombobox.h"
 #include "gimpcolorprofilestore.h"
 #include "gimpcolorprofilestore-private.h"
@@ -72,6 +78,10 @@ static void  gimp_color_profile_combo_box_changed      (GtkComboBox  *combo);
 static gboolean  gimp_color_profile_row_separator_func (GtkTreeModel *model,
                                                         GtkTreeIter  *iter,
                                                         gpointer      data);
+
+static void  gimp_color_profile_combo_dialog_response  (GimpColorProfileChooserDialog *dialog,
+                                                        gint                           response,
+                                                        GimpColorProfileComboBox      *combo);
 
 
 G_DEFINE_TYPE (GimpColorProfileComboBox,
@@ -155,6 +165,9 @@ gimp_color_profile_combo_box_finalize (GObject *object)
 
   if (combo->dialog)
     {
+      if (GIMP_IS_COLOR_PROFILE_CHOOSER_DIALOG (combo->dialog))
+        gtk_widget_destroy (combo->dialog);
+
       g_object_unref (combo->dialog);
       combo->dialog = NULL;
     }
@@ -183,6 +196,11 @@ gimp_color_profile_combo_box_set_property (GObject      *object,
     case PROP_DIALOG:
       g_return_if_fail (combo_box->dialog == NULL);
       combo_box->dialog = g_value_dup_object (value);
+
+      if (GIMP_IS_COLOR_PROFILE_CHOOSER_DIALOG (combo_box->dialog))
+        g_signal_connect (combo_box->dialog, "response",
+                          G_CALLBACK (gimp_color_profile_combo_dialog_response),
+                          combo_box);
       break;
 
     case PROP_MODEL:
@@ -289,6 +307,17 @@ gimp_color_profile_combo_box_changed (GtkComboBox *combo)
  *  gchar *history = gimp_personal_rc_file ("profilerc");
  * </programlisting></informalexample>
  *
+ * The recommended @dialog type to use is a #GimpColorProfileChooserDialog.
+ * If a #GimpColorProfileChooserDialog is passed, #GimpColorProfileComboBox
+ * will take complete control over the dialog, which means connecting
+ * a GtkDialog::response() callback by itself, and take care of destroying
+ * the dialog when the combo box is destroyed.
+ *
+ * If another type of @dialog is passed, this has to be implemented
+ * separately.
+ *
+ * See also gimp_color_profile_combo_box_new_with_model().
+ *
  * Return value: a new #GimpColorProfileComboBox.
  *
  * Since: GIMP 2.4
@@ -388,14 +417,42 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
+  gchar        *l = NULL;
 
   g_return_if_fail (GIMP_IS_COLOR_PROFILE_COMBO_BOX (combo));
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
 
+  if (filename && ! (label && *label))
+    {
+      cmsHPROFILE  profile;
+      GError      *error = NULL;
+
+      profile = gimp_lcms_profile_open_from_file (filename, &error);
+
+      if (! profile)
+        {
+          g_message ("%s", error->message);
+          g_clear_error (&error);
+        }
+      else
+        {
+          l = gimp_lcms_profile_get_label (profile);
+          cmsCloseProfile (profile);
+        }
+    }
+  else
+    {
+      l = g_strdup (label);
+    }
+
   if (_gimp_color_profile_store_history_add (GIMP_COLOR_PROFILE_STORE (model),
-                                             filename, label, &iter))
-    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
+                                             filename, l, &iter))
+    {
+      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
+    }
+
+  g_free (l);
 }
 
 /**
@@ -457,4 +514,26 @@ gimp_color_profile_row_separator_func (GtkTreeModel *model,
     default:
       return FALSE;
     }
+}
+
+static void
+gimp_color_profile_combo_dialog_response (GimpColorProfileChooserDialog *dialog,
+                                          gint                           response,
+                                          GimpColorProfileComboBox      *combo)
+{
+  if (response == GTK_RESPONSE_ACCEPT)
+    {
+      gchar *filename;
+
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+
+      if (filename)
+        {
+          gimp_color_profile_combo_box_set_active (combo, filename, NULL);
+
+          g_free (filename);
+        }
+    }
+
+  gtk_widget_hide (GTK_WIDGET (dialog));
 }

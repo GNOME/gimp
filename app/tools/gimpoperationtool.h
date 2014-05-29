@@ -39,12 +39,13 @@ struct _GimpOperationTool
 
   gchar            *operation;
   gchar            *undo_desc;
+  gchar            *icon_name;
   GimpObject       *config;
   GeglNode         *aux_input;
 
   /* dialog */
   GtkWidget        *options_box;
-  GtkWidget        *options_table;
+  GtkWidget        *options_gui;
   GtkWidget        *aux_input_box;
   GtkWidget        *aux_input_button;
 };
@@ -62,7 +63,8 @@ GType   gimp_operation_tool_get_type      (void) G_GNUC_CONST;
 
 void    gimp_operation_tool_set_operation (GimpOperationTool        *tool,
                                            const gchar              *operation,
-                                           const gchar              *undo_desc);
+                                           const gchar              *undo_desc,
+                                           const gchar              *icon_name);
 
 
 #endif  /*  __GIMP_OPERATION_TOOL_H__  */

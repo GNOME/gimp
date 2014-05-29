@@ -239,6 +239,9 @@ while (<>) {
        ([^*]+|\*(?!/))*
        \*/@@gx;
 	
+    # ignore forward declarations
+    next if /^\s*typedef\s+enum.*;/;
+
     if (m@^\s*typedef\s+enum\s*
            ({)?\s*
            (?:/\*<
@@ -259,6 +262,9 @@ while (<>) {
 	# Didn't have trailing '{' look on next lines
 	if (!defined $1) {
 	    while (<>) {
+		if (eof) {
+		    die "Hit end of file while parsing enum in $ARGV";
+		}
 		if (s/^\s*\{//) {
 		    last;
 		}

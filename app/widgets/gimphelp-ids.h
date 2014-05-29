@@ -126,6 +126,7 @@
 #define GIMP_HELP_IMAGE_CONVERT_U32               "gimp-image-convert-u32"
 #define GIMP_HELP_IMAGE_CONVERT_HALF              "gimp-image-convert-half"
 #define GIMP_HELP_IMAGE_CONVERT_FLOAT             "gimp-image-convert-float"
+#define GIMP_HELP_IMAGE_CONVERT_DOUBLE            "gimp-image-convert-double"
 #define GIMP_HELP_IMAGE_CONVERT_PRECISION         "gimp-image-convert-precision"
 #define GIMP_HELP_IMAGE_FLIP_HORIZONTAL           "gimp-image-flip-horizontal"
 #define GIMP_HELP_IMAGE_FLIP_VERTICAL             "gimp-image-flip-vertical"
@@ -508,6 +509,7 @@
 #define GIMP_HELP_DOCK_SHOW_BUTTON_BAR            "gimp-dock-show-button-bar"
 
 #define GIMP_HELP_ABOUT_DIALOG                    "gimp-about-dialog"
+#define GIMP_HELP_ACTION_SEARCH_DIALOG            "gimp-action-search-dialog"
 #define GIMP_HELP_COLOR_DIALOG                    "gimp-color-dialog"
 #define GIMP_HELP_DEVICE_STATUS_DIALOG            "gimp-device-status-dialog"
 #define GIMP_HELP_DISPLAY_FILTER_DIALOG           "gimp-display-filter-dialog"

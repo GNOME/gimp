@@ -46,6 +46,8 @@
 #include "gimpimagewindow.h"
 #include "gimpnavigationeditor.h"
 
+#include "gimp-intl.h"
+
 
 /*  local function prototypes  */
 
@@ -502,7 +504,46 @@ static void
 gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
                                           cairo_t          *cr)
 {
+  cairo_save (cr);
+
   gimp_display_shell_draw_background (shell, cr);
 
   gimp_cairo_draw_drop_wilber (shell->canvas, cr, shell->blink);
+
+  cairo_restore (cr);
+
+#ifdef GIMP_UNSTABLE
+  {
+    PangoLayout   *layout;
+    GtkAllocation  allocation;
+    gint           width;
+    gint           height;
+    gdouble        scale;
+
+    layout = gtk_widget_create_pango_layout (shell->canvas, NULL);
+    pango_layout_set_markup (layout,
+                             _("<big>Unstable Development Version</big>\n\n"
+                               "<small>Please build latest "
+                               "git master before\n"
+                               "reporting any bugs against "
+                               "this version</small>"), -1);
+    pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
+
+    pango_layout_get_pixel_size (layout, &width, &height);
+    gtk_widget_get_allocation (shell->canvas, &allocation);
+
+    scale = MIN (((gdouble) allocation.width  / 2.0) / (gdouble) width,
+                 ((gdouble) allocation.height / 2.0) / (gdouble) height);
+
+    cairo_move_to (cr,
+                   (allocation.width  - (width  * scale)) / 2,
+                   (allocation.height - (height * scale)) / 2);
+
+    cairo_scale (cr, scale, scale);
+
+    pango_cairo_show_layout (cr, layout);
+
+    g_object_unref (layout);
+  }
+#endif /* GIMP_UNSTABLE */
 }

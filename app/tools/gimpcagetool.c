@@ -115,6 +115,9 @@ static void       gimp_cage_tool_oper_update        (GimpTool              *tool
 
 static void       gimp_cage_tool_draw               (GimpDrawTool          *draw_tool);
 
+static void       gimp_cage_tool_halt               (GimpCageTool          *ct);
+static void       gimp_cage_tool_commit             (GimpCageTool          *ct);
+
 static gint       gimp_cage_tool_is_on_handle       (GimpCageTool          *ct,
                                                      GimpDrawTool          *draw_tool,
                                                      GimpDisplay           *display,
@@ -220,44 +223,11 @@ gimp_cage_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      if (ct->config)
-        {
-          g_object_unref (ct->config);
-          ct->config = NULL;
-        }
+      gimp_cage_tool_halt (ct);
+      break;
 
-      if (ct->coef)
-        {
-          g_object_unref (ct->coef);
-          ct->coef = NULL;
-        }
-
-      if (ct->render_node)
-        {
-          g_object_unref (ct->render_node);
-          ct->render_node = NULL;
-          ct->coef_node   = NULL;
-          ct->cage_node   = NULL;
-        }
-
-      if (ct->image_map)
-        {
-          gimp_tool_control_push_preserve (tool->control, TRUE);
-
-          gimp_image_map_abort (ct->image_map);
-          g_object_unref (ct->image_map);
-          ct->image_map = NULL;
-
-          gimp_tool_control_pop_preserve (tool->control);
-
-          gimp_image_flush (gimp_display_get_image (tool->display));
-        }
-
-      tool->display = NULL;
-
-      g_object_set (gimp_tool_get_options (tool),
-                    "cage-mode", GIMP_CAGE_MODE_CAGE_CHANGE,
-                    NULL);
+    case GIMP_TOOL_ACTION_COMMIT:
+      gimp_cage_tool_commit (ct);
       break;
     }
 
@@ -425,7 +395,8 @@ gimp_cage_tool_key_press (GimpTool    *tool,
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
-      if (! gimp_cage_tool_is_complete (ct) && gimp_cage_config_get_n_points (ct->config) > 2)
+      if (! gimp_cage_tool_is_complete (ct) &&
+          gimp_cage_config_get_n_points (ct->config) > 2)
         {
           g_object_set (gimp_tool_get_options (tool),
                         "cage-mode", GIMP_CAGE_MODE_DEFORM,
@@ -433,17 +404,7 @@ gimp_cage_tool_key_press (GimpTool    *tool,
         }
       else if (ct->tool_state == DEFORM_STATE_WAIT)
         {
-          gimp_tool_control_push_preserve (tool->control, TRUE);
-
-          gimp_image_map_commit (ct->image_map,
-                                 GIMP_PROGRESS (tool));
-          g_object_unref (ct->image_map);
-          ct->image_map = NULL;
-
-          gimp_tool_control_pop_preserve (tool->control);
-
-          gimp_image_flush (gimp_display_get_image (display));
-
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
           gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
         }
       return TRUE;
@@ -929,6 +890,68 @@ gimp_cage_tool_draw (GimpDrawTool *draw_tool)
                                     abs (ct->selection_start_x - ct->cursor_x),
                                     abs (ct->selection_start_y - ct->cursor_y));
     }
+}
+
+static void
+gimp_cage_tool_halt (GimpCageTool *ct)
+{
+  GimpTool *tool = GIMP_TOOL (ct);
+
+  if (ct->config)
+    {
+      g_object_unref (ct->config);
+      ct->config = NULL;
+    }
+
+  if (ct->coef)
+    {
+      g_object_unref (ct->coef);
+      ct->coef = NULL;
+    }
+
+  if (ct->render_node)
+    {
+      g_object_unref (ct->render_node);
+      ct->render_node = NULL;
+      ct->coef_node   = NULL;
+      ct->cage_node   = NULL;
+    }
+
+  if (ct->image_map)
+    {
+      gimp_tool_control_push_preserve (tool->control, TRUE);
+
+      gimp_image_map_abort (ct->image_map);
+      g_object_unref (ct->image_map);
+      ct->image_map = NULL;
+
+      gimp_tool_control_pop_preserve (tool->control);
+
+      gimp_image_flush (gimp_display_get_image (tool->display));
+    }
+
+  tool->display = NULL;
+
+  g_object_set (gimp_tool_get_options (tool),
+                "cage-mode", GIMP_CAGE_MODE_CAGE_CHANGE,
+                NULL);
+}
+
+static void
+gimp_cage_tool_commit (GimpCageTool *ct)
+{
+  GimpTool *tool = GIMP_TOOL (ct);
+
+  gimp_tool_control_push_preserve (tool->control, TRUE);
+
+  gimp_image_map_commit (ct->image_map,
+                         GIMP_PROGRESS (tool));
+  g_object_unref (ct->image_map);
+  ct->image_map = NULL;
+
+  gimp_tool_control_pop_preserve (tool->control);
+
+  gimp_image_flush (gimp_display_get_image (tool->display));
 }
 
 static gint

@@ -40,7 +40,9 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
+#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "dialogs/data-delete-dialog.h"
 
@@ -73,12 +75,15 @@ data_open_as_image_cmd_callback (GtkAction *action,
 
       if (uri)
         {
+          GtkWidget         *widget = GTK_WIDGET (view);
           GimpImage         *image;
           GimpPDBStatusType  status;
           GError            *error = NULL;
 
           image = file_open_with_display (context->gimp, context, NULL,
                                           uri, FALSE,
+                                          G_OBJECT (gtk_widget_get_screen (widget)),
+                                          gimp_widget_get_monitor (widget),
                                           &status, &error);
 
           if (! image && status != GIMP_PDB_CANCEL)
@@ -255,7 +260,8 @@ data_edit_cmd_callback (GtkAction   *action,
   if (data && gimp_data_factory_view_have (view,
                                            GIMP_OBJECT (data)))
     {
-      GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (view));
+      GdkScreen *screen  = gtk_widget_get_screen (GTK_WIDGET (view));
+      gint       monitor = gimp_widget_get_monitor (GTK_WIDGET (view));
       GtkWidget *dockable;
 
       dockable =
@@ -263,6 +269,7 @@ data_edit_cmd_callback (GtkAction   *action,
                                                    context->gimp,
                                                    gimp_dialog_factory_get_singleton (),
                                                    screen,
+                                                   monitor,
                                                    value);
 
       gimp_data_editor_set_data (GIMP_DATA_EDITOR (gtk_bin_get_child (GTK_BIN (dockable))),

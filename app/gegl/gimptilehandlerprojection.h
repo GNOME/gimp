@@ -63,6 +63,8 @@ GeglTileHandler * gimp_tile_handler_projection_new        (GeglNode             
                                                            gint                       proj_width,
                                                            gint                       proj_height);
 
+void              gimp_tile_handler_projection_assign     (GimpTileHandlerProjection *projection,
+                                                           GeglBuffer                *buffer);
 void              gimp_tile_handler_projection_invalidate (GimpTileHandlerProjection *projection,
                                                            gint                       x,
                                                            gint                       y,

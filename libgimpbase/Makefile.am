@@ -162,7 +162,7 @@ libgimpbase_@GIMP_API_VERSION@_la_LDFLAGS = \
 	$(libgimpbase_export_symbols)		\
 	$(framework_cocoa)
 
-libgimpbase_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpbase_def)
+EXTRA_libgimpbase_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpbase_def)
 
 libgimpbase_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GIO_LIBS)	\

@@ -1,6 +1,6 @@
 # GIMP tool preset file
 
-(stock-id "gimp-tool-smudge")
+(icon-name "gimp-tool-smudge")
 (name "Smudge Soft")
 (tool-options "GimpSmudgeOptions"
     (tool "gimp-smudge-tool")

@@ -18,7 +18,7 @@
  */
 
 #ifndef __GIMP_PLUG_IN_PROC_FRAME_H__
-#define __GIMP_PLUG_IN_PRON_FRAME_H__
+#define __GIMP_PLUG_IN_PROC_FRAME_H__
 
 
 struct _GimpPlugInProcFrame

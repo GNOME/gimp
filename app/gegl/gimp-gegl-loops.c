@@ -215,7 +215,7 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
 {
   GeglBufferIterator *iter;
 
-  if (type == GIMP_BURN)
+  if (type == GIMP_DODGE_BURN_TYPE_BURN)
     exposure = -exposure;
 
   iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
@@ -230,7 +230,7 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
     {
       gfloat factor;
 
-    case GIMP_HIGHLIGHTS:
+    case GIMP_TRANSFER_HIGHLIGHTS:
       factor = 1.0 + exposure * (0.333333);
 
       while (gegl_buffer_iterator_next (iter))
@@ -250,7 +250,7 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
         }
       break;
 
-    case GIMP_MIDTONES:
+    case GIMP_TRANSFER_MIDTONES:
       if (exposure < 0)
         factor = 1.0 - exposure * (0.333333);
       else
@@ -273,7 +273,7 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
         }
       break;
 
-    case GIMP_SHADOWS:
+    case GIMP_TRANSFER_SHADOWS:
       if (exposure >= 0)
         factor = 0.333333 * exposure;
       else

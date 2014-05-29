@@ -23,8 +23,11 @@
 #include <gegl.h>
 #include <gegl-utils.h>
 #include <glib/gstdio.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "core-types.h"
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "gimptempbuf.h"
 
@@ -59,6 +62,53 @@ gimp_temp_buf_new (gint        width,
                                  babl_format_get_bytes_per_pixel (format));
 
   return temp;
+}
+
+GimpTempBuf *
+gimp_temp_buf_new_from_pixbuf (GdkPixbuf  *pixbuf,
+                               const Babl *f_or_null)
+{
+  const Babl   *format = f_or_null;
+  const Babl   *fish   = NULL;
+  GimpTempBuf  *temp_buf;
+  const guchar *pixels;
+  gint          width;
+  gint          height;
+  gint          rowstride;
+  gint          bpp;
+  guchar       *data;
+  gint          i;
+
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
+
+  if (! format)
+    format = gimp_pixbuf_get_format (pixbuf);
+
+  pixels    = gdk_pixbuf_get_pixels (pixbuf);
+  width     = gdk_pixbuf_get_width (pixbuf);
+  height    = gdk_pixbuf_get_height (pixbuf);
+  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+
+  temp_buf  = gimp_temp_buf_new (width, height, format);
+  data      = gimp_temp_buf_get_data (temp_buf);
+
+  bpp       = babl_format_get_bytes_per_pixel (format);
+
+  if (gimp_pixbuf_get_format (pixbuf) != format)
+    fish = babl_fish (gimp_pixbuf_get_format (pixbuf), format);
+
+  for (i = 0; i < height; i++)
+    {
+      if (fish)
+        babl_process (fish, pixels, data, width);
+      else
+        memcpy (data, pixels, width * bpp);
+
+      data   += width * bpp;
+      pixels += rowstride;
+    }
+
+  return temp_buf;
 }
 
 GimpTempBuf *
@@ -236,6 +286,52 @@ gimp_temp_buf_create_buffer (GimpTempBuf *temp_buf)
   g_object_set_data (G_OBJECT (buffer), "gimp-temp-buf", temp_buf);
 
   return buffer;
+}
+
+GdkPixbuf *
+gimp_temp_buf_create_pixbuf (GimpTempBuf *temp_buf)
+{
+  GdkPixbuf    *pixbuf;
+  const Babl   *format;
+  const Babl   *fish = NULL;
+  const guchar *data;
+  gint          width;
+  gint          height;
+  gint          bpp;
+  guchar       *pixels;
+  gint          rowstride;
+  gint          i;
+
+  g_return_val_if_fail (temp_buf != NULL, NULL);
+
+  data      = gimp_temp_buf_get_data (temp_buf);
+  format    = gimp_temp_buf_get_format (temp_buf);
+  width     = gimp_temp_buf_get_width (temp_buf);
+  height    = gimp_temp_buf_get_height (temp_buf);
+  bpp       = babl_format_get_bytes_per_pixel (format);
+
+  pixbuf    = gdk_pixbuf_new (GDK_COLORSPACE_RGB,
+                              babl_format_has_alpha (format),
+                              8, width, height);
+
+  pixels    = gdk_pixbuf_get_pixels (pixbuf);
+  rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+
+  if (format != gimp_pixbuf_get_format (pixbuf))
+    fish = babl_fish (format, gimp_pixbuf_get_format (pixbuf));
+
+  for (i = 0; i < height; i++)
+    {
+      if (fish)
+        babl_process (fish, data, pixels, width);
+      else
+        memcpy (pixels, data, width * bpp);
+
+      data   += width * bpp;
+      pixels += rowstride;
+    }
+
+  return pixbuf;
 }
 
 GimpTempBuf *

@@ -49,7 +49,7 @@ gimp_message_dialog_init (GimpMessageDialog *dialog)
 
 GtkWidget *
 gimp_message_dialog_new (const gchar    *title,
-                         const gchar    *stock_id,
+                         const gchar    *icon_name,
                          GtkWidget      *parent,
                          GtkDialogFlags  flags,
                          GimpHelpFunc    help_func,
@@ -97,7 +97,7 @@ gimp_message_dialog_new (const gchar    *title,
   va_end (args);
 
   dialog->box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
-                              "stock-id",  stock_id,
+                              "icon-name", icon_name,
                               NULL);
 
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),

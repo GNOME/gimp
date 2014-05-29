@@ -66,10 +66,6 @@ paint_tools_stroke (Gimp              *gimp,
 
   n_strokes /= 2;  /* #doubles -> #points */
 
-  /* FIXME: i'm most certain that this is wrong, see bug 721249 --mitch */
-  gimp_paint_options_set_default_brush_size (options,
-                                             gimp_context_get_brush (context));
-
   /*  undefine the paint-relevant context properties and get them
    *  from the current context
    */
@@ -1053,7 +1049,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                                   "clone type",
                                                   "The type of clone",
                                                   GIMP_TYPE_CLONE_TYPE,
-                                                  GIMP_IMAGE_CLONE,
+                                                  GIMP_CLONE_IMAGE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("src-x",
@@ -1146,7 +1142,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                                   "convolve type",
                                                   "Convolve type",
                                                   GIMP_TYPE_CONVOLVE_TYPE,
-                                                  GIMP_BLUR_CONVOLVE,
+                                                  GIMP_CONVOLVE_BLUR,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-strokes",
@@ -1227,14 +1223,14 @@ register_paint_tools_procs (GimpPDB *pdb)
                                                   "dodgeburn type",
                                                   "The type either dodge or burn",
                                                   GIMP_TYPE_DODGE_BURN_TYPE,
-                                                  GIMP_DODGE,
+                                                  GIMP_DODGE_BURN_TYPE_DODGE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("dodgeburn-mode",
                                                   "dodgeburn mode",
                                                   "The mode",
                                                   GIMP_TYPE_TRANSFER_MODE,
-                                                  GIMP_SHADOWS,
+                                                  GIMP_TRANSFER_SHADOWS,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("num-strokes",

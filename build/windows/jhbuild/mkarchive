@@ -23,7 +23,6 @@ dostuff (){
 	rm -rf share/doc
 	rm -rf share/gtk-doc
 	rm -rf share/gtk-2.0/demo
-	rm -rf share/icons
 	rm -rf share/applications
 	rm -rf share/info
 	rm -rf share/man
@@ -58,6 +57,8 @@ dostuff (){
 	echo "@echo off
 SET PATH=%~dp0bin\\
 start $2" | unix2dos > run_gimp.bat
+
+	echo "gtk-fallback-icon-theme='gnome'" >> etc/gtk-2.0/gtkrc
 
 	popd
 

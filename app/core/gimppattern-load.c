@@ -198,8 +198,6 @@ gimp_pattern_load_pixbuf (GimpContext  *context,
 {
   GimpPattern *pattern;
   GdkPixbuf   *pixbuf;
-  GeglBuffer  *src_buffer;
-  GeglBuffer  *dest_buffer;
   gchar       *name;
 
   g_return_val_if_fail (filename != NULL, NULL);
@@ -225,17 +223,7 @@ gimp_pattern_load_pixbuf (GimpContext  *context,
                           NULL);
   g_free (name);
 
-  pattern->mask = gimp_temp_buf_new (gdk_pixbuf_get_width (pixbuf),
-                                     gdk_pixbuf_get_height (pixbuf),
-                                     gimp_pixbuf_get_format (pixbuf));
-
-  src_buffer  = gimp_pixbuf_create_buffer (pixbuf);
-  dest_buffer = gimp_temp_buf_create_buffer (pattern->mask);
-
-  gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
-
-  g_object_unref (src_buffer);
-  g_object_unref (dest_buffer);
+  pattern->mask = gimp_temp_buf_new_from_pixbuf (pixbuf, NULL);
 
   g_object_unref (pixbuf);
 

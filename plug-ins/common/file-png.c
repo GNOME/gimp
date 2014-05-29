@@ -828,6 +828,11 @@ load_image (const gchar  *filename,
       return image;
     }
 
+#ifdef PNG_BENIGN_ERRORS_SUPPORTED
+  /* Change some libpng errors to warnings (e.g. bug 721135) */
+  png_set_benign_errors (pp, TRUE);
+#endif
+
   /*
    * Open the file and initialize the PNG read "engine"...
    */
@@ -1353,7 +1358,8 @@ offsets_dialog (gint offset_x,
                       hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  image = gtk_image_new_from_stock (GIMP_STOCK_QUESTION, GTK_ICON_SIZE_DIALOG);
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_QUESTION,
+                                        GTK_ICON_SIZE_DIALOG);
   gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.0);
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
@@ -1446,6 +1452,11 @@ save_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename));
       return FALSE;
     }
+
+#ifdef PNG_BENIGN_ERRORS_SUPPORTED
+  /* Change some libpng errors to warnings (e.g. bug 721135) */
+  png_set_benign_errors (pp, TRUE);
+#endif
 
   /*
    * Open the file and initialize the PNG write "engine"...

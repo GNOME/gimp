@@ -31,7 +31,6 @@
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpdockbook.h"
-#include "gimpsessioninfo.h" /* for gimp_session_info_class_apply_position_accuracy() */
 #include "gimpsessioninfo-book.h"
 #include "gimpsessioninfo-dockable.h"
 #include "gimpwidgets-utils.h"

@@ -106,7 +106,7 @@ register(
     ],
     [],
     histogram_export,
-    menu="<Image>/Colors",
+    menu="<Image>/Colors/Info",
     domain=("gimp20-python", gimp.locale_directory)
     )
 

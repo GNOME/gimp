@@ -31,6 +31,7 @@
 #include "core/gimp-transform-utils.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpspinscale.h"
 
 #include "display/gimptoolgui.h"
 
@@ -121,31 +122,31 @@ static void
 gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
 {
   GimpShearTool *shear = GIMP_SHEAR_TOOL (tr_tool);
-  GtkWidget     *table;
-  GtkWidget     *button;
+  GtkWidget     *vbox;
+  GtkWidget     *scale;
 
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tr_tool->gui)), table,
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_box_pack_start (GTK_BOX (gimp_tool_gui_get_vbox (tr_tool->gui)), vbox,
                       FALSE, FALSE, 0);
-  gtk_widget_show (table);
+  gtk_widget_show (vbox);
 
-  button = gimp_spin_button_new ((GtkObject **) &shear->x_adj,
-                                 0, -65536, 65536, 1, 15, 0, 1, 0);
-  gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, _("Shear magnitude _X:"),
-                             0.0, 0.5, button, 1, TRUE);
+  shear->x_adj = (GtkAdjustment *)
+    gtk_adjustment_new (0, -65536, 65536, 1, 10, 0);
+  scale = gimp_spin_scale_new (shear->x_adj, _("Shear magnitude _X"), 0);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), -1000, 1000);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   g_signal_connect (shear->x_adj, "value-changed",
                     G_CALLBACK (shear_x_mag_changed),
                     tr_tool);
 
-  button = gimp_spin_button_new ((GtkObject **) &shear->y_adj,
-                                 0, -65536, 65536, 1, 15, 0, 1, 0);
-  gtk_entry_set_width_chars (GTK_ENTRY (button), SB_WIDTH);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1, _("Shear magnitude _Y:"),
-                             0.0, 0.5, button, 1, TRUE);
+  shear->y_adj = (GtkAdjustment *)
+    gtk_adjustment_new (0, -65536, 65536, 1, 10, 0);
+  scale = gimp_spin_scale_new (shear->y_adj, _("Shear magnitude _Y"), 0);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), -1000, 1000);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
 
   g_signal_connect (shear->y_adj, "value-changed",
                     G_CALLBACK (shear_y_mag_changed),

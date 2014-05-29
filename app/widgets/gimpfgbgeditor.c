@@ -35,6 +35,7 @@
 
 #include "gimpdnd.h"
 #include "gimpfgbgeditor.h"
+#include "gimpwidgets-utils.h"
 
 
 enum
@@ -251,9 +252,8 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
 
   /*  draw the default colors pixbuf  */
   if (! editor->default_icon)
-    editor->default_icon = gtk_widget_render_icon (widget,
-                                                   GIMP_STOCK_DEFAULT_COLORS,
-                                                   GTK_ICON_SIZE_MENU, NULL);
+    editor->default_icon = gimp_widget_load_icon (widget,
+                                                  GIMP_STOCK_DEFAULT_COLORS, 12);
 
   default_w = gdk_pixbuf_get_width  (editor->default_icon);
   default_h = gdk_pixbuf_get_height (editor->default_icon);
@@ -271,9 +271,8 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
 
   /*  draw the swap colors pixbuf  */
   if (! editor->swap_icon)
-    editor->swap_icon = gtk_widget_render_icon (widget,
-                                                GIMP_STOCK_SWAP_COLORS,
-                                                GTK_ICON_SIZE_MENU, NULL);
+    editor->swap_icon = gimp_widget_load_icon (widget,
+                                               GIMP_STOCK_SWAP_COLORS, 12);
 
   swap_w = gdk_pixbuf_get_width  (editor->swap_icon);
   swap_h = gdk_pixbuf_get_height (editor->swap_icon);

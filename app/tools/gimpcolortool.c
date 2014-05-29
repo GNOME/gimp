@@ -42,6 +42,7 @@
 #include "widgets/gimpdockable.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimpsessioninfo.h"
+#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpcanvasitem.h"
@@ -168,8 +169,8 @@ gimp_color_tool_init (GimpColorTool *color_tool)
 {
   GimpTool *tool = GIMP_TOOL (color_tool);
 
-  gimp_tool_control_set_action_value_2 (tool->control,
-                                        "tools/tools-color-average-radius-set");
+  gimp_tool_control_set_action_size (tool->control,
+                                     "tools/tools-color-average-radius-set");
 
   color_tool->enabled             = FALSE;
   color_tool->center_x            = 0;
@@ -663,8 +664,9 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
 
     case GIMP_COLOR_PICK_MODE_PALETTE:
       {
-        GimpDisplayShell *shell  = gimp_display_get_shell (tool->display);
-        GdkScreen        *screen = gtk_widget_get_screen (GTK_WIDGET (shell));
+        GimpDisplayShell *shell   = gimp_display_get_shell (tool->display);
+        GdkScreen        *screen  = gtk_widget_get_screen (GTK_WIDGET (shell));
+        gint              monitor = gimp_widget_get_monitor (GTK_WIDGET (shell));
         GtkWidget        *dockable;
 
         dockable =
@@ -672,6 +674,7 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
                                                      tool->display->gimp,
                                                      gimp_dialog_factory_get_singleton (),
                                                      screen,
+                                                     monitor,
                                                      "gimp-palette-editor");
 
         if (dockable)

@@ -95,6 +95,7 @@ static void       gimp_warp_tool_draw               (GimpDrawTool          *draw
 static void       gimp_warp_tool_start              (GimpWarpTool          *wt,
                                                      GimpDisplay           *display);
 static void       gimp_warp_tool_halt               (GimpWarpTool          *wt);
+static void       gimp_warp_tool_commit             (GimpWarpTool          *wt);
 
 static gboolean   gimp_warp_tool_stroke_timer       (GimpWarpTool          *wt);
 
@@ -164,12 +165,14 @@ gimp_warp_tool_init (GimpWarpTool *self)
   gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
   gimp_tool_control_set_dirty_mask  (tool->control,
                                      GIMP_DIRTY_IMAGE           |
-                                     GIMP_DIRTY_IMAGE_STRUCTURE |
                                      GIMP_DIRTY_DRAWABLE        |
-                                     GIMP_DIRTY_SELECTION);
+                                     GIMP_DIRTY_SELECTION       |
+                                     GIMP_DIRTY_ACTIVE_DRAWABLE);
   gimp_tool_control_set_wants_click (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
+  gimp_tool_control_set_action_size (tool->control,
+                                     "tools/tools-warp-effect-size-set");
 }
 
 static void
@@ -187,6 +190,10 @@ gimp_warp_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_HALT:
       gimp_warp_tool_halt (wt);
+      break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      gimp_warp_tool_commit (wt);
       break;
     }
 
@@ -321,8 +328,6 @@ gimp_warp_tool_key_press (GimpTool    *tool,
                           GdkEventKey *kevent,
                           GimpDisplay *display)
 {
-  GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
-
   switch (kevent->keyval)
     {
     case GDK_KEY_BackSpace:
@@ -331,18 +336,7 @@ gimp_warp_tool_key_press (GimpTool    *tool,
     case GDK_KEY_Return:
     case GDK_KEY_KP_Enter:
     case GDK_KEY_ISO_Enter:
-      if (wt->image_map)
-        {
-          gimp_tool_control_push_preserve (tool->control, TRUE);
-
-          gimp_image_map_commit (wt->image_map, GIMP_PROGRESS (tool));
-          g_object_unref (wt->image_map);
-          wt->image_map = NULL;
-
-          gimp_tool_control_pop_preserve (tool->control);
-
-          gimp_image_flush (gimp_display_get_image (display));
-        }
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
       /* fall thru */
 
     case GDK_KEY_Escape:
@@ -591,6 +585,25 @@ gimp_warp_tool_halt (GimpWarpTool *wt)
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (wt)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (wt));
+}
+
+static void
+gimp_warp_tool_commit (GimpWarpTool *wt)
+{
+  GimpTool *tool = GIMP_TOOL (wt);
+
+  if (wt->image_map)
+    {
+      gimp_tool_control_push_preserve (tool->control, TRUE);
+
+      gimp_image_map_commit (wt->image_map, GIMP_PROGRESS (tool));
+      g_object_unref (wt->image_map);
+      wt->image_map = NULL;
+
+      gimp_tool_control_pop_preserve (tool->control);
+
+      gimp_image_flush (gimp_display_get_image (tool->display));
+    }
 }
 
 static gboolean

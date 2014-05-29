@@ -86,11 +86,10 @@
 #define DEBUG FALSE
 
 /* 1: Normal debuggin, 2: Deep debuggin */
-#define DEBUG_LEVEL 1
+#define DEBUG_LEVEL 2
 
 #define IFDBG if (DEBUG)
 #define IF_DEEP_DBG if (DEBUG && DEBUG_LEVEL == 2)
-
 
 #define PSD_UNIT_INCH 1
 #define PSD_UNIT_CM   2
@@ -101,7 +100,6 @@
 /* Local types etc
  */
 
-
 typedef struct PsdLayerDimension
 {
   gint   left;
@@ -109,7 +107,6 @@ typedef struct PsdLayerDimension
   gint32 width;
   gint32 height;
 } PSD_Layer_Dimension;
-
 
 typedef struct PsdImageData
 {
@@ -134,64 +131,80 @@ typedef struct PsdImageData
 
 static PSD_Image_Data PSDImageData;
 
-
 /* Declare some local functions.
  */
 
-static void   query                (void);
-static void   run                  (const gchar      *name,
-                                    gint              nparams,
-                                    const GimpParam  *param,
-                                    gint             *nreturn_vals,
-                                    GimpParam       **return_vals);
+static void        query                (void);
 
-static void   psd_lmode_layer      (gint32         idLayer,
-                                    gchar         *psdMode);
-static void   reshuffle_cmap_write (guchar        *mapGimp);
-static void   save_header          (FILE          *fd,
-                                    gint32         image_id);
-static void   save_color_mode_data (FILE          *fd,
-                                    gint32         image_id);
-static void   save_resources       (FILE          *fd,
-                                    gint32         image_id);
-static void   save_layer_and_mask  (FILE          *fd,
-                                    gint32         image_id);
-static void   save_data            (FILE          *fd,
-                                    gint32         image_id);
-static gint   save_image           (const gchar   *filename,
-                                    gint32         image_id,
-                                    GError       **error);
-static void   xfwrite              (FILE          *fd,
-                                    gconstpointer  buf,
-                                    glong          len,
-                                    const gchar   *why);
-static void   write_pascalstring   (FILE          *fd,
-                                    const gchar   *val,
-                                    gint           padding,
-                                    const gchar   *why);
-static void   write_string         (FILE          *fd,
-                                    const gchar   *val,
-                                    const gchar   *why);
-static void   write_gchar          (FILE          *fd,
-                                    guchar         val,
-                                    const gchar   *why);
-static void   write_gint16         (FILE          *fd,
-                                    gint16         val,
-                                    const gchar   *why);
-static void   write_gint32         (FILE          *fd,
-                                    gint32         val,
-                                    const gchar   *why);
-static void   write_datablock_luni (FILE          *fd,
-                                    const gchar   *val,
-                                    const gchar   *why);
+static void        run                  (const gchar         *name,
+					 gint                 nparams,
+					 const GimpParam     *param,
+					 gint                *nreturn_vals,
+					 GimpParam           **return_vals);
 
-static void   write_pixel_data     (FILE          *fd,
-                                    gint32         drawableID,
-                                    glong         *ChanLenPosition,
-                                    gint32         rowlenOffset);
+static void        psd_lmode_layer      (gint32               idLayer,
+					 gchar               *psdMode);
 
-static gint32 create_merged_image  (gint32         imageID);
+static void        reshuffle_cmap_write (guchar              *mapGimp);
 
+static void        save_header          (FILE                *fd,
+					 gint32               image_id);
+
+static void        save_color_mode_data (FILE                *fd,
+					 gint32               image_id);
+
+static void        save_resources       (FILE                *fd,
+					 gint32               image_id);
+
+static void        save_layer_and_mask  (FILE                *fd,
+					 gint32               image_id);
+
+static void        save_data            (FILE                *fd,
+					 gint32               image_id);
+
+static gint        save_image           (const gchar         *filename,
+					 gint32               image_id,
+					 GError             **error);
+
+static void        xfwrite              (FILE                *fd,
+					 gconstpointer        buf,
+					 glong                len,
+					 const gchar         *why);
+
+static void        write_pascalstring   (FILE               *fd,
+					 const gchar        *val,
+					 gint                padding,
+					 const gchar        *why);
+
+static void        write_string         (FILE               *fd,
+					 const gchar        *val,
+					 const gchar        *why);
+
+static void        write_gchar          (FILE               *fd,
+					 guchar              val,
+					 const gchar        *why);
+
+static void        write_gint16         (FILE               *fd,
+					 gint16              val,
+					 const gchar        *why);
+
+static void        write_gint32         (FILE               *fd,
+					 gint32              val,
+					 const gchar        *why);
+
+static void        write_datablock_luni (FILE               *fd,
+					 const gchar        *val,
+					 const gchar        *why);
+
+
+static void        write_pixel_data     (FILE               *fd,
+					 gint32              drawableID,
+					 glong              *ChanLenPosition,
+					 gint32              rowlenOffset);
+
+static gint32      create_merged_image  (gint32              imageID);
+
+static const Babl* get_pixel_format     (gint32 drawableID);
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -234,7 +247,6 @@ query (void)
   gimp_register_file_handler_mime (SAVE_PROC, "image/x-psd");
   gimp_register_save_handler (SAVE_PROC, "psd", "");
 }
-
 
 static void
 run (const gchar      *name,
@@ -412,7 +424,6 @@ psd_lmode_layer (gint32  idLayer,
     }
 }
 
-
 static void
 write_string (FILE        *fd,
               const gchar *val,
@@ -421,7 +432,6 @@ write_string (FILE        *fd,
   write_gchar (fd, strlen (val), why);
   xfwrite (fd, val, strlen (val), why);
 }
-
 
 static void
 write_pascalstring (FILE        *fd,
@@ -460,7 +470,6 @@ write_pascalstring (FILE        *fd,
     write_gchar (fd, 0, why);
 }
 
-
 static void
 xfwrite (FILE          *fd,
          gconstpointer  buf,
@@ -476,7 +485,6 @@ xfwrite (FILE          *fd,
       gimp_quit ();
     }
 }
-
 
 static void
 write_gchar (FILE        *fd,
@@ -498,7 +506,6 @@ write_gchar (FILE        *fd,
   fseek (fd, pos + 1, SEEK_SET);
 }
 
-
 static void
 write_gint16 (FILE        *fd,
               gint16       val,
@@ -518,9 +525,6 @@ write_gint16 (FILE        *fd,
     }
 }
 
-
-
-
 static void
 write_gint32 (FILE        *fd,
               gint32       val,
@@ -539,7 +543,6 @@ write_gint32 (FILE        *fd,
       gimp_quit ();
     }
 }
-
 
 static void
 write_datablock_luni (FILE        *fd,
@@ -581,7 +584,6 @@ write_datablock_luni (FILE        *fd,
         }
     }
 }
-
 
 static gint32
 pack_pb_line (guchar *start,
@@ -667,7 +669,6 @@ gimpBaseTypeToPsdMode (GimpImageBaseType gimpBaseType)
     }
 }
 
-
 static gint
 nChansLayer (gint gimpBaseType,
              gint hasAlpha,
@@ -692,7 +693,6 @@ nChansLayer (gint gimpBaseType,
     }
 }
 
-
 static void
 reshuffle_cmap_write (guchar *mapGimp)
 {
@@ -716,7 +716,6 @@ reshuffle_cmap_write (guchar *mapGimp)
   g_free (mapPSD);
 }
 
-
 static void
 save_header (FILE   *fd,
              gint32  image_id)
@@ -737,12 +736,9 @@ save_header (FILE   *fd,
                 "channels");
   write_gint32 (fd, PSDImageData.image_height, "rows");
   write_gint32 (fd, PSDImageData.image_width, "columns");
-  write_gint16 (fd, 8, "depth");  /* Apparently GIMP only supports 8 bit deep
-                                     PSD images.  */
+  write_gint16 (fd, 8, "depth");  /* Saving can only be done in 8 bits at the moment. */
   write_gint16 (fd, gimpBaseTypeToPsdMode (PSDImageData.baseType), "mode");
 }
-
-
 
 static void
 save_color_mode_data (FILE   *fd,
@@ -800,8 +796,6 @@ save_color_mode_data (FILE   *fd,
       write_gint32 (fd, 0, "color data length");
     }
 }
-
-
 
 static void
 save_resources (FILE   *fd,
@@ -1032,8 +1026,6 @@ save_resources (FILE   *fd,
   fseek (fd, eof_pos, SEEK_SET);
 }
 
-
-
 static int
 get_compress_channel_data (guchar  *channel_data,
                            gint32   channel_cols,
@@ -1062,7 +1054,6 @@ get_compress_channel_data (guchar  *channel_data,
   /*  return((len + channel_rows * sizeof (gint16)) + sizeof (gint16));*/
   return len;
 }
-
 
 static void
 save_layer_and_mask (FILE   *fd,
@@ -1285,32 +1276,26 @@ save_layer_and_mask (FILE   *fd,
   fseek (fd, eof_pos, SEEK_SET);
 }
 
-
-
 static void
 write_pixel_data (FILE   *fd,
                   gint32  drawableID,
                   glong  *ChanLenPosition,
                   gint32  ltable_offset)
 {
-  GimpPixelRgn region;      /* Image region */
-  guchar *data;             /* Temporary copy of pixel data */
-
-  gint32 tile_height = gimp_tile_height();
-
-  GimpDrawable *drawable = gimp_drawable_get (drawableID);
-
-  gint32 height = drawable->height;
-  gint32 width  = drawable->width;
-  gint32 bytes  = drawable->bpp;
-  gint32 colors = bytes;    /* fixed up down below */
-  gint32 y;
-
-  gint32   len;                  /* Length of compressed data */
-  gint16 *LengthsTable;         /* Lengths of every compressed row */
-  guchar *rledata;              /* Compressed data from a region */
-  glong  length_table_pos;      /* position in file of the length table */
-  int i, j;
+  GeglBuffer   *buffer = gimp_drawable_get_buffer (drawableID);
+  const Babl   *format = get_pixel_format (drawableID);
+  gint32        tile_height = gimp_tile_height();
+  gint32        height = gegl_buffer_get_height (buffer);
+  gint32        width  = gegl_buffer_get_width (buffer);
+  gint32        bytes = babl_format_get_bytes_per_pixel (format);
+  gint32        colors = bytes;       /* fixed up down below */
+  gint32        y;
+  gint32        len;                  /* Length of compressed data */
+  gint16       *LengthsTable;         /* Lengths of every compressed row */
+  guchar       *rledata;              /* Compressed data from a region */
+  guchar       *data;                 /* Temporary copy of pixel data */
+  glong         length_table_pos;     /* position in file of the length table */
+  int           i, j;
 
   IFDBG printf (" Function: write_pixel_data, drw %d, lto %d\n",
                 drawableID, ltable_offset);
@@ -1319,16 +1304,11 @@ write_pixel_data (FILE   *fd,
       !gimp_drawable_is_indexed (drawableID))
     colors -= 1;
 
-  gimp_tile_cache_ntiles (2* (drawable->width / gimp_tile_width () + 1));
-
   LengthsTable = g_new (gint16, height);
   rledata = g_new (guchar, (MIN (height, tile_height) *
                             (width + 10 + (width / 100))));
 
   data = g_new (guchar, MIN(height, tile_height) * width * bytes);
-
-  gimp_pixel_rgn_init (&region, drawable, 0, 0,
-                       width, height, FALSE, FALSE);
 
   for (i = 0; i < bytes; i++)
     {
@@ -1375,8 +1355,8 @@ write_pixel_data (FILE   *fd,
       for (y = 0; y < height; y += tile_height)
         {
           int tlen;
-            gimp_pixel_rgn_get_rect (&region, data, 0, y,
-                                   width, MIN(height - y, tile_height));
+	  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, y, width, MIN (height - y, tile_height)),
+			   0, format, data, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
           tlen = get_compress_channel_data (&data[chan],
                                              width,
                                              MIN(height - y, tile_height),
@@ -1410,11 +1390,8 @@ write_pixel_data (FILE   *fd,
 
       if (maskID != -1)
         {
-          GimpDrawable *mdrawable = gimp_drawable_get (maskID);
+          GeglBuffer *mbuffer = gimp_drawable_get_buffer (maskID);
           len = 0;
-
-          gimp_pixel_rgn_init (&region, mdrawable, 0, 0,
-                               width, height, FALSE, FALSE);
 
           if (ChanLenPosition)
             {
@@ -1443,8 +1420,8 @@ write_pixel_data (FILE   *fd,
           for (y = 0; y < height; y += tile_height)
             {
               int tlen;
-              gimp_pixel_rgn_get_rect (&region, data, 0, y,
-                                       width, MIN(height - y, tile_height));
+	      gegl_buffer_get (mbuffer, GEGL_RECTANGLE (0, y, width, MIN (height - y, tile_height)),
+			       0, format, data, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
               tlen = get_compress_channel_data (&data[0],
                                                 width,
                                                 MIN(height - y, tile_height),
@@ -1474,18 +1451,16 @@ write_pixel_data (FILE   *fd,
           fseek (fd, 0, SEEK_END);
           IF_DEEP_DBG printf ("\t\t\t\t. Cur pos %ld\n", ftell(fd));
 
-          gimp_drawable_detach (mdrawable);
+          g_object_unref (mbuffer);
         }
     }
 
-  gimp_drawable_detach (drawable);
+  g_object_unref (buffer);
 
   g_free (data);
   g_free (rledata);
   g_free (LengthsTable);
 }
-
-
 
 static void
 save_data (FILE   *fd,
@@ -1542,50 +1517,50 @@ create_merged_image (gint32 image_id)
 
   if (gimp_image_base_type (image_id) != GIMP_INDEXED)
     {
-      GimpDrawable *drawable = gimp_drawable_get (projection);
-      GimpPixelRgn  region;
-      gboolean      transparency_found = FALSE;
-      gpointer      pr;
+      GeglBuffer           *buffer             = gimp_drawable_get_buffer (projection);
+      const Babl           *format             = get_pixel_format (projection);
+      gboolean              transparency_found = FALSE;
+      gint                  bpp                = babl_format_get_bytes_per_pixel (format);
+      gint                  n_components       = babl_format_get_n_components (format);
+      gint                  width              = gegl_buffer_get_width (buffer);
+      gint                  height             = gegl_buffer_get_height (buffer);
+      GeglBufferIterator   *iter               = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (0, 0, width, height),
+									   0, format, GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
 
-      gimp_pixel_rgn_init (&region, drawable,
-                           0, 0, drawable->width, drawable->height,
-                           TRUE, FALSE);
+      while (gegl_buffer_iterator_next (iter))
+	{
+	  guchar *data = iter->data[0];
+	  gint y;
 
-      for (pr = gimp_pixel_rgns_register (1, &region);
-           pr != NULL;
-           pr = gimp_pixel_rgns_process (pr))
-        {
-          guchar *data = region.data;
-          gint    y;
+	  for (y = 0; y < iter->roi->height; y++)
+	    {
+	      guchar *d = data;
+	      gint x;
 
-          for (y = 0; y < region.h; y++)
-            {
-              guchar *d = data;
-              gint    x;
+	      for (x = 0; x < iter->roi->width; x++)
+		{
+		  gint32 alpha = d[bpp - 1];
 
-              for (x = 0; x < region.w; x++)
-                {
-                  guint32 alpha = d[region.bpp - 1];
+		  if (alpha < 255)
+		    {
+		      gint i;
 
-                  if (alpha < 255)
-                    {
-                      gint i;
+		      transparency_found = TRUE;
 
-                      transparency_found = TRUE;
+		      /* blend against white, photoshop does this. */
+		      for (i = 0; i < bpp - 1; i++)
+			d[i] = ((guint32) d[i] * alpha) / 255 + 255 - alpha;
+		    }
 
-                      /* blend against white, photoshop does this. */
-                      for (i = 0; i < region.bpp - 1; i++)
-                        d[i] = ((guint32) d[i] * alpha) / 255 + 255 - alpha;
-                    }
+		}
 
-                  d += region.bpp;
-                }
+              d += bpp;
+	    }
 
-              data += region.rowstride;
-            }
-        }
+	  data += n_components;
+	}
 
-      gimp_drawable_detach (drawable);
+      g_object_unref (buffer);
 
       if (! transparency_found)
         gimp_layer_flatten (projection);
@@ -1629,18 +1604,16 @@ get_image_data (FILE   *fd,
   PSDImageData.layersDim = g_new (PSD_Layer_Dimension, PSDImageData.nLayers);
 }
 
-
-
 static gint
 save_image (const gchar  *filename,
             gint32        image_id,
             GError      **error)
 {
-  FILE   *fd;
-  gint32 *layers;
-  gint    nlayers;
-  gint    i;
-  GimpDrawable *drawable;
+  FILE         *fd;
+  gint32       *layers;
+  gint          nlayers;
+  gint          i;
+  GeglBuffer   *buffer;
 
   IFDBG printf (" Function: save_image\n");
 
@@ -1659,8 +1632,8 @@ save_image (const gchar  *filename,
   layers = gimp_image_get_layers (image_id, &nlayers);
   for (i = 0; i < nlayers; i++)
     {
-      drawable = gimp_drawable_get (layers[i]);
-      if (drawable->width > 30000 || drawable->height > 30000)
+      buffer = gimp_drawable_get_buffer (layers[i]);
+      if (gegl_buffer_get_width (buffer) > 30000 || gegl_buffer_get_height (buffer) > 30000)
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Unable to save '%s'.  The PSD file format does not "
@@ -1670,6 +1643,7 @@ save_image (const gchar  *filename,
           g_free (layers);
           return FALSE;
         }
+      g_object_unref (buffer);
     }
   g_free (layers);
 
@@ -1713,4 +1687,37 @@ save_image (const gchar  *filename,
 
   fclose (fd);
   return TRUE;
+}
+
+static const Babl *
+get_pixel_format (gint32 drawableID)
+{
+  const Babl *format;
+
+  switch (gimp_drawable_type (drawableID))
+    {
+    case GIMP_GRAY_IMAGE:
+      format = babl_format ("Y u8");
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      format = babl_format ("YA u8");
+      break;
+
+    case GIMP_RGB_IMAGE:
+    case GIMP_INDEXED_IMAGE:
+      format = babl_format ("RGB u8");
+      break;
+
+    case GIMP_RGBA_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+      format = babl_format ("RGBA u8");
+      break;
+
+    default:
+      return NULL;
+      break;
+    }
+
+  return format;
 }

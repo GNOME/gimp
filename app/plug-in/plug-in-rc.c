@@ -39,7 +39,7 @@
 #include "gimp-intl.h"
 
 
-#define PLUG_IN_RC_FILE_VERSION 2
+#define PLUG_IN_RC_FILE_VERSION 3
 
 
 /*
@@ -535,7 +535,7 @@ plug_in_icon_deserialize (GScanner            *scanner,
 
   switch (icon_type)
     {
-    case GIMP_ICON_TYPE_STOCK_ID:
+    case GIMP_ICON_TYPE_ICON_NAME:
     case GIMP_ICON_TYPE_IMAGE_FILE:
       icon_data_length = -1;
 
@@ -880,7 +880,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
 
               switch (proc->icon_type)
                 {
-                case GIMP_ICON_TYPE_STOCK_ID:
+                case GIMP_ICON_TYPE_ICON_NAME:
                 case GIMP_ICON_TYPE_IMAGE_FILE:
                   gimp_config_writer_string (writer, (gchar *) proc->icon_data);
                   break;

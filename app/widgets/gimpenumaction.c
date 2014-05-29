@@ -151,7 +151,7 @@ GimpEnumAction *
 gimp_enum_action_new (const gchar *name,
                       const gchar *label,
                       const gchar *tooltip,
-                      const gchar *stock_id,
+                      const gchar *icon_name,
                       gint         value,
                       gboolean     value_variable)
 {
@@ -159,7 +159,7 @@ gimp_enum_action_new (const gchar *name,
                        "name",           name,
                        "label",          label,
                        "tooltip",        tooltip,
-                       "stock-id",       stock_id,
+                       "icon-name",      icon_name,
                        "value",          value,
                        "value-variable", value_variable,
                        NULL);

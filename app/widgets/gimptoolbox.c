@@ -445,7 +445,7 @@ gimp_toolbox_button_press_event (GtkWidget      *widget,
       clipboard = gtk_widget_get_clipboard (widget, GDK_SELECTION_PRIMARY);
       gtk_clipboard_request_text (clipboard,
                                   toolbox_paste_received,
-                                  g_object_ref (toolbox->p->context));
+                                  g_object_ref (toolbox));
 
       return TRUE;
     }
@@ -771,7 +771,8 @@ toolbox_paste_received (GtkClipboard *clipboard,
                         const gchar  *text,
                         gpointer      data)
 {
-  GimpContext *context = GIMP_CONTEXT (data);
+  GimpToolbox *toolbox = GIMP_TOOLBOX (data);
+  GimpContext *context = toolbox->p->context;
 
   if (text)
     {
@@ -787,12 +788,16 @@ toolbox_paste_received (GtkClipboard *clipboard,
 
       if (strlen (copy))
         {
+          GtkWidget         *widget = GTK_WIDGET (toolbox);
           GimpImage         *image;
           GimpPDBStatusType  status;
           GError            *error = NULL;
 
           image = file_open_with_display (context->gimp, context, NULL,
-                                          copy, FALSE, &status, &error);
+                                          copy, FALSE,
+                                          G_OBJECT (gtk_widget_get_screen (widget)),
+                                          gimp_widget_get_monitor (widget),
+                                          &status, &error);
 
           if (! image && status != GIMP_PDB_CANCEL)
             {

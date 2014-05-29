@@ -87,6 +87,63 @@ add_misc_enums(PyObject *m)
 }
 
 static void
+add_compat_enums(PyObject *m)
+{
+    PyModule_AddIntConstant(m, "ADD_WHITE_MASK",
+			    GIMP_ADD_MASK_WHITE);
+    PyModule_AddIntConstant(m, "ADD_BLACK_MASK",
+			    GIMP_ADD_MASK_BLACK);
+    PyModule_AddIntConstant(m, "ADD_ALPHA_MASK",
+			    GIMP_ADD_MASK_ALPHA);
+    PyModule_AddIntConstant(m, "ADD_ALPHA_TRANSFER_MASK",
+			    GIMP_ADD_MASK_ALPHA_TRANSFER);
+    PyModule_AddIntConstant(m, "ADD_SELECTION_MASK",
+			    GIMP_ADD_MASK_SELECTION);
+    PyModule_AddIntConstant(m, "ADD_COPY_MASK",
+			    GIMP_ADD_MASK_COPY);
+    PyModule_AddIntConstant(m, "ADD_CHANNEL_MASK",
+			    GIMP_ADD_MASK_CHANNEL);
+
+    PyModule_AddIntConstant(m, "FG_BG_RGB_MODE",
+			    GIMP_BLEND_FG_BG_RGB);
+    PyModule_AddIntConstant(m, "FG_BG_HSV_MODE",
+			    GIMP_BLEND_FG_BG_HSV);
+    PyModule_AddIntConstant(m, "FG_TRANSPARENT_MODE",
+			    GIMP_BLEND_FG_TRANSPARENT);
+    PyModule_AddIntConstant(m, "CUSTOM_MODE",
+			    GIMP_BLEND_CUSTOM);
+
+    PyModule_AddIntConstant(m, "FG_BUCKET_FILL",
+			    GIMP_BUCKET_FILL_FG);
+    PyModule_AddIntConstant(m, "BG_BUCKET_FILL",
+			    GIMP_BUCKET_FILL_BG);
+    PyModule_AddIntConstant(m, "PATTERN_BUCKET_FILL",
+			    GIMP_BUCKET_FILL_PATTERN);
+
+    PyModule_AddIntConstant(m, "BLUR_CONVOLVE",
+			    GIMP_CONVOLVE_BLUR);
+    PyModule_AddIntConstant(m, "SHARPEN_CONVOLVE",
+			    GIMP_CONVOLVE_SHARPEN);
+
+    PyModule_AddIntConstant(m, "IMAGE_CLONE",
+			    GIMP_CLONE_IMAGE);
+    PyModule_AddIntConstant(m, "PATTERN_CLONE",
+			    GIMP_CLONE_PATTERN);
+
+    PyModule_AddIntConstant(m, "DODGE",
+			    GIMP_DODGE_BURN_TYPE_DODGE);
+    PyModule_AddIntConstant(m, "BURN",
+			    GIMP_DODGE_BURN_TYPE_BURN);
+
+    PyModule_AddIntConstant(m, "SHADOWS",
+			    GIMP_TRANSFER_SHADOWS);
+    PyModule_AddIntConstant(m, "MIDTONES",
+			    GIMP_TRANSFER_MIDTONES);
+    PyModule_AddIntConstant(m, "HIGHLIGHTS",
+			    GIMP_TRANSFER_HIGHLIGHTS);
+}
+
+static void
 add_registered_enums(PyObject *m)
 {
     int num_names, i;
@@ -125,6 +182,7 @@ init_gimpenums(void)
     m = Py_InitModule3("_gimpenums", NULL, gimpenums_doc);
 
     add_misc_enums(m);
+    add_compat_enums(m);
     add_registered_enums(m);
 
     /* Check for errors */

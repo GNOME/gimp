@@ -185,12 +185,13 @@ gimp_gegl_apply_flatten (GeglBuffer    *src_buffer,
 }
 
 void
-gimp_gegl_apply_feather (GeglBuffer   *src_buffer,
-                         GimpProgress *progress,
-                         const gchar  *undo_desc,
-                         GeglBuffer   *dest_buffer,
-                         gdouble       radius_x,
-                         gdouble       radius_y)
+gimp_gegl_apply_feather (GeglBuffer          *src_buffer,
+                         GimpProgress        *progress,
+                         const gchar         *undo_desc,
+                         GeglBuffer          *dest_buffer,
+                         const GeglRectangle *dest_rect,
+                         gdouble              radius_x,
+                         gdouble              radius_y)
 {
   g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
@@ -201,18 +202,103 @@ gimp_gegl_apply_feather (GeglBuffer   *src_buffer,
    */
   gimp_gegl_apply_gaussian_blur (src_buffer,
                                  progress, undo_desc,
-                                 dest_buffer,
+                                 dest_buffer, dest_rect,
                                  radius_x / 3.5,
                                  radius_y / 3.5);
 }
 
 void
-gimp_gegl_apply_gaussian_blur (GeglBuffer   *src_buffer,
-                               GimpProgress *progress,
-                               const gchar  *undo_desc,
-                               GeglBuffer   *dest_buffer,
-                               gdouble       std_dev_x,
-                               gdouble       std_dev_y)
+gimp_gegl_apply_border (GeglBuffer          *src_buffer,
+                        GimpProgress        *progress,
+                        const gchar         *undo_desc,
+                        GeglBuffer          *dest_buffer,
+                        const GeglRectangle *dest_rect,
+                        gint                 radius_x,
+                        gint                 radius_y,
+                        gboolean             feather,
+                        gboolean             edge_lock)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  node = gegl_node_new_child (NULL,
+                              "operation", "gimp:border",
+                              "radius-x",  radius_x,
+                              "radius-y",  radius_y,
+                              "feather",   feather,
+                              "edge-lock", edge_lock,
+                              NULL);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, dest_rect);
+  g_object_unref (node);
+}
+
+void
+gimp_gegl_apply_grow (GeglBuffer          *src_buffer,
+                      GimpProgress        *progress,
+                      const gchar         *undo_desc,
+                      GeglBuffer          *dest_buffer,
+                      const GeglRectangle *dest_rect,
+                      gint                 radius_x,
+                      gint                 radius_y)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  node = gegl_node_new_child (NULL,
+                              "operation", "gimp:grow",
+                              "radius-x",  radius_x,
+                              "radius-y",  radius_y,
+                              NULL);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, dest_rect);
+  g_object_unref (node);
+}
+
+void
+gimp_gegl_apply_shrink (GeglBuffer          *src_buffer,
+                        GimpProgress        *progress,
+                        const gchar         *undo_desc,
+                        GeglBuffer          *dest_buffer,
+                        const GeglRectangle *dest_rect,
+                        gint                 radius_x,
+                        gint                 radius_y,
+                        gboolean             edge_lock)
+{
+  GeglNode *node;
+
+  g_return_if_fail (GEGL_IS_BUFFER (src_buffer));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+
+  node = gegl_node_new_child (NULL,
+                              "operation", "gimp:shrink",
+                              "radius-x",  radius_x,
+                              "radius-y",  radius_y,
+                              "edge-lock", edge_lock,
+                              NULL);
+
+  gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
+                             node, dest_buffer, dest_rect);
+  g_object_unref (node);
+}
+
+void
+gimp_gegl_apply_gaussian_blur (GeglBuffer          *src_buffer,
+                               GimpProgress        *progress,
+                               const gchar         *undo_desc,
+                               GeglBuffer          *dest_buffer,
+                               const GeglRectangle *dest_rect,
+                               gdouble              std_dev_x,
+                               gdouble              std_dev_y)
 {
   GeglNode *node;
 
@@ -227,7 +313,7 @@ gimp_gegl_apply_gaussian_blur (GeglBuffer   *src_buffer,
                               NULL);
 
   gimp_gegl_apply_operation (src_buffer, progress, undo_desc,
-                             node, dest_buffer, NULL);
+                             node, dest_buffer, dest_rect);
   g_object_unref (node);
 }
 

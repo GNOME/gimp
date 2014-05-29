@@ -44,7 +44,7 @@ static const GimpActionEntry colormap_actions[] =
     NC_("colormap-action", "Colormap Menu"), NULL, NULL, NULL,
     GIMP_HELP_INDEXED_PALETTE_DIALOG },
 
-  { "colormap-edit-color", GTK_STOCK_EDIT,
+  { "colormap-edit-color", "gtk-edit",
     NC_("colormap-action", "_Edit Color..."), NULL,
     NC_("colormap-action", "Edit this color"),
     G_CALLBACK (colormap_edit_color_cmd_callback),
@@ -53,13 +53,13 @@ static const GimpActionEntry colormap_actions[] =
 
 static const GimpEnumActionEntry colormap_add_color_actions[] =
 {
-  { "colormap-add-color-from-fg", GTK_STOCK_ADD,
+  { "colormap-add-color-from-fg", "list-add",
     NC_("colormap-action", "_Add Color from FG"), "",
     NC_("colormap-action", "Add current foreground color"),
     FALSE, FALSE,
     GIMP_HELP_INDEXED_PALETTE_ADD },
 
-  { "colormap-add-color-from-bg", GTK_STOCK_ADD,
+  { "colormap-add-color-from-bg", "list-add",
     NC_("colormap-action", "_Add Color from BG"), "",
     NC_("colormap-action", "Add current background color"),
     TRUE, FALSE,

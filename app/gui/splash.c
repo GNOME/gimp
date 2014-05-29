@@ -93,14 +93,16 @@ static void        splash_timer_elapsed       (const gchar    *text1,
 /*  public functions  */
 
 void
-splash_create (gboolean be_verbose)
+splash_create (gboolean   be_verbose,
+               GdkScreen *screen,
+               gint       monitor)
 {
   GtkWidget          *frame;
   GtkWidget          *vbox;
   GdkPixbufAnimation *pixbuf;
-  GdkScreen          *screen;
 
   g_return_if_fail (splash == NULL);
+  g_return_if_fail (GDK_IS_SCREEN (screen));
 
   pixbuf = splash_image_load (be_verbose);
 
@@ -115,6 +117,7 @@ splash_create (gboolean be_verbose)
                   "type-hint",       GDK_WINDOW_TYPE_HINT_SPLASHSCREEN,
                   "title",           _("GIMP Startup"),
                   "role",            "gimp-startup",
+                  "screen",          screen,
                   "window-position", GTK_WIN_POS_CENTER,
                   "resizable",       FALSE,
                   NULL);
@@ -122,8 +125,6 @@ splash_create (gboolean be_verbose)
   g_signal_connect_swapped (splash->window, "delete-event",
                             G_CALLBACK (exit),
                             GINT_TO_POINTER (0));
-
-  screen = gtk_widget_get_screen (splash->window);
 
   splash->width  = MIN (gdk_pixbuf_animation_get_width (pixbuf),
                         gdk_screen_get_width (screen));

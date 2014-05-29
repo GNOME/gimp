@@ -41,6 +41,11 @@ struct _GimpPaintTool
   gboolean       pick_colors;  /*  pick color if ctrl is pressed   */
   gboolean       draw_line;
 
+  gboolean       show_cursor;
+  gboolean       draw_brush;
+  gboolean       draw_circle;
+  gint           circle_radius;
+
   const gchar   *status;       /* status message */
   const gchar   *status_line;  /* status message when drawing a line */
   const gchar   *status_ctrl;  /* additional message for the ctrl modifier */
@@ -51,6 +56,11 @@ struct _GimpPaintTool
 struct _GimpPaintToolClass
 {
   GimpColorToolClass  parent_class;
+
+  GimpCanvasItem * (* get_outline) (GimpPaintTool *paint_tool,
+                                    GimpDisplay   *display,
+                                    gdouble        x,
+                                    gdouble        y);
 };
 
 
@@ -58,6 +68,10 @@ GType   gimp_paint_tool_get_type            (void) G_GNUC_CONST;
 
 void    gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
                                              GimpColorPickMode  mode);
+
+void    gimp_paint_tool_set_draw_circle     (GimpPaintTool     *tool,
+                                             gboolean           draw_circle,
+                                             gint               circle_radius);
 
 
 #endif  /*  __GIMP_PAINT_TOOL_H__  */

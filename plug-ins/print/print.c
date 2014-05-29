@@ -40,6 +40,7 @@
 #define PRINT_TEMP_PROC_NAME "file-print-gtk-page-setup-notify-temp"
 #endif
 
+G_DEFINE_QUARK (gimp-plugin-print-error-quark, gimp_plugin_print_error)
 
 static void        query (void);
 static void        run   (const gchar       *name,
@@ -116,8 +117,8 @@ query (void)
                           print_args, NULL);
 
   gimp_plugin_menu_register (PRINT_PROC_NAME, "<Image>/File/Send");
-  gimp_plugin_icon_register (PRINT_PROC_NAME, GIMP_ICON_TYPE_STOCK_ID,
-                             (const guint8 *) GTK_STOCK_PRINT);
+  gimp_plugin_icon_register (PRINT_PROC_NAME, GIMP_ICON_TYPE_ICON_NAME,
+                             (const guint8 *) "document-print");
 
 #ifndef EMBED_PAGE_SETUP
   gimp_install_procedure (PAGE_SETUP_PROC_NAME,
@@ -134,8 +135,8 @@ query (void)
                           print_args, NULL);
 
   gimp_plugin_menu_register (PAGE_SETUP_PROC_NAME, "<Image>/File/Send");
-  gimp_plugin_icon_register (PAGE_SETUP_PROC_NAME, GIMP_ICON_TYPE_STOCK_ID,
-                             (const guint8 *) GTK_STOCK_PAGE_SETUP);
+  gimp_plugin_icon_register (PAGE_SETUP_PROC_NAME, GIMP_ICON_TYPE_ICON_NAME,
+                             (const guint8 *) "document-page-setup");
 #endif
 }
 
@@ -368,7 +369,7 @@ print_show_error (const gchar *message)
   dialog = gtk_message_dialog_new (NULL, 0,
                                    GTK_MESSAGE_ERROR,
                                    GTK_BUTTONS_OK,
-				   "%s",
+                                   "%s",
                                    _("An error occurred while trying to print:"));
 
   gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
@@ -423,10 +424,19 @@ draw_page (GtkPrintOperation *operation,
            gint               page_nr,
            PrintData         *data)
 {
-  print_draw_page (context, data);
+  GError *error = NULL;
 
-  gimp_progress_update (1.0);
+  if (print_draw_page (context, data, &error))
+    {
+      gimp_progress_update (1.0);
+    }
+  else
+    {
+      print_show_error (error->message);
+      g_error_free (error);
+    }
 }
+
 
 /*
  * This callback creates a "custom" widget that gets inserted into the

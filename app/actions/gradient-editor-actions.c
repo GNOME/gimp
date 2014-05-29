@@ -48,16 +48,16 @@ static const GimpActionEntry gradient_editor_actions[] =
 
   { "gradient-editor-left-color-type", NULL,
     NC_("gradient-editor-action", "Left Color Type") },
-  { "gradient-editor-load-left-color", GTK_STOCK_REVERT_TO_SAVED,
+  { "gradient-editor-load-left-color", "document-revert",
     NC_("gradient-editor-action", "_Load Left Color From") },
-  { "gradient-editor-save-left-color", GTK_STOCK_SAVE,
+  { "gradient-editor-save-left-color", "document-save",
     NC_("gradient-editor-action", "_Save Left Color To") },
 
   { "gradient-editor-right-color-type", NULL,
     NC_("gradient-editor-action", "Right Color Type") },
-  { "gradient-editor-load-right-color", GTK_STOCK_REVERT_TO_SAVED,
+  { "gradient-editor-load-right-color", "document-revert",
     NC_("gradient-editor-action", "Load Right Color Fr_om") },
-  { "gradient-editor-save-right-color", GTK_STOCK_SAVE,
+  { "gradient-editor-save-right-color", "document-save",
     NC_("gradient-editor-action", "Sa_ve Right Color To") },
 
   { "gradient-editor-blending-func", NULL, "blending-function" },
@@ -93,7 +93,7 @@ static const GimpActionEntry gradient_editor_actions[] =
     G_CALLBACK (gradient_editor_split_uniformly_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_SPLIT_UNIFORM },
 
-  { "gradient-editor-delete", GTK_STOCK_DELETE,
+  { "gradient-editor-delete", "edit-delete",
     "delete", "", NULL,
     G_CALLBACK (gradient_editor_delete_cmd_callback),
     GIMP_HELP_GRADIENT_EDITOR_DELETE },
@@ -370,19 +370,19 @@ static const GimpRadioActionEntry gradient_editor_coloring_actions[] =
 
 static const GimpEnumActionEntry gradient_editor_zoom_actions[] =
 {
-  { "gradient-editor-zoom-in", GTK_STOCK_ZOOM_IN,
+  { "gradient-editor-zoom-in", "zoom-in",
     N_("Zoom In"), NULL,
     N_("Zoom in"),
     GIMP_ZOOM_IN, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_ZOOM_IN },
 
-  { "gradient-editor-zoom-out", GTK_STOCK_ZOOM_OUT,
+  { "gradient-editor-zoom-out", "zoom-out",
     N_("Zoom Out"), NULL,
     N_("Zoom out"),
     GIMP_ZOOM_OUT, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_ZOOM_OUT },
 
-  { "gradient-editor-zoom-all", GTK_STOCK_ZOOM_FIT,
+  { "gradient-editor-zoom-all", "zoom-fit-best",
     N_("Zoom All"), NULL,
     N_("Zoom all"),
     GIMP_ZOOM_OUT_MAX, FALSE,

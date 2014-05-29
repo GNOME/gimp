@@ -33,7 +33,6 @@
 #include "gimpdockbook.h"
 #include "gimpdockcontainer.h"
 #include "gimpdockwindow.h"
-#include "gimpsessioninfo.h"
 #include "gimpsessioninfo-aux.h"
 #include "gimpsessioninfo-book.h"
 #include "gimpsessioninfo-dock.h"
@@ -120,7 +119,7 @@ gimp_session_info_dock_serialize (GimpConfigWriter    *writer,
     {
       const char *side_text =
         dock_info->side == GIMP_ALIGN_LEFT ? "left" : "right";
-      
+
       gimp_config_writer_open (writer, "side");
       gimp_config_writer_print (writer, side_text, strlen (side_text));
       gimp_config_writer_close (writer);
@@ -270,6 +269,7 @@ GimpDock *
 gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
                                 GimpDialogFactory   *factory,
                                 GdkScreen           *screen,
+                                gint                 monitor,
                                 GimpDockContainer   *dock_container)
 {
   gint           n_books = 0;
@@ -283,6 +283,7 @@ gimp_session_info_dock_restore (GimpSessionInfoDock *dock_info,
   ui_manager = gimp_dock_container_get_ui_manager (dock_container);
   dock       = gimp_dialog_factory_dialog_new (factory,
                                                screen,
+                                               monitor,
                                                ui_manager,
                                                dock_info->dock_type,
                                                -1 /*view_size*/,

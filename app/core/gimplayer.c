@@ -278,7 +278,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   gimp_object_class->name_changed     = gimp_layer_name_changed;
   gimp_object_class->get_memsize      = gimp_layer_get_memsize;
 
-  viewable_class->default_stock_id    = "gimp-layer";
+  viewable_class->default_icon_name   = "gimp-layer";
   viewable_class->invalidate_preview  = gimp_layer_invalidate_preview;
   viewable_class->get_description     = gimp_layer_get_description;
 
@@ -452,6 +452,8 @@ gimp_layer_dispose (GObject *object)
        */
       if (gimp_drawable_get_floating_sel (fs_drawable) == layer)
         gimp_drawable_detach_floating_sel (fs_drawable);
+
+      gimp_layer_set_floating_sel_drawable (layer, NULL);
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
@@ -466,13 +468,6 @@ gimp_layer_finalize (GObject *object)
     {
       g_object_unref (layer->mask);
       layer->mask = NULL;
-    }
-
-  if (layer->fs.segs)
-    {
-      g_free (layer->fs.segs);
-      layer->fs.segs     = NULL;
-      layer->fs.num_segs = 0;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -1290,17 +1285,25 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
 {
   GeglBuffer *buffer;
   GimpLayer  *layer;
+  gint        width;
+  gint        height;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (format != NULL, NULL);
 
-  buffer = gimp_pixbuf_create_buffer (pixbuf);
+  width  = gdk_pixbuf_get_width (pixbuf);
+  height = gdk_pixbuf_get_height (pixbuf);
 
-  layer = gimp_layer_new_from_buffer (buffer, dest_image, format,
-                                      name, opacity, mode);
+  layer = gimp_layer_new (dest_image, width, height,
+                          format, name, opacity, mode);
 
-  g_object_unref (buffer);
+  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+
+  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
+                   gimp_pixbuf_get_format (pixbuf),
+                   gdk_pixbuf_get_pixels (pixbuf),
+                   gdk_pixbuf_get_rowstride (pixbuf));
 
   return layer;
 }
@@ -1431,7 +1434,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
   GimpRGB        black = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
 
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
-  g_return_val_if_fail (add_mask_type != GIMP_ADD_CHANNEL_MASK ||
+  g_return_val_if_fail (add_mask_type != GIMP_ADD_MASK_CHANNEL ||
                         GIMP_IS_CHANNEL (channel), NULL);
 
   drawable = GIMP_DRAWABLE (layer);
@@ -1450,11 +1453,11 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
   switch (add_mask_type)
     {
-    case GIMP_ADD_WHITE_MASK:
+    case GIMP_ADD_MASK_WHITE:
       gimp_channel_all (GIMP_CHANNEL (mask), FALSE);
       return mask;
 
-    case GIMP_ADD_BLACK_MASK:
+    case GIMP_ADD_MASK_BLACK:
       gimp_channel_clear (GIMP_CHANNEL (mask), NULL, FALSE);
       return mask;
 
@@ -1464,12 +1467,12 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
   switch (add_mask_type)
     {
-    case GIMP_ADD_WHITE_MASK:
-    case GIMP_ADD_BLACK_MASK:
+    case GIMP_ADD_MASK_WHITE:
+    case GIMP_ADD_MASK_BLACK:
       break;
 
-    case GIMP_ADD_ALPHA_MASK:
-    case GIMP_ADD_ALPHA_TRANSFER_MASK:
+    case GIMP_ADD_MASK_ALPHA:
+    case GIMP_ADD_MASK_ALPHA_TRANSFER:
       if (gimp_drawable_has_alpha (drawable))
         {
           GeglBuffer *dest_buffer;
@@ -1485,7 +1488,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
                             dest_buffer, NULL);
           gegl_buffer_set_format (dest_buffer, NULL);
 
-          if (add_mask_type == GIMP_ADD_ALPHA_TRANSFER_MASK)
+          if (add_mask_type == GIMP_ADD_MASK_ALPHA_TRANSFER)
             {
               gimp_drawable_push_undo (drawable,
                                        C_("undo-type", "Transfer Alpha to Mask"),
@@ -1502,15 +1505,15 @@ gimp_layer_create_mask (const GimpLayer *layer,
         }
       break;
 
-    case GIMP_ADD_SELECTION_MASK:
-    case GIMP_ADD_CHANNEL_MASK:
+    case GIMP_ADD_MASK_SELECTION:
+    case GIMP_ADD_MASK_CHANNEL:
       {
         gboolean channel_empty;
         gint     offset_x, offset_y;
         gint     copy_x, copy_y;
         gint     copy_width, copy_height;
 
-        if (add_mask_type == GIMP_ADD_SELECTION_MASK)
+        if (add_mask_type == GIMP_ADD_MASK_SELECTION)
           channel = GIMP_CHANNEL (gimp_image_get_mask (image));
 
         channel_empty = gimp_channel_is_empty (channel);
@@ -1551,7 +1554,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
       }
       break;
 
-    case GIMP_ADD_COPY_MASK:
+    case GIMP_ADD_MASK_COPY:
       {
         GeglBuffer *src_buffer;
         GeglBuffer *dest_buffer;
@@ -1984,7 +1987,13 @@ gimp_layer_set_floating_sel_drawable (GimpLayer    *layer,
           layer->fs.num_segs = 0;
         }
 
+      if (layer->fs.drawable)
+        g_object_unref (layer->fs.drawable);
+
       layer->fs.drawable = drawable;
+
+      if (layer->fs.drawable)
+        g_object_ref (layer->fs.drawable);
 
       g_object_notify (G_OBJECT (layer), "floating-selection");
     }

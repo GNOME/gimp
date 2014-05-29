@@ -52,7 +52,7 @@ struct _GimpViewableClass
 {
   GimpObjectClass  parent_class;
 
-  const gchar     *default_stock_id;
+  const gchar     *default_icon_name;
   const gchar     *name_changed_signal;
 
   /*  signals  */
@@ -165,9 +165,9 @@ GdkPixbuf     * gimp_viewable_get_dummy_pixbuf   (GimpViewable  *viewable,
 gchar         * gimp_viewable_get_description    (GimpViewable  *viewable,
                                                   gchar        **tooltip);
 
-const gchar   * gimp_viewable_get_stock_id       (GimpViewable  *viewable);
-void            gimp_viewable_set_stock_id       (GimpViewable  *viewable,
-                                                  const gchar   *stock_id);
+const gchar   * gimp_viewable_get_icon_name      (GimpViewable  *viewable);
+void            gimp_viewable_set_icon_name      (GimpViewable  *viewable,
+                                                  const gchar   *icon_name);
 
 void            gimp_viewable_preview_freeze     (GimpViewable  *viewable);
 void            gimp_viewable_preview_thaw       (GimpViewable  *viewable);

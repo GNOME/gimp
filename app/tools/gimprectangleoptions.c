@@ -922,8 +922,8 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                                    private->aspect_history);
 
     private->aspect_button_box =
-      gimp_prop_enum_stock_box_new (G_OBJECT (entry),
-                                    "aspect", "gimp", -1, -1);
+      gimp_prop_enum_icon_box_new (G_OBJECT (entry),
+                                   "aspect", "gimp", -1, -1);
     gtk_box_pack_start (GTK_BOX (private->fixed_aspect_hbox),
                         private->aspect_button_box, FALSE, FALSE, 0);
     gtk_widget_show (private->aspect_button_box);
@@ -992,8 +992,8 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                                    private->size_history);
 
     private->size_button_box =
-      gimp_prop_enum_stock_box_new (G_OBJECT (entry),
-                                    "aspect", "gimp", -1, -1);
+      gimp_prop_enum_icon_box_new (G_OBJECT (entry),
+                                   "aspect", "gimp", -1, -1);
     gtk_box_pack_start (GTK_BOX (private->fixed_size_hbox),
                         private->size_button_box, FALSE, FALSE, 0);
     gtk_widget_show (private->size_button_box);

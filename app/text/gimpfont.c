@@ -26,6 +26,10 @@
 
 #include <pango/pangocairo.h>
 
+#include <hb.h>
+#include <hb-ot.h>
+#include <hb-ft.h>
+
 #define PANGO_ENABLE_ENGINE  1   /* Argh */
 #include <pango/pango-ot.h>
 
@@ -111,14 +115,14 @@ gimp_font_class_init (GimpFontClass *klass)
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->finalize     = gimp_font_finalize;
-  object_class->set_property = gimp_font_set_property;
+  object_class->finalize            = gimp_font_finalize;
+  object_class->set_property        = gimp_font_set_property;
 
-  viewable_class->get_preview_size = gimp_font_get_preview_size;
-  viewable_class->get_popup_size   = gimp_font_get_popup_size;
-  viewable_class->get_new_preview  = gimp_font_get_new_preview;
+  viewable_class->get_preview_size  = gimp_font_get_preview_size;
+  viewable_class->get_popup_size    = gimp_font_get_popup_size;
+  viewable_class->get_new_preview   = gimp_font_get_new_preview;
 
-  viewable_class->default_stock_id = "gtk-select-font";
+  viewable_class->default_icon_name = "gtk-select-font";
 
   g_object_class_install_property (object_class, PROP_PANGO_CONTEXT,
                                    g_param_spec_object ("pango-context",
@@ -350,13 +354,30 @@ gimp_font_covers_string (PangoFcFont *font,
   return TRUE;
 }
 
+/* This function was picked up from Pango's pango-ot-info.c. Until there
+ * is a better way to get the tag, we use this.
+ */
+static hb_tag_t
+get_hb_table_type (PangoOTTableType table_type)
+{
+  switch (table_type)
+    {
+    case PANGO_OT_TABLE_GSUB:
+      return HB_OT_TAG_GSUB;
+    case PANGO_OT_TABLE_GPOS:
+      return HB_OT_TAG_GPOS;
+    default:
+      return HB_TAG_NONE;
+    }
+}
+
 /* Guess a suitable short sample string for the font. */
 static const gchar *
 gimp_font_get_sample_string (PangoContext         *context,
                              PangoFontDescription *font_desc)
 {
   PangoFont        *font;
-  PangoOTInfo      *ot_info;
+  hb_face_t        *hb_face;
   FT_Face           face;
   TT_OS2           *os2;
   PangoOTTableType  tt;
@@ -642,7 +663,7 @@ gimp_font_get_sample_string (PangoContext         *context,
 
   face = pango_fc_font_lock_face (PANGO_FC_FONT (font));
   g_return_val_if_fail (face != NULL, "Aa");
-  ot_info = pango_ot_info_get (face);
+  hb_face = hb_ft_face_create (face, NULL);
 
   /* First check what script(s), if any, the font has GSUB or GPOS
    * OpenType layout tables for.
@@ -651,7 +672,15 @@ gimp_font_get_sample_string (PangoContext         *context,
        n_ot_alts < G_N_ELEMENTS (ot_alts) && tt <= PANGO_OT_TABLE_GPOS;
        tt++)
     {
-      PangoOTTag *slist = pango_ot_info_list_scripts (ot_info, tt);
+      hb_tag_t tag;
+      unsigned int count;
+      PangoOTTag *slist;
+
+      tag = get_hb_table_type (tt);
+      count = hb_ot_layout_table_get_script_tags (hb_face, tag, 0, NULL, NULL);
+      slist = g_new (PangoOTTag, count + 1);
+      hb_ot_layout_table_get_script_tags (hb_face, tag, 0, &count, slist);
+      slist[count] = 0;
 
       if (slist)
         {
@@ -686,6 +715,8 @@ gimp_font_get_sample_string (PangoContext         *context,
           g_free (slist);
         }
     }
+
+  hb_face_destroy (hb_face);
 
   DEBUGPRINT (("; OS/2: "));
 

@@ -753,7 +753,10 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  gimp_item_parasite_attach (item, parasite, TRUE);
+  if (gimp_item_parasite_validate (item, parasite, error))
+    gimp_item_parasite_attach (item, parasite, TRUE);
+  else
+    success = FALSE;
 }
 CODE
     );

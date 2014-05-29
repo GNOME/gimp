@@ -40,6 +40,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcolorpanel.h"
+#include "gimpdial.h"
 #include "gimpdnd.h"
 #include "gimpiconpicker.h"
 #include "gimplanguagecombobox.h"
@@ -505,6 +506,7 @@ gimp_prop_spin_scale_new (GObject     *config,
   if (GEGL_IS_PARAM_SPEC_DOUBLE (param_spec))
     {
       GeglParamSpecDouble *gspec = GEGL_PARAM_SPEC_DOUBLE (param_spec);
+
       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),
                                         gspec->ui_minimum, gspec->ui_maximum);
       gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), gspec->ui_gamma);
@@ -512,6 +514,7 @@ gimp_prop_spin_scale_new (GObject     *config,
   else if (GEGL_IS_PARAM_SPEC_INT (param_spec))
     {
       GeglParamSpecInt *gspec = GEGL_PARAM_SPEC_INT (param_spec);
+
       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),
                                         gspec->ui_minimum, gspec->ui_maximum);
       gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), gspec->ui_gamma);
@@ -531,6 +534,8 @@ gimp_prop_spin_scale_new (GObject     *config,
 void
 gimp_prop_widget_set_factor (GtkWidget *widget,
                              gdouble    factor,
+                             gdouble    step_increment,
+                             gdouble    page_increment,
                              gint       digits)
 {
   GtkAdjustment *adjustment;
@@ -564,12 +569,18 @@ gimp_prop_widget_set_factor (GtkWidget *widget,
 
   f = factor / old_factor;
 
+  if (step_increment <= 0)
+    step_increment = f * gtk_adjustment_get_step_increment (adjustment);
+
+  if (page_increment <= 0)
+    page_increment = f * gtk_adjustment_get_page_increment (adjustment);
+
   gtk_adjustment_configure (adjustment,
                             f * gtk_adjustment_get_value (adjustment),
                             f * gtk_adjustment_get_lower (adjustment),
                             f * gtk_adjustment_get_upper (adjustment),
-                            f * gtk_adjustment_get_step_increment (adjustment),
-                            f * gtk_adjustment_get_page_increment (adjustment),
+                            step_increment,
+                            page_increment,
                             f * gtk_adjustment_get_page_size (adjustment));
 
   gtk_spin_button_set_digits (GTK_SPIN_BUTTON (widget), digits);
@@ -715,9 +726,180 @@ gimp_prop_adjustment_notify (GObject       *config,
 }
 
 
-/*************/
+/************/
+/*  angles  */
+/************/
+
+static gboolean
+deg_to_rad (GBinding     *binding,
+            const GValue *from_value,
+            GValue       *to_value,
+            gpointer      user_data)
+{
+  gdouble *lower = user_data;
+  gdouble  value = g_value_get_double (from_value);
+
+  if (lower && *lower != 0.0)
+    {
+      if (value < 0.0)
+        value += 360.0;
+    }
+
+  value *= G_PI / 180.0;
+
+  g_value_set_double (to_value, value);
+
+  return TRUE;
+}
+
+static gboolean
+rad_to_deg (GBinding     *binding,
+            const GValue *from_value,
+            GValue       *to_value,
+            gpointer      user_data)
+{
+  gdouble *lower = user_data;
+  gdouble  value = g_value_get_double (from_value);
+
+  value *= 180.0 / G_PI;
+
+  if (lower && *lower != 0.0)
+    {
+      if (value > (*lower + 360.0))
+        value -= 360.0;
+    }
+
+  g_value_set_double (to_value, value);
+
+  return TRUE;
+}
+
+/**
+ * gimp_prop_angle_dial_new:
+ * @config:        #GimpConfig object to which property is attached.
+ * @property_name: Name of gdouble property
+ *
+ * Creates a #GimpDial to set and display the value of a
+ * gdouble property that represents an angle.
+ *
+ * Return value:  A new #GimpDial widget.
+ *
+ * Since GIMP 2.10
+ */
+GtkWidget *
+gimp_prop_angle_dial_new (GObject     *config,
+                          const gchar *property_name)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *dial;
+  gdouble     value;
+  gdouble     lower;
+  gdouble     upper;
+
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  if (! _gimp_prop_widgets_get_numeric_values (config, param_spec,
+                                               &value, &lower, &upper,
+                                               G_STRFUNC))
+    return NULL;
+
+  dial = gimp_dial_new ();
+
+  g_object_set (dial,
+                "size",         32,
+                "border-width", 0,
+                "background",   GIMP_CIRCLE_BACKGROUND_PLAIN,
+                "draw-beta",    FALSE,
+                NULL);
+
+  set_param_spec (G_OBJECT (dial), dial, param_spec);
+
+  if (lower == 0.0 && upper == 2 * G_PI)
+    {
+      g_object_bind_property (config, property_name,
+                              dial,   "alpha",
+                              G_BINDING_BIDIRECTIONAL |
+                              G_BINDING_SYNC_CREATE);
+    }
+  else if ((upper - lower) == 360.0)
+    {
+      gdouble *l = g_new0 (gdouble, 1);
+
+      *l = lower;
+
+      g_object_bind_property_full (config, property_name,
+                                   dial,   "alpha",
+                                   G_BINDING_BIDIRECTIONAL |
+                                   G_BINDING_SYNC_CREATE,
+                                   deg_to_rad,
+                                   rad_to_deg,
+                                   l, (GDestroyNotify) g_free);
+    }
+
+  return dial;
+}
+
+GtkWidget *
+gimp_prop_angle_range_dial_new  (GObject     *config,
+                                 const gchar *alpha_property_name,
+                                 const gchar *beta_property_name,
+                                 const gchar *clockwise_property_name)
+{
+  GParamSpec *alpha_param_spec;
+  GParamSpec *beta_param_spec;
+  GParamSpec *clockwise_param_spec;
+  GtkWidget  *dial;
+
+  alpha_param_spec = find_param_spec (config, alpha_property_name, G_STRFUNC);
+  if (! alpha_param_spec)
+    return NULL;
+
+  beta_param_spec = find_param_spec (config, beta_property_name, G_STRFUNC);
+  if (! beta_param_spec)
+    return NULL;
+
+  clockwise_param_spec = find_param_spec (config, clockwise_property_name, G_STRFUNC);
+  if (! clockwise_param_spec)
+    return NULL;
+
+  dial = gimp_dial_new ();
+
+  g_object_set (dial,
+                "size",         96,
+                "border-width", 0,
+                "background",   GIMP_CIRCLE_BACKGROUND_HSV,
+                NULL);
+
+  g_object_bind_property_full (config, alpha_property_name,
+                               dial,   "alpha",
+                               G_BINDING_BIDIRECTIONAL |
+                               G_BINDING_SYNC_CREATE,
+                               deg_to_rad,
+                               rad_to_deg,
+                               NULL, NULL);
+
+  g_object_bind_property_full (config, beta_property_name,
+                               dial,   "beta",
+                               G_BINDING_BIDIRECTIONAL |
+                               G_BINDING_SYNC_CREATE,
+                               deg_to_rad,
+                               rad_to_deg,
+                               NULL, NULL);
+
+  g_object_bind_property (config, clockwise_property_name,
+                          dial,   "clockwise",
+                          G_BINDING_BIDIRECTIONAL |
+                          G_BINDING_SYNC_CREATE);
+
+  return dial;
+}
+
+
+/**********/
 /*  view  */
-/*************/
+/**********/
 
 static void   gimp_prop_view_drop   (GtkWidget    *menu,
                                      gint          x,
@@ -1304,30 +1486,30 @@ GtkWidget *
 gimp_prop_icon_picker_new (GimpViewable *viewable,
                            Gimp         *gimp)
 {
-  GObject     *object         = G_OBJECT (viewable);
-  GtkWidget   *picker         = NULL;
-  GdkPixbuf   *pixbuf_value   = NULL;
-  gchar       *stock_id_value = NULL;
+  GObject     *object          = G_OBJECT (viewable);
+  GtkWidget   *picker          = NULL;
+  GdkPixbuf   *pixbuf_value    = NULL;
+  gchar       *icon_name_value = NULL;
 
   picker = gimp_icon_picker_new (gimp);
 
   g_object_get (object,
-                "stock-id", &stock_id_value,
+                "icon-name",   &icon_name_value,
                 "icon-pixbuf", &pixbuf_value,
                 NULL);
 
-  gimp_icon_picker_set_stock_id (GIMP_ICON_PICKER (picker), stock_id_value);
+  gimp_icon_picker_set_icon_name (GIMP_ICON_PICKER (picker), icon_name_value);
   gimp_icon_picker_set_icon_pixbuf (GIMP_ICON_PICKER (picker), pixbuf_value);
 
   g_signal_connect (picker, "notify::icon-pixbuf",
                     G_CALLBACK (gimp_prop_icon_picker_callback),
                     object);
 
-  g_signal_connect (picker, "notify::stock-id",
+  g_signal_connect (picker, "notify::icon-name",
                     G_CALLBACK (gimp_prop_icon_picker_callback),
                     object);
 
-  connect_notify (object, "stock-id",
+  connect_notify (object, "icon-name",
                   G_CALLBACK (gimp_prop_icon_picker_notify),
                   picker);
 
@@ -1335,8 +1517,8 @@ gimp_prop_icon_picker_new (GimpViewable *viewable,
                   G_CALLBACK (gimp_prop_icon_picker_notify),
                   picker);
 
-  if (stock_id_value)
-    g_free (stock_id_value);
+  if (icon_name_value)
+    g_free (icon_name_value);
   if (pixbuf_value)
     g_object_unref (pixbuf_value);
 
@@ -1352,12 +1534,12 @@ gimp_prop_icon_picker_callback (GtkWidget  *picker,
                                    gimp_prop_icon_picker_notify,
                                    picker);
 
-  if (! strcmp (param_spec->name, "stock-id"))
+  if (! strcmp (param_spec->name, "icon-name"))
     {
-      const gchar *value = gimp_icon_picker_get_stock_id (GIMP_ICON_PICKER (picker));
+      const gchar *value = gimp_icon_picker_get_icon_name (GIMP_ICON_PICKER (picker));
 
       g_object_set (config,
-                    "stock-id", value,
+                    "icon-name", value,
                     NULL);
 
     }
@@ -1385,15 +1567,15 @@ gimp_prop_icon_picker_notify (GObject    *config,
                                    gimp_prop_icon_picker_callback,
                                    config);
 
-  if (!strcmp (param_spec->name, "stock-id"))
+  if (!strcmp (param_spec->name, "icon-name"))
     {
       gchar *value = NULL;
 
       g_object_get (config,
-                    "stock-id", &value,
+                    "icon-name", &value,
                     NULL);
 
-      gimp_icon_picker_set_stock_id (GIMP_ICON_PICKER (picker), value);
+      gimp_icon_picker_set_icon_name (GIMP_ICON_PICKER (picker), value);
 
       if (value)
         g_free (value);
@@ -1508,7 +1690,7 @@ set_param_spec (GObject     *object,
       const gchar *blurb = g_param_spec_get_blurb (param_spec);
 
       if (blurb)
-        gimp_help_set_help_data (widget, gettext (blurb), NULL);
+        gimp_help_set_help_data (widget, blurb, NULL);
     }
 }
 

@@ -74,20 +74,20 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class,
                                     GIMP_RECTANGLE_OPTIONS_PROP_HIGHLIGHT,
                                     "highlight",
-                                    N_("Dim everything outside selection"),
+                                    _("Dim everything outside selection"),
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_LAYER_ONLY,
                                     "layer-only",
-                                    N_("Crop only currently selected layer"),
+                                    _("Crop only currently selected layer"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ALLOW_GROWING,
                                     "allow-growing",
-                                    N_("Allow resizing canvas by dragging cropping frame "
-                                       "beyond image boundary"),
+                                    _("Allow resizing canvas by dragging cropping frame "
+                                      "beyond image boundary"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 

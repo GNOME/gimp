@@ -349,17 +349,17 @@ gimp_procedure_execute (GimpProcedure   *procedure,
            *  from the error message that is optionally passed with
            *  the return values.
            */
-          if (error && *error == NULL)
+          if (error && *error == NULL &&
+              gimp_value_array_length (return_vals) > 1 &&
+              G_VALUE_HOLDS_STRING (gimp_value_array_index (return_vals, 1)))
             {
-              if (gimp_value_array_length (return_vals) > 1 &&
-                  G_VALUE_HOLDS_STRING (gimp_value_array_index (return_vals, 1)))
-                {
-                  GValue *value = gimp_value_array_index (return_vals, 1);
+              GValue      *value   = gimp_value_array_index (return_vals, 1);
+              const gchar *message = g_value_get_string (value);
 
-                  g_set_error_literal (error, GIMP_PDB_ERROR,
-                                       GIMP_PDB_ERROR_FAILED,
-				       g_value_get_string (value));
-                }
+              if (message)
+                g_set_error_literal (error, GIMP_PDB_ERROR,
+                                     GIMP_PDB_ERROR_FAILED,
+                                     message);
             }
           break;
 

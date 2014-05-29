@@ -25,11 +25,14 @@
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
 
 #include "core/gimp-edit.h"
+#include "core/gimp-gradients.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-blend.h"
@@ -45,6 +48,7 @@
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
+#include "gimppdbcontext.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -600,19 +604,19 @@ edit_bucket_fill_invoker (GimpProcedure         *procedure,
 
           if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
             {
-              GimpFillType fill_type = GIMP_FG_BUCKET_FILL;
+              GimpFillType fill_type = GIMP_FOREGROUND_FILL;
 
               switch (fill_mode)
                 {
-                case GIMP_FG_BUCKET_FILL:
+                case GIMP_BUCKET_FILL_FG:
                   fill_type = GIMP_FOREGROUND_FILL;
                   break;
 
-                case GIMP_BG_BUCKET_FILL:
+                case GIMP_BUCKET_FILL_BG:
                   fill_type = GIMP_BACKGROUND_FILL;
                   break;
 
-                case GIMP_PATTERN_BUCKET_FILL:
+                case GIMP_BUCKET_FILL_PATTERN:
                   fill_type = GIMP_PATTERN_FILL;
                   break;
                 }
@@ -680,19 +684,19 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
 
           if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
             {
-              GimpFillType fill_type = GIMP_FG_BUCKET_FILL;
+              GimpFillType fill_type = GIMP_FOREGROUND_FILL;
 
               switch (fill_mode)
                 {
-                case GIMP_FG_BUCKET_FILL:
+                case GIMP_BUCKET_FILL_FG:
                   fill_type = GIMP_FOREGROUND_FILL;
                   break;
 
-                case GIMP_BG_BUCKET_FILL:
+                case GIMP_BUCKET_FILL_BG:
                   fill_type = GIMP_BACKGROUND_FILL;
                   break;
 
-                case GIMP_PATTERN_BUCKET_FILL:
+                case GIMP_BUCKET_FILL_PATTERN:
                   fill_type = GIMP_PATTERN_FILL;
                   break;
                 }
@@ -779,12 +783,34 @@ edit_blend_invoker (GimpProcedure         *procedure,
 
       if (success)
         {
+          GimpGradient *gradient;
+
           if (progress)
             gimp_progress_start (progress, _("Blending"), FALSE);
 
+          switch (blend_mode)
+            {
+            case GIMP_BLEND_FG_BG_RGB:
+              gradient = gimp_gradients_get_fg_bg_rgb (context->gimp);
+              break;
+
+            case GIMP_BLEND_FG_BG_HSV:
+              gradient = gimp_gradients_get_fg_bg_hsv_cw (context->gimp);
+              break;
+
+            case GIMP_BLEND_FG_TRANSPARENT:
+              gradient = gimp_gradients_get_fg_transparent (context->gimp);
+              break;
+
+            case GIMP_BLEND_CUSTOM:
+            default:
+              gradient = gimp_context_get_gradient (context);
+              break;
+            }
+
           gimp_drawable_blend (drawable,
                                context,
-                               blend_mode,
+                               gradient,
                                paint_mode,
                                gradient_type,
                                opacity / 100.0,
@@ -822,18 +848,25 @@ edit_stroke_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GimpImage         *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+          GimpImage         *image = gimp_item_get_image (GIMP_ITEM (drawable));
           GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
+          GimpPaintOptions  *paint_options;
 
+          options = gimp_stroke_options_new (gimp, context, TRUE);
           g_object_set (options,
                         "method", GIMP_STROKE_METHOD_PAINT_CORE,
                         NULL);
 
+          paint_options =
+            gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context), NULL);
+          paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
+
           success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
-                                      drawable, context, options, TRUE, TRUE,
-                                      progress, error);
+                                      drawable, context, options, paint_options,
+                                      TRUE, progress, error);
 
           g_object_unref (options);
+          g_object_unref (paint_options);
         }
       else
         success = FALSE;
@@ -867,17 +900,24 @@ edit_stroke_vectors_invoker (GimpProcedure         *procedure,
                                      gimp_item_get_image (GIMP_ITEM (drawable)),
                                      0, error))
         {
-          GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
+          GimpStrokeOptions *options;
+          GimpPaintOptions  *paint_options;
 
+          options = gimp_stroke_options_new (gimp, context, TRUE);
           g_object_set (options,
                         "method", GIMP_STROKE_METHOD_PAINT_CORE,
                         NULL);
 
+          paint_options =
+            gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context), NULL);
+          paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
+
           success = gimp_item_stroke (GIMP_ITEM (vectors),
-                                      drawable, context, options, TRUE, TRUE,
-                                      progress, error);
+                                      drawable, context, options, paint_options,
+                                      TRUE, progress, error);
 
           g_object_unref (options);
+          g_object_unref (paint_options);
         }
       else
         success = FALSE;
@@ -1298,7 +1338,7 @@ register_edit_procs (GimpPDB *pdb)
                                                   "fill mode",
                                                   "The type of fill",
                                                   GIMP_TYPE_BUCKET_FILL_MODE,
-                                                  GIMP_FG_BUCKET_FILL,
+                                                  GIMP_BUCKET_FILL_FG,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("paint-mode",
@@ -1365,7 +1405,7 @@ register_edit_procs (GimpPDB *pdb)
                                                   "fill mode",
                                                   "The type of fill",
                                                   GIMP_TYPE_BUCKET_FILL_MODE,
-                                                  GIMP_FG_BUCKET_FILL,
+                                                  GIMP_BUCKET_FILL_FG,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("paint-mode",
@@ -1445,7 +1485,7 @@ register_edit_procs (GimpPDB *pdb)
                                                   "blend mode",
                                                   "The type of blend",
                                                   GIMP_TYPE_BLEND_MODE,
-                                                  GIMP_FG_BG_RGB_MODE,
+                                                  GIMP_BLEND_FG_BG_RGB,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("paint-mode",

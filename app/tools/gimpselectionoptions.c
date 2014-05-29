@@ -76,19 +76,19 @@ gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                                     "antialias",
-                                    N_("Smooth edges"),
+                                    _("Smooth edges"),
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FEATHER,
                                     "feather",
-                                    N_("Enable feathering of selection edges"),
+                                    _("Enable feathering of selection edges"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FEATHER_RADIUS,
                                    "feather-radius",
-                                   N_("Radius of feathering"),
+                                   _("Radius of feathering"),
                                    0.0, 100.0, 10.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 }
@@ -219,8 +219,8 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 
-    box = gimp_prop_enum_stock_box_new (config, "operation",
-                                        "gimp-selection", 0, 0);
+    box = gimp_prop_enum_icon_box_new (config, "operation",
+                                       "gimp-selection", 0, 0);
     gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
     gtk_widget_show (box);
 

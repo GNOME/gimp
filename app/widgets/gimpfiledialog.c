@@ -304,7 +304,7 @@ gimp_file_dialog_new (Gimp                  *gimp,
                       GimpFileChooserAction  action,
                       const gchar           *title,
                       const gchar           *role,
-                      const gchar           *stock_id,
+                      const gchar           *icon_name,
                       const gchar           *help_id)
 {
   GimpFileDialog       *dialog                = NULL;
@@ -318,7 +318,7 @@ gimp_file_dialog_new (Gimp                  *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
-  g_return_val_if_fail (stock_id != NULL, NULL);
+  g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
 
   switch (action)
@@ -367,7 +367,7 @@ gimp_file_dialog_new (Gimp                  *gimp,
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                          stock_id,         GTK_RESPONSE_OK,
+                          icon_name,        GTK_RESPONSE_OK,
                           NULL);
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
@@ -1161,6 +1161,17 @@ gimp_file_dialog_get_default_uri (Gimp *gimp)
                            NULL);
       uri = g_filename_to_uri (path, NULL, NULL);
       g_free (path);
+
+      /* Paranoia fallback, see bug #722400 */
+      if (! uri)
+        {
+          path = g_build_path (G_DIR_SEPARATOR_S,
+                               g_get_home_dir (),
+                               G_DIR_SEPARATOR_S,
+                               NULL);
+          uri = g_filename_to_uri (path, NULL, NULL);
+          g_free (path);
+        }
 
       return uri;
     }

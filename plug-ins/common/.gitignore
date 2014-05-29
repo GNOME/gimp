@@ -12,8 +12,6 @@
 /blinds.exe
 /blur
 /blur.exe
-/blur-gauss
-/blur-gauss.exe
 /blur-gauss-selective
 /blur-gauss-selective.exe
 /border-average
@@ -50,8 +48,6 @@
 /curve-bend.exe
 /decompose
 /decompose.exe
-/deinterlace
-/deinterlace.exe
 /depth-merge
 /depth-merge.exe
 /despeckle
@@ -168,8 +164,6 @@
 /jigsaw.exe
 /lcms
 /lcms.exe
-/lens-apply
-/lens-apply.exe
 /lens-flare
 /lens-flare.exe
 /mail
@@ -182,8 +176,6 @@
 /newsprint.exe
 /nl-filter
 /nl-filter.exe
-/noise-rgb
-/noise-rgb.exe
 /noise-solid
 /noise-solid.exe
 /nova
@@ -200,8 +192,6 @@
 /qbist.exe
 /ripple
 /ripple.exe
-/rotate
-/rotate.exe
 /sample-colorize
 /sample-colorize.exe
 /screenshot
@@ -220,8 +210,6 @@
 /sphere-designer.exe
 /tile
 /tile.exe
-/tile-glass
-/tile-glass.exe
 /tile-paper
 /tile-paper.exe
 /tile-small

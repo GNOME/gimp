@@ -134,9 +134,11 @@ typedef struct
 
 typedef struct
 {
+  GtkWidget *ip_entry;
   GtkWidget *port_entry;
   GtkWidget *log_entry;
 
+  gchar     *listen_ip;
   gint       port;
   gchar     *logfile;
 
@@ -156,7 +158,8 @@ typedef union
  *  Local Functions
  */
 
-static void      server_start       (gint         port,
+static void      server_start       (const gchar *listen_ip,
+                                     gint         port,
                                      const gchar *logfile);
 static gboolean  execute_command    (SFCommand   *cmd);
 static gint      read_from_client   (gint         filedes);
@@ -191,7 +194,9 @@ static ServerInterface sint =
 {
   NULL,  /*  port entry widget    */
   NULL,  /*  log entry widget     */
+  NULL,  /*  ip entry widget      */
 
+  NULL,  /*  ip to bind to        */
   10008, /*  default port number  */
   NULL,  /*  use stdout           */
 
@@ -238,7 +243,7 @@ script_fu_server_run (const gchar      *name,
           server_mode = TRUE;
 
           /*  Start the server  */
-          server_start (sint.port, sint.logfile);
+          server_start (sint.listen_ip, sint.port, sint.logfile);
         }
       break;
 
@@ -247,7 +252,11 @@ script_fu_server_run (const gchar      *name,
       server_mode = TRUE;
 
       /*  Start the server  */
-      server_start (params[1].data.d_int32, params[2].data.d_string);
+      server_start ((params[1].data.d_string &&
+                     strlen (params[1].data.d_string)) ?
+                    params[1].data.d_string : "127.0.0.1",
+                    params[2].data.d_int32,
+                    params[3].data.d_string);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -448,16 +457,16 @@ server_progress_uninstall (const gchar *progress)
 }
 
 static void
-server_start (gint         port,
+server_start (const gchar *listen_ip,
+              gint         port,
               const gchar *logfile)
 {
-  struct addrinfo *ai,
-                  *ai_curr;
+  struct addrinfo *ai;
+  struct addrinfo *ai_curr;
   struct addrinfo  hints;
-  gint             e,
-                   sockno;
+  gint             e;
+  gint             sockno;
   gchar           *port_s;
-
   const gchar     *progress;
 
   memset (&hints, 0, sizeof (hints));
@@ -465,12 +474,12 @@ server_start (gint         port,
   hints.ai_socktype = SOCK_STREAM;
 
   port_s = g_strdup_printf ("%d", port);
-  e = getaddrinfo (NULL, port_s, &hints, &ai);
+  e = getaddrinfo (listen_ip, port_s, &hints, &ai);
   g_free (port_s);
 
   if (e != 0)
     {
-      g_printerr ("getaddrinfo: %s", gai_strerror (e));
+      g_printerr ("getaddrinfo: %s\n", gai_strerror (e));
       return;
     }
 
@@ -805,7 +814,11 @@ static gboolean
 server_interface (void)
 {
   GtkWidget *dlg;
+  GtkWidget *main_vbox;
   GtkWidget *table;
+  GtkWidget *hbox;
+  GtkWidget *image;
+  GtkWidget *label;
 
   INIT_I18N();
 
@@ -832,28 +845,60 @@ server_interface (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  /*  The table to hold port & logfile entries  */
-  table = gtk_table_new (2, 2, FALSE);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
+                      main_vbox, TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
+
+  /*  The table to hold port, logfile and listen-to entries  */
+  table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dlg))),
-                      table, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  /* The server ip to listen to */
+  sint.ip_entry = gtk_entry_new ();
+  gtk_entry_set_text (GTK_ENTRY (sint.ip_entry), "127.0.0.1");
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Listen on IP:"), 0.0, 0.5,
+                             sint.ip_entry, 1, FALSE);
 
   /*  The server port  */
   sint.port_entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (sint.port_entry), "10008");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Server port:"), 0.0, 0.5,
                              sint.port_entry, 1, FALSE);
 
   /*  The server logfile  */
   sint.log_entry = gtk_entry_new ();
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("Server logfile:"), 0.0, 0.5,
                              sint.log_entry, 1, FALSE);
 
-  gtk_widget_show (table);
+  /* Warning */
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_WARNING,
+                                        GTK_ICON_SIZE_DIALOG);
+  gtk_box_pack_start (GTK_BOX (hbox), image, TRUE, TRUE, 0);
+  gtk_widget_show (image);
+
+  label = gtk_label_new (_("Listening on an IP address other than "
+                           "127.0.0.1 (especially 0.0.0.0) can allow "
+                           "attackers to remotely execute arbitrary code "
+                           "on this machine."));
+  gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+  gtk_widget_show (label);
+
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -869,10 +914,12 @@ response_callback (GtkWidget *widget,
   if (response_id == GTK_RESPONSE_OK)
     {
       g_free (sint.logfile);
+      g_free (sint.listen_ip);
 
-      sint.port    = atoi (gtk_entry_get_text (GTK_ENTRY (sint.port_entry)));
-      sint.logfile = g_strdup (gtk_entry_get_text (GTK_ENTRY (sint.log_entry)));
-      sint.run     = TRUE;
+      sint.port      = atoi (gtk_entry_get_text (GTK_ENTRY (sint.port_entry)));
+      sint.logfile   = g_strdup (gtk_entry_get_text (GTK_ENTRY (sint.log_entry)));
+      sint.listen_ip = g_strdup (gtk_entry_get_text (GTK_ENTRY (sint.ip_entry)));
+      sint.run       = TRUE;
     }
 
   gtk_widget_destroy (widget);

@@ -620,7 +620,7 @@ layer_create_mask_invoker (GimpProcedure         *procedure,
     {
       GimpChannel *channel = NULL;
 
-      if (mask_type == GIMP_ADD_CHANNEL_MASK)
+      if (mask_type == GIMP_ADD_MASK_CHANNEL)
         {
           channel = gimp_image_get_active_channel (gimp_item_get_image (GIMP_ITEM (layer)));
 
@@ -1294,7 +1294,8 @@ register_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-group-new",
                                      "Create a new layer group.",
-                                     "This procedure creates a new layer group. Attributes such as layer mode and opacity should be set with explicit procedure calls. Add the new layer group (which is a kind of layer) with the 'gimp-image-insert-layer' command.",
+                                     "This procedure creates a new layer group. Attributes such as layer mode and opacity should be set with explicit procedure calls. Add the new layer group (which is a kind of layer) with the 'gimp-image-insert-layer' command.\n"
+                                     "Other procedures useful with layer groups: 'gimp-image-reorder-item', 'gimp-item-get-parent', 'gimp-item-get-children', 'gimp-item-is-group'.",
                                      "Barak Itkin <lightningismyname@gmail.com>",
                                      "Barak Itkin",
                                      "2010",
@@ -1660,7 +1661,7 @@ register_layer_procs (GimpPDB *pdb)
                                                   "mask type",
                                                   "The type of mask",
                                                   GIMP_TYPE_ADD_MASK_TYPE,
-                                                  GIMP_ADD_WHITE_MASK,
+                                                  GIMP_ADD_MASK_WHITE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_layer_mask_id ("mask",

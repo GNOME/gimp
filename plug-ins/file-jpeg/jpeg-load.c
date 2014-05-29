@@ -606,7 +606,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
 
       if (cmyk_profile)
         {
-          if (cmsGetColorSpace (cmyk_profile) != cmsSigCmykData)
+          if (! gimp_lcms_profile_is_cmyk (cmyk_profile))
             {
               cmsCloseProfile (cmyk_profile);
               cmyk_profile = NULL;
@@ -619,7 +619,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
     {
       cmyk_profile = cmsOpenProfileFromFile (config->cmyk_profile, "r");
 
-      if (cmyk_profile && cmsGetColorSpace (cmyk_profile) != cmsSigCmykData)
+      if (cmyk_profile && ! gimp_lcms_profile_is_cmyk (cmyk_profile))
         {
           cmsCloseProfile (cmyk_profile);
           cmyk_profile = NULL;
@@ -638,17 +638,17 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
     {
       rgb_profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
 
-      if (rgb_profile && cmsGetColorSpace (rgb_profile) != cmsSigRgbData)
+      if (rgb_profile && ! gimp_lcms_profile_is_rgb (rgb_profile))
         {
           cmsCloseProfile (rgb_profile);
           rgb_profile = NULL;
         }
     }
 
-  /*  use the built-in sRGB profile as fallback  */
+  /*  make the real sRGB profile as a fallback  */
   if (! rgb_profile)
     {
-      rgb_profile = cmsCreate_sRGBProfile ();
+      rgb_profile = gimp_lcms_create_srgb_profile ();
     }
 
   if (config->display_intent ==

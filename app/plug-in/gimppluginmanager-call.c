@@ -155,11 +155,13 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
   if (plug_in)
     {
       GimpCoreConfig    *core_config    = manager->gimp->config;
+      GimpGeglConfig    *gegl_config    = GIMP_GEGL_CONFIG (core_config);
       GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (core_config);
       GimpGuiConfig     *gui_config     = GIMP_GUI_CONFIG (core_config);
       GPConfig           config;
       GPProcRun          proc_run;
       gint               display_ID;
+      GObject           *screen;
       gint               monitor;
 
       if (! gimp_plug_in_open (plug_in, GIMP_PLUG_IN_CALL_RUN, FALSE))
@@ -191,7 +193,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.show_help_button = (gui_config->use_help &&
                                  gui_config->show_help_button);
       config.use_cpu_accel    = manager->gimp->use_cpu_accel;
-      config.gimp_reserved_5  = 0;
+      config.use_opencl       = gegl_config->use_opencl;
       config.gimp_reserved_6  = 0;
       config.gimp_reserved_7  = 0;
       config.gimp_reserved_8  = 0;
@@ -202,7 +204,8 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
       config.app_name         = (gchar *) g_get_application_name ();
       config.wm_class         = (gchar *) gimp_get_program_class (manager->gimp);
       config.display_name     = gimp_get_display_name (manager->gimp,
-                                                       display_ID, &monitor);
+                                                       display_ID,
+                                                       &screen, &monitor);
       config.monitor_number   = monitor;
       config.timestamp        = gimp_get_user_time (manager->gimp);
 

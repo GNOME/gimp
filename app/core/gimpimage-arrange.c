@@ -67,7 +67,9 @@ static gint    offset_compare  (gconstpointer      a,
  * object in the sorted list is used as reference.
  *
  * When there are multiple target objects, they are arranged so that the spacing
- * between consecutive ones is given by the argument @offset.
+ * between consecutive ones is given by the argument @offset but for HFILL and VFILL -
+ * in this case, @offset works as an internal margin for the distribution
+ * (and it can be negative).
  */
 void
 gimp_image_arrange_objects (GimpImage         *image,
@@ -99,6 +101,7 @@ gimp_image_arrange_objects (GimpImage         *image,
     case GIMP_ARRANGE_LEFT:
     case GIMP_ARRANGE_HCENTER:
     case GIMP_ARRANGE_RIGHT:
+    case GIMP_ARRANGE_HFILL:
       do_x = TRUE;
       compute_offsets (list, alignment);
       break;
@@ -113,6 +116,7 @@ gimp_image_arrange_objects (GimpImage         *image,
     case GIMP_ARRANGE_TOP:
     case GIMP_ARRANGE_VCENTER:
     case GIMP_ARRANGE_BOTTOM:
+    case GIMP_ARRANGE_VFILL:
       do_y = TRUE;
       compute_offsets (list, alignment);
       break;
@@ -127,36 +131,79 @@ gimp_image_arrange_objects (GimpImage         *image,
     {
       reference = G_OBJECT (object_list->data);
       object_list = g_list_next (object_list);
+      reference_alignment = alignment;
     }
   else
-    compute_offset (reference, reference_alignment);
+    {
+      compute_offset (reference, reference_alignment);
+    }
 
   z0 = GPOINTER_TO_INT (g_object_get_data (reference, "align-offset"));
 
   if (object_list)
     {
-      GList *l;
-      gint   n;
+      GList    *lst;
+      gint     n;
+      gint     distr_width  = 0;
+      gint     distr_height = 0;
+      gdouble  fill_offset  = 0;
 
+      if (reference_alignment == GIMP_ARRANGE_HFILL)
+        {
+          distr_width = GPOINTER_TO_INT (g_object_get_data
+                                         (reference, "align-width"));
+          /* The offset parameter works as an internal margin */
+          fill_offset = (distr_width - 2 * offset) /
+                         g_list_length (object_list);
+        }
+      if (reference_alignment == GIMP_ARRANGE_VFILL)
+        {
+          distr_height = GPOINTER_TO_INT (g_object_get_data
+                                          (reference, "align-height"));
+          fill_offset = (distr_height - 2 * offset) /
+                         g_list_length (object_list);
+        }
       /* FIXME: undo group type is wrong */
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
                                    C_("undo-type", "Arrange Objects"));
 
-      for (l = object_list, n = 1; l; l = g_list_next (l), n++)
+      for (lst = object_list, n = 1; lst; lst = g_list_next (lst), n++)
         {
-          GObject *target          = G_OBJECT (l->data);
+          GObject *target          = G_OBJECT (lst->data);
           gint     xtranslate      = 0;
           gint     ytranslate      = 0;
+          gint     width;
+          gint     height;
           gint     z1;
 
           z1 = GPOINTER_TO_INT (g_object_get_data (target,
                                                     "align-offset"));
 
-          if (do_x)
-            xtranslate = z0 - z1 + n * offset;
+          if (reference_alignment == GIMP_ARRANGE_HFILL)
+            {
 
-          if (do_y)
-            ytranslate = z0 - z1 + n * offset;
+              width = GPOINTER_TO_INT (g_object_get_data (target,
+                                                    "align-width"));
+              xtranslate = ROUND (z0 - z1 + (n - 0.5) * fill_offset -
+                                  width/2.0 + offset);
+            }
+          else if (reference_alignment == GIMP_ARRANGE_VFILL)
+            {
+              height = GPOINTER_TO_INT (g_object_get_data (target,
+                                                    "align-height"));
+              ytranslate =  ROUND (z0 - z1 + (n - 0.5) * fill_offset -
+                                   height/2.0 + offset);
+            }
+          else /* the normal computing, when we don't depend on the
+                * width or height of the reference object
+                */
+            {
+              if (do_x)
+                xtranslate = z0 - z1 + n * offset;
+
+              if (do_y)
+                ytranslate = z0 - z1 + n * offset;
+            }
 
           /* now actually align the target object */
           if (GIMP_IS_ITEM (target))
@@ -220,10 +267,10 @@ static void
 compute_offsets (GList             *list,
                  GimpAlignmentType  alignment)
 {
-  GList *l;
+  GList *lst;
 
-  for (l = list; l; l = g_list_next (l))
-    compute_offset (G_OBJECT (l->data), alignment);
+  for (lst = list; lst; lst = g_list_next (lst))
+    compute_offset (G_OBJECT (lst->data), alignment);
 }
 
 static void
@@ -325,6 +372,7 @@ compute_offset (GObject *object,
     {
     case GIMP_ALIGN_LEFT:
     case GIMP_ARRANGE_LEFT:
+    case GIMP_ARRANGE_HFILL:
       offset = object_offset_x;
       break;
     case GIMP_ALIGN_HCENTER:
@@ -337,6 +385,7 @@ compute_offset (GObject *object,
       break;
     case GIMP_ALIGN_TOP:
     case GIMP_ARRANGE_TOP:
+    case GIMP_ARRANGE_VFILL:
       offset = object_offset_y;
       break;
     case GIMP_ALIGN_VCENTER:
@@ -353,4 +402,18 @@ compute_offset (GObject *object,
 
   g_object_set_data (object, "align-offset",
                      GINT_TO_POINTER (offset));
+
+  /* These are only used for HFILL and VFILL,  but
+   * since the call to gimp_image_arrange_objects
+   * allows for two different alignments (object and reference_alignment)
+   * we better be on the safe side in case they differ.
+   * (the current implementation of the align tool always
+   * pass the same value to both parameters)
+   */
+  g_object_set_data (object, "align-width",
+                     GINT_TO_POINTER (object_width));
+
+  g_object_set_data (object, "align-height",
+                     GINT_TO_POINTER (object_height));
+
 }

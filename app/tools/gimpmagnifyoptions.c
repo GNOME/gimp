@@ -77,14 +77,14 @@ gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTO_RESIZE,
                                     "auto-resize",
-                                    N_("Resize image window to accommodate "
-                                       "new zoom level"),
+                                    _("Resize image window to accommodate "
+                                      "new zoom level"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ZOOM_TYPE,
                                  "zoom-type",
-                                 N_("Direction of magnification"),
+                                 _("Direction of magnification"),
                                  GIMP_TYPE_ZOOM_TYPE,
                                  GIMP_ZOOM_IN,
                                  GIMP_PARAM_STATIC_STRINGS);

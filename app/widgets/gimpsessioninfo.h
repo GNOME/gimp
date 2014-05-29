@@ -60,8 +60,13 @@ struct _GimpSessionInfoClass
 GType                    gimp_session_info_get_type                      (void) G_GNUC_CONST;
 GimpSessionInfo *        gimp_session_info_new                           (void);
 void                     gimp_session_info_restore                       (GimpSessionInfo        *info,
-                                                                          GimpDialogFactory      *factory);
-void                     gimp_session_info_apply_geometry                (GimpSessionInfo        *info);
+                                                                          GimpDialogFactory      *factory,
+                                                                          GdkScreen              *screen,
+                                                                          gint                    monitor);
+void                     gimp_session_info_apply_geometry                (GimpSessionInfo        *info,
+                                                                          GdkScreen              *screen,
+                                                                          gint                    current_monitor,
+                                                                          gboolean                apply_stored_monitor);
 void                     gimp_session_info_read_geometry                 (GimpSessionInfo        *info,
                                                                           GdkEventConfigure      *cevent);
 void                     gimp_session_info_get_info                      (GimpSessionInfo        *info);

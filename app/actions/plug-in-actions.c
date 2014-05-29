@@ -113,6 +113,8 @@ static const GimpActionEntry plug_in_actions[] =
                                              "_Clouds")           },
   { "plug-in-render-nature-menu",  NULL, NC_("plug-in-action",
                                              "_Nature")           },
+  { "plug-in-render-noise-menu",   NULL, NC_("plug-in-action",
+                                             "N_oise")            },
   { "plug-in-render-pattern-menu", NULL, NC_("plug-in-action",
                                              "_Pattern")          },
   { "plug-in-web-menu",            NULL, NC_("plug-in-action",
@@ -129,7 +131,7 @@ static const GimpActionEntry plug_in_actions[] =
 
 static const GimpEnumActionEntry plug_in_repeat_actions[] =
 {
-  { "plug-in-repeat", GTK_STOCK_EXECUTE,
+  { "plug-in-repeat", "system-run",
     NC_("plug-in-action", "Re_peat Last"), "<primary>F",
     NC_("plug-in-action",
         "Rerun the last used plug-in using the same settings"),
@@ -208,7 +210,7 @@ plug_in_actions_setup (GimpActionGroup *group)
   for (i = 0; i < n_entries; i++)
     {
       entries[i].name        = g_strdup_printf ("plug-in-recent-%02d", i + 1);
-      entries[i].stock_id    = NULL;
+      entries[i].icon_name   = NULL;
       entries[i].label       = "";
       entries[i].accelerator = "";
       entries[i].tooltip     = NULL;
@@ -459,7 +461,7 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
     }
 
   entry.name        = gimp_object_get_name (proc);
-  entry.stock_id    = gimp_plug_in_procedure_get_stock_id (proc);
+  entry.icon_name   = gimp_plug_in_procedure_get_icon_name (proc);
   entry.label       = label;
   entry.accelerator = NULL;
   entry.tooltip     = gimp_plug_in_procedure_get_blurb (proc);
@@ -608,7 +610,7 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
                     "sensitive", sensitive,
                     "procedure", proc,
                     "label",     label,
-                    "stock-id",  gimp_plug_in_procedure_get_stock_id (proc),
+                    "icon-name", gimp_plug_in_procedure_get_icon_name (proc),
                     "tooltip",   gimp_plug_in_procedure_get_blurb (proc),
                     NULL);
     }

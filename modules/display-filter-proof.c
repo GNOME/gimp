@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#include <glib.h>  /* lcms.h uses the "inline" keyword */
-
 #include <lcms2.h>
 
 #include <gegl.h>
@@ -144,7 +142,7 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
 
   display_class->name            = _("Color Proof");
   display_class->help_id         = "gimp-colordisplay-proof";
-  display_class->stock_id        = GIMP_STOCK_DISPLAY_FILTER_PROOF;
+  display_class->icon_name       = GIMP_STOCK_DISPLAY_FILTER_PROOF;
 
   display_class->convert_buffer  = cdisplay_proof_convert_buffer;
   display_class->configure       = cdisplay_proof_configure;
@@ -260,125 +258,6 @@ cdisplay_proof_convert_buffer (GimpColorDisplay *display,
 }
 
 static void
-cdisplay_proof_combo_box_set_active (GimpColorProfileComboBox *combo,
-                                     const gchar              *filename)
-{
-  cmsHPROFILE  profile = NULL;
-  gchar       *label   = NULL;
-
-  if (filename)
-    profile = cmsOpenProfileFromFile (filename, "r");
-
-  if (profile)
-    {
-      cmsUInt32Number  descSize;
-      gchar           *descData;
-
-      descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
-                                         "en", "US", NULL, 0);
-      if (descSize > 0)
-        {
-          descData = g_new (gchar, descSize + 1);
-          descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
-                                             "en", "US", descData, descSize);
-          if (descSize > 0)
-            label = gimp_any_to_utf8 (descData, -1, NULL);
-
-          g_free (descData);
-        }
-
-      if (! label)
-        {
-          descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
-                                             "en", "US", NULL, 0);
-          if (descSize > 0)
-            {
-              descData = g_new (gchar, descSize + 1);
-              descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
-                                                 "en", "US", descData, descSize);
-              if (descSize > 0)
-                label = gimp_any_to_utf8 (descData, -1, NULL);
-
-              g_free (descData);
-            }
-        }
-
-      cmsCloseProfile (profile);
-    }
-
-  gimp_color_profile_combo_box_set_active (combo, filename, label);
-  g_free (label);
-}
-
-static void
-cdisplay_proof_file_chooser_dialog_response (GtkFileChooser           *dialog,
-                                             gint                      response,
-                                             GimpColorProfileComboBox *combo)
-{
-  if (response == GTK_RESPONSE_ACCEPT)
-    {
-      gchar *filename = gtk_file_chooser_get_filename (dialog);
-
-      if (filename)
-        {
-          cdisplay_proof_combo_box_set_active (combo, filename);
-
-          g_free (filename);
-        }
-    }
-
-  gtk_widget_hide (GTK_WIDGET (dialog));
-}
-
-static GtkWidget *
-cdisplay_proof_file_chooser_dialog_new (void)
-{
-  GtkWidget     *dialog;
-  GtkFileFilter *filter;
-
-  dialog = gtk_file_chooser_dialog_new (_("Choose an ICC Color Profile"),
-                                        NULL,
-                                        GTK_FILE_CHOOSER_ACTION_OPEN,
-
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
-
-                                        NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_ACCEPT,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
-
-#ifndef G_OS_WIN32
-  {
-    const gchar folder[] = "/usr/share/color/icc";
-
-    if (g_file_test (folder, G_FILE_TEST_IS_DIR))
-      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
-                                            folder, NULL);
-  }
-#endif
-
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All files (*.*)"));
-  gtk_file_filter_add_pattern (filter, "*");
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("ICC color profile (*.icc, *.icm)"));
-  gtk_file_filter_add_pattern (filter, "*.[Ii][Cc][Cc]");
-  gtk_file_filter_add_pattern (filter, "*.[Ii][Cc][Mm]");
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  return dialog;
-}
-
-static void
 cdisplay_proof_profile_changed (GtkWidget     *combo,
                                 CdisplayProof *proof)
 {
@@ -407,23 +286,19 @@ cdisplay_proof_configure (GimpColorDisplay *display)
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
 
-  dialog = cdisplay_proof_file_chooser_dialog_new ();
+  dialog = gimp_color_profile_chooser_dialog_new (_("Choose an ICC Color Profile"));
 
   history = gimp_personal_rc_file ("profilerc");
   combo = gimp_color_profile_combo_box_new (dialog, history);
   g_free (history);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (cdisplay_proof_file_chooser_dialog_response),
-                    combo);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (cdisplay_proof_profile_changed),
                     proof);
 
   if (proof->profile)
-    cdisplay_proof_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                         proof->profile);
+    gimp_color_profile_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                             proof->profile, NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("_Profile:"), 0.0, 0.5,
@@ -448,8 +323,8 @@ static void
 cdisplay_proof_changed (GimpColorDisplay *display)
 {
   CdisplayProof *proof = CDISPLAY_PROOF (display);
-  cmsHPROFILE    rgbProfile;
-  cmsHPROFILE    proofProfile;
+  cmsHPROFILE    rgb_profile;
+  cmsHPROFILE    proof_profile;
 
   if (proof->transform)
     {
@@ -460,26 +335,26 @@ cdisplay_proof_changed (GimpColorDisplay *display)
   if (! proof->profile)
     return;
 
-  rgbProfile = cmsCreate_sRGBProfile ();
+  rgb_profile = gimp_lcms_create_srgb_profile ();
 
-  proofProfile = cmsOpenProfileFromFile (proof->profile, "r");
+  proof_profile = cmsOpenProfileFromFile (proof->profile, "r");
 
-  if (proofProfile)
+  if (proof_profile)
     {
       cmsUInt32Number flags = cmsFLAGS_SOFTPROOFING;
 
       if (proof->bpc)
         flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
 
-      proof->transform = cmsCreateProofingTransform (rgbProfile, TYPE_RGBA_FLT,
-                                                     rgbProfile, TYPE_RGBA_FLT,
-                                                     proofProfile,
+      proof->transform = cmsCreateProofingTransform (rgb_profile, TYPE_RGBA_FLT,
+                                                     rgb_profile, TYPE_RGBA_FLT,
+                                                     proof_profile,
                                                      proof->intent,
                                                      proof->intent,
                                                      flags);
 
-      cmsCloseProfile (proofProfile);
+      cmsCloseProfile (proof_profile);
     }
 
-  cmsCloseProfile (rgbProfile);
+  cmsCloseProfile (rgb_profile);
 }

@@ -55,6 +55,7 @@
 #include "core/gimpdocumentlist.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
+#include "core/gimpimage-profile.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimagefile.h"
 #include "core/gimplayer.h"
@@ -415,11 +416,14 @@ file_open_with_display (Gimp               *gimp,
                         GimpProgress       *progress,
                         const gchar        *uri,
                         gboolean            as_new,
+                        GObject            *screen,
+                        gint                monitor,
                         GimpPDBStatusType  *status,
                         GError            **error)
 {
   return file_open_with_proc_and_display (gimp, context, progress,
                                           uri, uri, as_new, NULL,
+                                          screen, monitor,
                                           status, error);
 }
 
@@ -431,6 +435,8 @@ file_open_with_proc_and_display (Gimp                *gimp,
                                  const gchar         *entered_filename,
                                  gboolean             as_new,
                                  GimpPlugInProcedure *file_proc,
+                                 GObject             *screen,
+                                 gint                 monitor,
                                  GimpPDBStatusType   *status,
                                  GError             **error)
 {
@@ -440,6 +446,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (screen == NULL || G_IS_OBJECT (screen), NULL);
   g_return_val_if_fail (status != NULL, NULL);
 
   image = file_open_image (gimp, context, progress,
@@ -478,7 +485,8 @@ file_open_with_proc_and_display (Gimp                *gimp,
           g_free (basename);
         }
 
-      if (gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0))
+      if (gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
+                               screen, monitor))
         {
           /*  the display owns the image now  */
           g_object_unref (image);
@@ -597,7 +605,10 @@ file_open_layers (Gimp                *gimp,
 gboolean
 file_open_from_command_line (Gimp        *gimp,
                              const gchar *filename,
-                             gboolean     as_new)
+                             gboolean     as_new,
+                             GObject     *screen,
+                             gint         monitor)
+
 {
   GError   *error   = NULL;
   gchar    *uri;
@@ -605,6 +616,7 @@ file_open_from_command_line (Gimp        *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (screen == NULL || G_IS_OBJECT (screen), FALSE);
 
   /* we accept URI or filename */
   uri = file_utils_any_to_uri (gimp, filename, &error);
@@ -626,6 +638,7 @@ file_open_from_command_line (Gimp        *gimp,
                                       gimp_get_user_context (gimp),
                                       GIMP_PROGRESS (display),
                                       uri, as_new,
+                                      screen, monitor,
                                       &status, &error);
 
       if (image)
@@ -780,7 +793,7 @@ file_open_handle_color_profile (GimpImage    *image,
                                 GimpProgress *progress,
                                 GimpRunMode   run_mode)
 {
-  if (gimp_image_parasite_find (image, "icc-profile"))
+  if (gimp_image_get_icc_profile (image))
     {
       gimp_image_undo_disable (image);
 

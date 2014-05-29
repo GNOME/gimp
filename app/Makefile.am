@@ -175,10 +175,12 @@ gimpconsoleldadd = \
 	$(FREETYPE_LIBS)		\
 	$(FONTCONFIG_LIBS)		\
 	$(PANGOCAIRO_LIBS)		\
+	$(HARFBUZZ_LIBS)		\
 	$(CAIRO_LIBS)			\
 	$(GEGL_LIBS)			\
 	$(GLIB_LIBS)			\
 	$(GEXIV2_LIBS)			\
+	$(LCMS_LIBS)			\
 	$(INTLLIBS)			\
 	$(RT_LIBS)
 

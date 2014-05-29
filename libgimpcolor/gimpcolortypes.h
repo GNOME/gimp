@@ -30,6 +30,9 @@ G_BEGIN_DECLS
 
 typedef struct _GimpColorManaged GimpColorManaged;  /* dummy typedef */
 
+typedef gpointer GimpColorProfile;
+
+
 /*  usually we don't keep the structure definitions in the types file
  *  but GimpRGB appears in too many header files...
  */

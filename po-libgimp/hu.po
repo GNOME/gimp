@@ -8,14 +8,15 @@
 # András Prim <gimme_at_primandras.hu>, 2012.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2008, 2012.
 # Balázs Úr <urbalazs at gmail dot com>, 2013.
+# Balázs Úr <urbalazs@gmail.com>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp gimp-2-8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2013-09-21 15:40+0000\n"
-"PO-Revision-Date: 2013-09-22 10:58+0200\n"
-"Last-Translator: Balázs Úr <urbalazs at gmail dot com>\n"
+"POT-Creation-Date: 2014-03-20 06:34+0000\n"
+"PO-Revision-Date: 2014-03-20 17:18+0100\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -44,12 +45,12 @@ msgstr "hívási hiba"
 msgid "cancelled"
 msgstr "megszakítva"
 
-#: ../libgimp/gimpbrushselectbutton.c:178
+#: ../libgimp/gimpbrushselectbutton.c:179
 msgid "Brush Selection"
 msgstr "Ecset kiválasztása"
 
-#: ../libgimp/gimpbrushselectbutton.c:927
-#: ../libgimp/gimppatternselectbutton.c:725
+#: ../libgimp/gimpbrushselectbutton.c:928
+#: ../libgimp/gimppatternselectbutton.c:726
 msgid "_Browse..."
 msgstr "_Tallózás…"
 
@@ -185,7 +186,7 @@ msgstr "Fájl exportálása"
 msgid "_Ignore"
 msgstr "_Kihagyás"
 
-#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:988
+#: ../libgimp/gimpexport.c:518 ../libgimp/gimpexport.c:1013
 msgid "_Export"
 msgstr "_Exportálás"
 
@@ -205,7 +206,7 @@ msgid "The export conversion won't modify your original image."
 msgstr ""
 "Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
 
-#: ../libgimp/gimpexport.c:725
+#: ../libgimp/gimpexport.c:729
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -214,7 +215,7 @@ msgstr ""
 "Rétegmaszkot készül menteni %s formátumba.\n"
 "Ez nem fogja menteni a látható rétegeket."
 
-#: ../libgimp/gimpexport.c:731
+#: ../libgimp/gimpexport.c:735
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -223,146 +224,172 @@ msgstr ""
 "Csatornát (elmentett kijelölést) készül menteni %s formátumba.\n"
 "Ez nem fogja menteni a látható rétegeket."
 
-#: ../libgimp/gimpexport.c:979
+#: ../libgimp/gimpexport.c:1004
 msgid "Export Image as "
 msgstr "Kép exportálása másként"
 
-#: ../libgimp/gimpfontselectbutton.c:138
+#: ../libgimp/gimpfontselectbutton.c:139
 msgid "Font Selection"
 msgstr "Betűkészlet kiválasztása"
 
-#: ../libgimp/gimpfontselectbutton.c:153
+#: ../libgimp/gimpfontselectbutton.c:154
 msgid "Sans"
 msgstr "Sans"
 
-#: ../libgimp/gimpgradientselectbutton.c:156
+#: ../libgimp/gimpgradientselectbutton.c:157
 msgid "Gradient Selection"
 msgstr "Színátmenet kiválasztása"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimp/gimpmenu.c:461 ../libgimpwidgets/gimpintstore.c:258
+#: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:258
 msgid "(Empty)"
 msgstr "(Üres)"
 
-#: ../libgimp/gimppaletteselectbutton.c:138
+#: ../libgimp/gimpmetadata.c:543
+#| msgid "_Background Color"
+msgid "Background"
+msgstr "Háttér"
+
+#: ../libgimp/gimpmetadata.c:676
+#| msgid "Flatten Image"
+msgid "Rotate Image?"
+msgstr "Kép forgatása?"
+
+#: ../libgimp/gimpmetadata.c:679
+msgid "_Keep Orientation"
+msgstr "Tájolás megőr_zése"
+
+#: ../libgimp/gimpmetadata.c:737
+msgid "According to the Exif data, this image is rotated."
+msgstr "Az Exif-adatok szerint ez a kép el van forgatva."
+
+#: ../libgimp/gimpmetadata.c:752
+msgid "Would you like GIMP to rotate it into the standard orientation?"
+msgstr "Kívánja, hogy a GIMP elfordítsa azt az eredeti tájolás szerintire?"
+
+#: ../libgimp/gimpmetadata.c:762
+msgid "_Don't ask me again"
+msgstr "A jövőben _ne kérdezze meg"
+
+#: ../libgimp/gimppaletteselectbutton.c:139
 msgid "Palette Selection"
 msgstr "Paletta kiválasztása"
 
-#: ../libgimp/gimppatternselectbutton.c:164
+#: ../libgimp/gimppatternselectbutton.c:165
 msgid "Pattern Selection"
 msgstr "Minta kiválasztása"
 
-#: ../libgimp/gimpprocbrowserdialog.c:149
+#: ../libgimp/gimpprocbrowserdialog.c:150
 msgid "by name"
 msgstr "név alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:150
+#: ../libgimp/gimpprocbrowserdialog.c:151
 msgid "by description"
 msgstr "leírás alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:151
+#: ../libgimp/gimpprocbrowserdialog.c:152
 msgid "by help"
 msgstr "a segítség alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:152
+#: ../libgimp/gimpprocbrowserdialog.c:153
 msgid "by author"
 msgstr "szerző alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:153
+#: ../libgimp/gimpprocbrowserdialog.c:154
 msgid "by copyright"
 msgstr "copyright alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:154
+#: ../libgimp/gimpprocbrowserdialog.c:155
 msgid "by date"
 msgstr "dátum alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:155
+#: ../libgimp/gimpprocbrowserdialog.c:156
 msgid "by type"
 msgstr "típus alapján"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:394
-#: ../libgimp/gimpprocbrowserdialog.c:543 ../libgimpwidgets/gimpbrowser.c:139
+#: ../libgimp/gimpprocbrowserdialog.c:395
+#: ../libgimp/gimpprocbrowserdialog.c:544 ../libgimpwidgets/gimpbrowser.c:140
 msgid "No matches"
 msgstr "Nincs találat"
 
-#: ../libgimp/gimpprocbrowserdialog.c:397
+#: ../libgimp/gimpprocbrowserdialog.c:398
 msgid "Search term invalid or incomplete"
 msgstr "Érvénytelen vagy nem teljes keresési kifejezés"
 
-#: ../libgimp/gimpprocbrowserdialog.c:406
+#: ../libgimp/gimpprocbrowserdialog.c:407
 msgid "Searching"
 msgstr "Keresés"
 
-#: ../libgimp/gimpprocbrowserdialog.c:417
+#: ../libgimp/gimpprocbrowserdialog.c:418
 msgid "Searching by name"
 msgstr "Keresés név alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:438
+#: ../libgimp/gimpprocbrowserdialog.c:439
 msgid "Searching by description"
 msgstr "Keresés leírás alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:445
+#: ../libgimp/gimpprocbrowserdialog.c:446
 msgid "Searching by help"
 msgstr "Keresés a segítség alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:452
+#: ../libgimp/gimpprocbrowserdialog.c:453
 msgid "Searching by author"
 msgstr "Keresés szerző alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:459
+#: ../libgimp/gimpprocbrowserdialog.c:460
 msgid "Searching by copyright"
 msgstr "Keresés copyright alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:466
+#: ../libgimp/gimpprocbrowserdialog.c:467
 msgid "Searching by date"
 msgstr "Keresés dátum alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:473
+#: ../libgimp/gimpprocbrowserdialog.c:474
 msgid "Searching by type"
 msgstr "Keresés típus alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:483
+#: ../libgimp/gimpprocbrowserdialog.c:484
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d eljárás"
 msgstr[1] "%d eljárás"
 
-#: ../libgimp/gimpprocbrowserdialog.c:492
+#: ../libgimp/gimpprocbrowserdialog.c:493
 msgid "No matches for your query"
 msgstr "Nincs találat a lekérdezésre"
 
-#: ../libgimp/gimpprocbrowserdialog.c:496
+#: ../libgimp/gimpprocbrowserdialog.c:497
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d eljárás felel meg a lekérdezésnek"
 msgstr[1] "%d eljárás felel meg a lekérdezésnek"
 
-#: ../libgimp/gimpprocview.c:172
+#: ../libgimp/gimpprocview.c:173
 msgid "Parameters"
 msgstr "Paraméterek"
 
-#: ../libgimp/gimpprocview.c:185
+#: ../libgimp/gimpprocview.c:186
 msgid "Return Values"
 msgstr "Visszatérési értékek"
 
-#: ../libgimp/gimpprocview.c:198
+#: ../libgimp/gimpprocview.c:199
 msgid "Additional Information"
 msgstr "További információ"
 
-#: ../libgimp/gimpprocview.c:238
+#: ../libgimp/gimpprocview.c:239
 msgid "Author:"
 msgstr "Szerző:"
 
-#: ../libgimp/gimpprocview.c:250
+#: ../libgimp/gimpprocview.c:251
 msgid "Date:"
 msgstr "Dátum:"
 
-#: ../libgimp/gimpprocview.c:262
+#: ../libgimp/gimpprocview.c:263
 msgid "Copyright:"
 msgstr "Copyright:"
 
@@ -900,12 +927,40 @@ msgctxt "text-justification"
 msgid "Filled"
 msgstr "Sorkizárt"
 
+#: ../libgimpbase/gimpmetadata.c:523
+#, c-format
+msgid "Can load metadata only from local files"
+msgstr "Metaadatok betöltése csak helyi fájlokból lehetséges"
+
+#: ../libgimpbase/gimpmetadata.c:583
+#, c-format
+msgid "Can save metadata only to local files"
+msgstr "Metaadatok mentése csak helyi fájlokba lehetséges"
+
+#: ../libgimpbase/gimpmetadata.c:656
+#, c-format
+msgid "Parsing Exif data failed."
+msgstr "Az Exif adatok feldolgozása nem sikerült."
+
+#: ../libgimpbase/gimpmetadata.c:710
+#, c-format
+msgid "Parsing XMP data failed."
+msgstr "Az XMP adatok feldolgozása nem sikerült."
+
 #: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
-#: ../modules/color-selector-cmyk-lcms.c:417
-#: ../modules/color-selector-cmyk-lcms.c:440
-#: ../modules/display-filter-lcms.c:209
 msgid "(invalid UTF-8 string)"
 msgstr "(érvénytelen UTF-8 karakterlánc)"
+
+#: ../libgimpcolor/gimplcms.c:102
+#, c-format
+#| msgid "Color proof filter using ICC color profile"
+msgid "'%s' does not appear to be an ICC color profile"
+msgstr "„%s” nem tűnik ICC-színprofilnak"
+
+#: ../libgimpcolor/gimplcms.c:132
+#| msgid "Color proof filter using ICC color profile"
+msgid "Data does not appear to be an ICC color profile"
+msgstr "Az adat nem tűnik ICC-színprofilnak"
 
 #. *
 #. * SECTION: gimpcolorconfig
@@ -941,22 +996,38 @@ msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "Az RGB és a CMYK közti átalakításhoz használt CMYK színprofil."
 
 #: ../libgimpconfig/gimpcolorconfig.c:65
-msgid "The color profile used for simulating a printed version (softproof)."
-msgstr "Nyomtatott változat szimulációjához (próbanyomat) használt színprofil."
-
-#: ../libgimpconfig/gimpcolorconfig.c:67
-msgid "Sets how colors are mapped for your display."
-msgstr "A színeknek a képernyőre való leképezését adja meg."
+msgid ""
+"The color profile to use for soft proofing from your image's color space to "
+"some other color space, including soft proofing to a printer or other output "
+"device profile. "
+msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:69
 msgid ""
-"Sets how colors are converted from RGB working space to the print simulation "
-"device."
+"How colors are converted from your image's color space to your display "
+"device. Relative colorimetric is usually the best choice. Unless you use a "
+"LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
+"intent really gives you relative colorimetric."
 msgstr ""
-"Megadja, hogy a színek hogyan legyenek átalakítva az RGB munkaterületről a "
-"nyomtatásszimulációs eszközre."
 
-#: ../libgimpconfig/gimpcolorconfig.c:72
+#: ../libgimpconfig/gimpcolorconfig.c:74
+msgid ""
+"Do use black point compensation (unless you know you have a reason not to). "
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:76
+msgid ""
+"How colors are converted from your image's color space to the output "
+"simulation device (usually your monitor). Try them all and choose what looks "
+"the best. "
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:80
+msgid ""
+"Try with and without black point compensation and choose what looks best. "
+msgstr ""
+
+#: ../libgimpconfig/gimpcolorconfig.c:83
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
@@ -964,7 +1035,7 @@ msgstr ""
 "Ha be van kapcsolva, akkor a nyomtatásszimuláció megjelöli azon színeket, "
 "amelyek nem ábrázolhatók a cél-színtérben."
 
-#: ../libgimpconfig/gimpcolorconfig.c:75
+#: ../libgimpconfig/gimpcolorconfig.c:86
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "A színskálán kívüli színek megjelölésére használandó szín."
 
@@ -1126,15 +1197,18 @@ msgstr "Nincs betöltve"
 
 #: ../libgimpthumb/gimpthumb-utils.c:153
 #, c-format
+#| msgid ""
+#| "Cannot determine a valid home directory.\n"
+#| "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgid ""
-"Cannot determine a valid home directory.\n"
+"Cannot determine a valid thumbnails directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
-"Nem lehet meghatározni érvényes felhasználói könyvtárt (home).\n"
+"Nem lehet meghatározni érvényes bélyegkép könyvtárat.\n"
 "A bélyegképek e helyett az ideiglenes fájlok könyvtárában (%s) lesznek "
 "tárolva."
 
-#: ../libgimpthumb/gimpthumb-utils.c:277 ../libgimpthumb/gimpthumb-utils.c:345
+#: ../libgimpthumb/gimpthumb-utils.c:299 ../libgimpthumb/gimpthumb-utils.c:367
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "A(z) „%s” bélyegképmappa létrehozása sikertelen."
@@ -1144,12 +1218,12 @@ msgstr "A(z) „%s” bélyegképmappa létrehozása sikertelen."
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "A bélyegkép nem tartalmaz „Thumb::URI” címkét"
 
-#: ../libgimpthumb/gimpthumbnail.c:904
+#: ../libgimpthumb/gimpthumbnail.c:905
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nem sikerült létrehozni bélyegképet ehhez: %s: %s"
 
-#: ../libgimpwidgets/gimpbrowser.c:112
+#: ../libgimpwidgets/gimpbrowser.c:113
 msgid "_Search:"
 msgstr "_Keresés:"
 
@@ -1168,6 +1242,14 @@ msgstr "Fe_kete"
 #: ../libgimpwidgets/gimpcolorbutton.c:148
 msgid "_White"
 msgstr "_Fehér"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:111
+msgid "All files (*.*)"
+msgstr "Minden fájl (*.*)"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:116
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "ICC színprofil (*.icc, *.icm)"
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:145
 msgid "Select color profile from disk..."
@@ -1218,52 +1300,52 @@ msgstr "Mappa kiválasztása"
 msgid "Select File"
 msgstr "Fájl kiválasztása"
 
-#: ../libgimpwidgets/gimphelpui.c:432
+#: ../libgimpwidgets/gimphelpui.c:433
 msgid "Press F1 for more help"
 msgstr "További információ az F1 gombbal kérhető"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
+#: ../libgimpwidgets/gimpmemsizeentry.c:221
 msgid "Kilobytes"
 msgstr "Kilobájt"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
+#: ../libgimpwidgets/gimpmemsizeentry.c:222
 msgid "Megabytes"
 msgstr "Megabájt"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:222
+#: ../libgimpwidgets/gimpmemsizeentry.c:223
 msgid "Gigabytes"
 msgstr "Gigabájt"
 
 #. Count label
-#: ../libgimpwidgets/gimppageselector.c:269
-#: ../libgimpwidgets/gimppageselector.c:1067
+#: ../libgimpwidgets/gimppageselector.c:270
+#: ../libgimpwidgets/gimppageselector.c:1068
 msgid "Nothing selected"
 msgstr "Semmi nincs kijelölve"
 
-#: ../libgimpwidgets/gimppageselector.c:287
+#: ../libgimpwidgets/gimppageselector.c:288
 msgid "Select _All"
 msgstr "Az össz_es kijelölése"
 
-#: ../libgimpwidgets/gimppageselector.c:307
+#: ../libgimpwidgets/gimppageselector.c:308
 msgid "Select _range:"
 msgstr "T_artomány kijelölése:"
 
-#: ../libgimpwidgets/gimppageselector.c:319
+#: ../libgimpwidgets/gimppageselector.c:320
 msgid "Open _pages as"
 msgstr "Lapok megnyitása máské_nt"
 
-#: ../libgimpwidgets/gimppageselector.c:449
-#: ../libgimpwidgets/gimppageselector.c:647
+#: ../libgimpwidgets/gimppageselector.c:450
+#: ../libgimpwidgets/gimppageselector.c:648
 #, c-format
 msgid "Page %d"
 msgstr "%d. lap"
 
-#: ../libgimpwidgets/gimppageselector.c:1072
+#: ../libgimpwidgets/gimppageselector.c:1073
 msgid "One page selected"
 msgstr "Egy lap van kijelölve"
 
-#: ../libgimpwidgets/gimppageselector.c:1079
-#: ../libgimpwidgets/gimppageselector.c:1083
+#: ../libgimpwidgets/gimppageselector.c:1080
+#: ../libgimpwidgets/gimppageselector.c:1084
 #, c-format
 msgid "%d page selected"
 msgid_plural "All %d pages selected"
@@ -1278,7 +1360,7 @@ msgstr "Írható"
 msgid "Folder"
 msgstr "Mappa"
 
-#: ../libgimpwidgets/gimppickbutton.c:128
+#: ../libgimpwidgets/gimppickbutton.c:131
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -1287,7 +1369,7 @@ msgstr ""
 "kívánt képernyőpontra."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:290
+#: ../libgimpwidgets/gimppreview.c:291
 msgid "_Preview"
 msgstr "Előké_p"
 
@@ -1299,7 +1381,7 @@ msgstr "Négyzetek mérete"
 msgid "Check Style"
 msgstr "Négyzetek stílusa"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1893
+#: ../libgimpwidgets/gimppropwidgets.c:1904
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1342,56 +1424,55 @@ msgstr "_Visszaállítás"
 msgid "Visible"
 msgstr "Látható"
 
-#: ../libgimpwidgets/gimpstock.c:171 ../libgimpwidgets/gimpstock.c:175
+#: ../libgimpwidgets/gimpstock.c:174 ../libgimpwidgets/gimpstock.c:178
 msgid "_Stroke"
 msgstr "_Körberajzolás"
 
-#: ../libgimpwidgets/gimpstock.c:187
+#: ../libgimpwidgets/gimpstock.c:190
 msgid "L_etter Spacing"
 msgstr "B_etűköz"
 
-#: ../libgimpwidgets/gimpstock.c:188
+#: ../libgimpwidgets/gimpstock.c:191
 msgid "L_ine Spacing"
 msgstr "S_orköz"
 
-#: ../libgimpwidgets/gimpstock.c:204
-#| msgid "_Resize"
+#: ../libgimpwidgets/gimpstock.c:207
 msgid "Re_size"
 msgstr "Át_méretezés"
 
-#: ../libgimpwidgets/gimpstock.c:205 ../libgimpwidgets/gimpstock.c:340
+#: ../libgimpwidgets/gimpstock.c:208 ../libgimpwidgets/gimpstock.c:343
 msgid "_Scale"
 msgstr "Átmére_tezés"
 
-#: ../libgimpwidgets/gimpstock.c:315
+#: ../libgimpwidgets/gimpstock.c:318
 msgid "Cr_op"
 msgstr "Vá_gás"
 
-#: ../libgimpwidgets/gimpstock.c:335 ../libgimpwidgets/gimpstock.c:346
+#: ../libgimpwidgets/gimpstock.c:338 ../libgimpwidgets/gimpstock.c:349
 msgid "_Transform"
 msgstr "Á_talakítás"
 
-#: ../libgimpwidgets/gimpstock.c:339
+#: ../libgimpwidgets/gimpstock.c:342
 msgid "_Rotate"
 msgstr "_Forgatás"
 
-#: ../libgimpwidgets/gimpstock.c:342
+#: ../libgimpwidgets/gimpstock.c:345
 msgid "_Shear"
 msgstr "_Nyírás"
 
-#: ../libgimpwidgets/gimpunitmenu.c:264
+#: ../libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
 msgstr "Egyéb…"
 
-#: ../libgimpwidgets/gimpunitmenu.c:490
+#: ../libgimpwidgets/gimpunitmenu.c:491
 msgid "Unit Selection"
 msgstr "Mértékegység kiválasztása"
 
-#: ../libgimpwidgets/gimpunitmenu.c:539
+#: ../libgimpwidgets/gimpunitmenu.c:540
 msgid "Unit"
 msgstr "Mértékegység"
 
-#: ../libgimpwidgets/gimpunitmenu.c:543
+#: ../libgimpwidgets/gimpunitmenu.c:544
 msgid "Factor"
 msgstr "Szorzó"
 
@@ -1530,79 +1611,58 @@ msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Kicsinyítés"
 
-#: ../modules/color-selector-cmyk-lcms.c:86
+#: ../modules/color-selector-cmyk.c:86
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK színválasztó (színprofillal)"
 
-#: ../modules/color-selector-cmyk-lcms.c:120
-#: ../modules/color-selector-cmyk.c:102
+#: ../modules/color-selector-cmyk.c:120
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk-lcms.c:142
-#: ../modules/color-selector-cmyk.c:125
+#: ../modules/color-selector-cmyk.c:142
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk-lcms.c:144
-#: ../modules/color-selector-cmyk.c:127
+#: ../modules/color-selector-cmyk.c:144
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk-lcms.c:146
-#: ../modules/color-selector-cmyk.c:129
+#: ../modules/color-selector-cmyk.c:146
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk-lcms.c:148
-#: ../modules/color-selector-cmyk.c:131
+#: ../modules/color-selector-cmyk.c:148
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk-lcms.c:152
-#: ../modules/color-selector-cmyk.c:135
+#: ../modules/color-selector-cmyk.c:152
 msgid "Cyan"
 msgstr "Ciánkék"
 
-#: ../modules/color-selector-cmyk-lcms.c:153
-#: ../modules/color-selector-cmyk.c:136
+#: ../modules/color-selector-cmyk.c:153
 msgid "Magenta"
 msgstr "Bíborvörös"
 
-#: ../modules/color-selector-cmyk-lcms.c:154
-#: ../modules/color-selector-cmyk.c:137
+#: ../modules/color-selector-cmyk.c:154
 msgid "Yellow"
 msgstr "Sárga"
 
-#: ../modules/color-selector-cmyk-lcms.c:155
-#: ../modules/color-selector-cmyk.c:138
+#: ../modules/color-selector-cmyk.c:155
 msgid "Black"
 msgstr "Fekete"
 
-#: ../modules/color-selector-cmyk-lcms.c:388
+#: ../modules/color-selector-cmyk.c:398
 msgid "Profile: (none)"
 msgstr "Profil: (nincs)"
 
-#: ../modules/color-selector-cmyk-lcms.c:443
+#: ../modules/color-selector-cmyk.c:416
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
-
-#: ../modules/color-selector-cmyk.c:71
-msgid "CMYK color selector"
-msgstr "CMYK színválasztó"
-
-#: ../modules/color-selector-cmyk.c:172
-msgid "Black _pullout:"
-msgstr "_Fekete kivonása:"
-
-#: ../modules/color-selector-cmyk.c:189
-msgid "The percentage of black to pull out of the colored inks."
-msgstr "A színes tintákból kivonandó fekete százaléka."
 
 #: ../modules/color-selector-water.c:82
 msgid "Watercolor style color selector"
@@ -1612,7 +1672,7 @@ msgstr "Vízfestmény stílusú színválasztó"
 msgid "Watercolor"
 msgstr "Vízfestmény"
 
-#: ../modules/color-selector-water.c:186
+#: ../modules/color-selector-water.c:188
 msgid "Pressure"
 msgstr "Nyomás"
 
@@ -1624,311 +1684,311 @@ msgstr "HSV-színkerék"
 msgid "Wheel"
 msgstr "Kerék"
 
-#: ../modules/controller-dx-dinput.c:155
+#: ../modules/controller-dx-dinput.c:156
 msgid "DirectX DirectInput event controller"
 msgstr "DirectX DirectInput-eseményvezérlő"
 
-#: ../modules/controller-dx-dinput.c:195
-#: ../modules/controller-linux-input.c:217 ../modules/controller-midi.c:211
+#: ../modules/controller-dx-dinput.c:196
+#: ../modules/controller-linux-input.c:218 ../modules/controller-midi.c:212
 msgid "Device:"
 msgstr "Eszköz:"
 
-#: ../modules/controller-dx-dinput.c:196
+#: ../modules/controller-dx-dinput.c:197
 msgid "The device to read DirectInput events from."
 msgstr "Azon eszköz, amelyről a DirectInput-események olvasandók."
 
-#: ../modules/controller-dx-dinput.c:205
+#: ../modules/controller-dx-dinput.c:206
 msgid "DirectX DirectInput"
 msgstr "DirectX DirectInput"
 
-#: ../modules/controller-dx-dinput.c:418
+#: ../modules/controller-dx-dinput.c:419
 #, c-format
 msgid "Button %d"
 msgstr "%d. gomb"
 
-#: ../modules/controller-dx-dinput.c:421
+#: ../modules/controller-dx-dinput.c:422
 #, c-format
 msgid "Button %d Press"
 msgstr "%d. gomb lenyomása"
 
-#: ../modules/controller-dx-dinput.c:424
+#: ../modules/controller-dx-dinput.c:425
 #, c-format
 msgid "Button %d Release"
 msgstr "%d. gomb felengedése"
 
-#: ../modules/controller-dx-dinput.c:441
-#: ../modules/controller-linux-input.c:89
+#: ../modules/controller-dx-dinput.c:442
+#: ../modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "X-elmozdítás balra"
 
-#: ../modules/controller-dx-dinput.c:444
-#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:445
+#: ../modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "X-elmozdítás jobbra"
 
-#: ../modules/controller-dx-dinput.c:450
+#: ../modules/controller-dx-dinput.c:451
 msgid "Y Move Away"
 msgstr "Y-mozdítás távolodóan"
 
-#: ../modules/controller-dx-dinput.c:453
+#: ../modules/controller-dx-dinput.c:454
 msgid "Y Move Near"
 msgstr "Y-mozdítás közeledően"
 
-#: ../modules/controller-dx-dinput.c:459
-#: ../modules/controller-linux-input.c:93
+#: ../modules/controller-dx-dinput.c:460
+#: ../modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Z-elmozdítás fel"
 
-#: ../modules/controller-dx-dinput.c:462
-#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:463
+#: ../modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Z-elmozdítás le"
 
-#: ../modules/controller-dx-dinput.c:468
+#: ../modules/controller-dx-dinput.c:469
 msgid "X Axis Tilt Away"
 msgstr "X-tengely döntése távolodóan"
 
-#: ../modules/controller-dx-dinput.c:471
+#: ../modules/controller-dx-dinput.c:472
 msgid "X Axis Tilt Near"
 msgstr "X-tengely döntése közeledően"
 
-#: ../modules/controller-dx-dinput.c:477
-#: ../modules/controller-linux-input.c:98
+#: ../modules/controller-dx-dinput.c:478
+#: ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Y-tengely döntése jobbra"
 
-#: ../modules/controller-dx-dinput.c:480
-#: ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:481
+#: ../modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "Y-tengely döntése balra"
 
-#: ../modules/controller-dx-dinput.c:486
-#: ../modules/controller-linux-input.c:100
+#: ../modules/controller-dx-dinput.c:487
+#: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
 msgstr "Z-tengely fordítása balra"
 
-#: ../modules/controller-dx-dinput.c:489
-#: ../modules/controller-linux-input.c:101
+#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
 msgstr "Z-tengely fordítása jobbra"
 
-#: ../modules/controller-dx-dinput.c:500
+#: ../modules/controller-dx-dinput.c:501
 #, c-format
 msgid "Slider %d Increase"
 msgstr "%d. csúszka növelése"
 
-#: ../modules/controller-dx-dinput.c:503
+#: ../modules/controller-dx-dinput.c:504
 #, c-format
 msgid "Slider %d Decrease"
 msgstr "%d. csúszka csökkentése"
 
-#: ../modules/controller-dx-dinput.c:513
+#: ../modules/controller-dx-dinput.c:514
 #, c-format
 msgid "POV %d X View"
 msgstr "POV %d X-nézet"
 
-#: ../modules/controller-dx-dinput.c:516
+#: ../modules/controller-dx-dinput.c:517
 #, c-format
 msgid "POV %d Y View"
 msgstr "POV %d Y-nézet"
 
-#: ../modules/controller-dx-dinput.c:519
+#: ../modules/controller-dx-dinput.c:520
 #, c-format
 msgid "POV %d Return"
 msgstr "POV %d vissza"
 
-#: ../modules/controller-dx-dinput.c:1081
+#: ../modules/controller-dx-dinput.c:1082
 msgid "DirectInput Events"
 msgstr "DirectInput-események"
 
-#: ../modules/controller-dx-dinput.c:1092
-#: ../modules/controller-linux-input.c:524 ../modules/controller-midi.c:504
+#: ../modules/controller-dx-dinput.c:1093
+#: ../modules/controller-linux-input.c:525 ../modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Nem lett beállítva eszköz"
 
-#: ../modules/controller-dx-dinput.c:1117
-#: ../modules/controller-linux-input.c:587
+#: ../modules/controller-dx-dinput.c:1118
+#: ../modules/controller-linux-input.c:588
 msgid "Device not available"
 msgstr "Az eszköz nem elérhető"
 
-#: ../modules/controller-linux-input.c:57
+#: ../modules/controller-linux-input.c:58
 msgid "Button 0"
 msgstr "0. gomb"
 
-#: ../modules/controller-linux-input.c:58
+#: ../modules/controller-linux-input.c:59
 msgid "Button 1"
 msgstr "1. gomb"
 
-#: ../modules/controller-linux-input.c:59
+#: ../modules/controller-linux-input.c:60
 msgid "Button 2"
 msgstr "2. gomb"
 
-#: ../modules/controller-linux-input.c:60
+#: ../modules/controller-linux-input.c:61
 msgid "Button 3"
 msgstr "3. gomb"
 
-#: ../modules/controller-linux-input.c:61
+#: ../modules/controller-linux-input.c:62
 msgid "Button 4"
 msgstr "4. gomb"
 
-#: ../modules/controller-linux-input.c:62
+#: ../modules/controller-linux-input.c:63
 msgid "Button 5"
 msgstr "5. gomb"
 
-#: ../modules/controller-linux-input.c:63
+#: ../modules/controller-linux-input.c:64
 msgid "Button 6"
 msgstr "6. gomb"
 
-#: ../modules/controller-linux-input.c:64
+#: ../modules/controller-linux-input.c:65
 msgid "Button 7"
 msgstr "7. gomb"
 
-#: ../modules/controller-linux-input.c:65
+#: ../modules/controller-linux-input.c:66
 msgid "Button 8"
 msgstr "8. gomb"
 
-#: ../modules/controller-linux-input.c:66
+#: ../modules/controller-linux-input.c:67
 msgid "Button 9"
 msgstr "9. gomb"
 
-#: ../modules/controller-linux-input.c:67
+#: ../modules/controller-linux-input.c:68
 msgid "Button Mouse"
 msgstr "Egérgomb"
 
-#: ../modules/controller-linux-input.c:68
+#: ../modules/controller-linux-input.c:69
 msgid "Button Left"
 msgstr "Bal gomb"
 
-#: ../modules/controller-linux-input.c:69
+#: ../modules/controller-linux-input.c:70
 msgid "Button Right"
 msgstr "Jobb gomb"
 
-#: ../modules/controller-linux-input.c:70
+#: ../modules/controller-linux-input.c:71
 msgid "Button Middle"
 msgstr "Középső gomb"
 
-#: ../modules/controller-linux-input.c:71
+#: ../modules/controller-linux-input.c:72
 msgid "Button Side"
 msgstr "Oldalsó gomb"
 
-#: ../modules/controller-linux-input.c:72
+#: ../modules/controller-linux-input.c:73
 msgid "Button Extra"
 msgstr "Extra gomb"
 
-#: ../modules/controller-linux-input.c:73
+#: ../modules/controller-linux-input.c:74
 msgid "Button Forward"
 msgstr "Előre gomb"
 
-#: ../modules/controller-linux-input.c:74
+#: ../modules/controller-linux-input.c:75
 msgid "Button Back"
 msgstr "Hátra gomb"
 
-#: ../modules/controller-linux-input.c:75
+#: ../modules/controller-linux-input.c:76
 msgid "Button Task"
 msgstr "Feladatgomb"
 
-#: ../modules/controller-linux-input.c:77
+#: ../modules/controller-linux-input.c:78
 msgid "Button Wheel"
 msgstr "Kerékgomb"
 
-#: ../modules/controller-linux-input.c:80
+#: ../modules/controller-linux-input.c:81
 msgid "Button Gear Down"
 msgstr "„Fokozat lefelé” gomb"
 
-#: ../modules/controller-linux-input.c:83
+#: ../modules/controller-linux-input.c:84
 msgid "Button Gear Up"
 msgstr "„Fokozat felfelé” gomb"
 
-#: ../modules/controller-linux-input.c:91
+#: ../modules/controller-linux-input.c:92
 msgid "Y Move Forward"
 msgstr "Y-elmozdítás előre"
 
-#: ../modules/controller-linux-input.c:92
+#: ../modules/controller-linux-input.c:93
 msgid "Y Move Back"
 msgstr "Y-elmozdítás hátra"
 
-#: ../modules/controller-linux-input.c:96
+#: ../modules/controller-linux-input.c:97
 msgid "X Axis Tilt Forward"
 msgstr "X-tengely döntése előre"
 
-#: ../modules/controller-linux-input.c:97
+#: ../modules/controller-linux-input.c:98
 msgid "X Axis Tilt Back"
 msgstr "X-tengely döntése hátra"
 
-#: ../modules/controller-linux-input.c:103
+#: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Back"
 msgstr "Vízszintes kerék fordítása hátra"
 
-#: ../modules/controller-linux-input.c:104
+#: ../modules/controller-linux-input.c:105
 msgid "Horiz. Wheel Turn Forward"
 msgstr "Vízszintes kerék fordítása előre"
 
-#: ../modules/controller-linux-input.c:105
+#: ../modules/controller-linux-input.c:106
 msgid "Dial Turn Left"
 msgstr "Tárcsa fordítása balra"
 
-#: ../modules/controller-linux-input.c:106
+#: ../modules/controller-linux-input.c:107
 msgid "Dial Turn Right"
 msgstr "Tárcsa fordítása jobbra"
 
-#: ../modules/controller-linux-input.c:107
+#: ../modules/controller-linux-input.c:108
 msgid "Wheel Turn Left"
 msgstr "Kerék fordítása balra"
 
-#: ../modules/controller-linux-input.c:108
+#: ../modules/controller-linux-input.c:109
 msgid "Wheel Turn Right"
 msgstr "Kerék fordítása jobbra"
 
-#: ../modules/controller-linux-input.c:177
+#: ../modules/controller-linux-input.c:178
 msgid "Linux input event controller"
 msgstr "Linuxos bemeneti események vezérlője"
 
-#: ../modules/controller-linux-input.c:218
+#: ../modules/controller-linux-input.c:219
 msgid "The name of the device to read Linux Input events from."
 msgstr "Azon eszköz neve, amelyről a linuxos bemeneti események olvasandók."
 
-#: ../modules/controller-linux-input.c:229
+#: ../modules/controller-linux-input.c:230
 msgid "Linux Input"
 msgstr "Linuxos bemenet"
 
-#: ../modules/controller-linux-input.c:512
+#: ../modules/controller-linux-input.c:513
 msgid "Linux Input Events"
 msgstr "Linuxos bemeneti események"
 
-#: ../modules/controller-linux-input.c:550 ../modules/controller-midi.c:453
-#: ../modules/controller-midi.c:479
+#: ../modules/controller-linux-input.c:551 ../modules/controller-midi.c:454
+#: ../modules/controller-midi.c:480
 #, c-format
 msgid "Reading from %s"
 msgstr "Olvasás innen: %s"
 
-#: ../modules/controller-linux-input.c:568
-#: ../modules/controller-linux-input.c:622 ../modules/controller-midi.c:435
-#: ../modules/controller-midi.c:496 ../modules/controller-midi.c:567
+#: ../modules/controller-linux-input.c:569
+#: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
+#: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
 msgstr "Az eszköz nem elérhető: %s"
 
-#: ../modules/controller-linux-input.c:631 ../modules/controller-midi.c:576
+#: ../modules/controller-linux-input.c:632 ../modules/controller-midi.c:577
 msgid "End of file"
 msgstr "Fájl vége"
 
-#: ../modules/controller-midi.c:163
+#: ../modules/controller-midi.c:164
 msgid "MIDI event controller"
 msgstr "MIDI-eseményvezérlő"
 
-#: ../modules/controller-midi.c:202
+#: ../modules/controller-midi.c:203
 msgid "The name of the device to read MIDI events from."
 msgstr "Azon eszköz neve, amelyről a MIDI-események olvasandók."
 
-#: ../modules/controller-midi.c:205
+#: ../modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Az ALSA-szekvenszer használatához „alsa” értéket adjon meg."
 
-#: ../modules/controller-midi.c:220
+#: ../modules/controller-midi.c:221
 msgid "Channel:"
 msgstr "Csatorna:"
 
-#: ../modules/controller-midi.c:221
+#: ../modules/controller-midi.c:222
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
@@ -1936,34 +1996,34 @@ msgstr ""
 "Azon MIDI-csatorna, amelyről az események olvasandók. -1 értékre állítva az "
 "összes MIDI-csatornáról történik olvasás."
 
-#: ../modules/controller-midi.c:225
+#: ../modules/controller-midi.c:226
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller-midi.c:354
+#: ../modules/controller-midi.c:355
 #, c-format
 msgid "Note %02x on"
 msgstr "„%02x” hangjegy bekapcsolva"
 
-#: ../modules/controller-midi.c:357
+#: ../modules/controller-midi.c:358
 #, c-format
 msgid "Note %02x off"
 msgstr "„%02x” hangjegy kikapcsolva"
 
-#: ../modules/controller-midi.c:360
+#: ../modules/controller-midi.c:361
 #, c-format
 msgid "Controller %03d"
 msgstr "Vezérlő: %03d"
 
-#: ../modules/controller-midi.c:407
+#: ../modules/controller-midi.c:408
 msgid "MIDI Events"
 msgstr "MIDI-események"
 
-#: ../modules/controller-midi.c:425
+#: ../modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../modules/controller-midi.c:427
+#: ../modules/controller-midi.c:428
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI-bemeneti vezérlő"
 
@@ -1979,16 +2039,16 @@ msgstr "Deuteranopia (a zöld szín érzékelésének hiánya)"
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (a kék szín érzékelésének hiánya)"
 
-#: ../modules/display-filter-color-blind.c:195
+#: ../modules/display-filter-color-blind.c:193
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
 "Színérzékelési problémát szimuláló szűrő (Brettel-Vienot-Mollon-módszer)"
 
-#: ../modules/display-filter-color-blind.c:258
+#: ../modules/display-filter-color-blind.c:256
 msgid "Color Deficient Vision"
 msgstr "Színérzékelési probléma"
 
-#: ../modules/display-filter-color-blind.c:487
+#: ../modules/display-filter-color-blind.c:417
 msgid "Color _deficiency type:"
 msgstr "Színérzékelési probléma _típusa:"
 
@@ -2000,7 +2060,7 @@ msgstr "„Gamma” színmegjelenítési szűrő"
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/display-filter-gamma.c:239
+#: ../modules/display-filter-gamma.c:224
 msgid "_Gamma:"
 msgstr "G_amma:"
 
@@ -2012,28 +2072,28 @@ msgstr "„Magas kontraszt” színmegjelenítési szűrő"
 msgid "Contrast"
 msgstr "Kontraszt"
 
-#: ../modules/display-filter-high-contrast.c:239
+#: ../modules/display-filter-high-contrast.c:224
 msgid "Contrast c_ycles:"
 msgstr "Kontraszt_ciklusok:"
 
-#: ../modules/display-filter-lcms.c:101
+#: ../modules/display-filter-lcms.c:102
 msgid "Color management display filter using ICC color profiles"
 msgstr "ICC színprofilt használó színkezelési megjelenítési szűrő"
 
-#: ../modules/display-filter-lcms.c:133
+#: ../modules/display-filter-lcms.c:134
 msgid "Color Management"
 msgstr "Színkezelés"
 
 #. a color profile without a name
-#: ../modules/display-filter-lcms.c:215
+#: ../modules/display-filter-lcms.c:182
 msgid "(unnamed profile)"
 msgstr "(névtelen profil)"
 
-#: ../modules/display-filter-lcms.c:239
+#: ../modules/display-filter-lcms.c:189
 msgid "None"
 msgstr "Nincs"
 
-#: ../modules/display-filter-lcms.c:260
+#: ../modules/display-filter-lcms.c:210
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -2041,53 +2101,68 @@ msgstr ""
 "Ez a szűrő a beállítási párbeszédablak színkezelési részéből veszi a "
 "beállításait."
 
-#: ../modules/display-filter-lcms.c:274
+#: ../modules/display-filter-lcms.c:224
 msgid "Mode of operation:"
 msgstr "Működési mód:"
 
-#: ../modules/display-filter-lcms.c:281
+#: ../modules/display-filter-lcms.c:231
 msgid "Image profile:"
 msgstr "Képprofil:"
 
-#: ../modules/display-filter-lcms.c:289
+#: ../modules/display-filter-lcms.c:239
 msgid "Monitor profile:"
 msgstr "Monitorprofil:"
 
-#: ../modules/display-filter-lcms.c:297
+#: ../modules/display-filter-lcms.c:247
 msgid "Print simulation profile:"
 msgstr "Nyomtatásszimulációs profil:"
 
-#: ../modules/display-filter-proof.c:94
+#: ../modules/display-filter-proof.c:95
 msgid "Color proof filter using ICC color profile"
 msgstr "ICC színprofilt használó „színes próbanyomat” szűrő"
 
-#: ../modules/display-filter-proof.c:144
+#: ../modules/display-filter-proof.c:145
 msgid "Color Proof"
 msgstr "Színes próbanyomat"
 
-#: ../modules/display-filter-proof.c:367
+#: ../modules/display-filter-proof.c:334
 msgid "Choose an ICC Color Profile"
 msgstr "Válasszon egy ICC színprofilt"
 
-#: ../modules/display-filter-proof.c:394
-msgid "All files (*.*)"
-msgstr "Minden fájl (*.*)"
-
-#: ../modules/display-filter-proof.c:399
-msgid "ICC color profile (*.icc, *.icm)"
-msgstr "ICC színprofil (*.icc, *.icm)"
-
-#: ../modules/display-filter-proof.c:457
+#: ../modules/display-filter-proof.c:353
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/display-filter-proof.c:463
+#: ../modules/display-filter-proof.c:359
 msgid "_Intent:"
 msgstr "_Cél:"
 
-#: ../modules/display-filter-proof.c:468
+#: ../modules/display-filter-proof.c:364
 msgid "_Black Point Compensation"
 msgstr "_Feketepont-kompenzáció"
+
+#~ msgid "The color profile used for simulating a printed version (softproof)."
+#~ msgstr ""
+#~ "Nyomtatott változat szimulációjához (próbanyomat) használt színprofil."
+
+#~ msgid "Sets how colors are mapped for your display."
+#~ msgstr "A színeknek a képernyőre való leképezését adja meg."
+
+#~ msgid ""
+#~ "Sets how colors are converted from RGB working space to the print "
+#~ "simulation device."
+#~ msgstr ""
+#~ "Megadja, hogy a színek hogyan legyenek átalakítva az RGB munkaterületről "
+#~ "a nyomtatásszimulációs eszközre."
+
+#~ msgid "CMYK color selector"
+#~ msgstr "CMYK színválasztó"
+
+#~ msgid "Black _pullout:"
+#~ msgstr "_Fekete kivonása:"
+
+#~ msgid "The percentage of black to pull out of the colored inks."
+#~ msgstr "A színes tintákból kivonandó fekete százaléka."
 
 #~ msgctxt "interpolation-type"
 #~ msgid "Sinc (Lanczos3)"

@@ -119,7 +119,7 @@ gimp_template_class_init (GimpTemplateClass *klass)
   object_class->get_property = gimp_template_get_property;
   object_class->notify       = gimp_template_notify;
 
-  viewable_class->default_stock_id = "gimp-template";
+  viewable_class->default_icon_name = "gimp-template";
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_WIDTH, "width",
                                 NULL,
@@ -132,20 +132,20 @@ gimp_template_class_init (GimpTemplateClass *klass)
                                 GIMP_DEFAULT_IMAGE_HEIGHT,
                                 GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT, "unit",
-                                 N_("The unit used for coordinate display "
-                                    "when not in dot-for-dot mode."),
+                                 _("The unit used for coordinate display "
+                                   "when not in dot-for-dot mode."),
                                  TRUE, FALSE, GIMP_UNIT_PIXEL,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_XRESOLUTION,
                                        "xresolution",
-                                       N_("The horizontal image resolution."),
+                                       _("The horizontal image resolution."),
                                        DEFAULT_RESOLUTION,
                                        GIMP_PARAM_STATIC_STRINGS |
                                        GIMP_TEMPLATE_PARAM_COPY_FIRST);
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_YRESOLUTION,
                                        "yresolution",
-                                       N_("The vertical image resolution."),
+                                       _("The vertical image resolution."),
                                        DEFAULT_RESOLUTION,
                                        GIMP_PARAM_STATIC_STRINGS |
                                        GIMP_TEMPLATE_PARAM_COPY_FIRST);
@@ -346,7 +346,7 @@ gimp_template_notify (GObject    *object,
                                       private->precision,
                                       private->width, private->height);
 
-  if (! strcmp (pspec->name, "stock-id"))
+  if (! strcmp (pspec->name, "icon-name"))
     gimp_viewable_invalidate_preview (GIMP_VIEWABLE (object));
 }
 
@@ -470,7 +470,7 @@ gimp_template_get_precision (GimpTemplate *template)
 GimpFillType
 gimp_template_get_fill_type (GimpTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_NO_FILL);
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_BACKGROUND_FILL);
 
   return GET_PRIVATE (template)->fill_type;
 }

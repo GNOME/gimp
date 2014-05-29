@@ -32,6 +32,8 @@
 
 #include "gimpcolorbalanceconfig.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -84,35 +86,35 @@ gimp_color_balance_config_class_init (GimpColorBalanceConfigClass *klass)
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->set_property       = gimp_color_balance_config_set_property;
-  object_class->get_property       = gimp_color_balance_config_get_property;
+  object_class->set_property        = gimp_color_balance_config_set_property;
+  object_class->get_property        = gimp_color_balance_config_get_property;
 
-  viewable_class->default_stock_id = "gimp-tool-color-balance";
+  viewable_class->default_icon_name = "gimp-tool-color-balance";
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_RANGE,
                                  "range",
-                                 "The affected range",
+                                 _("The affected range"),
                                  GIMP_TYPE_TRANSFER_MODE,
-                                 GIMP_MIDTONES, 0);
+                                 GIMP_TRANSFER_MIDTONES, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CYAN_RED,
                                    "cyan-red",
-                                   "Cyan-Red",
+                                   _("Cyan-Red"),
                                    -1.0, 1.0, 0.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_MAGENTA_GREEN,
                                    "magenta-green",
-                                   "Magenta-Green",
+                                   _("Magenta-Green"),
                                    -1.0, 1.0, 0.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_YELLOW_BLUE,
                                    "yellow-blue",
-                                   "Yellow-Blue",
+                                   _("Yellow-Blue"),
                                    -1.0, 1.0, 0.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PRESERVE_LUMINOSITY,
                                     "preserve-luminosity",
-                                    "Preserve Luminosity",
+                                    _("Preserve Luminosity"),
                                     TRUE, 0);
 }
 
@@ -222,7 +224,9 @@ gimp_color_balance_config_serialize (GimpConfig       *config,
 
   old_range = bc_config->range;
 
-  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+  for (range = GIMP_TRANSFER_SHADOWS;
+       range <= GIMP_TRANSFER_HIGHLIGHTS;
+       range++)
     {
       bc_config->range = range;
 
@@ -280,7 +284,9 @@ gimp_color_balance_config_equal (GimpConfig *a,
   GimpColorBalanceConfig *config_b = GIMP_COLOR_BALANCE_CONFIG (b);
   GimpTransferMode        range;
 
-  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+  for (range = GIMP_TRANSFER_SHADOWS;
+       range <= GIMP_TRANSFER_HIGHLIGHTS;
+       range++)
     {
       if (config_a->cyan_red[range]      != config_b->cyan_red[range]      ||
           config_a->magenta_green[range] != config_b->magenta_green[range] ||
@@ -302,7 +308,9 @@ gimp_color_balance_config_reset (GimpConfig *config)
   GimpColorBalanceConfig *cb_config = GIMP_COLOR_BALANCE_CONFIG (config);
   GimpTransferMode        range;
 
-  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+  for (range = GIMP_TRANSFER_SHADOWS;
+       range <= GIMP_TRANSFER_HIGHLIGHTS;
+       range++)
     {
       cb_config->range = range;
       gimp_color_balance_config_reset_range (cb_config);
@@ -321,7 +329,9 @@ gimp_color_balance_config_copy (GimpConfig  *src,
   GimpColorBalanceConfig *dest_config = GIMP_COLOR_BALANCE_CONFIG (dest);
   GimpTransferMode        range;
 
-  for (range = GIMP_SHADOWS; range <= GIMP_HIGHLIGHTS; range++)
+  for (range = GIMP_TRANSFER_SHADOWS;
+       range <= GIMP_TRANSFER_HIGHLIGHTS;
+       range++)
     {
       dest_config->cyan_red[range]      = src_config->cyan_red[range];
       dest_config->magenta_green[range] = src_config->magenta_green[range];

@@ -104,7 +104,7 @@ static void      gimp_settings_box_deserialize   (GimpSettingsBox   *box);
 static void      gimp_settings_box_serialize     (GimpSettingsBox   *box);
 static GtkWidget *
                  gimp_settings_box_menu_item_add (GimpSettingsBox   *box,
-                                                  const gchar       *stock_id,
+                                                  const gchar       *icon_name,
                                                   const gchar       *label,
                                                   GCallback          callback);
 static gboolean
@@ -284,7 +284,7 @@ gimp_settings_box_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  image = gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_MENU);
+  image = gtk_image_new_from_icon_name ("list-add", GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
@@ -300,7 +300,7 @@ gimp_settings_box_constructed (GObject *object)
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  arrow = gtk_image_new_from_stock (GIMP_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);
+  arrow = gtk_image_new_from_icon_name (GIMP_STOCK_MENU_LEFT, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), arrow);
   gtk_widget_show (arrow);
 
@@ -315,20 +315,20 @@ gimp_settings_box_constructed (GObject *object)
 
   private->import_item =
     gimp_settings_box_menu_item_add (box,
-                                     GTK_STOCK_OPEN,
+                                     "document-open",
                                      _("_Import Settings from File..."),
                                      G_CALLBACK (gimp_settings_box_import_activate));
 
   private->export_item =
     gimp_settings_box_menu_item_add (box,
-                                     GTK_STOCK_SAVE,
+                                     "document-save",
                                      _("_Export Settings to File..."),
                                      G_CALLBACK (gimp_settings_box_export_activate));
 
   gimp_settings_box_menu_item_add (box, NULL, NULL, NULL);
 
   gimp_settings_box_menu_item_add (box,
-                                   GTK_STOCK_EDIT,
+                                   "gtk-edit",
                                    _("_Manage Settings..."),
                                    G_CALLBACK (gimp_settings_box_manage_activate));
 }
@@ -525,7 +525,7 @@ gimp_settings_box_serialize (GimpSettingsBox *box)
 
 static GtkWidget *
 gimp_settings_box_menu_item_add (GimpSettingsBox *box,
-                                 const gchar     *stock_id,
+                                 const gchar     *icon_name,
                                  const gchar     *label,
                                  GCallback        callback)
 {
@@ -537,7 +537,7 @@ gimp_settings_box_menu_item_add (GimpSettingsBox *box,
       GtkWidget *image;
 
       item = gtk_image_menu_item_new_with_mnemonic (label);
-      image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_MENU);
+      image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
       gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
 
       g_signal_connect (item, "activate",
@@ -682,8 +682,9 @@ gimp_settings_box_manage_activate (GtkWidget       *widget,
                                             "gimp-settings-editor-dialog",
                                             toplevel, 0,
                                             NULL, NULL,
-                                            GTK_STOCK_CLOSE,
-                                            GTK_RESPONSE_CLOSE,
+
+                                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+
                                             NULL);
 
   g_object_add_weak_pointer (G_OBJECT (private->editor_dialog),

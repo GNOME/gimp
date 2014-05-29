@@ -103,24 +103,26 @@ gimp_tool_dialog_dispose (GObject *object)
  **/
 GtkWidget *
 gimp_tool_dialog_new (GimpToolInfo *tool_info,
+                      GdkScreen    *screen,
+                      gint          monitor,
                       const gchar  *desc,
                       ...)
 {
   GtkWidget   *dialog;
-  const gchar *stock_id;
+  const gchar *icon_name;
   gchar       *identifier;
   va_list      args;
 
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
 
-  stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+  icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
 
   dialog = g_object_new (GIMP_TYPE_TOOL_DIALOG,
                          "title",        tool_info->blurb,
                          "role",         gimp_object_get_name (tool_info),
                          "help-func",    gimp_standard_help_func,
                          "help-id",      tool_info->help_id,
-                         "stock-id",     stock_id,
+                         "icon-name",    icon_name,
                          "description",  desc ? desc : tool_info->help,
                          NULL);
 
@@ -132,7 +134,9 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
 
   gimp_dialog_factory_add_foreign (gimp_dialog_factory_get_singleton (),
                                    identifier,
-                                   dialog);
+                                   dialog,
+                                   screen,
+                                   monitor);
 
   g_free (identifier);
 

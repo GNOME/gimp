@@ -153,7 +153,7 @@ gimp_view_renderer_init (GimpViewRenderer *renderer)
   renderer->surface       = NULL;
   renderer->pattern       = NULL;
   renderer->pixbuf        = NULL;
-  renderer->bg_stock_id   = NULL;
+  renderer->bg_icon_name  = NULL;
 
   renderer->size          = -1;
   renderer->needs_render  = TRUE;
@@ -199,10 +199,10 @@ gimp_view_renderer_finalize (GObject *object)
       renderer->pixbuf = NULL;
     }
 
-  if (renderer->bg_stock_id)
+  if (renderer->bg_icon_name)
     {
-      g_free (renderer->bg_stock_id);
-      renderer->bg_stock_id = NULL;
+      g_free (renderer->bg_icon_name);
+      renderer->bg_icon_name = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -510,14 +510,14 @@ gimp_view_renderer_set_border_color (GimpViewRenderer *renderer,
 
 void
 gimp_view_renderer_set_background (GimpViewRenderer *renderer,
-                                   const gchar      *stock_id)
+                                   const gchar      *icon_name)
 {
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
 
-  if (renderer->bg_stock_id)
-    g_free (renderer->bg_stock_id);
+  if (renderer->bg_icon_name)
+    g_free (renderer->bg_icon_name);
 
-  renderer->bg_stock_id = g_strdup (stock_id);
+  renderer->bg_icon_name = g_strdup (icon_name);
 
   if (renderer->pattern)
     {
@@ -618,9 +618,9 @@ gimp_view_renderer_draw (GimpViewRenderer *renderer,
 
       viewable_class = g_type_class_ref (renderer->viewable_type);
 
-      gimp_view_renderer_render_stock (renderer,
-                                       widget,
-                                       viewable_class->default_stock_id);
+      gimp_view_renderer_render_icon (renderer,
+                                      widget,
+                                      viewable_class->default_icon_name);
 
       g_type_class_unref (viewable_class);
 
@@ -695,7 +695,7 @@ gimp_view_renderer_real_draw (GimpViewRenderer *renderer,
       gint  height = gdk_pixbuf_get_height (renderer->pixbuf);
       gint  x, y;
 
-      if (renderer->bg_stock_id)
+      if (renderer->bg_icon_name)
         {
           if (! renderer->pattern)
             {
@@ -751,7 +751,7 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
 {
   GdkPixbuf   *pixbuf;
   GimpTempBuf *temp_buf;
-  const gchar *stock_id;
+  const gchar *icon_name;
 
   pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
                                      renderer->context,
@@ -773,8 +773,8 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
       return;
     }
 
-  stock_id = gimp_viewable_get_stock_id (renderer->viewable);
-  gimp_view_renderer_render_stock (renderer, widget, stock_id);
+  icon_name = gimp_viewable_get_icon_name (renderer->viewable);
+  gimp_view_renderer_render_icon (renderer, widget, icon_name);
 }
 
 static void
@@ -875,16 +875,15 @@ gimp_view_renderer_render_pixbuf (GimpViewRenderer *renderer,
 }
 
 void
-gimp_view_renderer_render_stock (GimpViewRenderer *renderer,
-                                 GtkWidget        *widget,
-                                 const gchar      *stock_id)
+gimp_view_renderer_render_icon (GimpViewRenderer *renderer,
+                                GtkWidget        *widget,
+                                const gchar      *icon_name)
 {
-  GdkPixbuf   *pixbuf = NULL;
-  GtkIconSize  icon_size;
+  GdkPixbuf *pixbuf;
 
   g_return_if_fail (GIMP_IS_VIEW_RENDERER (renderer));
   g_return_if_fail (GTK_IS_WIDGET (widget));
-  g_return_if_fail (stock_id != NULL);
+  g_return_if_fail (icon_name != NULL);
 
   if (renderer->pixbuf)
     {
@@ -898,11 +897,8 @@ gimp_view_renderer_render_stock (GimpViewRenderer *renderer,
       renderer->surface = NULL;
     }
 
-  icon_size = gimp_get_icon_size (widget, stock_id, GTK_ICON_SIZE_INVALID,
-                                  renderer->width, renderer->height);
-
-  if (icon_size)
-    pixbuf = gtk_widget_render_icon (widget, stock_id, icon_size, NULL);
+  pixbuf = gimp_widget_load_icon (widget, icon_name,
+                                  MIN (renderer->width, renderer->height));
 
   if (pixbuf)
     {
@@ -1137,8 +1133,8 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
   cairo_destroy (cr);
 }
 
-/* This function creates a background pattern from a stock icon
- * if renderer->bg_stock_id is set.
+/* This function creates a background pattern from a named icon
+ * if renderer->bg_icon_name is set.
  */
 static cairo_pattern_t *
 gimp_view_renderer_create_background (GimpViewRenderer *renderer,
@@ -1146,11 +1142,10 @@ gimp_view_renderer_create_background (GimpViewRenderer *renderer,
 {
   cairo_pattern_t *pattern = NULL;
 
-  if (renderer->bg_stock_id)
+  if (renderer->bg_icon_name)
     {
-      GdkPixbuf *pixbuf = gtk_widget_render_icon (widget,
-                                                  renderer->bg_stock_id,
-                                                  GTK_ICON_SIZE_DIALOG, NULL);
+      GdkPixbuf *pixbuf = gimp_widget_load_icon (widget,
+                                                 renderer->bg_icon_name, 64);
 
       if (pixbuf)
         {

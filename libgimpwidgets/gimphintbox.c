@@ -42,6 +42,7 @@ typedef struct
 {
   GtkBox    parent_instance;
 
+  gchar    *icon_name;
   gchar    *stock_id;
   gchar    *hint;
 } GimpHintBox;
@@ -52,6 +53,7 @@ typedef struct
 enum
 {
   PROP_0,
+  PROP_ICON_NAME,
   PROP_STOCK_ID,
   PROP_HINT
 };
@@ -84,6 +86,11 @@ gimp_hint_box_class_init (GimpHintBoxClass *klass)
   object_class->set_property  = gimp_hint_box_set_property;
   object_class->get_property  = gimp_hint_box_get_property;
 
+  g_object_class_install_property (object_class, PROP_ICON_NAME,
+                                   g_param_spec_string ("icon-name", NULL, NULL,
+                                                        GIMP_STOCK_INFO,
+                                                        G_PARAM_CONSTRUCT_ONLY |
+                                                        GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_STOCK_ID,
                                    g_param_spec_string ("stock-id", NULL, NULL,
                                                         GIMP_STOCK_INFO,
@@ -101,26 +108,32 @@ gimp_hint_box_init (GimpHintBox *box)
 {
   gtk_orientable_set_orientation (GTK_ORIENTABLE (box),
                                   GTK_ORIENTATION_HORIZONTAL);
-
-  box->stock_id = NULL;
-  box->hint     = NULL;
 }
 
 static void
 gimp_hint_box_constructed (GObject *object)
 {
-  GimpHintBox *box = GIMP_HINT_BOX (object);
+  GimpHintBox *box   = GIMP_HINT_BOX (object);
+  GtkWidget   *image = NULL;
   GtkWidget   *label;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gtk_box_set_spacing (GTK_BOX (box), 12);
 
-  if (box->stock_id)
+  if (box->icon_name)
     {
-      GtkWidget *image = gtk_image_new_from_stock (box->stock_id,
-                                                   GTK_ICON_SIZE_DIALOG);
+      image = gtk_image_new_from_icon_name (box->icon_name,
+                                            GTK_ICON_SIZE_DIALOG);
+    }
+  else if (box->stock_id)
+    {
+      image = gtk_image_new_from_stock (box->stock_id,
+                                        GTK_ICON_SIZE_DIALOG);
+    }
 
+  if (image)
+    {
       gtk_box_pack_start (GTK_BOX (box), image, FALSE, FALSE, 0);
       gtk_widget_show (image);
     }
@@ -144,6 +157,12 @@ static void
 gimp_hint_box_finalize (GObject *object)
 {
   GimpHintBox *box = GIMP_HINT_BOX (object);
+
+  if (box->icon_name)
+    {
+      g_free (box->icon_name);
+      box->icon_name = NULL;
+    }
 
   if (box->stock_id)
     {
@@ -170,6 +189,10 @@ gimp_hint_box_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_ICON_NAME:
+      box->icon_name = g_value_dup_string (value);
+      break;
+
     case PROP_STOCK_ID:
       box->stock_id = g_value_dup_string (value);
       break;
@@ -194,6 +217,10 @@ gimp_hint_box_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_ICON_NAME:
+      g_value_set_string (value, box->icon_name);
+      break;
+
     case PROP_STOCK_ID:
       g_value_set_string (value, box->stock_id);
       break;

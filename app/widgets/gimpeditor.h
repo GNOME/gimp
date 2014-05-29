@@ -60,15 +60,15 @@ gboolean    gimp_editor_popup_menu        (GimpEditor           *editor,
                                            gpointer              position_data);
 
 GtkWidget * gimp_editor_add_button        (GimpEditor           *editor,
-                                           const gchar          *stock_id,
+                                           const gchar          *icon_name,
                                            const gchar          *tooltip,
                                            const gchar          *help_id,
                                            GCallback             callback,
                                            GCallback             extended_callback,
                                            gpointer              callback_data);
-GtkWidget * gimp_editor_add_stock_box     (GimpEditor           *editor,
+GtkWidget * gimp_editor_add_icon_box      (GimpEditor           *editor,
                                            GType                 enum_type,
-                                           const gchar          *stock_prefix,
+                                           const gchar          *icon_prefix,
                                            GCallback             callback,
                                            gpointer              callback_data);
 

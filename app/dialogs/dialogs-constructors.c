@@ -65,6 +65,7 @@
 #include "display/gimpnavigationeditor.h"
 
 #include "about-dialog.h"
+#include "action-search-dialog.h"
 #include "dialogs.h"
 #include "dialogs-constructors.h"
 #include "file-open-dialog.h"
@@ -192,6 +193,15 @@ dialogs_about_get (GimpDialogFactory *factory,
                    gint               view_size)
 {
   return about_dialog_create (context);
+}
+
+GtkWidget *
+dialogs_action_search_get (GimpDialogFactory *factory,
+                           GimpContext       *context,
+                           GimpUIManager     *ui_manager,
+                           gint               view_size)
+{
+  return action_search_dialog_create (context->gimp);
 }
 
 GtkWidget *

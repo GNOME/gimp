@@ -214,17 +214,20 @@ gimp_get_program_class (Gimp *gimp)
 }
 
 gchar *
-gimp_get_display_name (Gimp *gimp,
-                       gint  display_ID,
-                       gint *monitor_number)
+gimp_get_display_name (Gimp     *gimp,
+                       gint      display_ID,
+                       GObject **screen,
+                       gint     *monitor)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (monitor_number != NULL, NULL);
+  g_return_val_if_fail (screen != NULL, NULL);
+  g_return_val_if_fail (monitor != NULL, NULL);
 
   if (gimp->gui.get_display_name)
-    return gimp->gui.get_display_name (gimp, display_ID, monitor_number);
+    return gimp->gui.get_display_name (gimp, display_ID, screen, monitor);
 
-  *monitor_number = 0;
+  *screen  = NULL;
+  *monitor = 0;
 
   return NULL;
 }
@@ -325,13 +328,16 @@ GimpObject *
 gimp_create_display (Gimp      *gimp,
                      GimpImage *image,
                      GimpUnit   unit,
-                     gdouble    scale)
+                     gdouble    scale,
+                     GObject   *screen,
+                     gint       monitor)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (screen == NULL || G_IS_OBJECT (screen), NULL);
 
   if (gimp->gui.display_create)
-    return gimp->gui.display_create (gimp, image, unit, scale);
+    return gimp->gui.display_create (gimp, image, unit, scale, screen, monitor);
 
   return NULL;
 }

@@ -23,19 +23,11 @@
 #include <errno.h>
 #include <string.h>
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
-
-#ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
-#endif
 
 #include "gui-types.h"
 
@@ -46,6 +38,7 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "dialogs/dialogs.h"
 
@@ -323,11 +316,15 @@ session_exit (Gimp *gimp)
 }
 
 void
-session_restore (Gimp *gimp)
+session_restore (Gimp      *gimp,
+                 GdkScreen *screen,
+                 gint       monitor)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GDK_IS_SCREEN (screen));
 
-  gimp_dialog_factory_restore (gimp_dialog_factory_get_singleton ());
+  gimp_dialog_factory_restore (gimp_dialog_factory_get_singleton (),
+                               screen, monitor);
 
   /* make sure GimpImageWindow acts upon hide-docks at the right time,
    * see bug #678043.

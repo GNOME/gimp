@@ -48,6 +48,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
@@ -150,6 +151,7 @@ file_open_location_cmd_callback (GtkAction *action,
 
   gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                   gtk_widget_get_screen (widget),
+                                  gimp_widget_get_monitor (widget),
                                   NULL /*ui_manager*/,
                                   "gimp-file-open-location-dialog", -1, TRUE);
 }
@@ -175,11 +177,13 @@ file_open_recent_cmd_callback (GtkAction *action,
   if (imagefile)
     {
       GimpDisplay       *display;
+      GtkWidget         *widget;
       GimpProgress      *progress;
       GimpImage         *image;
       GimpPDBStatusType  status;
       GError            *error = NULL;
       return_if_no_display (display, data);
+      return_if_no_widget (widget, data);
 
       g_object_ref (display);
       g_object_ref (imagefile);
@@ -190,6 +194,8 @@ file_open_recent_cmd_callback (GtkAction *action,
       image = file_open_with_display (gimp, action_data_get_context (data),
                                       progress,
                                       gimp_object_get_name (imagefile), FALSE,
+                                      G_OBJECT (gtk_widget_get_screen (widget)),
+                                      gimp_widget_get_monitor (widget),
                                       &status, &error);
 
       if (! image && status != GIMP_PDB_CANCEL)
@@ -413,7 +419,7 @@ file_revert_cmd_callback (GtkAction *action,
       gchar *filename;
 
       dialog =
-        gimp_message_dialog_new (_("Revert Image"), GTK_STOCK_REVERT_TO_SAVED,
+        gimp_message_dialog_new (_("Revert Image"), "document-revert",
                                  GTK_WIDGET (gimp_display_get_shell (display)),
                                  0,
                                  gimp_standard_help_func, GIMP_HELP_FILE_REVERT,
@@ -473,6 +479,7 @@ file_close_all_cmd_callback (GtkAction *action,
 
       gimp_dialog_factory_dialog_raise (gimp_dialog_factory_get_singleton (),
                                         gtk_widget_get_screen (widget),
+                                        gimp_widget_get_monitor (widget),
                                         "gimp-close-all-dialog", -1);
     }
 }
@@ -512,6 +519,7 @@ file_open_dialog_show (Gimp        *gimp,
 
   dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                            gtk_widget_get_screen (parent),
+                                           gimp_widget_get_monitor (parent),
                                            NULL /*ui_manager*/,
                                            "gimp-file-open-dialog", -1, FALSE);
 
@@ -556,6 +564,7 @@ file_save_dialog_show (Gimp        *gimp,
     {
       dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                                gtk_widget_get_screen (parent),
+                                               gimp_widget_get_monitor (parent),
                                                NULL /*ui_manager*/,
                                                "gimp-file-save-dialog",
                                                -1, FALSE);
@@ -644,6 +653,7 @@ file_export_dialog_show (Gimp      *gimp,
     {
       dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                                gtk_widget_get_screen (parent),
+                                               gimp_widget_get_monitor (parent),
                                                NULL /*ui_manager*/,
                                                "gimp-file-export-dialog",
                                                -1, FALSE);

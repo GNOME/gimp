@@ -69,6 +69,9 @@ GdkModifierType gtk_widget_get_modifier_mask    (GtkWidget         *widget,
 
 gboolean        gdk_cairo_get_clip_rectangle    (cairo_t           *cr,
                                                  GdkRectangle      *rect);
+void            gdk_screen_get_monitor_workarea (GdkScreen         *screen,
+                                                 gint               monitor_num,
+                                                 GdkRectangle      *dest);
 
 
 #endif /* __GIMP_3_MIGRATION_H__ */

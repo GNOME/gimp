@@ -57,11 +57,14 @@ gimp_pixbuf_get_format (GdkPixbuf *pixbuf)
  * gimp_pixbuf_create_buffer:
  * @pixbuf: a #GdkPixbuf
  *
- * Returns a #GeglBuffer that's backed by the @pixbuf's pixels, without
- * copying them. This function refs the pixbuf, so it will be kept
- * around for as long as te buffer exists.
+ * Returns a #GeglBuffer that's either backed by the @pixbuf's pixels,
+ * or a copy of them. This function tries to not copy the @pixbuf's
+ * pixels. If the pixbuf's rowstride is a multiple of its bpp, a
+ * simple reference to the @pixbuf's pixels is made and @pixbuf will
+ * be kept around for as long as the buffer exists; otherwise the
+ * pixels are copied.
  *
- * Return value: a new #GeglBuffer as a wrapper around @pixbuf.
+ * Return value: a new #GeglBuffer.
  *
  * Since: GIMP 2.10
  **/
@@ -71,17 +74,35 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
   gint width;
   gint height;
   gint rowstride;
+  gint bpp;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
 
   width     = gdk_pixbuf_get_width (pixbuf);
   height    = gdk_pixbuf_get_height (pixbuf);
   rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+  bpp       = gdk_pixbuf_get_n_channels (pixbuf);
 
-  return gegl_buffer_linear_new_from_data (gdk_pixbuf_get_pixels (pixbuf),
-                                           gimp_pixbuf_get_format (pixbuf),
-                                           GEGL_RECTANGLE (0, 0, width, height),
-                                           rowstride,
-                                           (GDestroyNotify) g_object_unref,
-                                           g_object_ref (pixbuf));
+  if ((rowstride % bpp) == 0)
+    {
+      return gegl_buffer_linear_new_from_data (gdk_pixbuf_get_pixels (pixbuf),
+                                               gimp_pixbuf_get_format (pixbuf),
+                                               GEGL_RECTANGLE (0, 0,
+                                                               width, height),
+                                               rowstride,
+                                               (GDestroyNotify) g_object_unref,
+                                               g_object_ref (pixbuf));
+    }
+  else
+    {
+      GeglBuffer *buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                            width, height),
+                                            gimp_pixbuf_get_format (pixbuf));
+
+      gegl_buffer_set (buffer, NULL, 0, NULL,
+                       gdk_pixbuf_get_pixels (pixbuf),
+                       gdk_pixbuf_get_rowstride (pixbuf));
+
+      return buffer;
+    }
 }

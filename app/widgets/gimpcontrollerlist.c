@@ -186,7 +186,7 @@ gimp_controller_list_init (GimpControllerList *list)
   cell = gtk_cell_renderer_pixbuf_new ();
   gtk_tree_view_column_pack_start (column, cell, FALSE);
   gtk_tree_view_column_set_attributes (column, cell,
-                                       "stock-id", COLUMN_ICON,
+                                       "icon-name", COLUMN_ICON,
                                        NULL);
 
   g_object_get (cell, "stock-size", &icon_size, NULL);
@@ -223,7 +223,7 @@ gimp_controller_list_init (GimpControllerList *list)
 
       gtk_list_store_append (list->src, &iter);
       gtk_list_store_set (list->src, &iter,
-                          COLUMN_ICON, controller_class->stock_id,
+                          COLUMN_ICON, controller_class->icon_name,
                           COLUMN_NAME, controller_class->name,
                           COLUMN_TYPE, controller_types[i],
                           -1);
@@ -243,7 +243,8 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->add_button, FALSE);
   gtk_widget_show (list->add_button);
 
-  image = gtk_image_new_from_stock (GTK_STOCK_GO_FORWARD, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name ("go-next",
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->add_button), image);
   gtk_widget_show (image);
 
@@ -259,7 +260,8 @@ gimp_controller_list_init (GimpControllerList *list)
   gtk_widget_set_sensitive (list->remove_button, FALSE);
   gtk_widget_show (list->remove_button);
 
-  image = gtk_image_new_from_stock (GTK_STOCK_GO_BACK, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name ("go-previous",
+                                        GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (list->remove_button), image);
   gtk_widget_show (image);
 
@@ -290,7 +292,7 @@ gimp_controller_list_init (GimpControllerList *list)
 
   list->edit_button =
     gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            GTK_STOCK_PROPERTIES,
+                            "document-properties",
                             _("Configure the selected controller"),
                             NULL,
                             G_CALLBACK (gimp_controller_list_edit_clicked),
@@ -298,7 +300,7 @@ gimp_controller_list_init (GimpControllerList *list)
                             list);
   list->up_button =
     gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            GTK_STOCK_GO_UP,
+                            "go-up",
                             _("Move the selected controller up"),
                             NULL,
                             G_CALLBACK (gimp_controller_list_up_clicked),
@@ -306,7 +308,7 @@ gimp_controller_list_init (GimpControllerList *list)
                             list);
   list->down_button =
     gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            GTK_STOCK_GO_DOWN,
+                            "go-down",
                             _("Move the selected controller down"),
                             NULL,
                             G_CALLBACK (gimp_controller_list_down_clicked),
@@ -645,7 +647,9 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
 
   gimp_dialog_factory_add_foreign (gimp_dialog_factory_get_singleton (),
                                    "gimp-controller-editor-dialog",
-                                   dialog);
+                                   dialog,
+                                   gtk_widget_get_screen (button),
+                                   gimp_widget_get_monitor (button));
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gtk_widget_destroy),

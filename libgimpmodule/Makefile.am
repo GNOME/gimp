@@ -71,7 +71,7 @@ libgimpmodule_@GIMP_API_VERSION@_la_LDFLAGS = \
 	$(no_undefined) 			\
 	$(libgimpmodule_export_symbols)
 
-libgimpmodule_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpmodule_def)
+EXTRA_libgimpmodule_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpmodule_def)
 
 libgimpmodule_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpbase)			\

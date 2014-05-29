@@ -2,107 +2,106 @@
 # Copyright (C) 2001, 2002 Free Software Foundation.
 # Simos Xenitellis <simos@hellug.gr>, 2001, 2002.
 # Vasilis Kontogiannis <vasilisk@ics.forth.gr>, 2009
-# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2011, 2012.
+# Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>, 2011, 2012, 2014.
 # Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.0\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2012-04-16 18:55+0000\n"
-"PO-Revision-Date: 2012-04-16 20:36+0300\n"
-"Last-Translator: Dimitris Spingos (Δημήτρης  Σπίγγος) <dmtrs32@gmail.com>\n"
-"Language-Team: team@gnome.gr\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-05-03 22:00+1200\n"
+"PO-Revision-Date: 2014-04-26 15:07+0300\n"
+"Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
+"Language-Team: www.gnome.gr\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Virtaal 0.7.0\n"
+"X-Generator: Virtaal 0.7.1\n"
 "X-Poedit-Language: Greek\n"
 "X-Poedit-Country: GREECE\n"
 "X-Project-Style: gnome\n"
 
-#: ../plug-ins/script-fu/script-fu.c:110
+#: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
 msgstr "Διαδραστική κονσόλα για την ανάπτυξη του Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:116
+#: ../plug-ins/script-fu/script-fu.c:117
 msgid "_Console"
 msgstr "_Κονσόλα"
 
-#: ../plug-ins/script-fu/script-fu.c:140
+#: ../plug-ins/script-fu/script-fu.c:141
 msgid "Server for remote Script-Fu operation"
 msgstr "Εξυπηρετητής για απομακρυσμένη λειτουργία Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:145
+#: ../plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
 msgstr "_Εκκίνηση εξυπηρετητή..."
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_GIMP Online"
 msgstr "Το _GIMP στο διαδίκτυο"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:308
 msgid "_User Manual"
 msgstr "_Εγχειρίδιο χρήστη"
 
-#: ../plug-ins/script-fu/script-fu.c:305
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
 #
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Test"
 msgstr "Έ_λεγχος"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:316
 msgid "_Buttons"
 msgstr "_Κουμπιά"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:318
 msgid "_Logos"
 msgstr "_Λογότυποι"
 
-#: ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:320
 msgid "_Patterns"
 msgstr "_Μοτίβα"
 
-#: ../plug-ins/script-fu/script-fu.c:317
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Web Page Themes"
 msgstr "_Θέματα ιστοσελίδων"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Alien Glow"
 msgstr "Παρά_ξενη λάμψη"
 
-#: ../plug-ins/script-fu/script-fu.c:321
+#: ../plug-ins/script-fu/script-fu.c:327
 msgid "_Beveled Pattern"
 msgstr "Υπόδειγμα λοξό_τμησης"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:326
+#: ../plug-ins/script-fu/script-fu.c:332
 msgid "Alpha to _Logo"
 msgstr "Άλφα σε _λογότυπο"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:335
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Ξαναδιάβασμα όλων των διαθέσιμων σεναρίων Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:334
+#: ../plug-ins/script-fu/script-fu.c:340
 msgid "_Refresh Scripts"
 msgstr "_Ανανέωση σεναρίων"
 
-#: ../plug-ins/script-fu/script-fu.c:357
+#: ../plug-ins/script-fu/script-fu.c:363
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
 msgstr ""
 "Δεν μπορείτε να χρησιμοποιήσετε \"ανανέωση σεναρίων\" ενώ το πλαίσιο "
-"διαλόγου του Script-Fu είναι ανοιχτό. Παρακαλώ κλείστε όλα τα παράθυρα "
+"διαλόγου του Script-Fu είναι ανοιχτό. Παρακαλούμε κλείστε όλα τα παράθυρα "
 "Script-Fu και προσπαθήστε ξανά."
 
 #: ../plug-ins/script-fu/script-fu-console.c:130
@@ -141,16 +140,16 @@ msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Η κατάσταση αξιολόγησης του Script-Fu επιτρέπει μόνο μη διαδραστική κλήση"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:194
+#: ../plug-ins/script-fu/script-fu-interface.c:198
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Αδυναμία επεξεργασίας δύο σεναρίων την ίδια στιγμή από το Script-Fu."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:196
+#: ../plug-ins/script-fu/script-fu-interface.c:200
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Εκτελείται ήδη το σενάριο \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:222
+#: ../plug-ins/script-fu/script-fu-interface.c:226
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
@@ -158,46 +157,46 @@ msgstr "Script-Fu: %s"
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:286
+#: ../plug-ins/script-fu/script-fu-interface.c:290
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
 #
-#: ../plug-ins/script-fu/script-fu-interface.c:333
+#: ../plug-ins/script-fu/script-fu-interface.c:337
 msgid "Script-Fu Color Selection"
 msgstr "Επιλογή χρώματος Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:442
+#: ../plug-ins/script-fu/script-fu-interface.c:446
 msgid "Script-Fu File Selection"
 msgstr "Επιλογή αρχείου Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:445
+#: ../plug-ins/script-fu/script-fu-interface.c:449
 msgid "Script-Fu Folder Selection"
 msgstr "Επιλογή φακέλου Script-Fu"
 
 #
-#: ../plug-ins/script-fu/script-fu-interface.c:458
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Font Selection"
 msgstr "Επιλογή γραμματοσειράς Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:466
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-Fu Palette Selection"
 msgstr "Επιλογή παλέτας Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Pattern Selection"
 msgstr "Επιλογή μοτίβου Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:484
+#: ../plug-ins/script-fu/script-fu-interface.c:488
 msgid "Script-Fu Gradient Selection"
 msgstr "Επιλογή διαβάθμισης Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:493
+#: ../plug-ins/script-fu/script-fu-interface.c:497
 msgid "Script-Fu Brush Selection"
 msgstr "Επιλογή πινέλου Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:824
+#: ../plug-ins/script-fu/script-fu-interface.c:840
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Σφάλμα εκτέλεσης %s:"
@@ -211,87 +210,1522 @@ msgstr "Πολύ λίγα ορίσματα κατά την κλήση του 'sc
 msgid "Error while loading %s:"
 msgstr "Σφάλμα φόρτωσης %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:807
+#: ../plug-ins/script-fu/script-fu-server.c:827
 msgid "Script-Fu Server Options"
 msgstr "Επιλογές εξυπηρετητή Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:812
+#: ../plug-ins/script-fu/script-fu-server.c:832
 msgid "_Start Server"
 msgstr "Εκκίνη_ση εξυπηρετητή"
 
-#: ../plug-ins/script-fu/script-fu-server.c:840
+#: ../plug-ins/script-fu/script-fu-server.c:865
+msgid "Listen on IP:"
+msgstr "Ακρόαση σε IP:"
+
+#: ../plug-ins/script-fu/script-fu-server.c:872
 msgid "Server port:"
 msgstr "Θύρα εξυπηρετητή:"
 
 #
-#: ../plug-ins/script-fu/script-fu-server.c:846
+#: ../plug-ins/script-fu/script-fu-server.c:878
 msgid "Server logfile:"
 msgstr "Αρχείο ημερολογίου εξυπηρετητή:"
 
-#
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:182
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:156
-msgid "Right"
-msgstr "Δεξιά"
+#: ../plug-ins/script-fu/script-fu-server.c:890
+msgid ""
+"Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
+"allow attackers to remotely execute arbitrary code on this machine."
+msgstr ""
+"Ακρόαση σε μια διεύθυνση IP διαφορετική από 127.0.0.1 (ιδιαίτερα 0.0.0.0) "
+"μπορεί να επιτρέψει σε επιτιθέμενους να εκτελέσουν απομακρυσμένα τυχαίο "
+"κώδικα σε αυτήν την μηχανή."
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm:136
-#: ../plug-ins/script-fu/scripts/blended-logo.scm:195
-msgid "FG-BG-RGB"
-msgstr "ΠΡΟΣΚΗΝΙΟ-ΠΑΡΑΣΚΗΝΙΟ-RGB"
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:76
+msgid "Bumpmap"
+msgstr "Χάρτης ανάγλυφου"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:185
+msgid "Add B_evel..."
+msgstr "Προσθήκη λ_οξότμησης..."
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:186
+msgid "Add a beveled border to an image"
+msgstr "Προσθέστε ένα περίγραμμα λοξότμησης στην εικόνα"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:193
+msgid "Thickness"
+msgstr "Πάχος"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:194
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
+#: ../plug-ins/script-fu/scripts/old-photo.scm:104
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/slide.scm:248
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
+msgid "Work on copy"
+msgstr "Εργασία σε αντίγραφο"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm:195
+msgid "Keep bump layer"
+msgstr "Διατήρηση στρώσης ανάγλυφου"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:108
+msgid "Border Layer"
+msgstr "Στρώση περιγράμματος"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:160
+msgid "Add _Border..."
+msgstr "Προσθήκη _περιγράμματος..."
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:161
+msgid "Add a border around an image"
+msgstr "Προσθήκη περιγράμματος γύρω από εικόνα"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:168
+msgid "Border X size"
+msgstr "Μέγεθος Χ περιγράμματος"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:169
+msgid "Border Y size"
+msgstr "Μέγεθος Υ περιγράμματος"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:170
+msgid "Border color"
+msgstr "Χρώμα περιγράμματος"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm:171
+msgid "Delta value on color"
+msgstr "Τιμή δέλτα στο χρώμα"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:206
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
+msgid "Frame"
+msgstr "Πλαίσιο"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:222
+msgid "Blend Animation needs at least three source layers"
+msgstr "Η κίνηση ανάμειξης χρειάζεται τουλάχιστον τρεις πηγαίες στρώσεις"
+
+#
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:228
+msgid "_Blend..."
+msgstr "Α_νάμειξη..."
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:229
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr ""
+"Δημιουργία ενδιάμεσων στρώσεων για την ανάμειξη δύο ή περισσοτέρων στρώσεων "
+"πάνω από ένα παρασκήνιο σαν κίνηση"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:236
+msgid "Intermediate frames"
+msgstr "Ενδιάμεσα πλαίσια"
+
+#
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:237
+msgid "Max. blur radius"
+msgstr "Μέγιστη ακτίνα θόλωσης"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm:238
+msgid "Looped"
+msgstr "Βρόχος"
+
+#. --- false form of "if-1"
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:212
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+"Το σενάριο αποτύπωσης χρειάζεται δύο στρώσεις συνολικά. Μια στρώση "
+"προσκηνίου με διαφάνεια και μια στρώση παρασκηνίου."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:219
+msgid "B_urn-In..."
+msgstr "Απο_τύπωση..."
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:220
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr ""
+"Δημιουργία ενδιάμεσων στρώσεων για να παραχθεί μία κινούμενη μετάπτωση "
+"'αποτύπωσης' μεταξύ δύο στρώσεων"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:227
+msgid "Glow color"
+msgstr "Χρώμα λάμψης"
+
+#
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:228
+msgid "Fadeout"
+msgstr "Ξεθώριασμα"
+
+#
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:229
+msgid "Fadeout width"
+msgstr "Πλάτος ξεθωριάσματος"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:230
+msgid "Corona width"
+msgstr "Πλάτος κορώνας"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:231
+msgid "After glow"
+msgstr "Μετά τη λάμψη"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
+msgid "Add glowing"
+msgstr "Προσθήκη λάμψης"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
+msgid "Prepare for GIF"
+msgstr "Προετοιμασία για GIF"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
+msgid "Speed (pixels/frame)"
+msgstr "Ταχύτητα (εικονοστοιχεία/πλαίσιο)"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:168
+msgid "Carved Surface"
+msgstr "Λαξευμένη επιφάνεια"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:169
+msgid "Bevel Shadow"
+msgstr "Σκιά λοξότμησης"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:170
+msgid "Bevel Highlight"
+msgstr "Τονισμός λοξότμησης"
+
+#
+#: ../plug-ins/script-fu/scripts/carve-it.scm:171
+msgid "Cast Shadow"
+msgstr "Σκιά απόχρωσης"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:172
+msgid "Inset"
+msgstr "Συρρίκνωση"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:182
+msgid "Stencil C_arve..."
+msgstr "Μήτρα _ανάγλυφου..."
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:183
+msgid ""
+"Use the specified drawable as a stencil to carve from the specified image."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:190
+msgid "Image to carve"
+msgstr "Εικόνα σε λάξευση"
+
+#: ../plug-ins/script-fu/scripts/carve-it.scm:191
+msgid "Carve white areas"
+msgstr "Λάξευση λευκών περιοχών"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:103
+msgid "Background"
+msgstr "Παρασκήνιο"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:104
+#, fuzzy
+msgid "Layer 1"
+msgstr "Στρώση1"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:105
+msgid "Layer 2"
+msgstr "Στρώση 2"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:106
+msgid "Layer 3"
+msgstr "Στρώση 3"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:107
+msgid "Drop Shadow"
+msgstr "Πίπτουσα σκιά"
+
+#
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:201
+msgid "Chrome"
+msgstr "Χρώμιο"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:202
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:68
+msgid "Highlight"
+msgstr "Τονισμός"
+
+#
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:214
+msgid "Stencil C_hrome..."
+msgstr "Μήτρα χρωμί_ου..."
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:215
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
+msgstr ""
+"Προσθήκη εφέ χρωμίου στην επιλεγμένη περιοχή (ή άλφα) με την χρήση "
+"καθορισμένης μήτρας γκρι κλίμακας"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:222
+msgid "Chrome saturation"
+msgstr "Κορεσμός χρωμίου"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:223
+msgid "Chrome lightness"
+msgstr "Φωτεινότητα χρωμίου"
+
+#
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:224
+msgid "Chrome factor"
+msgstr "Συντελεστής χρωμίου"
+
+#
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:225
+msgid "Environment map"
+msgstr "Χάρτης περιβάλλοντος"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:228
+msgid "Highlight balance"
+msgstr "Ισορροπία τονισμού"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:229
+msgid "Chrome balance"
+msgstr "Ισορροπία χρωμίου"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm:230
+msgid "Chrome white areas"
+msgstr "Λευκές περιοχές χρωμίου"
+
+#
+#: ../plug-ins/script-fu/scripts/circuit.scm:81
+msgid "Effect layer"
+msgstr "Στρώση εφέ"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:134
+msgid "_Circuit..."
+msgstr "_Κύκλωμα"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:135
+msgid ""
+"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr ""
+"Γέμισμα της επιλεγμένης περιοχής (ή άλφα) με ίχνη όπως αυτά κάρτας κυκλώματος"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:142
+msgid "Oilify mask size"
+msgstr "Μέγεθος μάσκας ελαιοποίησης"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:143
+msgid "Circuit seed"
+msgstr "Κόκκοι κυκλώματος"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:144
+msgid "No background (only for separate layer)"
+msgstr "Χωρίς παρασκήνιο (μόνο για ξεχωριστή στρώση)"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm:145
+#: ../plug-ins/script-fu/scripts/lava.scm:129
+#: ../plug-ins/script-fu/scripts/predator.scm:132
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:138
+msgid "Keep selection"
+msgstr "Διατήρηση επιλογής"
+
+#
+#: ../plug-ins/script-fu/scripts/circuit.scm:146
+#: ../plug-ins/script-fu/scripts/lava.scm:130
+#: ../plug-ins/script-fu/scripts/predator.scm:133
+msgid "Separate layer"
+msgstr "Ξεχωριστή στρώση"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:51
+msgid "_Clothify..."
+msgstr "_Υφασματοποίηση..."
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:52
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr "Προσθέστε μία υφασματοειδή υφή  στην επιλεγμένη περιοχή (ή άλφα)"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:59
+msgid "Blur X"
+msgstr "Θόλωση Χ"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:60
+msgid "Blur Y"
+msgstr "Θόλωση Υ"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:61
+msgid "Azimuth"
+msgstr "Αζιμούθιο"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:62
+msgid "Elevation"
+msgstr "Ανύψωση"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm:63
+msgid "Depth"
+msgstr "Βάθος"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:36
+msgid "Stain"
+msgstr "Κηλίδα"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:81
+msgid "_Coffee Stain..."
+msgstr "_Κηλίδα καφέ..."
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:82
+msgid "Add realistic looking coffee stains to the image"
+msgstr "Προσθέστε μία πραγματική όψη από κηλίδες καφέ στην εικόνα"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:89
+msgid "Stains"
+msgstr "Κηλίδες"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm:90
+msgid "Darken only"
+msgstr "Σκοτείνιασμα μόνο"
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:67
+msgid "Difference Clouds..."
+msgstr "Διαφορά σύννεφων..."
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm:68
+msgid "Solid noise applied with Difference layer mode"
+msgstr "Εφαρμογή συμπαγούς θορύβου με κατάσταση στρώσης διαφοράς"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:102
+msgid "_Distort..."
+msgstr "_Παραμόρφωση..."
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:103
+msgid "Distress the selection"
+msgstr "Παραμόρφωση επιλογής"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:110
+#, fuzzy
+msgid "Threshold (bigger 1<-->254 smaller)"
+msgstr "Κατώφλι (μεγαλύτερο 1<-->255 μικρότερο)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:111
+msgid "Spread"
+msgstr "Διασπορά"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:112
+msgid "Granularity (1 is low)"
+msgstr "Κοκκίωση (1 είναι χαμηλό)"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:113
+msgid "Smooth"
+msgstr "Ομαλό"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:114
+msgid "Smooth horizontally"
+msgstr "Εξομάλυνση οριζόντια"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm:115
+msgid "Smooth vertically"
+msgstr "Εξομάλυνση κάθετη"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
+msgid "_Drop Shadow..."
+msgstr "Πίπ_τουσα σκιά..."
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "Προσθήκη πίπτουσας σκιάς στην επιλεγμένη περιοχή (ή άλφα)"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
+msgid "Offset X"
+msgstr "Αντιστάθμιση X"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:179
+msgid "Offset Y"
+msgstr "Αντιστάθμιση Y"
+
+#
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+msgid "Blur radius"
+msgstr "Ακτίνα θόλωσης"
+
+#
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:154
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:210
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:350
+msgid "Color"
+msgstr "Χρώμα"
+
+#
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:182
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:211
+msgid "Opacity"
+msgstr "Αδιαφάνεια"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm:183
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:213
+msgid "Allow resizing"
+msgstr "Δυνατότητα αλλαγής μεγέθους"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:39
+msgid "_Erase Every Other Row..."
+msgstr "_Σβήσιμο κάθε δεύτερης γραμμής..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:40
+msgid "Erase every other row or column"
+msgstr "Σβήσιμο κάθε δεύτερη γραμμής ή στήλης"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+msgid "Rows/cols"
+msgstr "Γραμμές/στήλες"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:47
 msgid "Rows"
 msgstr "Σειρές"
 
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:47
+msgid "Columns"
+msgstr "Στήλες"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Even/odd"
+msgstr "Ζυγός/μονός"
+
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:48
 msgid "Even"
 msgstr "Ζυγός"
+
+#
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:48
+msgid "Odd"
+msgstr "Ζυγός"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Erase/fill"
+msgstr "Σβήσιμο/γέμισμα"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:49
 msgid "Erase"
 msgstr "Σβήσιμο"
 
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+msgid "Fill with BG"
+msgstr "Γέμισμα με παρασκήνιο"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:152
+msgid "Render _Font Map..."
+msgstr "Απόδοση χάρτη γρα_μματοσειράς..."
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:153
+msgid ""
+"Create an image filled with previews of fonts matching a fontname filter"
+msgstr ""
+"Δημιουργία εικόνας γεμάτης με προεπισκοπήσεις γραμματοσειρών που ταιριάζουν "
+"στο φίλτρο ονόματος γραμματοσειράς"
+
+#
+#: ../plug-ins/script-fu/scripts/font-map.scm:158
+msgid "_Text"
+msgstr "_Κείμενο"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:159
+msgid "Use font _name as text"
+msgstr "Χρήση ο_νόματος γραμματοσειράς ως κειμένου"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:160
+msgid "_Labels"
+msgstr "Ε_τικέτες"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:161
+msgid "_Filter (regexp)"
+msgstr "_Φίλτρο (regexp)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:162
+msgid "Font _size (pixels)"
+msgstr "Μέγεθος γραμματο_σειράς (εικονοστοιχεία)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:163
+msgid "_Border (pixels)"
+msgstr "_Περίγραμμα (εικονοστοιχεία)"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "_Color scheme"
+msgstr "_Χρώμα scheme"
+
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "Black on white"
 msgstr "Μαύρο σε λευκό"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm:164
+msgid "Active colors"
+msgstr "Ζωηρά χρώματα"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:146
+msgid "_Fuzzy Border..."
+msgstr "Ασα_φές περίγραμμα..."
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:147
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "Προσθήκη πριονωτού θολού περιγράμματος στην εικόνα"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:155
+#: ../plug-ins/script-fu/scripts/old-photo.scm:98
+msgid "Border size"
+msgstr "Μέγεθος περιγράμματος"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:156
+msgid "Blur border"
+msgstr "Θολό περίγραμμα"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
+msgid "Granularity (1 is Low)"
+msgstr "Κοκκίωση (1 είναι χαμηλό)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
+msgid "Add shadow"
+msgstr "Προσθήκη σκιάς"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
+msgid "Shadow weight (%)"
+msgstr "Βαρύτητα σκιάς (%)"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
+msgid "Flatten image"
+msgstr "Ισοπέδωση εικόνας"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:59
+msgid "Using _Paths"
+msgstr "Χρήση μονο_πατιών"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:60
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:73
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:86
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:99
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:112
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:125
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:138
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:151
+msgid "Bookmark to the user manual"
+msgstr "Σελιδοδείκτης στο εγχειρίδιο χρήστη"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:72
+msgid "_Preparing your Images for the Web"
+msgstr "_Προετοιμασία των εικόνων σας για τον ιστό"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:85
+msgid "_Working with Digital Camera Photos"
+msgstr "Εργα_σία με φωτογραφίες ψηφιακής κάμερας"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:98
+msgid "Create, Open and Save _Files"
+msgstr "Δημιουργία, άνοιγμα και αποθήκευση _αρχείων"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:111
+msgid "_Basic Concepts"
+msgstr "_Βασικές έννοιες"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:124
+msgid "How to Use _Dialogs"
+msgstr "Χρήση _διαλόγων"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:137
+msgid "Drawing _Simple Objects"
+msgstr "Σχεδία_ση απλών αντικειμένων"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:150
+msgid "Create and Use _Selections"
+msgstr "Δημιουργία και χρήση επ_ιλογών"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:178
+msgid "_Main Web Site"
+msgstr "_Κύρια ιστοσελίδα"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:179
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:192
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:205
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:218
+msgid "Bookmark to the GIMP web site"
+msgstr "Σελιδοδείκτης στην ιστοσελίδα GIMP"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:191
+msgid "_Developer Web Site"
+msgstr "Ιστοσελίδα πρ_ογραμματιστών"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:204
+msgid "_User Manual Web Site"
+msgstr "Ιστοσελίδα _εγχειριδίου χρήστη"
+
+#: ../plug-ins/script-fu/scripts/gimp-online.scm:217
+msgid "Plug-in _Registry"
+msgstr "Μητ_ρώο προσθέτων"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:63
+msgid "Custom _Gradient..."
+msgstr "Προσαρμογή _διαβάθμισης..."
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:64
+msgid "Create an image filled with an example of the current gradient"
+msgstr "Δημιουργία εικόνας γεμάτης με παράδειγμα τρέχουσας διαβάθμισης"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:138
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:194
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:263
+msgid "Width"
+msgstr "Πλάτος"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:70
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:71
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:139
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:195
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:264
+msgid "Height"
+msgstr "Ύψος"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm:71
+msgid "Gradient reverse"
+msgstr "Αντιστροφή διαβάθμισης"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:84
+msgid "_Grid..."
+msgstr "_Πλέγμα..."
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:85
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current "
+"brush"
+msgstr ""
+"Σχεδίαση πλέγματος όπως καθορίζεται από τις λίστες τοποθεσιών X και Y με τη "
+"χρήση του τρέχοντος πινέλου"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:92
+msgid "X divisions"
+msgstr "Χ υποδιαιρέσεις"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm:93
+msgid "Y divisions"
+msgstr "Υ υποδιαιρέσεις"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
+msgid "New Guides from _Selection"
+msgstr "Νέοι οδηγοί από _Επιλογή"
+
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
+#, fuzzy
+msgid "Create four guides around the bounding box of the current selection"
+msgstr "Στρογγυλοποίηση γωνιών της τρέχουσας επιλογής"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
+msgid "New Guide (by _Percent)..."
+msgstr "Νέος οδηγός (_Αναλογία)"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr ""
+"Προσθήκη οδηγού στην καθορισμένη θέση ως ποσοστού του μεγέθους της εικόνας"
+
+#
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Direction"
+msgstr "Κατεύθυνση"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Horizontal"
 msgstr "Οριζόντιο"
 
-#: ../plug-ins/script-fu/scripts/rendermap.scm:90
-msgid "Tile"
-msgstr "Παράθεση"
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
+#: ../plug-ins/script-fu/scripts/guides-new.scm:35
+msgid "Vertical"
+msgstr "Κάθετο"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
+msgid "Position (in %)"
+msgstr "Θέση (σε %)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:27
+msgid "New _Guide..."
+msgstr "Νέος οδη_γός"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:28
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr ""
+"Προσθήκη οδηγού στην καθορισμένη θέση και προσανατολισμό (σε εικονοστοιχεία)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm:36
+msgid "Position"
+msgstr "Θέση"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
+msgid "_Remove all Guides"
+msgstr "Αφαί_ρεση όλων των οδηγών"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
+msgid "Remove all horizontal and vertical guides"
+msgstr "Διαγραφή όλων των οριζόντιων και κάθετων οδηγών"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:117
+msgid "_Lava..."
+msgstr "_Λάβα..."
+
+#: ../plug-ins/script-fu/scripts/lava.scm:118
+msgid "Fill the current selection with lava"
+msgstr "Γέμισμα της τρέχουσας επιλογής με λάβα"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:125
+msgid "Seed"
+msgstr "Σπόρος"
+
+#
+#: ../plug-ins/script-fu/scripts/lava.scm:126
+msgid "Size"
+msgstr "Μέγεθος"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:127
+msgid "Roughness"
+msgstr "Σκληρότητα"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:128
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
+msgid "Gradient"
+msgstr "Διαβάθμιση"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:131
+msgid "Use current gradient"
+msgstr "Χρήση τρέχουσας διαβάθμισης"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:106
+msgid "Line _Nova..."
+msgstr "Γραμμή υπερκαι_νοφανούς..."
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:107
+#, fuzzy
+msgid ""
+"Fill a layer with rays emanating outward from its center using the "
+"foreground color"
+msgstr ""
+"Γέμισμα στρώσης με ακτίνες που εκπέμπουν προς τα έξω από το κέντρο τους "
+"χρησιμοποιώντας το χρώμα προσκηνίου"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:114
+msgid "Number of lines"
+msgstr "Αριθμός γραμμών"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:115
+msgid "Sharpness (degrees)"
+msgstr "Οξύτητα (μοίρες)"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:116
+msgid "Offset radius"
+msgstr "Ακτίνα αντιστάθμισης"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm:117
+msgid "Randomness"
+msgstr "Τυχαιότητα"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:63
+msgid "_Rectangular..."
+msgstr "Ο_ρθογώνιο..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:64
+msgid "Create a rectangular brush"
+msgstr "Δημιουργία ορθογωνίου πινέλου"
+
+#
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:69
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:137
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:193
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:262
+msgid "Name"
+msgstr "Όνομα"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:72
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:141
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:196
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:266
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+msgid "Spacing"
+msgstr "Διαστήματα"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:131
+msgid "Re_ctangular, Feathered..."
+msgstr "Ορ_θογώνιο, απαλυμένο..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:132
+msgid "Create a rectangular brush with feathered edges"
+msgstr "Δημιουργία ορθογωνίου πινέλου με απαλυμένα άκρα"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:140
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:265
+msgid "Feathering"
+msgstr "Απάλυνση"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:187
+msgid "_Elliptical..."
+msgstr "_Ελλειπτικό..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:188
+msgid "Create an elliptical brush"
+msgstr "Δημιουργία ελλειπτικού πινέλου"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:256
+msgid "Elli_ptical, Feathered..."
+msgstr "Ελλει_πτικό, απαλυμένο..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm:257
+msgid "Create an elliptical brush with feathered edges"
+msgstr "Δημιουργία ελλειπτικού πινέλου με απαλυμένες άκρες"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:89
+msgid "_Old Photo..."
+msgstr "Π_αλιά φωτογραφία..."
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:90
+msgid "Make an image look like an old photo"
+msgstr "Κατασκευή εικόνας που μοιάζει με παλιά φωτογραφία"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:97
+msgid "Defocus"
+msgstr "Απεστίαση"
+
+#. since this plug-in uses the fuzzy-border plug-in, I used the
+#. values of the latter, with the exception of the initial value
+#. and the 'minimum' value.
+#: ../plug-ins/script-fu/scripts/old-photo.scm:102
+msgid "Sepia"
+msgstr "Σουπιά"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm:103
+msgid "Mottle"
+msgstr "Διάστιξη"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:235
+msgid "Folder for the output file"
+msgstr "Φάκελος για το αρχείο εξόδου"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:236
+msgid ""
+"The name of the file to create (if a file with this name already exist, it "
+"will be replaced)"
+msgstr ""
+"Το όνομα του αρχείου για δημιουργία (εάν αρχείο με αυτό το όνομα  ήδη "
+"υπάρχει, θα αντικατασταθεί)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:244
+msgid "The filename you entered is not a suitable name for a file."
+msgstr "Το όνομα αρχείου που εισάγατε δεν είναι κατάλληλο όνομα για αρχείο."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:246
+msgid ""
+"All characters in the name are either white-spaces or characters which can "
+"not appear in filenames."
+msgstr ""
+"Όλοι οι χαρακτήρες στο όνομα είναι είτε κενοί ή χαρακτήρες που δεν μπορούν "
+"να εμφανιστούν σε ονόματα αρχείου."
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:274
+msgid ""
+"Export the active palette as a CSS stylesheet with the color entry name as "
+"their class name, and the color itself as the color attribute"
+msgstr ""
+"Εξαγωγή της ενεργής παλέτας ως φύλλου μορφοποίησης CSS με όνομα εισόδου "
+"χρώματος όπως το όνομα τάξης τους και του χρώματος της ως γνώρισμα χρώματος"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:300
+msgid "Export the active palette as a PHP dictionary (name => color)"
+msgstr "Εξαγωγή της ενεργής παλέτας ως λεξικό PHP (όνομα => χρώμα)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:332
+msgid "Export the active palette as a Python dictionary (name: color)"
+msgstr "Εξαγωγή της ενεργής παλέτας ως λεξικό Python (όνομα: χρώμα)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:361
+msgid ""
+"Write all the colors in a palette to a text file, one hexadecimal value per "
+"line (no names)"
+msgstr ""
+"Εγγραφή όλων των χρωμάτων σε μια παλέτα σε αρχείο κειμένου, μια δεκαεξαδική "
+"τιμή ανά γραμμή (χωρίς ονόματα)"
+
+#: ../plug-ins/script-fu/scripts/palette-export.scm:408
+msgid "Export the active palette as a java.util.Hashtable<String, Color>"
+msgstr ""
+"Εξαγωγή της ενεργής παλέτας ως java.util.Hashtable<αλφαριθμητικό, χρώμα>"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:56
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:44
+msgid "There is no image data in the clipboard to paste."
+msgstr "Δεν υπάρχουν στοιχεία εικόνας στο πρόχειρο για επικόλληση. "
+
+#
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
+msgid "New _Brush..."
+msgstr "Νέο _πινέλο..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
+msgid "Paste the clipboard contents into a new brush"
+msgstr "Επικόλληση των περιεχόμενων του πρόχειρου σε νέο πινέλο"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+msgid "Brush name"
+msgstr "Όνομα πινέλου"
+
+#
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
+msgid "File name"
+msgstr "Όνομα αρχείου"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
+msgid "New _Pattern..."
+msgstr "Νέο μο_τίβο..."
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "Επικόλληση των περιεχομένων του πρόχειρου σε νέο υπόδειγμα"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
+msgid "Pattern name"
+msgstr "Όνομα μοτίβου"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
+msgid "_Perspective..."
+msgstr "_Προοπτική..."
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr "Προσθήκη σκιάς προοπτικής στην επιλεγμένη περιοχή (ή άλφα)"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
+msgid "Angle"
+msgstr "Γωνία"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:207
+msgid "Relative distance of horizon"
+msgstr "Σχετική απόσταση του ορίζοντα"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:208
+msgid "Relative length of shadow"
+msgstr "Σχετικό μήκος της σκιάς"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm:212
+msgid "Interpolation"
+msgstr "Παρεμβολή"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:121
+msgid "_Predator..."
+msgstr "Αρ_πακτικό..."
+
+#: ../plug-ins/script-fu/scripts/predator.scm:122
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr "Προσθήκη εφέ 'αρπαχτικού' στην επιλεγμένη περιοχή (ή άλφα)"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:129
+msgid "Edge amount"
+msgstr "Ποσότητα άκρης"
+
+#
+#: ../plug-ins/script-fu/scripts/predator.scm:130
+msgid "Pixelize"
+msgstr "Εικονοστοιχειοποίηση"
+
+#: ../plug-ins/script-fu/scripts/predator.scm:131
+msgid "Pixel amount"
+msgstr "Ποσότητα εικονοστοιχείου"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
+msgid "Reverse Layer Order"
+msgstr "Αντιστροφή σειράς στρώσεων"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
+msgid "Reverse the order of layers in the image"
+msgstr "Αντιστροφή της σειράς στρώσεων στην εικόνα"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:119
+msgid "_Rippling..."
+msgstr "Κ_υματισμός..."
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:120
+msgid ""
+"Create a multi-layer image by adding a ripple effect to the current image"
+msgstr ""
+"Δημιουργία εικόνας πολλαπλών στρώσεων προσθέτοντας εφέ κυματισμού στην "
+"τρέχουσα εικόνα"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:127
+msgid "Rippling strength"
+msgstr "Δύναμη κυματισμού"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:128
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:105
+msgid "Number of frames"
+msgstr "Αριθμός πλαισίων"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+msgid "Edge behavior"
+msgstr "Συμπεριφορά άκρης"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
 msgid "Wrap"
 msgstr "Αναδίπλωση"
 
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+msgid "Smear"
+msgstr "Επάλειψη"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm:129
+msgid "Black"
+msgstr "Μαύρο"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+msgid "_Round Corners..."
+msgstr "Στ_ρογγύλεμα γωνιών..."
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+msgid ""
+"Round the corners of an image and optionally add a drop-shadow and background"
+msgstr ""
+"Στρογγύλεμα των γωνιών εικόνας και προαιρετικά προσθήκη πίπτουσας σκιάς και "
+"παρασκηνίου"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+msgid "Edge radius"
+msgstr "Ακτίνα άκρης"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+msgid "Add drop-shadow"
+msgstr "Προσθήκη πίπτουσας σκιάς"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+msgid "Shadow X offset"
+msgstr "Αντιστάθμιση Χ σκιάς"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+msgid "Shadow Y offset"
+msgstr "Αντιστάθμιση Υ σκιάς"
+
+#
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+msgid "Add background"
+msgstr "Προσθήκη παρασκηνίου"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
+msgid "Se_t Colormap..."
+msgstr "Ορισμός πίνακα χρώμα_τος..."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr ""
+"Αλλαγή του πίνακα χρωμάτων εικόνας στα χρώματα μιας καθορισμένης παλέτας."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:61
+msgid "Palette"
+msgstr "Παλέτα"
+
+#
+#: ../plug-ins/script-fu/scripts/selection-round.scm:139
+msgid "Rounded R_ectangle..."
+msgstr "Στρογγυλεμένο ορ_θογώνιο..."
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:140
+msgid "Round the corners of the current selection"
+msgstr "Στρογγυλοποίηση γωνιών της τρέχουσας επιλογής"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm:147
+msgid "Radius (%)"
+msgstr "Ακτίνα (%)"
+
+#
+#: ../plug-ins/script-fu/scripts/selection-round.scm:148
+msgid "Concave"
+msgstr "Κοίλος"
+
+#
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+msgid "To _Brush..."
+msgstr "Στο _πινέλο..."
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+msgid "Convert a selection to a brush"
+msgstr "Μετατροπή επιλογής σε πινέλο"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:81
+msgid "To _Image"
+msgstr "Στην ε_ικόνα"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm:82
+msgid "Convert a selection to an image"
+msgstr "Μετατροπή επιλογής σε εικόνα"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
+msgid "To _Pattern..."
+msgstr "Στο μ_οτίβο..."
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
+msgid "Convert a selection to a pattern"
+msgstr "Μετατροπή επιλογής σε υπόδειγμα"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:236
+msgid "_Slide..."
+msgstr "_Διαφάνεια..."
+
+#: ../plug-ins/script-fu/scripts/slide.scm:237
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr ""
+"Προσθήκη ταινίας διαφανειών όπως πλαίσια, οπών οδοντωτού τροχού και ετικετών "
+"σε εικόνα"
+
+#
+#: ../plug-ins/script-fu/scripts/slide.scm:244
+msgid "Text"
+msgstr "Κείμενο"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:245
+msgid "Number"
+msgstr "Αριθμός"
+
+#
+#: ../plug-ins/script-fu/scripts/slide.scm:246
+msgid "Font"
+msgstr "Γραμματοσειρά"
+
+#: ../plug-ins/script-fu/scripts/slide.scm:247
+msgid "Font color"
+msgstr "Χρώμα γραμματοσειράς"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
+msgid "_Spinning Globe..."
+msgstr "_Στροβιλιζόμενη υδρόγειος..."
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr ""
+"Δημιουργία κίνησης χαρτογραφώντας την τρέχουσα εικόνα σε μία στροβιλίζουσα "
+"σφαίρα"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
+msgid "Frames"
+msgstr "Πλαίσια"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
+msgid "Turn from left to right"
+msgstr "Περιστροφή από αριστερά προς  τα δεξιά"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:104
+msgid "Transparent background"
+msgstr "Διαφανές παρασκήνιο"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm:105
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "Δείκτης σε n χρώματα (0 = παραμένει RGB)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
+msgid "Rendering Spyro"
+msgstr "Απόδοση σπειρογραφήματος"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
+msgid "_Spyrogimp..."
+msgstr "_Σπειρογράφημα gimp..."
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
+msgid ""
+"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgstr ""
+"Προσθήκη σπειρογραφημάτων, επιτροχοειδών και καμπυλών Lissajous στην "
+"τρέχουσα στρώση"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
+msgid "Type"
+msgstr "Τύπος"
+
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Spyrograph"
 msgstr "Σπειρογράφημα"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
+msgid "Epitrochoid"
+msgstr "Επιτροχοειδές"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:325
+msgid "Lissajous"
+msgstr "Lissajous"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
+msgid "Shape"
+msgstr "Σχήμα"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:326
 msgid "Circle"
 msgstr "Κύκλος"
 
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:328
+msgid "Triangle"
+msgstr "Τρίγωνο"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:329
+msgid "Square"
+msgstr "Τετράγωνο"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:330
+msgid "Pentagon"
+msgstr "Πεντάγωνο"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:331
+msgid "Hexagon"
+msgstr "Εξάγωνο"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:332
+msgid "Polygon: 7 sides"
+msgstr "Πολύγωνο: 7 πλευρές"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:333
+msgid "Polygon: 8 sides"
+msgstr "Πολύγωνο: 8 πλευρές"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:334
+msgid "Polygon: 9 sides"
+msgstr "Πολύγωνο: 9 πλευρές"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:335
+msgid "Polygon: 10 sides"
+msgstr "Πολύγωνο: 10 πλευρές"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:336
+msgid "Outer teeth"
+msgstr "Εξωτερικά δόντια"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:337
+msgid "Inner teeth"
+msgstr "Εσωτερικά δόντια"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:338
+msgid "Margin (pixels)"
+msgstr "Περιθώριο (εικονοστοιχεία)"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:339
+msgid "Hole ratio"
+msgstr "Λόγος οπής"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:340
+msgid "Start angle"
+msgstr "Γωνία εκκίνησης"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
+msgid "Tool"
+msgstr "Εργαλείο"
+
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:342
 msgid "Pencil"
 msgstr "Μολύβι"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:343
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:345
+msgid "Brush"
+msgstr "Πινέλο"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:344
+msgid "Airbrush"
+msgstr "Αερογράφος"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
+msgid "Color method"
+msgstr "Μέθοδος χρώματος"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:347
 msgid "Solid Color"
 msgstr "Συμπαγές χρώμα"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm:129
-#: ../plug-ins/script-fu/scripts/textured-logo.scm:171
-msgid "Squares"
-msgstr "Τετράγωνα"
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:348
+msgid "Gradient: Loop Sawtooth"
+msgstr "Διαβάθμιση: πριονωτό δόντι βρόχου"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm:349
+msgid "Gradient: Loop Triangle"
+msgstr "Διαβάθμιση: Τρίγωνο βρόχου"
+
+#
+#: ../plug-ins/script-fu/scripts/test-sphere.scm:267
+#, fuzzy
+msgid "_Sphere..."
+msgstr "Εξερεύνηση..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:68
+msgid "_Tileable Blur..."
+msgstr "Θόλωση π_αράθεσης..."
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:69
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr "Θόλωση των άκρων εικόνας ώστε το αποτέλεσμα να παρατίθεται χωρίς ραφές"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:76
+msgid "Radius"
+msgstr "Ακτίνα"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:77
+msgid "Blur vertically"
+msgstr "Θόλωση κατακόρυφα"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:78
+msgid "Blur horizontally"
+msgstr "Θόλωση οριζόντια"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "Blur type"
+msgstr "Τύπος θόλωσης"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "IIR"
 msgstr "IIR"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm:79
+msgid "RLE"
+msgstr "RLE"
+
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:82
+msgid "Mask size"
+msgstr "Μέγεθος μάσκας"
+
+#
+#: ../plug-ins/script-fu/scripts/unsharp-mask.scm:83
+msgid "Mask opacity"
+msgstr "Αδιαφάνεια μάσκας"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:95
+msgid "_Waves..."
+msgstr "_Κύματα..."
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:96
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr ""
+"Δημιουργία εικόνας πολλαπλών στρώσεων με εφέ όπως μια πέτρα που πετάχτηκε "
+"στην τρέχουσα εικόνα"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:103
+msgid "Amplitude"
+msgstr "Εύρος"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:104
+msgid "Wavelength"
+msgstr "Μήκος κύματος"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm:106
+msgid "Invert direction"
+msgstr "Αντιστροφή κατεύθυνσης"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:389
+msgid "_Weave..."
+msgstr "Ύφαν_ση..."
+
+#: ../plug-ins/script-fu/scripts/weave.scm:390
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr ""
+"Δημιουργία νέας στρώσης γεμάτης με εφέ ύφανσης που θα χρησιμοποιηθεί ως "
+"επίστρωση ή χάρτης αναγλύφου"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:397
+msgid "Ribbon width"
+msgstr "Πλάτος κορδέλας"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:398
+msgid "Ribbon spacing"
+msgstr "Διάκενο κορδέλας"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:399
+msgid "Shadow darkness"
+msgstr "Σκοτεινότητα σκιάς"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:400
+msgid "Shadow depth"
+msgstr "Βάθος σκιάς"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:401
+msgid "Thread length"
+msgstr "Μήκος νήματος"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:402
+msgid "Thread density"
+msgstr "Πυκνότητα νήματος"
+
+#: ../plug-ins/script-fu/scripts/weave.scm:403
+msgid "Thread intensity"
+msgstr "Ένταση νήματος"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:92
+msgid "Shadow"
+msgstr "Σκιά"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:121
+msgid "_Xach-Effect..."
+msgstr "Εφέ _Xach..."
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:122
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr "Προσθήκη λεπτού ημιδιαφανούς 3Δ εφέ στην επιλεγμένη περιοχή (ή άλφα)"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:129
+msgid "Highlight X offset"
+msgstr "Αντιστάθμιση Χ τονισμού"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:130
+msgid "Highlight Y offset"
+msgstr "Αντιστάθμιση Υ τονισμού"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:131
+msgid "Highlight color"
+msgstr "Χρώμα τονισμού"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:132
+msgid "Highlight opacity"
+msgstr "Αδιαφάνεια τονισμού"
+
+#
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:133
+msgid "Drop shadow color"
+msgstr "Χρώμα πίπτουσας σκιάς"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:134
+msgid "Drop shadow opacity"
+msgstr "Αδιαφάνεια πίπτουσας σκιάς"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:135
+msgid "Drop shadow blur radius"
+msgstr "Ακτίνα θόλωσης πίπτουσας σκιάς"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:136
+msgid "Drop shadow X offset"
+msgstr "Αντιστάθμιση _Χ πίπτουσας σκιάς "
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm:137
+msgid "Drop shadow Y offset"
+msgstr "Αντιστάθμιση _Υ πίπτουσας σκιάς "
+
+#
+#~ msgid "Right"
+#~ msgstr "Δεξιά"
+
+#~ msgid "FG-BG-RGB"
+#~ msgstr "ΠΡΟΣΚΗΝΙΟ-ΠΑΡΑΣΚΗΝΙΟ-RGB"
+
+#~ msgid "Tile"
+#~ msgstr "Παράθεση"
+
+#~ msgid "Squares"
+#~ msgstr "Τετράγωνα"
 
 #~ msgid "3D _Outline..."
 #~ msgstr "3Δ _Περίγραμμα"
@@ -304,10 +1738,6 @@ msgstr "IIR"
 
 #~ msgid "Default bumpmap settings"
 #~ msgstr "Προεπιλεγμένες ρυθμίσεις χάρτη ανάγλυφου"
-
-#
-#~ msgid "Font"
-#~ msgstr "Γραμματοσειρά"
 
 #~ msgid "Font size (pixels)"
 #~ msgstr "Μέγεθος γραμματοσειράς (εικονοστοιχεία)"
@@ -326,18 +1756,8 @@ msgstr "IIR"
 #~ msgid "Pattern"
 #~ msgstr "Μοτίβο"
 
-#~ msgid "Shadow X offset"
-#~ msgstr "Αντιστάθμιση Χ σκιάς"
-
-#~ msgid "Shadow Y offset"
-#~ msgstr "Αντιστάθμιση Υ σκιάς"
-
 #~ msgid "Shadow blur radius"
 #~ msgstr "Ακτίνα θόλωσης περιγράμματος"
-
-#
-#~ msgid "Text"
-#~ msgstr "Κείμενο"
 
 #~ msgid "3_D Truchet..."
 #~ msgstr "3_Δ Truchet..."
@@ -366,54 +1786,12 @@ msgstr "IIR"
 #~ msgid "Supersample"
 #~ msgstr "Υπερδειγματοληψία"
 
-#~ msgid "Thickness"
-#~ msgstr "Πάχος"
-
-#~ msgid "Add B_evel..."
-#~ msgstr "Προσθήκη λ_οξότμησης..."
-
-#~ msgid "Add a beveled border to an image"
-#~ msgstr "Προσθέστε ένα περίγραμμα λοξότμησης στην εικόνα"
-
-#~ msgid "Bumpmap"
-#~ msgstr "Χάρτης ανάγλυφου"
-
-#~ msgid "Keep bump layer"
-#~ msgstr "Διατήρηση στρώσης ανάγλυφου"
-
-#~ msgid "Work on copy"
-#~ msgstr "Εργασία σε αντίγραφο"
-
-#~ msgid "Add _Border..."
-#~ msgstr "Προσθήκη _περιγράμματος..."
-
-#~ msgid "Add a border around an image"
-#~ msgstr "Προσθήκη περιγράμματος γύρω από εικόνα"
-
-#~ msgid "Border Layer"
-#~ msgstr "Στρώση περιγράμματος"
-
-#~ msgid "Border X size"
-#~ msgstr "Μέγεθος Χ περιγράμματος"
-
-#~ msgid "Border Y size"
-#~ msgstr "Μέγεθος Υ περιγράμματος"
-
-#~ msgid "Border color"
-#~ msgstr "Χρώμα περιγράμματος"
-
-#~ msgid "Delta value on color"
-#~ msgstr "Τιμή δέλτα στο χρώμα"
-
 #~ msgid "Alien Glow"
 #~ msgstr "Ξένη λάμψη"
 
 #
 #~ msgid "Arrow"
 #~ msgstr "Βέλος"
-
-#~ msgid "Background"
-#~ msgstr "Παρασκήνιο"
 
 #~ msgid "Create an arrow graphic with an eerie glow for web pages"
 #~ msgstr "Δημιουργία γραφικού βέλους με μια παράξενη λάμψη για ιστοσελίδες"
@@ -422,22 +1800,12 @@ msgstr "IIR"
 #~ msgid "Down"
 #~ msgstr "Κάτω"
 
-#~ msgid "Flatten image"
-#~ msgstr "Ισοπέδωση εικόνας"
-
-#~ msgid "Glow color"
-#~ msgstr "Χρώμα λάμψης"
-
 #
 #~ msgid "Left"
 #~ msgstr "Αριστερά"
 
 #~ msgid "Orientation"
 #~ msgstr "Προσανατολισμός"
-
-#
-#~ msgid "Size"
-#~ msgstr "Μέγεθος"
 
 #
 #~ msgid "Up"
@@ -470,9 +1838,6 @@ msgstr "IIR"
 
 #~ msgid "Create a bullet graphic with an eerie glow for web pages"
 #~ msgstr "Δημιουργία γραφικού κουκκίδας με μια παράξενη λάμψη για ιστοσελίδες"
-
-#~ msgid "Radius"
-#~ msgstr "Ακτίνα"
 
 #
 #~ msgid "_Bullet..."
@@ -565,9 +1930,6 @@ msgstr "IIR"
 #~ msgid "Create a simple, beveled button graphic for webpages"
 #~ msgstr "Δημιουργία απλού γραφικού λοξοτμημένου κουμπιού για ιστοσελίδες"
 
-#~ msgid "Gradient"
-#~ msgstr "Διαβάθμιση"
-
 #~ msgid "Lower-right color"
 #~ msgstr "Χρώμα κάτω δεξιά"
 
@@ -590,9 +1952,6 @@ msgstr "IIR"
 #~ msgid "Diameter"
 #~ msgstr "Διάμετρος"
 
-#~ msgid "Transparent background"
-#~ msgstr "Διαφανές παρασκήνιο"
-
 #~ msgid "Create a beveled pattern button for webpages"
 #~ msgstr "Δημιουργία κουμπιού υποδείγματος λοξότμησης για ιστοσελίδες"
 
@@ -605,41 +1964,8 @@ msgstr "IIR"
 #~ msgid "Create a beveled pattern hrule for webpages"
 #~ msgstr "Δημιουργία κάθετου χάρακα υποδείγματος λοξότμησης για ιστοσελίδες"
 
-#~ msgid "Height"
-#~ msgstr "Ύψος"
-
 #~ msgid "Rule"
 #~ msgstr "Χάρακας"
-
-#~ msgid "Width"
-#~ msgstr "Πλάτος"
-
-#~ msgid "Blend Animation needs at least three source layers"
-#~ msgstr "Η κίνηση ανάμειξης χρειάζεται τουλάχιστον τρεις πηγαίες στρώσεις"
-
-#~ msgid ""
-#~ "Create intermediate layers to blend two or more layers over a background "
-#~ "as an animation"
-#~ msgstr ""
-#~ "Δημιουργία ενδιάμεσων στρώσεων για την ανάμειξη δύο ή περισσοτέρων "
-#~ "στρώσεων πάνω από ένα παρασκήνιο σαν κίνηση"
-
-#~ msgid "Frame"
-#~ msgstr "Πλαίσιο"
-
-#~ msgid "Intermediate frames"
-#~ msgstr "Ενδιάμεσα πλαίσια"
-
-#~ msgid "Looped"
-#~ msgstr "Βρόχος"
-
-#
-#~ msgid "Max. blur radius"
-#~ msgstr "Μέγιστη ακτίνα θόλωσης"
-
-#
-#~ msgid "_Blend..."
-#~ msgstr "Α_νάμειξη..."
 
 #~ msgid ""
 #~ "Add blended backgrounds, highlights, and shadows to the selected region "
@@ -666,9 +1992,6 @@ msgstr "IIR"
 #~ msgid "FG-Transparent"
 #~ msgstr "Διαφανές προσκήνιο"
 
-#~ msgid "Gradient reverse"
-#~ msgstr "Αντιστροφή διαβάθμισης"
-
 #~ msgid "Offset (pixels)"
 #~ msgstr "Αντιστάθμιση (εικονοστοιχεία)"
 
@@ -690,46 +2013,6 @@ msgstr "IIR"
 #~ msgid "Spots density Y"
 #~ msgstr "Πυκνότητα κηλίδων Υ"
 
-#~ msgid "Add glowing"
-#~ msgstr "Προσθήκη λάμψης"
-
-#~ msgid "After glow"
-#~ msgstr "Μετά τη λάμψη"
-
-#~ msgid "B_urn-In..."
-#~ msgstr "Απο_τύπωση..."
-
-#~ msgid "Corona width"
-#~ msgstr "Πλάτος κορώνας"
-
-#~ msgid ""
-#~ "Create intermediate layers to produce an animated 'burn-in' transition "
-#~ "between two layers"
-#~ msgstr ""
-#~ "Δημιουργία ενδιάμεσων στρώσεων για να παραχθεί μία κινούμενη μετάπτωση "
-#~ "'αποτύπωσης' μεταξύ δύο στρώσεων"
-
-#
-#~ msgid "Fadeout"
-#~ msgstr "Ξεθώριασμα"
-
-#
-#~ msgid "Fadeout width"
-#~ msgstr "Πλάτος ξεθωριάσματος"
-
-#~ msgid "Prepare for GIF"
-#~ msgstr "Προετοιμασία για GIF"
-
-#~ msgid "Speed (pixels/frame)"
-#~ msgstr "Ταχύτητα (εικονοστοιχεία/πλαίσιο)"
-
-#~ msgid ""
-#~ "The Burn-In script needs two layers in total. A foreground layer with "
-#~ "transparency and a background layer."
-#~ msgstr ""
-#~ "Το σενάριο αποτύπωσης χρειάζεται δύο στρώσεις συνολικά. Μια στρώση "
-#~ "προσκηνίου με διαφάνεια και μια στρώση παρασκηνίου."
-
 #~ msgid "Color 1"
 #~ msgstr "Χρώμα 1"
 
@@ -748,36 +2031,8 @@ msgstr "IIR"
 #~ msgid "Image size"
 #~ msgstr "Μέγεθος εικόνας"
 
-#~ msgid "Smooth"
-#~ msgstr "Ομαλό"
-
 #~ msgid "_Camouflage..."
 #~ msgstr "Π_αραλλαγή..."
-
-#~ msgid "Bevel Highlight"
-#~ msgstr "Τονισμός λοξότμησης"
-
-#~ msgid "Bevel Shadow"
-#~ msgstr "Σκιά λοξότμησης"
-
-#~ msgid "Carve white areas"
-#~ msgstr "Λάξευση λευκών περιοχών"
-
-#~ msgid "Carved Surface"
-#~ msgstr "Λαξευμένη επιφάνεια"
-
-#
-#~ msgid "Cast Shadow"
-#~ msgstr "Σκιά απόχρωσης"
-
-#~ msgid "Image to carve"
-#~ msgstr "Εικόνα σε λάξευση"
-
-#~ msgid "Inset"
-#~ msgstr "Συρρίκνωση"
-
-#~ msgid "Stencil C_arve..."
-#~ msgstr "Μήτρα _ανάγλυφου..."
 
 #~ msgid "Background Image"
 #~ msgstr "Εικόνα Παρασκηνίου"
@@ -842,61 +2097,6 @@ msgstr "IIR"
 #~ msgid "Keep background"
 #~ msgstr "Διατήρηση παρασκηνίου"
 
-#~ msgid ""
-#~ "Add a chrome effect to the selected region (or alpha) using a specified "
-#~ "(grayscale) stencil"
-#~ msgstr ""
-#~ "Προσθήκη εφέ χρωμίου στην επιλεγμένη περιοχή (ή άλφα) με την χρήση "
-#~ "καθορισμένης μήτρας γκρι κλίμακας"
-
-#
-#~ msgid "Chrome"
-#~ msgstr "Χρώμιο"
-
-#~ msgid "Chrome balance"
-#~ msgstr "Ισορροπία χρωμίου"
-
-#
-#~ msgid "Chrome factor"
-#~ msgstr "Συντελεστής χρωμίου"
-
-#~ msgid "Chrome lightness"
-#~ msgstr "Φωτεινότητα χρωμίου"
-
-#~ msgid "Chrome saturation"
-#~ msgstr "Κορεσμός χρωμίου"
-
-#~ msgid "Chrome white areas"
-#~ msgstr "Λευκές περιοχές χρωμίου"
-
-#~ msgid "Drop Shadow"
-#~ msgstr "Πίπτουσα σκιά"
-
-#
-#~ msgid "Environment map"
-#~ msgstr "Χάρτης περιβάλλοντος"
-
-#~ msgid "Highlight"
-#~ msgstr "Τονισμός"
-
-#~ msgid "Highlight balance"
-#~ msgstr "Ισορροπία τονισμού"
-
-#, fuzzy
-#~| msgid "Layer1"
-#~ msgid "Layer 1"
-#~ msgstr "Στρώση1"
-
-#~ msgid "Layer 2"
-#~ msgstr "Στρώση 2"
-
-#~ msgid "Layer 3"
-#~ msgstr "Στρώση 3"
-
-#
-#~ msgid "Stencil C_hrome..."
-#~ msgstr "Μήτρα χρωμί_ου..."
-
 #~ msgid "Add a simple chrome effect to the selected region (or alpha)"
 #~ msgstr "Προσθήκη απλού εφέ χρωμίου στην επιλεγμένη περιοχή (ή άλφα)"
 
@@ -909,72 +2109,6 @@ msgstr "IIR"
 
 #~ msgid "Offsets (pixels * 2)"
 #~ msgstr "Αντισταθμίσεις (εικονοστοιχεία * 2)"
-
-#~ msgid "Circuit seed"
-#~ msgstr "Κόκκοι κυκλώματος"
-
-#
-#~ msgid "Effect layer"
-#~ msgstr "Στρώση εφέ"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with traces like those on a circuit "
-#~ "board"
-#~ msgstr ""
-#~ "Γέμισμα της επιλεγμένης περιοχής (ή άλφα) με ίχνη όπως αυτά κάρτας "
-#~ "κυκλώματος"
-
-#~ msgid "Keep selection"
-#~ msgstr "Διατήρηση επιλογής"
-
-#~ msgid "No background (only for separate layer)"
-#~ msgstr "Χωρίς παρασκήνιο (μόνο για ξεχωριστή στρώση)"
-
-#~ msgid "Oilify mask size"
-#~ msgstr "Μέγεθος μάσκας ελαιοποίησης"
-
-#
-#~ msgid "Separate layer"
-#~ msgstr "Ξεχωριστή στρώση"
-
-#~ msgid "_Circuit..."
-#~ msgstr "_Κύκλωμα"
-
-#~ msgid "Add a cloth-like texture to the selected region (or alpha)"
-#~ msgstr "Προσθέστε μία υφασματοειδή υφή  στην επιλεγμένη περιοχή (ή άλφα)"
-
-#~ msgid "Azimuth"
-#~ msgstr "Αζιμούθιο"
-
-#~ msgid "Blur X"
-#~ msgstr "Θόλωση Χ"
-
-#~ msgid "Blur Y"
-#~ msgstr "Θόλωση Υ"
-
-#~ msgid "Depth"
-#~ msgstr "Βάθος"
-
-#~ msgid "Elevation"
-#~ msgstr "Ανύψωση"
-
-#~ msgid "_Clothify..."
-#~ msgstr "_Υφασματοποίηση..."
-
-#~ msgid "Add realistic looking coffee stains to the image"
-#~ msgstr "Προσθέστε μία πραγματική όψη από κηλίδες καφέ στην εικόνα"
-
-#~ msgid "Darken only"
-#~ msgstr "Σκοτείνιασμα μόνο"
-
-#~ msgid "Stain"
-#~ msgstr "Κηλίδα"
-
-#~ msgid "Stains"
-#~ msgstr "Κηλίδες"
-
-#~ msgid "_Coffee Stain..."
-#~ msgstr "_Κηλίδα καφέ..."
 
 #~ msgid ""
 #~ "Add a comic-book effect to the selected region (or alpha) by outlining "
@@ -1027,85 +2161,6 @@ msgstr "IIR"
 #~ msgid "Crystal..."
 #~ msgstr "Κρύσταλλο"
 
-#~ msgid "Difference Clouds..."
-#~ msgstr "Διαφορά σύννεφων..."
-
-#~ msgid "Solid noise applied with Difference layer mode"
-#~ msgstr "Εφαρμογή συμπαγούς θορύβου με κατάσταση στρώσης διαφοράς"
-
-#~ msgid "Distress the selection"
-#~ msgstr "Παραμόρφωση επιλογής"
-
-#~ msgid "Granularity (1 is low)"
-#~ msgstr "Κοκκίωση (1 είναι χαμηλό)"
-
-#~ msgid "Smooth horizontally"
-#~ msgstr "Εξομάλυνση οριζόντια"
-
-#~ msgid "Smooth vertically"
-#~ msgstr "Εξομάλυνση κάθετη"
-
-#~ msgid "Spread"
-#~ msgstr "Διασπορά"
-
-#~ msgid "Threshold (bigger 1<-->255 smaller)"
-#~ msgstr "Κατώφλι (μεγαλύτερο 1<-->255 μικρότερο)"
-
-#~ msgid "_Distort..."
-#~ msgstr "_Παραμόρφωση..."
-
-#~ msgid "Add a drop shadow to the selected region (or alpha)"
-#~ msgstr "Προσθήκη πίπτουσας σκιάς στην επιλεγμένη περιοχή (ή άλφα)"
-
-#~ msgid "Allow resizing"
-#~ msgstr "Δυνατότητα αλλαγής μεγέθους"
-
-#
-#~ msgid "Blur radius"
-#~ msgstr "Ακτίνα θόλωσης"
-
-#
-#~ msgid "Color"
-#~ msgstr "Χρώμα"
-
-#~ msgid "Offset X"
-#~ msgstr "Αντιστάθμιση X"
-
-#~ msgid "Offset Y"
-#~ msgstr "Αντιστάθμιση Y"
-
-#
-#~ msgid "Opacity"
-#~ msgstr "Αδιαφάνεια"
-
-#~ msgid "_Drop Shadow..."
-#~ msgstr "Πίπ_τουσα σκιά..."
-
-#~ msgid "Columns"
-#~ msgstr "Στήλες"
-
-#~ msgid "Erase every other row or column"
-#~ msgstr "Σβήσιμο κάθε δεύτερη γραμμής ή στήλης"
-
-#~ msgid "Erase/fill"
-#~ msgstr "Σβήσιμο/γέμισμα"
-
-#~ msgid "Even/odd"
-#~ msgstr "Ζυγός/μονός"
-
-#~ msgid "Fill with BG"
-#~ msgstr "Γέμισμα με παρασκήνιο"
-
-#
-#~ msgid "Odd"
-#~ msgstr "Ζυγός"
-
-#~ msgid "Rows/cols"
-#~ msgstr "Γραμμές/στήλες"
-
-#~ msgid "_Erase Every Other Row..."
-#~ msgstr "_Σβήσιμο κάθε δεύτερης γραμμής..."
-
 #~ msgid "Create an image filled with a Land Pattern"
 #~ msgstr "Δημιουργία εικόνας γεμάτης με μοτίβο γης"
 
@@ -1131,40 +2186,6 @@ msgstr "IIR"
 #~ msgid "_Flatland..."
 #~ msgstr "_Επίπεδη έκταση..."
 
-#~ msgid "Active colors"
-#~ msgstr "Ζωηρά χρώματα"
-
-#~ msgid ""
-#~ "Create an image filled with previews of fonts matching a fontname filter"
-#~ msgstr ""
-#~ "Δημιουργία εικόνας γεμάτης με προεπισκοπήσεις γραμματοσειρών που "
-#~ "ταιριάζουν στο φίλτρο ονόματος γραμματοσειράς"
-
-#~ msgid "Font _size (pixels)"
-#~ msgstr "Μέγεθος γραμματο_σειράς (εικονοστοιχεία)"
-
-#~ msgid "Render _Font Map..."
-#~ msgstr "Απόδοση χάρτη γρα_μματοσειράς..."
-
-#~ msgid "Use font _name as text"
-#~ msgstr "Χρήση ο_νόματος γραμματοσειράς ως κειμένου"
-
-#~ msgid "_Border (pixels)"
-#~ msgstr "_Περίγραμμα (εικονοστοιχεία)"
-
-#~ msgid "_Color scheme"
-#~ msgstr "_Χρώμα scheme"
-
-#~ msgid "_Filter (regexp)"
-#~ msgstr "_Φίλτρο (regexp)"
-
-#~ msgid "_Labels"
-#~ msgstr "Ε_τικέτες"
-
-#
-#~ msgid "_Text"
-#~ msgstr "_Κείμενο"
-
 #~ msgid ""
 #~ "Add a frost effect to the selected region (or alpha) with an added drop "
 #~ "shadow"
@@ -1178,69 +2199,6 @@ msgstr "IIR"
 #
 #~ msgid "_Frosty..."
 #~ msgstr "_Παγωμένο..."
-
-#~ msgid "Add a jagged, fuzzy border to an image"
-#~ msgstr "Προσθήκη πριονωτού θολού περιγράμματος στην εικόνα"
-
-#~ msgid "Add shadow"
-#~ msgstr "Προσθήκη σκιάς"
-
-#~ msgid "Blur border"
-#~ msgstr "Θολό περίγραμμα"
-
-#~ msgid "Border size"
-#~ msgstr "Μέγεθος περιγράμματος"
-
-#~ msgid "Granularity (1 is Low)"
-#~ msgstr "Κοκκίωση (1 είναι χαμηλό)"
-
-#~ msgid "Shadow weight (%)"
-#~ msgstr "Βαρύτητα σκιάς (%)"
-
-#~ msgid "_Fuzzy Border..."
-#~ msgstr "Ασα_φές περίγραμμα..."
-
-#~ msgid "Bookmark to the GIMP web site"
-#~ msgstr "Σελιδοδείκτης στην ιστοσελίδα GIMP"
-
-#~ msgid "Bookmark to the user manual"
-#~ msgstr "Σελιδοδείκτης στο εγχειρίδιο χρήστη"
-
-#~ msgid "Create and Use _Selections"
-#~ msgstr "Δημιουργία και χρήση επ_ιλογών"
-
-#~ msgid "Create, Open and Save _Files"
-#~ msgstr "Δημιουργία, άνοιγμα και αποθήκευση _αρχείων"
-
-#~ msgid "Drawing _Simple Objects"
-#~ msgstr "Σχεδία_ση απλών αντικειμένων"
-
-#~ msgid "How to Use _Dialogs"
-#~ msgstr "Χρήση _διαλόγων"
-
-#~ msgid "Plug-in _Registry"
-#~ msgstr "Μητ_ρώο προσθέτων"
-
-#~ msgid "Using _Paths"
-#~ msgstr "Χρήση μονο_πατιών"
-
-#~ msgid "_Basic Concepts"
-#~ msgstr "_Βασικές έννοιες"
-
-#~ msgid "_Developer Web Site"
-#~ msgstr "Ιστοσελίδα πρ_ογραμματιστών"
-
-#~ msgid "_Main Web Site"
-#~ msgstr "_Κύρια ιστοσελίδα"
-
-#~ msgid "_Preparing your Images for the Web"
-#~ msgstr "_Προετοιμασία των εικόνων σας για τον ιστό"
-
-#~ msgid "_User Manual Web Site"
-#~ msgstr "Ιστοσελίδα _εγχειριδίου χρήστη"
-
-#~ msgid "_Working with Digital Camera Photos"
-#~ msgstr "Εργα_σία με φωτογραφίες ψηφιακής κάμερας"
 
 #~ msgid ""
 #~ "Add gradients, patterns, shadows, and bump maps to the selected region "
@@ -1277,9 +2235,6 @@ msgstr "IIR"
 # #       keep msg length relatively short...
 #~ msgid "Pattern (text)"
 #~ msgstr "Μοτίβο (κείμενο)"
-
-#~ msgid "Shadow"
-#~ msgstr "Σκιά"
 
 #~ msgid "Text gradient reverse"
 #~ msgstr "Αντιστροφή διαβάθμισης κειμένου"
@@ -1320,66 +2275,6 @@ msgstr "IIR"
 #~ msgid "Gradient Beve_l..."
 #~ msgstr "_Λοξότμηση διαβάθμισης..."
 
-#~ msgid "Create an image filled with an example of the current gradient"
-#~ msgstr "Δημιουργία εικόνας γεμάτης με παράδειγμα τρέχουσας διαβάθμισης"
-
-#~ msgid "Custom _Gradient..."
-#~ msgstr "Προσαρμογή _διαβάθμισης..."
-
-#~ msgid ""
-#~ "Draw a grid as specified by the lists of X and Y locations using the "
-#~ "current brush"
-#~ msgstr ""
-#~ "Σχεδίαση πλέγματος όπως καθορίζεται από τις λίστες τοποθεσιών X και Y με "
-#~ "τη χρήση του τρέχοντος πινέλου"
-
-#~ msgid "X divisions"
-#~ msgstr "Χ υποδιαιρέσεις"
-
-#~ msgid "Y divisions"
-#~ msgstr "Υ υποδιαιρέσεις"
-
-#~ msgid "_Grid..."
-#~ msgstr "_Πλέγμα..."
-
-#~ msgid "New Guides from _Selection"
-#~ msgstr "Νέοι οδηγοί από _Επιλογή"
-
-#~ msgid ""
-#~ "Add a guide at the position specified as a percentage of the image size"
-#~ msgstr ""
-#~ "Προσθήκη οδηγού στην καθορισμένη θέση ως ποσοστού του μεγέθους της εικόνας"
-
-#
-#~ msgid "Direction"
-#~ msgstr "Κατεύθυνση"
-
-#~ msgid "New Guide (by _Percent)..."
-#~ msgstr "Νέος οδηγός (_Αναλογία)"
-
-#~ msgid "Position (in %)"
-#~ msgstr "Θέση (σε %)"
-
-#~ msgid "Vertical"
-#~ msgstr "Κάθετο"
-
-#~ msgid "Add a guide at the orientation and position specified (in pixels)"
-#~ msgstr ""
-#~ "Προσθήκη οδηγού στην καθορισμένη θέση και προσανατολισμό (σε "
-#~ "εικονοστοιχεία)"
-
-#~ msgid "New _Guide..."
-#~ msgstr "Νέος οδη_γός"
-
-#~ msgid "Position"
-#~ msgstr "Θέση"
-
-#~ msgid "Remove all horizontal and vertical guides"
-#~ msgstr "Διαγραφή όλων των οριζόντιων και κάθετων οδηγών"
-
-#~ msgid "_Remove all Guides"
-#~ msgstr "Αφαί_ρεση όλων των οδηγών"
-
 #~ msgid "Create a logo in a two-color, scribbled text style"
 #~ msgstr ""
 #~ "Δημιουργία λογότυπου σε δύο χρώματα, τεχνοτροπίας κειμένου "
@@ -1405,81 +2300,6 @@ msgstr "IIR"
 
 #~ msgid "_Land..."
 #~ msgstr "_Γη..."
-
-#~ msgid "Fill the current selection with lava"
-#~ msgstr "Γέμισμα της τρέχουσας επιλογής με λάβα"
-
-#~ msgid "Roughness"
-#~ msgstr "Σκληρότητα"
-
-#~ msgid "Seed"
-#~ msgstr "Σπόρος"
-
-#~ msgid "Use current gradient"
-#~ msgstr "Χρήση τρέχουσας διαβάθμισης"
-
-#~ msgid "_Lava..."
-#~ msgstr "_Λάβα..."
-
-#, fuzzy
-#~| msgid ""
-#~| "Fill a layer with rays emanating outward from its center using the FG "
-#~| "color"
-#~ msgid ""
-#~ "Fill a layer with rays emanating outward from its center using the "
-#~ "foreground color"
-#~ msgstr ""
-#~ "Γέμισμα στρώσης με ακτίνες που εκπέμπουν προς τα έξω από το κέντρο τους "
-#~ "χρησιμοποιώντας το χρώμα προσκηνίου"
-
-#~ msgid "Line _Nova..."
-#~ msgstr "Γραμμή υπερκαι_νοφανούς..."
-
-#~ msgid "Number of lines"
-#~ msgstr "Αριθμός γραμμών"
-
-#~ msgid "Offset radius"
-#~ msgstr "Ακτίνα αντιστάθμισης"
-
-#~ msgid "Randomness"
-#~ msgstr "Τυχαιότητα"
-
-#~ msgid "Sharpness (degrees)"
-#~ msgstr "Οξύτητα (μοίρες)"
-
-#~ msgid "Create a rectangular brush"
-#~ msgstr "Δημιουργία ορθογωνίου πινέλου"
-
-#~ msgid "Create a rectangular brush with feathered edges"
-#~ msgstr "Δημιουργία ορθογωνίου πινέλου με απαλυμένα άκρα"
-
-#~ msgid "Create an elliptical brush"
-#~ msgstr "Δημιουργία ελλειπτικού πινέλου"
-
-#~ msgid "Create an elliptical brush with feathered edges"
-#~ msgstr "Δημιουργία ελλειπτικού πινέλου με απαλυμένες άκρες"
-
-#~ msgid "Elli_ptical, Feathered..."
-#~ msgstr "Ελλει_πτικό, απαλυμένο..."
-
-#~ msgid "Feathering"
-#~ msgstr "Απάλυνση"
-
-#
-#~ msgid "Name"
-#~ msgstr "Όνομα"
-
-#~ msgid "Re_ctangular, Feathered..."
-#~ msgstr "Ορ_θογώνιο, απαλυμένο..."
-
-#~ msgid "Spacing"
-#~ msgstr "Διαστήματα"
-
-#~ msgid "_Elliptical..."
-#~ msgstr "_Ελλειπτικό..."
-
-#~ msgid "_Rectangular..."
-#~ msgstr "Ο_ρθογώνιο..."
 
 #~ msgid "Convert the selected region (or alpha) into a neon-sign like object"
 #~ msgstr ""
@@ -1507,126 +2327,6 @@ msgstr "IIR"
 
 #~ msgid "Newsprint Te_xt..."
 #~ msgstr "Κεί_μενο εκτύπωσης εφημερίδας..."
-
-#~ msgid "Defocus"
-#~ msgstr "Απεστίαση"
-
-#~ msgid "Make an image look like an old photo"
-#~ msgstr "Κατασκευή εικόνας που μοιάζει με παλιά φωτογραφία"
-
-#~ msgid "Mottle"
-#~ msgstr "Διάστιξη"
-
-#~ msgid "Sepia"
-#~ msgstr "Σουπιά"
-
-#~ msgid "_Old Photo..."
-#~ msgstr "Π_αλιά φωτογραφία..."
-
-#~ msgid ""
-#~ "All characters in the name are either white-spaces or characters which "
-#~ "can not appear in filenames."
-#~ msgstr ""
-#~ "Όλοι οι χαρακτήρες στο όνομα είναι είτε κενοί ή χαρακτήρες που δεν "
-#~ "μπορούν να εμφανιστούν σε ονόματα αρχείου."
-
-#~ msgid ""
-#~ "Export the active palette as a CSS stylesheet with the color entry name "
-#~ "as their class name, and the color itself as the color attribute"
-#~ msgstr ""
-#~ "Εξαγωγή της ενεργής παλέτας ως φύλλου μορφοποίησης CSS με όνομα εισόδου "
-#~ "χρώματος όπως το όνομα τάξης τους και του χρώματος της ως γνώρισμα "
-#~ "χρώματος"
-
-#~ msgid "Export the active palette as a PHP dictionary (name => color)"
-#~ msgstr "Εξαγωγή της ενεργής παλέτας ως λεξικό PHP (όνομα => χρώμα)"
-
-#~ msgid "Export the active palette as a Python dictionary (name: color)"
-#~ msgstr "Εξαγωγή της ενεργής παλέτας ως λεξικό Python (όνομα: χρώμα)"
-
-#~ msgid "Export the active palette as a java.util.Hashtable<String, Color>"
-#~ msgstr ""
-#~ "Εξαγωγή της ενεργής παλέτας ως java.util.Hashtable<αλφαριθμητικό, χρώμα>"
-
-#~ msgid "Folder for the output file"
-#~ msgstr "Φάκελος για το αρχείο εξόδου"
-
-#~ msgid "The filename you entered is not a suitable name for a file."
-#~ msgstr "Το όνομα αρχείου που εισάγατε δεν είναι κατάλληλο όνομα για αρχείο."
-
-#~ msgid ""
-#~ "The name of the file to create (if a file with this name already exist, "
-#~ "it will be replaced)"
-#~ msgstr ""
-#~ "Το όνομα του αρχείου για δημιουργία (εάν αρχείο με αυτό το όνομα  ήδη "
-#~ "υπάρχει, θα αντικατασταθεί)"
-
-#~ msgid ""
-#~ "Write all the colors in a palette to a text file, one hexadecimal value "
-#~ "per line (no names)"
-#~ msgstr ""
-#~ "Εγγραφή όλων των χρωμάτων σε μια παλέτα σε αρχείο κειμένου, μια "
-#~ "δεκαεξαδική τιμή ανά γραμμή (χωρίς ονόματα)"
-
-#~ msgid "Brush name"
-#~ msgstr "Όνομα πινέλου"
-
-#
-#~ msgid "File name"
-#~ msgstr "Όνομα αρχείου"
-
-#
-#~ msgid "New _Brush..."
-#~ msgstr "Νέο _πινέλο..."
-
-#~ msgid "Paste the clipboard contents into a new brush"
-#~ msgstr "Επικόλληση των περιεχόμενων του πρόχειρου σε νέο πινέλο"
-
-#~ msgid "There is no image data in the clipboard to paste."
-#~ msgstr "Δεν υπάρχουν στοιχεία εικόνας στο πρόχειρο για επικόλληση. "
-
-#~ msgid "New _Pattern..."
-#~ msgstr "Νέο μο_τίβο..."
-
-#~ msgid "Paste the clipboard contents into a new pattern"
-#~ msgstr "Επικόλληση των περιεχομένων του πρόχειρου σε νέο υπόδειγμα"
-
-#~ msgid "Pattern name"
-#~ msgstr "Όνομα μοτίβου"
-
-#~ msgid "Add a perspective shadow to the selected region (or alpha)"
-#~ msgstr "Προσθήκη σκιάς προοπτικής στην επιλεγμένη περιοχή (ή άλφα)"
-
-#~ msgid "Angle"
-#~ msgstr "Γωνία"
-
-#~ msgid "Interpolation"
-#~ msgstr "Παρεμβολή"
-
-#~ msgid "Relative distance of horizon"
-#~ msgstr "Σχετική απόσταση του ορίζοντα"
-
-#~ msgid "Relative length of shadow"
-#~ msgstr "Σχετικό μήκος της σκιάς"
-
-#~ msgid "_Perspective..."
-#~ msgstr "_Προοπτική..."
-
-#~ msgid "Add a 'Predator' effect to the selected region (or alpha)"
-#~ msgstr "Προσθήκη εφέ 'αρπαχτικού' στην επιλεγμένη περιοχή (ή άλφα)"
-
-#~ msgid "Edge amount"
-#~ msgstr "Ποσότητα άκρης"
-
-#~ msgid "Pixel amount"
-#~ msgstr "Ποσότητα εικονοστοιχείου"
-
-#
-#~ msgid "Pixelize"
-#~ msgstr "Εικονοστοιχειοποίηση"
-
-#~ msgid "_Predator..."
-#~ msgstr "Αρ_πακτικό..."
 
 #~ msgid "Create images, each containing an oval button graphic"
 #~ msgstr "Δημιουργία εικόνων που καθεμιά περιέχει ένα ωοειδές γραφικό κουμπί"
@@ -1677,114 +2377,6 @@ msgstr "IIR"
 #~ msgid "Render _Map..."
 #~ msgstr "Απόδοση _χάρτη..."
 
-#~ msgid "Reverse Layer Order"
-#~ msgstr "Αντιστροφή σειράς στρώσεων"
-
-#~ msgid "Reverse the order of layers in the image"
-#~ msgstr "Αντιστροφή της σειράς στρώσεων στην εικόνα"
-
-#~ msgid "Black"
-#~ msgstr "Μαύρο"
-
-#~ msgid ""
-#~ "Create a multi-layer image by adding a ripple effect to the current image"
-#~ msgstr ""
-#~ "Δημιουργία εικόνας πολλαπλών στρώσεων προσθέτοντας εφέ κυματισμού στην "
-#~ "τρέχουσα εικόνα"
-
-#~ msgid "Edge behavior"
-#~ msgstr "Συμπεριφορά άκρης"
-
-#~ msgid "Number of frames"
-#~ msgstr "Αριθμός πλαισίων"
-
-#~ msgid "Rippling strength"
-#~ msgstr "Δύναμη κυματισμού"
-
-#~ msgid "Smear"
-#~ msgstr "Επάλειψη"
-
-#~ msgid "_Rippling..."
-#~ msgstr "Κ_υματισμός..."
-
-#
-#~ msgid "Add background"
-#~ msgstr "Προσθήκη παρασκηνίου"
-
-#~ msgid "Add drop-shadow"
-#~ msgstr "Προσθήκη πίπτουσας σκιάς"
-
-#~ msgid "Edge radius"
-#~ msgstr "Ακτίνα άκρης"
-
-#~ msgid ""
-#~ "Round the corners of an image and optionally add a drop-shadow and "
-#~ "background"
-#~ msgstr ""
-#~ "Στρογγύλεμα των γωνιών εικόνας και προαιρετικά προσθήκη πίπτουσας σκιάς "
-#~ "και παρασκηνίου"
-
-#~ msgid "_Round Corners..."
-#~ msgstr "Στ_ρογγύλεμα γωνιών..."
-
-#~ msgid ""
-#~ "Change the colormap of an image to the colors in a specified palette."
-#~ msgstr ""
-#~ "Αλλαγή του πίνακα χρωμάτων εικόνας στα χρώματα μιας καθορισμένης παλέτας."
-
-#~ msgid "Palette"
-#~ msgstr "Παλέτα"
-
-#~ msgid "Se_t Colormap..."
-#~ msgstr "Ορισμός πίνακα χρώμα_τος..."
-
-#~ msgid "Convert a selection to a brush"
-#~ msgstr "Μετατροπή επιλογής σε πινέλο"
-
-#
-#~ msgid "To _Brush..."
-#~ msgstr "Στο _πινέλο..."
-
-#~ msgid "Convert a selection to an image"
-#~ msgstr "Μετατροπή επιλογής σε εικόνα"
-
-#~ msgid "To _Image"
-#~ msgstr "Στην ε_ικόνα"
-
-#~ msgid "Convert a selection to a pattern"
-#~ msgstr "Μετατροπή επιλογής σε υπόδειγμα"
-
-#~ msgid "To _Pattern..."
-#~ msgstr "Στο μ_οτίβο..."
-
-#
-#~ msgid "Concave"
-#~ msgstr "Κοίλος"
-
-#~ msgid "Radius (%)"
-#~ msgstr "Ακτίνα (%)"
-
-#~ msgid "Round the corners of the current selection"
-#~ msgstr "Στρογγυλοποίηση γωνιών της τρέχουσας επιλογής"
-
-#
-#~ msgid "Rounded R_ectangle..."
-#~ msgstr "Στρογγυλεμένο ορ_θογώνιο..."
-
-#~ msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-#~ msgstr ""
-#~ "Προσθήκη ταινίας διαφανειών όπως πλαίσια, οπών οδοντωτού τροχού και "
-#~ "ετικετών σε εικόνα"
-
-#~ msgid "Font color"
-#~ msgstr "Χρώμα γραμματοσειράς"
-
-#~ msgid "Number"
-#~ msgstr "Αριθμός"
-
-#~ msgid "_Slide..."
-#~ msgstr "_Διαφάνεια..."
-
 #~ msgid "Create a State Of The Art chromed logo"
 #~ msgstr "Δημιουργία κατάστασης λογότυπου χρωμιομένης τέχνης"
 
@@ -1796,105 +2388,6 @@ msgstr "IIR"
 
 #~ msgid "Speed Text..."
 #~ msgstr "Γρήγορο κείμενο..."
-
-#~ msgid ""
-#~ "Create an animation by mapping the current image onto a spinning sphere"
-#~ msgstr ""
-#~ "Δημιουργία κίνησης χαρτογραφώντας την τρέχουσα εικόνα σε μία "
-#~ "στροβιλίζουσα σφαίρα"
-
-#~ msgid "Frames"
-#~ msgstr "Πλαίσια"
-
-#~ msgid "Index to n colors (0 = remain RGB)"
-#~ msgstr "Δείκτης σε n χρώματα (0 = παραμένει RGB)"
-
-#~ msgid "Turn from left to right"
-#~ msgstr "Περιστροφή από αριστερά προς  τα δεξιά"
-
-#~ msgid "_Spinning Globe..."
-#~ msgstr "_Στροβιλιζόμενη υδρόγειος..."
-
-#~ msgid ""
-#~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-#~ msgstr ""
-#~ "Προσθήκη σπειρογραφημάτων, επιτροχοειδών και καμπυλών Lissajous στην "
-#~ "τρέχουσα στρώση"
-
-#~ msgid "Airbrush"
-#~ msgstr "Αερογράφος"
-
-#~ msgid "Brush"
-#~ msgstr "Πινέλο"
-
-#~ msgid "Color method"
-#~ msgstr "Μέθοδος χρώματος"
-
-#~ msgid "Epitrochoid"
-#~ msgstr "Επιτροχοειδές"
-
-#~ msgid "Gradient: Loop Sawtooth"
-#~ msgstr "Διαβάθμιση: πριονωτό δόντι βρόχου"
-
-#~ msgid "Gradient: Loop Triangle"
-#~ msgstr "Διαβάθμιση: Τρίγωνο βρόχου"
-
-#~ msgid "Hexagon"
-#~ msgstr "Εξάγωνο"
-
-#~ msgid "Hole ratio"
-#~ msgstr "Λόγος οπής"
-
-#~ msgid "Inner teeth"
-#~ msgstr "Εσωτερικά δόντια"
-
-#~ msgid "Lissajous"
-#~ msgstr "Lissajous"
-
-#~ msgid "Margin (pixels)"
-#~ msgstr "Περιθώριο (εικονοστοιχεία)"
-
-#~ msgid "Outer teeth"
-#~ msgstr "Εξωτερικά δόντια"
-
-#~ msgid "Pentagon"
-#~ msgstr "Πεντάγωνο"
-
-#~ msgid "Polygon: 10 sides"
-#~ msgstr "Πολύγωνο: 10 πλευρές"
-
-#~ msgid "Polygon: 7 sides"
-#~ msgstr "Πολύγωνο: 7 πλευρές"
-
-#~ msgid "Polygon: 8 sides"
-#~ msgstr "Πολύγωνο: 8 πλευρές"
-
-#~ msgid "Polygon: 9 sides"
-#~ msgstr "Πολύγωνο: 9 πλευρές"
-
-#~ msgid "Rendering Spyro"
-#~ msgstr "Απόδοση σπειρογραφήματος"
-
-#~ msgid "Shape"
-#~ msgstr "Σχήμα"
-
-#~ msgid "Square"
-#~ msgstr "Τετράγωνο"
-
-#~ msgid "Start angle"
-#~ msgstr "Γωνία εκκίνησης"
-
-#~ msgid "Tool"
-#~ msgstr "Εργαλείο"
-
-#~ msgid "Triangle"
-#~ msgstr "Τρίγωνο"
-
-#~ msgid "Type"
-#~ msgstr "Τύπος"
-
-#~ msgid "_Spyrogimp..."
-#~ msgstr "_Σπειρογράφημα gimp..."
 
 #~ msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
 #~ msgstr ""
@@ -2001,25 +2494,6 @@ msgstr "IIR"
 #~ msgid "_Textured..."
 #~ msgstr "_Με υφή..."
 
-#~ msgid "Blur horizontally"
-#~ msgstr "Θόλωση οριζόντια"
-
-#~ msgid "Blur the edges of an image so the result tiles seamlessly"
-#~ msgstr ""
-#~ "Θόλωση των άκρων εικόνας ώστε το αποτέλεσμα να παρατίθεται χωρίς ραφές"
-
-#~ msgid "Blur type"
-#~ msgstr "Τύπος θόλωσης"
-
-#~ msgid "Blur vertically"
-#~ msgstr "Θόλωση κατακόρυφα"
-
-#~ msgid "RLE"
-#~ msgstr "RLE"
-
-#~ msgid "_Tileable Blur..."
-#~ msgstr "Θόλωση π_αράθεσης..."
-
 #~ msgid "Create a decorative web title header"
 #~ msgstr "Δημιουργία διακοσμητικής κεφαλίδας τίτλου ιστού"
 
@@ -2034,98 +2508,6 @@ msgstr "IIR"
 
 #~ msgid "T_ruchet..."
 #~ msgstr "T_ruchet..."
-
-#
-#~ msgid "Mask opacity"
-#~ msgstr "Αδιαφάνεια μάσκας"
-
-#~ msgid "Mask size"
-#~ msgstr "Μέγεθος μάσκας"
-
-#~ msgid "Amplitude"
-#~ msgstr "Εύρος"
-
-#~ msgid ""
-#~ "Create a multi-layer image with an effect like a stone was thrown into "
-#~ "the current image"
-#~ msgstr ""
-#~ "Δημιουργία εικόνας πολλαπλών στρώσεων με εφέ όπως μια πέτρα που πετάχτηκε "
-#~ "στην τρέχουσα εικόνα"
-
-#~ msgid "Invert direction"
-#~ msgstr "Αντιστροφή κατεύθυνσης"
-
-#~ msgid "Wavelength"
-#~ msgstr "Μήκος κύματος"
-
-#~ msgid "_Waves..."
-#~ msgstr "_Κύματα..."
-
-#~ msgid ""
-#~ "Create a new layer filled with a weave effect to be used as an overlay or "
-#~ "bump map"
-#~ msgstr ""
-#~ "Δημιουργία νέας στρώσης γεμάτης με εφέ ύφανσης που θα χρησιμοποιηθεί ως "
-#~ "επίστρωση ή χάρτης αναγλύφου"
-
-#~ msgid "Ribbon spacing"
-#~ msgstr "Διάκενο κορδέλας"
-
-#~ msgid "Ribbon width"
-#~ msgstr "Πλάτος κορδέλας"
-
-#~ msgid "Shadow darkness"
-#~ msgstr "Σκοτεινότητα σκιάς"
-
-#~ msgid "Shadow depth"
-#~ msgstr "Βάθος σκιάς"
-
-#~ msgid "Thread density"
-#~ msgstr "Πυκνότητα νήματος"
-
-#~ msgid "Thread intensity"
-#~ msgstr "Ένταση νήματος"
-
-#~ msgid "Thread length"
-#~ msgstr "Μήκος νήματος"
-
-#~ msgid "_Weave..."
-#~ msgstr "Ύφαν_ση..."
-
-#~ msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Προσθήκη λεπτού ημιδιαφανούς 3Δ εφέ στην επιλεγμένη περιοχή (ή άλφα)"
-
-#~ msgid "Drop shadow X offset"
-#~ msgstr "Αντιστάθμιση _Χ πίπτουσας σκιάς "
-
-#~ msgid "Drop shadow Y offset"
-#~ msgstr "Αντιστάθμιση _Υ πίπτουσας σκιάς "
-
-#~ msgid "Drop shadow blur radius"
-#~ msgstr "Ακτίνα θόλωσης πίπτουσας σκιάς"
-
-#
-#~ msgid "Drop shadow color"
-#~ msgstr "Χρώμα πίπτουσας σκιάς"
-
-#~ msgid "Drop shadow opacity"
-#~ msgstr "Αδιαφάνεια πίπτουσας σκιάς"
-
-#~ msgid "Highlight X offset"
-#~ msgstr "Αντιστάθμιση Χ τονισμού"
-
-#~ msgid "Highlight Y offset"
-#~ msgstr "Αντιστάθμιση Υ τονισμού"
-
-#~ msgid "Highlight color"
-#~ msgstr "Χρώμα τονισμού"
-
-#~ msgid "Highlight opacity"
-#~ msgstr "Αδιαφάνεια τονισμού"
-
-#~ msgid "_Xach-Effect..."
-#~ msgstr "Εφέ _Xach..."
 
 #, fuzzy
 #~ msgid "Autocrop"
@@ -2421,11 +2803,6 @@ msgstr "IIR"
 #, fuzzy
 #~ msgid "Sphere color"
 #~ msgstr "Επιλέξτε Χρώμα"
-
-#
-#, fuzzy
-#~ msgid "_Sphere..."
-#~ msgstr "Εξερεύνηση..."
 
 #, fuzzy
 #~ msgid "Burst color"

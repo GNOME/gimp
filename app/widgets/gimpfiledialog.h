@@ -71,7 +71,7 @@ GtkWidget * gimp_file_dialog_new            (Gimp                 *gimp,
                                              GimpFileChooserAction action,
                                              const gchar          *title,
                                              const gchar          *role,
-                                             const gchar          *stock_id,
+                                             const gchar          *icon_name,
                                              const gchar          *help_id);
 
 void        gimp_file_dialog_set_sensitive  (GimpFileDialog       *dialog,

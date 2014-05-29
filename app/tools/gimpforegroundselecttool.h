@@ -47,12 +47,18 @@ struct _GimpForegroundSelectTool
 {
   GimpFreeSelectTool  parent_instance;
 
+  MattingState        state;
+
   GimpCoords          last_coords;
   GArray             *stroke;
   GeglBuffer         *trimap;
   GeglBuffer         *mask;
-  MattingState        state;
+
+  GList              *undo_stack;
+  GList              *redo_stack;
+
   GimpToolGui        *gui;
+  GtkWidget          *preview_toggle;
 };
 
 struct _GimpForegroundSelectToolClass

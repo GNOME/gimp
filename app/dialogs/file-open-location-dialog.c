@@ -37,6 +37,7 @@
 #include "widgets/gimpcontainerentry.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpprogressbox.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "file-open-location-dialog.h"
 
@@ -99,7 +100,7 @@ file_open_location_dialog_new (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  image = gtk_image_new_from_stock (GIMP_STOCK_WEB, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_WEB, GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
@@ -204,6 +205,8 @@ file_open_location_response (GtkDialog *dialog,
                                                    gimp_get_user_context (gimp),
                                                    GIMP_PROGRESS (box),
                                                    uri, text, FALSE, NULL,
+                                                   G_OBJECT (gtk_widget_get_screen (entry)),
+                                                   gimp_widget_get_monitor (entry),
                                                    &status, &error);
 
           if (image == NULL && status != GIMP_PDB_CANCEL)

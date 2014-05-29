@@ -78,7 +78,7 @@ GimpToolInfo * gimp_tool_info_new          (Gimp                *gimp,
                                             const gchar         *help_domain,
                                             const gchar         *help_id,
                                             const gchar         *paint_core_name,
-                                            const gchar         *stock_id);
+                                            const gchar         *icon_name);
 
 void           gimp_tool_info_set_standard (Gimp                *gimp,
                                             GimpToolInfo        *tool_info);

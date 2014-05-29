@@ -43,14 +43,14 @@ static const GimpActionEntry brushes_actions[] =
     NC_("brushes-action", "Brushes Menu"), NULL, NULL, NULL,
     GIMP_HELP_BRUSH_DIALOG },
 
-  { "brushes-open-as-image", GTK_STOCK_OPEN,
-    NC_("brushes-action", "_Open Brush as Image"), "",
+  { "brushes-open-as-image", "document-open",
+    NC_("brushes-action", "_Open Brush as Image"), NULL,
     NC_("brushes-action", "Open brush as image"),
     G_CALLBACK (data_open_as_image_cmd_callback),
     GIMP_HELP_BRUSH_OPEN_AS_IMAGE },
 
-  { "brushes-new", GTK_STOCK_NEW,
-    NC_("brushes-action", "_New Brush"), "",
+  { "brushes-new", "document-new",
+    NC_("brushes-action", "_New Brush"), NULL,
     NC_("brushes-action", "Create a new brush"),
     G_CALLBACK (data_new_cmd_callback),
     GIMP_HELP_BRUSH_NEW },
@@ -61,20 +61,20 @@ static const GimpActionEntry brushes_actions[] =
     G_CALLBACK (data_duplicate_cmd_callback),
     GIMP_HELP_BRUSH_DUPLICATE },
 
-  { "brushes-copy-location", GTK_STOCK_COPY,
-    NC_("brushes-action", "Copy Brush _Location"), "",
+  { "brushes-copy-location", "edit-copy",
+    NC_("brushes-action", "Copy Brush _Location"), NULL,
     NC_("brushes-action", "Copy brush file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_BRUSH_COPY_LOCATION },
 
-  { "brushes-delete", GTK_STOCK_DELETE,
-    NC_("brushes-action", "_Delete Brush"), "",
+  { "brushes-delete", "edit-delete",
+    NC_("brushes-action", "_Delete Brush"), NULL,
     NC_("brushes-action", "Delete this brush"),
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_BRUSH_DELETE },
 
-  { "brushes-refresh", GTK_STOCK_REFRESH,
-    NC_("brushes-action", "_Refresh Brushes"), "",
+  { "brushes-refresh", "view-refresh",
+    NC_("brushes-action", "_Refresh Brushes"), NULL,
     NC_("brushes-action", "Refresh brushes"),
     G_CALLBACK (data_refresh_cmd_callback),
     GIMP_HELP_BRUSH_REFRESH }
@@ -82,7 +82,7 @@ static const GimpActionEntry brushes_actions[] =
 
 static const GimpStringActionEntry brushes_edit_actions[] =
 {
-  { "brushes-edit", GTK_STOCK_EDIT,
+  { "brushes-edit", "gtk-edit",
     NC_("brushes-action", "_Edit Brush..."), NULL,
     NC_("brushes-action", "Edit this brush"),
     "gimp-brush-editor",

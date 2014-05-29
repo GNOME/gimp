@@ -174,6 +174,25 @@ xcf_load_image (Gimp     *gimp,
               goto hard_error;
             }
         }
+      else if (info->file_version == 5 ||
+               info->file_version == 6)
+        {
+          switch (p)
+            {
+            case 100: precision = GIMP_PRECISION_U8_LINEAR; break;
+            case 150: precision = GIMP_PRECISION_U8_GAMMA; break;
+            case 200: precision = GIMP_PRECISION_U16_LINEAR; break;
+            case 250: precision = GIMP_PRECISION_U16_GAMMA; break;
+            case 300: precision = GIMP_PRECISION_U32_LINEAR; break;
+            case 350: precision = GIMP_PRECISION_U32_GAMMA; break;
+            case 400: precision = GIMP_PRECISION_HALF_LINEAR; break;
+            case 450: precision = GIMP_PRECISION_HALF_GAMMA; break;
+            case 500: precision = GIMP_PRECISION_FLOAT_LINEAR; break;
+            case 550: precision = GIMP_PRECISION_FLOAT_GAMMA; break;
+            default:
+              goto hard_error;
+            }
+        }
       else
         {
           precision = p;
@@ -734,12 +753,25 @@ xcf_load_image_props (XcfInfo   *info,
 
             while (info->cp - base < prop_size)
               {
-                GimpParasite *p = xcf_load_parasite (info);
+                GimpParasite *p     = xcf_load_parasite (info);
+                GError       *error = NULL;
 
                 if (! p)
                   return FALSE;
 
-                gimp_image_parasite_attach (image, p);
+                if (! gimp_image_parasite_validate (image, p, &error))
+                  {
+                    gimp_message (info->gimp, G_OBJECT (info->progress),
+                                  GIMP_MESSAGE_WARNING,
+                                  "Warning, invalid image parasite in XCF file: %s",
+                                  error->message);
+                    g_clear_error (&error);
+                  }
+                else
+                  {
+                    gimp_image_parasite_attach (image, p);
+                  }
+
                 gimp_parasite_free (p);
               }
 
@@ -1007,12 +1039,25 @@ xcf_load_layer_props (XcfInfo    *info,
 
             while (info->cp - base < prop_size)
               {
-                GimpParasite *p = xcf_load_parasite (info);
+                GimpParasite *p     = xcf_load_parasite (info);
+                GError       *error = NULL;
 
                 if (! p)
                   return FALSE;
 
-                gimp_item_parasite_attach (GIMP_ITEM (*layer), p, FALSE);
+                if (! gimp_item_parasite_validate (GIMP_ITEM (*layer), p, &error))
+                  {
+                    gimp_message (info->gimp, G_OBJECT (info->progress),
+                                  GIMP_MESSAGE_WARNING,
+                                  "Warning, invalid layer parasite in XCF file: %s",
+                                  error->message);
+                    g_clear_error (&error);
+                  }
+                else
+                  {
+                    gimp_item_parasite_attach (GIMP_ITEM (*layer), p, FALSE);
+                  }
+
                 gimp_parasite_free (p);
               }
 
@@ -1203,12 +1248,26 @@ xcf_load_channel_props (XcfInfo      *info,
 
             while ((info->cp - base) < prop_size)
               {
-                GimpParasite *p = xcf_load_parasite (info);
+                GimpParasite *p     = xcf_load_parasite (info);
+                GError       *error = NULL;
 
                 if (! p)
                   return FALSE;
 
-                gimp_item_parasite_attach (GIMP_ITEM (*channel), p, FALSE);
+                if (! gimp_item_parasite_validate (GIMP_ITEM (*channel), p,
+                                                    &error))
+                  {
+                    gimp_message (info->gimp, G_OBJECT (info->progress),
+                                  GIMP_MESSAGE_WARNING,
+                                  "Warning, invalid channel parasite in XCF file: %s",
+                                  error->message);
+                    g_clear_error (&error);
+                  }
+                else
+                  {
+                    gimp_item_parasite_attach (GIMP_ITEM (*channel), p, FALSE);
+                  }
+
                 gimp_parasite_free (p);
               }
 
@@ -2129,11 +2188,24 @@ xcf_load_vector (XcfInfo   *info,
   for (i = 0; i < num_parasites; i++)
     {
       GimpParasite *parasite = xcf_load_parasite (info);
+      GError       *error    = NULL;
 
       if (! parasite)
         return FALSE;
 
-      gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite, FALSE);
+      if (! gimp_item_parasite_validate (GIMP_ITEM (vectors), parasite, &error))
+        {
+          gimp_message (info->gimp, G_OBJECT (info->progress),
+                        GIMP_MESSAGE_WARNING,
+                        "Warning, invalid vectors parasite in XCF file: %s",
+                        error->message);
+          g_clear_error (&error);
+        }
+      else
+        {
+          gimp_item_parasite_attach (GIMP_ITEM (vectors), parasite, FALSE);
+        }
+
       gimp_parasite_free (parasite);
     }
 

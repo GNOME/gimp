@@ -23,6 +23,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "gui-types.h"
 
 #include "core/gimp.h"
@@ -34,6 +36,7 @@
 #include "widgets/gimpdockcontainer.h"
 #include "widgets/gimpdockwindow.h"
 #include "widgets/gimptoolbox.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -75,7 +78,7 @@ static void              gimp_ui_configurer_separate_docks              (GimpUIC
                                                                          GimpImageWindow   *source_image_window);
 static void              gimp_ui_configurer_move_docks_to_window        (GimpUIConfigurer  *ui_configurer,
                                                                          GimpDockColumns   *dock_columns,
-                                                                         GimpAlignmentType  screen_side_destination);
+                                                                         GimpAlignmentType  screen_side);
 static void              gimp_ui_configurer_separate_shells             (GimpUIConfigurer  *ui_configurer,
                                                                          GimpImageWindow   *source_image_window);
 static void              gimp_ui_configurer_configure_for_single_window (GimpUIConfigurer  *ui_configurer);
@@ -320,8 +323,7 @@ gimp_ui_configurer_separate_docks (GimpUIConfigurer  *ui_configurer,
 /**
  * gimp_ui_configurer_move_docks_to_window:
  * @dock_columns:
- * @screen_side_destination: At what side of the screen the dock window
- *                           should be put.
+ * @screen_side: At what side of the screen the dock window should be put.
  *
  * Moves docks in @dock_columns into a new #GimpDockWindow and
  * position it on the screen in a non-overlapping manner.
@@ -329,18 +331,26 @@ gimp_ui_configurer_separate_docks (GimpUIConfigurer  *ui_configurer,
 static void
 gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
                                          GimpDockColumns   *dock_columns,
-                                         GimpAlignmentType  screen_side_destination)
+                                         GimpAlignmentType  screen_side)
 {
-  GdkScreen    *screen           = gtk_widget_get_screen (GTK_WIDGET (dock_columns));
-  GList        *docks            = g_list_copy (gimp_dock_columns_get_docks (dock_columns));
-  GList        *iter             = NULL;
-  gboolean      contains_toolbox = FALSE;
-  GtkWidget    *dock_window      = NULL;
-  GtkAllocation original_size    = { 0, 0, 0, 0 };
+  GdkScreen     *screen;
+  gint           monitor;
+  GdkRectangle   monitor_rect;
+  GList         *docks;
+  GList         *iter;
+  gboolean       contains_toolbox = FALSE;
+  GtkWidget     *dock_window;
+  GtkAllocation  original_size;
+  gchar          geometry[32];
 
-  /* Are there docks to move at all? */
+  docks = g_list_copy (gimp_dock_columns_get_docks (dock_columns));
   if (! docks)
     return;
+
+  screen  = gtk_widget_get_screen (GTK_WIDGET (dock_columns));
+  monitor = gimp_widget_get_monitor (GTK_WIDGET (dock_columns));
+
+  gdk_screen_get_monitor_workarea (screen, monitor, &monitor_rect);
 
   /* Remember the size so we can set the new dock window to the same
    * size
@@ -348,7 +358,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
   gtk_widget_get_allocation (GTK_WIDGET (dock_columns), &original_size);
 
   /* Do we need a toolbox window? */
-  for (iter = docks; iter; iter = iter->next)
+  for (iter = docks; iter; iter = g_list_next (iter))
     {
       GimpDock *dock = GIMP_DOCK (iter->data);
 
@@ -367,6 +377,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
   dock_window =
     gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                     screen,
+                                    monitor,
                                     NULL /*ui_manager*/,
                                     (contains_toolbox ?
                                      "gimp-toolbox-window" :
@@ -374,7 +385,7 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
                                     -1 /*view_size*/,
                                     FALSE /*present*/);
 
-  for (iter = docks; iter; iter = iter->next)
+  for (iter = docks; iter; iter = g_list_next (iter))
     {
       GimpDock *dock = GIMP_DOCK (iter->data);
 
@@ -386,12 +397,24 @@ gimp_ui_configurer_move_docks_to_window (GimpUIConfigurer  *ui_configurer,
     }
 
   /* Position the window */
-  if (screen_side_destination == GIMP_ALIGN_LEFT)
-    gtk_window_parse_geometry (GTK_WINDOW (dock_window), "+0+0");
-  else if (screen_side_destination == GIMP_ALIGN_RIGHT)
-    gtk_window_parse_geometry (GTK_WINDOW (dock_window), "-0+0");
+  if (screen_side == GIMP_ALIGN_LEFT)
+    {
+      g_snprintf (geometry, sizeof (geometry), "%+d%+d",
+                  monitor_rect.x,
+                  monitor_rect.y);
+    }
+  else if (screen_side == GIMP_ALIGN_RIGHT)
+    {
+      g_snprintf (geometry, sizeof (geometry), "%+d%+d",
+                  monitor_rect.x + monitor_rect.width - original_size.width,
+                  monitor_rect.y);
+    }
   else
-    g_assert_not_reached ();
+    {
+      g_assert_not_reached ();
+    }
+
+  gtk_window_parse_geometry (GTK_WINDOW (dock_window), geometry);
 
   /* Try to keep the same size */
   gtk_window_set_default_size (GTK_WINDOW (dock_window),
@@ -428,7 +451,9 @@ gimp_ui_configurer_separate_shells (GimpUIConfigurer *ui_configurer,
       new_image_window = gimp_image_window_new (ui_configurer->p->gimp,
                                                 NULL,
                                                 global_menu_factory,
-                                                gimp_dialog_factory_get_singleton ());
+                                                gimp_dialog_factory_get_singleton (),
+                                                gtk_widget_get_screen (GTK_WIDGET (source_image_window)),
+                                                gimp_widget_get_monitor (GTK_WIDGET (source_image_window)));
       /* Move the shell there */
       shell = gimp_image_window_get_shell (source_image_window, 1);
 

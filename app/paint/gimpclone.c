@@ -119,7 +119,7 @@ gimp_clone_start (GimpPaintCore     *paint_core,
       return FALSE;
     }
 
-  if (options->clone_type == GIMP_PATTERN_CLONE)
+  if (options->clone_type == GIMP_CLONE_PATTERN)
     {
       if (! gimp_context_get_pattern (GIMP_CONTEXT (options)))
         {
@@ -171,7 +171,7 @@ gimp_clone_motion (GimpSourceCore   *source_core,
                                         paint_area_offset_y,
                                         0, 0));
     }
-  else if (options->clone_type == GIMP_PATTERN_CLONE)
+  else if (options->clone_type == GIMP_CLONE_PATTERN)
     {
       GimpPattern *pattern    = gimp_context_get_pattern (context);
       GeglBuffer  *src_buffer = gimp_pattern_create_buffer (pattern);
@@ -224,5 +224,5 @@ static gboolean
 gimp_clone_use_source (GimpSourceCore    *source_core,
                        GimpSourceOptions *options)
 {
-  return GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_IMAGE_CLONE;
+  return GIMP_CLONE_OPTIONS (options)->clone_type == GIMP_CLONE_IMAGE;
 }

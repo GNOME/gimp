@@ -285,6 +285,9 @@ gimp_perspective_clone_tool_control (GimpTool       *tool,
     case GIMP_TOOL_ACTION_HALT:
       gimp_perspective_clone_tool_halt (clone_tool);
       break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      break;
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);

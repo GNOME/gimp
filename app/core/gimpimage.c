@@ -52,6 +52,7 @@
 #include "gimpimage-sample-points.h"
 #include "gimpimage-preview.h"
 #include "gimpimage-private.h"
+#include "gimpimage-profile.h"
 #include "gimpimage-quick-mask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -179,7 +180,8 @@ static void     gimp_image_real_unit_changed     (GimpImage         *image);
 static void     gimp_image_real_colormap_changed (GimpImage         *image,
                                                   gint               color_index);
 
-static const guint8 * gimp_image_get_icc_profile (GimpColorManaged  *managed,
+static const guint8 *
+        gimp_image_color_managed_get_icc_profile (GimpColorManaged  *managed,
                                                   gsize             *len);
 
 static void        gimp_image_projectable_flush  (GimpProjectable   *projectable,
@@ -539,7 +541,7 @@ gimp_image_class_init (GimpImageClass *klass)
   gimp_object_class->name_changed     = gimp_image_name_changed;
   gimp_object_class->get_memsize      = gimp_image_get_memsize;
 
-  viewable_class->default_stock_id    = "gimp-image";
+  viewable_class->default_icon_name   = "gimp-image";
   viewable_class->get_size            = gimp_image_get_size;
   viewable_class->size_changed        = gimp_image_size_changed;
   viewable_class->get_preview_size    = gimp_image_get_preview_size;
@@ -628,7 +630,7 @@ gimp_image_class_init (GimpImageClass *klass)
 static void
 gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 {
-  iface->get_icc_profile = gimp_image_get_icc_profile;
+  iface->get_icc_profile = gimp_image_color_managed_get_icc_profile;
 }
 
 static void
@@ -1230,6 +1232,10 @@ gimp_image_real_precision_changed (GimpImage *image)
         case GIMP_COMPONENT_TYPE_FLOAT:
           gimp_metadata_set_bits_per_sample (metadata, 32);
           break;
+
+        case GIMP_COMPONENT_TYPE_DOUBLE:
+          gimp_metadata_set_bits_per_sample (metadata, 64);
+          break;
         }
     }
 
@@ -1315,12 +1321,12 @@ gimp_image_real_colormap_changed (GimpImage *image,
 }
 
 static const guint8 *
-gimp_image_get_icc_profile (GimpColorManaged *managed,
-                            gsize            *len)
+gimp_image_color_managed_get_icc_profile (GimpColorManaged *managed,
+                                          gsize            *len)
 {
   const GimpParasite *parasite;
 
-  parasite = gimp_image_parasite_find (GIMP_IMAGE (managed), "icc-profile");
+  parasite = gimp_image_get_icc_profile (GIMP_IMAGE (managed));
 
   if (parasite)
     {
@@ -3044,6 +3050,27 @@ gimp_image_parasite_list (const GimpImage *image,
   return list;
 }
 
+gboolean
+gimp_image_parasite_validate (GimpImage           *image,
+                              const GimpParasite  *parasite,
+                              GError             **error)
+{
+  const gchar *name;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (parasite != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  name = gimp_parasite_name (parasite);
+
+  if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
+    {
+      return gimp_image_validate_icc_profile (image, parasite, error);
+    }
+
+  return TRUE;
+}
+
 void
 gimp_image_parasite_attach (GimpImage          *image,
                             const GimpParasite *parasite)
@@ -3081,9 +3108,9 @@ gimp_image_parasite_attach (GimpImage          *image,
     }
 
   g_signal_emit (image, gimp_image_signals[PARASITE_ATTACHED], 0,
-                 parasite->name);
+                 gimp_parasite_name (parasite));
 
-  if (strcmp (parasite->name, "icc-profile") == 0)
+  if (strcmp (gimp_parasite_name (parasite), GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
 }
 
@@ -3112,7 +3139,7 @@ gimp_image_parasite_detach (GimpImage   *image,
   g_signal_emit (image, gimp_image_signals[PARASITE_DETACHED], 0,
                  name);
 
-  if (strcmp (name, "icc-profile") == 0)
+  if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
 }
 

@@ -112,7 +112,7 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
   gimp_tool_control_set_wants_click     (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor     (tool->control,
                                          GIMP_TOOL_CURSOR_BUCKET_FILL);
-  gimp_tool_control_set_action_value_1  (tool->control,
+  gimp_tool_control_set_action_opacity  (tool->control,
                                          "context/context-opacity-set");
   gimp_tool_control_set_action_object_1 (tool->control,
                                          "context/context-pattern-select-set");
@@ -195,13 +195,13 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
           switch (options->fill_mode)
             {
             default:
-            case GIMP_FG_BUCKET_FILL:
+            case GIMP_BUCKET_FILL_FG:
               fill_type = GIMP_FOREGROUND_FILL;
               break;
-            case GIMP_BG_BUCKET_FILL:
+            case GIMP_BUCKET_FILL_BG:
               fill_type = GIMP_BACKGROUND_FILL;
               break;
-            case GIMP_PATTERN_BUCKET_FILL:
+            case GIMP_BUCKET_FILL_PATTERN:
               fill_type = GIMP_PATTERN_FILL;
               break;
             }
@@ -257,12 +257,12 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
     {
       switch (options->fill_mode)
         {
-        case GIMP_FG_BUCKET_FILL:
-          g_object_set (options, "fill-mode", GIMP_BG_BUCKET_FILL, NULL);
+        case GIMP_BUCKET_FILL_FG:
+          g_object_set (options, "fill-mode", GIMP_BUCKET_FILL_BG, NULL);
           break;
 
-        case GIMP_BG_BUCKET_FILL:
-          g_object_set (options, "fill-mode", GIMP_FG_BUCKET_FILL, NULL);
+        case GIMP_BUCKET_FILL_BG:
+          g_object_set (options, "fill-mode", GIMP_BUCKET_FILL_FG, NULL);
           break;
 
         default:
@@ -296,15 +296,15 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
         {
           switch (options->fill_mode)
             {
-            case GIMP_FG_BUCKET_FILL:
+            case GIMP_BUCKET_FILL_FG:
               modifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
               break;
 
-            case GIMP_BG_BUCKET_FILL:
+            case GIMP_BUCKET_FILL_BG:
               modifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
               break;
 
-            case GIMP_PATTERN_BUCKET_FILL:
+            case GIMP_BUCKET_FILL_PATTERN:
               modifier = GIMP_CURSOR_MODIFIER_PATTERN;
               break;
             }

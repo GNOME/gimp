@@ -38,6 +38,7 @@
 #include "gimpviewablebutton.h"
 #include "gimpviewablebox.h"
 #include "gimpviewrenderergradient.h"
+#include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
@@ -53,7 +54,7 @@ static GtkWidget * gimp_viewable_box_new       (GimpContainer *container,
                                                 GimpViewType   button_view_size,
                                                 GimpViewSize   view_size,
                                                 const gchar   *dialog_identifier,
-                                                const gchar   *dialog_stock_id,
+                                                const gchar   *dialog_icon_name,
                                                 const gchar   *dialog_tooltip,
                                                 const gchar   *editor_id);
 static GtkWidget * view_props_connect          (GtkWidget     *box,
@@ -307,8 +308,8 @@ gradient_box_new (GimpContainer *container,
 
       gimp_help_set_help_data (toggle, _("Reverse"), NULL);
 
-      image = gtk_image_new_from_stock (GIMP_STOCK_FLIP_HORIZONTAL,
-                                        GTK_ICON_SIZE_MENU);
+      image = gtk_image_new_from_icon_name (GIMP_STOCK_FLIP_HORIZONTAL,
+                                            GTK_ICON_SIZE_MENU);
       gtk_container_add (GTK_CONTAINER (toggle), image);
       gtk_widget_show (image);
 
@@ -515,7 +516,7 @@ gimp_viewable_box_new (GimpContainer *container,
                        GimpViewType   button_view_size,
                        GimpViewSize   view_size,
                        const gchar   *dialog_identifier,
-                       const gchar   *dialog_stock_id,
+                       const gchar   *dialog_icon_name,
                        const gchar   *dialog_tooltip,
                        const gchar   *editor_id)
 {
@@ -532,7 +533,7 @@ gimp_viewable_box_new (GimpContainer *container,
                                      view_type, button_view_size, view_size, 1,
                                      gimp_dialog_factory_get_singleton (),
                                      dialog_identifier,
-                                     dialog_stock_id,
+                                     dialog_icon_name,
                                      dialog_tooltip);
 
   gimp_view_renderer_set_size_full (GIMP_VIEW (GIMP_VIEWABLE_BUTTON (button)->view)->renderer,
@@ -586,8 +587,8 @@ gimp_viewable_box_new (GimpContainer *container,
       gtk_box_pack_end (GTK_BOX (entry_hbox), edit_button, FALSE, FALSE, 0);
       gtk_widget_show (edit_button);
 
-      image = gtk_image_new_from_stock (GIMP_STOCK_EDIT,
-                                        GTK_ICON_SIZE_BUTTON);
+      image = gtk_image_new_from_icon_name (GIMP_STOCK_EDIT,
+                                            GTK_ICON_SIZE_BUTTON);
       gtk_misc_set_alignment (GTK_MISC (image), 0.5, 1.0);
       gtk_container_add (GTK_CONTAINER (edit_button), image);
       gtk_widget_show (image);
@@ -632,6 +633,7 @@ gimp_viewable_box_edit_clicked (GtkWidget          *widget,
                                              button->context->gimp,
                                              gimp_dialog_factory_get_singleton (),
                                              gtk_widget_get_screen (widget),
+                                             gimp_widget_get_monitor (widget),
                                              editor_id);
 }
 

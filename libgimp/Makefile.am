@@ -184,7 +184,6 @@ PDB_WRAPPERS_H = \
 libgimp_sources = \
 	gimp.c			\
 	gimp.h			\
-	gimpcompat.h		\
 	gimptypes.h		\
 	gimpenums.h		\
 	${PDB_WRAPPERS_C}	\
@@ -316,7 +315,6 @@ libgimpui_@GIMP_API_VERSION@_la_SOURCES = \
 
 gimpinclude_HEADERS = \
 	gimp.h				\
-	gimpcompat.h			\
 	gimptypes.h			\
 	gimpenums.h			\
 	${PDB_WRAPPERS_H}		\
@@ -377,6 +375,8 @@ libgimp_@GIMP_API_VERSION@_la_LDFLAGS = \
 	$(libgimp_export_symbols)		\
 	$(framework_cocoa)
 
+EXTRA_libgimp_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimp_def)
+
 libgimp_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
@@ -386,17 +386,13 @@ libgimp_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)
 
-libgimp_@GIMP_API_VERSION@_la_DEPENDENCIES = \
-	$(gimp_def)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)
-
 libgimpui_@GIMP_API_VERSION@_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined)				\
 	$(libgimpui_export_symbols)		\
 	$(framework_cocoa)
+
+EXTRA_libgimpui_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpui_def)
 
 libgimpui_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimp)		\
@@ -407,12 +403,6 @@ libgimpui_@GIMP_API_VERSION@_la_LIBADD = \
 	$(GTK_LIBS)		\
 	$(GEXIV2_LIBS)		\
 	$(RT_LIBS)
-
-libgimpui_@GIMP_API_VERSION@_la_DEPENDENCIES = \
-	$(gimpui_def)		\
-	$(libgimp)		\
-	$(libgimpwidgets)	\
-	$(libgimpbase)
 
 EXTRA_DIST = \
 	COPYING				\

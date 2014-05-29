@@ -60,7 +60,7 @@ GtkWidget *
 stroke_dialog_new (GimpItem    *item,
                    GimpContext *context,
                    const gchar *title,
-                   const gchar *stock_id,
+                   const gchar *icon_name,
                    const gchar *help_id,
                    GtkWidget   *parent)
 {
@@ -77,7 +77,7 @@ stroke_dialog_new (GimpItem    *item,
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (stock_id != NULL, NULL);
+  g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
@@ -93,7 +93,7 @@ stroke_dialog_new (GimpItem    *item,
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (item), context,
                                      title, "gimp-stroke-options",
-                                     stock_id,
+                                     icon_name,
                                      _("Choose Stroke Style"),
                                      parent,
                                      gimp_standard_help_func,
@@ -101,7 +101,7 @@ stroke_dialog_new (GimpItem    *item,
 
                                      GIMP_STOCK_RESET, RESPONSE_RESET,
                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                     stock_id,         GTK_RESPONSE_OK,
+                                     icon_name,        GTK_RESPONSE_OK,
 
                                      NULL);
 
@@ -297,8 +297,8 @@ stroke_dialog_response (GtkWidget  *widget,
                                 saved_options,
                                 (GDestroyNotify) g_object_unref);
 
-        if (! gimp_item_stroke (item, drawable, context, options, FALSE, TRUE,
-                                NULL, &error))
+        if (! gimp_item_stroke (item, drawable, context, options, NULL,
+                                TRUE, NULL, &error))
           {
             gimp_message_literal (context->gimp,
                                   G_OBJECT (widget),

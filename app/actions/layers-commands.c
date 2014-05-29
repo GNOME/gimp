@@ -144,7 +144,7 @@ static gchar                 *layer_name          = NULL;
 static GimpUnit               layer_resize_unit   = GIMP_UNIT_PIXEL;
 static GimpUnit               layer_scale_unit    = GIMP_UNIT_PIXEL;
 static GimpInterpolationType  layer_scale_interp  = -1;
-static GimpAddMaskType        layer_add_mask_type = GIMP_ADD_WHITE_MASK;
+static GimpAddMaskType        layer_add_mask_type = GIMP_ADD_MASK_WHITE;
 static gboolean               layer_mask_invert   = FALSE;
 
 
@@ -204,7 +204,7 @@ layers_edit_attributes_cmd_callback (GtkAction *action,
                                      layer_fill_type,
                                      _("Layer Attributes"),
                                      "gimp-layer-edit",
-                                     GTK_STOCK_EDIT,
+                                     "gtk-edit",
                                      _("Edit Layer Attributes"),
                                      GIMP_HELP_LAYER_EDIT);
 
@@ -1108,7 +1108,7 @@ layers_add_mask_response (GtkWidget          *widget,
       GimpImage     *image = gimp_item_get_image (GIMP_ITEM (layer));
       GimpLayerMask *mask;
 
-      if (dialog->add_mask_type == GIMP_ADD_CHANNEL_MASK &&
+      if (dialog->add_mask_type == GIMP_ADD_MASK_CHANNEL &&
           ! dialog->channel)
         {
           gimp_message_literal (image->gimp,

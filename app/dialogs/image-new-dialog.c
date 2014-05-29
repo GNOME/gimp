@@ -41,6 +41,7 @@
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
 #include "widgets/gimptemplateeditor.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "image-new-dialog.h"
 
@@ -192,11 +193,7 @@ image_new_dialog_set (GtkWidget    *widget,
       template = gimp_image_new_get_last_template (dialog->context->gimp,
                                                    image);
 
-      /*  make sure the resolution values are copied first (see bug #546924)  */
-      gimp_config_sync (G_OBJECT (template), G_OBJECT (dialog->template),
-                        GIMP_TEMPLATE_PARAM_COPY_FIRST);
-      gimp_config_sync (G_OBJECT (template), G_OBJECT (dialog->template),
-                        0);
+      image_new_template_changed (dialog->context, template, dialog);
 
       g_object_unref (template);
     }
@@ -246,10 +243,22 @@ image_new_template_changed (GimpContext    *context,
                             GimpTemplate   *template,
                             ImageNewDialog *dialog)
 {
-  gchar *comment;
+  GimpTemplateEditor *editor;
+  GtkWidget          *chain;
+  gdouble             xres, yres;
+  gchar              *comment;
 
-  if (!template)
+  if (! template)
     return;
+
+  editor = GIMP_TEMPLATE_EDITOR (dialog->editor);
+  chain  = gimp_template_editor_get_resolution_chain (editor);
+
+  xres = gimp_template_get_resolution_x (template);
+  yres = gimp_template_get_resolution_y (template);
+
+  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain),
+                                ABS (xres - yres) < GIMP_MIN_RESOLUTION);
 
   comment = (gchar *) gimp_template_get_comment (template);
 
@@ -350,10 +359,19 @@ image_new_create_image (ImageNewDialog *dialog)
 {
   GimpTemplate *template = g_object_ref (dialog->template);
   Gimp         *gimp     = dialog->context->gimp;
+  GimpImage    *image;
+
+  gtk_widget_hide (dialog->dialog);
+
+  image = gimp_image_new_from_template (gimp, template,
+                                        gimp_get_user_context (gimp));
+  gimp_create_display (gimp, image, gimp_template_get_unit (template), 1.0,
+                       G_OBJECT (gtk_widget_get_screen (dialog->dialog)),
+                       gimp_widget_get_monitor (dialog->dialog));
+  g_object_unref (image);
 
   gtk_widget_destroy (dialog->dialog);
 
-  gimp_image_new_from_template (gimp, template, gimp_get_user_context (gimp));
   gimp_image_new_set_last_template (gimp, template);
 
   g_object_unref (template);

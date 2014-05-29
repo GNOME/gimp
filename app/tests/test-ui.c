@@ -114,6 +114,7 @@ tool_options_editor_updates (gconstpointer data)
   GimpUIManager         *ui_manager   = gimp_image_window_get_ui_manager (image_window);
   GtkWidget             *dockable     = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                                                         gtk_widget_get_screen (toplevel),
+                                                                        gimp_widget_get_monitor (toplevel),
                                                                         NULL /*ui_manager*/,
                                                                         "gimp-tool-options",
                                                                         -1 /*view_size*/,
@@ -127,8 +128,7 @@ tool_options_editor_updates (gconstpointer data)
   g_assert_cmpstr (GIMP_HELP_TOOL_RECT_SELECT,
                    ==,
                    gimp_tool_options_editor_get_tool_options (editor)->
-                   tool_info->
-                   help_id);
+                   tool_info->help_id);
 
   /* Change tool and make sure the change is taken into account by the
    * tool options editor
@@ -139,8 +139,7 @@ tool_options_editor_updates (gconstpointer data)
   g_assert_cmpstr (GIMP_HELP_TOOL_ELLIPSE_SELECT,
                    ==,
                    gimp_tool_options_editor_get_tool_options (editor)->
-                   tool_info->
-                   help_id);
+                   tool_info->help_id);
 }
 
 static GtkWidget *
@@ -764,9 +763,11 @@ window_roles (gconstpointer data)
 
   dock           = gimp_dock_with_window_new (gimp_dialog_factory_get_singleton (),
                                               gdk_screen_get_default (),
+                                              0,
                                               FALSE /*toolbox*/);
   toolbox        = gimp_dock_with_window_new (gimp_dialog_factory_get_singleton (),
                                               gdk_screen_get_default (),
+                                              0,
                                               TRUE /*toolbox*/);
   dock_window    = gimp_dock_window_from_dock (GIMP_DOCK (dock));
   toolbox_window = gimp_dock_window_from_dock (GIMP_DOCK (toolbox));

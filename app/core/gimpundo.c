@@ -128,19 +128,19 @@ gimp_undo_class_init (GimpUndoClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_UNDO_MODE);
 
-  object_class->constructed        = gimp_undo_constructed;
-  object_class->finalize           = gimp_undo_finalize;
-  object_class->set_property       = gimp_undo_set_property;
-  object_class->get_property       = gimp_undo_get_property;
+  object_class->constructed         = gimp_undo_constructed;
+  object_class->finalize            = gimp_undo_finalize;
+  object_class->set_property        = gimp_undo_set_property;
+  object_class->get_property        = gimp_undo_get_property;
 
-  gimp_object_class->get_memsize   = gimp_undo_get_memsize;
+  gimp_object_class->get_memsize    = gimp_undo_get_memsize;
 
-  viewable_class->default_stock_id = "gtk-undo";
-  viewable_class->get_popup_size   = gimp_undo_get_popup_size;
-  viewable_class->get_new_preview  = gimp_undo_get_new_preview;
+  viewable_class->default_icon_name = "gtk-undo";
+  viewable_class->get_popup_size    = gimp_undo_get_popup_size;
+  viewable_class->get_new_preview   = gimp_undo_get_new_preview;
 
-  klass->pop                       = gimp_undo_real_pop;
-  klass->free                      = gimp_undo_real_free;
+  klass->pop                        = gimp_undo_real_pop;
+  klass->free                       = gimp_undo_real_free;
 
   g_object_class_install_property (object_class, PROP_IMAGE,
                                    g_param_spec_object ("image", NULL, NULL,

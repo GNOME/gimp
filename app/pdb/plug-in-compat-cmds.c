@@ -33,15 +33,18 @@
 
 #include "pdb-types.h"
 
+#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-crop.h"
+#include "core/gimpimage-rotate.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimppickable-auto-shrink.h"
 #include "core/gimppickable.h"
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimppdb.h"
@@ -51,6 +54,151 @@
 
 #include "gimp-intl.h"
 
+
+static GeglNode *
+wrap_in_selection_bounds (GeglNode     *node,
+                          GimpDrawable *drawable)
+{
+  gint x, y;
+  gint width, height;
+
+  if (gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                &x, &y, &width, &height))
+    {
+      GeglNode *new_node;
+      GeglNode *input;
+      GeglNode *output;
+      GeglNode *translate_before;
+      GeglNode *crop;
+      GeglNode *translate_after;
+
+      new_node = gegl_node_new ();
+
+      gegl_node_add_child (new_node, node);
+      g_object_unref (node);
+
+      input  = gegl_node_get_input_proxy  (new_node, "input");
+      output = gegl_node_get_output_proxy (new_node, "output");
+
+      translate_before = gegl_node_new_child (new_node,
+                                              "operation", "gegl:translate",
+                                              "x",         (gdouble) -x,
+                                              "y",         (gdouble) -y,
+                                              NULL);
+      crop = gegl_node_new_child (new_node,
+                                  "operation", "gegl:crop",
+                                  "width",     (gdouble) width,
+                                  "height",    (gdouble) height,
+                                  NULL);
+      translate_after = gegl_node_new_child (new_node,
+                                             "operation", "gegl:translate",
+                                             "x",         (gdouble) x,
+                                             "y",         (gdouble) y,
+                                             NULL);
+
+      gegl_node_link_many (input,
+                           translate_before,
+                           crop,
+                           node,
+                           translate_after,
+                           output,
+                           NULL);
+
+      return new_node;
+    }
+  else
+    {
+      return node;
+    }
+}
+
+static GeglNode *
+wrap_in_gamma_cast (GeglNode     *node,
+                    GimpDrawable *drawable)
+{
+  if (! gimp_drawable_get_linear (drawable))
+    {
+      const Babl *drawable_format;
+      const Babl *cast_format;
+      GeglNode   *new_node;
+      GeglNode   *input;
+      GeglNode   *output;
+      GeglNode   *cast_before;
+      GeglNode   *cast_after;
+
+      drawable_format = gimp_drawable_get_format (drawable);
+
+      cast_format =
+        gimp_babl_format (gimp_babl_format_get_base_type (drawable_format),
+                          gimp_babl_precision (gimp_babl_format_get_component_type (drawable_format),
+                                               TRUE),
+                          babl_format_has_alpha (drawable_format));
+
+      new_node = gegl_node_new ();
+
+      gegl_node_add_child (new_node, node);
+      g_object_unref (node);
+
+      input  = gegl_node_get_input_proxy  (new_node, "input");
+      output = gegl_node_get_output_proxy (new_node, "output");
+
+      cast_before = gegl_node_new_child (new_node,
+                                         "operation",     "gegl:cast-format",
+                                         "input-format",  drawable_format,
+                                         "output-format", cast_format,
+                                         NULL);
+      cast_after  = gegl_node_new_child (new_node,
+                                         "operation",     "gegl:cast-format",
+                                         "input-format",  cast_format,
+                                         "output-format", drawable_format,
+                                         NULL);
+
+      gegl_node_link_many (input,
+                           cast_before,
+                           node,
+                           cast_after,
+                           output,
+                           NULL);
+
+      return new_node;
+    }
+  else
+    {
+      return node;
+    }
+}
+
+static gboolean
+gaussian_blur (GimpDrawable  *drawable,
+               gdouble        horizontal,
+               gdouble        vertical,
+               GimpProgress  *progress,
+               GError       **error)
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      node = gegl_node_new_child (NULL,
+                                  "operation", "gegl:gaussian-blur",
+                                  "std-dev-x", horizontal * 0.32,
+                                  "std-dev-y", vertical   * 0.32,
+                                  NULL);
+
+      node = wrap_in_gamma_cast (node, drawable);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Gaussian Blur"),
+                                     node);
+      g_object_unref (node);
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
 
 static GimpValueArray *
 plug_in_alienmap2_invoker (GimpProcedure         *procedure,
@@ -109,7 +257,6 @@ plug_in_alienmap2_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Alien Map"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -147,7 +294,6 @@ plug_in_antialias_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Antialias"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -191,7 +337,66 @@ plug_in_apply_canvas_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Apply Canvas"),
                                          node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
 
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_applylens_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble refraction;
+  gboolean keep_surroundings;
+  gboolean set_background;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  refraction = g_value_get_double (gimp_value_array_index (args, 3));
+  keep_surroundings = g_value_get_boolean (gimp_value_array_index (args, 4));
+  set_background = g_value_get_boolean (gimp_value_array_index (args, 5));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GimpRGB    color;
+          GeglColor *gegl_color;
+          GeglNode  *node;
+
+          if (set_background)
+            gimp_context_get_background (context, &color);
+          else
+            gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
+
+          gegl_color = gimp_gegl_color_new (&color);
+
+          node = gegl_node_new_child (NULL,
+                                     "operation",         "gegl:apply-lens",
+                                     "refraction-index",  refraction,
+                                     "keep-surroundings", keep_surroundings,
+                                     "background-color",  gegl_color,
+                                     NULL);
+
+          g_object_unref (gegl_color);
+
+          node = wrap_in_selection_bounds (node, drawable);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Apply Lens"),
+                                         node);
           g_object_unref (node);
         }
       else
@@ -366,7 +571,6 @@ plug_in_c_astretch_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Stretch Contrast"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -434,7 +638,6 @@ plug_in_colors_channel_mixer_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Channel Mixer"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -479,7 +682,6 @@ plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Color to Alpha"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -542,7 +744,235 @@ plug_in_cubism_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Cubism"),
                                          node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
 
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_deinterlace_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 evenodd;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  evenodd = g_value_get_int (gimp_value_array_index (args, 3));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",   "gegl:deinterlace",
+                                      "keep",        evenodd ? 0 : 1,
+                                      "orientation", 0, /* HORIZONTAL */
+                                      "size",        1,
+                                      NULL);
+
+          node = wrap_in_gamma_cast (node, drawable);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Deinterlace"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_gauss_invoker (GimpProcedure         *procedure,
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble horizontal;
+  gdouble vertical;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  horizontal = g_value_get_double (gimp_value_array_index (args, 3));
+  vertical = g_value_get_double (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      success = gaussian_blur (drawable, horizontal, vertical, progress, error);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_gauss_iir_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble radius;
+  gboolean horizontal;
+  gboolean vertical;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  radius = g_value_get_double (gimp_value_array_index (args, 3));
+  horizontal = g_value_get_boolean (gimp_value_array_index (args, 4));
+  vertical = g_value_get_boolean (gimp_value_array_index (args, 5));
+
+  if (success)
+    {
+      success = gaussian_blur (drawable,
+                               horizontal ? radius : 0.0,
+                               vertical   ? radius : 0.0,
+                               progress, error);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_gauss_iir2_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble horizontal;
+  gdouble vertical;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  horizontal = g_value_get_double (gimp_value_array_index (args, 3));
+  vertical = g_value_get_double (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      success = gaussian_blur (drawable, horizontal, vertical, progress, error);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_gauss_rle_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble radius;
+  gboolean horizontal;
+  gboolean vertical;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  radius = g_value_get_double (gimp_value_array_index (args, 3));
+  horizontal = g_value_get_boolean (gimp_value_array_index (args, 4));
+  vertical = g_value_get_boolean (gimp_value_array_index (args, 5));
+
+  if (success)
+    {
+      success = gaussian_blur (drawable,
+                               horizontal ? radius : 0.0,
+                               vertical   ? radius : 0.0,
+                               progress, error);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_gauss_rle2_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble horizontal;
+  gdouble vertical;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  horizontal = g_value_get_double (gimp_value_array_index (args, 3));
+  vertical = g_value_get_double (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      success = gaussian_blur (drawable, horizontal, vertical, progress, error);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_glasstile_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 tilex;
+  gint32 tiley;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  tilex = g_value_get_int (gimp_value_array_index (args, 3));
+  tiley = g_value_get_int (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",   "gegl:tile-glass",
+                                      "tile-width",  tilex,
+                                      "tile-height", tiley,
+                                      NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Glass Tile"),
+                                         node);
           g_object_unref (node);
         }
       else
@@ -596,7 +1026,6 @@ plug_in_hsv_noise_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Noise HSV"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -703,10 +1132,13 @@ plug_in_lens_distortion_invoker (GimpProcedure         *procedure,
                                        "background", gegl_color,
                                        NULL);
 
+          g_object_unref (gegl_color);
+
+          node = wrap_in_selection_bounds (node, drawable);
+
           gimp_drawable_apply_operation (drawable, progress,
                                         C_("undo-type", "Lens Distortion"),
                                         node);
-          g_object_unref (gegl_color);
           g_object_unref (node);
 
         }
@@ -742,10 +1174,11 @@ plug_in_make_seamless_invoker (GimpProcedure         *procedure,
                                  "operation", "gegl:tile-seamless",
                                  NULL);
 
+          node = wrap_in_selection_bounds (node, drawable);
+
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Tile Seamless"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -785,7 +1218,15 @@ plug_in_mblur_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GeglNode *node = NULL;
+          GeglNode *node   = NULL;
+          gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+          gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+          center_x /= (gdouble) width;
+          center_y /= (gdouble) height;
+
+          if (angle > 180.0)
+            angle -= 360.0;
 
           if (type == 0)
             {
@@ -807,6 +1248,7 @@ plug_in_mblur_invoker (GimpProcedure         *procedure,
           else if (type == 2)
             {
               gdouble factor = CLAMP (length / 256.0, 0.0, 1.0);
+
               node =  gegl_node_new_child (NULL,
                                            "operation", "gegl:motion-blur-zoom",
                                            "center-x",  center_x,
@@ -820,7 +1262,6 @@ plug_in_mblur_invoker (GimpProcedure         *procedure,
               gimp_drawable_apply_operation (drawable, progress,
                                              C_("undo-type", "Motion Blur"),
                                              node);
-
               g_object_unref (node);
             }
           else
@@ -864,7 +1305,12 @@ plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
-          GeglNode *node = NULL;
+          GeglNode *node   = NULL;
+          gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+          gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+          center_x /= (gdouble) width;
+          center_y /= (gdouble) height;
 
           if (type == 0)
             {
@@ -886,6 +1332,7 @@ plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
           else if (type == 2)
             {
               gdouble factor = CLAMP (-length / (256.0 - length), -10.0, 0.0);
+
               node =  gegl_node_new_child (NULL,
                                            "operation", "gegl:motion-blur-zoom",
                                            "center-x",  center_x,
@@ -899,7 +1346,6 @@ plug_in_mblur_inward_invoker (GimpProcedure         *procedure,
               gimp_drawable_apply_operation (drawable, progress,
                                              C_("undo-type", "Motion Blur"),
                                              node);
-
               g_object_unref (node);
             }
           else
@@ -1042,7 +1488,6 @@ plug_in_pixelize_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Pixelize"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1086,7 +1531,6 @@ plug_in_pixelize2_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Pixelize"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1138,7 +1582,6 @@ plug_in_plasma_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Plasma"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1188,10 +1631,11 @@ plug_in_polar_coords_invoker (GimpProcedure         *procedure,
                                  "polar",     polrec,
                                  NULL);
 
+          node = wrap_in_selection_bounds (node, drawable);
+
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Polar Coordinates"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1232,7 +1676,6 @@ plug_in_red_eye_removal_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Red Eye Removal"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1286,7 +1729,6 @@ plug_in_randomize_hurl_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Random Hurl"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1340,7 +1782,6 @@ plug_in_randomize_pick_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Random Pick"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1394,7 +1835,204 @@ plug_in_randomize_slur_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Random Slur"),
                                          node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
 
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_rgb_noise_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gboolean independent;
+  gboolean correlated;
+  gdouble noise_1;
+  gdouble noise_2;
+  gdouble noise_3;
+  gdouble noise_4;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  independent = g_value_get_boolean (gimp_value_array_index (args, 3));
+  correlated = g_value_get_boolean (gimp_value_array_index (args, 4));
+  noise_1 = g_value_get_double (gimp_value_array_index (args, 5));
+  noise_2 = g_value_get_double (gimp_value_array_index (args, 6));
+  noise_3 = g_value_get_double (gimp_value_array_index (args, 7));
+  noise_4 = g_value_get_double (gimp_value_array_index (args, 8));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+          gdouble   r, g, b, a;
+
+          if (gimp_drawable_is_gray (drawable))
+            {
+              r = noise_1;
+              g = noise_1;
+              b = noise_1;
+              a = noise_2;
+            }
+          else
+            {
+              r = noise_1;
+              g = noise_2;
+              b = noise_3;
+              a = noise_4;
+            }
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",   "gegl:noise-rgb",
+                                      "correlated",  correlated,
+                                      "independent", independent,
+                                      "red",         r,
+                                      "green",       g,
+                                      "blue",        b,
+                                      "alpha",       a,
+                                      "seed",        g_random_int_range (0, G_MAXINT),
+                                      NULL);
+
+          node = wrap_in_gamma_cast (node, drawable);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "RGB Noise"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_rotate_invoker (GimpProcedure         *procedure,
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  GimpDrawable *drawable;
+  gint32 angle;
+  gboolean everything;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  angle = g_value_get_int (gimp_value_array_index (args, 3));
+  everything = g_value_get_boolean (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      GimpRotationType rotate_type = angle - 1;
+
+      if (everything)
+        {
+          gimp_image_rotate (image, context, rotate_type, progress);
+        }
+      else if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                          GIMP_PDB_ITEM_CONTENT, error))
+        {
+          GimpItem *item = GIMP_ITEM (drawable);
+          gint      off_x, off_y;
+          gdouble   center_x, center_y;
+
+          gimp_item_get_offset (item, &off_x, &off_y);
+
+          center_x = ((gdouble) off_x + (gdouble) gimp_item_get_width  (item) / 2.0);
+          center_y = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
+
+          gimp_item_rotate (item, context, rotate_type, center_x, center_y,
+                            GIMP_IS_CHANNEL (drawable));
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_noisify_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gboolean independent;
+  gdouble noise_1;
+  gdouble noise_2;
+  gdouble noise_3;
+  gdouble noise_4;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  independent = g_value_get_boolean (gimp_value_array_index (args, 3));
+  noise_1 = g_value_get_double (gimp_value_array_index (args, 4));
+  noise_2 = g_value_get_double (gimp_value_array_index (args, 5));
+  noise_3 = g_value_get_double (gimp_value_array_index (args, 6));
+  noise_4 = g_value_get_double (gimp_value_array_index (args, 7));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+          gdouble   r, g, b, a;
+
+          if (gimp_drawable_is_gray (drawable))
+            {
+              r = noise_1;
+              g = noise_1;
+              b = noise_1;
+              a = noise_2;
+            }
+          else
+            {
+              r = noise_1;
+              g = noise_2;
+              b = noise_3;
+              a = noise_4;
+            }
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",   "gegl:noise-rgb",
+                                      "correlated",  FALSE,
+                                      "independent", independent,
+                                      "red",         r,
+                                      "green",       g,
+                                      "blue",        b,
+                                      "alpha",       a,
+                                      "seed",        g_random_int_range (0, G_MAXINT),
+                                      NULL);
+
+          node = wrap_in_gamma_cast (node, drawable);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Noisify"),
+                                         node);
           g_object_unref (node);
         }
       else
@@ -1439,7 +2077,6 @@ plug_in_semiflatten_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Semi-Flatten"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1483,7 +2120,6 @@ plug_in_shift_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Shift"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1528,7 +2164,6 @@ plug_in_spread_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Spread"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1570,7 +2205,6 @@ plug_in_threshold_alpha_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Threshold Alpha"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1608,7 +2242,6 @@ plug_in_vinvert_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Value Invert"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1660,8 +2293,8 @@ plug_in_waves_invoker (GimpProcedure         *procedure,
 
           node = gegl_node_new_child (NULL,
                                      "operation", "gegl:waves",
-                                     "x",         width  / 2.0,
-                                     "y",         height / 2.0,
+                                     "x",         0.5,
+                                     "y",         0.5,
                                      "amplitude", amplitude,
                                      "phi",       (phase - 180.0) / 180.0,
                                      "period",    wavelength * 2.0,
@@ -1672,7 +2305,6 @@ plug_in_waves_invoker (GimpProcedure         *procedure,
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Waves"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1716,10 +2348,11 @@ plug_in_whirl_pinch_invoker (GimpProcedure         *procedure,
                                  "radius",    radius,
                                  NULL);
 
+          node = wrap_in_selection_bounds (node, drawable);
+
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Whirl and Pinch"),
                                          node);
-
           g_object_unref (node);
         }
       else
@@ -1912,6 +2545,66 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Texture depth (1 - 50)",
                                                       1, 50, 1,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-applylens
+   */
+  procedure = gimp_procedure_new (plug_in_applylens_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-applylens");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-applylens",
+                                     "Simulate an elliptical lens over the image",
+                                     "This plug-in uses Snell's law to draw an ellipsoid lens over the image.",
+                                     "Compatibility procedure. Please see 'gegl:apply-lens' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:apply-lens' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("refraction",
+                                                    "refraction",
+                                                    "Lens refraction index",
+                                                    1.0, 100.0, 1.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("keep-surroundings",
+                                                     "keep surroundings",
+                                                     "Keep lens surroundings",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("set-background",
+                                                     "set background",
+                                                     "Set lens surroundings to BG value",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("set-transparent",
+                                                     "set transparent",
+                                                     "Set lens surroundings transparent",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -2248,6 +2941,354 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "bg color",
                                                       "Background color { BLACK (0), BG (1) }",
                                                       0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-deinterlace
+   */
+  procedure = gimp_procedure_new (plug_in_deinterlace_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-deinterlace");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-deinterlace",
+                                     "Fix images where every other row is missing",
+                                     "Deinterlace is useful for processing images from video capture cards. When only the odd or even fields get captured, deinterlace can be used to interpolate between the existing fields to correct this.",
+                                     "Compatibility procedure. Please see 'gegl:deinterlace' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:deinterlace' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("evenodd",
+                                                      "evenodd",
+                                                      "Which lines to keep { KEEP-ODD (0), KEEP-EVEN (1)",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-gauss
+   */
+  procedure = gimp_procedure_new (plug_in_gauss_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-gauss");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-gauss",
+                                     "Simplest, most commonly used way of blurring",
+                                     "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run. The 'method' parameter is ignored.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("horizontal",
+                                                    "horizontal",
+                                                    "Horizontal radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("vertical",
+                                                    "vertical",
+                                                    "Vertical radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("method",
+                                                      "method",
+                                                      "Blur method { IIR (0), RLE (1) }",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-gauss-iir
+   */
+  procedure = gimp_procedure_new (plug_in_gauss_iir_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-gauss-iir");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-gauss-iir",
+                                     "Apply a gaussian blur",
+                                     "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("radius",
+                                                    "radius",
+                                                    "Radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("horizontal",
+                                                     "horizontal",
+                                                     "Blur in horizontal direction",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("vertical",
+                                                     "vertical",
+                                                     "Blur in vertical direction",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-gauss-iir2
+   */
+  procedure = gimp_procedure_new (plug_in_gauss_iir2_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-gauss-iir2");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-gauss-iir2",
+                                     "Apply a gaussian blur",
+                                     "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("horizontal",
+                                                    "horizontal",
+                                                    "Horizontal radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("vertical",
+                                                    "vertical",
+                                                    "Vertical radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-gauss-rle
+   */
+  procedure = gimp_procedure_new (plug_in_gauss_rle_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-gauss-rle");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-gauss-rle",
+                                     "Apply a gaussian blur",
+                                     "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("radius",
+                                                    "radius",
+                                                    "Radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("horizontal",
+                                                     "horizontal",
+                                                     "Blur in horizontal direction",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("vertical",
+                                                     "vertical",
+                                                     "Blur in vertical direction",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-gauss-rle2
+   */
+  procedure = gimp_procedure_new (plug_in_gauss_rle2_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-gauss-rle2");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-gauss-rle2",
+                                     "Apply a gaussian blur",
+                                     "Applies a gaussian blur to the drawable, with specified radius of affect. The standard deviation of the normal distribution used to modify pixel values is calculated based on the supplied radius. Horizontal and vertical blurring can be independently invoked by specifying only one to run.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:gaussian-blur' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("horizontal",
+                                                    "horizontal",
+                                                    "Horizontal radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("vertical",
+                                                    "vertical",
+                                                    "Vertical radius of gaussian blur (in pixels",
+                                                    0.0, 500.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-glasstile
+   */
+  procedure = gimp_procedure_new (plug_in_glasstile_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-glasstile");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-glasstile",
+                                     "Simulate distortion caused by square glass tiles",
+                                     "Divide the image into square glassblocks in which the image is refracted.",
+                                     "Compatibility procedure. Please see 'gegl:tile-glass' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:tile-glass' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("tilex",
+                                                      "tilex",
+                                                      "Tile width",
+                                                      10, 500, 10,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("tiley",
+                                                      "tiley",
+                                                      "Tile height",
+                                                      10, 500, 10,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -3119,6 +4160,192 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Seed value (used only if randomize is FALSE)",
                                                       G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-rgb-noise
+   */
+  procedure = gimp_procedure_new (plug_in_rgb_noise_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-rgb-noise");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-rgb-noise",
+                                     "Distort colors by random amounts",
+                                     "Add normally distributed (zero mean) random values to image channels. Noise may be additive (uncorrelated) or multiplicative (correlated - also known as speckle noise). For color images color channels may be treated together or independently.",
+                                     "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
+                                     "2013",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("independent",
+                                                     "independent",
+                                                     "Noise in channels independent",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("correlated",
+                                                     "correlated",
+                                                     "Noise correlated (i.e. multiplicative not additive)",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("noise-1",
+                                                    "noise 1",
+                                                    "Noise in the first channel (red, gray)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("noise-2",
+                                                    "noise 2",
+                                                    "Noise in the second channel (green, gray_alpha)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("noise-3",
+                                                    "noise 3",
+                                                    "Noise in the third channel (blue)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("noise-4",
+                                                    "noise 4",
+                                                    "Noise in the fourth channel (alpha)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-rotate
+   */
+  procedure = gimp_procedure_new (plug_in_rotate_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-rotate");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-rotate",
+                                     "Rotates a layer or the whole image by 90, 180 or 270 degrees",
+                                     "This plug-in does rotate the active layer or the whole image clockwise by multiples of 90 degrees. When the whole image is chosen, the image is resized if necessary.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("angle",
+                                                      "angle",
+                                                      "Angle { 90 (1), 180 (2), 270 (3) } degrees",
+                                                      1, 3, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("everything",
+                                                     "everything",
+                                                     "Rotate the whole image",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-noisify
+   */
+  procedure = gimp_procedure_new (plug_in_noisify_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-noisify");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-noisify",
+                                     "Adds random noise to image channels",
+                                     "Add normally distributed random values to image channels. For color images each color channel may be treated together or independently.",
+                                     "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:noise-rgb' for credits.",
+                                     "2013",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("independent",
+                                                     "independent",
+                                                     "Noise in channels independent",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("noise-1",
+                                                    "noise 1",
+                                                    "Noise in the first channel (red, gray)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("noise-2",
+                                                    "noise 2",
+                                                    "Noise in the second channel (green, gray_alpha)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("noise-3",
+                                                    "noise 3",
+                                                    "Noise in the third channel (blue)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("noise-4",
+                                                    "noise 4",
+                                                    "Noise in the fourth channel (alpha)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

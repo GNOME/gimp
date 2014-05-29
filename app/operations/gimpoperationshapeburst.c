@@ -35,7 +35,7 @@
 enum
 {
   PROP_0,
-  PROP_MAX_ITERATIONS,
+  PROP_NORMALIZE,
   PROP_PROGRESS
 };
 
@@ -92,12 +92,12 @@ gimp_operation_shapeburst_class_init (GimpOperationShapeburstClass *klass)
 
   filter_class->process                    = gimp_operation_shapeburst_process;
 
-  g_object_class_install_property (object_class, PROP_MAX_ITERATIONS,
-                                   g_param_spec_double ("max-iterations",
-                                                        "Max Iterations",
-                                                        "Max Iterations",
-                                                        0.0, G_MAXFLOAT, 0.0,
-                                                        G_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_NORMALIZE,
+                                   g_param_spec_boolean ("normalize",
+                                                         "Normalize",
+                                                         "Normalize",
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_PROGRESS,
                                    g_param_spec_double ("progress",
@@ -122,8 +122,8 @@ gimp_operation_shapeburst_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_MAX_ITERATIONS:
-      g_value_set_double (value, self->max_iterations);
+    case PROP_NORMALIZE:
+      g_value_set_boolean (value, self->normalize);
       break;
 
     case PROP_PROGRESS:
@@ -146,8 +146,8 @@ gimp_operation_shapeburst_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_MAX_ITERATIONS:
-      self->max_iterations = g_value_get_double (value);
+    case PROP_NORMALIZE:
+      self->normalize = g_value_get_boolean (value);
       break;
 
     case PROP_PROGRESS:
@@ -163,7 +163,7 @@ gimp_operation_shapeburst_set_property (GObject      *object,
 static void
 gimp_operation_shapeburst_prepare (GeglOperation *operation)
 {
-  gegl_operation_set_format (operation, "input",  babl_format ("Y u8"));
+  gegl_operation_set_format (operation, "input",  babl_format ("Y float"));
   gegl_operation_set_format (operation, "output", babl_format ("Y float"));
 }
 
@@ -189,7 +189,7 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
                                    const GeglRectangle *roi,
                                    gint                 level)
 {
-  const Babl *input_format   = babl_format ("Y u8");
+  const Babl *input_format   = babl_format ("Y float");
   const Babl *output_format  = babl_format ("Y float");
   gfloat      max_iterations = 0.0;
   gfloat     *distp_cur;
@@ -211,7 +211,7 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
   for (i = 0; i < roi->height; i++)
     {
       gfloat *tmp;
-      gint    src = 0;
+      gfloat  src = 0.0;
       gint    j;
 
       /*  set the current dist row to 0's  */
@@ -223,13 +223,23 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
           gfloat min_prev = MIN (distp_cur[j-1], distp_prev[j]);
           gint   min_left = MIN ((roi->width - j - 1), (roi->height - i - 1));
           gint   min      = (gint) MIN (min_left, min_prev);
-          gint   fraction = 255;
+          gfloat fraction = 1.0;
           gint   k;
 
-          /*  This might need to be changed to 0
-              instead of k = (min) ? (min - 1) : 0  */
+#define EPSILON 0.0001
 
-          for (k = (min) ? (min - 1) : 0; k <= min; k++)
+          /*  This loop used to start at "k = (min) ? (min - 1) : 0"
+           *  and this comment suggested it might have to be changed to
+           *  "k = 0", but "k = 0" increases processing time significantly.
+           *
+           *  When porting this to float, i noticed that starting at
+           *  "min - 2" gets rid of a lot of 8-bit artifacts, while starting
+           *  at "min - 3" or smaller would introduce different artifacts.
+           *
+           *  Note that I didn't really understand the entire algorithm,
+           *  I just "blindly" ported it to float :) --mitch
+           */
+          for (k = MAX (min - 2, 0); k <= min; k++)
             {
               gint x   = j;
               gint y   = i + k;
@@ -237,24 +247,14 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
 
               while (y >= end)
                 {
-                  guchar src_uchar;
-
-#if 1
-                  /* FIXME: this should be much faster, it converts
-                   * to 32 bit rgba intermediately, bah...
+                  /* FIXME: this should be much faster, it converts to
+                   * 32 bit rgba intermediately, bah...
                    */
-                  gegl_buffer_sample (input, x, y, NULL, &src_uchar,
+                  gegl_buffer_sample (input, x, y, NULL, &src,
                                       input_format,
                                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
-#else
-                  gegl_buffer_get (input, GEGL_RECTANGLE (x, y, 1, 1), 1.0,
-                                   input_format, &src_uchar,
-                                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-#endif
 
-                  src = src_uchar;
-
-                  if (src == 0)
+                  if (ABS (src) < EPSILON)
                     {
                       min = k;
                       y = -1;
@@ -269,17 +269,17 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
                 }
             }
 
-          if (src != 0)
+          if (src > EPSILON)
             {
               /*  If min_left != min_prev use the previous fraction
                *   if it is less than the one found
                */
               if (min_left != min)
                 {
-                  gint prev_frac = (int) (255 * (min_prev - min));
+                  gfloat prev_frac = min_prev - min;
 
-                  if (prev_frac == 255)
-                    prev_frac = 0;
+                  if (ABS (prev_frac - 1.0) < EPSILON)
+                    prev_frac = 0.0;
 
                   fraction = MIN (fraction, prev_frac);
                 }
@@ -287,7 +287,7 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
               min++;
             }
 
-          float_tmp = distp_cur[j] = min + fraction / 256.0;
+          float_tmp = distp_cur[j] = min + fraction * (1.0 - EPSILON);
 
           if (float_tmp > max_iterations)
             max_iterations = float_tmp;
@@ -312,9 +312,23 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
 
   g_free (memory);
 
-  g_object_set (operation,
-                "max-iterations", (gdouble) max_iterations,
-                NULL);
+  if (GIMP_OPERATION_SHAPEBURST (operation)->normalize &&
+      max_iterations > 0.0)
+    {
+      GeglBufferIterator *iter;
+
+      iter = gegl_buffer_iterator_new (output, NULL, 0, NULL,
+                                       GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          gint    count = iter->length;
+          gfloat *data  = iter->data[0];
+
+          while (count--)
+            *data++ /= max_iterations;
+        }
+    }
 
   return TRUE;
 }

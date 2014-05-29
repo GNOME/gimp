@@ -40,7 +40,7 @@ struct _GimpOperationShapeburst
 {
   GeglOperationFilter  parent_instance;
 
-  gdouble              max_iterations;
+  gboolean             normalize;
   gdouble              progress;
 };
 

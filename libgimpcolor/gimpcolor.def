@@ -37,6 +37,19 @@ EXPORTS
 	gimp_hsv_to_rgb_int
 	gimp_hsva_set
 	gimp_hwb_to_rgb
+	gimp_lcms_create_srgb_profile
+	gimp_lcms_profile_get_copyright
+	gimp_lcms_profile_get_description
+	gimp_lcms_profile_get_label
+	gimp_lcms_profile_get_manufacturer
+	gimp_lcms_profile_get_model
+	gimp_lcms_profile_get_summary
+	gimp_lcms_profile_is_cmyk
+	gimp_lcms_profile_is_equal
+	gimp_lcms_profile_is_rgb
+	gimp_lcms_profile_open_from_data
+	gimp_lcms_profile_open_from_file
+	gimp_lcms_profile_save_to_data
 	gimp_param_rgb_get_type
 	gimp_param_spec_rgb
 	gimp_param_spec_rgb_has_alpha

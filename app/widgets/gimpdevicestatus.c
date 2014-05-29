@@ -46,6 +46,7 @@
 #include "gimpdialogfactory.h"
 #include "gimppropwidgets.h"
 #include "gimpview.h"
+#include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
 
 #include "gimp-intl.h"
@@ -134,7 +135,7 @@ gimp_device_status_init (GimpDeviceStatus *status)
   gtk_widget_show (status->vbox);
 
   status->save_button =
-    gimp_editor_add_button (GIMP_EDITOR (status), GTK_STOCK_SAVE,
+    gimp_editor_add_button (GIMP_EDITOR (status), "document-save",
                             _("Save device status"), NULL,
                             G_CALLBACK (gimp_device_status_save_clicked),
                             NULL,
@@ -465,5 +466,6 @@ gimp_device_status_view_clicked (GtkWidget       *widget,
                                              status->gimp,
                                              dialog_factory,
                                              gtk_widget_get_screen (widget),
+                                             gimp_widget_get_monitor (widget),
                                              identifier);
 }

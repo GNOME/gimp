@@ -44,7 +44,8 @@ struct _GimpGui
   const gchar  * (* get_program_class)     (Gimp                *gimp);
   gchar        * (* get_display_name)      (Gimp                *gimp,
                                             gint                 display_ID,
-                                            gint                *monitor_number);
+                                            GObject            **screen,
+                                            gint                *monitor);
   guint32        (* get_user_time)         (Gimp                *gimp);
 
   const gchar  * (* get_theme_dir)         (Gimp                *gimp);
@@ -58,7 +59,9 @@ struct _GimpGui
   GimpObject   * (* display_create)        (Gimp                *gimp,
                                             GimpImage           *image,
                                             GimpUnit             unit,
-                                            gdouble              scale);
+                                            gdouble              scale,
+                                            GObject             *screen,
+                                            gint                 monitor);
   void           (* display_delete)        (GimpObject          *display);
   void           (* displays_reconnect)    (Gimp                *gimp,
                                             GimpImage           *old_image,
@@ -111,7 +114,9 @@ guint32        gimp_get_display_window_id (Gimp                *gimp,
 GimpObject   * gimp_create_display        (Gimp                *gimp,
                                            GimpImage           *image,
                                            GimpUnit             unit,
-                                           gdouble              scale);
+                                           gdouble              scale,
+                                           GObject             *screen,
+                                           gint                 monitor);
 void           gimp_delete_display        (Gimp                *gimp,
                                            GimpObject          *display);
 void           gimp_reconnect_displays    (Gimp                *gimp,
@@ -140,7 +145,8 @@ void           gimp_free_progress         (Gimp                *gimp,
 const gchar  * gimp_get_program_class     (Gimp                *gimp);
 gchar        * gimp_get_display_name      (Gimp                *gimp,
                                            gint                 display_ID,
-                                           gint                *monitor_number);
+                                           GObject            **screen,
+                                           gint                *monitor);
 guint32        gimp_get_user_time         (Gimp                *gimp);
 const gchar  * gimp_get_theme_dir         (Gimp                *gimp);
 

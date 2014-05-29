@@ -327,10 +327,9 @@ gimp_page_selector_init (GimpPageSelector *selector)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  priv->default_thumbnail = gtk_widget_render_icon (GTK_WIDGET (selector),
-                                                    GTK_STOCK_FILE,
-                                                    GTK_ICON_SIZE_DND,
-                                                    NULL);
+  priv->default_thumbnail =
+    gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                              "text-x-generic", 32, 0, NULL);
 }
 
 static void
@@ -1300,9 +1299,8 @@ gimp_page_selector_add_frame (GtkWidget *widget,
 
   if (! frame)
     {
-      frame = gtk_widget_render_icon (widget,
-                                      GIMP_STOCK_FRAME,
-                                      GTK_ICON_SIZE_DIALOG, NULL);
+      frame = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                        GIMP_STOCK_FRAME, 64, 0, NULL);
       g_object_set_data_full (G_OBJECT (widget), "frame", frame,
                               (GDestroyNotify) g_object_unref);
     }

@@ -110,12 +110,19 @@ gui_message_error_console (Gimp                *gimp,
     }
 
   if (! dockable)
-    dockable =
-      gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
-                                                 gimp,
-                                                 gimp_dialog_factory_get_singleton (),
-                                                 gdk_screen_get_default (),
-                                                 "gimp-error-console");
+    {
+      GdkScreen *screen;
+      gint       monitor;
+
+      monitor = gimp_get_monitor_at_pointer (&screen);
+
+      dockable =
+        gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
+                                                   gimp,
+                                                   gimp_dialog_factory_get_singleton (),
+                                                   screen, monitor,
+                                                   "gimp-error-console");
+    }
 
   if (dockable)
     {
@@ -178,8 +185,13 @@ progress_error_dialog (GimpProgress *progress)
 static GtkWidget *
 global_error_dialog (void)
 {
+  GdkScreen *screen;
+  gint       monitor;
+
+  monitor = gimp_get_monitor_at_pointer (&screen);
+
   return gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
-                                         gdk_screen_get_default (),
+                                         screen, monitor,
                                          NULL /*ui_manager*/,
                                          "gimp-error-dialog", -1,
                                          FALSE);
@@ -241,7 +253,7 @@ gui_message_error_dialog (Gimp                *gimp,
   if (dialog)
     {
       gimp_error_dialog_add (GIMP_ERROR_DIALOG (dialog),
-                             gimp_get_message_stock_id (severity),
+                             gimp_get_message_icon_name (severity),
                              domain, message);
       gtk_window_present (GTK_WINDOW (dialog));
 

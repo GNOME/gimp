@@ -4,11 +4,12 @@
                   a check-list for doing a GIMP release
 
 
- ( ) Check that you have working ssh access to ftp.gimp.org and that you
-     are a member of the ftp group.
+ ( ) Check that you have working ssh access to download.gimp.org and
+     that you are a member of the gimpadmins group.
 
- ( ) Check that ftp.gimp.org has enough space to upload the release and to
-     place it into the FTP area. If not, make place or ask Yosh to do that.
+ ( ) Check that download.gimp.org has enough space to upload the
+     release and to place it into the FTP area. If not, make place or
+     have somebody do that.
 
  ( ) Check that you have admin access to the GIMP product on
      bugzilla.gimp.org and to the news section on www.gimp.org, or that
@@ -64,14 +65,14 @@
  ( ) Use md5sum to create a checksum of the tarball (tar.bz2).
 
  ( ) Upload the tarball (tar.bz2) and the .md5 file to your home directory
-     on ftp.gimp.org.  Keep a copy of the .md5 file around.
+     on download.gimp.org.  Keep a copy of the .md5 file around.
 
  ( ) Tag the release (don't forget to push the tag)
         git tag -s GIMP_2_x_y
         git push origin GIMP_2_x_y
 
  ( ) Move the tarball and the .md5 file to its final destination in the
-     FTP area (/ftp/pub/gimp/v2.x).
+     FTP area (/srv/ftp/pub/gimp/v2.x).
 
  ( ) Update the 0.0_LATEST-IS- file in the directory on the FTP server.
 

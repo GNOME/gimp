@@ -3557,7 +3557,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-html-table.c:509
 msgid "C_aption"
-msgstr "C_aptura"
+msgstr "Tít_ol"
 
 #: ../plug-ins/common/file-html-table.c:515
 msgid "Check if you would like to have the table captioned."

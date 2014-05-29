@@ -141,12 +141,12 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  box = gimp_enum_stock_box_new (GIMP_TYPE_BRUSH_GENERATED_SHAPE,
-                                 "gimp-shape",
-                                 GTK_ICON_SIZE_MENU,
-                                 G_CALLBACK (gimp_brush_editor_update_shape),
-                                 editor,
-                                 &editor->shape_group);
+  box = gimp_enum_icon_box_new (GIMP_TYPE_BRUSH_GENERATED_SHAPE,
+                                "gimp-shape",
+                                GTK_ICON_SIZE_MENU,
+                                G_CALLBACK (gimp_brush_editor_update_shape),
+                                editor,
+                                &editor->shape_group);
   gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 

@@ -50,6 +50,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -140,6 +141,7 @@ image_new_cmd_callback (GtkAction *action,
 
   dialog = gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                            gtk_widget_get_screen (widget),
+                                           gimp_widget_get_monitor (widget),
                                            NULL /*ui_manager*/,
                                            "gimp-image-new-dialog", -1, FALSE);
 
@@ -549,10 +551,10 @@ image_duplicate_cmd_callback (GtkAction *action,
 
   new_image = gimp_image_duplicate (image);
 
-  gimp_create_display (new_image->gimp,
-                       new_image,
-                       shell->unit,
-                       gimp_zoom_model_get_factor (shell->zoom));
+  gimp_create_display (new_image->gimp, new_image, shell->unit,
+                       gimp_zoom_model_get_factor (shell->zoom),
+                       G_OBJECT (gtk_widget_get_screen (GTK_WIDGET (shell))),
+                       gimp_widget_get_monitor (GTK_WIDGET (shell)));
 
   g_object_unref (new_image);
 }

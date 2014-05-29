@@ -95,6 +95,12 @@ gimp_image_convert_precision (GimpImage     *image,
     case GIMP_PRECISION_FLOAT_GAMMA:
       undo_desc = C_("undo-type", "Convert Image to 32 bit gamma floating point");
       break;
+    case GIMP_PRECISION_DOUBLE_LINEAR:
+      undo_desc = C_("undo-type", "Convert Image to 64 bit linear floating point");
+      break;
+    case GIMP_PRECISION_DOUBLE_GAMMA:
+      undo_desc = C_("undo-type", "Convert Image to 64 bit gamma floating point");
+      break;
     }
 
   if (progress)

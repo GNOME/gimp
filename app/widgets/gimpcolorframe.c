@@ -531,6 +531,8 @@ gimp_color_frame_update (GimpColorFrame *frame)
               case GIMP_PRECISION_U32_GAMMA:
               case GIMP_PRECISION_FLOAT_LINEAR:
               case GIMP_PRECISION_FLOAT_GAMMA:
+              case GIMP_PRECISION_DOUBLE_LINEAR:
+              case GIMP_PRECISION_DOUBLE_GAMMA:
                 print_format = frame->sample_format;
                 break;
 

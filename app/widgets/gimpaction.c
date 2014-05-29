@@ -37,6 +37,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpaction.h"
+#include "gimpaction-history.h"
 #include "gimpview.h"
 #include "gimpviewrenderer.h"
 
@@ -52,6 +53,7 @@ enum
 };
 
 
+static void   gimp_action_constructed       (GObject          *object);
 static void   gimp_action_finalize          (GObject          *object);
 static void   gimp_action_set_property      (GObject          *object,
                                              guint             prop_id,
@@ -85,6 +87,7 @@ gimp_action_class_init (GimpActionClass *klass)
   GtkActionClass *action_class = GTK_ACTION_CLASS (klass);
   GimpRGB         black;
 
+  object_class->constructed   = gimp_action_constructed;
   object_class->finalize      = gimp_action_finalize;
   object_class->set_property  = gimp_action_set_property;
   object_class->get_property  = gimp_action_get_property;
@@ -135,6 +138,16 @@ gimp_action_init (GimpAction *action)
 
   g_signal_connect (action, "notify::tooltip",
                     G_CALLBACK (gimp_action_tooltip_notify),
+                    NULL);
+}
+
+static void
+gimp_action_constructed (GObject *object)
+{
+  GimpAction *action = GIMP_ACTION (object);
+
+  g_signal_connect (action, "activate",
+                    (GCallback) gimp_action_history_activate_callback,
                     NULL);
 }
 
@@ -276,22 +289,16 @@ GimpAction *
 gimp_action_new (const gchar *name,
                  const gchar *label,
                  const gchar *tooltip,
-                 const gchar *stock_id)
+                 const gchar *icon_name)
 {
   GimpAction *action;
 
   action = g_object_new (GIMP_TYPE_ACTION,
-                         "name",     name,
-                         "label",    label,
-                         "tooltip",  tooltip,
-                         "stock-id", stock_id,
+                         "name",      name,
+                         "label",     label,
+                         "tooltip",   tooltip,
+                         "icon-name", icon_name,
                          NULL);
-
-  if (stock_id)
-    {
-      if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (), stock_id))
-        gtk_action_set_icon_name (GTK_ACTION (action), stock_id);
-    }
 
   return action;
 }
@@ -302,6 +309,50 @@ gimp_action_name_compare (GimpAction  *action1,
 {
   return strcmp (gtk_action_get_name ((GtkAction *) action1),
                  gtk_action_get_name ((GtkAction *) action2));
+}
+
+gboolean
+gimp_action_is_gui_blacklisted (const gchar *action_name)
+{
+  static const gchar *suffixes[] =
+    {
+      "-menu",
+      "-popup"
+    };
+
+  static const gchar *prefixes[] =
+    {
+      "<",
+      "tools-color-average-radius-",
+      "tools-paintbrush-size-",
+      "tools-paintbrush-angle-",
+      "tools-paintbrush-aspect-ratio-",
+      "tools-ink-blob-size-",
+      "tools-ink-blob-aspect-",
+      "tools-ink-blob-angle-",
+      "tools-foreground-select-brush-size-",
+      "tools-transform-preview-opacity-",
+      "tools-warp-effect-size-"
+    };
+
+  gint i;
+
+  if (! (action_name && *action_name))
+    return TRUE;
+
+  for (i = 0; i < G_N_ELEMENTS (suffixes); i++)
+    {
+      if (g_str_has_suffix (action_name, suffixes[i]))
+        return TRUE;
+    }
+
+  for (i = 0; i < G_N_ELEMENTS (prefixes); i++)
+    {
+      if (g_str_has_prefix (action_name, prefixes[i]))
+        return TRUE;
+    }
+
+  return FALSE;
 }
 
 
@@ -389,7 +440,7 @@ gimp_action_set_proxy (GimpAction *action,
       if (GIMP_IS_VIEW (image) || GIMP_IS_COLOR_AREA (image))
         {
           gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (proxy), NULL);
-          g_object_notify (G_OBJECT (action), "stock-id");
+          g_object_notify (G_OBJECT (action), "icon-name");
         }
     }
 

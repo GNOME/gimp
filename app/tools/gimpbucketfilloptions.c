@@ -87,33 +87,33 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_MODE,
                                  "fill-mode", NULL,
                                  GIMP_TYPE_BUCKET_FILL_MODE,
-                                 GIMP_FG_BUCKET_FILL,
+                                 GIMP_BUCKET_FILL_FG,
                                  GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FILL_SELECTION,
                                     "fill-selection",
-                                    N_("Which area will be filled"),
+                                    _("Which area will be filled"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FILL_TRANSPARENT,
                                     "fill-transparent",
-                                    N_("Allow completely transparent regions "
-                                       "to be filled"),
+                                    _("Allow completely transparent regions "
+                                      "to be filled"),
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                                     "sample-merged",
-                                    N_("Base filled area on all visible "
-                                       "layers"),
+                                    _("Base filled area on all visible "
+                                      "layers"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
                                    "threshold",
-                                   N_("Maximum color difference"),
+                                   _("Maximum color difference"),
                                    0.0, 255.0, 15.0,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_CRITERION,
                                  "fill-criterion",
-                                 N_("Criterion used for determining color similarity"),
+                                 _("Criterion used for determining color similarity"),
                                  GIMP_TYPE_SELECT_CRITERION,
                                  GIMP_SELECT_CRITERION_COMPOSITE,
                                  GIMP_PARAM_STATIC_STRINGS);
@@ -238,7 +238,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
                                     NULL, 2,
                                     "pattern-view-type", "pattern-view-size");
   gimp_enum_radio_frame_add (GTK_FRAME (frame), hbox,
-                             GIMP_PATTERN_BUCKET_FILL, TRUE);
+                             GIMP_BUCKET_FILL_PATTERN, TRUE);
 
   /*  fill selection  */
   str = g_strdup_printf (_("Affected Area  (%s)"),

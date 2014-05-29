@@ -177,7 +177,7 @@ append_page (GtkWidget *notebook, GtkWidget *page, const gchar *icon_name,
    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
    gtk_widget_show(hbox);
 
-   icon = gtk_image_new_from_stock (icon_name, GTK_ICON_SIZE_MENU);
+   icon = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_MENU);
    gtk_box_pack_start (GTK_BOX (hbox), icon, FALSE, FALSE, 0);
    gtk_widget_show (icon);
 

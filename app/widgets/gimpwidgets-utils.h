@@ -30,9 +30,9 @@ void              gimp_button_menu_position        (GtkWidget            *button
                                                     GtkPositionType       position,
                                                     gint                 *x,
                                                     gint                 *y);
-void              gimp_table_attach_stock          (GtkTable             *table,
+void              gimp_table_attach_icon           (GtkTable             *table,
                                                     gint                  row,
-                                                    const gchar          *stock_id,
+                                                    const gchar          *icon_name,
                                                     GtkWidget            *widget,
                                                     gint                  colspan,
                                                     gboolean              left_align);
@@ -44,8 +44,11 @@ void              gimp_enum_radio_frame_add        (GtkFrame             *frame,
                                                     GtkWidget            *widget,
                                                     gint                  enum_value,
                                                     gboolean              below);
+GdkPixbuf       * gimp_widget_load_icon            (GtkWidget            *widget,
+                                                    const gchar          *icon_name,
+                                                    gint                  size);
 GtkIconSize       gimp_get_icon_size               (GtkWidget            *widget,
-                                                    const gchar          *stock_id,
+                                                    const gchar          *icon_name,
                                                     GtkIconSize           max_size,
                                                     gint                  width,
                                                     gint                  height);
@@ -66,7 +69,8 @@ GdkModifierType   gimp_get_toggle_behavior_mask    (void);
 GdkModifierType   gimp_get_constrain_behavior_mask (void);
 GdkModifierType   gimp_get_all_modifiers_mask      (void);
 
-void              gimp_get_screen_resolution       (GdkScreen            *screen,
+void              gimp_get_monitor_resolution      (GdkScreen            *screen,
+                                                    gint                  monitor,
                                                     gdouble              *xres,
                                                     gdouble              *yres);
 void              gimp_rgb_get_gdk_color           (const GimpRGB        *rgb,
@@ -82,7 +86,7 @@ void              gimp_toggle_button_set_visible   (GtkToggleButton      *toggle
                                                     GtkWidget            *widget);
 void              gimp_widget_set_accel_help       (GtkWidget            *widget,
                                                     GtkAction            *action);
-const gchar     * gimp_get_message_stock_id        (GimpMessageSeverity   severity);
+const gchar     * gimp_get_message_icon_name       (GimpMessageSeverity   severity);
 void              gimp_pango_layout_set_scale      (PangoLayout          *layout,
                                                     double                scale);
 void              gimp_pango_layout_set_weight     (PangoLayout          *layout,
@@ -91,6 +95,7 @@ void              gimp_highlight_widget            (GtkWidget            *widget
                                                     gboolean              highlight);
 GtkWidget       * gimp_dock_with_window_new        (GimpDialogFactory    *factory,
                                                     GdkScreen            *screen,
+                                                    gint                  monitor,
                                                     gboolean              toolbox);
 GtkWidget *       gimp_tools_get_tool_options_gui  (GimpToolOptions      *tool_options);
 void              gimp_tools_set_tool_options_gui  (GimpToolOptions      *tool_options,
@@ -99,8 +104,12 @@ void              gimp_tools_set_tool_options_gui  (GimpToolOptions      *tool_o
 void              gimp_widget_flush_expose         (GtkWidget            *widget);
 
 const gchar     * gimp_print_event                 (const GdkEvent       *event);
+
 void              gimp_session_write_position      (GimpConfigWriter     *writer,
                                                     gint                  position);
+
+gint              gimp_widget_get_monitor          (GtkWidget            *widget);
+gint              gimp_get_monitor_at_pointer      (GdkScreen           **screen);
 
 
 #endif /* __GIMP_WIDGETS_UTILS_H__ */

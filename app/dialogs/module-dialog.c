@@ -205,7 +205,7 @@ module_dialog_new (Gimp *gimp)
   dialog->error_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->error_box, FALSE, FALSE, 0);
 
-  image = gtk_image_new_from_stock (GIMP_STOCK_WARNING, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_WARNING, GTK_ICON_SIZE_BUTTON);
   gtk_box_pack_start (GTK_BOX (dialog->error_box), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 

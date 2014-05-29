@@ -92,12 +92,12 @@ struct _GimpItemTreeViewClass
   const gchar          *delete_action;
 
   /*  lock content button appearance  */
-  const gchar          *lock_content_stock_id;
+  const gchar          *lock_content_icon_name;
   const gchar          *lock_content_tooltip;
   const gchar          *lock_content_help_id;
 
   /* lock position (translation and transformation) button appearance */
-  const gchar          *lock_position_stock_id;
+  const gchar          *lock_position_icon_name;
   const gchar          *lock_position_tooltip;
   const gchar          *lock_position_help_id;
 };

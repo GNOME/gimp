@@ -865,6 +865,7 @@ void
 gimp_create_image_from_buffer (Gimp       *gimp,
                                GeglBuffer *buffer)
 {
+#if 0
   GimpImage  *image;
   GimpLayer  *layer;
   const Babl *format;
@@ -888,4 +889,5 @@ gimp_create_image_from_buffer (Gimp       *gimp,
   gimp_image_add_layer (image, layer, NULL, -1, FALSE);
 
   gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0);
+#endif
 }

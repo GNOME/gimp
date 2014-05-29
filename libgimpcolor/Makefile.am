@@ -53,6 +53,7 @@ AM_CPPFLAGS = \
 	$(GEGL_CFLAGS)			\
 	$(CAIRO_CFLAGS)			\
 	$(GDK_PIXBUF_CFLAGS)		\
+	$(LCMS_CFLAGS)			\
 	-I$(includedir)
 
 EXTRA_DIST = \
@@ -79,6 +80,8 @@ libgimpcolor_@GIMP_API_VERSION@_la_SOURCES = \
 	gimphsl.h			\
 	gimphsv.c			\
 	gimphsv.h			\
+	gimplcms.c			\
+	gimplcms.h			\
 	gimppixbuf.c			\
 	gimppixbuf.h			\
 	gimprgb.c			\
@@ -96,6 +99,7 @@ libgimpcolorinclude_HEADERS = \
 	gimpcolorspace.h		\
 	gimphsl.h			\
 	gimphsv.h			\
+	gimplcms.h			\
 	gimppixbuf.h			\
 	gimprgb.h
 
@@ -104,14 +108,14 @@ libgimpcolor_@GIMP_API_VERSION@_la_LDFLAGS = \
 	$(no_undefined) 			\
 	$(libgimpcolor_export_symbols)
 
-libgimpcolor_@GIMP_API_VERSION@_la_DEPENDENCIES = \
-	$(gimpcolor_def)	\
-	$(libgimpbase)
+EXTRA_libgimpcolor_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpcolor_def)
 
 libgimpcolor_@GIMP_API_VERSION@_la_LIBADD = \
+	$(libgimpbase)		\
 	$(GEGL_LIBS)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
+	$(LCMS_LIBS)		\
 	$(libm)
 
 
@@ -124,6 +128,7 @@ TESTS = test-color-parser$(EXEEXT)
 EXTRA_PROGRAMS = test-color-parser
 
 test_color_parser_DEPENDENCIES = \
+	$(libgimpbase)	\
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 
 test_color_parser_LDADD = \

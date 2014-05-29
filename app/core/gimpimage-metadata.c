@@ -91,6 +91,10 @@ gimp_image_set_metadata (GimpImage    *image,
             case GIMP_COMPONENT_TYPE_FLOAT:
               gimp_metadata_set_bits_per_sample (metadata, 32);
               break;
+
+            case GIMP_COMPONENT_TYPE_DOUBLE:
+              gimp_metadata_set_bits_per_sample (metadata, 64);
+              break;
             }
 
           gimp_image_get_resolution (image, &xres, &yres);

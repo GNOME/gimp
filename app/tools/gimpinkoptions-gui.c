@@ -116,8 +116,8 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_VERTICAL);
 
   /* Blob type radiobuttons */
-  blob_box = gimp_prop_enum_stock_box_new (config, "blob-type",
-                                           "gimp-shape", 0, 0);
+  blob_box = gimp_prop_enum_icon_box_new (config, "blob-type",
+                                          "gimp-shape", 0, 0);
   gtk_orientable_set_orientation (GTK_ORIENTABLE (blob_box),
                                   GTK_ORIENTATION_VERTICAL);
   gtk_box_pack_start (GTK_BOX (hbox), blob_box, FALSE, FALSE, 0);

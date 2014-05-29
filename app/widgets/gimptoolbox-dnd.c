@@ -42,6 +42,7 @@
 #include "gimpdnd.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-dnd.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -158,7 +159,10 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
       GError            *error = NULL;
 
       image = file_open_with_display (context->gimp, context, NULL,
-                                      uri, FALSE, &status, &error);
+                                      uri, FALSE,
+                                      G_OBJECT (gtk_widget_get_screen (widget)),
+                                      gimp_widget_get_monitor (widget),
+                                      &status, &error);
 
       if (! image && status != GIMP_PDB_CANCEL)
         {
@@ -189,7 +193,9 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
 
   new_image = gimp_image_new_from_drawable (context->gimp,
                                             GIMP_DRAWABLE (viewable));
-  gimp_create_display (context->gimp, new_image, GIMP_UNIT_PIXEL, 1.0);
+  gimp_create_display (context->gimp, new_image, GIMP_UNIT_PIXEL, 1.0,
+                       G_OBJECT (gtk_widget_get_screen (widget)),
+                       gimp_widget_get_monitor (widget));
   g_object_unref (new_image);
 }
 
@@ -223,7 +229,9 @@ gimp_toolbox_drop_buffer (GtkWidget    *widget,
 
   image = gimp_image_new_from_buffer (context->gimp, NULL,
                                       GIMP_BUFFER (viewable));
-  gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
+  gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
+                       G_OBJECT (gtk_widget_get_screen (widget)),
+                       gimp_widget_get_monitor (widget));
   g_object_unref (image);
 }
 
@@ -243,7 +251,9 @@ gimp_toolbox_drop_component (GtkWidget       *widget,
 
   new_image = gimp_image_new_from_component (context->gimp,
                                              image, component);
-  gimp_create_display (new_image->gimp, new_image, GIMP_UNIT_PIXEL, 1.0);
+  gimp_create_display (new_image->gimp, new_image, GIMP_UNIT_PIXEL, 1.0,
+                       G_OBJECT (gtk_widget_get_screen (widget)),
+                       gimp_widget_get_monitor (widget));
   g_object_unref (new_image);
 }
 
@@ -262,6 +272,8 @@ gimp_toolbox_drop_pixbuf (GtkWidget *widget,
 
   new_image = gimp_image_new_from_pixbuf (context->gimp, pixbuf,
                                           _("Dropped Buffer"));
-  gimp_create_display (new_image->gimp, new_image, GIMP_UNIT_PIXEL, 1.0);
+  gimp_create_display (new_image->gimp, new_image, GIMP_UNIT_PIXEL, 1.0,
+                       G_OBJECT (gtk_widget_get_screen (widget)),
+                       gimp_widget_get_monitor (widget));
   g_object_unref (new_image);
 }

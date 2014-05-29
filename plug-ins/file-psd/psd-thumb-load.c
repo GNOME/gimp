@@ -49,7 +49,7 @@ static gint    read_image_resource_block  (PSDimage     *img_a,
 static gint32  create_gimp_image          (PSDimage     *img_a,
                                            const gchar  *filename);
 
-static gint    add_image_resources        (const gint32  image_id,
+static gint    add_image_resources        (gint32        image_id,
                                            PSDimage     *img_a,
                                            FILE         *f,
                                            GError      **error);
@@ -273,10 +273,10 @@ create_gimp_image (PSDimage    *img_a,
 }
 
 static gint
-add_image_resources (const gint32   image_id,
-                     PSDimage      *img_a,
-                     FILE          *f,
-                     GError       **error)
+add_image_resources (gint32     image_id,
+                     PSDimage  *img_a,
+                     FILE      *f,
+                     GError   **error)
 {
   PSDimageres   res_a;
   gint          status;

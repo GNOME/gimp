@@ -223,15 +223,12 @@ gimp_convolve_calculate_matrix (GimpConvolve    *convolve,
   /*  get the appropriate convolution matrix and size and divisor  */
   switch (type)
     {
-    case GIMP_BLUR_CONVOLVE:
+    case GIMP_CONVOLVE_BLUR:
       convolve->matrix[4] = MIN_BLUR + percent * (MAX_BLUR - MIN_BLUR);
       break;
 
-    case GIMP_SHARPEN_CONVOLVE:
+    case GIMP_CONVOLVE_SHARPEN:
       convolve->matrix[4] = MIN_SHARPEN + percent * (MAX_SHARPEN - MIN_SHARPEN);
-      break;
-
-    case GIMP_CUSTOM_CONVOLVE:
       break;
     }
 

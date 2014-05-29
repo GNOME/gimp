@@ -140,7 +140,7 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
                                          GIMP_CURSOR_PRECISION_SUBPIXEL);
   gimp_tool_control_set_tool_cursor     (tool->control,
                                          GIMP_TOOL_CURSOR_BLEND);
-  gimp_tool_control_set_action_value_1  (tool->control,
+  gimp_tool_control_set_action_opacity  (tool->control,
                                          "context/context-opacity-set");
   gimp_tool_control_set_action_object_1 (tool->control,
                                          "context/context-gradient-select-set");
@@ -252,7 +252,7 @@ gimp_blend_tool_button_release (GimpTool              *tool,
 
       gimp_drawable_blend (drawable,
                            context,
-                           GIMP_CUSTOM_MODE,
+                           gimp_context_get_gradient (context),
                            gimp_context_get_paint_mode (context),
                            options->gradient_type,
                            gimp_context_get_opacity (context),
@@ -384,19 +384,21 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
 static void
 gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (draw_tool);
+  GimpBlendTool   *blend_tool = GIMP_BLEND_TOOL (draw_tool);
+  GimpCanvasGroup *group;
 
-  /*  Draw start target  */
+  group = gimp_draw_tool_add_stroke_group (draw_tool);
+  gimp_draw_tool_push_group (draw_tool, group);
+
   blend_tool->start_handle =
     gimp_draw_tool_add_handle (draw_tool,
-                               GIMP_HANDLE_CROSS,
+                               GIMP_HANDLE_CIRCLE,
                                blend_tool->start_x,
                                blend_tool->start_y,
-                               GIMP_TOOL_HANDLE_SIZE_CROSS,
-                               GIMP_TOOL_HANDLE_SIZE_CROSS,
+                               GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                               GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                GIMP_HANDLE_ANCHOR_CENTER);
 
-  /*  Draw the line between the start and end coords  */
   blend_tool->line =
     gimp_draw_tool_add_line (draw_tool,
                              blend_tool->start_x,
@@ -404,15 +406,16 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
                              blend_tool->end_x,
                              blend_tool->end_y);
 
-  /*  Draw end target  */
   blend_tool->end_handle =
     gimp_draw_tool_add_handle (draw_tool,
-                               GIMP_HANDLE_CROSS,
+                               GIMP_HANDLE_CIRCLE,
                                blend_tool->end_x,
                                blend_tool->end_y,
-                               GIMP_TOOL_HANDLE_SIZE_CROSS,
-                               GIMP_TOOL_HANDLE_SIZE_CROSS,
+                               GIMP_TOOL_HANDLE_SIZE_CIRCLE,
+                               GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                GIMP_HANDLE_ANCHOR_CENTER);
+
+  gimp_draw_tool_pop_group (draw_tool);
 }
 
 static void

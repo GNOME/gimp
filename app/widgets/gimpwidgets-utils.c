@@ -91,7 +91,7 @@ gimp_menu_position (GtkMenu *menu,
   screen = gtk_widget_get_screen (widget);
 
   monitor = gdk_screen_get_monitor_at_point (screen, *x, *y);
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
 
   gtk_menu_set_screen (menu, screen);
 
@@ -177,7 +177,7 @@ gimp_button_menu_position (GtkWidget       *button,
   screen = gtk_widget_get_screen (button);
 
   monitor = gdk_screen_get_monitor_at_point (screen, *x, *y);
-  gdk_screen_get_monitor_geometry (screen, monitor, &rect);
+  gdk_screen_get_monitor_workarea (screen, monitor, &rect);
 
   gtk_menu_set_screen (menu, screen);
 
@@ -210,20 +210,20 @@ gimp_button_menu_position (GtkWidget       *button,
 }
 
 void
-gimp_table_attach_stock (GtkTable    *table,
-                         gint         row,
-                         const gchar *stock_id,
-                         GtkWidget   *widget,
-                         gint         colspan,
-                         gboolean     left_align)
+gimp_table_attach_icon (GtkTable    *table,
+                        gint         row,
+                        const gchar *icon_name,
+                        GtkWidget   *widget,
+                        gint         colspan,
+                        gboolean     left_align)
 {
   GtkWidget *image;
 
   g_return_if_fail (GTK_IS_TABLE (table));
-  g_return_if_fail (stock_id != NULL);
+  g_return_if_fail (icon_name != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
   gtk_misc_set_alignment (GTK_MISC (image), 1.0, 0.5);
   gtk_table_attach (table, image, 0, 1, row, row + 1,
                     GTK_FILL, GTK_FILL, 0, 0);
@@ -364,9 +364,58 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
   gimp_enum_radio_box_add (GTK_BOX (box), widget, enum_value, below);
 }
 
+GdkPixbuf *
+gimp_widget_load_icon (GtkWidget   *widget,
+                       const gchar *icon_name,
+                       gint         size)
+{
+  GtkIconTheme *icon_theme;
+  gint         *icon_sizes;
+  gint          closest_size = -1;
+  gint          min_diff     = G_MAXINT;
+  gint          i;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
+  g_return_val_if_fail (icon_name != NULL, NULL);
+
+  icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (widget));
+
+  if (! gtk_icon_theme_has_icon (icon_theme, icon_name))
+    {
+      g_printerr ("gimp_widget_load_icon(): icon theme has no icon '%s'.\n",
+                  icon_name);
+
+      return gtk_icon_theme_load_icon (icon_theme, GIMP_STOCK_WILBER_EEK,
+                                       size, 0, NULL);
+    }
+
+  icon_sizes = gtk_icon_theme_get_icon_sizes (icon_theme, icon_name);
+
+  for (i = 0; icon_sizes[i]; i++)
+    {
+      if (icon_sizes[i] > 0 &&
+          icon_sizes[i] <= size)
+        {
+          if (size - icon_sizes[i] < min_diff)
+            {
+              min_diff     = size - icon_sizes[i];
+              closest_size = icon_sizes[i];
+            }
+        }
+    }
+
+  g_free (icon_sizes);
+
+  if (closest_size != -1)
+    size = closest_size;
+
+  return gtk_icon_theme_load_icon (icon_theme, icon_name, size,
+                                   GTK_ICON_LOOKUP_USE_BUILTIN, NULL);
+}
+
 GtkIconSize
 gimp_get_icon_size (GtkWidget   *widget,
-                    const gchar *stock_id,
+                    const gchar *icon_name,
                     GtkIconSize  max_size,
                     gint         width,
                     gint         height)
@@ -383,12 +432,12 @@ gimp_get_icon_size (GtkWidget   *widget,
   GtkSettings  *settings;
 
   g_return_val_if_fail (GTK_IS_WIDGET (widget), icon_size);
-  g_return_val_if_fail (stock_id != NULL, icon_size);
+  g_return_val_if_fail (icon_name != NULL, icon_size);
   g_return_val_if_fail (width > 0, icon_size);
   g_return_val_if_fail (height > 0, icon_size);
 
   icon_set = gtk_style_lookup_icon_set (gtk_widget_get_style (widget),
-                                        stock_id);
+                                        icon_name);
 
   if (! icon_set)
     return GTK_ICON_SIZE_INVALID;
@@ -724,36 +773,33 @@ gimp_get_all_modifiers_mask (void)
 }
 
 /**
- * gimp_get_screen_resolution:
- * @screen: a #GdkScreen or %NULL
- * @xres: returns the horizontal screen resolution (in dpi)
- * @yres: returns the vertical screen resolution (in dpi)
+ * gimp_get_monitor_resolution:
+ * @screen: a #GdkScreen
+ * @monitor: a monitor number
+ * @xres: returns the horizontal monitor resolution (in dpi)
+ * @yres: returns the vertical monitor resolution (in dpi)
  *
- * Retrieves the screen resolution from GDK. If @screen is %NULL, the
- * default screen is used.
+ * Retrieves the monitor's resolution from GDK.
  **/
 void
-gimp_get_screen_resolution (GdkScreen *screen,
-                            gdouble   *xres,
-                            gdouble   *yres)
+gimp_get_monitor_resolution (GdkScreen *screen,
+                             gint       monitor,
+                             gdouble   *xres,
+                             gdouble   *yres)
 {
-  gint    width, height;
-  gint    width_mm, height_mm;
-  gdouble x = 0.0;
-  gdouble y = 0.0;
+  GdkRectangle size_pixels;
+  gint         width_mm, height_mm;
+  gdouble      x = 0.0;
+  gdouble      y = 0.0;
 
-  g_return_if_fail (screen == NULL || GDK_IS_SCREEN (screen));
+  g_return_if_fail (GDK_IS_SCREEN (screen));
   g_return_if_fail (xres != NULL);
   g_return_if_fail (yres != NULL);
 
-  if (!screen)
-    screen = gdk_screen_get_default ();
+  gdk_screen_get_monitor_geometry (screen, monitor, &size_pixels);
 
-  width  = gdk_screen_get_width (screen);
-  height = gdk_screen_get_height (screen);
-
-  width_mm  = gdk_screen_get_width_mm (screen);
-  height_mm = gdk_screen_get_height_mm (screen);
+  width_mm  = gdk_screen_get_monitor_width_mm  (screen, monitor);
+  height_mm = gdk_screen_get_monitor_height_mm (screen, monitor);
 
   /*
    * From xdpyinfo.c:
@@ -767,15 +813,15 @@ gimp_get_screen_resolution (GdkScreen *screen,
 
   if (width_mm > 0 && height_mm > 0)
     {
-      x = (width  * 25.4) / (gdouble) width_mm;
-      y = (height * 25.4) / (gdouble) height_mm;
+      x = (size_pixels.width  * 25.4) / (gdouble) width_mm;
+      y = (size_pixels.height * 25.4) / (gdouble) height_mm;
     }
 
   if (x < GIMP_MIN_RESOLUTION || x > GIMP_MAX_RESOLUTION ||
       y < GIMP_MIN_RESOLUTION || y > GIMP_MAX_RESOLUTION)
     {
-      g_warning ("GDK returned bogus values for the screen resolution, "
-                 "using 96 dpi instead.");
+      g_printerr ("gimp_get_monitor_resolution(): GDK returned bogus "
+                  "values for the monitor resolution, using 96 dpi instead.\n");
 
       x = 96.0;
       y = 96.0;
@@ -1055,7 +1101,7 @@ gimp_widget_set_accel_help (GtkWidget *widget,
 }
 
 const gchar *
-gimp_get_message_stock_id (GimpMessageSeverity severity)
+gimp_get_message_icon_name (GimpMessageSeverity severity)
 {
   switch (severity)
     {
@@ -1145,6 +1191,7 @@ gimp_highlight_widget (GtkWidget *widget,
 GtkWidget *
 gimp_dock_with_window_new (GimpDialogFactory *factory,
                            GdkScreen         *screen,
+                           gint               monitor,
                            gboolean           toolbox)
 {
   GtkWidget         *dock_window;
@@ -1159,7 +1206,7 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
    * dock window before the dock because the dock has a dependency to
    * the ui manager in the dock window
    */
-  dock_window = gimp_dialog_factory_dialog_new (factory, screen,
+  dock_window = gimp_dialog_factory_dialog_new (factory, screen, monitor,
                                                 NULL /*ui_manager*/,
                                                 (toolbox ?
                                                  "gimp-toolbox-window" :
@@ -1171,6 +1218,7 @@ gimp_dock_with_window_new (GimpDialogFactory *factory,
   ui_manager     = gimp_dock_container_get_ui_manager (dock_container);
   dock           = gimp_dialog_factory_dialog_new (factory,
                                                    screen,
+                                                   monitor,
                                                    ui_manager,
                                                    (toolbox ?
                                                     "gimp-toolbox" :
@@ -1336,4 +1384,49 @@ gimp_session_write_position (GimpConfigWriter *writer,
   gimp_config_writer_close (writer);
 
   g_type_class_unref (klass);
+}
+
+gint
+gimp_widget_get_monitor (GtkWidget *widget)
+{
+  GdkWindow     *window;
+  GdkScreen     *screen;
+  GtkAllocation  allocation;
+  gint           x, y;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), 0);
+
+  window = gtk_widget_get_window (widget);
+
+  if (! window)
+    return gimp_get_monitor_at_pointer (&screen);
+
+  screen = gtk_widget_get_screen (widget);
+
+  gdk_window_get_origin (window, &x, &y);
+  gtk_widget_get_allocation (widget, &allocation);
+
+  if (! gtk_widget_get_has_window (widget))
+    {
+      x += allocation.x;
+      y += allocation.y;
+    }
+
+  x += allocation.width  / 2;
+  y += allocation.height / 2;
+
+  return gdk_screen_get_monitor_at_point (screen, x, y);
+}
+
+gint
+gimp_get_monitor_at_pointer (GdkScreen **screen)
+{
+  gint x, y;
+
+  g_return_val_if_fail (screen != NULL, 0);
+
+  gdk_display_get_pointer (gdk_display_get_default (),
+                           screen, &x, &y, NULL);
+
+  return gdk_screen_get_monitor_at_point (*screen, x, y);
 }

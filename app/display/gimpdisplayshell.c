@@ -96,6 +96,8 @@ enum
 {
   PROP_0,
   PROP_POPUP_MANAGER,
+  PROP_INITIAL_SCREEN,
+  PROP_INITIAL_MONITOR,
   PROP_DISPLAY,
   PROP_UNIT,
   PROP_TITLE,
@@ -257,6 +259,20 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_INITIAL_SCREEN,
+                                   g_param_spec_object ("initial-screen",
+                                                        NULL, NULL,
+                                                        GDK_TYPE_SCREEN,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_INITIAL_MONITOR,
+                                   g_param_spec_int ("initial-monitor",
+                                                     NULL, NULL,
+                                                     0, 16, 0,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT_ONLY));
+
   g_object_class_install_property (object_class, PROP_DISPLAY,
                                    g_param_spec_object ("display", NULL, NULL,
                                                         GIMP_TYPE_DISPLAY,
@@ -370,7 +386,6 @@ gimp_display_shell_constructed (GObject *object)
   GtkWidget             *lower_hbox;
   GtkWidget             *inner_table;
   GtkWidget             *gtk_image;
-  GdkScreen             *screen;
   GtkAction             *action;
   gint                   image_width;
   gint                   image_height;
@@ -402,12 +417,11 @@ gimp_display_shell_constructed (GObject *object)
 
   shell->dot_for_dot = config->default_dot_for_dot;
 
-  screen = gtk_widget_get_screen (GTK_WIDGET (shell));
-
   if (config->monitor_res_from_gdk)
     {
-      gimp_get_screen_resolution (screen,
-                                  &shell->monitor_xres, &shell->monitor_yres);
+      gimp_get_monitor_resolution (shell->initial_screen,
+                                   shell->initial_monitor,
+                                   &shell->monitor_xres, &shell->monitor_yres);
     }
   else
     {
@@ -507,8 +521,8 @@ gimp_display_shell_constructed (GObject *object)
   /*  the menu popup button  */
   shell->origin = gtk_event_box_new ();
 
-  gtk_image = gtk_image_new_from_stock (GIMP_STOCK_MENU_RIGHT,
-                                        GTK_ICON_SIZE_MENU);
+  gtk_image = gtk_image_new_from_icon_name (GIMP_STOCK_MENU_RIGHT,
+                                            GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->origin), gtk_image);
   gtk_widget_show (gtk_image);
 
@@ -622,8 +636,8 @@ gimp_display_shell_constructed (GObject *object)
                                      NULL);
   gtk_widget_set_can_focus (shell->zoom_button, FALSE);
 
-  gtk_image = gtk_image_new_from_stock (GIMP_STOCK_ZOOM_FOLLOW_WINDOW,
-                                        GTK_ICON_SIZE_MENU);
+  gtk_image = gtk_image_new_from_icon_name (GIMP_STOCK_ZOOM_FOLLOW_WINDOW,
+                                            GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->zoom_button), gtk_image);
   gtk_widget_show (gtk_image);
 
@@ -646,8 +660,8 @@ gimp_display_shell_constructed (GObject *object)
                                            NULL);
   gtk_widget_set_can_focus (shell->quick_mask_button, FALSE);
 
-  gtk_image = gtk_image_new_from_stock (GIMP_STOCK_QUICK_MASK_OFF,
-                                        GTK_ICON_SIZE_MENU);
+  gtk_image = gtk_image_new_from_icon_name (GIMP_STOCK_QUICK_MASK_OFF,
+                                            GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->quick_mask_button), gtk_image);
   gtk_widget_show (gtk_image);
 
@@ -670,8 +684,8 @@ gimp_display_shell_constructed (GObject *object)
   /*  the navigation window button  */
   shell->nav_ebox = gtk_event_box_new ();
 
-  gtk_image = gtk_image_new_from_stock (GIMP_STOCK_NAVIGATION,
-                                        GTK_ICON_SIZE_MENU);
+  gtk_image = gtk_image_new_from_icon_name (GIMP_STOCK_NAVIGATION,
+                                            GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->nav_ebox), gtk_image);
   gtk_widget_show (gtk_image);
 
@@ -907,6 +921,12 @@ gimp_display_shell_set_property (GObject      *object,
     case PROP_POPUP_MANAGER:
       shell->popup_manager = g_value_get_object (value);
       break;
+    case PROP_INITIAL_SCREEN:
+      shell->initial_screen = g_value_get_object (value);
+      break;
+    case PROP_INITIAL_MONITOR:
+      shell->initial_monitor = g_value_get_int (value);
+      break;
     case PROP_DISPLAY:
       shell->display = g_value_get_object (value);
       break;
@@ -945,6 +965,12 @@ gimp_display_shell_get_property (GObject    *object,
     {
     case PROP_POPUP_MANAGER:
       g_value_set_object (value, shell->popup_manager);
+      break;
+    case PROP_INITIAL_SCREEN:
+      g_value_set_object (value, shell->initial_screen);
+      break;
+    case PROP_INITIAL_MONITOR:
+      g_value_set_int (value, shell->initial_monitor);
       break;
     case PROP_DISPLAY:
       g_value_set_object (value, shell->display);
@@ -990,9 +1016,10 @@ gimp_display_shell_screen_changed (GtkWidget *widget,
 
   if (shell->display->config->monitor_res_from_gdk)
     {
-      gimp_get_screen_resolution (gtk_widget_get_screen (widget),
-                                  &shell->monitor_xres,
-                                  &shell->monitor_yres);
+      gimp_get_monitor_resolution (gtk_widget_get_screen (widget),
+                                   gimp_widget_get_monitor (widget),
+                                   &shell->monitor_xres,
+                                   &shell->monitor_yres);
     }
   else
     {
@@ -1174,18 +1201,23 @@ gimp_display_shell_transform_overlay (GimpDisplayShell *shell,
 /*  public functions  */
 
 GtkWidget *
-gimp_display_shell_new (GimpDisplay       *display,
-                        GimpUnit           unit,
-                        gdouble            scale,
-                        GimpUIManager     *popup_manager)
+gimp_display_shell_new (GimpDisplay   *display,
+                        GimpUnit       unit,
+                        gdouble        scale,
+                        GimpUIManager *popup_manager,
+                        GdkScreen     *screen,
+                        gint           monitor)
 {
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
   g_return_val_if_fail (GIMP_IS_UI_MANAGER (popup_manager), NULL);
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
   return g_object_new (GIMP_TYPE_DISPLAY_SHELL,
-                       "popup-manager", popup_manager,
-                       "display",       display,
-                       "unit",          unit,
+                       "popup-manager",   popup_manager,
+                       "initial-screen",  screen,
+                       "initial-monitor", monitor,
+                       "display",         display,
+                       "unit",            unit,
                        NULL);
 }
 
@@ -1718,14 +1750,6 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  gimp_display_shell_title_update (shell);
-
-  /* make sure the information is up-to-date */
-  gimp_display_shell_scale_changed (shell);
-
-  gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
-                                        gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
-
   if (now)
     {
       gdk_window_process_updates (gtk_widget_get_window (shell->canvas),
@@ -1735,6 +1759,14 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
     {
       GimpImageWindow *window = gimp_display_shell_get_window (shell);
       GimpContext     *context;
+
+      gimp_display_shell_title_update (shell);
+
+      /* make sure the information is up-to-date */
+      gimp_display_shell_scale_changed (shell);
+
+      gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
+                                            gimp_image_get_active_layer (gimp_display_get_image (shell->display)));
 
       if (window && gimp_image_window_get_active_shell (window) == shell)
         {

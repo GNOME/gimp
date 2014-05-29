@@ -400,8 +400,8 @@ exchange_dialog (GimpDrawable *drawable)
         from_colorbutton = colorbutton;
 
       /*  Red  */
-      image = gtk_image_new_from_stock (GIMP_STOCK_CHANNEL_RED,
-                                        GTK_ICON_SIZE_BUTTON);
+      image = gtk_image_new_from_icon_name (GIMP_STOCK_CHANNEL_RED,
+                                            GTK_ICON_SIZE_BUTTON);
       gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.5);
       gtk_table_attach (GTK_TABLE (table), image,
                         0, 1, row, row + 1 + (framenumber ? 0 : 1),
@@ -456,8 +456,8 @@ exchange_dialog (GimpDrawable *drawable)
         }
 
       /*  Green  */
-      image = gtk_image_new_from_stock (GIMP_STOCK_CHANNEL_GREEN,
-                                        GTK_ICON_SIZE_BUTTON);
+      image = gtk_image_new_from_icon_name (GIMP_STOCK_CHANNEL_GREEN,
+                                            GTK_ICON_SIZE_BUTTON);
       gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.5);
       gtk_table_attach (GTK_TABLE (table), image,
                         0, 1, row, row + 1 + (framenumber ? 0 : 1),
@@ -512,8 +512,8 @@ exchange_dialog (GimpDrawable *drawable)
         }
 
       /*  Blue  */
-      image = gtk_image_new_from_stock (GIMP_STOCK_CHANNEL_BLUE,
-                                        GTK_ICON_SIZE_BUTTON);
+      image = gtk_image_new_from_icon_name (GIMP_STOCK_CHANNEL_BLUE,
+                                            GTK_ICON_SIZE_BUTTON);
       gtk_misc_set_alignment (GTK_MISC (image), 0.5, 0.5);
       gtk_table_attach (GTK_TABLE (table), image,
                         0, 1, row, row + 1 + (framenumber ? 0 : 1),

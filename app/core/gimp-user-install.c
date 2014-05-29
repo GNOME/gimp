@@ -475,40 +475,58 @@ user_install_mkdir_with_parents (GimpUserInstall *install,
 /* The regexp pattern of all options changed from menurc of GIMP 2.8.
  * Add any pattern that we want to recognize for replacement in the menurc of
  * the next release*/
-#define MENURC_28_UPDATE_PATTERN "\"<Actions>/file/file-export-to\"|" \
-                                 "\"<Actions>/file/file-export\""
+#define MENURC_OVER20_UPDATE_PATTERN "\"<Actions>/file/file-export-to\"         |" \
+                                     "\"<Actions>/file/file-export\"            |" \
+                                     "\"<Actions>/tools/tools-value-[1-4]-.*\""
 
 /**
- * callback to use for updating a menurc from GIMP 2.8.
+ * callback to use for updating a menurc from GIMP over 2.0.
  * data is unused (always NULL).
  * The updated value will be matched line by line.
  */
 static gboolean
-user_update_menurc_28 (const GMatchInfo *matched_value,
-                       GString          *new_value,
-                       gpointer          data)
+user_update_menurc_over20 (const GMatchInfo *matched_value,
+                           GString          *new_value,
+                           gpointer          data)
 {
   gchar *match;
   match = g_match_info_fetch (matched_value, 0);
 
-  /* This is an example of how to use it.
-   * If view-close were to be renamed to file-close for instance, we'd add:
-
-  if (strcmp (match, "\"<Actions>/view/view-close\"") == 0)
-    g_string_append (new_value, "\"<Actions>/file/file-close\"");
-  */
-
-  if (strcmp (match, "\"<Actions>/file/file-export\"") == 0)
+  /* file-export-* changes to follow file-save-* patterns.
+   * Actions available since GIMP 2.8, changed for 2.10 in commit 4b14ed2. */
+  if (g_strcmp0 (match, "\"<Actions>/file/file-export\"") == 0)
     {
       g_string_append (new_value, "\"<Actions>/file/file-export-as\"");
     }
-  else if (strcmp (match, "\"<Actions>/file/file-export-to\"") == 0)
+  else if (g_strcmp0 (match, "\"<Actions>/file/file-export-to\"") == 0)
     {
       g_string_append (new_value, "\"<Actions>/file/file-export\"");
     }
+  /* Tools settings renamed more user-friendly.
+   * Actions available since GIMP 2.4, changed for 2.10 in commit 0bdb747. */
+  else if (g_str_has_prefix (match, "\"<Actions>/tools/tools-value-1-"))
+    {
+      g_string_append (new_value, "\"<Actions>/tools/tools-opacity-");
+      g_string_append (new_value, match + 31);
+    }
+  else if (g_str_has_prefix (match, "\"<Actions>/tools/tools-value-2-"))
+    {
+      g_string_append (new_value, "\"<Actions>/tools/tools-size-");
+      g_string_append (new_value, match + 31);
+    }
+  else if (g_str_has_prefix (match, "\"<Actions>/tools/tools-value-3-"))
+    {
+      g_string_append (new_value, "\"<Actions>/tools/tools-aspect-");
+      g_string_append (new_value, match + 31);
+    }
+  else if (g_str_has_prefix (match, "\"<Actions>/tools/tools-value-4-"))
+    {
+      g_string_append (new_value, "\"<Actions>/tools/tools-angle-");
+      g_string_append (new_value, match + 31);
+    }
+  /* Should not happen. Just in case we match something unexpected by mistake. */
   else
     {
-      /* Should not happen. Just in case we match something unexpected by mistake. */
       g_string_append (new_value, match);
     }
 
@@ -675,9 +693,9 @@ user_install_migrate_files (GimpUserInstall *install)
                   /*  skip menurc for gimp 2.0 as the format has changed  */
                   goto next_file;
                   break;
-                case 8:
-                  update_pattern = MENURC_28_UPDATE_PATTERN;
-                  update_callback = user_update_menurc_28;
+                default:
+                  update_pattern = MENURC_OVER20_UPDATE_PATTERN;
+                  update_callback = user_update_menurc_over20;
                   break;
                 }
             }

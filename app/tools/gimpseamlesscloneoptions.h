@@ -39,6 +39,7 @@ struct _GimpSeamlessCloneOptions
 {
   GimpToolOptions parent_instance;
 
+  gint            max_refine_steps;
   gboolean        temp;
 };
 

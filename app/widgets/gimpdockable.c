@@ -61,7 +61,7 @@ struct _GimpDockablePrivate
 {
   gchar        *name;
   gchar        *blurb;
-  gchar        *stock_id;
+  gchar        *icon_name;
   gchar        *help_id;
   GimpTabStyle  tab_style;
   GimpTabStyle  actual_tab_style;
@@ -225,10 +225,10 @@ gimp_dockable_dispose (GObject *object)
       dockable->p->name = NULL;
     }
 
-  if (dockable->p->stock_id)
+  if (dockable->p->icon_name)
     {
-      g_free (dockable->p->stock_id);
-      dockable->p->stock_id = NULL;
+      g_free (dockable->p->icon_name);
+      dockable->p->icon_name = NULL;
     }
 
   if (dockable->p->help_id)
@@ -537,20 +537,20 @@ gimp_dockable_new_tab_widget_internal (GimpDockable *dockable,
 GtkWidget *
 gimp_dockable_new (const gchar *name,
                    const gchar *blurb,
-                   const gchar *stock_id,
+                   const gchar *icon_name,
                    const gchar *help_id)
 {
   GimpDockable *dockable;
 
   g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (stock_id != NULL, NULL);
+  g_return_val_if_fail (icon_name != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
 
   dockable = g_object_new (GIMP_TYPE_DOCKABLE, NULL);
 
-  dockable->p->name     = g_strdup (name);
-  dockable->p->stock_id = g_strdup (stock_id);
-  dockable->p->help_id  = g_strdup (help_id);
+  dockable->p->name      = g_strdup (name);
+  dockable->p->icon_name = g_strdup (icon_name);
+  dockable->p->help_id   = g_strdup (help_id);
 
   if (blurb)
     dockable->p->blurb  = g_strdup (blurb);
@@ -630,26 +630,20 @@ gimp_dockable_get_help_id (GimpDockable *dockable)
 }
 
 const gchar *
-gimp_dockable_get_stock_id (GimpDockable *dockable)
+gimp_dockable_get_icon_name (GimpDockable *dockable)
 {
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
 
-  return dockable->p->stock_id;
+  return dockable->p->icon_name;
 }
 
 GtkWidget *
 gimp_dockable_get_icon (GimpDockable *dockable,
                         GtkIconSize   size)
 {
-  GdkScreen    *screen = gtk_widget_get_screen (GTK_WIDGET (dockable));
-  GtkIconTheme *theme  = gtk_icon_theme_get_for_screen (screen);
+  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
 
-  if (gtk_icon_theme_has_icon (theme, dockable->p->stock_id))
-    {
-      return gtk_image_new_from_icon_name (dockable->p->stock_id, size);
-    }
-
-  return  gtk_image_new_from_stock (dockable->p->stock_id, size);
+  return gtk_image_new_from_icon_name (dockable->p->icon_name, size);
 }
 
 gboolean
@@ -864,6 +858,7 @@ gimp_dockable_detach (GimpDockable *dockable)
 
   dock = gimp_dock_with_window_new (gimp_dialog_factory_get_singleton (),
                                     gtk_widget_get_screen (GTK_WIDGET (dockable)),
+                                    gimp_widget_get_monitor (GTK_WIDGET (dockable)),
                                     FALSE /*toolbox*/);
   dock_window = gimp_dock_window_from_dock (GIMP_DOCK (dock));
   gtk_window_set_position (GTK_WINDOW (dock_window), GTK_WIN_POS_MOUSE);

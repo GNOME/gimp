@@ -37,6 +37,7 @@
 #include "gimpimage-grid.h"
 #include "gimpimage-metadata.h"
 #include "gimpimage-private.h"
+#include "gimpimage-profile.h"
 #include "gimpimageundo.h"
 #include "gimpparasitelist.h"
 
@@ -487,7 +488,7 @@ gimp_image_undo_pop (GimpUndo            *undo,
 
         name = parasite ? parasite->name : image_undo->parasite_name;
 
-        if (strcmp (name, "icc-profile") == 0)
+        if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
           gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
 
         if (parasite)

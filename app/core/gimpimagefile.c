@@ -441,6 +441,13 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
 
       g_object_unref (imagefile);
 
+      if (! success)
+        {
+          g_object_set (thumbnail,
+                        "thumb-state", GIMP_THUMB_STATE_FAILED,
+                        NULL);
+        }
+
       return success;
     }
 
@@ -478,8 +485,17 @@ gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
 
   g_object_add_weak_pointer (G_OBJECT (imagefile), (gpointer) &imagefile);
 
-  gimp_imagefile_create_thumbnail (local, context, progress, size, replace,
-                                   NULL);
+  if (! gimp_imagefile_create_thumbnail (local, context, progress, size, replace,
+                                         NULL))
+    {
+      /* The weak version works on a local copy so the thumbnail status
+       * of the actual image is not properly updated in case of creation
+       * failure, thus it would end up in a generic GIMP_THUMB_STATE_NOT_FOUND,
+       * which is less informative. */
+      g_object_set (private->thumbnail,
+                    "thumb-state", GIMP_THUMB_STATE_FAILED,
+                    NULL);
+    }
 
   if (imagefile)
     {
@@ -578,6 +594,11 @@ gimp_imagefile_info_changed (GimpImagefile *imagefile)
         g_free (private->description);
 
       private->description = NULL;
+    }
+  if (private->icon)
+    {
+      g_object_unref (GET_PRIVATE (imagefile)->icon);
+      private->icon = NULL;
     }
 
   g_signal_emit (imagefile, gimp_imagefile_signals[INFO_CHANGED], 0);

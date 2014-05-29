@@ -137,7 +137,7 @@ vectors_edit_attributes_cmd_callback (GtkAction *action,
                                         gimp_object_get_name (vectors),
                                         _("Path Attributes"),
                                         "gimp-vectors-edit",
-                                        GTK_STOCK_EDIT,
+                                        "gtk-edit",
                                         _("Edit Path Attributes"),
                                         GIMP_HELP_PATH_EDIT);
 
@@ -432,7 +432,8 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
   else
     options = gimp_stroke_options_new (image->gimp, context, TRUE);
 
-  if (! gimp_item_stroke (GIMP_ITEM (vectors), drawable, context, options, FALSE,
+  if (! gimp_item_stroke (GIMP_ITEM (vectors),
+                          drawable, context, options, NULL,
                           TRUE, NULL, &error))
     {
       gimp_message_literal (image->gimp, G_OBJECT (widget),

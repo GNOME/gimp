@@ -1,6 +1,6 @@
 # GIMP tool preset file
 
-(stock-id "gimp-tool-eraser")
+(icon-name "gimp-tool-eraser")
 (name "Eraser Soft")
 (tool-options "GimpEraserOptions"
     (tool "gimp-eraser-tool")

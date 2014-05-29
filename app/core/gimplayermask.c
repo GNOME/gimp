@@ -71,7 +71,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
   GimpItemClass     *item_class     = GIMP_ITEM_CLASS (klass);
   GimpDrawableClass *drawable_class = GIMP_DRAWABLE_CLASS (klass);
 
-  viewable_class->default_stock_id = "gimp-layer-mask";
+  viewable_class->default_icon_name = "gimp-layer-mask";
 
   item_class->is_attached        = gimp_layer_mask_is_attached;
   item_class->is_content_locked  = gimp_layer_mask_is_content_locked;
@@ -82,7 +82,7 @@ gimp_layer_mask_class_init (GimpLayerMaskClass *klass)
   item_class->translate_desc     = C_("undo-type", "Move Layer Mask");
   item_class->to_selection_desc  = C_("undo-type", "Layer Mask to Selection");
 
-  drawable_class->convert_type  = gimp_layer_mask_convert_type;
+  drawable_class->convert_type   = gimp_layer_mask_convert_type;
 }
 
 static void

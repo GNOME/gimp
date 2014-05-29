@@ -74,10 +74,10 @@ struct _GimpToolControl
   GimpToolCursorType   toggle_tool_cursor;
   GimpCursorModifier   toggle_cursor_modifier;
 
-  gchar               *action_value_1;
-  gchar               *action_value_2;
-  gchar               *action_value_3;
-  gchar               *action_value_4;
+  gchar               *action_opacity;
+  gchar               *action_size;
+  gchar               *action_aspect;
+  gchar               *action_angle;
   gchar               *action_object_1;
   gchar               *action_object_2;
 };
@@ -184,21 +184,21 @@ GimpToolCursorType
 GimpCursorModifier
               gimp_tool_control_get_cursor_modifier (GimpToolControl *control);
 
-void          gimp_tool_control_set_action_value_1  (GimpToolControl *control,
+void          gimp_tool_control_set_action_opacity  (GimpToolControl *control,
                                                      const gchar     *action);
-const gchar * gimp_tool_control_get_action_value_1  (GimpToolControl *control);
+const gchar * gimp_tool_control_get_action_opacity  (GimpToolControl *control);
 
-void          gimp_tool_control_set_action_value_2  (GimpToolControl *control,
+void          gimp_tool_control_set_action_size     (GimpToolControl *control,
                                                      const gchar     *action);
-const gchar * gimp_tool_control_get_action_value_2  (GimpToolControl *control);
+const gchar * gimp_tool_control_get_action_size     (GimpToolControl *control);
 
-void          gimp_tool_control_set_action_value_3  (GimpToolControl *control,
+void          gimp_tool_control_set_action_aspect   (GimpToolControl *control,
                                                      const gchar     *action);
-const gchar * gimp_tool_control_get_action_value_3  (GimpToolControl *control);
+const gchar * gimp_tool_control_get_action_aspect   (GimpToolControl *control);
 
-void          gimp_tool_control_set_action_value_4  (GimpToolControl *control,
+void          gimp_tool_control_set_action_angle    (GimpToolControl *control,
                                                      const gchar     *action);
-const gchar * gimp_tool_control_get_action_value_4  (GimpToolControl *control);
+const gchar * gimp_tool_control_get_action_angle    (GimpToolControl *control);
 
 void          gimp_tool_control_set_action_object_1 (GimpToolControl *control,
                                                      const gchar     *action);

@@ -1,6 +1,6 @@
 # GIMP tool preset file
 
-(stock-id "gimp-tool-airbrush")
+(icon-name "gimp-tool-airbrush")
 (name "Airbrush")
 (tool-options "GimpAirbrushOptions"
     (tool "gimp-airbrush-tool")

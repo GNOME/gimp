@@ -52,6 +52,7 @@ AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpWidgets\"	\
 	-DGIMP_WIDGETS_COMPILATION		\
 	-I$(top_srcdir)				\
+	$(LCMS_CFLAGS)				\
 	$(GEGL_CFLAGS)				\
 	$(GTK_CFLAGS)				\
 	-I$(includedir)
@@ -83,11 +84,15 @@ libgimpwidgets_sources = \
 	gimpcolorhexentry.h		\
 	gimpcolornotebook.c		\
 	gimpcolornotebook.h		\
+	gimpcolorprofilechooserdialog.c	\
+	gimpcolorprofilechooserdialog.h	\
 	gimpcolorprofilecombobox.c	\
 	gimpcolorprofilecombobox.h	\
 	gimpcolorprofilestore-private.h	\
 	gimpcolorprofilestore.c		\
 	gimpcolorprofilestore.h		\
+	gimpcolorprofileview.c		\
+	gimpcolorprofileview.h		\
 	gimpcolorscale.c		\
 	gimpcolorscale.h		\
 	gimpcolorscales.c		\
@@ -204,8 +209,10 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpcolordisplaystack.h		\
 	gimpcolorhexentry.h		\
 	gimpcolornotebook.h		\
+	gimpcolorprofilechooserdialog.h	\
 	gimpcolorprofilecombobox.h	\
 	gimpcolorprofilestore.h		\
+	gimpcolorprofileview.h		\
 	gimpcolorscale.h		\
 	gimpcolorscales.h		\
 	gimpcolorselect.h		\
@@ -252,19 +259,20 @@ libgimpwidgetsinclude_HEADERS = \
 	gimp3migration.h
 
 libgimpwidgets_@GIMP_API_VERSION@_la_LDFLAGS = \
-	-version-info $(LT_VERSION_INFO)\
-	$(no_undefined) 		\
+	-version-info $(LT_VERSION_INFO)	\
+	$(no_undefined) 			\
 	$(libgimpwidgets_export_symbols)
 
+EXTRA_libgimpwidgets_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpwidgets_def)
+
 libgimpwidgets_@GIMP_API_VERSION@_la_LIBADD = \
+	$(libgimpbase)		\
 	$(libgimpcolor)		\
 	$(libgimpconfig)	\
-	$(libgimpbase)		\
+	$(LCMS_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
 	$(libm)
-
-libgimpwidgets_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpwidgets_def)
 
 
 ## Wilber icons for the window managaer, compiled in
@@ -339,24 +347,19 @@ EXTRA_PROGRAMS = \
 
 test_preview_area_SOURCES = test-preview-area.c 
 
-test_preview_area_DEPENDENCIES = \
-	$(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la	\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-
 test_preview_area_LDADD = \
-	$(GTK_LIBS) \
-	$(test_preview_area_DEPENDENCIES)
+	$(GTK_LIBS)	\
+	$(libgimpbase)	\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 
 
 test_eevl_SOURCES = \
 	test-eevl.c
 
-test_eevl_DEPENDENCIES = \
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
-
 test_eevl_LDADD = \
-	$(GLIB_LIBS) 		\
-	$(test_eevl_DEPENDENCIES)
+	$(GLIB_LIBS)	\
+	$(libgimpcolor)		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 
 
 #

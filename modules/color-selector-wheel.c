@@ -101,7 +101,7 @@ colorsel_wheel_class_init (ColorselWheelClass *klass)
 
   selector_class->name      = _("Wheel");
   selector_class->help_id   = "gimp-colorselector-triangle";
-  selector_class->stock_id  = GIMP_STOCK_COLOR_TRIANGLE;
+  selector_class->icon_name = GIMP_STOCK_COLOR_TRIANGLE;
   selector_class->set_color = colorsel_wheel_set_color;
 }
 

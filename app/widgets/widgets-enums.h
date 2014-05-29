@@ -34,6 +34,17 @@ typedef enum
 } GimpActiveColor;
 
 
+#define GIMP_TYPE_CIRCLE_BACKGROUND (gimp_circle_background_get_type ())
+
+GType gimp_circle_background_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_CIRCLE_BACKGROUND_PLAIN, /*< desc="Plain" >*/
+  GIMP_CIRCLE_BACKGROUND_HSV    /*< desc="HSV"   >*/
+} GimpCircleBackground;
+
+
 #define GIMP_TYPE_COLOR_DIALOG_STATE (gimp_color_dialog_state_get_type ())
 
 GType gimp_color_dialog_state_get_type (void) G_GNUC_CONST;

@@ -46,7 +46,7 @@ LayerOptionsDialog * layer_options_dialog_new (GimpImage    *image,
                                                GimpFillType  layer_fill_type,
                                                const gchar  *title,
                                                const gchar  *role,
-                                               const gchar  *stock_id,
+                                               const gchar  *icon_name,
                                                const gchar  *desc,
                                                const gchar  *help_id);
 

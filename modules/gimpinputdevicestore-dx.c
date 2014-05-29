@@ -143,6 +143,7 @@ aux_window_filter (GdkXEvent *xevent,
                    GdkEvent  *event,
                    gpointer   data)
 {
+#if 0
   GimpInputDeviceStore *store = (GimpInputDeviceStore *) data;
   const MSG *msg = (MSG *) xevent;
 
@@ -150,6 +151,7 @@ aux_window_filter (GdkXEvent *xevent,
   switch (msg->message)
     {
     }
+#endif
 
   return GDK_FILTER_REMOVE;
 }

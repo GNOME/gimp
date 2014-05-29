@@ -70,7 +70,7 @@
 #include "gimp-log.h"
 
 
-#define TILE_MAP_SIZE (GIMP_PLUG_IN_TILE_WIDTH * GIMP_PLUG_IN_TILE_HEIGHT * 16)
+#define TILE_MAP_SIZE (GIMP_PLUG_IN_TILE_WIDTH * GIMP_PLUG_IN_TILE_HEIGHT * 32)
 
 #define ERRMSG_SHM_DISABLE "Disabling shared memory tile transport"
 

@@ -136,7 +136,6 @@ typedef struct _GimpColorDialog              GimpColorDialog;
 typedef struct _GimpErrorDialog              GimpErrorDialog;
 typedef struct _GimpFileDialog               GimpFileDialog;
 typedef struct _GimpMessageDialog            GimpMessageDialog;
-typedef struct _GimpProfileChooserDialog     GimpProfileChooserDialog;
 typedef struct _GimpProgressDialog           GimpProgressDialog;
 typedef struct _GimpTextEditor               GimpTextEditor;
 typedef struct _GimpViewableDialog           GimpViewableDialog;
@@ -157,6 +156,7 @@ typedef struct _GimpPdbDialog                GimpPdbDialog;
 typedef struct _GimpActionEditor             GimpActionEditor;
 typedef struct _GimpActionView               GimpActionView;
 typedef struct _GimpBlobEditor               GimpBlobEditor;
+typedef struct _GimpCircle                   GimpCircle;
 typedef struct _GimpColorBar                 GimpColorBar;
 typedef struct _GimpColorDisplayEditor       GimpColorDisplayEditor;
 typedef struct _GimpColorFrame               GimpColorFrame;
@@ -168,6 +168,7 @@ typedef struct _GimpCurveView                GimpCurveView;
 typedef struct _GimpDashEditor               GimpDashEditor;
 typedef struct _GimpDeviceEditor             GimpDeviceEditor;
 typedef struct _GimpDeviceInfoEditor         GimpDeviceInfoEditor;
+typedef struct _GimpDial                     GimpDial;
 typedef struct _GimpDynamicsOutputEditor     GimpDynamicsOutputEditor;
 typedef struct _GimpFgBgEditor               GimpFgBgEditor;
 typedef struct _GimpFgBgView                 GimpFgBgView;
@@ -266,6 +267,7 @@ typedef struct _GimpDialogFactoryEntry       GimpDialogFactoryEntry;
 
 typedef GtkWidget * (* GimpDialogRestoreFunc)        (GimpDialogFactory *factory,
                                                       GdkScreen         *screen,
+                                                      gint               monitor,
                                                       GimpSessionInfo   *info);
 typedef void        (* GimpActionGroupSetupFunc)     (GimpActionGroup   *group);
 typedef void        (* GimpActionGroupUpdateFunc)    (GimpActionGroup   *group,

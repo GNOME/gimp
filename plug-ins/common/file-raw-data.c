@@ -218,7 +218,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_save_handler (SAVE_PROC, "", "");
+  gimp_register_save_handler (SAVE_PROC, "data", "");
 }
 
 static void
@@ -234,6 +234,7 @@ run (const gchar      *name,
   GError            *error  = NULL;
   gint32             image_id;
   gint32             drawable_id;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -314,6 +315,20 @@ run (const gchar      *name,
       image_id    = param[1].data.d_int32;
       drawable_id = param[2].data.d_int32;
 
+      /* export the image */
+      export = gimp_export_image (&image_id, &drawable_id, "RAW",
+                                  GIMP_EXPORT_CAN_HANDLE_RGB     |
+                                  GIMP_EXPORT_CAN_HANDLE_GRAY    |
+                                  GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                  GIMP_EXPORT_CAN_HANDLE_ALPHA);
+
+      if (export == GIMP_EXPORT_CANCEL)
+        {
+          *nreturn_vals = 1;
+          values[0].data.d_status = GIMP_PDB_CANCEL;
+          return;
+        }
+
       if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           gimp_get_data (SAVE_PROC, runtime);
@@ -341,6 +356,9 @@ run (const gchar      *name,
           status = save_image (param[3].data.d_string, image_id, drawable_id,
                                &error);
         }
+
+      if (export == GIMP_EXPORT_EXPORT)
+        gimp_image_delete (image_id);
     }
 
   g_free (runtime);

@@ -193,6 +193,9 @@ gimp_align_tool_control (GimpTool       *tool,
     case GIMP_TOOL_ACTION_HALT:
       gimp_align_tool_clear_selected (align_tool);
       break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      break;
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
@@ -740,6 +743,8 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
     case GIMP_ARRANGE_TOP:
     case GIMP_ARRANGE_VCENTER:
     case GIMP_ARRANGE_BOTTOM:
+    case GIMP_ARRANGE_HFILL:
+    case GIMP_ARRANGE_VFILL:
       offset = options->offset_x;
       break;
     }
@@ -789,7 +794,7 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
       break;
 
     case GIMP_ALIGN_REFERENCE_ACTIVE_PATH:
-      g_print ("reference = active path not yet handled.\n");
+      reference_object = G_OBJECT (gimp_image_get_active_vectors (image));
       break;
     }
 

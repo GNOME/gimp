@@ -270,7 +270,8 @@ print_size_dialog_new (GimpImage              *image,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1, private->yres);
 
   chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
+  if (ABS (private->xres - private->yres) < GIMP_MIN_RESOLUTION)
+    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
   gtk_table_attach_defaults (GTK_TABLE (entry), chain, 1, 2, 0, 2);
   gtk_widget_show (chain);
 
@@ -398,13 +399,9 @@ print_size_dialog_set_resolution (PrintSizeDialog *private,
   if (private->chain && gimp_chain_button_get_active (private->chain))
     {
       if (xres != private->xres)
-        {
-          yres = xres;
-        }
+        yres = xres;
       else
-        {
-          xres = yres;
-        }
+        xres = yres;
     }
 
   private->xres = xres;

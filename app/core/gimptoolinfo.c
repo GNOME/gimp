@@ -235,7 +235,7 @@ gimp_tool_info_new (Gimp                *gimp,
                     const gchar         *help_domain,
                     const gchar         *help_id,
                     const gchar         *paint_core_name,
-                    const gchar         *stock_id)
+                    const gchar         *icon_name)
 {
   GimpPaintInfo *paint_info;
   GimpToolInfo  *tool_info;
@@ -247,7 +247,7 @@ gimp_tool_info_new (Gimp                *gimp,
   g_return_val_if_fail (menu_label != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
   g_return_val_if_fail (paint_core_name != NULL, NULL);
-  g_return_val_if_fail (stock_id != NULL, NULL);
+  g_return_val_if_fail (icon_name != NULL, NULL);
 
   paint_info = (GimpPaintInfo *)
     gimp_container_get_child_by_name (gimp->paint_info_list, paint_core_name);
@@ -255,8 +255,8 @@ gimp_tool_info_new (Gimp                *gimp,
   g_return_val_if_fail (GIMP_IS_PAINT_INFO (paint_info), NULL);
 
   tool_info = g_object_new (GIMP_TYPE_TOOL_INFO,
-                            "name",     identifier,
-                            "stock-id", stock_id,
+                            "name",      identifier,
+                            "icon-name", icon_name,
                             NULL);
 
   tool_info->gimp              = gimp;

@@ -38,7 +38,7 @@
 enum
 {
   PROP_0,
-  PROP_STOCK_ID
+  PROP_ICON_NAME
 };
 
 
@@ -98,8 +98,8 @@ gimp_message_box_class_init (GimpMessageBoxClass *klass)
 
   container_class->forall     = gimp_message_box_forall;
 
-  g_object_class_install_property (object_class, PROP_STOCK_ID,
-                                   g_param_spec_string ("stock-id", NULL, NULL,
+  g_object_class_install_property (object_class, PROP_ICON_NAME,
+                                   g_param_spec_string ("icon-name", NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
@@ -153,11 +153,11 @@ gimp_message_box_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  if (box->stock_id)
+  if (box->icon_name)
     {
       gtk_widget_push_composite_child ();
-      box->image = gtk_image_new_from_stock (box->stock_id,
-                                             GTK_ICON_SIZE_DIALOG);
+      box->image = gtk_image_new_from_icon_name (box->icon_name,
+                                                 GTK_ICON_SIZE_DIALOG);
       gtk_widget_pop_composite_child ();
 
       gtk_misc_set_alignment (GTK_MISC (box->image), 0.0, 0.0);
@@ -185,10 +185,10 @@ gimp_message_box_finalize (GObject *object)
 {
   GimpMessageBox *box = GIMP_MESSAGE_BOX (object);
 
-  if (box->stock_id)
+  if (box->icon_name)
     {
-      g_free (box->stock_id);
-      box->stock_id = NULL;
+      g_free (box->icon_name);
+      box->icon_name = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -204,8 +204,8 @@ gimp_message_box_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_STOCK_ID:
-      box->stock_id = g_value_dup_string (value);
+    case PROP_ICON_NAME:
+      box->icon_name = g_value_dup_string (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -223,8 +223,8 @@ gimp_message_box_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_STOCK_ID:
-      g_value_set_string (value, box->stock_id);
+    case PROP_ICON_NAME:
+      g_value_set_string (value, box->icon_name);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -381,10 +381,10 @@ gimp_message_box_set_label_markup (GimpMessageBox *box,
 /*  public functions  */
 
 GtkWidget *
-gimp_message_box_new (const gchar *stock_id)
+gimp_message_box_new (const gchar *icon_name)
 {
   return g_object_new (GIMP_TYPE_MESSAGE_BOX,
-                       "stock-id",  stock_id,
+                       "icon-name", icon_name,
                        NULL);
 }
 

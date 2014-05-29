@@ -40,6 +40,7 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimpapplicator.h"
 
 #include "gimpchannel.h"
@@ -64,8 +65,9 @@ struct _GimpImageMap
   GimpDrawable       *drawable;
   gchar              *undo_desc;
   GeglNode           *operation;
-  gchar              *stock_id;
+  gchar              *icon_name;
   GimpImageMapRegion  region;
+  gboolean            gamma_hack;
 
   gboolean            filtering;
   GeglRectangle       filter_area;
@@ -73,6 +75,8 @@ struct _GimpImageMap
   GimpFilter         *filter;
   GeglNode           *translate;
   GeglNode           *crop;
+  GeglNode           *cast_before;
+  GeglNode           *cast_after;
   GimpApplicator     *applicator;
 };
 
@@ -146,10 +150,10 @@ gimp_image_map_finalize (GObject *object)
       image_map->operation = NULL;
     }
 
-  if (image_map->stock_id)
+  if (image_map->icon_name)
     {
-      g_free (image_map->stock_id);
-      image_map->stock_id = NULL;
+      g_free (image_map->icon_name);
+      image_map->icon_name = NULL;
     }
 
   if (image_map->filter)
@@ -177,7 +181,7 @@ GimpImageMap *
 gimp_image_map_new (GimpDrawable *drawable,
                     const gchar  *undo_desc,
                     GeglNode     *operation,
-                    const gchar  *stock_id)
+                    const gchar  *icon_name)
 {
   GimpImageMap *image_map;
 
@@ -191,7 +195,7 @@ gimp_image_map_new (GimpDrawable *drawable,
   image_map->undo_desc = g_strdup (undo_desc);
 
   image_map->operation = g_object_ref (operation);
-  image_map->stock_id  = g_strdup (stock_id);
+  image_map->icon_name = g_strdup (icon_name);
 
   gimp_viewable_preview_freeze (GIMP_VIEWABLE (drawable));
 
@@ -205,6 +209,15 @@ gimp_image_map_set_region (GimpImageMap       *image_map,
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
 
   image_map->region = region;
+}
+
+void
+gimp_image_map_set_gamma_hack (GimpImageMap *image_map,
+                               gboolean      gamma_hack)
+{
+  g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
+
+  image_map->gamma_hack = gamma_hack;
 }
 
 void
@@ -265,8 +278,8 @@ gimp_image_map_apply (GimpImageMap        *image_map,
       GeglNode *input;
 
       image_map->filter = gimp_filter_new (image_map->undo_desc);
-      gimp_viewable_set_stock_id (GIMP_VIEWABLE (image_map->filter),
-                                  image_map->stock_id);
+      gimp_viewable_set_icon_name (GIMP_VIEWABLE (image_map->filter),
+                                   image_map->icon_name);
 
       filter_node = gimp_filter_get_node (image_map->filter);
 
@@ -286,6 +299,40 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                                              "operation", "gegl:crop",
                                              NULL);
 
+      if (image_map->gamma_hack)
+        {
+          const Babl *drawable_format;
+          const Babl *cast_format;
+
+          drawable_format = gimp_drawable_get_format (image_map->drawable);
+
+          cast_format =
+            gimp_babl_format (gimp_babl_format_get_base_type (drawable_format),
+                              gimp_babl_precision (gimp_babl_format_get_component_type (drawable_format),
+                                                   ! gimp_babl_format_get_linear (drawable_format)),
+                              babl_format_has_alpha (drawable_format));
+
+          image_map->cast_before = gegl_node_new_child (filter_node,
+                                                        "operation",     "gegl:cast-format",
+                                                        "input-format",  drawable_format,
+                                                        "output-format", cast_format,
+                                                        NULL);
+          image_map->cast_after = gegl_node_new_child (filter_node,
+                                                       "operation",     "gegl:cast-format",
+                                                       "input-format",  cast_format,
+                                                       "output-format", drawable_format,
+                                                        NULL);
+        }
+      else
+        {
+          image_map->cast_before = gegl_node_new_child (filter_node,
+                                                        "operation", "gegl:nop",
+                                                        NULL);
+          image_map->cast_after = gegl_node_new_child (filter_node,
+                                                       "operation", "gegl:nop",
+                                                       NULL);
+        }
+
       input = gegl_node_get_input_proxy (filter_node, "input");
 
       if (gegl_node_has_pad (image_map->operation, "input") &&
@@ -297,10 +344,12 @@ gimp_image_map_apply (GimpImageMap        *image_map,
           gegl_node_link_many (input,
                                image_map->translate,
                                image_map->crop,
+                               image_map->cast_before,
                                image_map->operation,
+                               image_map->cast_after,
                                NULL);
 
-          filter_output = image_map->operation;
+          filter_output = image_map->cast_after;
         }
       else if (gegl_node_has_pad (image_map->operation, "output"))
         {
@@ -318,8 +367,12 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                                over,
                                NULL);
 
-          gegl_node_connect_to (image_map->operation, "output",
-                                over,                 "aux");
+          gegl_node_link_many (image_map->operation,
+                               image_map->cast_after,
+                               NULL);
+
+          gegl_node_connect_to (image_map->cast_after, "output",
+                                over,                  "aux");
 
           filter_output = over;
         }
@@ -330,9 +383,11 @@ gimp_image_map_apply (GimpImageMap        *image_map,
           gegl_node_link_many (input,
                                image_map->translate,
                                image_map->crop,
+                               image_map->cast_before,
+                               image_map->cast_after,
                                NULL);
 
-          filter_output = image_map->crop;
+          filter_output = image_map->cast_after;
         }
 
       gegl_node_connect_to (filter_output, "output",

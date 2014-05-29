@@ -154,14 +154,14 @@ gimp_stroke_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  box = gimp_prop_enum_stock_box_new (G_OBJECT (options), "cap-style",
-                                      "gimp-cap", 0, 0);
+  box = gimp_prop_enum_icon_box_new (G_OBJECT (options), "cap-style",
+                                     "gimp-cap", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Cap style:"), 0.0, 0.5,
                              box, 2, TRUE);
 
-  box = gimp_prop_enum_stock_box_new (G_OBJECT (options), "join-style",
-                                      "gimp-join", 0, 0);
+  box = gimp_prop_enum_icon_box_new (G_OBJECT (options), "join-style",
+                                     "gimp-join", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("_Join style:"), 0.0, 0.5,
                              box, 2, TRUE);

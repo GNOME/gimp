@@ -60,7 +60,7 @@ GType           gimp_dockable_get_type         (void) G_GNUC_CONST;
 
 GtkWidget     * gimp_dockable_new              (const gchar    *name,
                                                 const gchar    *blurb,
-                                                const gchar    *stock_id,
+                                                const gchar    *icon_name,
                                                 const gchar    *help_id);
 void            gimp_dockable_set_dockbook     (GimpDockable   *dockable,
                                                 GimpDockbook   *dockbook);
@@ -69,7 +69,7 @@ GimpTabStyle    gimp_dockable_get_tab_style    (GimpDockable   *dockable);
 const gchar   * gimp_dockable_get_name         (GimpDockable   *dockable);
 const gchar   * gimp_dockable_get_blurb        (GimpDockable   *dockable);
 const gchar   * gimp_dockable_get_help_id      (GimpDockable   *dockable);
-const gchar   * gimp_dockable_get_stock_id     (GimpDockable   *dockable);
+const gchar   * gimp_dockable_get_icon_name    (GimpDockable   *dockable);
 GtkWidget     * gimp_dockable_get_icon         (GimpDockable   *dockable,
                                                 GtkIconSize     size);
 
@@ -86,7 +86,6 @@ void            gimp_dockable_set_locked       (GimpDockable   *dockable,
                                                 gboolean        lock);
 gboolean        gimp_dockable_is_locked        (GimpDockable   *dockable);
 
-                                                      
 void            gimp_dockable_set_tab_style           (GimpDockable   *dockable,
                                                        GimpTabStyle    tab_style);
 gboolean        gimp_dockable_set_actual_tab_style    (GimpDockable   *dockable,

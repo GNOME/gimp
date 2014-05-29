@@ -1,6 +1,6 @@
 # GIMP tool preset file
 
-(stock-id "gimp-tool-ink")
+(icon-name "gimp-tool-ink")
 (name "Ink Thin")
 (tool-options "GimpInkOptions"
     (tool "gimp-ink-tool")

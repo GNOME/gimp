@@ -44,13 +44,19 @@
 #include "jpeg-save.h"
 #include "jpeg-settings.h"
 
-#define SCALE_WIDTH         125
+#ifdef C_ARITH_CODING_SUPPORTED
+static gboolean arithc_supported = TRUE;
+#else
+static gboolean arithc_supported = FALSE;
+#endif
 
+#define SCALE_WIDTH         125
 
 /* See bugs #63610 and #61088 for a discussion about the quality settings */
 #define DEFAULT_QUALITY          90.0
 #define DEFAULT_SMOOTHING        0.0
 #define DEFAULT_OPTIMIZE         TRUE
+#define DEFAULT_ARITHMETIC_CODING FALSE
 #define DEFAULT_PROGRESSIVE      TRUE
 #define DEFAULT_BASELINE         TRUE
 #define DEFAULT_SUBSMP           JPEG_SUBSAMPLING_1x1_1x1_1x1
@@ -95,7 +101,8 @@ typedef struct
 
   GtkObject     *quality;               /*quality slidebar*/
   GtkObject     *smoothing;             /*smoothing slidebar*/
-  GtkWidget     *optimize;              /*optimize togle*/
+  GtkWidget     *optimize;              /*optimize toggle*/
+  GtkWidget     *arithmetic_coding;     /*arithmetic coding toggle*/
   GtkWidget     *progressive;           /*progressive toggle*/
   GtkWidget     *subsmp;                /*subsampling side select*/
   GtkWidget     *restart;               /*spinner for setting frequency restart markers*/
@@ -399,7 +406,14 @@ save_image (const gchar  *filename,
         }
     }
 
-  cinfo.optimize_coding = jsvals.optimize;
+  if (arithc_supported)
+    {
+      cinfo.arith_code = jsvals.arithmetic_coding;
+      if (!jsvals.arithmetic_coding)
+        cinfo.optimize_coding = jsvals.optimize;
+    }
+  else
+    cinfo.optimize_coding = jsvals.optimize;
 
   subsampling = (gimp_drawable_is_rgb (drawable_ID) ?
                  jsvals.subsmp : JPEG_SUBSAMPLING_1x1_1x1_1x1);
@@ -692,6 +706,16 @@ destroy_preview (void)
     }
 }
 
+static void
+toggle_arithmetic_coding (GtkToggleButton *togglebutton,
+                          gpointer         user_data)
+{
+  GtkWidget *optimize = GTK_WIDGET (user_data);
+
+  gtk_widget_set_sensitive (optimize,
+                            !gtk_toggle_button_get_active (togglebutton));
+}
+
 gboolean
 save_dialog (void)
 {
@@ -713,7 +737,7 @@ save_dialog (void)
   GtkWidget     *scrolled_window;
   GtkWidget     *button;
   gchar         *text;
-
+  gint           row;
 
   dialog = gimp_export_dialog_new (_("JPEG"), PLUG_IN_BINARY, SAVE_PROC);
 
@@ -852,8 +876,12 @@ save_dialog (void)
                             G_CALLBACK (save_restart_update),
                             pg.scale_data);
 
+  row = 0;
+
+  /* Optimize */
   pg.optimize = toggle = gtk_check_button_new_with_mnemonic (_("_Optimize"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
+                    row, row + 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -865,9 +893,43 @@ save_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.optimize);
 
+  if (arithc_supported)
+    gtk_widget_set_sensitive (toggle, !jsvals.arithmetic_coding);
+
+  row++;
+
+  if (arithc_supported)
+    {
+      /* Arithmetic coding */
+      pg.arithmetic_coding = toggle = gtk_check_button_new_with_mnemonic
+        (_("Use arithmetic _coding"));
+      gtk_widget_set_tooltip_text
+        (toggle, _("Older software may have trouble opening "
+                   "arithmetic-coded images"));
+      gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
+                        row, row + 1, GTK_FILL, 0, 0, 0);
+      gtk_widget_show (toggle);
+
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (gimp_toggle_button_update),
+                        &jsvals.arithmetic_coding);
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (make_preview),
+                        NULL);
+      g_signal_connect (toggle, "toggled",
+                        G_CALLBACK (toggle_arithmetic_coding),
+                        pg.optimize);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                    jsvals.arithmetic_coding);
+
+      row++;
+    }
+
+  /* Progressive */
   pg.progressive = toggle =
     gtk_check_button_new_with_mnemonic (_("_Progressive"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
+                    row, row + 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -880,10 +942,14 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 jsvals.progressive);
 
+  row++;
+
+  /* Save EXIF data */
   pg.save_exif = toggle =
     gtk_check_button_new_with_mnemonic (_("Save _Exif data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_exif);
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
+                    row, row + 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -895,10 +961,14 @@ save_dialog (void)
 
   gtk_widget_set_sensitive (toggle, TRUE);
 
+  row++;
+
+  /* Save thumbnail */
   pg.save_thumbnail = toggle =
     gtk_check_button_new_with_mnemonic (_("Save _thumbnail"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_thumbnail);
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 3, 4, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
+                    row, row + 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -908,11 +978,14 @@ save_dialog (void)
                     G_CALLBACK (make_preview),
                     NULL);
 
+  row++;
+
   /* XMP metadata */
   pg.save_xmp = toggle =
     gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_xmp);
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 4, 5, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
+                    row, row + 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -924,11 +997,14 @@ save_dialog (void)
 
   gtk_widget_set_sensitive (toggle, TRUE);
 
+  row++;
+
   /* IPTC metadata */
   pg.save_iptc = toggle =
     gtk_check_button_new_with_mnemonic (_("Save _IPTC data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), jsvals.save_iptc);
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 5, 6, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1,
+                    row, row + 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
   g_signal_connect (toggle, "toggled",
@@ -940,11 +1016,14 @@ save_dialog (void)
 
   gtk_widget_set_sensitive (toggle, TRUE);
 
+  row++;
+
   /* custom quantization tables - now used also for original quality */
   pg.use_orig_quality = toggle =
     gtk_check_button_new_with_mnemonic (_("_Use quality settings from original "
                                           "image"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 6, 7, GTK_FILL, 0, 0, 0);
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 4,
+                    row, row + 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
 
   gimp_help_set_help_data (toggle,
@@ -1145,6 +1224,7 @@ load_defaults (void)
   jsvals.quality          = DEFAULT_QUALITY;
   jsvals.smoothing        = DEFAULT_SMOOTHING;
   jsvals.optimize         = DEFAULT_OPTIMIZE;
+  jsvals.arithmetic_coding= DEFAULT_ARITHMETIC_CODING;
   jsvals.progressive      = DEFAULT_PROGRESSIVE;
   jsvals.baseline         = DEFAULT_BASELINE;
   jsvals.subsmp           = DEFAULT_SUBSMP;
@@ -1167,7 +1247,8 @@ load_defaults (void)
 
   gimp_parasite_free (parasite);
 
-  num_fields = sscanf (def_str, "%lf %lf %d %d %d %d %d %d %d %d %d %d %d %d",
+  num_fields = sscanf (def_str,
+                       "%lf %lf %d %d %d %d %d %d %d %d %d %d %d %d %d",
                        &tmpvals.quality,
                        &tmpvals.smoothing,
                        &tmpvals.optimize,
@@ -1181,7 +1262,8 @@ load_defaults (void)
                        &tmpvals.save_thumbnail,
                        &tmpvals.save_xmp,
                        &tmpvals.use_orig_quality,
-                       &tmpvals.save_iptc);
+                       &tmpvals.save_iptc,
+                       &tmpvals.arithmetic_coding);
 
   tmpvals.subsmp = subsampling;
 
@@ -1199,7 +1281,7 @@ save_defaults (void)
   GimpParasite *parasite;
   gchar        *def_str;
 
-  def_str = g_strdup_printf ("%lf %lf %d %d %d %d %d %d %d %d %d %d %d %d",
+  def_str = g_strdup_printf ("%lf %lf %d %d %d %d %d %d %d %d %d %d %d %d %d",
                              jsvals.quality,
                              jsvals.smoothing,
                              jsvals.optimize,
@@ -1213,7 +1295,8 @@ save_defaults (void)
                              jsvals.save_thumbnail,
                              jsvals.save_xmp,
                              jsvals.use_orig_quality,
-                             jsvals.save_iptc);
+                             jsvals.save_iptc,
+                             jsvals.arithmetic_coding);
   parasite = gimp_parasite_new (JPEG_DEFAULTS_PARASITE,
                                 GIMP_PARASITE_PERSISTENT,
                                 strlen (def_str), def_str);

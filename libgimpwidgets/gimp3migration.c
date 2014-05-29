@@ -206,3 +206,11 @@ gdk_cairo_get_clip_rectangle (cairo_t      *cr,
 
   return clip_exists;
 }
+
+void
+gdk_screen_get_monitor_workarea (GdkScreen    *screen,
+                                 gint          monitor_num,
+                                 GdkRectangle *dest)
+{
+  gdk_screen_get_monitor_geometry (screen, monitor_num, dest);
+}

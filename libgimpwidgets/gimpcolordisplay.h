@@ -83,7 +83,11 @@ struct _GimpColorDisplayClass
   /*  signals  */
   void               (* changed)         (GimpColorDisplay *display);
 
-  const gchar  *stock_id;
+#ifdef GIMP_DISABLE_DEPRECATED
+  gpointer     deprecated_stock_id;
+#else
+  const gchar *stock_id;
+#endif
 
   /*  implementing the GimpColorDisplay::convert_surface method is deprecated  */
   void               (* convert_surface) (GimpColorDisplay *display,
@@ -93,8 +97,8 @@ struct _GimpColorDisplayClass
                                           GeglBuffer       *buffer,
                                           GeglRectangle    *area);
 
-  /* Padding for future expansion */
-  void (* _gimp_reserved4) (void);
+  /*  icon name  */
+  const gchar *icon_name;
 };
 
 

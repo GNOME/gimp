@@ -38,7 +38,7 @@ struct _GimpMessageBox
 {
   GtkBox     parent_instance;
 
-  gchar     *stock_id;
+  gchar     *icon_name;
   gint       repeat;
   GtkWidget *label[3];
   GtkWidget *image;
@@ -52,7 +52,7 @@ struct _GimpMessageBoxClass
 
 GType       gimp_message_box_get_type         (void) G_GNUC_CONST;
 
-GtkWidget * gimp_message_box_new              (const gchar    *stock_id);
+GtkWidget * gimp_message_box_new              (const gchar    *icon_name);
 void        gimp_message_box_set_primary_text (GimpMessageBox *box,
                                                const gchar    *format,
                                                ...) G_GNUC_PRINTF (2, 3);

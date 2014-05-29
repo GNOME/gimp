@@ -38,6 +38,7 @@
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpuimanager.h"
+#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
 
 #include "display/gimpdisplay.h"
@@ -91,7 +92,9 @@ view_new_cmd_callback (GtkAction *action,
 
   gimp_create_display (display->gimp,
                        gimp_display_get_image (display),
-                       shell->unit, gimp_zoom_model_get_factor (shell->zoom));
+                       shell->unit, gimp_zoom_model_get_factor (shell->zoom),
+                       G_OBJECT (gtk_widget_get_screen (GTK_WIDGET (shell))),
+                       gimp_widget_get_monitor (GTK_WIDGET (shell)));
 }
 
 void
@@ -392,6 +395,7 @@ view_navigation_window_cmd_callback (GtkAction *action,
                                              gimp,
                                              gimp_dialog_factory_get_singleton (),
                                              gtk_widget_get_screen (GTK_WIDGET (shell)),
+                                             gimp_widget_get_monitor (GTK_WIDGET (shell)),
                                              "gimp-navigation-view");
 }
 
@@ -650,7 +654,7 @@ view_padding_color_cmd_callback (GtkAction *action,
               gimp_color_dialog_new (GIMP_VIEWABLE (image),
                                      action_data_get_context (data),
                                      _("Set Canvas Padding Color"),
-                                     GTK_STOCK_SELECT_COLOR,
+                                     "gtk-select-color",
                                      _("Set Custom Canvas Padding Color"),
                                      GTK_WIDGET (shell),
                                      NULL, NULL,

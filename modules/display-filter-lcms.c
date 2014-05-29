@@ -17,7 +17,7 @@
 
 #include "config.h"
 
-#include <glib.h>  /* lcms.h uses the "inline" keyword */
+#include <glib.h>
 
 #include <string.h>
 
@@ -133,7 +133,7 @@ cdisplay_lcms_class_init (CdisplayLcmsClass *klass)
 
   display_class->name            = _("Color Management");
   display_class->help_id         = "gimp-colordisplay-lcms";
-  display_class->stock_id        = GIMP_STOCK_DISPLAY_FILTER_LCMS;
+  display_class->icon_name       = GIMP_STOCK_DISPLAY_FILTER_LCMS;
 
   display_class->configure       = cdisplay_lcms_configure;
   display_class->convert_buffer  = cdisplay_lcms_convert_buffer;
@@ -167,78 +167,18 @@ cdisplay_lcms_finalize (GObject *object)
 
 static void
 cdisplay_lcms_profile_get_info (cmsHPROFILE   profile,
-                                gchar       **name,
-                                gchar       **info)
+                                gchar       **label,
+                                gchar       **summary)
 {
   if (profile)
     {
-      cmsUInt32Number  descSize;
-      gchar           *descData;
-
-      descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
-                                         "en", "US", NULL, 0);
-      if (descSize > 0)
-        {
-          descData = g_new (gchar, descSize + 1);
-          descSize = cmsGetProfileInfoASCII (profile, cmsInfoDescription,
-                                             "en", "US", descData, descSize);
-          if (descSize > 0)
-            *name = descData;
-          else
-            g_free (descData);
-        }
-
-      if (! *name)
-        {
-          descSize = cmsGetProfileInfoASCII (profile, cmsInfoModel,
-                                             "en", "US", NULL, 0);
-          if (descSize > 0)
-            {
-              descData = g_new (gchar, descSize + 1);
-              descSize = cmsGetProfileInfoASCII(profile, cmsInfoModel,
-                                                "en", "US", descData, descSize);
-              if (descSize > 0)
-                *name = descData;
-              else
-                g_free (descData);
-            }
-        }
-
-      if (*name && ! g_utf8_validate (*name, -1, NULL))
-        {
-          g_free (*name);
-          *name = g_strdup (_("(invalid UTF-8 string)"));
-        }
-
-      if (! *name)
-        {
-          /* a color profile without a name */
-          *name = g_strdup (_("(unnamed profile)"));
-        }
-
-      descSize = cmsGetProfileInfoASCII (profile, cmsInfoManufacturer,
-                                         "en", "US", NULL, 0);
-      if (descSize > 0)
-        {
-          descData = g_new (gchar, descSize + 1);
-          descSize = cmsGetProfileInfoASCII (profile, cmsInfoManufacturer,
-                                             "en", "US", descData, descSize);
-          if (descSize > 0)
-            *info = descData;
-          else
-            g_free (descData);
-        }
-
-      if (*info && ! g_utf8_validate (*info, -1, NULL))
-        {
-          g_free (*info);
-          *info = NULL;
-        }
+      *label   = gimp_lcms_profile_get_label (profile);
+      *summary = gimp_lcms_profile_get_summary (profile);
     }
   else
     {
-      *name = g_strdup (_("None"));
-      *info = NULL;
+      *label   = g_strdup (_("None"));
+      *summary = NULL;
     }
 }
 
@@ -369,10 +309,10 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       cmsUInt32Number softproof_flags = 0;
 
       if (! src_profile)
-        src_profile = cmsCreate_sRGBProfile ();
+        src_profile = gimp_lcms_create_srgb_profile ();
 
       if (! dest_profile)
-        dest_profile = cmsCreate_sRGBProfile ();
+        dest_profile = gimp_lcms_create_srgb_profile ();
 
       softproof_flags |= cmsFLAGS_SOFTPROOFING;
 
@@ -409,10 +349,10 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       cmsUInt32Number display_flags = 0;
 
       if (! src_profile)
-        src_profile = cmsCreate_sRGBProfile ();
+        src_profile = gimp_lcms_create_srgb_profile ();
 
       if (! dest_profile)
-        dest_profile = cmsCreate_sRGBProfile ();
+        dest_profile = gimp_lcms_create_srgb_profile ();
 
       if (config->display_use_black_point_compensation)
         {
@@ -432,12 +372,6 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
     cmsCloseProfile (src_profile);
 }
 
-static gboolean
-cdisplay_lcms_profile_is_rgb (cmsHPROFILE profile)
-{
-  return (cmsGetColorSpace (profile) == cmsSigRgbData);
-}
-
 static cmsHPROFILE
 cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
 {
@@ -455,8 +389,7 @@ cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
       if (data)
         profile = cmsOpenProfileFromMem ((gpointer) data, len);
 
-      if (profile &&
-          ! cdisplay_lcms_profile_is_rgb (profile))
+      if (profile && ! gimp_lcms_profile_is_rgb (profile))
         {
           cmsCloseProfile (profile);
           profile = NULL;
@@ -469,6 +402,12 @@ cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
 
       if (config->rgb_profile)
         profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
+
+      if (profile && ! gimp_lcms_profile_is_rgb (profile))
+        {
+          cmsCloseProfile (profile);
+          profile = NULL;
+        }
     }
 
   return profile;
@@ -490,7 +429,7 @@ cdisplay_lcms_get_screen (CdisplayLcms *lcms,
 
   g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
-  if (GTK_IS_WIDGET (managed) && gtk_widget_is_drawable (GTK_WIDGET (managed)))
+  if (GTK_IS_WIDGET (managed) && gtk_widget_get_window (GTK_WIDGET (managed)))
     {
       GtkWidget *widget = GTK_WIDGET (managed);
 

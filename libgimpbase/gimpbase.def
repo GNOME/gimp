@@ -3,6 +3,7 @@ EXPORTS
 	gimp_any_to_utf8
 	gimp_base_init
 	gimp_blend_mode_get_type
+	gimp_brush_generated_shape_get_type
 	gimp_bucket_fill_mode_get_type
 	gimp_canonicalize_identifier
 	gimp_channel_ops_get_type
@@ -11,6 +12,9 @@ EXPORTS
 	gimp_check_type_get_type
 	gimp_checks_get_shades
 	gimp_clone_type_get_type
+	gimp_component_type_get_type
+	gimp_convert_palette_type_get_type
+	gimp_convolve_type_get_type
 	gimp_cpu_accel_get_support
 	gimp_cpu_accel_set_use
 	gimp_data_directory
@@ -28,6 +32,7 @@ EXPORTS
 	gimp_env_init
 	gimp_escape_uline
 	gimp_filename_to_utf8
+	gimp_fill_type_get_type
 	gimp_flags_get_first_desc
 	gimp_flags_get_first_value
 	gimp_flags_get_value_descriptions
@@ -35,20 +40,26 @@ EXPORTS
 	gimp_flags_value_get_desc
 	gimp_flags_value_get_help
 	gimp_foreground_extract_mode_get_type
+	gimp_gradient_segment_color_get_type
+	gimp_gradient_segment_type_get_type
 	gimp_gradient_type_get_type
 	gimp_grid_style_get_type
 	gimp_gtkrc
+	gimp_hue_range_get_type
 	gimp_icon_type_get_type
 	gimp_image_base_type_get_type
 	gimp_image_type_get_type
+	gimp_ink_blob_type_get_type
 	gimp_installation_directory
 	gimp_interpolation_type_get_type
 	gimp_locale_directory
 	gimp_major_version
+	gimp_mask_apply_mode_get_type
 	gimp_memsize_deserialize
 	gimp_memsize_get_type
 	gimp_memsize_serialize
 	gimp_memsize_to_string
+	gimp_merge_type_get_type
 	gimp_message_handler_type_get_type
 	gimp_metadata_deserialize
 	gimp_metadata_duplicate
@@ -65,6 +76,8 @@ EXPORTS
 	gimp_metadata_set_resolution
 	gimp_micro_version
 	gimp_minor_version
+	gimp_offset_type_get_type
+	gimp_orientation_type_get_type
 	gimp_output_stream_printf
 	gimp_output_stream_vprintf
 	gimp_paint_application_mode_get_type
@@ -103,11 +116,14 @@ EXPORTS
 	gimp_pixpipe_params_init
 	gimp_pixpipe_params_parse
 	gimp_plug_in_directory
+	gimp_precision_get_type
 	gimp_progress_command_get_type
 	gimp_rectangle_intersect
 	gimp_rectangle_union
 	gimp_repeat_mode_get_type
+	gimp_rotation_type_get_type
 	gimp_run_mode_get_type
+	gimp_select_criterion_get_type
 	gimp_signal_private
 	gimp_size_type_get_type
 	gimp_stack_trace_mode_get_type

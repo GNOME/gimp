@@ -49,7 +49,7 @@ static const GimpActionEntry dockable_actions[] =
     NC_("dockable-action", "Dialogs Menu"), NULL, NULL, NULL,
     GIMP_HELP_DOCK },
 
-  { "dockable-menu",              GTK_STOCK_MISSING_IMAGE, "" },
+  { "dockable-menu",              "image-mising", ""           },
   { "dockable-add-tab-menu",      NULL, NC_("dockable-action",
                                             "_Add Tab")        },
   { "dockable-preview-size-menu", NULL, NC_("dockable-action",
@@ -57,7 +57,7 @@ static const GimpActionEntry dockable_actions[] =
   { "dockable-tab-style-menu",    NULL, NC_("dockable-action",
                                             "_Tab Style")      },
 
-  { "dockable-close-tab", GTK_STOCK_CLOSE,
+  { "dockable-close-tab", "window-close",
     NC_("dockable-action", "_Close Tab"), "", NULL,
     G_CALLBACK (dockable_close_tab_cmd_callback),
     GIMP_HELP_DOCK_TAB_CLOSE },

@@ -194,6 +194,8 @@ gimp_levels_tool_initialize (GimpTool     *tool,
   GimpImage        *image    = gimp_display_get_image (display);
   GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
   gdouble           scale_factor;
+  gdouble           step_increment;
+  gdouble           page_increment;
   gint              digits;
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
@@ -210,23 +212,31 @@ gimp_levels_tool_initialize (GimpTool     *tool,
 
   if (gimp_drawable_get_component_type (drawable) == GIMP_COMPONENT_TYPE_U8)
     {
-      scale_factor = 255.0;
-      digits       = 0;
+      scale_factor   = 255.0;
+      step_increment = 1.0;
+      page_increment = 8.0;
+      digits         = 0;
     }
   else
     {
-      scale_factor = 10000;
-      digits       = 0;
+      scale_factor   = 100;
+      step_increment = 0.01;
+      page_increment = 1.0;
+      digits         = 2;
     }
 
   gimp_prop_widget_set_factor (l_tool->low_input_spinbutton,
-                               scale_factor, digits);
+                               scale_factor, step_increment, page_increment,
+                               digits);
   gimp_prop_widget_set_factor (l_tool->high_input_spinbutton,
-                               scale_factor, digits);
+                               scale_factor, step_increment, page_increment,
+                               digits);
   gimp_prop_widget_set_factor (l_tool->low_output_spinbutton,
-                               scale_factor, digits);
+                               scale_factor, step_increment, page_increment,
+                               digits);
   gimp_prop_widget_set_factor (l_tool->high_output_spinbutton,
-                               scale_factor, digits);
+                               scale_factor, step_increment, page_increment,
+                               digits);
 
   gtk_adjustment_configure (l_tool->gamma_linear,
                             scale_factor / 2.0,
@@ -265,22 +275,22 @@ static GtkWidget *
 gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
                                    guint           value)
 {
-  const gchar *stock_id;
+  const gchar *icon_name;
   const gchar *help;
 
   switch (value & 0xF)
     {
     case PICK_LOW_INPUT:
-      stock_id = GIMP_STOCK_COLOR_PICKER_BLACK;
-      help     = _("Pick black point");
+      icon_name = GIMP_STOCK_COLOR_PICKER_BLACK;
+      help      = _("Pick black point");
       break;
     case PICK_GAMMA:
-      stock_id = GIMP_STOCK_COLOR_PICKER_GRAY;
-      help     = _("Pick gray point");
+      icon_name = GIMP_STOCK_COLOR_PICKER_GRAY;
+      help      = _("Pick gray point");
       break;
     case PICK_HIGH_INPUT:
-      stock_id = GIMP_STOCK_COLOR_PICKER_WHITE;
-      help     = _("Pick white point");
+      icon_name = GIMP_STOCK_COLOR_PICKER_WHITE;
+      help      = _("Pick white point");
       break;
     default:
       return NULL;
@@ -288,7 +298,7 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
 
   return gimp_image_map_tool_add_color_picker (GIMP_IMAGE_MAP_TOOL (tool),
                                                GUINT_TO_POINTER (value),
-                                               stock_id,
+                                               icon_name,
                                                help);
 }
 
@@ -344,8 +354,8 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   g_signal_connect (menu, "changed",
                     G_CALLBACK (levels_channel_callback),
                     tool);
-  gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (menu),
-                                        "gimp-channel");
+  gimp_enum_combo_box_set_icon_prefix (GIMP_ENUM_COMBO_BOX (menu),
+                                       "gimp-channel");
   gtk_box_pack_start (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
@@ -361,9 +371,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (levels_channel_reset_callback),
                     tool);
 
-  menu = gimp_prop_enum_stock_box_new (G_OBJECT (tool_options),
-                                       "histogram-scale", "gimp-histogram",
-                                       0, 0);
+  menu = gimp_prop_enum_icon_box_new (G_OBJECT (tool_options),
+                                      "histogram-scale", "gimp-histogram",
+                                      0, 0);
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
@@ -435,7 +445,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   tool->low_input_spinbutton = spinbutton =
     gimp_prop_spin_button_new (image_map_tool->config, "low-input",
-                               0.0001, 0.1, 1);
+                               0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -472,7 +482,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (button);
 
   spinbutton = gimp_prop_spin_button_new (image_map_tool->config, "high-input",
-                                          0.0001, 0.1, 1);
+                                          0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox2), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
   tool->high_input_spinbutton = spinbutton;
@@ -521,7 +531,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   /*  low output spin  */
   tool->low_output_spinbutton = spinbutton =
     gimp_prop_spin_button_new (image_map_tool->config, "low-output",
-                               0.0001, 0.1, 1);
+                               0.01, 0.1, 1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -531,7 +541,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   /*  high output spin  */
   tool->high_output_spinbutton = spinbutton =
     gimp_prop_spin_button_new (image_map_tool->config, "high-output",
-                               0.0001, 0.1, 1);
+                               0.01, 0.1, 1);
   gtk_box_pack_end (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -576,8 +586,8 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_stock_button_new (GIMP_STOCK_TOOL_CURVES,
-                                  _("Edit these Settings as Curves"));
+  button = gimp_icon_button_new (GIMP_STOCK_TOOL_CURVES,
+                                 _("Edit these Settings as Curves"));
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -595,24 +605,11 @@ gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
   GimpLevelsTool       *tool    = GIMP_LEVELS_TOOL (image_map_tool);
   GimpHistogramChannel  channel = tool->config->channel;
 
-  g_object_freeze_notify (image_map_tool->config);
-
-  if (image_map_tool->default_config)
-    {
-      gimp_config_copy (GIMP_CONFIG (image_map_tool->default_config),
-                        GIMP_CONFIG (image_map_tool->config),
-                        0);
-    }
-  else
-    {
-      gimp_config_reset (GIMP_CONFIG (image_map_tool->config));
-    }
+  GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->reset (image_map_tool);
 
   g_object_set (tool->config,
                 "channel", channel,
                 NULL);
-
-  g_object_thaw_notify (image_map_tool->config);
 }
 
 static gboolean

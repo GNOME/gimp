@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_CONTROLLER_WHELL_H__
+#ifndef __GIMP_CONTROLLER_WHEEL_H__
 #define __GIMP_CONTROLLER_WHEEL_H__
 
 

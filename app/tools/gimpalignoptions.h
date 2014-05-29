@@ -22,7 +22,7 @@
 #include "core/gimptooloptions.h"
 
 
-#define ALIGN_OPTIONS_N_BUTTONS 12
+#define ALIGN_OPTIONS_N_BUTTONS 14
 
 
 #define GIMP_TYPE_ALIGN_OPTIONS            (gimp_align_options_get_type ())

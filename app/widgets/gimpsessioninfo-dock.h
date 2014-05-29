@@ -58,6 +58,7 @@ GimpSessionInfoDock * gimp_session_info_dock_from_widget (GimpDock             *
 GimpDock            * gimp_session_info_dock_restore     (GimpSessionInfoDock  *dock_info,
                                                           GimpDialogFactory    *factory,
                                                           GdkScreen            *screen,
+                                                          gint                  monitor,
                                                           GimpDockContainer    *dock_container);
 
 

@@ -75,7 +75,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                            gdouble               y,
                            GError              **error)
 {
-  GimpRGB      color;
+  GimpRGB      color   = { 0, };
   GimpPattern *pattern = NULL;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -83,15 +83,15 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (fill_mode == GIMP_FG_BUCKET_FILL)
+  if (fill_mode == GIMP_BUCKET_FILL_FG)
     {
       gimp_context_get_foreground (context, &color);
     }
-  else if (fill_mode == GIMP_BG_BUCKET_FILL)
+  else if (fill_mode == GIMP_BUCKET_FILL_BG)
     {
       gimp_context_get_background (context, &color);
     }
-  else if (fill_mode == GIMP_PATTERN_BUCKET_FILL)
+  else if (fill_mode == GIMP_BUCKET_FILL_PATTERN)
     {
       pattern = gimp_context_get_pattern (context);
 
@@ -146,9 +146,9 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (fill_mode != GIMP_PATTERN_BUCKET_FILL ||
+  g_return_if_fail (fill_mode != GIMP_BUCKET_FILL_PATTERN ||
                     GIMP_IS_PATTERN (pattern));
-  g_return_if_fail (fill_mode == GIMP_PATTERN_BUCKET_FILL ||
+  g_return_if_fail (fill_mode == GIMP_BUCKET_FILL_PATTERN ||
                     color != NULL);
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -226,8 +226,8 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
 
   switch (fill_mode)
     {
-    case GIMP_FG_BUCKET_FILL:
-    case GIMP_BG_BUCKET_FILL:
+    case GIMP_BUCKET_FILL_FG:
+    case GIMP_BUCKET_FILL_BG:
       {
         GeglColor *gegl_color = gimp_gegl_color_new (color);
 
@@ -236,7 +236,7 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
       }
       break;
 
-    case GIMP_PATTERN_BUCKET_FILL:
+    case GIMP_BUCKET_FILL_PATTERN:
       {
         GeglBuffer *pattern_buffer = gimp_pattern_create_buffer (pattern);
 

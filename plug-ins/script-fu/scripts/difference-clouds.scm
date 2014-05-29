@@ -74,4 +74,4 @@
                     SF-DRAWABLE    "Drawable"        0)
 
 (script-fu-menu-register "script-fu-difference-clouds"
-			 "<Image>/Filters/Render/Clouds")
+			 "<Image>/Filters/Render/Noise")

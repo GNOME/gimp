@@ -103,7 +103,7 @@ static void   gimp_tools_register (GType                   tool_type,
                                    const gchar            *menu_accel,
                                    const gchar            *help_domain,
                                    const gchar            *help_data,
-                                   const gchar            *stock_id,
+                                   const gchar            *icon_name,
                                    gpointer                data);
 
 
@@ -257,6 +257,7 @@ void
 gimp_tools_restore (Gimp *gimp)
 {
   GimpContainer *gimp_list;
+  GimpObject    *object;
   gchar         *filename;
   GList         *list;
   GError        *error = NULL;
@@ -283,7 +284,6 @@ gimp_tools_restore (Gimp *gimp)
            list = g_list_next (list), i++)
         {
           const gchar *name;
-          GimpObject  *object;
 
           name = gimp_object_get_name (list->data);
 
@@ -304,6 +304,12 @@ gimp_tools_restore (Gimp *gimp)
 
   g_free (filename);
   g_object_unref (gimp_list);
+
+  /* make the generic operation tool invisible by default */
+  object = gimp_container_get_child_by_name (gimp->tool_info_list,
+                                             "gimp-operation-tool");
+  if (object)
+    g_object_set (object, "visible", FALSE, NULL);
 
   for (list = gimp_get_tool_info_iter (gimp);
        list;
@@ -469,7 +475,7 @@ gimp_tools_register (GType                   tool_type,
                      const gchar            *menu_accel,
                      const gchar            *help_domain,
                      const gchar            *help_data,
-                     const gchar            *stock_id,
+                     const gchar            *icon_name,
                      gpointer                data)
 {
   Gimp         *gimp = (Gimp *) data;
@@ -546,7 +552,7 @@ gimp_tools_register (GType                   tool_type,
                                   help_domain,
                                   help_data,
                                   paint_core_name,
-                                  stock_id);
+                                  icon_name);
 
   visible = (! g_type_is_a (tool_type, GIMP_TYPE_IMAGE_MAP_TOOL));
 

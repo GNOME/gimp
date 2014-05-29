@@ -28,6 +28,18 @@
 #include "gimpparasitelist.h"
 
 
+gboolean
+gimp_parasite_validate (Gimp                *gimp,
+                        const GimpParasite  *parasite,
+                        GError             **error)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (parasite != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  return TRUE;
+}
+
 void
 gimp_parasite_attach (Gimp               *gimp,
                       const GimpParasite *parasite)

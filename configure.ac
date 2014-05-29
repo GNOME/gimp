@@ -50,6 +50,8 @@ m4_define([cairo_required_version], [1.12.2])
 m4_define([cairo_pdf_required_version], [1.12.2])
 m4_define([pangocairo_required_version], [1.29.4])
 m4_define([fontconfig_required_version], [2.2.0])
+m4_define([freetype2_required_version], [2.1.7])
+m4_define([harfbuzz_required_version], [0.9.19])
 m4_define([gtkdoc_required_version], [1.0])
 m4_define([webkit_required_version], [1.6.1])
 m4_define([alsa_required_version], [1.0.0])
@@ -64,8 +66,12 @@ m4_define([lcms_required_version], [2.2])
 m4_define([libpng_required_version], [1.2.37])
 m4_define([liblzma_required_version], [5.0.0])
 m4_define([openexr_required_version], [1.6.1])
-m4_define([gtk_mac_integration_required_version], [1.0.1])
+m4_define([gtk_mac_integration_required_version], [2.0.0])
+m4_define([intltool_required_version], [0.40.1])
 
+# Current test considers only 2 version numbers. If we update the recommended
+# version of gettext with more version numbers, please update the tests.
+m4_define([xgettext_recommended_version], [0.19])
 
 AC_INIT([GIMP], [gimp_version],
         [http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP],
@@ -125,12 +131,26 @@ GTK_REQUIRED_VERSION=gtk_required_version
 CAIRO_REQUIRED_VERSION=cairo_required_version
 GEGL_REQUIRED_VERSION=gegl_required_version
 GEXIV2_REQUIRED_VERSION=gexiv2_required_version
+PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
+BABL_REQUIRED_VERSION=babl_required_version
+FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
+FREETYPE2_REQUIRED_VERSION=freetype2_required_version
+HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
+ATK_REQUIRED_VERSION=atk_required_version
+INTLTOOL_REQUIRED_VERSION=intltool_required_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
 AC_SUBST(CAIRO_REQUIRED_VERSION)
 AC_SUBST(GEGL_REQUIRED_VERSION)
 AC_SUBST(GEXIV2_REQUIRED_VERSION)
+AC_SUBST(PANGOCAIRO_REQUIRED_VERSION)
+AC_SUBST(BABL_REQUIRED_VERSION)
+AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
+AC_SUBST(FREETYPE2_REQUIRED_VERSION)
+AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
+AC_SUBST(ATK_REQUIRED_VERSION)
+AC_SUBST(INTLTOOL_REQUIRED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
 # Makefiles and conditionally defined here as a preprocessor symbol
@@ -457,9 +477,43 @@ fi
 # Internationalisation
 ######################
 
-IT_PROG_INTLTOOL(0.40.1)
+IT_PROG_INTLTOOL(intltool_required_version)
 AM_GLIB_GNU_GETTEXT
 
+# Testing xgettext version since we had some problem with localizing script-fu. See bug 720052.
+AC_MSG_CHECKING([for recommended xgettext version (>= xgettext_recommended_version)])
+XGETTEXT_RECOMMENDED_VERSION=xgettext_recommended_version
+XGETTEXT_RECOMMENDED_VERSION_MAJOR=`echo $XGETTEXT_RECOMMENDED_VERSION | awk -F. '{ print $ 1; }'`
+XGETTEXT_RECOMMENDED_VERSION_MINOR_1=`echo $XGETTEXT_RECOMMENDED_VERSION | awk -F. '{ print $ 2; }'`
+
+XGETTEXT_APPLIED_VERSION=`$XGETTEXT --version | head -1 | cut -d" " -f4`
+XGETTEXT_APPLIED_VERSION_MAJOR=`echo $XGETTEXT_APPLIED_VERSION | awk -F. '{ print $ 1; }'`
+XGETTEXT_APPLIED_VERSION_MINOR_1=`echo $XGETTEXT_APPLIED_VERSION | awk -F. '{ print $ 2; }'`
+
+have_recommended_xgettext="no"
+if test -n "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
+    echo "major is: $XGETTEXT_APPLIED_VERSION_MAJOR"
+    if test "$XGETTEXT_RECOMMENDED_VERSION_MAJOR" -lt "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
+        have_recommended_xgettext="yes"
+    elif test "$XGETTEXT_RECOMMENDED_VERSION_MAJOR" -eq "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
+        if test -n "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
+        echo "major is: $XGETTEXT_APPLIED_VERSION_MINOR_1"
+            if test "$XGETTEXT_RECOMMENDED_VERSION_MINOR_1" -le "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
+                have_recommended_xgettext="yes"
+            fi
+        fi
+    fi
+fi
+AC_MSG_RESULT($have_recommended_xgettext)
+
+if test "x$have_recommended_xgettext" = "xno"; then
+    have_recommended_xgettext="
+WARNING: Your gettext version is $XGETTEXT_APPLIED_VERSION.
+         The recommended gettext version is $XGETTEXT_RECOMMENDED_VERSION or over.
+         If you continue without updating gettext, your build will have partially broken localization."
+else
+    have_recommended_xgettext=""
+fi
 
 ###########
 # iso-codes
@@ -528,6 +582,11 @@ AC_PATH_XTRA
 
 AM_PATH_GTK_2_0(gtk_required_version, :,
   AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.))
+
+AC_PATH_PROG(GTK_UPDATE_ICON_CACHE, gtk-update-icon-cache, no)
+if test "x$GTK_UPDATE_ICON_CACHE" = xno; then
+  AC_MSG_ERROR(Could not find gtk-update-icon-cache in your PATH)
+fi
 
 # GTK+ 2.26.0 will never be released, we keep the check around anyway
 # because we will need it again after the switch to GTK+ 3.x
@@ -610,6 +669,8 @@ if test "x$FREETYPE_CONFIG" != "xno" ; then
   AC_MSG_RESULT($FREETYPE_LIBS)
 fi
 AC_SUBST(FREETYPE_LIBS)
+
+PKG_CHECK_MODULES(HARFBUZZ, harfbuzz >= harfbuzz_required_version)
 
 PKG_CHECK_MODULES(GEXIV2, gexiv2 >= gexiv2_required_version)
 
@@ -1150,22 +1211,16 @@ AC_SUBST(JPEG_LIBS)
 # Check for libz
 ################
 
-have_zlib=yes
 if test -z "$Z_LIBS"; then
   AC_CHECK_LIB(z, gzsetparams,
     [AC_CHECK_HEADER(zlib.h,
-      FILE_PSP='file-psp$(EXEEXT)'; Z_LIBS='-lz',
-      [have_zlib="no (ZLIB header files not found)"])],
-    [have_zlib="no (ZLIB library not found)"])
+      Z_LIBS='-lz',
+      AC_MSG_ERROR([ZLIB header files not found]))],
+    AC_MSG_ERROR([ZLIB library not found]))
 fi
 
-if test "x$have_zlib" = xyes; then
-  MIME_TYPES="$MIME_TYPES;image/x-psp"
-fi
+MIME_TYPES="$MIME_TYPES;image/x-psp"
 
-AC_SUBST(FILE_PSP)
-
-AM_CONDITIONAL(HAVE_Z, test "x$have_zlib" = xyes)
 AC_SUBST(Z_LIBS)
 
 
@@ -1173,24 +1228,14 @@ AC_SUBST(Z_LIBS)
 # Check for libbzip2
 ####################
 
-AC_ARG_WITH(bzip2,  [  --without-bzip2         build without bzip2 support])
-
-have_libbzip2=no
-if test "x$with_bzip2" != xno; then
-  have_libbzip2=yes
+if test -z "$BZIP2_LIBS"; then
   AC_CHECK_LIB(bz2, BZ2_bzCompress,
     [AC_CHECK_HEADER(bzlib.h,
       BZIP2_LIBS='-lbz2',
-      [have_libbzip2="no (libbzip2 header files not found)"])],
-    [have_libbzip2="no (libbzip2 library not found)"])
-  if test "x$have_libbzip2" != xyes -a "x$with_bzip2" = xyes; then
-    AC_MSG_ERROR([
-*** Checks for bzip2 library failed. You can build without it by passing
-*** --without-bzip2 to configure but you won't be able to use compressed files then.])
-  fi
+      AC_MSG_ERROR([libbzip2 header files not found]))],
+    AC_MSG_ERROR([libbzip2 library not found]))
 fi
 
-AM_CONDITIONAL(HAVE_BZIP2, test "x$have_libbzip2" = xyes)
 AC_SUBST(BZIP2_LIBS)
 
 
@@ -1198,36 +1243,7 @@ AC_SUBST(BZIP2_LIBS)
 # Check for liblzma
 ###################
 
-AC_ARG_WITH(liblzma,  [  --without-liblzma       build without LZMA support])
-
-have_liblzma=no
-if test "x$with_liblzma" != xno; then
-  have_liblzma=yes
-  PKG_CHECK_MODULES(LZMA, liblzma >= liblzma_required_version,
-    AC_DEFINE(HAVE_LIBLZMA, 1, [Define to 1 if liblzma is available]),
-    have_liblzma="no (liblzma not found or too old)")
-fi
-
-AC_SUBST(LZMA_CFLAGS)
-AC_SUBST(LZMA_LIBS)
-
-AM_CONDITIONAL(HAVE_LIBLZMA, test "x$have_liblzma" = xyes)
-
-
-#######################################################################
-# file-compressor is only built when all the compressor libraries are
-# available. We should revisit this at some point to make it build even
-# with fewer libraries.
-#######################################################################
-have_compressor=no
-if test "x$have_zlib" = xyes && test "x$have_libbzip2" = xyes && test "x$have_liblzma" = xyes; then
-   have_compressor=yes
-else
-   AC_MSG_ERROR([
-*** One or more compression libraries are unavailable. zlib, libbzip2
-*** and liblzma are required build dependencies. See the file 'INSTALL'
-*** for help.])
-fi
+PKG_CHECK_MODULES(LZMA, liblzma >= liblzma_required_version)
 
 
 ###############################
@@ -1390,6 +1406,9 @@ else
 fi
 
 AC_SUBST(WEB_PAGE)
+if test "x$have_webkit" = "xyes"; then
+  AC_DEFINE(HAVE_WEBKIT, 1, [Define to 1 if webkit is available])
+fi
 AM_CONDITIONAL(HAVE_WEBKIT, test "x$have_webkit" = xyes)
 
 
@@ -1837,9 +1856,19 @@ AM_CONDITIONAL(PLATFORM_OSX, test "x$platform_osx" = xyes)
 # Check for GTK Mac Integration
 ###############################
 
+gtk_mac_integration_ok=no
 if test "x$platform_osx" != xno &&
    test "x`$PKG_CONFIG --variable=target gtk+-2.0`" == "xquartz"; then
-  PKG_CHECK_MODULES(GTK_MAC_INTEGRATION, gtk-mac-integration >= gtk_mac_integration_required_version)
+
+  PKG_CHECK_MODULES(GTK_MAC_INTEGRATION, gtk-mac-integration-gtk2 >= gtk_mac_integration_required_version,
+    gtk_mac_integration_ok=yes,
+    gtk_mac_integration_ok=no)
+
+  if test "x$gtk_mac_integration_ok" != "xyes"; then
+    PKG_CHECK_MODULES(GTK_MAC_INTEGRATION, gtk-mac-integration >= gtk_mac_integration_required_version,
+      gtk_mac_integration_ok=yes,
+      gtk_mac_integration_ok=no)
+  fi
 fi
 
 
@@ -2130,6 +2159,7 @@ _______EOF
 ])
 
 AC_CONFIG_FILES([
+INSTALL
 tools/Makefile
 tools/pdbgen/Makefile
 libgimp/Makefile
@@ -2247,10 +2277,9 @@ devel-docs/tools/Makefile
 docs/Makefile
 menus/Makefile
 cursors/Makefile
+icons/Makefile
 themes/Makefile
 themes/Default/Makefile
-themes/Default/images/Makefile
-themes/Default/images/preferences/Makefile
 themes/Small/Makefile
 data/Makefile
 data/brushes/Makefile
@@ -2323,7 +2352,6 @@ Optional Features:
 
 Optional Plug-Ins:
   Ascii Art:           $have_libaa
-  Compressor:          $have_compressor
   Ghostscript:         $have_gs
   Help Browser:        $have_webkit
   JPEG 2000:           $have_jp2
@@ -2332,7 +2360,6 @@ Optional Plug-Ins:
   PDF (import):        $have_poppler
   PDF (export):        $have_cairo_pdf
   Print:               $enable_print
-  PSP:                 $have_zlib
   Python:              $enable_python
   Script-Fu:           $have_script_fu
   SVG:                 $have_librsvg
@@ -2353,4 +2380,5 @@ Optional Modules:
 
 Tests:
   Use xvfb-run         $have_xvfb_run
+$have_recommended_xgettext
 ]);

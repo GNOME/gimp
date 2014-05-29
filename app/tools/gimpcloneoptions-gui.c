@@ -85,7 +85,7 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
                                G_BINDING_SYNC_CREATE,
                                gimp_clone_options_sync_source,
                                NULL,
-                               GINT_TO_POINTER (GIMP_IMAGE_CLONE), NULL);
+                               GINT_TO_POINTER (GIMP_CLONE_IMAGE), NULL);
 
   hbox = gimp_prop_pattern_box_new (NULL, GIMP_CONTEXT (tool_options),
                                     NULL, 2,
@@ -97,7 +97,7 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
                                G_BINDING_SYNC_CREATE,
                                gimp_clone_options_sync_source,
                                NULL,
-                               GINT_TO_POINTER (GIMP_PATTERN_CLONE), NULL);
+                               GINT_TO_POINTER (GIMP_CLONE_PATTERN), NULL);
 
   combo = gimp_prop_enum_combo_box_new (config, "align-mode", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Alignment"));

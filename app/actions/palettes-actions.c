@@ -44,14 +44,14 @@ static const GimpActionEntry palettes_actions[] =
     NC_("palettes-action", "Palettes Menu"), NULL, NULL, NULL,
     GIMP_HELP_PALETTE_DIALOG },
 
-  { "palettes-new", GTK_STOCK_NEW,
-    NC_("palettes-action", "_New Palette"), "",
+  { "palettes-new", "document-new",
+    NC_("palettes-action", "_New Palette"), NULL,
     NC_("palettes-action", "Create a new palette"),
     G_CALLBACK (data_new_cmd_callback),
     GIMP_HELP_PALETTE_NEW },
 
-  { "palettes-import", GTK_STOCK_CONVERT,
-    NC_("palettes-action", "_Import Palette..."), "",
+  { "palettes-import", "gtk-convert",
+    NC_("palettes-action", "_Import Palette..."), NULL,
     NC_("palettes-action", "Import palette"),
     G_CALLBACK (palettes_import_cmd_callback),
     GIMP_HELP_PALETTE_IMPORT },
@@ -68,20 +68,20 @@ static const GimpActionEntry palettes_actions[] =
     G_CALLBACK (palettes_merge_cmd_callback),
     GIMP_HELP_PALETTE_MERGE },
 
-  { "palettes-copy-location", GTK_STOCK_COPY,
-    NC_("palettes-action", "Copy Palette _Location"), "",
+  { "palettes-copy-location", "edit-copy",
+    NC_("palettes-action", "Copy Palette _Location"), NULL,
     NC_("palettes-action", "Copy palette file location to clipboard"),
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_PALETTE_COPY_LOCATION },
 
-  { "palettes-delete", GTK_STOCK_DELETE,
-    NC_("palettes-action", "_Delete Palette"), "",
+  { "palettes-delete", "edit-delete",
+    NC_("palettes-action", "_Delete Palette"), NULL,
     NC_("palettes-action", "Delete this palette"),
     G_CALLBACK (data_delete_cmd_callback),
     GIMP_HELP_PALETTE_DELETE },
 
-  { "palettes-refresh", GTK_STOCK_REFRESH,
-    NC_("palettes-action", "_Refresh Palettes"), "",
+  { "palettes-refresh", "view-refresh",
+    NC_("palettes-action", "_Refresh Palettes"), NULL,
     NC_("palettes-action", "Refresh palettes"),
     G_CALLBACK (data_refresh_cmd_callback),
     GIMP_HELP_PALETTE_REFRESH }
@@ -89,7 +89,7 @@ static const GimpActionEntry palettes_actions[] =
 
 static const GimpStringActionEntry palettes_edit_actions[] =
 {
-  { "palettes-edit", GTK_STOCK_EDIT,
+  { "palettes-edit", "gtk-edit",
     NC_("palettes-action", "_Edit Palette..."), NULL,
     NC_("palettes-action", "Edit palette"),
     "gimp-palette-editor",

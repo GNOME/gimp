@@ -108,10 +108,10 @@ gimp_view_renderer_buffer_render (GimpViewRenderer *renderer,
     }
   else /* no preview available */
     {
-      const gchar  *stock_id;
+      const gchar *icon_name;
 
-      stock_id = gimp_viewable_get_stock_id (renderer->viewable);
+      icon_name = gimp_viewable_get_icon_name (renderer->viewable);
 
-      gimp_view_renderer_render_stock (renderer, widget, stock_id);
+      gimp_view_renderer_render_icon (renderer, widget, icon_name);
     }
 }

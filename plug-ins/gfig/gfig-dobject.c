@@ -577,7 +577,7 @@ remove_obj_from_list (GFigObj    *obj,
       gtk_widget_queue_draw (gfig_context->preview);
     }
   else
-    g_warning (_("Hey where has the object gone ?"));
+    g_warning (_("Hey, where has the object gone?"));
 }
 
 static void

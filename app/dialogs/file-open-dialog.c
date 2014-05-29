@@ -39,6 +39,7 @@
 
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "file-open-dialog.h"
 
@@ -216,6 +217,8 @@ file_open_dialog_open_image (GtkWidget           *open_dialog,
                                            GIMP_PROGRESS (open_dialog),
                                            uri, uri, FALSE,
                                            load_proc,
+                                           G_OBJECT (gtk_widget_get_screen (open_dialog)),
+                                           gimp_widget_get_monitor (open_dialog),
                                            &status, &error);
 
   if (! image && status != GIMP_PDB_CANCEL)

@@ -26,6 +26,7 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
@@ -223,6 +224,61 @@ gimp_grid_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+
+/*  public functions  */
+
+GimpGridStyle
+gimp_grid_get_style (GimpGrid *grid)
+{
+  g_return_val_if_fail (GIMP_IS_GRID (grid), GIMP_GRID_SOLID);
+
+  return grid->style;
+}
+
+void
+gimp_grid_get_fgcolor (GimpGrid *grid,
+                       GimpRGB  *fgcolor)
+{
+  g_return_if_fail (GIMP_IS_GRID (grid));
+  g_return_if_fail (fgcolor != NULL);
+
+  *fgcolor = grid->fgcolor;
+}
+
+void
+gimp_grid_get_bgcolor (GimpGrid *grid,
+                       GimpRGB  *bgcolor)
+{
+  g_return_if_fail (GIMP_IS_GRID (grid));
+  g_return_if_fail (bgcolor != NULL);
+
+  *bgcolor = grid->bgcolor;
+}
+
+void
+gimp_grid_get_spacing (GimpGrid *grid,
+                       gdouble  *xspacing,
+                       gdouble  *yspacing)
+{
+  g_return_if_fail (GIMP_IS_GRID (grid));
+
+  /* FIXME subpixel grid */
+  if (xspacing) *xspacing = RINT (grid->xspacing);
+  if (yspacing) *yspacing = RINT (grid->yspacing);
+}
+
+void
+gimp_grid_get_offset (GimpGrid *grid,
+                      gdouble  *xoffset,
+                      gdouble  *yoffset)
+{
+  g_return_if_fail (GIMP_IS_GRID (grid));
+
+  /* FIXME subpixel grid */
+  if (xoffset) *xoffset = RINT (grid->xoffset);
+  if (yoffset) *yoffset = RINT (grid->yoffset);
 }
 
 const gchar *

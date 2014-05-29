@@ -36,7 +36,7 @@ TemplateOptionsDialog * template_options_dialog_new (GimpTemplate *template,
                                                      GtkWidget    *parent,
                                                      const gchar  *title,
                                                      const gchar  *role,
-                                                     const gchar  *stock_id,
+                                                     const gchar  *icon_name,
                                                      const gchar  *desc,
                                                      const gchar  *help_id);
 

@@ -591,11 +591,11 @@ gimp_display_shell_quick_mask_changed_handler (GimpImage        *image,
                                 quick_mask_state);
 
   if (quick_mask_state)
-    gtk_image_set_from_stock (gtk_image, GIMP_STOCK_QUICK_MASK_ON,
-                              GTK_ICON_SIZE_MENU);
+    gtk_image_set_from_icon_name (gtk_image, GIMP_STOCK_QUICK_MASK_ON,
+                                  GTK_ICON_SIZE_MENU);
   else
-    gtk_image_set_from_stock (gtk_image, GIMP_STOCK_QUICK_MASK_OFF,
-                              GTK_ICON_SIZE_MENU);
+    gtk_image_set_from_icon_name (gtk_image, GIMP_STOCK_QUICK_MASK_OFF,
+                                  GTK_ICON_SIZE_MENU);
 
   g_signal_handlers_unblock_by_func (shell->quick_mask_button,
                                      gimp_display_shell_quick_mask_toggled,
@@ -793,7 +793,7 @@ gimp_display_shell_saved_handler (GimpImage        *image,
   gchar         *filename  = file_utils_uri_display_name (uri);
 
   gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
-                            GTK_STOCK_SAVE, _("Image saved to '%s'"),
+                            "document-save", _("Image saved to '%s'"),
                             filename);
   g_free (filename);
 }
@@ -807,7 +807,7 @@ gimp_display_shell_exported_handler (GimpImage        *image,
   gchar         *filename  = file_utils_uri_display_name (uri);
 
   gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
-                            GTK_STOCK_SAVE, _("Image exported to '%s'"),
+                            "document-save", _("Image exported to '%s'"),
                             filename);
   g_free (filename);
 }
@@ -952,9 +952,10 @@ gimp_display_shell_monitor_res_notify_handler (GObject          *config,
 {
   if (GIMP_DISPLAY_CONFIG (config)->monitor_res_from_gdk)
     {
-      gimp_get_screen_resolution (gtk_widget_get_screen (GTK_WIDGET (shell)),
-                                  &shell->monitor_xres,
-                                  &shell->monitor_yres);
+      gimp_get_monitor_resolution (gtk_widget_get_screen (GTK_WIDGET (shell)),
+                                   gimp_widget_get_monitor (GTK_WIDGET (shell)),
+                                   &shell->monitor_xres,
+                                   &shell->monitor_yres);
     }
   else
     {

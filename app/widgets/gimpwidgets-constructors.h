@@ -22,7 +22,7 @@
 GtkWidget * gimp_paint_mode_menu_new (gboolean     with_behind_mode,
                                       gboolean     with_replace_modes);
 
-GtkWidget * gimp_stock_button_new    (const gchar *stock_id,
+GtkWidget * gimp_icon_button_new     (const gchar *icon_name,
                                       const gchar *label);
 
 

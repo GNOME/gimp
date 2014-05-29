@@ -219,8 +219,8 @@ query (void)
                           args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Animation");
-  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_STOCK_ID,
-                             (const guint8 *) GTK_STOCK_MEDIA_PLAY);
+  gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_ICON_NAME,
+                             (const guint8 *) "media-playback-start");
 }
 
 static void
@@ -588,32 +588,32 @@ ui_manager_new (GtkWidget *window)
 {
   static GtkActionEntry actions[] =
   {
-    { "step-back", GTK_STOCK_MEDIA_PREVIOUS,
+    { "step-back", "media-skip-backward",
       N_("Step _back"), "d", N_("Step back to previous frame"),
       G_CALLBACK (step_back_callback) },
 
-    { "step", GTK_STOCK_MEDIA_NEXT,
+    { "step", "media-skip-forward",
       N_("_Step"), "f", N_("Step to next frame"),
       G_CALLBACK (step_callback) },
 
-    { "rewind", GTK_STOCK_MEDIA_REWIND,
+    { "rewind", "media-seek-backward",
       NULL, NULL, N_("Rewind the animation"),
       G_CALLBACK (rewind_callback) },
 
-    { "refresh", GTK_STOCK_REFRESH,
+    { "refresh", "view-refresh",
       NULL, "<control>R", N_("Reload the image"),
       G_CALLBACK (refresh_callback) },
 
-    { "help", GTK_STOCK_HELP,
+    { "help", "help-browser",
       NULL, NULL, NULL,
       G_CALLBACK (help_callback) },
 
-    { "close", GTK_STOCK_CLOSE,
+    { "close", "window-close",
       NULL, "<control>W", NULL,
       G_CALLBACK (close_callback)
     },
     {
-      "quit", GTK_STOCK_QUIT,
+      "quit", "application-quit",
       NULL, "<control>Q", NULL,
       G_CALLBACK (close_callback)
     },
@@ -636,7 +636,7 @@ ui_manager_new (GtkWidget *window)
 
   static GtkToggleActionEntry toggle_actions[] =
   {
-    { "play", GTK_STOCK_MEDIA_PLAY,
+    { "play", "media-playback-start",
       NULL, "space", N_("Start playback"),
       G_CALLBACK (play_callback), FALSE },
 
@@ -1346,11 +1346,11 @@ play_callback (GtkToggleAction *action)
                              get_duration_factor (settings.duration_index),
                              advance_frame_callback, NULL);
 
-      gtk_action_set_stock_id (GTK_ACTION (action), GTK_STOCK_MEDIA_PAUSE);
+      gtk_action_set_icon_name (GTK_ACTION (action), "media-playback-pause");
     }
   else
     {
-      gtk_action_set_stock_id (GTK_ACTION (action), GTK_STOCK_MEDIA_PLAY);
+      gtk_action_set_icon_name (GTK_ACTION (action), "media-playback-start");
     }
 
   g_object_set (action,

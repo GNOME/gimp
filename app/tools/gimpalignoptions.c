@@ -89,20 +89,20 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ALIGN_REFERENCE,
                                  "align-reference",
-                                 N_("Reference image object a layer will be aligned on"),
+                                 _("Reference image object a layer will be aligned on"),
                                  GIMP_TYPE_ALIGN_REFERENCE_TYPE,
                                  GIMP_ALIGN_REFERENCE_FIRST,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_X,
                                    "offset-x",
-                                   N_("Horizontal offset for distribution"),
+                                   _("Horizontal offset for distribution"),
                                    -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_Y,
                                    "offset-y",
-                                   N_("Vertical offset for distribution"),
+                                   _("Vertical offset for distribution"),
                                    -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
                                    GIMP_PARAM_STATIC_STRINGS);
 }
@@ -189,46 +189,52 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
 {
   GtkWidget   *button;
   GtkWidget   *image;
-  const gchar *stock_id = NULL;
+  const gchar *icon_name = NULL;
 
   switch (action)
     {
     case GIMP_ALIGN_LEFT:
-      stock_id = GIMP_STOCK_GRAVITY_WEST;
+      icon_name = GIMP_STOCK_GRAVITY_WEST;
       break;
     case GIMP_ALIGN_HCENTER:
-      stock_id = GIMP_STOCK_HCENTER;
+      icon_name = GIMP_STOCK_HCENTER;
       break;
     case GIMP_ALIGN_RIGHT:
-      stock_id = GIMP_STOCK_GRAVITY_EAST;
+      icon_name = GIMP_STOCK_GRAVITY_EAST;
       break;
     case GIMP_ALIGN_TOP:
-      stock_id = GIMP_STOCK_GRAVITY_NORTH;
+      icon_name = GIMP_STOCK_GRAVITY_NORTH;
       break;
     case GIMP_ALIGN_VCENTER:
-      stock_id = GIMP_STOCK_VCENTER;
+      icon_name = GIMP_STOCK_VCENTER;
       break;
     case GIMP_ALIGN_BOTTOM:
-      stock_id = GIMP_STOCK_GRAVITY_SOUTH;
+      icon_name = GIMP_STOCK_GRAVITY_SOUTH;
       break;
     case GIMP_ARRANGE_LEFT:
-      stock_id = GIMP_STOCK_GRAVITY_WEST;
+      icon_name = GIMP_STOCK_GRAVITY_WEST;
       break;
     case GIMP_ARRANGE_HCENTER:
-      stock_id = GIMP_STOCK_HCENTER;
+      icon_name = GIMP_STOCK_HCENTER;
       break;
     case GIMP_ARRANGE_RIGHT:
-      stock_id = GIMP_STOCK_GRAVITY_EAST;
+      icon_name = GIMP_STOCK_GRAVITY_EAST;
       break;
     case GIMP_ARRANGE_TOP:
-      stock_id = GIMP_STOCK_GRAVITY_NORTH;
+      icon_name = GIMP_STOCK_GRAVITY_NORTH;
       break;
     case GIMP_ARRANGE_VCENTER:
-      stock_id = GIMP_STOCK_VCENTER;
+      icon_name = GIMP_STOCK_VCENTER;
       break;
     case GIMP_ARRANGE_BOTTOM:
-      stock_id = GIMP_STOCK_GRAVITY_SOUTH;
+      icon_name = GIMP_STOCK_GRAVITY_SOUTH;
       break;
+    case GIMP_ARRANGE_HFILL:
+        icon_name = GIMP_STOCK_HFILL;
+        break;
+    case GIMP_ARRANGE_VFILL:
+        icon_name = GIMP_STOCK_VFILL;
+        break;
     default:
       g_return_val_if_reached (NULL);
       break;
@@ -238,7 +244,7 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
   gtk_widget_set_sensitive (button, FALSE);
   gtk_widget_show (button);
 
-  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_BUTTON);
+  image = gtk_image_new_from_icon_name (icon_name, GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
 
@@ -340,6 +346,10 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
     gimp_align_options_button_new (options, GIMP_ARRANGE_RIGHT, hbox,
                                    _("Distribute right edges of targets"));
 
+  options->button[n++] =
+    gimp_align_options_button_new (options, GIMP_ARRANGE_HFILL, hbox,
+                                   _("Distribute targets evenly in the horizontal"));
+
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -355,6 +365,10 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   options->button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_BOTTOM, hbox,
                                    _("Distribute bottoms of targets"));
+
+  options->button[n++] =
+    gimp_align_options_button_new (options, GIMP_ARRANGE_VFILL, hbox,
+                                   _("Distribute targets evenly in the vertical"));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);

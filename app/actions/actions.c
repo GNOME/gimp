@@ -151,13 +151,13 @@ static const GimpActionFactoryEntry action_groups[] =
   { "dynamics-editor", N_("Paint Dynamics Editor"), GIMP_STOCK_DYNAMICS,
     dynamics_editor_actions_setup,
     dynamics_editor_actions_update },
-  { "edit", N_("Edit"), GTK_STOCK_EDIT,
+  { "edit", N_("Edit"), "gtk-edit",
     edit_actions_setup,
     edit_actions_update },
   { "error-console", N_("Error Console"), GIMP_STOCK_WARNING,
     error_console_actions_setup,
     error_console_actions_update },
-  { "file", N_("File"), GTK_STOCK_FILE,
+  { "file", N_("File"), "text-x-generic",
     file_actions_setup,
     file_actions_update },
   { "filters", N_("Filters"), GIMP_STOCK_GEGL,
@@ -178,7 +178,7 @@ static const GimpActionFactoryEntry action_groups[] =
   { "tool-preset-editor", N_("Tool Preset Editor"), GIMP_STOCK_TOOL_PRESET,
     tool_preset_editor_actions_setup,
     tool_preset_editor_actions_update },
-  { "help", N_("Help"), GTK_STOCK_HELP,
+  { "help", N_("Help"), "help-browser",
     help_actions_setup,
     help_actions_update },
   { "image", N_("Image"), GIMP_STOCK_IMAGE,
@@ -214,10 +214,10 @@ static const GimpActionFactoryEntry action_groups[] =
   { "templates", N_("Templates"), GIMP_STOCK_TEMPLATE,
     templates_actions_setup,
     templates_actions_update },
-  { "text-tool", N_("Text Tool"), GTK_STOCK_EDIT,
+  { "text-tool", N_("Text Tool"), "gtk-edit",
     text_tool_actions_setup,
     text_tool_actions_update },
-  { "text-editor", N_("Text Editor"), GTK_STOCK_EDIT,
+  { "text-editor", N_("Text Editor"), "gtk-edit",
     text_editor_actions_setup,
     text_editor_actions_update },
   { "tool-options", N_("Tool Options"), GIMP_STOCK_TOOL_OPTIONS,
@@ -254,7 +254,7 @@ actions_init (Gimp *gimp)
     gimp_action_factory_group_register (global_action_factory,
                                         action_groups[i].identifier,
                                         gettext (action_groups[i].label),
-                                        action_groups[i].stock_id,
+                                        action_groups[i].icon_name,
                                         action_groups[i].setup_func,
                                         action_groups[i].update_func);
 }
@@ -395,6 +395,8 @@ action_data_get_display (gpointer data)
     context = gimp_dock_get_context ((GimpDock *) data);
   else if (GIMP_IS_DOCK_WINDOW (data))
     context = gimp_dock_window_get_context (((GimpDockWindow *) data));
+  else if (GIMP_IS_IMAGE_EDITOR (data))
+    context = ((GimpImageEditor *) data)->context;
   else if (GIMP_IS_NAVIGATION_EDITOR (data))
     context = ((GimpNavigationEditor *) data)->context;
 
@@ -683,22 +685,22 @@ action_message (GimpDisplay *display,
 {
   GimpDisplayShell *shell     = gimp_display_get_shell (display);
   GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
-  const gchar      *stock_id  = NULL;
+  const gchar      *icon_name = NULL;
   va_list           args;
 
   if (GIMP_IS_TOOL_OPTIONS (object))
     {
       GimpToolInfo *tool_info = GIMP_TOOL_OPTIONS (object)->tool_info;
 
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool_info));
+      icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
     }
   else if (GIMP_IS_VIEWABLE (object))
     {
-      stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (object));
+      icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (object));
     }
 
   va_start (args, format);
   gimp_statusbar_push_temp_valist (statusbar, GIMP_MESSAGE_INFO,
-                                   stock_id, format, args);
+                                   icon_name, format, args);
   va_end (args);
 }

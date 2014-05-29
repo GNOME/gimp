@@ -85,6 +85,10 @@ os.environ['CFLAGS']  += os.environ.get('MINGW_CFLAGS', '')
 os.environ['CFLAGS']  += flavour_cflags
 os.environ['CXXFLAGS']+= flavour_cflags
 
+# CMake stuff
+cmakeargs += ' -DCMAKE_TOOLCHAIN_FILE=' + os.environ['PWD'] + '/toolchain.cmake '
+cmakeargs += ' -DCMAKE_FIND_ROOT_PATH="' + searchprefix + ';' + prefix + '" '
+
 #Don't install libraries in lib64, even if compiling on 64-bit machines
 use_lib64 = False
 

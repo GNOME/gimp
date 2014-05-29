@@ -40,7 +40,7 @@ GType       gimp_throbber_action_get_type (void) G_GNUC_CONST;
 GtkAction * gimp_throbber_action_new      (const gchar *name,
                                            const gchar *label,
                                            const gchar *tooltip,
-                                           const gchar *stock_id);
+                                           const gchar *icon_name);
 
 
 G_END_DECLS

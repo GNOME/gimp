@@ -165,7 +165,7 @@ gimp_plug_in_procedure_get_memsize (GimpObject *object,
 
   switch (proc->icon_type)
     {
-    case GIMP_ICON_TYPE_STOCK_ID:
+    case GIMP_ICON_TYPE_ICON_NAME:
     case GIMP_ICON_TYPE_IMAGE_FILE:
       memsize += gimp_string_get_memsize ((const gchar *) proc->icon_data);
       break;
@@ -604,7 +604,7 @@ gimp_plug_in_procedure_set_icon (GimpPlugInProcedure *proc,
 
   switch (proc->icon_type)
     {
-    case GIMP_ICON_TYPE_STOCK_ID:
+    case GIMP_ICON_TYPE_ICON_NAME:
     case GIMP_ICON_TYPE_IMAGE_FILE:
       proc->icon_data_length = -1;
       proc->icon_data        = (guint8 *) g_strdup ((gchar *) icon_data);
@@ -618,13 +618,13 @@ gimp_plug_in_procedure_set_icon (GimpPlugInProcedure *proc,
 }
 
 const gchar *
-gimp_plug_in_procedure_get_stock_id (const GimpPlugInProcedure *proc)
+gimp_plug_in_procedure_get_icon_name (const GimpPlugInProcedure *proc)
 {
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 
   switch (proc->icon_type)
     {
-    case GIMP_ICON_TYPE_STOCK_ID:
+    case GIMP_ICON_TYPE_ICON_NAME:
       return (gchar *) proc->icon_data;
 
     default:

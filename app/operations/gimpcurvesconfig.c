@@ -40,6 +40,8 @@
 
 #include "gimp-intl.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -93,21 +95,21 @@ gimp_curves_config_class_init (GimpCurvesConfigClass *klass)
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->finalize           = gimp_curves_config_finalize;
-  object_class->set_property       = gimp_curves_config_set_property;
-  object_class->get_property       = gimp_curves_config_get_property;
+  object_class->finalize            = gimp_curves_config_finalize;
+  object_class->set_property        = gimp_curves_config_set_property;
+  object_class->get_property        = gimp_curves_config_get_property;
 
-  viewable_class->default_stock_id = "gimp-tool-curves";
+  viewable_class->default_icon_name = "gimp-tool-curves";
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CHANNEL,
                                  "channel",
-                                 "The affected channel",
+                                 _("The affected channel"),
                                  GIMP_TYPE_HISTOGRAM_CHANNEL,
                                  GIMP_HISTOGRAM_VALUE, 0);
 
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_CURVE,
                                    "curve",
-                                   "Curve",
+                                   _("Curve"),
                                    GIMP_TYPE_CURVE,
                                    GIMP_CONFIG_PARAM_AGGREGATE);
 }

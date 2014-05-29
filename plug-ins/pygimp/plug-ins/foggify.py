@@ -70,7 +70,7 @@ register(
     ],
     [],
     foggify,
-    menu="<Image>/Filters/Render/Clouds",
+    menu="<Image>/Filters/Decor",
     domain=("gimp20-python", gimp.locale_directory)
     )
 

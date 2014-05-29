@@ -36,7 +36,7 @@ gimp_plugin_icon_register (const gchar  *procedure_name,
 
   switch (icon_type)
     {
-    case GIMP_ICON_TYPE_STOCK_ID:
+    case GIMP_ICON_TYPE_ICON_NAME:
     case GIMP_ICON_TYPE_IMAGE_FILE:
       icon_data_length = strlen ((const gchar *) icon_data) + 1;
       break;

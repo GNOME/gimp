@@ -27,6 +27,7 @@
 #include "core/gimp.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpwidgets-utils.h"
 #include "widgets/gimpwindowstrategy.h"
 
 #include "actions.h"
@@ -46,6 +47,7 @@ dialogs_create_toplevel_cmd_callback (GtkAction   *action,
   if (value)
     gimp_dialog_factory_dialog_new (gimp_dialog_factory_get_singleton (),
                                     gtk_widget_get_screen (widget),
+                                    gimp_widget_get_monitor (widget),
                                     NULL /*ui_manager*/,
                                     value, -1, TRUE);
 }
@@ -65,5 +67,6 @@ dialogs_create_dockable_cmd_callback (GtkAction   *action,
                                                gimp,
                                                gimp_dialog_factory_get_singleton (),
                                                gtk_widget_get_screen (widget),
+                                               gimp_widget_get_monitor (widget),
                                                value);
 }

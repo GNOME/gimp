@@ -24,8 +24,8 @@
 /*
  *  Set file read error
  */
-void                    psd_set_error          (const gboolean  file_eof,
-                                                const gint      err_no,
+void                    psd_set_error          (gboolean        file_eof,
+                                                gint            err_no,
                                                 GError        **error);
 
 /*
@@ -34,7 +34,7 @@ void                    psd_set_error          (const gboolean  file_eof,
  */
 gchar                 * fread_pascal_string    (gint32         *bytes_read,
                                                 gint32         *bytes_written,
-                                                const guint16   mod_len,
+                                                guint16         mod_len,
                                                 FILE           *f,
                                                 GError        **error);
 
@@ -43,7 +43,7 @@ gchar                 * fread_pascal_string    (gint32         *bytes_read,
  *  string with padding to a multiple of mod_len.
  */
 gint32                  fwrite_pascal_string   (const gchar    *src,
-                                                const guint16   mod_len,
+                                                guint16         mod_len,
                                                 FILE           *f,
                                                 GError        **error);
 
@@ -53,7 +53,7 @@ gint32                  fwrite_pascal_string   (const gchar    *src,
  */
 gchar                 * fread_unicode_string   (gint32         *bytes_read,
                                                 gint32         *bytes_written,
-                                                const guint16   mod_len,
+                                                guint16         mod_len,
                                                 FILE           *f,
                                                 GError        **error);
 
@@ -62,7 +62,7 @@ gchar                 * fread_unicode_string   (gint32         *bytes_read,
  *  then string padding to multiple of mod_len.
  */
 gint32                  fwrite_unicode_string  (const gchar    *src,
-                                                const guint16   mod_len,
+                                                guint16         mod_len,
                                                 FILE           *f,
                                                 GError        **error);
 
@@ -72,11 +72,11 @@ gint                    decode_packbits        (const gchar    *src,
                                                 guint32         unpacked_len);
 
 gchar                 * encode_packbits        (const gchar    *src,
-                                                const guint32   unpacked_len,
+                                                guint32         unpacked_len,
                                                 guint16        *packed_len);
 
 GimpLayerModeEffects    psd_to_gimp_blend_mode (const gchar    *psd_mode);
 
-gchar *                 gimp_to_psd_blend_mode (const GimpLayerModeEffects gimp_layer_mode);
+gchar *                 gimp_to_psd_blend_mode (GimpLayerModeEffects gimp_layer_mode);
 
 #endif /* __PSD_UTIL_H__ */

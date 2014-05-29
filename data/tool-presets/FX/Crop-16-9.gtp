@@ -1,6 +1,6 @@
 # GIMP tool preset file
 
-(stock-id "gimp-tool-crop")
+(icon-name "gimp-tool-crop")
 (name "Crop 16:9")
 (tool-options "GimpCropOptions"
     (aspect-denominator 9.000000)

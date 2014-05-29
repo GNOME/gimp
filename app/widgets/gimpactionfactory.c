@@ -70,7 +70,7 @@ gimp_action_factory_finalize (GObject *object)
 
       g_free (entry->identifier);
       g_free (entry->label);
-      g_free (entry->stock_id);
+      g_free (entry->icon_name);
 
       g_slice_free (GimpActionFactoryEntry, entry);
     }
@@ -99,7 +99,7 @@ void
 gimp_action_factory_group_register (GimpActionFactory         *factory,
                                     const gchar               *identifier,
                                     const gchar               *label,
-                                    const gchar               *stock_id,
+                                    const gchar               *icon_name,
                                     GimpActionGroupSetupFunc   setup_func,
                                     GimpActionGroupUpdateFunc  update_func)
 {
@@ -115,7 +115,7 @@ gimp_action_factory_group_register (GimpActionFactory         *factory,
 
   entry->identifier  = g_strdup (identifier);
   entry->label       = g_strdup (label);
-  entry->stock_id    = g_strdup (stock_id);
+  entry->icon_name   = g_strdup (icon_name);
   entry->setup_func  = setup_func;
   entry->update_func = update_func;
 
@@ -144,7 +144,7 @@ gimp_action_factory_group_new (GimpActionFactory *factory,
           group = gimp_action_group_new (factory->gimp,
                                          entry->identifier,
                                          entry->label,
-                                         entry->stock_id,
+                                         entry->icon_name,
                                          user_data,
                                          entry->update_func);
 

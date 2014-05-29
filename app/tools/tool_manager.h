@@ -24,9 +24,6 @@ void       tool_manager_exit                       (Gimp             *gimp);
 
 GimpTool * tool_manager_get_active                 (Gimp             *gimp);
 
-void       tool_manager_select_tool                (Gimp             *gimp,
-                                                    GimpTool         *tool);
-
 void       tool_manager_push_tool                  (Gimp             *gimp,
                                                     GimpTool         *tool);
 void       tool_manager_pop_tool                   (Gimp             *gimp);

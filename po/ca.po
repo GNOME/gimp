@@ -4346,7 +4346,7 @@ msgstr "_Selecciona"
 #: ../app/actions/select-actions.c:50
 msgctxt "select-action"
 msgid "_All"
-msgstr "Amplia-ho _tot"
+msgstr "_Tot"
 
 #: ../app/actions/select-actions.c:51
 msgctxt "select-action"
@@ -8975,7 +8975,7 @@ msgstr "Visiteu el web del GIMP"
 #. separated by newline
 #: ../app/dialogs/about-dialog.c:129
 msgid "translator-credits"
-msgstr "Softcatalà - www.softcatala.cat"
+msgstr "Softcatalà - www.softcatala.org"
 
 #: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"

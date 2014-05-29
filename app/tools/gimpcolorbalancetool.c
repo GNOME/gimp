@@ -168,7 +168,7 @@ create_levels_scale (GObject     *config,
 
   scale = gimp_prop_spin_scale_new (config, property_name,
                                     NULL, 0.01, 0.1, 0);
-  gimp_prop_widget_set_factor (scale, 100.0, 1);
+  gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
   gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, col, col + 1);
   gtk_widget_show (scale);
 
@@ -250,24 +250,11 @@ gimp_color_balance_tool_reset (GimpImageMapTool *im_tool)
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (im_tool);
   GimpTransferMode      range   = cb_tool->config->range;
 
-  g_object_freeze_notify (im_tool->config);
-
-  if (im_tool->default_config)
-    {
-      gimp_config_copy (GIMP_CONFIG (im_tool->default_config),
-                        GIMP_CONFIG (im_tool->config),
-                        0);
-    }
-  else
-    {
-      gimp_config_reset (GIMP_CONFIG (im_tool->config));
-    }
+  GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->reset (im_tool);
 
   g_object_set (cb_tool->config,
                 "range", range,
                 NULL);
-
-  g_object_thaw_notify (im_tool->config);
 }
 
 static void

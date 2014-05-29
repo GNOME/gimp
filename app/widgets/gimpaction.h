@@ -50,15 +50,17 @@ struct _GimpActionClass
 };
 
 
-GType        gimp_action_get_type     (void) G_GNUC_CONST;
+GType        gimp_action_get_type           (void) G_GNUC_CONST;
 
-GimpAction * gimp_action_new          (const gchar *name,
-                                       const gchar *label,
-                                       const gchar *tooltip,
-                                       const gchar *stock_id);
+GimpAction * gimp_action_new                (const gchar *name,
+                                             const gchar *label,
+                                             const gchar *tooltip,
+                                             const gchar *icon_name);
 
-gint         gimp_action_name_compare (GimpAction  *action1,
-                                       GimpAction  *action2);
+gint         gimp_action_name_compare       (GimpAction  *action1,
+                                             GimpAction  *action2);
+
+gboolean     gimp_action_is_gui_blacklisted (const gchar *action_name);
 
 
 #endif  /* __GIMP_ACTION_H__ */

@@ -1009,7 +1009,7 @@ _wrap_gimp_color_scale_new(PyGObject *self, PyObject *args, PyObject *kwargs)
     if (pygobject_construct(self,
                             "orientation", orientation,
                             "channel",     channel,
-                            NULL));
+                            NULL))
         return -1;
 
     gtk_range_set_flippable (GTK_RANGE (self->obj),

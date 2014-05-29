@@ -640,19 +640,19 @@ HELP
 
       if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
         {
-          GimpFillType fill_type = GIMP_FG_BUCKET_FILL;
+          GimpFillType fill_type = GIMP_FOREGROUND_FILL;
 
           switch (fill_mode)
             {
-            case GIMP_FG_BUCKET_FILL:
+            case GIMP_BUCKET_FILL_FG:
               fill_type = GIMP_FOREGROUND_FILL;
               break;
 
-            case GIMP_BG_BUCKET_FILL:
+            case GIMP_BUCKET_FILL_BG:
               fill_type = GIMP_BACKGROUND_FILL;
               break;
 
-            case GIMP_PATTERN_BUCKET_FILL:
+            case GIMP_BUCKET_FILL_PATTERN:
               fill_type = GIMP_PATTERN_FILL;
               break;
             }
@@ -748,19 +748,19 @@ HELP
 
       if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
         {
-          GimpFillType fill_type = GIMP_FG_BUCKET_FILL;
+          GimpFillType fill_type = GIMP_FOREGROUND_FILL;
 
           switch (fill_mode)
             {
-            case GIMP_FG_BUCKET_FILL:
+            case GIMP_BUCKET_FILL_FG:
               fill_type = GIMP_FOREGROUND_FILL;
               break;
 
-            case GIMP_BG_BUCKET_FILL:
+            case GIMP_BUCKET_FILL_BG:
               fill_type = GIMP_BACKGROUND_FILL;
               break;
 
-            case GIMP_PATTERN_BUCKET_FILL:
+            case GIMP_BUCKET_FILL_PATTERN:
               fill_type = GIMP_PATTERN_FILL;
               break;
             }
@@ -838,7 +838,7 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpdrawable-blend.h") ],
+        headers => [ qw("core/gimp-gradients.h" "core/gimpdrawable-blend.h") ],
 	code => <<'CODE'
 {
   success = (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
@@ -856,12 +856,34 @@ HELP
 
   if (success)
     {
+      GimpGradient *gradient;
+
       if (progress)
         gimp_progress_start (progress, _("Blending"), FALSE);
 
+      switch (blend_mode)
+        {
+        case GIMP_BLEND_FG_BG_RGB:
+          gradient = gimp_gradients_get_fg_bg_rgb (context->gimp);
+          break;
+
+        case GIMP_BLEND_FG_BG_HSV:
+          gradient = gimp_gradients_get_fg_bg_hsv_cw (context->gimp);
+          break;
+
+        case GIMP_BLEND_FG_TRANSPARENT:
+          gradient = gimp_gradients_get_fg_transparent (context->gimp);
+          break;
+
+        case GIMP_BLEND_CUSTOM:
+	default:
+          gradient = gimp_context_get_gradient (context);
+          break;
+        }
+
       gimp_drawable_blend (drawable,
                            context,
-                           blend_mode,
+                           gradient,
                            paint_mode,
                            gradient_type,
                            opacity / 100.0,
@@ -903,18 +925,25 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
     {
-      GimpImage         *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpImage         *image = gimp_item_get_image (GIMP_ITEM (drawable));
       GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
+      GimpPaintOptions  *paint_options;
 
+      options = gimp_stroke_options_new (gimp, context, TRUE);
       g_object_set (options,
                     "method", GIMP_STROKE_METHOD_PAINT_CORE,
                     NULL);
 
+      paint_options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context), NULL);
+      paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
+
       success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
-                                  drawable, context, options, TRUE, TRUE,
-                                  progress, error);
+                                  drawable, context, options, paint_options,
+                                  TRUE, progress, error);
 
       g_object_unref (options);
+      g_object_unref (paint_options);
     }
   else
     success = FALSE;
@@ -951,17 +980,24 @@ HELP
                                  gimp_item_get_image (GIMP_ITEM (drawable)),
                                  0, error))
     {
-      GimpStrokeOptions *options = gimp_stroke_options_new (gimp, context, TRUE);
+      GimpStrokeOptions *options;
+      GimpPaintOptions  *paint_options;
 
+      options = gimp_stroke_options_new (gimp, context, TRUE);
       g_object_set (options,
                     "method", GIMP_STROKE_METHOD_PAINT_CORE,
                     NULL);
 
+      paint_options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context), NULL);
+      paint_options = gimp_config_duplicate (GIMP_CONFIG (paint_options));
+
       success = gimp_item_stroke (GIMP_ITEM (vectors),
-                                  drawable, context, options, TRUE, TRUE,
-                                  progress, error);
+                                  drawable, context, options, paint_options,
+                                  TRUE, progress, error);
 
       g_object_unref (options);
+      g_object_unref (paint_options);
     }
   else
     success = FALSE;
@@ -972,12 +1008,14 @@ CODE
 
 
 @headers = qw(<string.h>
+              "libgimpconfig/gimpconfig.h"
               "core/gimp.h"
               "core/gimp-edit.h"
               "core/gimpimage.h"
               "core/gimpimage-new.h"
               "core/gimpprogress.h"
               "gimppdb-utils.h"
+              "gimppdbcontext.h"
               "gimp-intl.h");
 
 @procs = qw(edit_cut

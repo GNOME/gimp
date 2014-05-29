@@ -1070,6 +1070,9 @@ gimp_free_select_tool_control (GimpTool       *tool,
       priv->n_points              = 0;
       priv->n_segment_indices     = 0;
       break;
+
+    case GIMP_TOOL_ACTION_COMMIT:
+      break;
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
@@ -1221,13 +1224,14 @@ gimp_free_select_tool_button_press (GimpTool            *tool,
 
       tool->display = display;
 
-      gimp_draw_tool_start (draw_tool, display);
-
       /* We want to apply the selection operation that was current when
        * the tool was started, so we save this information
        */
       priv->operation_at_start = options->operation;
     }
+
+  if (! gimp_draw_tool_is_active (draw_tool))
+    gimp_draw_tool_start (draw_tool, display);
 
   gimp_tool_control_activate (tool->control);
 

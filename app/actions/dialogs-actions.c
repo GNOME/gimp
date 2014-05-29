@@ -228,7 +228,7 @@ gint n_dialogs_dockable_actions = G_N_ELEMENTS (dialogs_dockable_actions);
 
 static const GimpStringActionEntry dialogs_toplevel_actions[] =
 {
-  { "dialogs-preferences", GTK_STOCK_PREFERENCES,
+  { "dialogs-preferences", "preferences-system",
     NC_("dialogs-action", "_Preferences"), NULL,
     NC_("dialogs-action", "Open the preferences dialog"),
     "gimp-preferences-dialog",
@@ -246,7 +246,7 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
     "gimp-keyboard-shortcuts-dialog",
     GIMP_HELP_KEYBOARD_SHORTCUTS },
 
-  { "dialogs-module-dialog", GTK_STOCK_EXECUTE,
+  { "dialogs-module-dialog", "system-run",
     NC_("dialogs-action", "_Modules"), NULL,
     NC_("dialogs-action", "Open the module manager dialog"),
     "gimp-module-dialog",
@@ -258,7 +258,7 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
     "gimp-tips-dialog",
     GIMP_HELP_TIPS_DIALOG },
 
-    { "dialogs-about", GTK_STOCK_ABOUT,
+  { "dialogs-about", "help-about",
 #if defined(G_OS_WIN32) || defined(PLATFORM_OSX)
     NC_("dialogs-action", "About GIMP"),
 #else /* UNIX: use GNOME HIG */
@@ -267,7 +267,13 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
     NULL,
     NC_("dialogs-action", "About GIMP"),
     "gimp-about-dialog",
-    GIMP_HELP_ABOUT_DIALOG }
+      GIMP_HELP_ABOUT_DIALOG },
+
+  { "help-action-search", "edit-find",
+    NC_("help-action", "_Search and Run a Command"), "slash",
+    NC_("help-action", "Search commands by keyword, and run them"),
+    "gimp-action-search-dialog",
+    GIMP_HELP_ACTION_SEARCH_DIALOG }
 };
 
 

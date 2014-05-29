@@ -32,10 +32,16 @@ IGNORE_HFILES = \
 	gimpwidgets-private.h
 
 # Images to copy into HTML directory
-IMAGES_DIR = $(top_srcdir)/themes/Default/images
 HTML_IMAGES = \
-	$(IMAGES_DIR)/stock-*.png	\
-	$(IMAGES_DIR)/tools/stock-*.png \
+	$(top_srcdir)/icons/12/gimp-*.png	\
+	$(top_srcdir)/icons/16/gimp-*.png	\
+	$(top_srcdir)/icons/18/gimp-*.png	\
+	$(top_srcdir)/icons/20/gimp-*.png	\
+	$(top_srcdir)/icons/22/gimp-*.png	\
+	$(top_srcdir)/icons/24/gimp-*.png	\
+	$(top_srcdir)/icons/32/gimp-*.png	\
+	$(top_srcdir)/icons/48/gimp-*.png	\
+	$(top_srcdir)/icons/64/gimp-*.png	\
 	$(srcdir)/images/gimp-*.png	
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)

@@ -2,14 +2,16 @@
 <moduleset>
 	<repository type="tarball" name="gnome.org"
 		href="http://ftp.gnome.org/pub/gnome/sources/" />
+	<repository type="tarball" name="icon-theme.freedesktop.org"
+		href="http://icon-theme.freedesktop.org/releases/" />
+	<repository type="tarball" name="tango.freedesktop.org"
+		href="http://tango.freedesktop.org/releases/" />
 	<repository type="tarball" name="sf.net"
 		href="http://downloads.sourceforge.net/project/" />
 	<repository type="tarball" name="pkg-isocodes"
 		href="http://pkg-isocodes.alioth.debian.org/downloads/" />
 	<repository type="tarball" name="poppler"
 		href="http://poppler.freedesktop.org/" />
-	<repository type="tarball" name="yorba"
-		href="http://www.yorba.org/download/" />
 	<repository type="tarball" name="exiv2"
 		href="http://www.exiv2.org/" />
 
@@ -49,9 +51,9 @@
 </autotools>
 
 <autotools id="lcms2" autogen-sh="configure">
-	<branch version="2.5" repo="sf.net"
-			module="lcms/lcms/2.5/lcms2-2.5.tar.gz"
-			hash="sha256:6727772b44470a2111dba53b9ce4c952b87e7d1b72a31c5ebdf44ba6eb0aa72b">
+	<branch version="2.6" repo="sf.net"
+			module="lcms/lcms/2.6/lcms2-2.6.tar.gz"
+			hash="sha1:b0ecee5cb8391338e6c281d1c11dcae2bc22a5d2">
 	</branch>
 </autotools>
 
@@ -63,9 +65,9 @@
 </autotools>
 
 <autotools id="iso-codes" autogen-sh="configure">
-	<branch version="3.44" repo="pkg-isocodes"
-			module="iso-codes-3.44.tar.xz"
-			hash="sha1:628300675948a637ebd69b21673df73a0fbe1cf4">
+	<branch version="3.52" repo="pkg-isocodes"
+			module="iso-codes-3.52.tar.xz"
+			hash="sha1:2b023294a0c68583032d34290c9f58187d2e26a4">
 	</branch>
 </autotools>
 
@@ -116,9 +118,9 @@
 </autotools>
 
 <autotools id="poppler" autogen-sh="configure">
-	<branch version="0.24.5" repo="poppler"
-			module="poppler-0.24.5.tar.xz"
-			hash="sha1:7b7cabee85bd81a7e55c939740d5d7ccd7c0dda5">
+	<branch version="0.26.0" repo="poppler"
+			module="poppler-0.26.0.tar.xz"
+			hash="sha1:1f5d08ee01683c309688f17116d18bf47b13f001">
 	</branch>
 	<dependencies>
 		<dep package="freetype2"/>
@@ -130,12 +132,10 @@
 	</suggests>
 </autotools>
 
-<autotools id="exiv2" autogen-sh="configure"
-		makeargs="xmpsdk; make -C po all; make -C src lib"
-		makeinstallargs="-C po install; make -C src install-lib">
-	<branch version="0.23" repo="exiv2"
-			module="exiv2-0.23.tar.gz"
-			hash="md5:dab67c07bb63a4386d4ea607a8e06eaf">
+<cmake id="exiv2">
+	<branch version="0.24" repo="exiv2"
+			module="exiv2-0.24.tar.gz"
+			hash="md5:b8a23dc56a98ede85c00718a97a8d6fc">
 	</branch>
 	<dependencies>
 		<dep package="zlib"/>
@@ -143,18 +143,41 @@
 		<dep package="iconv"/>
 		<dep package="gettext"/>
 	</dependencies>
-</autotools>
+</cmake>
 
-<autotools id="libgexiv2" autogen-sh="|| autoreconf --force --install; ./configure">
-	<branch version="0.7.0" repo="yorba"
-			module="gexiv2/0.7/libgexiv2-0.7.0.tar.xz"
-			hash="sha1:cae01960735e819e17f0c7fe28aca058efe45385">
-		<!-- http://redmine.yorba.org/issues/7660 -->
-		<patch file="0001-Port-GExiv2-to-autotools-build-system.patch" strip="1"/>
+<autotools id="libgexiv2" autogen-sh="configure">
+	<branch version="0.10.1" repo="gnome.org"
+			module="gexiv2/0.10/gexiv2-0.10.1.tar.xz"
+			hash="sha256:7675752a59c2f091560be1f39514ef492ec705b9fdea5f52281672e6b3eba2c7">
 	</branch>
 	<dependencies>
 		<dep package="exiv2"/>
 		<dep package="glib2"/>
+	</dependencies>
+</autotools>
+
+<autotools id="hicolor-icon-theme" autogen-sh="configure">
+	<branch version="0.13" repo="icon-theme.freedesktop.org"
+			module="hicolor-icon-theme-0.13.tar.gz"
+			hash="sha256:a38b038915480d1ddd4e3c421562560a14d42ace0449a5acc07c50f57f9c3406">
+	</branch>
+</autotools>
+
+<autotools id="icon-naming-utils" autogen-sh="configure">
+	<branch version="0.8.90" repo="tango.freedesktop.org"
+			module="icon-naming-utils-0.8.90.tar.bz2"
+			hash="sha256:b1378679df4485b4459f609a3304238b3e92d91e43744c47b70abbe690d883d5">
+	</branch>
+</autotools>
+
+<autotools id="gnome-icon-theme" autogen-sh="configure">
+	<branch version="3.12.0" repo="gnome.org"
+			module="gnome-icon-theme/3.12/gnome-icon-theme-3.12.0.tar.xz"
+			hash="sha256:359e720b9202d3aba8d477752c4cd11eced368182281d51ffd64c8572b4e503a">
+	</branch>
+	<dependencies>
+		<dep package="icon-naming-utils"/>
+		<dep package="hicolor-icon-theme"/>
 	</dependencies>
 </autotools>
 

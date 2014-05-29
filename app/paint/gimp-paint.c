@@ -48,7 +48,7 @@ static void   gimp_paint_register (Gimp        *gimp,
                                    GType        paint_options_type,
                                    const gchar *identifier,
                                    const gchar *blurb,
-                                   const gchar *stock_id);
+                                   const gchar *icon_name);
 
 
 /*  public functions  */
@@ -114,7 +114,7 @@ gimp_paint_register (Gimp        *gimp,
                      GType        paint_options_type,
                      const gchar *identifier,
                      const gchar *blurb,
-                     const gchar *stock_id)
+                     const gchar *icon_name)
 {
   GimpPaintInfo *paint_info;
 
@@ -129,7 +129,7 @@ gimp_paint_register (Gimp        *gimp,
                                     paint_options_type,
                                     identifier,
                                     blurb,
-                                    stock_id);
+                                    icon_name);
 
   gimp_container_add (gimp->paint_info_list, GIMP_OBJECT (paint_info));
   g_object_unref (paint_info);

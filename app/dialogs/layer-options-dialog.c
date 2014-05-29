@@ -59,7 +59,7 @@ layer_options_dialog_new (GimpImage    *image,
                           GimpFillType  layer_fill_type,
                           const gchar  *title,
                           const gchar  *role,
-                          const gchar  *stock_id,
+                          const gchar  *icon_name,
                           const gchar  *desc,
                           const gchar  *help_id)
 {
@@ -92,7 +92,7 @@ layer_options_dialog_new (GimpImage    *image,
 
   options->dialog =
     gimp_viewable_dialog_new (viewable, context,
-                              title, role, stock_id, desc,
+                              title, role, icon_name, desc,
                               parent,
                               gimp_standard_help_func, help_id,
 

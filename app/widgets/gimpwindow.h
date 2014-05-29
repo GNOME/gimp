@@ -29,18 +29,23 @@
 #define GIMP_WINDOW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_WINDOW, GimpWindowClass))
 
 
-typedef struct _GimpWindowClass GimpWindowClass;
+typedef struct _GimpWindowClass   GimpWindowClass;
+typedef struct _GimpWindowPrivate GimpWindowPrivate;
 
 struct _GimpWindow
 {
-  GtkWindow  parent_instance;
+  GtkWindow          parent_instance;
 
-  GtkWidget *primary_focus_widget;
+  GimpWindowPrivate *private;
 };
 
 struct _GimpWindowClass
 {
   GtkWindowClass  parent_class;
+
+  void (* monitor_changed) (GimpWindow *window,
+                            GdkScreen  *screen,
+                            gint        monitor);
 };
 
 

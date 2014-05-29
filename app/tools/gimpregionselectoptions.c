@@ -80,26 +80,26 @@ gimp_region_select_options_class_init (GimpRegionSelectOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SELECT_TRANSPARENT,
                                     "select-transparent",
-                                    N_("Allow completely transparent regions "
-                                       "to be selected"),
+                                    _("Allow completely transparent regions "
+                                      "to be selected"),
                                     TRUE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SAMPLE_MERGED,
                                     "sample-merged",
-                                    N_("Base selection on all visible layers"),
+                                    _("Base selection on all visible layers"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
                                    "threshold",
-                                   N_("Maximum color difference"),
+                                   _("Maximum color difference"),
                                    0.0, 255.0, 15.0,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_SELECT_CRITERION,
                                  "select-criterion",
-                                 N_("Selection criterion"),
+                                 _("Selection criterion"),
                                  GIMP_TYPE_SELECT_CRITERION,
                                  GIMP_SELECT_CRITERION_COMPOSITE,
                                  GIMP_PARAM_STATIC_STRINGS);

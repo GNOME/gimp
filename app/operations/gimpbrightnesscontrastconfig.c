@@ -31,6 +31,8 @@
 #include "gimpbrightnesscontrastconfig.h"
 #include "gimplevelsconfig.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -64,19 +66,19 @@ gimp_brightness_contrast_config_class_init (GimpBrightnessContrastConfigClass *k
   GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
   GimpViewableClass *viewable_class = GIMP_VIEWABLE_CLASS (klass);
 
-  object_class->set_property       = gimp_brightness_contrast_config_set_property;
-  object_class->get_property       = gimp_brightness_contrast_config_get_property;
+  object_class->set_property        = gimp_brightness_contrast_config_set_property;
+  object_class->get_property        = gimp_brightness_contrast_config_get_property;
 
-  viewable_class->default_stock_id = "gimp-tool-brightness-contrast";
+  viewable_class->default_icon_name = "gimp-tool-brightness-contrast";
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRIGHTNESS,
                                    "brightness",
-                                   "Brightness",
+                                   _("Brightness"),
                                    -1.0, 1.0, 0.0, 0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CONTRAST,
                                    "contrast",
-                                   "Contrast",
+                                   _("Contrast"),
                                    -1.0, 1.0, 0.0, 0);
 }
 

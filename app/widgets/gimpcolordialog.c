@@ -38,6 +38,7 @@
 #include "gimpcolordialog.h"
 #include "gimpdialogfactory.h"
 #include "gimphelp-ids.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -241,7 +242,7 @@ GtkWidget *
 gimp_color_dialog_new (GimpViewable      *viewable,
                        GimpContext       *context,
                        const gchar       *title,
-                       const gchar       *stock_id,
+                       const gchar       *icon_name,
                        const gchar       *desc,
                        GtkWidget         *parent,
                        GimpDialogFactory *dialog_factory,
@@ -272,7 +273,7 @@ gimp_color_dialog_new (GimpViewable      *viewable,
                          "role",        role,
                          "help-func",   gimp_color_dialog_help_func,
                          "help-id",     GIMP_HELP_COLOR_DIALOG,
-                         "stock-id",    stock_id,
+                         "icon_name",   icon_name,
                          "description", desc,
                          "parent",      parent,
                          NULL);
@@ -295,8 +296,12 @@ gimp_color_dialog_new (GimpViewable      *viewable,
   dialog->wants_updates = wants_updates;
 
   if (dialog_factory)
-    gimp_dialog_factory_add_foreign (dialog_factory, dialog_identifier,
-                                     GTK_WIDGET (dialog));
+    {
+      gimp_dialog_factory_add_foreign (dialog_factory, dialog_identifier,
+                                       GTK_WIDGET (dialog),
+                                       gtk_widget_get_screen (parent),
+                                       gimp_widget_get_monitor (parent));
+    }
 
   gimp_color_selection_set_show_alpha (GIMP_COLOR_SELECTION (dialog->selection),
                                        show_alpha);
