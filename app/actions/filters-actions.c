@@ -90,6 +90,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:color-reduction",
     NULL /* FIXME GIMP_HELP_FILTER_COLOR_TEMPERATURE */ },
 
+  { "filters-color-rotate", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Rotate Colors..."), NULL, NULL,
+    "gegl:color-rotate",
+    NULL /* FIXME GIMP_HELP_FILTER_COLOR_ROTATE */ },
+
   { "filters-color-temperature", GIMP_STOCK_GEGL,
     NC_("filters-action", "Color T_emperature..."), NULL, NULL,
     "gegl:color-temperature",
@@ -416,6 +421,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-cartoon",                 writable);
   SET_SENSITIVE ("filters-checkerboard",            writable);
   SET_SENSITIVE ("filters-color-reduction",         writable);
+  SET_SENSITIVE ("filters-color-rotate",            writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
   SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);
   SET_SENSITIVE ("filters-convolution-matrix",      writable);

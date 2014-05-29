@@ -481,6 +481,7 @@ sanity_check_gegl_ops (void)
     "gegl:checkerboard",
     "gegl:color",
     "gegl:color-reduction",
+    "gegl:color-rotate",
     "gegl:color-temperature",
     "gegl:color-to-alpha",
     "gegl:convolution-matrix",
