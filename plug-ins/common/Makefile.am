@@ -63,7 +63,6 @@ libexec_PROGRAMS = \
 	compose \
 	contrast-normalize \
 	contrast-retinex \
-	convolution-matrix \
 	crop-zealous \
 	curve-bend \
 	decompose \
@@ -511,23 +510,6 @@ contrast_retinex_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(contrast_retinex_RC)
-
-convolution_matrix_SOURCES = \
-	convolution-matrix.c
-
-convolution_matrix_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(convolution_matrix_RC)
 
 crop_zealous_SOURCES = \
 	crop-zealous.c

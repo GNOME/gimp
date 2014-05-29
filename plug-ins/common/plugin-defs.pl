@@ -18,7 +18,6 @@
     'compose' => { ui => 1, gegl => 1 },
     'contrast-normalize' => {},
     'contrast-retinex' => { ui => 1 },
-    'convolution-matrix' => { ui => 1 },
     'crop-zealous' => {},
     'curve-bend' => { ui => 1 },
     'decompose' => { ui => 1, gegl => 1 },

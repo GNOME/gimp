@@ -577,6 +577,138 @@ CODE
     );
 }
 
+sub plug_in_convmatrix {
+    $blurb = 'Apply a generic 5x5 convolution matrix';
+
+    $help = <<'HELP';
+Apply a generic 5x5 convolution matrix.
+HELP
+
+    &std_pdb_compat('gegl:convolution-matrix');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'matrix', type => 'floatarray',
+	  desc => 'The 5x5 convolution matrix',
+	  array => { name => 'argc_matrix',
+		     desc => 'The number of elements in the following array, must always be 25' } },
+	{ name => 'alpha_alg', type => 'boolean',
+	  desc => 'Enable weighting by alpha channel' },
+	{ name => 'divisor', type => 'float',
+	  desc => 'Divisor' },
+	{ name => 'offset', type => 'float',
+	  desc => 'Offset' },
+	{ name => 'channels', type => 'int32array',
+	  desc => 'Mask of the channels to be filtered',
+	  array => { name => 'argc_channels',
+		     desc => 'The number of elements in following array, must always be 5' } },
+	{ name => 'bmode', type => '0 <= int32 <= 2',
+	  desc => 'Mode for treating image borders { EXTEND (0), WRAP (1), CLEAR (2) }' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (argc_matrix != 25)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("Array 'matrix' has only %d members, must have 25"),
+                   argc_matrix);
+      success = FALSE;
+    }
+
+  if (success && argc_channels != 5)
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                   _("Array 'channels' has only %d members, must have 5"),
+                   argc_channels);
+      success = FALSE;
+    }
+
+  if (success &&
+      gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode        *node;
+      GeglAbyssPolicy  border;
+      gboolean         r = channels[1];
+      gboolean         g = channels[2];
+      gboolean         b = channels[3];
+      gboolean         a = channels[4];
+
+      if (gimp_drawable_is_gray (drawable))
+        {
+          r = channels[0];
+          g = channels[0];
+          b = channels[0];
+        }
+
+      switch (bmode)
+        {
+        case 0: border = GEGL_ABYSS_CLAMP;
+        case 1: border = GEGL_ABYSS_LOOP;
+        case 2: border = GEGL_ABYSS_NONE;
+        }
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",    "gegl:convolution-matrix",
+                                  "a1",           matrix[0],
+                                  "a2",           matrix[1],
+                                  "a3",           matrix[2],
+                                  "a4",           matrix[3],
+                                  "a5",           matrix[4],
+                                  "b1",           matrix[5],
+                                  "b2",           matrix[6],
+                                  "b3",           matrix[7],
+                                  "b4",           matrix[8],
+                                  "b5",           matrix[9],
+                                  "c1",           matrix[10],
+                                  "c2",           matrix[11],
+                                  "c3",           matrix[12],
+                                  "c4",           matrix[13],
+                                  "c5",           matrix[14],
+                                  "d1",           matrix[15],
+                                  "d2",           matrix[16],
+                                  "d3",           matrix[17],
+                                  "d4",           matrix[18],
+                                  "d5",           matrix[19],
+                                  "e1",           matrix[20],
+                                  "e2",           matrix[21],
+                                  "e3",           matrix[22],
+                                  "e4",           matrix[23],
+                                  "e5",           matrix[24],
+                                  "divisor",      divisor,
+                                  "offset",       offset,
+                                  "red",          r,
+                                  "green",        g,
+                                  "blue",         b,
+                                  "alpha",        a,
+                                  "normalize",    FALSE,
+                                  "alpha-weight", alpha_alg,
+                                  "border",       border,
+                                  NULL);
+
+      node = wrap_in_gamma_cast (node, drawable);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Convolution Matrix"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_cubism {
     $blurb = 'Convert the image into randomly rotated square blobs';
 
@@ -2667,6 +2799,7 @@ CODE
               "core/gimpimage-undo.h"
               "core/gimppickable.h"
               "core/gimppickable-auto-shrink.h"
+              "gimppdberror.h"
               "gimppdb-utils.h"
               "gimp-intl.h");
 
@@ -2680,6 +2813,7 @@ CODE
             plug_in_c_astretch
             plug_in_colors_channel_mixer
             plug_in_colortoalpha
+            plug_in_convmatrix
             plug_in_cubism
             plug_in_deinterlace
             plug_in_gauss

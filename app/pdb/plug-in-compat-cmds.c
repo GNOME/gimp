@@ -48,6 +48,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimppdb.h"
+#include "gimppdberror.h"
 #include "gimppdb-utils.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
@@ -681,6 +682,132 @@ plug_in_colortoalpha_invoker (GimpProcedure         *procedure,
 
           gimp_drawable_apply_operation (drawable, progress,
                                          C_("undo-type", "Color to Alpha"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_convmatrix_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 argc_matrix;
+  const gdouble *matrix;
+  gboolean alpha_alg;
+  gdouble divisor;
+  gdouble offset;
+  gint32 argc_channels;
+  const gint32 *channels;
+  gint32 bmode;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  argc_matrix = g_value_get_int (gimp_value_array_index (args, 3));
+  matrix = gimp_value_get_floatarray (gimp_value_array_index (args, 4));
+  alpha_alg = g_value_get_boolean (gimp_value_array_index (args, 5));
+  divisor = g_value_get_double (gimp_value_array_index (args, 6));
+  offset = g_value_get_double (gimp_value_array_index (args, 7));
+  argc_channels = g_value_get_int (gimp_value_array_index (args, 8));
+  channels = gimp_value_get_int32array (gimp_value_array_index (args, 9));
+  bmode = g_value_get_int (gimp_value_array_index (args, 10));
+
+  if (success)
+    {
+      if (argc_matrix != 25)
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       _("Array 'matrix' has only %d members, must have 25"),
+                       argc_matrix);
+          success = FALSE;
+        }
+
+      if (success && argc_channels != 5)
+        {
+          g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                       _("Array 'channels' has only %d members, must have 5"),
+                       argc_channels);
+          success = FALSE;
+        }
+
+      if (success &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode        *node;
+          GeglAbyssPolicy  border;
+          gboolean         r = channels[1];
+          gboolean         g = channels[2];
+          gboolean         b = channels[3];
+          gboolean         a = channels[4];
+
+          if (gimp_drawable_is_gray (drawable))
+            {
+              r = channels[0];
+              g = channels[0];
+              b = channels[0];
+            }
+
+          switch (bmode)
+            {
+            case 0: border = GEGL_ABYSS_CLAMP;
+            case 1: border = GEGL_ABYSS_LOOP;
+            case 2: border = GEGL_ABYSS_NONE;
+            }
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",    "gegl:convolution-matrix",
+                                      "a1",           matrix[0],
+                                      "a2",           matrix[1],
+                                      "a3",           matrix[2],
+                                      "a4",           matrix[3],
+                                      "a5",           matrix[4],
+                                      "b1",           matrix[5],
+                                      "b2",           matrix[6],
+                                      "b3",           matrix[7],
+                                      "b4",           matrix[8],
+                                      "b5",           matrix[9],
+                                      "c1",           matrix[10],
+                                      "c2",           matrix[11],
+                                      "c3",           matrix[12],
+                                      "c4",           matrix[13],
+                                      "c5",           matrix[14],
+                                      "d1",           matrix[15],
+                                      "d2",           matrix[16],
+                                      "d3",           matrix[17],
+                                      "d4",           matrix[18],
+                                      "d5",           matrix[19],
+                                      "e1",           matrix[20],
+                                      "e2",           matrix[21],
+                                      "e3",           matrix[22],
+                                      "e4",           matrix[23],
+                                      "e5",           matrix[24],
+                                      "divisor",      divisor,
+                                      "offset",       offset,
+                                      "red",          r,
+                                      "green",        g,
+                                      "blue",         b,
+                                      "alpha",        a,
+                                      "normalize",    FALSE,
+                                      "alpha-weight", alpha_alg,
+                                      "border",       border,
+                                      NULL);
+
+          node = wrap_in_gamma_cast (node, drawable);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Convolution Matrix"),
                                          node);
           g_object_unref (node);
         }
@@ -2888,6 +3015,88 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     FALSE,
                                                     NULL,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-convmatrix
+   */
+  procedure = gimp_procedure_new (plug_in_convmatrix_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-convmatrix");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-convmatrix",
+                                     "Apply a generic 5x5 convolution matrix",
+                                     "Apply a generic 5x5 convolution matrix.",
+                                     "Compatibility procedure. Please see 'gegl:convolution-matrix' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:convolution-matrix' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("argc-matrix",
+                                                      "argc matrix",
+                                                      "The number of elements in the following array, must always be 25",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_float_array ("matrix",
+                                                            "matrix",
+                                                            "The 5x5 convolution matrix",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("alpha-alg",
+                                                     "alpha alg",
+                                                     "Enable weighting by alpha channel",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("divisor",
+                                                    "divisor",
+                                                    "Divisor",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("offset",
+                                                    "offset",
+                                                    "Offset",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("argc-channels",
+                                                      "argc channels",
+                                                      "The number of elements in following array, must always be 5",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32_array ("channels",
+                                                            "channels",
+                                                            "Mask of the channels to be filtered",
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("bmode",
+                                                      "bmode",
+                                                      "Mode for treating image borders { EXTEND (0), WRAP (1), CLEAR (2) }",
+                                                      0, 2, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

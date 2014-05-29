@@ -17,7 +17,6 @@ colormap_remap_RC = colormap-remap.rc.o
 compose_RC = compose.rc.o
 contrast_normalize_RC = contrast-normalize.rc.o
 contrast_retinex_RC = contrast-retinex.rc.o
-convolution_matrix_RC = convolution-matrix.rc.o
 crop_zealous_RC = crop-zealous.rc.o
 curve_bend_RC = curve-bend.rc.o
 decompose_RC = decompose.rc.o
