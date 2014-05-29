@@ -682,7 +682,9 @@
         <menuitem action="filters-edge-laplace" />
         <menuitem action="filters-edge-sobel" />
       </menu>
-      <menu action="plug-in-generic-menu" name="Generic" />
+      <menu action="plug-in-generic-menu" name="Generic">
+        <menuitem action="filters-convolution-matrix" />
+      </menu>
       <menu action="plug-in-combine-menu" name="Combine" />
       <menu action="plug-in-artistic-menu" name="Artistic">
 	<menuitem action="filters-apply-canvas" />

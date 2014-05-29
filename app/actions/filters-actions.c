@@ -100,6 +100,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:color-to-alpha",
     NULL /* FIXME GIMP_HELP_FILTER_COLOR_TO_ALPHA */ },
 
+  { "filters-convolution-matrix", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Convolution Matrix..."), NULL, NULL,
+    "gegl:convolution-matrix",
+    NULL /* FIXME GIMP_HELP_FILTER_CONVOLUTION_MATRIX */ },
+
   { "filters-cubism", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Cubism..."), NULL, NULL,
     "gegl:cubism",
@@ -413,6 +418,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-color-reduction",         writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
   SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);
+  SET_SENSITIVE ("filters-convolution-matrix",      writable);
   SET_SENSITIVE ("filters-cubism",                  writable);
   SET_SENSITIVE ("filters-deinterlace",             writable);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
