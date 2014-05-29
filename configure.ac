@@ -2203,8 +2203,6 @@ build/windows/Makefile
 build/windows/gimp.rc
 build/windows/gimp-plug-ins.rc
 plug-ins/Makefile
-plug-ins/color-rotate/Makefile
-plug-ins/color-rotate/images/Makefile
 plug-ins/file-bmp/Makefile
 plug-ins/file-compressor/Makefile
 plug-ins/file-exr/Makefile

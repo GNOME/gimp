@@ -37,7 +37,6 @@ endif
 SUBDIRS = \
 	$(script_fu)		\
 	$(pygimp)		\
-	color-rotate		\
 	file-bmp		\
 	file-compressor		\
 	$(file_exr)		\
