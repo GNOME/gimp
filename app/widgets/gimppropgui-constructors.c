@@ -292,6 +292,44 @@ gimp_prop_angle_range_box_new (GObject    *config,
   return main_hbox;
 }
 
+static GtkWidget *
+gimp_prop_polar_box_new (GObject    *config,
+                         GParamSpec *angle_pspec,
+                         GParamSpec *radius_pspec)
+{
+  GtkWidget *main_hbox;
+  GtkWidget *vbox;
+  GtkWidget *scale;
+  GtkWidget *polar;
+
+  main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
+  scale = gimp_prop_spin_scale_new (config, angle_pspec->name,
+                                    g_param_spec_get_nick (angle_pspec),
+                                    1.0, 15.0, 2);
+  gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  scale = gimp_prop_spin_scale_new (config, radius_pspec->name,
+                                    g_param_spec_get_nick (radius_pspec),
+                                    1.0, 15.0, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  polar = gimp_prop_polar_new (config,
+                               angle_pspec->name,
+                               radius_pspec->name);
+  gtk_box_pack_start (GTK_BOX (main_hbox), polar, FALSE, FALSE, 0);
+  gtk_widget_show (polar);
+
+  return main_hbox;
+}
+
 GtkWidget *
 _gimp_prop_gui_new_color_rotate (GObject              *config,
                                  GParamSpec          **param_specs,
@@ -302,6 +340,7 @@ _gimp_prop_gui_new_color_rotate (GObject              *config,
 {
   GtkWidget *main_vbox;
   GtkWidget *frame;
+  GtkWidget *vbox;
   GtkWidget *box;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
@@ -337,13 +376,22 @@ _gimp_prop_gui_new_color_rotate (GObject              *config,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
   box = _gimp_prop_gui_new_generic (config,
-                                    param_specs + 6,
-                                    n_param_specs - 6,
+                                    param_specs + 6, 2,
                                     context,
                                     create_picker_func,
                                     picker_creator);
-  gtk_container_add (GTK_CONTAINER (frame), box);
+  gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
+  gtk_widget_show (box);
+
+  box = gimp_prop_polar_box_new (config,
+                                 param_specs[8],
+                                 param_specs[9]);
+  gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
   return main_vbox;
