@@ -68,6 +68,7 @@ m4_define([liblzma_required_version], [5.0.0])
 m4_define([openexr_required_version], [1.6.1])
 m4_define([gtk_mac_integration_required_version], [2.0.0])
 m4_define([intltool_required_version], [0.40.1])
+m4_define([python2_required_version], [2.5.0])
 
 # Current test considers only 2 version numbers. If we update the recommended
 # version of gettext with more version numbers, please update the tests.
@@ -138,6 +139,7 @@ FREETYPE2_REQUIRED_VERSION=freetype2_required_version
 HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
 ATK_REQUIRED_VERSION=atk_required_version
 INTLTOOL_REQUIRED_VERSION=intltool_required_version
+PYTHON2_REQUIRED_VERSION=python2_required_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
@@ -151,6 +153,7 @@ AC_SUBST(FREETYPE2_REQUIRED_VERSION)
 AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
 AC_SUBST(ATK_REQUIRED_VERSION)
 AC_SUBST(INTLTOOL_REQUIRED_VERSION)
+AC_SUBST(PYTHON2_REQUIRED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
 # Makefiles and conditionally defined here as a preprocessor symbol
@@ -1760,10 +1763,10 @@ m4_define([pycheck_error], [
 if test "x$enable_python" != xno; then
   enable_python="yes"
   # check for Python
-  AM_PATH_PYTHON(2.5.0,,
-    [AC_MSG_ERROR([pycheck_error([Python 2.5.0 or newer], [it])])])
+  AM_PATH_PYTHON2(python2_required_version,,
+    [AC_MSG_ERROR([pycheck_error([Python 2 (python2_required_version or newer)], [it])])])
   AM_CHECK_PYTHON_HEADERS(,
-    [AC_MSG_ERROR([pycheck_error([Python headers], [them])])])
+    [AC_MSG_ERROR([pycheck_error([Python 2 headers], [them])])])
 
   # Win32 needs all symbols resolved for linking, even for DLLs
   # Assume the link library is in $exec_prefix/libs
@@ -2356,7 +2359,7 @@ Optional Plug-Ins:
   PDF (import):        $have_poppler
   PDF (export):        $have_cairo_pdf
   Print:               $enable_print
-  Python:              $enable_python
+  Python 2:            $enable_python
   Script-Fu:           $have_script_fu
   SVG:                 $have_librsvg
   TIFF:                $have_libtiff

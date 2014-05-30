@@ -86,9 +86,9 @@ header files installed.
      libtiff, webkit, libmng, librsvg, libwmf, libgs (Ghostscript),
      libaa and libjasper.
 
- 12. The Python extension requires Python development headers to be
-     present. You will also need PyGTK and the respective development
-     headers.
+ 12. The Python extension requires Python 2 development headers (@PYTHON2_REQUIRED_VERSION@
+     or newer) to be present. You will also need PyGTK and the
+     respective development headers.
 
  13. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
