@@ -481,6 +481,7 @@ app/widgets/gimppanedbox.c
 app/widgets/gimppdbdialog.c
 app/widgets/gimpprogressdialog.c
 app/widgets/gimppropgui.c
+app/widgets/gimppropgui-constructors.c
 app/widgets/gimppropwidgets.c
 app/widgets/gimpselectiondata.c
 app/widgets/gimpselectioneditor.c
