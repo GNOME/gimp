@@ -70,8 +70,8 @@ static void        gimp_polar_get_property         (GObject            *object,
                                                     GValue             *value,
                                                     GParamSpec         *pspec);
 
-static gboolean    gimp_polar_expose_event         (GtkWidget          *widget,
-                                                    GdkEventExpose     *event);
+static gboolean    gimp_polar_draw                 (GtkWidget          *widget,
+                                                    cairo_t            *cr);
 static gboolean    gimp_polar_button_press_event   (GtkWidget          *widget,
                                                     GdkEventButton     *bevent);
 static gboolean    gimp_polar_motion_notify_event  (GtkWidget          *widget,
@@ -108,7 +108,7 @@ gimp_polar_class_init (GimpPolarClass *klass)
   object_class->get_property         = gimp_polar_get_property;
   object_class->set_property         = gimp_polar_set_property;
 
-  widget_class->expose_event         = gimp_polar_expose_event;
+  widget_class->draw                 = gimp_polar_draw;
   widget_class->button_press_event   = gimp_polar_button_press_event;
   widget_class->motion_notify_event  = gimp_polar_motion_notify_event;
 
@@ -190,39 +190,32 @@ gimp_polar_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_polar_expose_event (GtkWidget      *widget,
-                         GdkEventExpose *event)
+gimp_polar_draw (GtkWidget *widget,
+                 cairo_t   *cr)
 {
-  GimpPolar *polar = GIMP_POLAR (widget);
+  GimpPolar     *polar = GIMP_POLAR (widget);
+  GtkAllocation  allocation;
+  gint           size;
 
-  GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+  GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
 
-  if (gtk_widget_is_drawable (widget))
-    {
-      GtkAllocation  allocation;
-      gint           size;
-      cairo_t       *cr;
+  g_object_get (widget,
+                "size", &size,
+                NULL);
 
-      g_object_get (widget,
-                    "size", &size,
-                    NULL);
+  gtk_widget_get_allocation (widget, &allocation);
 
-      cr = gdk_cairo_create (event->window);
-      gdk_cairo_region (cr, event->region);
-      cairo_clip (cr);
+  cairo_save (cr);
 
-      gtk_widget_get_allocation (widget, &allocation);
+  cairo_translate (cr,
+                   (allocation.width  - size) / 2.0,
+                   (allocation.height - size) / 2.0);
 
-      cairo_translate (cr,
-                       (gdouble) allocation.x + (allocation.width  - size) / 2.0,
-                       (gdouble) allocation.y + (allocation.height - size) / 2.0);
+  gimp_polar_draw_circle (cr, size,
+                          polar->priv->angle, polar->priv->radius,
+                          polar->priv->target);
 
-      gimp_polar_draw_circle (cr, size,
-                              polar->priv->angle, polar->priv->radius,
-                              polar->priv->target);
-
-      cairo_destroy (cr);
-    }
+  cairo_restore (cr);
 
   return FALSE;
 }
