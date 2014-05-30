@@ -124,7 +124,10 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
 
       applicator = gimp_filter_get_applicator (filter);
 
-      if (applicator)
+      /* FIXME: disabled because it is unacceptable to run the
+       * filter twice, need to use whatever cached result
+       */
+      if (FALSE /* applicator */)
         {
           GimpImage        *image = gimp_item_get_image (GIMP_ITEM (drawable));
           GimpDrawableUndo *undo;
