@@ -80,8 +80,8 @@ static void        gimp_dial_get_property         (GObject            *object,
                                                    GValue             *value,
                                                    GParamSpec         *pspec);
 
-static gboolean    gimp_dial_expose_event         (GtkWidget          *widget,
-                                                   GdkEventExpose     *event);
+static gboolean    gimp_dial_draw                 (GtkWidget          *widget,
+                                                   cairo_t            *cr);
 static gboolean    gimp_dial_button_press_event   (GtkWidget          *widget,
                                                    GdkEventButton     *bevent);
 static gboolean    gimp_dial_motion_notify_event  (GtkWidget          *widget,
@@ -120,7 +120,7 @@ gimp_dial_class_init (GimpDialClass *klass)
   object_class->get_property         = gimp_dial_get_property;
   object_class->set_property         = gimp_dial_set_property;
 
-  widget_class->expose_event         = gimp_dial_expose_event;
+  widget_class->draw                 = gimp_dial_draw;
   widget_class->button_press_event   = gimp_dial_button_press_event;
   widget_class->motion_notify_event  = gimp_dial_motion_notify_event;
 
@@ -234,41 +234,34 @@ gimp_dial_get_property (GObject    *object,
 }
 
 static gboolean
-gimp_dial_expose_event (GtkWidget      *widget,
-                        GdkEventExpose *event)
+gimp_dial_draw (GtkWidget *widget,
+                cairo_t   *cr)
 {
-  GimpDial *dial = GIMP_DIAL (widget);
+  GimpDial      *dial = GIMP_DIAL (widget);
+  GtkAllocation  allocation;
+  gint           size;
 
-  GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+  GTK_WIDGET_CLASS (parent_class)->draw (widget, cr);
 
-  if (gtk_widget_is_drawable (widget))
-    {
-      GtkAllocation  allocation;
-      gint           size;
-      cairo_t       *cr;
+  g_object_get (widget,
+                "size", &size,
+                NULL);
 
-      g_object_get (widget,
-                    "size", &size,
-                    NULL);
+  gtk_widget_get_allocation (widget, &allocation);
 
-      cr = gdk_cairo_create (event->window);
-      gdk_cairo_region (cr, event->region);
-      cairo_clip (cr);
+  cairo_save (cr);
 
-      gtk_widget_get_allocation (widget, &allocation);
+  cairo_translate (cr,
+                   (allocation.width  - size) / 2.0,
+                   (allocation.height - size) / 2.0);
 
-      cairo_translate (cr,
-                       (gdouble) allocation.x + (allocation.width  - size) / 2.0,
-                       (gdouble) allocation.y + (allocation.height - size) / 2.0);
+  gimp_dial_draw_arrows (cr, size,
+                         dial->priv->alpha, dial->priv->beta,
+                         dial->priv->clockwise,
+                         dial->priv->target,
+                         dial->priv->draw_beta);
 
-      gimp_dial_draw_arrows (cr, size,
-                             dial->priv->alpha, dial->priv->beta,
-                             dial->priv->clockwise,
-                             dial->priv->target,
-                             dial->priv->draw_beta);
-
-      cairo_destroy (cr);
-    }
+  cairo_restore (cr);
 
   return FALSE;
 }
