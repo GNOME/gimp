@@ -32,14 +32,17 @@
 #include "libgimp-intl.h"
 
 
-static void     gimp_image_metadata_rotate        (gint32             image_ID,
-                                                   GExiv2Orientation  orientation);
-static void     gimp_image_metadata_rotate_query  (gint32             image_ID,
-                                                   const gchar       *mime_type,
-                                                   GimpMetadata      *metadata,
-                                                   gboolean           interactive);
-static gboolean gimp_image_metadata_rotate_dialog (gint32             image_ID,
-                                                   const gchar       *parasite_name);
+static void        gimp_image_metadata_rotate        (gint32             image_ID,
+                                                      GExiv2Orientation  orientation);
+static GdkPixbuf * gimp_image_metadata_rotate_pixbuf (GdkPixbuf         *pixbuf,
+                                                      GExiv2Orientation  orientation);
+static void        gimp_image_metadata_rotate_query  (gint32             image_ID,
+                                                      const gchar       *mime_type,
+                                                      GimpMetadata      *metadata,
+                                                      gboolean           interactive);
+static gboolean    gimp_image_metadata_rotate_dialog (gint32             image_ID,
+                                                      GExiv2Orientation  orientation,
+                                                      const gchar       *parasite_name);
 
 
 /*  public functions  */
@@ -605,6 +608,58 @@ gimp_image_metadata_rotate (gint32             image_ID,
     }
 }
 
+static GdkPixbuf *
+gimp_image_metadata_rotate_pixbuf (GdkPixbuf         *pixbuf,
+                                   GExiv2Orientation  orientation)
+{
+  GdkPixbuf *rotated = NULL;
+  GdkPixbuf *temp;
+
+  switch (orientation)
+    {
+    case GEXIV2_ORIENTATION_UNSPECIFIED:
+    case GEXIV2_ORIENTATION_NORMAL:  /* standard orientation, do nothing */
+      break;
+
+    case GEXIV2_ORIENTATION_HFLIP:
+      rotated = gdk_pixbuf_flip (pixbuf, TRUE);
+      break;
+
+    case GEXIV2_ORIENTATION_ROT_180:
+      rotated = gdk_pixbuf_rotate_simple (pixbuf, GDK_PIXBUF_ROTATE_UPSIDEDOWN);
+      break;
+
+    case GEXIV2_ORIENTATION_VFLIP:
+      rotated = gdk_pixbuf_flip (pixbuf, FALSE);
+      break;
+
+    case GEXIV2_ORIENTATION_ROT_90_HFLIP:  /* flipped diagonally around '\' */
+      temp = gdk_pixbuf_rotate_simple (pixbuf, GDK_PIXBUF_ROTATE_CLOCKWISE);
+      rotated = gdk_pixbuf_flip (temp, TRUE);
+      g_object_unref (temp);
+      break;
+
+    case GEXIV2_ORIENTATION_ROT_90:  /* 90 CW */
+      rotated = gdk_pixbuf_rotate_simple (pixbuf, GDK_PIXBUF_ROTATE_CLOCKWISE);
+      break;
+
+    case GEXIV2_ORIENTATION_ROT_90_VFLIP:  /* flipped diagonally around '/' */
+      temp = gdk_pixbuf_rotate_simple (pixbuf, GDK_PIXBUF_ROTATE_CLOCKWISE);
+      rotated = gdk_pixbuf_flip (temp, FALSE);
+      g_object_unref (temp);
+      break;
+
+    case GEXIV2_ORIENTATION_ROT_270:  /* 90 CCW */
+      rotated = gdk_pixbuf_rotate_simple (pixbuf, GDK_PIXBUF_ROTATE_COUNTERCLOCKWISE);
+      break;
+
+    default: /* shouldn't happen */
+      break;
+    }
+
+  return rotated;
+}
+
 static void
 gimp_image_metadata_rotate_query (gint32        image_ID,
                                   const gchar  *mime_type,
@@ -645,6 +700,7 @@ gimp_image_metadata_rotate_query (gint32        image_ID,
     }
 
   if (query && ! gimp_image_metadata_rotate_dialog (image_ID,
+                                                    orientation,
                                                     parasite_name))
     {
       g_free (parasite_name);
@@ -662,24 +718,33 @@ gimp_image_metadata_rotate_query (gint32        image_ID,
 }
 
 static gboolean
-gimp_image_metadata_rotate_dialog (gint32       image_ID,
-                                   const gchar *parasite_name)
+gimp_image_metadata_rotate_dialog (gint32             image_ID,
+                                   GExiv2Orientation  orientation,
+                                   const gchar       *parasite_name)
 {
   GtkWidget *dialog;
-  GtkWidget *hbox;
+  GtkWidget *main_vbox;
   GtkWidget *vbox;
   GtkWidget *label;
   GtkWidget *toggle;
   GdkPixbuf *pixbuf;
+  gchar     *name;
+  gchar     *title;
   gint       response;
 
-  dialog = gimp_dialog_new (_("Rotate Image?"), "gimp-metadata-rotate-dialog",
+  name = gimp_image_get_name (image_ID);
+  title = g_strdup_printf (_("Rotate %s?"), name);
+  g_free (name);
+
+  dialog = gimp_dialog_new (title, "gimp-metadata-rotate-dialog",
                             NULL, 0, NULL, NULL,
 
-                            _("_Keep Orientation"), GTK_RESPONSE_CANCEL,
+                            _("_Keep Original"),    GTK_RESPONSE_CANCEL,
                             GIMP_STOCK_TOOL_ROTATE, GTK_RESPONSE_OK,
 
                             NULL);
+
+  g_free (title);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -689,15 +754,11 @@ gimp_image_metadata_rotate_dialog (gint32       image_ID,
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
   gimp_window_set_transient (GTK_WINDOW (dialog));
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+                      main_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (main_vbox);
 
 #define THUMBNAIL_SIZE 128
 
@@ -707,35 +768,55 @@ gimp_image_metadata_rotate_dialog (gint32       image_ID,
 
   if (pixbuf)
     {
+      GdkPixbuf *rotated;
+      GtkWidget *hbox;
       GtkWidget *image;
-      gchar     *name;
 
-      image = gtk_image_new_from_pixbuf (pixbuf);
-      g_object_unref (pixbuf);
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+      gtk_box_set_homogeneous (GTK_BOX (hbox), TRUE);
+      gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
 
-      gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
-      gtk_widget_show (image);
+      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+      gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+      gtk_widget_show (vbox);
 
-      name = gimp_image_get_name (image_ID);
-
-      label = gtk_label_new (name);
+      label = gtk_label_new (_("Original"));
       gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
       gimp_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_STYLE,  PANGO_STYLE_ITALIC,
                                  -1);
-      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+      gtk_box_pack_end (GTK_BOX (vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      g_free (name);
+      image = gtk_image_new_from_pixbuf (pixbuf);
+      gtk_box_pack_end (GTK_BOX (vbox), image, FALSE, FALSE, 0);
+      gtk_widget_show (image);
+
+      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+      gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+      gtk_widget_show (vbox);
+
+      label = gtk_label_new (_("Rotated"));
+      gimp_label_set_attributes (GTK_LABEL (label),
+                                 PANGO_ATTR_STYLE,  PANGO_STYLE_ITALIC,
+                                 -1);
+      gtk_box_pack_end (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      rotated = gimp_image_metadata_rotate_pixbuf (pixbuf, orientation);
+      g_object_unref (pixbuf);
+
+      image = gtk_image_new_from_pixbuf (rotated);
+      g_object_unref (rotated);
+
+      gtk_box_pack_end (GTK_BOX (vbox), image, FALSE, FALSE, 0);
+      gtk_widget_show (image);
     }
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
-
   label = g_object_new (GTK_TYPE_LABEL,
-                        "label",   _("According to the Exif data, "
-                                     "this image is rotated."),
+                        "label",   _("This image contains Exif orientation "
+                                     "metadata."),
                         "wrap",    TRUE,
                         "justify", GTK_JUSTIFY_LEFT,
                         "xalign",  0.0,
@@ -745,22 +826,27 @@ gimp_image_metadata_rotate_dialog (gint32       image_ID,
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  /* eek */
+  gtk_widget_set_size_request (GTK_WIDGET (label),
+                               2 * THUMBNAIL_SIZE + 12, -1);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   label = g_object_new (GTK_TYPE_LABEL,
-                        "label",   _("Would you like GIMP to rotate it "
-                                     "into the standard orientation?"),
+                        "label",   _("Would you like to rotate the image?"),
                         "wrap",    TRUE,
                         "justify", GTK_JUSTIFY_LEFT,
                         "xalign",  0.0,
                         "yalign",  0.5,
                         NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  /* eek */
+  gtk_widget_set_size_request (GTK_WIDGET (label),
+                               2 * THUMBNAIL_SIZE + 12, -1);
+  gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Don't ask me again"));
-  gtk_box_pack_end (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
   gtk_widget_show (toggle);
 
