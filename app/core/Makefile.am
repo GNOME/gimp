@@ -55,8 +55,6 @@ libappcore_a_sources = \
 	gimp-user-install.h			\
 	gimp-utils.c				\
 	gimp-utils.h				\
-	gimparea.c				\
-	gimparea.h				\
 	gimpbezierdesc.h			\
 	gimpbezierdesc.c			\
 	gimpboundary.c				\
