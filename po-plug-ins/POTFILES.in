@@ -3,9 +3,6 @@
 
 [encoding: UTF-8]
 
-plug-ins/color-rotate/color-rotate-dialog.c
-plug-ins/color-rotate/color-rotate-stock.c
-plug-ins/color-rotate/color-rotate.c
 plug-ins/common/align-layers.c
 plug-ins/common/animation-optimize.c
 plug-ins/common/animation-play.c
