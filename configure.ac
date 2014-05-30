@@ -469,12 +469,10 @@ XGETTEXT_APPLIED_VERSION_MINOR_1=`echo $XGETTEXT_APPLIED_VERSION | awk -F. '{ pr
 
 have_recommended_xgettext="no"
 if test -n "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
-    echo "major is: $XGETTEXT_APPLIED_VERSION_MAJOR"
     if test "$XGETTEXT_RECOMMENDED_VERSION_MAJOR" -lt "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
         have_recommended_xgettext="yes"
     elif test "$XGETTEXT_RECOMMENDED_VERSION_MAJOR" -eq "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
         if test -n "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
-        echo "major is: $XGETTEXT_APPLIED_VERSION_MINOR_1"
             if test "$XGETTEXT_RECOMMENDED_VERSION_MINOR_1" -le "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
                 have_recommended_xgettext="yes"
             fi
