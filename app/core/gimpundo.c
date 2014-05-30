@@ -135,7 +135,7 @@ gimp_undo_class_init (GimpUndoClass *klass)
 
   gimp_object_class->get_memsize    = gimp_undo_get_memsize;
 
-  viewable_class->default_icon_name = "gtk-undo";
+  viewable_class->default_icon_name = "edit-undo";
   viewable_class->get_popup_size    = gimp_undo_get_popup_size;
   viewable_class->get_new_preview   = gimp_undo_get_new_preview;
 
