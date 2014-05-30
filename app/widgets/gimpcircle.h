@@ -39,7 +39,7 @@ typedef struct _GimpCircleClass   GimpCircleClass;
 
 struct _GimpCircle
 {
-  GtkWidget        parent_instance;
+  GtkWidget          parent_instance;
 
   GimpCirclePrivate *priv;
 };
@@ -47,6 +47,8 @@ struct _GimpCircle
 struct _GimpCircleClass
 {
   GtkWidgetClass  parent_class;
+
+  void (* reset_target) (GimpCircle *circle);
 };
 
 
@@ -54,6 +56,7 @@ GType          gimp_circle_get_type                (void) G_GNUC_CONST;
 
 GtkWidget    * gimp_circle_new                     (void);
 
+gboolean       _gimp_circle_has_grab               (GimpCircle *circle);
 gdouble        _gimp_circle_get_angle_and_distance (GimpCircle *circle,
                                                     gdouble     event_x,
                                                     gdouble     event_y,

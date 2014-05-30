@@ -38,9 +38,6 @@
 #include "gimppolar.h"
 
 
-#define SEGMENT_FRACTION 0.3
-
-
 enum
 {
   PROP_0,
@@ -61,8 +58,6 @@ struct _GimpPolarPrivate
   gdouble      radius;
 
   PolarTarget  target;
-  gboolean     has_grab;
-  gboolean     in_widget;
 };
 
 
@@ -75,19 +70,14 @@ static void        gimp_polar_get_property         (GObject            *object,
                                                     GValue             *value,
                                                     GParamSpec         *pspec);
 
-static void        gimp_polar_unmap                (GtkWidget          *widget);
 static gboolean    gimp_polar_expose_event         (GtkWidget          *widget,
                                                     GdkEventExpose     *event);
 static gboolean    gimp_polar_button_press_event   (GtkWidget          *widget,
                                                     GdkEventButton     *bevent);
-static gboolean    gimp_polar_button_release_event (GtkWidget          *widget,
-                                                    GdkEventButton     *bevent);
 static gboolean    gimp_polar_motion_notify_event  (GtkWidget          *widget,
                                                     GdkEventMotion     *mevent);
-static gboolean    gimp_polar_enter_notify_event   (GtkWidget          *widget,
-                                                    GdkEventCrossing   *event);
-static gboolean    gimp_polar_leave_notify_event   (GtkWidget          *widget,
-                                                    GdkEventCrossing   *event);
+
+static void        gimp_polar_reset_target         (GimpCircle         *circle);
 
 static void        gimp_polar_set_target           (GimpPolar           *polar,
                                                     PolarTarget          target);
@@ -111,19 +101,18 @@ G_DEFINE_TYPE (GimpPolar, gimp_polar, GIMP_TYPE_CIRCLE)
 static void
 gimp_polar_class_init (GimpPolarClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass    *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass  *widget_class = GTK_WIDGET_CLASS (klass);
+  GimpCircleClass *circle_class = GIMP_CIRCLE_CLASS (klass);
 
   object_class->get_property         = gimp_polar_get_property;
   object_class->set_property         = gimp_polar_set_property;
 
-  widget_class->unmap                = gimp_polar_unmap;
   widget_class->expose_event         = gimp_polar_expose_event;
   widget_class->button_press_event   = gimp_polar_button_press_event;
-  widget_class->button_release_event = gimp_polar_button_release_event;
   widget_class->motion_notify_event  = gimp_polar_motion_notify_event;
-  widget_class->enter_notify_event   = gimp_polar_enter_notify_event;
-  widget_class->leave_notify_event   = gimp_polar_leave_notify_event;
+
+  circle_class->reset_target         = gimp_polar_reset_target;
 
   g_object_class_install_property (object_class, PROP_ANGLE,
                                    g_param_spec_double ("angle",
@@ -148,14 +137,6 @@ gimp_polar_init (GimpPolar *polar)
   polar->priv = G_TYPE_INSTANCE_GET_PRIVATE (polar,
                                              GIMP_TYPE_POLAR,
                                              GimpPolarPrivate);
-
-  gtk_widget_add_events (GTK_WIDGET (polar),
-                         GDK_POINTER_MOTION_MASK |
-                         GDK_BUTTON_PRESS_MASK   |
-                         GDK_BUTTON_RELEASE_MASK |
-                         GDK_BUTTON1_MOTION_MASK |
-                         GDK_ENTER_NOTIFY_MASK   |
-                         GDK_LEAVE_NOTIFY_MASK);
 }
 
 static void
@@ -206,20 +187,6 @@ gimp_polar_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_polar_unmap (GtkWidget *widget)
-{
-  GimpPolar *polar = GIMP_POLAR (widget);
-
-  if (polar->priv->has_grab)
-    {
-      gtk_grab_remove (widget);
-      polar->priv->has_grab = FALSE;
-    }
-
-  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
 
 static gboolean
@@ -273,8 +240,7 @@ gimp_polar_button_press_event (GtkWidget      *widget,
       gdouble angle;
       gdouble radius;
 
-      gtk_grab_add (widget);
-      polar->priv->has_grab = TRUE;
+      GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
 
       angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (polar),
                                                    bevent->x, bevent->y,
@@ -285,24 +251,6 @@ gimp_polar_button_press_event (GtkWidget      *widget,
                     "angle",  angle,
                     "radius", radius,
                     NULL);
-    }
-
-  return FALSE;
-}
-
-static gboolean
-gimp_polar_button_release_event (GtkWidget      *widget,
-                                 GdkEventButton *bevent)
-{
-  GimpPolar *polar = GIMP_POLAR (widget);
-
-  if (bevent->button == 1)
-    {
-      gtk_grab_remove (widget);
-      polar->priv->has_grab = FALSE;
-
-      if (! polar->priv->in_widget)
-        gimp_polar_set_target (polar, POLAR_TARGET_NONE);
     }
 
   return FALSE;
@@ -320,7 +268,7 @@ gimp_polar_motion_notify_event (GtkWidget      *widget,
                                                mevent->x, mevent->y,
                                                &radius);
 
-  if (polar->priv->has_grab)
+  if (_gimp_circle_has_grab (GIMP_CIRCLE (polar)))
     {
       radius = MIN (radius, 1.0);
 
@@ -356,29 +304,10 @@ gimp_polar_motion_notify_event (GtkWidget      *widget,
   return FALSE;
 }
 
-static gboolean
-gimp_polar_enter_notify_event (GtkWidget        *widget,
-                               GdkEventCrossing *event)
+static void
+gimp_polar_reset_target (GimpCircle *circle)
 {
-  GimpPolar *polar = GIMP_POLAR (widget);
-
-  polar->priv->in_widget = TRUE;
-
-  return FALSE;
-}
-
-static gboolean
-gimp_polar_leave_notify_event (GtkWidget        *widget,
-                               GdkEventCrossing *event)
-{
-  GimpPolar *polar = GIMP_POLAR (widget);
-
-  polar->priv->in_widget = FALSE;
-
-  if (! polar->priv->has_grab)
-    gimp_polar_set_target (polar, POLAR_TARGET_NONE);
-
-  return FALSE;
+  gimp_polar_set_target (GIMP_POLAR (circle), POLAR_TARGET_NONE);
 }
 
 
