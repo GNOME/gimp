@@ -22,21 +22,6 @@
 #include "gimpobject.h"
 
 
-typedef struct _GimpProjectionChunkRender GimpProjectionChunkRender;
-
-struct _GimpProjectionChunkRender
-{
-  gboolean running;
-  gint     width;
-  gint     height;
-  gint     x;
-  gint     y;
-  gint     base_x;
-  gint     base_y;
-  GSList  *update_areas;   /*  flushed update areas */
-};
-
-
 #define GIMP_TYPE_PROJECTION            (gimp_projection_get_type ())
 #define GIMP_PROJECTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROJECTION, GimpProjection))
 #define GIMP_PROJECTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PROJECTION, GimpProjectionClass))
@@ -45,23 +30,14 @@ struct _GimpProjectionChunkRender
 #define GIMP_PROJECTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROJECTION, GimpProjectionClass))
 
 
-
-typedef struct _GimpProjectionClass GimpProjectionClass;
+typedef struct _GimpProjectionPrivate GimpProjectionPrivate;
+typedef struct _GimpProjectionClass   GimpProjectionClass;
 
 struct _GimpProjection
 {
-  GimpObject                 parent_instance;
+  GimpObject             parent_instance;
 
-  GimpProjectable           *projectable;
-
-  GeglBuffer                *buffer;
-  gpointer                   validate_handler;
-
-  GSList                    *update_areas;
-  GimpProjectionChunkRender  chunk_render;
-  guint                      chunk_render_idle_id;
-
-  gboolean                   invalidate_preview;
+  GimpProjectionPrivate *priv;
 };
 
 struct _GimpProjectionClass
