@@ -65,7 +65,7 @@ m4_define([lcms1_required_version], [1.16])
 m4_define([lcms2_required_version], [2.2])
 m4_define([libpng_required_version], [1.2.37])
 m4_define([gtk_mac_integration_required_version], [2.0.0])
-
+m4_define([python2_required_version], [2.5.0])
 
 # Current test considers only 2 version numbers. If we update the recommended
 # version of gettext with more version numbers, please update the tests.
@@ -127,10 +127,12 @@ GLIB_REQUIRED_VERSION=glib_required_version
 GDK_PIXBUF_REQUIRED_VERSION=gdk_pixbuf_required_version
 GTK_REQUIRED_VERSION=gtk_required_version
 CAIRO_REQUIRED_VERSION=cairo_required_version
+PYTHON2_REQUIRED_VERSION=python2_required_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
 AC_SUBST(CAIRO_REQUIRED_VERSION)
+AC_SUBST(PYTHON2_REQUIRED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
 # Makefiles and conditionally defined here as a preprocessor symbol
@@ -1840,10 +1842,10 @@ m4_define([pycheck_error], [
 if test "x$enable_python" != xno; then
   enable_python="yes"
   # check for Python
-  AM_PATH_PYTHON(2.5.0,,
-    [AC_MSG_ERROR([pycheck_error([Python 2.5.0 or newer], [it])])])
+  AM_PATH_PYTHON2(python2_required_version,,
+    [AC_MSG_ERROR([pycheck_error([Python 2 (python2_required_version or newer)], [it])])])
   AM_CHECK_PYTHON_HEADERS(,
-    [AC_MSG_ERROR([pycheck_error([Python headers], [them])])])
+    [AC_MSG_ERROR([pycheck_error([Python 2 headers], [them])])])
 
   # Win32 needs all symbols resolved for linking, even for DLLs
   # Assume the link library is in $exec_prefix/libs
@@ -2445,7 +2447,7 @@ Optional Plug-Ins:
   PNG:                 $have_libpng
   Print:               $enable_print
   PSP:                 $have_zlib
-  Python:              $enable_python
+  Python 2:            $enable_python
   Script-Fu:           $have_script_fu
   SVG:                 $have_librsvg
   TIFF:                $have_libtiff

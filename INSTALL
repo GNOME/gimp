@@ -74,7 +74,7 @@ header files installed.
      libpng, libjpeg, libpoppler, libtiff, webkit, libmng, librsvg,
      libwmf, libz, libbzip2, libgs (Ghostscript), libaa and libjasper.
 
- 10. The Python extension requires Python development headers to be
+ 10. The Python extension requires Python 2 development headers to be
      present. You will also need PyGTK and the respective development
      headers.
 
