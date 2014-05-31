@@ -97,30 +97,13 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                                 &rect.width, &rect.height))
     {
       GimpApplicator *applicator;
-      GeglBuffer     *buffer;
       GeglNode       *node;
-      GeglNode       *src_node;
 
       gimp_drawable_push_undo (drawable, undo_desc, NULL,
                                rect.x, rect.y,
                                rect.width, rect.height);
 
       node = gimp_filter_get_node (filter);
-
-      /* dup() because reading and writing the same buffer doesn't
-       * work with area ops when using a processor. See bug #701875.
-       */
-      buffer = gegl_buffer_dup (gimp_drawable_get_buffer (drawable));
-
-      src_node = gegl_node_new_child (NULL,
-                                      "operation", "gegl:buffer-source",
-                                      "buffer",    buffer,
-                                      NULL);
-
-      g_object_unref (buffer);
-
-      gegl_node_connect_to (src_node, "output",
-                            node,     "input");
 
       applicator = gimp_filter_get_applicator (filter);
 
@@ -144,13 +127,11 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
             }
         }
 
-      gimp_gegl_apply_operation (NULL,
+      gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
                                  progress, undo_desc,
                                  node,
                                  gimp_drawable_get_buffer (drawable),
                                  &rect);
-
-      g_object_unref (src_node);
 
       gimp_drawable_update (drawable,
                             rect.x, rect.y,
