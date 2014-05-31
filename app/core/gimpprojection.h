@@ -53,18 +53,24 @@ struct _GimpProjectionClass
 };
 
 
-GType            gimp_projection_get_type         (void) G_GNUC_CONST;
+GType            gimp_projection_get_type          (void) G_GNUC_CONST;
 
-GimpProjection * gimp_projection_new              (GimpProjectable   *projectable);
+GimpProjection * gimp_projection_new               (GimpProjectable   *projectable);
 
-void             gimp_projection_flush            (GimpProjection    *proj);
-void             gimp_projection_flush_now        (GimpProjection    *proj);
-void             gimp_projection_finish_draw      (GimpProjection    *proj);
+void             gimp_projection_set_priority_rect (GimpProjection    *proj,
+                                                    gint               x,
+                                                    gint               y,
+                                                    gint               width,
+                                                    gint               height);
 
-gint64           gimp_projection_estimate_memsize (GimpImageBaseType  type,
-                                                   GimpPrecision      precision,
-                                                   gint               width,
-                                                   gint               height);
+void             gimp_projection_flush             (GimpProjection    *proj);
+void             gimp_projection_flush_now         (GimpProjection    *proj);
+void             gimp_projection_finish_draw       (GimpProjection    *proj);
+
+gint64           gimp_projection_estimate_memsize  (GimpImageBaseType  type,
+                                                    GimpPrecision      precision,
+                                                    gint               width,
+                                                    gint               height);
 
 
 #endif /*  __GIMP_PROJECTION_H__  */

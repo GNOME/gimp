@@ -91,6 +91,7 @@ struct _GimpProjectionPrivate
 
   cairo_region_t            *update_region;
   GimpProjectionChunkRender  chunk_render;
+  cairo_rectangle_int_t      priority_rect;
 
   gboolean                   invalidate_preview;
 };
@@ -459,6 +460,39 @@ gimp_projection_new (GimpProjectable *projectable)
 }
 
 void
+gimp_projection_set_priority_rect (GimpProjection *proj,
+                                   gint            x,
+                                   gint            y,
+                                   gint            width,
+                                   gint            height)
+{
+  gint off_x, off_y;
+  gint w, h;
+
+  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+
+  gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
+  gimp_projectable_get_size   (proj->priv->projectable, &w, &h);
+
+  /*  subtract the projectable's offsets because the list of update
+   *  areas is in tile-pyramid coordinates, but our external API is
+   *  always in terms of image coordinates.
+   */
+  x -= off_x;
+  y -= off_y;
+
+  proj->priv->priority_rect.x      = CLAMP (x,          0, w);
+  proj->priv->priority_rect.y      = CLAMP (y,          0, h);
+  proj->priv->priority_rect.width  = CLAMP (x + width,  0, w) -
+                                     proj->priv->priority_rect.x;
+  proj->priv->priority_rect.height = CLAMP (y + height, 0, h) -
+                                     proj->priv->priority_rect.y;
+
+  if (proj->priv->chunk_render.idle_id)
+    gimp_projection_chunk_render_init (proj);
+}
+
+void
 gimp_projection_flush (GimpProjection *proj)
 {
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
@@ -677,8 +711,12 @@ gimp_projection_chunk_render_init (GimpProjection *proj)
                      (proj->priv->chunk_render.work_y -
                       proj->priv->chunk_render.y));
 
-      cairo_region_union_rectangle (proj->priv->chunk_render.update_region,
-                                    &rect);
+      if (proj->priv->chunk_render.update_region)
+        cairo_region_union_rectangle (proj->priv->chunk_render.update_region,
+                                      &rect);
+      else
+        proj->priv->chunk_render.update_region =
+          cairo_region_create_rectangle (&rect);
 
       gimp_projection_chunk_render_next_area (proj);
     }
@@ -759,7 +797,8 @@ gimp_projection_chunk_render_iteration (GimpProjection *proj)
 static gboolean
 gimp_projection_chunk_render_next_area (GimpProjection *proj)
 {
-  cairo_rectangle_int_t rect;
+  cairo_region_t        *next_region;
+  cairo_rectangle_int_t  rect;
 
   if (! proj->priv->chunk_render.update_region)
     return FALSE;
@@ -772,8 +811,21 @@ gimp_projection_chunk_render_next_area (GimpProjection *proj)
       return FALSE;
     }
 
-  cairo_region_get_rectangle (proj->priv->chunk_render.update_region,
-                              0, &rect);
+  next_region = cairo_region_copy (proj->priv->chunk_render.update_region);
+  cairo_region_intersect_rectangle (next_region, &proj->priv->priority_rect);
+
+  if (cairo_region_is_empty (next_region))
+    {
+      cairo_region_get_rectangle (proj->priv->chunk_render.update_region,
+                                  0, &rect);
+    }
+  else
+    {
+      cairo_region_get_rectangle (next_region, 0, &rect);
+    }
+
+  cairo_region_destroy (next_region);
+
   cairo_region_subtract_rectangle (proj->priv->chunk_render.update_region,
                                    &rect);
 
@@ -889,4 +941,9 @@ gimp_projection_projectable_changed (GimpProjectable *projectable,
   gimp_projectable_get_size (projectable, &width, &height);
 
   gimp_projection_add_update_area (proj, off_x, off_y, width, height);
+
+  proj->priv->priority_rect.x      = 0;
+  proj->priv->priority_rect.y      = 0;
+  proj->priv->priority_rect.width  = width;
+  proj->priv->priority_rect.height = height;
 }
