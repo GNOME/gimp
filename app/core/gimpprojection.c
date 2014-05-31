@@ -79,9 +79,6 @@ struct _GimpProjectionChunkRender
   cairo_region_t *update_region;   /*  flushed update region */
 };
 
-
-typedef struct _GimpProjectionPrivate GimpProjectionPrivate;
-
 struct _GimpProjectionPrivate
 {
   GimpProjectable           *projectable;
