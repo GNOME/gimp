@@ -223,21 +223,6 @@ gimp_projection_finalize (GObject *object)
 {
   GimpProjection *proj = GIMP_PROJECTION (object);
 
-  if (proj->priv->chunk_render.idle_id)
-    gimp_projection_chunk_render_stop (proj);
-
-  if (proj->priv->update_region)
-    {
-      cairo_region_destroy (proj->priv->update_region);
-      proj->priv->update_region = NULL;
-    }
-
-  if (proj->priv->chunk_render.update_region)
-    {
-      cairo_region_destroy (proj->priv->chunk_render.update_region);
-      proj->priv->chunk_render.update_region = NULL;
-    }
-
   gimp_projection_free_buffer (proj);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -460,16 +445,16 @@ void
 gimp_projection_set_priority_rect (GimpProjection *proj,
                                    gint            x,
                                    gint            y,
-                                   gint            width,
-                                   gint            height)
+                                   gint            w,
+                                   gint            h)
 {
   gint off_x, off_y;
-  gint w, h;
+  gint width, height;
 
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
   gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
-  gimp_projectable_get_size   (proj->priv->projectable, &w, &h);
+  gimp_projectable_get_size   (proj->priv->projectable, &width, &height);
 
   /*  subtract the projectable's offsets because the list of update
    *  areas is in tile-pyramid coordinates, but our external API is
@@ -478,11 +463,11 @@ gimp_projection_set_priority_rect (GimpProjection *proj,
   x -= off_x;
   y -= off_y;
 
-  proj->priv->priority_rect.x      = CLAMP (x,          0, w);
-  proj->priv->priority_rect.y      = CLAMP (y,          0, h);
-  proj->priv->priority_rect.width  = CLAMP (x + width,  0, w) -
+  proj->priv->priority_rect.x      = CLAMP (x,     0, width);
+  proj->priv->priority_rect.y      = CLAMP (y,     0, height);
+  proj->priv->priority_rect.width  = CLAMP (x + w, 0, width) -
                                      proj->priv->priority_rect.x;
-  proj->priv->priority_rect.height = CLAMP (y + height, 0, h) -
+  proj->priv->priority_rect.height = CLAMP (y + h, 0, height) -
                                      proj->priv->priority_rect.y;
 
   if (proj->priv->chunk_render.idle_id)
@@ -526,6 +511,21 @@ gimp_projection_finish_draw (GimpProjection *proj)
 static void
 gimp_projection_free_buffer (GimpProjection  *proj)
 {
+  if (proj->priv->chunk_render.idle_id)
+    gimp_projection_chunk_render_stop (proj);
+
+  if (proj->priv->update_region)
+    {
+      cairo_region_destroy (proj->priv->update_region);
+      proj->priv->update_region = NULL;
+    }
+
+  if (proj->priv->chunk_render.update_region)
+    {
+      cairo_region_destroy (proj->priv->chunk_render.update_region);
+      proj->priv->chunk_render.update_region = NULL;
+    }
+
   if (proj->priv->buffer)
     {
       if (proj->priv->validate_handler)
@@ -579,7 +579,6 @@ static void
 gimp_projection_flush_whenever (GimpProjection *proj,
                                 gboolean        now)
 {
-  /*  First the updates...  */
   if (proj->priv->update_region)
     {
       if (now)  /* Synchronous */
@@ -844,30 +843,28 @@ gimp_projection_paint_area (GimpProjection *proj,
 {
   gint off_x, off_y;
   gint width, height;
-  gint x1, y1, x2, y2;
 
   gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
   gimp_projectable_get_size   (proj->priv->projectable, &width, &height);
 
-  /*  Bounds check  */
-  x1 = CLAMP (x,     0, width);
-  y1 = CLAMP (y,     0, height);
-  x2 = CLAMP (x + w, 0, width);
-  y2 = CLAMP (y + h, 0, height);
+  x = CLAMP (x,     0, width);
+  y = CLAMP (y,     0, height);
+  w = CLAMP (x + w, 0, width)  - x;
+  h = CLAMP (y + h, 0, height) - y;
 
   if (proj->priv->validate_handler)
     gimp_tile_handler_projection_invalidate (proj->priv->validate_handler,
-                                             x1, y1, x2 - x1, y2 - y1);
+                                             x, y, w, h);
   if (now)
     {
       GeglNode *graph = gimp_projectable_get_graph (proj->priv->projectable);
 
       if (proj->priv->validate_handler)
         gimp_tile_handler_projection_undo_invalidate (proj->priv->validate_handler,
-                                                      x1, y1, x2 - x1, y2 - y1);
+                                                      x, y, w, h);
 
       gegl_node_blit_buffer (graph, proj->priv->buffer,
-                             GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
+                             GEGL_RECTANGLE (x, y, w, h));
     }
 
   /*  add the projectable's offsets because the list of update areas
@@ -876,10 +873,10 @@ gimp_projection_paint_area (GimpProjection *proj,
    */
   g_signal_emit (proj, projection_signals[UPDATE], 0,
                  now,
-                 x1 + off_x,
-                 y1 + off_y,
-                 x2 - x1,
-                 y2 - y1);
+                 x + off_x,
+                 y + off_y,
+                 w,
+                 h);
 }
 
 
@@ -914,19 +911,10 @@ gimp_projection_projectable_changed (GimpProjectable *projectable,
   gint off_x, off_y;
   gint width, height;
 
-  if (proj->priv->chunk_render.idle_id)
-    gimp_projection_chunk_render_stop (proj);
-
-  if (proj->priv->update_region)
-    {
-      cairo_region_destroy (proj->priv->update_region);
-      proj->priv->update_region = NULL;
-    }
-
   gimp_projection_free_buffer (proj);
 
   gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
-  gimp_projectable_get_size (projectable, &width, &height);
+  gimp_projectable_get_size   (projectable, &width, &height);
 
   gimp_projection_add_update_area (proj, off_x, off_y, width, height);
 
