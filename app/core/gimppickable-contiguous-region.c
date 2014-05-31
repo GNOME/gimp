@@ -30,10 +30,8 @@
 
 #include "gegl/gimp-babl.h"
 
-#include "gimpdrawable.h"
-#include "gimpimage.h"
-#include "gimpimage-contiguous-region.h"
 #include "gimppickable.h"
+#include "gimppickable-contiguous-region.h"
 
 
 /*  local function prototypes  */
@@ -82,31 +80,22 @@ static void find_contiguous_region_helper (GeglBuffer          *src_buffer,
 /*  public functions  */
 
 GeglBuffer *
-gimp_image_contiguous_region_by_seed (GimpImage           *image,
-                                      GimpDrawable        *drawable,
-                                      gboolean             sample_merged,
-                                      gboolean             antialias,
-                                      gfloat               threshold,
-                                      gboolean             select_transparent,
-                                      GimpSelectCriterion  select_criterion,
-                                      gint                 x,
-                                      gint                 y)
+gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
+                                         gboolean             antialias,
+                                         gfloat               threshold,
+                                         gboolean             select_transparent,
+                                         GimpSelectCriterion  select_criterion,
+                                         gint                 x,
+                                         gint                 y)
 {
-  GimpPickable *pickable;
-  GeglBuffer   *src_buffer;
-  GeglBuffer   *mask_buffer;
-  const Babl   *format;
-  gint          n_components;
-  gboolean      has_alpha;
-  gfloat        start_col[MAX_CHANNELS];
+  GeglBuffer *src_buffer;
+  GeglBuffer *mask_buffer;
+  const Babl *format;
+  gint        n_components;
+  gboolean    has_alpha;
+  gfloat      start_col[MAX_CHANNELS];
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  if (sample_merged)
-    pickable = GIMP_PICKABLE (image);
-  else
-    pickable = GIMP_PICKABLE (drawable);
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
   gimp_pickable_flush (pickable);
 
@@ -147,23 +136,20 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
 }
 
 GeglBuffer *
-gimp_image_contiguous_region_by_color (GimpImage            *image,
-                                       GimpDrawable         *drawable,
-                                       gboolean              sample_merged,
-                                       gboolean              antialias,
-                                       gfloat                threshold,
-                                       gboolean              select_transparent,
-                                       GimpSelectCriterion   select_criterion,
-                                       const GimpRGB        *color)
+gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
+                                          gboolean             antialias,
+                                          gfloat               threshold,
+                                          gboolean             select_transparent,
+                                          GimpSelectCriterion  select_criterion,
+                                          const GimpRGB       *color)
 {
-  /*  Scan over the image's active layer, finding pixels within the
+  /*  Scan over the pickable's active layer, finding pixels within the
    *  specified threshold from the given R, G, & B values.  If
    *  antialiasing is on, use the same antialiasing scheme as in
-   *  fuzzy_select.  Modify the image's mask to reflect the
+   *  fuzzy_select.  Modify the pickable's mask to reflect the
    *  additional selection
    */
   GeglBufferIterator *iter;
-  GimpPickable       *pickable;
   GeglBuffer         *src_buffer;
   GeglBuffer         *mask_buffer;
   const Babl         *format;
@@ -171,14 +157,8 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
   gboolean            has_alpha;
   gfloat              start_col[MAX_CHANNELS];
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
   g_return_val_if_fail (color != NULL, NULL);
-
-  if (sample_merged)
-    pickable = GIMP_PICKABLE (image);
-  else
-    pickable = GIMP_PICKABLE (drawable);
 
   gimp_pickable_flush (pickable);
 

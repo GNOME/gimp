@@ -203,8 +203,6 @@ libappcore_a_sources = \
 	gimpimage-arrange.h			\
 	gimpimage-colormap.c			\
 	gimpimage-colormap.h			\
-	gimpimage-contiguous-region.c		\
-	gimpimage-contiguous-region.h		\
 	gimpimage-convert-fsdither.h		\
 	gimpimage-convert-data.h		\
 	gimpimage-convert-precision.c		\
@@ -327,6 +325,8 @@ libappcore_a_sources = \
 	gimppickable.h				\
 	gimppickable-auto-shrink.c		\
 	gimppickable-auto-shrink.h		\
+	gimppickable-contiguous-region.c	\
+	gimppickable-contiguous-region.h	\
 	gimpprogress.c				\
 	gimpprogress.h				\
 	gimpprojectable.c			\

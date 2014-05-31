@@ -39,8 +39,9 @@
 #include "gimpdrawable-bucket-fill.h"
 #include "gimperror.h"
 #include "gimpimage.h"
-#include "gimpimage-contiguous-region.h"
 #include "gimppattern.h"
+#include "gimppickable.h"
+#include "gimppickable-contiguous-region.h"
 
 #include "gimp-intl.h"
 
@@ -136,13 +137,14 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
                                     const GimpRGB       *color,
                                     GimpPattern         *pattern)
 {
-  GimpImage   *image;
-  GeglBuffer  *buffer;
-  GeglBuffer  *mask_buffer;
-  gint         x1, y1, x2, y2;
-  gint         mask_offset_x = 0;
-  gint         mask_offset_y = 0;
-  gboolean     selection;
+  GimpImage    *image;
+  GimpPickable *pickable;
+  GeglBuffer   *buffer;
+  GeglBuffer   *mask_buffer;
+  gint          x1, y1, x2, y2;
+  gint          mask_offset_x = 0;
+  gint          mask_offset_y = 0;
+  gboolean      selection;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
@@ -160,18 +162,22 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
 
   gimp_set_busy (image->gimp);
 
+  if (sample_merged)
+    pickable = GIMP_PICKABLE (image);
+  else
+    pickable = GIMP_PICKABLE (drawable);
+
   /*  Do a seed bucket fill...To do this, calculate a new
    *  contiguous region. If there is a selection, calculate the
    *  intersection of this region with the existing selection.
    */
-  mask_buffer = gimp_image_contiguous_region_by_seed (image, drawable,
-                                                      sample_merged,
-                                                      TRUE,
-                                                      threshold,
-                                                      fill_transparent,
-                                                      fill_criterion,
-                                                      (gint) x,
-                                                      (gint) y);
+  mask_buffer = gimp_pickable_contiguous_region_by_seed (pickable,
+                                                         TRUE,
+                                                         threshold,
+                                                         fill_transparent,
+                                                         fill_criterion,
+                                                         (gint) x,
+                                                         (gint) y);
 
   if (selection)
     {
