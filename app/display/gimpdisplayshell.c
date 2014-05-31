@@ -149,6 +149,7 @@ static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
 static gboolean  gimp_display_shell_popup_menu     (GtkWidget        *widget);
 
 static void      gimp_display_shell_real_scaled    (GimpDisplayShell *shell);
+static void      gimp_display_shell_real_scrolled  (GimpDisplayShell *shell);
 static void      gimp_display_shell_real_rotated   (GimpDisplayShell *shell);
 
 static const guint8 * gimp_display_shell_get_icc_profile
@@ -248,7 +249,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   widget_class->popup_menu         = gimp_display_shell_popup_menu;
 
   klass->scaled                    = gimp_display_shell_real_scaled;
-  klass->scrolled                  = NULL;
+  klass->scrolled                  = gimp_display_shell_real_scrolled;
   klass->rotated                   = gimp_display_shell_real_rotated;
   klass->reconnect                 = NULL;
 
@@ -1046,6 +1047,22 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
 }
 
 static void
+gimp_display_shell_set_priority_viewport (GimpDisplayShell *shell)
+{
+  GimpImage *image = gimp_display_get_image (shell->display);
+
+  if (image)
+    {
+      GimpProjection *projection = gimp_image_get_projection (image);
+      gint            x, y;
+      gint            width, height;
+
+      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
+      gimp_projection_set_priority_rect (projection, x, y, width, height);
+    }
+}
+
+static void
 gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 {
   GimpContext *user_context;
@@ -1058,7 +1075,27 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
   user_context = gimp_get_user_context (shell->display->gimp);
 
   if (shell->display == gimp_context_get_display (user_context))
-    gimp_ui_manager_update (shell->popup_manager, shell->display);
+    {
+      gimp_display_shell_set_priority_viewport (shell);
+
+      gimp_ui_manager_update (shell->popup_manager, shell->display);
+    }
+}
+
+static void
+gimp_display_shell_real_scrolled (GimpDisplayShell *shell)
+{
+  GimpContext *user_context;
+
+  if (! shell->display)
+    return;
+
+  user_context = gimp_get_user_context (shell->display->gimp);
+
+  if (shell->display == gimp_context_get_display (user_context))
+    {
+      gimp_display_shell_set_priority_viewport (shell);
+    }
 }
 
 static void
@@ -1072,7 +1109,11 @@ gimp_display_shell_real_rotated (GimpDisplayShell *shell)
   user_context = gimp_get_user_context (shell->display->gimp);
 
   if (shell->display == gimp_context_get_display (user_context))
-    gimp_ui_manager_update (shell->popup_manager, shell->display);
+    {
+      gimp_display_shell_set_priority_viewport (shell);
+
+      gimp_ui_manager_update (shell->popup_manager, shell->display);
+    }
 }
 
 static const guint8 *
