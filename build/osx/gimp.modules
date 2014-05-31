@@ -17,9 +17,6 @@
 
 	<repository type="tarball" name="xmlsoft.org" href="ftp://xmlsoft.org/libxml2/" />
 
-	<repository type="tarball" name="openssl"
-		href="http://www.openssl.org/source/" />
-
 	<repository type="tarball" name="ftp.gnome.org" default="yes"
 		href="http://ftp.gnome.org/pub/gnome/sources/" />
 
@@ -605,18 +602,6 @@
 		<branch module="nettle-2.7.1.tar.gz" version="2.7.1" repo="nettle" />
 		<dependencies>
 			<dep package="gmp5" />
-			<dep package="openssl" />
-		</dependencies>
-	</autotools>
-
-	<autotools id="openssl" autogen-sh="Configure"
-		autogen-template="%(srcdir)s/%(autogen-sh)s --prefix=%(prefix)s --install_prefix= -L%(libdir)s %(autogenargs)s"
-		autogenargs="zlib shared darwin64-x86_64-cc" makeinstallargs="install_sw">
-		<branch module="openssl-1.0.1g.tar.gz" version="1.0.1g" repo="openssl">
-			<patch file="0005-OpenSSL_install_to_DESTDIR.patch" strip="1" />
-		</branch>
-		<dependencies>
-			<dep package="zlib" />
 		</dependencies>
 	</autotools>
 
