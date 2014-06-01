@@ -150,8 +150,16 @@ gimp_applicator_new (GeglNode *parent,
 
   gegl_node_connect_to (applicator->aux_node,          "output",
                         applicator->apply_offset_node, "input");
-  gegl_node_connect_to (applicator->apply_offset_node, "output",
-                        applicator->mode_node,         "aux");
+
+  applicator->dup_apply_buffer_node =
+    gegl_node_new_child (applicator->node,
+                         "operation", "gegl:copy-buffer",
+                         NULL);
+
+  gegl_node_connect_to (applicator->apply_offset_node,     "output",
+                        applicator->dup_apply_buffer_node, "input");
+  gegl_node_connect_to (applicator->dup_apply_buffer_node, "output",
+                        applicator->mode_node,             "aux");
 
   applicator->mask_node =
     gegl_node_new_child (applicator->node,
@@ -423,37 +431,22 @@ gimp_applicator_dup_apply_buffer (GimpApplicator      *applicator,
                                   const GeglRectangle *rect)
 {
   GeglBuffer *buffer;
-  GeglNode   *offset;
-  GeglNode   *dest;
+  GeglBuffer *shifted;
 
   buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, rect->width, rect->height),
                             babl_format ("RGBA float"));
 
-  offset = gegl_node_new_child (applicator->node,
-                                "operation", "gegl:translate",
-                                "x",
-                                (gdouble) - applicator->apply_offset_x - rect->x,
-                                "y",
-                                (gdouble) - applicator->apply_offset_y - rect->y,
-                                NULL);
+  shifted = g_object_new (GEGL_TYPE_BUFFER,
+                          "source",  buffer,
+                          "shift-x", -rect->x,
+                          "shift-y", -rect->y,
+                          NULL);
 
-  dest = gegl_node_new_child (applicator->node,
-                              "operation", "gegl:write-buffer",
-                              "buffer",    buffer,
-                              NULL);
+  gegl_node_set (applicator->dup_apply_buffer_node,
+                 "buffer", shifted,
+                 NULL);
 
-  gegl_node_link_many (applicator->apply_offset_node,
-                       offset,
-                       dest,
-                       NULL);
-
-  gegl_node_blit (dest, 1.0, GEGL_RECTANGLE (0, 0, rect->width, rect->height),
-                  NULL, NULL, 0, GEGL_BLIT_DEFAULT);
-
-  gegl_node_disconnect (offset, "input");
-
-  gegl_node_remove_child (applicator->node, offset);
-  gegl_node_remove_child (applicator->node, dest);
+  g_object_unref (shifted);
 
   return buffer;
 }

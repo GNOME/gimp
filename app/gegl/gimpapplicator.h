@@ -48,6 +48,8 @@ struct _GimpApplicator
   gint                  apply_offset_y;
   GeglNode             *apply_offset_node;
 
+  GeglNode             *dup_apply_buffer_node;
+
   gdouble               opacity;
   GimpLayerModeEffects  paint_mode;
   gboolean              linear;

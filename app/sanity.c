@@ -485,6 +485,7 @@ sanity_check_gegl_ops (void)
     "gegl:color-temperature",
     "gegl:color-to-alpha",
     "gegl:convolution-matrix",
+    "gegl:copy-buffer",
     "gegl:crop",
     "gegl:cubism",
     "gegl:deinterlace",
