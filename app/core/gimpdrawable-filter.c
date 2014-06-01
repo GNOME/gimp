@@ -97,20 +97,14 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                                 &rect.width, &rect.height))
     {
       GimpApplicator *applicator;
-      GeglNode       *node;
 
       gimp_drawable_push_undo (drawable, undo_desc, NULL,
                                rect.x, rect.y,
                                rect.width, rect.height);
 
-      node = gimp_filter_get_node (filter);
-
       applicator = gimp_filter_get_applicator (filter);
 
-      /* FIXME: disabled because it is unacceptable to run the
-       * filter twice, need to use whatever cached result
-       */
-      if (FALSE /* applicator */)
+      if (applicator)
         {
           GimpImage        *image = gimp_item_get_image (GIMP_ITEM (drawable));
           GimpDrawableUndo *undo;
@@ -129,7 +123,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
 
       gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
                                  progress, undo_desc,
-                                 node,
+                                 gimp_filter_get_node (filter),
                                  gimp_drawable_get_buffer (drawable),
                                  &rect);
 
