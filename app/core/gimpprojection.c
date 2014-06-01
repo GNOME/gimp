@@ -21,6 +21,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
@@ -448,7 +450,8 @@ gimp_projection_set_priority_rect (GimpProjection *proj,
                                    gint            w,
                                    gint            h)
 {
-  gint off_x, off_y;
+  cairo_rectangle_int_t rect;
+  gint                  off_x, off_y;
   gint width, height;
 
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
@@ -463,15 +466,15 @@ gimp_projection_set_priority_rect (GimpProjection *proj,
   x -= off_x;
   y -= off_y;
 
-  proj->priv->priority_rect.x      = CLAMP (x,     0, width);
-  proj->priv->priority_rect.y      = CLAMP (y,     0, height);
-  proj->priv->priority_rect.width  = CLAMP (x + w, 0, width) -
-                                     proj->priv->priority_rect.x;
-  proj->priv->priority_rect.height = CLAMP (y + h, 0, height) -
-                                     proj->priv->priority_rect.y;
+  if (gimp_rectangle_intersect (x, y, w, h,
+                                0, 0, width, height,
+                                &rect.x, &rect.y, &rect.width, &rect.height))
+    {
+      proj->priv->priority_rect = rect;
 
-  if (proj->priv->chunk_render.idle_id)
-    gimp_projection_chunk_render_init (proj);
+      if (proj->priv->chunk_render.idle_id)
+        gimp_projection_chunk_render_init (proj);
+    }
 }
 
 void
@@ -564,15 +567,15 @@ gimp_projection_add_update_area (GimpProjection *proj,
   x -= off_x;
   y -= off_y;
 
-  rect.x      = CLAMP (x,     0, width);
-  rect.y      = CLAMP (y,     0, height);
-  rect.width  = CLAMP (x + w, 0, width)  - rect.x;
-  rect.height = CLAMP (y + h, 0, height) - rect.y;
-
-  if (proj->priv->update_region)
-    cairo_region_union_rectangle (proj->priv->update_region, &rect);
-  else
-    proj->priv->update_region = cairo_region_create_rectangle (&rect);
+  if (gimp_rectangle_intersect (x, y, w, h,
+                                0, 0, width, height,
+                                &rect.x, &rect.y, &rect.width, &rect.height))
+    {
+      if (proj->priv->update_region)
+        cairo_region_union_rectangle (proj->priv->update_region, &rect);
+      else
+        proj->priv->update_region = cairo_region_create_rectangle (&rect);
+    }
 }
 
 static void
@@ -847,36 +850,36 @@ gimp_projection_paint_area (GimpProjection *proj,
   gimp_projectable_get_offset (proj->priv->projectable, &off_x, &off_y);
   gimp_projectable_get_size   (proj->priv->projectable, &width, &height);
 
-  x = CLAMP (x,     0, width);
-  y = CLAMP (y,     0, height);
-  w = CLAMP (x + w, 0, width)  - x;
-  h = CLAMP (y + h, 0, height) - y;
-
-  if (proj->priv->validate_handler)
-    gimp_tile_handler_projection_invalidate (proj->priv->validate_handler,
-                                             x, y, w, h);
-  if (now)
+  if (gimp_rectangle_intersect (x, y, w, h,
+                                0, 0, width, height,
+                                &x, &y, &w, &h))
     {
-      GeglNode *graph = gimp_projectable_get_graph (proj->priv->projectable);
-
       if (proj->priv->validate_handler)
-        gimp_tile_handler_projection_undo_invalidate (proj->priv->validate_handler,
-                                                      x, y, w, h);
+        gimp_tile_handler_projection_invalidate (proj->priv->validate_handler,
+                                                 x, y, w, h);
+      if (now)
+        {
+          GeglNode *graph = gimp_projectable_get_graph (proj->priv->projectable);
 
-      gegl_node_blit_buffer (graph, proj->priv->buffer,
-                             GEGL_RECTANGLE (x, y, w, h));
+          if (proj->priv->validate_handler)
+            gimp_tile_handler_projection_undo_invalidate (proj->priv->validate_handler,
+                                                          x, y, w, h);
+
+          gegl_node_blit_buffer (graph, proj->priv->buffer,
+                                 GEGL_RECTANGLE (x, y, w, h));
+        }
+
+      /*  add the projectable's offsets because the list of update areas
+       *  is in tile-pyramid coordinates, but our external API is always
+       *  in terms of image coordinates.
+       */
+      g_signal_emit (proj, projection_signals[UPDATE], 0,
+                     now,
+                     x + off_x,
+                     y + off_y,
+                     w,
+                     h);
     }
-
-  /*  add the projectable's offsets because the list of update areas
-   *  is in tile-pyramid coordinates, but our external API is always
-   *  in terms of image coordinates.
-   */
-  g_signal_emit (proj, projection_signals[UPDATE], 0,
-                 now,
-                 x + off_x,
-                 y + off_y,
-                 w,
-                 h);
 }
 
 
