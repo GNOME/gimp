@@ -577,11 +577,10 @@ gimp_channel_translate (GimpItem *item,
                         gint      off_y,
                         gboolean  push_undo)
 {
-  GimpChannel   *channel    = GIMP_CHANNEL (item);
-  GimpChannel   *tmp_mask   = NULL;
-  GeglBuffer    *tmp_buffer = NULL;
-  gint           width, height;
-  gint           x1, y1, x2, y2;
+  GimpChannel *channel    = GIMP_CHANNEL (item);
+  GeglBuffer  *tmp_buffer = NULL;
+  gint         width, height;
+  gint         x1, y1, x2, y2;
 
   gimp_channel_bounds (channel, &x1, &y1, &x2, &y2);
 
@@ -604,17 +603,17 @@ gimp_channel_translate (GimpItem *item,
   /*  make sure width and height are non-zero  */
   if (width != 0 && height != 0)
     {
-      /*  copy the portion of the mask we will keep to a
-       *  temporary buffer
+      /*  copy the portion of the mask we will keep to a temporary
+       *  buffer
        */
-      tmp_mask = gimp_channel_new_mask (gimp_item_get_image (item),
-                                        width, height);
-      tmp_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (tmp_mask));
+      tmp_buffer =
+        gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+                         gimp_drawable_get_format (GIMP_DRAWABLE (channel)));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                         GEGL_RECTANGLE (x1 - off_x, y1 - off_y, width, height),
                         tmp_buffer,
-                        GEGL_RECTANGLE (0,0,0,0));
+                        GEGL_RECTANGLE (0, 0, 0, 0));
     }
 
   /*  clear the mask  */
@@ -631,7 +630,7 @@ gimp_channel_translate (GimpItem *item,
                         GEGL_RECTANGLE (x1, y1, 0, 0));
 
       /*  free the temporary mask  */
-      g_object_unref (tmp_mask);
+      g_object_unref (tmp_buffer);
     }
 
   /*  calculate new bounds  */
