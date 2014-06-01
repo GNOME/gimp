@@ -69,7 +69,6 @@ struct _GimpImageMap
   GimpImageMapRegion  region;
   gboolean            gamma_hack;
 
-  gboolean            filtering;
   GeglRectangle       filter_area;
 
   GimpFilter         *filter;
@@ -84,8 +83,10 @@ struct _GimpImageMap
 static void       gimp_image_map_dispose         (GObject             *object);
 static void       gimp_image_map_finalize        (GObject             *object);
 
+static gboolean   gimp_image_map_is_filtering    (GimpImageMap        *image_map);
 static gboolean   gimp_image_map_add_filter      (GimpImageMap        *image_map);
 static gboolean   gimp_image_map_remove_filter   (GimpImageMap        *image_map);
+
 static void       gimp_image_map_update_drawable (GimpImageMap        *image_map,
                                                   const GeglRectangle *area);
 
@@ -469,11 +470,13 @@ gimp_image_map_commit (GimpImageMap *image_map,
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (gimp_image_map_remove_filter (image_map))
+  if (gimp_image_map_is_filtering (image_map))
     {
       gimp_drawable_merge_filter (image_map->drawable, image_map->filter,
                                   progress,
                                   image_map->undo_desc);
+
+      gimp_image_map_remove_filter (image_map);
 
       g_signal_emit (image_map, image_map_signals[FLUSH], 0);
     }
@@ -494,16 +497,28 @@ gimp_image_map_abort (GimpImageMap *image_map)
 /*  private functions  */
 
 static gboolean
-gimp_image_map_add_filter (GimpImageMap *image_map)
+gimp_image_map_is_filtering (GimpImageMap *image_map)
 {
   if (image_map->filter &&
-      ! gimp_drawable_has_filter (image_map->drawable, image_map->filter))
+      gimp_drawable_has_filter (image_map->drawable, image_map->filter))
     {
-      gimp_drawable_add_filter (image_map->drawable, image_map->filter);
-
-      image_map->filtering = TRUE;
-
       return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gimp_image_map_add_filter (GimpImageMap *image_map)
+{
+  if (! gimp_image_map_is_filtering (image_map))
+    {
+      if (image_map->filter)
+        {
+          gimp_drawable_add_filter (image_map->drawable, image_map->filter);
+
+          return TRUE;
+        }
     }
 
   return FALSE;
@@ -512,17 +527,11 @@ gimp_image_map_add_filter (GimpImageMap *image_map)
 static gboolean
 gimp_image_map_remove_filter (GimpImageMap *image_map)
 {
-  if (image_map->filter &&
-      gimp_drawable_has_filter (image_map->drawable, image_map->filter))
+  if (gimp_image_map_is_filtering (image_map))
     {
       gimp_drawable_remove_filter (image_map->drawable, image_map->filter);
 
-      if (image_map->filtering)
-        {
-          image_map->filtering = FALSE;
-
-          return TRUE;
-        }
+      return TRUE;
     }
 
   return FALSE;
