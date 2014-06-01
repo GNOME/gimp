@@ -497,6 +497,9 @@ gimp_prop_spin_scale_new (GObject     *config,
   if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
     digits = 0;
 
+  if (! label)
+    label = g_param_spec_get_nick (param_spec);
+
   adjustment = gtk_adjustment_new (value, lower, upper,
                                    step_increment, page_increment, 0.0);
 
