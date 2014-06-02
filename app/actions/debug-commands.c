@@ -34,6 +34,7 @@
 #include "core/gimplayer.h"
 #include "core/gimppickable.h"
 #include "core/gimpprojectable.h"
+#include "core/gimpprojection.h"
 
 #include "gegl/gimp-gegl-utils.h"
 
@@ -55,6 +56,7 @@
 
 /*  local function prototypes  */
 
+static gboolean  debug_benchmark_projection    (GimpDisplay *display);
 static gboolean  debug_show_image_graph        (GimpImage   *source_image);
 
 static void      debug_dump_menus_recurse_menu (GtkWidget   *menu,
@@ -86,6 +88,16 @@ debug_mem_profile_cmd_callback (GtkAction *action,
   gimp_object_get_memsize (GIMP_OBJECT (gimp), NULL);
 
   gimp_debug_memsize = FALSE;
+}
+
+void
+debug_benchmark_projection_cmd_callback (GtkAction *action,
+                                         gpointer   data)
+{
+  GimpDisplay *display;
+  return_if_no_display (display, data);
+
+  g_idle_add ((GSourceFunc) debug_benchmark_projection, g_object_ref (display));
 }
 
 void
@@ -269,6 +281,29 @@ debug_dump_attached_data_cmd_callback (GtkAction *action,
 
 
 /*  private functions  */
+
+static gboolean
+debug_benchmark_projection (GimpDisplay *display)
+{
+  GimpImage      *image      = gimp_display_get_image (display);
+  GimpProjection *projection = gimp_image_get_projection (image);
+
+  GIMP_TIMER_START ();
+
+  gimp_image_invalidate (image,
+                         0, 0,
+                         gimp_image_get_width  (image),
+                         gimp_image_get_height (image));
+  gimp_projection_flush_now (projection);
+
+  gimp_display_flush_now (display);
+
+  GIMP_TIMER_END ("Validation of the entire projection");
+
+  g_object_unref (display);
+
+  return FALSE;
+}
 
 static gboolean
 debug_show_image_graph (GimpImage *source_image)
