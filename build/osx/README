@@ -44,6 +44,7 @@ $ curl -o $HOME/.jhbuildrc-gimp https://git.gnome.org/browse/gimp/plain/build/os
    curl --create-dirs -o $HOME/gimp/directory/gimp.modules https://git.gnome.org/browse/gimp/plain/build/osx/gimp.modules?h=gimp-2-8
 
 8. In order to create GIMP.app you'll need to download and install gtk-mac-bundler:
+$ JHB=gimp GIMP_SDK=10.6 jhbuild shell
 $ cd $HOME/gimp/10.6/source/
 $ git clone https://github.com/jralls/gtk-mac-bundler.git
 $ cd gtk-mac-bundler/
@@ -84,15 +85,6 @@ $ JHB=gimp GIMP_SDK=10.6 jhbuild build gimp-2.8
 
 For GIMP master enter
 $ JHB=gimp GIMP_SDK=10.6 jhbuild build gimp-master
-
-6. The build might fail on openssl with a message like this: 
-cp openssl.pc .../inst/lib/pkgconfig
-chmod 644 .../inst/lib/pkgconfig/openssl.pc
-*** Error during phase install of openssl: Module failed to install into DESTDIR u'.../inst/_jhbuild/root-openssl-broken' *** [2/2]
-
-This error is irrelevant. The OpenSSL install procedure failes erroneously although
-all library parts were installed successfully. Thus you can continue to the next
-module by choosing option 2.
 
 6. In order to run GIMP with D-Bus support (required for GVFS and GIO)
 $ dbus-launch gimp-2.8
