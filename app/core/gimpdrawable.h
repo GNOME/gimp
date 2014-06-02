@@ -214,6 +214,11 @@ gboolean        gimp_drawable_is_rgb             (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_gray            (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_indexed         (const GimpDrawable *drawable);
 
+const Babl  * gimp_drawable_get_component_format (const GimpDrawable *drawable,
+                                                  GimpChannelType     channel);
+gint          gimp_drawable_get_component_index  (const GimpDrawable *drawable,
+                                                  GimpChannelType     channel);
+
 const guchar  * gimp_drawable_get_colormap       (const GimpDrawable *drawable);
 
 GimpLayer    * gimp_drawable_get_floating_sel    (const GimpDrawable *drawable);

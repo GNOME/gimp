@@ -1680,6 +1680,72 @@ gimp_drawable_is_indexed (const GimpDrawable *drawable)
   return (gimp_drawable_get_base_type (drawable) == GIMP_INDEXED);
 }
 
+const Babl *
+gimp_drawable_get_component_format (const GimpDrawable *drawable,
+                                    GimpChannelType     channel)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  switch (channel)
+    {
+    case GIMP_RED_CHANNEL:
+      return gimp_babl_component_format (GIMP_RGB,
+                                         gimp_drawable_get_precision (drawable),
+                                         RED);
+
+    case GIMP_GREEN_CHANNEL:
+      return gimp_babl_component_format (GIMP_RGB,
+                                         gimp_drawable_get_precision (drawable),
+                                         GREEN);
+
+    case GIMP_BLUE_CHANNEL:
+      return gimp_babl_component_format (GIMP_RGB,
+                                         gimp_drawable_get_precision (drawable),
+                                         BLUE);
+
+    case GIMP_ALPHA_CHANNEL:
+      return gimp_babl_component_format (GIMP_RGB,
+                                         gimp_drawable_get_precision (drawable),
+                                         ALPHA);
+
+    case GIMP_GRAY_CHANNEL:
+      return gimp_babl_component_format (GIMP_GRAY,
+                                         gimp_drawable_get_precision (drawable),
+                                         GRAY);
+
+    case GIMP_INDEXED_CHANNEL:
+      return babl_format ("Y u8"); /* will extract grayscale, the best
+                                    * we can do here */
+    }
+
+  return NULL;
+}
+
+gint
+gimp_drawable_get_component_index (const GimpDrawable *drawable,
+                                   GimpChannelType     channel)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
+
+  switch (channel)
+    {
+    case GIMP_RED_CHANNEL:     return RED;
+    case GIMP_GREEN_CHANNEL:   return GREEN;
+    case GIMP_BLUE_CHANNEL:    return BLUE;
+    case GIMP_GRAY_CHANNEL:    return GRAY;
+    case GIMP_INDEXED_CHANNEL: return INDEXED;
+    case GIMP_ALPHA_CHANNEL:
+      switch (gimp_drawable_get_base_type (drawable))
+        {
+        case GIMP_RGB:     return ALPHA;
+        case GIMP_GRAY:    return ALPHA_G;
+        case GIMP_INDEXED: return ALPHA_I;
+        }
+    }
+
+  return -1;
+}
+
 const guchar *
 gimp_drawable_get_colormap (const GimpDrawable *drawable)
 {
