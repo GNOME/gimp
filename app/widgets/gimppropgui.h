@@ -29,17 +29,23 @@ typedef GtkWidget * (* GimpCreatePickerFunc) (gpointer     creator,
                                               const gchar *icon_name,
                                               const gchar *tooltip);
 
-GtkWidget * gimp_prop_widget_new (GObject              *config,
-                                  GParamSpec           *pspec,
-                                  GimpContext          *context,
-                                  GimpCreatePickerFunc  create_picker_func,
-                                  gpointer              picker_creator,
-                                  const gchar         **label);
-GtkWidget * gimp_prop_gui_new    (GObject              *config,
-                                  GType                 owner_type,
-                                  GimpContext          *context,
-                                  GimpCreatePickerFunc  create_picker_func,
-                                  gpointer              picker_creator);
+GtkWidget * gimp_prop_widget_new            (GObject              *config,
+                                             const gchar          *property_name,
+                                             GimpContext          *context,
+                                             GimpCreatePickerFunc  create_picker,
+                                             gpointer              picker_creator,
+                                             const gchar         **label);
+GtkWidget * gimp_prop_widget_new_from_pspec (GObject              *config,
+                                             GParamSpec           *pspec,
+                                             GimpContext          *context,
+                                             GimpCreatePickerFunc  create_picker,
+                                             gpointer              picker_creator,
+                                             const gchar         **label);
+GtkWidget * gimp_prop_gui_new               (GObject              *config,
+                                             GType                 owner_type,
+                                             GimpContext          *context,
+                                             GimpCreatePickerFunc  create_picker,
+                                             gpointer              picker_creator);
 
 
 

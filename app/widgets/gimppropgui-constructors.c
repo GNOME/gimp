@@ -100,12 +100,14 @@ _gimp_prop_gui_new_generic (GObject              *config,
 
           i++;
 
-          widget_x = gimp_prop_widget_new (config, pspec, context,
-                                           create_picker_func, picker_creator,
-                                           &label_x);
-          widget_y = gimp_prop_widget_new (config, next_pspec, context,
-                                           create_picker_func, picker_creator,
-                                           &label_y);
+          widget_x = gimp_prop_widget_new_from_pspec (config, pspec, context,
+                                                      create_picker_func,
+                                                      picker_creator,
+                                                      &label_x);
+          widget_y = gimp_prop_widget_new_from_pspec (config, next_pspec, context,
+                                                      create_picker_func,
+                                                      picker_creator,
+                                                      &label_y);
 
           adj_x = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget_x));
           adj_y = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget_y));
@@ -176,9 +178,10 @@ _gimp_prop_gui_new_generic (GObject              *config,
           GtkWidget   *widget;
           const gchar *label;
 
-          widget = gimp_prop_widget_new (config, pspec, context,
-                                         create_picker_func, picker_creator,
-                                         &label);
+          widget = gimp_prop_widget_new_from_pspec (config, pspec, context,
+                                                    create_picker_func,
+                                                    picker_creator,
+                                                    &label);
 
           if (widget && label)
             {
@@ -257,10 +260,10 @@ select_all_clicked (GtkWidget *button,
 }
 
 static GtkWidget *
-gimp_prop_angle_range_box_new (GObject    *config,
-                               GParamSpec *alpha_pspec,
-                               GParamSpec *beta_pspec,
-                               GParamSpec *clockwise_pspec)
+gimp_prop_angle_range_box_new (GObject     *config,
+                               const gchar *alpha_property_name,
+                               const gchar *beta_property_name,
+                               const gchar *clockwise_property_name)
 {
   GtkWidget *main_hbox;
   GtkWidget *vbox;
@@ -277,15 +280,13 @@ gimp_prop_angle_range_box_new (GObject    *config,
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  scale = gimp_prop_spin_scale_new (config, alpha_pspec->name,
-                                    g_param_spec_get_nick (alpha_pspec),
+  scale = gimp_prop_spin_scale_new (config, alpha_property_name, NULL,
                                     1.0, 15.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
-  scale = gimp_prop_spin_scale_new (config, beta_pspec->name,
-                                    g_param_spec_get_nick (beta_pspec),
+  scale = gimp_prop_spin_scale_new (config, beta_property_name, NULL,
                                     1.0, 15.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
@@ -296,8 +297,8 @@ gimp_prop_angle_range_box_new (GObject    *config,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gimp_prop_check_button_new (config, clockwise_pspec->name,
-                                       g_param_spec_get_nick (clockwise_pspec));
+  button = gimp_prop_check_button_new (config, clockwise_property_name,
+                                       _("Clockwise"));
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
@@ -310,9 +311,9 @@ gimp_prop_angle_range_box_new (GObject    *config,
   gtk_widget_show (all_button);
 
   dial = gimp_prop_angle_range_dial_new (config,
-                                         alpha_pspec->name,
-                                         beta_pspec->name,
-                                         clockwise_pspec->name);
+                                         alpha_property_name,
+                                         beta_property_name,
+                                         clockwise_property_name);
   gtk_box_pack_start (GTK_BOX (main_hbox), dial, FALSE, FALSE, 0);
   gtk_widget_show (dial);
 
@@ -328,9 +329,9 @@ gimp_prop_angle_range_box_new (GObject    *config,
 }
 
 static GtkWidget *
-gimp_prop_polar_box_new (GObject    *config,
-                         GParamSpec *angle_pspec,
-                         GParamSpec *radius_pspec)
+gimp_prop_polar_box_new (GObject     *config,
+                         const gchar *angle_property_name,
+                         const gchar *radius_property_name)
 {
   GtkWidget *main_hbox;
   GtkWidget *vbox;
@@ -343,22 +344,20 @@ gimp_prop_polar_box_new (GObject    *config,
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  scale = gimp_prop_spin_scale_new (config, angle_pspec->name,
-                                    g_param_spec_get_nick (angle_pspec),
+  scale = gimp_prop_spin_scale_new (config, angle_property_name, NULL,
                                     1.0, 15.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
-  scale = gimp_prop_spin_scale_new (config, radius_pspec->name,
-                                    g_param_spec_get_nick (radius_pspec),
+  scale = gimp_prop_spin_scale_new (config, radius_property_name, NULL,
                                     1.0, 15.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
   polar = gimp_prop_polar_new (config,
-                               angle_pspec->name,
-                               radius_pspec->name);
+                               angle_property_name,
+                               radius_property_name);
   gtk_box_pack_start (GTK_BOX (main_hbox), polar, FALSE, FALSE, 0);
   gtk_widget_show (polar);
 
@@ -390,9 +389,9 @@ _gimp_prop_gui_new_color_rotate (GObject              *config,
   gtk_widget_show (frame);
 
   box = gimp_prop_angle_range_box_new (config,
-                                       param_specs[1],
-                                       param_specs[2],
-                                       param_specs[0]);
+                                       param_specs[1]->name,
+                                       param_specs[2]->name,
+                                       param_specs[0]->name);
   gtk_container_add (GTK_CONTAINER (frame), box);
   gtk_widget_show (box);
 
@@ -401,9 +400,9 @@ _gimp_prop_gui_new_color_rotate (GObject              *config,
   gtk_widget_show (frame);
 
   box = gimp_prop_angle_range_box_new (config,
-                                       param_specs[4],
-                                       param_specs[5],
-                                       param_specs[3]);
+                                       param_specs[4]->name,
+                                       param_specs[5]->name,
+                                       param_specs[3]->name);
   gtk_container_add (GTK_CONTAINER (frame), box);
   gtk_widget_show (box);
 
@@ -424,8 +423,8 @@ _gimp_prop_gui_new_color_rotate (GObject              *config,
   gtk_widget_show (box);
 
   box = gimp_prop_polar_box_new (config,
-                                 param_specs[8],
-                                 param_specs[9]);
+                                 param_specs[8]->name,
+                                 param_specs[9]->name);
   gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
   gtk_widget_show (box);
 
@@ -487,12 +486,12 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  scale = gimp_prop_widget_new (config, param_specs[25],
+  scale = gimp_prop_widget_new (config, "divisor",
                                 context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_widget_show (scale);
 
-  scale = gimp_prop_widget_new (config, param_specs[26],
+  scale = gimp_prop_widget_new (config, "offset",
                                 context, NULL, NULL, &label);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_widget_show (scale);

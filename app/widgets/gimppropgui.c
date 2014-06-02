@@ -61,18 +61,37 @@ static void        gimp_prop_widget_new_seed_clicked (GtkButton     *button,
 /*  public functions  */
 
 GtkWidget *
-gimp_prop_widget_new (GObject               *config,
-                      GParamSpec            *pspec,
-                      GimpContext           *context,
-                      GimpCreatePickerFunc   create_picker_func,
-                      gpointer               picker_creator,
-                      const gchar          **label)
+gimp_prop_widget_new (GObject              *config,
+                      const gchar          *property_name,
+                      GimpContext          *context,
+                      GimpCreatePickerFunc  create_picker_func,
+                      gpointer              picker_creator,
+                      const gchar         **label)
+{
+  GParamSpec *pspec;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                        property_name);
+
+  return gimp_prop_widget_new_from_pspec (config, pspec, context,
+                                          create_picker_func, picker_creator,
+                                          label);
+}
+
+GtkWidget *
+gimp_prop_widget_new_from_pspec (GObject               *config,
+                                 GParamSpec            *pspec,
+                                 GimpContext           *context,
+                                 GimpCreatePickerFunc   create_picker_func,
+                                 gpointer               picker_creator,
+                                 const gchar          **label)
 {
   GtkWidget *widget = NULL;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
-  g_return_val_if_fail (g_type_is_a (G_OBJECT_TYPE (config), pspec->owner_type),
-                        NULL);
+  g_return_val_if_fail (pspec != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (label != NULL, NULL);
 
@@ -167,8 +186,7 @@ gimp_prop_widget_new (GObject               *config,
             }
         }
 
-      widget = gimp_prop_spin_scale_new (config, pspec->name,
-                                         g_param_spec_get_nick (pspec),
+      widget = gimp_prop_spin_scale_new (config, pspec->name, NULL,
                                          step, page, digits);
 
       if (HAS_KEY (pspec, "unit", "degree") &&
@@ -216,10 +234,10 @@ gimp_prop_widget_new (GObject               *config,
 
       if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec))
         {
-          widget = gimp_prop_file_chooser_button_new (config,
-                                                      pspec->name,
-                                                      g_param_spec_get_nick (pspec),
-                                                      GTK_FILE_CHOOSER_ACTION_OPEN);
+          widget =
+            gimp_prop_file_chooser_button_new (config, pspec->name,
+                                               g_param_spec_get_nick (pspec),
+                                               GTK_FILE_CHOOSER_ACTION_OPEN);
         }
       else if (g_param_spec_get_qdata (pspec, multiline_quark))
         {
