@@ -233,6 +233,7 @@ gimp_free_select_tool_init (GimpFreeSelectTool *fst)
   GimpTool                  *tool = GIMP_TOOL (fst);
   GimpFreeSelectToolPrivate *priv = GET_PRIVATE (fst);
 
+  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
   gimp_tool_control_set_wants_click (tool->control, TRUE);
   gimp_tool_control_set_precision   (tool->control,
                                      GIMP_CURSOR_PRECISION_SUBPIXEL);

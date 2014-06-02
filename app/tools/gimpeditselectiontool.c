@@ -146,10 +146,6 @@ gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass)
 static void
 gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
 {
-  GimpTool *tool = GIMP_TOOL (edit_selection_tool);
-
-  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_COMPRESS);
-
   edit_selection_tool->origx      = 0;
   edit_selection_tool->origy      = 0;
 

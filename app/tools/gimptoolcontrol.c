@@ -51,7 +51,7 @@ gimp_tool_control_init (GimpToolControl *control)
   control->handle_empty_image     = FALSE;
 
   control->dirty_mask             = GIMP_DIRTY_NONE;
-  control->motion_mode            = GIMP_MOTION_MODE_EXACT;
+  control->motion_mode            = GIMP_MOTION_MODE_COMPRESS;
 
   control->auto_snap_to           = TRUE;
   control->snap_offset_x          = 0;

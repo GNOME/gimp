@@ -226,6 +226,7 @@ gimp_foreground_select_tool_init (GimpForegroundSelectTool *fg_select)
 {
   GimpTool *tool = GIMP_TOOL (fg_select);
 
+  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
   gimp_tool_control_set_scroll_lock (tool->control, FALSE);
   gimp_tool_control_set_preserve    (tool->control, FALSE);
   gimp_tool_control_set_dirty_mask  (tool->control,

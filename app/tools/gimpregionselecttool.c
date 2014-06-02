@@ -103,7 +103,6 @@ gimp_region_select_tool_init (GimpRegionSelectTool *region_select)
   GimpTool *tool = GIMP_TOOL (region_select);
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_COMPRESS);
 
   region_select->x               = 0;
   region_select->y               = 0;

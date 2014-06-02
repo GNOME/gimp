@@ -221,9 +221,6 @@ gimp_seamless_clone_tool_init (GimpSeamlessCloneTool *self)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_MOVE);
 
-  gimp_tool_control_set_motion_mode (tool->control,
-                                     GIMP_MOTION_MODE_COMPRESS);
-
   self->tool_state = SC_STATE_INIT;
 }
 
