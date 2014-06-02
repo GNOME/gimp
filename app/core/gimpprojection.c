@@ -47,8 +47,10 @@
 #define GIMP_PROJECTION_CHUNK_WIDTH  256
 #define GIMP_PROJECTION_CHUNK_HEIGHT 128
 
-/*  how much time, in seconds, do we allow chunk rendering to take  */
-#define GIMP_PROJECTION_CHUNK_TIME 0.01
+/*  how much time, in seconds, do we allow chunk rendering to take,
+ *  aiming for 15fps
+ */
+#define GIMP_PROJECTION_CHUNK_TIME 0.0666
 
 
 enum
