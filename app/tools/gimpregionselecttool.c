@@ -343,7 +343,7 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
                                    gint                 *n_segs)
 {
   GimpDisplayShell *shell = gimp_display_get_shell (display);
-  GimpBoundSeg     *segs;
+  GimpBoundSeg     *segs  = NULL;
 
   gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
 
@@ -354,25 +354,24 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
     GIMP_REGION_SELECT_TOOL_GET_CLASS (region_sel)->get_mask (region_sel,
                                                               display);
 
-  if (! region_sel->region_mask)
+  if (region_sel->region_mask)
     {
-      gimp_display_shell_unset_override_cursor (shell);
-
-      *n_segs = 0;
-      return NULL;
+      /*  calculate and allocate a new segment array which represents
+       *  the boundary of the contiguous region
+       */
+      segs = gimp_boundary_find (region_sel->region_mask, NULL,
+                                 babl_format ("Y float"),
+                                 GIMP_BOUNDARY_WITHIN_BOUNDS,
+                                 0, 0,
+                                 gegl_buffer_get_width  (region_sel->region_mask),
+                                 gegl_buffer_get_height (region_sel->region_mask),
+                                 GIMP_BOUNDARY_HALF_WAY,
+                                 n_segs);
     }
-
-  /*  calculate and allocate a new segment array which represents the
-   *  boundary of the contiguous region
-   */
-  segs = gimp_boundary_find (region_sel->region_mask, NULL,
-                             babl_format ("Y float"),
-                             GIMP_BOUNDARY_WITHIN_BOUNDS,
-                             0, 0,
-                             gegl_buffer_get_width  (region_sel->region_mask),
-                             gegl_buffer_get_height (region_sel->region_mask),
-                             GIMP_BOUNDARY_HALF_WAY,
-                             n_segs);
+  else
+    {
+      *n_segs = 0;
+    }
 
   gimp_display_shell_unset_override_cursor (shell);
 

@@ -247,10 +247,11 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
                           GArray          *dash_info)
 {
   sc->do_stroke = TRUE;
-  sc->width = width;
-  sc->join  = join;
-  sc->cap   = cap;
-  sc->miter = miter;
+  sc->width     = width;
+  sc->join      = join;
+  sc->cap       = cap;
+  sc->miter     = miter;
+
   if (sc->dash_info)
     {
       g_array_free (sc->dash_info, TRUE);
