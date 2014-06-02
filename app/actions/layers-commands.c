@@ -139,7 +139,7 @@ static gint   layers_mode_index            (GimpLayerModeEffects   layer_mode);
 
 /*  private variables  */
 
-static GimpFillType           layer_fill_type     = GIMP_TRANSPARENT_FILL;
+static GimpFillType           layer_fill_type     = GIMP_FILL_TRANSPARENT;
 static gchar                 *layer_name          = NULL;
 static GimpUnit               layer_resize_unit   = GIMP_UNIT_PIXEL;
 static GimpUnit               layer_scale_unit    = GIMP_UNIT_PIXEL;

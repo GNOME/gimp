@@ -196,13 +196,13 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
             {
             default:
             case GIMP_BUCKET_FILL_FG:
-              fill_type = GIMP_FOREGROUND_FILL;
+              fill_type = GIMP_FILL_FOREGROUND;
               break;
             case GIMP_BUCKET_FILL_BG:
-              fill_type = GIMP_BACKGROUND_FILL;
+              fill_type = GIMP_FILL_BACKGROUND;
               break;
             case GIMP_BUCKET_FILL_PATTERN:
-              fill_type = GIMP_PATTERN_FILL;
+              fill_type = GIMP_FILL_PATTERN;
               break;
             }
 

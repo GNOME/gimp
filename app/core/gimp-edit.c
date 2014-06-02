@@ -438,27 +438,27 @@ gimp_edit_fill (GimpImage            *image,
 
   switch (fill_type)
     {
-    case GIMP_FOREGROUND_FILL:
+    case GIMP_FILL_FOREGROUND:
       gimp_context_get_foreground (context, &color);
       undo_desc = C_("undo-type", "Fill with Foreground Color");
       break;
 
-    case GIMP_BACKGROUND_FILL:
+    case GIMP_FILL_BACKGROUND:
       gimp_context_get_background (context, &color);
       undo_desc = C_("undo-type", "Fill with Background Color");
       break;
 
-    case GIMP_WHITE_FILL:
+    case GIMP_FILL_WHITE:
       gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
       undo_desc = C_("undo-type", "Fill with White");
       break;
 
-    case GIMP_TRANSPARENT_FILL:
+    case GIMP_FILL_TRANSPARENT:
       gimp_context_get_background (context, &color);
       undo_desc = C_("undo-type", "Fill with Transparency");
       break;
 
-    case GIMP_PATTERN_FILL:
+    case GIMP_FILL_PATTERN:
       pattern = gimp_context_get_pattern (context);
       undo_desc = C_("undo-type", "Fill with Pattern");
       break;
@@ -466,7 +466,7 @@ gimp_edit_fill (GimpImage            *image,
     default:
       g_warning ("%s: unknown fill type", G_STRFUNC);
       return gimp_edit_fill (image, drawable,
-                             context, GIMP_BACKGROUND_FILL,
+                             context, GIMP_FILL_BACKGROUND,
                              GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
     }
 

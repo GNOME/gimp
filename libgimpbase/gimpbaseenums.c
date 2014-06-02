@@ -487,21 +487,21 @@ gimp_fill_type_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_FOREGROUND_FILL, "GIMP_FOREGROUND_FILL", "foreground-fill" },
-    { GIMP_BACKGROUND_FILL, "GIMP_BACKGROUND_FILL", "background-fill" },
-    { GIMP_WHITE_FILL, "GIMP_WHITE_FILL", "white-fill" },
-    { GIMP_TRANSPARENT_FILL, "GIMP_TRANSPARENT_FILL", "transparent-fill" },
-    { GIMP_PATTERN_FILL, "GIMP_PATTERN_FILL", "pattern-fill" },
+    { GIMP_FILL_FOREGROUND, "GIMP_FILL_FOREGROUND", "foreground-fill" },
+    { GIMP_FILL_BACKGROUND, "GIMP_FILL_BACKGROUND", "background-fill" },
+    { GIMP_FILL_WHITE, "GIMP_FILL_WHITE", "white-fill" },
+    { GIMP_FILL_TRANSPARENT, "GIMP_FILL_TRANSPARENT", "transparent-fill" },
+    { GIMP_FILL_PATTERN, "GIMP_FILL_PATTERN", "pattern-fill" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_FOREGROUND_FILL, NC_("fill-type", "Foreground color"), NULL },
-    { GIMP_BACKGROUND_FILL, NC_("fill-type", "Background color"), NULL },
-    { GIMP_WHITE_FILL, NC_("fill-type", "White"), NULL },
-    { GIMP_TRANSPARENT_FILL, NC_("fill-type", "Transparency"), NULL },
-    { GIMP_PATTERN_FILL, NC_("fill-type", "Pattern"), NULL },
+    { GIMP_FILL_FOREGROUND, NC_("fill-type", "Foreground color"), NULL },
+    { GIMP_FILL_BACKGROUND, NC_("fill-type", "Background color"), NULL },
+    { GIMP_FILL_WHITE, NC_("fill-type", "White"), NULL },
+    { GIMP_FILL_TRANSPARENT, NC_("fill-type", "Transparency"), NULL },
+    { GIMP_FILL_PATTERN, NC_("fill-type", "Pattern"), NULL },
     { 0, NULL, NULL }
   };
 

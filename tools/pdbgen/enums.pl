@@ -146,14 +146,14 @@ package Gimp::CodeGen::enums;
     GimpFillType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_FOREGROUND_FILL GIMP_BACKGROUND_FILL
-			  GIMP_WHITE_FILL GIMP_TRANSPARENT_FILL
-			  GIMP_PATTERN_FILL) ],
-	  mapping => { GIMP_FOREGROUND_FILL => '0',
-		       GIMP_BACKGROUND_FILL => '1',
-		       GIMP_WHITE_FILL => '2',
-		       GIMP_TRANSPARENT_FILL => '3',
-		       GIMP_PATTERN_FILL => '4' }
+	  symbols => [ qw(GIMP_FILL_FOREGROUND GIMP_FILL_BACKGROUND
+			  GIMP_FILL_WHITE GIMP_FILL_TRANSPARENT
+			  GIMP_FILL_PATTERN) ],
+	  mapping => { GIMP_FILL_FOREGROUND => '0',
+		       GIMP_FILL_BACKGROUND => '1',
+		       GIMP_FILL_WHITE => '2',
+		       GIMP_FILL_TRANSPARENT => '3',
+		       GIMP_FILL_PATTERN => '4' }
 	},
     GimpForegroundExtractMode =>
 	{ contig => 1,

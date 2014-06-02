@@ -169,7 +169,7 @@ gimp_template_class_init (GimpTemplateClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FILL_TYPE,
                                  "fill-type",
                                  NULL,
-                                 GIMP_TYPE_FILL_TYPE, GIMP_BACKGROUND_FILL,
+                                 GIMP_TYPE_FILL_TYPE, GIMP_FILL_BACKGROUND,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_COMMENT,
@@ -328,7 +328,7 @@ gimp_template_notify (GObject    *object,
   /* the initial layer */
   format = gimp_babl_format (private->base_type,
                              private->precision,
-                             private->fill_type == GIMP_TRANSPARENT_FILL);
+                             private->fill_type == GIMP_FILL_TRANSPARENT);
   bytes = babl_format_get_bytes_per_pixel (format);
 
   /* the selection */
@@ -470,7 +470,7 @@ gimp_template_get_precision (GimpTemplate *template)
 GimpFillType
 gimp_template_get_fill_type (GimpTemplate *template)
 {
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_BACKGROUND_FILL);
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), GIMP_FILL_BACKGROUND);
 
   return GET_PRIVATE (template)->fill_type;
 }

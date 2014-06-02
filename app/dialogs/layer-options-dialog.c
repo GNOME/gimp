@@ -200,8 +200,8 @@ layer_options_dialog_new (GimpImage    *image,
 
       /*  The radio frame  */
       frame = gimp_enum_radio_frame_new_with_range (GIMP_TYPE_FILL_TYPE,
-                                                    GIMP_FOREGROUND_FILL,
-                                                    GIMP_TRANSPARENT_FILL,
+                                                    GIMP_FILL_FOREGROUND,
+                                                    GIMP_FILL_TRANSPARENT,
                                                     gtk_label_new (_("Layer Fill Type")),
                                                     G_CALLBACK (gimp_radio_button_update),
                                                     &options->fill_type,

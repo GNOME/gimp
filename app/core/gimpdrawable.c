@@ -1538,23 +1538,23 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
 
   switch (fill_type)
     {
-    case GIMP_FOREGROUND_FILL:
+    case GIMP_FILL_FOREGROUND:
       gimp_context_get_foreground (context, &color);
       break;
 
-    case GIMP_BACKGROUND_FILL:
+    case GIMP_FILL_BACKGROUND:
       gimp_context_get_background (context, &color);
       break;
 
-    case GIMP_WHITE_FILL:
+    case GIMP_FILL_WHITE:
       gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
       break;
 
-    case GIMP_TRANSPARENT_FILL:
+    case GIMP_FILL_TRANSPARENT:
       gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_TRANSPARENT);
       break;
 
-    case GIMP_PATTERN_FILL:
+    case GIMP_FILL_PATTERN:
       pattern = gimp_context_get_pattern (context);
       break;
 

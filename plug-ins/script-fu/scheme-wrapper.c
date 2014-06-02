@@ -156,6 +156,12 @@ static const NamedConstant const old_constants[] =
   { "IMAGE-CLONE",             GIMP_CLONE_IMAGE   },
   { "PATTERN-CLONE",           GIMP_CLONE_PATTERN },
 
+  { "FOREGROUND-FILL",         GIMP_FILL_FOREGROUND  },
+  { "BACKGROUND-FILL",         GIMP_FILL_BACKGROUND  },
+  { "WHITE-FILL",              GIMP_FILL_WHITE       },
+  { "TRANSPARENT-FILL",        GIMP_FILL_TRANSPARENT },
+  { "PATTERN-FILL",            GIMP_FILL_PATTERN     },
+
   { "DODGE",                   GIMP_DODGE_BURN_TYPE_DODGE },
   { "BURN",                    GIMP_DODGE_BURN_TYPE_BURN  },
 

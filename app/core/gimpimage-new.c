@@ -126,7 +126,7 @@ gimp_image_new_from_template (Gimp         *gimp,
   width  = gimp_image_get_width (image);
   height = gimp_image_get_height (image);
 
-  if (gimp_template_get_fill_type (template) == GIMP_TRANSPARENT_FILL)
+  if (gimp_template_get_fill_type (template) == GIMP_FILL_TRANSPARENT)
     has_alpha = TRUE;
   else
     has_alpha = FALSE;

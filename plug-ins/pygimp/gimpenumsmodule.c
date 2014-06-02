@@ -130,6 +130,17 @@ add_compat_enums(PyObject *m)
     PyModule_AddIntConstant(m, "PATTERN_CLONE",
 			    GIMP_CLONE_PATTERN);
 
+    PyModule_AddIntConstant(m, "FOREGROUND-FILL",
+			    GIMP_FILL_FOREGROUND);
+    PyModule_AddIntConstant(m, "BACKGROUND-FILL",
+			    GIMP_FILL_BACKGROUND);
+    PyModule_AddIntConstant(m, "WHITE-FILL",
+			    GIMP_FILL_WHITE);
+    PyModule_AddIntConstant(m, "TRANSPARENT-FILL",
+			    GIMP_FILL_TRANSPARENT);
+    PyModule_AddIntConstant(m, "PATTERN-FILL",
+			    GIMP_FILL_PATTERN);
+
     PyModule_AddIntConstant(m, "DODGE",
 			    GIMP_DODGE_BURN_TYPE_DODGE);
     PyModule_AddIntConstant(m, "BURN",

@@ -1642,7 +1642,7 @@ register_drawable_procs (GimpPDB *pdb)
                                                   "fill type",
                                                   "The type of fill",
                                                   GIMP_TYPE_FILL_TYPE,
-                                                  GIMP_FOREGROUND_FILL,
+                                                  GIMP_FILL_FOREGROUND,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

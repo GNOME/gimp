@@ -604,20 +604,20 @@ edit_bucket_fill_invoker (GimpProcedure         *procedure,
 
           if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
             {
-              GimpFillType fill_type = GIMP_FOREGROUND_FILL;
+              GimpFillType fill_type = GIMP_FILL_FOREGROUND;
 
               switch (fill_mode)
                 {
                 case GIMP_BUCKET_FILL_FG:
-                  fill_type = GIMP_FOREGROUND_FILL;
+                  fill_type = GIMP_FILL_FOREGROUND;
                   break;
 
                 case GIMP_BUCKET_FILL_BG:
-                  fill_type = GIMP_BACKGROUND_FILL;
+                  fill_type = GIMP_FILL_BACKGROUND;
                   break;
 
                 case GIMP_BUCKET_FILL_PATTERN:
-                  fill_type = GIMP_PATTERN_FILL;
+                  fill_type = GIMP_FILL_PATTERN;
                   break;
                 }
 
@@ -684,20 +684,20 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
 
           if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
             {
-              GimpFillType fill_type = GIMP_FOREGROUND_FILL;
+              GimpFillType fill_type = GIMP_FILL_FOREGROUND;
 
               switch (fill_mode)
                 {
                 case GIMP_BUCKET_FILL_FG:
-                  fill_type = GIMP_FOREGROUND_FILL;
+                  fill_type = GIMP_FILL_FOREGROUND;
                   break;
 
                 case GIMP_BUCKET_FILL_BG:
-                  fill_type = GIMP_BACKGROUND_FILL;
+                  fill_type = GIMP_FILL_BACKGROUND;
                   break;
 
                 case GIMP_BUCKET_FILL_PATTERN:
-                  fill_type = GIMP_PATTERN_FILL;
+                  fill_type = GIMP_FILL_PATTERN;
                   break;
                 }
 
@@ -1308,7 +1308,7 @@ register_edit_procs (GimpPDB *pdb)
                                                   "fill type",
                                                   "The type of fill",
                                                   GIMP_TYPE_FILL_TYPE,
-                                                  GIMP_FOREGROUND_FILL,
+                                                  GIMP_FILL_FOREGROUND,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

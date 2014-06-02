@@ -1345,7 +1345,7 @@ add_layers (gint32     image_id,
                                          image_type, 0, GIMP_NORMAL_MODE);
               g_free (lyr_a[lidx]->name);
               gimp_image_insert_layer (image_id, layer_id, parent_group_id, -1);
-              gimp_drawable_fill (layer_id, GIMP_TRANSPARENT_FILL);
+              gimp_drawable_fill (layer_id, GIMP_FILL_TRANSPARENT);
               gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
               if (lyr_a[lidx]->id)
                 gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
