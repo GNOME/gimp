@@ -32,6 +32,7 @@
 
 #include "gimp.h"
 #include "gimp-edit.h"
+#include "gimp-utils.h"
 #include "gimpbuffer.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -420,54 +421,48 @@ gimp_edit_clear (GimpImage    *image,
 }
 
 gboolean
-gimp_edit_fill (GimpImage            *image,
-                GimpDrawable         *drawable,
-                GimpContext          *context,
-                GimpFillType          fill_type,
-                gdouble               opacity,
-                GimpLayerModeEffects  paint_mode)
+gimp_edit_fill (GimpImage             *image,
+                GimpDrawable          *drawable,
+                GimpContext           *context,
+                GimpFillType           fill_type,
+                gdouble                opacity,
+                GimpLayerModeEffects   paint_mode,
+                GError               **error)
 {
   GimpRGB      color;
-  GimpPattern *pattern = NULL;
-  const gchar *undo_desc;
+  GimpPattern *pattern;
+  const gchar *undo_desc = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (! gimp_get_fill_params (context, fill_type, &color, &pattern, error))
+    return FALSE;
 
   switch (fill_type)
     {
     case GIMP_FILL_FOREGROUND:
-      gimp_context_get_foreground (context, &color);
       undo_desc = C_("undo-type", "Fill with Foreground Color");
       break;
 
     case GIMP_FILL_BACKGROUND:
-      gimp_context_get_background (context, &color);
       undo_desc = C_("undo-type", "Fill with Background Color");
       break;
 
     case GIMP_FILL_WHITE:
-      gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
       undo_desc = C_("undo-type", "Fill with White");
       break;
 
     case GIMP_FILL_TRANSPARENT:
-      gimp_context_get_background (context, &color);
       undo_desc = C_("undo-type", "Fill with Transparency");
       break;
 
     case GIMP_FILL_PATTERN:
-      pattern = gimp_context_get_pattern (context);
       undo_desc = C_("undo-type", "Fill with Pattern");
       break;
-
-    default:
-      g_warning ("%s: unknown fill type", G_STRFUNC);
-      return gimp_edit_fill (image, drawable,
-                             context, GIMP_FILL_BACKGROUND,
-                             GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
     }
 
   return gimp_edit_fill_full (image, drawable,

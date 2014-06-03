@@ -569,7 +569,8 @@ HELP
 
       success = gimp_edit_fill (image, drawable, context,
                                 (GimpFillType) fill_type,
-                                GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                                GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                                error);
     }
   else
     success = FALSE;
@@ -658,7 +659,8 @@ HELP
       if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
         {
           success = gimp_edit_fill (image, drawable, context, fill_type,
-                                    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                                    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                                    error);
         }
       else
         {
@@ -766,7 +768,8 @@ HELP
       if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
         {
           success = gimp_edit_fill (image, drawable, context, fill_type,
-                                    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                                    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                                    error);
         }
       else
         {

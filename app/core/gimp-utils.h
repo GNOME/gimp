@@ -80,6 +80,12 @@ gchar      * gimp_markup_extract_text              (const gchar     *markup);
 const gchar* gimp_enum_get_value_name              (GType            enum_type,
                                                     gint             value);
 
+gboolean     gimp_get_fill_params                  (GimpContext      *context,
+                                                    GimpFillType      fill_type,
+                                                    GimpRGB          *color,
+                                                    GimpPattern     **pattern,
+                                                    GError          **error);
+
 /* Common values for the n_snap_lines parameter of
  * gimp_constrain_line.
  */

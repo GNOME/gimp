@@ -557,7 +557,8 @@ edit_fill_invoker (GimpProcedure         *procedure,
 
           success = gimp_edit_fill (image, drawable, context,
                                     (GimpFillType) fill_type,
-                                    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                                    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                                    error);
         }
       else
         success = FALSE;
@@ -622,7 +623,8 @@ edit_bucket_fill_invoker (GimpProcedure         *procedure,
           if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
             {
               success = gimp_edit_fill (image, drawable, context, fill_type,
-                                        GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                                        GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                                        error);
             }
           else
             {
@@ -702,7 +704,8 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
           if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
             {
               success = gimp_edit_fill (image, drawable, context, fill_type,
-                                        GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                                        GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                                        error);
             }
           else
             {

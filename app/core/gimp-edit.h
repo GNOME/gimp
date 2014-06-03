@@ -62,7 +62,8 @@ gboolean           gimp_edit_fill               (GimpImage     *image,
                                                  GimpContext   *context,
                                                  GimpFillType   fill_type,
                                                  gdouble        opacity,
-                                                 GimpLayerModeEffects  paint_mode);
+                                                 GimpLayerModeEffects  paint_mode,
+                                                 GError       **error);
 
 gboolean           gimp_edit_fill_full          (GimpImage     *image,
                                                  GimpDrawable  *drawable,

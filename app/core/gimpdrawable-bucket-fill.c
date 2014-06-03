@@ -37,7 +37,6 @@
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-bucket-fill.h"
-#include "gimperror.h"
 #include "gimpimage.h"
 #include "gimppattern.h"
 #include "gimppickable.h"
@@ -76,47 +75,16 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                            gdouble               y,
                            GError              **error)
 {
-  GimpRGB      color   = { 0, };
-  GimpPattern *pattern = NULL;
+  GimpRGB      color;
+  GimpPattern *pattern;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  switch (fill_type)
-    {
-    case GIMP_FILL_FOREGROUND:
-      gimp_context_get_foreground (context, &color);
-      break;
-
-    case GIMP_FILL_BACKGROUND:
-      gimp_context_get_background (context, &color);
-      break;
-
-    case GIMP_FILL_WHITE:
-      gimp_rgba_set (&color, 1.0, 1.0, 1.0, 1.0);
-      break;
-
-    case GIMP_FILL_TRANSPARENT:
-      gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
-      break;
-
-    case GIMP_FILL_PATTERN:
-      pattern = gimp_context_get_pattern (context);
-
-      if (! pattern)
-        {
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			       _("No patterns available for this operation."));
-          return FALSE;
-        }
-      break;
-
-    default:
-      g_warning ("%s: invalid fill_type passed", G_STRFUNC);
-      return FALSE;
-    }
+  if (! gimp_get_fill_params (context, &color, &pattern, error))
+    return FALSE;
 
   gimp_drawable_bucket_fill_internal (drawable,
                                       fill_type,

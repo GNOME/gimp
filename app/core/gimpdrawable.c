@@ -1532,36 +1532,12 @@ gimp_drawable_fill_by_type (GimpDrawable *drawable,
                             GimpFillType  fill_type)
 {
   GimpRGB      color;
-  GimpPattern *pattern = NULL;
+  GimpPattern *pattern;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  switch (fill_type)
-    {
-    case GIMP_FILL_FOREGROUND:
-      gimp_context_get_foreground (context, &color);
-      break;
-
-    case GIMP_FILL_BACKGROUND:
-      gimp_context_get_background (context, &color);
-      break;
-
-    case GIMP_FILL_WHITE:
-      gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
-      break;
-
-    case GIMP_FILL_TRANSPARENT:
-      gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_TRANSPARENT);
-      break;
-
-    case GIMP_FILL_PATTERN:
-      pattern = gimp_context_get_pattern (context);
-      break;
-
-    default:
-      g_warning ("%s: unknown fill type %d", G_STRFUNC, fill_type);
-      return;
-    }
+  if (! gimp_get_fill_params (context, fill_type, &color, &pattern, NULL))
+    return;
 
   gimp_drawable_fill (drawable, pattern ? NULL : &color, pattern);
 }

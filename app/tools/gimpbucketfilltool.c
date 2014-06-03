@@ -175,6 +175,8 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
       GimpContext  *context  = GIMP_CONTEXT (options);
       GimpFillType  fill_type;
       gint          x, y;
+      gboolean      success;
+      GError       *error = NULL;
 
       switch (options->fill_mode)
         {
@@ -205,34 +207,32 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
 
       if (options->fill_selection)
         {
-          gimp_edit_fill (image, drawable, context, fill_type,
-                          gimp_context_get_opacity (context),
-                          gimp_context_get_paint_mode (context));
+          success = gimp_edit_fill (image, drawable, context, fill_type,
+                                    gimp_context_get_opacity (context),
+                                    gimp_context_get_paint_mode (context),
+                                    &error);
+        }
+      else
+        {
+          success = gimp_drawable_bucket_fill (drawable, context, fill_type,
+                                               gimp_context_get_paint_mode (context),
+                                               gimp_context_get_opacity (context),
+                                               options->fill_transparent,
+                                               options->fill_criterion,
+                                               options->threshold / 255.0,
+                                               options->sample_merged,
+                                               x, y, &error);
+        }
+
+      if (success)
+        {
           gimp_image_flush (image);
         }
       else
         {
-          GError *error = NULL;
-
-          if (! gimp_drawable_bucket_fill (drawable,
-                                           context,
-                                           fill_type,
-                                           gimp_context_get_paint_mode (context),
-                                           gimp_context_get_opacity (context),
-                                           options->fill_transparent,
-                                           options->fill_criterion,
-                                           options->threshold / 255.0,
-                                           options->sample_merged,
-                                           x, y, &error))
-            {
-              gimp_message_literal (display->gimp, G_OBJECT (display),
-                                    GIMP_MESSAGE_WARNING, error->message);
-              g_clear_error (&error);
-            }
-          else
-            {
-              gimp_image_flush (image);
-            }
+          gimp_message_literal (display->gimp, G_OBJECT (display),
+                                GIMP_MESSAGE_WARNING, error->message);
+          g_clear_error (&error);
         }
     }
 

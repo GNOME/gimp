@@ -61,10 +61,13 @@
 #include "gimp-utils.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimperror.h"
 #include "gimpparamspecs.h"
 
+#include "gimp-intl.h"
 
-#define MAX_FUNC               100
+
+#define MAX_FUNC 100
 
 
 gint64
@@ -765,6 +768,58 @@ gimp_enum_get_value_name (GType enum_type,
                        NULL /*value_help*/);
 
   return value_name;
+}
+
+gboolean
+gimp_get_fill_params (GimpContext   *context,
+                      GimpFillType   fill_type,
+                      GimpRGB       *color,
+                      GimpPattern  **pattern,
+                      GError       **error)
+
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (color != NULL, NULL);
+  g_return_val_if_fail (pattern != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  *pattern = NULL;
+
+  switch (fill_type)
+    {
+    case GIMP_FILL_FOREGROUND:
+      gimp_context_get_foreground (context, color);
+      break;
+
+    case GIMP_FILL_BACKGROUND:
+      gimp_context_get_background (context, color);
+      break;
+
+    case GIMP_FILL_WHITE:
+      gimp_rgba_set (color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+      break;
+
+    case GIMP_FILL_TRANSPARENT:
+      gimp_rgba_set (color, 0.0, 0.0, 0.0, GIMP_OPACITY_TRANSPARENT);
+      break;
+
+    case GIMP_FILL_PATTERN:
+      *pattern = gimp_context_get_pattern (context);
+
+      if (! *pattern)
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			       _("No patterns available for this operation."));
+          return FALSE;
+        }
+      break;
+
+    default:
+      g_warning ("%s: invalid fill_type %d", G_STRFUNC, fill_type);
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 /**
