@@ -33,6 +33,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
 #include "gimpchannel-combine.h"
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
@@ -83,7 +84,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! gimp_get_fill_params (context, &color, &pattern, error))
+  if (! gimp_get_fill_params (context, fill_type, &color, &pattern, error))
     return FALSE;
 
   gimp_drawable_bucket_fill_internal (drawable,
