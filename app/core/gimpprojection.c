@@ -17,6 +17,9 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
@@ -44,13 +47,13 @@
 #define GIMP_PROJECTION_IDLE_PRIORITY (G_PRIORITY_HIGH_IDLE + 20 + 1)
 
 /*  chunk size for one iteration of the chunk renderer  */
-#define GIMP_PROJECTION_CHUNK_WIDTH  256
-#define GIMP_PROJECTION_CHUNK_HEIGHT 128
+static gint GIMP_PROJECTION_CHUNK_WIDTH  = 256;
+static gint GIMP_PROJECTION_CHUNK_HEIGHT = 128;
 
 /*  how much time, in seconds, do we allow chunk rendering to take,
  *  aiming for 15fps
  */
-#define GIMP_PROJECTION_CHUNK_TIME 0.0666
+static gint GIMP_PROJECTION_CHUNK_TIME = 0.0666;
 
 
 enum
@@ -176,6 +179,7 @@ gimp_projection_class_init (GimpProjectionClass *klass)
 {
   GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
   GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  const gchar     *env;
 
   projection_signals[UPDATE] =
     g_signal_new ("update",
@@ -200,6 +204,24 @@ gimp_projection_class_init (GimpProjectionClass *klass)
   g_object_class_override_property (object_class, PROP_BUFFER, "buffer");
 
   g_type_class_add_private (klass, sizeof (GimpProjectionPrivate));
+
+  env = g_getenv ("GIMP_DISPLAY_RENDER_BUF_SIZE");
+  if (env)
+    {
+      gint width  = atoi (env);
+      gint height = width;
+
+      env = strchr (env, 'x');
+      if (env)
+        height = atoi (env);
+
+      if (width  > 0 && width  <= 8192 &&
+          height > 0 && height <= 8192)
+        {
+          GIMP_PROJECTION_CHUNK_WIDTH  = width;
+          GIMP_PROJECTION_CHUNK_HEIGHT = height;
+        }
+    }
 }
 
 static void
