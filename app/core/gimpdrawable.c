@@ -1490,15 +1490,39 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
 }
 
 void
-gimp_drawable_fill (GimpDrawable      *drawable,
-                    const GimpRGB     *color,
-                    const GimpPattern *pattern)
+gimp_drawable_fill (GimpDrawable *drawable,
+                    GimpContext  *context,
+                    GimpFillType  fill_type)
+{
+  GimpRGB      color;
+  GimpPattern *pattern;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  if (! gimp_get_fill_params (context, fill_type, &color, &pattern, NULL))
+    return;
+
+  gimp_drawable_fill_full (drawable, &color, pattern);
+}
+
+void
+gimp_drawable_fill_full (GimpDrawable      *drawable,
+                         const GimpRGB     *color,
+                         const GimpPattern *pattern)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (color != NULL || pattern != NULL);
+  g_return_if_fail (color != NULL);
   g_return_if_fail (pattern == NULL || GIMP_IS_PATTERN (pattern));
 
-  if (color)
+  if (pattern)
+    {
+      GeglBuffer *src_buffer = gimp_pattern_create_buffer (pattern);
+
+      gegl_buffer_set_pattern (gimp_drawable_get_buffer (drawable),
+                               NULL, src_buffer, 0, 0);
+      g_object_unref (src_buffer);
+    }
+  else
     {
       GimpRGB    c = *color;
       GeglColor *col;
@@ -1511,35 +1535,11 @@ gimp_drawable_fill (GimpDrawable      *drawable,
                              NULL, col);
       g_object_unref (col);
     }
-  else
-    {
-      GeglBuffer *src_buffer = gimp_pattern_create_buffer (pattern);
-
-      gegl_buffer_set_pattern (gimp_drawable_get_buffer (drawable),
-                               NULL, src_buffer, 0, 0);
-      g_object_unref (src_buffer);
-    }
 
   gimp_drawable_update (drawable,
                         0, 0,
                         gimp_item_get_width  (GIMP_ITEM (drawable)),
                         gimp_item_get_height (GIMP_ITEM (drawable)));
-}
-
-void
-gimp_drawable_fill_by_type (GimpDrawable *drawable,
-                            GimpContext  *context,
-                            GimpFillType  fill_type)
-{
-  GimpRGB      color;
-  GimpPattern *pattern;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-
-  if (! gimp_get_fill_params (context, fill_type, &color, &pattern, NULL))
-    return;
-
-  gimp_drawable_fill (drawable, pattern ? NULL : &color, pattern);
 }
 
 const Babl *

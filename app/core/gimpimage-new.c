@@ -136,8 +136,8 @@ gimp_image_new_from_template (Gimp         *gimp,
                           _("Background"),
                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
-  gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
-                              context, gimp_template_get_fill_type (template));
+  gimp_drawable_fill (GIMP_DRAWABLE (layer),
+                      context, gimp_template_get_fill_type (template));
 
   gimp_image_add_layer (image, layer, NULL, 0, FALSE);
 

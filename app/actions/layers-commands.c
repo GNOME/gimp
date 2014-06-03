@@ -326,9 +326,9 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
                               layer_name,
                               opacity, mode);
 
-  gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_layer),
-                              action_data_get_context (data),
-                              layer_fill_type);
+  gimp_drawable_fill (GIMP_DRAWABLE (new_layer),
+                      action_data_get_context (data),
+                      layer_fill_type);
   gimp_item_translate (GIMP_ITEM (new_layer), off_x, off_y, FALSE);
 
   gimp_image_add_layer (image, new_layer,
@@ -1035,9 +1035,9 @@ layers_new_layer_response (GtkWidget          *widget,
 
       if (layer)
         {
-          gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
-                                      dialog->context,
-                                      layer_fill_type);
+          gimp_drawable_fill (GIMP_DRAWABLE (layer),
+                              dialog->context,
+                              layer_fill_type);
 
           gimp_image_add_layer (dialog->image, layer,
                                 GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);

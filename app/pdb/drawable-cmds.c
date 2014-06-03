@@ -712,7 +712,9 @@ drawable_fill_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_modifyable (GIMP_ITEM (drawable),
                                        GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
-        gimp_drawable_fill_by_type (drawable, context, (GimpFillType) fill_type);
+        {
+          gimp_drawable_fill (drawable, context, (GimpFillType) fill_type);
+        }
       else
         success = FALSE;
     }
