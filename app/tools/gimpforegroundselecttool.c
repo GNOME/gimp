@@ -745,8 +745,10 @@ gimp_foreground_select_tool_options_notify (GimpTool         *tool,
                                             GimpToolOptions  *options,
                                             const GParamSpec *pspec)
 {
-  GimpForegroundSelectTool    *fg_select  = GIMP_FOREGROUND_SELECT_TOOL (tool);
-  GimpForegroundSelectOptions *fg_options = GIMP_FOREGROUND_SELECT_OPTIONS (options);
+  GimpForegroundSelectTool    *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
+  GimpForegroundSelectOptions *fg_options;
+
+  fg_options = GIMP_FOREGROUND_SELECT_OPTIONS (options);
 
   if (! tool->display)
     return;
@@ -754,27 +756,37 @@ gimp_foreground_select_tool_options_notify (GimpTool         *tool,
   if (! strcmp (pspec->name, "mask-color"))
     {
       if (fg_select->state == MATTING_STATE_PAINT_TRIMAP)
-        gimp_foreground_select_tool_set_trimap (fg_select);
+        {
+          gimp_foreground_select_tool_set_trimap (fg_select);
+        }
       else if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
-        gimp_foreground_select_tool_set_preview (fg_select);
+        {
+          gimp_foreground_select_tool_set_preview (fg_select);
+        }
     }
   else if (! strcmp (pspec->name, "engine"))
     {
       if (fg_select->state == MATTING_STATE_PREVIEW_MASK)
-        gimp_foreground_select_tool_preview (fg_select);
+        {
+          gimp_foreground_select_tool_preview (fg_select);
+        }
     }
   else if (! strcmp (pspec->name, "iterations"))
     {
       if (fg_options->engine == GIMP_MATTING_ENGINE_GLOBAL &&
           fg_select->state   == MATTING_STATE_PREVIEW_MASK)
-        gimp_foreground_select_tool_preview (fg_select);
+        {
+          gimp_foreground_select_tool_preview (fg_select);
+        }
     }
   else if (! strcmp (pspec->name, "levels") ||
            ! strcmp (pspec->name, "active-levels"))
     {
       if (fg_options->engine == GIMP_MATTING_ENGINE_LEVIN &&
           fg_select->state   == MATTING_STATE_PREVIEW_MASK)
-        gimp_foreground_select_tool_preview (fg_select);
+        {
+          gimp_foreground_select_tool_preview (fg_select);
+        }
     }
 }
 
@@ -802,12 +814,11 @@ gimp_foreground_select_tool_get_area (GeglBuffer *mask,
 static void
 gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTool                    *tool = GIMP_TOOL (draw_tool);
-  GimpForegroundSelectTool    *fg_select;
+  GimpTool                    *tool      = GIMP_TOOL (draw_tool);
+  GimpForegroundSelectTool    *fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
   GimpForegroundSelectOptions *options;
 
-  fg_select = GIMP_FOREGROUND_SELECT_TOOL (tool);
-  options   = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
+  options = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
   if (fg_select->state == MATTING_STATE_FREE_SELECT)
     {
@@ -861,15 +872,12 @@ static void
 gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                     GimpDisplay        *display)
 {
-  GimpForegroundSelectTool *fg_select;
-  GimpImage                *image = gimp_display_get_image (display);
-  GimpDrawable             *drawable;
+  GimpForegroundSelectTool *fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
+  GimpImage                *image     = gimp_display_get_image (display);
+  GimpDrawable             *drawable  = gimp_image_get_active_drawable (image);
   GimpScanConvert          *scan_convert;
   const GimpVector2        *points;
   gint                      n_points;
-
-  drawable  = gimp_image_get_active_drawable (image);
-  fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
 
   if (! drawable)
     return;
@@ -887,10 +895,11 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
                                       points,
                                       TRUE);
 
-      fg_select->trimap = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                           gimp_image_get_width  (image),
-                                                           gimp_image_get_height (image)),
-                                           gimp_image_get_mask_format (image));
+      fg_select->trimap =
+        gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                         gimp_image_get_width  (image),
+                                         gimp_image_get_height (image)),
+                         gimp_image_get_mask_format (image));
 
       gimp_scan_convert_render_value (scan_convert, fg_select->trimap,
                                       0, 0, 0.5);
@@ -1041,20 +1050,11 @@ static void
 gimp_foreground_select_tool_preview (GimpForegroundSelectTool *fg_select)
 {
   GimpTool                    *tool     = GIMP_TOOL (fg_select);
-  GimpForegroundSelectOptions *options  = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
+  GimpForegroundSelectOptions *options;
   GimpImage                   *image    = gimp_display_get_image (tool->display);
   GimpDrawable                *drawable = gimp_image_get_active_drawable (image);
-  GeglBuffer                  *trimap_buffer;
-  GeglBuffer                  *drawable_buffer;
-  GeglNode                    *gegl;
-  GeglNode                    *matting_node;
-  GeglNode                    *input_image;
-  GeglNode                    *input_trimap;
-  GeglNode                    *output_mask;
-  GeglBuffer                  *buffer;
-  GimpProgress                *progress;
-  GeglProcessor               *processor;
-  gdouble                     value;
+
+  options  = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (tool);
 
   if (fg_select->mask)
     {
@@ -1062,70 +1062,15 @@ gimp_foreground_select_tool_preview (GimpForegroundSelectTool *fg_select)
       fg_select->mask = NULL;
     }
 
-  progress = gimp_progress_start (GIMP_PROGRESS (fg_select),
-                                  _("Computing alpha of unknown pixels"),
-                                  FALSE);
-
-  trimap_buffer   = fg_select->trimap;
-  drawable_buffer = gimp_drawable_get_buffer (drawable);
-
-  gegl = gegl_node_new ();
-
-  input_trimap = gegl_node_new_child (gegl,
-                                      "operation", "gegl:buffer-source",
-                                      "buffer",    trimap_buffer,
-                                      NULL);
-  input_image = gegl_node_new_child (gegl,
-                                     "operation", "gegl:buffer-source",
-                                     "buffer",    drawable_buffer,
-                                     NULL);
-  output_mask = gegl_node_new_child (gegl,
-                                     "operation", "gegl:buffer-sink",
-                                     "buffer",    &buffer,
-                                     "format",    NULL,
-                                     NULL);
-
-  if (options->engine == GIMP_MATTING_ENGINE_GLOBAL)
-    {
-      matting_node = gegl_node_new_child (gegl,
-                                          "operation",  "gegl:matting-global",
-                                          "iterations", options->iterations,
-                                          NULL);
-    }
-  else
-    {
-      matting_node = gegl_node_new_child (gegl,
-                                          "operation",     "gegl:matting-levin",
-                                          "levels",        options->levels,
-                                          "active_levels", options->active_levels,
-                                          NULL);
-    }
-
-  gegl_node_connect_to (input_image,  "output",
-                        matting_node, "input");
-  gegl_node_connect_to (input_trimap, "output",
-                        matting_node, "aux");
-  gegl_node_connect_to (matting_node, "output",
-                        output_mask,  "input");
-
-  processor = gegl_node_new_processor (output_mask, NULL);
-
-  while (gegl_processor_work (processor, &value))
-    {
-      if (progress)
-        gimp_progress_set_value (progress, value);
-    }
-
-  if (progress)
-    gimp_progress_end (progress);
-
-  g_object_unref (processor);
-
-  fg_select->mask = buffer;
+  fg_select->mask = gimp_drawable_foreground_extract (drawable,
+                                                      options->engine,
+                                                      options->iterations,
+                                                      options->levels,
+                                                      options->active_levels,
+                                                      fg_select->trimap,
+                                                      GIMP_PROGRESS (fg_select));
 
   gimp_foreground_select_tool_set_preview (fg_select);
-
-  g_object_unref (gegl);
 }
 
 static void

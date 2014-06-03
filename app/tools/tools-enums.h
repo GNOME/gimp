@@ -144,17 +144,6 @@ typedef enum
 } GimpMattingDrawMode;
 
 
-#define GIMP_TYPE_MATTING_ENGINE (gimp_matting_engine_get_type ())
-
-GType gimp_matting_engine_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
- GIMP_MATTING_ENGINE_GLOBAL,  /*< desc="Matting Global" >*/
- GIMP_MATTING_ENGINE_LEVIN,   /*< desc="Matting Levin" >*/
-} GimpMattingEngine;
-
-
 #define GIMP_TYPE_WARP_BEHAVIOR (gimp_warp_behavior_get_type ())
 
 GType gimp_warp_behavior_get_type (void) G_GNUC_CONST;

@@ -29,6 +29,7 @@
 
 #include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
+#include "core/gimpchannel-select.h"
 #include "core/gimpdrawable-foreground-extract.h"
 #include "core/gimpdrawable-offset.h"
 #include "core/gimpdrawable-preview.h"
@@ -45,6 +46,7 @@
 
 #include "gimppdb.h"
 #include "gimppdb-utils.h"
+#include "gimppdbcontext.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
 
@@ -938,13 +940,35 @@ drawable_foreground_extract_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-    /*
-      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
-        gimp_drawable_foreground_extract (drawable, mode, mask, progress);
+      if (mode == GIMP_FOREGROUND_EXTRACT_MATTING &&
+          gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL, 0, error))
+        {
+          GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
+          GimpImage      *image       = gimp_item_get_image (GIMP_ITEM (drawable));
+          GeglBuffer     *buffer;
+
+          buffer = gimp_drawable_foreground_extract (drawable,
+                                                     GIMP_MATTING_ENGINE_GLOBAL,
+                                                     2,
+                                                     2,
+                                                     2,
+                                                     gimp_drawable_get_buffer (mask),
+                                                     progress);
+
+          gimp_channel_select_buffer (gimp_image_get_mask (image),
+                                      C_("command", "Foreground Select"),
+                                      buffer,
+                                      0, /* x offset */
+                                      0, /* y offset */
+                                      GIMP_CHANNEL_OP_REPLACE,
+                                      pdb_context->feather,
+                                      pdb_context->feather_radius_x,
+                                      pdb_context->feather_radius_y);
+
+          g_object_unref (buffer);
+        }
       else
         success = FALSE;
-    */
-      success = FALSE;
     }
 
   return gimp_procedure_get_return_values (procedure, success,
