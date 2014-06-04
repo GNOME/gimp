@@ -28,8 +28,16 @@
 
 #include <string.h>
 
+#ifdef PLATFORM_OSX
+#import <Foundation/Foundation.h>
+#endif
+
 #include <glib-object.h>
 #include <gio/gio.h>
+
+#ifdef PLATFORM_OSX
+#include "libgimpbase/gimpbase.h"
+#endif
 
 #include "gimphelp.h"
 #include "gimphelpprogress-private.h"
@@ -161,6 +169,20 @@ static const GMarkupParser markup_parser =
   locale_parser_error
 };
 
+/**
+ * gimp_help_locale_parse: *
+ * @locale:      language code of the help language
+ * @uri:         URI of the help index file
+ * @help_domain: the help namespace; for instance see #GIMP_HELP_DEFAULT_DOMAIN
+ * @progress:    data model for the prgress indicator
+ * @error:       a structure to contain occured errors
+ *
+ * Load and parse the locale specific help index file (gimp-help.xml).
+ * On OS X: cache the help index file on disk to become independent of
+ * GVFS and D-Bus.
+ *
+ * Returns: TRUE if parsing succeeded; FALSE on errors
+ */
 gboolean
 gimp_help_locale_parse (GimpHelpLocale    *locale,
                         const gchar       *uri,
@@ -175,6 +197,13 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
   LocaleParser         parser      = { NULL, };
   goffset              size        = 0;
   gboolean             success;
+
+#ifdef PLATFORM_OSX
+  const char *filepath;
+  NSURL *url;
+  NSData *urldata;
+  NSAutoreleasePool *pool;
+#endif
 
   g_return_val_if_fail (locale != NULL, FALSE);
   g_return_val_if_fail (uri != NULL, FALSE);
@@ -197,7 +226,27 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
               locale->locale_id, uri, help_domain);
 #endif
 
+#ifdef PLATFORM_OSX
+  if (g_str_has_prefix (uri, "http:"))
+    {
+      pool = [[NSAutoreleasePool alloc] init];
+      url = [NSURL URLWithString: [NSString stringWithUTF8String: uri]];
+      urldata = [NSData dataWithContentsOfURL: url];
+      filepath = g_build_filename (gimp_directory (), "gimp-help.xml", NULL);
+      [urldata writeToFile: [NSString stringWithUTF8String: filepath]
+                             atomically: YES];
+      [pool drain];
+
+      file = g_file_new_for_path (filepath);
+      g_free (filepath);
+    }
+  else
+    {
+      file = g_file_new_for_uri (uri);
+    }
+#else
   file = g_file_new_for_uri (uri);
+#endif
 
   if (progress)
     {
@@ -270,6 +319,18 @@ gimp_help_locale_parse (GimpHelpLocale    *locale,
   return success;
 }
 
+/**
+ * locale_parser_parse:
+ * @context:     the parsed content of the input stream
+ * @progress:    the GimpHelpProgress to update
+ * @stream:      the input stream to parse
+ * @size:        the size of the input stream
+ * @cancellable: a thread-safe operation cancellation stack
+ * @error:       a structure to contain occured errors
+ *
+ * Read and parse stream into context, update progress.
+ * Returns: TRUE if parsing succeeded; FALSE on errors
+ */
 static gboolean
 locale_parser_parse (GMarkupParseContext  *context,
                      GimpHelpProgress     *progress,
@@ -517,6 +578,15 @@ locale_parser_parse_missing (LocaleParser  *parser,
     }
 }
 
+/**
+ * locale_set_error:
+ * @error:  the error to contain the resulting message
+ * @format: the message to print; a standard printf() format string
+ * @file:   the file name to insert into the format string
+ *
+ * Write a message (given by format and file) into error->message.
+ *
+ */
 static void
 locale_set_error (GError      **error,
                   const gchar  *format,

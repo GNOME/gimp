@@ -825,7 +825,7 @@
 	</autotools>
 
 	<autotools id="gimp-osx" autogen-sh="autogen.sh"
-		autogenargs="--without-x --enable-gtk-doc=no --without-dbus --without-wmf --enable-binreloc --without-gs"
+		autogenargs="--without-x --enable-gtk-doc=no --without-dbus --without-wmf --enable-binreloc --without-gs --without-gvfs --with-libcurl"
 		skip-autogen="never">
 		<branch repo="git.gnome.org" module="gimp" revision="osx-build"
 			checkoutdir="gimp-osx" />
@@ -835,7 +835,6 @@
 			<dep package="libtiff" />
 			<dep package="exif" />
 			<dep package="dbus" />
-			<dep package="dbus-glib" />
 			<dep package="librsvg" />
 			<dep package="lcms" />
 			<dep package="fontconfig" />
@@ -848,7 +847,6 @@
 			<dep package="meta-gtk-osx-python" />
 			<dep package="tango-icon-theme" />
 			<dep package="gimp-osx-theme" />
-			<dep package="gvfs" />
 			<dep package="curl" />
 			<dep package="gtk-mac-integration-python2" />
 		</dependencies>
