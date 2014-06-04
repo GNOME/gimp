@@ -213,7 +213,7 @@ gimp_projection_class_init (GimpProjectionClass *klass)
 
       env = strchr (env, 'x');
       if (env)
-        height = atoi (env);
+        height = atoi (env + 1);
 
       if (width  > 0 && width  <= 8192 &&
           height > 0 && height <= 8192)

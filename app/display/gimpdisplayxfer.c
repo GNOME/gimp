@@ -220,7 +220,7 @@ gimp_display_xfer_realize (GtkWidget *widget)
 
       env = strchr (env, 'x');
       if (env)
-        height = atoi (env);
+        height = atoi (env + 1);
 
       if (width  > 0 && width  <= 8192 &&
           height > 0 && height <= 8192)
