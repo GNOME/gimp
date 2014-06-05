@@ -341,7 +341,6 @@ gimp_prop_gui_new (GObject              *config,
   GtkWidget    *gui = NULL;
   GParamSpec  **param_specs;
   guint         n_param_specs;
-  const gchar  *config_type_name;
   gint          i, j;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
@@ -367,24 +366,35 @@ gimp_prop_gui_new (GObject              *config,
 
   n_param_specs = j;
 
-  config_type_name = G_OBJECT_TYPE_NAME (config);
-
-  for (i = 0; i < G_N_ELEMENTS (gui_new_funcs); i++)
+  if (n_param_specs > 0)
     {
-      if (! gui_new_funcs[i].config_type ||
-          ! strcmp (gui_new_funcs[i].config_type, config_type_name))
-        {
-          g_printerr ("GUI new func match: %s\n",
-                      gui_new_funcs[i].config_type ?
-                      gui_new_funcs[i].config_type : "generic fallback");
+      const gchar *config_type_name = G_OBJECT_TYPE_NAME (config);
 
-          gui = gui_new_funcs[i].gui_new_func (config,
-                                               param_specs, n_param_specs,
-                                               context,
-                                               create_picker_func,
-                                               picker_creator);
-          break;
+      for (i = 0; i < G_N_ELEMENTS (gui_new_funcs); i++)
+        {
+          if (! gui_new_funcs[i].config_type ||
+              ! strcmp (gui_new_funcs[i].config_type, config_type_name))
+            {
+              g_printerr ("GUI new func match: %s\n",
+                          gui_new_funcs[i].config_type ?
+                          gui_new_funcs[i].config_type : "generic fallback");
+
+              gui = gui_new_funcs[i].gui_new_func (config,
+                                                   param_specs, n_param_specs,
+                                                   context,
+                                                   create_picker_func,
+                                                   picker_creator);
+              break;
+            }
         }
+    }
+  else
+    {
+      gui = gtk_label_new (_("This operation has no editable properties"));
+      gimp_label_set_attributes (GTK_LABEL (gui),
+                                 PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                                 -1);
+      gtk_misc_set_padding (GTK_MISC (gui), 0, 4);
     }
 
   g_free (param_specs);
