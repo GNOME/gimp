@@ -491,12 +491,12 @@ run (const gchar      *name,
            strcmp (name, SAVE2_PROC) == 0 ||
            strcmp (name, SAVE_DEFAULTS_PROC) == 0)
     {
-      gboolean alpha;
+      GimpMetadata          *metadata;
+      GimpMetadataSaveFlags  metadata_flags;
+      gboolean               alpha;
 
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
-
-      load_defaults ();
 
       /*  eventually export the image */
       switch (run_mode)
@@ -521,6 +521,17 @@ run (const gchar      *name,
         default:
           break;
         }
+
+      metadata = gimp_image_metadata_save_prepare (orig_image_ID,
+                                                   "image/png",
+                                                   &metadata_flags);
+
+      pngvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
+      pngvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
+      pngvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
+      pngvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
+
+      load_defaults ();
 
       switch (run_mode)
         {
@@ -603,31 +614,38 @@ run (const gchar      *name,
           if (save_image (param[3].data.d_string,
                           image_ID, drawable_ID, orig_image_ID, &error))
             {
-              GimpMetadata *metadata;
-
-              metadata = gimp_image_metadata_save_prepare (orig_image_ID,
-                                                           "image/png");
-
               if (metadata)
                 {
-                  GFile                 *file;
-                  GimpMetadataSaveFlags  flags = GIMP_METADATA_SAVE_ALL;
+                  GFile *file;
 
                   gimp_metadata_set_bits_per_sample (metadata, 8);
 
-                  if (! pngvals.save_exif)      flags &= ~GIMP_METADATA_SAVE_EXIF;
-                  if (! pngvals.save_xmp)       flags &= ~GIMP_METADATA_SAVE_XMP;
-                  if (! pngvals.save_iptc)      flags &= ~GIMP_METADATA_SAVE_IPTC;
-                  if (! pngvals.save_thumbnail) flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+                  if (pngvals.save_exif)
+                    metadata_flags |= GIMP_METADATA_SAVE_EXIF;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_EXIF;
+
+                  if (pngvals.save_xmp)
+                    metadata_flags |= GIMP_METADATA_SAVE_XMP;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_XMP;
+
+                  if (pngvals.save_iptc)
+                    metadata_flags |= GIMP_METADATA_SAVE_IPTC;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
+
+                  if (pngvals.save_thumbnail)
+                    metadata_flags |= GIMP_METADATA_SAVE_THUMBNAIL;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
                   file = g_file_new_for_path (param[3].data.d_string);
                   gimp_image_metadata_save_finish (orig_image_ID,
                                                    "image/png",
-                                                   metadata, flags, file,
-                                                   NULL);
+                                                   metadata, metadata_flags,
+                                                   file, NULL);
                   g_object_unref (file);
-
-                  g_object_unref (metadata);
                 }
 
               gimp_set_data (SAVE_PROC, &pngvals, sizeof (pngvals));
@@ -640,6 +658,9 @@ run (const gchar      *name,
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
+
+      if (metadata)
+        g_object_unref (metadata);
     }
   else if (strcmp (name, GET_DEFAULTS_PROC) == 0)
     {

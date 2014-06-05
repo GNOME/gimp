@@ -227,11 +227,6 @@ run (const gchar      *name,
 {
   static GimpParam   values[2];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpParasite      *parasite;
-  gint32             image;
-  gint32             drawable;
-  gint32             orig_image;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
   run_mode = param[0].data.d_int32;
@@ -252,8 +247,14 @@ run (const gchar      *name,
       (strcmp (name, SAVE2_PROC) == 0))
     {
       /* Plug-in is either file_tiff_save or file_tiff_save2 */
-      image = orig_image = param[1].data.d_int32;
-      drawable = param[2].data.d_int32;
+
+      GimpMetadata          *metadata;
+      GimpMetadataSaveFlags  metadata_flags;
+      GimpParasite          *parasite;
+      gint32                 image      = param[1].data.d_int32;
+      gint32                 drawable   = param[2].data.d_int32;
+      gint32                 orig_image = image;
+      GimpExportReturn       export     = GIMP_EXPORT_CANCEL;
 
       /* Do this right this time, if POSSIBLE query for parasites, otherwise
          or if there isn't one, choose the default comment from the gimprc. */
@@ -280,6 +281,15 @@ run (const gchar      *name,
         default:
           break;
         }
+
+      metadata = gimp_image_metadata_save_prepare (orig_image,
+                                                   "image/tiff",
+                                                   &metadata_flags);
+
+      tsvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
+      tsvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
+      tsvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
+      tsvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
 
       parasite = gimp_image_get_parasite (orig_image, "gimp-comment");
       if (parasite)
@@ -365,31 +375,38 @@ run (const gchar      *name,
           if (save_image (param[3].data.d_string, image, drawable, orig_image,
                           &saved_bpp, &error))
             {
-              GimpMetadata *metadata;
-
-              metadata = gimp_image_metadata_save_prepare (image,
-                                                           "image/tiff");
-
               if (metadata)
                 {
-                  GFile                 *file;
-                  GimpMetadataSaveFlags  flags = GIMP_METADATA_SAVE_ALL;
+                  GFile *file;
 
                   gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
 
-                  if (! tsvals.save_exif)      flags &= ~GIMP_METADATA_SAVE_EXIF;
-                  if (! tsvals.save_xmp)       flags &= ~GIMP_METADATA_SAVE_XMP;
-                  if (! tsvals.save_iptc)      flags &= ~GIMP_METADATA_SAVE_IPTC;
-                  if (! tsvals.save_thumbnail) flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+                  if (tsvals.save_exif)
+                    metadata_flags |= GIMP_METADATA_SAVE_EXIF;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_EXIF;
+
+                  if (tsvals.save_xmp)
+                    metadata_flags |= GIMP_METADATA_SAVE_XMP;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_XMP;
+
+                  if (tsvals.save_iptc)
+                    metadata_flags |= GIMP_METADATA_SAVE_IPTC;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
+
+                  if (tsvals.save_thumbnail)
+                    metadata_flags |= GIMP_METADATA_SAVE_THUMBNAIL;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
                   file = g_file_new_for_path (param[3].data.d_string);
                   gimp_image_metadata_save_finish (image,
                                                    "image/tiff",
-                                                   metadata, flags, file,
-                                                   NULL);
+                                                   metadata, metadata_flags,
+                                                   file, NULL);
                   g_object_unref (file);
-
-                  g_object_unref (metadata);
                 }
 
               /*  Store mvals data  */
@@ -403,6 +420,9 @@ run (const gchar      *name,
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image);
+
+      if (metadata)
+        g_object_unref (metadata);
     }
   else
     {

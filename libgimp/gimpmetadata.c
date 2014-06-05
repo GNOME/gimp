@@ -191,13 +191,17 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
  * Since: GIMP 2.10
  */
 GimpMetadata *
-gimp_image_metadata_save_prepare (gint32       image_ID,
-                                  const gchar *mime_type)
+gimp_image_metadata_save_prepare (gint32                 image_ID,
+                                  const gchar           *mime_type,
+                                  GimpMetadataSaveFlags *suggested_flags)
 {
   GimpMetadata *metadata;
 
   g_return_val_if_fail (image_ID > 0, NULL);
   g_return_val_if_fail (mime_type != NULL, NULL);
+  g_return_val_if_fail (suggested_flags != NULL, NULL);
+
+  *suggested_flags = GIMP_METADATA_SAVE_ALL;
 
   metadata = gimp_image_get_metadata (image_ID);
 
@@ -222,6 +226,9 @@ gimp_image_metadata_save_prepare (gint32       image_ID,
         comment = gimp_parasite_data (comment_parasite);
 
       /* Exif */
+
+      if (! gexiv2_metadata_has_exif (metadata))
+        *suggested_flags &= ~GIMP_METADATA_SAVE_EXIF;
 
       if (comment)
         {
@@ -258,6 +265,9 @@ gimp_image_metadata_save_prepare (gint32       image_ID,
 
       /* XMP */
 
+      if (! gexiv2_metadata_has_xmp (metadata))
+        *suggested_flags &= ~GIMP_METADATA_SAVE_XMP;
+
       gexiv2_metadata_set_tag_string (metadata,
                                       "Xmp.dc.Format",
                                       mime_type);
@@ -291,6 +301,9 @@ gimp_image_metadata_save_prepare (gint32       image_ID,
 
       /* IPTC */
 
+      if (! gexiv2_metadata_has_iptc (metadata))
+        *suggested_flags &= ~GIMP_METADATA_SAVE_IPTC;
+
       g_snprintf (buffer, sizeof (buffer),
                   "%d-%d-%d",
                   g_date_time_get_year (datetime),
@@ -312,6 +325,11 @@ gimp_image_metadata_save_prepare (gint32       image_ID,
                                       buffer);
 
       g_date_time_unref (datetime);
+
+      /* Thumbnail */
+
+      if (FALSE /* FIXME if (original image had a thumbnail) */)
+        *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
     }
 
   return metadata;

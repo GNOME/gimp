@@ -269,9 +269,11 @@ run (const gchar      *name,
 
   if (strcmp (name, SAVE_PROC) == 0)
     {
-      gint32           image_id;
-      gint32           drawable_id;
-      GimpExportReturn export = GIMP_EXPORT_IGNORE;
+      gint32                 image_id;
+      gint32                 drawable_id;
+      GimpMetadata          *metadata;
+      GimpMetadataSaveFlags  metadata_flags;
+      GimpExportReturn       export = GIMP_EXPORT_IGNORE;
 
       IFDBG printf ("\n---------------- %s ----------------\n",
                     param[3].data.d_string);
@@ -304,30 +306,23 @@ run (const gchar      *name,
           break;
         }
 
+      metadata = gimp_image_metadata_save_prepare (image_id,
+                                                   "image/x-psd",
+                                                   &metadata_flags);
+
       if (save_image (param[3].data.d_string, image_id, &error))
         {
-          GimpMetadata *metadata;
-
-          metadata = gimp_image_metadata_save_prepare (image_id,
-                                                       "image/x-psd");
-
           if (metadata)
             {
-              GFile                 *file;
-              GimpMetadataSaveFlags  flags = GIMP_METADATA_SAVE_ALL;
+              GFile *file;
 
               gimp_metadata_set_bits_per_sample (metadata, 8);
-
-              if (FALSE) flags &= ~GIMP_METADATA_SAVE_EXIF;
-              if (FALSE) flags &= ~GIMP_METADATA_SAVE_XMP;
-              if (FALSE) flags &= ~GIMP_METADATA_SAVE_IPTC;
-              if (FALSE) flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
               file = g_file_new_for_path (param[3].data.d_string);
               gimp_image_metadata_save_finish (image_id,
                                                "image/x-psd",
-                                               metadata, flags, file,
-                                               NULL);
+                                               metadata, metadata_flags,
+                                               file, NULL);
               g_object_unref (file);
 
               g_object_unref (metadata);
@@ -349,6 +344,9 @@ run (const gchar      *name,
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_id);
+
+      if (metadata)
+        g_object_unref (metadata);
     }
 }
 
