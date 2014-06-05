@@ -644,6 +644,7 @@ gimp_image_metadata_rotate_pixbuf (GdkPixbuf         *pixbuf,
     {
     case GEXIV2_ORIENTATION_UNSPECIFIED:
     case GEXIV2_ORIENTATION_NORMAL:  /* standard orientation, do nothing */
+      rotated = g_object_ref (pixbuf);
       break;
 
     case GEXIV2_ORIENTATION_HFLIP:
