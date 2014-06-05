@@ -180,11 +180,18 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
 
 /**
  * gimp_image_metadata_save_prepare:
- * @image_ID:  The image
- * @mime_type: The saved file's mime-type
+ * @image_ID:        The image
+ * @mime_type:       The saved file's mime-type
+ * @suggested_flags: Suggested default values for the @flags passed to
+ *                   gimp_image_metadata_save_finish()
  *
  * Gets the image metadata for saving it using
  * gimp_image_metadata_save_finish().
+ *
+ * The @suggested_flags are determined from what kind of metadata
+ * (Exif, XMP, ...) is actually present in the image. The suggested
+ * value for GIMP_METADATA_SAVE_THUMBNAIL is determined by whether
+ * there was a thumbnail in the previously imported image.
  *
  * Returns: The image's metadata, prepared for saving.
  *
