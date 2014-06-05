@@ -640,6 +640,5 @@ gimp_icon_picker_menu_from_name (GtkWidget      *widget,
   gimp_container_popup_set_view_type (GIMP_CONTAINER_POPUP (popup),
                                       GIMP_VIEW_TYPE_GRID);
 
-  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup),
-                             GTK_WIDGET (picker));
+  gimp_popup_show (GIMP_POPUP (popup), GTK_WIDGET (picker));
 }

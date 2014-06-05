@@ -255,7 +255,7 @@ gimp_viewable_button_clicked (GtkButton *button)
                     G_CALLBACK (gimp_viewable_button_popup_closed),
                     button);
 
-  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), GTK_WIDGET (button));
+  gimp_popup_show (GIMP_POPUP (popup), GTK_WIDGET (button));
 }
 
 static void

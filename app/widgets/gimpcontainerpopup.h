@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpcontainerpopup.h
- * Copyright (C) 2003-2005 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2003-2014 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,9 @@
 #define __GIMP_CONTAINER_POPUP_H__
 
 
+#include "gimppopup.h"
+
+
 #define GIMP_TYPE_CONTAINER_POPUP            (gimp_container_popup_get_type ())
 #define GIMP_CONTAINER_POPUP(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_POPUP, GimpContainerPopup))
 #define GIMP_CONTAINER_POPUP_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_POPUP, GimpContainerPopupClass))
@@ -34,7 +37,7 @@ typedef struct _GimpContainerPopupClass  GimpContainerPopupClass;
 
 struct _GimpContainerPopup
 {
-  GtkWindow            parent_instance;
+  GimpPopup            parent_instance;
 
   GimpContainer       *container;
   GimpContext         *orig_context;
@@ -56,10 +59,7 @@ struct _GimpContainerPopup
 
 struct _GimpContainerPopupClass
 {
-  GtkWindowClass  parent_instance;
-
-  void (* cancel)  (GimpContainerPopup *popup);
-  void (* confirm) (GimpContainerPopup *popup);
+  GimpPopupClass  parent_instance;
 };
 
 
@@ -75,8 +75,6 @@ GtkWidget * gimp_container_popup_new      (GimpContainer      *container,
                                            const gchar        *dialog_identifier,
                                            const gchar        *dialog_icon_name,
                                            const gchar        *dialog_tooltip);
-void        gimp_container_popup_show     (GimpContainerPopup *popup,
-                                           GtkWidget          *widget);
 
 GimpViewType gimp_container_popup_get_view_type (GimpContainerPopup *popup);
 void         gimp_container_popup_set_view_type (GimpContainerPopup *popup,

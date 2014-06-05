@@ -272,6 +272,8 @@ libappwidgets_a_sources = \
 	gimppluginaction.h		\
 	gimppolar.c			\
 	gimppolar.h			\
+	gimppopup.c			\
+	gimppopup.h			\
 	gimpprefsbox.c			\
 	gimpprefsbox.h			\
 	gimpprogressbox.c		\
