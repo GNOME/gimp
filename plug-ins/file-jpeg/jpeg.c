@@ -174,9 +174,7 @@ run (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image_ID;
   gint32             drawable_ID;
-  gint32             orig_image_ID;
   GimpParasite      *parasite;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
   run_mode = param[0].data.d_int32;
@@ -247,7 +245,6 @@ run (const gchar      *name,
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
-
     }
   else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
@@ -257,10 +254,10 @@ run (const gchar      *name,
         }
       else
         {
-          GFile        *file     = g_file_new_for_path (param[0].data.d_string);
-          gint          width    = 0;
-          gint          height   = 0;
-          GimpImageType type     = -1;
+          GFile        *file   = g_file_new_for_path (param[0].data.d_string);
+          gint          width  = 0;
+          gint          height = 0;
+          GimpImageType type   = -1;
 
           image_ID = load_thumbnail_image (file, &width, &height, &type,
                                            &error);
@@ -291,11 +288,14 @@ run (const gchar      *name,
     {
       GimpMetadata          *metadata;
       GimpMetadataSaveFlags  metadata_flags;
+      gint32                 orig_image_ID;
+      GimpExportReturn       export = GIMP_EXPORT_CANCEL;
 
-      image_ID = orig_image_ID = param[1].data.d_int32;
+      image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-       /*  eventually export the image */
+      orig_image_ID = image_ID;
+
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
@@ -321,14 +321,17 @@ run (const gchar      *name,
                 display_ID = -1;
               }
               break;
+
             case GIMP_EXPORT_IGNORE:
               break;
+
             case GIMP_EXPORT_CANCEL:
               values[0].data.d_status = GIMP_PDB_CANCEL;
               return;
               break;
             }
           break;
+
         default:
           break;
         }
@@ -504,7 +507,7 @@ run (const gchar      *name,
             gimp_display_delete (display_ID);
           else
             gimp_image_delete (image_ID);
-       }
+        }
 
       if (status == GIMP_PDB_SUCCESS)
         {

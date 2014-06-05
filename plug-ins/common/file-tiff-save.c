@@ -256,10 +256,6 @@ run (const gchar      *name,
       gint32                 orig_image = image;
       GimpExportReturn       export     = GIMP_EXPORT_CANCEL;
 
-      /* Do this right this time, if POSSIBLE query for parasites, otherwise
-         or if there isn't one, choose the default comment from the gimprc. */
-
-      /*  eventually export the image */
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:

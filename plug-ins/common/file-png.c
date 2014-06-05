@@ -417,8 +417,6 @@ run (const gchar      *name,
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32            image_ID;
   gint32            drawable_ID;
-  gint32            orig_image_ID;
-  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
   GError           *error  = NULL;
 
   run_mode = param[0].data.d_int32;
@@ -479,7 +477,7 @@ run (const gchar      *name,
           g_object_unref (file);
 
           *nreturn_vals = 2;
-          values[1].type = GIMP_PDB_IMAGE;
+          values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
         }
       else
@@ -493,12 +491,15 @@ run (const gchar      *name,
     {
       GimpMetadata          *metadata;
       GimpMetadataSaveFlags  metadata_flags;
+      gint32                 orig_image_ID;
+      GimpExportReturn       export = GIMP_EXPORT_CANCEL;
       gboolean               alpha;
 
-      image_ID    = orig_image_ID = param[1].data.d_int32;
+      image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */
+      orig_image_ID = image_ID;
+
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
@@ -518,6 +519,7 @@ run (const gchar      *name,
               return;
             }
           break;
+
         default:
           break;
         }
@@ -536,23 +538,19 @@ run (const gchar      *name,
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-          /*
-           * Possibly retrieve data...
-           */
+          /* possibly retrieve data */
           gimp_get_data (SAVE_PROC, &pngvals);
 
           alpha = gimp_drawable_has_alpha (drawable_ID);
 
-          /*
-           * If the image has no transparency, then there is usually
+          /* If the image has no transparency, then there is usually
            * no need to save a bKGD chunk.  For more information, see:
            * http://bugzilla.gnome.org/show_bug.cgi?id=92395
            */
           if (! alpha)
             pngvals.bkgd = FALSE;
 
-          /*
-           * Then acquire information with a dialog...
+          /* Then acquire information with a dialog...
            */
           if (! save_dialog (orig_image_ID, alpha))
             status = GIMP_PDB_CANCEL;
@@ -599,9 +597,7 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
-          /*
-           * Possibly retrieve data...
-           */
+          /* possibly retrieve data */
           gimp_get_data (SAVE_PROC, &pngvals);
           break;
 
@@ -739,7 +735,8 @@ struct read_error_data
 };
 
 static void
-on_read_error (png_structp png_ptr, png_const_charp error_msg)
+on_read_error (png_structp     png_ptr,
+               png_const_charp error_msg)
 {
   struct read_error_data *error_data = png_get_error_ptr (png_ptr);
   gint                    begin;
@@ -1596,7 +1593,7 @@ save_image (const gchar  *filename,
   if (pngvals.bkgd)
     {
       GimpRGB color;
-      guchar red, green, blue;
+      guchar  red, green, blue;
 
       gimp_context_get_background (&color);
       gimp_rgb_get_uchar (&color, &red, &green, &blue);
@@ -1689,7 +1686,7 @@ save_image (const gchar  *filename,
   if (pngvals.comment)
     {
       GimpParasite *parasite;
-      gsize text_length = 0;
+      gsize         text_length = 0;
 
       parasite = gimp_image_get_parasite (orig_image_ID, "gimp-comment");
       if (parasite)

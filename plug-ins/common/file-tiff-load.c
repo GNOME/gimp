@@ -208,7 +208,6 @@ run (const gchar      *name,
   static GimpParam   values[2];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GError            *error  = NULL;
-  gint32             image;
   TiffSelectedPages  pages;
 
   INIT_I18N ();
@@ -272,6 +271,7 @@ run (const gchar      *name,
 
               if (run_it)
                 {
+                  gint32   image;
                   gboolean resolution_loaded = FALSE;
 
                   gimp_set_data (LOAD_PROC, &target, sizeof (target));
