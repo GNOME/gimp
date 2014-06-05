@@ -266,6 +266,8 @@ libappwidgets_a_sources = \
 	gimppdbdialog.h			\
 	gimppickablebutton.c		\
 	gimppickablebutton.h		\
+	gimppickablepopup.c		\
+	gimppickablepopup.h		\
 	gimppixbuf.c			\
 	gimppixbuf.h			\
 	gimppluginaction.c		\
