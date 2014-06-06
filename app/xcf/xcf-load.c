@@ -874,8 +874,13 @@ xcf_load_layer_props (XcfInfo    *info,
               {
                 guint32 index;
 
-                info->cp += xcf_read_int32 (info->fp, &index, 1);
+                if (xcf_read_int32 (info->fp, &index, 1) != 4)
+                  {
+                    g_list_free (path);
+                    return FALSE;
+                  }
 
+                info->cp += 4;
                 path = g_list_append (path, GUINT_TO_POINTER (index));
               }
 
@@ -1310,9 +1315,7 @@ static gboolean
 xcf_load_hierarchy (XcfInfo     *info,
                     TileManager *tiles)
 {
-  guint32 saved_pos;
   guint32 offset;
-  guint32 junk;
   gint    width;
   gint    height;
   gint    bpp;
@@ -1329,25 +1332,7 @@ xcf_load_hierarchy (XcfInfo     *info,
       bpp    != tile_manager_bpp (tiles))
     return FALSE;
 
-  /* load in the levels...we make sure that the number of levels
-   *  calculated when the TileManager was created is the same
-   *  as the number of levels found in the file.
-   */
-
   info->cp += xcf_read_int32 (info->fp, &offset, 1); /* top level */
-
-  /* discard offsets for layers below first, if any.
-   */
-  do
-    {
-      info->cp += xcf_read_int32 (info->fp, &junk, 1);
-    }
-  while (junk != 0);
-
-  /* save the current position as it is where the
-   *  next level offset is stored.
-   */
-  saved_pos = info->cp;
 
   /* seek to the level offset */
   if (!xcf_seek_pos (info, offset, NULL))
@@ -1357,11 +1342,8 @@ xcf_load_hierarchy (XcfInfo     *info,
   if (!xcf_load_level (info, tiles))
     return FALSE;
 
-  /* restore the saved position so we'll be ready to
-   *  read the next offset.
+  /* discard levels below first.
    */
-  if (!xcf_seek_pos (info, saved_pos, NULL))
-    return FALSE;
 
   return TRUE;
 }
