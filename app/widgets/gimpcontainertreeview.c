@@ -241,7 +241,6 @@ gimp_container_tree_view_constructed (GObject *object)
                                   "has-tooltip",     TRUE,
                                   "show-expanders",  GIMP_CONTAINER_VIEW_GET_INTERFACE (view)->model_is_tree,
                                   NULL);
-  g_object_unref (tree_view->model);
 
   gtk_container_add (GTK_CONTAINER (box->scrolled_win),
                      GTK_WIDGET (tree_view->view));
@@ -319,6 +318,12 @@ static void
 gimp_container_tree_view_finalize (GObject *object)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (object);
+
+  if (tree_view->model)
+    {
+      g_object_unref (tree_view->model);
+      tree_view->model = NULL;
+    }
 
   if (tree_view->priv->toggle_cells)
     {
