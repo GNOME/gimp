@@ -73,8 +73,6 @@ static void     gimp_pickable_button_get_property  (GObject            *object,
 
 static void     gimp_pickable_button_clicked       (GtkButton          *button);
 
-static void     gimp_pickable_button_popup_cancel  (GimpPickablePopup  *popup,
-                                                    GimpPickableButton *button);
 static void     gimp_pickable_button_popup_confirm (GimpPickablePopup  *popup,
                                                     GimpPickableButton *button);
 static void     gimp_pickable_button_drop_pickable (GtkWidget          *widget,
@@ -248,9 +246,6 @@ gimp_pickable_button_clicked (GtkButton *button)
                                    pickable_button->private->view_size,
                                    pickable_button->private->view_border_width);
 
-  g_signal_connect (popup, "cancel",
-                    G_CALLBACK (gimp_pickable_button_popup_cancel),
-                    button);
   g_signal_connect (popup, "confirm",
                     G_CALLBACK (gimp_pickable_button_popup_confirm),
                     button);
@@ -259,15 +254,13 @@ gimp_pickable_button_clicked (GtkButton *button)
 }
 
 static void
-gimp_pickable_button_popup_cancel (GimpPickablePopup  *popup,
-                                   GimpPickableButton *button)
-{
-}
-
-static void
 gimp_pickable_button_popup_confirm (GimpPickablePopup  *popup,
                                     GimpPickableButton *button)
 {
+  GimpPickable *pickable = gimp_pickable_popup_get_pickable (popup);
+
+  if (pickable)
+    gimp_pickable_button_set_pickable (button, pickable);
 }
 
 static void
