@@ -314,11 +314,9 @@ gimp_container_entry_clear_items (GimpContainerView *view)
 {
   GtkTreeModel *model = gimp_container_entry_get_model (view);
 
-  /* happens in dispose() */
-  if (! model)
-    return;
-
-  gimp_container_tree_store_clear_items (GIMP_CONTAINER_TREE_STORE (model));
+  /* model is NULL in dispose() */
+  if (model)
+    gimp_container_tree_store_clear_items (GIMP_CONTAINER_TREE_STORE (model));
 
   parent_view_iface->clear_items (view);
 }
