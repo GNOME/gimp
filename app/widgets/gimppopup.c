@@ -221,7 +221,7 @@ gimp_popup_key_press (GtkWidget   *widget,
 {
   GtkBindingSet *binding_set;
 
-  binding_set = gtk_binding_set_by_class (GIMP_POPUP_GET_CLASS (widget));
+  binding_set = gtk_binding_set_by_class (g_type_class_peek (GIMP_TYPE_POPUP));
 
   /*  invoke the popup's binding entries manually, because otherwise
    *  the focus widget (GtkTreeView e.g.) would consume it
