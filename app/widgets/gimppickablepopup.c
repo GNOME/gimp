@@ -61,6 +61,7 @@ struct _GimpPickablePopupPrivate
 
   GtkWidget    *image_view;
   GtkWidget    *layer_view;
+  GtkWidget    *channel_view;
   GtkWidget    *layer_label;
 };
 
@@ -77,14 +78,10 @@ static void   gimp_pickable_popup_get_property   (GObject           *object,
                                                   GParamSpec        *pspec);
 
 static void   gimp_pickable_popup_image_changed  (GimpContext       *context,
-                                                  GimpImage          *image,
-                                                  GimpPickablePopup  *popup);
-static void   gimp_pickable_popup_image_activate (GimpContainerView *view,
                                                   GimpImage         *image,
-                                                  gpointer           unused,
                                                   GimpPickablePopup *popup);
-static void   gimp_pickable_popup_layer_activate (GimpContainerView *view,
-                                                  GimpLayer         *layer,
+static void   gimp_pickable_popup_item_activate  (GimpContainerView *view,
+                                                  GimpPickable      *pickable,
                                                   gpointer           unused,
                                                   GimpPickablePopup *popup);
 
@@ -158,6 +155,7 @@ gimp_pickable_popup_constructed (GObject *object)
   GtkWidget         *hbox;
   GtkWidget         *vbox;
   GtkWidget         *label;
+  GtkWidget         *notebook;
   GimpImage         *image;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -197,18 +195,23 @@ gimp_pickable_popup_constructed (GObject *object)
   gtk_widget_show (popup->priv->image_view);
 
   g_signal_connect_object (popup->priv->image_view, "activate-item",
-                           G_CALLBACK (gimp_pickable_popup_image_activate),
+                           G_CALLBACK (gimp_pickable_popup_item_activate),
                            G_OBJECT (popup), 0);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  popup->priv->layer_label = label = gtk_label_new (_("Layers"));
+  popup->priv->layer_label = label =
+    gtk_label_new (_("Select an image in the left pane"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_END);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  notebook = gtk_notebook_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
+  gtk_widget_show (notebook);
 
   popup->priv->layer_view =
     gimp_container_tree_view_new (NULL,
@@ -222,11 +225,28 @@ gimp_pickable_popup_constructed (GObject *object)
                                             2 * popup->priv->view_border_width),
                                        4 * (popup->priv->view_size +
                                             2 * popup->priv->view_border_width));
-  gtk_box_pack_start (GTK_BOX (vbox), popup->priv->layer_view, TRUE, TRUE, 0);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                            popup->priv->layer_view,
+                            gtk_label_new (_("Layers")));
   gtk_widget_show (popup->priv->layer_view);
 
-  g_signal_connect_object (popup->priv->layer_view, "activate-item",
-                           G_CALLBACK (gimp_pickable_popup_layer_activate),
+  popup->priv->channel_view =
+    gimp_container_tree_view_new (NULL,
+                                  popup->priv->context,
+                                  popup->priv->view_size,
+                                  popup->priv->view_border_width);
+  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (popup->priv->channel_view),
+                                       4 * (popup->priv->view_size +
+                                            2 * popup->priv->view_border_width),
+                                       4 * (popup->priv->view_size +
+                                            2 * popup->priv->view_border_width));
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                            popup->priv->channel_view,
+                            gtk_label_new (_("Channels")));
+  gtk_widget_show (popup->priv->channel_view);
+
+  g_signal_connect_object (popup->priv->channel_view, "activate-item",
+                           G_CALLBACK (gimp_pickable_popup_item_activate),
                            G_OBJECT (popup), 0);
 
   g_signal_connect_object (popup->priv->context, "image-changed",
@@ -382,21 +402,17 @@ gimp_pickable_popup_image_changed (GimpContext       *context,
   if (image)
     {
       gchar *desc;
-      gchar *text;
 
       container = gimp_image_get_layers (image);
 
       desc = gimp_viewable_get_description (GIMP_VIEWABLE (image), NULL);
-      text = g_strdup_printf (_("Layers of %s"), desc);
+      gtk_label_set_text (GTK_LABEL (popup->priv->layer_label), desc);
       g_free (desc);
-
-      gtk_label_set_text (GTK_LABEL (popup->priv->layer_label), text);
-      g_free (text);
     }
   else
     {
       gtk_label_set_text (GTK_LABEL (popup->priv->layer_label),
-                          _("Layers"));
+                          _("Select an image in the left pane"));
     }
 
   gimp_container_view_set_container (GIMP_CONTAINER_VIEW (popup->priv->layer_view),
@@ -404,19 +420,10 @@ gimp_pickable_popup_image_changed (GimpContext       *context,
 }
 
 static void
-gimp_pickable_popup_image_activate (GimpContainerView *view,
-                                    GimpImage         *image,
-                                    gpointer           unused,
-                                    GimpPickablePopup *popup)
-{
-  g_signal_emit_by_name (popup, "confirm");
-}
-
-static void
-gimp_pickable_popup_layer_activate (GimpContainerView *view,
-                                    GimpLayer         *layer,
-                                    gpointer           unused,
-                                    GimpPickablePopup *popup)
+gimp_pickable_popup_item_activate (GimpContainerView *view,
+                                   GimpPickable      *pickable,
+                                   gpointer           unused,
+                                   GimpPickablePopup *popup)
 {
   g_signal_emit_by_name (popup, "confirm");
 }
