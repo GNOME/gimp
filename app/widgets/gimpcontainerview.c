@@ -1072,13 +1072,9 @@ static void
 gimp_container_view_remove_container (GimpContainerView *view,
                                       GimpContainer     *container)
 {
-  GimpContainerViewInterface *view_iface;
-  GimpContainerViewPrivate   *private;
+  GimpContainerViewPrivate *private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
   g_object_ref (container);
-
-  view_iface = GIMP_CONTAINER_VIEW_GET_INTERFACE (view);
-  private    = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
 
   g_signal_handlers_disconnect_by_func (container,
                                         gimp_container_view_add,
@@ -1094,18 +1090,20 @@ gimp_container_view_remove_container (GimpContainerView *view,
     {
       gimp_tree_handler_disconnect (private->name_changed_handler);
       private->name_changed_handler = NULL;
-    }
 
-  if (! view_iface->model_is_tree && container == private->container)
-    {
+      /* optimization: when the toplevel container gets removed, call
+       * clear_items() which will get rid of all view widget stuff
+       * *and* empty private->item_hash, so below call to
+       * remove_foreach() will only disconnect all containers but not
+       * remove all items individually (because they are gone from
+       * item_hash).
+       */
       gimp_container_view_clear_items (view);
     }
-  else
-    {
-      gimp_container_foreach (container,
-                              (GFunc) gimp_container_view_remove_foreach,
-                              view);
-    }
+
+  gimp_container_foreach (container,
+                          (GFunc) gimp_container_view_remove_foreach,
+                          view);
 
   g_object_unref (container);
 }
