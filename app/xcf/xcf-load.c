@@ -2313,8 +2313,12 @@ xcf_skip_unknown_prop (XcfInfo *info,
         return FALSE;
 
       amount = MIN (16, size);
-      info->cp += xcf_read_int8 (info->input, buf, amount);
-      size -= MIN (16, amount);
+      amount = xcf_read_int8 (info->input, buf, amount);
+      if (amount == 0)
+        return FALSE;
+
+      info->cp += amount;
+      size -= amount;
     }
 
   return TRUE;
