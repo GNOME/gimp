@@ -154,6 +154,9 @@ xcf_load_image (Gimp     *gimp,
   info->cp += xcf_read_int32 (info->input, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->input, (guint32 *) &height, 1);
   info->cp += xcf_read_int32 (info->input, (guint32 *) &image_type, 1);
+  if (image_type < GIMP_RGB || image_type > GIMP_INDEXED ||
+      width <= 0 || height <= 0)
+    goto hard_error;
 
   if (info->file_version >= 4)
     {
@@ -1387,6 +1390,10 @@ xcf_load_layer (XcfInfo    *info,
       return NULL;
     }
 
+  if (gimp_image_get_base_type (image) != base_type ||
+      width <= 0 || height <= 0)
+    return NULL;
+
   /* do not use gimp_image_get_layer_format() because it might
    * be the floating selection of a channel or mask
    */
@@ -1508,6 +1515,9 @@ xcf_load_channel (XcfInfo   *info,
   /* read in the layer width, height and name */
   info->cp += xcf_read_int32 (info->input, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->input, (guint32 *) &height, 1);
+  if (width <= 0 || height <= 0)
+    return NULL;
+
   info->cp += xcf_read_string (info->input, &name, 1);
 
   /* create a new channel */
@@ -1566,6 +1576,9 @@ xcf_load_layer_mask (XcfInfo   *info,
   /* read in the layer width, height and name */
   info->cp += xcf_read_int32 (info->input, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->input, (guint32 *) &height, 1);
+  if (width <= 0 || height <= 0)
+    return NULL;
+
   info->cp += xcf_read_string (info->input, &name, 1);
 
   /* create a new layer mask */
