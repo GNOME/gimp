@@ -1390,8 +1390,7 @@ xcf_load_layer (XcfInfo    *info,
       return NULL;
     }
 
-  if (gimp_image_get_base_type (image) != base_type ||
-      width <= 0 || height <= 0)
+  if (width <= 0 || height <= 0)
     return NULL;
 
   /* do not use gimp_image_get_layer_format() because it might
