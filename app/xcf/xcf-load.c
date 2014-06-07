@@ -136,7 +136,7 @@ xcf_load_image (Gimp     *gimp,
                 XcfInfo  *info,
                 GError  **error)
 {
-  GimpImage          *image;
+  GimpImage          *image = NULL;
   const GimpParasite *parasite;
   guint32             saved_pos;
   guint32             offset;
@@ -149,6 +149,9 @@ xcf_load_image (Gimp     *gimp,
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &image_type, 1);
+  if (image_type < GIMP_RGB || image_type > GIMP_INDEXED ||
+      width <= 0 || height <= 0)
+    goto hard_error;
 
   image = gimp_create_image (gimp, width, height, image_type, FALSE);
 
@@ -350,7 +353,8 @@ xcf_load_image (Gimp     *gimp,
 		       _("This XCF file is corrupt!  I could not even "
 			 "salvage any partial image data from it."));
 
-  g_object_unref (image);
+  if (image)
+    g_object_unref (image);
 
   return NULL;
 }
@@ -1100,6 +1104,10 @@ xcf_load_layer (XcfInfo    *info,
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &type, 1);
+  if (gimp_image_base_type (image) != GIMP_IMAGE_TYPE_BASE_TYPE (type) ||
+      width <= 0 || height <= 0)
+    return NULL;
+
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new layer */
@@ -1214,6 +1222,9 @@ xcf_load_channel (XcfInfo   *info,
   /* read in the layer width, height and name */
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
+  if (width <= 0 || height <= 0)
+    return NULL;
+
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new channel */
@@ -1272,6 +1283,9 @@ xcf_load_layer_mask (XcfInfo   *info,
   /* read in the layer width, height and name */
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
+  if (width <= 0 || height <= 0)
+    return NULL;
+
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new layer mask */
