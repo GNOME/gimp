@@ -1104,8 +1104,7 @@ xcf_load_layer (XcfInfo    *info,
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &type, 1);
-  if (gimp_image_base_type (image) != GIMP_IMAGE_TYPE_BASE_TYPE (type) ||
-      width <= 0 || height <= 0)
+  if (width <= 0 || height <= 0)
     return NULL;
 
   info->cp += xcf_read_string (info->fp, &name, 1);
