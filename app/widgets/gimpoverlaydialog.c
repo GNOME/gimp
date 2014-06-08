@@ -119,14 +119,14 @@ gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
                                                         NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+                                                        G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ICON_NAME,
                                    g_param_spec_string ("icon-name",
                                                         NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+                                                        G_PARAM_CONSTRUCT));
 
   signals[RESPONSE] =
     g_signal_new ("response",
@@ -175,11 +175,12 @@ gimp_overlay_dialog_constructed (GObject *object)
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
-  image = gtk_image_new_from_icon_name (dialog->icon_name, GTK_ICON_SIZE_MENU);
+  dialog->icon_image = image = gtk_image_new_from_icon_name (dialog->icon_name,
+                                                             GTK_ICON_SIZE_MENU);
   gtk_box_pack_start (GTK_BOX (dialog->header), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
-  label = gtk_label_new (dialog->title);
+  dialog->title_label = label = gtk_label_new (dialog->title);
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
@@ -254,11 +255,18 @@ gimp_overlay_dialog_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_TITLE:
+      g_free (dialog->title);
       dialog->title = g_value_dup_string (value);
+      if (dialog->title_label)
+        gtk_label_set_text (GTK_LABEL (dialog->title_label), dialog->title);
       break;
 
     case PROP_ICON_NAME:
+      g_free (dialog->icon_name);
       dialog->icon_name = g_value_dup_string (value);
+      if (dialog->icon_image)
+        gtk_image_set_from_icon_name (GTK_IMAGE (dialog->icon_image),
+                                      dialog->icon_name, GTK_ICON_SIZE_MENU);
       break;
 
     default:

@@ -44,6 +44,8 @@ struct _GimpOverlayDialog
   gchar            *icon_name;
 
   GtkWidget        *header;
+  GtkWidget        *icon_image;
+  GtkWidget        *title_label;
   GtkWidget        *close_button;
   GtkWidget        *action_area;
 };

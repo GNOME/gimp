@@ -281,7 +281,7 @@ gimp_tool_gui_set_description (GimpToolGui *gui,
 
   if (private->overlay)
     {
-      /* TODO */
+      g_object_set (private->dialog, "title", description, NULL);
     }
   else
     {
@@ -308,14 +308,7 @@ gimp_tool_gui_set_icon_name (GimpToolGui *gui,
   if (! icon_name)
     icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (private->tool_info));
 
-  if (private->overlay)
-    {
-      /* TODO */
-    }
-  else
-    {
-      g_object_set (private->dialog, "icon-name", icon_name, NULL);
-    }
+  g_object_set (private->dialog, "icon-name", icon_name, NULL);
 }
 
 void
