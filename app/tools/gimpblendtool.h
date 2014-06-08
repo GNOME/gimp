@@ -21,6 +21,13 @@
 
 #include "gimpdrawtool.h"
 
+typedef enum
+{
+  /* POINT_NONE evaluates to FALSE */
+  POINT_NONE = 0,
+  POINT_START,
+  POINT_END
+} GimpBlendToolPoint;
 
 #define GIMP_TYPE_BLEND_TOOL            (gimp_blend_tool_get_type ())
 #define GIMP_BLEND_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_BLEND_TOOL, GimpBlendTool))
@@ -38,6 +45,8 @@ typedef struct _GimpBlendToolClass GimpBlendToolClass;
 struct _GimpBlendTool
 {
   GimpDrawTool    parent_instance;
+
+  GimpBlendToolPoint grabbed_point;
 
   gdouble         start_x;    /*  starting x coord  */
   gdouble         start_y;    /*  starting y coord  */
