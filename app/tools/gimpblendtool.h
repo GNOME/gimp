@@ -53,8 +53,6 @@ struct _GimpBlendTool
   gdouble         end_x;      /*  ending x coord    */
   gdouble         end_y;      /*  ending y coord    */
 
-  gdouble         last_x;     /*  last x coord      */
-  gdouble         last_y;     /*  last y coord      */
   gdouble         mouse_x;    /*  pointer x coord   */
   gdouble         mouse_y;    /*  pointer y coord   */
 

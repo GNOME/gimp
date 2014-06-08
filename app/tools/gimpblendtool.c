@@ -272,8 +272,8 @@ gimp_blend_tool_button_press (GimpTool            *tool,
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
 
-  blend_tool->last_x = blend_tool->mouse_x = coords->x;
-  blend_tool->last_y = blend_tool->mouse_y = coords->y;
+  blend_tool->mouse_x = coords->x;
+  blend_tool->mouse_y = coords->y;
 
   if (tool->display && display != tool->display)
     {
@@ -344,14 +344,18 @@ gimp_blend_tool_motion (GimpTool         *tool,
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
 
+  /* Save the mouse coordinates from last call */
+  gdouble last_x = blend_tool->mouse_x;
+  gdouble last_y = blend_tool->mouse_y;
+
   blend_tool->mouse_x = coords->x;
   blend_tool->mouse_y = coords->y;
 
   /* Move the whole line if alt is pressed */
   if (state & GDK_MOD1_MASK)
     {
-      gdouble dx = blend_tool->last_x - coords->x;
-      gdouble dy = blend_tool->last_y - coords->y;
+      gdouble dx = last_x - coords->x;
+      gdouble dy = last_y - coords->y;
 
       blend_tool->start_x -= dx;
       blend_tool->start_y -= dy;
@@ -367,9 +371,6 @@ gimp_blend_tool_motion (GimpTool         *tool,
 
   gimp_tool_pop_status (tool, display);
   gimp_blend_tool_push_status (blend_tool, state, display);
-
-  blend_tool->last_x = coords->x;
-  blend_tool->last_y = coords->y;
 
   gimp_blend_tool_update_items (blend_tool);
 }
