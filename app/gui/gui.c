@@ -650,6 +650,14 @@ gui_exit_after_callback (Gimp     *gimp,
   g_object_unref (ui_configurer);
   ui_configurer = NULL;
 
+  /*  exit the clipboard before shutting down the GUI because it runs
+   *  a whole lot of code paths. See bug #731389.
+   */
+  g_signal_handlers_disconnect_by_func (gimp,
+                                        G_CALLBACK (gui_global_buffer_changed),
+                                        NULL);
+  gimp_clipboard_exit (gimp);
+
   session_exit (gimp);
   menus_exit (gimp);
   actions_exit (gimp);
@@ -658,12 +666,6 @@ gui_exit_after_callback (Gimp     *gimp,
   gimp_controllers_exit (gimp);
   gimp_devices_exit (gimp);
   dialogs_exit (gimp);
-
-  g_signal_handlers_disconnect_by_func (gimp,
-                                        G_CALLBACK (gui_global_buffer_changed),
-                                        NULL);
-  gimp_clipboard_exit (gimp);
-
   themes_exit (gimp);
 
   g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));
