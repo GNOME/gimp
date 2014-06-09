@@ -376,7 +376,7 @@ gimp_overlay_dialog_size_allocate (GtkWidget     *widget,
   header_allocation.x = allocation->x + border_width;
   header_allocation.y = allocation->y + border_width;
   header_allocation.width  = MAX (allocation->width  - 2 * border_width, 0);
-  header_allocation.height = header_requisition.height, 0;
+  header_allocation.height = header_requisition.height;
 
   gtk_widget_size_allocate (dialog->header, &header_allocation);
 
@@ -384,7 +384,7 @@ gimp_overlay_dialog_size_allocate (GtkWidget     *widget,
   action_allocation.y = (child_allocation.y + child_allocation.height +
                          border_width);
   action_allocation.width  = MAX (allocation->width  - 2 * border_width, 0);
-  action_allocation.height = action_requisition.height, 0;
+  action_allocation.height = action_requisition.height;
 
   gtk_widget_size_allocate (dialog->action_area, &action_allocation);
 }
