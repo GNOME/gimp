@@ -1054,12 +1054,13 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
                            _("Measure Distances and Angles"),
                            gtk_widget_get_screen (GTK_WIDGET (shell)),
                            gimp_widget_get_monitor (GTK_WIDGET (shell)),
-                           FALSE,
+                           TRUE,
 
                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
                            NULL);
 
+  gimp_tool_gui_set_auto_overlay (gui, TRUE);
   gimp_tool_gui_set_focus_on_map (gui, FALSE);
 
   g_signal_connect (gui, "response",

@@ -34,6 +34,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpoverlaybox.h"
 #include "widgets/gimpoverlaydialog.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdisplayshell.h"
 #include "gimptooldialog.h"
@@ -69,6 +70,7 @@ struct _GimpToolGuiPrivate
   gboolean          focus_on_map;
 
   gboolean          overlay;
+  gboolean          auto_overlay;
 
   GimpDisplayShell *shell;
   GimpViewable     *viewable;
@@ -94,6 +96,9 @@ static void   gimp_tool_gui_update_viewable (GimpToolGui   *gui);
 
 static void   gimp_tool_gui_dialog_response (GtkWidget     *dialog,
                                              gint           response_id,
+                                             GimpToolGui   *gui);
+static void   gimp_tool_gui_canvas_resized  (GtkWidget     *canvas,
+                                             GtkAllocation *allocation,
                                              GimpToolGui   *gui);
 
 static ResponseEntry * response_entry_new   (gint           response_id,
@@ -165,6 +170,9 @@ gimp_tool_gui_dispose (GObject *object)
 
   if (private->dialog)
     {
+      if (gtk_widget_get_visible (private->dialog))
+        gimp_tool_gui_hide (GIMP_TOOL_GUI (object));
+
       if (private->overlay)
         g_object_unref (private->dialog);
       else
@@ -281,7 +289,7 @@ gimp_tool_gui_set_description (GimpToolGui *gui,
 
   if (private->overlay)
     {
-      g_object_set (private->dialog, "title", description, NULL);
+      /* TODO */
     }
   else
     {
@@ -325,7 +333,25 @@ gimp_tool_gui_set_shell (GimpToolGui      *gui,
   if (shell == private->shell)
     return;
 
+  if (private->shell)
+    {
+      g_object_remove_weak_pointer (G_OBJECT (private->shell),
+                                    (gpointer) &private->shell);
+      g_signal_handlers_disconnect_by_func (private->shell->canvas,
+                                            gimp_tool_gui_canvas_resized,
+                                            gui);
+    }
+
   private->shell = shell;
+
+  if (private->shell)
+    {
+      g_signal_connect (private->shell->canvas, "size-allocate",
+                        G_CALLBACK (gimp_tool_gui_canvas_resized),
+                        gui);
+      g_object_add_weak_pointer (G_OBJECT (private->shell),
+                                 (gpointer) &private->shell);
+    }
 
   gimp_tool_gui_update_shell (gui);
 }
@@ -441,6 +467,12 @@ gimp_tool_gui_set_overlay (GimpToolGui *gui,
   if (private->overlay == overlay)
     return;
 
+  if (! private->dialog)
+    {
+      private->overlay = overlay;
+      return;
+    }
+
   visible = gtk_widget_get_visible (private->dialog);
 
   if (visible)
@@ -454,7 +486,7 @@ gimp_tool_gui_set_overlay (GimpToolGui *gui,
   else
     gtk_widget_destroy (private->dialog);
 
-  private->overlay = overlay ? TRUE : FALSE;
+  private->overlay = overlay;
 
   gimp_tool_gui_create_dialog (gui, screen, monitor);
 
@@ -468,6 +500,33 @@ gimp_tool_gui_get_overlay (GimpToolGui *gui)
   g_return_val_if_fail (GIMP_IS_TOOL_GUI (gui), FALSE);
 
   return GET_PRIVATE (gui)->overlay;
+}
+
+void
+gimp_tool_gui_set_auto_overlay (GimpToolGui *gui,
+                                gboolean     auto_overlay)
+{
+  GimpToolGuiPrivate *private;
+
+  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+
+  private = GET_PRIVATE (gui);
+
+  if (private->auto_overlay != auto_overlay)
+    {
+      private->auto_overlay = auto_overlay;
+
+      if (private->shell)
+        gimp_tool_gui_canvas_resized (private->shell->canvas, NULL, gui);
+    }
+}
+
+gboolean
+gimp_tool_gui_get_auto_overlay (GimpToolGui *gui)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_GUI (gui), FALSE);
+
+  return GET_PRIVATE (gui)->auto_overlay;
 }
 
 void
@@ -753,6 +812,35 @@ gimp_tool_gui_dialog_response (GtkWidget   *dialog,
 {
   g_signal_emit (gui, signals[RESPONSE], 0,
                  response_id);
+}
+
+static void
+gimp_tool_gui_canvas_resized (GtkWidget     *canvas,
+                              GtkAllocation *unused,
+                              GimpToolGui   *gui)
+{
+  GimpToolGuiPrivate *private = GET_PRIVATE (gui);
+
+  if (private->auto_overlay)
+    {
+      GtkRequisition requisition;
+      GtkAllocation  allocation;
+      gboolean       overlay = FALSE;
+
+      gtk_widget_size_request (private->vbox, &requisition);
+      gtk_widget_get_allocation (canvas, &allocation);
+
+      if (allocation.width  > 2 * requisition.width &&
+          allocation.height > 3 * requisition.height)
+        {
+          overlay = TRUE;
+        }
+
+      gimp_tool_gui_set_overlay (gui,
+                                 gtk_widget_get_screen (private->dialog),
+                                 gimp_widget_get_monitor (private->dialog),
+                                 overlay);
+    }
 }
 
 static ResponseEntry *

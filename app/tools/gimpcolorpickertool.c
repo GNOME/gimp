@@ -315,12 +315,13 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
                                         _("Color Picker Information"),
                                         gtk_widget_get_screen (GTK_WIDGET (shell)),
                                         gimp_widget_get_monitor (GTK_WIDGET (shell)),
-                                        FALSE,
+                                        TRUE,
 
                                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
                                         NULL);
 
+  gimp_tool_gui_set_auto_overlay (picker_tool->gui, TRUE);
   gimp_tool_gui_set_focus_on_map (picker_tool->gui, FALSE);
   gimp_tool_gui_set_viewable (picker_tool->gui,
                               GIMP_VIEWABLE (tool->drawable));

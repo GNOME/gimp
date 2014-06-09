@@ -122,7 +122,6 @@ struct _GimpTransformTool
 
   const gchar    *progress_text;
 
-  gboolean        overlay;
   GimpToolGui    *gui;
 };
 
