@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include <gegl.h>
+#include <gegl-plugin.h> /* FIXME: gegl_operation_get_key() */
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 

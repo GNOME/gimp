@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include <gegl.h>
+#include <gegl-plugin.h> /* FIXME: gegl_operation_get_key() */
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
