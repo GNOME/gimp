@@ -463,6 +463,7 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Output image" },
   };
 
+#ifdef ENABLE_SAVING
   static const GimpParamDef save_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode",        "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
@@ -475,6 +476,7 @@ query (void)
     { GIMP_PDB_INT32,    "optimize",        "Optimization of entropy encoding parameters" },
     { GIMP_PDB_INT32,    "clr-transparent", "set all full-transparent pixels to 0" },
   };
+#endif
 
   gimp_install_procedure (LOAD_PROC,
                           "loads files of the jpeg-tar file format",
@@ -494,6 +496,7 @@ query (void)
                                     "",
                                     "");
 
+#ifdef ENABLE_SAVING
   gimp_install_procedure (SAVE_PROC,
                           "saves files in the jpeg-tar file format",
                           "saves files in the jpeg-tar file format",
@@ -507,6 +510,7 @@ query (void)
                           save_args, NULL);
 
   gimp_register_save_handler (SAVE_PROC, "xjt,xjtgz,xjtbz2", "");
+#endif
 }
 
 static void
