@@ -20,8 +20,9 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gegl.h>
-#include <gegl-plugin.h>
 
 #include "gimp-gegl-types.h"
 

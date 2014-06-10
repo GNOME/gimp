@@ -20,7 +20,7 @@
 #include "config.h"
 
 #include <gegl.h>
-#include <gegl-plugin.h>
+#include <gegl-plugin.h> /* gegl_operation_invalidate() */
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 

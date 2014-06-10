@@ -18,7 +18,6 @@
 #include "config.h"
 
 #include <gegl.h>
-#include <gegl-plugin.h>
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"

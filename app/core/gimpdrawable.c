@@ -19,7 +19,7 @@
 
 #include <cairo.h>
 #include <gegl.h>
-#include <gegl-plugin.h>
+#include <gegl-plugin.h> /* gegl_operation_invalidate() */
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
