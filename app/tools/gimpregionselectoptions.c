@@ -45,7 +45,8 @@ enum
   PROP_SELECT_TRANSPARENT,
   PROP_SAMPLE_MERGED,
   PROP_THRESHOLD,
-  PROP_SELECT_CRITERION
+  PROP_SELECT_CRITERION,
+  PROP_DRAW_MASK
 };
 
 
@@ -103,6 +104,14 @@ gimp_region_select_options_class_init (GimpRegionSelectOptionsClass *klass)
                                  GIMP_TYPE_SELECT_CRITERION,
                                  GIMP_SELECT_CRITERION_COMPOSITE,
                                  GIMP_PARAM_STATIC_STRINGS);
+
+  g_object_class_install_property (object_class, PROP_DRAW_MASK,
+                                   g_param_spec_boolean ("draw-mask",
+                                                         "Draw mask",
+                                                         _("Draw the selected region's mask"),
+                                                         FALSE,
+                                                         G_PARAM_READWRITE |
+                                                         GIMP_PARAM_STATIC_STRINGS));
 }
 
 static void
@@ -136,6 +145,10 @@ gimp_region_select_options_set_property (GObject      *object,
       options->select_criterion = g_value_get_enum (value);
       break;
 
+    case PROP_DRAW_MASK:
+      options->draw_mask = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -166,6 +179,10 @@ gimp_region_select_options_get_property (GObject    *object,
 
     case PROP_SELECT_CRITERION:
       g_value_set_enum (value, options->select_criterion);
+      break;
+
+    case PROP_DRAW_MASK:
+      g_value_set_boolean (value, options->draw_mask);
       break;
 
     default:
@@ -222,6 +239,12 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Select by"));
   gtk_box_pack_start (GTK_BOX (vbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
+
+  /*  the show mask toggle  */
+  button = gimp_prop_check_button_new (config, "draw-mask",
+                                       _("Draw Mask"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   return vbox;
 }

@@ -26,6 +26,7 @@
 
 #include "tools-types.h"
 
+#include "core/gimp-utils.h"
 #include "core/gimpboundary.h"
 #include "core/gimpchannel.h"
 #include "core/gimpchannel-select.h"
@@ -69,9 +70,8 @@ static void   gimp_region_select_tool_cursor_update  (GimpTool              *too
 
 static void   gimp_region_select_tool_draw           (GimpDrawTool          *draw_tool);
 
-static GimpBoundSeg * gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
-                                                         GimpDisplay          *display,
-                                                         gint                 *n_segs);
+static void   gimp_region_select_tool_get_mask       (GimpRegionSelectTool  *region_sel,
+                                                      GimpDisplay           *display);
 
 
 G_DEFINE_TYPE (GimpRegionSelectTool, gimp_region_select_tool,
@@ -161,9 +161,7 @@ gimp_region_select_tool_button_press (GimpTool            *tool,
   gimp_tool_push_status (tool, display,
                          _("Move the mouse to change threshold"));
 
-  /*  calculate the region boundary  */
-  region_sel->segs = gimp_region_select_tool_calculate (region_sel, display,
-                                                        &region_sel->n_segs);
+  gimp_region_select_tool_get_mask (region_sel, display);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }
@@ -186,6 +184,10 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
   gimp_tool_control_halt (tool->control);
+
+  if (options->draw_mask)
+    gimp_display_shell_set_mask (gimp_display_get_shell (display),
+                                 NULL, NULL, FALSE);
 
   if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
@@ -281,11 +283,7 @@ gimp_region_select_tool_motion (GimpTool         *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  if (region_sel->segs)
-    g_free (region_sel->segs);
-
-  region_sel->segs = gimp_region_select_tool_calculate (region_sel, display,
-                                                        &region_sel->n_segs);
+  gimp_region_select_tool_get_mask (region_sel, display);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -315,10 +313,26 @@ gimp_region_select_tool_draw (GimpDrawTool *draw_tool)
   GimpRegionSelectTool    *region_sel = GIMP_REGION_SELECT_TOOL (draw_tool);
   GimpRegionSelectOptions *options    = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (draw_tool);
 
-  if (region_sel->segs)
+  if (! options->draw_mask && region_sel->region_mask)
     {
       gint off_x = 0;
       gint off_y = 0;
+
+      if (! region_sel->segs)
+        {
+          /*  calculate and allocate a new segment array which represents
+           *  the boundary of the contiguous region
+           */
+          region_sel->segs = gimp_boundary_find (region_sel->region_mask, NULL,
+                                                 babl_format ("Y float"),
+                                                 GIMP_BOUNDARY_WITHIN_BOUNDS,
+                                                 0, 0,
+                                                 gegl_buffer_get_width  (region_sel->region_mask),
+                                                 gegl_buffer_get_height (region_sel->region_mask),
+                                                 GIMP_BOUNDARY_HALF_WAY,
+                                                 &region_sel->n_segs);
+
+        }
 
       if (! options->sample_merged)
         {
@@ -336,15 +350,21 @@ gimp_region_select_tool_draw (GimpDrawTool *draw_tool)
     }
 }
 
-static GimpBoundSeg *
-gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
-                                   GimpDisplay          *display,
-                                   gint                 *n_segs)
+static void
+gimp_region_select_tool_get_mask (GimpRegionSelectTool *region_sel,
+                                  GimpDisplay          *display)
 {
-  GimpDisplayShell *shell = gimp_display_get_shell (display);
-  GimpBoundSeg     *segs  = NULL;
+  GimpRegionSelectOptions *options = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (region_sel);
+  GimpDisplayShell        *shell   = gimp_display_get_shell (display);
 
   gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
+
+  if (region_sel->segs)
+    {
+      g_free (region_sel->segs);
+      region_sel->segs   = NULL;
+      region_sel->n_segs = 0;
+    }
 
   if (region_sel->region_mask)
     g_object_unref (region_sel->region_mask);
@@ -353,26 +373,20 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
     GIMP_REGION_SELECT_TOOL_GET_CLASS (region_sel)->get_mask (region_sel,
                                                               display);
 
-  if (region_sel->region_mask)
+  if (options->draw_mask)
     {
-      /*  calculate and allocate a new segment array which represents
-       *  the boundary of the contiguous region
-       */
-      segs = gimp_boundary_find (region_sel->region_mask, NULL,
-                                 babl_format ("Y float"),
-                                 GIMP_BOUNDARY_WITHIN_BOUNDS,
-                                 0, 0,
-                                 gegl_buffer_get_width  (region_sel->region_mask),
-                                 gegl_buffer_get_height (region_sel->region_mask),
-                                 GIMP_BOUNDARY_HALF_WAY,
-                                 n_segs);
-    }
-  else
-    {
-      *n_segs = 0;
+      if (region_sel->region_mask)
+        {
+          GimpRGB color = { 1.0, 0.0, 1.0, 1.0 };
+
+          gimp_display_shell_set_mask (shell, region_sel->region_mask,
+                                       &color, FALSE);
+        }
+      else
+        {
+          gimp_display_shell_set_mask (shell, NULL, NULL, FALSE);
+        }
     }
 
   gimp_display_shell_unset_override_cursor (shell);
-
-  return segs;
 }
