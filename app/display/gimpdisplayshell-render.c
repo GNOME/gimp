@@ -205,8 +205,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   if (shell->mask)
     {
-      gint mask_height;
-
       if (! shell->mask_surface)
         {
           shell->mask_surface =
@@ -231,21 +229,24 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                        data, stride,
                        GEGL_ABYSS_CLAMP);
 
-      /* invert the mask so what is *not* the foreground object is masked */
-      mask_height = scaled_height;
-      while (mask_height--)
+      if (shell->mask_inverted)
         {
-          gint    mask_width = scaled_width;
-          guchar *d          = data;
+          gint mask_height = scaled_height;
 
-          while (mask_width--)
+          while (mask_height--)
             {
-              guchar inv = 255 - *d;
+              gint    mask_width = scaled_width;
+              guchar *d          = data;
 
-              *d++ = inv;
+              while (mask_width--)
+                {
+                  guchar inv = 255 - *d;
+
+                  *d++ = inv;
+                }
+
+              data += stride;
             }
-
-          data += stride;
         }
     }
 
