@@ -243,17 +243,17 @@ choose_format (GeglBuffer          *buffer,
     {
     case GIMP_SELECT_CRITERION_COMPOSITE:
       if (babl_format_is_palette (format))
-        format = babl_format ("RGBA float");
+        format = babl_format ("R'G'B'A float");
       else
         format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                                   GIMP_PRECISION_FLOAT_LINEAR,
+                                   GIMP_PRECISION_FLOAT_GAMMA,
                                    *has_alpha);
       break;
 
     case GIMP_SELECT_CRITERION_R:
     case GIMP_SELECT_CRITERION_G:
     case GIMP_SELECT_CRITERION_B:
-      format = babl_format ("RGBA float");
+      format = babl_format ("R'G'B'A float");
       break;
 
     case GIMP_SELECT_CRITERION_H:
