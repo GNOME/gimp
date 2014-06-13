@@ -280,11 +280,8 @@
 	<autotools id="gtk+-2.24-git" autogen-sh="autogen.sh"
 		autogenargs="--with-gdktarget=quartz --enable-debug=yes --disable-gtk-doc --enable-gtk-doc=no --enable-gtk-doc-html=no --enable-gtk-doc-pdf=no --enable-quartz-relocation --without-x --with-xinput --enable-xinerama"
 		autogen-template="%(srcdir)s/%(autogen-sh)s --prefix %(prefix)s --libdir %(libdir)s %(autogenargs)s">
-		<branch repo="git.gnome.org" module="gtk+" revision="gtk-2-24">
-			<patch
-				file="https://dl.dropbox.com/u/942685/gimp/gtk+/0001-Add-extended-input-support-to-GTK-Quartz.patch"
-				strip="1" />
-		</branch>
+		<branch repo="git.gnome.org" module="gtk+" revision="gtk-2-24"
+			tag="2.24.23" />
 		<dependencies>
 			<dep package="glib" />
 			<dep package="pango" />
