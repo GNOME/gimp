@@ -5,7 +5,7 @@
 # Home <fios@akerbeltz.org>, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: gimp 2.8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2014-02-06 18:47+0000\n"

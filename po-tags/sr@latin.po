@@ -5,7 +5,7 @@
 # Miloš Popović <gpopac@gmail.com>, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 2.7\n"
+"Project-Id-Version: gimp-tags\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2014-03-26 18:39+0000\n"

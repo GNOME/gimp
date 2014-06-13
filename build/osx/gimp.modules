@@ -261,6 +261,8 @@
 		autogenargs="--with-gdktarget=quartz --enable-debug=yes --disable-gtk-doc --enable-quartz-relocation --without-x --with-xinput --enable-xinerama">
 		<branch module="gtk+/2.24/gtk+-2.24.23.tar.xz" version="2.24.23"
 			hash="sha256:a0a406e27e9b5e7d6b2c4334212706ed5cdcd41e713e66c9ae950655dd61517c">
+			<patch file="GTK-Add-missing-information-to-po-translation-files.patch"
+				strip="1" />
 		</branch>
 		<dependencies>
 			<dep package="glib" />
@@ -268,6 +270,8 @@
 			<dep package="atk" />
 			<dep package="gdk-pixbuf" />
 			<dep package="gobject-introspection" />
+			<dep package="gettext-runtime-update">
+			<dep package="gettext-tools-update">
 		</dependencies>
 	</autotools>
 
@@ -1298,4 +1302,22 @@
 			<dep package="ilmbase" />
 		</dependencies>
 	</autotools>
+
+	<!-- Gettext (newer than that from JHBuild) -->
+	<autotools id="gettext-runtime-update" autogen-sh="configure"
+		autogenargs="--without-emacs --disable-java --disable-native-java --disable-libasprintf --disable-csharp --disable-rpath --enable-nls">
+		<branch repo="ftp.gnu.org" source-subdir="gettext-runtime"
+			module="gettext/gettext-0.19.1.tar.gz" version="0.19.1">
+			<!-- patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/gettext-bug33999-stpncpy.patch" 
+				strip="1"/ -->
+		</branch>
+	</autotools>
+
+	<autotools id="gettext-tools-update" autogen-sh="configure"
+		autogenargs="--without-emacs --disable-java --disable-native-java --disable-libasprintf --disable-csharp --with-included-glib --enable-nls --disable-rpath">
+		<branch repo="ftp.gnu.org" source-subdir="gettext-tools"
+			module="gettext/gettext-0.19.1.tar.gz" version="0.19.1">
+		</branch>
+	</autotools>
+
 </moduleset>

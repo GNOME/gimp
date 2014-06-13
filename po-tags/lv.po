@@ -4,7 +4,7 @@
 # Rūdofls Mazurs <rudolfs.mazurs@gmail.com>, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: gimp-tags\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-28 13:10+0300\n"
 "PO-Revision-Date: 2011-07-27 21:23+0300\n"
