@@ -45,6 +45,7 @@ $ curl -o $HOME/.jhbuildrc-gimp https://git.gnome.org/browse/gimp/plain/build/os
 
 8. In order to create GIMP.app you'll need to download and install gtk-mac-bundler:
 $ JHB=gimp GIMP_SDK=10.6 jhbuild shell
+$ mkdir -p $HOME/gimp/10.6/source/
 $ cd $HOME/gimp/10.6/source/
 $ git clone https://github.com/jralls/gtk-mac-bundler.git
 $ cd gtk-mac-bundler/
