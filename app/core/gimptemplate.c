@@ -343,7 +343,7 @@ gimp_template_notify (GObject    *object,
 
   private->initial_size +=
     gimp_projection_estimate_memsize (private->base_type,
-                                      private->precision,
+                                      gimp_babl_component_type (private->precision),
                                       private->width, private->height);
 
   if (! strcmp (pspec->name, "icon-name"))

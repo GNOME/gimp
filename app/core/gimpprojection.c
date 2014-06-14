@@ -304,10 +304,10 @@ gimp_projection_get_memsize (GimpObject *object,
 
 /**
  * gimp_projection_estimate_memsize:
- * @type:      the projectable's base type
- * @precision: the projectable's precision
- * @width:     projection width
- * @height:    projection height
+ * @type:           the projectable's base type
+ * @component_type: the projectable's component type
+ * @width:          projection width
+ * @height:         projection height
  *
  * Calculates a rough estimate of the memory that is required for the
  * projection of an image with the given @width and @height.
@@ -316,7 +316,7 @@ gimp_projection_get_memsize (GimpObject *object,
  **/
 gint64
 gimp_projection_estimate_memsize (GimpImageBaseType type,
-                                  GimpPrecision     precision,
+                                  GimpComponentType component_type,
                                   gint              width,
                                   gint              height)
 {
@@ -326,7 +326,9 @@ gimp_projection_estimate_memsize (GimpImageBaseType type,
   if (type == GIMP_INDEXED)
     type = GIMP_RGB;
 
-  format = gimp_babl_format (type, precision, TRUE);
+  format = gimp_babl_format (type,
+                             gimp_babl_precision (component_type, FALSE),
+                             TRUE);
   bytes  = babl_format_get_bytes_per_pixel (format);
 
   /* The pyramid levels constitute a geometric sum with a ratio of 1/4. */
