@@ -142,6 +142,7 @@ static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               height);
 
 static gint64  gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
+                                                    GimpComponentType  component_type,
                                                     gint               width,
                                                     gint               height);
 
@@ -759,10 +760,15 @@ gimp_drawable_real_update (GimpDrawable *drawable,
 
 static gint64
 gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
+                                     GimpComponentType   component_type,
                                      gint                width,
                                      gint                height)
 {
-  const Babl *format = gimp_drawable_get_format (drawable);
+  const Babl *format;
+
+  format = gimp_babl_format (gimp_drawable_get_base_type (drawable),
+                             gimp_babl_precision (component_type, FALSE),
+                             gimp_drawable_has_alpha (drawable));
 
   return (gint64) babl_format_get_bytes_per_pixel (format) * width * height;
 }
@@ -1166,12 +1172,14 @@ gimp_drawable_new (GType          type,
 
 gint64
 gimp_drawable_estimate_memsize (const GimpDrawable *drawable,
+                                GimpComponentType   component_type,
                                 gint                width,
                                 gint                height)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0);
 
   return GIMP_DRAWABLE_GET_CLASS (drawable)->estimate_memsize (drawable,
+                                                               component_type,
                                                                width, height);
 }
 

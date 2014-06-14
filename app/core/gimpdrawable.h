@@ -54,6 +54,7 @@ struct _GimpDrawableClass
 
   /*  virtual functions  */
   gint64        (* estimate_memsize)      (const GimpDrawable   *drawable,
+                                           GimpComponentType     component_type,
                                            gint                  width,
                                            gint                  height);
   void          (* invalidate_boundary)   (GimpDrawable         *drawable);
@@ -121,6 +122,7 @@ GimpDrawable  * gimp_drawable_new                (GType               type,
                                                   const Babl         *format);
 
 gint64          gimp_drawable_estimate_memsize   (const GimpDrawable *drawable,
+                                                  GimpComponentType   component_type,
                                                   gint                width,
                                                   gint                height);
 

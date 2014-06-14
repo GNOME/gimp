@@ -153,6 +153,7 @@ static void       gimp_layer_to_selection       (GimpItem           *item,
                                                  gdouble             feather_radius_y);
 
 static gint64  gimp_layer_estimate_memsize      (const GimpDrawable *drawable,
+                                                 GimpComponentType   component_type,
                                                  gint                width,
                                                  gint                height);
 static void    gimp_layer_convert_type          (GimpDrawable       *drawable,
@@ -978,6 +979,7 @@ gimp_layer_to_selection (GimpItem       *item,
 
 static gint64
 gimp_layer_estimate_memsize (const GimpDrawable *drawable,
+                             GimpComponentType   component_type,
                              gint                width,
                              gint                height)
 {
@@ -986,11 +988,13 @@ gimp_layer_estimate_memsize (const GimpDrawable *drawable,
 
   if (layer->mask)
     memsize += gimp_drawable_estimate_memsize (GIMP_DRAWABLE (layer->mask),
+                                               component_type,
                                                width, height);
 
-  return memsize + GIMP_DRAWABLE_CLASS (parent_class)->estimate_memsize (drawable,
-                                                                         width,
-                                                                         height);
+  return memsize +
+         GIMP_DRAWABLE_CLASS (parent_class)->estimate_memsize (drawable,
+                                                               component_type,
+                                                               width, height);
 }
 
 static void

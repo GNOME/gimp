@@ -300,10 +300,12 @@ gimp_image_scale_check (const GimpImage *image,
 
       scalable_size +=
         gimp_drawable_estimate_memsize (drawable,
+                                        gimp_drawable_get_component_type (drawable),
                                         width, height);
 
       scaled_size +=
         gimp_drawable_estimate_memsize (drawable,
+                                        gimp_drawable_get_component_type (drawable),
                                         width * new_width /
                                         gimp_image_get_width (image),
                                         height * new_height /
