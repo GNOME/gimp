@@ -270,8 +270,8 @@
 			<dep package="atk" />
 			<dep package="gdk-pixbuf" />
 			<dep package="gobject-introspection" />
-			<dep package="gettext-runtime-update">
-			<dep package="gettext-tools-update">
+			<dep package="gettext-runtime-update"/>
+			<dep package="gettext-tools-update"/>
 		</dependencies>
 	</autotools>
 
