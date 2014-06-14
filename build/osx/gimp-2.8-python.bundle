@@ -228,10 +228,9 @@
 		${project}/custom/gtkrc
 	</data>
 
-
 	<!-- Copy in better FontConfig defaults -->
-	<!--<data dest="${bundle}/Contents/Resources/etc/fonts/fonts.conf"> ${project}/custom/fonts.conf 
-		</data> -->
+	<data dest="${bundle}/Contents/Resources/etc/fonts/fonts.conf"> ${project}/custom/fonts.conf
+	</data>
 
 	<!-- Copy in icons -->
 	<data dest="${bundle}/Contents/Resources">${project}/gimp.icns</data>
