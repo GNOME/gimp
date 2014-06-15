@@ -230,6 +230,10 @@ gimp_pickable_popup_constructed (GObject *object)
                             gtk_label_new (_("Layers")));
   gtk_widget_show (popup->priv->layer_view);
 
+  g_signal_connect_object (popup->priv->layer_view, "activate-item",
+                           G_CALLBACK (gimp_pickable_popup_item_activate),
+                           G_OBJECT (popup), 0);
+
   popup->priv->channel_view =
     gimp_container_tree_view_new (NULL,
                                   popup->priv->context,
@@ -385,6 +389,17 @@ gimp_pickable_popup_get_pickable (GimpPickablePopup *popup)
           g_list_free (selected);
         }
     }
+  else if (focus && gtk_widget_is_ancestor (focus, popup->priv->channel_view))
+    {
+      GList *selected;
+
+      if (gimp_container_view_get_selected (GIMP_CONTAINER_VIEW (popup->priv->channel_view),
+                                            &selected))
+        {
+          pickable = selected->data;
+          g_list_free (selected);
+        }
+    }
 
   return pickable;
 }
@@ -397,13 +412,15 @@ gimp_pickable_popup_image_changed (GimpContext       *context,
                                    GimpImage         *image,
                                    GimpPickablePopup *popup)
 {
-  GimpContainer *container = NULL;
+  GimpContainer *layers   = NULL;
+  GimpContainer *channels = NULL;
 
   if (image)
     {
       gchar *desc;
 
-      container = gimp_image_get_layers (image);
+      layers   = gimp_image_get_layers (image);
+      channels = gimp_image_get_channels (image);
 
       desc = gimp_viewable_get_description (GIMP_VIEWABLE (image), NULL);
       gtk_label_set_text (GTK_LABEL (popup->priv->layer_label), desc);
@@ -416,7 +433,9 @@ gimp_pickable_popup_image_changed (GimpContext       *context,
     }
 
   gimp_container_view_set_container (GIMP_CONTAINER_VIEW (popup->priv->layer_view),
-                                     container);
+                                     layers);
+  gimp_container_view_set_container (GIMP_CONTAINER_VIEW (popup->priv->channel_view),
+                                     channels);
 }
 
 static void
