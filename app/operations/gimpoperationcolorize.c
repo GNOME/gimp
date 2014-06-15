@@ -130,7 +130,7 @@ gimp_operation_colorize_process (GeglOperation       *operation,
       dest[RED]   = rgb.r; /* * lum; */
       dest[GREEN] = rgb.g; /* * lum; */
       dest[BLUE]  = rgb.b; /* * lum */;
-      dest[ALPHA] = rgb.a;
+      dest[ALPHA] = src[ALPHA];
 
       src  += 4;
       dest += 4;
