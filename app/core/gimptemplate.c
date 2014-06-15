@@ -332,9 +332,7 @@ gimp_template_notify (GObject    *object,
   bytes = babl_format_get_bytes_per_pixel (format);
 
   /* the selection */
-  format = gimp_babl_format (GIMP_GRAY,
-                             private->precision,
-                             FALSE);
+  format = gimp_babl_mask_format (private->precision);
   bytes += babl_format_get_bytes_per_pixel (format);
 
   private->initial_size = ((guint64) bytes          *
@@ -345,9 +343,6 @@ gimp_template_notify (GObject    *object,
     gimp_projection_estimate_memsize (private->base_type,
                                       gimp_babl_component_type (private->precision),
                                       private->width, private->height);
-
-  if (! strcmp (pspec->name, "icon-name"))
-    gimp_viewable_invalidate_preview (GIMP_VIEWABLE (object));
 }
 
 
