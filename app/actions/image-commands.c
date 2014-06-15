@@ -156,9 +156,9 @@ image_new_cmd_callback (GtkAction *action,
 }
 
 static void
-image_convert_type_dialog_unset (GtkWidget *widget)
+image_convert_type_dialog_unset (GimpImage *image)
 {
-  g_object_set_data (G_OBJECT (widget), IMAGE_CONVERT_TYPE_DIALOG_KEY, NULL);
+  g_object_set_data (G_OBJECT (image), IMAGE_CONVERT_TYPE_DIALOG_KEY, NULL);
 }
 
 void
@@ -167,23 +167,29 @@ image_convert_base_type_cmd_callback (GtkAction *action,
                                       gpointer   data)
 {
   GimpImage         *image;
-  GtkWidget         *widget;
   GimpDisplay       *display;
+  GtkWidget         *widget;
+  GtkWidget         *dialog;
   GimpImageBaseType  value;
   GError            *error = NULL;
   return_if_no_image (image, data);
-  return_if_no_widget (widget, data);
   return_if_no_display (display, data);
+  return_if_no_widget (widget, data);
 
   value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
   if (value == gimp_image_get_base_type (image))
     return;
 
+  dialog = g_object_get_data (G_OBJECT (image), IMAGE_CONVERT_TYPE_DIALOG_KEY);
+
   switch (value)
     {
     case GIMP_RGB:
     case GIMP_GRAY:
+      if (dialog)
+        gtk_widget_destroy (dialog);
+
       if (! gimp_image_convert_type (image, value,
                                      0, 0, FALSE, FALSE, FALSE, 0, NULL,
                                      NULL, &error))
@@ -197,32 +203,28 @@ image_convert_base_type_cmd_callback (GtkAction *action,
       break;
 
     case GIMP_INDEXED:
-      {
-        GtkWidget *dialog;
+      if (! dialog)
+        {
+          dialog = convert_type_dialog_new (image,
+                                            action_data_get_context (data),
+                                            widget,
+                                            GIMP_PROGRESS (display));
 
-        dialog = g_object_get_data (G_OBJECT (widget),
-                                    IMAGE_CONVERT_TYPE_DIALOG_KEY);
+          g_object_set_data (G_OBJECT (image),
+                             IMAGE_CONVERT_TYPE_DIALOG_KEY, dialog);
 
-        if (! dialog)
-          {
-            dialog = convert_type_dialog_new (image,
-                                              action_data_get_context (data),
-                                              widget,
-                                              GIMP_PROGRESS (display));
+          g_signal_connect_object (dialog, "destroy",
+                                   G_CALLBACK (image_convert_type_dialog_unset),
+                                   image, G_CONNECT_SWAPPED);
+        }
 
-            g_object_set_data (G_OBJECT (widget),
-                               IMAGE_CONVERT_TYPE_DIALOG_KEY, dialog);
-
-            g_signal_connect_object (dialog, "destroy",
-                                     G_CALLBACK (image_convert_type_dialog_unset),
-                                     widget, G_CONNECT_SWAPPED);
-          }
-
-        gtk_window_present (GTK_WINDOW (dialog));
-      }
+      gtk_window_present (GTK_WINDOW (dialog));
       break;
     }
 
+  /*  always flush, also when only the indexed dialog was shown, so the
+   *  menu items get updated back to the current image type
+   */
   gimp_image_flush (image);
 }
 
