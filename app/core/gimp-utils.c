@@ -305,6 +305,23 @@ gimp_gegl_buffer_get_memsize (GeglBuffer *buffer)
 }
 
 gint64
+gimp_gegl_pyramid_get_memsize (GeglBuffer *buffer)
+{
+  if (buffer)
+    {
+      const Babl *format = gegl_buffer_get_format (buffer);
+
+      /* The pyramid levels constitute a geometric sum with a ratio of 1/4. */
+      return ((gint64) babl_format_get_bytes_per_pixel (format) *
+              (gint64) gegl_buffer_get_width (buffer) *
+              (gint64) gegl_buffer_get_height (buffer) * 1.33 +
+              gimp_g_object_get_memsize (G_OBJECT (buffer)));
+    }
+
+  return 0;
+}
+
+gint64
 gimp_string_get_memsize (const gchar *string)
 {
   if (string)

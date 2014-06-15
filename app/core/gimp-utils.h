@@ -53,6 +53,7 @@ gint64       gimp_g_value_get_memsize              (GValue          *value);
 gint64       gimp_g_param_spec_get_memsize         (GParamSpec      *pspec);
 
 gint64       gimp_gegl_buffer_get_memsize          (GeglBuffer      *buffer);
+gint64       gimp_gegl_pyramid_get_memsize         (GeglBuffer      *buffer);
 
 gint64       gimp_string_get_memsize               (const gchar     *string);
 gint64       gimp_parasite_get_memsize             (GimpParasite    *parasite,

@@ -296,7 +296,7 @@ gimp_projection_get_memsize (GimpObject *object,
   GimpProjection *projection = GIMP_PROJECTION (object);
   gint64          memsize    = 0;
 
-  memsize += gimp_gegl_buffer_get_memsize (projection->priv->buffer);
+  memsize += gimp_gegl_pyramid_get_memsize (projection->priv->buffer);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
