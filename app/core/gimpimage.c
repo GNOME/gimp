@@ -48,6 +48,7 @@
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-item-list.h"
 #include "gimpimage-metadata.h"
 #include "gimpimage-sample-points.h"
 #include "gimpimage-preview.h"
@@ -75,6 +76,7 @@
 
 #include "vectors/gimpvectors.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
 
 
@@ -1628,6 +1630,81 @@ gimp_image_new (Gimp              *gimp,
                        "base-type", base_type,
                        "precision", precision,
                        NULL);
+}
+
+gint64
+gimp_image_estimate_memsize (const GimpImage   *image,
+                             GimpComponentType  component_type,
+                             gint               width,
+                             gint               height)
+{
+  GList  *drawables;
+  GList  *list;
+  gint    current_width;
+  gint    current_height;
+  gint64  current_size;
+  gint64  scalable_size = 0;
+  gint64  scaled_size   = 0;
+  gint64  new_size;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+
+  current_width  = gimp_image_get_width (image);
+  current_height = gimp_image_get_height (image);
+  current_size   = gimp_object_get_memsize (GIMP_OBJECT (image), NULL);
+
+  /*  the part of the image's memsize that scales linearly with the image  */
+  drawables = gimp_image_item_list_get_list (image, NULL,
+                                             GIMP_ITEM_TYPE_LAYERS |
+                                             GIMP_ITEM_TYPE_CHANNELS,
+                                             GIMP_ITEM_SET_ALL);
+
+  gimp_image_item_list_filter (NULL, drawables, TRUE, FALSE);
+
+  drawables = g_list_prepend (drawables, gimp_image_get_mask (image));
+
+  for (list = drawables; list; list = g_list_next (list))
+    {
+      GimpDrawable *drawable = list->data;
+      gdouble       drawable_width;
+      gdouble       drawable_height;
+
+      drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+      drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+      scalable_size += gimp_drawable_estimate_memsize (drawable,
+                                                       gimp_drawable_get_component_type (drawable),
+                                                       drawable_width,
+                                                       drawable_height);
+
+      scaled_size += gimp_drawable_estimate_memsize (drawable,
+                                                     component_type,
+                                                     drawable_width * width /
+                                                     current_width,
+                                                     drawable_height * height /
+                                                     current_height);
+    }
+
+  g_list_free (drawables);
+
+  scalable_size +=
+    gimp_projection_estimate_memsize (gimp_image_get_base_type (image),
+                                      gimp_image_get_component_type (image),
+                                      gimp_image_get_width (image),
+                                      gimp_image_get_height (image));
+
+  scaled_size +=
+    gimp_projection_estimate_memsize (gimp_image_get_base_type (image),
+                                      component_type,
+                                      width, height);
+
+  GIMP_LOG (IMAGE_SCALE,
+            "scalable_size = %"G_GINT64_FORMAT"  scaled_size = %"G_GINT64_FORMAT,
+            scalable_size, scaled_size);
+
+  new_size = current_size - scalable_size + scaled_size;
+
+  return new_size;
 }
 
 GimpImageBaseType

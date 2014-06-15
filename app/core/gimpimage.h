@@ -110,6 +110,11 @@ GimpImage     * gimp_image_new                   (Gimp               *gimp,
                                                   GimpImageBaseType   base_type,
                                                   GimpPrecision       precision);
 
+gint64          gimp_image_estimate_memsize      (const GimpImage    *image,
+                                                  GimpComponentType   component_type,
+                                                  gint                width,
+                                                  gint                height);
+
 GimpImageBaseType  gimp_image_get_base_type      (const GimpImage    *image);
 GimpComponentType  gimp_image_get_component_type (const GimpImage    *image);
 GimpPrecision      gimp_image_get_precision      (const GimpImage    *image);
