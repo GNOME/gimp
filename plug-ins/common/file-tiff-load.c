@@ -257,6 +257,8 @@ run (const gchar      *name,
 
                   run_it = TRUE;
                 }
+              else
+                gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
               if (pages.n_pages == 1)
                 {
@@ -451,8 +453,6 @@ load_dialog (TIFF              *tif,
   GtkWidget  *selector;
   gint        i;
   gboolean    run;
-
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
   dialog = gimp_dialog_new (_("Import from TIFF"), PLUG_IN_ROLE,
                             NULL, 0,
