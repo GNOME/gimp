@@ -43,8 +43,10 @@
 #include "gimp-log.h"
 
 
-/*  just a bit less than GDK_PRIORITY_REDRAW  */
-#define GIMP_PROJECTION_IDLE_PRIORITY (G_PRIORITY_HIGH_IDLE + 20 + 1)
+/*  just a bit less than GDK_PRIORITY_REDRAW, also see
+ *  GIMP_DISPLAY_SHELL_FILL_IDLE_PRIORITY in gimpdisplayshell.c
+ */
+#define GIMP_PROJECTION_IDLE_PRIORITY (G_PRIORITY_HIGH_IDLE + 20 + 2)
 
 /*  chunk size for one iteration of the chunk renderer  */
 static gint GIMP_PROJECTION_CHUNK_WIDTH  = 256;

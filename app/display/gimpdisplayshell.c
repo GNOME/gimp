@@ -85,11 +85,9 @@
 #include "gimp-intl.h"
 
 
-/*  halfway between G_PRIORITY_HIGH_IDLE and G_PRIORITY_DEFAULT_IDLE - 1,
- *  so a bit higher than projection construction
+/* a bit higher than projection construction, see gimpprojection.c
  */
-#define GIMP_DISPLAY_SHELL_FILL_IDLE_PRIORITY \
-        ((G_PRIORITY_HIGH_IDLE + G_PRIORITY_DEFAULT_IDLE) / 2 - 1)
+#define GIMP_DISPLAY_SHELL_FILL_IDLE_PRIORITY (G_PRIORITY_HIGH_IDLE + 20 + 1)
 
 
 enum
