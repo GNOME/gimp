@@ -52,12 +52,19 @@ struct _GimpCurvesConfigClass
 
 GType      gimp_curves_config_get_type            (void) G_GNUC_CONST;
 
+GObject  * gimp_curves_config_new_spline          (gint32             channel,
+                                                   const gdouble     *points,
+                                                   gint               n_points);
+GObject *  gimp_curves_config_new_explicit        (gint32             channel,
+                                                   const gdouble     *samples,
+                                                   gint               n_samples);
+
 GObject  * gimp_curves_config_new_spline_cruft    (gint32             channel,
                                                    const guint8      *points,
                                                    gint               n_points);
 GObject *  gimp_curves_config_new_explicit_cruft  (gint32             channel,
-                                                   const guint8      *points,
-                                                   gint               n_points);
+                                                   const guint8      *samples,
+                                                   gint               n_samples);
 
 void       gimp_curves_config_reset_channel       (GimpCurvesConfig  *config);
 

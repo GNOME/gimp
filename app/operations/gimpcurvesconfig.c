@@ -361,9 +361,9 @@ gimp_curves_config_curve_dirty (GimpCurve        *curve,
 /*  public functions  */
 
 GObject *
-gimp_curves_config_new_spline_cruft (gint32        channel,
-                                     const guint8 *points,
-                                     gint          n_points)
+gimp_curves_config_new_spline (gint32         channel,
+                               const gdouble *points,
+                               gint           n_points)
 {
   GimpCurvesConfig *config;
   GimpCurve        *curve;
@@ -388,8 +388,8 @@ gimp_curves_config_new_spline_cruft (gint32        channel,
 
   for (i = 0; i < n_points; i++)
     gimp_curve_set_point (curve, i,
-                          (gdouble) points[i * 2]     / 255.0,
-                          (gdouble) points[i * 2 + 1] / 255.0);
+                          (gdouble) points[i * 2],
+                          (gdouble) points[i * 2 + 1]);
 
   gimp_data_thaw (GIMP_DATA (curve));
 
@@ -397,9 +397,9 @@ gimp_curves_config_new_spline_cruft (gint32        channel,
 }
 
 GObject *
-gimp_curves_config_new_explicit_cruft (gint32        channel,
-                                       const guint8 *samples,
-                                       gint          n_samples)
+gimp_curves_config_new_explicit (gint32         channel,
+                                 const gdouble *samples,
+                                 gint           n_samples)
 {
   GimpCurvesConfig *config;
   GimpCurve        *curve;
@@ -421,12 +421,69 @@ gimp_curves_config_new_explicit_cruft (gint32        channel,
 
   for (i = 0; i < n_samples; i++)
     gimp_curve_set_curve (curve,
-                          (gdouble) i          / 255.0,
-                          (gdouble) samples[i] / 255.0);
+                          (gdouble) i / (gdouble) (n_samples - 1),
+                          (gdouble) samples[i]);
 
   gimp_data_thaw (GIMP_DATA (curve));
 
   return G_OBJECT (config);
+}
+
+GObject *
+gimp_curves_config_new_spline_cruft (gint32        channel,
+                                     const guint8 *points,
+                                     gint          n_points)
+{
+  GObject *config;
+  gdouble *d_points;
+  gint     i;
+
+  g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
+                        channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+  g_return_val_if_fail (points != NULL, NULL);
+  g_return_val_if_fail (n_points >= 2 && n_points <= 1024, NULL);
+
+  d_points = g_new (gdouble, 2 * n_points);
+
+  for (i = 0; i < n_points; i++)
+    {
+      d_points[i * 2]     = (gdouble) points[i * 2]     / 255.0;
+      d_points[i * 2 + 1] = (gdouble) points[i * 2 + 1] / 255.0;
+    }
+
+  config = gimp_curves_config_new_spline (channel, d_points, n_points);
+
+  g_free (d_points);
+
+  return config;
+}
+
+GObject *
+gimp_curves_config_new_explicit_cruft (gint32        channel,
+                                       const guint8 *samples,
+                                       gint          n_samples)
+{
+  GObject *config;
+  gdouble *d_samples;
+  gint     i;
+
+  g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
+                        channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+  g_return_val_if_fail (samples != NULL, NULL);
+  g_return_val_if_fail (n_samples >= 2 && n_samples <= 4096, NULL);
+
+  d_samples = g_new (gdouble, n_samples);
+
+  for (i = 0; i < n_samples; i++)
+    {
+      d_samples[i] = (gdouble) samples[i] / 255.0;
+    }
+
+  config = gimp_curves_config_new_explicit (channel, d_samples, n_samples);
+
+  g_free (d_samples);
+
+  return config;
 }
 
 void
