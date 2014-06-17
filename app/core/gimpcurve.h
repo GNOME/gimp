@@ -65,7 +65,12 @@ void            gimp_curve_set_curve_type    (GimpCurve     *curve,
                                               GimpCurveType  curve_type);
 GimpCurveType   gimp_curve_get_curve_type    (GimpCurve     *curve);
 
+void            gimp_curve_set_n_points      (GimpCurve     *curve,
+                                              gint           n_points);
 gint            gimp_curve_get_n_points      (GimpCurve     *curve);
+
+void            gimp_curve_set_n_samples     (GimpCurve     *curve,
+                                              gint           n_samples);
 gint            gimp_curve_get_n_samples     (GimpCurve     *curve);
 
 gint            gimp_curve_get_closest_point (GimpCurve     *curve,
