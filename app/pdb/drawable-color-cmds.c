@@ -228,9 +228,9 @@ drawable_curves_explicit_invoker (GimpProcedure         *procedure,
           (! gimp_drawable_is_gray (drawable) ||
            channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
         {
-          GObject *config = gimp_curves_config_new_spline (channel,
-                                                           curve,
-                                                           num_bytes);
+          GObject *config = gimp_curves_config_new_explicit (channel,
+                                                             curve,
+                                                             num_bytes);
 
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  C_("undo-type", "Curves"),
