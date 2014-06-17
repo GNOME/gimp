@@ -366,7 +366,7 @@ pixel_difference (const gfloat        *col1,
     }
 }
 
-#define FETCH_ROW 1
+/* #define FETCH_ROW 1 */
 
 static gboolean
 find_contiguous_segment (const gfloat        *col,
