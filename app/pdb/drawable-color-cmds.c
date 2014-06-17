@@ -210,27 +210,28 @@ drawable_curves_explicit_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpDrawable *drawable;
   gint32 channel;
-  gint32 num_bytes;
-  const guint8 *curve;
+  gint32 num_values;
+  const gdouble *values;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
-  num_bytes = g_value_get_int (gimp_value_array_index (args, 2));
-  curve = gimp_value_get_int8array (gimp_value_array_index (args, 3));
+  num_values = g_value_get_int (gimp_value_array_index (args, 2));
+  values = gimp_value_get_floatarray (gimp_value_array_index (args, 3));
 
   if (success)
     {
       if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-          (num_bytes == 256) &&
+          (num_values >= 256) &&
+          (num_values <= 4096) &&
           (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
           (! gimp_drawable_is_gray (drawable) ||
            channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
         {
-          GObject *config = gimp_curves_config_new_explicit_cruft (channel,
-                                                                   curve,
-                                                                   num_bytes);
+          GObject *config = gimp_curves_config_new_explicit (channel,
+                                                             values,
+                                                             num_values);
 
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  C_("undo-type", "Curves"),
@@ -258,12 +259,12 @@ drawable_curves_spline_invoker (GimpProcedure         *procedure,
   GimpDrawable *drawable;
   gint32 channel;
   gint32 num_points;
-  const guint8 *control_pts;
+  const gdouble *points;
 
   drawable = gimp_value_get_drawable (gimp_value_array_index (args, 0), gimp);
   channel = g_value_get_enum (gimp_value_array_index (args, 1));
   num_points = g_value_get_int (gimp_value_array_index (args, 2));
-  control_pts = gimp_value_get_int8array (gimp_value_array_index (args, 3));
+  points = gimp_value_get_floatarray (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -275,9 +276,9 @@ drawable_curves_spline_invoker (GimpProcedure         *procedure,
           (! gimp_drawable_is_gray (drawable) ||
            channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
         {
-          GObject *config = gimp_curves_config_new_spline_cruft (channel,
-                                                                 control_pts,
-                                                                 num_points / 2);
+          GObject *config = gimp_curves_config_new_spline (channel,
+                                                           points,
+                                                           num_points / 2);
 
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  C_("undo-type", "Curves"),
@@ -855,7 +856,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-curves-explicit",
                                      "Modifies the intensity curve(s) for specified drawable.",
-                                     "Modifies the intensity mapping for one channel in the specified drawable. The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value. The 'curve' parameter is an array of bytes which explicitly defines how each pixel value in the drawable will be modified. Use the 'gimp-curves-spline' function to modify intensity levels with Catmull Rom splines.",
+                                     "Modifies the intensity mapping for one channel in the specified drawable. The channel can be either an intensity component, or the value. The 'values' parameter is an array of doubles which explicitly defines how each pixel value in the drawable will be modified. Use the 'gimp-curves-spline' function to modify intensity levels with Catmull Rom splines.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -874,16 +875,16 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   GIMP_HISTOGRAM_VALUE,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int32 ("num-bytes",
-                                                      "num bytes",
-                                                      "The number of bytes in the new curve (always 256)",
-                                                      0, G_MAXINT32, 0,
+                               gimp_param_spec_int32 ("num-values",
+                                                      "num values",
+                                                      "The number of values in the new curve",
+                                                      256, 2096, 256,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8_array ("curve",
-                                                           "curve",
-                                                           "The explicit curve",
-                                                           GIMP_PARAM_READWRITE));
+                               gimp_param_spec_float_array ("values",
+                                                            "values",
+                                                            "The explicit curve",
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -896,7 +897,7 @@ register_drawable_color_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-drawable-curves-spline",
                                      "Modifies the intensity curve(s) for specified drawable.",
-                                     "Modifies the intensity mapping for one channel in the specified drawable. The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value. The 'control_pts' parameter is an array of integers which define a set of control points which describe a Catmull Rom spline which yields the final intensity curve. Use the 'gimp-curves-explicit' function to explicitly modify intensity levels.",
+                                     "Modifies the intensity mapping for one channel in the specified drawable. The channel can be either an intensity component, or the value. The 'points' parameter is an array of doubles which define a set of control points which describe a Catmull Rom spline which yields the final intensity curve. Use the 'gimp-curves-explicit' function to explicitly modify intensity levels.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -918,13 +919,13 @@ register_drawable_color_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("num-points",
                                                       "num points",
                                                       "The number of values in the control point array",
-                                                      4, 34, 4,
+                                                      4, 2048, 4,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_int8_array ("control-pts",
-                                                           "control pts",
-                                                           "The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }",
-                                                           GIMP_PARAM_READWRITE));
+                               gimp_param_spec_float_array ("points",
+                                                            "points",
+                                                            "The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }",
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

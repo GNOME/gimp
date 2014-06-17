@@ -60,10 +60,12 @@ GIMP_DEPRECATED_FOR(gimp_drawable_equalize)
 gboolean gimp_equalize            (gint32                drawable_ID,
                                    gboolean              mask_only);
 gboolean gimp_invert              (gint32                drawable_ID);
+GIMP_DEPRECATED_FOR(gimp_drawable_curves_spline)
 gboolean gimp_curves_spline       (gint32                drawable_ID,
                                    GimpHistogramChannel  channel,
                                    gint                  num_points,
                                    const guint8         *control_pts);
+GIMP_DEPRECATED_FOR(gimp_drawable_curves_explicit)
 gboolean gimp_curves_explicit     (gint32                drawable_ID,
                                    GimpHistogramChannel  channel,
                                    gint                  num_bytes,
