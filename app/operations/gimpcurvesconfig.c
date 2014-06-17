@@ -361,9 +361,9 @@ gimp_curves_config_curve_dirty (GimpCurve        *curve,
 /*  public functions  */
 
 GObject *
-gimp_curves_config_new_spline (gint32        channel,
-                               const guint8 *points,
-                               gint          n_points)
+gimp_curves_config_new_spline_cruft (gint32        channel,
+                                     const guint8 *points,
+                                     gint          n_points)
 {
   GimpCurvesConfig *config;
   GimpCurve        *curve;
@@ -371,6 +371,8 @@ gimp_curves_config_new_spline (gint32        channel,
 
   g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
                         channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+  g_return_val_if_fail (points != NULL, NULL);
+  g_return_val_if_fail (n_points >= 2 && n_points <= 1024, NULL);
 
   config = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
 
@@ -378,11 +380,11 @@ gimp_curves_config_new_spline (gint32        channel,
 
   gimp_data_freeze (GIMP_DATA (curve));
 
-  /* FIXME: create a curves object with the right number of points */
-  /*  unset the last point  */
-  gimp_curve_set_point (curve, curve->n_points - 1, -1, -1);
+  gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
+  gimp_curve_set_n_samples (curve, n_points);
 
-  n_points = MIN (n_points / 2, curve->n_points);
+  /*  unset the last point  */
+  gimp_curve_set_point (curve, curve->n_points - 1, -1.0, -1.0);
 
   for (i = 0; i < n_points; i++)
     gimp_curve_set_point (curve, i,
@@ -395,9 +397,9 @@ gimp_curves_config_new_spline (gint32        channel,
 }
 
 GObject *
-gimp_curves_config_new_explicit (gint32        channel,
-                                 const guint8 *points,
-                                 gint          n_points)
+gimp_curves_config_new_explicit_cruft (gint32        channel,
+                                       const guint8 *samples,
+                                       gint          n_samples)
 {
   GimpCurvesConfig *config;
   GimpCurve        *curve;
@@ -405,6 +407,8 @@ gimp_curves_config_new_explicit (gint32        channel,
 
   g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
                         channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+  g_return_val_if_fail (samples != NULL, NULL);
+  g_return_val_if_fail (n_samples >= 2 && n_samples <= 4096, NULL);
 
   config = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
 
@@ -413,11 +417,12 @@ gimp_curves_config_new_explicit (gint32        channel,
   gimp_data_freeze (GIMP_DATA (curve));
 
   gimp_curve_set_curve_type (curve, GIMP_CURVE_FREE);
+  gimp_curve_set_n_samples (curve, n_samples);
 
-  for (i = 0; i < 256; i++)
+  for (i = 0; i < n_samples; i++)
     gimp_curve_set_curve (curve,
-                          (gdouble) i         / 255.0,
-                          (gdouble) points[i] / 255.0);
+                          (gdouble) i          / 255.0,
+                          (gdouble) samples[i] / 255.0);
 
   gimp_data_thaw (GIMP_DATA (curve));
 
@@ -485,6 +490,7 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
       gimp_data_freeze (GIMP_DATA (curve));
 
       gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
+      gimp_curve_set_n_points (curve, GIMP_CURVE_N_CRUFT_POINTS);
 
       gimp_curve_reset (curve, FALSE);
 

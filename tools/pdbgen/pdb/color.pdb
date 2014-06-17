@@ -366,9 +366,9 @@ HELP
       (! gimp_drawable_is_gray (drawable) ||
        channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
     {
-      GObject *config = gimp_curves_config_new_spline (channel,
-                                                       control_pts,
-                                                       num_points);
+      GObject *config = gimp_curves_config_new_spline_cruft (channel,
+                                                             control_pts,
+                                                             num_points / 2);
 
       gimp_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Curves"),
@@ -421,9 +421,9 @@ HELP
       (! gimp_drawable_is_gray (drawable) ||
        channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
     {
-      GObject *config = gimp_curves_config_new_explicit (channel,
-                                                         curve,
-                                                         num_bytes);
+      GObject *config = gimp_curves_config_new_explicit_cruft (channel,
+                                                               curve,
+                                                               num_bytes);
 
       gimp_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Curves"),
