@@ -476,6 +476,7 @@ sanity_check_gegl_ops (void)
     "gegl:buffer-sink",
     "gegl:buffer-source",
     "gegl:c2g",
+    "gegl:cache",
     "gegl:cartoon",
     "gegl:cell-noise",
     "gegl:checkerboard",
