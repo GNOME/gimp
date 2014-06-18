@@ -106,7 +106,8 @@ gimp_applicator_get_property (GObject    *object,
 
 GimpApplicator *
 gimp_applicator_new (GeglNode *parent,
-                     gboolean  linear)
+                     gboolean  linear,
+                     gboolean  use_cache)
 {
   GimpApplicator *applicator;
 
@@ -148,16 +149,15 @@ gimp_applicator_new (GeglNode *parent,
                          "operation", "gegl:translate",
                          NULL);
 
-  gegl_node_connect_to (applicator->aux_node,          "output",
-                        applicator->apply_offset_node, "input");
-
   applicator->dup_apply_buffer_node =
     gegl_node_new_child (applicator->node,
                          "operation", "gegl:copy-buffer",
                          NULL);
 
-  gegl_node_connect_to (applicator->apply_offset_node,     "output",
-                        applicator->dup_apply_buffer_node, "input");
+  gegl_node_link_many (applicator->aux_node,
+                       applicator->apply_offset_node,
+                       applicator->dup_apply_buffer_node,
+                       NULL);
   gegl_node_connect_to (applicator->dup_apply_buffer_node, "output",
                         applicator->mode_node,             "aux");
 
@@ -181,12 +181,29 @@ gimp_applicator_new (GeglNode *parent,
                          "mask",      applicator->affect,
                          NULL);
 
-  gegl_node_connect_to (applicator->input_node,  "output",
-                        applicator->affect_node, "input");
+  if (use_cache)
+    {
+      applicator->cache_node =
+        gegl_node_new_child (applicator->node,
+                             "operation", "gegl:cache",
+                             NULL);
+
+      gegl_node_link_many (applicator->input_node,
+                           applicator->affect_node,
+                           applicator->cache_node,
+                           applicator->output_node,
+                           NULL);
+    }
+  else
+    {
+      gegl_node_link_many (applicator->input_node,
+                           applicator->affect_node,
+                           applicator->output_node,
+                           NULL);
+    }
+
   gegl_node_connect_to (applicator->mode_node,   "output",
                         applicator->affect_node, "aux");
-  gegl_node_connect_to (applicator->affect_node, "output",
-                        applicator->output_node, "input");
 
   return applicator;
 }
@@ -449,4 +466,33 @@ gimp_applicator_dup_apply_buffer (GimpApplicator      *applicator,
   g_object_unref (shifted);
 
   return buffer;
+}
+
+gboolean gegl_buffer_list_valid_rectangles (GeglBuffer     *buffer,
+                                            GeglRectangle **rectangles,
+                                            gint           *n_rectangles);
+
+GeglBuffer *
+gimp_applicator_get_cache_buffer (GimpApplicator  *applicator,
+                                  GeglRectangle  **rectangles,
+                                  gint            *n_rectangles)
+{
+  if (applicator->cache_node)
+    {
+      GeglBuffer *cache;
+
+      gegl_node_get (applicator->cache_node,
+                     "cache", &cache,
+                     NULL);
+
+      if (cache)
+        {
+          if (gegl_buffer_list_valid_rectangles (cache, rectangles, n_rectangles))
+            return cache;
+
+          g_object_unref (cache);
+        }
+    }
+
+  return NULL;
 }

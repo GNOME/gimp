@@ -97,6 +97,9 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                                 &rect.width, &rect.height))
     {
       GimpApplicator *applicator;
+      GeglBuffer     *cache   = NULL;
+      GeglRectangle  *rects   = NULL;
+      gint            n_rects = 0;
 
       gimp_drawable_push_undo (drawable, undo_desc, NULL,
                                rect.x, rect.y,
@@ -119,13 +122,33 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
               undo->applied_buffer =
                 gimp_applicator_dup_apply_buffer (applicator, &rect);
             }
+
+          cache = gimp_applicator_get_cache_buffer (applicator,
+                                                    &rects, &n_rects);
+
+          if (cache)
+            {
+              gint i;
+
+              for (i = 0; i < n_rects; i++)
+                g_printerr ("valid: %d %d %d %d\n",
+                            rects[i].x, rects[i].y,
+                            rects[i].width, rects[i].height);
+            }
         }
 
-      gimp_gegl_apply_operation (gimp_drawable_get_buffer (drawable),
-                                 progress, undo_desc,
-                                 gimp_filter_get_node (filter),
-                                 gimp_drawable_get_buffer (drawable),
-                                 &rect);
+      gimp_gegl_apply_cached_operation (gimp_drawable_get_buffer (drawable),
+                                        progress, undo_desc,
+                                        gimp_filter_get_node (filter),
+                                        gimp_drawable_get_buffer (drawable),
+                                        &rect,
+                                        cache, rects, n_rects);
+
+      if (cache)
+        {
+          g_object_unref (cache);
+          g_free (rects);
+        }
 
       gimp_drawable_update (drawable,
                             rect.x, rect.y,
