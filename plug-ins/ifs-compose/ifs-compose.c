@@ -349,7 +349,7 @@ query (void)
                           args, return_vals);
 
   gimp_plugin_menu_register (PLUG_IN_PROC,
-                             "<Image>/Filters/Render/Nature");
+                             "<Image>/Filters/Render/Fractals");
 }
 
 static void

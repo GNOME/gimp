@@ -705,6 +705,7 @@
       </menu>
       <menu action="plug-in-render-menu" name="Render">
         <menu action="plug-in-render-clouds-menu" name="Clouds" />
+        <menu action="plug-in-render-fractals-menu" name="Fractals" />
         <menu action="plug-in-render-nature-menu" name="Nature" />
         <menu action="plug-in-render-noise-menu" name="Noise">
 	  <menuitem action="filters-noise-cell" />
