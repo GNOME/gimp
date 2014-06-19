@@ -41,6 +41,10 @@ G_DEFINE_TYPE (GimpMybrushTool, gimp_mybrush_tool, GIMP_TYPE_PAINT_TOOL)
 #define parent_class gimp_mybrush_tool_parent_class
 
 
+static void   gimp_mybrush_tool_options_notify        (GimpTool         *tool,
+                                                       GimpToolOptions  *options,
+                                                       const GParamSpec *pspec);
+
 static GimpCanvasItem * gimp_mybrush_tool_get_outline (GimpPaintTool *paint_tool,
                                                        GimpDisplay   *display,
                                                        gdouble        x,
@@ -70,7 +74,10 @@ gimp_mybrush_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_mybrush_tool_class_init (GimpMybrushToolClass *klass)
 {
+  GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
   GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
+
+  tool_class->options_notify    = gimp_mybrush_tool_options_notify;
 
   paint_tool_class->get_outline = gimp_mybrush_tool_get_outline;
 }
@@ -86,6 +93,20 @@ gimp_mybrush_tool_init (GimpMybrushTool *mybrush_tool)
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (mybrush_tool),
                                        GIMP_COLOR_PICK_MODE_FOREGROUND);
+}
+
+static void
+gimp_mybrush_tool_options_notify (GimpTool         *tool,
+                                  GimpToolOptions  *options,
+                                  const GParamSpec *pspec)
+{
+  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
+
+  if (! strcmp (pspec->name, "radius"))
+    {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+    }
 }
 
 static GimpCanvasItem *
