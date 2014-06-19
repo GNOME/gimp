@@ -245,6 +245,8 @@ gimp_canvas_progress_transform (GimpCanvasItem *item,
 
   pango_layout_get_pixel_size (layout, width, height);
 
+  *width = MAX (*width, 2 * RADIUS);
+
   *width  += 2 * BORDER;
   *height += 3 * BORDER + 2 * RADIUS;
 
