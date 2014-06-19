@@ -587,6 +587,7 @@ gimp_spin_scale_change_value (GtkWidget *widget,
   gdouble               upper;
   gint                  width;
   gdouble               value;
+  gint                  digits;
 
   gimp_spin_scale_get_limits (GIMP_SPIN_SCALE (widget), &lower, &upper);
 
@@ -619,6 +620,16 @@ gimp_spin_scale_change_value (GtkWidget *widget,
 
       value = fraction * (upper - lower) + lower;
     }
+
+  digits = gtk_spin_button_get_digits (spin_button);
+
+  /*  round the value to the possible precision of the spinbutton, so
+   *  a focus-out will not change the value again, causing inadvertend
+   *  adjustment signals.
+   */
+  value *= powl (10, digits);
+  value = RINT (value);
+  value /= powl (10, digits);
 
   gtk_adjustment_set_value (adjustment, value);
 }
