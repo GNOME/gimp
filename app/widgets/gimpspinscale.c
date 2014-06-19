@@ -623,13 +623,21 @@ gimp_spin_scale_change_value (GtkWidget *widget,
 
   digits = gtk_spin_button_get_digits (spin_button);
 
-  /*  round the value to the possible precision of the spinbutton, so
-   *  a focus-out will not change the value again, causing inadvertend
-   *  adjustment signals.
-   */
-  value *= powl (10, digits);
-  value = RINT (value);
-  value /= powl (10, digits);
+  if (digits > 0)
+    {
+      gint power = 1;
+
+      while (digits--)
+        power *= 10;
+
+      /*  round the value to the possible precision of the spinbutton, so
+       *  a focus-out will not change the value again, causing inadvertend
+       *  adjustment signals.
+       */
+      value *= power;
+      value = RINT (value);
+      value /= power;
+    }
 
   gtk_adjustment_set_value (adjustment, value);
 }
