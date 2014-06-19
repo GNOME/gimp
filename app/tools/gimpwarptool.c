@@ -81,14 +81,17 @@ static void       gimp_warp_tool_cursor_update      (GimpTool              *tool
                                                      const GimpCoords      *coords,
                                                      GdkModifierType        state,
                                                      GimpDisplay           *display);
-const gchar     * gimp_warp_tool_get_undo_desc       (GimpTool             *tool,
-                                                      GimpDisplay          *display);
-const gchar     * gimp_warp_tool_get_redo_desc       (GimpTool             *tool,
-                                                      GimpDisplay          *display);
-gboolean          gimp_warp_tool_undo                (GimpTool             *tool,
-                                                      GimpDisplay          *display);
-gboolean          gimp_warp_tool_redo                (GimpTool             *tool,
-                                                      GimpDisplay          *display);
+const gchar     * gimp_warp_tool_get_undo_desc      (GimpTool              *tool,
+                                                     GimpDisplay           *display);
+const gchar     * gimp_warp_tool_get_redo_desc      (GimpTool              *tool,
+                                                     GimpDisplay           *display);
+static gboolean   gimp_warp_tool_undo               (GimpTool              *tool,
+                                                     GimpDisplay           *display);
+static gboolean   gimp_warp_tool_redo               (GimpTool              *tool,
+                                                     GimpDisplay           *display);
+static void       gimp_warp_tool_options_notify     (GimpTool              *tool,
+                                                     GimpToolOptions       *options,
+                                                     const GParamSpec      *pspec);
 
 static void       gimp_warp_tool_draw               (GimpDrawTool          *draw_tool);
 
@@ -152,6 +155,7 @@ gimp_warp_tool_class_init (GimpWarpToolClass *klass)
   tool_class->get_redo_desc  = gimp_warp_tool_get_redo_desc;
   tool_class->undo           = gimp_warp_tool_undo;
   tool_class->redo           = gimp_warp_tool_redo;
+  tool_class->options_notify = gimp_warp_tool_options_notify;
 
   draw_tool_class->draw      = gimp_warp_tool_draw;
 }
@@ -445,7 +449,7 @@ gimp_warp_tool_get_redo_desc (GimpTool    *tool,
   return _("Warp Tool Stroke");
 }
 
-gboolean
+static gboolean
 gimp_warp_tool_undo (GimpTool    *tool,
                      GimpDisplay *display)
 {
@@ -478,7 +482,7 @@ gimp_warp_tool_undo (GimpTool    *tool,
   return TRUE;
 }
 
-gboolean
+static gboolean
 gimp_warp_tool_redo (GimpTool    *tool,
                      GimpDisplay *display)
 {
@@ -498,6 +502,20 @@ gimp_warp_tool_redo (GimpTool    *tool,
   gimp_warp_tool_update_stroke (wt, to_add);
 
   return TRUE;
+}
+
+static void
+gimp_warp_tool_options_notify (GimpTool         *tool,
+                               GimpToolOptions  *options,
+                               const GParamSpec *pspec)
+{
+  GIMP_TOOL_CLASS (parent_class)->options_notify (tool, options, pspec);
+
+  if (! strcmp (pspec->name, "effect-size"))
+    {
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+    }
 }
 
 static void
