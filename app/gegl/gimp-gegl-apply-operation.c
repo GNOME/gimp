@@ -217,8 +217,6 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
             {
               gimp_progress_set_value (progress, value);
             }
-
-          g_object_unref (processor);
         }
       else
         {
