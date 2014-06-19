@@ -281,9 +281,6 @@ gimp_blend_tool_button_press (GimpTool            *tool,
       gimp_blend_tool_halt (blend_tool);
     }
 
-  if (! tool->display)
-    gimp_blend_tool_start (blend_tool, display);
-
   switch (gimp_blend_tool_get_point_under_cursor (blend_tool))
     {
     case POINT_NONE:
@@ -305,6 +302,14 @@ gimp_blend_tool_button_press (GimpTool            *tool,
       blend_tool->grabbed_point = POINT_START;
       break;
     }
+
+  /*
+   * gimp_blend_tool_start comes after determining what point is grabbed, so
+   * whenever we're starting the tool, gimp_blend_tool_get_point_under_cursor()
+   * returns POINT_NONE
+   */
+  if (! tool->display)
+    gimp_blend_tool_start (blend_tool, display);
 
   tool->display = display;
   gimp_blend_tool_update_items (blend_tool);
