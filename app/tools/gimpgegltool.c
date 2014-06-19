@@ -125,7 +125,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:checkerboard",
     "gegl:color",
     "gegl:color-reduction",
-    "gegl:color-rotation",
+    "gegl:color-rotate",
     "gegl:color-temperature",
     "gegl:color-to-alpha",
     "gegl:convolution-matrix",
@@ -183,7 +183,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:contrast-curve",
     "gegl:convert-format", /* pointless */
     "gegl:fill-path",
-    "gegl:grey", /* we use gimp's op */
+    "gegl:gray", /* we use gimp's op */
     "gegl:hstack", /* pointless */
     "gegl:introspect", /* pointless */
     "gegl:layer", /* we use gimp's ops */
