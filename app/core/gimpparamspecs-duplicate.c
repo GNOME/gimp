@@ -264,7 +264,8 @@ gimp_param_spec_duplicate (GParamSpec *pspec)
       GHashTable *keys  = g_param_spec_get_qdata (pspec, quark);
 
       if (keys)
-        g_param_spec_set_qdata (copy, quark, g_hash_table_ref (keys));
+        g_param_spec_set_qdata_full (copy, quark, g_hash_table_ref (keys),
+                                     (GDestroyNotify) g_hash_table_unref);
     }
 
   return copy;
