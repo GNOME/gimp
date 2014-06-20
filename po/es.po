@@ -10,23 +10,23 @@
 # Joaquín Ignacio Aramendía <samsagax@gmail.com>, 2011.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008, 2009, 2010, 2011.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011, 2012, 2013, 2014.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-04-15 05:44+0000\n"
-"PO-Revision-Date: 2013-12-12 11:22+0100\n"
+"POT-Creation-Date: 2014-06-20 05:23+0000\n"
+"PO-Revision-Date: 2014-06-20 13:35+0200\n"
 "Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
-"Language-Team: Español <gnome-es-list@gnome.org>\n"
+"Language-Team: Español; Castellano <gnome-es-list@gnome.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 2.91.5\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Gtranslator 2.91.6\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -7499,7 +7499,7 @@ msgstr "Parásitos"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2736
-#: ../app/tools/gimppaintoptions-gui.c:200
+#: ../app/tools/gimppaintoptions-gui.c:201
 msgid "Dynamics"
 msgstr "Dinámica"
 
@@ -7843,21 +7843,21 @@ msgstr "Achicar el canal"
 msgid "Cannot stroke empty channel."
 msgstr "No se puede trazar un canal vacío."
 
-#: ../app/core/gimpchannel.c:1758
+#: ../app/core/gimpchannel.c:1763
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Definir el color del canal"
 
-#: ../app/core/gimpchannel.c:1824
+#: ../app/core/gimpchannel.c:1829
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Definir la opacidad del canal"
 
-#: ../app/core/gimpchannel.c:1932 ../app/core/gimpselection.c:154
+#: ../app/core/gimpchannel.c:1937 ../app/core/gimpselection.c:154
 msgid "Selection Mask"
 msgstr "Máscara de selección"
 
-#: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:108
+#: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:109
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity"
 msgstr "Opacidad"
@@ -7920,7 +7920,7 @@ msgstr ""
 msgid "You don't have any writable data folder configured."
 msgstr "No tiene configurada una carpeta escribible de datos."
 
-#: ../app/core/gimpdatafactory.c:937
+#: ../app/core/gimpdatafactory.c:941
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -8112,37 +8112,37 @@ msgstr "No se encontraron degradados lineales en «%s»"
 msgid "Failed to import gradients from '%s': %s"
 msgstr "Fallo al importar degradados desde «%s»: %s"
 
-#: ../app/core/gimpgrid.c:84
+#: ../app/core/gimpgrid.c:85
 msgid "Line style used for the grid."
 msgstr "Estilo de línea utilizado por la rejilla."
 
-#: ../app/core/gimpgrid.c:90
+#: ../app/core/gimpgrid.c:91
 msgid "The foreground color of the grid."
 msgstr "El color de frente de la rejilla."
 
-#: ../app/core/gimpgrid.c:95
+#: ../app/core/gimpgrid.c:96
 msgid ""
 "The background color of the grid; only used in double dashed line style."
 msgstr ""
 "El color de fondo de la rejilla, sólo se utiliza en el estilo de línea de "
 "guiones dobles."
 
-#: ../app/core/gimpgrid.c:101
+#: ../app/core/gimpgrid.c:102
 msgid "Horizontal spacing of grid lines."
 msgstr "Espacio horizontal de la líneas de la rejilla."
 
-#: ../app/core/gimpgrid.c:106
+#: ../app/core/gimpgrid.c:107
 msgid "Vertical spacing of grid lines."
 msgstr "Espacio vertical de las líneas de la rejilla."
 
-#: ../app/core/gimpgrid.c:115
+#: ../app/core/gimpgrid.c:116
 msgid ""
 "Horizontal offset of the first grid line; this may be a negative number."
 msgstr ""
 "Desplazamiento horizontal de la primera línea de la rejilla, puede ser un "
 "número negativo."
 
-#: ../app/core/gimpgrid.c:122
+#: ../app/core/gimpgrid.c:123
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr ""
 "Desplazamiento vertical de la primera línea de la rejilla, puede ser un "
@@ -8481,7 +8481,7 @@ msgstr "(La vista previa podría estar desactualizada)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:796 ../app/widgets/gimpimagepropview.c:440
-#: ../app/widgets/gimpsizebox.c:427 ../app/widgets/gimptemplateeditor.c:565
+#: ../app/widgets/gimpsizebox.c:432 ../app/widgets/gimptemplateeditor.c:581
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -8892,6 +8892,12 @@ msgstr ""
 "extendiese hasta una distancia mayor que el límite de mediana multiplicado "
 "por el grosor de la línea a partir del punto real de unión."
 
+#: ../app/core/gimptoolpreset-load.c:61
+#, c-format
+#| msgid "Error while writing '%s': %s"
+msgid "Error while parsing '%s'"
+msgstr "Error al analizar «%s»"
+
 #: ../app/core/gimptemplate.c:129
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
@@ -9297,17 +9303,17 @@ msgstr "Crear una imagen nueva"
 msgid "_Template:"
 msgstr "Plan_tilla:"
 
-#: ../app/dialogs/image-new-dialog.c:308
+#: ../app/dialogs/image-new-dialog.c:316
 msgid "Confirm Image Size"
 msgstr "Confirmar el tamaño de la imagen"
 
-#: ../app/dialogs/image-new-dialog.c:330
+#: ../app/dialogs/image-new-dialog.c:338
 #: ../app/dialogs/image-scale-dialog.c:239
 #, c-format
 msgid "You are trying to create an image with a size of %s."
 msgstr "Está intentando crear una imagen con un tamaño de %s."
 
-#: ../app/dialogs/image-new-dialog.c:337
+#: ../app/dialogs/image-new-dialog.c:345
 #, c-format
 msgid ""
 "An image of the chosen size will use more memory than what is configured as "
@@ -10420,17 +10426,17 @@ msgid "H_eight:"
 msgstr "A_ltura:"
 
 #. the resolution labels
-#: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:255
+#: ../app/dialogs/print-size-dialog.c:222 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:309
 msgid "_X resolution:"
 msgstr "Resolución _X:"
 
-#: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:258
+#: ../app/dialogs/print-size-dialog.c:229 ../app/widgets/gimpsizebox.c:263
 #: ../app/widgets/gimptemplateeditor.c:316
 msgid "_Y resolution:"
 msgstr "Resolución _Y:"
 
-#: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:251
+#: ../app/dialogs/print-size-dialog.c:240 ../app/widgets/gimpsizebox.c:256
 #, c-format
 msgid "pixels/%a"
 msgstr "píxeles/%a"
@@ -10521,7 +10527,7 @@ msgstr "_Vertical:"
 msgid "Image Size"
 msgstr "Tamaño de la imagen"
 
-#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:390
+#: ../app/dialogs/scale-dialog.c:176 ../app/tools/gimppaintoptions-gui.c:391
 msgid "Quality"
 msgstr "Calidad"
 
@@ -11206,7 +11212,7 @@ msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "Rombo"
 
-#: ../app/pdb/channel-cmds.c:184
+#: ../app/pdb/channel-cmds.c:194
 msgid "Combine Masks"
 msgstr "Combinar máscaras"
 
@@ -12001,7 +12007,7 @@ msgstr "Pulse para elegir esta ruta como primer elemento"
 msgid "Click to add this path to the list"
 msgstr "Pulse para añadir esta ruta a la lista"
 
-#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:343
+#: ../app/tools/gimpblendoptions.c:211 ../app/tools/gimppaintoptions-gui.c:344
 msgid "Gradient"
 msgstr "Degradado"
 
@@ -12009,7 +12015,7 @@ msgstr "Degradado"
 msgid "Shape:"
 msgstr "Forma:"
 
-#: ../app/tools/gimpblendoptions.c:238 ../app/tools/gimppaintoptions-gui.c:322
+#: ../app/tools/gimpblendoptions.c:238 ../app/tools/gimppaintoptions-gui.c:323
 msgid "Repeat:"
 msgstr "Repetir:"
 
@@ -13106,12 +13112,12 @@ msgid "Adjustment"
 msgstr "Ajuste"
 
 #: ../app/tools/gimpinkoptions-gui.c:64 ../app/tools/gimpinkoptions-gui.c:87
-#: ../app/tools/gimppaintoptions-gui.c:131
+#: ../app/tools/gimppaintoptions-gui.c:132
 msgid "Size"
 msgstr "Tamaño"
 
 #: ../app/tools/gimpinkoptions-gui.c:71
-#: ../app/tools/gimppaintoptions-gui.c:180
+#: ../app/tools/gimppaintoptions-gui.c:181
 #: ../app/widgets/gimpbrusheditor.c:199
 msgid "Angle"
 msgstr "Ángulo"
@@ -13433,68 +13439,68 @@ msgstr "_Pincel"
 msgid "Mode:"
 msgstr "Modo:"
 
-#: ../app/tools/gimppaintoptions-gui.c:120
+#: ../app/tools/gimppaintoptions-gui.c:121
 msgid "Brush"
 msgstr "Pincel"
 
-#: ../app/tools/gimppaintoptions-gui.c:149
+#: ../app/tools/gimppaintoptions-gui.c:150
 msgid "Reset size to brush's native size"
 msgstr "Reiniciar tamaño al tamaño nativo del pincel"
 
-#: ../app/tools/gimppaintoptions-gui.c:156
+#: ../app/tools/gimppaintoptions-gui.c:157
 msgid "Aspect Ratio"
 msgstr "Proporción de aspecto"
 
-#: ../app/tools/gimppaintoptions-gui.c:173
+#: ../app/tools/gimppaintoptions-gui.c:174
 msgid "Reset aspect ratio to brush's native"
 msgstr "Reiniciar la proporción de aspecto a la nativa del pincel"
 
-#: ../app/tools/gimppaintoptions-gui.c:197
+#: ../app/tools/gimppaintoptions-gui.c:198
 msgid "Reset angle to zero"
 msgstr "Restablecer el ángulo a cero"
 
-#: ../app/tools/gimppaintoptions-gui.c:235
+#: ../app/tools/gimppaintoptions-gui.c:236
 msgid "Incremental"
 msgstr "Incremental"
 
-#: ../app/tools/gimppaintoptions-gui.c:253
+#: ../app/tools/gimppaintoptions-gui.c:254
 msgid "Hard edge"
 msgstr "Bordes duros"
 
-#: ../app/tools/gimppaintoptions-gui.c:282
+#: ../app/tools/gimppaintoptions-gui.c:283
 msgid "Dynamics Options"
 msgstr "Opciones de dinámica"
 
-#: ../app/tools/gimppaintoptions-gui.c:288
+#: ../app/tools/gimppaintoptions-gui.c:289
 msgid "Fade Options"
 msgstr "Opciones de desvanecimiento"
 
-#: ../app/tools/gimppaintoptions-gui.c:302
+#: ../app/tools/gimppaintoptions-gui.c:303
 msgid "Fade length"
 msgstr "Longitud de desvanecimiento"
 
-#: ../app/tools/gimppaintoptions-gui.c:331
+#: ../app/tools/gimppaintoptions-gui.c:332
 #: ../app/widgets/gimpviewablebox.c:311
 msgid "Reverse"
 msgstr "Invertido"
 
-#: ../app/tools/gimppaintoptions-gui.c:338
+#: ../app/tools/gimppaintoptions-gui.c:339
 msgid "Color Options"
 msgstr "Opciones de color"
 
-#: ../app/tools/gimppaintoptions-gui.c:364
+#: ../app/tools/gimppaintoptions-gui.c:365
 msgid "Amount"
 msgstr "Cantidad"
 
-#: ../app/tools/gimppaintoptions-gui.c:368
+#: ../app/tools/gimppaintoptions-gui.c:369
 msgid "Apply Jitter"
 msgstr "Aplicar «jitter»"
 
-#: ../app/tools/gimppaintoptions-gui.c:386
+#: ../app/tools/gimppaintoptions-gui.c:387
 msgid "Smooth stroke"
 msgstr "Trazado suave"
 
-#: ../app/tools/gimppaintoptions-gui.c:396
+#: ../app/tools/gimppaintoptions-gui.c:397
 msgid "Weight"
 msgstr "Peso"
 
@@ -15170,11 +15176,11 @@ msgid "Configure this tab"
 msgstr "Configurar esta pestaña"
 
 #. Auto button
-#: ../app/widgets/gimpdockwindow.c:386
+#: ../app/widgets/gimpdockwindow.c:384
 msgid "Auto"
 msgstr "Auto"
 
-#: ../app/widgets/gimpdockwindow.c:397
+#: ../app/widgets/gimpdockwindow.c:395
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
@@ -15645,12 +15651,12 @@ msgstr "Exportar los ajustes seleccionados a un archivo"
 msgid "Delete the selected settings"
 msgstr "Eliminar los ajustes seleccionados"
 
-#: ../app/widgets/gimpsizebox.c:453
+#: ../app/widgets/gimpsizebox.c:458
 #, c-format
 msgid "%d × %d ppi"
 msgstr "%d x %d ppp"
 
-#: ../app/widgets/gimpsizebox.c:455
+#: ../app/widgets/gimpsizebox.c:460
 #, c-format
 msgid "%d ppi"
 msgstr "%d ppp"
@@ -15728,12 +15734,12 @@ msgstr "_Nombre:"
 msgid "_Icon:"
 msgstr "_Icono:"
 
-#: ../app/widgets/gimptemplateeditor.c:683
+#: ../app/widgets/gimptemplateeditor.c:699
 #, c-format
 msgid "%d × %d ppi, %s"
 msgstr "%d x %d ppp, %s"
 
-#: ../app/widgets/gimptemplateeditor.c:685
+#: ../app/widgets/gimptemplateeditor.c:701
 #, c-format
 msgid "%d ppi, %s"
 msgstr "%d ppp, %s"
@@ -16131,7 +16137,7 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Indefinido"
 
-#: ../app/xcf/xcf-load.c:339
+#: ../app/xcf/xcf-load.c:342
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -16139,7 +16145,7 @@ msgstr ""
 "¡Este archivo XCF está corrupto! He cargado de él todo lo que he podido, "
 "pero está incompleto."
 
-#: ../app/xcf/xcf-load.c:350
+#: ../app/xcf/xcf-load.c:353
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -16147,7 +16153,7 @@ msgstr ""
 "¡Este archivo XCF está corrupto! No he podido salvar de él ni siquiera una "
 "imagen parcial."
 
-#: ../app/xcf/xcf-load.c:423
+#: ../app/xcf/xcf-load.c:427
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
