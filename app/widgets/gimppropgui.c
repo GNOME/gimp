@@ -246,6 +246,7 @@ gimp_prop_widget_new_from_pspec (GObject               *config,
 
           buffer = gimp_prop_text_buffer_new (config, pspec->name, -1);
           view = gtk_text_view_new_with_buffer (buffer);
+          g_object_unref (buffer);
 
           widget = gtk_scrolled_window_new (NULL, NULL);
           gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (widget),
