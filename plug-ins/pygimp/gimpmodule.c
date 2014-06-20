@@ -1783,8 +1783,6 @@ pygimp_export_dialog_new (PyObject *self, PyObject *args, PyObject *kwargs)
  * on the returned export_dialog
  */
 
-static PyObject *
-pygimp_export_dialog_ (PyObject *self, PyObject *args, PyObject *kwargs)
 
 /* List of methods defined in the module */
 
