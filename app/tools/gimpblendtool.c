@@ -37,7 +37,9 @@
 #include "core/gimperror.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagemap.h"
 #include "core/gimpprogress.h"
+#include "core/gimpprojection.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -114,6 +116,15 @@ static void   gimp_blend_tool_commit              (GimpBlendTool         *bt);
 static void   gimp_blend_tool_push_status         (GimpBlendTool         *blend_tool,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
+
+static void   gimp_blend_tool_create_graph        (GimpBlendTool         *blend_tool);
+static void   gimp_blend_tool_update_preview_coords (GimpBlendTool       *blend_tool);
+
+static void   gimp_blend_tool_create_image_map    (GimpBlendTool         *blend_tool,
+                                                   GimpDrawable          *drawable);
+static void   gimp_blend_tool_image_map_flush     (GimpImageMap          *image_map,
+                                                   GimpTool              *tool);
+
 
 
 G_DEFINE_TYPE (GimpBlendTool, gimp_blend_tool, GIMP_TYPE_DRAW_TOOL)
@@ -314,6 +325,9 @@ gimp_blend_tool_button_press (GimpTool            *tool,
   tool->display = display;
   gimp_blend_tool_update_items (blend_tool);
 
+  gimp_blend_tool_update_preview_coords (blend_tool);
+  gimp_image_map_apply (blend_tool->image_map, NULL);
+
   gimp_tool_control_activate (tool->control);
 
   gimp_blend_tool_push_status (blend_tool, state, display);
@@ -378,6 +392,9 @@ gimp_blend_tool_motion (GimpTool         *tool,
   gimp_blend_tool_push_status (blend_tool, state, display);
 
   gimp_blend_tool_update_items (blend_tool);
+
+  gimp_blend_tool_update_preview_coords (blend_tool);
+  gimp_image_map_apply (blend_tool->image_map, NULL);
 }
 
 static void
@@ -460,6 +477,9 @@ gimp_blend_tool_active_modifier_key (GimpTool        *tool,
       gimp_blend_tool_push_status (blend_tool, state, display);
 
       gimp_blend_tool_update_items (blend_tool);
+
+      gimp_blend_tool_update_preview_coords (blend_tool);
+      gimp_image_map_apply (blend_tool->image_map, NULL);
     }
   else if (key == GDK_MOD1_MASK)
     {
@@ -619,6 +639,8 @@ gimp_blend_tool_start (GimpBlendTool         *blend_tool,
   tool->display  = display;
   tool->drawable = drawable;
 
+  gimp_blend_tool_create_image_map (blend_tool, drawable);
+
   if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
     gimp_draw_tool_start (GIMP_DRAW_TOOL (blend_tool), display);
 }
@@ -627,6 +649,22 @@ static void
 gimp_blend_tool_halt (GimpBlendTool *blend_tool)
 {
   GimpTool *tool = GIMP_TOOL (blend_tool);
+
+  if (blend_tool->graph)
+    {
+      g_object_unref (blend_tool->graph);
+      blend_tool->graph       = NULL;
+      blend_tool->render_node = NULL;
+    }
+
+  if (blend_tool->image_map)
+    {
+      gimp_image_map_abort (blend_tool->image_map);
+      g_object_unref (blend_tool->image_map);
+      blend_tool->image_map = NULL;
+
+      gimp_image_flush (gimp_display_get_image (tool->display));
+    }
 
   tool->display  = NULL;
   tool->drawable = NULL;
@@ -709,4 +747,71 @@ gimp_blend_tool_push_status (GimpBlendTool   *blend_tool,
                                 status_help);
 
   g_free (status_help);
+}
+
+/* gegl graph stuff */
+
+static void
+gimp_blend_tool_create_graph (GimpBlendTool *blend_tool)
+{
+  GeglNode *graph, *output, *render;
+
+  /* render_node is not supposed to be recreated */
+  g_return_if_fail (blend_tool->graph == NULL);
+
+  graph = gegl_node_new ();
+
+  output = gegl_node_get_output_proxy (graph, "output");
+
+
+  render = gegl_node_new_child (graph,
+                                "operation", "gimp:blend",
+                                NULL);
+
+  gegl_node_link (render, output);
+
+  blend_tool->graph       = graph;
+  blend_tool->render_node = render;
+}
+
+static void
+gimp_blend_tool_update_preview_coords (GimpBlendTool *blend_tool)
+{
+  gegl_node_set (blend_tool->render_node,
+                 "start_x", blend_tool->start_x,
+                 "start_y", blend_tool->start_y,
+                 "end_x",   blend_tool->end_x,
+                 "end_y",   blend_tool->end_y,
+                 NULL);
+}
+
+/* Image map stuff */
+
+static void
+gimp_blend_tool_create_image_map (GimpBlendTool *blend_tool,
+                                  GimpDrawable  *drawable)
+{
+  if (! blend_tool->graph)
+    gimp_blend_tool_create_graph (blend_tool);
+
+  blend_tool->image_map = gimp_image_map_new (drawable,
+                                              C_("undo-type", "Blend"),
+                                              blend_tool->graph,
+                                              GIMP_STOCK_TOOL_BLEND);
+
+  gimp_image_map_set_region (blend_tool->image_map,
+                             GIMP_IMAGE_MAP_REGION_DRAWABLE);
+
+  g_signal_connect (blend_tool->image_map, "flush",
+                    G_CALLBACK (gimp_blend_tool_image_map_flush),
+                    blend_tool);
+}
+
+static void
+gimp_blend_tool_image_map_flush (GimpImageMap *image_map,
+                                 GimpTool     *tool)
+{
+  GimpImage *image = gimp_display_get_image (tool->display);
+
+  gimp_projection_flush (gimp_image_get_projection (image));
 }

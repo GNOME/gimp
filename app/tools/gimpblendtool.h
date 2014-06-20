@@ -59,6 +59,10 @@ struct _GimpBlendTool
   GimpCanvasItem *start_handle;
   GimpCanvasItem *line;
   GimpCanvasItem *end_handle;
+
+  GeglNode       *graph;
+  GeglNode       *render_node;
+  GimpImageMap   *image_map;
 };
 
 struct _GimpBlendToolClass
