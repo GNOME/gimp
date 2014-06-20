@@ -28,51 +28,51 @@
 
 #include "pygimp-api.h"
 #include "pygimp-util.h"
-
+#include "libgimp/gimpui.h"
 
 static void
 add_misc_enums(PyObject *m)
 {
     PyModule_AddIntConstant(m, "PARASITE_PERSISTENT",
-			    GIMP_PARASITE_PERSISTENT);
+                            GIMP_PARASITE_PERSISTENT);
     PyModule_AddIntConstant(m, "PARASITE_UNDOABLE",
-			    GIMP_PARASITE_UNDOABLE);
+                            GIMP_PARASITE_UNDOABLE);
     PyModule_AddIntConstant(m, "PARASITE_ATTACH_PARENT",
-			    GIMP_PARASITE_ATTACH_PARENT);
+                            GIMP_PARASITE_ATTACH_PARENT);
     PyModule_AddIntConstant(m, "PARASITE_PARENT_PERSISTENT",
-			    GIMP_PARASITE_PARENT_PERSISTENT);
+                            GIMP_PARASITE_PARENT_PERSISTENT);
     PyModule_AddIntConstant(m, "PARASITE_PARENT_UNDOABLE",
-			    GIMP_PARASITE_PARENT_UNDOABLE);
+                            GIMP_PARASITE_PARENT_UNDOABLE);
     PyModule_AddIntConstant(m, "PARASITE_ATTACH_GRANDPARENT",
-			    GIMP_PARASITE_ATTACH_GRANDPARENT);
+                            GIMP_PARASITE_ATTACH_GRANDPARENT);
     PyModule_AddIntConstant(m, "PARASITE_GRANDPARENT_PERSISTENT",
-			    GIMP_PARASITE_GRANDPARENT_PERSISTENT);
+                            GIMP_PARASITE_GRANDPARENT_PERSISTENT);
     PyModule_AddIntConstant(m, "PARASITE_GRANDPARENT_UNDOABLE",
-			    GIMP_PARASITE_GRANDPARENT_UNDOABLE);
+                            GIMP_PARASITE_GRANDPARENT_UNDOABLE);
 
     PyModule_AddIntConstant(m, "UNIT_PIXEL",
-			    GIMP_UNIT_PIXEL);
+                            GIMP_UNIT_PIXEL);
     PyModule_AddIntConstant(m, "UNIT_INCH",
-			    GIMP_UNIT_INCH);
+                            GIMP_UNIT_INCH);
     PyModule_AddIntConstant(m, "UNIT_MM",
-			    GIMP_UNIT_MM);
+                            GIMP_UNIT_MM);
     PyModule_AddIntConstant(m, "UNIT_POINT",
-			    GIMP_UNIT_POINT);
+                            GIMP_UNIT_POINT);
     PyModule_AddIntConstant(m, "UNIT_PICA",
-			    GIMP_UNIT_PICA);
+                            GIMP_UNIT_PICA);
 
     PyModule_AddIntConstant(m, "MIN_IMAGE_SIZE",
-			    GIMP_MIN_IMAGE_SIZE);
+                            GIMP_MIN_IMAGE_SIZE);
     PyModule_AddIntConstant(m, "MAX_IMAGE_SIZE",
-			    GIMP_MAX_IMAGE_SIZE);
+                            GIMP_MAX_IMAGE_SIZE);
 
     PyModule_AddObject(m, "MIN_RESOLUTION",
-		       PyFloat_FromDouble(GIMP_MIN_RESOLUTION));
+                       PyFloat_FromDouble(GIMP_MIN_RESOLUTION));
     PyModule_AddObject(m, "MAX_RESOLUTION",
-		       PyFloat_FromDouble(GIMP_MAX_RESOLUTION));
+                       PyFloat_FromDouble(GIMP_MAX_RESOLUTION));
 
     PyModule_AddObject(m, "MAX_MEMSIZE",
-		       PyLong_FromUnsignedLongLong(GIMP_MAX_MEMSIZE));
+                       PyLong_FromUnsignedLongLong(GIMP_MAX_MEMSIZE));
 
     PyModule_AddIntConstant(m, "PIXEL_FETCHER_EDGE_NONE",
                             GIMP_PIXEL_FETCHER_EDGE_NONE);
@@ -90,68 +90,94 @@ static void
 add_compat_enums(PyObject *m)
 {
     PyModule_AddIntConstant(m, "ADD_WHITE_MASK",
-			    GIMP_ADD_MASK_WHITE);
+                            GIMP_ADD_MASK_WHITE);
     PyModule_AddIntConstant(m, "ADD_BLACK_MASK",
-			    GIMP_ADD_MASK_BLACK);
+                            GIMP_ADD_MASK_BLACK);
     PyModule_AddIntConstant(m, "ADD_ALPHA_MASK",
-			    GIMP_ADD_MASK_ALPHA);
+                            GIMP_ADD_MASK_ALPHA);
     PyModule_AddIntConstant(m, "ADD_ALPHA_TRANSFER_MASK",
-			    GIMP_ADD_MASK_ALPHA_TRANSFER);
+                            GIMP_ADD_MASK_ALPHA_TRANSFER);
     PyModule_AddIntConstant(m, "ADD_SELECTION_MASK",
-			    GIMP_ADD_MASK_SELECTION);
+                            GIMP_ADD_MASK_SELECTION);
     PyModule_AddIntConstant(m, "ADD_COPY_MASK",
-			    GIMP_ADD_MASK_COPY);
+                            GIMP_ADD_MASK_COPY);
     PyModule_AddIntConstant(m, "ADD_CHANNEL_MASK",
-			    GIMP_ADD_MASK_CHANNEL);
+                            GIMP_ADD_MASK_CHANNEL);
 
     PyModule_AddIntConstant(m, "FG_BG_RGB_MODE",
-			    GIMP_BLEND_FG_BG_RGB);
+                            GIMP_BLEND_FG_BG_RGB);
     PyModule_AddIntConstant(m, "FG_BG_HSV_MODE",
-			    GIMP_BLEND_FG_BG_HSV);
+                            GIMP_BLEND_FG_BG_HSV);
     PyModule_AddIntConstant(m, "FG_TRANSPARENT_MODE",
-			    GIMP_BLEND_FG_TRANSPARENT);
+                            GIMP_BLEND_FG_TRANSPARENT);
     PyModule_AddIntConstant(m, "CUSTOM_MODE",
-			    GIMP_BLEND_CUSTOM);
+                            GIMP_BLEND_CUSTOM);
 
     PyModule_AddIntConstant(m, "FG_BUCKET_FILL",
-			    GIMP_BUCKET_FILL_FG);
+                            GIMP_BUCKET_FILL_FG);
     PyModule_AddIntConstant(m, "BG_BUCKET_FILL",
-			    GIMP_BUCKET_FILL_BG);
+                            GIMP_BUCKET_FILL_BG);
     PyModule_AddIntConstant(m, "PATTERN_BUCKET_FILL",
-			    GIMP_BUCKET_FILL_PATTERN);
+                            GIMP_BUCKET_FILL_PATTERN);
 
     PyModule_AddIntConstant(m, "BLUR_CONVOLVE",
-			    GIMP_CONVOLVE_BLUR);
+                            GIMP_CONVOLVE_BLUR);
     PyModule_AddIntConstant(m, "SHARPEN_CONVOLVE",
-			    GIMP_CONVOLVE_SHARPEN);
+                            GIMP_CONVOLVE_SHARPEN);
 
     PyModule_AddIntConstant(m, "IMAGE_CLONE",
-			    GIMP_CLONE_IMAGE);
+                            GIMP_CLONE_IMAGE);
     PyModule_AddIntConstant(m, "PATTERN_CLONE",
-			    GIMP_CLONE_PATTERN);
+                            GIMP_CLONE_PATTERN);
 
     PyModule_AddIntConstant(m, "FOREGROUND-FILL",
-			    GIMP_FILL_FOREGROUND);
+                            GIMP_FILL_FOREGROUND);
     PyModule_AddIntConstant(m, "BACKGROUND-FILL",
-			    GIMP_FILL_BACKGROUND);
+                            GIMP_FILL_BACKGROUND);
     PyModule_AddIntConstant(m, "WHITE-FILL",
-			    GIMP_FILL_WHITE);
+                            GIMP_FILL_WHITE);
     PyModule_AddIntConstant(m, "TRANSPARENT-FILL",
-			    GIMP_FILL_TRANSPARENT);
+                            GIMP_FILL_TRANSPARENT);
     PyModule_AddIntConstant(m, "PATTERN-FILL",
-			    GIMP_FILL_PATTERN);
+                            GIMP_FILL_PATTERN);
 
     PyModule_AddIntConstant(m, "DODGE",
-			    GIMP_DODGE_BURN_TYPE_DODGE);
+                            GIMP_DODGE_BURN_TYPE_DODGE);
     PyModule_AddIntConstant(m, "BURN",
-			    GIMP_DODGE_BURN_TYPE_BURN);
+                            GIMP_DODGE_BURN_TYPE_BURN);
 
     PyModule_AddIntConstant(m, "SHADOWS",
-			    GIMP_TRANSFER_SHADOWS);
+                            GIMP_TRANSFER_SHADOWS);
     PyModule_AddIntConstant(m, "MIDTONES",
-			    GIMP_TRANSFER_MIDTONES);
+                            GIMP_TRANSFER_MIDTONES);
     PyModule_AddIntConstant(m, "HIGHLIGHTS",
-			    GIMP_TRANSFER_HIGHLIGHTS);
+                            GIMP_TRANSFER_HIGHLIGHTS);
+    
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_RGB",
+                            GIMP_EXPORT_CAN_HANDLE_RGB);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_GRAY",
+                            GIMP_EXPORT_CAN_HANDLE_GRAY);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_INDEXED",
+                            GIMP_EXPORT_CAN_HANDLE_INDEXED);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_BITMAP",
+                            GIMP_EXPORT_CAN_HANDLE_BITMAP);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_ALPHA",
+                            GIMP_EXPORT_CAN_HANDLE_ALPHA);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_LAYERS",
+                            GIMP_EXPORT_CAN_HANDLE_LAYERS);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION",
+                            GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION);
+    PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_LAYER_MASKS",
+                            GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS);
+    PyModule_AddIntConstant(m, "EXPORT_NEEDS_ALPHA",
+                            GIMP_EXPORT_NEEDS_ALPHA);
+    
+    PyModule_AddIntConstant(m, "EXPORT_CANCEL",
+                            GIMP_EXPORT_CANCEL);
+    PyModule_AddIntConstant(m, "EXPORT_IGNORE",
+                            GIMP_EXPORT_IGNORE);
+    PyModule_AddIntConstant(m, "EXPORT_EXPORT",
+                            GIMP_EXPORT_EXPORT);
 }
 
 static void
@@ -166,7 +192,7 @@ add_registered_enums(PyObject *m)
     pyg_enum_add_constants(m, GIMP_TYPE_CHECK_TYPE, "GIMP_");
 
     for (i = 0; i < num_names; i++)
-	pyg_enum_add_constants(m, g_type_from_name(names[i]), "GIMP_");
+        pyg_enum_add_constants(m, g_type_from_name(names[i]), "GIMP_");
 }
 
 
@@ -198,5 +224,5 @@ init_gimpenums(void)
 
     /* Check for errors */
     if (PyErr_Occurred())
-	Py_FatalError("can't initialize module _gimpenums");
+        Py_FatalError("can't initialize module _gimpenums");
 }
