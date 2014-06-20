@@ -51,8 +51,8 @@ item_get_parent(PyGimpLayer *self, void *closure)
     gint32 id = gimp_item_get_parent(self->ID);
 
     if (id == -1) {
-	Py_INCREF(Py_None);
-	return Py_None;
+        Py_INCREF(Py_None);
+        return Py_None;
     }
 
     return pygimp_item_new(id);
@@ -70,7 +70,7 @@ item_get_children(PyGimpLayer *self, void *closure)
     ret = PyList_New(n_children);
 
     for (i = 0; i < n_children; i++)
-	PyList_SetItem(ret, i, pygimp_item_new(children[i]));
+        PyList_SetItem(ret, i, pygimp_item_new(children[i]));
 
     g_free(children);
 
@@ -163,8 +163,14 @@ pygimp_item_new(gint32 ID)
     }
 
     /* create the appropriate object type */
-    if (gimp_item_is_drawable(ID))
-        self = pygimp_drawable_new(NULL, ID);
+    if (gimp_item_is_drawable(ID)) {
+        if (gimp_item_is_group(ID)) {
+            self = pygimp_group_layer_new(ID);
+        }
+        else {
+            self = pygimp_drawable_new(NULL, ID);
+        }
+    }
     else /* Vectors */
         self = pygimp_vectors_new(ID);
 
