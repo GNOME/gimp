@@ -430,6 +430,8 @@ gimp_int_radio_group_set_active (GtkRadioButton *radio_button,
  * gtk_spin_button_set_numeric() so that non-numeric text cannot be
  * entered.
  *
+ * Deprecated: 2.10: Use gtk_spin_button_new() instead.
+ *
  * Returns: A #GtkSpinButton and its #GtkAdjustment.
  **/
 GtkWidget *
@@ -489,11 +491,11 @@ GtkWidget *
 gimp_random_seed_new (guint    *seed,
                       gboolean *random_seed)
 {
-  GtkWidget *hbox;
-  GtkWidget *toggle;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  GtkWidget *button;
+  GtkWidget     *hbox;
+  GtkWidget     *toggle;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  GtkWidget     *button;
 
   g_return_val_if_fail (seed != NULL, NULL);
   g_return_val_if_fail (random_seed != NULL, NULL);
@@ -504,8 +506,10 @@ gimp_random_seed_new (guint    *seed,
   if (*random_seed)
     *seed = g_random_int ();
 
-  spinbutton = gimp_spin_button_new (&adj, *seed,
-                                     0, (guint32) -1 , 1, 10, 0, 1, 0);
+  adj = (GtkAdjustment *)
+    gtk_adjustment_new (*seed, 0, (guint32) -1, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -731,12 +735,14 @@ gimp_coordinates_new (GimpUnit         unit,
                       gdouble          ysize_100  /* % */)
 {
   GimpCoordinatesData *data;
-  GtkObject           *adjustment;
+  GtkAdjustment       *adjustment;
   GtkWidget           *spinbutton;
   GtkWidget           *sizeentry;
   GtkWidget           *chainbutton;
 
-  spinbutton = gimp_spin_button_new (&adjustment, 1, 0, 1, 1, 10, 0, 1, 2);
+  adjustment = (GtkAdjustment *) gtk_adjustment_new (1, 0, 1, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adjustment, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
   if (spinbutton_width > 0)
     {

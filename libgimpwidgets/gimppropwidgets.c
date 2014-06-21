@@ -1071,12 +1071,12 @@ gimp_prop_spin_button_new (GObject     *config,
                            gdouble      page_increment,
                            gint         digits)
 {
-  GParamSpec *param_spec;
-  GtkWidget  *spinbutton;
-  GtkObject  *adjustment;
-  gdouble     value;
-  gdouble     lower;
-  gdouble     upper;
+  GParamSpec    *param_spec;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adjustment;
+  gdouble        value;
+  gdouble        lower;
+  gdouble        upper;
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
@@ -1089,10 +1089,12 @@ gimp_prop_spin_button_new (GObject     *config,
   if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
     digits = 0;
 
-  spinbutton = gimp_spin_button_new (&adjustment,
-                                     value, lower, upper,
-                                     step_increment, page_increment,
-                                     0.0, 1.0, digits);
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (value, lower, upper,
+                        step_increment, page_increment, 0);
+
+  spinbutton = gtk_spin_button_new (adjustment, step_increment, digits);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
   set_param_spec (G_OBJECT (adjustment), spinbutton, param_spec);
 
