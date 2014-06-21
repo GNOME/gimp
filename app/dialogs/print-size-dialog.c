@@ -93,7 +93,7 @@ print_size_dialog_new (GimpImage              *image,
   GtkWidget       *height;
   GtkWidget       *hbox;
   GtkWidget       *chain;
-  GtkObject       *adj;
+  GtkAdjustment   *adj;
   GList           *focus_chain = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -151,10 +151,14 @@ print_size_dialog_new (GimpImage              *image,
 
   /*  the print size entry  */
 
-  width = gimp_spin_button_new (&adj, 1, 1, 1, 1, 10, 0, 1, 2);
+  adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  width = gtk_spin_button_new (adj, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (width), SB_WIDTH);
 
-  height = gimp_spin_button_new (&adj, 1, 1, 1, 1, 10, 0, 1, 2);
+  adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  height = gtk_spin_button_new (adj, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
 
   entry = gimp_size_entry_new (0, gimp_get_default_unit (), "%p",
@@ -213,10 +217,14 @@ print_size_dialog_new (GimpImage              *image,
 
   /*  the resolution entry  */
 
-  width = gimp_spin_button_new (&adj, 1, 1, 1, 1, 10, 0, 1, 2);
+  adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  width = gtk_spin_button_new (adj, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (width), SB_WIDTH);
 
-  height = gimp_spin_button_new (&adj, 1, 1, 1, 1, 10, 0, 1, 2);
+  adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  height = gtk_spin_button_new (adj, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
 
   label = gtk_label_new_with_mnemonic (_("_X resolution:"));

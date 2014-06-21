@@ -39,7 +39,7 @@ struct _GimpPaletteEditor
   GtkWidget        *view;
 
   GtkWidget        *color_name;
-  GtkAdjustment    *columns_data;
+  GtkAdjustment    *columns_adj;
 
   GtkWidget        *color_dialog;
 

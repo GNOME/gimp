@@ -169,7 +169,6 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   GtkWidget      *hbox;
   GtkWidget      *label;
   GtkWidget      *spinbutton;
-  GtkObject      *adj;
 
   editor->zoom_factor = 1.0;
   editor->col_width   = 0;
@@ -250,12 +249,14 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  spinbutton = gimp_spin_button_new (&adj, 0, 0, 64, 1, 4, 0, 1, 0);
-  editor->columns_data = GTK_ADJUSTMENT (adj);
+  editor->columns_adj = (GtkAdjustment *)
+    gtk_adjustment_new (0, 0, 64, 1, 4, 0);
+  spinbutton = gtk_spin_button_new (editor->columns_adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  g_signal_connect (editor->columns_data, "value-changed",
+  g_signal_connect (editor->columns_adj, "value-changed",
                     G_CALLBACK (palette_editor_columns_changed),
                     editor);
 }
@@ -320,7 +321,7 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
 {
   GimpPaletteEditor *palette_editor = GIMP_PALETTE_EDITOR (editor);
 
-  g_signal_handlers_block_by_func (palette_editor->columns_data,
+  g_signal_handlers_block_by_func (palette_editor->columns_adj,
                                    palette_editor_columns_changed,
                                    editor);
 
@@ -336,7 +337,7 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
                                             palette_editor_invalidate_preview,
                                             editor);
 
-      gtk_adjustment_set_value (palette_editor->columns_data, 0);
+      gtk_adjustment_set_value (palette_editor->columns_adj, 0);
     }
 
   GIMP_DATA_EDITOR_CLASS (parent_class)->set_data (editor, data);
@@ -352,7 +353,7 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
                         G_CALLBACK (palette_editor_invalidate_preview),
                         editor);
 
-      gtk_adjustment_set_value (palette_editor->columns_data,
+      gtk_adjustment_set_value (palette_editor->columns_adj,
                                 gimp_palette_get_columns (palette));
 
       palette_editor_scroll_top_left (palette_editor);
@@ -361,7 +362,7 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
                                          palette_editor);
     }
 
-  g_signal_handlers_unblock_by_func (palette_editor->columns_data,
+  g_signal_handlers_unblock_by_func (palette_editor->columns_adj,
                                      palette_editor_columns_changed,
                                      editor);
 }

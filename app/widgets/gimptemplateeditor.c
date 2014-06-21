@@ -136,7 +136,7 @@ gimp_template_editor_constructed (GObject *object)
   GtkWidget                 *vbox;
   GtkWidget                 *table;
   GtkWidget                 *label;
-  GtkObject                 *adjustment;
+  GtkAdjustment             *adjustment;
   GtkWidget                 *width;
   GtkWidget                 *height;
   GtkWidget                 *xres;
@@ -166,14 +166,14 @@ gimp_template_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  width = gimp_spin_button_new (&adjustment,
-                                1, 1, 1, 1, 10, 0,
-                                1, 2);
+  adjustment = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  width = gtk_spin_button_new (adjustment, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (width), SB_WIDTH);
 
-  height = gimp_spin_button_new (&adjustment,
-                                 1, 1, 1, 1, 10, 0,
-                                 1, 2);
+  adjustment = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  height = gtk_spin_button_new (adjustment, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (height), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
 
   /*  the image size labels  */
@@ -295,14 +295,14 @@ gimp_template_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  xres = gimp_spin_button_new (&adjustment,
-                               1, 1, 1, 1, 10, 0,
-                               1, 2);
+  adjustment = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  xres = gtk_spin_button_new (adjustment, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (xres), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (xres), SB_WIDTH);
 
-  yres = gimp_spin_button_new (&adjustment,
-                               1, 1, 1, 1, 10, 0,
-                               1, 2);
+  adjustment = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  yres = gtk_spin_button_new (adjustment, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (yres), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (yres), SB_WIDTH);
 
   /*  the resolution labels  */

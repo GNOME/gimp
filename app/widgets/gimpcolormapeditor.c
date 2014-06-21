@@ -150,7 +150,6 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
 {
   GtkWidget *frame;
   GtkWidget *table;
-  GtkObject *adj;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -193,9 +192,13 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
   gtk_box_pack_end (GTK_BOX (editor), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  editor->index_spinbutton = gimp_spin_button_new (&adj,
-                                                   0, 0, 0, 1, 10, 0, 1.0, 0);
-  editor->index_adjustment = GTK_ADJUSTMENT (adj);
+  editor->index_adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (0, 0, 0, 1, 10, 0);
+  editor->index_spinbutton = gtk_spin_button_new (editor->index_adjustment,
+                                                  1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (editor->index_spinbutton),
+                               TRUE);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Color index:"), 0.0, 0.5,
                              editor->index_spinbutton, 1, TRUE);
