@@ -847,12 +847,12 @@ save_image (const gchar  *filename,
 static gboolean
 load_dialog (const gchar *filename)
 {
-  GtkWidget *dialog;
-  GtkWidget *table;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  gint32     width, height, nframes;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *table;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  gint32         width, height, nframes;
+  gboolean       run;
 
   get_info (filename, &width, &height, &nframes, NULL);
 
@@ -887,8 +887,9 @@ load_dialog (const gchar *filename)
    * Maybe I add on-the-fly RGB conversion, to keep palettechanges...
    * But for now you can set a start- and a end-frame:
    */
-  spinbutton = gimp_spin_button_new (&adj,
-				     from_frame, 1, nframes, 1, 10, 0, 1, 0);
+  adj = (GtkAdjustment *) gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     C_("frame-range", "From:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
@@ -896,8 +897,9 @@ load_dialog (const gchar *filename)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &from_frame);
 
-  spinbutton = gimp_spin_button_new (&adj,
-				     to_frame, 1, nframes, 1, 10, 0, 1, 0);
+  adj = (GtkAdjustment *) gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     C_("frame-range", "To:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
@@ -917,12 +919,12 @@ load_dialog (const gchar *filename)
 static gboolean
 save_dialog (gint32 image_id)
 {
-  GtkWidget *dialog;
-  GtkWidget *table;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  gint       nframes;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *table;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  gint           nframes;
+  gboolean       run;
 
   g_free (gimp_image_get_layers (image_id, &nframes));
 
@@ -943,8 +945,9 @@ save_dialog (gint32 image_id)
    * Maybe I add on-the-fly RGB conversion, to keep palettechanges...
    * But for now you can set a start- and a end-frame:
    */
-  spinbutton = gimp_spin_button_new (&adj,
-				     from_frame, 1, nframes, 1, 10, 0, 1, 0);
+  adj = (GtkAdjustment *) gtk_adjustment_new (from_frame, 1, nframes, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     C_("frame-range", "From:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
@@ -952,8 +955,9 @@ save_dialog (gint32 image_id)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &from_frame);
 
-  spinbutton = gimp_spin_button_new (&adj,
-				     to_frame, 1, nframes, 1, 10, 0, 1, 0);
+  adj = (GtkAdjustment *) gtk_adjustment_new (to_frame, 1, nframes, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     C_("frame-range", "To:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);

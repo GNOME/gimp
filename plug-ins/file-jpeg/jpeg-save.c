@@ -96,7 +96,7 @@ typedef struct
   gboolean       run;
   GtkWidget     *use_restart_markers;   /*checkbox setting use restart markers*/
   GtkTextBuffer *text_buffer;
-  GtkObject     *scale_data;            /*for restart markers*/
+  GtkAdjustment *scale_data;            /*for restart markers*/
   gulong         handler_id_restart;
 
   GtkObject     *quality;               /*quality slidebar*/
@@ -849,12 +849,13 @@ save_dialog (void)
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (restart_markers_label);
 
-  /*pg.scale_data = scale_data;*/
+  pg.scale_data = (GtkAdjustment *)
+    gtk_adjustment_new (((jsvals.restart == 0) ?
+                         DEFAULT_RESTART_MCU_ROWS : jsvals.restart),
+                        1.0, 64.0, 1.0, 1.0, 0);
   pg.restart = restart_markers_scale = spinbutton =
-    gimp_spin_button_new (&pg.scale_data,
-                          ((jsvals.restart == 0) ?
-                           DEFAULT_RESTART_MCU_ROWS : jsvals.restart),
-                          1.0, 64.0, 1.0, 1.0, 0, 1.0, 0);
+    gtk_spin_button_new (pg.scale_data, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 5, 6, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
