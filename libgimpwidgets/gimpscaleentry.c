@@ -163,7 +163,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
                                          unconstrained_lower,
                                          unconstrained_upper,
                                          step_increment, page_increment, 0.0,
-                                         1.0, digits);
+                                         step_increment, digits);
 
       g_signal_connect
         (G_OBJECT (constrained_adj), "value-changed",
@@ -183,7 +183,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
     {
       spinbutton = gimp_spin_button_new (&adjustment, value, lower, upper,
                                          step_increment, page_increment, 0.0,
-                                         1.0, digits);
+                                         step_increment, digits);
 
       return_adj = adjustment;
     }
