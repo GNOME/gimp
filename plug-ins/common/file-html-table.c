@@ -397,16 +397,16 @@ save_image (const gchar  *filename,
 static gint
 save_dialog (gint32 image_ID)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *frame;
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  GtkWidget *entry;
-  GtkWidget *toggle;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *frame;
+  GtkWidget     *vbox;
+  GtkWidget     *table;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  GtkWidget     *entry;
+  GtkWidget     *toggle;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -565,8 +565,10 @@ save_dialog (gint32 image_ID)
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  spinbutton = gimp_spin_button_new (&adj, gtmvals.border,
-                                     0, 1000, 1, 10, 0, 1, 0);
+  adj = (GtkAdjustment *) gtk_adjustment_new (gtmvals.border,
+                                              0, 1000, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("_Border:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
@@ -611,8 +613,10 @@ save_dialog (gint32 image_ID)
                     G_CALLBACK (gtm_clheight_callback),
                     NULL);
 
-  spinbutton = gimp_spin_button_new (&adj, gtmvals.cellpadding,
-                                     0, 1000, 1, 10, 0, 1, 0);
+  adj = (GtkAdjustment *) gtk_adjustment_new (gtmvals.cellpadding,
+                                              0, 1000, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              _("Cell-_padding:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
@@ -624,8 +628,10 @@ save_dialog (gint32 image_ID)
                     G_CALLBACK (gimp_int_adjustment_update),
                     &gtmvals.cellpadding);
 
-  spinbutton = gimp_spin_button_new (&adj, gtmvals.cellspacing,
-                                     0, 1000, 1, 10, 0, 1, 0);
+  adj = (GtkAdjustment *) gtk_adjustment_new (gtmvals.cellspacing,
+                                              0, 1000, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
                              _("Cell-_spacing:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);

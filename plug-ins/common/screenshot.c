@@ -1193,22 +1193,22 @@ shoot_radio_button_toggled (GtkWidget *widget,
 static gboolean
 shoot_dialog (GdkScreen **screen)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *notebook;
-  GtkWidget *frame;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *button;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *notebook;
+  GtkWidget     *frame;
+  GtkWidget     *vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *label;
+  GtkWidget     *button;
 #if (defined (HAVE_XFIXES) || defined (HAVE_X11_XMU_WINUTIL_H) || defined (PLATFORM_OSX))
-  GtkWidget *toggle;
+  GtkWidget     *toggle;
 #endif
-  GtkWidget *spinner;
-  GdkPixbuf *pixbuf;
-  GSList    *radio_group = NULL;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *spinner;
+  GdkPixbuf     *pixbuf;
+  GSList        *radio_group = NULL;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -1379,8 +1379,11 @@ shoot_dialog (GdkScreen **screen)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  spinner = gimp_spin_button_new (&adj, shootvals.select_delay,
-                                  0.0, 100.0, 1.0, 5.0, 0.0, 0, 0);
+  adj = (GtkAdjustment *)
+    gtk_adjustment_new (shootvals.select_delay,
+                        0.0, 100.0, 1.0, 5.0, 0.0);
+  spinner = gtk_spin_button_new (adj, 0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinner), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spinner, FALSE, FALSE, 0);
   gtk_widget_show (spinner);
 

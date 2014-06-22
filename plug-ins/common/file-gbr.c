@@ -767,12 +767,12 @@ save_image (GFile   *file,
 static gboolean
 save_dialog (void)
 {
-  GtkWidget *dialog;
-  GtkWidget *table;
-  GtkWidget *entry;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *table;
+  GtkWidget     *entry;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   dialog = gimp_export_dialog_new (_("Brush"), PLUG_IN_BINARY, SAVE_PROC);
 
@@ -785,8 +785,9 @@ save_dialog (void)
                       table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
-  spinbutton = gimp_spin_button_new (&adj,
-                                     info.spacing, 1, 1000, 1, 10, 0, 1, 0);
+  adj = (GtkAdjustment *) gtk_adjustment_new (info.spacing, 1, 1000, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Spacing:"), 1.0, 0.5,
                              spinbutton, 1, TRUE);

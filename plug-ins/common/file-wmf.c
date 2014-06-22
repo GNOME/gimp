@@ -373,8 +373,8 @@ load_wmf_size (const gchar *filename,
 /*  User interface  */
 
 static GimpSizeEntry *size       = NULL;
-static GtkObject     *xadj       = NULL;
-static GtkObject     *yadj       = NULL;
+static GtkAdjustment *xadj       = NULL;
+static GtkAdjustment *yadj       = NULL;
 static GtkWidget     *constrain  = NULL;
 static gdouble        ratio_x    = 1.0;
 static gdouble        ratio_y    = 1.0;
@@ -409,8 +409,8 @@ static void
 load_dialog_ratio_callback (GtkAdjustment *adj,
                             gpointer       data)
 {
-  gdouble x = gtk_adjustment_get_value (GTK_ADJUSTMENT (xadj));
-  gdouble y = gtk_adjustment_get_value (GTK_ADJUSTMENT (yadj));
+  gdouble x = gtk_adjustment_get_value (xadj);
+  gdouble y = gtk_adjustment_get_value (yadj);
 
   if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (constrain)))
     {
@@ -468,8 +468,8 @@ load_dialog_set_ratio (gdouble x,
   g_signal_handlers_block_by_func (xadj, load_dialog_ratio_callback, NULL);
   g_signal_handlers_block_by_func (yadj, load_dialog_ratio_callback, NULL);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (xadj), x);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (yadj), y);
+  gtk_adjustment_set_value (xadj, x);
+  gtk_adjustment_set_value (yadj, y);
 
   g_signal_handlers_unblock_by_func (xadj, load_dialog_ratio_callback, NULL);
   g_signal_handlers_unblock_by_func (yadj, load_dialog_ratio_callback, NULL);
@@ -478,20 +478,20 @@ load_dialog_set_ratio (gdouble x,
 static gboolean
 load_dialog (const gchar *filename)
 {
-  GtkWidget *dialog;
-  GtkWidget *frame;
-  GtkWidget *hbox;
-  GtkWidget *vbox;
-  GtkWidget *image;
-  GtkWidget *table;
-  GtkWidget *table2;
-  GtkWidget *abox;
-  GtkWidget *res;
-  GtkWidget *label;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  guchar    *pixels;
-  gboolean   run = FALSE;
+  GtkWidget     *dialog;
+  GtkWidget     *frame;
+  GtkWidget     *hbox;
+  GtkWidget     *vbox;
+  GtkWidget     *image;
+  GtkWidget     *table;
+  GtkWidget     *table2;
+  GtkWidget     *abox;
+  GtkWidget     *res;
+  GtkWidget     *label;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  guchar        *pixels;
+  gboolean       run = FALSE;
 
   WmfLoadVals  vals = { WMF_DEFAULT_RESOLUTION,
                         - WMF_PREVIEW_SIZE, - WMF_PREVIEW_SIZE };
@@ -586,7 +586,9 @@ load_dialog (const gchar *filename)
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (hbox);
 
-  spinbutton = gimp_spin_button_new (&adj, 1, 1, 1, 1, 10, 0, 1, 2);
+  adj = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -634,13 +636,13 @@ load_dialog (const gchar *filename)
   gtk_table_set_row_spacing (GTK_TABLE (table2), 0, 4);
   gtk_box_pack_start (GTK_BOX (hbox), table2, FALSE, FALSE, 0);
 
-  spinbutton =
-    gimp_spin_button_new (&xadj,
-                          ratio_x,
-                          (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) wmf_width,
-                          (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) wmf_width,
-                          0.01, 0.1, 0,
-                          0.01, 4);
+  xadj = (GtkAdjustment *)
+    gtk_adjustment_new (ratio_x,
+                        (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) wmf_width,
+                        (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) wmf_width,
+                        0.01, 0.1, 0);
+  spinbutton = gtk_spin_button_new (xadj, 0.01, 4);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
   gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 0, 1);
   gtk_widget_show (spinbutton);
@@ -656,13 +658,13 @@ load_dialog (const gchar *filename)
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  spinbutton =
-    gimp_spin_button_new (&yadj,
-                          ratio_y,
-                          (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) wmf_height,
-                          (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) wmf_height,
-                          0.01, 0.1, 0,
-                          0.01, 4);
+  yadj = (GtkAdjustment *)
+    gtk_adjustment_new (ratio_y,
+                        (gdouble) GIMP_MIN_IMAGE_SIZE / (gdouble) wmf_height,
+                        (gdouble) GIMP_MAX_IMAGE_SIZE / (gdouble) wmf_height,
+                        0.01, 0.1, 0);
+  spinbutton = gtk_spin_button_new (yadj, 0.01, 4);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
   gtk_table_attach_defaults (GTK_TABLE (table2), spinbutton, 0, 1, 1, 2);
   gtk_widget_show (spinbutton);

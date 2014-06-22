@@ -1019,7 +1019,7 @@ save_dialog (const gint32     image_ID,
   GtkWidget      *frame;
   GtkWidget      *table;
   GtkWidget      *box;
-  GtkObject      *adjustment;
+  GtkAdjustment  *adjustment;
   GtkWidget      *alignment;
   GtkWidget      *tmpwidget;
   GtkWidget      *label;
@@ -1053,38 +1053,48 @@ save_dialog (const gint32     image_ID,
   /* label "Hot spot  _X:" + spinbox */
   x1 = hotspotRange->x;
   x2 = hotspotRange->width + hotspotRange->x - 1;
-  tmpwidget =
-    gimp_spin_button_new (&adjustment, xmcparas.x, x1, x2, 1, 5, 0, 0, 0);
-  gtk_widget_show (tmpwidget);
+
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (xmcparas.x, x1, x2, 1, 5, 0);
+  tmpwidget = gtk_spin_button_new (adjustment, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);
   g_object_set_property (G_OBJECT (tmpwidget), "xalign", &val);/* align right*/
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Hot spot _X:"), 0, 0.5, tmpwidget, 1, TRUE);
+  gtk_widget_show (tmpwidget);
+
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xmcparas.x);
+
   gimp_help_set_help_data (tmpwidget,
                            _("Enter the X coordinate of the hot spot. "
                              "The origin is top left corner."),
                            NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Hot spot _X:"), 0, 0.5, tmpwidget, 1, TRUE);
+
   /* label "Y:" + spinbox */
   y1 = hotspotRange->y;
   y2 = hotspotRange->height + hotspotRange->y - 1;
-  tmpwidget =
-    gimp_spin_button_new (&adjustment, xmcparas.y, y1, y2, 1, 5, 0, 0, 0);
-  gtk_widget_show (tmpwidget);
+
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (xmcparas.y, y1, y2, 1, 5, 0);
+  tmpwidget = gtk_spin_button_new (adjustment, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);
   g_object_set_property (G_OBJECT (tmpwidget), "xalign", &val);/* align right*/
+  gimp_table_attach_aligned (GTK_TABLE (table), 1, 0,
+                             "_Y:", 1.0, 0.5, tmpwidget, 1, TRUE);
+  gtk_widget_show (tmpwidget);
+
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xmcparas.y);
-  /* tooltip */
+
   gimp_help_set_help_data (tmpwidget,
                            _("Enter the Y coordinate of the hot spot. "
                              "The origin is top left corner."),
                            NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 1, 0,
-                             "_Y:", 1.0, 0.5, tmpwidget, 1, TRUE);
 
   /*
    *  Auto-crop
@@ -1163,29 +1173,35 @@ save_dialog (const gint32     image_ID,
    */
   /* spin button */
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4, _("_Delay:"),
+                             0, 0.5, box, 3, TRUE);
   gtk_widget_show (box);
-  tmpwidget = gimp_spin_button_new (&adjustment,
-                                    xmcvals.delay, CURSOR_MINIMUM_DELAY,
-                                    CURSOR_MAX_DELAY, 1, 5, 0, 1, 0);
-  gtk_widget_show (tmpwidget);
+
+  gimp_help_set_help_data (box,
+                           _("Enter time span in milliseconds in which "
+                             "each frame is rendered."),
+                           NULL);
+
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (xmcvals.delay, CURSOR_MINIMUM_DELAY,
+                        CURSOR_MAX_DELAY, 1, 5, 0);
+  tmpwidget = gtk_spin_button_new (adjustment, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (tmpwidget), TRUE);
   g_value_set_double (&val, 1.0);
   g_object_set_property (G_OBJECT (tmpwidget), "xalign", &val);/* align right*/
   gtk_box_pack_start (GTK_BOX (box), tmpwidget, TRUE, TRUE, 0);
+  gtk_widget_show (tmpwidget);
+
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xmcvals.delay);
+
   /* appended "ms" */
   tmpwidget = gtk_label_new ("ms");
   gtk_misc_set_alignment (GTK_MISC (tmpwidget), 0, 0.5); /*align left*/
   gtk_box_pack_start (GTK_BOX (box), tmpwidget, TRUE, TRUE, 0);
   gtk_widget_show (tmpwidget);
-  /* tooltip */
-  gimp_help_set_help_data (box,
-                           _("Enter time span in milliseconds in which "
-                             "each frame is rendered."),
-                        NULL);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4, _("_Delay:"),
-                             0, 0.5, box, 3, TRUE);
+
   /* Replace delay? */
   tmpwidget =
     gimp_int_radio_group_new (FALSE, NULL, G_CALLBACK (gimp_radio_button_update),
