@@ -55,7 +55,7 @@ static gint GIMP_PROJECTION_CHUNK_HEIGHT = 128;
 /*  how much time, in seconds, do we allow chunk rendering to take,
  *  aiming for 15fps
  */
-static gint GIMP_PROJECTION_CHUNK_TIME = 0.0666;
+static gdouble GIMP_PROJECTION_CHUNK_TIME = 0.0666;
 
 
 enum
