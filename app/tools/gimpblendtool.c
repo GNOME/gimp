@@ -41,6 +41,8 @@
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
 
+#include "gegl/gimp-gegl-config-proxy.h"
+
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -87,8 +89,8 @@ static void   gimp_blend_tool_motion              (GimpTool              *tool,
                                                    guint32                time,
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
-static void   gimp_blend_tool_point_motion        (GimpBlendTool *blend_tool,
-                                                   gboolean constrain_angle);
+static void   gimp_blend_tool_point_motion        (GimpBlendTool         *blend_tool,
+                                                   gboolean               constrain_angle);
 static gboolean gimp_blend_tool_key_press         (GimpTool              *tool,
                                                    GdkEventKey           *kevent,
                                                    GimpDisplay           *display);
@@ -119,6 +121,9 @@ static void   gimp_blend_tool_push_status         (GimpBlendTool         *blend_
 
 static void   gimp_blend_tool_create_graph        (GimpBlendTool         *blend_tool);
 static void   gimp_blend_tool_update_preview_coords (GimpBlendTool       *blend_tool);
+static void   gimp_blend_tool_options_notify      (GimpTool              *tool,
+                                                   GimpToolOptions       *options,
+                                                   const GParamSpec      *pspec);
 
 static void   gimp_blend_tool_create_image_map    (GimpBlendTool         *blend_tool,
                                                    GimpDrawable          *drawable);
@@ -168,6 +173,7 @@ gimp_blend_tool_class_init (GimpBlendToolClass *klass)
   tool_class->key_press           = gimp_blend_tool_key_press;
   tool_class->active_modifier_key = gimp_blend_tool_active_modifier_key;
   tool_class->cursor_update       = gimp_blend_tool_cursor_update;
+  tool_class->options_notify      = gimp_blend_tool_options_notify;
 
   draw_tool_class->draw           = gimp_blend_tool_draw;
 }
@@ -632,14 +638,18 @@ static void
 gimp_blend_tool_start (GimpBlendTool         *blend_tool,
                        GimpDisplay           *display)
 {
-  GimpTool      *tool     = GIMP_TOOL (blend_tool);
-  GimpImage     *image    = gimp_display_get_image (display);
-  GimpDrawable  *drawable = gimp_image_get_active_drawable (image);
+  GimpTool         *tool     = GIMP_TOOL (blend_tool);
+  GimpImage        *image    = gimp_display_get_image (display);
+  GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
+  GimpBlendOptions *options  = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
 
   tool->display  = display;
   tool->drawable = drawable;
 
   gimp_blend_tool_create_image_map (blend_tool, drawable);
+
+  /* Initially sync all of the properties */
+  gimp_gegl_config_proxy_sync (GIMP_OBJECT (options), blend_tool->render_node);
 
   if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
     gimp_draw_tool_start (GIMP_DRAW_TOOL (blend_tool), display);
@@ -783,6 +793,29 @@ gimp_blend_tool_update_preview_coords (GimpBlendTool *blend_tool)
                  "end_x",   blend_tool->end_x,
                  "end_y",   blend_tool->end_y,
                  NULL);
+}
+
+static void
+gimp_blend_tool_options_notify (GimpTool         *tool,
+                                GimpToolOptions  *options,
+                                const GParamSpec *pspec)
+{
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
+
+  /* Sync any property changes on the config object that match the op */
+  if (blend_tool->render_node &&
+      gegl_node_find_property (blend_tool->render_node, pspec->name))
+    {
+      GValue value = G_VALUE_INIT;
+      g_value_init (&value, pspec->value_type);
+
+      g_object_get_property (G_OBJECT (options), pspec->name, &value);
+      gegl_node_set_property (blend_tool->render_node, pspec->name, &value);
+
+      g_value_unset (&value);
+
+      gimp_image_map_apply (blend_tool->image_map, NULL);
+    }
 }
 
 /* Image map stuff */
