@@ -60,23 +60,26 @@ enum
 
 struct _GimpImageMap
 {
-  GimpObject          parent_instance;
+  GimpObject            parent_instance;
 
-  GimpDrawable       *drawable;
-  gchar              *undo_desc;
-  GeglNode           *operation;
-  gchar              *icon_name;
-  GimpImageMapRegion  region;
-  gboolean            gamma_hack;
+  GimpDrawable         *drawable;
+  gchar                *undo_desc;
+  GeglNode             *operation;
+  gchar                *icon_name;
+  GimpImageMapRegion    region;
+  gboolean              gamma_hack;
 
-  GeglRectangle       filter_area;
+  GeglRectangle         filter_area;
 
-  GimpFilter         *filter;
-  GeglNode           *translate;
-  GeglNode           *crop;
-  GeglNode           *cast_before;
-  GeglNode           *cast_after;
-  GimpApplicator     *applicator;
+  gdouble               opacity;
+  GimpLayerModeEffects  paint_mode;
+
+  GimpFilter           *filter;
+  GeglNode             *translate;
+  GeglNode             *crop;
+  GeglNode             *cast_before;
+  GeglNode             *cast_after;
+  GimpApplicator       *applicator;
 };
 
 
@@ -120,7 +123,9 @@ gimp_image_map_class_init (GimpImageMapClass *klass)
 static void
 gimp_image_map_init (GimpImageMap *image_map)
 {
-  image_map->region = GIMP_IMAGE_MAP_REGION_SELECTION;
+  image_map->region     = GIMP_IMAGE_MAP_REGION_SELECTION;
+  image_map->opacity    = GIMP_OPACITY_OPAQUE;
+  image_map->paint_mode = GIMP_REPLACE_MODE;
 }
 
 static void
@@ -219,6 +224,26 @@ gimp_image_map_set_gamma_hack (GimpImageMap *image_map,
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
 
   image_map->gamma_hack = gamma_hack;
+}
+
+void
+gimp_image_map_set_mode (GimpImageMap         *image_map,
+                         gdouble               opacity,
+                         GimpLayerModeEffects  paint_mode)
+{
+  g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
+
+  if (opacity    != image_map->opacity ||
+      paint_mode != image_map->paint_mode)
+    {
+      image_map->opacity    = opacity;
+      image_map->paint_mode = paint_mode;
+
+      if (image_map->applicator)
+        gimp_applicator_set_mode (image_map->applicator,
+                                  image_map->opacity,
+                                  image_map->paint_mode);
+    }
 }
 
 void
@@ -396,8 +421,8 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                             filter_node,   "aux");
 
       gimp_applicator_set_mode (image_map->applicator,
-                                GIMP_OPACITY_OPAQUE,
-                                GIMP_REPLACE_MODE);
+                                image_map->opacity,
+                                image_map->paint_mode);
     }
 
   if (image_map->region == GIMP_IMAGE_MAP_REGION_SELECTION)
