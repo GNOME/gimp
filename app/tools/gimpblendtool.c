@@ -800,6 +800,7 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
                                 GimpToolOptions  *options,
                                 const GParamSpec *pspec)
 {
+  GimpContext   *context    = GIMP_CONTEXT (options);
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
 
   /* Sync any property changes on the config object that match the op */
@@ -816,6 +817,16 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
 
       gimp_image_map_apply (blend_tool->image_map, NULL);
     }
+  else if (blend_tool->image_map &&
+           (! strcmp (pspec->name, "opacity") ||
+            ! strcmp (pspec->name, "paint-mode")))
+    {
+      gimp_image_map_set_mode (blend_tool->image_map,
+                               gimp_context_get_opacity (context),
+                               gimp_context_get_paint_mode (context));
+
+      gimp_image_map_apply (blend_tool->image_map, NULL);
+    }
 }
 
 /* Image map stuff */
@@ -824,6 +835,9 @@ static void
 gimp_blend_tool_create_image_map (GimpBlendTool *blend_tool,
                                   GimpDrawable  *drawable)
 {
+  GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
+  GimpContext      *context = GIMP_CONTEXT (options);
+
   if (! blend_tool->graph)
     gimp_blend_tool_create_graph (blend_tool);
 
@@ -838,6 +852,10 @@ gimp_blend_tool_create_image_map (GimpBlendTool *blend_tool,
   g_signal_connect (blend_tool->image_map, "flush",
                     G_CALLBACK (gimp_blend_tool_image_map_flush),
                     blend_tool);
+
+  gimp_image_map_set_mode (blend_tool->image_map,
+                           gimp_context_get_opacity (context),
+                           gimp_context_get_paint_mode (context));
 }
 
 static void
