@@ -16,19 +16,13 @@
  */
 
 /* This file contains the code necessary for generating on canvas
- * previews, either by connecting a function to process the pixels or
- * by connecting a specified GEGL operation to do the processing. It
- * keeps an undo buffer to allow direct modification of the pixel data
- * (so that it will show up in the projection) and it will restore the
- * source in case the mapping procedure was cancelled.
+ * previews, by connecting a specified GEGL operation to do the
+ * processing. It uses drawable filters that allow for non-destructive
+ * manupulation of drawable data, with live preview on screen.
  *
  * To create a tool that uses this, see /tools/gimpimagemaptool.c for
  * the interface and /tools/gimpcolorbalancetool.c for an example of
  * using that interface.
- *
- * Note that when talking about on canvas preview, we are speaking
- * about non destructive image editing where the operation is previewd
- * before being applied.
  */
 
 #include "config.h"
@@ -66,13 +60,13 @@ struct _GimpImageMap
   gchar                *undo_desc;
   GeglNode             *operation;
   gchar                *icon_name;
+
   GimpImageMapRegion    region;
+  gdouble               opacity;
+  GimpLayerModeEffects  paint_mode;
   gboolean              gamma_hack;
 
   GeglRectangle         filter_area;
-
-  gdouble               opacity;
-  GimpLayerModeEffects  paint_mode;
 
   GimpFilter           *filter;
   GeglNode             *translate;
