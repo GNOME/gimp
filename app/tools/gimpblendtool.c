@@ -298,27 +298,18 @@ gimp_blend_tool_button_press (GimpTool            *tool,
       gimp_blend_tool_halt (blend_tool);
     }
 
-  switch (gimp_blend_tool_get_point_under_cursor (blend_tool))
+  blend_tool->grabbed_point = gimp_blend_tool_get_point_under_cursor (blend_tool);
+
+  if (blend_tool->grabbed_point == POINT_NONE)
     {
-    case POINT_NONE:
-      blend_tool->start_x = coords->x;
-      blend_tool->start_y = coords->y;
-      /* fall thru */
-
-    case POINT_END:
-      blend_tool->end_x = coords->x;
-      blend_tool->end_y = coords->y;
-
       blend_tool->grabbed_point = POINT_END;
-      break;
 
-    case POINT_START:
       blend_tool->start_x = coords->x;
       blend_tool->start_y = coords->y;
-
-      blend_tool->grabbed_point = POINT_START;
-      break;
     }
+
+  gimp_blend_tool_point_motion (blend_tool,
+                                state & gimp_get_constrain_behavior_mask ());
 
   /*
    * gimp_blend_tool_start comes after determining what point is grabbed, so
@@ -405,7 +396,7 @@ gimp_blend_tool_motion (GimpTool         *tool,
 
 static void
 gimp_blend_tool_point_motion (GimpBlendTool *blend_tool,
-                              gboolean constrain_angle)
+                              gboolean       constrain_angle)
 {
   switch (blend_tool->grabbed_point)
     {
