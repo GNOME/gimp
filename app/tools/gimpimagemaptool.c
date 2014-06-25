@@ -277,16 +277,9 @@ gamma_hack (GtkToggleButton  *button,
 {
   if (image_map_tool->image_map)
     {
-      GimpTool *tool = GIMP_TOOL (image_map_tool);
-
-      gimp_tool_control_push_preserve (tool->control, TRUE);
-
-      gimp_image_map_tool_create_map (image_map_tool);
       gimp_image_map_set_gamma_hack (image_map_tool->image_map,
                                      gtk_toggle_button_get_active (button));
       gimp_image_map_tool_preview (image_map_tool);
-
-      gimp_tool_control_pop_preserve (tool->control);
     }
 }
 
@@ -523,13 +516,12 @@ gimp_image_map_tool_options_notify (GimpTool         *tool,
                                     GimpToolOptions  *options,
                                     const GParamSpec *pspec)
 {
-  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
+  GimpImageMapTool    *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
+  GimpImageMapOptions *im_options     = GIMP_IMAGE_MAP_OPTIONS (options);
 
   if (! strcmp (pspec->name, "preview") &&
       image_map_tool->image_map)
     {
-      GimpImageMapOptions *im_options = GIMP_IMAGE_MAP_OPTIONS (options);
-
       if (im_options->preview)
         {
           gimp_tool_control_push_preserve (tool->control, TRUE);
@@ -550,12 +542,8 @@ gimp_image_map_tool_options_notify (GimpTool         *tool,
   else if (! strcmp (pspec->name, "region") &&
            image_map_tool->image_map)
     {
-      gimp_tool_control_push_preserve (tool->control, TRUE);
-
-      gimp_image_map_tool_create_map (image_map_tool);
+      gimp_image_map_set_region (image_map_tool->image_map, im_options->region);
       gimp_image_map_tool_preview (image_map_tool);
-
-      gimp_tool_control_pop_preserve (tool->control);
     }
 }
 
