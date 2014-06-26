@@ -58,9 +58,11 @@ struct _GimpBlendTool
   gdouble         mouse_x;    /*  pointer x coord   */
   gdouble         mouse_y;    /*  pointer y coord   */
 
-  GimpCanvasItem *start_handle;
   GimpCanvasItem *line;
-  GimpCanvasItem *end_handle;
+  GimpCanvasItem *start_handle_circle;
+  GimpCanvasItem *start_handle_cross;
+  GimpCanvasItem *end_handle_circle;
+  GimpCanvasItem *end_handle_cross;
 
   GeglNode       *graph;
   GeglNode       *render_node;
