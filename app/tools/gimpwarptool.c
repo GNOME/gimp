@@ -726,6 +726,12 @@ gimp_warp_tool_update_stroke (GimpWarpTool *wt,
       bbox.width  = max_x - min_x + size;
       bbox.height = max_y - min_y + size;
 
+#ifdef WARP_DEBUG
+  g_printerr ("update stroke: (%d,%d), %dx%d\n",
+              bbox.x, bbox.y,
+              bbox.width, bbox.height);
+#endif
+
       gimp_image_map_apply (wt->image_map, &bbox);
     }
 }
