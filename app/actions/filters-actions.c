@@ -164,6 +164,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:grid",
     NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_GRID */ },
 
+  { "filters-kaleidoscope", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Kaleidoscope..."), NULL, NULL,
+    "gegl:mirrors",
+    NULL /* FIXME GIMP_HELP_FILTER_KALEIDOSCOPE */ },
+
   { "filters-lens-distortion", GIMP_STOCK_GEGL,
     NC_("filters-action", "Lens Distortion..."), NULL, NULL,
     "gegl:lens-distortion",
@@ -435,6 +440,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-fractal-trace",           writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-grid",                    writable);
+  SET_SENSITIVE ("filters-kaleidoscope",            writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
   SET_SENSITIVE ("filters-mosaic",                  writable);
   SET_SENSITIVE ("filters-motion-blur-circular",    writable);

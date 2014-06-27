@@ -507,6 +507,7 @@ sanity_check_gegl_ops (void)
     "gegl:map-relative",
     "gegl:matting-global",
 /*  "gegl:matting-levin",*/ /* XXX: do we want to require this? */
+    "gegl:mirrors",
     "gegl:mono-mixer",
     "gegl:motion-blur-circular",
     "gegl:motion-blur-linear",
