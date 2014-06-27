@@ -259,9 +259,8 @@
 
 	<autotools id="gtk+-2.24" autogen-sh="configure"
 		autogenargs="--with-gdktarget=quartz --enable-debug=yes --disable-gtk-doc --enable-quartz-relocation --without-x --with-xinput --enable-xinerama">
-		<branch module="gtk+/2.24/gtk+-2.24.23.tar.xz" version="2.24.23"
-			hash="sha256:a0a406e27e9b5e7d6b2c4334212706ed5cdcd41e713e66c9ae950655dd61517c">
-			<patch file="GTK-Add-missing-information-to-po-translation-files.patch"
+		<branch module="gtk+/2.24/gtk+-2.24.24.tar.xz" version="2.24.24">
+			<patch file="0001-GTK-Add-missing-information-to-po-translation-files.patch"
 				strip="1" />
 		</branch>
 		<dependencies>

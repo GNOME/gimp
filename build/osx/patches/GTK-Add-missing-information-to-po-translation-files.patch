@@ -1,4 +1,4 @@
-From 46fe9a9d8793498788536d618ebb2f8a29d8d841 Mon Sep 17 00:00:00 2001
+From 5b1b3bd91db454247fd720a3eb769de526117f5e Mon Sep 17 00:00:00 2001
 From: Sven Claussner <sclaussner@src.gnome.org>
 Date: Fri, 13 Jun 2014 18:20:21 +0200
 Subject: [PATCH] GTK+: Add missing information to po translation files.
@@ -14,7 +14,7 @@ cleans up duplicate lines.
  po-properties/ar.po          |  1 +
  po-properties/as.po          |  1 +
  po-properties/ast.po         |  1 +
- po-properties/az.po          | 28 ++--------------------------
+ po-properties/az.po          | 26 +-------------------------
  po-properties/az_IR.po       |  1 +
  po-properties/be.po          |  1 +
  po-properties/be@latin.po    |  1 +
@@ -25,15 +25,11 @@ cleans up duplicate lines.
  po-properties/bs.po          |  1 +
  po-properties/ca.po          |  1 +
  po-properties/ca@valencia.po |  1 +
- po-properties/crh.po         |  3 ++-
- po-properties/cs.po          |  0
- po-properties/cy.po          |  0
+ po-properties/crh.po         |  1 +
  po-properties/da.po          |  1 +
- po-properties/de.po          |  0
  po-properties/dz.po          |  1 +
  po-properties/el.po          |  1 +
  po-properties/en_CA.po       |  1 +
- po-properties/en_GB.po       |  0
  po-properties/eo.po          |  1 +
  po-properties/es.po          |  1 +
  po-properties/et.po          |  1 +
@@ -42,7 +38,6 @@ cleans up duplicate lines.
  po-properties/fi.po          |  1 +
  po-properties/fr.po          |  1 +
  po-properties/ga.po          |  1 +
- po-properties/gl.po          |  0
  po-properties/gu.po          |  1 +
  po-properties/he.po          |  1 +
  po-properties/hi.po          |  1 +
@@ -53,15 +48,13 @@ cleans up duplicate lines.
  po-properties/id.po          |  1 +
  po-properties/io.po          |  1 +
  po-properties/is.po          |  1 +
- po-properties/it.po          |  0
  po-properties/ja.po          |  1 +
- po-properties/ka.po          |  3 ++-
+ po-properties/ka.po          |  1 +
  po-properties/kk.po          |  1 +
  po-properties/kn.po          |  1 +
  po-properties/ko.po          |  2 +-
  po-properties/ku.po          |  1 +
  po-properties/li.po          |  1 +
- po-properties/lt.po          |  0
  po-properties/lv.po          |  1 +
  po-properties/mai.po         |  1 +
  po-properties/mi.po          |  1 +
@@ -80,11 +73,9 @@ cleans up duplicate lines.
  po-properties/oc.po          |  1 +
  po-properties/or.po          |  1 +
  po-properties/pa.po          |  1 +
- po-properties/pl.po          |  0
  po-properties/ps.po          |  1 +
  po-properties/pt.po          |  1 +
  po-properties/pt_BR.po       |  1 +
- po-properties/ro.po          |  0
  po-properties/ru.po          |  1 +
  po-properties/rw.po          |  1 +
  po-properties/si.po          |  1 +
@@ -113,15 +104,12 @@ cleans up duplicate lines.
  po-properties/zh_CN.po       |  1 +
  po-properties/zh_HK.po       |  1 +
  po-properties/zh_TW.po       |  1 +
- po/af.po                     |  0
  po/am.po                     |  1 +
  po/ang.po                    |  1 +
- po/ar.po                     |  0
  po/as.po                     |  1 +
  po/ast.po                    |  1 +
  po/az.po                     |  1 +
  po/az_IR.po                  |  1 +
- po/be.po                     |  0
  po/be@latin.po               |  1 +
  po/bg.po                     |  1 +
  po/bn.po                     |  1 +
@@ -130,15 +118,11 @@ cleans up duplicate lines.
  po/bs.po                     |  1 +
  po/ca.po                     |  1 +
  po/ca@valencia.po            |  1 +
- po/crh.po                    |  3 ++-
- po/cs.po                     |  0
- po/cy.po                     |  0
+ po/crh.po                    |  1 +
  po/da.po                     |  1 +
  po/de.po                     |  2 +-
  po/dz.po                     |  1 +
- po/el.po                     |  0
  po/en_CA.po                  |  1 +
- po/en_GB.po                  |  0
  po/eo.po                     |  1 +
  po/es.po                     |  1 +
  po/et.po                     |  1 +
@@ -147,26 +131,19 @@ cleans up duplicate lines.
  po/fi.po                     |  1 +
  po/fr.po                     |  1 +
  po/ga.po                     |  1 +
- po/gl.po                     |  0
  po/gu.po                     |  1 +
- po/he.po                     |  0
  po/hi.po                     |  1 +
  po/hr.po                     |  1 +
  po/hu.po                     |  2 +-
  po/hy.po                     |  1 +
- po/ia.po                     |  0
  po/id.po                     |  1 +
  po/io.po                     |  1 +
  po/is.po                     |  1 +
- po/it.po                     |  0
  po/ja.po                     |  1 +
- po/ka.po                     |  5 +++--
- po/kk.po                     |  0
+ po/ka.po                     |  3 ++-
  po/kn.po                     |  1 +
  po/ko.po                     |  2 +-
- po/ku.po                     |  0
  po/li.po                     |  1 +
- po/lt.po                     |  0
  po/lv.po                     |  1 +
  po/mai.po                    |  1 +
  po/mi.po                     |  1 +
@@ -179,17 +156,14 @@ cleans up duplicate lines.
  po/nb.po                     |  2 +-
  po/nds.po                    |  1 +
  po/ne.po                     |  1 +
- po/nl.po                     |  0
  po/nn.po                     |  1 +
  po/nso.po                    |  1 +
  po/oc.po                     |  1 +
  po/or.po                     |  1 +
  po/pa.po                     |  1 +
- po/pl.po                     |  0
  po/ps.po                     |  1 +
  po/pt.po                     |  1 +
  po/pt_BR.po                  |  1 +
- po/ro.po                     |  0
  po/ru.po                     |  1 +
  po/rw.po                     |  1 +
  po/si.po                     |  1 +
@@ -202,7 +176,6 @@ cleans up duplicate lines.
  po/sv.po                     |  1 +
  po/ta.po                     |  1 +
  po/te.po                     |  1 +
- po/th.po                     |  0
  po/tk.po                     |  1 +
  po/tr.po                     |  1 +
  po/tt.po                     |  1 +
@@ -215,225 +188,12 @@ cleans up duplicate lines.
  po/wa.po                     |  1 +
  po/xh.po                     |  1 +
  po/yi.po                     |  1 +
- po/zh_CN.po                  |  0
  po/zh_HK.po                  |  1 +
  po/zh_TW.po                  |  1 +
- 210 files changed, 188 insertions(+), 38 deletions(-)
- mode change 100644 => 100755 po-properties/af.po
- mode change 100644 => 100755 po-properties/am.po
- mode change 100644 => 100755 po-properties/ang.po
- mode change 100644 => 100755 po-properties/ar.po
- mode change 100644 => 100755 po-properties/as.po
- mode change 100644 => 100755 po-properties/ast.po
- mode change 100644 => 100755 po-properties/az.po
- mode change 100644 => 100755 po-properties/az_IR.po
- mode change 100644 => 100755 po-properties/be.po
- mode change 100644 => 100755 po-properties/be@latin.po
- mode change 100644 => 100755 po-properties/bg.po
- mode change 100644 => 100755 po-properties/bn.po
- mode change 100644 => 100755 po-properties/bn_IN.po
- mode change 100644 => 100755 po-properties/br.po
- mode change 100644 => 100755 po-properties/bs.po
- mode change 100644 => 100755 po-properties/ca.po
- mode change 100644 => 100755 po-properties/ca@valencia.po
- mode change 100644 => 100755 po-properties/crh.po
- mode change 100644 => 100755 po-properties/cs.po
- mode change 100644 => 100755 po-properties/cy.po
- mode change 100644 => 100755 po-properties/da.po
- mode change 100644 => 100755 po-properties/de.po
- mode change 100644 => 100755 po-properties/dz.po
- mode change 100644 => 100755 po-properties/el.po
- mode change 100644 => 100755 po-properties/en_CA.po
- mode change 100644 => 100755 po-properties/en_GB.po
- mode change 100644 => 100755 po-properties/eo.po
- mode change 100644 => 100755 po-properties/es.po
- mode change 100644 => 100755 po-properties/et.po
- mode change 100644 => 100755 po-properties/eu.po
- mode change 100644 => 100755 po-properties/fa.po
- mode change 100644 => 100755 po-properties/fi.po
- mode change 100644 => 100755 po-properties/fr.po
- mode change 100644 => 100755 po-properties/ga.po
- mode change 100644 => 100755 po-properties/gl.po
- mode change 100644 => 100755 po-properties/gu.po
- mode change 100644 => 100755 po-properties/he.po
- mode change 100644 => 100755 po-properties/hi.po
- mode change 100644 => 100755 po-properties/hr.po
- mode change 100644 => 100755 po-properties/hu.po
- mode change 100644 => 100755 po-properties/hy.po
- mode change 100644 => 100755 po-properties/ia.po
- mode change 100644 => 100755 po-properties/id.po
- mode change 100644 => 100755 po-properties/io.po
- mode change 100644 => 100755 po-properties/is.po
- mode change 100644 => 100755 po-properties/it.po
- mode change 100644 => 100755 po-properties/ja.po
- mode change 100644 => 100755 po-properties/ka.po
- mode change 100644 => 100755 po-properties/kk.po
- mode change 100644 => 100755 po-properties/kn.po
- mode change 100644 => 100755 po-properties/ko.po
- mode change 100644 => 100755 po-properties/ku.po
- mode change 100644 => 100755 po-properties/li.po
- mode change 100644 => 100755 po-properties/lt.po
- mode change 100644 => 100755 po-properties/lv.po
- mode change 100644 => 100755 po-properties/mai.po
- mode change 100644 => 100755 po-properties/mi.po
- mode change 100644 => 100755 po-properties/mk.po
- mode change 100644 => 100755 po-properties/ml.po
- mode change 100644 => 100755 po-properties/mn.po
- mode change 100644 => 100755 po-properties/mr.po
- mode change 100644 => 100755 po-properties/ms.po
- mode change 100644 => 100755 po-properties/my.po
- mode change 100644 => 100755 po-properties/nb.po
- mode change 100644 => 100755 po-properties/nds.po
- mode change 100644 => 100755 po-properties/ne.po
- mode change 100644 => 100755 po-properties/nl.po
- mode change 100644 => 100755 po-properties/nn.po
- mode change 100644 => 100755 po-properties/nso.po
- mode change 100644 => 100755 po-properties/oc.po
- mode change 100644 => 100755 po-properties/or.po
- mode change 100644 => 100755 po-properties/pa.po
- mode change 100644 => 100755 po-properties/pl.po
- mode change 100644 => 100755 po-properties/ps.po
- mode change 100644 => 100755 po-properties/pt.po
- mode change 100644 => 100755 po-properties/pt_BR.po
- mode change 100644 => 100755 po-properties/ro.po
- mode change 100644 => 100755 po-properties/ru.po
- mode change 100644 => 100755 po-properties/rw.po
- mode change 100644 => 100755 po-properties/si.po
- mode change 100644 => 100755 po-properties/sk.po
- mode change 100644 => 100755 po-properties/sl.po
- mode change 100644 => 100755 po-properties/sq.po
- mode change 100644 => 100755 po-properties/sr.po
- mode change 100644 => 100755 po-properties/sr@ije.po
- mode change 100644 => 100755 po-properties/sr@latin.po
- mode change 100644 => 100755 po-properties/sv.po
- mode change 100644 => 100755 po-properties/ta.po
- mode change 100644 => 100755 po-properties/te.po
- mode change 100644 => 100755 po-properties/th.po
- mode change 100644 => 100755 po-properties/tk.po
- mode change 100644 => 100755 po-properties/tr.po
- mode change 100644 => 100755 po-properties/tt.po
- mode change 100644 => 100755 po-properties/ug.po
- mode change 100644 => 100755 po-properties/uk.po
- mode change 100644 => 100755 po-properties/ur.po
- mode change 100644 => 100755 po-properties/uz.po
- mode change 100644 => 100755 po-properties/uz@cyrillic.po
- mode change 100644 => 100755 po-properties/vi.po
- mode change 100644 => 100755 po-properties/wa.po
- mode change 100644 => 100755 po-properties/xh.po
- mode change 100644 => 100755 po-properties/yi.po
- mode change 100644 => 100755 po-properties/zh_CN.po
- mode change 100644 => 100755 po-properties/zh_HK.po
- mode change 100644 => 100755 po-properties/zh_TW.po
- mode change 100644 => 100755 po/af.po
- mode change 100644 => 100755 po/am.po
- mode change 100644 => 100755 po/ang.po
- mode change 100644 => 100755 po/ar.po
- mode change 100644 => 100755 po/as.po
- mode change 100644 => 100755 po/ast.po
- mode change 100644 => 100755 po/az.po
- mode change 100644 => 100755 po/az_IR.po
- mode change 100644 => 100755 po/be.po
- mode change 100644 => 100755 po/be@latin.po
- mode change 100644 => 100755 po/bg.po
- mode change 100644 => 100755 po/bn.po
- mode change 100644 => 100755 po/bn_IN.po
- mode change 100644 => 100755 po/br.po
- mode change 100644 => 100755 po/bs.po
- mode change 100644 => 100755 po/ca.po
- mode change 100644 => 100755 po/ca@valencia.po
- mode change 100644 => 100755 po/crh.po
- mode change 100644 => 100755 po/cs.po
- mode change 100644 => 100755 po/cy.po
- mode change 100644 => 100755 po/da.po
- mode change 100644 => 100755 po/de.po
- mode change 100644 => 100755 po/dz.po
- mode change 100644 => 100755 po/el.po
- mode change 100644 => 100755 po/en_CA.po
- mode change 100644 => 100755 po/en_GB.po
- mode change 100644 => 100755 po/eo.po
- mode change 100644 => 100755 po/es.po
- mode change 100644 => 100755 po/et.po
- mode change 100644 => 100755 po/eu.po
- mode change 100644 => 100755 po/fa.po
- mode change 100644 => 100755 po/fi.po
- mode change 100644 => 100755 po/fr.po
- mode change 100644 => 100755 po/ga.po
- mode change 100644 => 100755 po/gl.po
- mode change 100644 => 100755 po/gu.po
- mode change 100644 => 100755 po/he.po
- mode change 100644 => 100755 po/hi.po
- mode change 100644 => 100755 po/hr.po
- mode change 100644 => 100755 po/hu.po
- mode change 100644 => 100755 po/hy.po
- mode change 100644 => 100755 po/ia.po
- mode change 100644 => 100755 po/id.po
- mode change 100644 => 100755 po/io.po
- mode change 100644 => 100755 po/is.po
- mode change 100644 => 100755 po/it.po
- mode change 100644 => 100755 po/ja.po
- mode change 100644 => 100755 po/ka.po
- mode change 100644 => 100755 po/kk.po
- mode change 100644 => 100755 po/kn.po
- mode change 100644 => 100755 po/ko.po
- mode change 100644 => 100755 po/ku.po
- mode change 100644 => 100755 po/li.po
- mode change 100644 => 100755 po/lt.po
- mode change 100644 => 100755 po/lv.po
- mode change 100644 => 100755 po/mai.po
- mode change 100644 => 100755 po/mi.po
- mode change 100644 => 100755 po/mk.po
- mode change 100644 => 100755 po/ml.po
- mode change 100644 => 100755 po/mn.po
- mode change 100644 => 100755 po/mr.po
- mode change 100644 => 100755 po/ms.po
- mode change 100644 => 100755 po/my.po
- mode change 100644 => 100755 po/nb.po
- mode change 100644 => 100755 po/nds.po
- mode change 100644 => 100755 po/ne.po
- mode change 100644 => 100755 po/nl.po
- mode change 100644 => 100755 po/nn.po
- mode change 100644 => 100755 po/nso.po
- mode change 100644 => 100755 po/oc.po
- mode change 100644 => 100755 po/or.po
- mode change 100644 => 100755 po/pa.po
- mode change 100644 => 100755 po/pl.po
- mode change 100644 => 100755 po/ps.po
- mode change 100644 => 100755 po/pt.po
- mode change 100644 => 100755 po/pt_BR.po
- mode change 100644 => 100755 po/ro.po
- mode change 100644 => 100755 po/ru.po
- mode change 100644 => 100755 po/rw.po
- mode change 100644 => 100755 po/si.po
- mode change 100644 => 100755 po/sk.po
- mode change 100644 => 100755 po/sl.po
- mode change 100644 => 100755 po/sq.po
- mode change 100644 => 100755 po/sr.po
- mode change 100644 => 100755 po/sr@ije.po
- mode change 100644 => 100755 po/sr@latin.po
- mode change 100644 => 100755 po/sv.po
- mode change 100644 => 100755 po/ta.po
- mode change 100644 => 100755 po/te.po
- mode change 100644 => 100755 po/th.po
- mode change 100644 => 100755 po/tk.po
- mode change 100644 => 100755 po/tr.po
- mode change 100644 => 100755 po/tt.po
- mode change 100644 => 100755 po/ug.po
- mode change 100644 => 100755 po/uk.po
- mode change 100644 => 100755 po/ur.po
- mode change 100644 => 100755 po/uz.po
- mode change 100644 => 100755 po/uz@cyrillic.po
- mode change 100644 => 100755 po/vi.po
- mode change 100644 => 100755 po/wa.po
- mode change 100644 => 100755 po/xh.po
- mode change 100644 => 100755 po/yi.po
- mode change 100644 => 100755 po/zh_CN.po
- mode change 100644 => 100755 po/zh_HK.po
- mode change 100644 => 100755 po/zh_TW.po
+ 182 files changed, 183 insertions(+), 33 deletions(-)
 
 diff --git a/po-properties/af.po b/po-properties/af.po
-old mode 100644
-new mode 100755
-index a6356cf..bade5cb
+index a6356cf..bade5cb 100644
 --- a/po-properties/af.po
 +++ b/po-properties/af.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -445,9 +205,7 @@ index a6356cf..bade5cb
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/am.po b/po-properties/am.po
-old mode 100644
-new mode 100755
-index b697568..fe22a68
+index b697568..fe22a68 100644
 --- a/po-properties/am.po
 +++ b/po-properties/am.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -459,9 +217,7 @@ index b697568..fe22a68
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ang.po b/po-properties/ang.po
-old mode 100644
-new mode 100755
-index 2312603..7f5cd29
+index 2312603..7f5cd29 100644
 --- a/po-properties/ang.po
 +++ b/po-properties/ang.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -473,9 +229,7 @@ index 2312603..7f5cd29
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ar.po b/po-properties/ar.po
-old mode 100644
-new mode 100755
-index 6534b0c..8bccd82
+index 6534b0c..8bccd82 100644
 --- a/po-properties/ar.po
 +++ b/po-properties/ar.po
 @@ -16,6 +16,7 @@ msgstr ""
@@ -487,9 +241,7 @@ index 6534b0c..8bccd82
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/as.po b/po-properties/as.po
-old mode 100644
-new mode 100755
-index 0b4d660..d7cba2c
+index 0b4d660..d7cba2c 100644
 --- a/po-properties/as.po
 +++ b/po-properties/as.po
 @@ -13,6 +13,7 @@ msgstr ""
@@ -501,9 +253,7 @@ index 0b4d660..d7cba2c
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ast.po b/po-properties/ast.po
-old mode 100644
-new mode 100755
-index 83a2617..ceab2cb
+index 83a2617..ceab2cb 100644
 --- a/po-properties/ast.po
 +++ b/po-properties/ast.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -515,9 +265,7 @@ index 83a2617..ceab2cb
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/az.po b/po-properties/az.po
-old mode 100644
-new mode 100755
-index e2b7952..a03caf7
+index e2b7952..488b63a 100644
 --- a/po-properties/az.po
 +++ b/po-properties/az.po
 @@ -1,28 +1,3 @@
@@ -549,20 +297,16 @@ index e2b7952..a03caf7
  # translation of gtk+-properties.HEAD.az.po to Azerbaijani Turkish
  # Copyright (C) 2003, 2004 Free Software Foundation, Inc.
  # Vasif Ismailoglu MD <azerb_linux@hotmail.com>, 2000.
-@@ -35,7 +10,8 @@ msgstr ""
- "POT-Creation-Date: 2010-06-10 11:56-0400\n"
- "PO-Revision-Date: 2004-03-07 18:05+0200\n"
+@@ -37,6 +12,7 @@ msgstr ""
  "Last-Translator: Mətin Əmirov <metin@karegen.com>\n"
--"Language-Team: Azerbaijani Turkish <translation-team-az@lists.sourceforge."
-+"Language-Team: Azerbaijani Turkish <translation-team-az@lists.sourceforge.\n"
-+"Language: az\n"
+ "Language-Team: Azerbaijani Turkish <translation-team-az@lists.sourceforge."
  "net>\n"
++"Language: az\n"
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/az_IR.po b/po-properties/az_IR.po
-old mode 100644
-new mode 100755
-index 8e02fc2..a4b7e48
+index 8e02fc2..a4b7e48 100644
 --- a/po-properties/az_IR.po
 +++ b/po-properties/az_IR.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -574,9 +318,7 @@ index 8e02fc2..a4b7e48
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/be.po b/po-properties/be.po
-old mode 100644
-new mode 100755
-index 4ab9cb9..0b94e44
+index 4ab9cb9..0b94e44 100644
 --- a/po-properties/be.po
 +++ b/po-properties/be.po
 @@ -10,6 +10,7 @@ msgstr ""
@@ -588,23 +330,19 @@ index 4ab9cb9..0b94e44
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/be@latin.po b/po-properties/be@latin.po
-old mode 100644
-new mode 100755
-index 3fdaf6b..8a3246d
+index 3fdaf6b..7472be9 100644
 --- a/po-properties/be@latin.po
 +++ b/po-properties/be@latin.po
 @@ -10,6 +10,7 @@ msgstr ""
  "PO-Revision-Date: 2007-12-09 14:44+0200\n"
  "Last-Translator: Alaksandar Navicki <zolak@lacinka.org>\n"
  "Language-Team: i18n@mova.org <i18n@mova.org>\n"
-+"Language: be@latin\n"
++"Language: be-latin\n"
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/bg.po b/po-properties/bg.po
-old mode 100644
-new mode 100755
-index b909ac6..96a7283
+index b909ac6..96a7283 100644
 --- a/po-properties/bg.po
 +++ b/po-properties/bg.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -616,9 +354,7 @@ index b909ac6..96a7283
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/bn.po b/po-properties/bn.po
-old mode 100644
-new mode 100755
-index 5c7d912..769e346
+index 5c7d912..769e346 100644
 --- a/po-properties/bn.po
 +++ b/po-properties/bn.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -630,9 +366,7 @@ index 5c7d912..769e346
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/bn_IN.po b/po-properties/bn_IN.po
-old mode 100644
-new mode 100755
-index 2ef81f2..5880038
+index 2ef81f2..5880038 100644
 --- a/po-properties/bn_IN.po
 +++ b/po-properties/bn_IN.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -644,9 +378,7 @@ index 2ef81f2..5880038
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/br.po b/po-properties/br.po
-old mode 100644
-new mode 100755
-index 5ea003b..cf5c77e
+index 5ea003b..cf5c77e 100644
 --- a/po-properties/br.po
 +++ b/po-properties/br.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -658,9 +390,7 @@ index 5ea003b..cf5c77e
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/bs.po b/po-properties/bs.po
-old mode 100644
-new mode 100755
-index ccc9155..0abc1bf
+index ccc9155..0abc1bf 100644
 --- a/po-properties/bs.po
 +++ b/po-properties/bs.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -672,9 +402,7 @@ index ccc9155..0abc1bf
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ca.po b/po-properties/ca.po
-old mode 100644
-new mode 100755
-index 8f5c2f7..4dd645e
+index 8f5c2f7..4dd645e 100644
 --- a/po-properties/ca.po
 +++ b/po-properties/ca.po
 @@ -31,6 +31,7 @@ msgstr ""
@@ -686,45 +414,31 @@ index 8f5c2f7..4dd645e
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ca@valencia.po b/po-properties/ca@valencia.po
-old mode 100644
-new mode 100755
-index c7901b0..594cb03
+index c7901b0..abde1c1 100644
 --- a/po-properties/ca@valencia.po
 +++ b/po-properties/ca@valencia.po
 @@ -31,6 +31,7 @@ msgstr ""
  "PO-Revision-Date: 2010-03-29 20:27+0200\n"
  "Last-Translator: David Planella <david.planella@ubuntu.com>\n"
  "Language-Team: Catalan <tradgnome@softcatala.org>\n"
-+"Language: ca@valencia\n"
++"Language: ca-XV\n"
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/crh.po b/po-properties/crh.po
-old mode 100644
-new mode 100755
-index 18bbd12..5e4b51c
+index 18bbd12..a37a24b 100644
 --- a/po-properties/crh.po
 +++ b/po-properties/crh.po
-@@ -9,7 +9,8 @@ msgstr ""
- "POT-Creation-Date: 2010-06-10 11:56-0400\n"
- "PO-Revision-Date: 2009-04-09 04:32-0500\n"
+@@ -11,6 +11,7 @@ msgstr ""
  "Last-Translator: Reşat SABIQ <tilde.birlik@gmail.com>\n"
--"Language-Team: Qırımtatarca (Qırım Türkçesi) <tilde-birlik-tercime@lists."
-+"Language-Team: Qırımtatarca (Qırım Türkçesi) <tilde-birlik-tercime@lists.\n"
-+"Language: crh\n"
+ "Language-Team: Qırımtatarca (Qırım Türkçesi) <tilde-birlik-tercime@lists."
  "sourceforge.net>\n"
++"Language: crh\n"
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
-diff --git a/po-properties/cs.po b/po-properties/cs.po
-old mode 100644
-new mode 100755
-diff --git a/po-properties/cy.po b/po-properties/cy.po
-old mode 100644
-new mode 100755
+ "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/da.po b/po-properties/da.po
-old mode 100644
-new mode 100755
-index 744caed..3747207
+index 744caed..3747207 100644
 --- a/po-properties/da.po
 +++ b/po-properties/da.po
 @@ -51,6 +51,7 @@ msgstr ""
@@ -735,13 +449,8 @@ index 744caed..3747207
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po-properties/de.po b/po-properties/de.po
-old mode 100644
-new mode 100755
 diff --git a/po-properties/dz.po b/po-properties/dz.po
-old mode 100644
-new mode 100755
-index 37b54b8..db336a9
+index 37b54b8..db336a9 100644
 --- a/po-properties/dz.po
 +++ b/po-properties/dz.po
 @@ -10,6 +10,7 @@ msgstr ""
@@ -753,9 +462,7 @@ index 37b54b8..db336a9
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/el.po b/po-properties/el.po
-old mode 100644
-new mode 100755
-index daef71d..0f6fb08
+index daef71d..0f6fb08 100644
 --- a/po-properties/el.po
 +++ b/po-properties/el.po
 @@ -30,6 +30,7 @@ msgstr ""
@@ -767,9 +474,7 @@ index daef71d..0f6fb08
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/en_CA.po b/po-properties/en_CA.po
-old mode 100644
-new mode 100755
-index 85e7889..2ef9dee
+index 85e7889..2ef9dee 100644
 --- a/po-properties/en_CA.po
 +++ b/po-properties/en_CA.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -780,13 +485,8 @@ index 85e7889..2ef9dee
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po-properties/en_GB.po b/po-properties/en_GB.po
-old mode 100644
-new mode 100755
 diff --git a/po-properties/eo.po b/po-properties/eo.po
-old mode 100644
-new mode 100755
-index d53c7fc..5f988eb
+index d53c7fc..5f988eb 100644
 --- a/po-properties/eo.po
 +++ b/po-properties/eo.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -798,9 +498,7 @@ index d53c7fc..5f988eb
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/es.po b/po-properties/es.po
-old mode 100644
-new mode 100755
-index aa189ea..99b8e09
+index aa189ea..99b8e09 100644
 --- a/po-properties/es.po
 +++ b/po-properties/es.po
 @@ -21,6 +21,7 @@ msgstr ""
@@ -812,9 +510,7 @@ index aa189ea..99b8e09
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/et.po b/po-properties/et.po
-old mode 100644
-new mode 100755
-index 2d735bc..d785ac1
+index 2d735bc..d785ac1 100644
 --- a/po-properties/et.po
 +++ b/po-properties/et.po
 @@ -20,6 +20,7 @@ msgstr ""
@@ -826,9 +522,7 @@ index 2d735bc..d785ac1
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/eu.po b/po-properties/eu.po
-old mode 100644
-new mode 100755
-index 73db2b8..56dc7b4
+index 73db2b8..56dc7b4 100644
 --- a/po-properties/eu.po
 +++ b/po-properties/eu.po
 @@ -10,6 +10,7 @@ msgstr ""
@@ -840,9 +534,7 @@ index 73db2b8..56dc7b4
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/fa.po b/po-properties/fa.po
-old mode 100644
-new mode 100755
-index 7cb83d5..590142c
+index 7cb83d5..590142c 100644
 --- a/po-properties/fa.po
 +++ b/po-properties/fa.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -854,9 +546,7 @@ index 7cb83d5..590142c
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/fi.po b/po-properties/fi.po
-old mode 100644
-new mode 100755
-index 6e30e14..460b0fb
+index 6e30e14..460b0fb 100644
 --- a/po-properties/fi.po
 +++ b/po-properties/fi.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -868,9 +558,7 @@ index 6e30e14..460b0fb
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/fr.po b/po-properties/fr.po
-old mode 100644
-new mode 100755
-index bc80208..35f0153
+index bc80208..35f0153 100644
 --- a/po-properties/fr.po
 +++ b/po-properties/fr.po
 @@ -25,6 +25,7 @@ msgstr ""
@@ -882,9 +570,7 @@ index bc80208..35f0153
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ga.po b/po-properties/ga.po
-old mode 100644
-new mode 100755
-index e91a54c..daea4a1
+index e91a54c..daea4a1 100644
 --- a/po-properties/ga.po
 +++ b/po-properties/ga.po
 @@ -13,6 +13,7 @@ msgstr ""
@@ -895,13 +581,8 @@ index e91a54c..daea4a1
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po-properties/gl.po b/po-properties/gl.po
-old mode 100644
-new mode 100755
 diff --git a/po-properties/gu.po b/po-properties/gu.po
-old mode 100644
-new mode 100755
-index c197260..5c27935
+index c197260..5c27935 100644
 --- a/po-properties/gu.po
 +++ b/po-properties/gu.po
 @@ -10,6 +10,7 @@ msgstr ""
@@ -913,9 +594,7 @@ index c197260..5c27935
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/he.po b/po-properties/he.po
-old mode 100644
-new mode 100755
-index 14d4da7..67f2027
+index 14d4da7..67f2027 100644
 --- a/po-properties/he.po
 +++ b/po-properties/he.po
 @@ -10,6 +10,7 @@ msgstr ""
@@ -927,9 +606,7 @@ index 14d4da7..67f2027
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/hi.po b/po-properties/hi.po
-old mode 100644
-new mode 100755
-index d647f99..a2921c7
+index d647f99..a2921c7 100644
 --- a/po-properties/hi.po
 +++ b/po-properties/hi.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -941,9 +618,7 @@ index d647f99..a2921c7
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/hr.po b/po-properties/hr.po
-old mode 100644
-new mode 100755
-index 5c1d4bf..6e86983
+index 5c1d4bf..6e86983 100644
 --- a/po-properties/hr.po
 +++ b/po-properties/hr.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -955,9 +630,7 @@ index 5c1d4bf..6e86983
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/hu.po b/po-properties/hu.po
-old mode 100644
-new mode 100755
-index 4e6947a..a2b4e62
+index 4e6947a..a2b4e62 100644
 --- a/po-properties/hu.po
 +++ b/po-properties/hu.po
 @@ -15,7 +15,7 @@ msgstr ""
@@ -970,9 +643,7 @@ index 4e6947a..a2b4e62
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/hy.po b/po-properties/hy.po
-old mode 100644
-new mode 100755
-index 83e920d..e489537
+index 83e920d..e489537 100644
 --- a/po-properties/hy.po
 +++ b/po-properties/hy.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -984,9 +655,7 @@ index 83e920d..e489537
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 16bit\n"
 diff --git a/po-properties/ia.po b/po-properties/ia.po
-old mode 100644
-new mode 100755
-index d71e452..e43edc3
+index d71e452..e43edc3 100644
 --- a/po-properties/ia.po
 +++ b/po-properties/ia.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -998,9 +667,7 @@ index d71e452..e43edc3
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/id.po b/po-properties/id.po
-old mode 100644
-new mode 100755
-index 98ca1f5..826cb79
+index 98ca1f5..826cb79 100644
 --- a/po-properties/id.po
 +++ b/po-properties/id.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -1012,9 +679,7 @@ index 98ca1f5..826cb79
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/io.po b/po-properties/io.po
-old mode 100644
-new mode 100755
-index be34008..749e423
+index be34008..749e423 100644
 --- a/po-properties/io.po
 +++ b/po-properties/io.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1026,9 +691,7 @@ index be34008..749e423
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/is.po b/po-properties/is.po
-old mode 100644
-new mode 100755
-index ab0d3c3..f496047
+index ab0d3c3..f496047 100644
 --- a/po-properties/is.po
 +++ b/po-properties/is.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1039,13 +702,8 @@ index ab0d3c3..f496047
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po-properties/it.po b/po-properties/it.po
-old mode 100644
-new mode 100755
 diff --git a/po-properties/ja.po b/po-properties/ja.po
-old mode 100644
-new mode 100755
-index 47327fa..9a2ca5e
+index 47327fa..9a2ca5e 100644
 --- a/po-properties/ja.po
 +++ b/po-properties/ja.po
 @@ -17,6 +17,7 @@ msgstr ""
@@ -1057,25 +715,19 @@ index 47327fa..9a2ca5e
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ka.po b/po-properties/ka.po
-old mode 100644
-new mode 100755
-index 2d8ad27..a301497
+index 2d8ad27..4db58ab 100644
 --- a/po-properties/ka.po
 +++ b/po-properties/ka.po
-@@ -10,7 +10,8 @@ msgstr ""
- "POT-Creation-Date: 2010-06-10 11:56-0400\n"
- "PO-Revision-Date: 2008-03-19 16:31+0100\n"
+@@ -12,6 +12,7 @@ msgstr ""
  "Last-Translator: Vladimer Sichinava ვლადიმერ სიჭინავა <vsichi@gnome.org>\n"
--"Language-Team: Georgian <http://mail.gnome.org/mailman/listinfo/gnome-ge-"
-+"Language-Team: Georgian <http://mail.gnome.org/mailman/listinfo/gnome-ge-\n"
-+"Language: ka\n"
+ "Language-Team: Georgian <http://mail.gnome.org/mailman/listinfo/gnome-ge-"
  "list>\n"
++"Language: ka\n"
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/kk.po b/po-properties/kk.po
-old mode 100644
-new mode 100755
-index c7c497e..fc3abfc
+index c7c497e..fc3abfc 100644
 --- a/po-properties/kk.po
 +++ b/po-properties/kk.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1087,9 +739,7 @@ index c7c497e..fc3abfc
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/kn.po b/po-properties/kn.po
-old mode 100644
-new mode 100755
-index c47ad46..e6a77b1
+index c47ad46..e6a77b1 100644
 --- a/po-properties/kn.po
 +++ b/po-properties/kn.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1101,9 +751,7 @@ index c47ad46..e6a77b1
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ko.po b/po-properties/ko.po
-old mode 100644
-new mode 100755
-index 43f796b..cdac52c
+index 43f796b..cdac52c 100644
 --- a/po-properties/ko.po
 +++ b/po-properties/ko.po
 @@ -12,7 +12,7 @@ msgstr ""
@@ -1116,9 +764,7 @@ index 43f796b..cdac52c
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ku.po b/po-properties/ku.po
-old mode 100644
-new mode 100755
-index d266ac4..463c1bf
+index d266ac4..463c1bf 100644
 --- a/po-properties/ku.po
 +++ b/po-properties/ku.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -1130,9 +776,7 @@ index d266ac4..463c1bf
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/li.po b/po-properties/li.po
-old mode 100644
-new mode 100755
-index 5c73cf3..8602d59
+index 5c73cf3..8602d59 100644
 --- a/po-properties/li.po
 +++ b/po-properties/li.po
 @@ -9,6 +9,7 @@ msgstr ""
@@ -1143,13 +787,8 @@ index 5c73cf3..8602d59
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po-properties/lt.po b/po-properties/lt.po
-old mode 100644
-new mode 100755
 diff --git a/po-properties/lv.po b/po-properties/lv.po
-old mode 100644
-new mode 100755
-index 0d7cdbf..ea7e2cb
+index 0d7cdbf..ea7e2cb 100644
 --- a/po-properties/lv.po
 +++ b/po-properties/lv.po
 @@ -10,6 +10,7 @@ msgstr ""
@@ -1161,9 +800,7 @@ index 0d7cdbf..ea7e2cb
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/mai.po b/po-properties/mai.po
-old mode 100644
-new mode 100755
-index e025de5..1eec1a0
+index e025de5..1eec1a0 100644
 --- a/po-properties/mai.po
 +++ b/po-properties/mai.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1175,9 +812,7 @@ index e025de5..1eec1a0
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/mi.po b/po-properties/mi.po
-old mode 100644
-new mode 100755
-index 6cbb458..a9d914e
+index 6cbb458..a9d914e 100644
 --- a/po-properties/mi.po
 +++ b/po-properties/mi.po
 @@ -13,6 +13,7 @@ msgstr ""
@@ -1189,9 +824,7 @@ index 6cbb458..a9d914e
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/mk.po b/po-properties/mk.po
-old mode 100644
-new mode 100755
-index 9289e33..f9aaed5
+index 9289e33..f9aaed5 100644
 --- a/po-properties/mk.po
 +++ b/po-properties/mk.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -1203,9 +836,7 @@ index 9289e33..f9aaed5
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ml.po b/po-properties/ml.po
-old mode 100644
-new mode 100755
-index a2139dc..e5b4307
+index a2139dc..e5b4307 100644
 --- a/po-properties/ml.po
 +++ b/po-properties/ml.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -1217,9 +848,7 @@ index a2139dc..e5b4307
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/mn.po b/po-properties/mn.po
-old mode 100644
-new mode 100755
-index 75db2a5..7965086
+index 75db2a5..7965086 100644
 --- a/po-properties/mn.po
 +++ b/po-properties/mn.po
 @@ -17,6 +17,7 @@ msgstr ""
@@ -1231,9 +860,7 @@ index 75db2a5..7965086
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/mr.po b/po-properties/mr.po
-old mode 100644
-new mode 100755
-index 14c0f14..ce335ab
+index 14c0f14..ce335ab 100644
 --- a/po-properties/mr.po
 +++ b/po-properties/mr.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -1245,9 +872,7 @@ index 14c0f14..ce335ab
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ms.po b/po-properties/ms.po
-old mode 100644
-new mode 100755
-index 8622c4f..f582092
+index 8622c4f..f582092 100644
 --- a/po-properties/ms.po
 +++ b/po-properties/ms.po
 @@ -9,6 +9,7 @@ msgstr ""
@@ -1259,9 +884,7 @@ index 8622c4f..f582092
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/my.po b/po-properties/my.po
-old mode 100644
-new mode 100755
-index cfbb6b0..d99b579
+index cfbb6b0..d99b579 100644
 --- a/po-properties/my.po
 +++ b/po-properties/my.po
 @@ -10,6 +10,7 @@ msgstr ""
@@ -1273,9 +896,7 @@ index cfbb6b0..d99b579
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8-bit\n"
 diff --git a/po-properties/nb.po b/po-properties/nb.po
-old mode 100644
-new mode 100755
-index defd22d..cace7aa
+index defd22d..cace7aa 100644
 --- a/po-properties/nb.po
 +++ b/po-properties/nb.po
 @@ -12,7 +12,7 @@ msgstr ""
@@ -1288,9 +909,7 @@ index defd22d..cace7aa
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8-bit\n"
 diff --git a/po-properties/nds.po b/po-properties/nds.po
-old mode 100644
-new mode 100755
-index 804db91..1d001e2
+index 804db91..1d001e2 100644
 --- a/po-properties/nds.po
 +++ b/po-properties/nds.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1302,9 +921,7 @@ index 804db91..1d001e2
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ne.po b/po-properties/ne.po
-old mode 100644
-new mode 100755
-index acf77f0..74f26ad
+index acf77f0..74f26ad 100644
 --- a/po-properties/ne.po
 +++ b/po-properties/ne.po
 @@ -8,6 +8,7 @@ msgstr ""
@@ -1316,9 +933,7 @@ index acf77f0..74f26ad
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/nl.po b/po-properties/nl.po
-old mode 100644
-new mode 100755
-index 42f0a75..3749a28
+index 42f0a75..3749a28 100644
 --- a/po-properties/nl.po
 +++ b/po-properties/nl.po
 @@ -36,6 +36,7 @@ msgstr ""
@@ -1330,9 +945,7 @@ index 42f0a75..3749a28
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/nn.po b/po-properties/nn.po
-old mode 100644
-new mode 100755
-index 5dade5c..3693f38
+index 5dade5c..3693f38 100644
 --- a/po-properties/nn.po
 +++ b/po-properties/nn.po
 @@ -13,6 +13,7 @@ msgstr ""
@@ -1344,9 +957,7 @@ index 5dade5c..3693f38
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/nso.po b/po-properties/nso.po
-old mode 100644
-new mode 100755
-index b1e1e13..fbd82d5
+index b1e1e13..fbd82d5 100644
 --- a/po-properties/nso.po
 +++ b/po-properties/nso.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -1358,9 +969,7 @@ index b1e1e13..fbd82d5
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/oc.po b/po-properties/oc.po
-old mode 100644
-new mode 100755
-index 20a3ee8..8cb76a5
+index 20a3ee8..8cb76a5 100644
 --- a/po-properties/oc.po
 +++ b/po-properties/oc.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -1372,9 +981,7 @@ index 20a3ee8..8cb76a5
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/or.po b/po-properties/or.po
-old mode 100644
-new mode 100755
-index 66d78fc..eb430de
+index 66d78fc..eb430de 100644
 --- a/po-properties/or.po
 +++ b/po-properties/or.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1386,9 +993,7 @@ index 66d78fc..eb430de
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/pa.po b/po-properties/pa.po
-old mode 100644
-new mode 100755
-index 1f130bf..6ee69e2
+index 1f130bf..6ee69e2 100644
 --- a/po-properties/pa.po
 +++ b/po-properties/pa.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -1399,13 +1004,8 @@ index 1f130bf..6ee69e2
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po-properties/pl.po b/po-properties/pl.po
-old mode 100644
-new mode 100755
 diff --git a/po-properties/ps.po b/po-properties/ps.po
-old mode 100644
-new mode 100755
-index ea7c54c..360e6a3
+index ea7c54c..360e6a3 100644
 --- a/po-properties/ps.po
 +++ b/po-properties/ps.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1417,9 +1017,7 @@ index ea7c54c..360e6a3
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/pt.po b/po-properties/pt.po
-old mode 100644
-new mode 100755
-index 729e4ee..95e6bdf
+index 729e4ee..95e6bdf 100644
 --- a/po-properties/pt.po
 +++ b/po-properties/pt.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -1431,9 +1029,7 @@ index 729e4ee..95e6bdf
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/pt_BR.po b/po-properties/pt_BR.po
-old mode 100644
-new mode 100755
-index 2fb5a4d..5ebca22
+index 2fb5a4d..5ebca22 100644
 --- a/po-properties/pt_BR.po
 +++ b/po-properties/pt_BR.po
 @@ -17,6 +17,7 @@ msgstr ""
@@ -1444,13 +1040,8 @@ index 2fb5a4d..5ebca22
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po-properties/ro.po b/po-properties/ro.po
-old mode 100644
-new mode 100755
 diff --git a/po-properties/ru.po b/po-properties/ru.po
-old mode 100644
-new mode 100755
-index 434a91c..49419cd
+index 434a91c..49419cd 100644
 --- a/po-properties/ru.po
 +++ b/po-properties/ru.po
 @@ -16,6 +16,7 @@ msgstr ""
@@ -1462,9 +1053,7 @@ index 434a91c..49419cd
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/rw.po b/po-properties/rw.po
-old mode 100644
-new mode 100755
-index 187fe4c..bf72b7e
+index 187fe4c..bf72b7e 100644
 --- a/po-properties/rw.po
 +++ b/po-properties/rw.po
 @@ -16,6 +16,7 @@ msgstr ""
@@ -1476,9 +1065,7 @@ index 187fe4c..bf72b7e
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/si.po b/po-properties/si.po
-old mode 100644
-new mode 100755
-index 544b666..e95dc3f
+index 544b666..e95dc3f 100644
 --- a/po-properties/si.po
 +++ b/po-properties/si.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -1490,9 +1077,7 @@ index 544b666..e95dc3f
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/sk.po b/po-properties/sk.po
-old mode 100644
-new mode 100755
-index c334a06..8ff911a
+index c334a06..8ff911a 100644
 --- a/po-properties/sk.po
 +++ b/po-properties/sk.po
 @@ -17,6 +17,7 @@ msgstr ""
@@ -1504,9 +1089,7 @@ index c334a06..8ff911a
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/sl.po b/po-properties/sl.po
-old mode 100644
-new mode 100755
-index 7fa50ed..4ac823d
+index 7fa50ed..4ac823d 100644
 --- a/po-properties/sl.po
 +++ b/po-properties/sl.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -1518,9 +1101,7 @@ index 7fa50ed..4ac823d
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/sq.po b/po-properties/sq.po
-old mode 100644
-new mode 100755
-index 91187ef..96e8703
+index 91187ef..96e8703 100644
 --- a/po-properties/sq.po
 +++ b/po-properties/sq.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1532,9 +1113,7 @@ index 91187ef..96e8703
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/sr.po b/po-properties/sr.po
-old mode 100644
-new mode 100755
-index 7e17bb7..8285586
+index 7e17bb7..8285586 100644
 --- a/po-properties/sr.po
 +++ b/po-properties/sr.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -1546,9 +1125,7 @@ index 7e17bb7..8285586
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/sr@ije.po b/po-properties/sr@ije.po
-old mode 100644
-new mode 100755
-index ff93ecd..8ac7ae7
+index ff93ecd..8ac7ae7 100644
 --- a/po-properties/sr@ije.po
 +++ b/po-properties/sr@ije.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -1560,9 +1137,7 @@ index ff93ecd..8ac7ae7
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/sr@latin.po b/po-properties/sr@latin.po
-old mode 100644
-new mode 100755
-index b728eb9..2ecfafb
+index b728eb9..2ecfafb 100644
 --- a/po-properties/sr@latin.po
 +++ b/po-properties/sr@latin.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -1574,9 +1149,7 @@ index b728eb9..2ecfafb
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/sv.po b/po-properties/sv.po
-old mode 100644
-new mode 100755
-index 668b2c6..21298bc
+index 668b2c6..21298bc 100644
 --- a/po-properties/sv.po
 +++ b/po-properties/sv.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -1588,9 +1161,7 @@ index 668b2c6..21298bc
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ta.po b/po-properties/ta.po
-old mode 100644
-new mode 100755
-index 90e45e3..9326baa
+index 90e45e3..9326baa 100644
 --- a/po-properties/ta.po
 +++ b/po-properties/ta.po
 @@ -16,6 +16,7 @@ msgstr ""
@@ -1602,9 +1173,7 @@ index 90e45e3..9326baa
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/te.po b/po-properties/te.po
-old mode 100644
-new mode 100755
-index 58e11a1..da4c7e3
+index 58e11a1..da4c7e3 100644
 --- a/po-properties/te.po
 +++ b/po-properties/te.po
 @@ -16,6 +16,7 @@ msgstr ""
@@ -1616,9 +1185,7 @@ index 58e11a1..da4c7e3
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/th.po b/po-properties/th.po
-old mode 100644
-new mode 100755
-index cd8f143..2d68f5c
+index cd8f143..2d68f5c 100644
 --- a/po-properties/th.po
 +++ b/po-properties/th.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -1630,9 +1197,7 @@ index cd8f143..2d68f5c
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/tk.po b/po-properties/tk.po
-old mode 100644
-new mode 100755
-index d46a628..de849ea
+index d46a628..de849ea 100644
 --- a/po-properties/tk.po
 +++ b/po-properties/tk.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -1644,9 +1209,7 @@ index d46a628..de849ea
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/tr.po b/po-properties/tr.po
-old mode 100644
-new mode 100755
-index 2a24a49..30cc803
+index 2a24a49..30cc803 100644
 --- a/po-properties/tr.po
 +++ b/po-properties/tr.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -1658,9 +1221,7 @@ index 2a24a49..30cc803
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/tt.po b/po-properties/tt.po
-old mode 100644
-new mode 100755
-index 7fb3503..9c73a67
+index 7fb3503..9c73a67 100644
 --- a/po-properties/tt.po
 +++ b/po-properties/tt.po
 @@ -9,6 +9,7 @@ msgstr ""
@@ -1672,9 +1233,7 @@ index 7fb3503..9c73a67
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ug.po b/po-properties/ug.po
-old mode 100644
-new mode 100755
-index 498c834..846852d
+index 498c834..846852d 100644
 --- a/po-properties/ug.po
 +++ b/po-properties/ug.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -1686,9 +1245,7 @@ index 498c834..846852d
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/uk.po b/po-properties/uk.po
-old mode 100644
-new mode 100755
-index f7e24e3..bd64192
+index f7e24e3..bd64192 100644
 --- a/po-properties/uk.po
 +++ b/po-properties/uk.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -1700,9 +1257,7 @@ index f7e24e3..bd64192
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ur.po b/po-properties/ur.po
-old mode 100644
-new mode 100755
-index 368b720..8e380b4
+index 368b720..8e380b4 100644
 --- a/po-properties/ur.po
 +++ b/po-properties/ur.po
 @@ -6,6 +6,7 @@ msgstr ""
@@ -1714,9 +1269,7 @@ index 368b720..8e380b4
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/uz.po b/po-properties/uz.po
-old mode 100644
-new mode 100755
-index 7661af0..146d3bb
+index 7661af0..146d3bb 100644
 --- a/po-properties/uz.po
 +++ b/po-properties/uz.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1728,9 +1281,7 @@ index 7661af0..146d3bb
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/uz@cyrillic.po b/po-properties/uz@cyrillic.po
-old mode 100644
-new mode 100755
-index 75adceb..d0093fd
+index 75adceb..d0093fd 100644
 --- a/po-properties/uz@cyrillic.po
 +++ b/po-properties/uz@cyrillic.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1742,9 +1293,7 @@ index 75adceb..d0093fd
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/vi.po b/po-properties/vi.po
-old mode 100644
-new mode 100755
-index bd1ed46..b9d7a1e
+index bd1ed46..b9d7a1e 100644
 --- a/po-properties/vi.po
 +++ b/po-properties/vi.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1756,9 +1305,7 @@ index bd1ed46..b9d7a1e
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/wa.po b/po-properties/wa.po
-old mode 100644
-new mode 100755
-index c790170..1ebb4de
+index c790170..1ebb4de 100644
 --- a/po-properties/wa.po
 +++ b/po-properties/wa.po
 @@ -16,6 +16,7 @@ msgstr ""
@@ -1770,9 +1317,7 @@ index c790170..1ebb4de
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/xh.po b/po-properties/xh.po
-old mode 100644
-new mode 100755
-index 54c410b..9284648
+index 54c410b..9284648 100644
 --- a/po-properties/xh.po
 +++ b/po-properties/xh.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -1784,9 +1329,7 @@ index 54c410b..9284648
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/yi.po b/po-properties/yi.po
-old mode 100644
-new mode 100755
-index 205ac07..ed13758
+index 205ac07..ed13758 100644
 --- a/po-properties/yi.po
 +++ b/po-properties/yi.po
 @@ -10,6 +10,7 @@ msgstr ""
@@ -1798,9 +1341,7 @@ index 205ac07..ed13758
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/zh_CN.po b/po-properties/zh_CN.po
-old mode 100644
-new mode 100755
-index c2fb7db..adf0033
+index c2fb7db..adf0033 100644
 --- a/po-properties/zh_CN.po
 +++ b/po-properties/zh_CN.po
 @@ -19,6 +19,7 @@ msgstr ""
@@ -1812,9 +1353,7 @@ index c2fb7db..adf0033
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/zh_HK.po b/po-properties/zh_HK.po
-old mode 100644
-new mode 100755
-index dcc9ebe..c0b43e3
+index dcc9ebe..c0b43e3 100644
 --- a/po-properties/zh_HK.po
 +++ b/po-properties/zh_HK.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1826,9 +1365,7 @@ index dcc9ebe..c0b43e3
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/zh_TW.po b/po-properties/zh_TW.po
-old mode 100644
-new mode 100755
-index 623ea5b..87c03db
+index 623ea5b..87c03db 100644
 --- a/po-properties/zh_TW.po
 +++ b/po-properties/zh_TW.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1839,13 +1376,8 @@ index 623ea5b..87c03db
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/af.po b/po/af.po
-old mode 100644
-new mode 100755
 diff --git a/po/am.po b/po/am.po
-old mode 100644
-new mode 100755
-index c0ba839..5a44659
+index c0ba839..5a44659 100644
 --- a/po/am.po
 +++ b/po/am.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -1857,9 +1389,7 @@ index c0ba839..5a44659
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ang.po b/po/ang.po
-old mode 100644
-new mode 100755
-index 29cbf3b..502ad80
+index 29cbf3b..502ad80 100644
 --- a/po/ang.po
 +++ b/po/ang.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -1870,13 +1400,8 @@ index 29cbf3b..502ad80
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/ar.po b/po/ar.po
-old mode 100644
-new mode 100755
 diff --git a/po/as.po b/po/as.po
-old mode 100644
-new mode 100755
-index 8bb3aea..dd05747
+index 8bb3aea..dd05747 100644
 --- a/po/as.po
 +++ b/po/as.po
 @@ -13,6 +13,7 @@ msgstr ""
@@ -1888,9 +1413,7 @@ index 8bb3aea..dd05747
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ast.po b/po/ast.po
-old mode 100644
-new mode 100755
-index 7827135..4bb3a64
+index 7827135..4bb3a64 100644
 --- a/po/ast.po
 +++ b/po/ast.po
 @@ -13,6 +13,7 @@ msgstr ""
@@ -1902,9 +1425,7 @@ index 7827135..4bb3a64
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/az.po b/po/az.po
-old mode 100644
-new mode 100755
-index 8b24ff5..b9ce75f
+index 8b24ff5..b9ce75f 100644
 --- a/po/az.po
 +++ b/po/az.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1916,9 +1437,7 @@ index 8b24ff5..b9ce75f
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/az_IR.po b/po/az_IR.po
-old mode 100644
-new mode 100755
-index f189839..6dba620
+index f189839..6dba620 100644
 --- a/po/az_IR.po
 +++ b/po/az_IR.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -1929,27 +1448,20 @@ index f189839..6dba620
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/be.po b/po/be.po
-old mode 100644
-new mode 100755
 diff --git a/po/be@latin.po b/po/be@latin.po
-old mode 100644
-new mode 100755
-index 2540167..c1f4791
+index 2540167..c905849 100644
 --- a/po/be@latin.po
 +++ b/po/be@latin.po
 @@ -11,6 +11,7 @@ msgstr ""
  "PO-Revision-Date: 2009-02-14 03:17+0200\n"
  "Last-Translator: Alaksandar Navicki <zolak@lacinka.org>\n"
  "Language-Team: Belarusian Latin <i18n@mova.org>\n"
-+"Language: be@latin\n"
++"Language: be-latin\n"
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/bg.po b/po/bg.po
-old mode 100644
-new mode 100755
-index 0b7fc98..8a6c9a7
+index 0b7fc98..8a6c9a7 100644
 --- a/po/bg.po
 +++ b/po/bg.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -1961,9 +1473,7 @@ index 0b7fc98..8a6c9a7
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/bn.po b/po/bn.po
-old mode 100644
-new mode 100755
-index 5c00465..b6c495f
+index 5c00465..b6c495f 100644
 --- a/po/bn.po
 +++ b/po/bn.po
 @@ -18,6 +18,7 @@ msgstr ""
@@ -1975,9 +1485,7 @@ index 5c00465..b6c495f
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/bn_IN.po b/po/bn_IN.po
-old mode 100644
-new mode 100755
-index 3cb44c7..06baa7e
+index 3cb44c7..06baa7e 100644
 --- a/po/bn_IN.po
 +++ b/po/bn_IN.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -1989,9 +1497,7 @@ index 3cb44c7..06baa7e
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/br.po b/po/br.po
-old mode 100644
-new mode 100755
-index 49ae7ca..9014cdd
+index 49ae7ca..9014cdd 100644
 --- a/po/br.po
 +++ b/po/br.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -2003,9 +1509,7 @@ index 49ae7ca..9014cdd
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/bs.po b/po/bs.po
-old mode 100644
-new mode 100755
-index 8f51ae9..8844b6d
+index 8f51ae9..8844b6d 100644
 --- a/po/bs.po
 +++ b/po/bs.po
 @@ -13,6 +13,7 @@ msgstr ""
@@ -2017,9 +1521,7 @@ index 8f51ae9..8844b6d
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ca.po b/po/ca.po
-old mode 100644
-new mode 100755
-index dd4f43a..14ab348
+index dd4f43a..14ab348 100644
 --- a/po/ca.po
 +++ b/po/ca.po
 @@ -32,6 +32,7 @@ msgstr ""
@@ -2031,45 +1533,31 @@ index dd4f43a..14ab348
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ca@valencia.po b/po/ca@valencia.po
-old mode 100644
-new mode 100755
-index 1c2af04..5128fbc
+index 1c2af04..9828858 100644
 --- a/po/ca@valencia.po
 +++ b/po/ca@valencia.po
 @@ -32,6 +32,7 @@ msgstr ""
  "PO-Revision-Date: 2010-04-02 18:26+0200\n"
  "Last-Translator: David Planella <david.planella@gmail.com>\n"
  "Language-Team: Catalan <tradgnome@softcatala.org>\n"
-+"Language: ca@valencia\n"
++"Language: ca-XV\n"
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/crh.po b/po/crh.po
-old mode 100644
-new mode 100755
-index 592c0d2..4a83b28
+index 592c0d2..1c4a998 100644
 --- a/po/crh.po
 +++ b/po/crh.po
-@@ -9,7 +9,8 @@ msgstr ""
- "POT-Creation-Date: 2010-06-10 11:56-0400\n"
- "PO-Revision-Date: 2009-04-09 03:07-0500\n"
+@@ -11,6 +11,7 @@ msgstr ""
  "Last-Translator: Reşat SABIQ <tilde.birlik@gmail.com>\n"
--"Language-Team: Qırımtatarca (Qırım Türkçesi) <tilde-birlik-tercime@lists."
-+"Language-Team: Qırımtatarca (Qırım Türkçesi) <tilde-birlik-tercime@lists.\n"
-+"Language: crh\n"
+ "Language-Team: Qırımtatarca (Qırım Türkçesi) <tilde-birlik-tercime@lists."
  "sourceforge.net>\n"
++"Language: crh\n"
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
-diff --git a/po/cs.po b/po/cs.po
-old mode 100644
-new mode 100755
-diff --git a/po/cy.po b/po/cy.po
-old mode 100644
-new mode 100755
+ "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/da.po b/po/da.po
-old mode 100644
-new mode 100755
-index 6e15784..b232695
+index 6e15784..b232695 100644
 --- a/po/da.po
 +++ b/po/da.po
 @@ -40,6 +40,7 @@ msgstr ""
@@ -2081,9 +1569,7 @@ index 6e15784..b232695
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/de.po b/po/de.po
-old mode 100644
-new mode 100755
-index c9cd0a4..49e158b
+index c9cd0a4..49e158b 100644
 --- a/po/de.po
 +++ b/po/de.po
 @@ -23,7 +23,7 @@ msgstr ""
@@ -2096,9 +1582,7 @@ index c9cd0a4..49e158b
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/dz.po b/po/dz.po
-old mode 100644
-new mode 100755
-index cdac2cf..6a55ddf
+index cdac2cf..6a55ddf 100644
 --- a/po/dz.po
 +++ b/po/dz.po
 @@ -10,6 +10,7 @@ msgstr ""
@@ -2109,13 +1593,8 @@ index cdac2cf..6a55ddf
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/el.po b/po/el.po
-old mode 100644
-new mode 100755
 diff --git a/po/en_CA.po b/po/en_CA.po
-old mode 100644
-new mode 100755
-index 77b873d..a96e387
+index 77b873d..a96e387 100644
 --- a/po/en_CA.po
 +++ b/po/en_CA.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -2126,13 +1605,8 @@ index 77b873d..a96e387
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/en_GB.po b/po/en_GB.po
-old mode 100644
-new mode 100755
 diff --git a/po/eo.po b/po/eo.po
-old mode 100644
-new mode 100755
-index 97ed1ce..dada2fd
+index 97ed1ce..dada2fd 100644
 --- a/po/eo.po
 +++ b/po/eo.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -2144,9 +1618,7 @@ index 97ed1ce..dada2fd
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/es.po b/po/es.po
-old mode 100644
-new mode 100755
-index be31892..bac842a
+index be31892..bac842a 100644
 --- a/po/es.po
 +++ b/po/es.po
 @@ -21,6 +21,7 @@ msgstr ""
@@ -2158,9 +1630,7 @@ index be31892..bac842a
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/et.po b/po/et.po
-old mode 100644
-new mode 100755
-index 58479df..f2a1c6f
+index 58479df..f2a1c6f 100644
 --- a/po/et.po
 +++ b/po/et.po
 @@ -20,6 +20,7 @@ msgstr ""
@@ -2172,9 +1642,7 @@ index 58479df..f2a1c6f
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/eu.po b/po/eu.po
-old mode 100644
-new mode 100755
-index 888b7b9..7466232
+index 888b7b9..7466232 100644
 --- a/po/eu.po
 +++ b/po/eu.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -2186,9 +1654,7 @@ index 888b7b9..7466232
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/fa.po b/po/fa.po
-old mode 100644
-new mode 100755
-index 67b56a8..cebdb03
+index 67b56a8..cebdb03 100644
 --- a/po/fa.po
 +++ b/po/fa.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -2200,9 +1666,7 @@ index 67b56a8..cebdb03
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/fi.po b/po/fi.po
-old mode 100644
-new mode 100755
-index 8c29e40..8398c7b
+index 8c29e40..8398c7b 100644
 --- a/po/fi.po
 +++ b/po/fi.po
 @@ -16,6 +16,7 @@ msgstr ""
@@ -2214,9 +1678,7 @@ index 8c29e40..8398c7b
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/fr.po b/po/fr.po
-old mode 100644
-new mode 100755
-index 480d1a0..b6cf9a9
+index 480d1a0..b6cf9a9 100644
 --- a/po/fr.po
 +++ b/po/fr.po
 @@ -23,6 +23,7 @@ msgstr ""
@@ -2228,9 +1690,7 @@ index 480d1a0..b6cf9a9
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ga.po b/po/ga.po
-old mode 100644
-new mode 100755
-index 6b8e185..f73e59e
+index 6b8e185..f73e59e 100644
 --- a/po/ga.po
 +++ b/po/ga.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -2241,13 +1701,8 @@ index 6b8e185..f73e59e
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/gl.po b/po/gl.po
-old mode 100644
-new mode 100755
 diff --git a/po/gu.po b/po/gu.po
-old mode 100644
-new mode 100755
-index 3cc0eac..1560a4a
+index 3cc0eac..1560a4a 100644
 --- a/po/gu.po
 +++ b/po/gu.po
 @@ -13,6 +13,7 @@ msgstr ""
@@ -2258,13 +1713,8 @@ index 3cc0eac..1560a4a
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/he.po b/po/he.po
-old mode 100644
-new mode 100755
 diff --git a/po/hi.po b/po/hi.po
-old mode 100644
-new mode 100755
-index 192569e..da91819
+index 192569e..da91819 100644
 --- a/po/hi.po
 +++ b/po/hi.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -2276,9 +1726,7 @@ index 192569e..da91819
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/hr.po b/po/hr.po
-old mode 100644
-new mode 100755
-index 146caed..0cc868b
+index 146caed..0cc868b 100644
 --- a/po/hr.po
 +++ b/po/hr.po
 @@ -10,6 +10,7 @@ msgstr ""
@@ -2290,9 +1738,7 @@ index 146caed..0cc868b
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/hu.po b/po/hu.po
-old mode 100644
-new mode 100755
-index 00701b4..9df4f72
+index 00701b4..9df4f72 100644
 --- a/po/hu.po
 +++ b/po/hu.po
 @@ -16,7 +16,7 @@ msgstr ""
@@ -2305,9 +1751,7 @@ index 00701b4..9df4f72
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/hy.po b/po/hy.po
-old mode 100644
-new mode 100755
-index 02df504..75eb1c9
+index 02df504..75eb1c9 100644
 --- a/po/hy.po
 +++ b/po/hy.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -2318,13 +1762,8 @@ index 02df504..75eb1c9
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 16bit\n"
-diff --git a/po/ia.po b/po/ia.po
-old mode 100644
-new mode 100755
 diff --git a/po/id.po b/po/id.po
-old mode 100644
-new mode 100755
-index 0d01e70..a888e82
+index 0d01e70..a888e82 100644
 --- a/po/id.po
 +++ b/po/id.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -2336,9 +1775,7 @@ index 0d01e70..a888e82
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/io.po b/po/io.po
-old mode 100644
-new mode 100755
-index 6cad82b..156da03
+index 6cad82b..156da03 100644
 --- a/po/io.po
 +++ b/po/io.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -2350,9 +1787,7 @@ index 6cad82b..156da03
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/is.po b/po/is.po
-old mode 100644
-new mode 100755
-index f70b525..a96baac
+index f70b525..a96baac 100644
 --- a/po/is.po
 +++ b/po/is.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -2363,13 +1798,8 @@ index f70b525..a96baac
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/it.po b/po/it.po
-old mode 100644
-new mode 100755
 diff --git a/po/ja.po b/po/ja.po
-old mode 100644
-new mode 100755
-index 010dad6..9939c38
+index 010dad6..9939c38 100644
 --- a/po/ja.po
 +++ b/po/ja.po
 @@ -20,6 +20,7 @@ msgstr ""
@@ -2381,9 +1811,7 @@ index 010dad6..9939c38
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ka.po b/po/ka.po
-old mode 100644
-new mode 100755
-index 25badc4..74cab3a
+index 25badc4..1d767ef 100644
 --- a/po/ka.po
 +++ b/po/ka.po
 @@ -1,4 +1,4 @@
@@ -2392,23 +1820,16 @@ index 25badc4..74cab3a
  # Georgian translation for GTK+.
  # Copyright © 2006 The GTK Team
  # This file is distributed under the same license as the GTK package.
-@@ -13,7 +13,8 @@ msgstr ""
- "POT-Creation-Date: 2010-06-10 11:56-0400\n"
- "PO-Revision-Date: 2008-10-17 18:05+0200\n"
+@@ -15,6 +15,7 @@ msgstr ""
  "Last-Translator: Vladimer Sichinava ვლადიმერ სიჭინავა <vsichi@gnome.org>\n"
--"Language-Team: Georgian <http://mail.gnome.org/mailman/listinfo/gnome-ge-"
-+"Language-Team: Georgian <http://mail.gnome.org/mailman/listinfo/gnome-ge- \n"
-+"Language: ka\n"
+ "Language-Team: Georgian <http://mail.gnome.org/mailman/listinfo/gnome-ge-"
  "list>\n"
++"Language: ka\n"
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
-diff --git a/po/kk.po b/po/kk.po
-old mode 100644
-new mode 100755
+ "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/kn.po b/po/kn.po
-old mode 100644
-new mode 100755
-index bfae424..867091f
+index bfae424..867091f 100644
 --- a/po/kn.po
 +++ b/po/kn.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -2420,9 +1841,7 @@ index bfae424..867091f
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ko.po b/po/ko.po
-old mode 100644
-new mode 100755
-index 87ab6f8..64fe8bc
+index 87ab6f8..64fe8bc 100644
 --- a/po/ko.po
 +++ b/po/ko.po
 @@ -12,7 +12,7 @@ msgstr ""
@@ -2434,13 +1853,8 @@ index 87ab6f8..64fe8bc
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/ku.po b/po/ku.po
-old mode 100644
-new mode 100755
 diff --git a/po/li.po b/po/li.po
-old mode 100644
-new mode 100755
-index 26b3926..da05041
+index 26b3926..da05041 100644
 --- a/po/li.po
 +++ b/po/li.po
 @@ -9,6 +9,7 @@ msgstr ""
@@ -2451,13 +1865,8 @@ index 26b3926..da05041
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/lt.po b/po/lt.po
-old mode 100644
-new mode 100755
 diff --git a/po/lv.po b/po/lv.po
-old mode 100644
-new mode 100755
-index 8a0261f..6df51f8
+index 8a0261f..6df51f8 100644
 --- a/po/lv.po
 +++ b/po/lv.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -2469,9 +1878,7 @@ index 8a0261f..6df51f8
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/mai.po b/po/mai.po
-old mode 100644
-new mode 100755
-index 58c88ea..7216e98
+index 58c88ea..7216e98 100644
 --- a/po/mai.po
 +++ b/po/mai.po
 @@ -13,6 +13,7 @@ msgstr ""
@@ -2483,9 +1890,7 @@ index 58c88ea..7216e98
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/mi.po b/po/mi.po
-old mode 100644
-new mode 100755
-index bc507ae..1621e75
+index bc507ae..1621e75 100644
 --- a/po/mi.po
 +++ b/po/mi.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -2497,9 +1902,7 @@ index bc507ae..1621e75
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/mk.po b/po/mk.po
-old mode 100644
-new mode 100755
-index 2982275..3247a27
+index 2982275..3247a27 100644
 --- a/po/mk.po
 +++ b/po/mk.po
 @@ -16,6 +16,7 @@ msgstr ""
@@ -2511,9 +1914,7 @@ index 2982275..3247a27
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ml.po b/po/ml.po
-old mode 100644
-new mode 100755
-index ef7305d..8ec5b03
+index ef7305d..8ec5b03 100644
 --- a/po/ml.po
 +++ b/po/ml.po
 @@ -13,6 +13,7 @@ msgstr ""
@@ -2525,9 +1926,7 @@ index ef7305d..8ec5b03
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/mn.po b/po/mn.po
-old mode 100644
-new mode 100755
-index 788923f..2a9de0f
+index 788923f..2a9de0f 100644
 --- a/po/mn.po
 +++ b/po/mn.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -2539,9 +1938,7 @@ index 788923f..2a9de0f
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/mr.po b/po/mr.po
-old mode 100644
-new mode 100755
-index e3ec77c..912d097
+index e3ec77c..912d097 100644
 --- a/po/mr.po
 +++ b/po/mr.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -2553,9 +1950,7 @@ index e3ec77c..912d097
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ms.po b/po/ms.po
-old mode 100644
-new mode 100755
-index d748cf1..3404d0c
+index d748cf1..3404d0c 100644
 --- a/po/ms.po
 +++ b/po/ms.po
 @@ -9,6 +9,7 @@ msgstr ""
@@ -2567,9 +1962,7 @@ index d748cf1..3404d0c
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/my.po b/po/my.po
-old mode 100644
-new mode 100755
-index 0b93389..7077102
+index 0b93389..7077102 100644
 --- a/po/my.po
 +++ b/po/my.po
 @@ -10,6 +10,7 @@ msgstr ""
@@ -2581,9 +1974,7 @@ index 0b93389..7077102
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8-bit\n"
 diff --git a/po/nb.po b/po/nb.po
-old mode 100644
-new mode 100755
-index 5034538..4fda6ad
+index 5034538..4fda6ad 100644
 --- a/po/nb.po
 +++ b/po/nb.po
 @@ -11,7 +11,7 @@ msgstr ""
@@ -2596,9 +1987,7 @@ index 5034538..4fda6ad
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8-bit\n"
 diff --git a/po/nds.po b/po/nds.po
-old mode 100644
-new mode 100755
-index 6035c80..447cd63
+index 6035c80..447cd63 100644
 --- a/po/nds.po
 +++ b/po/nds.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -2610,9 +1999,7 @@ index 6035c80..447cd63
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ne.po b/po/ne.po
-old mode 100644
-new mode 100755
-index 16bb19e..b6bf258
+index 16bb19e..b6bf258 100644
 --- a/po/ne.po
 +++ b/po/ne.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -2623,13 +2010,8 @@ index 16bb19e..b6bf258
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/nl.po b/po/nl.po
-old mode 100644
-new mode 100755
 diff --git a/po/nn.po b/po/nn.po
-old mode 100644
-new mode 100755
-index 3001078..f66a7a3
+index 3001078..f66a7a3 100644
 --- a/po/nn.po
 +++ b/po/nn.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -2641,9 +2023,7 @@ index 3001078..f66a7a3
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/nso.po b/po/nso.po
-old mode 100644
-new mode 100755
-index e75bb66..c42d831
+index e75bb66..c42d831 100644
 --- a/po/nso.po
 +++ b/po/nso.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -2655,9 +2035,7 @@ index e75bb66..c42d831
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/oc.po b/po/oc.po
-old mode 100644
-new mode 100755
-index ee6639c..75005aa
+index ee6639c..75005aa 100644
 --- a/po/oc.po
 +++ b/po/oc.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -2669,9 +2047,7 @@ index ee6639c..75005aa
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/or.po b/po/or.po
-old mode 100644
-new mode 100755
-index a57624a..5f19cd0
+index a57624a..5f19cd0 100644
 --- a/po/or.po
 +++ b/po/or.po
 @@ -16,6 +16,7 @@ msgstr ""
@@ -2683,9 +2059,7 @@ index a57624a..5f19cd0
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/pa.po b/po/pa.po
-old mode 100644
-new mode 100755
-index f54689a..9aebc6f
+index f54689a..9aebc6f 100644
 --- a/po/pa.po
 +++ b/po/pa.po
 @@ -13,6 +13,7 @@ msgstr ""
@@ -2696,13 +2070,8 @@ index f54689a..9aebc6f
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/pl.po b/po/pl.po
-old mode 100644
-new mode 100755
 diff --git a/po/ps.po b/po/ps.po
-old mode 100644
-new mode 100755
-index d3519bf..c8ea092
+index d3519bf..c8ea092 100644
 --- a/po/ps.po
 +++ b/po/ps.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -2714,9 +2083,7 @@ index d3519bf..c8ea092
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/pt.po b/po/pt.po
-old mode 100644
-new mode 100755
-index 639a5a4..4566207
+index 639a5a4..4566207 100644
 --- a/po/pt.po
 +++ b/po/pt.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -2728,9 +2095,7 @@ index 639a5a4..4566207
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/pt_BR.po b/po/pt_BR.po
-old mode 100644
-new mode 100755
-index 56cc355..965dbb3
+index 56cc355..965dbb3 100644
 --- a/po/pt_BR.po
 +++ b/po/pt_BR.po
 @@ -25,6 +25,7 @@ msgstr ""
@@ -2741,13 +2106,8 @@ index 56cc355..965dbb3
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/ro.po b/po/ro.po
-old mode 100644
-new mode 100755
 diff --git a/po/ru.po b/po/ru.po
-old mode 100644
-new mode 100755
-index 8999218..00a57f4
+index 8999218..00a57f4 100644
 --- a/po/ru.po
 +++ b/po/ru.po
 @@ -23,6 +23,7 @@ msgstr ""
@@ -2759,9 +2119,7 @@ index 8999218..00a57f4
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/rw.po b/po/rw.po
-old mode 100644
-new mode 100755
-index d4ffc51..4df7e4f
+index d4ffc51..4df7e4f 100644
 --- a/po/rw.po
 +++ b/po/rw.po
 @@ -16,6 +16,7 @@ msgstr ""
@@ -2773,9 +2131,7 @@ index d4ffc51..4df7e4f
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/si.po b/po/si.po
-old mode 100644
-new mode 100755
-index 41389ef..a28a258
+index 41389ef..a28a258 100644
 --- a/po/si.po
 +++ b/po/si.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -2787,9 +2143,7 @@ index 41389ef..a28a258
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/sk.po b/po/sk.po
-old mode 100644
-new mode 100755
-index f14124b..52e9a7b
+index f14124b..52e9a7b 100644
 --- a/po/sk.po
 +++ b/po/sk.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -2801,9 +2155,7 @@ index f14124b..52e9a7b
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/sl.po b/po/sl.po
-old mode 100644
-new mode 100755
-index 6d63b05..5f95aa9
+index 6d63b05..5f95aa9 100644
 --- a/po/sl.po
 +++ b/po/sl.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -2815,9 +2167,7 @@ index 6d63b05..5f95aa9
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/sq.po b/po/sq.po
-old mode 100644
-new mode 100755
-index 361ae5e..ea696f7
+index 361ae5e..ea696f7 100644
 --- a/po/sq.po
 +++ b/po/sq.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -2829,9 +2179,7 @@ index 361ae5e..ea696f7
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/sr.po b/po/sr.po
-old mode 100644
-new mode 100755
-index 379b450..9c010f3
+index 379b450..9c010f3 100644
 --- a/po/sr.po
 +++ b/po/sr.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -2843,9 +2191,7 @@ index 379b450..9c010f3
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/sr@ije.po b/po/sr@ije.po
-old mode 100644
-new mode 100755
-index 107cc85..fbd06b1
+index 107cc85..fbd06b1 100644
 --- a/po/sr@ije.po
 +++ b/po/sr@ije.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -2857,9 +2203,7 @@ index 107cc85..fbd06b1
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/sr@latin.po b/po/sr@latin.po
-old mode 100644
-new mode 100755
-index aff4f8b..6230b7f
+index aff4f8b..6230b7f 100644
 --- a/po/sr@latin.po
 +++ b/po/sr@latin.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -2871,9 +2215,7 @@ index aff4f8b..6230b7f
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/sv.po b/po/sv.po
-old mode 100644
-new mode 100755
-index c6e71a8..0ee9f81
+index c6e71a8..0ee9f81 100644
 --- a/po/sv.po
 +++ b/po/sv.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -2885,9 +2227,7 @@ index c6e71a8..0ee9f81
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ta.po b/po/ta.po
-old mode 100644
-new mode 100755
-index a34ed16..3190944
+index a34ed16..3190944 100644
 --- a/po/ta.po
 +++ b/po/ta.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -2899,9 +2239,7 @@ index a34ed16..3190944
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/te.po b/po/te.po
-old mode 100644
-new mode 100755
-index 8d06825..c5ccd50
+index 8d06825..c5ccd50 100644
 --- a/po/te.po
 +++ b/po/te.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -2912,13 +2250,8 @@ index 8d06825..c5ccd50
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/th.po b/po/th.po
-old mode 100644
-new mode 100755
 diff --git a/po/tk.po b/po/tk.po
-old mode 100644
-new mode 100755
-index 1d6d57e..2a93b33
+index 1d6d57e..2a93b33 100644
 --- a/po/tk.po
 +++ b/po/tk.po
 @@ -14,6 +14,7 @@ msgstr ""
@@ -2930,9 +2263,7 @@ index 1d6d57e..2a93b33
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/tr.po b/po/tr.po
-old mode 100644
-new mode 100755
-index e65cac2..fe83a4f
+index e65cac2..fe83a4f 100644
 --- a/po/tr.po
 +++ b/po/tr.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -2944,9 +2275,7 @@ index e65cac2..fe83a4f
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/tt.po b/po/tt.po
-old mode 100644
-new mode 100755
-index 3f46e7a..2a320c8
+index 3f46e7a..2a320c8 100644
 --- a/po/tt.po
 +++ b/po/tt.po
 @@ -8,6 +8,7 @@ msgstr ""
@@ -2958,9 +2287,7 @@ index 3f46e7a..2a320c8
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ug.po b/po/ug.po
-old mode 100644
-new mode 100755
-index 139dc8b..8473632
+index 139dc8b..8473632 100644
 --- a/po/ug.po
 +++ b/po/ug.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -2972,9 +2299,7 @@ index 139dc8b..8473632
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/uk.po b/po/uk.po
-old mode 100644
-new mode 100755
-index 394d6e8..9132f49
+index 394d6e8..9132f49 100644
 --- a/po/uk.po
 +++ b/po/uk.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -2986,9 +2311,7 @@ index 394d6e8..9132f49
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ur.po b/po/ur.po
-old mode 100644
-new mode 100755
-index 520035a..f72711f
+index 520035a..f72711f 100644
 --- a/po/ur.po
 +++ b/po/ur.po
 @@ -6,6 +6,7 @@ msgstr ""
@@ -3000,9 +2323,7 @@ index 520035a..f72711f
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/uz.po b/po/uz.po
-old mode 100644
-new mode 100755
-index f38c5f5..e44b125
+index f38c5f5..e44b125 100644
 --- a/po/uz.po
 +++ b/po/uz.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -3014,9 +2335,7 @@ index f38c5f5..e44b125
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/uz@cyrillic.po b/po/uz@cyrillic.po
-old mode 100644
-new mode 100755
-index cc75f81..0d8cd12
+index cc75f81..0d8cd12 100644
 --- a/po/uz@cyrillic.po
 +++ b/po/uz@cyrillic.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -3028,9 +2347,7 @@ index cc75f81..0d8cd12
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/vi.po b/po/vi.po
-old mode 100644
-new mode 100755
-index 6f201ec..3b1599e
+index 6f201ec..3b1599e 100644
 --- a/po/vi.po
 +++ b/po/vi.po
 @@ -13,6 +13,7 @@ msgstr ""
@@ -3042,9 +2359,7 @@ index 6f201ec..3b1599e
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/wa.po b/po/wa.po
-old mode 100644
-new mode 100755
-index 26de7b1..bd4f574
+index 26de7b1..bd4f574 100644
 --- a/po/wa.po
 +++ b/po/wa.po
 @@ -15,6 +15,7 @@ msgstr ""
@@ -3056,9 +2371,7 @@ index 26de7b1..bd4f574
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/xh.po b/po/xh.po
-old mode 100644
-new mode 100755
-index e7f8c52..56bb872
+index e7f8c52..56bb872 100644
 --- a/po/xh.po
 +++ b/po/xh.po
 @@ -12,6 +12,7 @@ msgstr ""
@@ -3070,9 +2383,7 @@ index e7f8c52..56bb872
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/yi.po b/po/yi.po
-old mode 100644
-new mode 100755
-index e917584..7820e57
+index e917584..7820e57 100644
 --- a/po/yi.po
 +++ b/po/yi.po
 @@ -10,6 +10,7 @@ msgstr ""
@@ -3083,13 +2394,8 @@ index e917584..7820e57
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
-diff --git a/po/zh_CN.po b/po/zh_CN.po
-old mode 100644
-new mode 100755
 diff --git a/po/zh_HK.po b/po/zh_HK.po
-old mode 100644
-new mode 100755
-index a30ddba..5799059
+index a30ddba..5799059 100644
 --- a/po/zh_HK.po
 +++ b/po/zh_HK.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -3101,9 +2407,7 @@ index a30ddba..5799059
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/zh_TW.po b/po/zh_TW.po
-old mode 100644
-new mode 100755
-index 1b7b65b..a0dcead
+index 1b7b65b..a0dcead 100644
 --- a/po/zh_TW.po
 +++ b/po/zh_TW.po
 @@ -11,6 +11,7 @@ msgstr ""
@@ -3115,5 +2419,4 @@ index 1b7b65b..a0dcead
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 -- 
-2.0.0.rc2
-
+2.0.0
