@@ -69,6 +69,7 @@ struct _GimpTool
   /*  on-canvas progress  */
   GimpCanvasItem  *progress;
   GimpDisplay     *progress_display;
+  GtkWidget       *progress_grab_widget;
 };
 
 struct _GimpToolClass

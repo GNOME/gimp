@@ -22,6 +22,7 @@
 
 #include <gegl.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "tools-types.h"
 
@@ -78,6 +79,19 @@ gimp_tool_progress_iface_init (GimpProgressInterface *iface)
 
 /*  private functions  */
 
+static gboolean
+gimp_tool_progress_key_event (GtkWidget         *widget,
+                              const GdkEventKey *kevent,
+                              GimpTool          *tool)
+{
+  if (kevent->keyval == GDK_KEY_Escape)
+    {
+      gimp_progress_cancel (GIMP_PROGRESS (tool));
+    }
+
+  return TRUE;
+}
+
 static GimpProgress *
 gimp_tool_progress_start (GimpProgress *progress,
                           const gchar  *message,
@@ -109,6 +123,17 @@ gimp_tool_progress_start (GimpProgress *progress,
 
   tool->progress_display = tool->display;
 
+  if (cancelable)
+    {
+      tool->progress_grab_widget = gtk_invisible_new ();
+      gtk_widget_show (tool->progress_grab_widget);
+      gtk_grab_add (tool->progress_grab_widget);
+
+      g_signal_connect (tool->progress_grab_widget, "key-press-event",
+                        G_CALLBACK (gimp_tool_progress_key_event),
+                        tool);
+    }
+
   return progress;
 }
 
@@ -126,6 +151,13 @@ gimp_tool_progress_end (GimpProgress *progress)
 
       tool->progress         = NULL;
       tool->progress_display = NULL;
+
+      if (tool->progress_grab_widget)
+        {
+          gtk_grab_remove (tool->progress_grab_widget);
+          gtk_widget_destroy (tool->progress_grab_widget);
+          tool->progress_grab_widget = NULL;
+        }
     }
 }
 
