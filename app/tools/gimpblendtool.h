@@ -48,6 +48,8 @@ struct _GimpBlendTool
 
   GimpBlendToolPoint grabbed_point;
 
+  GimpGradient   *gradient;
+
   gdouble         start_x;    /*  starting x coord  */
   gdouble         start_y;    /*  starting y coord  */
   gdouble         end_x;      /*  ending x coord    */

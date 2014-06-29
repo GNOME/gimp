@@ -64,6 +64,7 @@
 static gboolean gimp_blend_tool_initialize        (GimpTool              *tool,
                                                    GimpDisplay           *display,
                                                    GError               **error);
+static void   gimp_blend_tool_dispose             (GObject               *object);
 static void   gimp_blend_tool_control             (GimpTool              *tool,
                                                    GimpToolAction         action,
                                                    GimpDisplay           *display);
@@ -121,6 +122,10 @@ static void   gimp_blend_tool_push_status         (GimpBlendTool         *blend_
 
 static void   gimp_blend_tool_create_graph        (GimpBlendTool         *blend_tool);
 static void   gimp_blend_tool_update_preview_coords (GimpBlendTool       *blend_tool);
+static void   gimp_blend_tool_gradient_dirty      (GimpGradient          *curve,
+                                                   GimpBlendTool         *blend_tool);
+static void   gimp_blend_tool_set_gradient        (GimpBlendTool         *blend_tool,
+                                                   GimpGradient          *gradient);
 static void   gimp_blend_tool_options_notify      (GimpTool              *tool,
                                                    GimpToolOptions       *options,
                                                    const GParamSpec      *pspec);
@@ -161,8 +166,11 @@ gimp_blend_tool_register (GimpToolRegisterCallback  callback,
 static void
 gimp_blend_tool_class_init (GimpBlendToolClass *klass)
 {
+  GObjectClass      *object_class    = G_OBJECT_CLASS (klass);
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
+
+  object_class->dispose           = gimp_blend_tool_dispose;
 
   tool_class->initialize          = gimp_blend_tool_initialize;
   tool_class->control             = gimp_blend_tool_control;
@@ -237,6 +245,15 @@ gimp_blend_tool_initialize (GimpTool     *tool,
     }
 
   return TRUE;
+}
+
+static void
+gimp_blend_tool_dispose (GObject *object)
+{
+  GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (object);
+  gimp_blend_tool_set_gradient (blend_tool, NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -633,6 +650,7 @@ gimp_blend_tool_start (GimpBlendTool         *blend_tool,
   GimpImage        *image    = gimp_display_get_image (display);
   GimpDrawable     *drawable = gimp_image_get_active_drawable (image);
   GimpBlendOptions *options  = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
+  GimpContext      *context  = GIMP_CONTEXT (options);
 
   tool->display  = display;
   tool->drawable = drawable;
@@ -641,6 +659,9 @@ gimp_blend_tool_start (GimpBlendTool         *blend_tool,
 
   /* Initially sync all of the properties */
   gimp_gegl_config_proxy_sync (GIMP_OBJECT (options), blend_tool->render_node);
+
+  /* Connect signal handlers for the gradient */
+  gimp_blend_tool_set_gradient (blend_tool, context->gradient);
 
   if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
     gimp_draw_tool_start (GIMP_DRAW_TOOL (blend_tool), display);
@@ -787,6 +808,48 @@ gimp_blend_tool_update_preview_coords (GimpBlendTool *blend_tool)
 }
 
 static void
+gimp_blend_tool_gradient_dirty (GimpGradient  *curve,
+                                GimpBlendTool *blend_tool)
+{
+  if (!blend_tool->image_map)
+    return;
+
+  /* Set a property on the node. Otherwise it will cache and refuse to update */
+  gegl_node_set (blend_tool->render_node,
+                 "gradient", blend_tool->gradient,
+                 NULL);
+
+  /* Update the image_map */
+  gimp_image_map_apply (blend_tool->image_map, NULL);
+}
+
+static void
+gimp_blend_tool_set_gradient (GimpBlendTool *blend_tool,
+                              GimpGradient  *gradient)
+{
+  if (blend_tool->gradient)
+    {
+      g_signal_handlers_disconnect_by_func (blend_tool->gradient,
+                                            G_CALLBACK (gimp_blend_tool_gradient_dirty),
+                                            blend_tool);
+      g_object_unref (blend_tool->gradient);
+      blend_tool->gradient = NULL;
+    }
+
+  if (gradient)
+    {
+      blend_tool->gradient = g_object_ref (gradient);
+      g_signal_connect (blend_tool->gradient, "dirty",
+                        G_CALLBACK (gimp_blend_tool_gradient_dirty),
+                        blend_tool);
+      if (blend_tool->render_node)
+        gegl_node_set (blend_tool->render_node,
+                       "gradient", blend_tool->gradient,
+                       NULL);
+    }
+}
+
+static void
 gimp_blend_tool_options_notify (GimpTool         *tool,
                                 GimpToolOptions  *options,
                                 const GParamSpec *pspec)
@@ -794,10 +857,17 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
   GimpContext   *context    = GIMP_CONTEXT (options);
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
 
-  /* Sync any property changes on the config object that match the op */
-  if (blend_tool->render_node &&
-      gegl_node_find_property (blend_tool->render_node, pspec->name))
+  if (! strcmp (pspec->name, "gradient"))
     {
+      gimp_blend_tool_set_gradient (blend_tool, context->gradient);
+
+      if (blend_tool->image_map)
+        gimp_image_map_apply (blend_tool->image_map, NULL);
+    }
+  else if (blend_tool->render_node &&
+           gegl_node_find_property (blend_tool->render_node, pspec->name))
+    {
+      /* Sync any property changes on the config object that match the op */
       GValue value = G_VALUE_INIT;
       g_value_init (&value, pspec->value_type);
 
