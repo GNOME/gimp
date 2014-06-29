@@ -3839,9 +3839,6 @@ gimp_image_remove_layer (GimpImage *image,
       g_list_free (children);
     }
 
-  if (! new_active && private->layer_stack)
-    new_active = private->layer_stack->data;
-
   new_active =
     GIMP_LAYER (gimp_item_tree_remove_item (private->layers,
                                             GIMP_ITEM (layer),
