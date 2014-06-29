@@ -33,8 +33,10 @@
 #include "gimpdrawableundo.h"
 #include "gimpfilter.h"
 #include "gimpfilterstack.h"
+#include "gimpimage.h"
 #include "gimpimage-undo.h"
 #include "gimpprogress.h"
+#include "gimpprojection.h"
 
 
 GimpContainer *
@@ -96,33 +98,27 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                                 &rect.x, &rect.y,
                                 &rect.width, &rect.height))
     {
+      GimpImage      *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+      GeglBuffer     *undo_buffer;
       GimpApplicator *applicator;
       GeglBuffer     *cache   = NULL;
       GeglRectangle  *rects   = NULL;
       gint            n_rects = 0;
 
-      gimp_drawable_push_undo (drawable, undo_desc, NULL,
-                               rect.x, rect.y,
-                               rect.width, rect.height);
+      undo_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                     rect.width, rect.height),
+                                     gimp_drawable_get_format (drawable));
+
+      gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
+                        GEGL_RECTANGLE (rect.x, rect.y,
+                                        rect.width, rect.height),
+                        undo_buffer,
+                        GEGL_RECTANGLE (0, 0, 0, 0));
 
       applicator = gimp_filter_get_applicator (filter);
 
       if (applicator)
         {
-          GimpImage        *image = gimp_item_get_image (GIMP_ITEM (drawable));
-          GimpDrawableUndo *undo;
-
-          undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
-
-          if (undo)
-            {
-              undo->paint_mode = applicator->paint_mode;
-              undo->opacity    = applicator->opacity;
-
-              undo->applied_buffer =
-                gimp_applicator_dup_apply_buffer (applicator, &rect);
-            }
-
           cache = gimp_applicator_get_cache_buffer (applicator,
                                                     &rects, &n_rects);
 
@@ -137,12 +133,45 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
             }
         }
 
-      gimp_gegl_apply_cached_operation (gimp_drawable_get_buffer (drawable),
-                                        progress, undo_desc,
-                                        gimp_filter_get_node (filter),
-                                        gimp_drawable_get_buffer (drawable),
-                                        &rect,
-                                        cache, rects, n_rects);
+      gimp_projection_stop_rendering (gimp_image_get_projection (image));
+
+      if (gimp_gegl_apply_cached_operation (gimp_drawable_get_buffer (drawable),
+                                            progress, undo_desc,
+                                            gimp_filter_get_node (filter),
+                                            gimp_drawable_get_buffer (drawable),
+                                            &rect,
+                                            cache, rects, n_rects,
+                                            TRUE))
+        {
+          gimp_drawable_push_undo (drawable, undo_desc, undo_buffer,
+                                   rect.x, rect.y,
+                                   rect.width, rect.height);
+
+          if (applicator)
+            {
+              GimpDrawableUndo *undo;
+
+              undo = GIMP_DRAWABLE_UNDO (gimp_image_undo_get_fadeable (image));
+
+              if (undo)
+                {
+                  undo->paint_mode = applicator->paint_mode;
+                  undo->opacity    = applicator->opacity;
+
+                  undo->applied_buffer =
+                    gimp_applicator_dup_apply_buffer (applicator, &rect);
+                }
+            }
+        }
+      else
+        {
+          gegl_buffer_copy (undo_buffer,
+                            GEGL_RECTANGLE (0, 0, rect.width, rect.height),
+                            gimp_drawable_get_buffer (drawable),
+                            GEGL_RECTANGLE (rect.x, rect.y, 0, 0));
+        }
+
+      g_object_unref (undo_buffer);
 
       if (cache)
         {

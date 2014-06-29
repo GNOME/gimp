@@ -26,22 +26,23 @@
 
 /*  generic functions, also used by the specific ones below  */
 
-void   gimp_gegl_apply_operation        (GeglBuffer           *src_buffer,
-                                         GimpProgress         *progress,
-                                         const gchar          *undo_desc,
-                                         GeglNode             *operation,
-                                         GeglBuffer           *dest_buffer,
-                                         const GeglRectangle  *dest_rect);
+void       gimp_gegl_apply_operation        (GeglBuffer          *src_buffer,
+                                             GimpProgress        *progress,
+                                             const gchar         *undo_desc,
+                                             GeglNode            *operation,
+                                             GeglBuffer          *dest_buffer,
+                                             const GeglRectangle *dest_rect);
 
-void   gimp_gegl_apply_cached_operation (GeglBuffer           *src_buffer,
-                                         GimpProgress         *progress,
-                                         const gchar          *undo_desc,
-                                         GeglNode             *operation,
-                                         GeglBuffer           *dest_buffer,
-                                         const GeglRectangle  *dest_rect,
-                                         GeglBuffer           *cache,
-                                         const GeglRectangle  *valid_rects,
-                                         gint                  n_valid_rects);
+gboolean   gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
+                                             GimpProgress        *progress,
+                                             const gchar         *undo_desc,
+                                             GeglNode            *operation,
+                                             GeglBuffer          *dest_buffer,
+                                             const GeglRectangle *dest_rect,
+                                             GeglBuffer          *cache,
+                                             const GeglRectangle *valid_rects,
+                                             gint                 n_valid_rects,
+                                             gboolean             cancelable);
 
 
 /*  apply specific operations  */
