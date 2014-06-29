@@ -204,17 +204,16 @@ gimp_display_shell_rotate_dialog_response (GtkWidget        *widget,
     {
     case RESPONSE_RESET:
       gtk_adjustment_set_value (dialog->rotate_adj, 0.0);
-      return;
+      break;
 
     case GTK_RESPONSE_CANCEL:
       gtk_adjustment_set_value (dialog->rotate_adj, dialog->old_angle);
       /* fall thru */
 
     default:
+      gtk_widget_destroy (dialog->shell->rotate_dialog);
       break;
     }
-
-  gtk_widget_destroy (dialog->shell->rotate_dialog);
 }
 
 static void
