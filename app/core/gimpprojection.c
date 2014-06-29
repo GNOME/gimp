@@ -480,7 +480,7 @@ gimp_projection_set_priority_rect (GimpProjection *proj,
 {
   cairo_rectangle_int_t rect;
   gint                  off_x, off_y;
-  gint width, height;
+  gint                  width, height;
 
   g_return_if_fail (GIMP_IS_PROJECTION (proj));
 
@@ -503,6 +503,50 @@ gimp_projection_set_priority_rect (GimpProjection *proj,
       if (proj->priv->chunk_render.idle_id)
         gimp_projection_chunk_render_init (proj);
     }
+}
+
+void
+gimp_projection_stop_rendering (GimpProjection *proj)
+{
+  GimpProjectionChunkRender *chunk_render;
+  cairo_rectangle_int_t      rect;
+
+  g_return_if_fail (GIMP_IS_PROJECTION (proj));
+
+  chunk_render = &proj->priv->chunk_render;
+
+  if (! chunk_render->idle_id)
+    return;
+
+  if (chunk_render->update_region)
+    {
+      if (proj->priv->update_region)
+        {
+          cairo_region_union (proj->priv->update_region,
+                              chunk_render->update_region);
+        }
+      else
+        {
+          proj->priv->update_region =
+            cairo_region_copy (chunk_render->update_region);
+        }
+
+      cairo_region_destroy (chunk_render->update_region);
+      chunk_render->update_region = NULL;
+    }
+
+  rect.x      = chunk_render->x;
+  rect.y      = chunk_render->work_y;
+  rect.width  = chunk_render->width;
+  rect.height = chunk_render->height - (chunk_render->work_y - chunk_render->y);
+
+  /* FIXME this is too much, the entire current row */
+  if (proj->priv->update_region)
+    cairo_region_union_rectangle (proj->priv->update_region, &rect);
+  else
+    proj->priv->update_region = cairo_region_create_rectangle (&rect);
+
+  gimp_projection_chunk_render_stop (proj);
 }
 
 void

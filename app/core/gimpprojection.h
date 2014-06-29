@@ -63,6 +63,8 @@ void             gimp_projection_set_priority_rect (GimpProjection    *proj,
                                                     gint               width,
                                                     gint               height);
 
+void             gimp_projection_stop_rendering    (GimpProjection    *proj);
+
 void             gimp_projection_flush             (GimpProjection    *proj);
 void             gimp_projection_flush_now         (GimpProjection    *proj);
 void             gimp_projection_finish_draw       (GimpProjection    *proj);
