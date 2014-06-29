@@ -34,7 +34,6 @@
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
 #include "core/gimpprojectable.h"
-#include "core/gimpprojection.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -57,7 +56,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            gint              h)
 {
   GimpImage       *image;
-  GimpProjection  *projection;
   GeglBuffer      *buffer;
   gdouble          scale_x      = 1.0;
   gdouble          scale_y      = 1.0;
@@ -82,9 +80,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   g_return_if_fail (cr != NULL);
   g_return_if_fail (w > 0 && h > 0);
 
-  image      = gimp_display_get_image (shell->display);
-  projection = gimp_image_get_projection (image);
-  buffer     = gimp_pickable_get_buffer (GIMP_PICKABLE (projection));
+  image  = gimp_display_get_image (shell->display);
+  buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
 
 #ifdef GIMP_DISPLAY_RENDER_ENABLE_SCALING
   /* if we had this future API, things would look pretty on hires (retina) */
