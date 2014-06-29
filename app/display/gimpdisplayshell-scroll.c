@@ -29,7 +29,6 @@
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimpimage.h"
-#include "core/gimpprojection.h"
 
 #include "gimpcanvas.h"
 #include "gimpdisplay.h"
