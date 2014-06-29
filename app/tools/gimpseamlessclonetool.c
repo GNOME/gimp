@@ -375,7 +375,7 @@ gimp_seamless_clone_tool_commit (GimpSeamlessCloneTool *sc)
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_image_map_commit (sc->image_map, GIMP_PROGRESS (tool));
+      gimp_image_map_commit (sc->image_map, GIMP_PROGRESS (tool), FALSE);
       g_object_unref (sc->image_map);
       sc->image_map = NULL;
 
@@ -525,7 +525,7 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
            *       rectangle each time (in the update function) or by
            *       invalidating and re-rendering all now (expensive and
            *       perhaps useless */
-          gimp_image_map_commit (sct->image_map, GIMP_PROGRESS (tool));
+          gimp_image_map_commit (sct->image_map, GIMP_PROGRESS (tool), FALSE);
           g_object_unref (sct->image_map);
           sct->image_map = NULL;
 

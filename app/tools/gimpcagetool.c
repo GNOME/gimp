@@ -944,8 +944,7 @@ gimp_cage_tool_commit (GimpCageTool *ct)
 
   gimp_tool_control_push_preserve (tool->control, TRUE);
 
-  gimp_image_map_commit (ct->image_map,
-                         GIMP_PROGRESS (tool));
+  gimp_image_map_commit (ct->image_map, GIMP_PROGRESS (tool), FALSE);
   g_object_unref (ct->image_map);
   ct->image_map = NULL;
 

@@ -397,23 +397,30 @@ gimp_image_map_apply (GimpImageMap        *image_map,
   gimp_image_map_update_drawable (image_map, &update_area);
 }
 
-void
+gboolean
 gimp_image_map_commit (GimpImageMap *image_map,
-                       GimpProgress *progress)
+                       GimpProgress *progress,
+                       gboolean      cancelable)
 {
+  gboolean success = TRUE;
+
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   if (gimp_image_map_is_filtering (image_map))
     {
-      gimp_drawable_merge_filter (image_map->drawable, image_map->filter,
-                                  progress,
-                                  image_map->undo_desc);
+      success = gimp_drawable_merge_filter (image_map->drawable,
+                                            image_map->filter,
+                                            progress,
+                                            image_map->undo_desc,
+                                            cancelable);
 
       gimp_image_map_remove_filter (image_map);
 
       g_signal_emit (image_map, image_map_signals[FLUSH], 0);
     }
+
+  return success;
 }
 
 void

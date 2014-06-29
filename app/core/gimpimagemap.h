@@ -66,8 +66,9 @@ void       gimp_image_map_set_gamma_hack (GimpImageMap         *image_map,
 void           gimp_image_map_apply      (GimpImageMap         *image_map,
                                           const GeglRectangle  *area);
 
-void           gimp_image_map_commit     (GimpImageMap         *image_map,
-                                          GimpProgress         *progress);
+gboolean       gimp_image_map_commit     (GimpImageMap         *image_map,
+                                          GimpProgress         *progress,
+                                          gboolean              cancelable);
 void           gimp_image_map_abort      (GimpImageMap         *image_map);
 
 

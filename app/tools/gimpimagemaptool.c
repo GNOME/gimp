@@ -651,8 +651,7 @@ gimp_image_map_tool_commit (GimpImageMapTool *im_tool)
       if (! options->preview)
         gimp_image_map_tool_map (im_tool);
 
-      gimp_image_map_commit (im_tool->image_map,
-                             GIMP_PROGRESS (tool));
+      gimp_image_map_commit (im_tool->image_map, GIMP_PROGRESS (tool), TRUE);
       g_object_unref (im_tool->image_map);
       im_tool->image_map = NULL;
 

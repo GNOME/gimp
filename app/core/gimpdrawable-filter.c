@@ -82,13 +82,15 @@ gimp_drawable_has_filter (GimpDrawable *drawable,
                               GIMP_OBJECT (filter));
 }
 
-void
+gboolean
 gimp_drawable_merge_filter (GimpDrawable *drawable,
                             GimpFilter   *filter,
                             GimpProgress *progress,
-                            const gchar  *undo_desc)
+                            const gchar  *undo_desc,
+                            gboolean      cancelable)
 {
   GeglRectangle rect;
+  gboolean      success = TRUE;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_FILTER (filter));
@@ -141,7 +143,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                                             gimp_drawable_get_buffer (drawable),
                                             &rect,
                                             cache, rects, n_rects,
-                                            TRUE))
+                                            cancelable))
         {
           gimp_drawable_push_undo (drawable, undo_desc, undo_buffer,
                                    rect.x, rect.y,
@@ -169,6 +171,9 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                             GEGL_RECTANGLE (0, 0, rect.width, rect.height),
                             gimp_drawable_get_buffer (drawable),
                             GEGL_RECTANGLE (rect.x, rect.y, 0, 0));
+
+          /* canceled by the user */
+          success = FALSE;
         }
 
       g_object_unref (undo_buffer);
@@ -183,4 +188,6 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                             rect.x, rect.y,
                             rect.width, rect.height);
     }
+
+  return success;
 }

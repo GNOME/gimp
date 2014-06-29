@@ -121,7 +121,7 @@ floating_sel_anchor (GimpLayer *layer)
 
   if (filter)
     {
-      gimp_drawable_merge_filter (drawable, filter, NULL, NULL);
+      gimp_drawable_merge_filter (drawable, filter, NULL, NULL, FALSE);
       g_object_unref (filter);
     }
 

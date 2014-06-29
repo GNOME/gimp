@@ -614,7 +614,7 @@ gimp_warp_tool_commit (GimpWarpTool *wt)
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_image_map_commit (wt->image_map, GIMP_PROGRESS (tool));
+      gimp_image_map_commit (wt->image_map, GIMP_PROGRESS (tool), FALSE);
       g_object_unref (wt->image_map);
       wt->image_map = NULL;
 
