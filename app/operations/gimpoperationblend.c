@@ -43,6 +43,7 @@
 enum
 {
   PROP_0,
+  PROP_CONTEXT,
   PROP_GRADIENT,
   PROP_START_X,
   PROP_START_Y,
@@ -190,6 +191,14 @@ gimp_operation_blend_class_init (GimpOperationBlendClass *klass)
                                  "description", "GIMP Blend operation",
                                  NULL);
 
+  g_object_class_install_property (object_class, PROP_CONTEXT,
+                                   g_param_spec_object ("context",
+                                                        "Context",
+                                                        "A GimpContext",
+                                                        GIMP_TYPE_OBJECT,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
+
   g_object_class_install_property (object_class, PROP_GRADIENT,
                                    g_param_spec_object ("gradient",
                                                         "Gradient",
@@ -307,7 +316,9 @@ static void
 gimp_operation_blend_dispose (GObject *object)
 {
   GimpOperationBlend *self = GIMP_OPERATION_BLEND (object);
+
   g_clear_object (&self->gradient);
+  g_clear_object (&self->context);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -322,6 +333,10 @@ gimp_operation_blend_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_CONTEXT:
+      g_value_set_object (value, self->context);
+      break;
+
     case PROP_GRADIENT:
       g_value_set_object (value, self->gradient);
       break;
@@ -390,22 +405,29 @@ gimp_operation_blend_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_CONTEXT:
+      if (self->context)
+        g_object_unref (self->context);
+
+      self->context = g_value_dup_object (value);
+      break;
+
     case PROP_GRADIENT:
       {
-        GimpGradient *gradient = g_value_dup_object (value);
-        if (gradient && gimp_gradient_has_fg_bg_segments (gradient))
-          {
-            g_warning ("gimp:blend can't handle gradients with foreground or "
-                       "background segments. Call gimp_gradient_flatten on "
-                       "the gradient first");
-            g_object_unref (gradient);
-          }
-        else
-          {
-            if (self->gradient)
-              g_object_unref (self->gradient);
+        GimpGradient *gradient = g_value_get_object (value);
 
-            self->gradient = gradient;
+        if (self->gradient)
+          {
+            g_object_unref (self->gradient);
+            self->gradient = NULL;
+          }
+
+        if (gradient)
+          {
+            if (gimp_gradient_has_fg_bg_segments (gradient))
+              self->gradient = gimp_gradient_flatten (gradient, self->context);
+            else
+              self->gradient = g_object_ref (gradient);
           }
       }
       break;

@@ -40,6 +40,8 @@ struct _GimpOperationBlend
 {
   GeglOperationSource  parent_instance;
 
+  GimpContext         *context;
+
   GimpGradient        *gradient;
   gdouble              start_x, start_y, end_x, end_y;
   GimpGradientType     gradient_type;
