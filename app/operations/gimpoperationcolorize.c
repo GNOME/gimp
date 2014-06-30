@@ -98,7 +98,6 @@ gimp_operation_colorize_process (GeglOperation       *operation,
 
   hsl.h = config->hue;
   hsl.s = config->saturation;
-  hsl.a = src[ALPHA];
 
   while (samples--)
     {
@@ -127,9 +126,9 @@ gimp_operation_colorize_process (GeglOperation       *operation,
        *  don't repeat this bug here (this is the reason why the gegl
        *  colorize is brighter than the legacy one).
        */
-      dest[RED]   = rgb.r; /* * lum; */
-      dest[GREEN] = rgb.g; /* * lum; */
-      dest[BLUE]  = rgb.b; /* * lum */;
+      dest[RED]   = rgb.r; /* * lum */
+      dest[GREEN] = rgb.g; /* * lum */
+      dest[BLUE]  = rgb.b; /* * lum */
       dest[ALPHA] = src[ALPHA];
 
       src  += 4;
