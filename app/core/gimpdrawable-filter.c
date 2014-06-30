@@ -27,6 +27,7 @@
 #include "gegl/gimpapplicator.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 
+#include "gimp-utils.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-filter.h"
 #include "gimpdrawable-private.h"
@@ -100,12 +101,13 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                                 &rect.x, &rect.y,
                                 &rect.width, &rect.height))
     {
-      GimpImage      *image   = gimp_item_get_image (GIMP_ITEM (drawable));
+      GimpImage      *image = gimp_item_get_image (GIMP_ITEM (drawable));
       GeglBuffer     *undo_buffer;
       GimpApplicator *applicator;
-      GeglBuffer     *cache   = NULL;
-      GeglRectangle  *rects   = NULL;
-      gint            n_rects = 0;
+      GeglBuffer     *apply_buffer = NULL;
+      GeglBuffer     *cache        = NULL;
+      GeglRectangle  *rects        = NULL;
+      gint            n_rects      = 0;
 
       undo_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                                      rect.width, rect.height),
@@ -121,6 +123,15 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
 
       if (applicator)
         {
+          /*  the apply_buffer will make a copy of the region that is
+           *  actually processed in gimp_gegl_apply_cached_operation()
+           *  below.
+           */
+          apply_buffer = gimp_applicator_dup_apply_buffer (applicator, &rect);
+
+          /*  the cache and its valid rectangles are the region that
+           *  has already been processed by this applicator.
+           */
           cache = gimp_applicator_get_cache_buffer (applicator,
                                                     &rects, &n_rects);
 
@@ -129,10 +140,23 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
               gint i;
 
               for (i = 0; i < n_rects; i++)
-                g_printerr ("valid: %d %d %d %d\n",
-                            rects[i].x, rects[i].y,
-                            rects[i].width, rects[i].height);
+                {
+                  g_printerr ("valid: %d %d %d %d\n",
+                              rects[i].x, rects[i].y,
+                              rects[i].width, rects[i].height);
+
+                  /*  we have to copy the cached region to the apply_buffer,
+                   *  because this region is not going to be processed.
+                   */
+                  gegl_buffer_copy (cache,
+                                    &rects[i],
+                                    apply_buffer,
+                                    GEGL_RECTANGLE (rects[i].x - rect.x,
+                                                    rects[i].y - rect.y,
+                                                    0, 0));
+                }
             }
+
         }
 
       gimp_projection_stop_rendering (gimp_image_get_projection (image));
@@ -145,6 +169,8 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                                             cache, rects, n_rects,
                                             cancelable))
         {
+          /*  finished successfully  */
+
           gimp_drawable_push_undo (drawable, undo_desc, undo_buffer,
                                    rect.x, rect.y,
                                    rect.width, rect.height);
@@ -160,23 +186,27 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                   undo->paint_mode = applicator->paint_mode;
                   undo->opacity    = applicator->opacity;
 
-                  undo->applied_buffer =
-                    gimp_applicator_dup_apply_buffer (applicator, &rect);
+                  undo->applied_buffer = apply_buffer;
+                  apply_buffer = NULL;
                 }
             }
         }
       else
         {
+          /*  canceled by the user  */
+
           gegl_buffer_copy (undo_buffer,
                             GEGL_RECTANGLE (0, 0, rect.width, rect.height),
                             gimp_drawable_get_buffer (drawable),
                             GEGL_RECTANGLE (rect.x, rect.y, 0, 0));
 
-          /* canceled by the user */
           success = FALSE;
         }
 
       g_object_unref (undo_buffer);
+
+      if (apply_buffer)
+        g_object_unref (apply_buffer);
 
       if (cache)
         {
