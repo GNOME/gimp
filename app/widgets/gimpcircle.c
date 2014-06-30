@@ -515,9 +515,17 @@ gimp_circle_background_hsv (gdouble  angle,
                             gdouble  distance,
                             guchar  *rgb)
 {
-  gdouble v = 1 - sqrt (distance) / 4; /* it just looks nicer this way */
+  GimpHSV hsv;
+  GimpRGB color;
 
-  gimp_hsv_to_rgb4 (rgb, angle / (2.0 * G_PI), distance, v);
+  gimp_hsv_set (&hsv,
+                angle / (2.0 * G_PI),
+                distance,
+                1 - sqrt (distance) / 4 /* it just looks nicer this way */);
+
+  gimp_hsv_to_rgb (&hsv, &color);
+
+  gimp_rgb_get_uchar (&color, rgb, rgb + 1, rgb + 2);
 }
 
 static void
