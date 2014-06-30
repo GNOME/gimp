@@ -80,7 +80,38 @@ gimp_tool_progress_iface_init (GimpProgressInterface *iface)
 /*  private functions  */
 
 static gboolean
-gimp_tool_progress_key_event (GtkWidget         *widget,
+gimp_tool_progress_button_press (GtkWidget            *widget,
+                                 const GdkEventButton *bevent,
+                                 GimpTool             *tool)
+{
+  if (bevent->type   == GDK_BUTTON_PRESS &&
+      bevent->button == 1)
+    {
+      GtkWidget        *event_widget;
+      GimpDisplayShell *shell;
+
+      event_widget = gtk_get_event_widget ((GdkEvent *) bevent);
+      shell        = gimp_display_get_shell (tool->progress_display);
+
+      if (shell->canvas == event_widget)
+        {
+          gint x, y;
+
+          gimp_display_shell_unzoom_xy (shell, bevent->x, bevent->y,
+                                        &x, &y, FALSE);
+
+          if (gimp_canvas_item_hit (tool->progress, x, y))
+            {
+              gimp_progress_cancel (GIMP_PROGRESS (tool));
+            }
+        }
+    }
+
+  return TRUE;
+}
+
+static gboolean
+gimp_tool_progress_key_press (GtkWidget         *widget,
                               const GdkEventKey *kevent,
                               GimpTool          *tool)
 {
@@ -129,8 +160,11 @@ gimp_tool_progress_start (GimpProgress *progress,
       gtk_widget_show (tool->progress_grab_widget);
       gtk_grab_add (tool->progress_grab_widget);
 
+      g_signal_connect (tool->progress_grab_widget, "button-press-event",
+                        G_CALLBACK (gimp_tool_progress_button_press),
+                        tool);
       g_signal_connect (tool->progress_grab_widget, "key-press-event",
-                        G_CALLBACK (gimp_tool_progress_key_event),
+                        G_CALLBACK (gimp_tool_progress_key_press),
                         tool);
     }
 
