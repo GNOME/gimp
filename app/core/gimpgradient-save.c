@@ -41,18 +41,23 @@ gimp_gradient_save (GimpData  *data,
   GimpGradient        *gradient = GIMP_GRADIENT (data);
   GimpGradientSegment *seg;
   gint                 num_segments;
+  gchar               *path;
   FILE                *file;
 
-  file = g_fopen (gimp_data_get_filename (data), "wb");
+  path = g_file_get_path (gimp_data_get_file (data));
+  file = g_fopen (path, "wb");
 
   if (! file)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (gimp_data_get_filename (data)),
+                   gimp_filename_to_utf8 (path),
                    g_strerror (errno));
+      g_free (path);
       return FALSE;
     }
+
+  g_free (path);
 
   /* File format is:
    *

@@ -82,13 +82,14 @@ gboolean      gimp_data_delete_from_disk (GimpData     *data,
 
 const gchar * gimp_data_get_extension    (GimpData     *data);
 
-void          gimp_data_set_filename     (GimpData     *data,
-                                          const gchar  *filename,
+void          gimp_data_set_file         (GimpData     *data,
+                                          GFile        *file,
                                           gboolean      writable,
                                           gboolean      deletable);
+GFile       * gimp_data_get_file         (GimpData     *data);
+
 void          gimp_data_create_filename  (GimpData     *data,
                                           const gchar  *dest_dir);
-const gchar * gimp_data_get_filename     (GimpData     *data);
 
 void          gimp_data_set_folder_tags  (GimpData     *data,
                                           const gchar  *top_directory);

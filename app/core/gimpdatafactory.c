@@ -248,9 +248,9 @@ gimp_data_factory_refresh_cache_add (GimpDataFactory *factory,
                                      GimpData        *data,
                                      gpointer         user_data)
 {
-  const gchar *filename = gimp_data_get_filename (data);
+  GFile *file = gimp_data_get_file (data);
 
-  if (filename)
+  if (file)
     {
       GHashTable *cache = user_data;
       GList      *list;
@@ -259,10 +259,10 @@ gimp_data_factory_refresh_cache_add (GimpDataFactory *factory,
 
       gimp_container_remove (factory->priv->container, GIMP_OBJECT (data));
 
-      list = g_hash_table_lookup (cache, filename);
+      list = g_hash_table_lookup (cache, file);
       list = g_list_prepend (list, data);
 
-      g_hash_table_insert (cache, (gpointer) filename, list);
+      g_hash_table_insert (cache, file, list);
     }
 }
 
@@ -385,7 +385,7 @@ gimp_data_factory_data_refresh (GimpDataFactory *factory,
   /*  First, save all dirty data objects  */
   gimp_data_factory_data_save (factory);
 
-  cache = g_hash_table_new (g_str_hash, g_str_equal);
+  cache = g_hash_table_new (g_file_hash, (GEqualFunc) g_file_equal);
 
   gimp_data_factory_data_foreach (factory, TRUE,
                                   gimp_data_factory_refresh_cache_add, cache);
@@ -439,7 +439,7 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
     {
       GimpData *data = list->data;
 
-      if (! gimp_data_get_filename (data))
+      if (! gimp_data_get_file (data))
         gimp_data_create_filename (data, writable_dir);
 
       if (gimp_data_is_dirty (data) &&
@@ -577,7 +577,7 @@ gimp_data_factory_data_delete (GimpDataFactory  *factory,
 
       gimp_container_remove (factory->priv->container, GIMP_OBJECT (data));
 
-      if (delete_from_disk && gimp_data_get_filename (data))
+      if (delete_from_disk && gimp_data_get_file (data))
         retval = gimp_data_delete_from_disk (data, error);
 
       g_object_unref (data);
@@ -611,7 +611,7 @@ gimp_data_factory_data_save_single (GimpDataFactory  *factory,
   if (! gimp_data_is_dirty (data))
     return TRUE;
 
-  if (! gimp_data_get_filename (data))
+  if (! gimp_data_get_file (data))
     {
       gchar  *writable_dir;
       GError *my_error = NULL;
@@ -867,9 +867,11 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
  insert:
   if (cache)
     {
+      GFile *file = g_file_new_for_path (file_data->filename);
       GList *cached_data;
 
-      cached_data = g_hash_table_lookup (cache, file_data->filename);
+      cached_data = g_hash_table_lookup (cache, file);
+      g_object_unref (file);
 
       if (cached_data &&
           gimp_data_get_mtime (cached_data->data) != 0 &&
@@ -914,10 +916,12 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
       for (list = data_list; list; list = g_list_next (list))
         {
           GimpData *data = list->data;
+          GFile    *file = g_file_new_for_path (file_data->filename);
 
-          gimp_data_set_filename (data, file_data->filename,
-                                  writable, deletable);
+          gimp_data_set_file (data, file, writable, deletable);
           gimp_data_set_mtime (data, file_data->mtime);
+
+          g_object_unref (file);
 
           gimp_data_clean (data);
 

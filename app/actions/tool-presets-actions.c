@@ -106,7 +106,7 @@ tool_presets_actions_update (GimpActionGroup *group,
   GimpContext    *context     = action_data_get_context (user_data);
   GimpToolPreset *tool_preset = NULL;
   GimpData       *data        = NULL;
-  const gchar    *filename    = NULL;
+  GFile          *file        = NULL;
 
   if (context)
     {
@@ -116,7 +116,7 @@ tool_presets_actions_update (GimpActionGroup *group,
         {
           data = GIMP_DATA (tool_preset);
 
-          filename = gimp_data_get_filename (data);
+          file = gimp_data_get_file (data);
         }
     }
 
@@ -125,7 +125,7 @@ tool_presets_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("tool-presets-edit",          tool_preset);
   SET_SENSITIVE ("tool-presets-duplicate",     tool_preset && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("tool-presets-copy-location", tool_preset && filename);
+  SET_SENSITIVE ("tool-presets-copy-location", tool_preset && file);
   SET_SENSITIVE ("tool-presets-delete",        tool_preset && gimp_data_is_deletable (data));
 
 #undef SET_SENSITIVE

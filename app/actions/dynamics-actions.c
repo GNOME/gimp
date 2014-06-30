@@ -104,7 +104,7 @@ dynamics_actions_update (GimpActionGroup *group,
   GimpContext  *context  = action_data_get_context (user_data);
   GimpDynamics *dynamics = NULL;
   GimpData     *data     = NULL;
-  const gchar  *filename = NULL;
+  GFile        *file     = NULL;
 
   if (context)
     {
@@ -114,7 +114,7 @@ dynamics_actions_update (GimpActionGroup *group,
         {
           data = GIMP_DATA (dynamics);
 
-          filename = gimp_data_get_filename (data);
+          file = gimp_data_get_file (data);
         }
     }
 
@@ -123,7 +123,7 @@ dynamics_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("dynamics-edit",          dynamics);
   SET_SENSITIVE ("dynamics-duplicate",     dynamics && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("dynamics-copy-location", dynamics && filename);
+  SET_SENSITIVE ("dynamics-copy-location", dynamics && file);
   SET_SENSITIVE ("dynamics-delete",        dynamics && gimp_data_is_deletable (data));
 
 #undef SET_SENSITIVE

@@ -57,7 +57,7 @@ enum
 enum
 {
   PROP_0,
-  PROP_FILENAME,
+  PROP_FILE,
   PROP_WRITABLE,
   PROP_DELETABLE,
   PROP_MIME_TYPE
@@ -68,7 +68,7 @@ typedef struct _GimpDataPrivate GimpDataPrivate;
 
 struct _GimpDataPrivate
 {
-  gchar  *filename;
+  GFile  *file;
   GQuark  mime_type;
   guint   writable  : 1;
   guint   deletable : 1;
@@ -193,9 +193,9 @@ gimp_data_class_init (GimpDataClass *klass)
   klass->get_extension            = NULL;
   klass->duplicate                = NULL;
 
-  g_object_class_install_property (object_class, PROP_FILENAME,
-                                   g_param_spec_string ("filename", NULL, NULL,
-                                                        NULL,
+  g_object_class_install_property (object_class, PROP_FILE,
+                                   g_param_spec_object ("file", NULL, NULL,
+                                                        G_TYPE_FILE,
                                                         GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class, PROP_WRITABLE,
@@ -260,10 +260,10 @@ gimp_data_finalize (GObject *object)
 {
   GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (object);
 
-  if (private->filename)
+  if (private->file)
     {
-      g_free (private->filename);
-      private->filename = NULL;
+      g_object_unref (private->file);
+      private->file = NULL;
     }
 
   if (private->tags)
@@ -292,11 +292,11 @@ gimp_data_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_FILENAME:
-      gimp_data_set_filename (data,
-                              g_value_get_string (value),
-                              private->writable,
-                              private->deletable);
+    case PROP_FILE:
+      gimp_data_set_file (data,
+                          g_value_get_object (value),
+                          private->writable,
+                          private->deletable);
       break;
 
     case PROP_WRITABLE:
@@ -330,8 +330,8 @@ gimp_data_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_FILENAME:
-      g_value_set_string (value, private->filename);
+    case PROP_FILE:
+      g_value_set_object (value, private->file);
       break;
 
     case PROP_WRITABLE:
@@ -370,7 +370,7 @@ gimp_data_get_memsize (GimpObject *object,
   GimpDataPrivate *private = GIMP_DATA_GET_PRIVATE (object);
   gint64           memsize = 0;
 
-  memsize += gimp_string_get_memsize (private->filename);
+  memsize += gimp_g_object_get_memsize (G_OBJECT (private->file));
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -443,39 +443,42 @@ gimp_data_get_identifier (GimpTagged *tagged)
   GimpDataPrivate *private    = GIMP_DATA_GET_PRIVATE (tagged);
   gchar           *identifier = NULL;
 
-  if (private->filename)
+  if (private->file)
     {
       const gchar *data_dir = gimp_data_directory ();
       const gchar *gimp_dir = gimp_directory ();
+      gchar       *path     = g_file_get_path (private->file);
       gchar       *tmp;
 
-      if (g_str_has_prefix (private->filename, data_dir))
+      if (g_str_has_prefix (path, data_dir))
         {
           tmp = g_strconcat ("${gimp_data_dir}",
-                             private->filename + strlen (data_dir),
+                             path + strlen (data_dir),
                              NULL);
           identifier = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
           g_free (tmp);
         }
-      else if (g_str_has_prefix (private->filename, gimp_dir))
+      else if (g_str_has_prefix (path, gimp_dir))
         {
           tmp = g_strconcat ("${gimp_dir}",
-                             private->filename + strlen (gimp_dir),
+                             path + strlen (gimp_dir),
                              NULL);
           identifier = g_filename_to_utf8 (tmp, -1, NULL, NULL, NULL);
           g_free (tmp);
         }
       else
         {
-          identifier = g_filename_to_utf8 (private->filename, -1,
+          identifier = g_filename_to_utf8 (path, -1,
                                            NULL, NULL, NULL);
         }
 
       if (! identifier)
         {
-          g_warning ("Failed to convert '%s' to utf8.\n", private->filename);
-          identifier = g_strdup (private->filename);
+          g_warning ("Failed to convert '%s' to utf8.\n", path);
+          identifier = g_strdup (path);
         }
+
+      g_free (path);
     }
   else if (private->internal)
     {
@@ -496,11 +499,11 @@ gimp_data_get_checksum (GimpTagged *tagged)
  * @data:  object whose contents are to be saved.
  * @error: return location for errors or %NULL
  *
- * Save the object.  If the object is marked as "internal", nothing happens.
- * Otherwise, it is saved to disk, using the file name set by
- * gimp_data_set_filename().  If the save is successful, the
- * object is marked as not dirty.  If not, an error message is returned
- * using the @error argument.
+ * Save the object.  If the object is marked as "internal", nothing
+ * happens.  Otherwise, it is saved to disk, using the file name set
+ * by gimp_data_set_file().  If the save is successful, the object is
+ * marked as not dirty.  If not, an error message is returned using
+ * the @error argument.
  *
  * Returns: %TRUE if the object is internal or the save is successful.
  **/
@@ -524,15 +527,15 @@ gimp_data_save (GimpData  *data,
       return TRUE;
     }
 
-  g_return_val_if_fail (private->filename != NULL, FALSE);
+  g_return_val_if_fail (private->file != NULL, FALSE);
 
   if (GIMP_DATA_GET_CLASS (data)->save)
     success = GIMP_DATA_GET_CLASS (data)->save (data, error);
 
   if (success)
     {
-      GFile     *file = g_file_new_for_path (private->filename);
-      GFileInfo *info = g_file_query_info (file, "time::*",
+      GFileInfo *info = g_file_query_info (private->file,
+                                           G_FILE_ATTRIBUTE_TIME_MODIFIED,
                                            G_FILE_QUERY_INFO_NONE,
                                            NULL, NULL);
       if (info)
@@ -542,8 +545,6 @@ gimp_data_save (GimpData  *data,
                                               G_FILE_ATTRIBUTE_TIME_MODIFIED);
           g_object_unref (info);
         }
-
-      g_object_unref (file);
 
       private->dirty = FALSE;
     }
@@ -661,7 +662,7 @@ gimp_data_is_frozen (GimpData *data)
  *
  * Deletes the object from disk.  If the object is marked as "internal",
  * nothing happens.  Otherwise, if the file exists whose name has been
- * set by gimp_data_set_filename(), it is deleted.  Obviously this is
+ * set by gimp_data_set_file(), it is deleted.  Obviously this is
  * a potentially dangerous function, which should be used with care.
  *
  * Returns: %TRUE if the object is internal to Gimp, or the deletion is
@@ -678,22 +679,13 @@ gimp_data_delete_from_disk (GimpData  *data,
 
   private = GIMP_DATA_GET_PRIVATE (data);
 
-  g_return_val_if_fail (private->filename != NULL, FALSE);
+  g_return_val_if_fail (private->file      != NULL, FALSE);
   g_return_val_if_fail (private->deletable == TRUE, FALSE);
 
   if (private->internal)
     return TRUE;
 
-  if (g_unlink (private->filename) == -1)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_DELETE,
-                   _("Could not delete '%s': %s"),
-                   gimp_filename_to_utf8 (private->filename),
-                   g_strerror (errno));
-      return FALSE;
-    }
-
-  return TRUE;
+  return g_file_delete (private->file, NULL, error);
 }
 
 const gchar *
@@ -708,39 +700,46 @@ gimp_data_get_extension (GimpData *data)
 }
 
 /**
- * gimp_data_set_filename:
+ * gimp_data_set_file:
  * @data:     A #GimpData object
- * @filename: File name to assign to @data.
+ * @file:     File to assign to @data.
  * @writable: %TRUE if we want to be able to write to this file.
  * @deletable: %TRUE if we want to be able to delete this file.
  *
- * This function assigns a file name to @data, and sets some flags
+ * This function assigns a file to @data, and sets some flags
  * according to the properties of the file.  If @writable is %TRUE,
- * and the user has permission to write or overwrite the requested file
- * name, and a "save" method exists for @data's object type, then
+ * and the user has permission to write or overwrite the requested
+ * file name, and a "save" method exists for @data's object type, then
  * @data is marked as writable.
  **/
 void
-gimp_data_set_filename (GimpData    *data,
-                        const gchar *filename,
-                        gboolean     writable,
-                        gboolean     deletable)
+gimp_data_set_file (GimpData *data,
+                    GFile    *file,
+                    gboolean  writable,
+                    gboolean  deletable)
 {
   GimpDataPrivate *private;
+  gchar           *path;
 
   g_return_if_fail (GIMP_IS_DATA (data));
-  g_return_if_fail (filename != NULL);
-  g_return_if_fail (g_path_is_absolute (filename));
+  g_return_if_fail (G_IS_FILE (file));
+
+  path = g_file_get_path (file);
+
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (g_path_is_absolute (path));
+
+  g_free (path);
 
   private = GIMP_DATA_GET_PRIVATE (data);
 
   if (private->internal)
     return;
 
-  if (private->filename)
-    g_free (private->filename);
+  if (private->file)
+    g_object_unref (private->file);
 
-  private->filename  = g_strdup (filename);
+  private->file      = g_object_ref (file);
   private->writable  = FALSE;
   private->deletable = FALSE;
 
@@ -749,23 +748,61 @@ gimp_data_set_filename (GimpData    *data,
    */
   if (writable || deletable)
     {
-      gchar *dirname = g_path_get_dirname (filename);
+      GFileInfo *info;
 
-      if ((g_access (filename, F_OK) == 0 &&  /* check if the file exists    */
-           g_access (filename, W_OK) == 0) || /* and is writable             */
-          (g_access (filename, F_OK) != 0 &&  /* OR doesn't exist            */
-           g_access (dirname,  W_OK) == 0))   /* and we can write to its dir */
+      if (g_file_query_exists (private->file, NULL)) /* check if it exists */
         {
-          private->writable  = writable  ? TRUE : FALSE;
-          private->deletable = deletable ? TRUE : FALSE;
-        }
+          info = g_file_query_info (private->file,
+                                    G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE,
+                                    G_FILE_QUERY_INFO_NONE,
+                                    NULL, NULL);
 
-      g_free (dirname);
+          /* and we can write it */
+          if (info &&
+              g_file_info_get_attribute_boolean (info,
+                                                 G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE))
+            {
+              private->writable  = writable  ? TRUE : FALSE;
+              private->deletable = deletable ? TRUE : FALSE;
+            }
+        }
+      else /* OR it doesn't exist */
+        {
+          GFile *parent = g_file_get_parent (private->file);
+
+          info = g_file_query_info (parent,
+                                    G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE,
+                                    G_FILE_QUERY_INFO_NONE,
+                                    NULL, NULL);
+
+          /* and we can write to its parent directory */
+          if (info &&
+              g_file_info_get_attribute_boolean (info,
+                                                 G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE))
+            {
+              private->writable  = writable  ? TRUE : FALSE;
+              private->deletable = deletable ? TRUE : FALSE;
+            }
+
+          g_object_unref (parent);
+        }
 
       /*  if we can't save, we are not writable  */
       if (! GIMP_DATA_GET_CLASS (data)->save)
         private->writable = FALSE;
     }
+}
+
+GFile *
+gimp_data_get_file (GimpData *data)
+{
+  GimpDataPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
+
+  private = GIMP_DATA_GET_PRIVATE (data);
+
+  return private->file;
 }
 
 /**
@@ -785,8 +822,9 @@ gimp_data_create_filename (GimpData    *data,
 {
   GimpDataPrivate *private;
   gchar           *safename;
-  gchar           *filename;
-  gchar           *fullpath;
+  gchar           *basename;
+  gchar           *path;
+  GFile           *file;
   gint             i;
   gint             unum  = 1;
   GError          *error = NULL;
@@ -820,43 +858,34 @@ gimp_data_create_filename (GimpData    *data,
     if (strchr ("\\/*?\"`'<>{}|\n\t ;:$^&", safename[i]))
       safename[i] = '-';
 
-  filename = g_strconcat (safename, gimp_data_get_extension (data), NULL);
+  basename = g_strconcat (safename, gimp_data_get_extension (data), NULL);
 
-  fullpath = g_build_filename (dest_dir, filename, NULL);
+  path = g_build_filename (dest_dir, basename, NULL);
 
-  g_free (filename);
+  g_free (basename);
 
-  while (g_file_test (fullpath, G_FILE_TEST_EXISTS))
+  while (g_file_test (path, G_FILE_TEST_EXISTS))
     {
-      g_free (fullpath);
+      g_free (path);
 
-      filename = g_strdup_printf ("%s-%d%s",
+      basename = g_strdup_printf ("%s-%d%s",
                                   safename,
                                   unum++,
                                   gimp_data_get_extension (data));
 
-      fullpath = g_build_filename (dest_dir, filename, NULL);
+      path = g_build_filename (dest_dir, basename, NULL);
 
-      g_free (filename);
+      g_free (basename);
     }
 
   g_free (safename);
 
-  gimp_data_set_filename (data, fullpath, TRUE, TRUE);
+  file = g_file_new_for_path (path);
+  g_free (path);
 
-  g_free (fullpath);
-}
+  gimp_data_set_file (data, file, TRUE, TRUE);
 
-const gchar *
-gimp_data_get_filename (GimpData *data)
-{
-  GimpDataPrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
-
-  private = GIMP_DATA_GET_PRIVATE (data);
-
-  return private->filename;
+  g_object_unref (file);
 }
 
 static const gchar *tag_blacklist[] = { "brushes",
@@ -886,6 +915,7 @@ gimp_data_set_folder_tags (GimpData    *data,
                            const gchar *top_directory)
 {
   GimpDataPrivate *private;
+  gchar           *path;
   gchar           *dirname;
 
   g_return_if_fail (GIMP_IS_DATA (data));
@@ -895,9 +925,11 @@ gimp_data_set_folder_tags (GimpData    *data,
   if (private->internal)
     return;
 
-  g_return_if_fail (private->filename != NULL);
+  g_return_if_fail (private->file != NULL);
 
-  dirname = g_path_get_dirname (private->filename);
+  path    = g_file_get_path (private->file);
+  dirname = g_path_get_dirname (path);
+  g_free (path);
 
   /*  if this data is in a subfolder, walk up the hierarchy and
    *  set each folder on the way as tag, except the top_directory
@@ -1040,10 +1072,10 @@ gimp_data_duplicate (GimpData *data)
                     "deletable", TRUE,
                     NULL);
 
-      if (private->filename)
+      if (private->file)
         {
-          g_free (private->filename);
-          private->filename = NULL;
+          g_object_unref (private->file);
+          private->file = NULL;
         }
 
       return new;
@@ -1074,10 +1106,10 @@ gimp_data_make_internal (GimpData    *data,
 
   private = GIMP_DATA_GET_PRIVATE (data);
 
-  if (private->filename)
+  if (private->file)
     {
-      g_free (private->filename);
-      private->filename = NULL;
+      g_object_unref (private->file);
+      private->file = NULL;
     }
 
   private->identifier = g_strdup (identifier);
