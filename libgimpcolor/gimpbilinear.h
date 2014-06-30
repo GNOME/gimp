@@ -49,6 +49,8 @@ GimpRGB   gimp_bilinear_rgb      (gdouble    x,
 GimpRGB   gimp_bilinear_rgba     (gdouble    x,
                                   gdouble    y,
                                   GimpRGB   *values);
+
+GIMP_DEPRECATED
 void      gimp_bilinear_pixels_8 (guchar    *dest,
                                   gdouble    x,
                                   gdouble    y,
