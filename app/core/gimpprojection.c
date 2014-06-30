@@ -829,13 +829,13 @@ gimp_projection_chunk_render_iteration (GimpProjection *proj)
   gimp_projection_paint_area (proj, TRUE /* sic! */,
                               work_x, work_y, work_w, work_h);
 
-  chunk_render->work_x += GIMP_PROJECTION_CHUNK_WIDTH;
+  chunk_render->work_x += work_w;
 
   if (chunk_render->work_x >= chunk_render->x + chunk_render->width)
     {
       chunk_render->work_x = chunk_render->x;
 
-      chunk_render->work_y += GIMP_PROJECTION_CHUNK_HEIGHT;
+      chunk_render->work_y += work_h;
 
       if (chunk_render->work_y >= chunk_render->y + chunk_render->height)
         {
