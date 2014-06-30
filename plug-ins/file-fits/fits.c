@@ -863,7 +863,7 @@ create_fits_header (FitsFile *ofp,
       hdulist->datamax = 65535;
       break;
     case 32:
-      hdulist->datamax = 4294967295;
+      hdulist->datamax = 4294967295.0; /* .0 to slinence gcc */
       break;
     case -32:
       hdulist->datamax = 1.0;
@@ -1055,7 +1055,7 @@ save_fits (FitsFile *ofp,
               case 32:
                 for (j = 0; j < width; j++)
                   {
-                    *((guint32*)src) += 2147483648;
+                    *((guint32*)src) += 2147483648.0; /* .0 to silence gcc */
                     putc (*(src + 3), ofp->fp);
                     putc (*(src + 2), ofp->fp);
                     putc (*(src + 1), ofp->fp);
