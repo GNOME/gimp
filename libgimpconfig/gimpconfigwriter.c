@@ -178,6 +178,42 @@ gimp_config_writer_new_file (const gchar  *filename,
 }
 
 /**
+ * gimp_config_writer_new_gfile:
+ * @file: a #GFile
+ * @atomic: if %TRUE the file is written atomically
+ * @header: text to include as comment at the top of the file
+ * @error: return location for errors
+ *
+ * Creates a new #GimpConfigWriter and sets it up to write to
+ * @file. If @atomic is %TRUE, a temporary file is used to avoid
+ * possible race conditions. The temporary file is then moved to @file
+ * when the writer is closed.
+ *
+ * Return value: a new #GimpConfigWriter or %NULL in case of an error
+ *
+ * Since: GIMP 2.10
+ **/
+GimpConfigWriter *
+gimp_config_writer_new_gfile (GFile        *file,
+                              gboolean      atomic,
+                              const gchar  *header,
+                              GError      **error)
+{
+  GimpConfigWriter *writer;
+  gchar            *path;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+  path = g_file_get_path (file);
+
+  writer = gimp_config_writer_new_file (path, atomic, header, error);
+
+  g_free (path);
+
+  return writer;
+}
+
+/**
  * gimp_config_writer_new_fd:
  * @fd:
  *

@@ -30,6 +30,8 @@
 
 GScanner * gimp_scanner_new_file                 (const gchar  *filename,
                                                   GError      **error);
+GScanner * gimp_scanner_new_gfile                (GFile        *file,
+                                                  GError      **error);
 GScanner * gimp_scanner_new_string               (const gchar  *text,
                                                   gint          text_len,
                                                   GError      **error);

@@ -113,6 +113,33 @@ gimp_scanner_new_file (const gchar  *filename,
 }
 
 /**
+ * gimp_scanner_new_gfile:
+ * @file: a #GFile
+ * @error: return location for #GError, or %NULL
+ *
+ * Return value: The new #GScanner.
+ *
+ * Since: GIMP 2.10
+ **/
+GScanner *
+gimp_scanner_new_gfile (GFile  *file,
+                        GError **error)
+{
+  GScanner *scanner;
+  gchar    *path;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+  path = g_file_get_path (file);
+
+  scanner = gimp_scanner_new_file (path, error);
+
+  g_free (path);
+
+  return scanner;
+}
+
+/**
  * gimp_scanner_new_string:
  * @text:
  * @text_len:

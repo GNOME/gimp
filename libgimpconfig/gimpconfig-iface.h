@@ -79,6 +79,12 @@ gboolean      gimp_config_serialize_to_file     (GimpConfig       *config,
                                                  const gchar      *footer,
                                                  gpointer          data,
                                                  GError          **error);
+gboolean      gimp_config_serialize_to_gfile    (GimpConfig       *config,
+                                                 GFile            *file,
+                                                 const gchar      *header,
+                                                 const gchar      *footer,
+                                                 gpointer          data,
+                                                 GError          **error);
 gboolean      gimp_config_serialize_to_fd       (GimpConfig       *config,
                                                  gint              fd,
                                                  gpointer          data);
@@ -86,6 +92,10 @@ gchar       * gimp_config_serialize_to_string   (GimpConfig       *config,
                                                  gpointer          data);
 gboolean      gimp_config_deserialize_file      (GimpConfig       *config,
                                                  const gchar      *filename,
+                                                 gpointer          data,
+                                                 GError          **error);
+gboolean      gimp_config_deserialize_gfile     (GimpConfig       *config,
+                                                 GFile            *file,
                                                  gpointer          data,
                                                  GError          **error);
 gboolean      gimp_config_deserialize_string    (GimpConfig       *config,

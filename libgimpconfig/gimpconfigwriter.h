@@ -31,6 +31,10 @@ GimpConfigWriter * gimp_config_writer_new_file     (const gchar       *filename,
                                                     gboolean           atomic,
                                                     const gchar       *header,
                                                     GError           **error);
+GimpConfigWriter * gimp_config_writer_new_gfile    (GFile             *file,
+                                                    gboolean           atomic,
+                                                    const gchar       *header,
+                                                    GError           **error);
 GimpConfigWriter * gimp_config_writer_new_fd       (gint               fd);
 GimpConfigWriter * gimp_config_writer_new_string   (GString           *string);
 
