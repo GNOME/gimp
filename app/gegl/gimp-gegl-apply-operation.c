@@ -79,13 +79,13 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
   gdouble        value;
   gboolean       cancel           = FALSE;
 
-  g_return_if_fail (src_buffer == NULL || GEGL_IS_BUFFER (src_buffer));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
-  g_return_if_fail (GEGL_IS_NODE (operation));
-  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
-  g_return_if_fail (cache == NULL || GEGL_IS_BUFFER (cache));
-  g_return_if_fail (valid_rects == NULL || cache != NULL);
-  g_return_if_fail (valid_rects == NULL || n_valid_rects != 0);
+  g_return_val_if_fail (src_buffer == NULL || GEGL_IS_BUFFER (src_buffer), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (GEGL_IS_NODE (operation), FALSE);
+  g_return_val_if_fail (GEGL_IS_BUFFER (dest_buffer), FALSE);
+  g_return_val_if_fail (cache == NULL || GEGL_IS_BUFFER (cache), FALSE);
+  g_return_val_if_fail (valid_rects == NULL || cache != NULL, FALSE);
+  g_return_val_if_fail (valid_rects == NULL || n_valid_rects != 0, FALSE);
 
   if (dest_rect)
     {

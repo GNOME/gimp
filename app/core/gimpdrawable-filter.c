@@ -92,9 +92,9 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
   GeglRectangle rect;
   gboolean      success = TRUE;
 
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (GIMP_IS_FILTER (filter));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_FILTER (filter), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
 
   if (gimp_item_mask_intersect (GIMP_ITEM (drawable),
                                 &rect.x, &rect.y,

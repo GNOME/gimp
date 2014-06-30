@@ -404,8 +404,8 @@ gimp_image_map_commit (GimpImageMap *image_map,
 {
   gboolean success = TRUE;
 
-  g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+  g_return_val_if_fail (GIMP_IS_IMAGE_MAP (image_map), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
 
   if (gimp_image_map_is_filtering (image_map))
     {
