@@ -40,7 +40,7 @@ GimpPalette * gimp_palette_import_from_drawable      (GimpDrawable *drawable,
                                                       gint          threshold,
                                                       gboolean      selection_only);
 GimpPalette * gimp_palette_import_from_file          (GimpContext  *context,
-                                                      const gchar  *filename,
+                                                      GFile        *file,
                                                       const gchar  *palette_name,
                                                       GError      **error);
 

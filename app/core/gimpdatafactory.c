@@ -390,7 +390,7 @@ gimp_data_factory_data_refresh (GimpDataFactory *factory,
   gimp_data_factory_data_foreach (factory, TRUE,
                                   gimp_data_factory_refresh_cache_add, cache);
 
-  /*  Now the cache contains a filename => list-of-objects mapping of
+  /*  Now the cache contains a GFile => list-of-objects mapping of
    *  the old objects. So we should now traverse the directory and for
    *  each file load it only if its mtime is newer.
    *

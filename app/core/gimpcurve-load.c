@@ -38,28 +38,33 @@
 
 
 GList *
-gimp_curve_load (const gchar  *filename,
-                 GError      **error)
+gimp_curve_load (GFile   *file,
+                 GError **error)
 {
-  FILE *file;
+  gchar *path;
+  FILE  *f;
 
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+  path = g_file_get_path (file);
+
+  g_return_val_if_fail (g_path_is_absolute (path), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  file = g_fopen (filename, "rb");
+  f = g_fopen (path, "rb");
+  g_free (path);
 
-  if (! file)
+  if (! f)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
   /* load curves */
 
-  fclose (file);
+  fclose (f);
 
   return NULL;
 }

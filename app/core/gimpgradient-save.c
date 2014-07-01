@@ -128,33 +128,36 @@ gimp_gradient_save (GimpData  *data,
 
 gboolean
 gimp_gradient_save_pov (GimpGradient  *gradient,
-                        const gchar   *filename,
+                        GFile         *file,
                         GError       **error)
 {
-  FILE                *file;
+  gchar               *path;
+  FILE                *f;
   GimpGradientSegment *seg;
   gchar                buf[G_ASCII_DTOSTR_BUF_SIZE];
   gchar                color_buf[4][G_ASCII_DTOSTR_BUF_SIZE];
 
   g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  file = g_fopen (filename, "wb");
+  path = g_file_get_path (file);
+  f = g_fopen (path, "wb");
+  g_free (path);
 
-  if (! file)
+  if (! f)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
   else
     {
-      fprintf (file, "/* color_map file created by GIMP */\n");
-      fprintf (file, "/* http://www.gimp.org/           */\n");
+      fprintf (f, "/* color_map file created by GIMP */\n");
+      fprintf (f, "/* http://www.gimp.org/           */\n");
 
-      fprintf (file, "color_map {\n");
+      fprintf (f, "color_map {\n");
 
       for (seg = gradient->segments; seg; seg = seg->next)
         {
@@ -170,7 +173,7 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
           g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            1.0 - seg->left_color.a);
 
-          fprintf (file, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
+          fprintf (f, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
                    buf,
                    color_buf[0], color_buf[1], color_buf[2], color_buf[3]);
 
@@ -186,7 +189,7 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
           g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            1.0 - (seg->left_color.a + seg->right_color.a) / 2.0);
 
-          fprintf (file, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
+          fprintf (f, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
                    buf,
                    color_buf[0], color_buf[1], color_buf[2], color_buf[3]);
 
@@ -202,13 +205,13 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
           g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            1.0 - seg->right_color.a);
 
-          fprintf (file, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
+          fprintf (f, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
                    buf,
                    color_buf[0], color_buf[1], color_buf[2], color_buf[3]);
         }
 
-      fprintf (file, "} /* color_map */\n");
-      fclose (file);
+      fprintf (f, "} /* color_map */\n");
+      fclose (f);
     }
 
   return TRUE;

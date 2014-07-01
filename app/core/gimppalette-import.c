@@ -494,29 +494,30 @@ gimp_palette_import_from_drawable (GimpDrawable *drawable,
 
 GimpPalette *
 gimp_palette_import_from_file (GimpContext  *context,
-                               const gchar  *filename,
+                               GFile        *file,
                                const gchar  *palette_name,
                                GError      **error)
 {
   GList *palette_list = NULL;
-  GFile *file;
+  gchar *path;
   FILE  *f;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  f = g_fopen (filename, "rb");
+  path = g_file_get_path (file);
+  f = g_fopen (path, "rb");
+  g_free (path);
+
   if (! f)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
-
-  file = g_file_new_for_path (filename);
 
   switch (gimp_palette_load_detect_format (file, f))
     {
@@ -548,11 +549,10 @@ gimp_palette_import_from_file (GimpContext  *context,
       g_set_error (error,
                    GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Unknown type of palette file: %s"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       break;
     }
 
-  g_object_unref (file);
   fclose (f);
 
   if (palette_list)

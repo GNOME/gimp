@@ -837,16 +837,15 @@ palette_import_make_palette (ImportDialog *dialog)
 
     case FILE_IMPORT:
       {
-        gchar  *filename;
+        GFile  *file;
         GError *error = NULL;
 
-        filename =
-          gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog->file_chooser));
+        file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog->file_chooser));
 
         palette = gimp_palette_import_from_file (dialog->context,
-                                                 filename,
+                                                 file,
                                                  palette_name, &error);
-        g_free (filename);
+        g_object_unref (file);
 
         if (! palette)
           {

@@ -24,7 +24,7 @@ gboolean   gimp_gradient_save     (GimpData      *data,
                                    GError       **error);
 
 gboolean   gimp_gradient_save_pov (GimpGradient  *gradient,
-                                   const gchar   *filename,
+                                   GFile         *file,
                                    GError       **error);
 
 

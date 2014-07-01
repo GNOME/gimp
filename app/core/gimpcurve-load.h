@@ -22,8 +22,8 @@
 #define GIMP_CURVE_FILE_EXTENSION ".curve"
 
 
-GList * gimp_curve_load (const gchar  *filename,
-                         GError      **error);
+GList * gimp_curve_load (GFile   *file,
+                         GError **error);
 
 
 #endif /* __GIMP_CURVE_LOAD_H__ */
