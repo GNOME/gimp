@@ -46,9 +46,9 @@ struct _GimpSettingsBoxClass
                               GtkFileChooserDialog *dialog,
                               gboolean              export);
   void (* import)            (GimpSettingsBox      *box,
-                              const gchar          *filename);
+                              GFile                *file);
   void (* export)            (GimpSettingsBox      *box,
-                              const gchar          *filename);
+                              GFile                *file);
 };
 
 
@@ -57,12 +57,12 @@ GType       gimp_settings_box_get_type    (void) G_GNUC_CONST;
 GtkWidget * gimp_settings_box_new         (Gimp            *gimp,
                                            GObject         *config,
                                            GimpContainer   *container,
-                                           const gchar     *filename,
+                                           GFile           *file,
                                            const gchar     *import_dialog_title,
                                            const gchar     *export_dialog_title,
                                            const gchar     *file_dialog_help_id,
                                            const gchar     *default_folder,
-                                           const gchar     *last_filename);
+                                           GFile           *last_file);
 
 void        gimp_settings_box_add_current (GimpSettingsBox *box,
                                            gint             max_recent);

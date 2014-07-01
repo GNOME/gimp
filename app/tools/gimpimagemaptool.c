@@ -374,6 +374,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
           GtkWidget *settings_ui;
           gchar     *settings_filename;
           gchar     *default_folder;
+          GFile     *settings_file;
 
           settings_filename =
             gimp_tool_info_build_options_filename (tool_info, ".settings");
@@ -381,14 +382,18 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
           default_folder =
             g_build_filename (gimp_directory (), klass->settings_name, NULL);
 
+          settings_file = g_file_new_for_path (settings_filename);
+
           settings_ui = klass->get_settings_ui (image_map_tool,
                                                 klass->recent_settings,
-                                                settings_filename,
+                                                settings_file,
                                                 klass->import_dialog_title,
                                                 klass->export_dialog_title,
                                                 tool_info->help_id,
                                                 default_folder,
                                                 &image_map_tool->settings_box);
+
+          g_object_unref (settings_file);
 
           g_free (settings_filename);
           g_free (default_folder);

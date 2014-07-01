@@ -76,9 +76,9 @@ gimp_image_map_options_class_init (GimpImageMapOptionsClass *klass)
                                                       G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SETTINGS,
-                                   g_param_spec_string ("settings",
+                                   g_param_spec_object ("settings",
                                                         NULL, NULL,
-                                                        NULL,
+                                                        G_TYPE_FILE,
                                                         GIMP_PARAM_READWRITE));
 }
 
@@ -94,7 +94,7 @@ gimp_image_map_options_finalize (GObject *object)
 
   if (options->settings)
     {
-      g_free (options->settings);
+      g_object_unref (options->settings);
       options->settings = NULL;
     }
 
@@ -121,8 +121,9 @@ gimp_image_map_options_set_property (GObject      *object,
       break;
 
     case PROP_SETTINGS:
-      g_free (options->settings);
-      options->settings = g_value_dup_string (value);
+      if (options->settings)
+        g_object_unref (options->settings);
+      options->settings = g_value_dup_object (value);
       break;
 
     default:
@@ -150,7 +151,7 @@ gimp_image_map_options_get_property (GObject    *object,
       break;
 
     case PROP_SETTINGS:
-      g_value_set_string (value, options->settings);
+      g_value_set_object (value, options->settings);
       break;
 
     default:

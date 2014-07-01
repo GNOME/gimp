@@ -77,7 +77,7 @@ struct _GimpImageMapToolClass
 
   GtkWidget * (* get_settings_ui) (GimpImageMapTool  *image_map_tool,
                                    GimpContainer     *settings,
-                                   const gchar       *settings_filename,
+                                   GFile             *settings_file,
                                    const gchar       *import_dialog_title,
                                    const gchar       *export_dialog_title,
                                    const gchar       *file_dialog_help_id,
@@ -85,10 +85,10 @@ struct _GimpImageMapToolClass
                                    GtkWidget        **settings_box);
 
   gboolean    (* settings_import) (GimpImageMapTool  *image_map_tool,
-                                   const gchar       *filename,
+                                   GFile             *file,
                                    GError           **error);
   gboolean    (* settings_export) (GimpImageMapTool  *image_map_tool,
-                                   const gchar       *filename,
+                                   GFile             *file,
                                    GError           **error);
 
   void        (* color_picked)    (GimpImageMapTool  *image_map_tool,

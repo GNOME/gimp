@@ -38,7 +38,7 @@ struct _GimpImageMapOptions
 
   gboolean            preview;
   GimpImageMapRegion  region;
-  gchar              *settings;
+  GFile              *settings;
 };
 
 

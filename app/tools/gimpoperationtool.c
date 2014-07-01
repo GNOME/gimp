@@ -76,7 +76,7 @@ static void        gimp_operation_tool_dialog          (GimpImageMapTool  *im_to
 static void        gimp_operation_tool_reset           (GimpImageMapTool  *im_tool);
 static GtkWidget * gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
                                                         GimpContainer     *settings,
-                                                        const gchar       *settings_filename,
+                                                        GFile             *settings_file,
                                                         const gchar       *import_dialog_title,
                                                         const gchar       *export_dialog_title,
                                                         const gchar       *file_dialog_help_id,
@@ -312,7 +312,7 @@ gimp_operation_tool_reset (GimpImageMapTool *image_map_tool)
 static GtkWidget *
 gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
                                      GimpContainer     *settings,
-                                     const gchar       *settings_filename,
+                                     GFile             *settings_file,
                                      const gchar       *import_dialog_title,
                                      const gchar       *export_dialog_title,
                                      const gchar       *file_dialog_help_id,
@@ -324,6 +324,7 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
   GtkWidget         *widget;
   gchar             *basename;
   gchar             *filename;
+  GFile             *file;
   gchar             *import_title;
   gchar             *export_title;
 
@@ -336,22 +337,26 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
   filename = g_build_filename (gimp_directory (), "filters", basename, NULL);
   g_free (basename);
 
+  file = g_file_new_for_path (filename);
+  g_free (filename);
+
   import_title = g_strdup_printf (_("Import '%s' Settings"), tool->undo_desc);
   export_title = g_strdup_printf (_("Export '%s' Settings"), tool->undo_desc);
 
   widget =
     GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->get_settings_ui (image_map_tool,
                                                                settings,
-                                                               filename,
+                                                               file,
                                                                import_title,
                                                                export_title,
                                                                "help-foo",
                                                                g_get_home_dir (),
                                                                settings_box);
 
-  g_free (filename);
   g_free (import_title);
   g_free (export_title);
+
+  g_object_unref (file);
 
   return widget;
 }
