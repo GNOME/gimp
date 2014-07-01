@@ -167,8 +167,6 @@ gimp_unitrc_load (Gimp *gimp)
 
   if (token != G_TOKEN_LEFT_PAREN)
     {
-      gchar *tmp;
-
       g_scanner_get_next_token (scanner);
       g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
                              _("fatal parse error"), TRUE);
@@ -176,9 +174,7 @@ gimp_unitrc_load (Gimp *gimp)
       gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
 
-      tmp = g_file_get_path (file);
-      gimp_config_file_backup_on_error (tmp, "unitrc", NULL);
-      g_free (tmp);
+      gimp_config_file_backup_on_error (file, "unitrc", NULL);
     }
 
   gimp_scanner_destroy (scanner);

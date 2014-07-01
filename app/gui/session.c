@@ -298,14 +298,10 @@ session_init (Gimp *gimp)
 
   if (error)
     {
-      gchar *tmp;
-
       gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
 
-      tmp = g_file_get_path (file);
-      gimp_config_file_backup_on_error (tmp, "sessionrc", NULL);
-      g_free (tmp);
+      gimp_config_file_backup_on_error (file, "sessionrc", NULL);
     }
 
   gimp_scanner_destroy (scanner);

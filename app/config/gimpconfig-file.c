@@ -211,20 +211,22 @@ gimp_config_file_copy (const gchar         *source,
 }
 
 gboolean
-gimp_config_file_backup_on_error (const gchar  *filename,
+gimp_config_file_backup_on_error (GFile        *file,
                                   const gchar  *name,
                                   GError      **error)
 {
+  gchar    *path;
   gchar    *backup;
   gboolean  success;
 
-  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (name != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  backup = g_strconcat (filename, "~", NULL);
+  path   = g_file_get_path (file);
+  backup = g_strconcat (path, "~", NULL);
 
-  success = gimp_config_file_copy (filename, backup, NULL, NULL, error);
+  success = gimp_config_file_copy (path, backup, NULL, NULL, error);
 
   if (success)
     g_message (_("There was an error parsing your '%s' file. "
@@ -233,6 +235,7 @@ gimp_config_file_backup_on_error (const gchar  *filename,
                name, gimp_filename_to_utf8 (backup));
 
   g_free (backup);
+  g_free (path);
 
   return success;
 }

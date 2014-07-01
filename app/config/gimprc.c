@@ -277,9 +277,13 @@ gimp_rc_load (GimpRc *rc)
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         {
+          GFile *file;
+
           g_message ("%s", error->message);
 
-          gimp_config_file_backup_on_error (rc->user_gimprc, "gimprc", NULL);
+          file = g_file_new_for_path (rc->user_gimprc);
+          gimp_config_file_backup_on_error (file, "gimprc", NULL);
+          g_object_unref (file);
         }
 
       g_clear_error (&error);
