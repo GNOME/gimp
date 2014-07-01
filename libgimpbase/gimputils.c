@@ -233,6 +233,42 @@ gimp_filename_to_utf8 (const gchar *filename)
   return filename_utf8;
 }
 
+/**
+ * gimp_file_get_utf8_name:
+ * @file: a #GFile
+ *
+ * This function works like gimp_filename_to_utf8() and returns
+ * a UTF-8 encoded string that does not need to be freed.
+ *
+ * It converts a #GFile's path or uri to UTF-8 temporarily.  The
+ * return value is a pointer to a string that is guaranteed to be
+ * valid only during the current iteration of the main loop or until
+ * the next call to gimp_file_get_utf8_name().
+ *
+ * The only purpose of this function is to provide an easy way to pass
+ * a #GFile's name to a function that expects an UTF-8 encoded string.
+ *
+ * See g_file_get_parse_name().
+ *
+ * Since: GIMP 2.10
+ *
+ * Return value: A temporarily valid UTF-8 representation of @file's name.
+ *               This string must not be changed or freed.
+ **/
+const gchar *
+gimp_file_get_utf8_name (GFile *file)
+{
+  gchar *name;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+  name = g_file_get_parse_name (file);
+
+  g_object_set_data_full (G_OBJECT (file), "gimp-parse-name", name,
+                          (GDestroyNotify) g_free);
+
+  return name;
+}
 
 /**
  * gimp_strip_uline:

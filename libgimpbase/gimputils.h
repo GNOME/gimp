@@ -33,6 +33,7 @@ gchar         * gimp_any_to_utf8             (const gchar  *str,
                                               const gchar  *warning_format,
                                               ...) G_GNUC_PRINTF (3, 4) G_GNUC_MALLOC;
 const gchar   * gimp_filename_to_utf8        (const gchar  *filename);
+const gchar   * gimp_file_get_utf8_name      (GFile        *file);
 
 gchar         * gimp_strip_uline             (const gchar  *str) G_GNUC_MALLOC;
 gchar         * gimp_escape_uline            (const gchar  *str) G_GNUC_MALLOC;
