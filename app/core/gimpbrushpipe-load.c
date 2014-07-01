@@ -77,12 +77,13 @@ gimp_brush_pipe_load (GimpContext  *context,
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   fd = g_open (path, O_RDONLY | _O_BINARY, 0);
+  g_free (path);
+
   if (fd == -1)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (path), g_strerror (errno));
-      g_free (path);
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -98,7 +99,7 @@ gimp_brush_pipe_load (GimpContext  *context,
       gchar *utf8 =
         gimp_any_to_utf8 (buffer->str, buffer->len,
                           _("Invalid UTF-8 string in brush file '%s'."),
-                          gimp_filename_to_utf8 (path));
+                          gimp_file_get_utf8_name (file));
 
       pipe = g_object_new (GIMP_TYPE_BRUSH_PIPE,
                            "name",      utf8,
@@ -115,9 +116,8 @@ gimp_brush_pipe_load (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "File is corrupt."),
-                   gimp_filename_to_utf8 (path));
+                   gimp_file_get_utf8_name (file));
       close (fd);
-      g_free (path);
       return NULL;
     }
 
@@ -136,9 +136,8 @@ gimp_brush_pipe_load (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "File is corrupt."),
-                   gimp_filename_to_utf8 (path));
+                   gimp_file_get_utf8_name (file));
       close (fd);
-      g_free (path);
       g_object_unref (pipe);
       g_string_free (buffer, TRUE);
       return NULL;
@@ -218,7 +217,7 @@ gimp_brush_pipe_load (GimpContext  *context,
       GError *my_error = NULL;
 
       pipe->brushes[pipe->n_brushes] = gimp_brush_load_brush (context,
-                                                              fd, path,
+                                                              file, fd,
                                                               &my_error);
 
       if (pipe->brushes[pipe->n_brushes])
@@ -230,7 +229,6 @@ gimp_brush_pipe_load (GimpContext  *context,
         {
           g_propagate_error (error, my_error);
           close (fd);
-          g_free (path);
           g_object_unref (pipe);
           return NULL;
         }
@@ -249,8 +247,6 @@ gimp_brush_pipe_load (GimpContext  *context,
   GIMP_BRUSH (pipe)->y_axis   = pipe->current->y_axis;
   GIMP_BRUSH (pipe)->mask     = pipe->current->mask;
   GIMP_BRUSH (pipe)->pixmap   = pipe->current->pixmap;
-
-  g_free (path);
 
   return g_list_prepend (NULL, pipe);
 }

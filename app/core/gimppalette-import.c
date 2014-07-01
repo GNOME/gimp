@@ -499,17 +499,16 @@ gimp_palette_import_from_file (GimpContext  *context,
                                GError      **error)
 {
   GList *palette_list = NULL;
-
-  FILE  *file;
+  GFile *file;
+  FILE  *f;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  file = g_fopen (filename, "rb");
-
-  if (!file)
+  f = g_fopen (filename, "rb");
+  if (! f)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
@@ -517,30 +516,32 @@ gimp_palette_import_from_file (GimpContext  *context,
       return NULL;
     }
 
-  switch (gimp_palette_load_detect_format (filename, file))
+  file = g_file_new_for_path (filename);
+
+  switch (gimp_palette_load_detect_format (file, f))
     {
     case GIMP_PALETTE_FILE_FORMAT_GPL:
-      palette_list = gimp_palette_load_gpl (context, filename, file, error);
+      palette_list = gimp_palette_load_gpl (context, file, f, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_ACT:
-      palette_list = gimp_palette_load_act (context, filename, file, error);
+      palette_list = gimp_palette_load_act (context, file, f, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_RIFF_PAL:
-      palette_list = gimp_palette_load_riff (context, filename, file, error);
+      palette_list = gimp_palette_load_riff (context, file, f, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_PSP_PAL:
-      palette_list = gimp_palette_load_psp (context, filename, file, error);
+      palette_list = gimp_palette_load_psp (context, file, f, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_ACO:
-      palette_list = gimp_palette_load_aco (context, filename, file, error);
+      palette_list = gimp_palette_load_aco (context, file, f, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_CSS:
-      palette_list = gimp_palette_load_css (context, filename, file, error);
+      palette_list = gimp_palette_load_css (context, file, f, error);
       break;
 
     default:
@@ -551,7 +552,8 @@ gimp_palette_import_from_file (GimpContext  *context,
       break;
     }
 
-  fclose (file);
+  g_object_unref (file);
+  fclose (f);
 
   if (palette_list)
     {

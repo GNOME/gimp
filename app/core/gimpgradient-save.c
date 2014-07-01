@@ -46,18 +46,16 @@ gimp_gradient_save (GimpData  *data,
 
   path = g_file_get_path (gimp_data_get_file (data));
   file = g_fopen (path, "wb");
+  g_free (path);
 
   if (! file)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (path),
+                   gimp_file_get_utf8_name (gimp_data_get_file (data)),
                    g_strerror (errno));
-      g_free (path);
       return FALSE;
     }
-
-  g_free (path);
 
   /* File format is:
    *

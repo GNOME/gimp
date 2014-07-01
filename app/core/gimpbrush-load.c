@@ -87,36 +87,36 @@ struct _AbrSampledBrushHeader
 
 /*  local function prototypes  */
 
-static GList     * gimp_brush_load_abr_v12       (FILE         *file,
+static GList     * gimp_brush_load_abr_v12       (FILE         *f,
                                                   AbrHeader    *abr_hdr,
-                                                  const gchar  *path,
+                                                  GFile        *file,
                                                   GError      **error);
-static GList     * gimp_brush_load_abr_v6        (FILE         *file,
+static GList     * gimp_brush_load_abr_v6        (FILE         *f,
                                                   AbrHeader    *abr_hdr,
-                                                  const gchar  *path,
+                                                  GFile        *file,
                                                   GError      **error);
-static GimpBrush * gimp_brush_load_abr_brush_v12 (FILE         *file,
+static GimpBrush * gimp_brush_load_abr_brush_v12 (FILE         *f,
                                                   AbrHeader    *abr_hdr,
                                                   gint          index,
-                                                  const gchar  *path,
+                                                  GFile        *file,
                                                   GError      **error);
-static GimpBrush * gimp_brush_load_abr_brush_v6  (FILE         *file,
+static GimpBrush * gimp_brush_load_abr_brush_v6  (FILE         *f,
                                                   AbrHeader    *abr_hdr,
                                                   gint32        max_offset,
                                                   gint          index,
-                                                  const gchar  *path,
+                                                  GFile        *file,
                                                   GError      **error);
 
-static gchar       abr_read_char                 (FILE         *file);
-static gint16      abr_read_short                (FILE         *file);
-static gint32      abr_read_long                 (FILE         *file);
-static gchar     * abr_read_ucs2_text            (FILE         *file);
+static gchar       abr_read_char                 (FILE         *f);
+static gint16      abr_read_short                (FILE         *f);
+static gint32      abr_read_long                 (FILE         *f);
+static gchar     * abr_read_ucs2_text            (FILE         *f);
 static gboolean    abr_supported                 (AbrHeader    *abr_hdr,
-                                                  const gchar  *path,
+                                                  GFile        *f,
                                                   GError      **error);
 static gboolean    abr_reach_8bim_section        (FILE         *abr,
                                                   const gchar  *name);
-static gint32      abr_rle_decode                (FILE         *file,
+static gint32      abr_rle_decode                (FILE         *f,
                                                   gchar        *buffer,
                                                   gint32        height);
 
@@ -140,19 +140,19 @@ gimp_brush_load (GimpContext  *context,
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   fd = g_open (path, O_RDONLY | _O_BINARY, 0);
+  g_free (path);
+
   if (fd == -1)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (path), g_strerror (errno));
-      g_free (path);
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
-  brush = gimp_brush_load_brush (context, fd, path, error);
+  brush = gimp_brush_load_brush (context, file, fd, error);
 
   close (fd);
-  g_free (path);
 
   if (! brush)
     return NULL;
@@ -162,8 +162,8 @@ gimp_brush_load (GimpContext  *context,
 
 GimpBrush *
 gimp_brush_load_brush (GimpContext  *context,
+                       GFile        *file,
                        gint          fd,
-                       const gchar  *path,
                        GError      **error)
 {
   GimpBrush   *brush;
@@ -175,7 +175,7 @@ gimp_brush_load_brush (GimpContext  *context,
   gssize       i, size;
   gboolean     success = TRUE;
 
-  g_return_val_if_fail (path != NULL, NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (fd != -1, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
@@ -187,7 +187,7 @@ gimp_brush_load_brush (GimpContext  *context,
                              "Could not read %d bytes from '%s': %s",
                              (gint) sizeof (header)),
                    (gint) sizeof (header),
-                   gimp_filename_to_utf8 (path), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -207,7 +207,7 @@ gimp_brush_load_brush (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "Width = 0."),
-                   gimp_filename_to_utf8 (path));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -216,7 +216,7 @@ gimp_brush_load_brush (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "Height = 0."),
-                   gimp_filename_to_utf8 (path));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -225,7 +225,7 @@ gimp_brush_load_brush (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "Bytes = 0."),
-                   gimp_filename_to_utf8 (path));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -249,7 +249,7 @@ gimp_brush_load_brush (GimpContext  *context,
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in brush file '%s': "
                          "Unknown depth %d."),
-                       gimp_filename_to_utf8 (path), header.bytes);
+                       gimp_file_get_utf8_name (file), header.bytes);
           return NULL;
         }
       /*  fallthrough  */
@@ -262,7 +262,7 @@ gimp_brush_load_brush (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "Unknown version %d."),
-                   gimp_filename_to_utf8 (path), header.version);
+                   gimp_file_get_utf8_name (file), header.version);
       return NULL;
     }
 
@@ -278,14 +278,14 @@ gimp_brush_load_brush (GimpContext  *context,
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in brush file '%s': "
                          "File appears truncated."),
-                       gimp_filename_to_utf8 (path));
+                       gimp_file_get_utf8_name (file));
           g_free (name);
           return NULL;
         }
 
       utf8 = gimp_any_to_utf8 (name, -1,
                                _("Invalid UTF-8 string in brush file '%s'."),
-                               gimp_filename_to_utf8 (path));
+                               gimp_file_get_utf8_name (file));
       g_free (name);
       name = utf8;
     }
@@ -363,7 +363,7 @@ gimp_brush_load_brush (GimpContext  *context,
                      "GIMP brushes must be GRAY or RGBA.\n"
                      "This might be an obsolete GIMP brush file, try "
                      "loading it as image and save it again."),
-                   gimp_filename_to_utf8 (path), header.bytes);
+                   gimp_file_get_utf8_name (file), header.bytes);
       return NULL;
       break;
 
@@ -406,7 +406,7 @@ gimp_brush_load_brush (GimpContext  *context,
                    _("Fatal parse error in brush file '%s': "
                      "Unsupported brush depth %d\n"
                      "GIMP brushes must be GRAY or RGBA."),
-                   gimp_filename_to_utf8 (path), header.bytes);
+                   gimp_file_get_utf8_name (file), header.bytes);
       return NULL;
     }
 
@@ -416,7 +416,7 @@ gimp_brush_load_brush (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "File appears truncated."),
-                   gimp_filename_to_utf8 (path));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -447,31 +447,32 @@ gimp_brush_load_abr (GimpContext  *context,
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   f = g_fopen (path, "rb");
+  g_free (path);
+
   if (! f)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (path), g_strerror (errno));
-      g_free (path);
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
   abr_hdr.version = abr_read_short (f);
   abr_hdr.count   = abr_read_short (f); /* sub-version for ABR v6 */
 
-  if (abr_supported (&abr_hdr, path, error))
+  if (abr_supported (&abr_hdr, file, error))
     {
       switch (abr_hdr.version)
         {
         case 1:
         case 2:
           brush_list = gimp_brush_load_abr_v12 (f, &abr_hdr,
-                                                path, error);
+                                                file, error);
           break;
 
         case 6:
           brush_list = gimp_brush_load_abr_v6 (f, &abr_hdr,
-                                               path, error);
+                                               file, error);
         }
     }
 
@@ -481,9 +482,7 @@ gimp_brush_load_abr (GimpContext  *context,
     g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                  _("Fatal parse error in brush file '%s': "
                    "unable to decode abr format version %d."),
-                 gimp_filename_to_utf8 (path), abr_hdr.version);
-
-  g_free (path);
+                 gimp_file_get_utf8_name (file), abr_hdr.version);
 
   return g_list_reverse (brush_list);
 }
@@ -492,10 +491,10 @@ gimp_brush_load_abr (GimpContext  *context,
 /*  private functions  */
 
 static GList *
-gimp_brush_load_abr_v12 (FILE         *file,
-                         AbrHeader    *abr_hdr,
-                         const gchar  *path,
-                         GError      **error)
+gimp_brush_load_abr_v12 (FILE       *f,
+                         AbrHeader  *abr_hdr,
+                         GFile      *file,
+                         GError    **error)
 {
   GList *brush_list = NULL;
   gint   i;
@@ -505,8 +504,8 @@ gimp_brush_load_abr_v12 (FILE         *file,
       GimpBrush *brush;
       GError    *my_error = NULL;
 
-      brush = gimp_brush_load_abr_brush_v12 (file, abr_hdr, i,
-                                             path, &my_error);
+      brush = gimp_brush_load_abr_brush_v12 (f, abr_hdr, i,
+                                             file, &my_error);
 
       /*  a NULL brush without an error means an unsupported brush
        *  type was encountered, silently skip it and try the next one
@@ -527,29 +526,29 @@ gimp_brush_load_abr_v12 (FILE         *file,
 }
 
 static GList *
-gimp_brush_load_abr_v6 (FILE         *file,
-                        AbrHeader    *abr_hdr,
-                        const gchar  *path,
-                        GError      **error)
+gimp_brush_load_abr_v6 (FILE       *f,
+                        AbrHeader  *abr_hdr,
+                        GFile      *file,
+                        GError    **error)
 {
   GList  *brush_list = NULL;
   gint32  sample_section_size;
   gint32  sample_section_end;
   gint    i = 1;
 
-  if (! abr_reach_8bim_section (file, "samp"))
+  if (! abr_reach_8bim_section (f, "samp"))
     return brush_list;
 
-  sample_section_size = abr_read_long (file);
-  sample_section_end  = sample_section_size + ftell (file);
+  sample_section_size = abr_read_long (f);
+  sample_section_end  = sample_section_size + ftell (f);
 
-  while (ftell (file) < sample_section_end)
+  while (ftell (f) < sample_section_end)
     {
       GimpBrush *brush;
       GError    *my_error = NULL;
 
-      brush = gimp_brush_load_abr_brush_v6 (file, abr_hdr, sample_section_end,
-                                            i, path, &my_error);
+      brush = gimp_brush_load_abr_brush_v6 (f, abr_hdr, sample_section_end,
+                                            i, file, &my_error);
 
       /*  a NULL brush without an error means an unsupported brush
        *  type was encountered, silently skip it and try the next one
@@ -572,20 +571,17 @@ gimp_brush_load_abr_v6 (FILE         *file,
 }
 
 static GimpBrush *
-gimp_brush_load_abr_brush_v12 (FILE         *file,
-                               AbrHeader    *abr_hdr,
-                               gint          index,
-                               const gchar  *path,
-                               GError      **error)
+gimp_brush_load_abr_brush_v12 (FILE       *f,
+                               AbrHeader  *abr_hdr,
+                               gint        index,
+                               GFile      *file,
+                               GError    **error)
 {
   GimpBrush      *brush = NULL;
   AbrBrushHeader  abr_brush_hdr;
 
-  g_return_val_if_fail (path != NULL, NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  abr_brush_hdr.type = abr_read_short (file);
-  abr_brush_hdr.size = abr_read_long (file);
+  abr_brush_hdr.type = abr_read_short (f);
+  abr_brush_hdr.size = abr_read_long (f);
 
   /*  g_print(" + BRUSH\n | << type: %i  block size: %i bytes\n",
    *          abr_brush_hdr.type, abr_brush_hdr.size);
@@ -601,7 +597,7 @@ gimp_brush_load_abr_brush_v12 (FILE         *file,
        * types -akl
        */
       g_printerr ("WARNING: computed brush unsupported, skipping.\n");
-      fseek (file, abr_brush_hdr.size, SEEK_CUR);
+      fseek (f, abr_brush_hdr.size, SEEK_CUR);
       break;
 
     case 2: /* sampled brush */
@@ -617,21 +613,21 @@ gimp_brush_load_abr_brush_v12 (FILE         *file,
         gchar                 *tmp;
         gshort                 compress;
 
-        abr_sampled_brush_hdr.misc    = abr_read_long (file);
-        abr_sampled_brush_hdr.spacing = abr_read_short (file);
+        abr_sampled_brush_hdr.misc    = abr_read_long (f);
+        abr_sampled_brush_hdr.spacing = abr_read_short (f);
 
         if (abr_hdr->version == 2)
-          sample_name = abr_read_ucs2_text (file);
+          sample_name = abr_read_ucs2_text (f);
 
-        abr_sampled_brush_hdr.antialiasing = abr_read_char (file);
-
-        for (i = 0; i < 4; i++)
-          abr_sampled_brush_hdr.bounds[i] = abr_read_short (file);
+        abr_sampled_brush_hdr.antialiasing = abr_read_char (f);
 
         for (i = 0; i < 4; i++)
-          abr_sampled_brush_hdr.bounds_long[i] = abr_read_long (file);
+          abr_sampled_brush_hdr.bounds[i] = abr_read_short (f);
 
-        abr_sampled_brush_hdr.depth = abr_read_short (file);
+        for (i = 0; i < 4; i++)
+          abr_sampled_brush_hdr.bounds_long[i] = abr_read_long (f);
+
+        abr_sampled_brush_hdr.depth = abr_read_short (f);
 
         height = (abr_sampled_brush_hdr.bounds_long[2] -
                   abr_sampled_brush_hdr.bounds_long[0]); /* bottom - top */
@@ -650,11 +646,11 @@ gimp_brush_load_abr_brush_v12 (FILE         *file,
             g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                          _("Fatal parse error in brush file '%s': "
                            "Wide brushes are not supported."),
-                         gimp_filename_to_utf8 (path));
+                         gimp_file_get_utf8_name (file));
             return NULL;
           }
 
-        tmp = g_filename_display_basename (path);
+        tmp = g_path_get_basename (gimp_file_get_utf8_name (file));
         if (! sample_name)
           {
             /* build name from filename and index */
@@ -687,7 +683,7 @@ gimp_brush_load_abr_brush_v12 (FILE         *file,
         mask = gimp_temp_buf_get_data (brush->mask);
         size = width * height * bytes;
 
-        compress = abr_read_char (file);
+        compress = abr_read_char (f);
 
         /* g_print(" | << size: %dx%d %d bit (%d bytes) %s\n",
          *         width, height, abr_sampled_brush_hdr.depth, size,
@@ -695,15 +691,15 @@ gimp_brush_load_abr_brush_v12 (FILE         *file,
          */
 
         if (! compress)
-          fread (mask, size, 1, file);
+          fread (mask, size, 1, f);
         else
-          abr_rle_decode (file, (gchar *) mask, height);
+          abr_rle_decode (f, (gchar *) mask, height);
       }
       break;
 
     default:
       g_printerr ("WARNING: unknown brush type, skipping.\n");
-      fseek (file, abr_brush_hdr.size, SEEK_CUR);
+      fseek (f, abr_brush_hdr.size, SEEK_CUR);
       break;
     }
 
@@ -711,12 +707,12 @@ gimp_brush_load_abr_brush_v12 (FILE         *file,
 }
 
 static GimpBrush *
-gimp_brush_load_abr_brush_v6 (FILE         *file,
-                              AbrHeader    *abr_hdr,
-                              gint32        max_offset,
-                              gint          index,
-                              const gchar  *path,
-                              GError      **error)
+gimp_brush_load_abr_brush_v6 (FILE       *f,
+                              AbrHeader  *abr_hdr,
+                              gint32      max_offset,
+                              gint        index,
+                              GFile      *file,
+                              GError    **error)
 {
   GimpBrush *brush = NULL;
   guchar    *mask;
@@ -736,43 +732,43 @@ gimp_brush_load_abr_brush_v6 (FILE         *file,
   gchar     *name;
   gint       r;
 
-  brush_size = abr_read_long (file);
+  brush_size = abr_read_long (f);
   brush_end = brush_size;
 
   /* complement to 4 */
   while (brush_end % 4 != 0)
     brush_end++;
 
-  next_brush = ftell (file) + brush_end;
+  next_brush = ftell (f) + brush_end;
 
   if (abr_hdr->count == 1)
     /* discard key and short coordinates and unknown short */
-    r = fseek (file, 47, SEEK_CUR);
+    r = fseek (f, 47, SEEK_CUR);
   else
     /* discard key and unknown bytes */
-    r = fseek (file, 301, SEEK_CUR);
+    r = fseek (f, 301, SEEK_CUR);
 
   if (r == -1)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "File appears truncated."),
-                   gimp_filename_to_utf8 (path));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
-  top      = abr_read_long (file);
-  left     = abr_read_long (file);
-  bottom   = abr_read_long (file);
-  right    = abr_read_long (file);
-  depth    = abr_read_short (file);
-  compress = abr_read_char (file);
+  top      = abr_read_long (f);
+  left     = abr_read_long (f);
+  bottom   = abr_read_long (f);
+  right    = abr_read_long (f);
+  depth    = abr_read_short (f);
+  compress = abr_read_char (f);
 
   width  = right - left;
   height = bottom - top;
   size   = width * (depth >> 3) * height;
 
-  tmp = g_filename_display_basename (path);
+  tmp = g_path_get_basename (gimp_file_get_utf8_name (file));
   name = g_strdup_printf ("%s-%03d", tmp, index);
   g_free (tmp);
 
@@ -797,43 +793,43 @@ gimp_brush_load_abr_brush_v6 (FILE         *file,
   /* data decoding */
   if (! compress)
     /* not compressed - read raw bytes as brush data */
-    fread (mask, size, 1, file);
+    fread (mask, size, 1, f);
   else
-    abr_rle_decode (file, (gchar *) mask, height);
+    abr_rle_decode (f, (gchar *) mask, height);
 
-  fseek (file, next_brush, SEEK_SET);
+  fseek (f, next_brush, SEEK_SET);
 
   return brush;
 }
 
 static gchar
-abr_read_char (FILE *file)
+abr_read_char (FILE *f)
 {
-  return fgetc (file);
+  return fgetc (f);
 }
 
 static gint16
-abr_read_short (FILE *file)
+abr_read_short (FILE *f)
 {
   gint16 val;
 
-  fread (&val, sizeof (val), 1, file);
+  fread (&val, sizeof (val), 1, f);
 
   return GINT16_FROM_BE (val);
 }
 
 static gint32
-abr_read_long (FILE *file)
+abr_read_long (FILE *f)
 {
   gint32 val;
 
-  fread (&val, sizeof (val), 1, file);
+  fread (&val, sizeof (val), 1, f);
 
   return GINT32_FROM_BE (val);
 }
 
 static gchar *
-abr_read_ucs2_text (FILE *file)
+abr_read_ucs2_text (FILE *f)
 {
   gchar *name_ucs2;
   gchar *name_utf8;
@@ -846,14 +842,14 @@ abr_read_ucs2_text (FILE *file)
    *   data : zero terminated UCS-2 string
    */
 
-  len = 2 * abr_read_long (file);
+  len = 2 * abr_read_long (f);
   if (len <= 0)
     return NULL;
 
   name_ucs2 = g_new (gchar, len);
 
   for (i = 0; i < len; i++)
-    name_ucs2[i] = abr_read_char (file);
+    name_ucs2[i] = abr_read_char (f);
 
   name_utf8 = g_convert (name_ucs2, len,
                          "UTF-8", "UCS-2BE",
@@ -865,9 +861,9 @@ abr_read_ucs2_text (FILE *file)
 }
 
 static gboolean
-abr_supported (AbrHeader    *abr_hdr,
-               const gchar  *path,
-               GError      **error)
+abr_supported (AbrHeader  *abr_hdr,
+               GFile      *file,
+               GError    **error)
 {
   switch (abr_hdr->version)
     {
@@ -885,7 +881,7 @@ abr_supported (AbrHeader    *abr_hdr,
         g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                      _("Fatal parse error in brush file '%s': "
                        "unable to decode abr format version %d."),
-                     gimp_filename_to_utf8 (path),
+                     gimp_file_get_utf8_name (file),
 
                      /* horrid subversion display, but better than
                       * having yet another translatable string for
@@ -935,7 +931,7 @@ abr_reach_8bim_section (FILE        *abr,
 }
 
 static gint32
-abr_rle_decode (FILE   *file,
+abr_rle_decode (FILE   *f,
                 gchar  *buffer,
                 gint32  height)
 {
@@ -947,14 +943,14 @@ abr_rle_decode (FILE   *file,
   /* read compressed size foreach scanline */
   cscanline_len = g_new0 (gshort, height);
   for (i = 0; i < height; i++)
-    cscanline_len[i] = abr_read_short (file);
+    cscanline_len[i] = abr_read_short (f);
 
   /* unpack each scanline data */
   for (i = 0; i < height; i++)
     {
       for (j = 0; j < cscanline_len[i];)
         {
-          gint32 n = abr_read_char (file);
+          gint32 n = abr_read_char (f);
 
           j++;
 
@@ -969,7 +965,7 @@ abr_rle_decode (FILE   *file,
                 continue;
 
               n = -n + 1;
-              ch = abr_read_char (file);
+              ch = abr_read_char (f);
               j++;
 
               for (c = 0; c < n; c++, data++)
@@ -980,7 +976,7 @@ abr_rle_decode (FILE   *file,
               /* read the following n + 1 chars (no compr) */
 
               for (c = 0; c < n + 1; c++, j++, data++)
-                *data = abr_read_char (file);
+                *data = abr_read_char (f);
             }
         }
     }

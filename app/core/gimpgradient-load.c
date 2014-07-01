@@ -61,12 +61,13 @@ gimp_gradient_load (GimpContext  *context,
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   f = g_fopen (path, "rb");
+  g_free (path);
+
   if (! f)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (path), g_strerror (errno));
-      g_free (path);
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -76,9 +77,8 @@ gimp_gradient_load (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in gradient file '%s': "
                      "Read error in line %d."),
-                   gimp_filename_to_utf8 (path), linenum);
+                   gimp_file_get_utf8_name (file), linenum);
       fclose (f);
-      g_free (path);
       return NULL;
     }
 
@@ -87,9 +87,8 @@ gimp_gradient_load (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in gradient file '%s': "
                      "Not a GIMP gradient file."),
-                   gimp_filename_to_utf8 (path));
+                   gimp_file_get_utf8_name (file));
       fclose (f);
-      g_free (path);
       return NULL;
     }
 
@@ -103,9 +102,8 @@ gimp_gradient_load (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in gradient file '%s': "
                      "Read error in line %d."),
-                   gimp_filename_to_utf8 (path), linenum);
+                   gimp_file_get_utf8_name (file), linenum);
       fclose (f);
-      g_free (path);
       g_object_unref (gradient);
       return NULL;
     }
@@ -116,7 +114,7 @@ gimp_gradient_load (GimpContext  *context,
 
       utf8 = gimp_any_to_utf8 (g_strstrip (line + strlen ("Name: ")), -1,
                                _("Invalid UTF-8 string in gradient file '%s'."),
-                               gimp_filename_to_utf8 (path));
+                               gimp_file_get_utf8_name (file));
       gimp_object_take_name (GIMP_OBJECT (gradient), utf8);
 
       linenum++;
@@ -125,9 +123,8 @@ gimp_gradient_load (GimpContext  *context,
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in gradient file '%s': "
                          "Read error in line %d."),
-                       gimp_filename_to_utf8 (path), linenum);
+                       gimp_file_get_utf8_name (file), linenum);
           fclose (f);
-          g_free (path);
           g_object_unref (gradient);
           return NULL;
         }
@@ -135,7 +132,7 @@ gimp_gradient_load (GimpContext  *context,
   else /* old gradient format */
     {
       gimp_object_take_name (GIMP_OBJECT (gradient),
-                             g_filename_display_basename (path));
+                             g_path_get_basename (gimp_file_get_utf8_name (file)));
     }
 
   num_segments = atoi (line);
@@ -145,10 +142,9 @@ gimp_gradient_load (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in gradient file '%s': "
                      "File is corrupt in line %d."),
-                   gimp_filename_to_utf8 (path), linenum);
+                   gimp_file_get_utf8_name (file), linenum);
       g_object_unref (gradient);
       fclose (f);
-      g_free (path);
       return NULL;
     }
 
@@ -178,9 +174,8 @@ gimp_gradient_load (GimpContext  *context,
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in gradient file '%s': "
                          "Read error in line %d."),
-                       gimp_filename_to_utf8 (path), linenum);
+                       gimp_file_get_utf8_name (file), linenum);
           fclose (f);
-          g_free (path);
           g_object_unref (gradient);
           return NULL;
         }
@@ -229,10 +224,9 @@ gimp_gradient_load (GimpContext  *context,
               g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                            _("Fatal parse error in gradient file '%s': "
                              "Corrupt segment %d in line %d."),
-                           gimp_filename_to_utf8 (path), i, linenum);
+                           gimp_file_get_utf8_name (file), i, linenum);
               g_object_unref (gradient);
               fclose (f);
-              g_free (path);
               return NULL;
             }
         }
@@ -241,10 +235,9 @@ gimp_gradient_load (GimpContext  *context,
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in gradient file '%s': "
                          "Corrupt segment %d in line %d."),
-                       gimp_filename_to_utf8 (path), i, linenum);
+                       gimp_file_get_utf8_name (file), i, linenum);
           g_object_unref (gradient);
           fclose (f);
-          g_free (path);
           return NULL;
         }
 
@@ -254,10 +247,9 @@ gimp_gradient_load (GimpContext  *context,
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Gradient file '%s' is corrupt: "
                          "Segments do not span the range 0-1."),
-                       gimp_filename_to_utf8 (path));
+                       gimp_file_get_utf8_name (file));
           g_object_unref (gradient);
           fclose (f);
-          g_free (path);
           return NULL;
         }
 
@@ -269,15 +261,13 @@ gimp_gradient_load (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Gradient file '%s' is corrupt: "
                      "Segments do not span the range 0-1."),
-                   gimp_filename_to_utf8 (path));
+                   gimp_file_get_utf8_name (file));
       g_object_unref (gradient);
       fclose (f);
-      g_free (path);
       return NULL;
     }
 
   fclose (f);
-  g_free (path);
 
   return g_list_prepend (NULL, gradient);
 }
@@ -334,14 +324,9 @@ gimp_gradient_load_svg (GimpContext  *context,
 {
   GimpXmlParser *xml_parser;
   SvgParser      parser = { NULL, };
-  gchar         *path;
   gboolean       success;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-
-  path = g_file_get_path (file);
-
-  g_return_val_if_fail (g_path_is_absolute (path), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
@@ -354,7 +339,7 @@ gimp_gradient_load_svg (GimpContext  *context,
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("No linear gradients found in '%s'"),
-                   gimp_filename_to_utf8 (path));
+                   gimp_file_get_utf8_name (file));
     }
   else
     {
@@ -364,7 +349,7 @@ gimp_gradient_load_svg (GimpContext  *context,
 
           (*error)->message =
             g_strdup_printf (_("Failed to import gradients from '%s': %s"),
-                             gimp_filename_to_utf8 (path), msg);
+                             gimp_file_get_utf8_name (file), msg);
 
           g_free (msg);
         }
@@ -382,8 +367,6 @@ gimp_gradient_load_svg (GimpContext  *context,
 
       g_list_free (parser.stops);
     }
-
-  g_free (path);
 
   return g_list_reverse (parser.gradients);
 }

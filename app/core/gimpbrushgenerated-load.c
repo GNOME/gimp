@@ -69,12 +69,13 @@ gimp_brush_generated_load (GimpContext  *context,
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   f = g_fopen (path, "rb");
+  g_free (path);
+
   if (! f)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (path), g_strerror (errno));
-      g_free (path);
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
@@ -89,7 +90,7 @@ gimp_brush_generated_load (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "Not a GIMP brush file."),
-                   gimp_filename_to_utf8 (path));
+                   gimp_file_get_utf8_name (file));
       goto failed;
     }
 
@@ -106,7 +107,7 @@ gimp_brush_generated_load (GimpContext  *context,
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in brush file '%s': "
                          "Unknown GIMP brush version in line %d."),
-                       gimp_filename_to_utf8 (path), linenum);
+                       gimp_file_get_utf8_name (file), linenum);
           goto failed;
         }
       else
@@ -129,7 +130,7 @@ gimp_brush_generated_load (GimpContext  *context,
 
   name = gimp_any_to_utf8 (string, -1,
                            _("Invalid UTF-8 string in brush file '%s'."),
-                           gimp_filename_to_utf8 (path));
+                           gimp_file_get_utf8_name (file));
 
   if (have_shape)
     {
@@ -152,7 +153,7 @@ gimp_brush_generated_load (GimpContext  *context,
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in brush file '%s': "
                          "Unknown GIMP brush shape in line %d."),
-                       gimp_filename_to_utf8 (path), linenum);
+                       gimp_file_get_utf8_name (file), linenum);
           goto failed;
         }
 
@@ -212,8 +213,6 @@ gimp_brush_generated_load (GimpContext  *context,
 
   brush->spacing = spacing;
 
-  g_free (path);
-
   return g_list_prepend (NULL, brush);
 
  failed:
@@ -234,12 +233,10 @@ gimp_brush_generated_load (GimpContext  *context,
 
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Error while reading brush file '%s': %s"),
-                   gimp_filename_to_utf8 (path), msg);
+                   gimp_file_get_utf8_name (file), msg);
 
       g_free (msg);
     }
-
-  g_free (path);
 
   return NULL;
 }

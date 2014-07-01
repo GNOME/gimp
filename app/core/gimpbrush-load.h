@@ -29,8 +29,8 @@ GList     * gimp_brush_load        (GimpContext  *context,
                                     GFile        *file,
                                     GError      **error);
 GimpBrush * gimp_brush_load_brush  (GimpContext  *context,
+                                    GFile        *file,
                                     gint          fd,
-                                    const gchar  *path,
                                     GError      **error);
 
 GList     * gimp_brush_load_abr    (GimpContext  *context,

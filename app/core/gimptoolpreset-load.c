@@ -57,12 +57,9 @@ gimp_tool_preset_load (GimpContext  *context,
         }
       else
         {
-          gchar *path = g_file_get_path (file);
-
           g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
                        _("Error while parsing '%s'"),
-                       gimp_filename_to_utf8 (path));
-          g_free (path);
+                       gimp_file_get_utf8_name (file));
         }
     }
 

@@ -46,6 +46,7 @@
 
 #include "gimp-intl.h"
 
+
 GList *
 gimp_palette_load (GimpContext  *context,
                    GFile        *file,
@@ -63,26 +64,26 @@ gimp_palette_load (GimpContext  *context,
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   f = g_fopen (path, "rb");
+  g_free (path);
+
   if (! f)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (path), g_strerror (errno));
-      g_free (path);
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return NULL;
     }
 
-  glist = gimp_palette_load_gpl (context, path, f, error);
+  glist = gimp_palette_load_gpl (context, file, f, error);
   fclose (f);
 
   return glist;
 }
 
-
 GList *
 gimp_palette_load_gpl (GimpContext  *context,
-                       const gchar  *filename,
-                       FILE         *file,
+                       GFile        *file,
+                       FILE         *f,
                        GError      **error)
 {
   GimpPalette      *palette;
@@ -92,19 +93,18 @@ gimp_palette_load_gpl (GimpContext  *context,
   gint              r, g, b;
   gint              linenum;
 
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   r = g = b = 0;
 
   linenum = 1;
-  if (! fgets (str, sizeof (str), file))
+  if (! fgets (str, sizeof (str), f))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in palette file '%s': "
                      "Read error in line %d."),
-                   gimp_filename_to_utf8 (filename), linenum);
+                   gimp_file_get_utf8_name (file), linenum);
       return NULL;
     }
 
@@ -113,7 +113,7 @@ gimp_palette_load_gpl (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in palette file '%s': "
                      "Missing magic header."),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -123,12 +123,12 @@ gimp_palette_load_gpl (GimpContext  *context,
 
   linenum++;
 
-  if (! fgets (str, sizeof (str), file))
+  if (! fgets (str, sizeof (str), f))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in palette file '%s': "
                      "Read error in line %d."),
-                   gimp_filename_to_utf8 (filename), linenum);
+                   gimp_file_get_utf8_name (file), linenum);
       g_object_unref (palette);
       return NULL;
     }
@@ -139,16 +139,16 @@ gimp_palette_load_gpl (GimpContext  *context,
 
       utf8 = gimp_any_to_utf8 (g_strstrip (str + strlen ("Name: ")), -1,
                                _("Invalid UTF-8 string in palette file '%s'"),
-                               gimp_filename_to_utf8 (filename));
+                               gimp_file_get_utf8_name (file));
       gimp_object_take_name (GIMP_OBJECT (palette), utf8);
 
       linenum++;
-      if (! fgets (str, sizeof (str), file))
+      if (! fgets (str, sizeof (str), f))
         {
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in palette file '%s': "
                          "Read error in line %d."),
-                       gimp_filename_to_utf8 (filename), linenum);
+                       gimp_file_get_utf8_name (file), linenum);
           g_object_unref (palette);
           return NULL;
         }
@@ -164,19 +164,19 @@ gimp_palette_load_gpl (GimpContext  *context,
               g_message (_("Reading palette file '%s': "
                            "Invalid number of columns in line %d. "
                            "Using default value."),
-                         gimp_filename_to_utf8 (filename), linenum);
+                         gimp_file_get_utf8_name (file), linenum);
               columns = 0;
             }
 
           gimp_palette_set_columns (palette, columns);
 
           linenum++;
-          if (! fgets (str, sizeof (str), file))
+          if (! fgets (str, sizeof (str), f))
             {
               g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                            _("Fatal parse error in palette file '%s': "
                              "Read error in line %d."),
-                           gimp_filename_to_utf8 (filename), linenum);
+                           gimp_file_get_utf8_name (file), linenum);
               g_object_unref (palette);
               return NULL;
             }
@@ -185,10 +185,10 @@ gimp_palette_load_gpl (GimpContext  *context,
   else /* old palette format */
     {
       gimp_object_take_name (GIMP_OBJECT (palette),
-                             g_filename_display_basename (filename));
+                             g_path_get_basename (gimp_file_get_utf8_name (file)));
     }
 
-  while (! feof (file))
+  while (! feof (f))
     {
       if (str[0] != '#' && str[0] != '\n')
         {
@@ -198,7 +198,7 @@ gimp_palette_load_gpl (GimpContext  *context,
           else
             g_message (_("Reading palette file '%s': "
                          "Missing RED component in line %d."),
-                       gimp_filename_to_utf8 (filename), linenum);
+                       gimp_file_get_utf8_name (file), linenum);
 
           tok = strtok (NULL, " \t");
           if (tok)
@@ -206,7 +206,7 @@ gimp_palette_load_gpl (GimpContext  *context,
           else
             g_message (_("Reading palette file '%s': "
                          "Missing GREEN component in line %d."),
-                       gimp_filename_to_utf8 (filename), linenum);
+                       gimp_file_get_utf8_name (file), linenum);
 
           tok = strtok (NULL, " \t");
           if (tok)
@@ -214,7 +214,7 @@ gimp_palette_load_gpl (GimpContext  *context,
           else
             g_message (_("Reading palette file '%s': "
                          "Missing BLUE component in line %d."),
-                       gimp_filename_to_utf8 (filename), linenum);
+                       gimp_file_get_utf8_name (file), linenum);
 
           /* optional name */
           tok = strtok (NULL, "\n");
@@ -224,7 +224,7 @@ gimp_palette_load_gpl (GimpContext  *context,
               b < 0 || b > 255)
             g_message (_("Reading palette file '%s': "
                          "RGB value out of range in line %d."),
-                       gimp_filename_to_utf8 (filename), linenum);
+                       gimp_file_get_utf8_name (file), linenum);
 
           /* don't call gimp_palette_add_entry here, it's rather inefficient */
           entry = g_slice_new0 (GimpPaletteEntry);
@@ -243,15 +243,15 @@ gimp_palette_load_gpl (GimpContext  *context,
         }
 
       linenum++;
-      if (! fgets (str, sizeof (str), file))
+      if (! fgets (str, sizeof (str), f))
         {
-          if (feof (file))
+          if (feof (f))
             break;
 
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in palette file '%s': "
                          "Read error in line %d."),
-                       gimp_filename_to_utf8 (filename), linenum);
+                       gimp_file_get_utf8_name (file), linenum);
           g_object_unref (palette);
           return NULL;
         }
@@ -264,20 +264,19 @@ gimp_palette_load_gpl (GimpContext  *context,
 
 GList *
 gimp_palette_load_act (GimpContext  *context,
-                       const gchar  *filename,
-                       FILE         *file,
+                       GFile        *file,
+                       FILE         *f,
                        GError      **error)
 {
   GimpPalette *palette;
   gchar       *palette_name;
-  gint         fd = fileno (file);
+  gint         fd = fileno (f);
   guchar       color_bytes[4];
 
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  palette_name = g_filename_display_basename (filename);
+  palette_name = g_path_get_basename (gimp_file_get_utf8_name (file));
   palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
   g_free (palette_name);
 
@@ -298,20 +297,19 @@ gimp_palette_load_act (GimpContext  *context,
 
 GList *
 gimp_palette_load_riff (GimpContext  *context,
-                        const gchar  *filename,
-                        FILE         *file,
+                        GFile        *file,
+                        FILE         *f,
                         GError      **error)
 {
   GimpPalette *palette;
   gchar       *palette_name;
-  gint         fd = fileno (file);
+  gint         fd = fileno (f);
   guchar       color_bytes[4];
 
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  palette_name = g_filename_display_basename (filename);
+  palette_name = g_path_get_basename (gimp_file_get_utf8_name (file));
   palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
   g_free (palette_name);
 
@@ -335,13 +333,13 @@ gimp_palette_load_riff (GimpContext  *context,
 
 GList *
 gimp_palette_load_psp (GimpContext  *context,
-                       const gchar  *filename,
-                       FILE         *file,
+                       GFile        *file,
+                       FILE         *f,
                        GError      **error)
 {
   GimpPalette *palette;
   gchar       *palette_name;
-  gint         fd = fileno (file);
+  gint         fd = fileno (f);
   guchar       color_bytes[4];
   gint         number_of_colors;
   gint         data_size;
@@ -352,11 +350,10 @@ gimp_palette_load_psp (GimpContext  *context,
   gchar      **lines;
   gchar      **ascii_colors;
 
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  palette_name = g_filename_display_basename (filename);
+  palette_name = g_path_get_basename (gimp_file_get_utf8_name (file));
   palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
   g_free (palette_name);
 
@@ -373,7 +370,7 @@ gimp_palette_load_psp (GimpContext  *context,
       if (lines[i + 1] == NULL)
         {
           g_printerr ("Premature end of file reading %s.",
-                      gimp_filename_to_utf8 (filename));
+                      gimp_file_get_utf8_name (file));
           break;
         }
 
@@ -385,7 +382,7 @@ gimp_palette_load_psp (GimpContext  *context,
           if (ascii_colors[j] == NULL)
             {
               g_printerr ("Corrupted palette file %s.",
-                          gimp_filename_to_utf8 (filename));
+                          gimp_file_get_utf8_name (file));
               color_ok = FALSE;
               break;
             }
@@ -415,13 +412,13 @@ gimp_palette_load_psp (GimpContext  *context,
 
 GList *
 gimp_palette_load_aco (GimpContext  *context,
-                       const gchar  *filename,
-                       FILE         *file,
+                       GFile        *file,
+                       FILE         *f,
                        GError      **error)
 {
   GimpPalette *palette;
   gchar       *palette_name;
-  gint         fd = fileno (file);
+  gint         fd = fileno (f);
   gint         format_version;
   gint         number_of_colors;
   gint         i;
@@ -430,8 +427,7 @@ gimp_palette_load_aco (GimpContext  *context,
   gchar        format2_preamble[4];
   gint         status;
 
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   status = read (fd, header, sizeof (header));
@@ -441,11 +437,11 @@ gimp_palette_load_aco (GimpContext  *context,
       g_set_error (error,
                    GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Could not read header from palette file '%s'"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
-  palette_name = g_filename_display_basename (filename);
+  palette_name = g_path_get_basename (gimp_file_get_utf8_name (file));
   palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
   g_free (palette_name);
 
@@ -463,7 +459,7 @@ gimp_palette_load_aco (GimpContext  *context,
 	{
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in palette file '%s'"),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_file_get_utf8_name (file));
           g_object_unref (palette);
           return NULL;
 	}
@@ -537,7 +533,7 @@ gimp_palette_load_aco (GimpContext  *context,
       else
         {
           g_printerr ("Unsupported color space (%d) in ACO file %s\n",
-                      color_space, gimp_filename_to_utf8 (filename));
+                      color_space, gimp_file_get_utf8_name (file));
         }
 
       if (format_version == 2)
@@ -550,7 +546,7 @@ gimp_palette_load_aco (GimpContext  *context,
 	    {
 	      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
 			   _("Fatal parse error in palette file '%s'"),
-			   gimp_filename_to_utf8 (filename));
+			   gimp_file_get_utf8_name (file));
 	      g_object_unref (palette);
 	      return NULL;
 	    }
@@ -569,8 +565,8 @@ gimp_palette_load_aco (GimpContext  *context,
 
 GList *
 gimp_palette_load_css (GimpContext  *context,
-                       const gchar  *filename,
-                       FILE         *file,
+                       GFile        *file,
+                       FILE         *f,
                        GError      **error)
 {
   GimpPalette *palette;
@@ -578,15 +574,14 @@ gimp_palette_load_css (GimpContext  *context,
   GRegex      *regex;
   GimpRGB      color;
 
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   regex = g_regex_new (".*color.*:(?P<param>.*);", G_REGEX_CASELESS, 0, error);
   if (! regex)
     return NULL;
 
-  name = g_filename_display_basename (filename);
+  name = g_path_get_basename (gimp_file_get_utf8_name (file));
   palette = GIMP_PALETTE (gimp_palette_new (context, name));
   g_free (name);
 
@@ -595,7 +590,7 @@ gimp_palette_load_css (GimpContext  *context,
       GMatchInfo *matches;
       gchar       buf[1024];
 
-      if (fgets (buf, sizeof (buf), file) != NULL)
+      if (fgets (buf, sizeof (buf), f) != NULL)
         {
           if (g_regex_match (regex, buf, 0, &matches))
             {
@@ -612,7 +607,7 @@ gimp_palette_load_css (GimpContext  *context,
               g_free (word);
             }
         }
-    } while (! feof (file));
+    } while (! feof (f));
 
   g_regex_unref (regex);
 
@@ -620,14 +615,14 @@ gimp_palette_load_css (GimpContext  *context,
 }
 
 GimpPaletteFileFormat
-gimp_palette_load_detect_format (const gchar *filename,
-                                 FILE        *file)
+gimp_palette_load_detect_format (GFile *file,
+                                 FILE  *f)
 {
   GimpPaletteFileFormat format = GIMP_PALETTE_FILE_FORMAT_UNKNOWN;
-  gint                  fd = fileno (file);
+  gint                  fd = fileno (f);
   gchar                 header[16];
 
-  if (fread (header, 1, sizeof (header), file) == sizeof (header))
+  if (fread (header, 1, sizeof (header), f) == sizeof (header))
     {
       if (g_str_has_prefix (header + 0, "RIFF") &&
           g_str_has_prefix (header + 8, "PAL data"))
@@ -646,7 +641,8 @@ gimp_palette_load_detect_format (const gchar *filename,
 
   if (format == GIMP_PALETTE_FILE_FORMAT_UNKNOWN)
     {
-      gchar *lower_filename = g_ascii_strdown (filename, -1);
+      gchar *lower_filename =
+        g_ascii_strdown (gimp_file_get_utf8_name (file), -1);
 
       if (g_str_has_suffix (lower_filename, ".aco"))
         {
@@ -671,7 +667,7 @@ gimp_palette_load_detect_format (const gchar *filename,
         }
     }
 
-  rewind (file);
+  rewind (f);
 
   return format;
 }

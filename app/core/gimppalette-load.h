@@ -38,32 +38,32 @@ GList               * gimp_palette_load               (GimpContext  *context,
                                                        GFile        *file,
                                                        GError      **error);
 GList               * gimp_palette_load_gpl           (GimpContext  *context,
-                                                       const gchar  *filename,
-                                                       FILE         *file,
+                                                       GFile        *file,
+                                                       FILE         *f,
                                                        GError      **error);
 GList               * gimp_palette_load_act           (GimpContext  *context,
-                                                       const gchar  *filename,
-                                                       FILE         *file,
+                                                       GFile        *file,
+                                                       FILE         *f,
                                                        GError      **error);
 GList               * gimp_palette_load_riff          (GimpContext  *context,
-                                                       const gchar  *filename,
-                                                       FILE         *file,
+                                                       GFile        *file,
+                                                       FILE         *f,
                                                        GError      **error);
 GList               * gimp_palette_load_psp           (GimpContext  *context,
-                                                       const gchar  *filename,
-                                                       FILE         *file,
+                                                       GFile        *file,
+                                                       FILE         *f,
                                                        GError      **error);
 GList               * gimp_palette_load_aco           (GimpContext  *context,
-                                                       const gchar  *filename,
-                                                       FILE         *file,
+                                                       GFile        *file,
+                                                       FILE         *f,
                                                        GError      **error);
 GList               * gimp_palette_load_css           (GimpContext  *context,
-                                                       const gchar  *filename,
-                                                       FILE         *file,
+                                                       GFile        *file,
+                                                       FILE         *f,
                                                        GError      **error);
 
-GimpPaletteFileFormat gimp_palette_load_detect_format (const gchar  *filename,
-                                                       FILE         *file);
+GimpPaletteFileFormat gimp_palette_load_detect_format (GFile        *file,
+                                                       FILE         *f);
 
 
 #endif /* __GIMP_PALETTE_H__ */
