@@ -23,10 +23,10 @@
 
 
 GList * gimp_pattern_load        (GimpContext  *context,
-                                  const gchar  *filename,
+                                  GFile        *file,
                                   GError      **error);
 GList * gimp_pattern_load_pixbuf (GimpContext  *context,
-                                  const gchar  *filename,
+                                  GFile        *file,
                                   GError      **error);
 
 

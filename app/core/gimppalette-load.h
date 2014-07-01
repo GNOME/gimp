@@ -35,7 +35,7 @@ typedef enum
 
 
 GList               * gimp_palette_load               (GimpContext  *context,
-                                                       const gchar  *filename,
+                                                       GFile        *file,
                                                        GError      **error);
 GList               * gimp_palette_load_gpl           (GimpContext  *context,
                                                        const gchar  *filename,
@@ -63,7 +63,7 @@ GList               * gimp_palette_load_css           (GimpContext  *context,
                                                        GError      **error);
 
 GimpPaletteFileFormat gimp_palette_load_detect_format (const gchar  *filename,
-                                                       FILE *file);
+                                                       FILE         *file);
 
 
 #endif /* __GIMP_PALETTE_H__ */

@@ -28,7 +28,7 @@
 typedef GimpData * (* GimpDataNewFunc)         (GimpContext  *context,
                                                 const gchar  *name);
 typedef GList    * (* GimpDataLoadFunc)        (GimpContext  *context,
-                                                const gchar  *filename,
+                                                GFile        *file,
                                                 GError      **error);
 typedef GimpData * (* GimpDataGetStandardFunc) (GimpContext  *context);
 

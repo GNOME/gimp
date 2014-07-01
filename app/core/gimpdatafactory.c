@@ -844,6 +844,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
   GimpDataFactory                  *factory = context->factory;
   GHashTable                       *cache   = context->cache;
   const GimpDataFactoryLoaderEntry *loader  = NULL;
+  GFile                            *file    = NULL;
   GError                           *error   = NULL;
   GList                            *data_list;
   gint                              i;
@@ -865,13 +866,11 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
   return;
 
  insert:
+  file = g_file_new_for_path (file_data->filename);
+
   if (cache)
     {
-      GFile *file = g_file_new_for_path (file_data->filename);
-      GList *cached_data;
-
-      cached_data = g_hash_table_lookup (cache, file);
-      g_object_unref (file);
+      GList *cached_data = g_hash_table_lookup (cache, file);
 
       if (cached_data &&
           gimp_data_get_mtime (cached_data->data) != 0 &&
@@ -882,11 +881,13 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
           for (list = cached_data; list; list = g_list_next (list))
             gimp_container_add (factory->priv->container, list->data);
 
+          g_object_unref (file);
+
           return;
         }
     }
 
-  data_list = loader->load_func (context->context, file_data->filename, &error);
+  data_list = loader->load_func (context->context, file, &error);
 
   if (G_LIKELY (data_list))
     {
@@ -916,13 +917,9 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
       for (list = data_list; list; list = g_list_next (list))
         {
           GimpData *data = list->data;
-          GFile    *file = g_file_new_for_path (file_data->filename);
 
           gimp_data_set_file (data, file, writable, deletable);
           gimp_data_set_mtime (data, file_data->mtime);
-
-          g_object_unref (file);
-
           gimp_data_clean (data);
 
           if (obsolete)
@@ -943,6 +940,8 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
 
       g_list_free (data_list);
     }
+
+  g_object_unref (file);
 
   /*  not else { ... } because loader->load_func() can return a list
    *  of data objects *and* an error message if loading failed after

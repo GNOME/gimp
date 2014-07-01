@@ -24,10 +24,10 @@
 
 
 GList  * gimp_gradient_load     (GimpContext  *context,
-                                 const gchar  *filename,
+                                 GFile        *file,
                                  GError      **error);
 GList  * gimp_gradient_load_svg (GimpContext  *context,
-                                 const gchar  *filename,
+                                 GFile        *file,
                                  GError      **error);
 
 

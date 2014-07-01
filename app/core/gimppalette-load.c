@@ -48,28 +48,32 @@
 
 GList *
 gimp_palette_load (GimpContext  *context,
-                   const gchar  *filename,
+                   GFile        *file,
                    GError      **error)
 {
-  FILE  *file;
+  gchar *path;
+  FILE  *f;
   GList *glist;
 
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+  path = g_file_get_path (file);
+
+  g_return_val_if_fail (g_path_is_absolute (path), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  file = g_fopen (filename, "rb");
-
-  if (! file)
+  f = g_fopen (path, "rb");
+  if (! f)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_filename_to_utf8 (path), g_strerror (errno));
+      g_free (path);
       return NULL;
     }
 
-  glist = gimp_palette_load_gpl (context, filename, file, error);
-  fclose (file);
+  glist = gimp_palette_load_gpl (context, path, f, error);
+  fclose (f);
 
   return glist;
 }

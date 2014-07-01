@@ -34,23 +34,22 @@
 
 GList *
 gimp_tool_preset_load (GimpContext  *context,
-                       const gchar  *filename,
+                       GFile        *file,
                        GError      **error)
 {
   GimpToolPreset *tool_preset;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   tool_preset = g_object_new (GIMP_TYPE_TOOL_PRESET,
                               "gimp", context->gimp,
                               NULL);
 
-  if (gimp_config_deserialize_file (GIMP_CONFIG (tool_preset),
-                                    filename,
-                                    NULL, error))
+  if (gimp_config_deserialize_gfile (GIMP_CONFIG (tool_preset),
+                                     file,
+                                     NULL, error))
     {
       if (GIMP_IS_CONTEXT (tool_preset->tool_options))
         {
@@ -58,9 +57,12 @@ gimp_tool_preset_load (GimpContext  *context,
         }
       else
         {
+          gchar *path = g_file_get_path (file);
+
           g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
                        _("Error while parsing '%s'"),
-                       gimp_filename_to_utf8 (filename));
+                       gimp_filename_to_utf8 (path));
+          g_free (path);
         }
     }
 

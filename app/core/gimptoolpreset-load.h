@@ -23,7 +23,7 @@
 
 
 GList * gimp_tool_preset_load (GimpContext  *context,
-                               const gchar  *filename,
+                               GFile        *file,
                                GError      **error);
 
 

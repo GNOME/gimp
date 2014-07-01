@@ -24,7 +24,7 @@
 
 
 GList * gimp_brush_pipe_load (GimpContext  *context,
-                              const gchar  *filename,
+                              GFile        *file,
                               GError      **error);
 
 

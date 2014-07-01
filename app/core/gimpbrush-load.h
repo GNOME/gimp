@@ -26,15 +26,15 @@
 
 
 GList     * gimp_brush_load        (GimpContext  *context,
-                                    const gchar  *filename,
+                                    GFile        *file,
                                     GError      **error);
 GimpBrush * gimp_brush_load_brush  (GimpContext  *context,
                                     gint          fd,
-                                    const gchar  *filename,
+                                    const gchar  *path,
                                     GError      **error);
 
 GList     * gimp_brush_load_abr    (GimpContext  *context,
-                                    const gchar  *filename,
+                                    GFile        *file,
                                     GError      **error);
 
 
