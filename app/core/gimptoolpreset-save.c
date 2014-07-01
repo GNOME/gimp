@@ -32,20 +32,12 @@ gboolean
 gimp_tool_preset_save (GimpData  *data,
                        GError   **error)
 {
-  gchar    *path;
-  gboolean  success;
-
   g_return_val_if_fail (GIMP_IS_TOOL_PRESET (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  path = g_file_get_path (gimp_data_get_file (data));
-
-  success = gimp_config_serialize_to_file (GIMP_CONFIG (data), path,
-                                           "GIMP tool preset file",
-                                           "end of GIMP tool preset file",
-                                           NULL, error);
-
-  g_free (path);
-
-  return success;
+  return gimp_config_serialize_to_gfile (GIMP_CONFIG (data),
+                                         gimp_data_get_file (data),
+                                         "GIMP tool preset file",
+                                         "end of GIMP tool preset file",
+                                         NULL, error);
 }

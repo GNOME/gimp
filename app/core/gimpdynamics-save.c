@@ -32,20 +32,12 @@ gboolean
 gimp_dynamics_save (GimpData  *data,
                     GError   **error)
 {
-  gchar    *path;
-  gboolean  success;
-
   g_return_val_if_fail (GIMP_IS_DYNAMICS (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  path = g_file_get_path (gimp_data_get_file (data));
-
-  success = gimp_config_serialize_to_file (GIMP_CONFIG (data), path,
-                                           "GIMP dynamics file",
-                                           "end of GIMP dynamics file",
-                                           NULL, error);
-
-  g_free (path);
-
-  return success;
+  return gimp_config_serialize_to_gfile (GIMP_CONFIG (data),
+                                         gimp_data_get_file (data),
+                                         "GIMP dynamics file",
+                                         "end of GIMP dynamics file",
+                                         NULL, error);
 }
