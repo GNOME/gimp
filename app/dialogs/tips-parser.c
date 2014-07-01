@@ -22,7 +22,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gio/gio.h>
 
 #include "config/config-types.h"
 #include "config/gimpxmlparser.h"
