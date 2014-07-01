@@ -17,11 +17,6 @@
 
 #include "config.h"
 
-#include <errno.h>
-
-#undef GSEAL_ENABLE
-
-#include <glib/gstdio.h>
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -29,14 +24,11 @@
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpbase/gimpbase.h"
 
-#ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
-#endif
-
 #include "widgets-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimperror.h"
 #include "core/gimpgradient.h"
 #include "core/gimplist.h"
 #include "core/gimppattern.h"
@@ -96,7 +88,7 @@ gimp_devices_restore (Gimp *gimp)
   GimpContext       *user_context;
   GimpDeviceInfo    *current_device;
   GList             *list;
-  gchar             *filename;
+  GFile             *file;
   GError            *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -119,15 +111,15 @@ gimp_devices_restore (Gimp *gimp)
       gimp_device_info_set_default_tool (device_info);
     }
 
-  filename = gimp_personal_rc_file ("devicerc");
+  file = gimp_personal_rc_gfile ("devicerc");
 
   if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_deserialize_file (GIMP_CONFIG (manager),
-                                      filename,
-                                      gimp,
-                                      &error))
+  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (manager),
+                                       file,
+                                       gimp,
+                                       &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
@@ -136,7 +128,7 @@ gimp_devices_restore (Gimp *gimp)
       /* don't bail out here */
     }
 
-  g_free (filename);
+  g_object_unref (file);
 
   current_device = gimp_device_manager_get_current_device (manager);
 
@@ -150,7 +142,7 @@ gimp_devices_save (Gimp     *gimp,
                    gboolean  always_save)
 {
   GimpDeviceManager *manager;
-  gchar             *filename;
+  GFile             *file;
   GError            *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -162,23 +154,23 @@ gimp_devices_save (Gimp     *gimp,
   if (devicerc_deleted && ! always_save)
     return;
 
-  filename = gimp_personal_rc_file ("devicerc");
+  file = gimp_personal_rc_gfile ("devicerc");
 
   if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_serialize_to_file (GIMP_CONFIG (manager),
-                                       filename,
-                                       "GIMP devicerc",
-                                       "end of devicerc",
-                                       NULL,
-                                       &error))
+  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (manager),
+                                        file,
+                                        "GIMP devicerc",
+                                        "end of devicerc",
+                                        NULL,
+                                        &error))
     {
       gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_error_free (error);
     }
 
-  g_free (filename);
+  g_object_unref (file);
 
   devicerc_deleted = FALSE;
 }
@@ -188,8 +180,9 @@ gimp_devices_clear (Gimp    *gimp,
                     GError **error)
 {
   GimpDeviceManager *manager;
-  gchar             *filename;
-  gboolean           success = TRUE;
+  GFile             *file;
+  GError            *my_error = NULL;
+  gboolean           success  = TRUE;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
@@ -197,21 +190,24 @@ gimp_devices_clear (Gimp    *gimp,
 
   g_return_val_if_fail (GIMP_IS_DEVICE_MANAGER (manager), FALSE);
 
-  filename = gimp_personal_rc_file ("devicerc");
+  file = gimp_personal_rc_gfile ("devicerc");
 
-  if (g_unlink (filename) != 0 && errno != ENOENT)
+  if (! g_file_delete (file, NULL, &my_error) &&
+      my_error->code != G_IO_ERROR_NOT_FOUND)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-		   _("Deleting \"%s\" failed: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       success = FALSE;
+
+      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                   _("Deleting \"%s\" failed: %s"),
+                   gimp_file_get_utf8_name (file), my_error->message);
     }
   else
     {
       devicerc_deleted = TRUE;
     }
 
-  g_free (filename);
+  g_clear_error (&my_error);
+  g_object_unref (file);
 
   return success;
 }

@@ -83,33 +83,38 @@ enum
 void
 gimp_unitrc_load (Gimp *gimp)
 {
-  gchar      *filename;
+  GFile      *file;
   GScanner   *scanner;
   GTokenType  token;
   GError     *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = gimp_personal_rc_file ("unitrc");
+  file = gimp_personal_rc_gfile ("unitrc");
 
   if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  scanner = gimp_scanner_new_file (filename, &error);
+  scanner = gimp_scanner_new_gfile (file, &error);
 
   if (! scanner && error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
     {
-      g_clear_error (&error);
-      g_free (filename);
+      gchar *tmp;
 
-      filename = g_build_filename (gimp_sysconf_directory (), "unitrc", NULL);
-      scanner = gimp_scanner_new_file (filename, NULL);
+      g_clear_error (&error);
+      g_object_unref (file);
+
+      tmp = g_build_filename (gimp_sysconf_directory (), "unitrc", NULL);
+      file = g_file_new_for_path (tmp);
+      g_free (tmp);
+
+      scanner = gimp_scanner_new_gfile (file, NULL);
     }
 
   if (! scanner)
     {
       g_clear_error (&error);
-      g_free (filename);
+      g_object_unref (file);
       return;
     }
 
@@ -162,6 +167,8 @@ gimp_unitrc_load (Gimp *gimp)
 
   if (token != G_TOKEN_LEFT_PAREN)
     {
+      gchar *tmp;
+
       g_scanner_get_next_token (scanner);
       g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
                              _("fatal parse error"), TRUE);
@@ -169,41 +176,43 @@ gimp_unitrc_load (Gimp *gimp)
       gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
 
-      gimp_config_file_backup_on_error (filename, "unitrc", NULL);
+      tmp = g_file_get_path (file);
+      gimp_config_file_backup_on_error (tmp, "unitrc", NULL);
+      g_free (tmp);
     }
 
   gimp_scanner_destroy (scanner);
-  g_free (filename);
+  g_object_unref (file);
 }
 
 void
 gimp_unitrc_save (Gimp *gimp)
 {
   GimpConfigWriter *writer;
-  gchar            *filename;
+  GFile            *file;
   gint              i;
   GError           *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = gimp_personal_rc_file ("unitrc");
+  file = gimp_personal_rc_gfile ("unitrc");
 
   if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
   writer =
-    gimp_config_writer_new_file (filename,
-                                 TRUE,
-                                 "GIMP units\n\n"
-                                 "This file contains the user unit database. "
-                                 "You can edit this list with the unit "
-                                 "editor. You are not supposed to edit it "
-                                 "manually, but of course you can do.\n"
-                                 "This file will be entirely rewritten each "
-                                 "time you exit.",
-                                 NULL);
+    gimp_config_writer_new_gfile (file,
+                                  TRUE,
+                                  "GIMP units\n\n"
+                                  "This file contains the user unit database. "
+                                  "You can edit this list with the unit "
+                                  "editor. You are not supposed to edit it "
+                                  "manually, but of course you can do.\n"
+                                  "This file will be entirely rewritten each "
+                                  "time you exit.",
+                                  NULL);
 
-  g_free (filename);
+  g_object_unref (file);
 
   if (!writer)
     return;

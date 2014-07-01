@@ -369,20 +369,17 @@ gimp_tool_options_delete (GimpToolOptions  *tool_options,
   if (tool_options->tool_info->gimp->be_verbose)
     g_print ("Deleting '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! g_file_delete (file, NULL, &my_error))
+  if (! g_file_delete (file, NULL, &my_error) &&
+      my_error->code != G_IO_ERROR_NOT_FOUND)
     {
-      if (my_error->code != G_IO_ERROR_NOT_FOUND)
-        {
-          success = FALSE;
+      success = FALSE;
 
-          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-                       _("Deleting \"%s\" failed: %s"),
-                       gimp_file_get_utf8_name (file), my_error->message);
-        }
-
-      g_clear_error (&my_error);
+      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                   _("Deleting \"%s\" failed: %s"),
+                   gimp_file_get_utf8_name (file), my_error->message);
     }
 
+  g_clear_error (&my_error);
   g_object_unref (file);
 
   return success;

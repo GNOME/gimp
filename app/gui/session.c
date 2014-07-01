@@ -20,10 +20,6 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <string.h>
-
-#include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -35,6 +31,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimperror.h"
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpsessioninfo.h"
@@ -58,7 +55,7 @@ enum
 };
 
 
-static gchar * session_filename (Gimp *gimp);
+static GFile * session_file (Gimp *gimp);
 
 
 /*  private variables  */
@@ -71,36 +68,40 @@ static gboolean   sessionrc_deleted = FALSE;
 void
 session_init (Gimp *gimp)
 {
-  gchar      *filename;
+  GFile      *file;
   GScanner   *scanner;
   GTokenType  token;
   GError     *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = session_filename (gimp);
+  file = session_file (gimp);
 
-  scanner = gimp_scanner_new_file (filename, &error);
+  scanner = gimp_scanner_new_gfile (file, &error);
 
   if (! scanner && error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
     {
-      g_clear_error (&error);
-      g_free (filename);
+      gchar *tmp;
 
-      filename = g_build_filename (gimp_sysconf_directory (),
-                                   "sessionrc", NULL);
-      scanner = gimp_scanner_new_file (filename, NULL);
+      g_clear_error (&error);
+      g_object_unref (file);
+
+      tmp = g_build_filename (gimp_sysconf_directory (), "sessionrc", NULL);
+      file = g_file_new_for_path (tmp);
+      g_free (tmp);
+
+      scanner = gimp_scanner_new_gfile (file, NULL);
     }
 
   if (! scanner)
     {
       g_clear_error (&error);
-      g_free (filename);
+      g_object_unref (file);
       return;
     }
 
   if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
   g_scanner_scope_add_symbol (scanner, 0, "session-info",
                               GINT_TO_POINTER (SESSION_INFO));
@@ -297,14 +298,18 @@ session_init (Gimp *gimp)
 
   if (error)
     {
+      gchar *tmp;
+
       gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
 
-      gimp_config_file_backup_on_error (filename, "sessionrc", NULL);
+      tmp = g_file_get_path (file);
+      gimp_config_file_backup_on_error (tmp, "sessionrc", NULL);
+      g_free (tmp);
     }
 
   gimp_scanner_destroy (scanner);
-  g_free (filename);
+  g_object_unref (file);
 
   dialogs_load_recent_docks (gimp);
 }
@@ -341,7 +346,7 @@ session_save (Gimp     *gimp,
               gboolean  always_save)
 {
   GimpConfigWriter *writer;
-  gchar            *filename;
+  GFile            *file;
   GError           *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -349,25 +354,25 @@ session_save (Gimp     *gimp,
   if (sessionrc_deleted && ! always_save)
     return;
 
-  filename = session_filename (gimp);
+  file = session_file (gimp);
 
   if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
   writer =
-    gimp_config_writer_new_file (filename,
-                                 TRUE,
-                                 "GIMP sessionrc\n\n"
-                                 "This file takes session-specific info "
-                                 "(that is info, you want to keep between "
-                                 "two GIMP sessions).  You are not supposed "
-                                 "to edit it manually, but of course you "
-                                 "can do.  The sessionrc will be entirely "
-                                 "rewritten every time you quit GIMP.  "
-                                 "If this file isn't found, defaults are "
-                                 "used.",
-                                 NULL);
-  g_free (filename);
+    gimp_config_writer_new_gfile (file,
+                                  TRUE,
+                                  "GIMP sessionrc\n\n"
+                                  "This file takes session-specific info "
+                                  "(that is info, you want to keep between "
+                                  "two GIMP sessions).  You are not supposed "
+                                  "to edit it manually, but of course you "
+                                  "can do.  The sessionrc will be entirely "
+                                  "rewritten every time you quit GIMP.  "
+                                  "If this file isn't found, defaults are "
+                                  "used.",
+                                  NULL);
+  g_object_unref (file);
 
   if (!writer)
     return;
@@ -412,37 +417,42 @@ gboolean
 session_clear (Gimp    *gimp,
                GError **error)
 {
-  gchar    *filename;
-  gboolean  success = TRUE;
+  GFile    *file;
+  GError   *my_error = NULL;
+  gboolean  success  = TRUE;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  filename = session_filename (gimp);
+  file = session_file (gimp);
 
-  if (g_unlink (filename) != 0 && errno != ENOENT)
+  if (! g_file_delete (file, NULL, &my_error) &&
+      my_error->code != G_IO_ERROR_NOT_FOUND)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-		   _("Deleting \"%s\" failed: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       success = FALSE;
+
+      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                   _("Deleting \"%s\" failed: %s"),
+                   gimp_file_get_utf8_name (file), my_error->message);
     }
   else
     {
       sessionrc_deleted = TRUE;
     }
 
-  g_free (filename);
+  g_clear_error (&my_error);
+  g_object_unref (file);
 
   return success;
 }
 
 
-static gchar *
-session_filename (Gimp *gimp)
+static GFile *
+session_file (Gimp *gimp)
 {
   const gchar *basename;
   gchar       *filename;
+  GFile       *file;
 
   basename = g_getenv ("GIMP_TESTING_SESSIONRC_NAME");
   if (! basename)
@@ -458,5 +468,8 @@ session_filename (Gimp *gimp)
       filename = tmp;
     }
 
-  return filename;
+  file = g_file_new_for_path (filename);
+  g_free (filename);
+
+  return file;
 }

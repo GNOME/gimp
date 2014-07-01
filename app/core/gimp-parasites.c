@@ -114,18 +114,18 @@ gimp_parasite_shift_parent (GimpParasite *parasite)
 void
 gimp_parasiterc_load (Gimp *gimp)
 {
-  gchar  *filename;
+  GFile  *file;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = gimp_personal_rc_file ("parasiterc");
+  file = gimp_personal_rc_gfile ("parasiterc");
 
   if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_deserialize_file (GIMP_CONFIG (gimp->parasites),
-                                      filename, NULL, &error))
+  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (gimp->parasites),
+                                       file, NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
@@ -133,7 +133,7 @@ gimp_parasiterc_load (Gimp *gimp)
       g_error_free (error);
     }
 
-  g_free (filename);
+  g_object_unref (file);
 }
 
 void
@@ -146,25 +146,25 @@ gimp_parasiterc_save (Gimp *gimp)
   const gchar *footer =
     "end of parasiterc";
 
-  gchar  *filename;
+  GFile  *file;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_PARASITE_LIST (gimp->parasites));
 
-  filename = gimp_personal_rc_file ("parasiterc");
+  file = gimp_personal_rc_gfile ("parasiterc");
 
   if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_serialize_to_file (GIMP_CONFIG (gimp->parasites),
-                                       filename,
-                                       header, footer, NULL,
-                                       &error))
+  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (gimp->parasites),
+                                        file,
+                                        header, footer, NULL,
+                                        &error))
     {
       gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_error_free (error);
     }
 
-  g_free (filename);
+  g_object_unref (file);
 }

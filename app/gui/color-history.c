@@ -52,23 +52,23 @@ void
 color_history_save (Gimp *gimp)
 {
   GimpConfigWriter *writer;
-  gchar            *filename;
+  GFile            *file;
   gint              i;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = gimp_personal_rc_file ("colorrc");
+  file = gimp_personal_rc_gfile ("colorrc");
 
   if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  writer = gimp_config_writer_new_file (filename,
-                                        TRUE,
-                                        "GIMP colorrc\n\n"
-                                        "This file holds a list of "
-                                        "recently used colors.",
-                                        NULL);
-  g_free (filename);
+  writer = gimp_config_writer_new_gfile (file,
+                                         TRUE,
+                                         "GIMP colorrc\n\n"
+                                         "This file holds a list of "
+                                         "recently used colors.",
+                                         NULL);
+  g_object_unref (file);
 
   if (!writer)
     return;
@@ -105,19 +105,19 @@ color_history_save (Gimp *gimp)
 void
 color_history_restore (Gimp *gimp)
 {
-  gchar      *filename;
+  GFile      *file;
   GScanner   *scanner;
   GTokenType  token;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = gimp_personal_rc_file ("colorrc");
+  file = gimp_personal_rc_gfile ("colorrc");
 
   if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  scanner = gimp_scanner_new_file (filename, NULL);
-  g_free (filename);
+  scanner = gimp_scanner_new_gfile (file, NULL);
+  g_object_unref (file);
 
   if (! scanner)
     return;
