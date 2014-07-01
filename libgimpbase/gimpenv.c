@@ -32,7 +32,7 @@
 #include <AppKit/AppKit.h>
 #endif
 
-#include <glib-object.h>
+#include <gio/gio.h>
 #include <glib/gstdio.h>
 
 #undef GIMP_DISABLE_DEPRECATED
@@ -612,10 +612,10 @@ gimp_plug_in_directory (void)
  *
  * Returns the name of a file in the user-specific GIMP settings directory.
  *
- * The returned string is allocated dynamically and *SHOULD* be freed
- * with g_free() after use. The returned string is in the encoding
- * used for filenames by GLib, which isn't necessarily
- * UTF-8. (On Windows it always is UTF-8.)
+ * The returned string is newly allocated and should be freed with
+ * g_free() after use. The returned string is in the encoding used for
+ * filenames by GLib, which isn't necessarily UTF-8. (On Windows it
+ * always is UTF-8.)
  *
  * Returns: The name of a file in the user-specific GIMP settings directory.
  **/
@@ -623,6 +623,33 @@ gchar *
 gimp_personal_rc_file (const gchar *basename)
 {
   return g_build_filename (gimp_directory (), basename, NULL);
+}
+
+/**
+ * gimp_personal_rc_gfile:
+ * @basename: The basename of a rc_file.
+ *
+ * Returns a #GFile in the user-specific GIMP settings directory.
+ *
+ * The returned #GFile is newly allocated and should be freed with
+ * g_object_unref() after use.
+ *
+ * See gimp_personal_rc_file().
+ *
+ * Since: GIMP 2.10
+ *
+ * Returns: A #GFile in the user-specific GIMP settings directory.
+ **/
+GFile *
+gimp_personal_rc_gfile (const gchar *basename)
+{
+  gchar *path = gimp_personal_rc_file (basename);
+  GFile *file;
+
+  file = g_file_new_for_path (path);
+  g_free (path);
+
+  return file;
 }
 
 /**

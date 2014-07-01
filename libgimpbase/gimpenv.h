@@ -61,6 +61,7 @@ const gchar * gimp_user_directory             (GimpUserDirectory   type) G_GNUC_
 
 const gchar * gimp_gtkrc                      (void) G_GNUC_CONST;
 gchar       * gimp_personal_rc_file           (const gchar        *basename) G_GNUC_MALLOC;
+GFile       * gimp_personal_rc_gfile          (const gchar        *basename);
 
 GList       * gimp_path_parse                 (const gchar        *path,
                                                gint                max_paths,
