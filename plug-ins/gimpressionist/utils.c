@@ -24,10 +24,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
-
-#include <libgimpconfig/gimpconfig.h>
-#include <libgimpmath/gimpmath.h>
+#include <libgimp/gimp.h>
 
 #include "gimpressionist.h"
 
