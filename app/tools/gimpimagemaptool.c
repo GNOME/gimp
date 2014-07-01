@@ -372,17 +372,13 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       if (image_map_tool->config && klass->settings_name)
         {
           GtkWidget *settings_ui;
-          gchar     *settings_filename;
           gchar     *default_folder;
           GFile     *settings_file;
 
-          settings_filename =
-            gimp_tool_info_build_options_filename (tool_info, ".settings");
-
-          default_folder =
-            g_build_filename (gimp_directory (), klass->settings_name, NULL);
-
-          settings_file = g_file_new_for_path (settings_filename);
+          settings_file = gimp_tool_info_get_options_file (tool_info,
+                                                           ".settings");
+          default_folder = g_build_filename (gimp_directory (),
+                                             klass->settings_name, NULL);
 
           settings_ui = klass->get_settings_ui (image_map_tool,
                                                 klass->recent_settings,
@@ -393,10 +389,8 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
                                                 default_folder,
                                                 &image_map_tool->settings_box);
 
-          g_object_unref (settings_file);
-
-          g_free (settings_filename);
           g_free (default_folder);
+          g_object_unref (settings_file);
 
           gtk_box_pack_start (GTK_BOX (vbox), settings_ui, FALSE, FALSE, 0);
           gtk_widget_show (settings_ui);

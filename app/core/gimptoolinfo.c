@@ -333,22 +333,18 @@ gimp_tool_info_get_standard (Gimp *gimp)
   return gimp->standard_tool_info;
 }
 
-gchar *
-gimp_tool_info_build_options_filename (GimpToolInfo *tool_info,
-                                       const gchar  *suffix)
+GFile *
+gimp_tool_info_get_options_file (GimpToolInfo *tool_info,
+                                 const gchar  *suffix)
 {
-  const gchar *name;
-  gchar       *filename;
-  gchar       *basename;
+  gchar *filename;
+  gchar *basename;
+  GFile *file;
 
   g_return_val_if_fail (GIMP_IS_TOOL_INFO (tool_info), NULL);
 
-  name = gimp_object_get_name (tool_info);
-
-  if (suffix)
-    basename = g_strconcat (name, suffix, NULL);
-  else
-    basename = g_strdup (name);
+  /* also works for a NULL suffix */
+  basename = g_strconcat (gimp_object_get_name (tool_info), suffix, NULL);
 
   filename = g_build_filename (gimp_directory (),
                                "tool-options",
@@ -356,5 +352,8 @@ gimp_tool_info_build_options_filename (GimpToolInfo *tool_info,
                                NULL);
   g_free (basename);
 
-  return filename;
+  file = g_file_new_for_path (filename);
+  g_free (filename);
+
+  return file;
 }

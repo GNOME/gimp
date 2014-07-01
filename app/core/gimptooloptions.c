@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#include <errno.h>
-
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -298,7 +296,7 @@ gboolean
 gimp_tool_options_serialize (GimpToolOptions  *tool_options,
                              GError          **error)
 {
-  gchar    *filename;
+  GFile    *file;
   gchar    *header;
   gchar    *footer;
   gboolean  retval;
@@ -306,26 +304,26 @@ gimp_tool_options_serialize (GimpToolOptions  *tool_options,
   g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  filename = gimp_tool_info_build_options_filename (tool_options->tool_info,
-                                                    NULL);
+  file = gimp_tool_info_get_options_file (tool_options->tool_info, NULL);
 
   if (tool_options->tool_info->gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
   header = g_strdup_printf ("GIMP %s options",
                             gimp_object_get_name (tool_options->tool_info));
   footer = g_strdup_printf ("end of %s options",
                             gimp_object_get_name (tool_options->tool_info));
 
-  retval = gimp_config_serialize_to_file (GIMP_CONFIG (tool_options),
-                                          filename,
-                                          header, footer,
-                                          NULL,
-                                          error);
+  retval = gimp_config_serialize_to_gfile (GIMP_CONFIG (tool_options),
+                                           file,
+                                           header, footer,
+                                           NULL,
+                                           error);
 
-  g_free (filename);
   g_free (header);
   g_free (footer);
+
+  g_object_unref (file);
 
   return retval;
 }
@@ -334,24 +332,23 @@ gboolean
 gimp_tool_options_deserialize (GimpToolOptions  *tool_options,
                                GError          **error)
 {
-  gchar    *filename;
+  GFile    *file;
   gboolean  retval;
 
   g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  filename = gimp_tool_info_build_options_filename (tool_options->tool_info,
-                                                    NULL);
+  file = gimp_tool_info_get_options_file (tool_options->tool_info, NULL);
 
   if (tool_options->tool_info->gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  retval = gimp_config_deserialize_file (GIMP_CONFIG (tool_options),
-                                         filename,
-                                         NULL,
-                                         error);
+  retval = gimp_config_deserialize_gfile (GIMP_CONFIG (tool_options),
+                                          file,
+                                          NULL,
+                                          error);
 
-  g_free (filename);
+  g_object_unref (file);
 
   return retval;
 }
@@ -360,26 +357,35 @@ gboolean
 gimp_tool_options_delete (GimpToolOptions  *tool_options,
                           GError          **error)
 {
-  gchar    *filename;
-  gboolean  retval = TRUE;
+  GFile    *file;
+  GError   *my_error = NULL;
+  gboolean  success  = TRUE;
 
   g_return_val_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  filename = gimp_tool_info_build_options_filename (tool_options->tool_info,
-                                                    NULL);
+  file = gimp_tool_info_get_options_file (tool_options->tool_info, NULL);
 
-  if (g_unlink (filename) != 0 && errno != ENOENT)
+  if (tool_options->tool_info->gimp->be_verbose)
+    g_print ("Deleting '%s'\n", gimp_file_get_utf8_name (file));
+
+  if (! g_file_delete (file, NULL, &my_error))
     {
-      retval = FALSE;
-      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-		   _("Deleting \"%s\" failed: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      if (my_error->code != G_IO_ERROR_NOT_FOUND)
+        {
+          success = FALSE;
+
+          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                       _("Deleting \"%s\" failed: %s"),
+                       gimp_file_get_utf8_name (file), my_error->message);
+        }
+
+      g_clear_error (&my_error);
     }
 
-  g_free (filename);
+  g_object_unref (file);
 
-  return retval;
+  return success;
 }
 
 void
