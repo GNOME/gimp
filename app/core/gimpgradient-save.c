@@ -17,11 +17,7 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <errno.h>
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -39,21 +35,23 @@ gimp_gradient_save (GimpData  *data,
                     GError   **error)
 {
   GimpGradient        *gradient = GIMP_GRADIENT (data);
+  GOutputStream       *output;
+  GString             *string;
   GimpGradientSegment *seg;
   gint                 num_segments;
-  gchar               *path;
-  FILE                *file;
+  gsize                bytes_written;
+  GError              *my_error = NULL;
 
-  path = g_file_get_path (gimp_data_get_file (data));
-  file = g_fopen (path, "wb");
-  g_free (path);
-
-  if (! file)
+  output = G_OUTPUT_STREAM (g_file_replace (gimp_data_get_file (data),
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, error));
+  if (! output)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
                    gimp_file_get_utf8_name (gimp_data_get_file (data)),
-                   g_strerror (errno));
+                   my_error->message);
+      g_clear_error (&my_error);
       return FALSE;
     }
 
@@ -67,9 +65,10 @@ gimp_gradient_save (GimpData  *data,
    *   ...
    */
 
-  fprintf (file, "GIMP Gradient\n");
+  string = g_string_new ("GIMP Gradient\n");
 
-  fprintf (file, "Name: %s\n", gimp_object_get_name (gradient));
+  g_string_append_printf (string, "Name: %s\n",
+                          gimp_object_get_name (gradient));
 
   /* Count number of segments */
   num_segments = 0;
@@ -82,7 +81,7 @@ gimp_gradient_save (GimpData  *data,
     }
 
   /* Write rest of file */
-  fprintf (file, "%d\n", num_segments);
+  g_string_append_printf (string, "%d\n", num_segments);
 
   for (seg = gradient->segments; seg; seg = seg->next)
     {
@@ -111,17 +110,33 @@ gimp_gradient_save (GimpData  *data,
       g_ascii_formatd (buf[10], G_ASCII_DTOSTR_BUF_SIZE,
                        "%f", seg->right_color.a);
 
-      fprintf (file, "%s %s %s %s %s %s %s %s %s %s %s %d %d %d %d\n",
-               buf[0], buf[1], buf[2],          /* left, middle, right */
-               buf[3], buf[4], buf[5], buf[6],  /* left color          */
-               buf[7], buf[8], buf[9], buf[10], /* right color         */
-               (gint) seg->type,
-               (gint) seg->color,
-               (gint) seg->left_color_type,
-               (gint) seg->right_color_type);
+      g_string_append_printf (string,
+                              "%s %s %s %s %s %s %s %s %s %s %s %d %d %d %d\n",
+                              buf[0], buf[1], buf[2],   /* left, middle, right */
+                              buf[3], buf[4], buf[5], buf[6],  /* left color   */
+                              buf[7], buf[8], buf[9], buf[10], /* right color  */
+                              (gint) seg->type,
+                              (gint) seg->color,
+                              (gint) seg->left_color_type,
+                              (gint) seg->right_color_type);
     }
 
-  fclose (file);
+  if (! g_output_stream_write_all (output, string->str, string->len,
+                                   &bytes_written, NULL, &my_error) ||
+      bytes_written != string->len)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
+                   _("Writing gradient file '%s' failed: %s"),
+                   gimp_file_get_utf8_name (gimp_data_get_file (data)),
+                   my_error->message);
+      g_clear_error (&my_error);
+      g_string_free (string, TRUE);
+      g_object_unref (output);
+      return FALSE;
+    }
+
+  g_string_free (string, TRUE);
+  g_object_unref (output);
 
   return TRUE;
 }
@@ -131,88 +146,109 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
                         GFile         *file,
                         GError       **error)
 {
-  gchar               *path;
-  FILE                *f;
+  GOutputStream       *output;
+  GString             *string;
   GimpGradientSegment *seg;
   gchar                buf[G_ASCII_DTOSTR_BUF_SIZE];
   gchar                color_buf[4][G_ASCII_DTOSTR_BUF_SIZE];
+  gsize                bytes_written;
+  GError              *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  path = g_file_get_path (file);
-  f = g_fopen (path, "wb");
-  g_free (path);
-
-  if (! f)
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, error));
+  if (! output)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), my_error->message);
+      g_clear_error (&my_error);
       return FALSE;
     }
-  else
+
+  string = g_string_new ("/* color_map file created by GIMP */\n"
+                         "/* http://www.gimp.org/           */\n"
+                         "color_map {\n");
+
+  for (seg = gradient->segments; seg; seg = seg->next)
     {
-      fprintf (f, "/* color_map file created by GIMP */\n");
-      fprintf (f, "/* http://www.gimp.org/           */\n");
+      /* Left */
+      g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       seg->left);
+      g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       seg->left_color.r);
+      g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       seg->left_color.g);
+      g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       seg->left_color.b);
+      g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       1.0 - seg->left_color.a);
 
-      fprintf (f, "color_map {\n");
+      g_string_append_printf (string,
+                              "\t[%s color rgbt <%s, %s, %s, %s>]\n",
+                              buf,
+                              color_buf[0], color_buf[1],
+                              color_buf[2], color_buf[3]);
 
-      for (seg = gradient->segments; seg; seg = seg->next)
-        {
-          /* Left */
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           seg->left);
-          g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           seg->left_color.r);
-          g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           seg->left_color.g);
-          g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           seg->left_color.b);
-          g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           1.0 - seg->left_color.a);
+      /* Middle */
+      g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       seg->middle);
+      g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       (seg->left_color.r + seg->right_color.r) / 2.0);
+      g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       (seg->left_color.g + seg->right_color.g) / 2.0);
+      g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       (seg->left_color.b + seg->right_color.b) / 2.0);
+      g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       1.0 - (seg->left_color.a + seg->right_color.a) / 2.0);
 
-          fprintf (f, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
-                   buf,
-                   color_buf[0], color_buf[1], color_buf[2], color_buf[3]);
+      g_string_append_printf (string,
+                              "\t[%s color rgbt <%s, %s, %s, %s>]\n",
+                              buf,
+                              color_buf[0], color_buf[1],
+                              color_buf[2], color_buf[3]);
 
-          /* Middle */
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           seg->middle);
-          g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           (seg->left_color.r + seg->right_color.r) / 2.0);
-          g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           (seg->left_color.g + seg->right_color.g) / 2.0);
-          g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           (seg->left_color.b + seg->right_color.b) / 2.0);
-          g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           1.0 - (seg->left_color.a + seg->right_color.a) / 2.0);
+      /* Right */
+      g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       seg->right);
+      g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       seg->right_color.r);
+      g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       seg->right_color.g);
+      g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       seg->right_color.b);
+      g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                       1.0 - seg->right_color.a);
 
-          fprintf (f, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
-                   buf,
-                   color_buf[0], color_buf[1], color_buf[2], color_buf[3]);
-
-          /* Right */
-          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           seg->right);
-          g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           seg->right_color.r);
-          g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           seg->right_color.g);
-          g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           seg->right_color.b);
-          g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                           1.0 - seg->right_color.a);
-
-          fprintf (f, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
-                   buf,
-                   color_buf[0], color_buf[1], color_buf[2], color_buf[3]);
-        }
-
-      fprintf (f, "} /* color_map */\n");
-      fclose (f);
+      g_string_append_printf (string,
+                              "\t[%s color rgbt <%s, %s, %s, %s>]\n",
+                              buf,
+                              color_buf[0], color_buf[1],
+                              color_buf[2], color_buf[3]);
     }
+
+  g_string_append_printf (string, "} /* color_map */\n");
+
+  if (! g_output_stream_write_all (output, string->str, string->len,
+                                   &bytes_written, NULL, &my_error) ||
+      bytes_written != string->len)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
+                   _("Writing POV file '%s' failed: %s"),
+                   gimp_file_get_utf8_name (file),
+                   my_error->message);
+      g_clear_error (&my_error);
+      g_string_free (string, TRUE);
+      g_object_unref (output);
+      return FALSE;
+    }
+
+  g_string_free (string, TRUE);
+  g_object_unref (output);
 
   return TRUE;
 }
