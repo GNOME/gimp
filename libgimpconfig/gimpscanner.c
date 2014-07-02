@@ -51,7 +51,8 @@
 typedef struct
 {
   gchar        *name;
-  GMappedFile  *file;
+  GMappedFile  *mapped;
+  gchar        *text;
   GError      **error;
 } GimpScannerData;
 
@@ -59,7 +60,8 @@ typedef struct
 /*  local function prototypes  */
 
 static GScanner * gimp_scanner_new     (const gchar  *name,
-                                        GMappedFile  *file,
+                                        GMappedFile  *mapped,
+                                        gchar        *text,
                                         GError      **error);
 static void       gimp_scanner_message (GScanner     *scanner,
                                         gchar        *message,
@@ -81,33 +83,15 @@ GScanner *
 gimp_scanner_new_file (const gchar  *filename,
                        GError      **error)
 {
-  GScanner    *scanner;
-  GMappedFile *file;
+  GScanner *scanner;
+  GFile    *file;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  file = g_mapped_file_new (filename, FALSE, error);
-
-  if (! file)
-    {
-      if (error)
-        {
-          (*error)->domain = GIMP_CONFIG_ERROR;
-          (*error)->code   = ((*error)->code == G_FILE_ERROR_NOENT ?
-                              GIMP_CONFIG_ERROR_OPEN_ENOENT :
-                              GIMP_CONFIG_ERROR_OPEN);
-        }
-
-      return NULL;
-    }
-
-  /*  gimp_scanner_new() takes a "name" for the scanner, not a filename  */
-  scanner = gimp_scanner_new (gimp_filename_to_utf8 (filename), file, error);
-
-  g_scanner_input_text (scanner,
-                        g_mapped_file_get_contents (file),
-                        g_mapped_file_get_length (file));
+  file = g_file_new_for_path (filename);
+  scanner = gimp_scanner_new_gfile (file, error);
+  g_object_unref (file);
 
   return scanner;
 }
@@ -122,19 +106,112 @@ gimp_scanner_new_file (const gchar  *filename,
  * Since: GIMP 2.10
  **/
 GScanner *
-gimp_scanner_new_gfile (GFile  *file,
+gimp_scanner_new_gfile (GFile   *file,
                         GError **error)
 {
-  GScanner *scanner;
-  gchar    *path;
+  GScanner    *scanner;
+  gchar       *path;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   path = g_file_get_path (file);
 
-  scanner = gimp_scanner_new_file (path, error);
+  if (path)
+    {
+      GMappedFile *mapped;
 
-  g_free (path);
+      mapped = g_mapped_file_new (path, FALSE, error);
+      g_free (path);
+
+      if (! mapped)
+        {
+          if (error)
+            {
+              (*error)->domain = GIMP_CONFIG_ERROR;
+              (*error)->code   = ((*error)->code == G_FILE_ERROR_NOENT ?
+                                  GIMP_CONFIG_ERROR_OPEN_ENOENT :
+                                  GIMP_CONFIG_ERROR_OPEN);
+            }
+
+          return NULL;
+        }
+
+      /*  gimp_scanner_new() takes a "name" for the scanner, not a filename  */
+      scanner = gimp_scanner_new (gimp_file_get_utf8_name (file),
+                                  mapped, NULL, error);
+
+      g_scanner_input_text (scanner,
+                            g_mapped_file_get_contents (mapped),
+                            g_mapped_file_get_length (mapped));
+    }
+  else
+    {
+      GInputStream *input;
+      GString      *string;
+      gchar         buffer[4096];
+      gsize         bytes_read;
+
+      input = G_INPUT_STREAM (g_file_read (file, NULL, error));
+
+      if (! input)
+        {
+          if (error)
+            {
+              (*error)->domain = GIMP_CONFIG_ERROR;
+              (*error)->code   = ((*error)->code == G_IO_ERROR_NOT_FOUND ?
+                                  GIMP_CONFIG_ERROR_OPEN_ENOENT :
+                                  GIMP_CONFIG_ERROR_OPEN);
+            }
+
+          return NULL;
+        }
+
+      string = g_string_new (NULL);
+
+      do
+        {
+          GError   *my_error = NULL;
+          gboolean  success;
+
+          success = g_input_stream_read_all (input, buffer, sizeof (buffer),
+                                             &bytes_read, NULL, &my_error);
+
+          if (bytes_read > 0)
+            g_string_append_len (string, buffer, bytes_read);
+
+          if (! success)
+            {
+              if (string->len > 0)
+                {
+                  g_printerr ("%s: read error in '%s', trying to scan "
+                              "partial content: %s",
+                              G_STRFUNC, gimp_file_get_utf8_name (file),
+                              my_error->message);
+                  g_clear_error (&my_error);
+                  break;
+                }
+
+              g_string_free (string, TRUE);
+              g_object_unref (input);
+
+              g_propagate_error (error, my_error);
+
+              return NULL;
+            }
+        }
+      while (bytes_read == sizeof (buffer));
+
+      g_object_unref (input);
+
+      /*  gimp_scanner_new() takes a "name" for the scanner, not a filename  */
+      scanner = gimp_scanner_new (gimp_file_get_utf8_name (file),
+                                  NULL, string->str, error);
+
+      bytes_read = string->len;
+
+      g_scanner_input_text (scanner, g_string_free (string, FALSE), bytes_read);
+    }
 
   return scanner;
 }
@@ -162,7 +239,7 @@ gimp_scanner_new_string (const gchar  *text,
   if (text_len < 0)
     text_len = strlen (text);
 
-  scanner = gimp_scanner_new (NULL, NULL, error);
+  scanner = gimp_scanner_new (NULL, NULL, NULL, error);
 
   g_scanner_input_text (scanner, text, text_len);
 
@@ -171,7 +248,8 @@ gimp_scanner_new_string (const gchar  *text,
 
 static GScanner *
 gimp_scanner_new (const gchar  *name,
-                  GMappedFile  *file,
+                  GMappedFile  *mapped,
+                  gchar        *text,
                   GError      **error)
 {
   GScanner        *scanner;
@@ -181,9 +259,10 @@ gimp_scanner_new (const gchar  *name,
 
   data = g_slice_new0 (GimpScannerData);
 
-  data->name  = g_strdup (name);
-  data->file  = file;
-  data->error = error;
+  data->name   = g_strdup (name);
+  data->mapped = mapped;
+  data->text   = text;
+  data->error  = error;
 
   scanner->user_data   = data;
   scanner->msg_handler = gimp_scanner_message;
@@ -214,8 +293,11 @@ gimp_scanner_destroy (GScanner *scanner)
 
   data = scanner->user_data;
 
-  if (data->file)
-    g_mapped_file_unref (data->file);
+  if (data->mapped)
+    g_mapped_file_unref (data->mapped);
+
+  if (data->text)
+    g_free (data->text);
 
   g_free (data->name);
   g_slice_free (GimpScannerData, data);
