@@ -189,6 +189,7 @@ file_save (Gimp                *gimp,
            * of a GimpImage is the last-save URI
            */
           gimp_image_set_exported_uri (image, uri);
+          gimp_image_set_export_proc (image, file_proc);
 
           /* An image can not be considered both exported and imported
            * at the same time, so stop consider it as imported now

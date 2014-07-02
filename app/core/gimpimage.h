@@ -201,6 +201,9 @@ void            gimp_image_set_save_proc         (GimpImage          *image,
 GimpPlugInProcedure * gimp_image_get_save_proc   (const GimpImage    *image);
 void            gimp_image_saved                 (GimpImage          *image,
                                                   const gchar        *uri);
+void            gimp_image_set_export_proc       (GimpImage          *image,
+                                                  GimpPlugInProcedure *proc);
+GimpPlugInProcedure * gimp_image_get_export_proc (const GimpImage    *image);
 void            gimp_image_exported              (GimpImage          *image,
                                                   const gchar        *uri);
 

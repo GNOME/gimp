@@ -1900,6 +1900,23 @@ gimp_image_get_save_proc (const GimpImage *image)
 }
 
 void
+gimp_image_set_export_proc (GimpImage           *image,
+                            GimpPlugInProcedure *proc)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  GIMP_IMAGE_GET_PRIVATE (image)->export_proc = proc;
+}
+
+GimpPlugInProcedure *
+gimp_image_get_export_proc (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->export_proc;
+}
+
+void
 gimp_image_set_resolution (GimpImage *image,
                            gdouble    xresolution,
                            gdouble    yresolution)
