@@ -17,30 +17,6 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-
-#include <sys/types.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <fcntl.h>
-
-#include <glib.h>
-#include <glib/gstdio.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
-
-#ifndef _O_BINARY
-#define _O_BINARY 0
-#endif
-
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -65,32 +41,31 @@ gimp_pattern_load (GimpContext  *context,
 {
   GimpPattern   *pattern = NULL;
   const Babl    *format  = NULL;
-  gchar         *path;
-  gint           fd;
+  GInputStream  *input;
   PatternHeader  header;
+  gsize          size;
+  gsize          bytes_read;
   gint           bn_size;
-  gchar         *name    = NULL;
+  gchar         *name     = NULL;
+  GError        *my_error = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-
-  path = g_file_get_path (file);
-
-  g_return_val_if_fail (g_path_is_absolute (path), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  fd = g_open (path, O_RDONLY | _O_BINARY, 0);
-  g_free (path);
-
-  if (fd == -1)
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
+  if (! input)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), my_error->message);
+      g_clear_error (&my_error);
       return NULL;
     }
 
-  /*  Read in the header size  */
-  if (read (fd, &header, sizeof (header)) != sizeof (header))
+  /*  read the size  */
+  if (! g_input_stream_read_all (input, &header, sizeof (header),
+                                 &bytes_read, NULL, NULL) ||
+      bytes_read != sizeof (header))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in pattern file '%s': "
@@ -136,7 +111,9 @@ gimp_pattern_load (GimpContext  *context,
 
       name = g_new (gchar, bn_size);
 
-      if ((read (fd, name, bn_size)) < bn_size)
+      if (! g_input_stream_read_all (input, name, bn_size,
+                                     &bytes_read, NULL, NULL) ||
+          bytes_read != bn_size)
         {
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in pattern file '%s': "
@@ -172,10 +149,12 @@ gimp_pattern_load (GimpContext  *context,
     }
 
   pattern->mask = gimp_temp_buf_new (header.width, header.height, format);
+  size = header.width * header.height * header.bytes;
 
-  if (read (fd, gimp_temp_buf_get_data (pattern->mask),
-            header.width * header.height * header.bytes) <
-      header.width * header.height * header.bytes)
+  if (! g_input_stream_read_all (input,
+                                 gimp_temp_buf_get_data (pattern->mask), size,
+                                 &bytes_read, NULL, NULL) ||
+      bytes_read != size)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in pattern file '%s': "
@@ -184,7 +163,7 @@ gimp_pattern_load (GimpContext  *context,
       goto error;
     }
 
-  close (fd);
+  g_object_unref (input);
 
   return g_list_prepend (NULL, pattern);
 
@@ -192,7 +171,7 @@ gimp_pattern_load (GimpContext  *context,
   if (pattern)
     g_object_unref (pattern);
 
-  close (fd);
+  g_object_unref (input);
 
   return NULL;
 }
@@ -202,20 +181,27 @@ gimp_pattern_load_pixbuf (GimpContext  *context,
                           GFile        *file,
                           GError      **error)
 {
-  GimpPattern *pattern;
-  GdkPixbuf   *pixbuf;
-  gchar       *path;
-  gchar       *name;
+  GimpPattern  *pattern;
+  GInputStream *input;
+  GdkPixbuf    *pixbuf;
+  gchar        *name;
+  GError       *my_error = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-
-  path = g_file_get_path (file);
-
-  g_return_val_if_fail (g_path_is_absolute (path), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  pixbuf = gdk_pixbuf_new_from_file (path, error);
-  g_free (path);
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
+  if (! input)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_file_get_utf8_name (file), my_error->message);
+      g_clear_error (&my_error);
+      return NULL;
+    }
+
+  pixbuf = gdk_pixbuf_new_from_stream (input, NULL, error);
+  g_object_unref (input);
 
   if (! pixbuf)
     return NULL;
