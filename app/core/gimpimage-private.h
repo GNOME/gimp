@@ -38,6 +38,7 @@ struct _GimpImagePrivate
 
   GimpPlugInProcedure *load_proc;           /*  procedure used for loading   */
   GimpPlugInProcedure *save_proc;           /*  last save procedure used     */
+  GimpPlugInProcedure *export_proc;         /*  last export procedure used   */
 
   gchar             *display_name;          /*  display basename             */
   gchar             *display_path;          /*  display full path            */

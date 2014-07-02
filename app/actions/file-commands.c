@@ -299,13 +299,14 @@ file_save_cmd_callback (GtkAction *action,
     case GIMP_SAVE_MODE_EXPORT:
     case GIMP_SAVE_MODE_OVERWRITE:
       {
-        const gchar         *uri = NULL;
-        GimpPlugInProcedure *export_proc;
-        gboolean             overwrite = FALSE;
+        const gchar         *uri         = NULL;
+        GimpPlugInProcedure *export_proc = NULL;
+        gboolean             overwrite   = FALSE;
 
         if (save_mode == GIMP_SAVE_MODE_EXPORT)
           {
-            uri = gimp_image_get_exported_uri (image);
+            uri         = gimp_image_get_exported_uri (image);
+            export_proc = gimp_image_get_export_proc (image);
 
             if (! uri)
               {
@@ -323,7 +324,7 @@ file_save_cmd_callback (GtkAction *action,
             overwrite = TRUE;
           }
 
-        if (uri)
+        if (uri && ! export_proc)
           {
             export_proc =
               file_procedure_find (image->gimp->plug_in_manager->export_procs,
