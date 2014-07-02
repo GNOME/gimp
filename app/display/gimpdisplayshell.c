@@ -81,13 +81,9 @@
 
 #include "about.h"
 #include "gimp-log.h"
+#include "gimp-priorities.h"
 
 #include "gimp-intl.h"
-
-
-/* a bit higher than projection construction, see gimpprojection.c
- */
-#define GIMP_DISPLAY_SHELL_FILL_IDLE_PRIORITY (G_PRIORITY_HIGH_IDLE + 20 + 1)
 
 
 enum
@@ -1512,7 +1508,7 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
     }
 
   shell->fill_idle_id =
-    g_idle_add_full (GIMP_DISPLAY_SHELL_FILL_IDLE_PRIORITY,
+    g_idle_add_full (GIMP_PRIORITY_DISPLAY_SHELL_FILL_IDLE,
                      (GSourceFunc) gimp_display_shell_fill_idle, shell,
                      NULL);
 }

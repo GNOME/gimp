@@ -41,12 +41,8 @@
 #include "gimpprojection.h"
 
 #include "gimp-log.h"
+#include "gimp-priorities.h"
 
-
-/*  just a bit less than GDK_PRIORITY_REDRAW, also see
- *  GIMP_DISPLAY_SHELL_FILL_IDLE_PRIORITY in gimpdisplayshell.c
- */
-#define GIMP_PROJECTION_IDLE_PRIORITY (G_PRIORITY_HIGH_IDLE + 20 + 2)
 
 /*  chunk size for one iteration of the chunk renderer  */
 static gint GIMP_PROJECTION_CHUNK_WIDTH  = 256;
@@ -702,7 +698,7 @@ gimp_projection_chunk_render_start (GimpProjection *proj)
   g_return_if_fail (proj->priv->chunk_render.idle_id == 0);
 
   proj->priv->chunk_render.idle_id =
-    g_idle_add_full (GIMP_PROJECTION_IDLE_PRIORITY,
+    g_idle_add_full (GIMP_PRIORITY_PROJECTION_IDLE,
                      gimp_projection_chunk_render_callback, proj,
                      NULL);
 }

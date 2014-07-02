@@ -37,6 +37,8 @@
 #include "gimpundo.h"
 #include "gimpundostack.h"
 
+#include "gimp-priorities.h"
+
 #include "gimp-intl.h"
 
 
@@ -424,7 +426,7 @@ gimp_undo_create_preview (GimpUndo    *undo,
         idle->context = g_object_ref (context);
 
       undo->preview_idle_id =
-        g_idle_add_full (GIMP_VIEWABLE_PRIORITY_IDLE,
+        g_idle_add_full (GIMP_PRIORITY_VIEWABLE_IDLE,
                          gimp_undo_create_preview_idle, idle,
                          (GDestroyNotify) gimp_undo_idle_free);
     }
