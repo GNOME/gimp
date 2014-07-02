@@ -27,6 +27,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <glib/gstdio.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -571,17 +572,33 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
 
 gboolean
 gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
-                               gpointer           fp,
+                               GFile             *file,
                                GError           **error)
 {
-  FILE *file = fp;
-  gint  i;
+  GOutputStream *output;
+  GString       *string;
+  gsize          bytes_written;
+  gint           i;
+  GError        *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_CURVES_CONFIG (config), FALSE);
-  g_return_val_if_fail (file != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  fprintf (file, "# GIMP Curves File\n");
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, error));
+  if (! output)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_file_get_utf8_name (file),
+                   my_error->message);
+      g_clear_error (&my_error);
+      return FALSE;
+    }
+
+  string = g_string_new ("# GIMP Curves File\n");
 
   for (i = 0; i < 5; i++)
     {
@@ -624,18 +641,35 @@ gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
 
           if (x < 0.0 || y < 0.0)
             {
-              fprintf (file, "%d %d ", -1, -1);
+              g_string_append_printf (string, "%d %d ", -1, -1);
             }
           else
             {
-              fprintf (file, "%d %d ",
-                       (gint) (x * 255.999),
-                       (gint) (y * 255.999));
+              g_string_append_printf (string, "%d %d ",
+                                      (gint) (x * 255.999),
+                                      (gint) (y * 255.999));
             }
         }
 
-      fprintf (file, "\n");
+      g_string_append_printf (string, "\n");
     }
+
+  if (! g_output_stream_write_all (output, string->str, string->len,
+                                   &bytes_written, NULL, &my_error) ||
+      bytes_written != string->len)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
+                   _("Writing brush file '%s' failed: %s"),
+                   gimp_file_get_utf8_name (file),
+                   my_error->message);
+      g_clear_error (&my_error);
+      g_string_free (string, TRUE);
+      g_object_unref (output);
+      return FALSE;
+    }
+
+  g_string_free (string, TRUE);
+  g_object_unref (output);
 
   return TRUE;
 }

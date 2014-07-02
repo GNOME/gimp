@@ -653,30 +653,7 @@ gimp_curves_tool_settings_export (GimpImageMapTool  *image_map_tool,
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
 
   if (tool->export_old_format)
-    {
-      gchar    *path;
-      FILE     *f;
-      gboolean  success;
-
-      path = g_file_get_path (file);
-      f = g_fopen (path, "wt");
-      g_free (path);
-
-      if (! f)
-        {
-          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Could not open '%s' for writing: %s"),
-                       gimp_file_get_utf8_name (file),
-                       g_strerror (errno));
-          return FALSE;
-        }
-
-      success = gimp_curves_config_save_cruft (tool->config, f, error);
-
-      fclose (f);
-
-      return success;
-    }
+    return gimp_curves_config_save_cruft (tool->config, file, error);
 
   return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_export (image_map_tool,
                                                                     file,
