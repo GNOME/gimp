@@ -239,7 +239,7 @@ gimp_config_writer_new_fd (gint fd)
   writer = g_slice_new0 (GimpConfigWriter);
 
 #ifdef G_OS_WIN32
-  writer->output = g_win32_input_stream_new ((HANDLE *) fd, FALSE);
+  writer->output = g_win32_output_stream_new ((gpointer) fd, FALSE);
 #else
   writer->output = g_unix_output_stream_new (fd, FALSE);
 #endif
