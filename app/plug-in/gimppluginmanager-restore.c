@@ -52,9 +52,9 @@
 
 static void    gimp_plug_in_manager_search            (GimpPlugInManager      *manager,
                                                        GimpInitStatusFunc      status_callback);
-static gchar * gimp_plug_in_manager_get_pluginrc      (GimpPlugInManager      *manager);
+static GFile * gimp_plug_in_manager_get_pluginrc      (GimpPlugInManager      *manager);
 static void    gimp_plug_in_manager_read_pluginrc     (GimpPlugInManager      *manager,
-                                                       const gchar            *pluginrc,
+                                                       GFile                  *file,
                                                        GimpInitStatusFunc      status_callback);
 static void    gimp_plug_in_manager_query_new         (GimpPlugInManager      *manager,
                                                        GimpContext            *context,
@@ -85,7 +85,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
                               GimpInitStatusFunc  status_callback)
 {
   Gimp   *gimp;
-  gchar  *pluginrc;
+  GFile  *pluginrc;
   GSList *list;
   GError *error = NULL;
 
@@ -128,7 +128,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
   if (manager->write_pluginrc)
     {
       if (gimp->be_verbose)
-        g_print ("Writing '%s'\n", gimp_filename_to_utf8 (pluginrc));
+        g_print ("Writing '%s'\n", gimp_file_get_utf8_name (pluginrc));
 
       if (! plug_in_rc_write (manager->plug_in_defs, pluginrc, &error))
         {
@@ -140,7 +140,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
       manager->write_pluginrc = FALSE;
     }
 
-  g_free (pluginrc);
+  g_object_unref (pluginrc);
 
   /* create locale and help domain lists */
   for (list = manager->plug_in_defs; list; list = list->next)
@@ -246,28 +246,33 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
   g_free (path);
 }
 
-static gchar *
+static GFile *
 gimp_plug_in_manager_get_pluginrc (GimpPlugInManager *manager)
 {
   Gimp  *gimp = manager->gimp;
-  gchar *pluginrc;
+  GFile *pluginrc;
 
   if (gimp->config->plug_in_rc_path)
     {
-      pluginrc = gimp_config_path_expand (gimp->config->plug_in_rc_path,
-                                          TRUE, NULL);
+      gchar *path;
 
-      if (! g_path_is_absolute (pluginrc))
+      path = gimp_config_path_expand (gimp->config->plug_in_rc_path,
+                                      TRUE, NULL);
+
+      if (! g_path_is_absolute (path))
         {
-          gchar *str = g_build_filename (gimp_directory (), pluginrc, NULL);
+          gchar *str = g_build_filename (gimp_directory (), path, NULL);
 
-          g_free (pluginrc);
-          pluginrc = str;
+          g_free (path);
+          path = str;
         }
+
+      pluginrc = g_file_new_for_path (path);
+      g_free (path);
     }
   else
     {
-      pluginrc = gimp_personal_rc_file ("pluginrc");
+      pluginrc = gimp_personal_rc_gfile ("pluginrc");
     }
 
   return pluginrc;
@@ -276,17 +281,17 @@ gimp_plug_in_manager_get_pluginrc (GimpPlugInManager *manager)
 /* read the pluginrc file for cached data */
 static void
 gimp_plug_in_manager_read_pluginrc (GimpPlugInManager  *manager,
-                                    const gchar        *pluginrc,
+                                    GFile              *pluginrc,
                                     GimpInitStatusFunc  status_callback)
 {
   GSList *rc_defs;
   GError *error = NULL;
 
   status_callback (_("Resource configuration"),
-                   gimp_filename_to_utf8 (pluginrc), 0.0);
+                   gimp_file_get_utf8_name (pluginrc), 0.0);
 
   if (manager->gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (pluginrc));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (pluginrc));
 
   rc_defs = plug_in_rc_parse (manager->gimp, pluginrc, &error);
 
