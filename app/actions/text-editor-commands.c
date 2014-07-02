@@ -131,25 +131,25 @@ text_editor_load_response (GtkWidget      *dialog,
   if (response_id == GTK_RESPONSE_OK)
     {
       GtkTextBuffer *buffer;
-      gchar         *filename;
+      GFile         *file;
       GError        *error = NULL;
 
-      buffer   = gtk_text_view_get_buffer (GTK_TEXT_VIEW (editor->view));
-      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+      buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (editor->view));
+      file   = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
 
-      if (! gimp_text_buffer_load (GIMP_TEXT_BUFFER (buffer), filename, &error))
+      if (! gimp_text_buffer_load (GIMP_TEXT_BUFFER (buffer), file, &error))
         {
           gimp_message (editor->ui_manager->gimp, G_OBJECT (dialog),
                         GIMP_MESSAGE_ERROR,
                         _("Could not open '%s' for reading: %s"),
-                        gimp_filename_to_utf8 (filename),
+                        gimp_file_get_utf8_name (file),
                         error->message);
           g_clear_error (&error);
-          g_free (filename);
+          g_object_unref (file);
           return;
         }
 
-      g_free (filename);
+      g_object_unref (file);
     }
 
   gtk_widget_hide (dialog);

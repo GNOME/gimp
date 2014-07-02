@@ -145,25 +145,25 @@ error_console_save_response (GtkWidget        *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
+      GFile  *file;
       GError *error = NULL;
-      gchar  *filename;
 
-      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+      file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
 
       if (! gimp_text_buffer_save (GIMP_TEXT_BUFFER (console->text_buffer),
-                                   filename,
+                                   file,
                                    console->save_selection, &error))
         {
           gimp_message (console->gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
                         _("Error writing file '%s':\n%s"),
-                        gimp_filename_to_utf8 (filename),
+                        gimp_file_get_utf8_name (file),
                         error->message);
           g_clear_error (&error);
-          g_free (filename);
+          g_object_unref (file);
           return;
         }
 
-      g_free (filename);
+      g_object_unref (file);
     }
 
   gtk_widget_destroy (dialog);

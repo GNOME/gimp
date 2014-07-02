@@ -1400,21 +1400,24 @@ gimp_text_buffer_get_iter_at_index (GimpTextBuffer *buffer,
 
 gboolean
 gimp_text_buffer_load (GimpTextBuffer *buffer,
-                       const gchar    *filename,
+                       GFile          *file,
                        GError        **error)
 {
-  FILE        *file;
+  gchar       *path;
+  FILE        *f;
   gchar        buf[2048];
   gint         remaining = 0;
   GtkTextIter  iter;
 
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  file = g_fopen (filename, "r");
+  path = g_file_get_path (file);
+  f = g_fopen (path, "r");
+  g_free (file);
 
-  if (! file)
+  if (! f)
     {
       g_set_error_literal (error, G_FILE_ERROR,
                            g_file_error_from_errno (errno),
@@ -1427,13 +1430,13 @@ gimp_text_buffer_load (GimpTextBuffer *buffer,
   gimp_text_buffer_set_text (buffer, NULL);
   gtk_text_buffer_get_end_iter (GTK_TEXT_BUFFER (buffer), &iter);
 
-  while (! feof (file))
+  while (! feof (f))
     {
       const char *leftover;
       gint        count;
       gint        to_read = sizeof (buf) - remaining - 1;
 
-      count = fread (buf + remaining, 1, to_read, file);
+      count = fread (buf + remaining, 1, to_read, f);
       buf[count + remaining] = '\0';
 
       g_utf8_validate (buf, count + remaining, &leftover);
@@ -1451,9 +1454,9 @@ gimp_text_buffer_load (GimpTextBuffer *buffer,
 
   if (remaining)
     g_message (_("Invalid UTF-8 data in file '%s'."),
-               gimp_filename_to_utf8 (filename));
+               gimp_file_get_utf8_name (file));
 
-  fclose (file);
+  fclose (f);
 
   gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
 
@@ -1462,20 +1465,23 @@ gimp_text_buffer_load (GimpTextBuffer *buffer,
 
 gboolean
 gimp_text_buffer_save (GimpTextBuffer *buffer,
-                       const gchar    *filename,
+                       GFile          *file,
                        gboolean        selection_only,
                        GError        **error)
 {
   GtkTextIter  start_iter;
   GtkTextIter  end_iter;
+  gchar       *path;
   gint         fd;
   gchar       *text_contents;
 
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  fd = g_open (filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
+  path = g_file_get_path (file);
+  fd = g_open (path, O_WRONLY | O_CREAT | O_APPEND, 0666);
+  g_free (path);
 
   if (fd == -1)
     {
