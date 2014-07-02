@@ -50,7 +50,7 @@ combine_paint_mask_to_canvas_mask (const GimpTempBuf *paint_mask,
 
   iter = gegl_buffer_iterator_new (canvas_buffer, &roi, 0,
                                    babl_format ("Y float"),
-                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
   if (stipple)
     {
@@ -190,7 +190,8 @@ canvas_buffer_to_paint_buf_alpha (GimpTempBuf  *paint_buf,
 
   iter = gegl_buffer_iterator_new (canvas_buffer, &roi, 0,
                                    babl_format ("Y float"),
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
   while (gegl_buffer_iterator_next (iter))
     {
       gfloat *canvas_pixel = (gfloat *)iter->data[0];
@@ -316,20 +317,20 @@ do_layer_blend (GeglBuffer  *src_buffer,
 
   iter = gegl_buffer_iterator_new (dst_buffer, &roi, 0,
                                    iterator_format,
-                                   GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, src_buffer, &roi, 0,
                             iterator_format,
-                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   if (mask_buffer)
     {
       gegl_buffer_iterator_add (iter, mask_buffer, &mask_roi, 0,
                                 babl_format ("Y float"),
-                                GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
     }
 
-  while (gegl_buffer_iterator_next(iter))
+  while (gegl_buffer_iterator_next (iter))
     {
       gfloat *out_pixel   = (gfloat *)iter->data[0];
       gfloat *in_pixel    = (gfloat *)iter->data[1];
@@ -384,22 +385,22 @@ mask_components_onto (GeglBuffer        *src_buffer,
 
   iter = gegl_buffer_iterator_new (dst_buffer, roi, 0,
                                    iterator_format,
-                                   GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, src_buffer, roi, 0,
                             iterator_format,
-                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, aux_buffer, roi, 0,
                             iterator_format,
-                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next(iter))
     {
-      gfloat *dest   = (gfloat *)iter->data[0];
-      gfloat *src    = (gfloat *)iter->data[1];
-      gfloat *aux    = (gfloat *)iter->data[2];
-      glong   samples     = iter->length;
+      gfloat *dest    = (gfloat *)iter->data[0];
+      gfloat *src     = (gfloat *)iter->data[1];
+      gfloat *aux     = (gfloat *)iter->data[2];
+      glong   samples = iter->length;
 
       while (samples--)
         {

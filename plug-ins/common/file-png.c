@@ -1312,7 +1312,7 @@ load_image (const gchar  *filename,
       file_format = gegl_buffer_get_format (buffer);
 
       iter = gegl_buffer_iterator_new (buffer, NULL, 0, file_format,
-                                       GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
       n_components = babl_format_get_n_components (file_format);
       g_warn_if_fail (n_components == 2);
 
@@ -1937,7 +1937,7 @@ ia_has_transparent_pixels (GeglBuffer *buffer)
 
   format = gegl_buffer_get_format (buffer);
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   n_components = babl_format_get_n_components (format);
   g_return_val_if_fail (n_components == 2, FALSE);
 
@@ -1980,7 +1980,7 @@ find_unused_ia_color (GeglBuffer *buffer,
 
   format = gegl_buffer_get_format (buffer);
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   n_components = babl_format_get_n_components (format);
   g_return_val_if_fail (n_components == 2, FALSE);
 

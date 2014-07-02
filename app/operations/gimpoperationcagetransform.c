@@ -245,7 +245,7 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
 
   /* pre-fill the out buffer with no-displacement coordinate */
   it      = gegl_buffer_iterator_new (out_buf, roi, 0, NULL,
-                                      GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                      GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
   cage_bb = gimp_cage_config_get_bounding_box (config);
 
   point = &(g_array_index (config->cage_points, GimpCagePoint, 0));

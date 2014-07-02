@@ -1538,12 +1538,12 @@ load_contiguous (TIFF         *tif,
               iter = gegl_buffer_iterator_new (src_buf,
                                                GEGL_RECTANGLE (0, 0, cols, rows),
                                                0, NULL,
-                                               GEGL_BUFFER_READ,
+                                               GEGL_ACCESS_READ,
                                                GEGL_ABYSS_NONE);
               gegl_buffer_iterator_add (iter, channel[i].buffer,
                                         GEGL_RECTANGLE (x, y, cols, rows),
                                         0, channel[i].format,
-                                        GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                        GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
               while (gegl_buffer_iterator_next (iter))
                 {
@@ -1664,12 +1664,12 @@ load_separate (TIFF         *tif,
                   iter = gegl_buffer_iterator_new (src_buf,
                                                    GEGL_RECTANGLE (0, 0, cols, rows),
                                                    0, NULL,
-                                                   GEGL_BUFFER_READ,
+                                                   GEGL_ACCESS_READ,
                                                    GEGL_ABYSS_NONE);
                   gegl_buffer_iterator_add (iter, channel[i].buffer,
                                             GEGL_RECTANGLE (x, y, cols, rows),
                                             0, channel[i].format,
-                                            GEGL_BUFFER_READWRITE,
+                                            GEGL_ACCESS_READWRITE,
                                             GEGL_ABYSS_NONE);
 
                   while (gegl_buffer_iterator_next (iter))

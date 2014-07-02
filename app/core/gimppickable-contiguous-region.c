@@ -195,11 +195,11 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
 
   iter = gegl_buffer_iterator_new (src_buffer,
                                    NULL, 0, format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, mask_buffer,
                             NULL, 0, babl_format ("Y float"),
-                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {

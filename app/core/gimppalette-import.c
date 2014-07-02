@@ -290,7 +290,7 @@ gimp_palette_import_extract (GimpImage     *image,
   format = babl_format ("R'G'B'A u8");
 
   iter = gegl_buffer_iterator_new (buffer, &rect, 0, format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   bpp = babl_format_get_bytes_per_pixel (format);
 
   if (selection_only &&
@@ -305,7 +305,7 @@ gimp_palette_import_extract (GimpImage     *image,
       format = babl_format ("Y u8");
 
       gegl_buffer_iterator_add (iter, buffer, &rect, 0, format,
-                                GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
       mask_roi = &iter->roi[1];
       mask_bpp = babl_format_get_bytes_per_pixel (format);
     }

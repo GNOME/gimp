@@ -135,7 +135,7 @@ print_surface_from_drawable (gint32   drawable_ID,
   iter = gegl_buffer_iterator_new (buffer,
                                    GEGL_RECTANGLE (0, 0, width, height), 0,
                                    format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {

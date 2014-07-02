@@ -322,7 +322,7 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
       GeglBufferIterator *iter;
 
       iter = gegl_buffer_iterator_new (output, NULL, 0, NULL,
-                                       GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
       while (gegl_buffer_iterator_next (iter))
         {

@@ -75,11 +75,11 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
   dest_components = babl_format_get_n_components (dest_format);
 
   iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0, src_format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   src_roi = &iter->roi[0];
 
   gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0, dest_format,
-                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
   dest_roi = &iter->roi[1];
 
   while (gegl_buffer_iterator_next (iter))
@@ -220,11 +220,11 @@ gimp_gegl_dodgeburn (GeglBuffer          *src_buffer,
 
   iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
                                    babl_format ("R'G'B'A float"),
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
                             babl_format ("R'G'B'A float"),
-                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   switch (mode)
     {
@@ -345,15 +345,15 @@ gimp_gegl_smudge_blend (GeglBuffer          *top_buffer,
 
   iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0,
                                    babl_format ("RGBA float"),
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0,
                             babl_format ("RGBA float"),
-                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
                             babl_format ("RGBA float"),
-                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -403,11 +403,11 @@ gimp_gegl_apply_mask (GeglBuffer          *mask_buffer,
 
   iter = gegl_buffer_iterator_new (mask_buffer, mask_rect, 0,
                                    babl_format ("Y float"),
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
                             babl_format ("RGBA float"),
-                            GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -436,11 +436,11 @@ gimp_gegl_combine_mask (GeglBuffer          *mask_buffer,
 
   iter = gegl_buffer_iterator_new (mask_buffer, mask_rect, 0,
                                    babl_format ("Y float"),
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
                             babl_format ("Y float"),
-                            GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -470,11 +470,11 @@ gimp_gegl_combine_mask_weird (GeglBuffer          *mask_buffer,
 
   iter = gegl_buffer_iterator_new (mask_buffer, mask_rect, 0,
                                    babl_format ("Y float"),
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
                             babl_format ("Y float"),
-                            GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -522,19 +522,19 @@ gimp_gegl_replace (GeglBuffer          *top_buffer,
 
   iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0,
                                    babl_format ("RGBA float"),
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0,
                             babl_format ("RGBA float"),
-                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, mask_buffer, mask_rect, 0,
                             babl_format ("Y float"),
-                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
                             babl_format ("RGBA float"),
-                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {

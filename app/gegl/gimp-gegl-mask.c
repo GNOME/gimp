@@ -48,7 +48,7 @@ gimp_gegl_mask_bounds (GeglBuffer *buffer,
   ty2 = 0;
 
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, babl_format ("Y float"),
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   roi = &iter->roi[0];
 
   while (gegl_buffer_iterator_next (iter))
@@ -138,7 +138,7 @@ gimp_gegl_mask_is_empty (GeglBuffer *buffer)
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), FALSE);
 
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, babl_format ("Y float"),
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {

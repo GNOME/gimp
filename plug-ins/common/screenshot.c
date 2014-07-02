@@ -896,7 +896,7 @@ add_cursor_image (gint32      image,
                                                    gimp_drawable_width  (layer),
                                                    gimp_drawable_height (layer)),
                                    0, babl_format ("R'G'B'A u8"),
-                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
   roi = &iter->roi[0];
 
   while (gegl_buffer_iterator_next (iter))

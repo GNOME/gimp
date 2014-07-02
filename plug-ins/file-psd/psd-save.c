@@ -1523,7 +1523,8 @@ create_merged_image (gint32 image_id)
       gint                  width              = gegl_buffer_get_width (buffer);
       gint                  height             = gegl_buffer_get_height (buffer);
       GeglBufferIterator   *iter               = gegl_buffer_iterator_new (buffer, GEGL_RECTANGLE (0, 0, width, height),
-									   0, format, GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+									   0, format,
+                                                                           GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
       while (gegl_buffer_iterator_next (iter))
 	{

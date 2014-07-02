@@ -687,7 +687,7 @@ remap_indexed_layer (GimpLayer    *layer,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, NULL,
-                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -1150,7 +1150,7 @@ generate_histogram_gray (CFHistogram  histogram,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -1219,7 +1219,7 @@ generate_histogram_rgb (CFHistogram   histogram,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   roi = &iter->roi[0];
 
   if (progress)
@@ -2858,12 +2858,12 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, NULL,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   src_roi = &iter->roi[0];
 
   gegl_buffer_iterator_add (iter, new_buffer,
                             NULL, 0, NULL,
-                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -2964,12 +2964,12 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, NULL,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   src_roi = &iter->roi[0];
 
   gegl_buffer_iterator_add (iter, new_buffer,
                             NULL, 0, NULL,
-                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -3141,12 +3141,12 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, NULL,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   src_roi = &iter->roi[0];
 
   gegl_buffer_iterator_add (iter, new_buffer,
                             NULL, 0, NULL,
-                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   layer_size = (gimp_item_get_width  (GIMP_ITEM (layer)) *
                 gimp_item_get_height (GIMP_ITEM (layer)));
@@ -3274,12 +3274,12 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, NULL,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   src_roi = &iter->roi[0];
 
   gegl_buffer_iterator_add (iter, new_buffer,
                             NULL, 0, NULL,
-                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   layer_size = (gimp_item_get_width  (GIMP_ITEM (layer)) *
                 gimp_item_get_height (GIMP_ITEM (layer)));
@@ -3485,12 +3485,12 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
 
   iter = gegl_buffer_iterator_new (gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
                                    NULL, 0, NULL,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   src_roi = &iter->roi[0];
 
   gegl_buffer_iterator_add (iter, new_buffer,
                             NULL, 0, NULL,
-                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {

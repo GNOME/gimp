@@ -259,7 +259,7 @@ cdisplay_lcms_convert_buffer (GimpColorDisplay *display,
 
   iter = gegl_buffer_iterator_new (buffer, area, 0,
                                    babl_format ("R'G'B'A float"),
-                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {

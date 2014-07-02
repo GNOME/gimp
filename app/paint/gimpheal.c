@@ -170,14 +170,14 @@ gimp_heal_sub (GeglBuffer          *top_buffer,
     g_return_if_reached ();
 
   iter = gegl_buffer_iterator_new (top_buffer, top_rect, 0, format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, bottom_buffer, bottom_rect, 0, format,
-                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, result_buffer, result_rect, 0,
                             babl_format_n (babl_type ("float"), n_components),
-                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -215,13 +215,13 @@ gimp_heal_add (GeglBuffer          *first_buffer,
   iter = gegl_buffer_iterator_new (first_buffer, first_rect, 0,
                                    babl_format_n (babl_type ("float"),
                                                   n_components),
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, second_buffer, second_rect, 0, format,
-                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, result_buffer, result_rect, 0, format,
-                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {

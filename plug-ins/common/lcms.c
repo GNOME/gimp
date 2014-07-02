@@ -1022,11 +1022,11 @@ lcms_layers_transform_rgb (gint                     *layers,
 
           iter = gegl_buffer_iterator_new (src_buffer, NULL, 0,
                                            iter_format,
-                                           GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                           GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
           gegl_buffer_iterator_add (iter, dest_buffer, NULL, 0,
                                     iter_format,
-                                    GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                    GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
           while (gegl_buffer_iterator_next (iter))
             {

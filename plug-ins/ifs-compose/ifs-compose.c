@@ -1313,7 +1313,7 @@ ifs_compose (gint32 drawable_id)
                                        GEGL_RECTANGLE (0, band_y,
                                                        width, band_height), 0,
                                        format,
-                                       GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
       roi = &iter->roi[0];
 
       while (gegl_buffer_iterator_next (iter))

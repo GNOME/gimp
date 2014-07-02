@@ -632,12 +632,12 @@ transfer_registration_color (GeglBuffer  *src,
   dst_bpp = babl_format_get_bytes_per_pixel (dst_format);
 
   gi = gegl_buffer_iterator_new (src, NULL, 0, NULL,
-                                 GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   for (i = 0; i < count; i++)
     {
       gegl_buffer_iterator_add (gi, dst[i], NULL, 0, NULL,
-                                GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
     }
 
   while (gegl_buffer_iterator_next (gi))
@@ -683,7 +683,7 @@ cpn_affine_transform_clamp (GeglBuffer  *buffer,
   gegl_buffer_set_format (buffer, babl_format ("Y double"));
 
   gi = gegl_buffer_iterator_new (buffer, NULL, 0, NULL,
-                                 GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (gi))
     {

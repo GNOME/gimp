@@ -265,11 +265,11 @@ map (GeglBuffer   *buffer,
     }
 
   gi = gegl_buffer_iterator_new (shadow_buffer, NULL, 0, format_shadow,
-                                 GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   index_iter = gegl_buffer_iterator_add (gi, buffer, NULL,
                                          0, format_buffer,
-                                         GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                         GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (gi))
     {
