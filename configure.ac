@@ -551,7 +551,9 @@ PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
 PKG_CHECK_MODULES(GIO, gio-2.0)
 
-if test "$os_win32" != "yes"; then
+if test "x$os_win32" = "xyes"; then
+  PKG_CHECK_MODULES(GIO_WINDOWS, gio-windows-2.0)
+else
   PKG_CHECK_MODULES(GIO_UNIX, gio-unix-2.0)
 fi
 
