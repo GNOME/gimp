@@ -128,31 +128,26 @@ gimp_brush_load (GimpContext  *context,
                  GFile        *file,
                  GError      **error)
 {
-  GimpBrush *brush;
-  gchar     *path;
-  gint       fd;
+  GimpBrush    *brush;
+  GInputStream *input;
+  GError       *my_error = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-
-  path = g_file_get_path (file);
-
-  g_return_val_if_fail (g_path_is_absolute (path), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  fd = g_open (path, O_RDONLY | _O_BINARY, 0);
-  g_free (path);
-
-  if (fd == -1)
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
+  if (! input)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), my_error->message);
+      g_clear_error (&my_error);
       return NULL;
     }
 
-  brush = gimp_brush_load_brush (context, file, fd, error);
+  brush = gimp_brush_load_brush (context, file, input, error);
 
-  close (fd);
+  g_object_unref (input);
 
   if (! brush)
     return NULL;
@@ -161,10 +156,10 @@ gimp_brush_load (GimpContext  *context,
 }
 
 GimpBrush *
-gimp_brush_load_brush (GimpContext  *context,
-                       GFile        *file,
-                       gint          fd,
-                       GError      **error)
+gimp_brush_load_brush (GimpContext   *context,
+                       GFile         *file,
+                       GInputStream  *input,
+                       GError       **error)
 {
   GimpBrush   *brush;
   gint         bn_size;
@@ -172,22 +167,27 @@ gimp_brush_load_brush (GimpContext  *context,
   gchar       *name = NULL;
   guchar      *pixmap;
   guchar      *mask;
+  gsize        bytes_read;
   gssize       i, size;
-  gboolean     success = TRUE;
+  GError      *my_error = NULL;
+  gboolean     success  = TRUE;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (fd != -1, NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  /*  Read in the header size  */
-  if (read (fd, &header, sizeof (header)) != sizeof (header))
+  /*  read the header  */
+  if (! g_input_stream_read_all (input, &header, sizeof (header),
+                                 &bytes_read, NULL, &my_error) ||
+      bytes_read != sizeof (header))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    ngettext ("Could not read %d byte from '%s': %s",
                              "Could not read %d bytes from '%s': %s",
                              (gint) sizeof (header)),
                    (gint) sizeof (header),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), my_error->message);
+      g_clear_error (&my_error);
       return NULL;
     }
 
@@ -233,7 +233,10 @@ gimp_brush_load_brush (GimpContext  *context,
     {
     case 1:
       /*  If this is a version 1 brush, set the fp back 8 bytes  */
-      lseek (fd, -8, SEEK_CUR);
+      if (! g_seekable_seek (G_SEEKABLE (input), -8, G_SEEK_CUR,
+                             NULL, error))
+        return NULL;
+
       header.header_size += 8;
       /*  spacing is not defined in version 1  */
       header.spacing = 25;
@@ -273,7 +276,9 @@ gimp_brush_load_brush (GimpContext  *context,
 
       name = g_new (gchar, bn_size);
 
-      if ((read (fd, name, bn_size)) < bn_size)
+      if (! g_input_stream_read_all (input, name, bn_size,
+                                     &bytes_read, NULL, NULL) ||
+          bytes_read != bn_size)
         {
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Fatal parse error in brush file '%s': "
@@ -308,7 +313,9 @@ gimp_brush_load_brush (GimpContext  *context,
   switch (header.bytes)
     {
     case 1:
-      success = (read (fd, mask, size) == size);
+      success = (g_input_stream_read_all (input, mask, size,
+                                         &bytes_read, NULL, NULL) &&
+                 bytes_read == size);
       break;
 
     case 2:  /*  cinepaint brush, 16 bit floats  */
@@ -317,9 +324,11 @@ gimp_brush_load_brush (GimpContext  *context,
 
         for (i = 0; success && i < size;)
           {
-            gssize  bytes = MIN (size - i, sizeof (buf));
+            gssize bytes = MIN (size - i, sizeof (buf));
 
-            success = (read (fd, buf, bytes) == bytes);
+            success = (g_input_stream_read_all (input, buf, bytes,
+                                                &bytes_read, NULL, NULL) &&
+                       bytes_read == bytes);
 
             if (success)
               {
@@ -377,9 +386,11 @@ gimp_brush_load_brush (GimpContext  *context,
 
         for (i = 0; success && i < size;)
           {
-            gssize  bytes = MIN (size - i, sizeof (buf));
+            gssize bytes = MIN (size - i, sizeof (buf));
 
-            success = (read (fd, buf, bytes) == bytes);
+            success = (g_input_stream_read_all (input, buf, bytes,
+                                                &bytes_read, NULL, NULL) &&
+                       bytes_read == bytes);
 
             if (success)
               {

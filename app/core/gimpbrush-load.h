@@ -25,17 +25,17 @@
 #define GIMP_BRUSH_PSP_FILE_EXTENSION    ".jbr"
 
 
-GList     * gimp_brush_load        (GimpContext  *context,
-                                    GFile        *file,
-                                    GError      **error);
-GimpBrush * gimp_brush_load_brush  (GimpContext  *context,
-                                    GFile        *file,
-                                    gint          fd,
-                                    GError      **error);
+GList     * gimp_brush_load        (GimpContext   *context,
+                                    GFile         *file,
+                                    GError       **error);
+GimpBrush * gimp_brush_load_brush  (GimpContext   *context,
+                                    GFile         *file,
+                                    GInputStream  *input,
+                                    GError       **error);
 
-GList     * gimp_brush_load_abr    (GimpContext  *context,
-                                    GFile        *file,
-                                    GError      **error);
+GList     * gimp_brush_load_abr    (GimpContext   *context,
+                                    GFile         *file,
+                                    GError       **error);
 
 
 #endif /* __GIMP_BRUSH_LOAD_H__ */
