@@ -659,7 +659,7 @@ gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
       bytes_written != string->len)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
-                   _("Writing brush file '%s' failed: %s"),
+                   _("Writing curves file '%s' failed: %s"),
                    gimp_file_get_utf8_name (file),
                    my_error->message);
       g_clear_error (&my_error);
