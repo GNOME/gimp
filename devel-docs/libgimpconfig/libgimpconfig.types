@@ -1,4 +1,4 @@
-#include <glib-object.h>
+#include <gio/gio.h>
 #include <libgimpconfig/gimpconfig.h>
 
 gimp_config_interface_get_type
