@@ -1264,7 +1264,11 @@ HELP
         headers => [ qw("vectors/gimpvectors-export.h") ],
         code    => <<'CODE'
 {
-  success = gimp_vectors_export_file (image, vectors, filename, error);
+  GFile *file = g_file_new_for_path (filename);
+
+  success = gimp_vectors_export_file (image, vectors, file, error);
+
+  g_object_unref (file);
 }
 CODE
     );

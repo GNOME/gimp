@@ -53,7 +53,7 @@ static gchar   * gimp_vectors_export_path_data  (const GimpVectors *vectors);
  * gimp_vectors_export_file:
  * @image: the #GimpImage from which to export vectors
  * @vectors: a #GimpVectors object or %NULL to export all vectors in @image
- * @filename: the name of the file to write
+ * @file: the file to write
  * @error: return location for errors
  *
  * Exports one or more vectors to a SVG file.
@@ -64,37 +64,41 @@ static gchar   * gimp_vectors_export_path_data  (const GimpVectors *vectors);
 gboolean
 gimp_vectors_export_file (const GimpImage    *image,
                           const GimpVectors  *vectors,
-                          const gchar        *filename,
+                          GFile              *file,
                           GError            **error)
 {
-  FILE    *file;
+  gchar   *path;
+  FILE    *f;
   GString *str;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  file = g_fopen (filename, "w");
-  if (!file)
+  path = g_file_get_path (file);
+  f = g_fopen (path, "w");
+  g_free (path);
+
+  if (! f)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
 		   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 
   str = gimp_vectors_export (image, vectors);
 
-  fprintf (file, "%s", str->str);
+  fprintf (f, "%s", str->str);
 
   g_string_free (str, TRUE);
 
-  if (fclose (file))
+  if (fclose (f))
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
 		   _("Error while writing '%s': %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
       return FALSE;
     }
 

@@ -1284,7 +1284,11 @@ vectors_export_to_file_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      success = gimp_vectors_export_file (image, vectors, filename, error);
+      GFile *file = g_file_new_for_path (filename);
+
+      success = gimp_vectors_export_file (image, vectors, file, error);
+
+      g_object_unref (file);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
