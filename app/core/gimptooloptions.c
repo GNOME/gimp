@@ -17,18 +17,10 @@
 
 #include "config.h"
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
-#ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h" /* For S_IRGRP etc */
-#endif
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
@@ -388,12 +380,8 @@ gimp_tool_options_delete (GimpToolOptions  *tool_options,
 void
 gimp_tool_options_create_folder (void)
 {
-  gchar *filename = g_build_filename (gimp_directory (), "tool-options", NULL);
+  GFile *file = gimp_personal_rc_gfile ("tool-options");
 
-  g_mkdir (filename,
-           S_IRUSR | S_IWUSR | S_IXUSR |
-           S_IRGRP | S_IXGRP |
-           S_IROTH | S_IXOTH);
-
-  g_free (filename);
+  g_file_make_directory (file, NULL, NULL);
+  g_object_unref (file);
 }
