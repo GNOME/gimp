@@ -1144,12 +1144,15 @@ HELP
         headers => [ qw("vectors/gimpvectors-import.h") ],
         code    => <<'CODE'
 {
-  GList *list, *vectors_list = NULL;
+  GFile *file         = g_file_new_for_path (filename);
+  GList *vectors_list = NULL;
 
   /* FIXME tree */
-  success = gimp_vectors_import_file (image, filename,
+  success = gimp_vectors_import_file (image, file,
                                       merge, scale, NULL, -1,
                                       &vectors_list, error);
+
+  g_object_unref (file);
 
   if (success)
     {
@@ -1157,7 +1160,8 @@ HELP
 
       if (num_vectors)
         {
-          gint i;
+          GList *list;
+          gint   i;
       
           vectors_ids = g_new (gint32, num_vectors);
       

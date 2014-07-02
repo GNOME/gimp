@@ -23,7 +23,7 @@
 
 
 gboolean  gimp_vectors_import_file   (GimpImage    *image,
-                                      const gchar  *filename,
+                                      GFile        *file,
                                       gboolean      merge,
                                       gboolean      scale,
                                       GimpVectors  *parent,

@@ -93,7 +93,7 @@ typedef struct
 
 
 static gboolean  gimp_vectors_import  (GimpImage            *image,
-                                       const gchar          *filename,
+                                       GFile                *file,
                                        const gchar          *str,
                                        gsize                 len,
                                        gboolean              merge,
@@ -185,7 +185,7 @@ static GList    * parse_path_data     (const gchar  *data);
 /**
  * gimp_vectors_import_file:
  * @image:    the #GimpImage to add the paths to
- * @filename: name of a SVG file
+ * @file:     a SVG file
  * @merge:    should multiple paths be merged into a single #GimpVectors object
  * @scale:    should the SVG be scaled to fit the image dimensions
  * @position: position in the image's vectors stack where to add the vectors
@@ -197,7 +197,7 @@ static GList    * parse_path_data     (const gchar  *data);
  **/
 gboolean
 gimp_vectors_import_file (GimpImage    *image,
-                          const gchar  *filename,
+                          GFile        *file,
                           gboolean      merge,
                           gboolean      scale,
                           GimpVectors  *parent,
@@ -206,7 +206,7 @@ gimp_vectors_import_file (GimpImage    *image,
                           GError      **error)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (parent == NULL ||
                         parent == GIMP_IMAGE_ACTIVE_PARENT ||
                         GIMP_IS_VECTORS (parent), FALSE);
@@ -224,7 +224,7 @@ gimp_vectors_import_file (GimpImage    *image,
   g_return_val_if_fail (ret_vectors == NULL || *ret_vectors == NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_vectors_import (image, filename, NULL, 0, merge, scale,
+  return gimp_vectors_import (image, file, NULL, 0, merge, scale,
                               parent, position,
                               ret_vectors, error);
 }
@@ -279,7 +279,7 @@ gimp_vectors_import_buffer (GimpImage    *image,
 
 static gboolean
 gimp_vectors_import (GimpImage    *image,
-                     const gchar  *filename,
+                     GFile        *file,
                      const gchar  *str,
                      gsize         len,
                      gboolean      merge,
@@ -310,8 +310,8 @@ gimp_vectors_import (GimpImage    *image,
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
-  if (filename)
-    success = gimp_xml_parser_parse_file (xml_parser, filename, error);
+  if (file)
+    success = gimp_xml_parser_parse_gfile (xml_parser, file, error);
   else
     success = gimp_xml_parser_parse_buffer (xml_parser, str, len, error);
 
@@ -368,10 +368,10 @@ gimp_vectors_import (GimpImage    *image,
         }
       else
         {
-          if (filename)
+          if (file)
             g_set_error (error, GIMP_ERROR, GIMP_FAILED,
                          _("No paths found in '%s'"),
-                         gimp_filename_to_utf8 (filename));
+                         gimp_file_get_utf8_name (file));
           else
             g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                                  _("No paths found in the buffer"));
@@ -379,13 +379,13 @@ gimp_vectors_import (GimpImage    *image,
           success = FALSE;
         }
     }
-  else if (error && *error && filename) /*  parser reported an error  */
+  else if (error && *error && file) /*  parser reported an error  */
     {
       gchar *msg = (*error)->message;
 
       (*error)->message =
         g_strdup_printf (_("Failed to import paths from '%s': %s"),
-                         gimp_filename_to_utf8 (filename), msg);
+                         gimp_file_get_utf8_name (file), msg);
 
       g_free (msg);
     }

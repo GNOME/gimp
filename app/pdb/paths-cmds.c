@@ -687,8 +687,12 @@ path_import_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      success = gimp_vectors_import_file (image, filename,
+      GFile *file = g_file_new_for_path (filename);
+
+      success = gimp_vectors_import_file (image, file,
                                           merge, scale, NULL, -1, NULL, NULL);
+
+      g_object_unref (file);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

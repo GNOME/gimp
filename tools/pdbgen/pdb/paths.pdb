@@ -595,8 +595,12 @@ sub path_import {
         headers => [ qw("vectors/gimpvectors-import.h") ],
 	code    => <<'CODE'
 {
-  success = gimp_vectors_import_file (image, filename,
+  GFile *file = g_file_new_for_path (filename);
+
+  success = gimp_vectors_import_file (image, file,
                                       merge, scale, NULL, -1, NULL, NULL);
+
+  g_object_unref (file);
 }
 CODE
     );
