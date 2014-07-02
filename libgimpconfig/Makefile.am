@@ -47,6 +47,8 @@ AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpConfig\"	\
 	-DGIMP_CONFIG_COMPILATION		\
 	-I$(top_srcdir)				\
+	$(GIO_UNIX_CFLAGS)			\
+	$(GIO_WINDOWS_CFLAGS)			\
 	$(GEGL_CFLAGS)				\
 	$(CAIRO_CFLAGS)				\
 	$(GDK_PIXBUF_CFLAGS)			\
@@ -113,11 +115,13 @@ libgimpconfig_@GIMP_API_VERSION@_la_LDFLAGS = \
 EXTRA_libgimpconfig_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpconfig_def)
 
 libgimpconfig_@GIMP_API_VERSION@_la_LIBADD = \
-	$(libgimpbase)	\
-	$(libgimpcolor)	\
-	$(libgimpmath)	\
-	$(GEGL_LIBS)	\
-	$(CAIRO_LIBS)	\
+	$(libgimpbase)		\
+	$(libgimpcolor)		\
+	$(libgimpmath)		\
+	$(GIO_UNIX_LIBS)	\
+	$(GIO_WINDOWS_LIBS)	\
+	$(GEGL_LIBS)		\
+	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)
 
 
