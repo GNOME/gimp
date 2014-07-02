@@ -17,18 +17,9 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -45,28 +36,33 @@ gboolean
 gimp_palette_save (GimpData  *data,
                    GError   **error)
 {
-  GimpPalette *palette = GIMP_PALETTE (data);
-  GList       *list;
-  gchar       *path;
-  FILE        *file;
+  GimpPalette   *palette = GIMP_PALETTE (data);
+  GOutputStream *output;
+  GString       *string;
+  GList         *list;
+  gsize          bytes_written;
+  GError        *my_error = NULL;
 
-  path = g_file_get_path (gimp_data_get_file (data));
-  file = g_fopen (path, "wb");
-  g_free (path);
-
-  if (! file)
+  output = G_OUTPUT_STREAM (g_file_replace (gimp_data_get_file (data),
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, error));
+  if (! output)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for writing: %s"),
                    gimp_file_get_utf8_name (gimp_data_get_file (data)),
-                   g_strerror (errno));
+                   my_error->message);
+      g_clear_error (&my_error);
       return FALSE;
     }
 
-  fprintf (file, "GIMP Palette\n");
-  fprintf (file, "Name: %s\n", gimp_object_get_name (palette));
-  fprintf (file, "Columns: %d\n#\n", CLAMP (gimp_palette_get_columns (palette),
-                                            0, 256));
+  string = g_string_new ("GIMP Palette\n");
+
+  g_string_append_printf (string,
+                          "Name: %s\n"
+                          "Columns: %d\n#\n",
+                          gimp_object_get_name (palette),
+                          CLAMP (gimp_palette_get_columns (palette), 0, 256));
 
   for (list = gimp_palette_get_colors (palette);
        list;
@@ -77,10 +73,26 @@ gimp_palette_save (GimpData  *data,
 
       gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
 
-      fprintf (file, "%3d %3d %3d\t%s\n", r, g, b, entry->name);
+      g_string_append_printf (string, "%3d %3d %3d\t%s\n",
+                              r, g, b, entry->name);
     }
 
-  fclose (file);
+  if (! g_output_stream_write_all (output, string->str, string->len,
+                                   &bytes_written, NULL, &my_error) ||
+      bytes_written != string->len)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
+                   _("Writing palette file '%s' failed: %s"),
+                   gimp_file_get_utf8_name (gimp_data_get_file (data)),
+                   my_error->message);
+      g_clear_error (&my_error);
+      g_string_free (string, TRUE);
+      g_object_unref (output);
+      return FALSE;
+    }
+
+  g_string_free (string, TRUE);
+  g_object_unref (output);
 
   return TRUE;
 }
