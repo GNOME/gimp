@@ -19,16 +19,9 @@
 
 #include "config.h"
 
-#include <errno.h>
 #include <stdlib.h>
-#include <string.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -47,9 +40,10 @@ gimp_brush_generated_load (GimpContext  *context,
                            GError      **error)
 {
   GimpBrush               *brush;
-  gchar                   *path;
-  FILE                    *f;
-  gchar                    string[256];
+  GInputStream            *input;
+  GDataInputStream        *data_input;
+  gchar                   *string;
+  gsize                    string_len;
   gint                     linenum;
   gchar                   *name       = NULL;
   GimpBrushGeneratedShape  shape      = GIMP_BRUSH_GENERATED_CIRCLE;
@@ -60,29 +54,32 @@ gimp_brush_generated_load (GimpContext  *context,
   gdouble                  hardness;
   gdouble                  aspect_ratio;
   gdouble                  angle;
+  GError                  *my_error = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-
-  path = g_file_get_path (file);
-
-  g_return_val_if_fail (g_path_is_absolute (path), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  f = g_fopen (path, "rb");
-  g_free (path);
-
-  if (! f)
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
+  if (! input)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), my_error->message);
+      g_clear_error (&my_error);
       return NULL;
+    }
+  else
+    {
+      data_input = g_data_input_stream_new (input);
+      g_object_unref (input);
     }
 
   /* make sure the file we are reading is the right type */
-  errno = 0;
   linenum = 1;
-  if (! fgets (string, sizeof (string), f))
+  string_len = 256;
+  string = g_data_input_stream_read_line (data_input, &string_len,
+                                          NULL, &my_error);
+  if (! string)
     goto failed;
 
   if (! g_str_has_prefix (string, "GIMP-VBR"))
@@ -91,13 +88,18 @@ gimp_brush_generated_load (GimpContext  *context,
                    _("Fatal parse error in brush file '%s': "
                      "Not a GIMP brush file."),
                    gimp_file_get_utf8_name (file));
+      g_free (string);
       goto failed;
     }
 
+  g_free (string);
+
   /* make sure we are reading a compatible version */
-  errno = 0;
   linenum++;
-  if (! fgets (string, sizeof (string), f))
+  string_len = 256;
+  string = g_data_input_stream_read_line (data_input, &string_len,
+                                          NULL, &my_error);
+  if (! string)
     goto failed;
 
   if (! g_str_has_prefix (string, "1.0"))
@@ -108,6 +110,7 @@ gimp_brush_generated_load (GimpContext  *context,
                        _("Fatal parse error in brush file '%s': "
                          "Unknown GIMP brush version in line %d."),
                        gimp_file_get_utf8_name (file), linenum);
+          g_free (string);
           goto failed;
         }
       else
@@ -116,10 +119,14 @@ gimp_brush_generated_load (GimpContext  *context,
         }
     }
 
+  g_free (string);
+
   /* read name */
-  errno = 0;
   linenum++;
-  if (! fgets (string, sizeof (string), f))
+  string_len = 256;
+  string = g_data_input_stream_read_line (data_input, &string_len,
+                                          NULL, &my_error);
+  if (! string)
     goto failed;
 
   g_strstrip (string);
@@ -132,6 +139,8 @@ gimp_brush_generated_load (GimpContext  *context,
                            _("Invalid UTF-8 string in brush file '%s'."),
                            gimp_file_get_utf8_name (file));
 
+  g_free (string);
+
   if (have_shape)
     {
       GEnumClass *enum_class;
@@ -140,9 +149,11 @@ gimp_brush_generated_load (GimpContext  *context,
       enum_class = g_type_class_peek (GIMP_TYPE_BRUSH_GENERATED_SHAPE);
 
       /* read shape */
-      errno = 0;
       linenum++;
-      if (! fgets (string, sizeof (string), f))
+      string_len = 256;
+      string = g_data_input_stream_read_line (data_input, &string_len,
+                                              NULL, &my_error);
+      if (! string)
         goto failed;
 
       g_strstrip (string);
@@ -154,58 +165,79 @@ gimp_brush_generated_load (GimpContext  *context,
                        _("Fatal parse error in brush file '%s': "
                          "Unknown GIMP brush shape in line %d."),
                        gimp_file_get_utf8_name (file), linenum);
+          g_free (string);
           goto failed;
         }
+
+      g_free (string);
 
       shape = shape_val->value;
     }
 
   /* read brush spacing */
-  errno = 0;
   linenum++;
-  if (! fgets (string, sizeof (string), f))
+  string_len = 256;
+  string = g_data_input_stream_read_line (data_input, &string_len,
+                                          NULL, &my_error);
+  if (! string)
     goto failed;
   spacing = g_ascii_strtod (string, NULL);
+  g_free (string);
 
   /* read brush radius */
-  errno = 0;
   linenum++;
-  if (! fgets (string, sizeof (string), f))
+  string_len = 256;
+  string = g_data_input_stream_read_line (data_input, &string_len,
+                                          NULL, &my_error);
+  if (! string)
     goto failed;
   radius = g_ascii_strtod (string, NULL);
+  g_free (string);
 
   if (have_shape)
     {
       /* read number of spikes */
-      errno = 0;
       linenum++;
-      if (! fgets (string, sizeof (string), f))
+      string_len = 256;
+      string = g_data_input_stream_read_line (data_input, &string_len,
+                                              NULL, &my_error);
+      if (! string)
         goto failed;
       spikes = CLAMP (atoi (string), 2, 20);
+      g_free (string);
     }
 
   /* read brush hardness */
-  errno = 0;
   linenum++;
-  if (! fgets (string, sizeof (string), f))
+  string_len = 256;
+  string = g_data_input_stream_read_line (data_input, &string_len,
+                                          NULL, &my_error);
+  if (! string)
     goto failed;
   hardness = g_ascii_strtod (string, NULL);
+  g_free (string);
 
   /* read brush aspect_ratio */
-  errno = 0;
   linenum++;
-  if (! fgets (string, sizeof (string), f))
+  string_len = 256;
+  string = g_data_input_stream_read_line (data_input, &string_len,
+                                          NULL, &my_error);
+  if (! string)
     goto failed;
   aspect_ratio = g_ascii_strtod (string, NULL);
+  g_free (string);
 
   /* read brush angle */
-  errno = 0;
   linenum++;
-  if (! fgets (string, sizeof (string), f))
+  string_len = 256;
+  string = g_data_input_stream_read_line (data_input, &string_len,
+                                          NULL, &my_error);
+  if (! string)
     goto failed;
   angle = g_ascii_strtod (string, NULL);
+  g_free (string);
 
-  fclose (f);
+  g_object_unref (data_input);
 
   brush = GIMP_BRUSH (gimp_brush_generated_new (name, shape, radius, spikes,
                                                 hardness, aspect_ratio, angle));
@@ -217,7 +249,7 @@ gimp_brush_generated_load (GimpContext  *context,
 
  failed:
 
-  fclose (f);
+  g_object_unref (data_input);
 
   if (name)
     g_free (name);
@@ -226,10 +258,12 @@ gimp_brush_generated_load (GimpContext  *context,
     {
       gchar *msg;
 
-      if (errno)
-        msg = g_strdup_printf (_("Line %d: %s"), linenum, g_strerror (errno));
+      if (my_error)
+        msg = g_strdup_printf (_("Line %d: %s"), linenum, my_error->message);
       else
         msg = g_strdup_printf (_("File is truncated in line %d"), linenum);
+
+      g_clear_error (&my_error);
 
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Error while reading brush file '%s': %s"),
