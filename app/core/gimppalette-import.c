@@ -551,7 +551,7 @@ gimp_palette_import_from_file (GimpContext  *context,
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_ACO:
-      palette_list = gimp_palette_load_aco (context, file, f, error);
+      palette_list = gimp_palette_load_aco (context, file, input, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_CSS:

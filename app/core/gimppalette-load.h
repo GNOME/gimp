@@ -55,7 +55,7 @@ GList               * gimp_palette_load_psp           (GimpContext   *context,
                                                        GError       **error);
 GList               * gimp_palette_load_aco           (GimpContext   *context,
                                                        GFile         *file,
-                                                       FILE          *f,
+                                                       GInputStream  *input,
                                                        GError       **error);
 GList               * gimp_palette_load_css           (GimpContext   *context,
                                                        GFile         *file,

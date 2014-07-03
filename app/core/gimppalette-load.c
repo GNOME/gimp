@@ -384,6 +384,7 @@ gimp_palette_load_psp (GimpContext   *context,
   gchar      **ascii_colors;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   palette_name = g_path_get_basename (gimp_file_get_utf8_name (file));
@@ -455,33 +456,29 @@ gimp_palette_load_psp (GimpContext   *context,
 }
 
 GList *
-gimp_palette_load_aco (GimpContext  *context,
-                       GFile        *file,
-                       FILE         *f,
-                       GError      **error)
+gimp_palette_load_aco (GimpContext   *context,
+                       GFile         *file,
+                       GInputStream  *input,
+                       GError       **error)
 {
   GimpPalette *palette;
   gchar       *palette_name;
-  gint         fd = fileno (f);
   gint         format_version;
   gint         number_of_colors;
   gint         i;
   gchar        header[4];
-  gchar        color_info[10];
-  gchar        format2_preamble[4];
-  gint         status;
+  gsize        bytes_read;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  status = read (fd, header, sizeof (header));
-
-  if (status != sizeof (header))
+  if (! g_input_stream_read_all (input, header, sizeof (header),
+                                 &bytes_read, NULL, error) ||
+      bytes_read != sizeof (header))
     {
-      g_set_error (error,
-                   GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Could not read header from palette file '%s'"),
-                   gimp_file_get_utf8_name (file));
+      g_prefix_error (error, "%s",
+                      _("Could not read header from palette file '%s': "));
       return NULL;
     }
 
@@ -489,22 +486,51 @@ gimp_palette_load_aco (GimpContext  *context,
   palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
   g_free (palette_name);
 
-  format_version = header[1] + (header[0] << 8);
+  format_version   = header[1] + (header[0] << 8);
   number_of_colors = header[3] + (header[2] << 8);
 
   for (i = 0; i < number_of_colors; i++)
     {
-      gint     color_space;
-      gint     w, x, y, z;
-      gboolean color_ok = FALSE;
-      GimpRGB  color;
+      gchar     color_info[10];
+      gint      color_space;
+      gint      w, x, y, z;
+      gboolean  color_ok = FALSE;
+      GimpRGB   color;
+      GError   *my_error = NULL;
 
-      if (read (fd, color_info, sizeof (color_info)) != sizeof (color_info))
+      if (! g_input_stream_read_all (input, color_info, sizeof (color_info),
+                                     &bytes_read, NULL, &my_error) ||
+          bytes_read != sizeof (color_info))
 	{
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Fatal parse error in palette file '%s'"),
-                       gimp_file_get_utf8_name (file));
+          if (palette->colors)
+            {
+              g_message (_("Reading palette file '%s': "
+                           "Read %d colors from truncated file: %s"),
+                         gimp_file_get_utf8_name (file),
+                         g_list_length (palette->colors),
+                         my_error ?
+                         my_error->message : _("Premature end of file."));
+              g_clear_error (&my_error);
+              break;
+            }
+
+          if (error && *error == NULL)
+            {
+              const gchar *msg;
+
+              if (my_error)
+                msg = my_error->message;
+              else
+                msg = _("File is truncated.");
+
+              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                           _("Fatal parse error in palette file '%s': %s"),
+                           gimp_file_get_utf8_name (file), msg);
+            }
+
+          g_clear_error (&my_error);
           g_object_unref (palette);
+
           return NULL;
 	}
 
@@ -582,21 +608,32 @@ gimp_palette_load_aco (GimpContext  *context,
 
       if (format_version == 2)
         {
-          gint number_of_chars;
+          gchar format2_preamble[4];
+          gint  number_of_chars;
 
-	  if (read (fd,
-		    format2_preamble,
-		    sizeof (format2_preamble)) != sizeof (format2_preamble))
+          if (! g_input_stream_read_all (input,
+                                         format2_preamble,
+                                         sizeof (format2_preamble),
+                                         &bytes_read, NULL, &my_error) ||
+              bytes_read != sizeof (format2_preamble))
 	    {
 	      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-			   _("Fatal parse error in palette file '%s'"),
-			   gimp_file_get_utf8_name (file));
+			   _("Fatal parse error in palette file '%s': %s"),
+			   gimp_file_get_utf8_name (file),
+                           my_error ?
+                           my_error->message : _("Premature end of file."));
 	      g_object_unref (palette);
 	      return NULL;
 	    }
 
           number_of_chars = format2_preamble[3] + (format2_preamble[2] << 8);
-          lseek (fd, number_of_chars * 2, SEEK_SET);
+
+          if (! g_seekable_seek (G_SEEKABLE (input), number_of_chars * 2,
+                                 G_SEEK_SET, NULL, error))
+            {
+              g_object_unref (palette);
+              return NULL;
+            }
         }
 
       if (color_ok)
