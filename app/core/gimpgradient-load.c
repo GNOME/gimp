@@ -23,7 +23,6 @@
 
 #include <cairo.h>
 #include <gegl.h>
-#include <glib/gstdio.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -44,69 +43,60 @@ gimp_gradient_load (GimpContext  *context,
                     GFile        *file,
                     GError      **error)
 {
-  GimpGradient        *gradient;
+  GimpGradient        *gradient = NULL;
   GimpGradientSegment *prev;
   gint                 num_segments;
   gint                 i;
-  gchar               *path;
-  FILE                *f;
-  gchar                line[1024];
+  GInputStream        *input;
+  GDataInputStream    *data_input;
+  gchar               *line;
+  gsize                line_len;
   gint                 linenum;
+  GError              *my_error = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
-
-  path = g_file_get_path (file);
-
-  g_return_val_if_fail (g_path_is_absolute (path), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  f = g_fopen (path, "rb");
-  g_free (path);
-
-  if (! f)
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
+  if (! input)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), my_error->message);
+      g_clear_error (&my_error);
       return NULL;
     }
 
+  data_input = g_data_input_stream_new (input);
+  g_object_unref (input);
+
   linenum = 1;
-  if (! fgets (line, sizeof (line), f))
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in gradient file '%s': "
-                     "Read error in line %d."),
-                   gimp_file_get_utf8_name (file), linenum);
-      fclose (f);
-      return NULL;
-    }
+  line_len = 1024;
+  line = g_data_input_stream_read_line (data_input, &line_len,
+                                        NULL, &my_error);
+  if (! line)
+    goto failed;
 
   if (! g_str_has_prefix (line, "GIMP Gradient"))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in gradient file '%s': "
-                     "Not a GIMP gradient file."),
-                   gimp_file_get_utf8_name (file));
-      fclose (f);
-      return NULL;
+      g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Not a GIMP gradient file."));
+      g_free (line);
+      goto failed;
     }
+
+  g_free (line);
 
   gradient = g_object_new (GIMP_TYPE_GRADIENT,
                            "mime-type", "application/x-gimp-gradient",
                            NULL);
 
   linenum++;
-  if (! fgets (line, sizeof (line), f))
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in gradient file '%s': "
-                     "Read error in line %d."),
-                   gimp_file_get_utf8_name (file), linenum);
-      fclose (f);
-      g_object_unref (gradient);
-      return NULL;
-    }
+  line_len = 1024;
+  line = g_data_input_stream_read_line (data_input, &line_len,
+                                        NULL, &my_error);
+  if (! line)
+    goto failed;
 
   if (g_str_has_prefix (line, "Name: "))
     {
@@ -117,17 +107,14 @@ gimp_gradient_load (GimpContext  *context,
                                gimp_file_get_utf8_name (file));
       gimp_object_take_name (GIMP_OBJECT (gradient), utf8);
 
+      g_free (line);
+
       linenum++;
-      if (! fgets (line, sizeof (line), f))
-        {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Fatal parse error in gradient file '%s': "
-                         "Read error in line %d."),
-                       gimp_file_get_utf8_name (file), linenum);
-          fclose (f);
-          g_object_unref (gradient);
-          return NULL;
-        }
+      line_len = 1024;
+      line = g_data_input_stream_read_line (data_input, &line_len,
+                                            NULL, &my_error);
+      if (! line)
+        goto failed;
     }
   else /* old gradient format */
     {
@@ -137,15 +124,13 @@ gimp_gradient_load (GimpContext  *context,
 
   num_segments = atoi (line);
 
+  g_free (line);
+
   if (num_segments < 1)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in gradient file '%s': "
-                     "File is corrupt in line %d."),
-                   gimp_file_get_utf8_name (file), linenum);
-      g_object_unref (gradient);
-      fclose (f);
-      return NULL;
+      g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("File is corrupt."));
+      goto failed;
     }
 
   prev = NULL;
@@ -154,10 +139,6 @@ gimp_gradient_load (GimpContext  *context,
     {
       GimpGradientSegment *seg;
       gchar               *end;
-      gint                 color;
-      gint                 type;
-      gint                 left_color_type;
-      gint                 right_color_type;
 
       seg = gimp_gradient_segment_new ();
 
@@ -169,16 +150,11 @@ gimp_gradient_load (GimpContext  *context,
         gradient->segments = seg;
 
       linenum++;
-      if (! fgets (line, sizeof (line), f))
-        {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Fatal parse error in gradient file '%s': "
-                         "Read error in line %d."),
-                       gimp_file_get_utf8_name (file), linenum);
-          fclose (f);
-          g_object_unref (gradient);
-          return NULL;
-        }
+      line_len = 1024;
+      line = g_data_input_stream_read_line (data_input, &line_len,
+                                            NULL, &my_error);
+      if (! line)
+        goto failed;
 
       seg->left = g_ascii_strtod (line, &end);
       if (end && errno != ERANGE)
@@ -206,6 +182,11 @@ gimp_gradient_load (GimpContext  *context,
 
       if (errno != ERANGE)
         {
+          gint color;
+          gint type;
+          gint left_color_type;
+          gint right_color_type;
+
           switch (sscanf (end, "%d %d %d %d",
                           &type, &color,
                           &left_color_type, &right_color_type))
@@ -221,36 +202,24 @@ gimp_gradient_load (GimpContext  *context,
               break;
 
             default:
-              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                           _("Fatal parse error in gradient file '%s': "
-                             "Corrupt segment %d in line %d."),
-                           gimp_file_get_utf8_name (file), i, linenum);
-              g_object_unref (gradient);
-              fclose (f);
-              return NULL;
+              g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                           _("Corrupt segment %d."), i);
+              goto failed;
             }
         }
       else
         {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Fatal parse error in gradient file '%s': "
-                         "Corrupt segment %d in line %d."),
-                       gimp_file_get_utf8_name (file), i, linenum);
-          g_object_unref (gradient);
-          fclose (f);
-          return NULL;
+          g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Corrupt segment %d."), i);
+          goto failed;
         }
 
-      if ( (prev && (prev->right < seg->left))
-           || (!prev && (0. < seg->left) ))
+      if ((  prev && (prev->right < seg->left)) ||
+          (! prev && (0.0         < seg->left)))
         {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Gradient file '%s' is corrupt: "
-                         "Segments do not span the range 0-1."),
-                       gimp_file_get_utf8_name (file));
-          g_object_unref (gradient);
-          fclose (f);
-          return NULL;
+          g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Segments do not span the range 0-1."));
+          goto failed;
         }
 
       prev = seg;
@@ -258,18 +227,42 @@ gimp_gradient_load (GimpContext  *context,
 
   if (prev->right < 1.0)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Gradient file '%s' is corrupt: "
-                     "Segments do not span the range 0-1."),
-                   gimp_file_get_utf8_name (file));
-      g_object_unref (gradient);
-      fclose (f);
-      return NULL;
+      g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Segments do not span the range 0-1."));
+      goto failed;
     }
 
-  fclose (f);
+  g_object_unref (data_input);
 
   return g_list_prepend (NULL, gradient);
+
+ failed:
+
+  g_object_unref (data_input);
+
+  if (gradient)
+    g_object_unref (gradient);
+
+  if (error && *error == NULL)
+    {
+      gchar *msg;
+
+      if (my_error)
+        msg = g_strdup_printf (_("Error in line %d: %s"), linenum,
+                               my_error->message);
+      else
+        msg = g_strdup_printf (_("File is truncated in line %d"), linenum);
+
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Error while reading gradient file '%s': %s"),
+                   gimp_file_get_utf8_name (file), msg);
+
+      g_free (msg);
+    }
+
+  g_clear_error (&my_error);
+
+  return NULL;
 }
 
 
