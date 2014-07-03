@@ -263,14 +263,14 @@ gimp_brush_generated_load (GimpContext  *context,
       else
         msg = g_strdup_printf (_("File is truncated in line %d"), linenum);
 
-      g_clear_error (&my_error);
-
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Error while reading brush file '%s': %s"),
                    gimp_file_get_utf8_name (file), msg);
 
       g_free (msg);
     }
+
+  g_clear_error (&my_error);
 
   return NULL;
 }
