@@ -52,49 +52,9 @@ gimp_palette_load (GimpContext  *context,
                    GFile        *file,
                    GError      **error)
 {
-  gchar *path;
-  FILE  *f;
-  GList *glist;
-
-  g_return_val_if_fail (G_IS_FILE (file), NULL);
-
-  path = g_file_get_path (file);
-
-  g_return_val_if_fail (g_path_is_absolute (path), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  f = g_fopen (path, "rb");
-  g_free (path);
-
-  if (! f)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
-      return NULL;
-    }
-
-  glist = gimp_palette_load_gpl (context, file, error);
-  fclose (f);
-
-  return glist;
-}
-
-GList *
-gimp_palette_load_gpl (GimpContext  *context,
-                       GFile        *file,
-                       GError      **error)
-{
-  GimpPalette      *palette = NULL;
-  GimpPaletteEntry *entry;
-  GInputStream     *input;
-  GDataInputStream *data_input;
-  gchar            *str;
-  gsize             str_len;
-  gchar            *tok;
-  gint              r, g, b;
-  gint              linenum;
-  GError           *my_error = NULL;
+  GList        *list;
+  GInputStream *input;
+  GError       *my_error = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -108,11 +68,35 @@ gimp_palette_load_gpl (GimpContext  *context,
       g_clear_error (&my_error);
       return NULL;
     }
-  else
-    {
-      data_input = g_data_input_stream_new (input);
-      g_object_unref (input);
-    }
+
+  list = gimp_palette_load_gpl (context, file, input, error);
+
+  g_object_unref (input);
+
+  return list;
+}
+
+GList *
+gimp_palette_load_gpl (GimpContext   *context,
+                       GFile         *file,
+                       GInputStream  *input,
+                       GError       **error)
+{
+  GimpPalette      *palette = NULL;
+  GimpPaletteEntry *entry;
+  GDataInputStream *data_input;
+  gchar            *str;
+  gsize             str_len;
+  gchar            *tok;
+  gint              r, g, b;
+  gint              linenum;
+  GError           *my_error = NULL;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  data_input = g_data_input_stream_new (input);
 
   r = g = b = 0;
 

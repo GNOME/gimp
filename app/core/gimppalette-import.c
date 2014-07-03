@@ -498,31 +498,44 @@ gimp_palette_import_from_file (GimpContext  *context,
                                const gchar  *palette_name,
                                GError      **error)
 {
-  GList *palette_list = NULL;
-  gchar *path;
-  FILE  *f;
+  GList        *palette_list = NULL;
+  GInputStream *input;
+  gchar        *path;
+  FILE         *f;
+  GError       *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
+  if (! input)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_file_get_utf8_name (file), my_error->message);
+      g_clear_error (&my_error);
+      return NULL;
+    }
+
+  /* EEK temporary double opening of the file, until all is GIO */
   path = g_file_get_path (file);
   f = g_fopen (path, "rb");
   g_free (path);
-
   if (! f)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
                    gimp_file_get_utf8_name (file), g_strerror (errno));
+      g_object_unref (input);
       return NULL;
     }
 
   switch (gimp_palette_load_detect_format (file, f))
     {
     case GIMP_PALETTE_FILE_FORMAT_GPL:
-      palette_list = gimp_palette_load_gpl (context, file, error);
+      palette_list = gimp_palette_load_gpl (context, file, input, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_ACT:
@@ -554,6 +567,7 @@ gimp_palette_import_from_file (GimpContext  *context,
     }
 
   fclose (f);
+  g_object_unref (input);
 
   if (palette_list)
     {
