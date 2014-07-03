@@ -17,7 +17,6 @@
 
 #include "config.h"
 
-#include <glib/gstdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -47,10 +46,11 @@ typedef struct _PDBDump PDBDump;
 
 struct _PDBDump
 {
-  GimpPDB  *pdb;
-  FILE     *file;
+  GimpPDB       *pdb;
+  GOutputStream *output;
+  GError        *error;
 
-  gboolean  dumping_compat;
+  gboolean       dumping_compat;
 };
 
 typedef struct _PDBQuery PDBQuery;
@@ -103,18 +103,22 @@ static void   gimp_pdb_free_strings (PDBStrings    *strings);
 /*  public functions  */
 
 gboolean
-gimp_pdb_dump (GimpPDB     *pdb,
-               const gchar *filename)
+gimp_pdb_dump (GimpPDB  *pdb,
+               GFile    *file,
+               GError  **error)
 {
-  PDBDump pdb_dump;
+  PDBDump pdb_dump = { 0, };
 
   g_return_val_if_fail (GIMP_IS_PDB (pdb), FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  pdb_dump.pdb  = pdb;
-  pdb_dump.file = g_fopen (filename, "w");
-
-  if (! pdb_dump.file)
+  pdb_dump.pdb    = pdb;
+  pdb_dump.output = G_OUTPUT_STREAM (g_file_replace (file,
+                                                     NULL, FALSE,
+                                                     G_FILE_CREATE_NONE,
+                                                     NULL, error));
+  if (! pdb_dump.output)
     return FALSE;
 
   pdb_dump.dumping_compat = FALSE;
@@ -129,7 +133,18 @@ gimp_pdb_dump (GimpPDB     *pdb,
                         gimp_pdb_print_entry,
                         &pdb_dump);
 
-  fclose (pdb_dump.file);
+  if (pdb_dump.error)
+    {
+      g_set_error (error, pdb_dump.error->domain, pdb_dump.error->code,
+                   _("Writing PDB file '%s' failed: %s"),
+                   gimp_file_get_utf8_name (file), pdb_dump.error->message);
+      g_clear_error (&pdb_dump.error);
+      g_object_unref (pdb_dump.output);
+
+      return FALSE;
+    }
+
+  g_object_unref (pdb_dump.output);
 
   return TRUE;
 }
@@ -364,13 +379,12 @@ gimp_pdb_query_entry (gpointer key,
 
 /* #define DEBUG_OUTPUT 1 */
 
-static gboolean
-output_string (FILE        *file,
+static void
+output_string (GString     *dest,
                const gchar *string)
 {
 #ifndef DEBUG_OUTPUT
-  if (fprintf (file, "\"") < 0)
-    return FALSE;
+  g_string_append_printf (dest, "\"");
 #endif
 
   if (string)
@@ -378,25 +392,21 @@ output_string (FILE        *file,
       {
         switch (*string)
           {
-          case '\\' : if (fprintf (file, "\\\\") < 0) return FALSE; break;
-          case '\"' : if (fprintf (file, "\\\"") < 0) return FALSE; break;
-          case '{'  : if (fprintf (file, "@{")   < 0) return FALSE; break;
-          case '@'  : if (fprintf (file, "@@")   < 0) return FALSE; break;
-          case '}'  : if (fprintf (file, "@}")   < 0) return FALSE; break;
+          case '\\' : g_string_append_printf (dest, "\\\\"); break;
+          case '\"' : g_string_append_printf (dest, "\\\""); break;
+          case '{'  : g_string_append_printf (dest, "@{");   break;
+          case '@'  : g_string_append_printf (dest, "@@");   break;
+          case '}'  : g_string_append_printf (dest, "@}");   break;
 
           default:
-            if (fprintf (file, "%c", *string) < 0)
-              return FALSE;
+            g_string_append_printf (dest, "%c", *string);
           }
         string++;
       }
 
 #ifndef DEBUG_OUTPUT
-  if (fprintf (file, "\"\n") < 0)
-    return FALSE;
+  g_string_append_printf (dest, "\"\n");
 #endif
-
-  return TRUE;
 }
 
 static void
@@ -404,14 +414,19 @@ gimp_pdb_print_entry (gpointer key,
                       gpointer value,
                       gpointer user_data)
 {
-  PDBDump     *pdb_dump = user_data;
-  FILE        *file     = pdb_dump->file;
-  const gchar *proc_name;
-  GList       *list;
-  GEnumClass  *arg_class;
-  GEnumClass  *proc_class;
-  GString     *buf;
-  gint         num = 0;
+  PDBDump       *pdb_dump = user_data;
+  GOutputStream *output   = pdb_dump->output;
+  const gchar   *proc_name;
+  GList         *list;
+  GEnumClass    *arg_class;
+  GEnumClass    *proc_class;
+  GString       *buf;
+  GString       *string;
+  gsize          bytes_written;
+  gint           num   = 0;
+
+  if (pdb_dump->error)
+    return;
 
   proc_name = key;
 
@@ -423,7 +438,8 @@ gimp_pdb_print_entry (gpointer key,
   arg_class  = g_type_class_ref (GIMP_TYPE_PDB_ARG_TYPE);
   proc_class = g_type_class_ref (GIMP_TYPE_PDB_PROC_TYPE);
 
-  buf = g_string_new ("");
+  buf    = g_string_new (NULL);
+  string = g_string_new (NULL);
 
   for (; list; list = list->next)
     {
@@ -438,26 +454,26 @@ gimp_pdb_print_entry (gpointer key,
       gimp_pdb_get_strings (&strings, procedure, pdb_dump->dumping_compat);
 
 #ifdef DEBUG_OUTPUT
-      fprintf (file, "(");
+      g_string_append_printf (string, "(");
 #else
-      fprintf (file, "(register-procedure ");
+      g_string_append_printf (string, "(register-procedure ");
 #endif
 
       if (num != 1)
         {
           g_string_printf (buf, "%s <%d>", proc_name, num);
-          output_string (file, buf->str);
+          output_string (string, buf->str);
         }
       else
         {
-          output_string (file, proc_name);
+          output_string (string, proc_name);
         }
 
       type_desc = gimp_enum_get_desc (proc_class, procedure->proc_type);
 
 #ifdef DEBUG_OUTPUT
 
-      fprintf (file, " (");
+      g_string_append_printf (string, " (");
 
       for (i = 0; i < procedure->num_args; i++)
         {
@@ -469,12 +485,12 @@ gimp_pdb_print_entry (gpointer key,
           arg_value = g_enum_get_value (arg_class, arg_type);
 
           if (i > 0)
-            fprintf (file, " ");
+            g_string_append_printf (string, " ");
 
-          output_string (file, arg_value->value_name);
+          output_string (string, arg_value->value_name);
         }
 
-      fprintf (file, ") (");
+      g_string_append_printf (string, ") (");
 
       for (i = 0; i < procedure->num_values; i++)
         {
@@ -486,83 +502,103 @@ gimp_pdb_print_entry (gpointer key,
           arg_value = g_enum_get_value (arg_class, arg_type);
 
           if (i > 0)
-            fprintf (file, " ");
+            g_string_append_printf (string, " ");
 
-          output_string (file, arg_value->value_name);
+          output_string (string, arg_value->value_name);
         }
-      fprintf (file, "))\n");
+
+      g_string_append_printf (string, "))\n");
 
 #else /* ! DEBUG_OUTPUT */
 
-      fprintf (file, "  ");
-      output_string (file, strings.blurb);
-      fprintf (file, "  ");
-      output_string (file, strings.help);
-      fprintf (file, "  ");
-      output_string (file, strings.author);
-      fprintf (file, "  ");
-      output_string (file, strings.copyright);
-      fprintf (file, "  ");
-      output_string (file, strings.date);
-      fprintf (file, "  ");
-      output_string (file, type_desc->value_desc);
+      g_string_append_printf (string, "  ");
+      output_string (string, strings.blurb);
 
-      fprintf (file, "  (");
+      g_string_append_printf (string, "  ");
+      output_string (string, strings.help);
+
+      g_string_append_printf (string, "  ");
+      output_string (string, strings.author);
+
+      g_string_append_printf (string, "  ");
+      output_string (string, strings.copyright);
+
+      g_string_append_printf (string, "  ");
+      output_string (string, strings.date);
+
+      g_string_append_printf (string, "  ");
+      output_string (string, type_desc->value_desc);
+
+      g_string_append_printf (string, "  (");
+
       for (i = 0; i < procedure->num_args; i++)
         {
           GParamSpec     *pspec = procedure->args[i];
           GimpPDBArgType  arg_type;
           gchar          *desc  = gimp_param_spec_get_desc (pspec);
 
-          fprintf (file, "\n    (\n");
+          g_string_append_printf (string, "\n    (\n");
 
           arg_type = gimp_pdb_compat_arg_type_from_gtype (pspec->value_type);
 
           arg_value = g_enum_get_value (arg_class, arg_type);
 
-          fprintf (file, "      ");
-          output_string (file, g_param_spec_get_name (pspec));
-          fprintf (file, "      ");
-          output_string (file, arg_value->value_name);
-          fprintf (file, "      ");
-          output_string (file, desc);
+          g_string_append_printf (string, "      ");
+          output_string (string, g_param_spec_get_name (pspec));
+
+          g_string_append_printf (string, "      ");
+          output_string (string, arg_value->value_name);
+
+          g_string_append_printf (string, "      ");
+          output_string (string, desc);
+
           g_free (desc);
 
-          fprintf (file, "    )");
+          g_string_append_printf (string, "    )");
         }
-      fprintf (file, "\n  )\n");
 
-      fprintf (file, "  (");
+      g_string_append_printf (string, "\n  )\n");
+
+      g_string_append_printf (string, "  (");
+
       for (i = 0; i < procedure->num_values; i++)
         {
           GParamSpec     *pspec = procedure->values[i];
           GimpPDBArgType  arg_type;
           gchar          *desc  = gimp_param_spec_get_desc (pspec);
 
-          fprintf (file, "\n    (\n");
+          g_string_append_printf (string, "\n    (\n");
 
           arg_type = gimp_pdb_compat_arg_type_from_gtype (pspec->value_type);
 
           arg_value = g_enum_get_value (arg_class, arg_type);
 
-          fprintf (file, "      ");
-          output_string (file, g_param_spec_get_name (pspec));
-          fprintf (file, "      ");
-          output_string (file, arg_value->value_name);
-          fprintf (file, "      ");
-          output_string (file, desc);
+          g_string_append_printf (string, "      ");
+          output_string (string, g_param_spec_get_name (pspec));
+
+          g_string_append_printf (string, "      ");
+          output_string (string, arg_value->value_name);
+
+          g_string_append_printf (string, "      ");
+          output_string (string, desc);
+
           g_free (desc);
 
-          fprintf (file, "    )");
+          g_string_append_printf (string, "    )");
         }
-      fprintf (file, "\n  )");
-      fprintf (file, "\n)\n");
+
+      g_string_append_printf (string, "\n  )");
+      g_string_append_printf (string, "\n)\n");
 
 #endif /* DEBUG_OUTPUT */
 
       gimp_pdb_free_strings (&strings);
     }
 
+  g_output_stream_write_all (output, string->str, string->len,
+                             &bytes_written, NULL, &pdb_dump->error);
+
+  g_string_free (string, TRUE);
   g_string_free (buf, TRUE);
 
   g_type_class_unref (arg_class);

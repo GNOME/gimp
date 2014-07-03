@@ -77,7 +77,11 @@ procedural_db_dump_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      success = gimp_pdb_dump (gimp->pdb, filename);
+      GFile *file = g_file_new_for_path (filename);
+
+      success = gimp_pdb_dump (gimp->pdb, file, error);
+
+      g_object_unref (file);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

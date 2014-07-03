@@ -20,7 +20,8 @@
 
 
 gboolean   gimp_pdb_dump      (GimpPDB          *pdb,
-                               const gchar      *filename);
+                               GFile            *file,
+                               GError          **error);
 gboolean   gimp_pdb_query     (GimpPDB          *pdb,
                                const gchar      *name,
                                const gchar      *blurb,
