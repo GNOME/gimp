@@ -63,7 +63,7 @@ GList               * gimp_palette_load_css           (GimpContext   *context,
                                                        GError       **error);
 
 GimpPaletteFileFormat gimp_palette_load_detect_format (GFile         *file,
-                                                       FILE          *f);
+                                                       GInputStream  *input);
 
 
 #endif /* __GIMP_PALETTE_H__ */

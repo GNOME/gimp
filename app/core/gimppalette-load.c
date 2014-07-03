@@ -640,14 +640,16 @@ gimp_palette_load_css (GimpContext  *context,
 }
 
 GimpPaletteFileFormat
-gimp_palette_load_detect_format (GFile *file,
-                                 FILE  *f)
+gimp_palette_load_detect_format (GFile        *file,
+                                 GInputStream *input)
 {
   GimpPaletteFileFormat format = GIMP_PALETTE_FILE_FORMAT_UNKNOWN;
-  gint                  fd = fileno (f);
   gchar                 header[16];
+  gsize                 bytes_read;
 
-  if (fread (header, 1, sizeof (header), f) == sizeof (header))
+  if (g_input_stream_read_all (input, &header, sizeof (header),
+                               &bytes_read, NULL, NULL) &&
+      bytes_read == sizeof (header))
     {
       if (g_str_has_prefix (header + 0, "RIFF") &&
           g_str_has_prefix (header + 8, "PAL data"))
@@ -666,33 +668,39 @@ gimp_palette_load_detect_format (GFile *file,
 
   if (format == GIMP_PALETTE_FILE_FORMAT_UNKNOWN)
     {
-      gchar *lower_filename =
-        g_ascii_strdown (gimp_file_get_utf8_name (file), -1);
+      gchar *lower = g_ascii_strdown (gimp_file_get_utf8_name (file), -1);
 
-      if (g_str_has_suffix (lower_filename, ".aco"))
+      if (g_str_has_suffix (lower, ".aco"))
         {
           format = GIMP_PALETTE_FILE_FORMAT_ACO;
         }
-      else if (g_str_has_suffix (lower_filename, ".css"))
+      else if (g_str_has_suffix (lower, ".css"))
         {
           format = GIMP_PALETTE_FILE_FORMAT_CSS;
         }
 
-      g_free (lower_filename);
+      g_free (lower);
     }
 
   if (format == GIMP_PALETTE_FILE_FORMAT_UNKNOWN)
     {
-      struct stat file_stat;
+      GFileInfo *info = g_file_query_info (file,
+                                           G_FILE_ATTRIBUTE_STANDARD_SIZE,
+                                           G_FILE_QUERY_INFO_NONE,
+                                           NULL, NULL);
 
-      if (fstat (fd, &file_stat) >= 0)
+      if (info)
         {
-          if (file_stat.st_size == 768)
+          goffset size = g_file_info_get_size (info);
+
+          if (size == 768)
             format = GIMP_PALETTE_FILE_FORMAT_ACT;
+
+          g_object_unref (info);
         }
     }
 
-  rewind (f);
+  g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_SET, NULL, NULL);
 
   return format;
 }
