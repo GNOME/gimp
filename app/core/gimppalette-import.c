@@ -17,14 +17,9 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <string.h>
-
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -500,8 +495,6 @@ gimp_palette_import_from_file (GimpContext  *context,
 {
   GList        *palette_list = NULL;
   GInputStream *input;
-  gchar        *path;
-  FILE         *f;
   GError       *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -516,19 +509,6 @@ gimp_palette_import_from_file (GimpContext  *context,
                    _("Could not open '%s' for reading: %s"),
                    gimp_file_get_utf8_name (file), my_error->message);
       g_clear_error (&my_error);
-      return NULL;
-    }
-
-  /* EEK temporary double opening of the file, until all is GIO */
-  path = g_file_get_path (file);
-  f = g_fopen (path, "rb");
-  g_free (path);
-  if (! f)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
-      g_object_unref (input);
       return NULL;
     }
 
@@ -555,7 +535,7 @@ gimp_palette_import_from_file (GimpContext  *context,
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_CSS:
-      palette_list = gimp_palette_load_css (context, file, f, error);
+      palette_list = gimp_palette_load_css (context, file, input, error);
       break;
 
     default:
@@ -566,7 +546,6 @@ gimp_palette_import_from_file (GimpContext  *context,
       break;
     }
 
-  fclose (f);
   g_object_unref (input);
 
   if (palette_list)

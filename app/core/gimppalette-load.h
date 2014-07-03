@@ -59,7 +59,7 @@ GList               * gimp_palette_load_aco           (GimpContext   *context,
                                                        GError       **error);
 GList               * gimp_palette_load_css           (GimpContext   *context,
                                                        GFile         *file,
-                                                       FILE          *f,
+                                                       GInputStream  *input,
                                                        GError       **error);
 
 GimpPaletteFileFormat gimp_palette_load_detect_format (GFile         *file,

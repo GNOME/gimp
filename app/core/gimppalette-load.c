@@ -17,24 +17,11 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <fcntl.h>
 #include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
-
-#ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
-#endif
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -645,17 +632,19 @@ gimp_palette_load_aco (GimpContext   *context,
 
 
 GList *
-gimp_palette_load_css (GimpContext  *context,
-                       GFile        *file,
-                       FILE         *f,
-                       GError      **error)
+gimp_palette_load_css (GimpContext   *context,
+                       GFile         *file,
+                       GInputStream  *input,
+                       GError       **error)
 {
-  GimpPalette *palette;
-  gchar       *name;
-  GRegex      *regex;
-  GimpRGB      color;
+  GimpPalette      *palette;
+  GDataInputStream *data_input;
+  gchar            *name;
+  GRegex           *regex;
+  gchar            *buf;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   regex = g_regex_new (".*color.*:(?P<param>.*);", G_REGEX_CASELESS, 0, error);
@@ -666,16 +655,22 @@ gimp_palette_load_css (GimpContext  *context,
   palette = GIMP_PALETTE (gimp_palette_new (context, name));
   g_free (name);
 
+  data_input = g_data_input_stream_new (input);
+
   do
     {
-      GMatchInfo *matches;
-      gchar       buf[1024];
+      gsize  buf_len = 1024;
 
-      if (fgets (buf, sizeof (buf), f) != NULL)
+      buf = g_data_input_stream_read_line (data_input, &buf_len, NULL, NULL);
+
+      if (buf)
         {
+          GMatchInfo *matches;
+
           if (g_regex_match (regex, buf, 0, &matches))
             {
-              gchar *word = g_match_info_fetch_named (matches, "param");
+              GimpRGB  color;
+              gchar   *word = g_match_info_fetch_named (matches, "param");
 
               if (gimp_rgb_parse_css (&color, word, -1))
                 {
@@ -687,10 +682,14 @@ gimp_palette_load_css (GimpContext  *context,
 
               g_free (word);
             }
+
+          g_free (buf);
         }
-    } while (! feof (f));
+    }
+  while (buf);
 
   g_regex_unref (regex);
+  g_object_unref (data_input);
 
   return g_list_prepend (NULL, palette);
 }
