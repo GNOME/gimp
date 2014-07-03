@@ -258,7 +258,8 @@ gimp_palette_load_gpl (GimpContext   *context,
       gchar *msg;
 
       if (my_error)
-        msg = g_strdup_printf (_("Line %d: %s"), linenum, my_error->message);
+        msg = g_strdup_printf (_("Error in line %d: %s"), linenum,
+                               my_error->message);
       else
         msg = g_strdup_printf (_("File is truncated in line %d"), linenum);
 
