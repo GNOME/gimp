@@ -539,11 +539,11 @@ gimp_palette_import_from_file (GimpContext  *context,
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_ACT:
-      palette_list = gimp_palette_load_act (context, file, f, error);
+      palette_list = gimp_palette_load_act (context, file, input, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_RIFF_PAL:
-      palette_list = gimp_palette_load_riff (context, file, f, error);
+      palette_list = gimp_palette_load_riff (context, file, input, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_PSP_PAL:

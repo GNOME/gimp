@@ -288,24 +288,27 @@ gimp_palette_load_gpl (GimpContext   *context,
 }
 
 GList *
-gimp_palette_load_act (GimpContext  *context,
-                       GFile        *file,
-                       FILE         *f,
-                       GError      **error)
+gimp_palette_load_act (GimpContext   *context,
+                       GFile         *file,
+                       GInputStream  *input,
+                       GError       **error)
 {
   GimpPalette *palette;
   gchar       *palette_name;
-  gint         fd = fileno (f);
-  guchar       color_bytes[4];
+  guchar       color_bytes[3];
+  gsize        bytes_read;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   palette_name = g_path_get_basename (gimp_file_get_utf8_name (file));
   palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
   g_free (palette_name);
 
-  while (read (fd, color_bytes, 3) == 3)
+  while (g_input_stream_read_all (input, color_bytes, sizeof (color_bytes),
+                                  &bytes_read, NULL, NULL) &&
+         bytes_read == sizeof (color_bytes))
     {
       GimpRGB color;
 
@@ -321,27 +324,30 @@ gimp_palette_load_act (GimpContext  *context,
 }
 
 GList *
-gimp_palette_load_riff (GimpContext  *context,
-                        GFile        *file,
-                        FILE         *f,
-                        GError      **error)
+gimp_palette_load_riff (GimpContext   *context,
+                        GFile         *file,
+                        GInputStream  *input,
+                        GError       **error)
 {
   GimpPalette *palette;
   gchar       *palette_name;
-  gint         fd = fileno (f);
   guchar       color_bytes[4];
+  gsize        bytes_read;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   palette_name = g_path_get_basename (gimp_file_get_utf8_name (file));
   palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
   g_free (palette_name);
 
-  lseek (fd, 28, SEEK_SET);
+  if (! g_seekable_seek (G_SEEKABLE (input), 28, G_SEEK_SET, NULL, error))
+    return NULL;
 
-  while (read (fd,
-               color_bytes, sizeof (color_bytes)) == sizeof (color_bytes))
+  while (g_input_stream_read_all (input, color_bytes, sizeof (color_bytes),
+                                  &bytes_read, NULL, NULL) &&
+         bytes_read == sizeof (color_bytes))
     {
       GimpRGB color;
 
