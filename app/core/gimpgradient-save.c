@@ -44,7 +44,7 @@ gimp_gradient_save (GimpData  *data,
 
   output = G_OUTPUT_STREAM (g_file_replace (gimp_data_get_file (data),
                                             NULL, FALSE, G_FILE_CREATE_NONE,
-                                            NULL, error));
+                                            NULL, &my_error));
   if (! output)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
@@ -160,7 +160,7 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
                                             NULL, FALSE, G_FILE_CREATE_NONE,
-                                            NULL, error));
+                                            NULL, &my_error));
   if (! output)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
