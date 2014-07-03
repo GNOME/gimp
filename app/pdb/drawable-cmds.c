@@ -684,7 +684,7 @@ drawable_set_pixel_invoker (GimpProcedure         *procedure,
         {
           gegl_buffer_set (gimp_drawable_get_buffer (drawable),
                            GEGL_RECTANGLE (x_coord, y_coord, 1, 1),
-                           1.0, format, pixel, GEGL_AUTO_ROWSTRIDE);
+                           0, format, pixel, GEGL_AUTO_ROWSTRIDE);
         }
       else
         success = FALSE;

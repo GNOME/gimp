@@ -307,7 +307,7 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
       gegl_buffer_set (output,
                        GEGL_RECTANGLE (roi->x, roi->y + y,
                                        roi->width, 1),
-                       1.0, output_format, distbuf_cur,
+                       0, output_format, distbuf_cur,
                        GEGL_AUTO_ROWSTRIDE);
 
       g_object_set (operation,

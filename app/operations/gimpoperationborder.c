@@ -406,7 +406,7 @@ gimp_operation_border_process (GeglOperation       *operation,
       gegl_buffer_set (output,
                        GEGL_RECTANGLE (roi->x, roi->y,
                                        roi->width, 1),
-                       1.0, output_format, transition,
+                       0, output_format, transition,
                        GEGL_AUTO_ROWSTRIDE);
 
       for (y = 1; y < roi->height; y++)
@@ -441,7 +441,7 @@ gimp_operation_border_process (GeglOperation       *operation,
           gegl_buffer_set (output,
                            GEGL_RECTANGLE (roi->x, roi->y + y,
                                            roi->width, 1),
-                           1.0, output_format, transition,
+                           0, output_format, transition,
                            GEGL_AUTO_ROWSTRIDE);
         }
 
@@ -713,7 +713,7 @@ gimp_operation_border_process (GeglOperation       *operation,
       gegl_buffer_set (output,
                        GEGL_RECTANGLE (roi->x, roi->y + y,
                                        roi->width, 1),
-                       1.0, output_format, out,
+                       0, output_format, out,
                        GEGL_AUTO_ROWSTRIDE);
     }
 
