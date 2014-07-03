@@ -17,11 +17,7 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <string.h>
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -67,40 +63,46 @@ gimp_vectors_export_file (const GimpImage    *image,
                           GFile              *file,
                           GError            **error)
 {
-  gchar   *path;
-  FILE    *f;
-  GString *str;
+  GOutputStream *output;
+  GString       *string;
+  gsize          bytes_written;
+  GError        *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  path = g_file_get_path (file);
-  f = g_fopen (path, "w");
-  g_free (path);
-
-  if (! f)
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, &my_error));
+  if (! output)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-		   _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+      g_set_error (error, my_error->domain, my_error->code,
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_file_get_utf8_name (file),
+                   my_error->message);
+      g_clear_error (&my_error);
       return FALSE;
     }
 
-  str = gimp_vectors_export (image, vectors);
+  string = gimp_vectors_export (image, vectors);
 
-  fprintf (f, "%s", str->str);
-
-  g_string_free (str, TRUE);
-
-  if (fclose (f))
+  if (! g_output_stream_write_all (output, string->str, string->len,
+                                   &bytes_written, NULL, &my_error) ||
+      bytes_written != string->len)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-		   _("Error while writing '%s': %s"),
-                   gimp_file_get_utf8_name (file), g_strerror (errno));
+      g_set_error (error, my_error->domain, my_error->code,
+                   _("Writing SVG file '%s' failed: %s"),
+                   gimp_file_get_utf8_name (file), my_error->message);
+      g_clear_error (&my_error);
+      g_string_free (string, TRUE);
+      g_object_unref (output);
       return FALSE;
     }
+
+  g_string_free (string, TRUE);
+  g_object_unref (output);
 
   return TRUE;
 }
