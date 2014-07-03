@@ -343,7 +343,10 @@ gimp_palette_load_riff (GimpContext   *context,
   g_free (palette_name);
 
   if (! g_seekable_seek (G_SEEKABLE (input), 28, G_SEEK_SET, NULL, error))
-    return NULL;
+    {
+      g_object_unref (palette);
+      return NULL;
+    }
 
   while (g_input_stream_read_all (input, color_bytes, sizeof (color_bytes),
                                   &bytes_read, NULL, NULL) &&
@@ -363,17 +366,16 @@ gimp_palette_load_riff (GimpContext   *context,
 }
 
 GList *
-gimp_palette_load_psp (GimpContext  *context,
-                       GFile        *file,
-                       FILE         *f,
-                       GError      **error)
+gimp_palette_load_psp (GimpContext   *context,
+                       GFile         *file,
+                       GInputStream  *input,
+                       GError       **error)
 {
   GimpPalette *palette;
   gchar       *palette_name;
-  gint         fd = fileno (f);
   guchar       color_bytes[4];
   gint         number_of_colors;
-  gint         data_size;
+  gsize        bytes_read;
   gint         i, j;
   gboolean     color_ok;
   gchar        buffer[4096];
@@ -388,9 +390,20 @@ gimp_palette_load_psp (GimpContext  *context,
   palette = GIMP_PALETTE (gimp_palette_new (context, palette_name));
   g_free (palette_name);
 
-  lseek (fd, 16, SEEK_SET);
-  data_size = read (fd, buffer, sizeof (buffer) - 1);
-  buffer[data_size] = '\0';
+  if (! g_seekable_seek (G_SEEKABLE (input), 16, G_SEEK_SET, NULL, error))
+    {
+      g_object_unref (palette);
+      return NULL;
+    }
+
+  if (! g_input_stream_read_all (input, buffer, sizeof (buffer) - 1,
+                                 &bytes_read, NULL, error))
+    {
+      g_object_unref (palette);
+      return NULL;
+    }
+
+  buffer[bytes_read] = '\0';
 
   lines = g_strsplit (buffer, "\x0d\x0a", -1);
 
