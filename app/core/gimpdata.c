@@ -20,22 +20,10 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <string.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
-#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
-
-#ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
-#endif
 
 #include "core-types.h"
 
