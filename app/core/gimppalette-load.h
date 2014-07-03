@@ -39,7 +39,6 @@ GList               * gimp_palette_load               (GimpContext  *context,
                                                        GError      **error);
 GList               * gimp_palette_load_gpl           (GimpContext  *context,
                                                        GFile        *file,
-                                                       FILE         *f,
                                                        GError      **error);
 GList               * gimp_palette_load_act           (GimpContext  *context,
                                                        GFile        *file,

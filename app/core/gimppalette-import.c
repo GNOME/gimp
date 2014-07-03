@@ -522,7 +522,7 @@ gimp_palette_import_from_file (GimpContext  *context,
   switch (gimp_palette_load_detect_format (file, f))
     {
     case GIMP_PALETTE_FILE_FORMAT_GPL:
-      palette_list = gimp_palette_load_gpl (context, file, f, error);
+      palette_list = gimp_palette_load_gpl (context, file, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_ACT:

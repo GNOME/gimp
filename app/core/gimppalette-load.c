@@ -74,7 +74,7 @@ gimp_palette_load (GimpContext  *context,
       return NULL;
     }
 
-  glist = gimp_palette_load_gpl (context, file, f, error);
+  glist = gimp_palette_load_gpl (context, file, error);
   fclose (f);
 
   return glist;
@@ -83,38 +83,52 @@ gimp_palette_load (GimpContext  *context,
 GList *
 gimp_palette_load_gpl (GimpContext  *context,
                        GFile        *file,
-                       FILE         *f,
                        GError      **error)
 {
-  GimpPalette      *palette;
+  GimpPalette      *palette = NULL;
   GimpPaletteEntry *entry;
-  gchar             str[1024];
+  GInputStream     *input;
+  GDataInputStream *data_input;
+  gchar            *str;
+  gsize             str_len;
   gchar            *tok;
   gint              r, g, b;
   gint              linenum;
+  GError           *my_error = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
+  if (! input)
+    {
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_file_get_utf8_name (file), my_error->message);
+      g_clear_error (&my_error);
+      return NULL;
+    }
+  else
+    {
+      data_input = g_data_input_stream_new (input);
+      g_object_unref (input);
+    }
+
   r = g = b = 0;
 
   linenum = 1;
-  if (! fgets (str, sizeof (str), f))
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in palette file '%s': "
-                     "Read error in line %d."),
-                   gimp_file_get_utf8_name (file), linenum);
-      return NULL;
-    }
+  str_len = 1024;
+  str = g_data_input_stream_read_line (data_input, &str_len,
+                                       NULL, &my_error);
+  if (! str)
+    goto failed;
 
   if (! g_str_has_prefix (str, "GIMP Palette"))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in palette file '%s': "
-                     "Missing magic header."),
-                   gimp_file_get_utf8_name (file));
-      return NULL;
+      g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Missing magic header."));
+      g_free (str);
+      goto failed;
     }
 
   palette = g_object_new (GIMP_TYPE_PALETTE,
@@ -122,16 +136,11 @@ gimp_palette_load_gpl (GimpContext  *context,
                           NULL);
 
   linenum++;
-
-  if (! fgets (str, sizeof (str), f))
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in palette file '%s': "
-                     "Read error in line %d."),
-                   gimp_file_get_utf8_name (file), linenum);
-      g_object_unref (palette);
-      return NULL;
-    }
+  str_len = 1024;
+  str = g_data_input_stream_read_line (data_input, &str_len,
+                                       NULL, &my_error);
+  if (! str)
+    goto failed;
 
   if (g_str_has_prefix (str, "Name: "))
     {
@@ -141,17 +150,14 @@ gimp_palette_load_gpl (GimpContext  *context,
                                _("Invalid UTF-8 string in palette file '%s'"),
                                gimp_file_get_utf8_name (file));
       gimp_object_take_name (GIMP_OBJECT (palette), utf8);
+      g_free (str);
 
       linenum++;
-      if (! fgets (str, sizeof (str), f))
-        {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Fatal parse error in palette file '%s': "
-                         "Read error in line %d."),
-                       gimp_file_get_utf8_name (file), linenum);
-          g_object_unref (palette);
-          return NULL;
-        }
+      str_len = 1024;
+      str = g_data_input_stream_read_line (data_input, &str_len,
+                                           NULL, &my_error);
+      if (! str)
+        goto failed;
 
       if (g_str_has_prefix (str, "Columns: "))
         {
@@ -169,17 +175,14 @@ gimp_palette_load_gpl (GimpContext  *context,
             }
 
           gimp_palette_set_columns (palette, columns);
+          g_free (str);
 
           linenum++;
-          if (! fgets (str, sizeof (str), f))
-            {
-              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                           _("Fatal parse error in palette file '%s': "
-                             "Read error in line %d."),
-                           gimp_file_get_utf8_name (file), linenum);
-              g_object_unref (palette);
-              return NULL;
-            }
+          str_len = 1024;
+          str = g_data_input_stream_read_line (data_input, &str_len,
+                                               NULL, &my_error);
+          if (! str)
+            goto failed;
         }
     }
   else /* old palette format */
@@ -188,7 +191,7 @@ gimp_palette_load_gpl (GimpContext  *context,
                              g_path_get_basename (gimp_file_get_utf8_name (file)));
     }
 
-  while (! feof (f))
+  while (str)
     {
       if (str[0] != '#' && str[0] != '\n')
         {
@@ -242,24 +245,62 @@ gimp_palette_load_gpl (GimpContext  *context,
           palette->n_colors++;
         }
 
-      linenum++;
-      if (! fgets (str, sizeof (str), f))
-        {
-          if (feof (f))
-            break;
+      g_free (str);
 
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Fatal parse error in palette file '%s': "
-                         "Read error in line %d."),
-                       gimp_file_get_utf8_name (file), linenum);
-          g_object_unref (palette);
-          return NULL;
+      linenum++;
+      str_len = 1024;
+      str = g_data_input_stream_read_line (data_input, &str_len,
+                                           NULL, &my_error);
+      if (! str)
+        {
+          if (! palette->colors)
+            goto failed;
+
+          if (my_error)
+            {
+              g_message (_("Reading palette file '%s': "
+                           "Read %d colors from truncated file: %s"),
+                         gimp_file_get_utf8_name (file),
+                         g_list_length (palette->colors),
+                         my_error->message);
+              g_clear_error (&my_error);
+              break;
+            }
         }
     }
 
   palette->colors = g_list_reverse (palette->colors);
 
+  g_object_unref (data_input);
+
   return g_list_prepend (NULL, palette);
+
+ failed:
+
+  g_object_unref (data_input);
+
+  if (palette)
+    g_object_unref (palette);
+
+  if (error && *error == NULL)
+    {
+      gchar *msg;
+
+      if (my_error)
+        msg = g_strdup_printf (_("Line %d: %s"), linenum, my_error->message);
+      else
+        msg = g_strdup_printf (_("File is truncated in line %d"), linenum);
+
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                   _("Error while reading palette file '%s': %s"),
+                   gimp_file_get_utf8_name (file), msg);
+
+      g_free (msg);
+    }
+
+  g_clear_error (&my_error);
+
+  return NULL;
 }
 
 GList *
