@@ -21,22 +21,6 @@
 #include "config.h"
 
 #include <stdlib.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <string.h>
-#include <sys/types.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <glib/gstdio.h>
-
-#include <glib.h>
-
-#ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
-#endif
 
 #include <gegl.h>
 #include <gtk/gtk.h>
@@ -1403,25 +1387,26 @@ gimp_text_buffer_load (GimpTextBuffer *buffer,
                        GFile          *file,
                        GError        **error)
 {
-  gchar       *path;
-  FILE        *f;
-  gchar        buf[2048];
-  gint         remaining = 0;
-  GtkTextIter  iter;
+  GInputStream *input;
+  gchar         buf[2048];
+  gint          to_read;
+  gsize         bytes_read;
+  gsize         total_read = 0;
+  gint          remaining  = 0;
+  GtkTextIter   iter;
+  GError       *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  path = g_file_get_path (file);
-  f = g_fopen (path, "r");
-  g_free (file);
-
-  if (! f)
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
+  if (! input)
     {
-      g_set_error_literal (error, G_FILE_ERROR,
-                           g_file_error_from_errno (errno),
-                           g_strerror (errno));
+      g_set_error (error, my_error->domain, my_error->code,
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_file_get_utf8_name (file), my_error->message);
+      g_clear_error (&my_error);
       return FALSE;
     }
 
@@ -1430,35 +1415,55 @@ gimp_text_buffer_load (GimpTextBuffer *buffer,
   gimp_text_buffer_set_text (buffer, NULL);
   gtk_text_buffer_get_end_iter (GTK_TEXT_BUFFER (buffer), &iter);
 
-  while (! feof (f))
+  do
     {
+      gboolean    success;
       const char *leftover;
-      gint        count;
-      gint        to_read = sizeof (buf) - remaining - 1;
 
-      count = fread (buf + remaining, 1, to_read, f);
-      buf[count + remaining] = '\0';
+      to_read = sizeof (buf) - remaining - 1;
 
-      g_utf8_validate (buf, count + remaining, &leftover);
+      success = g_input_stream_read_all (input, buf + remaining, to_read,
+                                         &bytes_read, NULL, &my_error);
+
+      total_read += bytes_read;
+      buf[bytes_read + remaining] = '\0';
+
+      g_utf8_validate (buf, bytes_read + remaining, &leftover);
 
       gtk_text_buffer_insert (GTK_TEXT_BUFFER (buffer), &iter,
                               buf, leftover - buf);
       gtk_text_buffer_get_end_iter (GTK_TEXT_BUFFER (buffer), &iter);
 
-      remaining = (buf + remaining + count) - leftover;
+      remaining = (buf + remaining + bytes_read) - leftover;
       g_memmove (buf, leftover, remaining);
 
-      if (remaining > 6 || count < to_read)
-        break;
+      if (! success)
+        {
+          if (total_read > 0)
+            {
+              g_message (_("Input file '%s' appears truncated: %s"),
+                         gimp_file_get_utf8_name (file),
+                         my_error->message);
+              g_clear_error (&my_error);
+              break;
+            }
+
+          gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
+          g_object_unref (input);
+
+          g_propagate_error (error, my_error);
+
+          return FALSE;
+        }
     }
+  while (remaining <= 6 && bytes_read == to_read);
 
   if (remaining)
     g_message (_("Invalid UTF-8 data in file '%s'."),
                gimp_file_get_utf8_name (file));
 
-  fclose (f);
-
   gtk_text_buffer_end_user_action (GTK_TEXT_BUFFER (buffer));
+  g_object_unref (input);
 
   return TRUE;
 }
@@ -1469,25 +1474,25 @@ gimp_text_buffer_save (GimpTextBuffer *buffer,
                        gboolean        selection_only,
                        GError        **error)
 {
-  GtkTextIter  start_iter;
-  GtkTextIter  end_iter;
-  gchar       *path;
-  gint         fd;
-  gchar       *text_contents;
+  GOutputStream *output;
+  GtkTextIter    start_iter;
+  GtkTextIter    end_iter;
+  gchar         *text_contents;
+  GError        *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_TEXT_BUFFER (buffer), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  path = g_file_get_path (file);
-  fd = g_open (path, O_WRONLY | O_CREAT | O_APPEND, 0666);
-  g_free (path);
-
-  if (fd == -1)
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, &my_error));
+  if (! output)
     {
-      g_set_error_literal (error, G_FILE_ERROR,
-                           g_file_error_from_errno (errno),
-                           g_strerror (errno));
+      g_set_error (error, my_error->domain, my_error->code,
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_file_get_utf8_name (file), my_error->message);
+      g_clear_error (&my_error);
       return FALSE;
     }
 
@@ -1503,29 +1508,26 @@ gimp_text_buffer_save (GimpTextBuffer *buffer,
 
   if (text_contents)
     {
-      gint text_length = strlen (text_contents);
+      gint  text_length = strlen (text_contents);
+      gsize bytes_written;
 
-      if (text_length > 0)
+      if (! g_output_stream_write_all (output, text_contents, text_length,
+                                       &bytes_written, NULL, &my_error) ||
+          bytes_written != text_length)
         {
-          gint bytes_written;
-
-          bytes_written = write (fd, text_contents, text_length);
-
-          if (bytes_written != text_length)
-            {
-              g_free (text_contents);
-              close (fd);
-              g_set_error_literal (error, G_FILE_ERROR,
-                                   g_file_error_from_errno (errno),
-                                   g_strerror (errno));
-              return FALSE;
-            }
+          g_set_error (error, my_error->domain, my_error->code,
+                       _("Writing palette file '%s' failed: %s"),
+                       gimp_file_get_utf8_name (file), my_error->message);
+          g_clear_error (&my_error);
+          g_free (text_contents);
+          g_object_unref (output);
+          return FALSE;
         }
 
       g_free (text_contents);
     }
 
-  close (fd);
+  g_object_unref (output);
 
   return TRUE;
 }
