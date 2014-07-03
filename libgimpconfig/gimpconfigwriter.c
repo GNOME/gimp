@@ -66,10 +66,10 @@ struct _GimpConfigWriter
 };
 
 
-static inline void  gimp_config_writer_flush      (GimpConfigWriter  *writer);
-static inline void  gimp_config_writer_newline    (GimpConfigWriter  *writer);
-static gboolean     gimp_config_writer_close_file (GimpConfigWriter  *writer,
-                                                   GError           **error);
+static inline void  gimp_config_writer_flush        (GimpConfigWriter  *writer);
+static inline void  gimp_config_writer_newline      (GimpConfigWriter  *writer);
+static gboolean     gimp_config_writer_close_output (GimpConfigWriter  *writer,
+                                                     GError           **error);
 
 static inline void
 gimp_config_writer_flush (GimpConfigWriter *writer)
@@ -77,22 +77,20 @@ gimp_config_writer_flush (GimpConfigWriter *writer)
   gsize   bytes_written;
   GError *error = NULL;
 
+  if (! writer->output)
+    return;
+
   if (! g_output_stream_write_all (writer->output,
                                    writer->buffer->str,
                                    writer->buffer->len,
                                    &bytes_written,
                                    NULL, &error))
     {
-      const gchar *path;
-
-      if (writer->file)
-        path = gimp_file_get_utf8_name (writer->file);
-      else
-        path = "file descriptor";
-
       g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
                    _("Error writing to '%s': %s"),
-                   path, error->message);
+                   writer->file ?
+                   gimp_file_get_utf8_name (writer->file) : "output stream",
+                   error->message);
       g_clear_error (&error);
     }
 
@@ -210,6 +208,43 @@ gimp_config_writer_new_gfile (GFile        *file,
 
   writer->output = output;
   writer->file   = g_object_ref (file);
+  writer->buffer = g_string_new (NULL);
+
+  if (header)
+    {
+      gimp_config_writer_comment (writer, header);
+      gimp_config_writer_linefeed (writer);
+    }
+
+  return writer;
+}
+
+/**
+ * gimp_config_writer_new_stream:
+ * @output: a #GOutputStream
+ * @header: text to include as comment at the top of the file
+ * @error: return location for errors
+ *
+ * Creates a new #GimpConfigWriter and sets it up to write to
+ * @output.
+ *
+ * Return value: a new #GimpConfigWriter or %NULL in case of an error
+ *
+ * Since: GIMP 2.10
+ **/
+GimpConfigWriter *
+gimp_config_writer_new_stream (GOutputStream  *output,
+                               const gchar    *header,
+                               GError        **error)
+{
+  GimpConfigWriter *writer;
+
+  g_return_val_if_fail (G_IS_OUTPUT_STREAM (output), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  writer = g_slice_new0 (GimpConfigWriter);
+
+  writer->output = g_object_ref (output);
   writer->buffer = g_string_new (NULL);
 
   if (header)
@@ -542,8 +577,7 @@ gimp_config_writer_close (GimpConfigWriter *writer)
     {
       g_string_append_c (writer->buffer, '\n');
 
-      if (writer->output)
-        gimp_config_writer_flush (writer);
+      gimp_config_writer_flush (writer);
     }
 }
 
@@ -591,7 +625,7 @@ gimp_config_writer_finish (GimpConfigWriter  *writer,
 
   if (writer->output)
     {
-      success = gimp_config_writer_close_file (writer, error);
+      success = gimp_config_writer_close_output (writer, error);
 
       if (writer->file)
         g_object_unref (writer->file);
@@ -601,7 +635,11 @@ gimp_config_writer_finish (GimpConfigWriter  *writer,
 
   if (writer->error)
     {
-      g_propagate_error (error, writer->error);
+      if (error && *error == NULL)
+        g_propagate_error (error, writer->error);
+      else
+        g_clear_error (&writer->error);
+
       success = FALSE;
     }
 
@@ -618,7 +656,7 @@ gimp_config_writer_linefeed (GimpConfigWriter *writer)
   if (writer->error)
     return;
 
-  if (writer->buffer->len == 0 && !writer->comment)
+  if (writer->output && writer->buffer->len == 0 && !writer->comment)
     {
       gsize   bytes_written;
       GError *error = NULL;
@@ -629,7 +667,9 @@ gimp_config_writer_linefeed (GimpConfigWriter *writer)
         {
           g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
                        _("Error writing to '%s': %s"),
-                       gimp_file_get_utf8_name (writer->file), error->message);
+                       writer->file ?
+                       gimp_file_get_utf8_name (writer->file) : "output stream",
+                       error->message);
           g_clear_error (&error);
         }
     }
@@ -709,34 +749,36 @@ gimp_config_writer_comment (GimpConfigWriter *writer,
 }
 
 static gboolean
-gimp_config_writer_close_file (GimpConfigWriter  *writer,
-                               GError           **error)
+gimp_config_writer_close_output (GimpConfigWriter  *writer,
+                                 GError           **error)
 {
-  GError *my_error = NULL;
-
   g_return_val_if_fail (writer->output != NULL, FALSE);
-
-  if (! writer->file)
-    return TRUE;
 
   if (writer->error)
     {
       g_object_unref (writer->output);
       writer->output = NULL;
+
       return FALSE;
     }
 
-  if (! g_output_stream_close (writer->output, NULL, &my_error))
+  if (writer->file)
     {
-      g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-                   _("Error writing '%s': %s"),
-                   gimp_file_get_utf8_name (writer->file), my_error->message);
-      g_clear_error (&my_error);
+      GError *my_error = NULL;
 
-      g_object_unref (writer->output);
-      writer->output = NULL;
+      if (! g_output_stream_close (writer->output, NULL, &my_error))
+        {
+          g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+                       _("Error writing '%s': %s"),
+                       gimp_file_get_utf8_name (writer->file),
+                       my_error->message);
+          g_clear_error (&my_error);
 
-      return FALSE;
+          g_object_unref (writer->output);
+          writer->output = NULL;
+
+          return FALSE;
+        }
     }
 
   g_object_unref (writer->output);

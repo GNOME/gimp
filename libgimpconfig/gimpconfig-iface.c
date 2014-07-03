@@ -339,6 +339,45 @@ gimp_config_serialize_to_gfile (GimpConfig   *config,
 }
 
 /**
+ * gimp_config_serialize_to_stream:
+ * @config: a #GObject that implements the #GimpConfigInterface.
+ * @stream: the #GOutputStream to write the configuration to.
+ * @header: optional file header (must be ASCII only)
+ * @footer: optional file footer (must be ASCII only)
+ * @data: user data passed to the serialize implementation.
+ * @error: return location for a possible error
+ *
+ * Serializes the object properties of @config to the stream specified
+ * by @stream.
+ *
+ * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_config_serialize_to_stream (GimpConfig     *config,
+                                 GOutputStream  *output,
+                                 const gchar    *header,
+                                 const gchar    *footer,
+                                 gpointer        data,
+                                 GError        **error)
+{
+  GimpConfigWriter *writer;
+
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
+  g_return_val_if_fail (G_IS_OUTPUT_STREAM (output), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  writer = gimp_config_writer_new_stream (output, header, error);
+  if (!writer)
+    return FALSE;
+
+  GIMP_CONFIG_GET_INTERFACE (config)->serialize (config, writer, data);
+
+  return gimp_config_writer_finish (writer, footer, error);
+}
+
+/**
  * gimp_config_serialize_to_fd:
  * @config: a #GObject that implements the #GimpConfigInterface.
  * @fd: a file descriptor, opened for writing

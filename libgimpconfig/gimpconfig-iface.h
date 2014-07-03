@@ -85,6 +85,12 @@ gboolean      gimp_config_serialize_to_gfile    (GimpConfig       *config,
                                                  const gchar      *footer,
                                                  gpointer          data,
                                                  GError          **error);
+gboolean      gimp_config_serialize_to_stream   (GimpConfig       *config,
+                                                 GOutputStream    *output,
+                                                 const gchar      *header,
+                                                 const gchar      *footer,
+                                                 gpointer          data,
+                                                 GError          **error);
 gboolean      gimp_config_serialize_to_fd       (GimpConfig       *config,
                                                  gint              fd,
                                                  gpointer          data);
