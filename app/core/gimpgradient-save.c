@@ -31,29 +31,16 @@
 
 
 gboolean
-gimp_gradient_save (GimpData  *data,
-                    GError   **error)
+gimp_gradient_save (GimpData       *data,
+                    GOutputStream  *output,
+                    GError        **error)
 {
   GimpGradient        *gradient = GIMP_GRADIENT (data);
-  GOutputStream       *output;
   GString             *string;
   GimpGradientSegment *seg;
   gint                 num_segments;
   gsize                bytes_written;
   GError              *my_error = NULL;
-
-  output = G_OUTPUT_STREAM (g_file_replace (gimp_data_get_file (data),
-                                            NULL, FALSE, G_FILE_CREATE_NONE,
-                                            NULL, &my_error));
-  if (! output)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (gimp_data_get_file (data)),
-                   my_error->message);
-      g_clear_error (&my_error);
-      return FALSE;
-    }
 
   /* File format is:
    *
@@ -131,12 +118,10 @@ gimp_gradient_save (GimpData  *data,
                    my_error->message);
       g_clear_error (&my_error);
       g_string_free (string, TRUE);
-      g_object_unref (output);
       return FALSE;
     }
 
   g_string_free (string, TRUE);
-  g_object_unref (output);
 
   return TRUE;
 }

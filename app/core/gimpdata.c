@@ -518,7 +518,36 @@ gimp_data_save (GimpData  *data,
   g_return_val_if_fail (private->file != NULL, FALSE);
 
   if (GIMP_DATA_GET_CLASS (data)->save)
-    success = GIMP_DATA_GET_CLASS (data)->save (data, error);
+    {
+      GOutputStream *output;
+
+      output = G_OUTPUT_STREAM (g_file_replace (private->file,
+                                                NULL, FALSE, G_FILE_CREATE_NONE,
+                                                NULL, error));
+
+      if (output)
+        {
+          success = GIMP_DATA_GET_CLASS (data)->save (data, output, error);
+
+          if (success &&
+              ! g_output_stream_close (output, NULL, error))
+            {
+              g_prefix_error (error,
+                              _("Error writing '%s': "),
+                              gimp_file_get_utf8_name (private->file));
+
+              success = FALSE;
+            }
+
+          g_object_unref (output);
+        }
+      else
+        {
+          g_prefix_error (error,
+                          _("Could not open '%s' for writing: "),
+                          gimp_file_get_utf8_name (private->file));
+        }
+    }
 
   if (success)
     {

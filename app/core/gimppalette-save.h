@@ -20,8 +20,9 @@
 
 
 /*  don't call this function directly, use gimp_data_save() instead  */
-gboolean   gimp_palette_save (GimpData  *data,
-                              GError   **error);
+gboolean   gimp_palette_save (GimpData       *data,
+                              GOutputStream  *output,
+                              GError        **error);
 
 
 #endif /* __GIMP_PALETTE_SAVE_H__ */

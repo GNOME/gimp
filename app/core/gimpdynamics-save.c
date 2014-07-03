@@ -29,15 +29,16 @@
 
 
 gboolean
-gimp_dynamics_save (GimpData  *data,
-                    GError   **error)
+gimp_dynamics_save (GimpData       *data,
+                    GOutputStream  *output,
+                    GError        **error)
 {
   g_return_val_if_fail (GIMP_IS_DYNAMICS (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_config_serialize_to_gfile (GIMP_CONFIG (data),
-                                         gimp_data_get_file (data),
-                                         "GIMP dynamics file",
-                                         "end of GIMP dynamics file",
-                                         NULL, error);
+  return gimp_config_serialize_to_stream (GIMP_CONFIG (data),
+                                          output,
+                                          "GIMP dynamics file",
+                                          "end of GIMP dynamics file",
+                                          NULL, error);
 }

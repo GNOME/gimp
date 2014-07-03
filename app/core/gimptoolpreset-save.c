@@ -29,15 +29,16 @@
 
 
 gboolean
-gimp_tool_preset_save (GimpData  *data,
-                       GError   **error)
+gimp_tool_preset_save (GimpData       *data,
+                       GOutputStream  *output,
+                       GError        **error)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_PRESET (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_config_serialize_to_gfile (GIMP_CONFIG (data),
-                                         gimp_data_get_file (data),
-                                         "GIMP tool preset file",
-                                         "end of GIMP tool preset file",
-                                         NULL, error);
+  return gimp_config_serialize_to_stream (GIMP_CONFIG (data),
+                                          output,
+                                          "GIMP tool preset file",
+                                          "end of GIMP tool preset file",
+                                          NULL, error);
 }

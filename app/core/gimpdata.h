@@ -57,10 +57,11 @@ struct _GimpDataClass
   void          (* dirty)         (GimpData  *data);
 
   /*  virtual functions  */
-  gboolean      (* save)          (GimpData  *data,
-                                   GError   **error);
-  const gchar * (* get_extension) (GimpData  *data);
-  GimpData    * (* duplicate)     (GimpData  *data);
+  gboolean      (* save)          (GimpData       *data,
+                                   GOutputStream  *output,
+                                   GError        **error);
+  const gchar * (* get_extension) (GimpData       *data);
+  GimpData    * (* duplicate)     (GimpData       *data);
 };
 
 

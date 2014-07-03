@@ -29,15 +29,16 @@
 
 
 gboolean
-gimp_curve_save (GimpData  *data,
-                 GError   **error)
+gimp_curve_save (GimpData       *data,
+                 GOutputStream  *output,
+                 GError        **error)
 {
   g_return_val_if_fail (GIMP_IS_CURVE (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  return gimp_config_serialize_to_gfile (GIMP_CONFIG (data),
-                                         gimp_data_get_file (data),
-                                         "GIMP curve file",
-                                         "end of GIMP curve file",
-                                         NULL, error);
+  return gimp_config_serialize_to_stream (GIMP_CONFIG (data),
+                                          output,
+                                          "GIMP curve file",
+                                          "end of GIMP curve file",
+                                          NULL, error);
 }
