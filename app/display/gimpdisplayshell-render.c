@@ -33,7 +33,9 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
+#ifdef USE_NODE_BLIT
 #include "core/gimpprojectable.h"
+#endif
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -57,6 +59,9 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 {
   GimpImage       *image;
   GeglBuffer      *buffer;
+#ifdef USE_NODE_BLIT
+  GeglNode        *node;
+#endif
   gdouble          scale_x      = 1.0;
   gdouble          scale_y      = 1.0;
   gdouble          buffer_scale = 1.0;
@@ -82,6 +87,9 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   image  = gimp_display_get_image (shell->display);
   buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
+#ifdef USE_NODE_BLIT
+  node   = gimp_projectable_get_graph (GIMP_PROJECTABLE (image));
+#endif
 
 #ifdef GIMP_DISPLAY_RENDER_ENABLE_SCALING
   /* if we had this future API, things would look pretty on hires (retina) */
@@ -166,13 +174,23 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                               shell->filter_data);
         }
 
+#ifndef USE_NODE_BLIT
       gegl_buffer_get (buffer,
                        GEGL_RECTANGLE (scaled_x, scaled_y,
                                        scaled_width, scaled_height),
                        buffer_scale,
-                       filter_format, shell->filter_data,
-                       shell->filter_stride, GEGL_ABYSS_CLAMP);
-
+                       filter_format,
+                       shell->filter_data, shell->filter_stride,
+                       GEGL_ABYSS_CLAMP);
+#else
+      gegl_node_blit (node,
+                      buffer_scale,
+                      GEGL_RECTANGLE (scaled_x, scaled_y,
+                                      scaled_width, scaled_height),
+                      filter_format,
+                      shell->filter_data, shell->filter_stride,
+                      GEGL_BLIT_CACHE);
+#endif
 
       gimp_color_display_stack_convert_buffer (shell->filter_stack,
                                                shell->filter_buffer,
@@ -191,6 +209,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     }
   else
     {
+#ifndef USE_NODE_BLIT
       gegl_buffer_get (buffer,
                        GEGL_RECTANGLE (scaled_x, scaled_y,
                                        scaled_width, scaled_height),
@@ -198,6 +217,15 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                        babl_format ("cairo-ARGB32"),
                        data, stride,
                        GEGL_ABYSS_CLAMP);
+#else
+      gegl_node_blit (node,
+                      buffer_scale,
+                      GEGL_RECTANGLE (scaled_x, scaled_y,
+                                      scaled_width, scaled_height),
+                      babl_format ("cairo-ARGB32"),
+                      data, stride,
+                      GEGL_BLIT_CACHE);
+#endif
     }
 
   if (shell->mask)
