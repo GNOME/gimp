@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpColorProfile   gimp_lcms_profile_open_from_file   (const gchar       *filename,
+GimpColorProfile   gimp_lcms_profile_open_from_file   (GFile             *file,
                                                        GError           **error);
 GimpColorProfile   gimp_lcms_profile_open_from_data   (const guint8      *data,
                                                        gsize              length,

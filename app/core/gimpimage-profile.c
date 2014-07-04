@@ -154,16 +154,20 @@ gimp_image_get_profile (GimpImage  *image,
     }
   else if (config->rgb_profile)
     {
-      profile = gimp_lcms_profile_open_from_file (config->rgb_profile, error);
+      GFile *file = g_file_new_for_path (config->rgb_profile);
+
+      profile = gimp_lcms_profile_open_from_file (file, error);
 
       if (profile && ! gimp_lcms_profile_is_rgb (profile))
         {
           g_set_error (error, GIMP_ERROR, GIMP_FAILED,
                        _("Color profile '%s' is not for RGB color space"),
-                       gimp_filename_to_utf8 (config->rgb_profile));
+                       gimp_file_get_utf8_name (file));
           cmsCloseProfile (profile);
           profile = NULL;
         }
+
+      g_object_unref (file);
     }
 
   return profile;

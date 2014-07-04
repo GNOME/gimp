@@ -85,11 +85,11 @@ static void  run   (const gchar      *name,
 
 static GimpPDBStatusType  lcms_icc_set       (GimpColorConfig  *config,
                                               gint32            image,
-                                              const gchar      *filename);
+                                              GFile            *file);
 static GimpPDBStatusType  lcms_icc_apply     (GimpColorConfig  *config,
                                               GimpRunMode       run_mode,
                                               gint32            image,
-                                              const gchar      *filename,
+                                              GFile            *file,
                                               GimpColorRenderingIntent intent,
                                               gboolean          bpc,
                                               gboolean         *dont_ask);
@@ -98,7 +98,7 @@ static GimpPDBStatusType  lcms_icc_info      (GimpColorConfig  *config,
                                               gchar           **name,
                                               gchar           **desc,
                                               gchar           **info);
-static GimpPDBStatusType  lcms_icc_file_info (const gchar      *filename,
+static GimpPDBStatusType  lcms_icc_file_info (GFile            *file,
                                               gchar           **name,
                                               gchar           **desc,
                                               gchar           **info,
@@ -109,11 +109,11 @@ static cmsHPROFILE  lcms_image_get_profile       (GimpColorConfig *config,
                                                   GError         **error);
 static gboolean     lcms_image_set_profile       (gint32           image,
                                                   cmsHPROFILE      profile,
-                                                  const gchar     *filename);
+                                                  GFile           *file);
 static gboolean     lcms_image_apply_profile     (gint32           image,
                                                   cmsHPROFILE      src_profile,
                                                   cmsHPROFILE      dest_profile,
-                                                  const gchar     *filename,
+                                                  GFile           *file,
                                                   GimpColorRenderingIntent intent,
                                                   gboolean          bpc);
 static void         lcms_image_transform_rgb     (gint32           image,
@@ -320,7 +320,7 @@ run (const gchar      *name,
   gint                      proc     = NONE;
   GimpRunMode               run_mode = GIMP_RUN_NONINTERACTIVE;
   gint32                    image    = -1;
-  const gchar              *filename = NULL;
+  GFile                    *file     = NULL;
   GimpColorConfig          *config   = NULL;
   gboolean                  dont_ask = FALSE;
   GimpColorRenderingIntent  intent;
@@ -365,14 +365,14 @@ run (const gchar      *name,
       run_mode = param[0].data.d_int32;
       image    = param[1].data.d_image;
       if (nparams > 2)
-        filename = param[2].data.d_string;
+        file = g_file_new_for_path (param[2].data.d_string);
       break;
 
     case PROC_APPLY:
       run_mode = param[0].data.d_int32;
       image    = param[1].data.d_image;
       if (nparams > 2)
-        filename = param[2].data.d_string;
+        file = g_file_new_for_path (param[2].data.d_string);
       if (nparams > 3)
         intent = param[3].data.d_int32;
       if (nparams > 4)
@@ -398,7 +398,7 @@ run (const gchar      *name,
       break;
 
     case PROC_FILE_INFO:
-      filename = param[0].data.d_string;
+      file = g_file_new_for_path (param[0].data.d_string);
       break;
     }
 
@@ -430,13 +430,13 @@ run (const gchar      *name,
     {
     case PROC_SET:
     case PROC_SET_RGB:
-      status = lcms_icc_set (config, image, filename);
+      status = lcms_icc_set (config, image, file);
       break;
 
     case PROC_APPLY:
     case PROC_APPLY_RGB:
       status = lcms_icc_apply (config, run_mode,
-                               image, filename, intent, bpc,
+                               image, file, intent, bpc,
                                &dont_ask);
 
       if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -459,7 +459,7 @@ run (const gchar      *name,
         if (proc == PROC_INFO)
           status = lcms_icc_info (config, image, &name, &desc, &info);
         else
-          status = lcms_icc_file_info (filename, &name, &desc, &info, &error);
+          status = lcms_icc_file_info (file, &name, &desc, &info, &error);
 
         if (status == GIMP_PDB_SUCCESS)
           {
@@ -492,23 +492,31 @@ run (const gchar      *name,
   if (config)
     g_object_unref (config);
 
+  if (file)
+    g_object_unref (file);
+
   values[0].data.d_status = status;
 }
 
 static GimpPDBStatusType
 lcms_icc_set (GimpColorConfig *config,
               gint32           image,
-              const gchar     *filename)
+              GFile           *file)
 {
   gboolean success;
 
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (image != -1, GIMP_PDB_CALLING_ERROR);
 
-  if (! filename)
-    filename = config->rgb_profile;
+  if (file)
+    g_object_ref (file);
+  else if (config->rgb_profile)
+    file = g_file_new_for_path (config->rgb_profile);
 
-  success = lcms_image_set_profile (image, NULL, filename);
+  success = lcms_image_set_profile (image, NULL, file);
+
+  if (file)
+    g_object_unref (file);
 
   return success ? GIMP_PDB_SUCCESS : GIMP_PDB_EXECUTION_ERROR;
 }
@@ -517,7 +525,7 @@ static GimpPDBStatusType
 lcms_icc_apply (GimpColorConfig          *config,
                 GimpRunMode               run_mode,
                 gint32                    image,
-                const gchar              *filename,
+                GFile                    *file,
                 GimpColorRenderingIntent  intent,
                 gboolean                  bpc,
                 gboolean                 *dont_ask)
@@ -530,14 +538,16 @@ lcms_icc_apply (GimpColorConfig          *config,
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (image != -1, GIMP_PDB_CALLING_ERROR);
 
-  if (! filename)
-    filename = config->rgb_profile;
+  if (file)
+    g_object_ref (file);
+  else if (config->rgb_profile)
+    file = g_file_new_for_path (config->rgb_profile);
 
-  if (filename)
+  if (file)
     {
       GError *error = NULL;
 
-      dest_profile = gimp_lcms_profile_open_from_file (filename, &error);
+      dest_profile = gimp_lcms_profile_open_from_file (file, &error);
 
       if (! dest_profile)
         {
@@ -550,9 +560,10 @@ lcms_icc_apply (GimpColorConfig          *config,
       if (! gimp_lcms_profile_is_rgb (dest_profile))
         {
           g_message (_("Color profile '%s' is not for RGB color space."),
-                     gimp_filename_to_utf8 (filename));
+                     gimp_file_get_utf8_name (file));
 
           cmsCloseProfile (dest_profile);
+          g_object_unref (file);
           return GIMP_PDB_EXECUTION_ERROR;
         }
     }
@@ -589,6 +600,9 @@ lcms_icc_apply (GimpColorConfig          *config,
       g_free (src_label);
       g_free (dest_label);
 
+      if (file)
+        g_object_unref (file);
+
       return GIMP_PDB_SUCCESS;
     }
 
@@ -600,7 +614,7 @@ lcms_icc_apply (GimpColorConfig          *config,
 
   if (status == GIMP_PDB_SUCCESS &&
       ! lcms_image_apply_profile (image,
-                                  src_profile, dest_profile, filename,
+                                  src_profile, dest_profile, file,
                                   intent, bpc))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
@@ -608,6 +622,9 @@ lcms_icc_apply (GimpColorConfig          *config,
 
   cmsCloseProfile (src_profile);
   cmsCloseProfile (dest_profile);
+
+  if (file)
+    g_object_unref (file);
 
   return status;
 }
@@ -646,15 +663,15 @@ lcms_icc_info (GimpColorConfig *config,
 }
 
 static GimpPDBStatusType
-lcms_icc_file_info (const gchar  *filename,
-                    gchar       **name,
-                    gchar       **desc,
-                    gchar       **info,
-                    GError      **error)
+lcms_icc_file_info (GFile   *file,
+                    gchar  **name,
+                    gchar  **desc,
+                    gchar  **info,
+                    GError **error)
 {
   cmsHPROFILE profile;
 
-  profile = gimp_lcms_profile_open_from_file (filename, error);
+  profile = gimp_lcms_profile_open_from_file (file, error);
 
   if (! profile)
     return GIMP_PDB_EXECUTION_ERROR;
@@ -692,16 +709,20 @@ lcms_image_get_profile (GimpColorConfig  *config,
     }
   else if (config->rgb_profile)
     {
-      profile = gimp_lcms_profile_open_from_file (config->rgb_profile, error);
+      GFile *file = g_file_new_for_path (config->rgb_profile);
+
+      profile = gimp_lcms_profile_open_from_file (file, error);
 
       if (profile && ! gimp_lcms_profile_is_rgb (profile))
         {
           g_set_error (error, 0, 0,
                        _("Color profile '%s' is not for RGB color space"),
-                       gimp_filename_to_utf8 (config->rgb_profile));
+                       gimp_file_get_utf8_name (file));
           cmsCloseProfile (profile);
           profile = NULL;
         }
+
+      g_object_unref (file);
     }
 
   return profile;
@@ -710,19 +731,22 @@ lcms_image_get_profile (GimpColorConfig  *config,
 static gboolean
 lcms_image_set_profile (gint32       image,
                         cmsHPROFILE  profile,
-                        const gchar *filename)
+                        GFile       *file)
 {
   g_return_val_if_fail (image != -1, FALSE);
 
-  if (filename)
+  if (file)
     {
+      cmsHPROFILE   file_profile;
       GimpParasite *parasite;
-      GMappedFile  *file;
+      guint8       *profile_data;
+      gsize         profile_length;
       GError       *error = NULL;
 
-      file = g_mapped_file_new (filename, FALSE, &error);
+      /* check that this file is actually an ICC profile */
+      file_profile = gimp_lcms_profile_open_from_file (file, &error);
 
-      if (! file)
+      if (! file_profile)
         {
           g_message ("%s", error->message);
           g_clear_error (&error);
@@ -730,22 +754,17 @@ lcms_image_set_profile (gint32       image,
           return FALSE;
         }
 
-      /* check that this file is actually an ICC profile */
-      if (! profile)
-        {
-          profile = cmsOpenProfileFromMem (g_mapped_file_get_contents (file),
-                                           g_mapped_file_get_length (file));
+      profile_data = gimp_lcms_profile_save_to_data (file_profile,
+                                                     &profile_length,
+                                                     &error);
+      cmsCloseProfile (file_profile);
 
-          if (profile)
-            {
-              cmsCloseProfile (profile);
-            }
-          else
-            {
-              g_message (_("'%s' does not appear to be an ICC color profile"),
-                         gimp_filename_to_utf8 (filename));
-              return FALSE;
-            }
+      if (! profile_data)
+        {
+          g_message ("%s", error->message);
+          g_clear_error (&error);
+
+          return FALSE;
         }
 
       gimp_image_undo_group_start (image);
@@ -753,10 +772,9 @@ lcms_image_set_profile (gint32       image,
       parasite = gimp_parasite_new ("icc-profile",
                                     GIMP_PARASITE_PERSISTENT |
                                     GIMP_PARASITE_UNDOABLE,
-                                    g_mapped_file_get_length (file),
-                                    g_mapped_file_get_contents (file));
+                                    profile_length, profile_data);
 
-      g_mapped_file_unref (file);
+      g_free (profile_data);
 
       gimp_image_attach_parasite (image, parasite);
       gimp_parasite_free (parasite);
@@ -779,7 +797,7 @@ static gboolean
 lcms_image_apply_profile (gint32                    image,
                           cmsHPROFILE               src_profile,
                           cmsHPROFILE               dest_profile,
-                          const gchar              *filename,
+                          GFile                    *file,
                           GimpColorRenderingIntent  intent,
                           gboolean                  bpc)
 {
@@ -789,7 +807,7 @@ lcms_image_apply_profile (gint32                    image,
 
   gimp_image_undo_group_start (image);
 
-  if (! lcms_image_set_profile (image, dest_profile, filename))
+  if (! lcms_image_set_profile (image, dest_profile, file))
     {
       gimp_image_undo_group_end (image);
 
@@ -1255,9 +1273,10 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
 
   if (config->rgb_profile)
     {
+      GFile  *file  = g_file_new_for_path (config->rgb_profile);
       GError *error = NULL;
 
-      profile = gimp_lcms_profile_open_from_file (config->rgb_profile, &error);
+      profile = gimp_lcms_profile_open_from_file (file, &error);
 
       if (! profile)
         {
@@ -1275,6 +1294,8 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
         {
           rgb_filename = config->rgb_profile;
         }
+
+      g_object_unref (file);
     }
 
   if (! profile)
@@ -1421,15 +1442,19 @@ lcms_dialog (GimpColorConfig *config,
   while ((run = gimp_dialog_run (GIMP_DIALOG (dialog))) == GTK_RESPONSE_OK)
     {
       gchar       *filename = gimp_color_profile_combo_box_get_active (box);
+      GFile       *file     = NULL;
       cmsHPROFILE  dest_profile;
 
       gtk_widget_set_sensitive (dialog, FALSE);
 
       if (filename)
+        file = g_file_new_for_path (filename);
+
+      if (file)
         {
           GError *error = NULL;
 
-          dest_profile = gimp_lcms_profile_open_from_file (filename, &error);
+          dest_profile = gimp_lcms_profile_open_from_file (file, &error);
 
           if (! dest_profile)
             {
@@ -1449,12 +1474,12 @@ lcms_dialog (GimpColorConfig *config,
               if (apply)
                 success = lcms_image_apply_profile (image,
                                                     src_profile, dest_profile,
-                                                    filename,
+                                                    file,
                                                     values->intent,
                                                     values->bpc);
               else
                 success = lcms_image_set_profile (image,
-                                                  dest_profile, filename);
+                                                  dest_profile, file);
             }
           else
             {
@@ -1463,6 +1488,9 @@ lcms_dialog (GimpColorConfig *config,
 
           cmsCloseProfile (dest_profile);
         }
+
+      if (file)
+        g_object_unref (file);
 
       if (success)
         break;
