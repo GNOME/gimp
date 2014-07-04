@@ -17,11 +17,8 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <stdarg.h>
 #include <stdlib.h>
 
-#include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -212,49 +209,52 @@ static void
 themes_apply_theme (Gimp        *gimp,
                     const gchar *theme_name)
 {
-  const gchar *theme_dir;
-  gchar       *gtkrc_theme;
-  gchar       *gtkrc_user;
-  gchar       *themerc;
-  FILE        *file;
+  GFile         *themerc;
+  GOutputStream *output;
+  GError        *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  theme_dir = themes_get_theme_dir (gimp, theme_name);
-
-  if (theme_dir)
-    {
-      gtkrc_theme = g_build_filename (theme_dir, "gtkrc", NULL);
-    }
-  else
-    {
-      /*  get the hardcoded default theme gtkrc  */
-      gtkrc_theme = g_strdup (gimp_gtkrc ());
-    }
-
-  gtkrc_user = gimp_personal_rc_file ("gtkrc");
-
-  themerc = gimp_personal_rc_file ("themerc");
+  themerc = gimp_personal_rc_gfile ("themerc");
 
   if (gimp->be_verbose)
-    g_print ("Writing '%s'\n",
-             gimp_filename_to_utf8 (themerc));
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (themerc));
 
-  file = g_fopen (themerc, "w");
-
-  if (! file)
+  output = G_OUTPUT_STREAM (g_file_replace (themerc,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, &error));
+  if (! output)
     {
       gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
                     _("Could not open '%s' for writing: %s"),
-                    gimp_filename_to_utf8 (themerc), g_strerror (errno));
-      goto cleanup;
+                    gimp_file_get_utf8_name (themerc), error->message);
+      g_clear_error (&error);
     }
+  else
+    {
+      const gchar *theme_dir = themes_get_theme_dir (gimp, theme_name);
+      gchar       *gtkrc_theme;
+      gchar       *gtkrc_user;
+      gchar       *esc_gtkrc_theme;
+      gchar       *esc_gtkrc_user;
 
-  {
-    gchar *esc_gtkrc_theme = g_strescape (gtkrc_theme, NULL);
-    gchar *esc_gtkrc_user  = g_strescape (gtkrc_user, NULL);
+      if (theme_dir)
+        {
+          gtkrc_theme = g_build_filename (theme_dir, "gtkrc", NULL);
+        }
+      else
+        {
+          /*  get the hardcoded default theme gtkrc  */
+          gtkrc_theme = g_strdup (gimp_gtkrc ());
+        }
 
-    fprintf (file,
+      gtkrc_user = gimp_personal_rc_file ("gtkrc");
+
+      esc_gtkrc_theme = g_strescape (gtkrc_theme, NULL);
+      esc_gtkrc_user  = g_strescape (gtkrc_user, NULL);
+
+      if (! gimp_output_stream_printf
+            (output, NULL, NULL, &error,
              "# GIMP themerc\n"
              "#\n"
              "# This file is written on GIMP startup and on every theme change.\n"
@@ -267,18 +267,23 @@ themes_apply_theme (Gimp        *gimp,
              "# end of themerc\n",
              gtkrc_user,
              esc_gtkrc_theme,
-             esc_gtkrc_user);
+             esc_gtkrc_user))
+        {
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                        _("Error writing '%s': %s"),
+                        gimp_file_get_utf8_name (themerc), error->message);
+          g_clear_error (&error);
+        }
 
-    g_free (esc_gtkrc_theme);
-    g_free (esc_gtkrc_user);
-  }
+      g_free (esc_gtkrc_theme);
+      g_free (esc_gtkrc_user);
+      g_free (gtkrc_theme);
+      g_free (gtkrc_user);
 
-  fclose (file);
+      g_object_unref (output);
+    }
 
- cleanup:
-  g_free (gtkrc_theme);
-  g_free (gtkrc_user);
-  g_free (themerc);
+  g_object_unref (themerc);
 }
 
 static void
