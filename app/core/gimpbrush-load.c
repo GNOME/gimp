@@ -446,7 +446,8 @@ gimp_brush_load_abr (GimpContext   *context,
                      abr_hdr.version);
     }
 
-  g_propagate_error (error, my_error);
+  if (my_error)
+    g_propagate_error (error, my_error);
 
   return g_list_reverse (brush_list);
 }
