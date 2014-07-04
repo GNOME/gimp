@@ -599,31 +599,16 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
 
 gboolean
 gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
-                               GFile             *file,
+                               GOutputStream     *output,
                                GError           **error)
 {
-  GOutputStream *output;
-  GString       *string;
-  gsize          bytes_written;
-  gint           i;
-  GError        *my_error = NULL;
+  GString *string;
+  gsize    bytes_written;
+  gint     i;
 
   g_return_val_if_fail (GIMP_IS_CURVES_CONFIG (config), FALSE);
-  g_return_val_if_fail (G_IS_FILE (file), FALSE);
+  g_return_val_if_fail (G_IS_OUTPUT_STREAM (output), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-
-  output = G_OUTPUT_STREAM (g_file_replace (file,
-                                            NULL, FALSE, G_FILE_CREATE_NONE,
-                                            NULL, &my_error));
-  if (! output)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file),
-                   my_error->message);
-      g_clear_error (&my_error);
-      return FALSE;
-    }
 
   string = g_string_new ("# GIMP Curves File\n");
 
@@ -682,21 +667,15 @@ gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
     }
 
   if (! g_output_stream_write_all (output, string->str, string->len,
-                                   &bytes_written, NULL, &my_error) ||
+                                   &bytes_written, NULL, error) ||
       bytes_written != string->len)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
-                   _("Writing curves file '%s' failed: %s"),
-                   gimp_file_get_utf8_name (file),
-                   my_error->message);
-      g_clear_error (&my_error);
+      g_prefix_error (error, _("Writing curves file failed: "));
       g_string_free (string, TRUE);
-      g_object_unref (output);
       return FALSE;
     }
 
   g_string_free (string, TRUE);
-  g_object_unref (output);
 
   return TRUE;
 }

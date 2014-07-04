@@ -30,10 +30,10 @@ GtkWidget * gimp_image_map_tool_real_get_settings_ui (GimpImageMapTool *tool,
                                                       const gchar      *default_folder,
                                                       GtkWidget       **settings_box);
 gboolean    gimp_image_map_tool_real_settings_import (GimpImageMapTool *tool,
-                                                      GFile            *file,
+                                                      GInputStream     *input,
                                                       GError          **error);
 gboolean    gimp_image_map_tool_real_settings_export (GimpImageMapTool *tool,
-                                                      GFile            *file,
+                                                      GOutputStream    *output,
                                                       GError          **error);
 
 

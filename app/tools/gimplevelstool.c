@@ -77,10 +77,10 @@ static GeglNode * gimp_levels_tool_get_operation  (GimpImageMapTool  *im_tool,
 static void       gimp_levels_tool_dialog         (GimpImageMapTool  *im_tool);
 static void       gimp_levels_tool_reset          (GimpImageMapTool  *im_tool);
 static gboolean   gimp_levels_tool_settings_import(GimpImageMapTool  *im_tool,
-                                                   GFile             *file,
+                                                   GInputStream      *input,
                                                    GError           **error);
 static gboolean   gimp_levels_tool_settings_export(GimpImageMapTool  *im_tool,
-                                                   GFile             *file,
+                                                   GOutputStream     *output,
                                                    GError           **error);
 static void       gimp_levels_tool_color_picked   (GimpImageMapTool  *im_tool,
                                                    gpointer           identifier,
@@ -611,66 +611,43 @@ gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
 
 static gboolean
 gimp_levels_tool_settings_import (GimpImageMapTool  *image_map_tool,
-                                  GFile             *file,
+                                  GInputStream      *input,
                                   GError           **error)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
-  GInputStream   *input;
   gchar           header[64];
   gsize           bytes_read;
-
-  input = G_INPUT_STREAM (g_file_read (file, NULL, error));
-  if (! input)
-    {
-      g_prefix_error (error,
-                      _("Could not open '%s' for reading: "),
-                      gimp_file_get_utf8_name (file));
-      return FALSE;
-    }
 
   if (! g_input_stream_read_all (input, header, sizeof (header),
                                  &bytes_read, NULL, error) ||
       bytes_read != sizeof (header))
     {
-      g_prefix_error (error,
-                      _("Could not read header from '%s': "),
-                      gimp_file_get_utf8_name (file));
-      g_object_unref (input);
+      g_prefix_error (error, _("Could not read header: "));
       return FALSE;
     }
 
+  g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_SET, NULL, NULL);
+
   if (g_str_has_prefix (header, "# GIMP Levels File\n"))
-    {
-      gboolean success;
-
-      g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_SET, NULL, NULL);
-
-      success = gimp_levels_config_load_cruft (tool->config, input, error);
-
-      g_object_unref (input);
-
-      return success;
-    }
-
-  g_object_unref (input);
+    return gimp_levels_config_load_cruft (tool->config, input, error);
 
   return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_import (image_map_tool,
-                                                                    file,
+                                                                    input,
                                                                     error);
 }
 
 static gboolean
 gimp_levels_tool_settings_export (GimpImageMapTool  *image_map_tool,
-                                  GFile             *file,
+                                  GOutputStream     *output,
                                   GError           **error)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
 
   if (tool->export_old_format)
-    return gimp_levels_config_save_cruft (tool->config, file, error);
+    return gimp_levels_config_save_cruft (tool->config, output, error);
 
   return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_export (image_map_tool,
-                                                                    file,
+                                                                    output,
                                                                     error);
 }
 

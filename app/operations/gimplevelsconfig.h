@@ -79,7 +79,7 @@ gboolean   gimp_levels_config_load_cruft       (GimpLevelsConfig      *config,
                                                 GInputStream          *input,
                                                 GError               **error);
 gboolean   gimp_levels_config_save_cruft       (GimpLevelsConfig      *config,
-                                                GFile                 *file,
+                                                GOutputStream         *output,
                                                 GError               **error);
 
 

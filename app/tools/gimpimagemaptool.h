@@ -85,10 +85,10 @@ struct _GimpImageMapToolClass
                                    GtkWidget        **settings_box);
 
   gboolean    (* settings_import) (GimpImageMapTool  *image_map_tool,
-                                   GFile             *file,
+                                   GInputStream      *input,
                                    GError           **error);
   gboolean    (* settings_export) (GimpImageMapTool  *image_map_tool,
-                                   GFile             *file,
+                                   GOutputStream     *output,
                                    GError           **error);
 
   void        (* color_picked)    (GimpImageMapTool  *image_map_tool,

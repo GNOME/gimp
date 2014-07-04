@@ -72,7 +72,7 @@ gboolean   gimp_curves_config_load_cruft          (GimpCurvesConfig  *config,
                                                    GInputStream      *input,
                                                    GError           **error);
 gboolean   gimp_curves_config_save_cruft          (GimpCurvesConfig  *config,
-                                                   GFile             *file,
+                                                   GOutputStream     *output,
                                                    GError           **error);
 
 
