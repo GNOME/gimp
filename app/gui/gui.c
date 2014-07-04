@@ -450,10 +450,6 @@ gui_restore_callback (Gimp               *gimp,
 
   g_type_class_unref (g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_PALETTE));
 
-  /*  initialize the document history  */
-  status_callback (NULL, _("Documents"), 0.9);
-  gimp_recent_list_load (gimp);
-
   status_callback (NULL, _("Tool Options"), 1.0);
   gimp_tools_restore (gimp);
 }
@@ -494,6 +490,12 @@ gui_restore_after_callback (Gimp               *gimp,
     g_print ("INIT: %s\n", G_STRFUNC);
 
   gimp->message_handler = GIMP_MESSAGE_BOX;
+
+  /*  load the recent documents after gimp_real_restore() because we
+   *  need the mime-types implemented by plug-ins
+   */
+  status_callback (NULL, _("Documents"), 0.9);
+  gimp_recent_list_load (gimp);
 
   /*  enable this to always have icons everywhere  */
   if (g_getenv ("GIMP_ICONS_LIKE_A_BOSS"))

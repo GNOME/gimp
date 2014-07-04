@@ -231,6 +231,25 @@ file_procedure_find_by_extension (GSList      *procs,
   return file_proc_find_by_extension (procs, uri, FALSE, FALSE);
 }
 
+GimpPlugInProcedure *
+file_procedure_find_by_mime_type (GSList      *procs,
+                                  const gchar *mime_type)
+{
+  GSList *list;
+
+  g_return_val_if_fail (mime_type != NULL, NULL);
+
+  for (list = procs; list; list = g_slist_next (list))
+    {
+      GimpPlugInProcedure *proc = list->data;
+
+      if (proc->mime_type && ! strcmp (mime_type, proc->mime_type))
+        return proc;
+    }
+
+  return NULL;
+}
+
 gboolean
 file_procedure_in_group (GimpPlugInProcedure *file_proc,
                          FileProcedureGroup   group)

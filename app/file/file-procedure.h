@@ -37,6 +37,10 @@ GimpPlugInProcedure *file_procedure_find_by_prefix    (GSList               *pro
                                                        const gchar          *uri);
 GimpPlugInProcedure *file_procedure_find_by_extension (GSList               *procs,
                                                        const gchar          *uri);
+
+GimpPlugInProcedure *file_procedure_find_by_mime_type (GSList               *procs,
+                                                       const gchar          *mime_type);
+
 gboolean             file_procedure_in_group          (GimpPlugInProcedure  *file_proc,
                                                        FileProcedureGroup    group);
 

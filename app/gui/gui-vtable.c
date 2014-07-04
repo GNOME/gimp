@@ -47,6 +47,10 @@
 
 #include "text/gimpfont.h"
 
+#include "plug-in/gimppluginmanager.h"
+
+#include "file/file-procedure.h"
+
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpbrushselect.h"
 #include "widgets/gimpdialogfactory.h"
@@ -693,16 +697,22 @@ gui_recent_list_load (Gimp *gimp)
       if (gtk_recent_info_has_application (info,
                                            "GNU Image Manipulation Program"))
         {
-          GimpImagefile *imagefile;
+          const gchar *mime_type = gtk_recent_info_get_mime_type (info);
 
-          imagefile = gimp_imagefile_new (gimp,
-                                          gtk_recent_info_get_uri (info));
+          if (mime_type &&
+              file_procedure_find_by_mime_type (gimp->plug_in_manager->load_procs,
+                                                mime_type))
+            {
+              GimpImagefile *imagefile;
 
-          gimp_imagefile_set_mime_type (imagefile,
-                                        gtk_recent_info_get_mime_type (info));
+              imagefile = gimp_imagefile_new (gimp,
+                                              gtk_recent_info_get_uri (info));
 
-          gimp_container_add (gimp->documents, GIMP_OBJECT (imagefile));
-          g_object_unref (imagefile);
+              gimp_imagefile_set_mime_type (imagefile, mime_type);
+
+              gimp_container_add (gimp->documents, GIMP_OBJECT (imagefile));
+              g_object_unref (imagefile);
+            }
         }
 
       gtk_recent_info_unref (info);
