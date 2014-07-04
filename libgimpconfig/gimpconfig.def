@@ -12,6 +12,7 @@ EXPORTS
 	gimp_config_deserialize_properties
 	gimp_config_deserialize_property
 	gimp_config_deserialize_return
+	gimp_config_deserialize_stream
 	gimp_config_deserialize_string
 	gimp_config_diff
 	gimp_config_duplicate
@@ -59,6 +60,7 @@ EXPORTS
 	gimp_scanner_destroy
 	gimp_scanner_new_file
 	gimp_scanner_new_gfile
+	gimp_scanner_new_stream
 	gimp_scanner_new_string
 	gimp_scanner_parse_boolean
 	gimp_scanner_parse_color

@@ -109,8 +109,8 @@ GScanner *
 gimp_scanner_new_gfile (GFile   *file,
                         GError **error)
 {
-  GScanner    *scanner;
-  gchar       *path;
+  GScanner *scanner;
+  gchar    *path;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -148,9 +148,6 @@ gimp_scanner_new_gfile (GFile   *file,
   else
     {
       GInputStream *input;
-      GString      *string;
-      gchar         buffer[4096];
-      gsize         bytes_read;
 
       input = G_INPUT_STREAM (g_file_read (file, NULL, error));
 
@@ -167,51 +164,84 @@ gimp_scanner_new_gfile (GFile   *file,
           return NULL;
         }
 
-      string = g_string_new (NULL);
+      g_object_set_data (G_OBJECT (input), "gimp-data", file);
 
-      do
-        {
-          GError   *my_error = NULL;
-          gboolean  success;
-
-          success = g_input_stream_read_all (input, buffer, sizeof (buffer),
-                                             &bytes_read, NULL, &my_error);
-
-          if (bytes_read > 0)
-            g_string_append_len (string, buffer, bytes_read);
-
-          if (! success)
-            {
-              if (string->len > 0)
-                {
-                  g_printerr ("%s: read error in '%s', trying to scan "
-                              "partial content: %s",
-                              G_STRFUNC, gimp_file_get_utf8_name (file),
-                              my_error->message);
-                  g_clear_error (&my_error);
-                  break;
-                }
-
-              g_string_free (string, TRUE);
-              g_object_unref (input);
-
-              g_propagate_error (error, my_error);
-
-              return NULL;
-            }
-        }
-      while (bytes_read == sizeof (buffer));
+      scanner = gimp_scanner_new_stream (input, error);
 
       g_object_unref (input);
-
-      /*  gimp_scanner_new() takes a "name" for the scanner, not a filename  */
-      scanner = gimp_scanner_new (gimp_file_get_utf8_name (file),
-                                  NULL, string->str, error);
-
-      bytes_read = string->len;
-
-      g_scanner_input_text (scanner, g_string_free (string, FALSE), bytes_read);
     }
+
+  return scanner;
+}
+
+/**
+ * gimp_scanner_new_stream:
+ * @input: a #GInputStream
+ * @error: return location for #GError, or %NULL
+ *
+ * Return value: The new #GScanner.
+ *
+ * Since: GIMP 2.10
+ **/
+GScanner *
+gimp_scanner_new_stream (GInputStream  *input,
+                         GError       **error)
+{
+  GScanner    *scanner;
+  GFile       *file;
+  const gchar *path;
+  GString     *string;
+  gchar        buffer[4096];
+  gsize        bytes_read;
+
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  file = g_object_get_data (G_OBJECT (input), "gimp-file");
+  if (file)
+    path = gimp_file_get_utf8_name (file);
+  else
+    path = "stream";
+
+  string = g_string_new (NULL);
+
+  do
+    {
+      GError   *my_error = NULL;
+      gboolean  success;
+
+      success = g_input_stream_read_all (input, buffer, sizeof (buffer),
+                                         &bytes_read, NULL, &my_error);
+
+      if (bytes_read > 0)
+        g_string_append_len (string, buffer, bytes_read);
+
+      if (! success)
+        {
+          if (string->len > 0)
+            {
+              g_printerr ("%s: read error in '%s', trying to scan "
+                          "partial content: %s",
+                          G_STRFUNC, path, my_error->message);
+              g_clear_error (&my_error);
+              break;
+            }
+
+          g_string_free (string, TRUE);
+
+          g_propagate_error (error, my_error);
+
+          return NULL;
+        }
+    }
+  while (bytes_read == sizeof (buffer));
+
+  /*  gimp_scanner_new() takes a "name" for the scanner, not a filename  */
+  scanner = gimp_scanner_new (path, NULL, string->str, error);
+
+  bytes_read = string->len;
+
+  g_scanner_input_text (scanner, g_string_free (string, FALSE), bytes_read);
 
   return scanner;
 }

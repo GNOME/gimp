@@ -536,6 +536,54 @@ gimp_config_deserialize_gfile (GimpConfig  *config,
 }
 
 /**
+ * gimp_config_deserialize_stream:
+ * @config: a #GObject that implements the #GimpConfigInterface.
+ * @input: the #GInputStream to read configuration from.
+ * @data: user data passed to the deserialize implementation.
+ * @error: return location for a possible error
+ *
+ * Reads configuration data from @input and configures @config
+ * accordingly. Basically this function creates a properly configured
+ * #GScanner for you and calls the deserialize function of the
+ * @config's #GimpConfigInterface.
+ *
+ * Return value: %TRUE if deserialization succeeded, %FALSE otherwise.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_config_deserialize_stream (GimpConfig    *config,
+                                GInputStream  *input,
+                                gpointer       data,
+                                GError       **error)
+{
+  GScanner *scanner;
+  gboolean  success;
+
+  g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  scanner = gimp_scanner_new_stream (input, error);
+  if (! scanner)
+    return FALSE;
+
+  g_object_freeze_notify (G_OBJECT (config));
+
+  success = GIMP_CONFIG_GET_INTERFACE (config)->deserialize (config,
+                                                             scanner, 0, data);
+
+  g_object_thaw_notify (G_OBJECT (config));
+
+  gimp_scanner_destroy (scanner);
+
+  if (! success)
+    g_assert (error == NULL || *error != NULL);
+
+  return success;
+}
+
+/**
  * gimp_config_deserialize_string:
  * @config:   a #GObject that implements the #GimpConfigInterface.
  * @text:     string to deserialize (in UTF-8 encoding)

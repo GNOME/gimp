@@ -104,6 +104,10 @@ gboolean      gimp_config_deserialize_gfile     (GimpConfig       *config,
                                                  GFile            *file,
                                                  gpointer          data,
                                                  GError          **error);
+gboolean      gimp_config_deserialize_stream    (GimpConfig       *config,
+                                                 GInputStream     *input,
+                                                 gpointer          data,
+                                                 GError          **error);
 gboolean      gimp_config_deserialize_string    (GimpConfig       *config,
                                                  const gchar      *text,
                                                  gint              text_len,
