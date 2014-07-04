@@ -529,14 +529,27 @@ gimp_data_save (GimpData  *data,
         {
           success = GIMP_DATA_GET_CLASS (data)->save (data, output, error);
 
-          if (success &&
-              ! g_output_stream_close (output, NULL, error))
+          if (success)
+            {
+              if (! g_output_stream_close (output, NULL, error))
+                {
+                  g_prefix_error (error,
+                                  _("Error saving '%s': "),
+                                  gimp_file_get_utf8_name (private->file));
+                  success = FALSE;
+                }
+            }
+          else if (error && *error)
             {
               g_prefix_error (error,
-                              _("Error writing '%s': "),
+                              _("Error saving '%s': "),
                               gimp_file_get_utf8_name (private->file));
-
-              success = FALSE;
+            }
+          else
+            {
+              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
+                           _("Error saving '%s'"),
+                           gimp_file_get_utf8_name (private->file));
             }
 
           g_object_unref (output);

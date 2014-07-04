@@ -40,7 +40,6 @@ gimp_gradient_save (GimpData       *data,
   GimpGradientSegment *seg;
   gint                 num_segments;
   gsize                bytes_written;
-  GError              *my_error = NULL;
 
   /* File format is:
    *
@@ -109,15 +108,11 @@ gimp_gradient_save (GimpData       *data,
     }
 
   if (! g_output_stream_write_all (output, string->str, string->len,
-                                   &bytes_written, NULL, &my_error) ||
+                                   &bytes_written, NULL, error) ||
       bytes_written != string->len)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
-                   _("Writing gradient file '%s' failed: %s"),
-                   gimp_file_get_utf8_name (gimp_data_get_file (data)),
-                   my_error->message);
-      g_clear_error (&my_error);
       g_string_free (string, TRUE);
+
       return FALSE;
     }
 

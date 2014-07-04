@@ -52,7 +52,6 @@ gimp_gradient_load (GimpContext   *context,
   gchar               *line;
   gsize                line_len;
   gint                 linenum;
-  GError              *my_error = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
@@ -63,13 +62,13 @@ gimp_gradient_load (GimpContext   *context,
   linenum = 1;
   line_len = 1024;
   line = g_data_input_stream_read_line (data_input, &line_len,
-                                        NULL, &my_error);
+                                        NULL, error);
   if (! line)
     goto failed;
 
   if (! g_str_has_prefix (line, "GIMP Gradient"))
     {
-      g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Not a GIMP gradient file."));
       g_free (line);
       goto failed;
@@ -84,7 +83,7 @@ gimp_gradient_load (GimpContext   *context,
   linenum++;
   line_len = 1024;
   line = g_data_input_stream_read_line (data_input, &line_len,
-                                        NULL, &my_error);
+                                        NULL, error);
   if (! line)
     goto failed;
 
@@ -102,7 +101,7 @@ gimp_gradient_load (GimpContext   *context,
       linenum++;
       line_len = 1024;
       line = g_data_input_stream_read_line (data_input, &line_len,
-                                            NULL, &my_error);
+                                            NULL, error);
       if (! line)
         goto failed;
     }
@@ -118,7 +117,7 @@ gimp_gradient_load (GimpContext   *context,
 
   if (num_segments < 1)
     {
-      g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("File is corrupt."));
       goto failed;
     }
@@ -142,7 +141,7 @@ gimp_gradient_load (GimpContext   *context,
       linenum++;
       line_len = 1024;
       line = g_data_input_stream_read_line (data_input, &line_len,
-                                            NULL, &my_error);
+                                            NULL, error);
       if (! line)
         goto failed;
 
@@ -192,14 +191,14 @@ gimp_gradient_load (GimpContext   *context,
               break;
 
             default:
-              g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                            _("Corrupt segment %d."), i);
               goto failed;
             }
         }
       else
         {
-          g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Corrupt segment %d."), i);
           goto failed;
         }
@@ -207,7 +206,7 @@ gimp_gradient_load (GimpContext   *context,
       if ((  prev && (prev->right < seg->left)) ||
           (! prev && (0.0         < seg->left)))
         {
-          g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Segments do not span the range 0-1."));
           goto failed;
         }
@@ -217,7 +216,7 @@ gimp_gradient_load (GimpContext   *context,
 
   if (prev->right < 1.0)
     {
-      g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Segments do not span the range 0-1."));
       goto failed;
     }
@@ -233,24 +232,7 @@ gimp_gradient_load (GimpContext   *context,
   if (gradient)
     g_object_unref (gradient);
 
-  if (error && *error == NULL)
-    {
-      gchar *msg;
-
-      if (my_error)
-        msg = g_strdup_printf (_("Error in line %d: %s"), linenum,
-                               my_error->message);
-      else
-        msg = g_strdup_printf (_("File is truncated in line %d"), linenum);
-
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Error while reading gradient file '%s': %s"),
-                   gimp_file_get_utf8_name (file), msg);
-
-      g_free (msg);
-    }
-
-  g_clear_error (&my_error);
+  g_prefix_error (error, _("In line %d of gradient file: "), linenum);
 
   return NULL;
 }
@@ -326,21 +308,7 @@ gimp_gradient_load_svg (GimpContext   *context,
   if (success && ! parser.gradients)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("No linear gradients found in '%s'"),
-                   gimp_file_get_utf8_name (file));
-    }
-  else
-    {
-      if (error && *error) /*  parser reported an error  */
-        {
-          gchar *msg = (*error)->message;
-
-          (*error)->message =
-            g_strdup_printf (_("Failed to import gradients from '%s': %s"),
-                             gimp_file_get_utf8_name (file), msg);
-
-          g_free (msg);
-        }
+                   _("No linear gradients found."));
     }
 
   if (parser.gradient)

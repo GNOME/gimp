@@ -190,11 +190,9 @@ gimp_brush_pipe_load (GimpContext   *context,
 
   while (pipe->n_brushes < num_of_brushes)
     {
-      GError *my_error = NULL;
-
       pipe->brushes[pipe->n_brushes] = gimp_brush_load_brush (context,
                                                               file, input,
-                                                              &my_error);
+                                                              error);
 
       if (pipe->brushes[pipe->n_brushes])
         {
@@ -203,7 +201,6 @@ gimp_brush_pipe_load (GimpContext   *context,
         }
       else
         {
-          g_propagate_error (error, my_error);
           g_object_unref (pipe);
           return NULL;
         }

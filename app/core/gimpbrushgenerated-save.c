@@ -43,7 +43,6 @@ gimp_brush_generated_save (GimpData       *data,
   gchar               buf[G_ASCII_DTOSTR_BUF_SIZE];
   gsize               bytes_written;
   gboolean            have_shape = FALSE;
-  GError             *my_error   = NULL;
 
   g_return_val_if_fail (name != NULL && *name != '\0', FALSE);
 
@@ -108,15 +107,11 @@ gimp_brush_generated_save (GimpData       *data,
                                            brush->angle));
 
   if (! g_output_stream_write_all (output, string->str, string->len,
-                                   &bytes_written, NULL, &my_error) ||
+                                   &bytes_written, NULL, error) ||
       bytes_written != string->len)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
-                   _("Writing brush file '%s' failed: %s"),
-                   gimp_file_get_utf8_name (gimp_data_get_file (data)),
-                   my_error->message);
-      g_clear_error (&my_error);
       g_string_free (string, TRUE);
+
       return FALSE;
     }
 

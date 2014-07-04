@@ -48,7 +48,6 @@ gimp_palette_load (GimpContext   *context,
   gchar            *tok;
   gint              r, g, b;
   gint              linenum;
-  GError           *my_error = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
@@ -61,13 +60,13 @@ gimp_palette_load (GimpContext   *context,
   linenum = 1;
   str_len = 1024;
   str = g_data_input_stream_read_line (data_input, &str_len,
-                                       NULL, &my_error);
+                                       NULL, error);
   if (! str)
     goto failed;
 
   if (! g_str_has_prefix (str, "GIMP Palette"))
     {
-      g_set_error (&my_error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Missing magic header."));
       g_free (str);
       goto failed;
@@ -80,7 +79,7 @@ gimp_palette_load (GimpContext   *context,
   linenum++;
   str_len = 1024;
   str = g_data_input_stream_read_line (data_input, &str_len,
-                                       NULL, &my_error);
+                                       NULL, error);
   if (! str)
     goto failed;
 
@@ -97,7 +96,7 @@ gimp_palette_load (GimpContext   *context,
       linenum++;
       str_len = 1024;
       str = g_data_input_stream_read_line (data_input, &str_len,
-                                           NULL, &my_error);
+                                           NULL, error);
       if (! str)
         goto failed;
 
@@ -122,7 +121,7 @@ gimp_palette_load (GimpContext   *context,
           linenum++;
           str_len = 1024;
           str = g_data_input_stream_read_line (data_input, &str_len,
-                                               NULL, &my_error);
+                                               NULL, error);
           if (! str)
             goto failed;
         }
@@ -135,6 +134,8 @@ gimp_palette_load (GimpContext   *context,
 
   while (str)
     {
+      GError *my_error = NULL;
+
       if (str[0] != '#' && str[0] != '\n')
         {
           tok = strtok (str, " \t");
@@ -196,7 +197,10 @@ gimp_palette_load (GimpContext   *context,
       if (! str)
         {
           if (! palette->colors)
-            goto failed;
+            {
+              g_propagate_error (error, my_error);
+              goto failed;
+            }
 
           if (my_error)
             {
@@ -224,24 +228,7 @@ gimp_palette_load (GimpContext   *context,
   if (palette)
     g_object_unref (palette);
 
-  if (error && *error == NULL)
-    {
-      gchar *msg;
-
-      if (my_error)
-        msg = g_strdup_printf (_("Error in line %d: %s"), linenum,
-                               my_error->message);
-      else
-        msg = g_strdup_printf (_("File is truncated in line %d"), linenum);
-
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Error while reading palette file '%s': %s"),
-                   gimp_file_get_utf8_name (file), msg);
-
-      g_free (msg);
-    }
-
-  g_clear_error (&my_error);
+  g_prefix_error (error, _("In line %d of palette file: "), linenum);
 
   return NULL;
 }
@@ -436,8 +423,9 @@ gimp_palette_load_aco (GimpContext   *context,
                                  &bytes_read, NULL, error) ||
       bytes_read != sizeof (header))
     {
-      g_prefix_error (error, "%s",
-                      _("Could not read header from palette file '%s': "));
+      g_prefix_error (error,
+                      _("Could not read header from palette file '%s': "),
+                      gimp_file_get_utf8_name (file));
       return NULL;
     }
 
@@ -473,21 +461,7 @@ gimp_palette_load_aco (GimpContext   *context,
               break;
             }
 
-          if (error && *error == NULL)
-            {
-              const gchar *msg;
-
-              if (my_error)
-                msg = my_error->message;
-              else
-                msg = _("File is truncated.");
-
-              g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                           _("Fatal parse error in palette file '%s': %s"),
-                           gimp_file_get_utf8_name (file), msg);
-            }
-
-          g_clear_error (&my_error);
+          g_propagate_error (error, my_error);
           g_object_unref (palette);
 
           return NULL;
@@ -573,14 +547,9 @@ gimp_palette_load_aco (GimpContext   *context,
           if (! g_input_stream_read_all (input,
                                          format2_preamble,
                                          sizeof (format2_preamble),
-                                         &bytes_read, NULL, &my_error) ||
+                                         &bytes_read, NULL, error) ||
               bytes_read != sizeof (format2_preamble))
 	    {
-	      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-			   _("Fatal parse error in palette file '%s': %s"),
-			   gimp_file_get_utf8_name (file),
-                           my_error ?
-                           my_error->message : _("Premature end of file."));
 	      g_object_unref (palette);
 	      return NULL;
 	    }

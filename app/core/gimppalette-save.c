@@ -41,13 +41,13 @@ gimp_palette_save (GimpData       *data,
   GString     *string;
   GList       *list;
   gsize        bytes_written;
-  GError      *my_error = NULL;
 
   string = g_string_new ("GIMP Palette\n");
 
   g_string_append_printf (string,
                           "Name: %s\n"
-                          "Columns: %d\n#\n",
+                          "Columns: %d\n"
+                          "#\n",
                           gimp_object_get_name (palette),
                           CLAMP (gimp_palette_get_columns (palette), 0, 256));
 
@@ -65,15 +65,11 @@ gimp_palette_save (GimpData       *data,
     }
 
   if (! g_output_stream_write_all (output, string->str, string->len,
-                                   &bytes_written, NULL, &my_error) ||
+                                   &bytes_written, NULL, error) ||
       bytes_written != string->len)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
-                   _("Writing palette file '%s' failed: %s"),
-                   gimp_file_get_utf8_name (gimp_data_get_file (data)),
-                   my_error->message);
-      g_clear_error (&my_error);
       g_string_free (string, TRUE);
+
       return FALSE;
     }
 

@@ -54,13 +54,10 @@ gimp_pattern_load (GimpContext   *context,
 
   /*  read the size  */
   if (! g_input_stream_read_all (input, &header, sizeof (header),
-                                 &bytes_read, NULL, NULL) ||
+                                 &bytes_read, NULL, error) ||
       bytes_read != sizeof (header))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in pattern file '%s': "
-                     "File appears truncated."),
-                   gimp_file_get_utf8_name (file));
+      g_prefix_error (error, _("File appears truncated: "));
       goto error;
     }
 
@@ -77,9 +74,8 @@ gimp_pattern_load (GimpContext   *context,
       header.header_size <= sizeof (header))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in pattern file '%s': "
-                     "Unknown pattern format version %d."),
-                   gimp_file_get_utf8_name (file), header.version);
+                   _("Unknown pattern format version %d."),
+                   header.version);
       goto error;
     }
 
@@ -87,10 +83,9 @@ gimp_pattern_load (GimpContext   *context,
   if (header.bytes < 1 || header.bytes > 4)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in pattern file '%s: "
-                     "Unsupported pattern depth %d.\n"
+                   _("Unsupported pattern depth %d.\n"
                      "GIMP Patterns must be GRAY or RGB."),
-                   gimp_file_get_utf8_name (file), header.bytes);
+                   header.bytes);
       goto error;
     }
 
@@ -102,13 +97,10 @@ gimp_pattern_load (GimpContext   *context,
       name = g_new (gchar, bn_size);
 
       if (! g_input_stream_read_all (input, name, bn_size,
-                                     &bytes_read, NULL, NULL) ||
+                                     &bytes_read, NULL, error) ||
           bytes_read != bn_size)
         {
-          g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                       _("Fatal parse error in pattern file '%s': "
-                         "File appears truncated."),
-                       gimp_file_get_utf8_name (file));
+          g_prefix_error (error, _("File appears truncated."));
           g_free (name);
           goto error;
         }
@@ -143,13 +135,10 @@ gimp_pattern_load (GimpContext   *context,
 
   if (! g_input_stream_read_all (input,
                                  gimp_temp_buf_get_data (pattern->mask), size,
-                                 &bytes_read, NULL, NULL) ||
+                                 &bytes_read, NULL, error) ||
       bytes_read != size)
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
-                   _("Fatal parse error in pattern file '%s': "
-                     "File appears truncated."),
-                   gimp_file_get_utf8_name (file));
+      g_prefix_error (error, _("File appears truncated."));
       goto error;
     }
 
@@ -159,6 +148,8 @@ gimp_pattern_load (GimpContext   *context,
 
   if (pattern)
     g_object_unref (pattern);
+
+  g_prefix_error (error, _("Fatal parse error in pattern file: "));
 
   return NULL;
 }

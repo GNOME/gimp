@@ -59,9 +59,9 @@ gimp_tool_preset_load (GimpContext   *context,
         }
       else
         {
-          g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                       _("Error while parsing '%s'"),
-                       gimp_file_get_utf8_name (file));
+          g_set_error_literal (error,
+                               GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+                               _("Tool preset file is corrupt."));
         }
     }
 

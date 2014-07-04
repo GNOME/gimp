@@ -894,6 +894,19 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
     {
       data_list = loader->load_func (context->context, file, input, &error);
 
+      if (error)
+        {
+          g_prefix_error (&error,
+                          _("Error loading '%s': "),
+                          gimp_file_get_utf8_name (file));
+        }
+      else if (! data_list)
+        {
+          g_set_error (&error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
+                       _("Error loading '%s'"),
+                       gimp_file_get_utf8_name (file));
+        }
+
       g_object_unref (input);
     }
   else
