@@ -36,9 +36,6 @@ typedef enum
 
 GList               * gimp_palette_load               (GimpContext   *context,
                                                        GFile         *file,
-                                                       GError       **error);
-GList               * gimp_palette_load_gpl           (GimpContext   *context,
-                                                       GFile         *file,
                                                        GInputStream  *input,
                                                        GError       **error);
 GList               * gimp_palette_load_act           (GimpContext   *context,

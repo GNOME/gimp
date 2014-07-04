@@ -24,9 +24,10 @@
 #define GIMP_BRUSH_GENERATED_FILE_EXTENSION ".vbr"
 
 
-GList * gimp_brush_generated_load (GimpContext  *context,
-                                   GFile        *file,
-                                   GError      **error);
+GList * gimp_brush_generated_load (GimpContext   *context,
+                                   GFile         *file,
+                                   GInputStream  *input,
+                                   GError       **error);
 
 
 #endif  /*  __GIMP_BRUSH_GENERATED_LOAD_H__  */

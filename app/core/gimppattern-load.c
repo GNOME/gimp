@@ -35,32 +35,22 @@
 
 
 GList *
-gimp_pattern_load (GimpContext  *context,
-                   GFile        *file,
-                   GError      **error)
+gimp_pattern_load (GimpContext   *context,
+                   GFile         *file,
+                   GInputStream  *input,
+                   GError       **error)
 {
   GimpPattern   *pattern = NULL;
   const Babl    *format  = NULL;
-  GInputStream  *input;
   PatternHeader  header;
   gsize          size;
   gsize          bytes_read;
   gint           bn_size;
-  gchar         *name     = NULL;
-  GError        *my_error = NULL;
+  gchar         *name = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
-  if (! input)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
-      g_clear_error (&my_error);
-      return NULL;
-    }
 
   /*  read the size  */
   if (! g_input_stream_read_all (input, &header, sizeof (header),
@@ -163,46 +153,31 @@ gimp_pattern_load (GimpContext  *context,
       goto error;
     }
 
-  g_object_unref (input);
-
   return g_list_prepend (NULL, pattern);
 
  error:
+
   if (pattern)
     g_object_unref (pattern);
-
-  g_object_unref (input);
 
   return NULL;
 }
 
 GList *
-gimp_pattern_load_pixbuf (GimpContext  *context,
-                          GFile        *file,
-                          GError      **error)
+gimp_pattern_load_pixbuf (GimpContext   *context,
+                          GFile         *file,
+                          GInputStream  *input,
+                          GError       **error)
 {
-  GimpPattern  *pattern;
-  GInputStream *input;
-  GdkPixbuf    *pixbuf;
-  gchar        *name;
-  GError       *my_error = NULL;
+  GimpPattern *pattern;
+  GdkPixbuf   *pixbuf;
+  gchar       *name;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
-  if (! input)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
-      g_clear_error (&my_error);
-      return NULL;
-    }
-
   pixbuf = gdk_pixbuf_new_from_stream (input, NULL, error);
-  g_object_unref (input);
-
   if (! pixbuf)
     return NULL;
 

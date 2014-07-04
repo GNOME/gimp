@@ -840,14 +840,15 @@ static void
 gimp_data_factory_load_data (const GimpDatafileData *file_data,
                              gpointer                data)
 {
-  GimpDataLoadContext              *context = data;
-  GimpDataFactory                  *factory = context->factory;
-  GHashTable                       *cache   = context->cache;
-  const GimpDataFactoryLoaderEntry *loader  = NULL;
-  GFile                            *file    = NULL;
-  GError                           *error   = NULL;
-  GList                            *data_list;
+  GimpDataLoadContext              *context   = data;
+  GimpDataFactory                  *factory   = context->factory;
+  GHashTable                       *cache     = context->cache;
+  const GimpDataFactoryLoaderEntry *loader    = NULL;
+  GList                            *data_list = NULL;
+  GFile                            *file;
+  GInputStream                     *input;
   gint                              i;
+  GError                           *error = NULL;
 
   for (i = 0; i < factory->priv->n_loader_entries; i++)
     {
@@ -887,7 +888,20 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
         }
     }
 
-  data_list = loader->load_func (context->context, file, &error);
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &error));
+
+  if (input)
+    {
+      data_list = loader->load_func (context->context, file, input, &error);
+
+      g_object_unref (input);
+    }
+  else
+    {
+      g_prefix_error (&error,
+                      _("Could not open '%s' for reading: "),
+                      gimp_file_get_utf8_name (file));
+    }
 
   if (G_LIKELY (data_list))
     {

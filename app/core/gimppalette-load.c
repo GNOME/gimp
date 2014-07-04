@@ -35,39 +35,10 @@
 
 
 GList *
-gimp_palette_load (GimpContext  *context,
-                   GFile        *file,
-                   GError      **error)
-{
-  GList        *list;
-  GInputStream *input;
-  GError       *my_error = NULL;
-
-  g_return_val_if_fail (G_IS_FILE (file), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
-  if (! input)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
-      g_clear_error (&my_error);
-      return NULL;
-    }
-
-  list = gimp_palette_load_gpl (context, file, input, error);
-
-  g_object_unref (input);
-
-  return list;
-}
-
-GList *
-gimp_palette_load_gpl (GimpContext   *context,
-                       GFile         *file,
-                       GInputStream  *input,
-                       GError       **error)
+gimp_palette_load (GimpContext   *context,
+                   GFile         *file,
+                   GInputStream  *input,
+                   GError       **error)
 {
   GimpPalette      *palette = NULL;
   GimpPaletteEntry *entry;

@@ -110,31 +110,18 @@ static gboolean    abr_rle_decode                (GDataInputStream  *input,
 /*  public functions  */
 
 GList *
-gimp_brush_load (GimpContext  *context,
-                 GFile        *file,
-                 GError      **error)
+gimp_brush_load (GimpContext   *context,
+                 GFile         *file,
+                 GInputStream  *input,
+                 GError       **error)
 {
-  GimpBrush    *brush;
-  GInputStream *input;
-  GError       *my_error = NULL;
+  GimpBrush *brush;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
-  if (! input)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
-      g_clear_error (&my_error);
-      return NULL;
-    }
-
   brush = gimp_brush_load_brush (context, file, input, error);
-
-  g_object_unref (input);
-
   if (! brush)
     return NULL;
 
@@ -427,31 +414,21 @@ gimp_brush_load_brush (GimpContext   *context,
 }
 
 GList *
-gimp_brush_load_abr (GimpContext  *context,
-                     GFile        *file,
-                     GError      **error)
+gimp_brush_load_abr (GimpContext   *context,
+                     GFile         *file,
+                     GInputStream  *input,
+                     GError       **error)
 {
-  GInputStream     *input;
   GDataInputStream *data_input;
   AbrHeader         abr_hdr;
   GList            *brush_list = NULL;
   GError           *my_error   = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
-  if (! input)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
-      g_clear_error (&my_error);
-      return NULL;
-    }
-
   data_input = g_data_input_stream_new (input);
-  g_object_unref (input);
 
   g_data_input_stream_set_byte_order (data_input,
                                       G_DATA_STREAM_BYTE_ORDER_BIG_ENDIAN);

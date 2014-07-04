@@ -35,12 +35,12 @@
 
 
 GList *
-gimp_brush_generated_load (GimpContext  *context,
-                           GFile        *file,
-                           GError      **error)
+gimp_brush_generated_load (GimpContext   *context,
+                           GFile         *file,
+                           GInputStream  *input,
+                           GError       **error)
 {
   GimpBrush               *brush;
-  GInputStream            *input;
   GDataInputStream        *data_input;
   gchar                   *string;
   gsize                    string_len;
@@ -57,22 +57,10 @@ gimp_brush_generated_load (GimpContext  *context,
   GError                  *my_error = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
-  if (! input)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
-      g_clear_error (&my_error);
-      return NULL;
-    }
-  else
-    {
-      data_input = g_data_input_stream_new (input);
-      g_object_unref (input);
-    }
+  data_input = g_data_input_stream_new (input);
 
   /* make sure the file we are reading is the right type */
   linenum = 1;

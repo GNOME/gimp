@@ -39,15 +39,15 @@
 
 
 GList *
-gimp_gradient_load (GimpContext  *context,
-                    GFile        *file,
-                    GError      **error)
+gimp_gradient_load (GimpContext   *context,
+                    GFile         *file,
+                    GInputStream  *input,
+                    GError       **error)
 {
   GimpGradient        *gradient = NULL;
   GimpGradientSegment *prev;
   gint                 num_segments;
   gint                 i;
-  GInputStream        *input;
   GDataInputStream    *data_input;
   gchar               *line;
   gsize                line_len;
@@ -55,20 +55,10 @@ gimp_gradient_load (GimpContext  *context,
   GError              *my_error = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
-  if (! input)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
-      g_clear_error (&my_error);
-      return NULL;
-    }
-
   data_input = g_data_input_stream_new (input);
-  g_object_unref (input);
 
   linenum = 1;
   line_len = 1024;
@@ -311,16 +301,21 @@ static const GMarkupParser markup_parser =
 
 
 GList *
-gimp_gradient_load_svg (GimpContext  *context,
-                        GFile        *file,
-                        GError      **error)
+gimp_gradient_load_svg (GimpContext   *context,
+                        GFile         *file,
+                        GInputStream  *input,
+                        GError       **error)
 {
   GimpXmlParser *xml_parser;
   SvgParser      parser = { NULL, };
   gboolean       success;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  /* FIXME input */
+  g_input_stream_close (input, NULL, NULL);
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 

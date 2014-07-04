@@ -36,12 +36,12 @@
 
 
 GList *
-gimp_brush_pipe_load (GimpContext  *context,
-                      GFile        *file,
-                      GError      **error)
+gimp_brush_pipe_load (GimpContext   *context,
+                      GFile         *file,
+                      GInputStream  *input,
+                      GError       **error)
 {
   GimpBrushPipe     *pipe = NULL;
-  GInputStream      *input;
   GimpPixPipeParams  params;
   gint               i;
   gint               num_of_brushes = 0;
@@ -50,20 +50,10 @@ gimp_brush_pipe_load (GimpContext  *context,
   GString           *buffer;
   gchar              c;
   gsize              bytes_read;
-  GError            *my_error = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
-  if (! input)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
-      g_clear_error (&my_error);
-      return NULL;
-    }
 
   /* The file format starts with a painfully simple text header */
 
@@ -100,7 +90,6 @@ gimp_brush_pipe_load (GimpContext  *context,
                    _("Fatal parse error in brush file '%s': "
                      "File is corrupt."),
                    gimp_file_get_utf8_name (file));
-      g_object_unref (input);
       return NULL;
     }
 
@@ -125,7 +114,6 @@ gimp_brush_pipe_load (GimpContext  *context,
                    _("Fatal parse error in brush file '%s': "
                      "File is corrupt."),
                    gimp_file_get_utf8_name (file));
-      g_object_unref (input);
       g_object_unref (pipe);
       g_string_free (buffer, TRUE);
       return NULL;
@@ -216,15 +204,12 @@ gimp_brush_pipe_load (GimpContext  *context,
       else
         {
           g_propagate_error (error, my_error);
-          g_object_unref (input);
           g_object_unref (pipe);
           return NULL;
         }
 
       pipe->n_brushes++;
     }
-
-  g_object_unref (input);
 
   /* Current brush is the first one. */
   pipe->current = pipe->brushes[0];

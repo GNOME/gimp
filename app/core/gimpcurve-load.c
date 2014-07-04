@@ -29,19 +29,21 @@
 
 
 GList *
-gimp_curve_load (GFile   *file,
-                 GError **error)
+gimp_curve_load (GFile         *file,
+                 GInputStream  *input,
+                 GError       **error)
 {
   GimpCurve *curve;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   curve = g_object_new (GIMP_TYPE_CURVE, NULL);
 
-  if (gimp_config_deserialize_gfile (GIMP_CONFIG (curve),
-                                     file,
-                                     NULL, error))
+  if (gimp_config_deserialize_stream (GIMP_CONFIG (curve),
+                                      input,
+                                      NULL, error))
     {
       return g_list_prepend (NULL, curve);
     }

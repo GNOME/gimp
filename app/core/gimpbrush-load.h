@@ -27,6 +27,7 @@
 
 GList     * gimp_brush_load        (GimpContext   *context,
                                     GFile         *file,
+                                    GInputStream  *input,
                                     GError       **error);
 GimpBrush * gimp_brush_load_brush  (GimpContext   *context,
                                     GFile         *file,
@@ -35,6 +36,7 @@ GimpBrush * gimp_brush_load_brush  (GimpContext   *context,
 
 GList     * gimp_brush_load_abr    (GimpContext   *context,
                                     GFile         *file,
+                                    GInputStream  *input,
                                     GError       **error);
 
 

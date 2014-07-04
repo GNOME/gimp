@@ -22,12 +22,14 @@
 #define GIMP_PATTERN_FILE_EXTENSION ".pat"
 
 
-GList * gimp_pattern_load        (GimpContext  *context,
-                                  GFile        *file,
-                                  GError      **error);
-GList * gimp_pattern_load_pixbuf (GimpContext  *context,
-                                  GFile        *file,
-                                  GError      **error);
+GList * gimp_pattern_load        (GimpContext   *context,
+                                  GFile         *file,
+                                  GInputStream  *input,
+                                  GError       **error);
+GList * gimp_pattern_load_pixbuf (GimpContext   *context,
+                                  GFile         *file,
+                                  GInputStream  *input,
+                                  GError       **error);
 
 
 #endif /* __GIMP_PATTERN_LOAD_H__ */
