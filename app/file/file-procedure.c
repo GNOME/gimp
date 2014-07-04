@@ -22,20 +22,8 @@
 
 #include <errno.h>
 #include <stdlib.h>
-#include <string.h>
-
-#ifdef HAVE_SYS_PARAM_H
-#include <sys/param.h>
-#endif
-
-#include <sys/types.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -79,11 +67,13 @@ static FileMatchType         file_check_single_magic     (const gchar  *offset,
                                                           const gchar  *value,
                                                           const guchar *file_head,
                                                           gint          headsize,
-                                                          FILE         *ifp);
+                                                          GFile        *file,
+                                                          GInputStream *input);
 static FileMatchType         file_check_magic_list       (GSList       *magics_list,
                                                           const guchar *head,
                                                           gint          headsize,
-                                                          FILE         *ifp);
+                                                          GFile        *file,
+                                                          GInputStream *input);
 
 
 /*  public functions  */
@@ -94,7 +84,7 @@ file_procedure_find (GSList       *procs,
                      GError      **error)
 {
   GimpPlugInProcedure *file_proc;
-  gchar               *filename;
+  GFile               *file;
 
   g_return_val_if_fail (procs != NULL, NULL);
   g_return_val_if_fail (uri != NULL, NULL);
@@ -121,16 +111,16 @@ file_procedure_find (GSList       *procs,
   if (file_proc)
     return file_proc;
 
-  filename = file_utils_filename_from_uri (uri);
+  file = g_file_new_for_uri (uri);
 
   /* Then look for magics */
-  if (filename)
+  if (file)
     {
       GSList              *list;
       GimpPlugInProcedure *size_matched_proc = NULL;
-      FILE                *ifp               = NULL;
+      GInputStream        *input             = NULL;
       gboolean             opened            = FALSE;
-      gint                 head_size         = 0;
+      gsize                head_size         = 0;
       gint                 size_match_count  = 0;
       guchar               head[256];
 
@@ -140,16 +130,31 @@ file_procedure_find (GSList       *procs,
 
           if (file_proc->magics_list)
             {
-              if (G_UNLIKELY (!opened))
+              if (G_UNLIKELY (! opened))
                 {
-                  ifp = g_fopen (filename, "rb");
-                  if (ifp != NULL)
-                    head_size = fread ((gchar *) head, 1, sizeof (head), ifp);
-                  else
-                    g_set_error_literal (error,
-                                         G_FILE_ERROR,
-                                         g_file_error_from_errno (errno),
-                                         g_strerror (errno));
+                  input = G_INPUT_STREAM (g_file_read (file, NULL, error));
+
+                  if (input)
+                    {
+                      g_input_stream_read_all (input,
+                                               head, sizeof (head),
+                                               &head_size, NULL, error);
+
+                      if (head_size < 4)
+                        {
+                          g_object_unref (input);
+                          input = NULL;
+                        }
+                      else
+                        {
+                          GDataInputStream *data_input;
+
+                          data_input = g_data_input_stream_new (input);
+                          g_object_unref (input);
+                          input = G_INPUT_STREAM (data_input);
+                        }
+                    }
+
                   opened = TRUE;
                 }
 
@@ -159,7 +164,7 @@ file_procedure_find (GSList       *procs,
 
                   match_val = file_check_magic_list (file_proc->magics_list,
                                                      head, head_size,
-                                                     ifp);
+                                                     file, input);
 
                   if (match_val == FILE_MATCH_SIZE)
                     {
@@ -169,8 +174,8 @@ file_procedure_find (GSList       *procs,
                     }
                   else if (match_val != FILE_MATCH_NONE)
                     {
-                      fclose (ifp);
-                      g_free (filename);
+                      g_object_unref (input);
+                      g_object_unref (file);
 
                       return file_proc;
                     }
@@ -178,17 +183,19 @@ file_procedure_find (GSList       *procs,
             }
         }
 
-      if (ifp)
+      if (input)
         {
+#if 0
           if (ferror (ifp))
             g_set_error_literal (error, G_FILE_ERROR,
                                  g_file_error_from_errno (errno),
                                  g_strerror (errno));
+#endif
 
-          fclose (ifp);
+          g_object_unref (input);
         }
 
-      g_free (filename);
+      g_object_unref (file);
 
       if (size_match_count == 1)
         return size_matched_proc;
@@ -435,7 +442,8 @@ file_check_single_magic (const gchar  *offset,
                          const gchar  *value,
                          const guchar *file_head,
                          gint          headsize,
-                         FILE         *ifp)
+                         GFile        *file,
+                         GInputStream *input)
 
 {
   FileMatchType found = FILE_MATCH_NONE;
@@ -518,12 +526,15 @@ file_check_single_magic (const gchar  *offset,
 
       if (numbytes == 5)    /* Check for file size ? */
         {
-          struct stat buf;
-
-          if (fstat (fileno (ifp), &buf) < 0)
+          GFileInfo *info = g_file_query_info (file,
+                                               G_FILE_ATTRIBUTE_STANDARD_SIZE,
+                                               G_FILE_QUERY_INFO_NONE,
+                                               NULL, NULL);
+          if (! info)
             return FILE_MATCH_NONE;
 
-          fileval = buf.st_size;
+          fileval = g_file_info_get_size (info);
+          g_object_unref (info);
         }
       else if (offs >= 0 &&
                (offs + numbytes <= headsize)) /* We have it in memory ? */
@@ -533,16 +544,26 @@ file_check_single_magic (const gchar  *offset,
         }
       else   /* Read it from file */
         {
-          gint c = 0;
-
-          if (fseek (ifp, offs, (offs >= 0) ? SEEK_SET : SEEK_END) < 0)
+          if (! g_seekable_seek (G_SEEKABLE (input), offs,
+                                 (offs >= 0) ? G_SEEK_SET : G_SEEK_END,
+                                 NULL, NULL))
             return FILE_MATCH_NONE;
 
           for (k = 0; k < numbytes; k++)
-            fileval = (fileval << 8) | (c = getc (ifp));
+            {
+              guchar  byte;
+              GError *error = NULL;
 
-          if (c == EOF)
-            return FILE_MATCH_NONE;
+              byte = g_data_input_stream_read_byte (G_DATA_INPUT_STREAM (input),
+                                                    NULL, &error);
+              if (error)
+                {
+                  g_clear_error (&error);
+                  return FILE_MATCH_NONE;
+                }
+
+              fileval = (fileval << 8) | byte;
+            }
         }
 
       if (num_operator == '&')
@@ -576,16 +597,28 @@ file_check_single_magic (const gchar  *offset,
         }
       else   /* Read it from file */
         {
-          if (fseek (ifp, offs, (offs >= 0) ? SEEK_SET : SEEK_END) < 0)
+          if (! g_seekable_seek (G_SEEKABLE (input), offs,
+                                 (offs >= 0) ? G_SEEK_SET : G_SEEK_END,
+                                 NULL, NULL))
             return FILE_MATCH_NONE;
 
           found = FILE_MATCH_MAGIC;
 
           for (k = 0; found && (k < numbytes); k++)
             {
-              gint c = getc (ifp);
+              guchar  byte;
+              GError *error = NULL;
 
-              found = (c != EOF) && (c == (gint) mem_testval[k]);
+              byte = g_data_input_stream_read_byte (G_DATA_INPUT_STREAM (input),
+                                                    NULL, &error);
+              if (error)
+                {
+                  g_clear_error (&error);
+                  return FILE_MATCH_NONE;
+                }
+
+              if (byte != mem_testval[k])
+                found = FILE_MATCH_NONE;
             }
         }
     }
@@ -597,7 +630,8 @@ static FileMatchType
 file_check_magic_list (GSList       *magics_list,
                        const guchar *head,
                        gint          headsize,
-                       FILE         *ifp)
+                       GFile        *file,
+                       GInputStream *input)
 
 {
   const gchar   *offset;
@@ -619,7 +653,7 @@ file_check_magic_list (GSList       *magics_list,
 
       match_val = file_check_single_magic (offset, type, value,
                                            head, headsize,
-                                           ifp);
+                                           file, input);
       if (and)
         found = found && (match_val != FILE_MATCH_NONE);
       else
