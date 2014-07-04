@@ -17,9 +17,6 @@
 
 #include "config.h"
 
-#include <errno.h>
-
-#include <glib/gstdio.h>
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -618,30 +615,27 @@ gimp_levels_tool_settings_import (GimpImageMapTool  *image_map_tool,
                                   GError           **error)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
-  gchar          *path;
-  FILE           *f;
+  GInputStream   *input;
   gchar           header[64];
+  gsize           bytes_read;
 
-  path = g_file_get_path (file);
-  f = g_fopen (path, "rt");
-  g_free (path);
-
-  if (! f)
+  input = G_INPUT_STREAM (g_file_read (file, NULL, error));
+  if (! input)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_file_get_utf8_name (file),
-                   g_strerror (errno));
+      g_prefix_error (error,
+                      _("Could not open '%s' for reading: "),
+                      gimp_file_get_utf8_name (file));
       return FALSE;
     }
 
-  if (! fgets (header, sizeof (header), f))
+  if (! g_input_stream_read_all (input, header, sizeof (header),
+                                 &bytes_read, NULL, error) ||
+      bytes_read != sizeof (header))
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not read header from '%s': %s"),
-                   gimp_file_get_utf8_name (file),
-                   g_strerror (errno));
-      fclose (f);
+      g_prefix_error (error,
+                      _("Could not read header from '%s': "),
+                      gimp_file_get_utf8_name (file));
+      g_object_unref (input);
       return FALSE;
     }
 
@@ -649,16 +643,16 @@ gimp_levels_tool_settings_import (GimpImageMapTool  *image_map_tool,
     {
       gboolean success;
 
-      rewind (f);
+      g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_SET, NULL, NULL);
 
-      success = gimp_levels_config_load_cruft (tool->config, f, error);
+      success = gimp_levels_config_load_cruft (tool->config, input, error);
 
-      fclose (f);
+      g_object_unref (input);
 
       return success;
     }
 
-  fclose (f);
+  g_object_unref (input);
 
   return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_import (image_map_tool,
                                                                     file,

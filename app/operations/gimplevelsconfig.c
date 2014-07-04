@@ -21,12 +21,10 @@
 #include "config.h"
 
 #include <errno.h>
-#include <string.h>
 
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -740,51 +738,76 @@ gimp_levels_config_to_curves_config (GimpLevelsConfig *config)
 
 gboolean
 gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
-                               gpointer           fp,
+                               GInputStream      *input,
                                GError           **error)
 {
-  FILE    *file = fp;
-  gint     low_input[5];
-  gint     high_input[5];
-  gint     low_output[5];
-  gint     high_output[5];
-  gdouble  gamma[5];
-  gint     i;
-  gint     fields;
-  gchar    buf[50];
-  gchar   *nptr;
+  GDataInputStream *data_input;
+  gint              low_input[5];
+  gint              high_input[5];
+  gint              low_output[5];
+  gint              high_output[5];
+  gdouble           gamma[5];
+  gchar            *line;
+  gsize             line_len;
+  gint              i;
 
   g_return_val_if_fail (GIMP_IS_LEVELS_CONFIG (config), FALSE);
-  g_return_val_if_fail (file != NULL, FALSE);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! fgets (buf, sizeof (buf), file) ||
-      strcmp (buf, "# GIMP Levels File\n") != 0)
+  data_input = g_data_input_stream_new (input);
+
+  line_len = 64;
+  line = g_data_input_stream_read_line (data_input, &line_len,
+                                        NULL, error);
+  if (! line)
+    return FALSE;
+
+  if (strcmp (line, "# GIMP Levels File") != 0)
     {
       g_set_error_literal (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
 			   _("not a GIMP Levels file"));
+      g_object_unref (data_input);
+      g_free (line);
       return FALSE;
     }
 
+  g_free (line);
+
   for (i = 0; i < 5; i++)
     {
-      fields = fscanf (file, "%d %d %d %d ",
+      gchar  float_buf[32];
+      gchar *endp;
+      gint   fields;
+
+      line_len = 64;
+      line = g_data_input_stream_read_line (data_input, &line_len,
+                                            NULL, error);
+      if (! line)
+        {
+          g_object_unref (data_input);
+          return FALSE;
+        }
+
+      fields = sscanf (line, "%d %d %d %d %31s",
                        &low_input[i],
                        &high_input[i],
                        &low_output[i],
-                       &high_output[i]);
+                       &high_output[i],
+                       float_buf);
 
-      if (fields != 4)
+      g_free (line);
+
+      if (fields != 5)
         goto error;
 
-      if (! fgets (buf, 50, file))
-        goto error;
+      gamma[i] = g_ascii_strtod (float_buf, &endp);
 
-      gamma[i] = g_ascii_strtod (buf, &nptr);
-
-      if (buf == nptr || errno == ERANGE)
+      if (endp == float_buf || errno == ERANGE)
         goto error;
     }
+
+  g_object_unref (data_input);
 
   g_object_freeze_notify (G_OBJECT (config));
 
@@ -808,6 +831,8 @@ gimp_levels_config_load_cruft (GimpLevelsConfig  *config,
   return TRUE;
 
  error:
+  g_object_unref (data_input);
+
   g_set_error_literal (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
 		       _("parse error"));
   return FALSE;

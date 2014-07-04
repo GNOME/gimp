@@ -76,7 +76,7 @@ GimpCurvesConfig *
            gimp_levels_config_to_curves_config (GimpLevelsConfig      *config);
 
 gboolean   gimp_levels_config_load_cruft       (GimpLevelsConfig      *config,
-                                                gpointer               fp,
+                                                GInputStream          *input,
                                                 GError               **error);
 gboolean   gimp_levels_config_save_cruft       (GimpLevelsConfig      *config,
                                                 GFile                 *file,

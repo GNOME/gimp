@@ -20,12 +20,9 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -499,26 +496,34 @@ gimp_curves_config_reset_channel (GimpCurvesConfig *config)
 
 gboolean
 gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
-                               gpointer           fp,
+                               GInputStream      *input,
                                GError           **error)
 {
-  FILE  *file = fp;
-  gint   i, j;
-  gint   fields;
-  gchar  buf[50];
-  gint   index[5][GIMP_CURVE_N_CRUFT_POINTS];
-  gint   value[5][GIMP_CURVE_N_CRUFT_POINTS];
+  GDataInputStream *data_input;
+  gint              index[5][GIMP_CURVE_N_CRUFT_POINTS];
+  gint              value[5][GIMP_CURVE_N_CRUFT_POINTS];
+  gchar            *line;
+  gsize             line_len;
+  gint              i, j;
 
   g_return_val_if_fail (GIMP_IS_CURVES_CONFIG (config), FALSE);
-  g_return_val_if_fail (file != NULL, FALSE);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! fgets (buf, sizeof (buf), file) ||
-      strcmp (buf, "# GIMP Curves File\n") != 0)
+  data_input = g_data_input_stream_new (input);
+
+  line_len = 64;
+  line = g_data_input_stream_read_line (data_input, &line_len,
+                                        NULL, error);
+  if (! line)
+    return FALSE;
+
+  if (strcmp (line, "# GIMP Curves File") != 0)
     {
-      g_set_error_literal (error,
-			   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+      g_set_error_literal (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
 			   _("not a GIMP Curves file"));
+      g_object_unref (data_input);
+      g_free (line);
       return FALSE;
     }
 
@@ -526,18 +531,40 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
     {
       for (j = 0; j < GIMP_CURVE_N_CRUFT_POINTS; j++)
         {
-          fields = fscanf (file, "%d %d ", &index[i][j], &value[i][j]);
-          if (fields != 2)
+          gchar *x_str = NULL;
+          gchar *y_str = NULL;
+
+          if (! (x_str = g_data_input_stream_read_upto (data_input, " ", -1,
+                                                        NULL, NULL, error)) ||
+              ! g_data_input_stream_read_byte (data_input,  NULL, error) ||
+              ! (y_str = g_data_input_stream_read_upto (data_input, " ", -1,
+                                                        NULL, NULL, error)) ||
+              ! g_data_input_stream_read_byte (data_input,  NULL, error))
             {
-              /*  FIXME: should have a helpful error message here  */
-              g_printerr ("fields != 2");
-              g_set_error_literal (error,
-				   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-				   _("parse error"));
+              g_free (x_str);
+              g_free (y_str);
+              g_object_unref (data_input);
               return FALSE;
             }
+
+          if (sscanf (x_str, "%d", &index[i][j]) != 1 ||
+              sscanf (y_str, "%d", &value[i][j]) != 1)
+            {
+              g_set_error_literal (error,
+				   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+				   _("Parse error, didn't find 2 integers"));
+              g_free (x_str);
+              g_free (y_str);
+              g_object_unref (data_input);
+              return FALSE;
+            }
+
+          g_free (x_str);
+          g_free (y_str);
         }
     }
+
+  g_object_unref (data_input);
 
   g_object_freeze_notify (G_OBJECT (config));
 

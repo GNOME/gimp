@@ -69,7 +69,7 @@ GObject *  gimp_curves_config_new_explicit_cruft  (gint32             channel,
 void       gimp_curves_config_reset_channel       (GimpCurvesConfig  *config);
 
 gboolean   gimp_curves_config_load_cruft          (GimpCurvesConfig  *config,
-                                                   gpointer           fp,
+                                                   GInputStream      *input,
                                                    GError           **error);
 gboolean   gimp_curves_config_save_cruft          (GimpCurvesConfig  *config,
                                                    GFile             *file,
