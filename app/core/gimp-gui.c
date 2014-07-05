@@ -62,7 +62,7 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.progress_free         = NULL;
   gimp->gui.pdb_dialog_set        = NULL;
   gimp->gui.pdb_dialog_close      = NULL;
-  gimp->gui.recent_list_add_uri   = NULL;
+  gimp->gui.recent_list_add_file  = NULL;
   gimp->gui.recent_list_load      = NULL;
 }
 
@@ -471,15 +471,15 @@ gimp_pdb_dialog_close (Gimp          *gimp,
 }
 
 gboolean
-gimp_recent_list_add_uri (Gimp        *gimp,
-                          const gchar *uri,
-                          const gchar *mime_type)
+gimp_recent_list_add_file (Gimp        *gimp,
+                           GFile       *file,
+                           const gchar *mime_type)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (uri != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
 
-  if (gimp->gui.recent_list_add_uri)
-    return gimp->gui.recent_list_add_uri (gimp, uri, mime_type);
+  if (gimp->gui.recent_list_add_file)
+    return gimp->gui.recent_list_add_file (gimp, file, mime_type);
 
   return FALSE;
 }

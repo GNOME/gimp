@@ -497,8 +497,11 @@ file_open_with_proc_and_display (Gimp                *gimp,
           GimpDocumentList *documents = GIMP_DOCUMENT_LIST (gimp->documents);
           GimpImagefile    *imagefile;
           const gchar      *any_uri;
+          GFile            *file;
 
-          imagefile = gimp_document_list_add_uri (documents, uri, mime_type);
+          file = g_file_new_for_uri (uri);
+          imagefile = gimp_document_list_add_file (documents, file, mime_type);
+          g_object_unref (file);
 
           /*  can only create a thumbnail if the passed uri and the
            *  resulting image's uri match. Use any_uri() here so we
@@ -578,12 +581,15 @@ file_open_layers (Gimp                *gimp,
       if (layers)
         {
           gchar *basename = file_utils_uri_display_basename (uri);
+          GFile *file;
 
           file_open_convert_items (dest_image, basename, layers);
           g_free (basename);
 
-          gimp_document_list_add_uri (GIMP_DOCUMENT_LIST (gimp->documents),
-                                      uri, mime_type);
+          file = g_file_new_for_uri (uri);
+          gimp_document_list_add_file (GIMP_DOCUMENT_LIST (gimp->documents),
+                                       file, mime_type);
+          g_object_unref (file);
         }
       else
         {

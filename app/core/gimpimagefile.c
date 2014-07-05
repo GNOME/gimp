@@ -65,6 +65,7 @@ struct _GimpImagefilePrivate
 {
   Gimp          *gimp;
 
+  GFile         *file;
   GimpThumbnail *thumbnail;
   GIcon         *icon;
   GCancellable  *icon_cancellable;
@@ -215,23 +216,34 @@ gimp_imagefile_finalize (GObject *object)
       private->icon = NULL;
     }
 
+  if (private->file)
+    {
+      g_object_unref (private->file);
+      private->file = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 GimpImagefile *
-gimp_imagefile_new (Gimp        *gimp,
-                    const gchar *uri)
+gimp_imagefile_new (Gimp  *gimp,
+                    GFile *file)
 {
   GimpImagefile *imagefile;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (file == NULL || G_IS_FILE (file), NULL);
 
   imagefile = g_object_new (GIMP_TYPE_IMAGEFILE, NULL);
 
   GET_PRIVATE (imagefile)->gimp = gimp;
 
-  if (uri)
-    gimp_object_set_name (GIMP_OBJECT (imagefile), uri);
+  if (file)
+    {
+      gimp_object_take_name (GIMP_OBJECT (imagefile), g_file_get_uri (file));
+
+      /* file member gets created by gimp_imagefile_name_changed() */
+    }
 
   return imagefile;
 }
@@ -258,20 +270,14 @@ gimp_imagefile_get_gicon (GimpImagefile *imagefile)
 
   if (! private->icon_cancellable)
     {
-      GFile *file;
-
-      file = g_file_new_for_uri (gimp_object_get_name (imagefile));
-
       private->icon_cancellable = g_cancellable_new ();
 
-      g_file_query_info_async (file, "standard::icon",
+      g_file_query_info_async (private->file, "standard::icon",
                                G_FILE_QUERY_INFO_NONE,
                                G_PRIORITY_DEFAULT,
                                private->icon_cancellable,
                                gimp_imagefile_icon_callback,
                                imagefile);
-
-      g_object_unref (file);
     }
 
   return NULL;
@@ -481,17 +487,18 @@ gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
   if (! uri)
     return;
 
-  local = gimp_imagefile_new (private->gimp, uri);
+  local = gimp_imagefile_new (private->gimp, private->file);
 
   g_object_add_weak_pointer (G_OBJECT (imagefile), (gpointer) &imagefile);
 
   if (! gimp_imagefile_create_thumbnail (local, context, progress, size, replace,
                                          NULL))
     {
-      /* The weak version works on a local copy so the thumbnail status
-       * of the actual image is not properly updated in case of creation
-       * failure, thus it would end up in a generic GIMP_THUMB_STATE_NOT_FOUND,
-       * which is less informative. */
+      /* The weak version works on a local copy so the thumbnail
+       * status of the actual image is not properly updated in case of
+       * creation failure, thus it would end up in a generic
+       * GIMP_THUMB_STATE_NOT_FOUND, which is less informative.
+       */
       g_object_set (private->thumbnail,
                     "thumb-state", GIMP_THUMB_STATE_FAILED,
                     NULL);
@@ -581,6 +588,11 @@ gimp_imagefile_name_changed (GimpObject *object)
     GIMP_OBJECT_CLASS (parent_class)->name_changed (object);
 
   gimp_thumbnail_set_uri (private->thumbnail, gimp_object_get_name (object));
+
+  if (private->file)
+    g_object_unref (private->file);
+
+  private->file = g_file_new_for_uri (gimp_object_get_name (object));
 }
 
 static void

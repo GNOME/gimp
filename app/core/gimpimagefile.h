@@ -56,7 +56,7 @@ struct _GimpImagefileClass
 GType           gimp_imagefile_get_type              (void) G_GNUC_CONST;
 
 GimpImagefile * gimp_imagefile_new                   (Gimp           *gimp,
-                                                      const gchar    *uri);
+                                                      GFile          *file);
 
 GimpThumbnail * gimp_imagefile_get_thumbnail         (GimpImagefile  *imagefile);
 GIcon         * gimp_imagefile_get_gicon             (GimpImagefile  *imagefile);

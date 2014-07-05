@@ -166,6 +166,7 @@ file_save (Gimp                *gimp,
     {
       GimpDocumentList *documents;
       GimpImagefile    *imagefile;
+      GFile            *file;
 
       if (change_saved_state)
         {
@@ -215,9 +216,11 @@ file_save (Gimp                *gimp,
         gimp_image_saved (image, uri);
 
       documents = GIMP_DOCUMENT_LIST (image->gimp->documents);
-      imagefile = gimp_document_list_add_uri (documents,
-                                              uri,
-                                              file_proc->mime_type);
+
+      file = g_file_new_for_uri (uri);
+      imagefile = gimp_document_list_add_file (documents, file,
+                                               file_proc->mime_type);
+      g_object_unref (file);
 
       /* only save a thumbnail if we are saving as XCF, see bug #25272 */
       if (GIMP_PROCEDURE (file_proc)->proc_type == GIMP_INTERNAL)

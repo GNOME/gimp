@@ -63,23 +63,28 @@ gimp_document_list_new (Gimp *gimp)
 }
 
 GimpImagefile *
-gimp_document_list_add_uri (GimpDocumentList *document_list,
-                            const gchar      *uri,
-                            const gchar      *mime_type)
+gimp_document_list_add_file (GimpDocumentList *document_list,
+                             GFile            *file,
+                             const gchar      *mime_type)
 {
   Gimp          *gimp;
   GimpImagefile *imagefile;
   GimpContainer *container;
+  gchar         *uri;
 
   g_return_val_if_fail (GIMP_IS_DOCUMENT_LIST (document_list), NULL);
-  g_return_val_if_fail (uri != NULL, NULL);
-
-  gimp = document_list->gimp;
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
 
   container = GIMP_CONTAINER (document_list);
 
+  gimp = document_list->gimp;
+
+  uri = g_file_get_uri (file);
+
   imagefile = (GimpImagefile *) gimp_container_get_child_by_name (container,
                                                                   uri);
+
+  g_free (uri);
 
   if (imagefile)
     {
@@ -87,7 +92,7 @@ gimp_document_list_add_uri (GimpDocumentList *document_list,
     }
   else
     {
-      imagefile = gimp_imagefile_new (gimp, uri);
+      imagefile = gimp_imagefile_new (gimp, file);
       gimp_container_add (container, GIMP_OBJECT (imagefile));
       g_object_unref (imagefile);
     }
@@ -95,7 +100,7 @@ gimp_document_list_add_uri (GimpDocumentList *document_list,
   gimp_imagefile_set_mime_type (imagefile, mime_type);
 
   if (gimp->config->save_document_history)
-    gimp_recent_list_add_uri (gimp, uri, mime_type);
+    gimp_recent_list_add_file (gimp, file, mime_type);
 
   return imagefile;
 }

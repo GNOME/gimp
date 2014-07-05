@@ -19,6 +19,7 @@
 
 #include "config.h"
 
+#include <gio/gio.h>
 #include <gegl.h>
 
 #include "operations-types.h"

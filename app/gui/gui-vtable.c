@@ -137,8 +137,8 @@ static gboolean       gui_pdb_dialog_set        (Gimp                *gimp,
 static gboolean       gui_pdb_dialog_close      (Gimp                *gimp,
                                                  GimpContainer       *container,
                                                  const gchar         *callback_name);
-static gboolean       gui_recent_list_add_uri   (Gimp                *gimp,
-                                                 const gchar         *uri,
+static gboolean       gui_recent_list_add_file  (Gimp                *gimp,
+                                                 GFile               *file,
                                                  const gchar         *mime_type);
 static void           gui_recent_list_load      (Gimp                *gimp);
 
@@ -174,7 +174,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.pdb_dialog_new        = gui_pdb_dialog_new;
   gimp->gui.pdb_dialog_set        = gui_pdb_dialog_set;
   gimp->gui.pdb_dialog_close      = gui_pdb_dialog_close;
-  gimp->gui.recent_list_add_uri   = gui_recent_list_add_uri;
+  gimp->gui.recent_list_add_file  = gui_recent_list_add_file;
   gimp->gui.recent_list_load      = gui_recent_list_load;
 }
 
@@ -641,15 +641,17 @@ gui_pdb_dialog_close (Gimp          *gimp,
 }
 
 static gboolean
-gui_recent_list_add_uri (Gimp        *gimp,
-                         const gchar *uri,
-                         const gchar *mime_type)
+gui_recent_list_add_file (Gimp        *gimp,
+                          GFile       *file,
+                          const gchar *mime_type)
 {
   GtkRecentData  recent;
   const gchar   *groups[2] = { "Graphics", NULL };
+  gchar         *uri;
+  gboolean       success;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (uri != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
 
   /* use last part of the URI */
   recent.display_name = NULL;
@@ -663,8 +665,14 @@ gui_recent_list_add_uri (Gimp        *gimp,
   recent.groups       = (gchar **) groups;
   recent.is_private   = FALSE;
 
-  return gtk_recent_manager_add_full (gtk_recent_manager_get_default (),
-                                      uri, &recent);
+  uri = g_file_get_uri (file);
+
+  success = gtk_recent_manager_add_full (gtk_recent_manager_get_default (),
+                                         uri, &recent);
+
+  g_free (uri);
+
+  return success;
 }
 
 static gint
@@ -704,9 +712,11 @@ gui_recent_list_load (Gimp *gimp)
                                                 mime_type))
             {
               GimpImagefile *imagefile;
+              GFile         *file;
 
-              imagefile = gimp_imagefile_new (gimp,
-                                              gtk_recent_info_get_uri (info));
+              file = g_file_new_for_uri (gtk_recent_info_get_uri (info));
+              imagefile = gimp_imagefile_new (gimp, file);
+              g_object_unref (file);
 
               gimp_imagefile_set_mime_type (imagefile, mime_type);
 
