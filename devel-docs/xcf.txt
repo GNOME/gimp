@@ -2,6 +2,54 @@
 SPECIFICATION OF THE XCF FILE FORMAT
 ====================================
 
+This document specifies the native image file format of GIMP.
+
+Table of contents
+-----------------
+
+Specification of the XCF file format
+  Table of contents
+  License
+  Status
+  Distinctions
+  The name XCF
+
+1. Basic data model
+  Layers
+  Channels
+
+2. Format concepts and data types
+  Basic data types
+  Properties
+  Parasites
+
+3. The master image structure
+
+4. The layer structure
+  Layer properties
+
+5. The channel structure
+  Channel properties
+
+6. The hierarchy structure
+  Levels
+  Tiles
+
+7. Tile data organization
+  Uncompressed tile data
+  RLE compressed tile data
+
+8. Generic properties
+
+9. Compositing and layer modes
+  Flattening overview
+  Helper functions
+  Layer modes
+
+
+License
+-------
+
 Copyright Henning Makholm <henning@makholm.net>, 2006-07-11
 
 This is free documentation; you can modify and/or redistribute
@@ -13,39 +61,12 @@ as published by the Free Software Foundation, either version
      T H I S    I S    A    D R A F T    O N L Y !
      ---------------------------------------------
 
-This is the native image file format of GIMP. Beware that
-CinePaint's native file format is called XCF too. While the latter is
-derived from the format described here, the two formats differ in many
-details and are not mutually compatible.
-
-The XCF format is designed to store the entire part of the state of
-GIMP that is specific to one image (i.e., not the cut buffer, tool
-options, key bindings, etc.) and is not undo data.  This makes the
-full collection of data stored in an XCF file rather heterogeneous and
-tied to the internals of GIMP. Use of the format by third-party
-software is recommended only as a way to get data into and out of the
-Gimp for which it would be impossible or inconvenient to use a more
-standard interchange format.
-
-Authors of third-party XCF-creating software in particular should take
-care to write files that are as indistinguishable as possible from
-ones saved by GIMP. The GIMP developers take care to make each
-version of GIMP able to read XCF files produced by older versions,
-but they make no special efforts to allow reading of files created by
-other software that attempt to extrapolate from the GIMP source.
-
-The name
---------
-
-The name XCF honors GIMP's origin at the eXperimental Computing
-Facility of the University of California at Berkeley.
-
-Status of this document
------------------------
+Status
+------
 
 This specification is an unofficial condensation and extrapolation of
 the XCF-writing and -reading code in version 2.2.11 of GIMP. As of
-this writing, it has not been approved or proofread by any Gimp
+this writing, it has not been approved or proofread by any GIMP
 developer, though it has been written with the intention of
 contributing it to the GIMP project for use as official documentation.
 
@@ -53,6 +74,36 @@ Some of the normative statements made below are enforced by the XCF
 reader in GIMP; others are just the author's informed guess about
 "best practices" that would be likely to maximize interoperability
 with future versions of GIMP.
+
+Distinctions
+------------
+
+Beware that CinePaint's native file format is called XCF too.
+While the latter is derived from the format described here, the two formats
+differ in many details and are not mutually compatible.
+See http://www.cinepaint.org/more/docs/xcf.html for more information.
+
+The XCF format is designed to store the entire part of the state of
+GIMP that is specific to one image (i.e., not the cut buffer, tool
+options, key bindings, etc.) and is not undo data.  This makes the
+full collection of data stored in an XCF file rather heterogeneous and
+tied to the internals of GIMP. Use of the format by third-party
+software is recommended only as a way to get data into and out of
+GIMP for which it would be impossible or inconvenient to use a more
+standard interchange format.
+
+Authors of third-party XCF-creating software in particular should take
+care to write files that are as indistinguishable as possible from
+ones saved by GIMP. The GIMP developers take care to make each
+version of GIMP able to read XCF files produced by older GIMP versions,
+but they make no special efforts to allow reading of XCF files created by
+other software.
+
+The name XCF
+------------
+
+The name XCF honors GIMP's origin at the eXperimental Computing
+Facility of the University of California at Berkeley.
 
 
 1. BASIC DATA MODEL
@@ -93,10 +144,10 @@ layer has a color which is specified in one of three ways:
      for storing the intended gamma of the samples.
 
   Grayscale: One intensity value on a scale from 0 (black) to 255
-     (white). Gamma considerations as for RIB.
+     (white). Gamma considerations as for RGB.
 
-  Indexed: An 8-bit index into a colormap that is shared between all
-     layers. The colormap maps each index to an RGB triple which is
+  Indexed: An 8-bit index into a color map that is shared between all
+     layers. The color map maps each index to an RGB triple which is
      interpreted as in the RGB model.
 
 All layers in an image must use the same color model. Exception: if
@@ -167,8 +218,8 @@ layer mask can make parts of the layer more transparent, but never
 more opaque.
 
 
-2. FORMAT CONCEPTS AND DATATYPES
-================================
+2. FORMAT CONCEPTS AND DATA TYPES
+=================================
 
 An XCF file is a sequence of bytes. It contains a series of data
 structures, the order of which is in general not significant.  The
@@ -253,10 +304,10 @@ A second level of extensibility is provided by the "parasite"
 concept. A parasite is analogous to a property (and is usually stored
 in a special property in the XCF file) but is identified by a string
 rather than a number. This makes a larger namespace available for
-parasites.  Gimp plug-ins can access the parasites of an image
+parasites. GIMP plug-ins can access the parasites of an image
 component through a generic API and can define their own parasite
-names which will be ignored by other plug-ins. In contrast, only the
-Gimp itself should define new property types.
+names which will be ignored by other plug-ins. In contrast, only
+GIMP itself should define new property types.
 
 A list of known parasites and their data formats can be found in the
 file devel-doc/parasites.txt of the GIMP source tree.
@@ -316,30 +367,30 @@ section 8 below.
 PROP_COLORMAP (essential)
   uint32  1     The type number for PROP_COLORMAP is 1
   uint32  3n+4  The payload length
-  uint32  n     The number of colors in the colormap (should be <256)
+  uint32  n     The number of colors in the color map (should be <256)
   ,------------ Repeat n times:
-  | byte  r     The red component of a colormap color
-  | byte  g     The green component of a colormap color
-  | byte  b     The blue component of a colormap color
+  | byte  r     The red component of a color map color
+  | byte  g     The green component of a color map color
+  | byte  b     The blue component of a color map color
   `--
 
-  Appears in all indexed images and stores the colormap. The property
+  Appears in all indexed images and stores the color map. The property
   will be ignored if it is encountered in an RGB or grayscale
-  image. The current GIMP will not write a colormap with RGB or
+  image. The current GIMP will not write a color map with RGB or
   grayscale images, but some older ones occasionally did, and readers
   should be prepared to gracefully ignore it in those cases.
 
   Note that in contrast to the palette data model of, for example, the
-  PNG format, an XCF colormap does not contain alpha components, and
-  there is no colormap entry for "transparent"; the alpha channel of
+  PNG format, an XCF color map does not contain alpha components, and
+  there is no color map entry for "transparent"; the alpha channel of
   layers that have one is always represented separately.
 
   The structure here is that of XCF version >= 1.  Comments in the
   GIMP source code indicate that XCF version 0 could not store indexed
-  images in a sane way; contemporary Gimps will complain and
+  images in a sane way; contemporary GIMP versions will complain and
   reinterpret the pixel data as a grayscale image if they meet a
   version-0 indexed image.
-  
+
   Beware that the payload length of the PROP_COLORMAP in particular
   cannot be trusted: some historic releases of GIMP erroneously
   wrote n+4 instead of 3n+4 into the length word (but still actually
@@ -361,10 +412,10 @@ PROP_COMPRESSION (essential)
   small integer, PROP_COMPRESSION does _not_ pad the value to a full
   32-bit integer.
 
-  Contemporary Gimps always write files with c=1. It is unknown to the
+  Contemporary GIMP versions always write files with c=1. It is unknown to the
   author of this document whether versions that wrote completely
   uncompressed (c=0) files ever existed.
-  
+
 PROP_GUIDES (editing state)
   uint32  18  The type number for PROP_GUIDES is 18
   uint32  5*n Five bytes of payload per guide
@@ -379,7 +430,7 @@ PROP_GUIDES (editing state)
 
   Some old XCF files define guides with negative coordinates; those
   should be ignored by readers.
-   
+
 PROP_RESOLUTION (not editing state, but not _really_ essential either)
   uint32  19  The type number for PROP_RESOLUTION is 19
   uint32  8   Eight bytes of payload
@@ -397,7 +448,7 @@ PROP_RESOLUTION (not editing state, but not _really_ essential either)
   information in this property too rigidly; GIMP writes it to XCF
   files unconditionally, even if the user has not explicitly chosen a
   resolution.
-  
+
 PROP_UNIT (editing state)
   uint32  22  The type number for PROP_UNIT is 22
   uint32  4   Four bytes of payload
@@ -452,10 +503,10 @@ PROP_PATHS
   XCF writer does not check whether all paths are parasite-less when
   choosing which property to use, so path parasites may be lost upon
   saving).
-  
+
   There may be paths that declare a length of 0 points; these should
   be ignored.
-  
+
 PROP_USER_UNIT (editing state)
   uint32  24      The type number for PROP_USER_UNIT is 24
   uint32  length  The total length of the following payload
@@ -469,7 +520,7 @@ PROP_USER_UNIT (editing state)
 
   An alternative to PROP_UNIT which allows the use of units not on the
   standard list.
-  
+
 PROP_VECTORS
   uint32       25         The type number for PROP_VECTORS is 25
   uint32       length     The total length of the following payload
@@ -505,7 +556,7 @@ PROP_VECTORS
   | | `--
   | `--
   `--
-  
+
   Appears unless all paths can be stored in the PROP_PATHS format.
 
   GIMP's XCF reader checks that the total size of all path
@@ -609,7 +660,7 @@ PROP_MODE (essential)
                  19: Soft Light (XCF version >= 2 only)
                  20: Grain Extract (XCF version >= 2 only)
                  21: Grain Merge (XCF version >= 2 only)
-                 
+
   When reading old XCF files that lack this property, assume m=0.
   The effects of the various layer modes is defined in Section 8, below.
 
@@ -621,14 +672,15 @@ PROP_MODE (essential)
   none) of the canvas, it will be the only layer to have its mode
   forced to Normal.
 
-PROP_PRESERVE_TRANSPARENCY (editing state)
-(called PROP_LOCK_ALPHA in Gimp 3.3+)
+
+PROP_LOCK_ALPHA (editing state)
+(called PROP_PRESERVE_TRANSPARENCY in GIMP before 2.3)
   uint32  10  The type number for PROP_PRESERVE_TRANSPARENCY is 10
   uint32  4   Four bytes of payload
   uint32  b   1 if the Preserve Transparency flag is set; 0 if not
 
-  The Preserve Transparency flag prevents all drawing tools in the
-  Gimp from increasing the alpha of any pixel in the layer.
+  The Preserve Transparency flag prevents all drawing tools in
+  GIMP from increasing the alpha of any pixel in the layer.
 
 PROP_APPLY_MASK (essential)
   uint32  11  The type number for PROP_APPLY_MASK is 11
@@ -678,7 +730,7 @@ PROP_OFFSETS (essential)
   extends to the left of or above the canvas boundary.
 
   When reading old XCF files that lack this property, assume (0,0).
-    
+
 PROP_TEXT_LAYER_FLAGS
   uint32  26  The type number for PROP_TEXT_LAYER_FLAGS is 26
   uint32  4   Four bytes of payload
@@ -687,12 +739,12 @@ PROP_TEXT_LAYER_FLAGS
                            contents is changed
                0x00000002  The pixel data has been painted to or
                            otherwise modified since the text was rendered
-  
+
   Appears in property lists for text layers. The actual text (and
   other parameters such as font and color) appears as a parasite
   rather than a property.
 
-                   
+
 5. THE CHANNEL STRUCTURE
 ========================
 
@@ -704,7 +756,7 @@ channels).
   uint32  height The height of the channel
   string  name   The name of the channel
   property-list  Layer properties (see below)
-  uint32  hptr   Pointer to the hierarchy structure containing the pixels  
+  uint32  hptr   Pointer to the hierarchy structure containing the pixels
 
 The with and height of the channel must be the same as those of its
 parent structure (the layer in the case of layer masks; the canvas for
@@ -730,7 +782,7 @@ PROP_SELECTION (editing state?)
 
   Appears in the property list for the channel structure that
   represents the selection mask.
-  
+
 PROP_SHOW_MASKED (editing state)
   uint32  14  The type number for PROP_SHOW_MASKED is 14
   uint32  4   Four bytes of payload
@@ -839,8 +891,8 @@ memory it needs to allocate for internal data structures.
 The format of the data blocks pointed to by the tile pointers in the
 level structure of the previous section differs according to the value
 of the PROP_COMPRESSION property of the main image structure. Current
-Gimps always use RLE compression, but readers should nevertheless be
-prepared to meet the older uncompressed format.
+GIMP versions always use RLE compression, but readers should nevertheless
+be prepared to meet the older uncompressed format.
 
 Both formats assume the width, height and byte depth of the tile are
 known from the context (namely, they are stored explicitly in the
@@ -918,7 +970,7 @@ PROP_END
 
   This pseudo-property marks the end of a property list in the XCF
   file.
-  
+
 PROP_OPACITY (essential)
   uint32  6   The type number for PROP_OPACITY is 6
   uint32  4   Four bytes of payload
@@ -926,8 +978,8 @@ PROP_OPACITY (essential)
               (fully opaque)
 
   Appears in the property list of layers and channels, and records the
-  overall opacity setting for the layer/channel. Note that though the
-  Gimp's user interface displays the opacity as a percentage, it is
+  overall opacity setting for the layer/channel. Note that though
+  GIMP's user interface displays the opacity as a percentage, it is
   actually stored on a 0-255 scale. Also note that this opacity value
   is stored as a 32-bit quantity even though it has been scaled to
   fit exactly in a single byte.
@@ -953,7 +1005,7 @@ PROP_LINKED (editing state)
   UI property: if the Move tool is used to move a linked layer, all
   other linked layers will be moved in parallel.
 
-PROP_TATTOO (internal Gimp state)
+PROP_TATTOO (internal GIMP state)
   uint32  20  The type number for PROP_TATTOO is 20
   uint32  4   Four bytes of payload
   uint32  4   The tattoo, a nonzero unsigned integer
@@ -974,7 +1026,7 @@ PROP_TATTOO (internal Gimp state)
   An XCF file must either provide tattoo values for all its elements
   or for none of them. GIMP will invent fresh tattoos when it
   reads in tattoo-less elements, but it does not attempt to keep them
-  different from ones specified explicitly in the file. 
+  different from ones specified explicitly in the file.
 
 PROP_PARASITES
   uint32    21      The type number for PROP_PARASITES is 21
@@ -1043,7 +1095,7 @@ least significant bits are referred to studying its source code.
 In the description below, the variable letter "a" is used for alpha
 values. The variable letter "r", "g", "b" are used for primary
 intensities, "y" is used for grayscale intensities, and "i" is used
-for colormap indexed. The letter "c" is used for the complete
+for color map indexed. The letter "c" is used for the complete
 color information for a pixel; depending on the color mode of the
 image that is either an (r,g,b) triple, a y, or a c.
 
@@ -1068,7 +1120,7 @@ parallel):
 
 1. Initialize a "working pixel" (a1,c1) to be completely transparent
    (that is, a1=0.0 and the value of c1 is immaterial).
-   
+
 2. Do the following for each visible layer in the image, starting with
    the one that comes LAST in the master layer list:
 
@@ -1090,7 +1142,7 @@ parallel):
          at the pixel position in question, and set a3 to a3*x.
 
       8. Let m3 be the layer mode of the floating selection.
-         
+
       9. Set (a2,c2) to COMPOSITE(a2,c2, a3,c3,m3).
          The COMPOSITE function is defined below.
 
@@ -1121,26 +1173,26 @@ The following auxiliary functions are used in the definition of
 COMPOSITE below:
 
  MIN(x1,...,xn) is the least value of x1...xn
- 
+
  MAX(x1,...,xn) is the largest value of x1..xn
 
  MID(x1,...,xn) = (MIN(x1,...,xn)+MAX(x1,...,xn))/2
 
  CLAMP(x) = if x < 0 then 0.0 else if x > 1 then 1.0 else x
- 
+
  BLEND(a1,x1, a2,x2) = (1-k)*x1 + k*x2
                        where k = a2/(1-(1-a1)*(1-a2))
 
-The layer modes
----------------
+Layer modes
+-----------
 
 This and the following sections define the COMPOSITE function used in
-the general flattening algorithm. 
+the general flattening algorithm.
 
 "Normal" mode for RGB or grayscale images is the usual mode of
-compositeing in computer graphics with alpha channels. In indexed
+compositing in computer graphics with alpha channels. In indexed
 mode, the alpha value gets rounded to either 1.0 or 0.0 such that
-no colors outside the colormap get produced:
+no colors outside the color map get produced:
 
   COMPOSITE(a1,y1, a2,y2,Normal)
      = ( 1-(1-a1)*(1-a2), BLEND(a1,y1, a2,y2) )
@@ -1231,7 +1283,7 @@ For defining these modes, we say that
   if r' = g' = b' and r = g = b
   or MAX(r,g,b)-MIN(r,g,b) = MIN(MID(r,g,b),1-MID(r,g,b)) *
             (MAX(r',g',b')-MIN(r',g',b'))/MIN(MID(r',g',b'),1-MID(r',g',b'))
- 
+
 Mode 11: Hue (H of HSV)
 
   h(r1,g1,b1, r2,g2,b2, 11) is
