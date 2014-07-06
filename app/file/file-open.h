@@ -78,7 +78,7 @@ GList     * file_open_layers                (Gimp                *gimp,
                                              GError             **error);
 
 gboolean    file_open_from_command_line     (Gimp                *gimp,
-                                             const gchar         *filename,
+                                             GFile               *file,
                                              gboolean             as_new,
                                              GObject             *screen,
                                              gint                 monitor);

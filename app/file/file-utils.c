@@ -167,38 +167,6 @@ file_utils_filename_to_uri (Gimp         *gimp,
   return uri;
 }
 
-GFile *
-file_utils_any_to_file (Gimp         *gimp,
-                        const gchar  *filename_or_uri,
-                        GError      **error)
-{
-  GFile *file;
-  gchar *uri;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (filename_or_uri != NULL, NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  /*  first try if we got a file uri  */
-  uri = g_filename_from_uri (filename_or_uri, NULL, NULL);
-
-  if (uri)
-    {
-      g_free (uri);
-      uri = g_strdup (filename_or_uri);
-    }
-  else
-    {
-      uri = file_utils_filename_to_uri (gimp, filename_or_uri, error);
-    }
-
-  file = g_file_new_for_uri (uri);
-  g_free (uri);
-
-  return file;
-}
-
-
 /**
  * file_utils_filename_from_uri:
  * @uri: a URI

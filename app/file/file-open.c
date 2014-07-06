@@ -605,71 +605,57 @@ file_open_layers (Gimp                *gimp,
  *  or from the D-Bus service.
  */
 gboolean
-file_open_from_command_line (Gimp        *gimp,
-                             const gchar *filename,
-                             gboolean     as_new,
-                             GObject     *screen,
-                             gint         monitor)
+file_open_from_command_line (Gimp     *gimp,
+                             GFile    *file,
+                             gboolean  as_new,
+                             GObject  *screen,
+                             gint      monitor)
 
 {
-  GFile    *file;
-  gboolean  success = FALSE;
-  GError   *error   = NULL;
+  GimpImage         *image;
+  GimpObject        *display;
+  GimpPDBStatusType  status;
+  gboolean           success = FALSE;
+  GError            *error   = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (screen == NULL || G_IS_OBJECT (screen), FALSE);
 
-  /* we accept URI or filename */
-  file = file_utils_any_to_file (gimp, filename, &error);
+  display = gimp_get_empty_display (gimp);
 
-  if (file)
+  /* show the progress in the last opened display, see bug #704896 */
+  if (! display)
+    display = gimp_context_get_display (gimp_get_user_context (gimp));
+
+  if (display)
+    g_object_add_weak_pointer (G_OBJECT (display), (gpointer) &display);
+
+  image = file_open_with_display (gimp,
+                                  gimp_get_user_context (gimp),
+                                  GIMP_PROGRESS (display),
+                                  file, as_new,
+                                  screen, monitor,
+                                  &status, &error);
+
+  if (image)
     {
-      GimpImage         *image;
-      GimpObject        *display = gimp_get_empty_display (gimp);
-      GimpPDBStatusType  status;
+      success = TRUE;
 
-      /* show the progress in the last opened display, see bug #704896 */
-      if (! display)
-        display = gimp_context_get_display (gimp_get_user_context (gimp));
-
-      if (display)
-        g_object_add_weak_pointer (G_OBJECT (display), (gpointer) &display);
-
-      image = file_open_with_display (gimp,
-                                      gimp_get_user_context (gimp),
-                                      GIMP_PROGRESS (display),
-                                      file, as_new,
-                                      screen, monitor,
-                                      &status, &error);
-
-      if (image)
-        {
-          success = TRUE;
-
-          g_object_set_data_full (G_OBJECT (gimp), GIMP_FILE_OPEN_LAST_FILE_KEY,
-                                  g_object_ref (file),
-                                  (GDestroyNotify) g_object_unref);
-        }
-      else if (status != GIMP_PDB_CANCEL && display)
-        {
-          gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
-                        _("Opening '%s' failed: %s"),
-                        gimp_file_get_utf8_name (file), error->message);
-          g_clear_error (&error);
-        }
-
-      if (display)
-        g_object_remove_weak_pointer (G_OBJECT (display), (gpointer) &display);
-
-      g_object_unref (file);
+      g_object_set_data_full (G_OBJECT (gimp), GIMP_FILE_OPEN_LAST_FILE_KEY,
+                              g_object_ref (file),
+                              (GDestroyNotify) g_object_unref);
     }
-  else
+  else if (status != GIMP_PDB_CANCEL && display)
     {
-      g_printerr ("conversion filename -> uri failed: %s\n",
-                  error->message);
+      gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
+                    _("Opening '%s' failed: %s"),
+                    gimp_file_get_utf8_name (file), error->message);
       g_clear_error (&error);
     }
+
+  if (display)
+    g_object_remove_weak_pointer (G_OBJECT (display), (gpointer) &display);
 
   return success;
 }

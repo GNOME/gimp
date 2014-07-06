@@ -277,9 +277,15 @@ app_run (const gchar         *full_prog_name,
       for (i = 0; filenames[i] != NULL; i++)
         {
           if (run_loop)
-            file_open_from_command_line (gimp, filenames[i], as_new,
-                                         initial_screen,
-                                         initial_monitor);
+            {
+              GFile *file = g_file_new_for_commandline_arg (filenames[i]);
+
+              file_open_from_command_line (gimp, file, as_new,
+                                           initial_screen,
+                                           initial_monitor);
+
+              g_object_unref (file);
+            }
         }
     }
 
