@@ -778,6 +778,7 @@ toolbox_paste_received (GtkClipboard *clipboard,
     {
       const gchar *newline = strchr (text, '\n');
       gchar       *copy;
+      GFile       *file = NULL;
 
       if (newline)
         copy = g_strndup (text, newline - text);
@@ -787,6 +788,11 @@ toolbox_paste_received (GtkClipboard *clipboard,
       g_strstrip (copy);
 
       if (strlen (copy))
+        file = g_file_new_for_commandline_arg (copy);
+
+      g_free (copy);
+
+      if (file)
         {
           GtkWidget         *widget = GTK_WIDGET (toolbox);
           GimpImage         *image;
@@ -794,25 +800,21 @@ toolbox_paste_received (GtkClipboard *clipboard,
           GError            *error = NULL;
 
           image = file_open_with_display (context->gimp, context, NULL,
-                                          copy, FALSE,
+                                          file, FALSE,
                                           G_OBJECT (gtk_widget_get_screen (widget)),
                                           gimp_widget_get_monitor (widget),
                                           &status, &error);
 
           if (! image && status != GIMP_PDB_CANCEL)
             {
-              gchar *filename = file_utils_uri_display_name (copy);
-
               gimp_message (context->gimp, NULL, GIMP_MESSAGE_ERROR,
                             _("Opening '%s' failed:\n\n%s"),
-                            filename, error->message);
-
+                            gimp_file_get_utf8_name (file), error->message);
               g_clear_error (&error);
-              g_free (filename);
             }
-        }
 
-      g_free (copy);
+          g_object_unref (file);
+        }
     }
 
   g_object_unref (context);

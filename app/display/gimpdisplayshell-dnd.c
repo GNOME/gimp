@@ -512,7 +512,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
 
   for (list = uri_list; list; list = g_list_next (list))
     {
-      const gchar       *uri   = list->data;
+      GFile             *file  = g_file_new_for_uri (list->data);
       GimpPDBStatusType  status;
       GError            *error = NULL;
       gboolean           warn  = FALSE;
@@ -520,6 +520,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
       if (! shell->display)
         {
           /* It seems as if GIMP is being torn down for quitting. Bail out. */
+          g_object_unref (file);
           return;
         }
 
@@ -530,7 +531,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
           new_layers = file_open_layers (shell->display->gimp, context,
                                          GIMP_PROGRESS (shell->display),
                                          image, FALSE,
-                                         uri, GIMP_RUN_INTERACTIVE, NULL,
+                                         file, GIMP_RUN_INTERACTIVE, NULL,
                                          &status, &error);
 
           if (new_layers)
@@ -560,7 +561,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
 
           new_image = file_open_with_display (shell->display->gimp, context,
                                               NULL,
-                                              uri, FALSE,
+                                              file, FALSE,
                                               G_OBJECT (gtk_widget_get_screen (widget)),
                                               gimp_widget_get_monitor (widget),
                                               &status, &error);
@@ -573,7 +574,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
           /*  open the first image in the empty display  */
           image = file_open_with_display (shell->display->gimp, context,
                                           GIMP_PROGRESS (shell->display),
-                                          uri, FALSE,
+                                          file, FALSE,
                                           G_OBJECT (gtk_widget_get_screen (widget)),
                                           gimp_widget_get_monitor (widget),
                                           &status, &error);
@@ -587,16 +588,14 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
        * is being torn down for quitting. */
       if (warn && shell->display)
         {
-          gchar *filename = file_utils_uri_display_name (uri);
-
           gimp_message (shell->display->gimp, G_OBJECT (shell->display),
                         GIMP_MESSAGE_ERROR,
                         _("Opening '%s' failed:\n\n%s"),
-                        filename, error->message);
-
+                        gimp_file_get_utf8_name (file), error->message);
           g_clear_error (&error);
-          g_free (filename);
         }
+
+      g_object_unref (file);
     }
 
   if (image)

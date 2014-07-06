@@ -138,7 +138,7 @@ struct _GimpClass
 
   /*  emitted if an image is loaded and opened with a display  */
   void     (* image_opened)   (Gimp               *gimp,
-                               const gchar        *uri);
+                               GFile              *file);
 };
 
 
@@ -215,7 +215,7 @@ void           gimp_message_literal      (Gimp                *gimp,
                                           const gchar         *message);
 
 void           gimp_image_opened         (Gimp                *gimp,
-                                          const gchar         *uri);
+                                          GFile               *file);
 
 gchar        * gimp_get_temp_filename    (Gimp                *gimp,
                                           const gchar         *extension);

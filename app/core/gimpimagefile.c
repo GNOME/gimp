@@ -248,6 +248,14 @@ gimp_imagefile_new (Gimp  *gimp,
   return imagefile;
 }
 
+GFile *
+gimp_imagefile_get_file (GimpImagefile *imagefile)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), NULL);
+
+  return GET_PRIVATE (imagefile)->file;
+}
+
 GimpThumbnail *
 gimp_imagefile_get_thumbnail (GimpImagefile *imagefile)
 {
@@ -356,7 +364,6 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
   if (image_state == GIMP_THUMB_STATE_REMOTE ||
       image_state >= GIMP_THUMB_STATE_EXISTS)
     {
-      GFile         *file;
       GimpImage     *image;
       gboolean       success;
       gint           width      = 0;
@@ -365,16 +372,14 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
       const Babl    *format     = NULL;
       gint           num_layers = -1;
 
-      file = g_file_new_for_uri (thumbnail->image_uri);
-
       /*  we only want to attempt thumbnailing on readable, regular files  */
-      if (g_file_is_native (file))
+      if (g_file_is_native (private->file))
         {
           GFileInfo *file_info;
           gboolean   regular;
           gboolean   readable;
 
-          file_info = g_file_query_info (file,
+          file_info = g_file_query_info (private->file,
                                          G_FILE_ATTRIBUTE_STANDARD_TYPE ","
                                          G_FILE_ATTRIBUTE_ACCESS_CAN_READ,
                                          G_FILE_QUERY_INFO_NONE,
@@ -387,13 +392,8 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
           g_object_unref (file_info);
 
           if (! (regular && readable))
-            {
-              g_object_unref (file);
-              return TRUE;
-            }
+            return TRUE;
         }
-
-      g_object_unref (file);
 
       g_object_ref (imagefile);
 
@@ -401,7 +401,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
        * actual thumbnail saving
        */
       image = file_open_thumbnail (private->gimp, context, progress,
-                                   thumbnail->image_uri, size,
+                                   private->file, size,
                                    &mime_type, &width, &height,
                                    &format, &num_layers, NULL);
 
@@ -419,8 +419,8 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
            * from actual thumbnail saving
            */
           image = file_open_image (private->gimp, context, progress,
-                                   thumbnail->image_uri,
-                                   thumbnail->image_uri,
+                                   private->file,
+                                   private->file,
                                    FALSE, NULL, GIMP_RUN_NONINTERACTIVE,
                                    &status, &mime_type, NULL);
 

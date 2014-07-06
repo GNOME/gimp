@@ -60,7 +60,7 @@ static gboolean   gimp_dbus_service_open_as_new    (GimpDBusServiceUI     *servi
                                                     const gchar           *uri);
 
 static void       gimp_dbus_service_gimp_opened    (Gimp                  *gimp,
-						    const gchar           *uri,
+						    GFile                 *file,
 						    GimpDBusService       *service);
 
 static gboolean   gimp_dbus_service_queue_open     (GimpDBusService       *service,
@@ -212,10 +212,14 @@ gimp_dbus_service_open_as_new (GimpDBusServiceUI     *service,
 
 static void
 gimp_dbus_service_gimp_opened (Gimp            *gimp,
-			       const gchar     *uri,
+			       GFile           *file,
 			       GimpDBusService *service)
 {
+  gchar *uri = g_file_get_uri (file);
+
   g_signal_emit_by_name (service, "opened", uri);
+
+  g_free (uri);
 }
 
 /*

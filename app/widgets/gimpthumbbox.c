@@ -699,7 +699,7 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
 {
   Gimp          *gimp  = box->context->gimp;
   GimpThumbnail *thumb = gimp_imagefile_get_thumbnail (box->imagefile);
-  const gchar   *uri   = gimp_object_get_name (box->imagefile);
+  GFile         *file  = gimp_imagefile_get_file (box->imagefile);
 
   box->idle_id = 0;
 
@@ -713,7 +713,7 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
       if (thumb->image_filesize < gimp->config->thumbnail_filesize_limit &&
           ! gimp_thumbnail_has_failed (thumb)                            &&
           file_procedure_find_by_extension (gimp->plug_in_manager->load_procs,
-                                            uri))
+                                            file))
         {
           if (thumb->image_filesize > 0)
             {

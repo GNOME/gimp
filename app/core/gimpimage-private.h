@@ -58,6 +58,11 @@ struct _GimpImagePrivate
 
   GimpMetadata      *metadata;              /*  image's metadata             */
 
+  GFile             *file;
+  GFile             *imported_file;
+  GFile             *exported_file;
+  GFile             *save_a_copy_file;
+
   gint               dirty;                 /*  dirty flag -- # of ops       */
   guint              dirty_time;            /*  time when image became dirty */
   gint               export_dirty;          /*  'dirty' but for export       */

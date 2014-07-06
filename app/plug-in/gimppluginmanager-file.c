@@ -231,8 +231,8 @@ gimp_plug_in_manager_register_thumb_loader (GimpPlugInManager *manager,
 }
 
 gboolean
-gimp_plug_in_manager_uri_has_exporter (GimpPlugInManager *manager,
-                                       const gchar       *uri)
+gimp_plug_in_manager_file_has_exporter (GimpPlugInManager *manager,
+                                        GFile             *file)
 {
-  return file_procedure_find (manager->export_procs, uri, NULL) != NULL;
+  return file_procedure_find (manager->export_procs, file, NULL) != NULL;
 }

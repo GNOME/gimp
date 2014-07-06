@@ -173,8 +173,8 @@ gimp_class_init (GimpClass *klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpClass, image_opened),
                   NULL, NULL,
-                  gimp_marshal_VOID__STRING,
-                  G_TYPE_NONE, 1, G_TYPE_STRING);
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1, G_TYPE_FILE);
 
   object_class->dispose          = gimp_dispose;
   object_class->finalize         = gimp_finalize;
@@ -1298,13 +1298,13 @@ gimp_message_literal (Gimp                *gimp,
 }
 
 void
-gimp_image_opened (Gimp        *gimp,
-		   const gchar *uri)
+gimp_image_opened (Gimp  *gimp,
+		   GFile *file)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (uri != NULL);
+  g_return_if_fail (G_IS_FILE (file));
 
-  g_signal_emit (gimp, gimp_signals[IMAGE_OPENED], 0, uri);
+  g_signal_emit (gimp, gimp_signals[IMAGE_OPENED], 0, file);
 }
 
 gchar *

@@ -63,7 +63,7 @@ static void    file_actions_close_all_update    (GimpContainer   *images,
                                                  GimpObject      *unused,
                                                  GimpActionGroup *group);
 static gchar * file_actions_create_label        (const gchar     *format,
-                                                 const gchar     *uri);
+                                                 GFile           *file);
 
 
 static const GimpActionEntry file_actions[] =
@@ -256,21 +256,29 @@ file_actions_update (GimpActionGroup *group,
   Gimp         *gimp           = action_data_get_gimp (data);
   GimpImage    *image          = action_data_get_image (data);
   GimpDrawable *drawable       = NULL;
-  const gchar  *source         = NULL;
-  const gchar  *export         = NULL;
+  GFile        *source         = NULL;
+  GFile        *export         = NULL;
   gboolean      show_overwrite = FALSE;
 
   if (image)
     {
+      const gchar *uri;
+
       drawable = gimp_image_get_active_drawable (image);
-      source   = gimp_image_get_imported_uri (image);
-      export   = gimp_image_get_exported_uri (image);
+
+      uri = gimp_image_get_imported_uri (image);
+      if (uri)
+        source = g_file_new_for_uri (uri);
+
+      uri = gimp_image_get_exported_uri (image);
+      if (uri)
+        export = g_file_new_for_uri (uri);
     }
 
   show_overwrite =
     (source &&
-     gimp_plug_in_manager_uri_has_exporter (gimp->plug_in_manager,
-                                            source));
+     gimp_plug_in_manager_file_has_exporter (gimp->plug_in_manager,
+                                             source));
 
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
@@ -413,9 +421,9 @@ file_actions_close_all_update (GimpContainer   *images,
 
 static gchar *
 file_actions_create_label (const gchar *format,
-                           const gchar *uri)
+                           GFile       *file)
 {
-  gchar *basename         = file_utils_uri_display_basename (uri);
+  gchar *basename         = g_path_get_basename (gimp_file_get_utf8_name (file));
   gchar *escaped_basename = gimp_escape_uline (basename);
   gchar *label            = g_strdup_printf (format, escaped_basename);
 

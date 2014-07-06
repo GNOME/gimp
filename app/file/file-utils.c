@@ -100,20 +100,25 @@ file_utils_filename_to_uri (Gimp         *gimp,
                             const gchar  *filename,
                             GError      **error)
 {
-  GError *temp_error = NULL;
+  GFile  *file;
   gchar  *absolute;
   gchar  *uri;
+  GError *temp_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
+  file = g_file_new_for_uri (filename);
+
   /*  check for prefixes like http or ftp  */
   if (file_procedure_find_by_prefix (gimp->plug_in_manager->load_procs,
-                                     filename))
+                                     file))
     {
       if (g_utf8_validate (filename, -1, NULL))
         {
+          g_object_unref (file);
+
           return g_strdup (filename);
         }
       else
@@ -122,19 +127,25 @@ file_utils_filename_to_uri (Gimp         *gimp,
 			       G_CONVERT_ERROR,
 			       G_CONVERT_ERROR_ILLEGAL_SEQUENCE,
 			       _("Invalid character sequence in URI"));
+          g_object_unref (file);
           return NULL;
         }
     }
   else if (file_utils_filename_is_uri (filename, &temp_error))
     {
+      g_object_unref (file);
+
       return g_strdup (filename);
     }
   else if (temp_error)
     {
       g_propagate_error (error, temp_error);
+      g_object_unref (file);
 
       return NULL;
     }
+
+  g_object_unref (file);
 
   if (! g_path_is_absolute (filename))
     {
@@ -156,11 +167,12 @@ file_utils_filename_to_uri (Gimp         *gimp,
   return uri;
 }
 
-gchar *
-file_utils_any_to_uri (Gimp         *gimp,
-                       const gchar  *filename_or_uri,
-                       GError      **error)
+GFile *
+file_utils_any_to_file (Gimp         *gimp,
+                        const gchar  *filename_or_uri,
+                        GError      **error)
 {
+  GFile *file;
   gchar *uri;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -180,7 +192,10 @@ file_utils_any_to_uri (Gimp         *gimp,
       uri = file_utils_filename_to_uri (gimp, filename_or_uri, error);
     }
 
-  return uri;
+  file = g_file_new_for_uri (uri);
+  g_free (uri);
+
+  return file;
 }
 
 

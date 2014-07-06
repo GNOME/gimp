@@ -20,26 +20,8 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
-
-#ifdef HAVE_SYS_PARAM_H
-#include <sys/param.h>
-#endif
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 #include <gegl.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#define W_OK 2
-#endif
 
 #include "libgimpbase/gimpbase.h"
 
@@ -73,7 +55,7 @@ GimpPDBStatusType
 file_save (Gimp                *gimp,
            GimpImage           *image,
            GimpProgress        *progress,
-           const gchar         *uri,
+           GFile               *file,
            GimpPlugInProcedure *file_proc,
            GimpRunMode          run_mode,
            gboolean             change_saved_state,
@@ -84,7 +66,8 @@ file_save (Gimp                *gimp,
   GimpDrawable      *drawable;
   GimpValueArray    *return_vals;
   GimpPDBStatusType  status;
-  gchar             *filename;
+  gchar             *filename = NULL;
+  gchar             *uri      = NULL;
   gint32             image_ID;
   gint32             drawable_ID;
 
@@ -92,7 +75,7 @@ file_save (Gimp                *gimp,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress),
                         GIMP_PDB_CALLING_ERROR);
-  g_return_val_if_fail (uri != NULL, GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail (G_IS_FILE (file), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (file_proc),
                         GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail ((export_backward && export_forward) == FALSE,
@@ -105,40 +88,46 @@ file_save (Gimp                *gimp,
   if (! drawable)
     return GIMP_PDB_EXECUTION_ERROR;
 
-  filename = file_utils_filename_from_uri (uri);
-
-  if (filename)
+  if (g_file_query_exists (file, NULL))
     {
-      /* check if we are saving to a file */
-      if (g_file_test (filename, G_FILE_TEST_EXISTS))
-        {
-          if (! g_file_test (filename, G_FILE_TEST_IS_REGULAR))
-            {
-              g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-				   _("Not a regular file"));
-              status = GIMP_PDB_EXECUTION_ERROR;
-              goto out;
-            }
+      GFileInfo *info;
 
-          if (g_access (filename, W_OK) != 0)
-            {
-              g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_ACCES,
-                                   g_strerror (errno));
-              status = GIMP_PDB_EXECUTION_ERROR;
-              goto out;
-            }
+      info = g_file_query_info (file,
+                                G_FILE_ATTRIBUTE_STANDARD_TYPE ","
+                                G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE,
+                                G_FILE_QUERY_INFO_NONE,
+                                NULL, error);
+      if (! info)
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+          goto out;
         }
 
-      if (file_proc->handles_uri)
+      if (g_file_info_get_file_type (info) != G_FILE_TYPE_REGULAR)
         {
-          g_free (filename);
-          filename = g_strdup (uri);
+          g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                               _("Not a regular file"));
+          status = GIMP_PDB_EXECUTION_ERROR;
+          goto out;
+        }
+
+      if (! g_file_info_get_attribute_boolean (info,
+                                               G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE))
+        {
+          g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                               _("Premission denied"));
+          status = GIMP_PDB_EXECUTION_ERROR;
+          goto out;
         }
     }
-  else
-    {
-      filename = g_strdup (uri);
-    }
+
+  uri = g_file_get_uri (file);
+
+  if (! file_proc->handles_uri)
+    filename = g_file_get_path (file);
+
+  if (! filename)
+    filename = g_strdup (uri);
 
   /* ref the image, so it can't get deleted during save */
   g_object_ref (image);
@@ -166,7 +155,6 @@ file_save (Gimp                *gimp,
     {
       GimpDocumentList *documents;
       GimpImagefile    *imagefile;
-      GFile            *file;
 
       if (change_saved_state)
         {
@@ -217,10 +205,8 @@ file_save (Gimp                *gimp,
 
       documents = GIMP_DOCUMENT_LIST (image->gimp->documents);
 
-      file = g_file_new_for_uri (uri);
       imagefile = gimp_document_list_add_file (documents, file,
                                                file_proc->mime_type);
-      g_object_unref (file);
 
       /* only save a thumbnail if we are saving as XCF, see bug #25272 */
       if (GIMP_PROCEDURE (file_proc)->proc_type == GIMP_INTERNAL)
@@ -243,6 +229,7 @@ file_save (Gimp                *gimp,
 
  out:
   g_free (filename);
+  g_free (uri);
 
   return status;
 }

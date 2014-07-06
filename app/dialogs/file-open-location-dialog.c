@@ -23,6 +23,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "dialogs-types.h"
@@ -173,7 +174,8 @@ file_open_location_response (GtkDialog *dialog,
       gchar             *uri;
       gchar             *filename;
       gchar             *hostname;
-      GError            *error  = NULL;
+      GFile             *file  = NULL;
+      GError            *error = NULL;
       GimpPDBStatusType  status;
 
       filename = g_filename_from_uri (text, &hostname, NULL);
@@ -190,6 +192,12 @@ file_open_location_response (GtkDialog *dialog,
           uri = file_utils_filename_to_uri (gimp, text, &error);
         }
 
+      if (uri)
+        {
+          file = g_file_new_for_uri (uri);
+          g_free (uri);
+        }
+
       box = gimp_progress_box_new ();
       gtk_container_set_border_width (GTK_CONTAINER (box), 12);
       gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
@@ -197,31 +205,32 @@ file_open_location_response (GtkDialog *dialog,
 
       g_object_set_data (G_OBJECT (dialog), "progress-box", box);
 
-      if (uri)
+      if (file)
         {
+          GFile *entered_file = g_file_new_for_uri (text);
+
           gtk_widget_show (box);
 
           image = file_open_with_proc_and_display (gimp,
                                                    gimp_get_user_context (gimp),
                                                    GIMP_PROGRESS (box),
-                                                   uri, text, FALSE, NULL,
+                                                   file, entered_file,
+                                                   FALSE, NULL,
                                                    G_OBJECT (gtk_widget_get_screen (entry)),
                                                    gimp_widget_get_monitor (entry),
                                                    &status, &error);
 
+          g_object_unref (entered_file);
+
           if (image == NULL && status != GIMP_PDB_CANCEL)
             {
-              gchar *filename = file_utils_uri_display_name (uri);
-
               gimp_message (gimp, G_OBJECT (box), GIMP_MESSAGE_ERROR,
                             _("Opening '%s' failed:\n\n%s"),
-                            filename, error->message);
+                            gimp_file_get_utf8_name (file), error->message);
               g_clear_error (&error);
-
-              g_free (filename);
             }
 
-          g_free (uri);
+          g_object_unref (file);
         }
       else
         {

@@ -62,6 +62,7 @@ file_load_invoker (GimpProcedure         *procedure,
   GimpPlugInProcedure *file_proc;
   GimpProcedure       *proc;
   gchar               *uri;
+  GFile               *file;
   gint                 i;
 
   uri = file_utils_filename_to_uri (gimp,
@@ -72,10 +73,13 @@ file_load_invoker (GimpProcedure         *procedure,
     return gimp_procedure_get_return_values (procedure, FALSE,
                                              error ? *error : NULL);
 
-  file_proc =
-    file_procedure_find (gimp->plug_in_manager->load_procs, uri, error);
-
+  file = g_file_new_for_uri (uri);
   g_free (uri);
+
+  file_proc =
+    file_procedure_find (gimp->plug_in_manager->load_procs, file, error);
+
+  g_object_unref (file);
 
   if (! file_proc)
     return gimp_procedure_get_return_values (procedure, FALSE,
@@ -142,12 +146,18 @@ file_load_layer_invoker (GimpProcedure         *procedure,
 
       if (uri)
         {
+          GFile             *file;
           GList             *layers;
           GimpPDBStatusType  status;
 
+          file = g_file_new_for_uri (uri);
+          g_free (uri);
+
           layers = file_open_layers (gimp, context, progress,
                                      image, FALSE,
-                                     uri, run_mode, NULL, &status, error);
+                                     file, run_mode, NULL, &status, error);
+
+          g_object_unref (file);
 
           if (layers)
             {
@@ -196,12 +206,18 @@ file_load_layers_invoker (GimpProcedure         *procedure,
 
       if (uri)
         {
+          GFile             *file;
           GList             *layers;
           GimpPDBStatusType  status;
 
+          file = g_file_new_for_uri (uri);
+          g_free (uri);
+
           layers = file_open_layers (gimp, context, progress,
                                      image, FALSE,
-                                     uri, run_mode, NULL, &status, error);
+                                     file, run_mode, NULL, &status, error);
+
+          g_object_unref (file);
 
           if (layers)
             {
@@ -251,6 +267,7 @@ file_save_invoker (GimpProcedure         *procedure,
   GimpPlugInProcedure *file_proc;
   GimpProcedure       *proc;
   gchar               *uri;
+  GFile               *file;
   gint                 i;
 
   uri = file_utils_filename_to_uri (gimp,
@@ -261,13 +278,17 @@ file_save_invoker (GimpProcedure         *procedure,
     return gimp_procedure_get_return_values (procedure, FALSE,
                                              error ? *error : NULL);
 
+  file = g_file_new_for_uri (uri);
+  g_free (uri);
+
   file_proc =
-    file_procedure_find (gimp->plug_in_manager->save_procs, uri, NULL);
+    file_procedure_find (gimp->plug_in_manager->save_procs, file, NULL);
 
   if (! file_proc)
-    file_proc = file_procedure_find (gimp->plug_in_manager->export_procs, uri, error);
+    file_proc = file_procedure_find (gimp->plug_in_manager->export_procs, file,
+                                     error);
 
-  g_free (uri);
+  g_object_unref (file);
 
   if (! file_proc)
     return gimp_procedure_get_return_values (procedure, FALSE,

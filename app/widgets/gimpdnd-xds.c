@@ -33,6 +33,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -122,6 +123,7 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
   gint                 length;
   guchar              *data;
   gchar               *uri;
+  GFile               *file;
   gboolean             export = FALSE;
   GError              *error  = NULL;
 
@@ -142,29 +144,25 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
   uri = g_strndup ((const gchar *) data, length);
   g_free (data);
 
-  proc = file_procedure_find (image->gimp->plug_in_manager->save_procs, uri,
-                              NULL);
+  file = g_file_new_for_uri (uri);
+
+  proc = file_procedure_find (image->gimp->plug_in_manager->save_procs,
+                              file, NULL);
   if (! proc)
     {
-      proc = file_procedure_find (image->gimp->plug_in_manager->export_procs, uri,
-                                  NULL);
-
+      proc = file_procedure_find (image->gimp->plug_in_manager->export_procs,
+                                  file, NULL);
       export = TRUE;
     }
 
   if (proc)
     {
-      gchar *filename = file_utils_filename_from_uri (uri);
-
-      /*  FIXME: shouldn't overwrite non-local files w/o confirmation  */
-
-      if (! filename ||
-          ! g_file_test (filename, G_FILE_TEST_EXISTS) ||
+      if (! g_file_query_exists (file, NULL) ||
           gimp_file_overwrite_dialog (NULL, uri))
         {
           if (file_save (image->gimp,
                          image, NULL,
-                         uri, proc, GIMP_RUN_INTERACTIVE,
+                         file, proc, GIMP_RUN_INTERACTIVE,
                          ! export, FALSE, export,
                          &error) == GIMP_PDB_SUCCESS)
             {
@@ -180,19 +178,14 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
 
               if (error)
                 {
-                  gchar *filename = file_utils_uri_display_name (uri);
-
                   gimp_message (image->gimp, NULL, GIMP_MESSAGE_ERROR,
                                 _("Saving '%s' failed:\n\n%s"),
-                                filename, error->message);
-
-                  g_free (filename);
-                  g_error_free (error);
+                                gimp_file_get_utf8_name (file),
+                                error->message);
+                  g_clear_error (&error);
                 }
             }
         }
-
-      g_free (filename);
     }
   else
     {
@@ -205,6 +198,7 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
                               "file extension."));
     }
 
+  g_object_unref (file);
   g_free (uri);
 }
 

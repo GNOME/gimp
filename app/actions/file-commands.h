@@ -43,7 +43,7 @@ void   file_quit_cmd_callback            (GtkAction   *action,
                                           gpointer     data);
 
 void   file_file_open_dialog             (Gimp        *gimp,
-                                          const gchar *uri,
+                                          GFile       *file,
                                           GtkWidget   *parent);
 
 

@@ -26,10 +26,11 @@ gboolean      file_utils_filename_is_uri      (const gchar   *filename,
 gchar       * file_utils_filename_to_uri      (Gimp          *gimp,
                                                const gchar   *filename,
                                                GError       **error);
-gchar       * file_utils_any_to_uri           (Gimp          *gimp,
+GFile       * file_utils_any_to_file          (Gimp          *gimp,
                                                const gchar   *filename_or_uri,
                                                GError       **error);
 gchar       * file_utils_filename_from_uri    (const gchar   *uri);
+gchar       * file_utils_filename_from_file   (GFile         *file);
 gchar       * file_utils_uri_with_new_ext     (const gchar   *uri,
                                                const gchar   *uri_with_ext);
 const gchar * file_utils_uri_get_ext          (const gchar   *uri);

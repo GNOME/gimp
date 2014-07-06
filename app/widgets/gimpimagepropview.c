@@ -375,12 +375,15 @@ gimp_image_prop_view_label_set_filetype (GtkWidget *label,
 
   if (! proc)
     {
-      gchar *filename = gimp_image_get_filename (image);
+      const gchar *uri = gimp_image_get_uri (image);
 
-      if (filename)
+      if (uri)
         {
-          proc = file_procedure_find (manager->load_procs, filename, NULL);
-          g_free (filename);
+          GFile *file;
+
+          file = g_file_new_for_uri (uri);
+          proc = file_procedure_find (manager->load_procs, file, NULL);
+          g_object_unref (file);
         }
     }
 
