@@ -1047,6 +1047,7 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
               if (last_dot != uri)
                 {
                   GString *s = g_string_new (uri);
+                  GFile   *file;
                   gchar   *basename;
 
                   if (last_dot)
@@ -1055,13 +1056,14 @@ gimp_file_dialog_proc_changed (GimpFileProcView *view,
                   g_string_append (s, ".");
                   g_string_append (s, (gchar *) proc->extensions_list->data);
 
-                  gtk_file_chooser_set_uri (chooser, s->str);
+                  file = g_file_new_for_uri (s->str);
+                  g_string_free (s, TRUE);
 
-                  basename = file_utils_uri_display_basename (s->str);
+                  gtk_file_chooser_set_file (chooser, file, NULL);
+
+                  basename = g_path_get_basename (gimp_file_get_utf8_name (file));
                   gtk_file_chooser_set_current_name (chooser, basename);
                   g_free (basename);
-
-                  g_string_free (s, TRUE);
                 }
             }
 
