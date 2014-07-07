@@ -256,6 +256,16 @@ gimp_imagefile_get_file (GimpImagefile *imagefile)
   return GET_PRIVATE (imagefile)->file;
 }
 
+void
+gimp_imagefile_set_file (GimpImagefile *imagefile,
+                         GFile         *file)
+{
+  g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
+  g_return_if_fail (G_IS_FILE (file));
+
+  gimp_object_take_name (GIMP_OBJECT (imagefile), g_file_get_uri (file));
+}
+
 GimpThumbnail *
 gimp_imagefile_get_thumbnail (GimpImagefile *imagefile)
 {
