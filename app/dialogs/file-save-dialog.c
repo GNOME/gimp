@@ -214,11 +214,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
            * file_save()
            */
           if (dialog->save_a_copy)
-            {
-              gchar *uri = g_file_get_uri (file);
-              gimp_image_set_save_a_copy_uri (dialog->image, uri);
-              g_free (uri);
-            }
+            gimp_image_set_save_a_copy_file (dialog->image, file);
 
           if (! dialog->export)
             g_object_set_data_full (G_OBJECT (dialog->image->gimp),

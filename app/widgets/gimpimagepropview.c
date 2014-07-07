@@ -305,14 +305,12 @@ static void
 gimp_image_prop_view_label_set_filename (GtkWidget *label,
                                          GimpImage *image)
 {
-  const gchar *uri = gimp_image_get_any_uri (image);
+  GFile *file = gimp_image_get_any_file (image);
 
-  if (uri)
+  if (file)
     {
-      gchar *name = file_utils_uri_display_name (uri);
-
-      gtk_label_set_text (GTK_LABEL (label), name);
-      g_free (name);
+      gtk_label_set_text (GTK_LABEL (label),
+                          gimp_file_get_utf8_name (file));
     }
   else
     {
@@ -325,11 +323,7 @@ static void
 gimp_image_prop_view_label_set_filesize (GtkWidget *label,
                                          GimpImage *image)
 {
-  const gchar *uri  = gimp_image_get_any_uri (image);
-  GFile       *file = NULL;
-
-  if (uri)
-    file = g_file_new_for_uri (uri);
+  GFile *file = gimp_image_get_any_file (image);
 
   if (file)
     {
@@ -352,8 +346,6 @@ gimp_image_prop_view_label_set_filesize (GtkWidget *label,
         {
           gtk_label_set_text (GTK_LABEL (label), NULL);
         }
-
-      g_object_unref (file);
     }
   else
     {
@@ -375,16 +367,10 @@ gimp_image_prop_view_label_set_filetype (GtkWidget *label,
 
   if (! proc)
     {
-      const gchar *uri = gimp_image_get_uri (image);
+      GFile *file = gimp_image_get_file (image);
 
-      if (uri)
-        {
-          GFile *file;
-
-          file = g_file_new_for_uri (uri);
-          proc = file_procedure_find (manager->load_procs, file, NULL);
-          g_object_unref (file);
-        }
+      if (file)
+        proc = file_procedure_find (manager->load_procs, file, NULL);
     }
 
   gtk_label_set_text (GTK_LABEL (label),

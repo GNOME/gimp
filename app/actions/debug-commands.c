@@ -340,7 +340,7 @@ debug_show_image_graph (GimpImage *source_image)
                                  GIMP_RGB,
                                  GIMP_PRECISION_U8_GAMMA,
                                  FALSE);
-  gimp_image_set_uri (new_image, new_name);
+  gimp_image_set_file (new_image, g_file_new_for_uri (new_name));
   layer = gimp_layer_new_from_buffer (buffer,
                                       new_image,
                                       gimp_image_get_layer_format (new_image,

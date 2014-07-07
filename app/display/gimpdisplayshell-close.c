@@ -22,6 +22,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
@@ -56,7 +57,7 @@ static void      gimp_display_shell_close_dialog       (GimpDisplayShell *shell,
 static void      gimp_display_shell_close_name_changed (GimpImage        *image,
                                                         GimpMessageBox   *box);
 static void      gimp_display_shell_close_exported     (GimpImage        *image,
-                                                        const gchar      *uri,
+                                                        GFile            *file,
                                                         GimpMessageBox   *box);
 static gboolean  gimp_display_shell_close_time_changed (GimpMessageBox   *box);
 static void      gimp_display_shell_close_response     (GtkWidget        *widget,
@@ -156,7 +157,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   gchar           *accel_string;
   gchar           *hint;
   gchar           *markup;
-  const gchar     *uri;
+  GFile           *file;
 
   if (shell->close_dialog)
     {
@@ -164,7 +165,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
       return;
     }
 
-  uri = gimp_image_get_uri (image);
+  file = gimp_image_get_file (image);
 
   title = g_strdup_printf (_("Close %s"), gimp_image_get_display_name (image));
 
@@ -179,7 +180,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
                           _("_Discard Changes"), GTK_RESPONSE_CLOSE,
                           GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
-                          (uri ?
+                          (file ?
                            GTK_STOCK_SAVE :
                            GTK_STOCK_SAVE_AS),   RESPONSE_SAVE,
                           NULL);
@@ -281,7 +282,7 @@ gimp_display_shell_close_name_changed (GimpImage      *image,
 
 static void
 gimp_display_shell_close_exported (GimpImage      *image,
-                                   const gchar    *uri,
+                                   GFile          *file,
                                    GimpMessageBox *box)
 {
   gimp_display_shell_close_time_changed (box);
@@ -342,19 +343,14 @@ gimp_display_shell_close_time_changed (GimpMessageBox *box)
 
   if (! gimp_image_is_export_dirty (image))
     {
-      const gchar *uri;
-      gchar       *filename;
+      GFile *file;
 
-      uri = gimp_image_get_exported_uri (image);
-      if (! uri)
-        uri = gimp_image_get_imported_uri (image);
-
-      filename = file_utils_uri_to_utf8_filename (uri);
+      file = gimp_image_get_exported_file (image);
+      if (! file)
+        file = gimp_image_get_imported_file (image);
 
       export_text = g_strdup_printf (_("The image has been exported to '%s'."),
-                                     filename);
-
-      g_free (filename);
+                                     gimp_file_get_utf8_name (file));
     }
 
   if (time_text && export_text)

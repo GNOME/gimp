@@ -209,12 +209,10 @@ file_open_image (Gimp                *gimp,
       if (file_open_file_proc_is_import (file_proc))
         {
           /* Remember the import source */
-          gchar *uri = g_file_get_uri (file);
-          gimp_image_set_imported_uri (image, uri);
-          g_free (uri);
+          gimp_image_set_imported_file (image, file);
 
           /* We shall treat this file as an Untitled file */
-          gimp_image_set_uri (image, NULL);
+          gimp_image_set_file (image, NULL);
         }
     }
 
@@ -493,8 +491,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
         {
           GimpDocumentList *documents = GIMP_DOCUMENT_LIST (gimp->documents);
           GimpImagefile    *imagefile;
-          const gchar      *any_uri;
-          gchar            *uri;
+          GFile            *any_file;
 
           imagefile = gimp_document_list_add_file (documents, file, mime_type);
 
@@ -502,10 +499,9 @@ file_open_with_proc_and_display (Gimp                *gimp,
            *  resulting image's uri match. Use any_uri() here so we
            *  create thumbnails for both XCF and imported images.
            */
-          any_uri = gimp_image_get_any_uri (image);
-          uri     = g_file_get_uri (file);
+          any_file = gimp_image_get_any_file (image);
 
-          if (any_uri && ! strcmp (uri, any_uri))
+          if (any_file && g_file_equal (file, any_file))
             {
               /*  no need to save a thumbnail if there's a good one already  */
               if (! gimp_imagefile_check_thumbnail (imagefile))
@@ -514,8 +510,6 @@ file_open_with_proc_and_display (Gimp                *gimp,
                                                  NULL);
                 }
             }
-
-          g_free (uri);
         }
 
       /*  announce that we opened this image  */
@@ -668,7 +662,7 @@ file_open_sanitize_image (GimpImage *image,
                           gboolean   as_new)
 {
   if (as_new)
-    gimp_image_set_uri (image, NULL);
+    gimp_image_set_file (image, NULL);
 
   /* clear all undo steps */
   gimp_image_undo_free (image);

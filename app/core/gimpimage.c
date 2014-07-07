@@ -86,11 +86,6 @@
 #define TRC(x)
 #endif
 
-/* Data keys for GimpImage */
-#define GIMP_FILE_EXPORT_URI_KEY        "gimp-file-export-uri"
-#define GIMP_FILE_SAVE_A_COPY_URI_KEY   "gimp-file-save-a-copy-uri"
-#define GIMP_FILE_IMPORT_SOURCE_URI_KEY "gimp-file-import-source-uri"
-
 
 enum
 {
@@ -419,9 +414,9 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, saved),
                   NULL, NULL,
-                  gimp_marshal_VOID__STRING,
+                  gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  G_TYPE_STRING);
+                  G_TYPE_FILE);
 
   gimp_image_signals[EXPORTED] =
     g_signal_new ("exported",
@@ -429,9 +424,9 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, exported),
                   NULL, NULL,
-                  gimp_marshal_VOID__STRING,
+                  gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  G_TYPE_STRING);
+                  G_TYPE_FILE);
 
   gimp_image_signals[GUIDE_ADDED] =
     g_signal_new ("guide-added",
@@ -1086,7 +1081,19 @@ gimp_image_name_changed (GimpObject *object)
    */
   name = gimp_object_get_name (object);
   if (name && strlen (name) == 0)
-    gimp_object_name_free (object);
+    {
+      gimp_object_name_free (object);
+      name = NULL;
+    }
+
+  if (private->file)
+    {
+      g_object_unref (private->file);
+      private->file = NULL;
+    }
+
+  if (name)
+    private->file = g_file_new_for_uri (name);
 }
 
 static gint64
@@ -1809,12 +1816,22 @@ gimp_image_get_by_ID (Gimp *gimp,
 }
 
 void
-gimp_image_set_uri (GimpImage   *image,
-                    const gchar *uri)
+gimp_image_set_file (GimpImage *image,
+                     GFile     *file)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  gimp_object_set_name (GIMP_OBJECT (image), uri);
+  if (file)
+    {
+      gchar *uri = g_file_get_uri (file);
+      gimp_object_set_name (GIMP_OBJECT (image), uri);
+      g_free (uri);
+    }
+  else
+    {
+      gimp_object_set_name (GIMP_OBJECT (image), NULL);
+    }
 }
 
 static void
@@ -1851,25 +1868,25 @@ gimp_image_get_uri_or_untitled (const GimpImage *image)
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_image_get_uri (image);
+  uri = gimp_object_get_name (image);
 
   return uri ? uri : gimp_image_get_string_untitled ();
 }
 
 /**
- * gimp_image_get_uri:
+ * gimp_image_get_file:
  * @image: A #GimpImage.
  *
- * Get the URI of the XCF image, or NULL if there is no URI.
+ * Get the file of the XCF image, or NULL if there is no file.
  *
- * Returns: The URI, or NULL.
+ * Returns: The file, or NULL.
  **/
-const gchar *
-gimp_image_get_uri (const GimpImage *image)
+GFile *
+gimp_image_get_file (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return gimp_object_get_name (image);
+  return GIMP_IMAGE_GET_PRIVATE (image)->file;
 }
 
 void
@@ -1887,132 +1904,148 @@ gimp_image_set_filename (GimpImage   *image,
     }
   else
     {
-      gimp_image_set_uri (image, NULL);
+      gimp_image_set_file (image, NULL);
     }
 }
 
 /**
- * gimp_image_get_imported_uri:
+ * gimp_image_get_imported_file:
  * @image: A #GimpImage.
  *
- * Returns: The URI of the imported image, or NULL if the image has
+ * Returns: The file of the imported image, or NULL if the image has
  * been saved as XCF after it was imported.
  **/
-const gchar *
-gimp_image_get_imported_uri (const GimpImage *image)
+GFile *
+gimp_image_get_imported_file (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return g_object_get_data (G_OBJECT (image),
-                            GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+  return GIMP_IMAGE_GET_PRIVATE (image)->imported_file;
 }
 
 /**
- * gimp_image_get_exported_uri:
+ * gimp_image_get_exported_file:
  * @image: A #GimpImage.
  *
- * Returns: The URI of the image last exported from this XCF file, or
+ * Returns: The file of the image last exported from this XCF file, or
  * NULL if the image has never been exported.
  **/
-const gchar *
-gimp_image_get_exported_uri (const GimpImage *image)
+GFile *
+gimp_image_get_exported_file (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return g_object_get_data (G_OBJECT (image),
-                            GIMP_FILE_EXPORT_URI_KEY);
+  return GIMP_IMAGE_GET_PRIVATE (image)->exported_file;
 }
 
 /**
- * gimp_image_get_save_a_copy_uri:
+ * gimp_image_get_save_a_copy_file:
  * @image: A #GimpImage.
  *
  * Returns: The URI of the last copy that was saved of this XCF file.
  **/
-const gchar *
-gimp_image_get_save_a_copy_uri (const GimpImage *image)
+GFile *
+gimp_image_get_save_a_copy_file (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return g_object_get_data (G_OBJECT (image),
-                            GIMP_FILE_SAVE_A_COPY_URI_KEY);
+  return GIMP_IMAGE_GET_PRIVATE (image)->save_a_copy_file;
 }
 
 /**
- * gimp_image_get_any_uri:
+ * gimp_image_get_any_file:
  * @image: A #GimpImage.
  *
- * Returns: The XCF file URI, the imported file URI, or the exported
- * file URI, in that order of precedence.
+ * Returns: The XCF file, the imported file, or the exported file, in
+ * that order of precedence.
  **/
-const gchar *
-gimp_image_get_any_uri (const GimpImage *image)
+GFile *
+gimp_image_get_any_file (const GimpImage *image)
 {
-  const gchar *uri;
+  GFile *file;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_image_get_uri (image);
-  if (! uri)
+  file = gimp_image_get_file (image);
+  if (! file)
     {
-      uri = gimp_image_get_imported_uri (image);
-      if (! uri)
+      file = gimp_image_get_imported_file (image);
+      if (! file)
         {
-          uri = gimp_image_get_exported_uri (image);
+          file = gimp_image_get_exported_file (image);
         }
     }
 
-  return uri;
+  return file;
 }
 
 /**
  * gimp_image_set_imported_uri:
  * @image: A #GimpImage.
- * @uri:
+ * @file:
  *
  * Sets the URI this file was imported from.
  **/
 void
-gimp_image_set_imported_uri (GimpImage   *image,
-                             const gchar *uri)
+gimp_image_set_imported_file (GimpImage *image,
+                              GFile     *file)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  if (gimp_image_get_imported_uri (image) == uri)
-    return;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  g_object_set_data_full (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY,
-                          g_strdup (uri), (GDestroyNotify) g_free);
+  if (private->imported_file != file)
+    {
+      if (private->imported_file)
+        g_object_unref (private->imported_file);
 
-  gimp_object_name_changed (GIMP_OBJECT (image));
+      private->imported_file = file;
+
+      if (private->imported_file)
+        g_object_ref (private->imported_file);
+
+      gimp_object_name_changed (GIMP_OBJECT (image));
+    }
 }
 
 /**
- * gimp_image_set_exported_uri:
+ * gimp_image_set_exported_file:
  * @image: A #GimpImage.
- * @uri:
+ * @file:
  *
- * Sets the URI this file was last exported to. Note that saving as
+ * Sets the file this image was last exported to. Note that saving as
  * XCF is not "exporting".
  **/
 void
-gimp_image_set_exported_uri (GimpImage   *image,
-                             const gchar *uri)
+gimp_image_set_exported_file (GimpImage *image,
+                              GFile     *file)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  if (gimp_image_get_exported_uri (image) == uri)
-    return;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  g_object_set_data_full (G_OBJECT (image),
-                          GIMP_FILE_EXPORT_URI_KEY,
-                          g_strdup (uri), (GDestroyNotify) g_free);
+  if (private->exported_file != file)
+    {
+      if (private->exported_file)
+        g_object_unref (private->exported_file);
 
-  gimp_object_name_changed (GIMP_OBJECT (image));
+      private->exported_file = file;
+
+      if (private->exported_file)
+        g_object_ref (private->exported_file);
+
+      gimp_object_name_changed (GIMP_OBJECT (image));
+    }
 }
 
 /**
- * gimp_image_set_save_a_copy_uri:
+ * gimp_image_set_save_a_copy_file:
  * @image: A #GimpImage.
  * @uri:
  *
@@ -2020,32 +2053,41 @@ gimp_image_set_exported_uri (GimpImage   *image,
  * "save a copy" action.
  **/
 void
-gimp_image_set_save_a_copy_uri (GimpImage   *image,
-                                const gchar *uri)
+gimp_image_set_save_a_copy_file (GimpImage *image,
+                                 GFile     *file)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  if (gimp_image_get_save_a_copy_uri (image) == uri)
-    return;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  g_object_set_data_full (G_OBJECT (image),
-                          GIMP_FILE_SAVE_A_COPY_URI_KEY,
-                          g_strdup (uri), (GDestroyNotify) g_free);
+  if (private->save_a_copy_file != file)
+    {
+      if (private->save_a_copy_file)
+        g_object_unref (private->save_a_copy_file);
+
+      private->save_a_copy_file = file;
+
+      if (private->save_a_copy_file)
+        g_object_ref (private->save_a_copy_file);
+    }
 }
 
 gchar *
 gimp_image_get_filename (const GimpImage *image)
 {
-  const gchar *uri;
+  GFile *file;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_image_get_uri (image);
+  file = gimp_image_get_file (image);
 
-  if (! uri)
+  if (! file)
     return NULL;
 
-  return g_filename_from_uri (uri, NULL, NULL);
+  return g_file_get_path (file);
 }
 
 static gchar *
@@ -2054,9 +2096,10 @@ gimp_image_format_display_uri (GimpImage *image,
 {
   const gchar *uri_format    = NULL;
   const gchar *export_status = NULL;
-  const gchar *uri;
-  const gchar *source;
-  const gchar *dest;
+  GFile       *file          = NULL;
+  GFile       *source        = NULL;
+  GFile       *dest          = NULL;
+  GFile       *display_file  = NULL;
   gboolean     is_imported;
   gboolean     is_exported;
   gchar       *display_uri   = NULL;
@@ -2065,29 +2108,29 @@ gimp_image_format_display_uri (GimpImage *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri    = gimp_image_get_uri (image);
-  source = gimp_image_get_imported_uri (image);
-  dest   = gimp_image_get_exported_uri (image);
+  file   = gimp_image_get_file (image);
+  source = gimp_image_get_imported_file (image);
+  dest   = gimp_image_get_exported_file (image);
 
   is_imported = (source != NULL);
   is_exported = (dest   != NULL);
 
-  if (uri)
+  if (file)
     {
-      display_uri = g_strdup (uri);
-      uri_format  = "%s";
+      display_file = g_object_ref (file);
+      uri_format   = "%s";
     }
   else
     {
       if (is_imported)
-        display_uri = g_strdup (source);
+        display_file = source;
 
       /* Calculate filename suffix */
       if (! gimp_image_is_export_dirty (image))
         {
           if (is_exported)
             {
-              display_uri   = g_strdup (dest);
+              display_file  = dest;
               export_status = _(" (exported)");
             }
           else if (is_imported)
@@ -2104,32 +2147,21 @@ gimp_image_format_display_uri (GimpImage *image,
           export_status = _(" (imported)");
         }
 
-      if (display_uri)
-        {
-          gchar *tmp = file_utils_uri_with_new_ext (display_uri, NULL);
-          g_free (display_uri);
-          display_uri = tmp;
-        }
+      if (display_file)
+        display_file = file_utils_file_with_new_ext (display_file, NULL);
 
       uri_format = "[%s]";
     }
 
-  if (! display_uri)
-    {
-      display_uri = g_strdup (gimp_image_get_string_untitled ());
-    }
-  else if (basename)
-    {
-      tmp = file_utils_uri_display_basename (display_uri);
-      g_free (display_uri);
-      display_uri = tmp;
-    }
+  if (! display_file)
+    display_file = g_file_new_for_uri (gimp_image_get_string_untitled ());
+
+  if (basename)
+    display_uri = g_path_get_basename (gimp_file_get_utf8_name (display_file));
   else
-    {
-      tmp = file_utils_uri_display_name (display_uri);
-      g_free (display_uri);
-      display_uri = tmp;
-    }
+    display_uri = g_strdup (gimp_file_get_utf8_name (display_file));
+
+  g_object_unref (display_file);
 
   format_string = g_strconcat (uri_format, export_status, NULL);
 
@@ -3015,37 +3047,37 @@ gimp_image_get_dirty_time (const GimpImage *image)
 /**
  * gimp_image_saved:
  * @image:
- * @uri:
+ * @file:
  *
  * Emits the "saved" signal, indicating that @image was saved to the
- * location specified by @uri.
+ * location specified by @file.
  */
 void
-gimp_image_saved (GimpImage   *image,
-                  const gchar *uri)
+gimp_image_saved (GimpImage *image,
+                  GFile     *file)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (uri != NULL);
+  g_return_if_fail (G_IS_FILE (file));
 
-  g_signal_emit (image, gimp_image_signals[SAVED], 0, uri);
+  g_signal_emit (image, gimp_image_signals[SAVED], 0, file);
 }
 
 /**
  * gimp_image_exported:
  * @image:
- * @uri:
+ * @file:
  *
  * Emits the "exported" signal, indicating that @image was exported to the
- * location specified by @uri.
+ * location specified by @file.
  */
 void
-gimp_image_exported (GimpImage   *image,
-                     const gchar *uri)
+gimp_image_exported (GimpImage *image,
+                     GFile     *file)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (uri != NULL);
+  g_return_if_fail (G_IS_FILE (file));
 
-  g_signal_emit (image, gimp_image_signals[EXPORTED], 0, uri);
+  g_signal_emit (image, gimp_image_signals[EXPORTED], 0, file);
 }
 
 

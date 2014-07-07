@@ -214,15 +214,39 @@ file_utils_filename_from_uri (const gchar *uri)
   return filename;
 }
 
-gchar *
-file_utils_uri_with_new_ext (const gchar *uri,
-                             const gchar *ext_uri)
+GFile *
+file_utils_file_with_new_ext (GFile *file,
+                              GFile *ext_file)
 {
-  const gchar *uri_ext      = file_utils_uri_get_ext (uri);
-  const gchar *ext_uri_ext  = ext_uri ? file_utils_uri_get_ext (ext_uri) : NULL;
-  gchar *uri_without_ext    = g_strndup (uri, uri_ext - uri);
-  gchar *ret                = g_strconcat (uri_without_ext, ext_uri_ext, NULL);
+  gchar       *uri;
+  const gchar *uri_ext;
+  gchar       *ext_uri     = NULL;
+  const gchar *ext_uri_ext = NULL;
+  gchar       *uri_without_ext;
+  gchar       *new_uri;
+  GFile       *ret;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (ext_file == NULL || G_IS_FILE (ext_file), NULL);
+
+  uri     = g_file_get_uri (file);
+  uri_ext = file_utils_uri_get_ext (uri);
+
+  if (ext_uri)
+    {
+      ext_uri     = g_file_get_uri (ext_file);
+      ext_uri_ext = file_utils_uri_get_ext (ext_uri);
+    }
+
+  uri_without_ext = g_strndup (uri, uri_ext - uri);
+
+  new_uri = g_strconcat (uri_without_ext, ext_uri_ext, NULL);
+
+  ret = g_file_new_for_uri (new_uri);
+
   g_free (uri_without_ext);
+  g_free (new_uri);
+
   return ret;
 }
 
@@ -428,36 +452,31 @@ gboolean
 file_utils_save_thumbnail (GimpImage   *image,
                            const gchar *filename)
 {
-  const gchar *image_uri;
-  gboolean     success = FALSE;
+  GFile    *file;
+  gboolean  success = FALSE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
 
-  image_uri = gimp_image_get_uri (image);
+  file = gimp_image_get_file (image);
 
-  if (image_uri)
+  if (file)
     {
-      gchar *uri = g_filename_to_uri (filename, NULL, NULL);
+      gchar *image_uri = g_file_get_uri (file);
+      gchar *uri       = g_filename_to_uri (filename, NULL, NULL);
 
-      if (uri)
+      if (uri && image_uri && ! strcmp (uri, image_uri))
         {
-          if ( ! strcmp (uri, image_uri))
-            {
-              GimpImagefile *imagefile;
-              GFile         *file;
+          GimpImagefile *imagefile;
 
-              file = g_file_new_for_uri (uri);
-              imagefile = gimp_imagefile_new (image->gimp, file);
-              g_object_unref (file);
-
-              success = gimp_imagefile_save_thumbnail (imagefile, NULL, image,
-                                                       NULL);
-              g_object_unref (imagefile);
-            }
-
-          g_free (uri);
+          imagefile = gimp_imagefile_new (image->gimp, file);
+          success = gimp_imagefile_save_thumbnail (imagefile, NULL, image,
+                                                   NULL);
+          g_object_unref (imagefile);
         }
+
+      g_free (image_uri);
+      g_free (uri);
     }
 
   return success;

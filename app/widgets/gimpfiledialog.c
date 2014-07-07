@@ -123,9 +123,7 @@ static void     gimp_file_dialog_help_clicked           (GtkWidget        *widge
                                                          gpointer          dialog);
 
 static gchar  * gimp_file_dialog_pattern_from_extension (const gchar   *extension);
-static gchar  * gimp_file_dialog_get_default_uri        (Gimp          *gimp);
-static gchar  * gimp_file_dialog_get_dirname_from_uri   (const gchar   *uri);
-
+static GFile  * gimp_file_dialog_get_default_file       (Gimp          *gimp);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpFileDialog, gimp_file_dialog,
@@ -489,17 +487,17 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                  gboolean        close_after_saving,
                                  GimpObject     *display)
 {
-  const gchar *dir_uri     = NULL;
-  const gchar *name_uri    = NULL;
-  const gchar *ext_uri     = NULL;
-  gchar       *default_uri = NULL;
-  gchar       *dirname     = NULL;
-  gchar       *basename    = NULL;
+  GFile *dir_file  = NULL;
+  GFile *name_file = NULL;
+  GFile *ext_file  = NULL;
+  GFile *default_file;
+  GFile *parent_file;
+  gchar *basename;
 
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  default_uri = gimp_file_dialog_get_default_uri (gimp);
+  default_file = gimp_file_dialog_get_default_file (gimp);
 
   dialog->image              = image;
   dialog->save_a_copy        = save_a_copy;
@@ -523,28 +521,24 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        */
 
       if (save_a_copy)
-        dir_uri = gimp_image_get_save_a_copy_uri (image);
+        dir_file = gimp_image_get_save_a_copy_file (image);
 
-      if (! dir_uri)
-        dir_uri = gimp_image_get_uri (image);
+      if (! dir_file)
+        dir_file = gimp_image_get_file (image);
 
-      if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (image),
-                                     "gimp-image-source-uri");
+      if (! dir_file)
+        dir_file = g_object_get_data (G_OBJECT (image),
+                                      "gimp-image-source-file");
 
-      if (! dir_uri)
-        dir_uri = gimp_image_get_imported_uri (image);
+      if (! dir_file)
+        dir_file = gimp_image_get_imported_file (image);
 
-      if (! dir_uri)
-        {
-          GFile *file = g_object_get_data (G_OBJECT (gimp),
-                                           GIMP_FILE_SAVE_LAST_FILE_KEY);
-          if (file)
-            dir_uri = g_file_get_uri (file); /* FIXME leak */
-        }
+      if (! dir_file)
+        dir_file = g_object_get_data (G_OBJECT (gimp),
+                                      GIMP_FILE_SAVE_LAST_FILE_KEY);
 
-      if (! dir_uri)
-        dir_uri = default_uri;
+      if (! dir_file)
+        dir_file = default_file;
 
 
       /* Priority of default basenames for Save:
@@ -557,19 +551,20 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        */
 
       if (save_a_copy)
-        name_uri = gimp_image_get_save_a_copy_uri (image);
+        name_file = gimp_image_get_save_a_copy_file (image);
 
-      if (! name_uri)
-        name_uri = gimp_image_get_uri (image);
+      if (! name_file)
+        name_file = gimp_image_get_file (image);
 
-      if (! name_uri)
-        name_uri = gimp_image_get_exported_uri (image);
+      if (! name_file)
+        name_file = gimp_image_get_exported_file (image);
 
-      if (! name_uri)
-        name_uri = gimp_image_get_imported_uri (image);
+      if (! name_file)
+        name_file = gimp_image_get_imported_file (image);
 
-      if (! name_uri)
-        name_uri = gimp_image_get_string_untitled ();
+      if (! name_file)
+        /* XXX leak */
+        name_file = g_file_new_for_uri (gimp_image_get_string_untitled ());
 
 
       /* Priority of default type/extension for Save:
@@ -577,10 +572,10 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   1. Type of last Save
        *   2. .xcf (which we don't explicitly append)
        */
-      ext_uri = gimp_image_get_uri (image);
+      ext_file = gimp_image_get_file (image);
 
-      if (! ext_uri)
-        ext_uri = "file:///we/only/care/about/extension.xcf";
+      if (! ext_file)
+        ext_file = g_file_new_for_uri ("file:///we/only/care/about/extension.xcf");
     }
   else /* if (export) */
     {
@@ -595,36 +590,28 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   6. The default path (usually the OS 'Documents' path)
        */
 
-      dir_uri = gimp_image_get_exported_uri (image);
+      dir_file = gimp_image_get_exported_file (image);
 
-      if (! dir_uri)
-        dir_uri = g_object_get_data (G_OBJECT (image),
-                                     "gimp-image-source-uri");
+      if (! dir_file)
+        dir_file = g_object_get_data (G_OBJECT (image),
+                                      "gimp-image-source-file");
 
-      if (! dir_uri)
-        dir_uri = gimp_image_get_imported_uri (image);
+      if (! dir_file)
+        dir_file = gimp_image_get_imported_file (image);
 
-      if (! dir_uri)
-        dir_uri = gimp_image_get_uri (image);
+      if (! dir_file)
+        dir_file = gimp_image_get_file (image);
 
-      if (! dir_uri)
-        {
-          GFile *file = g_object_get_data (G_OBJECT (gimp),
-                                           GIMP_FILE_SAVE_LAST_FILE_KEY);
-          if (file)
-            dir_uri = g_file_get_uri (file); /* XXX fixme leak */
-        }
+      if (! dir_file)
+        dir_file = g_object_get_data (G_OBJECT (gimp),
+                                      GIMP_FILE_SAVE_LAST_FILE_KEY);
 
-      if (! dir_uri)
-        {
-          GFile *file = g_object_get_data (G_OBJECT (gimp),
-                                           GIMP_FILE_EXPORT_LAST_FILE_KEY);
-          if (file)
-            dir_uri = g_file_get_uri (file); /* XXX fixme leak */
-        }
+      if (! dir_file)
+        dir_file = g_object_get_data (G_OBJECT (gimp),
+                                      GIMP_FILE_EXPORT_LAST_FILE_KEY);
 
-      if (! dir_uri)
-        dir_uri = default_uri;
+      if (! dir_file)
+        dir_file = default_file;
 
 
       /* Priority of default basenames for Export:
@@ -635,16 +622,17 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   3. 'Untitled'
        */
 
-      name_uri = gimp_image_get_exported_uri (image);
+      name_file = gimp_image_get_exported_file (image);
 
-      if (! name_uri)
-        name_uri = gimp_image_get_uri (image);
+      if (! name_file)
+        name_file = gimp_image_get_file (image);
 
-      if (! name_uri)
-        name_uri = gimp_image_get_imported_uri (image);
+      if (! name_file)
+        name_file = gimp_image_get_imported_file (image);
 
-      if (! name_uri)
-        name_uri = gimp_image_get_string_untitled ();
+      if (! name_file)
+        /* XXX leak */
+        name_file = g_file_new_for_uri (gimp_image_get_string_untitled ());
 
 
       /* Priority of default type/extension for Export:
@@ -654,43 +642,36 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        *   3. Type of latest Export of any document
        *   4. .png
        */
-      ext_uri = gimp_image_get_exported_uri (image);
+      ext_file = gimp_image_get_exported_file (image);
 
-      if (! ext_uri)
-        ext_uri = gimp_image_get_imported_uri (image);
+      if (! ext_file)
+        ext_file = gimp_image_get_imported_file (image);
 
-      if (! ext_uri)
-        {
-          GFile *file = g_object_get_data (G_OBJECT (gimp),
-                                           GIMP_FILE_EXPORT_LAST_FILE_KEY);
-          if (file)
-            ext_uri = g_file_get_uri (file); /* XXX fixme leak */
-        }
+      if (! ext_file)
+        ext_file = g_object_get_data (G_OBJECT (gimp),
+                                      GIMP_FILE_EXPORT_LAST_FILE_KEY);
 
-      if (! ext_uri)
-        ext_uri = "file:///we/only/care/about/extension.png";
+      if (! ext_file)
+        ext_file = g_file_new_for_uri ("file:///we/only/care/about/extension.png");
     }
 
-  dirname = gimp_file_dialog_get_dirname_from_uri (dir_uri);
-
-  if (ext_uri)
+  if (ext_file)
     {
-      gchar *uri_new_ext = file_utils_uri_with_new_ext (name_uri,
-                                                        ext_uri);
-      basename = file_utils_uri_display_basename (uri_new_ext);
-      g_free (uri_new_ext);
+      GFile *tmp_file = file_utils_file_with_new_ext (name_file, ext_file);
+      basename = g_path_get_basename (gimp_file_get_utf8_name (tmp_file));
+      g_object_unref (tmp_file);
     }
   else
     {
-      basename = file_utils_uri_display_basename (name_uri);
+      basename = g_path_get_basename (gimp_file_get_utf8_name (name_file));
     }
 
-  gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog), dirname);
-  gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
+  parent_file = g_file_get_parent (dir_file);
+  gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
+                                            parent_file, NULL);
+  g_object_unref (parent_file);
 
-  g_free (default_uri);
-  g_free (basename);
-  g_free (dirname);
+  gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
 }
 
 GimpFileDialogState *
@@ -1158,91 +1139,34 @@ gimp_file_dialog_pattern_from_extension (const gchar *extension)
   return pattern;
 }
 
-static gchar *
-gimp_file_dialog_get_default_uri (Gimp *gimp)
+static GFile *
+gimp_file_dialog_get_default_file (Gimp *gimp)
 {
   if (gimp->default_folder)
     {
-      return g_strdup (gimp->default_folder);
+      return g_file_new_for_path (gimp->default_folder);
     }
   else
     {
+      GFile *file;
       gchar *path;
-      gchar *uri;
 
       /* Make sure it ends in '/' */
       path = g_build_path (G_DIR_SEPARATOR_S,
                            g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
                            G_DIR_SEPARATOR_S,
                            NULL);
-      uri = g_filename_to_uri (path, NULL, NULL);
-      g_free (path);
 
       /* Paranoia fallback, see bug #722400 */
-      if (! uri)
-        {
-          path = g_build_path (G_DIR_SEPARATOR_S,
-                               g_get_home_dir (),
-                               G_DIR_SEPARATOR_S,
-                               NULL);
-          uri = g_filename_to_uri (path, NULL, NULL);
-          g_free (path);
-        }
+      if (! path)
+        path = g_build_path (G_DIR_SEPARATOR_S,
+                             g_get_home_dir (),
+                             G_DIR_SEPARATOR_S,
+                             NULL);
 
-      return uri;
+      file = g_file_new_for_path (path);
+      g_free (path);
+
+      return file;
     }
-}
-
-static gchar *
-gimp_file_dialog_get_dirname_from_uri (const gchar *uri)
-{
-  gchar *dirname = NULL;
-
-#ifndef G_OS_WIN32
-  dirname  = g_path_get_dirname (uri);
-#else
-  /* g_path_get_dirname() is supposed to work on pathnames, not URIs.
-   *
-   * If uri points to a file on the root of a drive
-   * "file:///d:/foo.png", g_path_get_dirname() would return
-   * "file:///d:". (What we really would want is "file:///d:/".) When
-   * this then is passed inside gtk+ to g_filename_from_uri() we get
-   * "d:" which is not an absolute pathname. This currently causes an
-   * assertion failure in gtk+. This scenario occurs if we have opened
-   * an image from the root of a drive and then do Save As.
-   *
-   * Of course, gtk+ shouldn't assert even if we feed it slightly bogus
-   * data, and that problem should be fixed, too. But to get the
-   * correct default current folder in the filechooser combo box, we
-   * need to pass it the proper URI for an absolute path anyway. So
-   * don't use g_path_get_dirname() on file: URIs.
-   */
-  if (g_str_has_prefix (uri, "file:///"))
-    {
-      gchar *filepath = g_filename_from_uri (uri, NULL, NULL);
-      gchar *dirpath  = NULL;
-
-      if (filepath != NULL)
-        {
-          dirpath = g_path_get_dirname (filepath);
-          g_free (filepath);
-        }
-
-      if (dirpath != NULL)
-        {
-          dirname = g_filename_to_uri (dirpath, NULL, NULL);
-          g_free (dirpath);
-        }
-      else
-        {
-          dirname = NULL;
-        }
-    }
-  else
-    {
-      dirname = g_path_get_dirname (uri);
-    }
-#endif
-
-  return dirname;
 }

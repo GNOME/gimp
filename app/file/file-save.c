@@ -158,14 +158,14 @@ file_save (Gimp                *gimp,
 
       if (change_saved_state)
         {
-          gimp_image_set_uri (image, uri);
+          gimp_image_set_file (image, file);
           gimp_image_set_save_proc (image, file_proc);
 
           /* Forget the import source when we save. We interpret a
            * save as that the user is not interested in being able
            * to quickly export back to the original any longer
            */
-          gimp_image_set_imported_uri (image, NULL);
+          gimp_image_set_imported_file (image, NULL);
 
           gimp_image_clean_all (image);
         }
@@ -186,22 +186,22 @@ file_save (Gimp                *gimp,
            * happens implicitly when saving since the GimpObject name
            * of a GimpImage is the last-save URI
            */
-          gimp_image_set_exported_uri (image, uri);
+          gimp_image_set_exported_file (image, file);
           gimp_image_set_export_proc (image, file_proc);
 
           /* An image can not be considered both exported and imported
            * at the same time, so stop consider it as imported now
            * that we consider it exported.
            */
-          gimp_image_set_imported_uri (image, NULL);
+          gimp_image_set_imported_file (image, NULL);
 
           gimp_image_export_clean_all (image);
         }
 
       if (export_backward || export_forward)
-        gimp_image_exported (image, uri);
+        gimp_image_exported (image, file);
       else
-        gimp_image_saved (image, uri);
+        gimp_image_saved (image, file);
 
       documents = GIMP_DOCUMENT_LIST (image->gimp->documents);
 

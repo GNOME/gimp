@@ -28,8 +28,8 @@ gchar       * file_utils_filename_to_uri      (Gimp          *gimp,
                                                GError       **error);
 gchar       * file_utils_filename_from_uri    (const gchar   *uri);
 gchar       * file_utils_filename_from_file   (GFile         *file);
-gchar       * file_utils_uri_with_new_ext     (const gchar   *uri,
-                                               const gchar   *uri_with_ext);
+GFile       * file_utils_file_with_new_ext    (GFile         *file,
+                                               GFile         *ext_file);
 const gchar * file_utils_uri_get_ext          (const gchar   *uri);
 
 gchar       * file_utils_uri_to_utf8_filename (const gchar   *uri);

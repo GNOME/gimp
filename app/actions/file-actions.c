@@ -256,23 +256,18 @@ file_actions_update (GimpActionGroup *group,
   Gimp         *gimp           = action_data_get_gimp (data);
   GimpImage    *image          = action_data_get_image (data);
   GimpDrawable *drawable       = NULL;
+  GFile        *file           = NULL;
   GFile        *source         = NULL;
   GFile        *export         = NULL;
   gboolean      show_overwrite = FALSE;
 
   if (image)
     {
-      const gchar *uri;
-
       drawable = gimp_image_get_active_drawable (image);
 
-      uri = gimp_image_get_imported_uri (image);
-      if (uri)
-        source = g_file_new_for_uri (uri);
-
-      uri = gimp_image_get_exported_uri (image);
-      if (uri)
-        export = g_file_new_for_uri (uri);
+      file   = gimp_image_get_file (image);
+      source = gimp_image_get_imported_file (image);
+      export = gimp_image_get_exported_file (image);
     }
 
   show_overwrite =
@@ -289,7 +284,7 @@ file_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("file-save-as",         drawable);
   SET_SENSITIVE ("file-save-a-copy",     drawable);
   SET_SENSITIVE ("file-save-and-close",  drawable);
-  SET_SENSITIVE ("file-revert",          image && (gimp_image_get_uri (image) || source));
+  SET_SENSITIVE ("file-revert",          image && (file || source));
   SET_SENSITIVE ("file-export",          drawable);
   SET_VISIBLE   ("file-export",          ! show_overwrite);
   SET_SENSITIVE ("file-overwrite",       show_overwrite);

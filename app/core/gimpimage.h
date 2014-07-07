@@ -74,9 +74,9 @@ struct _GimpImageClass
   void (* dirty)                        (GimpImage            *image,
                                          GimpDirtyMask         dirty_mask);
   void (* saved)                        (GimpImage            *image,
-                                         const gchar          *uri);
+                                         GFile                *file);
   void (* exported)                     (GimpImage            *image,
-                                         const gchar          *uri);
+                                         GFile                *file);
 
   void (* guide_added)                  (GimpImage            *image,
                                          GimpGuide            *guide);
@@ -132,21 +132,21 @@ gint            gimp_image_get_ID                (const GimpImage    *image);
 GimpImage     * gimp_image_get_by_ID             (Gimp               *gimp,
                                                   gint                id);
 
-const gchar   * gimp_image_get_uri               (const GimpImage    *image);
+GFile         * gimp_image_get_file              (const GimpImage    *image);
 const gchar   * gimp_image_get_uri_or_untitled   (const GimpImage    *image);
-const gchar   * gimp_image_get_imported_uri      (const GimpImage    *image);
-const gchar   * gimp_image_get_exported_uri      (const GimpImage    *image);
-const gchar   * gimp_image_get_save_a_copy_uri   (const GimpImage    *image);
-const gchar   * gimp_image_get_any_uri           (const GimpImage    *image);
+GFile         * gimp_image_get_imported_file      (const GimpImage    *image);
+GFile         * gimp_image_get_exported_file     (const GimpImage    *image);
+GFile         * gimp_image_get_save_a_copy_file  (const GimpImage    *image);
+GFile         * gimp_image_get_any_file          (const GimpImage    *image);
 
-void            gimp_image_set_uri               (GimpImage          *image,
-                                                  const gchar        *uri);
-void            gimp_image_set_imported_uri      (GimpImage          *image,
-                                                  const gchar        *uri);
-void            gimp_image_set_exported_uri      (GimpImage          *image,
-                                                  const gchar        *uri);
-void            gimp_image_set_save_a_copy_uri   (GimpImage          *image,
-                                                  const gchar        *uri);
+void            gimp_image_set_file              (GimpImage          *image,
+                                                  GFile              *file);
+void            gimp_image_set_imported_file     (GimpImage          *image,
+                                                  GFile              *file);
+void            gimp_image_set_exported_file     (GimpImage          *image,
+                                                  GFile              *file);
+void            gimp_image_set_save_a_copy_file  (GimpImage          *image,
+                                                  GFile              *file);
 
 void            gimp_image_set_filename          (GimpImage          *image,
                                                   const gchar        *filename);
@@ -162,12 +162,12 @@ void            gimp_image_set_save_proc         (GimpImage          *image,
                                                   GimpPlugInProcedure *proc);
 GimpPlugInProcedure * gimp_image_get_save_proc   (const GimpImage    *image);
 void            gimp_image_saved                 (GimpImage          *image,
-                                                  const gchar        *uri);
+                                                  GFile              *file);
 void            gimp_image_set_export_proc       (GimpImage          *image,
                                                   GimpPlugInProcedure *proc);
 GimpPlugInProcedure * gimp_image_get_export_proc (const GimpImage    *image);
 void            gimp_image_exported              (GimpImage          *image,
-                                                  const gchar        *uri);
+                                                  GFile              *file);
 
 void            gimp_image_set_resolution        (GimpImage          *image,
                                                   gdouble             xres,
