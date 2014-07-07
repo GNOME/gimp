@@ -45,7 +45,6 @@
 
 #include "file/file-procedure.h"
 #include "file/file-save.h"
-#include "file/file-utils.h"
 
 #include "gimpdnd-xds.h"
 #include "gimpfiledialog.h"
@@ -61,8 +60,8 @@
 
 /*  local function prototypes  */
 
-static gboolean   gimp_file_overwrite_dialog (GtkWidget   *parent,
-                                              const gchar *uri);
+static gboolean   gimp_file_overwrite_dialog (GtkWidget *parent,
+                                              GFile     *file);
 
 
 /*  public functions  */
@@ -158,7 +157,7 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
   if (proc)
     {
       if (! g_file_query_exists (file, NULL) ||
-          gimp_file_overwrite_dialog (NULL, uri))
+          gimp_file_overwrite_dialog (NULL, file))
         {
           if (file_save (image->gimp,
                          image, NULL,
@@ -206,11 +205,10 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
 /*  private functions  */
 
 static gboolean
-gimp_file_overwrite_dialog (GtkWidget   *parent,
-                            const gchar *uri)
+gimp_file_overwrite_dialog (GtkWidget *parent,
+                            GFile     *file)
 {
   GtkWidget *dialog;
-  gchar     *filename;
   gboolean   overwrite = FALSE;
 
   dialog = gimp_message_dialog_new (_("File Exists"), GIMP_STOCK_WARNING,
@@ -227,11 +225,9 @@ gimp_file_overwrite_dialog (GtkWidget   *parent,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  filename = file_utils_uri_display_name (uri);
   gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                      _("A file named '%s' already exists."),
-                                     filename);
-  g_free (filename);
+                                     gimp_file_get_utf8_name (file));
 
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                              _("Do you want to replace it with the image "
