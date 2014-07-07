@@ -968,16 +968,16 @@ static void
 gimp_file_dialog_selection_changed (GtkFileChooser *chooser,
                                     GimpFileDialog *dialog)
 {
-  gimp_thumb_box_take_uris (GIMP_THUMB_BOX (dialog->thumb_box),
-                            gtk_file_chooser_get_uris (chooser));
+  gimp_thumb_box_take_files (GIMP_THUMB_BOX (dialog->thumb_box),
+                             gtk_file_chooser_get_files (chooser));
 }
 
 static void
 gimp_file_dialog_update_preview (GtkFileChooser *chooser,
                                  GimpFileDialog *dialog)
 {
-  gimp_thumb_box_take_uri (GIMP_THUMB_BOX (dialog->thumb_box),
-                           gtk_file_chooser_get_preview_uri (chooser));
+  gimp_thumb_box_take_file (GIMP_THUMB_BOX (dialog->thumb_box),
+                            gtk_file_chooser_get_preview_file (chooser));
 }
 
 static void

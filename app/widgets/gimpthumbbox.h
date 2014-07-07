@@ -35,7 +35,7 @@ struct _GimpThumbBox
 
   GimpContext   *context;
   GimpImagefile *imagefile;
-  GSList        *uris;
+  GSList        *files;
 
   GtkWidget     *preview;
   GtkWidget     *filename;
@@ -55,12 +55,12 @@ struct _GimpThumbBoxClass
 
 GType       gimp_thumb_box_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_thumb_box_new       (GimpContext  *context);
+GtkWidget * gimp_thumb_box_new        (GimpContext  *context);
 
-void        gimp_thumb_box_take_uri  (GimpThumbBox *box,
-                                      gchar        *uri);
-void        gimp_thumb_box_take_uris (GimpThumbBox *box,
-                                      GSList       *uris);
+void        gimp_thumb_box_take_file  (GimpThumbBox *box,
+                                       GFile        *file);
+void        gimp_thumb_box_take_files (GimpThumbBox *box,
+                                       GSList       *files);
 
 
 #endif  /*  __GIMP_THUMB_BOX_H__  */
