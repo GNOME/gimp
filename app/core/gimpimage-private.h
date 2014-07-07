@@ -62,6 +62,7 @@ struct _GimpImagePrivate
   GFile             *imported_file;         /*  the image's source file      */
   GFile             *exported_file;         /*  the image's export file      */
   GFile             *save_a_copy_file;      /*  the image's save-a-copy file */
+  GFile             *untitled_file;         /*  a file saying "Untitled"     */
 
   gint               dirty;                 /*  dirty flag -- # of ops       */
   guint              dirty_time;            /*  time when image became dirty */

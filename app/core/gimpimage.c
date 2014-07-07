@@ -993,6 +993,12 @@ gimp_image_finalize (GObject *object)
       private->save_a_copy_file = NULL;
     }
 
+  if (private->untitled_file)
+    {
+      g_object_unref (private->untitled_file);
+      private->untitled_file = NULL;
+    }
+
   if (private->layers)
     {
       g_object_unref (private->layers);
@@ -1866,35 +1872,46 @@ gimp_image_take_uri (GimpImage *image,
 }
 
 /**
- * gimp_image_get_untitled_string:
+ * gimp_image_get_untitled_file:
  *
- * Returns: The (translated) "Untitled" string for newly created
- * images.
+ * Returns: A #GFile saying "Untitled" for newly created images.
  **/
-const gchar *
-gimp_image_get_string_untitled (void)
+GFile *
+gimp_image_get_untitled_file (const GimpImage *image)
 {
-  return _("Untitled");
-}
-
-/**
- * gimp_image_get_uri_or_untitled:
- * @image: A #GimpImage.
- *
- * Get the URI of the XCF image, or "Untitled" if there is no URI.
- *
- * Returns: The URI, or "Untitled".
- **/
-const gchar *
-gimp_image_get_uri_or_untitled (const GimpImage *image)
-{
-  const gchar *uri;
+  GimpImagePrivate *private;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_object_get_name (image);
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  return uri ? uri : gimp_image_get_string_untitled ();
+  if (! private->untitled_file)
+    private->untitled_file = g_file_new_for_uri (_("Untitled"));
+
+  return private->untitled_file;
+}
+
+/**
+ * gimp_image_get_file_or_untitled:
+ * @image: A #GimpImage.
+ *
+ * Get the file of the XCF image, or the "Untitled" file if there is no file.
+ *
+ * Returns: A #GFile.
+ **/
+GFile *
+gimp_image_get_file_or_untitled (const GimpImage *image)
+{
+  GFile *file;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  file = gimp_image_get_file (image);
+
+  if (! file)
+    file = gimp_image_get_untitled_file (image);
+
+  return file;
 }
 
 /**
@@ -2141,7 +2158,7 @@ gimp_image_format_display_uri (GimpImage *image,
 
   if (file)
     {
-      display_file = g_object_ref (file);
+      display_file = file;
       uri_format   = "%s";
     }
   else
@@ -2178,14 +2195,12 @@ gimp_image_format_display_uri (GimpImage *image,
     }
 
   if (! display_file)
-    display_file = g_file_new_for_uri (gimp_image_get_string_untitled ());
+    display_file = gimp_image_get_untitled_file (image);
 
   if (basename)
     display_uri = g_path_get_basename (gimp_file_get_utf8_name (display_file));
   else
     display_uri = g_strdup (gimp_file_get_utf8_name (display_file));
-
-  g_object_unref (display_file);
 
   format_string = g_strconcat (uri_format, export_status, NULL);
 

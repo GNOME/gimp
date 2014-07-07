@@ -563,8 +563,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
         name_file = gimp_image_get_imported_file (image);
 
       if (! name_file)
-        /* XXX leak */
-        name_file = g_file_new_for_uri (gimp_image_get_string_untitled ());
+        name_file = gimp_image_get_untitled_file (image);
 
 
       /* Priority of default type/extension for Save:
@@ -631,8 +630,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
         name_file = gimp_image_get_imported_file (image);
 
       if (! name_file)
-        /* XXX leak */
-        name_file = g_file_new_for_uri (gimp_image_get_string_untitled ());
+        name_file = gimp_image_get_untitled_file (image);
 
 
       /* Priority of default type/extension for Export:

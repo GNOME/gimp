@@ -133,8 +133,9 @@ GimpImage     * gimp_image_get_by_ID             (Gimp               *gimp,
                                                   gint                id);
 
 GFile         * gimp_image_get_file              (const GimpImage    *image);
-const gchar   * gimp_image_get_uri_or_untitled   (const GimpImage    *image);
-GFile         * gimp_image_get_imported_file      (const GimpImage    *image);
+GFile         * gimp_image_get_untitled_file     (const GimpImage    *image);
+GFile         * gimp_image_get_file_or_untitled  (const GimpImage    *image);
+GFile         * gimp_image_get_imported_file     (const GimpImage    *image);
 GFile         * gimp_image_get_exported_file     (const GimpImage    *image);
 GFile         * gimp_image_get_save_a_copy_file  (const GimpImage    *image);
 GFile         * gimp_image_get_any_file          (const GimpImage    *image);
@@ -428,8 +429,6 @@ gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,
                                                   gboolean            selected_only);
 
 void            gimp_image_invalidate_previews   (GimpImage          *image);
-
-const gchar   * gimp_image_get_string_untitled   (void);
 
 
 #endif /* __GIMP_IMAGE_H__ */
