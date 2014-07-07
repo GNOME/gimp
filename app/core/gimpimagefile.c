@@ -47,7 +47,6 @@
 #include "gimpprogress.h"
 
 #include "file/file-open.h"
-#include "file/file-utils.h"
 
 #include "gimp-intl.h"
 
@@ -660,29 +659,24 @@ gimp_imagefile_get_description (GimpViewable   *viewable,
   GimpThumbnail        *thumbnail = private->thumbnail;
   gchar                *basename;
 
-  if (! thumbnail->image_uri)
+  if (! private->file)
     return NULL;
 
   if (tooltip)
     {
-      gchar       *filename;
+      const gchar *name;
       const gchar *desc;
 
-      filename = file_utils_uri_display_name (thumbnail->image_uri);
-      desc     = gimp_imagefile_get_desc_string (imagefile);
+      name = gimp_file_get_utf8_name (private->file);
+      desc = gimp_imagefile_get_desc_string (imagefile);
 
       if (desc)
-        {
-          *tooltip = g_strdup_printf ("%s\n%s", filename, desc);
-          g_free (filename);
-        }
+        *tooltip = g_strdup_printf ("%s\n%s", name, desc);
       else
-        {
-          *tooltip = filename;
-        }
+        *tooltip = g_strdup (name);
     }
 
-  basename = file_utils_uri_display_basename (thumbnail->image_uri);
+  basename = g_path_get_basename (gimp_file_get_utf8_name (private->file));
 
   if (thumbnail->image_width > 0 && thumbnail->image_height > 0)
     {
