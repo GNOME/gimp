@@ -31,8 +31,6 @@
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 
-#include "file/file-utils.h"
-
 #include "gimpview.h"
 #include "gimpviewabledialog.h"
 #include "gimpviewrenderer.h"

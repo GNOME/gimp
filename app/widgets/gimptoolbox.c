@@ -35,7 +35,6 @@
 #include "core/gimpcontext.h"
 
 #include "file/file-open.h"
-#include "file/file-utils.h"
 
 #include "gimpcairo-wilber.h"
 #include "gimpdevices.h"

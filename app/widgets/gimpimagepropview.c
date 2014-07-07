@@ -38,7 +38,6 @@
 #include "core/gimp-utils.h"
 
 #include "file/file-procedure.h"
-#include "file/file-utils.h"
 
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginprocedure.h"

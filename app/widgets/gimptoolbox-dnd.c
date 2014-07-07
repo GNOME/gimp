@@ -38,7 +38,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "file/file-open.h"
-#include "file/file-utils.h"
 
 #include "gimpdnd.h"
 #include "gimptoolbox.h"

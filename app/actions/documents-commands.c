@@ -36,7 +36,6 @@
 #include "core/gimpimagefile.h"
 
 #include "file/file-open.h"
-#include "file/file-utils.h"
 
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimpcontainerview.h"

@@ -41,7 +41,6 @@
 #include "core/gimpprogress.h"
 
 #include "file/file-open.h"
-#include "file/file-utils.h"
 
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"

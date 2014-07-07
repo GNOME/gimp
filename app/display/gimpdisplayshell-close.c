@@ -34,8 +34,6 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
-#include "file/file-utils.h"
-
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"

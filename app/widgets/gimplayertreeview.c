@@ -43,7 +43,6 @@
 #include "text/gimptextlayer.h"
 
 #include "file/file-open.h"
-#include "file/file-utils.h"
 
 #include "gimpactiongroup.h"
 #include "gimpcellrendererviewable.h"

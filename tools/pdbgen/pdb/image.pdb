@@ -3060,7 +3060,6 @@ CODE
               "core/gimpunit.h"
               "plug-in/gimpplugin.h"
               "plug-in/gimppluginmanager.h"
-              "file/file-utils.h"
               "gimppdbcontext.h"
               "gimppdberror.h"
               "gimppdb-utils.h"
