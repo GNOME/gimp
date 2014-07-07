@@ -969,6 +969,30 @@ gimp_image_finalize (GObject *object)
       private->metadata = NULL;
     }
 
+  if (private->file)
+    {
+      g_object_unref (private->file);
+      private->file = NULL;
+    }
+
+  if (private->imported_file)
+    {
+      g_object_unref (private->imported_file);
+      private->imported_file = NULL;
+    }
+
+  if (private->exported_file)
+    {
+      g_object_unref (private->exported_file);
+      private->exported_file = NULL;
+    }
+
+  if (private->save_a_copy_file)
+    {
+      g_object_unref (private->save_a_copy_file);
+      private->save_a_copy_file = NULL;
+    }
+
   if (private->layers)
     {
       g_object_unref (private->layers);
