@@ -232,7 +232,7 @@ file_utils_file_with_new_ext (GFile *file,
   uri     = g_file_get_uri (file);
   uri_ext = file_utils_uri_get_ext (uri);
 
-  if (ext_uri)
+  if (ext_file)
     {
       ext_uri     = g_file_get_uri (ext_file);
       ext_uri_ext = file_utils_uri_get_ext (ext_uri);
