@@ -1852,16 +1852,8 @@ gimp_image_set_file (GimpImage *image,
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  if (file)
-    {
-      gchar *uri = g_file_get_uri (file);
-      gimp_object_set_name (GIMP_OBJECT (image), uri);
-      g_free (uri);
-    }
-  else
-    {
-      gimp_object_set_name (GIMP_OBJECT (image), NULL);
-    }
+  gimp_object_take_name (GIMP_OBJECT (image),
+                         file ? g_file_get_uri (file) : NULL);
 }
 
 static void
