@@ -26,16 +26,9 @@ gboolean      file_utils_filename_is_uri      (const gchar   *filename,
 gchar       * file_utils_filename_to_uri      (Gimp          *gimp,
                                                const gchar   *filename,
                                                GError       **error);
-gchar       * file_utils_filename_from_uri    (const gchar   *uri);
-gchar       * file_utils_filename_from_file   (GFile         *file);
 GFile       * file_utils_file_with_new_ext    (GFile         *file,
                                                GFile         *ext_file);
 const gchar * file_utils_uri_get_ext          (const gchar   *uri);
-
-gchar       * file_utils_uri_to_utf8_filename (const gchar   *uri);
-
-gchar       * file_utils_uri_display_basename (const gchar   *uri);
-gchar       * file_utils_uri_display_name     (const gchar   *uri);
 
 GdkPixbuf   * file_utils_load_thumbnail       (const gchar   *filename);
 gboolean      file_utils_save_thumbnail       (GimpImage     *image,
