@@ -37,7 +37,6 @@
 
 #include "file/file-procedure.h"
 #include "file/file-save.h"
-#include "file/file-utils.h"
 #include "file/gimp-file.h"
 
 #include "widgets/gimpactiongroup.h"
@@ -78,14 +77,13 @@ static CheckUriResult file_save_dialog_check_file           (GtkWidget          
                                                              GimpPlugInProcedure **ret_save_proc);
 static gboolean  file_save_dialog_no_overwrite_confirmation (GimpFileDialog       *dialog,
                                                              Gimp                 *gimp);
-static gchar *   file_save_dialog_get_uri                   (GimpFileDialog       *dialog);
 static GSList *  file_save_dialog_get_procs                 (GimpFileDialog       *dialog,
                                                              Gimp                 *gimp);
 static gboolean  file_save_dialog_switch_dialogs            (GimpFileDialog       *file_dialog,
                                                              Gimp                 *gimp,
                                                              const gchar          *basename);
 static gboolean  file_save_dialog_use_extension             (GtkWidget            *save_dialog,
-                                                             const gchar          *uri);
+                                                             GFile                *file);
 
 
 /*  public functions  */
@@ -279,19 +277,17 @@ file_save_dialog_check_file (GtkWidget            *save_dialog,
                              GimpPlugInProcedure **ret_save_proc)
 {
   GimpFileDialog      *dialog = GIMP_FILE_DIALOG (save_dialog);
-  gchar               *uri;
   GFile               *file;
+  gchar               *uri;
   gchar               *basename;
   GimpPlugInProcedure *save_proc;
   GimpPlugInProcedure *uri_proc;
   GimpPlugInProcedure *basename_proc;
 
-  uri = file_save_dialog_get_uri (dialog);
+  file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
 
-  if (! uri)
+  if (! file)
     return CHECK_URI_FAIL;
-
-  file = g_file_new_for_uri (uri);
 
   basename      = g_path_get_basename (gimp_file_get_utf8_name (file));
 
@@ -301,6 +297,8 @@ file_save_dialog_check_file (GtkWidget            *save_dialog,
   basename_proc = file_procedure_find (file_save_dialog_get_procs (dialog, gimp),
                                        /* XXX fixme leak */
                                        g_file_new_for_path (basename), NULL);
+
+  uri = g_file_get_uri (file);
 
   GIMP_LOG (SAVE_DIALOG, "URI = %s", uri);
   GIMP_LOG (SAVE_DIALOG, "basename = %s", basename);
@@ -312,6 +310,8 @@ file_save_dialog_check_file (GtkWidget            *save_dialog,
   GIMP_LOG (SAVE_DIALOG, "basename save_proc: %s",
             basename_proc && basename_proc->menu_label ?
             basename_proc->menu_label : "NULL");
+
+  g_free (uri);
 
   /*  first check if the user entered an extension at all  */
   if (! basename_proc)
@@ -461,7 +461,7 @@ file_save_dialog_check_file (GtkWidget            *save_dialog,
 
               /*  local URI  */
 
-              if (! file_save_dialog_use_extension (save_dialog, uri))
+              if (! file_save_dialog_use_extension (save_dialog, file))
                 {
                   goto fail;
                 }
@@ -487,8 +487,6 @@ file_save_dialog_check_file (GtkWidget            *save_dialog,
       return CHECK_URI_FAIL;
     }
 
-  g_free (uri);
-
   *ret_file      = file;
   *ret_basename  = basename;
   *ret_save_proc = save_proc;
@@ -498,7 +496,6 @@ file_save_dialog_check_file (GtkWidget            *save_dialog,
  fail:
 
   g_object_unref (file);
-  g_free (uri);
   g_free (basename);
 
   return CHECK_URI_FAIL;
@@ -506,7 +503,6 @@ file_save_dialog_check_file (GtkWidget            *save_dialog,
  switch_dialogs:
 
   g_object_unref (file);
-  g_free (uri);
   g_free (basename);
 
   return CHECK_URI_SWITCH_DIALOGS;
@@ -519,19 +515,19 @@ static gboolean
 file_save_dialog_no_overwrite_confirmation (GimpFileDialog *dialog,
                                             Gimp           *gimp)
 {
-  gboolean             uri_will_change = FALSE;
-  gboolean             unknown_ext     = FALSE;
-  gchar               *uri             = NULL;
-  gchar               *basename        = NULL;
-  GimpPlugInProcedure *basename_proc   = NULL;
-  GimpPlugInProcedure *save_proc       = NULL;
+  GFile               *file;
+  gchar               *basename;
+  GimpPlugInProcedure *basename_proc;
+  GimpPlugInProcedure *save_proc;
+  gboolean             uri_will_change;
+  gboolean             unknown_ext;
 
-  uri = file_save_dialog_get_uri (dialog);
+  file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
 
-  if (! uri)
+  if (! file)
     return FALSE;
 
-  basename      = file_utils_uri_display_basename (uri);
+  basename      = g_path_get_basename (gimp_file_get_utf8_name (file));
   save_proc     = dialog->file_proc;
   basename_proc = file_procedure_find (file_save_dialog_get_procs (dialog, gimp),
                                        /* XXX fixme leak */
@@ -545,23 +541,9 @@ file_save_dialog_no_overwrite_confirmation (GimpFileDialog *dialog,
                      ! basename_proc);
 
   g_free (basename);
-  g_free (uri);
+  g_object_unref (file);
 
   return uri_will_change || unknown_ext;
-}
-
-static gchar *
-file_save_dialog_get_uri (GimpFileDialog *dialog)
-{
-  gchar *uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (dialog));
-
-  if (uri && ! strlen (uri))
-    {
-      g_free (uri);
-      uri = NULL;
-    }
-
-  return uri;
 }
 
 static GSList *
@@ -691,8 +673,8 @@ file_save_dialog_switch_dialogs (GimpFileDialog *file_dialog,
 }
 
 static gboolean
-file_save_dialog_use_extension (GtkWidget   *save_dialog,
-                                const gchar *uri)
+file_save_dialog_use_extension (GtkWidget *save_dialog,
+                                GFile     *file)
 {
   GtkWidget *dialog;
   gboolean   use_name = FALSE;
