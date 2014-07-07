@@ -30,9 +30,9 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimagefile.h"
 #include "core/gimpviewable.h"
 
-#include "file/file-utils.h"
 #include "file/gimp-file.h"
 
 #include "plug-in/gimppluginmanager-file.h"
@@ -344,15 +344,15 @@ file_actions_last_opened_update (GimpContainer   *container,
 
           if (GIMP_ACTION (action)->viewable != (GimpViewable *) imagefile)
             {
-              const gchar *uri;
-              gchar       *filename;
+              GFile       *file;
+              const gchar *name;
               gchar       *basename;
               gchar       *escaped;
 
-              uri = gimp_object_get_name (imagefile);
+              file = gimp_imagefile_get_file (imagefile);
 
-              filename = file_utils_uri_display_name (uri);
-              basename = file_utils_uri_display_basename (uri);
+              name     = gimp_file_get_utf8_name (file);
+              basename = g_path_get_basename (name);
 
               escaped = gimp_escape_uline (basename);
 
@@ -360,13 +360,12 @@ file_actions_last_opened_update (GimpContainer   *container,
 
               g_object_set (action,
                             "label",    escaped,
-                            "tooltip",  filename,
+                            "tooltip",  name,
                             "visible",  TRUE,
                             "viewable", imagefile,
                             NULL);
 
-              g_free (filename);
-              g_free (escaped);
+               g_free (escaped);
             }
         }
       else

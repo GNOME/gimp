@@ -41,7 +41,6 @@
 #include "file/file-open.h"
 #include "file/file-procedure.h"
 #include "file/file-save.h"
-#include "file/file-utils.h"
 #include "file/gimp-file.h"
 
 #include "widgets/gimpactiongroup.h"
@@ -600,25 +599,26 @@ file_save_dialog_response (GtkWidget *dialog,
       GimpFileDialog *file_dialog = GIMP_FILE_DIALOG (dialog);
       GtkWindow      *parent;
       GtkWidget      *other;
-      gchar          *folder;
-      gchar          *uri;
-      gchar          *name;
+      GFile          *folder;
+      GFile          *file;
+      gchar          *basename;
 
-      parent = gtk_window_get_transient_for (GTK_WINDOW (dialog));
-      folder = gtk_file_chooser_get_current_folder_uri (GTK_FILE_CHOOSER (dialog));
-      uri    = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (dialog));
-      name   = file_utils_uri_display_basename (uri);
-      g_free (uri);
+      parent   = gtk_window_get_transient_for (GTK_WINDOW (dialog));
+      folder   = gtk_file_chooser_get_current_folder_file (GTK_FILE_CHOOSER (dialog));
+      file     = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
+      basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+      g_object_unref (file);
 
       other = file_export_dialog_show (file_dialog->image->gimp,
                                        file_dialog->image,
                                        GTK_WIDGET (parent));
 
-      gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (other), folder);
-      gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (other), name);
+      gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (other),
+                                                folder, NULL);
+      gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (other), basename);
 
-      g_free (folder);
-      g_free (name);
+      g_object_unref (folder);
+      g_free (basename);
     }
 }
 
@@ -687,15 +687,15 @@ file_export_dialog_response (GtkWidget *dialog,
       GimpFileDialog *file_dialog = GIMP_FILE_DIALOG (dialog);
       GtkWindow      *parent;
       GtkWidget      *other;
-      gchar          *folder;
-      gchar          *uri;
-      gchar          *name;
+      GFile          *folder;
+      GFile          *file;
+      gchar          *basename;
 
-      parent = gtk_window_get_transient_for (GTK_WINDOW (dialog));
-      folder = gtk_file_chooser_get_current_folder_uri (GTK_FILE_CHOOSER (dialog));
-      uri    = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (dialog));
-      name   = file_utils_uri_display_basename (uri);
-      g_free (uri);
+      parent   = gtk_window_get_transient_for (GTK_WINDOW (dialog));
+      folder   = gtk_file_chooser_get_current_folder_file (GTK_FILE_CHOOSER (dialog));
+      file     = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
+      basename = g_path_get_basename (gimp_file_get_utf8_name (file));
+      g_object_unref (file);
 
       other = file_save_dialog_show (file_dialog->image->gimp,
                                      file_dialog->image,
@@ -703,11 +703,12 @@ file_export_dialog_response (GtkWidget *dialog,
                                      _("Save Image"),
                                      FALSE, FALSE, NULL);
 
-      gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (other), folder);
-      gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (other), name);
+      gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (other),
+                                                folder, NULL);
+      gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (other), basename);
 
-      g_free (folder);
-      g_free (name);
+      g_object_unref (folder);
+      g_free (basename);
     }
 }
 
