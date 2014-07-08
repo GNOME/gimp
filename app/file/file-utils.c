@@ -43,7 +43,7 @@
 #include "gimp-intl.h"
 
 
-gboolean
+static gboolean
 file_utils_filename_is_uri (const gchar  *filename,
                             GError      **error)
 {
