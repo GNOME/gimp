@@ -280,6 +280,7 @@ file_save_dialog_check_file (GtkWidget            *save_dialog,
   GFile               *file;
   gchar               *uri;
   gchar               *basename;
+  GFile               *basename_file;
   GimpPlugInProcedure *save_proc;
   GimpPlugInProcedure *uri_proc;
   GimpPlugInProcedure *basename_proc;
@@ -290,13 +291,15 @@ file_save_dialog_check_file (GtkWidget            *save_dialog,
     return CHECK_URI_FAIL;
 
   basename      = g_path_get_basename (gimp_file_get_utf8_name (file));
+  basename_file = g_file_new_for_uri (basename);
 
   save_proc     = dialog->file_proc;
   uri_proc      = file_procedure_find (file_save_dialog_get_procs (dialog, gimp),
                                        file, NULL);
   basename_proc = file_procedure_find (file_save_dialog_get_procs (dialog, gimp),
-                                       /* XXX fixme leak */
-                                       g_file_new_for_path (basename), NULL);
+                                       basename_file, NULL);
+
+  g_object_unref (basename_file);
 
   uri = g_file_get_uri (file);
 
@@ -517,6 +520,7 @@ file_save_dialog_no_overwrite_confirmation (GimpFileDialog *dialog,
 {
   GFile               *file;
   gchar               *basename;
+  GFile               *basename_file;
   GimpPlugInProcedure *basename_proc;
   GimpPlugInProcedure *save_proc;
   gboolean             uri_will_change;
@@ -528,10 +532,13 @@ file_save_dialog_no_overwrite_confirmation (GimpFileDialog *dialog,
     return FALSE;
 
   basename      = g_path_get_basename (gimp_file_get_utf8_name (file));
+  basename_file = g_file_new_for_uri (basename);
+
   save_proc     = dialog->file_proc;
   basename_proc = file_procedure_find (file_save_dialog_get_procs (dialog, gimp),
-                                       /* XXX fixme leak */
-                                       g_file_new_for_path (basename), NULL);
+                                       basename_file, NULL);
+
+  g_object_unref (basename_file);
 
   uri_will_change = (! basename_proc &&
                      ! strchr (basename, '.') &&
@@ -571,15 +578,18 @@ file_save_dialog_switch_dialogs (GimpFileDialog *file_dialog,
                                  const gchar    *basename)
 {
   GimpPlugInProcedure *proc_in_other_group;
+  GFile               *file;
   gboolean             switch_dialogs = FALSE;
+
+  file = g_file_new_for_uri (basename);
 
   proc_in_other_group =
     file_procedure_find (file_dialog->export ?
                          gimp->plug_in_manager->save_procs :
                          gimp->plug_in_manager->export_procs,
-                         /* XXX fixme leak */
-                         g_file_new_for_path (basename),
-                         NULL);
+                         file, NULL);
+
+  g_object_unref (file);
 
   if (proc_in_other_group)
     {
