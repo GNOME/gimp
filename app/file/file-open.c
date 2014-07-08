@@ -111,7 +111,9 @@ file_open_image (Gimp                *gimp,
   if (! file_proc)
     return NULL;
 
-  if (g_file_query_exists (file, NULL))
+  /* FIXME enable these tests for remote files again, needs testing */
+  if (g_file_is_native (file) &&
+      g_file_query_exists (file, NULL))
     {
       GFileInfo *info;
 
@@ -135,6 +137,7 @@ file_open_image (Gimp                *gimp,
         {
           g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                _("Premission denied"));
+          return NULL;
         }
     }
 

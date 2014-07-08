@@ -88,7 +88,9 @@ file_save (Gimp                *gimp,
   if (! drawable)
     return GIMP_PDB_EXECUTION_ERROR;
 
-  if (g_file_query_exists (file, NULL))
+  /* FIXME enable these tests for remote files again, needs testing */
+  if (g_file_is_native (file) &&
+      g_file_query_exists (file, NULL))
     {
       GFileInfo *info;
 
