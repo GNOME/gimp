@@ -96,7 +96,6 @@ file_utils_filename_to_file (Gimp         *gimp,
 {
   GFile  *file;
   gchar  *absolute;
-  gchar  *uri;
   GError *temp_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -133,6 +132,8 @@ file_utils_filename_to_file (Gimp         *gimp,
 
       return NULL;
     }
+
+  g_object_unref (file);
 
   if (! g_path_is_absolute (filename))
     {
