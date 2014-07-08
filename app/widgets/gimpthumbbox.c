@@ -447,7 +447,7 @@ gimp_thumb_box_take_file (GimpThumbBox *box,
                           GFile        *file)
 {
   g_return_if_fail (GIMP_IS_THUMB_BOX (box));
-  g_return_if_fail (G_IS_FILE (file));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
 
   if (box->idle_id)
     {
