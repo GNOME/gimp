@@ -17,8 +17,6 @@
 
 #include <string.h>
 
-#include <glib/gstdio.h>
-
 #include <gegl.h>
 
 #include <gtk/gtk.h>
@@ -141,7 +139,7 @@
 
 
 GimpImage        * gimp_test_load_image                        (Gimp            *gimp,
-                                                                const gchar     *uri);
+                                                                GFile           *file);
 static void        gimp_write_and_read_file                    (Gimp            *gimp,
                                                                 gboolean         with_unusual_stuff,
                                                                 gboolean         compat_paths,
@@ -203,15 +201,18 @@ write_and_read_gimp_2_6_format_unusual (gconstpointer data)
 static void
 load_gimp_2_6_file (gconstpointer data)
 {
-  Gimp      *gimp  = GIMP (data);
-  GimpImage *image = NULL;
-  gchar     *uri   = NULL;
+  Gimp      *gimp = GIMP (data);
+  GimpImage *image;
+  gchar     *filename;
+  GFile     *file;
 
-  uri = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
-                          "app/tests/files/gimp-2-6-file.xcf",
-                          NULL);
+  filename = g_build_filename (g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR"),
+                               "app/tests/files/gimp-2-6-file.xcf",
+                               NULL);
+  file = g_file_new_for_path (filename);
+  g_free (filename);
 
-  image = gimp_test_load_image (gimp, uri);
+  image = gimp_test_load_image (gimp, file);
 
   /* The image file was constructed by running
    * gimp_write_and_read_file (FALSE, FALSE) in GIMP 2.6 by
@@ -245,25 +246,25 @@ write_and_read_gimp_2_8_format (gconstpointer data)
 }
 
 GimpImage *
-gimp_test_load_image (Gimp        *gimp,
-                      const gchar *uri)
+gimp_test_load_image (Gimp  *gimp,
+                      GFile *file)
 {
-  GimpPlugInProcedure *proc     = NULL;
-  GimpImage           *image    = NULL;
-  GimpPDBStatusType    not_used = 0;
+  GimpPlugInProcedure *proc;
+  GimpImage           *image;
+  GimpPDBStatusType    unused;
 
   proc = file_procedure_find (gimp->plug_in_manager->load_procs,
-                              uri,
+                              file,
                               NULL /*error*/);
   image = file_open_image (gimp,
                            gimp_get_user_context (gimp),
                            NULL /*progress*/,
-                           uri,
-                           "irrelevant" /*entered_filename*/,
+                           file,
+                           file,
                            FALSE /*as_new*/,
                            proc,
                            GIMP_RUN_NONINTERACTIVE,
-                           &not_used /*status*/,
+                           &unused /*status*/,
                            NULL /*mime_type*/,
                            NULL /*error*/);
 
@@ -284,10 +285,11 @@ gimp_write_and_read_file (Gimp     *gimp,
                           gboolean  compat_paths,
                           gboolean  use_gimp_2_8_features)
 {
-  GimpImage           *image        = NULL;
-  GimpImage           *loaded_image = NULL;
-  GimpPlugInProcedure *proc         = NULL;
-  gchar               *uri          = NULL;
+  GimpImage           *image;
+  GimpImage           *loaded_image;
+  GimpPlugInProcedure *proc;
+  gchar               *filename;
+  GFile               *file;
 
   /* Create the image */
   image = gimp_create_mainimage (gimp,
@@ -302,14 +304,17 @@ gimp_write_and_read_file (Gimp     *gimp,
                          use_gimp_2_8_features);
 
   /* Write to file */
-  uri  = g_build_filename (g_get_tmp_dir (), "gimp-test.xcf", NULL);
+  filename = g_build_filename (g_get_tmp_dir (), "gimp-test.xcf", NULL);
+  file = g_file_new_for_path (filename);
+  g_free (filename);
+
   proc = file_procedure_find (image->gimp->plug_in_manager->save_procs,
-                              uri,
+                              file,
                               NULL /*error*/);
   file_save (gimp,
              image,
              NULL /*progress*/,
-             uri,
+             file,
              proc,
              GIMP_RUN_NONINTERACTIVE,
              FALSE /*change_saved_state*/,
@@ -318,7 +323,7 @@ gimp_write_and_read_file (Gimp     *gimp,
              NULL /*error*/);
 
   /* Load from file */
-  loaded_image = gimp_test_load_image (image->gimp, uri);
+  loaded_image = gimp_test_load_image (image->gimp, file);
 
   /* Assert on the loaded file. If success, it means that there is no
    * significant information loss when we wrote the image to a file
@@ -329,8 +334,8 @@ gimp_write_and_read_file (Gimp     *gimp,
                          compat_paths,
                          use_gimp_2_8_features);
 
-  g_unlink (uri);
-  g_free (uri);
+  g_file_delete (file, NULL, NULL);
+  g_object_unref (file);
 }
 
 /**
