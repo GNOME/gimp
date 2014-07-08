@@ -62,7 +62,7 @@ gimp_plug_in_def_finalize (GObject *object)
 {
   GimpPlugInDef *plug_in_def = GIMP_PLUG_IN_DEF (object);
 
-  g_free (plug_in_def->prog);
+  g_object_unref (plug_in_def->file);
   g_free (plug_in_def->locale_domain_name);
   g_free (plug_in_def->locale_domain_path);
   g_free (plug_in_def->help_domain_name);
@@ -80,7 +80,7 @@ gimp_plug_in_def_get_memsize (GimpObject *object,
   GimpPlugInDef *plug_in_def = GIMP_PLUG_IN_DEF (object);
   gint64         memsize     = 0;
 
-  memsize += gimp_string_get_memsize (plug_in_def->prog);
+  memsize += gimp_g_object_get_memsize (G_OBJECT (plug_in_def->file));
   memsize += gimp_string_get_memsize (plug_in_def->locale_domain_name);
   memsize += gimp_string_get_memsize (plug_in_def->locale_domain_path);
   memsize += gimp_string_get_memsize (plug_in_def->help_domain_name);
@@ -96,15 +96,15 @@ gimp_plug_in_def_get_memsize (GimpObject *object,
 /*  public functions  */
 
 GimpPlugInDef *
-gimp_plug_in_def_new (const gchar *prog)
+gimp_plug_in_def_new (GFile *file)
 {
   GimpPlugInDef *plug_in_def;
 
-  g_return_val_if_fail (prog != NULL, NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
 
   plug_in_def = g_object_new (GIMP_TYPE_PLUG_IN_DEF, NULL);
 
-  plug_in_def->prog = g_strdup (prog);
+  plug_in_def->file = g_object_ref (file);
 
   return plug_in_def;
 }

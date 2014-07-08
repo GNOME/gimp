@@ -37,7 +37,7 @@ struct _GimpPlugInDef
 {
   GimpObject  parent_instance;
 
-  gchar      *prog;
+  GFile      *file;
   GSList     *procedures;
   gchar      *locale_domain_name;
   gchar      *locale_domain_path;
@@ -56,7 +56,7 @@ struct _GimpPlugInDefClass
 
 GType           gimp_plug_in_def_get_type (void) G_GNUC_CONST;
 
-GimpPlugInDef * gimp_plug_in_def_new      (const gchar         *prog);
+GimpPlugInDef * gimp_plug_in_def_new      (GFile               *file);
 
 void   gimp_plug_in_def_add_procedure     (GimpPlugInDef       *plug_in_def,
                                            GimpPlugInProcedure *proc);

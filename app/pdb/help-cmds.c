@@ -60,7 +60,7 @@ help_invoker (GimpProcedure         *procedure,
       if (! help_domain && manager->current_plug_in)
         help_domain = (gchar *)
           gimp_plug_in_manager_get_help_domain (manager,
-                                                manager->current_plug_in->prog,
+                                                manager->current_plug_in->file,
                                                 NULL);
 
       gimp_help (gimp, progress, help_domain, help_id);

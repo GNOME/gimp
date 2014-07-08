@@ -113,9 +113,9 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
                   G_STRUCT_OFFSET (GimpPlugInManagerClass,
                                    menu_branch_added),
                   NULL, NULL,
-                  gimp_marshal_VOID__STRING_STRING_STRING,
+                  gimp_marshal_VOID__OBJECT_STRING_STRING,
                   G_TYPE_NONE, 1,
-                  G_TYPE_STRING,
+                  G_TYPE_FILE,
                   G_TYPE_STRING,
                   G_TYPE_STRING);
 
@@ -359,7 +359,7 @@ gimp_plug_in_manager_add_procedure (GimpPlugInManager   *manager,
           g_printerr ("Removing duplicate PDB procedure '%s' "
                       "registered by '%s'\n",
                       gimp_object_get_name (tmp_proc),
-                      gimp_filename_to_utf8 (tmp_proc->prog));
+                      gimp_file_get_utf8_name (tmp_proc->file));
 
           /* search the plugin list to see if any plugins had references to
            * the tmp_proc.

@@ -52,7 +52,7 @@ static GTokenType plug_in_def_deserialize        (Gimp                 *gimp,
                                                   GSList              **plug_in_defs);
 static GTokenType plug_in_procedure_deserialize  (GScanner             *scanner,
                                                   Gimp                 *gimp,
-                                                  const gchar          *prog,
+                                                  GFile                *file,
                                                   GimpPlugInProcedure **proc);
 static GTokenType plug_in_menu_path_deserialize  (GScanner             *scanner,
                                                   GimpPlugInProcedure  *proc);
@@ -261,6 +261,7 @@ plug_in_def_deserialize (Gimp      *gimp,
   GimpPlugInProcedure *proc = NULL;
   gchar               *name;
   gchar               *path;
+  GFile               *file;
   gint64               mtime;
   GTokenType           token;
 
@@ -270,8 +271,11 @@ plug_in_def_deserialize (Gimp      *gimp,
   path = gimp_config_path_expand (name, TRUE, NULL);
   g_free (name);
 
-  plug_in_def = gimp_plug_in_def_new (path);
+  file = g_file_new_for_path (path);
   g_free (path);
+
+  plug_in_def = gimp_plug_in_def_new (file);
+  g_object_unref (file);
 
   if (! gimp_scanner_parse_int64 (scanner, &mtime))
     {
@@ -298,7 +302,7 @@ plug_in_def_deserialize (Gimp      *gimp,
             {
             case PROC_DEF:
               token = plug_in_procedure_deserialize (scanner, gimp,
-                                                     plug_in_def->prog,
+                                                     plug_in_def->file,
                                                      &proc);
 
               if (token == G_TOKEN_LEFT_PAREN)
@@ -353,7 +357,7 @@ plug_in_def_deserialize (Gimp      *gimp,
 static GTokenType
 plug_in_procedure_deserialize (GScanner             *scanner,
                                Gimp                 *gimp,
-                               const gchar          *prog,
+                               GFile                *file,
                                GimpPlugInProcedure **proc)
 {
   GimpProcedure   *procedure;
@@ -374,7 +378,7 @@ plug_in_procedure_deserialize (GScanner             *scanner,
       return G_TOKEN_INT;
     }
 
-  procedure = gimp_plug_in_procedure_new (proc_type, prog);
+  procedure = gimp_plug_in_procedure_new (proc_type, file);
 
   *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
 
@@ -820,9 +824,12 @@ plug_in_rc_write (GSList  *plug_in_defs,
       if (plug_in_def->procedures)
         {
           GSList *list2;
+          gchar  *path;
           gchar  *utf8;
 
-          utf8 = g_filename_to_utf8 (plug_in_def->prog, -1, NULL, NULL, NULL);
+          path = g_file_get_path (plug_in_def->file);
+          utf8 = g_filename_to_utf8 (path, -1, NULL, NULL, NULL);
+          g_free (path);
 
           if (! utf8)
             continue;

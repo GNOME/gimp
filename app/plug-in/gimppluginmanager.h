@@ -74,7 +74,7 @@ struct _GimpPlugInManagerClass
                               GimpPlugIn        *plug_in);
 
   void (* menu_branch_added) (GimpPlugInManager *manager,
-                              const gchar       *prog_name,
+                              GFile             *file,
                               const gchar       *menu_path,
                               const gchar       *menu_label);
   void (* history_changed)   (GimpPlugInManager *manager);

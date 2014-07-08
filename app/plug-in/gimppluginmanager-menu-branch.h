@@ -23,7 +23,7 @@
 
 struct _GimpPlugInMenuBranch
 {
-  gchar *prog_name;
+  GFile *file;
   gchar *menu_path;
   gchar *menu_label;
 };
@@ -33,7 +33,7 @@ void     gimp_plug_in_manager_menu_branch_exit  (GimpPlugInManager *manager);
 
 /* Add a menu branch */
 void     gimp_plug_in_manager_add_menu_branch   (GimpPlugInManager *manager,
-                                                 const gchar       *prog_name,
+                                                 GFile             *file,
                                                  const gchar       *menu_path,
                                                  const gchar       *menu_label);
 GSList * gimp_plug_in_manager_get_menu_branches (GimpPlugInManager *manager);

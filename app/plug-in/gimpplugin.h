@@ -42,7 +42,7 @@ struct _GimpPlugIn
   GimpObject           parent_instance;
 
   GimpPlugInManager   *manager;
-  gchar               *prog;            /*  Plug-in's full path name          */
+  GFile               *file;            /*  Plug-in's full path name          */
 
   GimpPlugInCallMode   call_mode;       /*  QUERY, INIT or RUN                */
   guint                open : 1;        /*  Is the plug-in open?              */
@@ -83,7 +83,7 @@ GimpPlugIn  * gimp_plug_in_new               (GimpPlugInManager      *manager,
                                               GimpContext            *context,
                                               GimpProgress           *progress,
                                               GimpPlugInProcedure    *procedure,
-                                              const gchar            *prog);
+                                              GFile                  *file);
 
 gboolean      gimp_plug_in_open              (GimpPlugIn             *plug_in,
                                               GimpPlugInCallMode      call_mode,

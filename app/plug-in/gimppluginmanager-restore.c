@@ -149,20 +149,20 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
 
       if (plug_in_def->locale_domain_name)
         gimp_plug_in_manager_add_locale_domain (manager,
-                                                plug_in_def->prog,
+                                                plug_in_def->file,
                                                 plug_in_def->locale_domain_name,
                                                 plug_in_def->locale_domain_path);
       else
         /* set the default plug-in locale domain */
         gimp_plug_in_def_set_locale_domain (plug_in_def,
                                             gimp_plug_in_manager_get_locale_domain (manager,
-                                                                                    plug_in_def->prog,
+                                                                                    plug_in_def->file,
                                                                                     NULL),
                                             NULL);
 
       if (plug_in_def->help_domain_name)
         gimp_plug_in_manager_add_help_domain (manager,
-                                              plug_in_def->prog,
+                                              plug_in_def->file,
                                               plug_in_def->help_domain_name,
                                               plug_in_def->help_domain_uri);
     }
@@ -347,14 +347,15 @@ gimp_plug_in_manager_query_new (GimpPlugInManager  *manager,
             {
               gchar *basename;
 
-              basename = g_filename_display_basename (plug_in_def->prog);
+              basename =
+                g_path_get_basename (gimp_file_get_utf8_name (plug_in_def->file));
               status_callback (NULL, basename,
                                (gdouble) nth++ / (gdouble) n_plugins);
               g_free (basename);
 
               if (manager->gimp->be_verbose)
                 g_print ("Querying plug-in: '%s'\n",
-                         gimp_filename_to_utf8 (plug_in_def->prog));
+                         gimp_file_get_utf8_name (plug_in_def->file));
 
               gimp_plug_in_manager_call_query (manager, context, plug_in_def);
             }
@@ -395,14 +396,15 @@ gimp_plug_in_manager_init_plug_ins (GimpPlugInManager  *manager,
             {
               gchar *basename;
 
-              basename = g_filename_display_basename (plug_in_def->prog);
+              basename =
+                g_path_get_basename (gimp_file_get_utf8_name (plug_in_def->file));
               status_callback (NULL, basename,
                                (gdouble) nth++ / (gdouble) n_plugins);
               g_free (basename);
 
               if (manager->gimp->be_verbose)
                 g_print ("Initializing plug-in: '%s'\n",
-                         gimp_filename_to_utf8 (plug_in_def->prog));
+                         gimp_file_get_utf8_name (plug_in_def->file));
 
               gimp_plug_in_manager_call_init (manager, context, plug_in_def);
             }
@@ -428,7 +430,7 @@ gimp_plug_in_manager_run_extensions (GimpPlugInManager  *manager,
     {
       GimpPlugInProcedure *proc = list->data;
 
-      if (proc->prog                                         &&
+      if (proc->file                                         &&
           GIMP_PROCEDURE (proc)->proc_type == GIMP_EXTENSION &&
           GIMP_PROCEDURE (proc)->num_args  == 0)
         {
@@ -550,6 +552,7 @@ gimp_plug_in_manager_add_from_file (const GimpDatafileData *file_data,
 {
   GimpPlugInManager *manager = data;
   GimpPlugInDef     *plug_in_def;
+  GFile             *file;
   GSList            *list;
 
   /* When we scan build dirs for plug-ins, there will be some
@@ -562,10 +565,14 @@ gimp_plug_in_manager_add_from_file (const GimpDatafileData *file_data,
 
   for (list = manager->plug_in_defs; list; list = list->next)
     {
+      gchar *path;
       gchar *plug_in_name;
 
       plug_in_def  = list->data;
-      plug_in_name = g_path_get_basename (plug_in_def->prog);
+
+      path = g_file_get_path (plug_in_def->file);
+      plug_in_name = g_path_get_basename (path);
+      g_free (path);
 
       if (g_ascii_strcasecmp (file_data->basename, plug_in_name) == 0)
         {
@@ -580,7 +587,9 @@ gimp_plug_in_manager_add_from_file (const GimpDatafileData *file_data,
       g_free (plug_in_name);
     }
 
-  plug_in_def = gimp_plug_in_def_new (file_data->filename);
+  file = g_file_new_for_path (file_data->filename);
+  plug_in_def = gimp_plug_in_def_new (file);
+  g_object_unref (file);
 
   gimp_plug_in_def_set_mtime (plug_in_def, file_data->mtime);
   gimp_plug_in_def_set_needs_query (plug_in_def, TRUE);
@@ -593,20 +602,24 @@ gimp_plug_in_manager_add_from_rc (GimpPlugInManager *manager,
                                   GimpPlugInDef     *plug_in_def)
 {
   GSList *list;
+  gchar  *path1;
   gchar  *basename1;
 
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
   g_return_if_fail (plug_in_def != NULL);
-  g_return_if_fail (plug_in_def->prog != NULL);
+  g_return_if_fail (plug_in_def->file != NULL);
 
-  if (! g_path_is_absolute (plug_in_def->prog))
+  path1 = g_file_get_path (plug_in_def->file);
+
+  if (! g_path_is_absolute (path1))
     {
       g_warning ("plug_ins_def_add_from_rc: filename not absolute (skipping)");
       g_object_unref (plug_in_def);
+      g_free (path1);
       return;
     }
 
-  basename1 = g_path_get_basename (plug_in_def->prog);
+  basename1 = g_path_get_basename (path1);
 
   /*  If this is a file load or save plugin, make sure we have
    *  something for one of the extensions, prefixes, or magic number.
@@ -635,14 +648,19 @@ gimp_plug_in_manager_add_from_rc (GimpPlugInManager *manager,
   for (list = manager->plug_in_defs; list; list = list->next)
     {
       GimpPlugInDef *ondisk_plug_in_def = list->data;
+      gchar         *path2;
       gchar         *basename2;
 
-      basename2 = g_path_get_basename (ondisk_plug_in_def->prog);
+      path2 = g_file_get_path (ondisk_plug_in_def->file);
+
+      basename2 = g_path_get_basename (path2);
+
+      g_free (path2);
 
       if (! strcmp (basename1, basename2))
         {
-          if (! g_ascii_strcasecmp (plug_in_def->prog,
-                                    ondisk_plug_in_def->prog) &&
+          if (g_file_equal (plug_in_def->file,
+                            ondisk_plug_in_def->file) &&
               (plug_in_def->mtime == ondisk_plug_in_def->mtime))
             {
               /* Use pluginrc entry, deleting on-disk entry */
@@ -665,13 +683,14 @@ gimp_plug_in_manager_add_from_rc (GimpPlugInManager *manager,
     }
 
   g_free (basename1);
+  g_free (path1);
 
   manager->write_pluginrc = TRUE;
 
   if (manager->gimp->be_verbose)
     {
       g_printerr ("pluginrc lists '%s', but it wasn't found\n",
-                  gimp_filename_to_utf8 (plug_in_def->prog));
+                  gimp_file_get_utf8_name (plug_in_def->file));
     }
 
   g_object_unref (plug_in_def);
@@ -736,10 +755,10 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
   const gchar         *label_b;
   gint                 retval = 0;
 
-  if (g_str_has_prefix (proc_a->prog, "gimp-xcf"))
+  if (g_str_has_prefix (gimp_file_get_utf8_name (proc_a->file), "gimp-xcf"))
     return -1;
 
-  if (g_str_has_prefix (proc_b->prog, "gimp-xcf"))
+  if (g_str_has_prefix (gimp_file_get_utf8_name (proc_b->file), "gimp-xcf"))
     return 1;
 
   label_a = gimp_plug_in_procedure_get_label (proc_a);

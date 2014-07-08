@@ -51,7 +51,7 @@ static void        gimp_temporary_procedure_execute_async (GimpProcedure  *proce
                                                            GimpValueArray *args,
                                                            GimpObject     *display);
 
-const gchar       * gimp_temporary_procedure_get_progname (const GimpPlugInProcedure *procedure);
+static GFile     * gimp_temporary_procedure_get_file      (const GimpPlugInProcedure *procedure);
 
 
 G_DEFINE_TYPE (GimpTemporaryProcedure, gimp_temporary_procedure,
@@ -72,7 +72,7 @@ gimp_temporary_procedure_class_init (GimpTemporaryProcedureClass *klass)
   proc_class->execute       = gimp_temporary_procedure_execute;
   proc_class->execute_async = gimp_temporary_procedure_execute_async;
 
-  plug_class->get_progname  = gimp_temporary_procedure_get_progname;
+  plug_class->get_file      = gimp_temporary_procedure_get_file;
 }
 
 static void
@@ -130,10 +130,10 @@ gimp_temporary_procedure_execute_async (GimpProcedure  *procedure,
     }
 }
 
-const gchar *
-gimp_temporary_procedure_get_progname (const GimpPlugInProcedure *procedure)
+static GFile *
+gimp_temporary_procedure_get_file (const GimpPlugInProcedure *procedure)
 {
-  return GIMP_TEMPORARY_PROCEDURE (procedure)->plug_in->prog;
+  return GIMP_TEMPORARY_PROCEDURE (procedure)->plug_in->file;
 }
 
 
@@ -150,7 +150,7 @@ gimp_temporary_procedure_new (GimpPlugIn *plug_in)
 
   proc->plug_in = plug_in;
 
-  GIMP_PLUG_IN_PROCEDURE (proc)->prog = g_strdup ("none");
+  GIMP_PLUG_IN_PROCEDURE (proc)->file = g_file_new_for_path ("none");
 
   return GIMP_PROCEDURE (proc);
 }

@@ -126,7 +126,7 @@ plug_in_menus_setup (GimpUIManager *manager,
     {
       GimpPlugInProcedure *plug_in_proc = list->data;
 
-      if (! plug_in_proc->prog)
+      if (! plug_in_proc->file)
         continue;
 
       g_signal_connect_object (plug_in_proc, "menu-path-added",
@@ -143,17 +143,17 @@ plug_in_menus_setup (GimpUIManager *manager,
               if (g_str_has_prefix (path->data, manager->name))
                 {
                   PlugInMenuEntry *entry = g_slice_new0 (PlugInMenuEntry);
-                  const gchar     *progname;
+                  GFile           *file;
                   const gchar     *locale_domain;
 
                   entry->proc      = plug_in_proc;
                   entry->menu_path = path->data;
 
-                  progname = gimp_plug_in_procedure_get_progname (plug_in_proc);
+                  file = gimp_plug_in_procedure_get_file (plug_in_proc);
 
                   locale_domain =
                     gimp_plug_in_manager_get_locale_domain (plug_in_manager,
-                                                            progname, NULL);
+                                                            file, NULL);
 
                   if (plug_in_proc->menu_label)
                     {

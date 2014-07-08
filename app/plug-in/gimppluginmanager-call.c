@@ -63,7 +63,7 @@ gimp_plug_in_manager_call_query (GimpPlugInManager *manager,
   g_return_if_fail (GIMP_IS_PLUG_IN_DEF (plug_in_def));
 
   plug_in = gimp_plug_in_new (manager, context, NULL,
-                              NULL, plug_in_def->prog);
+                              NULL, plug_in_def->file);
 
   if (plug_in)
     {
@@ -103,7 +103,7 @@ gimp_plug_in_manager_call_init (GimpPlugInManager *manager,
   g_return_if_fail (GIMP_IS_PLUG_IN_DEF (plug_in_def));
 
   plug_in = gimp_plug_in_new (manager, context, NULL,
-                              NULL, plug_in_def->prog);
+                              NULL, plug_in_def->file);
 
   if (plug_in)
     {
