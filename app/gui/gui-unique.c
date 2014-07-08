@@ -103,22 +103,18 @@ gui_unique_exit (void)
 
 typedef struct
 {
-  gchar    *name;
+  GFile    *file;
   gboolean  as_new;
 } IdleOpenData;
 
 static IdleOpenData *
-idle_open_data_new (const gchar *name,
-                    gint         len,
-                    gboolean     as_new)
+idle_open_data_new (GFile    *file,
+                    gboolean  as_new)
 {
   IdleOpenData *data = g_slice_new0 (IdleOpenData);
 
-  if (len > 0)
-    {
-      data->name   = g_strdup (name);
-      data->as_new = as_new;
-    }
+  data->file   = g_object_ref (file);
+  data->as_new = as_new;
 
   return data;
 }
@@ -126,7 +122,7 @@ idle_open_data_new (const gchar *name,
 static void
 idle_open_data_free (IdleOpenData *data)
 {
-  g_free (data->name);
+  g_object_unref (data->file);
   g_slice_free (IdleOpenData, data);
 }
 
@@ -139,9 +135,10 @@ gui_unique_win32_idle_open (IdleOpenData *data)
   if (! gimp_is_restored (unique_gimp))
     return TRUE;
 
-  if (data->name)
+  if (data->file)
     {
-      file_open_from_command_line (unique_gimp, data->name, data->as_new, NULL, 0);
+      file_open_from_command_line (unique_gimp, data->file,
+                                   data->as_new, NULL, 0);
     }
   else
     {
@@ -168,25 +165,33 @@ gui_unique_win32_message_handler (HWND   hWnd,
       if (unique_gimp)
         {
           COPYDATASTRUCT *copydata = (COPYDATASTRUCT *) lParam;
-          GSource        *source;
-          GClosure       *closure;
-          IdleOpenData   *data;
 
-          data = idle_open_data_new (copydata->lpData,
-                                     copydata->cbData,
-                                     copydata->dwData != 0);
+          if (copydata->cbData > 0)
+            {
+              GSource        *source;
+              GClosure       *closure;
+              GFile          *file;
+              IdleOpenData   *data;
 
-          closure = g_cclosure_new (G_CALLBACK (gui_unique_win32_idle_open),
-                                    data,
-                                    (GClosureNotify) idle_open_data_free);
+              file = g_file_new_for_path (copydata->lpData);
 
-          g_object_watch_closure (unique_gimp, closure);
+              data = idle_open_data_new (file,
+                                         copydata->dwData != 0);
 
-          source = g_idle_source_new ();
-          g_source_set_priority (source, G_PRIORITY_LOW);
-          g_source_set_closure (source, closure);
-          g_source_attach (source, NULL);
-          g_source_unref (source);
+              g_object_unref (file);
+
+              closure = g_cclosure_new (G_CALLBACK (gui_unique_win32_idle_open),
+                                        data,
+                                        (GClosureNotify) idle_open_data_free);
+
+              g_object_watch_closure (unique_gimp, closure);
+
+              source = g_idle_source_new ();
+              g_source_set_priority (source, G_PRIORITY_LOW);
+              g_source_set_closure (source, closure);
+              g_source_attach (source, NULL);
+              g_source_unref (source);
+            }
         }
       return TRUE;
 
@@ -233,7 +238,7 @@ gui_unique_win32_exit (void)
 #elif defined (GDK_WINDOWING_QUARTZ)
 
 static gboolean
-gui_unique_quartz_idle_open (gchar *path)
+gui_unique_quartz_idle_open (GFile *file)
 {
   /*  We want to be called again later in case that GIMP is not fully
    *  started yet.
@@ -241,9 +246,9 @@ gui_unique_quartz_idle_open (gchar *path)
   if (! gimp_is_restored (unique_gimp))
     return TRUE;
 
-  if (path)
+  if (file)
     {
-      file_open_from_command_line (unique_gimp, path, FALSE, NULL, 0);
+      file_open_from_command_line (unique_gimp, file, FALSE, NULL, 0);
     }
 
   return FALSE;
@@ -254,15 +259,17 @@ gui_unique_quartz_nsopen_file_callback (GtkosxApplication *osx_app,
                                         gchar             *path,
                                         gpointer           user_data)
 {
-  gchar    *callback_path;
+  GFile    *file;
   GSource  *source;
   GClosure *closure;
 
-  callback_path = g_strdup (path);
+  file = g_file_new_for_path (path);
 
   closure = g_cclosure_new (G_CALLBACK (gui_unique_quartz_idle_open),
-                            (gpointer) callback_path,
-                            (GClosureNotify) g_free);
+                            g_object_ref (file),
+                            (GClosureNotify) g_object_unref);
+
+  g_object_unref (file);
 
   g_object_watch_closure (G_OBJECT (unique_gimp), closure);
 
