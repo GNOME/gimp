@@ -326,9 +326,7 @@ file_proc_find_by_extension (GSList   *procs,
                              gboolean  skip_magic,
                              gboolean  uri_procs_only)
 {
-  const gchar *ext;
-
-  ext = file_utils_file_get_ext (file);
+  gchar *ext = file_utils_file_get_ext (file);
 
   if (ext)
     {
