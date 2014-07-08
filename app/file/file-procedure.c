@@ -326,40 +326,36 @@ file_proc_find_by_extension (GSList   *procs,
                              gboolean  skip_magic,
                              gboolean  uri_procs_only)
 {
-  gchar       *uri = g_file_get_uri (file);
-  GSList      *p;
   const gchar *ext;
 
-  ext = file_utils_uri_get_ext (uri);
+  ext = file_utils_file_get_ext (file);
 
-  if (! (ext && *ext == '.'))
+  if (ext)
     {
-      g_free (uri);
-      return NULL;
-    }
+      GSList *p;
 
-  ext++;
-
-  for (p = procs; p; p = g_slist_next (p))
-    {
-      GimpPlugInProcedure *proc = p->data;
-
-      if (uri_procs_only && ! proc->handles_uri)
-        continue;
-
-      if (skip_magic && proc->magics_list)
-        continue;
-
-      if (g_slist_find_custom (proc->extensions_list,
-                               ext,
-                               (GCompareFunc) g_ascii_strcasecmp))
+      for (p = procs; p; p = g_slist_next (p))
         {
-          g_free (uri);
-          return proc;
-        }
-    }
+          GimpPlugInProcedure *proc = p->data;
 
-  g_free (uri);
+          if (uri_procs_only && ! proc->handles_uri)
+            continue;
+
+          if (skip_magic && proc->magics_list)
+            continue;
+
+          if (g_slist_find_custom (proc->extensions_list,
+                                   ext + 1,
+                                   (GCompareFunc) g_ascii_strcasecmp))
+            {
+              g_free (ext);
+
+              return proc;
+            }
+        }
+
+      g_free (ext);
+    }
 
   return NULL;
 }

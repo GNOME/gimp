@@ -165,32 +165,38 @@ GFile *
 file_utils_file_with_new_ext (GFile *file,
                               GFile *ext_file)
 {
-  gchar       *uri;
-  const gchar *uri_ext;
-  gchar       *ext_uri     = NULL;
-  const gchar *ext_uri_ext = NULL;
-  gchar       *uri_without_ext;
-  gchar       *new_uri;
-  GFile       *ret;
+  gchar *uri;
+  gchar *file_ext;
+  gint   file_ext_len = 0;
+  gchar *ext_file_ext = NULL;
+  gchar *uri_without_ext;
+  gchar *new_uri;
+  GFile *ret;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (ext_file == NULL || G_IS_FILE (ext_file), NULL);
 
-  uri     = g_file_get_uri (file);
-  uri_ext = file_utils_uri_get_ext (uri);
+  uri      = g_file_get_uri (file);
+  file_ext = file_utils_file_get_ext (file);
 
-  if (ext_file)
+  if (file_ext)
     {
-      ext_uri     = g_file_get_uri (ext_file);
-      ext_uri_ext = file_utils_uri_get_ext (ext_uri);
+      file_ext_len = strlen (file_ext);
+      g_free (file_ext);
     }
 
-  uri_without_ext = g_strndup (uri, uri_ext - uri);
+  if (ext_file)
+    ext_file_ext = file_utils_file_get_ext (ext_file);
 
-  new_uri = g_strconcat (uri_without_ext, ext_uri_ext, NULL);
+  uri_without_ext = g_strndup (uri, strlen (uri) - file_ext_len);
+
+  g_free (uri);
+
+  new_uri = g_strconcat (uri_without_ext, ext_file_ext, NULL);
 
   ret = g_file_new_for_uri (new_uri);
 
+  g_free (ext_file_ext);
   g_free (uri_without_ext);
   g_free (new_uri);
 
@@ -199,21 +205,26 @@ file_utils_file_with_new_ext (GFile *file,
 
 
 /**
- * file_utils_uri_get_ext:
- * @uri:
+ * file_utils_file_get_ext:
+ * @file:
  *
- * Returns the position of the extension (including the .) for an URI. If
- * there is no extension the returned position is right after the
- * string, at the terminating NULL character.
+ * Returns the position of the extension (including the .), or NULL
+ * if there is no extension.
  *
  * Returns:
  **/
-const gchar *
-file_utils_uri_get_ext (const gchar *uri)
+gchar *
+file_utils_file_get_ext (GFile *file)
 {
-  const gchar *ext        = NULL;
-  int          uri_len    = strlen (uri);
-  int          search_len = 0;
+  gchar *uri;
+  gint   uri_len;
+  gchar *ext = NULL;
+  gint   search_len;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+  uri     = g_file_get_uri (file);
+  uri_len = strlen (uri);
 
   if (g_strrstr (uri, ".gz"))
     search_len = uri_len - 3;
@@ -226,8 +237,10 @@ file_utils_uri_get_ext (const gchar *uri)
 
   ext = g_strrstr_len (uri, search_len, ".");
 
-  if (! ext)
-    ext = uri + uri_len;
+  if (ext)
+    ext = g_strdup (ext);
+
+  g_free (uri);
 
   return ext;
 }

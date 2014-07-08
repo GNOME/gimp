@@ -26,9 +26,10 @@ gboolean      file_utils_filename_is_uri      (const gchar   *filename,
 gchar       * file_utils_filename_to_uri      (Gimp          *gimp,
                                                const gchar   *filename,
                                                GError       **error);
+
 GFile       * file_utils_file_with_new_ext    (GFile         *file,
                                                GFile         *ext_file);
-const gchar * file_utils_uri_get_ext          (const gchar   *uri);
+gchar       * file_utils_file_get_ext         (GFile         *file);
 
 GdkPixbuf   * file_utils_load_thumbnail       (const gchar   *filename);
 gboolean      file_utils_save_thumbnail       (GimpImage     *image,
