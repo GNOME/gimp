@@ -166,28 +166,31 @@ gimp_unique_win32_open (const gchar **filenames,
       if (filenames)
         {
           gchar  *cwd   = g_get_current_dir ();
-          GError *error = NULL;
           gint    i;
 
           for (i = 0; filenames[i]; i++)
             {
-              gchar *uri;
+              GFile *file;
+              file = g_file_new_for_commandline_arg_and_cwd (filenames[i], cwd);
 
-              uri = gimp_unique_filename_to_uri (filenames[i], cwd, &error);
-
-              if (uri)
+              if (file)
                 {
+                  gchar *uri = g_file_get_uri (file);
+
                   copydata.lpData = uri;
                   copydata.cbData = strlen (uri) + 1;  /* size in bytes   */
                   copydata.dwData = (long) as_new;
 
                   SendMessage (window_handle,
                                WM_COPYDATA, (WPARAM) window_handle, (LPARAM) &copydata);
+
+                  g_free (uri);
+                  g_object_unref (file);
                 }
               else
                 {
-                  g_printerr ("conversion to uri failed: %s\n", error->message);
-                  g_clear_error (&error);
+                  g_printerr ("conversion to uri failed for '%s'\n",
+                              filenames[i]);
                 }
             }
 

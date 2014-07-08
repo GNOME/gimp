@@ -35,6 +35,7 @@
 #include "core/gimpcontainer.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "file/file-open.h"
 
@@ -173,7 +174,7 @@ gui_unique_win32_message_handler (HWND   hWnd,
               GFile          *file;
               IdleOpenData   *data;
 
-              file = g_file_new_for_path (copydata->lpData);
+              file = g_file_new_for_uri (copydata->lpData);
 
               data = idle_open_data_new (file,
                                          copydata->dwData != 0);
@@ -184,7 +185,7 @@ gui_unique_win32_message_handler (HWND   hWnd,
                                         data,
                                         (GClosureNotify) idle_open_data_free);
 
-              g_object_watch_closure (unique_gimp, closure);
+              g_object_watch_closure (G_OBJECT (unique_gimp), closure);
 
               source = g_idle_source_new ();
               g_source_set_priority (source, G_PRIORITY_LOW);
