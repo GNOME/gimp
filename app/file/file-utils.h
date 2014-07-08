@@ -21,7 +21,7 @@
 #define __FILE_UTILS_H__
 
 
-gchar     * file_utils_filename_to_uri   (Gimp         *gimp,
+GFile     * file_utils_filename_to_file  (Gimp         *gimp,
                                           const gchar  *filename,
                                           GError      **error);
 

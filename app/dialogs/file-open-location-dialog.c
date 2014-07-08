@@ -171,31 +171,21 @@ file_open_location_response (GtkDialog *dialog,
   if (text && strlen (text))
     {
       GimpImage         *image;
-      gchar             *uri;
       gchar             *filename;
-      gchar             *hostname;
-      GFile             *file  = NULL;
-      GError            *error = NULL;
+      GFile             *file;
       GimpPDBStatusType  status;
+      GError            *error = NULL;
 
-      filename = g_filename_from_uri (text, &hostname, NULL);
+      filename = g_filename_from_uri (text, NULL, NULL);
 
       if (filename)
         {
-          uri = g_filename_to_uri (filename, hostname, &error);
-
-          g_free (hostname);
+          file = g_file_new_for_uri (text);
           g_free (filename);
         }
       else
         {
-          uri = file_utils_filename_to_uri (gimp, text, &error);
-        }
-
-      if (uri)
-        {
-          file = g_file_new_for_uri (uri);
-          g_free (uri);
+          file = file_utils_filename_to_file (gimp, text, &error);
         }
 
       box = gimp_progress_box_new ();

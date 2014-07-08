@@ -89,10 +89,10 @@ file_utils_filename_is_uri (const gchar  *filename,
   return FALSE;
 }
 
-gchar *
-file_utils_filename_to_uri (Gimp         *gimp,
-                            const gchar  *filename,
-                            GError      **error)
+GFile *
+file_utils_filename_to_file (Gimp         *gimp,
+                             const gchar  *filename,
+                             GError      **error)
 {
   GFile  *file;
   gchar  *absolute;
@@ -111,9 +111,7 @@ file_utils_filename_to_uri (Gimp         *gimp,
     {
       if (g_utf8_validate (filename, -1, NULL))
         {
-          g_object_unref (file);
-
-          return g_strdup (filename);
+          return file;
         }
       else
         {
@@ -121,15 +119,12 @@ file_utils_filename_to_uri (Gimp         *gimp,
 			       G_CONVERT_ERROR,
 			       G_CONVERT_ERROR_ILLEGAL_SEQUENCE,
 			       _("Invalid character sequence in URI"));
-          g_object_unref (file);
           return NULL;
         }
     }
   else if (file_utils_filename_is_uri (filename, &temp_error))
     {
-      g_object_unref (file);
-
-      return g_strdup (filename);
+      return file;
     }
   else if (temp_error)
     {
@@ -138,8 +133,6 @@ file_utils_filename_to_uri (Gimp         *gimp,
 
       return NULL;
     }
-
-  g_object_unref (file);
 
   if (! g_path_is_absolute (filename))
     {
@@ -154,11 +147,11 @@ file_utils_filename_to_uri (Gimp         *gimp,
       absolute = g_strdup (filename);
     }
 
-  uri = g_filename_to_uri (absolute, NULL, error);
+  file = g_file_new_for_path (absolute);
 
   g_free (absolute);
 
-  return uri;
+  return file;
 }
 
 GFile *

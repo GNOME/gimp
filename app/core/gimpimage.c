@@ -1856,13 +1856,6 @@ gimp_image_set_file (GimpImage *image,
                          file ? g_file_get_uri (file) : NULL);
 }
 
-static void
-gimp_image_take_uri (GimpImage *image,
-                     gchar     *uri)
-{
-  gimp_object_take_name (GIMP_OBJECT (image), uri);
-}
-
 /**
  * gimp_image_get_untitled_file:
  *
@@ -1926,19 +1919,17 @@ void
 gimp_image_set_filename (GimpImage   *image,
                          const gchar *filename)
 {
+  GFile *file = NULL;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   if (filename && strlen (filename))
-    {
-      gimp_image_take_uri (image,
-                           file_utils_filename_to_uri (image->gimp,
-                                                       filename,
-                                                       NULL));
-    }
-  else
-    {
-      gimp_image_set_file (image, NULL);
-    }
+    file = file_utils_filename_to_file (image->gimp, filename, NULL);
+
+  gimp_image_set_file (image, file);
+
+  if (file)
+    g_object_unref (file);
 }
 
 /**
