@@ -150,12 +150,12 @@ gimp_guide_undo_pop (GimpUndo              *undo,
   orientation = gimp_guide_get_orientation (guide_undo->guide);
   position    = gimp_guide_get_position (guide_undo->guide);
 
-  if (position == -1)
+  if (position == GIMP_GUIDE_POSITION_UNDEFINED)
     {
       gimp_image_add_guide (undo->image,
                             guide_undo->guide, guide_undo->position);
     }
-  else if (guide_undo->position == -1)
+  else if (guide_undo->position == GIMP_GUIDE_POSITION_UNDEFINED)
     {
       gimp_image_remove_guide (undo->image, guide_undo->guide, FALSE);
     }

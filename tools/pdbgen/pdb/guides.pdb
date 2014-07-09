@@ -219,7 +219,8 @@ HELP
     );
 
     @outargs = (
-	{ name => 'position', type => 'int32', libdef => '-1',
+	{ name => 'position', type => 'int32',
+          libdef => 'G_MININT /* GIMP_GUIDE_POSITION_UNDEFINED */',
 	  desc => "The guide's position relative to top or left of image" }
     );
 
@@ -238,10 +239,14 @@ CODE
 }
 
 
-@headers = qw("core/gimpguide.h" "core/gimpimage-guides.h" "core/gimpimage-undo-push.h");
+@headers = qw("core/gimpguide.h"
+              "core/gimpimage-guides.h"
+              "core/gimpimage-undo-push.h");
 
-@procs = qw(image_add_hguide image_add_vguide image_delete_guide
-	    image_find_next_guide image_get_guide_orientation
+@procs = qw(image_add_hguide image_add_vguide
+            image_delete_guide
+            image_find_next_guide
+            image_get_guide_orientation
 	    image_get_guide_position);
 
 %exports = (app => [@procs], lib => [@procs]);

@@ -59,8 +59,6 @@
 #include "gimp-intl.h"
 
 
-#define GUIDE_POSITION_INVALID G_MININT
-
 #define SWAP_ORIENT(orient) ((orient) == GIMP_ORIENTATION_HORIZONTAL ? \
                              GIMP_ORIENTATION_VERTICAL : \
                              GIMP_ORIENTATION_HORIZONTAL)
@@ -163,7 +161,7 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   move_tool->guide              = NULL;
 
   move_tool->moving_guide       = FALSE;
-  move_tool->guide_position     = GUIDE_POSITION_INVALID;
+  move_tool->guide_position     = GIMP_GUIDE_POSITION_UNDEFINED;
   move_tool->guide_orientation  = GIMP_ORIENTATION_UNKNOWN;
 
   move_tool->saved_type         = GIMP_TRANSFORM_TYPE_LAYER;
@@ -421,7 +419,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
       if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
         {
           move->moving_guide      = FALSE;
-          move->guide_position    = GUIDE_POSITION_INVALID;
+          move->guide_position    = GIMP_GUIDE_POSITION_UNDEFINED;
           move->guide_orientation = GIMP_ORIENTATION_UNKNOWN;
 
           gimp_display_shell_selection_resume (shell);
@@ -431,15 +429,15 @@ gimp_move_tool_button_release (GimpTool              *tool,
       switch (move->guide_orientation)
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          if (move->guide_position == GUIDE_POSITION_INVALID ||
-              move->guide_position <  0                      ||
+          if (move->guide_position == GIMP_GUIDE_POSITION_UNDEFINED ||
+              move->guide_position <  0                             ||
               move->guide_position >= height)
             delete_guide = TRUE;
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-          if (move->guide_position == GUIDE_POSITION_INVALID ||
-              move->guide_position <  0                      ||
+          if (move->guide_position == GIMP_GUIDE_POSITION_UNDEFINED ||
+              move->guide_position <  0                             ||
               move->guide_position >= width)
             delete_guide = TRUE;
           break;
@@ -489,7 +487,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
       gimp_image_flush (image);
 
       move->moving_guide      = FALSE;
-      move->guide_position    = GUIDE_POSITION_INVALID;
+      move->guide_position    = GIMP_GUIDE_POSITION_UNDEFINED;
       move->guide_orientation = GIMP_ORIENTATION_UNKNOWN;
 
       if (move->guide)
@@ -559,7 +557,7 @@ gimp_move_tool_motion (GimpTool         *tool,
       if (tx < 0 || tx >= shell->disp_width ||
           ty < 0 || ty >= shell->disp_height)
         {
-          move->guide_position = GUIDE_POSITION_INVALID;
+          move->guide_position = GIMP_GUIDE_POSITION_UNDEFINED;
 
           delete_guide = TRUE;
         }
@@ -845,7 +843,8 @@ gimp_move_tool_draw (GimpDrawTool *draw_tool)
       gimp_canvas_item_set_highlight (item, TRUE);
     }
 
-  if (move->moving_guide && move->guide_position != GUIDE_POSITION_INVALID)
+  if (move->moving_guide &&
+      move->guide_position != GIMP_GUIDE_POSITION_UNDEFINED)
     {
       gimp_draw_tool_add_guide (draw_tool,
                                 move->guide_orientation,
@@ -894,7 +893,7 @@ gimp_move_tool_start_guide (GimpMoveTool        *move,
 
   move->guide             = NULL;
   move->moving_guide      = TRUE;
-  move->guide_position    = GUIDE_POSITION_INVALID;
+  move->guide_position    = GIMP_GUIDE_POSITION_UNDEFINED;
   move->guide_orientation = orientation;
 
   gimp_tool_set_cursor (tool, display,

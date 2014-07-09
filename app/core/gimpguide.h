@@ -25,6 +25,9 @@
 #include "gimpobject.h"
 
 
+#define GIMP_GUIDE_POSITION_UNDEFINED G_MININT
+
+
 #define GIMP_TYPE_GUIDE            (gimp_guide_get_type ())
 #define GIMP_GUIDE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GUIDE, GimpGuide))
 #define GIMP_GUIDE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GUIDE, GimpGuideClass))
@@ -33,23 +36,22 @@
 #define GIMP_GUIDE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_GUIDE, GimpGuideClass))
 
 
-typedef struct _GimpGuideClass GimpGuideClass;
+typedef struct _GimpGuidePrivate GimpGuidePrivate;
+typedef struct _GimpGuideClass   GimpGuideClass;
 
 struct _GimpGuide
 {
-  GObject              parent_instance;
+  GObject           parent_instance;
 
-  guint32              guide_ID;
-  GimpOrientationType  orientation;
-  gint                 position;
+  GimpGuidePrivate *priv;
 };
 
 struct _GimpGuideClass
 {
-  GObjectClass         parent_class;
+  GObjectClass      parent_class;
 
   /*  signals  */
-  void (* removed)    (GimpGuide  *guide);
+  void (* removed) (GimpGuide  *guide);
 };
 
 
@@ -68,5 +70,6 @@ gint                gimp_guide_get_position    (GimpGuide           *guide);
 void                gimp_guide_set_position    (GimpGuide           *guide,
                                                 gint                 position);
 void                gimp_guide_removed         (GimpGuide           *guide);
+
 
 #endif /* __GIMP_GUIDE_H__ */
