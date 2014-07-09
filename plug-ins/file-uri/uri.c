@@ -130,6 +130,7 @@ query (void)
                                  (const guint8 *) GIMP_STOCK_WEB);
       gimp_register_load_handler (LOAD_PROC,
                                   "", uri_backend_get_load_protocols ());
+      gimp_register_file_handler_uri (LOAD_PROC);
     }
 
   if (uri_backend_get_save_protocols ())
@@ -150,6 +151,7 @@ query (void)
                                  (const guint8 *) GIMP_STOCK_WEB);
       gimp_register_save_handler (SAVE_PROC,
                                   "", uri_backend_get_save_protocols ());
+      gimp_register_file_handler_uri (SAVE_PROC);
     }
 
   uri_backend_shutdown ();
