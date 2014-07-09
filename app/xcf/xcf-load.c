@@ -67,6 +67,7 @@
 #include "xcf-read.h"
 #include "xcf-seek.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
 
 
@@ -202,6 +203,9 @@ xcf_load_image (Gimp     *gimp,
         }
     }
 
+  GIMP_LOG (XCF, "version=%d, width=%d, height=%d, image_type=%d, precision=%d",
+            info->file_version, width, height, image_type, precision);
+
   image = gimp_create_image (gimp, width, height, image_type, precision,
                              FALSE);
 
@@ -212,6 +216,8 @@ xcf_load_image (Gimp     *gimp,
   /* read the image properties */
   if (! xcf_load_image_props (info, image))
     goto hard_error;
+
+  GIMP_LOG (XCF, "image props loaded");
 
   /* check for a GimpGrid parasite */
   parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
@@ -635,6 +641,8 @@ xcf_load_image_props (XcfInfo   *info,
              */
             if (gimp_image_get_base_type (image) == GIMP_INDEXED)
               gimp_image_set_colormap (image, cmap, n_colors, FALSE);
+
+            GIMP_LOG (XCF, "prop colormap n_colors=%d", n_colors);
           }
           break;
 
@@ -657,6 +665,8 @@ xcf_load_image_props (XcfInfo   *info,
               }
 
             info->compression = compression;
+
+            GIMP_LOG (XCF, "prop compression=%d", compression);
           }
           break;
 
@@ -678,6 +688,9 @@ xcf_load_image_props (XcfInfo   *info,
                 /*  skip -1 guides from old XCFs  */
                 if (position < 0)
                   continue;
+
+                GIMP_LOG (XCF, "prop guide orientation=%d position=%d",
+                          orientation, position);
 
                 switch (orientation)
                   {
@@ -716,6 +729,8 @@ xcf_load_image_props (XcfInfo   *info,
                 info->cp += xcf_read_int32 (info->input, (guint32 *) &x, 1);
                 info->cp += xcf_read_int32 (info->input, (guint32 *) &y, 1);
 
+                GIMP_LOG (XCF, "prop sample point x=%d y=%d", x, y);
+
                 gimp_image_add_sample_point_at_pos (image, x, y, FALSE);
               }
           }
@@ -727,6 +742,8 @@ xcf_load_image_props (XcfInfo   *info,
 
             info->cp += xcf_read_float (info->input, &xres, 1);
             info->cp += xcf_read_float (info->input, &yres, 1);
+
+            GIMP_LOG (XCF, "prop resolution x=%f y=%f", xres, yres);
 
             if (xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
                 yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
@@ -747,6 +764,8 @@ xcf_load_image_props (XcfInfo   *info,
         case PROP_TATTOO:
           {
             info->cp += xcf_read_int32 (info->input, &info->tattoo_state, 1);
+
+            GIMP_LOG (XCF, "prop tattoo state=%d", info->tattoo_state);
           }
           break;
 
@@ -790,6 +809,8 @@ xcf_load_image_props (XcfInfo   *info,
             guint32 unit;
 
             info->cp += xcf_read_int32 (info->input, &unit, 1);
+
+            GIMP_LOG (XCF, "prop unit=%d", unit);
 
             if ((unit <= GIMP_UNIT_PIXEL) ||
                 (unit >= gimp_unit_get_number_of_built_in_units ()))
@@ -1354,6 +1375,9 @@ xcf_load_layer (XcfInfo    *info,
   info->cp += xcf_read_int32 (info->input, (guint32 *) &type, 1);
   info->cp += xcf_read_string (info->input, &name, 1);
 
+  GIMP_LOG (XCF, "width=%d, height=%d, type=%d, name='%s'",
+            width, height, type, name);
+
   switch (type)
     {
     case GIMP_RGB_IMAGE:
@@ -1413,6 +1437,8 @@ xcf_load_layer (XcfInfo    *info,
                               &text_layer_flags, &group_layer_flags))
     goto error;
 
+  GIMP_LOG (XCF, "layer props loaded");
+
   xcf_progress_update (info);
 
   /* call the evil text layer hack that might change our layer pointer */
@@ -1443,9 +1469,13 @@ xcf_load_layer (XcfInfo    *info,
       if (! xcf_seek_pos (info, hierarchy_offset, NULL))
         goto error;
 
+      GIMP_LOG (XCF, "loading buffer");
+
       if (! xcf_load_buffer (info,
                              gimp_drawable_get_buffer (GIMP_DRAWABLE (layer))))
         goto error;
+
+      GIMP_LOG (XCF, "buffer loaded");
 
       xcf_progress_update (info);
     }
@@ -1735,6 +1765,8 @@ xcf_load_level (XcfInfo    *info,
                                       XCF_TILE_WIDTH, XCF_TILE_HEIGHT,
                                       i, &rect);
 
+      GIMP_LOG (XCF, "loading tile %d/%d", i + 1, ntiles);
+
       /* read in the tile */
       switch (info->compression)
         {
@@ -1759,6 +1791,8 @@ xcf_load_level (XcfInfo    *info,
 
       if (fail)
         return FALSE;
+
+      GIMP_LOG (XCF, "loaded tile %d/%d", i + 1, ntiles);
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.

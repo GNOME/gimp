@@ -44,7 +44,8 @@ static const GDebugKey log_keys[] =
   { "instances",          GIMP_LOG_INSTANCES          },
   { "rectangle-tool",     GIMP_LOG_RECTANGLE_TOOL     },
   { "brush-cache",        GIMP_LOG_BRUSH_CACHE        },
-  { "projection",         GIMP_LOG_PROJECTION         }
+  { "projection",         GIMP_LOG_PROJECTION         },
+  { "xcf",                GIMP_LOG_XCF                }
 };
 
 
