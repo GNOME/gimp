@@ -184,13 +184,15 @@ gimp_image_resize_with_layers (GimpImage    *image,
   g_list_free (resize_layers);
 
   /*  Reposition or remove all guides  */
-  for (list = gimp_image_get_guides (image);
-       list;
-       list = g_list_next (list))
+  list = gimp_image_get_guides (image);
+
+  while (list)
     {
       GimpGuide *guide        = list->data;
       gboolean   remove_guide = FALSE;
       gint       new_position = gimp_guide_get_position (guide);
+
+      list = g_list_next (list);
 
       switch (gimp_guide_get_orientation (guide))
         {
@@ -217,14 +219,16 @@ gimp_image_resize_with_layers (GimpImage    *image,
     }
 
   /*  Reposition or remove sample points  */
-  for (list = gimp_image_get_sample_points (image);
-       list;
-       list = g_list_next (list))
+  list = gimp_image_get_sample_points (image);
+
+  while (list)
     {
       GimpSamplePoint *sample_point        = list->data;
       gboolean         remove_sample_point = FALSE;
       gint             new_x               = sample_point->x;
       gint             new_y               = sample_point->y;
+
+      list = g_list_next (list);
 
       new_y += offset_y;
       if ((sample_point->y < 0) || (sample_point->y > new_height))
