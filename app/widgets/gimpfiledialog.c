@@ -122,8 +122,8 @@ static void     gimp_file_dialog_help_func              (const gchar      *help_
 static void     gimp_file_dialog_help_clicked           (GtkWidget        *widget,
                                                          gpointer          dialog);
 
-static gchar  * gimp_file_dialog_pattern_from_extension (const gchar   *extension);
-static GFile  * gimp_file_dialog_get_default_file       (Gimp          *gimp);
+static gchar  * gimp_file_dialog_pattern_from_extension (const gchar      *extension);
+static GFile  * gimp_file_dialog_get_default_folder     (Gimp             *gimp);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpFileDialog, gimp_file_dialog,
@@ -490,14 +490,10 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
   GFile *dir_file  = NULL;
   GFile *name_file = NULL;
   GFile *ext_file  = NULL;
-  GFile *default_file;
-  GFile *parent_file;
   gchar *basename;
 
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
   g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  default_file = gimp_file_dialog_get_default_file (gimp);
 
   dialog->image              = image;
   dialog->save_a_copy        = save_a_copy;
@@ -538,7 +534,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                       GIMP_FILE_SAVE_LAST_FILE_KEY);
 
       if (! dir_file)
-        dir_file = default_file;
+        dir_file = gimp_file_dialog_get_default_folder (gimp);
 
 
       /* Priority of default basenames for Save:
@@ -610,7 +606,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
                                       GIMP_FILE_EXPORT_LAST_FILE_KEY);
 
       if (! dir_file)
-        dir_file = default_file;
+        dir_file = gimp_file_dialog_get_default_folder (gimp);
 
 
       /* Priority of default basenames for Export:
@@ -664,10 +660,19 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
       basename = g_path_get_basename (gimp_file_get_utf8_name (name_file));
     }
 
-  parent_file = g_file_get_parent (dir_file);
-  gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
-                                            parent_file, NULL);
-  g_object_unref (parent_file);
+  if (g_file_query_file_type (dir_file, G_FILE_QUERY_INFO_NONE, NULL) ==
+      G_FILE_TYPE_DIRECTORY)
+    {
+      gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
+                                                dir_file, NULL);
+    }
+  else
+    {
+      GFile *parent_file = g_file_get_parent (dir_file);
+      gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
+                                                parent_file, NULL);
+      g_object_unref (parent_file);
+    }
 
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
 }
@@ -1140,32 +1145,40 @@ gimp_file_dialog_pattern_from_extension (const gchar *extension)
 }
 
 static GFile *
-gimp_file_dialog_get_default_file (Gimp *gimp)
+gimp_file_dialog_get_default_folder (Gimp *gimp)
 {
   if (gimp->default_folder)
     {
-      return g_file_new_for_path (gimp->default_folder);
+      return gimp->default_folder;
     }
   else
     {
-      GFile *file;
-      gchar *path;
+      GFile *file = g_object_get_data (G_OBJECT (gimp),
+                                       "gimp-documents-folder");
 
-      /* Make sure it ends in '/' */
-      path = g_build_path (G_DIR_SEPARATOR_S,
-                           g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
-                           G_DIR_SEPARATOR_S,
-                           NULL);
+      if (! file)
+        {
+          gchar *path;
 
-      /* Paranoia fallback, see bug #722400 */
-      if (! path)
-        path = g_build_path (G_DIR_SEPARATOR_S,
-                             g_get_home_dir (),
-                             G_DIR_SEPARATOR_S,
-                             NULL);
+          /* Make sure it ends in '/' */
+          path = g_build_path (G_DIR_SEPARATOR_S,
+                               g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
+                               G_DIR_SEPARATOR_S,
+                               NULL);
 
-      file = g_file_new_for_path (path);
-      g_free (path);
+          /* Paranoia fallback, see bug #722400 */
+          if (! path)
+            path = g_build_path (G_DIR_SEPARATOR_S,
+                                 g_get_home_dir (),
+                                 G_DIR_SEPARATOR_S,
+                                 NULL);
+
+          file = g_file_new_for_path (path);
+          g_free (path);
+
+          g_object_set_data_full (G_OBJECT (gimp), "gimp-documents-folder",
+                                  file, (GDestroyNotify) g_object_unref);
+        }
 
       return file;
     }

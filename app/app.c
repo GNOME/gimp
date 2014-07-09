@@ -162,14 +162,14 @@ app_run (const gchar         *full_prog_name,
   Gimp               *gimp;
   GMainLoop          *loop;
   GMainLoop          *run_loop;
-  gchar              *default_folder = NULL;
+  GFile              *default_folder = NULL;
 
   if (filenames && filenames[0] && ! filenames[1] &&
       g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
     {
       if (g_path_is_absolute (filenames[0]))
         {
-          default_folder = g_filename_to_uri (filenames[0], NULL, NULL);
+          default_folder = g_file_new_for_path (filenames[0]);
         }
       else
         {
@@ -177,7 +177,7 @@ app_run (const gchar         *full_prog_name,
                                           g_get_current_dir (),
                                           filenames[0],
                                           NULL);
-          default_folder = g_filename_to_uri (absolute, NULL, NULL);
+          default_folder = g_file_new_for_path (absolute);
           g_free (absolute);
         }
 
@@ -199,6 +199,9 @@ app_run (const gchar         *full_prog_name,
                    console_messages,
                    stack_trace_mode,
                    pdb_compat_mode);
+
+  if (default_folder)
+    g_object_unref (default_folder);
 
   gimp_cpu_accel_set_use (use_cpu_accel);
 

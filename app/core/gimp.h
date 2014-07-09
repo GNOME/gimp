@@ -41,7 +41,7 @@ struct _Gimp
                                         * for the preferences dialog
                                         */
   gchar                  *session_name;
-  gchar                  *default_folder;
+  GFile                  *default_folder;
 
   gboolean                be_verbose;
   gboolean                no_data;
@@ -146,7 +146,7 @@ GType          gimp_get_type             (void) G_GNUC_CONST;
 
 Gimp         * gimp_new                  (const gchar         *name,
                                           const gchar         *session_name,
-                                          const gchar         *default_folder,
+                                          GFile               *default_folder,
                                           gboolean             be_verbose,
                                           gboolean             no_data,
                                           gboolean             no_fonts,

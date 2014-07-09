@@ -523,8 +523,8 @@ file_open_dialog_show (Gimp        *gimp,
       if (file)
         gtk_file_chooser_set_file (GTK_FILE_CHOOSER (dialog), file, NULL);
       else if (gimp->default_folder)
-        gtk_file_chooser_set_current_folder_uri (GTK_FILE_CHOOSER (dialog),
-                                                 gimp->default_folder);
+        gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
+                                                  gimp->default_folder, NULL);
 
       gimp_file_dialog_set_open_image (GIMP_FILE_DIALOG (dialog),
                                        image, open_as_layers);
