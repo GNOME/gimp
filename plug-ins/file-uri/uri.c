@@ -100,6 +100,9 @@ query (void)
 
   GError *error = NULL;
 
+  if (g_getenv ("GIMP_HANDLE_REMOTE_FILES"))
+    return;
+
   if (! uri_backend_init (PLUG_IN_BINARY,
                           FALSE,
                           GIMP_RUN_NONINTERACTIVE,
