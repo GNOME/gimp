@@ -392,7 +392,11 @@ temp_name_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      name = gimp_get_temp_filename (gimp, extension);
+      GFile *file = gimp_get_temp_file (gimp, extension);
+
+      name = g_file_get_path (file);
+
+      g_object_unref (file);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

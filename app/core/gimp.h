@@ -217,7 +217,7 @@ void           gimp_message_literal      (Gimp                *gimp,
 void           gimp_image_opened         (Gimp                *gimp,
                                           GFile               *file);
 
-gchar        * gimp_get_temp_filename    (Gimp                *gimp,
+GFile        * gimp_get_temp_file        (Gimp                *gimp,
                                           const gchar         *extension);
 
 

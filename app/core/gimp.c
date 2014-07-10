@@ -1309,15 +1309,16 @@ gimp_image_opened (Gimp  *gimp,
   g_signal_emit (gimp, gimp_signals[IMAGE_OPENED], 0, file);
 }
 
-gchar *
-gimp_get_temp_filename (Gimp        *gimp,
-                        const gchar *extension)
+GFile *
+gimp_get_temp_file (Gimp        *gimp,
+                    const gchar *extension)
 {
   static gint  id = 0;
   static gint  pid;
   gchar       *filename;
   gchar       *basename;
   gchar       *path;
+  GFile       *file;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -1337,5 +1338,9 @@ gimp_get_temp_filename (Gimp        *gimp,
   g_free (path);
   g_free (basename);
 
-  return filename;
+  file = g_file_new_for_path (filename);
+
+  g_free (filename);
+
+  return file;
 }
