@@ -96,6 +96,10 @@ gboolean        gimp_pdb_image_is_not_precision (GimpImage          *image,
                                                  GimpPrecision       precision,
                                                  GError            **error);
 
+GimpGuide     * gimp_pdb_image_get_guide        (GimpImage          *image,
+                                                 gint                guide_ID,
+                                                 GError            **error);
+
 GimpStroke    * gimp_pdb_get_vectors_stroke     (GimpVectors        *vectors,
                                                  gint                stroke_ID,
                                                  GimpPDBItemModify   modify,

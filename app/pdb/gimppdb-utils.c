@@ -30,6 +30,7 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-guides.h"
 #include "core/gimpitem.h"
 
 #include "text/gimptextlayer.h"
@@ -676,6 +677,29 @@ gimp_pdb_image_is_not_precision (GimpImage      *image,
                gimp_pdb_enum_value_get_nick (GIMP_TYPE_PRECISION, precision));
 
   return FALSE;
+}
+
+GimpGuide *
+gimp_pdb_image_get_guide (GimpImage  *image,
+                          gint        guide_ID,
+                          GError    **error)
+{
+  GimpGuide *guide;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  guide = gimp_image_get_guide (image, guide_ID);
+
+  if (guide)
+    return guide;
+
+  g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+               _("Image '%s' (%d) does not contain guide with ID %d"),
+               gimp_image_get_display_name (image),
+               gimp_image_get_ID (image),
+               guide_ID);
+  return NULL;
 }
 
 GimpStroke *
