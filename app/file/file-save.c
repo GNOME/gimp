@@ -42,6 +42,7 @@
 
 #include "plug-in/gimppluginprocedure.h"
 
+#include "file-remote.h"
 #include "file-save.h"
 #include "file-utils.h"
 #include "gimp-file.h"
@@ -66,8 +67,10 @@ file_save (Gimp                *gimp,
   GimpDrawable      *drawable;
   GimpValueArray    *return_vals;
   GimpPDBStatusType  status;
-  gchar             *filename = NULL;
-  gchar             *uri      = NULL;
+  GFile             *local_file = NULL;
+  gboolean           mounted    = TRUE;
+  gchar             *path       = NULL;
+  gchar             *uri        = NULL;
   gint32             image_ID;
   gint32             drawable_ID;
 
@@ -123,13 +126,35 @@ file_save (Gimp                *gimp,
         }
     }
 
-  uri = g_file_get_uri (file);
-
   if (! file_proc->handles_uri)
-    filename = g_file_get_path (file);
+    {
+      path = g_file_get_path (file);
 
-  if (! filename)
-    filename = g_strdup (uri);
+      if (! path && g_getenv ("GIMP_HANDLE_REMOTE_FILES"))
+        {
+          GError *my_error = NULL;
+
+          local_file = file_remote_upload_image_prepare (gimp, file, &mounted,
+                                                         progress, &my_error);
+
+          if (! local_file)
+            {
+              if (my_error)
+                g_propagate_error (error, my_error);
+              else
+                status = GIMP_PDB_CANCEL;
+
+              goto out;
+            }
+
+          path = g_file_get_path (local_file);
+        }
+    }
+
+  if (! path)
+    path = g_file_get_uri (file);
+
+  uri = g_file_get_uri (file);
 
   /* ref the image, so it can't get deleted during save */
   g_object_ref (image);
@@ -145,13 +170,36 @@ file_save (Gimp                *gimp,
                                         GIMP_TYPE_INT32,       run_mode,
                                         GIMP_TYPE_IMAGE_ID,    image_ID,
                                         GIMP_TYPE_DRAWABLE_ID, drawable_ID,
-                                        G_TYPE_STRING,         filename,
+                                        G_TYPE_STRING,         path,
                                         G_TYPE_STRING,         uri,
                                         G_TYPE_NONE);
 
   status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
   gimp_value_array_unref (return_vals);
+
+  if (local_file)
+    {
+      if (status == GIMP_PDB_SUCCESS)
+        {
+          GError *my_error = NULL;
+
+          if (! file_remote_upload_image_finish (gimp, file, local_file,
+                                                 mounted,
+                                                 progress, &my_error))
+            {
+              if (my_error)
+                g_propagate_error (error, my_error);
+              else
+                status = GIMP_PDB_CANCEL;
+            }
+        }
+
+      if (! mounted)
+        g_file_delete (local_file, NULL, NULL);
+
+      g_object_unref (local_file);
+    }
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -230,7 +278,7 @@ file_save (Gimp                *gimp,
   g_object_unref (image);
 
  out:
-  g_free (filename);
+  g_free (path);
   g_free (uri);
 
   return status;

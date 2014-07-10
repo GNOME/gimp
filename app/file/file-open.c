@@ -53,6 +53,7 @@
 
 #include "file-open.h"
 #include "file-procedure.h"
+#include "file-remote.h"
 #include "file-utils.h"
 #include "gimp-file.h"
 
@@ -91,6 +92,8 @@ file_open_image (Gimp                *gimp,
 {
   GimpValueArray *return_vals;
   GimpImage      *image       = NULL;
+  GFile          *local_file  = NULL;
+  gboolean        mounted     = TRUE;
   gchar          *path        = NULL;
   gchar          *entered_uri = NULL;
 
@@ -142,7 +145,29 @@ file_open_image (Gimp                *gimp,
     }
 
   if (! file_proc->handles_uri)
-    path = g_file_get_path (file);
+    {
+      path = g_file_get_path (file);
+
+      if (! path && g_getenv ("GIMP_HANDLE_REMOTE_FILES"))
+        {
+          GError *my_error = NULL;
+
+          local_file = file_remote_download_image (gimp, file, &mounted,
+                                                   progress, &my_error);
+
+          if (! local_file)
+            {
+              if (my_error)
+                g_propagate_error (error, my_error);
+              else
+                *status = GIMP_PDB_CANCEL;
+
+              return NULL;
+            }
+
+          path = g_file_get_path (local_file);
+        }
+    }
 
   if (! path)
     path = g_file_get_uri (file);
@@ -167,10 +192,22 @@ file_open_image (Gimp                *gimp,
   *status = g_value_get_enum (gimp_value_array_index (return_vals, 0));
 
   if (*status == GIMP_PDB_SUCCESS)
-    {
-      image = gimp_value_get_image (gimp_value_array_index (return_vals, 1),
-                                    gimp);
+    image = gimp_value_get_image (gimp_value_array_index (return_vals, 1),
+                                  gimp);
 
+  if (local_file)
+    {
+      if (image)
+        gimp_image_set_file (image, file);
+
+      if (! mounted)
+        g_file_delete (local_file, NULL, NULL);
+
+      g_object_unref (local_file);
+    }
+
+  if (*status == GIMP_PDB_SUCCESS)
+    {
       if (image)
         {
           file_open_sanitize_image (image, as_new);
