@@ -59,9 +59,9 @@ static GimpPDBStatusType   save_image    (GFile            *file,
                                           gint32            run_mode,
                                           GError          **error);
 
-static gchar             * get_temp_name (GFile            *file,
+static GFile             * get_temp_file (GFile            *file,
                                           gboolean         *name_image);
-static gboolean            valid_file    (const gchar      *filename);
+static gboolean            valid_file    (GFile            *file);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -240,24 +240,26 @@ load_image (GFile        *file,
 {
   gint32    image_ID   = -1;
   gboolean  name_image = FALSE;
-  gchar    *tmpname;
+  GFile    *local_file;
   gboolean  mapped     = FALSE;
 
-  tmpname = uri_backend_map_image (file, run_mode);
+  local_file = uri_backend_map_image (file, run_mode);
 
-  if (tmpname)
+  if (local_file)
     {
       mapped = TRUE;
     }
   else
     {
-      tmpname = get_temp_name (file, &name_image);
+      local_file = get_temp_file (file, &name_image);
 
-      if (! uri_backend_load_image (file, tmpname, run_mode, error))
+      if (! uri_backend_load_image (file, local_file, run_mode, error))
         return -1;
     }
 
-  image_ID = gimp_file_load (run_mode, tmpname, tmpname);
+  image_ID = gimp_file_load (run_mode,
+                             g_file_get_path (local_file),
+                             g_file_get_path (local_file));
 
   if (image_ID != -1)
     {
@@ -273,9 +275,9 @@ load_image (GFile        *file,
     }
 
   if (! mapped)
-    g_unlink (tmpname);
+    g_file_delete (local_file, NULL, NULL);
 
-  g_free (tmpname);
+  g_object_unref (local_file);
 
   return image_ID;
 }
@@ -288,29 +290,29 @@ save_image (GFile   *file,
             GError **error)
 {
   GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
-  gchar             *tmpname;
+  GFile             *local_file;
   gboolean           mapped = FALSE;
 
-  tmpname = uri_backend_map_image (file, run_mode);
+  local_file = uri_backend_map_image (file, run_mode);
 
-  if (tmpname)
+  if (local_file)
     mapped = TRUE;
   else
-    tmpname = get_temp_name (file, NULL);
+    local_file = get_temp_file (file, NULL);
 
   if (gimp_file_save (run_mode,
                       image_ID,
                       drawable_ID,
-                      tmpname,
-                      tmpname))
+                      g_file_get_path (local_file),
+                      g_file_get_path (local_file)))
     {
       if (mapped)
         {
           status = GIMP_PDB_SUCCESS;
         }
-      else if (valid_file (tmpname))
+      else if (valid_file (local_file))
         {
-          if (uri_backend_save_image (file, tmpname, run_mode, error))
+          if (uri_backend_save_image (file, local_file, run_mode, error))
             {
               status = GIMP_PDB_SUCCESS;
             }
@@ -319,7 +321,7 @@ save_image (GFile   *file,
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                        _("Failed to save to temporary file '%s'"),
-                       gimp_filename_to_utf8 (tmpname));
+                       gimp_file_get_utf8_name (local_file));
         }
     }
   else
@@ -329,19 +331,20 @@ save_image (GFile   *file,
     }
 
   if (! mapped)
-    g_unlink (tmpname);
+    g_file_delete (local_file, NULL, NULL);
 
-  g_free (tmpname);
+  g_object_unref (local_file);
 
   return status;
 }
 
-static gchar *
-get_temp_name (GFile    *file,
+static GFile *
+get_temp_file (GFile    *file,
                gboolean *name_image)
 {
   gchar *basename;
   gchar *tmpname = NULL;
+  GFile *tmpfile;
 
   if (name_image)
     *name_image = FALSE;
@@ -366,13 +369,29 @@ get_temp_name (GFile    *file,
   if (! tmpname)
     tmpname = gimp_temp_name ("xxx");
 
-  return tmpname;
+  tmpfile = g_file_new_for_path (tmpname);
+
+  g_free (tmpname);
+
+  return tmpfile;
 }
 
 static gboolean
-valid_file (const gchar *filename)
+valid_file (GFile *file)
 {
-  struct stat buf;
+  GFileInfo *info = g_file_query_info (file,
+                                       G_FILE_ATTRIBUTE_STANDARD_SIZE,
+                                       G_FILE_QUERY_INFO_NONE,
+                                       NULL, NULL);
 
-  return g_stat (filename, &buf) == 0 && buf.st_size > 0;
+  if (info)
+    {
+      goffset size = g_file_info_get_size (info);
+
+      g_object_unref (info);
+
+      return size > 0;
+    }
+
+  return FALSE;
 }
