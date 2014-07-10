@@ -1496,42 +1496,6 @@ if test "x$have_cairo_pdf" = xyes && test "x$have_poppler" = xyes; then
 fi
 
 
-################################
-# Check for gio/gvfs and libcurl
-################################
-
-uri_plugin=no
-
-
-AC_ARG_WITH(gvfs, [  --without-gvfs          build without GIO/GVfs support])
-
-AM_CONDITIONAL(HAVE_GVFS, test "x$with_gvfs" != xno)
-
-
-AC_ARG_WITH(libcurl,  [  --without-libcurl       build without curl support])
-
-have_libcurl="no (disabled)"
-
-if test "x$with_libcurl" != xno; then
-
-PKG_CHECK_MODULES(CURL, libcurl >= libcurl_required_version,
-  have_libcurl=yes,
-  have_libcurl="no (libcurl not found)")
-
-fi
-
-AM_CONDITIONAL(HAVE_LIBCURL, test "x$have_libcurl" = xyes)
-
-
-if test "x$with_gvfs" != xno; then
-  uri_plugin="yes (using GIO/GVfs)"
-elif test "x$have_libcurl" = xyes; then
-  uri_plugin="yes (using libcurl)"
-elif test "x$os_win32" = xno; then
-  uri_plugin="yes (using wget)"
-fi
-
-
 ###################
 # Check for libwmf2
 ###################
@@ -2367,9 +2331,7 @@ Optional Plug-Ins:
   TIFF:                $have_libtiff
   TWAIN (MacOS X):     $mac_twain_ok
   TWAIN (Win32):       $os_win32
-  URI:                 $uri_plugin
   Webpage:             $have_webkit
-  Windows ICO:         $have_libpng
   WMF:                 $have_libwmf
   X11 Mouse Cursor:    $have_xmc
   XPM:                 $have_libxpm

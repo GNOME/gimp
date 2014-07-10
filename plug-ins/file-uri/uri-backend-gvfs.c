@@ -40,8 +40,8 @@ typedef enum
 
 
 static gchar    * get_protocols          (void);
-static gboolean   copy_uri               (const gchar  *src_uri,
-                                          const gchar  *dest_uri,
+static gboolean   copy_uri               (GFile        *src_file,
+                                          GFile        *dest_file,
                                           Mode          mode,
                                           GimpRunMode   run_mode,
                                           GError      **error);
@@ -101,55 +101,47 @@ uri_backend_get_save_protocols (void)
 }
 
 gboolean
-uri_backend_load_image (const gchar  *uri,
+uri_backend_load_image (GFile        *file,
                         const gchar  *tmpname,
                         GimpRunMode   run_mode,
                         GError      **error)
 {
-  gchar *dest_uri = g_filename_to_uri (tmpname, NULL, error);
+  GFile    *dest_file;
+  gboolean  success;
 
-  if (dest_uri)
-    {
-      gboolean success = copy_uri (uri, dest_uri, DOWNLOAD, run_mode, error);
+  dest_file = g_file_new_for_path (tmpname);
 
-      g_free (dest_uri);
+  success = copy_uri (file, dest_file, DOWNLOAD, run_mode, error);
 
-      return success;
-    }
+  g_object_unref (dest_file);
 
-  return FALSE;
+  return success;
 }
 
 gboolean
-uri_backend_save_image (const gchar  *uri,
+uri_backend_save_image (GFile        *file,
                         const gchar  *tmpname,
                         GimpRunMode   run_mode,
                         GError      **error)
 {
-  gchar *src_uri = g_filename_to_uri (tmpname, NULL, error);
+  GFile    *src_file;
+  gboolean  success;
 
-  if (src_uri)
-    {
-      gboolean success = copy_uri (src_uri, uri, UPLOAD, run_mode, error);
+  src_file = g_file_new_for_path (tmpname);
 
-      g_free (src_uri);
+  success = copy_uri (src_file, file, UPLOAD, run_mode, error);
 
-      return success;
-    }
+  g_object_unref (src_file);
 
-  return FALSE;
+  return success;
 }
 
 gchar *
-uri_backend_map_image (const gchar  *uri,
-                       GimpRunMode   run_mode)
+uri_backend_map_image (GFile       *file,
+                       GimpRunMode  run_mode)
 {
-  GFile    *file    = g_file_new_for_uri (uri);
   gchar    *path    = NULL;
   gboolean  success = TRUE;
-
-  if (! file)
-    return NULL;
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -167,8 +159,6 @@ uri_backend_map_image (const gchar  *uri,
 
   if (success)
     path = g_file_get_path (file);
-
-  g_object_unref (file);
 
   return path;
 }
@@ -303,23 +293,18 @@ mount_enclosing_volume (GFile   *file,
 }
 
 static gboolean
-copy_uri (const gchar  *src_uri,
-          const gchar  *dest_uri,
+copy_uri (GFile        *src_file,
+          GFile        *dest_file,
           Mode          mode,
           GimpRunMode   run_mode,
           GError      **error)
 {
-  GFile       *src_file;
-  GFile       *dest_file;
-  UriProgress  progress = { 0, };
-  gboolean     success;
+  UriProgress progress = { 0, };
+  gboolean    success;
 
   gimp_progress_init (_("Connecting to server"));
 
   progress.mode = mode;
-
-  src_file  = g_file_new_for_uri (src_uri);
-  dest_file = g_file_new_for_uri (dest_uri);
 
   success = g_file_copy (src_file, dest_file, G_FILE_COPY_OVERWRITE, NULL,
                          uri_progress_callback, &progress,
@@ -342,9 +327,6 @@ copy_uri (const gchar  *src_uri,
 
         }
     }
-
-  g_object_unref (src_file);
-  g_object_unref (dest_file);
 
   return success;
 }

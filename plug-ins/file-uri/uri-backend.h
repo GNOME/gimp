@@ -31,15 +31,15 @@ const gchar * uri_backend_get_save_help      (void);
 const gchar * uri_backend_get_load_protocols (void);
 const gchar * uri_backend_get_save_protocols (void);
 
-gboolean      uri_backend_load_image         (const gchar  *uri,
+gboolean      uri_backend_load_image         (GFile        *file,
                                               const gchar  *tmpname,
                                               GimpRunMode   run_mode,
                                               GError      **error);
-gboolean      uri_backend_save_image         (const gchar  *uri,
+gboolean      uri_backend_save_image         (GFile        *file,
                                               const gchar  *tmpname,
                                               GimpRunMode   run_mode,
                                               GError      **error);
-gchar       * uri_backend_map_image          (const gchar  *uri,
+gchar       * uri_backend_map_image          (GFile        *file,
                                               GimpRunMode   run_mode);
 
 

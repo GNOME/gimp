@@ -27,11 +27,6 @@ endif
 if OS_WIN32
 twain = twain
 win_snap = win-snap
-if HAVE_LIBCURL
-file_uri = file-uri
-endif
-else
-file_uri = file-uri
 endif
 
 SUBDIRS = \
@@ -47,7 +42,7 @@ SUBDIRS = \
 	file-jpeg		\
 	file-psd		\
 	file-sgi		\
-	$(file_uri)		\
+	file-uri		\
 	flame			\
 	fractal-explorer	\
 	gfig			\

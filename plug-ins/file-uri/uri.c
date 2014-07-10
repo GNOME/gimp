@@ -50,16 +50,16 @@ static void                run           (const gchar      *name,
                                           gint             *nreturn_vals,
                                           GimpParam       **return_vals);
 
-static gint32              load_image    (const gchar      *uri,
+static gint32              load_image    (GFile            *file,
                                           GimpRunMode       run_mode,
                                           GError          **error);
-static GimpPDBStatusType   save_image    (const gchar      *uri,
+static GimpPDBStatusType   save_image    (GFile            *file,
                                           gint32            image_ID,
                                           gint32            drawable_ID,
                                           gint32            run_mode,
                                           GError          **error);
 
-static gchar             * get_temp_name (const gchar      *uri,
+static gchar             * get_temp_name (GFile            *file,
                                           gboolean         *name_image);
 static gboolean            valid_file    (const gchar      *filename);
 
@@ -197,7 +197,8 @@ run (const gchar      *name,
 
   if (! strcmp (name, LOAD_PROC) && uri_backend_get_load_protocols ())
     {
-      image_ID = load_image (param[2].data.d_string, run_mode, &error);
+      image_ID = load_image (g_file_new_for_uri (param[2].data.d_string),
+                             run_mode, &error);
 
       if (image_ID != -1)
         {
@@ -210,7 +211,7 @@ run (const gchar      *name,
     }
   else if (! strcmp (name, SAVE_PROC) && uri_backend_get_save_protocols ())
     {
-      status = save_image (param[3].data.d_string,
+      status = save_image (g_file_new_for_uri (param[3].data.d_string),
                            param[1].data.d_int32,
                            param[2].data.d_int32,
                            run_mode, &error);
@@ -233,7 +234,7 @@ run (const gchar      *name,
 }
 
 static gint32
-load_image (const gchar  *uri,
+load_image (GFile        *file,
             GimpRunMode   run_mode,
             GError      **error)
 {
@@ -242,7 +243,7 @@ load_image (const gchar  *uri,
   gchar    *tmpname;
   gboolean  mapped     = FALSE;
 
-  tmpname = uri_backend_map_image (uri, run_mode);
+  tmpname = uri_backend_map_image (file, run_mode);
 
   if (tmpname)
     {
@@ -250,9 +251,9 @@ load_image (const gchar  *uri,
     }
   else
     {
-      tmpname = get_temp_name (uri, &name_image);
+      tmpname = get_temp_name (file, &name_image);
 
-      if (! uri_backend_load_image (uri, tmpname, run_mode, error))
+      if (! uri_backend_load_image (file, tmpname, run_mode, error))
         return -1;
     }
 
@@ -261,7 +262,7 @@ load_image (const gchar  *uri,
   if (image_ID != -1)
     {
       if (mapped || name_image)
-        gimp_image_set_filename (image_ID, uri);
+        gimp_image_set_filename (image_ID, g_file_get_uri (file));
       else
         gimp_image_set_filename (image_ID, "");
     }
@@ -280,22 +281,22 @@ load_image (const gchar  *uri,
 }
 
 static GimpPDBStatusType
-save_image (const gchar  *uri,
-            gint32        image_ID,
-            gint32        drawable_ID,
-            gint32        run_mode,
-            GError      **error)
+save_image (GFile   *file,
+            gint32   image_ID,
+            gint32   drawable_ID,
+            gint32   run_mode,
+            GError **error)
 {
   GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
   gchar             *tmpname;
   gboolean           mapped = FALSE;
 
-  tmpname = uri_backend_map_image (uri, run_mode);
+  tmpname = uri_backend_map_image (file, run_mode);
 
   if (tmpname)
     mapped = TRUE;
   else
-    tmpname = get_temp_name (uri, NULL);
+    tmpname = get_temp_name (file, NULL);
 
   if (gimp_file_save (run_mode,
                       image_ID,
@@ -309,7 +310,7 @@ save_image (const gchar  *uri,
         }
       else if (valid_file (tmpname))
         {
-          if (uri_backend_save_image (uri, tmpname, run_mode, error))
+          if (uri_backend_save_image (file, tmpname, run_mode, error))
             {
               status = GIMP_PDB_SUCCESS;
             }
@@ -336,8 +337,8 @@ save_image (const gchar  *uri,
 }
 
 static gchar *
-get_temp_name (const gchar *uri,
-               gboolean    *name_image)
+get_temp_name (GFile    *file,
+               gboolean *name_image)
 {
   gchar *basename;
   gchar *tmpname = NULL;
@@ -345,7 +346,7 @@ get_temp_name (const gchar *uri,
   if (name_image)
     *name_image = FALSE;
 
-  basename = g_path_get_basename (uri);
+  basename = g_path_get_basename (gimp_file_get_utf8_name (file));
 
   if (basename)
     {

@@ -23,30 +23,13 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = file-uri
 
-if HAVE_GVFS
-backend_sources = uri-backend-gvfs.c
-backend_cflags = $(GIO_CFLAGS)
-backend_libs = $(GIO_LIBS)
-else
-if HAVE_LIBCURL
-backend_sources = uri-backend-libcurl.c
-backend_cflags = $(CURL_CFLAGS)
-backend_libs = $(CURL_LIBS)
-else
-backend_sources = uri-backend-wget.c
-backend_cflags = 
-backend_libs = 
-endif
-endif
-
 file_uri_SOURCES = \
 	uri.c			\
 	uri-backend.h		\
-	$(backend_sources)
+	uri-backend-gvfs.c
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)		\
-	$(backend_cflags)	\
 	$(GTK_CFLAGS)		\
 	$(GEGL_CFLAGS) \
 	-I$(includedir)
@@ -59,7 +42,6 @@ LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(backend_libs)		\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
