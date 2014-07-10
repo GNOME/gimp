@@ -231,6 +231,7 @@ app/display/gimpstatusbar.c
 
 app/file/file-open.c
 app/file/file-procedure.c
+app/file/file-remote.c
 app/file/file-save.c
 app/file/file-utils.c
 
