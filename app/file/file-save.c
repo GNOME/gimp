@@ -66,7 +66,7 @@ file_save (Gimp                *gimp,
 {
   GimpDrawable      *drawable;
   GimpValueArray    *return_vals;
-  GimpPDBStatusType  status;
+  GimpPDBStatusType  status     = GIMP_PDB_EXECUTION_ERROR;
   GFile             *local_file = NULL;
   gboolean           mounted    = TRUE;
   gchar             *path       = NULL;
@@ -86,10 +86,13 @@ file_save (Gimp                *gimp,
   g_return_val_if_fail (error == NULL || *error == NULL,
                         GIMP_PDB_CALLING_ERROR);
 
+  /* ref the image, so it can't get deleted during save */
+  g_object_ref (image);
+
   drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
-    return GIMP_PDB_EXECUTION_ERROR;
+    goto out;
 
   /* FIXME enable these tests for remote files again, needs testing */
   if (g_file_is_native (file) &&
@@ -103,16 +106,12 @@ file_save (Gimp                *gimp,
                                 G_FILE_QUERY_INFO_NONE,
                                 NULL, error);
       if (! info)
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-          goto out;
-        }
+        goto out;
 
       if (g_file_info_get_file_type (info) != G_FILE_TYPE_REGULAR)
         {
           g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                _("Not a regular file"));
-          status = GIMP_PDB_EXECUTION_ERROR;
           goto out;
         }
 
@@ -121,7 +120,6 @@ file_save (Gimp                *gimp,
         {
           g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                _("Premission denied"));
-          status = GIMP_PDB_EXECUTION_ERROR;
           goto out;
         }
     }
@@ -156,9 +154,6 @@ file_save (Gimp                *gimp,
 
   uri = g_file_get_uri (file);
 
-  /* ref the image, so it can't get deleted during save */
-  g_object_ref (image);
-
   image_ID    = gimp_image_get_ID (image);
   drawable_ID = gimp_item_get_ID (GIMP_ITEM (drawable));
 
@@ -188,6 +183,8 @@ file_save (Gimp                *gimp,
                                                  mounted,
                                                  progress, &my_error))
             {
+              status = GIMP_PDB_EXECUTION_ERROR;
+
               if (my_error)
                 g_propagate_error (error, my_error);
               else
@@ -275,9 +272,9 @@ file_save (Gimp                *gimp,
 
   gimp_image_flush (image);
 
+ out:
   g_object_unref (image);
 
- out:
   g_free (path);
   g_free (uri);
 
