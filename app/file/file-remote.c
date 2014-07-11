@@ -297,6 +297,10 @@ file_remote_copy_file (Gimp            *gimp,
 
   if (progress)
     {
+      g_signal_handlers_disconnect_by_func (progress,
+                                            file_remote_copy_file_cancel,
+                                            &remote_progress);
+
       gimp_progress_end (progress);
 
       g_object_unref (remote_progress.cancellable);
