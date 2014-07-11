@@ -328,9 +328,9 @@ gimp_file_dialog_new (Gimp                  *gimp,
       automatic             = _("Automatically Detected");
       automatic_help_id     = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
 
-      /* FIXME */
       local_only = (gimp_pdb_lookup_procedure (gimp->pdb,
-                                               "file-uri-load") == NULL);
+                                               "file-uri-load") == NULL &&
+                    ! g_getenv ("GIMP_HANDLE_REMOTE_FILES"));
       break;
 
     case GIMP_FILE_CHOOSER_ACTION_SAVE:
@@ -345,9 +345,9 @@ gimp_file_dialog_new (Gimp                  *gimp,
       automatic             = _("By Extension");
       automatic_help_id     = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
 
-      /* FIXME */
       local_only = (gimp_pdb_lookup_procedure (gimp->pdb,
-                                               "file-uri-save") == NULL);
+                                               "file-uri-save") == NULL &&
+                    ! g_getenv ("GIMP_HANDLE_REMOTE_FILES"));
       break;
 
     default:
