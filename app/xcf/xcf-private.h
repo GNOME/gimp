@@ -101,8 +101,6 @@ struct _XcfInfo
   GimpDrawable       *floating_sel_drawable;
   GimpLayer          *floating_sel;
   guint               floating_sel_offset;
-  gint                swap_num;
-  gint               *ref_count;
   XcfCompressionType  compression;
   gint                file_version;
 };
