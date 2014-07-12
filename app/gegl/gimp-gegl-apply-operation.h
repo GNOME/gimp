@@ -42,7 +42,7 @@ gboolean   gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                              GeglBuffer          *cache,
                                              const GeglRectangle *valid_rects,
                                              gint                 n_valid_rects,
-                                             gboolean             cancelable);
+                                             gboolean             cancellable);
 
 
 /*  apply specific operations  */

@@ -39,7 +39,7 @@ struct _GimpProgressBox
   GtkBox     parent_instance;
 
   gboolean   active;
-  gboolean   cancelable;
+  gboolean   cancellable;
   gdouble    value;
 
   GtkWidget *label;

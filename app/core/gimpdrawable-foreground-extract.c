@@ -61,9 +61,8 @@ gimp_drawable_foreground_extract (GimpDrawable      *drawable,
   g_return_val_if_fail (GEGL_IS_BUFFER (trimap), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
 
-  progress = gimp_progress_start (progress,
-                                  _("Computing alpha of unknown pixels"),
-                                  FALSE);
+  progress = gimp_progress_start (progress, FALSE,
+                                  _("Computing alpha of unknown pixels"));
 
   drawable_buffer = gimp_drawable_get_buffer (drawable);
 

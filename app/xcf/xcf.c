@@ -287,11 +287,7 @@ xcf_load_invoker (GimpProcedure         *procedure,
       if (progress)
         {
           gchar *name = g_filename_display_name (filename);
-          gchar *msg  = g_strdup_printf (_("Opening '%s'"), name);
-
-          gimp_progress_start (progress, msg, FALSE);
-
-          g_free (msg);
+          gimp_progress_start (progress, FALSE, _("Opening '%s'"), name);
           g_free (name);
         }
 
@@ -403,11 +399,7 @@ xcf_save_invoker (GimpProcedure         *procedure,
       if (progress)
         {
           gchar *name = g_filename_display_name (filename);
-          gchar *msg  = g_strdup_printf (_("Saving '%s'"), name);
-
-          gimp_progress_start (progress, msg, FALSE);
-
-          g_free (msg);
+          gimp_progress_start (progress, FALSE, _("Saving '%s'"), name);
           g_free (name);
         }
 

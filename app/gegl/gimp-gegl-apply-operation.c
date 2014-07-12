@@ -69,7 +69,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                   GeglBuffer          *cache,
                                   const GeglRectangle *valid_rects,
                                   gint                 n_valid_rects,
-                                  gboolean             cancelable)
+                                  gboolean             cancellable)
 {
   GeglNode      *gegl;
   GeglNode      *dest_node;
@@ -140,16 +140,16 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
       if (gimp_progress_is_active (progress))
         {
           if (undo_desc)
-            gimp_progress_set_text (progress, undo_desc);
+            gimp_progress_set_text (progress, "%s", undo_desc);
 
           progress_started = FALSE;
-          cancelable       = FALSE;
+          cancellable      = FALSE;
         }
       else
         {
-          gimp_progress_start (progress, undo_desc, cancelable);
+          gimp_progress_start (progress, cancellable, "%s", undo_desc);
 
-          if (cancelable)
+          if (cancellable)
             g_signal_connect (progress, "cancel",
                               G_CALLBACK (gimp_gegl_apply_operation_cancel),
                               &cancel);
@@ -215,7 +215,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
                                             value * rect_pixels) /
                                            (gdouble) all_pixels);
 
-                  if (cancelable)
+                  if (cancellable)
                     while (! cancel && g_main_context_pending (NULL))
                       g_main_context_iteration (NULL, FALSE);
                 }
@@ -239,7 +239,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
             {
               gimp_progress_set_value (progress, value);
 
-              if (cancelable)
+              if (cancellable)
                 while (! cancel && g_main_context_pending (NULL))
                   g_main_context_iteration (NULL, FALSE);
             }
@@ -260,7 +260,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
     {
       gimp_progress_end (progress);
 
-      if (cancelable)
+      if (cancellable)
         g_signal_handlers_disconnect_by_func (progress,
                                               gimp_gegl_apply_operation_cancel,
                                               &cancel);

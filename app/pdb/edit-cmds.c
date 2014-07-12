@@ -789,7 +789,7 @@ edit_blend_invoker (GimpProcedure         *procedure,
           GimpGradient *gradient;
 
           if (progress)
-            gimp_progress_start (progress, _("Blending"), FALSE);
+            gimp_progress_start (progress, FALSE, _("Blending"));
 
           switch (blend_mode)
             {

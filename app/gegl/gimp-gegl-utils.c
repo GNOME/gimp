@@ -88,7 +88,7 @@ gimp_gegl_progress_notify (GObject          *object,
     {
       if (value == 0.0)
         {
-          gimp_progress_start (progress, text, FALSE);
+          gimp_progress_start (progress, FALSE, "%s", text);
           return;
         }
       else if (value == 1.0)

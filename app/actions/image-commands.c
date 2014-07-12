@@ -342,8 +342,8 @@ image_resize_to_layers_cmd_callback (GtkAction *action,
 
   image = gimp_display_get_image (display);
 
-  progress = gimp_progress_start (GIMP_PROGRESS (display),
-                                  _("Resizing"), FALSE);
+  progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
+                                  _("Resizing"));
 
   gimp_image_resize_to_layers (image,
                                action_data_get_context (data),
@@ -366,8 +366,8 @@ image_resize_to_selection_cmd_callback (GtkAction *action,
 
   image = gimp_display_get_image (display);
 
-  progress = gimp_progress_start (GIMP_PROGRESS (display),
-                                  _("Resizing"), FALSE);
+  progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
+                                  _("Resizing"));
 
   gimp_image_resize_to_selection (image,
                                   action_data_get_context (data),
@@ -455,8 +455,8 @@ image_flip_cmd_callback (GtkAction *action,
 
   image = gimp_display_get_image (display);
 
-  progress = gimp_progress_start (GIMP_PROGRESS (display),
-                                  _("Flipping"), FALSE);
+  progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
+                                  _("Flipping"));
 
   gimp_image_flip (image, action_data_get_context (data),
                    (GimpOrientationType) value, progress);
@@ -479,8 +479,8 @@ image_rotate_cmd_callback (GtkAction *action,
 
   image = gimp_display_get_image (display);
 
-  progress = gimp_progress_start (GIMP_PROGRESS (display),
-                                  _("Rotating"), FALSE);
+  progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
+                                  _("Rotating"));
 
   gimp_image_rotate (image, action_data_get_context (data),
                      (GimpRotationType) value, progress);
@@ -698,8 +698,8 @@ image_resize_callback (GtkWidget    *dialog,
           height == gimp_image_get_height (image))
         return;
 
-      progress = gimp_progress_start (GIMP_PROGRESS (display),
-                                      _("Resizing"), FALSE);
+      progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
+                                      _("Resizing"));
 
       gimp_image_resize_with_layers (image,
                                      context,
@@ -798,8 +798,8 @@ image_scale_callback (GtkWidget              *dialog,
         {
           GimpProgress *progress;
 
-          progress = gimp_progress_start (GIMP_PROGRESS (user_data),
-                                          _("Scaling"), FALSE);
+          progress = gimp_progress_start (GIMP_PROGRESS (user_data), FALSE,
+                                          _("Scaling"));
 
           gimp_image_scale (image, width, height, interpolation, progress);
 

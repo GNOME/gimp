@@ -1080,8 +1080,8 @@ gimp_cage_tool_compute_coef (GimpCageTool *ct)
   GeglBuffer     *buffer;
   gdouble         value;
 
-  progress = gimp_progress_start (GIMP_PROGRESS (ct),
-                                  _("Computing Cage Coefficients"), FALSE);
+  progress = gimp_progress_start (GIMP_PROGRESS (ct), FALSE,
+                                  _("Computing Cage Coefficients"));
 
   if (ct->coef)
     {

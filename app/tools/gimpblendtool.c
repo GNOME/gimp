@@ -245,8 +245,8 @@ gimp_blend_tool_button_release (GimpTool              *tool,
       gint          off_x;
       gint          off_y;
 
-      progress = gimp_progress_start (GIMP_PROGRESS (tool),
-                                      _("Blending"), FALSE);
+      progress = gimp_progress_start (GIMP_PROGRESS (tool), FALSE,
+                                      _("Blending"));
 
       gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 

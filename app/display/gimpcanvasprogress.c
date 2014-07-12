@@ -88,8 +88,8 @@ static cairo_region_t * gimp_canvas_progress_get_extents  (GimpCanvasItem   *ite
                                                                                                                                              gdouble           y);
 
 static GimpProgress   * gimp_canvas_progress_start        (GimpProgress      *progress,
-                                                           const gchar       *message,
-                                                           gboolean           cancelable);
+                                                           gboolean           cancellable,
+                                                           const gchar       *message);
 static void             gimp_canvas_progress_end          (GimpProgress      *progress);
 static gboolean         gimp_canvas_progress_is_active    (GimpProgress      *progress);
 static void             gimp_canvas_progress_set_text     (GimpProgress      *progress,
@@ -346,8 +346,8 @@ gimp_canvas_progress_hit (GimpCanvasItem *item,
 
 static GimpProgress *
 gimp_canvas_progress_start (GimpProgress *progress,
-                            const gchar  *message,
-                            gboolean      cancelable)
+                            gboolean      cancellable,
+                            const gchar  *message)
 {
   gimp_canvas_progress_set_text (progress, message);
 

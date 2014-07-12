@@ -1270,8 +1270,8 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   GimpTransformResize   clip    = options->clip;
   GimpProgress         *progress;
 
-  progress = gimp_progress_start (GIMP_PROGRESS (tool),
-                                  tr_tool->progress_text, FALSE);
+  progress = gimp_progress_start (GIMP_PROGRESS (tool), FALSE,
+                                  "%s", tr_tool->progress_text);
 
   if (gimp_item_get_linked (active_item))
     gimp_item_linked_transform (active_item, context,

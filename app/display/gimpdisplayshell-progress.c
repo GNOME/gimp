@@ -33,13 +33,14 @@
 
 static GimpProgress *
 gimp_display_shell_progress_start (GimpProgress *progress,
-                                   const gchar  *message,
-                                   gboolean      cancelable)
+                                   gboolean      cancellable,
+                                   const gchar  *message)
 {
   GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
   GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-  return gimp_progress_start (GIMP_PROGRESS (statusbar), message, cancelable);
+  return gimp_progress_start (GIMP_PROGRESS (statusbar), cancellable,
+                              "%s", message);
 }
 
 static void
@@ -67,7 +68,7 @@ gimp_display_shell_progress_set_text (GimpProgress *progress,
   GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
   GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-  gimp_progress_set_text (GIMP_PROGRESS (statusbar), message);
+  gimp_progress_set_text (GIMP_PROGRESS (statusbar), "%s", message);
 }
 
 static void

@@ -336,7 +336,7 @@ HELP
   GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
 
   if (progress)
-    gimp_progress_start (progress, _("Scaling"), FALSE);
+    gimp_progress_start (progress, FALSE, _("Scaling"));
 
   gimp_image_scale (image, new_width, new_height,
                     pdb_context->interpolation,
@@ -369,7 +369,7 @@ sub image_scale_full {
         code => <<'CODE'
 {
   if (progress)
-    gimp_progress_start (progress, _("Scaling"), FALSE);
+    gimp_progress_start (progress, FALSE, _("Scaling"));
 
   gimp_image_scale (image, new_width, new_height, interpolation, progress);
 
@@ -470,7 +470,7 @@ sub image_rotate {
         code => <<'CODE'
 {
   if (progress)
-    gimp_progress_start (progress, _("Rotating"), FALSE);
+    gimp_progress_start (progress, FALSE, _("Rotating"));
 
   gimp_image_rotate (image, context, rotate_type, progress);
 

@@ -258,8 +258,8 @@ convert_precision_dialog_response (GtkWidget     *widget,
     {
       GimpProgress *progress;
 
-      progress = gimp_progress_start (dialog->progress,
-                                      _("Converting to lower bit depth"), FALSE);
+      progress = gimp_progress_start (dialog->progress, FALSE,
+                                      _("Converting to lower bit depth"));
 
       gimp_image_convert_precision (dialog->image,
                                     dialog->precision,

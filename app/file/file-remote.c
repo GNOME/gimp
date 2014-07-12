@@ -246,7 +246,7 @@ file_remote_copy_file (Gimp            *gimp,
     {
       remote_progress.cancellable = g_cancellable_new ();
 
-      gimp_progress_start (progress, _("Connecting to server"), TRUE);
+      gimp_progress_start (progress, TRUE, _("Connecting to server"));
 
       g_signal_connect (progress, "cancel",
                         G_CALLBACK (file_remote_copy_file_cancel),
@@ -342,7 +342,6 @@ file_remote_progress_callback (goffset  current_num_bytes,
       const gchar *format;
       gchar       *done  = g_format_size (current_num_bytes);
       gchar       *total = g_format_size (total_num_bytes);
-      gchar       *text;
 
       switch (progress->mode)
         {
@@ -358,12 +357,9 @@ file_remote_progress_callback (goffset  current_num_bytes,
           g_assert_not_reached ();
         }
 
-      text = g_strdup_printf (format, done, total);
+      gimp_progress_set_text (progress->progress, format, done, total);
       g_free (total);
       g_free (done);
-
-      gimp_progress_set_text (progress->progress, text);
-      g_free (text);
 
       gimp_progress_set_value (progress->progress,
                                (gdouble) current_num_bytes /
@@ -373,7 +369,6 @@ file_remote_progress_callback (goffset  current_num_bytes,
     {
       const gchar *format;
       gchar       *done = g_format_size (current_num_bytes);
-      gchar       *text;
 
       switch (progress->mode)
         {
@@ -389,16 +384,12 @@ file_remote_progress_callback (goffset  current_num_bytes,
           g_assert_not_reached ();
         }
 
-      text = g_strdup_printf (format, done);
+      gimp_progress_set_text (progress->progress, format, done);
       g_free (done);
-
-      gimp_progress_set_text (progress->progress, text);
-      g_free (text);
 
       gimp_progress_pulse (progress->progress);
     }
 
   while (! progress->cancel && g_main_context_pending (NULL))
     g_main_context_iteration (NULL, FALSE);
-
 }

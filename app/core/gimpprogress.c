@@ -96,20 +96,33 @@ gimp_progress_iface_base_init (GimpProgressInterface *progress_iface)
 
 GimpProgress *
 gimp_progress_start (GimpProgress *progress,
-                     const gchar  *message,
-                     gboolean      cancelable)
+                     gboolean      cancellable,
+                     const gchar  *format,
+                     ...)
 {
   GimpProgressInterface *progress_iface;
 
   g_return_val_if_fail (GIMP_IS_PROGRESS (progress), NULL);
-
-  if (! message)
-    message = _("Please wait");
+  g_return_val_if_fail (format != NULL, NULL);
 
   progress_iface = GIMP_PROGRESS_GET_INTERFACE (progress);
 
   if (progress_iface->start)
-    return progress_iface->start (progress, message, cancelable);
+    {
+      GimpProgress *ret;
+      va_list       args;
+      gchar        *text;
+
+      va_start (args, format);
+      text = g_strdup_vprintf (format, args);
+      va_end (args);
+
+      ret = progress_iface->start (progress, cancellable, text);
+
+      g_free (text);
+
+      return ret;
+    }
 
   return NULL;
 }
@@ -144,19 +157,29 @@ gimp_progress_is_active (GimpProgress *progress)
 
 void
 gimp_progress_set_text (GimpProgress *progress,
-                        const gchar  *message)
+                        const gchar  *format,
+                        ...)
 {
   GimpProgressInterface *progress_iface;
 
   g_return_if_fail (GIMP_IS_PROGRESS (progress));
-
-  if (! message || ! strlen (message))
-    message = _("Please wait");
+  g_return_if_fail (format != NULL);
 
   progress_iface = GIMP_PROGRESS_GET_INTERFACE (progress);
 
   if (progress_iface->set_text)
-    progress_iface->set_text (progress, message);
+    {
+      va_list  args;
+      gchar   *text;
+
+      va_start (args, format);
+      text = g_strdup_vprintf (format, args);
+      va_end (args);
+
+      progress_iface->set_text (progress, text);
+
+      g_free (text);
+    }
 }
 
 void

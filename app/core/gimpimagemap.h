@@ -68,7 +68,7 @@ void           gimp_image_map_apply      (GimpImageMap         *image_map,
 
 gboolean       gimp_image_map_commit     (GimpImageMap         *image_map,
                                           GimpProgress         *progress,
-                                          gboolean              cancelable);
+                                          gboolean              cancellable);
 void           gimp_image_map_abort      (GimpImageMap         *image_map);
 
 

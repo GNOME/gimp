@@ -488,7 +488,7 @@ image_scale_invoker (GimpProcedure         *procedure,
       GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
 
       if (progress)
-        gimp_progress_start (progress, _("Scaling"), FALSE);
+        gimp_progress_start (progress, FALSE, _("Scaling"));
 
       gimp_image_scale (image, new_width, new_height,
                         pdb_context->interpolation,
@@ -524,7 +524,7 @@ image_scale_full_invoker (GimpProcedure         *procedure,
   if (success)
     {
       if (progress)
-        gimp_progress_start (progress, _("Scaling"), FALSE);
+        gimp_progress_start (progress, FALSE, _("Scaling"));
 
       gimp_image_scale (image, new_width, new_height, interpolation, progress);
 
@@ -616,7 +616,7 @@ image_rotate_invoker (GimpProcedure         *procedure,
   if (success)
     {
       if (progress)
-        gimp_progress_start (progress, _("Rotating"), FALSE);
+        gimp_progress_start (progress, FALSE, _("Rotating"));
 
       gimp_image_rotate (image, context, rotate_type, progress);
 

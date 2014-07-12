@@ -36,8 +36,8 @@ struct _GimpProgressInterface
 
   /*  virtual functions  */
   GimpProgress * (* start)         (GimpProgress        *progress,
-                                    const gchar         *message,
-                                    gboolean             cancelable);
+                                    gboolean             cancellable,
+                                    const gchar         *message);
   void           (* end)           (GimpProgress        *progress);
   gboolean       (* is_active)     (GimpProgress        *progress);
 
@@ -64,13 +64,15 @@ struct _GimpProgressInterface
 GType          gimp_progress_interface_get_type (void) G_GNUC_CONST;
 
 GimpProgress * gimp_progress_start              (GimpProgress        *progress,
-                                                 const gchar         *message,
-                                                 gboolean             cancelable);
+                                                 gboolean             cancellable,
+                                                 const gchar         *format,
+                                                 ...) G_GNUC_PRINTF (3, 4);
 void           gimp_progress_end                (GimpProgress        *progress);
 gboolean       gimp_progress_is_active          (GimpProgress        *progress);
 
 void           gimp_progress_set_text           (GimpProgress        *progress,
-                                                 const gchar         *message);
+                                                 const gchar         *message,
+                                                 ...) G_GNUC_PRINTF (2, 3);
 void           gimp_progress_set_value          (GimpProgress        *progress,
                                                  gdouble              percentage);
 gdouble        gimp_progress_get_value          (GimpProgress        *progress);

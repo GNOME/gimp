@@ -99,8 +99,8 @@ static void     gimp_display_get_property           (GObject             *object
                                                      GParamSpec          *pspec);
 
 static GimpProgress * gimp_display_progress_start   (GimpProgress        *progress,
-                                                     const gchar         *message,
-                                                     gboolean             cancelable);
+                                                     gboolean             cancellable,
+                                                     const gchar         *message);
 static void     gimp_display_progress_end           (GimpProgress        *progress);
 static gboolean gimp_display_progress_is_active     (GimpProgress        *progress);
 static void     gimp_display_progress_set_text      (GimpProgress        *progress,
@@ -267,15 +267,15 @@ gimp_display_get_property (GObject    *object,
 
 static GimpProgress *
 gimp_display_progress_start (GimpProgress *progress,
-                             const gchar  *message,
-                             gboolean      cancelable)
+                             gboolean      cancellable,
+                             const gchar  *message)
 {
   GimpDisplay        *display = GIMP_DISPLAY (progress);
   GimpDisplayPrivate *private = GIMP_DISPLAY_GET_PRIVATE (display);
 
   if (private->shell)
-    return gimp_progress_start (GIMP_PROGRESS (private->shell),
-                                message, cancelable);
+    return gimp_progress_start (GIMP_PROGRESS (private->shell), cancellable,
+                                "%s", message);
 
   return NULL;
 }
@@ -310,7 +310,7 @@ gimp_display_progress_set_text (GimpProgress *progress,
   GimpDisplayPrivate *private = GIMP_DISPLAY_GET_PRIVATE (display);
 
   if (private->shell)
-    gimp_progress_set_text (GIMP_PROGRESS (private->shell), message);
+    gimp_progress_set_text (GIMP_PROGRESS (private->shell), "%s", message);
 }
 
 static void

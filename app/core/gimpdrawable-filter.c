@@ -88,7 +88,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                             GimpFilter   *filter,
                             GimpProgress *progress,
                             const gchar  *undo_desc,
-                            gboolean      cancelable)
+                            gboolean      cancellable)
 {
   GeglRectangle rect;
   gboolean      success = TRUE;
@@ -167,7 +167,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                                             gimp_drawable_get_buffer (drawable),
                                             &rect,
                                             cache, rects, n_rects,
-                                            cancelable))
+                                            cancellable))
         {
           /*  finished successfully  */
 

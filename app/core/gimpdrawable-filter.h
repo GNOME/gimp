@@ -35,7 +35,7 @@ gboolean        gimp_drawable_merge_filter  (GimpDrawable *drawable,
                                              GimpFilter   *filter,
                                              GimpProgress *progress,
                                              const gchar  *undo_desc,
-                                             gboolean      cancelable);
+                                             gboolean      cancellable);
 
 
 #endif /* __GIMP_DRAWABLE_FILTER_H__ */

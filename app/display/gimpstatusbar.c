@@ -84,8 +84,8 @@ static void     gimp_statusbar_hbox_size_request  (GtkWidget         *widget,
 
 static GimpProgress *
                 gimp_statusbar_progress_start     (GimpProgress      *progress,
-                                                   const gchar       *message,
-                                                   gboolean           cancelable);
+                                                   gboolean           cancellable,
+                                                   const gchar       *message);
 static void     gimp_statusbar_progress_end       (GimpProgress      *progress);
 static gboolean gimp_statusbar_progress_is_active (GimpProgress      *progress);
 static void     gimp_statusbar_progress_set_text  (GimpProgress      *progress,
@@ -400,8 +400,8 @@ gimp_statusbar_hbox_size_request (GtkWidget      *widget,
 
 static GimpProgress *
 gimp_statusbar_progress_start (GimpProgress *progress,
-                               const gchar  *message,
-                               gboolean      cancelable)
+                               gboolean      cancellable,
+                               const gchar  *message)
 {
   GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
 
@@ -414,9 +414,9 @@ gimp_statusbar_progress_start (GimpProgress *progress,
 
       gimp_statusbar_push (statusbar, "progress", NULL, "%s", message);
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
-      gtk_widget_set_sensitive (statusbar->cancel_button, cancelable);
+      gtk_widget_set_sensitive (statusbar->cancel_button, cancellable);
 
-      if (cancelable)
+      if (cancellable)
         {
           if (message)
             {

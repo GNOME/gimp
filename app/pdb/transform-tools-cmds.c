@@ -168,7 +168,7 @@ perspective_invoker (GimpProcedure         *procedure,
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
-            gimp_progress_start (progress, _("Perspective"), FALSE);
+            gimp_progress_start (progress, FALSE, _("Perspective"));
 
           if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
               ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
@@ -252,7 +252,7 @@ rotate_invoker (GimpProcedure         *procedure,
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
-            gimp_progress_start (progress, _("Rotating"), FALSE);
+            gimp_progress_start (progress, FALSE, _("Rotating"));
 
           if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
               ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
@@ -343,7 +343,7 @@ scale_invoker (GimpProcedure         *procedure,
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
-            gimp_progress_start (progress, _("Scaling"), FALSE);
+            gimp_progress_start (progress, FALSE, _("Scaling"));
 
           if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
               ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
@@ -429,7 +429,7 @@ shear_invoker (GimpProcedure         *procedure,
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
-            gimp_progress_start (progress, _("Shearing"), FALSE);
+            gimp_progress_start (progress, FALSE, _("Shearing"));
 
           if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
               ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))
@@ -520,7 +520,7 @@ transform_2d_invoker (GimpProcedure         *procedure,
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
-            gimp_progress_start (progress, _("2D Transform"), FALSE);
+            gimp_progress_start (progress, FALSE, _("2D Transform"));
 
           if (! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
               ! gimp_channel_is_empty (gimp_image_get_mask (gimp_item_get_image (GIMP_ITEM (drawable)))))

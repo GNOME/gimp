@@ -791,9 +791,8 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
   GeglProcessor    *processor;
   gdouble           value;
 
-  progress = gimp_progress_start (GIMP_PROGRESS (sc),
-                                  _("Cloning the foreground object..."),
-                                  FALSE);
+  progress = gimp_progress_start (GIMP_PROGRESS (sc), FALSE,
+                                  _("Cloning the foreground object"));
 
   /* Find out at which x,y is the top left corner of the currently
    * displayed part */

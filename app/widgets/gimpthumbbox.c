@@ -61,8 +61,8 @@ static void     gimp_thumb_box_style_set          (GtkWidget         *widget,
 
 static GimpProgress *
                 gimp_thumb_box_progress_start     (GimpProgress      *progress,
-                                                   const gchar       *message,
-                                                   gboolean           cancelable);
+                                                   gboolean           cancellable,
+                                                   const gchar       *message);
 static void     gimp_thumb_box_progress_end       (GimpProgress      *progress);
 static gboolean gimp_thumb_box_progress_is_active (GimpProgress      *progress);
 static void     gimp_thumb_box_progress_set_value (GimpProgress      *progress,
@@ -193,8 +193,8 @@ gimp_thumb_box_style_set (GtkWidget *widget,
 
 static GimpProgress *
 gimp_thumb_box_progress_start (GimpProgress *progress,
-                               const gchar  *message,
-                               gboolean      cancelable)
+                               gboolean      cancellable,
+                               const gchar  *message)
 {
   GimpThumbBox *box = GIMP_THUMB_BOX (progress);
 
@@ -214,7 +214,7 @@ gimp_thumb_box_progress_start (GimpProgress *progress,
 
       if (GIMP_IS_FILE_DIALOG (toplevel))
         gtk_dialog_set_response_sensitive (GTK_DIALOG (toplevel),
-                                           GTK_RESPONSE_CANCEL, cancelable);
+                                           GTK_RESPONSE_CANCEL, cancellable);
 
       return progress;
     }
@@ -583,7 +583,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
     {
       gchar *str;
 
-      gimp_progress_start (GIMP_PROGRESS (box), "", TRUE);
+      gimp_progress_start (GIMP_PROGRESS (box), TRUE, "%s", "");
 
       progress = gimp_sub_progress_new (GIMP_PROGRESS (box));
 

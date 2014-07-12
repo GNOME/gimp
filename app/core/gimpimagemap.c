@@ -400,7 +400,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
 gboolean
 gimp_image_map_commit (GimpImageMap *image_map,
                        GimpProgress *progress,
-                       gboolean      cancelable)
+                       gboolean      cancellable)
 {
   gboolean success = TRUE;
 
@@ -413,7 +413,7 @@ gimp_image_map_commit (GimpImageMap *image_map,
                                             image_map->filter,
                                             progress,
                                             image_map->undo_desc,
-                                            cancelable);
+                                            cancellable);
 
       gimp_image_map_remove_filter (image_map);
 

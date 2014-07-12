@@ -44,8 +44,8 @@
 /*  local function prototypes  */
 
 static GimpProgress * gimp_tool_progress_start     (GimpProgress        *progress,
-                                                    const gchar         *message,
-                                                    gboolean             cancelable);
+                                                    gboolean             cancellable,
+                                                    const gchar         *message);
 static void           gimp_tool_progress_end       (GimpProgress        *progress);
 static gboolean       gimp_tool_progress_is_active (GimpProgress        *progress);
 static void           gimp_tool_progress_set_text  (GimpProgress        *progress,
@@ -125,8 +125,8 @@ gimp_tool_progress_key_press (GtkWidget         *widget,
 
 static GimpProgress *
 gimp_tool_progress_start (GimpProgress *progress,
-                          const gchar  *message,
-                          gboolean      cancelable)
+                          gboolean      cancellable,
+                          const gchar  *message)
 {
   GimpTool         *tool = GIMP_TOOL (progress);
   GimpDisplayShell *shell;
@@ -148,13 +148,13 @@ gimp_tool_progress_start (GimpProgress *progress,
   gimp_display_shell_add_unrotated_item (shell, tool->progress);
   g_object_unref (tool->progress);
 
-  gimp_progress_start (GIMP_PROGRESS (tool->progress),
-                       message, FALSE);
+  gimp_progress_start (GIMP_PROGRESS (tool->progress), FALSE,
+                       "%s", message);
   gimp_widget_flush_expose (shell->canvas);
 
   tool->progress_display = tool->display;
 
-  if (cancelable)
+  if (cancellable)
     {
       tool->progress_grab_widget = gtk_invisible_new ();
       gtk_widget_show (tool->progress_grab_widget);
@@ -213,7 +213,7 @@ gimp_tool_progress_set_text (GimpProgress *progress,
     {
       GimpDisplayShell *shell = gimp_display_get_shell (tool->progress_display);
 
-      gimp_progress_set_text (GIMP_PROGRESS (tool->progress), message);
+      gimp_progress_set_text (GIMP_PROGRESS (tool->progress), "%s", message);
       gimp_widget_flush_expose (shell->canvas);
     }
 }
