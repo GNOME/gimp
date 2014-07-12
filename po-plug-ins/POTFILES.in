@@ -140,8 +140,6 @@ plug-ins/file-psd/psd-util.c
 plug-ins/file-psd/psd.c
 plug-ins/file-sgi/sgi.c
 plug-ins/file-uri/uri-backend-gvfs.c
-plug-ins/file-uri/uri-backend-libcurl.c
-plug-ins/file-uri/uri-backend-wget.c
 plug-ins/file-uri/uri.c
 plug-ins/flame/flame.c
 plug-ins/fractal-explorer/fractal-explorer-dialogs.c
