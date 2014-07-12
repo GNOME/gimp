@@ -1,17 +1,41 @@
 
-PARASITE REGISTRY - 2007-10-18
+PARASITE REGISTRY
 =================
 
+This document describes parasites in GIMP. 
+
+
+Table of contents
+-----------------
+Parasite registry
+  Table of contents
+  Audience
+  
+1. Namespace
+
+2. Known prefixes
+
+3. Known global parasites
+
+4. Known image parasites
+
+5. Known layer/drawable parasites
+
+6. Parasite format
+
+
+Audience
+--------
 This document is designed for the convenience of GIMP developers.
 It does not need to concern users.
 
->>>> If your plugin or script writes parasites, please
->>>> amend this file in SVN or submit patches to
->>>> gimp-developer@scam.xcf.berkeley.edu
+>>>> If your plug-in or script writes parasites, please
+>>>> amend this file in the Git repository or submit patches to
+>>>> gimp-developer-list@gnome.org
 
 
-------------------------------------------------------------------
-*** NAMESPACE
+1. NAMESPACE
+============
 
 Plug-in-specific data should be prefixed by the plug-in function name and
 a slash, i.e. private data of plug_in_displace should be named like:
@@ -22,8 +46,9 @@ etc.
 
 Global data follows no strict rules.
 
-------------------------------------------------------------------
-*** KNOWN PREFIXES:
+
+2. KNOWN PREFIXES
+=================
 
 "tiff"    : The standard GIMP TIFF plugin
 "jpeg"    : The standard GIMP JPEG plugin
@@ -31,8 +56,9 @@ Global data follows no strict rules.
 "dcm"     : The standard GIMP DICOM plugin
 "gimp"    : For common and standard parasites
 
-------------------------------------------------------------------
-*** KNOWN GLOBAL PARASITES:
+
+3. KNOWN GLOBAL PARASITES
+=========================
 
 "jpeg-save-defaults" (GLOBAL, PERSISTENT)
         Default save parameters used by the JPEG plug-in.
@@ -54,8 +80,9 @@ Global data follows no strict rules.
         plug-in should ask the user what to do. This parasite may be
         removed in a future version (assuming always yes).
 
-------------------------------------------------------------------
-*** KNOWN IMAGE PARASITES:
+
+4. KNOWN IMAGE PARASITES
+========================
 
 "gimp-comment" (IMAGE, PERSISTENT)
         Standard GIF-style image comments.  This parasite should be
@@ -224,8 +251,9 @@ Global data follows no strict rules.
                AA is a two character ascii value representing the Dicom
                  element's Value Represenation (VR)
 
-------------------------------------------------------------------
-*** KNOWN LAYER/DRAWABLE PARASITES:
+
+5. KNOWN LAYER/DRAWABLE PARASITES
+=================================
 
 "gimp-text-layer" (LAYER, PERSISTENT)
         The associated GimpText object serialized to a string. For
@@ -242,8 +270,8 @@ Global data follows no strict rules.
         parasite, the contents of the parasite are loaded at startup.
 
 
-------------------------------------------------------------------
-*** PARASITE FORMAT:
+6. PARASITE FORMAT
+==================
 
 The parasite data format is not rigidly specified. For non-persistant
 parasites you are entirely free, as the parasite data does not survive the
@@ -259,7 +287,7 @@ non-persistant data might be fine as well):
 
 - Use character (string) data
 
-  Obvious to perl people but less so to C programmers: just sprintf your
+  Obvious to Perl people but less so to C programmers: just sprintf your
   data into a string (e.g. "SIZE 100x200 XRES 300 YRES 300") and store
   that in the parasite, and later sscanf it again. This often solves most
   of the problems you might encounter, makes for easier debugging and
