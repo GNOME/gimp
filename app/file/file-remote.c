@@ -268,6 +268,7 @@ file_remote_copy_file (Gimp            *gimp,
 
   if (! success                      &&
       ! gimp->no_interface           &&
+      my_error                       &&
       my_error->domain == G_IO_ERROR &&
       my_error->code   == G_IO_ERROR_NOT_MOUNTED)
     {
