@@ -23,9 +23,9 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
-#include "libmypaint/mypaint-brush.h"
-#include "libmypaint/mypaint-tiled-surface.h"
-#include "libmypaint/gegl/mypaint-gegl-surface.h"
+#include <mypaint-brush.h>
+#include <mypaint-tiled-surface.h>
+#include <mypaint-gegl-surface.h>
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"

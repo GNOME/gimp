@@ -165,7 +165,6 @@ gimpconsoleldadd = \
 	file/libappfile.a		\
 	text/libapptext.a		\
 	paint/libapppaint.a		\
-	paint/libmypaint.a		\
 	operations/libappoperations.a	\
 	gegl/libappgegl.a		\
 	config/libappconfig.a		\
@@ -189,6 +188,7 @@ gimpconsoleldadd = \
 	$(LCMS_LIBS)			\
 	$(Z_LIBS)			\
 	$(JSON_C_LIBS)			\
+	$(LIBMYPAINTGEGL_LIBS)		\
 	$(INTLLIBS)			\
 	$(RT_LIBS)			\
 	$(libm)
