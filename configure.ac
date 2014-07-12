@@ -66,6 +66,7 @@ m4_define([poppler_required_version], [0.12.4])
 m4_define([poppler_data_required_version], [0.4.7])
 m4_define([libgudev_required_version], [167])
 m4_define([gexiv2_required_version], [0.6.1])
+m4_define([libmypaint_required_version], [1.1])
 m4_define([lcms_required_version], [2.6])
 m4_define([libpng_required_version], [1.2.37])
 m4_define([liblzma_required_version], [5.0.0])
@@ -396,9 +397,8 @@ CFLAGS="$CFLAGS $extra_warnings"
 # can cause random behavior. If compile breaks due to the following,
 # come to us and we will point you to a newer version which works.
 #
-# Temporarily disabled -- mypaint brush
-# GIMP_DETECT_CFLAGS(extra_warnings, '-Werror=missing-prototypes')
-# CFLAGS="$CFLAGS $extra_warnings"
+GIMP_DETECT_CFLAGS(extra_warnings, '-Werror=missing-prototypes')
+CFLAGS="$CFLAGS $extra_warnings"
 
 GIMP_DETECT_CFLAGS(extra_warnings, '-Wstrict-prototypes')
 CFLAGS="$CFLAGS $extra_warnings"
@@ -724,6 +724,8 @@ AC_SUBST(FREETYPE_LIBS)
 PKG_CHECK_MODULES(HARFBUZZ, harfbuzz >= harfbuzz_required_version)
 
 PKG_CHECK_MODULES(GEXIV2, gexiv2 >= gexiv2_required_version)
+
+PKG_CHECK_MODULES(LIBMYPAINTGEGL, libmypaint-gegl >= libmypaint_required_version)
 
 ##########################################
 # Check for some special functions we need
@@ -1628,13 +1630,6 @@ AC_SUBST(JP2_LIBS)
 ################
 
 PKG_CHECK_MODULES(LCMS, lcms2 >= lcms_required_version)
-
-
-##################
-# Check for json-c -- temporary for mypaint brush
-##################
-
-PKG_CHECK_MODULES(JSON_C, json-c)
 
 
 ######################
