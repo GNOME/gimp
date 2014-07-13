@@ -762,7 +762,8 @@ PROP_PATHS
 
     Format 1:   Format 2:   Format 3:
      string      string      string     name     Name of the path
-     uint32      uint32      uint32     locked   (TODO: correct to 'linked')
+     uint32      uint32      uint32     linked   1 if the path is linked;
+                                                 0 if not
      byte        byte        byte       state    4 if closed; 2 otherwise
                                                  (for GIMP 1.2 compatibility)
      uint32      uint32      uint32     closed   1 if path is closed;
@@ -784,6 +785,9 @@ PROP_PATHS
   continuous sequences of Bezier strokes. Otherwise GIMP stores the paths in
   PROP_VECTORS.
 
+  Note: the attribute 'linked' was formerly erroneously called 'locked'
+  (but meant 'linked' anyway).
+  
   A closed path is a path which has the last and the first point connected,
   for instance a triangle.
 

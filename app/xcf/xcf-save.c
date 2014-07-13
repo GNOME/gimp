@@ -1618,7 +1618,7 @@ xcf_save_old_paths (XcfInfo    *info,
     {
       GimpVectors            *vectors = list->data;
       gchar                  *name;
-      guint32                 locked;
+      guint32                 linked;
       guint8                  state;
       guint32                 version;
       guint32                 pathtype;
@@ -1630,7 +1630,7 @@ xcf_save_old_paths (XcfInfo    *info,
 
       /*
        * name (string)
-       * locked (gint)
+       * linked (gint)
        * state (gchar)
        * closed (gint)
        * number points (gint)
@@ -1650,14 +1650,14 @@ xcf_save_old_paths (XcfInfo    *info,
        * around to fix that cruft  */
 
       name     = (gchar *) gimp_object_get_name (vectors);
-      locked   = gimp_item_get_linked (GIMP_ITEM (vectors));
+      linked   = gimp_item_get_linked (GIMP_ITEM (vectors));
       state    = closed ? 4 : 2;  /* EDIT : ADD  (editing state, 1.2 compat) */
       version  = 3;
       pathtype = 1;  /* BEZIER  (1.2 compat) */
       tattoo   = gimp_item_get_tattoo (GIMP_ITEM (vectors));
 
       xcf_write_string_check_error (info, &name,       1);
-      xcf_write_int32_check_error  (info, &locked,     1);
+      xcf_write_int32_check_error  (info, &linked,     1);
       xcf_write_int8_check_error   (info, &state,      1);
       xcf_write_int32_check_error  (info, &closed,     1);
       xcf_write_int32_check_error  (info, &num_points, 1);

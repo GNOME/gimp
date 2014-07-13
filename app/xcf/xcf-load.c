@@ -71,6 +71,13 @@
 #include "gimp-intl.h"
 
 
+/**
+ * SECTION:xcf-load
+ * @Short_description:XCF file loader functions
+ *
+ * This section describes the XCF file loader.
+ */
+
 #define MAX_XCF_PARASITE_DATA_LEN (256L * 1024 * 1024)
 
 /* #define GIMP_XCF_PATH_DEBUG */
@@ -131,6 +138,20 @@ static gboolean        xcf_skip_unknown_prop  (XcfInfo      *info,
   } G_STMT_END
 
 
+/**
+ * xcf_load_image:
+ *
+ * @gimp:  Pointer to the #Gimp instance
+ * @info:  Pointer to the #XcfInfo structure of the file to open
+ * @error: Return location for hard errors
+ *
+ * Returns: Image of type #GimpImage with the loaded content from the XCF file
+ *          or %NULL if a hard error occured.
+ *
+ * On hard errors, @error will contain the occured error and %NULL be returned.
+ *
+ * Loads an image from an XCF file.
+ */
 GimpImage *
 xcf_load_image (Gimp     *gimp,
                 XcfInfo  *info,
@@ -1391,7 +1412,7 @@ xcf_load_level (XcfInfo     *info,
   if (offset == 0)
     return TRUE;
 
-  /* Initialise the reference for the in-memory tile-compression
+  /* Initialize the reference for the in-memory tile-compression
    */
   previous = NULL;
 
@@ -1700,7 +1721,7 @@ xcf_load_old_path (XcfInfo   *info,
                    GimpImage *image)
 {
   gchar                  *name;
-  guint32                 locked;
+  guint32                 linked;
   guint8                  state;
   guint32                 closed;
   guint32                 num_points;
@@ -1711,7 +1732,7 @@ xcf_load_old_path (XcfInfo   *info,
   gint                    i;
 
   info->cp += xcf_read_string (info->fp, &name, 1);
-  info->cp += xcf_read_int32  (info->fp, &locked, 1);
+  info->cp += xcf_read_int32  (info->fp, &linked, 1);
   info->cp += xcf_read_int8   (info->fp, &state, 1);
   info->cp += xcf_read_int32  (info->fp, &closed, 1);
   info->cp += xcf_read_int32  (info->fp, &num_points, 1);
@@ -1728,7 +1749,7 @@ xcf_load_old_path (XcfInfo   *info,
     {
       guint32 dummy;
 
-      /* Has extra tatto field */
+      /* Has extra tattoo field */
       info->cp += xcf_read_int32 (info->fp, (guint32 *) &dummy,  1);
       info->cp += xcf_read_int32 (info->fp, (guint32 *) &tattoo, 1);
     }
@@ -1781,7 +1802,7 @@ xcf_load_old_path (XcfInfo   *info,
   g_free (name);
   g_free (points);
 
-  gimp_item_set_linked (GIMP_ITEM (vectors), locked, FALSE);
+  gimp_item_set_linked (GIMP_ITEM (vectors), linked, FALSE);
 
   if (tattoo)
     gimp_item_set_tattoo (GIMP_ITEM (vectors), tattoo);
