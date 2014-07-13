@@ -104,16 +104,23 @@ header files installed.
 
  16. Summary of required packages and what version you need:
 
-     gtk+: @GTK_REQUIRED_VERSION@
-     cairo: @CAIRO_REQUIRED_VERSION@
-     glib: @GLIB_REQUIRED_VERSION@
-     pangocairo: @PANGOCAIRO_REQUIRED_VERSION@
-     atk: @ATK_REQUIRED_VERSION@
-     fontconfig: @FONTCONFIG_REQUIRED_VERSION@
+     ATK: @ATK_REQUIRED_VERSION@
      babl: @BABL_REQUIRED_VERSION@
-     gdk_pixbuf: @GDK_PIXBUF_REQUIRED_VERSION@
-     gegl: @GEGL_REQUIRED_VERSION@
+     libbzip2
+     cairo: @CAIRO_REQUIRED_VERSION@
+     Fontconfig: @FONTCONFIG_REQUIRED_VERSION@
      freetype2: @FREETYPE2_REQUIRED_VERSION@
+     GDK-PixBuf: @GDK_PIXBUF_REQUIRED_VERSION@
+     GEGL: @GEGL_REQUIRED_VERSION@
+     GLib: @GLIB_REQUIRED_VERSION@
+     GTK+: @GTK_REQUIRED_VERSION@
+     HarfBuzz: @HARFBUZZ_REQUIRED_VERSION@
+     libjpeg
+     libpng: @LIBPNG_REQUIRED_VERSION@
+     liblzma: @LIBLZMA_REQUIRED_VERSION@
+     Little CMS: @LCMS_REQUIRED_VERSION@
+     pangocairo: @PANGOCAIRO_REQUIRED_VERSION@
+     zlib
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries
 lying around on your system, otherwise configure may fail to find the
