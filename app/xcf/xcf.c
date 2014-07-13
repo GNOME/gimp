@@ -285,11 +285,7 @@ xcf_load_invoker (GimpProcedure         *procedure,
       info.compression = COMPRESS_NONE;
 
       if (progress)
-        {
-          gchar *name = g_filename_display_name (filename);
-          gimp_progress_start (progress, FALSE, _("Opening '%s'"), name);
-          g_free (name);
-        }
+        gimp_progress_start (progress, FALSE, _("Opening '%s'"), filename);
 
       success = TRUE;
 
@@ -397,11 +393,7 @@ xcf_save_invoker (GimpProcedure         *procedure,
       info.compression = COMPRESS_RLE;
 
       if (progress)
-        {
-          gchar *name = g_filename_display_name (filename);
-          gimp_progress_start (progress, FALSE, _("Saving '%s'"), name);
-          g_free (name);
-        }
+        gimp_progress_start (progress, FALSE, _("Saving '%s'"), filename);
 
       xcf_save_choose_format (&info, image);
 
