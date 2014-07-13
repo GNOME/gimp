@@ -341,8 +341,11 @@ gimp_imagefile_set_file (GimpImagefile *imagefile,
   g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
   g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  gimp_object_take_name (GIMP_OBJECT (imagefile),
-                         file ? g_file_get_uri (file) : NULL);
+  if (GET_PRIVATE (imagefile)->file != file)
+    {
+      gimp_object_take_name (GIMP_OBJECT (imagefile),
+                             file ? g_file_get_uri (file) : NULL);
+    }
 }
 
 GimpThumbnail *
