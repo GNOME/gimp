@@ -1849,11 +1849,18 @@ void
 gimp_image_set_file (GimpImage *image,
                      GFile     *file)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  gimp_object_take_name (GIMP_OBJECT (image),
-                         file ? g_file_get_uri (file) : NULL);
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->file != file)
+    {
+      gimp_object_take_name (GIMP_OBJECT (image),
+                             file ? g_file_get_uri (file) : NULL);
+    }
 }
 
 /**
