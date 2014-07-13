@@ -397,7 +397,20 @@ xcf_save_invoker (GimpProcedure         *procedure,
 
       xcf_save_choose_format (&info, image);
 
-      success = xcf_save_image (&info, image, error);
+      success = xcf_save_image (&info, image, &my_error);
+
+      if (success)
+        {
+          if (progress)
+            gimp_progress_set_text (progress, _("Closing '%s'"), filename);
+
+          success = g_output_stream_close (info.output, NULL, &my_error);
+        }
+
+      if (! success)
+        g_propagate_prefixed_error (error, my_error,
+                                    _("Error writing '%s': "),
+                                    filename);
 
       g_object_unref (info.output);
 
