@@ -86,8 +86,9 @@ file_save (Gimp                *gimp,
   g_return_val_if_fail (error == NULL || *error == NULL,
                         GIMP_PDB_CALLING_ERROR);
 
-  /* ref the image, so it can't get deleted during save */
+  /*  ref image and file, so they can't get deleted during save  */
   g_object_ref (image);
+  g_object_ref (file);
 
   drawable = gimp_image_get_active_drawable (image);
 
@@ -273,6 +274,7 @@ file_save (Gimp                *gimp,
   gimp_image_flush (image);
 
  out:
+  g_object_unref (file);
   g_object_unref (image);
 
   g_free (path);
