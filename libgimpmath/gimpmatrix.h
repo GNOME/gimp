@@ -120,8 +120,8 @@ void          gimp_matrix3_transform_point (const GimpMatrix3 *matrix,
 
 /*****************/
 /*  GimpMatrix4  */
-
 /*****************/
+
 void          gimp_matrix4_to_deg          (const GimpMatrix4 *matrix,
                                             gdouble           *a,
                                             gdouble           *b,
