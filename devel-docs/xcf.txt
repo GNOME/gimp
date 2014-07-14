@@ -141,7 +141,7 @@ Since GIMP 1.3.10, released on 07.11.2002.
 Adds layer modes "Soft light", "Grain extract", "Grain merge" and painting
 mode "Color Erase". In chapter 5 "The layer structure" the description of
 the property PROP_MODE contains the new layer modes.
-Improves path handling in GIMP 1.3.21 (releases on 5.10.2003).
+Improves path handling in GIMP 1.3.21, released on 5.10.2003.
 Chapter 1 "Basic concepts" describes the path handling in general and
 chapter 2 "General concepts" introduces the PROP_VECTORS property.
 
@@ -593,8 +593,9 @@ PROP_PARASITES
   | byte[n] ...      Parasite-specific payload
   `--
 
-  PROP_PARASITES can contain multiple parasite records. See "Basic concepts"
-  and the file parasites.txt for more information about parasites.
+  PROP_PARASITES stores parasites. It can contain multiple parasite records.
+  See "Basic concepts" and the file parasites.txt for more information about
+  parasites.
   This property can appear in any property list.
 
 PROP_TATTOO (internal GIMP state)
@@ -1213,6 +1214,7 @@ hierarchy structure (except for the aforementioned dummy levels).
 
 Ceil(x) is the smallest integer not smaller than x.
 
+
 7. TILE DATA ORGANIZATION
 =========================
 
@@ -1290,6 +1292,7 @@ A simple way for an XCF creator to avoid overflow is
 
 TODO: If each tile has a maximum of 64 pixels (resulting in a maximum of 64
 bytes for each color in this tile), do values>64 and long runs apply at all?
+
 
 8. MISCELLANEOUS
 ================
