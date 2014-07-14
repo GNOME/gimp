@@ -79,7 +79,6 @@ struct _Gimp
   guint32                 next_guide_ID;
   guint32                 next_sample_point_ID;
   GimpIdTable            *image_table;
-
   GimpIdTable            *item_table;
 
   GimpContainer          *displays;

@@ -214,10 +214,6 @@ gimp_class_init (GimpClass *klass)
 static void
 gimp_init (Gimp *gimp)
 {
-  gimp->config           = NULL;
-  gimp->session_name     = NULL;
-  gimp->default_folder   = NULL;
-
   gimp->be_verbose       = FALSE;
   gimp->no_data          = FALSE;
   gimp->no_interface     = FALSE;
@@ -228,66 +224,36 @@ gimp_init (Gimp *gimp)
   gimp->stack_trace_mode = GIMP_STACK_TRACE_NEVER;
   gimp->pdb_compat_mode  = GIMP_PDB_COMPAT_OFF;
 
-  gimp->restored         = FALSE;
-
   gimp_gui_init (gimp);
 
-  gimp->busy                = 0;
-  gimp->busy_idle_id        = 0;
+  gimp->parasites = gimp_parasite_list_new ();
 
-  gimp->parasites           = gimp_parasite_list_new ();
-
-  gimp->images              = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
+  gimp->images = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->images), "images");
 
   gimp->next_guide_ID        = 1;
   gimp->next_sample_point_ID = 1;
   gimp->image_table          = gimp_id_table_new ();
+  gimp->item_table           = gimp_id_table_new ();
 
-  gimp->item_table          = gimp_id_table_new ();
-
-  gimp->displays            = g_object_new (GIMP_TYPE_LIST,
-                                            "children-type", GIMP_TYPE_OBJECT,
-                                            "policy",        GIMP_CONTAINER_POLICY_WEAK,
-                                            "append",        TRUE,
-                                            NULL);
+  gimp->displays = g_object_new (GIMP_TYPE_LIST,
+                                 "children-type", GIMP_TYPE_OBJECT,
+                                 "policy",        GIMP_CONTAINER_POLICY_WEAK,
+                                 "append",        TRUE,
+                                 NULL);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->displays), "displays");
+  gimp->next_display_ID = 1;
 
-  gimp->next_display_ID     = 1;
-
-  gimp->image_windows       = NULL;
-
-  gimp->global_buffer       = NULL;
-  gimp->named_buffers       = gimp_list_new (GIMP_TYPE_BUFFER, TRUE);
+  gimp->named_buffers = gimp_list_new (GIMP_TYPE_BUFFER, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->named_buffers),
                                "named buffers");
 
-  gimp->fonts               = NULL;
-  gimp->brush_factory       = NULL;
-  gimp->dynamics_factory    = NULL;
-  gimp->pattern_factory     = NULL;
-  gimp->gradient_factory    = NULL;
-  gimp->palette_factory     = NULL;
-  gimp->tool_preset_factory = NULL;
-
-  gimp->tag_cache           = NULL;
-
-  gimp->tool_info_list      = gimp_list_new (GIMP_TYPE_TOOL_INFO, FALSE);
+  gimp->tool_info_list = gimp_list_new (GIMP_TYPE_TOOL_INFO, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_info_list),
                                "tool infos");
 
-  gimp->standard_tool_info  = NULL;
-
-  gimp->documents           = gimp_document_list_new (gimp);
-
-  gimp->templates           = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
+  gimp->templates = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->templates), "templates");
-
-  gimp->image_new_last_template = NULL;
-
-  gimp->context_list        = NULL;
-  gimp->default_context     = NULL;
-  gimp->user_context        = NULL;
 }
 
 static void
