@@ -93,7 +93,22 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_VERBOSE
+};
 
+
+static void      gimp_constructed          (GObject           *object);
+static void      gimp_set_property         (GObject           *object,
+                                            guint              property_id,
+                                            const GValue      *value,
+                                            GParamSpec        *pspec);
+static void      gimp_get_property         (GObject           *object,
+                                            guint              property_id,
+                                            GValue            *value,
+                                            GParamSpec        *pspec);
 static void      gimp_dispose              (GObject           *object);
 static void      gimp_finalize             (GObject           *object);
 
@@ -176,6 +191,9 @@ gimp_class_init (GimpClass *klass)
                   gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1, G_TYPE_FILE);
 
+  object_class->constructed      = gimp_constructed;
+  object_class->set_property     = gimp_set_property;
+  object_class->get_property     = gimp_get_property;
   object_class->dispose          = gimp_dispose;
   object_class->finalize         = gimp_finalize;
 
@@ -185,6 +203,12 @@ gimp_class_init (GimpClass *klass)
   klass->restore                 = gimp_real_restore;
   klass->exit                    = gimp_real_exit;
   klass->buffer_changed          = NULL;
+
+  g_object_class_install_property (object_class, PROP_VERBOSE,
+                                   g_param_spec_boolean ("verbose", NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -211,13 +235,7 @@ gimp_init (Gimp *gimp)
   gimp->busy                = 0;
   gimp->busy_idle_id        = 0;
 
-  gimp_units_init (gimp);
-
   gimp->parasites           = gimp_parasite_list_new ();
-
-  gimp_modules_init (gimp);
-
-  gimp->plug_in_manager     = gimp_plug_in_manager_new (gimp);
 
   gimp->images              = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->images), "images");
@@ -254,10 +272,6 @@ gimp_init (Gimp *gimp)
 
   gimp->tag_cache           = NULL;
 
-  gimp->pdb                 = gimp_pdb_new (gimp);
-
-  xcf_init (gimp);
-
   gimp->tool_info_list      = gimp_list_new (GIMP_TYPE_TOOL_INFO, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_info_list),
                                "tool infos");
@@ -274,6 +288,64 @@ gimp_init (Gimp *gimp)
   gimp->context_list        = NULL;
   gimp->default_context     = NULL;
   gimp->user_context        = NULL;
+}
+
+static void
+gimp_constructed (GObject *object)
+{
+  Gimp *gimp = GIMP (object);
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gimp_units_init (gimp);
+  gimp_modules_init (gimp);
+
+  gimp->plug_in_manager = gimp_plug_in_manager_new (gimp);
+  gimp->pdb             = gimp_pdb_new (gimp);
+
+  xcf_init (gimp);
+
+  gimp->documents = gimp_document_list_new (gimp);
+}
+
+static void
+gimp_set_property (GObject           *object,
+                   guint              property_id,
+                   const GValue      *value,
+                   GParamSpec        *pspec)
+{
+  Gimp *gimp = GIMP (object);
+
+  switch (property_id)
+    {
+    case PROP_VERBOSE:
+      gimp->be_verbose = g_value_get_boolean (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_get_property (GObject    *object,
+                   guint       property_id,
+                   GValue     *value,
+                   GParamSpec *pspec)
+{
+  Gimp *gimp = GIMP (object);
+
+  switch (property_id)
+    {
+    case PROP_VERBOSE:
+      g_value_set_boolean (value, gimp->be_verbose);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -771,14 +843,14 @@ gimp_new (const gchar       *name,
   g_return_val_if_fail (name != NULL, NULL);
 
   gimp = g_object_new (GIMP_TYPE_GIMP,
-                       "name", name,
+                       "name",    name,
+                       "verbose", be_verbose ? TRUE : FALSE,
                        NULL);
 
   if (default_folder)
     gimp->default_folder = g_object_ref (default_folder);
 
   gimp->session_name     = g_strdup (session_name);
-  gimp->be_verbose       = be_verbose       ? TRUE : FALSE;
   gimp->no_data          = no_data          ? TRUE : FALSE;
   gimp->no_fonts         = no_fonts         ? TRUE : FALSE;
   gimp->no_interface     = no_interface     ? TRUE : FALSE;
