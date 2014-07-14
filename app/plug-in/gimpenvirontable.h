@@ -36,6 +36,8 @@ struct _GimpEnvironTable
 {
   GObject      parent_instance;
 
+  gboolean     verbose;
+
   GHashTable  *vars;
   GHashTable  *internal;
 
@@ -49,7 +51,7 @@ struct _GimpEnvironTableClass
 
 
 GType               gimp_environ_table_get_type  (void) G_GNUC_CONST;
-GimpEnvironTable  * gimp_environ_table_new       (void);
+GimpEnvironTable  * gimp_environ_table_new       (gboolean          verbose);
 
 void                gimp_environ_table_load      (GimpEnvironTable *environ_table,
                                                   const gchar      *env_path);

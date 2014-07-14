@@ -117,13 +117,6 @@ gimp_interpreter_db_class_init (GimpInterpreterDBClass *class)
 static void
 gimp_interpreter_db_init (GimpInterpreterDB *db)
 {
-  db->programs        = NULL;
-
-  db->magics          = NULL;
-  db->magic_names     = NULL;
-
-  db->extensions      = NULL;
-  db->extension_names = NULL;
 }
 
 static void
@@ -137,9 +130,13 @@ gimp_interpreter_db_finalize (GObject *object)
 }
 
 GimpInterpreterDB *
-gimp_interpreter_db_new (void)
+gimp_interpreter_db_new (gboolean verbose)
 {
-  return g_object_new (GIMP_TYPE_INTERPRETER_DB, NULL);
+  GimpInterpreterDB *db = g_object_new (GIMP_TYPE_INTERPRETER_DB, NULL);
+
+  db->verbose = verbose;
+
+  return db;
 }
 
 void
@@ -212,6 +209,9 @@ gimp_interpreter_db_load_interp_file (const GimpDatafileData *file_data,
   gsize              len;
 
   db = GIMP_INTERPRETER_DB (user_data);
+
+  if (db->verbose)
+    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (file_data->filename));
 
   interp_file = g_fopen (file_data->filename, "r");
   if (! interp_file)

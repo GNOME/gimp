@@ -81,10 +81,6 @@ gimp_environ_table_class_init (GimpEnvironTableClass *class)
 static void
 gimp_environ_table_init (GimpEnvironTable *environ_table)
 {
-  environ_table->vars     = NULL;
-  environ_table->internal = NULL;
-
-  environ_table->envp     = NULL;
 }
 
 static void
@@ -98,9 +94,13 @@ gimp_environ_table_finalize (GObject *object)
 }
 
 GimpEnvironTable *
-gimp_environ_table_new (void)
+gimp_environ_table_new (gboolean verbose)
 {
-  return g_object_new (GIMP_TYPE_ENVIRON_TABLE, NULL);
+  GimpEnvironTable *table = g_object_new (GIMP_TYPE_ENVIRON_TABLE, NULL);
+
+  table->verbose = verbose;
+
+  return table;
 }
 
 static guint
@@ -248,6 +248,9 @@ gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
   gsize             len;
   gchar            *name, *value, *separator, *p, *q;
   GimpEnvironValue *val;
+
+  if (environ_table->verbose)
+    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (file_data->filename));
 
   env = g_fopen (file_data->filename, "r");
   if (! env)

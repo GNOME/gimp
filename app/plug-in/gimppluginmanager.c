@@ -138,26 +138,6 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
 static void
 gimp_plug_in_manager_init (GimpPlugInManager *manager)
 {
-  manager->gimp               = NULL;
-
-  manager->plug_in_defs       = NULL;
-  manager->write_pluginrc     = FALSE;
-
-  manager->plug_in_procedures = NULL;
-  manager->load_procs         = NULL;
-  manager->save_procs         = NULL;
-  manager->export_procs       = NULL;
-
-  manager->current_plug_in    = NULL;
-  manager->open_plug_ins      = NULL;
-  manager->plug_in_stack      = NULL;
-  manager->history            = NULL;
-
-  manager->shm                = NULL;
-  manager->interpreter_db     = gimp_interpreter_db_new ();
-  manager->environ_table      = gimp_environ_table_new ();
-  manager->debug              = NULL;
-  manager->data_list          = NULL;
 }
 
 static void
@@ -280,7 +260,9 @@ gimp_plug_in_manager_new (Gimp *gimp)
 
   manager = g_object_new (GIMP_TYPE_PLUG_IN_MANAGER, NULL);
 
-  manager->gimp = gimp;
+  manager->gimp           = gimp;
+  manager->interpreter_db = gimp_interpreter_db_new (gimp->be_verbose);
+  manager->environ_table  = gimp_environ_table_new (gimp->be_verbose);
 
   return manager;
 }
