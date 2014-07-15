@@ -311,6 +311,54 @@ gimp_config_path_expand (const gchar  *path,
   return gimp_config_path_expand_only (path, error);
 }
 
+/**
+ * gimp_config_path_expand_to_files:
+ * @path: a NUL-terminated string in UTF-8 encoding
+ * @error: return location for errors
+ *
+ * Paths as stored in the gimprc have to be treated special. The
+ * string may contain special identifiers such as for example
+ * ${gimp_dir} that have to be substituted before use. Also the user's
+ * filesystem may be in a different encoding than UTF-8 (which is what
+ * is used for the gimprc).
+ *
+ * This function runs @path through gimp_config_path_expand() and
+ * gimp_path_parse(), then turns the filenames returned by gimp_path_parse()
+ * into GFile using g_file_new_for_path().
+ *
+ * Return value: a #GList of newly allocated #GFile objects.
+ *
+ * Since: GIMP 2.10
+ **/
+GList *
+gimp_config_path_expand_to_files (const gchar  *path,
+                                  GError      **error)
+{
+  GList *files;
+  GList *list;
+  gchar *expanded;
+
+  g_return_val_if_fail (path != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  expanded = gimp_config_path_expand (path, TRUE, error);
+
+  if (! expanded)
+    return NULL;
+
+  files = gimp_path_parse (expanded, 256, FALSE, NULL);
+
+  for (list = files; list; list = g_list_next (list))
+    {
+      gchar *dir = list->data;
+
+      list->data = g_file_new_for_path (dir);
+      g_free (dir);
+    }
+
+  return files;
+}
+
 
 #define SUBSTS_ALLOC 4
 
