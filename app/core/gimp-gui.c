@@ -254,7 +254,7 @@ gimp_get_user_time (Gimp *gimp)
   return 0;
 }
 
-const gchar *
+GFile *
 gimp_get_theme_dir (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);

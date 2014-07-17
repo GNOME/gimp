@@ -102,7 +102,7 @@ static gchar        * gui_get_display_name       (Gimp                *gimp,
                                                   GObject            **screen,
                                                   gint                *monitor);
 static guint32        gui_get_user_time          (Gimp                *gimp);
-static const gchar  * gui_get_theme_dir          (Gimp                *gimp);
+static GFile        * gui_get_theme_dir          (Gimp                *gimp);
 static GimpObject   * gui_get_window_strategy    (Gimp                *gimp);
 static GimpObject   * gui_get_empty_display      (Gimp                *gimp);
 static GimpObject   * gui_display_get_by_ID      (Gimp                *gimp,
@@ -291,7 +291,7 @@ gui_get_user_time (Gimp *gimp)
   return 0;
 }
 
-static const gchar *
+static GFile *
 gui_get_theme_dir (Gimp *gimp)
 {
   return themes_get_theme_dir (gimp, GIMP_GUI_CONFIG (gimp->config)->theme);

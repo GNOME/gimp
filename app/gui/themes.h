@@ -19,16 +19,16 @@
 #define __THEMES_H__
 
 
-void           themes_init           (Gimp        *gimp);
-void           themes_exit           (Gimp        *gimp);
+void     themes_init           (Gimp        *gimp);
+void     themes_exit           (Gimp        *gimp);
 
-gchar       ** themes_list_themes    (Gimp        *gimp,
-                                      gint        *n_themes);
-const gchar  * themes_get_theme_dir  (Gimp        *gimp,
-                                      const gchar *theme_name);
-gchar        * themes_get_theme_file (Gimp        *gimp,
-                                      const gchar *first_component,
-                                      ...) G_GNUC_NULL_TERMINATED;
+gchar ** themes_list_themes    (Gimp        *gimp,
+                                gint        *n_themes);
+GFile  * themes_get_theme_dir  (Gimp        *gimp,
+                                const gchar *theme_name);
+GFile  * themes_get_theme_file (Gimp        *gimp,
+                                const gchar *first_component,
+                                ...) G_GNUC_NULL_TERMINATED;
 
 
 #endif /* __THEMES_H__ */

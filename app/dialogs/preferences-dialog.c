@@ -1510,12 +1510,13 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0; i < n_themes; i++)
       {
-        GtkTreeIter iter;
+        GtkTreeIter  iter;
+        GFile       *theme_dir = themes_get_theme_dir (gimp, themes[i]);
 
         gtk_list_store_append (list_store, &iter);
         gtk_list_store_set (list_store, &iter,
                             0, themes[i],
-                            1, themes_get_theme_dir (gimp, themes[i]),
+                            1, gimp_file_get_utf8_name (theme_dir),
                             -1);
 
         if (GIMP_GUI_CONFIG (object)->theme &&
@@ -1533,8 +1534,7 @@ prefs_dialog_new (Gimp       *gimp,
           }
       }
 
-    if (themes)
-      g_strfreev (themes);
+    g_strfreev (themes);
 
     g_signal_connect (sel, "changed",
                       G_CALLBACK (prefs_theme_select_callback),
