@@ -75,7 +75,7 @@
  * SECTION:xcf-load
  * @Short_description:XCF file loader functions
  *
- * This section describes the XCF file loader.
+ * XCF file loader
  */
 
 #define MAX_XCF_PARASITE_DATA_LEN (256L * 1024 * 1024)
@@ -140,17 +140,16 @@ static gboolean        xcf_skip_unknown_prop  (XcfInfo      *info,
 
 /**
  * xcf_load_image:
- *
- * @gimp:  Pointer to the #Gimp instance
- * @info:  Pointer to the #XcfInfo structure of the file to open
+ * @gimp:  #Gimp instance
+ * @info:  #XcfInfo structure of the file to open
  * @error: Return location for hard errors
  *
- * Returns: Image of type #GimpImage with the loaded content from the XCF file
- *          or %NULL if a hard error occured.
- *
- * On hard errors, @error will contain the occured error and %NULL be returned.
- *
  * Loads an image from an XCF file.
+ *
+ * Returns: Image of type #GimpImage with the loaded content from the XCF file
+ *          or %NULL if a hard error occurred.
+ * On hard errors, @error will contain the occurred error and %NULL be returned.
+ *
  */
 GimpImage *
 xcf_load_image (Gimp     *gimp,

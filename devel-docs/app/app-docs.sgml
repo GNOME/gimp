@@ -518,7 +518,7 @@
     </chapter>
 
     <chapter id="app-xcf-lowlevel">
-      <title>Lowlevel File Access</title>
+      <title>Low-level File Access</title>
       <xi:include href="xml/xcf-read.xml" />
       <xi:include href="xml/xcf-write.xml" />
       <xi:include href="xml/xcf-seek.xml" />

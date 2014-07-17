@@ -27,8 +27,36 @@
 
 #include "gimp-intl.h"
 
+/**
+ * SECTION:xcf-read
+ * @Short_description:XCF reading functions
+ *
+ * Low-level XCF reading functions
+ */
+
+/**
+ * MAX_XCF_STRING_LEN:
+<<<<<<< Upstream, based on origin/osx-build
+ *
+ * Maximum length of a string in an XCF file ((16L * 1024 * 1024) bytes)
+=======
+ * @MAX_XCF_STRING_LEN: maximum length of a string in an XCF file
+ * ((16L * 1024 * 1024) bytes)
+>>>>>>> 059857a API-doc minor fixes
+ */
 #define MAX_XCF_STRING_LEN (16L * 1024 * 1024)
 
+/**
+ * xcf_read_int32:
+ * @fp:    input file stream
+ * @data:  destination data array
+ * @count: number of words to read
+ *
+ * Read @count 4-byte-words from @fp into @data.
+ * The functions respects the machine specific byte order.
+ *
+ * Returns: number of read bytes (not words)
+ */
 guint
 xcf_read_int32 (FILE    *fp,
                 guint32 *data,
@@ -50,6 +78,16 @@ xcf_read_int32 (FILE    *fp,
   return total;
 }
 
+/**
+ * xcf_read_float:
+ * @fp:    input file stream
+ * @data:  destination data array
+ * @count: number of words to read
+ *
+ * Read @count float values from @fp into @data.
+ *
+ * Returns: number of read bytes
+ */
 guint
 xcf_read_float (FILE   *fp,
                 gfloat *data,
@@ -58,6 +96,16 @@ xcf_read_float (FILE   *fp,
   return xcf_read_int32 (fp, (guint32 *) ((void *) data), count);
 }
 
+/**
+ * xcf_read_int8:
+ * @fp:    input file stream
+ * @data:  destination data array
+ * @count: number of bytes to read
+ *
+ * Read @count bytes from @fp into @data.
+ *
+ * Returns: number of read bytes
+ */
 guint
 xcf_read_int8 (FILE   *fp,
                guint8 *data,
@@ -81,6 +129,17 @@ xcf_read_int8 (FILE   *fp,
   return total;
 }
 
+/**
+ * xcf_read_string:
+ * @fp:    input file stream
+ * @data:  destination data array
+ * @count: number of strings to read
+ *
+ * Read @count bytes from @fp into @data
+ * and convert them to UTF8.
+ *
+ * Returns: number of read bytes
+ */
 guint
 xcf_read_string (FILE   *fp,
                  gchar **data,

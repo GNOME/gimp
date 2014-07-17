@@ -29,6 +29,24 @@
 
 #include "gimp-intl.h"
 
+/**
+ * SECTION:xcf-seek
+ * @Short_description:XCF file seeker functions
+ *
+ * Functions to change the file position in the XCF file
+ */
+
+/**
+ * xcf_seek_pos:
+ * @info:  #XcfInfo structure of the file under work
+ * @pos:   new position, relative to the beginning of the file
+ * @error: Return location for errors
+ *
+ * Changes the file position in the input or output stream to the given
+ * position.
+ *
+ * Returns: %TRUE in case of success; %FALSE otherwise
+ */
 gboolean
 xcf_seek_pos (XcfInfo  *info,
               guint     pos,
@@ -50,6 +68,15 @@ xcf_seek_pos (XcfInfo  *info,
   return TRUE;
 }
 
+/**
+ * xcf_seek_end:
+ * @info: #XcfInfo structure of the file under work
+ * @error: Return location for errors
+ *
+ * Changes the file position in the input or output stream to the file end.
+ *
+ * Returns: %TRUE in case of success; %FALSE otherwise
+ */
 gboolean
 xcf_seek_end (XcfInfo  *info,
               GError  **error)

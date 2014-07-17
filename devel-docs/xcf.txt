@@ -822,6 +822,14 @@ PROP_RESOLUTION (not editing state, but not _really_ essential either)
   files unconditionally, even if the user has not explicitly chosen a
   resolution.
 
+PROP_SAMPLE_POINTS
+  uint32   17       Type identification
+  uint32   plength  Total length of the following payload in bytes
+  ,---------------- Repeat for each sample point:
+  | uint32 x        X coordinate
+  | uint32 y        Y coordinate
+  `--
+
 PROP_UNIT (editing state)
   uint32  22       Type identification
   uint32  4        Four bytes of payload

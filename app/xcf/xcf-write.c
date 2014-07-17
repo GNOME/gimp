@@ -28,6 +28,24 @@
 
 #include "gimp-intl.h"
 
+/**
+ * SECTION:xcf-write
+ * @Short_description:XCF writing functions
+ *
+ * Low-level XCF writing functions
+ */
+
+/**
+ * xcf_write_int32:
+ * @fp:     output file stream
+ * @data:   source data array
+ * @count:  number of words to write
+ * @error:  container for occurred errors
+ *
+ * Write @count 4-byte-words from @data to @fp.
+ *
+ * Returns: count (in numbers of bytes, not words)
+ */
 guint
 xcf_write_int32 (FILE           *fp,
                  const guint32  *data,
@@ -57,6 +75,17 @@ xcf_write_int32 (FILE           *fp,
   return count * 4;
 }
 
+/**
+ * xcf_write_float:
+ * @fp:     output file stream
+ * @data:   source data array
+ * @count:  number of words to write
+ * @error:  container for occurred errors
+ *
+ * Write @count float values from @data to @fp.
+ *
+ * Returns: count (in numbers of bytes, not words)
+ */
 guint
 xcf_write_float (FILE           *fp,
                  const gfloat   *data,
@@ -68,6 +97,19 @@ xcf_write_float (FILE           *fp,
                           error);
 }
 
+/**
+ * xcf_write_int8:
+ * @fp:     output file stream
+ * @data:   source data array
+ * @count:  number of bytes to write
+ * @error:  container for occurred errors
+ *
+ * Write @count bytes of unsigned integer from @data to @fp.
+ *
+ * Returns: @count
+ */
+
+/* TODO: shouldn't the return value (i.e. local variable total) mean the number of written bytes? */
 guint
 xcf_write_int8 (FILE           *fp,
                 const guint8   *data,
@@ -80,7 +122,7 @@ xcf_write_int8 (FILE           *fp,
     {
       gint bytes = fwrite ((const gchar*) data, sizeof (gchar), count, fp);
 
-      if (bytes == 0)
+      if (bytes != count)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Error writing XCF: %s"), g_strerror (errno));
@@ -95,6 +137,17 @@ xcf_write_int8 (FILE           *fp,
   return total;
 }
 
+/**
+ * xcf_write_string:
+ * @fp:     output file stream
+ * @data:   source data array
+ * @count:  number of strings to write
+ * @error:  container for occurred errors
+ *
+ * Write @count bytes of unsigned integer from @data to @fp.
+ *
+ * Returns: number of written bytes
+ */
 guint
 xcf_write_string (FILE     *fp,
                   gchar   **data,

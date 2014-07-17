@@ -68,6 +68,13 @@
 #include "gimp-intl.h"
 
 
+/**
+ * SECTION:xcf-save
+ * @Short_description:XCF file saver functions
+ *
+ * XCF file saver
+ */
+
 static gboolean xcf_save_image_props   (XcfInfo           *info,
                                         GimpImage         *image,
                                         GError           **error);
@@ -176,6 +183,23 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
 
 static const guint32 zero;
 
+/**
+ * xcf_save_choose_format:
+ * @info:  #XcfInfo structure of the file to save
+ * @image: Image to save
+ *
+ * Determines the format version for saving the image to an XCF file:
+ *
+ * 0: Nothing special is in the image.
+ *
+ * 1: Image has color map.
+ *
+ * 2: Image uses one of the layer modes "Soft light", "Grain extract",
+ *    "Grain merge" or "Color erase".
+ *
+ * 3: Image contains a layer group.
+ *
+ */
 void
 xcf_save_choose_format (XcfInfo   *info,
                         GimpImage *image)
@@ -183,7 +207,7 @@ xcf_save_choose_format (XcfInfo   *info,
   GList *list;
   gint   save_version = 0;  /* default to oldest */
 
-  /* need version 1 for colormaps */
+  /* need version 1 for color maps */
   if (gimp_image_get_colormap (image))
     save_version = 1;
 
@@ -215,6 +239,16 @@ xcf_save_choose_format (XcfInfo   *info,
   info->file_version = save_version;
 }
 
+/**
+ * xcf_save_image:
+ * @info:  #XcfInfo structure of the file to save
+ * @image: Image to save
+ * @error: Return location for errors
+ *
+ * Saves the image to an XCF file.
+ *
+ * Returns: 0 if file errors occurred
+ */
 gint
 xcf_save_image (XcfInfo    *info,
                 GimpImage  *image,
@@ -344,7 +378,7 @@ xcf_save_image_props (XcfInfo    *info,
 
   gimp_image_get_resolution (image, &xres, &yres);
 
-  /* check and see if we should save the colormap property */
+  /* check and see if we should save the color map property */
   if (gimp_image_get_colormap (image))
     xcf_check_error (xcf_save_prop (info, image, PROP_COLORMAP, error,
                                     gimp_image_get_colormap_size (image),

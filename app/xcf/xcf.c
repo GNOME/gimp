@@ -45,6 +45,14 @@
 #include "gimp-intl.h"
 
 
+/**
+ * SECTION:xcf
+ * @Short_description:XCF file loader/saver initialization and finalization
+ *
+ * Functions to initialize and finalize the XCF file loader and saver.
+ *
+ */
+
 typedef GimpImage * GimpXcfLoaderFunc (Gimp     *gimp,
                                        XcfInfo  *info,
                                        GError  **error);
@@ -73,6 +81,12 @@ static GimpXcfLoaderFunc * const xcf_loaders[] =
 };
 
 
+/**
+ * xcf_init:
+ * @gimp: #Gimp instance.
+ *
+ * Registers the functions to load and save XCF files in @gimp's plug-in-manager.
+ */
 void
 xcf_init (Gimp *gimp)
 {
@@ -222,6 +236,22 @@ xcf_init (Gimp *gimp)
   g_object_unref (procedure);
 }
 
+/**
+ * xcf_exit:
+ * @gimp: #Gimp instance
+ *
+ * This function does nothing. It is here to keep the symmetry to xcf_init().
+ * Because the plug-in-manager has taken ownership of the load and save
+ * procedures we don't need to unregister or finalize them here.
+ * This will be done automatically at program exit in gimp_real_exit().
+ *
+ * See also:
+ *
+ * - gimp_real_exit()
+ *
+ * - #GimpPluginManager:gimp_plug_in_manager_exit()
+ *
+ */
 void
 xcf_exit (Gimp *gimp)
 {
