@@ -39,8 +39,6 @@
 
 static void   themes_apply_theme         (Gimp                   *gimp,
                                           const gchar            *theme_name);
-static void   themes_directories_foreach (const GimpDatafileData *file_data,
-                                          gpointer                user_data);
 static void   themes_list_themes_foreach (gpointer                key,
                                           gpointer                value,
                                           gpointer                data);
@@ -75,16 +73,57 @@ themes_init (Gimp *gimp)
 
   if (config->theme_path)
     {
-      gchar *path;
+      GList *path;
+      GList *list;
 
-      path = gimp_config_path_expand (config->theme_path, TRUE, NULL);
+      path = gimp_config_path_expand_to_files (config->theme_path, NULL);
 
-      gimp_datafiles_read_directories (path,
-                                       G_FILE_TEST_IS_DIR,
-                                       themes_directories_foreach,
-                                       gimp);
+      for (list = path; list; list = g_list_next (list))
+        {
+          GFile           *dir = list->data;
+          GFileEnumerator *enumerator;
 
-      g_free (path);
+          enumerator =
+            g_file_enumerate_children (dir,
+                                       G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                       G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                       G_FILE_QUERY_INFO_NONE,
+                                       NULL, NULL);
+
+          if (enumerator)
+            {
+              GFileInfo *info;
+
+              while ((info = g_file_enumerator_next_file (enumerator,
+                                                          NULL, NULL)))
+                {
+                  if (! g_file_info_get_is_hidden (info) &&
+                      g_file_info_get_file_type (info) == G_FILE_TYPE_DIRECTORY)
+                    {
+                      GFile       *file;
+                      const gchar *name;
+                      gchar       *basename;
+
+                      file = g_file_enumerator_get_child (enumerator, info);
+                      name = gimp_file_get_utf8_name (file);
+
+                      basename = g_path_get_basename (name);
+
+                      if (gimp->be_verbose)
+                        g_print ("Adding theme '%s' (%s)\n",
+                                 basename, name);
+
+                      g_hash_table_insert (themes_hash, basename, file);
+                    }
+
+                  g_object_unref (info);
+                }
+
+              g_object_unref (enumerator);
+            }
+        }
+
+      g_list_free_full (path, (GDestroyNotify) g_object_unref);
     }
 
   themes_apply_theme (gimp, config->theme);
@@ -296,22 +335,6 @@ themes_apply_theme (Gimp        *gimp,
     }
 
   g_object_unref (themerc);
-}
-
-static void
-themes_directories_foreach (const GimpDatafileData *file_data,
-                            gpointer                user_data)
-{
-  Gimp *gimp = GIMP (user_data);
-
-  if (gimp->be_verbose)
-    g_print ("Adding theme '%s' (%s)\n",
-             gimp_filename_to_utf8 (file_data->basename),
-             gimp_filename_to_utf8 (file_data->filename));
-
-  g_hash_table_insert (themes_hash,
-                       g_strdup (file_data->basename),
-                       g_file_new_for_path (file_data->filename));
 }
 
 static void
