@@ -306,29 +306,33 @@ xcf_save_image (XcfInfo    *info,
 
   max_progress = 1 + n_layers + n_channels;
 
-  /* write the property information for the image.
-   */
-
+  /* write the property information for the image. */
   xcf_check_error (xcf_save_image_props (info, image, error));
 
   xcf_progress_update (info);
 
   offset = info->cp + (n_layers + n_channels + 2) * 4;
 
+  /* write the layers */
   for (list = all_layers; list; list = g_list_next (list))
     {
       GimpLayer *layer = list->data;
 
+      /* write offset to layer pointers table */
       xcf_write_int32_check_error (info, &offset, 1);
 
+      /* write layer at offset */
       saved_pos = info->cp;
       xcf_check_error (xcf_seek_pos (info, offset, error));
-
       xcf_check_error (xcf_save_layer (info, image, layer, error));
 
+      /* increase offset */
       offset = info->cp;
+
+      /* set file position to layer pointers table */
       xcf_check_error (xcf_seek_pos (info, saved_pos, error));
 
+      /* indicate progress */
       xcf_progress_update (info);
     }
 
@@ -337,20 +341,26 @@ xcf_save_image (XcfInfo    *info,
    */
   xcf_write_int32_check_error (info, &zero, 1);
 
+  /* write the channels */
   for (list = all_channels; list; list = g_list_next (list))
     {
       GimpChannel *channel = list->data;
 
+      /* write offset to channel pointers table */
       xcf_write_int32_check_error (info, &offset, 1);
 
+      /* write channel at offset */
       saved_pos = info->cp;
       xcf_check_error (xcf_seek_pos (info, offset, error));
-
       xcf_check_error (xcf_save_channel (info, image, channel, error));
 
+      /* increase offset */
       offset = info->cp;
+
+      /* set file position to channel pointers table */
       xcf_check_error (xcf_seek_pos (info, saved_pos, error));
 
+      /* indicate progress */
       xcf_progress_update (info);
     }
 

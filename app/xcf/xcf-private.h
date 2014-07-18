@@ -22,7 +22,7 @@
  * SECTION:xcf-private
  * @Short_description:Common definitions for the XCF functions
  *
- * Common enum and structs definitions for the XCF functions
+ * Common enum and struct definitions for the XCF functions
  */
 
 
