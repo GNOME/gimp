@@ -181,7 +181,7 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
                                (gdouble) progress / (gdouble) max_progress); \
   } G_STMT_END
 
-static const guint32 zero;
+static const guint32 zero = 0;
 
 /**
  * xcf_save_choose_format:
