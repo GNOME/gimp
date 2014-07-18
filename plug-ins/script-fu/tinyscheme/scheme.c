@@ -2132,7 +2132,7 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
                /* R5RS says there must be a '.' (unless 'e'?) */
                f = strcspn(p, ".e");
                if (p[f] == 0) {
-                    p[f] = '.'; // not found, so add '.0' at the end
+                    p[f] = '.'; /* not found, so add '.0' at the end */
                     p[f+1] = '0';
                     p[f+2] = 0;
                }

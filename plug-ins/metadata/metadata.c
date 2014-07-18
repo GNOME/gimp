@@ -198,7 +198,7 @@ query (void)
                           editor_args, NULL);
 
   gimp_plugin_menu_register (EDITOR_PROC, "<Image>/File/Info");
-  // XXX gimp_plugin_icon_register (EDITOR_PROC, GIMP_ICON_TYPE_STOCK_ID,
+  /* XXX gimp_plugin_icon_register (EDITOR_PROC, GIMP_ICON_TYPE_STOCK_ID,*/
 
   gimp_install_procedure (DECODE_XMP_PROC,
                           "Decode an XMP packet",
