@@ -20,11 +20,9 @@
 
 #include "config.h"
 
-#include <stdlib.h>
 #include <string.h>
 
 #include <gio/gio.h>
-#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -275,40 +273,50 @@ static void
 gimp_environ_table_load_env_file (GimpEnvironTable *environ_table,
 				  GFile            *file)
 {
-  FILE             *env;
-  gchar            *path;
-  gchar             buffer[4096];
-  gsize             len;
-  gchar            *name, *value, *separator, *p, *q;
-  GimpEnvironValue *val;
+  GInputStream     *input;
+  GDataInputStream *data_input;
+  gchar            *buffer;
+  gsize             buffer_len;
+  GError           *error = NULL;
 
   if (environ_table->verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  path = g_file_get_path (file);
-  env = g_fopen (path, "r");
-  g_free (path);
-
-  if (! env)
-    return;
-
-  while (fgets (buffer, sizeof (buffer), env))
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &error));
+  if (! input)
     {
+      g_message (_("Could not open '%s' for reading: %s"),
+                 gimp_file_get_utf8_name (file),
+                 error->message);
+      g_clear_error (&error);
+      return;
+    }
+
+  data_input = g_data_input_stream_new (input);
+  g_object_unref (input);
+
+  while ((buffer = g_data_input_stream_read_line (data_input, &buffer_len,
+                                                  NULL, &error)))
+    {
+      gchar *name;
+      gchar *value;
+      gchar *separator;
+      gchar *p;
+      gchar *q;
+
       /* Skip comments */
       if (buffer[0] == '#')
-        continue;
-
-      len = strlen (buffer) - 1;
-
-      /* Skip too long lines */
-      if (buffer[len] != '\n')
-        continue;
-
-      buffer[len] = '\0';
+        {
+          g_free (buffer);
+          continue;
+        }
 
       p = strchr (buffer, '=');
       if (! p)
-        continue;
+        {
+          g_free (buffer);
+          continue;
+        }
 
       *p = '\0';
 
@@ -319,6 +327,7 @@ gimp_environ_table_load_env_file (GimpEnvironTable *environ_table,
         {
           g_message (_("Empty variable name in environment file %s"),
                      gimp_file_get_utf8_name (file));
+          g_free (buffer);
           continue;
         }
 
@@ -337,21 +346,32 @@ gimp_environ_table_load_env_file (GimpEnvironTable *environ_table,
         {
           g_message (_("Illegal variable name in environment file %s: %s"),
                      gimp_file_get_utf8_name (file), name);
+          g_free (buffer);
           continue;
         }
 
       if (! g_hash_table_lookup (environ_table->vars, name))
         {
-          val = g_slice_new (GimpEnvironValue);
+          GimpEnvironValue *val = g_slice_new (GimpEnvironValue);
 
           val->value     = gimp_config_path_expand (value, FALSE, NULL);
           val->separator = g_strdup (separator);
 
           g_hash_table_insert (environ_table->vars, g_strdup (name), val);
         }
+
+      g_free (buffer);
     }
 
-  fclose (env);
+  if (error)
+    {
+      g_message (_("Error reading '%s': %s"),
+                 gimp_file_get_utf8_name (file),
+                 error->message);
+      g_clear_error (&error);
+    }
+
+  g_object_unref (data_input);
 }
 
 static gboolean
