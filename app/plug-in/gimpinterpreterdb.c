@@ -79,26 +79,26 @@ struct _GimpInterpreterMagic
 };
 
 
-static void     gimp_interpreter_db_finalize         (GObject                 *object);
+static void     gimp_interpreter_db_finalize         (GObject            *object);
 
-static void     gimp_interpreter_db_load_interp_file (const GimpDatafileData  *file_data,
-                                                      gpointer                 user_data);
+static void     gimp_interpreter_db_load_interp_file (GimpInterpreterDB  *db,
+                                                      GFile              *file);
 
-static void     gimp_interpreter_db_add_program      (GimpInterpreterDB       *db,
-                                                      const GimpDatafileData  *file_data,
-                                                      gchar                   *buffer);
-static void     gimp_interpreter_db_add_binfmt_misc  (GimpInterpreterDB       *db,
-                                                      const GimpDatafileData  *file_data,
-                                                      gchar                   *buffer);
+static void     gimp_interpreter_db_add_program      (GimpInterpreterDB  *db,
+                                                      GFile              *file,
+                                                      gchar              *buffer);
+static void     gimp_interpreter_db_add_binfmt_misc  (GimpInterpreterDB  *db,
+                                                      GFile              *file,
+                                                      gchar              *buffer);
 
-static gboolean gimp_interpreter_db_add_extension    (GimpInterpreterDB       *db,
-                                                      gchar                  **tokens);
-static gboolean gimp_interpreter_db_add_magic        (GimpInterpreterDB       *db,
-                                                      gchar                  **tokens);
+static gboolean gimp_interpreter_db_add_extension    (GimpInterpreterDB  *db,
+                                                      gchar             **tokens);
+static gboolean gimp_interpreter_db_add_magic        (GimpInterpreterDB  *db,
+                                                      gchar             **tokens);
 
-static void     gimp_interpreter_db_clear_magics     (GimpInterpreterDB       *db);
+static void     gimp_interpreter_db_clear_magics     (GimpInterpreterDB  *db);
 
-static void     gimp_interpreter_db_resolve_programs (GimpInterpreterDB       *db);
+static void     gimp_interpreter_db_resolve_programs (GimpInterpreterDB  *db);
 
 
 G_DEFINE_TYPE (GimpInterpreterDB, gimp_interpreter_db, G_TYPE_OBJECT)
@@ -141,8 +141,10 @@ gimp_interpreter_db_new (gboolean verbose)
 
 void
 gimp_interpreter_db_load (GimpInterpreterDB *db,
-                          const gchar       *interp_path)
+                          GList             *path)
 {
+  GList *list;
+
   g_return_if_fail (GIMP_IS_INTERPRETER_DB (db));
 
   gimp_interpreter_db_clear (db);
@@ -159,10 +161,41 @@ gimp_interpreter_db_load (GimpInterpreterDB *db,
   db->extension_names = g_hash_table_new_full (g_str_hash, g_str_equal,
                                                g_free, NULL);
 
-  gimp_datafiles_read_directories (interp_path,
-                                   G_FILE_TEST_EXISTS,
-                                   gimp_interpreter_db_load_interp_file,
-                                   db);
+  for (list = path; list; list = g_list_next (list))
+    {
+      GFile           *dir = list->data;
+      GFileEnumerator *enumerator;
+
+      enumerator =
+	g_file_enumerate_children (dir,
+				   G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+				   G_FILE_ATTRIBUTE_STANDARD_TYPE,
+				   G_FILE_QUERY_INFO_NONE,
+				   NULL, NULL);
+
+      if (enumerator)
+	{
+	  GFileInfo *info;
+
+	  while ((info = g_file_enumerator_next_file (enumerator,
+						      NULL, NULL)))
+	    {
+	      if (! g_file_info_get_is_hidden (info) &&
+		  g_file_info_get_file_type (info) == G_FILE_TYPE_REGULAR)
+		{
+		  GFile *file = g_file_enumerator_get_child (enumerator, info);
+
+		  gimp_interpreter_db_load_interp_file (db, file);
+
+		  g_object_unref (file);
+		}
+
+	      g_object_unref (info);
+	    }
+
+	  g_object_unref (enumerator);
+	}
+    }
 
   gimp_interpreter_db_resolve_programs (db);
 }
@@ -200,20 +233,21 @@ gimp_interpreter_db_clear (GimpInterpreterDB *db)
 }
 
 static void
-gimp_interpreter_db_load_interp_file (const GimpDatafileData *file_data,
-                                      gpointer                user_data)
+gimp_interpreter_db_load_interp_file (GimpInterpreterDB *db,
+				      GFile             *file)
 {
-  GimpInterpreterDB *db;
-  FILE              *interp_file;
-  gchar              buffer[4096];
-  gsize              len;
-
-  db = GIMP_INTERPRETER_DB (user_data);
+  FILE  *interp_file;
+  gchar *path;
+  gchar  buffer[4096];
+  gsize  len;
 
   if (db->verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (file_data->filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  interp_file = g_fopen (file_data->filename, "r");
+  path = g_file_get_path (file);
+  interp_file = g_fopen (path, "r");
+  g_free (path);
+
   if (! interp_file)
     return;
 
@@ -232,18 +266,22 @@ gimp_interpreter_db_load_interp_file (const GimpDatafileData *file_data,
       buffer[len] = '\0';
 
       if (g_ascii_isalnum (buffer[0]) || (buffer[0] == '/'))
-        gimp_interpreter_db_add_program (db, file_data, buffer);
+	{
+	  gimp_interpreter_db_add_program (db, file, buffer);
+	}
       else if (! g_ascii_isspace (buffer[0]) && (buffer[0] != '\0'))
-        gimp_interpreter_db_add_binfmt_misc (db, file_data, buffer);
+	{
+	  gimp_interpreter_db_add_binfmt_misc (db, file, buffer);
+	}
     }
 
   fclose (interp_file);
 }
 
 static void
-gimp_interpreter_db_add_program (GimpInterpreterDB      *db,
-                                 const GimpDatafileData *file_data,
-                                 gchar                  *buffer)
+gimp_interpreter_db_add_program (GimpInterpreterDB  *db,
+                                 GFile              *file,
+                                 gchar              *buffer)
 {
   gchar *name;
   gchar *program;
@@ -261,7 +299,7 @@ gimp_interpreter_db_add_program (GimpInterpreterDB      *db,
   if (! g_file_test (program, G_FILE_TEST_IS_EXECUTABLE))
     {
       g_message (_("Bad interpreter referenced in interpreter file %s: %s"),
-                 gimp_filename_to_utf8 (file_data->filename),
+                 gimp_file_get_utf8_name (file),
                  gimp_filename_to_utf8 (program));
       return;
     }
@@ -271,9 +309,9 @@ gimp_interpreter_db_add_program (GimpInterpreterDB      *db,
 }
 
 static void
-gimp_interpreter_db_add_binfmt_misc (GimpInterpreterDB      *db,
-                                     const GimpDatafileData *file_data,
-                                     gchar                  *buffer)
+gimp_interpreter_db_add_binfmt_misc (GimpInterpreterDB *db,
+                                     GFile             *file,
+                                     gchar             *buffer)
 {
   gchar **tokens = NULL;
   gchar  *name, *type, *program;
@@ -320,7 +358,7 @@ gimp_interpreter_db_add_binfmt_misc (GimpInterpreterDB      *db,
 
 bail:
   g_message (_("Bad binary format string in interpreter file %s"),
-             gimp_filename_to_utf8 (file_data->filename));
+             gimp_file_get_utf8_name (file));
 
 out:
   g_strfreev (tokens);

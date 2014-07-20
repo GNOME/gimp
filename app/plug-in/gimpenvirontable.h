@@ -54,7 +54,7 @@ GType               gimp_environ_table_get_type  (void) G_GNUC_CONST;
 GimpEnvironTable  * gimp_environ_table_new       (gboolean          verbose);
 
 void                gimp_environ_table_load      (GimpEnvironTable *environ_table,
-                                                  const gchar      *env_path);
+                                                  GList            *path);
 
 void                gimp_environ_table_add       (GimpEnvironTable *environ_table,
                                                   const gchar      *name,

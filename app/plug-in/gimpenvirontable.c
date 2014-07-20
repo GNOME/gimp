@@ -47,8 +47,8 @@ struct _GimpEnvironValue
 
 static void     gimp_environ_table_finalize       (GObject               *object);
 
-static void     gimp_environ_table_load_env_file  (const GimpDatafileData *file_data,
-                                                   gpointer                user_data);
+static void     gimp_environ_table_load_env_file  (GimpEnvironTable      *environ_table,
+                                                   GFile                 *file);
 static gboolean gimp_environ_table_legal_name     (gchar                 *name);
 
 static void     gimp_environ_table_populate       (GimpEnvironTable      *environ_table);
@@ -138,8 +138,10 @@ gimp_environ_table_str_equal (gconstpointer v1,
 
 void
 gimp_environ_table_load (GimpEnvironTable *environ_table,
-                         const gchar      *env_path)
+                         GList            *path)
 {
+  GList *list;
+
   g_return_if_fail (GIMP_IS_ENVIRON_TABLE (environ_table));
 
   gimp_environ_table_clear (environ_table);
@@ -150,10 +152,41 @@ gimp_environ_table_load (GimpEnvironTable *environ_table,
                            g_free,
                            (GDestroyNotify) gimp_environ_table_free_value);
 
-  gimp_datafiles_read_directories (env_path,
-                                   G_FILE_TEST_EXISTS,
-                                   gimp_environ_table_load_env_file,
-                                   environ_table);
+  for (list = path; list; list = g_list_next (list))
+    {
+      GFile           *dir = list->data;
+      GFileEnumerator *enumerator;
+
+      enumerator =
+	g_file_enumerate_children (dir,
+				   G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+				   G_FILE_ATTRIBUTE_STANDARD_TYPE,
+				   G_FILE_QUERY_INFO_NONE,
+				   NULL, NULL);
+
+      if (enumerator)
+	{
+	  GFileInfo *info;
+
+	  while ((info = g_file_enumerator_next_file (enumerator,
+						      NULL, NULL)))
+	    {
+	      if (! g_file_info_get_is_hidden (info) &&
+		  g_file_info_get_file_type (info) == G_FILE_TYPE_REGULAR)
+		{
+		  GFile *file = g_file_enumerator_get_child (enumerator, info);
+
+		  gimp_environ_table_load_env_file (environ_table, file);
+
+		  g_object_unref (file);
+		}
+
+	      g_object_unref (info);
+	    }
+
+	  g_object_unref (enumerator);
+	}
+    }
 }
 
 void
@@ -239,20 +272,23 @@ gimp_environ_table_get_envp (GimpEnvironTable *environ_table)
 /* private */
 
 static void
-gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
-                                  gpointer                user_data)
+gimp_environ_table_load_env_file (GimpEnvironTable *environ_table,
+				  GFile            *file)
 {
-  GimpEnvironTable *environ_table = GIMP_ENVIRON_TABLE (user_data);
   FILE             *env;
+  gchar            *path;
   gchar             buffer[4096];
   gsize             len;
   gchar            *name, *value, *separator, *p, *q;
   GimpEnvironValue *val;
 
   if (environ_table->verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (file_data->filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  env = g_fopen (file_data->filename, "r");
+  path = g_file_get_path (file);
+  env = g_fopen (path, "r");
+  g_free (path);
+
   if (! env)
     return;
 
@@ -282,7 +318,7 @@ gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
       if (name[0] == '\0')
         {
           g_message (_("Empty variable name in environment file %s"),
-                     gimp_filename_to_utf8 (file_data->filename));
+                     gimp_file_get_utf8_name (file));
           continue;
         }
 
@@ -300,7 +336,7 @@ gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
       if (! gimp_environ_table_legal_name (name))
         {
           g_message (_("Illegal variable name in environment file %s: %s"),
-                     gimp_filename_to_utf8 (file_data->filename), name);
+                     gimp_file_get_utf8_name (file), name);
           continue;
         }
 

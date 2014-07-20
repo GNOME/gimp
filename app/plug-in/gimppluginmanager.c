@@ -271,24 +271,25 @@ void
 gimp_plug_in_manager_initialize (GimpPlugInManager  *manager,
                                  GimpInitStatusFunc  status_callback)
 {
-  gchar *path;
+  GimpCoreConfig *config;
+  GList          *path;
 
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
   g_return_if_fail (status_callback != NULL);
 
+  config = manager->gimp->config;
+
   status_callback (NULL, _("Plug-In Interpreters"), 0.8);
 
-  path = gimp_config_path_expand (manager->gimp->config->interpreter_path,
-                                  TRUE, NULL);
+  path = gimp_config_path_expand_to_files (config->interpreter_path, NULL);
   gimp_interpreter_db_load (manager->interpreter_db, path);
-  g_free (path);
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   status_callback (NULL, _("Plug-In Environment"), 0.9);
 
-  path = gimp_config_path_expand (manager->gimp->config->environ_path,
-                                  TRUE, NULL);
+  path = gimp_config_path_expand_to_files (config->environ_path, NULL);
   gimp_environ_table_load (manager->environ_table, path);
-  g_free (path);
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   /*  allocate a piece of shared memory for use in transporting tiles
    *  to plug-ins. if we can't allocate a piece of shared memory then
