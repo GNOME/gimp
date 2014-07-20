@@ -121,7 +121,7 @@
 
 	<autotools id="libpng" autogenargs="--enable-shared"
 		autogen-sh="configure">
-		<branch module="libpng/libpng-1.6.10.tar.xz" version="1.6.10"
+		<branch module="libpng/libpng-1.6.12.tar.xz" version="1.6.12"
 			repo="sourceforge" />
 	</autotools>
 
@@ -411,8 +411,7 @@
 	</autotools>
 
 	<autotools id="atk" autogen-sh="configure">
-		<branch module="atk/2.13/atk-2.13.1.tar.xz" version="2.13.1"
-			hash="sha256:71baf41d5b01f550e63601baf8589cacf9ccec7f3fa6638924d9100def51fa62" />
+		<branch module="atk/2.13/atk-2.13.3.tar.xz" version="2.13.3"/>
 		<dependencies>
 			<dep package="glib" />
 			<dep package="shared-mime-info" />
@@ -423,8 +422,7 @@
 
 	<autotools id="pixman" autogenargs="--disable-gtk"
 		autogen-sh="configure">
-		<branch version="0.32.4" module="pixman-0.32.4.tar.gz" repo="cairographics"
-			hash="sha1:54be89b3453109be0930400e5b13c35c9e9d5e3a" />
+		<branch version="0.32.6" module="pixman-0.32.6.tar.gz" repo="cairographics"/>
 		<dependencies>
 			>
 			<dep package="fontconfig" />
@@ -453,8 +451,7 @@
 	</autotools>
 
 	<autotools id="harfbuzz" autogen-sh="configure" autogenargs="">
-		<branch version="0.9.28" repo="harfbuzz" module="harfbuzz-0.9.28.tar.bz2"
-			hash="sha256:a567f7c58018af0a9751e18641fd8434bfcef8307122dabe47dd652ce8bde048">
+		<branch version="0.9.32" repo="harfbuzz" module="harfbuzz-0.9.32.tar.bz2">
 		</branch>
 		<dependencies>
 			<dep package="cairo" />
@@ -465,8 +462,7 @@
 
 	<autotools id="pango" autogen-sh="configure"
 		autogenargs="--enable-shared --disable-silent-rules --with-cairo">
-		<branch version="1.36.0" module="pango/1.36/pango-1.36.3.tar.xz"
-			hash="sha256:ad48e32917f94aa9d507486d44366e59355fcfd46ef86d119ddcba566ada5d22">
+		<branch version="1.36.5" module="pango/1.36/pango-1.36.5.tar.xz">
 		</branch>
 		<dependencies>
 			<dep package="cairo" />
@@ -496,8 +492,7 @@
 
 	<autotools id="gvfs" autogen-sh="configure"
 		autogenargs="--disable-avahi --disable-fuse --disable-hal --disable-cdda --disable-obexftp --disable-gphoto2 --enable-samba --disable-udev --disable-gdu --disable-udisks2 --disable-libsystemd-login --disable-gudev --disable-afc --disable-goa --disable-bluray --disable-libmtp --enable-http --enable-archive --enable-afp --disable-silent-rules">
-		<branch module="gvfs/1.21/gvfs-1.21.2.tar.xz" version="1.21.2"
-			hash="sha256:aadf18dea818bdd1fd14856e56a30171bd9f89ce5e36591ab8c74d10199e0142">
+		<branch module="gvfs/1.21/gvfs-1.21.4.tar.xz" version="1.21.4">
 			<!--<patch file="https://dl.dropboxusercontent.com/u/942685/files/gvfs/patch-gconf-gapplookupgconf.h.diff" 
 				strip="0"/> -->
 		</branch>
@@ -574,7 +569,7 @@
 	</autotools>
 
 	<autotools id="curl" autogen-sh="configure" autogenargs="">
-		<branch module="curl-7.37.0.tar.gz" version="7.37.0" repo="curl" />
+		<branch module="curl-7.37.1.tar.gz" version="7.37.1" repo="curl" />
 		<dependencies>
 			<dep package="gnutls" />
 		</dependencies>
@@ -687,7 +682,7 @@
 
 	<autotools id="poppler" autogen-sh="configure"
 		autogenargs="--enable-compile-warnings=no">
-		<branch module="poppler-0.26.1.tar.xz" version="0.26.1" repo="poppler" />
+		<branch module="poppler-0.26.3.tar.xz" version="0.26.3" repo="poppler" />
 		<dependencies>
 			<dep package="lcms" />
 			<dep package="lcms2" />
@@ -740,7 +735,7 @@
 
 	<autotools id="dbus" autogen-sh="configure"
 		autogenargs="--disable-doxygen-docs --disable-xml-docs --disable-selinux --without-x --disable-tests --enable-verbose-mode --enable-asserts">
-		<branch module="dbus/dbus-1.8.2.tar.gz" version="1.8.2" repo="dbus">
+		<branch module="dbus/dbus-1.8.6.tar.gz" version="1.8.6" repo="dbus">
 		</branch>
 		<dependencies>
 		</dependencies>
@@ -1039,8 +1034,8 @@
 
 	<autotools id="python" autogenargs="--enable-shared"
 		autogen-sh="configure">
-		<branch repo="python" module="2.7.6/Python-2.7.6.tar.xz"
-			version="2.7.6">
+		<branch repo="python" module="2.7.8/Python-2.7.8.tar.xz"
+			version="2.7.8">
 		</branch>
 		<dependencies>
 			<dep package="berkeleydb" />
@@ -1164,7 +1159,7 @@
 		href="http://pkg-isocodes.alioth.debian.org/downloads/" />
 
 	<autotools id="iso-codes" autogen-sh="configure">
-		<branch module="iso-codes-3.53.tar.xz" version="3.53" repo="iso-codes" />
+		<branch module="iso-codes-3.55.tar.xz" version="3.55" repo="iso-codes" />
 	</autotools>
 
 	<!-- Ufraw plugin -->
