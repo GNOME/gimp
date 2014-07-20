@@ -213,7 +213,7 @@ gimp_tool_progress_set_text (GimpProgress *progress,
     {
       GimpDisplayShell *shell = gimp_display_get_shell (tool->progress_display);
 
-      gimp_progress_set_text (GIMP_PROGRESS (tool->progress), "%s", message);
+      gimp_progress_set_text_literal (GIMP_PROGRESS (tool->progress), message);
       gimp_widget_flush_expose (shell->canvas);
     }
 }

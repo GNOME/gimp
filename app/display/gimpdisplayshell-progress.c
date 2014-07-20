@@ -68,7 +68,7 @@ gimp_display_shell_progress_set_text (GimpProgress *progress,
   GimpDisplayShell *shell     = GIMP_DISPLAY_SHELL (progress);
   GimpStatusbar    *statusbar = gimp_display_shell_get_statusbar (shell);
 
-  gimp_progress_set_text (GIMP_PROGRESS (statusbar), "%s", message);
+  gimp_progress_set_text_literal (GIMP_PROGRESS (statusbar), message);
 }
 
 static void

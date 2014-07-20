@@ -310,7 +310,7 @@ gimp_display_progress_set_text (GimpProgress *progress,
   GimpDisplayPrivate *private = GIMP_DISPLAY_GET_PRIVATE (display);
 
   if (private->shell)
-    gimp_progress_set_text (GIMP_PROGRESS (private->shell), "%s", message);
+    gimp_progress_set_text_literal (GIMP_PROGRESS (private->shell), message);
 }
 
 static void

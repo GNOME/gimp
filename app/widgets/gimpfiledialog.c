@@ -253,7 +253,7 @@ gimp_file_dialog_progress_set_text (GimpProgress *progress,
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (progress);
 
   if (dialog->progress)
-    gimp_progress_set_text (GIMP_PROGRESS (dialog->progress), "%s", message);
+    gimp_progress_set_text_literal (GIMP_PROGRESS (dialog->progress), message);
 }
 
 static void

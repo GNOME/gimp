@@ -71,8 +71,10 @@ void           gimp_progress_end                (GimpProgress        *progress);
 gboolean       gimp_progress_is_active          (GimpProgress        *progress);
 
 void           gimp_progress_set_text           (GimpProgress        *progress,
-                                                 const gchar         *message,
+                                                 const gchar         *format,
                                                  ...) G_GNUC_PRINTF (2, 3);
+void           gimp_progress_set_text_literal   (GimpProgress        *progress,
+                                                 const gchar         *message);
 void           gimp_progress_set_value          (GimpProgress        *progress,
                                                  gdouble              percentage);
 gdouble        gimp_progress_get_value          (GimpProgress        *progress);

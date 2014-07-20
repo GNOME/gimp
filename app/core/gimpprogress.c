@@ -160,26 +160,34 @@ gimp_progress_set_text (GimpProgress *progress,
                         const gchar  *format,
                         ...)
 {
-  GimpProgressInterface *progress_iface;
+  va_list  args;
+  gchar   *message;
 
   g_return_if_fail (GIMP_IS_PROGRESS (progress));
   g_return_if_fail (format != NULL);
 
+  va_start (args, format);
+  message = g_strdup_vprintf (format, args);
+  va_end (args);
+
+  gimp_progress_set_text_literal (progress, message);
+
+  g_free (message);
+}
+
+void
+gimp_progress_set_text_literal (GimpProgress *progress,
+                                const gchar  *message)
+{
+  GimpProgressInterface *progress_iface;
+
+  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (message != NULL);
+
   progress_iface = GIMP_PROGRESS_GET_INTERFACE (progress);
 
   if (progress_iface->set_text)
-    {
-      va_list  args;
-      gchar   *text;
-
-      va_start (args, format);
-      text = g_strdup_vprintf (format, args);
-      va_end (args);
-
-      progress_iface->set_text (progress, text);
-
-      g_free (text);
-    }
+    progress_iface->set_text (progress, message);
 }
 
 void

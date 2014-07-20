@@ -140,7 +140,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
       if (gimp_progress_is_active (progress))
         {
           if (undo_desc)
-            gimp_progress_set_text (progress, "%s", undo_desc);
+            gimp_progress_set_text_literal (progress, undo_desc);
 
           progress_started = FALSE;
           cancellable      = FALSE;

@@ -880,8 +880,8 @@ gimp_image_convert_type (GimpImage               *image,
         }
 
       if (progress)
-        gimp_progress_set_text (progress,
-                                _("Converting to indexed colors (stage 2)"));
+        gimp_progress_set_text_literal (progress,
+                                        _("Converting to indexed colors (stage 2)"));
 
       if (old_type == GIMP_RGB &&
           ! needs_quantize     &&
@@ -925,8 +925,8 @@ gimp_image_convert_type (GimpImage               *image,
     }
 
   if (progress)
-    gimp_progress_set_text (progress,
-                            _("Converting to indexed colors (stage 3)"));
+    gimp_progress_set_text_literal (progress,
+                                    _("Converting to indexed colors (stage 3)"));
 
   /* Initialise data which must persist across indexed layer iterations */
   switch (new_type)

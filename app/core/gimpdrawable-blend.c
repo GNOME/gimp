@@ -540,7 +540,7 @@ gradient_precalc_shapeburst (GimpImage           *image,
   GeglBuffer  *temp_buffer;
   GeglNode    *shapeburst;
 
-  gimp_progress_set_text (progress, _("Calculating distance map"));
+  gimp_progress_set_text_literal (progress, _("Calculating distance map"));
 
   /*  allocate the distance map  */
   dist_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -863,7 +863,7 @@ gradient_fill_region (GimpImage           *image,
       rbd.dist_buffer = gradient_precalc_shapeburst (image, drawable,
                                                      buffer_region,
                                                      rbd.dist, progress);
-      gimp_progress_set_text (progress, _("Blending"));
+      gimp_progress_set_text_literal (progress, _("Blending"));
       break;
 
     default:

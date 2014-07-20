@@ -179,7 +179,7 @@ gimp_progress_dialog_progress_set_text (GimpProgress *progress,
   if (! dialog->box)
     return;
 
-  gimp_progress_set_text (GIMP_PROGRESS (dialog->box), "%s", message);
+  gimp_progress_set_text_literal (GIMP_PROGRESS (dialog->box), message);
 }
 
 static void
