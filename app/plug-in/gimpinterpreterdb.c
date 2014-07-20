@@ -236,34 +236,37 @@ static void
 gimp_interpreter_db_load_interp_file (GimpInterpreterDB *db,
 				      GFile             *file)
 {
-  FILE  *interp_file;
-  gchar *path;
-  gchar  buffer[4096];
-  gsize  len;
+  GInputStream     *input;
+  GDataInputStream *data_input;
+  gchar            *buffer;
+  gsize             buffer_len;
+  GError           *error = NULL;
 
   if (db->verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  path = g_file_get_path (file);
-  interp_file = g_fopen (path, "r");
-  g_free (path);
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &error));
+  if (! input)
+    {
+      g_message (_("Could not open '%s' for reading: %s"),
+                 gimp_file_get_utf8_name (file),
+                 error->message);
+      g_clear_error (&error);
+      return;
+    }
 
-  if (! interp_file)
-    return;
+  data_input = g_data_input_stream_new (input);
+  g_object_unref (input);
 
-  while (fgets (buffer, sizeof (buffer), interp_file))
+  while ((buffer = g_data_input_stream_read_line (data_input, &buffer_len,
+                                                  NULL, &error)))
     {
       /* Skip comments */
       if (buffer[0] == '#')
-        continue;
-
-      len = strlen (buffer) - 1;
-
-      /* Skip too long lines */
-      if (buffer[len] != '\n')
-        continue;
-
-      buffer[len] = '\0';
+        {
+          g_free (buffer);
+          continue;
+        }
 
       if (g_ascii_isalnum (buffer[0]) || (buffer[0] == '/'))
 	{
@@ -273,9 +276,19 @@ gimp_interpreter_db_load_interp_file (GimpInterpreterDB *db,
 	{
 	  gimp_interpreter_db_add_binfmt_misc (db, file, buffer);
 	}
+
+      g_free (buffer);
     }
 
-  fclose (interp_file);
+  if (error)
+    {
+      g_message (_("Error reading '%s': %s"),
+                 gimp_file_get_utf8_name (file),
+                 error->message);
+      g_clear_error (&error);
+    }
+
+  g_object_unref (data_input);
 }
 
 static void
@@ -322,6 +335,8 @@ gimp_interpreter_db_add_binfmt_misc (GimpInterpreterDB *db,
 
   if ((count < 10) || (count > 255))
     goto bail;
+
+  buffer = g_strndup (buffer, count + 9);
 
   del[0] = *buffer;
   del[1] = '\0';
