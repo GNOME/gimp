@@ -531,6 +531,8 @@ gimp_viewable_deserialize_property (GimpConfig *config,
               }
           }
 
+        g_free (encoded_image);
+
         g_value_take_object (value, icon_pixbuf);
       }
       break;

@@ -193,6 +193,7 @@ gimp_gradient_load (GimpContext   *context,
             default:
               g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                            _("Corrupt segment %d."), i);
+              g_free (line);
               goto failed;
             }
         }
@@ -200,8 +201,11 @@ gimp_gradient_load (GimpContext   *context,
         {
           g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                        _("Corrupt segment %d."), i);
+          g_free (line);
           goto failed;
         }
+
+      g_free (line);
 
       if ((  prev && (prev->right < seg->left)) ||
           (! prev && (0.0         < seg->left)))

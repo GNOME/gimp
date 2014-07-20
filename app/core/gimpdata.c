@@ -788,12 +788,16 @@ gimp_data_set_file (GimpData *data,
                                     NULL, NULL);
 
           /* and we can write it */
-          if (info &&
-              g_file_info_get_attribute_boolean (info,
-                                                 G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE))
+          if (info)
             {
-              private->writable  = writable  ? TRUE : FALSE;
-              private->deletable = deletable ? TRUE : FALSE;
+              if (g_file_info_get_attribute_boolean (info,
+                                                     G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE))
+                {
+                  private->writable  = writable  ? TRUE : FALSE;
+                  private->deletable = deletable ? TRUE : FALSE;
+                }
+
+              g_object_unref (info);
             }
         }
       else /* OR it doesn't exist */
@@ -806,12 +810,16 @@ gimp_data_set_file (GimpData *data,
                                     NULL, NULL);
 
           /* and we can write to its parent directory */
-          if (info &&
-              g_file_info_get_attribute_boolean (info,
-                                                 G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE))
+          if (info)
             {
-              private->writable  = writable  ? TRUE : FALSE;
-              private->deletable = deletable ? TRUE : FALSE;
+              if (g_file_info_get_attribute_boolean (info,
+                                                     G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE))
+                {
+                  private->writable  = writable  ? TRUE : FALSE;
+                  private->deletable = deletable ? TRUE : FALSE;
+                }
+
+              g_object_unref (file);
             }
 
           g_object_unref (parent);

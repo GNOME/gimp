@@ -675,6 +675,7 @@ gimp_plug_in_manager_add_from_rc (GimpPlugInManager *manager,
 
           g_free (basename2);
           g_free (basename1);
+          g_free (path1);
 
           return;
         }

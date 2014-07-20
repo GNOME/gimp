@@ -72,6 +72,8 @@ gimp_palette_load (GimpContext   *context,
       goto failed;
     }
 
+  g_free (str);
+
   palette = g_object_new (GIMP_TYPE_PALETTE,
                           "mime-type", "application/x-gimp-palette",
                           NULL);
