@@ -773,7 +773,7 @@ flip_line (guchar   *buffer,
 
   alt = buffer + (info->bytes * (info->width - 1));
 
-  for (x = 0; x * 2 <= info->width; x++)
+  for (x = 0; x * 2 < info->width; x++)
     {
       for (s = 0; s < info->bytes; ++s)
         {
