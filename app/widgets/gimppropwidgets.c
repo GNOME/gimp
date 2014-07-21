@@ -478,12 +478,12 @@ gimp_prop_spin_scale_new (GObject     *config,
                           gdouble      page_increment,
                           gint         digits)
 {
-  GParamSpec *param_spec;
-  GtkObject  *adjustment;
-  GtkWidget  *scale;
-  gdouble     value;
-  gdouble     lower;
-  gdouble     upper;
+  GParamSpec    *param_spec;
+  GtkAdjustment *adjustment;
+  GtkWidget     *scale;
+  gdouble        value;
+  gdouble        lower;
+  gdouble        upper;
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
@@ -500,10 +500,11 @@ gimp_prop_spin_scale_new (GObject     *config,
   if (! label)
     label = g_param_spec_get_nick (param_spec);
 
-  adjustment = gtk_adjustment_new (value, lower, upper,
-                                   step_increment, page_increment, 0.0);
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (value, lower, upper,
+                        step_increment, page_increment, 0.0);
 
-  scale = gimp_spin_scale_new (GTK_ADJUSTMENT (adjustment), label, digits);
+  scale = gimp_spin_scale_new (adjustment, label, digits);
 
   set_param_spec (G_OBJECT (adjustment), scale, param_spec);
 

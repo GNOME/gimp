@@ -97,7 +97,7 @@ static void       gimp_ui_manager_menu_pos            (GtkMenu        *menu,
                                                        gint           *y,
                                                        gboolean       *push_in,
                                                        gpointer        data);
-static void       gimp_ui_manager_delete_popdown_data (GtkObject      *object,
+static void       gimp_ui_manager_delete_popdown_data (GtkWidget      *widget,
                                                        GimpUIManager  *manager);
 static void       gimp_ui_manager_item_realize        (GtkWidget      *widget,
                                                        GimpUIManager  *manager);
@@ -857,10 +857,10 @@ gimp_ui_manager_menu_pos (GtkMenu  *menu,
 }
 
 static void
-gimp_ui_manager_delete_popdown_data (GtkObject     *object,
+gimp_ui_manager_delete_popdown_data (GtkWidget     *widget,
                                      GimpUIManager *manager)
 {
-  g_signal_handlers_disconnect_by_func (object,
+  g_signal_handlers_disconnect_by_func (widget,
                                         gimp_ui_manager_delete_popdown_data,
                                         manager);
   g_object_set_data (G_OBJECT (manager), "popdown-data", NULL);
