@@ -129,7 +129,7 @@ file_save (Gimp                *gimp,
     {
       path = g_file_get_path (file);
 
-      if (! path && g_getenv ("GIMP_HANDLE_REMOTE_FILES"))
+      if (! path)
         {
           GError *my_error = NULL;
 

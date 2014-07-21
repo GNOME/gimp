@@ -254,7 +254,6 @@ file_procedure_in_group (GimpPlugInProcedure *file_proc,
   const gchar *name        = gimp_object_get_name (file_proc);
   gboolean     is_xcf_save = FALSE;
   gboolean     is_filter   = FALSE;
-  gboolean     is_uri      = FALSE;
 
   is_xcf_save = (strcmp (name, "gimp-xcf-save") == 0);
 
@@ -262,17 +261,15 @@ file_procedure_in_group (GimpPlugInProcedure *file_proc,
                  strcmp (name, "file-bz2-save") == 0 ||
                  strcmp (name, "file-xz-save")  == 0);
 
-  is_uri      = (strcmp (name, "file-uri-save") == 0);
-
   switch (group)
     {
     case FILE_PROCEDURE_GROUP_SAVE:
       /* Only .xcf shall pass */
-      return is_xcf_save || is_filter || is_uri;
+      return is_xcf_save || is_filter;
 
     case FILE_PROCEDURE_GROUP_EXPORT:
       /* Anything but .xcf shall pass */
-      return ! is_xcf_save || is_uri;
+      return ! is_xcf_save;
 
     case FILE_PROCEDURE_GROUP_OPEN:
       /* No filter applied for Open */

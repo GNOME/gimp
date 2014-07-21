@@ -310,7 +310,6 @@ gimp_file_dialog_new (Gimp                  *gimp,
   GSList               *file_procs_all_images = NULL;
   const gchar          *automatic             = NULL;
   const gchar          *automatic_help_id     = NULL;
-  gboolean              local_only            = FALSE;
   GtkFileChooserAction  gtk_action            = 0;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -327,10 +326,6 @@ gimp_file_dialog_new (Gimp                  *gimp,
       file_procs_all_images = NULL;
       automatic             = _("Automatically Detected");
       automatic_help_id     = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
-
-      local_only = (gimp_pdb_lookup_procedure (gimp->pdb,
-                                               "file-uri-load") == NULL &&
-                    ! g_getenv ("GIMP_HANDLE_REMOTE_FILES"));
       break;
 
     case GIMP_FILE_CHOOSER_ACTION_SAVE:
@@ -344,10 +339,6 @@ gimp_file_dialog_new (Gimp                  *gimp,
                                gimp->plug_in_manager->save_procs);
       automatic             = _("By Extension");
       automatic_help_id     = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
-
-      local_only = (gimp_pdb_lookup_procedure (gimp->pdb,
-                                               "file-uri-save") == NULL &&
-                    ! g_getenv ("GIMP_HANDLE_REMOTE_FILES"));
       break;
 
     default:
@@ -359,7 +350,7 @@ gimp_file_dialog_new (Gimp                  *gimp,
                          "title",                     title,
                          "role",                      role,
                          "action",                    gtk_action,
-                         "local-only",                local_only,
+                         "local-only",                FALSE,
                          "do-overwrite-confirmation", TRUE,
                          NULL);
 

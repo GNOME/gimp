@@ -42,7 +42,6 @@ SUBDIRS = \
 	file-jpeg		\
 	file-psd		\
 	file-sgi		\
-	file-uri		\
 	flame			\
 	fractal-explorer	\
 	gfig			\

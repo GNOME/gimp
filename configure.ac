@@ -2201,7 +2201,6 @@ plug-ins/file-ico/Makefile
 plug-ins/file-jpeg/Makefile
 plug-ins/file-psd/Makefile
 plug-ins/file-sgi/Makefile
-plug-ins/file-uri/Makefile
 plug-ins/flame/Makefile
 plug-ins/fractal-explorer/Makefile
 plug-ins/fractal-explorer/examples/Makefile
