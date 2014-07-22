@@ -64,7 +64,7 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.pdb_dialog_close       = NULL;
   gimp->gui.recent_list_add_file   = NULL;
   gimp->gui.recent_list_load       = NULL;
-  gimp->gui.mount_enclosing_volume = NULL;
+  gimp->gui.get_mount_operation    = NULL;
 }
 
 void
@@ -494,19 +494,15 @@ gimp_recent_list_load (Gimp *gimp)
     gimp->gui.recent_list_load (gimp);
 }
 
-gboolean
-gimp_mount_enclosing_volume (Gimp          *gimp,
-                             GFile         *file,
-                             GimpProgress  *progress,
-                             GError       **error)
+GMountOperation *
+gimp_get_mount_operation (Gimp         *gimp,
+                          GimpProgress *progress)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (gimp->gui.mount_enclosing_volume)
-    return gimp->gui.mount_enclosing_volume (gimp, file, progress, error);
+  if (gimp->gui.get_mount_operation)
+    return gimp->gui.get_mount_operation (gimp, progress);
 
-  return FALSE;
+  return g_mount_operation_new ();
 }

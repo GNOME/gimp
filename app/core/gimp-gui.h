@@ -93,10 +93,8 @@ struct _GimpGui
                                              const gchar         *mime_type);
   void           (* recent_list_load)       (Gimp                *gimp);
 
-  gboolean       (* mount_enclosing_volume) (Gimp                *gimp,
-                                             GFile               *file,
-                                             GimpProgress        *progress,
-                                             GError             **error);
+  GMountOperation * (* get_mount_operation) (Gimp                *gimp,
+                                             GimpProgress        *progress);
 };
 
 
@@ -175,10 +173,8 @@ gboolean       gimp_recent_list_add_file   (Gimp                *gimp,
                                             const gchar         *mime_type);
 void           gimp_recent_list_load       (Gimp                *gimp);
 
-gboolean       gimp_mount_enclosing_volume (Gimp                *gimp,
-                                            GFile               *file,
-                                            GimpProgress        *progress,
-                                            GError             **error);
+GMountOperation * gimp_get_mount_operation (Gimp                *gimp,
+                                            GimpProgress        *progress);
 
 
 #endif  /* __GIMP_GUI_H__ */

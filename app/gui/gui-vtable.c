@@ -144,10 +144,8 @@ static gboolean       gui_recent_list_add_file   (Gimp                *gimp,
                                                   const gchar         *mime_type);
 static void           gui_recent_list_load       (Gimp                *gimp);
 
-static gboolean       gui_mount_enclosing_volume (Gimp                *gimp,
-                                                  GFile               *file,
-                                                  GimpProgress        *progress,
-                                                  GError             **error);
+static GMountOperation * gui_get_mount_operation (Gimp                *gimp,
+                                                  GimpProgress        *progress);
 
 
 /*  public functions  */
@@ -183,7 +181,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.pdb_dialog_close       = gui_pdb_dialog_close;
   gimp->gui.recent_list_add_file   = gui_recent_list_add_file;
   gimp->gui.recent_list_load       = gui_recent_list_load;
-  gimp->gui.mount_enclosing_volume = gui_mount_enclosing_volume;
+  gimp->gui.get_mount_operation    = gui_get_mount_operation;
 }
 
 
@@ -741,45 +739,14 @@ gui_recent_list_load (Gimp *gimp)
   gimp_container_thaw (gimp->documents);
 }
 
-static void
-mount_volume_ready (GFile         *file,
-                    GAsyncResult  *res,
-                    GError       **error)
+static GMountOperation *
+gui_get_mount_operation (Gimp         *gimp,
+                         GimpProgress *progress)
 {
-  g_file_mount_enclosing_volume_finish (file, res, error);
-
-  gtk_main_quit ();
-}
-
-static gboolean
-gui_mount_enclosing_volume (Gimp          *gimp,
-                            GFile         *file,
-                            GimpProgress  *progress,
-                            GError       **error)
-{
-  GMountOperation *operation;
-  GtkWidget       *toplevel = NULL;
-  GError          *my_error = NULL;
+  GtkWidget *toplevel = NULL;
 
   if (GTK_IS_WIDGET (progress))
     toplevel = gtk_widget_get_toplevel (GTK_WIDGET (progress));
 
-  operation = gtk_mount_operation_new (GTK_WINDOW (toplevel));
-
-  g_file_mount_enclosing_volume (file, G_MOUNT_MOUNT_NONE,
-                                 operation,
-                                 NULL,
-                                 (GAsyncReadyCallback) mount_volume_ready,
-                                 &my_error);
-  gtk_main ();
-
-  g_object_unref (operation);
-
-  if (my_error)
-    {
-      g_propagate_error (error, my_error);
-      return FALSE;
-    }
-
-  return TRUE;
+  return gtk_mount_operation_new (GTK_WINDOW (toplevel));
 }

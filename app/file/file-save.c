@@ -68,11 +68,11 @@ file_save (Gimp                *gimp,
   GimpValueArray    *return_vals;
   GimpPDBStatusType  status     = GIMP_PDB_EXECUTION_ERROR;
   GFile             *local_file = NULL;
-  gboolean           mounted    = TRUE;
   gchar             *path       = NULL;
   gchar             *uri        = NULL;
   gint32             image_ID;
   gint32             drawable_ID;
+  GError            *my_error   = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_PDB_CALLING_ERROR);
@@ -125,16 +125,25 @@ file_save (Gimp                *gimp,
         }
     }
 
+  if (! g_file_is_native (file) &&
+      ! file_remote_mount_file (gimp, file, progress, &my_error))
+    {
+      if (my_error)
+        g_propagate_error (error, my_error);
+      else
+        status = GIMP_PDB_CANCEL;
+
+      goto out;
+    }
+
   if (! file_proc->handles_uri)
     {
       path = g_file_get_path (file);
 
       if (! path)
         {
-          GError *my_error = NULL;
-
-          local_file = file_remote_upload_image_prepare (gimp, file, &mounted,
-                                                         progress, &my_error);
+          local_file = file_remote_upload_image_prepare (gimp, file, progress,
+                                                         &my_error);
 
           if (! local_file)
             {
@@ -181,7 +190,6 @@ file_save (Gimp                *gimp,
           GError *my_error = NULL;
 
           if (! file_remote_upload_image_finish (gimp, file, local_file,
-                                                 mounted,
                                                  progress, &my_error))
             {
               status = GIMP_PDB_EXECUTION_ERROR;
@@ -193,9 +201,7 @@ file_save (Gimp                *gimp,
             }
         }
 
-      if (! mounted)
-        g_file_delete (local_file, NULL, NULL);
-
+      g_file_delete (local_file, NULL, NULL);
       g_object_unref (local_file);
     }
 

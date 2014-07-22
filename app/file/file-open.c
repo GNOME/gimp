@@ -93,9 +93,9 @@ file_open_image (Gimp                *gimp,
   GimpValueArray *return_vals;
   GimpImage      *image       = NULL;
   GFile          *local_file  = NULL;
-  gboolean        mounted     = TRUE;
   gchar          *path        = NULL;
   gchar          *entered_uri = NULL;
+  GError         *my_error    = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -144,16 +144,25 @@ file_open_image (Gimp                *gimp,
         }
     }
 
+  if (! g_file_is_native (file) &&
+      ! file_remote_mount_file (gimp, file, progress, &my_error))
+    {
+      if (my_error)
+        g_propagate_error (error, my_error);
+      else
+        *status = GIMP_PDB_CANCEL;
+
+      return NULL;
+    }
+
   if (! file_proc->handles_uri)
     {
       path = g_file_get_path (file);
 
       if (! path)
         {
-          GError *my_error = NULL;
-
-          local_file = file_remote_download_image (gimp, file, &mounted,
-                                                   progress, &my_error);
+          local_file = file_remote_download_image (gimp, file, progress,
+                                                   &my_error);
 
           if (! local_file)
             {
@@ -200,9 +209,7 @@ file_open_image (Gimp                *gimp,
       if (image)
         gimp_image_set_file (image, file);
 
-      if (! mounted)
-        g_file_delete (local_file, NULL, NULL);
-
+      g_file_delete (local_file, NULL, NULL);
       g_object_unref (local_file);
     }
 
