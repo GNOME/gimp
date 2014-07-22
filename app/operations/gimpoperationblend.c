@@ -1088,7 +1088,7 @@ gimp_operation_blend_process (GeglOperation       *operation,
 
       iter = gegl_buffer_iterator_new (output, result, 0,
                                        babl_format ("R'G'B'A float"),
-                                       GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
       roi = &iter->roi[0];
 
       if (self->dither)
