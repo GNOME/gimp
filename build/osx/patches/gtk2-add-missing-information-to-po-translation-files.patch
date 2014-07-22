@@ -1,4 +1,4 @@
-From 5b1b3bd91db454247fd720a3eb769de526117f5e Mon Sep 17 00:00:00 2001
+From 8f68c0b138d0f00ad64b79a609cecaa2eb703de2 Mon Sep 17 00:00:00 2001
 From: Sven Claussner <sclaussner@src.gnome.org>
 Date: Fri, 13 Jun 2014 18:20:21 +0200
 Subject: [PATCH] GTK+: Add missing information to po translation files.
@@ -330,14 +330,14 @@ index 4ab9cb9..0b94e44 100644
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/be@latin.po b/po-properties/be@latin.po
-index 3fdaf6b..7472be9 100644
+index 3fdaf6b..8a3246d 100644
 --- a/po-properties/be@latin.po
 +++ b/po-properties/be@latin.po
 @@ -10,6 +10,7 @@ msgstr ""
  "PO-Revision-Date: 2007-12-09 14:44+0200\n"
  "Last-Translator: Alaksandar Navicki <zolak@lacinka.org>\n"
  "Language-Team: i18n@mova.org <i18n@mova.org>\n"
-+"Language: be-latin\n"
++"Language: be@latin\n"
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
@@ -414,14 +414,14 @@ index 8f5c2f7..4dd645e 100644
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po-properties/ca@valencia.po b/po-properties/ca@valencia.po
-index c7901b0..abde1c1 100644
+index c7901b0..594cb03 100644
 --- a/po-properties/ca@valencia.po
 +++ b/po-properties/ca@valencia.po
 @@ -31,6 +31,7 @@ msgstr ""
  "PO-Revision-Date: 2010-03-29 20:27+0200\n"
  "Last-Translator: David Planella <david.planella@ubuntu.com>\n"
  "Language-Team: Catalan <tradgnome@softcatala.org>\n"
-+"Language: ca-XV\n"
++"Language: ca@valencia\n"
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
@@ -1449,14 +1449,14 @@ index f189839..6dba620 100644
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/be@latin.po b/po/be@latin.po
-index 2540167..c905849 100644
+index 2540167..c1f4791 100644
 --- a/po/be@latin.po
 +++ b/po/be@latin.po
 @@ -11,6 +11,7 @@ msgstr ""
  "PO-Revision-Date: 2009-02-14 03:17+0200\n"
  "Last-Translator: Alaksandar Navicki <zolak@lacinka.org>\n"
  "Language-Team: Belarusian Latin <i18n@mova.org>\n"
-+"Language: be-latin\n"
++"Language: be@latin\n"
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=utf-8\n"
  "Content-Transfer-Encoding: 8bit\n"
@@ -1533,14 +1533,14 @@ index dd4f43a..14ab348 100644
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
 diff --git a/po/ca@valencia.po b/po/ca@valencia.po
-index 1c2af04..9828858 100644
+index 1c2af04..5128fbc 100644
 --- a/po/ca@valencia.po
 +++ b/po/ca@valencia.po
 @@ -32,6 +32,7 @@ msgstr ""
  "PO-Revision-Date: 2010-04-02 18:26+0200\n"
  "Last-Translator: David Planella <david.planella@gmail.com>\n"
  "Language-Team: Catalan <tradgnome@softcatala.org>\n"
-+"Language: ca-XV\n"
++"Language: ca@valencia\n"
  "MIME-Version: 1.0\n"
  "Content-Type: text/plain; charset=UTF-8\n"
  "Content-Transfer-Encoding: 8bit\n"
@@ -2420,3 +2420,4 @@ index 1b7b65b..a0dcead 100644
  "Content-Transfer-Encoding: 8bit\n"
 -- 
 2.0.0
+

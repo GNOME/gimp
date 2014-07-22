@@ -260,7 +260,7 @@
 	<autotools id="gtk+-2.24" autogen-sh="configure"
 		autogenargs="--with-gdktarget=quartz --enable-debug=yes --disable-gtk-doc --enable-quartz-relocation --without-x --with-xinput --enable-xinerama">
 		<branch module="gtk+/2.24/gtk+-2.24.24.tar.xz" version="2.24.24">
-			<patch file="0001-GTK-Add-missing-information-to-po-translation-files.patch"
+			<patch file="gtk2-add-missing-information-to-po-translation-files.patch"
 				strip="1" />
 		</branch>
 		<dependencies>
@@ -340,9 +340,9 @@
 			version="2.0.5"
 			hash="sha256:6c4ff7501d7ff35e49068052d80fcf76ce494e5953c5f3967e4958b1b0c67b9f">
 			<patch
-				file="0002-Improve-internationalization-of-App-menu-and-other-s.patch"
+				file="gmi2-improve-internationalization-of-App-menu-and-other-s.patch"
 				strip="1" />
-			<patch file="0003-Keep-separators-between-placeholders.patch"
+			<patch file="gmi2-keep-separators-between-placeholders.patch"
 				strip="1" />
 		</branch>
 	</autotools>
@@ -370,7 +370,7 @@
 	<autotools id="libffi" autogenargs="--disable-builddir">
 		<branch module="libffi/libffi-3.1.tar.gz" repo="sourceware.org"
 			version="3.1" checkoutdir="libffi-3.1">
-			<patch file="0004-Fix-wrong-variable-substitution-in-configure.patch"
+			<patch file="libffi-fix-wrong-variable-substitution-in-configure.patch"
 				strip="1" />
 		</branch>
 	</autotools>
@@ -411,7 +411,7 @@
 	</autotools>
 
 	<autotools id="atk" autogen-sh="configure">
-		<branch module="atk/2.13/atk-2.13.3.tar.xz" version="2.13.3"/>
+		<branch module="atk/2.12/atk-2.12.0.tar.xz" version="2.12"/>
 		<dependencies>
 			<dep package="glib" />
 			<dep package="shared-mime-info" />
@@ -492,10 +492,7 @@
 
 	<autotools id="gvfs" autogen-sh="configure"
 		autogenargs="--disable-avahi --disable-fuse --disable-hal --disable-cdda --disable-obexftp --disable-gphoto2 --enable-samba --disable-udev --disable-gdu --disable-udisks2 --disable-libsystemd-login --disable-gudev --disable-afc --disable-goa --disable-bluray --disable-libmtp --enable-http --enable-archive --enable-afp --disable-silent-rules">
-		<branch module="gvfs/1.21/gvfs-1.21.4.tar.xz" version="1.21.4">
-			<!--<patch file="https://dl.dropboxusercontent.com/u/942685/files/gvfs/patch-gconf-gapplookupgconf.h.diff" 
-				strip="0"/> -->
-		</branch>
+		<branch module="gvfs/1.21/gvfs-1.21.4.tar.xz" version="1.21.4"/>
 		<dependencies>
 			<dep package="gtk+-2.24" />
 			<dep package="glib" />
@@ -560,7 +557,7 @@
 	</autotools>
 
 	<autotools id="gnutls" autogen-sh="configure" autogenargs="--disable-cxx">
-		<branch module="gnutls/v3.3/gnutls-3.3.2.tar.xz" version="3.3.2"
+		<branch module="gnutls/v3.2/gnutls-3.2.15.tar.xz" version="3.2.15"
 			repo="gnutls" />
 		<dependencies>
 			<dep package="nettle" />
@@ -578,7 +575,7 @@
 	<autotools id="libgcrypt" autogen-sh="configure" autogenargs="--disable-asm">
 		<branch module="gcrypt/libgcrypt/libgcrypt-1.6.1.tar.gz"
 			version="" repo="gnupg">
-			<patch file="0001-libgcrypt-build-without-docs.patch" strip="1" />
+			<patch file="libgcrypt-build-without-docs.patch" strip="1" />
 		</branch>
 		<dependencies>
 			<dep package="libgpg-error" />
@@ -744,9 +741,9 @@
 	<autotools id="dbus-nolaunchd" autogen-sh="configure"
 		autogenargs="--disable-doxygen-docs --disable-xml-docs --disable-selinux --without-x --disable-launchd --with-session-socket-dir=/var/tmp --disable-tests">
 		<branch module="dbus/dbus-1.7.4.tar.gz" version="1.7.4" repo="dbus">
-			<!--<patch file="https://git.gnome.org/browse/gtk-osx/plain/patches/dbus-install.patch"/> 
-				<patch file="https://git.gnome.org/browse/gtk-osx/plain/patches/dbus-msg-nosignal.patch" 
-				strip="1"/> <patch file="https://git.gnome.org/browse/gedit/plain/osx/jhbuild/patches/dbus-relocatable-services.patch" 
+			<!--<patch file="https://git.gnome.org/browse/gtk-osx/plain/patches/dbus-install.patch"/>
+				<patch file="https://git.gnome.org/browse/gtk-osx/plain/patches/dbus-msg-nosignal.patch"
+				strip="1"/> <patch file="https://git.gnome.org/browse/gedit/plain/osx/jhbuild/patches/dbus-relocatable-services.patch"
 				strip="1"/> -->
 		</branch>
 		<dependencies>
@@ -1083,9 +1080,9 @@
 		</dependencies>
 	</autotools>
 
-	<!-- PyGObject 2.28 is the last series for Gtk+-2; for co-installation with 
-		later versions it installs as pygobject2 and PyGObject 3 installs as pygobject3. 
-		Introspection is disabled here, because gir-scanner isn't smart enough to 
+	<!-- PyGObject 2.28 is the last series for Gtk+-2; for co-installation with
+		later versions it installs as pygobject2 and PyGObject 3 installs as pygobject3.
+		Introspection is disabled here, because gir-scanner isn't smart enough to
 		co-install them. -->
 	<autotools id="pygobject" autogen-sh="configure"
 		autogenargs=" --enable-introspection=no">
@@ -1123,9 +1120,9 @@
 			version="2.0.5"
 			hash="sha256:6c4ff7501d7ff35e49068052d80fcf76ce494e5953c5f3967e4958b1b0c67b9f">
 			<patch
-				file="0002-Improve-internationalization-of-App-menu-and-other-s.patch"
+				file="gmi2-improve-internationalization-of-App-menu-and-other-s.patch"
 				strip="1" />
-                        <patch file="0003-Keep-separators-between-placeholders.patch"
+			<patch file="gmi2-keep-separators-between-placeholders.patch"
 				strip="1" />
 		</branch>
 		<dependencies>
@@ -1300,17 +1297,16 @@
 	<autotools id="gettext-runtime-update" autogen-sh="configure"
 		autogenargs="--without-emacs --disable-java --disable-native-java --disable-libasprintf --disable-csharp --disable-rpath --enable-nls">
 		<branch repo="ftp.gnu.org" source-subdir="gettext-runtime"
-			module="gettext/gettext-0.19.1.tar.gz" version="0.19.1">
-			<!-- patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/gettext-bug33999-stpncpy.patch" 
-				strip="1"/ -->
+			module="gettext/gettext-0.19.2.tar.gz" version="0.19.2">
 		</branch>
 	</autotools>
 
 	<autotools id="gettext-tools-update" autogen-sh="configure"
 		autogenargs="--without-emacs --disable-java --disable-native-java --disable-libasprintf --disable-csharp --with-included-glib --enable-nls --disable-rpath">
 		<branch repo="ftp.gnu.org" source-subdir="gettext-tools"
-			module="gettext/gettext-0.19.1.tar.gz" version="0.19.1">
+			module="gettext/gettext-0.19.2.tar.gz" version="0.19.2">
 		</branch>
 	</autotools>
 
 </moduleset>
+
