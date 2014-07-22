@@ -877,11 +877,16 @@ gimp_blend_tool_create_graph (GimpBlendTool *blend_tool)
 static void
 gimp_blend_tool_update_preview_coords (GimpBlendTool *blend_tool)
 {
+  GimpTool *tool = GIMP_TOOL (blend_tool);
+  gint      off_x, off_y;
+
+  gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+
   gegl_node_set (blend_tool->render_node,
-                 "start_x", blend_tool->start_x,
-                 "start_y", blend_tool->start_y,
-                 "end_x",   blend_tool->end_x,
-                 "end_y",   blend_tool->end_y,
+                 "start_x", blend_tool->start_x - off_x,
+                 "start_y", blend_tool->start_y - off_y,
+                 "end_x",   blend_tool->end_x - off_x,
+                 "end_y",   blend_tool->end_y - off_y,
                  NULL);
 }
 
