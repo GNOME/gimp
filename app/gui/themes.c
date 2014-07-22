@@ -85,6 +85,7 @@ themes_init (Gimp *gimp)
 
           enumerator =
             g_file_enumerate_children (dir,
+                                       G_FILE_ATTRIBUTE_STANDARD_NAME ","
                                        G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
                                        G_FILE_ATTRIBUTE_STANDARD_TYPE,
                                        G_FILE_QUERY_INFO_NONE,
