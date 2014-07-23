@@ -435,6 +435,9 @@ load_image (const gchar  *filename,
   L_XWDFILEHEADER  xwdhdr;
   L_XWDCOLOR      *xwdcolmap = NULL;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   ifp = g_fopen (filename, "rb");
   if (!ifp)
     {
@@ -536,9 +539,6 @@ load_image (const gchar  *filename,
       goto out;
     }
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
-
   depth = xwdhdr.l_pixmap_depth;
   bpp   = xwdhdr.l_bits_per_pixel;
 
@@ -638,6 +638,9 @@ save_image (const gchar  *filename,
       break;
     }
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   /* Open the output file. */
   ofp = g_fopen (filename, "wb");
   if (! ofp)
@@ -647,9 +650,6 @@ save_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   switch (drawable_type)
     {

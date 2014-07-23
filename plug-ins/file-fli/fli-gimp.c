@@ -491,6 +491,9 @@ load_image (const gchar  *filename,
   s_fli_header  fli_header;
   gint          cnt;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   file = g_fopen (filename ,"rb");
   if (!file)
     {
@@ -499,9 +502,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   fli_read_header (file, &fli_header);
   if (fli_header.magic == NO_HEADER)

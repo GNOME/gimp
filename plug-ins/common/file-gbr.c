@@ -345,12 +345,12 @@ load_image (GFile   *file,
   gsize              size;
   gint               i;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             g_file_get_parse_name (file));
+
   input = G_INPUT_STREAM (g_file_read (file, NULL, error));
   if (! input)
     return -1;
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             g_file_get_parse_name (file));
 
   size = G_STRUCT_OFFSET (BrushHeader, magic_number);
 
@@ -671,12 +671,12 @@ save_image (GFile   *file,
 
   bpp = babl_format_get_bytes_per_pixel (format);
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             g_file_get_parse_name (file));
+
   output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
   if (! output)
     return FALSE;
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             g_file_get_parse_name (file));
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 

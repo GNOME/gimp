@@ -356,6 +356,9 @@ load_image (const gchar  *filename,
   guchar       *dest, cmap[768];
   guint8        header_buf[128];
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   fd = g_fopen (filename, "rb");
 
   if (! fd)
@@ -365,9 +368,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   if (fread (header_buf, 128, 1, fd) == 0)
     {

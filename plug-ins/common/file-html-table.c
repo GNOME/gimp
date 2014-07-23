@@ -233,6 +233,9 @@ save_image (const gchar  *filename,
   cols = gegl_buffer_get_width  (buffer);
   rows = gegl_buffer_get_height (buffer);
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   fp = g_fopen (filename, "w");
 
   if (! fp)
@@ -259,9 +262,6 @@ save_image (const gchar  *filename,
   if (gtmvals.caption)
     fprintf (fp, "<CAPTION>%s</CAPTION>\n",
              gtmvals.captiontxt);
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   buf  = g_newa (guchar, babl_format_get_bytes_per_pixel (format));
   buf2 = g_newa (guchar, babl_format_get_bytes_per_pixel (format));

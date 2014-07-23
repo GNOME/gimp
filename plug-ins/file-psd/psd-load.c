@@ -122,6 +122,9 @@ load_image (const gchar  *filename,
   if (g_stat (filename, &st) == -1)
     return -1;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   IFDBG(1) g_debug ("Open file %s", gimp_filename_to_utf8 (filename));
   f = g_fopen (filename, "rb");
   if (f == NULL)
@@ -131,9 +134,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /* ----- Read the PSD file Header block ----- */
   IFDBG(2) g_debug ("Read header block");

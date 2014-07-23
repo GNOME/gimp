@@ -646,6 +646,9 @@ load_image (const gchar  *filename,
   gint             img_height;
   gint             i, j;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   /* Open the file and check it is a valid X cursor */
 
   fp = g_fopen (filename, "rb");
@@ -664,9 +667,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename));
       return -1;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /* check dimension is valid. */
 
@@ -1451,6 +1451,9 @@ save_image (const gchar *filename,
                     0,
                     NULL);
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   /*
    * Open the file pointer.
    */
@@ -1463,9 +1466,6 @@ save_image (const gchar *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /* get layers */
   orig_layers = gimp_image_get_layers (orig_image_ID, &nlayers);

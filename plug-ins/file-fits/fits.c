@@ -470,6 +470,9 @@ save_image (const gchar  *filename,
       break;
     }
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   /* Open the output file. */
   ofp = fits_open (filename, "w");
   if (!ofp)
@@ -479,9 +482,6 @@ save_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return (FALSE);
     }
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   retval = save_fits (ofp,image_ID, drawable_ID);
 

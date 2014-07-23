@@ -855,6 +855,9 @@ load_image (const gchar  *filename,
    * Open the file and initialize the PNG read "engine"...
    */
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   fp = g_fopen (filename, "rb");
 
   if (fp == NULL)
@@ -866,9 +869,6 @@ load_image (const gchar  *filename,
     }
 
   png_init_io (pp, fp);
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /*
    * Get the image dimensions and create the image...
@@ -1480,6 +1480,9 @@ save_image (const gchar  *filename,
    * Open the file and initialize the PNG write "engine"...
    */
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   fp = g_fopen (filename, "wb");
   if (fp == NULL)
     {
@@ -1490,9 +1493,6 @@ save_image (const gchar  *filename,
     }
 
   png_init_io (pp, fp);
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /*
    * Get the buffer for the current image...

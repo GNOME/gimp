@@ -348,6 +348,9 @@ load_image (const gchar  *filename,
   gchar     version[4];
   gint32    image_ID = -1;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   fd = g_fopen (filename, "rb");
 
   if (! fd)
@@ -357,9 +360,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   if (! ReadOK (fd, buf, 6))
     {

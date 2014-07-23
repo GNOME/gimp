@@ -982,13 +982,13 @@ load_image (const gchar  *filename,
   guchar       *pixels;
   guint         width, height;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   pixels = wmf_load_file (filename, &width, &height, error);
 
   if (! pixels)
     return -1;
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   image = gimp_image_new (width, height, GIMP_RGB);
   gimp_image_set_filename (image, filename);

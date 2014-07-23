@@ -317,12 +317,12 @@ load_image (GFile   *file,
   GimpImageType     image_type;
   gsize             bytes_read;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             g_file_get_parse_name (file));
+
   input = G_INPUT_STREAM (g_file_read (file, NULL, error));
   if (! input)
     return -1;
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             g_file_get_parse_name (file));
 
   if (! g_input_stream_read_all (input, &ph, sizeof (PatternHeader),
                                  &bytes_read, NULL, error) ||
@@ -515,12 +515,12 @@ save_image (GFile   *file,
       return FALSE;
     }
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             g_file_get_parse_name (file));
+
   output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
   if (! output)
     return FALSE;
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             g_file_get_parse_name (file));
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 

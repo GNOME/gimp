@@ -197,6 +197,9 @@ ReadBMP (const gchar  *name,
   gchar     magick[2];
   Bitmap_Channel masks[4];
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (name));
+
   filename = name;
   fd = g_fopen (filename, "rb");
 
@@ -207,9 +210,6 @@ ReadBMP (const gchar  *name,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       goto out;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (name));
 
   /* It is a File. Now is it a Bitmap? Read the shortest possible header */
 

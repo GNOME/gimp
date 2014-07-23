@@ -1011,6 +1011,9 @@ load_image (const gchar  *filename,
   g_print (" GraphicsAlphaBits: %d\n", plvals.graphicsalpha);
 #endif
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   /* Try to see if PostScript file is available */
   ifp = g_fopen (filename, "r");
   if (ifp == NULL)
@@ -1021,9 +1024,6 @@ load_image (const gchar  *filename,
       return -1;
     }
   fclose (ifp);
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury, &is_epsf);
   if (!ifp)
@@ -1187,6 +1187,9 @@ save_image (const gchar  *filename,
       break;
     }
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   /* Open the output file. */
   ofp = g_fopen (filename, "wb");
   if (!ofp)
@@ -1196,9 +1199,6 @@ save_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   save_ps_header (ofp, filename);
 

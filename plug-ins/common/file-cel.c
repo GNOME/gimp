@@ -335,6 +335,8 @@ load_image (const gchar  *file,
   gint        i, j, k;       /* Counters */
   size_t      n_read;        /* Number of items read from file */
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (file));
 
   /* Open the file for reading */
   fp = g_fopen (file, "r");
@@ -346,9 +348,6 @@ load_image (const gchar  *file,
                    gimp_filename_to_utf8 (file), g_strerror (errno));
       return -1;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (file));
 
   /* Get the image dimensions and create the image... */
 
@@ -769,6 +768,9 @@ save_image (const gchar  *file,
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (file));
+
   /* Open the file for writing */
   fp = g_fopen (file, "w");
 
@@ -779,9 +781,6 @@ save_image (const gchar  *file,
                    gimp_filename_to_utf8 (file), g_strerror (errno));
       return FALSE;
     }
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (file));
 
   /* Headers */
   memset (header, 0, 32);

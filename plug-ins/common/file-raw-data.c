@@ -899,6 +899,9 @@ load_image (const gchar  *filename,
 
   data = g_new0 (RawGimpData, 1);
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   data->fp = g_fopen (filename, "rb");
   if (! data->fp)
     {
@@ -907,9 +910,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   size = get_file_info (filename);
 

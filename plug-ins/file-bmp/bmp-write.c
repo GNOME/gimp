@@ -312,6 +312,10 @@ WriteBMP (const gchar  *filename,
 
   gimp_set_data (SAVE_PROC, &BMPSaveData, sizeof (BMPSaveData));
 
+  /* Let's begin the progress */
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   /* Let's take some file */
   outfile = g_fopen (filename, "wb");
   if (!outfile)
@@ -331,10 +335,6 @@ WriteBMP (const gchar  *filename,
                    GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
   g_object_unref (buffer);
-
-  /* And let's begin the progress */
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   cur_progress = 0;
   max_progress = drawable_height;

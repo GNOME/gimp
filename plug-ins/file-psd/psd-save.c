@@ -1646,6 +1646,8 @@ save_image (const gchar  *filename,
     }
   g_free (layers);
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
 
   fd = g_fopen (filename, "wb");
   if (fd == NULL)
@@ -1655,9 +1657,6 @@ save_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   IFDBG g_print ("\tFile '%s' has been opened\n",
                  gimp_filename_to_utf8 (filename));

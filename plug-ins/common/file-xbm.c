@@ -731,6 +731,9 @@ load_image (const gchar  *filename,
     0xff, 0xff, 0xff            /* white */
   };
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   fp = g_fopen (filename, "rb");
   if (! fp)
     {
@@ -739,9 +742,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   comment = fgetcomment (fp);
 
@@ -1023,6 +1023,9 @@ save_image (const gchar  *filename,
         dark = 1;
     }
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   /* Now actually save the data. */
   fp = g_fopen (filename, "w");
   if (! fp)
@@ -1032,9 +1035,6 @@ save_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /* Maybe write the image comment. */
 #if 0

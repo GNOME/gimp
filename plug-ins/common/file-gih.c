@@ -662,12 +662,12 @@ gih_load_image (GFile   *file,
   GimpParasite *pipe_parasite;
   gsize         bytes_read;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             g_file_get_parse_name (file));
+
   input = G_INPUT_STREAM (g_file_read (file, NULL, error));
   if (! input)
     return -1;
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             g_file_get_parse_name (file));
 
   /* The file format starts with a painfully simple text header */
 
@@ -1294,12 +1294,12 @@ gih_save_image (GFile    *file,
   imagew = gimp_image_width (image_ID);
   imageh = gimp_image_height (image_ID);
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             g_file_get_parse_name (file));
+
   output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
   if (! output)
     return FALSE;
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             g_file_get_parse_name (file));
 
   parstring = gimp_pixpipe_params_build (&gihparams);
 

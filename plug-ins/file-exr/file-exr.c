@@ -171,6 +171,9 @@ load_image (const gchar  *filename,
   int end;
   int num;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   loader = exr_loader_new (filename);
   if (!loader)
     {
@@ -226,9 +229,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename));
       goto out;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   image = gimp_image_new_with_precision (width, height,
                                          image_type, image_precision);

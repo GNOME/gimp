@@ -426,6 +426,9 @@ load_image (const gchar  *filename,
   L_SUNFILEHEADER  sunhdr;
   guchar          *suncolmap = NULL;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   ifp = g_fopen (filename, "rb");
   if (!ifp)
     {
@@ -526,9 +529,6 @@ load_image (const gchar  *filename,
       return -1;
     }
 
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
-
   switch (sunhdr.l_ras_depth)
     {
     case 1:    /* bitmap */
@@ -599,6 +599,9 @@ save_image (const gchar  *filename,
       break;
     }
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   /* Open the output file. */
   ofp = g_fopen (filename, "wb");
   if (! ofp)
@@ -608,9 +611,6 @@ save_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   if (drawable_type == GIMP_INDEXED_IMAGE)
     retval = save_index (ofp,image_ID, drawable_ID, FALSE, psvals.rle);
