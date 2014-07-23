@@ -84,13 +84,8 @@ file_procedure_find (GSList  *procs,
                      GError **error)
 {
   GimpPlugInProcedure *file_proc;
-  GSList              *list;
   GimpPlugInProcedure *size_matched_proc = NULL;
-  GInputStream        *input             = NULL;
-  gboolean             opened            = FALSE;
-  gsize                head_size         = 0;
   gint                 size_match_count  = 0;
-  guchar               head[256];
 
   g_return_val_if_fail (procs != NULL, NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
@@ -117,75 +112,84 @@ file_procedure_find (GSList  *procs,
   if (file_proc)
     return file_proc;
 
-  /* Then look for magics */
-  for (list = procs; list; list = g_slist_next (list))
+  /* Then look for magics, but not on remote files */
+  if (g_file_is_native (file))
     {
-      file_proc = list->data;
+      GSList       *list;
+      GInputStream *input     = NULL;
+      gboolean      opened    = FALSE;
+      gsize         head_size = 0;
+      guchar        head[256];
 
-      if (file_proc->magics_list)
+      for (list = procs; list; list = g_slist_next (list))
         {
-          if (G_UNLIKELY (! opened))
+          file_proc = list->data;
+
+          if (file_proc->magics_list)
             {
-              input = G_INPUT_STREAM (g_file_read (file, NULL, error));
-
-              if (input)
+              if (G_UNLIKELY (! opened))
                 {
-                  g_input_stream_read_all (input,
-                                           head, sizeof (head),
-                                           &head_size, NULL, error);
+                  input = G_INPUT_STREAM (g_file_read (file, NULL, error));
 
-                  if (head_size < 4)
+                  if (input)
                     {
-                      g_object_unref (input);
-                      input = NULL;
-                    }
-                  else
-                    {
-                      GDataInputStream *data_input;
+                      g_input_stream_read_all (input,
+                                               head, sizeof (head),
+                                               &head_size, NULL, error);
 
-                      data_input = g_data_input_stream_new (input);
-                      g_object_unref (input);
-                      input = G_INPUT_STREAM (data_input);
+                      if (head_size < 4)
+                        {
+                          g_object_unref (input);
+                          input = NULL;
+                        }
+                      else
+                        {
+                          GDataInputStream *data_input;
+
+                          data_input = g_data_input_stream_new (input);
+                          g_object_unref (input);
+                          input = G_INPUT_STREAM (data_input);
+                        }
                     }
+
+                  opened = TRUE;
                 }
 
-              opened = TRUE;
-            }
-
-          if (head_size >= 4)
-            {
-              FileMatchType match_val;
-
-              match_val = file_check_magic_list (file_proc->magics_list,
-                                                 head, head_size,
-                                                 file, input);
-
-              if (match_val == FILE_MATCH_SIZE)
+              if (head_size >= 4)
                 {
-                  /* Use it only if no other magic matches */
-                  size_match_count++;
-                  size_matched_proc = file_proc;
-                }
-              else if (match_val != FILE_MATCH_NONE)
-                {
-                  g_object_unref (input);
+                  FileMatchType match_val;
 
-                  return file_proc;
+                  match_val = file_check_magic_list (file_proc->magics_list,
+                                                     head, head_size,
+                                                     file, input);
+
+                  if (match_val == FILE_MATCH_SIZE)
+                    {
+                      /* Use it only if no other magic matches */
+                      size_match_count++;
+                      size_matched_proc = file_proc;
+                    }
+                  else if (match_val != FILE_MATCH_NONE)
+                    {
+                      g_object_unref (input);
+
+                      return file_proc;
+                    }
                 }
             }
         }
-    }
 
-  if (input)
-    {
+      if (input)
+        {
 #if 0
-      if (ferror (ifp))
-        g_set_error_literal (error, G_FILE_ERROR,
-                             g_file_error_from_errno (errno),
-                             g_strerror (errno));
+          if (ferror (ifp))
+            g_set_error_literal (error, G_FILE_ERROR,
+                                 g_file_error_from_errno (errno),
+                                 g_strerror (errno));
 #endif
 
-      g_object_unref (input);
+          g_object_unref (input);
+        }
     }
 
   if (size_match_count == 1)
