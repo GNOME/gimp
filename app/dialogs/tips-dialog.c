@@ -74,11 +74,14 @@ tips_dialog_create (Gimp *gimp)
     {
       GError *error = NULL;
       gchar  *filename;
+      GFile  *file;
 
       filename = g_build_filename (gimp_data_directory (), "tips",
                                    "gimp-tips.xml", NULL);
+      file = g_file_new_for_path (filename);
+      g_free (filename);
 
-      tips = gimp_tips_from_file (filename, &error);
+      tips = gimp_tips_from_file (file, &error);
 
       if (! tips)
         {
@@ -94,7 +97,7 @@ tips_dialog_create (Gimp *gimp)
                                     "missing!"),
                                   _("There should be a file called '%s'. "
                                     "Please check your installation."),
-                                  gimp_filename_to_utf8 (filename));
+                                  gimp_file_get_utf8_name (file));
             }
           else
             {
@@ -107,11 +110,11 @@ tips_dialog_create (Gimp *gimp)
       else if (error)
         {
           g_printerr ("Error while parsing '%s': %s\n",
-                      filename, error->message);
+                      gimp_file_get_utf8_name (file), error->message);
         }
 
       g_clear_error (&error);
-      g_free (filename);
+      g_object_unref (file);
     }
 
   tips_count = g_list_length (tips);
