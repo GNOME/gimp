@@ -30,8 +30,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-27 17:04+0200\n"
-"PO-Revision-Date: 2014-06-27 19:12+0200\n"
+"POT-Creation-Date: 2014-07-25 18:37+0200\n"
+"PO-Revision-Date: 2014-07-25 21:41+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -311,7 +311,7 @@ msgid "Brush Editor"
 msgstr "Modifica pennello"
 
 #. initialize the list of gimp brushes
-#: ../app/actions/actions.c:112 ../app/core/gimp.c:964
+#: ../app/actions/actions.c:112 ../app/core/gimp.c:1004
 #: ../app/dialogs/dialogs.c:325 ../app/dialogs/preferences-dialog.c:2581
 msgid "Brushes"
 msgstr "Pennelli"
@@ -401,12 +401,12 @@ msgid "Gradient Editor"
 msgstr "Modifica del gradiente"
 
 #. initialize the list of gimp gradients
-#: ../app/actions/actions.c:172 ../app/core/gimp.c:984
+#: ../app/actions/actions.c:172 ../app/core/gimp.c:1024
 #: ../app/dialogs/dialogs.c:329 ../app/dialogs/preferences-dialog.c:2597
 msgid "Gradients"
 msgstr "Gradienti"
 
-#: ../app/actions/actions.c:175 ../app/core/gimp.c:996
+#: ../app/actions/actions.c:175 ../app/core/gimp.c:1036
 #: ../app/dialogs/dialogs.c:345 ../app/dialogs/preferences-dialog.c:2605
 msgid "Tool Presets"
 msgstr "Preimpostazioni strumento"
@@ -441,13 +441,13 @@ msgid "Palette Editor"
 msgstr "Modifica tavolozza"
 
 #. initialize the list of gimp palettes
-#: ../app/actions/actions.c:196 ../app/core/gimp.c:979
+#: ../app/actions/actions.c:196 ../app/core/gimp.c:1019
 #: ../app/dialogs/dialogs.c:331 ../app/dialogs/preferences-dialog.c:2593
 msgid "Palettes"
 msgstr "Tavolozze"
 
 #. initialize the list of gimp patterns
-#: ../app/actions/actions.c:199 ../app/core/gimp.c:974
+#: ../app/actions/actions.c:199 ../app/core/gimp.c:1014
 #: ../app/dialogs/dialogs.c:327 ../app/dialogs/preferences-dialog.c:2589
 msgid "Patterns"
 msgstr "Motivi"
@@ -471,7 +471,7 @@ msgid "Select"
 msgstr "Seleziona"
 
 #. initialize the template list
-#: ../app/actions/actions.c:214 ../app/core/gimp.c:1002
+#: ../app/actions/actions.c:214 ../app/core/gimp.c:1042
 #: ../app/dialogs/dialogs.c:339
 msgid "Templates"
 msgstr "Modelli"
@@ -485,7 +485,7 @@ msgid "Text Editor"
 msgstr "Modifica del testo"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:306
-#: ../app/gui/gui.c:457
+#: ../app/gui/gui.c:453
 msgid "Tool Options"
 msgstr "Opzioni strumento"
 
@@ -821,9 +821,9 @@ msgid "New Channel Color"
 msgstr "Nuovo colore del canale"
 
 #: ../app/actions/channels-commands.c:244 ../app/core/gimpimage-new.c:253
-#: ../app/display/gimpdisplayshell-dnd.c:650
+#: ../app/display/gimpdisplayshell-dnd.c:648
 #: ../app/widgets/gimpchanneltreeview.c:259
-#: ../app/widgets/gimplayertreeview.c:779
+#: ../app/widgets/gimplayertreeview.c:777
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Copia canale %s"
@@ -1007,14 +1007,14 @@ msgctxt "cursor-info-action"
 msgid "Use the composite color of all visible layers"
 msgstr "Usa il colore composto da tutti i livelli visibili"
 
-#: ../app/actions/data-commands.c:95 ../app/actions/documents-commands.c:356
-#: ../app/actions/file-commands.c:207 ../app/dialogs/file-open-dialog.c:229
-#: ../app/dialogs/file-open-dialog.c:273
-#: ../app/dialogs/file-open-location-dialog.c:217
-#: ../app/dialogs/file-open-location-dialog.c:229
-#: ../app/display/gimpdisplayshell-dnd.c:594
-#: ../app/widgets/gimplayertreeview.c:739 ../app/widgets/gimptoolbox.c:807
-#: ../app/widgets/gimptoolbox-dnd.c:172
+#: ../app/actions/data-commands.c:90 ../app/actions/documents-commands.c:354
+#: ../app/actions/file-commands.c:208 ../app/dialogs/file-open-dialog.c:230
+#: ../app/dialogs/file-open-dialog.c:271
+#: ../app/dialogs/file-open-location-dialog.c:218
+#: ../app/dialogs/file-open-location-dialog.c:228
+#: ../app/display/gimpdisplayshell-dnd.c:592
+#: ../app/widgets/gimplayertreeview.c:737 ../app/widgets/gimptoolbox.c:810
+#: ../app/widgets/gimptoolbox-dnd.c:170
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1025,11 +1025,11 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:124
+#: ../app/actions/data-commands.c:114
 #: ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:124 ../app/core/gimpimage.c:1836
-#: ../app/core/gimppalette.c:399 ../app/core/gimppalette-import.c:213
-#: ../app/core/gimppalette-load.c:234
+#: ../app/core/gimpbrushgenerated-load.c:119 ../app/core/gimpimage.c:1881
+#: ../app/core/gimppalette.c:399 ../app/core/gimppalette-import.c:208
+#: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:94
 msgid "Untitled"
 msgstr "Senzanome"
@@ -1400,7 +1400,7 @@ msgid "Search commands by keyword, and run them"
 msgstr "Cerca comandi per parola-chiave e li esegue"
 
 #: ../app/actions/dialogs-actions.c:337
-#: ../app/dialogs/preferences-dialog.c:1751 ../app/widgets/gimptoolbox.c:535
+#: ../app/dialogs/preferences-dialog.c:1751 ../app/widgets/gimptoolbox.c:534
 msgid "Toolbox"
 msgstr "Pannello strumenti"
 
@@ -2465,64 +2465,64 @@ msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
 msgstr "Esporta l'immagine in vari formati come PNG o JPEG"
 
-#: ../app/actions/file-actions.c:294
+#: ../app/actions/file-actions.c:297
 #, c-format
 msgid "Export to %s"
 msgstr "Esporta su %s"
 
-#: ../app/actions/file-actions.c:300
+#: ../app/actions/file-actions.c:303
 #, c-format
 msgid "Over_write %s"
 msgstr "So_vrascrivi %s"
 
-#: ../app/actions/file-actions.c:307
+#: ../app/actions/file-actions.c:310
 msgid "Export"
 msgstr "Esporta"
 
-#: ../app/actions/file-commands.c:120 ../app/actions/file-commands.c:503
-#: ../app/dialogs/file-open-dialog.c:76
+#: ../app/actions/file-commands.c:121 ../app/actions/file-commands.c:488
+#: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Apri immagine"
 
-#: ../app/actions/file-commands.c:141
+#: ../app/actions/file-commands.c:142
 msgid "Open Image as Layers"
 msgstr "Apri immagine come livelli"
 
-#: ../app/actions/file-commands.c:278
+#: ../app/actions/file-commands.c:277
 msgid "No changes need to be saved"
 msgstr "Nessuna modifica da salvare"
 
-#: ../app/actions/file-commands.c:285 ../app/actions/file-commands.c:713
-#: ../app/dialogs/file-save-dialog.c:103
+#: ../app/actions/file-commands.c:284 ../app/actions/file-commands.c:703
+#: ../app/dialogs/file-save-dialog.c:102
 msgid "Save Image"
 msgstr "Salva immagine"
 
-#: ../app/actions/file-commands.c:291
+#: ../app/actions/file-commands.c:290
 msgid "Save a Copy of the Image"
 msgstr "Salva una copia dell'immagine"
 
-#: ../app/actions/file-commands.c:376
+#: ../app/actions/file-commands.c:366
 msgid "Create New Template"
 msgstr "Crea un nuovo modello"
 
-#: ../app/actions/file-commands.c:380
+#: ../app/actions/file-commands.c:370
 msgid "Enter a name for this template"
 msgstr "Inserisci un nome per questo modello"
 
-#: ../app/actions/file-commands.c:410
+#: ../app/actions/file-commands.c:400
 msgid "Revert failed. No file name associated with this image."
 msgstr "Fallita la ricarica. Nessun nome file associato a quest'immagine."
 
-#: ../app/actions/file-commands.c:422
+#: ../app/actions/file-commands.c:410
 msgid "Revert Image"
 msgstr "Ricarica immagine"
 
-#: ../app/actions/file-commands.c:448
+#: ../app/actions/file-commands.c:434
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Ricaricare \"%s\" a \"%s\"?"
 
-#: ../app/actions/file-commands.c:454
+#: ../app/actions/file-commands.c:439
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -2530,11 +2530,11 @@ msgstr ""
 "Ricaricando l'immagine salvata su disco, perderai tutte le modifiche, "
 "incluse tutte le informazioni di annullamento."
 
-#: ../app/actions/file-commands.c:743
+#: ../app/actions/file-commands.c:734
 msgid "(Unnamed Template)"
 msgstr "(modello senza nome)"
 
-#: ../app/actions/file-commands.c:794
+#: ../app/actions/file-commands.c:783
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3754,7 +3754,7 @@ msgstr "Riflessione"
 
 #: ../app/actions/image-commands.c:483
 #: ../app/pdb/drawable-transform-cmds.c:617
-#: ../app/pdb/drawable-transform-cmds.c:711 ../app/pdb/image-cmds.c:620
+#: ../app/pdb/drawable-transform-cmds.c:711 ../app/pdb/image-cmds.c:619
 #: ../app/pdb/item-transform-cmds.c:443 ../app/pdb/transform-tools-cmds.c:255
 #: ../app/tools/gimprotatetool.c:126
 msgid "Rotating"
@@ -3780,8 +3780,8 @@ msgstr "Scala immagine"
 #: ../app/actions/image-commands.c:802 ../app/actions/layers-commands.c:1181
 #: ../app/dialogs/preferences-dialog.c:1706
 #: ../app/pdb/drawable-transform-cmds.c:800
-#: ../app/pdb/drawable-transform-cmds.c:891 ../app/pdb/image-cmds.c:492
-#: ../app/pdb/image-cmds.c:528 ../app/pdb/item-transform-cmds.c:534
+#: ../app/pdb/drawable-transform-cmds.c:891 ../app/pdb/image-cmds.c:491
+#: ../app/pdb/image-cmds.c:527 ../app/pdb/item-transform-cmds.c:534
 #: ../app/pdb/layer-cmds.c:383 ../app/pdb/layer-cmds.c:430
 #: ../app/pdb/transform-tools-cmds.c:346 ../app/tools/gimpscaletool.c:119
 msgid "Scaling"
@@ -4353,7 +4353,7 @@ msgstr "Livello"
 
 #: ../app/actions/layers-commands.c:254 ../app/actions/layers-commands.c:322
 #: ../app/widgets/gimpdrawabletreeview.c:319
-#: ../app/widgets/gimplayertreeview.c:840
+#: ../app/widgets/gimplayertreeview.c:838
 msgid "New Layer"
 msgstr "Nuovo livello"
 
@@ -4767,21 +4767,21 @@ msgctxt "plug-in-action"
 msgid "Show the last used plug-in dialog again"
 msgstr "Mostra ancora la finestra dell'ultimo plug-in usato"
 
-#: ../app/actions/plug-in-actions.c:555
+#: ../app/actions/plug-in-actions.c:554
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Ri_peti \"%s\""
 
-#: ../app/actions/plug-in-actions.c:556
+#: ../app/actions/plug-in-actions.c:555
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "R_i-mostra \"%s\""
 
-#: ../app/actions/plug-in-actions.c:572
+#: ../app/actions/plug-in-actions.c:571
 msgid "Repeat Last"
 msgstr "Ripeti l'ultimo"
 
-#: ../app/actions/plug-in-actions.c:574
+#: ../app/actions/plug-in-actions.c:573
 msgid "Re-Show Last"
 msgstr "Ri-mostra l'ultimo"
 
@@ -5174,12 +5174,10 @@ msgstr "Apri file di testo (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:144
 #: ../app/actions/text-tool-commands.c:227 ../app/config/gimpconfig-file.c:71
-#: ../app/core/gimpbrush-load.c:142 ../app/core/gimpbrush-load.c:444
-#: ../app/core/gimpbrushgenerated-load.c:72
-#: ../app/core/gimpbrushpipe-load.c:80 ../app/core/gimpcurve-load.c:55
-#: ../app/core/gimpgradient-load.c:64 ../app/core/gimppalette-import.c:515
-#: ../app/core/gimppalette-load.c:66 ../app/core/gimppattern-load.c:81
-#: ../app/tools/gimpcurvestool.c:609 ../app/tools/gimplevelstool.c:629
+#: ../app/core/gimppalette-import.c:509 ../app/plug-in/gimpenvirontable.c:289
+#: ../app/plug-in/gimpinterpreterdb.c:252
+#: ../app/tools/gimpimagemaptool-settings.c:172
+#: ../app/widgets/gimptextbuffer.c:1407
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossibile aprire \"%s\" in lettura: %s"
@@ -6479,11 +6477,9 @@ msgctxt "position"
 msgid "Right"
 msgstr "Destra"
 
-#: ../app/config/gimpconfig-file.c:82 ../app/core/gimpbrushgenerated-save.c:61
-#: ../app/core/gimpcurve-save.c:53 ../app/core/gimpgradient-save.c:51
-#: ../app/core/gimpgradient-save.c:145 ../app/core/gimppalette-save.c:57
-#: ../app/gui/themes.c:248 ../app/tools/gimpcurvestool.c:662
-#: ../app/tools/gimplevelstool.c:682 ../app/vectors/gimpvectors-export.c:82
+#: ../app/config/gimpconfig-file.c:82 ../app/core/gimpgradient-save.c:147
+#: ../app/gui/themes.c:275 ../app/tools/gimpimagemaptool-settings.c:225
+#: ../app/vectors/gimpvectors-export.c:82 ../app/widgets/gimptextbuffer.c:1493
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Non è possibile aprire \"%s\" in scrittura: %s"
@@ -6494,16 +6490,19 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "Errore durante l'analisi di \"%%s\": riga più lunga di %s caratteri."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196
+#: ../app/gui/themes.c:326 ../app/tools/gimpimagemaptool-settings.c:237
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Errore durante la scrittura di \"%s\": %s"
 
-#: ../app/config/gimpconfig-file.c:182
+#: ../app/config/gimpconfig-file.c:182 ../app/plug-in/gimpenvirontable.c:369
+#: ../app/plug-in/gimpinterpreterdb.c:286
+#: ../app/tools/gimpimagemaptool-settings.c:184
 #, c-format
 msgid "Error reading '%s': %s"
 msgstr "Errore durante la lettura di \"%s\": %s"
 
-#: ../app/config/gimpconfig-file.c:230
+#: ../app/config/gimpconfig-file.c:232
 #, c-format
 msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
@@ -7071,7 +7070,7 @@ msgid "When enabled, uses OpenCL for some operations."
 msgstr "Se abilitata, usa OpenCL per alcune operazioni."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:136
-#: ../app/core/gimp-units.c:167 ../app/gui/session.c:295
+#: ../app/core/gimp-units.c:172 ../app/gui/session.c:296
 #: ../app/plug-in/plug-in-rc.c:241
 msgid "fatal parse error"
 msgstr "errore di analisi fatale"
@@ -7958,48 +7957,48 @@ msgctxt "image-map-region"
 msgid "Use the entire layer as input"
 msgstr "Usa l'intero livello come ingresso"
 
-#: ../app/core/gimp.c:604
+#: ../app/core/gimp.c:642
 msgid "Initialization"
 msgstr "Inizializzazione"
 
 #. register all internal procedures
-#: ../app/core/gimp.c:705
+#: ../app/core/gimp.c:743
 msgid "Internal Procedures"
 msgstr "Procedure interne"
 
 #. initialize  the global parasite table
-#: ../app/core/gimp.c:960
+#: ../app/core/gimp.c:1000
 msgid "Looking for data files"
 msgstr "Inizializzazione"
 
-#: ../app/core/gimp.c:960
+#: ../app/core/gimp.c:1000
 msgid "Parasites"
 msgstr "Parasites"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp.c:969 ../app/dialogs/preferences-dialog.c:2585
+#: ../app/core/gimp.c:1009 ../app/dialogs/preferences-dialog.c:2585
 #: ../app/tools/gimppaintoptions-gui.c:207
 msgid "Dynamics"
 msgstr "Dinamiche"
 
 #. initialize the list of fonts
-#: ../app/core/gimp.c:989
+#: ../app/core/gimp.c:1029
 msgid "Fonts (this may take a while)"
 msgstr "Caratteri (può metterci parecchio tempo)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:1006 ../app/dialogs/preferences-dialog.c:2617
+#: ../app/core/gimp.c:1046 ../app/dialogs/preferences-dialog.c:2617
 msgid "Modules"
 msgstr "Moduli"
 
 #. update tag cache
-#: ../app/core/gimp.c:1010
+#: ../app/core/gimp.c:1050
 msgid "Updating tag cache"
 msgstr "Aggiornamento cache dei marcatori"
 
-#: ../app/core/gimp-contexts.c:151 ../app/core/gimptooloptions.c:376
-#: ../app/gui/session.c:426 ../app/menus/menus.c:459
-#: ../app/widgets/gimpdevices.c:205
+#: ../app/core/gimp-contexts.c:153 ../app/core/gimptooloptions.c:370
+#: ../app/gui/session.c:431 ../app/menus/menus.c:459
+#: ../app/widgets/gimpdevices.c:201
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
 msgstr "La cancellazione di \"%s\" è fallita: %s"
@@ -8109,139 +8108,111 @@ msgstr "Impossibile creare la cartella '%s': %s"
 msgid "No patterns available for this operation."
 msgstr "Nessun motivo disponibile per questa operazione."
 
-#: ../app/core/gimpbrush-load.c:180
+#: ../app/core/gimpbrush-load.c:172
 #, c-format
-msgid "Could not read %d byte from '%s': %s"
-msgid_plural "Could not read %d bytes from '%s': %s"
-msgstr[0] "Impossibile leggere %d byte da \"%s\": %s"
-msgstr[1] "Impossibile leggere %d byte da \"%s\": %s"
+msgid "Fatal parse error in brush file: Width = 0."
+msgstr "Errore fatale nel file pennello: larghezza = 0."
 
-#: ../app/core/gimpbrush-load.c:202
+#: ../app/core/gimpbrush-load.c:179
 #, c-format
-msgid "Fatal parse error in brush file '%s': Width = 0."
-msgstr "Errore fatale nel file pennello '%s': profondità = 0."
+msgid "Fatal parse error in brush file: Height = 0."
+msgstr "Errore fatale nel file pennello: altezza = 0."
+
+#: ../app/core/gimpbrush-load.c:186
+#, c-format
+msgid "Fatal parse error in brush file: Bytes = 0."
+msgstr "Errore fatale nel file pennello: byte = 0."
 
 #: ../app/core/gimpbrush-load.c:211
 #, c-format
-msgid "Fatal parse error in brush file '%s': Height = 0."
-msgstr "Errore fatale nel file pennello '%s': altezza = 0."
+msgid "Fatal parse error in brush file: Unknown depth %d."
+msgstr "Errore fatale di analisi nel file pennello: profondità sconosciuta %d."
 
-#: ../app/core/gimpbrush-load.c:220
+#: ../app/core/gimpbrush-load.c:223
 #, c-format
-msgid "Fatal parse error in brush file '%s': Bytes = 0."
-msgstr "Errore fatale nel file pennello '%s': bytes = 0."
+msgid "Fatal parse error in brush file: Unknown version %d."
+msgstr "Errore fatale di analisi nel file pennello: versione sconosciuta %d."
 
-#: ../app/core/gimpbrush-load.c:244
-#, c-format
-msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr ""
-"Errore fatale di analisi nel file pennello '%s': profondità sconosciuta %d."
-
-#: ../app/core/gimpbrush-load.c:257
-#, c-format
-msgid "Fatal parse error in brush file '%s': Unknown version %d."
-msgstr ""
-"Errore fatale di analisi nel file pennello '%s': versione sconosciuta %d."
-
-#: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:411
-#: ../app/core/gimpbrush-load.c:746
-#, c-format
-msgid "Fatal parse error in brush file '%s': File appears truncated."
-msgstr ""
-"Errore di analisi fatale nel file pennello '%s': il file sembra troncato."
-
-#: ../app/core/gimpbrush-load.c:281 ../app/core/gimpbrushgenerated-load.c:127
-#: ../app/core/gimpbrushpipe-load.c:96
+#: ../app/core/gimpbrush-load.c:244 ../app/core/gimpbrushgenerated-load.c:122
+#: ../app/core/gimpbrushpipe-load.c:74
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Stringa UTF-8 non valida nel file pennello '%s'."
 
-#: ../app/core/gimpbrush-load.c:288 ../app/core/gimppattern-load.c:151
+#: ../app/core/gimpbrush-load.c:251 ../app/core/gimppattern-load.c:116
 #: ../app/dialogs/template-options-dialog.c:84
 #: ../app/tools/gimpvectortool.c:319
 msgid "Unnamed"
 msgstr "Senza nome"
 
-#: ../app/core/gimpbrush-load.c:355
+#: ../app/core/gimpbrush-load.c:322
 #, c-format
 msgid ""
-"Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
+"Fatal parse error in brush file:\n"
+"Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA.\n"
 "This might be an obsolete GIMP brush file, try loading it as image and save "
 "it again."
 msgstr ""
-"Errore fatale di analisi nel file pennello \"%s\": profondità pennello non "
-"supportata %d\n"
+"Errore fatale di analisi nel file pennello:\n"
+"profondità pennello non supportata %d\n"
 "I pennelli di GIMP devono essere grigi o RGBA.\n"
-"Potrebbe trattarsi di un file pennello obsoleto di GIMP; provare a caricarlo "
-"come immagine e salvarlo nuovamente."
+"Potrebbe trattarsi di un file pennello obsoleto di GIMP; provare a caricarlo come immagine e salvarlo nuovamente."
 
-#: ../app/core/gimpbrush-load.c:400
+#: ../app/core/gimpbrush-load.c:369
 #, c-format
 msgid ""
-"Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
+"Fatal parse error in brush file:\n"
+"Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Errore fatale di analisi nel file pennello '%s': profondita pennello non "
-"supportata %d\n"
+"Errore fatale di analisi nel file pennello:\n"
+"profondita pennello non supportata %d\n"
 "I pennelli di GIMP devono essere grigi o RGBA."
 
-#: ../app/core/gimpbrush-load.c:472 ../app/core/gimpbrush-load.c:874
+#: ../app/core/gimpbrush-load.c:445
+#, c-format
+msgid "Unable to decode abr format version %d."
+msgstr "Impossibile decodificare versione formato abr %d."
+
+#: ../app/core/gimpbrush-load.c:643
+#, c-format
+msgid "Fatal parse error in brush file: Wide brushes are not supported."
+msgstr "Errore di analisi fatale nel file pennello: i pennelli estesi non sono supportati."
+
+#: ../app/core/gimpbrush-load.c:784
+msgid "Fatal parse error in brush file : File appears truncated: "
+msgstr "Errore di analisi fatale nel file pennello: il file sembra troncato."
+
+#: ../app/core/gimpbrush-load.c:930
 #, c-format
 msgid ""
-"Fatal parse error in brush file '%s': unable to decode abr format version %d."
-msgstr ""
-"Errore fatale di analisi del file pennello '%s': impossibile decodificare "
-"versione formato abr %d."
-
-#: ../app/core/gimpbrush-load.c:639
-#, c-format
-msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
-msgstr ""
-"Errore di analisi fatale nel file pennello \"%s\": i pennelli estesi non "
-"sono supportati."
+"Fatal parse error in brush file: Unable to decode abr format version %d."
+msgstr "Errore fatale di analisi del file pennello: impossibile decodificare versione formato abr %d."
 
 #: ../app/core/gimpbrush.c:148
 msgid "Brush Spacing"
 msgstr "Spaziatura pennello"
 
-#: ../app/core/gimpbrushgenerated-load.c:86
+#: ../app/core/gimpbrushgenerated-load.c:75
 #, c-format
-msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr ""
-"Errore fatale di analisi del file pennello '%s': non è un file pennello di "
-"GIMP."
+msgid "Not a GIMP brush file."
+msgstr "Non è un file pennello di GIMP"
 
-#: ../app/core/gimpbrushgenerated-load.c:103
+#: ../app/core/gimpbrushgenerated-load.c:95
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
-msgstr ""
-"Errore fatale di analisi nel file pennello \"%s\": versione di pennello GIMP "
-"sconosciuta alla riga %d."
+msgid "Unknown GIMP brush version."
+msgstr "Versione pennello di GIMP sconosciuta."
 
-#: ../app/core/gimpbrushgenerated-load.c:149
+#: ../app/core/gimpbrushgenerated-load.c:148
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
-msgstr ""
-"Errore fatale di analisi nel file pennello \"%s\": forma di pennello GIMP "
-"sconosciuta alla riga %d."
+msgid "Unknown GIMP brush shape."
+msgstr "Forma pennello di GIMP sconosciuta."
 
-#: ../app/core/gimpbrushgenerated-load.c:225
+#: ../app/core/gimpbrushgenerated-load.c:238
 #, c-format
-msgid "Line %d: %s"
-msgstr "Riga %d: %s"
-
-#: ../app/core/gimpbrushgenerated-load.c:227
-#, c-format
-msgid "File is truncated in line %d"
-msgstr "Il file è troncato alla riga %d"
-
-#: ../app/core/gimpbrushgenerated-load.c:230
-#, c-format
-msgid "Error while reading brush file '%s': %s"
-msgstr "Errore durante la lettura del file pennello '%s': %s"
+msgid "In line %d of brush file: "
+msgstr "Nella riga %d del file pennello: "
 
 #: ../app/core/gimpbrushgenerated.c:129
 msgid "Brush Shape"
@@ -8267,7 +8238,7 @@ msgstr "Rapporto dimensioni pennello"
 msgid "Brush Angle"
 msgstr "Angolo pennello"
 
-#: ../app/core/gimpbrushpipe-load.c:112 ../app/core/gimpbrushpipe-load.c:132
+#: ../app/core/gimpbrushpipe-load.c:90 ../app/core/gimpbrushpipe-load.c:114
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Errore fatale di analisi nel file pennello '%s': il file è errato."
@@ -8445,7 +8416,7 @@ msgid "Selection Mask"
 msgstr "Maschera di selezione"
 
 #: ../app/core/gimpcontext.c:640 ../app/tools/gimppaintoptions-gui.c:101
-#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:287
+#: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:286
 msgid "Opacity"
 msgstr "Opacità"
 
@@ -8453,10 +8424,20 @@ msgstr "Opacità"
 msgid "Paint Mode"
 msgstr "Modalità disegno"
 
-#: ../app/core/gimpdata.c:690
+#: ../app/core/gimpdata.c:537 ../app/core/gimpdata.c:545
 #, c-format
-msgid "Could not delete '%s': %s"
-msgstr "Impossibile cancellare '%s': %s"
+msgid "Error saving '%s': "
+msgstr "Errore durante il salvataggio di \"%s\": "
+
+#: ../app/core/gimpdata.c:551
+#, c-format
+msgid "Error saving '%s'"
+msgstr "Errore durante il salvataggio di \"%s\""
+
+#: ../app/core/gimpdata.c:560 ../app/xcf/xcf.c:423
+#, c-format
+msgid "Could not open '%s' for writing: "
+msgstr "Non è possibile aprire \"%s\" in scrittura: "
 
 #: ../app/core/gimpdatafactory.c:429 ../app/core/gimpdatafactory.c:458
 #: ../app/core/gimpdatafactory.c:624 ../app/core/gimpdatafactory.c:646
@@ -8508,7 +8489,22 @@ msgstr ""
 msgid "You don't have any writable data folder configured."
 msgstr "Non è stata configurata nessuna una cartella data scrivibile."
 
-#: ../app/core/gimpdatafactory.c:950
+#: ../app/core/gimpdatafactory.c:900
+#, c-format
+msgid "Error loading '%s': "
+msgstr "Errore durante il caricamento di \"%s\": "
+
+#: ../app/core/gimpdatafactory.c:906
+#, c-format
+msgid "Error loading '%s'"
+msgstr "Errore durante il caricamento di \"%s\""
+
+#: ../app/core/gimpdatafactory.c:915 ../app/xcf/xcf.c:338
+#, c-format
+msgid "Could not open '%s' for reading: "
+msgstr "Impossibile aprire \"%s\" in lettura: "
+
+#: ../app/core/gimpdatafactory.c:980
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -8524,7 +8520,7 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Scala"
 
-#: ../app/core/gimpdrawable-blend.c:215
+#: ../app/core/gimpdrawable-blend.c:215 ../app/tools/gimpblendtool.c:1005
 msgctxt "undo-type"
 msgid "Blend"
 msgstr "Sfumatura"
@@ -8534,7 +8530,7 @@ msgid "Calculating distance map"
 msgstr "Calcolo della mappa della distanza"
 
 #: ../app/core/gimpdrawable-blend.c:866 ../app/pdb/edit-cmds.c:792
-#: ../app/tools/gimpblendtool.c:249
+#: ../app/tools/gimpblendtool.c:789
 msgid "Blending"
 msgstr "Sfumatura in corso"
 
@@ -8554,7 +8550,7 @@ msgstr "Calcolo alfa per i pixel sconosciuti"
 
 #: ../app/core/gimpdrawable-levels.c:72
 #: ../app/tools/gimpforegroundselectoptions.c:324
-#: ../app/tools/gimplevelstool.c:136
+#: ../app/tools/gimplevelstool.c:133
 msgid "Levels"
 msgstr "Livelli"
 
@@ -8600,55 +8596,45 @@ msgstr "Trasformazione"
 msgid "Output type"
 msgstr "Tipo di uscita"
 
-#: ../app/core/gimpgradient-load.c:73 ../app/core/gimpgradient-load.c:98
-#: ../app/core/gimpgradient-load.c:119 ../app/core/gimpgradient-load.c:170
+#: ../app/core/gimpgradient-load.c:72
 #, c-format
-msgid "Fatal parse error in gradient file '%s': Read error in line %d."
-msgstr ""
-"Errore fatale di analisi in file gradiente \"%s\": errore di lettura alla "
-"riga %d."
+msgid "Not a GIMP gradient file."
+msgstr "Non è un file gradiente di GIMP."
 
-#: ../app/core/gimpgradient-load.c:83
-#, c-format
-msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
-msgstr ""
-"Errore di analisi fatale nel file gradiente: '%s' non è un file di gradiente "
-"GIMP."
-
-#: ../app/core/gimpgradient-load.c:111
+#: ../app/core/gimpgradient-load.c:95
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "Stringa UTF-8 non valida in file gradiente '%s'."
 
-#: ../app/core/gimpgradient-load.c:138
+#: ../app/core/gimpgradient-load.c:121
 #, c-format
-msgid "Fatal parse error in gradient file '%s': File is corrupt in line %d."
-msgstr ""
-"Errore di analisi fatale nel file gradiente \"%s\": il file è errato alla "
-"riga %d."
+msgid "File is corrupt."
+msgstr "Il file è rovinato."
 
-#: ../app/core/gimpgradient-load.c:220 ../app/core/gimpgradient-load.c:231
+#: ../app/core/gimpgradient-load.c:195 ../app/core/gimpgradient-load.c:203
 #, c-format
-msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
-msgstr ""
-"Errore di analisi fatale nel file gradiente \"%s\": segmento %d errato alla "
-"riga %d."
+msgid "Corrupt segment %d."
+msgstr "Rovinato segmento %d."
 
-#: ../app/core/gimpgradient-load.c:243 ../app/core/gimpgradient-load.c:257
+#: ../app/core/gimpgradient-load.c:214 ../app/core/gimpgradient-load.c:224
 #, c-format
-msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
-msgstr ""
-"Il file gradiente '%s' è danneggiato: i segmenti non coprono il campo 0-1."
+msgid "Segments do not span the range 0-1."
+msgstr "I segmenti non coprono il campo 0-1."
 
-#: ../app/core/gimpgradient-load.c:337
+#: ../app/core/gimpgradient-load.c:239
 #, c-format
-msgid "No linear gradients found in '%s'"
-msgstr "Non è stato trovato nessun gradiente lineare in '%s'"
+msgid "In line %d of gradient file: "
+msgstr "Alla riga %d del file gradiente: "
 
-#: ../app/core/gimpgradient-load.c:347
+#: ../app/core/gimpgradient-load.c:315
 #, c-format
-msgid "Failed to import gradients from '%s': %s"
-msgstr "Impossibile importare gradienti da '%s': %s"
+msgid "No linear gradients found."
+msgstr "Non è stato trovato nessun gradiente lineare."
+
+#: ../app/core/gimpgradient-save.c:221
+#, c-format
+msgid "Writing POV file '%s' failed: %s"
+msgstr "La scrittura del file POV \"%s\" è fallita: %s"
 
 #: ../app/core/gimpgrid.c:86
 msgid "Line style used for the grid."
@@ -8725,69 +8711,69 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Trasforma gruppo livelli"
 
-#: ../app/core/gimpimage.c:2091
+#: ../app/core/gimpimage.c:2165
 msgid " (exported)"
 msgstr " (esportata)"
 
-#: ../app/core/gimpimage.c:2095
+#: ../app/core/gimpimage.c:2169
 msgid " (overwritten)"
 msgstr " (sovrascritta)"
 
-#: ../app/core/gimpimage.c:2104
+#: ../app/core/gimpimage.c:2178
 msgid " (imported)"
 msgstr " (importata)"
 
-#: ../app/core/gimpimage.c:2229
+#: ../app/core/gimpimage.c:2307
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Cambia risoluzione immagine"
 
-#: ../app/core/gimpimage.c:2281
+#: ../app/core/gimpimage.c:2359
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Cambia unità immagine"
 
-#: ../app/core/gimpimage.c:3170
+#: ../app/core/gimpimage.c:3248
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Allega parassita all'immagine"
 
-#: ../app/core/gimpimage.c:3211
+#: ../app/core/gimpimage.c:3289
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Rimuovi parassita dall'immagine"
 
-#: ../app/core/gimpimage.c:3920
+#: ../app/core/gimpimage.c:3998
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Aggiungi livello"
 
-#: ../app/core/gimpimage.c:3970 ../app/core/gimpimage.c:3990
+#: ../app/core/gimpimage.c:4048 ../app/core/gimpimage.c:4068
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Rimuovi livello"
 
-#: ../app/core/gimpimage.c:3984
+#: ../app/core/gimpimage.c:4062
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Rimuovi selezione fluttuante"
 
-#: ../app/core/gimpimage.c:4152
+#: ../app/core/gimpimage.c:4227
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Aggiungi canale"
 
-#: ../app/core/gimpimage.c:4190 ../app/core/gimpimage.c:4203
+#: ../app/core/gimpimage.c:4265 ../app/core/gimpimage.c:4278
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Rimuovi canale"
 
-#: ../app/core/gimpimage.c:4257
+#: ../app/core/gimpimage.c:4332
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Aggiungi tracciato"
 
-#: ../app/core/gimpimage.c:4288
+#: ../app/core/gimpimage.c:4363
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Rimuovi tracciato"
@@ -9040,7 +9026,7 @@ msgstr ""
 "Validazione profilo ICC fallita: il profilo colore non è per lo spazio "
 "colore RGB"
 
-#: ../app/core/gimpimage-profile.c:162
+#: ../app/core/gimpimage-profile.c:164
 #, c-format
 msgid "Color profile '%s' is not for RGB color space"
 msgstr "Il profilo colore \"%s\" non è per lo spazio colore RGB"
@@ -9080,40 +9066,40 @@ msgstr "Scala immagine"
 msgid "Can't undo %s"
 msgstr "Impossibile annullare %s"
 
-#: ../app/core/gimpimagefile.c:752 ../app/dialogs/preferences-dialog.c:1502
+#: ../app/core/gimpimagefile.c:776 ../app/dialogs/preferences-dialog.c:1502
 msgid "Folder"
 msgstr "Cartella"
 
-#: ../app/core/gimpimagefile.c:757
+#: ../app/core/gimpimagefile.c:781
 msgid "Special File"
 msgstr "File speciale"
 
-#: ../app/core/gimpimagefile.c:773
+#: ../app/core/gimpimagefile.c:797
 msgid "Remote File"
 msgstr "File remoto"
 
-#: ../app/core/gimpimagefile.c:792
+#: ../app/core/gimpimagefile.c:816
 msgid "Click to create preview"
 msgstr "Fare clic per creare l'anteprima"
 
-#: ../app/core/gimpimagefile.c:798
+#: ../app/core/gimpimagefile.c:822
 msgid "Loading preview..."
 msgstr "Caricamento anteprima..."
 
-#: ../app/core/gimpimagefile.c:804
+#: ../app/core/gimpimagefile.c:828
 msgid "Preview is out of date"
 msgstr "L'anteprima non è aggiornata"
 
-#: ../app/core/gimpimagefile.c:810
+#: ../app/core/gimpimagefile.c:834
 msgid "Cannot create preview"
 msgstr "Impossibile creare l'anteprima"
 
-#: ../app/core/gimpimagefile.c:820
+#: ../app/core/gimpimagefile.c:844
 msgid "(Preview may be out of date)"
 msgstr "(l'anteprima potrebbe non essere aggiornata)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:829 ../app/widgets/gimpimagepropview.c:443
+#: ../app/core/gimpimagefile.c:853 ../app/widgets/gimpimagepropview.c:431
 #: ../app/widgets/gimpsizebox.c:432 ../app/widgets/gimptemplateeditor.c:585
 #, c-format
 msgid "%d × %d pixel"
@@ -9121,14 +9107,14 @@ msgid_plural "%d × %d pixels"
 msgstr[0] "%d × %d pixel"
 msgstr[1] "%d × %d pixel"
 
-#: ../app/core/gimpimagefile.c:852 ../app/display/gimpdisplayshell-title.c:323
+#: ../app/core/gimpimagefile.c:876 ../app/display/gimpdisplayshell-title.c:323
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d livello"
 msgstr[1] "%d livelli"
 
-#: ../app/core/gimpimagefile.c:900
+#: ../app/core/gimpimagefile.c:924
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Impossibile aprire la miniatura '%s': %s."
@@ -9329,38 +9315,27 @@ msgstr "Maschera di livello a selezione"
 msgid "Cannot rename layer masks."
 msgstr "Impossibile rinominare le maschere di livello."
 
-#: ../app/core/gimppalette-import.c:427
+#: ../app/core/gimppalette-import.c:422
 #, c-format
 msgid "Index %d"
 msgstr "Indice %d"
 
-#: ../app/core/gimppalette-import.c:549
+#: ../app/core/gimppalette-import.c:544
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Tipo file tavolozza sconosciuto: %s"
 
-#: ../app/core/gimppalette-load.c:101 ../app/core/gimppalette-load.c:125
-#: ../app/core/gimppalette-load.c:145 ../app/core/gimppalette-load.c:173
-#: ../app/core/gimppalette-load.c:248
+#: ../app/core/gimppalette-load.c:70
 #, c-format
-msgid "Fatal parse error in palette file '%s': Read error in line %d."
-msgstr ""
-"Errore fatale di analisi caricamento tavolozza '%s': errore di lettura alla "
-"riga %d."
+msgid "Missing magic header."
+msgstr "Magic header mancante."
 
-#: ../app/core/gimppalette-load.c:110
-#, c-format
-msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr ""
-"Errore fatale di analisi nel file tavolozza '%s': manca l'intestazione "
-"magica."
-
-#: ../app/core/gimppalette-load.c:137
+#: ../app/core/gimppalette-load.c:93
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Stringa UTF-8 non valida nel file tavolozza '%s'"
 
-#: ../app/core/gimppalette-load.c:160
+#: ../app/core/gimppalette-load.c:113
 #, c-format
 msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
@@ -9369,65 +9344,75 @@ msgstr ""
 "Caricamento file tavolozza '%s': numero di colonne non valido alla riga %d. "
 "Uso il valore predefinito."
 
-#: ../app/core/gimppalette-load.c:195
+#: ../app/core/gimppalette-load.c:147
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr "Caricamento tavolozza '%s': manca componente ROSSA alla riga %d."
+msgstr "Lettura file tavolozza \"%s\": manca la componente ROSSA alla riga %d."
 
-#: ../app/core/gimppalette-load.c:203
+#: ../app/core/gimppalette-load.c:155
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
-msgstr ""
-"Caricamento file tavolozza '%s': manca la componente VERDE alla riga %d."
+msgstr "Lettura file tavolozza \"%s\": manca la componente VERDE alla riga %d."
 
-#: ../app/core/gimppalette-load.c:211
+#: ../app/core/gimppalette-load.c:163
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
-msgstr "Caricamento tavolozza '%s': manca componente BLU alla riga %d."
+msgstr "Lettura file tavolozza \"%s\": manca la componente BLU alla riga %d."
 
-#: ../app/core/gimppalette-load.c:221
+#: ../app/core/gimppalette-load.c:173
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr "Caricamento tavolozza '%s': valori RGB fuori range alla riga %d."
+msgstr "Lettura file tavolozza \"%s\": valori RGB fuori range alla riga %d."
 
-#: ../app/core/gimppalette-load.c:439
+#: ../app/core/gimppalette-load.c:209 ../app/core/gimppalette-load.c:456
 #, c-format
-msgid "Could not read header from palette file '%s'"
-msgstr "Impossibile leggere l'intestazione dal file tavolozza \"%s\""
+msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
+msgstr "Lettura file tavolozza \"%s\": letti %d colori da file troncato: %s."
 
-#: ../app/core/gimppalette-load.c:461 ../app/core/gimppalette-load.c:548
+#: ../app/core/gimppalette-load.c:233
 #, c-format
-msgid "Fatal parse error in palette file '%s'"
-msgstr "Errore fatale di analisi nel file tavolozza \"%s\""
+msgid "In line %d of palette file: "
+msgstr "Alla riga %d del file tavolozza: "
 
-#: ../app/core/gimppattern-load.c:90 ../app/core/gimppattern-load.c:136
-#: ../app/core/gimppattern-load.c:175
+#: ../app/core/gimppalette-load.c:429
 #, c-format
-msgid "Fatal parse error in pattern file '%s': File appears truncated."
+msgid "Could not read header from palette file '%s': "
+msgstr "Impossibile leggere l'intestazione dal file tavolozza \"%s\": "
+
+#: ../app/core/gimppalette-load.c:461
+msgid "Premature end of file."
+msgstr "Fine file prematura."
+
+#: ../app/core/gimppattern-load.c:60
+msgid "File appears truncated: "
+msgstr "Il file sembra troncato: "
+
+#: ../app/core/gimppattern-load.c:77
+#, c-format
+msgid "Unknown pattern format version %d."
+msgstr "Versione formato motivo %d sconosciuta."
+
+#: ../app/core/gimppattern-load.c:86
+#, c-format
+msgid ""
+"Unsupported pattern depth %d.\n"
+"GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Errore di analisi fatale nel file motivo \"%s\": il file sembra troncato."
+"Profondità motivo %d non supportata.\n"
+"I motivi di GIMP devono essere in toni di grigio o RGB."
+
+#: ../app/core/gimppattern-load.c:103 ../app/core/gimppattern-load.c:141
+msgid "File appears truncated."
+msgstr "Il file sembra troncato."
 
 #: ../app/core/gimppattern-load.c:109
 #, c-format
-msgid ""
-"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
-msgstr ""
-"Errore di analisi fatale nel file \"%s\": versione formato motivo %d "
-"sconosciuta."
-
-#: ../app/core/gimppattern-load.c:119
-#, c-format
-msgid ""
-"Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
-"GIMP Patterns must be GRAY or RGB."
-msgstr ""
-"Errore fatale nel file motivo \"%s\": profondità motivo %d non supportata.\n"
-"I motivi di GIMP devono essere in toni di grigio o RGB."
-
-#: ../app/core/gimppattern-load.c:144
-#, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Stringa UTF-8 non valida nel file motivo di GIMP \"%s\"."
+
+#: ../app/core/gimppattern-load.c:152
+msgid "Fatal parse error in pattern file: "
+msgstr "Errore fatale di analisi nel file tavolozza: "
 
 #: ../app/core/gimppdbprogress.c:282 ../app/widgets/gimppdbdialog.c:332
 #, c-format
@@ -9435,10 +9420,6 @@ msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
 msgstr ""
 "Impossibile eseguire la callback %s. Può essere andato in crash il plug-in "
 "corrispondente."
-
-#: ../app/core/gimpprogress.c:106 ../app/core/gimpprogress.c:153
-msgid "Please wait"
-msgstr "Attendere"
 
 #: ../app/core/gimpselection.c:162
 msgctxt "undo-type"
@@ -9536,10 +9517,9 @@ msgstr "La risoluzione orizzontale dell'immagine."
 msgid "The vertical image resolution."
 msgstr "Risoluzione verticale dell'immagine"
 
-#: ../app/core/gimptoolpreset-load.c:62
-#, c-format
-msgid "Error while parsing '%s'"
-msgstr "Errore durante l'analisi di \"%s\""
+#: ../app/core/gimptoolpreset-load.c:64
+msgid "Tool preset file is corrupt."
+msgstr "Il file di preimpostazione strumento è rovinato."
 
 #: ../app/core/gimpunit.c:60
 msgctxt "unit-singular"
@@ -9816,23 +9796,23 @@ msgstr "_Opacità:"
 msgid "Open layers"
 msgstr "Apri livelli"
 
-#: ../app/dialogs/file-open-location-dialog.c:73
+#: ../app/dialogs/file-open-location-dialog.c:74
 msgid "Open Location"
 msgstr "Apri posizione"
 
-#: ../app/dialogs/file-open-location-dialog.c:111
+#: ../app/dialogs/file-open-location-dialog.c:112
 msgid "Enter location (URI):"
 msgstr "Inserisci posizione (URI):"
 
-#: ../app/dialogs/file-save-dialog.c:113
+#: ../app/dialogs/file-save-dialog.c:112
 msgid "Export Image"
 msgstr "Esporta immagine"
 
-#: ../app/dialogs/file-save-dialog.c:114
+#: ../app/dialogs/file-save-dialog.c:113
 msgid "_Export"
 msgstr "_Esporta"
 
-#: ../app/dialogs/file-save-dialog.c:458
+#: ../app/dialogs/file-save-dialog.c:452
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9842,11 +9822,11 @@ msgstr ""
 "file dall'estensione. Inserire un'estensione corrispondente con il formato "
 "file selezionato o non inserire nessuna estensione."
 
-#: ../app/dialogs/file-save-dialog.c:605
+#: ../app/dialogs/file-save-dialog.c:603
 msgid "The given filename cannot be used for exporting"
 msgstr "Il nome file dato non può essere usato per l'esportazione"
 
-#: ../app/dialogs/file-save-dialog.c:606
+#: ../app/dialogs/file-save-dialog.c:604
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
@@ -9855,15 +9835,15 @@ msgstr ""
 "desidera salvare l'immagine nel formato nativo di GIMP XCF, usare il comando "
 "File→Salva."
 
-#: ../app/dialogs/file-save-dialog.c:609
+#: ../app/dialogs/file-save-dialog.c:607
 msgid "Take me to the Save dialog"
 msgstr "Portami alla finestra di dialogo di salvataggio"
 
-#: ../app/dialogs/file-save-dialog.c:613
+#: ../app/dialogs/file-save-dialog.c:611
 msgid "The given filename cannot be used for saving"
 msgstr "Il nome file dato non può essere usato per il salvataggio"
 
-#: ../app/dialogs/file-save-dialog.c:614
+#: ../app/dialogs/file-save-dialog.c:612
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
@@ -9871,15 +9851,15 @@ msgstr ""
 "Questa finestra di dialogo serve per salvare nel formato nativo di GIMP XCF. "
 "Per esportare in altri formati usare invece il comando File→Esporta."
 
-#: ../app/dialogs/file-save-dialog.c:616
+#: ../app/dialogs/file-save-dialog.c:614
 msgid "Take me to the Export dialog"
 msgstr "Portami alla finestra di dialogo di esportazione"
 
-#: ../app/dialogs/file-save-dialog.c:619 ../app/dialogs/file-save-dialog.c:694
+#: ../app/dialogs/file-save-dialog.c:617 ../app/dialogs/file-save-dialog.c:692
 msgid "Extension Mismatch"
 msgstr "Estensione non corrispondente"
 
-#: ../app/dialogs/file-save-dialog.c:678
+#: ../app/dialogs/file-save-dialog.c:676
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9887,19 +9867,19 @@ msgstr ""
 "Il nome file dato ha un'estensione sconosciuta. Inserire un'estensione "
 "conosciuta o selezionare un formato file dall'elenco dei formati."
 
-#: ../app/dialogs/file-save-dialog.c:710
+#: ../app/dialogs/file-save-dialog.c:708
 msgid "The given file extension does not match the chosen file type."
 msgstr "L'estensione file data non corrisponde con il tipo di file scelto."
 
-#: ../app/dialogs/file-save-dialog.c:714
+#: ../app/dialogs/file-save-dialog.c:712
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Usare ugualmente questo nome per salvare l'immagine?"
 
-#: ../app/dialogs/file-save-dialog.c:776
+#: ../app/dialogs/file-save-dialog.c:774
 msgid "Saving canceled"
 msgstr "Salvataggio annullato"
 
-#: ../app/dialogs/file-save-dialog.c:784 ../app/widgets/gimpdnd-xds.c:186
+#: ../app/dialogs/file-save-dialog.c:780 ../app/widgets/gimpdnd-xds.c:181
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -10889,7 +10869,7 @@ msgid "Vertical"
 msgstr "Verticale"
 
 #: ../app/dialogs/preferences-dialog.c:2171
-#: ../app/widgets/gimpimagepropview.c:472
+#: ../app/widgets/gimpimagepropview.c:460
 msgid "ppi"
 msgstr "ppi"
 
@@ -11220,56 +11200,56 @@ msgstr "Risoluzione _Y:"
 msgid "pixels/%a"
 msgstr "pixel/%a"
 
-#: ../app/dialogs/quit-dialog.c:145
+#: ../app/dialogs/quit-dialog.c:144
 msgid "Quit GIMP"
 msgstr "Esci da GIMP"
 
-#: ../app/dialogs/quit-dialog.c:145
+#: ../app/dialogs/quit-dialog.c:144
 msgid "Close All Images"
 msgstr "Chiudi tutte le immagini"
 
-#: ../app/dialogs/quit-dialog.c:213
+#: ../app/dialogs/quit-dialog.c:212
 msgid "If you quit GIMP now, these changes will be lost."
 msgstr "Se si esce da GIMP ora, queste modifiche saranno perse."
 
-#: ../app/dialogs/quit-dialog.c:216
+#: ../app/dialogs/quit-dialog.c:215
 msgid "If you close these images now, changes will be lost."
 msgstr "Se ora si chiudono queste immagini, verranno perse le modifiche."
 
-#: ../app/dialogs/quit-dialog.c:301
+#: ../app/dialogs/quit-dialog.c:300
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
 msgstr[0] "C'è un'immagine con modifiche non salvate:"
 msgstr[1] "Ci sono %d immagini con modifiche non salvate:"
 
-#: ../app/dialogs/quit-dialog.c:312
+#: ../app/dialogs/quit-dialog.c:311
 #, c-format
 msgid "Press %s to quit."
 msgstr "Premere %s per uscire."
 
-#: ../app/dialogs/quit-dialog.c:315
+#: ../app/dialogs/quit-dialog.c:314
 #, c-format
 msgid "Press %s to close all images."
 msgstr "Premere %s per chiudere tutte le immagini."
 
-#: ../app/dialogs/quit-dialog.c:331
+#: ../app/dialogs/quit-dialog.c:330
 #, c-format
 msgid "Press %s to discard all changes and quit."
 msgstr "Premere %s per abbandonare tutti i cambiamenti e uscire."
 
-#: ../app/dialogs/quit-dialog.c:334
+#: ../app/dialogs/quit-dialog.c:333
 #, c-format
 msgid "Press %s to discard all changes and close all images."
 msgstr ""
 "Premere %s per abbandonare tutti i cambiamenti e chiudere tutte le immagini."
 
-#: ../app/dialogs/quit-dialog.c:342
-#: ../app/display/gimpdisplayshell-close.c:180
+#: ../app/dialogs/quit-dialog.c:341
+#: ../app/display/gimpdisplayshell-close.c:179
 msgid "_Discard Changes"
 msgstr "Abban_dona le modifiche"
 
-#: ../app/dialogs/quit-dialog.c:424
+#: ../app/dialogs/quit-dialog.c:421
 #, c-format
 msgid "Exported to %s"
 msgstr "Esportato su %s"
@@ -11339,37 +11319,37 @@ msgstr "Strumento di disegno:"
 msgid "_Emulate brush dynamics"
 msgstr "_Emula le dinamiche del pennello"
 
-#: ../app/dialogs/tips-dialog.c:89
+#: ../app/dialogs/tips-dialog.c:92
 msgid "The GIMP tips file is empty!"
 msgstr "Il file dei suggerimenti di GIMP è vuoto!"
 
-#: ../app/dialogs/tips-dialog.c:93
+#: ../app/dialogs/tips-dialog.c:96
 msgid "The GIMP tips file appears to be missing!"
 msgstr "Manca il file dei suggerimenti di GIMP!"
 
-#: ../app/dialogs/tips-dialog.c:95
+#: ../app/dialogs/tips-dialog.c:98
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr "Dovrebbe esserci un file chiamato '%s'. Controllare l'installazione."
 
-#: ../app/dialogs/tips-dialog.c:101
+#: ../app/dialogs/tips-dialog.c:104
 msgid "The GIMP tips file could not be parsed!"
 msgstr "Impossibile elaborare il file dei suggerimenti di GIMP!"
 
-#: ../app/dialogs/tips-dialog.c:129
+#: ../app/dialogs/tips-dialog.c:132
 msgid "GIMP Tip of the Day"
 msgstr "Suggerimenti del giorno di GIMP"
 
-#: ../app/dialogs/tips-dialog.c:135
+#: ../app/dialogs/tips-dialog.c:138
 msgid "_Previous Tip"
 msgstr "_Precedente"
 
-#: ../app/dialogs/tips-dialog.c:141
+#: ../app/dialogs/tips-dialog.c:144
 msgid "_Next Tip"
 msgstr "_Successivo"
 
 #. a link to the related section in the user manual
-#: ../app/dialogs/tips-dialog.c:194
+#: ../app/dialogs/tips-dialog.c:197
 msgid "Learn more"
 msgstr "Maggiori informazioni"
 
@@ -11523,24 +11503,24 @@ msgstr "A"
 msgid "_Sample Merged"
 msgstr "Campionamento diffu_so"
 
-#: ../app/display/gimpdisplayshell.c:533
+#: ../app/display/gimpdisplayshell.c:529
 msgid "Access the image menu"
 msgstr "Accedi al menu immagine"
 
-#: ../app/display/gimpdisplayshell.c:644
+#: ../app/display/gimpdisplayshell.c:640
 msgid "Zoom image when window size changes"
 msgstr "Zooma l'immagine quando cambia la dimensione della finestra"
 
-#: ../app/display/gimpdisplayshell.c:673
+#: ../app/display/gimpdisplayshell.c:669
 msgid "Toggle Quick Mask"
 msgstr "Commuta maschera veloce"
 
-#: ../app/display/gimpdisplayshell.c:696
+#: ../app/display/gimpdisplayshell.c:692
 msgid "Navigate the image display"
 msgstr "Naviga nella finestra immagine"
 
-#: ../app/display/gimpdisplayshell.c:768
-#: ../app/display/gimpdisplayshell.c:1437 ../app/widgets/gimptoolbox.c:252
+#: ../app/display/gimpdisplayshell.c:764
+#: ../app/display/gimpdisplayshell.c:1433 ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Trascina e rilascia qui i file immagine per aprirli"
 
@@ -11556,23 +11536,23 @@ msgstr ""
 "<small>Compilare l'ultima versione da git master prima di\n"
 "fare rapporto su un qualsiasi difetto di questa versione</small>"
 
-#: ../app/display/gimpdisplayshell-close.c:169
-#: ../app/display/gimpdisplayshell-close.c:269
+#: ../app/display/gimpdisplayshell-close.c:168
+#: ../app/display/gimpdisplayshell-close.c:268
 #, c-format
 msgid "Close %s"
 msgstr "Chiudere %s"
 
-#: ../app/display/gimpdisplayshell-close.c:217
+#: ../app/display/gimpdisplayshell-close.c:216
 #, c-format
 msgid "Press %s to discard all changes and close the image."
 msgstr "Premere %s per abbandonare tutti i cambiamenti e chiudere l'immagine."
 
-#: ../app/display/gimpdisplayshell-close.c:277
+#: ../app/display/gimpdisplayshell-close.c:276
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
 msgstr "Prima di chiudere, salvare le modifiche all'immagine \"%s\"?"
 
-#: ../app/display/gimpdisplayshell-close.c:310
+#: ../app/display/gimpdisplayshell-close.c:309
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
@@ -11584,7 +11564,7 @@ msgstr[1] ""
 "Se non si salva l'immagine si perderanno le modifiche effettuate nelle "
 "ultime %d ore."
 
-#: ../app/display/gimpdisplayshell-close.c:321
+#: ../app/display/gimpdisplayshell-close.c:320
 #, c-format
 msgid ""
 "If you don't save the image, changes from the last hour and %d minute will "
@@ -11599,7 +11579,7 @@ msgstr[1] ""
 "Se non si salva l'immagine si perderanno le modifiche effettuate nell'ultima "
 "ora e %d minuti."
 
-#: ../app/display/gimpdisplayshell-close.c:333
+#: ../app/display/gimpdisplayshell-close.c:332
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
@@ -11611,44 +11591,44 @@ msgstr[1] ""
 "Se non si salva l'immagine si perderanno le modifiche effettuate negli "
 "ultimi %d minuti."
 
-#: ../app/display/gimpdisplayshell-close.c:354
+#: ../app/display/gimpdisplayshell-close.c:350
 #, c-format
 msgid "The image has been exported to '%s'."
 msgstr "L'immagine è stata esportata su \"%s\"."
 
-#: ../app/display/gimpdisplayshell-dnd.c:248
-#: ../app/display/gimpdisplayshell-dnd.c:653
-#: ../app/display/gimpdisplayshell-dnd.c:712
+#: ../app/display/gimpdisplayshell-dnd.c:247
+#: ../app/display/gimpdisplayshell-dnd.c:651
+#: ../app/display/gimpdisplayshell-dnd.c:710
 msgid "Drop New Layer"
 msgstr "Nuovo livello"
 
-#: ../app/display/gimpdisplayshell-dnd.c:291
+#: ../app/display/gimpdisplayshell-dnd.c:290
 msgid "Drop New Path"
 msgstr "Nuovo tracciato"
 
-#: ../app/display/gimpdisplayshell-dnd.c:362
-#: ../app/display/gimpdisplayshell-dnd.c:461 ../app/tools/gimpblendtool.c:166
+#: ../app/display/gimpdisplayshell-dnd.c:361
+#: ../app/display/gimpdisplayshell-dnd.c:460 ../app/tools/gimpblendtool.c:225
 #: ../app/tools/gimpbucketfilltool.c:137 ../app/tools/gimpimagemaptool.c:305
 #: ../app/tools/gimpselectiontool.c:427
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Impossibile modificare i pixel di un gruppo di livelli."
 
-#: ../app/display/gimpdisplayshell-dnd.c:370
-#: ../app/display/gimpdisplayshell-dnd.c:469 ../app/tools/gimpblendtool.c:173
+#: ../app/display/gimpdisplayshell-dnd.c:369
+#: ../app/display/gimpdisplayshell-dnd.c:468 ../app/tools/gimpblendtool.c:232
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:312 ../app/tools/gimppainttool.c:276
 #: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1822
 msgid "The active layer's pixels are locked."
 msgstr "I pixel del livello attivo sono bloccati."
 
-#: ../app/display/gimpdisplayshell-dnd.c:389
+#: ../app/display/gimpdisplayshell-dnd.c:388
 #: ../app/widgets/gimpdrawabletreeview.c:242
 #: ../app/widgets/gimpdrawabletreeview.c:330
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Rilascia il motivo sul livello"
 
-#: ../app/display/gimpdisplayshell-dnd.c:390
+#: ../app/display/gimpdisplayshell-dnd.c:389
 #: ../app/widgets/gimpdrawabletreeview.c:266
 #: ../app/widgets/gimpdrawabletreeview.c:331
 msgctxt "undo-type"
@@ -11660,9 +11640,9 @@ msgstr "Rilascia il colore sul livello"
 msgid "Drop layers"
 msgstr "Rilascia i livelli"
 
-#: ../app/display/gimpdisplayshell-dnd.c:686
-#: ../app/display/gimpdisplayshell-dnd.c:704
-#: ../app/widgets/gimplayertreeview.c:805 ../app/widgets/gimptoolbox-dnd.c:274
+#: ../app/display/gimpdisplayshell-dnd.c:684
+#: ../app/display/gimpdisplayshell-dnd.c:702
+#: ../app/widgets/gimplayertreeview.c:803 ../app/widgets/gimptoolbox-dnd.c:272
 msgid "Dropped Buffer"
 msgstr "Buffer rilasciato"
 
@@ -11674,12 +11654,12 @@ msgstr "Filtri di colore a video"
 msgid "Configure Color Display Filters"
 msgstr "Configura i filtri di colore a video"
 
-#: ../app/display/gimpdisplayshell-handlers.c:796
+#: ../app/display/gimpdisplayshell-handlers.c:794
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "Immagine salvata su \"%s\""
 
-#: ../app/display/gimpdisplayshell-handlers.c:810
+#: ../app/display/gimpdisplayshell-handlers.c:806
 #, c-format
 msgid "Image exported to '%s'"
 msgstr "Immagine esportata su \"%s\""
@@ -11740,30 +11720,34 @@ msgstr "(nessuna)"
 msgid "Cancel <i>%s</i>"
 msgstr "Cancella <i>%s</i>"
 
-#: ../app/file/file-open.c:140 ../app/file/file-save.c:118
+#: ../app/file/file-open.c:134 ../app/file/file-save.c:115
 msgid "Not a regular file"
 msgstr "Non è un file regolare"
 
-#: ../app/file/file-open.c:199
+#: ../app/file/file-open.c:142 ../app/file/file-save.c:123
+msgid "Premission denied"
+msgstr "Permesso negato"
+
+#: ../app/file/file-open.c:235
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Il plug-in %s ha risposto successo ma non ha restituito un'immagine"
 
-#: ../app/file/file-open.c:210
+#: ../app/file/file-open.c:246
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "Il plug-in %s non può aprire l'immagine"
 
-#: ../app/file/file-open.c:591
+#: ../app/file/file-open.c:634
 msgid "Image doesn't contain any layers"
 msgstr "L'immagine non contiene nessun livello"
 
-#: ../app/file/file-open.c:656
+#: ../app/file/file-open.c:693
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "L'apertura di \"%s\" è fallita: %s"
 
-#: ../app/file/file-open.c:770
+#: ../app/file/file-open.c:797
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -11771,21 +11755,49 @@ msgstr ""
 "La gestione dei colori è stata disabilitata. Può essere nuovamente "
 "riabilitata agendo nella finestra delle preferenze."
 
-#: ../app/file/file-procedure.c:210
+#: ../app/file/file-procedure.c:211
 msgid "Unknown file type"
 msgstr "Tipo file sconosciuto"
 
-#: ../app/file/file-save.c:231
+#: ../app/file/file-remote.c:113
+msgid "Mounting remote volume"
+msgstr "Montaggio volume remoto"
+
+#: ../app/file/file-remote.c:289
+msgid "Opening remote file"
+msgstr "Apertura file remoto"
+
+#: ../app/file/file-remote.c:357
+#, c-format
+msgid "Downloading image (%s of %s)"
+msgstr "Scaricamento immagine (%s di %s)"
+
+#: ../app/file/file-remote.c:361
+#, c-format
+msgid "Uploading image (%s of %s)"
+msgstr "Caricamento immagine (%s di %s)"
+
+#: ../app/file/file-remote.c:384
+#, c-format
+msgid "Downloaded %s of image data"
+msgstr "Scaricati %s di dati immagine"
+
+#: ../app/file/file-remote.c:388
+#, c-format
+msgid "Uploaded %s of image data"
+msgstr "Caricati %s di dati immagine"
+
+#: ../app/file/file-save.c:275
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Il plug-in %s non può salvare l'immagine"
 
-#: ../app/file/file-utils.c:72
+#: ../app/file/file-utils.c:66
 #, c-format
 msgid "'%s:' is not a valid URI scheme"
 msgstr "\"%s:\" non è uno schema URI valido"
 
-#: ../app/file/file-utils.c:88 ../app/file/file-utils.c:124
+#: ../app/file/file-utils.c:82 ../app/file/file-utils.c:120
 msgid "Invalid character sequence in URI"
 msgstr "Carattere non valido in sequenza URI"
 
@@ -11924,23 +11936,26 @@ msgstr "Saturazione"
 msgid "Lightness"
 msgstr "Luminosità"
 
-#: ../app/operations/gimpcurvesconfig.c:106
-#: ../app/operations/gimplevelsconfig.c:106
+#: ../app/operations/gimpcurvesconfig.c:104
+#: ../app/operations/gimplevelsconfig.c:105
 msgid "The affected channel"
 msgstr "Il canale interessato"
 
-#: ../app/operations/gimpcurvesconfig.c:112
+#: ../app/operations/gimpcurvesconfig.c:110
 msgid "Curve"
 msgstr "Curve"
 
-#: ../app/operations/gimpcurvesconfig.c:520
+#: ../app/operations/gimpcurvesconfig.c:524
 msgid "not a GIMP Curves file"
 msgstr "non è un file curve di GIMP"
 
-#: ../app/operations/gimpcurvesconfig.c:535
-#: ../app/operations/gimplevelsconfig.c:811
-msgid "parse error"
-msgstr "errore di analisi"
+#: ../app/operations/gimpcurvesconfig.c:555
+msgid "Parse error, didn't find 2 integers"
+msgstr "Errore di analisi, non sono stati trovati 2 interi"
+
+#: ../app/operations/gimpcurvesconfig.c:673
+msgid "Writing curves file failed: "
+msgstr "Scrittura file curve fallita: "
 
 #: ../app/operations/gimpdesaturateconfig.c:73
 msgid "Desaturate mode"
@@ -11950,29 +11965,37 @@ msgstr "Modalità desaturazione"
 msgid "Overlap"
 msgstr "Sovrapposta"
 
-#: ../app/operations/gimplevelsconfig.c:112 ../app/tools/gimplevelstool.c:460
+#: ../app/operations/gimplevelsconfig.c:111 ../app/tools/gimplevelstool.c:457
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../app/operations/gimplevelsconfig.c:117
+#: ../app/operations/gimplevelsconfig.c:116
 msgid "Low Input"
 msgstr "Ingresso basso"
 
-#: ../app/operations/gimplevelsconfig.c:122
+#: ../app/operations/gimplevelsconfig.c:121
 msgid "High Input"
 msgstr "Ingresso alto"
 
-#: ../app/operations/gimplevelsconfig.c:127
+#: ../app/operations/gimplevelsconfig.c:126
 msgid "Low Output"
 msgstr "Uscita bassa"
 
-#: ../app/operations/gimplevelsconfig.c:132
+#: ../app/operations/gimplevelsconfig.c:131
 msgid "High Output"
 msgstr "Uscita alta"
 
-#: ../app/operations/gimplevelsconfig.c:764
+#: ../app/operations/gimplevelsconfig.c:769
 msgid "not a GIMP Levels file"
 msgstr "non è un file livelli di GIMP"
+
+#: ../app/operations/gimplevelsconfig.c:837
+msgid "parse error"
+msgstr "errore di analisi"
+
+#: ../app/operations/gimplevelsconfig.c:874
+msgid "Writing levels file failed: "
+msgstr "Scrittura file livelli fallita: "
 
 #: ../app/operations/gimpoperationcagecoefcalc.c:69
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
@@ -12024,8 +12047,10 @@ msgstr "Soglia alta"
 msgid "default:LTR"
 msgstr "default:LTR"
 
-#. initialize the document history
-#: ../app/gui/gui.c:454
+#. load the recent documents after gimp_real_restore() because we
+#. *  need the mime-types implemented by plug-ins
+#.
+#: ../app/gui/gui.c:497
 msgid "Documents"
 msgstr "Documenti"
 
@@ -12316,124 +12341,129 @@ msgstr ""
 "Non posso convertire questo livello in un livello normale perchè non è una "
 "selezione fluttuante."
 
-#: ../app/pdb/gimppdb-query.c:299 ../app/pdb/gimppdb.c:306
+#: ../app/pdb/gimppdb-query.c:139
+#, c-format
+msgid "Writing PDB file '%s' failed: %s"
+msgstr "Scrittura file PDB \"%s\" fallita: %s"
+
+#: ../app/pdb/gimppdb-query.c:314 ../app/pdb/gimppdb.c:306
 #: ../app/pdb/gimppdb.c:377
 #, c-format
 msgid "Procedure '%s' not found"
 msgstr "Procedura \"%s\" non trovata"
 
-#: ../app/pdb/gimppdb-utils.c:74
+#: ../app/pdb/gimppdb-utils.c:75
 msgid "Invalid empty brush name"
 msgstr "Un nome pennello vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:83
+#: ../app/pdb/gimppdb-utils.c:84
 #, c-format
 msgid "Brush '%s' not found"
 msgstr "Pennello \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:88
+#: ../app/pdb/gimppdb-utils.c:89
 #, c-format
 msgid "Brush '%s' is not editable"
 msgstr "Il pennello \"%s\" non è modificabile"
 
-#: ../app/pdb/gimppdb-utils.c:114
+#: ../app/pdb/gimppdb-utils.c:115
 #, c-format
 msgid "Brush '%s' is not a generated brush"
 msgstr "Il pennello \"%s\" non è un pennello generato"
 
-#: ../app/pdb/gimppdb-utils.c:135
+#: ../app/pdb/gimppdb-utils.c:136
 msgid "Invalid empty paint dynamics name"
 msgstr "Nome vuoto per le dinamiche di disegno non valido"
 
-#: ../app/pdb/gimppdb-utils.c:144
+#: ../app/pdb/gimppdb-utils.c:145
 #, c-format
 msgid "Paint dynamics '%s' not found"
 msgstr "Dinamiche di disegno \"%s\" non trovate"
 
-#: ../app/pdb/gimppdb-utils.c:149
+#: ../app/pdb/gimppdb-utils.c:150
 #, c-format
 msgid "Paint dynamics '%s' is not editable"
 msgstr "Dinamiche di disegno \"%s\" non modificabili"
 
-#: ../app/pdb/gimppdb-utils.c:169
+#: ../app/pdb/gimppdb-utils.c:170
 msgid "Invalid empty pattern name"
 msgstr "Un nome motivo vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:178
+#: ../app/pdb/gimppdb-utils.c:179
 #, c-format
 msgid "Pattern '%s' not found"
 msgstr "Motivo \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:198
+#: ../app/pdb/gimppdb-utils.c:199
 msgid "Invalid empty gradient name"
 msgstr "Un nome gradiente vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:207
+#: ../app/pdb/gimppdb-utils.c:208
 #, c-format
 msgid "Gradient '%s' not found"
 msgstr "Gradiente \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:212
+#: ../app/pdb/gimppdb-utils.c:213
 #, c-format
 msgid "Gradient '%s' is not editable"
 msgstr "Il gradiente \"%s\" non è modificabile"
 
-#: ../app/pdb/gimppdb-utils.c:233
+#: ../app/pdb/gimppdb-utils.c:234
 msgid "Invalid empty palette name"
 msgstr "Un nome tavolozza vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:242
+#: ../app/pdb/gimppdb-utils.c:243
 #, c-format
 msgid "Palette '%s' not found"
 msgstr "Tavolozza \"%s\" non trovata"
 
-#: ../app/pdb/gimppdb-utils.c:247
+#: ../app/pdb/gimppdb-utils.c:248
 #, c-format
 msgid "Palette '%s' is not editable"
 msgstr "La tavolozza \"%s\" non è modificabile"
 
-#: ../app/pdb/gimppdb-utils.c:267
+#: ../app/pdb/gimppdb-utils.c:268
 msgid "Invalid empty font name"
 msgstr "Un nome carattere vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:277
+#: ../app/pdb/gimppdb-utils.c:278
 #, c-format
 msgid "Font '%s' not found"
 msgstr "Carattere \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:296
+#: ../app/pdb/gimppdb-utils.c:297
 msgid "Invalid empty buffer name"
 msgstr "Un nome buffer vuoto non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:306
+#: ../app/pdb/gimppdb-utils.c:307
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr "Buffer con nome \"%s\" non trovato"
 
-#: ../app/pdb/gimppdb-utils.c:325
+#: ../app/pdb/gimppdb-utils.c:326
 msgid "Invalid empty paint method name"
 msgstr "Un nome vuoto per il metodo di disegno non è valido"
 
-#: ../app/pdb/gimppdb-utils.c:335
+#: ../app/pdb/gimppdb-utils.c:336
 #, c-format
 msgid "Paint method '%s' does not exist"
 msgstr "Il metodo di disegno \"%s\" non esiste"
 
-#: ../app/pdb/gimppdb-utils.c:354
+#: ../app/pdb/gimppdb-utils.c:355
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere usato perché non è stato aggiunto ad "
 "un'immagine"
 
-#: ../app/pdb/gimppdb-utils.c:364
+#: ../app/pdb/gimppdb-utils.c:365
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere usato perché non è stato allegato ad "
 "un'immagine"
 
-#: ../app/pdb/gimppdb-utils.c:390
+#: ../app/pdb/gimppdb-utils.c:391
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
@@ -12442,7 +12472,7 @@ msgstr ""
 "L'elemento \"%s\" (%d) non può essere usato perché non è figlio diretto di "
 "un albero elementi"
 
-#: ../app/pdb/gimppdb-utils.c:418
+#: ../app/pdb/gimppdb-utils.c:419
 #, c-format
 msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
@@ -12451,29 +12481,29 @@ msgstr ""
 "Gli elementi \"%s\" (%d) e \"%s\" (%d) non possono essere usati perché non "
 "sono parte dello stesso albero elementi"
 
-#: ../app/pdb/gimppdb-utils.c:443
+#: ../app/pdb/gimppdb-utils.c:444
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
 msgstr "L'elemento \"%s\" (%d) non deve essere un antenato di \"%s\" (%d)"
 
-#: ../app/pdb/gimppdb-utils.c:467
+#: ../app/pdb/gimppdb-utils.c:468
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
 msgstr "L'elemento \"%s\" (%d) è già stato aggiunto ad un'immagine"
 
-#: ../app/pdb/gimppdb-utils.c:475
+#: ../app/pdb/gimppdb-utils.c:476
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
 msgstr "Tentativo di aggiungere la voce \"%s\" (%d) all'immagine sbagliata"
 
-#: ../app/pdb/gimppdb-utils.c:495
+#: ../app/pdb/gimppdb-utils.c:496
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere modificato perché il suo contenuto è "
 "bloccato"
 
-#: ../app/pdb/gimppdb-utils.c:505
+#: ../app/pdb/gimppdb-utils.c:506
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
@@ -12481,37 +12511,37 @@ msgstr ""
 "L'elemento \"%s\" (%d) non può essere modificato perché la sua posizione e "
 "dimensione sono bloccate."
 
-#: ../app/pdb/gimppdb-utils.c:525
+#: ../app/pdb/gimppdb-utils.c:526
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere usato perché non è un'elemento gruppo"
 
-#: ../app/pdb/gimppdb-utils.c:545
+#: ../app/pdb/gimppdb-utils.c:546
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr ""
 "L'elemento \"%s\" (%d) non può essere modificato perché è un'elemento gruppo"
 
-#: ../app/pdb/gimppdb-utils.c:566
+#: ../app/pdb/gimppdb-utils.c:567
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr ""
 "Il livello \"%s\" (%d) non può essere usato perché non è un livello di testo"
 
-#: ../app/pdb/gimppdb-utils.c:607
+#: ../app/pdb/gimppdb-utils.c:608
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
 "L'immagine \"%s\" (%d) è di tipo \"%s\", ma era prevista un'immagine di tipo "
 "\"%s\""
 
-#: ../app/pdb/gimppdb-utils.c:630
+#: ../app/pdb/gimppdb-utils.c:631
 #, c-format
 msgid "Image '%s' (%d) must not be of type '%s'"
 msgstr "L'immagine \"%s\" (%d) non deve essere di tipo \"%s\""
 
-#: ../app/pdb/gimppdb-utils.c:650
+#: ../app/pdb/gimppdb-utils.c:651
 #, c-format
 msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
@@ -12520,12 +12550,17 @@ msgstr ""
 "L'immagine \"%s\" (%d) ha precisione \"%s\", invece era prevista una "
 "precisione \"%s\""
 
-#: ../app/pdb/gimppdb-utils.c:673
+#: ../app/pdb/gimppdb-utils.c:674
 #, c-format
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "L'immagine \"%s\" (%d) non deve essere di precisione \"%s\""
 
-#: ../app/pdb/gimppdb-utils.c:702
+#: ../app/pdb/gimppdb-utils.c:698 ../app/pdb/guides-cmds.c:178
+#, c-format
+msgid "Image '%s' (%d) does not contain guide with ID %d"
+msgstr "L'immagine \"%s\" (%d) non contiene una guida con ID %d"
+
+#: ../app/pdb/gimppdb-utils.c:726
 #, c-format
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "L'oggetto vettori %d non contiene un tracciato con ID %d"
@@ -12624,7 +12659,7 @@ msgstr ""
 "La procedura \"%s\" è stata chiamata con il valore \"%s\" l'argomento \"%s"
 "\" (#%d, tipo %s). Questo valore è fuori limite."
 
-#: ../app/pdb/image-cmds.c:2513
+#: ../app/pdb/image-cmds.c:2520
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -12883,27 +12918,27 @@ msgstr "Aggiungi la delineatura del tracciato"
 msgid "Extend path stroke"
 msgstr "Estendi la delineatura del tracciato"
 
-#: ../app/plug-in/gimpenvirontable.c:281
+#: ../app/plug-in/gimpenvirontable.c:329
 #, c-format
 msgid "Empty variable name in environment file %s"
 msgstr "Nome variabile vuoto nel file di ambiente %s"
 
-#: ../app/plug-in/gimpenvirontable.c:299
+#: ../app/plug-in/gimpenvirontable.c:348
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Nome variabile illegale nel file di ambiente %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:263
+#: ../app/plug-in/gimpinterpreterdb.c:315
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
 msgstr "Riferimento a interprete errato in file interprete %s: %s"
 
-#: ../app/plug-in/gimpinterpreterdb.c:322
+#: ../app/plug-in/gimpinterpreterdb.c:376
 #, c-format
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Stringa di formato binario errato in file interprete %s"
 
-#: ../app/plug-in/gimpplugin.c:639
+#: ../app/plug-in/gimpplugin.c:644
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -12936,15 +12971,15 @@ msgstr ""
 "Errore di esecuzione per la procedura \"%s\":\n"
 "%s"
 
-#: ../app/plug-in/gimpplugin-progress.c:331
+#: ../app/plug-in/gimpplugin-progress.c:330
 msgid "Cancelled"
 msgstr "Annullato"
 
-#: ../app/plug-in/gimppluginmanager.c:297
+#: ../app/plug-in/gimppluginmanager.c:282
 msgid "Plug-In Interpreters"
 msgstr "Interpreti dei plug-in"
 
-#: ../app/plug-in/gimppluginmanager.c:304
+#: ../app/plug-in/gimppluginmanager.c:288
 msgid "Plug-In Environment"
 msgstr "Ambiente plug-in"
 
@@ -12959,19 +12994,19 @@ msgstr "Fallita l'esecuzione del plug-in \"%s\""
 msgid "Searching Plug-Ins"
 msgstr "Ricerca plug-in"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:285
+#: ../app/plug-in/gimppluginmanager-restore.c:290
 msgid "Resource configuration"
 msgstr "Configurazione risorse"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:321
+#: ../app/plug-in/gimppluginmanager-restore.c:326
 msgid "Querying new Plug-ins"
 msgstr "Interrogazione nuovi plug-in"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:371
+#: ../app/plug-in/gimppluginmanager-restore.c:377
 msgid "Initializing Plug-ins"
 msgstr "Inizializzazione plug-in"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:443
+#: ../app/plug-in/gimppluginmanager-restore.c:450
 msgid "Starting Extensions"
 msgstr "Avvio estensioni"
 
@@ -13019,12 +13054,12 @@ msgstr "Salto di '%s': versione protocollo GIMP errata."
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "Salto di '%s': versione del formato del file pluginrc errata."
 
-#: ../app/plug-in/plug-in-rc.c:506
+#: ../app/plug-in/plug-in-rc.c:510
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "valore non valido '%s' per il tipo icona"
 
-#: ../app/plug-in/plug-in-rc.c:521
+#: ../app/plug-in/plug-in-rc.c:525
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "valore non valido '%ld' per il tipo icona"
@@ -13303,41 +13338,41 @@ msgstr "Sovracampionamento adattivo"
 msgid "Max depth"
 msgstr "Profondità max"
 
-#: ../app/tools/gimpblendtool.c:109
+#: ../app/tools/gimpblendtool.c:161
 msgid "Blend"
 msgstr "Sfumatura"
 
-#: ../app/tools/gimpblendtool.c:110
+#: ../app/tools/gimpblendtool.c:162
 msgid "Blend Tool: Fill selected area with a color gradient"
 msgstr ""
 "Strumento sfumatura: riempie l'area selezionata con un gradiente di colore"
 
-#: ../app/tools/gimpblendtool.c:111
+#: ../app/tools/gimpblendtool.c:163
 msgid "Blen_d"
 msgstr "S_fumatura"
 
-#: ../app/tools/gimpblendtool.c:180 ../app/tools/gimpbucketfilltool.c:151
+#: ../app/tools/gimpblendtool.c:239 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpforegroundselecttool.c:286
 #: ../app/tools/gimpimagemaptool.c:319 ../app/tools/gimppainttool.c:283
 #: ../app/tools/gimptransformtool.c:1829
 msgid "The active layer is not visible."
 msgstr "Il livello attivo non è visibile."
 
-#: ../app/tools/gimpblendtool.c:187
+#: ../app/tools/gimpblendtool.c:246
 msgid "No gradient available for use with this tool."
 msgstr "Nessun motivo disponibile con questo strumento."
 
-#: ../app/tools/gimpblendtool.c:455 ../app/tools/gimppainttool.c:653
+#: ../app/tools/gimpblendtool.c:832 ../app/tools/gimppainttool.c:653
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s per gli angoli bloccati"
 
-#: ../app/tools/gimpblendtool.c:456
+#: ../app/tools/gimpblendtool.c:833
 #, c-format
 msgid "%s to move the whole line"
 msgstr "%s per spostare l'intera riga"
 
-#: ../app/tools/gimpblendtool.c:460
+#: ../app/tools/gimpblendtool.c:837
 msgid "Blend: "
 msgstr "Sfumatura:"
 
@@ -13475,7 +13510,7 @@ msgstr ""
 "Riempie la posizione originale\n"
 "della gabbia con un colore"
 
-#: ../app/tools/gimpcagetool.c:159 ../app/tools/gimpcagetool.c:1182
+#: ../app/tools/gimpcagetool.c:159 ../app/tools/gimpcagetool.c:1181
 msgid "Cage Transform"
 msgstr "Trasformazione gabbia"
 
@@ -13491,11 +13526,11 @@ msgstr "_Trasformazione gabbia"
 msgid "Press ENTER to commit the transform"
 msgstr "Premere INVIO per confermare la trasformazione"
 
-#: ../app/tools/gimpcagetool.c:1085
+#: ../app/tools/gimpcagetool.c:1084
 msgid "Computing Cage Coefficients"
 msgstr "Calcolo coefficienti gabbia"
 
-#: ../app/tools/gimpcagetool.c:1233
+#: ../app/tools/gimpcagetool.c:1232
 msgid "Cage transform"
 msgstr "Trasformazione gabbia"
 
@@ -13563,7 +13598,7 @@ msgstr "Il bilanciamento del colore agisce solo su livelli con colore RGB."
 msgid "Select Range to Adjust"
 msgstr "Seleziona campo di regolazione"
 
-#: ../app/tools/gimpcolorbalancetool.c:202 ../app/tools/gimplevelstool.c:155
+#: ../app/tools/gimpcolorbalancetool.c:202 ../app/tools/gimplevelstool.c:152
 msgid "Adjust Color Levels"
 msgstr "Regola i livelli colore"
 
@@ -13881,11 +13916,11 @@ msgstr "Fare clic per aggiungere punti di controllo a tutti i canali"
 msgid "Click to locate on curve (try Shift, Ctrl)"
 msgstr "Fare clic per localizzare sulla curva (provare Maiusc, Ctrl)"
 
-#: ../app/tools/gimpcurvestool.c:423 ../app/tools/gimplevelstool.c:342
+#: ../app/tools/gimpcurvestool.c:423 ../app/tools/gimplevelstool.c:339
 msgid "Cha_nnel:"
 msgstr "Ca_nale:"
 
-#: ../app/tools/gimpcurvestool.c:449 ../app/tools/gimplevelstool.c:366
+#: ../app/tools/gimpcurvestool.c:449 ../app/tools/gimplevelstool.c:363
 msgid "R_eset Channel"
 msgstr "R_eimposta canale"
 
@@ -13893,12 +13928,11 @@ msgstr "R_eimposta canale"
 msgid "Curve _type:"
 msgstr "_Tipo di curva:"
 
-#: ../app/tools/gimpcurvestool.c:618 ../app/tools/gimplevelstool.c:638
-#, c-format
-msgid "Could not read header from '%s': %s"
-msgstr "Impossibile leggere l'intestazione da \"%s\": %s"
+#: ../app/tools/gimpcurvestool.c:608 ../app/tools/gimplevelstool.c:625
+msgid "Could not read header: "
+msgstr "Impossibile leggere l'intestazione: "
 
-#: ../app/tools/gimpcurvestool.c:691
+#: ../app/tools/gimpcurvestool.c:648
 msgid "Use _old curves file format"
 msgstr "Usa file curve di vecchi_o formato"
 
@@ -14358,7 +14392,7 @@ msgstr "Regola colore selezionato"
 msgid "R_eset Color"
 msgstr "R_eimposta il colore"
 
-#: ../app/tools/gimpimagemaptool.c:412
+#: ../app/tools/gimpimagemaptool.c:411
 msgid "_Preview"
 msgstr "Ante_prima"
 
@@ -14366,7 +14400,7 @@ msgstr "Ante_prima"
 msgid "Pre_sets:"
 msgstr "Preimpo_stazioni:"
 
-#: ../app/tools/gimpimagemaptool-settings.c:216
+#: ../app/tools/gimpimagemaptool-settings.c:250
 #, c-format
 msgid "Settings saved to '%s'"
 msgstr "Impostazioni salvate su \"%s\""
@@ -14463,62 +14497,62 @@ msgstr "Premere invio per convertire in una selezione"
 msgid "Click or Click-Drag to add a point"
 msgstr "Fare clic e trascinare per aggiungere un punto"
 
-#: ../app/tools/gimplevelstool.c:137
+#: ../app/tools/gimplevelstool.c:134
 msgid "Levels Tool: Adjust color levels"
 msgstr "Strumento livelli: regola i livelli colore"
 
-#: ../app/tools/gimplevelstool.c:138
+#: ../app/tools/gimplevelstool.c:135
 msgid "_Levels..."
 msgstr "_Livelli..."
 
-#: ../app/tools/gimplevelstool.c:157
+#: ../app/tools/gimplevelstool.c:154
 msgid "Import Levels"
 msgstr "Importa Livelli"
 
-#: ../app/tools/gimplevelstool.c:158
+#: ../app/tools/gimplevelstool.c:155
 msgid "Export Levels"
 msgstr "Esporta Livelli"
 
-#: ../app/tools/gimplevelstool.c:285
+#: ../app/tools/gimplevelstool.c:282
 msgid "Pick black point"
 msgstr "Prendi il punto nero"
 
-#: ../app/tools/gimplevelstool.c:289
+#: ../app/tools/gimplevelstool.c:286
 msgid "Pick gray point"
 msgstr "Prendi il punto grigio"
 
-#: ../app/tools/gimplevelstool.c:293
+#: ../app/tools/gimplevelstool.c:290
 msgid "Pick white point"
 msgstr "Prendi punto bianco"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:381
+#: ../app/tools/gimplevelstool.c:378
 msgid "Input Levels"
 msgstr "Livelli di ingresso"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:495
+#: ../app/tools/gimplevelstool.c:492
 msgid "Output Levels"
 msgstr "Livelli di uscita"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:553
+#: ../app/tools/gimplevelstool.c:550
 msgid "All Channels"
 msgstr "Tutti i canali"
 
-#: ../app/tools/gimplevelstool.c:565 ../app/tools/gimpthresholdtool.c:231
+#: ../app/tools/gimplevelstool.c:562 ../app/tools/gimpthresholdtool.c:231
 msgid "_Auto"
 msgstr "_Auto"
 
-#: ../app/tools/gimplevelstool.c:567
+#: ../app/tools/gimplevelstool.c:564
 msgid "Adjust levels automatically"
 msgstr "Regola automaticamente i livelli"
 
-#: ../app/tools/gimplevelstool.c:590
+#: ../app/tools/gimplevelstool.c:587
 msgid "Edit these Settings as Curves"
 msgstr "Modifica queste impostazioni come curve"
 
-#: ../app/tools/gimplevelstool.c:781
+#: ../app/tools/gimplevelstool.c:735
 msgid "Use _old levels file format"
 msgstr "Usa file livelli di vecchi_o formato"
 
@@ -14623,7 +14657,7 @@ msgstr "Preleva un livello o una guida"
 
 #: ../app/tools/gimpmoveoptions.c:141
 msgid "Move the active layer"
-msgstr "Sposta livello attivo"
+msgstr "Sposta il livello attivo"
 
 #: ../app/tools/gimpmoveoptions.c:145
 msgid "Move selection"
@@ -14647,56 +14681,56 @@ msgstr "Sposta:"
 msgid "Tool Toggle  (%s)"
 msgstr "Commuta strumento (%s)"
 
-#: ../app/tools/gimpmovetool.c:127
+#: ../app/tools/gimpmovetool.c:125
 msgctxt "tool"
 msgid "Move"
 msgstr "Sposta"
 
-#: ../app/tools/gimpmovetool.c:128
+#: ../app/tools/gimpmovetool.c:126
 msgid "Move Tool: Move layers, selections, and other objects"
 msgstr "Strumento sposta: sposta livelli, selezioni e altri oggetti"
 
-#: ../app/tools/gimpmovetool.c:129
+#: ../app/tools/gimpmovetool.c:127
 msgid "_Move"
 msgstr "_Sposta"
 
-#: ../app/tools/gimpmovetool.c:250 ../app/tools/gimpmovetool.c:610
+#: ../app/tools/gimpmovetool.c:248 ../app/tools/gimpmovetool.c:608
 msgid "Move Guide: "
 msgstr "Sposta guida:"
 
-#: ../app/tools/gimpmovetool.c:295
+#: ../app/tools/gimpmovetool.c:293
 msgid "There is no path to move."
 msgstr "Nessun tracciato da spostare."
 
-#: ../app/tools/gimpmovetool.c:296 ../app/tools/gimptransformtool.c:1850
+#: ../app/tools/gimpmovetool.c:294 ../app/tools/gimptransformtool.c:1850
 msgid "The active path's position is locked."
 msgstr "La posizione del tracciato attivo è bloccata."
 
-#: ../app/tools/gimpmovetool.c:327
+#: ../app/tools/gimpmovetool.c:325
 msgid "The selection is empty."
 msgstr "La selezione è vuota."
 
-#: ../app/tools/gimpmovetool.c:335
+#: ../app/tools/gimpmovetool.c:333
 msgid "There is no layer to move."
 msgstr "Nessun livello da spostare."
 
-#: ../app/tools/gimpmovetool.c:339 ../app/tools/gimpmovetool.c:365
+#: ../app/tools/gimpmovetool.c:337 ../app/tools/gimpmovetool.c:363
 msgid "The active layer's position is locked."
 msgstr "La posizone del livello attivo è bloccata."
 
-#: ../app/tools/gimpmovetool.c:352
+#: ../app/tools/gimpmovetool.c:350
 msgid "The active channel's position is locked."
 msgstr "La posizione del canale attivo è bloccata."
 
-#: ../app/tools/gimpmovetool.c:604
+#: ../app/tools/gimpmovetool.c:602
 msgid "Remove Guide"
 msgstr "Rimuovi guida"
 
-#: ../app/tools/gimpmovetool.c:604
+#: ../app/tools/gimpmovetool.c:602
 msgid "Cancel Guide"
 msgstr "Elimina guida"
 
-#: ../app/tools/gimpmovetool.c:610
+#: ../app/tools/gimpmovetool.c:608
 msgid "Add Guide: "
 msgstr "Aggiungi guida:"
 
@@ -14704,17 +14738,17 @@ msgstr "Aggiungi guida:"
 msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Strumento operazione: usa una qualsiasi operazione GEGL"
 
-#: ../app/tools/gimpoperationtool.c:339
+#: ../app/tools/gimpoperationtool.c:343
 #, c-format
 msgid "Import '%s' Settings"
 msgstr "Importa le impostazioni \"%s\""
 
-#: ../app/tools/gimpoperationtool.c:340
+#: ../app/tools/gimpoperationtool.c:344
 #, c-format
 msgid "Export '%s' Settings"
 msgstr "Esporta le impostazioni \"%s\""
 
-#: ../app/tools/gimpoperationtool.c:642
+#: ../app/tools/gimpoperationtool.c:647
 msgid "_Aux Input"
 msgstr "Ingresso _ausiliare"
 
@@ -14727,7 +14761,7 @@ msgid "_Paintbrush"
 msgstr "_Pennello"
 
 #: ../app/tools/gimppaintoptions-gui.c:85
-#: ../app/widgets/gimplayertreeview.c:270
+#: ../app/widgets/gimplayertreeview.c:269
 msgid "Mode"
 msgstr "Modalità"
 
@@ -15029,7 +15063,7 @@ msgstr "Seleziona le aree trasparenti"
 
 #: ../app/tools/gimpregionselectoptions.c:239
 msgid "Select by"
-msgstr "Seleziona per"
+msgstr "Selezione per"
 
 #: ../app/tools/gimpregionselectoptions.c:245
 msgid "Draw Mask"
@@ -15113,8 +15147,8 @@ msgid "_Seamless Clone"
 msgstr "Clone contin_uo"
 
 #: ../app/tools/gimpseamlessclonetool.c:795
-msgid "Cloning the foreground object..."
-msgstr "Clonazione oggetto di primo piano..."
+msgid "Cloning the foreground object"
+msgstr "Clonazione oggetto in primo piano"
 
 #: ../app/tools/gimpselectionoptions.c:85
 msgid "Enable feathering of selection edges"
@@ -15933,8 +15967,8 @@ msgstr "Trasforma tracciato"
 
 #: ../app/vectors/gimpvectors-export.c:96
 #, c-format
-msgid "Error while writing '%s': %s"
-msgstr "Errore durante la scrittura di \"%s\": %s"
+msgid "Writing SVG file '%s' failed: %s"
+msgstr "Scrittura file SVG \"%s\" fallita: %s"
 
 #: ../app/vectors/gimpvectors-import.c:331
 msgid "Import Paths"
@@ -16586,24 +16620,24 @@ msgstr "Primo piano: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Sfondo: %d, %d, %d"
 
-#: ../app/widgets/gimpdnd-xds.c:204
+#: ../app/widgets/gimpdnd-xds.c:196
 msgid "The given filename does not have any known file extension."
 msgstr "Il nome file dato non possiede una forma di estensione conosciuta."
 
-#: ../app/widgets/gimpdnd-xds.c:222
+#: ../app/widgets/gimpdnd-xds.c:214
 msgid "File Exists"
 msgstr "Il file esiste"
 
-#: ../app/widgets/gimpdnd-xds.c:227
+#: ../app/widgets/gimpdnd-xds.c:219
 msgid "_Replace"
 msgstr "_Rimpiazza"
 
-#: ../app/widgets/gimpdnd-xds.c:238
+#: ../app/widgets/gimpdnd-xds.c:229
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Un file di nome '%s' esiste già."
 
-#: ../app/widgets/gimpdnd-xds.c:243
+#: ../app/widgets/gimpdnd-xds.c:233
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Volete rimpiazzarlo con l'immagine che stavate salvando?"
 
@@ -16689,31 +16723,31 @@ msgstr "I messaggi sono rediretti su stderr."
 msgid "%s Message"
 msgstr "Messaggio %s"
 
-#: ../app/widgets/gimpfiledialog.c:330
+#: ../app/widgets/gimpfiledialog.c:327
 msgid "Automatically Detected"
 msgstr "Rilevato automaticamente"
 
-#: ../app/widgets/gimpfiledialog.c:347
+#: ../app/widgets/gimpfiledialog.c:340
 msgid "By Extension"
 msgstr "Per estensione"
 
-#: ../app/widgets/gimpfiledialog.c:801
+#: ../app/widgets/gimpfiledialog.c:792
 msgid "All files"
 msgstr "Tutti i file"
 
-#: ../app/widgets/gimpfiledialog.c:806
+#: ../app/widgets/gimpfiledialog.c:797
 msgid "All images"
 msgstr "Tutte le immagini"
 
-#: ../app/widgets/gimpfiledialog.c:813
+#: ../app/widgets/gimpfiledialog.c:804
 msgid "All XCF images"
 msgstr "Tutte le immagini XCF"
 
-#: ../app/widgets/gimpfiledialog.c:815
+#: ../app/widgets/gimpfiledialog.c:806
 msgid "All export images"
 msgstr "Tutte le immagini esportabili"
 
-#: ../app/widgets/gimpfiledialog.c:999
+#: ../app/widgets/gimpfiledialog.c:990
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleziona _tipo di file (%s)"
@@ -16954,83 +16988,83 @@ msgstr ""
 "Rimpiazza l'attuale commento dell'immagine con il valore predefinito "
 "impostato in Modifica→Preferenze→Immagine predefinita."
 
-#: ../app/widgets/gimpimagepropview.c:113
+#: ../app/widgets/gimpimagepropview.c:112
 msgid "Size in pixels:"
 msgstr "Dimensione in pixel:"
 
-#: ../app/widgets/gimpimagepropview.c:116
+#: ../app/widgets/gimpimagepropview.c:115
 msgid "Print size:"
 msgstr "Dimensioni di stampa:"
 
-#: ../app/widgets/gimpimagepropview.c:119
+#: ../app/widgets/gimpimagepropview.c:118
 msgid "Resolution:"
 msgstr "Risoluzione:"
 
-#: ../app/widgets/gimpimagepropview.c:122
+#: ../app/widgets/gimpimagepropview.c:121
 msgid "Color space:"
 msgstr "Spazio colore:"
 
-#: ../app/widgets/gimpimagepropview.c:125
+#: ../app/widgets/gimpimagepropview.c:124
 msgid "Precision:"
 msgstr "Precisione:"
 
-#: ../app/widgets/gimpimagepropview.c:130
+#: ../app/widgets/gimpimagepropview.c:129
 msgid "File Name:"
 msgstr "Nome file:"
 
-#: ../app/widgets/gimpimagepropview.c:136
+#: ../app/widgets/gimpimagepropview.c:135
 msgid "File Size:"
 msgstr "Dimensione file:"
 
-#: ../app/widgets/gimpimagepropview.c:139
+#: ../app/widgets/gimpimagepropview.c:138
 msgid "File Type:"
 msgstr "Tipo file:"
 
-#: ../app/widgets/gimpimagepropview.c:144
+#: ../app/widgets/gimpimagepropview.c:143
 msgid "Size in memory:"
 msgstr "Dimensione in memoria:"
 
-#: ../app/widgets/gimpimagepropview.c:147
+#: ../app/widgets/gimpimagepropview.c:146
 msgid "Undo steps:"
 msgstr "Azioni annullabili:"
 
-#: ../app/widgets/gimpimagepropview.c:150
+#: ../app/widgets/gimpimagepropview.c:149
 msgid "Redo steps:"
 msgstr "Azioni ripetibili:"
 
-#: ../app/widgets/gimpimagepropview.c:155
+#: ../app/widgets/gimpimagepropview.c:154
 msgid "Number of pixels:"
 msgstr "Numero di pixel:"
 
-#: ../app/widgets/gimpimagepropview.c:158
+#: ../app/widgets/gimpimagepropview.c:157
 msgid "Number of layers:"
 msgstr "Numero di livelli:"
 
-#: ../app/widgets/gimpimagepropview.c:161
+#: ../app/widgets/gimpimagepropview.c:160
 msgid "Number of channels:"
 msgstr "Numero di canali:"
 
-#: ../app/widgets/gimpimagepropview.c:164
+#: ../app/widgets/gimpimagepropview.c:163
 msgid "Number of paths:"
 msgstr "Numero di tracciati:"
 
 #. no undo (or redo) steps available
-#: ../app/widgets/gimpimagepropview.c:412
+#: ../app/widgets/gimpimagepropview.c:400
 msgid "None"
 msgstr "Nessuna"
 
-#: ../app/widgets/gimpimagepropview.c:467
+#: ../app/widgets/gimpimagepropview.c:455
 #: ../app/widgets/gimptemplateeditor.c:331
 #, c-format
 msgid "pixels/%s"
 msgstr "punti/%s"
 
-#: ../app/widgets/gimpimagepropview.c:469
+#: ../app/widgets/gimpimagepropview.c:457
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:490
+#: ../app/widgets/gimpimagepropview.c:478
 msgid "colors"
 msgstr "colori"
 
@@ -17042,7 +17076,7 @@ msgstr "Blocca:"
 msgid "System Language"
 msgstr "Lingua di sistema"
 
-#: ../app/widgets/gimplayertreeview.c:311
+#: ../app/widgets/gimplayertreeview.c:310
 msgid "Lock alpha channel"
 msgstr "Blocca canale alfa"
 
@@ -17071,7 +17105,7 @@ msgstr "Rilasciare qui le finestre agganciabili"
 msgid "Select an image in the left pane"
 msgstr "Seleziona un'immagine nel pannello a sinistra"
 
-#: ../app/widgets/gimpprogressdialog.c:222
+#: ../app/widgets/gimpprogressdialog.c:223
 msgid "Progress"
 msgstr "Operazione in corso"
 
@@ -17210,19 +17244,19 @@ msgstr "_Esporta le impostazioni su file..."
 msgid "_Manage Settings..."
 msgstr "Gestione i_mpostazioni..."
 
-#: ../app/widgets/gimpsettingsbox.c:636
+#: ../app/widgets/gimpsettingsbox.c:641
 msgid "Add Settings to Favorites"
 msgstr "Aggiungi le impostazioni tra i favoriti"
 
-#: ../app/widgets/gimpsettingsbox.c:639
+#: ../app/widgets/gimpsettingsbox.c:644
 msgid "Enter a name for the settings"
 msgstr "Inserisci un nome per le impostazioni"
 
-#: ../app/widgets/gimpsettingsbox.c:640
+#: ../app/widgets/gimpsettingsbox.c:645
 msgid "Saved Settings"
 msgstr "Impostazioni salvate"
 
-#: ../app/widgets/gimpsettingsbox.c:681
+#: ../app/widgets/gimpsettingsbox.c:686
 msgid "Manage Saved Settings"
 msgstr "Gestione delle impostazioni salvate"
 
@@ -17345,10 +17379,20 @@ msgstr "L'attributo \"%s\" non è valido sull'elemento <%s> in questo contesto"
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "L'elemento più esterno nel testo deve essere un <marcatore> non <%s>"
 
-#: ../app/widgets/gimptextbuffer.c:1453
+#: ../app/widgets/gimptextbuffer.c:1444
+#, c-format
+msgid "Input file '%s' appears truncated: %s"
+msgstr "Il file in ingresso \"%s\" sembra troncato: %s"
+
+#: ../app/widgets/gimptextbuffer.c:1462
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Dato UTF-8 non valido nel file '%s'"
+
+#: ../app/widgets/gimptextbuffer.c:1519
+#, c-format
+msgid "Writing palette file '%s' failed: %s"
+msgstr "Scrittura file tavolozza \"%s\" fallita: %s"
 
 #: ../app/widgets/gimptexteditor.c:223
 msgid "_Use selected font"
@@ -17401,7 +17445,7 @@ msgstr "Barrato"
 msgid "Font \"%s\" unavailable on this system"
 msgstr "In carattere \"%s\" non è disponibile su questo sistema"
 
-#: ../app/widgets/gimpthumbbox.c:331
+#: ../app/widgets/gimpthumbbox.c:330
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -17410,20 +17454,20 @@ msgstr ""
 "Fare clic per aggiornare l'anteprima\n"
 "%s-clic per forzare l'aggiornamento anche se l'anteprima è aggiornata"
 
-#: ../app/widgets/gimpthumbbox.c:348
+#: ../app/widgets/gimpthumbbox.c:347
 msgid "Pr_eview"
 msgstr "Ant_eprima"
 
-#: ../app/widgets/gimpthumbbox.c:405 ../app/widgets/gimpthumbbox.c:469
+#: ../app/widgets/gimpthumbbox.c:404 ../app/widgets/gimpthumbbox.c:468
 msgid "No selection"
 msgstr "Nessuna selezione"
 
-#: ../app/widgets/gimpthumbbox.c:597 ../app/widgets/gimpthumbbox.c:618
+#: ../app/widgets/gimpthumbbox.c:596 ../app/widgets/gimpthumbbox.c:617
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniatura %d di %d"
 
-#: ../app/widgets/gimpthumbbox.c:725 ../app/widgets/gimpthumbbox.c:735
+#: ../app/widgets/gimpthumbbox.c:724 ../app/widgets/gimpthumbbox.c:734
 msgid "Creating preview..."
 msgstr "Creazione anteprima..."
 
@@ -17738,36 +17782,36 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Indefinito"
 
-#: ../app/xcf/xcf.c:104 ../app/xcf/xcf.c:175
+#: ../app/xcf/xcf.c:108 ../app/xcf/xcf.c:182
 msgid "GIMP XCF image"
 msgstr "Immagine GIMP XCF"
 
-#: ../app/xcf/xcf.c:283
+#: ../app/xcf/xcf.c:288
 #, c-format
 msgid "Opening '%s'"
 msgstr "Apertura di \"%s\""
 
-#: ../app/xcf/xcf.c:325
+#: ../app/xcf/xcf.c:324
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Errore XCF: riscontrata versione file XCF %d non supportata"
 
-#: ../app/xcf/xcf.c:339
-#, c-format
-msgid "Could not open '%s' for reading: "
-msgstr "Impossibile aprire \"%s\" in lettura: "
-
-#: ../app/xcf/xcf.c:399
+#: ../app/xcf/xcf.c:396
 #, c-format
 msgid "Saving '%s'"
 msgstr "Salvataggio di \"%s\""
 
-#: ../app/xcf/xcf.c:419
+#: ../app/xcf/xcf.c:405
 #, c-format
-msgid "Could not open '%s' for writing: "
-msgstr "Non è possibile aprire \"%s\" in scrittura: "
+msgid "Closing '%s'"
+msgstr "Chiusura \"%s\""
 
-#: ../app/xcf/xcf-load.c:289
+#: ../app/xcf/xcf.c:412
+#, c-format
+msgid "Error writing '%s': "
+msgstr "Errore durante la scrittura di \"%s\": "
+
+#: ../app/xcf/xcf-load.c:295
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -17776,7 +17820,7 @@ msgstr ""
 "Scoperto parassita 'exif-data' rovinato.\n"
 "I dati Exif non possono essere migrati: %s"
 
-#: ../app/xcf/xcf-load.c:336
+#: ../app/xcf/xcf-load.c:342
 #, c-format
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
@@ -17785,7 +17829,7 @@ msgstr ""
 "Scoperto parassita 'gimp-metadata' rovinato.\n"
 "I dati XMP non possono essere migrati: %s"
 
-#: ../app/xcf/xcf-load.c:510
+#: ../app/xcf/xcf-load.c:516
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -17793,7 +17837,7 @@ msgstr ""
 "Questo file XCF è danneggiato! È stato caricato tutto quello che si è "
 "potuto, ma è incompleto."
 
-#: ../app/xcf/xcf-load.c:521
+#: ../app/xcf/xcf-load.c:527
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -17801,7 +17845,7 @@ msgstr ""
 "Questo file XCF è danneggiato! Non è stato possibile ripristinare neanche "
 "una parte di esso."
 
-#: ../app/xcf/xcf-load.c:613
+#: ../app/xcf/xcf-load.c:619
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"

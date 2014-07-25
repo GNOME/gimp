@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-27 19:22+0200\n"
-"PO-Revision-Date: 2014-06-27 19:26+0200\n"
+"POT-Creation-Date: 2014-07-25 20:15+0200\n"
+"PO-Revision-Date: 2014-07-25 20:16+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -1053,7 +1053,7 @@ msgstr "Esegui con gli ultimi parametri usati"
 #: ../libgimpbase/gimpbaseenums.c:1476
 msgctxt "select-criterion"
 msgid "Composite"
-msgstr "Composita"
+msgstr "Composito"
 
 #: ../libgimpbase/gimpbaseenums.c:1477
 msgctxt "select-criterion"
@@ -1214,20 +1214,20 @@ msgstr "Fallita l'analisi dei dati XMP."
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
-#: ../libgimpcolor/gimplcms.c:88
+#: ../libgimpcolor/gimplcms.c:132
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "\"%s\" non sembra essere un profilo di colore ICC"
 
-#: ../libgimpcolor/gimplcms.c:111
+#: ../libgimpcolor/gimplcms.c:153
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Il dati non sembrano essere un profilo di colore ICC"
 
-#: ../libgimpcolor/gimplcms.c:142
+#: ../libgimpcolor/gimplcms.c:184
 msgid "Could not save color profile to memory"
 msgstr "Impossibile salvare il profilo di colore in memoria"
 
-#: ../libgimpcolor/gimplcms.c:222
+#: ../libgimpcolor/gimplcms.c:264
 msgid "(unnamed profile)"
 msgstr "(profilo senza nome)"
 
@@ -1384,70 +1384,51 @@ msgstr "valore \"%ld\" non valido per il token %s"
 msgid "while parsing token '%s': %s"
 msgstr "durante l'analisi del token \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:482
-#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:595
-#: ../libgimpconfig/gimpscanner.c:677
+#: ../libgimpconfig/gimpconfig-iface.c:658
+#: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:734
+#: ../libgimpconfig/gimpscanner.c:816
 #: ../libgimpwidgets/gimpcolorprofilestore.c:655
 msgid "fatal parse error"
 msgstr "errore di analisi irrimediabile"
 
-#: ../libgimpconfig/gimpconfig-path.c:389
+#: ../libgimpconfig/gimpconfig-path.c:437
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Impossibile espandere ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:87
-#: ../libgimpconfig/gimpconfigwriter.c:728
+#: ../libgimpconfig/gimpconfigwriter.c:90
+#: ../libgimpconfig/gimpconfigwriter.c:669
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Errore nello scrivere su \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:145
+#: ../libgimpconfig/gimpconfigwriter.c:187
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Impossibile creare il file temporaneo per \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:158
+#: ../libgimpconfig/gimpconfigwriter.c:197
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire \"%s\" in scrittura: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:689
-#: ../libgimpconfig/gimpconfigwriter.c:709
+#: ../libgimpconfig/gimpconfigwriter.c:772
 #, c-format
-msgid ""
-"Error writing to temporary file for '%s': %s\n"
-"The original file has not been touched."
-msgstr ""
-"Errore nello scrivere sul file temporaneo per \"%s\": %s\n"
-"Il file originale non è stato toccato."
+msgid "Error writing '%s': %s"
+msgstr "Errore durante la scrittura su \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:717
-#, c-format
-msgid ""
-"Error writing to temporary file for '%s': %s\n"
-"No file has been created."
-msgstr ""
-"Errore nello scrivere sul file temporaneo per \"%s\": %s\n"
-"Non è stato creato alcun file."
-
-#: ../libgimpconfig/gimpconfigwriter.c:741
-#, c-format
-msgid "Could not create '%s': %s"
-msgstr "Impossibile creare \"%s\": %s"
-
-#: ../libgimpconfig/gimpscanner.c:269
+#: ../libgimpconfig/gimpscanner.c:408
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "stringa UTF-8 non valida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:467
+#: ../libgimpconfig/gimpscanner.c:606
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "atteso \"yes\" o \"no\" per il token booleano, ottenuto \"%s\""
 
-#: ../libgimpconfig/gimpscanner.c:704
+#: ../libgimpconfig/gimpscanner.c:843
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Errore durante l'analisi di \"%s\" alla riga %d: %s"
