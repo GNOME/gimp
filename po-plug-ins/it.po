@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-27 00:00+0200\n"
-"PO-Revision-Date: 2014-04-27 00:04+0200\n"
+"POT-Creation-Date: 2014-07-25 18:33+0200\n"
+"PO-Revision-Date: 2014-07-25 18:35+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -655,7 +655,7 @@ msgstr "Sfocatura selettiva Gaussiana"
 #: ../plug-ins/common/edge-dog.c:269 ../plug-ins/common/edge-neon.c:228
 #: ../plug-ins/common/edge-sobel.c:212 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/pixelize.c:293 ../plug-ins/common/softglow.c:224
-#: ../plug-ins/file-sgi/sgi.c:560 ../plug-ins/file-xjt/xjt.c:1687
+#: ../plug-ins/file-sgi/sgi.c:560 ../plug-ins/file-xjt/xjt.c:1691
 #: ../plug-ins/gradient-flare/gradient-flare.c:966
 msgid "Cannot operate on indexed color images."
 msgstr "Impossibile operare su immagini a colori indicizzati."
@@ -1037,12 +1037,12 @@ msgstr "Carica le impostazioni del mixer dei canali"
 #: ../plug-ins/file-jpeg/jpeg-load.c:894 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-psd/psd-thumb-load.c:79
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:193
-#: ../plug-ins/file-xjt/xjt.c:2529 ../plug-ins/file-xjt/xjt.c:2537
+#: ../plug-ins/file-xjt/xjt.c:2533 ../plug-ins/file-xjt/xjt.c:2541
 #: ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:923
-#: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
+#: ../plug-ins/gfig/gfig.c:433 ../plug-ins/help/gimphelplocale.c:271
+#: ../plug-ins/help/gimphelplocale.c:287
 #: ../plug-ins/lighting/lighting-ui.c:1367
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1063,14 +1063,14 @@ msgstr "Salva le impostazioni del mixer dei canali"
 #: ../plug-ins/common/file-png.c:1369 ../plug-ins/common/file-pnm.c:1012
 #: ../plug-ins/common/file-ps.c:1195 ../plug-ins/common/file-raw.c:609
 #: ../plug-ins/common/file-raw.c:637 ../plug-ins/common/file-sunras.c:567
-#: ../plug-ins/common/file-tga.c:1180 ../plug-ins/common/file-tiff-save.c:710
+#: ../plug-ins/common/file-tga.c:1180 ../plug-ins/common/file-tiff-save.c:838
 #: ../plug-ins/common/file-xbm.c:1037 ../plug-ins/common/file-xmc.c:1449
 #: ../plug-ins/common/file-xwd.c:637 ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:309 ../plug-ins/file-fits/fits.c:478
 #: ../plug-ins/file-fli/fli-gimp.c:752 ../plug-ins/file-ico/ico-save.c:1007
 #: ../plug-ins/file-jpeg/jpeg-save.c:355 ../plug-ins/file-psd/psd-save.c:1653
 #: ../plug-ins/file-uri/uri-backend-libcurl.c:166
-#: ../plug-ins/file-xjt/xjt.c:1276 ../plug-ins/file-xjt/xjt.c:1715
+#: ../plug-ins/file-xjt/xjt.c:1280 ../plug-ins/file-xjt/xjt.c:1719
 #: ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:797 ../plug-ins/ifs-compose/ifs-compose.c:2408
@@ -3040,7 +3040,7 @@ msgstr "EOF o errore durante la lettura dell'intestazione dell'immagine"
 #: ../plug-ins/file-bmp/bmp-read.c:211 ../plug-ins/file-faxg3/faxg3.c:213
 #: ../plug-ins/file-fli/fli-gimp.c:503 ../plug-ins/file-ico/ico-load.c:644
 #: ../plug-ins/file-jpeg/jpeg-load.c:128 ../plug-ins/file-psd/psd-load.c:135
-#: ../plug-ins/file-sgi/sgi.c:332 ../plug-ins/file-xjt/xjt.c:3333
+#: ../plug-ins/file-sgi/sgi.c:332 ../plug-ins/file-xjt/xjt.c:3337
 #, c-format
 msgid "Opening '%s'"
 msgstr "Apertura di '%s'"
@@ -3115,13 +3115,13 @@ msgstr "\"%s\": EOF o errore durante la lettura dei dati della tavolozza"
 #: ../plug-ins/common/file-pcx.c:645 ../plug-ins/common/file-pix.c:533
 #: ../plug-ins/common/file-png.c:1376 ../plug-ins/common/file-pnm.c:1017
 #: ../plug-ins/common/file-ps.c:1200 ../plug-ins/common/file-sunras.c:572
-#: ../plug-ins/common/file-tga.c:1185 ../plug-ins/common/file-tiff-save.c:718
+#: ../plug-ins/common/file-tga.c:1185 ../plug-ins/common/file-tiff-save.c:709
 #: ../plug-ins/common/file-xbm.c:1042 ../plug-ins/common/file-xmc.c:1454
 #: ../plug-ins/common/file-xpm.c:639 ../plug-ins/common/file-xwd.c:642
 #: ../plug-ins/file-bmp/bmp-write.c:320 ../plug-ins/file-fits/fits.c:483
 #: ../plug-ins/file-fli/fli-gimp.c:720 ../plug-ins/file-ico/ico-save.c:1001
 #: ../plug-ins/file-jpeg/jpeg-save.c:312 ../plug-ins/file-psd/psd-save.c:1658
-#: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-xjt/xjt.c:1696
+#: ../plug-ins/file-sgi/sgi.c:578 ../plug-ins/file-xjt/xjt.c:1700
 #, c-format
 msgid "Saving '%s'"
 msgstr "Salvataggio di \"%s\""
@@ -3205,7 +3205,7 @@ msgstr "Impossibile salvare immagini con canali alfa."
 
 #: ../plug-ins/common/file-dicom.c:1354 ../plug-ins/common/file-ps.c:1185
 #: ../plug-ins/common/file-ps.c:1217 ../plug-ins/common/file-xwd.c:627
-#: ../plug-ins/file-fits/fits.c:468 ../plug-ins/file-xjt/xjt.c:1691
+#: ../plug-ins/file-fits/fits.c:468 ../plug-ins/file-xjt/xjt.c:1695
 msgid "Cannot operate on unknown image types."
 msgstr "Impossibile operare su immagini di tipo sconosciuto."
 
@@ -3860,7 +3860,7 @@ msgid "Writing to file '%s' failed: %s"
 msgstr "Fallita la scrittura sul file \"%s\": %s"
 
 #: ../plug-ins/common/file-pdf-load.c:300
-#: ../plug-ins/common/file-pdf-save.c:290
+#: ../plug-ins/common/file-pdf-save.c:298
 msgid "Portable Document Format"
 msgstr "Portable Document Format (PDF)"
 
@@ -3917,15 +3917,15 @@ msgstr "Usa l'_antialiasing"
 msgid "pixels/%a"
 msgstr "Punti/%a"
 
-#: ../plug-ins/common/file-pdf-save.c:305
+#: ../plug-ins/common/file-pdf-save.c:313
 msgid "_Create multipage PDF..."
 msgstr "_Crea PDF multipagina..."
 
-#: ../plug-ins/common/file-pdf-save.c:412
+#: ../plug-ins/common/file-pdf-save.c:421
 msgid "You must select a file to save!"
 msgstr "È necessario selezionare un file da salvare!"
 
-#: ../plug-ins/common/file-pdf-save.c:422
+#: ../plug-ins/common/file-pdf-save.c:431
 #, c-format
 msgid ""
 "An error occured while creating the PDF file:\n"
@@ -3938,49 +3938,55 @@ msgstr ""
 "Assicurarsi di aver inserito un nome file valido e che la posizione scelta "
 "consenta la scrittura!"
 
-#: ../plug-ins/common/file-pdf-save.c:746
-#: ../plug-ins/common/file-pdf-save.c:863
+#: ../plug-ins/common/file-pdf-save.c:785
+#: ../plug-ins/common/file-pdf-save.c:902
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Omettere livelli invisibili e con opacità a zero"
 
-#: ../plug-ins/common/file-pdf-save.c:750
-#: ../plug-ins/common/file-pdf-save.c:867
+#: ../plug-ins/common/file-pdf-save.c:789
+#: ../plug-ins/common/file-pdf-save.c:906
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Convertire le bitmap in grafica vettoriale ove possibile"
 
-#: ../plug-ins/common/file-pdf-save.c:754
-#: ../plug-ins/common/file-pdf-save.c:871
+#: ../plug-ins/common/file-pdf-save.c:793
+#: ../plug-ins/common/file-pdf-save.c:910
 msgid "Apply layer masks before saving"
 msgstr "Applica le maschere di livello prima di salvare"
 
-#: ../plug-ins/common/file-pdf-save.c:757
-#: ../plug-ins/common/file-pdf-save.c:874
+#: ../plug-ins/common/file-pdf-save.c:796
+#: ../plug-ins/common/file-pdf-save.c:913
 msgid "Keeping the masks will not change the output"
 msgstr "Mantenendo le maschere non verrà modificato il risultato"
 
-#: ../plug-ins/common/file-pdf-save.c:810
+#: ../plug-ins/common/file-pdf-save.c:849
 msgid "Save to:"
 msgstr "Salva in:"
 
-#: ../plug-ins/common/file-pdf-save.c:814
+#: ../plug-ins/common/file-pdf-save.c:853
 msgid "Browse..."
 msgstr "Sfoglia..."
 
-#: ../plug-ins/common/file-pdf-save.c:815
+#: ../plug-ins/common/file-pdf-save.c:854
 msgid "Multipage PDF export"
 msgstr "Esportazione PDF multipagina"
 
-#: ../plug-ins/common/file-pdf-save.c:848
+#: ../plug-ins/common/file-pdf-save.c:887
 msgid "Remove the selected pages"
 msgstr "Rimuovi le pagine selezionate"
 
-#: ../plug-ins/common/file-pdf-save.c:858
+#: ../plug-ins/common/file-pdf-save.c:897
 msgid "Add this image"
 msgstr "Aggiungi questa immagine"
 
-#: ../plug-ins/common/file-pdf-save.c:971
+#: ../plug-ins/common/file-pdf-save.c:1010
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Errore! Per salvare il file, deve essere aggiunta almeno un'immagine!"
+
+#: ../plug-ins/common/file-pdf-save.c:1333
+#: ../plug-ins/print/print-draw-page.c:223
+msgid "Cannot handle the size (either width or height) of the image."
+msgstr ""
+"Impossibile gestire la dimensione (orizzontale o verticale) dell'immagine."
 
 #: ../plug-ins/common/file-pix.c:142 ../plug-ins/common/file-pix.c:159
 msgid "Alias Pix image"
@@ -4637,8 +4643,8 @@ msgid "Top left"
 msgstr "In alto a sinistra"
 
 #: ../plug-ins/common/file-tiff-load.c:243
-#: ../plug-ins/common/file-tiff-save.c:186
-#: ../plug-ins/common/file-tiff-save.c:203
+#: ../plug-ins/common/file-tiff-save.c:187
+#: ../plug-ins/common/file-tiff-save.c:204
 msgid "TIFF image"
 msgstr "Immagine TIFF"
 
@@ -4673,7 +4679,17 @@ msgstr ""
 "bit, perciò convertirà l'immagine per voi. A causa della conversione alcune "
 "informazioni andranno perse."
 
-#: ../plug-ins/common/file-tiff-save.c:912
+#: ../plug-ins/common/file-tiff-save.c:812
+msgid ""
+"Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
+"Group 3\"."
+msgstr "Solo immagini monocromatiche possono essere compresse con \"CCITT Gruppo 4\" o \"CCITT Gruppo 3\"."
+
+#: ../plug-ins/common/file-tiff-save.c:826
+msgid "Indexed pictures cannot be compressed with \"JPEG\"."
+msgstr "Le immagini indicizzate non possono essere compresse con \"JPEG\"."
+
+#: ../plug-ins/common/file-tiff-save.c:929
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -4681,48 +4697,48 @@ msgstr ""
 "Il formato TIFF supporta solo commenti nella\n"
 "codifica ASCII a 7bit. Nessun commento salvato."
 
-#: ../plug-ins/common/file-tiff-save.c:1085
+#: ../plug-ins/common/file-tiff-save.c:1104
 msgid "TIFF"
 msgstr "TIFF"
 
 #. compression
-#: ../plug-ins/common/file-tiff-save.c:1093
+#: ../plug-ins/common/file-tiff-save.c:1112
 msgid "Compression"
 msgstr "Compressione"
 
-#: ../plug-ins/common/file-tiff-save.c:1097
+#: ../plug-ins/common/file-tiff-save.c:1116
 msgid "_None"
 msgstr "_Nessuna"
 
-#: ../plug-ins/common/file-tiff-save.c:1098
+#: ../plug-ins/common/file-tiff-save.c:1117
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/file-tiff-save.c:1099
+#: ../plug-ins/common/file-tiff-save.c:1118
 msgid "_Pack Bits"
 msgstr "_Pack bits"
 
-#: ../plug-ins/common/file-tiff-save.c:1100
+#: ../plug-ins/common/file-tiff-save.c:1119
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/common/file-tiff-save.c:1101
+#: ../plug-ins/common/file-tiff-save.c:1120
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/file-tiff-save.c:1102
+#: ../plug-ins/common/file-tiff-save.c:1121
 msgid "CCITT Group _3 fax"
 msgstr "Fax CCITT gruppo _3"
 
-#: ../plug-ins/common/file-tiff-save.c:1103
+#: ../plug-ins/common/file-tiff-save.c:1122
 msgid "CCITT Group _4 fax"
 msgstr "Fax CCITT gruppo _4"
 
-#: ../plug-ins/common/file-tiff-save.c:1125
+#: ../plug-ins/common/file-tiff-save.c:1151
 msgid "Save _color values from transparent pixels"
 msgstr "Salva valori _colore dai punti trasparenti"
 
-#: ../plug-ins/common/file-tiff-save.c:1141 ../plug-ins/common/file-xbm.c:1236
+#: ../plug-ins/common/file-tiff-save.c:1167 ../plug-ins/common/file-xbm.c:1236
 msgid "Comment:"
 msgstr "Commento:"
 
@@ -9168,7 +9184,8 @@ msgid ""
 "cropped which may result in data loss."
 msgstr ""
 "Attenzione\n"
-"La maschera di livello è parzialmente fuori dal bordo del livello. La maschera verrà ritagliata e ciò potrà comportare la perdita di dati."
+"La maschera di livello è parzialmente fuori dal bordo del livello. La "
+"maschera verrà ritagliata e ciò potrà comportare la perdita di dati."
 
 #: ../plug-ins/file-psd/psd-load.c:1713
 msgid "Extra"
@@ -9363,71 +9380,71 @@ msgstr "URI"
 msgid "Failed to save to temporary file '%s'"
 msgstr "Fallito il salvataggio sul file temporaneo  '%s'"
 
-#: ../plug-ins/file-xjt/xjt.c:485 ../plug-ins/file-xjt/xjt.c:503
+#: ../plug-ins/file-xjt/xjt.c:487 ../plug-ins/file-xjt/xjt.c:506
 msgid "GIMP compressed XJT image"
 msgstr "Immagine XJT Gimp compressa"
 
-#: ../plug-ins/file-xjt/xjt.c:733
+#: ../plug-ins/file-xjt/xjt.c:737
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr "Il file XJT contiene una modalità livello sconosciuta %d"
 
-#: ../plug-ins/file-xjt/xjt.c:770
+#: ../plug-ins/file-xjt/xjt.c:774
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr "Attenzione: modalità livello non supportata %d salvata sul file XJT"
 
-#: ../plug-ins/file-xjt/xjt.c:786
+#: ../plug-ins/file-xjt/xjt.c:790
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr "Il file XJT contiene un tipo percorso sconosciuto %d"
 
-#: ../plug-ins/file-xjt/xjt.c:802
+#: ../plug-ins/file-xjt/xjt.c:806
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr "Attenzione: un tipo percorso sconosciuto %d salvato sul file XJT"
 
-#: ../plug-ins/file-xjt/xjt.c:821
+#: ../plug-ins/file-xjt/xjt.c:825
 #, c-format
 msgid "XJT file contains unknown unittype %d"
 msgstr "Il file XJT contiene il tipo unità sconosciuta %d"
 
-#: ../plug-ins/file-xjt/xjt.c:842
+#: ../plug-ins/file-xjt/xjt.c:846
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr "Attenzione: tipo unità sconosciuta %d salvata nel file XJT"
 
-#: ../plug-ins/file-xjt/xjt.c:863
+#: ../plug-ins/file-xjt/xjt.c:867
 msgid "XJT"
 msgstr "XJT"
 
-#: ../plug-ins/file-xjt/xjt.c:873
+#: ../plug-ins/file-xjt/xjt.c:877
 msgid "Optimize"
 msgstr "Ottimizza"
 
-#: ../plug-ins/file-xjt/xjt.c:883
+#: ../plug-ins/file-xjt/xjt.c:887
 msgid "Clear transparent"
 msgstr "Cancella trasparenza"
 
-#: ../plug-ins/file-xjt/xjt.c:895
+#: ../plug-ins/file-xjt/xjt.c:899
 msgid "Quality:"
 msgstr "Qualità:"
 
-#: ../plug-ins/file-xjt/xjt.c:904
+#: ../plug-ins/file-xjt/xjt.c:908
 msgid "Smoothing:"
 msgstr "Smussamento:"
 
-#: ../plug-ins/file-xjt/xjt.c:1705 ../plug-ins/file-xjt/xjt.c:3343
+#: ../plug-ins/file-xjt/xjt.c:1709 ../plug-ins/file-xjt/xjt.c:3347
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "Impossibile creare la cartella di lavoro '%s': %s"
 
-#: ../plug-ins/file-xjt/xjt.c:3209
+#: ../plug-ins/file-xjt/xjt.c:3213
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr "Errore: impossibile leggere il file delle proprietà XJT '%s'."
 
-#: ../plug-ins/file-xjt/xjt.c:3216
+#: ../plug-ins/file-xjt/xjt.c:3220
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Errore: il file delle proprietà XJT '%s' è vuoto."
@@ -11427,12 +11444,12 @@ msgstr "Forse mancano i backend GIO ed è necessario installare GVFS?"
 msgid "Help ID '%s' unknown"
 msgstr "ID dell'aiuto '%s' sconosciuto"
 
-#: ../plug-ins/help/gimphelplocale.c:208
+#: ../plug-ins/help/gimphelplocale.c:257
 #, c-format
 msgid "Loading index from '%s'"
 msgstr "Caricamento indice da \"%s\""
 
-#: ../plug-ins/help/gimphelplocale.c:266
+#: ../plug-ins/help/gimphelplocale.c:315
 #, c-format
 msgid ""
 "Parse error in '%s':\n"
@@ -13208,10 +13225,6 @@ msgstr "Livello ricciolo"
 #: ../plug-ins/pagecurl/pagecurl.c:1022
 msgid "Page Curl"
 msgstr "Pagina arricciata"
-
-#: ../plug-ins/print/print-draw-page.c:223
-msgid "Cannot handle the size (either width or height) of the image."
-msgstr "Impossibile gestire la dimensione (orizzontale o verticale) dell'immagine."
 
 #: ../plug-ins/print/print-page-layout.c:153
 msgid "Ignore Page _Margins"
