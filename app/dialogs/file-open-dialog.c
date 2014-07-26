@@ -135,7 +135,7 @@ file_open_dialog_response (GtkWidget *open_dialog,
   if (! dialog->open_as_layers)
     gtk_window_set_transient_for (GTK_WINDOW (open_dialog), NULL);
 
-  for (list = files; list; list = g_slist_next (files))
+  for (list = files; list; list = g_slist_next (list))
     {
       GFile *file = list->data;
       gchar *path = g_file_get_path (file);
