@@ -853,39 +853,26 @@ gimp_data_get_file (GimpData *data)
  * assuming that @data can be saved.
  **/
 void
-gimp_data_create_filename (GimpData    *data,
-                           const gchar *dest_dir)
+gimp_data_create_filename (GimpData *data,
+                           GFile    *dest_dir)
 {
   GimpDataPrivate *private;
   gchar           *safename;
   gchar           *basename;
-  gchar           *path;
   GFile           *file;
   gint             i;
   gint             unum  = 1;
   GError          *error = NULL;
 
   g_return_if_fail (GIMP_IS_DATA (data));
-  g_return_if_fail (dest_dir != NULL);
-  g_return_if_fail (g_path_is_absolute (dest_dir));
+  g_return_if_fail (G_IS_FILE (dest_dir));
 
   private = GIMP_DATA_GET_PRIVATE (data);
 
   if (private->internal)
     return;
 
-  safename = g_filename_from_utf8 (gimp_object_get_name (data),
-                                   -1, NULL, NULL, &error);
-  if (! safename)
-    {
-      g_warning ("gimp_data_create_filename:\n"
-                 "g_filename_from_utf8() failed for '%s': %s",
-                 gimp_object_get_name (data), error->message);
-      g_error_free (error);
-      return;
-    }
-
-  g_strstrip (safename);
+  safename = g_strstrip (g_strdup (gimp_object_get_name (data)));
 
   if (safename[0] == '.')
     safename[0] = '-';
@@ -896,28 +883,33 @@ gimp_data_create_filename (GimpData    *data,
 
   basename = g_strconcat (safename, gimp_data_get_extension (data), NULL);
 
-  path = g_build_filename (dest_dir, basename, NULL);
-
+  file = g_file_get_child_for_display_name (dest_dir, basename, &error);
   g_free (basename);
 
-  while (g_file_test (path, G_FILE_TEST_EXISTS))
+  if (! file)
     {
-      g_free (path);
+      g_warning ("gimp_data_create_filename:\n"
+                 "g_file_get_child_for_display_name() failed for '%s': %s",
+                 gimp_object_get_name (data), error->message);
+      g_clear_error (&error);
+      g_free (safename);
+      return;
+    }
+
+  while (g_file_query_exists (file, NULL))
+    {
+      g_object_unref (file);
 
       basename = g_strdup_printf ("%s-%d%s",
                                   safename,
                                   unum++,
                                   gimp_data_get_extension (data));
 
-      path = g_build_filename (dest_dir, basename, NULL);
-
+      file = g_file_get_child_for_display_name (dest_dir, basename, NULL);
       g_free (basename);
     }
 
   g_free (safename);
-
-  file = g_file_new_for_path (path);
-  g_free (path);
 
   gimp_data_set_file (data, file, TRUE, TRUE);
 

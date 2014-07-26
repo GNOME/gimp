@@ -90,7 +90,7 @@ void          gimp_data_set_file         (GimpData     *data,
 GFile       * gimp_data_get_file         (GimpData     *data);
 
 void          gimp_data_create_filename  (GimpData     *data,
-                                          const gchar  *dest_dir);
+                                          GFile        *dest_dir);
 
 void          gimp_data_set_folder_tags  (GimpData     *data,
                                           const gchar  *top_directory);

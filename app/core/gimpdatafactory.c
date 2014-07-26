@@ -79,7 +79,7 @@ static void    gimp_data_factory_data_load    (GimpDataFactory      *factory,
 static gint64  gimp_data_factory_get_memsize  (GimpObject           *object,
                                                gint64               *gui_size);
 
-static gchar * gimp_data_factory_get_save_dir (GimpDataFactory      *factory,
+static GFile * gimp_data_factory_get_save_dir (GimpDataFactory      *factory,
                                                GError              **error);
 
 static void    gimp_data_factory_load_data  (const GimpDatafileData *file_data,
@@ -408,7 +408,7 @@ void
 gimp_data_factory_data_save (GimpDataFactory *factory)
 {
   GList  *list;
-  gchar  *writable_dir;
+  GFile  *writable_dir;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
@@ -458,7 +458,7 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
         }
     }
 
-  g_free (writable_dir);
+  g_object_unref (writable_dir);
 }
 
 static void
@@ -608,7 +608,7 @@ gimp_data_factory_data_save_single (GimpDataFactory  *factory,
 
   if (! gimp_data_get_file (data))
     {
-      gchar  *writable_dir;
+      GFile  *writable_dir;
       GError *my_error = NULL;
 
       writable_dir = gimp_data_factory_get_save_dir (factory, &my_error);
@@ -625,7 +625,7 @@ gimp_data_factory_data_save_single (GimpDataFactory  *factory,
 
       gimp_data_create_filename (data, writable_dir);
 
-      g_free (writable_dir);
+      g_object_unref (writable_dir);
     }
 
   if (! gimp_data_is_writable (data))
@@ -690,72 +690,81 @@ gimp_data_factory_has_data_new_func (GimpDataFactory *factory)
 
 /*  private functions  */
 
-static gchar *
+static gint
+gimp_file_compare (GFile *file1,
+                   GFile *file2)
+{
+  if (g_file_equal (file1, file2))
+    {
+      return 0;
+    }
+  else
+    {
+      gchar *uri1   = g_file_get_uri (file1);
+      gchar *uri2   = g_file_get_uri (file2);
+      gint   result = strcmp (uri1, uri2);
+
+      g_free (uri1);
+      g_free (uri2);
+
+      return result;
+    }
+}
+
+static GFile *
 gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
                                 GError          **error)
 {
-  gchar *path;
-  gchar *writable_path;
-  gchar *tmp;
-  GList *path_list;
-  GList *writable_list;
-  GList *list;
-  gchar *writable_dir = NULL;
+  gchar *p;
+  gchar *wp;
+  GList *path;
+  GList *writable_path;
+  GFile *writable_dir = NULL;
 
   g_object_get (factory->priv->gimp->config,
-                factory->priv->path_property_name,     &path,
-                factory->priv->writable_property_name, &writable_path,
+                factory->priv->path_property_name,     &p,
+                factory->priv->writable_property_name, &wp,
                 NULL);
 
-  tmp = gimp_config_path_expand (path, TRUE, NULL);
-  g_free (path);
-  path = tmp;
+  path          = gimp_config_path_expand_to_files (p, NULL);
+  writable_path = gimp_config_path_expand_to_files (wp, NULL);
 
-  tmp = gimp_config_path_expand (writable_path, TRUE, NULL);
-  g_free (writable_path);
-  writable_path = tmp;
-
-  path_list     = gimp_path_parse (path,          256, FALSE, NULL);
-  writable_list = gimp_path_parse (writable_path, 256, FALSE, NULL);
-
-  g_free (path);
-  g_free (writable_path);
+  g_free (p);
+  g_free (wp);
 
   if (writable_path)
     {
-      gboolean found_any = FALSE;
+      GList    *list;
+      gboolean  found_any = FALSE;
 
-      for (list = writable_list; list; list = g_list_next (list))
+      for (list = writable_path; list; list = g_list_next (list))
         {
-          GList *found = g_list_find_custom (path_list,
-                                             list->data, (GCompareFunc) strcmp);
+          GList *found = g_list_find_custom (path, list->data,
+                                             (GCompareFunc) gimp_file_compare);
           if (found)
             {
-              const gchar *dir = found->data;
+              GFile *dir = found->data;
 
               found_any = TRUE;
 
-              if (! g_file_test (dir, G_FILE_TEST_IS_DIR))
+              if (g_file_query_file_type (dir, G_FILE_QUERY_INFO_NONE,
+                                          NULL) != G_FILE_TYPE_DIRECTORY)
                 {
                   /*  error out only if this is the last chance  */
                   if (! list->next)
                     {
-                      gchar *display_name = g_filename_display_name (dir);
-
                       g_set_error (error, GIMP_DATA_ERROR, 0,
                                    _("You have a writable data folder "
                                      "configured (%s), but this folder does "
                                      "not exist. Please create the folder or "
                                      "fix your configuration in the "
                                      "Preferences dialog's 'Folders' section."),
-                                   display_name);
-
-                      g_free (display_name);
+                                   gimp_file_get_utf8_name (dir));
                     }
                 }
               else
                 {
-                  writable_dir = g_strdup (dir);
+                  writable_dir = g_object_ref (dir);
                   break;
                 }
             }
@@ -777,8 +786,8 @@ gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
                    _("You don't have any writable data folder configured."));
     }
 
-  gimp_path_free (path_list);
-  gimp_path_free (writable_list);
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
+  g_list_free_full (writable_path, (GDestroyNotify) g_object_unref);
 
   return writable_dir;
 }
