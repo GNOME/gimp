@@ -818,6 +818,8 @@ gimp_data_set_file (GimpData *data,
                   private->writable  = writable  ? TRUE : FALSE;
                   private->deletable = deletable ? TRUE : FALSE;
                 }
+
+              g_object_unref (info);
             }
 
           g_object_unref (parent);
