@@ -515,7 +515,7 @@ gimp_data_save (GimpData  *data,
       return TRUE;
     }
 
-  g_return_val_if_fail (private->file != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (private->file), FALSE);
 
   if (GIMP_DATA_GET_CLASS (data)->save)
     {
@@ -818,8 +818,6 @@ gimp_data_set_file (GimpData *data,
                   private->writable  = writable  ? TRUE : FALSE;
                   private->deletable = deletable ? TRUE : FALSE;
                 }
-
-              g_object_unref (file);
             }
 
           g_object_unref (parent);
