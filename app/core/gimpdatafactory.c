@@ -41,8 +41,6 @@
 #include "gimp-intl.h"
 
 
-#define WRITABLE_PATH_KEY "gimp-data-factory-writable-path"
-
 /* Data files that have this string in their path are considered
  * obsolete and are only kept around for backwards compatibility
  */
@@ -311,6 +309,7 @@ typedef struct
   GimpContext     *context;
   GHashTable      *cache;
   const gchar     *top_directory;
+  GList           *writable_path;
 } GimpDataLoadContext;
 
 static void
@@ -328,9 +327,8 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
 
   if (path && strlen (path))
     {
-      GList               *writable_list = NULL;
-      gchar               *tmp;
       GimpDataLoadContext  load_context = { 0, };
+      gchar               *tmp;
 
       load_context.factory = factory;
       load_context.context = context;
@@ -346,10 +344,8 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
           g_free (writable_path);
           writable_path = tmp;
 
-          writable_list = gimp_path_parse (writable_path, 256, TRUE, NULL);
-
-          g_object_set_data (G_OBJECT (factory),
-                             WRITABLE_PATH_KEY, writable_list);
+          load_context.writable_path = gimp_path_parse (writable_path,
+                                                        256, TRUE, NULL);
         }
 
       gimp_datafiles_read_directories (path, G_FILE_TEST_IS_REGULAR,
@@ -362,8 +358,7 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
 
       if (writable_path)
         {
-          gimp_path_free (writable_list);
-          g_object_set_data (G_OBJECT (factory), WRITABLE_PATH_KEY, NULL);
+          gimp_path_free (load_context.writable_path);
         }
     }
 
@@ -929,14 +924,9 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
       /* obsolete files are immutable, don't check their writability */
       if (! obsolete)
         {
-          GList *writable_list;
-
-          writable_list = g_object_get_data (G_OBJECT (factory),
-                                             WRITABLE_PATH_KEY);
-
           deletable = (g_list_length (data_list) == 1 &&
                        gimp_data_factory_is_dir_writable (file_data->dirname,
-                                                          writable_list));
+                                                          context->writable_path));
 
           writable = (deletable && loader->writable);
         }
