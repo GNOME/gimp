@@ -424,6 +424,12 @@ run (const gchar      *name,
     }
 
   fp = g_fopen (file_name, "wb");
+  if (fp == NULL)
+    {
+      values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+      return;
+    }
+
   pdf_file = cairo_pdf_surface_create_for_stream (write_func, fp, 1, 1);
   if (cairo_surface_status (pdf_file) != CAIRO_STATUS_SUCCESS)
     {
