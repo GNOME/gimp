@@ -141,6 +141,7 @@ header files installed.
      libmng					 - 				MNG
      openexr				@OPENEXR_REQUIRED_VERSION@			OpenEXR
      libpoppler				@POPPLER_REQUIRED_VERSION@			PDF import
+     poppler-data			 - 				PDF import (optional: rendering of CJK and Cyrillic)
      cairo-pdf				@CAIRO_PDF_REQUIRED_VERSION@			PDF export
      python 2				@PYTHON2_REQUIRED_VERSION@			Python plug-ins
      librsvg				@RSVG_REQUIRED_VERSION@			SVG
