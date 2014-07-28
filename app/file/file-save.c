@@ -120,7 +120,7 @@ file_save (Gimp                *gimp,
                                                G_FILE_ATTRIBUTE_ACCESS_CAN_WRITE))
         {
           g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                               _("Premission denied"));
+                               _("Permission denied"));
           goto out;
         }
     }
