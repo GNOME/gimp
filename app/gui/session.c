@@ -450,17 +450,13 @@ session_file (Gimp *gimp)
   if (! basename)
     basename = "sessionrc";
 
-  filename = gimp_personal_rc_file (basename);
-
   if (gimp->session_name)
-    {
-      gchar *tmp = g_strconcat (filename, ".", gimp->session_name, NULL);
+    filename = g_strconcat (basename, ".", gimp->session_name, NULL);
+  else
+    filename = g_strdup (basename);
 
-      g_free (filename);
-      filename = tmp;
-    }
+  file = gimp_directory_file (filename, NULL);
 
-  file = g_file_new_for_path (filename);
   g_free (filename);
 
   return file;
