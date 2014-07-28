@@ -380,7 +380,7 @@ gimp_tool_options_delete (GimpToolOptions  *tool_options,
 void
 gimp_tool_options_create_folder (void)
 {
-  GFile *file = gimp_personal_rc_gfile ("tool-options");
+  GFile *file = gimp_directory_file ("tool-options", NULL);
 
   g_file_make_directory (file, NULL, NULL);
   g_object_unref (file);

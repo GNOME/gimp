@@ -261,7 +261,7 @@ themes_apply_theme (Gimp        *gimp,
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  themerc = gimp_personal_rc_gfile ("themerc");
+  themerc = gimp_directory_file ("themerc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (themerc));
@@ -295,7 +295,7 @@ themes_apply_theme (Gimp        *gimp,
           gtkrc_theme = g_file_new_for_path (gimp_gtkrc ());
         }
 
-      gtkrc_user = gimp_personal_rc_gfile ("gtkrc");
+      gtkrc_user = gimp_directory_file ("gtkrc", NULL);
 
       tmp = g_file_get_path (gtkrc_theme);
       esc_gtkrc_theme = g_strescape (tmp, NULL);

@@ -143,7 +143,7 @@ gimp_controllers_restore (Gimp          *gimp,
 
   manager->ui_manager = g_object_ref (ui_manager);
 
-  file = gimp_personal_rc_gfile ("controllerrc");
+  file = gimp_directory_file ("controllerrc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
@@ -153,15 +153,10 @@ gimp_controllers_restore (Gimp          *gimp,
     {
       if (error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
         {
-          gchar *tmp;
-
           g_clear_error (&error);
           g_object_unref (file);
 
-          tmp = g_build_filename (gimp_sysconf_directory (),
-                                  "controllerrc", NULL);
-          file = g_file_new_for_path (tmp);
-          g_free (tmp);
+          file = gimp_sysconf_directory_file ("controllerrc", NULL);
 
           if (! gimp_config_deserialize_gfile (GIMP_CONFIG (manager->controllers),
                                                file, NULL, &error))
@@ -203,7 +198,7 @@ gimp_controllers_save (Gimp *gimp)
 
   g_return_if_fail (manager != NULL);
 
-  file = gimp_personal_rc_gfile ("controllerrc");
+  file = gimp_directory_file ("controllerrc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));

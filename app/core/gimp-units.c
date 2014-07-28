@@ -90,7 +90,7 @@ gimp_unitrc_load (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  file = gimp_personal_rc_gfile ("unitrc");
+  file = gimp_directory_file ("unitrc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
@@ -99,14 +99,10 @@ gimp_unitrc_load (Gimp *gimp)
 
   if (! scanner && error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
     {
-      gchar *tmp;
-
       g_clear_error (&error);
       g_object_unref (file);
 
-      tmp = g_build_filename (gimp_sysconf_directory (), "unitrc", NULL);
-      file = g_file_new_for_path (tmp);
-      g_free (tmp);
+      file = gimp_sysconf_directory_file ("unitrc", NULL);
 
       scanner = gimp_scanner_new_gfile (file, NULL);
     }
@@ -191,7 +187,7 @@ gimp_unitrc_save (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  file = gimp_personal_rc_gfile ("unitrc");
+  file = gimp_directory_file ("unitrc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));

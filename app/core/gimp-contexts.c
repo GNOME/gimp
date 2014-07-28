@@ -79,7 +79,7 @@ gimp_contexts_load (Gimp    *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  file = gimp_personal_rc_gfile ("contextrc");
+  file = gimp_directory_file ("contextrc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
@@ -116,7 +116,7 @@ gimp_contexts_save (Gimp    *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  file = gimp_personal_rc_gfile ("contextrc");
+  file = gimp_directory_file ("contextrc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
@@ -142,7 +142,7 @@ gimp_contexts_clear (Gimp    *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
-  file = gimp_personal_rc_gfile ("contextrc");
+  file = gimp_directory_file ("contextrc", NULL);
 
   if (! g_file_delete (file, NULL, &my_error) &&
       my_error->code != G_IO_ERROR_NOT_FOUND)

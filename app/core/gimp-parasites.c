@@ -119,7 +119,7 @@ gimp_parasiterc_load (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  file = gimp_personal_rc_gfile ("parasiterc");
+  file = gimp_directory_file ("parasiterc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
@@ -152,7 +152,7 @@ gimp_parasiterc_save (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_PARASITE_LIST (gimp->parasites));
 
-  file = gimp_personal_rc_gfile ("parasiterc");
+  file = gimp_directory_file ("parasiterc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));

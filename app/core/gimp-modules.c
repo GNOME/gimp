@@ -76,7 +76,7 @@ gimp_modules_load (Gimp *gimp)
   /* FIXME, gimp->be_verbose is not yet initialized in init() */
   gimp->module_db->verbose = gimp->be_verbose;
 
-  file = gimp_personal_rc_gfile ("modulerc");
+  file = gimp_directory_file ("modulerc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
@@ -192,7 +192,7 @@ gimp_modules_unload (Gimp *gimp)
       else
         p = "";
 
-      file = gimp_personal_rc_gfile ("modulerc");
+      file = gimp_directory_file ("modulerc", NULL);
 
       if (gimp->be_verbose)
         g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));

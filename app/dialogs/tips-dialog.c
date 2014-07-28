@@ -73,13 +73,9 @@ tips_dialog_create (Gimp *gimp)
   if (!tips)
     {
       GError *error = NULL;
-      gchar  *filename;
       GFile  *file;
 
-      filename = g_build_filename (gimp_data_directory (), "tips",
-                                   "gimp-tips.xml", NULL);
-      file = g_file_new_for_path (filename);
-      g_free (filename);
+      file = gimp_data_directory_file ("tips", "gimp-tips.xml", NULL);
 
       tips = gimp_tips_from_file (file, &error);
 

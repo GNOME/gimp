@@ -272,7 +272,7 @@ gimp_plug_in_manager_get_pluginrc (GimpPlugInManager *manager)
     }
   else
     {
-      pluginrc = gimp_personal_rc_gfile ("pluginrc");
+      pluginrc = gimp_directory_file ("pluginrc", NULL);
     }
 
   return pluginrc;

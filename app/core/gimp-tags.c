@@ -72,6 +72,7 @@ static const gchar* attribute_name_to_value                (const gchar        *
 gboolean
 gimp_tags_user_install (void)
 {
+  GFile             *file;
   gchar             *filename;
   GMarkupParser      markup_parser;
   GimpXmlParser     *xml_parser;
@@ -105,8 +106,7 @@ gimp_tags_user_install (void)
   g_string_append (tags_installer.buf, "<?xml version='1.0' encoding='UTF-8'?>\n");
   g_string_append (tags_installer.buf, "<tags>\n");
 
-  filename = g_build_filename (gimp_data_directory (), "tags",
-                               "gimp-tags-default.xml", NULL);
+  file = gimp_data_directory_file ("tags", "gimp-tags-default.xml", NULL);
 
   markup_parser.start_element = gimp_tags_installer_load_start_element;
   markup_parser.end_element   = gimp_tags_installer_load_end_element;
@@ -116,9 +116,9 @@ gimp_tags_user_install (void)
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &tags_installer);
 
-  result = gimp_xml_parser_parse_file (xml_parser, filename, &error);
+  result = gimp_xml_parser_parse_gfile (xml_parser, file, &error);
 
-  g_free (filename);
+  g_object_unref (file);
   gimp_xml_parser_free (xml_parser);
 
   if (! result)

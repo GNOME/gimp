@@ -111,7 +111,7 @@ gimp_devices_restore (Gimp *gimp)
       gimp_device_info_set_default_tool (device_info);
     }
 
-  file = gimp_personal_rc_gfile ("devicerc");
+  file = gimp_directory_file ("devicerc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
@@ -154,7 +154,7 @@ gimp_devices_save (Gimp     *gimp,
   if (devicerc_deleted && ! always_save)
     return;
 
-  file = gimp_personal_rc_gfile ("devicerc");
+  file = gimp_directory_file ("devicerc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
@@ -190,7 +190,7 @@ gimp_devices_clear (Gimp    *gimp,
 
   g_return_val_if_fail (GIMP_IS_DEVICE_MANAGER (manager), FALSE);
 
-  file = gimp_personal_rc_gfile ("devicerc");
+  file = gimp_directory_file ("devicerc", NULL);
 
   if (! g_file_delete (file, NULL, &my_error) &&
       my_error->code != G_IO_ERROR_NOT_FOUND)

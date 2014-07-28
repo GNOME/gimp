@@ -44,7 +44,7 @@ gimp_templates_load (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_LIST (gimp->templates));
 
-  file = gimp_personal_rc_gfile ("templaterc");
+  file = gimp_directory_file ("templaterc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
@@ -54,14 +54,10 @@ gimp_templates_load (Gimp *gimp)
     {
       if (error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
         {
-          gchar *tmp;
-
           g_clear_error (&error);
           g_object_unref (file);
 
-          tmp = g_build_filename (gimp_sysconf_directory (), "templaterc", NULL);
-          file = g_file_new_for_path (tmp);
-          g_free (tmp);
+          file = gimp_sysconf_directory_file ("templaterc", NULL);
 
           if (! gimp_config_deserialize_gfile (GIMP_CONFIG (gimp->templates),
                                                file, NULL, &error))
@@ -99,7 +95,7 @@ gimp_templates_save (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_LIST (gimp->templates));
 
-  file = gimp_personal_rc_gfile ("templaterc");
+  file = gimp_directory_file ("templaterc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
@@ -173,17 +169,14 @@ void
 gimp_templates_migrate (const gchar *olddir)
 {
   GimpContainer *templates = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
-  GFile         *file      = gimp_personal_rc_gfile ("templaterc");
+  GFile         *file      = gimp_directory_file ("templaterc", NULL);
 
   if (gimp_config_deserialize_gfile (GIMP_CONFIG (templates), file,
                                      NULL, NULL))
     {
-      gchar *tmp;
       GFile *sysconf_file;
 
-      tmp = g_build_filename (gimp_sysconf_directory (), "templaterc", NULL);
-      sysconf_file = g_file_new_for_path (tmp);
-      g_free (tmp);
+      sysconf_file = gimp_sysconf_directory_file ("templaterc", NULL);
 
       if (olddir && (strstr (olddir, "2.0") || strstr (olddir, "2.2")))
         {

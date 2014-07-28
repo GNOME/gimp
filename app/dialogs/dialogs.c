@@ -578,7 +578,7 @@ dialogs_get_dockrc_file (void)
   if (! basename)
     basename = "dockrc";
 
-  return gimp_personal_rc_gfile (basename);
+  return gimp_directory_file (basename, NULL);
 }
 
 void

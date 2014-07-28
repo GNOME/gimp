@@ -81,14 +81,10 @@ session_init (Gimp *gimp)
 
   if (! scanner && error->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
     {
-      gchar *tmp;
-
       g_clear_error (&error);
       g_object_unref (file);
 
-      tmp = g_build_filename (gimp_sysconf_directory (), "sessionrc", NULL);
-      file = g_file_new_for_path (tmp);
-      g_free (tmp);
+      file = gimp_sysconf_directory_file ("sessionrc", NULL);
 
       scanner = gimp_scanner_new_gfile (file, NULL);
     }

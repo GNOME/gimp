@@ -266,7 +266,7 @@ gimp_tools_restore (Gimp *gimp)
 
   gimp_list = gimp_list_new (GIMP_TYPE_TOOL_INFO, FALSE);
 
-  file = gimp_personal_rc_gfile ("toolrc");
+  file = gimp_directory_file ("toolrc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
@@ -411,7 +411,7 @@ gimp_tools_save (Gimp     *gimp,
         }
     }
 
-  file = gimp_personal_rc_gfile ("toolrc");
+  file = gimp_directory_file ("toolrc", NULL);
 
   if (gimp->be_verbose)
     g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
