@@ -160,8 +160,8 @@ void           gimp_set_show_gui         (Gimp                *gimp,
 gboolean       gimp_get_show_gui         (Gimp                *gimp);
 
 void           gimp_load_config          (Gimp                *gimp,
-                                          const gchar         *alternate_system_gimprc,
-                                          const gchar         *alternate_gimprc);
+                                          GFile               *alternate_system_gimprc,
+                                          GFile               *alternate_gimprc);
 void           gimp_initialize           (Gimp                *gimp,
                                           GimpInitStatusFunc   status_callback);
 void           gimp_restore              (Gimp                *gimp,

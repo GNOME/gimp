@@ -140,8 +140,8 @@ app_exit (gint status)
 void
 app_run (const gchar         *full_prog_name,
          const gchar        **filenames,
-         const gchar         *alternate_system_gimprc,
-         const gchar         *alternate_gimprc,
+         GFile               *alternate_system_gimprc,
+         GFile               *alternate_gimprc,
          const gchar         *session_name,
          const gchar         *batch_interpreter,
          const gchar        **batch_commands,

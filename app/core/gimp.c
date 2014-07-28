@@ -938,13 +938,17 @@ gimp_edit_config_notify (GObject    *edit_config,
 }
 
 void
-gimp_load_config (Gimp        *gimp,
-                  const gchar *alternate_system_gimprc,
-                  const gchar *alternate_gimprc)
+gimp_load_config (Gimp  *gimp,
+                  GFile *alternate_system_gimprc,
+                  GFile *alternate_gimprc)
 {
   GimpRc *gimprc;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (alternate_system_gimprc == NULL ||
+                    G_IS_FILE (alternate_system_gimprc));
+  g_return_if_fail (alternate_gimprc == NULL ||
+                    G_IS_FILE (alternate_gimprc));
   g_return_if_fail (gimp->config == NULL);
   g_return_if_fail (gimp->edit_config == NULL);
 

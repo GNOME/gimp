@@ -286,6 +286,8 @@ main (int    argc,
   GError         *error = NULL;
   const gchar    *abort_message;
   gchar          *basename;
+  GFile          *system_gimprc_file = NULL;
+  GFile          *user_gimprc_file   = NULL;
   gint            i;
 
 #if defined (__GNUC__) && defined (_WIN64)
@@ -449,10 +451,16 @@ main (int    argc,
 
   gimp_init_signal_handlers (stack_trace_mode);
 
+  if (system_gimprc)
+    system_gimprc_file = g_file_new_for_commandline_arg (system_gimprc);
+
+  if (user_gimprc)
+    user_gimprc_file = g_file_new_for_commandline_arg (user_gimprc);
+
   app_run (argv[0],
            filenames,
-           system_gimprc,
-           user_gimprc,
+           system_gimprc_file,
+           user_gimprc_file,
            session_name,
            batch_interpreter,
            batch_commands,
@@ -468,6 +476,12 @@ main (int    argc,
            use_debug_handler,
            stack_trace_mode,
            pdb_compat_mode);
+
+  if (system_gimprc_file)
+    g_object_unref (system_gimprc_file);
+
+  if (user_gimprc_file)
+    g_object_unref (user_gimprc_file);
 
   g_strfreev (argv);
 
