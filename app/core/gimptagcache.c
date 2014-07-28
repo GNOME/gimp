@@ -20,9 +20,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
@@ -351,12 +348,13 @@ gimp_tag_cache_tagged_to_cache_record_foreach (GimpTagged  *tagged,
 void
 gimp_tag_cache_save (GimpTagCache *cache)
 {
-  GString *buf;
-  GList   *saved_records;
-  GList   *iterator;
-  gchar   *filename;
-  GError  *error = NULL;
-  gint     i;
+  GString       *buf;
+  GList         *saved_records;
+  GList         *iterator;
+  GFile         *file;
+  GOutputStream *output;
+  GError        *error = NULL;
+  gint           i;
 
   g_return_if_fail (GIMP_IS_TAG_CACHE (cache));
 
@@ -428,16 +426,29 @@ gimp_tag_cache_save (GimpTagCache *cache)
 
   g_string_append (buf, "</tags>\n");
 
-  filename = g_build_filename (gimp_directory (), GIMP_TAG_CACHE_FILE, NULL);
+  file = gimp_directory_file (GIMP_TAG_CACHE_FILE, NULL);
 
-  if (! g_file_set_contents (filename, buf->str, buf->len, &error))
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, &error));
+  if (! output)
     {
-      g_printerr ("Error while saving tag cache: %s\n", error->message);
-      g_error_free (error);
+      g_printerr (_("Could not open '%s' for writing: %s"),
+                  gimp_file_get_utf8_name (file), error->message);
+    }
+  else if (! g_output_stream_write_all (output, buf->str, buf->len,
+                                        NULL, NULL, &error) ||
+           ! g_output_stream_close (output, NULL, &error))
+    {
+      g_printerr (_("Error writing '%s': %s"),
+                  gimp_file_get_utf8_name (file), error->message);
     }
 
-  g_free (filename);
+  if (output)
+    g_object_unref (output);
 
+  g_clear_error (&error);
+  g_object_unref (file);
   g_string_free (buf, TRUE);
 
   for (iterator = saved_records;
@@ -462,18 +473,16 @@ gimp_tag_cache_save (GimpTagCache *cache)
 void
 gimp_tag_cache_load (GimpTagCache *cache)
 {
-  gchar                 *filename;
-  GError                *error = NULL;
+  GFile                 *file;
   GMarkupParser          markup_parser;
   GimpXmlParser         *xml_parser;
   GimpTagCacheParseData  parse_data;
+  GError                *error = NULL;
 
   g_return_if_fail (GIMP_IS_TAG_CACHE (cache));
 
   /* clear any previous priv->records */
   cache->priv->records = g_array_set_size (cache->priv->records, 0);
-
-  filename = g_build_filename (gimp_directory (), GIMP_TAG_CACHE_FILE, NULL);
 
   parse_data.records = g_array_new (FALSE, FALSE, sizeof (GimpTagCacheRecord));
   memset (&parse_data.current_record, 0, sizeof (GimpTagCacheRecord));
@@ -486,7 +495,9 @@ gimp_tag_cache_load (GimpTagCache *cache)
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parse_data);
 
-  if (gimp_xml_parser_parse_file (xml_parser, filename, &error))
+  file = gimp_directory_file (GIMP_TAG_CACHE_FILE, NULL);
+
+  if (gimp_xml_parser_parse_gfile (xml_parser, file, &error))
     {
       cache->priv->records = g_array_append_vals (cache->priv->records,
                                                   parse_data.records->data,
@@ -495,10 +506,10 @@ gimp_tag_cache_load (GimpTagCache *cache)
   else
     {
       g_printerr ("Failed to parse tag cache: %s\n",
-                  error ? error->message : NULL);
+                  error ? error->message : "WTF unknown error");
     }
 
-  g_free (filename);
+  g_object_unref (file);
   gimp_xml_parser_free (xml_parser);
   g_array_free (parse_data.records, TRUE);
 }
@@ -602,7 +613,7 @@ gimp_tag_cache_load_error (GMarkupParseContext *context,
                            GError              *error,
                            gpointer             user_data)
 {
-  printf ("Tag cache parse error: %s\n", error->message);
+  g_printerr ("Tag cache parse error: %s\n", error->message);
 }
 
 static const gchar*
