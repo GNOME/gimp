@@ -21,7 +21,6 @@
 #include "config.h"
 
 #include <string.h>
-#include <ctype.h>
 
 #include <gtk/gtk.h>
 
@@ -41,18 +40,20 @@
 
 typedef struct
 {
-  GtkAction    *action;
-  gchar        *name;
-  gint          count;
+  GtkAction   *action;
+  const gchar *name;
+  gint         count;
 } GimpActionHistoryItem;
 
 static struct
 {
-  GimpGuiConfig *config;
-  GList         *items;
+  GList *items;
 } history;
 
 
+static GimpActionHistoryItem *
+            gimp_action_history_item_new          (GtkAction             *action,
+                                                   gint                   count);
 static void gimp_action_history_item_free         (GimpActionHistoryItem *item);
 
 static gint gimp_action_history_init_compare_func (GimpActionHistoryItem *a,
@@ -60,19 +61,17 @@ static gint gimp_action_history_init_compare_func (GimpActionHistoryItem *a,
 static gint gimp_action_history_compare_func      (GimpActionHistoryItem *a,
                                                    GimpActionHistoryItem *b);
 
-static void gimp_action_history_insert            (const gchar           *action_name,
-                                                   gint                   count);
-
 
 /*  public functions  */
 
 void
 gimp_action_history_init (GimpGuiConfig *config)
 {
-  gchar *history_file_path;
-  gint   count;
-  FILE  *fp;
-  gint   i;
+  GimpUIManager *manager;
+  gchar         *filename;
+  gint           count;
+  FILE          *fp;
+  gint           i;
 
   if (history.items != NULL)
     {
@@ -80,30 +79,43 @@ gimp_action_history_init (GimpGuiConfig *config)
       return;
     }
 
-  history.config    = config;
-  history_file_path = gimp_personal_rc_file (GIMP_ACTION_HISTORY_FILENAME);
+  filename = gimp_personal_rc_file (GIMP_ACTION_HISTORY_FILENAME);
+  fp = fopen (filename, "r");
+  g_free (filename);
 
-  fp = fopen (history_file_path, "r");
   if (fp == NULL)
     /* Probably a first use case. Not necessarily an error. */
     return;
 
+  manager = gimp_ui_managers_from_name ("<Image>")->data;
+
   for (i = 0; i < config->action_history_size; i++)
     {
       /* Let's assume an action name will never be more than 256 character. */
-      gchar action_name[256];
+      gchar      action_name[256];
+      GtkAction *action;
 
       if (fscanf (fp, "%s %d", action_name, &count) == EOF)
         break;
 
-      gimp_action_history_insert (action_name, count);
+      action = gimp_ui_manager_find_action (manager, NULL, action_name);
+
+      if (action)
+        {
+          history.items =
+            g_list_insert_sorted (history.items,
+                                  gimp_action_history_item_new (action, count),
+                                  (GCompareFunc) gimp_action_history_init_compare_func);
+        }
     }
 
   if (count > 1)
     {
-      GList *actions = history.items;
+      GList *actions;
 
-      for (; actions && i; actions = g_list_next (actions), i--)
+      for (actions = history.items, i = 0;
+           actions && i < config->action_history_size;
+           actions = g_list_next (actions), i++)
         {
           GimpActionHistoryItem *action = actions->data;
 
@@ -111,47 +123,42 @@ gimp_action_history_init (GimpGuiConfig *config)
         }
     }
 
-  g_free (history_file_path);
-
   fclose (fp);
 }
 
 void
 gimp_action_history_exit (GimpGuiConfig *config)
 {
-  GList *actions = history.items;
-  gchar *history_file_path;
-  gint   min_count = 0;
-  FILE  *fp;
-  gint   i = config->action_history_size;
+  GimpActionHistoryItem *item;
+  GList                 *actions;
+  gchar                 *filename;
+  gint                   min_count = 0;
+  FILE                  *fp;
+  gint                   i;
 
   /* If we have more items than current history size, trim the history
-     and move down all count so that 1 is lower. */
-  for (; actions && i; actions = g_list_next (actions), i--)
-    ;
-  if (actions)
-    {
-      GimpActionHistoryItem *action = actions->data;
+   * and move down all count so that 1 is lower.
+   */
+  item = g_list_nth_data (history.items, config->action_history_size);
+  if (item)
+    min_count = item->count - 1;
 
-      min_count = action->count - 1;
+  filename = gimp_personal_rc_file (GIMP_ACTION_HISTORY_FILENAME);
+  fp = fopen (filename, "w");
+  g_free (filename);
+
+  for (actions = history.items, i = 0;
+       actions && i < config->action_history_size;
+       actions = g_list_next (actions), i++)
+    {
+      item = actions->data;
+
+      fprintf (fp, "%s %d \n", item->name, item->count - min_count);
     }
 
-  actions = history.items;
-  i       = config->action_history_size;
-
-  history_file_path = gimp_personal_rc_file (GIMP_ACTION_HISTORY_FILENAME);
-
-  fp = fopen (history_file_path, "w");
-  for (; actions && i; actions = g_list_next (actions), i--)
-    {
-      GimpActionHistoryItem *action = actions->data;
-
-      fprintf (fp, "%s %d \n", action->name, action->count - min_count);
-    }
+  fclose (fp);
 
   gimp_action_history_empty ();
-  fclose (fp);
-  g_free (history_file_path);
 }
 
 /* gimp_action_history_excluded_action:
@@ -180,10 +187,9 @@ void
 gimp_action_history_activate_callback (GtkAction *action,
                                        gpointer   user_data)
 {
-  GList                 *actions;
-  GimpActionHistoryItem *history_item;
-  const gchar           *action_name;
-  gint                   previous_count = 0;
+  GList       *actions;
+  const gchar *action_name;
+  gint         previous_count = 0;
 
   action_name = gtk_action_get_name (action);
 
@@ -193,62 +199,59 @@ gimp_action_history_activate_callback (GtkAction *action,
 
   for (actions = history.items; actions; actions = g_list_next (actions))
     {
-      history_item = actions->data;
+      GimpActionHistoryItem *item = actions->data;
 
-      if (g_strcmp0 (action_name, history_item->name) == 0)
+      if (g_strcmp0 (action_name, item->name) == 0)
         {
-          GimpActionHistoryItem *next_history_item = g_list_next (actions) ?
-            g_list_next (actions)->data : NULL;
+          GimpActionHistoryItem *next_item;
+
+          next_item = g_list_next (actions) ? g_list_next (actions)->data : NULL;
 
           /* Is there any other item with the same count?  We don't
            * want to leave any count gap to always accept new items.
            * This means that if we increment the only item with a
            * given count, we must decrement the next item.  Other
            * consequence is that an item with higher count won't be
-           * incremented at all if no other items have the same
-           * count.
+           * incremented at all if no other items have the same count.
            */
-          if (previous_count == history_item->count ||
-              (next_history_item && next_history_item->count == history_item->count))
+          if (previous_count == item->count ||
+              (next_item && next_item->count == item->count))
             {
-              history_item->count++;
-              /* Remove then reinsert to reorder. */
-              history.items = g_list_remove (history.items, history_item);
-              history.items = g_list_insert_sorted (history.items, history_item,
+              item->count++;
+
+              history.items = g_list_remove (history.items, item);
+              history.items = g_list_insert_sorted (history.items, item,
                                                     (GCompareFunc) gimp_action_history_compare_func);
             }
-          else if (previous_count != 0                   &&
-                   previous_count != history_item->count)
+          else if (previous_count != 0 &&
+                   previous_count != item->count)
             {
-              GimpActionHistoryItem *previous_history_item = g_list_previous (actions)->data;
+              GimpActionHistoryItem *previous_item = g_list_previous (actions)->data;
 
-              history_item->count++;
-              /* Remove then reinsert to reorder. */
-              history.items = g_list_remove (history.items, history_item);
-              history.items = g_list_insert_sorted (history.items, history_item,
+              item->count++;
+
+              history.items = g_list_remove (history.items, item);
+              history.items = g_list_insert_sorted (history.items, item,
                                                     (GCompareFunc) gimp_action_history_compare_func);
 
-              previous_history_item->count--;
-              /* Remove then reinsert to reorder. */
-              history.items = g_list_remove (history.items, previous_history_item);
-              history.items = g_list_insert_sorted (history.items, previous_history_item,
+              previous_item->count--;
+
+              history.items = g_list_remove (history.items, previous_item);
+              history.items = g_list_insert_sorted (history.items, previous_item,
                                                     (GCompareFunc) gimp_action_history_compare_func);
             }
+
           return;
         }
 
-      previous_count = history_item->count;
+      previous_count = item->count;
     }
 
   /* If we are here, this action is not logged yet. */
-  history_item = g_malloc0 (sizeof (GimpActionHistoryItem));
-
-  history_item->action = g_object_ref (action);
-  history_item->name = g_strdup (action_name);
-  history_item->count = 1;
-  history.items = g_list_insert_sorted (history.items,
-                                        history_item,
-                                        (GCompareFunc) gimp_action_history_compare_func);
+  history.items =
+    g_list_insert_sorted (history.items,
+                          gimp_action_history_item_new (action, 1),
+                          (GCompareFunc) gimp_action_history_compare_func);
 }
 
 void
@@ -265,42 +268,53 @@ gimp_action_history_empty (void)
  * @return a list of GtkAction*, to free with:
  * g_list_free_full (result, (GDestroyNotify) g_object_unref);
  */
-GList*
+GList *
 gimp_action_history_search (const gchar         *keyword,
                             GimpActionMatchFunc  match_func,
                             GimpGuiConfig       *config)
 {
-  GList                 *actions;
-  GimpActionHistoryItem *history_item;
-  GtkAction             *action;
-  GList                 *search_result = NULL;
-  gint                   i             = config->action_history_size;
+  GList *actions;
+  GList *result = NULL;
+  gint   i;
 
-  for (actions = history.items;
-       actions && i;
-       actions = g_list_next (actions), i--)
+  for (actions = history.items, i = 0;
+       actions && i < config->action_history_size;
+       actions = g_list_next (actions), i++)
     {
-      history_item = actions->data;
-      action = history_item->action;
+      GimpActionHistoryItem *item   = actions->data;
+      GtkAction             *action = item->action;
 
       if (! gtk_action_is_sensitive (action) &&
           ! config->search_show_unavailable)
         continue;
 
       if (match_func (action, keyword, NULL, FALSE))
-        search_result = g_list_prepend (search_result, g_object_ref (action));
+        result = g_list_prepend (result, g_object_ref (action));
     }
 
-  return g_list_reverse (search_result);
+  return g_list_reverse (result);
 }
 
+
 /*  private functions  */
+
+static GimpActionHistoryItem *
+gimp_action_history_item_new (GtkAction *action,
+                              gint       count)
+{
+  GimpActionHistoryItem *item = g_new0 (GimpActionHistoryItem, 1);
+
+  item->action = g_object_ref (action);
+  item->name   = gtk_action_get_name (action);
+  item->count  = count;
+
+  return item;
+}
 
 static void
 gimp_action_history_item_free (GimpActionHistoryItem *item)
 {
   g_object_unref (item->action);
-  g_free (item->name);
   g_free (item);
 }
 
@@ -324,69 +338,4 @@ gimp_action_history_compare_func (GimpActionHistoryItem *a,
                                   GimpActionHistoryItem *b)
 {
   return (a->count < b->count);
-}
-
-static void
-gimp_action_history_insert (const gchar *action_name,
-                            gint         count)
-{
-  GList             *action_groups;
-  GimpUIManager     *manager;
-
-  /* We do not insert some categories of actions. */
-  if (gimp_action_history_excluded_action (action_name))
-    return;
-
-  manager = gimp_ui_managers_from_name ("<Image>")->data;
-
-  for (action_groups = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager));
-       action_groups;
-       action_groups = g_list_next (action_groups))
-    {
-      GimpActionGroup *group = action_groups->data;
-      GList           *actions;
-      GList           *list2;
-      gboolean         found = FALSE;
-
-      actions = gtk_action_group_list_actions (GTK_ACTION_GROUP (group));
-      actions = g_list_sort (actions, (GCompareFunc) gimp_action_name_compare);
-
-      for (list2 = actions; list2; list2 = g_list_next (list2))
-        {
-          GtkAction *action             = list2->data;
-          gint       unavailable_action = -1;
-
-          unavailable_action = strcmp (action_name, gtk_action_get_name (action));
-
-          if (unavailable_action == 0)
-            {
-              /* We found our action. */
-              GimpActionHistoryItem *new_action = g_new0 (GimpActionHistoryItem, 1);
-
-              new_action->action = g_object_ref (action);
-              new_action->name   = g_strdup (action_name);
-              new_action->count  = count;
-
-              history.items =
-                g_list_insert_sorted (history.items,
-                                      new_action,
-                                      (GCompareFunc) gimp_action_history_init_compare_func);
-              found = TRUE;
-              break;
-            }
-          else if (unavailable_action < 0)
-            {
-              /* Since the actions list is sorted, it means we passed
-               * all possible actions already and it is not in this group.
-               */
-              break;
-            }
-
-        }
-
-      g_list_free (actions);
-
-      if (found)
-        break;
-   }
 }
