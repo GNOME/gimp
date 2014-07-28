@@ -323,7 +323,6 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
   GType              type = G_TYPE_FROM_INSTANCE (tool->config);
   GtkWidget         *widget;
   gchar             *basename;
-  gchar             *filename;
   GFile             *file;
   gchar             *import_title;
   gchar             *export_title;
@@ -334,11 +333,8 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
                              (GCompareFunc) gimp_settings_compare);
 
   basename = g_strconcat (G_OBJECT_TYPE_NAME (tool->config), ".settings", NULL);
-  filename = g_build_filename (gimp_directory (), "filters", basename, NULL);
+  file = gimp_directory_file ("filters", basename, NULL);
   g_free (basename);
-
-  file = g_file_new_for_path (filename);
-  g_free (filename);
 
   import_title = g_strdup_printf (_("Import '%s' Settings"), tool->undo_desc);
   export_title = g_strdup_printf (_("Export '%s' Settings"), tool->undo_desc);

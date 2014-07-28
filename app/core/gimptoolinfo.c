@@ -337,7 +337,6 @@ GFile *
 gimp_tool_info_get_options_file (GimpToolInfo *tool_info,
                                  const gchar  *suffix)
 {
-  gchar *filename;
   gchar *basename;
   GFile *file;
 
@@ -346,14 +345,8 @@ gimp_tool_info_get_options_file (GimpToolInfo *tool_info,
   /* also works for a NULL suffix */
   basename = g_strconcat (gimp_object_get_name (tool_info), suffix, NULL);
 
-  filename = g_build_filename (gimp_directory (),
-                               "tool-options",
-                               basename,
-                               NULL);
+  file = gimp_directory_file ("tool-options", basename, NULL);
   g_free (basename);
-
-  file = g_file_new_for_path (filename);
-  g_free (filename);
 
   return file;
 }
