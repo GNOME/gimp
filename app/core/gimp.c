@@ -1357,9 +1357,9 @@ gimp_get_temp_file (Gimp        *gimp,
 {
   static gint  id = 0;
   static gint  pid;
-  gchar       *filename;
   gchar       *basename;
   gchar       *path;
+  GFile       *dir;
   GFile       *file;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -1375,14 +1375,12 @@ gimp_get_temp_file (Gimp        *gimp,
   path = gimp_config_path_expand (GIMP_GEGL_CONFIG (gimp->config)->temp_path,
                                   TRUE, NULL);
 
-  filename = g_build_filename (path, basename, NULL);
-
+  dir = g_file_new_for_path (path);
   g_free (path);
+
+  file = g_file_get_child (dir, basename);
   g_free (basename);
-
-  file = g_file_new_for_path (filename);
-
-  g_free (filename);
+  g_object_unref (dir);
 
   return file;
 }
