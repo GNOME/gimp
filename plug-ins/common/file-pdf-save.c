@@ -102,6 +102,8 @@
 
 #include "config.h"
 
+#include <errno.h>
+
 #include <glib/gstdio.h>
 #include <cairo-pdf.h>
 #include <pango/pangocairo.h>
@@ -420,7 +422,17 @@ run (const gchar      *name,
   fp = g_fopen (file_name, "wb");
   if (fp == NULL)
     {
+      *nreturn_vals = 2;
+
       values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+      values[1].type          = GIMP_PDB_STRING;
+      if (error == NULL)
+        {
+          g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not open '%s' for writing: %s"),
+                       gimp_filename_to_utf8 (file_name), g_strerror (errno));
+        }
+      values[1].data.d_string = error->message;
       return;
     }
 
