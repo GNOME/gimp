@@ -93,6 +93,10 @@ gimp_action_history_init (Gimp *gimp)
     }
 
   file = gimp_directory_file (GIMP_ACTION_HISTORY_FILENAME, NULL);
+
+  if (gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+
   scanner = gimp_scanner_new_gfile (file, NULL);
   g_object_unref (file);
 
@@ -208,6 +212,10 @@ gimp_action_history_exit (Gimp *gimp)
     min_count = item->count - 1;
 
   file = gimp_directory_file (GIMP_ACTION_HISTORY_FILENAME, NULL);
+
+  if (gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
+
   writer = gimp_config_writer_new_gfile (file, TRUE, "GIMP action-history",
                                          NULL);
   g_object_unref (file);
