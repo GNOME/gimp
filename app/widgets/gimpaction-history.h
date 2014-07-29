@@ -21,23 +21,26 @@
 #ifndef __GIMP_ACTION_HISTORY_H__
 #define __GIMP_ACTION_HISTORY_H__
 
-typedef gboolean   (* GimpActionMatchFunc)       (GtkAction           *action,
-                                                  const gchar         *keyword,
-                                                  gint                *section,
-                                                  gboolean             match_fuzzy);
 
-void       gimp_action_history_init              (GimpGuiConfig       *config);
-void       gimp_action_history_exit              (GimpGuiConfig       *config);
+typedef gboolean (* GimpActionMatchFunc) (GtkAction   *action,
+                                          const gchar *keyword,
+                                          gint        *section,
+                                          gboolean     match_fuzzy);
+
+
+void       gimp_action_history_init              (Gimp                *gimp);
+void       gimp_action_history_exit              (Gimp                *gimp);
+
+void       gimp_action_history_clear             (Gimp                *gimp);
+
+GList    * gimp_action_history_search            (Gimp                *gimp,
+                                                  GimpActionMatchFunc  match_func,
+                                                  const gchar         *keyword);
+
+gboolean   gimp_action_history_excluded_action   (const gchar         *action_name);
 
 void       gimp_action_history_activate_callback (GtkAction           *action,
                                                   gpointer             user_data);
 
-void       gimp_action_history_empty             (void);
-
-GList *    gimp_action_history_search            (const gchar         *keyword,
-                                                  GimpActionMatchFunc  match_func,
-                                                  GimpGuiConfig       *config);
-
-gboolean   gimp_action_history_excluded_action   (const gchar         *action_name);
 
 #endif  /* __GIMP_ACTION_HISTORY_H__ */

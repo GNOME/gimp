@@ -114,8 +114,8 @@ static void   prefs_devices_save_callback         (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_devices_clear_callback        (GtkWidget  *widget,
                                                    Gimp       *gimp);
-static void   prefs_search_empty_callback         (GtkWidget  *widget,
-                                                   gpointer    user_data);
+static void   prefs_search_clear_callback         (GtkWidget  *widget,
+                                                   Gimp       *gimp);
 static void   prefs_tool_options_save_callback    (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_tool_options_clear_callback   (GtkWidget  *widget,
@@ -653,10 +653,10 @@ prefs_devices_clear_callback (GtkWidget *widget,
 }
 
 static void
-prefs_search_empty_callback (GtkWidget  *widget,
-                             gpointer    user_data)
+prefs_search_clear_callback (GtkWidget *widget,
+                             Gimp      *gimp)
 {
-  gimp_action_history_empty ();
+  gimp_action_history_clear (gimp);
 }
 
 static void
@@ -1647,8 +1647,8 @@ prefs_dialog_new (Gimp       *gimp,
                              _("Clear Action History"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (prefs_search_empty_callback),
-                    NULL);
+                    G_CALLBACK (prefs_search_clear_callback),
+                    gimp);
 
   g_object_unref (size_group);
   size_group = NULL;

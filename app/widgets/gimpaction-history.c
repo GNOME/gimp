@@ -31,6 +31,8 @@
 
 #include "config/gimpguiconfig.h"
 
+#include "core/gimp.h"
+
 #include "gimpuimanager.h"
 #include "gimpaction.h"
 #include "gimpaction-history.h"
@@ -70,14 +72,19 @@ static gint gimp_action_history_compare_func      (GimpActionHistoryItem *a,
 /*  public functions  */
 
 void
-gimp_action_history_init (GimpGuiConfig *config)
+gimp_action_history_init (Gimp *gimp)
 {
+  GimpGuiConfig *config;
   GimpUIManager *manager;
   GFile         *file;
   GScanner      *scanner;
   GTokenType     token;
   gint           count;
   gint           n_items = 0;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  config = GIMP_GUI_CONFIG (gimp->config);
 
   if (history.items != NULL)
     {
@@ -179,14 +186,19 @@ gimp_action_history_init (GimpGuiConfig *config)
 }
 
 void
-gimp_action_history_exit (GimpGuiConfig *config)
+gimp_action_history_exit (Gimp *gimp)
 {
+  GimpGuiConfig         *config;
   GimpActionHistoryItem *item;
   GList                 *actions;
   GFile                 *file;
   GimpConfigWriter      *writer;
   gint                   min_count = 0;
   gint                   i;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  config = GIMP_GUI_CONFIG (gimp->config);
 
   /* If we have more items than current history size, trim the history
    * and move down all count so that 1 is lower.
@@ -214,7 +226,56 @@ gimp_action_history_exit (GimpGuiConfig *config)
 
   gimp_config_writer_finish (writer, "end of action-history", NULL);
 
-  gimp_action_history_empty ();
+  gimp_action_history_clear (gimp);
+}
+
+void
+gimp_action_history_clear (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  g_list_free_full (history.items,
+                    (GDestroyNotify) gimp_action_history_item_free);
+  history.items = NULL;
+}
+
+/* Search all history actions which match "keyword" with function
+ * match_func(action, keyword).
+ *
+ * @return a list of GtkAction*, to free with:
+ * g_list_free_full (result, (GDestroyNotify) g_object_unref);
+ */
+GList *
+gimp_action_history_search (Gimp                *gimp,
+                            GimpActionMatchFunc  match_func,
+                            const gchar         *keyword)
+{
+  GimpGuiConfig *config;
+  GList         *actions;
+  GList         *result = NULL;
+  gint           i;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (match_func != NULL, NULL);
+
+  config = GIMP_GUI_CONFIG (gimp->config);
+
+  for (actions = history.items, i = 0;
+       actions && i < config->action_history_size;
+       actions = g_list_next (actions), i++)
+    {
+      GimpActionHistoryItem *item   = actions->data;
+      GtkAction             *action = item->action;
+
+      if (! gtk_action_is_sensitive (action) &&
+          ! config->search_show_unavailable)
+        continue;
+
+      if (match_func (action, keyword, NULL, FALSE))
+        result = g_list_prepend (result, g_object_ref (action));
+    }
+
+  return g_list_reverse (result);
 }
 
 /* gimp_action_history_excluded_action:
@@ -308,47 +369,6 @@ gimp_action_history_activate_callback (GtkAction *action,
     g_list_insert_sorted (history.items,
                           gimp_action_history_item_new (action, 1),
                           (GCompareFunc) gimp_action_history_compare_func);
-}
-
-void
-gimp_action_history_empty (void)
-{
-  g_list_free_full (history.items,
-                    (GDestroyNotify) gimp_action_history_item_free);
-  history.items = NULL;
-}
-
-/* Search all history actions which match "keyword" with function
- * match_func(action, keyword).
- *
- * @return a list of GtkAction*, to free with:
- * g_list_free_full (result, (GDestroyNotify) g_object_unref);
- */
-GList *
-gimp_action_history_search (const gchar         *keyword,
-                            GimpActionMatchFunc  match_func,
-                            GimpGuiConfig       *config)
-{
-  GList *actions;
-  GList *result = NULL;
-  gint   i;
-
-  for (actions = history.items, i = 0;
-       actions && i < config->action_history_size;
-       actions = g_list_next (actions), i++)
-    {
-      GimpActionHistoryItem *item   = actions->data;
-      GtkAction             *action = item->action;
-
-      if (! gtk_action_is_sensitive (action) &&
-          ! config->search_show_unavailable)
-        continue;
-
-      if (match_func (action, keyword, NULL, FALSE))
-        result = g_list_prepend (result, g_object_ref (action));
-    }
-
-  return g_list_reverse (result);
 }
 
 

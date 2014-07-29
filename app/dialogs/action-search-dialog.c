@@ -65,7 +65,7 @@ typedef struct
 {
   GtkWidget     *dialog;
 
-  GimpGuiConfig *config;
+  Gimp          *gimp;
   GtkWidget     *keyword_entry;
   GtkWidget     *results_list;
   GtkWidget     *list_view;
@@ -122,16 +122,15 @@ action_search_dialog_create (Gimp *gimp)
 
   if (! private)
     {
-      GtkWidget     *action_search_dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-      GimpGuiConfig *config               = GIMP_GUI_CONFIG (gimp->config);
-      GtkWidget     *main_vbox;
+      GtkWidget *action_search_dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+      GtkWidget *main_vbox;
 
       private = g_slice_new0 (SearchDialog);
       g_object_weak_ref (G_OBJECT (action_search_dialog),
                          (GWeakNotify) search_dialog_free, private);
 
       private->dialog = action_search_dialog;
-      private->config = config;
+      private->gimp   = gimp;
 
       gtk_window_set_role (GTK_WINDOW (action_search_dialog),
                            "gimp-action-search-dialog");
@@ -537,9 +536,9 @@ action_search_history_and_actions (const gchar  *keyword,
   if (g_strcmp0 (keyword, "") == 0)
     return;
 
-  history_actions = gimp_action_history_search (keyword,
+  history_actions = gimp_action_history_search (private->gimp,
                                                 action_search_match_keyword,
-                                                private->config);
+                                                keyword);
 
   /* First put on top of the list any matching action of user history. */
   for (list = history_actions; list; list = g_list_next (list))
@@ -581,7 +580,7 @@ action_search_history_and_actions (const gchar  *keyword,
             continue;
 
           if (! gtk_action_is_sensitive (action) &&
-              ! private->config->search_show_unavailable)
+              ! GIMP_GUI_CONFIG (private->gimp->config)->search_show_unavailable)
             continue;
 
           if (action_search_match_keyword (action, keyword, &section, TRUE))
