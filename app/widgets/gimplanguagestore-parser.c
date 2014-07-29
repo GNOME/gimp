@@ -308,7 +308,8 @@ static gboolean
 parse_iso_codes (GHashTable  *base_lang_list,
                  GError     **error)
 {
-  gboolean         success = TRUE;
+  gboolean success = TRUE;
+
 #ifdef HAVE_ISO_CODES
   static const GMarkupParser markup_parser =
     {
@@ -319,9 +320,9 @@ parse_iso_codes (GHashTable  *base_lang_list,
       NULL   /*  error        */
     };
 
-  GimpXmlParser   *xml_parser;
-  gchar           *filename;
-  IsoCodesParser   parser = { 0, };
+  GimpXmlParser  *xml_parser;
+  GFile          *file;
+  IsoCodesParser  parser = { 0, };
 
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -332,16 +333,15 @@ parse_iso_codes (GHashTable  *base_lang_list,
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
 #ifdef G_OS_WIN32
-  filename = g_build_filename (gimp_data_directory (),
-                               "..", "..", "xml", "iso-codes", "iso_639.xml",
-                               NULL);
+  file = gimp_data_directory_file ("..", "..",
+                                   "xml", "iso-codes", "iso_639.xml", NULL);
 #else
-  filename = g_build_filename (ISO_CODES_LOCATION, "iso_639.xml", NULL);
+  file = g_file_new_for_path (ISO_CODES_LOCATION G_DIR_SEPARATOR_S "iso_639.xml");
 #endif
 
-  success = gimp_xml_parser_parse_file (xml_parser, filename, error);
+  success = gimp_xml_parser_parse_gfile (xml_parser, file, error);
 
-  g_free (filename);
+  g_object_unref (file);
 
   gimp_xml_parser_free (xml_parser);
   g_hash_table_unref (parser.base_lang_list);
