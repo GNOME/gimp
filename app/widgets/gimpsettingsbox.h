@@ -61,7 +61,7 @@ GtkWidget * gimp_settings_box_new         (Gimp            *gimp,
                                            const gchar     *import_dialog_title,
                                            const gchar     *export_dialog_title,
                                            const gchar     *file_dialog_help_id,
-                                           const gchar     *default_folder,
+                                           GFile           *default_folder,
                                            GFile           *last_file);
 
 void        gimp_settings_box_add_current (GimpSettingsBox *box,

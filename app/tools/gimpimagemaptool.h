@@ -81,7 +81,7 @@ struct _GimpImageMapToolClass
                                    const gchar       *import_dialog_title,
                                    const gchar       *export_dialog_title,
                                    const gchar       *file_dialog_help_id,
-                                   const gchar       *default_folder,
+                                   GFile             *default_folder,
                                    GtkWidget        **settings_box);
 
   gboolean    (* settings_import) (GimpImageMapTool  *image_map_tool,

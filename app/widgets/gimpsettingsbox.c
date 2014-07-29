@@ -80,7 +80,7 @@ struct _GimpSettingsBoxPrivate
   gchar         *import_dialog_title;
   gchar         *export_dialog_title;
   gchar         *file_dialog_help_id;
-  gchar         *default_folder;
+  GFile         *default_folder;
   GFile         *last_file;
 };
 
@@ -362,10 +362,15 @@ gimp_settings_box_finalize (GObject *object)
       private->last_file = NULL;
     }
 
+  if (private->default_folder)
+    {
+      g_object_unref (private->default_folder);
+      private->default_folder = NULL;
+    }
+
   g_free (private->import_dialog_title);
   g_free (private->export_dialog_title);
   g_free (private->file_dialog_help_id);
-  g_free (private->default_folder);
 
   if (private->editor_dialog)
     {
@@ -795,14 +800,19 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
                     NULL);
 
   if (private->default_folder &&
-      g_file_test (private->default_folder, G_FILE_TEST_IS_DIR))
+      g_file_query_file_type (private->default_folder,
+                              G_FILE_QUERY_INFO_NONE, NULL) ==
+      G_FILE_TYPE_DIRECTORY)
     {
-      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
-                                            private->default_folder, NULL);
+      gchar *uri = g_file_get_uri (private->default_folder);
+      gtk_file_chooser_add_shortcut_folder_uri (GTK_FILE_CHOOSER (dialog),
+                                                uri, NULL);
+      g_free (uri);
 
       if (! private->last_file)
-        gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog),
-                                             private->default_folder);
+        gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
+                                                  private->default_folder,
+                                                  NULL);
     }
   else if (! private->last_file)
     {
@@ -943,7 +953,7 @@ gimp_settings_box_new (Gimp          *gimp,
                        const gchar   *import_dialog_title,
                        const gchar   *export_dialog_title,
                        const gchar   *file_dialog_help_id,
-                       const gchar   *default_folder,
+                       GFile         *default_folder,
                        GFile         *last_file)
 {
   GimpSettingsBox        *box;
@@ -953,6 +963,8 @@ gimp_settings_box_new (Gimp          *gimp,
   g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
   g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (default_folder == NULL || G_IS_FILE (default_folder),
+                        NULL);
   g_return_val_if_fail (last_file == NULL || G_IS_FILE (last_file), NULL);
 
   box = g_object_new (GIMP_TYPE_SETTINGS_BOX,
@@ -967,7 +979,9 @@ gimp_settings_box_new (Gimp          *gimp,
   private->import_dialog_title = g_strdup (import_dialog_title);
   private->export_dialog_title = g_strdup (export_dialog_title);
   private->file_dialog_help_id = g_strdup (file_dialog_help_id);
-  private->default_folder      = g_strdup (default_folder);
+
+  if (default_folder)
+    private->default_folder = g_object_ref (default_folder);
 
   if (last_file)
     private->last_file = g_object_ref (last_file);

@@ -80,7 +80,7 @@ static GtkWidget * gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image
                                                         const gchar       *import_dialog_title,
                                                         const gchar       *export_dialog_title,
                                                         const gchar       *file_dialog_help_id,
-                                                        const gchar       *default_folder,
+                                                        GFile             *default_folder,
                                                         GtkWidget        **settings_box);
 static void        gimp_operation_tool_color_picked    (GimpImageMapTool  *im_tool,
                                                         gpointer           identifier,
@@ -316,7 +316,7 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
                                      const gchar       *import_dialog_title,
                                      const gchar       *export_dialog_title,
                                      const gchar       *file_dialog_help_id,
-                                     const gchar       *default_folder,
+                                     GFile             *default_folder,
                                      GtkWidget        **settings_box)
 {
   GimpOperationTool *tool = GIMP_OPERATION_TOOL (image_map_tool);
@@ -346,7 +346,7 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
                                                                import_title,
                                                                export_title,
                                                                "help-foo",
-                                                               g_get_home_dir (),
+                                                               NULL, /* sic */
                                                                settings_box);
 
   g_free (import_title);
