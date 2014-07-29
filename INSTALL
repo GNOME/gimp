@@ -77,8 +77,10 @@ header files installed.
   9. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
      to check that the following libraries are installed: lcms,
-     libpng, libjpeg, libpoppler, libtiff, webkit, libmng, librsvg,
-     libwmf, libz, libbzip2, libgs (Ghostscript), libaa and libjasper.
+     libpng, libjpeg, libpoppler (and poppler-data, optional encoding
+     package, necessary to import PDF with CJK and cyrillic text),
+     libtiff, webkit, libmng, librsvg, libwmf, libz, libbzip2, libgs
+     (Ghostscript), libaa and libjasper.
 
  10. The Python extension requires Python 2 development headers to be
      present. You will also need PyGTK and the respective development
