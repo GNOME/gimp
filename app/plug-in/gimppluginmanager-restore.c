@@ -254,20 +254,14 @@ gimp_plug_in_manager_get_pluginrc (GimpPlugInManager *manager)
 
   if (gimp->config->plug_in_rc_path)
     {
-      gchar *path;
+      gchar *path = gimp_config_path_expand (gimp->config->plug_in_rc_path,
+                                             TRUE, NULL);
 
-      path = gimp_config_path_expand (gimp->config->plug_in_rc_path,
-                                      TRUE, NULL);
+      if (g_path_is_absolute (path))
+        pluginrc = g_file_new_for_path (path);
+      else
+        pluginrc = gimp_directory_file (path, NULL);
 
-      if (! g_path_is_absolute (path))
-        {
-          gchar *str = g_build_filename (gimp_directory (), path, NULL);
-
-          g_free (path);
-          path = str;
-        }
-
-      pluginrc = g_file_new_for_path (path);
       g_free (path);
     }
   else
