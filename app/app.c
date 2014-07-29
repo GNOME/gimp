@@ -211,7 +211,9 @@ app_run (const gchar         *full_prog_name,
 
   /*  Check if the user's gimp_directory exists
    */
-  if (! g_file_test (gimp_directory (), G_FILE_TEST_IS_DIR))
+  if (g_file_query_file_type (gimp_directory_file (NULL),
+                              G_FILE_QUERY_INFO_NONE, NULL) !=
+      G_FILE_TYPE_DIRECTORY)
     {
       GimpUserInstall *install = gimp_user_install_new (be_verbose);
 
