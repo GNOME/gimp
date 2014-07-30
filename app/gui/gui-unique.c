@@ -260,17 +260,12 @@ gui_unique_quartz_nsopen_file_callback (GtkosxApplication *osx_app,
                                         gchar             *path,
                                         gpointer           user_data)
 {
-  GFile    *file;
   GSource  *source;
   GClosure *closure;
 
-  file = g_file_new_for_path (path);
-
   closure = g_cclosure_new (G_CALLBACK (gui_unique_quartz_idle_open),
-                            g_object_ref (file),
+                            g_file_new_for_path (path),
                             (GClosureNotify) g_object_unref);
-
-  g_object_unref (file);
 
   g_object_watch_closure (G_OBJECT (unique_gimp), closure);
 
@@ -288,8 +283,6 @@ gui_unique_quartz_nsopen_file_callback (GtkosxApplication *osx_app,
 - (void) handleEvent: (NSAppleEventDescriptor *) inEvent
         andReplyWith: (NSAppleEventDescriptor *) replyEvent
 {
-  const gchar       *path;
-  NSURL             *url;
   NSAutoreleasePool *urlpool;
   NSInteger          count;
   NSInteger          i;
@@ -300,17 +293,17 @@ gui_unique_quartz_nsopen_file_callback (GtkosxApplication *osx_app,
 
   for (i = 1; i <= count; i++)
     {
-      gchar    *callback_path;
-      GSource  *source;
-      GClosure *closure;
+      NSURL       *url;
+      const gchar *path;
+      GSource     *source;
+      GClosure    *closure;
 
       url = [NSURL URLWithString: [[inEvent descriptorAtIndex: i] stringValue]];
       path = [[url path] UTF8String];
 
-      callback_path = g_strdup (path);
       closure = g_cclosure_new (G_CALLBACK (gui_unique_quartz_idle_open),
-                                (gpointer) callback_path,
-                                (GClosureNotify) g_free);
+                                g_file_new_for_path (path),
+                                (GClosureNotify) g_object_unref);
 
       g_object_watch_closure (G_OBJECT (unique_gimp), closure);
 
