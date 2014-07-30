@@ -23,6 +23,8 @@
 	<branch version="1.12.16" repo="cairographics.org"
 			module="cairo-1.12.16.tar.xz"
 			hash="sha1:4f6e337d5d3edd7ea79d1426f575331552b003ec">
+		<!-- From cairo git -->
+		<patch file="cairo-disable-lto.patch" strip="1"/>
 	</branch>
 	<dependencies>
 		<dep package="zlib"/>
