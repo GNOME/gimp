@@ -30,6 +30,7 @@ else:
 # prefix:       target path to install the compiled binaries
 checkoutroot = os.environ['PWD']+'/checkout/'
 prefix = os.environ['PWD'] + '/targets/' + module + flavour_ext + '/'
+tarballdir = None
 
 os.environ['prefix'] = prefix
 
