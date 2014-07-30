@@ -40,7 +40,7 @@
 		<dep package="librsvg"/>
 		<dep package="libexif"/>
 		<dep package="iso-codes"/>
-		<dep package="libwmf"/>
+		<!-- <dep package="libwmf"/> -->
 		<dep package="ghostscript"/>
 	</dependencies>
 	<suggests>
