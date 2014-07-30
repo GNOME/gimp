@@ -1,17 +1,18 @@
 #!/bin/bash
 
-dll_loc=${DLL_LOC:-/usr/lib/gcc/i686-w64-mingw32/4.6}
+dll_loc_32=${DLL_LOC_i686:-/usr/i686-w64-mingw32/bin}
+dll_loc_64=${DLL_LOC_x86_64:-/usr/x86_64-w64-mingw32/bin}
 
 add_dll (){
-	cp --reflink=auto $dll_loc/$1 ./bin/
+	cp --reflink=auto $1/$2 ./bin/
 }
 
 dostuff (){
-	f=$1-i686-`date +%Y-%m-%d`
+	f=$1-$4-`date +%Y-%m-%d`
 
 	mkdir -p combined/$f
-	cp -R -d -L --reflink=auto ./gimp-common$3/* combined/$f
-	cp -R -d -L --reflink=auto ./$1/* combined/$f
+	cp -R -d -L --reflink=auto ./gimp-common$3-$4/* combined/$f
+	cp -R -d -L --reflink=auto ./$1-$4/* combined/$f
 
 	pushd combined
 	pushd $f
@@ -33,8 +34,15 @@ dostuff (){
 
 	rm -f `find -name *.exe | sed -e /gimp/d -e /gspawn/d -e /gdb.exe/d`
 
-	add_dll libstdc++-6.dll
-	add_dll libgcc_s_sjlj-1.dll
+	if [ "$4" == "i686" ]; then
+		add_dll $dll_loc_32 libstdc++-6.dll
+		add_dll $dll_loc_32 libgcc_s_sjlj-1.dll
+		add_dll $dll_loc_32 libwinpthread-1.dll
+	elif [ "$4" == "x86_64" ]; then
+		add_dll $dll_loc_64 libstdc++-6.dll
+		add_dll $dll_loc_64 libgcc_s_seh-1.dll
+		add_dll $dll_loc_64 libwinpthread-1.dll
+	fi
 
 	pushd bin
 	rm -f `ls | sed -e /.exe/d -e /.dll/d`
@@ -78,7 +86,11 @@ start $2" | unix2dos > run_gimp.bat
 }
 
 cd targets
-dostuff gimp-stable gimp-2.8.exe ""
-dostuff gimp-dev gimp-2.9.exe ""
-dostuff gimp-stable-dbg gimp-2.8.exe "-dbg"
-dostuff gimp-dev-dbg gimp-2.9.exe "-dbg"
+dostuff gimp-stable gimp-2.8.exe "" i686
+dostuff gimp-dev gimp-2.9.exe "" i686
+dostuff gimp-stable-dbg gimp-2.8.exe "-dbg" i686
+dostuff gimp-dev-dbg gimp-2.9.exe "-dbg" i686
+dostuff gimp-stable gimp-2.8.exe "" x86_64
+dostuff gimp-dev gimp-2.9.exe "" x86_64
+dostuff gimp-stable-dbg gimp-2.8.exe "-dbg" x86_64
+dostuff gimp-dev-dbg gimp-2.9.exe "-dbg" x86_64
