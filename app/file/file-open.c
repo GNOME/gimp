@@ -542,8 +542,8 @@ file_open_with_proc_and_display (Gimp                *gimp,
 
           imagefile = gimp_document_list_add_file (documents, file, mime_type);
 
-          /*  can only create a thumbnail if the passed uri and the
-           *  resulting image's uri match. Use any_uri() here so we
+          /*  can only create a thumbnail if the passed file and the
+           *  resulting image's file match. Use any_file() here so we
            *  create thumbnails for both XCF and imported images.
            */
           any_file = gimp_image_get_any_file (image);
