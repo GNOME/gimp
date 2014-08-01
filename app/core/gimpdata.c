@@ -929,26 +929,28 @@ static const gchar *tag_blacklist[] = { "brushes",
  * gimp_data_set_folder_tags:
  * @data:          a #Gimpdata object.
  * @top_directory: the top directory of the currently processed data
- *                 hierarchy, or %NULL if that top directory is
- *                 currently processed itself
+ *                 hierarchy.
  *
  * Sets tags based on all folder names below top_directory. So if the
- * data's filename is /home/foo/.gimp/brushes/Flowers/Roses/rose.gbr,
- * it will add "Flowers" and "Roses" tags.
+ * data's filename is e.g.
+ * /home/foo/.config/GIMP/X.Y/brushes/Flowers/Roses/rose.gbr, it will
+ * add "Flowers" and "Roses" tags.
  *
  * if the top directory (as passed, or as derived from the data's
  * filename) does not end with one of the default data directory names
  * (brushes, patterns etc), its name will be added as tag too.
  **/
 void
-gimp_data_set_folder_tags (GimpData    *data,
-                           const gchar *top_directory)
+gimp_data_set_folder_tags (GimpData *data,
+                           GFile    *top_directory)
 {
   GimpDataPrivate *private;
-  gchar           *path;
+  gchar           *tmp;
   gchar           *dirname;
+  gchar           *top_path;
 
   g_return_if_fail (GIMP_IS_DATA (data));
+  g_return_if_fail (G_IS_FILE (top_directory));
 
   private = GIMP_DATA_GET_PRIVATE (data);
 
@@ -957,38 +959,33 @@ gimp_data_set_folder_tags (GimpData    *data,
 
   g_return_if_fail (private->file != NULL);
 
-  path    = g_file_get_path (private->file);
-  dirname = g_path_get_dirname (path);
-  g_free (path);
+  tmp = g_file_get_path (private->file);
+  dirname = g_path_get_dirname (tmp);
+  g_free (tmp);
 
-  /*  if this data is in a subfolder, walk up the hierarchy and
-   *  set each folder on the way as tag, except the top_directory
+  top_path = g_file_get_path (top_directory);
+
+  g_return_if_fail (g_str_has_prefix (dirname, top_path));
+
+  /*  walk up the hierarchy and set each folder on the way as tag,
+   *  except the top_directory
    */
-  if (top_directory)
+  while (strcmp (dirname, top_path))
     {
-      size_t top_directory_len = strlen (top_directory);
+      gchar   *basename = g_path_get_basename (dirname);
+      GimpTag *tag      = gimp_tag_new (basename);
 
-      g_return_if_fail (g_str_has_prefix (dirname, top_directory) &&
-                        (dirname[top_directory_len] == '\0' ||
-                         G_IS_DIR_SEPARATOR (dirname[top_directory_len])));
+      gimp_tag_set_internal (tag, TRUE);
+      gimp_tagged_add_tag (GIMP_TAGGED (data), tag);
+      g_object_unref (tag);
+      g_free (basename);
 
-      do
-        {
-          gchar   *basename = g_path_get_basename (dirname);
-          GimpTag *tag      = gimp_tag_new (basename);
-          gchar   *tmp;
-
-          gimp_tag_set_internal (tag, TRUE);
-          gimp_tagged_add_tag (GIMP_TAGGED (data), tag);
-          g_object_unref (tag);
-          g_free (basename);
-
-          tmp = g_path_get_dirname (dirname);
-          g_free (dirname);
-          dirname = tmp;
-        }
-      while (strcmp (dirname, top_directory));
+      tmp = g_path_get_dirname (dirname);
+      g_free (dirname);
+      dirname = tmp;
     }
+
+  g_free (top_path);
 
   if (dirname)
     {

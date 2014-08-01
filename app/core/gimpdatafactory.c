@@ -70,23 +70,32 @@ struct _GimpDataFactoryPriv
 };
 
 
-static void    gimp_data_factory_finalize     (GObject              *object);
+static void    gimp_data_factory_finalize       (GObject          *object);
 
-static void    gimp_data_factory_data_load    (GimpDataFactory      *factory,
-                                               GimpContext          *context,
-                                               GHashTable           *cache);
+static gint64  gimp_data_factory_get_memsize    (GimpObject       *object,
+                                                 gint64           *gui_size);
 
-static gint64  gimp_data_factory_get_memsize  (GimpObject           *object,
-                                               gint64               *gui_size);
+static void    gimp_data_factory_data_load      (GimpDataFactory  *factory,
+                                                 GimpContext      *context,
+                                                 GHashTable       *cache);
 
-static GFile * gimp_data_factory_get_save_dir (GimpDataFactory      *factory,
-                                               GError              **error);
+static GFile * gimp_data_factory_get_save_dir   (GimpDataFactory  *factory,
+                                                 GError          **error);
 
-static void    gimp_data_factory_load_data  (const GimpDatafileData *file_data,
-                                             gpointer                data);
+static void    gimp_data_factory_load_directory (GimpDataFactory  *factory,
+                                                 GimpContext      *context,
+                                                 GHashTable       *cache,
+                                                 GList            *writable_path,
+                                                 GFile            *directory,
+                                                 GFile            *top_directory);
+static void    gimp_data_factory_load_data      (GimpDataFactory  *factory,
+                                                 GimpContext      *context,
+                                                 GHashTable       *cache,
+                                                 GList            *writable_path,
+                                                 GFile            *file,
+                                                 guint64           mtime,
+                                                 GFile            *top_directory);
 
-static void    gimp_data_factory_load_data_recursive (const GimpDatafileData *file_data,
-                                                      gpointer                data);
 
 G_DEFINE_TYPE (GimpDataFactory, gimp_data_factory, GIMP_TYPE_OBJECT)
 
@@ -303,67 +312,38 @@ gimp_data_factory_data_foreach (GimpDataFactory     *factory,
     }
 }
 
-typedef struct
-{
-  GimpDataFactory *factory;
-  GimpContext     *context;
-  GHashTable      *cache;
-  const gchar     *top_directory;
-  GList           *writable_path;
-} GimpDataLoadContext;
-
 static void
 gimp_data_factory_data_load (GimpDataFactory *factory,
                              GimpContext     *context,
                              GHashTable      *cache)
 {
-  gchar *path;
-  gchar *writable_path;
+  gchar *p;
+  gchar *wp;
+  GList *path;
+  GList *writable_path;
+  GList *list;
 
   g_object_get (factory->priv->gimp->config,
-                factory->priv->path_property_name,     &path,
-                factory->priv->writable_property_name, &writable_path,
+                factory->priv->path_property_name,     &p,
+                factory->priv->writable_property_name, &wp,
                 NULL);
 
-  if (path && strlen (path))
+  path          = gimp_config_path_expand_to_files (p, NULL);
+  writable_path = gimp_config_path_expand_to_files (wp, NULL);
+
+  g_free (p);
+  g_free (wp);
+
+  for (list = path; list; list = g_list_next (list))
     {
-      GimpDataLoadContext  load_context = { 0, };
-      gchar               *tmp;
-
-      load_context.factory = factory;
-      load_context.context = context;
-      load_context.cache   = cache;
-
-      tmp = gimp_config_path_expand (path, TRUE, NULL);
-      g_free (path);
-      path = tmp;
-
-      if (writable_path)
-        {
-          tmp = gimp_config_path_expand (writable_path, TRUE, NULL);
-          g_free (writable_path);
-          writable_path = tmp;
-
-          load_context.writable_path = gimp_path_parse (writable_path,
-                                                        256, TRUE, NULL);
-        }
-
-      gimp_datafiles_read_directories (path, G_FILE_TEST_IS_REGULAR,
-                                       gimp_data_factory_load_data,
-                                       &load_context);
-
-      gimp_datafiles_read_directories (path, G_FILE_TEST_IS_DIR,
-                                       gimp_data_factory_load_data_recursive,
-                                       &load_context);
-
-      if (writable_path)
-        {
-          gimp_path_free (load_context.writable_path);
-        }
+      gimp_data_factory_load_directory (factory, context, cache,
+                                        writable_path,
+                                        list->data,
+                                        list->data);
     }
 
-  g_free (path);
-  g_free (writable_path);
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
+  g_list_free_full (writable_path, (GDestroyNotify) g_object_unref);
 }
 
 void
@@ -793,66 +773,108 @@ gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
 }
 
 static gboolean
-gimp_data_factory_is_dir_writable (const gchar *dirname,
+gimp_data_factory_is_dir_writable (const gchar *uri,
                                    GList       *writable_path)
 {
   GList *list;
 
   for (list = writable_path; list; list = g_list_next (list))
     {
-      if (g_str_has_prefix (dirname, list->data))
-        return TRUE;
+      gchar *path_uri = g_file_get_uri (list->data);
+
+      if (g_str_has_prefix (uri, path_uri))
+        {
+          g_free (path_uri);
+          return TRUE;
+        }
+
+      g_free (path_uri);
     }
 
   return FALSE;
 }
 
 static void
-gimp_data_factory_load_data_recursive (const GimpDatafileData *file_data,
-                                       gpointer                data)
+gimp_data_factory_load_directory (GimpDataFactory *factory,
+                                  GimpContext     *context,
+                                  GHashTable      *cache,
+                                  GList           *writable_path,
+                                  GFile           *directory,
+                                  GFile           *top_directory)
 {
-  GimpDataLoadContext *context = data;
-  gboolean             top_set = FALSE;
+  GFileEnumerator *enumerator;
 
-  /*  When processing subdirectories, set the top_directory if it's
-   *  unset. This way me make sure gimp_data_set_folder_tags()'
-   *  calling convention is honored: pass NULL when processing the
-   *  toplevel directory itself, and pass the toplevel directory when
-   *  processing any folder inside.
-   */
-  if (! context->top_directory)
+  enumerator = g_file_enumerate_children (directory,
+                                          G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                          G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                          G_FILE_ATTRIBUTE_STANDARD_TYPE ","
+                                          G_FILE_ATTRIBUTE_TIME_MODIFIED,
+                                          G_FILE_QUERY_INFO_NONE,
+                                          NULL, NULL);
+
+  if (enumerator)
     {
-      context->top_directory = file_data->dirname;
-      top_set = TRUE;
+      GFileInfo *info;
+
+      while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
+        {
+          GFileType  file_type;
+          GFile     *child;
+
+          if (g_file_info_get_is_hidden (info))
+            {
+              g_object_unref (info);
+              continue;
+            }
+
+          file_type = g_file_info_get_file_type (info);
+          child     = g_file_enumerator_get_child (enumerator, info);
+
+          if (file_type == G_FILE_TYPE_DIRECTORY)
+            {
+              gimp_data_factory_load_directory (factory, context, cache,
+                                                writable_path,
+                                                child,
+                                                top_directory);
+            }
+          else if (file_type == G_FILE_TYPE_REGULAR)
+            {
+              guint64 mtime;
+
+              mtime = g_file_info_get_attribute_uint64 (info,
+                                                        G_FILE_ATTRIBUTE_TIME_MODIFIED);
+
+              gimp_data_factory_load_data (factory, context, cache,
+                                           writable_path,
+                                           child, mtime,
+                                           top_directory);
+            }
+
+          g_object_unref (child);
+          g_object_unref (info);
+        }
+
+      g_object_unref (enumerator);
     }
-
-  gimp_datafiles_read_directories (file_data->filename, G_FILE_TEST_IS_REGULAR,
-                                   gimp_data_factory_load_data, context);
-
-  gimp_datafiles_read_directories (file_data->filename, G_FILE_TEST_IS_DIR,
-                                   gimp_data_factory_load_data_recursive,
-                                   context);
-
-  /*  Unset, the string is only valid within this function, and will
-   *  be set again for the next subdirectory.
-   */
-  if (top_set)
-    context->top_directory = NULL;
 }
 
 static void
-gimp_data_factory_load_data (const GimpDatafileData *file_data,
-                             gpointer                data)
+gimp_data_factory_load_data (GimpDataFactory *factory,
+                             GimpContext     *context,
+                             GHashTable      *cache,
+                             GList           *writable_path,
+                             GFile           *file,
+                             guint64          mtime,
+                             GFile           *top_directory)
 {
-  GimpDataLoadContext              *context   = data;
-  GimpDataFactory                  *factory   = context->factory;
-  GHashTable                       *cache     = context->cache;
   const GimpDataFactoryLoaderEntry *loader    = NULL;
   GList                            *data_list = NULL;
-  GFile                            *file;
+  gchar                            *uri;
   GInputStream                     *input;
   gint                              i;
   GError                           *error = NULL;
+
+  uri = g_file_get_uri (file);
 
   for (i = 0; i < factory->priv->n_loader_entries; i++)
     {
@@ -863,31 +885,30 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
        * which must be last in the loader array
        */
       if (! loader->extension ||
-          gimp_datafiles_check_extension (file_data->filename,
-                                          loader->extension))
-        goto insert;
+          gimp_datafiles_check_extension (uri, loader->extension))
+        {
+          goto insert;
+        }
     }
 
+  g_free (uri);
   return;
 
  insert:
-  file = g_file_new_for_path (file_data->filename);
-
   if (cache)
     {
       GList *cached_data = g_hash_table_lookup (cache, file);
 
       if (cached_data &&
           gimp_data_get_mtime (cached_data->data) != 0 &&
-          gimp_data_get_mtime (cached_data->data) == file_data->mtime)
+          gimp_data_get_mtime (cached_data->data) == mtime)
         {
           GList *list;
 
           for (list = cached_data; list; list = g_list_next (list))
             gimp_container_add (factory->priv->container, list->data);
 
-          g_object_unref (file);
-
+          g_free (uri);
           return;
         }
     }
@@ -896,7 +917,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
 
   if (input)
     {
-      data_list = loader->load_func (context->context, file, input, &error);
+      data_list = loader->load_func (context, file, input, &error);
 
       if (error)
         {
@@ -927,15 +948,14 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
       gboolean  writable  = FALSE;
       gboolean  deletable = FALSE;
 
-      obsolete = (strstr (file_data->dirname,
-                          GIMP_OBSOLETE_DATA_DIR_NAME) != 0);
+      obsolete = (strstr (uri, GIMP_OBSOLETE_DATA_DIR_NAME) != 0);
 
       /* obsolete files are immutable, don't check their writability */
       if (! obsolete)
         {
           deletable = (g_list_length (data_list) == 1 &&
-                       gimp_data_factory_is_dir_writable (file_data->dirname,
-                                                          context->writable_path));
+                       gimp_data_factory_is_dir_writable (uri,
+                                                          writable_path));
 
           writable = (deletable && loader->writable);
         }
@@ -945,7 +965,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
           GimpData *data = list->data;
 
           gimp_data_set_file (data, file, writable, deletable);
-          gimp_data_set_mtime (data, file_data->mtime);
+          gimp_data_set_mtime (data, mtime);
           gimp_data_clean (data);
 
           if (obsolete)
@@ -955,7 +975,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
             }
           else
             {
-              gimp_data_set_folder_tags (data, context->top_directory);
+              gimp_data_set_folder_tags (data, top_directory);
 
               gimp_container_add (factory->priv->container,
                                   GIMP_OBJECT (data));
@@ -967,7 +987,7 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
       g_list_free (data_list);
     }
 
-  g_object_unref (file);
+  g_free (uri);
 
   /*  not else { ... } because loader->load_func() can return a list
    *  of data objects *and* an error message if loading failed after
