@@ -220,11 +220,11 @@ file_utils_file_get_ext (GFile *file)
   uri     = g_file_get_uri (file);
   uri_len = strlen (uri);
 
-  if (g_strrstr (uri, ".gz"))
+  if (g_str_has_suffix (uri, ".gz"))
     search_len = uri_len - 3;
-  else if (g_strrstr (uri, ".bz2"))
+  else if (g_str_has_suffix (uri, ".bz2"))
     search_len = uri_len - 4;
-  else if (g_strrstr (uri, ".xz"))
+  else if (g_str_has_suffix (uri, ".xz"))
     search_len = uri_len - 3;
   else
     search_len = uri_len;
