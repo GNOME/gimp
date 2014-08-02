@@ -49,7 +49,7 @@ enum
 };
 
 
-/*  #define DUMP_DB 1  */
+#define DUMP_DB FALSE
 
 
 static void         gimp_module_db_finalize            (GObject      *object);
@@ -60,15 +60,13 @@ static void         gimp_module_db_module_initialize   (const GimpDatafileData *
 static GimpModule * gimp_module_db_module_find_by_path (GimpModuleDB *db,
                                                         const char   *fullpath);
 
-#ifdef DUMP_DB
-static void         gimp_module_db_dump_module         (gpointer      data,
+static void         gimp_module_db_module_dump_func    (gpointer      data,
                                                         gpointer      user_data);
-#endif
-
 static void         gimp_module_db_module_on_disk_func (gpointer      data,
                                                         gpointer      user_data);
 static void         gimp_module_db_module_remove_func  (gpointer      data,
                                                         gpointer      user_data);
+
 static void         gimp_module_db_module_modified     (GimpModule   *module,
                                                         GimpModuleDB *db);
 
@@ -278,9 +276,8 @@ gimp_module_db_load (GimpModuleDB *db,
                                      gimp_module_db_module_initialize,
                                      db);
 
-#ifdef DUMP_DB
-  g_list_foreach (db->modules, gimp_module_db_dump_module, NULL);
-#endif
+  if (DUMP_DB)
+    g_list_foreach (db->modules, gimp_module_db_module_dump_func, NULL);
 }
 
 /**
@@ -369,10 +366,9 @@ gimp_module_db_module_find_by_path (GimpModuleDB *db,
   return NULL;
 }
 
-#ifdef DUMP_DB
 static void
-gimp_module_db_dump_module (gpointer data,
-                            gpointer user_data)
+gimp_module_db_module_dump_func (gpointer data,
+                                 gpointer user_data)
 {
   GimpModule *module = data;
 
@@ -386,7 +382,7 @@ gimp_module_db_dump_module (gpointer data,
            module->query_module,
            module->register_module);
 
-  if (i->info)
+  if (module->info)
     {
       g_print ("  purpose:   %s\n"
                "  author:    %s\n"
@@ -400,7 +396,6 @@ gimp_module_db_dump_module (gpointer data,
                module->info->date      ? module->info->date      : "NONE");
     }
 }
-#endif
 
 static void
 gimp_module_db_module_on_disk_func (gpointer data,
