@@ -21,8 +21,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2014-02-26 18:28+0000\n"
-"PO-Revision-Date: 2014-05-15 07:08+0100\n"
-"Last-Translator: Sven Claussner <sclaussner@src.gnome.org>\n"
+"PO-Revision-Date: 2014-08-02 10:10+0100\n"
+"Last-Translator: Sven Claussner <<sclaussner@src.gnome.org>>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -7531,7 +7531,7 @@ msgstr "Module"
 #. update tag cache
 #: ../app/core/gimp.c:997
 msgid "Updating tag cache"
-msgstr "Tagdatenbank wird aufgefrischt"
+msgstr "Stichwortdatenbank wird aufgefrischt"
 
 #: ../app/core/gimpbrush-load.c:180
 #, c-format
@@ -15715,7 +15715,7 @@ msgstr "Filter"
 
 #: ../app/widgets/gimptagentry.c:46
 msgid "enter tags"
-msgstr "Tags eingeben"
+msgstr "Stichworte eingeben"
 
 #. Seperator for tags
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
