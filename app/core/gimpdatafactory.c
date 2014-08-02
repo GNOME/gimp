@@ -833,12 +833,9 @@ gimp_data_factory_load_data (GimpDataFactory *factory,
 {
   const GimpDataFactoryLoaderEntry *loader    = NULL;
   GList                            *data_list = NULL;
-  gchar                            *uri;
   GInputStream                     *input;
   gint                              i;
   GError                           *error = NULL;
-
-  uri = g_file_get_uri (file);
 
   for (i = 0; i < factory->priv->n_loader_entries; i++)
     {
@@ -849,13 +846,12 @@ gimp_data_factory_load_data (GimpDataFactory *factory,
        * which must be last in the loader array
        */
       if (! loader->extension ||
-          gimp_datafiles_check_extension (uri, loader->extension))
+          gimp_file_has_extension (file, loader->extension))
         {
           goto insert;
         }
     }
 
-  g_free (uri);
   return;
 
  insert:
@@ -872,7 +868,6 @@ gimp_data_factory_load_data (GimpDataFactory *factory,
           for (list = cached_data; list; list = g_list_next (list))
             gimp_container_add (factory->priv->container, list->data);
 
-          g_free (uri);
           return;
         }
     }
@@ -908,11 +903,16 @@ gimp_data_factory_load_data (GimpDataFactory *factory,
   if (G_LIKELY (data_list))
     {
       GList    *list;
+      gchar    *uri;
       gboolean  obsolete;
       gboolean  writable  = FALSE;
       gboolean  deletable = FALSE;
 
+      uri = g_file_get_uri (file);
+
       obsolete = (strstr (uri, GIMP_OBSOLETE_DATA_DIR_NAME) != 0);
+
+      g_free (uri);
 
       /* obsolete files are immutable, don't check their writability */
       if (! obsolete)
@@ -947,8 +947,6 @@ gimp_data_factory_load_data (GimpDataFactory *factory,
 
       g_list_free (data_list);
     }
-
-  g_free (uri);
 
   /*  not else { ... } because loader->load_func() can return a list
    *  of data objects *and* an error message if loading failed after
