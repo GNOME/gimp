@@ -86,13 +86,13 @@ static GFile * gimp_data_factory_get_save_dir   (GimpDataFactory  *factory,
 static void    gimp_data_factory_load_directory (GimpDataFactory  *factory,
                                                  GimpContext      *context,
                                                  GHashTable       *cache,
-                                                 GList            *writable_path,
+                                                 gboolean          dir_writable,
                                                  GFile            *directory,
                                                  GFile            *top_directory);
 static void    gimp_data_factory_load_data      (GimpDataFactory  *factory,
                                                  GimpContext      *context,
                                                  GHashTable       *cache,
-                                                 GList            *writable_path,
+                                                 gboolean          dir_writable,
                                                  GFile            *file,
                                                  guint64           mtime,
                                                  GFile            *top_directory);
@@ -337,8 +337,14 @@ gimp_data_factory_data_load (GimpDataFactory *factory,
 
   for (list = path; list; list = g_list_next (list))
     {
+      gboolean dir_writable = FALSE;
+
+      if (g_list_find_custom (writable_path, list->data,
+                              (GCompareFunc) gimp_file_compare))
+        dir_writable = TRUE;
+
       gimp_data_factory_load_directory (factory, context, cache,
-                                        writable_path,
+                                        dir_writable,
                                         list->data,
                                         list->data);
     }
@@ -752,33 +758,11 @@ gimp_data_factory_get_save_dir (GimpDataFactory  *factory,
   return writable_dir;
 }
 
-static gboolean
-gimp_data_factory_is_dir_writable (const gchar *uri,
-                                   GList       *writable_path)
-{
-  GList *list;
-
-  for (list = writable_path; list; list = g_list_next (list))
-    {
-      gchar *path_uri = g_file_get_uri (list->data);
-
-      if (g_str_has_prefix (uri, path_uri))
-        {
-          g_free (path_uri);
-          return TRUE;
-        }
-
-      g_free (path_uri);
-    }
-
-  return FALSE;
-}
-
 static void
 gimp_data_factory_load_directory (GimpDataFactory *factory,
                                   GimpContext     *context,
                                   GHashTable      *cache,
-                                  GList           *writable_path,
+                                  gboolean         dir_writable,
                                   GFile           *directory,
                                   GFile           *top_directory)
 {
@@ -813,7 +797,7 @@ gimp_data_factory_load_directory (GimpDataFactory *factory,
           if (file_type == G_FILE_TYPE_DIRECTORY)
             {
               gimp_data_factory_load_directory (factory, context, cache,
-                                                writable_path,
+                                                dir_writable,
                                                 child,
                                                 top_directory);
             }
@@ -825,7 +809,7 @@ gimp_data_factory_load_directory (GimpDataFactory *factory,
                                                         G_FILE_ATTRIBUTE_TIME_MODIFIED);
 
               gimp_data_factory_load_data (factory, context, cache,
-                                           writable_path,
+                                           dir_writable,
                                            child, mtime,
                                            top_directory);
             }
@@ -842,7 +826,7 @@ static void
 gimp_data_factory_load_data (GimpDataFactory *factory,
                              GimpContext     *context,
                              GHashTable      *cache,
-                             GList           *writable_path,
+                             gboolean         dir_writable,
                              GFile           *file,
                              guint64          mtime,
                              GFile           *top_directory)
@@ -933,11 +917,8 @@ gimp_data_factory_load_data (GimpDataFactory *factory,
       /* obsolete files are immutable, don't check their writability */
       if (! obsolete)
         {
-          deletable = (g_list_length (data_list) == 1 &&
-                       gimp_data_factory_is_dir_writable (uri,
-                                                          writable_path));
-
-          writable = (deletable && loader->writable);
+          deletable = (g_list_length (data_list) == 1 && dir_writable);
+          writable  = (deletable && loader->writable);
         }
 
       for (list = data_list; list; list = g_list_next (list))
