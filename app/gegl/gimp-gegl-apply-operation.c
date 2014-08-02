@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include <cairo.h>
+#include <gio/gio.h>
 #include <gegl.h>
 
 #include "gimp-gegl-types.h"

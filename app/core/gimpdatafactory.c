@@ -33,6 +33,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
 #include "gimpcontext.h"
 #include "gimpdata.h"
 #include "gimpdatafactory.h"
@@ -669,27 +670,6 @@ gimp_data_factory_has_data_new_func (GimpDataFactory *factory)
 
 
 /*  private functions  */
-
-static gint
-gimp_file_compare (GFile *file1,
-                   GFile *file2)
-{
-  if (g_file_equal (file1, file2))
-    {
-      return 0;
-    }
-  else
-    {
-      gchar *uri1   = g_file_get_uri (file1);
-      gchar *uri2   = g_file_get_uri (file2);
-      gint   result = strcmp (uri1, uri2);
-
-      g_free (uri1);
-      g_free (uri2);
-
-      return result;
-    }
-}
 
 static GFile *
 gimp_data_factory_get_save_dir (GimpDataFactory  *factory,

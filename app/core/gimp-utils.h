@@ -100,6 +100,9 @@ void         gimp_constrain_line                   (gdouble          start_x,
                                                     gdouble         *end_y,
                                                     gint             n_snap_lines);
 
+gint         gimp_file_compare                     (GFile           *file1,
+                                                    GFile           *file2);
+
 void         gimp_create_image_from_buffer         (Gimp            *gimp,
                                                     GeglBuffer      *buffer);
 

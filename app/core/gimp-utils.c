@@ -926,6 +926,27 @@ gimp_constrain_line (gdouble  start_x,
     }
 }
 
+gint
+gimp_file_compare (GFile *file1,
+                   GFile *file2)
+{
+  if (g_file_equal (file1, file2))
+    {
+      return 0;
+    }
+  else
+    {
+      gchar *uri1   = g_file_get_uri (file1);
+      gchar *uri2   = g_file_get_uri (file2);
+      gint   result = strcmp (uri1, uri2);
+
+      g_free (uri1);
+      g_free (uri2);
+
+      return result;
+    }
+}
+
 
 /*  debug stuff  */
 
