@@ -46,7 +46,7 @@ static void    script_fu_run            (const gchar      *name,
                                          const GimpParam  *params,
                                          gint             *nreturn_vals,
                                          GimpParam       **return_vals);
-static gchar * script_fu_search_path    (void);
+static GList * script_fu_search_path    (void);
 static void    script_fu_extension_init (void);
 static void    script_fu_refresh_proc   (const gchar      *name,
                                          gint              nparams,
@@ -178,7 +178,7 @@ script_fu_run (const gchar      *name,
                gint             *nreturn_vals,
                GimpParam       **return_vals)
 {
-  gchar *path;
+  GList *path;
 
   INIT_I18N();
 
@@ -207,7 +207,7 @@ script_fu_run (const gchar      *name,
   /*  Load all of the available scripts  */
   script_fu_find_scripts (path);
 
-  g_free (path);
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   if (strcmp (name, "extension-script-fu") == 0)
     {
@@ -269,11 +269,11 @@ script_fu_run (const gchar      *name,
     }
 }
 
-static gchar *
+static GList *
 script_fu_search_path (void)
 {
-  gchar  *path_str;
-  gchar  *path  = NULL;
+  gchar *path_str;
+  GList *path  = NULL;
 
   path_str = gimp_gimprc_query ("script-fu-path");
 
@@ -281,15 +281,14 @@ script_fu_search_path (void)
     {
       GError *error = NULL;
 
-      path = g_filename_from_utf8 (path_str, -1, NULL, NULL, &error);
-
+      path = gimp_config_path_expand_to_files (path_str, &error);
       g_free (path_str);
 
       if (! path)
         {
           g_warning ("Can't convert script-fu-path to filesystem encoding: %s",
                      error->message);
-          g_error_free (error);
+          g_clear_error (&error);
         }
     }
 
@@ -369,11 +368,11 @@ script_fu_refresh_proc (const gchar      *name,
   else
     {
       /*  Reload all of the available scripts  */
-      gchar *path = script_fu_search_path ();
+      GList *path = script_fu_search_path ();
 
       script_fu_find_scripts (path);
 
-      g_free (path);
+      g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
       status = GIMP_PDB_SUCCESS;
     }

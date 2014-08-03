@@ -54,28 +54,28 @@ typedef struct
  *  Local Functions
  */
 
-static gboolean  script_fu_run_command    (const gchar             *command,
-                                           GError                 **error);
-static void      script_fu_load_script    (const GimpDatafileData  *file_data,
-                                           gpointer                 user_data);
-static gboolean  script_fu_install_script (gpointer                 foo,
-                                           GList                   *scripts,
-                                           gpointer                 bar);
-static void      script_fu_install_menu   (SFMenu                  *menu);
-static gboolean  script_fu_remove_script  (gpointer                 foo,
-                                           GList                   *scripts,
-                                           gpointer                 bar);
-static void      script_fu_script_proc    (const gchar             *name,
-                                           gint                     nparams,
-                                           const GimpParam         *params,
-                                           gint                    *nreturn_vals,
-                                           GimpParam              **return_vals);
+static gboolean  script_fu_run_command    (const gchar      *command,
+                                           GError          **error);
+static void      script_fu_load_directory (GFile            *directory);
+static void      script_fu_load_script    (GFile            *file);
+static gboolean  script_fu_install_script (gpointer          foo,
+                                           GList            *scripts,
+                                           gpointer          bar);
+static void      script_fu_install_menu   (SFMenu           *menu);
+static gboolean  script_fu_remove_script  (gpointer          foo,
+                                           GList            *scripts,
+                                           gpointer          bar);
+static void      script_fu_script_proc    (const gchar      *name,
+                                           gint              nparams,
+                                           const GimpParam  *params,
+                                           gint             *nreturn_vals,
+                                           GimpParam       **return_vals);
 
-static SFScript *script_fu_find_script    (const gchar             *name);
+static SFScript *script_fu_find_script    (const gchar      *name);
 
-static gchar *   script_fu_menu_map       (const gchar             *menu_path);
-static gint      script_fu_menu_compare   (gconstpointer            a,
-                                           gconstpointer            b);
+static gchar *   script_fu_menu_map       (const gchar      *menu_path);
+static gint      script_fu_menu_compare   (gconstpointer     a,
+                                           gconstpointer     b);
 
 
 /*
@@ -91,8 +91,10 @@ static GList *script_menu_list = NULL;
  */
 
 void
-script_fu_find_scripts (const gchar *path)
+script_fu_find_scripts (GList *path)
 {
+  GList *list;
+
   /*  Make sure to clear any existing scripts  */
   if (script_tree != NULL)
     {
@@ -107,9 +109,10 @@ script_fu_find_scripts (const gchar *path)
 
   script_tree = g_tree_new ((GCompareFunc) g_utf8_collate);
 
-  gimp_datafiles_read_directories (path, G_FILE_TEST_IS_REGULAR,
-                                   script_fu_load_script,
-                                   NULL);
+  for (list = path; list; list = g_list_next (list))
+    {
+      script_fu_load_directory (list->data);
+    }
 
   /*  Now that all scripts are read in and sorted, tell gimp about them  */
   g_tree_foreach (script_tree,
@@ -587,12 +590,49 @@ script_fu_run_command (const gchar  *command,
 }
 
 static void
-script_fu_load_script (const GimpDatafileData *file_data,
-                       gpointer                user_data)
+script_fu_load_directory (GFile *directory)
 {
-  if (gimp_datafiles_check_extension (file_data->filename, ".scm"))
+  GFileEnumerator *enumerator;
+
+  enumerator = g_file_enumerate_children (directory,
+                                          G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                          G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                          G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                          G_FILE_QUERY_INFO_NONE,
+                                          NULL, NULL);
+
+  if (enumerator)
     {
-      gchar  *escaped = script_fu_strescape (file_data->filename);
+      GFileInfo *info;
+
+      while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
+        {
+          GFileType file_type = g_file_info_get_file_type (info);
+
+         if (file_type == G_FILE_TYPE_REGULAR &&
+             ! g_file_info_get_is_hidden (info))
+            {
+              GFile *child = g_file_enumerator_get_child (enumerator, info);
+
+              script_fu_load_script (child);
+
+              g_object_unref (child);
+            }
+
+          g_object_unref (info);
+        }
+
+      g_object_unref (enumerator);
+    }
+}
+
+static void
+script_fu_load_script (GFile *file)
+{
+  if (gimp_file_has_extension (file, ".scm"))
+    {
+      gchar  *path    = g_file_get_path (file);
+      gchar  *escaped = script_fu_strescape (path);
       gchar  *command;
       GError *error   = NULL;
 
@@ -601,15 +641,13 @@ script_fu_load_script (const GimpDatafileData *file_data,
 
       if (! script_fu_run_command (command, &error))
         {
-          gchar *display_name = g_filename_display_name (file_data->filename);
-          gchar *message      = g_strdup_printf (_("Error while loading %s:"),
-                                                 display_name);
+          gchar *message = g_strdup_printf (_("Error while loading %s:"),
+                                            gimp_file_get_utf8_name (file));
 
           g_message ("%s\n\n%s", message, error->message);
 
           g_clear_error (&error);
           g_free (message);
-          g_free (display_name);
         }
 
 #ifdef G_OS_WIN32
@@ -620,6 +658,7 @@ script_fu_load_script (const GimpDatafileData *file_data,
 #endif
 
       g_free (command);
+      g_free (path);
     }
 }
 
