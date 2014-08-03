@@ -687,6 +687,7 @@
       </menu>
       <menu action="plug-in-generic-menu" name="Generic">
         <menuitem action="filters-convolution-matrix" />
+        <menuitem action="filters-distance-map" />
       </menu>
       <menu action="plug-in-combine-menu" name="Combine" />
       <menu action="plug-in-artistic-menu" name="Artistic">
