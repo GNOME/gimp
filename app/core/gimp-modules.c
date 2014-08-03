@@ -64,7 +64,6 @@ void
 gimp_modules_load (Gimp *gimp)
 {
   GFile    *file;
-  gchar    *path;
   GScanner *scanner;
   gchar    *module_load_inhibit = NULL;
 
@@ -153,9 +152,7 @@ gimp_modules_load (Gimp *gimp)
       g_free (module_load_inhibit);
     }
 
-  path = gimp_config_path_expand (gimp->config->module_path, TRUE, NULL);
-  gimp_module_db_load (gimp->module_db, path);
-  g_free (path);
+  gimp_module_db_load (gimp->module_db, gimp->config->module_path);
 }
 
 static void
@@ -229,10 +226,6 @@ gimp_modules_refresh (Gimp *gimp)
 
   if (! gimp->no_interface)
     {
-      gchar *path;
-
-      path = gimp_config_path_expand (gimp->config->module_path, TRUE, NULL);
-      gimp_module_db_refresh (gimp->module_db, path);
-      g_free (path);
+      gimp_module_db_refresh (gimp->module_db, gimp->config->module_path);
     }
 }

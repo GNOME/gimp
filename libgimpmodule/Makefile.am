@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -75,6 +76,7 @@ EXTRA_libgimpmodule_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpmodule_def)
 
 libgimpmodule_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpbase)			\
+	$(libgimpconfig)		\
 	$(GMODULE_NO_EXPORT_LIBS) 	\
 	$(GLIB_LIBS)
 
