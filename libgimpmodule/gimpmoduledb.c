@@ -262,9 +262,9 @@ gimp_module_db_get_load_inhibit (GimpModuleDB *db)
  * @module_path: A #G_SEARCHPATH_SEPARATOR delimited list of directories
  *               to load modules from.
  *
- * Scans the directories contained in @module_path using
- * gimp_datafiles_read_directories() and creates a #GimpModule
- * instance for every loadable module contained in the directories.
+ * Scans the directories contained in @module_path and creates a
+ * #GimpModule instance for every loadable module contained in the
+ * directories.
  **/
 void
 gimp_module_db_load (GimpModuleDB *db,
