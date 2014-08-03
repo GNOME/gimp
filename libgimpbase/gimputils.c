@@ -271,6 +271,48 @@ gimp_file_get_utf8_name (GFile *file)
 }
 
 /**
+ * gimp_file_has_extension:
+ * @file:      a #GFile
+ * @extension: an ASCII extension
+ *
+ * This function checks if @file's URI ends with @extension. It behaves
+ * like g_str_has_suffix() on g_file_get_uri(), except that the string
+ * comparison is done case-insensitively using g_ascii_strcasecmp().
+ *
+ * Since: GIMP 2.10
+ *
+ * Return value: %TRUE if @file's URI ends with @extension,
+ *               %FALSE otherwise.
+ **/
+gboolean
+gimp_file_has_extension (GFile       *file,
+                         const gchar *extension)
+{
+  gchar    *uri;
+  gint      uri_len;
+  gint      ext_len;
+  gboolean  result = FALSE;
+
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
+  g_return_val_if_fail (extension != NULL, FALSE);
+
+  uri = g_file_get_uri (file);
+
+  uri_len = strlen (uri);
+  ext_len = strlen (extension);
+
+  if (uri_len && ext_len && (uri_len > ext_len))
+    {
+      if (g_ascii_strcasecmp (uri + uri_len - ext_len, extension) == 0)
+        result = TRUE;
+    }
+
+  g_free (uri);
+
+  return result;
+}
+
+/**
  * gimp_strip_uline:
  * @str: underline infested string (or %NULL)
  *

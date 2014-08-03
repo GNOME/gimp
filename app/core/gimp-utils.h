@@ -102,8 +102,6 @@ void         gimp_constrain_line                   (gdouble          start_x,
 
 gint         gimp_file_compare                     (GFile           *file1,
                                                     GFile           *file2);
-gboolean     gimp_file_has_extension               (GFile           *file,
-                                                    const gchar     *extension);
 
 void         gimp_create_image_from_buffer         (Gimp            *gimp,
                                                     GeglBuffer      *buffer);

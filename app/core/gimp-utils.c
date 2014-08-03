@@ -947,34 +947,6 @@ gimp_file_compare (GFile *file1,
     }
 }
 
-gboolean
-gimp_file_has_extension (GFile       *file,
-                         const gchar *extension)
-{
-  gchar    *uri;
-  gint      uri_len;
-  gint      ext_len;
-  gboolean  result = FALSE;
-
-  g_return_val_if_fail (G_IS_FILE (file), FALSE);
-  g_return_val_if_fail (extension != NULL, FALSE);
-
-  uri = g_file_get_uri (file);
-
-  uri_len = strlen (uri);
-  ext_len = strlen (extension);
-
-  if (uri_len && ext_len && (uri_len > ext_len))
-    {
-      if (g_ascii_strcasecmp (uri + uri_len - ext_len, extension) == 0)
-        result = TRUE;
-    }
-
-  g_free (uri);
-
-  return result;
-}
-
 
 /*  debug stuff  */
 

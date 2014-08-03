@@ -373,13 +373,10 @@ gimp_module_db_load_module (GimpModuleDB *db,
   gchar      *path;
   gboolean    load_inhibit;
 
-  path = g_file_get_path (file);
+  if (! gimp_file_has_extension (file, "." G_MODULE_SUFFIX))
+    return;
 
-  if (! gimp_datafiles_check_extension (path, "." G_MODULE_SUFFIX))
-    {
-      g_free (path);
-      return;
-    }
+  path = g_file_get_path (file);
 
   /* don't load if we already know about it */
   if (gimp_module_db_module_find_by_path (db, path))
