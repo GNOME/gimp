@@ -947,6 +947,80 @@ gimp_file_compare (GFile *file1,
     }
 }
 
+static inline gboolean
+is_script (const gchar *filename)
+{
+#ifdef G_OS_WIN32
+  /* On Windows there is no concept like the Unix executable flag.
+   * There is a weak emulation provided by the MS C Runtime using file
+   * extensions (com, exe, cmd, bat). This needs to be extended to
+   * treat scripts (Python, Perl, ...) as executables, too. We use the
+   * PATHEXT variable, which is also used by cmd.exe.
+   */
+  static gchar **exts = NULL;
+
+  const gchar   *ext = strrchr (filename, '.');
+  gchar         *pathext;
+  gint           i;
+
+  if (exts == NULL)
+    {
+      pathext = g_getenv ("PATHEXT");
+      if (pathext != NULL)
+        {
+          exts = g_strsplit (pathext, G_SEARCHPATH_SEPARATOR_S, 100);
+        }
+      else
+        {
+          exts = g_new (gchar *, 1);
+          exts[0] = NULL;
+        }
+    }
+
+  for (i = 0; exts[i]; i++)
+    {
+      if (g_ascii_strcasecmp (ext, exts[i]) == 0)
+        return TRUE;
+    }
+#endif /* G_OS_WIN32 */
+
+  return FALSE;
+}
+
+gboolean
+gimp_file_is_executable (GFile *file)
+{
+  GFileInfo *info;
+  gboolean   executable = FALSE;
+
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
+
+  info = g_file_query_info (file,
+                            G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                            G_FILE_ATTRIBUTE_STANDARD_TYPE ","
+                            G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE ",",
+                            G_FILE_QUERY_INFO_NONE,
+                            NULL, NULL);
+
+  if (info)
+    {
+      GFileType    file_type = g_file_info_get_file_type (info);
+      const gchar *filename  = g_file_info_get_name (info);
+
+      if (g_file_info_get_attribute_boolean (info,
+                                             G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE) ||
+          ((file_type == G_FILE_TYPE_REGULAR) &&
+           is_script (filename)))
+        {
+          executable = TRUE;
+        }
+
+      g_object_unref (info);
+    }
+
+  return executable;
+}
+
 
 /*  debug stuff  */
 
