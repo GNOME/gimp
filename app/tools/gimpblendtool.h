@@ -26,7 +26,8 @@ typedef enum
   /* POINT_NONE evaluates to FALSE */
   POINT_NONE = 0,
   POINT_START,
-  POINT_END
+  POINT_END,
+  POINT_FILL_MODE
 } GimpBlendToolPoint;
 
 #define GIMP_TYPE_BLEND_TOOL            (gimp_blend_tool_get_type ())

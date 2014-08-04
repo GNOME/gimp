@@ -132,6 +132,7 @@ static void   gimp_blend_tool_set_gradient        (GimpBlendTool         *blend_
 static void   gimp_blend_tool_options_notify      (GimpTool              *tool,
                                                    GimpToolOptions       *options,
                                                    const GParamSpec      *pspec);
+static gboolean gimp_blend_tool_is_shapeburst     (GimpBlendTool         *blend_tool);
 
 static void   gimp_blend_tool_create_image_map    (GimpBlendTool         *blend_tool,
                                                    GimpDrawable          *drawable);
@@ -322,10 +323,17 @@ gimp_blend_tool_button_press (GimpTool            *tool,
 
   if (blend_tool->grabbed_point == POINT_NONE)
     {
-      blend_tool->grabbed_point = POINT_END;
+      if (gimp_blend_tool_is_shapeburst (blend_tool))
+        {
+          blend_tool->grabbed_point = POINT_FILL_MODE;
+        }
+      else
+        {
+          blend_tool->grabbed_point = POINT_END;
 
-      blend_tool->start_x = coords->x;
-      blend_tool->start_y = coords->y;
+          blend_tool->start_x = coords->x;
+          blend_tool->start_y = coords->y;
+        }
     }
 
   gimp_blend_tool_point_motion (blend_tool,
@@ -342,8 +350,11 @@ gimp_blend_tool_button_press (GimpTool            *tool,
   tool->display = display;
   gimp_blend_tool_update_items (blend_tool);
 
-  gimp_blend_tool_update_preview_coords (blend_tool);
-  gimp_image_map_apply (blend_tool->image_map, NULL);
+  if (blend_tool->grabbed_point != POINT_FILL_MODE)
+    {
+      gimp_blend_tool_update_preview_coords (blend_tool);
+      gimp_image_map_apply (blend_tool->image_map, NULL);
+    }
 
   gimp_tool_control_activate (tool->control);
 
@@ -363,12 +374,19 @@ gimp_blend_tool_button_release (GimpTool              *tool,
   gimp_tool_pop_status (tool, display);
   /* XXX: Push a useful status message */
 
-  blend_tool->grabbed_point = POINT_NONE;
-
   gimp_tool_control_halt (tool->control);
 
   /* XXX: handle cancel properly */
   /* if (release_type == GIMP_BUTTON_RELEASE_CANCEL) */
+
+  if (blend_tool->grabbed_point == POINT_FILL_MODE)
+    {
+      /* XXX: Temporary, until the handles are working properly for shapebursts */
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+    }
+
+  blend_tool->grabbed_point = POINT_NONE;
 }
 
 static void
@@ -525,6 +543,10 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
     {
       modifier = GIMP_CURSOR_MODIFIER_BAD;
     }
+  else if (gimp_blend_tool_is_shapeburst (blend_tool))
+    {
+      modifier = GIMP_CURSOR_MODIFIER_PLUS;
+    }
   else if (gimp_blend_tool_get_point_under_cursor (blend_tool))
     {
       modifier = GIMP_CURSOR_MODIFIER_MOVE;
@@ -540,58 +562,62 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpBlendTool   *blend_tool = GIMP_BLEND_TOOL (draw_tool);
 
-  blend_tool->line =
-    gimp_draw_tool_add_line (draw_tool,
-                             blend_tool->start_x,
-                             blend_tool->start_y,
-                             blend_tool->end_x,
-                             blend_tool->end_y);
+  if (blend_tool->grabbed_point != POINT_FILL_MODE)
+    {
+      blend_tool->line =
+        gimp_draw_tool_add_line (draw_tool,
+                                 blend_tool->start_x,
+                                 blend_tool->start_y,
+                                 blend_tool->end_x,
+                                 blend_tool->end_y);
 
-  gimp_canvas_item_set_visible (blend_tool->line, SHOW_LINE);
+      gimp_canvas_item_set_visible (blend_tool->line, SHOW_LINE);
 
-  blend_tool->start_handle_circle =
-    gimp_draw_tool_add_handle (draw_tool,
-                               GIMP_HANDLE_CIRCLE,
-                               blend_tool->start_x,
-                               blend_tool->start_y,
-                               HANDLE_DIAMETER,
-                               HANDLE_DIAMETER,
-                               GIMP_HANDLE_ANCHOR_CENTER);
+      blend_tool->start_handle_circle =
+        gimp_draw_tool_add_handle (draw_tool,
+                                   GIMP_HANDLE_CIRCLE,
+                                   blend_tool->start_x,
+                                   blend_tool->start_y,
+                                   HANDLE_DIAMETER,
+                                   HANDLE_DIAMETER,
+                                   GIMP_HANDLE_ANCHOR_CENTER);
 
-  blend_tool->start_handle_cross =
-    gimp_draw_tool_add_handle (draw_tool,
-                               GIMP_HANDLE_CROSS,
-                               blend_tool->start_x,
-                               blend_tool->start_y,
-                               HANDLE_CROSS_DIAMETER,
-                               HANDLE_CROSS_DIAMETER,
-                               GIMP_HANDLE_ANCHOR_CENTER);
+      blend_tool->start_handle_cross =
+        gimp_draw_tool_add_handle (draw_tool,
+                                   GIMP_HANDLE_CROSS,
+                                   blend_tool->start_x,
+                                   blend_tool->start_y,
+                                   HANDLE_CROSS_DIAMETER,
+                                   HANDLE_CROSS_DIAMETER,
+                                   GIMP_HANDLE_ANCHOR_CENTER);
 
-  blend_tool->end_handle_circle =
-    gimp_draw_tool_add_handle (draw_tool,
-                               GIMP_HANDLE_CIRCLE,
-                               blend_tool->end_x,
-                               blend_tool->end_y,
-                               HANDLE_DIAMETER,
-                               HANDLE_DIAMETER,
-                               GIMP_HANDLE_ANCHOR_CENTER);
+      blend_tool->end_handle_circle =
+        gimp_draw_tool_add_handle (draw_tool,
+                                   GIMP_HANDLE_CIRCLE,
+                                   blend_tool->end_x,
+                                   blend_tool->end_y,
+                                   HANDLE_DIAMETER,
+                                   HANDLE_DIAMETER,
+                                   GIMP_HANDLE_ANCHOR_CENTER);
 
-  blend_tool->end_handle_cross =
-    gimp_draw_tool_add_handle (draw_tool,
-                               GIMP_HANDLE_CROSS,
-                               blend_tool->end_x,
-                               blend_tool->end_y,
-                               HANDLE_CROSS_DIAMETER,
-                               HANDLE_CROSS_DIAMETER,
-                               GIMP_HANDLE_ANCHOR_CENTER);
+      blend_tool->end_handle_cross =
+        gimp_draw_tool_add_handle (draw_tool,
+                                   GIMP_HANDLE_CROSS,
+                                   blend_tool->end_x,
+                                   blend_tool->end_y,
+                                   HANDLE_CROSS_DIAMETER,
+                                   HANDLE_CROSS_DIAMETER,
+                                   GIMP_HANDLE_ANCHOR_CENTER);
 
-  gimp_blend_tool_update_item_hilight (blend_tool);
+      gimp_blend_tool_update_item_hilight (blend_tool);
+    }
 }
 
 static void
 gimp_blend_tool_update_items (GimpBlendTool *blend_tool)
 {
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)) &&
+      blend_tool->grabbed_point != POINT_FILL_MODE)
     {
       gimp_canvas_line_set (blend_tool->line,
                             blend_tool->start_x,
@@ -727,13 +753,16 @@ gimp_blend_tool_start (GimpBlendTool         *blend_tool,
   tool->display  = display;
   tool->drawable = drawable;
 
-  gimp_blend_tool_create_image_map (blend_tool, drawable);
+  if (blend_tool->grabbed_point != POINT_FILL_MODE)
+    {
+      gimp_blend_tool_create_image_map (blend_tool, drawable);
 
-  /* Initially sync all of the properties */
-  gimp_gegl_config_proxy_sync (GIMP_OBJECT (options), blend_tool->render_node);
+      /* Initially sync all of the properties */
+      gimp_gegl_config_proxy_sync (GIMP_OBJECT (options), blend_tool->render_node);
 
-  /* Connect signal handlers for the gradient */
-  gimp_blend_tool_set_gradient (blend_tool, context->gradient);
+      /* Connect signal handlers for the gradient */
+      gimp_blend_tool_set_gradient (blend_tool, context->gradient);
+    }
 
   if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
     gimp_draw_tool_start (GIMP_DRAW_TOOL (blend_tool), display);
@@ -776,44 +805,39 @@ gimp_blend_tool_commit (GimpBlendTool *blend_tool)
   GimpPaintOptions *paint_options = GIMP_PAINT_OPTIONS (options);
   GimpContext      *context       = GIMP_CONTEXT (options);
   GimpImage        *image         = gimp_display_get_image (tool->display);
+  GimpDrawable     *drawable      = gimp_image_get_active_drawable (image);
+  GimpProgress     *progress;
+  gint              off_x;
+  gint              off_y;
 
-  if ((blend_tool->start_x != blend_tool->end_x) ||
-      (blend_tool->start_y != blend_tool->end_y))
-    {
-      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-      GimpProgress *progress;
-      gint          off_x;
-      gint          off_y;
+  progress = gimp_progress_start (GIMP_PROGRESS (tool), FALSE,
+                                  _("Blending"));
 
-      progress = gimp_progress_start (GIMP_PROGRESS (tool), FALSE,
-                                      _("Blending"));
+  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+  gimp_drawable_blend (drawable,
+                       context,
+                       gimp_context_get_gradient (context),
+                       gimp_context_get_paint_mode (context),
+                       options->gradient_type,
+                       gimp_context_get_opacity (context),
+                       options->offset,
+                       paint_options->gradient_options->gradient_repeat,
+                       paint_options->gradient_options->gradient_reverse,
+                       options->supersample,
+                       options->supersample_depth,
+                       options->supersample_threshold,
+                       options->dither,
+                       blend_tool->start_x - off_x,
+                       blend_tool->start_y - off_y,
+                       blend_tool->end_x - off_x,
+                       blend_tool->end_y - off_y,
+                       progress);
 
-      gimp_drawable_blend (drawable,
-                           context,
-                           gimp_context_get_gradient (context),
-                           gimp_context_get_paint_mode (context),
-                           options->gradient_type,
-                           gimp_context_get_opacity (context),
-                           options->offset,
-                           paint_options->gradient_options->gradient_repeat,
-                           paint_options->gradient_options->gradient_reverse,
-                           options->supersample,
-                           options->supersample_depth,
-                           options->supersample_threshold,
-                           options->dither,
-                           blend_tool->start_x - off_x,
-                           blend_tool->start_y - off_y,
-                           blend_tool->end_x - off_x,
-                           blend_tool->end_y - off_y,
-                           progress);
+  if (progress)
+    gimp_progress_end (progress);
 
-      if (progress)
-        gimp_progress_end (progress);
-
-      gimp_image_flush (image);
-    }
+  gimp_image_flush (image);
 }
 
 static void
@@ -987,6 +1011,15 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
 
       gimp_image_map_apply (blend_tool->image_map, NULL);
     }
+}
+
+static gboolean
+gimp_blend_tool_is_shapeburst (GimpBlendTool *blend_tool)
+{
+  GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
+
+  return options->gradient_type >= GIMP_GRADIENT_SHAPEBURST_ANGULAR &&
+         options->gradient_type <= GIMP_GRADIENT_SHAPEBURST_DIMPLED;
 }
 
 /* Image map stuff */
