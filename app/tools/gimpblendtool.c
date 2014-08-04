@@ -323,13 +323,19 @@ gimp_blend_tool_button_press (GimpTool            *tool,
 
   if (blend_tool->grabbed_point == POINT_NONE)
     {
+      if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
+        {
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+        }
+
       if (gimp_blend_tool_is_shapeburst (blend_tool))
         {
           blend_tool->grabbed_point = POINT_FILL_MODE;
         }
       else
         {
-          blend_tool->grabbed_point = POINT_END;
+          blend_tool->grabbed_point = POINT_INIT_MODE;
 
           blend_tool->start_x = coords->x;
           blend_tool->start_y = coords->y;
@@ -350,7 +356,8 @@ gimp_blend_tool_button_press (GimpTool            *tool,
   tool->display = display;
   gimp_blend_tool_update_items (blend_tool);
 
-  if (blend_tool->grabbed_point != POINT_FILL_MODE)
+  if (blend_tool->grabbed_point != POINT_FILL_MODE &&
+      blend_tool->grabbed_point != POINT_INIT_MODE)
     {
       gimp_blend_tool_update_preview_coords (blend_tool);
       gimp_image_map_apply (blend_tool->image_map, NULL);
@@ -379,6 +386,11 @@ gimp_blend_tool_button_release (GimpTool              *tool,
   /* XXX: handle cancel properly */
   /* if (release_type == GIMP_BUTTON_RELEASE_CANCEL) */
 
+  if (blend_tool->grabbed_point == POINT_INIT_MODE)
+    {
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+    }
+
   if (blend_tool->grabbed_point == POINT_FILL_MODE)
     {
       /* XXX: Temporary, until the handles are working properly for shapebursts */
@@ -405,6 +417,15 @@ gimp_blend_tool_motion (GimpTool         *tool,
   blend_tool->mouse_x = coords->x;
   blend_tool->mouse_y = coords->y;
 
+  if (blend_tool->grabbed_point == POINT_INIT_MODE)
+    {
+      GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (blend_tool);
+
+      gimp_draw_tool_pause (draw_tool);
+      blend_tool->grabbed_point = POINT_END;
+      gimp_draw_tool_resume (draw_tool);
+    }
+
   /* Move the whole line if alt is pressed */
   if (state & GDK_MOD1_MASK)
     {
@@ -426,7 +447,8 @@ gimp_blend_tool_motion (GimpTool         *tool,
   gimp_tool_pop_status (tool, display);
   gimp_blend_tool_push_status (blend_tool, state, display);
 
-  gimp_blend_tool_update_items (blend_tool);
+  if (GIMP_IS_CANVAS_LINE (blend_tool->line))
+    gimp_blend_tool_update_items (blend_tool);
 
   gimp_blend_tool_update_preview_coords (blend_tool);
   gimp_image_map_apply (blend_tool->image_map, NULL);
@@ -562,7 +584,8 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpBlendTool   *blend_tool = GIMP_BLEND_TOOL (draw_tool);
 
-  if (blend_tool->grabbed_point != POINT_FILL_MODE)
+  if (blend_tool->grabbed_point != POINT_FILL_MODE &&
+      blend_tool->grabbed_point != POINT_INIT_MODE)
     {
       blend_tool->line =
         gimp_draw_tool_add_line (draw_tool,
@@ -617,7 +640,8 @@ static void
 gimp_blend_tool_update_items (GimpBlendTool *blend_tool)
 {
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)) &&
-      blend_tool->grabbed_point != POINT_FILL_MODE)
+      blend_tool->grabbed_point != POINT_FILL_MODE &&
+      blend_tool->grabbed_point != POINT_INIT_MODE)
     {
       gimp_canvas_line_set (blend_tool->line,
                             blend_tool->start_x,

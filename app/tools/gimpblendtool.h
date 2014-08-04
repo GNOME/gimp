@@ -27,6 +27,7 @@ typedef enum
   POINT_NONE = 0,
   POINT_START,
   POINT_END,
+  POINT_INIT_MODE,
   POINT_FILL_MODE
 } GimpBlendToolPoint;
 
