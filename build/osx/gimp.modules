@@ -691,6 +691,14 @@
 		</dependencies>
 	</autotools>
 
+	<autotools id="poppler-data" autogen-sh=" || true"
+		makeinstallargs="install prefix=${prefix}">
+		<branch version="0.4.6" repo="poppler"
+			module="poppler-data-0.4.6.tar.gz"
+			hash="sha1:f030563eed9f93912b1a546e6d87936d07d7f27d">
+		</branch>
+	</autotools>
+
 	<autotools id="jasper" autogen-sh="configure" autogenargs="--enable-shared">
 		<branch module="jasper-1.900.1.zip" version="1.900.1" repo="jasper" />
 		<dependencies>
