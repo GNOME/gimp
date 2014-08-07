@@ -50,10 +50,8 @@
   />
 
   <programming-language>C</programming-language>
-  <programming-language>Perl</programming-language>
   <programming-language>Python</programming-language>
-  <programming-language>Shell</programming-language>
-  <programming-language>XSLT</programming-language>
+  <programming-language>Scheme</programming-language>
 
   <maintainer>
     <foaf:Person>
