@@ -5,10 +5,55 @@
          xmlns="http://usefulinc.com/ns/doap#">
 
   <name xml:lang="en">GIMP</name>
+
   <shortdesc xml:lang="en">GNU Image Manipulation Program</shortdesc>
+
+  <description xml:lang="en">
+      GIMP is an acronym for GNU Image Manipulation Program. It is a
+      freely distributed program for such tasks as photo retouching,
+      image composition and image authoring.
+      It has many capabilities. It can be used as a simple paint
+      program, an expert quality photo retouching program, an online
+      batch processing system, a mass production image renderer, an
+      image format converter, etc.
+      GIMP is expandable and extensible. It is designed to be
+      augmented with plug-ins and extensions to do just about
+      anything. The advanced scripting interface allows everything
+      from the simplest task to the most complex image manipulation
+      procedures to be easily scripted. GIMP is available for Linux,
+      Windows and OS X.
+  </description>
+  <description xml:lang="de">
+      GIMP ist die Abkürzung für GNU Image Manipulation Program.
+      Es ist ein frei verfügbares Programm für Aufgaben wie Fotoretusche,
+      Bildgestaltung und Bildbearbeitung.
+      GIMP hat viele Fähigkeiten. Sie können es verwenden für einfache
+      Zeichenaufgabben, professionelle Fotoretuschen, die Online-
+      Stapelverarbeitung, Bildrendering in der Massenproduktion,
+      die Umwandlung von Grafikdateien und vieles mehr.
+      GIMP ist durch Plug-ins erweiterungsfähig.
+      Mithilfe der Programmierschnittstelle von GIMP können Sie einfache
+      Aufgaben wie auch komplexe Bildverarbeitungprozeduren automatisieren.
+      GIMP steht Ihnen unter Linux, Windows und OS X zur Verfügung.
+  </description>
+
   <homepage rdf:resource="http://www.gimp.org" />
+
   <mailing-list rdf:resource="http://gimp.org/mail_lists.html" />
+
   <category rdf:resource="http://api.gnome.org/doap-extensions#productivity" />
+
+  <download-page rdf:resource="http:///www.gimp.org/downloads/" />
+
+  <bug-database
+    rdf:resource="https://bugzilla.gnome.org/browse.cgi?product=GIMP"
+  />
+
+  <programming-language>C</programming-language>
+  <programming-language>Perl</programming-language>
+  <programming-language>Python</programming-language>
+  <programming-language>Shell</programming-language>
+  <programming-language>XSLT</programming-language>
 
   <maintainer>
     <foaf:Person>
@@ -22,4 +67,7 @@
       <gnome:userid>mitch</gnome:userid>
     </foaf:Person>
   </maintainer>
+
+<!-- TODO: generate MAINTAINERS from this file -->
+
 </Project>
