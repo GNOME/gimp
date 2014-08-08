@@ -36,6 +36,22 @@
       Aufgaben wie auch komplexe Bildverarbeitungprozeduren automatisieren.
       GIMP steht Ihnen unter Linux, Windows und OS X zur Verfügung.
   </description>
+  <description xml:lang="it">
+      GIMP è un acronimo per GNU Image Manipulation Program. È un 
+      programma distribuito liberamente adatto al foto ritocco,
+      alla composizione e alla creazione di immagini.
+      È molto flessibile. Può essere usato come semplice programma 
+      di disegno, come programma per il fotoritocco professionale,
+      come sistema di elaborazione bach in linea, come generatore
+      di immagini prodotte automaticamente, come convertitore tra
+      diversi formati immagine e altro ancora.
+      GIMP è espandibile ed estensibile. È stato progettato per 
+      essere ampliato con plug-in ed estensioni per poter aggiungere
+      praticamente qualunque comando. L'interfaccia avanzata di 
+      scripting semplifica la conversione in procedura dal compito
+      più semplice fino all'elaborazione di immagini più complessa.
+      GIMP è disponibile per Linux, Windows e OS X.
+  </description>
 
   <homepage rdf:resource="http://www.gimp.org" />
 
