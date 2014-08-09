@@ -46,6 +46,7 @@ AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpModule\"	\
 	-DGIMP_MODULE_COMPILATION		\
 	-I$(top_srcdir)				\
+	$(GIO_CFLAGS)				\
 	$(GLIB_CFLAGS)				\
 	$(GMODULE_NO_EXPORT_CFLAGS)		\
 	-I$(includedir)
@@ -78,6 +79,7 @@ libgimpmodule_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpbase)			\
 	$(libgimpconfig)		\
 	$(GMODULE_NO_EXPORT_LIBS) 	\
+	$(GIO_LIBS)			\
 	$(GLIB_LIBS)
 
 install-data-local: install-ms-lib install-libtool-import-lib
