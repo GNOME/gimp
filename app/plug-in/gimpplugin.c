@@ -370,7 +370,6 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
                     gimp_file_get_utf8_name (plug_in->file),
                     error->message);
       g_clear_error (&error);
-      g_free (progname);
       goto cleanup;
     }
 
