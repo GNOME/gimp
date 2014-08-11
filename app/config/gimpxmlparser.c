@@ -122,7 +122,11 @@ gimp_xml_parser_parse_fd (GimpXmlParser  *parser,
   g_return_val_if_fail (parser != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
+#ifdef G_OS_WIN32
+  io = g_io_channel_win32_new_fd (fd);
+#else
   io = g_io_channel_unix_new (fd);
+#endif
 
   success = gimp_xml_parser_parse_io_channel (parser, io, error);
 

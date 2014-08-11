@@ -435,8 +435,13 @@ gimp_main (const GimpPlugInInfo *info,
   gimp_signal_private (SIGCHLD, SIG_DFL, SA_RESTART);
 #endif
 
+#ifdef G_OS_WIN32
+  _readchannel  = g_io_channel_win32_new_fd (atoi (argv[2]));
+  _writechannel = g_io_channel_win32_new_fd (atoi (argv[3]));
+#else
   _readchannel  = g_io_channel_unix_new (atoi (argv[2]));
   _writechannel = g_io_channel_unix_new (atoi (argv[3]));
+#endif
 
   g_io_channel_set_encoding (_readchannel, NULL, NULL);
   g_io_channel_set_encoding (_writechannel, NULL, NULL);
