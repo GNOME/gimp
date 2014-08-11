@@ -27,8 +27,8 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-07-02 12:34+0000\n"
-"PO-Revision-Date: 2014-07-07 12:40+0200\n"
+"POT-Creation-Date: 2014-08-09 17:26+0000\n"
+"PO-Revision-Date: 2014-08-11 12:28+0200\n"
 "Last-Translator: André Schutten <andre_sch@zonnet.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "Language: nl\n"
@@ -279,7 +279,7 @@ msgstr "Editor Penselen"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:112 ../app/core/gimp.c:951
-#: ../app/dialogs/dialogs.c:317 ../app/dialogs/preferences-dialog.c:2732
+#: ../app/dialogs/dialogs.c:317 ../app/dialogs/preferences-dialog.c:2746
 msgid "Brushes"
 msgstr "Penselen"
 
@@ -329,7 +329,7 @@ msgstr "Dokbaar"
 
 #. Document History
 #: ../app/actions/actions.c:145 ../app/dialogs/dialogs.c:329
-#: ../app/dialogs/preferences-dialog.c:1566
+#: ../app/dialogs/preferences-dialog.c:1577
 msgid "Document History"
 msgstr "Documentgeschiedenis"
 
@@ -360,7 +360,7 @@ msgid "File"
 msgstr "Bestand"
 
 #: ../app/actions/actions.c:166 ../app/dialogs/dialogs.c:325
-#: ../app/dialogs/preferences-dialog.c:2752
+#: ../app/dialogs/preferences-dialog.c:2766
 msgid "Fonts"
 msgstr "Lettertypes"
 
@@ -371,12 +371,12 @@ msgstr "Editor Kleurverlopen"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:172 ../app/core/gimp.c:971
-#: ../app/dialogs/dialogs.c:321 ../app/dialogs/preferences-dialog.c:2748
+#: ../app/dialogs/dialogs.c:321 ../app/dialogs/preferences-dialog.c:2762
 msgid "Gradients"
 msgstr "Kleurverlopen"
 
 #: ../app/actions/actions.c:175 ../app/core/gimp.c:983
-#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2756
+#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2770
 msgid "Tool Presets"
 msgstr "Gereedschapsopties"
 
@@ -410,23 +410,23 @@ msgstr "Editor Paletten"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:196 ../app/core/gimp.c:966
-#: ../app/dialogs/dialogs.c:323 ../app/dialogs/preferences-dialog.c:2744
+#: ../app/dialogs/dialogs.c:323 ../app/dialogs/preferences-dialog.c:2758
 msgid "Palettes"
 msgstr "Paletten"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:199 ../app/core/gimp.c:961
-#: ../app/dialogs/dialogs.c:319 ../app/dialogs/preferences-dialog.c:2740
+#: ../app/dialogs/dialogs.c:319 ../app/dialogs/preferences-dialog.c:2754
 msgid "Patterns"
 msgstr "Patronen"
 
-#: ../app/actions/actions.c:202 ../app/dialogs/preferences-dialog.c:2760
+#: ../app/actions/actions.c:202 ../app/dialogs/preferences-dialog.c:2774
 msgid "Plug-Ins"
 msgstr "Plug-ins"
 
 #. Quick Mask Color
 #: ../app/actions/actions.c:205 ../app/core/gimpchannel.c:386
-#: ../app/dialogs/preferences-dialog.c:2018
+#: ../app/dialogs/preferences-dialog.c:2032
 msgid "Quick Mask"
 msgstr "Snelmasker"
 
@@ -456,7 +456,7 @@ msgid "Text Editor"
 msgstr "Editor Tekst"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
-#: ../app/dialogs/preferences-dialog.c:1847 ../app/gui/gui.c:435
+#: ../app/dialogs/preferences-dialog.c:1861 ../app/gui/gui.c:435
 msgid "Tool Options"
 msgstr "Gereedschapsopties"
 
@@ -1021,187 +1021,187 @@ msgid "Untitled"
 msgstr "Naamloos"
 
 # werkbalk
-#: ../app/actions/dialogs-actions.c:49
+#: ../app/actions/dialogs-actions.c:47
 msgctxt "windows-action"
 msgid "Tool_box"
 msgstr "_Gereedschapskist"
 
-#: ../app/actions/dialogs-actions.c:55
+#: ../app/actions/dialogs-actions.c:52
 msgctxt "dialogs-action"
 msgid "Tool _Options"
 msgstr "Gereedschaps_opties"
 
-#: ../app/actions/dialogs-actions.c:56
+#: ../app/actions/dialogs-actions.c:53
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
 msgstr "Het dialoogvenster Gereedschapsopties openen"
 
-#: ../app/actions/dialogs-actions.c:61
+#: ../app/actions/dialogs-actions.c:58
 msgctxt "dialogs-action"
 msgid "_Device Status"
 msgstr "_Apparaatstatus"
 
-#: ../app/actions/dialogs-actions.c:62
+#: ../app/actions/dialogs-actions.c:59
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
 msgstr "Het dialoogvenster Apparaatstatus openen"
 
-#: ../app/actions/dialogs-actions.c:67
+#: ../app/actions/dialogs-actions.c:63
 msgctxt "dialogs-action"
 msgid "_Layers"
 msgstr "_Lagen"
 
-#: ../app/actions/dialogs-actions.c:68
+#: ../app/actions/dialogs-actions.c:64
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
 msgstr "Het dialoogvenster Lagen openen"
 
-#: ../app/actions/dialogs-actions.c:73
+#: ../app/actions/dialogs-actions.c:69
 msgctxt "dialogs-action"
 msgid "_Channels"
 msgstr "_Kanalen"
 
-#: ../app/actions/dialogs-actions.c:74
+#: ../app/actions/dialogs-actions.c:70
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
 msgstr "Het dialoogvenster Kanalen openen"
 
-#: ../app/actions/dialogs-actions.c:79
+#: ../app/actions/dialogs-actions.c:73
 msgctxt "dialogs-action"
 msgid "_Paths"
 msgstr "Pa_den"
 
-#: ../app/actions/dialogs-actions.c:80
+#: ../app/actions/dialogs-actions.c:74
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
 msgstr "Het dialoogvenster Paden openen"
 
-#: ../app/actions/dialogs-actions.c:85
+#: ../app/actions/dialogs-actions.c:79
 msgctxt "dialogs-action"
 msgid "Color_map"
 msgstr "_Kleurenkaart"
 
-#: ../app/actions/dialogs-actions.c:86
+#: ../app/actions/dialogs-actions.c:80
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
 msgstr "Het dialoogvenster Kleurenkaart openen"
 
-#: ../app/actions/dialogs-actions.c:91
+#: ../app/actions/dialogs-actions.c:85
 msgctxt "dialogs-action"
 msgid "Histogra_m"
 msgstr "_Histogram"
 
-#: ../app/actions/dialogs-actions.c:92
+#: ../app/actions/dialogs-actions.c:86
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
 msgstr "Het dialoogvenster Histogram openen"
 
-#: ../app/actions/dialogs-actions.c:97
+#: ../app/actions/dialogs-actions.c:90
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
 msgstr "Editor _Selecties"
 
-#: ../app/actions/dialogs-actions.c:98
+#: ../app/actions/dialogs-actions.c:91
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
 msgstr "De editor voor selecties openen"
 
-#: ../app/actions/dialogs-actions.c:103
+#: ../app/actions/dialogs-actions.c:95
 msgctxt "dialogs-action"
 msgid "Na_vigation"
 msgstr "Na_vigatie"
 
-#: ../app/actions/dialogs-actions.c:104
+#: ../app/actions/dialogs-actions.c:96
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
 msgstr "Het dialoogvenster Navigatie openen"
 
-#: ../app/actions/dialogs-actions.c:109
+#: ../app/actions/dialogs-actions.c:101
 msgctxt "dialogs-action"
 msgid "Undo _History"
 msgstr "Be_werkingsgeschiedenis"
 
-#: ../app/actions/dialogs-actions.c:110
+#: ../app/actions/dialogs-actions.c:102
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
 msgstr "Het dialoogvenster Bewerkingsgeschiedenis openen"
 
-#: ../app/actions/dialogs-actions.c:115
+#: ../app/actions/dialogs-actions.c:106
 msgctxt "dialogs-action"
 msgid "Pointer"
 msgstr "Aanwijzer"
 
-#: ../app/actions/dialogs-actions.c:116
+#: ../app/actions/dialogs-actions.c:107
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
 msgstr "Het dialoogvenster Muisaanwijzerinformatie openen"
 
-#: ../app/actions/dialogs-actions.c:121
+#: ../app/actions/dialogs-actions.c:112
 msgctxt "dialogs-action"
 msgid "_Sample Points"
 msgstr "_Monsterpunten"
 
-#: ../app/actions/dialogs-actions.c:122
+#: ../app/actions/dialogs-actions.c:113
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
 msgstr "Het dialoogvenster Monsterpunten openen"
 
-#: ../app/actions/dialogs-actions.c:127
+#: ../app/actions/dialogs-actions.c:118
 msgctxt "dialogs-action"
 msgid "Colo_rs"
 msgstr "Kleu_ren"
 
-#: ../app/actions/dialogs-actions.c:128
+#: ../app/actions/dialogs-actions.c:119
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
 msgstr "Het dialoogvenster voor het wijzigen van VG/AG-kleuren openen"
 
-#: ../app/actions/dialogs-actions.c:133
+#: ../app/actions/dialogs-actions.c:122
 msgctxt "dialogs-action"
 msgid "_Brushes"
 msgstr "_Penselen"
 
-#: ../app/actions/dialogs-actions.c:134
+#: ../app/actions/dialogs-actions.c:123
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
 msgstr "Het dialoogvenster Penselen openen"
 
-#: ../app/actions/dialogs-actions.c:139
+#: ../app/actions/dialogs-actions.c:128
 msgctxt "dialogs-action"
 msgid "Brush Editor"
 msgstr "Editor Penselen"
 
-#: ../app/actions/dialogs-actions.c:140
+#: ../app/actions/dialogs-actions.c:129
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
 msgstr "De editor voor penselen openen"
 
-#: ../app/actions/dialogs-actions.c:145
+#: ../app/actions/dialogs-actions.c:133
 msgctxt "dialogs-action"
 msgid "Paint Dynamics"
 msgstr "Tekengedragingen"
 
-#: ../app/actions/dialogs-actions.c:146
+#: ../app/actions/dialogs-actions.c:134
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
 msgstr "Het dialoogvenster Tekengedragingen openen"
 
-#: ../app/actions/dialogs-actions.c:151
+#: ../app/actions/dialogs-actions.c:138
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
 msgstr "Editor Tekengedragingen"
 
-#: ../app/actions/dialogs-actions.c:152
+#: ../app/actions/dialogs-actions.c:139
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
 msgstr "De editor voor tekengedragingen openen"
 
-#: ../app/actions/dialogs-actions.c:157
+#: ../app/actions/dialogs-actions.c:144
 msgctxt "dialogs-action"
 msgid "P_atterns"
 msgstr "P_atronen"
 
-#: ../app/actions/dialogs-actions.c:158
+#: ../app/actions/dialogs-actions.c:145
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
 msgstr "Het dialoogvenster Patronen openen"
@@ -1209,190 +1209,197 @@ msgstr "Het dialoogvenster Patronen openen"
 # verlopen/verloop
 # verlopen ziet er uit als werkwoord
 # 01/03/08: bij "kleurverlopen" is het iets duidelijker dat het om een zelfstandig naamwoord gaat
-#: ../app/actions/dialogs-actions.c:163
+#: ../app/actions/dialogs-actions.c:150
 msgctxt "dialogs-action"
 msgid "_Gradients"
 msgstr "Kleur_verlopen"
 
-#: ../app/actions/dialogs-actions.c:164
+#: ../app/actions/dialogs-actions.c:151
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
 msgstr "Het dialoogvenster Kleurverlopen openen"
 
-#: ../app/actions/dialogs-actions.c:169
+#: ../app/actions/dialogs-actions.c:156
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
 msgstr "Editor Kleurverlopen"
 
-#: ../app/actions/dialogs-actions.c:170
+#: ../app/actions/dialogs-actions.c:157
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
 msgstr "De editor voor kleurverlopen openen"
 
-#: ../app/actions/dialogs-actions.c:175
+#: ../app/actions/dialogs-actions.c:162
 msgctxt "dialogs-action"
 msgid "Pal_ettes"
 msgstr "Pal_etten"
 
-#: ../app/actions/dialogs-actions.c:176
+#: ../app/actions/dialogs-actions.c:163
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
 msgstr "Het dialoogvenster Paletten openen"
 
-#: ../app/actions/dialogs-actions.c:181
+#: ../app/actions/dialogs-actions.c:168
 msgctxt "dialogs-action"
 msgid "Palette Editor"
 msgstr "Editor Paletten"
 
-#: ../app/actions/dialogs-actions.c:182
+#: ../app/actions/dialogs-actions.c:169
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
 msgstr "De editor voor paletten openen"
 
-#: ../app/actions/dialogs-actions.c:187
+#: ../app/actions/dialogs-actions.c:173
 msgctxt "dialogs-action"
 msgid "Tool presets"
 msgstr "Gereedschapsopties"
 
-#: ../app/actions/dialogs-actions.c:188
+#: ../app/actions/dialogs-actions.c:174
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
 msgstr "Het dialoogvenster Gereedschapsopties openen"
 
-#: ../app/actions/dialogs-actions.c:193
+#: ../app/actions/dialogs-actions.c:178
 msgctxt "dialogs-action"
 msgid "_Fonts"
 msgstr "_Lettertypes"
 
-#: ../app/actions/dialogs-actions.c:194
+#: ../app/actions/dialogs-actions.c:179
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
 msgstr "Het dialoogvenster Lettertypes openen"
 
-#: ../app/actions/dialogs-actions.c:199
+#: ../app/actions/dialogs-actions.c:183
 msgctxt "dialogs-action"
 msgid "B_uffers"
 msgstr "B_uffers"
 
-#: ../app/actions/dialogs-actions.c:200
+#: ../app/actions/dialogs-actions.c:184
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
 msgstr "Het dialoogvenster Buffers openen"
 
-#: ../app/actions/dialogs-actions.c:205
+#: ../app/actions/dialogs-actions.c:188
 msgctxt "dialogs-action"
 msgid "_Images"
 msgstr "Af_beeldingen"
 
-#: ../app/actions/dialogs-actions.c:206
+#: ../app/actions/dialogs-actions.c:189
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
 msgstr "Het dialoogvenster Afbeeldingen openen"
 
-#: ../app/actions/dialogs-actions.c:211
+#: ../app/actions/dialogs-actions.c:194
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr "Do_cumentgeschiedenis"
 
-#: ../app/actions/dialogs-actions.c:212
+#: ../app/actions/dialogs-actions.c:195
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
 msgstr "Het dialoogvenster Documentgeschiedenis openen"
 
-#: ../app/actions/dialogs-actions.c:217
+#: ../app/actions/dialogs-actions.c:200
 msgctxt "dialogs-action"
 msgid "_Templates"
 msgstr "S_jablonen"
 
-#: ../app/actions/dialogs-actions.c:218
+#: ../app/actions/dialogs-actions.c:201
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
 msgstr "Het dialoogvenster Sjablonen openen"
 
-#: ../app/actions/dialogs-actions.c:223
+#: ../app/actions/dialogs-actions.c:206
 msgctxt "dialogs-action"
 msgid "Error Co_nsole"
 msgstr "_Foutenconsole"
 
-#: ../app/actions/dialogs-actions.c:224
+#: ../app/actions/dialogs-actions.c:207
 msgctxt "dialogs-action"
 msgid "Open the error console"
 msgstr "Het dialoogvenster Foutconsole openen"
 
-#: ../app/actions/dialogs-actions.c:234
+#: ../app/actions/dialogs-actions.c:215
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "_Voorkeuren"
 
-#: ../app/actions/dialogs-actions.c:235
+#: ../app/actions/dialogs-actions.c:216
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "Het dialoogvenster Voorkeuren openen"
 
-#: ../app/actions/dialogs-actions.c:240
+#: ../app/actions/dialogs-actions.c:221
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "_Invoerapparaten"
 
-#: ../app/actions/dialogs-actions.c:241
+#: ../app/actions/dialogs-actions.c:222
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "Het dialoogvenster Invoerapparaten openen"
 
-#: ../app/actions/dialogs-actions.c:246
+#: ../app/actions/dialogs-actions.c:227
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "_Sneltoetsen"
 
-#: ../app/actions/dialogs-actions.c:247
+#: ../app/actions/dialogs-actions.c:228
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "Het dialoogvenster Sneltoetsen openen"
 
-#: ../app/actions/dialogs-actions.c:252
+#: ../app/actions/dialogs-actions.c:233
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_Modules"
 
-#: ../app/actions/dialogs-actions.c:253
+#: ../app/actions/dialogs-actions.c:234
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "Het dialoogvenster Modulebeheer openen"
 
-#: ../app/actions/dialogs-actions.c:258
+#: ../app/actions/dialogs-actions.c:238
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "_Tip van de dag"
 
-#: ../app/actions/dialogs-actions.c:259
+#: ../app/actions/dialogs-actions.c:239
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Nuttige tips voor het gebruik van GIMP tonen"
 
-#: ../app/actions/dialogs-actions.c:264
-msgctxt "dialogs-action"
-msgid "_About"
-msgstr "I_nfo"
-
-#: ../app/actions/dialogs-actions.c:265
+#: ../app/actions/dialogs-actions.c:245 ../app/actions/dialogs-actions.c:251
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "Over GIMP"
 
-#: ../app/actions/dialogs-actions.c:328
-#: ../app/dialogs/preferences-dialog.c:1937 ../app/widgets/gimptoolbox.c:540
+#: ../app/actions/dialogs-actions.c:247
+#| msgctxt "dialogs-action"
+#| msgid "_About"
+msgctxt "dialogs-action"
+msgid "About"
+msgstr "Info"
+
+#: ../app/actions/dialogs-actions.c:249
+msgctxt "dialogs-action"
+msgid "_About"
+msgstr "I_nfo"
+
+#: ../app/actions/dialogs-actions.c:310
+#: ../app/dialogs/preferences-dialog.c:1951 ../app/widgets/gimptoolbox.c:540
 msgid "Toolbox"
 msgstr "Gereedschapskist"
 
-#: ../app/actions/dialogs-actions.c:329
+#: ../app/actions/dialogs-actions.c:311
 msgid "Raise the toolbox"
 msgstr "Gereedschapskist bovenaan zetten"
 
-#: ../app/actions/dialogs-actions.c:333
+#: ../app/actions/dialogs-actions.c:315
 msgid "New Toolbox"
 msgstr "Nieuwe gereedschapskist"
 
-#: ../app/actions/dialogs-actions.c:334
+#: ../app/actions/dialogs-actions.c:316
 msgid "Create a new toolbox"
 msgstr "Nieuwe gereedschapskist aanmaken"
 
@@ -2044,7 +2051,7 @@ msgstr "Een nieuwe laag aanmaken met de inhoud van het klembord"
 #: ../app/actions/edit-actions.c:159
 msgctxt "edit-action"
 msgid "Cu_t Named..."
-msgstr "Benoemde buffer k_nippen…"
+msgstr "Benoemd k_nippen…"
 
 #: ../app/actions/edit-actions.c:160
 msgctxt "edit-action"
@@ -2054,7 +2061,7 @@ msgstr "Geselecteerde beeldpunten naar een benoemde buffer verplaatsen"
 #: ../app/actions/edit-actions.c:165
 msgctxt "edit-action"
 msgid "_Copy Named..."
-msgstr "Benoemde buffer _kopiëren…"
+msgstr "Benoemd _kopiëren…"
 
 #: ../app/actions/edit-actions.c:166
 msgctxt "edit-action"
@@ -2065,7 +2072,7 @@ msgstr "Geselecteerde beeldpunten naar een benoemde buffer kopiëren"
 #: ../app/actions/edit-actions.c:171
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
-msgstr "_Zichtbare benoemde buffer kopiëren…"
+msgstr "_Zichtbare benoemd kopiëren…"
 
 #: ../app/actions/edit-actions.c:173
 msgctxt "edit-action"
@@ -3297,7 +3304,7 @@ msgstr "Afbeelding schalen"
 #  Scaling
 #. Scaling
 #: ../app/actions/image-commands.c:693 ../app/actions/layers-commands.c:1145
-#: ../app/dialogs/preferences-dialog.c:1892
+#: ../app/dialogs/preferences-dialog.c:1906
 #: ../app/pdb/drawable-transform-cmds.c:783
 #: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:406
 #: ../app/pdb/image-cmds.c:442 ../app/pdb/item-transform-cmds.c:524
@@ -4680,7 +4687,7 @@ msgstr "Tekstbestand (UTF-8) openen"
 #: ../app/core/gimppalette-load.c:377 ../app/core/gimppalette-load.c:467
 #: ../app/core/gimppalette-load.c:634 ../app/core/gimppattern-load.c:76
 #: ../app/tools/gimpcurvestool.c:649 ../app/tools/gimplevelstool.c:747
-#: ../app/xcf/xcf.c:329
+#: ../app/xcf/xcf.c:359
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Kon ‘%s’ niet openen om te lezen: %s"
@@ -6083,7 +6090,7 @@ msgstr "Rechtshandig"
 #: ../app/core/gimpgradient-save.c:144 ../app/core/gimppalette-save.c:56
 #: ../app/gui/themes.c:248 ../app/tools/gimpcurvestool.c:702
 #: ../app/tools/gimplevelstool.c:800 ../app/vectors/gimpvectors-export.c:81
-#: ../app/xcf/xcf.c:422
+#: ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kon ‘%s’ niet openen om te schrijven: %s"
@@ -7582,7 +7589,7 @@ msgid "Parasites"
 msgstr "Parasieten"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2736
+#: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2750
 #: ../app/tools/gimppaintoptions-gui.c:201
 msgid "Dynamics"
 msgstr "Gedragingen"
@@ -7593,7 +7600,7 @@ msgid "Fonts (this may take a while)"
 msgstr "Lettertypes (even geduld)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:993 ../app/dialogs/preferences-dialog.c:2768
+#: ../app/core/gimp.c:993 ../app/dialogs/preferences-dialog.c:2782
 msgid "Modules"
 msgstr "Modules"
 
@@ -7960,15 +7967,16 @@ msgstr ""
 "\n"
 "%s"
 
+# 2014 analoog aan %s kopie
 #: ../app/core/gimpdatafactory.c:537 ../app/core/gimpdatafactory.c:540
 #: ../app/core/gimpitem.c:495 ../app/core/gimpitem.c:498
 msgid "copy"
-msgstr "kopiëren"
+msgstr "kopie"
 
 #: ../app/core/gimpdatafactory.c:549 ../app/core/gimpitem.c:507
 #, c-format
 msgid "%s copy"
-msgstr "%s kopiëren"
+msgstr "%s kopie"
 
 #: ../app/core/gimpdatafactory.c:742
 #, c-format
@@ -8525,7 +8533,7 @@ msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Pad verwijderen"
 
-#: ../app/core/gimpimagefile.c:719 ../app/dialogs/preferences-dialog.c:1704
+#: ../app/core/gimpimagefile.c:719 ../app/dialogs/preferences-dialog.c:1715
 msgid "Folder"
 msgstr "Map"
 
@@ -8972,7 +8980,6 @@ msgstr ""
 
 #: ../app/core/gimptoolpreset-load.c:61
 #, c-format
-#| msgid "Error while writing '%s': %s"
 msgid "Error while parsing '%s'"
 msgstr "Fout tijdens ontleden van ‘%s’"
 
@@ -9389,7 +9396,7 @@ msgid "Create a New Image"
 msgstr "Nieuwe afbeelding maken"
 
 #: ../app/dialogs/image-new-dialog.c:135
-#: ../app/dialogs/preferences-dialog.c:2002
+#: ../app/dialogs/preferences-dialog.c:2016
 msgid "_Template:"
 msgstr "_Sjabloon:"
 
@@ -9632,7 +9639,7 @@ msgid "Select Source"
 msgstr "Bron selecteren"
 
 #: ../app/dialogs/palette-import-dialog.c:214
-#: ../app/dialogs/preferences-dialog.c:1916
+#: ../app/dialogs/preferences-dialog.c:1930
 msgid "_Gradient"
 msgstr "Kleur_verloop"
 
@@ -9692,20 +9699,20 @@ msgstr "Voorbeeld"
 msgid "The selected source contains no colors."
 msgstr "De geselecteerde bron bevat geen kleuren"
 
-#: ../app/dialogs/preferences-dialog.c:266
+#: ../app/dialogs/preferences-dialog.c:268
 msgid "Reset All Preferences"
 msgstr "Alle voorkeuren resetten"
 
-#: ../app/dialogs/preferences-dialog.c:284
+#: ../app/dialogs/preferences-dialog.c:286
 msgid "Do you really want to reset all preferences to default values?"
 msgstr ""
 "Weet u zeker dat u alle voorkeuren wilt terugzetten op de standaardwaarden?"
 
-#: ../app/dialogs/preferences-dialog.c:354
+#: ../app/dialogs/preferences-dialog.c:356
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr "U moet GIMP herstarten om de volgende wijzigingen door te voeren:"
 
-#: ../app/dialogs/preferences-dialog.c:536
+#: ../app/dialogs/preferences-dialog.c:538
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
@@ -9713,15 +9720,15 @@ msgstr ""
 "Uw sneltoetsen zullen op hun standaardwaarden worden teruggezet wanneer u de "
 "volgende keer GIMP opstart."
 
-#: ../app/dialogs/preferences-dialog.c:547
+#: ../app/dialogs/preferences-dialog.c:549
 msgid "Remove all Keyboard Shortcuts"
 msgstr "Alle sneltoetsen verwijderen"
 
-#: ../app/dialogs/preferences-dialog.c:569
+#: ../app/dialogs/preferences-dialog.c:571
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
 msgstr "Weet u zeker dat u alle sneltoetsen wilt verwijderen uit alle menu's?"
 
-#: ../app/dialogs/preferences-dialog.c:610
+#: ../app/dialogs/preferences-dialog.c:612
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
@@ -9729,7 +9736,7 @@ msgstr ""
 "Uw vensterindeling zal op de standaardwaarden worden teruggezet wanneer u de "
 "volgende keer GIMP opstart."
 
-#: ../app/dialogs/preferences-dialog.c:645
+#: ../app/dialogs/preferences-dialog.c:647
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
@@ -9737,7 +9744,7 @@ msgstr ""
 "Uw invoerapparaten zullen op de standaardwaarden worden teruggezet wanneer u "
 "de volgende keer GIMP opstart."
 
-#: ../app/dialogs/preferences-dialog.c:680
+#: ../app/dialogs/preferences-dialog.c:682
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
@@ -9745,554 +9752,553 @@ msgstr ""
 "Uw gereedschapsopties zullen op de standaardwaarden worden teruggezet "
 "wanneer u de volgende keer GIMP opstart."
 
-#: ../app/dialogs/preferences-dialog.c:1266
+#: ../app/dialogs/preferences-dialog.c:1268
 msgid "Show _menubar"
 msgstr "_Menubalk tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1270
+#: ../app/dialogs/preferences-dialog.c:1272
 msgid "Show _rulers"
 msgstr "L_inialen tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1273
+#: ../app/dialogs/preferences-dialog.c:1275
 msgid "Show scroll_bars"
 msgstr "_Schuifbalken tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1276
+#: ../app/dialogs/preferences-dialog.c:1278
 msgid "Show s_tatusbar"
 msgstr "Status_balk tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1284
+#: ../app/dialogs/preferences-dialog.c:1286
 msgid "Show s_election"
 msgstr "S_electie tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1287
+#: ../app/dialogs/preferences-dialog.c:1289
 msgid "Show _layer boundary"
 msgstr "_Laaggrens tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1290
+#: ../app/dialogs/preferences-dialog.c:1292
 msgid "Show _guides"
 msgstr "Hulplijnen _tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1293
+#: ../app/dialogs/preferences-dialog.c:1295
 msgid "Show gri_d"
 msgstr "Ra_ster tonen"
 
 # dit is hoe de venster rond de afbeelding wordt getoond
 # (bv bij uitzoomen als het venster groter is als de afbeelding)
 # mogelijkheden zijn: van thema/lichte vakjes/donkere vakjes/aangepaste kleur)
-#: ../app/dialogs/preferences-dialog.c:1299
+#: ../app/dialogs/preferences-dialog.c:1301
 msgid "Canvas _padding mode:"
 msgstr "_Canvasvulling:"
 
 # aangepaste/zelfgemaakte/eigen
-#: ../app/dialogs/preferences-dialog.c:1304
+#: ../app/dialogs/preferences-dialog.c:1306
 msgid "Custom p_adding color:"
 msgstr "Aangepaste opvul_kleur:"
 
-#: ../app/dialogs/preferences-dialog.c:1305
+#: ../app/dialogs/preferences-dialog.c:1307
 msgid "Select Custom Canvas Padding Color"
 msgstr "Selecteer zelf een opvulkleur voor het canvas"
 
-#: ../app/dialogs/preferences-dialog.c:1394
+#: ../app/dialogs/preferences-dialog.c:1405
 msgid "Preferences"
 msgstr "Voorkeuren"
 
-#: ../app/dialogs/preferences-dialog.c:1507
-#: ../app/dialogs/preferences-dialog.c:2776
+#: ../app/dialogs/preferences-dialog.c:1518
+#: ../app/dialogs/preferences-dialog.c:2790
 msgid "Environment"
 msgstr "Omgeving"
 
-#: ../app/dialogs/preferences-dialog.c:1521
+#: ../app/dialogs/preferences-dialog.c:1532
 msgid "Resource Consumption"
 msgstr "Bronverbruik"
 
-#: ../app/dialogs/preferences-dialog.c:1531
+#: ../app/dialogs/preferences-dialog.c:1542
 msgid "Minimal number of _undo levels:"
 msgstr "_Minimum aantal opgeslagen bewerkingen:"
 
-#: ../app/dialogs/preferences-dialog.c:1534
+#: ../app/dialogs/preferences-dialog.c:1545
 msgid "Maximum undo _memory:"
 msgstr "Maximum _geheugen om bewerkingen op te slaan:"
 
-#: ../app/dialogs/preferences-dialog.c:1537
+#: ../app/dialogs/preferences-dialog.c:1548
 msgid "Tile cache _size:"
 msgstr "Grootte van de _tegelcache:"
 
-#: ../app/dialogs/preferences-dialog.c:1540
+#: ../app/dialogs/preferences-dialog.c:1551
 msgid "Maximum _new image size:"
 msgstr "Ma_ximale grootte voor nieuwe afbeelding:"
 
 # processors/processoren
-#: ../app/dialogs/preferences-dialog.c:1545
+#: ../app/dialogs/preferences-dialog.c:1556
 msgid "Number of _processors to use:"
 msgstr "Aantal te gebruiken _processors:"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1550
+#: ../app/dialogs/preferences-dialog.c:1561
 msgid "Image Thumbnails"
 msgstr "Miniaturen"
 
-#: ../app/dialogs/preferences-dialog.c:1555
+#: ../app/dialogs/preferences-dialog.c:1566
 msgid "Size of _thumbnails:"
 msgstr "Grootte _van miniaturen:"
 
-#: ../app/dialogs/preferences-dialog.c:1559
+#: ../app/dialogs/preferences-dialog.c:1570
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Maximale _bestandsgrootte voor miniaturen:"
 
-#: ../app/dialogs/preferences-dialog.c:1569
+#: ../app/dialogs/preferences-dialog.c:1580
 msgid "Keep record of used files in the Recent Documents list"
 msgstr ""
 "Gebruikte bestanden onthouden in de lijst van recent geopende documenten"
 
-#: ../app/dialogs/preferences-dialog.c:1578
+#: ../app/dialogs/preferences-dialog.c:1589
 msgid "User Interface"
 msgstr "Gebruikersinterface"
 
-#: ../app/dialogs/preferences-dialog.c:1581
+#: ../app/dialogs/preferences-dialog.c:1592
 msgid "Interface"
 msgstr "Interface"
 
-#: ../app/dialogs/preferences-dialog.c:1591
+#: ../app/dialogs/preferences-dialog.c:1602
 msgid "Language"
 msgstr "Taal"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1597
+#: ../app/dialogs/preferences-dialog.c:1608
 msgid "Previews"
 msgstr "Voorbeelden"
 
-#: ../app/dialogs/preferences-dialog.c:1600
+#: ../app/dialogs/preferences-dialog.c:1611
 msgid "_Enable layer & channel previews"
 msgstr "_Laag- en kanaalvoorbeelden inschakelen"
 
-#: ../app/dialogs/preferences-dialog.c:1606
+#: ../app/dialogs/preferences-dialog.c:1617
 msgid "_Default layer & channel preview size:"
 msgstr "Standaard_grootte voorbeeld lagen en kanalen:"
 
-#: ../app/dialogs/preferences-dialog.c:1609
+#: ../app/dialogs/preferences-dialog.c:1620
 msgid "Na_vigation preview size:"
 msgstr "Grootte _navigatievoorbeeld:"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1613
+#: ../app/dialogs/preferences-dialog.c:1624
 msgid "Keyboard Shortcuts"
 msgstr "Sneltoetsen"
 
-#: ../app/dialogs/preferences-dialog.c:1617
+#: ../app/dialogs/preferences-dialog.c:1628
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "_Dynamische sneltoetsen gebruiken"
 
-#: ../app/dialogs/preferences-dialog.c:1621
+#: ../app/dialogs/preferences-dialog.c:1632
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Sneltoetsen _configureren…"
 
-#: ../app/dialogs/preferences-dialog.c:1628
+#: ../app/dialogs/preferences-dialog.c:1639
 msgid "_Save keyboard shortcuts on exit"
 msgstr "_Sneltoetsen opslaan bij afsluiten"
 
-#: ../app/dialogs/preferences-dialog.c:1632
+#: ../app/dialogs/preferences-dialog.c:1643
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Sn_eltoetsen nu opslaan"
 
-#: ../app/dialogs/preferences-dialog.c:1639
+#: ../app/dialogs/preferences-dialog.c:1650
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "Sneltoetsen _terugzetten op standaardwaarden"
 
-#: ../app/dialogs/preferences-dialog.c:1648
+#: ../app/dialogs/preferences-dialog.c:1659
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Alle sneltoetsen _verwijderen"
 
-#: ../app/dialogs/preferences-dialog.c:1660
-#: ../app/dialogs/preferences-dialog.c:1699
+#: ../app/dialogs/preferences-dialog.c:1671
+#: ../app/dialogs/preferences-dialog.c:1710
 msgid "Theme"
 msgstr "Thema"
 
 #  Themes
-#: ../app/dialogs/preferences-dialog.c:1669
+#: ../app/dialogs/preferences-dialog.c:1680
 msgid "Select Theme"
 msgstr "Thema selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:1751
+#: ../app/dialogs/preferences-dialog.c:1762
 msgid "Reload C_urrent Theme"
 msgstr "Huidig th_ema herladen"
 
-#: ../app/dialogs/preferences-dialog.c:1763
+#: ../app/dialogs/preferences-dialog.c:1774
 msgid "Help System"
 msgstr "Hulpsysteem"
 
 #. General
-#: ../app/dialogs/preferences-dialog.c:1775
-#: ../app/dialogs/preferences-dialog.c:1859
-#: ../app/dialogs/preferences-dialog.c:2072
+#: ../app/dialogs/preferences-dialog.c:1786
+#: ../app/dialogs/preferences-dialog.c:1873
+#: ../app/dialogs/preferences-dialog.c:2086
 #: ../app/widgets/gimpcontrollereditor.c:185
 msgid "General"
 msgstr "Algemeen"
 
 # What's the Dutch translation for tooltip?
 # scherminfo/tooltip/tekstballon
-#: ../app/dialogs/preferences-dialog.c:1778
+#: ../app/dialogs/preferences-dialog.c:1789
 msgid "Show _tooltips"
 msgstr "_Tekstballonnen tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1781
+#: ../app/dialogs/preferences-dialog.c:1792
 msgid "Show help _buttons"
 msgstr "Hulp_knoppen tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1794
+#: ../app/dialogs/preferences-dialog.c:1805
 msgid "Use the online version"
 msgstr "De online-versie gebruiken"
 
-#: ../app/dialogs/preferences-dialog.c:1795
+#: ../app/dialogs/preferences-dialog.c:1806
 msgid "Use a locally installed copy"
 msgstr "Een lokaal geïnstalleerde kopie gebruiken"
 
-#: ../app/dialogs/preferences-dialog.c:1796
+#: ../app/dialogs/preferences-dialog.c:1807
 msgid "User manual:"
 msgstr "Gebruikershandleiding:"
 
-#: ../app/dialogs/preferences-dialog.c:1803
+#: ../app/dialogs/preferences-dialog.c:1814
 msgid "There's a local installation of the user manual."
 msgstr "Er is een lokale installatie van de gebruikershandleiding."
 
-#: ../app/dialogs/preferences-dialog.c:1808
+#: ../app/dialogs/preferences-dialog.c:1819
 msgid "The user manual is not installed locally."
 msgstr "De gebruikershandleiding is niet plaatselijk geïnstalleerd."
 
-#. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1831
+#: ../app/dialogs/preferences-dialog.c:1844
 msgid "Help Browser"
 msgstr "Hulpbrowser"
 
-#: ../app/dialogs/preferences-dialog.c:1835
+#: ../app/dialogs/preferences-dialog.c:1848
 msgid "H_elp browser to use:"
 msgstr "Te _gebruiken hulpbrowser:"
 
 # bij het verlaten/afsluiten
-#: ../app/dialogs/preferences-dialog.c:1862
+#: ../app/dialogs/preferences-dialog.c:1876
 msgid "_Save tool options on exit"
 msgstr "Gereedschapsopties op_slaan bij afsluiten"
 
-#: ../app/dialogs/preferences-dialog.c:1866
+#: ../app/dialogs/preferences-dialog.c:1880
 msgid "Save Tool Options _Now"
 msgstr "Gereedschapsopties _nu opslaan"
 
-#: ../app/dialogs/preferences-dialog.c:1873
+#: ../app/dialogs/preferences-dialog.c:1887
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "Opg_eslagen gereedschapsopties terugzetten op standaardwaarden"
 
 #  Snapping Distance
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1883
+#: ../app/dialogs/preferences-dialog.c:1897
 msgid "Guide & Grid Snapping"
 msgstr "Magnetische hulplijnen en raster"
 
-#: ../app/dialogs/preferences-dialog.c:1888
+#: ../app/dialogs/preferences-dialog.c:1902
 msgid "_Snap distance:"
 msgstr "_Magnetische afstand:"
 
-#: ../app/dialogs/preferences-dialog.c:1896
+#: ../app/dialogs/preferences-dialog.c:1910
 msgid "Default _interpolation:"
 msgstr "Standaard _interpolatie:"
 
 #  Global Brush, Pattern, ...
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1903
+#: ../app/dialogs/preferences-dialog.c:1917
 msgid "Paint Options Shared Between Tools"
 msgstr "Tekenopties gedeeld tussen gereedschappen"
 
-#: ../app/dialogs/preferences-dialog.c:1907
+#: ../app/dialogs/preferences-dialog.c:1921
 msgid "_Brush"
 msgstr "Pe_nseel"
 
-#: ../app/dialogs/preferences-dialog.c:1910
+#: ../app/dialogs/preferences-dialog.c:1924
 msgid "_Dynamics"
 msgstr "_Gedragingen"
 
-#: ../app/dialogs/preferences-dialog.c:1913
+#: ../app/dialogs/preferences-dialog.c:1927
 msgid "_Pattern"
 msgstr "_Patroon"
 
 #. Move Tool
-#: ../app/dialogs/preferences-dialog.c:1920
+#: ../app/dialogs/preferences-dialog.c:1934
 msgid "Move Tool"
 msgstr "Verplaatsen"
 
-#: ../app/dialogs/preferences-dialog.c:1924
+#: ../app/dialogs/preferences-dialog.c:1938
 msgid "Set layer or path as active"
 msgstr "Laag of pad als actief instellen"
 
 # Verschijning/Weergave/Beeld
 # Dit staat in de titel van het voorkeuren dialoog
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1949
-#: ../app/dialogs/preferences-dialog.c:2148
+#: ../app/dialogs/preferences-dialog.c:1963
+#: ../app/dialogs/preferences-dialog.c:2162
 #: ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Weergave"
 
-#: ../app/dialogs/preferences-dialog.c:1953
+#: ../app/dialogs/preferences-dialog.c:1967
 msgid "Show _foreground & background color"
 msgstr "_Voor- en achtergrondkleur tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1957
+#: ../app/dialogs/preferences-dialog.c:1971
 msgid "Show active _brush, pattern & gradient"
 msgstr "Actieve _penseel, patroon en kleurverloop tonen"
 
-#: ../app/dialogs/preferences-dialog.c:1961
+#: ../app/dialogs/preferences-dialog.c:1975
 msgid "Show active _image"
 msgstr "A_ctieve afbeelding tonen"
 
 #. Tool Editor
-#: ../app/dialogs/preferences-dialog.c:1969
+#: ../app/dialogs/preferences-dialog.c:1983
 msgid "Tools configuration"
 msgstr "Gereedschapsinstellingen"
 
 # Nieuwe standaardafbeelding/Standaard nieuwe afbeelding
-#: ../app/dialogs/preferences-dialog.c:1984
+#: ../app/dialogs/preferences-dialog.c:1998
 msgid "Default New Image"
 msgstr "Standaard nieuwe afbeelding"
 
-#: ../app/dialogs/preferences-dialog.c:1987
+#: ../app/dialogs/preferences-dialog.c:2001
 msgid "Default Image"
 msgstr "Standaardafbeelding"
 
-#: ../app/dialogs/preferences-dialog.c:2021
+#: ../app/dialogs/preferences-dialog.c:2035
 msgid "Set the default Quick Mask color"
 msgstr "Snelmaskerkleur bewerken"
 
-#: ../app/dialogs/preferences-dialog.c:2027
+#: ../app/dialogs/preferences-dialog.c:2041
 msgid "Quick Mask color:"
 msgstr "Snelmaskerkleur:"
 
 # image niet meevertaald voor duidelijkheid
-#: ../app/dialogs/preferences-dialog.c:2037
+#: ../app/dialogs/preferences-dialog.c:2051
 msgid "Default Image Grid"
 msgstr "Standaard raster"
 
-#: ../app/dialogs/preferences-dialog.c:2040
+#: ../app/dialogs/preferences-dialog.c:2054
 msgid "Default Grid"
 msgstr "Standaard raster"
 
-#: ../app/dialogs/preferences-dialog.c:2060
+#: ../app/dialogs/preferences-dialog.c:2074
 msgid "Image Windows"
 msgstr "Afbeeldingsvensters"
 
-#: ../app/dialogs/preferences-dialog.c:2075
+#: ../app/dialogs/preferences-dialog.c:2089
 msgid "Use \"_Dot for dot\" by default"
 msgstr "_Standaard \"stip voor stip\" gebruiken"
 
-#: ../app/dialogs/preferences-dialog.c:2081
+#: ../app/dialogs/preferences-dialog.c:2095
 msgid "Marching _ants speed:"
 msgstr "S_nelheid marcherende mieren:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2085
+#: ../app/dialogs/preferences-dialog.c:2099
 msgid "Zoom & Resize Behavior"
 msgstr "Gedrag zoomen en grootte wijzigen"
 
-#: ../app/dialogs/preferences-dialog.c:2089
+#: ../app/dialogs/preferences-dialog.c:2103
 msgid "Resize window on _zoom"
 msgstr "_Grootte venster wijzigen bij zoomen"
 
-#: ../app/dialogs/preferences-dialog.c:2092
+#: ../app/dialogs/preferences-dialog.c:2106
 msgid "Resize window on image _size change"
 msgstr "Grootte _venster wijzigen bij vergroten/verkleinen afbeelding"
 
-#: ../app/dialogs/preferences-dialog.c:2098
+#: ../app/dialogs/preferences-dialog.c:2112
 msgid "Fit to window"
 msgstr "In venster passen"
 
-#: ../app/dialogs/preferences-dialog.c:2100
+#: ../app/dialogs/preferences-dialog.c:2114
 msgid "Initial zoom _ratio:"
 msgstr "Aanvankelijke _zoomverhouding:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2104
+#: ../app/dialogs/preferences-dialog.c:2118
 msgid "Space Bar"
 msgstr "Spatiebalk"
 
-#: ../app/dialogs/preferences-dialog.c:2110
+#: ../app/dialogs/preferences-dialog.c:2124
 msgid "_While space bar is pressed:"
 msgstr "_Bij indrukken van spatiebalk"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2114
+#: ../app/dialogs/preferences-dialog.c:2128
 msgid "Mouse Pointers"
 msgstr "Muisaanwijzers"
 
-#: ../app/dialogs/preferences-dialog.c:2118
+#: ../app/dialogs/preferences-dialog.c:2132
 msgid "Show _brush outline"
 msgstr "_Penseelomtrek tonen"
 
-#: ../app/dialogs/preferences-dialog.c:2121
+#: ../app/dialogs/preferences-dialog.c:2135
 msgid "Show pointer for paint _tools"
 msgstr "_Muisaanwijzer tonen bij tekengereedschap"
 
-#: ../app/dialogs/preferences-dialog.c:2127
+#: ../app/dialogs/preferences-dialog.c:2141
 msgid "Pointer _mode:"
 msgstr "M_uisaanwijzermodus:"
 
-#: ../app/dialogs/preferences-dialog.c:2130
+#: ../app/dialogs/preferences-dialog.c:2144
 msgid "Pointer re_ndering:"
 msgstr "Muisaan_wijzer renderen:"
 
-#: ../app/dialogs/preferences-dialog.c:2133
+#: ../app/dialogs/preferences-dialog.c:2147
 msgid "Pointer _handedness:"
 msgstr "_Links- of rechtshandige muisaanwijzer:"
 
-#: ../app/dialogs/preferences-dialog.c:2145
+#: ../app/dialogs/preferences-dialog.c:2159
 msgid "Image Window Appearance"
 msgstr "Weergave afbeeldingsvensters"
 
-#: ../app/dialogs/preferences-dialog.c:2156
+#: ../app/dialogs/preferences-dialog.c:2170
 msgid "Default Appearance in Normal Mode"
 msgstr "Standaardinstellingen"
 
-#: ../app/dialogs/preferences-dialog.c:2161
+#: ../app/dialogs/preferences-dialog.c:2175
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Volledig scherm"
 
 # image niet meevertaald voor duidelijkheid.
 # formaat/indeling/informatie
-#: ../app/dialogs/preferences-dialog.c:2170
+#: ../app/dialogs/preferences-dialog.c:2184
 msgid "Image Title & Statusbar Format"
 msgstr "Formaat titel en statusbalk"
 
-#: ../app/dialogs/preferences-dialog.c:2173
+#: ../app/dialogs/preferences-dialog.c:2187
 msgid "Title & Status"
 msgstr "Titel & status"
 
 # format/formaat
-#: ../app/dialogs/preferences-dialog.c:2191
+#: ../app/dialogs/preferences-dialog.c:2205
 msgid "Current format"
 msgstr "Huidige formaat"
 
 # format/formaat
-#: ../app/dialogs/preferences-dialog.c:2192
+#: ../app/dialogs/preferences-dialog.c:2206
 msgid "Default format"
 msgstr "Standaardformaat"
 
-#: ../app/dialogs/preferences-dialog.c:2193
+#: ../app/dialogs/preferences-dialog.c:2207
 msgid "Show zoom percentage"
 msgstr "Zoompercentage tonen"
 
-#: ../app/dialogs/preferences-dialog.c:2194
+#: ../app/dialogs/preferences-dialog.c:2208
 msgid "Show zoom ratio"
 msgstr "Zoomverhouding tonen"
 
-#: ../app/dialogs/preferences-dialog.c:2195
+#: ../app/dialogs/preferences-dialog.c:2209
 msgid "Show image size"
 msgstr "Afbeeldingsgrootte tonen"
 
-#: ../app/dialogs/preferences-dialog.c:2208
+#: ../app/dialogs/preferences-dialog.c:2222
 msgid "Image Title Format"
 msgstr "Formaat titel"
 
-#: ../app/dialogs/preferences-dialog.c:2210
+#: ../app/dialogs/preferences-dialog.c:2224
 msgid "Image Statusbar Format"
 msgstr "Formaat statusbalk"
 
-#: ../app/dialogs/preferences-dialog.c:2295
+#: ../app/dialogs/preferences-dialog.c:2309
 msgid "Display"
 msgstr "Weergave"
 
 #. Transparency
-#: ../app/dialogs/preferences-dialog.c:2307
+#: ../app/dialogs/preferences-dialog.c:2321
 msgid "Transparency"
 msgstr "Transparantie"
 
 # vakjes
-#: ../app/dialogs/preferences-dialog.c:2311
+#: ../app/dialogs/preferences-dialog.c:2325
 msgid "_Check style:"
 msgstr "_Vakstijl:"
 
 # grootte van vakjes
-#: ../app/dialogs/preferences-dialog.c:2314
+#: ../app/dialogs/preferences-dialog.c:2328
 msgid "Check _size:"
 msgstr "Vak_grootte:"
 
-#: ../app/dialogs/preferences-dialog.c:2317
+#: ../app/dialogs/preferences-dialog.c:2331
 msgid "Monitor Resolution"
 msgstr "Beeldschermresolutie"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2321
+#: ../app/dialogs/preferences-dialog.c:2335
 #: ../app/display/gimpcursorview.c:206 ../app/widgets/gimpgrideditor.c:199
 #: ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "Beeldpunten"
 
-#: ../app/dialogs/preferences-dialog.c:2339
+#: ../app/dialogs/preferences-dialog.c:2353
 msgid "Horizontal"
 msgstr "Horizontaal"
 
-#: ../app/dialogs/preferences-dialog.c:2341
+#: ../app/dialogs/preferences-dialog.c:2355
 msgid "Vertical"
 msgstr "Verticaal"
 
-#: ../app/dialogs/preferences-dialog.c:2343
+#: ../app/dialogs/preferences-dialog.c:2357
 #: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppi"
 
-#: ../app/dialogs/preferences-dialog.c:2359
+#: ../app/dialogs/preferences-dialog.c:2373
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "Automatisch _detecteren (momenteel %d x %d ppi)"
 
-#: ../app/dialogs/preferences-dialog.c:2377
+#: ../app/dialogs/preferences-dialog.c:2391
 msgid "_Enter manually"
 msgstr "Voer handmatig _in"
 
-#: ../app/dialogs/preferences-dialog.c:2392
+#: ../app/dialogs/preferences-dialog.c:2406
 msgid "C_alibrate..."
 msgstr "_Kalibreren…"
 
-#: ../app/dialogs/preferences-dialog.c:2420
+#: ../app/dialogs/preferences-dialog.c:2434
 msgid "Color Management"
 msgstr "Kleurbeheer"
 
-#: ../app/dialogs/preferences-dialog.c:2440
+#: ../app/dialogs/preferences-dialog.c:2454
 msgid "_RGB profile:"
 msgstr "RGB-_profiel:"
 
-#: ../app/dialogs/preferences-dialog.c:2441
+#: ../app/dialogs/preferences-dialog.c:2455
 msgid "Select RGB Color Profile"
 msgstr "RGB kleurprofiel selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2442
+#: ../app/dialogs/preferences-dialog.c:2456
 msgid "_CMYK profile:"
 msgstr "_CMYK-profiel:"
 
-#: ../app/dialogs/preferences-dialog.c:2443
+#: ../app/dialogs/preferences-dialog.c:2457
 msgid "Select CMYK Color Profile"
 msgstr "CMYK kleurprofiel selecteren"
 
 # beeldbuis/beeldscherm/monitor
-#: ../app/dialogs/preferences-dialog.c:2444
+#: ../app/dialogs/preferences-dialog.c:2458
 msgid "_Monitor profile:"
 msgstr "_Beeldschermprofiel:"
 
-#: ../app/dialogs/preferences-dialog.c:2445
+#: ../app/dialogs/preferences-dialog.c:2459
 msgid "Select Monitor Color Profile"
 msgstr "Kleurprofiel beeldscherm selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2446
+#: ../app/dialogs/preferences-dialog.c:2460
 msgid "_Print simulation profile:"
 msgstr "_Simulatieprofiel afdrukken"
 
-#: ../app/dialogs/preferences-dialog.c:2447
+#: ../app/dialogs/preferences-dialog.c:2461
 msgid "Select Printer Color Profile"
 msgstr "Printer kleurprofiel selecteren"
 
 # afdeling: Colormanagement
 # opties zijn: Color managed display, No color management, print simulation
-#: ../app/dialogs/preferences-dialog.c:2458
+#: ../app/dialogs/preferences-dialog.c:2472
 msgid "_Mode of operation:"
 msgstr "_Kleurweergave:"
 
-#: ../app/dialogs/preferences-dialog.c:2488
+#: ../app/dialogs/preferences-dialog.c:2502
 msgid "_Try to use the system monitor profile"
 msgstr "Beeldschermprofiel _van het systeem proberen te gebruiken"
 
@@ -10300,234 +10306,234 @@ msgstr "Beeldschermprofiel _van het systeem proberen te gebruiken"
 # opties: gevoelsmatig, relative colorimetric, Verzadiging,
 #  absolute colorimetric
 # 03/02/08: bij Adobeprogramma's is dit de "renderintentie"
-#: ../app/dialogs/preferences-dialog.c:2498
+#: ../app/dialogs/preferences-dialog.c:2512
 msgid "_Display rendering intent:"
 msgstr "R_enderintentie beeldscherm:"
 
 # Tooltip: sets how colors are converted from workspace to the print
 # simulation device.
 # afdrukvoorbeeld/softproof/
-#: ../app/dialogs/preferences-dialog.c:2507
+#: ../app/dialogs/preferences-dialog.c:2521
 msgid "_Softproof rendering intent:"
 msgstr "So_ftproof renderintentie:"
 
-#: ../app/dialogs/preferences-dialog.c:2520
+#: ../app/dialogs/preferences-dialog.c:2534
 msgid "Mark out of gamut colors"
 msgstr "Kleuren buiten het gamut markeren"
 
-#: ../app/dialogs/preferences-dialog.c:2525
+#: ../app/dialogs/preferences-dialog.c:2539
 msgid "Select Warning Color"
 msgstr "Selecteer waarschuwingskleur"
 
-#: ../app/dialogs/preferences-dialog.c:2538
+#: ../app/dialogs/preferences-dialog.c:2552
 msgid "File Open behaviour:"
 msgstr "Gedrag bij openen bestanden:"
 
-#: ../app/dialogs/preferences-dialog.c:2550
+#: ../app/dialogs/preferences-dialog.c:2564
 msgid "Input Devices"
 msgstr "Invoerapparaten"
 
 #  Input Device Settings
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2560
+#: ../app/dialogs/preferences-dialog.c:2574
 msgid "Extended Input Devices"
 msgstr "Uitgebreide invoerapparaten"
 
-#: ../app/dialogs/preferences-dialog.c:2564
+#: ../app/dialogs/preferences-dialog.c:2578
 msgid "Configure E_xtended Input Devices..."
 msgstr "_Uitgebreide invoerapparaten configureren…"
 
-#: ../app/dialogs/preferences-dialog.c:2571
+#: ../app/dialogs/preferences-dialog.c:2585
 msgid "_Save input device settings on exit"
 msgstr "Apparaat_instellingen opslaan bij afsluiten"
 
-#: ../app/dialogs/preferences-dialog.c:2575
+#: ../app/dialogs/preferences-dialog.c:2589
 msgid "Save Input Device Settings _Now"
 msgstr "Apparaatinstellingen _nu opslaan"
 
-#: ../app/dialogs/preferences-dialog.c:2582
+#: ../app/dialogs/preferences-dialog.c:2596
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr ""
 "Opgeslagen instellingen invoerapparaat _terugzetten op standaardwaarden"
 
-#: ../app/dialogs/preferences-dialog.c:2597
+#: ../app/dialogs/preferences-dialog.c:2611
 msgid "Additional Input Controllers"
 msgstr "Aanvullende invoercontrollers"
 
-#: ../app/dialogs/preferences-dialog.c:2600
+#: ../app/dialogs/preferences-dialog.c:2614
 msgid "Input Controllers"
 msgstr "Invoercontrollers"
 
-#: ../app/dialogs/preferences-dialog.c:2616
+#: ../app/dialogs/preferences-dialog.c:2630
 msgid "Window Management"
 msgstr "Vensterbeheer"
 
-#: ../app/dialogs/preferences-dialog.c:2625
+#: ../app/dialogs/preferences-dialog.c:2639
 msgid "Window Manager Hints"
 msgstr "Vensterbeheer hints"
 
-#: ../app/dialogs/preferences-dialog.c:2631
+#: ../app/dialogs/preferences-dialog.c:2645
 msgid "Hint for _docks and toolbox:"
 msgstr "Hint _voor dokken en gereedschapvenster:"
 
-#: ../app/dialogs/preferences-dialog.c:2634
+#: ../app/dialogs/preferences-dialog.c:2648
 msgid "Focus"
 msgstr "Focus"
 
-#: ../app/dialogs/preferences-dialog.c:2638
+#: ../app/dialogs/preferences-dialog.c:2652
 msgid "Activate the _focused image"
 msgstr "De afbeelding met _focus activeren"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2642
+#: ../app/dialogs/preferences-dialog.c:2656
 msgid "Window Positions"
 msgstr "Vensterposities"
 
-#: ../app/dialogs/preferences-dialog.c:2645
+#: ../app/dialogs/preferences-dialog.c:2659
 msgid "_Save window positions on exit"
 msgstr "Vensterposities op_slaan bij verlaten"
 
-#: ../app/dialogs/preferences-dialog.c:2649
+#: ../app/dialogs/preferences-dialog.c:2663
 msgid "Save Window Positions _Now"
 msgstr "Vensterposities _nu opslaan"
 
-#: ../app/dialogs/preferences-dialog.c:2656
+#: ../app/dialogs/preferences-dialog.c:2670
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "Opge_slagen vensterposities resetten"
 
-#: ../app/dialogs/preferences-dialog.c:2671
+#: ../app/dialogs/preferences-dialog.c:2685
 msgid "Folders"
 msgstr "Mappen"
 
-#: ../app/dialogs/preferences-dialog.c:2691
+#: ../app/dialogs/preferences-dialog.c:2705
 msgid "Temporary folder:"
 msgstr "Tijdelijke map:"
 
-#: ../app/dialogs/preferences-dialog.c:2692
+#: ../app/dialogs/preferences-dialog.c:2706
 msgid "Select Folder for Temporary Files"
 msgstr "Selecteer een map voor tijdelijke bestanden"
 
-#: ../app/dialogs/preferences-dialog.c:2696
+#: ../app/dialogs/preferences-dialog.c:2710
 msgid "Swap folder:"
 msgstr "Wisselmap:"
 
-#: ../app/dialogs/preferences-dialog.c:2697
+#: ../app/dialogs/preferences-dialog.c:2711
 msgid "Select Swap Folder"
 msgstr "Wisselmap selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2732
+#: ../app/dialogs/preferences-dialog.c:2746
 msgid "Brush Folders"
 msgstr "Penseelmappen"
 
-#: ../app/dialogs/preferences-dialog.c:2734
+#: ../app/dialogs/preferences-dialog.c:2748
 msgid "Select Brush Folders"
 msgstr "Penseelmappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2736
+#: ../app/dialogs/preferences-dialog.c:2750
 msgid "Dynamics Folders"
 msgstr "Mappen voor gedragingen"
 
-#: ../app/dialogs/preferences-dialog.c:2738
+#: ../app/dialogs/preferences-dialog.c:2752
 msgid "Select Dynamics Folders"
 msgstr "Mappen voor gedragingen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2740
+#: ../app/dialogs/preferences-dialog.c:2754
 msgid "Pattern Folders"
 msgstr "Patroonmappen"
 
-#: ../app/dialogs/preferences-dialog.c:2742
+#: ../app/dialogs/preferences-dialog.c:2756
 msgid "Select Pattern Folders"
 msgstr "Patroonmappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2744
+#: ../app/dialogs/preferences-dialog.c:2758
 msgid "Palette Folders"
 msgstr "Paletmappen"
 
-#: ../app/dialogs/preferences-dialog.c:2746
+#: ../app/dialogs/preferences-dialog.c:2760
 msgid "Select Palette Folders"
 msgstr "Paletmappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2748
+#: ../app/dialogs/preferences-dialog.c:2762
 msgid "Gradient Folders"
 msgstr "Kleurverloopmappen"
 
-#: ../app/dialogs/preferences-dialog.c:2750
+#: ../app/dialogs/preferences-dialog.c:2764
 msgid "Select Gradient Folders"
 msgstr "Kleurverloopmappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2752
+#: ../app/dialogs/preferences-dialog.c:2766
 msgid "Font Folders"
 msgstr "Lettertypemappen"
 
-#: ../app/dialogs/preferences-dialog.c:2754
+#: ../app/dialogs/preferences-dialog.c:2768
 msgid "Select Font Folders"
 msgstr "Lettertypemappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2756
+#: ../app/dialogs/preferences-dialog.c:2770
 msgid "Tool Preset Folders"
 msgstr "Mappen voor gereedschapsopties"
 
-#: ../app/dialogs/preferences-dialog.c:2758
+#: ../app/dialogs/preferences-dialog.c:2772
 msgid "Select Tool Preset Folders"
 msgstr "Mappen voor gereedschapsopties selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2760
+#: ../app/dialogs/preferences-dialog.c:2774
 msgid "Plug-In Folders"
 msgstr "Plug-in-mappen"
 
-#: ../app/dialogs/preferences-dialog.c:2762
+#: ../app/dialogs/preferences-dialog.c:2776
 msgid "Select Plug-In Folders"
 msgstr "Plug-in-mappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2764
+#: ../app/dialogs/preferences-dialog.c:2778
 msgid "Scripts"
 msgstr "Scripts"
 
-#: ../app/dialogs/preferences-dialog.c:2764
+#: ../app/dialogs/preferences-dialog.c:2778
 msgid "Script-Fu Folders"
 msgstr "Script-Fu-mappen"
 
-#: ../app/dialogs/preferences-dialog.c:2766
+#: ../app/dialogs/preferences-dialog.c:2780
 msgid "Select Script-Fu Folders"
 msgstr "Script-Fu-mappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2768
+#: ../app/dialogs/preferences-dialog.c:2782
 msgid "Module Folders"
 msgstr "Modulemappen"
 
-#: ../app/dialogs/preferences-dialog.c:2770
+#: ../app/dialogs/preferences-dialog.c:2784
 msgid "Select Module Folders"
 msgstr "Modulemappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2772
+#: ../app/dialogs/preferences-dialog.c:2786
 msgid "Interpreters"
 msgstr "Interpreters"
 
-#: ../app/dialogs/preferences-dialog.c:2772
+#: ../app/dialogs/preferences-dialog.c:2786
 msgid "Interpreter Folders"
 msgstr "Interpreter-mappen"
 
-#: ../app/dialogs/preferences-dialog.c:2774
+#: ../app/dialogs/preferences-dialog.c:2788
 msgid "Select Interpreter Folders"
 msgstr "Interpreter-mappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2776
+#: ../app/dialogs/preferences-dialog.c:2790
 msgid "Environment Folders"
 msgstr "Omgevingsmappen"
 
-#: ../app/dialogs/preferences-dialog.c:2778
+#: ../app/dialogs/preferences-dialog.c:2792
 msgid "Select Environment Folders"
 msgstr "Omgevingsmappen selecteren"
 
-#: ../app/dialogs/preferences-dialog.c:2780
+#: ../app/dialogs/preferences-dialog.c:2794
 msgid "Themes"
 msgstr "Thema's"
 
-#: ../app/dialogs/preferences-dialog.c:2780
+#: ../app/dialogs/preferences-dialog.c:2794
 msgid "Theme Folders"
 msgstr "Themamappen"
 
-#: ../app/dialogs/preferences-dialog.c:2782
+#: ../app/dialogs/preferences-dialog.c:2796
 msgid "Select Theme Folders"
 msgstr "Themamappen selecteren"
 
@@ -10885,7 +10891,7 @@ msgstr "Navigeren in de afbeeldingsweergave"
 #: ../app/display/gimpdisplayshell.c:746
 #: ../app/display/gimpdisplayshell.c:1327 ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
-msgstr "Sleep hier afbeeldingsbestanden om ze te openen"
+msgstr "Afbeeldingsbestanden hier neerzetten om ze te openen"
 
 #: ../app/display/gimpdisplayshell-close.c:169
 #: ../app/display/gimpdisplayshell-close.c:269
@@ -10953,12 +10959,12 @@ msgstr "De afbeelding is geëxporteerd naar ‘%s’."
 #: ../app/display/gimpdisplayshell-dnd.c:649
 #: ../app/display/gimpdisplayshell-dnd.c:707
 msgid "Drop New Layer"
-msgstr "Nieuwe laag slepen"
+msgstr "Nieuwe laag neerzetten"
 
 # drag and drop
 #: ../app/display/gimpdisplayshell-dnd.c:289
 msgid "Drop New Path"
-msgstr "Nieuw pad slepen"
+msgstr "Nieuw pad neerzetten"
 
 #: ../app/display/gimpdisplayshell-dnd.c:361
 #: ../app/display/gimpdisplayshell-dnd.c:463 ../app/tools/gimpblendtool.c:173
@@ -10978,13 +10984,13 @@ msgstr "De beeldpunten van de actieve laag zijn vergrendeld."
 #: ../app/display/gimpdisplayshell-dnd.c:549
 #: ../app/widgets/gimplayertreeview.c:725
 msgid "Drop layers"
-msgstr "Lagen slepen"
+msgstr "Lagen neerzetten"
 
 #: ../app/display/gimpdisplayshell-dnd.c:682
 #: ../app/display/gimpdisplayshell-dnd.c:699
 #: ../app/widgets/gimplayertreeview.c:802 ../app/widgets/gimptoolbox-dnd.c:264
 msgid "Dropped Buffer"
-msgstr "Weggegooide buffer"
+msgstr "Neergezette buffer"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:83
 msgid "Color Display Filters"
@@ -11400,8 +11406,8 @@ msgstr ""
 "Deze laag kan niet omgezet worden naar een normale laag, want het is geen "
 "zwevende selectie."
 
-#: ../app/pdb/gimppdb-query.c:299 ../app/pdb/gimppdb.c:305
-#: ../app/pdb/gimppdb.c:375
+#: ../app/pdb/gimppdb-query.c:299 ../app/pdb/gimppdb.c:315
+#: ../app/pdb/gimppdb.c:385
 #, c-format
 msgid "Procedure '%s' not found"
 msgstr "Procedure ‘%s’ is niet gevonden"
@@ -11591,7 +11597,7 @@ msgstr "Afbeelding ‘%s’ (%d) is reeds van het type ‘%s’"
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "Het vectorobject %d bevat geen lijn met ID %d"
 
-#: ../app/pdb/gimppdb.c:410
+#: ../app/pdb/gimppdb.c:420
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong type for argument #%d. Expected "
@@ -15537,15 +15543,15 @@ msgstr "Breedte"
 msgid "Height"
 msgstr "Hoogte"
 
-#: ../app/widgets/gimphelp.c:293
+#: ../app/widgets/gimphelp.c:297
 msgid "Help browser is missing"
 msgstr "Hulpbrowser ontbreekt"
 
-#: ../app/widgets/gimphelp.c:294
+#: ../app/widgets/gimphelp.c:298
 msgid "The GIMP help browser is not available."
 msgstr "De GIMP-hulpbrowser is niet beschikbaar."
 
-#: ../app/widgets/gimphelp.c:295
+#: ../app/widgets/gimphelp.c:299
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -15553,32 +15559,32 @@ msgstr ""
 "De plug-in voor de GIMP-hulpbrowser is schijnbaar niet geïnstalleerd. U kunt "
 "in plaats daarvan de webbrowser gebruiken om de hulppagina's te lezen."
 
-#: ../app/widgets/gimphelp.c:336
+#: ../app/widgets/gimphelp.c:340
 msgid "Help browser doesn't start"
 msgstr "Hulpbrowser start niet op"
 
-#: ../app/widgets/gimphelp.c:337
+#: ../app/widgets/gimphelp.c:341
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Kon de hulpbrowser plug-in van GIMP niet starten."
 
 #  Web Browser
-#: ../app/widgets/gimphelp.c:364
+#: ../app/widgets/gimphelp.c:368
 msgid "Use _Web Browser"
 msgstr "_Webbrowser gebruiken"
 
-#: ../app/widgets/gimphelp.c:610
+#: ../app/widgets/gimphelp.c:712
 msgid "GIMP user manual is missing"
 msgstr "De GIMP-gebruikershandleiding ontbreekt"
 
-#: ../app/widgets/gimphelp.c:617
+#: ../app/widgets/gimphelp.c:719
 msgid "_Read Online"
 msgstr "Online _lezen"
 
-#: ../app/widgets/gimphelp.c:641
+#: ../app/widgets/gimphelp.c:743
 msgid "The GIMP user manual is not installed on your computer."
 msgstr "De GIMP-gebruikershandleiding is niet geïnstalleerd op uw computer."
 
-#: ../app/widgets/gimphelp.c:644
+#: ../app/widgets/gimphelp.c:746
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -16298,7 +16304,7 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Ongedefinieerd"
 
-#: ../app/xcf/xcf-load.c:342
+#: ../app/xcf/xcf-load.c:392
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -16306,7 +16312,7 @@ msgstr ""
 "Dit XCF-bestand is beschadigd! Ik heb er zoveel mogelijk van geladen als ik "
 "kan, maar het is onvolledig."
 
-#: ../app/xcf/xcf-load.c:353
+#: ../app/xcf/xcf-load.c:403
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -16314,7 +16320,7 @@ msgstr ""
 "Dit XCF-bestand is beschadigd! Ik kan zelfs geen gedeeltelijke "
 "afbeeldingsgegevens ervan redden."
 
-#: ../app/xcf/xcf-load.c:427
+#: ../app/xcf/xcf-load.c:477
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -16325,40 +16331,40 @@ msgstr ""
 "verkeerd op. Bezig met vervangen van\n"
 "de grijswaardenkaart."
 
-#: ../app/xcf/xcf-read.c:115
+#: ../app/xcf/xcf-read.c:174
 msgid "Invalid UTF-8 string in XCF file"
 msgstr "Ongeldige UTF-8-tekenreeks in XCF-bestand"
 
-#: ../app/xcf/xcf-write.c:86
+#: ../app/xcf/xcf-write.c:128
 #, c-format
 msgid "Error writing XCF: %s"
 msgstr "Fout bij schrijven XCF: %s"
 
-#: ../app/xcf/xcf-seek.c:43 ../app/xcf/xcf-seek.c:60 ../app/xcf/xcf-seek.c:71
+#: ../app/xcf/xcf-seek.c:61 ../app/xcf/xcf-seek.c:87 ../app/xcf/xcf-seek.c:98
 #, c-format
 msgid "Could not seek in XCF file: %s"
 msgstr "Kan niet zoeken in XCF-bestand: %s"
 
-#: ../app/xcf/xcf.c:99 ../app/xcf/xcf.c:167
+#: ../app/xcf/xcf.c:113 ../app/xcf/xcf.c:181
 msgid "GIMP XCF image"
 msgstr "GIMP XCF-afbeelding"
 
-#: ../app/xcf/xcf.c:271
+#: ../app/xcf/xcf.c:301
 #, c-format
 msgid "Opening '%s'"
 msgstr "‘%s’ wordt geopend"
 
-#: ../app/xcf/xcf.c:313
+#: ../app/xcf/xcf.c:343
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF-fout: niet ondersteunde XCF-bestandsversie %d tegengekomen"
 
-#: ../app/xcf/xcf.c:383
+#: ../app/xcf/xcf.c:413
 #, c-format
 msgid "Saving '%s'"
 msgstr "‘%s’ wordt opgeslagen"
 
-#: ../app/xcf/xcf.c:403
+#: ../app/xcf/xcf.c:433
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Fout bij opslaan XCF-bestand: %s"
@@ -16394,18 +16400,24 @@ msgstr ""
 "programma voor het omzetten van afbeeldingsformaten, enz."
 
 #: ../desktop/gimp.appdata.xml.in.h:3
+#| msgid ""
+#| "GIMP is expandable and extensible. It is designed to be augmented with "
+#| "plug-ins and extensions to do just about anything. The advanced scripting "
+#| "interface allows everything from the simplest task to the most complex "
+#| "image manipulation procedures to be easily scripted. GIMP is also "
+#| "available for Microsoft Windows and OS X."
 msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-"
 "ins and extensions to do just about anything. The advanced scripting "
 "interface allows everything from the simplest task to the most complex image "
-"manipulation procedures to be easily scripted. GIMP is also available for "
+"manipulation procedures to be easily scripted. GIMP is available for Linux, "
 "Microsoft Windows and OS X."
 msgstr ""
 "GIMP is uitbreidbaar. Het is ontworpen om te worden aangevuld met plug-ins "
 "en extensies, zodat het bijna alle taken aankan. Met de geavanceerd "
 "scripting interface kunt u voor alles, van de eenvoudigste taak tot de meest "
 "ingewikkelde beeldbewerkingsprocedure, gemakkelijk een script maken. GIMP is "
-"ook beschikbaar voor Microsoft Windows and OS X."
+"beschikbaar voor Linux, Microsoft Windows and OS X."
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
