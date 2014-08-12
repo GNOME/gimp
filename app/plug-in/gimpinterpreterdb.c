@@ -31,29 +31,10 @@
 
 #include "config.h"
 
-#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
-
-#include <sys/types.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <fcntl.h>
 
 #include <gio/gio.h>
-#include <glib/gstdio.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
-
-#ifndef _O_BINARY
-#define _O_BINARY 0
-#endif
 
 #include "libgimpbase/gimpbase.h"
 
@@ -771,9 +752,10 @@ gimp_interpreter_db_resolve (GimpInterpreterDB  *db,
                              const gchar        *program_path,
                              gchar             **interp_arg)
 {
-  gint    fd;
-  gssize  len;
-  gchar   buffer[BUFSIZE];
+  GFile        *file;
+  GInputStream *input;
+  gsize         bytes_read;
+  gchar         buffer[BUFSIZE];
 
   g_return_val_if_fail (GIMP_IS_INTERPRETER_DB (db), NULL);
   g_return_val_if_fail (program_path != NULL, NULL);
@@ -781,20 +763,24 @@ gimp_interpreter_db_resolve (GimpInterpreterDB  *db,
 
   *interp_arg = NULL;
 
-  fd = g_open (program_path, O_RDONLY | _O_BINARY, 0);
+  file = g_file_new_for_path (program_path);
+  input = G_INPUT_STREAM (g_file_read (file, NULL, NULL));
+  g_object_unref (file);
 
-  if (fd == -1)
+  if (! input)
     return resolve_extension (db, program_path);
 
   memset (buffer, 0, sizeof (buffer));
-  len = read (fd, buffer, sizeof (buffer) - 1); /* leave one nul at the end */
-  close (fd);
+  g_input_stream_read_all (input, buffer,
+                           sizeof (buffer) - 1, /* leave one nul at the end */
+                           &bytes_read, NULL, NULL);
+  g_object_unref (input);
 
-  if (len <= 0)
+  if (bytes_read == 0)
     return resolve_extension (db, program_path);
 
-  if (len > 3 && buffer[0] == '#' && buffer[1] == '!')
-    return resolve_sh_bang (db, program_path, buffer, len, interp_arg);
+  if (bytes_read > 3 && buffer[0] == '#' && buffer[1] == '!')
+    return resolve_sh_bang (db, program_path, buffer, bytes_read, interp_arg);
 
   return resolve_magic (db, program_path, buffer);
 }
