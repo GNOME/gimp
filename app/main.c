@@ -338,12 +338,8 @@ main (int    argc,
 
   g_set_application_name (GIMP_NAME);
 
-#if GLIB_CHECK_VERSION (2, 39, 90)
 #ifdef G_OS_WIN32
   argv = g_win32_get_command_line ();
-#else
-  argv = g_strdupv (argv);
-#endif
 #else
   argv = g_strdupv (argv);
 #endif
@@ -403,11 +399,7 @@ main (int    argc,
 
   app_libs_init (context, no_interface);
 
-#if GLIB_CHECK_VERSION (2, 39, 90)
   if (! g_option_context_parse_strv (context, &argv, &error))
-#else
-  if (! g_option_context_parse (context, &argc, &argv, &error))
-#endif
     {
       if (error)
         {
