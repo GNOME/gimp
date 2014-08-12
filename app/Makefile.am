@@ -178,6 +178,8 @@ gimpconsoleldadd = \
 	$(PANGOCAIRO_LIBS)		\
 	$(HARFBUZZ_LIBS)		\
 	$(CAIRO_LIBS)			\
+	$(GIO_UNIX_LIBS)		\
+	$(GIO_WINDOWS_LIBS)		\
 	$(GEGL_LIBS)			\
 	$(GLIB_LIBS)			\
 	$(GEXIV2_LIBS)			\
