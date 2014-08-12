@@ -277,8 +277,8 @@ gimp_value_array_insert (GimpValueArray *value_array,
   value_array_grow (value_array, value_array->n_values + 1, FALSE);
 
   if (index + 1 < value_array->n_values)
-    g_memmove (value_array->values + index + 1, value_array->values + index,
-	       (i - index) * sizeof (value_array->values[0]));
+    memmove (value_array->values + index + 1, value_array->values + index,
+             (i - index) * sizeof (value_array->values[0]));
 
   memset (value_array->values + index, 0, sizeof (value_array->values[0]));
 
@@ -317,8 +317,8 @@ gimp_value_array_remove (GimpValueArray *value_array,
   value_array->n_values--;
 
   if (index < value_array->n_values)
-    g_memmove (value_array->values + index, value_array->values + index + 1,
-	       (value_array->n_values - index) * sizeof (value_array->values[0]));
+    memmove (value_array->values + index, value_array->values + index + 1,
+             (value_array->n_values - index) * sizeof (value_array->values[0]));
 
   value_array_shrink (value_array);
 

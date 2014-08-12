@@ -83,8 +83,6 @@ EXPORTS
 	gimp_minor_version
 	gimp_offset_type_get_type
 	gimp_orientation_type_get_type
-	gimp_output_stream_printf
-	gimp_output_stream_vprintf
 	gimp_paint_application_mode_get_type
 	gimp_param_memsize_get_type
 	gimp_param_parasite_get_type

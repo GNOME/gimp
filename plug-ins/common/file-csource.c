@@ -309,8 +309,8 @@ print (GOutputStream  *stream,
   gboolean success;
 
   va_start (args, format);
-  success = gimp_output_stream_vprintf (stream, NULL, NULL,
-                                        error, format, args);
+  success = g_output_stream_vprintf (stream, NULL, NULL,
+                                     error, format, args);
   va_end (args);
 
   return success;

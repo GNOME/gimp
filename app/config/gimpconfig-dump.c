@@ -258,8 +258,8 @@ dump_gimprc_manpage (GimpConfig       *rc,
   guint          n_property_specs;
   guint          i;
 
-  gimp_output_stream_printf (output, NULL, NULL, NULL,
-                             "%s", man_page_header);
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "%s", man_page_header);
 
   klass = G_OBJECT_GET_CLASS (rc);
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
@@ -275,20 +275,20 @@ dump_gimprc_manpage (GimpConfig       *rc,
       if (prop_spec->flags & GIMP_CONFIG_PARAM_IGNORE)
         continue;
 
-      gimp_output_stream_printf (output, NULL, NULL, NULL,
-                                 ".TP\n");
+      g_output_stream_printf (output, NULL, NULL, NULL,
+                              ".TP\n");
 
       if (gimp_config_serialize_property (rc, prop_spec, writer))
         {
-          gimp_output_stream_printf (output, NULL, NULL, NULL,
-                                     "\n");
+          g_output_stream_printf (output, NULL, NULL, NULL,
+                                  "\n");
 
           desc = dump_describe_param (prop_spec);
 
           dump_with_linebreaks (output, desc);
 
-          gimp_output_stream_printf (output, NULL, NULL, NULL,
-                                     "\n");
+          g_output_stream_printf (output, NULL, NULL, NULL,
+                                  "\n");
 
           g_free (desc);
         }
@@ -296,10 +296,10 @@ dump_gimprc_manpage (GimpConfig       *rc,
 
   g_free (property_specs);
 
-  gimp_output_stream_printf (output, NULL, NULL, NULL,
-                             "%s", man_page_path);
-  gimp_output_stream_printf (output, NULL, NULL, NULL,
-                             "%s", man_page_footer);
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "%s", man_page_path);
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "%s", man_page_footer);
 }
 
 
@@ -521,8 +521,8 @@ dump_with_linebreaks (GOutputStream *output,
 
       /*  groff doesn't like lines to start with a single quote  */
       if (*text == '\'')
-        gimp_output_stream_printf (output, NULL, NULL, NULL,
-                                   "\\&");  /*  a zero width space  */
+        g_output_stream_printf (output, NULL, NULL, NULL,
+                                "\\&");  /*  a zero width space  */
 
       for (t = text, i = 0, space = 0;
            *t != '\n' && (i <= LINE_LENGTH || space == 0) && i < len;
@@ -536,12 +536,12 @@ dump_with_linebreaks (GOutputStream *output,
         i = space;
 
       g_output_stream_write_all (output, text, i, NULL, NULL, NULL);
-      gimp_output_stream_printf (output, NULL, NULL, NULL,
-                                 "\n");
+      g_output_stream_printf (output, NULL, NULL, NULL,
+                              "\n");
 
       if (*t == '\n')
-        gimp_output_stream_printf (output, NULL, NULL, NULL,
-                                   ".br\n");
+        g_output_stream_printf (output, NULL, NULL, NULL,
+                                ".br\n");
 
       i++;
 

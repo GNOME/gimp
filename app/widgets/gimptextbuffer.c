@@ -1435,7 +1435,7 @@ gimp_text_buffer_load (GimpTextBuffer *buffer,
       gtk_text_buffer_get_end_iter (GTK_TEXT_BUFFER (buffer), &iter);
 
       remaining = (buf + remaining + bytes_read) - leftover;
-      g_memmove (buf, leftover, remaining);
+      memmove (buf, leftover, remaining);
 
       if (! success)
         {

@@ -305,7 +305,7 @@ themes_apply_theme (Gimp        *gimp,
       esc_gtkrc_user = g_strescape (tmp, NULL);
       g_free (tmp);
 
-      if (! gimp_output_stream_printf
+      if (! g_output_stream_printf
             (output, NULL, NULL, &error,
              "# GIMP themerc\n"
              "#\n"

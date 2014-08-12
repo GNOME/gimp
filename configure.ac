@@ -42,7 +42,7 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 # required versions of other packages
 m4_define([babl_required_version], [0.1.11])
 m4_define([gegl_required_version], [0.3.0])
-m4_define([glib_required_version], [2.36.0])
+m4_define([glib_required_version], [2.40.0])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
 m4_define([gdk_pixbuf_required_version], [2.24.1])
@@ -583,13 +583,13 @@ if test "x$GDBUS_CODEGEN" = xno; then
   AC_MSG_ERROR([Could not find gdbus-codegen in your PATH])
 fi
 
-AC_MSG_CHECKING([if GLib is version 2.39.0 or newer])
-if $PKG_CONFIG --atleast-version=2.39.0 glib-2.0; then
-  have_glib_2_39=yes
+AC_MSG_CHECKING([if GLib is version 2.43.0 or newer])
+if $PKG_CONFIG --atleast-version=2.43.0 glib-2.0; then
+  have_glib_2_43=yes
 else
-  have_glib_2_39=no
+  have_glib_2_43=no
 fi
-AC_MSG_RESULT($have_glib_2_39)
+AC_MSG_RESULT($have_glib_2_43)
 
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
@@ -2035,7 +2035,7 @@ CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEA
 # We must build without problems with future releases of libraries
 # and disabling deprecated API risks breaking the build
 
-if test "x$have_glib_2_39" != "xyes"; then
+if test "x$have_glib_2_43" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
