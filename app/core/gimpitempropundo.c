@@ -24,7 +24,7 @@
 
 #include "core-types.h"
 
-#include "gimp-utils.h"
+#include "gimp-memsize.h"
 #include "gimpitem.h"
 #include "gimpitemtree.h"
 #include "gimpitempropundo.h"

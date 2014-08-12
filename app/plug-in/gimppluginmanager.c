@@ -32,7 +32,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimp-utils.h"
+#include "core/gimp-memsize.h"
 #include "core/gimpmarshal.h"
 
 #include "pdb/gimppdb.h"

@@ -29,7 +29,7 @@
 
 #include "vectors-types.h"
 
-#include "core/gimp-utils.h"
+#include "core/gimp-memsize.h"
 #include "core/gimpcoords.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimp-transform-utils.h"

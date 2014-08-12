@@ -32,6 +32,7 @@
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-utils.h"
 
+#include "gimp-memsize.h"
 #include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"

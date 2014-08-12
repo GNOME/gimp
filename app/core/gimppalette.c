@@ -28,7 +28,7 @@
 
 #include "core-types.h"
 
-#include "gimp-utils.h"
+#include "gimp-memsize.h"
 #include "gimppalette.h"
 #include "gimppalette-load.h"
 #include "gimppalette-save.h"

@@ -27,7 +27,7 @@
 
 #include "gegl/gimp-babl.h"
 
-#include "gimp-utils.h"
+#include "gimp-memsize.h"
 #include "gimpbuffer.h"
 #include "gimpimage.h"
 #include "gimptempbuf.h"

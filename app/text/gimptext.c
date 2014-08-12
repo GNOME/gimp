@@ -34,9 +34,10 @@
 
 #include "text-types.h"
 
+#include "core/gimp-memsize.h"
+#include "core/gimp-utils.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpstrokeoptions.h"
-#include "core/gimp-utils.h"
 
 #include "gimptext.h"
 

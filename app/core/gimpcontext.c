@@ -33,7 +33,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
-#include "gimp-utils.h"
+#include "gimp-memsize.h"
 #include "gimpbrush.h"
 #include "gimpbuffer.h"
 #include "gimpcontainer.h"

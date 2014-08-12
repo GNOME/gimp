@@ -25,8 +25,8 @@
 
 #include "core-types.h"
 
+#include "gimp-memsize.h"
 #include "gimpidtable.h"
-#include "gimp-utils.h"
 
 
 #define GIMP_ID_TABLE_START_ID 1

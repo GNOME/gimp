@@ -45,6 +45,7 @@
 #include "gimp.h"
 #include "gimp-contexts.h"
 #include "gimp-gradients.h"
+#include "gimp-memsize.h"
 #include "gimp-modules.h"
 #include "gimp-parasites.h"
 #include "gimp-templates.h"

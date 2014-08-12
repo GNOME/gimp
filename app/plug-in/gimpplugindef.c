@@ -24,7 +24,7 @@
 
 #include "plug-in-types.h"
 
-#include "core/gimp-utils.h"
+#include "core/gimp-memsize.h"
 
 #include "gimpplugindef.h"
 #include "gimppluginprocedure.h"

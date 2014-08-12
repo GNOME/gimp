@@ -33,7 +33,7 @@
 #include "gegl/gimptilehandlerprojection.h"
 
 #include "gimp.h"
-#include "gimp-utils.h"
+#include "gimp-memsize.h"
 #include "gimpimage.h"
 #include "gimpmarshal.h"
 #include "gimppickable.h"

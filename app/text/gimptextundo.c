@@ -26,9 +26,9 @@
 
 #include "gegl/gimp-babl.h"
 
+#include "core/gimp-memsize.h"
 #include "core/gimpitem.h"
 #include "core/gimpitemundo.h"
-#include "core/gimp-utils.h"
 
 #include "gimptext.h"
 #include "gimptextlayer.h"

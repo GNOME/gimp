@@ -31,7 +31,7 @@
 
 #include "config/gimpxmlparser.h"
 
-#include "gimp-utils.h"
+#include "gimp-memsize.h"
 #include "gimpcontext.h"
 #include "gimpdata.h"
 #include "gimplist.h"

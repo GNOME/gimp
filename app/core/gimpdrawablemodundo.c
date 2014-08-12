@@ -24,7 +24,7 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
-#include "gimp-utils.h"
+#include "gimp-memsize.h"
 #include "gimpimage.h"
 #include "gimpdrawable.h"
 #include "gimpdrawablemodundo.h"

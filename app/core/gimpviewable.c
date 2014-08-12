@@ -32,7 +32,7 @@
 
 #include "core-types.h"
 
-#include "gimp-utils.h"
+#include "gimp-memsize.h"
 #include "gimpcontext.h"
 #include "gimpmarshal.h"
 #include "gimptempbuf.h"

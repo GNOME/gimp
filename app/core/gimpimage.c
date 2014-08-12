@@ -37,8 +37,8 @@
 #include "gegl/gimp-babl.h"
 
 #include "gimp.h"
+#include "gimp-memsize.h"
 #include "gimp-parasites.h"
-#include "gimp-utils.h"
 #include "gimpcontext.h"
 #include "gimpdrawablestack.h"
 #include "gimpgrid.h"
