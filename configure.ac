@@ -60,6 +60,7 @@ m4_define([rsvg_required_version], [2.36.0])
 m4_define([wmf_required_version], [0.2.8])
 m4_define([pygtk_required_version], [2.10.4])
 m4_define([poppler_required_version], [0.12.4])
+m4_define([poppler_data_required_version], [0.4.7])
 m4_define([libgudev_required_version], [167])
 m4_define([gexiv2_required_version], [0.6.1])
 m4_define([lcms_required_version], [2.2])
@@ -147,6 +148,7 @@ ATK_REQUIRED_VERSION=atk_required_version
 RSVG_REQUIRED_VERSION=rsvg_required_version
 WMF_REQUIRED_VERSION=wmf_required_version
 POPPLER_REQUIRED_VERSION=poppler_required_version
+POPPLER_DATA_REQUIRED_VERSION=poppler_data_required_version
 OPENEXR_REQUIRED_VERSION=openexr_required_version
 INTLTOOL_REQUIRED_VERSION=intltool_required_version
 PYTHON2_REQUIRED_VERSION=python2_required_version
@@ -172,6 +174,7 @@ AC_SUBST(ATK_REQUIRED_VERSION)
 AC_SUBST(RSVG_REQUIRED_VERSION)
 AC_SUBST(WMF_REQUIRED_VERSION)
 AC_SUBST(POPPLER_REQUIRED_VERSION)
+AC_SUBST(POPPLER_DATA_REQUIRED_VERSION)
 AC_SUBST(OPENEXR_REQUIRED_VERSION)
 AC_SUBST(INTLTOOL_REQUIRED_VERSION)
 AC_SUBST(PYTHON2_REQUIRED_VERSION)
@@ -1501,9 +1504,16 @@ have_poppler=no
 if test "x$with_poppler" != xno; then
   PKG_CHECK_MODULES(POPPLER,
     poppler-glib >= poppler_required_version,
-    FILE_PDF_LOAD='file-pdf-load$(EXEEXT)'
-    AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
-    have_poppler=yes,
+    [ FILE_PDF_LOAD='file-pdf-load$(EXEEXT)'
+      AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
+      # We don't check against a poppler-data version, because old
+      # versions may work as well. Yet the pkg-config file has only been
+      # added in 0.4.7, thus we can't verify presence of older versions.
+      PKG_CHECK_MODULES(POPPLER_DATA, poppler-data,
+        [have_poppler="yes (Cyrillic and CJK support: yes)"],
+        [have_poppler='yes (Cyrillic and CJK support: no or poppler-data < poppler_data_required_version)']
+      )
+    ],
     have_poppler="Using PostScript plug-in (libpoppler not found)")
 else
   have_poppler="Using PostScript plug-in (libpoppler support disabled)"

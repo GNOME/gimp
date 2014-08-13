@@ -86,6 +86,15 @@ header files installed.
      libtiff, webkit, libmng, librsvg, libwmf, libgs (Ghostscript),
      libaa and libjasper.
 
+     Note that to be able to render CJK (Asian) and Cyrillic characters
+     in pdf-imported files, the data package `poppler-data` needs to be
+     installed as well. It is only possible to automatically check its
+     existence since version @POPPLER_DATA_REQUIRED_VERSION@, but there is no strong requirement
+     in our `configure` script because older versions of poppler-data may
+     still work. Thus if poppler-data was not detected during ./configure,
+     but you are sure it is installed, you are advised to test your build
+     afterwards.
+
  11. The Python extension requires Python 2 development headers (@PYTHON2_REQUIRED_VERSION@
      or newer) to be present. You will also need PyGTK and the
      respective development headers.
@@ -133,7 +142,7 @@ header files installed.
      libmng		-		MNG
      openexr		@OPENEXR_REQUIRED_VERSION@		OpenEXR
      libpoppler		@POPPLER_REQUIRED_VERSION@		PDF import
-     poppler-data	-		PDF import (optional: rendering of CJK and Cyrillic)
+     poppler-data	@POPPLER_DATA_REQUIRED_VERSION@		PDF import (optional: rendering of CJK and Cyrillic)
      cairo-pdf		@CAIRO_PDF_REQUIRED_VERSION@		PDF export
      python 2		@PYTHON2_REQUIRED_VERSION@		Python plug-ins
      librsvg		@RSVG_REQUIRED_VERSION@		SVG
