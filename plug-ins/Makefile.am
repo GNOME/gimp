@@ -33,7 +33,6 @@ SUBDIRS = \
 	$(script_fu)		\
 	$(pygimp)		\
 	file-bmp		\
-	file-compressor		\
 	$(file_exr)		\
 	file-faxg3		\
 	file-fits		\
