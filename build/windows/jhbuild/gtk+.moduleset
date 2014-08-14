@@ -36,9 +36,9 @@
 </autotools>
 
 <autotools id="pixman" autogen-sh="configure">
-	<branch version="0.32.4" repo="cairographics.org"
-			module="pixman-0.32.4.tar.gz"
-			hash="sha1:54be89b3453109be0930400e5b13c35c9e9d5e3a">
+	<branch version="0.32.6" repo="cairographics.org"
+			module="pixman-0.32.6.tar.gz"
+			hash="sha1:8791343cbf6d99451f4d08e8209d6ac11bf96df2">
 	</branch>
 </autotools>
 
