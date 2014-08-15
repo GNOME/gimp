@@ -804,10 +804,11 @@ image_types_parse (const gchar *name,
               g_printerr ("%s: image-type contains unrecognizable parts:"
                           "'%s'\n", name, type_spec);
 
+              /* skip to next token */
               while (*image_types &&
-                     ((*image_types != ' ') ||
-                      (*image_types != '\t') ||
-                      (*image_types != ',')))
+                     *image_types != ' '  &&
+                     *image_types != '\t' &&
+                     *image_types != ',')
                 {
                   image_types++;
                 }
