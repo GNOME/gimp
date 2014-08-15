@@ -101,6 +101,18 @@ gimp_init_for_gui_testing_internal (gboolean     show_gui,
   GimpSessionInfoClass *klass;
   Gimp                 *gimp;
 
+#if defined (G_OS_WIN32)
+  /* g_test_init() sets warnings always fatal, which is a usually a good
+     testing default. Nevertheless the Windows platform may have a few
+     quirks generating warnings, yet we want to finish tests. So we
+     allow some relaxed rules on this platform. */
+
+  GLogLevelFlags fatal_mask;
+
+  fatal_mask = (GLogLevelFlags) (G_LOG_FATAL_MASK | G_LOG_LEVEL_CRITICAL);
+  g_log_set_always_fatal (fatal_mask);
+#endif
+
   /* from main() */
   gimp_log_init ();
   gegl_init (NULL, NULL);
