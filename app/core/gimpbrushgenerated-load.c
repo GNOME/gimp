@@ -116,11 +116,15 @@ gimp_brush_generated_load (GimpContext   *context,
 
   /* the empty string is not an allowed name */
   if (strlen (string) < 1)
-    g_strlcpy (string, _("Untitled"), sizeof (string));
-
-  name = gimp_any_to_utf8 (string, -1,
-                           _("Invalid UTF-8 string in brush file '%s'."),
-                           gimp_file_get_utf8_name (file));
+    {
+      name = g_strdup (_("Untitled"));
+    }
+  else
+    {
+      name = gimp_any_to_utf8 (string, -1,
+                               _("Invalid UTF-8 string in brush file '%s'."),
+                               gimp_file_get_utf8_name (file));
+    }
 
   g_free (string);
 
