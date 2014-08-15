@@ -765,11 +765,14 @@ gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
                                      gint                width,
                                      gint                height)
 {
+  GimpImage  *image  = gimp_item_get_image (GIMP_ITEM (drawable));
+  gboolean    linear = gimp_drawable_get_linear (drawable);
   const Babl *format;
 
-  format = gimp_babl_format (gimp_drawable_get_base_type (drawable),
-                             gimp_babl_precision (component_type, FALSE),
-                             gimp_drawable_has_alpha (drawable));
+  format = gimp_image_get_format (image,
+                                  gimp_drawable_get_base_type (drawable),
+                                  gimp_babl_precision (component_type, linear),
+                                  gimp_drawable_has_alpha (drawable));
 
   return (gint64) babl_format_get_bytes_per_pixel (format) * width * height;
 }
