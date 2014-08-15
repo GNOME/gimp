@@ -871,7 +871,7 @@ load_thumbnail (const gchar *filename,
           size = READ32 (fp, error)
           positions[*thumb_num_layers] = READ32 (fp, error)
           /* is this image is more preferred than selected before? */
-          diff = ABS(thumb_size - size);
+          diff = MAX (thumb_size, size) - MIN (thumb_size, size);
           if (diff < min_diff)
             {/* the image size is closer than current selected image */
               min_diff = diff;

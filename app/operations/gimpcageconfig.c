@@ -425,7 +425,6 @@ gimp_cage_config_get_bounding_box (GimpCageConfig *gcc)
   GimpCagePoint *point;
 
   g_return_val_if_fail (GIMP_IS_CAGE_CONFIG (gcc), bounding_box);
-  g_return_val_if_fail (gcc->cage_points->len >= 0, bounding_box);
 
   if (gcc->cage_points->len == 0)
     return bounding_box;

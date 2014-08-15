@@ -1651,7 +1651,8 @@ static gunichar basic_inchar(port *pt) {
       len = pt->rep.string.past_the_end - pt->rep.string.curr;
       c = g_utf8_get_char_validated(pt->rep.string.curr, len);
 
-      if (c >= 0)   /* Valid UTF-8 character? */
+      if (c != (gunichar) -1 &&
+          c != (gunichar) -2)   /* Valid UTF-8 character? */
       {
         len = g_unichar_to_utf8(c, NULL);   /* Length of UTF-8 sequence */
         pt->rep.string.curr += len;
