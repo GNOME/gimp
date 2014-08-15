@@ -1210,7 +1210,7 @@ gimp_draw_tool_on_vectors_curve (GimpDrawTool      *draw_tool,
   if (ret_coords)        *ret_coords        = *coord;
   if (ret_pos)           *ret_pos           = -1.0;
   if (ret_segment_start) *ret_segment_start = NULL;
-  if (ret_segment_start) *ret_segment_end   = NULL;
+  if (ret_segment_end)   *ret_segment_end   = NULL;
   if (ret_stroke)        *ret_stroke        = NULL;
 
   min_dist = -1.0;

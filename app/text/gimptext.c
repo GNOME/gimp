@@ -566,5 +566,5 @@ gimp_text_get_transformation (GimpText    *text,
 
   matrix->coeff[2][0] = 0.0;
   matrix->coeff[2][1] = 0.0;
-  matrix->coeff[2][1] = 1.0;
+  matrix->coeff[2][2] = 1.0;
 }

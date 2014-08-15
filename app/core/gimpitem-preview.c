@@ -122,8 +122,8 @@ gimp_item_get_popup_size (GimpViewable *viewable,
 
       if (scaling_up)
         {
-          *popup_width = gimp_item_get_width  (item);
-          *popup_width = gimp_item_get_height (item);
+          *popup_width  = gimp_item_get_width  (item);
+          *popup_height = gimp_item_get_height (item);
         }
 
       return TRUE;
