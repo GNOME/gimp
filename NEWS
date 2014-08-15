@@ -7,6 +7,48 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.8.10 to GIMP 2.8.12
+===================================================
+
+
+Core:
+
+ - OSX: Fix migration code for old GIMP directories
+ - Fix brush sizes when used from plug-ins
+ - Windows: Allow to Explorer-open files with UTF-8 characters in the filename
+ - Make XCF loading more robust against broken files
+
+
+GUI:
+
+ - Make sure the widget direction matches the GUI language
+ - Remove the option to disable the warning when closing a modified image
+ - Fix canvas overlay widgets (like the text options) for tablets
+ - Make DND work between images in one dockable
+
+
+Libgimp:
+
+ - Make gimp_image_get_name() return the string used for the image title
+
+
+Plug-ins:
+
+ - Make script-fu-server more secure by running to 127.0.0.1 by
+   default and add a warning about changing that IP. This breaks the
+   procedure's API, but for security reasons.
+ - Bring back proper script-fu translations
+
+
+General:
+
+ - Massively clean up and fix the OSX build and bundle
+ - Add Jenkins tutorial
+ - Documentation updates
+ - Bug fixes
+ - Translation updates
+
+
 Overview of Changes from GIMP 2.8.8 to GIMP 2.8.10
 ==================================================
 
