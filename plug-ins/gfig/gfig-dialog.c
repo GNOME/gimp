@@ -1620,7 +1620,6 @@ save_file_chooser_response (GtkFileChooser *chooser,
 
       gfig_context->current_obj = obj;
       gfig_save_callbk ();
-      gfig_context->current_obj = gfig_context->current_obj;
     }
 
   gtk_widget_destroy (GTK_WIDGET (chooser));

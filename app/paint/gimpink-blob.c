@@ -159,7 +159,7 @@ gimp_blob_square (gdouble xc,
 
   /* Make sure we order points ccw */
 
-  if (xp * yq - yq * xp < 0)
+  if (xp * yq - xq * yp < 0)
     {
       xq = -xq;
       yq = -yq;
@@ -192,7 +192,7 @@ gimp_blob_diamond (gdouble xc,
 
   /* Make sure we order points ccw */
 
-  if (xp * yq - yq * xp < 0)
+  if (xp * yq - xq * yp < 0)
     {
       xq = -xq;
       yq = -yq;
@@ -275,7 +275,7 @@ gimp_blob_ellipse (gdouble xc,
 
   /* Make sure we traverse ellipse in ccw direction */
 
-  if (xp * yq - yq * xp < 0)
+  if (xp * yq - xq * yp < 0)
     {
       xq = -xq;
       yq = -yq;
