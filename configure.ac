@@ -323,6 +323,7 @@ AC_SUBST(WINDRES)
 # Checks for programs.
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
+AC_PROG_LN_S
 
 # Large file support for the swap file
 AC_SYS_LARGEFILE

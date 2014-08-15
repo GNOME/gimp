@@ -33,7 +33,7 @@ TESTS = \
 EXTRA_PROGRAMS = $(TESTS)
 CLEANFILES = $(EXTRA_PROGRAMS)
 
-$(TESTS): gimpdir-output
+$(TESTS): gimpdir-output gimp-test-icon-theme
 
 noinst_LIBRARIES = libgimpapptestutils.a
 libgimpapptestutils_a_SOURCES = \
@@ -137,5 +137,14 @@ gimpdir-output:
 	mkdir -p gimpdir-output/patterns
 	mkdir -p gimpdir-output/gradients
 
+gimp-test-icon-theme:
+	mkdir -p $$(echo $$(find ../../icons/ -name [0-9][0-9] -type d | sed 's@.*/\([0-9][0-9]\)$$@gimp-test-icon-theme/hicolor/\1x\1@'))
+	for dir in $$(echo $$(find ../../icons/ -name [0-9][0-9] -type d | sed 's@.*/\([0-9][0-9]\)$$@\1@')); do \
+		(cd gimp-test-icon-theme/hicolor/$${dir}x$${dir}/ && \
+		$(LN_S) ../../../../../icons/$${dir} apps); \
+	done
+	(cd gimp-test-icon-theme/hicolor && $(LN_S) ../../../../icons/index.theme index.theme)
+
 clean-local:
 	rm -rf gimpdir-output
+	rm -fr gimp-test-icon-theme
