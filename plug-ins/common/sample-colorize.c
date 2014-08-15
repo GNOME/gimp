@@ -893,7 +893,7 @@ update_preview (gint32 *id_ptr)
 
   if (g_Sdebug)
     printf ("UPD PREVIEWS   ID:%d ENABLE_UPD:%d\n",
-            (int)*id_ptr, (int)g_di.enable_preview_update);
+            id_ptr ? (int) *id_ptr : -1, (int)g_di.enable_preview_update);
 
   if (id_ptr == NULL || !g_di.enable_preview_update)
     return;

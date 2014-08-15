@@ -1505,8 +1505,7 @@ add_layers (gint32     image_id,
                       gimp_layer_set_apply_mask (layer_id,
                                                  ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
                     }
-                  if (pixels)
-                    g_free (pixels);
+                  g_free (pixels);
                 }
             }
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
