@@ -1014,7 +1014,7 @@ lcms_layers_transform_rgb (gint                     *layers,
                                       dest_profile, lcms_format,
                                       intent,
                                       cmsFLAGS_NOOPTIMIZE |
-                                      bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0);
+                                      (bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0));
 
       if (transform)
         {
@@ -1095,7 +1095,7 @@ lcms_image_transform_indexed (gint32                    image,
                                   dest_profile, format,
                                   intent,
                                   cmsFLAGS_NOOPTIMIZE |
-                                  bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0);
+                                  (bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0));
 
   if (transform)
     {

@@ -193,8 +193,8 @@ gimp_g_value_get_memsize (GValue *value)
           GimpArray *array = g_value_get_boxed (value);
 
           if (array)
-            memsize += (sizeof (GimpArray) +
-                        array->static_data ? 0 : array->length);
+            memsize += sizeof (GimpArray) +
+                       (array->static_data ? 0 : array->length);
         }
       else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
         {

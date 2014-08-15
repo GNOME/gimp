@@ -895,7 +895,7 @@ script_fu_menu_map (const gchar *menu_path)
         {
           const gchar *suffix = menu_path + strlen (mapping[i].old);
 
-          if (! *suffix == '/')
+          if (*suffix != '/')
             continue;
 
           return g_strconcat (mapping[i].new, suffix, NULL);
