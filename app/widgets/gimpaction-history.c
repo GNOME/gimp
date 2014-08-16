@@ -79,7 +79,7 @@ gimp_action_history_init (Gimp *gimp)
   GFile         *file;
   GScanner      *scanner;
   GTokenType     token;
-  gint           count;
+  gint           count = 0;
   gint           n_items = 0;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
