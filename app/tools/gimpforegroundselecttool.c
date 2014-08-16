@@ -831,7 +831,7 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
     {
       gint    x      = fg_select->last_coords.x;
       gint    y      = fg_select->last_coords.y;
-      gdouble radius = options->stroke_width / 2;;
+      gdouble radius = options->stroke_width / 2.0f;
 
       if (fg_select->stroke)
         {
