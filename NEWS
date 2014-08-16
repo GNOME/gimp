@@ -34,7 +34,7 @@ Libgimp:
 
 Plug-ins:
 
- - Make script-fu-server more secure by running to 127.0.0.1 by
+ - Make script-fu-server more secure by listening to 127.0.0.1 by
    default and add a warning about changing that IP. This breaks the
    procedure's API, but for security reasons.
  - Bring back proper script-fu translations
