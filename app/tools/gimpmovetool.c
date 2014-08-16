@@ -329,47 +329,40 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
     case GIMP_TRANSFORM_TYPE_LAYER:
       {
+        GimpTranslateMode mode;
+
         active_item  = GIMP_ITEM (gimp_image_get_active_drawable (image));
         null_message = _("There is no layer to move.");
 
         if (GIMP_IS_LAYER_MASK (active_item))
           {
             locked_message = _("The active layer's position is locked.");
-
-            if (! gimp_item_is_position_locked (active_item))
-              {
-                gimp_tool_control_activate (tool->control);
-                gimp_edit_selection_tool_start (tool, display, coords,
-                                                GIMP_TRANSLATE_MODE_LAYER_MASK,
-                                                TRUE);
-                return;
-              }
+            mode = GIMP_TRANSLATE_MODE_LAYER_MASK;
           }
         else if (GIMP_IS_CHANNEL (active_item))
           {
             locked_message = _("The active channel's position is locked.");
-
-            if (! gimp_item_is_position_locked (active_item))
-              {
-                gimp_tool_control_activate (tool->control);
-                gimp_edit_selection_tool_start (tool, display, coords,
-                                                GIMP_TRANSLATE_MODE_CHANNEL,
-                                                TRUE);
-                return;
-              }
+            mode = GIMP_TRANSLATE_MODE_CHANNEL;
           }
         else if (GIMP_IS_LAYER (active_item))
           {
             locked_message = _("The active layer's position is locked.");
+            mode = GIMP_TRANSLATE_MODE_LAYER;
+          }
+        else if (active_item)
+          {
+            g_warn_if_reached ();
+          }
 
-            if (! gimp_item_is_position_locked (active_item))
-              {
-                gimp_tool_control_activate (tool->control);
-                gimp_edit_selection_tool_start (tool, display, coords,
-                                                GIMP_TRANSLATE_MODE_LAYER,
-                                                TRUE);
-                return;
-              }
+        if (active_item && ! gimp_item_is_position_locked (active_item))
+          {
+            /* if there's a selection, make a floating selection */
+            if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+              mode = GIMP_TRANSLATE_MODE_MASK_TO_LAYER;
+
+            gimp_tool_control_activate (tool->control);
+            gimp_edit_selection_tool_start (tool, display, coords, mode, TRUE);
+            return;
           }
       }
       break;
