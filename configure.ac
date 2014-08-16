@@ -1515,7 +1515,7 @@ if test "x$with_poppler" != xno; then
         [have_poppler='yes (Cyrillic and CJK support: no or poppler-data < poppler_data_required_version)']
       )
     ],
-    have_poppler="Using PostScript plug-in (libpoppler not found)")
+    have_poppler="Using PostScript plug-in (libpoppler-glib not found)")
 else
   have_poppler="Using PostScript plug-in (libpoppler support disabled)"
 fi

@@ -82,9 +82,9 @@ header files installed.
 
  10. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
-     to check that the following libraries are installed: libpoppler,
-     libtiff, webkit, libmng, librsvg, libwmf, libgs (Ghostscript),
-     libaa and libjasper.
+     to check that the following libraries are installed: libjasper,
+     libpoppler-glib, libtiff, webkit, libmng, librsvg, libwmf, libaa
+     and libgs (Ghostscript).
 
      Note that to be able to render CJK (Asian) and Cyrillic characters
      in pdf-imported files, the data package `poppler-data` needs to be
@@ -141,7 +141,7 @@ header files installed.
      libjasper		-		JPEG 2000
      libmng		-		MNG
      openexr		@OPENEXR_REQUIRED_VERSION@		OpenEXR
-     libpoppler		@POPPLER_REQUIRED_VERSION@		PDF import
+     libpoppler-glib	@POPPLER_REQUIRED_VERSION@		PDF import
      poppler-data	@POPPLER_DATA_REQUIRED_VERSION@		PDF import (optional: rendering of CJK and Cyrillic)
      cairo-pdf		@CAIRO_PDF_REQUIRED_VERSION@		PDF export
      python 2		@PYTHON2_REQUIRED_VERSION@		Python plug-ins
