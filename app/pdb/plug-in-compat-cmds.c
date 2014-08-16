@@ -761,9 +761,9 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
 
           switch (bmode)
             {
-            case 0: border = GEGL_ABYSS_CLAMP;
-            case 1: border = GEGL_ABYSS_LOOP;
-            case 2: border = GEGL_ABYSS_NONE;
+            case 0: border = GEGL_ABYSS_CLAMP; break;
+            case 1: border = GEGL_ABYSS_LOOP; break;
+            case 2: border = GEGL_ABYSS_NONE; break;
             }
 
           node = gegl_node_new_child (NULL,
