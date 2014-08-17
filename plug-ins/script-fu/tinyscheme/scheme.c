@@ -2123,8 +2123,7 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
      } else if (l == sc->EOF_OBJ) {
           p = "#<EOF>";
      } else if (is_port(l)) {
-          p = sc->strbuff;
-          snprintf(p, STRBUFFSIZE, "#<PORT>");
+          p = "#<PORT>";
      } else if (is_number(l)) {
           p = sc->strbuff;
           if (f <= 1 || f == 10) /* f is the base for numbers if > 1 */ {
@@ -2179,17 +2178,17 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
           } else {
                switch(c) {
                case ' ':
-                    snprintf(p,STRBUFFSIZE,"#\\space"); break;
+                    p = "#\\space";
                case '\n':
-                    snprintf(p,STRBUFFSIZE,"#\\newline"); break;
+                    p = "#\\newline";
                case '\r':
-                    snprintf(p,STRBUFFSIZE,"#\\return"); break;
+                    p = "#\\return";
                case '\t':
-                    snprintf(p,STRBUFFSIZE,"#\\tab"); break;
+                    p = "#\\tab";
                default:
 #if USE_ASCII_NAMES
                     if(c==127) {
-                         snprintf(p,STRBUFFSIZE, "#\\del");
+                         p = "#\\del";
                          break;
                     } else if(c<32) {
                          snprintf(p,STRBUFFSIZE, "#\\%s", charnames[c]);
