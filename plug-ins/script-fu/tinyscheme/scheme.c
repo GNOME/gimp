@@ -5114,6 +5114,8 @@ void scheme_load_named_file(scheme *sc, FILE *fin, const char *filename) {
   sc->load_stack[0].rep.stdio.curr_line = 0;
   if(fin!=stdin && filename)
     sc->load_stack[0].rep.stdio.filename = store_string(sc, strlen(filename), filename, 0);
+  else
+    sc->load_stack[0].rep.stdio.filename = NULL;
 #endif
 
   sc->inport=sc->loadport;
