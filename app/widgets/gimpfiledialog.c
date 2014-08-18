@@ -560,7 +560,9 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
        */
       ext_file = gimp_image_get_file (image);
 
-      if (! ext_file)
+      if (ext_file)
+        g_object_ref (ext_file);
+      else
         ext_file = g_file_new_for_uri ("file:///we/only/care/about/extension.xcf");
     }
   else /* if (export) */
@@ -636,7 +638,9 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
         ext_file = g_object_get_data (G_OBJECT (gimp),
                                       GIMP_FILE_EXPORT_LAST_FILE_KEY);
 
-      if (! ext_file)
+      if (ext_file)
+        g_object_ref (ext_file);
+      else
         ext_file = g_file_new_for_uri ("file:///we/only/care/about/extension.png");
     }
 
@@ -645,6 +649,7 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
       GFile *tmp_file = file_utils_file_with_new_ext (name_file, ext_file);
       basename = g_path_get_basename (gimp_file_get_utf8_name (tmp_file));
       g_object_unref (tmp_file);
+      g_object_unref (ext_file);
     }
   else
     {
