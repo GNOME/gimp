@@ -692,12 +692,18 @@ resolve_sh_bang (GimpInterpreterDB  *db,
     {
       if (strcmp ("/usr/bin/env", name) == 0)
         {
-          program = g_hash_table_lookup (db->programs, cp);
-          if (program)
-            return g_strdup (program);
+          /* Shift program name and arguments to the right. */
+          name = cp;
+
+          for ( ; *cp && (*cp != ' ') && (*cp != '\t'); cp++)
+            ;
+
+          while ((*cp == ' ') || (*cp == '\t'))
+            *cp++ = '\0';
         }
 
-      *interp_arg = g_strdup (cp);
+      if (*cp)
+        *interp_arg = g_strdup (cp);
     }
 
   program = g_hash_table_lookup (db->programs, name);
