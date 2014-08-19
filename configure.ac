@@ -1274,13 +1274,24 @@ AC_SUBST(Z_LIBS)
 # Check for libbzip2
 ####################
 
+gimp_save_LIBS=$LIBS
+LIBS="$LIBS -lbz2"
+
 if test -z "$BZIP2_LIBS"; then
-  AC_CHECK_LIB(bz2, BZ2_bzCompress,
-    [AC_CHECK_HEADER(bzlib.h,
-      BZIP2_LIBS='-lbz2',
-      AC_MSG_ERROR([libbzip2 header files not found]))],
-    AC_MSG_ERROR([libbzip2 library not found]))
+  # We used to use AC_CHECK_LIB, but bz2 uses the WINAPI calling convention on
+  # windows, so the test needs to #include <bzlib.h> to be able to link properly
+  AC_CHECK_HEADER(bzlib.h,
+    [AC_MSG_CHECKING([for BZ2_bzCompress in -lbz2]);
+    AC_LINK_IFELSE(
+      [AC_LANG_PROGRAM(
+        [#include <bzlib.h>],
+        [BZ2_bzCompress (NULL, 0);])],
+      [AC_MSG_RESULT([yes]); BZIP2_LIBS='-lbz2'],
+      AC_MSG_ERROR([libbzip2 library not found]))],
+    AC_MSG_ERROR([libbzip2 header files not found]))
 fi
+
+LIBS=$gimp_save_LIBS
 
 AC_SUBST(BZIP2_LIBS)
 
