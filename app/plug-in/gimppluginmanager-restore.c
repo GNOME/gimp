@@ -209,11 +209,11 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
   const gchar *path_str;
   GList       *path;
   GList       *list;
+
+#ifdef G_OS_WIN32
   const gchar *pathext = g_getenv ("PATHEXT");
 
-  /*  If PATHEXT is set, we are likely on Windows and need to add
-   *  the known file extensions.
-   */
+  /*  On Windows, we need to add the known file extensions in PATHEXT. */
   if (pathext)
     {
       gchar *exts;
@@ -232,6 +232,7 @@ gimp_plug_in_manager_search (GimpPlugInManager  *manager,
           g_free (exts);
         }
     }
+#endif /* G_OS_WIN32 */
 
   status_callback (_("Searching Plug-Ins"), "", 0.0);
 
