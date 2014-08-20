@@ -69,7 +69,8 @@ EXTRA_DIST = \
 	authors.xml		\
 	authors.xsl		\
 	config.h.win32		\
-	gimp-zip.in
+	gimp-zip.in		\
+	gtk-doc.make
 
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
