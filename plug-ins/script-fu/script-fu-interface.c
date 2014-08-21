@@ -719,6 +719,16 @@ script_fu_brush_callback (gpointer              data,
 }
 
 static void
+unset_transient_for (GtkWidget *dialog)
+{
+  GdkWindow *window = gtk_widget_get_window (dialog);
+
+  if (window)
+    gdk_property_delete (window,
+                         gdk_atom_intern_static_string ("WM_TRANSIENT_FOR"));
+}
+
+static void
 script_fu_response (GtkWidget *widget,
                     gint       response_id,
                     SFScript  *script)
@@ -747,6 +757,13 @@ script_fu_response (GtkWidget *widget,
       while (g_main_context_pending (NULL))
         g_main_context_iteration (NULL, TRUE);
 #endif
+      /*
+       * The script could have created a new GimpImageWindow, so
+       * unset the transient-for property not to focus the
+       * ImageWindow from which the script was started
+       */
+      unset_transient_for (sf_interface->dialog);
+
       gtk_widget_destroy (sf_interface->dialog);
       break;
 
