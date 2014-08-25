@@ -67,7 +67,7 @@ static void      gimp_display_shell_close_accel_marshal(GClosure         *closur
                                                         const GValue     *param_values,
                                                         gpointer          invocation_hint,
                                                         gpointer          marshal_data);
-static void      gimp_time_since                       (guint             then,
+static void      gimp_time_since                       (gint64            then,
                                                         gint             *hours,
                                                         gint             *minutes);
 
@@ -290,7 +290,7 @@ static gboolean
 gimp_display_shell_close_time_changed (GimpMessageBox *box)
 {
   GimpImage   *image       = g_object_get_data (G_OBJECT (box), "gimp-image");
-  gint         dirty_time  = gimp_image_get_dirty_time (image);
+  gint64       dirty_time  = gimp_image_get_dirty_time (image);
   gchar       *time_text   = NULL;
   gchar       *export_text = NULL;
 
@@ -413,12 +413,12 @@ gimp_display_shell_close_accel_marshal (GClosure     *closure,
 }
 
 static void
-gimp_time_since (guint  then,
+gimp_time_since (gint64 then,
                  gint  *hours,
                  gint  *minutes)
 {
-  guint now  = time (NULL);
-  guint diff = 1 + now - then;
+  gint64 now  = time (NULL);
+  gint64 diff = 1 + now - then;
 
   g_return_if_fail (now >= then);
 

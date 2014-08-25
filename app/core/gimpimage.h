@@ -271,7 +271,7 @@ void            gimp_image_clean_all             (GimpImage          *image);
 void            gimp_image_export_clean_all      (GimpImage          *image);
 gint            gimp_image_is_dirty              (const GimpImage    *image);
 gboolean        gimp_image_is_export_dirty       (const GimpImage    *image);
-gint            gimp_image_get_dirty_time        (const GimpImage    *image);
+gint64          gimp_image_get_dirty_time        (const GimpImage    *image);
 
 
 /*  flush this image's displays  */

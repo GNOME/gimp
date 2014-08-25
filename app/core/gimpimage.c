@@ -3065,7 +3065,7 @@ gimp_image_is_export_dirty (const GimpImage *image)
   return GIMP_IMAGE_GET_PRIVATE (image)->export_dirty != 0;
 }
 
-gint
+gint64
 gimp_image_get_dirty_time (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);

@@ -65,7 +65,7 @@ struct _GimpImagePrivate
   GFile             *untitled_file;         /*  a file saying "Untitled"     */
 
   gint               dirty;                 /*  dirty flag -- # of ops       */
-  guint              dirty_time;            /*  time when image became dirty */
+  gint64             dirty_time;            /*  time when image became dirty */
   gint               export_dirty;          /*  'dirty' but for export       */
 
   gint               undo_freeze_count;     /*  counts the _freeze's         */
