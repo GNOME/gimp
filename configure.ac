@@ -1450,7 +1450,7 @@ AM_CONDITIONAL(HAVE_OPENEXR, test "x$have_openexr" = xyes)
 # Check for webkit
 ##################
 
-AC_ARG_WITH(webkit, [  --without-webkit        don't build the help-browser plug-in])
+AC_ARG_WITH(webkit, [  --without-webkit        don't build the help-browser and web-page plug-ins])
 
 have_webkit=no
 if test "x$with_webkit" != xno; then
