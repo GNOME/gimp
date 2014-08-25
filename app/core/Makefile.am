@@ -403,13 +403,7 @@ libappcore_a_built_sources = \
 libappcore_a_extra_sources = \
 	gimpmarshal.list
 
-libappcore_a_SOURCES = \
-	$(libappcore_a_built_sources)	\
-	$(libappcore_a_sources)
-
-DISTCLEANFILES = \
-	gimpmarshal.c	\
-	gimpmarshal.h
+libappcore_a_SOURCES = $(libappcore_a_built_sources) $(libappcore_a_sources)
 
 EXTRA_DIST = \
 	$(libappcore_a_extra_sources)
