@@ -42,7 +42,7 @@
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 # specified the size defaults to being specified in kilobytes.
 # 
-# (tile-cache-size 2147483647)
+# (tile-cache-size 6132474k)
 
 # Specifies the language to use for the user interface.  This is a string
 # value.
@@ -447,11 +447,6 @@
 # 
 # (image-status-format "%n (%m)")
 
-# Ask for confirmation before closing an image without saving.  Possible
-# values are yes and no.
-# 
-# (confirm-on-close yes)
-
 # Sets the monitor's horizontal resolution, in dots per inch.  If set to 0,
 # forces the X server to be queried for both horizontal and vertical
 # resolution information.  This is a float value.
@@ -675,9 +670,7 @@
 # When enabled, the online user manual will be used by the help system.
 # Otherwise the locally installed copy is used.  Possible values are yes and
 # no.
-# Because the user manual is not shipped with GIMP by default, we set this
-# value to 'yes'. 
-#
+# 
 # (user-manual-online yes)
 
 # The location of the online user manual. This is used if

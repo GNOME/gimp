@@ -60,7 +60,7 @@ Sets how many processors GIMP should try to use simultaneously.  This is an
 integer value.
 
 .TP
-(tile-cache-size 2147483647)
+(tile-cache-size 6132474k)
 
 When the amount of pixel data exceeds this limit, GIMP will start to swap
 tiles to disk.  This is a lot slower but it makes it possible to work on
@@ -588,12 +588,6 @@ certain % character sequences are recognised and expanded as follows:
 .br
 
 .TP
-(confirm-on-close yes)
-
-Ask for confirmation before closing an image without saving.  Possible values
-are yes and no.
-
-.TP
 (monitor-xresolution 96.000000)
 
 Sets the monitor's horizontal resolution, in dots per inch.  If set to 0,
@@ -852,7 +846,7 @@ Sets the browser used by the help system.  Possible values are gimp and
 web-browser.
 
 .TP
-(user-manual-online no)
+(user-manual-online yes)
 
 When enabled, the online user manual will be used by the help system.
 Otherwise the locally installed copy is used.  Possible values are yes and no.
