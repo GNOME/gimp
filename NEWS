@@ -7,6 +7,15 @@ This is the stable branch of GIMP. No new features are being added
 here, just bug-fixes.
 
 
+Overview of Changes from GIMP 2.8.12 to GIMP 2.8.14
+===================================================
+
+
+General:
+
+ - Fix libtool versioning (forgot to bump gimp_interface_age)
+
+
 Overview of Changes from GIMP 2.8.10 to GIMP 2.8.12
 ===================================================
 
