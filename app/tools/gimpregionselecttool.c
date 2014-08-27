@@ -315,9 +315,6 @@ gimp_region_select_tool_draw (GimpDrawTool *draw_tool)
 
   if (! options->draw_mask && region_sel->region_mask)
     {
-      gint off_x = 0;
-      gint off_y = 0;
-
       if (! region_sel->segs)
         {
           /*  calculate and allocate a new segment array which represents
@@ -334,19 +331,25 @@ gimp_region_select_tool_draw (GimpDrawTool *draw_tool)
 
         }
 
-      if (! options->sample_merged)
+      if (region_sel->segs)
         {
-          GimpImage    *image    = gimp_display_get_image (draw_tool->display);
-          GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+          gint off_x = 0;
+          gint off_y = 0;
 
-          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+          if (! options->sample_merged)
+            {
+              GimpImage    *image    = gimp_display_get_image (draw_tool->display);
+              GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+
+              gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+            }
+
+          gimp_draw_tool_add_boundary (draw_tool,
+                                       region_sel->segs,
+                                       region_sel->n_segs,
+                                       NULL,
+                                       off_x, off_y);
         }
-
-      gimp_draw_tool_add_boundary (draw_tool,
-                                   region_sel->segs,
-                                   region_sel->n_segs,
-                                   NULL,
-                                   off_x, off_y);
     }
 }
 
