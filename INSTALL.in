@@ -74,11 +74,10 @@ header files installed.
      be installed. All these libraries are required dependencies.
 
   8. For metadata access GIMP requires the gexiv2 library. It is hosted
-     at http://redmine.yorba.org/projects/gexiv2/wiki .
+     at https://wiki.gnome.org/Projects/gexiv2 .
 
-  9. Some other third party libraries or programs are needed for some
-     of the available plug-ins. libpng, libjpeg and lcms are hard
-     dependencies that can not be disabled.
+  9. libpng, libjpeg and lcms are hard dependencies that can not be
+     disabled.
 
  10. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
