@@ -90,12 +90,13 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
                                          gint                 x,
                                          gint                 y)
 {
-  GeglBuffer *src_buffer;
-  GeglBuffer *mask_buffer;
-  const Babl *format;
-  gint        n_components;
-  gboolean    has_alpha;
-  gfloat      start_col[MAX_CHANNELS];
+  GeglBuffer    *src_buffer;
+  GeglBuffer    *mask_buffer;
+  const Babl    *format;
+  GeglRectangle  extent;
+  gint           n_components;
+  gboolean       has_alpha;
+  gfloat         start_col[MAX_CHANNELS];
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
@@ -125,18 +126,23 @@ gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
       select_transparent = FALSE;
     }
 
-  mask_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
-                                 babl_format ("Y float"));
+  extent = *gegl_buffer_get_extent (src_buffer);
 
-  GIMP_TIMER_START();
+  mask_buffer = gegl_buffer_new (&extent, babl_format ("Y float"));
 
-  find_contiguous_region (src_buffer, mask_buffer,
-                          format, n_components, has_alpha,
-                          select_transparent, select_criterion,
-                          antialias, threshold,
-                          x, y, start_col);
+  if (x >= extent.x && x < (extent.x + extent.width) &&
+      y >= extent.y && y < (extent.y + extent.height))
+    {
+      GIMP_TIMER_START();
 
-  GIMP_TIMER_END("foo")
+      find_contiguous_region (src_buffer, mask_buffer,
+                              format, n_components, has_alpha,
+                              select_transparent, select_criterion,
+                              antialias, threshold,
+                              x, y, start_col);
+
+      GIMP_TIMER_END("foo");
+    }
 
   return mask_buffer;
 }
