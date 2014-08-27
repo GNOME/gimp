@@ -28,6 +28,7 @@ EXTRA_DIST = \
 	gih.txt  			\
 	gpb.txt  			\
 	includes.txt			\
+	libtool-instructions.txt	\
 	parasites.txt			\
 	pat.txt				\
 	gegl-porting-plan.txt		\

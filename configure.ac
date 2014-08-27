@@ -3,8 +3,11 @@
 AC_PREREQ(2.54)
 
 # Making releases on the stable branch:
-#   GIMP_MICRO_VERSION += 1;
-#   GIMP_INTERFACE_AGE += 1;
+#   gimp_micro_version += 1;
+#   gimp_interface_age += 1;
+#
+# For a description of libtool version variables, see:
+# devel-docs/libtool-instructions.txt
 
 m4_define([gimp_major_version], [2])
 m4_define([gimp_minor_version], [9])

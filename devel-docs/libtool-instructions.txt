@@ -1,0 +1,65 @@
+configure.ac libtool settings
+=============================
+
+This is a brief description of how the various version variables at the
+top of configure.ac are to be set, including gimp_interface_age and
+gimp_binary_age.
+
+See the arithmetic under the "libtool versioning" comment heading in
+configure.ac as a reference.
+
+See https://www.gnu.org/software/libtool/manual/html_node/Libtool-versioning.html
+for definitions of libtool "current", "revision" and "age" numbers as
+used below.
+
+When making a release
+---------------------
+
+(1) When making releases on the stable branch, set:
+  gimp_micro_version += 1;
+  gimp_interface_age += 1;
+
+  If gimp_binary_age is defined as a constant, set gimp_binary_age += 1;
+  else if gimp_binary_age is defined as an m4_eval(), leave it as it is.
+
+  The default gimp_binary_age m4_eval() expression auto-increments
+  itself.
+
+(2) NEVER increment gimp_interface_age and gimp_binary_age by more than
+1 at any time for whatever reason, or you will have to wear a brown
+paper bag on your head to hide your face for the rest of your life. If
+you increment gimp_interface_age by more than 1, then the libtool
+"current" number is decremented which could result in incompatible
+library interface with existing bin programs.
+
+(3) If any functions have been added, set gimp_interface_age=0. This
+will cause the "current" and "age" part of libtool version to bump
+upwards, increasing the interface number the library implements while
+keeping the minimum interface number supported the same as before
+(i.e., backwards compatible ABI).
+
+  Example: In GIMP 2.8.10, with gimp_minor_version=8,
+  gimp_micro_version=10 and gimp_interface_age=10 (incremented by 1
+  for every micro release), current=800 and age=800, which means that
+  the libraries support interface numbers 0 through 800, and the
+  interface DID NOT change at all between GIMP 2.8.0 to GIMP 2.8.10.
+
+  Example: In GIMP 2.8.12, with gimp_minor_version=8,
+  gimp_micro_version=12 and gimp_interface_age=0, current=812 and
+  age=812, which means that the libraries support interface numbers 0
+  through 812, and the ABI interface DID change in backwards
+  compatible manner at the time gimp_interface_age was set to 0.
+
+(4) If backwards compatibility was broken, set gimp_binary_age=0 and
+gimp_interface_age=0. This will cause "age" part of libtool version to
+be 0, increasing the minimum interface supported to "current" part of
+libtool version, and making ABI backwards incompatible (the linker
+will not be able to use these libraries with programs compiled to work
+against older libraries.
+
+  Example: In GIMP 2.8.14, with gimp_minor_version=8,
+  gimp_micro_version=14, gimp_binary_age=0 and gimp_interface_age=0,
+  current=814 and age=0, which means that the libraries support
+  interface number 814 only, which tells libtool the ABI interface
+  changed in backwards incompatible manner at the time
+  gimp_binary_age was set to 0.
