@@ -25,7 +25,8 @@
  ( ) Bump the version number to an even micro in configure.ac and
      commit this change. It should be the version number of the
      release you are about to make. Releases always have even micro
-     numbers.
+     numbers. Don't forget to also bump the interface age for stable
+     releases. For devel releases, read libtool-instructions.txt.
 
  ( ) Make dist tarballs:
 
@@ -88,7 +89,9 @@
 
  ( ) Bump the version number (past the tagged version) in configure.ac
      to the next odd micro and commit this change. GIT version always
-     have odd micro numbers.
+     have odd micro numbers. Don't forget to also bump the interface
+     age for stable releases. For devel releases, read
+     libtool-instructions.txt.
 
  ( ) Grab a properly chilled beverage and enjoy yourself.
 
