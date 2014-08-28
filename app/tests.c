@@ -95,8 +95,8 @@ gimp_init_icon_theme_for_testing (void)
 }
 
 static Gimp *
-gimp_init_for_gui_testing_internal (gboolean     show_gui,
-                                    const gchar *gimprc)
+gimp_init_for_gui_testing_internal (gboolean  show_gui,
+                                    GFile    *gimprc)
 {
   GimpSessionInfoClass *klass;
   Gimp                 *gimp;
@@ -164,8 +164,8 @@ gimp_init_for_gui_testing (gboolean show_gui)
  * Returns: The #Gimp instance.
  **/
 Gimp *
-gimp_init_for_gui_testing_with_rc (gboolean     show_gui,
-                                   const gchar *gimprc)
+gimp_init_for_gui_testing_with_rc (gboolean  show_gui,
+                                   GFile    *gimprc)
 {
   return gimp_init_for_gui_testing_internal (show_gui, gimprc);
 }
