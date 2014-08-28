@@ -326,6 +326,10 @@ ReadBMP (const gchar  *name,
 
       if (Bitmap_Head.biCompr == BI_BITFIELDS)
         {
+#ifdef DEBUG
+          g_print ("Got BI_BITFIELDS compression\n");
+#endif
+
           if (!ReadOK (fd, buffer, 3 * sizeof (guint32)))
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -341,6 +345,10 @@ ReadBMP (const gchar  *name,
         }
       else if (Bitmap_Head.biCompr == BI_RGB)
         {
+#ifdef DEBUG
+          g_print ("Got BI_RGB compression\n");
+#endif
+
           setMasksDefault (Bitmap_Head.biBitCnt, masks);
         }
       else if ((Bitmap_Head.biCompr != BI_RLE4) && (Bitmap_Head.biCompr != BI_RLE8))
@@ -351,6 +359,10 @@ ReadBMP (const gchar  *name,
                        Bitmap_Head.biCompr,
                        gimp_filename_to_utf8 (filename));
         }
+
+#ifdef DEBUG
+      g_print ("Got BI_RLE4 or BI_RLE8 compression\n");
+#endif
     }
   else if (Bitmap_File_Head.biSize >= 56 && Bitmap_File_Head.biSize <= 64)
     /* enhanced Windows format with bit masks */
@@ -412,10 +424,18 @@ ReadBMP (const gchar  *name,
 
       if (Bitmap_Head.biCompr == BI_BITFIELDS)
         {
+#ifdef DEBUG
+          g_print ("Got BI_BITFIELDS compression\n");
+#endif
+
           ReadChannelMasks (&Bitmap_Head.masks[0], masks, 4);
         }
       else if (Bitmap_Head.biCompr == BI_RGB)
         {
+#ifdef DEBUG
+          g_print ("Got BI_RGB compression\n");
+#endif
+
           setMasksDefault (Bitmap_Head.biBitCnt, masks);
         }
     }
