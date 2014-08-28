@@ -725,11 +725,11 @@ ReadImage (FILE                  *fd,
             for (xpos= 0; xpos < width; ++xpos)
               {
                 px32 = ToL(&row_buf[xpos*4]);
-                *(temp++) = (px32 & masks[0].mask) >> masks[0].shiftin;
-                *(temp++) = (px32 & masks[1].mask) >> masks[1].shiftin;
-                *(temp++) = (px32 & masks[2].mask) >> masks[2].shiftin;
+                *(temp++) = ((px32 & masks[0].mask) >> masks[0].shiftin) * 255.0 / masks[0].max_value + 0.5;
+                *(temp++) = ((px32 & masks[1].mask) >> masks[1].shiftin) * 255.0 / masks[1].max_value + 0.5;
+                *(temp++) = ((px32 & masks[2].mask) >> masks[2].shiftin) * 255.0 / masks[2].max_value + 0.5;
                 if (channels > 3)
-                  *(temp++)= (px32 & masks[3].mask) >> masks[3].shiftin;
+                  *(temp++) = ((px32 & masks[3].mask) >> masks[3].shiftin) * 255.0 / masks[3].max_value + 0.5;
               }
             if (ypos == 0)
               break;
