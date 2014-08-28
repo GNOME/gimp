@@ -514,8 +514,8 @@ ReadBMP (const gchar  *name,
   rowbytes= ((Bitmap_Head.biWidth * Bitmap_Head.biBitCnt - 1) / 32) * 4 + 4;
 
 #ifdef DEBUG
-  printf ("\nSize: %u, Colors: %u, Bits: %u, Width: %u, Height: %u, "
-          "Comp: %u, Zeile: %u\n",
+  printf ("\nSize: %lu, Colors: %lu, Bits: %hu, Width: %ld, Height: %ld, "
+          "Comp: %lu, Zeile: %d\n",
           Bitmap_File_Head.bfSize,
           Bitmap_Head.biClrUsed,
           Bitmap_Head.biBitCnt,
