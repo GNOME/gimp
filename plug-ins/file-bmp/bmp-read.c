@@ -705,11 +705,11 @@ ReadImage (FILE                  *fd,
             for (xpos= 0; xpos < width; ++xpos)
               {
                 px32 = ToL(&row_buf[xpos*4]);
-                *(temp++)= (guchar)((px32 & masks[0].mask) >> masks[0].shiftin);
-                *(temp++)= (guchar)((px32 & masks[1].mask) >> masks[1].shiftin);
-                *(temp++)= (guchar)((px32 & masks[2].mask) >> masks[2].shiftin);
+                *(temp++) = (px32 & masks[0].mask) >> masks[0].shiftin;
+                *(temp++) = (px32 & masks[1].mask) >> masks[1].shiftin;
+                *(temp++) = (px32 & masks[2].mask) >> masks[2].shiftin;
                 if (channels > 3)
-                  *(temp++)= (guchar)((px32 & masks[3].mask) >> masks[3].shiftin);
+                  *(temp++)= (px32 & masks[3].mask) >> masks[3].shiftin;
               }
             if (ypos == 0)
               break;
@@ -729,9 +729,9 @@ ReadImage (FILE                  *fd,
             temp = dest + (ypos * rowstride);
             for (xpos= 0; xpos < width; ++xpos)
               {
-                *(temp++)= row_buf[xpos * 3 + 2];
-                *(temp++)= row_buf[xpos * 3 + 1];
-                *(temp++)= row_buf[xpos * 3];
+                *(temp++) = row_buf[xpos * 3 + 2];
+                *(temp++) = row_buf[xpos * 3 + 1];
+                *(temp++) = row_buf[xpos * 3];
               }
             if (ypos == 0)
               break;
@@ -752,11 +752,11 @@ ReadImage (FILE                  *fd,
             for (xpos= 0; xpos < width; ++xpos)
               {
                 rgb= ToS(&row_buf[xpos * 2]);
-                *(temp++) = (guchar)(((rgb & masks[0].mask) >> masks[0].shiftin) * 255.0 / masks[0].max_value + 0.5);
-                *(temp++) = (guchar)(((rgb & masks[1].mask) >> masks[1].shiftin) * 255.0 / masks[1].max_value + 0.5);
-                *(temp++) = (guchar)(((rgb & masks[2].mask) >> masks[2].shiftin) * 255.0 / masks[2].max_value + 0.5);
+                *(temp++) = ((rgb & masks[0].mask) >> masks[0].shiftin) * 255.0 / masks[0].max_value + 0.5;
+                *(temp++) = ((rgb & masks[1].mask) >> masks[1].shiftin) * 255.0 / masks[1].max_value + 0.5;
+                *(temp++) = ((rgb & masks[2].mask) >> masks[2].shiftin) * 255.0 / masks[2].max_value + 0.5;
                 if (channels > 3)
-                  *(temp++) = (guchar)(((rgb & masks[3].mask) >> masks[3].shiftin) * 255.0 / masks[3].max_value + 0.5);
+                  *(temp++) = ((rgb & masks[3].mask) >> masks[3].shiftin) * 255.0 / masks[3].max_value + 0.5;
               }
             if (ypos == 0)
               break;
@@ -814,7 +814,7 @@ ReadImage (FILE                  *fd,
                     break;
                   }
 
-                if ((guchar) row_buf[0] != 0)
+                if (row_buf[0] != 0)
                   /* Count + Color - record */
                   {
                     /* encoded mode run -
@@ -822,7 +822,7 @@ ReadImage (FILE                  *fd,
                          row_buf[1] == pixel data
                     */
                     for (j = 0;
-                         ((guchar) j < (guchar) row_buf[0]) && (xpos < width);)
+                         ((guchar) j < row_buf[0]) && (xpos < width);)
                       {
 #ifdef DEBUG2
                         printf("%u %u | ",xpos,width);
@@ -830,7 +830,7 @@ ReadImage (FILE                  *fd,
                         for (i = 1;
                              ((i <= (8 / bpp)) &&
                               (xpos < width) &&
-                              ((guchar) j < (unsigned char) row_buf[0]));
+                              ((guchar) j < row_buf[0]));
                              i++, xpos++, j++)
                           {
                             temp = dest + (ypos * rowstride) + (xpos * channels);
@@ -841,7 +841,7 @@ ReadImage (FILE                  *fd,
                           }
                       }
                   }
-                if (((guchar) row_buf[0] == 0) && ((guchar) row_buf[1] > 2))
+                if ((row_buf[0] == 0) && (row_buf[1] > 2))
                   /* uncompressed record */
                   {
                     n = row_buf[1];
@@ -880,7 +880,7 @@ ReadImage (FILE                  *fd,
                     if (total_bytes_read % 2)
                       fread(&v, 1, 1, fd);
                   }
-                if (((guchar) row_buf[0] == 0) && ((guchar) row_buf[1] == 0))
+                if ((row_buf[0] == 0) && (row_buf[1] == 0))
                   /* Line end */
                   {
                     ypos--;
@@ -891,12 +891,12 @@ ReadImage (FILE                  *fd,
                       gimp_progress_update ((gdouble) cur_progress /
                                             (gdouble)  max_progress);
                   }
-                if (((guchar) row_buf[0] == 0) && ((guchar) row_buf[1] == 1))
+                if ((row_buf[0] == 0) && (row_buf[1] == 1))
                   /* Bitmap end */
                   {
                     break;
                   }
-                if (((guchar) row_buf[0] == 0) && ((guchar) row_buf[1] == 2))
+                if ((row_buf[0] == 0) && (row_buf[1] == 2))
                   /* Deltarecord */
                   {
                     if (!ReadOK (fd, row_buf, 2))
@@ -904,8 +904,8 @@ ReadImage (FILE                  *fd,
                         g_message (_("The bitmap ends unexpectedly."));
                         break;
                       }
-                    xpos += (guchar) row_buf[0];
-                    ypos -= (guchar) row_buf[1];
+                    xpos += row_buf[0];
+                    ypos -= row_buf[1];
                   }
               }
             break;
