@@ -746,11 +746,11 @@ plug_in_convmatrix_invoker (GimpProcedure         *procedure,
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
           GeglNode        *node;
-          GeglAbyssPolicy  border;
-          gboolean         r = channels[1];
-          gboolean         g = channels[2];
-          gboolean         b = channels[3];
-          gboolean         a = channels[4];
+          GeglAbyssPolicy  border = GEGL_ABYSS_CLAMP;
+          gboolean         r      = channels[1];
+          gboolean         g      = channels[2];
+          gboolean         b      = channels[3];
+          gboolean         a      = channels[4];
 
           if (gimp_drawable_is_gray (drawable))
             {
