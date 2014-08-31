@@ -607,7 +607,6 @@ gimp_stroke_options_prepare (GimpStrokeOptions *options,
           }
 
         g_object_set (options, "paint-options", paint_options, NULL);
-        g_object_unref (paint_options);
       }
       break;
 
