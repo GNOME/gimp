@@ -58,7 +58,7 @@ static gboolean         gimp_pickable_colors_alpha  (guchar       *col1,
 
 /*  public functions  */
 
-gboolean
+GimpAutoShrink
 gimp_pickable_auto_shrink (GimpPickable *pickable,
                            gint          start_x1,
                            gint          start_y1,
@@ -78,7 +78,7 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
   gint             width, height;
   const Babl      *format;
   gint             x, y, abort;
-  gboolean         retval = FALSE;
+  GimpAutoShrink   retval = GIMP_AUTO_SHRINK_UNSHRINKABLE;
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
   g_return_val_if_fail (shrunk_x1 != NULL, FALSE);
@@ -144,7 +144,10 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
         abort = ! colors_equal_func (bgcolor, buf + x * 4);
     }
   if (y == y2 && !abort)
-    goto FINISH;
+    {
+      retval = GIMP_AUTO_SHRINK_EMPTY;
+      goto FINISH;
+    }
   y1 = y - 1;
 
   /* Check how many of the bottom lines are uniform/transparent. */
@@ -201,8 +204,6 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
     }
   x2 = x + 1;
 
- FINISH:
-
   if (x1 != start_x1 || y1 != start_y1 ||
       x2 != start_x2 || y2 != start_y2)
     {
@@ -211,8 +212,10 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
       *shrunk_x2 = x2;
       *shrunk_y2 = y2;
 
-      retval = TRUE;
+      retval = GIMP_AUTO_SHRINK_SHRINK;
     }
+
+ FINISH:
 
   g_free (buf);
   gimp_unset_busy (gimp_pickable_get_image (pickable)->gimp);

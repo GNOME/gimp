@@ -430,26 +430,33 @@ plug_in_autocrop_invoker (GimpProcedure         *procedure,
         {
           gint x1, y1, x2, y2;
 
-          if (gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
-                                         0, 0,
-                                         gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                         gimp_item_get_height (GIMP_ITEM (drawable)),
-                                         &x1, &y1, &x2, &y2))
+          switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+                                             0, 0,
+                                             gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                             gimp_item_get_height (GIMP_ITEM (drawable)),
+                                             &x1, &y1, &x2, &y2))
             {
-              gint off_x, off_y;
+            case GIMP_AUTO_SHRINK_SHRINK:
+              {
+                gint off_x, off_y;
 
-              gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+                gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
 
-              x1 += off_x; x2 += off_x;
-              y1 += off_y; y2 += off_y;
+                x1 += off_x; x2 += off_x;
+                y1 += off_y; y2 += off_y;
 
-              gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                                           _("Autocrop image"));
+                gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                                             _("Autocrop image"));
 
-              gimp_image_crop (image, context,
-                               x2 - x1, y2 - y1, -x1, -y1, TRUE);
+                gimp_image_crop (image, context,
+                                 x2 - x1, y2 - y1, -x1, -y1, TRUE);
 
-              gimp_image_undo_group_end (image);
+                gimp_image_undo_group_end (image);
+              }
+              break;
+
+            default:
+              break;
             }
         }
       else
@@ -483,20 +490,27 @@ plug_in_autocrop_layer_invoker (GimpProcedure         *procedure,
           GimpLayer *layer = gimp_image_get_active_layer (image);
           gint       x1, y1, x2, y2;
 
-          if (layer &&
-              gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
-                                         0, 0,
-                                         gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                         gimp_item_get_height (GIMP_ITEM (drawable)),
-                                         &x1, &y1, &x2, &y2))
+          if (layer)
             {
-              gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                                           _("Autocrop layer"));
+              switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+                                                 0, 0,
+                                                 gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                                 gimp_item_get_height (GIMP_ITEM (drawable)),
+                                                 &x1, &y1, &x2, &y2))
+                {
+                case GIMP_AUTO_SHRINK_SHRINK:
+                  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                                               _("Autocrop layer"));
 
-              gimp_item_resize (GIMP_ITEM (layer), context,
-                                x2 - x1, y2 - y1, -x1, -y1);
+                  gimp_item_resize (GIMP_ITEM (layer), context,
+                                    x2 - x1, y2 - y1, -x1, -y1);
 
-              gimp_image_undo_group_end (image);
+                  gimp_image_undo_group_end (image);
+                  break;
+
+                default:
+                  break;
+                }
             }
         }
       else

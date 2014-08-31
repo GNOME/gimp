@@ -525,21 +525,30 @@ image_crop_to_content_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_pickable_auto_shrink (GIMP_PICKABLE (image),
-                                   0, 0,
-                                   gimp_image_get_width  (image),
-                                   gimp_image_get_height (image),
-                                   &x1, &y1, &x2, &y2))
+  switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (image),
+                                     0, 0,
+                                     gimp_image_get_width  (image),
+                                     gimp_image_get_height (image),
+                                     &x1, &y1, &x2, &y2))
     {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            _("Cannot crop because the image has no content."));
-      return;
-    }
+    case GIMP_AUTO_SHRINK_SHRINK:
+      gimp_image_crop (image, action_data_get_context (data),
+                       x1, y1, x2, y2, TRUE);
+      gimp_image_flush (image);
+      break;
 
-  gimp_image_crop (image, action_data_get_context (data),
-                   x1, y1, x2, y2, TRUE);
-  gimp_image_flush (image);
+    case GIMP_AUTO_SHRINK_EMPTY:
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_INFO,
+                            _("Cannot crop because the image has no content."));
+      break;
+
+    case GIMP_AUTO_SHRINK_UNSHRINKABLE:
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_INFO,
+                            _("Cannot crop because the image is already cropped to its content."));
+      break;
+    }
 }
 
 void
