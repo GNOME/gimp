@@ -115,9 +115,9 @@ static void   gimp_blend_tool_update_item_hilight (GimpBlendTool         *blend_
 
 static GimpBlendToolPoint gimp_blend_tool_get_point_under_cursor (GimpBlendTool *blend_tool);
 
-static void   gimp_blend_tool_start               (GimpBlendTool         *bt,
+static void   gimp_blend_tool_start_preview       (GimpBlendTool         *bt,
                                                    GimpDisplay           *display);
-static void   gimp_blend_tool_halt                (GimpBlendTool         *bt);
+static void   gimp_blend_tool_halt_preview        (GimpBlendTool         *bt);
 static void   gimp_blend_tool_commit              (GimpBlendTool         *bt);
 
 static void   gimp_blend_tool_push_status         (GimpBlendTool         *blend_tool,
@@ -274,7 +274,7 @@ gimp_blend_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      gimp_blend_tool_halt (blend_tool);
+      gimp_blend_tool_halt_preview (blend_tool);
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:
@@ -316,7 +316,7 @@ gimp_blend_tool_button_press (GimpTool            *tool,
   if (tool->display && display != tool->display)
     {
       gimp_tool_pop_status (tool, tool->display);
-      gimp_blend_tool_halt (blend_tool);
+      gimp_blend_tool_halt_preview (blend_tool);
     }
 
   blend_tool->grabbed_point = gimp_blend_tool_get_point_under_cursor (blend_tool);
@@ -344,14 +344,6 @@ gimp_blend_tool_button_press (GimpTool            *tool,
 
   gimp_blend_tool_point_motion (blend_tool,
                                 state & gimp_get_constrain_behavior_mask ());
-
-  /*
-   * gimp_blend_tool_start comes after determining what point is grabbed, so
-   * whenever we're starting the tool, gimp_blend_tool_get_point_under_cursor()
-   * returns POINT_NONE
-   */
-  if (! tool->display)
-    gimp_blend_tool_start (blend_tool, display);
 
   tool->display = display;
   gimp_blend_tool_update_items (blend_tool);
@@ -419,11 +411,8 @@ gimp_blend_tool_motion (GimpTool         *tool,
 
   if (blend_tool->grabbed_point == POINT_INIT_MODE)
     {
-      GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (blend_tool);
-
-      gimp_draw_tool_pause (draw_tool);
       blend_tool->grabbed_point = POINT_END;
-      gimp_draw_tool_resume (draw_tool);
+      gimp_blend_tool_start_preview (blend_tool, display);
     }
 
   /* Move the whole line if alt is pressed */
@@ -447,8 +436,7 @@ gimp_blend_tool_motion (GimpTool         *tool,
   gimp_tool_pop_status (tool, display);
   gimp_blend_tool_push_status (blend_tool, state, display);
 
-  if (GIMP_IS_CANVAS_LINE (blend_tool->line))
-    gimp_blend_tool_update_items (blend_tool);
+  gimp_blend_tool_update_items (blend_tool);
 
   gimp_blend_tool_update_preview_coords (blend_tool);
   gimp_image_map_apply (blend_tool->image_map, NULL);
@@ -584,64 +572,58 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpBlendTool   *blend_tool = GIMP_BLEND_TOOL (draw_tool);
 
-  if (blend_tool->grabbed_point != POINT_FILL_MODE &&
-      blend_tool->grabbed_point != POINT_INIT_MODE)
-    {
-      blend_tool->line =
-        gimp_draw_tool_add_line (draw_tool,
-                                 blend_tool->start_x,
-                                 blend_tool->start_y,
-                                 blend_tool->end_x,
-                                 blend_tool->end_y);
+  blend_tool->line =
+    gimp_draw_tool_add_line (draw_tool,
+                             blend_tool->start_x,
+                             blend_tool->start_y,
+                             blend_tool->end_x,
+                             blend_tool->end_y);
 
-      gimp_canvas_item_set_visible (blend_tool->line, SHOW_LINE);
+  gimp_canvas_item_set_visible (blend_tool->line, SHOW_LINE);
 
-      blend_tool->start_handle_circle =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_CIRCLE,
-                                   blend_tool->start_x,
-                                   blend_tool->start_y,
-                                   HANDLE_DIAMETER,
-                                   HANDLE_DIAMETER,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
+  blend_tool->start_handle_circle =
+    gimp_draw_tool_add_handle (draw_tool,
+                               GIMP_HANDLE_CIRCLE,
+                               blend_tool->start_x,
+                               blend_tool->start_y,
+                               HANDLE_DIAMETER,
+                               HANDLE_DIAMETER,
+                               GIMP_HANDLE_ANCHOR_CENTER);
 
-      blend_tool->start_handle_cross =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_CROSS,
-                                   blend_tool->start_x,
-                                   blend_tool->start_y,
-                                   HANDLE_CROSS_DIAMETER,
-                                   HANDLE_CROSS_DIAMETER,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
+  blend_tool->start_handle_cross =
+    gimp_draw_tool_add_handle (draw_tool,
+                               GIMP_HANDLE_CROSS,
+                               blend_tool->start_x,
+                               blend_tool->start_y,
+                               HANDLE_CROSS_DIAMETER,
+                               HANDLE_CROSS_DIAMETER,
+                               GIMP_HANDLE_ANCHOR_CENTER);
 
-      blend_tool->end_handle_circle =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_CIRCLE,
-                                   blend_tool->end_x,
-                                   blend_tool->end_y,
-                                   HANDLE_DIAMETER,
-                                   HANDLE_DIAMETER,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
+  blend_tool->end_handle_circle =
+    gimp_draw_tool_add_handle (draw_tool,
+                               GIMP_HANDLE_CIRCLE,
+                               blend_tool->end_x,
+                               blend_tool->end_y,
+                               HANDLE_DIAMETER,
+                               HANDLE_DIAMETER,
+                               GIMP_HANDLE_ANCHOR_CENTER);
 
-      blend_tool->end_handle_cross =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_CROSS,
-                                   blend_tool->end_x,
-                                   blend_tool->end_y,
-                                   HANDLE_CROSS_DIAMETER,
-                                   HANDLE_CROSS_DIAMETER,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
+  blend_tool->end_handle_cross =
+    gimp_draw_tool_add_handle (draw_tool,
+                               GIMP_HANDLE_CROSS,
+                               blend_tool->end_x,
+                               blend_tool->end_y,
+                               HANDLE_CROSS_DIAMETER,
+                               HANDLE_CROSS_DIAMETER,
+                               GIMP_HANDLE_ANCHOR_CENTER);
 
-      gimp_blend_tool_update_item_hilight (blend_tool);
-    }
+  gimp_blend_tool_update_item_hilight (blend_tool);
 }
 
 static void
 gimp_blend_tool_update_items (GimpBlendTool *blend_tool)
 {
-  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)) &&
-      blend_tool->grabbed_point != POINT_FILL_MODE &&
-      blend_tool->grabbed_point != POINT_INIT_MODE)
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
     {
       gimp_canvas_line_set (blend_tool->line,
                             blend_tool->start_x,
@@ -765,8 +747,8 @@ gimp_blend_tool_get_point_under_cursor (GimpBlendTool *blend_tool)
 }
 
 static void
-gimp_blend_tool_start (GimpBlendTool         *blend_tool,
-                       GimpDisplay           *display)
+gimp_blend_tool_start_preview (GimpBlendTool *blend_tool,
+                               GimpDisplay   *display)
 {
   GimpTool         *tool     = GIMP_TOOL (blend_tool);
   GimpImage        *image    = gimp_display_get_image (display);
@@ -793,7 +775,7 @@ gimp_blend_tool_start (GimpBlendTool         *blend_tool,
 }
 
 static void
-gimp_blend_tool_halt (GimpBlendTool *blend_tool)
+gimp_blend_tool_halt_preview (GimpBlendTool *blend_tool)
 {
   GimpTool *tool = GIMP_TOOL (blend_tool);
 
