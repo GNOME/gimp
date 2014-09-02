@@ -101,7 +101,7 @@
 	</dependencies>
 </autotools>
 
-<autotools id="icu-native" autogen-sh=" || env -i source/runConfigureICU Linux ; true " makeinstallargs=" -f ../../fake.mk ">
+<autotools id="icu-native" autogen-sh=" || env -i PATH=$PATH source/runConfigureICU Linux ; true " makeinstallargs=" -f ../../fake.mk ">
 	<branch version="51.2" repo="icu-project.org"
 			checkoutdir="icu-native"
 			module="icu4c/51.2/icu4c-51_2-src.tgz"
