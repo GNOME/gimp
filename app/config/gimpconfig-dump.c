@@ -335,7 +335,8 @@ static const gchar display_format_description[] =
 "%x  the width of the active layer/channel in pixels\n"
 "%X  the width of the active layer/channel in real-world units\n"
 "%y  the height of the active layer/channel in pixels\n"
-"%Y  the height of the active layer/channel in real-world units\n\n";
+"%Y  the height of the active layer/channel in real-world units\n"
+"%o  the name of the image's color profile\n\n";
 
 
 static gchar *
