@@ -519,10 +519,10 @@ gimp_get_fill_params (GimpContext   *context,
                       GError       **error)
 
 {
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (color != NULL, NULL);
-  g_return_val_if_fail (pattern != NULL, NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (color != NULL, FALSE);
+  g_return_val_if_fail (pattern != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   *pattern = NULL;
 
