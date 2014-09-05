@@ -77,6 +77,7 @@
 #include "splash.h"
 #include "themes.h"
 #ifdef GDK_WINDOWING_QUARTZ
+#import <AppKit/AppKit.h>
 #include <gtkosxapplication.h>
 #endif /* GDK_WINDOWING_QUARTZ */
 
@@ -491,6 +492,9 @@ gui_restore_after_callback (Gimp               *gimp,
     GtkosxApplication *osx_app;
     GtkWidget         *menu;
     GtkWidget         *item;
+
+    [[NSUserDefaults standardUserDefaults] setObject:@"NO"
+                                           forKey:@"NSTreatUnknownArgumentsAsOpen"];
 
     osx_app = gtkosx_application_get ();
 
