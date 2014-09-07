@@ -202,7 +202,10 @@ minver = list(map(int, '$2'.split('.'))) + [[0, 0, 0]]
 minverhex = 0
 # xrange is not present in Python 3.0 and range returns an iterator
 for i in list(range(0, 4)): minverhex = (minverhex << 8) + minver[[i]]
-sys.exit(sys.version_info.major != 2 or sys.hexversion < minverhex)"
+# sys.version_info.major only available since Python 2.7.
+# use sys.version_info[0] instead.
+# Double the square brackets for M4 syntax.
+sys.exit(sys.version_info[[0]] != 2 or sys.hexversion < minverhex)"
   AS_IF([AM_RUN_LOG([$1 -c "$prog"])], [$3], [$4])])
 
 
