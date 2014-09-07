@@ -74,7 +74,6 @@ static gboolean     gimp_config_writer_close_output (GimpConfigWriter  *writer,
 static inline void
 gimp_config_writer_flush (GimpConfigWriter *writer)
 {
-  gsize   bytes_written;
   GError *error = NULL;
 
   if (! writer->output)
@@ -83,8 +82,7 @@ gimp_config_writer_flush (GimpConfigWriter *writer)
   if (! g_output_stream_write_all (writer->output,
                                    writer->buffer->str,
                                    writer->buffer->len,
-                                   &bytes_written,
-                                   NULL, &error))
+                                   NULL, NULL, &error))
     {
       g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
                    _("Error writing to '%s': %s"),
@@ -658,12 +656,10 @@ gimp_config_writer_linefeed (GimpConfigWriter *writer)
 
   if (writer->output && writer->buffer->len == 0 && !writer->comment)
     {
-      gsize   bytes_written;
       GError *error = NULL;
 
       if (! g_output_stream_write_all (writer->output, "\n", 1,
-                                       &bytes_written,
-                                       NULL, &error))
+                                       NULL, NULL, &error))
         {
           g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
                        _("Error writing to '%s': %s"),

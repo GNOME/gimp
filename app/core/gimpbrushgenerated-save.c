@@ -41,7 +41,6 @@ gimp_brush_generated_save (GimpData       *data,
   const gchar        *name  = gimp_object_get_name (data);
   GString            *string;
   gchar               buf[G_ASCII_DTOSTR_BUF_SIZE];
-  gsize               bytes_written;
   gboolean            have_shape = FALSE;
 
   g_return_val_if_fail (name != NULL && *name != '\0', FALSE);
@@ -107,8 +106,7 @@ gimp_brush_generated_save (GimpData       *data,
                                            brush->angle));
 
   if (! g_output_stream_write_all (output, string->str, string->len,
-                                   &bytes_written, NULL, error) ||
-      bytes_written != string->len)
+                                   NULL, NULL, error))
     {
       g_string_free (string, TRUE);
 

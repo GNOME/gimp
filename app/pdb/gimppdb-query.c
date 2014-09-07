@@ -422,8 +422,7 @@ gimp_pdb_print_entry (gpointer key,
   GEnumClass    *proc_class;
   GString       *buf;
   GString       *string;
-  gsize          bytes_written;
-  gint           num   = 0;
+  gint           num = 0;
 
   if (pdb_dump->error)
     return;
@@ -596,7 +595,7 @@ gimp_pdb_print_entry (gpointer key,
     }
 
   g_output_stream_write_all (output, string->str, string->len,
-                             &bytes_written, NULL, &pdb_dump->error);
+                             NULL, NULL, &pdb_dump->error);
 
   g_string_free (string, TRUE);
   g_string_free (buf, TRUE);

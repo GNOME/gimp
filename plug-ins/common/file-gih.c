@@ -1185,7 +1185,6 @@ gih_save_one_brush (GOutputStream  *output,
   GimpImageType  drawable_type;
   gint           bpp;
   guint          y;
-  gsize          bytes_written;
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
@@ -1222,15 +1221,13 @@ gih_save_one_brush (GOutputStream  *output,
   bh.spacing      = g_htonl (info.spacing);
 
   if (! g_output_stream_write_all (output, &bh, sizeof (bh),
-                                   &bytes_written, NULL, error) ||
-      bytes_written != sizeof (bh))
+                                   NULL, NULL, error))
     {
       return FALSE;
     }
 
   if (! g_output_stream_write_all (output, name, strlen (name) + 1,
-                                   &bytes_written, NULL, error) ||
-      bytes_written != strlen (name) + 1)
+                                   NULL, NULL, error))
     {
       return FALSE;
     }
@@ -1254,8 +1251,7 @@ gih_save_one_brush (GOutputStream  *output,
         }
 
       if (! g_output_stream_write_all (output, data, rect->width * bpp,
-                                       &bytes_written, NULL, error) ||
-          bytes_written != rect->width * bpp)
+                                       NULL, NULL, error))
         {
           g_free (data);
           return FALSE;
@@ -1286,7 +1282,6 @@ gih_save_image (GFile    *file,
   gint           imagew, imageh;
   gint           offsetx, offsety;
   gint           k;
-  gsize          bytes_written;
 
   if (gihparams.ncells < 1)
     return FALSE;
@@ -1307,8 +1302,7 @@ gih_save_image (GFile    *file,
                             info.description, gihparams.ncells, parstring);
 
   if (! g_output_stream_write_all (output, header, strlen (header),
-                                   &bytes_written, NULL, error) ||
-      bytes_written != strlen (header))
+                                   NULL, NULL, error))
     {
       g_free (parstring);
       g_free (header);

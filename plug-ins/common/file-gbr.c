@@ -647,7 +647,6 @@ save_image (GFile   *file,
   gint           width;
   gint           height;
   GimpRGB        gray, white;
-  gsize          bytes_written;
 
   gimp_rgba_set_uchar (&white, 255, 255, 255, 255);
 
@@ -693,8 +692,7 @@ save_image (GFile   *file,
   bh.spacing      = g_htonl (info.spacing);
 
   if (! g_output_stream_write_all (output, &bh, sizeof (BrushHeader),
-                                   &bytes_written, NULL, error) ||
-      bytes_written != sizeof (BrushHeader))
+                                   NULL, NULL, error))
     {
       g_object_unref (output);
       return FALSE;
@@ -703,8 +701,7 @@ save_image (GFile   *file,
   if (! g_output_stream_write_all (output,
                                    info.description,
                                    strlen (info.description) + 1,
-                                   &bytes_written, NULL, error) ||
-      bytes_written != strlen (info.description) + 1)
+                                   NULL, NULL, error))
     {
       g_object_unref (output);
       return FALSE;
@@ -744,8 +741,7 @@ save_image (GFile   *file,
         }
 
       if (! g_output_stream_write_all (output, brush_buf, width * file_bpp,
-                                       &bytes_written, NULL, error) ||
-          bytes_written != width * file_bpp)
+                                       NULL, NULL, error))
         {
           g_free (brush_buf);
           g_object_unref (output);

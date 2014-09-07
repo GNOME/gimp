@@ -603,7 +603,6 @@ gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
                                GError           **error)
 {
   GString *string;
-  gsize    bytes_written;
   gint     i;
 
   g_return_val_if_fail (GIMP_IS_CURVES_CONFIG (config), FALSE);
@@ -667,8 +666,7 @@ gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
     }
 
   if (! g_output_stream_write_all (output, string->str, string->len,
-                                   &bytes_written, NULL, error) ||
-      bytes_written != string->len)
+                                   NULL, NULL, error))
     {
       g_prefix_error (error, _("Writing curves file failed: "));
       g_string_free (string, TRUE);

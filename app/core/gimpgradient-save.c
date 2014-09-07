@@ -39,7 +39,6 @@ gimp_gradient_save (GimpData       *data,
   GString             *string;
   GimpGradientSegment *seg;
   gint                 num_segments;
-  gsize                bytes_written;
 
   /* File format is:
    *
@@ -108,8 +107,7 @@ gimp_gradient_save (GimpData       *data,
     }
 
   if (! g_output_stream_write_all (output, string->str, string->len,
-                                   &bytes_written, NULL, error) ||
-      bytes_written != string->len)
+                                   NULL, NULL, error))
     {
       g_string_free (string, TRUE);
 
@@ -131,7 +129,6 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
   GimpGradientSegment *seg;
   gchar                buf[G_ASCII_DTOSTR_BUF_SIZE];
   gchar                color_buf[4][G_ASCII_DTOSTR_BUF_SIZE];
-  gsize                bytes_written;
   GError              *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), FALSE);
@@ -214,8 +211,7 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
   g_string_append_printf (string, "} /* color_map */\n");
 
   if (! g_output_stream_write_all (output, string->str, string->len,
-                                   &bytes_written, NULL, &my_error) ||
-      bytes_written != string->len)
+                                   NULL, NULL, &my_error))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_WRITE,
                    _("Writing POV file '%s' failed: %s"),

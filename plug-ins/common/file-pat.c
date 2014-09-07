@@ -486,7 +486,6 @@ save_image (GFile   *file,
   gint           height;
   gint           line_size;
   gint           line;
-  gsize          bytes_written;
 
   switch (gimp_drawable_type (drawable_ID))
     {
@@ -535,8 +534,7 @@ save_image (GFile   *file,
   ph.magic_number = g_htonl (GPATTERN_MAGIC);
 
   if (! g_output_stream_write_all (output, &ph, sizeof (PatternHeader),
-                                   &bytes_written, NULL, error) ||
-      bytes_written != sizeof (PatternHeader))
+                                   NULL, NULL, error))
     {
       g_object_unref (output);
       return FALSE;
@@ -544,8 +542,7 @@ save_image (GFile   *file,
 
   if (! g_output_stream_write_all (output,
                                    description, strlen (description) + 1,
-                                   &bytes_written, NULL, error) ||
-      bytes_written != strlen (description) + 1)
+                                   NULL, NULL, error))
     {
       g_object_unref (output);
       return FALSE;
@@ -563,8 +560,7 @@ save_image (GFile   *file,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       if (! g_output_stream_write_all (output, buf, line_size,
-                                       &bytes_written, NULL, error) ||
-          bytes_written != line_size)
+                                       NULL, NULL, error))
         {
           g_object_unref (buffer);
           g_object_unref (output);

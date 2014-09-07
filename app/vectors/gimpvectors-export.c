@@ -65,7 +65,6 @@ gimp_vectors_export_file (const GimpImage    *image,
 {
   GOutputStream *output;
   GString       *string;
-  gsize          bytes_written;
   GError        *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -89,8 +88,7 @@ gimp_vectors_export_file (const GimpImage    *image,
   string = gimp_vectors_export (image, vectors);
 
   if (! g_output_stream_write_all (output, string->str, string->len,
-                                   &bytes_written, NULL, &my_error) ||
-      bytes_written != string->len)
+                                   NULL, NULL, &my_error))
     {
       g_set_error (error, my_error->domain, my_error->code,
                    _("Writing SVG file '%s' failed: %s"),

@@ -1508,12 +1508,10 @@ gimp_text_buffer_save (GimpTextBuffer *buffer,
 
   if (text_contents)
     {
-      gint  text_length = strlen (text_contents);
-      gsize bytes_written;
+      gint text_length = strlen (text_contents);
 
       if (! g_output_stream_write_all (output, text_contents, text_length,
-                                       &bytes_written, NULL, &my_error) ||
-          bytes_written != text_length)
+                                       NULL, NULL, &my_error))
         {
           g_set_error (error, my_error->domain, my_error->code,
                        _("Writing palette file '%s' failed: %s"),

@@ -870,16 +870,7 @@ output_write (GOutputStream *output,
               gsize          count,
               GError       **error)
 {
-  gsize bytes_written;
-
-  if (! g_output_stream_write_all (output, buffer, count,
-                                   &bytes_written, NULL, error) ||
-      bytes_written != count)
-    {
-      return FALSE;
-    }
-
-  return TRUE;
+  return g_output_stream_write_all (output, buffer, count, NULL, NULL, error);
 }
 
 /* Writes out mono raw rows */

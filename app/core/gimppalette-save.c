@@ -40,7 +40,6 @@ gimp_palette_save (GimpData       *data,
   GimpPalette *palette = GIMP_PALETTE (data);
   GString     *string;
   GList       *list;
-  gsize        bytes_written;
 
   string = g_string_new ("GIMP Palette\n");
 
@@ -65,8 +64,7 @@ gimp_palette_save (GimpData       *data,
     }
 
   if (! g_output_stream_write_all (output, string->str, string->len,
-                                   &bytes_written, NULL, error) ||
-      bytes_written != string->len)
+                                   NULL, NULL, error))
     {
       g_string_free (string, TRUE);
 
