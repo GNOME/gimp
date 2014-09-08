@@ -939,12 +939,18 @@ gradient_put_pixel (gint      x,
 
   if (ppd->dither_rand)
     {
-      gint i = g_rand_int (ppd->dither_rand);
+      gfloat r, g, b, a;
+      gint   i = g_rand_int (ppd->dither_rand);
 
-      *dest++ = color->r + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-      *dest++ = color->g + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-      *dest++ = color->b + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-      *dest++ = color->a + (gdouble) (i & 0xff) / 256.0 / 256.0;
+      r = color->r + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
+      g = color->g + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
+      b = color->b + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
+      a = color->a + (gdouble) (i & 0xff) / 256.0 / 256.0;
+
+      *dest++ = MAX (r, 0.0);
+      *dest++ = MAX (g, 0.0);
+      *dest++ = MAX (b, 0.0);
+      *dest++ = MAX (a, 0.0);
     }
   else
     {
@@ -1058,7 +1064,7 @@ gimp_operation_blend_process (GeglOperation       *operation,
 
   if (self->supersample)
     {
-      PutPixelData  ppd = {0, };
+      PutPixelData  ppd = { 0, };
 
       ppd.buffer      = output;
       ppd.row_data    = g_malloc (sizeof (float) * 4 * result->width);
@@ -1097,8 +1103,8 @@ gimp_operation_blend_process (GeglOperation       *operation,
       while (gegl_buffer_iterator_next (iter))
         {
           gfloat *dest = iter->data[0];
-          gint    endx  = roi->x + roi->width;
-          gint    endy  = roi->y + roi->height;
+          gint    endx = roi->x + roi->width;
+          gint    endy = roi->y + roi->height;
           gint    x, y;
 
           if (rbd.seed)
@@ -1109,14 +1115,20 @@ gimp_operation_blend_process (GeglOperation       *operation,
                 for (x = roi->x; x < endx; x++)
                   {
                     GimpRGB  color = { 0.0, 0.0, 0.0, 1.0 };
+                    gfloat   r, g, b, a;
                     gint     i = g_rand_int (dither_rand);
 
                     gradient_render_pixel (x, y, &color, &rbd);
 
-                    *dest++ = color.r + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-                    *dest++ = color.g + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-                    *dest++ = color.b + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
-                    *dest++ = color.a + (gdouble) (i & 0xff) / 256.0 / 256.0;
+                    r = color.r + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
+                    g = color.g + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
+                    b = color.b + (gdouble) (i & 0xff) / 256.0 / 256.0; i >>= 8;
+                    a = color.a + (gdouble) (i & 0xff) / 256.0 / 256.0;
+
+                    *dest++ = MAX (r, 0.0);
+                    *dest++ = MAX (g, 0.0);
+                    *dest++ = MAX (b, 0.0);
+                    *dest++ = MAX (a, 0.0);
                   }
 
               g_rand_free (dither_rand);
