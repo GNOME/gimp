@@ -688,6 +688,7 @@
 			<dep package="gtk+-2.24" />
 			<dep package="libtiff" />
 			<dep package="libxml2" />
+			<dep package="poppler-data" />
 		</dependencies>
 	</autotools>
 
