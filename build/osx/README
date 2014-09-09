@@ -170,5 +170,5 @@ gimp-master-python-bundle   configuration for gtk-mac-bundler (GIMP master)
 info-2.8-python.plist       OS X application metadata (GIMP 2.8)
 info-master-python.plist    OS X application metadata (GIMP master)
 launcher-python.sh          GIMP starter in the OS X application package
-patches                     Patches as long as their are not accepted upstream
+patches                     Patches as long as they are not accepted upstream
 xcf.icns                    application icon
