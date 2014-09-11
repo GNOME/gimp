@@ -15,21 +15,23 @@
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2008, 2012.
 # Janne Peltonen <peltzi@gimp-suomi.org>, 2012.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2014.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2014.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-05-21 05:22+0000\n"
-"PO-Revision-Date: 2014-05-21 18:17+0300\n"
-"Last-Translator: Lasse Liehu <lasse.liehu@gmail.com>\n"
-"Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
+"POT-Creation-Date: 2014-09-10 05:25+0000\n"
+"PO-Revision-Date: 2014-09-10 10:24+0300\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
+"Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Gtranslator 2.91.6\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -268,7 +270,7 @@ msgstr "Sivellinmuokkain"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:112 ../app/core/gimp.c:951
-#: ../app/dialogs/dialogs.c:317 ../app/dialogs/preferences-dialog.c:2732
+#: ../app/dialogs/dialogs.c:317 ../app/dialogs/preferences-dialog.c:2746
 msgid "Brushes"
 msgstr "Siveltimet"
 
@@ -315,7 +317,7 @@ msgstr "Telakoitava"
 
 #. Document History
 #: ../app/actions/actions.c:145 ../app/dialogs/dialogs.c:329
-#: ../app/dialogs/preferences-dialog.c:1566
+#: ../app/dialogs/preferences-dialog.c:1577
 msgid "Document History"
 msgstr "Asiakirjahistoria"
 
@@ -346,7 +348,7 @@ msgid "File"
 msgstr "Tiedosto"
 
 #: ../app/actions/actions.c:166 ../app/dialogs/dialogs.c:325
-#: ../app/dialogs/preferences-dialog.c:2752
+#: ../app/dialogs/preferences-dialog.c:2766
 msgid "Fonts"
 msgstr "Fontit"
 
@@ -357,12 +359,12 @@ msgstr "Liukuvärin muokkain"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:172 ../app/core/gimp.c:971
-#: ../app/dialogs/dialogs.c:321 ../app/dialogs/preferences-dialog.c:2748
+#: ../app/dialogs/dialogs.c:321 ../app/dialogs/preferences-dialog.c:2762
 msgid "Gradients"
 msgstr "Liukuvärit"
 
 #: ../app/actions/actions.c:175 ../app/core/gimp.c:983
-#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2756
+#: ../app/dialogs/dialogs.c:337 ../app/dialogs/preferences-dialog.c:2770
 msgid "Tool Presets"
 msgstr "Työkalun esivalinnat"
 
@@ -396,23 +398,23 @@ msgstr "Paletin muokkain"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:196 ../app/core/gimp.c:966
-#: ../app/dialogs/dialogs.c:323 ../app/dialogs/preferences-dialog.c:2744
+#: ../app/dialogs/dialogs.c:323 ../app/dialogs/preferences-dialog.c:2758
 msgid "Palettes"
 msgstr "Paletit"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:199 ../app/core/gimp.c:961
-#: ../app/dialogs/dialogs.c:319 ../app/dialogs/preferences-dialog.c:2740
+#: ../app/dialogs/dialogs.c:319 ../app/dialogs/preferences-dialog.c:2754
 msgid "Patterns"
 msgstr "Kuviot"
 
-#: ../app/actions/actions.c:202 ../app/dialogs/preferences-dialog.c:2760
+#: ../app/actions/actions.c:202 ../app/dialogs/preferences-dialog.c:2774
 msgid "Plug-Ins"
 msgstr "Liitännäiset"
 
 #. Quick Mask Color
 #: ../app/actions/actions.c:205 ../app/core/gimpchannel.c:386
-#: ../app/dialogs/preferences-dialog.c:2018
+#: ../app/dialogs/preferences-dialog.c:2032
 msgid "Quick Mask"
 msgstr "Pikamaski"
 
@@ -439,7 +441,7 @@ msgid "Text Editor"
 msgstr "Tekstimuokkain"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
-#: ../app/dialogs/preferences-dialog.c:1847 ../app/gui/gui.c:435
+#: ../app/dialogs/preferences-dialog.c:1861 ../app/gui/gui.c:436
 msgid "Tool Options"
 msgstr "Työkaluasetukset"
 
@@ -998,375 +1000,382 @@ msgstr ""
 msgid "Untitled"
 msgstr "Nimetön"
 
-#: ../app/actions/dialogs-actions.c:49
+#: ../app/actions/dialogs-actions.c:47
 msgctxt "windows-action"
 msgid "Tool_box"
 msgstr "_Työkaluvalikko"
 
-#: ../app/actions/dialogs-actions.c:55
+#: ../app/actions/dialogs-actions.c:52
 msgctxt "dialogs-action"
 msgid "Tool _Options"
 msgstr "Työkalun _asetukset"
 
-#: ../app/actions/dialogs-actions.c:56
+#: ../app/actions/dialogs-actions.c:53
 msgctxt "dialogs-action"
 msgid "Open the tool options dialog"
 msgstr "Avaa työkalun valitsimien ikkuna"
 
-#: ../app/actions/dialogs-actions.c:61
+#: ../app/actions/dialogs-actions.c:58
 msgctxt "dialogs-action"
 msgid "_Device Status"
 msgstr "_Laitteiden tila"
 
-#: ../app/actions/dialogs-actions.c:62
+#: ../app/actions/dialogs-actions.c:59
 msgctxt "dialogs-action"
 msgid "Open the device status dialog"
 msgstr "Avaa laitteiden tilan ikkuna"
 
-#: ../app/actions/dialogs-actions.c:67
+#: ../app/actions/dialogs-actions.c:63
 msgctxt "dialogs-action"
 msgid "_Layers"
 msgstr "_Tasot"
 
-#: ../app/actions/dialogs-actions.c:68
+#: ../app/actions/dialogs-actions.c:64
 msgctxt "dialogs-action"
 msgid "Open the layers dialog"
 msgstr "Avaa tasoikkuna"
 
-#: ../app/actions/dialogs-actions.c:73
+#: ../app/actions/dialogs-actions.c:69
 msgctxt "dialogs-action"
 msgid "_Channels"
 msgstr "_Kanavat"
 
-#: ../app/actions/dialogs-actions.c:74
+#: ../app/actions/dialogs-actions.c:70
 msgctxt "dialogs-action"
 msgid "Open the channels dialog"
 msgstr "Avaa kanavaikkuna"
 
-#: ../app/actions/dialogs-actions.c:79
+#: ../app/actions/dialogs-actions.c:73
 msgctxt "dialogs-action"
 msgid "_Paths"
 msgstr "_Polut"
 
-#: ../app/actions/dialogs-actions.c:80
+#: ../app/actions/dialogs-actions.c:74
 msgctxt "dialogs-action"
 msgid "Open the paths dialog"
 msgstr "Avaa polkuikkuna"
 
-#: ../app/actions/dialogs-actions.c:85
+#: ../app/actions/dialogs-actions.c:79
 msgctxt "dialogs-action"
 msgid "Color_map"
 msgstr "_Värikartta"
 
-#: ../app/actions/dialogs-actions.c:86
+#: ../app/actions/dialogs-actions.c:80
 msgctxt "dialogs-action"
 msgid "Open the colormap dialog"
 msgstr "Avaa värikarttaikkuna"
 
-#: ../app/actions/dialogs-actions.c:91
+#: ../app/actions/dialogs-actions.c:85
 msgctxt "dialogs-action"
 msgid "Histogra_m"
 msgstr "Histogra_mmi"
 
-#: ../app/actions/dialogs-actions.c:92
+#: ../app/actions/dialogs-actions.c:86
 msgctxt "dialogs-action"
 msgid "Open the histogram dialog"
 msgstr "Avaa histogrammi-ikkuna"
 
-#: ../app/actions/dialogs-actions.c:97
+#: ../app/actions/dialogs-actions.c:90
 msgctxt "dialogs-action"
 msgid "_Selection Editor"
 msgstr "_Valintamuokkain"
 
-#: ../app/actions/dialogs-actions.c:98
+#: ../app/actions/dialogs-actions.c:91
 msgctxt "dialogs-action"
 msgid "Open the selection editor"
 msgstr "Avaa valintaikkuna"
 
-#: ../app/actions/dialogs-actions.c:103
+#: ../app/actions/dialogs-actions.c:95
 msgctxt "dialogs-action"
 msgid "Na_vigation"
 msgstr "Na_vigointi"
 
-#: ../app/actions/dialogs-actions.c:104
+#: ../app/actions/dialogs-actions.c:96
 msgctxt "dialogs-action"
 msgid "Open the display navigation dialog"
 msgstr "Avaa näytön navigointi -ikkuna"
 
-#: ../app/actions/dialogs-actions.c:109
+#: ../app/actions/dialogs-actions.c:101
 msgctxt "dialogs-action"
 msgid "Undo _History"
 msgstr "Toiminto_historia"
 
-#: ../app/actions/dialogs-actions.c:110
+#: ../app/actions/dialogs-actions.c:102
 msgctxt "dialogs-action"
 msgid "Open the undo history dialog"
 msgstr "Avaa perumishistorian ikkuna"
 
-#: ../app/actions/dialogs-actions.c:115
+#: ../app/actions/dialogs-actions.c:106
 msgctxt "dialogs-action"
 msgid "Pointer"
 msgstr "Osoitin"
 
-#: ../app/actions/dialogs-actions.c:116
+#: ../app/actions/dialogs-actions.c:107
 msgctxt "dialogs-action"
 msgid "Open the pointer information dialog"
 msgstr "Avaa osoitintietojen ikkuna"
 
-#: ../app/actions/dialogs-actions.c:121
+#: ../app/actions/dialogs-actions.c:112
 msgctxt "dialogs-action"
 msgid "_Sample Points"
 msgstr "Näytepi_steet"
 
-#: ../app/actions/dialogs-actions.c:122
+#: ../app/actions/dialogs-actions.c:113
 msgctxt "dialogs-action"
 msgid "Open the sample points dialog"
 msgstr "Avaa näytepisteikkuna"
 
-#: ../app/actions/dialogs-actions.c:127
+#: ../app/actions/dialogs-actions.c:118
 msgctxt "dialogs-action"
 msgid "Colo_rs"
 msgstr "Vä_rit"
 
-#: ../app/actions/dialogs-actions.c:128
+#: ../app/actions/dialogs-actions.c:119
 msgctxt "dialogs-action"
 msgid "Open the FG/BG color dialog"
 msgstr "Avaa edusta- ja taustavärien ikkuna"
 
-#: ../app/actions/dialogs-actions.c:133
+#: ../app/actions/dialogs-actions.c:122
 msgctxt "dialogs-action"
 msgid "_Brushes"
 msgstr "_Siveltimet"
 
-#: ../app/actions/dialogs-actions.c:134
+#: ../app/actions/dialogs-actions.c:123
 msgctxt "dialogs-action"
 msgid "Open the brushes dialog"
 msgstr "Avaa sivellinten valintaikkuna"
 
-#: ../app/actions/dialogs-actions.c:139
+#: ../app/actions/dialogs-actions.c:128
 msgctxt "dialogs-action"
 msgid "Brush Editor"
 msgstr "Sivellinmuokkain"
 
-#: ../app/actions/dialogs-actions.c:140
+#: ../app/actions/dialogs-actions.c:129
 msgctxt "dialogs-action"
 msgid "Open the brush editor"
 msgstr "Avaa siveltimien muokkain"
 
-#: ../app/actions/dialogs-actions.c:145
+#: ../app/actions/dialogs-actions.c:133
 msgctxt "dialogs-action"
 msgid "Paint Dynamics"
 msgstr "Piirron dynamiikka"
 
-#: ../app/actions/dialogs-actions.c:146
+#: ../app/actions/dialogs-actions.c:134
 msgctxt "dialogs-action"
 msgid "Open paint dynamics dialog"
 msgstr "Avaa piirron dynamiikan ikkuna"
 
-#: ../app/actions/dialogs-actions.c:151
+#: ../app/actions/dialogs-actions.c:138
 msgctxt "dialogs-action"
 msgid "Paint Dynamics Editor"
 msgstr "Piirron dynamiikan muokkain"
 
-#: ../app/actions/dialogs-actions.c:152
+#: ../app/actions/dialogs-actions.c:139
 msgctxt "dialogs-action"
 msgid "Open the paint dynamics editor"
 msgstr "Avaa piirron dynamiikan muokkain"
 
-#: ../app/actions/dialogs-actions.c:157
+#: ../app/actions/dialogs-actions.c:144
 msgctxt "dialogs-action"
 msgid "P_atterns"
 msgstr "_Kuviot"
 
-#: ../app/actions/dialogs-actions.c:158
+#: ../app/actions/dialogs-actions.c:145
 msgctxt "dialogs-action"
 msgid "Open the patterns dialog"
 msgstr "Avaa kuvion valintaikkuna"
 
-#: ../app/actions/dialogs-actions.c:163
+#: ../app/actions/dialogs-actions.c:150
 msgctxt "dialogs-action"
 msgid "_Gradients"
 msgstr "_Liukuvärit"
 
-#: ../app/actions/dialogs-actions.c:164
+#: ../app/actions/dialogs-actions.c:151
 msgctxt "dialogs-action"
 msgid "Open the gradients dialog"
 msgstr "Avaa liukuvärin valintaikkuna"
 
-#: ../app/actions/dialogs-actions.c:169
+#: ../app/actions/dialogs-actions.c:156
 msgctxt "dialogs-action"
 msgid "Gradient Editor"
 msgstr "Liukuvärin muokkain"
 
-#: ../app/actions/dialogs-actions.c:170
+#: ../app/actions/dialogs-actions.c:157
 msgctxt "dialogs-action"
 msgid "Open the gradient editor"
 msgstr "Avaa liukuvärien muokkain"
 
-#: ../app/actions/dialogs-actions.c:175
+#: ../app/actions/dialogs-actions.c:162
 msgctxt "dialogs-action"
 msgid "Pal_ettes"
 msgstr "Pal_etit"
 
-#: ../app/actions/dialogs-actions.c:176
+#: ../app/actions/dialogs-actions.c:163
 msgctxt "dialogs-action"
 msgid "Open the palettes dialog"
 msgstr "Avaa paletin valintaikkuna"
 
-#: ../app/actions/dialogs-actions.c:181
+#: ../app/actions/dialogs-actions.c:168
 msgctxt "dialogs-action"
 msgid "Palette Editor"
 msgstr "Paletin muokkain"
 
-#: ../app/actions/dialogs-actions.c:182
+#: ../app/actions/dialogs-actions.c:169
 msgctxt "dialogs-action"
 msgid "Open the palette editor"
 msgstr "Avaa palettimuokkain"
 
-#: ../app/actions/dialogs-actions.c:187
+#: ../app/actions/dialogs-actions.c:173
 msgctxt "dialogs-action"
 msgid "Tool presets"
 msgstr "Työkalun esiasetukset"
 
-#: ../app/actions/dialogs-actions.c:188
+#: ../app/actions/dialogs-actions.c:174
 msgctxt "dialogs-action"
 msgid "Open tool presets dialog"
 msgstr "Avaa työkalun esiasetusten ikkuna"
 
-#: ../app/actions/dialogs-actions.c:193
+#: ../app/actions/dialogs-actions.c:178
 msgctxt "dialogs-action"
 msgid "_Fonts"
 msgstr "_Fontit"
 
-#: ../app/actions/dialogs-actions.c:194
+#: ../app/actions/dialogs-actions.c:179
 msgctxt "dialogs-action"
 msgid "Open the fonts dialog"
 msgstr "Avaa fonttien valintaikkuna"
 
-#: ../app/actions/dialogs-actions.c:199
+#: ../app/actions/dialogs-actions.c:183
 msgctxt "dialogs-action"
 msgid "B_uffers"
 msgstr "_Leikkeet"
 
-#: ../app/actions/dialogs-actions.c:200
+#: ../app/actions/dialogs-actions.c:184
 msgctxt "dialogs-action"
 msgid "Open the named buffers dialog"
 msgstr "Avaa nimettyjen leikkeiden ikkuna"
 
-#: ../app/actions/dialogs-actions.c:205
+#: ../app/actions/dialogs-actions.c:188
 msgctxt "dialogs-action"
 msgid "_Images"
 msgstr "K_uvat"
 
-#: ../app/actions/dialogs-actions.c:206
+#: ../app/actions/dialogs-actions.c:189
 msgctxt "dialogs-action"
 msgid "Open the images dialog"
 msgstr "Avaa kuvien valintaikkuna"
 
-#: ../app/actions/dialogs-actions.c:211
+#: ../app/actions/dialogs-actions.c:194
 msgctxt "dialogs-action"
 msgid "Document Histor_y"
 msgstr "Asiakirjahistor_ia"
 
-#: ../app/actions/dialogs-actions.c:212
+#: ../app/actions/dialogs-actions.c:195
 msgctxt "dialogs-action"
 msgid "Open the document history dialog"
 msgstr "Avaa asiakirjahistoria"
 
-#: ../app/actions/dialogs-actions.c:217
+#: ../app/actions/dialogs-actions.c:200
 msgctxt "dialogs-action"
 msgid "_Templates"
 msgstr "_Mallit"
 
-#: ../app/actions/dialogs-actions.c:218
+#: ../app/actions/dialogs-actions.c:201
 msgctxt "dialogs-action"
 msgid "Open the image templates dialog"
 msgstr "Avaa kuvapohjien valintaikkuna"
 
-#: ../app/actions/dialogs-actions.c:223
+#: ../app/actions/dialogs-actions.c:206
 msgctxt "dialogs-action"
 msgid "Error Co_nsole"
 msgstr "Virheko_nsoli"
 
-#: ../app/actions/dialogs-actions.c:224
+#: ../app/actions/dialogs-actions.c:207
 msgctxt "dialogs-action"
 msgid "Open the error console"
 msgstr "Avaa virhekonsoli"
 
-#: ../app/actions/dialogs-actions.c:234
+#: ../app/actions/dialogs-actions.c:215
 msgctxt "dialogs-action"
 msgid "_Preferences"
 msgstr "_Asetukset"
 
-#: ../app/actions/dialogs-actions.c:235
+#: ../app/actions/dialogs-actions.c:216
 msgctxt "dialogs-action"
 msgid "Open the preferences dialog"
 msgstr "Avaa asetusikkuna"
 
-#: ../app/actions/dialogs-actions.c:240
+#: ../app/actions/dialogs-actions.c:221
 msgctxt "dialogs-action"
 msgid "_Input Devices"
 msgstr "Syöttöla_itteet"
 
-#: ../app/actions/dialogs-actions.c:241
+#: ../app/actions/dialogs-actions.c:222
 msgctxt "dialogs-action"
 msgid "Open the input devices editor"
 msgstr "Avaa syötelaitteiden muokkain"
 
-#: ../app/actions/dialogs-actions.c:246
+#: ../app/actions/dialogs-actions.c:227
 msgctxt "dialogs-action"
 msgid "_Keyboard Shortcuts"
 msgstr "_Näppäimistön pikavalinnat"
 
-#: ../app/actions/dialogs-actions.c:247
+#: ../app/actions/dialogs-actions.c:228
 msgctxt "dialogs-action"
 msgid "Open the keyboard shortcuts editor"
 msgstr "Avaa näppäinsidosten muokkain"
 
-#: ../app/actions/dialogs-actions.c:252
+#: ../app/actions/dialogs-actions.c:233
 msgctxt "dialogs-action"
 msgid "_Modules"
 msgstr "_Moduulit"
 
-#: ../app/actions/dialogs-actions.c:253
+#: ../app/actions/dialogs-actions.c:234
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
 msgstr "Avaa moduulien hallintaikkuna"
 
-#: ../app/actions/dialogs-actions.c:258
+#: ../app/actions/dialogs-actions.c:238
 msgctxt "dialogs-action"
 msgid "_Tip of the Day"
 msgstr "_Päivän vihje"
 
-#: ../app/actions/dialogs-actions.c:259
+#: ../app/actions/dialogs-actions.c:239
 msgctxt "dialogs-action"
 msgid "Show some helpful tips on using GIMP"
 msgstr "Näytä hyödyllisiä vihjeitä GIMPin käytöstä"
 
-#: ../app/actions/dialogs-actions.c:264
-msgctxt "dialogs-action"
-msgid "_About"
-msgstr "_Tietoja"
-
-#: ../app/actions/dialogs-actions.c:265
+#: ../app/actions/dialogs-actions.c:245 ../app/actions/dialogs-actions.c:251
 msgctxt "dialogs-action"
 msgid "About GIMP"
 msgstr "Tietoja Gimpistä"
 
-#: ../app/actions/dialogs-actions.c:328
-#: ../app/dialogs/preferences-dialog.c:1937 ../app/widgets/gimptoolbox.c:540
+#: ../app/actions/dialogs-actions.c:247
+#| msgctxt "dialogs-action"
+#| msgid "_About"
+msgctxt "dialogs-action"
+msgid "About"
+msgstr "Tietoja"
+
+#: ../app/actions/dialogs-actions.c:249
+msgctxt "dialogs-action"
+msgid "_About"
+msgstr "_Tietoja"
+
+#: ../app/actions/dialogs-actions.c:310
+#: ../app/dialogs/preferences-dialog.c:1951 ../app/widgets/gimptoolbox.c:540
 msgid "Toolbox"
 msgstr "Työkalupakki"
 
-#: ../app/actions/dialogs-actions.c:329
+#: ../app/actions/dialogs-actions.c:311
 msgid "Raise the toolbox"
 msgstr "Nosta työkalulaatikko"
 
-#: ../app/actions/dialogs-actions.c:333
+#: ../app/actions/dialogs-actions.c:315
 msgid "New Toolbox"
 msgstr "Uusi työkalupakki"
 
-#: ../app/actions/dialogs-actions.c:334
+#: ../app/actions/dialogs-actions.c:316
 msgid "Create a new toolbox"
 msgstr "Luo uusi työkalupalkki"
 
@@ -2366,11 +2375,10 @@ msgid "Save this image and close its window"
 msgstr "Tallenna tämä kuva ja sulje sen ikkuna"
 
 #: ../app/actions/file-actions.c:146
-#, fuzzy
 #| msgid "_Export"
 msgctxt "file-action"
 msgid "Export"
-msgstr "_Vie"
+msgstr "Vie"
 
 #: ../app/actions/file-actions.c:147
 msgctxt "file-action"
@@ -2388,12 +2396,11 @@ msgid "Export the image back to the imported file in the import format"
 msgstr "Vie kuva takaisin tuodussa muodossa korvaten tuotu tiedosto"
 
 #: ../app/actions/file-actions.c:158
-#, fuzzy
 #| msgctxt "file-action"
 #| msgid "Export..."
 msgctxt "file-action"
 msgid "Export As..."
-msgstr "Vie..."
+msgstr "Vie nimellä..."
 
 #: ../app/actions/file-actions.c:159
 msgctxt "file-action"
@@ -2411,12 +2418,11 @@ msgid "Over_write %s"
 msgstr "Kor_vaa %s"
 
 #: ../app/actions/file-actions.c:306
-#, fuzzy
 #| msgid "_Export"
 msgid "Export"
-msgstr "_Vie"
+msgstr "Vie"
 
-#: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:496
+#: ../app/actions/file-commands.c:119 ../app/actions/file-commands.c:497
 #: ../app/dialogs/file-open-dialog.c:77
 msgid "Open Image"
 msgstr "Avaa kuva"
@@ -2429,7 +2435,7 @@ msgstr "Avaa kuva tasoina"
 msgid "No changes need to be saved"
 msgstr "Mitään muutoksia ei tarvitse tallentaa"
 
-#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:700
+#: ../app/actions/file-commands.c:279 ../app/actions/file-commands.c:701
 #: ../app/dialogs/file-save-dialog.c:103
 msgid "Save Image"
 msgstr "Tallenna kuva"
@@ -2438,39 +2444,39 @@ msgstr "Tallenna kuva"
 msgid "Save a Copy of the Image"
 msgstr "Tallenna kuvasta kopio"
 
-#: ../app/actions/file-commands.c:370
+#: ../app/actions/file-commands.c:371
 msgid "Create New Template"
 msgstr "Luo uusi malli"
 
-#: ../app/actions/file-commands.c:374
+#: ../app/actions/file-commands.c:375
 msgid "Enter a name for this template"
 msgstr "Anna nimi tälle mallille"
 
-#: ../app/actions/file-commands.c:404
+#: ../app/actions/file-commands.c:405
 msgid "Revert failed. No file name associated with this image."
 msgstr "Palautus epäonnistui. Kuvalle ei ole tiedostonimeä."
 
-#: ../app/actions/file-commands.c:416
+#: ../app/actions/file-commands.c:417
 msgid "Revert Image"
 msgstr "Palauta kuva?"
 
-#: ../app/actions/file-commands.c:442
+#: ../app/actions/file-commands.c:443
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Palautetaanko '%s' -> '%s'?"
 
-#: ../app/actions/file-commands.c:448
+#: ../app/actions/file-commands.c:449
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
 msgstr ""
 "Palauttamalla kuvan levyltä menetät kaikki muutokset ja toimintohistorian."
 
-#: ../app/actions/file-commands.c:730
+#: ../app/actions/file-commands.c:731
 msgid "(Unnamed Template)"
 msgstr "(Nimeämätön malli)"
 
-#: ../app/actions/file-commands.c:781
+#: ../app/actions/file-commands.c:782
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3245,7 +3251,7 @@ msgstr "Skaalaa kuvaa"
 
 #. Scaling
 #: ../app/actions/image-commands.c:693 ../app/actions/layers-commands.c:1145
-#: ../app/dialogs/preferences-dialog.c:1892
+#: ../app/dialogs/preferences-dialog.c:1906
 #: ../app/pdb/drawable-transform-cmds.c:783
 #: ../app/pdb/drawable-transform-cmds.c:872 ../app/pdb/image-cmds.c:406
 #: ../app/pdb/image-cmds.c:442 ../app/pdb/item-transform-cmds.c:524
@@ -4604,7 +4610,7 @@ msgstr "Avaa tekstitiedosto (UTF-8)"
 #: ../app/core/gimppalette-load.c:377 ../app/core/gimppalette-load.c:467
 #: ../app/core/gimppalette-load.c:634 ../app/core/gimppattern-load.c:76
 #: ../app/tools/gimpcurvestool.c:649 ../app/tools/gimplevelstool.c:747
-#: ../app/xcf/xcf.c:329
+#: ../app/xcf/xcf.c:359
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Tiedoston '%s' avaaminen luettavaksi epäonnistui: %s"
@@ -5155,20 +5161,18 @@ msgid "Create another view on this image"
 msgstr "Luo tälle kuvalle uusi näkymä"
 
 #: ../app/actions/view-actions.c:82
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "_Close"
 msgctxt "view-action"
 msgid "_Close View"
-msgstr "_Sulje"
+msgstr "_Sulje näkymä"
 
 #: ../app/actions/view-actions.c:83
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Close this image window"
 msgctxt "view-action"
 msgid "Close the active image view"
-msgstr "Sulje tämä kuvaikkuna"
+msgstr "Sulje avoinna olevan kuvan näkymä"
 
 #: ../app/actions/view-actions.c:88
 msgctxt "view-action"
@@ -5972,7 +5976,7 @@ msgstr "Oikeakätinen"
 #: ../app/core/gimpgradient-save.c:144 ../app/core/gimppalette-save.c:56
 #: ../app/gui/themes.c:248 ../app/tools/gimpcurvestool.c:702
 #: ../app/tools/gimplevelstool.c:800 ../app/vectors/gimpvectors-export.c:81
-#: ../app/xcf/xcf.c:422
+#: ../app/xcf/xcf.c:452
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Tiedoston '%s' avaaminen kirjoitettavaksi epäonnistui: %s"
@@ -7422,7 +7426,7 @@ msgid "Parasites"
 msgstr "Parasiitit"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2736
+#: ../app/core/gimp.c:956 ../app/dialogs/preferences-dialog.c:2750
 #: ../app/tools/gimppaintoptions-gui.c:201
 msgid "Dynamics"
 msgstr "Dynamiikka"
@@ -7433,7 +7437,7 @@ msgid "Fonts (this may take a while)"
 msgstr "Fontit (tämä saattaa kestää hetken)"
 
 #. initialize the module list
-#: ../app/core/gimp.c:993 ../app/dialogs/preferences-dialog.c:2768
+#: ../app/core/gimp.c:993 ../app/dialogs/preferences-dialog.c:2782
 msgid "Modules"
 msgstr "Moduulit"
 
@@ -7475,7 +7479,9 @@ msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "Sivellintiedosto '%s' on viallinen. Tuntematon versio %d."
 
 #: ../app/core/gimpbrush-load.c:273 ../app/core/gimpbrush-load.c:410
-#: ../app/core/gimpbrush-load.c:744
+#: ../app/core/gimpbrush-load.c:626 ../app/core/gimpbrush-load.c:700
+#: ../app/core/gimpbrush-load.c:763 ../app/core/gimpbrush-load.c:779
+#: ../app/core/gimpbrush-load.c:822
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "Jäsennysvirhe: Sivellintiedosto '%s' näyttää katkenneen."
@@ -7515,7 +7521,7 @@ msgstr ""
 "Virhe sivellintiedostossa '%s': Tuntematon siveltimen syvyys %d\n"
 "GIMPin siveltimet pitää olla HARMAA tai RGBA."
 
-#: ../app/core/gimpbrush-load.c:471 ../app/core/gimpbrush-load.c:871
+#: ../app/core/gimpbrush-load.c:471 ../app/core/gimpbrush-load.c:909
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': unable to decode abr format version %d."
@@ -7523,7 +7529,7 @@ msgstr ""
 "Jäsennysvirhe sivellintiedostossa '%s': ei voi tulkita abr-muodon versiota "
 "%d."
 
-#: ../app/core/gimpbrush-load.c:638
+#: ../app/core/gimpbrush-load.c:647
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
@@ -7925,9 +7931,8 @@ msgid "Not enough points to stroke"
 msgstr "Ei riittävästi pisteitä piirtoa varten"
 
 #: ../app/core/gimpdrawable-stroke.c:273
-#, fuzzy
 msgid "Not enough points to fill"
-msgstr "Ei riittävästi pisteitä piirtoa varten"
+msgstr "Ei riittävästi pisteitä täyttöä varten"
 
 #: ../app/core/gimpdrawable-stroke.c:404
 msgctxt "undo-type"
@@ -8013,35 +8018,35 @@ msgstr "Ei sisällä liukuvärejä: '%s'"
 msgid "Failed to import gradients from '%s': %s"
 msgstr "Liukuvärin tuonti '%s' epäonnistui: %s"
 
-#: ../app/core/gimpgrid.c:84
+#: ../app/core/gimpgrid.c:85
 msgid "Line style used for the grid."
 msgstr "Ruudukossa käytetty viivatyyli."
 
-#: ../app/core/gimpgrid.c:90
+#: ../app/core/gimpgrid.c:91
 msgid "The foreground color of the grid."
 msgstr "Ruudukon edustaväri."
 
-#: ../app/core/gimpgrid.c:95
+#: ../app/core/gimpgrid.c:96
 msgid ""
 "The background color of the grid; only used in double dashed line style."
 msgstr "Apuviivojen taustaväri, käytetään vain tuplakatkoviiva tyylissä."
 
-#: ../app/core/gimpgrid.c:101
+#: ../app/core/gimpgrid.c:102
 msgid "Horizontal spacing of grid lines."
 msgstr "Apuviivojen vaakasuora välistys."
 
-#: ../app/core/gimpgrid.c:106
+#: ../app/core/gimpgrid.c:107
 msgid "Vertical spacing of grid lines."
 msgstr "Apuviivojen pystysuora välistys."
 
-#: ../app/core/gimpgrid.c:115
+#: ../app/core/gimpgrid.c:116
 msgid ""
 "Horizontal offset of the first grid line; this may be a negative number."
 msgstr ""
 "Ensimmäisen ruudukon viivan siirtymä vaakatasossa; tämä voi olla "
 "negatiivinen."
 
-#: ../app/core/gimpgrid.c:122
+#: ../app/core/gimpgrid.c:123
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr ""
 "Ensimmäisen ruudukon viivan siirtymä pystytasossa; tämä voi olla "
@@ -8292,62 +8297,62 @@ msgstr " (korvattu)"
 msgid " (imported)"
 msgstr " (tuotu)"
 
-#: ../app/core/gimpimage.c:1922
+#: ../app/core/gimpimage.c:1939
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Vaihda kuvan tarkkuutta"
 
-#: ../app/core/gimpimage.c:1974
+#: ../app/core/gimpimage.c:1991
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Vaihda kuvan yksiköt"
 
-#: ../app/core/gimpimage.c:2987
+#: ../app/core/gimpimage.c:3004
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Lisää kuvaan parasiitti"
 
-#: ../app/core/gimpimage.c:3028
+#: ../app/core/gimpimage.c:3045
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Poista kuvasta parasiitti"
 
-#: ../app/core/gimpimage.c:3737
+#: ../app/core/gimpimage.c:3754
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Lisää taso"
 
-#: ../app/core/gimpimage.c:3787 ../app/core/gimpimage.c:3807
+#: ../app/core/gimpimage.c:3804 ../app/core/gimpimage.c:3824
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Poista taso"
 
-#: ../app/core/gimpimage.c:3801
+#: ../app/core/gimpimage.c:3818
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Poista kelluva valinta"
 
-#: ../app/core/gimpimage.c:3969
+#: ../app/core/gimpimage.c:3983
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Lisää kanava"
 
-#: ../app/core/gimpimage.c:4007 ../app/core/gimpimage.c:4020
+#: ../app/core/gimpimage.c:4021 ../app/core/gimpimage.c:4034
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Poista kanava"
 
-#: ../app/core/gimpimage.c:4074
+#: ../app/core/gimpimage.c:4088
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Lisää polku"
 
-#: ../app/core/gimpimage.c:4105
+#: ../app/core/gimpimage.c:4119
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Poista polku"
 
-#: ../app/core/gimpimagefile.c:719 ../app/dialogs/preferences-dialog.c:1704
+#: ../app/core/gimpimagefile.c:719 ../app/dialogs/preferences-dialog.c:1715
 msgid "Folder"
 msgstr "Kansio"
 
@@ -8952,7 +8957,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Haluatko varmasti poistaa '%s':n luettelosta ja myös levyltä?"
 
-#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:161
+#: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:162
 #: ../app/gui/gui-message.c:149
 msgid "GIMP Message"
 msgstr "GIMPin ilmoitus"
@@ -9065,10 +9070,9 @@ msgstr ""
 "tai älä anna tiedoston pääteosaa lainkaan."
 
 #: ../app/dialogs/file-save-dialog.c:605
-#, fuzzy
 #| msgid "The given filename does not have any known file extension."
 msgid "The given filename cannot be used for exporting"
-msgstr "Annetussa tiedostonimessä ei ole mitään tunnettua pääteosaa."
+msgstr "Annettua tiedostonimeä ei voi käyttää vietäessä"
 
 #: ../app/dialogs/file-save-dialog.c:606
 msgid ""
@@ -9190,7 +9194,7 @@ msgid "Create a New Image"
 msgstr "Luo uusi kuva"
 
 #: ../app/dialogs/image-new-dialog.c:135
-#: ../app/dialogs/preferences-dialog.c:2002
+#: ../app/dialogs/preferences-dialog.c:2016
 msgid "_Template:"
 msgstr "_Malli:"
 
@@ -9420,7 +9424,7 @@ msgid "Select Source"
 msgstr "Valitse lähde"
 
 #: ../app/dialogs/palette-import-dialog.c:214
-#: ../app/dialogs/preferences-dialog.c:1916
+#: ../app/dialogs/preferences-dialog.c:1930
 msgid "_Gradient"
 msgstr "_Liukuväri"
 
@@ -9479,20 +9483,20 @@ msgstr "Esikatselu"
 msgid "The selected source contains no colors."
 msgstr "Valittu lähde ei sisällä mitään värejä."
 
-#: ../app/dialogs/preferences-dialog.c:266
+#: ../app/dialogs/preferences-dialog.c:268
 msgid "Reset All Preferences"
 msgstr "Nollaa kaikki asetukset"
 
-#: ../app/dialogs/preferences-dialog.c:284
+#: ../app/dialogs/preferences-dialog.c:286
 msgid "Do you really want to reset all preferences to default values?"
 msgstr "Haluatko todella palauttaa kaikki asetukset oletusarvoihin?"
 
-#: ../app/dialogs/preferences-dialog.c:354
+#: ../app/dialogs/preferences-dialog.c:356
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr ""
 "GIMP täytyy käynnistää uudestaan jotta seuraavat muutokset tulisivat voimaan:"
 
-#: ../app/dialogs/preferences-dialog.c:536
+#: ../app/dialogs/preferences-dialog.c:538
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
@@ -9500,17 +9504,17 @@ msgstr ""
 "Näppäimistön pikavalinnat palautetaan oletusarvoihin kun Gimp seuraavan "
 "kerran käynnistyy."
 
-#: ../app/dialogs/preferences-dialog.c:547
+#: ../app/dialogs/preferences-dialog.c:549
 msgid "Remove all Keyboard Shortcuts"
 msgstr "Poista kaikki näppäimistön pikavalinnat"
 
-#: ../app/dialogs/preferences-dialog.c:569
+#: ../app/dialogs/preferences-dialog.c:571
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
 msgstr ""
 "Haluatko todella poistaa kaikki näppäimistön pikavalinnat kaikista "
 "valikoista?"
 
-#: ../app/dialogs/preferences-dialog.c:610
+#: ../app/dialogs/preferences-dialog.c:612
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
@@ -9518,7 +9522,7 @@ msgstr ""
 "Ikkunoiden paikat palautuvat perusasetuksiin seuraavan kerran kun Gimp "
 "käynnistyy."
 
-#: ../app/dialogs/preferences-dialog.c:645
+#: ../app/dialogs/preferences-dialog.c:647
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
@@ -9526,7 +9530,7 @@ msgstr ""
 "Syöttölaitteiden asetukset palautuvat perusasetuksiin seuraavan kerran kun "
 "Gimp käynnistyy."
 
-#: ../app/dialogs/preferences-dialog.c:680
+#: ../app/dialogs/preferences-dialog.c:682
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
@@ -9534,759 +9538,758 @@ msgstr ""
 "Työkalujen asetukset palautuvat oletusasetuksiin kun Gimp käynnistyy "
 "seuraavan kerran."
 
-#: ../app/dialogs/preferences-dialog.c:1266
+#: ../app/dialogs/preferences-dialog.c:1268
 msgid "Show _menubar"
 msgstr "Näytä _valikkopalkki"
 
-#: ../app/dialogs/preferences-dialog.c:1270
+#: ../app/dialogs/preferences-dialog.c:1272
 msgid "Show _rulers"
 msgstr "Näytä _viivaimet"
 
-#: ../app/dialogs/preferences-dialog.c:1273
+#: ../app/dialogs/preferences-dialog.c:1275
 msgid "Show scroll_bars"
 msgstr "Näytä v_ierityspalkit"
 
-#: ../app/dialogs/preferences-dialog.c:1276
+#: ../app/dialogs/preferences-dialog.c:1278
 msgid "Show s_tatusbar"
 msgstr "Näytä _tilapalkki"
 
-#: ../app/dialogs/preferences-dialog.c:1284
+#: ../app/dialogs/preferences-dialog.c:1286
 msgid "Show s_election"
 msgstr "Näytä v_alinta"
 
-#: ../app/dialogs/preferences-dialog.c:1287
+#: ../app/dialogs/preferences-dialog.c:1289
 msgid "Show _layer boundary"
 msgstr "Näytä tason rajat"
 
-#: ../app/dialogs/preferences-dialog.c:1290
+#: ../app/dialogs/preferences-dialog.c:1292
 msgid "Show _guides"
 msgstr "Näytä apu_linjat"
 
-#: ../app/dialogs/preferences-dialog.c:1293
+#: ../app/dialogs/preferences-dialog.c:1295
 msgid "Show gri_d"
 msgstr "Näytä _ruudukko"
 
-#: ../app/dialogs/preferences-dialog.c:1299
+#: ../app/dialogs/preferences-dialog.c:1301
 msgid "Canvas _padding mode:"
 msgstr "Kankaan täyttömuoto:"
 
-#: ../app/dialogs/preferences-dialog.c:1304
+#: ../app/dialogs/preferences-dialog.c:1306
 msgid "Custom p_adding color:"
 msgstr "Oma täyttöväri:"
 
-#: ../app/dialogs/preferences-dialog.c:1305
+#: ../app/dialogs/preferences-dialog.c:1307
 msgid "Select Custom Canvas Padding Color"
 msgstr "Valitse oma kankaan täyttöväri"
 
-#: ../app/dialogs/preferences-dialog.c:1394
+#: ../app/dialogs/preferences-dialog.c:1405
 msgid "Preferences"
 msgstr "Asetukset"
 
-#: ../app/dialogs/preferences-dialog.c:1507
-#: ../app/dialogs/preferences-dialog.c:2776
+#: ../app/dialogs/preferences-dialog.c:1518
+#: ../app/dialogs/preferences-dialog.c:2790
 msgid "Environment"
 msgstr "Ympäristö"
 
-#: ../app/dialogs/preferences-dialog.c:1521
+#: ../app/dialogs/preferences-dialog.c:1532
 msgid "Resource Consumption"
 msgstr "Resurssikulutus"
 
-#: ../app/dialogs/preferences-dialog.c:1531
+#: ../app/dialogs/preferences-dialog.c:1542
 msgid "Minimal number of _undo levels:"
 msgstr "Kumoamistoiminnolle varatut säätöarvot:"
 
-#: ../app/dialogs/preferences-dialog.c:1534
+#: ../app/dialogs/preferences-dialog.c:1545
 msgid "Maximum undo _memory:"
 msgstr "Maksimi kumoamismuisti:"
 
-#: ../app/dialogs/preferences-dialog.c:1537
+#: ../app/dialogs/preferences-dialog.c:1548
 msgid "Tile cache _size:"
 msgstr "Kuvavälimuistin koko:"
 
-#: ../app/dialogs/preferences-dialog.c:1540
+#: ../app/dialogs/preferences-dialog.c:1551
 msgid "Maximum _new image size:"
 msgstr "Uuden kuvan enimmäiskoko:"
 
-#: ../app/dialogs/preferences-dialog.c:1545
+#: ../app/dialogs/preferences-dialog.c:1556
 msgid "Number of _processors to use:"
 msgstr "Käytettävien suorittimien lukumäärä:"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1550
+#: ../app/dialogs/preferences-dialog.c:1561
 msgid "Image Thumbnails"
 msgstr "Kuvien esikatselut"
 
-#: ../app/dialogs/preferences-dialog.c:1555
+#: ../app/dialogs/preferences-dialog.c:1566
 msgid "Size of _thumbnails:"
 msgstr "Esikatselukuvan koko:"
 
-#: ../app/dialogs/preferences-dialog.c:1559
+#: ../app/dialogs/preferences-dialog.c:1570
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Suurin tiedostokoko, josta tehdään esikatselu."
 
-#: ../app/dialogs/preferences-dialog.c:1569
+#: ../app/dialogs/preferences-dialog.c:1580
 msgid "Keep record of used files in the Recent Documents list"
 msgstr ""
 "Pidä kirjaa käytetyistä tiedostoista viimeisten asiakirjojen luettelossa"
 
-#: ../app/dialogs/preferences-dialog.c:1578
+#: ../app/dialogs/preferences-dialog.c:1589
 msgid "User Interface"
 msgstr "Käyttöliittymä"
 
-#: ../app/dialogs/preferences-dialog.c:1581
+#: ../app/dialogs/preferences-dialog.c:1592
 msgid "Interface"
 msgstr "Käyttöliittymä"
 
-#: ../app/dialogs/preferences-dialog.c:1591
+#: ../app/dialogs/preferences-dialog.c:1602
 msgid "Language"
 msgstr "Kieli"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1597
+#: ../app/dialogs/preferences-dialog.c:1608
 msgid "Previews"
 msgstr "Esikatselut"
 
-#: ../app/dialogs/preferences-dialog.c:1600
+#: ../app/dialogs/preferences-dialog.c:1611
 msgid "_Enable layer & channel previews"
 msgstr "_Salli tasojen ja kanavien esikatselut"
 
-#: ../app/dialogs/preferences-dialog.c:1606
+#: ../app/dialogs/preferences-dialog.c:1617
 msgid "_Default layer & channel preview size:"
 msgstr "Tasojen ja kanavien esikatselun oletuskoko:"
 
-#: ../app/dialogs/preferences-dialog.c:1609
+#: ../app/dialogs/preferences-dialog.c:1620
 msgid "Na_vigation preview size:"
 msgstr "Navigointinäkymän koko:"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1613
+#: ../app/dialogs/preferences-dialog.c:1624
 msgid "Keyboard Shortcuts"
 msgstr "Näppäimistön pikavalinnat"
 
-#: ../app/dialogs/preferences-dialog.c:1617
+#: ../app/dialogs/preferences-dialog.c:1628
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "_Käytä dynaamisia näppäimistön pikavalintoja"
 
-#: ../app/dialogs/preferences-dialog.c:1621
+#: ../app/dialogs/preferences-dialog.c:1632
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Määritä näppäimistön pikavalinnat..."
 
-#: ../app/dialogs/preferences-dialog.c:1628
+#: ../app/dialogs/preferences-dialog.c:1639
 msgid "_Save keyboard shortcuts on exit"
 msgstr "_Tallenna näppäimistön pikavalinnat poistuttaessa"
 
-#: ../app/dialogs/preferences-dialog.c:1632
+#: ../app/dialogs/preferences-dialog.c:1643
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Tallenna näppäimistön pikavalinnat nyt"
 
-#: ../app/dialogs/preferences-dialog.c:1639
+#: ../app/dialogs/preferences-dialog.c:1650
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "_Palauta näppäimistön pikavalinnat oletusarvoihin"
 
-#: ../app/dialogs/preferences-dialog.c:1648
+#: ../app/dialogs/preferences-dialog.c:1659
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Poista kaikki näppäimistön pikavalinnat"
 
-#: ../app/dialogs/preferences-dialog.c:1660
-#: ../app/dialogs/preferences-dialog.c:1699
+#: ../app/dialogs/preferences-dialog.c:1671
+#: ../app/dialogs/preferences-dialog.c:1710
 msgid "Theme"
 msgstr "Teema"
 
-#: ../app/dialogs/preferences-dialog.c:1669
+#: ../app/dialogs/preferences-dialog.c:1680
 msgid "Select Theme"
 msgstr "Valitse teema"
 
-#: ../app/dialogs/preferences-dialog.c:1751
+#: ../app/dialogs/preferences-dialog.c:1762
 msgid "Reload C_urrent Theme"
 msgstr "Lataa uudelleen nykyinen teema"
 
-#: ../app/dialogs/preferences-dialog.c:1763
+#: ../app/dialogs/preferences-dialog.c:1774
 msgid "Help System"
 msgstr "Avustukset"
 
 #. General
-#: ../app/dialogs/preferences-dialog.c:1775
-#: ../app/dialogs/preferences-dialog.c:1859
-#: ../app/dialogs/preferences-dialog.c:2072
+#: ../app/dialogs/preferences-dialog.c:1786
+#: ../app/dialogs/preferences-dialog.c:1873
+#: ../app/dialogs/preferences-dialog.c:2086
 #: ../app/widgets/gimpcontrollereditor.c:185
 msgid "General"
 msgstr "Yleistä"
 
-#: ../app/dialogs/preferences-dialog.c:1778
+#: ../app/dialogs/preferences-dialog.c:1789
 msgid "Show _tooltips"
 msgstr "Näytä työkaluvihjeet"
 
-#: ../app/dialogs/preferences-dialog.c:1781
+#: ../app/dialogs/preferences-dialog.c:1792
 msgid "Show help _buttons"
 msgstr "Näytä Apu-painikkeet"
 
-#: ../app/dialogs/preferences-dialog.c:1794
+#: ../app/dialogs/preferences-dialog.c:1805
 msgid "Use the online version"
 msgstr "Käytä verkkoversiota"
 
-#: ../app/dialogs/preferences-dialog.c:1795
+#: ../app/dialogs/preferences-dialog.c:1806
 msgid "Use a locally installed copy"
 msgstr "Käytä paikallisesti asennettua kopiota"
 
-#: ../app/dialogs/preferences-dialog.c:1796
+#: ../app/dialogs/preferences-dialog.c:1807
 msgid "User manual:"
 msgstr "Käyttöohje:"
 
-#: ../app/dialogs/preferences-dialog.c:1803
+#: ../app/dialogs/preferences-dialog.c:1814
 msgid "There's a local installation of the user manual."
 msgstr "Käyttöohje on asennettu paikallisesti."
 
-#: ../app/dialogs/preferences-dialog.c:1808
+#: ../app/dialogs/preferences-dialog.c:1819
 msgid "The user manual is not installed locally."
 msgstr "Käyttöohjetta ei ole asennettu paikallisesti."
 
-#. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1831
+#: ../app/dialogs/preferences-dialog.c:1844
 msgid "Help Browser"
 msgstr "Ohjeselain"
 
-#: ../app/dialogs/preferences-dialog.c:1835
+#: ../app/dialogs/preferences-dialog.c:1848
 msgid "H_elp browser to use:"
 msgstr "Käytettävä _selain avustuksille:"
 
-#: ../app/dialogs/preferences-dialog.c:1862
+#: ../app/dialogs/preferences-dialog.c:1876
 msgid "_Save tool options on exit"
 msgstr "Tallenna työkaluasetukset poistuttaessa"
 
-#: ../app/dialogs/preferences-dialog.c:1866
+#: ../app/dialogs/preferences-dialog.c:1880
 msgid "Save Tool Options _Now"
 msgstr "Tallenna työkalujen asetukset nyt"
 
-#: ../app/dialogs/preferences-dialog.c:1873
+#: ../app/dialogs/preferences-dialog.c:1887
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "Palauta tallennetut työkaluasetukset oletusarvoihin"
 
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1883
+#: ../app/dialogs/preferences-dialog.c:1897
 msgid "Guide & Grid Snapping"
 msgstr "Apulinjoihin ja ruudukkoon kiinnittyminen"
 
-#: ../app/dialogs/preferences-dialog.c:1888
+#: ../app/dialogs/preferences-dialog.c:1902
 msgid "_Snap distance:"
 msgstr "_Kiinnittymisetäisyys:"
 
-#: ../app/dialogs/preferences-dialog.c:1896
+#: ../app/dialogs/preferences-dialog.c:1910
 msgid "Default _interpolation:"
 msgstr "_Interpolaation oletusarvo:"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1903
+#: ../app/dialogs/preferences-dialog.c:1917
 msgid "Paint Options Shared Between Tools"
 msgstr "Asetukset jaetaan maalaustyökalujen välillä"
 
-#: ../app/dialogs/preferences-dialog.c:1907
+#: ../app/dialogs/preferences-dialog.c:1921
 msgid "_Brush"
 msgstr "_Sivellin"
 
-#: ../app/dialogs/preferences-dialog.c:1910
+#: ../app/dialogs/preferences-dialog.c:1924
 msgid "_Dynamics"
 msgstr "_Dynamiikka"
 
-#: ../app/dialogs/preferences-dialog.c:1913
+#: ../app/dialogs/preferences-dialog.c:1927
 msgid "_Pattern"
 msgstr "_Kuvio"
 
 #. Move Tool
-#: ../app/dialogs/preferences-dialog.c:1920
+#: ../app/dialogs/preferences-dialog.c:1934
 msgid "Move Tool"
 msgstr "Siirtotyökalu"
 
-#: ../app/dialogs/preferences-dialog.c:1924
+#: ../app/dialogs/preferences-dialog.c:1938
 msgid "Set layer or path as active"
 msgstr "Aseta tason tai polku aktiiviseksi"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1949
-#: ../app/dialogs/preferences-dialog.c:2148
+#: ../app/dialogs/preferences-dialog.c:1963
+#: ../app/dialogs/preferences-dialog.c:2162
 #: ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Ulkoasu"
 
-#: ../app/dialogs/preferences-dialog.c:1953
+#: ../app/dialogs/preferences-dialog.c:1967
 msgid "Show _foreground & background color"
 msgstr "Näytä edusta- ja taustaväri"
 
-#: ../app/dialogs/preferences-dialog.c:1957
+#: ../app/dialogs/preferences-dialog.c:1971
 msgid "Show active _brush, pattern & gradient"
 msgstr "Näytä aktiivinen sivellin, kuvio ja liukuväri"
 
-#: ../app/dialogs/preferences-dialog.c:1961
+#: ../app/dialogs/preferences-dialog.c:1975
 msgid "Show active _image"
 msgstr "Näytä aktiivinen kuva"
 
 #. Tool Editor
-#: ../app/dialogs/preferences-dialog.c:1969
+#: ../app/dialogs/preferences-dialog.c:1983
 msgid "Tools configuration"
 msgstr "Työkalujen asetukset"
 
-#: ../app/dialogs/preferences-dialog.c:1984
+#: ../app/dialogs/preferences-dialog.c:1998
 msgid "Default New Image"
 msgstr "Uusi oletuskuva"
 
-#: ../app/dialogs/preferences-dialog.c:1987
+#: ../app/dialogs/preferences-dialog.c:2001
 msgid "Default Image"
 msgstr "Oletuskuva"
 
-#: ../app/dialogs/preferences-dialog.c:2021
+#: ../app/dialogs/preferences-dialog.c:2035
 msgid "Set the default Quick Mask color"
 msgstr "Aseta pikamaskin oletusväri"
 
-#: ../app/dialogs/preferences-dialog.c:2027
+#: ../app/dialogs/preferences-dialog.c:2041
 msgid "Quick Mask color:"
 msgstr "Muokkaa pikamaskin väriä:"
 
-#: ../app/dialogs/preferences-dialog.c:2037
+#: ../app/dialogs/preferences-dialog.c:2051
 msgid "Default Image Grid"
 msgstr "Kuvan oletusruudukko"
 
-#: ../app/dialogs/preferences-dialog.c:2040
+#: ../app/dialogs/preferences-dialog.c:2054
 msgid "Default Grid"
 msgstr "Oletusruudukko"
 
-#: ../app/dialogs/preferences-dialog.c:2060
+#: ../app/dialogs/preferences-dialog.c:2074
 msgid "Image Windows"
 msgstr "Kuvaikkunat"
 
-#: ../app/dialogs/preferences-dialog.c:2075
+#: ../app/dialogs/preferences-dialog.c:2089
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Käytä \"Piste pisteeltä\" oletuksena"
 
-#: ../app/dialogs/preferences-dialog.c:2081
+#: ../app/dialogs/preferences-dialog.c:2095
 msgid "Marching _ants speed:"
 msgstr "Valinta-animaation nopeus:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2085
+#: ../app/dialogs/preferences-dialog.c:2099
 msgid "Zoom & Resize Behavior"
 msgstr "Suurennus- ja pienennyskäyttäytyminen"
 
-#: ../app/dialogs/preferences-dialog.c:2089
+#: ../app/dialogs/preferences-dialog.c:2103
 msgid "Resize window on _zoom"
 msgstr "Muuta ikkunan kokoa zoomattaessa"
 
-#: ../app/dialogs/preferences-dialog.c:2092
+#: ../app/dialogs/preferences-dialog.c:2106
 msgid "Resize window on image _size change"
 msgstr "Muuta ikkunan kokoa kun kuvan koko muuttuu"
 
-#: ../app/dialogs/preferences-dialog.c:2098
+#: ../app/dialogs/preferences-dialog.c:2112
 msgid "Fit to window"
 msgstr "Sovita ikkunaan"
 
-#: ../app/dialogs/preferences-dialog.c:2100
+#: ../app/dialogs/preferences-dialog.c:2114
 msgid "Initial zoom _ratio:"
 msgstr "Alkuperäinen zoomaussuhde:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2104
+#: ../app/dialogs/preferences-dialog.c:2118
 msgid "Space Bar"
 msgstr "Välilyönti"
 
-#: ../app/dialogs/preferences-dialog.c:2110
+#: ../app/dialogs/preferences-dialog.c:2124
 msgid "_While space bar is pressed:"
 msgstr "_Painettaessa välilyöntiä:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2114
+#: ../app/dialogs/preferences-dialog.c:2128
 msgid "Mouse Pointers"
 msgstr "Hiiriosoittimet"
 
-#: ../app/dialogs/preferences-dialog.c:2118
+#: ../app/dialogs/preferences-dialog.c:2132
 msgid "Show _brush outline"
 msgstr "Näytä siveltimen ääriviiva"
 
-#: ../app/dialogs/preferences-dialog.c:2121
+#: ../app/dialogs/preferences-dialog.c:2135
 msgid "Show pointer for paint _tools"
 msgstr "Näytä maalaustyökalun osoitin"
 
-#: ../app/dialogs/preferences-dialog.c:2127
+#: ../app/dialogs/preferences-dialog.c:2141
 msgid "Pointer _mode:"
 msgstr "Osoittimen muoto:"
 
-#: ../app/dialogs/preferences-dialog.c:2130
+#: ../app/dialogs/preferences-dialog.c:2144
 msgid "Pointer re_ndering:"
 msgstr "Osoittimen piirto:"
 
-#: ../app/dialogs/preferences-dialog.c:2133
+#: ../app/dialogs/preferences-dialog.c:2147
 #, fuzzy
 msgid "Pointer _handedness:"
 msgstr "Osoittimen piirto:"
 
-#: ../app/dialogs/preferences-dialog.c:2145
+#: ../app/dialogs/preferences-dialog.c:2159
 msgid "Image Window Appearance"
 msgstr "Kuvaikkunan ulkoasu"
 
-#: ../app/dialogs/preferences-dialog.c:2156
+#: ../app/dialogs/preferences-dialog.c:2170
 msgid "Default Appearance in Normal Mode"
 msgstr "Normaalitilan oletusulkoasu"
 
-#: ../app/dialogs/preferences-dialog.c:2161
+#: ../app/dialogs/preferences-dialog.c:2175
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Kokoruututilan oletusulkoasu"
 
-#: ../app/dialogs/preferences-dialog.c:2170
+#: ../app/dialogs/preferences-dialog.c:2184
 msgid "Image Title & Statusbar Format"
 msgstr "Kuvan otsikon ja tilapalkin muoto"
 
-#: ../app/dialogs/preferences-dialog.c:2173
+#: ../app/dialogs/preferences-dialog.c:2187
 msgid "Title & Status"
 msgstr "Otsikko ja tila"
 
-#: ../app/dialogs/preferences-dialog.c:2191
+#: ../app/dialogs/preferences-dialog.c:2205
 msgid "Current format"
 msgstr "Nykyinen muoto"
 
-#: ../app/dialogs/preferences-dialog.c:2192
+#: ../app/dialogs/preferences-dialog.c:2206
 msgid "Default format"
 msgstr "Oletusmuoto"
 
-#: ../app/dialogs/preferences-dialog.c:2193
+#: ../app/dialogs/preferences-dialog.c:2207
 msgid "Show zoom percentage"
 msgstr "Näytä suurennosprosentti"
 
-#: ../app/dialogs/preferences-dialog.c:2194
+#: ../app/dialogs/preferences-dialog.c:2208
 msgid "Show zoom ratio"
 msgstr "Näytä suurennossuhde"
 
-#: ../app/dialogs/preferences-dialog.c:2195
+#: ../app/dialogs/preferences-dialog.c:2209
 msgid "Show image size"
 msgstr "Näytä kuvan koko"
 
-#: ../app/dialogs/preferences-dialog.c:2208
+#: ../app/dialogs/preferences-dialog.c:2222
 msgid "Image Title Format"
 msgstr "Kuvan otsikon muoto"
 
-#: ../app/dialogs/preferences-dialog.c:2210
+#: ../app/dialogs/preferences-dialog.c:2224
 msgid "Image Statusbar Format"
 msgstr "Kuvan tilapalkin muoto"
 
-#: ../app/dialogs/preferences-dialog.c:2295
+#: ../app/dialogs/preferences-dialog.c:2309
 msgid "Display"
 msgstr "Näyttö"
 
 #. Transparency
-#: ../app/dialogs/preferences-dialog.c:2307
+#: ../app/dialogs/preferences-dialog.c:2321
 msgid "Transparency"
 msgstr "Läpinäkyvä"
 
-#: ../app/dialogs/preferences-dialog.c:2311
+#: ../app/dialogs/preferences-dialog.c:2325
 msgid "_Check style:"
 msgstr "Tarkistustyyli:"
 
-#: ../app/dialogs/preferences-dialog.c:2314
+#: ../app/dialogs/preferences-dialog.c:2328
 msgid "Check _size:"
 msgstr "Tarkistus koko:"
 
-#: ../app/dialogs/preferences-dialog.c:2317
+#: ../app/dialogs/preferences-dialog.c:2331
 msgid "Monitor Resolution"
 msgstr "Näytön tarkkuus"
 
 #. Pixels
-#: ../app/dialogs/preferences-dialog.c:2321
+#: ../app/dialogs/preferences-dialog.c:2335
 #: ../app/display/gimpcursorview.c:206 ../app/widgets/gimpgrideditor.c:199
 #: ../app/widgets/gimpgrideditor.c:231
 msgid "Pixels"
 msgstr "pikseliä"
 
-#: ../app/dialogs/preferences-dialog.c:2339
+#: ../app/dialogs/preferences-dialog.c:2353
 msgid "Horizontal"
 msgstr "Vaaka"
 
-#: ../app/dialogs/preferences-dialog.c:2341
+#: ../app/dialogs/preferences-dialog.c:2355
 msgid "Vertical"
 msgstr "Pysty"
 
-#: ../app/dialogs/preferences-dialog.c:2343
+#: ../app/dialogs/preferences-dialog.c:2357
 #: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppi"
 
-#: ../app/dialogs/preferences-dialog.c:2359
+#: ../app/dialogs/preferences-dialog.c:2373
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Havaitse automaattisesti (nyt %d×%d ppi)"
 
-#: ../app/dialogs/preferences-dialog.c:2377
+#: ../app/dialogs/preferences-dialog.c:2391
 msgid "_Enter manually"
 msgstr "_Syötä käsin"
 
-#: ../app/dialogs/preferences-dialog.c:2392
+#: ../app/dialogs/preferences-dialog.c:2406
 msgid "C_alibrate..."
 msgstr "Kalibroi..."
 
-#: ../app/dialogs/preferences-dialog.c:2420
+#: ../app/dialogs/preferences-dialog.c:2434
 msgid "Color Management"
 msgstr "Värin hallinta"
 
-#: ../app/dialogs/preferences-dialog.c:2440
+#: ../app/dialogs/preferences-dialog.c:2454
 msgid "_RGB profile:"
 msgstr "_RGB profiili:"
 
-#: ../app/dialogs/preferences-dialog.c:2441
+#: ../app/dialogs/preferences-dialog.c:2455
 msgid "Select RGB Color Profile"
 msgstr "Valitse RGB väriprofiili"
 
-#: ../app/dialogs/preferences-dialog.c:2442
+#: ../app/dialogs/preferences-dialog.c:2456
 msgid "_CMYK profile:"
 msgstr "_CMYK profiili:"
 
-#: ../app/dialogs/preferences-dialog.c:2443
+#: ../app/dialogs/preferences-dialog.c:2457
 msgid "Select CMYK Color Profile"
 msgstr "Valitse CMYK väriprofiili"
 
-#: ../app/dialogs/preferences-dialog.c:2444
+#: ../app/dialogs/preferences-dialog.c:2458
 msgid "_Monitor profile:"
 msgstr "_Monitoriprofiili:"
 
-#: ../app/dialogs/preferences-dialog.c:2445
+#: ../app/dialogs/preferences-dialog.c:2459
 msgid "Select Monitor Color Profile"
 msgstr "Valitse näytön väriprofiili"
 
-#: ../app/dialogs/preferences-dialog.c:2446
+#: ../app/dialogs/preferences-dialog.c:2460
 msgid "_Print simulation profile:"
 msgstr "Tulostinsimulaatioprofiili:"
 
-#: ../app/dialogs/preferences-dialog.c:2447
+#: ../app/dialogs/preferences-dialog.c:2461
 msgid "Select Printer Color Profile"
 msgstr "Valitse tulostimen väriprofiili"
 
-#: ../app/dialogs/preferences-dialog.c:2458
+#: ../app/dialogs/preferences-dialog.c:2472
 msgid "_Mode of operation:"
 msgstr "_Toimintatapa:"
 
-#: ../app/dialogs/preferences-dialog.c:2488
+#: ../app/dialogs/preferences-dialog.c:2502
 msgid "_Try to use the system monitor profile"
 msgstr "_Yritä käyttää järjestelmän näyttöprofiilia"
 
-#: ../app/dialogs/preferences-dialog.c:2498
+#: ../app/dialogs/preferences-dialog.c:2512
 msgid "_Display rendering intent:"
 msgstr "_Näytä muunnosalgoritmi:"
 
-#: ../app/dialogs/preferences-dialog.c:2507
+#: ../app/dialogs/preferences-dialog.c:2521
 msgid "_Softproof rendering intent:"
 msgstr "_Softproof muunnosalgoritmi:"
 
-#: ../app/dialogs/preferences-dialog.c:2520
+#: ../app/dialogs/preferences-dialog.c:2534
 msgid "Mark out of gamut colors"
 msgstr "Merkitse kirjon ulkopuoliset sävyt"
 
-#: ../app/dialogs/preferences-dialog.c:2525
+#: ../app/dialogs/preferences-dialog.c:2539
 msgid "Select Warning Color"
 msgstr "Valitse varoitusväri"
 
-#: ../app/dialogs/preferences-dialog.c:2538
+#: ../app/dialogs/preferences-dialog.c:2552
 msgid "File Open behaviour:"
 msgstr "Tiedostojen avaustapa:"
 
-#: ../app/dialogs/preferences-dialog.c:2550
+#: ../app/dialogs/preferences-dialog.c:2564
 msgid "Input Devices"
 msgstr "Syöttölaitteet"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2560
+#: ../app/dialogs/preferences-dialog.c:2574
 msgid "Extended Input Devices"
 msgstr "Lisäsyöttölaitteet"
 
-#: ../app/dialogs/preferences-dialog.c:2564
+#: ../app/dialogs/preferences-dialog.c:2578
 msgid "Configure E_xtended Input Devices..."
 msgstr "Määritä lisäsyöttölaitteet..."
 
-#: ../app/dialogs/preferences-dialog.c:2571
+#: ../app/dialogs/preferences-dialog.c:2585
 msgid "_Save input device settings on exit"
 msgstr "Tallenna syöttölaitteiden asetukset poistuttaessa"
 
-#: ../app/dialogs/preferences-dialog.c:2575
+#: ../app/dialogs/preferences-dialog.c:2589
 msgid "Save Input Device Settings _Now"
 msgstr "Tallenna syöttölaitteiden asetukset _nyt"
 
-#: ../app/dialogs/preferences-dialog.c:2582
+#: ../app/dialogs/preferences-dialog.c:2596
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Palauta tallennetut syöttölaitteiden asetukset oletusarvoihin"
 
-#: ../app/dialogs/preferences-dialog.c:2597
+#: ../app/dialogs/preferences-dialog.c:2611
 msgid "Additional Input Controllers"
 msgstr "Lisäsyöttöohjaimet"
 
-#: ../app/dialogs/preferences-dialog.c:2600
+#: ../app/dialogs/preferences-dialog.c:2614
 msgid "Input Controllers"
 msgstr "Syöttöohjaimet"
 
-#: ../app/dialogs/preferences-dialog.c:2616
+#: ../app/dialogs/preferences-dialog.c:2630
 msgid "Window Management"
 msgstr "Ikkunanhallinta"
 
-#: ../app/dialogs/preferences-dialog.c:2625
+#: ../app/dialogs/preferences-dialog.c:2639
 msgid "Window Manager Hints"
 msgstr "Ikkunointiohjelman vihjeet"
 
-#: ../app/dialogs/preferences-dialog.c:2631
+#: ../app/dialogs/preferences-dialog.c:2645
 msgid "Hint for _docks and toolbox:"
 msgstr "Työkalulaatikon ja _telakan vihje:"
 
-#: ../app/dialogs/preferences-dialog.c:2634
+#: ../app/dialogs/preferences-dialog.c:2648
 msgid "Focus"
 msgstr "Kohdistus"
 
-#: ../app/dialogs/preferences-dialog.c:2638
+#: ../app/dialogs/preferences-dialog.c:2652
 msgid "Activate the _focused image"
 msgstr "Aktivoi kohdistettu kuva"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2642
+#: ../app/dialogs/preferences-dialog.c:2656
 msgid "Window Positions"
 msgstr "Ikkunoiden sijainnit"
 
-#: ../app/dialogs/preferences-dialog.c:2645
+#: ../app/dialogs/preferences-dialog.c:2659
 msgid "_Save window positions on exit"
 msgstr "Tallenna ikkunoiden sijainnit poistuttaessa"
 
-#: ../app/dialogs/preferences-dialog.c:2649
+#: ../app/dialogs/preferences-dialog.c:2663
 msgid "Save Window Positions _Now"
 msgstr "Tallenna ikkunoiden sijainnit _nyt"
 
-#: ../app/dialogs/preferences-dialog.c:2656
+#: ../app/dialogs/preferences-dialog.c:2670
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Palauta ikkunoiden sijainnit poistuttaessa"
 
-#: ../app/dialogs/preferences-dialog.c:2671
+#: ../app/dialogs/preferences-dialog.c:2685
 msgid "Folders"
 msgstr "Kansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2691
+#: ../app/dialogs/preferences-dialog.c:2705
 msgid "Temporary folder:"
 msgstr "Tilapäistiedostojen kansio:"
 
-#: ../app/dialogs/preferences-dialog.c:2692
+#: ../app/dialogs/preferences-dialog.c:2706
 msgid "Select Folder for Temporary Files"
 msgstr "Valitse kansio tilapäisille tiedostoille"
 
-#: ../app/dialogs/preferences-dialog.c:2696
+#: ../app/dialogs/preferences-dialog.c:2710
 msgid "Swap folder:"
 msgstr "Sivutuskansio:"
 
-#: ../app/dialogs/preferences-dialog.c:2697
+#: ../app/dialogs/preferences-dialog.c:2711
 msgid "Select Swap Folder"
 msgstr "Valitse sivutuskansio"
 
-#: ../app/dialogs/preferences-dialog.c:2732
+#: ../app/dialogs/preferences-dialog.c:2746
 msgid "Brush Folders"
 msgstr "Sivellinkansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2734
+#: ../app/dialogs/preferences-dialog.c:2748
 msgid "Select Brush Folders"
 msgstr "Valitse sivellinkansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2736
+#: ../app/dialogs/preferences-dialog.c:2750
 msgid "Dynamics Folders"
 msgstr "Dynamiikkakansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2738
+#: ../app/dialogs/preferences-dialog.c:2752
 msgid "Select Dynamics Folders"
 msgstr "Valitse dynamiikkakansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2740
+#: ../app/dialogs/preferences-dialog.c:2754
 msgid "Pattern Folders"
 msgstr "Kuviokansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2742
+#: ../app/dialogs/preferences-dialog.c:2756
 msgid "Select Pattern Folders"
 msgstr "Valitse kuviokansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2744
+#: ../app/dialogs/preferences-dialog.c:2758
 msgid "Palette Folders"
 msgstr "Palettikansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2746
+#: ../app/dialogs/preferences-dialog.c:2760
 msgid "Select Palette Folders"
 msgstr "Valitse palettikansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2748
+#: ../app/dialogs/preferences-dialog.c:2762
 msgid "Gradient Folders"
 msgstr "Liukuvärikansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2750
+#: ../app/dialogs/preferences-dialog.c:2764
 msgid "Select Gradient Folders"
 msgstr "Valitse liukuvärikansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2752
+#: ../app/dialogs/preferences-dialog.c:2766
 msgid "Font Folders"
 msgstr "Fonttikansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2754
+#: ../app/dialogs/preferences-dialog.c:2768
 msgid "Select Font Folders"
 msgstr "Valitse fonttikansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2756
+#: ../app/dialogs/preferences-dialog.c:2770
 #, fuzzy
 msgid "Tool Preset Folders"
 msgstr "Työkalun esivalinnat"
 
-#: ../app/dialogs/preferences-dialog.c:2758
+#: ../app/dialogs/preferences-dialog.c:2772
 #, fuzzy
 msgid "Select Tool Preset Folders"
 msgstr "Valitse teemakansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2760
+#: ../app/dialogs/preferences-dialog.c:2774
 msgid "Plug-In Folders"
 msgstr "Liitännäiskansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2762
+#: ../app/dialogs/preferences-dialog.c:2776
 msgid "Select Plug-In Folders"
 msgstr "Valitse liitännäiskansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2764
+#: ../app/dialogs/preferences-dialog.c:2778
 msgid "Scripts"
 msgstr "Komentosarjat"
 
-#: ../app/dialogs/preferences-dialog.c:2764
+#: ../app/dialogs/preferences-dialog.c:2778
 msgid "Script-Fu Folders"
 msgstr "Script-Fu -kansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2766
+#: ../app/dialogs/preferences-dialog.c:2780
 msgid "Select Script-Fu Folders"
 msgstr "Valitse Script-Fu -kansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2768
+#: ../app/dialogs/preferences-dialog.c:2782
 msgid "Module Folders"
 msgstr "Moduulikansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2770
+#: ../app/dialogs/preferences-dialog.c:2784
 msgid "Select Module Folders"
 msgstr "Valitse kansio moduuleille"
 
-#: ../app/dialogs/preferences-dialog.c:2772
+#: ../app/dialogs/preferences-dialog.c:2786
 msgid "Interpreters"
 msgstr "Tulkit"
 
-#: ../app/dialogs/preferences-dialog.c:2772
+#: ../app/dialogs/preferences-dialog.c:2786
 msgid "Interpreter Folders"
 msgstr "Tulkkikansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2774
+#: ../app/dialogs/preferences-dialog.c:2788
 msgid "Select Interpreter Folders"
 msgstr "Valitse tulkkikansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2776
+#: ../app/dialogs/preferences-dialog.c:2790
 msgid "Environment Folders"
 msgstr "Ympäristökansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2778
+#: ../app/dialogs/preferences-dialog.c:2792
 msgid "Select Environment Folders"
 msgstr "Valitse ympäristökansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2780
+#: ../app/dialogs/preferences-dialog.c:2794
 msgid "Themes"
 msgstr "Teemat"
 
-#: ../app/dialogs/preferences-dialog.c:2780
+#: ../app/dialogs/preferences-dialog.c:2794
 msgid "Theme Folders"
 msgstr "Teemakansiot"
 
-#: ../app/dialogs/preferences-dialog.c:2782
+#: ../app/dialogs/preferences-dialog.c:2796
 msgid "Select Theme Folders"
 msgstr "Valitse teemakansiot"
 
@@ -10347,22 +10350,22 @@ msgstr[1] "%d kuvassa on tallentamattomia muutoksia:"
 #: ../app/dialogs/quit-dialog.c:311
 #, c-format
 msgid "Press %s to quit."
-msgstr ""
+msgstr "Paina %s lopettaaksesi."
 
 #: ../app/dialogs/quit-dialog.c:314
 #, c-format
 msgid "Press %s to close all images."
-msgstr ""
+msgstr "Paina %s sulkeaksesi kaikki kuvat."
 
 #: ../app/dialogs/quit-dialog.c:330
 #, c-format
 msgid "Press %s to discard all changes and quit."
-msgstr ""
+msgstr "Paina %s hylätäksesi kaikki muutokset ja lopettaaksesi."
 
 #: ../app/dialogs/quit-dialog.c:333
 #, c-format
 msgid "Press %s to discard all changes and close all images."
-msgstr ""
+msgstr "Paina %s hylätäksesi kaikki muutokset ja sulkeaksesi kaikki kuvat."
 
 #: ../app/dialogs/quit-dialog.c:341
 #: ../app/display/gimpdisplayshell-close.c:180
@@ -10370,10 +10373,10 @@ msgid "_Discard Changes"
 msgstr "_Hylkää muutokset"
 
 #: ../app/dialogs/quit-dialog.c:423
-#, fuzzy, c-format
+#, c-format
 #| msgid "Export to %s"
 msgid "Exported to %s"
-msgstr "Vie nimellä %s"
+msgstr "Viety kohteeseen %s"
 
 #: ../app/dialogs/resize-dialog.c:119
 msgid "Canvas Size"
@@ -10650,7 +10653,7 @@ msgstr "Sulje %s"
 #: ../app/display/gimpdisplayshell-close.c:217
 #, c-format
 msgid "Press %s to discard all changes and close the image."
-msgstr ""
+msgstr "Paina %s hylätäksesi kaikki muutokset ja sulkeaksesi kuvan."
 
 #: ../app/display/gimpdisplayshell-close.c:277
 #, c-format
@@ -10819,7 +10822,7 @@ msgstr ""
 msgid "Unknown file type"
 msgstr "Tuntematon tiedoston tyyppi"
 
-#: ../app/file/file-save.c:221
+#: ../app/file/file-save.c:222
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Liitännäinen %s ei voinut tallentaa kuvaa"
@@ -10880,12 +10883,12 @@ msgstr "Täytä häkin alkuperäinen sijainti värillä"
 #. * But user config may have overriden the language, therefore we must
 #. * check the widget directions again.
 #.
-#: ../app/gui/gui.c:207
+#: ../app/gui/gui.c:208
 msgid "default:LTR"
 msgstr ""
 
 #. initialize the document history
-#: ../app/gui/gui.c:432
+#: ../app/gui/gui.c:433
 msgid "Documents"
 msgstr "Asiakirjat"
 
@@ -11131,8 +11134,8 @@ msgstr ""
 "Tason muuntaminen tavalliseksi tasoksi epäonnistui, koska se ei ole kelluva "
 "valinta."
 
-#: ../app/pdb/gimppdb-query.c:299 ../app/pdb/gimppdb.c:305
-#: ../app/pdb/gimppdb.c:375
+#: ../app/pdb/gimppdb-query.c:299 ../app/pdb/gimppdb.c:315
+#: ../app/pdb/gimppdb.c:385
 #, c-format
 msgid "Procedure '%s' not found"
 msgstr "Proseduuria %s ei löydy"
@@ -11291,7 +11294,7 @@ msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr "Kohdetta \"%s\" (%d) ei voi käyttää, koska sitä ei ole lisätty kuvaan"
 
 #: ../app/pdb/gimppdb-utils.c:557
-#, fuzzy, c-format
+#, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
 msgstr "Tasoa \"%s\" (%d) ei voi käyttää, koska se ei ole tekstitaso"
 
@@ -11311,7 +11314,7 @@ msgstr "Kuvan \"%s\" (%d) tyyppi on jo \"%s\""
 msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "Vektoriolio %d ei sisällä viivaa tunnisteella %d"
 
-#: ../app/pdb/gimppdb.c:410
+#: ../app/pdb/gimppdb.c:420
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong type for argument #%d. Expected "
@@ -12790,9 +12793,8 @@ msgid "Operation Settings"
 msgstr "Toiminnon asetukset"
 
 #: ../app/tools/gimpgegltool.c:442
-#, fuzzy
 msgid "Select an operation from the list above"
-msgstr "Tyhjennetäänkö kuvan toimintohistoria?"
+msgstr "Valitse toiminto yllä olevasta luettelosta"
 
 #: ../app/tools/gimphealtool.c:53
 msgid "Healing Tool: Heal image irregularities"
@@ -15018,16 +15020,14 @@ msgid "All images"
 msgstr "Kaikki kuvat"
 
 #: ../app/widgets/gimpfiledialog.c:813
-#, fuzzy
 #| msgid "All images"
 msgid "All XCF images"
-msgstr "Kaikki kuvat"
+msgstr "Kaikki XCF-kuvat"
 
 #: ../app/widgets/gimpfiledialog.c:815
-#, fuzzy
 #| msgid "All images"
 msgid "All export images"
-msgstr "Kaikki kuvat"
+msgstr "Kaikki vietävät kuvat"
 
 #: ../app/widgets/gimpfiledialog.c:999
 #, c-format
@@ -15160,15 +15160,15 @@ msgstr "Leveys"
 msgid "Height"
 msgstr "Korkeus"
 
-#: ../app/widgets/gimphelp.c:293
+#: ../app/widgets/gimphelp.c:297
 msgid "Help browser is missing"
 msgstr "Ohjeselain puuttuu"
 
-#: ../app/widgets/gimphelp.c:294
+#: ../app/widgets/gimphelp.c:298
 msgid "The GIMP help browser is not available."
 msgstr "GIMP-ohjeselainta ei ole saatavilla"
 
-#: ../app/widgets/gimphelp.c:295
+#: ../app/widgets/gimphelp.c:299
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -15176,31 +15176,31 @@ msgstr ""
 "GIMP-ohjeselaimen liitännäinen näyttää puuttuvat asennuksestasi. Voit lukea "
 "ohjesivuja myös WWW-selaimellasi."
 
-#: ../app/widgets/gimphelp.c:336
+#: ../app/widgets/gimphelp.c:340
 msgid "Help browser doesn't start"
 msgstr "Ohjeselain ei käynnistynyt"
 
-#: ../app/widgets/gimphelp.c:337
+#: ../app/widgets/gimphelp.c:341
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "GIMPin ohjeselainta ei voitu käynnistää."
 
-#: ../app/widgets/gimphelp.c:364
+#: ../app/widgets/gimphelp.c:368
 msgid "Use _Web Browser"
 msgstr "Käytä _WWW-selainta"
 
-#: ../app/widgets/gimphelp.c:610
+#: ../app/widgets/gimphelp.c:712
 msgid "GIMP user manual is missing"
 msgstr "GIMP-ohjekirja puuttuu"
 
-#: ../app/widgets/gimphelp.c:617
+#: ../app/widgets/gimphelp.c:719
 msgid "_Read Online"
 msgstr "_Lue verkossa"
 
-#: ../app/widgets/gimphelp.c:641
+#: ../app/widgets/gimphelp.c:743
 msgid "The GIMP user manual is not installed on your computer."
 msgstr "GIMP-ohjekirjaa ei ole asennettu tietokoneelle."
 
-#: ../app/widgets/gimphelp.c:644
+#: ../app/widgets/gimphelp.c:746
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -15911,7 +15911,7 @@ msgctxt "tab-style"
 msgid "Undefined"
 msgstr "Määrittelemätön"
 
-#: ../app/xcf/xcf-load.c:339
+#: ../app/xcf/xcf-load.c:392
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -15919,7 +15919,7 @@ msgstr ""
 "XCF-tiedosto on vioittunut! Siitä on ladattu niin paljon kuin voitiin, mutta "
 "se ei ole kokonainen."
 
-#: ../app/xcf/xcf-load.c:350
+#: ../app/xcf/xcf-load.c:403
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -15927,7 +15927,7 @@ msgstr ""
 "Tämä XCF-tiedosto on vioittunut! Siitä ei voitu lukea edes osittaista "
 "kuvatietoa."
 
-#: ../app/xcf/xcf-load.c:423
+#: ../app/xcf/xcf-load.c:477
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -15937,40 +15937,40 @@ msgstr ""
 "ei tallentanut indeksoituja väripaletteja oikein.\n"
 "Korvataan harmaasävykartalla."
 
-#: ../app/xcf/xcf-read.c:115
+#: ../app/xcf/xcf-read.c:174
 msgid "Invalid UTF-8 string in XCF file"
 msgstr "Epäkelpo UTF-8 merkkijono XCF-tiedostossa"
 
-#: ../app/xcf/xcf-write.c:86
+#: ../app/xcf/xcf-write.c:128
 #, c-format
 msgid "Error writing XCF: %s"
 msgstr "XCF-tiedoston kirjoitusvirhe: %s"
 
-#: ../app/xcf/xcf-seek.c:43 ../app/xcf/xcf-seek.c:60 ../app/xcf/xcf-seek.c:71
+#: ../app/xcf/xcf-seek.c:61 ../app/xcf/xcf-seek.c:87 ../app/xcf/xcf-seek.c:98
 #, c-format
 msgid "Could not seek in XCF file: %s"
 msgstr "XCF-tiedoston hakuvirhe: %s"
 
-#: ../app/xcf/xcf.c:99 ../app/xcf/xcf.c:167
+#: ../app/xcf/xcf.c:113 ../app/xcf/xcf.c:181
 msgid "GIMP XCF image"
 msgstr "GIMP XCF-kuva"
 
-#: ../app/xcf/xcf.c:271
+#: ../app/xcf/xcf.c:301
 #, c-format
 msgid "Opening '%s'"
 msgstr "Avataan \"%s\""
 
-#: ../app/xcf/xcf.c:313
+#: ../app/xcf/xcf.c:343
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF-virhe: havaittua XCF-tiedostoversiota %d ei tueta."
 
-#: ../app/xcf/xcf.c:383
+#: ../app/xcf/xcf.c:413
 #, c-format
 msgid "Saving '%s'"
 msgstr "Tallennetaan \"%s\""
 
-#: ../app/xcf/xcf.c:403
+#: ../app/xcf/xcf.c:433
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "XCF-tiedoston tallennusvirhe: %s"
@@ -16003,7 +16003,7 @@ msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-"
 "ins and extensions to do just about anything. The advanced scripting "
 "interface allows everything from the simplest task to the most complex image "
-"manipulation procedures to be easily scripted. GIMP is also available for "
+"manipulation procedures to be easily scripted. GIMP is available for Linux, "
 "Microsoft Windows and OS X."
 msgstr ""
 
