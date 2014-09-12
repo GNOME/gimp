@@ -731,8 +731,11 @@ save_image (const gchar  *filename,
   gboolean       alpha;
   gshort         predictor;
   gshort         photometric;
+  const Babl    *format;
+  const Babl    *type;
   gshort         samplesperpixel;
   gshort         bitspersample;
+  gshort         sampleformat;
   gint           bytesperrow;
   guchar        *t;
   guchar        *src = NULL;
@@ -742,7 +745,6 @@ save_image (const gchar  *filename,
   gint           success;
   GimpImageType  drawable_type;
   GeglBuffer    *buffer = NULL;
-  const Babl    *format;
   gint           tile_height;
   gint           y, yend;
   gboolean       is_bw    = FALSE;
@@ -769,15 +771,49 @@ save_image (const gchar  *filename,
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  if (gimp_image_get_precision (image) == GIMP_PRECISION_U8_GAMMA)
-    bitspersample = 8;
+  drawable_type = gimp_drawable_type (layer);
+  buffer        = gimp_drawable_get_buffer (layer);
+
+  format = gegl_buffer_get_format (buffer);
+  type   = babl_format_get_type (format, 0);
+
+  sampleformat = SAMPLEFORMAT_UINT;
+
+  if (type == babl_type ("u8"))
+    {
+      bitspersample = 8;
+    }
+  else if (type == babl_type ("u16"))
+    {
+      bitspersample = 16;
+    }
+  else if (type == babl_type ("half"))
+    {
+      bitspersample = 16;
+      sampleformat  = SAMPLEFORMAT_IEEEFP;
+    }
+  else if (type == babl_type ("u32"))
+    {
+      bitspersample = 32;
+    }
+  else if (type == babl_type ("float"))
+    {
+      bitspersample = 32;
+      sampleformat  = SAMPLEFORMAT_IEEEFP;
+    }
+  else if (type == babl_type ("double"))
+    {
+      bitspersample = 64;
+      sampleformat  = SAMPLEFORMAT_IEEEFP;
+    }
   else
-    bitspersample = 16;
+    {
+      bitspersample = 32;
+      sampleformat  = SAMPLEFORMAT_IEEEFP;
+      type          = babl_type ("float");
+    }
 
   *saved_bpp = bitspersample;
-
-  drawable_type = gimp_drawable_type (layer);
-  buffer = gimp_drawable_get_buffer (layer);
 
   cols = gegl_buffer_get_width (buffer);
   rows = gegl_buffer_get_height (buffer);
@@ -789,20 +825,22 @@ save_image (const gchar  *filename,
       samplesperpixel = 3;
       photometric     = PHOTOMETRIC_RGB;
       alpha           = FALSE;
-      if (bitspersample == 8)
-        format        = babl_format ("R'G'B' u8");
-      else
-        format        = babl_format ("R'G'B' u16");
+      format          = babl_format_new (babl_model ("R'G'B'"),
+                                         type,
+                                         babl_component ("R'"),
+                                         babl_component ("G'"),
+                                         babl_component ("B'"),
+                                         NULL);
       break;
 
     case GIMP_GRAY_IMAGE:
       samplesperpixel = 1;
       photometric     = PHOTOMETRIC_MINISBLACK;
       alpha           = FALSE;
-      if (bitspersample == 8)
-        format        = babl_format ("Y' u8");
-      else
-        format        = babl_format ("Y' u16");
+      format          = babl_format_new (babl_model ("Y'"),
+                                         type,
+                                         babl_component ("Y'"),
+                                         NULL);
       break;
 
     case GIMP_RGBA_IMAGE:
@@ -810,19 +848,25 @@ save_image (const gchar  *filename,
       samplesperpixel = 4;
       photometric     = PHOTOMETRIC_RGB;
       alpha           = TRUE;
-      if (bitspersample == 8)
+      if (tsvals.save_transp_pixels)
         {
-          if (tsvals.save_transp_pixels)
-            format    = babl_format ("R'G'B'A u8");
-          else
-            format    = babl_format ("R'aG'aB'aA u8");
+          format = babl_format_new (babl_model ("R'G'B'A"),
+                                    type,
+                                    babl_component ("R'"),
+                                    babl_component ("G'"),
+                                    babl_component ("B'"),
+                                    babl_component ("A"),
+                                    NULL);
         }
       else
         {
-          if (tsvals.save_transp_pixels)
-            format    = babl_format ("R'G'B'A u16");
-          else
-            format    = babl_format ("R'aG'aB'aA u16");
+          format = babl_format_new (babl_model ("R'aG'aB'aA"),
+                                    type,
+                                    babl_component ("R'a"),
+                                    babl_component ("G'a"),
+                                    babl_component ("B'a"),
+                                    babl_component ("A"),
+                                    NULL);
         }
       break;
 
@@ -830,19 +874,21 @@ save_image (const gchar  *filename,
       samplesperpixel = 2;
       photometric     = PHOTOMETRIC_MINISBLACK;
       alpha           = TRUE;
-      if (bitspersample == 8)
+      if (tsvals.save_transp_pixels)
         {
-          if (tsvals.save_transp_pixels)
-            format    = babl_format ("Y'A u8");
-          else
-            format    = babl_format ("Y'aA u8");
+          format = babl_format_new (babl_model ("Y'A"),
+                                    type,
+                                    babl_component ("Y'"),
+                                    babl_component ("A"),
+                                    NULL);
         }
       else
         {
-          if (tsvals.save_transp_pixels)
-            format    = babl_format ("Y'A u16");
-          else
-            format    = babl_format ("Y'aA u16");
+          format = babl_format_new (babl_model ("Y'aA"),
+                                    type,
+                                    babl_component ("Y'a"),
+                                    babl_component ("A"),
+                                    NULL);
         }
       break;
 
@@ -939,6 +985,7 @@ save_image (const gchar  *filename,
   TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, cols);
   TIFFSetField (tif, TIFFTAG_IMAGELENGTH, rows);
   TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, bitspersample);
+  TIFFSetField (tif, TIFFTAG_SAMPLEFORMAT, sampleformat);
   TIFFSetField (tif, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
   TIFFSetField (tif, TIFFTAG_COMPRESSION, compression);
 
