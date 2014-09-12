@@ -121,11 +121,13 @@ static void      load_rgba        (TIFF         *tif,
                                    channel_data *channel);
 static void      load_contiguous  (TIFF         *tif,
                                    channel_data *channel,
+                                   const Babl   *type,
                                    gushort       bps,
                                    gushort       spp,
                                    gint          extra);
 static void      load_separate    (TIFF         *tif,
                                    channel_data *channel,
+                                   const Babl   *type,
                                    gushort       bps,
                                    gushort       spp,
                                    gint          extra);
@@ -535,6 +537,9 @@ load_image (const gchar        *filename,
             GError            **error)
 {
   gushort       bps, spp, photomet;
+  gshort        sampleformat;
+  GimpPrecision image_precision;
+  const Babl    *type;
   guint16       orientation;
   gint          cols, rows;
   gboolean      alpha;
@@ -599,8 +604,53 @@ load_image (const gchar        *filename,
 
       TIFFGetFieldDefaulted (tif, TIFFTAG_BITSPERSAMPLE, &bps);
 
-      if (bps > 8 && bps != 16)
+      TIFFGetFieldDefaulted (tif, TIFFTAG_SAMPLEFORMAT, &sampleformat);
+
+      if (bps > 8 && bps != 8 && bps != 16 && bps != 32 && bps != 64)
         worst_case = TRUE; /* Wrong sample width => RGBA */
+
+      switch (bps)
+        {
+        case 8:
+          image_precision = GIMP_PRECISION_U8_GAMMA;
+          type            = babl_type ("u8");
+          break;
+
+        case 16:
+          if (sampleformat == SAMPLEFORMAT_IEEEFP)
+            {
+              image_precision = GIMP_PRECISION_HALF_GAMMA;
+              type            = babl_type ("half");
+            }
+          else
+            {
+              image_precision = GIMP_PRECISION_U16_GAMMA;
+              type            = babl_type ("u16");
+            }
+          break;
+
+        case 32:
+          if (sampleformat == SAMPLEFORMAT_IEEEFP)
+            {
+              image_precision = GIMP_PRECISION_FLOAT_GAMMA;
+              type            = babl_type ("float");
+            }
+          else
+            {
+              image_precision = GIMP_PRECISION_U32_GAMMA;
+              type            = babl_type ("u32");
+            }
+          break;
+
+        case 64:
+          image_precision = GIMP_PRECISION_DOUBLE_GAMMA;
+          type            = babl_type ("double");
+          break;
+
+        default:
+          image_precision = GIMP_PRECISION_U16_GAMMA;
+          type            = babl_type ("u16");
+        }
 
       g_printerr ("bps: %d\n", bps);
 
@@ -712,27 +762,29 @@ load_image (const gchar        *filename,
 
               if (alpha)
                 {
-                  if (bps == 8)
+                  if (tsvals.save_transp_pixels)
                     {
-                      if (tsvals.save_transp_pixels)
-                        base_format = babl_format ("Y'A u8");
-                      else
-                        base_format = babl_format ("Y'aA u8");
+                      base_format = babl_format_new (babl_model ("Y'A"),
+                                                     type,
+                                                     babl_component ("Y'"),
+                                                     babl_component ("A"),
+                                                     NULL);
                     }
-                  else if (bps == 16)
+                  else
                     {
-                      if (tsvals.save_transp_pixels)
-                        base_format = babl_format ("Y'A u16");
-                      else
-                        base_format = babl_format ("Y'aA u16");
+                      base_format = babl_format_new (babl_model ("Y'aA"),
+                                                     type,
+                                                     babl_component ("Y'a"),
+                                                     babl_component ("A"),
+                                                     NULL);
                     }
                 }
               else
                 {
-                  if (bps == 8)
-                    base_format     = babl_format ("Y' u8");
-                  else if (bps == 16)
-                    base_format     = babl_format ("Y' u16");
+                  base_format = babl_format_new (babl_model ("Y'"),
+                                                 type,
+                                                 babl_component ("Y'"),
+                                                 NULL);
                 }
             }
           break;
@@ -743,27 +795,35 @@ load_image (const gchar        *filename,
 
           if (alpha)
             {
-              if (bps == 8)
+              if (tsvals.save_transp_pixels)
                 {
-                  if (tsvals.save_transp_pixels)
-                    base_format = babl_format ("R'G'B'A u8");
-                  else
-                    base_format = babl_format ("R'aG'aB'aA u8");
+                  base_format = babl_format_new (babl_model ("R'G'B'A"),
+                                                 type,
+                                                 babl_component ("R'"),
+                                                 babl_component ("G'"),
+                                                 babl_component ("B'"),
+                                                 babl_component ("A"),
+                                                 NULL);
                 }
-              else if (bps == 16)
+              else
                 {
-                  if (tsvals.save_transp_pixels)
-                    base_format = babl_format ("R'G'B'A u16");
-                  else
-                    base_format = babl_format ("R'aG'aB'aA u16");
+                  base_format = babl_format_new (babl_model ("R'aG'aB'aA"),
+                                                 type,
+                                                 babl_component ("R'a"),
+                                                 babl_component ("G'a"),
+                                                 babl_component ("B'a"),
+                                                 babl_component ("A"),
+                                                 NULL);
                 }
             }
           else
             {
-              if (bps == 8)
-                base_format     = babl_format ("R'G'B' u8");
-              else if (bps == 16)
-                base_format     = babl_format ("R'G'B' u16");
+              base_format = babl_format_new (babl_model ("R'G'B'"),
+                                             type,
+                                             babl_component ("R'"),
+                                             babl_component ("G'"),
+                                             babl_component ("B'"),
+                                             NULL);
             }
           break;
 
@@ -812,12 +872,15 @@ load_image (const gchar        *filename,
 
       if (worst_case)
         {
-          image_type = GIMP_RGB;
-          layer_type = GIMP_RGBA_IMAGE;
-          if (bps == 8)
-            base_format = babl_format ("R'aG'aB'aA u8");
-          else if (bps == 16)
-            base_format = babl_format ("R'aG'aB'aA u16");
+          image_type  = GIMP_RGB;
+          layer_type  = GIMP_RGBA_IMAGE;
+          base_format = babl_format_new (babl_model ("R'aG'aB'aA"),
+                                         type,
+                                         babl_component ("R'a"),
+                                         babl_component ("G'a"),
+                                         babl_component ("B'a"),
+                                         babl_component ("A"),
+                                         NULL);
         }
 
       if (target == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
@@ -831,9 +894,7 @@ load_image (const gchar        *filename,
       if ((target == GIMP_PAGE_SELECTOR_TARGET_IMAGES) || (! image))
         {
           image = gimp_image_new_with_precision (cols, rows, image_type,
-                                                 bps <= 8 ?
-                                                 GIMP_PRECISION_U8_GAMMA :
-                                                 GIMP_PRECISION_U16_GAMMA);
+                                                 image_precision);
 
           if (image < 1)
             {
@@ -1078,10 +1139,9 @@ load_image (const gchar        *filename,
                                                 100.0, &color);
               gimp_image_insert_channel (image, channel[i].ID, -1, 0);
               channel[i].buffer = gimp_drawable_get_buffer (channel[i].ID);
-              if (bps < 16)
-                channel[i].format = babl_format ("A u8");
-              else
-                channel[i].format = babl_format ("A u16");
+              channel[i].format = babl_format_new (babl_model ("A"),
+                                                   type,
+                                                   NULL);
             }
         }
 
@@ -1093,11 +1153,11 @@ load_image (const gchar        *filename,
         }
       else if (planar == PLANARCONFIG_CONTIG)
         {
-          load_contiguous (tif, channel, bps, spp, extra);
+          load_contiguous (tif, channel, type, bps, spp, extra);
         }
       else
         {
-          load_separate (tif, channel, bps, spp, extra);
+          load_separate (tif, channel, type, bps, spp, extra);
         }
 
       if (TIFFGetField (tif, TIFFTAG_ORIENTATION, &orientation))
@@ -1453,6 +1513,7 @@ load_paths (TIFF *tif, gint image)
 static void
 load_contiguous (TIFF         *tif,
                  channel_data *channel,
+                 const Babl   *type,
                  gushort       bps,
                  gushort       spp,
                  gint          extra)
@@ -1490,10 +1551,7 @@ load_contiguous (TIFF         *tif,
 
   one_row = (gdouble) tileLength / (gdouble) imageLength;
 
-  if (bps <= 8)
-    src_format = babl_format_n (babl_type ("u8"), spp);
-  else
-    src_format = babl_format_n (babl_type ("u16"), spp);
+  src_format = babl_format_n (type, spp);
 
   /* consistency check */
   bytes_per_pixel = 0;
@@ -1575,6 +1633,7 @@ load_contiguous (TIFF         *tif,
 static void
 load_separate (TIFF         *tif,
                channel_data *channel,
+               const Babl   *type,
                gushort       bps,
                gushort       spp,
                gint          extra)
@@ -1612,10 +1671,7 @@ load_separate (TIFF         *tif,
 
   one_row = (gdouble) tileLength / (gdouble) imageLength;
 
-  if (bps <= 8)
-    src_format = babl_format_n (babl_type ("u8"), 1);
-  else
-    src_format = babl_format_n (babl_type ("u16"), 1);
+  src_format = babl_format_n (type, 1);
 
   /* consistency check */
   bytes_per_pixel = 0;
