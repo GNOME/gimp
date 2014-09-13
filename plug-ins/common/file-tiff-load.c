@@ -47,22 +47,6 @@
 #include <errno.h>
 #include <string.h>
 
-#include <sys/types.h>
-#include <fcntl.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <glib/gstdio.h>
-#ifdef G_OS_WIN32
-#include <libgimpbase/gimpwin32-io.h>
-#endif
-
-#ifndef _O_BINARY
-#define _O_BINARY 0
-#endif
-
 #include <tiffio.h>
 
 #include <libgimp/gimp.h>
@@ -85,12 +69,12 @@ typedef struct
 
 typedef struct
 {
-  gint32        ID;
-  GeglBuffer   *buffer;
-  const Babl   *format;
-  guchar       *pixels;
-  guchar       *pixel;
-} channel_data;
+  gint32      ID;
+  GeglBuffer *buffer;
+  const Babl *format;
+  guchar     *pixels;
+  guchar     *pixel;
+} ChannelData;
 
 typedef struct
 {
@@ -99,14 +83,15 @@ typedef struct
   gint *pages;
 } TiffSelectedPages;
 
+
 /* Declare some local functions.
  */
-static void   query     (void);
-static void   run       (const gchar      *name,
-                         gint              nparams,
-                         const GimpParam  *param,
-                         gint             *nreturn_vals,
-                         GimpParam       **return_vals);
+static void      query            (void);
+static void      run              (const gchar        *name,
+                                   gint                nparams,
+                                   const GimpParam    *param,
+                                   gint               *nreturn_vals,
+                                   GimpParam         **return_vals);
 
 static gboolean  load_dialog      (TIFF               *tif,
                                    TiffSelectedPages  *pages);
@@ -117,32 +102,32 @@ static gint32    load_image       (const gchar        *filename,
                                    gboolean           *resolution_loaded,
                                    GError            **error);
 
-static void      load_rgba        (TIFF         *tif,
-                                   channel_data *channel);
-static void      load_contiguous  (TIFF         *tif,
-                                   channel_data *channel,
-                                   const Babl   *type,
-                                   gushort       bps,
-                                   gushort       spp,
-                                   gint          extra);
-static void      load_separate    (TIFF         *tif,
-                                   channel_data *channel,
-                                   const Babl   *type,
-                                   gushort       bps,
-                                   gushort       spp,
-                                   gint          extra);
-static void      load_paths       (TIFF         *tif,
-                                   gint          image);
+static void      load_rgba        (TIFF               *tif,
+                                   ChannelData        *channel);
+static void      load_contiguous  (TIFF               *tif,
+                                   ChannelData        *channel,
+                                   const Babl         *type,
+                                   gushort             bps,
+                                   gushort             spp,
+                                   gint                extra);
+static void      load_separate    (TIFF               *tif,
+                                   ChannelData        *channel,
+                                   const Babl         *type,
+                                   gushort             bps,
+                                   gushort             spp,
+                                   gint                extra);
+static void      load_paths       (TIFF               *tif,
+                                   gint                image);
 
-static void      tiff_warning  (const gchar  *module,
-                                const gchar  *fmt,
-                                va_list       ap) G_GNUC_PRINTF (2, 0);
-static void      tiff_error    (const gchar  *module,
-                                const gchar  *fmt,
-                                va_list       ap) G_GNUC_PRINTF (2, 0);
-static TIFF     *tiff_open     (const gchar  *filename,
-                                const gchar  *mode,
-                                GError      **error);
+static void      tiff_warning     (const gchar        *module,
+                                   const gchar        *fmt,
+                                   va_list             ap) G_GNUC_PRINTF (2, 0);
+static void      tiff_error       (const gchar        *module,
+                                   const gchar        *fmt,
+                                   va_list             ap) G_GNUC_PRINTF (2, 0);
+static TIFF    * tiff_open        (const gchar        *filename,
+                                   const gchar        *mode,
+                                   GError            **error);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -159,9 +144,7 @@ static TiffSaveVals tsvals =
   TRUE,                /*  alpha handling */
 };
 
-
-static GimpRunMode             run_mode      = GIMP_RUN_INTERACTIVE;
-static GimpPageSelectorTarget  target        = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
+static GimpPageSelectorTarget target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
 
 
 MAIN ()
@@ -208,6 +191,7 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[2];
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GError            *error  = NULL;
   TiffSelectedPages  pages;
@@ -229,7 +213,9 @@ run (const gchar      *name,
   if (strcmp (name, LOAD_PROC) == 0)
     {
       const gchar *filename = param[1].data.d_string;
-      TIFF        *tif      = tiff_open (filename, "r", &error);
+      TIFF        *tif;
+
+      tif = tiff_open (filename, "r", &error);
 
       if (tif)
         {
@@ -288,8 +274,10 @@ run (const gchar      *name,
 
                   if (image != -1)
                     {
-                      GFile        *file = g_file_new_for_path (param[1].data.d_string);
+                      GFile        *file;
                       GimpMetadata *metadata;
+
+                      file = g_file_new_for_path (param[1].data.d_string);
 
                       metadata = gimp_image_metadata_load_prepare (image,
                                                                    "image/tiff",
@@ -445,7 +433,6 @@ tiff_get_page_name (TIFF *tif)
   return NULL;
 }
 
-
 static gboolean
 load_dialog (TIFF              *tif,
              TiffSelectedPages *pages)
@@ -536,52 +523,52 @@ load_image (const gchar        *filename,
             gboolean           *resolution_loaded,
             GError            **error)
 {
-  gushort       bps, spp, photomet;
-  gshort        sampleformat;
-  GimpPrecision image_precision;
+  gushort        bps, spp, photomet;
+  gshort         sampleformat;
+  GimpPrecision  image_precision;
   const Babl    *type;
-  guint16       orientation;
-  gint          cols, rows;
-  gboolean      alpha;
-  gint          image = 0, image_type = GIMP_RGB;
-  gint          layer, layer_type     = GIMP_RGB_IMAGE;
-  gint          first_image_type      = GIMP_RGB;
-  const Babl   *base_format = NULL;
-  float         layer_offset_x        = 0.0;
-  float         layer_offset_y        = 0.0;
-  gint          layer_offset_x_pixel  = 0;
-  gint          layer_offset_y_pixel  = 0;
-  gint          min_row = G_MAXINT;
-  gint          min_col = G_MAXINT;
-  gint          max_row = 0;
-  gint          max_col = 0;
-  gushort       extra, *extra_types;
-  channel_data *channel = NULL;
+  guint16        orientation;
+  gint           cols, rows;
+  gboolean       alpha;
+  gint           image                = 0;
+  gint           image_type           = GIMP_RGB;
+  gint           layer;
+  gint           layer_type           = GIMP_RGB_IMAGE;
+  gint           first_image_type     = GIMP_RGB;
+  const Babl    *base_format          = NULL;
+  float          layer_offset_x       = 0.0;
+  float          layer_offset_y       = 0.0;
+  gint           layer_offset_x_pixel = 0;
+  gint           layer_offset_y_pixel = 0;
+  gint           min_row              = G_MAXINT;
+  gint           min_col              = G_MAXINT;
+  gint           max_row              = 0;
+  gint           max_col              = 0;
+  gushort        extra;
+  gushort       *extra_types;
+  ChannelData   *channel = NULL;
 
-  GimpRGB       color;
+  GimpRGB        color;
 
-  uint16  planar = PLANARCONFIG_CONTIG;
+  uint16         planar = PLANARCONFIG_CONTIG;
 
-  gboolean      is_bw;
+  gboolean       is_bw;
 
-  gint          i;
-  gboolean      worst_case = FALSE;
+  gint           i;
+  gboolean       worst_case = FALSE;
 
-  TiffSaveVals  save_vals;
-  GimpParasite *parasite;
-  guint16       tmp;
+  TiffSaveVals   save_vals;
+  GimpParasite  *parasite;
+  guint16        tmp;
 
-  const gchar  *name;
+  const gchar   *name;
 
-  GList        *images_list = NULL, *images_list_temp;
-  gint          li;
-
-  gboolean      flip_horizontal = FALSE;
-  gboolean      flip_vertical   = FALSE;
+  GList         *images_list = NULL;
+  gint           li;
 
 #ifdef TIFFTAG_ICCPROFILE
-  uint32        profile_size;
-  guchar       *icc_profile;
+  uint32         profile_size;
+  guchar        *icc_profile;
 #endif
 
   gimp_rgb_set (&color, 0.0, 0.0, 0.0);
@@ -656,30 +643,31 @@ load_image (const gchar        *filename,
 
       TIFFGetFieldDefaulted (tif, TIFFTAG_SAMPLESPERPIXEL, &spp);
 
-      if (!TIFFGetField (tif, TIFFTAG_EXTRASAMPLES, &extra, &extra_types))
+      if (! TIFFGetField (tif, TIFFTAG_EXTRASAMPLES, &extra, &extra_types))
         extra = 0;
 
-      if (!TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols))
+      if (! TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols))
         {
           g_message ("Could not get image width from '%s'",
                      gimp_filename_to_utf8 (filename));
           return -1;
         }
 
-      if (!TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows))
+      if (! TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows))
         {
           g_message ("Could not get image length from '%s'",
                      gimp_filename_to_utf8 (filename));
           return -1;
         }
 
-      if (!TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
+      if (! TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
         {
           uint16 compress;
-          if (TIFFGetField(tif, TIFFTAG_COMPRESSION, &compress) &&
+
+          if (TIFFGetField (tif, TIFFTAG_COMPRESSION, &compress) &&
               (compress == COMPRESSION_CCITTFAX3 ||
                compress == COMPRESSION_CCITTFAX4 ||
-               compress == COMPRESSION_CCITTRLE ||
+               compress == COMPRESSION_CCITTRLE  ||
                compress == COMPRESSION_CCITTRLEW))
             {
               g_message ("Could not get photometric from '%s'. "
@@ -841,7 +829,7 @@ load_image (const gchar        *filename,
         }
 
       /* attach a parasite containing the compression */
-      if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &tmp))
+      if (! TIFFGetField (tif, TIFFTAG_COMPRESSION, &tmp))
         {
           save_vals.compression = COMPRESSION_NONE;
         }
@@ -1049,8 +1037,8 @@ load_image (const gchar        *filename,
 
         /* round floating point position to integer position
            required by GIMP */
-        layer_offset_x_pixel = ROUND(layer_offset_x * xres);
-        layer_offset_y_pixel = ROUND(layer_offset_y * yres);
+        layer_offset_x_pixel = ROUND (layer_offset_x * xres);
+        layer_offset_y_pixel = ROUND (layer_offset_y * yres);
       }
 
 #if 0
@@ -1076,8 +1064,8 @@ load_image (const gchar        *filename,
             {
               gushort *redmap, *greenmap, *bluemap;
 
-              if (!TIFFGetField (tif, TIFFTAG_COLORMAP,
-                                 &redmap, &greenmap, &bluemap))
+              if (! TIFFGetField (tif, TIFFTAG_COLORMAP,
+                                  &redmap, &greenmap, &bluemap))
                 {
                   g_message ("Could not get colormaps from '%s'",
                              gimp_filename_to_utf8 (filename));
@@ -1098,8 +1086,8 @@ load_image (const gchar        *filename,
 
       load_paths (tif, image);
 
-      /* Allocate channel_data for all channels, even the background layer */
-      channel = g_new0 (channel_data, extra + 1);
+      /* Allocate ChannelData for all channels, even the background layer */
+      channel = g_new0 (ChannelData, extra + 1);
 
       /* try and use layer name from tiff file */
       name = tiff_get_page_name (tif);
@@ -1162,27 +1150,28 @@ load_image (const gchar        *filename,
 
       if (TIFFGetField (tif, TIFFTAG_ORIENTATION, &orientation))
         {
+          gboolean flip_horizontal = FALSE;
+          gboolean flip_vertical   = FALSE;
+
           switch (orientation)
             {
             case ORIENTATION_TOPLEFT:
-              flip_horizontal = FALSE;
-              flip_vertical   = FALSE;
               break;
+
             case ORIENTATION_TOPRIGHT:
               flip_horizontal = TRUE;
-              flip_vertical   = FALSE;
               break;
+
             case ORIENTATION_BOTRIGHT:
               flip_horizontal = TRUE;
               flip_vertical   = TRUE;
               break;
+
             case ORIENTATION_BOTLEFT:
-              flip_horizontal = FALSE;
-              flip_vertical   = TRUE;
+              flip_vertical = TRUE;
               break;
+
             default:
-              flip_horizontal = FALSE;
-              flip_vertical   = FALSE;
               g_warning ("Orientation %d not handled yet!", orientation);
               break;
             }
@@ -1258,7 +1247,7 @@ load_image (const gchar        *filename,
     }
   else
     {
-      images_list_temp = images_list;
+      GList *images_list_temp = images_list;
 
       if (images_list)
         {
@@ -1279,8 +1268,8 @@ load_image (const gchar        *filename,
 }
 
 static void
-load_rgba (TIFF         *tif,
-           channel_data *channel)
+load_rgba (TIFF        *tif,
+           ChannelData *channel)
 {
   uint32  imageWidth, imageLength;
   uint32  row;
@@ -1293,7 +1282,7 @@ load_rgba (TIFF         *tif,
 
   buffer = g_new (uint32, imageWidth * imageLength);
 
-  if (!TIFFReadRGBAImage (tif, imageWidth, imageLength, buffer, 0))
+  if (! TIFFReadRGBAImage (tif, imageWidth, imageLength, buffer, 0))
     g_message ("Unsupported layout, no RGBA loader");
 
   for (row = 0; row < imageLength; ++row)
@@ -1324,30 +1313,30 @@ load_rgba (TIFF         *tif,
 static void
 load_paths (TIFF *tif, gint image)
 {
-  guint16 id;
-  gsize  len, n_bytes, pos;
-  gchar *bytes, *name;
+  guint16  id;
+  gsize    len, n_bytes, pos;
+  gchar   *bytes;
+  gchar   *name;
   guint32 *val32;
   guint16 *val16;
+  gint     width, height;
+  gint     path_index;
 
-  gint width, height;
-  gint path_index;
-
-  width = gimp_image_width (image);
+  width  = gimp_image_width (image);
   height = gimp_image_height (image);
 
-  if (!TIFFGetField (tif, TIFFTAG_PHOTOSHOP, &n_bytes, &bytes))
+  if (! TIFFGetField (tif, TIFFTAG_PHOTOSHOP, &n_bytes, &bytes))
     return;
 
   path_index = 0;
-
-  pos = 0;
+  pos        = 0;
 
   while (pos < n_bytes)
     {
       if (n_bytes-pos < 7 ||
           strncmp (bytes + pos, "8BIM", 4) != 0)
         break;
+
       pos += 4;
 
       val16 = (guint16 *) (bytes + pos);
@@ -1360,8 +1349,7 @@ load_paths (TIFF *tif, gint image)
       if (n_bytes - pos < len + 1)
         break;   /* block not big enough */
 
-      /*
-       * do we have the UTF-marker? is it valid UTF-8?
+      /* do we have the UTF-marker? is it valid UTF-8?
        * if so, we assume an utf-8 encoded name, otherwise we
        * assume iso8859-1
        */
@@ -1377,7 +1365,7 @@ load_paths (TIFF *tif, gint image)
           name = g_convert (name, len, "utf-8", "iso8859-1", NULL, NULL, NULL);
         }
 
-      if (!name)
+      if (! name)
         name = g_strdup ("(imported path)");
 
       pos += len + 1;
@@ -1398,13 +1386,13 @@ load_paths (TIFF *tif, gint image)
       if (id >= 2000 && id <= 2998)
         {
           /* path information */
-          guint16 type;
-          gint rec = pos;
-          gint32   vectors;
-          gdouble *points = NULL;
-          gint     expected_points = 0;
-          gint     pointcount = 0;
-          gboolean closed = FALSE;
+          guint16   type;
+          gint      rec = pos;
+          gint32    vectors;
+          gdouble  *points          = NULL;
+          gint      expected_points = 0;
+          gint      pointcount      = 0;
+          gboolean  closed          = FALSE;
 
           vectors = gimp_vectors_new (image, name);
           gimp_image_insert_vectors (image, vectors, -1, path_index);
@@ -1417,7 +1405,7 @@ load_paths (TIFF *tif, gint image)
               type = GUINT16_FROM_BE (*val16);
 
               switch (type)
-              {
+                {
                 case 0:  /* new closed subpath */
                 case 3:  /* new open subpath */
                   val16 = (guint16 *) (bytes + rec + 2);
@@ -1491,7 +1479,7 @@ load_paths (TIFF *tif, gint image)
 
                 default:
                   break;
-              }
+                }
 
               rec += 26;
             }
@@ -1511,23 +1499,24 @@ load_paths (TIFF *tif, gint image)
 
 
 static void
-load_contiguous (TIFF         *tif,
-                 channel_data *channel,
-                 const Babl   *type,
-                 gushort       bps,
-                 gushort       spp,
-                 gint          extra)
+load_contiguous (TIFF        *tif,
+                 ChannelData *channel,
+                 const Babl  *type,
+                 gushort      bps,
+                 gushort      spp,
+                 gint         extra)
 {
-  uint32  imageWidth, imageLength;
-  uint32  tileWidth, tileLength;
-  uint32  x, y, rows, cols;
-  int bytes_per_pixel;
-  GeglBuffer *src_buf;
-  const Babl *src_format;
+  uint32              imageWidth, imageLength;
+  uint32              tileWidth, tileLength;
+  uint32              x, y, rows, cols;
+  gint                bytes_per_pixel;
+  GeglBuffer         *src_buf;
+  const Babl         *src_format;
   GeglBufferIterator *iter;
-  guchar *buffer;
-  gdouble progress = 0.0, one_row;
-  gint    i;
+  guchar             *buffer;
+  gdouble             progress = 0.0;
+  gdouble             one_row;
+  gint                i;
 
   g_printerr ("%s\n", __func__);
 
@@ -1605,9 +1594,9 @@ load_contiguous (TIFF         *tif,
 
               while (gegl_buffer_iterator_next (iter))
                 {
-                  guchar *s = iter->data[0];
-                  guchar *d = iter->data[1];
-                  gint length = iter->length;
+                  guchar *s      = iter->data[0];
+                  guchar *d      = iter->data[1];
+                  gint    length = iter->length;
 
                   s += offset;
 
@@ -1631,23 +1620,24 @@ load_contiguous (TIFF         *tif,
 
 
 static void
-load_separate (TIFF         *tif,
-               channel_data *channel,
-               const Babl   *type,
-               gushort       bps,
-               gushort       spp,
-               gint          extra)
+load_separate (TIFF        *tif,
+               ChannelData *channel,
+               const Babl  *type,
+               gushort      bps,
+               gushort      spp,
+               gint         extra)
 {
-  uint32  imageWidth, imageLength;
-  uint32  tileWidth, tileLength;
-  uint32  x, y, rows, cols;
-  int bytes_per_pixel;
-  GeglBuffer *src_buf;
-  const Babl *src_format;
+  guint32             imageWidth, imageLength;
+  guint32             tileWidth, tileLength;
+  guint32             rows, cols;
+  gint                bytes_per_pixel;
+  GeglBuffer         *src_buf;
+  const Babl         *src_format;
   GeglBufferIterator *iter;
-  guchar *buffer;
-  gdouble progress = 0.0, one_row;
-  gint    i, compindex;
+  guchar             *buffer;
+  gdouble             progress = 0.0;
+  gdouble             one_row;
+  gint                i, compindex;
 
   g_printerr ("%s\n", __func__);
 
@@ -1688,14 +1678,16 @@ load_separate (TIFF         *tif,
       gint src_bpp, dest_bpp;
       gint n_comps, j, offset;
 
-      n_comps = babl_format_get_n_components (channel[i].format);
-      src_bpp = babl_format_get_bytes_per_pixel (src_format);
+      n_comps  = babl_format_get_n_components (channel[i].format);
+      src_bpp  = babl_format_get_bytes_per_pixel (src_format);
       dest_bpp = babl_format_get_bytes_per_pixel (channel[i].format);
 
       offset = 0;
 
       for (j = 0; j < n_comps; j++)
         {
+          guint32 y, x;
+
           for (y = 0; y < imageLength; y += tileLength)
             {
               for (x = 0; x < imageWidth; x += tileWidth)
@@ -1730,9 +1722,9 @@ load_separate (TIFF         *tif,
 
                   while (gegl_buffer_iterator_next (iter))
                     {
-                      guchar *s = iter->data[0];
-                      guchar *d = iter->data[1];
-                      gint length = iter->length;
+                      guchar *s      = iter->data[0];
+                      guchar *d      = iter->data[1];
+                      gint    length = iter->length;
 
                       d += offset;
 
