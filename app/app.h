@@ -47,6 +47,7 @@ void  app_run       (const gchar         *full_prog_name,
                      gboolean             use_cpu_accel,
                      gboolean             console_messages,
                      gboolean             use_debug_handler,
+                     gboolean             show_playground,
                      GimpStackTraceMode   stack_trace_mode,
                      GimpPDBCompatMode    pdb_compat_mode);
 

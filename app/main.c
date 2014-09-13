@@ -133,9 +133,11 @@ static gboolean            console_messages  = FALSE;
 static gboolean            use_debug_handler = FALSE;
 
 #ifdef GIMP_UNSTABLE
+static gboolean            show_playground   = TRUE;
 static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_QUERY;
 static GimpPDBCompatMode   pdb_compat_mode   = GIMP_PDB_COMPAT_WARN;
 #else
+static gboolean            show_playground   = FALSE;
 static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_NEVER;
 static GimpPDBCompatMode   pdb_compat_mode   = GIMP_PDB_COMPAT_ON;
 #endif
@@ -269,6 +271,11 @@ static const GOptionEntry main_entries[] =
     G_OPTION_FLAG_NO_ARG | G_OPTION_FLAG_HIDDEN,
     G_OPTION_ARG_CALLBACK, gimp_option_dump_pdb_procedures_deprecated,
     N_("Output a sorted list of deprecated procedures in the PDB"), NULL
+  },
+  {
+    "show-playground", 0, G_OPTION_FLAG_HIDDEN,
+    G_OPTION_ARG_NONE, &show_playground,
+    N_("Show a preferences page with experimental features"), NULL
   },
   {
     G_OPTION_REMAINING, 0, 0,
@@ -466,6 +473,7 @@ main (int    argc,
            use_cpu_accel,
            console_messages,
            use_debug_handler,
+           show_playground,
            stack_trace_mode,
            pdb_compat_mode);
 

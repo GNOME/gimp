@@ -1451,6 +1451,32 @@ prefs_dialog_new (Gimp       *gimp,
                     gimp);
 
 
+  /****************/
+  /*  Playground  */
+  /****************/
+  if (gimp->show_playground)
+    {
+      GtkWidget *label;
+
+      pixbuf = prefs_get_pixbufs (dialog, "playground", &small_pixbuf);
+      vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                      _("Experimental Playground"),
+                                      pixbuf,
+                                      _("Playground"),
+                                      small_pixbuf,
+                                      GIMP_HELP_PREFS_DIALOG,
+                                      NULL,
+                                      &top_iter);
+
+      vbox2 = prefs_frame_new (_("Insane Options"),
+                               GTK_CONTAINER (vbox), TRUE);
+
+      label = gtk_label_new ("Fuck Yeah!");
+      gtk_box_pack_start (GTK_BOX (vbox2), label, TRUE, TRUE, 0);
+      gtk_widget_show (label);
+    }
+
+
   /***********/
   /*  Theme  */
   /***********/

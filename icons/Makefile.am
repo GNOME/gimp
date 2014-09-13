@@ -260,6 +260,7 @@ icons22_DATA = \
 	22/gimp-prefs-input-devices.png		\
 	22/gimp-prefs-interface.png		\
 	22/gimp-prefs-new-image.png		\
+	22/gimp-prefs-playground.png		\
 	22/gimp-prefs-session.png		\
 	22/gimp-prefs-theme.png			\
 	22/gimp-prefs-tool-options.png		\
@@ -432,6 +433,7 @@ icons48_DATA = \
 	48/gimp-prefs-input-devices.png		\
 	48/gimp-prefs-interface.png		\
 	48/gimp-prefs-new-image.png		\
+	48/gimp-prefs-playground.png		\
 	48/gimp-prefs-session.png		\
 	48/gimp-prefs-theme.png			\
 	48/gimp-prefs-tool-options.png		\

@@ -222,6 +222,7 @@ gimp_init (Gimp *gimp)
   gimp->use_shm          = FALSE;
   gimp->use_cpu_accel    = TRUE;
   gimp->message_handler  = GIMP_CONSOLE;
+  gimp->show_playground  = FALSE;
   gimp->stack_trace_mode = GIMP_STACK_TRACE_NEVER;
   gimp->pdb_compat_mode  = GIMP_PDB_COMPAT_OFF;
 
@@ -802,6 +803,7 @@ gimp_new (const gchar       *name,
           gboolean           use_shm,
           gboolean           use_cpu_accel,
           gboolean           console_messages,
+          gboolean           show_playground,
           GimpStackTraceMode stack_trace_mode,
           GimpPDBCompatMode  pdb_compat_mode)
 {
@@ -824,6 +826,7 @@ gimp_new (const gchar       *name,
   gimp->use_shm          = use_shm          ? TRUE : FALSE;
   gimp->use_cpu_accel    = use_cpu_accel    ? TRUE : FALSE;
   gimp->console_messages = console_messages ? TRUE : FALSE;
+  gimp->show_playground  = show_playground  ? TRUE : FALSE;
   gimp->stack_trace_mode = stack_trace_mode;
   gimp->pdb_compat_mode  = pdb_compat_mode;
 

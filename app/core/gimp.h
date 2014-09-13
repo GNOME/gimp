@@ -52,6 +52,7 @@ struct _Gimp
   gboolean                use_cpu_accel;
   GimpMessageHandlerType  message_handler;
   gboolean                console_messages;
+  gboolean                show_playground;
   GimpStackTraceMode      stack_trace_mode;
   GimpPDBCompatMode       pdb_compat_mode;
 
@@ -153,6 +154,7 @@ Gimp         * gimp_new                  (const gchar         *name,
                                           gboolean             use_shm,
                                           gboolean             use_cpu_accel,
                                           gboolean             console_messages,
+                                          gboolean             show_playground,
                                           GimpStackTraceMode   stack_trace_mode,
                                           GimpPDBCompatMode    pdb_compat_mode);
 void           gimp_set_show_gui         (Gimp                *gimp,
