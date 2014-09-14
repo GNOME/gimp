@@ -11,11 +11,11 @@ endif
 
 if OS_WIN32
 gimpthumb_def = gimpthumb.def
-libgimpthumb_export_symbols = -export-symbols gimpthumb.def
+libgimpthumb_export_symbols = -export-symbols $(srcdir)/gimpthumb.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpthumb-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) gimpthumb.def $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/gimpthumb.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpthumb-$(GIMP_API_VERSION).dll.a

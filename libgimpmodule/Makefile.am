@@ -8,11 +8,11 @@ endif
 
 if OS_WIN32
 gimpmodule_def = gimpmodule.def
-libgimpmodule_export_symbols = -export-symbols gimpmodule.def
+libgimpmodule_export_symbols = -export-symbols $(srcdir)/gimpmodule.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpmodule-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) gimpmodule.def $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/gimpmodule.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpmodule-$(GIMP_API_VERSION).dll.a

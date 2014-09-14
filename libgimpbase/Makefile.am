@@ -12,11 +12,11 @@ endif
 if OS_WIN32
 ole32_lib = -lole32
 gimpbase_def = gimpbase.def
-libgimpbase_export_symbols = -export-symbols gimpbase.def
+libgimpbase_export_symbols = -export-symbols $(srcdir)/gimpbase.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpbase-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) gimpbase.def $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/gimpbase.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpbase-$(GIMP_API_VERSION).dll.a
