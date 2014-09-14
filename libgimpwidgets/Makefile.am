@@ -15,11 +15,11 @@ endif
 
 if OS_WIN32
 gimpwidgets_def = gimpwidgets.def
-libgimpwidgets_export_symbols = -export-symbols gimpwidgets.def
+libgimpwidgets_export_symbols = -export-symbols $(srcdir)/gimpwidgets.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpwidgets-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) gimpwidgets.def $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/gimpwidgets.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpwidgets-$(GIMP_API_VERSION).dll.a

@@ -10,11 +10,11 @@ endif
 
 if OS_WIN32
 gimpconfig_def = gimpconfig.def
-libgimpconfig_export_symbols = -export-symbols gimpconfig.def
+libgimpconfig_export_symbols = -export-symbols $(srcdir)/gimpconfig.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpconfig-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) gimpconfig.def $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/gimpconfig.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpconfig-$(GIMP_API_VERSION).dll.a
