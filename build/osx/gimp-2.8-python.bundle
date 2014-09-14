@@ -125,6 +125,8 @@
 	</binary>
 
 	<!-- Translations -->
+	<data>${prefix}/share/xml/iso-codes/iso_639.xml</data>
+
 	<!-- - GIMP and GEGL translations - -->
 	<translations name="gegl-0.2">${prefix}/share/locale</translations>
 	<translations name="gimp20-libgimp">${prefix}/share/locale</translations>

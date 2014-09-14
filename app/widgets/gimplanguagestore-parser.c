@@ -116,7 +116,7 @@ gimp_language_store_parse_iso_codes (GimpLanguageStore  *store,
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
-#ifdef G_OS_WIN32
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   filename = g_build_filename (gimp_data_directory (),
                                "..", "..", "xml", "iso-codes", "iso_639.xml",
                                NULL);
