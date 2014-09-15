@@ -8,7 +8,7 @@ The
 .B gimprc
 file is a configuration file read by GIMP when it starts up.  There
 are two of these: one system-wide one stored in
-@gimpsysconfdir@/gimprc and a per-user \fB$HOME\fP/@gimpdir@/gimprc
+@gimpsysconfdir@/gimprc and a per-user @manpage_gimpdir@/gimprc
 which may override system settings.
 
 Comments are introduced by a hash sign (#), and continue until the end
@@ -944,7 +944,7 @@ There are a few variables that are pre-defined:
 .TP
 .I gimp_dir
 The personal gimp directory which is set to the value of the environment
-variable GIMP2_DIRECTORY or to ~/@gimpdir@.
+variable GIMP2_DIRECTORY or to @manpage_gimpdir@.
 .TP
 .I gimp_data_dir
 Base for paths to shareable data, which is set to the value of the
@@ -966,7 +966,7 @@ variable GIMP2_SYSCONFDIR or to the compiled-in default value
 .I @gimpsysconfdir@/gimprc
 System-wide configuration file
 .TP
-.I \fB$HOME\fP/@gimpdir@/gimprc
+.I @manpage_gimpdir@/gimprc
 Per-user configuration file
 
 .SH "SEE ALSO"

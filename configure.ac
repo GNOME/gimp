@@ -2004,7 +2004,7 @@ AC_ARG_ENABLE(gimp-console, [  --enable-gimp-console   build a console-only bina
 AM_CONDITIONAL(ENABLE_GIMP_CONSOLE, test "x$enable_gimp_console" != xno)
 
 
-# Possibly change default gimpdir from .gimp-major.minor
+# Possibly change default gimpdir from $XDG_CONFIG_HOME/GIMP/gimp_user_version
 gimpdir=GIMP
 AC_ARG_WITH(gimpdir, [  --with-gimpdir=DIR      change default gimpdir from $XDG_CONFIG_HOME/GIMP/gimp_user_version to $XDG_CONFIG_HOME/DIR/gimp_user_version, or to DIR if DIR is an absolute path],
 if eval "test x$with_gimpdir != x"; then
@@ -2013,11 +2013,23 @@ if eval "test x$with_gimpdir != x"; then
   fi
 fi)
 
+# Build the gimpdir to be used in manpages here, because the manpage
+# source is unreadable enough already
+case "$gimpdir" in
+  /*)
+    manpage_gimpdir="$gimpdir"
+    ;;
+  *)
+    manpage_gimpdir="\\fB\$XDG_CONFIG_HOME\\fP/$gimpdir/gimp_user_version"
+    ;;
+esac
+
 gimpdatadir="$datadir/$PACKAGE/gimp_data_version"
 gimpplugindir="$libdir/$PACKAGE/gimp_plugin_version"
 gimpsysconfdir="$sysconfdir/$PACKAGE/gimp_sysconf_version"
 
 AC_SUBST(gimpdir)
+AC_SUBST(manpage_gimpdir)
 AC_SUBST(gimpdatadir)
 AC_SUBST(gimpplugindir)
 AC_SUBST(gimpsysconfdir)
