@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <zlib.h>
 
 #include <cairo.h>
 #include <gegl.h>
@@ -108,6 +109,11 @@ static gboolean xcf_save_tile_rle      (XcfInfo           *info,
                                         GeglRectangle     *tile_rect,
                                         const Babl        *format,
                                         guchar            *rlebuf,
+                                        GError           **error);
+static gboolean xcf_save_tile_zlib     (XcfInfo           *info,
+                                        GeglBuffer        *buffer,
+                                        GeglRectangle     *tile_rect,
+                                        const Babl        *format,
                                         GError           **error);
 static gboolean xcf_save_parasite      (XcfInfo           *info,
                                         GimpParasite      *parasite,
@@ -222,6 +228,10 @@ xcf_save_choose_format (XcfInfo   *info,
   /* need version 7 for high bit depth images */
   if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_GAMMA)
     save_version = MAX (7, save_version);
+
+  /* need version 8 for zlib compression */
+  if (info->compression == COMPRESS_ZLIB)
+    save_version = MAX (8, save_version);
 
   info->file_version = save_version;
 }
@@ -1506,7 +1516,8 @@ xcf_save_level (XcfInfo     *info,
                                               rlebuf, error));
           break;
         case COMPRESS_ZLIB:
-          g_error ("xcf: zlib compression unimplemented");
+          xcf_check_error (xcf_save_tile_zlib (info, buffer, &rect, format,
+                                               error));
           break;
         case COMPRESS_FRACTAL:
           g_error ("xcf: fractal compression unimplemented");
@@ -1677,6 +1688,74 @@ xcf_save_tile_rle (XcfInfo        *info,
 
   xcf_write_int8_check_error (info, rlebuf, len);
 
+  return TRUE;
+}
+
+static gboolean
+xcf_save_tile_zlib (XcfInfo        *info,
+                    GeglBuffer     *buffer,
+                    GeglRectangle  *tile_rect,
+                    const Babl     *format,
+                    GError        **error)
+{
+  gint      bpp       = babl_format_get_bytes_per_pixel (format);
+  gint      tile_size = bpp * tile_rect->width * tile_rect->height;
+  guchar   *tile_data = g_alloca (tile_size);
+  /* The buffer for compressed data. */
+  guchar   *buf       = g_alloca (tile_size);
+  GError   *tmp_error = NULL;
+  z_stream  strm;
+  int       action;
+  int       status;
+
+  gegl_buffer_get (buffer, tile_rect, 1.0, format, tile_data,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+  /* allocate deflate state */
+  strm.zalloc = Z_NULL;
+  strm.zfree  = Z_NULL;
+  strm.opaque = Z_NULL;
+
+  status = deflateInit (&strm, Z_DEFAULT_COMPRESSION);
+  if (status != Z_OK)
+    return FALSE;
+
+  strm.next_in   = tile_data;
+  strm.avail_in  = tile_size;
+  strm.next_out  = buf;
+  strm.avail_out = tile_size;
+
+  action = Z_NO_FLUSH;
+
+  while (status == Z_OK || status == Z_BUF_ERROR)
+    {
+      if (strm.avail_in == 0)
+        {
+          /* Finish the encoding. */
+          action = Z_FINISH;
+        }
+
+      status = deflate (&strm, action);
+
+      if (status == Z_STREAM_END || status == Z_BUF_ERROR)
+        {
+          size_t write_size = tile_size - strm.avail_out;
+
+          xcf_write_int8_check_error (info, buf, write_size);
+
+          /* Reset next_out and avail_out. */
+          strm.next_out  = buf;
+          strm.avail_out = tile_size;
+        }
+      else if (status != Z_OK)
+        {
+          g_printerr ("xcf: tile compression failed: %s", zError (status));
+          deflateEnd (&strm);
+          return FALSE;
+        }
+    }
+
+  deflateEnd (&strm);
   return TRUE;
 }
 

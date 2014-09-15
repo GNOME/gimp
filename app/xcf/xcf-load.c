@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <zlib.h>
 
 #include <cairo.h>
 #include <gegl.h>
@@ -110,6 +111,11 @@ static gboolean        xcf_load_tile          (XcfInfo       *info,
                                                GeglRectangle *tile_rect,
                                                const Babl    *format);
 static gboolean        xcf_load_tile_rle      (XcfInfo       *info,
+                                               GeglBuffer    *buffer,
+                                               GeglRectangle *tile_rect,
+                                               const Babl    *format,
+                                               gint           data_length);
+static gboolean        xcf_load_tile_zlib     (XcfInfo       *info,
                                                GeglBuffer    *buffer,
                                                GeglRectangle *tile_rect,
                                                const Babl    *format,
@@ -1780,8 +1786,9 @@ xcf_load_level (XcfInfo    *info,
             fail = TRUE;
           break;
         case COMPRESS_ZLIB:
-          g_warning ("xcf: zlib compression unimplemented");
-          fail = TRUE;
+          if (!xcf_load_tile_zlib (info, buffer, &rect, format,
+                                   offset2 - offset))
+            fail = TRUE;
           break;
         case COMPRESS_FRACTAL:
           g_warning ("xcf: fractal compression unimplemented");
@@ -1973,6 +1980,95 @@ xcf_load_tile_rle (XcfInfo       *info,
 
  bogus_rle:
   return FALSE;
+}
+
+static gboolean
+xcf_load_tile_zlib (XcfInfo       *info,
+                    GeglBuffer    *buffer,
+                    GeglRectangle *tile_rect,
+                    const Babl    *format,
+                    gint           data_length)
+{
+  z_stream  strm;
+  int       action;
+  int       status;
+  gint      bpp       = babl_format_get_bytes_per_pixel (format);
+  gint      tile_size = bpp * tile_rect->width * tile_rect->height;
+  guchar   *tile_data = g_alloca (tile_size);
+  gsize     bytes_read;
+  guchar   *xcfdata;
+
+  /* Workaround for bug #357809: avoid crashing on g_malloc() and skip
+   * this tile (return TRUE without storing data) as if it did not
+   * contain any data.  It is better than returning FALSE, which would
+   * skip the whole hierarchy while there may still be some valid
+   * tiles in the file.
+   */
+  if (data_length <= 0)
+    return TRUE;
+
+  xcfdata = g_alloca (data_length);
+
+  /* we have to read directly instead of xcf_read_* because we may be
+   * reading past the end of the file here
+   */
+  g_input_stream_read_all (info->input, xcfdata, data_length,
+                           &bytes_read, NULL, NULL);
+
+  if (bytes_read == 0)
+    return TRUE;
+
+  info->cp      += bytes_read;
+
+  strm.next_out  = tile_data;
+  strm.avail_out = tile_size;
+
+  strm.zalloc    = Z_NULL;
+  strm.zfree     = Z_NULL;
+  strm.opaque    = Z_NULL;
+  strm.next_in   = xcfdata;
+  strm.avail_in  = bytes_read;
+
+  /* Initialize the stream decompression. */
+  status = inflateInit (&strm);
+  if (status != Z_OK)
+    return FALSE;
+
+  action = Z_NO_FLUSH;
+
+  while (status == Z_OK)
+    {
+      if (strm.avail_in == 0)
+        {
+          action = Z_FINISH;
+        }
+
+      status = inflate (&strm, action);
+
+      if (status == Z_STREAM_END)
+        {
+          /* All the data was successfully decoded. */
+          break;
+        }
+      else if (status == Z_BUF_ERROR)
+        {
+          g_printerr ("xcf: decompressed tile bigger than the expected size.");
+          inflateEnd (&strm);
+          return FALSE;
+        }
+      else if (status != Z_OK)
+        {
+          g_printerr ("xcf: tile decompression failed: %s", zError (status));
+          inflateEnd (&strm);
+          return FALSE;
+        }
+    }
+
+  gegl_buffer_set (buffer, tile_rect, 0, format, tile_data,
+                   GEGL_AUTO_ROWSTRIDE);
+
+  inflateEnd (&strm);
+  return TRUE;
 }
 
 static GimpParasite *

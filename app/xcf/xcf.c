@@ -74,7 +74,8 @@ static GimpXcfLoaderFunc * const xcf_loaders[] =
   xcf_load_image,   /* version 4 */
   xcf_load_image,   /* version 5 */
   xcf_load_image,   /* version 6 */
-  xcf_load_image    /* version 7 */
+  xcf_load_image,   /* version 7 */
+  xcf_load_image    /* version 8 */
 };
 
 
@@ -390,7 +391,7 @@ xcf_save_invoker (GimpProcedure         *procedure,
       info.seekable    = G_SEEKABLE (info.output);
       info.progress    = progress;
       info.filename    = filename;
-      info.compression = COMPRESS_RLE;
+      info.compression = COMPRESS_ZLIB;
 
       if (progress)
         gimp_progress_start (progress, FALSE, _("Saving '%s'"), filename);
