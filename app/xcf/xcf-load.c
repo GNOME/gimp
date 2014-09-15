@@ -1493,11 +1493,15 @@ xcf_load_level (XcfInfo     *info,
             fail = TRUE;
           break;
         case COMPRESS_ZLIB:
-          g_error ("xcf: zlib compression unimplemented");
+          g_warning ("xcf: zlib compression unimplemented");
           fail = TRUE;
           break;
         case COMPRESS_FRACTAL:
-          g_error ("xcf: fractal compression unimplemented");
+          g_warning ("xcf: fractal compression unimplemented");
+          fail = TRUE;
+          break;
+        default:
+          g_warning ("xcf: unknown compression");
           fail = TRUE;
           break;
         }
