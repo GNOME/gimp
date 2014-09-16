@@ -94,13 +94,10 @@ static void         action_search_add_to_results_list      (GtkAction         *a
 static void         action_search_run_selected             (SearchDialog      *private);
 static void         action_search_history_and_actions      (const gchar       *keyword,
                                                             SearchDialog      *private);
-static gboolean     action_fuzzy_match                     (gchar             *string,
-                                                            gchar             *key);
-static gchar *      action_search_normalize_string         (const gchar       *str);
 static gboolean     action_search_match_keyword            (GtkAction         *action,
                                                             const gchar*       keyword,
                                                             gint              *section,
-                                                            gboolean           match_fuzzy);
+                                                            Gimp              *gimp);
 
 static void         action_search_hide                     (SearchDialog      *private);
 
@@ -583,7 +580,7 @@ action_search_history_and_actions (const gchar  *keyword,
               ! GIMP_GUI_CONFIG (private->gimp->config)->search_show_unavailable)
             continue;
 
-          if (action_search_match_keyword (action, keyword, &section, TRUE))
+          if (action_search_match_keyword (action, keyword, &section, private->gimp))
             {
               GList *list3;
 
@@ -613,61 +610,16 @@ action_search_history_and_actions (const gchar  *keyword,
   g_list_free_full (history_actions, (GDestroyNotify) g_object_unref);
 }
 
-/**
- * Fuzzy search matching.
- * Returns: TRUE if all the letters of `key` are found in `string`,
- * in the same order (even with intermediate letters).
- */
-static gboolean
-action_fuzzy_match (gchar *string,
-                    gchar *key)
-{
-  gchar *remaining_string = string;
-
-  if (strlen (key) == 0 )
-    return TRUE;
-
-  if ((remaining_string = strchr (string, key[0])) != NULL )
-    return action_fuzzy_match (remaining_string + 1,
-                                            key + 1);
-  else
-    return FALSE;
-}
-
-/*
- * Returns: a newly allocated lowercased string, which replaced any
- * spacing characters into a single space and stripped out any leading
- * and trailing space.
- */
-static gchar *
-action_search_normalize_string (const gchar *str)
-{
-  GRegex *spaces_regex;
-  gchar  *normalized_str;
-  gint    i;
-
-  spaces_regex = g_regex_new ("[ \n\t\r]+", 0, 0, NULL);
-  normalized_str = g_regex_replace_literal (spaces_regex, str, -1, 0, " ", 0, NULL);
-
-  g_regex_unref (spaces_regex);
-
-  normalized_str = g_strstrip (normalized_str);
-
-  for (i = 0 ; i < strlen (normalized_str); i++)
-    normalized_str[i] = tolower (normalized_str[i]);
-
-  return normalized_str;
-}
-
 static gboolean
 action_search_match_keyword (GtkAction   *action,
                              const gchar *keyword,
                              gint        *section,
-                             gboolean     match_fuzzy)
+                             Gimp        *gimp)
 {
-  gboolean  matched = FALSE;
-  gchar    *key;
-  gchar    *label;
+  gboolean   matched = FALSE;
+  gchar    **key_tokens;
+  gchar    **label_tokens;
+  gchar    **label_alternates = NULL;
   gchar    *tmp;
 
   if (keyword == NULL)
@@ -682,108 +634,153 @@ action_search_match_keyword (GtkAction   *action,
       return TRUE;
     }
 
-  key   = action_search_normalize_string (keyword);
-  tmp   = gimp_strip_uline (gtk_action_get_label (action));
-  label = action_search_normalize_string (tmp);
+  key_tokens   = g_str_tokenize_and_fold (keyword, gimp->config->language, NULL);
+  tmp          = gimp_strip_uline (gtk_action_get_label (action));
+  label_tokens = g_str_tokenize_and_fold (tmp, gimp->config->language, &label_alternates);
   g_free (tmp);
 
   /* If keyword is two characters, then match them with first letters
    * of first and second word in the labels.  For instance 'gb' will
    * list 'Gaussian Blur...'
    */
-  if (strlen (key) == 2)
+  if (g_strv_length (key_tokens) == 1 && g_utf8_strlen (key_tokens[0], -1) == 2)
     {
-      gchar* space_pos;
+      gunichar c1 = g_utf8_get_char (key_tokens[0]);
+      gunichar c2 = g_utf8_get_char (g_utf8_find_next_char (key_tokens[0], NULL));
 
-      space_pos = strchr (label, ' ');
-
-      if (space_pos != NULL)
-        {
-          space_pos++;
-
-          if (key[0] == label[0] && key[1] == *space_pos)
-            {
-              matched = TRUE;
-              if (section)
-                {
-                  *section = 1;
-                }
-            }
-        }
-    }
-
-  if (! matched)
-    {
-      gchar *substr;
-
-      substr = strstr (label, key);
-      if (substr)
+      if ((g_strv_length   (label_tokens) > 1          &&
+           g_utf8_get_char (label_tokens[0]) == c1     &&
+           g_utf8_get_char (label_tokens[1]) == c2)    ||
+          (g_strv_length   (label_alternates) > 1      &&
+           g_utf8_get_char (label_alternates[0]) == c1 &&
+           g_utf8_get_char (label_alternates[1]) == c2))
         {
           matched = TRUE;
           if (section)
             {
-              /* If the substring is the label start, this is a nicer match. */
-              *section = (substr == label) ? 1 : 2;
-            }
-        }
-      else if (strlen (key) > 2)
-        {
-          gchar *tooltip = NULL;
-
-          if (gtk_action_get_tooltip (action)!= NULL)
-            {
-              tooltip = action_search_normalize_string (gtk_action_get_tooltip (action));
-
-              if (strstr (tooltip, key))
-                {
-                  matched = TRUE;
-                  if (section)
-                    {
-                      *section = 3;
-                    }
-                }
-            }
-
-          if (! matched && strchr (key, ' '))
-            {
-              gchar **words;
-              gchar **word;
-
-              matched = TRUE;
-              if (section)
-                {
-                  *section = 4;
-                }
-
-              words = g_strsplit (key, " ", 0);
-              for (word = &words[0]; *word; ++word)
-                {
-                  if (! strstr (label, *word) &&
-                      (! tooltip || ! strstr (tooltip, *word)))
-                    {
-                      matched = FALSE;
-                      break;
-                    }
-                }
-
-              g_strfreev (words);
-            }
-
-          g_free (tooltip);
-        }
-
-      if (! matched && match_fuzzy && action_fuzzy_match (label, key))
-        {
-          matched = TRUE;
-          if (section)
-            {
-              *section = 5;
+              *section = 1;
             }
         }
     }
 
-  g_free (label);
-  g_free (key);
+  if (! matched && g_strv_length (label_tokens) > 0)
+    {
+      gint     previous_matched = -1;
+      gboolean match_start;
+      gboolean match_ordered;
+      gint     i;
+
+      matched       = TRUE;
+      match_start   = TRUE;
+      match_ordered = TRUE;
+      for (i = 0; key_tokens[i] != NULL; i++)
+        {
+          gint j;
+          for (j = 0; label_tokens[j] != NULL; j++)
+            {
+              if (g_str_has_prefix (label_tokens[j], key_tokens[i]))
+                {
+                  goto one_matched;
+                }
+            }
+          for (j = 0; label_alternates[j] != NULL; j++)
+            {
+              if (g_str_has_prefix (label_alternates[j], key_tokens[i]))
+                {
+                  goto one_matched;
+                }
+            }
+          matched = FALSE;
+one_matched:
+          if (previous_matched > j)
+            match_ordered = FALSE;
+          previous_matched = j;
+
+          if (i != j)
+            match_start = FALSE;
+
+          continue;
+        }
+
+      if (matched && section)
+        {
+          /* If the key is the label start, this is a nicer match.
+           * Then if key tokens are found in the same order in the label.
+           * Finally we show at the end if the key tokens are found with a different order. */
+          *section = match_ordered ? (match_start ? 1 : 2) : 3;
+        }
+    }
+
+  if (! matched && g_utf8_strlen (key_tokens[0], -1) > 2 &&
+      gtk_action_get_tooltip (action) != NULL)
+    {
+      gchar    **tooltip_tokens;
+      gchar    **tooltip_alternates = NULL;
+      gboolean   mixed_match;
+      gint       i;
+
+      tooltip_tokens = g_str_tokenize_and_fold (gtk_action_get_tooltip (action),
+                                                gimp->config->language, &tooltip_alternates);
+
+      if (g_strv_length (tooltip_tokens) > 0)
+        {
+          matched     = TRUE;
+          mixed_match = FALSE;
+
+          for (i = 0; key_tokens[i] != NULL; i++)
+            {
+              gint j;
+              for (j = 0; tooltip_tokens[j] != NULL; j++)
+                {
+                  if (g_str_has_prefix (tooltip_tokens[j], key_tokens[i]))
+                    {
+                      goto one_tooltip_matched;
+                    }
+                }
+              for (j = 0; tooltip_alternates[j] != NULL; j++)
+                {
+                  if (g_str_has_prefix (tooltip_alternates[j], key_tokens[i]))
+                    {
+                      goto one_tooltip_matched;
+                    }
+                }
+              for (j = 0; label_tokens[j] != NULL; j++)
+                {
+                  if (g_str_has_prefix (label_tokens[j], key_tokens[i]))
+                    {
+                      mixed_match = TRUE;
+                      goto one_tooltip_matched;
+                    }
+                }
+              for (j = 0; label_alternates[j] != NULL; j++)
+                {
+                  if (g_str_has_prefix (label_alternates[j], key_tokens[i]))
+                    {
+                      mixed_match = TRUE;
+                      goto one_tooltip_matched;
+                    }
+                }
+              matched = FALSE;
+one_tooltip_matched:
+              continue;
+            }
+          if (matched && section)
+            {
+              /* Matching the tooltip is section 4. We don't go looking
+               * for start of string or token order for tooltip match.
+               * But if the match is mixed on tooltip and label (there are
+               * no match for *only* label or *only* tooltip), this is
+               * section 5. */
+              *section = mixed_match ? 5 : 4;
+            }
+        }
+      g_strfreev (tooltip_tokens);
+      g_strfreev (tooltip_alternates);
+    }
+
+  g_strfreev (key_tokens);
+  g_strfreev (label_tokens);
+  g_strfreev (label_alternates);
 
   return matched;
 }

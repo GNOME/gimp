@@ -279,7 +279,7 @@ gimp_action_history_search (Gimp                *gimp,
           ! config->search_show_unavailable)
         continue;
 
-      if (match_func (action, keyword, NULL, FALSE))
+      if (match_func (action, keyword, NULL, gimp))
         result = g_list_prepend (result, g_object_ref (action));
     }
 
