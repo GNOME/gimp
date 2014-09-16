@@ -184,6 +184,7 @@ gimpconsoleldadd = \
 	$(GLIB_LIBS)			\
 	$(GEXIV2_LIBS)			\
 	$(LCMS_LIBS)			\
+	$(Z_LIBS)			\
 	$(INTLLIBS)			\
 	$(RT_LIBS)
 
