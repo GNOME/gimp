@@ -1520,8 +1520,8 @@ xcf_save_level (XcfInfo     *info,
                                                error));
           break;
         case COMPRESS_FRACTAL:
-          g_error ("xcf: fractal compression unimplemented");
-          break;
+          g_warning ("xcf: fractal compression unimplemented");
+          return FALSE;
         }
 
       /* seek back to where we are to write out the next
@@ -1549,7 +1549,6 @@ xcf_save_level (XcfInfo     *info,
   xcf_write_int32_check_error (info, &offset, 1);
 
   return TRUE;
-
 }
 
 static gboolean

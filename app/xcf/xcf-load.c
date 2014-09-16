@@ -1791,11 +1791,13 @@ xcf_load_level (XcfInfo    *info,
             fail = TRUE;
           break;
         case COMPRESS_FRACTAL:
-          g_warning ("xcf: fractal compression unimplemented");
+          g_printerr ("xcf: fractal compression unimplemented. "
+                      "Possibly corrupt XCF file.");
           fail = TRUE;
           break;
         default:
-          g_warning ("xcf: unknown compression");
+          g_printerr ("xcf: unknown compression. "
+                      "Possibly corrupt XCF file.");
           fail = TRUE;
           break;
         }
@@ -2086,8 +2088,8 @@ xcf_load_parasite (XcfInfo *info)
 
   if (size > MAX_XCF_PARASITE_DATA_LEN)
     {
-      g_warning ("Maximum parasite data length (%ld bytes) exceeded. "
-                 "Possibly corrupt XCF file.", MAX_XCF_PARASITE_DATA_LEN);
+      g_printerr ("Maximum parasite data length (%ld bytes) exceeded. "
+                  "Possibly corrupt XCF file.", MAX_XCF_PARASITE_DATA_LEN);
       g_free (name);
       return NULL;
     }
@@ -2166,7 +2168,7 @@ xcf_load_old_path (XcfInfo   *info,
     }
   else if (version != 1)
     {
-      g_warning ("Unknown path type. Possibly corrupt XCF file");
+      g_printerr ("Unknown path type. Possibly corrupt XCF file");
 
       return FALSE;
     }
