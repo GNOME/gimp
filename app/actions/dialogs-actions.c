@@ -259,11 +259,13 @@ static const GimpStringActionEntry dialogs_toplevel_actions[] =
     GIMP_HELP_TIPS_DIALOG },
 
   { "dialogs-about", "help-about",
-#if defined(G_OS_WIN32) || defined(PLATFORM_OSX)
+#if defined(G_OS_WIN32)
     NC_("dialogs-action", "About GIMP"),
+#elif defined(PLATFORM_OSX)
+    NC_("dialogs-action", "About"),
 #else /* UNIX: use GNOME HIG */
     NC_("dialogs-action", "_About"),
-#endif /* G_OS_WIN32 */
+#endif
     NULL,
     NC_("dialogs-action", "About GIMP"),
     "gimp-about-dialog",
