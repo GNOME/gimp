@@ -115,7 +115,7 @@ test_config_LDADD = \
 	$(GDK_PIXBUF_LIBS)			\
 	$(GEGL_LIBS)				\
 	$(GIO_LIBS)				\
-	$(GEXIV2_LIBS)
+	$(GEXIV2_LIBS)				\
 	$(Z_LIBS)
 
 CLEANFILES = $(EXTRA_PROGRAMS) foorc
