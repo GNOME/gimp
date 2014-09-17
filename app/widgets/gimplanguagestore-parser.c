@@ -332,7 +332,7 @@ parse_iso_codes (GHashTable  *base_lang_list,
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
-#ifdef G_OS_WIN32
+#if defined (G_OS_WIN32) || defined (PLATFORM_OSX)
   file = gimp_data_directory_file ("..", "..",
                                    "xml", "iso-codes", "iso_639.xml", NULL);
 #else
