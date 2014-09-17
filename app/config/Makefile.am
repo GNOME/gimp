@@ -116,6 +116,7 @@ test_config_LDADD = \
 	$(GEGL_LIBS)				\
 	$(GIO_LIBS)				\
 	$(GEXIV2_LIBS)
+	$(Z_LIBS)
 
 CLEANFILES = $(EXTRA_PROGRAMS) foorc
 
