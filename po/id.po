@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2014-09-19 05:21+0000\n"
-"PO-Revision-Date: 2014-09-20 16:10+0700\n"
+"PO-Revision-Date: 2014-09-20 21:49+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -1933,7 +1933,7 @@ msgstr ""
 #: ../app/actions/edit-actions.c:105
 msgctxt "edit-action"
 msgid "Modify paint mode and opacity of the last pixel manipulation"
-msgstr ""
+msgstr "Ubah kelegapan dan mode cat dari manipulasi piksel terakhir"
 
 #: ../app/actions/edit-actions.c:110
 msgctxt "edit-action"
@@ -2133,6 +2133,8 @@ msgstr "Mundur dalam riwayat pembatalan"
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
+"Membersihkan riwayat tak jadi dari citra ini akan mendapatkan tambahan "
+"memori %s."
 
 #: ../app/actions/edit-commands.c:206
 msgid "Cut pixels to the clipboard"
@@ -2383,6 +2385,8 @@ msgid ""
 "Save a copy of this image, without affecting the source file (if any) or the "
 "current state of the image"
 msgstr ""
+"Menyimpan sebuah salinan citra ini, tanpa mempengaruhi berkas sumber (bila "
+"ada) atau keadaan citra saat ini"
 
 #: ../app/actions/file-actions.c:140
 msgctxt "file-action"
@@ -2392,7 +2396,7 @@ msgstr "Simpan dan Tutup..."
 #: ../app/actions/file-actions.c:141
 msgctxt "file-action"
 msgid "Save this image and close its window"
-msgstr ""
+msgstr "Simpan citra ini dan tutup jendelanya"
 
 #: ../app/actions/file-actions.c:146
 #, fuzzy
@@ -2414,7 +2418,7 @@ msgstr "Ti_mpa"
 #: ../app/actions/file-actions.c:153
 msgctxt "file-action"
 msgid "Export the image back to the imported file in the import format"
-msgstr ""
+msgstr "Ekspor citra kembali ke berkas yang diimpor dalam format impor"
 
 #: ../app/actions/file-actions.c:158
 #, fuzzy
@@ -2425,7 +2429,7 @@ msgstr "Ekspor..."
 #: ../app/actions/file-actions.c:159
 msgctxt "file-action"
 msgid "Export the image to various file formats such as PNG or JPEG"
-msgstr ""
+msgstr "Ekspor citra ke berbagai format berkas seperti misalnya PNG atau JPEG"
 
 #: ../app/actions/file-actions.c:292
 #, c-format
@@ -2498,18 +2502,17 @@ msgid ""
 msgstr ""
 
 #: ../app/actions/file-commands.c:731
-#, fuzzy
 msgid "(Unnamed Template)"
-msgstr "Hapus template"
+msgstr "(Templat Tanpa Nama)"
 
 #: ../app/actions/file-commands.c:782
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
 "\n"
 "%s"
 msgstr ""
-"Gagal menghapus '%s':\n"
+"Gagal menghapus ‘%s’:\n"
 "%s"
 
 #: ../app/actions/fonts-actions.c:43
@@ -2518,58 +2521,49 @@ msgid "Fonts Menu"
 msgstr "Menu Fonta"
 
 #: ../app/actions/fonts-actions.c:47
-#, fuzzy
 msgctxt "fonts-action"
 msgid "_Rescan Font List"
-msgstr "Daftar keluarga fonta yang tersedia"
+msgstr "Pindai Ulang Dafta_r Fonta"
 
 #: ../app/actions/fonts-actions.c:48
-#, fuzzy
 msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
-msgstr "Gunakan fonta sistem"
+msgstr "Pindai ulang fonta yang terpasang"
 
 #: ../app/actions/gradient-editor-actions.c:45
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Gradient Editor Menu"
-msgstr "Penyunting Menu Sederhana %s"
+msgstr "Menu Penyunting Gradien"
 
 #: ../app/actions/gradient-editor-actions.c:49
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Left Color Type"
-msgstr "Jenis penitik warna"
+msgstr "Tipe Warna Kiri"
 
 #: ../app/actions/gradient-editor-actions.c:51
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Load Left Color From"
-msgstr "Pilih warna dari dialog"
+msgstr "Muat Warna K_iri Dari"
 
 #: ../app/actions/gradient-editor-actions.c:53
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Save Left Color To"
-msgstr "Warna"
+msgstr "_Simpan Warna Kiri Ke"
 
 #: ../app/actions/gradient-editor-actions.c:56
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Right Color Type"
-msgstr "Jenis penitik warna"
+msgstr "Tipe Warna Kanan"
 
 #: ../app/actions/gradient-editor-actions.c:58
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Load Right Color Fr_om"
-msgstr "Warna grafik untuk beban rata-rata"
+msgstr "Muat Warna K_anan Dari"
 
 #: ../app/actions/gradient-editor-actions.c:60
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Sa_ve Right Color To"
-msgstr "Apakah mencetak warna latar belakang"
+msgstr "Simpan _Warna Kanan Ke"
 
 #: ../app/actions/gradient-editor-actions.c:66
 #, fuzzy
@@ -2596,12 +2590,9 @@ msgid "Blend Endpoints' Opacit_y"
 msgstr "Telusuri Blend String"
 
 #: ../app/actions/gradient-editor-actions.c:124
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "Edit Active Gradient"
-msgstr ""
-"Gradien aktif.\n"
-"Klik untuk membuka kotak Gradien"
+msgstr "Sunting Gradien Aktif"
 
 #: ../app/actions/gradient-editor-actions.c:155
 #, fuzzy
@@ -2617,10 +2608,9 @@ msgstr "Rata kanan"
 
 #: ../app/actions/gradient-editor-actions.c:165
 #: ../app/actions/gradient-editor-actions.c:213
-#, fuzzy
 msgctxt "gradient-editor-action"
 msgid "_Foreground Color"
-msgstr "Warna latar depan:"
+msgstr "Warna Latar _Depan"
 
 #: ../app/actions/gradient-editor-actions.c:170
 #: ../app/actions/gradient-editor-actions.c:218
@@ -2642,24 +2632,21 @@ msgstr "Rata kiri"
 
 #: ../app/actions/gradient-editor-actions.c:257
 #: ../app/actions/gradient-editor-actions.c:287
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "_Fixed"
-msgstr "X Tetap"
+msgstr "_Tetap"
 
 #: ../app/actions/gradient-editor-actions.c:262
 #: ../app/actions/gradient-editor-actions.c:292
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "F_oreground Color"
-msgstr "Warna pinggiran:"
+msgstr "War_na Latar Depan"
 
 #: ../app/actions/gradient-editor-actions.c:268
 #: ../app/actions/gradient-editor-actions.c:298
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "Fo_reground Color (Transparent)"
-msgstr "Warna untuk Wilayah Transparan"
+msgstr "Warna Lata_r Depan (Transparan)"
 
 #: ../app/actions/gradient-editor-actions.c:273
 #: ../app/actions/gradient-editor-actions.c:303
@@ -2669,10 +2656,9 @@ msgstr "Warna Latar _Belakang"
 
 #: ../app/actions/gradient-editor-actions.c:279
 #: ../app/actions/gradient-editor-actions.c:309
-#, fuzzy
 msgctxt "gradient-editor-color-type"
 msgid "B_ackground Color (Transparent)"
-msgstr "Warna untuk Wilayah Transparan"
+msgstr "W_arna Latar Belakang (Transparan)"
 
 #: ../app/actions/gradient-editor-actions.c:317
 msgctxt "gradient-editor-blending"
@@ -2695,10 +2681,9 @@ msgid "Spherical (i_ncreasing)"
 msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:337
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "Spherical (_decreasing)"
-msgstr "Menurunkan kecepatan otomatis ke %0.2f"
+msgstr "Sferis (b_erkurang)"
 
 #: ../app/actions/gradient-editor-actions.c:342
 msgctxt "gradient-editor-blending"
@@ -2706,7 +2691,6 @@ msgid "(Varies)"
 msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:350
-#, fuzzy
 msgctxt "gradient-editor-coloring"
 msgid "_RGB"
 msgstr "_RGB"
@@ -2761,9 +2745,8 @@ msgid "_Blending Function for Segment"
 msgstr "Segmen Terbesar Untuk Semua"
 
 #: ../app/actions/gradient-editor-actions.c:778
-#, fuzzy
 msgid "Coloring _Type for Segment"
-msgstr "Segmen Terbesar Untuk Semua"
+msgstr "_Tipe Pewarnaan bagi Segmen"
 
 #: ../app/actions/gradient-editor-actions.c:781
 #, fuzzy
@@ -2771,24 +2754,20 @@ msgid "_Flip Segment"
 msgstr "segmen kode"
 
 #: ../app/actions/gradient-editor-actions.c:783
-#, fuzzy
 msgid "_Replicate Segment..."
-msgstr "segmen kode"
+msgstr "_Replikasikan Segmen…"
 
 #: ../app/actions/gradient-editor-actions.c:785
-#, fuzzy
 msgid "Split Segment at _Midpoint"
-msgstr "Pembungkus Registri AT-SPI"
+msgstr "Belah Seg_men di Titik Tengah"
 
 #: ../app/actions/gradient-editor-actions.c:787
-#, fuzzy
 msgid "Split Segment _Uniformly..."
-msgstr "Pecah trek yang dipilih"
+msgstr "Belah Segmen Secara Sera_gam…"
 
 #: ../app/actions/gradient-editor-actions.c:789
-#, fuzzy
 msgid "_Delete Segment"
-msgstr "Hapus segmen"
+msgstr "_Hapus Segmen"
 
 #: ../app/actions/gradient-editor-actions.c:791
 #, fuzzy
@@ -2806,9 +2785,8 @@ msgid "_Blending Function for Selection"
 msgstr "Fungsi \"%s\" tidak dikenal untuk tombol"
 
 #: ../app/actions/gradient-editor-actions.c:800
-#, fuzzy
 msgid "Coloring _Type for Selection"
-msgstr "%s dengan pemicu yang tidak diketahui"
+msgstr "_Tipe Pewarnaan bagi Pilihan"
 
 #: ../app/actions/gradient-editor-actions.c:803
 #, fuzzy
@@ -2816,24 +2794,20 @@ msgid "_Flip Selection"
 msgstr "Bersihkan Pi_lihan"
 
 #: ../app/actions/gradient-editor-actions.c:805
-#, fuzzy
 msgid "_Replicate Selection..."
-msgstr "Bersihkan Pi_lihan"
+msgstr "_Replikasikan Pilihan…"
 
 #: ../app/actions/gradient-editor-actions.c:807
-#, fuzzy
 msgid "Split Segments at _Midpoints"
-msgstr "Pembungkus Registri AT-SPI"
+msgstr "Belah Seg_men pada Titik Tengah"
 
 #: ../app/actions/gradient-editor-actions.c:809
-#, fuzzy
 msgid "Split Segments _Uniformly..."
-msgstr "Pecah trek yang dipilih"
+msgstr "Be_lah Segmen Secara Seragam…"
 
 #: ../app/actions/gradient-editor-actions.c:811
-#, fuzzy
 msgid "_Delete Selection"
-msgstr "Hapus yang dipilih"
+msgstr "_Hapus Pilihan"
 
 #: ../app/actions/gradient-editor-actions.c:813
 #, fuzzy
@@ -2846,9 +2820,8 @@ msgid "Re-distribute _Handles in Selection"
 msgstr "Pilihan warna yang ditempelkan di dialog."
 
 #: ../app/actions/gradient-editor-commands.c:84
-#, fuzzy
 msgid "Left Endpoint Color"
-msgstr "Warna isi sorotan"
+msgstr "Warna Titik Akhir Kiri"
 
 #: ../app/actions/gradient-editor-commands.c:86
 #, fuzzy
@@ -2858,33 +2831,28 @@ msgstr ""
 "padat."
 
 #: ../app/actions/gradient-editor-commands.c:235
-#, fuzzy
 msgid "Right Endpoint Color"
-msgstr "Klik pada warna yang sesuai."
+msgstr "Warna Titik Akhir Kanan"
 
 #: ../app/actions/gradient-editor-commands.c:237
 msgid "Gradient Segment's Right Endpoint Color"
 msgstr ""
 
 #: ../app/actions/gradient-editor-commands.c:451
-#, fuzzy
 msgid "Replicate Segment"
-msgstr "segmen kode"
+msgstr "Replikasikan Segmen"
 
 #: ../app/actions/gradient-editor-commands.c:452
-#, fuzzy
 msgid "Replicate Gradient Segment"
-msgstr "Palet ke _Gradien"
+msgstr "Replikasikan Segmen Gradien"
 
 #: ../app/actions/gradient-editor-commands.c:456
-#, fuzzy
 msgid "Replicate Selection"
-msgstr "Bersihkan Pi_lihan"
+msgstr "Replikasikan Pilihan"
 
 #: ../app/actions/gradient-editor-commands.c:457
-#, fuzzy
 msgid "Replicate Gradient Selection"
-msgstr "Pemilihan Gradien Script-Fu"
+msgstr "Replikasikan Pilihan Gradien"
 
 #: ../app/actions/gradient-editor-commands.c:470
 msgid "Replicate"
@@ -2895,37 +2863,36 @@ msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
 msgstr ""
+"Pilih berapa kali mereplikasi\n"
+"segmen yang dipilih."
 
 #: ../app/actions/gradient-editor-commands.c:494
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
 msgstr ""
+"Pilih berapa kali mereplikasi\n"
+"pilihan."
 
 #: ../app/actions/gradient-editor-commands.c:553
-#, fuzzy
 msgid "Split Segment Uniformly"
-msgstr "Pecah trek yang dipilih"
+msgstr "Belah Segmen Secara Seragam"
 
 #: ../app/actions/gradient-editor-commands.c:554
-#, fuzzy
 msgid "Split Gradient Segment Uniformly"
-msgstr "Segmen Terbesar Untuk Semua"
+msgstr "Belah Segmen Gradien Secara Seragam"
 
 #: ../app/actions/gradient-editor-commands.c:558
-#, fuzzy
 msgid "Split Segments Uniformly"
-msgstr "Pecah trek yang dipilih"
+msgstr "Belah Segmen-segmen Secara Seragam"
 
 #: ../app/actions/gradient-editor-commands.c:559
-#, fuzzy
 msgid "Split Gradient Segments Uniformly"
-msgstr "Palet ke _Gradien Berulang"
+msgstr "Belah Segmen-segmen Gradien Secara Seragam"
 
 #: ../app/actions/gradient-editor-commands.c:572
-#, fuzzy
 msgid "Split"
-msgstr "Pecah"
+msgstr "Belah"
 
 #: ../app/actions/gradient-editor-commands.c:594
 msgid ""
@@ -3027,10 +2994,9 @@ msgid "_Help"
 msgstr "Ba_ntuan"
 
 #: ../app/actions/help-actions.c:41
-#, fuzzy
 msgctxt "help-action"
 msgid "Open the GIMP user manual"
-msgstr "Manual Manajemen Pengguna GST"
+msgstr "Buka manual pengguna GIMP"
 
 #: ../app/actions/help-actions.c:46
 msgctxt "help-action"
@@ -3109,16 +3075,14 @@ msgid "Can_vas Size..."
 msgstr "Ukuran Kan_vas..."
 
 #: ../app/actions/image-actions.c:74
-#, fuzzy
 msgctxt "image-action"
 msgid "Adjust the image dimensions"
-msgstr "Gambar TGA ini memiliki dimensi yang salah"
+msgstr "Setel dimensi citra"
 
 #: ../app/actions/image-actions.c:79
-#, fuzzy
 msgctxt "image-action"
 msgid "Fit Canvas to L_ayers"
-msgstr "Menyesuaikan gambar dengan jendela aplikasi"
+msgstr "Paskan Kanvas ke L_apisan"
 
 #: ../app/actions/image-actions.c:80
 #, fuzzy
@@ -3127,34 +3091,29 @@ msgid "Resize the image to enclose all layers"
 msgstr "Apakah mengubah ukuran jendela agar pas dengan ukuran gambar"
 
 #: ../app/actions/image-actions.c:85
-#, fuzzy
 msgctxt "image-action"
 msgid "F_it Canvas to Selection"
-msgstr "Salin pilihan ke clipboard"
+msgstr "Paskan Kanvas ke P_ilihan"
 
 #: ../app/actions/image-actions.c:86
-#, fuzzy
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
-msgstr "Ubah ukuran jendela ke ukuran gambar"
+msgstr "Ubah ukuran citra ke batas-batas pilihan"
 
 #: ../app/actions/image-actions.c:91
-#, fuzzy
 msgctxt "image-action"
 msgid "_Print Size..."
-msgstr "Ukuran Berkas"
+msgstr "Ukuran _Cetak…"
 
 #: ../app/actions/image-actions.c:92
-#, fuzzy
 msgctxt "image-action"
 msgid "Adjust the print resolution"
-msgstr "Setel resolusi tampilan"
+msgstr "Setel resolusi cetak"
 
 #: ../app/actions/image-actions.c:97
-#, fuzzy
 msgctxt "image-action"
 msgid "_Scale Image..."
-msgstr "Skalakan gambar"
+msgstr "_Skalakan Citra…"
 
 #: ../app/actions/image-actions.c:98
 msgctxt "image-action"
@@ -3162,16 +3121,14 @@ msgid "Change the size of the image content"
 msgstr "Ubah ukuran isi gambar"
 
 #: ../app/actions/image-actions.c:103
-#, fuzzy
 msgctxt "image-action"
 msgid "_Crop to Selection"
-msgstr "_Tambahkan ke Pilihan"
+msgstr "_Pangkas ke Pilihan"
 
 #: ../app/actions/image-actions.c:104
-#, fuzzy
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
-msgstr "\"%s\" tidak dapat ditambahkan ke pemilihan."
+msgstr "Pangkas citra ke batas-batas pilihan"
 
 #: ../app/actions/image-actions.c:109
 msgctxt "image-action"
@@ -3179,21 +3136,19 @@ msgid "_Duplicate"
 msgstr "_Duplikat"
 
 #: ../app/actions/image-actions.c:110
-#, fuzzy
 msgctxt "image-action"
 msgid "Create a duplicate of this image"
-msgstr "Buat tampilan baru untuk gambar ini"
+msgstr "Buat sebuah duplikat dari citra ini"
 
 #: ../app/actions/image-actions.c:115
-#, fuzzy
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
-msgstr "Nomor Baris Marjin nampak"
+msgstr "Gabungkan _Lapisan Yang Tampak…"
 
 #: ../app/actions/image-actions.c:116
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
-msgstr ""
+msgstr "Gabungkan semua lapisan yang tampak ke satu lapisan"
 
 #: ../app/actions/image-actions.c:121
 #, fuzzy
@@ -3204,143 +3159,120 @@ msgstr "Render citra"
 #: ../app/actions/image-actions.c:122
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
-msgstr ""
+msgstr "Gabungkan semua lapisan menjadi satu dan hapus tembus pandang"
 
 #: ../app/actions/image-actions.c:127
-#, fuzzy
 msgctxt "image-action"
 msgid "Configure G_rid..."
-msgstr "Konfigurasikan Projek"
+msgstr "Konfigu_rasikan Kisi…"
 
 #: ../app/actions/image-actions.c:128
-#, fuzzy
 msgctxt "image-action"
 msgid "Configure the grid for this image"
-msgstr "Cacah baris bagi kisi ini"
+msgstr "Konfigurasikan kisi bagi citra ini"
 
 #: ../app/actions/image-actions.c:133
-#, fuzzy
 msgctxt "image-action"
 msgid "Image Pr_operties"
-msgstr "Preferensi Pr_ofil"
+msgstr "Pr_operti Citra"
 
 #: ../app/actions/image-actions.c:134
-#, fuzzy
 msgctxt "image-action"
 msgid "Display information about this image"
-msgstr "Tampilkan informasi tentang aplikasi ini"
+msgstr "Tampilkan informasi tentang citra ini"
 
 #: ../app/actions/image-actions.c:142
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
 
 #: ../app/actions/image-actions.c:143
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
-msgstr "Simulasi gambar untuk DVD burning"
+msgstr "Konversikan citra ke ruang warna RGB"
 
 #: ../app/actions/image-actions.c:147
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "_Grayscale"
-msgstr "Skala kelabu..."
+msgstr "Skala _Kelabu"
 
 #: ../app/actions/image-actions.c:148
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
-msgstr "Burning foto ke DVD"
+msgstr "Konversikan citra ke skala kelabu"
 
 #: ../app/actions/image-actions.c:152
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "_Indexed..."
-msgstr "Telah diindeks"
+msgstr "Ter_indeks…"
 
 #: ../app/actions/image-actions.c:153
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
-msgstr "Belajar mengenali warna yang tidak umum"
+msgstr "Konversikan citra ke warna terindeks"
 
 #: ../app/actions/image-actions.c:160
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip _Horizontally"
-msgstr "Balikkan Secara _Horisontal"
+msgstr "Balik _Horisontal"
 
 #: ../app/actions/image-actions.c:161
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip image horizontally"
-msgstr "Membalikkan gambar secara horisontal"
+msgstr "Membalikkan citra secara horisontal"
 
 #: ../app/actions/image-actions.c:166
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip _Vertically"
-msgstr "Balikkan gambar secara vertikal"
+msgstr "Balik _Vertikal"
 
 #: ../app/actions/image-actions.c:167
-#, fuzzy
 msgctxt "image-action"
 msgid "Flip image vertically"
-msgstr "Balikkan gambar secara vertikal"
+msgstr "Membalikkan citra secara vertikal"
 
 #: ../app/actions/image-actions.c:175
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
-msgstr "Putar halaman 90 derajat searah dengan jarum jam."
+msgstr "Putar 90° se_arah jarum jam"
 
 #: ../app/actions/image-actions.c:176
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the right"
-msgstr "Memutar gambar 90 derajat ke kanan"
+msgstr "Memutar citra 90 derajat ke kanan"
 
 #: ../app/actions/image-actions.c:181
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate _180°"
-msgstr "Puta_r Searah Jarum Jam"
+msgstr "Putar _180°"
 
 #: ../app/actions/image-actions.c:182
-#, fuzzy
 msgctxt "image-action"
 msgid "Turn the image upside-down"
-msgstr "Berpindah sehalaman naik/turun."
+msgstr "Jungkirkan citra"
 
 #: ../app/actions/image-actions.c:187
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
-msgstr "Apakah memutar berlawanan arah jarum jam"
+msgstr "Putar 90° mela_wan arah jarum jam"
 
 #: ../app/actions/image-actions.c:188
-#, fuzzy
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
-msgstr "Memutar gambar 90 derajat ke kiri"
+msgstr "Memutar citra 90 derajat ke kiri"
 
 #: ../app/actions/image-commands.c:237
-#, fuzzy
 msgid "Set Image Canvas Size"
-msgstr "Set gambar ke ukuran sebenarnya"
+msgstr "Atur Ukuran Kanvas Citra"
 
 #: ../app/actions/image-commands.c:266 ../app/actions/image-commands.c:290
 #: ../app/actions/image-commands.c:594
-#, fuzzy
 msgid "Resizing"
-msgstr "Mengubah ukuran gambar"
+msgstr "Mengubah Ukuran"
 
 #: ../app/actions/image-commands.c:317
-#, fuzzy
 msgid "Set Image Print Resolution"
-msgstr "Set Gambar sebagai _Wallpaper"
+msgstr "Atur Resolusi Cetak Citra"
 
 #: ../app/actions/image-commands.c:379
 #: ../app/pdb/drawable-transform-cmds.c:159
@@ -3355,25 +3287,20 @@ msgstr "Membolak-balik antar halaman"
 #: ../app/pdb/drawable-transform-cmds.c:694 ../app/pdb/image-cmds.c:534
 #: ../app/pdb/item-transform-cmds.c:433 ../app/pdb/transform-tools-cmds.c:245
 #: ../app/tools/gimprotatetool.c:125
-#, fuzzy
 msgid "Rotating"
-msgstr "Memutar foto"
+msgstr "Memutar"
 
 #: ../app/actions/image-commands.c:429 ../app/actions/layers-commands.c:691
-#, fuzzy
 msgid "Cannot crop because the current selection is empty."
-msgstr ""
-"Galat saat mengimpor baris %1: Tak bisa mengimpor baris karena kunci primer "
-"kosong.\n"
+msgstr "Tak dapat memangkas karena seleksi saat ini kosong."
 
 #: ../app/actions/image-commands.c:641
 msgid "Change Print Size"
 msgstr "Ubah Ukuran Cetak"
 
 #: ../app/actions/image-commands.c:682
-#, fuzzy
 msgid "Scale Image"
-msgstr "Skalakan gambar"
+msgstr "Skalakan Citra"
 
 #. Scaling
 #: ../app/actions/image-commands.c:693 ../app/actions/layers-commands.c:1145
@@ -3383,9 +3310,8 @@ msgstr "Skalakan gambar"
 #: ../app/pdb/image-cmds.c:442 ../app/pdb/item-transform-cmds.c:524
 #: ../app/pdb/layer-cmds.c:330 ../app/pdb/layer-cmds.c:375
 #: ../app/pdb/transform-tools-cmds.c:334 ../app/tools/gimpscaletool.c:118
-#, fuzzy
 msgid "Scaling"
-msgstr "Scala"
+msgstr "Penskalaan"
 
 #: ../app/actions/images-actions.c:43
 msgctxt "images-action"
@@ -3393,10 +3319,9 @@ msgid "Images Menu"
 msgstr "Menu Citra"
 
 #: ../app/actions/images-actions.c:47
-#, fuzzy
 msgctxt "images-action"
 msgid "_Raise Views"
-msgstr "Definisikan Tampilan..."
+msgstr "Definisikan Tampilan…"
 
 #: ../app/actions/images-actions.c:48
 #, fuzzy
@@ -3405,22 +3330,19 @@ msgid "Raise this image's displays"
 msgstr "Naikkan tampilan gambar"
 
 #: ../app/actions/images-actions.c:53
-#, fuzzy
 msgctxt "images-action"
 msgid "_New View"
-msgstr "<i>Tampila_n baru...</i>"
+msgstr "Tilika_n Baru"
 
 #: ../app/actions/images-actions.c:54
-#, fuzzy
 msgctxt "images-action"
 msgid "Create a new display for this image"
-msgstr "Buat tampilan baru untuk gambar ini"
+msgstr "Buat sebuah tampilan baru untuk citra ini"
 
 #: ../app/actions/images-actions.c:59
-#, fuzzy
 msgctxt "images-action"
 msgid "_Delete Image"
-msgstr "Hapus gambar ini"
+msgstr "_Hapus Citra"
 
 #: ../app/actions/images-actions.c:60
 msgctxt "images-action"
@@ -3428,16 +3350,14 @@ msgid "Delete this image"
 msgstr "Hapus gambar ini"
 
 #: ../app/actions/layers-actions.c:49
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layers Menu"
-msgstr "Menu Utama"
+msgstr "Menu Lapisan"
 
 #: ../app/actions/layers-actions.c:53
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Layer"
-msgstr "Lapisan"
+msgstr "_Lapisan"
 
 #: ../app/actions/layers-actions.c:55
 msgctxt "layers-action"
@@ -3463,34 +3383,29 @@ msgid "_Transform"
 msgstr "_Ubah"
 
 #: ../app/actions/layers-actions.c:63
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Properties"
 msgstr "_Properti"
 
 #: ../app/actions/layers-actions.c:65
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Opacity"
-msgstr "Kelegapan"
+msgstr "_Kelegapan"
 
 #: ../app/actions/layers-actions.c:67
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer _Mode"
-msgstr "_Moda impor:"
+msgstr "_Moda Lapisan"
 
 #: ../app/actions/layers-actions.c:70
-#, fuzzy
 msgctxt "layers-action"
 msgid "Te_xt Tool"
-msgstr "Indikator tek_s: "
+msgstr "Perkakas Tek_s"
 
 #: ../app/actions/layers-actions.c:71
-#, fuzzy
 msgctxt "layers-action"
 msgid "Activate the text tool on this text layer"
-msgstr "Plugin ini melakukan operasi penyandian atas teks."
+msgstr "Aktifkan perkakas teks pada lapisan teks ini"
 
 #: ../app/actions/layers-actions.c:76
 msgctxt "layers-action"
@@ -3503,40 +3418,34 @@ msgid "Edit the layer's name"
 msgstr "Sunting nama lapisan"
 
 #: ../app/actions/layers-actions.c:82 ../app/actions/layers-actions.c:610
-#, fuzzy
 msgctxt "layers-action"
 msgid "_New Layer..."
-msgstr "Lapisan Baru"
+msgstr "Lapisa_n Baru…"
 
 #: ../app/actions/layers-actions.c:83
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer and add it to the image"
-msgstr "Tambahkan bayangan jatuh ke lapisan, dan dapat dibuat bevel"
+msgstr "Buat suatu lapisan baru dan tambahkan ke citra"
 
 #: ../app/actions/layers-actions.c:88 ../app/actions/layers-actions.c:611
-#, fuzzy
 msgctxt "layers-action"
 msgid "_New Layer"
-msgstr "Lapisan Baru"
+msgstr "Lapisa_n Baru"
 
 #: ../app/actions/layers-actions.c:89
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer with last used values"
-msgstr "Buat tampilan baru untuk gambar ini"
+msgstr "Buat suatu lapisan baru dengan nilai-nilai yang terakhir dipakai"
 
 #: ../app/actions/layers-actions.c:94
-#, fuzzy
 msgctxt "layers-action"
 msgid "New from _Visible"
-msgstr "Baru Dari LibriVox"
+msgstr "Baru dari yang _Tampak"
 
 #: ../app/actions/layers-actions.c:96
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a new layer from what is visible in this image"
-msgstr "Buat tampilan baru untuk gambar ini"
+msgstr "Buat sebuah lapisan baru dari apa yang tampak dalam citra ini"
 
 #: ../app/actions/layers-actions.c:101
 #, fuzzy
@@ -3562,10 +3471,9 @@ msgid "Create a duplicate of the layer and add it to the image"
 msgstr "Tambahkan bayangan jatuh ke lapisan, dan dapat dibuat bevel"
 
 #: ../app/actions/layers-actions.c:114
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Delete Layer"
-msgstr "Hapus Lapisan"
+msgstr "_Hapus Lapisan"
 
 #: ../app/actions/layers-actions.c:115
 msgctxt "layers-action"
@@ -3573,50 +3481,44 @@ msgid "Delete this layer"
 msgstr "Hapus lapisan ini"
 
 #: ../app/actions/layers-actions.c:120
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Raise Layer"
-msgstr "Naikkan Lapisan"
+msgstr "_Naikkan Lapisan"
 
 #: ../app/actions/layers-actions.c:121
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
-msgstr ""
+msgstr "Naikkan lapisan ini satu tingkat dalam tumpukan lapisan"
 
 #: ../app/actions/layers-actions.c:126
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Top"
-msgstr "Bawah ke Atas"
+msgstr "Lapisam ke _Puncak"
 
 #: ../app/actions/layers-actions.c:127
-#, fuzzy
 msgctxt "layers-action"
 msgid "Move this layer to the top of the layer stack"
-msgstr "Pindahkan jendela ke pojok kiri atas"
+msgstr "Pindahkan lapisan ini ke puncak tumpukan lapisan"
 
 #: ../app/actions/layers-actions.c:132
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Lower Layer"
-msgstr "Turunkan Lapisan"
+msgstr "_Turunkan Lapisan"
 
 #: ../app/actions/layers-actions.c:133
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
-msgstr ""
+msgstr "Turunkan lapisan ini satu tingkat dalam tumpukan lapisan"
 
 #: ../app/actions/layers-actions.c:138
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Bottom"
-msgstr "Bawah ke Atas"
+msgstr "Lapisan ke _Dasar"
 
 #: ../app/actions/layers-actions.c:139
-#, fuzzy
 msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
-msgstr "Pindahkan jendela ke pojok kiri bawah"
+msgstr "Pindahkan lapisan ini ke dasar tumpukan lapisan"
 
 #: ../app/actions/layers-actions.c:144
 #, fuzzy
@@ -3631,37 +3533,34 @@ msgid "Anchor the floating layer"
 msgstr "DVD+R dual layer"
 
 #: ../app/actions/layers-actions.c:150
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge Do_wn"
-msgstr "Jangan pasang:"
+msgstr "Gabung T_urun"
 
 #: ../app/actions/layers-actions.c:151
 msgctxt "layers-action"
 msgid "Merge this layer with the first visible layer below it"
-msgstr ""
+msgstr "Gabungkan lapisan ini dengan lapisan tampak pertama di bawahnya"
 
 #: ../app/actions/layers-actions.c:156
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge Layer Group"
-msgstr "Tak bisa menambah grup"
+msgstr "Gabung Grup Lapisan"
 
 #: ../app/actions/layers-actions.c:157
 msgctxt "layers-action"
 msgid "Merge the layer group's layers into one normal layer"
-msgstr ""
+msgstr "Gabungkan lapisan kelompok lapisan menjadi satu lapisan normal"
 
 #: ../app/actions/layers-actions.c:162
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge _Visible Layers..."
-msgstr "Nomor Baris Marjin nampak"
+msgstr "Gabung Lapisan _Tampak…"
 
 #: ../app/actions/layers-actions.c:163
 msgctxt "layers-action"
 msgid "Merge all visible layers into one layer"
-msgstr ""
+msgstr "Gabungkan semua lapisan tampak menjadi satu lapisan"
 
 #: ../app/actions/layers-actions.c:168
 #, fuzzy
@@ -3672,18 +3571,17 @@ msgstr "Render citra"
 #: ../app/actions/layers-actions.c:169
 msgctxt "layers-action"
 msgid "Merge all layers into one and remove transparency"
-msgstr ""
+msgstr "Gabungkan semua lapisan menjadi satu dan buang tembus pandang"
 
 #: ../app/actions/layers-actions.c:174
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Discard Text Information"
-msgstr "Pilihan informasi teks"
+msgstr "_Buang Informasi Teks"
 
 #: ../app/actions/layers-actions.c:175
 msgctxt "layers-action"
 msgid "Turn this text layer into a normal layer"
-msgstr ""
+msgstr "Ubah lapisan teks ini menjadi lapisan normal"
 
 #: ../app/actions/layers-actions.c:180
 msgctxt "layers-action"
@@ -3706,10 +3604,9 @@ msgid "Warp this layer's text along the current path"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:192
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer B_oundary Size..."
-msgstr "T_ampil Ukuran Asli"
+msgstr "Ukur_an Batas Lapisan…"
 
 #: ../app/actions/layers-actions.c:193
 msgctxt "layers-action"
@@ -3737,15 +3634,14 @@ msgid "Change the size of the layer content"
 msgstr "Ubah ukuran isi lapisan"
 
 #: ../app/actions/layers-actions.c:210
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Crop to Selection"
-msgstr "_Tambahkan ke Pilihan"
+msgstr "_Pangkas ke Pilihan"
 
 #: ../app/actions/layers-actions.c:211
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
-msgstr ""
+msgstr "Pangkas lapisan ke batas-batas pilihan"
 
 #: ../app/actions/layers-actions.c:216
 #, fuzzy
@@ -3787,42 +3683,37 @@ msgstr "Kunci Kanal _Alfa"
 msgctxt "layers-action"
 msgid "Keep transparency information on this layer from being modified"
 msgstr ""
+"Jaga informasi tingkat tembus pandang pada lapisan ini agar tak berubah"
 
 #: ../app/actions/layers-actions.c:246
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Edit Layer Mask"
-msgstr "<b>Alamat:</b> %s <b>Subnet mask:</b> %s"
+msgstr "Sunting Mask_er Lapisan"
 
 #: ../app/actions/layers-actions.c:247
-#, fuzzy
 msgctxt "layers-action"
 msgid "Work on the layer mask"
-msgstr "Pekerjaan awal pada OLE2 untuk libgsf"
+msgstr ""
 
 #: ../app/actions/layers-actions.c:253
-#, fuzzy
 msgctxt "layers-action"
 msgid "S_how Layer Mask"
-msgstr "<b>Alamat:</b> %s <b>Subnet mask:</b> %s"
+msgstr "Ta_mpilkan Masker Lapisan"
 
 #: ../app/actions/layers-actions.c:259
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Disable Layer Mask"
-msgstr "<b>Alamat:</b> %s <b>Subnet mask:</b> %s"
+msgstr "_Nonaktifkan Masker Lapisan"
 
 #: ../app/actions/layers-actions.c:260
-#, fuzzy
 msgctxt "layers-action"
 msgid "Dismiss the effect of the layer mask"
-msgstr "Atur ke mask host"
+msgstr ""
 
 #: ../app/actions/layers-actions.c:269
-#, fuzzy
 msgctxt "layers-action"
 msgid "Apply Layer _Mask"
-msgstr "<b>Alamat:</b> %s <b>Subnet mask:</b> %s"
+msgstr "Terapkan _Masker Lapisan"
 
 #: ../app/actions/layers-actions.c:270
 msgctxt "layers-action"
@@ -3830,10 +3721,9 @@ msgid "Apply the effect of the layer mask and remove it"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:275
-#, fuzzy
 msgctxt "layers-action"
 msgid "Delete Layer Mas_k"
-msgstr "DVD+R dual layer"
+msgstr "Hapus Mas_ker Lapisan"
 
 #: ../app/actions/layers-actions.c:276
 msgctxt "layers-action"
@@ -3841,16 +3731,14 @@ msgid "Remove the layer mask and its effect"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:284
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Mask to Selection"
-msgstr "_Tambahkan ke Pilihan"
+msgstr "_Masker ke Pilihan"
 
 #: ../app/actions/layers-actions.c:285
-#, fuzzy
 msgctxt "layers-action"
 msgid "Replace the selection with the layer mask"
-msgstr "Pindahkan Pilihan ke Lapisan di atas"
+msgstr "Gantikan pilihan dengan masker lapisan"
 
 #: ../app/actions/layers-actions.c:290
 msgctxt "layers-action"
@@ -3858,10 +3746,9 @@ msgid "_Add to Selection"
 msgstr "T_ambahkan ke Pilihan"
 
 #: ../app/actions/layers-actions.c:291
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add the layer mask to the current selection"
-msgstr "Gunakan pilihan yang sekarang untuk membuat nama"
+msgstr "Tambah masker lapisan ke pilihan saat ini"
 
 #: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:325
 msgctxt "layers-action"
@@ -3901,12 +3788,12 @@ msgstr "_Tambahkan ke Pilihan"
 #: ../app/actions/layers-actions.c:320
 msgctxt "layers-action"
 msgid "Add the layer's alpha channel to the current selection"
-msgstr ""
+msgstr "Tambahkan kanal alfa lapisan ke pilihan saat ini"
 
 #: ../app/actions/layers-actions.c:327
 msgctxt "layers-action"
 msgid "Subtract the layer's alpha channel from the current selection"
-msgstr ""
+msgstr "Kurangkan kanal alfa lapisan dari pilihan saat ini"
 
 #: ../app/actions/layers-actions.c:334
 msgctxt "layers-action"
@@ -4597,22 +4484,19 @@ msgid "Replace the selection by its border"
 msgstr "Jalankan program sesuai nama atau penjelasannya"
 
 #: ../app/actions/select-actions.c:105
-#, fuzzy
 msgctxt "select-action"
 msgid "Save to _Channel"
-msgstr "Kanal yang akan _disortir"
+msgstr "Simpan ke _Kanal"
 
 #: ../app/actions/select-actions.c:106
-#, fuzzy
 msgctxt "select-action"
 msgid "Save the selection to a channel"
-msgstr "Naikkan channel ke paling atas"
+msgstr "Simpan pilihan ke suatu kanal"
 
 #: ../app/actions/select-actions.c:111
-#, fuzzy
 msgctxt "select-action"
 msgid "_Stroke Selection..."
-msgstr "Bersihkan Pi_lihan"
+msgstr "Pilihan _Sapuan…"
 
 #: ../app/actions/select-actions.c:112
 #, fuzzy
@@ -4621,16 +4505,14 @@ msgid "Paint along the selection outline"
 msgstr "Hapus Tag Dari Pilihan"
 
 #: ../app/actions/select-actions.c:117
-#, fuzzy
 msgctxt "select-action"
 msgid "_Stroke Selection"
-msgstr "Bersihkan Pi_lihan"
+msgstr "Pilihan _Sapuan"
 
 #: ../app/actions/select-actions.c:118
-#, fuzzy
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
-msgstr "Kotak Pemilih Font GIMP"
+msgstr "Pilihan sapuan dengan nilai-nilai yang terakhir dipakai"
 
 #: ../app/actions/select-commands.c:156
 #, fuzzy
@@ -4685,9 +4567,8 @@ msgstr "Warna pinggiran:"
 
 #. Edge lock button
 #: ../app/actions/select-commands.c:293
-#, fuzzy
 msgid "_Lock selection to image edges"
-msgstr "Citra menggulung di tepi layar"
+msgstr "Kunci pi_lihan ke tepi citra"
 
 #: ../app/actions/select-commands.c:345 ../app/actions/select-commands.c:378
 #: ../app/actions/vectors-commands.c:386 ../app/actions/vectors-commands.c:420
@@ -4696,27 +4577,23 @@ msgid "There is no active layer or channel to stroke to."
 msgstr ""
 
 #: ../app/actions/select-commands.c:351
-#, fuzzy
 msgid "Stroke Selection"
-msgstr "Bersihkan Pi_lihan"
+msgstr "Pilihan Sapuan"
 
 #: ../app/actions/templates-actions.c:41
-#, fuzzy
 msgctxt "templates-action"
 msgid "Templates Menu"
-msgstr "Menu Utama"
+msgstr "Menu Templat"
 
 #: ../app/actions/templates-actions.c:45
-#, fuzzy
 msgctxt "templates-action"
 msgid "_Create Image from Template"
-msgstr "Buat _Templat Dari Dokumen"
+msgstr "Buat _Citra dari Templat"
 
 #: ../app/actions/templates-actions.c:46
-#, fuzzy
 msgctxt "templates-action"
 msgid "Create a new image from the selected template"
-msgstr "Buat gambar baru dari template pilihan"
+msgstr "Buat suatu citra baru dari templat yang dipilih"
 
 #: ../app/actions/templates-actions.c:51
 msgctxt "templates-action"
@@ -4787,22 +4664,19 @@ msgid "Open"
 msgstr "Buka"
 
 #: ../app/actions/text-editor-actions.c:44
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Load text from file"
-msgstr "Impor teks dari berkas"
+msgstr "Muat teks dari berkas"
 
 #: ../app/actions/text-editor-actions.c:49
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Clear"
-msgstr "Hapus"
+msgstr "Bersihkan"
 
 #: ../app/actions/text-editor-actions.c:50
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "Clear all text"
-msgstr "Bersihkan semua teks yang disorot"
+msgstr "Bersihkan semua teks"
 
 #: ../app/actions/text-editor-actions.c:58
 msgctxt "text-editor-action"
@@ -4810,10 +4684,9 @@ msgid "LTR"
 msgstr "LTR"
 
 #: ../app/actions/text-editor-actions.c:59
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "From left to right"
-msgstr "Selalu Kiri-ke-Kanan"
+msgstr "Dari kiri ke kanan"
 
 #: ../app/actions/text-editor-actions.c:64
 msgctxt "text-editor-action"
@@ -4821,10 +4694,9 @@ msgid "RTL"
 msgstr "RTL"
 
 #: ../app/actions/text-editor-actions.c:65
-#, fuzzy
 msgctxt "text-editor-action"
 msgid "From right to left"
-msgstr "Selalu Kiri-ke-Kanan"
+msgstr "Dari kanan ke kiri"
 
 #: ../app/actions/text-editor-commands.c:62
 #: ../app/actions/text-tool-commands.c:117
@@ -4847,76 +4719,64 @@ msgid "Could not open '%s' for reading: %s"
 msgstr "Tak bisa membuka '%s' untuk baca: %s"
 
 #: ../app/actions/text-tool-actions.c:50
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Text Tool Menu"
-msgstr "Tombol Alat Menu"
+msgstr "Menu Alat Teks"
 
 #: ../app/actions/text-tool-actions.c:54
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Input _Methods"
-msgstr "_Metode Input"
+msgstr "_Metode Masukan"
 
 #: ../app/actions/text-tool-actions.c:58
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Cu_t"
 msgstr "Po_tong"
 
 #: ../app/actions/text-tool-actions.c:63
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Copy"
 msgstr "Sa_lin"
 
 #: ../app/actions/text-tool-actions.c:68
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Paste"
 msgstr "Tem_pel"
 
 #: ../app/actions/text-tool-actions.c:73
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Delete"
 msgstr "_Hapus"
 
 #: ../app/actions/text-tool-actions.c:78
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Open text file..."
-msgstr "Buka file teks (UTF-8)"
+msgstr "_Buka berkas teks…"
 
 #: ../app/actions/text-tool-actions.c:83
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Cl_ear"
 msgstr "B_ersihkan"
 
 #: ../app/actions/text-tool-actions.c:84
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Clear all text"
-msgstr "Bersihkan semua teks yang disorot"
+msgstr "Bersihkan semua teks"
 
 #: ../app/actions/text-tool-actions.c:89
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "_Path from Text"
-msgstr "Jarak dari teks"
+msgstr "_Jalur dari Teks"
 
 #: ../app/actions/text-tool-actions.c:91
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Create a path from the outlines of the current text"
-msgstr "Buat kuas baru dengan karakter dari suatu urutan teks"
+msgstr "Buat suatu jalur dari garis pinggiran teks saat ini"
 
 #: ../app/actions/text-tool-actions.c:96
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "Text _along Path"
-msgstr "Ofset sepanjang path, antara -1.0 dan 2.0"
+msgstr "Teks sep_anjang Jalur"
 
 #: ../app/actions/text-tool-actions.c:98
 msgctxt "text-tool-action"
@@ -4924,103 +4784,87 @@ msgid "Bend the text along the currently active path"
 msgstr "Bengkokkan teks mengikuti jalur yang saat ini aktif"
 
 #: ../app/actions/text-tool-actions.c:106
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "From left to right"
-msgstr "Selalu Kiri-ke-Kanan"
+msgstr "Dari kiri ke kanan"
 
 #: ../app/actions/text-tool-actions.c:111
-#, fuzzy
 msgctxt "text-tool-action"
 msgid "From right to left"
-msgstr "Selalu Kiri-ke-Kanan"
+msgstr "Dari kanan ke kiri"
 
 #: ../app/actions/tool-options-actions.c:56
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Tool Options Menu"
-msgstr "Tombol Alat Menu"
+msgstr "Menu Opsi Alat"
 
 #: ../app/actions/tool-options-actions.c:60
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Save Tool Preset"
-msgstr "Tambah Prasetel _Baru"
+msgstr "_Simpan Prasetel Alat"
 
 #: ../app/actions/tool-options-actions.c:64
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Restore Tool Preset"
-msgstr "Tambah Prasetel _Baru"
+msgstr "Pulihkan P_rasetel Alat"
 
 #: ../app/actions/tool-options-actions.c:68
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "E_dit Tool Preset"
-msgstr "Tambah Prasetel _Baru"
+msgstr "Sunting Pras_etel Alat"
 
 #: ../app/actions/tool-options-actions.c:72
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
-msgstr "Hapus satu alat build"
+msgstr "_Hapus Prasetel Alat"
 
 #: ../app/actions/tool-options-actions.c:76
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_New Tool Preset..."
-msgstr "Tambah Prasetel _Baru"
+msgstr "Prasetel Alat _Baru…"
 
 #: ../app/actions/tool-options-actions.c:81
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "R_eset Tool Options"
-msgstr "Berikutnya - Opsi penerimaan"
+msgstr "R_eset Opsi Alat"
 
 #: ../app/actions/tool-options-actions.c:82
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset to default values"
-msgstr "Reset ke ukuran baku"
+msgstr "Reset ke nilai-nilai baku"
 
 #: ../app/actions/tool-options-actions.c:87
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
-msgstr "Menampilkan semua opsi bantuan"
+msgstr "Reset semu_a Opsi Alat"
 
 #: ../app/actions/tool-options-actions.c:88
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset all tool options"
-msgstr "Menampilkan semua opsi bantuan"
+msgstr "Reset semua opsi alat"
 
 #: ../app/actions/tool-options-commands.c:186
-#, fuzzy
 msgid "Reset All Tool Options"
-msgstr "Menampilkan semua opsi bantuan"
+msgstr "Reset Semua Opsi Alat"
 
 #: ../app/actions/tool-options-commands.c:209
 msgid "Do you really want to reset all tool options to default values?"
 msgstr "Apakah Anda yakin hendak mereset semua opsi alat ke nilai-nilai baku?"
 
 #: ../app/actions/tool-presets-actions.c:44
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Tool Presets Menu"
-msgstr "Tombol Alat Menu"
+msgstr "Menu Prasetel Alat"
 
 #: ../app/actions/tool-presets-actions.c:48
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
-msgstr "Tambah Prasetel _Baru"
+msgstr "Prasetel Alat _Baru"
 
 #: ../app/actions/tool-presets-actions.c:49
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Create a new tool preset"
-msgstr "Buat folder kosong baru"
+msgstr "Buat sebuah prasetel alat baru"
 
 #: ../app/actions/tool-presets-actions.c:54
 #, fuzzy
@@ -5035,130 +4879,109 @@ msgid "Duplicate this tool preset"
 msgstr "Gandakan CD audio ini"
 
 #: ../app/actions/tool-presets-actions.c:60
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Copy Tool Preset _Location"
-msgstr "Salin lokasi ke clipboard"
+msgstr "Salin _Lokasi Prasetel Alat"
 
 #: ../app/actions/tool-presets-actions.c:61
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Copy tool preset file location to clipboard"
-msgstr "Tak bisa menyalin berkas POT baru ke lokasi publik."
+msgstr "Salin lokasi berkas prasetel alat ke papan klip"
 
 #: ../app/actions/tool-presets-actions.c:66
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
-msgstr "Hapus satu alat build"
+msgstr "_Hapus Prasetel Alat"
 
 #: ../app/actions/tool-presets-actions.c:67
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
-msgstr "Hapus satu alat build"
+msgstr "Hapus prasetel alat ini"
 
 #: ../app/actions/tool-presets-actions.c:72
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
-msgstr "Pakai perkakas Helgrind"
+msgstr "Sega_rkan Prasetel Alat"
 
 #: ../app/actions/tool-presets-actions.c:73
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
-msgstr "Pakai perkakas Helgrind"
+msgstr "Segarkan prasetel alat"
 
 #: ../app/actions/tool-presets-actions.c:81
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
-msgstr "Tambah Prasetel _Baru"
+msgstr "Sunting Pras_etel Alat…"
 
 #: ../app/actions/tool-presets-actions.c:82
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
-msgstr "Sunting properti akun ini"
+msgstr "Sunting prasetel alat ini"
 
 #: ../app/actions/tool-preset-editor-actions.c:42
-#, fuzzy
 msgctxt "tool-preset-editor-action"
 msgid "Tool Preset Editor Menu"
-msgstr "NULL tooldata dalam tool_menu_select"
+msgstr "Menu Penyunting Prasetel Alat"
 
 #: ../app/actions/tool-preset-editor-actions.c:50
-#, fuzzy
 msgctxt "tool-preset-editor-action"
 msgid "Edit Active Tool Preset"
-msgstr "Pakai perkakas Valgrind AddrCheck"
+msgstr "Sunting Prasetel Alat Aktif"
 
 #: ../app/actions/tools-actions.c:45
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Tools"
-msgstr "_Perkakas"
+msgstr "Ala_t"
 
 #: ../app/actions/tools-actions.c:46
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Selection Tools"
-msgstr "Perkakas branch"
+msgstr "Perkaka_s Pemilihan"
 
 #: ../app/actions/tools-actions.c:47
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Paint Tools"
-msgstr "Perkakas branch"
+msgstr "_Perkakas Cat"
 
 #: ../app/actions/tools-actions.c:48
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Transform Tools"
-msgstr "Perkakas branch"
+msgstr "Perkakas _Transformasi"
 
 #: ../app/actions/tools-actions.c:49
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Color Tools"
-msgstr "Perkakas branch"
+msgstr "Perkakas _Warna"
 
 #: ../app/actions/tools-actions.c:55
-#, fuzzy
 msgctxt "tools-action"
 msgid "_By Color"
-msgstr "Warna pinggiran:"
+msgstr "_Menurut Warna"
 
 #: ../app/actions/tools-actions.c:56
-#, fuzzy
 msgctxt "tools-action"
 msgid "Select regions with similar colors"
-msgstr "Tampilkan gambar dengan warna negatif"
+msgstr "Pilih wilayah dengan warna serupa"
 
 #: ../app/actions/tools-actions.c:61
-#, fuzzy
 msgctxt "tools-action"
 msgid "_Arbitrary Rotation..."
-msgstr "Sudut Rotasi X"
+msgstr "Rotasi Sebar_ang…"
 
 #: ../app/actions/tools-actions.c:62
-#, fuzzy
 msgctxt "tools-action"
 msgid "Rotate by an arbitrary angle"
-msgstr "Putar citra 90 derajat berlawanan dengan arah jarum jam"
+msgstr "Putar dengan sudut sebarang"
 
 #: ../app/actions/vectors-actions.c:44
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Paths Menu"
-msgstr "Menu Utama"
+msgstr "Menu Jalur"
 
 #: ../app/actions/vectors-actions.c:48
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Path _Tool"
-msgstr "Editor Alat"
+msgstr "Ala_t Jalur"
 
 #: ../app/actions/vectors-actions.c:53
 msgctxt "vectors-action"
@@ -5171,22 +4994,19 @@ msgid "Edit path attributes"
 msgstr "Sunting atribut path"
 
 #: ../app/actions/vectors-actions.c:59
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_New Path..."
-msgstr "Path Pertama:"
+msgstr "Jalur _Baru…"
 
 #: ../app/actions/vectors-actions.c:60
-#, fuzzy
 msgctxt "vectors-action"
 msgid "Create a new path..."
-msgstr "Buat direktori baru"
+msgstr "Buat suatu jalur baru…"
 
 #: ../app/actions/vectors-actions.c:65
-#, fuzzy
 msgctxt "vectors-action"
 msgid "_New Path with last values"
-msgstr "path dari suatu daftar mesti diakhiri dengan ':/'"
+msgstr "Jalur baru dengan _nilai-nilai terakhir"
 
 #: ../app/actions/vectors-actions.c:66
 #, fuzzy
@@ -6472,10 +6292,14 @@ msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr ""
+"Ketika difungsikan, ini akan memastikannya bahwa setiap piksel dari suatu "
+"citra dipetakan ke sebuah piksel pada layar."
 
 #: ../app/config/gimprc-blurbs.h:93
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
+"Ini adalah jarak dalam piksel dimana pelengketan Panduan dan Kisi "
+"teraktivasi."
 
 #: ../app/config/gimprc-blurbs.h:109
 msgid ""
@@ -6517,22 +6341,26 @@ msgstr "Ruang swap digunakan oleh sistem operasi sebagai memori virtual."
 
 #: ../app/config/gimprc-blurbs.h:191
 msgid "Sets the text to appear in image window status bars."
-msgstr ""
+msgstr "Menata teks yang muncul dalam bilah status jendela citra."
 
 #: ../app/config/gimprc-blurbs.h:194
 msgid "Sets the text to appear in image window titles."
-msgstr ""
+msgstr "Menata teks yang muncul dalam judul jendela citra."
 
 #: ../app/config/gimprc-blurbs.h:197
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
+"Ketika difungsikan, ini akan memastikan bahwa seluruh citra tampak setelah "
+"suatu berkas dibuka, jika tidak itu akan ditampilkan dengan skala 1:1."
 
 #: ../app/config/gimprc-blurbs.h:201
 msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
+"Menata tingkat interpolasi yang dipakai untuk penskalaan dan transformasi "
+"lain."
 
 #: ../app/config/gimprc-blurbs.h:208
 #, fuzzy
@@ -6542,6 +6370,8 @@ msgstr "Pilih antarmuka untuk dipakai bagi layanan baru"
 #: ../app/config/gimprc-blurbs.h:211
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr ""
+"Berapa banyak nama berkas citra yang baru-baru ini dibuka dipertahankan "
+"dalam menu Berkas."
 
 #: ../app/config/gimprc-blurbs.h:214
 msgid ""
@@ -6554,6 +6384,9 @@ msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
+"GIMP akan memperingatkan pengguna bila suatu upaya dilakukan untuk membuat "
+"sebuah citra yang akan menghabiskan memori lebih dari ukuran yang dinyatakan "
+"di sini."
 
 #: ../app/config/gimprc-blurbs.h:228
 msgid ""
@@ -6561,6 +6394,8 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Menata resolusi horisontal monitor, dalam dot per inci. Bila diisi 0, "
+"memaksa server X ditanyai informasi horisontal dan vertikal."
 
 #: ../app/config/gimprc-blurbs.h:233
 msgid ""
@@ -6568,22 +6403,31 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Menata resolusi vertikal monitor, dalam dot per inci. Bila diisi 0, memaksa "
+"server X ditanyai informasi horisontal dan vertikal."
 
 #: ../app/config/gimprc-blurbs.h:238
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
 msgstr ""
+"Bila difungsikan, alat pindah menata lapisan atau jalur yang disunting "
+"sebagai aktif. Ini biasanya menjadi perilaku baku dalam versi-versi lebih "
+"lama."
 
 #: ../app/config/gimprc-blurbs.h:242
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 msgstr ""
+"Menata ukuran pratinjau navigasi yang tersedia di pojok kanan bawah jendela "
+"citra."
 
 #: ../app/config/gimprc-blurbs.h:246
 msgid "Sets how many processors GIMP should try to use simultaneously."
 msgstr ""
+"Menata berapa banyak prosesor yang akan dicoba dipakai secara simultan oleh "
+"GIMP."
 
 #: ../app/config/gimprc-blurbs.h:259
 msgid ""
@@ -6665,60 +6509,80 @@ msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
 msgstr ""
+"Ketika difungsikan, penunjuk tetikus akan ditunjukkan di atas citra saat "
+"memakai suatu alat cat."
 
 #: ../app/config/gimprc-blurbs.h:328
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
+"Ketika difungsikan, bilah menu secara baku tampak. Ini juga dapat "
+"dijungkitkan dengan perintah \"Tilik->Tampilkan Bilah Menu\"."
 
 #: ../app/config/gimprc-blurbs.h:332
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr ""
+"Ketika difungsikan, penggaris secara baku tampak. Ini juga dapat "
+"dijungkitkan dengan perintah \"Tilik->Tunjukkan Penggaris\"."
 
 #: ../app/config/gimprc-blurbs.h:336
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
+"Ketika difungsikan, bilah gulir secara baku tampak. Ini juga dapat "
+"dijungkitkan dengan perintah \"Tilik->Tunjukkan Bilah Gulir\"."
 
 #: ../app/config/gimprc-blurbs.h:340
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr ""
+"Ketika difungsikan, bilah status secara baku tampak. Ini juga dapat "
+"dijungkitkan dengan perintah \"Tilik->Tunjukkan Bilah Status\"."
 
 #: ../app/config/gimprc-blurbs.h:344
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr ""
+"Ketika difungsikan, pilihan secara baku tampak. Ini juga dapat dijungkitkan "
+"dengan perintah \"Tilik->Tunjukkan Pilihan\"."
 
 #: ../app/config/gimprc-blurbs.h:348
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
+"Ketika difungsikan, batas lapisan secara baku tampak. Ini juga dapat "
+"dijungkitkan dengan perintah \"Tilik->Tunjukkan Batas Lapisan\"."
 
 #: ../app/config/gimprc-blurbs.h:352
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
+"Ketika difungsikan, panduan secara baku tampak. Ini juga dapat dijungkitkan "
+"dengan perintah \"Tilik->Tunjukkan Panduan\"."
 
 #: ../app/config/gimprc-blurbs.h:356
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr ""
+"Ketika difungsikan, kisi secara baku tampak. Ini juga dapat dijungkitkan "
+"dengan perintah \"Tilik->Tunjukkan Kisi\"."
 
 #: ../app/config/gimprc-blurbs.h:360
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
+"Ketika difungsikan, titik cuplik secara baku tampak. Ini juga dapat "
+"dijungkitkan dengan perintah \"Tilik->Tunjukkan Titik Cuplik\"."
 
 #: ../app/config/gimprc-blurbs.h:364
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -6731,11 +6595,12 @@ msgstr "Gunakan fonta dalam label pada mode info fonta"
 
 #: ../app/config/gimprc-blurbs.h:370
 msgid "Hide docks and other windows, leaving only image windows."
-msgstr ""
+msgstr "Sembunyikan dok dan jendela lain, menyisakan hanya jendela citra."
 
 #: ../app/config/gimprc-blurbs.h:373
 msgid "What to do when the space bar is pressed in the image window."
 msgstr ""
+"Apa yang mesti dilakukan ketika bilah spasi ditekan dalam jendela citra."
 
 #: ../app/config/gimprc-blurbs.h:376
 msgid ""
@@ -6749,13 +6614,15 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:385
 msgid "When enabled, menus can be torn off."
-msgstr ""
+msgstr "Ketika difungsikan, menu dapat dilepas."
 
 #: ../app/config/gimprc-blurbs.h:388
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 msgstr ""
+"Ketika difungsikan, Anda dapat mengubah pintasan papan tik bagi butir menu "
+"dengan menekan kombinasi tombol saat butir menu disorot."
 
 #: ../app/config/gimprc-blurbs.h:392
 #, fuzzy
@@ -6773,10 +6640,14 @@ msgid ""
 "files are likely to remain, so it is best if this folder not be one that is "
 "shared by other users."
 msgstr ""
+"Menata folder bagi penyimpanan sementara. Berkas akan muncul di sini selama "
+"menjalankan GIMP. Kebanyakan berkas akan lenyap ketika GIMP keluar, tapi "
+"beberapa berkas mungkin bertahan, maka paling baik bila folder ini bukan "
+"yang dipakai bersama dengan pengguna lain."
 
 #: ../app/config/gimprc-blurbs.h:410
 msgid "Sets the size of the thumbnail shown in the Open dialog."
-msgstr ""
+msgstr "Menata ukuran gambar mini yang ditunjukkan dalam dialog Buka."
 
 #: ../app/config/gimprc-blurbs.h:413
 msgid ""
@@ -9048,9 +8919,9 @@ msgstr "Error penguraian berikutnya tidak akan ditampilkan."
 
 #: ../app/core/gimplayer.c:450 ../app/core/gimplayer.c:1528
 #: ../app/core/gimplayermask.c:236
-#, fuzzy, c-format
+#, c-format
 msgid "%s mask"
-msgstr "Mask"
+msgstr "%s masker"
 
 #: ../app/core/gimplayer.c:489
 #, fuzzy, c-format
@@ -11592,12 +11463,12 @@ msgstr "Bukan berkas biasa"
 #: ../app/file/file-open.c:188
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
-msgstr ""
+msgstr "plug-in %s mengembalikan SUCCESS tapi tak mengembalikan suatu citra"
 
 #: ../app/file/file-open.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-In could not open image"
-msgstr "Tak dapat membuka divais untuk putar kembali dalam mode mono."
+msgstr "plug-in %s tak bisa membuka citra"
 
 #: ../app/file/file-open.c:530
 #, fuzzy
@@ -11621,10 +11492,9 @@ msgid "Unknown file type"
 msgstr "Jenis berkas tidak dikenal"
 
 #: ../app/file/file-save.c:222
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in could not save image"
-msgstr ""
-"Tidak dapat menemukan modul yang cocok untuk menyimpan gambar sebagai \"%s\""
+msgstr "plug-in %s tak bisa menyimpan citra"
 
 #: ../app/file/file-utils.c:72
 #, fuzzy, c-format
@@ -12759,14 +12629,14 @@ msgid "No gradient available for use with this tool."
 msgstr ""
 
 #: ../app/tools/gimpblendtool.c:452 ../app/tools/gimppainttool.c:624
-#, fuzzy, c-format
+#, c-format
 msgid "%s for constrained angles"
-msgstr "Pindah sudut kamera"
+msgstr "%s untuk sudut terkendala"
 
 #: ../app/tools/gimpblendtool.c:453
-#, fuzzy, c-format
+#, c-format
 msgid "%s to move the whole line"
-msgstr "Pindahkan kursor ke baris"
+msgstr "%s untuk memindah seluruh garis"
 
 #: ../app/tools/gimpblendtool.c:457
 #, fuzzy
@@ -12969,9 +12839,9 @@ msgid "Click to clone"
 msgstr "_Klik untuk Bergerak"
 
 #: ../app/tools/gimpclonetool.c:86 ../app/tools/gimpclonetool.c:91
-#, fuzzy, c-format
+#, c-format
 msgid "%s to set a new clone source"
-msgstr "Impor suatu tree sumber baru ke CVS"
+msgstr "%s untuk menata sebuah sumber klon baru"
 
 #. Translators: the translation of "Click" must be the first word
 #: ../app/tools/gimpclonetool.c:90
@@ -13255,9 +13125,9 @@ msgid "Click to blur the line"
 msgstr "Lihat ke baris tertentu"
 
 #: ../app/tools/gimpconvolvetool.c:186
-#, fuzzy, c-format
+#, c-format
 msgid "%s to sharpen"
-msgstr "Balas ke %s"
+msgstr "%s untuk mempertajam"
 
 #: ../app/tools/gimpconvolvetool.c:190
 #, fuzzy
@@ -13270,9 +13140,9 @@ msgid "Click to sharpen the line"
 msgstr "Lihat ke baris tertentu"
 
 #: ../app/tools/gimpconvolvetool.c:192
-#, fuzzy, c-format
+#, c-format
 msgid "%s to blur"
-msgstr "tapis pengaburan"
+msgstr "%s untuk mengaburkan"
 
 #. the type radio box
 #: ../app/tools/gimpconvolvetool.c:216
@@ -13449,9 +13319,9 @@ msgid "Click to dodge the line"
 msgstr "Lihat ke baris tertentu"
 
 #: ../app/tools/gimpdodgeburntool.c:189
-#, fuzzy, c-format
+#, c-format
 msgid "%s to burn"
-msgstr "<b>Foto untuk Dibakar</b>"
+msgstr "%s untuk membakar"
 
 #: ../app/tools/gimpdodgeburntool.c:193
 #, fuzzy
@@ -13464,9 +13334,9 @@ msgid "Click to burn the line"
 msgstr "Klik tombol <gui>Bakar</gui> untuk mulai merekam."
 
 #: ../app/tools/gimpdodgeburntool.c:195
-#, fuzzy, c-format
+#, c-format
 msgid "%s to dodge"
-msgstr "Dodge Center"
+msgstr "%s untuk dodge"
 
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:219
@@ -13536,9 +13406,9 @@ msgid "Click to erase the line"
 msgstr "Lihat ke baris tertentu"
 
 #: ../app/tools/gimperasertool.c:98
-#, fuzzy, c-format
+#, c-format
 msgid "%s to pick a background color"
-msgstr "Warna latar belakang diganti ke:"
+msgstr "%s untuk menitik suatu warna latar belakang"
 
 #. the anti_erase toggle
 #: ../app/tools/gimperasertool.c:145
@@ -14412,9 +14282,9 @@ msgid "Click to draw the line"
 msgstr "Lihat ke baris tertentu"
 
 #: ../app/tools/gimppainttool.c:140
-#, fuzzy, c-format
+#, c-format
 msgid "%s to pick a color"
-msgstr "Pilih warna latar"
+msgstr "%s untuk menitik suatu warna"
 
 #: ../app/tools/gimppainttool.c:259
 #, fuzzy
@@ -14422,9 +14292,9 @@ msgid "Cannot paint on layer groups."
 msgstr "Tidak bisa membuat kunci folder pada %s: %s"
 
 #: ../app/tools/gimppainttool.c:679
-#, fuzzy, c-format
+#, c-format
 msgid "%s for a straight line"
-msgstr "Depresiasi Garis Lurus"
+msgstr "%s untuk sebuah garis lurus"
 
 #: ../app/tools/gimppenciltool.c:51
 msgid "Pencil Tool: Hard edge painting using a brush"
@@ -15270,7 +15140,7 @@ msgstr "Klik di sini untuk mengubah tipe pencarian"
 #: ../app/tools/gimpvectortool.c:1271
 #, c-format
 msgid "%s: symmetrical"
-msgstr ""
+msgstr "%s: simetris"
 
 #: ../app/tools/gimpvectortool.c:1276
 #, fuzzy
@@ -17075,9 +16945,9 @@ msgid "Apply stored font"
 msgstr "Gunakan fonta tema"
 
 #: ../app/widgets/gimptoolpreseteditor.c:292
-#, fuzzy, c-format
+#, c-format
 msgid "%s Preset"
-msgstr "Tambah Prasetel _Baru"
+msgstr "Prasetel %s"
 
 #: ../app/widgets/gimptranslationstore.c:100
 msgid "System Language"
