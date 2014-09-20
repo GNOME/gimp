@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2014-09-19 05:21+0000\n"
-"PO-Revision-Date: 2014-09-19 23:05+0700\n"
+"PO-Revision-Date: 2014-09-20 16:10+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
@@ -892,7 +892,7 @@ msgstr "Rasio _Aspek"
 #: ../app/actions/context-actions.c:77
 msgctxt "context-action"
 msgid "A_ngle"
-msgstr ""
+msgstr "_Sudut"
 
 #: ../app/actions/context-actions.c:80
 msgctxt "context-action"
@@ -1475,22 +1475,19 @@ msgid "Current _Status"
 msgstr "_Status Kini"
 
 #: ../app/actions/dockable-actions.c:110
-#, fuzzy
 msgctxt "tab-style"
 msgid "_Text"
 msgstr "_Teks"
 
 #: ../app/actions/dockable-actions.c:112
-#, fuzzy
 msgctxt "tab-style"
 msgid "I_con & Text"
-msgstr "Berkas Teks"
+msgstr "I_kon & Teks"
 
 #: ../app/actions/dockable-actions.c:114
-#, fuzzy
 msgctxt "tab-style"
 msgid "St_atus & Text"
-msgstr "Teks untuk dirender"
+msgstr "St_atus & Teks"
 
 #: ../app/actions/dockable-actions.c:116 ../app/widgets/widgets-enums.c:224
 msgctxt "tab-style"
@@ -1506,7 +1503,7 @@ msgstr "Pindah ke tab ini"
 #: ../app/actions/dockable-actions.c:128
 msgctxt "dockable-action"
 msgid "Protect this tab from being dragged with the mouse pointer"
-msgstr ""
+msgstr "Lindungi tab ini agar tak diseret memakai penunjuk tetikus"
 
 #: ../app/actions/dockable-actions.c:134
 msgctxt "dockable-action"
@@ -1621,7 +1618,7 @@ msgstr "Tambah/Hapus _Hyperlink"
 #: ../app/actions/documents-actions.c:95
 msgctxt "documents-action"
 msgid "Remove entries for which the corresponding file is not available"
-msgstr ""
+msgstr "Hapus entri yang berkas terkaitnya tak tersedia"
 
 #: ../app/actions/documents-commands.c:192
 msgid "Clear Document History"
@@ -1636,6 +1633,8 @@ msgid ""
 "Clearing the document history will permanently remove all images from the "
 "recent documents list."
 msgstr ""
+"Membersihkan riwayat dokumen akan menghapus permanen semua citra dari daftar "
+"dokumen baru-baru ini."
 
 #: ../app/actions/drawable-actions.c:45
 #, fuzzy
@@ -1709,9 +1708,10 @@ msgid "L_ock pixels"
 msgstr "Kun_ci piksel"
 
 #: ../app/actions/drawable-actions.c:89
+#, fuzzy
 msgctxt "drawable-action"
 msgid "Keep the pixels on this drawable from being modified"
-msgstr ""
+msgstr "Pertahankan piksel-piksel"
 
 #: ../app/actions/drawable-actions.c:98
 msgctxt "drawable-action"
@@ -1793,16 +1793,14 @@ msgid "Create a new dynamics"
 msgstr "Buat suatu dinamika baru"
 
 #: ../app/actions/dynamics-actions.c:52
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "D_uplicate Dynamics"
-msgstr "Duplikatkan path"
+msgstr "D_uplikatkan Dinamika"
 
 #: ../app/actions/dynamics-actions.c:53
-#, fuzzy
 msgctxt "dynamics-action"
 msgid "Duplicate this dynamics"
-msgstr "Gandakan CD audio ini"
+msgstr "Gandakan dinamika ini"
 
 #: ../app/actions/dynamics-actions.c:58
 msgctxt "dynamics-action"
@@ -1880,10 +1878,9 @@ msgid "_Undo"
 msgstr "_Tak Jadi"
 
 #: ../app/actions/edit-actions.c:73
-#, fuzzy
 msgctxt "edit-action"
 msgid "Undo the last operation"
-msgstr "_Batalkan Operasi Terakhir"
+msgstr "Tak jadi jalankan operasi terakhir"
 
 #: ../app/actions/edit-actions.c:78
 msgctxt "edit-action"
@@ -1904,7 +1901,7 @@ msgstr "_Batalkan Langkah"
 #: ../app/actions/edit-actions.c:85
 msgctxt "edit-action"
 msgid "Undo the last operation, skipping visibility changes"
-msgstr ""
+msgstr "Tak jadi laksanakan operasi terakhir, melewati perubahan kenampakan"
 
 #: ../app/actions/edit-actions.c:90
 #, fuzzy
@@ -1916,24 +1913,22 @@ msgstr "_Ulangi Langkah"
 msgctxt "edit-action"
 msgid "Redo the last operation that was undone, skipping visibility changes"
 msgstr ""
+"Jadikan lagi operasi terakhir yang dibatalkan, melewati perubahan kenampakan"
 
 #: ../app/actions/edit-actions.c:97
 msgctxt "edit-action"
 msgid "_Clear Undo History"
-msgstr ""
+msgstr "_Bersihkan Riwayat Tak Jadi"
 
 #: ../app/actions/edit-actions.c:98
-#, fuzzy
 msgctxt "edit-action"
 msgid "Remove all operations from the undo history"
-msgstr ""
-"Hapus semua pesan yang telah ditandai untuk dihapus dari dalam folder ini"
+msgstr "Hapus semua operasi dari riwayat pembatalan operasi"
 
 #: ../app/actions/edit-actions.c:103
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Fade..."
-msgstr "_Fade:"
+msgstr ""
 
 #: ../app/actions/edit-actions.c:105
 msgctxt "edit-action"
@@ -1941,35 +1936,30 @@ msgid "Modify paint mode and opacity of the last pixel manipulation"
 msgstr ""
 
 #: ../app/actions/edit-actions.c:110
-#, fuzzy
 msgctxt "edit-action"
 msgid "Cu_t"
 msgstr "Po_tong"
 
 #: ../app/actions/edit-actions.c:111
-#, fuzzy
 msgctxt "edit-action"
 msgid "Move the selected pixels to the clipboard"
-msgstr "Salin teks yang dipilih ke clipboard"
+msgstr "Pindahkan piksel-piksel yang dipilih ke papan klip"
 
 #: ../app/actions/edit-actions.c:116
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Copy"
 msgstr "Sa_lin"
 
 #: ../app/actions/edit-actions.c:117
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy the selected pixels to the clipboard"
-msgstr "Salin teks yang dipilih ke clipboard"
+msgstr "Salin piksel-piksel yang dipilih ke papan klip"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:122
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy _Visible"
-msgstr "Kursor Nampak"
+msgstr "Salin _Nampak"
 
 #: ../app/actions/edit-actions.c:123
 msgctxt "edit-action"
@@ -1977,89 +1967,75 @@ msgid "Copy what is visible in the selected region"
 msgstr "Salin yang tampak dalam wilayah yang dipilih"
 
 #: ../app/actions/edit-actions.c:128
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Paste"
 msgstr "Tem_pel"
 
 #: ../app/actions/edit-actions.c:129
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard"
-msgstr "Tempel dari papan klip"
+msgstr "Tempelkan isi papan klip"
 
 #: ../app/actions/edit-actions.c:134
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste _Into"
-msgstr "Tem_pel Ke Folder"
+msgstr "Temp_el Ke"
 
 #: ../app/actions/edit-actions.c:136
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
-msgstr "Tempelkan isi clipboard ke posisi kini"
+msgstr "Tempelkan isi papan klip ke pilihan kini"
 
 #: ../app/actions/edit-actions.c:141
-#, fuzzy
 msgctxt "edit-action"
 msgid "From _Clipboard"
-msgstr "Tempel dari papan klip"
+msgstr "Dari Papan _Klip"
 
 #: ../app/actions/edit-actions.c:142 ../app/actions/edit-actions.c:148
-#, fuzzy
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
-msgstr "Buat gambar baru dari template pilihan"
+msgstr "Buat sebuah citra baru dari isi papan klip"
 
 #: ../app/actions/edit-actions.c:147
-#, fuzzy
 msgctxt "edit-action"
 msgid "_New Image"
-msgstr "Gambar Baru:"
+msgstr "Citra _Baru"
 
 #: ../app/actions/edit-actions.c:153
-#, fuzzy
 msgctxt "edit-action"
 msgid "New _Layer"
-msgstr "Lapisan Baru"
+msgstr "_Lapisan Baru"
 
 #: ../app/actions/edit-actions.c:154
-#, fuzzy
 msgctxt "edit-action"
 msgid "Create a new layer from the content of the clipboard"
-msgstr "Buat kuas baru dengan karakter dari suatu urutan teks"
+msgstr "Buat sebuah lapisan baru dari isi papan klip"
 
 #: ../app/actions/edit-actions.c:159
-#, fuzzy
 msgctxt "edit-action"
 msgid "Cu_t Named..."
-msgstr "Warna bernama"
+msgstr "Potong Bernama…"
 
 #: ../app/actions/edit-actions.c:160
-#, fuzzy
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
-msgstr "Hapus template terpilih"
+msgstr "Pindahkan piksel-piksel yang dipilih ke sebuah penyangga bernama"
 
 #: ../app/actions/edit-actions.c:165
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Copy Named..."
-msgstr "Warna bernama"
+msgstr "_Salin Bernama…"
 
 #: ../app/actions/edit-actions.c:166
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Hapus template terpilih"
+msgstr "Salin piksel-piksel yang dipilih ke suatu penyangga bernama"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:171
-#, fuzzy
 msgctxt "edit-action"
 msgid "Copy _Visible Named..."
-msgstr "Nilai properti yang telah di namai"
+msgstr "Salin _Nampak Bernama…"
 
 #: ../app/actions/edit-actions.c:173
 msgctxt "edit-action"
@@ -2067,76 +2043,64 @@ msgid "Copy what is visible in the selected region to a named buffer"
 msgstr "Salin yang tampak dalam wilayah yang dipilih ke penyangga bernama"
 
 #: ../app/actions/edit-actions.c:178
-#, fuzzy
 msgctxt "edit-action"
 msgid "_Paste Named..."
-msgstr "Warna bernama"
+msgstr "Tem_epl Bernama…"
 
 #: ../app/actions/edit-actions.c:179
-#, fuzzy
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
-msgstr "Eksekusi isi penyangga query, atau penyangga query yang dinamai"
+msgstr "Tempelkan isi dari sebuah penyangga bernama"
 
 #: ../app/actions/edit-actions.c:184
-#, fuzzy
 msgctxt "edit-action"
 msgid "Cl_ear"
 msgstr "B_ersihkan"
 
 #: ../app/actions/edit-actions.c:185
-#, fuzzy
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
-msgstr "Bersihkan terjemahan yang dipilih"
+msgstr "Bersihkan piksel-piksel yang dipilih"
 
 #: ../app/actions/edit-actions.c:193
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
-msgstr "Warna yang mengisi kotak sorotan"
+msgstr "Isi dengan Warna _Depan"
 
 #: ../app/actions/edit-actions.c:194
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
-msgstr "Warna latar depan bagi ikon simbolis"
+msgstr "Penuhi pilihan memakai warna latar depan"
 
 #: ../app/actions/edit-actions.c:199
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
-msgstr "Warna isi sorotan"
+msgstr "Isi dengan Warna _Latar"
 
 #: ../app/actions/edit-actions.c:200
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
-msgstr "Apakah warna latar belakang ditata"
+msgstr "Penuhi pilihan memakai warna latar belakang"
 
 #: ../app/actions/edit-actions.c:205
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
-msgstr "Isi memori yang di-malloc dengan:"
+msgstr "Isi _dengan Pola"
 
 #: ../app/actions/edit-actions.c:206
-#, fuzzy
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
-msgstr ""
-"Pola yang aktif.\n"
-"Klik untuk membuka Kotak Pola."
+msgstr "Penuhi pilihan memakai pola yang aktif"
 
 #: ../app/actions/edit-actions.c:304
-#, fuzzy, c-format
+#, c-format
 msgid "_Undo %s"
-msgstr "Undo"
+msgstr "Tak _Jadi %s"
 
 #: ../app/actions/edit-actions.c:311
-#, fuzzy, c-format
+#, c-format
 msgid "_Redo %s"
-msgstr "_Jadi Lagi"
+msgstr "_Jadi Lagi %s"
 
 #: ../app/actions/edit-actions.c:326
 #, fuzzy, c-format
@@ -2144,12 +2108,10 @@ msgid "_Fade %s..."
 msgstr "_Fade:"
 
 #: ../app/actions/edit-actions.c:338
-#, fuzzy
 msgid "_Undo"
 msgstr "_Tak Jadi"
 
 #: ../app/actions/edit-actions.c:339
-#, fuzzy
 msgid "_Redo"
 msgstr "_Jadi Lagi"
 
@@ -2159,9 +2121,8 @@ msgid "_Fade..."
 msgstr "_Fade:"
 
 #: ../app/actions/edit-commands.c:137
-#, fuzzy
 msgid "Clear Undo History"
-msgstr "Tidak ada riwayat \"tak jadi\""
+msgstr "Bersihkan Riwayat Tak Jadi"
 
 #: ../app/actions/edit-commands.c:163
 #, fuzzy
@@ -2174,9 +2135,8 @@ msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
 
 #: ../app/actions/edit-commands.c:206
-#, fuzzy
 msgid "Cut pixels to the clipboard"
-msgstr "Memotong kontak yang dipilih ke dalam papan klip"
+msgstr "Potong piksel-piksel ke papan klip"
 
 #: ../app/actions/edit-commands.c:236 ../app/actions/edit-commands.c:265
 #, fuzzy
@@ -2190,14 +2150,12 @@ msgstr "Tak ada data citra dalam papan klip untuk ditempelkan."
 
 #: ../app/actions/edit-commands.c:348 ../app/core/gimpbrushclipboard.c:172
 #: ../app/core/gimppatternclipboard.c:172 ../app/widgets/gimpclipboard.c:345
-#, fuzzy
 msgid "Clipboard"
-msgstr "Tempel isi clipboard"
+msgstr "Papan Klip"
 
 #: ../app/actions/edit-commands.c:374
-#, fuzzy
 msgid "Cut Named"
-msgstr "Warna bernama"
+msgstr "Potong Bernama"
 
 #: ../app/actions/edit-commands.c:377 ../app/actions/edit-commands.c:418
 #: ../app/actions/edit-commands.c:438
@@ -2206,14 +2164,12 @@ msgid "Enter a name for this buffer"
 msgstr "Silakan masukkan suatu nama bagi situs web ini"
 
 #: ../app/actions/edit-commands.c:415
-#, fuzzy
 msgid "Copy Named"
-msgstr "Warna bernama"
+msgstr "Salin Bernama"
 
 #: ../app/actions/edit-commands.c:435
-#, fuzzy
 msgid "Copy Visible Named "
-msgstr "Nilai properti yang telah di namai"
+msgstr "Salin Nampak Bernama"
 
 #: ../app/actions/edit-commands.c:560
 msgid "There is no active layer or channel to cut from."
@@ -2221,19 +2177,17 @@ msgstr "Tak ada lapisan atau kanal aktif untuk memotong darinya."
 
 #: ../app/actions/edit-commands.c:565 ../app/actions/edit-commands.c:597
 #: ../app/actions/edit-commands.c:621
-#, fuzzy
 msgid "(Unnamed Buffer)"
-msgstr "Buffer baru"
+msgstr "(Penyangga Tanpa Nama)"
 
 #: ../app/actions/edit-commands.c:592
 msgid "There is no active layer or channel to copy from."
 msgstr "Tak ada lapisan atau kanal aktif untuk menyalin darinya."
 
 #: ../app/actions/error-console-actions.c:39
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Error Console Menu"
-msgstr "Menu Konsol Python"
+msgstr "Menu Konsol Galat"
 
 #: ../app/actions/error-console-actions.c:43
 #, fuzzy
@@ -2248,34 +2202,29 @@ msgid "Clear error console"
 msgstr "galat memberitahu sistem otentikasi tentang konsol pengguna: %s"
 
 #: ../app/actions/error-console-actions.c:49
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Select _All"
 msgstr "Pilih Semu_a"
 
 #: ../app/actions/error-console-actions.c:50
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Select all error messages"
-msgstr "Pilih semua pesan yang dapat Anda lihat sekarang"
+msgstr "Pilih semua pesan yang galat"
 
 #: ../app/actions/error-console-actions.c:58
-#, fuzzy
 msgctxt "error-console-action"
 msgid "_Save Error Log to File..."
-msgstr "Simpan log error ke dalam file"
+msgstr "_Simpan Log Galat ke Berkas…"
 
 #: ../app/actions/error-console-actions.c:59
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Write all error messages to a file"
-msgstr "Kesalahan saat coba menulis berkas CSV"
+msgstr "Tulis semua pesan galat ke sebuah berkas"
 
 #: ../app/actions/error-console-actions.c:64
-#, fuzzy
 msgctxt "error-console-action"
 msgid "Save S_election to File..."
-msgstr "Tidak dapat menyimpan ke berkas \"{0}\"."
+msgstr "Simpan Pilihan k_e Berkas…"
 
 #: ../app/actions/error-console-actions.c:65
 #, fuzzy
@@ -2284,9 +2233,8 @@ msgid "Write the selected error messages to a file"
 msgstr "Kesalahan saat coba menulis berkas CSV"
 
 #: ../app/actions/error-console-commands.c:84
-#, fuzzy
 msgid "Cannot save. Nothing is selected."
-msgstr "Tak bisa memrofil: Tak ada perangkat yang dipilih"
+msgstr "Tak bisa menyimpan. Tak ada yang dipilih."
 
 #: ../app/actions/error-console-commands.c:95
 msgid "Save Error Log to File"
@@ -2321,19 +2269,17 @@ msgstr "Buka Te_rkini"
 #, fuzzy
 msgctxt "file-action"
 msgid "_Open..."
-msgstr "_Buka..."
+msgstr "_Buka…"
 
 #: ../app/actions/file-actions.c:77
-#, fuzzy
 msgctxt "file-action"
 msgid "Open an image file"
-msgstr "Pilih suatu Berkas Gambar"
+msgstr "Buka suatu berkas citra"
 
 #: ../app/actions/file-actions.c:82
-#, fuzzy
 msgctxt "file-action"
 msgid "Op_en as Layers..."
-msgstr "Tandai Buka_n Sampah"
+msgstr "Buka s_ebagai Lapisan…"
 
 #: ../app/actions/file-actions.c:83
 #, fuzzy
@@ -2729,7 +2675,6 @@ msgid "B_ackground Color (Transparent)"
 msgstr "Warna untuk Wilayah Transparan"
 
 #: ../app/actions/gradient-editor-actions.c:317
-#, fuzzy
 msgctxt "gradient-editor-blending"
 msgid "_Linear"
 msgstr "_Linier"
@@ -3741,22 +3686,19 @@ msgid "Turn this text layer into a normal layer"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:180
-#, fuzzy
 msgctxt "layers-action"
 msgid "Text to _Path"
-msgstr "PATH KE PERANGKAT"
+msgstr "Teks ke _Jalur"
 
 #: ../app/actions/layers-actions.c:181
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create a path from this text layer"
-msgstr "Buat kuas baru dengan karakter dari suatu urutan teks"
+msgstr "Membuat suatu jalur dari lapisan teks ini"
 
 #: ../app/actions/layers-actions.c:186
-#, fuzzy
 msgctxt "layers-action"
 msgid "Text alon_g Path"
-msgstr "file:///path/ke/berkas1.text"
+msgstr "Teks sepanjan_g Jalur"
 
 #: ../app/actions/layers-actions.c:187
 msgctxt "layers-action"
@@ -3770,28 +3712,24 @@ msgid "Layer B_oundary Size..."
 msgstr "T_ampil Ukuran Asli"
 
 #: ../app/actions/layers-actions.c:193
-#, fuzzy
 msgctxt "layers-action"
 msgid "Adjust the layer dimensions"
-msgstr "dimensi (kolom x baris)"
+msgstr "Setelh dimensi lapisan"
 
 #: ../app/actions/layers-actions.c:198
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layer to _Image Size"
-msgstr "Set gambar ke ukuran sebenarnya"
+msgstr "Lapisan ke Ukuran C_itra"
 
 #: ../app/actions/layers-actions.c:199
-#, fuzzy
 msgctxt "layers-action"
 msgid "Resize the layer to the size of the image"
-msgstr "Ubah ukuran jendela ke ukuran gambar"
+msgstr "Ubah ukuran lapisan ke ukuran citra"
 
 #: ../app/actions/layers-actions.c:204
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Scale Layer..."
-msgstr "Tapis Akses"
+msgstr "_Skalakan Lapisan…"
 
 #: ../app/actions/layers-actions.c:205
 msgctxt "layers-action"
@@ -3805,10 +3743,9 @@ msgid "_Crop to Selection"
 msgstr "_Tambahkan ke Pilihan"
 
 #: ../app/actions/layers-actions.c:211
-#, fuzzy
 msgctxt "layers-action"
 msgid "Crop the layer to the extents of the selection"
-msgstr "Pindahkan Pilihan ke Lapisan di atas"
+msgstr ""
 
 #: ../app/actions/layers-actions.c:216
 #, fuzzy
@@ -3827,28 +3764,24 @@ msgid "Add Alpha C_hannel"
 msgstr "Tamba_h Kanal Alfa"
 
 #: ../app/actions/layers-actions.c:224
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add transparency information to the layer"
-msgstr "Pindahkan Pilihan ke Lapisan di atas"
+msgstr "Menambahkan informasi tingkat tembus pandang ke lapisan"
 
 #: ../app/actions/layers-actions.c:229
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Remove Alpha Channel"
-msgstr "Lebar daftar kanal"
+msgstr "_Hapus Kanal Alfa"
 
 #: ../app/actions/layers-actions.c:230
-#, fuzzy
 msgctxt "layers-action"
 msgid "Remove transparency information from the layer"
-msgstr "Mengumpulkan informasi dari sistem Anda..."
+msgstr "Menghapus informasi tingkat tembus pandang dari lapisan"
 
 #: ../app/actions/layers-actions.c:238
-#, fuzzy
 msgctxt "layers-action"
 msgid "Lock Alph_a Channel"
-msgstr "Lebar daftar kanal"
+msgstr "Kunci Kanal _Alfa"
 
 #: ../app/actions/layers-actions.c:240
 msgctxt "layers-action"
@@ -3931,10 +3864,9 @@ msgid "Add the layer mask to the current selection"
 msgstr "Gunakan pilihan yang sekarang untuk membuat nama"
 
 #: ../app/actions/layers-actions.c:296 ../app/actions/layers-actions.c:325
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Subtract from Selection"
-msgstr "Hapus Tag Dari Pilihan"
+msgstr "_Kurangkan dari Pilihan"
 
 #: ../app/actions/layers-actions.c:297
 msgctxt "layers-action"
@@ -3942,28 +3874,24 @@ msgid "Subtract the layer mask from the current selection"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:302 ../app/actions/layers-actions.c:332
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Intersect with Selection"
-msgstr "Ganti judul dengan pilihan."
+msgstr "Perpotongkan dengan P_ilihan"
 
 #: ../app/actions/layers-actions.c:303
-#, fuzzy
 msgctxt "layers-action"
 msgid "Intersect the layer mask with the current selection"
-msgstr "/Lihat/Tampilkan Grid"
+msgstr ""
 
 #: ../app/actions/layers-actions.c:311
-#, fuzzy
 msgctxt "layers-action"
 msgid "Al_pha to Selection"
-msgstr "Salin pilihan ke clipboard"
+msgstr "Alfa ke _Pilihan"
 
 #: ../app/actions/layers-actions.c:313
-#, fuzzy
 msgctxt "layers-action"
 msgid "Replace the selection with the layer's alpha channel"
-msgstr "Bentuk aktor dengan kanal alfa ketika mengambil"
+msgstr "Gantikan pilihan dengan kanal alfa lapisan"
 
 #: ../app/actions/layers-actions.c:318
 msgctxt "layers-action"
@@ -4072,24 +4000,20 @@ msgid "Visible"
 msgstr "Tampak"
 
 #: ../app/actions/layers-commands.c:618
-#, fuzzy
 msgid "Set Layer Boundary Size"
-msgstr "Tata ke ukuran sebenarnya"
+msgstr "Tata Ukuran Batas Lapisan"
 
 #: ../app/actions/layers-commands.c:663
-#, fuzzy
 msgid "Scale Layer"
-msgstr "Tapis Akses"
+msgstr "Skalakan Lapisan"
 
 #: ../app/actions/layers-commands.c:701
-#, fuzzy
 msgid "Crop Layer"
-msgstr "Tidak ada lapisan"
+msgstr "Pangkas Lapisan"
 
 #: ../app/actions/layers-commands.c:1080
-#, fuzzy
 msgid "Please select a channel first"
-msgstr "Silakan masukkan path pertama."
+msgstr "Harap terlebih dahulu memilih sebuah kanal"
 
 #: ../app/actions/layers-commands.c:1088
 #: ../app/dialogs/layer-add-mask-dialog.c:82
@@ -4128,28 +4052,24 @@ msgid "Edit Active Palette"
 msgstr "Sunting Palet Aktif"
 
 #: ../app/actions/palette-editor-actions.c:71
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "New Color from _FG"
-msgstr "Pilih warna dari dialog"
+msgstr "Warna Baru dari _Depan"
 
 #: ../app/actions/palette-editor-actions.c:73
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the foreground color"
-msgstr "Buat kuas baru dengan karakter dari suatu urutan teks"
+msgstr "Buat entri baru dari warna latar depan"
 
 #: ../app/actions/palette-editor-actions.c:78
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "New Color from _BG"
-msgstr "Pilih warna dari dialog"
+msgstr "Warna Baru dari _Latar"
 
 #: ../app/actions/palette-editor-actions.c:80
-#, fuzzy
 msgctxt "palette-editor-action"
 msgid "Create a new entry from the background color"
-msgstr "Ganti warna latar belakang"
+msgstr "Buat entrib aru dari warna latar belakang"
 
 #: ../app/actions/palette-editor-actions.c:88
 msgid "Zoom _In"
@@ -4172,10 +4092,9 @@ msgid "Edit Color Palette Entry"
 msgstr "Sunting Isian Palet Warna"
 
 #: ../app/actions/palettes-actions.c:43
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Palettes Menu"
-msgstr "Menu Utama"
+msgstr "Menu Palet"
 
 #: ../app/actions/palettes-actions.c:47
 msgctxt "palettes-action"
@@ -4213,10 +4132,9 @@ msgid "_Merge Palettes..."
 msgstr "_Gabungkan Palet"
 
 #: ../app/actions/palettes-actions.c:66
-#, fuzzy
 msgctxt "palettes-action"
 msgid "Merge palettes"
-msgstr "Palet yang tersedia"
+msgstr "Gabungkan palet"
 
 #: ../app/actions/palettes-actions.c:71
 msgctxt "palettes-action"
@@ -4442,10 +4360,9 @@ msgid "An_imation"
 msgstr "An_imasi"
 
 #: ../app/actions/plug-in-actions.c:124
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Reset all _Filters"
-msgstr "Reset semua preferensi"
+msgstr "Reset semua _Penyaring"
 
 #: ../app/actions/plug-in-actions.c:125
 msgctxt "plug-in-action"
@@ -4453,10 +4370,9 @@ msgid "Reset all plug-ins to their default settings"
 msgstr ""
 
 #: ../app/actions/plug-in-actions.c:133
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "Re_peat Last"
-msgstr "Batalkan langkah terakhir"
+msgstr "_Ulang yang Terakhir"
 
 #: ../app/actions/plug-in-actions.c:135
 msgctxt "plug-in-action"
@@ -4464,10 +4380,9 @@ msgid "Rerun the last used plug-in using the same settings"
 msgstr ""
 
 #: ../app/actions/plug-in-actions.c:140
-#, fuzzy
 msgctxt "plug-in-action"
 msgid "R_e-Show Last"
-msgstr "Menampilkan halaman terakhir"
+msgstr "Tampilkan Lagi yang T_erakhir"
 
 #: ../app/actions/plug-in-actions.c:141
 #, fuzzy
@@ -4490,9 +4405,8 @@ msgid "Repeat Last"
 msgstr "Ulangi Yang Terakhir"
 
 #: ../app/actions/plug-in-actions.c:570
-#, fuzzy
 msgid "Re-Show Last"
-msgstr "Menampilkan halaman terakhir"
+msgstr "Tampilkan Lagi yang Terakhir"
 
 #: ../app/actions/plug-in-commands.c:262
 msgid "Reset all Filters"
@@ -4510,10 +4424,9 @@ msgid "Quick Mask Menu"
 msgstr "Aksi menu SymbolDb"
 
 #: ../app/actions/quick-mask-actions.c:47
-#, fuzzy
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
-msgstr "Warna dan ketebalan isi sorotan."
+msgstr "_Kofigurasikan Warna dan Kelegapan…"
 
 #: ../app/actions/quick-mask-actions.c:55
 #, fuzzy
@@ -4560,31 +4473,26 @@ msgid "_Mask opacity:"
 msgstr "Tingkat transparansi aktor"
 
 #: ../app/actions/sample-points-actions.c:39
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "Sample Point Menu"
-msgstr "Aksi menu SymbolDb"
+msgstr "Menu Titik Cuplikan"
 
 #: ../app/actions/sample-points-actions.c:46
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "_Sample Merged"
-msgstr "Entri Tergabung"
+msgstr "_Cuplikan Digabung"
 
 #: ../app/actions/sample-points-actions.c:48
-#, fuzzy
 msgctxt "sample-points-action"
 msgid "Use the composite color of all visible layers"
-msgstr "Pilih warna dasar yang digunakan untuk seluruh catatan."
+msgstr "Gunakan warna komposit dari semua lapisan yang tampak"
 
 #: ../app/actions/select-actions.c:44
-#, fuzzy
 msgctxt "select-action"
 msgid "Selection Editor Menu"
-msgstr "Penyunting Menu Sederhana %s"
+msgstr "Menu Penyunting Pilihan"
 
 #: ../app/actions/select-actions.c:47
-#, fuzzy
 msgctxt "select-action"
 msgid "_Select"
 msgstr "_Pilih"
@@ -4595,40 +4503,34 @@ msgid "_All"
 msgstr "Semu_a"
 
 #: ../app/actions/select-actions.c:51
-#, fuzzy
 msgctxt "select-action"
 msgid "Select everything"
-msgstr "Pilih semuanya"
+msgstr "Pilih seluruhnya"
 
 #: ../app/actions/select-actions.c:56
-#, fuzzy
 msgctxt "select-action"
 msgid "_None"
 msgstr "_Nihil"
 
 #: ../app/actions/select-actions.c:57
-#, fuzzy
 msgctxt "select-action"
 msgid "Dismiss the selection"
-msgstr "Bersihkan Pi_lihan"
+msgstr "Bersihkan pilihan"
 
 #: ../app/actions/select-actions.c:62
-#, fuzzy
 msgctxt "select-action"
 msgid "_Invert"
-msgstr "Balikkan"
+msgstr "Bal_ikkan"
 
 #: ../app/actions/select-actions.c:63
-#, fuzzy
 msgctxt "select-action"
 msgid "Invert the selection"
-msgstr "Balik P_ilihan"
+msgstr "Balik pilihan"
 
 #: ../app/actions/select-actions.c:68
-#, fuzzy
 msgctxt "select-action"
 msgid "_Float"
-msgstr "Pecahan"
+msgstr "_Mengambang"
 
 #: ../app/actions/select-actions.c:69
 #, fuzzy
