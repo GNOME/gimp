@@ -1,15 +1,15 @@
-Minimal quick start guide in order to get a working version of gimp on OSX.
-================================================ 
+Minimal quick start guide in order to get a working version of gimp on OS X.
+============================================================================ 
 
 Notation:
 The dollar sign precedes any terminal commands.
 
-Please note that this is not a flawless process, and there are a few issues that still 
+Please note that this is not a flawless process, and there are a few issues that still
 need to be fixed. If you have any questions, please ask them in #gimp on irc.gimp.org
 or on the GIMP developer mailing list (see http://www.gimp.org/mail_lists.html)
 
 I. Preparations
----------------------
+---------------
 1. Remove all traces of any previous Macports, Homebrew, or JHBuild installations.
 
 2. Backup "~/.profile" for a fresh start:
@@ -18,17 +18,20 @@ $ if [ -f $HOME/.profile ]; \
      cp $HOME/.profile $HOME/.profile-bak \
     fi
 
-3. Get XCode for your OS X version from the App Store. 
-    Its installation takes some time. Use it to dig out some calming music. You will need it ;-)
-    Note that OS X doesn't provide XCode for many older platforms. 
-    Check the directory /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs
-    to see the minimum target OS X version you are able to build for. 
-    Apple requires you to get an Apple Developer Id to get XCode for older
-    platforms if needed.  
-    
-4. Most OS X installations come with preinstalled Git. If you do not have Git installed, 
-    then download a prebuilt binary from http://git-scm.com/download
-    
+3. Get XCode for your OS X version from the App Store.
+   Its installation takes some time. Use it to dig out some calming music. You will need it ;-)
+   Note that OS X doesn't provide XCode for many older platforms. 
+   Check the directory /Developer/SDKs to see the minimum target OS X version
+   you are able to build for. If you have XCode 4.3 installed (OS X 10.7 and
+   greater), then check /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs instead.
+   Apple requires you to get an Apple Developer Id to get XCode for older
+   platforms if needed.  
+
+4. Most OS X installations come with preinstalled Git. If you do not have Git
+   installed, then download a prebuilt binary from http://git-scm.com/download.
+   If you are on OS X 10.6 "Snow Leopard", then download git 1.8.4.2 from the
+   legacy site: code.google.com/p/git-osx-installer/downloads
+
 5. Download and install the JHBuild build setup for OS X:
 $ cd $HOME
 $ curl -O https://git.gnome.org/browse/gtk-osx/plain/gtk-osx-build-setup.sh
@@ -41,7 +44,7 @@ $ echo 'export PATH=$HOME/.local/bin:$PATH' > $HOME/.profile
 
 7. Download a custom JHBuild files for gimp
 $ curl -o $HOME/.jhbuildrc-gimp https://git.gnome.org/browse/gimp/plain/build/osx/jhbuildrc-gimp?h=gimp-2-8 && 
-   curl --create-dirs -o $HOME/gimp/directory/gimp.modules https://git.gnome.org/browse/gimp/plain/build/osx/gimp.modules?h=gimp-2-8
+  curl --create-dirs -o $HOME/gimp/directory/gimp.modules https://git.gnome.org/browse/gimp/plain/build/osx/gimp.modules?h=gimp-2-8
 
 8. In order to create GIMP.app you'll need to download and install gtk-mac-bundler:
 $ JHB=gimp GIMP_SDK=10.6 jhbuild shell
@@ -52,19 +55,19 @@ $ cd gtk-mac-bundler/
 $ make install
 
 II. Download and build GIMP
-----------------------------------------
-1. Now you can download and install GIMP, where 'gimp' is the directory prefix, and 
-'10.6' is the minimum version you are building GIMP for. As it stands, you should be 
+---------------------------
+1. Now you can download and install GIMP, where 'gimp' is the directory prefix, and
+'10.6' is the minimum version you are building GIMP for. As it stands, you should be
 able to leave the values as they are, except XCode on your computer doesn't let
 you build for older versions.
 $ JHB=gimp GIMP_SDK=10.6 jhbuild bootstrap
 
-This process requires some manual intervention, see the next steps. 
+This process requires some manual intervention, see the next steps.
 
 2. When the build fails on cmake, you can ignore this. GIMP and its dependencies
 don't need it.
- 
-3. When the build fails on perl-xml-parser, it will  tell you that it can neither make 
+
+3. When the build fails on perl-xml-parser, it will tell you that it can neither make
 nor install.
 In this case choose option '4' to start a JHBuild subshell and complete the install:
 $ make -j3
@@ -105,12 +108,12 @@ $ JHB=gimp GIMP_SDK=10.6 jhbuild build gimp-master
 7. In order to run GIMP with D-Bus support (required for GVFS and GIO)
 $ dbus-launch gimp-2.8
 
-This will generate a D-Bus session. If you continuously run GIMP using this method, 
+This will generate a D-Bus session. If you repeatedly run GIMP using this method,
 you will end up with many D-Bus sessions being run. Kill them after all GIMP
 instances have been killed. 
 
 III. Create a GIMP installer
--------------------------------------
+----------------------------
 1. To create a bundle, we need some more files:
 
 for GIMP 2.8:
