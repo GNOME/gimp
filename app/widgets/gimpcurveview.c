@@ -62,6 +62,7 @@ typedef struct
 {
   GimpCurve *curve;
   GimpRGB    color;
+  gboolean   color_set;
 } BGCurve;
 
 
@@ -585,11 +586,22 @@ gimp_curve_view_expose (GtkWidget      *widget,
     {
       BGCurve *bg = list->data;
 
-      cairo_set_source_rgba (cr,
-                             bg->color.r,
-                             bg->color.g,
-                             bg->color.b,
-                             0.5);
+      if (bg->color_set)
+        {
+          cairo_set_source_rgba (cr,
+                                 bg->color.r,
+                                 bg->color.g,
+                                 bg->color.b,
+                                 0.5);
+        }
+      else
+        {
+          cairo_set_source_rgba (cr,
+                                 style->text[GTK_STATE_NORMAL].red / 65535.0,
+                                 style->text[GTK_STATE_NORMAL].green / 65535.0,
+                                 style->text[GTK_STATE_NORMAL].blue / 65535.0,
+                                 0.5);
+        }
 
       gimp_curve_view_draw_curve (view, cr, bg->curve,
                                   width, height, border);
@@ -1232,7 +1244,6 @@ gimp_curve_view_add_background (GimpCurveView *view,
 
   g_return_if_fail (GIMP_IS_CURVE_VIEW (view));
   g_return_if_fail (GIMP_IS_CURVE (curve));
-  g_return_if_fail (color != NULL);
 
   for (list = view->bg_curves; list; list = g_list_next (list))
     {
@@ -1244,7 +1255,12 @@ gimp_curve_view_add_background (GimpCurveView *view,
   bg = g_slice_new0 (BGCurve);
 
   bg->curve = g_object_ref (curve);
-  bg->color = *color;
+
+  if (color)
+    {
+      bg->color     = *color;
+      bg->color_set = TRUE;
+    }
 
   g_signal_connect (bg->curve, "dirty",
                     G_CALLBACK (gimp_curve_view_curve_dirty),
