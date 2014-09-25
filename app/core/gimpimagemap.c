@@ -82,6 +82,7 @@ static void       gimp_image_map_finalize        (GObject             *object);
 
 static void       gimp_image_map_sync_region     (GimpImageMap        *image_map);
 static void       gimp_image_map_sync_mode       (GimpImageMap        *image_map);
+static void       gimp_image_map_sync_affect     (GimpImageMap        *image_map);
 static void       gimp_image_map_sync_gamma_hack (GimpImageMap        *image_map);
 
 static gboolean   gimp_image_map_is_filtering    (GimpImageMap        *image_map);
@@ -91,6 +92,9 @@ static gboolean   gimp_image_map_remove_filter   (GimpImageMap        *image_map
 static void       gimp_image_map_update_drawable (GimpImageMap        *image_map,
                                                   const GeglRectangle *area);
 
+static void       gimp_image_map_affect_changed  (GimpImage           *image,
+                                                  GimpChannelType      channel,
+                                                  GimpImageMap        *image_map);
 
 
 G_DEFINE_TYPE (GimpImageMap, gimp_image_map, GIMP_TYPE_OBJECT)
@@ -132,7 +136,10 @@ gimp_image_map_dispose (GObject *object)
   GimpImageMap *image_map = GIMP_IMAGE_MAP (object);
 
   if (image_map->drawable)
-    gimp_viewable_preview_thaw (GIMP_VIEWABLE (image_map->drawable));
+    {
+      gimp_image_map_remove_filter (image_map);
+      gimp_viewable_preview_thaw (GIMP_VIEWABLE (image_map->drawable));
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -256,10 +263,9 @@ void
 gimp_image_map_apply (GimpImageMap        *image_map,
                       const GeglRectangle *area)
 {
-  GimpImage         *image;
-  GimpChannel       *mask;
-  GeglRectangle      update_area;
-  GimpComponentMask  active_mask;
+  GimpImage     *image;
+  GimpChannel   *mask;
+  GeglRectangle  update_area;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP (image_map));
 
@@ -361,16 +367,7 @@ gimp_image_map_apply (GimpImageMap        *image_map,
                             filter_node,           "aux");
     }
 
-  active_mask = gimp_drawable_get_active_mask (image_map->drawable);
-
-  /*  don't let the filter affect the drawable projection's alpha,
-   *  because it can't affect the drawable buffer's alpha either
-   *  when finally merged (see bug #699279)
-   */
-  if (! gimp_drawable_has_alpha (image_map->drawable))
-    active_mask &= ~GIMP_COMPONENT_ALPHA;
-
-  gimp_applicator_set_affect (image_map->applicator, active_mask);
+  gimp_image_map_sync_affect (image_map);
 
   image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
   mask  = gimp_image_get_mask (image);
@@ -489,6 +486,26 @@ gimp_image_map_sync_mode (GimpImageMap *image_map)
 }
 
 static void
+gimp_image_map_sync_affect (GimpImageMap *image_map)
+{
+  if (image_map->applicator)
+    {
+      GimpComponentMask active_mask;
+
+      active_mask = gimp_drawable_get_active_mask (image_map->drawable);
+
+      /*  don't let the filter affect the drawable projection's alpha,
+       *  because it can't affect the drawable buffer's alpha either
+       *  when finally merged (see bug #699279)
+       */
+      if (! gimp_drawable_has_alpha (image_map->drawable))
+        active_mask &= ~GIMP_COMPONENT_ALPHA;
+
+      gimp_applicator_set_affect (image_map->applicator, active_mask);
+    }
+}
+
+static void
 gimp_image_map_sync_gamma_hack (GimpImageMap *image_map)
 {
   if (image_map->applicator)
@@ -551,7 +568,15 @@ gimp_image_map_add_filter (GimpImageMap *image_map)
     {
       if (image_map->filter)
         {
+          GimpImage *image;
+
           gimp_drawable_add_filter (image_map->drawable, image_map->filter);
+
+          image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+
+          g_signal_connect (image, "component-active-changed",
+                            G_CALLBACK (gimp_image_map_affect_changed),
+                            image_map);
 
           return TRUE;
         }
@@ -565,6 +590,12 @@ gimp_image_map_remove_filter (GimpImageMap *image_map)
 {
   if (gimp_image_map_is_filtering (image_map))
     {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+
+      g_signal_handlers_disconnect_by_func (image,
+                                            gimp_image_map_affect_changed,
+                                            image_map);
+
       gimp_drawable_remove_filter (image_map->drawable, image_map->filter);
 
       return TRUE;
@@ -584,4 +615,13 @@ gimp_image_map_update_drawable (GimpImageMap        *image_map,
                         area->height);
 
   g_signal_emit (image_map, image_map_signals[FLUSH], 0);
+}
+
+static void
+gimp_image_map_affect_changed (GimpImage       *image,
+                               GimpChannelType  channel,
+                               GimpImageMap    *image_map)
+{
+  gimp_image_map_sync_affect (image_map);
+  gimp_image_map_update_drawable (image_map, &image_map->filter_area);
 }
