@@ -491,6 +491,11 @@ load_image (const gchar  *filename,
                                 GifScreen.Height);
         }
 
+      if (image_ID < 0)
+        {
+          break;
+        }
+
       if (comment_parasite != NULL)
         {
           if (! thumbnail)
@@ -655,7 +660,7 @@ GetDataBlock (FILE   *fd,
       return -1;
     }
 
-  ZeroDataBlock = count == 0;
+  ZeroDataBlock = (count == 0);
 
   if ((count != 0) && (! ReadOK (fd, buf, count)))
     {
@@ -697,8 +702,15 @@ GetCode (FILE     *fd,
       buf[0] = buf[last_byte - 2];
       buf[1] = buf[last_byte - 1];
 
-      if ((count = GetDataBlock (fd, &buf[2])) <= 0)
-        done = TRUE;
+      count = GetDataBlock (fd, &buf[2]);
+      if (count < 0)
+        {
+          return -1;
+        }
+      else if (count == 0)
+        {
+          done = TRUE;
+        }
 
       last_byte = 2 + count;
       curbit = (curbit - lastbit) + 16;
@@ -776,6 +788,11 @@ LZWReadByte (FILE *fd,
         }
       while (firstcode == clear_code);
 
+      if (firstcode < 0)
+        {
+          return -1;
+        }
+
       return firstcode & 255;
     }
 
@@ -802,6 +819,11 @@ LZWReadByte (FILE *fd,
           max_code      = clear_code + 2;
           sp            = stack;
           firstcode     = oldcode = GetCode (fd, code_size, FALSE);
+
+          if (firstcode < 0)
+            {
+              return -1;
+            }
 
           return firstcode & 255;
         }
@@ -862,6 +884,11 @@ LZWReadByte (FILE *fd,
 
       if (sp > stack)
         return (*--sp) & 255;
+    }
+
+  if (code < 0)
+    {
+      return -1;
     }
 
   return code & 255;
@@ -1172,6 +1199,11 @@ ReadImage (FILE        *fd,
 
       if (ypos >= height)
         break;
+    }
+
+  if (v < 0)
+    {
+      return -1;
     }
 
  fini:
