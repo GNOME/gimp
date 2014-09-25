@@ -746,7 +746,10 @@ LZWReadByte (FILE *fd,
       max_code_size = 2 * clear_code;
       max_code      = clear_code + 2;
 
-      GetCode (fd, 0, TRUE);
+      if (GetCode (fd, 0, TRUE) < 0)
+        {
+          return -1;
+        }
 
       fresh = TRUE;
 
