@@ -283,7 +283,8 @@ run (const gchar      *name,
               break;
 
             default:
-              break;
+              g_warning("Unhandled run_mode (%d)", run_mode);
+              status = GIMP_PDB_CALLING_ERROR;
             }
         }
 
@@ -291,6 +292,7 @@ run (const gchar      *name,
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_NONINTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
           {
             GimpExportCapabilities capabilities =
@@ -313,8 +315,9 @@ run (const gchar      *name,
               }
           }
           break;
+
         default:
-          break;
+          status = GIMP_PDB_CALLING_ERROR;
         }
 
       /* Write the image to file */
