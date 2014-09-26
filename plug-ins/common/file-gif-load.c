@@ -317,7 +317,7 @@ static gint     GetCode      (FILE        *fd,
 static gint     LZWReadByte  (FILE        *fd,
                               gint         just_reset_LZW,
                               gint         input_code_size);
-static gint32   ReadImage    (FILE        *fd,
+static gboolean ReadImage    (FILE        *fd,
                               const gchar *filename,
                               gint         len,
                               gint         height,
