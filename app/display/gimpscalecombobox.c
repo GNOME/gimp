@@ -377,14 +377,26 @@ gimp_scale_combo_box_scale_iter_set (GtkListStore *store,
 {
   gchar label[32];
 
-  /*  use U+2009 THIN SPACE to seperate the percent sign from the number */
+#ifdef G_OS_WIN32
+
+  /*  use a normal space until pango's windows backend uses harfbuzz,
+   *  see bug #735505
+   */
+#define PERCENT_SPACE " "
+
+#else
+
+  /*  use U+2009 THIN SPACE to separate the percent sign from the number */
+#define PERCENT_SPACE "\342\200\211"
+
+#endif
 
   if (scale > 1.0)
     g_snprintf (label, sizeof (label),
-                "%d\342\200\211%%", (gint) ROUND (100.0 * scale));
+                "%d" PERCENT_SPACE "%%", (gint) ROUND (100.0 * scale));
   else
     g_snprintf (label, sizeof (label),
-                "%.3g\342\200\211%%", 100.0 * scale);
+                "%.3g" PERCENT_SPACE "%%", 100.0 * scale);
 
   gtk_list_store_set (store, iter,
                       COLUMN_SCALE,      scale,
