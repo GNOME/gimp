@@ -170,6 +170,11 @@ GimpPlugInProcedure * gimp_image_get_export_proc (const GimpImage    *image);
 void            gimp_image_exported              (GimpImage          *image,
                                                   GFile              *file);
 
+gint            gimp_image_get_xcf_version       (GimpImage          *image,
+                                                  gboolean            zlib_compression,
+                                                  gint               *gimp_version,
+                                                  const gchar       **version_string);
+
 void            gimp_image_set_resolution        (GimpImage          *image,
                                                   gdouble             xres,
                                                   gdouble             yres);

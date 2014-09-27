@@ -19,11 +19,9 @@
 #define __XCF_SAVE_H__
 
 
-void   xcf_save_choose_format (XcfInfo    *info,
-                               GimpImage  *image);
-gint   xcf_save_image         (XcfInfo    *info,
-                               GimpImage  *image,
-                               GError    **error);
+gboolean   xcf_save_image (XcfInfo    *info,
+                           GimpImage  *image,
+                           GError    **error);
 
 
 #endif  /* __XCF_SAVE_H__ */

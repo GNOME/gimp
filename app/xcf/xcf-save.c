@@ -185,58 +185,7 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
   } G_STMT_END
 
 
-void
-xcf_save_choose_format (XcfInfo   *info,
-                        GimpImage *image)
-{
-  GList *list;
-  gint   save_version = 0;  /* default to oldest */
-
-  /* need version 1 for colormaps */
-  if (gimp_image_get_colormap (image))
-    save_version = 1;
-
-  for (list = gimp_image_get_layer_iter (image);
-       list && save_version < 3;
-       list = g_list_next (list))
-    {
-      GimpLayer *layer = GIMP_LAYER (list->data);
-
-      switch (gimp_layer_get_mode (layer))
-        {
-          /* new layer modes not supported by gimp-1.2 */
-        case GIMP_SOFTLIGHT_MODE:
-        case GIMP_GRAIN_EXTRACT_MODE:
-        case GIMP_GRAIN_MERGE_MODE:
-        case GIMP_COLOR_ERASE_MODE:
-          save_version = MAX (2, save_version);
-          break;
-
-        default:
-          break;
-        }
-
-      /* need version 3 for layer trees */
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
-        save_version = MAX (3, save_version);
-    }
-
-  /* need version 6 for new metadata */
-  if (gimp_image_get_metadata (image))
-    save_version = MAX (6, save_version);
-
-  /* need version 7 for high bit depth images */
-  if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_GAMMA)
-    save_version = MAX (7, save_version);
-
-  /* need version 8 for zlib compression */
-  if (info->compression == COMPRESS_ZLIB)
-    save_version = MAX (8, save_version);
-
-  info->file_version = save_version;
-}
-
-gint
+gboolean
 xcf_save_image (XcfInfo    *info,
                 GimpImage  *image,
                 GError    **error)

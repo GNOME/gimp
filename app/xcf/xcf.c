@@ -387,16 +387,18 @@ xcf_save_invoker (GimpProcedure         *procedure,
 
   if (info.output)
     {
-      info.gimp        = gimp;
-      info.seekable    = G_SEEKABLE (info.output);
-      info.progress    = progress;
-      info.filename    = filename;
-      info.compression = COMPRESS_ZLIB;
+      info.gimp         = gimp;
+      info.seekable     = G_SEEKABLE (info.output);
+      info.progress     = progress;
+      info.filename     = filename;
+      info.compression  = COMPRESS_ZLIB;
+      info.file_version = gimp_image_get_xcf_version (image,
+                                                      info.compression ==
+                                                      COMPRESS_ZLIB,
+                                                      NULL, NULL);
 
       if (progress)
         gimp_progress_start (progress, FALSE, _("Saving '%s'"), filename);
-
-      xcf_save_choose_format (&info, image);
 
       success = xcf_save_image (&info, image, &my_error);
 

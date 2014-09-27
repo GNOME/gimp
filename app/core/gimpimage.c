@@ -2284,6 +2284,83 @@ gimp_image_get_export_proc (const GimpImage *image)
   return GIMP_IMAGE_GET_PRIVATE (image)->export_proc;
 }
 
+gint
+gimp_image_get_xcf_version (GimpImage    *image,
+                            gboolean      zlib_compression,
+                            gint         *gimp_version,
+                            const gchar **version_string)
+{
+  GList *list;
+  gint   version = 0;  /* default to oldest */
+
+  /* need version 1 for colormaps */
+  if (gimp_image_get_colormap (image))
+    version = 1;
+
+  for (list = gimp_image_get_layer_iter (image);
+       list && version < 3;
+       list = g_list_next (list))
+    {
+      GimpLayer *layer = GIMP_LAYER (list->data);
+
+      switch (gimp_layer_get_mode (layer))
+        {
+          /* new layer modes not supported by gimp-1.2 */
+        case GIMP_SOFTLIGHT_MODE:
+        case GIMP_GRAIN_EXTRACT_MODE:
+        case GIMP_GRAIN_MERGE_MODE:
+        case GIMP_COLOR_ERASE_MODE:
+          version = MAX (2, version);
+          break;
+
+        default:
+          break;
+        }
+
+      /* need version 3 for layer trees */
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+        version = MAX (3, version);
+    }
+
+  /* need version 6 for new metadata */
+  if (gimp_image_get_metadata (image))
+    version = MAX (6, version);
+
+  /* need version 7 for high bit depth images */
+  if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_GAMMA)
+    version = MAX (7, version);
+
+  /* need version 8 for zlib compression */
+  if (zlib_compression)
+    version = MAX (8, version);
+
+  switch (version)
+    {
+    case 0:
+    case 1:
+    case 2:
+      if (gimp_version)   *gimp_version   = 206;
+      if (version_string) *version_string = "GIMP 2.6";
+      break;
+
+    case 3:
+      if (gimp_version)   *gimp_version   = 208;
+      if (version_string) *version_string = "GIMP 2.8";
+      break;
+
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+      if (gimp_version)   *gimp_version   = 210;
+      if (version_string) *version_string = "GIMP 2.10";
+      break;
+    }
+
+  return version;
+}
+
 void
 gimp_image_set_resolution (GimpImage *image,
                            gdouble    xresolution,
