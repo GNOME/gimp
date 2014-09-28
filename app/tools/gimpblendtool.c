@@ -404,12 +404,14 @@ gimp_blend_tool_motion (GimpTool         *tool,
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
   GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
+  gdouble last_x;
+  gdouble last_y;
 
   gimp_draw_tool_pause (draw_tool);
 
   /* Save the mouse coordinates from last call */
-  gdouble last_x = blend_tool->mouse_x;
-  gdouble last_y = blend_tool->mouse_y;
+  last_x = blend_tool->mouse_x;
+  last_y = blend_tool->mouse_y;
 
   blend_tool->mouse_x = coords->x;
   blend_tool->mouse_y = coords->y;
@@ -576,8 +578,10 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
 static void
 gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpBlendTool  *blend_tool = GIMP_BLEND_TOOL (draw_tool);
-  GimpCanvasItem *start_handle_cross, *end_handle_cross;
+  GimpBlendTool      *blend_tool = GIMP_BLEND_TOOL (draw_tool);
+  GimpCanvasItem     *start_handle_cross, *end_handle_cross;
+  GimpBlendToolPoint  hilight_point;
+  gboolean            start_visible, end_visible;
 
   gimp_draw_tool_add_line (draw_tool,
                            blend_tool->start_x,
@@ -602,9 +606,6 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
                                HANDLE_CROSS_DIAMETER,
                                HANDLE_CROSS_DIAMETER,
                                GIMP_HANDLE_ANCHOR_CENTER);
-
-  GimpBlendToolPoint hilight_point;
-  gboolean           start_visible, end_visible;
 
   /* Calculate handle visibility */
   if (blend_tool->grabbed_point)
