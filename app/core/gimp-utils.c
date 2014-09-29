@@ -731,9 +731,9 @@ gimp_file_is_executable (GFile *file)
       GFileType    file_type = g_file_info_get_file_type (info);
       const gchar *filename  = g_file_info_get_name (info);
 
-      if (g_file_info_get_attribute_boolean (info,
-                                             G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE) ||
-          ((file_type == G_FILE_TYPE_REGULAR) &&
+      if (file_type == G_FILE_TYPE_REGULAR &&
+          (g_file_info_get_attribute_boolean (info,
+                                              G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE) ||
            is_script (filename)))
         {
           executable = TRUE;
