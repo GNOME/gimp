@@ -33,75 +33,136 @@
 /* public functions */
 
 
-GimpMetadata *
-gimp_image_get_metadata (GimpImage *image)
-{
-  GimpImagePrivate *private;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  return private->metadata;
-}
+//void
+//gimp_image_set_metadata (GimpImage    *image,
+//                         GimpMetadata *metadata,
+//                         gboolean      push_undo)
+//{
+//  GimpImagePrivate *private;
+//
+//  g_return_if_fail (GIMP_IS_IMAGE (image));
+//
+//  private = GIMP_IMAGE_GET_PRIVATE (image);
+//
+//  if (metadata != private->metadata)
+//    {
+//      if (push_undo)
+//        gimp_image_undo_push_image_metadata (image, NULL);
+//
+//      if (private->metadata)
+//        g_object_unref (private->metadata);
+//
+//      private->metadata = metadata;
+//
+//      if (private->metadata)
+//        {
+//          gdouble xres, yres;
+//
+//          g_object_ref (private->metadata);
+//
+//          gimp_metadata_set_pixel_size (metadata,
+//                                        gimp_image_get_width  (image),
+//                                        gimp_image_get_height (image));
+//
+//          switch (gimp_image_get_component_type (image))
+//            {
+//            case GIMP_COMPONENT_TYPE_U8:
+//              gimp_metadata_set_bits_per_sample (metadata, 8);
+//              break;
+//
+//            case GIMP_COMPONENT_TYPE_U16:
+//            case GIMP_COMPONENT_TYPE_HALF:
+//              gimp_metadata_set_bits_per_sample (metadata, 16);
+//              break;
+//
+//            case GIMP_COMPONENT_TYPE_U32:
+//            case GIMP_COMPONENT_TYPE_FLOAT:
+//              gimp_metadata_set_bits_per_sample (metadata, 32);
+//              break;
+//
+//            case GIMP_COMPONENT_TYPE_DOUBLE:
+//              gimp_metadata_set_bits_per_sample (metadata, 64);
+//              break;
+//            }
+//
+//          gimp_image_get_resolution (image, &xres, &yres);
+//          gimp_metadata_set_resolution (metadata, xres, yres,
+//                                        gimp_image_get_unit (image));
+//        }
+//
+//      g_object_notify (G_OBJECT (image), "metadata");
+//    }
+//}
 
 void
-gimp_image_set_metadata (GimpImage    *image,
-                         GimpMetadata *metadata,
-                         gboolean      push_undo)
+gimp_image_set_attributes (GimpImage      *image,
+                           GimpAttributes *attributes,
+                           gboolean        push_undo)
 {
-  GimpImagePrivate *private;
+  GimpViewable *viewable;
+  gdouble xres, yres;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  private = GIMP_IMAGE_GET_PRIVATE (image);
+  if (! attributes)
+    return;
 
-  if (metadata != private->metadata)
+  if (push_undo)
+    gimp_image_undo_push_image_attributes (image, NULL);
+
+  viewable = GIMP_VIEWABLE (image);
+
+  if (viewable)
     {
-      if (push_undo)
-        gimp_image_undo_push_image_metadata (image, NULL);
 
-      if (private->metadata)
-        g_object_unref (private->metadata);
+      gimp_attributes_set_pixel_size (attributes,
+                                      gimp_image_get_width  (image),
+                                      gimp_image_get_height (image));
 
-      private->metadata = metadata;
+      switch (gimp_image_get_component_type (image))
+      {
+        case GIMP_COMPONENT_TYPE_U8:
+          gimp_attributes_set_bits_per_sample (attributes, 8);
+          break;
 
-      if (private->metadata)
-        {
-          gdouble xres, yres;
+        case GIMP_COMPONENT_TYPE_U16:
+        case GIMP_COMPONENT_TYPE_HALF:
+          gimp_attributes_set_bits_per_sample (attributes, 16);
+          break;
 
-          g_object_ref (private->metadata);
+        case GIMP_COMPONENT_TYPE_U32:
+        case GIMP_COMPONENT_TYPE_FLOAT:
+          gimp_attributes_set_bits_per_sample (attributes, 32);
+          break;
 
-          gimp_metadata_set_pixel_size (metadata,
-                                        gimp_image_get_width  (image),
-                                        gimp_image_get_height (image));
+        case GIMP_COMPONENT_TYPE_DOUBLE:
+          gimp_attributes_set_bits_per_sample (attributes, 64);
+          break;
+      }
 
-          switch (gimp_image_get_component_type (image))
-            {
-            case GIMP_COMPONENT_TYPE_U8:
-              gimp_metadata_set_bits_per_sample (metadata, 8);
-              break;
+      gimp_image_get_resolution (image, &xres, &yres);
+      gimp_attributes_set_resolution (attributes, xres, yres,
+                                      gimp_image_get_unit (image));
 
-            case GIMP_COMPONENT_TYPE_U16:
-            case GIMP_COMPONENT_TYPE_HALF:
-              gimp_metadata_set_bits_per_sample (metadata, 16);
-              break;
-
-            case GIMP_COMPONENT_TYPE_U32:
-            case GIMP_COMPONENT_TYPE_FLOAT:
-              gimp_metadata_set_bits_per_sample (metadata, 32);
-              break;
-
-            case GIMP_COMPONENT_TYPE_DOUBLE:
-              gimp_metadata_set_bits_per_sample (metadata, 64);
-              break;
-            }
-
-          gimp_image_get_resolution (image, &xres, &yres);
-          gimp_metadata_set_resolution (metadata, xres, yres,
-                                        gimp_image_get_unit (image));
-        }
-
-      g_object_notify (G_OBJECT (image), "metadata");
+      gimp_viewable_set_attributes (viewable, attributes);
     }
+}
+
+GimpAttributes *
+gimp_image_get_attributes (GimpImage *image)
+{
+  GimpViewable   *viewable;
+  GimpAttributes *attributes;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  viewable = GIMP_VIEWABLE (image);
+
+  if (viewable)
+    {
+      attributes = gimp_viewable_get_attributes (viewable);
+      return attributes;
+    }
+
+  return NULL;
 }

@@ -1,0 +1,109 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub viewable_get_attributes {
+    $blurb = "Returns the viewables's attributes.";
+    $help = <<'HELP';
+This procedure returns the stored attributes of a viewable
+GimpViewable is one of the lowest class in gimp, that other
+clsses are derived from.
+That is:
+image
+Layer
+Layer mask
+Grouplayer
+Brush/BrushPipe
+HELP
+
+    &std_pdb_misc('2014', '2.10');
+
+    @inargs = (
+        { name => 'object', type => 'GObject',
+          desc => 'The object' }
+    );
+
+    @outargs = (
+	{ name => 'attributes_string', type => 'string', wrap => 1,
+	  desc => 'The attributes as a xml string'}
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpAttributes *attributes = gimp_viewable_get_attributes (object);
+
+  if (attributes)
+    attributes_string = gimp_attributes_serialize (metadata);
+}
+CODE
+    );
+}
+
+sub viewable_set_attributes {
+    $blurb = "Set the viewables attributes.";
+    $help = <<'HELP';
+This procedure set attributes of a viewable.
+GimpViewable is one of the lowest class in gimp, that other
+clsses are derived from.
+That is:
+image
+Layer
+Layer mask
+Grouplayer
+Brush/BrushPipe
+HELP
+
+    &std_pdb_misc('2014', '2.10');
+
+    @inargs = (
+        { name => 'object', type => 'GObject',
+          desc => 'The image' },
+	{ name => 'attributes_string', type => 'string', wrap => 1,
+	  desc => 'The attributes as a xml string' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpAttributes *attributes = gimp_attributes_deserialize (NULL, attributes_string);
+
+  gimp_viewable_set_attributes (image, attributes);
+
+  if (attributes)
+    g_object_unref (attributes);
+}
+CODE
+    );
+}
+
+
+@headers = qw("libgimpbase/gimpbase.h"
+              "core/gimp.h"
+              "core/gimpviewable.h");
+
+@procs = qw(image_get_attributes
+            image_set_attributes);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Viewable attributes';
+$doc_title = 'viewableattributes';
+$doc_short_desc = 'Operations related to viewable attribuites.';
+$doc_long_desc = 'Operations related to viewable attribuites.';
+
+1;

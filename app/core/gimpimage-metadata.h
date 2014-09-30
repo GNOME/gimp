@@ -19,10 +19,10 @@
 #define __GIMP_IMAGE_METADATA_H__
 
 
-GimpMetadata * gimp_image_get_metadata (GimpImage    *image);
-void           gimp_image_set_metadata (GimpImage    *image,
-                                        GimpMetadata *metadata,
-                                        gboolean      push_undo);
+void              gimp_image_set_attributes  (GimpImage      *image,
+                                              GimpAttributes *attributes,
+                                              gboolean        push_undo);
+GimpAttributes *  gimp_image_get_attributes  (GimpImage      *image);
 
 
 #endif /* __GIMP_IMAGE_METADATA_H__ */

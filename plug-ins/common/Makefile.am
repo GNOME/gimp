@@ -47,6 +47,7 @@ libexec_PROGRAMS = \
 	align-layers \
 	animation-optimize \
 	animation-play \
+	attributes \
 	blinds \
 	blur \
 	blur-gauss-selective \
@@ -122,13 +123,13 @@ libexec_PROGRAMS = \
 	guillotine \
 	hot \
 	illusion \
+	iptc \
 	iwarp \
 	jigsaw \
 	lcms \
 	lens-flare \
 	$(MAIL) \
 	max-rgb \
-	metadata \
 	newsprint \
 	nl-filter \
 	noise-solid \
@@ -238,6 +239,24 @@ animation_play_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(animation_play_RC)
+
+attributes_SOURCES = \
+	attributes.c
+
+attributes_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(attributes_RC)
 
 blinds_SOURCES = \
 	blinds.c
@@ -1566,6 +1585,26 @@ illusion_LDADD = \
 	$(INTLLIBS)		\
 	$(illusion_RC)
 
+iptc_CFLAGS = $(GEXIV2_CFLAGS)
+
+iptc_SOURCES = \
+	iptc.c
+
+iptc_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(GEXIV2_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(iptc_RC)
+
 iwarp_SOURCES = \
 	iwarp.c
 
@@ -1671,26 +1710,6 @@ max_rgb_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(max_rgb_RC)
-
-metadata_CFLAGS = $(GEXIV2_CFLAGS)
-
-metadata_SOURCES = \
-	metadata.c
-
-metadata_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(GEXIV2_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(metadata_RC)
 
 newsprint_SOURCES = \
 	newsprint.c

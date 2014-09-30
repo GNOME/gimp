@@ -148,9 +148,9 @@ G_GNUC_INTERNAL guint8*  _gimp_image_get_colormap            (gint32            
 G_GNUC_INTERNAL gboolean _gimp_image_set_colormap            (gint32                  image_ID,
                                                               gint                    num_bytes,
                                                               const guint8           *colormap);
-G_GNUC_INTERNAL gchar*   _gimp_image_get_metadata            (gint32                  image_ID);
-G_GNUC_INTERNAL gboolean _gimp_image_set_metadata            (gint32                  image_ID,
-                                                              const gchar            *metadata_string);
+G_GNUC_INTERNAL gboolean _gimp_image_set_attributes          (gint32                  image_ID,
+                                                              const gchar            *attributes_string);
+G_GNUC_INTERNAL gchar*   _gimp_image_get_attributes          (gint32                  image_ID);
 gboolean                 gimp_image_clean_all                (gint32                  image_ID);
 gboolean                 gimp_image_is_dirty                 (gint32                  image_ID);
 G_GNUC_INTERNAL gboolean _gimp_image_thumbnail               (gint32                  image_ID,

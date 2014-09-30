@@ -869,6 +869,68 @@ gimp_item_set_tattoo (gint32 item_ID,
 }
 
 /**
+ * _gimp_item_get_attributes:
+ * @item_ID: The item.
+ *
+ * Returns the item's attributes.
+ *
+ * Returns attributes from the item.
+ *
+ * Returns: The attributes as a xml string.
+ **/
+gchar *
+_gimp_item_get_attributes (gint32 item_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *attributes_string = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-item-get-attributes",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    attributes_string = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return attributes_string;
+}
+
+/**
+ * _gimp_item_set_attributes:
+ * @item_ID: The item.
+ * @attributes_string: The attributes as a xml string.
+ *
+ * Set the item's attributes.
+ *
+ * Sets attributes on the item.
+ *
+ * Returns: TRUE on success.
+ **/
+gboolean
+_gimp_item_set_attributes (gint32       item_ID,
+                           const gchar *attributes_string)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-item-set-attributes",
+                                    &nreturn_vals,
+                                    GIMP_PDB_ITEM, item_ID,
+                                    GIMP_PDB_STRING, attributes_string,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_item_attach_parasite:
  * @item_ID: The item.
  * @parasite: The parasite to attach to the item.

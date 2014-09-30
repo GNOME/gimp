@@ -166,6 +166,7 @@ typedef struct _GimpSamplePointUndo   GimpSamplePointUndo;
 typedef struct _GimpFloatingSelUndo   GimpFloatingSelUndo;
 typedef struct _GimpUndoStack         GimpUndoStack;
 typedef struct _GimpUndoAccumulator   GimpUndoAccumulator;
+typedef struct _GimpViewableUndo      GimpViewableUndo;
 
 
 /*  misc objects  */

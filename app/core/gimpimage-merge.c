@@ -40,8 +40,10 @@
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-merge.h"
+#include "gimpimage-metadata.h"
 #include "gimpimage-undo.h"
 #include "gimpitemstack.h"
+#include "gimpitem-metadata.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
@@ -426,6 +428,7 @@ gimp_image_merge_layers (GimpImage     *image,
   GimpLayer        *layer;
   GimpLayer        *bottom_layer;
   GimpParasiteList *parasites;
+  GimpAttributes   *attributes;
   gint              count;
   gint              x1, y1, x2, y2;
   gint              off_x, off_y;
@@ -520,8 +523,8 @@ gimp_image_merge_layers (GimpImage     *image,
       (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)) &&
        ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer))))
     {
-      GeglColor *color;
-      GimpRGB    bg;
+      GeglColor      *color;
+      GimpRGB         bg;
 
       merge_layer = gimp_layer_new (image, (x2 - x1), (y2 - y1),
                                     gimp_image_get_layer_format (image, FALSE),
@@ -580,6 +583,22 @@ gimp_image_merge_layers (GimpImage     *image,
     }
 
   bottom_layer = layer;
+
+  /* Copy the attributes of the bottom layer to the new layer */
+
+  attributes = gimp_item_get_attributes (GIMP_ITEM (bottom_layer));
+
+  if (!attributes)
+    attributes = gimp_image_get_attributes (image);
+
+  if (attributes)
+    {
+      GimpAttributes *new_attributes;
+
+      new_attributes = gimp_attributes_duplicate (attributes);
+      gimp_item_set_attributes (GIMP_ITEM (merge_layer), new_attributes, TRUE);
+      g_object_unref (new_attributes);
+    }
 
   /* Copy the tattoo and parasites of the bottom layer to the new layer */
   gimp_item_set_tattoo (GIMP_ITEM (merge_layer),

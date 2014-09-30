@@ -705,7 +705,9 @@ static GimpItem *
 gimp_layer_duplicate (GimpItem *item,
                       GType     new_type)
 {
-  GimpItem *new_item;
+  GimpItem       *new_item;
+  GimpAttributes *attributes;
+  GimpAttributes *new_attributes;
 
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_DRAWABLE), NULL);
 
@@ -735,6 +737,14 @@ gimp_layer_duplicate (GimpItem *item,
           new_layer->apply_mask = layer->apply_mask;
           new_layer->edit_mask  = layer->edit_mask;
           new_layer->show_mask  = layer->show_mask;
+        }
+
+      attributes = gimp_viewable_get_attributes (GIMP_VIEWABLE (layer));
+      if (attributes)
+        {
+          new_attributes = gimp_attributes_duplicate (attributes);
+          gimp_viewable_set_attributes (GIMP_VIEWABLE (new_layer), new_attributes);
+          g_object_unref (new_attributes);
         }
     }
 

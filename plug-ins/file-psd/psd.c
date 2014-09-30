@@ -226,7 +226,7 @@ run (const gchar      *name,
               if (resolution_loaded)
                 flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
-              gimp_image_metadata_load_finish (image_ID, "image/x-psd",
+              gimp_image_metadata_load_finish (image_ID, -1, "image/x-psd",
                                                metadata, flags,
                                                interactive);
 

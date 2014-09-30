@@ -43,7 +43,8 @@ typedef struct _GimpViewableClass GimpViewableClass;
 
 struct _GimpViewable
 {
-  GimpObject  parent_instance;
+  GimpObject       parent_instance;
+  GimpAttributes  *attributes;
 };
 
 struct _GimpViewableClass
@@ -97,6 +98,7 @@ struct _GimpViewableClass
   void            (* set_expanded)       (GimpViewable  *viewable,
                                           gboolean       expand);
   gboolean        (* get_expanded)       (GimpViewable  *viewable);
+
 };
 
 
@@ -179,7 +181,10 @@ GimpContainer * gimp_viewable_get_children       (GimpViewable  *viewable);
 gboolean        gimp_viewable_get_expanded       (GimpViewable  *viewable);
 void            gimp_viewable_set_expanded       (GimpViewable  *viewable,
                                                   gboolean       expanded);
-
+void            gimp_viewable_set_attributes     (GimpViewable  *viewable,
+                                                  GimpAttributes *attributes);
+GimpAttributes *
+                gimp_viewable_get_attributes     (GimpViewable  *viewable);
 gboolean        gimp_viewable_is_ancestor        (GimpViewable  *ancestor,
                                                   GimpViewable  *descendant);
 

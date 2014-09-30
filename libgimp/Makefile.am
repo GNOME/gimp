@@ -206,6 +206,8 @@ libgimp_sources = \
 	gimpgradientselect.h	\
 	gimpimage.c		\
 	gimpimage.h		\
+	gimpitem.c		\
+	gimpitem.h		\
 	gimplayer.c		\
 	gimplayer.h		\
 	gimppalette.c		\
@@ -327,6 +329,7 @@ gimpinclude_HEADERS = \
 	gimpgradients.h			\
 	gimpgradientselect.h		\
 	gimpimage.h			\
+	gimpitem.h			\
 	gimplayer.h			\
 	gimppalette.h			\
 	gimppalettes.h			\

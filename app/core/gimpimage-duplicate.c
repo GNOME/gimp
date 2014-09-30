@@ -72,7 +72,7 @@ static void          gimp_image_duplicate_sample_points    (GimpImage *image,
                                                             GimpImage *new_image);
 static void          gimp_image_duplicate_grid             (GimpImage *image,
                                                             GimpImage *new_image);
-static void          gimp_image_duplicate_metadata         (GimpImage *image,
+static void          gimp_image_duplicate_attributes       (GimpImage *image,
                                                             GimpImage *new_image);
 static void          gimp_image_duplicate_quick_mask       (GimpImage *image,
                                                             GimpImage *new_image);
@@ -147,8 +147,8 @@ gimp_image_duplicate (GimpImage *image)
   /*  Copy the grid  */
   gimp_image_duplicate_grid (image, new_image);
 
-  /*  Copy the metadata  */
-  gimp_image_duplicate_metadata (image, new_image);
+  /*  Copy the attributes  */
+  gimp_image_duplicate_attributes (image, new_image);
 
   /*  Copy the quick mask info  */
   gimp_image_duplicate_quick_mask (image, new_image);
@@ -474,16 +474,16 @@ gimp_image_duplicate_grid (GimpImage *image,
 }
 
 static void
-gimp_image_duplicate_metadata (GimpImage *image,
-                               GimpImage *new_image)
+gimp_image_duplicate_attributes (GimpImage *image,
+                                 GimpImage *new_image)
 {
-  GimpMetadata *metadata = gimp_image_get_metadata (image);
+  GimpAttributes *attributes = gimp_image_get_attributes (image);
 
-  if (metadata)
+  if (attributes)
     {
-      metadata = gimp_metadata_duplicate (metadata);
-      gimp_image_set_metadata (new_image, metadata, FALSE);
-      g_object_unref (metadata);
+      attributes = gimp_attributes_duplicate (attributes);
+      gimp_image_set_attributes (new_image, attributes, FALSE);
+      g_object_unref (attributes);
     }
 }
 

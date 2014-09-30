@@ -90,6 +90,12 @@ libgimpbase_sources = \
 	gimpparam.h		\
 	gimpversion.h		\
 	\
+	gimpattribute.c	\
+	gimpattribute.h	\
+	gimpattributes.c	\
+	gimpattributes.h	\
+	gimpattributes-image.c	\
+	gimpattributes-image.h	\
 	gimpbase-private.c	\
 	gimpbase-private.h	\
 	gimpchecks.c           	\
@@ -110,6 +116,8 @@ libgimpbase_sources = \
 	gimpparasiteio.h	\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
+	gimprational.c		\
+	gimprational.h		\
 	gimprectangle.c		\
 	gimprectangle.h		\
 	gimpreloc.c		\
@@ -143,6 +151,9 @@ libgimpbaseinclude_HEADERS = \
 	gimpparam.h		\
 	gimpversion.h		\
 	\
+	gimpattribute.h		\
+	gimpattributes.h		\
+	gimpattributes-image.h	\
 	gimpchecks.h		\
 	gimpdatafiles.h		\
 	gimpenv.h		\
@@ -150,6 +161,7 @@ libgimpbaseinclude_HEADERS = \
 	gimpmetadata.h		\
 	gimpparasite.h		\
 	gimpparasiteio.h	\
+	gimprational.h		\
 	gimprectangle.h		\
 	gimpsignal.h		\
 	gimpunit.h		\

@@ -1707,64 +1707,64 @@ image_set_colormap_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-image_get_metadata_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
-                            GError               **error)
+image_set_attributes_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  const gchar *attributes_string;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+  attributes_string = g_value_get_string (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpAttributes *attributes = gimp_attributes_deserialize (attributes_string);
+
+      gimp_image_set_attributes (image, attributes, TRUE);
+
+      if (attributes)
+        g_object_unref (attributes);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_get_attributes_invoker (GimpProcedure         *procedure,
+                              Gimp                  *gimp,
+                              GimpContext           *context,
+                              GimpProgress          *progress,
+                              const GimpValueArray  *args,
+                              GError               **error)
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
   GimpImage *image;
-  gchar *metadata_string = NULL;
+  gchar *attributes_string = NULL;
 
   image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
 
   if (success)
     {
-      GimpMetadata *metadata = gimp_image_get_metadata (image);
+      GimpAttributes *attributes = gimp_image_get_attributes (image);
 
-      if (metadata)
-        metadata_string = gimp_metadata_serialize (metadata);
+      if (attributes)
+        attributes_string = gimp_attributes_serialize (attributes);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
                                                   error ? *error : NULL);
 
   if (success)
-    g_value_take_string (gimp_value_array_index (return_vals, 1), metadata_string);
+    g_value_take_string (gimp_value_array_index (return_vals, 1), attributes_string);
 
   return return_vals;
-}
-
-static GimpValueArray *
-image_set_metadata_invoker (GimpProcedure         *procedure,
-                            Gimp                  *gimp,
-                            GimpContext           *context,
-                            GimpProgress          *progress,
-                            const GimpValueArray  *args,
-                            GError               **error)
-{
-  gboolean success = TRUE;
-  GimpImage *image;
-  const gchar *metadata_string;
-
-  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
-  metadata_string = g_value_get_string (gimp_value_array_index (args, 1));
-
-  if (success)
-    {
-      GimpMetadata *metadata = gimp_metadata_deserialize (metadata_string);
-
-      gimp_image_set_metadata (image, metadata, TRUE);
-
-      if (metadata)
-        g_object_unref (metadata);
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
 }
 
 static GimpValueArray *
@@ -4622,15 +4622,45 @@ register_image_procs (GimpPDB *pdb)
   g_object_unref (procedure);
 
   /*
-   * gimp-image-get-metadata
+   * gimp-image-set-attributes
    */
-  procedure = gimp_procedure_new (image_get_metadata_invoker);
+  procedure = gimp_procedure_new (image_set_attributes_invoker);
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-get-metadata");
+                               "gimp-image-set-attributes");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-get-metadata",
-                                     "Returns the image's metadata.",
-                                     "Returns exif/iptc/xmp metadata from the image.",
+                                     "gimp-image-set-attributes",
+                                     "Set the image's attributes.",
+                                     "Sets attributes on the image.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "The image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("attributes-string",
+                                                       "attributes string",
+                                                       "The attributes as a xml string",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-attributes
+   */
+  procedure = gimp_procedure_new (image_get_attributes_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-attributes");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-image-get-attributes",
+                                     "Returns the image's attributes.",
+                                     "Returns attributes from the image.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
@@ -4642,42 +4672,12 @@ register_image_procs (GimpPDB *pdb)
                                                          pdb->gimp, FALSE,
                                                          GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_string ("metadata-string",
-                                                           "metadata string",
-                                                           "The exif/ptc/xmp metadata as a string",
+                                   gimp_param_spec_string ("attributes-string",
+                                                           "attributes string",
+                                                           "The attributes as a xml string",
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-image-set-metadata
-   */
-  procedure = gimp_procedure_new (image_set_metadata_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-image-set-metadata");
-  gimp_procedure_set_static_strings (procedure,
-                                     "gimp-image-set-metadata",
-                                     "Set the image's metadata.",
-                                     "Sets exif/iptc/xmp metadata on the image.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_image_id ("image",
-                                                         "image",
-                                                         "The image",
-                                                         pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("metadata-string",
-                                                       "metadata string",
-                                                       "The exif/ptc/xmp metadata as a string",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -234,7 +234,7 @@ run (const gchar      *name,
     {
       /* Plug-in is either file_tiff_save or file_tiff_save2 */
 
-      GimpMetadata          *metadata;
+      GimpAttributes        *attributes;
       GimpMetadataSaveFlags  metadata_flags;
       GimpParasite          *parasite;
       gint32                 image      = param[1].data.d_int32;
@@ -264,9 +264,9 @@ run (const gchar      *name,
           break;
         }
 
-      metadata = gimp_image_metadata_save_prepare (orig_image,
-                                                   "image/tiff",
-                                                   &metadata_flags);
+      attributes = gimp_image_metadata_save_prepare (orig_image,
+                                                     "image/tiff",
+                                                     &metadata_flags);
 
       tsvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
       tsvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
@@ -357,11 +357,17 @@ run (const gchar      *name,
           if (save_image (param[3].data.d_string, image, drawable, orig_image,
                           &saved_bpp, &error))
             {
-              if (metadata)
+              if (attributes)
                 {
                   GFile *file;
+                  gchar *val = g_strdup_printf ("%u", (gushort) saved_bpp);
 
-                  gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
+                  gimp_attributes_add_attribute (attributes,
+                                                 gimp_attribute_new_string ("Exif.Image.BitsPerSample",
+                                                                             val, TYPE_SHORT)
+                                                );
+
+                  g_free (val);
 
                   if (tsvals.save_exif)
                     metadata_flags |= GIMP_METADATA_SAVE_EXIF;
@@ -386,8 +392,9 @@ run (const gchar      *name,
                   file = g_file_new_for_path (param[3].data.d_string);
                   gimp_image_metadata_save_finish (image,
                                                    "image/tiff",
-                                                   metadata, metadata_flags,
+                                                   attributes, metadata_flags,
                                                    file, NULL);
+                  g_object_unref (attributes);
                   g_object_unref (file);
                 }
 
@@ -402,9 +409,6 @@ run (const gchar      *name,
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image);
-
-      if (metadata)
-        g_object_unref (metadata);
     }
   else
     {

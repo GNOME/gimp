@@ -53,6 +53,7 @@ SUBDIRS = \
 	lighting		\
 	map-object		\
 	maze			\
+	metainfo		\
 	pagecurl		\
 	$(print)		\
 	selection-to-path	\

@@ -45,11 +45,6 @@ typedef enum
 
 
 GimpMetadata * gimp_metadata_new                 (void);
-GimpMetadata * gimp_metadata_duplicate           (GimpMetadata  *metadata);
-
-GimpMetadata * gimp_metadata_deserialize         (const gchar   *metadata_xml);
-gchar        * gimp_metadata_serialize           (GimpMetadata  *metadata);
-
 GimpMetadata * gimp_metadata_load_from_file      (GFile         *file,
                                                   GError       **error);
 gboolean       gimp_metadata_save_to_file        (GimpMetadata  *metadata,
@@ -64,22 +59,6 @@ gboolean       gimp_metadata_set_from_xmp        (GimpMetadata  *metadata,
                                                   const guchar  *xmp_data,
                                                   gint           xmp_data_length,
                                                   GError       **error);
-
-void           gimp_metadata_set_pixel_size      (GimpMetadata  *metadata,
-                                                  gint           width,
-                                                  gint           height);
-void           gimp_metadata_set_bits_per_sample (GimpMetadata  *metadata,
-                                                  gint           bits_per_sample);
-
-gboolean       gimp_metadata_get_resolution      (GimpMetadata  *metadata,
-                                                  gdouble       *xres,
-                                                  gdouble       *yres,
-                                                  GimpUnit      *unit);
-void           gimp_metadata_set_resolution      (GimpMetadata  *metadata,
-                                                  gdouble        xres,
-                                                  gdouble        yres,
-                                                  GimpUnit       unit);
-
 gboolean       gimp_metadata_is_tag_supported    (const gchar   *tag,
                                                   const gchar   *mime_type);
 

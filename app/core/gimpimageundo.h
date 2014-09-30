@@ -50,7 +50,7 @@ struct _GimpImageUndo
   GimpGrid          *grid;
   gint               num_colors;
   guchar            *colormap;
-  GimpMetadata      *metadata;
+  GimpAttributes    *attributes;
   gchar             *parasite_name;
   GimpParasite      *parasite;
 };

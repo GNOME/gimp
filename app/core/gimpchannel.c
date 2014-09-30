@@ -23,6 +23,7 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
 
@@ -44,6 +45,7 @@
 #include "gimpimage-quick-mask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
+#include "gimpitem-metadata.h"
 #include "gimpchannel.h"
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
@@ -493,6 +495,9 @@ gimp_channel_duplicate (GimpItem *item,
 
   if (GIMP_IS_CHANNEL (new_item))
     {
+      GimpAttributes *attributes;
+      GimpAttributes *new_attributes;
+
       GimpChannel *channel     = GIMP_CHANNEL (item);
       GimpChannel *new_channel = GIMP_CHANNEL (new_item);
 
@@ -506,6 +511,15 @@ gimp_channel_duplicate (GimpItem *item,
       new_channel->y1           = channel->y1;
       new_channel->x2           = channel->x2;
       new_channel->y2           = channel->y2;
+
+      attributes = gimp_item_get_attributes (item);
+      if (attributes)
+        {
+          new_attributes = gimp_attributes_duplicate (attributes);
+          gimp_item_set_attributes (new_item, new_attributes, FALSE);
+          g_object_unref (new_attributes);
+        }
+
     }
 
   return new_item;

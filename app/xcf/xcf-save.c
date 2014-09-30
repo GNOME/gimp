@@ -45,6 +45,7 @@
 #include "core/gimpimage-metadata.h"
 #include "core/gimpimage-private.h"
 #include "core/gimpimage-sample-points.h"
+#include "core/gimpitem-metadata.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparasitelist.h"
@@ -355,10 +356,11 @@ xcf_save_image_props (XcfInfo    *info,
                       GimpImage  *image,
                       GError    **error)
 {
-  GimpImagePrivate *private       = GIMP_IMAGE_GET_PRIVATE (image);
-  GimpParasite     *grid_parasite = NULL;
-  GimpParasite     *meta_parasite = NULL;
-  GimpUnit          unit          = gimp_image_get_unit (image);
+  GimpImagePrivate *private             = GIMP_IMAGE_GET_PRIVATE (image);
+  GimpParasite     *grid_parasite       = NULL;
+  GimpParasite     *meta_parasite       = NULL;
+  GimpParasite     *attributes_parasite = NULL;
+  GimpUnit          unit                = gimp_image_get_unit (image);
   gdouble           xres;
   gdouble           yres;
 
@@ -410,21 +412,21 @@ xcf_save_image_props (XcfInfo    *info,
       gimp_parasite_list_add (private->parasites, grid_parasite);
     }
 
-  if (gimp_image_get_metadata (image))
+  if (gimp_image_get_attributes (image))
     {
-      GimpMetadata *metadata = gimp_image_get_metadata (image);
-      gchar        *meta_string;
+      GimpAttributes *attributes = gimp_image_get_attributes (image);
+      gchar          *attributes_string;
 
-      meta_string = gimp_metadata_serialize (metadata);
+      attributes_string = gimp_attributes_serialize (attributes);
 
-      if (meta_string)
+      if (attributes_string)
         {
-          meta_parasite = gimp_parasite_new ("gimp-image-metadata",
-                                             GIMP_PARASITE_PERSISTENT,
-                                             strlen (meta_string) + 1,
-                                             meta_string);
-          gimp_parasite_list_add (private->parasites, meta_parasite);
-          g_free (meta_string);
+          attributes_parasite = gimp_parasite_new ("gimp-image-attributes",
+                                                   GIMP_PARASITE_PERSISTENT,
+                                                   strlen (attributes_string) + 1,
+                                                   attributes_string);
+          gimp_parasite_list_add (private->parasites, attributes_parasite);
+          g_free (attributes_string);
         }
     }
 
@@ -462,6 +464,25 @@ xcf_save_layer_props (XcfInfo    *info,
   GimpParasiteList *parasites;
   gint              offset_x;
   gint              offset_y;
+  GimpParasite     *attributes_parasite = NULL;
+
+  if (gimp_item_get_attributes (GIMP_ITEM (layer)))
+    {
+      GimpAttributes *attributes = gimp_item_get_attributes (GIMP_ITEM (layer));
+      gchar          *attributes_string;
+
+      attributes_string = gimp_attributes_serialize (attributes);
+
+      if (attributes_string)
+        {
+          attributes_parasite = gimp_parasite_new ("gimp-item-attributes",
+                                                   GIMP_PARASITE_PERSISTENT,
+                                                   strlen (attributes_string) + 1,
+                                                   attributes_string);
+          gimp_item_parasite_attach (GIMP_ITEM (layer), attributes_parasite, FALSE);
+          g_free (attributes_string);
+        }
+    }
 
   if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
     xcf_check_error (xcf_save_prop (info, image, PROP_GROUP_ITEM, error));
@@ -573,6 +594,25 @@ xcf_save_channel_props (XcfInfo      *info,
 {
   GimpParasiteList *parasites;
   guchar            col[3];
+  GimpParasite     *attributes_parasite = NULL;
+
+  if (gimp_item_get_attributes (GIMP_ITEM (channel)))
+    {
+      GimpAttributes *attributes = gimp_item_get_attributes (GIMP_ITEM (channel));
+      gchar          *attributes_string;
+
+      attributes_string = gimp_attributes_serialize (attributes);
+
+      if (attributes_string)
+        {
+          attributes_parasite = gimp_parasite_new ("gimp-item-attributes",
+                                                   GIMP_PARASITE_PERSISTENT,
+                                                   strlen (attributes_string) + 1,
+                                                   attributes_string);
+          gimp_item_parasite_attach (GIMP_ITEM (channel), attributes_parasite, FALSE);
+          g_free (attributes_string);
+        }
+    }
 
   if (channel == gimp_image_get_active_channel (image))
     xcf_check_error (xcf_save_prop (info, image, PROP_ACTIVE_CHANNEL, error));

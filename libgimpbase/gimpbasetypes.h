@@ -45,6 +45,8 @@ G_BEGIN_DECLS
 #endif
 
 
+typedef struct _GimpAttribute    GimpAttribute;
+typedef struct _GimpAttributes   GimpAttributes;
 typedef struct _GimpParasite     GimpParasite;
 typedef struct _GimpDatafileData GimpDatafileData;
 typedef struct _GimpEnumDesc     GimpEnumDesc;

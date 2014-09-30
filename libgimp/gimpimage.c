@@ -101,61 +101,61 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
 }
 
 /**
- * gimp_image_get_metadata:
+ * gimp_image_get_attributes:
  * @image_ID: The image.
  *
- * Returns the image's metadata.
+ * Returns the image's attributes.
  *
- * Returns exif/iptc/xmp metadata from the image.
+ * Returns attributes from the image.
  *
- * Returns: The exif/ptc/xmp metadata, or %NULL if there is none.
+ * Returns: The attributes, or %NULL if there is none.
  *
  * Since: GIMP 2.10
  **/
-GimpMetadata *
-gimp_image_get_metadata (gint32 image_ID)
+GimpAttributes *
+gimp_image_get_attributes (gint32 image_ID)
 {
-  GimpMetadata *metadata = NULL;
-  gchar        *metadata_string;
+  GimpAttributes *attributes        = NULL;
+  gchar          *attributes_string = NULL;
 
-  metadata_string = _gimp_image_get_metadata (image_ID);
-  if (metadata_string)
+  attributes_string = _gimp_image_get_attributes (image_ID);
+  if (attributes_string)
     {
-      metadata = gimp_metadata_deserialize (metadata_string);
-      g_free (metadata_string);
+      attributes = gimp_attributes_deserialize (attributes_string);
+      g_free (attributes_string);
     }
 
-  return metadata;
+  return attributes;
 }
 
 /**
- * gimp_image_set_metadata:
+ * gimp_image_set_attributes:
  * @image_ID: The image.
- * @metadata: The exif/ptc/xmp metadata.
+ * @metadata: The GimpAttributes object.
  *
- * Set the image's metadata.
+ * Set the image's attributes.
  *
- * Sets exif/iptc/xmp metadata on the image, or deletes it if
- * @metadata is %NULL.
+ * Sets attributes on the image, or deletes it if
+ * @attributes is %NULL.
  *
  * Returns: TRUE on success.
  *
  * Since: GIMP 2.10
  **/
 gboolean
-gimp_image_set_metadata (gint32        image_ID,
-                         GimpMetadata *metadata)
+gimp_image_set_attributes (gint32          image_ID,
+                           GimpAttributes *attributes)
 {
-  gchar    *metadata_string = NULL;
+  gchar    *attributes_string = NULL;
   gboolean  success;
 
-  if (metadata)
-    metadata_string = gimp_metadata_serialize (metadata);
+  if (attributes)
+    attributes_string = gimp_attributes_serialize (attributes);
 
-  success = _gimp_image_set_metadata (image_ID, metadata_string);
+  success = _gimp_image_set_attributes (image_ID, attributes_string);
 
-  if (metadata_string)
-    g_free (metadata_string);
+  if (attributes_string)
+    g_free (attributes_string);
 
   return success;
 }

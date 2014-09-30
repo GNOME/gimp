@@ -30,6 +30,7 @@
 #include "pdb-types.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpitem-metadata.h"
 #include "core/gimpitem.h"
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
@@ -762,6 +763,67 @@ item_set_tattoo_invoker (GimpProcedure         *procedure,
   if (success)
     {
       gimp_item_set_tattoo (GIMP_ITEM (item), tattoo);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+item_get_attributes_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpItem *item;
+  gchar *attributes_string = NULL;
+
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpAttributes *attributes = gimp_item_get_attributes (item);
+
+      if (attributes)
+        attributes_string = gimp_attributes_serialize (attributes);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_take_string (gimp_value_array_index (return_vals, 1), attributes_string);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+item_set_attributes_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpItem *item;
+  const gchar *attributes_string;
+
+  item = gimp_value_get_item (gimp_value_array_index (args, 0), gimp);
+  attributes_string = g_value_get_string (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      GimpAttributes *attributes = gimp_attributes_deserialize (attributes_string);
+
+      gimp_item_set_attributes (item, attributes, TRUE);
+
+      if (attributes)
+        g_object_unref (attributes);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1614,6 +1676,66 @@ register_item_procs (GimpPDB *pdb)
                                                   "The new item tattoo",
                                                   1, G_MAXUINT32, 1,
                                                   GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-get-attributes
+   */
+  procedure = gimp_procedure_new (item_get_attributes_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-get-attributes");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-get-attributes",
+                                     "Returns the item's attributes.",
+                                     "Returns attributes from the item.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("attributes-string",
+                                                           "attributes string",
+                                                           "The attributes as a xml string",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-item-set-attributes
+   */
+  procedure = gimp_procedure_new (item_set_attributes_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-item-set-attributes");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-item-set-attributes",
+                                     "Set the item's attributes.",
+                                     "Sets attributes on the item.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_item_id ("item",
+                                                        "item",
+                                                        "The item",
+                                                        pdb->gimp, FALSE,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("attributes-string",
+                                                       "attributes string",
+                                                       "The attributes as a xml string",
+                                                       FALSE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

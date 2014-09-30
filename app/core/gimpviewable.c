@@ -26,6 +26,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -125,7 +126,6 @@ static gboolean gimp_viewable_deserialize_property   (GimpConfig       *config,
                                                       GScanner         *scanner,
                                                       GTokenType       *expected);
 
-
 G_DEFINE_TYPE_WITH_CODE (GimpViewable, gimp_viewable, GIMP_TYPE_OBJECT,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
                                                 gimp_viewable_config_iface_init))
@@ -210,6 +210,7 @@ gimp_viewable_class_init (GimpViewableClass *klass)
 static void
 gimp_viewable_init (GimpViewable *viewable)
 {
+  viewable->attributes = NULL;
 }
 
 static void
@@ -222,6 +223,7 @@ gimp_viewable_config_iface_init (GimpConfigInterface *iface)
 static void
 gimp_viewable_finalize (GObject *object)
 {
+  GimpViewable        *viewable = GIMP_VIEWABLE (object);
   GimpViewablePrivate *private = GET_PRIVATE (object);
 
   if (private->icon_name)
@@ -246,6 +248,11 @@ gimp_viewable_finalize (GObject *object)
     {
       g_object_unref (private->preview_pixbuf);
       private->preview_pixbuf = NULL;
+    }
+  if (viewable->attributes)
+    {
+      g_object_unref (viewable->attributes);
+      viewable->attributes = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -575,7 +582,22 @@ gimp_viewable_invalidate_preview (GimpViewable *viewable)
 void
 gimp_viewable_size_changed (GimpViewable *viewable)
 {
+  GimpAttributes *attributes = NULL;
+  gint width, height;
+
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  gimp_viewable_get_size (viewable, &width, &height);
+
+  attributes = gimp_viewable_get_attributes (viewable);
+
+  if (attributes)
+    {
+      gimp_attributes_set_pixel_size (attributes,
+                                      width,
+                                      height);
+
+    }
 
   g_signal_emit (viewable, viewable_signals[SIZE_CHANGED], 0);
 }
@@ -1298,6 +1320,28 @@ gimp_viewable_set_expanded (GimpViewable *viewable,
 
   if (GIMP_VIEWABLE_GET_CLASS (viewable)->set_expanded)
     GIMP_VIEWABLE_GET_CLASS (viewable)->set_expanded (viewable, expanded);
+}
+
+void 
+gimp_viewable_set_attributes (GimpViewable   *viewable,
+                              GimpAttributes *attributes)
+{
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  if (attributes)
+    {
+
+      viewable->attributes = attributes;
+      g_object_ref (viewable->attributes);
+    }
+}
+
+GimpAttributes *
+gimp_viewable_get_attributes (GimpViewable  *viewable)
+{
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
+
+  return viewable->attributes;
 }
 
 gboolean

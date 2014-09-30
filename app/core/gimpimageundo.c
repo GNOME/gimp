@@ -188,9 +188,9 @@ gimp_image_undo_constructed (GObject *object)
                                          GIMP_IMAGE_COLORMAP_SIZE);
       break;
 
-    case GIMP_UNDO_IMAGE_METADATA:
-      image_undo->metadata =
-        gimp_metadata_duplicate (gimp_image_get_metadata (image));
+    case GIMP_UNDO_IMAGE_ATTRIBUTES:
+      image_undo->attributes =
+        gimp_attributes_duplicate (gimp_image_get_attributes (image));
       break;
 
     case GIMP_UNDO_PARASITE_ATTACH:
@@ -291,8 +291,8 @@ gimp_image_undo_get_memsize (GimpObject *object,
   if (image_undo->colormap)
     memsize += GIMP_IMAGE_COLORMAP_SIZE;
 
-  if (image_undo->metadata)
-    memsize += gimp_g_object_get_memsize (G_OBJECT (image_undo->metadata));
+  if (image_undo->attributes)
+    memsize += gimp_g_object_get_memsize (G_OBJECT (image_undo->attributes));
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
                                       gui_size);
@@ -457,17 +457,17 @@ gimp_image_undo_pop (GimpUndo            *undo,
       }
       break;
 
-    case GIMP_UNDO_IMAGE_METADATA:
+    case GIMP_UNDO_IMAGE_ATTRIBUTES:
       {
-        GimpMetadata *metadata;
+        GimpAttributes *attributes;
 
-        metadata = gimp_metadata_duplicate (gimp_image_get_metadata (image));
+        attributes = gimp_attributes_duplicate (gimp_image_get_attributes (image));
 
-        gimp_image_set_metadata (image, image_undo->metadata, FALSE);
+        gimp_image_set_attributes (image, image_undo->attributes, FALSE);
 
-        if (image_undo->metadata)
-          g_object_unref (image_undo->metadata);
-        image_undo->metadata = metadata;
+        if (image_undo->attributes)
+          g_object_unref (image_undo->attributes);
+        image_undo->attributes = attributes;
       }
       break;
 
@@ -519,10 +519,10 @@ gimp_image_undo_free (GimpUndo     *undo,
       image_undo->colormap = NULL;
     }
 
-  if (image_undo->metadata)
+  if (image_undo->attributes)
     {
-      g_object_unref (image_undo->metadata);
-      image_undo->metadata = NULL;
+      g_object_unref (image_undo->attributes);
+      image_undo->attributes = NULL;
     }
 
   if (image_undo->parasite_name)

@@ -97,6 +97,7 @@ static gboolean  load_dialog      (TIFF               *tif,
                                    TiffSelectedPages  *pages);
 
 static gint32    load_image       (const gchar        *filename,
+                                   gint32             *layer_ID,
                                    TIFF               *tif,
                                    TiffSelectedPages  *pages,
                                    gboolean           *resolution_loaded,
@@ -262,11 +263,12 @@ run (const gchar      *name,
               if (run_it)
                 {
                   gint32   image;
+                  gint32   layer_ID;
                   gboolean resolution_loaded = FALSE;
 
                   gimp_set_data (LOAD_PROC, &target, sizeof (target));
 
-                  image = load_image (param[1].data.d_string, tif, &pages,
+                  image = load_image (param[1].data.d_string, &layer_ID, tif, &pages,
                                       &resolution_loaded,
                                       &error);
 
@@ -290,7 +292,7 @@ run (const gchar      *name,
                           if (resolution_loaded)
                             flags &= ~GIMP_METADATA_LOAD_RESOLUTION;
 
-                          gimp_image_metadata_load_finish (image, "image/tiff",
+                          gimp_image_metadata_load_finish (image, layer_ID, "image/tiff",
                                                            metadata, flags,
                                                            run_mode == GIMP_RUN_INTERACTIVE);
 
@@ -518,6 +520,7 @@ load_dialog (TIFF              *tif,
 
 static gint32
 load_image (const gchar        *filename,
+            gint32             *layer_ID,
             TIFF               *tif,
             TiffSelectedPages  *pages,
             gboolean           *resolution_loaded,
@@ -1113,6 +1116,7 @@ load_image (const gchar        *filename,
           g_free (name);
         }
 
+      *layer_ID         = layer;
       channel[0].ID     = layer;
       channel[0].buffer = gimp_drawable_get_buffer (layer);
       channel[0].format = base_format;

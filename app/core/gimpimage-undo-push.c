@@ -49,6 +49,8 @@
 #include "gimpsamplepoint.h"
 #include "gimpsamplepointundo.h"
 #include "gimpselection.h"
+#include "gimpviewable.h"
+#include "gimpviewableundo.h"
 
 #include "text/gimptextlayer.h"
 #include "text/gimptextundo.h"
@@ -149,14 +151,29 @@ gimp_image_undo_push_image_colormap (GimpImage   *image,
 }
 
 GimpUndo *
-gimp_image_undo_push_image_metadata (GimpImage   *image,
+gimp_image_undo_push_image_attributes (GimpImage   *image,
                                      const gchar *undo_desc)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
-                               GIMP_UNDO_IMAGE_METADATA, undo_desc,
+                               GIMP_UNDO_IMAGE_ATTRIBUTES, undo_desc,
                                GIMP_DIRTY_IMAGE_META,
+                               NULL);
+}
+
+
+GimpUndo *
+gimp_image_undo_push_item_attributes (GimpImage    *image,
+                                      const gchar  *undo_desc,
+                                      GimpItem     *item)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
+                               GIMP_UNDO_ITEM_ATTRIBUTES, undo_desc,
+                               GIMP_DIRTY_IMAGE_META,
+                               "item", item,
                                NULL);
 }
 

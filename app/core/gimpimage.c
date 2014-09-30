@@ -848,7 +848,6 @@ gimp_image_set_property (GObject      *object,
     case PROP_PRECISION:
       private->precision = g_value_get_enum (value);
       break;
-    case PROP_METADATA:
     case PROP_BUFFER:
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -884,9 +883,6 @@ gimp_image_get_property (GObject    *object,
       break;
     case PROP_PRECISION:
       g_value_set_enum (value, private->precision);
-      break;
-    case PROP_METADATA:
-      g_value_set_object (value, gimp_image_get_metadata (image));
       break;
     case PROP_BUFFER:
       g_value_set_object (value, gimp_image_get_buffer (GIMP_PICKABLE (image)));
@@ -1191,10 +1187,10 @@ gimp_image_get_size (GimpViewable *viewable,
 static void
 gimp_image_size_changed (GimpViewable *viewable)
 {
-  GimpImage    *image = GIMP_IMAGE (viewable);
-  GimpMetadata *metadata;
-  GList        *all_items;
-  GList        *list;
+  GimpImage      *image = GIMP_IMAGE (viewable);
+  GimpAttributes *attributes;
+  GList          *all_items;
+  GList          *list;
 
   if (GIMP_VIEWABLE_CLASS (parent_class)->size_changed)
     GIMP_VIEWABLE_CLASS (parent_class)->size_changed (viewable);
@@ -1219,12 +1215,15 @@ gimp_image_size_changed (GimpViewable *viewable)
 
   gimp_viewable_size_changed (GIMP_VIEWABLE (gimp_image_get_mask (image)));
 
-  metadata = gimp_image_get_metadata (image);
-  if (metadata)
-    gimp_metadata_set_pixel_size (metadata,
-                                  gimp_image_get_width  (image),
-                                  gimp_image_get_height (image));
+  attributes = gimp_image_get_attributes (image);
 
+  if (attributes)
+    {
+      gimp_attributes_set_pixel_size (attributes,
+                                      gimp_image_get_width  (image),
+                                      gimp_image_get_height (image));
+
+    }
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
 }
 
@@ -1251,31 +1250,32 @@ gimp_image_real_mode_changed (GimpImage *image)
 static void
 gimp_image_real_precision_changed (GimpImage *image)
 {
-  GimpMetadata *metadata;
+  GimpAttributes *attributes;
 
-  metadata = gimp_image_get_metadata (image);
-  if (metadata)
+  attributes = gimp_image_get_attributes (image);
+
+  if (attributes)
     {
       switch (gimp_image_get_component_type (image))
-        {
+      {
         case GIMP_COMPONENT_TYPE_U8:
-          gimp_metadata_set_bits_per_sample (metadata, 8);
+          gimp_attributes_set_bits_per_sample (attributes, 8);
           break;
 
         case GIMP_COMPONENT_TYPE_U16:
         case GIMP_COMPONENT_TYPE_HALF:
-          gimp_metadata_set_bits_per_sample (metadata, 16);
+          gimp_attributes_set_bits_per_sample (attributes, 16);
           break;
 
         case GIMP_COMPONENT_TYPE_U32:
         case GIMP_COMPONENT_TYPE_FLOAT:
-          gimp_metadata_set_bits_per_sample (metadata, 32);
+          gimp_attributes_set_bits_per_sample (attributes, 32);
           break;
 
         case GIMP_COMPONENT_TYPE_DOUBLE:
-          gimp_metadata_set_bits_per_sample (metadata, 64);
+          gimp_attributes_set_bits_per_sample (attributes, 64);
           break;
-        }
+      }
     }
 
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
@@ -1284,16 +1284,17 @@ gimp_image_real_precision_changed (GimpImage *image)
 static void
 gimp_image_real_resolution_changed (GimpImage *image)
 {
-  GimpMetadata *metadata;
+  GimpAttributes *attributes;
 
-  metadata = gimp_image_get_metadata (image);
-  if (metadata)
+  attributes = gimp_image_get_attributes (image);
+
+  if (attributes)
     {
       gdouble xres, yres;
 
       gimp_image_get_resolution (image, &xres, &yres);
-      gimp_metadata_set_resolution (metadata, xres, yres,
-                                    gimp_image_get_unit (image));
+      gimp_attributes_set_resolution (attributes, xres, yres,
+                                      gimp_image_get_unit (image));
     }
 }
 
@@ -1314,16 +1315,17 @@ gimp_image_real_size_changed_detailed (GimpImage *image,
 static void
 gimp_image_real_unit_changed (GimpImage *image)
 {
-  GimpMetadata *metadata;
+  GimpAttributes *attributes;
 
-  metadata = gimp_image_get_metadata (image);
-  if (metadata)
+  attributes = gimp_image_get_attributes (image);
+
+  if (attributes)
     {
       gdouble xres, yres;
 
       gimp_image_get_resolution (image, &xres, &yres);
-      gimp_metadata_set_resolution (metadata, xres, yres,
-                                    gimp_image_get_unit (image));
+      gimp_attributes_set_resolution (attributes, xres, yres,
+                                      gimp_image_get_unit (image));
     }
 }
 
@@ -2321,10 +2323,6 @@ gimp_image_get_xcf_version (GimpImage    *image,
       if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
         version = MAX (3, version);
     }
-
-  /* need version 6 for new metadata */
-  if (gimp_image_get_metadata (image))
-    version = MAX (6, version);
 
   /* need version 7 for high bit depth images */
   if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_GAMMA)

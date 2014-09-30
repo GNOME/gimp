@@ -35,17 +35,18 @@ GimpMetadata * gimp_image_metadata_load_prepare (gint32                 image_ID
                                                  GFile                 *file,
                                                  GError               **error);
 void           gimp_image_metadata_load_finish  (gint32                 image_ID,
+                                                 gint32                 layer_ID,
                                                  const gchar           *mime_type,
                                                  GimpMetadata          *metadata,
                                                  GimpMetadataLoadFlags  flags,
                                                  gboolean               interactive);
 
-GimpMetadata * gimp_image_metadata_save_prepare (gint32                 image_ID,
+GimpAttributes * gimp_image_metadata_save_prepare (gint32                 image_ID,
                                                  const gchar           *mime_type,
                                                  GimpMetadataSaveFlags *suggested_flags);
 gboolean       gimp_image_metadata_save_finish  (gint32                 image_ID,
                                                  const gchar           *mime_type,
-                                                 GimpMetadata          *metadata,
+                                                 GimpAttributes        *attributes,
                                                  GimpMetadataSaveFlags  flags,
                                                  GFile                 *file,
                                                  GError               **error);
