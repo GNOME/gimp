@@ -47,6 +47,7 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-transform.h"
 
 #include "gimprectangletool.h"
 #include "gimptextoptions.h"
@@ -566,6 +567,42 @@ gimp_text_tool_editor_get_cursor_rect (GimpTextTool   *text_tool,
   cursor_rect->y      = PANGO_PIXELS (cursor_rect->y) + offset_y;
   cursor_rect->width  = PANGO_PIXELS (cursor_rect->width);
   cursor_rect->height = PANGO_PIXELS (cursor_rect->height);
+}
+
+void
+gimp_text_tool_editor_update_im_rect (GimpTextTool *text_tool)
+{
+  GimpDisplayShell *shell;
+  PangoRectangle    rect = { 0, };
+  gint              off_x, off_y;
+
+  g_return_if_fail (GIMP_IS_TEXT_TOOL (text_tool));
+
+  shell = gimp_display_get_shell (GIMP_TOOL (text_tool)->display);
+
+  if (text_tool->text)
+    gimp_text_tool_editor_get_cursor_rect (text_tool,
+                                           text_tool->overwrite_mode,
+                                           &rect);
+
+  g_object_get (text_tool, "x1", &off_x, "y1", &off_y, NULL);
+  rect.x += off_x;
+  rect.y += off_y;
+
+  gimp_display_shell_transform_xy (shell, rect.x, rect.y, &rect.x, &rect.y);
+
+  if (text_tool->preedit_overlay)
+    {
+      GtkRequisition requisition;
+
+      gtk_widget_size_request (text_tool->preedit_overlay, &requisition);
+
+      rect.width  = requisition.width;
+      rect.height = requisition.height;
+    }
+
+  gtk_im_context_set_cursor_location (text_tool->im_context,
+                                      (GdkRectangle *) &rect);
 }
 
 
@@ -1343,6 +1380,8 @@ gimp_text_tool_im_preedit_start (GtkIMContext *context,
   gtk_misc_set_padding (GTK_MISC (text_tool->preedit_label), 2, 2);
   gtk_container_add (GTK_CONTAINER (ebox), text_tool->preedit_label);
   gtk_widget_show (text_tool->preedit_label);
+
+  gimp_text_tool_editor_update_im_rect (text_tool);
 }
 
 static void

@@ -772,7 +772,11 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
   if (! text_tool->text  ||
       ! text_tool->layer ||
       ! text_tool->layer->text)
-    return;
+    {
+      gimp_text_tool_editor_update_im_rect (text_tool);
+
+      return;
+    }
 
   gimp_text_tool_ensure_layout (text_tool);
 
@@ -805,6 +809,8 @@ gimp_text_tool_draw (GimpDrawTool *draw_tool)
                                              overwrite);
       gimp_canvas_item_set_highlight (item, TRUE);
     }
+
+  gimp_text_tool_editor_update_im_rect (text_tool);
 }
 
 static void
