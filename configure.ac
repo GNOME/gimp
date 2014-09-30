@@ -65,7 +65,7 @@ m4_define([pygtk_required_version], [2.10.4])
 m4_define([poppler_required_version], [0.12.4])
 m4_define([poppler_data_required_version], [0.4.7])
 m4_define([libgudev_required_version], [167])
-m4_define([gexiv2_required_version], [0.6.1])
+m4_define([gexiv2_required_version], [0.10.3])
 m4_define([lcms_required_version], [2.2])
 m4_define([libpng_required_version], [1.2.37])
 m4_define([liblzma_required_version], [5.0.0])
@@ -2279,6 +2279,7 @@ plug-ins/lighting/Makefile
 plug-ins/lighting/images/Makefile
 plug-ins/map-object/Makefile
 plug-ins/maze/Makefile
+plug-ins/metainfo/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
 plug-ins/pygimp/Makefile
