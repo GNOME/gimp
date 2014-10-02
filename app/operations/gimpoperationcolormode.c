@@ -111,6 +111,7 @@ gimp_operation_color_mode_process_pixels (gfloat              *in,
       if (comp_alpha && new_alpha)
         {
           gint   b;
+          gfloat out_tmp[3];
           gfloat ratio = comp_alpha / new_alpha;
 
           gimp_rgb_to_hsl (&layer_rgb, &layer_hsl);
@@ -120,13 +121,13 @@ gimp_operation_color_mode_process_pixels (gfloat              *in,
           out_hsl.s = layer_hsl.s;
           gimp_hsl_to_rgb (&out_hsl, &out_rgb);
 
-          out[0] = out_rgb.r;
-          out[1] = out_rgb.g;
-          out[2] = out_rgb.b;
+          out_tmp[0] = out_rgb.r;
+          out_tmp[1] = out_rgb.g;
+          out_tmp[2] = out_rgb.b;
 
           for (b = RED; b < ALPHA; b++)
             {
-              out[b] = out[b] * ratio + in[b] * (1.0 - ratio);
+              out[b] = out_tmp[b] * ratio + in[b] * (1.0 - ratio);
             }
         }
       else
