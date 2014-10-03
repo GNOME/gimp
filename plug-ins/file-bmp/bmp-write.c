@@ -83,18 +83,18 @@ static void
 FromL (gint32  wert,
        guchar *bopuffer)
 {
-  bopuffer[0] = (wert & 0x000000ff)>>0x00;
-  bopuffer[1] = (wert & 0x0000ff00)>>0x08;
-  bopuffer[2] = (wert & 0x00ff0000)>>0x10;
-  bopuffer[3] = (wert & 0xff000000)>>0x18;
+  bopuffer[0] = (wert)         & 0xff;
+  bopuffer[1] = (wert >> 0x08) & 0xff;
+  bopuffer[2] = (wert >> 0x10) & 0xff;
+  bopuffer[3] = (wert >> 0x18) & 0xff;
 }
 
 static void
 FromS (gint16  wert,
        guchar *bopuffer)
 {
-  bopuffer[0] = (wert & 0x00ff)>>0x00;
-  bopuffer[1] = (wert & 0xff00)>>0x08;
+  bopuffer[0] = (wert)         & 0xff;
+  bopuffer[1] = (wert >> 0x08) & 0xff;
 }
 
 static void
