@@ -72,7 +72,9 @@ static  void      write_image     (FILE   *f,
                                    gint    bpp,
                                    gint    spzeile,
                                    gint    MapSize,
-                                   RGBMode rgb_format);
+                                   RGBMode rgb_format,
+                                   gint    mask_info_size,
+                                   gint    color_space_size);
 
 static  gboolean  save_dialog     (gint    channels);
 
@@ -338,9 +340,10 @@ WriteBMP (const gchar  *filename,
   else
     SpZeile = ((gint) (((Spcols * BitsPerPixel) / 8) / 4) + 1) * 4;
 
-  color_space_size = 0;
   if (! BMPSaveData.dont_write_color_space_data)
     color_space_size = 68;
+  else
+    color_space_size = 0;
 
   Bitmap_File_Head.bfSize    = (0x36 + MapSize + (rows * SpZeile) +
                                 mask_info_size + color_space_size);
@@ -525,7 +528,8 @@ WriteBMP (const gchar  *filename,
                pixels, cols, rows,
                BMPSaveData.use_run_length_encoding,
                channels, BitsPerPixel, SpZeile,
-               MapSize, BMPSaveData.rgb_format);
+               MapSize, BMPSaveData.rgb_format,
+               mask_info_size, color_space_size);
 
   /* ... and exit normally */
 
@@ -567,7 +571,9 @@ write_image (FILE   *f,
              gint    bpp,
              gint    spzeile,
              gint    MapSize,
-             RGBMode rgb_format)
+             RGBMode rgb_format,
+             gint    mask_info_size,
+             gint    color_space_size)
 {
   guchar  buf[16] = { 0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0 };
   guchar  puffer[8];
@@ -815,7 +821,7 @@ write_image (FILE   *f,
             FromL (length, puffer);
             Write (f, puffer, 4);
             fseek (f, 0x02, SEEK_SET);            /* Write length of file */
-            length += (0x36 + MapSize);
+            length += (0x36 + MapSize + mask_info_size + color_space_size);
             FromL (length, puffer);
             Write (f, puffer, 4);
             g_free (ketten);
