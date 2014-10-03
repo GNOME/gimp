@@ -22,7 +22,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gio/gio.h>
 
 #include "config/config-types.h"
 #include "config/gimpxmlparser.h"
@@ -153,7 +153,7 @@ gimp_tip_free (GimpTip *tip)
 
 /**
  * gimp_tips_from_file:
- * @filename: the name of the tips file to parse
+ * @file:  the tips file to parse
  * @error: return location for a #GError
  *
  * Reads a gimp-tips XML file, creates a new #GimpTip for
@@ -166,15 +166,15 @@ gimp_tip_free (GimpTip *tip)
  * Return value: a #Glist of #GimpTips.
  **/
 GList *
-gimp_tips_from_file (const gchar  *filename,
-                     GError      **error)
+gimp_tips_from_file (GFile   *file,
+                     GError **error)
 {
   GimpXmlParser *xml_parser;
   TipsParser     parser = { 0, };
   const gchar   *tips_locale;
   GList         *tips   = NULL;
 
-  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   parser.value = g_string_new (NULL);
@@ -200,7 +200,7 @@ gimp_tips_from_file (const gchar  *filename,
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
-  gimp_xml_parser_parse_file (xml_parser, filename, error);
+  gimp_xml_parser_parse_gfile (xml_parser, file, error);
 
   gimp_xml_parser_free (xml_parser);
 

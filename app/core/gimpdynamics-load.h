@@ -22,9 +22,10 @@
 #define GIMP_DYNAMICS_FILE_EXTENSION ".gdyn"
 
 
-GList * gimp_dynamics_load (GimpContext  *context,
-                            const gchar  *filename,
-                            GError      **error);
+GList * gimp_dynamics_load (GimpContext   *context,
+                            GFile         *file,
+                            GInputStream  *input,
+                            GError       **error);
 
 
 #endif /* __GIMP_DYNAMICS_LOAD_H__ */

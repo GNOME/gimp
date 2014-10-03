@@ -37,8 +37,8 @@ struct _GimpRc
 {
   GimpPluginConfig  parent_instance;
 
-  gchar            *user_gimprc;
-  gchar            *system_gimprc;
+  GFile            *user_gimprc;
+  GFile            *system_gimprc;
   gboolean          verbose;
   gboolean          autosave;
   guint             save_idle_id;
@@ -51,9 +51,10 @@ struct _GimpRcClass
 
 
 GType     gimp_rc_get_type          (void) G_GNUC_CONST;
-GimpRc  * gimp_rc_new               (const gchar *system_gimprc,
-                                     const gchar *user_gimprc,
+GimpRc  * gimp_rc_new               (GFile       *system_gimprc,
+                                     GFile       *user_gimprc,
                                      gboolean     verbose);
+
 void      gimp_rc_set_autosave      (GimpRc      *gimprc,
                                      gboolean     autosave);
 void      gimp_rc_save              (GimpRc      *gimprc);

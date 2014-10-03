@@ -29,9 +29,10 @@
 </autotools>
 
 <autotools id="librsvg" autogen-sh="configure">
-	<branch version="2.37.0" repo="gnome.org"
-			module="librsvg/2.37/librsvg-2.37.0.tar.xz"
-			hash="sha256:06c57dbcb29369d147b4e6ff4257c42ae5120c504c30fb567a27034ee30fd835">
+	<branch version="2.40.2" repo="gnome.org"
+			module="librsvg/2.40/librsvg-2.40.2.tar.xz"
+			hash="sha256:48049b643294636df7de1a4b997414d699666f5dc44776945c218a257d2a291c">
+		<patch file="librsvg-bug710163.patch" strip="1"/>
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>
@@ -118,9 +119,9 @@
 </autotools>
 
 <autotools id="poppler" autogen-sh="configure">
-	<branch version="0.26.0" repo="poppler"
-			module="poppler-0.26.0.tar.xz"
-			hash="sha1:1f5d08ee01683c309688f17116d18bf47b13f001">
+	<branch version="0.26.3" repo="poppler"
+			module="poppler-0.26.3.tar.xz"
+			hash="sha1:544f64ac2801c0625c519213a999e0c86a9a6bd6">
 	</branch>
 	<dependencies>
 		<dep package="freetype2"/>

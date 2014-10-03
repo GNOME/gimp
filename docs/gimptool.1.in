@@ -119,12 +119,12 @@ Compile,link, and strip \fIplug-in.c\fP into a \fIGIMP\fP plug-in.
 .TP 8
 .B  \-\-install \fIplug-in.c\fP
 Compile, link, and install \fIplug-in.c\fP into the user's personal
-\fIGIMP\fP plug-in directory (\fB$HOME\fP/@gimpdir@/plug-ins)
+\fIGIMP\fP plug-in directory (@manpage_gimpdir@/plug-ins)
 .TP 8
 .B  \-\-install\-strip \fIplug-in.c\fP
 Compile, link,strip, and install \fIplug-in.c\fP into the user's
 personal \fIGIMP\fP
-plug-in directory (\fB$HOME\fP/@gimpdir@/plug-ins)
+plug-in directory (@manpage_gimpdir@/plug-ins)
 .TP 8
 .B  \-\-install\-admin \fIplug-in.c\fP
 Compile, link, and install \fIplug-in.c\fP into the system-wide \fIGIMP\fP
@@ -132,7 +132,7 @@ plug-in directory (@gimpplugindir@/plug-ins)
 .TP 8
 .B  \-\-install\-bin \fIplug-in\fP
 Install \fIplug-in\fP into the user's personal \fIGIMP\fP
-plug-in directory (\fB$HOME\fP/@gimpdir@/plug-ins)
+plug-in directory (@manpage_gimpdir@/plug-ins)
 .TP 8
 .B  \-\-install\-admin\-bin \fIplug-in\fP
 Install \fIplug-in\fP into the system-wide \fIGIMP\fP
@@ -140,7 +140,7 @@ plug-in directory (@gimpplugindir@/plug-ins)
 .TP 8
 .B  \-\-install\-bin\-strip \fIplug-in\fP
 Install stripped \fIplug-in\fP into the user's personal \fIGIMP\fP
-plug-in directory (\fB$HOME\fP/@gimpdir@/plug-ins)
+plug-in directory (@manpage_gimpdir@/plug-ins)
 .TP 8
 .B  \-\-install\-admin\-bin\-strip \fIplug-in\fP
 Install stripped \fIplug-in\fP into the system-wide \fIGIMP\fP
@@ -148,7 +148,7 @@ plug-in directory (@gimpplugindir@/plug-ins)
 .TP 8
 .B  \-\-install\-script \fIscript.scm\fP
 Install \fIscript.scm\fP into the user's personal \fIGIMP\fP
-script directory (\fB$HOME\fP/@gimpdir@/scripts)
+script directory (@manpage_gimpdir@/scripts)
 .TP 8
 .B  \-\-install\-admin\-script \fIscript.scm\fP
 Install \fIscript.scm\fP into the system-wide \fIGIMP\fP
@@ -156,7 +156,7 @@ script directory (@gimpdatadir@/scripts)
 .TP 8
 .B  \-\-uninstall\-bin \fIplug-in\fP
 Uninstall \fIplug-in\fP from the user's personal \fIGIMP\fP
-plug-in directory (\fB$HOME\fP/@gimpdir@/plug-ins)
+plug-in directory (@manpage_gimpdir@/plug-ins)
 .TP 8
 .B  \-\-uninstall\-admin\-bin \fIplug-in\fP
 Uninstall \fIplug-in\fP from the system-wide \fIGIMP\fP
@@ -164,7 +164,7 @@ plug-in directory (@gimpplugindir@/plug-ins)
 .TP 8
 .B  \-\-uninstall\-script \fIscript.scm\fP
 Uninstall \fIscript.scm\fP from the user's personal \fIGIMP\fP
-script directory (\fB$HOME\fP/@gimpdir@/scripts)
+script directory (@manpage_gimpdir@/scripts)
 .TP 8
 .B  \-\-uninstall\-admin\-script \fIscript.scm\fP
 Uninstall \fIscript.scm\fP from the system-wide \fIGIMP\fP

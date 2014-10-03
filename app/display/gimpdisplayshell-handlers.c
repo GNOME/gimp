@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -42,8 +43,6 @@
 #include "core/gimptreehandler.h"
 
 #include "vectors/gimpvectors.h"
-
-#include "file/file-utils.h"
 
 #include "widgets/gimpwidgets-utils.h"
 
@@ -120,10 +119,10 @@ static void   gimp_display_shell_invalidate_preview_handler (GimpImage        *i
 static void   gimp_display_shell_profile_changed_handler    (GimpColorManaged *image,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_saved_handler              (GimpImage        *image,
-                                                             const gchar      *uri,
+                                                             GFile            *file,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_exported_handler           (GimpImage        *image,
-                                                             const gchar      *uri,
+                                                             GFile            *file,
                                                              GimpDisplayShell *shell);
 
 static void   gimp_display_shell_active_vectors_handler     (GimpImage        *image,
@@ -786,30 +785,26 @@ gimp_display_shell_profile_changed_handler (GimpColorManaged *image,
 
 static void
 gimp_display_shell_saved_handler (GimpImage        *image,
-                                  const gchar      *uri,
+                                  GFile            *file,
                                   GimpDisplayShell *shell)
 {
   GimpStatusbar *statusbar = gimp_display_shell_get_statusbar (shell);
-  gchar         *filename  = file_utils_uri_display_name (uri);
 
   gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
                             "document-save", _("Image saved to '%s'"),
-                            filename);
-  g_free (filename);
+                            gimp_file_get_utf8_name (file));
 }
 
 static void
 gimp_display_shell_exported_handler (GimpImage        *image,
-                                     const gchar      *uri,
+                                     GFile            *file,
                                      GimpDisplayShell *shell)
 {
   GimpStatusbar *statusbar = gimp_display_shell_get_statusbar (shell);
-  gchar         *filename  = file_utils_uri_display_name (uri);
 
   gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
                             "document-save", _("Image exported to '%s'"),
-                            filename);
-  g_free (filename);
+                            gimp_file_get_utf8_name (file));
 }
 
 static void

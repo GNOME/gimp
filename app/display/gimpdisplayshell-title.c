@@ -19,10 +19,13 @@
 
 #include <string.h>
 
+#include <lcms2.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "libgimpbase/gimpbase.h"
@@ -36,6 +39,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-profile.h"
 #include "core/gimpitem.h"
 
 #include "gimpdisplay.h"
@@ -450,23 +454,35 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                             gimp_item_get_height (GIMP_ITEM (drawable)));
               break;
 
+            case 'o': /* image's color profile name */
+              {
+                GimpColorProfile *profile = gimp_image_get_profile (image, NULL);
+
+                if (! profile)
+                  profile = gimp_lcms_create_srgb_profile ();
+
+                i += print (title, title_len, i, "%s",
+                            gimp_lcms_profile_get_label (profile));
+
+                cmsCloseProfile (profile);
+              }
+              break;
+
             case '\xc3': /* utf-8 extended char */
               {
                 format ++;
                 switch (*format)
                   {
                   case '\xbe':
-                      {
-                        /* line actually written at 23:55 on an Easter Sunday */
-                        i+= print(title, title_len, i, "42");
-                      }
-                      break;
+                    /* line actually written at 23:55 on an Easter Sunday */
+                    i += print (title, title_len, i, "42");
+                    break;
 
                   default:
                     /* in the case of an unhandled utf-8 extended char format
                      * leave the format string parsing as it was
                     */
-                    format --;
+                    format--;
                     break;
                   }
               }
@@ -476,7 +492,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                * %r = xresolution
                * %R = yresolution
                * %ø = image's fractal dimension
-               * # %þ = the answer to everything - (implemented)
+               * %þ = the answer to everything - (implemented)
                */
 
             default:

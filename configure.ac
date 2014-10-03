@@ -3,8 +3,11 @@
 AC_PREREQ(2.54)
 
 # Making releases on the stable branch:
-#   GIMP_MICRO_VERSION += 1;
-#   GIMP_INTERFACE_AGE += 1;
+#   gimp_micro_version += 1;
+#   gimp_interface_age += 1;
+#
+# For a description of libtool version variables, see:
+# devel-docs/libtool-instructions.txt
 
 m4_define([gimp_major_version], [2])
 m4_define([gimp_minor_version], [9])
@@ -42,7 +45,7 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 # required versions of other packages
 m4_define([babl_required_version], [0.1.11])
 m4_define([gegl_required_version], [0.3.0])
-m4_define([glib_required_version], [2.36.0])
+m4_define([glib_required_version], [2.40.0])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
 m4_define([gdk_pixbuf_required_version], [2.24.1])
@@ -50,6 +53,7 @@ m4_define([cairo_required_version], [1.12.2])
 m4_define([cairo_pdf_required_version], [1.12.2])
 m4_define([pangocairo_required_version], [1.29.4])
 m4_define([fontconfig_required_version], [2.2.0])
+m4_define([fontconfig_win32_recommended_version], [2.11.1])
 m4_define([freetype2_required_version], [2.1.7])
 m4_define([harfbuzz_required_version], [0.9.19])
 m4_define([gtkdoc_required_version], [1.0])
@@ -59,7 +63,7 @@ m4_define([rsvg_required_version], [2.36.0])
 m4_define([wmf_required_version], [0.2.8])
 m4_define([pygtk_required_version], [2.10.4])
 m4_define([poppler_required_version], [0.12.4])
-m4_define([libcurl_required_version], [7.15.1])
+m4_define([poppler_data_required_version], [0.4.7])
 m4_define([libgudev_required_version], [167])
 m4_define([gexiv2_required_version], [0.6.1])
 m4_define([lcms_required_version], [2.2])
@@ -68,6 +72,7 @@ m4_define([liblzma_required_version], [5.0.0])
 m4_define([openexr_required_version], [1.6.1])
 m4_define([gtk_mac_integration_required_version], [2.0.0])
 m4_define([intltool_required_version], [0.40.1])
+m4_define([python2_required_version], [2.5.0])
 
 # Current test considers only 2 version numbers. If we update the recommended
 # version of gettext with more version numbers, please update the tests.
@@ -129,28 +134,54 @@ GLIB_REQUIRED_VERSION=glib_required_version
 GDK_PIXBUF_REQUIRED_VERSION=gdk_pixbuf_required_version
 GTK_REQUIRED_VERSION=gtk_required_version
 CAIRO_REQUIRED_VERSION=cairo_required_version
+CAIRO_PDF_REQUIRED_VERSION=cairo_pdf_required_version
 GEGL_REQUIRED_VERSION=gegl_required_version
 GEXIV2_REQUIRED_VERSION=gexiv2_required_version
+LCMS_REQUIRED_VERSION=lcms_required_version
+LIBPNG_REQUIRED_VERSION=libpng_required_version
+LIBLZMA_REQUIRED_VERSION=liblzma_required_version
 PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
 BABL_REQUIRED_VERSION=babl_required_version
 FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
+FONTCONFIG_WIN32_RECOMMENDED_VERSION=fontconfig_win32_recommended_version
 FREETYPE2_REQUIRED_VERSION=freetype2_required_version
 HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
+WEBKIT_REQUIRED_VERSION=webkit_required_version
 ATK_REQUIRED_VERSION=atk_required_version
+RSVG_REQUIRED_VERSION=rsvg_required_version
+WMF_REQUIRED_VERSION=wmf_required_version
+POPPLER_REQUIRED_VERSION=poppler_required_version
+POPPLER_DATA_REQUIRED_VERSION=poppler_data_required_version
+OPENEXR_REQUIRED_VERSION=openexr_required_version
 INTLTOOL_REQUIRED_VERSION=intltool_required_version
+PYTHON2_REQUIRED_VERSION=python2_required_version
+XGETTEXT_RECOMMENDED_VERSION=xgettext_recommended_version
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GDK_PIXBUF_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
 AC_SUBST(CAIRO_REQUIRED_VERSION)
+AC_SUBST(CAIRO_PDF_REQUIRED_VERSION)
 AC_SUBST(GEGL_REQUIRED_VERSION)
 AC_SUBST(GEXIV2_REQUIRED_VERSION)
+AC_SUBST(LCMS_REQUIRED_VERSION)
+AC_SUBST(LIBPNG_REQUIRED_VERSION)
+AC_SUBST(LIBLZMA_REQUIRED_VERSION)
 AC_SUBST(PANGOCAIRO_REQUIRED_VERSION)
 AC_SUBST(BABL_REQUIRED_VERSION)
 AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
+AC_SUBST(FONTCONFIG_WIN32_RECOMMENDED_VERSION)
 AC_SUBST(FREETYPE2_REQUIRED_VERSION)
 AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
+AC_SUBST(WEBKIT_REQUIRED_VERSION)
 AC_SUBST(ATK_REQUIRED_VERSION)
+AC_SUBST(RSVG_REQUIRED_VERSION)
+AC_SUBST(WMF_REQUIRED_VERSION)
+AC_SUBST(POPPLER_REQUIRED_VERSION)
+AC_SUBST(POPPLER_DATA_REQUIRED_VERSION)
+AC_SUBST(OPENEXR_REQUIRED_VERSION)
 AC_SUBST(INTLTOOL_REQUIRED_VERSION)
+AC_SUBST(PYTHON2_REQUIRED_VERSION)
+AC_SUBST(XGETTEXT_RECOMMENDED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
 # Makefiles and conditionally defined here as a preprocessor symbol
@@ -295,6 +326,7 @@ AC_SUBST(WINDRES)
 # Checks for programs.
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
+AC_PROG_LN_S
 
 # Large file support for the swap file
 AC_SYS_LARGEFILE
@@ -482,7 +514,6 @@ AM_GLIB_GNU_GETTEXT
 
 # Testing xgettext version since we had some problem with localizing script-fu. See bug 720052.
 AC_MSG_CHECKING([for recommended xgettext version (>= xgettext_recommended_version)])
-XGETTEXT_RECOMMENDED_VERSION=xgettext_recommended_version
 XGETTEXT_RECOMMENDED_VERSION_MAJOR=`echo $XGETTEXT_RECOMMENDED_VERSION | awk -F. '{ print $ 1; }'`
 XGETTEXT_RECOMMENDED_VERSION_MINOR_1=`echo $XGETTEXT_RECOMMENDED_VERSION | awk -F. '{ print $ 2; }'`
 
@@ -492,12 +523,10 @@ XGETTEXT_APPLIED_VERSION_MINOR_1=`echo $XGETTEXT_APPLIED_VERSION | awk -F. '{ pr
 
 have_recommended_xgettext="no"
 if test -n "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
-    echo "major is: $XGETTEXT_APPLIED_VERSION_MAJOR"
     if test "$XGETTEXT_RECOMMENDED_VERSION_MAJOR" -lt "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
         have_recommended_xgettext="yes"
     elif test "$XGETTEXT_RECOMMENDED_VERSION_MAJOR" -eq "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
         if test -n "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
-        echo "major is: $XGETTEXT_APPLIED_VERSION_MINOR_1"
             if test "$XGETTEXT_RECOMMENDED_VERSION_MINOR_1" -le "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
                 have_recommended_xgettext="yes"
             fi
@@ -550,7 +579,9 @@ PKG_CHECK_MODULES(GMODULE_NO_EXPORT, gmodule-no-export-2.0)
 
 PKG_CHECK_MODULES(GIO, gio-2.0)
 
-if test "$os_win32" != "yes"; then
+if test "x$os_win32" = "xyes"; then
+  PKG_CHECK_MODULES(GIO_WINDOWS, gio-windows-2.0)
+else
   PKG_CHECK_MODULES(GIO_UNIX, gio-unix-2.0)
 fi
 
@@ -559,13 +590,13 @@ if test "x$GDBUS_CODEGEN" = xno; then
   AC_MSG_ERROR([Could not find gdbus-codegen in your PATH])
 fi
 
-AC_MSG_CHECKING([if GLib is version 2.39.0 or newer])
-if $PKG_CONFIG --atleast-version=2.39.0 glib-2.0; then
-  have_glib_2_39=yes
+AC_MSG_CHECKING([if GLib is version 2.43.0 or newer])
+if $PKG_CONFIG --atleast-version=2.43.0 glib-2.0; then
+  have_glib_2_43=yes
 else
-  have_glib_2_39=no
+  have_glib_2_43=no
 fi
-AC_MSG_RESULT($have_glib_2_39)
+AC_MSG_RESULT($have_glib_2_43)
 
 
 # Check for bind_textdomain_codeset, including -lintl if GLib brings it in.
@@ -625,6 +656,24 @@ gimp_save_CFLAGS=$CFLAGS
 CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 
 PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
+
+# Windows platform had a few bugs fixed in earlier fontconfig.
+# Display a warning when compiling with a flawed fontconfig.
+# See bugs 708110 and 703331.
+have_recommended_fontconfig=""
+if test "x$platform_win32" = "xyes"; then
+    PKG_CHECK_MODULES(RECOMMENDED_WIN32_FONTCONFIG, fontconfig >= fontconfig_win32_recommended_version,
+                      have_recommended_fontconfig="yes", have_recommended_fontconfig="no")
+
+    if test "x$have_recommended_fontconfig" = xno; then
+        have_recommended_fontconfig="
+WARNING: Your fontconfig version is `$PKG_CONFIG --modversion fontconfig`.
+         The recommended fontconfig version under Windows is $FONTCONFIG_WIN32_RECOMMENDED_VERSION or over.
+         If you continue without updating fontconfig, your build may have partially broken font processing."
+    else
+        have_recommended_fontconfig=""
+    fi
+fi
 
 AC_MSG_CHECKING([if Pango is version 1.32.0 or newer])
 if $PKG_CONFIG --atleast-version=1.32.0 pango; then
@@ -1228,13 +1277,24 @@ AC_SUBST(Z_LIBS)
 # Check for libbzip2
 ####################
 
+gimp_save_LIBS=$LIBS
+LIBS="$LIBS -lbz2"
+
 if test -z "$BZIP2_LIBS"; then
-  AC_CHECK_LIB(bz2, BZ2_bzCompress,
-    [AC_CHECK_HEADER(bzlib.h,
-      BZIP2_LIBS='-lbz2',
-      AC_MSG_ERROR([libbzip2 header files not found]))],
-    AC_MSG_ERROR([libbzip2 library not found]))
+  # We used to use AC_CHECK_LIB, but bz2 uses the WINAPI calling convention on
+  # windows, so the test needs to #include <bzlib.h> to be able to link properly
+  AC_CHECK_HEADER(bzlib.h,
+    [AC_MSG_CHECKING([for BZ2_bzCompress in -lbz2]);
+    AC_LINK_IFELSE(
+      [AC_LANG_PROGRAM(
+        [#include <bzlib.h>],
+        [BZ2_bzCompress (NULL, 0);])],
+      [AC_MSG_RESULT([yes]); BZIP2_LIBS='-lbz2'],
+      AC_MSG_ERROR([libbzip2 library not found]))],
+    AC_MSG_ERROR([libbzip2 header files not found]))
 fi
+
+LIBS=$gimp_save_LIBS
 
 AC_SUBST(BZIP2_LIBS)
 
@@ -1393,7 +1453,7 @@ AM_CONDITIONAL(HAVE_OPENEXR, test "x$have_openexr" = xyes)
 # Check for webkit
 ##################
 
-AC_ARG_WITH(webkit, [  --without-webkit        don't build the help-browser plug-in])
+AC_ARG_WITH(webkit, [  --without-webkit        don't build the help-browser and web-page plug-ins])
 
 have_webkit=no
 if test "x$with_webkit" != xno; then
@@ -1459,10 +1519,17 @@ have_poppler=no
 if test "x$with_poppler" != xno; then
   PKG_CHECK_MODULES(POPPLER,
     poppler-glib >= poppler_required_version,
-    FILE_PDF_LOAD='file-pdf-load$(EXEEXT)'
-    AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
-    have_poppler=yes,
-    have_poppler="Using PostScript plug-in (libpoppler not found)")
+    [ FILE_PDF_LOAD='file-pdf-load$(EXEEXT)'
+      AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
+      # We don't check against a poppler-data version, because old
+      # versions may work as well. Yet the pkg-config file has only been
+      # added in 0.4.7, thus we can't verify presence of older versions.
+      PKG_CHECK_MODULES(POPPLER_DATA, poppler-data,
+        [have_poppler="yes (Cyrillic and CJK support: yes)"],
+        [have_poppler='yes (Cyrillic and CJK support: no or poppler-data < poppler_data_required_version)']
+      )
+    ],
+    have_poppler="Using PostScript plug-in (libpoppler-glib not found)")
 else
   have_poppler="Using PostScript plug-in (libpoppler support disabled)"
 fi
@@ -1490,42 +1557,6 @@ AC_SUBST(FILE_PDF_SAVE)
 ## If both poppler and cairo-pdf are enabled then we have complete PDF support
 if test "x$have_cairo_pdf" = xyes && test "x$have_poppler" = xyes; then
   MIME_TYPES="$MIME_TYPES;application/pdf"
-fi
-
-
-################################
-# Check for gio/gvfs and libcurl
-################################
-
-uri_plugin=no
-
-
-AC_ARG_WITH(gvfs, [  --without-gvfs          build without GIO/GVfs support])
-
-AM_CONDITIONAL(HAVE_GVFS, test "x$with_gvfs" != xno)
-
-
-AC_ARG_WITH(libcurl,  [  --without-libcurl       build without curl support])
-
-have_libcurl="no (disabled)"
-
-if test "x$with_libcurl" != xno; then
-
-PKG_CHECK_MODULES(CURL, libcurl >= libcurl_required_version,
-  have_libcurl=yes,
-  have_libcurl="no (libcurl not found)")
-
-fi
-
-AM_CONDITIONAL(HAVE_LIBCURL, test "x$have_libcurl" = xyes)
-
-
-if test "x$with_gvfs" != xno; then
-  uri_plugin="yes (using GIO/GVfs)"
-elif test "x$have_libcurl" = xyes; then
-  uri_plugin="yes (using libcurl)"
-elif test "x$os_win32" = xno; then
-  uri_plugin="yes (using wget)"
 fi
 
 
@@ -1762,10 +1793,10 @@ m4_define([pycheck_error], [
 if test "x$enable_python" != xno; then
   enable_python="yes"
   # check for Python
-  AM_PATH_PYTHON(2.5.0,,
-    [AC_MSG_ERROR([pycheck_error([Python 2.5.0 or newer], [it])])])
+  AM_PATH_PYTHON2(python2_required_version,,
+    [AC_MSG_ERROR([pycheck_error([Python 2 (python2_required_version or newer)], [it])])])
   AM_CHECK_PYTHON_HEADERS(,
-    [AC_MSG_ERROR([pycheck_error([Python headers], [them])])])
+    [AC_MSG_ERROR([pycheck_error([Python 2 headers], [them])])])
 
   # Win32 needs all symbols resolved for linking, even for DLLs
   # Assume the link library is in $exec_prefix/libs
@@ -1973,7 +2004,7 @@ AC_ARG_ENABLE(gimp-console, [  --enable-gimp-console   build a console-only bina
 AM_CONDITIONAL(ENABLE_GIMP_CONSOLE, test "x$enable_gimp_console" != xno)
 
 
-# Possibly change default gimpdir from .gimp-major.minor
+# Possibly change default gimpdir from $XDG_CONFIG_HOME/GIMP/gimp_user_version
 gimpdir=GIMP
 AC_ARG_WITH(gimpdir, [  --with-gimpdir=DIR      change default gimpdir from $XDG_CONFIG_HOME/GIMP/gimp_user_version to $XDG_CONFIG_HOME/DIR/gimp_user_version, or to DIR if DIR is an absolute path],
 if eval "test x$with_gimpdir != x"; then
@@ -1982,11 +2013,23 @@ if eval "test x$with_gimpdir != x"; then
   fi
 fi)
 
+# Build the gimpdir to be used in manpages here, because the manpage
+# source is unreadable enough already
+case "$gimpdir" in
+  /*)
+    manpage_gimpdir="$gimpdir"
+    ;;
+  *)
+    manpage_gimpdir="\\fB\$XDG_CONFIG_HOME\\fP/$gimpdir/gimp_user_version"
+    ;;
+esac
+
 gimpdatadir="$datadir/$PACKAGE/gimp_data_version"
 gimpplugindir="$libdir/$PACKAGE/gimp_plugin_version"
 gimpsysconfdir="$sysconfdir/$PACKAGE/gimp_sysconf_version"
 
 AC_SUBST(gimpdir)
+AC_SUBST(manpage_gimpdir)
 AC_SUBST(gimpdatadir)
 AC_SUBST(gimpplugindir)
 AC_SUBST(gimpsysconfdir)
@@ -2029,7 +2072,7 @@ CPPFLAGS="${CPPFLAGS} -DGIMP_DISABLE_DEPRECATED -DBABL_DISABLE_DEPRECATED -DGSEA
 # We must build without problems with future releases of libraries
 # and disabling deprecated API risks breaking the build
 
-if test "x$have_glib_2_39" != "xyes"; then
+if test "x$have_glib_2_43" != "xyes"; then
   CPPFLAGS="${CPPFLAGS} -DG_DISABLE_DEPRECATED"
 fi
 
@@ -2205,10 +2248,7 @@ build/windows/Makefile
 build/windows/gimp.rc
 build/windows/gimp-plug-ins.rc
 plug-ins/Makefile
-plug-ins/color-rotate/Makefile
-plug-ins/color-rotate/images/Makefile
 plug-ins/file-bmp/Makefile
-plug-ins/file-compressor/Makefile
 plug-ins/file-exr/Makefile
 plug-ins/file-faxg3/Makefile
 plug-ins/file-fits/Makefile
@@ -2217,7 +2257,6 @@ plug-ins/file-ico/Makefile
 plug-ins/file-jpeg/Makefile
 plug-ins/file-psd/Makefile
 plug-ins/file-sgi/Makefile
-plug-ins/file-uri/Makefile
 plug-ins/flame/Makefile
 plug-ins/fractal-explorer/Makefile
 plug-ins/fractal-explorer/examples/Makefile
@@ -2360,15 +2399,13 @@ Optional Plug-Ins:
   PDF (import):        $have_poppler
   PDF (export):        $have_cairo_pdf
   Print:               $enable_print
-  Python:              $enable_python
+  Python 2:            $enable_python
   Script-Fu:           $have_script_fu
   SVG:                 $have_librsvg
   TIFF:                $have_libtiff
   TWAIN (MacOS X):     $mac_twain_ok
   TWAIN (Win32):       $os_win32
-  URI:                 $uri_plugin
   Webpage:             $have_webkit
-  Windows ICO:         $have_libpng
   WMF:                 $have_libwmf
   X11 Mouse Cursor:    $have_xmc
   XPM:                 $have_libxpm
@@ -2380,5 +2417,5 @@ Optional Modules:
 
 Tests:
   Use xvfb-run         $have_xvfb_run
-$have_recommended_xgettext
+$have_recommended_xgettext $have_recommended_fontconfig
 ]);

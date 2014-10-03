@@ -336,7 +336,7 @@ HELP
   GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
 
   if (progress)
-    gimp_progress_start (progress, _("Scaling"), FALSE);
+    gimp_progress_start (progress, FALSE, _("Scaling"));
 
   gimp_image_scale (image, new_width, new_height,
                     pdb_context->interpolation,
@@ -369,7 +369,7 @@ sub image_scale_full {
         code => <<'CODE'
 {
   if (progress)
-    gimp_progress_start (progress, _("Scaling"), FALSE);
+    gimp_progress_start (progress, FALSE, _("Scaling"));
 
   gimp_image_scale (image, new_width, new_height, interpolation, progress);
 
@@ -470,7 +470,7 @@ sub image_rotate {
         code => <<'CODE'
 {
   if (progress)
-    gimp_progress_start (progress, _("Rotating"), FALSE);
+    gimp_progress_start (progress, FALSE, _("Rotating"));
 
   gimp_image_rotate (image, context, rotate_type, progress);
 
@@ -2245,9 +2245,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  const gchar *uri = gimp_image_get_any_uri (image);
-  if (uri)
-    filename = g_filename_from_uri (uri, NULL, NULL);
+  GFile *file = gimp_image_get_any_file (image);
+  if (file)
+    filename = g_file_get_path (file);
 }
 CODE
     );
@@ -2325,7 +2325,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  uri = g_strdup (gimp_image_get_any_uri (image));
+  GFile *file = gimp_image_get_any_file (image);
+  if (file)
+    uri = g_file_get_uri (file);
 }
 CODE
     );
@@ -2357,7 +2359,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  uri = g_strdup (gimp_image_get_uri (image));
+  GFile *file = gimp_image_get_file (image);
+  if (file)
+    uri = g_file_get_uri (file);
 }
 CODE
     );
@@ -2391,7 +2395,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  uri = g_strdup (gimp_image_get_imported_uri (image));
+  GFile *file = gimp_image_get_imported_file (image);
+  if (file)
+    uri = g_file_get_uri (file);
 }
 CODE
     );
@@ -2424,7 +2430,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  uri = g_strdup (gimp_image_get_exported_uri (image));
+  GFile *file = gimp_image_get_exported_file (image);
+  if (file)
+    uri = g_file_get_uri (file);
 }
 CODE
     );
@@ -3052,7 +3060,6 @@ CODE
               "core/gimpunit.h"
               "plug-in/gimpplugin.h"
               "plug-in/gimppluginmanager.h"
-              "file/file-utils.h"
               "gimppdbcontext.h"
               "gimppdberror.h"
               "gimppdb-utils.h"

@@ -102,11 +102,6 @@ static gboolean      gimp_curve_copy              (GimpConfig       *src,
                                                    GimpConfig       *dest,
                                                    GParamFlags       flags);
 
-static void          gimp_curve_set_n_points      (GimpCurve        *curve,
-                                                   gint              n_points);
-static void          gimp_curve_set_n_samples     (GimpCurve        *curve,
-                                                   gint              n_samples);
-
 static void          gimp_curve_calculate         (GimpCurve        *curve);
 static void          gimp_curve_plot              (GimpCurve        *curve,
                                                    gint              p1,
@@ -648,11 +643,13 @@ gimp_curve_get_curve_type (GimpCurve *curve)
   return curve->curve_type;
 }
 
-static void
+void
 gimp_curve_set_n_points (GimpCurve *curve,
                          gint       n_points)
 {
   g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (n_points >= 2);
+  g_return_if_fail (n_points <= 1024);
 
   if (n_points != curve->n_points)
     {
@@ -694,11 +691,13 @@ gimp_curve_get_n_points (GimpCurve *curve)
   return curve->n_points;
 }
 
-static void
+void
 gimp_curve_set_n_samples (GimpCurve *curve,
                           gint       n_samples)
 {
   g_return_if_fail (GIMP_IS_CURVE (curve));
+  g_return_if_fail (n_samples >= 256);
+  g_return_if_fail (n_samples <= 4096);
 
   if (n_samples != curve->n_samples)
     {

@@ -114,8 +114,8 @@ static void   prefs_devices_save_callback         (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_devices_clear_callback        (GtkWidget  *widget,
                                                    Gimp       *gimp);
-static void   prefs_search_empty_callback         (GtkWidget  *widget,
-                                                   gpointer    user_data);
+static void   prefs_search_clear_callback         (GtkWidget  *widget,
+                                                   Gimp       *gimp);
 static void   prefs_tool_options_save_callback    (GtkWidget  *widget,
                                                    Gimp       *gimp);
 static void   prefs_tool_options_clear_callback   (GtkWidget  *widget,
@@ -653,10 +653,10 @@ prefs_devices_clear_callback (GtkWidget *widget,
 }
 
 static void
-prefs_search_empty_callback (GtkWidget  *widget,
-                             gpointer    user_data)
+prefs_search_clear_callback (GtkWidget *widget,
+                             Gimp      *gimp)
 {
-  gimp_action_history_empty ();
+  gimp_action_history_clear (gimp);
 }
 
 static void
@@ -1451,6 +1451,32 @@ prefs_dialog_new (Gimp       *gimp,
                     gimp);
 
 
+  /****************/
+  /*  Playground  */
+  /****************/
+  if (gimp->show_playground)
+    {
+      GtkWidget *label;
+
+      pixbuf = prefs_get_pixbufs (dialog, "playground", &small_pixbuf);
+      vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                      _("Experimental Playground"),
+                                      pixbuf,
+                                      _("Playground"),
+                                      small_pixbuf,
+                                      GIMP_HELP_PREFS_DIALOG,
+                                      NULL,
+                                      &top_iter);
+
+      vbox2 = prefs_frame_new (_("Insane Options"),
+                               GTK_CONTAINER (vbox), TRUE);
+
+      label = gtk_label_new ("Fuck Yeah!");
+      gtk_box_pack_start (GTK_BOX (vbox2), label, TRUE, TRUE, 0);
+      gtk_widget_show (label);
+    }
+
+
   /***********/
   /*  Theme  */
   /***********/
@@ -1510,12 +1536,13 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0; i < n_themes; i++)
       {
-        GtkTreeIter iter;
+        GtkTreeIter  iter;
+        GFile       *theme_dir = themes_get_theme_dir (gimp, themes[i]);
 
         gtk_list_store_append (list_store, &iter);
         gtk_list_store_set (list_store, &iter,
                             0, themes[i],
-                            1, themes_get_theme_dir (gimp, themes[i]),
+                            1, gimp_file_get_utf8_name (theme_dir),
                             -1);
 
         if (GIMP_GUI_CONFIG (object)->theme &&
@@ -1533,8 +1560,7 @@ prefs_dialog_new (Gimp       *gimp,
           }
       }
 
-    if (themes)
-      g_strfreev (themes);
+    g_strfreev (themes);
 
     g_signal_connect (sel, "changed",
                       G_CALLBACK (prefs_theme_select_callback),
@@ -1647,8 +1673,8 @@ prefs_dialog_new (Gimp       *gimp,
                              _("Clear Action History"),
                              GTK_BOX (vbox2));
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (prefs_search_empty_callback),
-                    NULL);
+                    G_CALLBACK (prefs_search_clear_callback),
+                    gimp);
 
   g_object_unref (size_group);
   size_group = NULL;

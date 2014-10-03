@@ -20,13 +20,11 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -361,9 +359,9 @@ gimp_curves_config_curve_dirty (GimpCurve        *curve,
 /*  public functions  */
 
 GObject *
-gimp_curves_config_new_spline (gint32        channel,
-                               const guint8 *points,
-                               gint          n_points)
+gimp_curves_config_new_spline (gint32         channel,
+                               const gdouble *points,
+                               gint           n_points)
 {
   GimpCurvesConfig *config;
   GimpCurve        *curve;
@@ -371,6 +369,8 @@ gimp_curves_config_new_spline (gint32        channel,
 
   g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
                         channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+  g_return_val_if_fail (points != NULL, NULL);
+  g_return_val_if_fail (n_points >= 2 && n_points <= 1024, NULL);
 
   config = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
 
@@ -378,16 +378,16 @@ gimp_curves_config_new_spline (gint32        channel,
 
   gimp_data_freeze (GIMP_DATA (curve));
 
-  /* FIXME: create a curves object with the right number of points */
-  /*  unset the last point  */
-  gimp_curve_set_point (curve, curve->n_points - 1, -1, -1);
+  gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
+  gimp_curve_set_n_samples (curve, n_points);
 
-  n_points = MIN (n_points / 2, curve->n_points);
+  /*  unset the last point  */
+  gimp_curve_set_point (curve, curve->n_points - 1, -1.0, -1.0);
 
   for (i = 0; i < n_points; i++)
     gimp_curve_set_point (curve, i,
-                          (gdouble) points[i * 2]     / 255.0,
-                          (gdouble) points[i * 2 + 1] / 255.0);
+                          (gdouble) points[i * 2],
+                          (gdouble) points[i * 2 + 1]);
 
   gimp_data_thaw (GIMP_DATA (curve));
 
@@ -395,9 +395,9 @@ gimp_curves_config_new_spline (gint32        channel,
 }
 
 GObject *
-gimp_curves_config_new_explicit (gint32        channel,
-                                 const guint8 *points,
-                                 gint          n_points)
+gimp_curves_config_new_explicit (gint32         channel,
+                                 const gdouble *samples,
+                                 gint           n_samples)
 {
   GimpCurvesConfig *config;
   GimpCurve        *curve;
@@ -405,6 +405,8 @@ gimp_curves_config_new_explicit (gint32        channel,
 
   g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
                         channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+  g_return_val_if_fail (samples != NULL, NULL);
+  g_return_val_if_fail (n_samples >= 2 && n_samples <= 4096, NULL);
 
   config = g_object_new (GIMP_TYPE_CURVES_CONFIG, NULL);
 
@@ -413,15 +415,73 @@ gimp_curves_config_new_explicit (gint32        channel,
   gimp_data_freeze (GIMP_DATA (curve));
 
   gimp_curve_set_curve_type (curve, GIMP_CURVE_FREE);
+  gimp_curve_set_n_samples (curve, n_samples);
 
-  for (i = 0; i < 256; i++)
+  for (i = 0; i < n_samples; i++)
     gimp_curve_set_curve (curve,
-                          (gdouble) i         / 255.0,
-                          (gdouble) points[i] / 255.0);
+                          (gdouble) i / (gdouble) (n_samples - 1),
+                          (gdouble) samples[i]);
 
   gimp_data_thaw (GIMP_DATA (curve));
 
   return G_OBJECT (config);
+}
+
+GObject *
+gimp_curves_config_new_spline_cruft (gint32        channel,
+                                     const guint8 *points,
+                                     gint          n_points)
+{
+  GObject *config;
+  gdouble *d_points;
+  gint     i;
+
+  g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
+                        channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+  g_return_val_if_fail (points != NULL, NULL);
+  g_return_val_if_fail (n_points >= 2 && n_points <= 1024, NULL);
+
+  d_points = g_new (gdouble, 2 * n_points);
+
+  for (i = 0; i < n_points; i++)
+    {
+      d_points[i * 2]     = (gdouble) points[i * 2]     / 255.0;
+      d_points[i * 2 + 1] = (gdouble) points[i * 2 + 1] / 255.0;
+    }
+
+  config = gimp_curves_config_new_spline (channel, d_points, n_points);
+
+  g_free (d_points);
+
+  return config;
+}
+
+GObject *
+gimp_curves_config_new_explicit_cruft (gint32        channel,
+                                       const guint8 *samples,
+                                       gint          n_samples)
+{
+  GObject *config;
+  gdouble *d_samples;
+  gint     i;
+
+  g_return_val_if_fail (channel >= GIMP_HISTOGRAM_VALUE &&
+                        channel <= GIMP_HISTOGRAM_ALPHA, NULL);
+  g_return_val_if_fail (samples != NULL, NULL);
+  g_return_val_if_fail (n_samples >= 2 && n_samples <= 4096, NULL);
+
+  d_samples = g_new (gdouble, n_samples);
+
+  for (i = 0; i < n_samples; i++)
+    {
+      d_samples[i] = (gdouble) samples[i] / 255.0;
+    }
+
+  config = gimp_curves_config_new_explicit (channel, d_samples, n_samples);
+
+  g_free (d_samples);
+
+  return config;
 }
 
 void
@@ -436,26 +496,34 @@ gimp_curves_config_reset_channel (GimpCurvesConfig *config)
 
 gboolean
 gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
-                               gpointer           fp,
+                               GInputStream      *input,
                                GError           **error)
 {
-  FILE  *file = fp;
-  gint   i, j;
-  gint   fields;
-  gchar  buf[50];
-  gint   index[5][GIMP_CURVE_N_CRUFT_POINTS];
-  gint   value[5][GIMP_CURVE_N_CRUFT_POINTS];
+  GDataInputStream *data_input;
+  gint              index[5][GIMP_CURVE_N_CRUFT_POINTS];
+  gint              value[5][GIMP_CURVE_N_CRUFT_POINTS];
+  gchar            *line;
+  gsize             line_len;
+  gint              i, j;
 
   g_return_val_if_fail (GIMP_IS_CURVES_CONFIG (config), FALSE);
-  g_return_val_if_fail (file != NULL, FALSE);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! fgets (buf, sizeof (buf), file) ||
-      strcmp (buf, "# GIMP Curves File\n") != 0)
+  data_input = g_data_input_stream_new (input);
+
+  line_len = 64;
+  line = g_data_input_stream_read_line (data_input, &line_len,
+                                        NULL, error);
+  if (! line)
+    return FALSE;
+
+  if (strcmp (line, "# GIMP Curves File") != 0)
     {
-      g_set_error_literal (error,
-			   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+      g_set_error_literal (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
 			   _("not a GIMP Curves file"));
+      g_object_unref (data_input);
+      g_free (line);
       return FALSE;
     }
 
@@ -463,18 +531,40 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
     {
       for (j = 0; j < GIMP_CURVE_N_CRUFT_POINTS; j++)
         {
-          fields = fscanf (file, "%d %d ", &index[i][j], &value[i][j]);
-          if (fields != 2)
+          gchar *x_str = NULL;
+          gchar *y_str = NULL;
+
+          if (! (x_str = g_data_input_stream_read_upto (data_input, " ", -1,
+                                                        NULL, NULL, error)) ||
+              ! g_data_input_stream_read_byte (data_input,  NULL, error) ||
+              ! (y_str = g_data_input_stream_read_upto (data_input, " ", -1,
+                                                        NULL, NULL, error)) ||
+              ! g_data_input_stream_read_byte (data_input,  NULL, error))
             {
-              /*  FIXME: should have a helpful error message here  */
-              g_printerr ("fields != 2");
-              g_set_error_literal (error,
-				   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-				   _("parse error"));
+              g_free (x_str);
+              g_free (y_str);
+              g_object_unref (data_input);
               return FALSE;
             }
+
+          if (sscanf (x_str, "%d", &index[i][j]) != 1 ||
+              sscanf (y_str, "%d", &value[i][j]) != 1)
+            {
+              g_set_error_literal (error,
+				   GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+				   _("Parse error, didn't find 2 integers"));
+              g_free (x_str);
+              g_free (y_str);
+              g_object_unref (data_input);
+              return FALSE;
+            }
+
+          g_free (x_str);
+          g_free (y_str);
         }
     }
+
+  g_object_unref (data_input);
 
   g_object_freeze_notify (G_OBJECT (config));
 
@@ -485,6 +575,7 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
       gimp_data_freeze (GIMP_DATA (curve));
 
       gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
+      gimp_curve_set_n_points (curve, GIMP_CURVE_N_CRUFT_POINTS);
 
       gimp_curve_reset (curve, FALSE);
 
@@ -508,17 +599,17 @@ gimp_curves_config_load_cruft (GimpCurvesConfig  *config,
 
 gboolean
 gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
-                               gpointer           fp,
+                               GOutputStream     *output,
                                GError           **error)
 {
-  FILE *file = fp;
-  gint  i;
+  GString *string;
+  gint     i;
 
   g_return_val_if_fail (GIMP_IS_CURVES_CONFIG (config), FALSE);
-  g_return_val_if_fail (file != NULL, FALSE);
+  g_return_val_if_fail (G_IS_OUTPUT_STREAM (output), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  fprintf (file, "# GIMP Curves File\n");
+  string = g_string_new ("# GIMP Curves File\n");
 
   for (i = 0; i < 5; i++)
     {
@@ -561,18 +652,28 @@ gimp_curves_config_save_cruft (GimpCurvesConfig  *config,
 
           if (x < 0.0 || y < 0.0)
             {
-              fprintf (file, "%d %d ", -1, -1);
+              g_string_append_printf (string, "%d %d ", -1, -1);
             }
           else
             {
-              fprintf (file, "%d %d ",
-                       (gint) (x * 255.999),
-                       (gint) (y * 255.999));
+              g_string_append_printf (string, "%d %d ",
+                                      (gint) (x * 255.999),
+                                      (gint) (y * 255.999));
             }
         }
 
-      fprintf (file, "\n");
+      g_string_append_printf (string, "\n");
     }
+
+  if (! g_output_stream_write_all (output, string->str, string->len,
+                                   NULL, NULL, error))
+    {
+      g_prefix_error (error, _("Writing curves file failed: "));
+      g_string_free (string, TRUE);
+      return FALSE;
+    }
+
+  g_string_free (string, TRUE);
 
   return TRUE;
 }

@@ -239,7 +239,7 @@ gfig_dialog (void)
 
   if (parasite)
     {
-      gimp_drawable_fill (gfig_context->drawable_id, GIMP_TRANSPARENT_FILL);
+      gimp_drawable_fill (gfig_context->drawable_id, GIMP_FILL_TRANSPARENT);
       gfig_context->using_new_layer = FALSE;
       gimp_parasite_free (parasite);
     }
@@ -248,7 +248,7 @@ gfig_dialog (void)
       newlayer = gimp_layer_new (gfig_context->image_id, "GFig",
                                  img_width, img_height,
                                  img_type, 100.0, GIMP_NORMAL_MODE);
-      gimp_drawable_fill (newlayer, GIMP_TRANSPARENT_FILL);
+      gimp_drawable_fill (newlayer, GIMP_FILL_TRANSPARENT);
       gimp_image_insert_layer (gfig_context->image_id, newlayer, -1, -1);
       gfig_context->drawable_id = newlayer;
       gfig_context->using_new_layer = TRUE;
@@ -1620,7 +1620,6 @@ save_file_chooser_response (GtkFileChooser *chooser,
 
       gfig_context->current_obj = obj;
       gfig_save_callbk ();
-      gfig_context->current_obj = gfig_context->current_obj;
     }
 
   gtk_widget_destroy (GTK_WIDGET (chooser));
@@ -1991,7 +1990,7 @@ gfig_paint_callback (void)
 
   objs = gfig_context->current_obj->obj_list;
 
-  gimp_drawable_fill (gfig_context->drawable_id, GIMP_TRANSPARENT_FILL);
+  gimp_drawable_fill (gfig_context->drawable_id, GIMP_FILL_TRANSPARENT);
 
   while (objs)
     {

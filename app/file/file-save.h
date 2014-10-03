@@ -24,7 +24,7 @@
 GimpPDBStatusType   file_save (Gimp                 *gimp,
                                GimpImage            *image,
                                GimpProgress         *progress,
-                               const gchar          *uri,
+                               GFile                *file,
                                GimpPlugInProcedure  *file_proc,
                                GimpRunMode           run_mode,
                                gboolean              change_saved_state,

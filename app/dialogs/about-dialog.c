@@ -203,19 +203,26 @@ about_dialog_unmap (GtkWidget       *widget,
 static GdkPixbuf *
 about_dialog_load_logo (void)
 {
-  GdkPixbuf *pixbuf;
-  gchar     *filename;
+  GdkPixbuf    *pixbuf = NULL;
+  GFile        *file;
+  GInputStream *input;
 
-  filename = g_build_filename (gimp_data_directory (), "images",
+  file = gimp_data_directory_file ("images",
 #ifdef GIMP_UNSTABLE
-                               "gimp-devel-logo.png",
+                                   "gimp-devel-logo.png",
 #else
-                               "gimp-logo.png",
+                                   "gimp-logo.png",
 #endif
-                               NULL);
+                                   NULL);
 
-  pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-  g_free (filename);
+  input = G_INPUT_STREAM (g_file_read (file, NULL, NULL));
+  g_object_unref (file);
+
+  if (input)
+    {
+      pixbuf = gdk_pixbuf_new_from_stream (input, NULL, NULL);
+      g_object_unref (input);
+    }
 
   return pixbuf;
 }

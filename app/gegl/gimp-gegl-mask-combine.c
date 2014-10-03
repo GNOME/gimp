@@ -204,7 +204,7 @@ gimp_gegl_mask_combine_ellipse_rect (GeglBuffer     *mask,
   iter = gegl_buffer_iterator_new (mask,
                                    GEGL_RECTANGLE (x0, y0, width, height), 0,
                                    babl_format ("Y float"),
-                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
   roi = &iter->roi[0];
 
   while (gegl_buffer_iterator_next (iter))
@@ -397,14 +397,14 @@ gimp_gegl_mask_combine_buffer (GeglBuffer     *mask,
 
   iter = gegl_buffer_iterator_new (mask, &rect, 0,
                                    babl_format ("Y float"),
-                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
   rect.x -= off_x;
   rect.y -= off_y;
 
   gegl_buffer_iterator_add (iter, add_on, &rect, 0,
                             babl_format ("Y float"),
-                            GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   switch (op)
     {

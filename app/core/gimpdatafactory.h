@@ -25,12 +25,13 @@
 #include "gimpobject.h"
 
 
-typedef GimpData * (* GimpDataNewFunc)         (GimpContext  *context,
-                                                const gchar  *name);
-typedef GList    * (* GimpDataLoadFunc)        (GimpContext  *context,
-                                                const gchar  *filename,
-                                                GError      **error);
-typedef GimpData * (* GimpDataGetStandardFunc) (GimpContext  *context);
+typedef GimpData * (* GimpDataNewFunc)         (GimpContext   *context,
+                                                const gchar   *name);
+typedef GList    * (* GimpDataLoadFunc)        (GimpContext   *context,
+                                                GFile         *file,
+                                                GInputStream  *input,
+                                                GError       **error);
+typedef GimpData * (* GimpDataGetStandardFunc) (GimpContext   *context);
 
 
 typedef struct _GimpDataFactoryLoaderEntry GimpDataFactoryLoaderEntry;

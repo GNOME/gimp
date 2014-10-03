@@ -1,0 +1,14 @@
+Index: /trunk/Source/WebCore/platform/graphics/harfbuzz/HarfBuzzFaceCairo.cpp
+===================================================================
+--- /trunk/Source/WebCore/platform/graphics/harfbuzz/HarfBuzzFaceCairo.cpp	(revision 159938)
++++ /trunk/Source/WebCore/platform/graphics/harfbuzz/HarfBuzzFaceCairo.cpp	(revision 159939)
+@@ -40,6 +40,7 @@
+ #include <cairo-ft.h>
+ #include <cairo.h>
+-#include <freetype/freetype.h>
+-#include <freetype/tttables.h>
++#include <ft2build.h>
++#include FT_FREETYPE_H
++#include FT_TRUETYPE_TABLES_H
+ #include <hb.h>
+ #include <wtf/text/CString.h>

@@ -33,24 +33,25 @@
 
 
 GList *
-gimp_tool_preset_load (GimpContext  *context,
-                       const gchar  *filename,
-                       GError      **error)
+gimp_tool_preset_load (GimpContext   *context,
+                       GFile         *file,
+                       GInputStream  *input,
+                       GError       **error)
 {
   GimpToolPreset *tool_preset;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   tool_preset = g_object_new (GIMP_TYPE_TOOL_PRESET,
                               "gimp", context->gimp,
                               NULL);
 
-  if (gimp_config_deserialize_file (GIMP_CONFIG (tool_preset),
-                                    filename,
-                                    NULL, error))
+  if (gimp_config_deserialize_stream (GIMP_CONFIG (tool_preset),
+                                      input,
+                                      NULL, error))
     {
       if (GIMP_IS_CONTEXT (tool_preset->tool_options))
         {
@@ -58,9 +59,9 @@ gimp_tool_preset_load (GimpContext  *context,
         }
       else
         {
-          g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
-                       _("Error while parsing '%s'"),
-                       gimp_filename_to_utf8 (filename));
+          g_set_error_literal (error,
+                               GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_PARSE,
+                               _("Tool preset file is corrupt."));
         }
     }
 

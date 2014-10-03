@@ -14,6 +14,8 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)						\
 	-I$(top_builddir)/app					\
 	-I$(top_srcdir)/app					\
+	$(GIO_UNIX_CFLAGS)					\
+	$(GIO_WINDOWS_CFLAGS)					\
 	$(GEGL_CFLAGS)						\
 	$(CAIRO_CFLAGS)						\
 	$(GDK_PIXBUF_CFLAGS)					\
@@ -113,7 +115,8 @@ test_config_LDADD = \
 	$(GDK_PIXBUF_LIBS)			\
 	$(GEGL_LIBS)				\
 	$(GIO_LIBS)				\
-	$(GEXIV2_LIBS)
+	$(GEXIV2_LIBS)				\
+	$(Z_LIBS)
 
 CLEANFILES = $(EXTRA_PROGRAMS) foorc
 

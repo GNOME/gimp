@@ -25,8 +25,6 @@
 
 #include "core/core-types.h"
 
-#include "file/file-utils.h"
-
 #include "unique.h"
 
 
@@ -47,39 +45,6 @@ gimp_unique_open (const gchar **filenames,
   return gimp_unique_dbus_open (filenames, as_new);
 #endif
 }
-
-#ifndef GIMP_CONSOLE_COMPILATION
-static gchar *
-gimp_unique_filename_to_uri (const gchar  *filename,
-			     const gchar  *cwd,
-			     GError      **error)
-{
-  gchar *uri = NULL;
-
-  if (file_utils_filename_is_uri (filename, error))
-    {
-      uri = g_strdup (filename);
-    }
-  else if (! *error)
-    {
-      if (! g_path_is_absolute (filename))
-	{
-	  gchar *absolute = g_build_filename (cwd, filename, NULL);
-
-	  uri = g_filename_to_uri (absolute, NULL, error);
-
-	  g_free (absolute);
-	}
-      else
-	{
-	  uri = g_filename_to_uri (filename, NULL, error);
-	}
-    }
-
-  return uri;
-}
-#endif
-
 
 static gboolean
 gimp_unique_dbus_open (const gchar **filenames,
@@ -107,13 +72,14 @@ gimp_unique_dbus_open (const gchar **filenames,
 
           for (i = 0; filenames[i] && success; i++)
             {
-              GError *error = NULL;
-	      gchar  *uri   = gimp_unique_filename_to_uri (filenames[i],
-                                                           cwd, &error);
+              GFile *file;
 
-              if (uri)
+              file = g_file_new_for_commandline_arg_and_cwd (filenames[i], cwd);
+
+              if (file)
                 {
                   GVariant *result;
+                  gchar    *uri = g_file_get_uri (file);
 
                   result = g_dbus_connection_call_sync (connection,
                                                         GIMP_DBUS_SERVICE_NAME,
@@ -126,17 +92,20 @@ gimp_unique_dbus_open (const gchar **filenames,
                                                         G_DBUS_CALL_FLAGS_NO_AUTO_START,
                                                         -1,
                                                         NULL, NULL);
+
+                  g_free (uri);
+
                   if (result)
                     g_variant_unref (result);
                   else
                     success = FALSE;
 
-                  g_free (uri);
+                  g_object_unref (file);
                 }
               else
                 {
-                  g_printerr ("conversion to uri failed: %s\n", error->message);
-                  g_clear_error (&error);
+                  g_printerr ("conversion to uri failed for '%s'\n",
+                              filenames[i]);
                 }
             }
 
@@ -197,28 +166,31 @@ gimp_unique_win32_open (const gchar **filenames,
       if (filenames)
         {
           gchar  *cwd   = g_get_current_dir ();
-          GError *error = NULL;
           gint    i;
 
           for (i = 0; filenames[i]; i++)
             {
-              gchar *uri;
+              GFile *file;
+              file = g_file_new_for_commandline_arg_and_cwd (filenames[i], cwd);
 
-              uri = gimp_unique_filename_to_uri (filenames[i], cwd, &error);
-
-              if (uri)
+              if (file)
                 {
+                  gchar *uri = g_file_get_uri (file);
+
                   copydata.lpData = uri;
                   copydata.cbData = strlen (uri) + 1;  /* size in bytes   */
                   copydata.dwData = (long) as_new;
 
                   SendMessage (window_handle,
                                WM_COPYDATA, (WPARAM) window_handle, (LPARAM) &copydata);
+
+                  g_free (uri);
+                  g_object_unref (file);
                 }
               else
                 {
-                  g_printerr ("conversion to uri failed: %s\n", error->message);
-                  g_clear_error (&error);
+                  g_printerr ("conversion to uri failed for '%s'\n",
+                              filenames[i]);
                 }
             }
 

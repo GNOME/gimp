@@ -45,8 +45,8 @@ static void     gimp_progress_dialog_response           (GtkDialog    *dialog,
 
 static GimpProgress *
                 gimp_progress_dialog_progress_start     (GimpProgress *progress,
-                                                         const gchar  *message,
-                                                         gboolean      cancelable);
+                                                         gboolean      cancellable,
+                                                         const gchar  *message);
 static void     gimp_progress_dialog_progress_end       (GimpProgress *progress);
 static gboolean gimp_progress_dialog_progress_is_active (GimpProgress *progress);
 static void     gimp_progress_dialog_progress_set_text  (GimpProgress *progress,
@@ -112,24 +112,25 @@ gimp_progress_dialog_response (GtkDialog *dialog,
 {
   GimpProgressDialog *progress_dialog = GIMP_PROGRESS_DIALOG (dialog);
 
-  if (GIMP_PROGRESS_BOX (progress_dialog->box)->cancelable)
+  if (GIMP_PROGRESS_BOX (progress_dialog->box)->cancellable)
     gimp_progress_cancel (GIMP_PROGRESS (dialog));
 }
 
 static GimpProgress *
 gimp_progress_dialog_progress_start (GimpProgress *progress,
-                                     const gchar  *message,
-                                     gboolean      cancelable)
+                                     gboolean      cancellable,
+                                     const gchar  *message)
 {
   GimpProgressDialog *dialog = GIMP_PROGRESS_DIALOG (progress);
 
   if (! dialog->box)
     return NULL;
 
-  if (gimp_progress_start (GIMP_PROGRESS (dialog->box), message, cancelable))
+  if (gimp_progress_start (GIMP_PROGRESS (dialog->box), cancellable,
+                           "%s", message))
     {
       gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
-                                         GTK_RESPONSE_CANCEL, cancelable);
+                                         GTK_RESPONSE_CANCEL, cancellable);
 
       gtk_window_present (GTK_WINDOW (dialog));
 
@@ -178,7 +179,7 @@ gimp_progress_dialog_progress_set_text (GimpProgress *progress,
   if (! dialog->box)
     return;
 
-  gimp_progress_set_text (GIMP_PROGRESS (dialog->box), message);
+  gimp_progress_set_text_literal (GIMP_PROGRESS (dialog->box), message);
 }
 
 static void

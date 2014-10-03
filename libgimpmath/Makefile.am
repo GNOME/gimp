@@ -13,11 +13,11 @@ endif
 
 if OS_WIN32
 gimpmath_def = gimpmath.def
-libgimpmath_export_symbols = -export-symbols gimpmath.def
+libgimpmath_export_symbols = -export-symbols $(srcdir)/gimpmath.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpmath-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) gimpmath.def $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/gimpmath.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpmath-$(GIMP_API_VERSION).dll.a

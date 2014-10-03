@@ -31,6 +31,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpspinscale.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimprotatetool.h"
@@ -438,6 +439,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
   /*  the grid density scale  */
   scale = gimp_prop_spin_scale_new (config, "grid-size", NULL,
                                     1.8, 8.0, 0);
+  gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), NULL);
   gtk_container_add (GTK_CONTAINER (frame), scale);
 
   g_object_bind_property_full (config, "grid-type",

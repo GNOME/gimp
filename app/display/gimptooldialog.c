@@ -162,25 +162,24 @@ gimp_tool_dialog_set_shell (GimpToolDialog   *tool_dialog,
       g_signal_handlers_disconnect_by_func (private->shell,
                                             gimp_tool_dialog_shell_unmap,
                                             tool_dialog);
-      private->shell = NULL;
+
+      gtk_window_set_transient_for (GTK_WINDOW (tool_dialog), NULL);
     }
 
   private->shell = shell;
 
   if (private->shell)
     {
-      GtkWidget *toplevel;
+      GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
+
+      gtk_window_set_transient_for (GTK_WINDOW (tool_dialog),
+                                    GTK_WINDOW (toplevel));
 
       g_signal_connect_object (private->shell, "unmap",
                                G_CALLBACK (gimp_tool_dialog_shell_unmap),
                                tool_dialog, 0);
-
       g_object_add_weak_pointer (G_OBJECT (private->shell),
                                  (gpointer) &private->shell);
-      toplevel = gtk_widget_get_toplevel (GTK_WIDGET (shell));
-
-      gtk_window_set_transient_for (GTK_WINDOW (tool_dialog),
-                                    GTK_WINDOW (toplevel));
     }
 }
 

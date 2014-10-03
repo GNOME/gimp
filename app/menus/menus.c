@@ -17,9 +17,6 @@
 
 #include "config.h"
 
-#include <errno.h>
-
-#include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -439,25 +436,28 @@ gboolean
 menus_clear (Gimp    *gimp,
              GError **error)
 {
-  gchar    *filename;
-  gchar    *source;
-  gboolean  success = TRUE;
+  GFile    *file;
+  GFile    *source;
+  gboolean  success  = TRUE;
+  GError   *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  filename = gimp_personal_rc_file ("menurc");
-  source = g_build_filename (gimp_sysconf_directory (), "menurc", NULL);
+  file   = gimp_directory_file ("menurc", NULL);
+  source = gimp_sysconf_directory_file ("menurc", NULL);
 
-  if (gimp_config_file_copy (source, filename, NULL, NULL, NULL))
+  if (g_file_copy (source, file, G_FILE_COPY_OVERWRITE,
+                   NULL, NULL, NULL, NULL))
     {
       menurc_deleted = TRUE;
     }
-  else if (g_unlink (filename) != 0 && errno != ENOENT)
+  else if (! g_file_delete (file, NULL, &my_error) &&
+           my_error->code != G_IO_ERROR_NOT_FOUND)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+      g_set_error (error, my_error->domain, my_error->code,
 		   _("Deleting \"%s\" failed: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), my_error->message);
       success = FALSE;
     }
   else
@@ -465,8 +465,9 @@ menus_clear (Gimp    *gimp,
       menurc_deleted = TRUE;
     }
 
-  g_free (source);
-  g_free (filename);
+  g_clear_error (&my_error);
+  g_object_unref (source);
+  g_object_unref (file);
 
   return success;
 }

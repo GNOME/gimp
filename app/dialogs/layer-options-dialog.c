@@ -68,7 +68,7 @@ layer_options_dialog_new (GimpImage    *image,
   GtkWidget          *vbox;
   GtkWidget          *table;
   GtkWidget          *label;
-  GtkObject          *adjustment;
+  GtkAdjustment      *adjustment;
   GtkWidget          *spinbutton;
   GtkWidget          *frame;
   GtkWidget          *button;
@@ -152,9 +152,10 @@ layer_options_dialog_new (GimpImage    *image,
       gtk_widget_show (label);
 
       /*  The size sizeentry  */
-      spinbutton = gimp_spin_button_new (&adjustment,
-                                         1, 1, 1, 1, 10, 0,
-                                         1, 2);
+      adjustment = (GtkAdjustment *)
+        gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+      spinbutton = gtk_spin_button_new (adjustment, 1.0, 2);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
 
       options->size_se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",
@@ -200,8 +201,8 @@ layer_options_dialog_new (GimpImage    *image,
 
       /*  The radio frame  */
       frame = gimp_enum_radio_frame_new_with_range (GIMP_TYPE_FILL_TYPE,
-                                                    GIMP_FOREGROUND_FILL,
-                                                    GIMP_TRANSPARENT_FILL,
+                                                    GIMP_FILL_FOREGROUND,
+                                                    GIMP_FILL_TRANSPARENT,
                                                     gtk_label_new (_("Layer Fill Type")),
                                                     G_CALLBACK (gimp_radio_button_update),
                                                     &options->fill_type,

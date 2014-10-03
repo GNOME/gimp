@@ -38,7 +38,7 @@ typedef struct _GimpPlugInLocaleDomain GimpPlugInLocaleDomain;
 
 struct _GimpPlugInLocaleDomain
 {
-  gchar *prog_name;
+  GFile *file;
   gchar *domain_name;
   gchar *domain_path;
 };
@@ -55,7 +55,7 @@ gimp_plug_in_manager_locale_domain_exit (GimpPlugInManager *manager)
     {
       GimpPlugInLocaleDomain *domain = list->data;
 
-      g_free (domain->prog_name);
+      g_object_unref (domain->file);
       g_free (domain->domain_name);
       g_free (domain->domain_path);
       g_slice_free (GimpPlugInLocaleDomain, domain);
@@ -67,19 +67,19 @@ gimp_plug_in_manager_locale_domain_exit (GimpPlugInManager *manager)
 
 void
 gimp_plug_in_manager_add_locale_domain (GimpPlugInManager *manager,
-                                        const gchar       *prog_name,
+                                        GFile             *file,
                                         const gchar       *domain_name,
                                         const gchar       *domain_path)
 {
   GimpPlugInLocaleDomain *domain;
 
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-  g_return_if_fail (prog_name != NULL);
+  g_return_if_fail (G_IS_FILE (file));
   g_return_if_fail (domain_name != NULL);
 
   domain = g_slice_new (GimpPlugInLocaleDomain);
 
-  domain->prog_name   = g_strdup (prog_name);
+  domain->file        = g_object_ref (file);
   domain->domain_name = g_strdup (domain_name);
   domain->domain_path = g_strdup (domain_path);
 
@@ -95,26 +95,27 @@ gimp_plug_in_manager_add_locale_domain (GimpPlugInManager *manager,
 
 const gchar *
 gimp_plug_in_manager_get_locale_domain (GimpPlugInManager  *manager,
-                                        const gchar        *prog_name,
+                                        GFile              *file,
                                         const gchar       **domain_path)
 {
   GSList *list;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+  g_return_val_if_fail (file == NULL || G_IS_FILE (file), NULL);
 
   if (domain_path)
     *domain_path = gimp_locale_directory ();
 
   /*  A NULL prog_name is GIMP itself, return the default domain  */
-  if (! prog_name)
+  if (! file)
     return NULL;
 
   for (list = manager->locale_domains; list; list = list->next)
     {
       GimpPlugInLocaleDomain *domain = list->data;
 
-      if (domain && domain->prog_name &&
-          ! strcmp (domain->prog_name, prog_name))
+      if (domain && domain->file &&
+          g_file_equal (domain->file, file))
         {
           if (domain_path && domain->domain_path)
             *domain_path = domain->domain_path;

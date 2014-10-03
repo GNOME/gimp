@@ -22,6 +22,7 @@
 
 #include <string.h>
 
+#include <gio/gio.h>
 #include <gegl.h>
 
 #include "core-types.h"
@@ -95,20 +96,33 @@ gimp_progress_iface_base_init (GimpProgressInterface *progress_iface)
 
 GimpProgress *
 gimp_progress_start (GimpProgress *progress,
-                     const gchar  *message,
-                     gboolean      cancelable)
+                     gboolean      cancellable,
+                     const gchar  *format,
+                     ...)
 {
   GimpProgressInterface *progress_iface;
 
   g_return_val_if_fail (GIMP_IS_PROGRESS (progress), NULL);
-
-  if (! message)
-    message = _("Please wait");
+  g_return_val_if_fail (format != NULL, NULL);
 
   progress_iface = GIMP_PROGRESS_GET_INTERFACE (progress);
 
   if (progress_iface->start)
-    return progress_iface->start (progress, message, cancelable);
+    {
+      GimpProgress *ret;
+      va_list       args;
+      gchar        *text;
+
+      va_start (args, format);
+      text = g_strdup_vprintf (format, args);
+      va_end (args);
+
+      ret = progress_iface->start (progress, cancellable, text);
+
+      g_free (text);
+
+      return ret;
+    }
 
   return NULL;
 }
@@ -143,14 +157,32 @@ gimp_progress_is_active (GimpProgress *progress)
 
 void
 gimp_progress_set_text (GimpProgress *progress,
-                        const gchar  *message)
+                        const gchar  *format,
+                        ...)
+{
+  va_list  args;
+  gchar   *message;
+
+  g_return_if_fail (GIMP_IS_PROGRESS (progress));
+  g_return_if_fail (format != NULL);
+
+  va_start (args, format);
+  message = g_strdup_vprintf (format, args);
+  va_end (args);
+
+  gimp_progress_set_text_literal (progress, message);
+
+  g_free (message);
+}
+
+void
+gimp_progress_set_text_literal (GimpProgress *progress,
+                                const gchar  *message)
 {
   GimpProgressInterface *progress_iface;
 
   g_return_if_fail (GIMP_IS_PROGRESS (progress));
-
-  if (! message || ! strlen (message))
-    message = _("Please wait");
+  g_return_if_fail (message != NULL);
 
   progress_iface = GIMP_PROGRESS_GET_INTERFACE (progress);
 

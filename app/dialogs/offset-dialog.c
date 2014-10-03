@@ -81,19 +81,19 @@ offset_dialog_new (GimpDrawable *drawable,
                    GimpContext  *context,
                    GtkWidget    *parent)
 {
-  GimpItem     *item;
-  OffsetDialog *dialog;
-  GtkWidget    *main_vbox;
-  GtkWidget    *vbox;
-  GtkWidget    *hbox;
-  GtkWidget    *button;
-  GtkWidget    *spinbutton;
-  GtkWidget    *frame;
-  GtkWidget    *radio_button;
-  GtkObject    *adjustment;
-  gdouble       xres;
-  gdouble       yres;
-  const gchar  *title = NULL;
+  GimpItem      *item;
+  OffsetDialog  *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *button;
+  GtkWidget     *spinbutton;
+  GtkWidget     *frame;
+  GtkWidget     *radio_button;
+  GtkAdjustment *adjustment;
+  gdouble        xres;
+  gdouble        yres;
+  const gchar   *title = NULL;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -161,9 +161,10 @@ offset_dialog_new (GimpDrawable *drawable,
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  spinbutton = gimp_spin_button_new (&adjustment,
-                                     1, 1, 1, 1, 10, 0,
-                                     1, 2);
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adjustment, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 10);
 
   dialog->off_se = gimp_size_entry_new (1, GIMP_UNIT_PIXEL, "%a",

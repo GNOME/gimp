@@ -68,8 +68,6 @@ struct _GimpDialPrivate
 
   DialTarget  target;
   gdouble     last_angle;
-  gboolean    has_grab;
-  gboolean    in_widget;
 };
 
 
@@ -82,19 +80,14 @@ static void        gimp_dial_get_property         (GObject            *object,
                                                    GValue             *value,
                                                    GParamSpec         *pspec);
 
-static void        gimp_dial_unmap                (GtkWidget          *widget);
 static gboolean    gimp_dial_expose_event         (GtkWidget          *widget,
                                                    GdkEventExpose     *event);
 static gboolean    gimp_dial_button_press_event   (GtkWidget          *widget,
                                                    GdkEventButton     *bevent);
-static gboolean    gimp_dial_button_release_event (GtkWidget          *widget,
-                                                   GdkEventButton     *bevent);
 static gboolean    gimp_dial_motion_notify_event  (GtkWidget          *widget,
                                                    GdkEventMotion     *mevent);
-static gboolean    gimp_dial_enter_notify_event   (GtkWidget          *widget,
-                                                   GdkEventCrossing   *event);
-static gboolean    gimp_dial_leave_notify_event   (GtkWidget          *widget,
-                                                   GdkEventCrossing   *event);
+
+static void        gimp_dial_reset_target         (GimpCircle         *circle);
 
 static void        gimp_dial_set_target           (GimpDial           *dial,
                                                    DialTarget          target);
@@ -120,19 +113,18 @@ G_DEFINE_TYPE (GimpDial, gimp_dial, GIMP_TYPE_CIRCLE)
 static void
 gimp_dial_class_init (GimpDialClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass    *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass  *widget_class = GTK_WIDGET_CLASS (klass);
+  GimpCircleClass *circle_class = GIMP_CIRCLE_CLASS (klass);
 
   object_class->get_property         = gimp_dial_get_property;
   object_class->set_property         = gimp_dial_set_property;
 
-  widget_class->unmap                = gimp_dial_unmap;
   widget_class->expose_event         = gimp_dial_expose_event;
   widget_class->button_press_event   = gimp_dial_button_press_event;
-  widget_class->button_release_event = gimp_dial_button_release_event;
   widget_class->motion_notify_event  = gimp_dial_motion_notify_event;
-  widget_class->enter_notify_event   = gimp_dial_enter_notify_event;
-  widget_class->leave_notify_event   = gimp_dial_leave_notify_event;
+
+  circle_class->reset_target         = gimp_dial_reset_target;
 
   g_object_class_install_property (object_class, PROP_ALPHA,
                                    g_param_spec_double ("alpha",
@@ -171,14 +163,6 @@ gimp_dial_init (GimpDial *dial)
   dial->priv = G_TYPE_INSTANCE_GET_PRIVATE (dial,
                                             GIMP_TYPE_DIAL,
                                             GimpDialPrivate);
-
-  gtk_widget_add_events (GTK_WIDGET (dial),
-                         GDK_POINTER_MOTION_MASK |
-                         GDK_BUTTON_PRESS_MASK   |
-                         GDK_BUTTON_RELEASE_MASK |
-                         GDK_BUTTON1_MOTION_MASK |
-                         GDK_ENTER_NOTIFY_MASK   |
-                         GDK_LEAVE_NOTIFY_MASK);
 }
 
 static void
@@ -249,20 +233,6 @@ gimp_dial_get_property (GObject    *object,
     }
 }
 
-static void
-gimp_dial_unmap (GtkWidget *widget)
-{
-  GimpDial *dial = GIMP_DIAL (widget);
-
-  if (dial->priv->has_grab)
-    {
-      gtk_grab_remove (widget);
-      dial->priv->has_grab = FALSE;
-    }
-
-  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
-}
-
 static gboolean
 gimp_dial_expose_event (GtkWidget      *widget,
                         GdkEventExpose *event)
@@ -315,8 +285,7 @@ gimp_dial_button_press_event (GtkWidget      *widget,
     {
       gdouble angle;
 
-      gtk_grab_add (widget);
-      dial->priv->has_grab = TRUE;
+      GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, bevent);
 
       angle = _gimp_circle_get_angle_and_distance (GIMP_CIRCLE (dial),
                                                    bevent->x, bevent->y,
@@ -342,24 +311,6 @@ gimp_dial_button_press_event (GtkWidget      *widget,
 }
 
 static gboolean
-gimp_dial_button_release_event (GtkWidget      *widget,
-                                GdkEventButton *bevent)
-{
-  GimpDial *dial = GIMP_DIAL (widget);
-
-  if (bevent->button == 1)
-    {
-      gtk_grab_remove (widget);
-      dial->priv->has_grab = FALSE;
-
-      if (! dial->priv->in_widget)
-        gimp_dial_set_target (dial, DIAL_TARGET_NONE);
-    }
-
-  return FALSE;
-}
-
-static gboolean
 gimp_dial_motion_notify_event (GtkWidget      *widget,
                                GdkEventMotion *mevent)
 {
@@ -371,7 +322,7 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
                                                mevent->x, mevent->y,
                                                &distance);
 
-  if (dial->priv->has_grab)
+  if (_gimp_circle_has_grab (GIMP_CIRCLE (dial)))
     {
       gdouble delta;
 
@@ -437,29 +388,10 @@ gimp_dial_motion_notify_event (GtkWidget      *widget,
   return FALSE;
 }
 
-static gboolean
-gimp_dial_enter_notify_event (GtkWidget        *widget,
-                              GdkEventCrossing *event)
+static void
+gimp_dial_reset_target (GimpCircle *circle)
 {
-  GimpDial *dial = GIMP_DIAL (widget);
-
-  dial->priv->in_widget = TRUE;
-
-  return FALSE;
-}
-
-static gboolean
-gimp_dial_leave_notify_event (GtkWidget        *widget,
-                              GdkEventCrossing *event)
-{
-  GimpDial *dial = GIMP_DIAL (widget);
-
-  dial->priv->in_widget = FALSE;
-
-  if (! dial->priv->has_grab)
-    gimp_dial_set_target (dial, DIAL_TARGET_NONE);
-
-  return FALSE;
+  gimp_dial_set_target (GIMP_DIAL (circle), DIAL_TARGET_NONE);
 }
 
 

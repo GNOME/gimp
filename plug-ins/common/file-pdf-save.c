@@ -102,6 +102,8 @@
 
 #include "config.h"
 
+#include <errno.h>
+
 #include <glib/gstdio.h>
 #include <cairo-pdf.h>
 #include <pango/pangocairo.h>
@@ -418,6 +420,21 @@ run (const gchar      *name,
     }
 
   fp = g_fopen (file_name, "wb");
+  if (fp == NULL)
+    {
+      *nreturn_vals = 2;
+
+      values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+      values[1].type          = GIMP_PDB_STRING;
+      if (error == NULL)
+        {
+          g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Could not open '%s' for writing: %s"),
+                       gimp_filename_to_utf8 (file_name), g_strerror (errno));
+        }
+      values[1].data.d_string = error->message;
+      return;
+    }
 
   pdf_file = cairo_pdf_surface_create_for_stream (write_func, fp, 1, 1);
 
@@ -677,7 +694,7 @@ init_vals (const gchar      *name,
 
       *run_mode = param[SMA_RUN_MODE].data.d_int32;
       image = -1;
-      file_name = param[SA_FILENAME].data.d_string;
+      file_name = param[SMA_FILENAME].data.d_string;
 
       optimize.apply_masks = param[SMA_APPLY_MASKS].data.d_int32;
       optimize.vectorize = param[SMA_VECTORIZE].data.d_int32;

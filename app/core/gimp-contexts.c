@@ -19,10 +19,7 @@
 
 #include "config.h"
 
-#include <errno.h>
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -31,6 +28,7 @@
 #include "core-types.h"
 
 #include "gimp.h"
+#include "gimperror.h"
 #include "gimp-contexts.h"
 #include "gimpcontext.h"
 
@@ -74,21 +72,23 @@ gboolean
 gimp_contexts_load (Gimp    *gimp,
                     GError **error)
 {
-  gchar    *filename;
+  GFile    *file;
   GError   *my_error = NULL;
   gboolean  success;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  filename = gimp_personal_rc_file ("contextrc");
+  file = gimp_directory_file ("contextrc", NULL);
 
   if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  success = gimp_config_deserialize_file (GIMP_CONFIG (gimp_get_user_context (gimp)),
-                                          filename,
-                                          NULL, &my_error);
+  success = gimp_config_deserialize_gfile (GIMP_CONFIG (gimp_get_user_context (gimp)),
+                                           file,
+                                           NULL, &my_error);
+
+  g_object_unref (file);
 
   if (! success)
     {
@@ -103,8 +103,6 @@ gimp_contexts_load (Gimp    *gimp,
         }
     }
 
-  g_free (filename);
-
   return success;
 }
 
@@ -112,24 +110,24 @@ gboolean
 gimp_contexts_save (Gimp    *gimp,
                     GError **error)
 {
-  gchar    *filename;
+  GFile    *file;
   gboolean  success;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  filename = gimp_personal_rc_file ("contextrc");
+  file = gimp_directory_file ("contextrc", NULL);
 
   if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  success = gimp_config_serialize_to_file (GIMP_CONFIG (gimp_get_user_context (gimp)),
-                                           filename,
-                                           "GIMP user context",
-                                           "end of user context",
-                                           NULL, error);
+  success = gimp_config_serialize_to_gfile (GIMP_CONFIG (gimp_get_user_context (gimp)),
+                                            file,
+                                            "GIMP user context",
+                                            "end of user context",
+                                            NULL, error);
 
-  g_free (filename);
+  g_object_unref (file);
 
   return success;
 }
@@ -138,22 +136,26 @@ gboolean
 gimp_contexts_clear (Gimp    *gimp,
                      GError **error)
 {
-  gchar    *filename;
-  gboolean  success = TRUE;
+  GFile    *file;
+  GError   *my_error = NULL;
+  gboolean  success  = TRUE;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
-  filename = gimp_personal_rc_file ("contextrc");
+  file = gimp_directory_file ("contextrc", NULL);
 
-  if (g_unlink (filename) != 0 && errno != ENOENT)
+  if (! g_file_delete (file, NULL, &my_error) &&
+      my_error->code != G_IO_ERROR_NOT_FOUND)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Deleting \"%s\" failed: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
       success = FALSE;
+
+      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                   _("Deleting \"%s\" failed: %s"),
+                   gimp_file_get_utf8_name (file), my_error->message);
     }
 
-  g_free (filename);
+  g_clear_error (&my_error);
+  g_object_unref (file);
 
   return success;
 }

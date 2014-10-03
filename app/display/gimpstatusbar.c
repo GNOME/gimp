@@ -73,14 +73,19 @@ static void     gimp_statusbar_progress_iface_init (GimpProgressInterface *iface
 static void     gimp_statusbar_dispose            (GObject           *object);
 static void     gimp_statusbar_finalize           (GObject           *object);
 
+static void     gimp_statusbar_screen_changed     (GtkWidget         *widget,
+                                                   GdkScreen         *previous);
+static void     gimp_statusbar_style_set          (GtkWidget         *widget,
+                                                   GtkStyle          *prev_style);
+
 static void     gimp_statusbar_hbox_size_request  (GtkWidget         *widget,
                                                    GtkRequisition    *requisition,
                                                    GimpStatusbar     *statusbar);
 
 static GimpProgress *
                 gimp_statusbar_progress_start     (GimpProgress      *progress,
-                                                   const gchar       *message,
-                                                   gboolean           cancelable);
+                                                   gboolean           cancellable,
+                                                   const gchar       *message);
 static void     gimp_statusbar_progress_end       (GimpProgress      *progress);
 static gboolean gimp_statusbar_progress_is_active (GimpProgress      *progress);
 static void     gimp_statusbar_progress_set_text  (GimpProgress      *progress,
@@ -122,6 +127,9 @@ static void     gimp_statusbar_msg_free           (GimpStatusbarMsg  *msg);
 static gchar *  gimp_statusbar_vprintf            (const gchar       *format,
                                                    va_list            args) G_GNUC_PRINTF (1, 0);
 
+static GdkPixbuf * gimp_statusbar_load_icon       (GimpStatusbar     *statusbar,
+                                                   const gchar       *icon_name);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpStatusbar, gimp_statusbar, GTK_TYPE_STATUSBAR,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
@@ -133,10 +141,14 @@ G_DEFINE_TYPE_WITH_CODE (GimpStatusbar, gimp_statusbar, GTK_TYPE_STATUSBAR,
 static void
 gimp_statusbar_class_init (GimpStatusbarClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->dispose  = gimp_statusbar_dispose;
-  object_class->finalize = gimp_statusbar_finalize;
+  object_class->dispose        = gimp_statusbar_dispose;
+  object_class->finalize       = gimp_statusbar_finalize;
+
+  widget_class->screen_changed = gimp_statusbar_screen_changed;
+  widget_class->style_set      = gimp_statusbar_style_set;
 }
 
 static void
@@ -296,6 +308,12 @@ gimp_statusbar_finalize (GObject *object)
       statusbar->icon = NULL;
     }
 
+  if (statusbar->icon_hash)
+    {
+      g_hash_table_unref (statusbar->icon_hash);
+      statusbar->icon_hash = NULL;
+    }
+
   g_slist_free_full (statusbar->messages,
                      (GDestroyNotify) gimp_statusbar_msg_free);
   statusbar->messages = NULL;
@@ -307,6 +325,37 @@ gimp_statusbar_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_statusbar_screen_changed (GtkWidget *widget,
+                               GdkScreen *previous)
+{
+  GimpStatusbar *statusbar = GIMP_STATUSBAR (widget);
+
+  if (GTK_WIDGET_CLASS (parent_class)->screen_changed)
+    GTK_WIDGET_CLASS (parent_class)->screen_changed (widget, previous);
+
+  if (statusbar->icon_hash)
+    {
+      g_hash_table_unref (statusbar->icon_hash);
+      statusbar->icon_hash = NULL;
+    }
+}
+
+static void
+gimp_statusbar_style_set (GtkWidget *widget,
+                          GtkStyle  *prev_style)
+{
+  GimpStatusbar *statusbar = GIMP_STATUSBAR (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  if (statusbar->icon_hash)
+    {
+      g_hash_table_unref (statusbar->icon_hash);
+      statusbar->icon_hash = NULL;
+    }
 }
 
 static void
@@ -351,8 +400,8 @@ gimp_statusbar_hbox_size_request (GtkWidget      *widget,
 
 static GimpProgress *
 gimp_statusbar_progress_start (GimpProgress *progress,
-                               const gchar  *message,
-                               gboolean      cancelable)
+                               gboolean      cancellable,
+                               const gchar  *message)
 {
   GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
 
@@ -365,9 +414,9 @@ gimp_statusbar_progress_start (GimpProgress *progress,
 
       gimp_statusbar_push (statusbar, "progress", NULL, "%s", message);
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
-      gtk_widget_set_sensitive (statusbar->cancel_button, cancelable);
+      gtk_widget_set_sensitive (statusbar->cancel_button, cancellable);
 
-      if (cancelable)
+      if (cancellable)
         {
           if (message)
             {
@@ -551,7 +600,7 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
             {
               GdkPixbuf *pixbuf;
 
-              pixbuf = gimp_widget_load_icon (statusbar->label, icon_name, 16);
+              pixbuf = gimp_statusbar_load_icon (statusbar, icon_name);
 
               width += ICON_SPACING + gdk_pixbuf_get_width (pixbuf);
 
@@ -601,8 +650,7 @@ gimp_statusbar_set_text (GimpStatusbar *statusbar,
         }
 
       if (icon_name)
-        statusbar->icon = gimp_widget_load_icon (statusbar->label,
-                                                 icon_name, 16);
+        statusbar->icon = gimp_statusbar_load_icon (statusbar, icon_name);
 
       if (statusbar->icon)
         {
@@ -1546,4 +1594,36 @@ gimp_statusbar_vprintf (const gchar *format,
     *newline = '\0';
 
   return message;
+}
+
+static GdkPixbuf *
+gimp_statusbar_load_icon (GimpStatusbar *statusbar,
+                          const gchar   *icon_name)
+{
+  GdkPixbuf *icon;
+
+  if (G_UNLIKELY (! statusbar->icon_hash))
+    {
+      statusbar->icon_hash =
+        g_hash_table_new_full (g_str_hash,
+                               g_str_equal,
+                               (GDestroyNotify) g_free,
+                               (GDestroyNotify) g_object_unref);
+    }
+
+  icon = g_hash_table_lookup (statusbar->icon_hash, icon_name);
+
+  if (icon)
+    return g_object_ref (icon);
+
+  icon = gimp_widget_load_icon (statusbar->label, icon_name, 16);
+
+  /* this is not optimal but so what */
+  if (g_hash_table_size (statusbar->icon_hash) > 16)
+    g_hash_table_remove_all (statusbar->icon_hash);
+
+  g_hash_table_insert (statusbar->icon_hash,
+                       g_strdup (icon_name), g_object_ref (icon));
+
+  return icon;
 }

@@ -18,10 +18,12 @@ EXPORTS
 	gimp_cpu_accel_get_support
 	gimp_cpu_accel_set_use
 	gimp_data_directory
+	gimp_data_directory_file
 	gimp_datafiles_check_extension
 	gimp_datafiles_read_directories
 	gimp_desaturate_mode_get_type
 	gimp_directory
+	gimp_directory_file
 	gimp_dodge_burn_type_get_type
 	gimp_enum_get_desc
 	gimp_enum_get_value
@@ -31,6 +33,8 @@ EXPORTS
 	gimp_enum_value_get_help
 	gimp_env_init
 	gimp_escape_uline
+	gimp_file_get_utf8_name
+	gimp_file_has_extension
 	gimp_filename_to_utf8
 	gimp_fill_type_get_type
 	gimp_flags_get_first_desc
@@ -53,6 +57,7 @@ EXPORTS
 	gimp_installation_directory
 	gimp_interpolation_type_get_type
 	gimp_locale_directory
+	gimp_locale_directory_file
 	gimp_major_version
 	gimp_mask_apply_mode_get_type
 	gimp_memsize_deserialize
@@ -78,8 +83,6 @@ EXPORTS
 	gimp_minor_version
 	gimp_offset_type_get_type
 	gimp_orientation_type_get_type
-	gimp_output_stream_printf
-	gimp_output_stream_vprintf
 	gimp_paint_application_mode_get_type
 	gimp_param_memsize_get_type
 	gimp_param_parasite_get_type
@@ -116,6 +119,7 @@ EXPORTS
 	gimp_pixpipe_params_init
 	gimp_pixpipe_params_parse
 	gimp_plug_in_directory
+	gimp_plug_in_directory_file
 	gimp_precision_get_type
 	gimp_progress_command_get_type
 	gimp_rectangle_intersect
@@ -129,6 +133,7 @@ EXPORTS
 	gimp_stack_trace_mode_get_type
 	gimp_strip_uline
 	gimp_sysconf_directory
+	gimp_sysconf_directory_file
 	gimp_text_direction_get_type
 	gimp_text_hint_style_get_type
 	gimp_text_justification_get_type

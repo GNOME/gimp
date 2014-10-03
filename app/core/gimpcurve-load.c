@@ -17,49 +17,38 @@
 
 #include "config.h"
 
-#include <errno.h>
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
-
-#ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
-#endif
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
 #include "gimpcurve.h"
 #include "gimpcurve-load.h"
 
-#include "gimp-intl.h"
-
 
 GList *
-gimp_curve_load (const gchar  *filename,
-                 GError      **error)
+gimp_curve_load (GFile         *file,
+                 GInputStream  *input,
+                 GError       **error)
 {
-  FILE *file;
+  GimpCurve *curve;
 
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  file = g_fopen (filename, "rb");
+  curve = g_object_new (GIMP_TYPE_CURVE, NULL);
 
-  if (! file)
+  if (gimp_config_deserialize_stream (GIMP_CONFIG (curve),
+                                      input,
+                                      NULL, error))
     {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return NULL;
+      return g_list_prepend (NULL, curve);
     }
 
-  /* load curves */
-
-  fclose (file);
+  g_object_unref (curve);
 
   return NULL;
 }

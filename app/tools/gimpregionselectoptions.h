@@ -41,6 +41,7 @@ struct _GimpRegionSelectOptions
   gboolean              sample_merged;
   gdouble               threshold;
   GimpSelectCriterion   select_criterion;
+  gboolean              draw_mask;
 };
 
 

@@ -323,8 +323,8 @@ pcx_header_from_buffer (guint8 *buf)
 
   for (i = 0; pcx_header_buf_xlate[i].size != 0; i++)
     {
-      g_memmove (pcx_header_buf_xlate[i].address, buf + buf_offset,
-                 pcx_header_buf_xlate[i].size);
+      memmove (pcx_header_buf_xlate[i].address, buf + buf_offset,
+               pcx_header_buf_xlate[i].size);
       buf_offset += pcx_header_buf_xlate[i].size;
     }
 }
@@ -337,8 +337,8 @@ pcx_header_to_buffer (guint8 *buf)
 
   for (i = 0; pcx_header_buf_xlate[i].size != 0; i++)
     {
-      g_memmove (buf + buf_offset, pcx_header_buf_xlate[i].address,
-                 pcx_header_buf_xlate[i].size);
+      memmove (buf + buf_offset, pcx_header_buf_xlate[i].address,
+               pcx_header_buf_xlate[i].size);
       buf_offset += pcx_header_buf_xlate[i].size;
     }
 }
@@ -356,6 +356,9 @@ load_image (const gchar  *filename,
   guchar       *dest, cmap[768];
   guint8        header_buf[128];
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   fd = g_fopen (filename, "rb");
 
   if (! fd)
@@ -365,9 +368,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   if (fread (header_buf, 128, 1, fd) == 0)
     {

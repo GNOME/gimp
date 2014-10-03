@@ -22,12 +22,12 @@
 #define __PLUG_IN_RC_H__
 
 
-GSList   * plug_in_rc_parse (Gimp         *gimp,
-                             const gchar  *filename,
-                             GError      **error);
-gboolean   plug_in_rc_write (GSList       *plug_in_defs,
-                             const gchar  *filename,
-                             GError      **error);
+GSList   * plug_in_rc_parse (Gimp    *gimp,
+                             GFile   *file,
+                             GError **error);
+gboolean   plug_in_rc_write (GSList  *plug_in_defs,
+                             GFile   *file,
+                             GError **error);
 
 
 #endif /* __PLUG_IN_RC_H__ */

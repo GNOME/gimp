@@ -48,6 +48,7 @@
 #include "gimpscalebutton.h"
 #include "gimpspinscale.h"
 #include "gimpview.h"
+#include "gimppolar.h"
 #include "gimppropwidgets.h"
 #include "gimpwidgets-constructors.h"
 #include "gimpwidgets-utils.h"
@@ -477,12 +478,12 @@ gimp_prop_spin_scale_new (GObject     *config,
                           gdouble      page_increment,
                           gint         digits)
 {
-  GParamSpec *param_spec;
-  GtkObject  *adjustment;
-  GtkWidget  *scale;
-  gdouble     value;
-  gdouble     lower;
-  gdouble     upper;
+  GParamSpec    *param_spec;
+  GtkAdjustment *adjustment;
+  GtkWidget     *scale;
+  gdouble        value;
+  gdouble        lower;
+  gdouble        upper;
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
@@ -496,10 +497,14 @@ gimp_prop_spin_scale_new (GObject     *config,
   if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
     digits = 0;
 
-  adjustment = gtk_adjustment_new (value, lower, upper,
-                                   step_increment, page_increment, 0.0);
+  if (! label)
+    label = g_param_spec_get_nick (param_spec);
 
-  scale = gimp_spin_scale_new (GTK_ADJUSTMENT (adjustment), label, digits);
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (value, lower, upper,
+                        step_increment, page_increment, 0.0);
+
+  scale = gimp_spin_scale_new (adjustment, label, digits);
 
   set_param_spec (G_OBJECT (adjustment), scale, param_spec);
 
@@ -607,31 +612,66 @@ gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
 
   if (G_IS_PARAM_SPEC_INT (param_spec))
     {
-      g_object_set (config, param_spec->name, (gint) value, NULL);
+      gint v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != (gint) value)
+        g_object_set (config, param_spec->name, (gint) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_UINT (param_spec))
     {
-      g_object_set (config, param_spec->name, (guint) value, NULL);
+      guint v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != (guint) value)
+        g_object_set (config, param_spec->name, (guint) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_LONG (param_spec))
     {
-      g_object_set (config, param_spec->name, (glong) value, NULL);
+      glong v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != (glong) value)
+        g_object_set (config, param_spec->name, (glong) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_ULONG (param_spec))
     {
-      g_object_set (config, param_spec->name, (gulong) value, NULL);
+      gulong v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != (gulong) value)
+        g_object_set (config, param_spec->name, (gulong) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_INT64 (param_spec))
     {
-      g_object_set (config, param_spec->name, (gint64) value, NULL);
+      gint64 v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != (gint64) value)
+        g_object_set (config, param_spec->name, (gint64) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_UINT64 (param_spec))
     {
-      g_object_set (config, param_spec->name, (guint64) value, NULL);
+      guint64 v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != (guint64) value)
+        g_object_set (config, param_spec->name, (guint64) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
     {
-      g_object_set (config, param_spec->name, value, NULL);
+      gdouble v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != value)
+        g_object_set (config, param_spec->name, value, NULL);
     }
 }
 
@@ -808,10 +848,9 @@ gimp_prop_angle_dial_new (GObject     *config,
   dial = gimp_dial_new ();
 
   g_object_set (dial,
-                "size",         32,
-                "border-width", 0,
-                "background",   GIMP_CIRCLE_BACKGROUND_PLAIN,
-                "draw-beta",    FALSE,
+                "size",       32,
+                "background", GIMP_CIRCLE_BACKGROUND_PLAIN,
+                "draw-beta",  FALSE,
                 NULL);
 
   set_param_spec (G_OBJECT (dial), dial, param_spec);
@@ -894,6 +933,47 @@ gimp_prop_angle_range_dial_new  (GObject     *config,
                           G_BINDING_SYNC_CREATE);
 
   return dial;
+}
+
+GtkWidget *
+gimp_prop_polar_new  (GObject     *config,
+                      const gchar *angle_property_name,
+                      const gchar *radius_property_name)
+{
+  GParamSpec *angle_param_spec;
+  GParamSpec *radius_param_spec;
+  GtkWidget  *polar;
+
+  angle_param_spec = find_param_spec (config, angle_property_name, G_STRFUNC);
+  if (! angle_param_spec)
+    return NULL;
+
+  radius_param_spec = find_param_spec (config, radius_property_name, G_STRFUNC);
+  if (! radius_param_spec)
+    return NULL;
+
+  polar = gimp_polar_new ();
+
+  g_object_set (polar,
+                "size",         90,
+                "border-width", 3,
+                "background",   GIMP_CIRCLE_BACKGROUND_HSV,
+                NULL);
+
+  g_object_bind_property_full (config, angle_property_name,
+                               polar,  "angle",
+                               G_BINDING_BIDIRECTIONAL |
+                               G_BINDING_SYNC_CREATE,
+                               deg_to_rad,
+                               rad_to_deg,
+                               NULL, NULL);
+
+  g_object_bind_property (config, radius_property_name,
+                          polar, "radius",
+                          G_BINDING_BIDIRECTIONAL |
+                          G_BINDING_SYNC_CREATE);
+
+  return polar;
 }
 
 

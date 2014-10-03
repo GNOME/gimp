@@ -40,6 +40,13 @@ struct _GimpOverlayDialog
 {
   GimpOverlayFrame  parent_instance;
 
+  gchar            *title;
+  gchar            *icon_name;
+
+  GtkWidget        *header;
+  GtkWidget        *icon_image;
+  GtkWidget        *title_label;
+  GtkWidget        *close_button;
   GtkWidget        *action_area;
 };
 

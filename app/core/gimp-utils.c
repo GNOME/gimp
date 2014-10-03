@@ -53,274 +53,18 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
 #include "gimp.h"
 #include "gimp-utils.h"
-#include "gimpcontainer.h"
 #include "gimpcontext.h"
-#include "gimpparamspecs.h"
+#include "gimperror.h"
+
+#include "gimp-intl.h"
 
 
-#define MAX_FUNC               100
-
-
-gint64
-gimp_g_type_instance_get_memsize (GTypeInstance *instance)
-{
-  if (instance)
-    {
-      GTypeQuery type_query;
-
-      g_type_query (G_TYPE_FROM_INSTANCE (instance), &type_query);
-
-      return type_query.instance_size;
-    }
-
-  return 0;
-}
-
-gint64
-gimp_g_object_get_memsize (GObject *object)
-{
-  if (object)
-    return gimp_g_type_instance_get_memsize ((GTypeInstance *) object);
-
-  return 0;
-}
-
-gint64
-gimp_g_hash_table_get_memsize (GHashTable *hash,
-                               gint64      data_size)
-{
-  if (hash)
-    return (2 * sizeof (gint) +
-            5 * sizeof (gpointer) +
-            g_hash_table_size (hash) * (3 * sizeof (gpointer) + data_size));
-
-  return 0;
-}
-
-typedef struct
-{
-  GimpMemsizeFunc func;
-  gint64          memsize;
-  gint64          gui_size;
-} HashMemsize;
-
-static void
-hash_memsize_foreach (gpointer     key,
-                      gpointer     value,
-                      HashMemsize *memsize)
-{
-  gint64 gui_size = 0;
-
-  memsize->memsize  += memsize->func (value, &gui_size);
-  memsize->gui_size += gui_size;
-}
-
-gint64
-gimp_g_hash_table_get_memsize_foreach (GHashTable      *hash,
-                                       GimpMemsizeFunc  func,
-                                       gint64          *gui_size)
-{
-  HashMemsize memsize;
-
-  g_return_val_if_fail (func != NULL, 0);
-
-  if (! hash)
-    return 0;
-
-  memsize.func     = func;
-  memsize.memsize  = 0;
-  memsize.gui_size = 0;
-
-  g_hash_table_foreach (hash, (GHFunc) hash_memsize_foreach, &memsize);
-
-  if (gui_size)
-    *gui_size = memsize.gui_size;
-
-  return memsize.memsize + gimp_g_hash_table_get_memsize (hash, 0);
-}
-
-gint64
-gimp_g_slist_get_memsize (GSList  *slist,
-                          gint64   data_size)
-{
-  return g_slist_length (slist) * (data_size + sizeof (GSList));
-}
-
-gint64
-gimp_g_slist_get_memsize_foreach (GSList          *slist,
-                                  GimpMemsizeFunc  func,
-                                  gint64          *gui_size)
-{
-  GSList *l;
-  gint64  memsize = 0;
-
-  g_return_val_if_fail (func != NULL, 0);
-
-  for (l = slist; l; l = g_slist_next (l))
-    memsize += sizeof (GSList) + func (l->data, gui_size);
-
-  return memsize;
-}
-
-gint64
-gimp_g_list_get_memsize (GList  *list,
-                         gint64  data_size)
-{
-  return g_list_length (list) * (data_size + sizeof (GList));
-}
-
-gint64
-gimp_g_list_get_memsize_foreach (GList           *list,
-                                 GimpMemsizeFunc  func,
-                                 gint64          *gui_size)
-{
-  GList  *l;
-  gint64  memsize = 0;
-
-  g_return_val_if_fail (func != NULL, 0);
-
-  for (l = list; l; l = g_list_next (l))
-    memsize += sizeof (GList) + func (l->data, gui_size);
-
-  return memsize;
-}
-
-gint64
-gimp_g_value_get_memsize (GValue *value)
-{
-  gint64 memsize = 0;
-
-  if (! value)
-    return 0;
-
-  if (G_VALUE_HOLDS_STRING (value))
-    {
-      memsize += gimp_string_get_memsize (g_value_get_string (value));
-    }
-  else if (G_VALUE_HOLDS_BOXED (value))
-    {
-      if (GIMP_VALUE_HOLDS_RGB (value))
-        {
-          memsize += sizeof (GimpRGB);
-        }
-      else if (GIMP_VALUE_HOLDS_MATRIX2 (value))
-        {
-          memsize += sizeof (GimpMatrix2);
-        }
-      else if (GIMP_VALUE_HOLDS_PARASITE (value))
-        {
-          memsize += gimp_parasite_get_memsize (g_value_get_boxed (value),
-                                                NULL);
-        }
-      else if (GIMP_VALUE_HOLDS_ARRAY (value)       ||
-               GIMP_VALUE_HOLDS_INT8_ARRAY (value)  ||
-               GIMP_VALUE_HOLDS_INT16_ARRAY (value) ||
-               GIMP_VALUE_HOLDS_INT32_ARRAY (value) ||
-               GIMP_VALUE_HOLDS_FLOAT_ARRAY (value))
-        {
-          GimpArray *array = g_value_get_boxed (value);
-
-          if (array)
-            memsize += (sizeof (GimpArray) +
-                        array->static_data ? 0 : array->length);
-        }
-      else if (GIMP_VALUE_HOLDS_STRING_ARRAY (value))
-        {
-          GimpArray *array = g_value_get_boxed (value);
-
-          if (array)
-            {
-              memsize += sizeof (GimpArray);
-
-              if (! array->static_data)
-                {
-                  gchar **tmp = (gchar **) array->data;
-                  gint    i;
-
-                  memsize += array->length * sizeof (gchar *);
-
-                  for (i = 0; i < array->length; i++)
-                    memsize += gimp_string_get_memsize (tmp[i]);
-                }
-            }
-        }
-      else
-        {
-          g_printerr ("%s: unhandled boxed value type: %s\n",
-                      G_STRFUNC, G_VALUE_TYPE_NAME (value));
-        }
-    }
-  else if (G_VALUE_HOLDS_OBJECT (value))
-    {
-      g_printerr ("%s: unhandled object value type: %s\n",
-                  G_STRFUNC, G_VALUE_TYPE_NAME (value));
-    }
-
-  return memsize + sizeof (GValue);
-}
-
-gint64
-gimp_g_param_spec_get_memsize (GParamSpec *pspec)
-{
-  gint64 memsize = 0;
-
-  if (! pspec)
-    return 0;
-
-  if (! (pspec->flags & G_PARAM_STATIC_NAME))
-    memsize += gimp_string_get_memsize (g_param_spec_get_name (pspec));
-
-  if (! (pspec->flags & G_PARAM_STATIC_NICK))
-    memsize += gimp_string_get_memsize (g_param_spec_get_nick (pspec));
-
-  if (! (pspec->flags & G_PARAM_STATIC_BLURB))
-    memsize += gimp_string_get_memsize (g_param_spec_get_blurb (pspec));
-
-  return memsize + gimp_g_type_instance_get_memsize ((GTypeInstance *) pspec);
-}
-
-gint64
-gimp_gegl_buffer_get_memsize (GeglBuffer *buffer)
-{
-  if (buffer)
-    {
-      const Babl *format = gegl_buffer_get_format (buffer);
-
-      return (babl_format_get_bytes_per_pixel (format) *
-              gegl_buffer_get_width (buffer) *
-              gegl_buffer_get_height (buffer) +
-              gimp_g_object_get_memsize (G_OBJECT (buffer)));
-    }
-
-  return 0;
-}
-
-gint64
-gimp_string_get_memsize (const gchar *string)
-{
-  if (string)
-    return strlen (string) + 1;
-
-  return 0;
-}
-
-gint64
-gimp_parasite_get_memsize (GimpParasite *parasite,
-                           gint64       *gui_size)
-{
-  if (parasite)
-    return (sizeof (GimpParasite) +
-            gimp_string_get_memsize (parasite->name) +
-            parasite->size);
-
-  return 0;
-}
+#define MAX_FUNC 100
 
 
 gint
@@ -767,6 +511,58 @@ gimp_enum_get_value_name (GType enum_type,
   return value_name;
 }
 
+gboolean
+gimp_get_fill_params (GimpContext   *context,
+                      GimpFillType   fill_type,
+                      GimpRGB       *color,
+                      GimpPattern  **pattern,
+                      GError       **error)
+
+{
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (color != NULL, FALSE);
+  g_return_val_if_fail (pattern != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  *pattern = NULL;
+
+  switch (fill_type)
+    {
+    case GIMP_FILL_FOREGROUND:
+      gimp_context_get_foreground (context, color);
+      break;
+
+    case GIMP_FILL_BACKGROUND:
+      gimp_context_get_background (context, color);
+      break;
+
+    case GIMP_FILL_WHITE:
+      gimp_rgba_set (color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
+      break;
+
+    case GIMP_FILL_TRANSPARENT:
+      gimp_rgba_set (color, 0.0, 0.0, 0.0, GIMP_OPACITY_TRANSPARENT);
+      break;
+
+    case GIMP_FILL_PATTERN:
+      *pattern = gimp_context_get_pattern (context);
+
+      if (! *pattern)
+        {
+          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+			       _("No patterns available for this operation."));
+          return FALSE;
+        }
+      break;
+
+    default:
+      g_warning ("%s: invalid fill_type %d", G_STRFUNC, fill_type);
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
 /**
  * gimp_utils_point_to_line_distance:
  * @point:              The point to calculate the distance for.
@@ -854,6 +650,101 @@ gimp_constrain_line (gdouble  start_x,
     }
 }
 
+gint
+gimp_file_compare (GFile *file1,
+                   GFile *file2)
+{
+  if (g_file_equal (file1, file2))
+    {
+      return 0;
+    }
+  else
+    {
+      gchar *uri1   = g_file_get_uri (file1);
+      gchar *uri2   = g_file_get_uri (file2);
+      gint   result = strcmp (uri1, uri2);
+
+      g_free (uri1);
+      g_free (uri2);
+
+      return result;
+    }
+}
+
+static inline gboolean
+is_script (const gchar *filename)
+{
+#ifdef G_OS_WIN32
+  /* On Windows there is no concept like the Unix executable flag.
+   * There is a weak emulation provided by the MS C Runtime using file
+   * extensions (com, exe, cmd, bat). This needs to be extended to
+   * treat scripts (Python, Perl, ...) as executables, too. We use the
+   * PATHEXT variable, which is also used by cmd.exe.
+   */
+  static gchar **exts = NULL;
+
+  const gchar   *ext = strrchr (filename, '.');
+  gchar         *pathext;
+  gint           i;
+
+  if (exts == NULL)
+    {
+      pathext = g_getenv ("PATHEXT");
+      if (pathext != NULL)
+        {
+          exts = g_strsplit (pathext, G_SEARCHPATH_SEPARATOR_S, 100);
+        }
+      else
+        {
+          exts = g_new (gchar *, 1);
+          exts[0] = NULL;
+        }
+    }
+
+  for (i = 0; exts[i]; i++)
+    {
+      if (g_ascii_strcasecmp (ext, exts[i]) == 0)
+        return TRUE;
+    }
+#endif /* G_OS_WIN32 */
+
+  return FALSE;
+}
+
+gboolean
+gimp_file_is_executable (GFile *file)
+{
+  GFileInfo *info;
+  gboolean   executable = FALSE;
+
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
+
+  info = g_file_query_info (file,
+                            G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                            G_FILE_ATTRIBUTE_STANDARD_TYPE ","
+                            G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE ",",
+                            G_FILE_QUERY_INFO_NONE,
+                            NULL, NULL);
+
+  if (info)
+    {
+      GFileType    file_type = g_file_info_get_file_type (info);
+      const gchar *filename  = g_file_info_get_name (info);
+
+      if (g_file_info_get_attribute_boolean (info,
+                                             G_FILE_ATTRIBUTE_ACCESS_CAN_EXECUTE) ||
+          ((file_type == G_FILE_TYPE_REGULAR) &&
+           is_script (filename)))
+        {
+          executable = TRUE;
+        }
+
+      g_object_unref (info);
+    }
+
+  return executable;
+}
+
 
 /*  debug stuff  */
 
@@ -865,7 +756,6 @@ void
 gimp_create_image_from_buffer (Gimp       *gimp,
                                GeglBuffer *buffer)
 {
-#if 0
   GimpImage  *image;
   GimpLayer  *layer;
   const Babl *format;
@@ -888,6 +778,8 @@ gimp_create_image_from_buffer (Gimp       *gimp,
                                       GIMP_NORMAL_MODE);
   gimp_image_add_layer (image, layer, NULL, -1, FALSE);
 
-  gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0);
-#endif
+  gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0, NULL, 0);
+
+  /* unref the image unconditionally, even when no display was created */
+  g_object_unref (image);
 }

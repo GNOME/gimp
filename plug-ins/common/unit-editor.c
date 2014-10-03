@@ -187,20 +187,20 @@ static GimpUnit
 new_unit_dialog (GtkWidget *main_dialog,
                  GimpUnit   template)
 {
-  GtkWidget *dialog;
-  GtkWidget *table;
-  GtkWidget *entry;
-  GtkWidget *spinbutton;
+  GtkWidget     *dialog;
+  GtkWidget     *table;
+  GtkWidget     *entry;
+  GtkWidget     *spinbutton;
 
-  GtkWidget *identifier_entry;
-  GtkObject *factor_adj;
-  GtkObject *digits_adj;
-  GtkWidget *symbol_entry;
-  GtkWidget *abbreviation_entry;
-  GtkWidget *singular_entry;
-  GtkWidget *plural_entry;
+  GtkWidget     *identifier_entry;
+  GtkAdjustment *factor_adj;
+  GtkAdjustment *digits_adj;
+  GtkWidget     *symbol_entry;
+  GtkWidget     *abbreviation_entry;
+  GtkWidget     *singular_entry;
+  GtkWidget     *plural_entry;
 
-  GimpUnit   unit = GIMP_UNIT_PIXEL;
+  GimpUnit       unit = GIMP_UNIT_PIXEL;
 
   dialog = gimp_dialog_new (_("Add a New Unit"), PLUG_IN_ROLE,
                             main_dialog, GTK_DIALOG_MODAL,
@@ -236,21 +236,25 @@ new_unit_dialog (GtkWidget *main_dialog,
 
   gimp_help_set_help_data (entry, gettext (columns[IDENTIFIER].help), NULL);
 
-  spinbutton = gimp_spin_button_new (&factor_adj,
-                                     (template != GIMP_UNIT_PIXEL) ?
-                                     gimp_unit_get_factor (template) : 1.0,
-                                     GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
-                                     0.01, 0.1, 0.0, 0.01, 5);
+  factor_adj = (GtkAdjustment *)
+    gtk_adjustment_new ((template != GIMP_UNIT_PIXEL) ?
+                        gimp_unit_get_factor (template) : 1.0,
+                        GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
+                        0.01, 0.1, 0.0);
+  spinbutton = gtk_spin_button_new (factor_adj, 0.01, 5);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Factor:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton, gettext (columns[FACTOR].help), NULL);
 
-  spinbutton = gimp_spin_button_new (&digits_adj,
-                                     (template != GIMP_UNIT_PIXEL) ?
-                                     gimp_unit_get_digits (template) : 2.0,
-                                     0, 5, 1, 1, 0, 1, 0);
+  digits_adj = (GtkAdjustment *)
+    gtk_adjustment_new ((template != GIMP_UNIT_PIXEL) ?
+                        gimp_unit_get_digits (template) : 2.0,
+                        0, 5, 1, 1, 0);
+  spinbutton = gtk_spin_button_new (digits_adj, 0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("_Digits:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);

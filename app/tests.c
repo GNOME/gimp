@@ -66,7 +66,8 @@ gimp_init_for_testing (void)
   gegl_init (NULL, NULL);
 
   gimp = gimp_new ("Unit Tested GIMP", NULL, NULL, FALSE, TRUE, TRUE, TRUE,
-                   FALSE, FALSE, TRUE, TRUE, FALSE);
+                   FALSE, FALSE, TRUE, FALSE,
+                   GIMP_STACK_TRACE_QUERY, GIMP_PDB_COMPAT_OFF);
 
   units_init (gimp);
 
@@ -82,77 +83,36 @@ gimp_init_for_testing (void)
 
 #ifndef GIMP_CONSOLE_COMPILATION
 
-#ifndef G_OS_WIN32
-
 static void
 gimp_init_icon_theme_for_testing (void)
 {
-  const gchar *top_srcdir = g_getenv ("GIMP_TESTING_ABS_TOP_SRCDIR");
   gchar       *icon_root;
-  gchar       *link_name;
-  gchar       *link_target;
-  gint         i;
 
-  static const gchar *sizes[] = { "12x12", "16x16", "18x18", "20x20", "22x22",
-                                  "24x24", "32x32", "48x48", "64x64" };
-
-  if (! top_srcdir)
-    {
-      g_printerr ("*\n"
-                  "*  The env var GIMP_TESTING_ABS_TOP_SRCDIR is not set,\n"
-                  "*  you are probably running in a debugger.\n"
-                  "*  Set it manually, e.g.:\n"
-                  "*\n"
-                  "*    set env GIMP_TESTING_ABS_TOP_SRCDIR=%s/source/gimp\n"
-                  "*\n",
-                  g_get_home_dir ());
-      return;
-    }
-
-  icon_root = g_dir_make_tmp ("gimp-test-icon-theme-XXXXXX", NULL);
-  if (! icon_root)
-    return;
-
-  for (i = 0; i < G_N_ELEMENTS (sizes); i++)
-    {
-      gchar *icon_dir;
-
-      icon_dir = g_build_filename (icon_root, "hicolor", sizes[i], NULL);
-      g_mkdir_with_parents (icon_dir, 0700);
-
-      link_name   = g_build_filename (icon_dir, "apps", NULL);
-      link_target = g_build_filename (top_srcdir, "icons", sizes[i] + 3, NULL);
-
-      symlink (link_target, link_name);
-
-      g_free (link_target);
-      g_free (link_name);
-
-      g_free (icon_dir);
-    }
-
-  link_name   = g_build_filename (icon_root, "hicolor", "index.theme", NULL);
-  link_target = g_build_filename (top_srcdir, "icons", "index.theme", NULL);
-
-  symlink (link_target, link_name);
-
-  g_free (link_target);
-  g_free (link_name);
-
+  icon_root = g_test_build_filename (G_TEST_BUILT, "gimp-test-icon-theme", NULL);
   gtk_icon_theme_prepend_search_path (gtk_icon_theme_get_default (),
                                       icon_root);
-
   g_free (icon_root);
+  return;
 }
 
-#endif /* G_OS_WIN32 */
-
 static Gimp *
-gimp_init_for_gui_testing_internal (gboolean     show_gui,
-                                    const gchar *gimprc)
+gimp_init_for_gui_testing_internal (gboolean  show_gui,
+                                    GFile    *gimprc)
 {
   GimpSessionInfoClass *klass;
   Gimp                 *gimp;
+
+#if defined (G_OS_WIN32)
+  /* g_test_init() sets warnings always fatal, which is a usually a good
+     testing default. Nevertheless the Windows platform may have a few
+     quirks generating warnings, yet we want to finish tests. So we
+     allow some relaxed rules on this platform. */
+
+  GLogLevelFlags fatal_mask;
+
+  fatal_mask = (GLogLevelFlags) (G_LOG_FATAL_MASK | G_LOG_LEVEL_CRITICAL);
+  g_log_set_always_fatal (fatal_mask);
+#endif
 
   /* from main() */
   gimp_log_init ();
@@ -164,15 +124,14 @@ gimp_init_for_gui_testing_internal (gboolean     show_gui,
 
   /* from app_run() */
   gimp = gimp_new ("Unit Tested GIMP", NULL, NULL, FALSE, TRUE, TRUE, !show_gui,
-                   FALSE, FALSE, TRUE, TRUE, FALSE);
+                   FALSE, FALSE, TRUE, FALSE,
+                   GIMP_STACK_TRACE_QUERY, GIMP_PDB_COMPAT_OFF);
   gimp_set_show_gui (gimp, show_gui);
   units_init (gimp);
   gimp_load_config (gimp, gimprc, NULL);
   gimp_gegl_init (gimp);
   gui_init (gimp, TRUE);
-#ifndef G_OS_WIN32
   gimp_init_icon_theme_for_testing ();
-#endif
   gimp_initialize (gimp, gimp_status_func_dummy);
   gimp_restore (gimp, gimp_status_func_dummy);
 
@@ -207,8 +166,8 @@ gimp_init_for_gui_testing (gboolean show_gui)
  * Returns: The #Gimp instance.
  **/
 Gimp *
-gimp_init_for_gui_testing_with_rc (gboolean     show_gui,
-                                   const gchar *gimprc)
+gimp_init_for_gui_testing_with_rc (gboolean  show_gui,
+                                   GFile    *gimprc)
 {
   return gimp_init_for_gui_testing_internal (show_gui, gimprc);
 }

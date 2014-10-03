@@ -89,20 +89,20 @@ static GimpPixPipeParams gihparams;
 
 typedef struct
 {
-  GimpOrientationType orientation;
-  gint32     image;
-  gint32     toplayer;
-  gint       nguides;
-  gint32    *guides;
-  gint      *value;
-  GtkWidget *count_label;       /* Corresponding count adjustment, */
-  gint      *count;             /* cols or rows                    */
-  gint      *other_count;       /* and the other one               */
-  GtkObject *ncells;
-  GtkObject *rank0;
-  GtkWidget *warning_label;
-  GtkWidget *rank_entry[GIMP_PIXPIPE_MAXDIM];
-  GtkWidget *mode_entry[GIMP_PIXPIPE_MAXDIM];
+  GimpOrientationType  orientation;
+  gint32               image;
+  gint32               toplayer;
+  gint                 nguides;
+  gint32              *guides;
+  gint                *value;
+  GtkWidget           *count_label;    /* Corresponding count adjustment, */
+  gint                *count;          /* cols or rows                    */
+  gint                *other_count;    /* and the other one               */
+  GtkAdjustment       *ncells;
+  GtkAdjustment       *rank0;
+  GtkWidget           *warning_label;
+  GtkWidget           *rank_entry[GIMP_PIXPIPE_MAXDIM];
+  GtkWidget           *mode_entry[GIMP_PIXPIPE_MAXDIM];
 } SizeAdjustmentData;
 
 /* static gint32 *vguides, *hguides;       */
@@ -662,12 +662,12 @@ gih_load_image (GFile   *file,
   GimpParasite *pipe_parasite;
   gsize         bytes_read;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             g_file_get_parse_name (file));
+
   input = G_INPUT_STREAM (g_file_read (file, NULL, error));
   if (! input)
     return -1;
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             g_file_get_parse_name (file));
 
   /* The file format starts with a painfully simple text header */
 
@@ -882,22 +882,22 @@ dim_callback (GtkAdjustment *adjustment,
 static gboolean
 gih_save_dialog (gint32 image_ID)
 {
-  GtkWidget *dialog;
-  GtkWidget *table;
-  GtkWidget *dimtable;
-  GtkWidget *label;
-  GtkObject *adjustment;
-  GtkWidget *spinbutton;
-  GtkWidget *entry;
-  GtkWidget *box;
-  GtkWidget *cb;
-  gint       i;
-  gchar      buffer[100];
-  SizeAdjustmentData cellw_adjust;
-  SizeAdjustmentData cellh_adjust;
-  gint32    *layer_ID;
-  gint32     nlayers;
-  gboolean   run;
+  GtkWidget          *dialog;
+  GtkWidget          *table;
+  GtkWidget          *dimtable;
+  GtkWidget          *label;
+  GtkAdjustment      *adjustment;
+  GtkWidget          *spinbutton;
+  GtkWidget          *entry;
+  GtkWidget          *box;
+  GtkWidget          *cb;
+  gint                i;
+  gchar               buffer[100];
+  SizeAdjustmentData  cellw_adjust;
+  SizeAdjustmentData  cellh_adjust;
+  gint32             *layer_ID;
+  gint32              nlayers;
+  gboolean            run;
 
   dialog = gimp_export_dialog_new (_("Brush Pipe"), PLUG_IN_BINARY, SAVE_PROC);
 
@@ -913,8 +913,10 @@ gih_save_dialog (gint32 image_ID)
   /*
    * Spacing: __
    */
-  spinbutton = gimp_spin_button_new (&adjustment, info.spacing,
-                                     1, 1000, 1, 10, 0, 1, 0);
+  adjustment = (GtkAdjustment *) gtk_adjustment_new (info.spacing,
+                                                     1, 1000, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Spacing (percent):"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
@@ -942,10 +944,11 @@ gih_save_dialog (gint32 image_ID)
    */
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
 
-  spinbutton = gimp_spin_button_new (&adjustment,
-                                     gihparams.cellwidth,
-                                     2, gimp_image_width (image_ID), 1, 10, 0,
-                                     1, 0);
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (gihparams.cellwidth,
+                        2, gimp_image_width (image_ID), 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -965,10 +968,11 @@ gih_save_dialog (gint32 image_ID)
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  spinbutton = gimp_spin_button_new (&adjustment,
-                                     gihparams.cellheight,
-                                     2, gimp_image_height (image_ID), 1, 10, 0,
-                                     1, 0);
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (gihparams.cellheight,
+                        2, gimp_image_height (image_ID), 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -996,9 +1000,10 @@ gih_save_dialog (gint32 image_ID)
   /*
    * Number of cells: ___
    */
-  spinbutton = gimp_spin_button_new (&adjustment,
-                                     gihparams.ncells, 1, 1000, 1, 10, 0,
-                                     1, 0);
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (gihparams.ncells, 1, 1000, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              _("Number of cells:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
@@ -1056,8 +1061,10 @@ gih_save_dialog (gint32 image_ID)
   /*
    * Dimension: ___
    */
-  spinbutton = gimp_spin_button_new (&adjustment, gihparams.dim,
-                                     1, GIMP_PIXPIPE_MAXDIM, 1, 1, 0, 1, 0);
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (gihparams.dim, 1, GIMP_PIXPIPE_MAXDIM, 1, 1, 0);
+  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
                              _("Dimension:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
@@ -1076,9 +1083,10 @@ gih_save_dialog (gint32 image_ID)
     {
       gint j;
 
-      spinbutton = gimp_spin_button_new (&adjustment,
-                                         gihparams.rank[i], 1, 100, 1, 1, 0,
-                                         1, 0);
+      adjustment = (GtkAdjustment *)
+        gtk_adjustment_new (gihparams.rank[i], 1, 100, 1, 1, 0);
+      spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
       gtk_table_attach (GTK_TABLE (dimtable), spinbutton, 0, 1, i, i + 1,
                         GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
@@ -1177,7 +1185,6 @@ gih_save_one_brush (GOutputStream  *output,
   GimpImageType  drawable_type;
   gint           bpp;
   guint          y;
-  gsize          bytes_written;
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
@@ -1214,15 +1221,13 @@ gih_save_one_brush (GOutputStream  *output,
   bh.spacing      = g_htonl (info.spacing);
 
   if (! g_output_stream_write_all (output, &bh, sizeof (bh),
-                                   &bytes_written, NULL, error) ||
-      bytes_written != sizeof (bh))
+                                   NULL, NULL, error))
     {
       return FALSE;
     }
 
   if (! g_output_stream_write_all (output, name, strlen (name) + 1,
-                                   &bytes_written, NULL, error) ||
-      bytes_written != strlen (name) + 1)
+                                   NULL, NULL, error))
     {
       return FALSE;
     }
@@ -1246,8 +1251,7 @@ gih_save_one_brush (GOutputStream  *output,
         }
 
       if (! g_output_stream_write_all (output, data, rect->width * bpp,
-                                       &bytes_written, NULL, error) ||
-          bytes_written != rect->width * bpp)
+                                       NULL, NULL, error))
         {
           g_free (data);
           return FALSE;
@@ -1278,7 +1282,6 @@ gih_save_image (GFile    *file,
   gint           imagew, imageh;
   gint           offsetx, offsety;
   gint           k;
-  gsize          bytes_written;
 
   if (gihparams.ncells < 1)
     return FALSE;
@@ -1286,12 +1289,12 @@ gih_save_image (GFile    *file,
   imagew = gimp_image_width (image_ID);
   imageh = gimp_image_height (image_ID);
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             g_file_get_parse_name (file));
+
   output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
   if (! output)
     return FALSE;
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             g_file_get_parse_name (file));
 
   parstring = gimp_pixpipe_params_build (&gihparams);
 
@@ -1299,8 +1302,7 @@ gih_save_image (GFile    *file,
                             info.description, gihparams.ncells, parstring);
 
   if (! g_output_stream_write_all (output, header, strlen (header),
-                                   &bytes_written, NULL, error) ||
-      bytes_written != strlen (header))
+                                   NULL, NULL, error))
     {
       g_free (parstring);
       g_free (header);

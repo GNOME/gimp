@@ -191,6 +191,7 @@ struct _GimpDisplayShell
 
   GeglBuffer        *mask;
   GimpRGB            mask_color;
+  gboolean           mask_inverted;
 
   GimpMotionBuffer  *motion_buffer;
 
@@ -281,7 +282,8 @@ void              gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
                                                     const GdkRectangle *highlight);
 void              gimp_display_shell_set_mask      (GimpDisplayShell   *shell,
                                                     GeglBuffer         *mask,
-                                                    const GimpRGB      *color);
+                                                    const GimpRGB      *color,
+                                                    gboolean            inverted);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_H__ */

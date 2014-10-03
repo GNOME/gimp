@@ -323,15 +323,7 @@ gimp_invert (gint32 drawable_ID)
  * @num_points: The number of values in the control point array.
  * @control_pts: The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }.
  *
- * Modifies the intensity curve(s) for specified drawable.
- *
- * Modifies the intensity mapping for one channel in the specified
- * drawable. The drawable must be either grayscale or RGB, and the
- * channel can be either an intensity component, or the value. The
- * 'control_pts' parameter is an array of integers which define a set
- * of control points which describe a Catmull Rom spline which yields
- * the final intensity curve. Use the gimp_curves_explicit() function
- * to explicitly modify intensity levels.
+ * Deprecated: Use gimp_drawable_curves_spline() instead.
  *
  * Returns: TRUE on success.
  **/
@@ -367,15 +359,7 @@ gimp_curves_spline (gint32                drawable_ID,
  * @num_bytes: The number of bytes in the new curve (always 256).
  * @curve: The explicit curve.
  *
- * Modifies the intensity curve(s) for specified drawable.
- *
- * Modifies the intensity mapping for one channel in the specified
- * drawable. The drawable must be either grayscale or RGB, and the
- * channel can be either an intensity component, or the value. The
- * 'curve' parameter is an array of bytes which explicitly defines how
- * each pixel value in the drawable will be modified. Use the
- * gimp_curves_spline() function to modify intensity levels with
- * Catmull Rom splines.
+ * Deprecated: Use gimp_drawable_curves_explicit() instead.
  *
  * Returns: TRUE on success.
  **/

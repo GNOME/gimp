@@ -173,7 +173,24 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
     {
       GimpDrawable *drawable = gimp_image_get_active_drawable (image);
       GimpContext  *context  = GIMP_CONTEXT (options);
+      GimpFillType  fill_type;
       gint          x, y;
+      gboolean      success;
+      GError       *error = NULL;
+
+      switch (options->fill_mode)
+        {
+        default:
+        case GIMP_BUCKET_FILL_FG:
+          fill_type = GIMP_FILL_FOREGROUND;
+          break;
+        case GIMP_BUCKET_FILL_BG:
+          fill_type = GIMP_FILL_BACKGROUND;
+          break;
+        case GIMP_BUCKET_FILL_PATTERN:
+          fill_type = GIMP_FILL_PATTERN;
+          break;
+        }
 
       x = coords->x;
       y = coords->y;
@@ -190,50 +207,32 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
 
       if (options->fill_selection)
         {
-          GimpFillType fill_type;
+          success = gimp_edit_fill (image, drawable, context, fill_type,
+                                    gimp_context_get_opacity (context),
+                                    gimp_context_get_paint_mode (context),
+                                    &error);
+        }
+      else
+        {
+          success = gimp_drawable_bucket_fill (drawable, context, fill_type,
+                                               gimp_context_get_paint_mode (context),
+                                               gimp_context_get_opacity (context),
+                                               options->fill_transparent,
+                                               options->fill_criterion,
+                                               options->threshold / 255.0,
+                                               options->sample_merged,
+                                               x, y, &error);
+        }
 
-          switch (options->fill_mode)
-            {
-            default:
-            case GIMP_BUCKET_FILL_FG:
-              fill_type = GIMP_FOREGROUND_FILL;
-              break;
-            case GIMP_BUCKET_FILL_BG:
-              fill_type = GIMP_BACKGROUND_FILL;
-              break;
-            case GIMP_BUCKET_FILL_PATTERN:
-              fill_type = GIMP_PATTERN_FILL;
-              break;
-            }
-
-          gimp_edit_fill (image, drawable, context, fill_type,
-                          gimp_context_get_opacity (context),
-                          gimp_context_get_paint_mode (context));
+      if (success)
+        {
           gimp_image_flush (image);
         }
       else
         {
-          GError *error = NULL;
-
-          if (! gimp_drawable_bucket_fill (drawable,
-                                           context,
-                                           options->fill_mode,
-                                           gimp_context_get_paint_mode (context),
-                                           gimp_context_get_opacity (context),
-                                           options->fill_transparent,
-                                           options->fill_criterion,
-                                           options->threshold / 255.0,
-                                           options->sample_merged,
-                                           x, y, &error))
-            {
-              gimp_message_literal (display->gimp, G_OBJECT (display),
-                                    GIMP_MESSAGE_WARNING, error->message);
-              g_clear_error (&error);
-            }
-          else
-            {
-              gimp_image_flush (image);
-            }
+          gimp_message_literal (display->gimp, G_OBJECT (display),
+                                GIMP_MESSAGE_WARNING, error->message);
+          g_clear_error (&error);
         }
     }
 

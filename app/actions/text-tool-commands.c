@@ -215,24 +215,24 @@ text_tool_load_dialog_response (GtkWidget    *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      gchar  *filename;
+      GFile  *file;
       GError *error = NULL;
 
-      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+      file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
 
-      if (! gimp_text_buffer_load (tool->buffer, filename, &error))
+      if (! gimp_text_buffer_load (tool->buffer, file, &error))
         {
           gimp_message (GIMP_TOOL (tool)->tool_info->gimp, G_OBJECT (dialog),
                         GIMP_MESSAGE_ERROR,
                         _("Could not open '%s' for reading: %s"),
-                        gimp_filename_to_utf8 (filename),
+                        gimp_file_get_utf8_name (file),
                         error->message);
           g_clear_error (&error);
-          g_free (filename);
+          g_object_unref (file);
           return;
         }
 
-      g_free (filename);
+      g_object_unref (file);
     }
 
   gtk_widget_hide (dialog);

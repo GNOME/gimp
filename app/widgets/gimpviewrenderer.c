@@ -43,6 +43,8 @@
 #include "gimpviewrenderer-utils.h"
 #include "gimpwidgets-utils.h"
 
+#include "gimp-priorities.h"
+
 
 enum
 {
@@ -540,7 +542,7 @@ gimp_view_renderer_invalidate (GimpViewRenderer *renderer)
   GIMP_VIEW_RENDERER_GET_CLASS (renderer)->invalidate (renderer);
 
   renderer->idle_id =
-    g_idle_add_full (GIMP_VIEWABLE_PRIORITY_IDLE,
+    g_idle_add_full (GIMP_PRIORITY_VIEWABLE_IDLE,
                      (GSourceFunc) gimp_view_renderer_idle_update,
                      renderer, NULL);
 }
@@ -568,7 +570,7 @@ gimp_view_renderer_update_idle (GimpViewRenderer *renderer)
     g_source_remove (renderer->idle_id);
 
   renderer->idle_id =
-    g_idle_add_full (GIMP_VIEWABLE_PRIORITY_IDLE,
+    g_idle_add_full (GIMP_PRIORITY_VIEWABLE_IDLE,
                      (GSourceFunc) gimp_view_renderer_idle_update,
                      renderer, NULL);
 }

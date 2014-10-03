@@ -274,7 +274,6 @@ script_fu_interface (SFScript  *script,
   for (i = start_arg; i < script->n_args; i++)
     {
       GtkWidget *widget       = NULL;
-      GtkObject *adj;
       gchar     *label_text;
       gfloat     label_yalign = 0.5;
       gint      *ID_ptr       = NULL;
@@ -420,17 +419,18 @@ script_fu_interface (SFScript  *script,
 
             case SF_SPINNER:
               left_align = TRUE;
-              widget =
-                gimp_spin_button_new (&adj,
-                                      arg->value.sfa_adjustment.value,
-                                      arg->default_value.sfa_adjustment.lower,
-                                      arg->default_value.sfa_adjustment.upper,
-                                      arg->default_value.sfa_adjustment.step,
-                                      arg->default_value.sfa_adjustment.page,
-                                      0, 0,
-                                      arg->default_value.sfa_adjustment.digits);
+              arg->value.sfa_adjustment.adj = (GtkAdjustment *)
+                gtk_adjustment_new (arg->value.sfa_adjustment.value,
+                                    arg->default_value.sfa_adjustment.lower,
+                                    arg->default_value.sfa_adjustment.upper,
+                                    arg->default_value.sfa_adjustment.step,
+                                    arg->default_value.sfa_adjustment.page,
+                                    0);
+              widget = gtk_spin_button_new (arg->value.sfa_adjustment.adj,
+                                            arg->default_value.sfa_adjustment.step,
+                                            arg->default_value.sfa_adjustment.digits);
+              gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (widget), TRUE);
               gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
-              arg->value.sfa_adjustment.adj = GTK_ADJUSTMENT (adj);
               break;
             }
 
@@ -719,6 +719,16 @@ script_fu_brush_callback (gpointer              data,
 }
 
 static void
+unset_transient_for (GtkWidget *dialog)
+{
+  GdkWindow *window = gtk_widget_get_window (dialog);
+
+  if (window)
+    gdk_property_delete (window,
+                         gdk_atom_intern_static_string ("WM_TRANSIENT_FOR"));
+}
+
+static void
 script_fu_response (GtkWidget *widget,
                     gint       response_id,
                     SFScript  *script)
@@ -747,6 +757,13 @@ script_fu_response (GtkWidget *widget,
       while (g_main_context_pending (NULL))
         g_main_context_iteration (NULL, TRUE);
 #endif
+      /*
+       * The script could have created a new GimpImageWindow, so
+       * unset the transient-for property not to focus the
+       * ImageWindow from which the script was started
+       */
+      unset_transient_for (sf_interface->dialog);
+
       gtk_widget_destroy (sf_interface->dialog);
       break;
 

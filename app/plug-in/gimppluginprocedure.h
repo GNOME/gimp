@@ -39,7 +39,7 @@ struct _GimpPlugInProcedure
   GimpProcedure        parent_instance;
 
   /*  common members  */
-  gchar               *prog;
+  GFile               *file;
   GQuark               locale_domain;
   GQuark               help_domain;
   gchar               *menu_label;
@@ -71,23 +71,23 @@ struct _GimpPlugInProcedureClass
   GimpProcedureClass parent_class;
 
   /*  virtual functions  */
-  const gchar * (* get_progname)    (const GimpPlugInProcedure *procedure);
+  GFile * (* get_file)        (const GimpPlugInProcedure *procedure);
 
   /*  signals  */
-  void          (* menu_path_added) (GimpPlugInProcedure       *procedure,
-                                     const gchar               *menu_path);
+  void    (* menu_path_added) (GimpPlugInProcedure       *procedure,
+                               const gchar               *menu_path);
 };
 
 
 GType           gimp_plug_in_procedure_get_type      (void) G_GNUC_CONST;
 
 GimpProcedure * gimp_plug_in_procedure_new           (GimpPDBProcType            proc_type,
-                                                      const gchar               *prog);
+                                                      GFile                     *file);
 
 GimpPlugInProcedure * gimp_plug_in_procedure_find    (GSList                    *list,
                                                       const gchar               *proc_name);
 
-const gchar * gimp_plug_in_procedure_get_progname    (const GimpPlugInProcedure *proc);
+GFile       * gimp_plug_in_procedure_get_file        (const GimpPlugInProcedure *proc);
 
 void          gimp_plug_in_procedure_set_locale_domain (GimpPlugInProcedure     *proc,
                                                         const gchar             *locale_domain);

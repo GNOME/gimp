@@ -19,16 +19,7 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <stdlib.h>
-#include <string.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -42,44 +33,34 @@
 
 
 gboolean
-gimp_brush_generated_save (GimpData  *data,
-                           GError   **error)
+gimp_brush_generated_save (GimpData       *data,
+                           GOutputStream  *output,
+                           GError        **error)
 {
   GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (data);
   const gchar        *name  = gimp_object_get_name (data);
-  FILE               *file;
+  GString            *string;
   gchar               buf[G_ASCII_DTOSTR_BUF_SIZE];
   gboolean            have_shape = FALSE;
 
   g_return_val_if_fail (name != NULL && *name != '\0', FALSE);
 
-  file = g_fopen (gimp_data_get_filename (data), "wb");
-
-  if (! file)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (gimp_data_get_filename (data)),
-                   g_strerror (errno));
-      return FALSE;
-    }
-
   /* write magic header */
-  fprintf (file, "GIMP-VBR\n");
+  string = g_string_new ("GIMP-VBR\n");
 
   /* write version */
   if (brush->shape != GIMP_BRUSH_GENERATED_CIRCLE || brush->spikes > 2)
     {
-      fprintf (file, "1.5\n");
+      g_string_append (string, "1.5\n");
       have_shape = TRUE;
     }
   else
     {
-      fprintf (file, "1.0\n");
+      g_string_append (string, "1.0\n");
     }
 
   /* write name */
-  fprintf (file, "%.255s\n", name);
+  g_string_append_printf (string, "%.255s\n", name);
 
   if (have_shape)
     {
@@ -90,41 +71,49 @@ gimp_brush_generated_save (GimpData  *data,
 
       /* write shape */
       shape_val = g_enum_get_value (enum_class, brush->shape);
-      fprintf (file, "%s\n", shape_val->value_nick);
+      g_string_append_printf (string, "%s\n", shape_val->value_nick);
     }
 
   /* write brush spacing */
-  fprintf (file, "%s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                            gimp_brush_get_spacing (GIMP_BRUSH (brush))));
+  g_string_append_printf (string, "%s\n",
+                          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                                           gimp_brush_get_spacing (GIMP_BRUSH (brush))));
 
   /* write brush radius */
-  fprintf (file, "%s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                            brush->radius));
+  g_string_append_printf (string, "%s\n",
+                          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                                           brush->radius));
 
   if (have_shape)
     {
       /* write brush spikes */
-      fprintf (file, "%d\n", brush->spikes);
+      g_string_append_printf (string, "%d\n", brush->spikes);
     }
 
   /* write brush hardness */
-  fprintf (file, "%s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                            brush->hardness));
+  g_string_append_printf (string, "%s\n",
+                          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                                           brush->hardness));
 
   /* write brush aspect_ratio */
-  fprintf (file, "%s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                            brush->aspect_ratio));
+  g_string_append_printf (string, "%s\n",
+                          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                                           brush->aspect_ratio));
 
   /* write brush angle */
-  fprintf (file, "%s\n",
-           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
-                            brush->angle));
+  g_string_append_printf (string, "%s\n",
+                          g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
+                                           brush->angle));
 
-  fclose (file);
+  if (! g_output_stream_write_all (output, string->str, string->len,
+                                   NULL, NULL, error))
+    {
+      g_string_free (string, TRUE);
+
+      return FALSE;
+    }
+
+  g_string_free (string, TRUE);
 
   return TRUE;
 }

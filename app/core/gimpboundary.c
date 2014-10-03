@@ -132,7 +132,7 @@ static void       simplify_subdivide  (const GimpBoundSeg  *segs,
 
 /**
  * gimp_boundary_find:
- * @maskPR:    any PixelRegion
+ * @buffer:    a #GeglBuffer
  * @format:    a #Babl float format representing the component to analyze
  * @type:      type of bounds
  * @x1:        left side of bounds
@@ -225,7 +225,9 @@ gimp_boundary_sort (const GimpBoundSeg *segs,
   if (num_segs == 0)
     return NULL;
 
-  /* prepare arrays with GimpBoundSeg pointers sorted by xy1 and xy2 accordingly */
+  /* prepare arrays with GimpBoundSeg pointers sorted by xy1 and xy2
+   * accordingly
+   */
   segs_ptrs_by_xy1 = g_new (const GimpBoundSeg *, num_segs);
   segs_ptrs_by_xy2 = g_new (const GimpBoundSeg *, num_segs);
 
@@ -386,6 +388,9 @@ gimp_boundary_offset (GimpBoundSeg *segs,
                       gint          off_y)
 {
   gint i;
+
+  g_return_if_fail ((segs == NULL && num_segs == 0) ||
+                    (segs != NULL && num_segs >  0));
 
   for (i = 0; i < num_segs; i++)
     {

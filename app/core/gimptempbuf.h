@@ -21,7 +21,7 @@
 
 GimpTempBuf * gimp_temp_buf_new             (gint               width,
                                              gint               height,
-                                             const Babl        *fomat) G_GNUC_WARN_UNUSED_RESULT;
+                                             const Babl        *format) G_GNUC_WARN_UNUSED_RESULT;
 GimpTempBuf * gimp_temp_buf_new_from_pixbuf (GdkPixbuf         *pixbuf,
                                              const Babl        *f_or_null) G_GNUC_WARN_UNUSED_RESULT;
 GimpTempBuf * gimp_temp_buf_copy            (const GimpTempBuf *src) G_GNUC_WARN_UNUSED_RESULT;

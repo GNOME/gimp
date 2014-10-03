@@ -38,13 +38,21 @@
 
 /*  local function prototypes  */
 
-static void   color_area_color_clicked (GimpFgBgEditor       *editor,
-                                        GimpActiveColor       active_color,
-                                        GimpContext          *context);
-static void   color_area_dialog_update (GimpColorDialog      *dialog,
-                                        const GimpRGB        *color,
-                                        GimpColorDialogState  state,
-                                        GimpContext          *context);
+static void   color_area_foreground_changed (GimpContext          *context,
+                                             const GimpRGB        *color,
+                                             GimpColorDialog      *dialog);
+static void   color_area_background_changed (GimpContext          *context,
+                                             const GimpRGB        *color,
+                                             GimpColorDialog      *dialog);
+
+static void   color_area_dialog_update      (GimpColorDialog      *dialog,
+                                             const GimpRGB        *color,
+                                             GimpColorDialogState  state,
+                                             GimpContext          *context);
+
+static void   color_area_color_clicked      (GimpFgBgEditor       *editor,
+                                             GimpActiveColor       active_color,
+                                             GimpContext          *context);
 
 
 /*  local variables  */
@@ -52,7 +60,7 @@ static void   color_area_dialog_update (GimpColorDialog      *dialog,
 static GtkWidget       *color_area          = NULL;
 static GtkWidget       *color_dialog        = NULL;
 static gboolean         color_dialog_active = FALSE;
-static GimpActiveColor  edit_color;
+static GimpActiveColor  edit_color          = GIMP_ACTIVE_COLOR_FOREGROUND;
 static GimpRGB          revert_fg;
 static GimpRGB          revert_bg;
 
@@ -93,6 +101,48 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
 /*  private functions  */
 
 static void
+color_area_foreground_changed (GimpContext     *context,
+                               const GimpRGB   *color,
+                               GimpColorDialog *dialog)
+{
+  if (edit_color == GIMP_ACTIVE_COLOR_FOREGROUND)
+    {
+      g_signal_handlers_block_by_func (dialog,
+                                       color_area_dialog_update,
+                                       context);
+
+      /* FIXME this should use GimpColorDialog API */
+      gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
+                                      color);
+
+      g_signal_handlers_unblock_by_func (dialog,
+                                         color_area_dialog_update,
+                                         context);
+    }
+}
+
+static void
+color_area_background_changed (GimpContext     *context,
+                               const GimpRGB   *color,
+                               GimpColorDialog *dialog)
+{
+  if (edit_color == GIMP_ACTIVE_COLOR_BACKGROUND)
+    {
+      g_signal_handlers_block_by_func (dialog,
+                                       color_area_dialog_update,
+                                       context);
+
+      /* FIXME this should use GimpColorDialog API */
+      gimp_color_selection_set_color (GIMP_COLOR_SELECTION (dialog->selection),
+                                      color);
+
+      g_signal_handlers_unblock_by_func (dialog,
+                                         color_area_dialog_update,
+                                         context);
+    }
+}
+
+static void
 color_area_dialog_update (GimpColorDialog      *dialog,
                           const GimpRGB        *color,
                           GimpColorDialogState  state,
@@ -107,9 +157,29 @@ color_area_dialog_update (GimpColorDialog      *dialog,
 
     case GIMP_COLOR_DIALOG_UPDATE:
       if (edit_color == GIMP_ACTIVE_COLOR_FOREGROUND)
-        gimp_context_set_foreground (context, color);
+        {
+          g_signal_handlers_block_by_func (context,
+                                           color_area_foreground_changed,
+                                           dialog);
+
+          gimp_context_set_foreground (context, color);
+
+          g_signal_handlers_unblock_by_func (context,
+                                             color_area_foreground_changed,
+                                             dialog);
+        }
       else
-        gimp_context_set_background (context, color);
+        {
+          g_signal_handlers_block_by_func (context,
+                                           color_area_foreground_changed,
+                                           dialog);
+
+          gimp_context_set_background (context, color);
+
+          g_signal_handlers_unblock_by_func (context,
+                                             color_area_foreground_changed,
+                                             dialog);
+        }
       break;
 
     case GIMP_COLOR_DIALOG_CANCEL:
@@ -158,9 +228,16 @@ color_area_color_clicked (GimpFgBgEditor  *editor,
                                             &color,
                                             TRUE, FALSE);
 
-      g_signal_connect (color_dialog, "update",
-                        G_CALLBACK (color_area_dialog_update),
-                        context);
+      g_signal_connect_object (color_dialog, "update",
+                               G_CALLBACK (color_area_dialog_update),
+                               G_OBJECT (context), 0);
+
+      g_signal_connect_object (context, "foreground-changed",
+                               G_CALLBACK (color_area_foreground_changed),
+                               G_OBJECT (color_dialog), 0);
+      g_signal_connect_object (context, "background-changed",
+                               G_CALLBACK (color_area_background_changed),
+                               G_OBJECT (color_dialog), 0);
     }
 
   gtk_window_set_title (GTK_WINDOW (color_dialog), title);

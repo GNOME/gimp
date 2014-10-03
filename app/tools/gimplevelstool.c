@@ -17,9 +17,6 @@
 
 #include "config.h"
 
-#include <errno.h>
-
-#include <glib/gstdio.h>
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -80,10 +77,10 @@ static GeglNode * gimp_levels_tool_get_operation  (GimpImageMapTool  *im_tool,
 static void       gimp_levels_tool_dialog         (GimpImageMapTool  *im_tool);
 static void       gimp_levels_tool_reset          (GimpImageMapTool  *im_tool);
 static gboolean   gimp_levels_tool_settings_import(GimpImageMapTool  *im_tool,
-                                                   const gchar       *filename,
+                                                   GInputStream      *input,
                                                    GError           **error);
 static gboolean   gimp_levels_tool_settings_export(GimpImageMapTool  *im_tool,
-                                                   const gchar       *filename,
+                                                   GOutputStream     *output,
                                                    GError           **error);
 static void       gimp_levels_tool_color_picked   (GimpImageMapTool  *im_tool,
                                                    gpointer           identifier,
@@ -614,86 +611,43 @@ gimp_levels_tool_reset (GimpImageMapTool *image_map_tool)
 
 static gboolean
 gimp_levels_tool_settings_import (GimpImageMapTool  *image_map_tool,
-                                  const gchar       *filename,
+                                  GInputStream      *input,
                                   GError           **error)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
-  FILE           *file;
   gchar           header[64];
+  gsize           bytes_read;
 
-  file = g_fopen (filename, "rt");
-
-  if (! file)
+  if (! g_input_stream_read_all (input, header, sizeof (header),
+                                 &bytes_read, NULL, error) ||
+      bytes_read != sizeof (header))
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename),
-                   g_strerror (errno));
+      g_prefix_error (error, _("Could not read header: "));
       return FALSE;
     }
 
-  if (! fgets (header, sizeof (header), file))
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not read header from '%s': %s"),
-                   gimp_filename_to_utf8 (filename),
-                   g_strerror (errno));
-      fclose (file);
-      return FALSE;
-    }
+  g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_SET, NULL, NULL);
 
   if (g_str_has_prefix (header, "# GIMP Levels File\n"))
-    {
-      gboolean success;
-
-      rewind (file);
-
-      success = gimp_levels_config_load_cruft (tool->config, file, error);
-
-      fclose (file);
-
-      return success;
-    }
-
-  fclose (file);
+    return gimp_levels_config_load_cruft (tool->config, input, error);
 
   return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_import (image_map_tool,
-                                                                    filename,
+                                                                    input,
                                                                     error);
 }
 
 static gboolean
 gimp_levels_tool_settings_export (GimpImageMapTool  *image_map_tool,
-                                  const gchar       *filename,
+                                  GOutputStream     *output,
                                   GError           **error)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (image_map_tool);
 
   if (tool->export_old_format)
-    {
-      FILE     *file;
-      gboolean  success;
-
-      file = g_fopen (filename, "wt");
-
-      if (! file)
-        {
-          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Could not open '%s' for writing: %s"),
-                       gimp_filename_to_utf8 (filename),
-                       g_strerror (errno));
-          return FALSE;
-        }
-
-      success = gimp_levels_config_save_cruft (tool->config, file, error);
-
-      fclose (file);
-
-      return success;
-    }
+    return gimp_levels_config_save_cruft (tool->config, output, error);
 
   return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_export (image_map_tool,
-                                                                    filename,
+                                                                    output,
                                                                     error);
 }
 

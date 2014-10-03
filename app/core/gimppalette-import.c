@@ -17,14 +17,9 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <string.h>
-
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -290,7 +285,7 @@ gimp_palette_import_extract (GimpImage     *image,
   format = babl_format ("R'G'B'A u8");
 
   iter = gegl_buffer_iterator_new (buffer, &rect, 0, format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   bpp = babl_format_get_bytes_per_pixel (format);
 
   if (selection_only &&
@@ -305,7 +300,7 @@ gimp_palette_import_extract (GimpImage     *image,
       format = babl_format ("Y u8");
 
       gegl_buffer_iterator_add (iter, buffer, &rect, 0, format,
-                                GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
       mask_roi = &iter->roi[1];
       mask_bpp = babl_format_get_bytes_per_pixel (format);
     }
@@ -494,64 +489,64 @@ gimp_palette_import_from_drawable (GimpDrawable *drawable,
 
 GimpPalette *
 gimp_palette_import_from_file (GimpContext  *context,
-                               const gchar  *filename,
+                               GFile        *file,
                                const gchar  *palette_name,
                                GError      **error)
 {
-  GList *palette_list = NULL;
-
-  FILE  *file;
+  GList        *palette_list = NULL;
+  GInputStream *input;
+  GError       *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  file = g_fopen (filename, "rb");
-
-  if (!file)
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
+  if (! input)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
                    _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+                   gimp_file_get_utf8_name (file), my_error->message);
+      g_clear_error (&my_error);
       return NULL;
     }
 
-  switch (gimp_palette_load_detect_format (filename, file))
+  switch (gimp_palette_load_detect_format (file, input))
     {
     case GIMP_PALETTE_FILE_FORMAT_GPL:
-      palette_list = gimp_palette_load_gpl (context, filename, file, error);
+      palette_list = gimp_palette_load (context, file, input, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_ACT:
-      palette_list = gimp_palette_load_act (context, filename, file, error);
+      palette_list = gimp_palette_load_act (context, file, input, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_RIFF_PAL:
-      palette_list = gimp_palette_load_riff (context, filename, file, error);
+      palette_list = gimp_palette_load_riff (context, file, input, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_PSP_PAL:
-      palette_list = gimp_palette_load_psp (context, filename, file, error);
+      palette_list = gimp_palette_load_psp (context, file, input, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_ACO:
-      palette_list = gimp_palette_load_aco (context, filename, file, error);
+      palette_list = gimp_palette_load_aco (context, file, input, error);
       break;
 
     case GIMP_PALETTE_FILE_FORMAT_CSS:
-      palette_list = gimp_palette_load_css (context, filename, file, error);
+      palette_list = gimp_palette_load_css (context, file, input, error);
       break;
 
     default:
       g_set_error (error,
                    GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Unknown type of palette file: %s"),
-                   gimp_filename_to_utf8 (filename));
+                   gimp_file_get_utf8_name (file));
       break;
     }
 
-  fclose (file);
+  g_object_unref (input);
 
   if (palette_list)
     {

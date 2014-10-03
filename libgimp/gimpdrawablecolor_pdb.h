@@ -47,12 +47,12 @@ gboolean gimp_drawable_colorize_hsl        (gint32                drawable_ID,
                                             gdouble               lightness);
 gboolean gimp_drawable_curves_explicit     (gint32                drawable_ID,
                                             GimpHistogramChannel  channel,
-                                            gint                  num_bytes,
-                                            const guint8         *curve);
+                                            gint                  num_values,
+                                            const gdouble        *values);
 gboolean gimp_drawable_curves_spline       (gint32                drawable_ID,
                                             GimpHistogramChannel  channel,
                                             gint                  num_points,
-                                            const guint8         *control_pts);
+                                            const gdouble        *points);
 gboolean gimp_drawable_desaturate          (gint32                drawable_ID,
                                             GimpDesaturateMode    desaturate_mode);
 gboolean gimp_drawable_equalize            (gint32                drawable_ID,

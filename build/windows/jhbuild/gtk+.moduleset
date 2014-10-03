@@ -23,6 +23,8 @@
 	<branch version="1.12.16" repo="cairographics.org"
 			module="cairo-1.12.16.tar.xz"
 			hash="sha1:4f6e337d5d3edd7ea79d1426f575331552b003ec">
+		<!-- From cairo git -->
+		<patch file="cairo-disable-lto.patch" strip="1"/>
 	</branch>
 	<dependencies>
 		<dep package="zlib"/>
@@ -34,16 +36,16 @@
 </autotools>
 
 <autotools id="pixman" autogen-sh="configure">
-	<branch version="0.32.4" repo="cairographics.org"
-			module="pixman-0.32.4.tar.gz"
-			hash="sha1:54be89b3453109be0930400e5b13c35c9e9d5e3a">
+	<branch version="0.32.6" repo="cairographics.org"
+			module="pixman-0.32.6.tar.gz"
+			hash="sha1:8791343cbf6d99451f4d08e8209d6ac11bf96df2">
 	</branch>
 </autotools>
 
 <autotools id="pango" autogen-sh="configure">
-	<branch version="1.36.3" repo="gnome.org"
-			module="pango/1.36/pango-1.36.3.tar.xz"
-			hash="sha256:ad48e32917f94aa9d507486d44366e59355fcfd46ef86d119ddcba566ada5d22">
+	<branch version="1.36.5" repo="gnome.org"
+			module="pango/1.36/pango-1.36.5.tar.xz"
+			hash="sha256:be0e94b2e5c7459f0b6db21efab6253556c8f443837200b8736d697071276ac8">
 	</branch>
 	<dependencies>
 		<dep package="cairo"/>
@@ -99,7 +101,7 @@
 	</dependencies>
 </autotools>
 
-<autotools id="icu-native" autogen-sh=" || env -i source/runConfigureICU Linux ; true " makeinstallargs=" -f ../../fake.mk ">
+<autotools id="icu-native" autogen-sh=" || env -i PATH=$PATH source/runConfigureICU Linux ; true " makeinstallargs=" -f ../../fake.mk ">
 	<branch version="51.2" repo="icu-project.org"
 			checkoutdir="icu-native"
 			module="icu4c/51.2/icu4c-51_2-src.tgz"
@@ -109,9 +111,9 @@
 </autotools>
 
 <autotools id="harfbuzz">
-	<branch version="0.9.28" repo="freedesktop.org"
-			module="harfbuzz/release/harfbuzz-0.9.28.tar.bz2"
-			hash="sha256:a567f7c58018af0a9751e18641fd8434bfcef8307122dabe47dd652ce8bde048">
+	<branch version="0.9.34" repo="freedesktop.org"
+			module="harfbuzz/release/harfbuzz-0.9.34.tar.bz2"
+			hash="sha256:a8e6d76aec0691f7e14e7b75d677eb25949a8906740b824b2889879c32d8ba39">
 	</branch>
 	<dependencies>
 		<dep package="cairo"/>
@@ -155,7 +157,7 @@
 	</dependencies>
 </autotools>
 
-<autotools id="gtk2" autogen-sh="|| rm -f gtk/gtk.def; ./configure" makeinstallargs="install -j1">
+<autotools id="gtk2" autogen-sh="configure" makeargs=" || rm -f gtk/gtk.def &amp;&amp; make" makeinstallargs="install -j1">
 	<branch version="2.24.23" repo="gnome.org"
 			module="gtk+/2.24/gtk+-2.24.23.tar.xz"
 			hash="sha256:a0a406e27e9b5e7d6b2c4334212706ed5cdcd41e713e66c9ae950655dd61517c">

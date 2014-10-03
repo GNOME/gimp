@@ -89,7 +89,7 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
     {
       GimpPlugInProcedure *proc = list->data;
 
-      if (proc->prog && proc->menu_paths)
+      if (proc->file && proc->menu_paths)
         {
           gchar *name;
 
@@ -142,7 +142,7 @@ gimp_plug_in_manager_query (GimpPlugInManager   *manager,
 
       (*menu_strs)[i]     = gimp_strip_uline (name);
       (*accel_strs)[i]    = NULL;
-      (*prog_strs)[i]     = g_strdup (proc->prog);
+      (*prog_strs)[i]     = g_file_get_path (proc->file);
       (*types_strs)[i]    = g_strdup (proc->image_types);
       (*realname_strs)[i] = g_strdup (gimp_object_get_name (proc));
       (*time_ints)[i]     = proc->mtime;

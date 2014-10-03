@@ -648,7 +648,7 @@ cpn_affine_transform (GeglBuffer  *buffer,
   gegl_buffer_set_format (buffer, babl_format ("Y double"));
 
   gi = gegl_buffer_iterator_new (buffer, NULL, 0, NULL,
-                                 GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (gi))
     {
@@ -675,13 +675,13 @@ fill_buffer_from_components (GeglBuffer   *temp[MAX_COMPOSE_IMAGES],
   gint j;
 
   gi = gegl_buffer_iterator_new (dst, NULL, 0, NULL,
-                                 GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   for (j = 0; j < num_cpn; j++)
     {
       if (inputs[j].is_ID)
         gegl_buffer_iterator_add (gi, temp[j], NULL, 0, NULL,
-                                  GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                  GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
     }
 
   while (gegl_buffer_iterator_next (gi))

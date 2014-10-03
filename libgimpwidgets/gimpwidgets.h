@@ -144,6 +144,7 @@ void   gimp_radio_group_set_active (GtkRadioButton     *radio_button,
                                     gpointer            item_data);
 
 
+GIMP_DEPRECATED_FOR(gtk_spin_button_new)
 GtkWidget * gimp_spin_button_new   (/* return value: */
                                     GtkObject         **adjustment,
 

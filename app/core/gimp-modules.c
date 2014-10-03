@@ -63,8 +63,7 @@ gimp_modules_exit (Gimp *gimp)
 void
 gimp_modules_load (Gimp *gimp)
 {
-  gchar    *filename;
-  gchar    *path;
+  GFile    *file;
   GScanner *scanner;
   gchar    *module_load_inhibit = NULL;
 
@@ -76,13 +75,13 @@ gimp_modules_load (Gimp *gimp)
   /* FIXME, gimp->be_verbose is not yet initialized in init() */
   gimp->module_db->verbose = gimp->be_verbose;
 
-  filename = gimp_personal_rc_file ("modulerc");
+  file = gimp_directory_file ("modulerc", NULL);
 
   if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  scanner = gimp_scanner_new_file (filename, NULL);
-  g_free (filename);
+  scanner = gimp_scanner_new_gfile (file, NULL);
+  g_object_unref (file);
 
   if (scanner)
     {
@@ -153,9 +152,7 @@ gimp_modules_load (Gimp *gimp)
       g_free (module_load_inhibit);
     }
 
-  path = gimp_config_path_expand (gimp->config->module_path, TRUE, NULL);
-  gimp_module_db_load (gimp->module_db, path);
-  g_free (path);
+  gimp_module_db_load (gimp->module_db, gimp->config->module_path);
 }
 
 static void
@@ -182,7 +179,7 @@ gimp_modules_unload (Gimp *gimp)
       GimpConfigWriter *writer;
       GString          *str;
       const gchar      *p;
-      gchar            *filename;
+      GFile            *file;
       GError           *error = NULL;
 
       str = g_string_new (NULL);
@@ -192,14 +189,14 @@ gimp_modules_unload (Gimp *gimp)
       else
         p = "";
 
-      filename = gimp_personal_rc_file ("modulerc");
+      file = gimp_directory_file ("modulerc", NULL);
 
       if (gimp->be_verbose)
-        g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+        g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-      writer = gimp_config_writer_new_file (filename, TRUE,
-                                            "GIMP modulerc", &error);
-      g_free (filename);
+      writer = gimp_config_writer_new_gfile (file, TRUE,
+                                             "GIMP modulerc", &error);
+      g_object_unref (file);
 
       if (writer)
         {
@@ -229,10 +226,6 @@ gimp_modules_refresh (Gimp *gimp)
 
   if (! gimp->no_interface)
     {
-      gchar *path;
-
-      path = gimp_config_path_expand (gimp->config->module_path, TRUE, NULL);
-      gimp_module_db_refresh (gimp->module_db, path);
-      g_free (path);
+      gimp_module_db_refresh (gimp->module_db, gimp->config->module_path);
     }
 }

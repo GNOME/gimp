@@ -3,9 +3,6 @@
 
 [encoding: UTF-8]
 
-plug-ins/color-rotate/color-rotate-dialog.c
-plug-ins/color-rotate/color-rotate-stock.c
-plug-ins/color-rotate/color-rotate.c
 plug-ins/common/align-layers.c
 plug-ins/common/animation-optimize.c
 plug-ins/common/animation-play.c
@@ -25,7 +22,6 @@ plug-ins/common/colormap-remap.c
 plug-ins/common/compose.c
 plug-ins/common/contrast-normalize.c
 plug-ins/common/contrast-retinex.c
-plug-ins/common/convolution-matrix.c
 plug-ins/common/crop-zealous.c
 plug-ins/common/curve-bend.c
 plug-ins/common/decompose.c
@@ -43,6 +39,7 @@ plug-ins/common/engrave.c
 plug-ins/common/file-aa.c
 plug-ins/common/file-cel.c
 plug-ins/common/file-csource.c
+plug-ins/common/file-compressor.c
 plug-ins/common/file-desktop-link.c
 plug-ins/common/file-dicom.c
 plug-ins/common/file-gbr.c
@@ -124,7 +121,6 @@ plug-ins/common/wind.c
 plug-ins/file-bmp/bmp-read.c
 plug-ins/file-bmp/bmp-write.c
 plug-ins/file-bmp/bmp.c
-plug-ins/file-compressor/file-compressor.c
 plug-ins/file-exr/file-exr.c
 plug-ins/file-faxg3/faxg3.c
 plug-ins/file-fits/fits.c
@@ -143,10 +139,6 @@ plug-ins/file-psd/psd-thumb-load.c
 plug-ins/file-psd/psd-util.c
 plug-ins/file-psd/psd.c
 plug-ins/file-sgi/sgi.c
-plug-ins/file-uri/uri-backend-gvfs.c
-plug-ins/file-uri/uri-backend-libcurl.c
-plug-ins/file-uri/uri-backend-wget.c
-plug-ins/file-uri/uri.c
 plug-ins/flame/flame.c
 plug-ins/fractal-explorer/fractal-explorer-dialogs.c
 plug-ins/fractal-explorer/fractal-explorer.c

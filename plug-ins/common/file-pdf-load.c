@@ -132,7 +132,7 @@ struct _GimpResolutionEntryField
 
   guint          changed_signal;
 
-  GtkObject     *adjustment;
+  GtkAdjustment *adjustment;
   GtkWidget     *spinbutton;
 
   gdouble        phy_size;
@@ -1373,14 +1373,14 @@ gimp_resolution_entry_field_init (GimpResolutionEntry      *gre,
 
   digits = size ? 0 : MIN (gimp_unit_get_digits (initial_unit), 5) + 1;
 
-  gref->spinbutton = gimp_spin_button_new (&gref->adjustment,
-                                            gref->value,
-                                            gref->min_value,
-                                            gref->max_value,
-                                            1.0, 10.0, 0.0,
-                                            1.0,
-                                            digits);
-
+  gref->adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (gref->value,
+                        gref->min_value,
+                        gref->max_value,
+                        1.0, 10.0, 0.0);
+  gref->spinbutton = gtk_spin_button_new (gref->adjustment,
+                                          1.0, digits);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (gref->spinbutton), TRUE);
 
   if (spinbutton_width > 0)
     {
@@ -1643,7 +1643,7 @@ gimp_resolution_entry_update_value (GimpResolutionEntryField *gref,
                                           factor);
     }
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (gref->adjustment), value);
+  gtk_adjustment_set_value (gref->adjustment, value);
 
   gref->stop_recursion--;
 

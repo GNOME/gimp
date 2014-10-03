@@ -47,22 +47,6 @@
 #include <errno.h>
 #include <string.h>
 
-#include <sys/types.h>
-#include <fcntl.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
-#include <glib/gstdio.h>
-#ifdef G_OS_WIN32
-#include <libgimpbase/gimpwin32-io.h>
-#endif
-
-#ifndef _O_BINARY
-#define _O_BINARY 0
-#endif
-
 #include <tiffio.h>
 
 #include <libgimp/gimp.h>
@@ -97,47 +81,49 @@ typedef struct
   guchar       *pixel;
 } channel_data;
 
+
 /* Declare some local functions.
  */
-static void   query     (void);
-static void   run       (const gchar      *name,
-                         gint              nparams,
-                         const GimpParam  *param,
-                         gint             *nreturn_vals,
-                         GimpParam       **return_vals);
+static void      query                  (void);
+static void      run                    (const gchar      *name,
+                                         gint              nparams,
+                                         const GimpParam  *param,
+                                         gint             *nreturn_vals,
+                                         GimpParam       **return_vals);
 
-static gboolean  image_is_monochrome (gint32 image);
+static gboolean  image_is_monochrome    (gint32            image);
 
-static gboolean  save_paths             (TIFF         *tif,
-                                         gint32        image);
-static gboolean  save_image             (const gchar  *filename,
-                                         gint32        image,
-                                         gint32        drawable,
-                                         gint32        orig_image,
-                                         gint         *saved_bpp,
-                                         GError      **error);
+static gboolean  save_paths             (TIFF             *tif,
+                                         gint32            image);
+static gboolean  save_image             (const gchar      *filename,
+                                         gint32            image,
+                                         gint32            drawable,
+                                         gint32            orig_image,
+                                         gint             *saved_bpp,
+                                         GError          **error);
 
-static gboolean  save_dialog            (gboolean      has_alpha,
-                                         gboolean      is_monochrome,
-                                         gboolean      is_indexed);
+static gboolean  save_dialog            (gboolean          has_alpha,
+                                         gboolean          is_monochrome,
+                                         gboolean          is_indexed);
 
-static void      comment_entry_callback (GtkWidget    *widget,
-                                         gpointer      data);
+static void      comment_entry_callback (GtkWidget        *widget,
+                                         gpointer          data);
 
-static void      byte2bit               (const guchar *byteline,
-                                         gint          width,
-                                         guchar       *bitline,
-                                         gboolean      invert);
+static void      byte2bit               (const guchar     *byteline,
+                                         gint              width,
+                                         guchar           *bitline,
+                                         gboolean          invert);
 
-static void      tiff_warning           (const gchar *module,
-                                         const gchar *fmt,
-                                         va_list      ap) G_GNUC_PRINTF (2, 0);
-static void      tiff_error             (const gchar *module,
-                                         const gchar *fmt,
-                                         va_list      ap) G_GNUC_PRINTF (2, 0);
-static TIFF     *tiff_open              (const gchar *filename,
-                                         const gchar *mode,
-                                         GError     **error);
+static void      tiff_warning           (const gchar      *module,
+                                         const gchar      *fmt,
+                                         va_list           ap) G_GNUC_PRINTF (2, 0);
+static void      tiff_error             (const gchar      *module,
+                                         const gchar      *fmt,
+                                         va_list           ap) G_GNUC_PRINTF (2, 0);
+static TIFF    * tiff_open              (const gchar      *filename,
+                                         const gchar      *mode,
+                                         GError          **error);
+
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -158,8 +144,7 @@ static TiffSaveVals tsvals =
   TRUE                 /*  save thumbnail      */
 };
 
-static gchar       *image_comment = NULL;
-static GimpRunMode  run_mode      = GIMP_RUN_INTERACTIVE;
+static gchar *image_comment = NULL;
 
 
 MAIN ()
@@ -226,12 +211,8 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[2];
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpParasite      *parasite;
-  gint32             image;
-  gint32             drawable;
-  gint32             orig_image;
-  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error  = NULL;
 
   run_mode = param[0].data.d_int32;
@@ -248,17 +229,19 @@ run (const gchar      *name,
   TIFFSetWarningHandler (tiff_warning);
   TIFFSetErrorHandler (tiff_error);
 
-  if ((strcmp (name, SAVE_PROC) == 0) ||
+  if ((strcmp (name, SAVE_PROC)  == 0) ||
       (strcmp (name, SAVE2_PROC) == 0))
     {
       /* Plug-in is either file_tiff_save or file_tiff_save2 */
-      image = orig_image = param[1].data.d_int32;
-      drawable = param[2].data.d_int32;
 
-      /* Do this right this time, if POSSIBLE query for parasites, otherwise
-         or if there isn't one, choose the default comment from the gimprc. */
+      GimpMetadata          *metadata;
+      GimpMetadataSaveFlags  metadata_flags;
+      GimpParasite          *parasite;
+      gint32                 image      = param[1].data.d_int32;
+      gint32                 drawable   = param[2].data.d_int32;
+      gint32                 orig_image = image;
+      GimpExportReturn       export     = GIMP_EXPORT_CANCEL;
 
-      /*  eventually export the image */
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
@@ -280,6 +263,15 @@ run (const gchar      *name,
         default:
           break;
         }
+
+      metadata = gimp_image_metadata_save_prepare (orig_image,
+                                                   "image/tiff",
+                                                   &metadata_flags);
+
+      tsvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
+      tsvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
+      tsvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
+      tsvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
 
       parasite = gimp_image_get_parasite (orig_image, "gimp-comment");
       if (parasite)
@@ -365,31 +357,38 @@ run (const gchar      *name,
           if (save_image (param[3].data.d_string, image, drawable, orig_image,
                           &saved_bpp, &error))
             {
-              GimpMetadata *metadata;
-
-              metadata = gimp_image_metadata_save_prepare (image,
-                                                           "image/tiff");
-
               if (metadata)
                 {
-                  GFile                 *file;
-                  GimpMetadataSaveFlags  flags = GIMP_METADATA_SAVE_ALL;
+                  GFile *file;
 
                   gimp_metadata_set_bits_per_sample (metadata, saved_bpp);
 
-                  if (! tsvals.save_exif)      flags &= ~GIMP_METADATA_SAVE_EXIF;
-                  if (! tsvals.save_xmp)       flags &= ~GIMP_METADATA_SAVE_XMP;
-                  if (! tsvals.save_iptc)      flags &= ~GIMP_METADATA_SAVE_IPTC;
-                  if (! tsvals.save_thumbnail) flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+                  if (tsvals.save_exif)
+                    metadata_flags |= GIMP_METADATA_SAVE_EXIF;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_EXIF;
+
+                  if (tsvals.save_xmp)
+                    metadata_flags |= GIMP_METADATA_SAVE_XMP;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_XMP;
+
+                  if (tsvals.save_iptc)
+                    metadata_flags |= GIMP_METADATA_SAVE_IPTC;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
+
+                  if (tsvals.save_thumbnail)
+                    metadata_flags |= GIMP_METADATA_SAVE_THUMBNAIL;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
                   file = g_file_new_for_path (param[3].data.d_string);
                   gimp_image_metadata_save_finish (image,
                                                    "image/tiff",
-                                                   metadata, flags, file,
-                                                   NULL);
+                                                   metadata, metadata_flags,
+                                                   file, NULL);
                   g_object_unref (file);
-
-                  g_object_unref (metadata);
                 }
 
               /*  Store mvals data  */
@@ -403,6 +402,9 @@ run (const gchar      *name,
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image);
+
+      if (metadata)
+        g_object_unref (metadata);
     }
   else
     {
@@ -512,9 +514,9 @@ image_is_monochrome (gint32 image)
   return monochrome;
 }
 
-
 static void
-double_to_psd_fixed (gdouble value, gchar *target)
+double_to_psd_fixed (gdouble  value,
+                     gchar   *target)
 {
   gdouble in, frac;
   gint    i, f;
@@ -534,7 +536,6 @@ double_to_psd_fixed (gdouble value, gchar *target)
   target[2] = (f >>  8) & 0xFF;
   target[3] = f & 0xFF;
 }
-
 
 static gboolean
 save_paths (TIFF   *tif,
@@ -677,23 +678,22 @@ save_paths (TIFF   *tif,
   return TRUE;
 }
 
-
 /*
-** pnmtotiff.c - converts a portable anymap to a Tagged Image File
-**
-** Derived by Jef Poskanzer from ras2tif.c, which is:
-**
-** Copyright (c) 1990 by Sun Microsystems, Inc.
-**
-** Author: Patrick J. Naughton
-** naughton@wind.sun.com
-**
-** This file is provided AS IS with no warranties of any kind.  The author
-** shall have no liability with respect to the infringement of copyrights,
-** trade secrets or any patents by this file or any part thereof.  In no
-** event will the author be liable for any lost revenue or profits or
-** other special, indirect and consequential damages.
-*/
+ * pnmtotiff.c - converts a portable anymap to a Tagged Image File
+ *
+ * Derived by Jef Poskanzer from ras2tif.c, which is:
+ *
+ * Copyright (c) 1990 by Sun Microsystems, Inc.
+ *
+ * Author: Patrick J. Naughton
+ * naughton@wind.sun.com
+ *
+ * This file is provided AS IS with no warranties of any kind.  The author
+ * shall have no liability with respect to the infringement of copyrights,
+ * trade secrets or any patents by this file or any part thereof.  In no
+ * event will the author be liable for any lost revenue or profits or
+ * other special, indirect and consequential damages.
+ */
 
 static gboolean
 save_image (const gchar  *filename,
@@ -715,10 +715,12 @@ save_image (const gchar  *filename,
   gboolean       alpha;
   gshort         predictor;
   gshort         photometric;
+  const Babl    *format;
+  const Babl    *type;
   gshort         samplesperpixel;
   gshort         bitspersample;
+  gshort         sampleformat;
   gint           bytesperrow;
-  guchar        *t;
   guchar        *src = NULL;
   guchar        *data = NULL;
   guchar        *cmap;
@@ -726,7 +728,6 @@ save_image (const gchar  *filename,
   gint           success;
   GimpImageType  drawable_type;
   GeglBuffer    *buffer = NULL;
-  const Babl    *format;
   gint           tile_height;
   gint           y, yend;
   gboolean       is_bw    = FALSE;
@@ -753,15 +754,49 @@ save_image (const gchar  *filename,
   gimp_progress_init_printf (_("Saving '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  if (gimp_image_get_precision (image) == GIMP_PRECISION_U8_GAMMA)
-    bitspersample = 8;
+  drawable_type = gimp_drawable_type (layer);
+  buffer        = gimp_drawable_get_buffer (layer);
+
+  format = gegl_buffer_get_format (buffer);
+  type   = babl_format_get_type (format, 0);
+
+  sampleformat = SAMPLEFORMAT_UINT;
+
+  if (type == babl_type ("u8"))
+    {
+      bitspersample = 8;
+    }
+  else if (type == babl_type ("u16"))
+    {
+      bitspersample = 16;
+    }
+  else if (type == babl_type ("half"))
+    {
+      bitspersample = 16;
+      sampleformat  = SAMPLEFORMAT_IEEEFP;
+    }
+  else if (type == babl_type ("u32"))
+    {
+      bitspersample = 32;
+    }
+  else if (type == babl_type ("float"))
+    {
+      bitspersample = 32;
+      sampleformat  = SAMPLEFORMAT_IEEEFP;
+    }
+  else if (type == babl_type ("double"))
+    {
+      bitspersample = 64;
+      sampleformat  = SAMPLEFORMAT_IEEEFP;
+    }
   else
-    bitspersample = 16;
+    {
+      bitspersample = 32;
+      sampleformat  = SAMPLEFORMAT_IEEEFP;
+      type          = babl_type ("float");
+    }
 
   *saved_bpp = bitspersample;
-
-  drawable_type = gimp_drawable_type (layer);
-  buffer = gimp_drawable_get_buffer (layer);
 
   cols = gegl_buffer_get_width (buffer);
   rows = gegl_buffer_get_height (buffer);
@@ -773,20 +808,22 @@ save_image (const gchar  *filename,
       samplesperpixel = 3;
       photometric     = PHOTOMETRIC_RGB;
       alpha           = FALSE;
-      if (bitspersample == 8)
-        format        = babl_format ("R'G'B' u8");
-      else
-        format        = babl_format ("R'G'B' u16");
+      format          = babl_format_new (babl_model ("R'G'B'"),
+                                         type,
+                                         babl_component ("R'"),
+                                         babl_component ("G'"),
+                                         babl_component ("B'"),
+                                         NULL);
       break;
 
     case GIMP_GRAY_IMAGE:
       samplesperpixel = 1;
       photometric     = PHOTOMETRIC_MINISBLACK;
       alpha           = FALSE;
-      if (bitspersample == 8)
-        format        = babl_format ("Y' u8");
-      else
-        format        = babl_format ("Y' u16");
+      format          = babl_format_new (babl_model ("Y'"),
+                                         type,
+                                         babl_component ("Y'"),
+                                         NULL);
       break;
 
     case GIMP_RGBA_IMAGE:
@@ -794,19 +831,25 @@ save_image (const gchar  *filename,
       samplesperpixel = 4;
       photometric     = PHOTOMETRIC_RGB;
       alpha           = TRUE;
-      if (bitspersample == 8)
+      if (tsvals.save_transp_pixels)
         {
-          if (tsvals.save_transp_pixels)
-            format    = babl_format ("R'G'B'A u8");
-          else
-            format    = babl_format ("R'aG'aB'aA u8");
+          format = babl_format_new (babl_model ("R'G'B'A"),
+                                    type,
+                                    babl_component ("R'"),
+                                    babl_component ("G'"),
+                                    babl_component ("B'"),
+                                    babl_component ("A"),
+                                    NULL);
         }
       else
         {
-          if (tsvals.save_transp_pixels)
-            format    = babl_format ("R'G'B'A u16");
-          else
-            format    = babl_format ("R'aG'aB'aA u16");
+          format = babl_format_new (babl_model ("R'aG'aB'aA"),
+                                    type,
+                                    babl_component ("R'a"),
+                                    babl_component ("G'a"),
+                                    babl_component ("B'a"),
+                                    babl_component ("A"),
+                                    NULL);
         }
       break;
 
@@ -814,19 +857,21 @@ save_image (const gchar  *filename,
       samplesperpixel = 2;
       photometric     = PHOTOMETRIC_MINISBLACK;
       alpha           = TRUE;
-      if (bitspersample == 8)
+      if (tsvals.save_transp_pixels)
         {
-          if (tsvals.save_transp_pixels)
-            format    = babl_format ("Y'A u8");
-          else
-            format    = babl_format ("Y'aA u8");
+          format = babl_format_new (babl_model ("Y'A"),
+                                    type,
+                                    babl_component ("Y'"),
+                                    babl_component ("A"),
+                                    NULL);
         }
       else
         {
-          if (tsvals.save_transp_pixels)
-            format    = babl_format ("Y'A u16");
-          else
-            format    = babl_format ("Y'aA u16");
+          format = babl_format_new (babl_model ("Y'aA"),
+                                    type,
+                                    babl_component ("Y'a"),
+                                    babl_component ("A"),
+                                    NULL);
         }
       break;
 
@@ -923,11 +968,13 @@ save_image (const gchar  *filename,
   TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, cols);
   TIFFSetField (tif, TIFFTAG_IMAGELENGTH, rows);
   TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, bitspersample);
+  TIFFSetField (tif, TIFFTAG_SAMPLEFORMAT, sampleformat);
   TIFFSetField (tif, TIFFTAG_ORIENTATION, ORIENTATION_TOPLEFT);
   TIFFSetField (tif, TIFFTAG_COMPRESSION, compression);
 
-  if ((compression == COMPRESSION_LZW || compression == COMPRESSION_ADOBE_DEFLATE)
-      && (predictor != 0))
+  if ((compression == COMPRESSION_LZW ||
+       compression == COMPRESSION_ADOBE_DEFLATE) &&
+      (predictor != 0))
     {
       TIFFSetField (tif, TIFFTAG_PREDICTOR, predictor);
     }
@@ -1048,7 +1095,7 @@ save_image (const gchar  *filename,
     TIFFSetField (tif, TIFFTAG_COLORMAP, red, grn, blu);
 
   /* array to rearrange data */
-  src = g_new (guchar, bytesperrow * tile_height);
+  src  = g_new (guchar, bytesperrow * tile_height);
   data = g_new (guchar, bytesperrow);
 
   /* Now write the TIFF data. */
@@ -1058,16 +1105,13 @@ save_image (const gchar  *filename,
       yend = MIN (yend, rows);
 
       gegl_buffer_get (buffer,
-                       GEGL_RECTANGLE (0, y, cols, yend - y),
-                       1.0,
-                       format,
-                       src,
-                       GEGL_AUTO_ROWSTRIDE,
-                       GEGL_ABYSS_NONE);
+                       GEGL_RECTANGLE (0, y, cols, yend - y), 1.0,
+                       format, src,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       for (row = y; row < yend; row++)
         {
-          t = src + bytesperrow * (row - y);
+          guchar *t = src + bytesperrow * (row - y);
 
           switch (drawable_type)
             {
@@ -1188,7 +1232,7 @@ save_dialog (gboolean has_alpha,
   if (! is_monochrome)
     {
       if (tsvals.compression == COMPRESSION_CCITTFAX3 ||
-          tsvals.compression ==  COMPRESSION_CCITTFAX4)
+          tsvals.compression == COMPRESSION_CCITTFAX4)
         {
           gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (cmp_g3),
                                            COMPRESSION_NONE);
@@ -1290,6 +1334,7 @@ byte2bit (const guchar *byteline,
       *(bitline++) = invert ? ~bitval : bitval;
       width -= 8;
     }
+
   if (width > 0)
     {
       memset (rest, 0, 8);

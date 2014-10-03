@@ -22,20 +22,8 @@
 
 #include <errno.h>
 #include <stdlib.h>
-#include <string.h>
-
-#ifdef HAVE_SYS_PARAM_H
-#include <sys/param.h>
-#endif
-
-#include <sys/types.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -60,14 +48,14 @@ typedef enum
 /*  local function prototypes  */
 
 static GimpPlugInProcedure * file_proc_find_by_prefix    (GSList       *procs,
-                                                          const gchar  *uri,
+                                                          GFile        *file,
                                                           gboolean      skip_magic);
 static GimpPlugInProcedure * file_proc_find_by_extension (GSList       *procs,
-                                                          const gchar  *uri,
+                                                          GFile        *file,
                                                           gboolean      skip_magic,
                                                           gboolean      uri_procs_only);
 static GimpPlugInProcedure * file_proc_find_by_name      (GSList       *procs,
-                                                          const gchar  *uri,
+                                                          GFile        *file,
                                                           gboolean      skip_magic);
 
 static void                  file_convert_string         (const gchar  *instr,
@@ -79,60 +67,59 @@ static FileMatchType         file_check_single_magic     (const gchar  *offset,
                                                           const gchar  *value,
                                                           const guchar *file_head,
                                                           gint          headsize,
-                                                          FILE         *ifp);
+                                                          GFile        *file,
+                                                          GInputStream *input);
 static FileMatchType         file_check_magic_list       (GSList       *magics_list,
                                                           const guchar *head,
                                                           gint          headsize,
-                                                          FILE         *ifp);
+                                                          GFile        *file,
+                                                          GInputStream *input);
 
 
 /*  public functions  */
 
 GimpPlugInProcedure *
-file_procedure_find (GSList       *procs,
-                     const gchar  *uri,
-                     GError      **error)
+file_procedure_find (GSList  *procs,
+                     GFile   *file,
+                     GError **error)
 {
   GimpPlugInProcedure *file_proc;
-  gchar               *filename;
+  GimpPlugInProcedure *size_matched_proc = NULL;
+  gint                 size_match_count  = 0;
 
   g_return_val_if_fail (procs != NULL, NULL);
-  g_return_val_if_fail (uri != NULL, NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   /* First, check magicless prefixes/suffixes: */
 
-  if (! file_proc_find_by_extension (procs, uri, FALSE, TRUE))
+  if (! file_proc_find_by_extension (procs, file, FALSE, TRUE))
     {
       /* If there is not any (with or without magic) file proc that
-       * can load the URI by extension directly, try to find a proc
+       * can load the file by extension directly, try to find a proc
        * that can load the prefix
        */
-      file_proc = file_proc_find_by_prefix (procs, uri, TRUE);
+      file_proc = file_proc_find_by_prefix (procs, file, TRUE);
     }
   else
     {
       /* Otherwise try to find a magicless file proc that handles the
        * extension
        */
-      file_proc = file_proc_find_by_extension (procs, uri, TRUE, FALSE);
+      file_proc = file_proc_find_by_extension (procs, file, TRUE, FALSE);
     }
 
   if (file_proc)
     return file_proc;
 
-  filename = file_utils_filename_from_uri (uri);
-
-  /* Then look for magics */
-  if (filename)
+  /* Then look for magics, but not on remote files */
+  if (g_file_is_native (file))
     {
-      GSList              *list;
-      GimpPlugInProcedure *size_matched_proc = NULL;
-      FILE                *ifp               = NULL;
-      gboolean             opened            = FALSE;
-      gint                 head_size         = 0;
-      gint                 size_match_count  = 0;
-      guchar               head[256];
+      GSList       *list;
+      GInputStream *input     = NULL;
+      gboolean      opened    = FALSE;
+      gsize         head_size = 0;
+      guchar        head[256];
 
       for (list = procs; list; list = g_slist_next (list))
         {
@@ -140,16 +127,31 @@ file_procedure_find (GSList       *procs,
 
           if (file_proc->magics_list)
             {
-              if (G_UNLIKELY (!opened))
+              if (G_UNLIKELY (! opened))
                 {
-                  ifp = g_fopen (filename, "rb");
-                  if (ifp != NULL)
-                    head_size = fread ((gchar *) head, 1, sizeof (head), ifp);
-                  else
-                    g_set_error_literal (error,
-                                         G_FILE_ERROR,
-                                         g_file_error_from_errno (errno),
-                                         g_strerror (errno));
+                  input = G_INPUT_STREAM (g_file_read (file, NULL, error));
+
+                  if (input)
+                    {
+                      g_input_stream_read_all (input,
+                                               head, sizeof (head),
+                                               &head_size, NULL, error);
+
+                      if (head_size < 4)
+                        {
+                          g_object_unref (input);
+                          input = NULL;
+                        }
+                      else
+                        {
+                          GDataInputStream *data_input;
+
+                          data_input = g_data_input_stream_new (input);
+                          g_object_unref (input);
+                          input = G_INPUT_STREAM (data_input);
+                        }
+                    }
+
                   opened = TRUE;
                 }
 
@@ -159,7 +161,7 @@ file_procedure_find (GSList       *procs,
 
                   match_val = file_check_magic_list (file_proc->magics_list,
                                                      head, head_size,
-                                                     ifp);
+                                                     file, input);
 
                   if (match_val == FILE_MATCH_SIZE)
                     {
@@ -169,8 +171,7 @@ file_procedure_find (GSList       *procs,
                     }
                   else if (match_val != FILE_MATCH_NONE)
                     {
-                      fclose (ifp);
-                      g_free (filename);
+                      g_object_unref (input);
 
                       return file_proc;
                     }
@@ -178,24 +179,24 @@ file_procedure_find (GSList       *procs,
             }
         }
 
-      if (ifp)
+      if (input)
         {
+#if 0
           if (ferror (ifp))
             g_set_error_literal (error, G_FILE_ERROR,
                                  g_file_error_from_errno (errno),
                                  g_strerror (errno));
+#endif
 
-          fclose (ifp);
+          g_object_unref (input);
         }
-
-      g_free (filename);
-
-      if (size_match_count == 1)
-        return size_matched_proc;
     }
 
+  if (size_match_count == 1)
+    return size_matched_proc;
+
   /* As a last resort, try matching by name, not skipping magic procs */
-  file_proc = file_proc_find_by_name (procs, uri, FALSE);
+  file_proc = file_proc_find_by_name (procs, file, FALSE);
 
   if (file_proc)
     {
@@ -214,21 +215,40 @@ file_procedure_find (GSList       *procs,
 }
 
 GimpPlugInProcedure *
-file_procedure_find_by_prefix (GSList      *procs,
-                               const gchar *uri)
+file_procedure_find_by_prefix (GSList *procs,
+                               GFile  *file)
 {
-  g_return_val_if_fail (uri != NULL, NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
 
-  return file_proc_find_by_prefix (procs, uri, FALSE);
+  return file_proc_find_by_prefix (procs, file, FALSE);
 }
 
 GimpPlugInProcedure *
-file_procedure_find_by_extension (GSList      *procs,
-                                  const gchar *uri)
+file_procedure_find_by_extension (GSList *procs,
+                                  GFile  *file)
 {
-  g_return_val_if_fail (uri != NULL, NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
 
-  return file_proc_find_by_extension (procs, uri, FALSE, FALSE);
+  return file_proc_find_by_extension (procs, file, FALSE, FALSE);
+}
+
+GimpPlugInProcedure *
+file_procedure_find_by_mime_type (GSList      *procs,
+                                  const gchar *mime_type)
+{
+  GSList *list;
+
+  g_return_val_if_fail (mime_type != NULL, NULL);
+
+  for (list = procs; list; list = g_slist_next (list))
+    {
+      GimpPlugInProcedure *proc = list->data;
+
+      if (proc->mime_type && ! strcmp (mime_type, proc->mime_type))
+        return proc;
+    }
+
+  return NULL;
 }
 
 gboolean
@@ -238,7 +258,6 @@ file_procedure_in_group (GimpPlugInProcedure *file_proc,
   const gchar *name        = gimp_object_get_name (file_proc);
   gboolean     is_xcf_save = FALSE;
   gboolean     is_filter   = FALSE;
-  gboolean     is_uri      = FALSE;
 
   is_xcf_save = (strcmp (name, "gimp-xcf-save") == 0);
 
@@ -246,17 +265,15 @@ file_procedure_in_group (GimpPlugInProcedure *file_proc,
                  strcmp (name, "file-bz2-save") == 0 ||
                  strcmp (name, "file-xz-save")  == 0);
 
-  is_uri      = (strcmp (name, "file-uri-save") == 0);
-
   switch (group)
     {
     case FILE_PROCEDURE_GROUP_SAVE:
       /* Only .xcf shall pass */
-      return is_xcf_save || is_filter || is_uri;
+      return is_xcf_save || is_filter;
 
     case FILE_PROCEDURE_GROUP_EXPORT:
       /* Anything but .xcf shall pass */
-      return ! is_xcf_save || is_uri;
+      return ! is_xcf_save;
 
     case FILE_PROCEDURE_GROUP_OPEN:
       /* No filter applied for Open */
@@ -272,10 +289,11 @@ file_procedure_in_group (GimpPlugInProcedure *file_proc,
 /*  private functions  */
 
 static GimpPlugInProcedure *
-file_proc_find_by_prefix (GSList      *procs,
-                          const gchar *uri,
-                          gboolean     skip_magic)
+file_proc_find_by_prefix (GSList   *procs,
+                          GFile    *file,
+                          gboolean  skip_magic)
 {
+  gchar  *uri = g_file_get_uri (file);
   GSList *p;
 
   for (p = procs; p; p = g_slist_next (p))
@@ -291,64 +309,70 @@ file_proc_find_by_prefix (GSList      *procs,
            prefixes = g_slist_next (prefixes))
         {
           if (g_str_has_prefix (uri, prefixes->data))
-            return proc;
+            {
+              g_free (uri);
+              return proc;
+            }
         }
      }
+
+  g_free (uri);
 
   return NULL;
 }
 
 static GimpPlugInProcedure *
-file_proc_find_by_extension (GSList      *procs,
-                             const gchar *uri,
-                             gboolean     skip_magic,
-                             gboolean     uri_procs_only)
+file_proc_find_by_extension (GSList   *procs,
+                             GFile    *file,
+                             gboolean  skip_magic,
+                             gboolean  uri_procs_only)
 {
-  GSList      *p;
-  const gchar *ext;
+  gchar *ext = file_utils_file_get_ext (file);
 
-  ext = file_utils_uri_get_ext (uri);
-
-  if (! (ext && *ext == '.'))
-    return NULL;
-
-  ext++;
-
-  for (p = procs; p; p = g_slist_next (p))
+  if (ext)
     {
-      GimpPlugInProcedure *proc = p->data;
+      GSList *p;
 
-      if (uri_procs_only && ! proc->handles_uri)
-        continue;
-
-      if (skip_magic && proc->magics_list)
-        continue;
-
-      if (g_slist_find_custom (proc->extensions_list,
-                               ext,
-                               (GCompareFunc) g_ascii_strcasecmp))
+      for (p = procs; p; p = g_slist_next (p))
         {
-          return proc;
+          GimpPlugInProcedure *proc = p->data;
+
+          if (uri_procs_only && ! proc->handles_uri)
+            continue;
+
+          if (skip_magic && proc->magics_list)
+            continue;
+
+          if (g_slist_find_custom (proc->extensions_list,
+                                   ext + 1,
+                                   (GCompareFunc) g_ascii_strcasecmp))
+            {
+              g_free (ext);
+
+              return proc;
+            }
         }
+
+      g_free (ext);
     }
 
   return NULL;
 }
 
 static GimpPlugInProcedure *
-file_proc_find_by_name (GSList      *procs,
-                        const gchar *uri,
-                        gboolean     skip_magic)
+file_proc_find_by_name (GSList   *procs,
+                        GFile    *file,
+                        gboolean  skip_magic)
 {
   GimpPlugInProcedure *proc;
 
-  proc = file_proc_find_by_extension (procs, uri, skip_magic, TRUE);
+  proc = file_proc_find_by_extension (procs, file, skip_magic, TRUE);
 
   if (! proc)
-    proc = file_proc_find_by_prefix (procs, uri, skip_magic);
+    proc = file_proc_find_by_prefix (procs, file, skip_magic);
 
   if (! proc)
-    proc = file_proc_find_by_extension (procs, uri, skip_magic, FALSE);
+    proc = file_proc_find_by_extension (procs, file, skip_magic, FALSE);
 
   return proc;
 }
@@ -416,7 +440,8 @@ file_check_single_magic (const gchar  *offset,
                          const gchar  *value,
                          const guchar *file_head,
                          gint          headsize,
-                         FILE         *ifp)
+                         GFile        *file,
+                         GInputStream *input)
 
 {
   FileMatchType found = FILE_MATCH_NONE;
@@ -499,12 +524,15 @@ file_check_single_magic (const gchar  *offset,
 
       if (numbytes == 5)    /* Check for file size ? */
         {
-          struct stat buf;
-
-          if (fstat (fileno (ifp), &buf) < 0)
+          GFileInfo *info = g_file_query_info (file,
+                                               G_FILE_ATTRIBUTE_STANDARD_SIZE,
+                                               G_FILE_QUERY_INFO_NONE,
+                                               NULL, NULL);
+          if (! info)
             return FILE_MATCH_NONE;
 
-          fileval = buf.st_size;
+          fileval = g_file_info_get_size (info);
+          g_object_unref (info);
         }
       else if (offs >= 0 &&
                (offs + numbytes <= headsize)) /* We have it in memory ? */
@@ -514,16 +542,26 @@ file_check_single_magic (const gchar  *offset,
         }
       else   /* Read it from file */
         {
-          gint c = 0;
-
-          if (fseek (ifp, offs, (offs >= 0) ? SEEK_SET : SEEK_END) < 0)
+          if (! g_seekable_seek (G_SEEKABLE (input), offs,
+                                 (offs >= 0) ? G_SEEK_SET : G_SEEK_END,
+                                 NULL, NULL))
             return FILE_MATCH_NONE;
 
           for (k = 0; k < numbytes; k++)
-            fileval = (fileval << 8) | (c = getc (ifp));
+            {
+              guchar  byte;
+              GError *error = NULL;
 
-          if (c == EOF)
-            return FILE_MATCH_NONE;
+              byte = g_data_input_stream_read_byte (G_DATA_INPUT_STREAM (input),
+                                                    NULL, &error);
+              if (error)
+                {
+                  g_clear_error (&error);
+                  return FILE_MATCH_NONE;
+                }
+
+              fileval = (fileval << 8) | byte;
+            }
         }
 
       if (num_operator == '&')
@@ -557,16 +595,28 @@ file_check_single_magic (const gchar  *offset,
         }
       else   /* Read it from file */
         {
-          if (fseek (ifp, offs, (offs >= 0) ? SEEK_SET : SEEK_END) < 0)
+          if (! g_seekable_seek (G_SEEKABLE (input), offs,
+                                 (offs >= 0) ? G_SEEK_SET : G_SEEK_END,
+                                 NULL, NULL))
             return FILE_MATCH_NONE;
 
           found = FILE_MATCH_MAGIC;
 
           for (k = 0; found && (k < numbytes); k++)
             {
-              gint c = getc (ifp);
+              guchar  byte;
+              GError *error = NULL;
 
-              found = (c != EOF) && (c == (gint) mem_testval[k]);
+              byte = g_data_input_stream_read_byte (G_DATA_INPUT_STREAM (input),
+                                                    NULL, &error);
+              if (error)
+                {
+                  g_clear_error (&error);
+                  return FILE_MATCH_NONE;
+                }
+
+              if (byte != mem_testval[k])
+                found = FILE_MATCH_NONE;
             }
         }
     }
@@ -578,7 +628,8 @@ static FileMatchType
 file_check_magic_list (GSList       *magics_list,
                        const guchar *head,
                        gint          headsize,
-                       FILE         *ifp)
+                       GFile        *file,
+                       GInputStream *input)
 
 {
   const gchar   *offset;
@@ -600,7 +651,7 @@ file_check_magic_list (GSList       *magics_list,
 
       match_val = file_check_single_magic (offset, type, value,
                                            head, headsize,
-                                           ifp);
+                                           file, input);
       if (and)
         found = found && (match_val != FILE_MATCH_NONE);
       else

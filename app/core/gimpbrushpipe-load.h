@@ -23,9 +23,10 @@
 #define GIMP_BRUSH_PIPE_FILE_EXTENSION ".gih"
 
 
-GList * gimp_brush_pipe_load (GimpContext  *context,
-                              const gchar  *filename,
-                              GError      **error);
+GList * gimp_brush_pipe_load (GimpContext   *context,
+                              GFile         *file,
+                              GInputStream  *input,
+                              GError       **error);
 
 
 #endif  /* __GIMP_BRUSH_PIPE_LOAD_H__ */

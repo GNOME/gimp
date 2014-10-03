@@ -52,7 +52,7 @@ static void     gimp_combo_tag_entry_icon_press        (GtkWidget            *wi
                                                         GdkEvent             *event,
                                                         gpointer              user_data);
 
-static void     gimp_combo_tag_entry_popup_destroy     (GtkObject            *object,
+static void     gimp_combo_tag_entry_popup_destroy     (GtkWidget            *widget,
                                                         GimpComboTagEntry    *entry);
 
 static void     gimp_combo_tag_entry_tag_count_changed (GimpTaggedContainer  *container,
@@ -291,7 +291,7 @@ gimp_combo_tag_entry_icon_press (GtkWidget            *widget,
 }
 
 static void
-gimp_combo_tag_entry_popup_destroy (GtkObject         *object,
+gimp_combo_tag_entry_popup_destroy (GtkWidget         *widget,
                                     GimpComboTagEntry *entry)
 {
   entry->popup = NULL;

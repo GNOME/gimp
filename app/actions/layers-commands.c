@@ -139,7 +139,7 @@ static gint   layers_mode_index            (GimpLayerModeEffects   layer_mode);
 
 /*  private variables  */
 
-static GimpFillType           layer_fill_type     = GIMP_TRANSPARENT_FILL;
+static GimpFillType           layer_fill_type     = GIMP_FILL_TRANSPARENT;
 static gchar                 *layer_name          = NULL;
 static GimpUnit               layer_resize_unit   = GIMP_UNIT_PIXEL;
 static GimpUnit               layer_scale_unit    = GIMP_UNIT_PIXEL;
@@ -326,9 +326,9 @@ layers_new_last_vals_cmd_callback (GtkAction *action,
                               layer_name,
                               opacity, mode);
 
-  gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_layer),
-                              action_data_get_context (data),
-                              layer_fill_type);
+  gimp_drawable_fill (GIMP_DRAWABLE (new_layer),
+                      action_data_get_context (data),
+                      layer_fill_type);
   gimp_item_translate (GIMP_ITEM (new_layer), off_x, off_y, FALSE);
 
   gimp_image_add_layer (image, new_layer,
@@ -721,27 +721,35 @@ layers_crop_to_content_cmd_callback (GtkAction *action,
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_pickable_auto_shrink (GIMP_PICKABLE (layer),
-                                   0, 0,
-                                   gimp_item_get_width  (GIMP_ITEM (layer)),
-                                   gimp_item_get_height (GIMP_ITEM (layer)),
-                                   &x1, &y1, &x2, &y2))
+  switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (layer),
+                                     0, 0,
+                                     gimp_item_get_width  (GIMP_ITEM (layer)),
+                                     gimp_item_get_height (GIMP_ITEM (layer)),
+                                     &x1, &y1, &x2, &y2))
     {
+    case GIMP_AUTO_SHRINK_SHRINK:
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                                   _("Crop Layer to Content"));
+
+      gimp_item_resize (GIMP_ITEM (layer), action_data_get_context (data),
+                        x2 - x1, y2 - y1, -x1, -y1);
+
+      gimp_image_undo_group_end (image);
+      gimp_image_flush (image);
+      break;
+
+    case GIMP_AUTO_SHRINK_EMPTY:
       gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                            G_OBJECT (widget), GIMP_MESSAGE_INFO,
                             _("Cannot crop because the active layer has no content."));
-      return;
+      break;
+
+    case GIMP_AUTO_SHRINK_UNSHRINKABLE:
+      gimp_message_literal (image->gimp,
+                            G_OBJECT (widget), GIMP_MESSAGE_INFO,
+                            _("Cannot crop because the active layer is already cropped to its content."));
+      break;
     }
-
-  gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                               _("Crop Layer to Content"));
-
-  gimp_item_resize (GIMP_ITEM (layer), action_data_get_context (data),
-                    x2 - x1, y2 - y1, -x1, -y1);
-
-  gimp_image_undo_group_end (image);
-
-  gimp_image_flush (image);
 }
 
 void
@@ -1035,9 +1043,9 @@ layers_new_layer_response (GtkWidget          *widget,
 
       if (layer)
         {
-          gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
-                                      dialog->context,
-                                      layer_fill_type);
+          gimp_drawable_fill (GIMP_DRAWABLE (layer),
+                              dialog->context,
+                              layer_fill_type);
 
           gimp_image_add_layer (dialog->image, layer,
                                 GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
@@ -1178,7 +1186,7 @@ layers_scale_layer_callback (GtkWidget             *dialog,
           progress = GIMP_PROGRESS (progress_dialog);
         }
 
-      progress = gimp_progress_start (progress, _("Scaling"), FALSE);
+      progress = gimp_progress_start (progress, FALSE, _("Scaling"));
 
       gimp_item_scale_by_origin (item,
                                  width, height, interpolation,

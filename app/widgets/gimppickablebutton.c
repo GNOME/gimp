@@ -37,6 +37,7 @@
 #include "gimpview.h"
 #include "gimpviewrenderer.h"
 #include "gimppickablebutton.h"
+#include "gimppickablepopup.h"
 
 
 enum
@@ -72,6 +73,8 @@ static void     gimp_pickable_button_get_property  (GObject            *object,
 
 static void     gimp_pickable_button_clicked       (GtkButton          *button);
 
+static void     gimp_pickable_button_popup_confirm (GimpPickablePopup  *popup,
+                                                    GimpPickableButton *button);
 static void     gimp_pickable_button_drop_pickable (GtkWidget          *widget,
                                                     gint                x,
                                                     gint                y,
@@ -145,6 +148,8 @@ static void
 gimp_pickable_button_constructed (GObject *object)
 {
   GimpPickableButton *button = GIMP_PICKABLE_BUTTON (object);
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_CONTEXT (button->private->context));
 
@@ -234,6 +239,28 @@ gimp_pickable_button_get_property (GObject    *object,
 static void
 gimp_pickable_button_clicked (GtkButton *button)
 {
+  GimpPickableButton *pickable_button = GIMP_PICKABLE_BUTTON (button);
+  GtkWidget          *popup;
+
+  popup = gimp_pickable_popup_new (pickable_button->private->context,
+                                   pickable_button->private->view_size,
+                                   pickable_button->private->view_border_width);
+
+  g_signal_connect (popup, "confirm",
+                    G_CALLBACK (gimp_pickable_button_popup_confirm),
+                    button);
+
+  gimp_popup_show (GIMP_POPUP (popup), GTK_WIDGET (button));
+}
+
+static void
+gimp_pickable_button_popup_confirm (GimpPickablePopup  *popup,
+                                    GimpPickableButton *button)
+{
+  GimpPickable *pickable = gimp_pickable_popup_get_pickable (popup);
+
+  if (pickable)
+    gimp_pickable_button_set_pickable (button, pickable);
 }
 
 static void

@@ -57,6 +57,7 @@ gimp_la_LIBADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
+	$(libgimpui)		\
 	$(GLIB_LIBS)		\
 	$(PYLINK_LIBS)		\
 	$(RT_LIBS)

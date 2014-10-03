@@ -46,7 +46,7 @@ Previous...Inherited code from Ray Lehtiniemi, who inherited it from S & P.
 
 #include <glib/gstdio.h>
 
-#include <gdkconfig.h>          /* For GDK_WINDOWING_WIN32 */
+#include <gdk/gdk.h>          /* For GDK_WINDOWING_WIN32 */
 
 #ifndef GDK_WINDOWING_X11
 #ifndef XPM_NO_X

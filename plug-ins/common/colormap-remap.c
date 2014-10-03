@@ -363,13 +363,13 @@ remap (gint32  image_ID,
       iter = gegl_buffer_iterator_new (buffer,
                                        GEGL_RECTANGLE (0, 0, width, height), 0,
                                        format,
-                                       GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
       src_roi = &iter->roi[0];
 
       gegl_buffer_iterator_add (iter, shadow,
                                 GEGL_RECTANGLE (0, 0, width, height), 0,
                                 format,
-                                GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
       dest_roi = &iter->roi[1];
 
       while (gegl_buffer_iterator_next (iter))

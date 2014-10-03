@@ -20,7 +20,7 @@
 
 #include "tinyscheme/scheme.h"
 
-void          tinyscheme_init         (const gchar  *path,
+void          tinyscheme_init         (GList        *path,
                                        gboolean      register_scripts);
 
 void          ts_set_run_mode         (GimpRunMode   run_mode);

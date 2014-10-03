@@ -194,19 +194,19 @@ static const GimpEnumActionEntry edit_fill_actions[] =
   { "edit-fill-fg", GIMP_STOCK_TOOL_BUCKET_FILL,
     NC_("edit-action", "Fill with _FG Color"), "<primary>comma",
     NC_("edit-action", "Fill the selection using the foreground color"),
-    GIMP_FOREGROUND_FILL, FALSE,
+    GIMP_FILL_FOREGROUND, FALSE,
     GIMP_HELP_EDIT_FILL_FG },
 
   { "edit-fill-bg", GIMP_STOCK_TOOL_BUCKET_FILL,
     NC_("edit-action", "Fill with B_G Color"), "<primary>period",
     NC_("edit-action", "Fill the selection using the background color"),
-    GIMP_BACKGROUND_FILL, FALSE,
+    GIMP_FILL_BACKGROUND, FALSE,
     GIMP_HELP_EDIT_FILL_BG },
 
   { "edit-fill-pattern", GIMP_STOCK_TOOL_BUCKET_FILL,
     NC_("edit-action", "Fill _with Pattern"), "<primary>semicolon",
     NC_("edit-action", "Fill the selection using the active pattern"),
-    GIMP_PATTERN_FILL, FALSE,
+    GIMP_FILL_PATTERN, FALSE,
     GIMP_HELP_EDIT_FILL_PATTERN }
 };
 

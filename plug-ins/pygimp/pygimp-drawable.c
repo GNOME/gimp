@@ -109,7 +109,7 @@ drw_free_shadow(PyGimpDrawable *self)
 static PyObject *
 drw_fill(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
 {
-    int fill = GIMP_FOREGROUND_FILL;
+    int fill = GIMP_FILL_FOREGROUND;
 
     static char *kwlist[] = { "fill", NULL };
 

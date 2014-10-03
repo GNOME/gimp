@@ -17,6 +17,8 @@ libappfile_a_SOURCES = \
 	file-open.h		\
 	file-procedure.c	\
 	file-procedure.h	\
+	file-remote.c		\
+	file-remote.h		\
 	file-save.c		\
 	file-save.h		\
 	file-utils.c		\

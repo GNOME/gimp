@@ -49,6 +49,7 @@ void       gimp_text_tool_reset_im_context       (GimpTextTool        *text_tool
 void       gimp_text_tool_editor_get_cursor_rect (GimpTextTool        *text_tool,
                                                   gboolean             overwrite,
                                                   PangoRectangle      *cursor_rect);
+void       gimp_text_tool_editor_update_im_rect  (GimpTextTool        *text_tool);
 
 
 #endif /* __GIMP_TEXT_TOOL_EDITOR_H__ */

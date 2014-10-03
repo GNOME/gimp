@@ -50,23 +50,30 @@ struct _GimpCurvesConfigClass
 };
 
 
-GType      gimp_curves_config_get_type      (void) G_GNUC_CONST;
+GType      gimp_curves_config_get_type            (void) G_GNUC_CONST;
 
-GObject  * gimp_curves_config_new_spline    (gint32             channel,
-                                             const guint8      *points,
-                                             gint               n_points);
-GObject *  gimp_curves_config_new_explicit  (gint32             channel,
-                                             const guint8      *points,
-                                             gint               n_points);
+GObject  * gimp_curves_config_new_spline          (gint32             channel,
+                                                   const gdouble     *points,
+                                                   gint               n_points);
+GObject *  gimp_curves_config_new_explicit        (gint32             channel,
+                                                   const gdouble     *samples,
+                                                   gint               n_samples);
 
-void       gimp_curves_config_reset_channel (GimpCurvesConfig  *config);
+GObject  * gimp_curves_config_new_spline_cruft    (gint32             channel,
+                                                   const guint8      *points,
+                                                   gint               n_points);
+GObject *  gimp_curves_config_new_explicit_cruft  (gint32             channel,
+                                                   const guint8      *samples,
+                                                   gint               n_samples);
 
-gboolean   gimp_curves_config_load_cruft    (GimpCurvesConfig  *config,
-                                             gpointer           fp,
-                                             GError           **error);
-gboolean   gimp_curves_config_save_cruft    (GimpCurvesConfig  *config,
-                                             gpointer           fp,
-                                             GError           **error);
+void       gimp_curves_config_reset_channel       (GimpCurvesConfig  *config);
+
+gboolean   gimp_curves_config_load_cruft          (GimpCurvesConfig  *config,
+                                                   GInputStream      *input,
+                                                   GError           **error);
+gboolean   gimp_curves_config_save_cruft          (GimpCurvesConfig  *config,
+                                                   GOutputStream     *output,
+                                                   GError           **error);
 
 
 #endif /* __GIMP_CURVES_CONFIG_H__ */

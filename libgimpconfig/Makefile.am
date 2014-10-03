@@ -10,11 +10,11 @@ endif
 
 if OS_WIN32
 gimpconfig_def = gimpconfig.def
-libgimpconfig_export_symbols = -export-symbols gimpconfig.def
+libgimpconfig_export_symbols = -export-symbols $(srcdir)/gimpconfig.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpconfig-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) gimpconfig.def $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/gimpconfig.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpconfig-$(GIMP_API_VERSION).dll.a
@@ -47,6 +47,8 @@ AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpConfig\"	\
 	-DGIMP_CONFIG_COMPILATION		\
 	-I$(top_srcdir)				\
+	$(GIO_UNIX_CFLAGS)			\
+	$(GIO_WINDOWS_CFLAGS)			\
 	$(GEGL_CFLAGS)				\
 	$(CAIRO_CFLAGS)				\
 	$(GDK_PIXBUF_CFLAGS)			\
@@ -113,11 +115,13 @@ libgimpconfig_@GIMP_API_VERSION@_la_LDFLAGS = \
 EXTRA_libgimpconfig_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpconfig_def)
 
 libgimpconfig_@GIMP_API_VERSION@_la_LIBADD = \
-	$(libgimpbase)	\
-	$(libgimpcolor)	\
-	$(libgimpmath)	\
-	$(GEGL_LIBS)	\
-	$(CAIRO_LIBS)	\
+	$(libgimpbase)		\
+	$(libgimpcolor)		\
+	$(libgimpmath)		\
+	$(GIO_UNIX_LIBS)	\
+	$(GIO_WINDOWS_LIBS)	\
+	$(GEGL_LIBS)		\
+	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)
 
 

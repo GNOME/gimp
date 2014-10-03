@@ -19,7 +19,7 @@
 
 #include <cairo.h>
 #include <gegl.h>
-#include <gegl-plugin.h>
+#include <gegl-plugin.h> /* gegl_operation_invalidate() */
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -32,6 +32,7 @@
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-utils.h"
 
+#include "gimp-memsize.h"
 #include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -142,6 +143,7 @@ static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               height);
 
 static gint64  gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
+                                                    GimpComponentType  component_type,
                                                     gint               width,
                                                     gint               height);
 
@@ -759,10 +761,18 @@ gimp_drawable_real_update (GimpDrawable *drawable,
 
 static gint64
 gimp_drawable_real_estimate_memsize (const GimpDrawable *drawable,
+                                     GimpComponentType   component_type,
                                      gint                width,
                                      gint                height)
 {
-  const Babl *format = gimp_drawable_get_format (drawable);
+  GimpImage  *image  = gimp_item_get_image (GIMP_ITEM (drawable));
+  gboolean    linear = gimp_drawable_get_linear (drawable);
+  const Babl *format;
+
+  format = gimp_image_get_format (image,
+                                  gimp_drawable_get_base_type (drawable),
+                                  gimp_babl_precision (component_type, linear),
+                                  gimp_drawable_has_alpha (drawable));
 
   return (gint64) babl_format_get_bytes_per_pixel (format) * width * height;
 }
@@ -951,7 +961,7 @@ gimp_drawable_sync_fs_filter (GimpDrawable *drawable,
 
           gegl_node_add_child (node, fs_source);
 
-          private->fs_applicator = gimp_applicator_new (node, linear);
+          private->fs_applicator = gimp_applicator_new (node, linear, FALSE);
 
           private->fs_crop_node =
             gegl_node_new_child (node,
@@ -1166,12 +1176,14 @@ gimp_drawable_new (GType          type,
 
 gint64
 gimp_drawable_estimate_memsize (const GimpDrawable *drawable,
+                                GimpComponentType   component_type,
                                 gint                width,
                                 gint                height)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0);
 
   return GIMP_DRAWABLE_GET_CLASS (drawable)->estimate_memsize (drawable,
+                                                               component_type,
                                                                width, height);
 }
 
@@ -1490,15 +1502,39 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
 }
 
 void
-gimp_drawable_fill (GimpDrawable      *drawable,
-                    const GimpRGB     *color,
-                    const GimpPattern *pattern)
+gimp_drawable_fill (GimpDrawable *drawable,
+                    GimpContext  *context,
+                    GimpFillType  fill_type)
+{
+  GimpRGB      color;
+  GimpPattern *pattern;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  if (! gimp_get_fill_params (context, fill_type, &color, &pattern, NULL))
+    return;
+
+  gimp_drawable_fill_full (drawable, &color, pattern);
+}
+
+void
+gimp_drawable_fill_full (GimpDrawable      *drawable,
+                         const GimpRGB     *color,
+                         const GimpPattern *pattern)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (color != NULL || pattern != NULL);
+  g_return_if_fail (color != NULL);
   g_return_if_fail (pattern == NULL || GIMP_IS_PATTERN (pattern));
 
-  if (color)
+  if (pattern)
+    {
+      GeglBuffer *src_buffer = gimp_pattern_create_buffer (pattern);
+
+      gegl_buffer_set_pattern (gimp_drawable_get_buffer (drawable),
+                               NULL, src_buffer, 0, 0);
+      g_object_unref (src_buffer);
+    }
+  else
     {
       GimpRGB    c = *color;
       GeglColor *col;
@@ -1511,59 +1547,11 @@ gimp_drawable_fill (GimpDrawable      *drawable,
                              NULL, col);
       g_object_unref (col);
     }
-  else
-    {
-      GeglBuffer *src_buffer = gimp_pattern_create_buffer (pattern);
-
-      gegl_buffer_set_pattern (gimp_drawable_get_buffer (drawable),
-                               NULL, src_buffer, 0, 0);
-      g_object_unref (src_buffer);
-    }
 
   gimp_drawable_update (drawable,
                         0, 0,
                         gimp_item_get_width  (GIMP_ITEM (drawable)),
                         gimp_item_get_height (GIMP_ITEM (drawable)));
-}
-
-void
-gimp_drawable_fill_by_type (GimpDrawable *drawable,
-                            GimpContext  *context,
-                            GimpFillType  fill_type)
-{
-  GimpRGB      color;
-  GimpPattern *pattern = NULL;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-
-  switch (fill_type)
-    {
-    case GIMP_FOREGROUND_FILL:
-      gimp_context_get_foreground (context, &color);
-      break;
-
-    case GIMP_BACKGROUND_FILL:
-      gimp_context_get_background (context, &color);
-      break;
-
-    case GIMP_WHITE_FILL:
-      gimp_rgba_set (&color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
-      break;
-
-    case GIMP_TRANSPARENT_FILL:
-      gimp_rgba_set (&color, 0.0, 0.0, 0.0, GIMP_OPACITY_TRANSPARENT);
-      break;
-
-    case GIMP_PATTERN_FILL:
-      pattern = gimp_context_get_pattern (context);
-      break;
-
-    default:
-      g_warning ("%s: unknown fill type %d", G_STRFUNC, fill_type);
-      return;
-    }
-
-  gimp_drawable_fill (drawable, pattern ? NULL : &color, pattern);
 }
 
 const Babl *
@@ -1678,6 +1666,72 @@ gimp_drawable_is_indexed (const GimpDrawable *drawable)
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
   return (gimp_drawable_get_base_type (drawable) == GIMP_INDEXED);
+}
+
+const Babl *
+gimp_drawable_get_component_format (const GimpDrawable *drawable,
+                                    GimpChannelType     channel)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  switch (channel)
+    {
+    case GIMP_RED_CHANNEL:
+      return gimp_babl_component_format (GIMP_RGB,
+                                         gimp_drawable_get_precision (drawable),
+                                         RED);
+
+    case GIMP_GREEN_CHANNEL:
+      return gimp_babl_component_format (GIMP_RGB,
+                                         gimp_drawable_get_precision (drawable),
+                                         GREEN);
+
+    case GIMP_BLUE_CHANNEL:
+      return gimp_babl_component_format (GIMP_RGB,
+                                         gimp_drawable_get_precision (drawable),
+                                         BLUE);
+
+    case GIMP_ALPHA_CHANNEL:
+      return gimp_babl_component_format (GIMP_RGB,
+                                         gimp_drawable_get_precision (drawable),
+                                         ALPHA);
+
+    case GIMP_GRAY_CHANNEL:
+      return gimp_babl_component_format (GIMP_GRAY,
+                                         gimp_drawable_get_precision (drawable),
+                                         GRAY);
+
+    case GIMP_INDEXED_CHANNEL:
+      return babl_format ("Y u8"); /* will extract grayscale, the best
+                                    * we can do here */
+    }
+
+  return NULL;
+}
+
+gint
+gimp_drawable_get_component_index (const GimpDrawable *drawable,
+                                   GimpChannelType     channel)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
+
+  switch (channel)
+    {
+    case GIMP_RED_CHANNEL:     return RED;
+    case GIMP_GREEN_CHANNEL:   return GREEN;
+    case GIMP_BLUE_CHANNEL:    return BLUE;
+    case GIMP_GRAY_CHANNEL:    return GRAY;
+    case GIMP_INDEXED_CHANNEL: return INDEXED;
+    case GIMP_ALPHA_CHANNEL:
+      switch (gimp_drawable_get_base_type (drawable))
+        {
+        case GIMP_RGB:     return ALPHA;
+        case GIMP_GRAY:    return ALPHA_G;
+        case GIMP_INDEXED: return ALPHA_I;
+        }
+    }
+
+  return -1;
 }
 
 const guchar *

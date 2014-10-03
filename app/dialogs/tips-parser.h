@@ -36,7 +36,7 @@ GimpTip * gimp_tip_new        (const gchar  *title,
                                ...) G_GNUC_PRINTF(2, 3);
 void      gimp_tip_free       (GimpTip      *tip);
 
-GList   * gimp_tips_from_file (const gchar  *filename,
+GList   * gimp_tips_from_file (GFile        *file,
                                GError      **error);
 void      gimp_tips_free      (GList        *tips);
 

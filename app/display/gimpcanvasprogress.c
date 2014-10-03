@@ -83,11 +83,13 @@ static void             gimp_canvas_progress_get_property (GObject          *obj
                                                            GParamSpec       *pspec);
 static void             gimp_canvas_progress_draw         (GimpCanvasItem   *item,
                                                            cairo_t          *cr);
-static cairo_region_t * gimp_canvas_progress_get_extents  (GimpCanvasItem   *item);
+static cairo_region_t * gimp_canvas_progress_get_extents  (GimpCanvasItem   *item);static gboolean        gimp_canvas_progress_hit          (GimpCanvasItem   *item,
+                                                                                                                                             gdouble           x,
+                                                                                                                                             gdouble           y);
 
 static GimpProgress   * gimp_canvas_progress_start        (GimpProgress      *progress,
-                                                           const gchar       *message,
-                                                           gboolean           cancelable);
+                                                           gboolean           cancellable,
+                                                           const gchar       *message);
 static void             gimp_canvas_progress_end          (GimpProgress      *progress);
 static gboolean         gimp_canvas_progress_is_active    (GimpProgress      *progress);
 static void             gimp_canvas_progress_set_text     (GimpProgress      *progress,
@@ -123,6 +125,7 @@ gimp_canvas_progress_class_init (GimpCanvasProgressClass *klass)
 
   item_class->draw           = gimp_canvas_progress_draw;
   item_class->get_extents    = gimp_canvas_progress_get_extents;
+  item_class->hit            = gimp_canvas_progress_hit;
 
   g_object_class_install_property (object_class, PROP_ANCHOR,
                                    g_param_spec_enum ("anchor", NULL, NULL,
@@ -245,6 +248,8 @@ gimp_canvas_progress_transform (GimpCanvasItem *item,
 
   pango_layout_get_pixel_size (layout, width, height);
 
+  *width = MAX (*width, 2 * RADIUS);
+
   *width  += 2 * BORDER;
   *height += 3 * BORDER + 2 * RADIUS;
 
@@ -321,10 +326,28 @@ gimp_canvas_progress_get_extents (GimpCanvasItem *item)
   return cairo_region_create_rectangle (&rectangle);
 }
 
+static gboolean
+gimp_canvas_progress_hit (GimpCanvasItem *item,
+                          gdouble         x,
+                          gdouble         y)
+{
+  gdouble px, py;
+  gint    pwidth, pheight;
+  gdouble tx, ty;
+
+  gimp_canvas_progress_transform (item, &px, &py, &pwidth, &pheight);
+  gimp_canvas_item_transform_xy_f (item, x, y, &tx, &ty);
+
+  pheight -= BORDER + 2 * RADIUS;
+
+  return (tx >= px && tx < (px + pwidth) &&
+          ty >= py && ty < (py + pheight));
+}
+
 static GimpProgress *
 gimp_canvas_progress_start (GimpProgress *progress,
-                            const gchar  *message,
-                            gboolean      cancelable)
+                            gboolean      cancellable,
+                            const gchar  *message)
 {
   gimp_canvas_progress_set_text (progress, message);
 

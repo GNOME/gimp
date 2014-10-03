@@ -30,9 +30,9 @@
 #include "tools-types.h"
 
 #include "core/gimpimage.h"
-#include "core/gimpimage-contiguous-region.h"
 #include "core/gimpitem.h"
 #include "core/gimppickable.h"
+#include "core/gimppickable-contiguous-region.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -126,13 +126,12 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
   gimp_pickable_flush (pickable);
 
   if (gimp_pickable_get_color_at (pickable, x, y, &color))
-    return gimp_image_contiguous_region_by_color (image, drawable,
-                                                  options->sample_merged,
-                                                  sel_options->antialias,
-                                                  options->threshold / 255.0,
-                                                  options->select_transparent,
-                                                  options->select_criterion,
-                                                  &color);
+    return gimp_pickable_contiguous_region_by_color (pickable,
+                                                     sel_options->antialias,
+                                                     options->threshold / 255.0,
+                                                     options->select_transparent,
+                                                     options->select_criterion,
+                                                     &color);
 
   return NULL;
 }

@@ -318,14 +318,11 @@ put_short (GOutputStream  *output,
            GError        **error)
 {
   guchar buf[2];
-  gsize  bytes_written;
 
   buf[0] = (value >> 8) & 0xFF;
   buf[1] = value & 0xFF;
 
-  return (g_output_stream_write_all (output, buf, 2,
-                                     &bytes_written, NULL, error) &&
-          bytes_written == 2);
+  return g_output_stream_write_all (output, buf, 2, NULL, NULL, error);
 }
 
 /*
@@ -357,12 +354,12 @@ load_image (GFile   *file,
 
   PIX_DEBUG_PRINT ("Opening file: %s\n", filename);
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             g_file_get_parse_name (file));
+
   input = G_INPUT_STREAM (g_file_read (file, NULL, error));
   if (! input)
     return -1;
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             g_file_get_parse_name (file));
 
   /* Read header information */
   if (! get_short (input, &width,  error) ||
@@ -536,12 +533,12 @@ save_image (GFile   *file,
   guchar        *src;
   guchar        *src_base;
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             g_file_get_parse_name (file));
+
   output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
   if (! output)
     return FALSE;
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             g_file_get_parse_name (file));
 
   /* Get info about image */
   buffer = gimp_drawable_get_buffer (drawable_ID);
@@ -598,7 +595,6 @@ save_image (GFile   *file,
               /* Write a row of the image */
 
               guchar record[4];
-              gsize  bytes_written;
 
               record[0] = 1;
               record[3] = src[0];
@@ -615,9 +611,7 @@ save_image (GFile   *file,
                       /* Write current RLE record and start a new one */
 
                       if (! g_output_stream_write_all (output, record, 4,
-                                                       &bytes_written, NULL,
-                                                       error) ||
-                          bytes_written != 4)
+                                                       NULL, NULL, error))
                         {
                           goto fail;
                         }
@@ -638,9 +632,7 @@ save_image (GFile   *file,
               /* Write last record in row */
 
               if (! g_output_stream_write_all (output, record, 4,
-                                               &bytes_written, NULL,
-                                               error) ||
-                  bytes_written != 4)
+                                               NULL, NULL, error))
                 {
                   goto fail;
                 }
@@ -672,7 +664,6 @@ save_image (GFile   *file,
               /* Write a row of the image */
 
               guchar record[2];
-              gsize  bytes_written;
 
               record[0] = 1;
               record[1] = src[0];
@@ -684,9 +675,7 @@ save_image (GFile   *file,
                       /* Write current RLE record and start a new one */
 
                       if (! g_output_stream_write_all (output, record, 2,
-                                                       &bytes_written, NULL,
-                                                       error) ||
-                          bytes_written != 2)
+                                                       NULL, NULL, error))
                         {
                           goto fail;
                         }
@@ -705,9 +694,7 @@ save_image (GFile   *file,
               /* Write last record in row */
 
               if (! g_output_stream_write_all (output, record, 2,
-                                               &bytes_written, NULL,
-                                               error) ||
-                  bytes_written != 2)
+                                               NULL, NULL, error))
                 {
                   goto fail;
                 }

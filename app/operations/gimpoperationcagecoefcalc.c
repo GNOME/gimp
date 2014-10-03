@@ -216,7 +216,7 @@ gimp_operation_cage_coef_calc_process (GeglOperation       *operation,
   n_cage_vertices   = gimp_cage_config_get_n_points (config);
 
   it = gegl_buffer_iterator_new (output, roi, 0, format,
-                                 GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                 GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (it))
     {

@@ -44,6 +44,7 @@
 
 #endif /* USE_POSIX_SHM */
 
+#include <gio/gio.h>
 #include <gegl.h>
 
 #if defined(G_OS_WIN32) || defined(G_WITH_CYGWIN)

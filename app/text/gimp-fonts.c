@@ -40,10 +40,10 @@
 #define CONF_FNAME "fonts.conf"
 
 
-static gboolean gimp_fonts_load_fonts_conf (FcConfig    *config,
-                                            gchar       *fonts_conf);
-static void     gimp_fonts_add_directories (FcConfig    *config,
-                                            const gchar *path_str);
+static gboolean gimp_fonts_load_fonts_conf (FcConfig *config,
+                                            GFile    *fonts_conf);
+static void     gimp_fonts_add_directories (FcConfig *config,
+                                            GList    *path);
 
 
 void
@@ -62,8 +62,8 @@ void
 gimp_fonts_load (Gimp *gimp)
 {
   FcConfig *config;
-  gchar    *fonts_conf;
-  gchar    *path;
+  GFile    *fonts_conf;
+  GList    *path;
 
   g_return_if_fail (GIMP_IS_FONT_LIST (gimp->fonts));
 
@@ -81,17 +81,17 @@ gimp_fonts_load (Gimp *gimp)
   if (! config)
     goto cleanup;
 
-  fonts_conf = gimp_personal_rc_file (CONF_FNAME);
+  fonts_conf = gimp_directory_file (CONF_FNAME, NULL);
   if (! gimp_fonts_load_fonts_conf (config, fonts_conf))
     goto cleanup;
 
-  fonts_conf = g_build_filename (gimp_sysconf_directory (), CONF_FNAME, NULL);
+  fonts_conf = gimp_sysconf_directory_file (CONF_FNAME, NULL);
   if (! gimp_fonts_load_fonts_conf (config, fonts_conf))
     goto cleanup;
 
-  path = gimp_config_path_expand (gimp->config->font_path, TRUE, NULL);
+  path = gimp_config_path_expand_to_files (gimp->config->font_path, FALSE);
   gimp_fonts_add_directories (config, path);
-  g_free (path);
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   if (! FcConfigBuildFonts (config))
     {
@@ -122,35 +122,37 @@ gimp_fonts_reset (Gimp *gimp)
 
 static gboolean
 gimp_fonts_load_fonts_conf (FcConfig *config,
-                            gchar    *fonts_conf)
+                            GFile    *fonts_conf)
 {
-  gboolean ret = TRUE;
+  gchar    *path = g_file_get_path (fonts_conf);
+  gboolean  ret  = TRUE;
 
-  if (! FcConfigParseAndLoad (config, (const guchar *) fonts_conf, FcFalse))
+  if (! FcConfigParseAndLoad (config, (const guchar *) path, FcFalse))
     {
       FcConfigDestroy (config);
       ret = FALSE;
     }
 
-  g_free (fonts_conf);
+  g_free (path);
+  g_object_unref (fonts_conf);
 
   return ret;
 }
 
 static void
-gimp_fonts_add_directories (FcConfig    *config,
-                            const gchar *path_str)
+gimp_fonts_add_directories (FcConfig *config,
+                            GList    *path)
 {
-  GList *path;
   GList *list;
 
   g_return_if_fail (config != NULL);
-  g_return_if_fail (path_str != NULL);
-
-  path = gimp_path_parse (path_str, 256, TRUE, NULL);
 
   for (list = path; list; list = list->next)
-    FcConfigAppFontAddDir (config, (const guchar *) list->data);
+    {
+      gchar *dir = g_file_get_path (list->data);
 
-  gimp_path_free (path);
+      FcConfigAppFontAddDir (config, (const FcChar8 *) dir);
+
+      g_free (dir);
+    }
 }

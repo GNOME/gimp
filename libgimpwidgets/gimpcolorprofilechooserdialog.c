@@ -186,18 +186,18 @@ static void
 gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog *dialog)
 {
   GimpColorProfile  profile;
-  gchar            *filename;
+  GFile            *file;
   GError           *error = NULL;
 
-  filename = gtk_file_chooser_get_preview_filename (GTK_FILE_CHOOSER (dialog));
+  file = gtk_file_chooser_get_preview_file (GTK_FILE_CHOOSER (dialog));
 
-  if (! filename)
+  if (! file)
     {
       gimp_color_profile_view_set_profile (dialog->priv->profile_view, NULL);
       return;
     }
 
-  profile = gimp_lcms_profile_open_from_file (filename, &error);
+  profile = gimp_lcms_profile_open_from_file (file, &error);
 
   if (! profile)
     {
@@ -212,5 +212,5 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
       cmsCloseProfile (profile);
     }
 
-  g_free (filename);
+  g_object_unref (file);
 }

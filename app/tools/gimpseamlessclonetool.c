@@ -20,7 +20,7 @@
 #include "config.h"
 
 #include <gegl.h>
-#include <gegl-plugin.h>
+#include <gegl-plugin.h> /* gegl_operation_invalidate() */
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -221,9 +221,6 @@ gimp_seamless_clone_tool_init (GimpSeamlessCloneTool *self)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_MOVE);
 
-  gimp_tool_control_set_motion_mode (tool->control,
-                                     GIMP_MOTION_MODE_COMPRESS);
-
   self->tool_state = SC_STATE_INIT;
 }
 
@@ -378,7 +375,7 @@ gimp_seamless_clone_tool_commit (GimpSeamlessCloneTool *sc)
     {
       gimp_tool_control_push_preserve (tool->control, TRUE);
 
-      gimp_image_map_commit (sc->image_map, GIMP_PROGRESS (tool));
+      gimp_image_map_commit (sc->image_map, GIMP_PROGRESS (tool), FALSE);
       g_object_unref (sc->image_map);
       sc->image_map = NULL;
 
@@ -528,7 +525,7 @@ gimp_seamless_clone_tool_key_press (GimpTool    *tool,
            *       rectangle each time (in the update function) or by
            *       invalidating and re-rendering all now (expensive and
            *       perhaps useless */
-          gimp_image_map_commit (sct->image_map, GIMP_PROGRESS (tool));
+          gimp_image_map_commit (sct->image_map, GIMP_PROGRESS (tool), FALSE);
           g_object_unref (sct->image_map);
           sct->image_map = NULL;
 
@@ -794,9 +791,8 @@ gimp_seamless_clone_tool_image_map_update (GimpSeamlessCloneTool *sc)
   GeglProcessor    *processor;
   gdouble           value;
 
-  progress = gimp_progress_start (GIMP_PROGRESS (sc),
-                                  _("Cloning the foreground object..."),
-                                  FALSE);
+  progress = gimp_progress_start (GIMP_PROGRESS (sc), FALSE,
+                                  _("Cloning the foreground object"));
 
   /* Find out at which x,y is the top left corner of the currently
    * displayed part */

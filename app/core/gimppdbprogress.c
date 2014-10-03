@@ -64,8 +64,8 @@ static void      gimp_pdb_progress_set_property   (GObject            *object,
                                                    GParamSpec         *pspec);
 
 static GimpProgress * gimp_pdb_progress_progress_start   (GimpProgress *progress,
-                                                          const gchar  *message,
-                                                          gboolean      cancelable);
+                                                          gboolean      cancellable,
+                                                          const gchar  *message);
 static void     gimp_pdb_progress_progress_end           (GimpProgress *progress);
 static gboolean gimp_pdb_progress_progress_is_active     (GimpProgress *progress);
 static void     gimp_pdb_progress_progress_set_text      (GimpProgress *progress,
@@ -299,8 +299,8 @@ gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
 
 static GimpProgress *
 gimp_pdb_progress_progress_start (GimpProgress *progress,
-                                  const gchar  *message,
-                                  gboolean      cancelable)
+                                  gboolean      cancellable,
+                                  const gchar  *message)
 {
   GimpPdbProgress *pdb_progress = GIMP_PDB_PROGRESS (progress);
 

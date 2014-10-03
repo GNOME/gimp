@@ -23,6 +23,7 @@
 #include <gio/gio.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "gimpmoduletypes.h"
 
@@ -49,26 +50,26 @@ enum
 };
 
 
-/*  #define DUMP_DB 1  */
+#define DUMP_DB FALSE
 
 
 static void         gimp_module_db_finalize            (GObject      *object);
 
-static void         gimp_module_db_module_initialize   (const GimpDatafileData *file_data,
-                                                        gpointer                user_data);
+static void         gimp_module_db_load_directory      (GimpModuleDB *db,
+                                                        GFile        *directory);
+static void         gimp_module_db_load_module         (GimpModuleDB *db,
+                                                        GFile        *file);
 
 static GimpModule * gimp_module_db_module_find_by_path (GimpModuleDB *db,
                                                         const char   *fullpath);
 
-#ifdef DUMP_DB
-static void         gimp_module_db_dump_module         (gpointer      data,
+static void         gimp_module_db_module_dump_func    (gpointer      data,
                                                         gpointer      user_data);
-#endif
-
 static void         gimp_module_db_module_on_disk_func (gpointer      data,
                                                         gpointer      user_data);
 static void         gimp_module_db_module_remove_func  (gpointer      data,
                                                         gpointer      user_data);
+
 static void         gimp_module_db_module_modified     (GimpModule   *module,
                                                         GimpModuleDB *db);
 
@@ -261,9 +262,9 @@ gimp_module_db_get_load_inhibit (GimpModuleDB *db)
  * @module_path: A #G_SEARCHPATH_SEPARATOR delimited list of directories
  *               to load modules from.
  *
- * Scans the directories contained in @module_path using
- * gimp_datafiles_read_directories() and creates a #GimpModule
- * instance for every loadable module contained in the directories.
+ * Scans the directories contained in @module_path and creates a
+ * #GimpModule instance for every loadable module contained in the
+ * directories.
  **/
 void
 gimp_module_db_load (GimpModuleDB *db,
@@ -273,14 +274,22 @@ gimp_module_db_load (GimpModuleDB *db,
   g_return_if_fail (module_path != NULL);
 
   if (g_module_supported ())
-    gimp_datafiles_read_directories (module_path,
-                                     G_FILE_TEST_EXISTS,
-                                     gimp_module_db_module_initialize,
-                                     db);
+    {
+      GList *path;
+      GList *list;
 
-#ifdef DUMP_DB
-  g_list_foreach (db->modules, gimp_module_db_dump_module, NULL);
-#endif
+      path = gimp_config_path_expand_to_files (module_path, NULL);
+
+      for (list = path; list; list = g_list_next (list))
+        {
+          gimp_module_db_load_directory (db, list->data);
+        }
+
+      g_list_free_full (path, (GDestroyNotify) g_object_unref);
+    }
+
+  if (DUMP_DB)
+    g_list_foreach (db->modules, gimp_module_db_module_dump_func, NULL);
 }
 
 /**
@@ -315,40 +324,81 @@ gimp_module_db_refresh (GimpModuleDB *db,
   g_list_free (kill_list);
 
   /* walk filesystem and add new things we find */
-  gimp_datafiles_read_directories (module_path,
-                                   G_FILE_TEST_EXISTS,
-                                   gimp_module_db_module_initialize,
-                                   db);
+  gimp_module_db_load (db, module_path);
 }
 
 static void
-gimp_module_db_module_initialize (const GimpDatafileData *file_data,
-                                  gpointer                user_data)
+gimp_module_db_load_directory (GimpModuleDB *db,
+                               GFile        *directory)
 {
-  GimpModuleDB *db = GIMP_MODULE_DB (user_data);
-  GimpModule   *module;
-  gboolean      load_inhibit;
+  GFileEnumerator *enumerator;
 
-  if (! gimp_datafiles_check_extension (file_data->filename,
-                                        "." G_MODULE_SUFFIX))
+  enumerator = g_file_enumerate_children (directory,
+                                          G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                          G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                          G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                          G_FILE_QUERY_INFO_NONE,
+                                          NULL, NULL);
+
+  if (enumerator)
+    {
+      GFileInfo *info;
+
+      while ((info = g_file_enumerator_next_file (enumerator, NULL, NULL)))
+        {
+          GFileType file_type = g_file_info_get_file_type (info);
+
+         if (file_type == G_FILE_TYPE_REGULAR &&
+             ! g_file_info_get_is_hidden (info))
+            {
+              GFile *child = g_file_enumerator_get_child (enumerator, info);
+
+              gimp_module_db_load_module (db, child);
+
+              g_object_unref (child);
+            }
+
+          g_object_unref (info);
+        }
+
+      g_object_unref (enumerator);
+    }
+}
+
+static void
+gimp_module_db_load_module (GimpModuleDB *db,
+                            GFile        *file)
+{
+  GimpModule *module;
+  gchar      *path;
+  gboolean    load_inhibit;
+
+  if (! gimp_file_has_extension (file, "." G_MODULE_SUFFIX))
     return;
+
+  path = g_file_get_path (file);
 
   /* don't load if we already know about it */
-  if (gimp_module_db_module_find_by_path (db, file_data->filename))
-    return;
+  if (gimp_module_db_module_find_by_path (db, path))
+    {
+      g_free (path);
+      return;
+    }
 
-  load_inhibit = is_in_inhibit_list (file_data->filename,
-                                     db->load_inhibit);
+  load_inhibit = is_in_inhibit_list (path, db->load_inhibit);
 
-  module = gimp_module_new (file_data->filename,
+  module = gimp_module_new (path,
                             load_inhibit,
                             db->verbose);
+
+  g_free (path);
 
   g_signal_connect (module, "modified",
                     G_CALLBACK (gimp_module_db_module_modified),
                     db);
 
   db->modules = g_list_append (db->modules, module);
+
   g_signal_emit (db, db_signals[ADD], 0, module);
 }
 
@@ -369,10 +419,9 @@ gimp_module_db_module_find_by_path (GimpModuleDB *db,
   return NULL;
 }
 
-#ifdef DUMP_DB
 static void
-gimp_module_db_dump_module (gpointer data,
-                            gpointer user_data)
+gimp_module_db_module_dump_func (gpointer data,
+                                 gpointer user_data)
 {
   GimpModule *module = data;
 
@@ -386,7 +435,7 @@ gimp_module_db_dump_module (gpointer data,
            module->query_module,
            module->register_module);
 
-  if (i->info)
+  if (module->info)
     {
       g_print ("  purpose:   %s\n"
                "  author:    %s\n"
@@ -400,7 +449,6 @@ gimp_module_db_dump_module (gpointer data,
                module->info->date      ? module->info->date      : "NONE");
     }
 }
-#endif
 
 static void
 gimp_module_db_module_on_disk_func (gpointer data,

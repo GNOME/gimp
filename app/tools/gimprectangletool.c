@@ -2546,32 +2546,39 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rect_tool)
       y2 = private->y2 - offset_y;
     }
 
-  if (gimp_pickable_auto_shrink (pickable,
-                                 x1, y1, x2, y2,
-                                 &shrunk_x1,
-                                 &shrunk_y1,
-                                 &shrunk_x2,
-                                 &shrunk_y2))
+  switch (gimp_pickable_auto_shrink (pickable,
+                                     x1, y1, x2, y2,
+                                     &shrunk_x1,
+                                     &shrunk_y1,
+                                     &shrunk_x2,
+                                     &shrunk_y2))
     {
-      GimpRectangleFunction original_function = private->function;
+    case GIMP_AUTO_SHRINK_SHRINK:
+      {
+        GimpRectangleFunction original_function = private->function;
 
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_tool));
-      private->function = GIMP_RECTANGLE_TOOL_AUTO_SHRINK;
+        gimp_draw_tool_pause (GIMP_DRAW_TOOL (rect_tool));
+        private->function = GIMP_RECTANGLE_TOOL_AUTO_SHRINK;
 
-      private->x1 = offset_x + shrunk_x1;
-      private->y1 = offset_y + shrunk_y1;
-      private->x2 = offset_x + shrunk_x2;
-      private->y2 = offset_y + shrunk_y2;
+        private->x1 = offset_x + shrunk_x1;
+        private->y1 = offset_y + shrunk_y1;
+        private->x2 = offset_x + shrunk_x2;
+        private->y2 = offset_y + shrunk_y2;
 
-      gimp_rectangle_tool_update_int_rect (rect_tool);
+        gimp_rectangle_tool_update_int_rect (rect_tool);
 
-      gimp_rectangle_tool_rectangle_change_complete (rect_tool);
+        gimp_rectangle_tool_rectangle_change_complete (rect_tool);
 
-      gimp_rectangle_tool_update_handle_sizes (rect_tool);
-      gimp_rectangle_tool_update_highlight (rect_tool);
+        gimp_rectangle_tool_update_handle_sizes (rect_tool);
+        gimp_rectangle_tool_update_highlight (rect_tool);
 
-      private->function = original_function;
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (rect_tool));
+        private->function = original_function;
+        gimp_draw_tool_resume (GIMP_DRAW_TOOL (rect_tool));
+      }
+      break;
+
+    default:
+      break;
     }
 
   gimp_rectangle_tool_update_options (rect_tool, tool->display);

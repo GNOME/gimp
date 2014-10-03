@@ -18,7 +18,6 @@
 #include "config.h"
 
 #include <gegl.h>
-#include <gegl-plugin.h>
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -90,6 +89,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:color-reduction",
     NULL /* FIXME GIMP_HELP_FILTER_COLOR_TEMPERATURE */ },
 
+  { "filters-color-rotate", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Rotate Colors..."), NULL, NULL,
+    "gegl:color-rotate",
+    NULL /* FIXME GIMP_HELP_FILTER_COLOR_ROTATE */ },
+
   { "filters-color-temperature", GIMP_STOCK_GEGL,
     NC_("filters-action", "Color T_emperature..."), NULL, NULL,
     "gegl:color-temperature",
@@ -119,6 +123,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "Difference of Gaussians..."), NULL, NULL,
     "gegl:difference-of-gaussians",
     NULL /* FIXME GIMP_HELP_FILTER_DIFFERENCE_OF_GAUSSIANS */ },
+
+  { "filters-distance-map", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Distance Map..."), NULL, NULL,
+    "gegl:distance-transform",
+    NULL /* FIXME GIMP_HELP_FILTER_DISTANCE_MAP */ },
 
   { "filters-dropshadow", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Drop Shadow..."), NULL, NULL,
@@ -159,6 +168,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "_Grid..."), NULL, NULL,
     "gegl:grid",
     NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_GRID */ },
+
+  { "filters-kaleidoscope", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Kaleidoscope..."), NULL, NULL,
+    "gegl:mirrors",
+    NULL /* FIXME GIMP_HELP_FILTER_KALEIDOSCOPE */ },
 
   { "filters-lens-distortion", GIMP_STOCK_GEGL,
     NC_("filters-action", "Lens Distortion..."), NULL, NULL,
@@ -416,12 +430,14 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-cartoon",                 writable);
   SET_SENSITIVE ("filters-checkerboard",            writable);
   SET_SENSITIVE ("filters-color-reduction",         writable);
+  SET_SENSITIVE ("filters-color-rotate",            writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
   SET_SENSITIVE ("filters-color-to-alpha",          writable && !gray && alpha);
   SET_SENSITIVE ("filters-convolution-matrix",      writable);
   SET_SENSITIVE ("filters-cubism",                  writable);
   SET_SENSITIVE ("filters-deinterlace",             writable);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
+  SET_SENSITIVE ("filters-distance-map",            writable);
   SET_SENSITIVE ("filters-dropshadow",              writable && alpha);
   SET_SENSITIVE ("filters-edge-laplace",            writable);
   SET_SENSITIVE ("filters-edge-sobel",              writable);
@@ -430,6 +446,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-fractal-trace",           writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-grid",                    writable);
+  SET_SENSITIVE ("filters-kaleidoscope",            writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
   SET_SENSITIVE ("filters-mosaic",                  writable);
   SET_SENSITIVE ("filters-motion-blur-circular",    writable);

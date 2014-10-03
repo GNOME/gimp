@@ -48,6 +48,8 @@ struct _GimpApplicator
   gint                  apply_offset_y;
   GeglNode             *apply_offset_node;
 
+  GeglNode             *dup_apply_buffer_node;
+
   gdouble               opacity;
   GimpLayerModeEffects  paint_mode;
   gboolean              linear;
@@ -55,6 +57,8 @@ struct _GimpApplicator
 
   GimpComponentMask     affect;
   GeglNode             *affect_node;
+
+  GeglNode             *cache_node;
 
   GeglBuffer           *src_buffer;
   GeglNode             *src_node;
@@ -79,7 +83,8 @@ struct _GimpApplicatorClass
 GType        gimp_applicator_get_type         (void) G_GNUC_CONST;
 
 GimpApplicator * gimp_applicator_new          (GeglNode             *parent,
-                                               gboolean              linear);
+                                               gboolean              linear,
+                                               gboolean              use_cache);
 
 void         gimp_applicator_set_src_buffer   (GimpApplicator       *applicator,
                                                GeglBuffer           *dest_buffer);
@@ -109,6 +114,9 @@ void         gimp_applicator_blit             (GimpApplicator       *applicator,
 
 GeglBuffer * gimp_applicator_dup_apply_buffer (GimpApplicator       *applicator,
                                                const GeglRectangle  *rect);
+GeglBuffer * gimp_applicator_get_cache_buffer (GimpApplicator       *applicator,
+                                               GeglRectangle       **rectangles,
+                                               gint                 *n_rectangles);
 
 
 #endif  /*  __GIMP_APPLICATOR_H__  */

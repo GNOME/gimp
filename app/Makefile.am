@@ -44,31 +44,32 @@ bin_PROGRAMS = gimp-@GIMP_APP_VERSION@
 endif
 
 libapp_sources = \
-	about.h		\
-	app.c		\
-	app.h		\
-	batch.c		\
-	batch.h		\
-	errors.c	\
-	errors.h	\
-	language.c	\
-	language.h	\
-	sanity.c	\
-	sanity.h	\
-	signals.c	\
-	signals.h	\
-	tests.c		\
-	tests.h		\
-	unique.c	\
-	unique.h	\
-	units.c		\
-	units.h		\
-	version.c	\
-	version.h	\
-	gimp-debug.c	\
-	gimp-debug.h	\
-	gimp-log.c	\
-	gimp-log.h	\
+	about.h			\
+	app.c			\
+	app.h			\
+	batch.c			\
+	batch.h			\
+	errors.c		\
+	errors.h		\
+	language.c		\
+	language.h		\
+	sanity.c		\
+	sanity.h		\
+	signals.c		\
+	signals.h		\
+	tests.c			\
+	tests.h			\
+	unique.c		\
+	unique.h		\
+	units.c			\
+	units.h			\
+	version.c		\
+	version.h		\
+	gimp-debug.c		\
+	gimp-debug.h		\
+	gimp-log.c		\
+	gimp-log.h		\
+	gimp-priorities.h	\
 	gimp-intl.h
 
 libapp_generated_sources = \
@@ -177,10 +178,13 @@ gimpconsoleldadd = \
 	$(PANGOCAIRO_LIBS)		\
 	$(HARFBUZZ_LIBS)		\
 	$(CAIRO_LIBS)			\
+	$(GIO_UNIX_LIBS)		\
+	$(GIO_WINDOWS_LIBS)		\
 	$(GEGL_LIBS)			\
 	$(GLIB_LIBS)			\
 	$(GEXIV2_LIBS)			\
 	$(LCMS_LIBS)			\
+	$(Z_LIBS)			\
 	$(INTLLIBS)			\
 	$(RT_LIBS)
 

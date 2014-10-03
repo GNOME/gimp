@@ -39,11 +39,13 @@
 </autotools>
 
 <autotools id="webkitgtk">
-	<branch version="2.0.3" repo="webkitgtk.org"
-			module="webkitgtk-2.0.3.tar.xz"
-			hash="sha1:136c649c34956cadfaac9b13bbad368b70d38820">
+	<branch version="2.0.4" repo="webkitgtk.org"
+			module="webkitgtk-2.0.4.tar.xz"
+			hash="sha1:3b9ddbdc61e38b5c8fdd108e891b7db5fb12d55a">
 		<patch file="webkit-add-autogen.patch" strip="1"/>
 		<patch file="webkit-2.0-disable-tests.patch" strip="1"/>
+		<!-- Part of: http://trac.webkit.org/changeset/159939 -->
+		<patch file="webkit-fix-freetype.diff" strip="2"/>
 	</branch>
 	<dependencies>
 		<dep package="mingw32-pthreads"/>

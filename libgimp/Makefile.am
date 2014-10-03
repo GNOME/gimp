@@ -19,14 +19,14 @@ endif
 if OS_WIN32
 gimp_def = gimp.def
 gimpui_def = gimpui.def
-libgimp_export_symbols = -export-symbols gimp.def
-libgimpui_export_symbols = -export-symbols gimpui.def
+libgimp_export_symbols = -export-symbols $(srcdir)/gimp.def
+libgimpui_export_symbols = -export-symbols $(srcdir)/gimpui.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimp-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
 	$(INSTALL) .libs/libgimpui-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) gimp.def $(DESTDIR)$(libdir)
-	$(INSTALL) gimpui.def $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/gimp.def $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/gimpui.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimp-$(GIMP_API_VERSION).dll.a

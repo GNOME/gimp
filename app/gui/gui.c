@@ -79,6 +79,7 @@
 #include "splash.h"
 #include "themes.h"
 #ifdef GDK_WINDOWING_QUARTZ
+#import <AppKit/AppKit.h>
 #include <gtkosxapplication.h>
 #endif /* GDK_WINDOWING_QUARTZ */
 
@@ -450,10 +451,6 @@ gui_restore_callback (Gimp               *gimp,
 
   g_type_class_unref (g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_PALETTE));
 
-  /*  initialize the document history  */
-  status_callback (NULL, _("Documents"), 0.9);
-  gimp_recent_list_load (gimp);
-
   status_callback (NULL, _("Tool Options"), 1.0);
   gimp_tools_restore (gimp);
 }
@@ -495,13 +492,22 @@ gui_restore_after_callback (Gimp               *gimp,
 
   gimp->message_handler = GIMP_MESSAGE_BOX;
 
-#if 0
+  /*  load the recent documents after gimp_real_restore() because we
+   *  need the mime-types implemented by plug-ins
+   */
+  status_callback (NULL, _("Documents"), 0.9);
+  gimp_recent_list_load (gimp);
+
   /*  enable this to always have icons everywhere  */
-  g_object_set (G_OBJECT (gtk_settings_get_default ()),
-                "gtk-button-images", TRUE,
-                "gtk-menu-images", TRUE,
-                NULL);
-#endif
+  if (g_getenv ("GIMP_ICONS_LIKE_A_BOSS"))
+    {
+      GdkScreen *screen = gdk_screen_get_default ();
+
+      g_object_set (G_OBJECT (gtk_settings_get_for_screen (screen)),
+                    "gtk-button-images", TRUE,
+                    "gtk-menu-images",   TRUE,
+                    NULL);
+    }
 
   if (gui_config->restore_accels)
     menus_restore (gimp);
@@ -515,13 +521,17 @@ gui_restore_after_callback (Gimp               *gimp,
                                                     gimp,
                                                     gui_config->tearoff_menus);
   gimp_ui_manager_update (image_ui_manager, gimp);
-  gimp_action_history_init (gui_config);
+
+  gimp_action_history_init (gimp);
 
 #ifdef GDK_WINDOWING_QUARTZ
   {
     GtkosxApplication *osx_app;
     GtkWidget         *menu;
     GtkWidget         *item;
+
+    [[NSUserDefaults standardUserDefaults] setObject:@"NO"
+                                           forKey:@"NSTreatUnknownArgumentsAsOpen"];
 
     osx_app = gtkosx_application_get ();
 
@@ -692,13 +702,21 @@ gui_exit_after_callback (Gimp     *gimp,
                                         gui_show_tooltips_notify,
                                         gimp);
 
-  gimp_action_history_exit (GIMP_GUI_CONFIG (gimp->config));
+  gimp_action_history_exit (gimp);
 
   g_object_unref (image_ui_manager);
   image_ui_manager = NULL;
 
   g_object_unref (ui_configurer);
   ui_configurer = NULL;
+
+  /*  exit the clipboard before shutting down the GUI because it runs
+   *  a whole lot of code paths. See bug #731389.
+   */
+  g_signal_handlers_disconnect_by_func (gimp,
+                                        G_CALLBACK (gui_global_buffer_changed),
+                                        NULL);
+  gimp_clipboard_exit (gimp);
 
   session_exit (gimp);
   menus_exit (gimp);
@@ -708,12 +726,6 @@ gui_exit_after_callback (Gimp     *gimp,
   gimp_controllers_exit (gimp);
   gimp_devices_exit (gimp);
   dialogs_exit (gimp);
-
-  g_signal_handlers_disconnect_by_func (gimp,
-                                        G_CALLBACK (gui_global_buffer_changed),
-                                        NULL);
-  gimp_clipboard_exit (gimp);
-
   themes_exit (gimp);
 
   g_type_class_unref (g_type_class_peek (GIMP_TYPE_COLOR_SELECT));

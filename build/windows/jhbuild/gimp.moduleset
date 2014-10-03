@@ -40,14 +40,14 @@
 		<dep package="librsvg"/>
 		<dep package="libexif"/>
 		<dep package="iso-codes"/>
-		<dep package="libwmf"/>
+		<!-- <dep package="libwmf"/> -->
 		<dep package="ghostscript"/>
-		<dep package="poppler"/>
 	</dependencies>
 	<suggests>
 		<dep package="webkitgtk"/>
 		<dep package="libmng"/>
 		<dep package="gdb"/>
+		<dep package="poppler"/>
 	</suggests>
 </metamodule>
 

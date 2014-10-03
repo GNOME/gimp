@@ -161,9 +161,9 @@ channels_new_last_vals_cmd_callback (GtkAction *action,
   new_channel = gimp_channel_new (image, width, height,
                                   channel_name, &color);
 
-  gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
-                              action_data_get_context (data),
-                              GIMP_TRANSPARENT_FILL);
+  gimp_drawable_fill (GIMP_DRAWABLE (new_channel),
+                      action_data_get_context (data),
+                      GIMP_FILL_TRANSPARENT);
 
   gimp_image_add_channel (image, new_channel,
                           GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);
@@ -358,9 +358,9 @@ channels_new_channel_response (GtkWidget            *widget,
                                           channel_name,
                                           &channel_color);
 
-          gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
-                                      options->context,
-                                      GIMP_TRANSPARENT_FILL);
+          gimp_drawable_fill (GIMP_DRAWABLE (new_channel),
+                              options->context,
+                              GIMP_FILL_TRANSPARENT);
         }
 
       gimp_image_add_channel (options->image, new_channel,

@@ -274,7 +274,7 @@ borderaverage (GeglBuffer   *buffer,
           GeglBufferIterator *gi;
 
           gi = gegl_buffer_iterator_new (buffer, &border[i], 0, babl_format ("R'G'B' u8"),
-                                         GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                         GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
           while (gegl_buffer_iterator_next (gi))
             {

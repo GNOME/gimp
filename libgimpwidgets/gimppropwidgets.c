@@ -1071,12 +1071,12 @@ gimp_prop_spin_button_new (GObject     *config,
                            gdouble      page_increment,
                            gint         digits)
 {
-  GParamSpec *param_spec;
-  GtkWidget  *spinbutton;
-  GtkObject  *adjustment;
-  gdouble     value;
-  gdouble     lower;
-  gdouble     upper;
+  GParamSpec    *param_spec;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adjustment;
+  gdouble        value;
+  gdouble        lower;
+  gdouble        upper;
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
@@ -1089,10 +1089,12 @@ gimp_prop_spin_button_new (GObject     *config,
   if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
     digits = 0;
 
-  spinbutton = gimp_spin_button_new (&adjustment,
-                                     value, lower, upper,
-                                     step_increment, page_increment,
-                                     0.0, 1.0, digits);
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (value, lower, upper,
+                        step_increment, page_increment, 0);
+
+  spinbutton = gtk_spin_button_new (adjustment, step_increment, digits);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
   set_param_spec (G_OBJECT (adjustment), spinbutton, param_spec);
 
@@ -1389,31 +1391,66 @@ gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
 
   if (G_IS_PARAM_SPEC_INT (param_spec))
     {
-      g_object_set (config, param_spec->name, (gint) value, NULL);
+      gint v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != (gint) value)
+        g_object_set (config, param_spec->name, (gint) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_UINT (param_spec))
     {
-      g_object_set (config, param_spec->name, (guint) value, NULL);
+      guint v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != (guint) value)
+        g_object_set (config, param_spec->name, (guint) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_LONG (param_spec))
     {
-      g_object_set (config, param_spec->name, (glong) value, NULL);
+      glong v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != (glong) value)
+        g_object_set (config, param_spec->name, (glong) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_ULONG (param_spec))
     {
-      g_object_set (config, param_spec->name, (gulong) value, NULL);
+      gulong v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != (gulong) value)
+        g_object_set (config, param_spec->name, (gulong) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_INT64 (param_spec))
     {
-      g_object_set (config, param_spec->name, (gint64) value, NULL);
+      gint64 v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != (gint64) value)
+        g_object_set (config, param_spec->name, (gint64) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_UINT64 (param_spec))
     {
-      g_object_set (config, param_spec->name, (guint64) value, NULL);
+      guint64 v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != (guint64) value)
+        g_object_set (config, param_spec->name, (guint64) value, NULL);
     }
   else if (G_IS_PARAM_SPEC_DOUBLE (param_spec))
     {
-      g_object_set (config, param_spec->name, value, NULL);
+      gdouble v;
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (v != value)
+        g_object_set (config, param_spec->name, value, NULL);
     }
 }
 

@@ -27,19 +27,12 @@ endif
 if OS_WIN32
 twain = twain
 win_snap = win-snap
-if HAVE_LIBCURL
-file_uri = file-uri
-endif
-else
-file_uri = file-uri
 endif
 
 SUBDIRS = \
 	$(script_fu)		\
 	$(pygimp)		\
-	color-rotate		\
 	file-bmp		\
-	file-compressor		\
 	$(file_exr)		\
 	file-faxg3		\
 	file-fits		\
@@ -48,7 +41,6 @@ SUBDIRS = \
 	file-jpeg		\
 	file-psd		\
 	file-sgi		\
-	$(file_uri)		\
 	flame			\
 	fractal-explorer	\
 	gfig			\

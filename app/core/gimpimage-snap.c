@@ -83,9 +83,6 @@ gimp_image_snap_x (GimpImage *image,
           GimpGuide *guide    = list->data;
           gint       position = gimp_guide_get_position (guide);
 
-          if (position < 0)
-            continue;
-
           if (gimp_guide_get_orientation (guide) == GIMP_ORIENTATION_VERTICAL)
             {
               snapped |= gimp_image_snap_distance (x, position,
@@ -167,9 +164,6 @@ gimp_image_snap_y (GimpImage *image,
         {
           GimpGuide *guide    = list->data;
           gint       position = gimp_guide_get_position (guide);
-
-          if (position < 0)
-            continue;
 
           if (gimp_guide_get_orientation (guide) == GIMP_ORIENTATION_HORIZONTAL)
             {
@@ -262,9 +256,6 @@ gimp_image_snap_point (GimpImage *image,
         {
           GimpGuide *guide    = list->data;
           gint       position = gimp_guide_get_position (guide);
-
-          if (position < 0)
-            continue;
 
           switch (gimp_guide_get_orientation (guide))
             {
@@ -654,6 +645,34 @@ gimp_image_snap_rectangle (GimpImage *image,
                   *ty1 = RINT (y1 + (nearest.y - y2));
                   snapped = TRUE;
                 }
+            }
+
+          /*  center  */
+
+          coords1.x = x_center;
+          coords1.y = y_center;
+
+          if (gimp_stroke_nearest_point_get (stroke, &coords1, 1.0,
+                                             &nearest,
+                                             NULL, NULL, NULL) >= 0)
+            {
+              if (gimp_image_snap_distance (x_center, nearest.x,
+                                            epsilon_x,
+                                            &mindist_x, &nx))
+                {
+                  mindist_x = ABS (nx - x_center);
+                  *tx1 = RINT (x1 + (nx - x_center));
+                  snapped = TRUE;
+                }
+
+              if (gimp_image_snap_distance (y_center, nearest.y,
+                                            epsilon_y,
+                                            &mindist_y, &ny))
+                {
+                  mindist_y = ABS (ny - y_center);
+                  *ty1 = RINT (y1 + (ny - y_center));
+                  snapped = TRUE;
+               }
             }
         }
     }

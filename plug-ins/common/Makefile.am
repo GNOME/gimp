@@ -63,7 +63,6 @@ libexec_PROGRAMS = \
 	compose \
 	contrast-normalize \
 	contrast-retinex \
-	convolution-matrix \
 	crop-zealous \
 	curve-bend \
 	decompose \
@@ -80,6 +79,7 @@ libexec_PROGRAMS = \
 	engrave \
 	$(FILE_AA) \
 	file-cel \
+	file-compressor \
 	file-csource \
 	file-desktop-link \
 	file-dicom \
@@ -512,23 +512,6 @@ contrast_retinex_LDADD = \
 	$(INTLLIBS)		\
 	$(contrast_retinex_RC)
 
-convolution_matrix_SOURCES = \
-	convolution-matrix.c
-
-convolution_matrix_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(convolution_matrix_RC)
-
 crop_zealous_SOURCES = \
 	crop-zealous.c
 
@@ -802,6 +785,26 @@ file_cel_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_cel_RC)
+
+file_compressor_CFLAGS = $(LZMA_CFLAGS)
+
+file_compressor_SOURCES = \
+	file-compressor.c
+
+file_compressor_LDADD = \
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(CAIRO_LIBS)		\
+	$(GDK_PIXBUF_LIBS)	\
+	$(LZMA_LIBS)		\
+	$(BZIP2_LIBS)		\
+	$(Z_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(file_compressor_RC)
 
 file_csource_SOURCES = \
 	file-csource.c

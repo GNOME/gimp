@@ -122,7 +122,7 @@ gimp_image_remove_guide (GimpImage *image,
 
   gimp_image_guide_removed (image, guide);
 
-  gimp_guide_set_position (guide, -1);
+  gimp_guide_set_position (guide, GIMP_GUIDE_POSITION_UNDEFINED);
   g_object_unref (G_OBJECT (guide));
 }
 
@@ -171,8 +171,7 @@ gimp_image_get_guide (GimpImage *image,
     {
       GimpGuide *guide = guides->data;
 
-      if (gimp_guide_get_ID (guide) == id &&
-          gimp_guide_get_position (guide) >= 0)
+      if (gimp_guide_get_ID (guide) == id)
         return guide;
     }
 
@@ -199,9 +198,6 @@ gimp_image_get_next_guide (GimpImage *image,
        guides = g_list_next (guides))
     {
       GimpGuide *guide = guides->data;
-
-      if (gimp_guide_get_position (guide) < 0)
-        continue;
 
       if (*guide_found) /* this is the first guide after the found one */
         return guide;
@@ -234,9 +230,6 @@ gimp_image_find_guide (GimpImage *image,
       GimpGuide *guide    = list->data;
       gint       position = gimp_guide_get_position (guide);
       gdouble    dist;
-
-      if (position < 0)
-        continue;
 
       switch (gimp_guide_get_orientation (guide))
         {

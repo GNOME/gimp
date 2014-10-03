@@ -251,7 +251,7 @@ load_image (const gchar  *filename,
   if (rs < 0)
     {
       perror ("read");
-      close (rs);
+      close (fd);
       gimp_quit ();
     }
 

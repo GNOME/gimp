@@ -17,48 +17,28 @@
 
 #include "config.h"
 
-#include <errno.h>
-
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 #include <gegl.h>
 
-#include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
 #include "gimpcurve.h"
 #include "gimpcurve-save.h"
 
-#include "gimp-intl.h"
-
 
 gboolean
-gimp_curve_save (GimpData  *data,
-                 GError   **error)
+gimp_curve_save (GimpData       *data,
+                 GOutputStream  *output,
+                 GError        **error)
 {
-  /* GimpCurve *curve; */
-  FILE      *file;
-
   g_return_val_if_fail (GIMP_IS_CURVE (data), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  /* curve = GIMP_CURVE (data); */
-
-  file = g_fopen (gimp_data_get_filename (data), "wb");
-
-  if (! file)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (gimp_data_get_filename (data)),
-                   g_strerror (errno));
-      return FALSE;
-    }
-
-  /* FIXME: write curve */
-
-  fclose (file);
-
-  return TRUE;
+  return gimp_config_serialize_to_stream (GIMP_CONFIG (data),
+                                          output,
+                                          "GIMP curve file",
+                                          "end of GIMP curve file",
+                                          NULL, error);
 }

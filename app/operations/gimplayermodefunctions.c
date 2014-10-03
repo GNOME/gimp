@@ -21,11 +21,10 @@
 #include "config.h"
 
 #include <gegl.h>
-#include <gegl-plugin.h>
+
 #include "operations-types.h"
 
 #include "gimplayermodefunctions.h"
-
 #include "gimpoperationpointlayermode.h"
 #include "gimpoperationnormalmode.h"
 #include "gimpoperationdissolvemode.h"

@@ -226,7 +226,7 @@ gimp_image_get_guide_position (gint32 image_ID,
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gint position = -1;
+  gint position = G_MININT /* GIMP_GUIDE_POSITION_UNDEFINED */;
 
   return_vals = gimp_run_procedure ("gimp-image-get-guide-position",
                                     &nreturn_vals,

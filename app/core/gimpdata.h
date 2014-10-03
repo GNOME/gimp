@@ -57,10 +57,11 @@ struct _GimpDataClass
   void          (* dirty)         (GimpData  *data);
 
   /*  virtual functions  */
-  gboolean      (* save)          (GimpData  *data,
-                                   GError   **error);
-  const gchar * (* get_extension) (GimpData  *data);
-  GimpData    * (* duplicate)     (GimpData  *data);
+  gboolean      (* save)          (GimpData       *data,
+                                   GOutputStream  *output,
+                                   GError        **error);
+  const gchar * (* get_extension) (GimpData       *data);
+  GimpData    * (* duplicate)     (GimpData       *data);
 };
 
 
@@ -82,16 +83,17 @@ gboolean      gimp_data_delete_from_disk (GimpData     *data,
 
 const gchar * gimp_data_get_extension    (GimpData     *data);
 
-void          gimp_data_set_filename     (GimpData     *data,
-                                          const gchar  *filename,
+void          gimp_data_set_file         (GimpData     *data,
+                                          GFile        *file,
                                           gboolean      writable,
                                           gboolean      deletable);
+GFile       * gimp_data_get_file         (GimpData     *data);
+
 void          gimp_data_create_filename  (GimpData     *data,
-                                          const gchar  *dest_dir);
-const gchar * gimp_data_get_filename     (GimpData     *data);
+                                          GFile        *dest_dir);
 
 void          gimp_data_set_folder_tags  (GimpData     *data,
-                                          const gchar  *top_directory);
+                                          GFile        *top_directory);
 
 const gchar * gimp_data_get_mime_type    (GimpData     *data);
 

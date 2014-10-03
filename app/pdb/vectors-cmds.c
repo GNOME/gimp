@@ -1163,12 +1163,15 @@ vectors_import_from_file_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GList *list, *vectors_list = NULL;
+      GFile *file         = g_file_new_for_path (filename);
+      GList *vectors_list = NULL;
 
       /* FIXME tree */
-      success = gimp_vectors_import_file (image, filename,
+      success = gimp_vectors_import_file (image, file,
                                           merge, scale, NULL, -1,
                                           &vectors_list, error);
+
+      g_object_unref (file);
 
       if (success)
         {
@@ -1176,7 +1179,8 @@ vectors_import_from_file_invoker (GimpProcedure         *procedure,
 
           if (num_vectors)
             {
-              gint i;
+              GList *list;
+              gint   i;
 
               vectors_ids = g_new (gint32, num_vectors);
 
@@ -1284,7 +1288,11 @@ vectors_export_to_file_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      success = gimp_vectors_export_file (image, vectors, filename, error);
+      GFile *file = g_file_new_for_path (filename);
+
+      success = gimp_vectors_export_file (image, vectors, file, error);
+
+      g_object_unref (file);
     }
 
   return gimp_procedure_get_return_values (procedure, success,

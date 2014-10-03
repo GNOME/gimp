@@ -425,9 +425,9 @@ curves_spline_invoker (GimpProcedure         *procedure,
           (! gimp_drawable_is_gray (drawable) ||
            channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
         {
-          GObject *config = gimp_curves_config_new_spline (channel,
-                                                           control_pts,
-                                                           num_points);
+          GObject *config = gimp_curves_config_new_spline_cruft (channel,
+                                                                 control_pts,
+                                                                 num_points / 2);
 
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  C_("undo-type", "Curves"),
@@ -472,9 +472,9 @@ curves_explicit_invoker (GimpProcedure         *procedure,
           (! gimp_drawable_is_gray (drawable) ||
            channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
         {
-          GObject *config = gimp_curves_config_new_spline (channel,
-                                                           curve,
-                                                           num_bytes);
+          GObject *config = gimp_curves_config_new_explicit_cruft (channel,
+                                                                   curve,
+                                                                   num_bytes);
 
           gimp_drawable_apply_operation_by_name (drawable, progress,
                                                  C_("undo-type", "Curves"),
@@ -1063,12 +1063,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-curves-spline");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-curves-spline",
-                                     "Modifies the intensity curve(s) for specified drawable.",
-                                     "Modifies the intensity mapping for one channel in the specified drawable. The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value. The 'control_pts' parameter is an array of integers which define a set of control points which describe a Catmull Rom spline which yields the final intensity curve. Use the 'gimp-curves-explicit' function to explicitly modify intensity levels.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-curves-spline' instead.",
+                                     "Deprecated: Use 'gimp-drawable-curves-spline' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-curves-spline");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
@@ -1104,12 +1104,12 @@ register_color_procs (GimpPDB *pdb)
                                "gimp-curves-explicit");
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-curves-explicit",
-                                     "Modifies the intensity curve(s) for specified drawable.",
-                                     "Modifies the intensity mapping for one channel in the specified drawable. The drawable must be either grayscale or RGB, and the channel can be either an intensity component, or the value. The 'curve' parameter is an array of bytes which explicitly defines how each pixel value in the drawable will be modified. Use the 'gimp-curves-spline' function to modify intensity levels with Catmull Rom splines.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
-                                     NULL);
+                                     "Deprecated: Use 'gimp-drawable-curves-explicit' instead.",
+                                     "Deprecated: Use 'gimp-drawable-curves-explicit' instead.",
+                                     "",
+                                     "",
+                                     "",
+                                     "gimp-drawable-curves-explicit");
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",

@@ -167,7 +167,7 @@ img_new_layer(PyGimpImage *self, PyObject *args, PyObject *kwargs)
     }
 
     if (fill_mode == -1)
-        fill_mode = alpha ? GIMP_TRANSPARENT_FILL: GIMP_BACKGROUND_FILL;
+        fill_mode = alpha ? GIMP_FILL_TRANSPARENT: GIMP_FILL_BACKGROUND;
 
 
     layer_id = gimp_layer_new(self->ID, layer_name, width, height,

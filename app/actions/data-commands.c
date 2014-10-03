@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -31,7 +32,6 @@
 #include "core/gimpdatafactory.h"
 
 #include "file/file-open.h"
-#include "file/file-utils.h"
 
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimpcontainerview.h"
@@ -69,37 +69,27 @@ data_open_as_image_cmd_callback (GtkAction *action,
     gimp_context_get_by_type (context,
                               gimp_data_factory_view_get_children_type (view));
 
-  if (data && gimp_data_get_filename (data))
+  if (data && gimp_data_get_file (data))
     {
-      gchar *uri = g_filename_to_uri (gimp_data_get_filename (data), NULL, NULL);
+      GFile             *file = gimp_data_get_file (data);
+      GtkWidget         *widget = GTK_WIDGET (view);
+      GimpImage         *image;
+      GimpPDBStatusType  status;
+      GError            *error = NULL;
 
-      if (uri)
+      image = file_open_with_display (context->gimp, context, NULL,
+                                      file, FALSE,
+                                      G_OBJECT (gtk_widget_get_screen (widget)),
+                                      gimp_widget_get_monitor (widget),
+                                      &status, &error);
+
+      if (! image && status != GIMP_PDB_CANCEL)
         {
-          GtkWidget         *widget = GTK_WIDGET (view);
-          GimpImage         *image;
-          GimpPDBStatusType  status;
-          GError            *error = NULL;
-
-          image = file_open_with_display (context->gimp, context, NULL,
-                                          uri, FALSE,
-                                          G_OBJECT (gtk_widget_get_screen (widget)),
-                                          gimp_widget_get_monitor (widget),
-                                          &status, &error);
-
-          if (! image && status != GIMP_PDB_CANCEL)
-            {
-              gchar *filename = file_utils_uri_display_name (uri);
-
-              gimp_message (context->gimp, G_OBJECT (view),
-                            GIMP_MESSAGE_ERROR,
-                            _("Opening '%s' failed:\n\n%s"),
-                            filename, error->message);
-              g_clear_error (&error);
-
-              g_free (filename);
-            }
-
-          g_free (uri);
+          gimp_message (context->gimp, G_OBJECT (view),
+                        GIMP_MESSAGE_ERROR,
+                        _("Opening '%s' failed:\n\n%s"),
+                        gimp_file_get_utf8_name (file), error->message);
+          g_clear_error (&error);
         }
     }
 }
@@ -182,17 +172,14 @@ data_copy_location_cmd_callback (GtkAction *action,
 
   if (data)
     {
-      const gchar *filename = gimp_data_get_filename (data);
+      GFile *file = gimp_data_get_file (data);
 
-      if (filename && *filename)
+      if (file)
         {
-          gchar *uri = g_filename_to_uri (filename, NULL, NULL);
+          gchar *uri = g_file_get_uri (file);
 
-          if (uri)
-            {
-              gimp_clipboard_set_text (context->gimp, uri);
-              g_free (uri);
-            }
+          gimp_clipboard_set_text (context->gimp, uri);
+          g_free (uri);
         }
     }
 }

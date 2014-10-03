@@ -184,7 +184,10 @@ get_theme_dir_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   gchar *theme_dir = NULL;
 
-  theme_dir = g_strdup (gimp_get_theme_dir (gimp));
+  GFile *file = gimp_get_theme_dir (gimp);
+
+  if (file)
+    theme_dir = g_file_get_path (file);
 
   return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
   g_value_take_string (gimp_value_array_index (return_vals, 1), theme_dir);

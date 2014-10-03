@@ -25,6 +25,7 @@
 
 #include "dialogs-types.h"
 
+#include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
@@ -50,9 +51,9 @@ typedef struct
 
   GimpImage     *image;
   GimpProgress  *progress;
-  GimpContext   *context;
 
   GimpPrecision  precision;
+  gint           bits;
   gint           layer_dither_type;
   gint           text_layer_dither_type;
   gint           mask_dither_type;
@@ -93,6 +94,8 @@ convert_precision_dialog_new (GimpImage     *image,
   const gchar   *enum_desc;
   gchar         *blurb;
   GType          dither_type;
+  const Babl    *format;
+  gint           bits;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -101,12 +104,23 @@ convert_precision_dialog_new (GimpImage     *image,
 
   dialog = g_slice_new0 (ConvertDialog);
 
-  dialog->image                  = image;
-  dialog->precision              = precision;
-  dialog->progress               = progress;
-  dialog->layer_dither_type      = saved_layer_dither_type;
-  dialog->text_layer_dither_type = saved_text_layer_dither_type;
-  dialog->mask_dither_type       = saved_mask_dither_type;
+  /* a random format with precision */
+  format = gimp_babl_format (GIMP_RGB, precision, FALSE);
+  bits   = (babl_format_get_bytes_per_pixel (format) * 8 /
+            babl_format_get_n_components (format));
+
+  dialog->image     = image;
+  dialog->progress  = progress;
+  dialog->precision = precision;
+  dialog->bits      = bits;
+
+  /* gegl:color-reduction only does 16 bits */
+  if (bits <= 16)
+    {
+      dialog->layer_dither_type      = saved_layer_dither_type;
+      dialog->text_layer_dither_type = saved_text_layer_dither_type;
+      dialog->mask_dither_type       = saved_mask_dither_type;
+    }
 
   gimp_enum_get_value (GIMP_TYPE_PRECISION, precision,
                        NULL, NULL, &enum_desc, NULL);
@@ -168,6 +182,9 @@ convert_precision_dialog_new (GimpImage     *image,
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
+
+  /* gegl:color-reduction only does 16 bits */
+  gtk_widget_set_sensitive (vbox, bits <= 16);
 
   size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
@@ -258,8 +275,8 @@ convert_precision_dialog_response (GtkWidget     *widget,
     {
       GimpProgress *progress;
 
-      progress = gimp_progress_start (dialog->progress,
-                                      _("Converting to lower bit depth"), FALSE);
+      progress = gimp_progress_start (dialog->progress, FALSE,
+                                      _("Converting to lower bit depth"));
 
       gimp_image_convert_precision (dialog->image,
                                     dialog->precision,
@@ -273,9 +290,14 @@ convert_precision_dialog_response (GtkWidget     *widget,
 
       gimp_image_flush (dialog->image);
 
-      /* Save defaults for next time */
-      saved_layer_dither_type = dialog->layer_dither_type;
-      saved_mask_dither_type  = dialog->mask_dither_type;
+       /* gegl:color-reduction only does 16 bits */
+      if (dialog->bits <= 16)
+        {
+          /* Save defaults for next time */
+          saved_layer_dither_type      = dialog->layer_dither_type;
+          saved_text_layer_dither_type = dialog->text_layer_dither_type;
+          saved_mask_dither_type       = dialog->mask_dither_type;
+        }
     }
 
   gtk_widget_destroy (dialog->dialog);

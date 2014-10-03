@@ -494,13 +494,12 @@ load_image (GFile   *file,
   PNMScanner      *volatile scan;
   int             ctr;
 
-  /* open the file */
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             g_file_get_parse_name (file));
+
   input = G_INPUT_STREAM (g_file_read (file, NULL, error));
   if (! input)
     return -1;
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             g_file_get_parse_name (file));
 
   /* allocate the necessary structures */
   pnminfo = g_new (PNMInfo, 1);
@@ -871,16 +870,7 @@ output_write (GOutputStream *output,
               gsize          count,
               GError       **error)
 {
-  gsize bytes_written;
-
-  if (! g_output_stream_write_all (output, buffer, count,
-                                   &bytes_written, NULL, error) ||
-      bytes_written != count)
-    {
-      return FALSE;
-    }
-
-  return TRUE;
+  return g_output_stream_write_all (output, buffer, count, NULL, NULL, error);
 }
 
 /* Writes out mono raw rows */
@@ -1052,13 +1042,13 @@ save_image (GFile     *file,
       return FALSE;
     }
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             g_file_get_parse_name (file));
+
   /* open the file */
   output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
   if (! output)
     return FALSE;
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             g_file_get_parse_name (file));
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 

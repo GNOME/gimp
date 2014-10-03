@@ -191,134 +191,138 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
 {
   const Babl *input_format   = babl_format ("Y float");
   const Babl *output_format  = babl_format ("Y float");
-  gfloat      max_iterations = 0.0;
-  gfloat     *distp_cur;
-  gfloat     *distp_prev;
-  gfloat     *memory;
-  gint        length;
-  gint        i;
+  gfloat      max_dist = 0.0;
+  gfloat     *distbuf;
+  gint        x, y;
 
-  length = roi->width + 1;
-  memory = g_new (gfloat, length * 2);
+  distbuf = g_new0 (gfloat, (roi->width + 1) * 2);
 
-  distp_prev = memory;
-  for (i = 0; i < length; i++)
-    distp_prev[i] = 0.0;
-
-  distp_prev += 1;
-  distp_cur = distp_prev + length;
-
-  for (i = 0; i < roi->height; i++)
+  for (y = 0; y < roi->height; y++)
     {
-      gfloat *tmp;
+      gfloat *distbuf_cur;
+      gfloat *distbuf_prev;
       gfloat  src = 0.0;
-      gint    j;
 
-      /*  set the current dist row to 0's  */
-      memset (distp_cur - 1, 0, sizeof (gfloat) * (length - 1));
-
-      for (j = 0; j < roi->width; j++)
+      /* toggling distance buffers for the current and previous row.
+       * with one spare zero element on the left side */
+      if (y % 2)
         {
-          gfloat float_tmp;
-          gfloat min_prev = MIN (distp_cur[j-1], distp_prev[j]);
-          gint   min_left = MIN ((roi->width - j - 1), (roi->height - i - 1));
-          gint   min      = (gint) MIN (min_left, min_prev);
-          gfloat fraction = 1.0;
+          distbuf_prev = distbuf + 1;
+          distbuf_cur  = distbuf + 1 + roi->width + 1;
+        }
+      else
+        {
+          distbuf_prev = distbuf + 1 + roi->width + 1;
+          distbuf_cur  = distbuf + 1;
+        }
+
+      /*  clear the current rows distbuffer */
+      memset (distbuf_cur, 0, sizeof (gfloat) * roi->width);
+
+      for (x = 0; x < roi->width; x++)
+        {
+          gfloat dist_nw = MIN (distbuf_cur[x-1], distbuf_prev[x]);
+          gfloat dist_se = MIN ((roi->width - x - 1), (roi->height - y - 1));
+          gfloat dist    = MIN (dist_se, dist_nw);
+          gfloat frac    = 1.0;
           gint   k;
 
 #define EPSILON 0.0001
 
-          /*  This loop used to start at "k = (min) ? (min - 1) : 0"
+          /*  This loop used to start at "k = (dist) ? (dist - 1) : 0"
            *  and this comment suggested it might have to be changed to
            *  "k = 0", but "k = 0" increases processing time significantly.
            *
            *  When porting this to float, i noticed that starting at
-           *  "min - 2" gets rid of a lot of 8-bit artifacts, while starting
-           *  at "min - 3" or smaller would introduce different artifacts.
+           *  "dist - 2" gets rid of a lot of 8-bit artifacts, while starting
+           *  at "dist - 3" or smaller would introduce different artifacts.
            *
            *  Note that I didn't really understand the entire algorithm,
            *  I just "blindly" ported it to float :) --mitch
            */
-          for (k = MAX (min - 2, 0); k <= min; k++)
-            {
-              gint x   = j;
-              gint y   = i + k;
-              gint end = y - k;
 
-              while (y >= end)
+          /* the idea here is to check the south-eastern "thick" diagonal
+           * along the already established accumulated minimum distance.
+           *
+           * it is easy to understand why it is sufficient to check
+           * the triangle to this diagonal (k=0), but in fact we can
+           * omit that, since this check has already been incorporated
+           * in the accumulated minimum distance of the previous pixels.
+           *
+           * Not sure however if this is implemented properly.
+           *      -- simon
+           */
+
+          for (k = MAX (dist - 2, 0); k <= dist; k++)
+            {
+              gint x1  = x;
+              gint y1  = y + k;
+
+              while (y1 >= y)
                 {
                   /* FIXME: this should be much faster, it converts to
                    * 32 bit rgba intermediately, bah...
                    */
-                  gegl_buffer_sample (input, x, y, NULL, &src,
+                  gegl_buffer_sample (input, x1, y1, NULL, &src,
                                       input_format,
                                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-                  if (ABS (src) < EPSILON)
+                  if (src < EPSILON)
                     {
-                      min = k;
-                      y = -1;
+                      dist = k;
                       break;
                     }
 
-                  if (src < fraction)
-                    fraction = src;
+                  frac = MIN (frac, src);
 
-                  x++;
-                  y--;
+                  x1++;
+                  y1--;
                 }
             }
 
           if (src > EPSILON)
             {
-              /*  If min_left != min_prev use the previous fraction
+              /*  If dist_se != dist_nw use the previous frac
                *   if it is less than the one found
                */
-              if (min_left != min)
+              if (dist_se != dist)
                 {
-                  gfloat prev_frac = min_prev - min;
+                  gfloat prev_frac = dist_nw - dist;
 
                   if (ABS (prev_frac - 1.0) < EPSILON)
                     prev_frac = 0.0;
 
-                  fraction = MIN (fraction, prev_frac);
+                  frac = MIN (frac, prev_frac);
                 }
 
-              min++;
+              dist += 1.0;
             }
 
-          float_tmp = distp_cur[j] = min + fraction * (1.0 - EPSILON);
+          distbuf_cur[x] = dist + frac;
 
-          if (float_tmp > max_iterations)
-            max_iterations = float_tmp;
+          max_dist = MAX (max_dist, distbuf_cur[x]);
         }
 
       /*  set the dist row  */
       gegl_buffer_set (output,
-                       GEGL_RECTANGLE (roi->x, roi->y + i,
+                       GEGL_RECTANGLE (roi->x, roi->y + y,
                                        roi->width, 1),
-                       1.0, output_format, distp_cur,
+                       0, output_format, distbuf_cur,
                        GEGL_AUTO_ROWSTRIDE);
 
-      /*  swap pointers around  */
-      tmp = distp_prev;
-      distp_prev = distp_cur;
-      distp_cur = tmp;
-
       g_object_set (operation,
-                    "progress", (gdouble) i / roi->height,
+                    "progress", (gdouble) y / roi->height,
                     NULL);
     }
 
-  g_free (memory);
+  g_free (distbuf);
 
-  if (GIMP_OPERATION_SHAPEBURST (operation)->normalize &&
-      max_iterations > 0.0)
+  if (GIMP_OPERATION_SHAPEBURST (operation)->normalize && max_dist > 0.0)
     {
       GeglBufferIterator *iter;
 
       iter = gegl_buffer_iterator_new (output, NULL, 0, NULL,
-                                       GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
       while (gegl_buffer_iterator_next (iter))
         {
@@ -326,7 +330,7 @@ gimp_operation_shapeburst_process (GeglOperation       *operation,
           gfloat *data  = iter->data[0];
 
           while (count--)
-            *data++ /= max_iterations;
+            *data++ /= max_dist;
         }
     }
 

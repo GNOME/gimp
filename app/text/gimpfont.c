@@ -682,38 +682,37 @@ gimp_font_get_sample_string (PangoContext         *context,
       hb_ot_layout_table_get_script_tags (hb_face, tag, 0, &count, slist);
       slist[count] = 0;
 
-      if (slist)
+      for (i = 0;
+           n_ot_alts < G_N_ELEMENTS (ot_alts) && i < G_N_ELEMENTS (scripts);
+           i++)
         {
-          for (i = 0;
-               n_ot_alts < G_N_ELEMENTS (ot_alts) && i < G_N_ELEMENTS (scripts);
-               i++)
+          gint j, k;
+
+          for (k = 0; k < n_ot_alts; k++)
+            if (ot_alts[k] == i)
+              break;
+
+          if (k == n_ot_alts)
             {
-              gint j, k;
-
-              for (k = 0; k < n_ot_alts; k++)
-                if (ot_alts[k] == i)
-                  break;
-
-              if (k == n_ot_alts)
-                for (j = 0;
-                     n_ot_alts < G_N_ELEMENTS (ot_alts) && slist[j];
-                     j++)
-                  {
+              for (j = 0;
+                   n_ot_alts < G_N_ELEMENTS (ot_alts) && slist[j];
+                   j++)
+                {
 #define TAG(s) FT_MAKE_TAG (s[0], s[1], s[2], s[3])
 
-                    if (slist[j] == TAG (scripts[i].script) &&
-                        gimp_font_covers_string (PANGO_FC_FONT (font),
-                                                 scripts[i].sample))
-                      {
-                        ot_alts[n_ot_alts++] = i;
-                        DEBUGPRINT (("%.4s ", scripts[i].script));
-                      }
+                  if (slist[j] == TAG (scripts[i].script) &&
+                      gimp_font_covers_string (PANGO_FC_FONT (font),
+                                               scripts[i].sample))
+                    {
+                      ot_alts[n_ot_alts++] = i;
+                      DEBUGPRINT (("%.4s ", scripts[i].script));
+                    }
 #undef TAG
-                  }
+                }
             }
-
-          g_free (slist);
         }
+
+      g_free (slist);
     }
 
   hb_face_destroy (hb_face);

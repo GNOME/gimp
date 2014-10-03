@@ -156,8 +156,8 @@ static const gchar       * find_extension (const Compressor   *compressor,
 static gboolean            gzip_load      (const char         *infile,
                                            const char         *outfile);
 static gboolean            gzip_save      (const char         *infile,
-
                                            const char         *outfile);
+
 static gboolean            bzip2_load     (const char         *infile,
                                            const char         *outfile);
 static gboolean            bzip2_save     (const char         *infile,

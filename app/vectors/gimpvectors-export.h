@@ -21,7 +21,7 @@
 
 gboolean   gimp_vectors_export_file   (const GimpImage    *image,
                                        const GimpVectors  *vectors,
-                                       const gchar        *filename,
+                                       GFile              *file,
                                        GError            **error);
 gchar    * gimp_vectors_export_string (const GimpImage    *image,
                                        const GimpVectors  *vectors);

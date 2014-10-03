@@ -32,7 +32,7 @@
 
 #include "core-types.h"
 
-#include "gimp-utils.h"
+#include "gimp-memsize.h"
 #include "gimpcontext.h"
 #include "gimpmarshal.h"
 #include "gimptempbuf.h"
@@ -530,6 +530,8 @@ gimp_viewable_deserialize_property (GimpConfig *config,
                 g_free (decoded_image);
               }
           }
+
+        g_free (encoded_image);
 
         g_value_take_object (value, icon_pixbuf);
       }

@@ -58,7 +58,6 @@
 #include "core/gimpselection.h"
 #include "core/gimptempbuf.h"
 #include "core/gimpunit.h"
-#include "file/file-utils.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 #include "vectors/gimpvectors.h"
@@ -489,7 +488,7 @@ image_scale_invoker (GimpProcedure         *procedure,
       GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
 
       if (progress)
-        gimp_progress_start (progress, _("Scaling"), FALSE);
+        gimp_progress_start (progress, FALSE, _("Scaling"));
 
       gimp_image_scale (image, new_width, new_height,
                         pdb_context->interpolation,
@@ -525,7 +524,7 @@ image_scale_full_invoker (GimpProcedure         *procedure,
   if (success)
     {
       if (progress)
-        gimp_progress_start (progress, _("Scaling"), FALSE);
+        gimp_progress_start (progress, FALSE, _("Scaling"));
 
       gimp_image_scale (image, new_width, new_height, interpolation, progress);
 
@@ -617,7 +616,7 @@ image_rotate_invoker (GimpProcedure         *procedure,
   if (success)
     {
       if (progress)
-        gimp_progress_start (progress, _("Rotating"), FALSE);
+        gimp_progress_start (progress, FALSE, _("Rotating"));
 
       gimp_image_rotate (image, context, rotate_type, progress);
 
@@ -2250,9 +2249,9 @@ image_get_filename_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      const gchar *uri = gimp_image_get_any_uri (image);
-      if (uri)
-        filename = g_filename_from_uri (uri, NULL, NULL);
+      GFile *file = gimp_image_get_any_file (image);
+      if (file)
+        filename = g_file_get_path (file);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -2323,7 +2322,9 @@ image_get_uri_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      uri = g_strdup (gimp_image_get_any_uri (image));
+      GFile *file = gimp_image_get_any_file (image);
+      if (file)
+        uri = g_file_get_uri (file);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -2352,7 +2353,9 @@ image_get_xcf_uri_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      uri = g_strdup (gimp_image_get_uri (image));
+      GFile *file = gimp_image_get_file (image);
+      if (file)
+        uri = g_file_get_uri (file);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -2381,7 +2384,9 @@ image_get_imported_uri_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      uri = g_strdup (gimp_image_get_imported_uri (image));
+      GFile *file = gimp_image_get_imported_file (image);
+      if (file)
+        uri = g_file_get_uri (file);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -2410,7 +2415,9 @@ image_get_exported_uri_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      uri = g_strdup (gimp_image_get_exported_uri (image));
+      GFile *file = gimp_image_get_exported_file (image);
+      if (file)
+        uri = g_file_get_uri (file);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

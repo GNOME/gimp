@@ -19,3 +19,4 @@ test-window-management*
 test-xcf*
 /*.trs
 /*.log
+/gimp-test-icon-theme

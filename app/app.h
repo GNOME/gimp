@@ -32,8 +32,8 @@ void  app_exit      (gint                 status) G_GNUC_NORETURN;
 
 void  app_run       (const gchar         *full_prog_name,
                      const gchar        **filenames,
-                     const gchar         *alternate_system_gimprc,
-                     const gchar         *alternate_gimprc,
+                     GFile               *alternate_system_gimprc,
+                     GFile               *alternate_gimprc,
                      const gchar         *session_name,
                      const gchar         *batch_interpreter,
                      const gchar        **batch_commands,
@@ -47,6 +47,7 @@ void  app_run       (const gchar         *full_prog_name,
                      gboolean             use_cpu_accel,
                      gboolean             console_messages,
                      gboolean             use_debug_handler,
+                     gboolean             show_playground,
                      GimpStackTraceMode   stack_trace_mode,
                      GimpPDBCompatMode    pdb_compat_mode);
 

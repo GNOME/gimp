@@ -630,7 +630,7 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                   return -1;
                 }
 
-              if (ver == 42)
+              if (size == 42)
                 {
                   if (fread(&natcolor[0], 2, 1, f) < 1
                       || fread(&natcolor[1], 2, 1, f) < 1
@@ -657,6 +657,7 @@ load_resource_lrfx (const PSDlayerres  *res_a,
               gchar     effecton;
               gchar     anglefx;
               gchar     opacity;
+              gchar     invert;
               gint16    natcolor[5];
 
               if (fread (&size, 4, 1, f) < 1
@@ -684,40 +685,8 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                   psd_set_error (feof (f), errno, error);
                   return -1;
                 }
-            }
-          else if (memcmp (effectname, "oglw", 4) == 0)
-            {
-              gint32    size;
-              gint32    ver;
-              gint32    blur;
-              gint32    intensity;
-              gint16    color[5];
-              gint32    blendsig;
-              gint32    effect;
-              gchar     effecton;
-              gchar     opacity;
-              gchar     invert;
-              gint16    natcolor[5];
 
-              if (fread (&size, 4, 1, f) < 1
-                  || fread(&ver, 4, 1, f) < 1
-                  || fread(&blur, 4, 1, f) < 1
-                  || fread(&intensity, 4, 1, f) < 1
-                  || fread(&color[0], 2, 1, f) < 1
-                  || fread(&color[1], 2, 1, f) < 1
-                  || fread(&color[2], 2, 1, f) < 1
-                  || fread(&color[3], 2, 1, f) < 1
-                  || fread(&color[4], 2, 1, f) < 1
-                  || fread(&blendsig, 4, 1, f) < 1
-                  || fread(&effect, 4, 1, f) < 1
-                  || fread(&effecton, 1, 1, f) < 1
-                  || fread(&opacity, 1, 1, f) < 1)
-                {
-                  psd_set_error (feof (f), errno, error);
-                  return -1;
-                }
-
-              if (ver == 43)
+              if (size == 43)
                 {
                   if (fread (&invert, 1, 1, f) < 1
                       || fread(&natcolor[0], 2, 1, f) < 1
@@ -784,7 +753,7 @@ load_resource_lrfx (const PSDlayerres  *res_a,
                   return -1;
                 }
 
-              if (ver == 78)
+              if (size == 78)
                 {
                   if (fread(&highlightnatcolor[0], 2, 1, f) < 1
                       || fread(&highlightnatcolor[0], 2, 1, f) < 1

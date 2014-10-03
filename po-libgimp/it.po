@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-15 11:40+0200\n"
-"PO-Revision-Date: 2014-05-15 12:12+0200\n"
+"POT-Creation-Date: 2014-07-25 20:15+0200\n"
+"PO-Revision-Date: 2014-07-25 20:16+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -262,27 +262,36 @@ msgstr "Selezione gradiente"
 msgid "(Empty)"
 msgstr "(Vuoto)"
 
-#: ../libgimp/gimpmetadata.c:543
+#: ../libgimp/gimpmetadata.c:571
 msgid "Background"
 msgstr "Sfondo"
 
-#: ../libgimp/gimpmetadata.c:676
-msgid "Rotate Image?"
-msgstr "Ruotare l'immagine?"
-
-#: ../libgimp/gimpmetadata.c:679
-msgid "_Keep Orientation"
-msgstr "_Mantieni l'orientamento"
-
-#: ../libgimp/gimpmetadata.c:737
-msgid "According to the Exif data, this image is rotated."
-msgstr "Secondo i dati Exif, questa immagine è ruotata."
-
-#: ../libgimp/gimpmetadata.c:752
-msgid "Would you like GIMP to rotate it into the standard orientation?"
-msgstr "Volete che GIMP la ruoti secondo l'orientamento normale?"
-
 #: ../libgimp/gimpmetadata.c:762
+#, c-format
+msgid "Rotate %s?"
+msgstr "_Ruota %s?"
+
+#: ../libgimp/gimpmetadata.c:768
+msgid "_Keep Original"
+msgstr "_Mantieni l'originale"
+
+#: ../libgimp/gimpmetadata.c:810
+msgid "Original"
+msgstr "Originale"
+
+#: ../libgimp/gimpmetadata.c:826
+msgid "Rotated"
+msgstr "Ruotato"
+
+#: ../libgimp/gimpmetadata.c:844
+msgid "This image contains Exif orientation metadata."
+msgstr "Questa immagine contiene metadati Exif di orientamento."
+
+#: ../libgimp/gimpmetadata.c:862
+msgid "Would you like to rotate the image?"
+msgstr "Volete ruotare l'immagine?"
+
+#: ../libgimp/gimpmetadata.c:874
 msgid "_Don't ask me again"
 msgstr "Non chie_dere più"
 
@@ -890,12 +899,12 @@ msgstr "Cubica"
 #: ../libgimpbase/gimpbaseenums.c:895
 msgctxt "interpolation-type"
 msgid "NoHalo"
-msgstr "NoHalo"
+msgstr "NoAura"
 
 #: ../libgimpbase/gimpbaseenums.c:896
 msgctxt "interpolation-type"
 msgid "LoHalo"
-msgstr "LoHalo"
+msgstr "BassAura"
 
 #: ../libgimpbase/gimpbaseenums.c:1052
 msgctxt "orientation-type"
@@ -1044,7 +1053,7 @@ msgstr "Esegui con gli ultimi parametri usati"
 #: ../libgimpbase/gimpbaseenums.c:1476
 msgctxt "select-criterion"
 msgid "Composite"
-msgstr "Composita"
+msgstr "Composito"
 
 #: ../libgimpbase/gimpbaseenums.c:1477
 msgctxt "select-criterion"
@@ -1205,20 +1214,20 @@ msgstr "Fallita l'analisi dei dati XMP."
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
 
-#: ../libgimpcolor/gimplcms.c:88
+#: ../libgimpcolor/gimplcms.c:132
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "\"%s\" non sembra essere un profilo di colore ICC"
 
-#: ../libgimpcolor/gimplcms.c:111
+#: ../libgimpcolor/gimplcms.c:153
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Il dati non sembrano essere un profilo di colore ICC"
 
-#: ../libgimpcolor/gimplcms.c:142
+#: ../libgimpcolor/gimplcms.c:184
 msgid "Could not save color profile to memory"
 msgstr "Impossibile salvare il profilo di colore in memoria"
 
-#: ../libgimpcolor/gimplcms.c:222
+#: ../libgimpcolor/gimplcms.c:264
 msgid "(unnamed profile)"
 msgstr "(profilo senza nome)"
 
@@ -1375,70 +1384,51 @@ msgstr "valore \"%ld\" non valido per il token %s"
 msgid "while parsing token '%s': %s"
 msgstr "durante l'analisi del token \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:482
-#: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:595
-#: ../libgimpconfig/gimpscanner.c:677
+#: ../libgimpconfig/gimpconfig-iface.c:658
+#: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:734
+#: ../libgimpconfig/gimpscanner.c:816
 #: ../libgimpwidgets/gimpcolorprofilestore.c:655
 msgid "fatal parse error"
 msgstr "errore di analisi irrimediabile"
 
-#: ../libgimpconfig/gimpconfig-path.c:389
+#: ../libgimpconfig/gimpconfig-path.c:437
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Impossibile espandere ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:87
-#: ../libgimpconfig/gimpconfigwriter.c:728
+#: ../libgimpconfig/gimpconfigwriter.c:90
+#: ../libgimpconfig/gimpconfigwriter.c:669
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Errore nello scrivere su \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:145
+#: ../libgimpconfig/gimpconfigwriter.c:187
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Impossibile creare il file temporaneo per \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:158
+#: ../libgimpconfig/gimpconfigwriter.c:197
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire \"%s\" in scrittura: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:689
-#: ../libgimpconfig/gimpconfigwriter.c:709
+#: ../libgimpconfig/gimpconfigwriter.c:772
 #, c-format
-msgid ""
-"Error writing to temporary file for '%s': %s\n"
-"The original file has not been touched."
-msgstr ""
-"Errore nello scrivere sul file temporaneo per \"%s\": %s\n"
-"Il file originale non è stato toccato."
+msgid "Error writing '%s': %s"
+msgstr "Errore durante la scrittura su \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:717
-#, c-format
-msgid ""
-"Error writing to temporary file for '%s': %s\n"
-"No file has been created."
-msgstr ""
-"Errore nello scrivere sul file temporaneo per \"%s\": %s\n"
-"Non è stato creato alcun file."
-
-#: ../libgimpconfig/gimpconfigwriter.c:741
-#, c-format
-msgid "Could not create '%s': %s"
-msgstr "Impossibile creare \"%s\": %s"
-
-#: ../libgimpconfig/gimpscanner.c:269
+#: ../libgimpconfig/gimpscanner.c:408
 #, c-format
 msgid "invalid UTF-8 string"
 msgstr "stringa UTF-8 non valida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpscanner.c:467
+#: ../libgimpconfig/gimpscanner.c:606
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "atteso \"yes\" o \"no\" per il token booleano, ottenuto \"%s\""
 
-#: ../libgimpconfig/gimpscanner.c:704
+#: ../libgimpconfig/gimpscanner.c:843
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Errore durante l'analisi di \"%s\" alla riga %d: %s"
@@ -1571,15 +1561,15 @@ msgstr "Seleziona file"
 msgid "Press F1 for more help"
 msgstr "Premere F1 per ulteriore aiuto"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
+#: ../libgimpwidgets/gimpmemsizeentry.c:223
 msgid "Kilobytes"
 msgstr "Kilobyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:222
+#: ../libgimpwidgets/gimpmemsizeentry.c:224
 msgid "Megabytes"
 msgstr "Megabyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:223
+#: ../libgimpwidgets/gimpmemsizeentry.c:225
 msgid "Gigabytes"
 msgstr "Gigabyte"
 
@@ -1653,86 +1643,86 @@ msgstr "Dimensione scacco"
 msgid "Check Style"
 msgstr "Stile scacchi"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1934
+#: ../libgimpwidgets/gimppropwidgets.c:1971
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Questo campo di immissione testo è limitato a %d carattere."
 msgstr[1] "Questo campo di immissione testo è limitato a %d caratteri."
 
-#: ../libgimpwidgets/gimpstock.c:129
+#: ../libgimpwidgets/gimpstock.c:60
 msgid "Anchor"
 msgstr "Àncora"
 
-#: ../libgimpwidgets/gimpstock.c:130
+#: ../libgimpwidgets/gimpstock.c:61
 msgid "C_enter"
 msgstr "C_entra"
 
-#: ../libgimpwidgets/gimpstock.c:131
+#: ../libgimpwidgets/gimpstock.c:62
 msgid "_Duplicate"
 msgstr "_Duplica"
 
-#: ../libgimpwidgets/gimpstock.c:132
+#: ../libgimpwidgets/gimpstock.c:63
 msgid "_Edit"
 msgstr "_Modifica"
 
-#: ../libgimpwidgets/gimpstock.c:133
+#: ../libgimpwidgets/gimpstock.c:64
 msgid "Linked"
 msgstr "Collegato"
 
-#: ../libgimpwidgets/gimpstock.c:134
+#: ../libgimpwidgets/gimpstock.c:65
 msgid "Paste as New"
 msgstr "Incolla come nuovo"
 
-#: ../libgimpwidgets/gimpstock.c:135
+#: ../libgimpwidgets/gimpstock.c:66
 msgid "Paste Into"
 msgstr "Incolla dentro"
 
-#: ../libgimpwidgets/gimpstock.c:136
+#: ../libgimpwidgets/gimpstock.c:67
 msgid "_Reset"
 msgstr "_Reimposta"
 
-#: ../libgimpwidgets/gimpstock.c:137
+#: ../libgimpwidgets/gimpstock.c:68
 msgid "Visible"
 msgstr "Visibile"
 
-#: ../libgimpwidgets/gimpstock.c:176 ../libgimpwidgets/gimpstock.c:180
+#: ../libgimpwidgets/gimpstock.c:107 ../libgimpwidgets/gimpstock.c:111
 msgid "_Stroke"
 msgstr "_Delinea"
 
-#: ../libgimpwidgets/gimpstock.c:192
+#: ../libgimpwidgets/gimpstock.c:123
 msgid "L_etter Spacing"
 msgstr "Spaziatura l_ettere"
 
-#: ../libgimpwidgets/gimpstock.c:193
+#: ../libgimpwidgets/gimpstock.c:124
 msgid "L_ine Spacing"
 msgstr "Spaziatura r_ighe"
 
-#: ../libgimpwidgets/gimpstock.c:209
+#: ../libgimpwidgets/gimpstock.c:140
 msgid "Re_size"
 msgstr "Ridimen_siona"
 
-#: ../libgimpwidgets/gimpstock.c:210 ../libgimpwidgets/gimpstock.c:345
+#: ../libgimpwidgets/gimpstock.c:141 ../libgimpwidgets/gimpstock.c:273
 msgid "_Scale"
 msgstr "_Scala"
 
-#: ../libgimpwidgets/gimpstock.c:320
+#: ../libgimpwidgets/gimpstock.c:248
 msgid "Cr_op"
 msgstr "Rita_glia"
 
-#: ../libgimpwidgets/gimpstock.c:328
+#: ../libgimpwidgets/gimpstock.c:256
 msgid "_Select"
 msgstr "_Seleziona"
 
-#: ../libgimpwidgets/gimpstock.c:340 ../libgimpwidgets/gimpstock.c:351
+#: ../libgimpwidgets/gimpstock.c:268 ../libgimpwidgets/gimpstock.c:279
 msgid "_Transform"
 msgstr "_Trasforma"
 
-#: ../libgimpwidgets/gimpstock.c:344
+#: ../libgimpwidgets/gimpstock.c:272
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: ../libgimpwidgets/gimpstock.c:347
+#: ../libgimpwidgets/gimpstock.c:275
 msgid "_Shear"
 msgstr "_Inclina"
 
@@ -1752,7 +1742,7 @@ msgstr "Unità"
 msgid "Factor"
 msgstr "Fattore"
 
-#: ../libgimpwidgets/gimpwidgets.c:517
+#: ../libgimpwidgets/gimpwidgets.c:521
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -1760,15 +1750,15 @@ msgstr ""
 "Usare questo valore per la generazione del seme di casualità - questo "
 "permette di ripetere una data operazione \"casuale\""
 
-#: ../libgimpwidgets/gimpwidgets.c:521
+#: ../libgimpwidgets/gimpwidgets.c:525
 msgid "_New Seed"
 msgstr "_Nuovo seme"
 
-#: ../libgimpwidgets/gimpwidgets.c:534
+#: ../libgimpwidgets/gimpwidgets.c:538
 msgid "Seed random number generator with a generated random number"
 msgstr "Generatore del seme di casualità con un numero generato casualmente"
 
-#: ../libgimpwidgets/gimpwidgets.c:538
+#: ../libgimpwidgets/gimpwidgets.c:542
 msgid "_Randomize"
 msgstr "_Casualizza"
 

@@ -317,12 +317,12 @@ load_image (GFile   *file,
   GimpImageType     image_type;
   gsize             bytes_read;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             g_file_get_parse_name (file));
+
   input = G_INPUT_STREAM (g_file_read (file, NULL, error));
   if (! input)
     return -1;
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             g_file_get_parse_name (file));
 
   if (! g_input_stream_read_all (input, &ph, sizeof (PatternHeader),
                                  &bytes_read, NULL, error) ||
@@ -486,7 +486,6 @@ save_image (GFile   *file,
   gint           height;
   gint           line_size;
   gint           line;
-  gsize          bytes_written;
 
   switch (gimp_drawable_type (drawable_ID))
     {
@@ -515,12 +514,12 @@ save_image (GFile   *file,
       return FALSE;
     }
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             g_file_get_parse_name (file));
+
   output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
   if (! output)
     return FALSE;
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             g_file_get_parse_name (file));
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
@@ -535,8 +534,7 @@ save_image (GFile   *file,
   ph.magic_number = g_htonl (GPATTERN_MAGIC);
 
   if (! g_output_stream_write_all (output, &ph, sizeof (PatternHeader),
-                                   &bytes_written, NULL, error) ||
-      bytes_written != sizeof (PatternHeader))
+                                   NULL, NULL, error))
     {
       g_object_unref (output);
       return FALSE;
@@ -544,8 +542,7 @@ save_image (GFile   *file,
 
   if (! g_output_stream_write_all (output,
                                    description, strlen (description) + 1,
-                                   &bytes_written, NULL, error) ||
-      bytes_written != strlen (description) + 1)
+                                   NULL, NULL, error))
     {
       g_object_unref (output);
       return FALSE;
@@ -563,8 +560,7 @@ save_image (GFile   *file,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       if (! g_output_stream_write_all (output, buf, line_size,
-                                       &bytes_written, NULL, error) ||
-          bytes_written != line_size)
+                                       NULL, NULL, error))
         {
           g_object_unref (buffer);
           g_object_unref (output);

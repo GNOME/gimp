@@ -17,6 +17,7 @@
 
 #include "config.h"
 
+#include <gio/gio.h>
 #include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"

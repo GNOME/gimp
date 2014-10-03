@@ -41,29 +41,30 @@ gimp_gui_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->gui.ungrab                = NULL;
-  gimp->gui.threads_enter         = NULL;
-  gimp->gui.threads_leave         = NULL;
-  gimp->gui.set_busy              = NULL;
-  gimp->gui.unset_busy            = NULL;
-  gimp->gui.show_message          = NULL;
-  gimp->gui.help                  = NULL;
-  gimp->gui.get_program_class     = NULL;
-  gimp->gui.get_display_name      = NULL;
-  gimp->gui.get_user_time         = NULL;
-  gimp->gui.get_theme_dir         = NULL;
-  gimp->gui.display_get_by_id     = NULL;
-  gimp->gui.display_get_id        = NULL;
-  gimp->gui.display_get_window_id = NULL;
-  gimp->gui.display_create        = NULL;
-  gimp->gui.display_delete        = NULL;
-  gimp->gui.displays_reconnect    = NULL;
-  gimp->gui.progress_new          = NULL;
-  gimp->gui.progress_free         = NULL;
-  gimp->gui.pdb_dialog_set        = NULL;
-  gimp->gui.pdb_dialog_close      = NULL;
-  gimp->gui.recent_list_add_uri   = NULL;
-  gimp->gui.recent_list_load      = NULL;
+  gimp->gui.ungrab                 = NULL;
+  gimp->gui.threads_enter          = NULL;
+  gimp->gui.threads_leave          = NULL;
+  gimp->gui.set_busy               = NULL;
+  gimp->gui.unset_busy             = NULL;
+  gimp->gui.show_message           = NULL;
+  gimp->gui.help                   = NULL;
+  gimp->gui.get_program_class      = NULL;
+  gimp->gui.get_display_name       = NULL;
+  gimp->gui.get_user_time          = NULL;
+  gimp->gui.get_theme_dir          = NULL;
+  gimp->gui.display_get_by_id      = NULL;
+  gimp->gui.display_get_id         = NULL;
+  gimp->gui.display_get_window_id  = NULL;
+  gimp->gui.display_create         = NULL;
+  gimp->gui.display_delete         = NULL;
+  gimp->gui.displays_reconnect     = NULL;
+  gimp->gui.progress_new           = NULL;
+  gimp->gui.progress_free          = NULL;
+  gimp->gui.pdb_dialog_set         = NULL;
+  gimp->gui.pdb_dialog_close       = NULL;
+  gimp->gui.recent_list_add_file   = NULL;
+  gimp->gui.recent_list_load       = NULL;
+  gimp->gui.get_mount_operation    = NULL;
 }
 
 void
@@ -253,7 +254,7 @@ gimp_get_user_time (Gimp *gimp)
   return 0;
 }
 
-const gchar *
+GFile *
 gimp_get_theme_dir (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -471,15 +472,15 @@ gimp_pdb_dialog_close (Gimp          *gimp,
 }
 
 gboolean
-gimp_recent_list_add_uri (Gimp        *gimp,
-                          const gchar *uri,
-                          const gchar *mime_type)
+gimp_recent_list_add_file (Gimp        *gimp,
+                           GFile       *file,
+                           const gchar *mime_type)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (uri != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
 
-  if (gimp->gui.recent_list_add_uri)
-    return gimp->gui.recent_list_add_uri (gimp, uri, mime_type);
+  if (gimp->gui.recent_list_add_file)
+    return gimp->gui.recent_list_add_file (gimp, file, mime_type);
 
   return FALSE;
 }
@@ -491,4 +492,17 @@ gimp_recent_list_load (Gimp *gimp)
 
   if (gimp->gui.recent_list_load)
     gimp->gui.recent_list_load (gimp);
+}
+
+GMountOperation *
+gimp_get_mount_operation (Gimp         *gimp,
+                          GimpProgress *progress)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+
+  if (gimp->gui.get_mount_operation)
+    return gimp->gui.get_mount_operation (gimp, progress);
+
+  return g_mount_operation_new ();
 }

@@ -44,6 +44,8 @@ libappoperations_generic_a_sources = \
 	gimpthresholdconfig.c			\
 	gimpthresholdconfig.h			\
 	\
+	gimpoperationblend.c			\
+	gimpoperationblend.h			\
 	gimpoperationborder.c			\
 	gimpoperationborder.h			\
 	gimpoperationcagecoefcalc.c		\

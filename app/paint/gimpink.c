@@ -659,7 +659,7 @@ render_blob (GeglBuffer    *buffer,
   GeglRectangle      *roi;
 
   iter = gegl_buffer_iterator_new (buffer, rect, 0, babl_format ("Y float"),
-                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
   roi = &iter->roi[0];
 
   while (gegl_buffer_iterator_next (iter))

@@ -39,7 +39,6 @@
 #include "plug-in/gimppluginmanager.h"
 
 #include "file/file-procedure.h"
-#include "file/file-utils.h"
 
 #include "gimpfiledialog.h" /* eek */
 #include "gimpthumbbox.h"
@@ -62,8 +61,8 @@ static void     gimp_thumb_box_style_set          (GtkWidget         *widget,
 
 static GimpProgress *
                 gimp_thumb_box_progress_start     (GimpProgress      *progress,
-                                                   const gchar       *message,
-                                                   gboolean           cancelable);
+                                                   gboolean           cancellable,
+                                                   const gchar       *message);
 static void     gimp_thumb_box_progress_end       (GimpProgress      *progress);
 static gboolean gimp_thumb_box_progress_is_active (GimpProgress      *progress);
 static void     gimp_thumb_box_progress_set_value (GimpProgress      *progress,
@@ -91,7 +90,7 @@ static void gimp_thumb_box_thumb_state_notify     (GimpThumbnail     *thumb,
 static void gimp_thumb_box_create_thumbnails      (GimpThumbBox      *box,
                                                    gboolean           force);
 static void gimp_thumb_box_create_thumbnail       (GimpThumbBox      *box,
-                                                   const gchar       *uri,
+                                                   GFile             *file,
                                                    GimpThumbnailSize  size,
                                                    gboolean           force,
                                                    GimpProgress      *progress);
@@ -158,7 +157,7 @@ gimp_thumb_box_finalize (GObject *object)
 {
   GimpThumbBox *box = GIMP_THUMB_BOX (object);
 
-  gimp_thumb_box_take_uris (box, NULL);
+  gimp_thumb_box_take_files (box, NULL);
 
   if (box->imagefile)
     {
@@ -194,8 +193,8 @@ gimp_thumb_box_style_set (GtkWidget *widget,
 
 static GimpProgress *
 gimp_thumb_box_progress_start (GimpProgress *progress,
-                               const gchar  *message,
-                               gboolean      cancelable)
+                               gboolean      cancellable,
+                               const gchar  *message)
 {
   GimpThumbBox *box = GIMP_THUMB_BOX (progress);
 
@@ -215,7 +214,7 @@ gimp_thumb_box_progress_start (GimpProgress *progress,
 
       if (GIMP_IS_FILE_DIALOG (toplevel))
         gtk_dialog_set_response_sensitive (GTK_DIALOG (toplevel),
-                                           GTK_RESPONSE_CANCEL, cancelable);
+                                           GTK_RESPONSE_CANCEL, cancellable);
 
       return progress;
     }
@@ -444,10 +443,11 @@ gimp_thumb_box_new (GimpContext *context)
 }
 
 void
-gimp_thumb_box_take_uri (GimpThumbBox *box,
-                         gchar        *uri)
+gimp_thumb_box_take_file (GimpThumbBox *box,
+                          GFile        *file)
 {
   g_return_if_fail (GIMP_IS_THUMB_BOX (box));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
 
   if (box->idle_id)
     {
@@ -455,12 +455,11 @@ gimp_thumb_box_take_uri (GimpThumbBox *box,
       box->idle_id = 0;
     }
 
-  gimp_object_take_name (GIMP_OBJECT (box->imagefile), uri);
+  gimp_imagefile_set_file (box->imagefile, file);
 
-  if (uri)
+  if (file)
     {
-      gchar *basename = file_utils_uri_display_basename (uri);
-
+      gchar *basename = g_path_get_basename (gimp_file_get_utf8_name (file));
       gtk_label_set_text (GTK_LABEL (box->filename), basename);
       g_free (basename);
     }
@@ -469,23 +468,23 @@ gimp_thumb_box_take_uri (GimpThumbBox *box,
       gtk_label_set_text (GTK_LABEL (box->filename), _("No selection"));
     }
 
-  gtk_widget_set_sensitive (GTK_WIDGET (box), uri != NULL);
+  gtk_widget_set_sensitive (GTK_WIDGET (box), file != NULL);
   gimp_imagefile_update (box->imagefile);
 }
 
 void
-gimp_thumb_box_take_uris (GimpThumbBox *box,
-                          GSList       *uris)
+gimp_thumb_box_take_files (GimpThumbBox *box,
+                           GSList       *files)
 {
   g_return_if_fail (GIMP_IS_THUMB_BOX (box));
 
-  if (box->uris)
+  if (box->files)
     {
-      g_slist_free_full (box->uris, (GDestroyNotify) g_free);
-      box->uris = NULL;
+      g_slist_free_full (box->files, (GDestroyNotify) g_object_unref);
+      box->files = NULL;
     }
 
-  box->uris = uris;
+  box->files = files;
 }
 
 
@@ -554,7 +553,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
   GimpFileDialog *dialog   = NULL;
   GtkWidget      *toplevel;
   GSList         *list;
-  gint            n_uris;
+  gint            n_files;
   gint            i;
 
   if (gimp->config->thumbnail_size == GIMP_THUMBNAIL_SIZE_NONE)
@@ -572,29 +571,29 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
   else
     gtk_widget_set_sensitive (toplevel, FALSE);
 
-  if (box->uris)
+  if (box->files)
     {
       gtk_widget_hide (box->info);
       gtk_widget_show (box->progress);
     }
 
-  n_uris = g_slist_length (box->uris);
+  n_files = g_slist_length (box->files);
 
-  if (n_uris > 1)
+  if (n_files > 1)
     {
       gchar *str;
 
-      gimp_progress_start (GIMP_PROGRESS (box), "", TRUE);
+      gimp_progress_start (GIMP_PROGRESS (box), TRUE, "%s", "");
 
       progress = gimp_sub_progress_new (GIMP_PROGRESS (box));
 
-      gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (progress), 0, n_uris);
+      gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (progress), 0, n_files);
 
-      for (list = box->uris->next, i = 1;
+      for (list = box->files->next, i = 1;
            list;
            list = g_slist_next (list), i++)
         {
-          str = g_strdup_printf (_("Thumbnail %d of %d"), i, n_uris);
+          str = g_strdup_printf (_("Thumbnail %d of %d"), i, n_files);
           gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), str);
           g_free (str);
 
@@ -612,10 +611,10 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
           if (dialog && dialog->canceled)
             goto canceled;
 
-          gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (progress), i, n_uris);
+          gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (progress), i, n_files);
         }
 
-      str = g_strdup_printf (_("Thumbnail %d of %d"), n_uris, n_uris);
+      str = g_strdup_printf (_("Thumbnail %d of %d"), n_files, n_files);
       gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), str);
       g_free (str);
 
@@ -625,10 +624,10 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
         gtk_main_iteration ();
     }
 
-  if (box->uris)
+  if (box->files)
     {
       gimp_thumb_box_create_thumbnail (box,
-                                       box->uris->data,
+                                       box->files->data,
                                        gimp->config->thumbnail_size,
                                        force,
                                        progress);
@@ -638,7 +637,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
 
  canceled:
 
-  if (n_uris > 1)
+  if (n_files > 1)
     {
       g_object_unref (progress);
 
@@ -646,7 +645,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
       gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), "");
     }
 
-  if (box->uris)
+  if (box->files)
     {
       gtk_widget_hide (box->progress);
       gtk_widget_show (box->info);
@@ -662,7 +661,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
 
 static void
 gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
-                                 const gchar       *uri,
+                                 GFile             *file,
                                  GimpThumbnailSize  size,
                                  gboolean           force,
                                  GimpProgress      *progress)
@@ -670,11 +669,11 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
   GimpThumbnail *thumb = gimp_imagefile_get_thumbnail (box->imagefile);
   gchar         *basename;
 
-  basename = file_utils_uri_display_basename (uri);
+  basename = g_path_get_basename (gimp_file_get_utf8_name (file));
   gtk_label_set_text (GTK_LABEL (box->filename), basename);
   g_free (basename);
 
-  gimp_object_set_name (GIMP_OBJECT (box->imagefile), uri);
+  gimp_imagefile_set_file (box->imagefile, file);
 
   if (force ||
       (gimp_thumbnail_peek_thumb (thumb, size) < GIMP_THUMB_STATE_FAILED &&
@@ -699,7 +698,7 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
 {
   Gimp          *gimp  = box->context->gimp;
   GimpThumbnail *thumb = gimp_imagefile_get_thumbnail (box->imagefile);
-  const gchar   *uri   = gimp_object_get_name (box->imagefile);
+  GFile         *file  = gimp_imagefile_get_file (box->imagefile);
 
   box->idle_id = 0;
 
@@ -713,7 +712,7 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
       if (thumb->image_filesize < gimp->config->thumbnail_filesize_limit &&
           ! gimp_thumbnail_has_failed (thumb)                            &&
           file_procedure_find_by_extension (gimp->plug_in_manager->load_procs,
-                                            uri))
+                                            file))
         {
           if (thumb->image_filesize > 0)
             {

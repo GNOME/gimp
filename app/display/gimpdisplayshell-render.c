@@ -33,8 +33,9 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
+#ifdef USE_NODE_BLIT
 #include "core/gimpprojectable.h"
-#include "core/gimpprojection.h"
+#endif
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
@@ -57,8 +58,10 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            gint              h)
 {
   GimpImage       *image;
-  GimpProjection  *projection;
   GeglBuffer      *buffer;
+#ifdef USE_NODE_BLIT
+  GeglNode        *node;
+#endif
   gdouble          scale_x      = 1.0;
   gdouble          scale_y      = 1.0;
   gdouble          buffer_scale = 1.0;
@@ -82,9 +85,11 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   g_return_if_fail (cr != NULL);
   g_return_if_fail (w > 0 && h > 0);
 
-  image      = gimp_display_get_image (shell->display);
-  projection = gimp_image_get_projection (image);
-  buffer     = gimp_pickable_get_buffer (GIMP_PICKABLE (projection));
+  image  = gimp_display_get_image (shell->display);
+  buffer = gimp_pickable_get_buffer (GIMP_PICKABLE (image));
+#ifdef USE_NODE_BLIT
+  node   = gimp_projectable_get_graph (GIMP_PROJECTABLE (image));
+#endif
 
 #ifdef GIMP_DISPLAY_RENDER_ENABLE_SCALING
   /* if we had this future API, things would look pretty on hires (retina) */
@@ -169,13 +174,23 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                               shell->filter_data);
         }
 
+#ifndef USE_NODE_BLIT
       gegl_buffer_get (buffer,
                        GEGL_RECTANGLE (scaled_x, scaled_y,
                                        scaled_width, scaled_height),
                        buffer_scale,
-                       filter_format, shell->filter_data,
-                       shell->filter_stride, GEGL_ABYSS_CLAMP);
-
+                       filter_format,
+                       shell->filter_data, shell->filter_stride,
+                       GEGL_ABYSS_CLAMP);
+#else
+      gegl_node_blit (node,
+                      buffer_scale,
+                      GEGL_RECTANGLE (scaled_x, scaled_y,
+                                      scaled_width, scaled_height),
+                      filter_format,
+                      shell->filter_data, shell->filter_stride,
+                      GEGL_BLIT_CACHE);
+#endif
 
       gimp_color_display_stack_convert_buffer (shell->filter_stack,
                                                shell->filter_buffer,
@@ -194,6 +209,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     }
   else
     {
+#ifndef USE_NODE_BLIT
       gegl_buffer_get (buffer,
                        GEGL_RECTANGLE (scaled_x, scaled_y,
                                        scaled_width, scaled_height),
@@ -201,12 +217,19 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                        babl_format ("cairo-ARGB32"),
                        data, stride,
                        GEGL_ABYSS_CLAMP);
+#else
+      gegl_node_blit (node,
+                      buffer_scale,
+                      GEGL_RECTANGLE (scaled_x, scaled_y,
+                                      scaled_width, scaled_height),
+                      babl_format ("cairo-ARGB32"),
+                      data, stride,
+                      GEGL_BLIT_CACHE);
+#endif
     }
 
   if (shell->mask)
     {
-      gint mask_height;
-
       if (! shell->mask_surface)
         {
           shell->mask_surface =
@@ -231,21 +254,24 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                        data, stride,
                        GEGL_ABYSS_CLAMP);
 
-      /* invert the mask so what is *not* the foreground object is masked */
-      mask_height = scaled_height;
-      while (mask_height--)
+      if (shell->mask_inverted)
         {
-          gint    mask_width = scaled_width;
-          guchar *d          = data;
+          gint mask_height = scaled_height;
 
-          while (mask_width--)
+          while (mask_height--)
             {
-              guchar inv = 255 - *d;
+              gint    mask_width = scaled_width;
+              guchar *d          = data;
 
-              *d++ = inv;
+              while (mask_width--)
+                {
+                  guchar inv = 255 - *d;
+
+                  *d++ = inv;
+                }
+
+              data += stride;
             }
-
-          data += stride;
         }
     }
 

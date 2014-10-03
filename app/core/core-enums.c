@@ -325,6 +325,35 @@ gimp_layer_mode_effects_get_type (void)
 }
 
 GType
+gimp_matting_engine_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_MATTING_ENGINE_GLOBAL, "GIMP_MATTING_ENGINE_GLOBAL", "global" },
+    { GIMP_MATTING_ENGINE_LEVIN, "GIMP_MATTING_ENGINE_LEVIN", "levin" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_MATTING_ENGINE_GLOBAL, NC_("matting-engine", "Matting Global"), NULL },
+    { GIMP_MATTING_ENGINE_LEVIN, NC_("matting-engine", "Matting Levin"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpMattingEngine", values);
+      gimp_type_set_translation_context (type, "matting-engine");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_alignment_type_get_type (void)
 {
   static const GEnumValue values[] =

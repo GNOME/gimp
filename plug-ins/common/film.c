@@ -426,7 +426,7 @@ film (void)
                                    &drawable_dst, &pixel_rgn_dst);
 
   /* Fill film background */
-  gimp_drawable_fill (layer_ID_dst, GIMP_BACKGROUND_FILL);
+  gimp_drawable_fill (layer_ID_dst, GIMP_FILL_BACKGROUND);
 
   /* Draw all the holes */
   hole_offset = film_height * filmvals.hole_offset;

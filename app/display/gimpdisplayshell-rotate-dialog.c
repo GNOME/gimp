@@ -28,6 +28,7 @@
 #include "core/gimp.h"
 #include "core/gimpviewable.h"
 
+#include "widgets/gimpdial.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -46,21 +47,30 @@ typedef struct
 {
   GimpDisplayShell *shell;
   GtkAdjustment    *rotate_adj;
+  gdouble           old_angle;
 } RotateDialogData;
 
 
 /*  local function prototypes  */
 
-static void  gimp_display_shell_rotate_dialog_response (GtkWidget        *widget,
-                                                        gint              response_id,
+static void  gimp_display_shell_rotate_dialog_response (GtkWidget         *widget,
+                                                        gint               response_id,
                                                         RotateDialogData  *dialog);
-static void  gimp_display_shell_rotate_dialog_free     (RotateDialogData  *dialog);
+static void      gimp_display_shell_rotate_dialog_free (RotateDialogData  *dialog);
 
-static void  rotate_adjustment_changed                (GtkAdjustment     *adj,
-                                                       RotateDialogData  *dialog);
-static void  display_shell_rotated                    (GimpDisplayShell  *shell,
-                                                       RotateDialogData  *dialog);
+static void      rotate_adjustment_changed             (GtkAdjustment     *adj,
+                                                        RotateDialogData  *dialog);
+static void      display_shell_rotated                 (GimpDisplayShell  *shell,
+                                                        RotateDialogData  *dialog);
 
+static gboolean  deg_to_rad                            (GBinding          *binding,
+                                                        const GValue      *from_value,
+                                                        GValue            *to_value,
+                                                        gpointer           user_data);
+static gboolean  rad_to_deg                            (GBinding          *binding,
+                                                        const GValue      *from_value,
+                                                        GValue            *to_value,
+                                                        gpointer           user_data);
 
 
 /*  public functions  */
@@ -80,6 +90,7 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
   GtkWidget        *toplevel;
   GtkWidget        *hbox;
   GtkWidget        *spin;
+  GtkWidget        *dial;
   GtkWidget        *label;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -94,7 +105,8 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
 
   data = g_slice_new (RotateDialogData);
 
-  data->shell = shell;
+  data->shell     = shell;
+  data->old_angle = shell->rotate_angle;
 
   shell->rotate_dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
@@ -107,13 +119,14 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
                               GIMP_HELP_VIEW_ROTATE_OTHER,
 
                               GIMP_STOCK_RESET, RESPONSE_RESET,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                               GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (shell->rotate_dialog),
                                            GTK_RESPONSE_OK,
-                                           RESPONSE_RESET,
+                                           GTK_RESPONSE_CANCEL,
                                            -1);
 
   g_object_weak_ref (G_OBJECT (shell->rotate_dialog),
@@ -142,18 +155,35 @@ gimp_display_shell_rotate_dialog (GimpDisplayShell *shell)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  spin = gimp_spin_button_new ((GtkObject **) &data->rotate_adj,
-                               shell->rotate_angle,
-                               0.0, 360.0,
-                               1, 15, 0, 1, 2);
-  gtk_entry_set_activates_default (GTK_ENTRY (spin), TRUE);
+  data->rotate_adj = (GtkAdjustment *)
+    gtk_adjustment_new (shell->rotate_angle, 0.0, 360.0, 1, 15, 0);
+  spin = gtk_spin_button_new (data->rotate_adj, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spin), TRUE);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (spin), TRUE);
+  gtk_entry_set_activates_default (GTK_ENTRY (spin), TRUE);
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
   gtk_widget_show (spin);
 
   label = gtk_label_new (_("degrees"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
+
+  dial = gimp_dial_new ();
+  g_object_set (dial,
+                "size",       32,
+                "background", GIMP_CIRCLE_BACKGROUND_PLAIN,
+                "draw-beta",  FALSE,
+                NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), dial, FALSE, FALSE, 0);
+  gtk_widget_show (dial);
+
+  g_object_bind_property_full (data->rotate_adj, "value",
+                               dial,             "alpha",
+                               G_BINDING_BIDIRECTIONAL |
+                               G_BINDING_SYNC_CREATE,
+                               deg_to_rad,
+                               rad_to_deg,
+                               NULL, NULL);
 
   g_signal_connect (data->rotate_adj, "value-changed",
                     G_CALLBACK (rotate_adjustment_changed),
@@ -170,12 +200,20 @@ gimp_display_shell_rotate_dialog_response (GtkWidget        *widget,
                                            gint              response_id,
                                            RotateDialogData *dialog)
 {
-  if (response_id == RESPONSE_RESET)
+  switch (response_id)
     {
+    case RESPONSE_RESET:
       gtk_adjustment_set_value (dialog->rotate_adj, 0.0);
-    }
+      break;
 
-  gtk_widget_destroy (dialog->shell->rotate_dialog);
+    case GTK_RESPONSE_CANCEL:
+      gtk_adjustment_set_value (dialog->rotate_adj, dialog->old_angle);
+      /* fall thru */
+
+    default:
+      gtk_widget_destroy (dialog->shell->rotate_dialog);
+      break;
+    }
 }
 
 static void
@@ -218,4 +256,38 @@ display_shell_rotated (GimpDisplayShell  *shell,
   g_signal_handlers_unblock_by_func (dialog->rotate_adj,
                                      rotate_adjustment_changed,
                                      dialog);
+}
+
+static gboolean
+deg_to_rad (GBinding     *binding,
+            const GValue *from_value,
+            GValue       *to_value,
+            gpointer      user_data)
+{
+  gdouble value = g_value_get_double (from_value);
+
+  value = 360.0 - value;
+
+  value *= G_PI / 180.0;
+
+  g_value_set_double (to_value, value);
+
+  return TRUE;
+}
+
+static gboolean
+rad_to_deg (GBinding     *binding,
+            const GValue *from_value,
+            GValue       *to_value,
+            gpointer      user_data)
+{
+  gdouble value = g_value_get_double (from_value);
+
+  value *= 180.0 / G_PI;
+
+  value = 360.0 - value;
+
+  g_value_set_double (to_value, value);
+
+  return TRUE;
 }

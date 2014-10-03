@@ -57,7 +57,7 @@ enum
   PROP_GIMP,
   PROP_CONFIG,
   PROP_CONTAINER,
-  PROP_FILENAME
+  PROP_FILE
 };
 
 
@@ -75,13 +75,13 @@ struct _GimpSettingsBoxPrivate
   Gimp          *gimp;
   GObject       *config;
   GimpContainer *container;
-  gchar         *filename;
+  GFile         *file;
 
   gchar         *import_dialog_title;
   gchar         *export_dialog_title;
   gchar         *file_dialog_help_id;
-  gchar         *default_folder;
-  gchar         *last_filename;
+  GFile         *default_folder;
+  GFile         *last_file;
 };
 
 #define GET_PRIVATE(item) G_TYPE_INSTANCE_GET_PRIVATE (item, \
@@ -174,9 +174,9 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpSettingsBoxClass, import),
                   NULL, NULL,
-                  gimp_marshal_BOOLEAN__STRING,
+                  gimp_marshal_BOOLEAN__OBJECT,
                   G_TYPE_BOOLEAN, 1,
-                  G_TYPE_STRING);
+                  G_TYPE_FILE);
 
   settings_box_signals[EXPORT] =
     g_signal_new ("export",
@@ -184,9 +184,9 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpSettingsBoxClass, export),
                   NULL, NULL,
-                  gimp_marshal_BOOLEAN__STRING,
+                  gimp_marshal_BOOLEAN__OBJECT,
                   G_TYPE_BOOLEAN, 1,
-                  G_TYPE_STRING);
+                  G_TYPE_FILE);
 
   object_class->constructed  = gimp_settings_box_constructed;
   object_class->finalize     = gimp_settings_box_finalize;
@@ -218,10 +218,10 @@ gimp_settings_box_class_init (GimpSettingsBoxClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
-  g_object_class_install_property (object_class, PROP_FILENAME,
-                                   g_param_spec_string ("filename",
+  g_object_class_install_property (object_class, PROP_FILE,
+                                   g_param_spec_object ("file",
                                                         NULL, NULL,
-                                                        NULL,
+                                                        G_TYPE_FILE,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
@@ -252,7 +252,7 @@ gimp_settings_box_constructed (GObject *object)
   g_assert (GIMP_IS_GIMP (private->gimp));
   g_assert (GIMP_IS_CONFIG (private->config));
   g_assert (GIMP_IS_CONTAINER (private->container));
-  g_assert (private->filename != NULL);
+  g_assert (G_IS_FILE (private->file));
 
   if (gimp_container_get_n_children (private->container) == 0)
     gimp_settings_box_deserialize (box);
@@ -350,17 +350,27 @@ gimp_settings_box_finalize (GObject *object)
       private->container = NULL;
     }
 
-  if (private->filename)
+  if (private->file)
     {
-      g_free (private->filename);
-      private->filename = NULL;
+      g_object_unref (private->file);
+      private->file = NULL;
+    }
+
+  if (private->last_file)
+    {
+      g_object_unref (private->last_file);
+      private->last_file = NULL;
+    }
+
+  if (private->default_folder)
+    {
+      g_object_unref (private->default_folder);
+      private->default_folder = NULL;
     }
 
   g_free (private->import_dialog_title);
   g_free (private->export_dialog_title);
   g_free (private->file_dialog_help_id);
-  g_free (private->default_folder);
-  g_free (private->last_filename);
 
   if (private->editor_dialog)
     {
@@ -411,8 +421,8 @@ gimp_settings_box_set_property (GObject      *object,
       private->container = g_value_dup_object (value);
       break;
 
-    case PROP_FILENAME:
-      private->filename = g_value_dup_string (value);
+    case PROP_FILE:
+      private->file = g_value_dup_object (value);
       break;
 
    default:
@@ -443,8 +453,8 @@ gimp_settings_box_get_property (GObject    *object,
       g_value_set_object (value, private->container);
       break;
 
-    case PROP_FILENAME:
-      g_value_set_string (value, private->filename);
+    case PROP_FILE:
+      g_value_set_object (value, private->file);
       break;
 
    default:
@@ -482,11 +492,11 @@ gimp_settings_box_deserialize (GimpSettingsBox *box)
   GError                 *error   = NULL;
 
   if (private->gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (private->filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (private->file));
 
-  if (! gimp_config_deserialize_file (GIMP_CONFIG (private->container),
-                                      private->filename,
-                                      NULL, &error))
+  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (private->container),
+                                       private->file,
+                                       NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         gimp_message_literal (private->gimp, NULL, GIMP_MESSAGE_ERROR,
@@ -507,13 +517,13 @@ gimp_settings_box_serialize (GimpSettingsBox *box)
   gimp_settings_box_separator_remove (private->container);
 
   if (private->gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (private->filename));
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (private->file));
 
-  if (! gimp_config_serialize_to_file (GIMP_CONFIG (private->container),
-                                       private->filename,
-                                       "settings",
-                                       "end of settings",
-                                       NULL, &error))
+  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (private->container),
+                                        private->file,
+                                        "settings",
+                                        "end of settings",
+                                        NULL, &error))
     {
       gimp_message_literal (private->gimp, NULL, GIMP_MESSAGE_ERROR,
                             error->message);
@@ -790,24 +800,29 @@ gimp_settings_box_file_dialog (GimpSettingsBox *box,
                     NULL);
 
   if (private->default_folder &&
-      g_file_test (private->default_folder, G_FILE_TEST_IS_DIR))
+      g_file_query_file_type (private->default_folder,
+                              G_FILE_QUERY_INFO_NONE, NULL) ==
+      G_FILE_TYPE_DIRECTORY)
     {
-      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
-                                            private->default_folder, NULL);
+      gchar *uri = g_file_get_uri (private->default_folder);
+      gtk_file_chooser_add_shortcut_folder_uri (GTK_FILE_CHOOSER (dialog),
+                                                uri, NULL);
+      g_free (uri);
 
-      if (! private->last_filename)
-        gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog),
-                                             private->default_folder);
+      if (! private->last_file)
+        gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
+                                                  private->default_folder,
+                                                  NULL);
     }
-  else if (! private->last_filename)
+  else if (! private->last_file)
     {
       gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog),
                                            g_get_home_dir ());
     }
 
-  if (private->last_filename)
-    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
-                                   private->last_filename);
+  if (private->last_file)
+    gtk_file_chooser_set_file (GTK_FILE_CHOOSER (dialog),
+                               private->last_file, NULL);
 
   gimp_help_connect (private->file_dialog, gimp_standard_help_func,
                      private->file_dialog_help_id, NULL);
@@ -839,25 +854,28 @@ gimp_settings_box_file_response (GtkWidget       *dialog,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      gchar    *filename;
+      GFile    *file;
       gboolean  success = FALSE;
 
-      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+      file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
 
       if (save)
-        g_signal_emit (box, settings_box_signals[EXPORT], 0, filename,
+        g_signal_emit (box, settings_box_signals[EXPORT], 0, file,
                        &success);
       else
-        g_signal_emit (box, settings_box_signals[IMPORT], 0, filename,
+        g_signal_emit (box, settings_box_signals[IMPORT], 0, file,
                        &success);
 
       if (success)
         {
-          g_free (private->last_filename);
-          private->last_filename = g_strdup (filename);
+          if (private->last_file)
+            g_object_unref (private->last_file);
+          private->last_file = file;
         }
-
-      g_free (filename);
+      else
+        {
+          g_object_unref (file);
+        }
     }
 
   if (save)
@@ -931,12 +949,12 @@ GtkWidget *
 gimp_settings_box_new (Gimp          *gimp,
                        GObject       *config,
                        GimpContainer *container,
-                       const gchar   *filename,
+                       GFile         *file,
                        const gchar   *import_dialog_title,
                        const gchar   *export_dialog_title,
                        const gchar   *file_dialog_help_id,
-                       const gchar   *default_folder,
-                       const gchar   *last_filename)
+                       GFile         *default_folder,
+                       GFile         *last_file)
 {
   GimpSettingsBox        *box;
   GimpSettingsBoxPrivate *private;
@@ -944,13 +962,16 @@ gimp_settings_box_new (Gimp          *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
-  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (default_folder == NULL || G_IS_FILE (default_folder),
+                        NULL);
+  g_return_val_if_fail (last_file == NULL || G_IS_FILE (last_file), NULL);
 
   box = g_object_new (GIMP_TYPE_SETTINGS_BOX,
                       "gimp",      gimp,
                       "config",    config,
                       "container", container,
-                      "filename",  filename,
+                      "file",      file,
                       NULL);
 
   private = GET_PRIVATE (box);
@@ -958,8 +979,12 @@ gimp_settings_box_new (Gimp          *gimp,
   private->import_dialog_title = g_strdup (import_dialog_title);
   private->export_dialog_title = g_strdup (export_dialog_title);
   private->file_dialog_help_id = g_strdup (file_dialog_help_id);
-  private->default_folder      = g_strdup (default_folder);
-  private->last_filename       = g_strdup (last_filename);
+
+  if (default_folder)
+    private->default_folder = g_object_ref (default_folder);
+
+  if (last_file)
+    private->last_file = g_object_ref (last_file);
 
   return GTK_WIDGET (box);
 }

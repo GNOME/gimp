@@ -28,7 +28,7 @@
 #include "pdb-types.h"
 
 #include "core/gimp.h"
-#include "core/gimp-utils.h"
+#include "core/gimp-memsize.h"
 #include "core/gimpchannel.h"
 #include "core/gimplayer.h"
 #include "core/gimpparamspecs.h"

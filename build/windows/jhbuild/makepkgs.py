@@ -45,9 +45,18 @@ def run (targets_loc, packages_loc):
         if not os.path.isfile (packagedb_loc):
             continue
 
+        # Build arch
+        build_arch = ""
+        if target_name[-7:] == "-x86_64":
+            build_arch = "x86_64"
+        elif target_name[-5:] == "-i686":
+            build_arch = "i686"
+        else:
+            print ("Warning: BUILD_ARCH suffix not recognized")
+
         # Create archives for each package
         for package in parse_packagedb (packagedb_loc):
-            tar_name = package["package"] + '-' + package["version"] + '.tar.bz2'
+            tar_name = package["package"] + '-' + build_arch + '-' + package["version"] + '.tar.bz2'
             tar_loc = os.path.join (packages_loc, tar_name)
             manifest_loc = os.path.join (manifests_loc, package["package"])
 

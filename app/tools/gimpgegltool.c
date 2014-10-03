@@ -125,12 +125,14 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:checkerboard",
     "gegl:color",
     "gegl:color-reduction",
+    "gegl:color-rotate",
     "gegl:color-temperature",
     "gegl:color-to-alpha",
     "gegl:convolution-matrix",
     "gegl:cubism",
     "gegl:deinterlace",
     "gegl:difference-of-gaussians",
+    "gegl:distance-transform",
     "gegl:dropshadow",
     "gegl:edge-laplace",
     "gegl:edge-sobel",
@@ -142,6 +144,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:invert-linear",
     "gegl:invert-gamma",
     "gegl:lens-distortion",
+    "gegl:mirrors",
     "gegl:mono-mixer",
     "gegl:mosaic",
     "gegl:motion-blur-circular",
@@ -182,7 +185,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:contrast-curve",
     "gegl:convert-format", /* pointless */
     "gegl:fill-path",
-    "gegl:grey", /* we use gimp's op */
+    "gegl:gray", /* we use gimp's op */
     "gegl:hstack", /* pointless */
     "gegl:introspect", /* pointless */
     "gegl:layer", /* we use gimp's ops */
@@ -272,7 +275,13 @@ static gint
 gimp_gegl_tool_compare_operation_names (GeglOperationClass *a,
                                         GeglOperationClass *b)
 {
-  return strcmp (a->name, b->name);
+  const gchar *name_a = gegl_operation_class_get_key (a, "title");
+  const gchar *name_b = gegl_operation_class_get_key (b, "title");
+
+  if (! name_a) name_a = a->name;
+  if (! name_b) name_b = b->name;
+
+  return strcmp (name_a, name_b);
 }
 
 static GList *
@@ -324,26 +333,32 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
 
   for (iter = opclasses; iter; iter = iter->next)
     {
-      GeglOperationClass *opclass = GEGL_OPERATION_CLASS (iter->data);
-      const gchar        *icon_name;
-      const gchar        *label;
+      GeglOperationClass *opclass   = GEGL_OPERATION_CLASS (iter->data);
+      const gchar        *icon_name = NULL;
+      const gchar        *op_name   = opclass->name;
+      const gchar        *title;
+      gchar              *label;
 
       if (g_str_has_prefix (opclass->name, "gegl:"))
-        {
-          label     = opclass->name + strlen ("gegl:");
-          icon_name = GIMP_STOCK_GEGL;
-        }
+        icon_name = GIMP_STOCK_GEGL;
+
+      if (g_str_has_prefix (op_name, "gegl:"))
+        op_name += strlen ("gegl:");
+
+      title = gegl_operation_class_get_key (opclass, "title");
+
+      if (title)
+        label = g_strdup_printf ("%s (%s)", title, op_name);
       else
-        {
-          label     = opclass->name;
-          icon_name = NULL;
-        }
+        label = g_strdup (op_name);
 
       gtk_list_store_insert_with_values (store, NULL, -1,
                                          COLUMN_NAME,      opclass->name,
                                          COLUMN_LABEL,     label,
                                          COLUMN_ICON_NAME, icon_name,
                                          -1);
+
+      g_free (label);
     }
 
   g_list_free (opclasses);
@@ -359,6 +374,9 @@ gimp_gegl_tool_dialog (GimpImageMapTool *image_map_tool)
                                  "icon-name", COLUMN_ICON_NAME);
 
   cell = gtk_cell_renderer_text_new ();
+  g_object_set (cell,
+                "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
+                NULL);
   gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, TRUE);
   gtk_cell_layout_add_attribute (GTK_CELL_LAYOUT (combo), cell,
                                  "text", COLUMN_LABEL);

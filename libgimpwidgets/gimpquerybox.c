@@ -323,9 +323,9 @@ gimp_query_int_box (const gchar          *title,
                     GimpQueryIntCallback  callback,
                     gpointer              data)
 {
-  QueryBox  *query_box;
-  GtkWidget *spinbutton;
-  GtkObject *adjustment;
+  QueryBox      *query_box;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adjustment;
 
   query_box = create_query_box (title, parent, help_func, help_id,
                                 G_CALLBACK (int_query_box_response),
@@ -338,9 +338,10 @@ gimp_query_int_box (const gchar          *title,
   if (! query_box)
     return NULL;
 
-  spinbutton = gimp_spin_button_new (&adjustment,
-                                     initial, lower, upper, 1, 10, 0,
-                                     1, 0);
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (initial, lower, upper, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_grab_focus (spinbutton);
@@ -386,9 +387,9 @@ gimp_query_double_box (const gchar             *title,
                        GimpQueryDoubleCallback  callback,
                        gpointer                 data)
 {
-  QueryBox  *query_box;
-  GtkWidget *spinbutton;
-  GtkObject *adjustment;
+  QueryBox      *query_box;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adjustment;
 
   query_box = create_query_box (title, parent, help_func, help_id,
                                 G_CALLBACK (double_query_box_response),
@@ -401,9 +402,10 @@ gimp_query_double_box (const gchar             *title,
   if (! query_box)
     return NULL;
 
-  spinbutton = gimp_spin_button_new (&adjustment,
-                                     initial, lower, upper, 1, 10, 0,
-                                     1, digits);
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (initial, lower, upper, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
   gtk_box_pack_start (GTK_BOX (query_box->vbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_grab_focus (spinbutton);

@@ -417,8 +417,6 @@ run (const gchar      *name,
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32            image_ID;
   gint32            drawable_ID;
-  gint32            orig_image_ID;
-  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
   GError           *error  = NULL;
 
   run_mode = param[0].data.d_int32;
@@ -479,7 +477,7 @@ run (const gchar      *name,
           g_object_unref (file);
 
           *nreturn_vals = 2;
-          values[1].type = GIMP_PDB_IMAGE;
+          values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
         }
       else
@@ -491,14 +489,17 @@ run (const gchar      *name,
            strcmp (name, SAVE2_PROC) == 0 ||
            strcmp (name, SAVE_DEFAULTS_PROC) == 0)
     {
-      gboolean alpha;
+      GimpMetadata          *metadata;
+      GimpMetadataSaveFlags  metadata_flags;
+      gint32                 orig_image_ID;
+      GimpExportReturn       export = GIMP_EXPORT_CANCEL;
+      gboolean               alpha;
 
-      image_ID    = orig_image_ID = param[1].data.d_int32;
+      image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      load_defaults ();
+      orig_image_ID = image_ID;
 
-      /*  eventually export the image */
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
@@ -518,30 +519,38 @@ run (const gchar      *name,
               return;
             }
           break;
+
         default:
           break;
         }
 
+      metadata = gimp_image_metadata_save_prepare (orig_image_ID,
+                                                   "image/png",
+                                                   &metadata_flags);
+
+      pngvals.save_exif      = (metadata_flags & GIMP_METADATA_SAVE_EXIF) != 0;
+      pngvals.save_xmp       = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
+      pngvals.save_iptc      = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
+      pngvals.save_thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
+
+      load_defaults ();
+
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-          /*
-           * Possibly retrieve data...
-           */
+          /* possibly retrieve data */
           gimp_get_data (SAVE_PROC, &pngvals);
 
           alpha = gimp_drawable_has_alpha (drawable_ID);
 
-          /*
-           * If the image has no transparency, then there is usually
+          /* If the image has no transparency, then there is usually
            * no need to save a bKGD chunk.  For more information, see:
            * http://bugzilla.gnome.org/show_bug.cgi?id=92395
            */
           if (! alpha)
             pngvals.bkgd = FALSE;
 
-          /*
-           * Then acquire information with a dialog...
+          /* Then acquire information with a dialog...
            */
           if (! save_dialog (orig_image_ID, alpha))
             status = GIMP_PDB_CANCEL;
@@ -588,9 +597,7 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
-          /*
-           * Possibly retrieve data...
-           */
+          /* possibly retrieve data */
           gimp_get_data (SAVE_PROC, &pngvals);
           break;
 
@@ -603,31 +610,38 @@ run (const gchar      *name,
           if (save_image (param[3].data.d_string,
                           image_ID, drawable_ID, orig_image_ID, &error))
             {
-              GimpMetadata *metadata;
-
-              metadata = gimp_image_metadata_save_prepare (orig_image_ID,
-                                                           "image/png");
-
               if (metadata)
                 {
-                  GFile                 *file;
-                  GimpMetadataSaveFlags  flags = GIMP_METADATA_SAVE_ALL;
+                  GFile *file;
 
                   gimp_metadata_set_bits_per_sample (metadata, 8);
 
-                  if (! pngvals.save_exif)      flags &= ~GIMP_METADATA_SAVE_EXIF;
-                  if (! pngvals.save_xmp)       flags &= ~GIMP_METADATA_SAVE_XMP;
-                  if (! pngvals.save_iptc)      flags &= ~GIMP_METADATA_SAVE_IPTC;
-                  if (! pngvals.save_thumbnail) flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+                  if (pngvals.save_exif)
+                    metadata_flags |= GIMP_METADATA_SAVE_EXIF;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_EXIF;
+
+                  if (pngvals.save_xmp)
+                    metadata_flags |= GIMP_METADATA_SAVE_XMP;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_XMP;
+
+                  if (pngvals.save_iptc)
+                    metadata_flags |= GIMP_METADATA_SAVE_IPTC;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
+
+                  if (pngvals.save_thumbnail)
+                    metadata_flags |= GIMP_METADATA_SAVE_THUMBNAIL;
+                  else
+                    metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
                   file = g_file_new_for_path (param[3].data.d_string);
                   gimp_image_metadata_save_finish (orig_image_ID,
                                                    "image/png",
-                                                   metadata, flags, file,
-                                                   NULL);
+                                                   metadata, metadata_flags,
+                                                   file, NULL);
                   g_object_unref (file);
-
-                  g_object_unref (metadata);
                 }
 
               gimp_set_data (SAVE_PROC, &pngvals, sizeof (pngvals));
@@ -640,6 +654,9 @@ run (const gchar      *name,
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
+
+      if (metadata)
+        g_object_unref (metadata);
     }
   else if (strcmp (name, GET_DEFAULTS_PROC) == 0)
     {
@@ -718,7 +735,8 @@ struct read_error_data
 };
 
 static void
-on_read_error (png_structp png_ptr, png_const_charp error_msg)
+on_read_error (png_structp     png_ptr,
+               png_const_charp error_msg)
 {
   struct read_error_data *error_data = png_get_error_ptr (png_ptr);
   gint                    begin;
@@ -837,6 +855,9 @@ load_image (const gchar  *filename,
    * Open the file and initialize the PNG read "engine"...
    */
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   fp = g_fopen (filename, "rb");
 
   if (fp == NULL)
@@ -848,9 +869,6 @@ load_image (const gchar  *filename,
     }
 
   png_init_io (pp, fp);
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /*
    * Get the image dimensions and create the image...
@@ -1294,7 +1312,7 @@ load_image (const gchar  *filename,
       file_format = gegl_buffer_get_format (buffer);
 
       iter = gegl_buffer_iterator_new (buffer, NULL, 0, file_format,
-                                       GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
       n_components = babl_format_get_n_components (file_format);
       g_warn_if_fail (n_components == 2);
 
@@ -1462,6 +1480,9 @@ save_image (const gchar  *filename,
    * Open the file and initialize the PNG write "engine"...
    */
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   fp = g_fopen (filename, "wb");
   if (fp == NULL)
     {
@@ -1472,9 +1493,6 @@ save_image (const gchar  *filename,
     }
 
   png_init_io (pp, fp);
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /*
    * Get the buffer for the current image...
@@ -1575,7 +1593,7 @@ save_image (const gchar  *filename,
   if (pngvals.bkgd)
     {
       GimpRGB color;
-      guchar red, green, blue;
+      guchar  red, green, blue;
 
       gimp_context_get_background (&color);
       gimp_rgb_get_uchar (&color, &red, &green, &blue);
@@ -1668,7 +1686,7 @@ save_image (const gchar  *filename,
   if (pngvals.comment)
     {
       GimpParasite *parasite;
-      gsize text_length = 0;
+      gsize         text_length = 0;
 
       parasite = gimp_image_get_parasite (orig_image_ID, "gimp-comment");
       if (parasite)
@@ -1919,7 +1937,7 @@ ia_has_transparent_pixels (GeglBuffer *buffer)
 
   format = gegl_buffer_get_format (buffer);
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   n_components = babl_format_get_n_components (format);
   g_return_val_if_fail (n_components == 2, FALSE);
 
@@ -1962,7 +1980,7 @@ find_unused_ia_color (GeglBuffer *buffer,
 
   format = gegl_buffer_get_format (buffer);
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
   n_components = babl_format_get_n_components (format);
   g_return_val_if_fail (n_components == 2, FALSE);
 

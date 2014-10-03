@@ -258,7 +258,7 @@ gimp_tools_restore (Gimp *gimp)
 {
   GimpContainer *gimp_list;
   GimpObject    *object;
-  gchar         *filename;
+  GFile         *file;
   GList         *list;
   GError        *error = NULL;
 
@@ -266,13 +266,13 @@ gimp_tools_restore (Gimp *gimp)
 
   gimp_list = gimp_list_new (GIMP_TYPE_TOOL_INFO, FALSE);
 
-  filename = gimp_personal_rc_file ("toolrc");
+  file = gimp_directory_file ("toolrc", NULL);
 
   if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (gimp_config_deserialize_file (GIMP_CONFIG (gimp_list), filename,
-                                    NULL, NULL))
+  if (gimp_config_deserialize_gfile (GIMP_CONFIG (gimp_list), file,
+                                     NULL, NULL))
     {
       gint n = gimp_container_get_n_children (gimp->tool_info_list);
       gint i;
@@ -302,7 +302,7 @@ gimp_tools_restore (Gimp *gimp)
         }
     }
 
-  g_free (filename);
+  g_object_unref (file);
   g_object_unref (gimp_list);
 
   /* make the generic operation tool invisible by default */
@@ -383,7 +383,7 @@ gimp_tools_save (Gimp     *gimp,
                  gboolean  save_tool_options,
                  gboolean  always_save)
 {
-  gchar *filename;
+  GFile *file;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -411,17 +411,17 @@ gimp_tools_save (Gimp     *gimp,
         }
     }
 
-  filename = gimp_personal_rc_file ("toolrc");
+  file = gimp_directory_file ("toolrc", NULL);
 
   if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  gimp_config_serialize_to_file (GIMP_CONFIG (gimp->tool_info_list),
-                                 filename,
-                                 "GIMP toolrc",
-                                 "end of toolrc",
-                                 NULL, NULL);
-  g_free (filename);
+  gimp_config_serialize_to_gfile (GIMP_CONFIG (gimp->tool_info_list),
+                                  file,
+                                  "GIMP toolrc",
+                                  "end of toolrc",
+                                  NULL, NULL);
+  g_object_unref (file);
 }
 
 gboolean

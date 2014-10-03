@@ -19,15 +19,23 @@
 #define __GIMP_PICKABLE_AUTO_SHRINK_H__
 
 
-gboolean   gimp_pickable_auto_shrink (GimpPickable *pickable,
-                                      gint         x1,
-                                      gint         y1,
-                                      gint         x2,
-                                      gint         y2,
-                                      gint        *shrunk_x1,
-                                      gint        *shrunk_y1,
-                                      gint        *shrunk_x2,
-                                      gint        *shrunk_y2);
+typedef enum
+{
+  GIMP_AUTO_SHRINK_SHRINK,
+  GIMP_AUTO_SHRINK_EMPTY,
+  GIMP_AUTO_SHRINK_UNSHRINKABLE
+} GimpAutoShrink;
+
+
+GimpAutoShrink   gimp_pickable_auto_shrink (GimpPickable *pickable,
+                                            gint         x1,
+                                            gint         y1,
+                                            gint         x2,
+                                            gint         y2,
+                                            gint        *shrunk_x1,
+                                            gint        *shrunk_y1,
+                                            gint        *shrunk_x2,
+                                            gint        *shrunk_y2);
 
 
 #endif  /* __GIMP_PICKABLE_AUTO_SHRINK_H__ */

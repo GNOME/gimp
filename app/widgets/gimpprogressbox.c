@@ -31,6 +31,7 @@
 #include "core/gimpprogress.h"
 
 #include "gimpprogressbox.h"
+#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -41,8 +42,8 @@ static void     gimp_progress_box_dispose            (GObject      *object);
 
 static GimpProgress *
                 gimp_progress_box_progress_start     (GimpProgress *progress,
-                                                      const gchar  *message,
-                                                      gboolean      cancelable);
+                                                      gboolean      cancellable,
+                                                      const gchar  *message);
 static void     gimp_progress_box_progress_end       (GimpProgress *progress);
 static gboolean gimp_progress_box_progress_is_active (GimpProgress *progress);
 static void     gimp_progress_box_progress_set_text  (GimpProgress *progress,
@@ -115,8 +116,8 @@ gimp_progress_box_dispose (GObject *object)
 
 static GimpProgress *
 gimp_progress_box_progress_start (GimpProgress *progress,
-                                  const gchar  *message,
-                                  gboolean      cancelable)
+                                  gboolean      cancellable,
+                                  const gchar  *message)
 {
   GimpProgressBox *box = GIMP_PROGRESS_BOX (progress);
 
@@ -130,9 +131,9 @@ gimp_progress_box_progress_start (GimpProgress *progress,
       gtk_label_set_text (GTK_LABEL (box->label), message);
       gtk_progress_bar_set_fraction (bar, 0.0);
 
-      box->active     = TRUE;
-      box->cancelable = cancelable;
-      box->value      = 0.0;
+      box->active      = TRUE;
+      box->cancellable = cancellable;
+      box->value       = 0.0;
 
       if (gtk_widget_is_drawable (box->progress))
         gdk_window_process_updates (gtk_widget_get_window (box->progress),
@@ -155,9 +156,9 @@ gimp_progress_box_progress_end (GimpProgress *progress)
       gtk_label_set_text (GTK_LABEL (box->label), "");
       gtk_progress_bar_set_fraction (bar, 0.0);
 
-      box->active     = FALSE;
-      box->cancelable = FALSE;
-      box->value      = 0.0;
+      box->active      = FALSE;
+      box->cancellable = FALSE;
+      box->value       = 0.0;
     }
 }
 
@@ -205,9 +206,7 @@ gimp_progress_box_progress_set_value (GimpProgress *progress,
         {
           gtk_progress_bar_set_fraction (bar, box->value);
 
-          if (gtk_widget_is_drawable (box->progress))
-            gdk_window_process_updates (gtk_widget_get_window (box->progress),
-                                        TRUE);
+          gimp_widget_flush_expose (box->progress);
         }
     }
 }

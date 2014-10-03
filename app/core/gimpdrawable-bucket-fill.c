@@ -33,20 +33,21 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
+#include "gimp-utils.h"
 #include "gimpchannel-combine.h"
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-bucket-fill.h"
-#include "gimperror.h"
 #include "gimpimage.h"
-#include "gimpimage-contiguous-region.h"
 #include "gimppattern.h"
+#include "gimppickable.h"
+#include "gimppickable-contiguous-region.h"
 
 #include "gimp-intl.h"
 
 
 static void   gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
-                                                  GimpBucketFillMode   fill_mode,
+                                                  GimpFillType         fill_type,
                                                   gint                 paint_mode,
                                                   gdouble              opacity,
                                                   gboolean             fill_transparent,
@@ -64,7 +65,7 @@ static void   gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
 gboolean
 gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                            GimpContext          *context,
-                           GimpBucketFillMode    fill_mode,
+                           GimpFillType          fill_type,
                            gint                  paint_mode,
                            gdouble               opacity,
                            gboolean              fill_transparent,
@@ -75,41 +76,19 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                            gdouble               y,
                            GError              **error)
 {
-  GimpRGB      color   = { 0, };
-  GimpPattern *pattern = NULL;
+  GimpRGB      color;
+  GimpPattern *pattern;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (fill_mode == GIMP_BUCKET_FILL_FG)
-    {
-      gimp_context_get_foreground (context, &color);
-    }
-  else if (fill_mode == GIMP_BUCKET_FILL_BG)
-    {
-      gimp_context_get_background (context, &color);
-    }
-  else if (fill_mode == GIMP_BUCKET_FILL_PATTERN)
-    {
-      pattern = gimp_context_get_pattern (context);
-
-      if (! pattern)
-        {
-          g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-			       _("No patterns available for this operation."));
-          return FALSE;
-        }
-    }
-  else
-    {
-      g_warning ("%s: invalid fill_mode passed", G_STRFUNC);
-      return FALSE;
-    }
+  if (! gimp_get_fill_params (context, fill_type, &color, &pattern, error))
+    return FALSE;
 
   gimp_drawable_bucket_fill_internal (drawable,
-                                      fill_mode,
+                                      fill_type,
                                       paint_mode, opacity,
                                       fill_transparent, fill_criterion,
                                       threshold, sample_merged,
@@ -124,7 +103,7 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 
 static void
 gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
-                                    GimpBucketFillMode   fill_mode,
+                                    GimpFillType         fill_type,
                                     gint                 paint_mode,
                                     gdouble              opacity,
                                     gboolean             fill_transparent,
@@ -136,19 +115,20 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
                                     const GimpRGB       *color,
                                     GimpPattern         *pattern)
 {
-  GimpImage   *image;
-  GeglBuffer  *buffer;
-  GeglBuffer  *mask_buffer;
-  gint         x1, y1, x2, y2;
-  gint         mask_offset_x = 0;
-  gint         mask_offset_y = 0;
-  gboolean     selection;
+  GimpImage    *image;
+  GimpPickable *pickable;
+  GeglBuffer   *buffer;
+  GeglBuffer   *mask_buffer;
+  gint          x1, y1, x2, y2;
+  gint          mask_offset_x = 0;
+  gint          mask_offset_y = 0;
+  gboolean      selection;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
-  g_return_if_fail (fill_mode != GIMP_BUCKET_FILL_PATTERN ||
+  g_return_if_fail (fill_type != GIMP_FILL_PATTERN ||
                     GIMP_IS_PATTERN (pattern));
-  g_return_if_fail (fill_mode == GIMP_BUCKET_FILL_PATTERN ||
+  g_return_if_fail (fill_type == GIMP_FILL_PATTERN ||
                     color != NULL);
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -160,18 +140,22 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
 
   gimp_set_busy (image->gimp);
 
+  if (sample_merged)
+    pickable = GIMP_PICKABLE (image);
+  else
+    pickable = GIMP_PICKABLE (drawable);
+
   /*  Do a seed bucket fill...To do this, calculate a new
    *  contiguous region. If there is a selection, calculate the
    *  intersection of this region with the existing selection.
    */
-  mask_buffer = gimp_image_contiguous_region_by_seed (image, drawable,
-                                                      sample_merged,
-                                                      TRUE,
-                                                      threshold,
-                                                      fill_transparent,
-                                                      fill_criterion,
-                                                      (gint) x,
-                                                      (gint) y);
+  mask_buffer = gimp_pickable_contiguous_region_by_seed (pickable,
+                                                         TRUE,
+                                                         threshold,
+                                                         fill_transparent,
+                                                         fill_criterion,
+                                                         (gint) x,
+                                                         (gint) y);
 
   if (selection)
     {
@@ -224,10 +208,12 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
   buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
                             gimp_drawable_get_format_with_alpha (drawable));
 
-  switch (fill_mode)
+  switch (fill_type)
     {
-    case GIMP_BUCKET_FILL_FG:
-    case GIMP_BUCKET_FILL_BG:
+    case GIMP_FILL_FOREGROUND:
+    case GIMP_FILL_BACKGROUND:
+    case GIMP_FILL_WHITE:
+    case GIMP_FILL_TRANSPARENT:
       {
         GeglColor *gegl_color = gimp_gegl_color_new (color);
 
@@ -236,7 +222,7 @@ gimp_drawable_bucket_fill_internal (GimpDrawable        *drawable,
       }
       break;
 
-    case GIMP_BUCKET_FILL_PATTERN:
+    case GIMP_FILL_PATTERN:
       {
         GeglBuffer *pattern_buffer = gimp_pattern_create_buffer (pattern);
 

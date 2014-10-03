@@ -152,9 +152,9 @@ GIMP respects a number of environment variables.
 to get the default host and display number.
 .TP 8
 .B GIMP2_DIRECTORY
-to get the name of the personal GIMP directory. If unset @gimpdir@ is
+to get the name of the personal GIMP directory. If unset @manpage_gimpdir@ is
 used.  If this is an absolute path, it is used as is.  If it is a
-relative path, it is taken to be a subdirectory of the home directory.
+relative path, it is taken to be a subdirectory of \fB$XDG_CONFIG_HOME\fP.
 .TP 8
 .B GIMP2_DATADIR
 to get the base location for data files such as brushes and patterns.
@@ -185,35 +185,35 @@ configuration files are stored in @gimpsysconfdir@, where ${prefix}
 is typically /usr.
 
 Most GIMP configuration is read in from the user's init file,
-\fB$HOME\fP/@gimpdir@/gimprc. The system wide equivalent is in
-@sysconfdir@/gimprc. The system wide file is parsed
-first and the user gimprc can override the system settings.
-@sysconfdir@/gimprc_user is the default gimprc
-placed in users' home directories the first time GIMP is run.
+@manpage_gimpdir@/gimprc. The system wide equivalent is in
+@sysconfdir@/gimprc. The system wide file is parsed first and the user
+gimprc can override the system settings.  @sysconfdir@/gimprc_user is
+the default gimprc placed in users' home directories the first time
+GIMP is run.
 
-\fB$HOME\fP/@gimpdir@/devicerc - holds settings for input devices
-together with the tool, colors, brush, pattern and gradient
-associated to that device.
+@manpage_gimpdir@/devicerc - holds settings for input devices together
+with the tool, colors, brush, pattern and gradient associated to that
+device.
 
-\fB$HOME\fP/@gimpdir@/gtkrc - users set of GIMP-specific GTK+ config
+@manpage_gimpdir@/gtkrc - users set of GIMP-specific GTK+ config
 settings. Options such as widget color and fonts sizes can be set
 here.
 
 @gimpsysconfdir@/gtkrc - system wide default set of GIMP-specific GTK+
 config settings.
 
-\fB$HOME\fP/@gimpdir@/menurc - user's set of keybindings.
+@manpage_gimpdir@/menurc - user's set of keybindings.
 
-\fB$HOME\fP/@gimpdir@/parasiterc - Stores all persistent GIMP
+@manpage_gimpdir@/parasiterc - Stores all persistent GIMP
 parasites. This file will be rewritten every time you quit GIMP.
 
-\fB$HOME\fP/@gimpdir@/sessionrc - This file takes session-specific
-info (that is info, you want to keep between two GIMP sessions). You
-are not supposed to edit it manually, but of course you can do. This
-file will be entirely rewritten every time you quit GIMP. If this
-file isn't found, defaults are used.
+@manpage_gimpdir@/sessionrc - This file takes session-specific info
+(that is info, you want to keep between two GIMP sessions). You are
+not supposed to edit it manually, but of course you can do. This file
+will be entirely rewritten every time you quit GIMP. If this file
+isn't found, defaults are used.
 
-\fB$HOME\fP/@gimpdir@/templaterc - Image templates are kept in this
+@manpage_gimpdir@/templaterc - Image templates are kept in this
 file. New images can conveniently created from these templates. If
 this file isn't found, defaults are used.
 
@@ -223,65 +223,64 @@ points and typographic picas and is placed in users home directories
 the first time GIMP is ran. If this file isn't found, defaults are
 used.
 
-\fB$HOME\fP/@gimpdir@/unitrc - This file contains your user unit
+@manpage_gimpdir@/unitrc - This file contains your user unit
 database. You can modify this list with the unit editor. You are not
 supposed to edit it manually, but of course you can do.  This file
 will be entirely rewritten every time you quit GIMP.
 
-\fB$HOME\fP/@gimpdir@/plug-ins - location of user installed plug-ins.
+@manpage_gimpdir@/plug-ins - location of user installed plug-ins.
 
-\fB$HOME\fP/@gimpdir@/pluginrc - plug-in initialization values are
-stored here. This file is parsed on startup and regenerated if need
-be.
+@manpage_gimpdir@/pluginrc - plug-in initialization values are stored
+here. This file is parsed on startup and regenerated if need be.
 
-\fB$HOME\fP/@gimpdir@/modules - location of user installed modules.
+@manpage_gimpdir@/modules - location of user installed modules.
 
-\fB$HOME\fP/@gimpdir@/tmp - default location that GIMP uses as
-temporary space.
+@manpage_gimpdir@/tmp - default location that GIMP uses as temporary
+space.
 
 @gimpdatadir@/brushes - system wide brush files.
 
-\fB$HOME\fP/@gimpdir@/brushes - user created and installed brush
+@manpage_gimpdir@/brushes - user created and installed brush
 files. These files are in the .gbr, .gih or .vbr file formats.
 
-\fB$HOME\fP/@gimpdir@/curves - Curve profiles and presets as saved from
+@manpage_gimpdir@/curves - Curve profiles and presets as saved from
 the Curves tool.
 
-\fB$HOME\fP/@gimpdir@/gimpressionist - Presets and user created brushes
+@manpage_gimpdir@/gimpressionist - Presets and user created brushes
 and papers are stored here.
 
-\fB$HOME\fP/@gimpdir@/levels - Level profiles and presets as saved from
+@manpage_gimpdir@/levels - Level profiles and presets as saved from
 the Levels tool.
 
 @gimpdatadir@/palettes - the system wide palette files.
 
-\fB$HOME\fP/@gimpdir@/palettes - user created and modified palette
+@manpage_gimpdir@/palettes - user created and modified palette
 files. This files are in the .gpl format.
 
 @gimpdatadir@/patterns - basic set of patterns for use in GIMP.
 
-\fB$HOME\fP/@gimpdir@/patterns - user created and installed gimp
-pattern files. This files are in the .pat format.
+@manpage_gimpdir@/patterns - user created and installed gimp pattern
+files. This files are in the .pat format.
 
 @gimpdatadir@/gradients - standard system wide set of gradient files.
 
-\fB$HOME\fP/@gimpdir@/gradients - user created and installed gradient
+@manpage_gimpdir@/gradients - user created and installed gradient
 files.
 
 @gimpdatadir@/scripts - system wide directory of scripts
 used in Script-Fu and other scripting extensions.
 
-\fB$HOME\fP/@gimpdir@/scripts - user created and installed scripts.
+@manpage_gimpdir@/scripts - user created and installed scripts.
 
 @gimpdatadir@/gflares - system wide directory used by the gflare
 plug-in.
 
-\fB$HOME\fP/@gimpdir@/gflares - user created and installed gflare
+@manpage_gimpdir@/gflares - user created and installed gflare
 files.
 
 @gimpdatadir@/gfig - system wide directory used by the gfig plug-in.
 
-\fB$HOME\fP/@gimpdir@/gfig - user created and installed gfig files.
+@manpage_gimpdir@/gfig - user created and installed gfig files.
 
 @gimpdatadir@/images/gimp\-splash.png - the default image used for the
 GIMP splash screen.
@@ -301,9 +300,9 @@ chosen as follows:
 
 .IP 1.
 GIMP tries to load a random splash screen from the directory
-\fB$HOME\fP/@gimpdir@/splashes.
+@manpage_gimpdir@/splashes.
 .IP 2.
-It then falls back to using \fB$HOME\fP/@gimpdir@/gimp\-splash.png.
+It then falls back to using @manpage_gimpdir@/gimp\-splash.png.
 .IP 3.
 If the user didn't install any custom splash images, a random image is
 picked from @gimpdatadir@/splashes.
@@ -333,7 +332,7 @@ There is also a GIMP User Manual available at http://docs.gimp.org/
 that goes into much more detail about the interactive use of GIMP.
 
 The latest versions of GIMP and the GTK+ libs are always available at
-ftp://ftp.gimp.org/.
+http://download.gimp.org/.
 
 
 .SH AUTHORS

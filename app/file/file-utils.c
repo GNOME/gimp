@@ -43,13 +43,7 @@
 #include "gimp-intl.h"
 
 
-static gchar * file_utils_unescape_uri  (const gchar *escaped,
-                                         gint         len,
-                                         const gchar *illegal_escaped_characters,
-                                         gboolean     ascii_must_not_be_escaped);
-
-
-gboolean
+static gboolean
 file_utils_filename_is_uri (const gchar  *filename,
                             GError      **error)
 {
@@ -95,26 +89,28 @@ file_utils_filename_is_uri (const gchar  *filename,
   return FALSE;
 }
 
-gchar *
-file_utils_filename_to_uri (Gimp         *gimp,
-                            const gchar  *filename,
-                            GError      **error)
+GFile *
+file_utils_filename_to_file (Gimp         *gimp,
+                             const gchar  *filename,
+                             GError      **error)
 {
-  GError *temp_error = NULL;
+  GFile  *file;
   gchar  *absolute;
-  gchar  *uri;
+  GError *temp_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
+  file = g_file_new_for_uri (filename);
+
   /*  check for prefixes like http or ftp  */
   if (file_procedure_find_by_prefix (gimp->plug_in_manager->load_procs,
-                                     filename))
+                                     file))
     {
       if (g_utf8_validate (filename, -1, NULL))
         {
-          return g_strdup (filename);
+          return file;
         }
       else
         {
@@ -127,14 +123,17 @@ file_utils_filename_to_uri (Gimp         *gimp,
     }
   else if (file_utils_filename_is_uri (filename, &temp_error))
     {
-      return g_strdup (filename);
+      return file;
     }
   else if (temp_error)
     {
       g_propagate_error (error, temp_error);
+      g_object_unref (file);
 
       return NULL;
     }
+
+  g_object_unref (file);
 
   if (! g_path_is_absolute (filename))
     {
@@ -149,249 +148,95 @@ file_utils_filename_to_uri (Gimp         *gimp,
       absolute = g_strdup (filename);
     }
 
-  uri = g_filename_to_uri (absolute, NULL, error);
+  file = g_file_new_for_path (absolute);
 
   g_free (absolute);
 
-  return uri;
+  return file;
 }
 
-gchar *
-file_utils_any_to_uri (Gimp         *gimp,
-                       const gchar  *filename_or_uri,
-                       GError      **error)
+GFile *
+file_utils_file_with_new_ext (GFile *file,
+                              GFile *ext_file)
 {
   gchar *uri;
+  gchar *file_ext;
+  gint   file_ext_len = 0;
+  gchar *ext_file_ext = NULL;
+  gchar *uri_without_ext;
+  gchar *new_uri;
+  GFile *ret;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (filename_or_uri != NULL, NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (ext_file == NULL || G_IS_FILE (ext_file), NULL);
 
-  /*  first try if we got a file uri  */
-  uri = g_filename_from_uri (filename_or_uri, NULL, NULL);
+  uri      = g_file_get_uri (file);
+  file_ext = file_utils_file_get_ext (file);
 
-  if (uri)
+  if (file_ext)
     {
-      g_free (uri);
-      uri = g_strdup (filename_or_uri);
-    }
-  else
-    {
-      uri = file_utils_filename_to_uri (gimp, filename_or_uri, error);
-    }
-
-  return uri;
-}
-
-
-/**
- * file_utils_filename_from_uri:
- * @uri: a URI
- *
- * A utility function to be used as a replacement for
- * g_filename_from_uri(). It deals with file: URIs with hostname in a
- * platform-specific way. On Win32, a UNC path is created and
- * returned, on other platforms the URI is detected as non-local and
- * NULL is returned.
- *
- * Returns: newly allocated filename or %NULL if @uri is a remote file
- **/
-gchar *
-file_utils_filename_from_uri (const gchar *uri)
-{
-  gchar *filename;
-  gchar *hostname;
-
-  g_return_val_if_fail (uri != NULL, NULL);
-
-  filename = g_filename_from_uri (uri, &hostname, NULL);
-
-  if (!filename)
-    return NULL;
-
-  if (hostname)
-    {
-      /*  we have a file: URI with a hostname                           */
-#ifdef G_OS_WIN32
-      /*  on Win32, create a valid UNC path and use it as the filename  */
-
-      gchar *tmp = g_build_filename ("//", hostname, filename, NULL);
-
-      g_free (filename);
-      filename = tmp;
-#else
-      /*  otherwise return NULL, caller should use URI then             */
-      g_free (filename);
-      filename = NULL;
-#endif
-
-      g_free (hostname);
+      file_ext_len = strlen (file_ext);
+      g_free (file_ext);
     }
 
-  return filename;
-}
+  if (ext_file)
+    ext_file_ext = file_utils_file_get_ext (ext_file);
 
-gchar *
-file_utils_uri_with_new_ext (const gchar *uri,
-                             const gchar *ext_uri)
-{
-  const gchar *uri_ext      = file_utils_uri_get_ext (uri);
-  const gchar *ext_uri_ext  = ext_uri ? file_utils_uri_get_ext (ext_uri) : NULL;
-  gchar *uri_without_ext    = g_strndup (uri, uri_ext - uri);
-  gchar *ret                = g_strconcat (uri_without_ext, ext_uri_ext, NULL);
+  uri_without_ext = g_strndup (uri, strlen (uri) - file_ext_len);
+
+  g_free (uri);
+
+  new_uri = g_strconcat (uri_without_ext, ext_file_ext, NULL);
+
+  ret = g_file_new_for_uri (new_uri);
+
+  g_free (ext_file_ext);
   g_free (uri_without_ext);
+  g_free (new_uri);
+
   return ret;
 }
 
 
 /**
- * file_utils_uri_get_ext:
- * @uri:
+ * file_utils_file_get_ext:
+ * @file:
  *
- * Returns the position of the extension (including the .) for an URI. If
- * there is no extension the returned position is right after the
- * string, at the terminating NULL character.
+ * Returns the position of the extension (including the .), or NULL
+ * if there is no extension.
  *
  * Returns:
  **/
-const gchar *
-file_utils_uri_get_ext (const gchar *uri)
+gchar *
+file_utils_file_get_ext (GFile *file)
 {
-  const gchar *ext        = NULL;
-  int          uri_len    = strlen (uri);
-  int          search_len = 0;
+  gchar *uri;
+  gint   uri_len;
+  gchar *ext = NULL;
+  gint   search_len;
 
-  if (g_strrstr (uri, ".gz"))
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+  uri     = g_file_get_uri (file);
+  uri_len = strlen (uri);
+
+  if (g_str_has_suffix (uri, ".gz"))
     search_len = uri_len - 3;
-  else if (g_strrstr (uri, ".bz2"))
+  else if (g_str_has_suffix (uri, ".bz2"))
     search_len = uri_len - 4;
-  else if (g_strrstr (uri, ".xz"))
+  else if (g_str_has_suffix (uri, ".xz"))
     search_len = uri_len - 3;
   else
     search_len = uri_len;
 
   ext = g_strrstr_len (uri, search_len, ".");
 
-  if (! ext)
-    ext = uri + uri_len;
+  if (ext)
+    ext = g_strdup (ext);
+
+  g_free (uri);
 
   return ext;
-}
-
-gchar *
-file_utils_uri_to_utf8_filename (const gchar *uri)
-{
-  g_return_val_if_fail (uri != NULL, NULL);
-
-  if (g_str_has_prefix (uri, "file:"))
-    {
-      gchar *filename = file_utils_filename_from_uri (uri);
-
-      if (filename)
-        {
-          GError *error = NULL;
-          gchar  *utf8;
-
-          utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, &error);
-          g_free (filename);
-
-          if (utf8)
-            return utf8;
-
-          g_warning ("%s: cannot convert filename to UTF-8: %s",
-                     G_STRLOC, error->message);
-          g_error_free (error);
-        }
-    }
-
-  return g_strdup (uri);
-}
-
-static gchar *
-file_utils_uri_to_utf8_basename (const gchar *uri)
-{
-  gchar *filename;
-  gchar *basename = NULL;
-
-  g_return_val_if_fail (uri != NULL, NULL);
-
-  filename = file_utils_uri_to_utf8_filename (uri);
-
-  if (strstr (filename, G_DIR_SEPARATOR_S))
-    {
-      basename = g_path_get_basename (filename);
-    }
-  else if (strstr (filename, "://"))
-    {
-      basename = strrchr (uri, '/');
-
-      if (basename)
-        basename = g_strdup (basename + 1);
-    }
-
-  if (basename)
-    {
-      g_free (filename);
-      return basename;
-    }
-
-  return filename;
-}
-
-gchar *
-file_utils_uri_display_basename (const gchar *uri)
-{
-  gchar *basename = NULL;
-
-  g_return_val_if_fail (uri != NULL, NULL);
-
-  if (g_str_has_prefix (uri, "file:"))
-    {
-      gchar *filename = file_utils_filename_from_uri (uri);
-
-      if (filename)
-        {
-          basename = g_filename_display_basename (filename);
-          g_free (filename);
-        }
-    }
-  else
-    {
-      gchar *name = file_utils_uri_display_name (uri);
-
-      basename = strrchr (name, '/');
-      if (basename)
-        basename = g_strdup (basename + 1);
-
-      g_free (name);
-    }
-
-  return basename ? basename : file_utils_uri_to_utf8_basename (uri);
-}
-
-gchar *
-file_utils_uri_display_name (const gchar *uri)
-{
-  gchar *name = NULL;
-
-  g_return_val_if_fail (uri != NULL, NULL);
-
-  if (g_str_has_prefix (uri, "file:"))
-    {
-      gchar *filename = file_utils_filename_from_uri (uri);
-
-      if (filename)
-        {
-          name = g_filename_display_name (filename);
-          g_free (filename);
-        }
-    }
-  else
-    {
-      name = file_utils_unescape_uri (uri, -1, "/", FALSE);
-    }
-
-  return name ? name : g_strdup (uri);
 }
 
 GdkPixbuf *
@@ -445,114 +290,32 @@ gboolean
 file_utils_save_thumbnail (GimpImage   *image,
                            const gchar *filename)
 {
-  const gchar *image_uri;
-  gboolean     success = FALSE;
+  GFile    *file;
+  gboolean  success = FALSE;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
 
-  image_uri = gimp_image_get_uri (image);
+  file = gimp_image_get_file (image);
 
-  if (image_uri)
+  if (file)
     {
-      gchar *uri = g_filename_to_uri (filename, NULL, NULL);
+      gchar *image_uri = g_file_get_uri (file);
+      gchar *uri       = g_filename_to_uri (filename, NULL, NULL);
 
-      if (uri)
+      if (uri && image_uri && ! strcmp (uri, image_uri))
         {
-          if ( ! strcmp (uri, image_uri))
-            {
-              GimpImagefile *imagefile;
+          GimpImagefile *imagefile;
 
-              imagefile = gimp_imagefile_new (image->gimp, uri);
-              success = gimp_imagefile_save_thumbnail (imagefile, NULL, image,
-                                                       NULL);
-              g_object_unref (imagefile);
-            }
-
-          g_free (uri);
+          imagefile = gimp_imagefile_new (image->gimp, file);
+          success = gimp_imagefile_save_thumbnail (imagefile, NULL, image,
+                                                   NULL);
+          g_object_unref (imagefile);
         }
+
+      g_free (image_uri);
+      g_free (uri);
     }
 
   return success;
-}
-
-
-/* the following two functions are copied from glib/gconvert.c */
-
-static gint
-unescape_character (const gchar *scanner)
-{
-  gint first_digit;
-  gint second_digit;
-
-  first_digit = g_ascii_xdigit_value (scanner[0]);
-  if (first_digit < 0)
-    return -1;
-
-  second_digit = g_ascii_xdigit_value (scanner[1]);
-  if (second_digit < 0)
-    return -1;
-
-  return (first_digit << 4) | second_digit;
-}
-
-static gchar *
-file_utils_unescape_uri (const gchar *escaped,
-                         gint         len,
-                         const gchar *illegal_escaped_characters,
-                         gboolean     ascii_must_not_be_escaped)
-{
-  const gchar *in, *in_end;
-  gchar *out, *result;
-  gint c;
-
-  if (escaped == NULL)
-    return NULL;
-
-  if (len < 0)
-    len = strlen (escaped);
-
-  result = g_malloc (len + 1);
-
-  out = result;
-  for (in = escaped, in_end = escaped + len; in < in_end; in++)
-    {
-      c = *in;
-
-      if (c == '%')
-	{
-	  /* catch partial escape sequences past the end of the substring */
-	  if (in + 3 > in_end)
-	    break;
-
-	  c = unescape_character (in + 1);
-
-	  /* catch bad escape sequences and NUL characters */
-	  if (c <= 0)
-	    break;
-
-	  /* catch escaped ASCII */
-	  if (ascii_must_not_be_escaped && c <= 0x7F)
-	    break;
-
-	  /* catch other illegal escaped characters */
-	  if (strchr (illegal_escaped_characters, c) != NULL)
-	    break;
-
-	  in += 2;
-	}
-
-      *out++ = c;
-    }
-
-  g_assert (out - result <= len);
-  *out = '\0';
-
-  if (in != in_end)
-    {
-      g_free (result);
-      return NULL;
-    }
-
-  return result;
 }

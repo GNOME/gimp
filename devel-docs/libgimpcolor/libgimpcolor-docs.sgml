@@ -21,6 +21,7 @@
     <xi:include href="xml/gimpadaptivesupersample.xml" />
     <xi:include href="xml/gimpbilinear.xml" />
     <xi:include href="xml/gimpcairocolor.xml" />
+    <xi:include href="xml/gimplcms.xml" />
   </part>
 
   <index id="libgimpcolor-index">

@@ -30,6 +30,8 @@
 
 #include "core-types.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-undo-push.h"
@@ -130,8 +132,9 @@ static void            gimp_group_layer_transform    (GimpItem        *item,
                                                       GimpProgress    *progress);
 
 static gint64      gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
-                                                      gint             width,
-                                                      gint             height);
+                                                      GimpComponentType  component_type,
+                                                      gint               width,
+                                                      gint               height);
 static void            gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                                       GimpImage         *dest_image,
                                                       const Babl        *new_format,
@@ -804,6 +807,7 @@ gimp_group_layer_transform (GimpItem               *item,
 
 static gint64
 gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
+                                   GimpComponentType   component_type,
                                    gint                width,
                                    gint                height)
 {
@@ -828,19 +832,20 @@ gimp_group_layer_estimate_memsize (const GimpDrawable *drawable,
                       gimp_item_get_height (GIMP_ITEM (drawable)));
 
       memsize += gimp_drawable_estimate_memsize (child,
+                                                 component_type,
                                                  child_width,
                                                  child_height);
     }
 
   base_type = gimp_drawable_get_base_type (drawable);
 
-  memsize += gimp_projection_estimate_memsize (base_type,
-                                               gimp_drawable_get_precision (drawable),
+  memsize += gimp_projection_estimate_memsize (base_type, component_type,
                                                width, height);
 
-  return memsize + GIMP_DRAWABLE_CLASS (parent_class)->estimate_memsize (drawable,
-                                                                         width,
-                                                                         height);
+  return memsize +
+         GIMP_DRAWABLE_CLASS (parent_class)->estimate_memsize (drawable,
+                                                               component_type,
+                                                               width, height);
 }
 
 static const Babl *

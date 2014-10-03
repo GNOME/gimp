@@ -260,11 +260,19 @@ GType gimp_fill_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_FOREGROUND_FILL,   /*< desc="Foreground color" >*/
-  GIMP_BACKGROUND_FILL,   /*< desc="Background color" >*/
-  GIMP_WHITE_FILL,        /*< desc="White"            >*/
-  GIMP_TRANSPARENT_FILL,  /*< desc="Transparency"     >*/
-  GIMP_PATTERN_FILL       /*< desc="Pattern"          >*/
+  GIMP_FILL_FOREGROUND,  /*< nick=foreground-fill,  desc="Foreground color" >*/
+  GIMP_FILL_BACKGROUND,  /*< nick=background-fill,  desc="Background color" >*/
+  GIMP_FILL_WHITE,       /*< nick=white-fill,       desc="White"            >*/
+  GIMP_FILL_TRANSPARENT, /*< nick=transparent-fill, desc="Transparency"     >*/
+  GIMP_FILL_PATTERN,     /*< nick=pattern-fill,     desc="Pattern"          >*/
+
+#ifndef GIMP_DISABLE_DEPRECATED
+  GIMP_FOREGROUND_FILL  = GIMP_FILL_FOREGROUND,  /*< skip, pdb-skip >*/
+  GIMP_BACKGROUND_FILL  = GIMP_FILL_BACKGROUND,  /*< skip, pdb-skip >*/
+  GIMP_WHITE_FILL       = GIMP_FILL_WHITE,       /*< skip, pdb-skip >*/
+  GIMP_TRANSPARENT_FILL = GIMP_FILL_TRANSPARENT, /*< skip, pdb-skip >*/
+  GIMP_PATTERN_FILL     = GIMP_FILL_PATTERN      /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpFillType;
 
 

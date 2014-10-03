@@ -218,7 +218,7 @@ plugin_menu_branch_register_invoker (GimpProcedure         *procedure,
       if (plug_in)
         {
           gimp_plug_in_manager_add_menu_branch (gimp->plug_in_manager,
-                                                plug_in->prog, menu_path, menu_name);
+                                                plug_in->file, menu_path, menu_name);
         }
       else
         {

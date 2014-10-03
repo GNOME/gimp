@@ -266,8 +266,8 @@ static gboolean  resolution_change_callback (GtkAdjustment *adjustment,
 
 typedef struct
 {
-  GtkObject *adjustment[4];
-  gint       level;
+  GtkAdjustment *adjustment[4];
+  gint           level;
 } SaveDialogVals;
 
 static gboolean  save_dialog              (void);
@@ -1011,6 +1011,9 @@ load_image (const gchar  *filename,
   g_print (" GraphicsAlphaBits: %d\n", plvals.graphicsalpha);
 #endif
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   /* Try to see if PostScript file is available */
   ifp = g_fopen (filename, "r");
   if (ifp == NULL)
@@ -1021,9 +1024,6 @@ load_image (const gchar  *filename,
       return -1;
     }
   fclose (ifp);
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury, &is_epsf);
   if (!ifp)
@@ -1187,6 +1187,9 @@ save_image (const gchar  *filename,
       break;
     }
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   /* Open the output file. */
   ofp = g_fopen (filename, "wb");
   if (!ofp)
@@ -1196,9 +1199,6 @@ save_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   save_ps_header (ofp, filename);
 
@@ -3002,21 +3002,21 @@ static gboolean
 load_dialog (const gchar *filename,
              gboolean     loadPDF)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *hbox;
-  GtkWidget *frame;
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  GtkWidget *entry    = NULL;
-  GtkWidget *target   = NULL;
-  GtkWidget *toggle;
-  GtkWidget *selector = NULL;
-  gint32     page_count;
-  gchar     *range    = NULL;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *hbox;
+  GtkWidget     *frame;
+  GtkWidget     *vbox;
+  GtkWidget     *table;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  GtkWidget     *entry    = NULL;
+  GtkWidget     *target   = NULL;
+  GtkWidget     *toggle;
+  GtkWidget     *selector = NULL;
+  gint32         page_count;
+  gchar         *range    = NULL;
+  gboolean       run;
 
   page_count = count_ps_pages (filename);
 
@@ -3079,9 +3079,11 @@ load_dialog (const gchar *filename,
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  spinbutton = gimp_spin_button_new (&adj, plvals.resolution,
-                                     MIN_RESOLUTION, MAX_RESOLUTION,
-                                     1, 10, 0, 1, 0);
+  adj = (GtkAdjustment *) gtk_adjustment_new (plvals.resolution,
+                                              MIN_RESOLUTION, MAX_RESOLUTION,
+                                              1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Resolution:"), 0.0, 0.5,
                              spinbutton, 1, FALSE);
@@ -3089,28 +3091,32 @@ load_dialog (const gchar *filename,
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (resolution_change_callback),
                     &plvals.resolution);
-
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.resolution);
 
-
-  ps_width_spinbutton = gimp_spin_button_new (&adj, plvals.width,
+  adj = (GtkAdjustment *) gtk_adjustment_new (plvals.width,
                                               1, GIMP_MAX_IMAGE_SIZE,
-                                              1, 10, 0, 1, 0);
+                                              1, 10, 0);
+  ps_width_spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Width:"), 0.0, 0.5,
                              ps_width_spinbutton, 1, FALSE);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.width);
 
-  ps_height_spinbutton = gimp_spin_button_new (&adj, plvals.height,
-                                               1, GIMP_MAX_IMAGE_SIZE,
-                                               1, 10, 0, 1, 0);
+  adj = (GtkAdjustment *) gtk_adjustment_new (plvals.height,
+                                              1, GIMP_MAX_IMAGE_SIZE,
+                                              1, 10, 0);
+  ps_height_spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("_Height:"), 0.0, 0.5,
                              ps_height_spinbutton, 1, FALSE);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.height);
@@ -3250,16 +3256,16 @@ static gboolean
 save_dialog (void)
 {
   SaveDialogVals *vals;
-  GtkWidget *dialog;
-  GtkWidget *toggle;
-  GtkWidget *frame, *uframe;
-  GtkWidget *hbox, *vbox;
-  GtkWidget *main_vbox[2];
-  GtkWidget *table;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  gint       j;
-  gboolean   run;
+  GtkWidget      *dialog;
+  GtkWidget      *toggle;
+  GtkWidget      *frame, *uframe;
+  GtkWidget      *hbox, *vbox;
+  GtkWidget      *main_vbox[2];
+  GtkWidget      *table;
+  GtkWidget      *spinbutton;
+  GtkAdjustment  *adj;
+  gint            j;
+  gboolean        run;
 
   vals = g_new (SaveDialogVals, 1);
   vals->level = (psvals.level > 1);
@@ -3294,8 +3300,11 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  spinbutton = gimp_spin_button_new (&vals->adjustment[0], psvals.width,
-                                     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
+  vals->adjustment[0] = (GtkAdjustment *)
+    gtk_adjustment_new (psvals.width,
+                        1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (vals->adjustment[0], 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("_Width:"), 0.0, 0.5,
                              spinbutton, 1, FALSE);
@@ -3303,8 +3312,11 @@ save_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.width);
 
-  spinbutton = gimp_spin_button_new (&vals->adjustment[1], psvals.height,
-                                     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
+  vals->adjustment[1] = (GtkAdjustment *)
+    gtk_adjustment_new (psvals.height,
+                        1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (vals->adjustment[1], 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Height:"), 0.0, 0.5,
                              spinbutton, 1, FALSE);
@@ -3312,8 +3324,11 @@ save_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.height);
 
-  spinbutton = gimp_spin_button_new (&vals->adjustment[2], psvals.x_offset,
-                                     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
+  vals->adjustment[2] = (GtkAdjustment *)
+    gtk_adjustment_new (psvals.x_offset,
+                        0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (vals->adjustment[2], 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("_X offset:"), 0.0, 0.5,
                              spinbutton, 1, FALSE);
@@ -3321,8 +3336,11 @@ save_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.x_offset);
 
-  spinbutton = gimp_spin_button_new (&vals->adjustment[3], psvals.y_offset,
-                                     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
+  vals->adjustment[3] = (GtkAdjustment *)
+    gtk_adjustment_new (psvals.y_offset,
+                        0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (vals->adjustment[3], 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
                              _("_Y offset:"), 0.0, 0.5,
                              spinbutton, 1, FALSE);
@@ -3420,8 +3438,10 @@ save_dialog (void)
                           table,  "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  spinbutton = gimp_spin_button_new (&adj, psvals.preview_size,
-                                     0, 1024, 1, 10, 0, 1, 0);
+  adj = (GtkAdjustment *) gtk_adjustment_new (psvals.preview_size,
+                                              0, 1024, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Preview _size:"), 1.0, 0.5,
                              spinbutton, 1, FALSE);
@@ -3472,10 +3492,9 @@ save_unit_toggle_update (GtkWidget *widget,
 
       for (i = 0; i < 4; i++)
         {
-          value = gtk_adjustment_get_value (GTK_ADJUSTMENT (vals->adjustment[i])) * factor;
+          value = gtk_adjustment_get_value (vals->adjustment[i]) * factor;
 
-          gtk_adjustment_set_value (GTK_ADJUSTMENT (vals->adjustment[i]),
-                                    value);
+          gtk_adjustment_set_value (vals->adjustment[i], value);
         }
     }
 }

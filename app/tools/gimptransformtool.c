@@ -69,7 +69,6 @@
 
 
 #define RESPONSE_RESET  1
-#define RESPONSE_EEK    2
 #define MIN_HANDLE_SIZE 6
 
 
@@ -1271,8 +1270,8 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   GimpTransformResize   clip    = options->clip;
   GimpProgress         *progress;
 
-  progress = gimp_progress_start (GIMP_PROGRESS (tool),
-                                  tr_tool->progress_text, FALSE);
+  progress = gimp_progress_start (GIMP_PROGRESS (tool), FALSE,
+                                  "%s", tr_tool->progress_text);
 
   if (gimp_item_get_linked (active_item))
     gimp_item_linked_transform (active_item, context,
@@ -1642,25 +1641,22 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 
   icon_name = gimp_viewable_get_icon_name (GIMP_VIEWABLE (tool_info));
 
-  tr_tool->overlay = FALSE;
-
   tr_tool->gui = gimp_tool_gui_new (tool_info,
                                     tool_info->blurb,
                                     gtk_widget_get_screen (GTK_WIDGET (shell)),
                                     gimp_widget_get_monitor (GTK_WIDGET (shell)),
-                                    tr_tool->overlay,
+                                    TRUE,
 
-                                    GIMP_STOCK_WILBER_EEK, RESPONSE_EEK,
                                     GIMP_STOCK_RESET, RESPONSE_RESET,
                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                     icon_name,        GTK_RESPONSE_OK,
 
                                     NULL);
 
+  gimp_tool_gui_set_auto_overlay (tr_tool->gui, TRUE);
   gimp_tool_gui_set_default_response (tr_tool->gui, GTK_RESPONSE_OK);
 
   gimp_tool_gui_set_alternative_button_order (tr_tool->gui,
-                                              RESPONSE_EEK,
                                               RESPONSE_RESET,
                                               GTK_RESPONSE_OK,
                                               GTK_RESPONSE_CANCEL,
@@ -1717,18 +1713,6 @@ gimp_transform_tool_response (GimpToolGui       *gui,
 
   switch (response_id)
     {
-    case RESPONSE_EEK:
-      if (tr_tool->gui)
-        {
-          GimpDisplayShell *shell = gimp_display_get_shell (display);
-
-          gimp_tool_gui_set_overlay (tr_tool->gui,
-                                     gtk_widget_get_screen (GTK_WIDGET (shell)),
-                                     gimp_widget_get_monitor (GTK_WIDGET (shell)),
-                                     ! gimp_tool_gui_get_overlay (tr_tool->gui));
-        }
-      break;
-
     case RESPONSE_RESET:
       /* Move all undo events to redo, and pop off the first
        * one as that's the current one, which always sits on

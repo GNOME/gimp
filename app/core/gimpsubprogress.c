@@ -30,8 +30,8 @@ static void           gimp_sub_progress_iface_init    (GimpProgressInterface *if
 static void           gimp_sub_progress_finalize      (GObject             *object);
 
 static GimpProgress * gimp_sub_progress_start         (GimpProgress        *progress,
-                                                       const gchar         *message,
-                                                       gboolean             cancelable);
+                                                       gboolean             cancellable,
+                                                       const gchar         *message);
 static void           gimp_sub_progress_end           (GimpProgress        *progress);
 static gboolean       gimp_sub_progress_is_active     (GimpProgress        *progress);
 static void           gimp_sub_progress_set_text      (GimpProgress        *progress,
@@ -101,8 +101,8 @@ gimp_sub_progress_iface_init (GimpProgressInterface *iface)
 
 static GimpProgress *
 gimp_sub_progress_start (GimpProgress *progress,
-                         const gchar  *message,
-                         gboolean      cancelable)
+                         gboolean      cancellable,
+                         const gchar  *message)
 {
   /* does nothing */
   return NULL;

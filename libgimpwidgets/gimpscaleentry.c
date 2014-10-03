@@ -137,11 +137,11 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
                                const gchar *tooltip,
                                const gchar *help_id)
 {
-  GtkWidget *label;
-  GtkWidget *scale;
-  GtkWidget *spinbutton;
-  GtkObject *adjustment;
-  GtkObject *return_adj;
+  GtkWidget     *label;
+  GtkWidget     *scale;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adjustment;
+  GtkAdjustment *return_adj;
 
   label = gtk_label_new_with_mnemonic (text);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
@@ -154,25 +154,28 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
       unconstrained_lower <= lower &&
       unconstrained_upper >= upper)
     {
-      GtkObject *constrained_adj;
+      GtkAdjustment *constrained_adj;
 
-      constrained_adj = gtk_adjustment_new (value, lower, upper,
-                                            step_increment, page_increment,
-                                            0.0);
+      constrained_adj = (GtkAdjustment *)
+        gtk_adjustment_new (value, lower, upper,
+                            step_increment, page_increment,
+                            0.0);
 
-      spinbutton = gimp_spin_button_new (&adjustment, value,
-                                         unconstrained_lower,
-                                         unconstrained_upper,
-                                         step_increment, page_increment, 0.0,
-                                         1.0, digits);
+      adjustment = (GtkAdjustment *)
+        gtk_adjustment_new (value,
+                            unconstrained_lower,
+                            unconstrained_upper,
+                            step_increment, page_increment, 0.0);
+      spinbutton = gtk_spin_button_new (adjustment, step_increment, digits);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
       g_signal_connect
-        (G_OBJECT (constrained_adj), "value-changed",
+        (constrained_adj, "value-changed",
          G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
          adjustment);
 
       g_signal_connect
-        (G_OBJECT (adjustment), "value-changed",
+        (adjustment, "value-changed",
          G_CALLBACK (gimp_scale_entry_unconstrained_adjustment_callback),
          constrained_adj);
 
@@ -182,9 +185,11 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
     }
   else
     {
-      spinbutton = gimp_spin_button_new (&adjustment, value, lower, upper,
-                                         step_increment, page_increment, 0.0,
-                                         1.0, digits);
+      adjustment = (GtkAdjustment *)
+        gtk_adjustment_new (value, lower, upper,
+                            step_increment, page_increment, 0.0);
+      spinbutton = gtk_spin_button_new (adjustment, step_increment, digits);
+      gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
 
       return_adj = adjustment;
     }
@@ -204,13 +209,11 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
       scale = gimp_color_scale_new (GTK_ORIENTATION_HORIZONTAL,
                                     GIMP_COLOR_SELECTOR_VALUE);
 
-      gtk_range_set_adjustment (GTK_RANGE (scale),
-                                GTK_ADJUSTMENT (adjustment));
+      gtk_range_set_adjustment (GTK_RANGE (scale), adjustment);
     }
   else
     {
-      scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL,
-                             GTK_ADJUSTMENT (adjustment));
+      scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, adjustment);
     }
 
   if (scale_width > 0)
@@ -238,7 +241,7 @@ gimp_scale_entry_new_internal (gboolean     color_scale,
   g_object_set_data (G_OBJECT (return_adj), "scale",      scale);
   g_object_set_data (G_OBJECT (return_adj), "spinbutton", spinbutton);
 
-  return return_adj;
+  return GTK_OBJECT (return_adj);
 }
 
 /**

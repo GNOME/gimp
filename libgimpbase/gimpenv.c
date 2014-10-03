@@ -32,7 +32,7 @@
 #include <AppKit/AppKit.h>
 #endif
 
-#include <glib-object.h>
+#include <gio/gio.h>
 #include <glib/gstdio.h>
 
 #undef GIMP_DISABLE_DEPRECATED
@@ -555,23 +555,6 @@ gimp_sysconf_directory (void)
 }
 
 /**
- * gimp_user_directory:
- * @type: the type of user directory to retrieve
- *
- * This procedure is deprecated! Use g_get_user_special_dir() instead.
- *
- * Returns: The path to the specified user directory, or %NULL if the
- *          logical ID was not found.
- *
- * Since: GIMP 2.4
- **/
-const gchar *
-gimp_user_directory (GimpUserDirectory type)
-{
-  return g_get_user_special_dir (type);
-}
-
-/**
  * gimp_plug_in_directory:
  *
  * Returns the top directory for GIMP plug_ins and modules. If the
@@ -606,16 +589,203 @@ gimp_plug_in_directory (void)
   return gimp_plug_in_dir;
 }
 
+static GFile *
+gimp_child_file (const gchar *parent,
+                 const gchar *element,
+                 va_list      args)
+{
+  GFile *file = g_file_new_for_path (parent);
+
+  while (element)
+    {
+      GFile *child = g_file_get_child (file, element);
+
+      g_object_unref (file);
+      file = child;
+
+      element = va_arg (args, const gchar *);
+    }
+
+  return file;
+}
+
+/**
+ * gimp_directory_file:
+ * @first_element: the first element of a path to a file in the
+ *                 user's GIMP directory, or %NULL.
+ * @...: a %NULL terminated list of the remaining elements of the path
+ *       to the file.
+ *
+ * Returns a #GFile in the user's GIMP directory, or the data
+ * directory itself if @first_element is %NULL.
+ *
+ * See also: gimp_directory().
+ *
+ * Since: GIMP 2.10
+ *
+ * Returns: a new @GFile for the path, Free with g_object_unref().
+ **/
+GFile *
+gimp_directory_file (const gchar *first_element,
+                     ...)
+{
+  GFile   *file;
+  va_list  args;
+
+  va_start (args, first_element);
+  file = gimp_child_file (gimp_directory (), first_element, args);
+  va_end (args);
+
+  return file;
+}
+
+/**
+ * gimp_data_directory_file:
+ * @first_element: the first element of a path to a file in the
+ *                 data directory, or %NULL.
+ * @...: a %NULL terminated list of the remaining elements of the path
+ *       to the file.
+ *
+ * Returns a #GFile in the data directory, or the data directory
+ * itself if @first_element is %NULL.
+ *
+ * See also: gimp_data_directory().
+ *
+ * Since: GIMP 2.10
+ *
+ * Returns: a new @GFile for the path, Free with g_object_unref().
+ **/
+GFile *
+gimp_data_directory_file (const gchar *first_element,
+                          ...)
+{
+  GFile   *file;
+  va_list  args;
+
+  va_start (args, first_element);
+  file = gimp_child_file (gimp_data_directory (), first_element, args);
+  va_end (args);
+
+  return file;
+}
+
+/**
+ * gimp_locale_directory_file:
+ * @first_element: the first element of a path to a file in the
+ *                 locale directory, or %NULL.
+ * @...: a %NULL terminated list of the remaining elements of the path
+ *       to the file.
+ *
+ * Returns a #GFile in the locale directory, or the locale directory
+ * itself if @first_element is %NULL.
+ *
+ * See also: gimp_locale_directory().
+ *
+ * Since: GIMP 2.10
+ *
+ * Returns: a new @GFile for the path, Free with g_object_unref().
+ **/
+GFile *
+gimp_locale_directory_file (const gchar *first_element,
+                            ...)
+{
+  GFile   *file;
+  va_list  args;
+
+  va_start (args, first_element);
+  file = gimp_child_file (gimp_locale_directory (), first_element, args);
+  va_end (args);
+
+  return file;
+}
+
+/**
+ * gimp_sysconf_directory_file:
+ * @first_element: the first element of a path to a file in the
+ *                 sysconf directory, or %NULL.
+ * @...: a %NULL terminated list of the remaining elements of the path
+ *       to the file.
+ *
+ * Returns a #GFile in the sysconf directory, or the sysconf directory
+ * itself if @first_element is %NULL.
+ *
+ * See also: gimp_sysconf_directory().
+ *
+ * Since: GIMP 2.10
+ *
+ * Returns: a new @GFile for the path, Free with g_object_unref().
+ **/
+GFile *
+gimp_sysconf_directory_file (const gchar *first_element,
+                             ...)
+{
+  GFile   *file;
+  va_list  args;
+
+  va_start (args, first_element);
+  file = gimp_child_file (gimp_sysconf_directory (), first_element, args);
+  va_end (args);
+
+  return file;
+}
+
+/**
+ * gimp_plug_in_directory_file:
+ * @first_element: the first element of a path to a file in the
+ *                 plug-in directory, or %NULL.
+ * @...: a %NULL terminated list of the remaining elements of the path
+ *       to the file.
+ *
+ * Returns a #GFile in the plug-in directory, or the plug-in directory
+ * itself if @first_element is %NULL.
+ *
+ * See also: gimp_plug_in_directory().
+ *
+ * Since: GIMP 2.10
+ *
+ * Returns: a new @GFile for the path, Free with g_object_unref().
+ **/
+GFile *
+gimp_plug_in_directory_file (const gchar *first_element,
+                             ...)
+{
+  GFile   *file;
+  va_list  args;
+
+  va_start (args, first_element);
+  file = gimp_child_file (gimp_plug_in_directory (), first_element, args);
+  va_end (args);
+
+  return file;
+}
+
+/**
+ * gimp_user_directory:
+ * @type: the type of user directory to retrieve
+ *
+ * This procedure is deprecated! Use g_get_user_special_dir() instead.
+ *
+ * Returns: The path to the specified user directory, or %NULL if the
+ *          logical ID was not found.
+ *
+ * Since: GIMP 2.4
+ **/
+const gchar *
+gimp_user_directory (GimpUserDirectory type)
+{
+  return g_get_user_special_dir (type);
+}
+
 /**
  * gimp_personal_rc_file:
  * @basename: The basename of a rc_file.
  *
  * Returns the name of a file in the user-specific GIMP settings directory.
  *
- * The returned string is allocated dynamically and *SHOULD* be freed
- * with g_free() after use. The returned string is in the encoding
- * used for filenames by GLib, which isn't necessarily
- * UTF-8. (On Windows it always is UTF-8.)
+ * The returned string is newly allocated and should be freed with
+ * g_free() after use. The returned string is in the encoding used for
+ * filenames by GLib, which isn't necessarily UTF-8. (On Windows it
+ * always is UTF-8.)
  *
  * Returns: The name of a file in the user-specific GIMP settings directory.
  **/

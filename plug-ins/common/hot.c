@@ -351,7 +351,7 @@ pluginCore (piArgs *argp)
       nl = gimp_layer_new (argp->image, name, width, height,
                            GIMP_RGBA_IMAGE, (gdouble)100, GIMP_NORMAL_MODE);
       ndrw = gimp_drawable_get (nl);
-      gimp_drawable_fill (nl, GIMP_TRANSPARENT_FILL);
+      gimp_drawable_fill (nl, GIMP_FILL_TRANSPARENT);
       gimp_image_insert_layer (argp->image, nl, -1, 0);
     }
 

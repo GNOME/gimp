@@ -29,7 +29,7 @@
 
 #include "core-types.h"
 
-#include "gimp-utils.h"
+#include "gimp-memsize.h"
 #include "gimpdrawable.h"
 #include "gimpgrid.h"
 #include "gimpimage.h"

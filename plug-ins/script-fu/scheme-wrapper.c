@@ -156,6 +156,12 @@ static const NamedConstant const old_constants[] =
   { "IMAGE-CLONE",             GIMP_CLONE_IMAGE   },
   { "PATTERN-CLONE",           GIMP_CLONE_PATTERN },
 
+  { "FOREGROUND-FILL",         GIMP_FILL_FOREGROUND  },
+  { "BACKGROUND-FILL",         GIMP_FILL_BACKGROUND  },
+  { "WHITE-FILL",              GIMP_FILL_WHITE       },
+  { "TRANSPARENT-FILL",        GIMP_FILL_TRANSPARENT },
+  { "PATTERN-FILL",            GIMP_FILL_PATTERN     },
+
   { "DODGE",                   GIMP_DODGE_BURN_TYPE_DODGE },
   { "BURN",                    GIMP_DODGE_BURN_TYPE_BURN  },
 
@@ -171,8 +177,8 @@ static scheme sc;
 
 
 void
-tinyscheme_init (const gchar *path,
-                 gboolean     register_scripts)
+tinyscheme_init (GList    *path,
+                 gboolean  register_scripts)
 {
   /* init the interpreter */
   if (! scheme_init (&sc))
@@ -195,31 +201,34 @@ tinyscheme_init (const gchar *path,
 
   if (path)
     {
-      GList *dir_list = gimp_path_parse (path, 256, TRUE, NULL);
       GList *list;
 
-      for (list = dir_list; list; list = g_list_next (list))
+      for (list = path; list; list = g_list_next (list))
         {
-          if (ts_load_file (list->data, "script-fu.init"))
+          gchar *dir = g_file_get_path (list->data);
+
+          if (ts_load_file (dir, "script-fu.init"))
             {
               /*  To improve compatibility with older Script-Fu scripts,
                *  load script-fu-compat.init from the same directory.
                */
-              ts_load_file (list->data, "script-fu-compat.init");
+              ts_load_file (dir, "script-fu-compat.init");
 
               /*  To improve compatibility with older GIMP version,
                *  load plug-in-compat.init from the same directory.
                */
-              ts_load_file (list->data, "plug-in-compat.init");
+              ts_load_file (dir, "plug-in-compat.init");
+
+              g_free (dir);
 
               break;
             }
+
+          g_free (dir);
         }
 
       if (list == NULL)
         g_printerr ("Unable to read initialization file script-fu.init\n");
-
-      gimp_path_free (dir_list);
     }
 }
 

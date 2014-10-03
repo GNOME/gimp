@@ -373,8 +373,8 @@ draw_grid_polar (cairo_t *cr)
         gdouble t;
         gdouble sector_size = 2 * G_PI / current_sectors;
         cairo_arc (cr,
-                   0.5 + preview_width / 2,
-                   0.5 + preview_height / 2,
+                   0.5 + preview_width / 2.0,
+                   0.5 + preview_height / 2.0,
                    outer_radius, 0, 2 * G_PI);
         cairo_stroke (cr);
 
@@ -391,11 +391,11 @@ draw_grid_polar (cairo_t *cr)
             gdouble normal_x = cos (selvals.opts.grid_rotation+t);
             gdouble normal_y = sin (selvals.opts.grid_rotation+t);
             cairo_move_to (cr,
-                           0.5 + (preview_width / 2 + inner_radius * normal_x),
-                           0.5 + (preview_height / 2 - inner_radius * normal_y));
+                           0.5 + (preview_width / 2.0 + inner_radius * normal_x),
+                           0.5 + (preview_height / 2.0 - inner_radius * normal_y));
             cairo_line_to (cr,
-                           0.5 + (preview_width / 2 + outer_radius * normal_x),
-                           0.5 + (preview_height / 2 - outer_radius * normal_y));
+                           0.5 + (preview_width / 2.0 + outer_radius * normal_x),
+                           0.5 + (preview_height / 2.0 - outer_radius * normal_y));
             cairo_stroke (cr);
           }
       }

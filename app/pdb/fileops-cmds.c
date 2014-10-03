@@ -61,21 +61,21 @@ file_load_invoker (GimpProcedure         *procedure,
   GimpValueArray      *return_vals;
   GimpPlugInProcedure *file_proc;
   GimpProcedure       *proc;
-  gchar               *uri;
+  GFile               *file;
   gint                 i;
 
-  uri = file_utils_filename_to_uri (gimp,
-                                    g_value_get_string (gimp_value_array_index (args, 1)),
-                                    error);
+  file = file_utils_filename_to_file (gimp,
+                                      g_value_get_string (gimp_value_array_index (args, 1)),
+                                      error);
 
-  if (! uri)
+  if (! file)
     return gimp_procedure_get_return_values (procedure, FALSE,
                                              error ? *error : NULL);
 
-  file_proc =
-    file_procedure_find (gimp->plug_in_manager->load_procs, uri, error);
+  file_proc = file_procedure_find (gimp->plug_in_manager->load_procs,
+                                   file, error);
 
-  g_free (uri);
+  g_object_unref (file);
 
   if (! file_proc)
     return gimp_procedure_get_return_values (procedure, FALSE,
@@ -138,16 +138,18 @@ file_load_layer_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gchar *uri = file_utils_filename_to_uri (gimp, filename, error);
+      GFile *file = file_utils_filename_to_file (gimp, filename, error);
 
-      if (uri)
+      if (file)
         {
           GList             *layers;
           GimpPDBStatusType  status;
 
           layers = file_open_layers (gimp, context, progress,
                                      image, FALSE,
-                                     uri, run_mode, NULL, &status, error);
+                                     file, run_mode, NULL, &status, error);
+
+          g_object_unref (file);
 
           if (layers)
             {
@@ -192,16 +194,18 @@ file_load_layers_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      gchar *uri = file_utils_filename_to_uri (gimp, filename, error);
+      GFile *file = file_utils_filename_to_file (gimp, filename, error);
 
-      if (uri)
+      if (file)
         {
           GList             *layers;
           GimpPDBStatusType  status;
 
           layers = file_open_layers (gimp, context, progress,
                                      image, FALSE,
-                                     uri, run_mode, NULL, &status, error);
+                                     file, run_mode, NULL, &status, error);
+
+          g_object_unref (file);
 
           if (layers)
             {
@@ -250,24 +254,25 @@ file_save_invoker (GimpProcedure         *procedure,
   GimpValueArray      *return_vals;
   GimpPlugInProcedure *file_proc;
   GimpProcedure       *proc;
-  gchar               *uri;
+  GFile               *file;
   gint                 i;
 
-  uri = file_utils_filename_to_uri (gimp,
-                                    g_value_get_string (gimp_value_array_index (args, 3)),
-                                    error);
+  file = file_utils_filename_to_file (gimp,
+                                      g_value_get_string (gimp_value_array_index (args, 3)),
+                                      error);
 
-  if (! uri)
+  if (! file)
     return gimp_procedure_get_return_values (procedure, FALSE,
                                              error ? *error : NULL);
 
-  file_proc =
-    file_procedure_find (gimp->plug_in_manager->save_procs, uri, NULL);
+  file_proc = file_procedure_find (gimp->plug_in_manager->save_procs,
+                                   file, NULL);
 
   if (! file_proc)
-    file_proc = file_procedure_find (gimp->plug_in_manager->export_procs, uri, error);
+    file_proc = file_procedure_find (gimp->plug_in_manager->export_procs,
+                                     file, error);
 
-  g_free (uri);
+  g_object_unref (file);
 
   if (! file_proc)
     return gimp_procedure_get_return_values (procedure, FALSE,
@@ -387,7 +392,11 @@ temp_name_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      name = gimp_get_temp_filename (gimp, extension);
+      GFile *file = gimp_get_temp_file (gimp, extension);
+
+      name = g_file_get_path (file);
+
+      g_object_unref (file);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

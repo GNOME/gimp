@@ -81,15 +81,9 @@
 
 #include "about.h"
 #include "gimp-log.h"
+#include "gimp-priorities.h"
 
 #include "gimp-intl.h"
-
-
-/*  halfway between G_PRIORITY_HIGH_IDLE and G_PRIORITY_DEFAULT_IDLE - 1,
- *  so a bit higher than projection construction
- */
-#define GIMP_DISPLAY_SHELL_FILL_IDLE_PRIORITY \
-        ((G_PRIORITY_HIGH_IDLE + G_PRIORITY_DEFAULT_IDLE) / 2 - 1)
 
 
 enum
@@ -149,6 +143,7 @@ static void      gimp_display_shell_screen_changed (GtkWidget        *widget,
 static gboolean  gimp_display_shell_popup_menu     (GtkWidget        *widget);
 
 static void      gimp_display_shell_real_scaled    (GimpDisplayShell *shell);
+static void      gimp_display_shell_real_scrolled  (GimpDisplayShell *shell);
 static void      gimp_display_shell_real_rotated   (GimpDisplayShell *shell);
 
 static const guint8 * gimp_display_shell_get_icc_profile
@@ -248,7 +243,7 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
   widget_class->popup_menu         = gimp_display_shell_popup_menu;
 
   klass->scaled                    = gimp_display_shell_real_scaled;
-  klass->scrolled                  = NULL;
+  klass->scrolled                  = gimp_display_shell_real_scrolled;
   klass->rotated                   = gimp_display_shell_real_rotated;
   klass->reconnect                 = NULL;
 
@@ -1046,6 +1041,22 @@ gimp_display_shell_popup_menu (GtkWidget *widget)
 }
 
 static void
+gimp_display_shell_set_priority_viewport (GimpDisplayShell *shell)
+{
+  GimpImage *image = gimp_display_get_image (shell->display);
+
+  if (image)
+    {
+      GimpProjection *projection = gimp_image_get_projection (image);
+      gint            x, y;
+      gint            width, height;
+
+      gimp_display_shell_untransform_viewport (shell, &x, &y, &width, &height);
+      gimp_projection_set_priority_rect (projection, x, y, width, height);
+    }
+}
+
+static void
 gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 {
   GimpContext *user_context;
@@ -1058,7 +1069,27 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
   user_context = gimp_get_user_context (shell->display->gimp);
 
   if (shell->display == gimp_context_get_display (user_context))
-    gimp_ui_manager_update (shell->popup_manager, shell->display);
+    {
+      gimp_display_shell_set_priority_viewport (shell);
+
+      gimp_ui_manager_update (shell->popup_manager, shell->display);
+    }
+}
+
+static void
+gimp_display_shell_real_scrolled (GimpDisplayShell *shell)
+{
+  GimpContext *user_context;
+
+  if (! shell->display)
+    return;
+
+  user_context = gimp_get_user_context (shell->display->gimp);
+
+  if (shell->display == gimp_context_get_display (user_context))
+    {
+      gimp_display_shell_set_priority_viewport (shell);
+    }
 }
 
 static void
@@ -1072,7 +1103,11 @@ gimp_display_shell_real_rotated (GimpDisplayShell *shell)
   user_context = gimp_get_user_context (shell->display->gimp);
 
   if (shell->display == gimp_context_get_display (user_context))
-    gimp_ui_manager_update (shell->popup_manager, shell->display);
+    {
+      gimp_display_shell_set_priority_viewport (shell);
+
+      gimp_ui_manager_update (shell->popup_manager, shell->display);
+    }
 }
 
 static const guint8 *
@@ -1473,7 +1508,7 @@ gimp_display_shell_fill (GimpDisplayShell *shell,
     }
 
   shell->fill_idle_id =
-    g_idle_add_full (GIMP_DISPLAY_SHELL_FILL_IDLE_PRIORITY,
+    g_idle_add_full (GIMP_PRIORITY_DISPLAY_SHELL_FILL_IDLE,
                      (GSourceFunc) gimp_display_shell_fill_idle, shell,
                      NULL);
 }
@@ -1877,15 +1912,16 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
  * @shell: a #GimpDisplayShell
  * @mask:  a #GimpDrawable (1 byte per pixel)
  * @color: the color to use for drawing the mask
+ * @inverted: #TRUE if the mask should be drawn inverted
  *
- * Previews a selection (used by the foreground selection tool).
- * Pixels that are not selected (> 127) in the mask are tinted with
- * the given color.
+ * Previews an image-sized mask. Depending on @inverted, pixels that
+ * are selected or not selected are tinted with the given color.
  **/
 void
 gimp_display_shell_set_mask (GimpDisplayShell *shell,
                              GeglBuffer       *mask,
-                             const GimpRGB    *color)
+                             const GimpRGB    *color,
+                             gboolean          inverted)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (mask == NULL || GEGL_IS_BUFFER (mask));
@@ -1901,6 +1937,8 @@ gimp_display_shell_set_mask (GimpDisplayShell *shell,
 
   if (mask)
     shell->mask_color = *color;
+
+  shell->mask_inverted = inverted;
 
   gimp_display_shell_expose_full (shell);
 }

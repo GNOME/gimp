@@ -50,10 +50,10 @@
 /*  local function prototypes  */
 
 static gboolean gimp_image_map_tool_settings_import (GimpSettingsBox  *box,
-                                                     const gchar      *filename,
+                                                     GFile            *file,
                                                      GimpImageMapTool *tool);
 static gboolean gimp_image_map_tool_settings_export (GimpSettingsBox  *box,
-                                                     const gchar      *filename,
+                                                     GFile            *file,
                                                      GimpImageMapTool *tool);
 
 
@@ -62,11 +62,11 @@ static gboolean gimp_image_map_tool_settings_export (GimpSettingsBox  *box,
 GtkWidget *
 gimp_image_map_tool_real_get_settings_ui (GimpImageMapTool  *image_map_tool,
                                           GimpContainer     *settings,
-                                          const gchar       *settings_filename,
+                                          GFile             *settings_file,
                                           const gchar       *import_dialog_title,
                                           const gchar       *export_dialog_title,
                                           const gchar       *file_dialog_help_id,
-                                          const gchar       *default_folder,
+                                          GFile             *default_folder,
                                           GtkWidget        **settings_box)
 {
   GimpToolInfo *tool_info;
@@ -89,7 +89,7 @@ gimp_image_map_tool_real_get_settings_ui (GimpImageMapTool  *image_map_tool,
   *settings_box = gimp_settings_box_new (tool_info->gimp,
                                          image_map_tool->config,
                                          settings,
-                                         settings_filename,
+                                         settings_file,
                                          import_dialog_title,
                                          export_dialog_title,
                                          file_dialog_help_id,
@@ -114,24 +114,17 @@ gimp_image_map_tool_real_get_settings_ui (GimpImageMapTool  *image_map_tool,
 
 gboolean
 gimp_image_map_tool_real_settings_import (GimpImageMapTool  *tool,
-                                          const gchar       *filename,
+                                          GInputStream      *input,
                                           GError           **error)
 {
-  gboolean success;
-
-  if (GIMP_TOOL (tool)->tool_info->gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
-
-  success = gimp_config_deserialize_file (GIMP_CONFIG (tool->config),
-                                          filename,
-                                          NULL, error);
-
-  return success;
+  return gimp_config_deserialize_stream (GIMP_CONFIG (tool->config),
+                                         input,
+                                         NULL, error);
 }
 
 gboolean
 gimp_image_map_tool_real_settings_export (GimpImageMapTool  *tool,
-                                          const gchar       *filename,
+                                          GOutputStream     *output,
                                           GError           **error)
 {
   GimpImageMapToolClass *klass = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
@@ -142,13 +135,10 @@ gimp_image_map_tool_real_settings_export (GimpImageMapTool  *tool,
   header = g_strdup_printf ("GIMP %s tool settings",   klass->settings_name);
   footer = g_strdup_printf ("end of %s tool settings", klass->settings_name);
 
-  if (GIMP_TOOL (tool)->tool_info->gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
-
-  success = gimp_config_serialize_to_file (GIMP_CONFIG (tool->config),
-                                           filename,
-                                           header, footer,
-                                           NULL, error);
+  success = gimp_config_serialize_to_stream (GIMP_CONFIG (tool->config),
+                                             output,
+                                             header, footer,
+                                             NULL, error);
 
   g_free (header);
   g_free (footer);
@@ -161,28 +151,50 @@ gimp_image_map_tool_real_settings_export (GimpImageMapTool  *tool,
 
 static gboolean
 gimp_image_map_tool_settings_import (GimpSettingsBox  *box,
-                                     const gchar      *filename,
+                                     GFile            *file,
                                      GimpImageMapTool *tool)
 {
   GimpImageMapToolClass *tool_class = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
+  GInputStream          *input;
   GError                *error      = NULL;
 
   g_return_val_if_fail (tool_class->settings_import != NULL, FALSE);
 
-  if (! tool_class->settings_import (tool, filename, &error))
-    {
-      gimp_message_literal (GIMP_TOOL (tool)->tool_info->gimp,
-                            G_OBJECT (gimp_tool_gui_get_dialog (tool->gui)),
-                            GIMP_MESSAGE_ERROR, error->message);
-      g_clear_error (&error);
+  if (GIMP_TOOL (tool)->tool_info->gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
+  input = G_INPUT_STREAM (g_file_read (file, NULL, &error));
+  if (! input)
+    {
+      gimp_message (GIMP_TOOL (tool)->tool_info->gimp,
+                    G_OBJECT (gimp_tool_gui_get_dialog (tool->gui)),
+                    GIMP_MESSAGE_ERROR,
+                    _("Could not open '%s' for reading: %s"),
+                    gimp_file_get_utf8_name (file),
+                    error->message);
+      g_clear_error (&error);
       return FALSE;
     }
+
+  if (! tool_class->settings_import (tool, input, &error))
+    {
+      gimp_message (GIMP_TOOL (tool)->tool_info->gimp,
+                    G_OBJECT (gimp_tool_gui_get_dialog (tool->gui)),
+                    GIMP_MESSAGE_ERROR,
+                    _("Error reading '%s': %s"),
+                    gimp_file_get_utf8_name (file),
+                    error->message);
+      g_clear_error (&error);
+      g_object_unref (input);
+      return FALSE;
+    }
+
+  g_object_unref (input);
 
   gimp_image_map_tool_preview (tool);
 
   g_object_set (GIMP_TOOL_GET_OPTIONS (tool),
-                "settings", filename,
+                "settings", file,
                 NULL);
 
   return TRUE;
@@ -190,35 +202,56 @@ gimp_image_map_tool_settings_import (GimpSettingsBox  *box,
 
 static gboolean
 gimp_image_map_tool_settings_export (GimpSettingsBox  *box,
-                                     const gchar      *filename,
+                                     GFile            *file,
                                      GimpImageMapTool *tool)
 {
   GimpImageMapToolClass *tool_class = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
+  GOutputStream         *output;
   GError                *error      = NULL;
-  gchar                 *display_name;
 
   g_return_val_if_fail (tool_class->settings_export != NULL, FALSE);
 
-  if (! tool_class->settings_export (tool, filename, &error))
-    {
-      gimp_message_literal (GIMP_TOOL (tool)->tool_info->gimp,
-                            G_OBJECT (gimp_tool_gui_get_dialog (tool->gui)),
-                            GIMP_MESSAGE_ERROR, error->message);
-      g_clear_error (&error);
+  if (GIMP_TOOL (tool)->tool_info->gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, &error));
+  if (! output)
+    {
+      gimp_message (GIMP_TOOL (tool)->tool_info->gimp,
+                    G_OBJECT (gimp_tool_gui_get_dialog (tool->gui)),
+                    GIMP_MESSAGE_ERROR,
+                    _("Could not open '%s' for writing: %s"),
+                    gimp_file_get_utf8_name (file),
+                    error->message);
+      g_clear_error (&error);
       return FALSE;
     }
 
-  display_name = g_filename_display_name (filename);
+  if (! tool_class->settings_export (tool, output, &error))
+    {
+      gimp_message (GIMP_TOOL (tool)->tool_info->gimp,
+                    G_OBJECT (gimp_tool_gui_get_dialog (tool->gui)),
+                    GIMP_MESSAGE_ERROR,
+                    _("Error writing '%s': %s"),
+                    gimp_file_get_utf8_name (file),
+                    error->message);
+      g_clear_error (&error);
+      g_object_unref (output);
+      return FALSE;
+    }
+
+  g_object_unref (output);
+
   gimp_message (GIMP_TOOL (tool)->tool_info->gimp,
                 G_OBJECT (GIMP_TOOL (tool)->display),
                 GIMP_MESSAGE_INFO,
                 _("Settings saved to '%s'"),
-                display_name);
-  g_free (display_name);
+                gimp_file_get_utf8_name (file));
 
   g_object_set (GIMP_TOOL_GET_OPTIONS (tool),
-                "settings", filename,
+                "settings", file,
                 NULL);
 
   return TRUE;

@@ -181,12 +181,12 @@ sub drawable_curves_explicit {
     $blurb = 'Modifies the intensity curve(s) for specified drawable.';
 
     $help = <<'HELP';
-Modifies the intensity mapping for one channel in the specified drawable. The
-drawable must be either grayscale or RGB, and the channel can be either an
-intensity component, or the value. The 'curve' parameter is an array of bytes
-which explicitly defines how each pixel value in the drawable will be modified.
-Use the gimp_curves_spline() function to modify intensity levels with Catmull
-Rom splines.
+Modifies the intensity mapping for one channel in the specified
+drawable. The channel can be either an intensity component, or the
+value. The 'values' parameter is an array of doubles which explicitly
+defines how each pixel value in the drawable will be modified.  Use
+the gimp_curves_spline() function to modify intensity levels with
+Catmull Rom splines.
 HELP
 
     &std_pdb_misc;
@@ -197,11 +197,10 @@ HELP
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
 	  desc => 'The channel to modify' },
-	{ name => 'curve', type => 'int8array',
+	{ name => 'values', type => 'floatarray',
 	  desc => 'The explicit curve',
-	  array => { name => 'num_bytes',
-		     desc => 'The number of bytes in the new curve (always
-			      256)' } }
+	  array => { name => 'num_values', type => '256 <= int32 <= 2096',
+		     desc => 'The number of values in the new curve' } }
     );
 
     %invoke = (
@@ -211,14 +210,15 @@ HELP
   if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
                                  GIMP_PDB_ITEM_CONTENT, error) &&
       gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error) &&
-      (num_bytes == 256) &&
+      (num_values >= 256) &&
+      (num_values <= 4096) &&
       (gimp_drawable_has_alpha (drawable) || channel != GIMP_HISTOGRAM_ALPHA) &&
       (! gimp_drawable_is_gray (drawable) ||
        channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
     {
-      GObject *config = gimp_curves_config_new_spline (channel,
-                                                       curve,
-                                                       num_bytes);
+      GObject *config = gimp_curves_config_new_explicit (channel,
+                                                         values,
+                                                         num_values);
 
       gimp_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Curves"),
@@ -237,12 +237,12 @@ sub drawable_curves_spline {
     $blurb = 'Modifies the intensity curve(s) for specified drawable.';
 
     $help = <<'HELP';
-Modifies the intensity mapping for one channel in the specified drawable. The
-drawable must be either grayscale or RGB, and the channel can be either an
-intensity component, or the value. The 'control_pts' parameter is an array of
-integers which define a set of control points which describe a Catmull Rom
-spline which yields the final intensity curve. Use the gimp_curves_explicit()
-function to explicitly modify intensity levels.
+Modifies the intensity mapping for one channel in the specified
+drawable. The channel can be either an intensity component, or the
+value. The 'points' parameter is an array of doubles which define a
+set of control points which describe a Catmull Rom spline which yields
+the final intensity curve. Use the gimp_curves_explicit() function to
+explicitly modify intensity levels.
 HELP
 
     &std_pdb_misc;
@@ -253,10 +253,10 @@ HELP
 	  desc => 'The drawable' },
 	{ name => 'channel', type => 'enum GimpHistogramChannel',
 	  desc => 'The channel to modify' },
-	{ name => 'control_pts', type => 'int8array',
+	{ name => 'points', type => 'floatarray',
 	  desc => 'The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y,
 		   ... }',
-	  array => { name => 'num_points', type => '4 <= int32 <= 34',
+	  array => { name => 'num_points', type => '4 <= int32 <= 2048',
 		     desc => 'The number of values in the control point array' }
        }
     );
@@ -274,8 +274,8 @@ HELP
        channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
     {
       GObject *config = gimp_curves_config_new_spline (channel,
-                                                       control_pts,
-                                                       num_points);
+                                                       points,
+                                                       num_points / 2);
 
       gimp_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Curves"),

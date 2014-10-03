@@ -380,7 +380,7 @@ layer_scale_invoker (GimpProcedure         *procedure,
           GimpPDBContext *pdb_context = GIMP_PDB_CONTEXT (context);
 
           if (progress)
-            gimp_progress_start (progress, _("Scaling"), FALSE);
+            gimp_progress_start (progress, FALSE, _("Scaling"));
 
           gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
                                      pdb_context->interpolation, progress,
@@ -427,7 +427,7 @@ layer_scale_full_invoker (GimpProcedure         *procedure,
                                      error))
         {
           if (progress)
-            gimp_progress_start (progress, _("Scaling"), FALSE);
+            gimp_progress_start (progress, FALSE, _("Scaling"));
 
           gimp_item_scale_by_origin (GIMP_ITEM (layer), new_width, new_height,
                                      interpolation, progress,

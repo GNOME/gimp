@@ -116,7 +116,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGuide *g = gimp_image_get_guide (image, guide);
+  GimpGuide *g = gimp_pdb_image_get_guide (image, guide, error);
 
   if (g)
     gimp_image_remove_guide (image, g, TRUE);
@@ -158,6 +158,13 @@ HELP
 
   if (g)
     next_guide = gimp_guide_get_ID (g);
+
+  if (! success)
+    g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                 _("Image '%s' (%d) does not contain guide with ID %d"),
+                 gimp_image_get_display_name (image),
+                 gimp_image_get_ID (image),
+                 guide);
 }
 CODE
     );
@@ -190,7 +197,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGuide *g = gimp_image_get_guide (image, guide);
+  GimpGuide *g = gimp_pdb_image_get_guide (image, guide, error);
 
   if (g)
     orientation = gimp_guide_get_orientation (g);
@@ -219,14 +226,15 @@ HELP
     );
 
     @outargs = (
-	{ name => 'position', type => 'int32', libdef => '-1',
+	{ name => 'position', type => 'int32',
+          libdef => 'G_MININT /* GIMP_GUIDE_POSITION_UNDEFINED */',
 	  desc => "The guide's position relative to top or left of image" }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGuide *g = gimp_image_get_guide (image, guide);
+  GimpGuide *g = gimp_pdb_image_get_guide (image, guide, error);
 
   if (g)
     position = gimp_guide_get_position (g);
@@ -238,10 +246,17 @@ CODE
 }
 
 
-@headers = qw("core/gimpguide.h" "core/gimpimage-guides.h" "core/gimpimage-undo-push.h");
+@headers = qw("core/gimpguide.h"
+              "core/gimpimage-guides.h"
+              "core/gimpimage-undo-push.h"
+              "gimppdb-utils.h"
+              "gimppdberror.h"
+              "gimp-intl.h");
 
-@procs = qw(image_add_hguide image_add_vguide image_delete_guide
-	    image_find_next_guide image_get_guide_orientation
+@procs = qw(image_add_hguide image_add_vguide
+            image_delete_guide
+            image_find_next_guide
+            image_get_guide_orientation
 	    image_get_guide_position);
 
 %exports = (app => [@procs], lib => [@procs]);

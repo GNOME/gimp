@@ -521,6 +521,7 @@ gfig_brush_changed_callback (GimpBrushSelectButton *button,
   gfig_context->bdesc.width = width;
   gfig_context->bdesc.height = height;
   gimp_context_set_brush (brush_name);
+  gimp_context_set_brush_default_size ();
 
   gfig_paint_callback ();
 }
@@ -611,9 +612,11 @@ gfig_style_apply (Style *style)
 
   gimp_context_set_background (&style->background);
 
-  if (!gimp_context_set_brush (style->brush_name))
+  if (! gimp_context_set_brush (style->brush_name))
     g_message ("Style apply: Failed to set brush to '%s' in style '%s'",
                style->brush_name, style->name);
+
+  gimp_context_set_brush_default_size ();
 
   gimp_context_set_pattern (style->pattern);
 
@@ -683,9 +686,11 @@ gfig_style_set_context_from_style (Style *style)
                                &style->foreground);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),
                                &style->background);
-  if (!gimp_context_set_brush (style->brush_name))
+  if (! gimp_context_set_brush (style->brush_name))
     g_message ("Style from context: Failed to set brush to '%s'",
                style->brush_name);
+
+  gimp_context_set_brush_default_size ();
 
   gimp_brush_select_button_set_brush (GIMP_BRUSH_SELECT_BUTTON (gfig_context->brush_select),
                                       style->brush_name, -1.0, -1, -1);  /* FIXME */

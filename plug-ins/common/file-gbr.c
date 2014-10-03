@@ -345,12 +345,12 @@ load_image (GFile   *file,
   gsize              size;
   gint               i;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             g_file_get_parse_name (file));
+
   input = G_INPUT_STREAM (g_file_read (file, NULL, error));
   if (! input)
     return -1;
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             g_file_get_parse_name (file));
 
   size = G_STRUCT_OFFSET (BrushHeader, magic_number);
 
@@ -647,7 +647,6 @@ save_image (GFile   *file,
   gint           width;
   gint           height;
   GimpRGB        gray, white;
-  gsize          bytes_written;
 
   gimp_rgba_set_uchar (&white, 255, 255, 255, 255);
 
@@ -671,12 +670,12 @@ save_image (GFile   *file,
 
   bpp = babl_format_get_bytes_per_pixel (format);
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             g_file_get_parse_name (file));
+
   output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
   if (! output)
     return FALSE;
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             g_file_get_parse_name (file));
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
 
@@ -693,8 +692,7 @@ save_image (GFile   *file,
   bh.spacing      = g_htonl (info.spacing);
 
   if (! g_output_stream_write_all (output, &bh, sizeof (BrushHeader),
-                                   &bytes_written, NULL, error) ||
-      bytes_written != sizeof (BrushHeader))
+                                   NULL, NULL, error))
     {
       g_object_unref (output);
       return FALSE;
@@ -703,8 +701,7 @@ save_image (GFile   *file,
   if (! g_output_stream_write_all (output,
                                    info.description,
                                    strlen (info.description) + 1,
-                                   &bytes_written, NULL, error) ||
-      bytes_written != strlen (info.description) + 1)
+                                   NULL, NULL, error))
     {
       g_object_unref (output);
       return FALSE;
@@ -744,8 +741,7 @@ save_image (GFile   *file,
         }
 
       if (! g_output_stream_write_all (output, brush_buf, width * file_bpp,
-                                       &bytes_written, NULL, error) ||
-          bytes_written != width * file_bpp)
+                                       NULL, NULL, error))
         {
           g_free (brush_buf);
           g_object_unref (output);
@@ -767,12 +763,12 @@ save_image (GFile   *file,
 static gboolean
 save_dialog (void)
 {
-  GtkWidget *dialog;
-  GtkWidget *table;
-  GtkWidget *entry;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *table;
+  GtkWidget     *entry;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   dialog = gimp_export_dialog_new (_("Brush"), PLUG_IN_BINARY, SAVE_PROC);
 
@@ -785,8 +781,9 @@ save_dialog (void)
                       table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
-  spinbutton = gimp_spin_button_new (&adj,
-                                     info.spacing, 1, 1000, 1, 10, 0, 1, 0);
+  adj = (GtkAdjustment *) gtk_adjustment_new (info.spacing, 1, 1000, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Spacing:"), 1.0, 0.5,
                              spinbutton, 1, TRUE);

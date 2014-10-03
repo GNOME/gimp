@@ -31,6 +31,24 @@ gimp_hsl_get_type
 </SECTION>
 
 <SECTION>
+<FILE>gimplcms</FILE>
+GimpColorProfile
+gimp_lcms_profile_open_from_file
+gimp_lcms_profile_open_from_data
+gimp_lcms_profile_save_to_data
+gimp_lcms_profile_get_description
+gimp_lcms_profile_get_manufacturer
+gimp_lcms_profile_get_model
+gimp_lcms_profile_get_copyright
+gimp_lcms_profile_get_label
+gimp_lcms_profile_get_summary
+gimp_lcms_profile_is_equal
+gimp_lcms_profile_is_rgb
+gimp_lcms_profile_is_cmyk
+gimp_lcms_create_srgb_profile
+</SECTION>
+
+<SECTION>
 <FILE>gimppixbuf</FILE>
 gimp_pixbuf_get_format
 gimp_pixbuf_create_buffer

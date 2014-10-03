@@ -45,6 +45,7 @@
 #include "gimp.h"
 #include "gimp-contexts.h"
 #include "gimp-gradients.h"
+#include "gimp-memsize.h"
 #include "gimp-modules.h"
 #include "gimp-parasites.h"
 #include "gimp-templates.h"
@@ -93,7 +94,22 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_VERBOSE
+};
 
+
+static void      gimp_constructed          (GObject           *object);
+static void      gimp_set_property         (GObject           *object,
+                                            guint              property_id,
+                                            const GValue      *value,
+                                            GParamSpec        *pspec);
+static void      gimp_get_property         (GObject           *object,
+                                            guint              property_id,
+                                            GValue            *value,
+                                            GParamSpec        *pspec);
 static void      gimp_dispose              (GObject           *object);
 static void      gimp_finalize             (GObject           *object);
 
@@ -173,9 +189,12 @@ gimp_class_init (GimpClass *klass)
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpClass, image_opened),
                   NULL, NULL,
-                  gimp_marshal_VOID__STRING,
-                  G_TYPE_NONE, 1, G_TYPE_STRING);
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1, G_TYPE_FILE);
 
+  object_class->constructed      = gimp_constructed;
+  object_class->set_property     = gimp_set_property;
+  object_class->get_property     = gimp_get_property;
   object_class->dispose          = gimp_dispose;
   object_class->finalize         = gimp_finalize;
 
@@ -185,15 +204,17 @@ gimp_class_init (GimpClass *klass)
   klass->restore                 = gimp_real_restore;
   klass->exit                    = gimp_real_exit;
   klass->buffer_changed          = NULL;
+
+  g_object_class_install_property (object_class, PROP_VERBOSE,
+                                   g_param_spec_boolean ("verbose", NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
 gimp_init (Gimp *gimp)
 {
-  gimp->config           = NULL;
-  gimp->session_name     = NULL;
-  gimp->default_folder   = NULL;
-
   gimp->be_verbose       = FALSE;
   gimp->no_data          = FALSE;
   gimp->no_interface     = FALSE;
@@ -201,79 +222,98 @@ gimp_init (Gimp *gimp)
   gimp->use_shm          = FALSE;
   gimp->use_cpu_accel    = TRUE;
   gimp->message_handler  = GIMP_CONSOLE;
+  gimp->show_playground  = FALSE;
   gimp->stack_trace_mode = GIMP_STACK_TRACE_NEVER;
   gimp->pdb_compat_mode  = GIMP_PDB_COMPAT_OFF;
 
-  gimp->restored         = FALSE;
-
   gimp_gui_init (gimp);
 
-  gimp->busy                = 0;
-  gimp->busy_idle_id        = 0;
+  gimp->parasites = gimp_parasite_list_new ();
 
-  gimp_units_init (gimp);
-
-  gimp->parasites           = gimp_parasite_list_new ();
-
-  gimp_modules_init (gimp);
-
-  gimp->plug_in_manager     = gimp_plug_in_manager_new (gimp);
-
-  gimp->images              = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
+  gimp->images = gimp_list_new_weak (GIMP_TYPE_IMAGE, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->images), "images");
 
   gimp->next_guide_ID        = 1;
   gimp->next_sample_point_ID = 1;
   gimp->image_table          = gimp_id_table_new ();
+  gimp->item_table           = gimp_id_table_new ();
 
-  gimp->item_table          = gimp_id_table_new ();
-
-  gimp->displays            = g_object_new (GIMP_TYPE_LIST,
-                                            "children-type", GIMP_TYPE_OBJECT,
-                                            "policy",        GIMP_CONTAINER_POLICY_WEAK,
-                                            "append",        TRUE,
-                                            NULL);
+  gimp->displays = g_object_new (GIMP_TYPE_LIST,
+                                 "children-type", GIMP_TYPE_OBJECT,
+                                 "policy",        GIMP_CONTAINER_POLICY_WEAK,
+                                 "append",        TRUE,
+                                 NULL);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->displays), "displays");
+  gimp->next_display_ID = 1;
 
-  gimp->next_display_ID     = 1;
-
-  gimp->image_windows       = NULL;
-
-  gimp->global_buffer       = NULL;
-  gimp->named_buffers       = gimp_list_new (GIMP_TYPE_BUFFER, TRUE);
+  gimp->named_buffers = gimp_list_new (GIMP_TYPE_BUFFER, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->named_buffers),
                                "named buffers");
 
-  gimp->fonts               = NULL;
-  gimp->brush_factory       = NULL;
-  gimp->dynamics_factory    = NULL;
-  gimp->pattern_factory     = NULL;
-  gimp->gradient_factory    = NULL;
-  gimp->palette_factory     = NULL;
-  gimp->tool_preset_factory = NULL;
-
-  gimp->tag_cache           = NULL;
-
-  gimp->pdb                 = gimp_pdb_new (gimp);
-
-  xcf_init (gimp);
-
-  gimp->tool_info_list      = gimp_list_new (GIMP_TYPE_TOOL_INFO, FALSE);
+  gimp->tool_info_list = gimp_list_new (GIMP_TYPE_TOOL_INFO, FALSE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->tool_info_list),
                                "tool infos");
 
-  gimp->standard_tool_info  = NULL;
-
-  gimp->documents           = gimp_document_list_new (gimp);
-
-  gimp->templates           = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
+  gimp->templates = gimp_list_new (GIMP_TYPE_TEMPLATE, TRUE);
   gimp_object_set_static_name (GIMP_OBJECT (gimp->templates), "templates");
+}
 
-  gimp->image_new_last_template = NULL;
+static void
+gimp_constructed (GObject *object)
+{
+  Gimp *gimp = GIMP (object);
 
-  gimp->context_list        = NULL;
-  gimp->default_context     = NULL;
-  gimp->user_context        = NULL;
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gimp_units_init (gimp);
+  gimp_modules_init (gimp);
+
+  gimp->plug_in_manager = gimp_plug_in_manager_new (gimp);
+  gimp->pdb             = gimp_pdb_new (gimp);
+
+  xcf_init (gimp);
+
+  gimp->documents = gimp_document_list_new (gimp);
+}
+
+static void
+gimp_set_property (GObject           *object,
+                   guint              property_id,
+                   const GValue      *value,
+                   GParamSpec        *pspec)
+{
+  Gimp *gimp = GIMP (object);
+
+  switch (property_id)
+    {
+    case PROP_VERBOSE:
+      gimp->be_verbose = g_value_get_boolean (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_get_property (GObject    *object,
+                   guint       property_id,
+                   GValue     *value,
+                   GParamSpec *pspec)
+{
+  Gimp *gimp = GIMP (object);
+
+  switch (property_id)
+    {
+    case PROP_VERBOSE:
+      g_value_set_boolean (value, gimp->be_verbose);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -460,7 +500,7 @@ gimp_finalize (GObject *object)
 
   if (gimp->default_folder)
     {
-      g_free (gimp->default_folder);
+      g_object_unref (gimp->default_folder);
       gimp->default_folder = NULL;
     }
 
@@ -574,20 +614,18 @@ gimp_real_initialize (Gimp               *gimp,
   static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
   {
     { gimp_pattern_load,         GIMP_PATTERN_FILE_EXTENSION,         FALSE },
-    { gimp_pattern_load_pixbuf,  NULL,                                FALSE }
+    { gimp_pattern_load_pixbuf,  NULL /* fallback loader */,          FALSE }
   };
 
   static const GimpDataFactoryLoaderEntry gradient_loader_entries[] =
   {
     { gimp_gradient_load,        GIMP_GRADIENT_FILE_EXTENSION,        TRUE  },
-    { gimp_gradient_load_svg,    GIMP_GRADIENT_SVG_FILE_EXTENSION,    FALSE },
-    { gimp_gradient_load,        NULL /* legacy loader */,            TRUE  }
+    { gimp_gradient_load_svg,    GIMP_GRADIENT_SVG_FILE_EXTENSION,    FALSE }
   };
 
   static const GimpDataFactoryLoaderEntry palette_loader_entries[] =
   {
-    { gimp_palette_load,         GIMP_PALETTE_FILE_EXTENSION,         TRUE  },
-    { gimp_palette_load,         NULL /* legacy loader */,            TRUE  }
+    { gimp_palette_load,         GIMP_PALETTE_FILE_EXTENSION,         TRUE  }
   };
 
   static const GimpDataFactoryLoaderEntry tool_preset_loader_entries[] =
@@ -755,7 +793,7 @@ gimp_real_exit (Gimp     *gimp,
 Gimp *
 gimp_new (const gchar       *name,
           const gchar       *session_name,
-          const gchar       *default_folder,
+          GFile             *default_folder,
           gboolean           be_verbose,
           gboolean           no_data,
           gboolean           no_fonts,
@@ -763,6 +801,7 @@ gimp_new (const gchar       *name,
           gboolean           use_shm,
           gboolean           use_cpu_accel,
           gboolean           console_messages,
+          gboolean           show_playground,
           GimpStackTraceMode stack_trace_mode,
           GimpPDBCompatMode  pdb_compat_mode)
 {
@@ -771,18 +810,21 @@ gimp_new (const gchar       *name,
   g_return_val_if_fail (name != NULL, NULL);
 
   gimp = g_object_new (GIMP_TYPE_GIMP,
-                       "name", name,
+                       "name",    name,
+                       "verbose", be_verbose ? TRUE : FALSE,
                        NULL);
 
+  if (default_folder)
+    gimp->default_folder = g_object_ref (default_folder);
+
   gimp->session_name     = g_strdup (session_name);
-  gimp->default_folder   = g_strdup (default_folder);
-  gimp->be_verbose       = be_verbose       ? TRUE : FALSE;
   gimp->no_data          = no_data          ? TRUE : FALSE;
   gimp->no_fonts         = no_fonts         ? TRUE : FALSE;
   gimp->no_interface     = no_interface     ? TRUE : FALSE;
   gimp->use_shm          = use_shm          ? TRUE : FALSE;
   gimp->use_cpu_accel    = use_cpu_accel    ? TRUE : FALSE;
   gimp->console_messages = console_messages ? TRUE : FALSE;
+  gimp->show_playground  = show_playground  ? TRUE : FALSE;
   gimp->stack_trace_mode = stack_trace_mode;
   gimp->pdb_compat_mode  = pdb_compat_mode;
 
@@ -898,13 +940,17 @@ gimp_edit_config_notify (GObject    *edit_config,
 }
 
 void
-gimp_load_config (Gimp        *gimp,
-                  const gchar *alternate_system_gimprc,
-                  const gchar *alternate_gimprc)
+gimp_load_config (Gimp  *gimp,
+                  GFile *alternate_system_gimprc,
+                  GFile *alternate_gimprc)
 {
   GimpRc *gimprc;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (alternate_system_gimprc == NULL ||
+                    G_IS_FILE (alternate_system_gimprc));
+  g_return_if_fail (alternate_gimprc == NULL ||
+                    G_IS_FILE (alternate_gimprc));
   g_return_if_fail (gimp->config == NULL);
   g_return_if_fail (gimp->edit_config == NULL);
 
@@ -1298,24 +1344,25 @@ gimp_message_literal (Gimp                *gimp,
 }
 
 void
-gimp_image_opened (Gimp        *gimp,
-		   const gchar *uri)
+gimp_image_opened (Gimp  *gimp,
+		   GFile *file)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (uri != NULL);
+  g_return_if_fail (G_IS_FILE (file));
 
-  g_signal_emit (gimp, gimp_signals[IMAGE_OPENED], 0, uri);
+  g_signal_emit (gimp, gimp_signals[IMAGE_OPENED], 0, file);
 }
 
-gchar *
-gimp_get_temp_filename (Gimp        *gimp,
-                        const gchar *extension)
+GFile *
+gimp_get_temp_file (Gimp        *gimp,
+                    const gchar *extension)
 {
   static gint  id = 0;
   static gint  pid;
-  gchar       *filename;
   gchar       *basename;
   gchar       *path;
+  GFile       *dir;
+  GFile       *file;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -1330,10 +1377,12 @@ gimp_get_temp_filename (Gimp        *gimp,
   path = gimp_config_path_expand (GIMP_GEGL_CONFIG (gimp->config)->temp_path,
                                   TRUE, NULL);
 
-  filename = g_build_filename (path, basename, NULL);
-
+  dir = g_file_new_for_path (path);
   g_free (path);
-  g_free (basename);
 
-  return filename;
+  file = g_file_get_child (dir, basename);
+  g_free (basename);
+  g_object_unref (dir);
+
+  return file;
 }

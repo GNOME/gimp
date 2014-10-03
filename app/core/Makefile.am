@@ -37,6 +37,8 @@ libappcore_a_sources = \
 	gimp-gradients.h			\
 	gimp-gui.c				\
 	gimp-gui.h				\
+	gimp-memsize.c				\
+	gimp-memsize.h				\
 	gimp-modules.c				\
 	gimp-modules.h				\
 	gimp-parasites.c			\
@@ -55,8 +57,6 @@ libappcore_a_sources = \
 	gimp-user-install.h			\
 	gimp-utils.c				\
 	gimp-utils.h				\
-	gimparea.c				\
-	gimparea.h				\
 	gimpbezierdesc.h			\
 	gimpbezierdesc.c			\
 	gimpboundary.c				\
@@ -205,8 +205,6 @@ libappcore_a_sources = \
 	gimpimage-arrange.h			\
 	gimpimage-colormap.c			\
 	gimpimage-colormap.h			\
-	gimpimage-contiguous-region.c		\
-	gimpimage-contiguous-region.h		\
 	gimpimage-convert-fsdither.h		\
 	gimpimage-convert-data.h		\
 	gimpimage-convert-precision.c		\
@@ -329,6 +327,8 @@ libappcore_a_sources = \
 	gimppickable.h				\
 	gimppickable-auto-shrink.c		\
 	gimppickable-auto-shrink.h		\
+	gimppickable-contiguous-region.c	\
+	gimppickable-contiguous-region.h	\
 	gimpprogress.c				\
 	gimpprogress.h				\
 	gimpprojectable.c			\

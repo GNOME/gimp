@@ -22,6 +22,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpthumb/gimpthumb.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -35,7 +36,6 @@
 #include "core/gimpimagefile.h"
 
 #include "file/file-open.h"
-#include "file/file-utils.h"
 
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimpcontainerview.h"
@@ -145,7 +145,7 @@ documents_file_open_dialog_cmd_callback (GtkAction *action,
   if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
     {
       file_file_open_dialog (context->gimp,
-                             gimp_object_get_name (imagefile),
+                             gimp_imagefile_get_file (imagefile),
                              GTK_WIDGET (editor));
     }
 }
@@ -336,28 +336,24 @@ documents_open_image (GtkWidget     *editor,
                       GimpContext   *context,
                       GimpImagefile *imagefile)
 {
-  const gchar        *uri;
+  GFile              *file;
   GimpImage          *image;
   GimpPDBStatusType   status;
   GError             *error = NULL;
 
-  uri = gimp_object_get_name (imagefile);
+  file = gimp_imagefile_get_file (imagefile);
 
-  image = file_open_with_display (context->gimp, context, NULL, uri, FALSE,
+  image = file_open_with_display (context->gimp, context, NULL, file, FALSE,
                                   G_OBJECT (gtk_widget_get_screen (editor)),
                                   gimp_widget_get_monitor (editor),
                                   &status, &error);
 
   if (! image && status != GIMP_PDB_CANCEL)
     {
-      gchar *filename = file_utils_uri_display_name (uri);
-
       gimp_message (context->gimp, G_OBJECT (editor), GIMP_MESSAGE_ERROR,
                     _("Opening '%s' failed:\n\n%s"),
-                    filename, error->message);
+                    gimp_file_get_utf8_name (file), error->message);
       g_clear_error (&error);
-
-      g_free (filename);
     }
 }
 

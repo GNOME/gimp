@@ -15,25 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_AREA_H__
-#define __GIMP_AREA_H__
+#ifndef __GIMP_PRIORITIES_H__
+#define __GIMP_PRIORITIES_H__
 
 
-struct _GimpArea
-{
-  gint x1, y1, x2, y2;   /*  area bounds  */
-};
+/* #define G_PRIORITY_HIGH -100 */
+
+/* #define G_PRIORITY_DEFAULT 0 */
+
+/* #define G_PRIORITY_HIGH_IDLE 100 */
+
+/* #define GTK_PRIORITY_REDRAW (G_PRIORITY_HIGH_IDLE + 20) */
+
+/*  a bit higher than projection construction  */
+#define GIMP_PRIORITY_DISPLAY_SHELL_FILL_IDLE (G_PRIORITY_HIGH_IDLE + 21)
+
+/*  just a bit less than GDK_PRIORITY_REDRAW   */
+#define GIMP_PRIORITY_PROJECTION_IDLE (G_PRIORITY_HIGH_IDLE + 22)
+
+/* #define G_PRIORITY_DEFAULT_IDLE 200 */
+
+#define GIMP_PRIORITY_VIEWABLE_IDLE (G_PRIORITY_LOW)
+
+/* #define G_PRIORITY_LOW 300 */
 
 
-GimpArea * gimp_area_new          (gint      x1,
-                                   gint      y1,
-                                   gint      x2,
-                                   gint      y2);
-void       gimp_area_free         (GimpArea *area);
-
-GSList   * gimp_area_list_process (GSList   *list,
-                                   GimpArea *area);
-void       gimp_area_list_free    (GSList   *list);
-
-
-#endif /*  __GIMP_AREA_H__  */
+#endif /* __GIMP_PRIORITIES_H__ */

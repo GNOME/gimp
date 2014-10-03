@@ -1597,7 +1597,7 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
 
   iter = gegl_buffer_iterator_new (area, NULL, 0,
                                    babl_format ("RGBA float"),
-                                   GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
   roi = &iter->roi[0];
 
   while (gegl_buffer_iterator_next (iter))

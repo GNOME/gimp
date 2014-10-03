@@ -73,6 +73,10 @@ GtkWidget * gimp_prop_angle_range_dial_new  (GObject       *config,
                                              const gchar   *beta_property_name,
                                              const gchar   *clockwise_property_name);
 
+GtkWidget * gimp_prop_polar_new             (GObject       *config,
+                                             const gchar   *angle_property_name,
+                                             const gchar   *radius_property_name);
+
 
 /*  GParamObject (GimpViewable)  */
 

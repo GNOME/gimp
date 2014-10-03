@@ -236,7 +236,16 @@ gimp_draw_tool_draw (GimpDrawTool *draw_tool)
       if (draw_tool->item)
         gimp_display_shell_add_tool_item (shell, draw_tool->item);
 
-      draw_tool->last_draw_time = now;
+#if 0
+      gimp_display_shell_flush (shell, TRUE);
+#endif
+
+      draw_tool->last_draw_time = g_get_monotonic_time ();
+
+#if 0
+      g_printerr ("drawing tool stuff took %f seconds\n",
+                  (draw_tool->last_draw_time - now) / 1000000.0);
+#endif
     }
 }
 
@@ -1201,7 +1210,7 @@ gimp_draw_tool_on_vectors_curve (GimpDrawTool      *draw_tool,
   if (ret_coords)        *ret_coords        = *coord;
   if (ret_pos)           *ret_pos           = -1.0;
   if (ret_segment_start) *ret_segment_start = NULL;
-  if (ret_segment_start) *ret_segment_end   = NULL;
+  if (ret_segment_end)   *ret_segment_end   = NULL;
   if (ret_stroke)        *ret_stroke        = NULL;
 
   min_dist = -1.0;

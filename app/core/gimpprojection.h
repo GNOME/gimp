@@ -22,21 +22,6 @@
 #include "gimpobject.h"
 
 
-typedef struct _GimpProjectionChunkRender GimpProjectionChunkRender;
-
-struct _GimpProjectionChunkRender
-{
-  gboolean running;
-  gint     width;
-  gint     height;
-  gint     x;
-  gint     y;
-  gint     base_x;
-  gint     base_y;
-  GSList  *update_areas;   /*  flushed update areas */
-};
-
-
 #define GIMP_TYPE_PROJECTION            (gimp_projection_get_type ())
 #define GIMP_PROJECTION(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PROJECTION, GimpProjection))
 #define GIMP_PROJECTION_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PROJECTION, GimpProjectionClass))
@@ -45,23 +30,14 @@ struct _GimpProjectionChunkRender
 #define GIMP_PROJECTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROJECTION, GimpProjectionClass))
 
 
-
-typedef struct _GimpProjectionClass GimpProjectionClass;
+typedef struct _GimpProjectionPrivate GimpProjectionPrivate;
+typedef struct _GimpProjectionClass   GimpProjectionClass;
 
 struct _GimpProjection
 {
-  GimpObject                 parent_instance;
+  GimpObject             parent_instance;
 
-  GimpProjectable           *projectable;
-
-  GeglBuffer                *buffer;
-  gpointer                   validate_handler;
-
-  GSList                    *update_areas;
-  GimpProjectionChunkRender  chunk_render;
-  guint                      chunk_render_idle_id;
-
-  gboolean                   invalidate_preview;
+  GimpProjectionPrivate *priv;
 };
 
 struct _GimpProjectionClass
@@ -77,18 +53,26 @@ struct _GimpProjectionClass
 };
 
 
-GType            gimp_projection_get_type         (void) G_GNUC_CONST;
+GType            gimp_projection_get_type          (void) G_GNUC_CONST;
 
-GimpProjection * gimp_projection_new              (GimpProjectable   *projectable);
+GimpProjection * gimp_projection_new               (GimpProjectable   *projectable);
 
-void             gimp_projection_flush            (GimpProjection    *proj);
-void             gimp_projection_flush_now        (GimpProjection    *proj);
-void             gimp_projection_finish_draw      (GimpProjection    *proj);
+void             gimp_projection_set_priority_rect (GimpProjection    *proj,
+                                                    gint               x,
+                                                    gint               y,
+                                                    gint               width,
+                                                    gint               height);
 
-gint64           gimp_projection_estimate_memsize (GimpImageBaseType  type,
-                                                   GimpPrecision      precision,
-                                                   gint               width,
-                                                   gint               height);
+void             gimp_projection_stop_rendering    (GimpProjection    *proj);
+
+void             gimp_projection_flush             (GimpProjection    *proj);
+void             gimp_projection_flush_now         (GimpProjection    *proj);
+void             gimp_projection_finish_draw       (GimpProjection    *proj);
+
+gint64           gimp_projection_estimate_memsize  (GimpImageBaseType  type,
+                                                    GimpComponentType  component_type,
+                                                    gint               width,
+                                                    gint               height);
 
 
 #endif /*  __GIMP_PROJECTION_H__  */

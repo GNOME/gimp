@@ -349,7 +349,7 @@ query (void)
                           args, return_vals);
 
   gimp_plugin_menu_register (PLUG_IN_PROC,
-                             "<Image>/Filters/Render/Nature");
+                             "<Image>/Filters/Render/Fractals");
 }
 
 static void
@@ -1313,7 +1313,7 @@ ifs_compose (gint32 drawable_id)
                                        GEGL_RECTANGLE (0, band_y,
                                                        width, band_height), 0,
                                        format,
-                                       GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                                       GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
       roi = &iter->roi[0];
 
       while (gegl_buffer_iterator_next (iter))
@@ -2103,11 +2103,13 @@ value_pair_create (gpointer      data,
   value_pair->type   = type;
   value_pair->timeout_id = 0;
 
-  value_pair->spin = gimp_spin_button_new ((GtkObject **) &value_pair->adjustment,
-                                           1.0, lower, upper,
-                                           (upper - lower) / 100,
-                                           (upper - lower) / 10,
-                                           0.0, 1.0, 3);
+  value_pair->adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (1.0, lower, upper,
+                        (upper - lower) / 100,
+                        (upper - lower) / 10,
+                        0.0);
+  value_pair->spin = gtk_spin_button_new (value_pair->adjustment, 1.0, 3);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (value_pair->spin), TRUE);
   gtk_widget_set_size_request (value_pair->spin, 72, -1);
 
   g_signal_connect (value_pair->adjustment, "value-changed",

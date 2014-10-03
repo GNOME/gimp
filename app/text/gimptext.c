@@ -34,9 +34,10 @@
 
 #include "text-types.h"
 
+#include "core/gimp-memsize.h"
+#include "core/gimp-utils.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpstrokeoptions.h"
-#include "core/gimp-utils.h"
 
 #include "gimptext.h"
 
@@ -565,5 +566,5 @@ gimp_text_get_transformation (GimpText    *text,
 
   matrix->coeff[2][0] = 0.0;
   matrix->coeff[2][1] = 0.0;
-  matrix->coeff[2][1] = 1.0;
+  matrix->coeff[2][2] = 1.0;
 }

@@ -5,8 +5,8 @@
     (debug-events no)
     (controller "GimpControllerWheel")
     (mapping
-        (map "scroll-up-alt"                 "tools-value-1-increase-skip")
-        (map "scroll-down-alt"               "tools-value-1-decrease-skip")
+        (map "scroll-up-alt"                 "tools-opacity-increase-skip")
+        (map "scroll-down-alt"               "tools-opacity-decrease-skip")
         (map "scroll-up-control-alt"         "context-gradient-select-next")
         (map "scroll-down-control-alt"       "context-gradient-select-previous")
         (map "scroll-up-shift-alt"           "context-pattern-select-next")

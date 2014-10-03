@@ -233,6 +233,84 @@ gimp_filename_to_utf8 (const gchar *filename)
   return filename_utf8;
 }
 
+/**
+ * gimp_file_get_utf8_name:
+ * @file: a #GFile
+ *
+ * This function works like gimp_filename_to_utf8() and returns
+ * a UTF-8 encoded string that does not need to be freed.
+ *
+ * It converts a #GFile's path or uri to UTF-8 temporarily.  The
+ * return value is a pointer to a string that is guaranteed to be
+ * valid only during the current iteration of the main loop or until
+ * the next call to gimp_file_get_utf8_name().
+ *
+ * The only purpose of this function is to provide an easy way to pass
+ * a #GFile's name to a function that expects an UTF-8 encoded string.
+ *
+ * See g_file_get_parse_name().
+ *
+ * Since: GIMP 2.10
+ *
+ * Return value: A temporarily valid UTF-8 representation of @file's name.
+ *               This string must not be changed or freed.
+ **/
+const gchar *
+gimp_file_get_utf8_name (GFile *file)
+{
+  gchar *name;
+
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+
+  name = g_file_get_parse_name (file);
+
+  g_object_set_data_full (G_OBJECT (file), "gimp-parse-name", name,
+                          (GDestroyNotify) g_free);
+
+  return name;
+}
+
+/**
+ * gimp_file_has_extension:
+ * @file:      a #GFile
+ * @extension: an ASCII extension
+ *
+ * This function checks if @file's URI ends with @extension. It behaves
+ * like g_str_has_suffix() on g_file_get_uri(), except that the string
+ * comparison is done case-insensitively using g_ascii_strcasecmp().
+ *
+ * Since: GIMP 2.10
+ *
+ * Return value: %TRUE if @file's URI ends with @extension,
+ *               %FALSE otherwise.
+ **/
+gboolean
+gimp_file_has_extension (GFile       *file,
+                         const gchar *extension)
+{
+  gchar    *uri;
+  gint      uri_len;
+  gint      ext_len;
+  gboolean  result = FALSE;
+
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
+  g_return_val_if_fail (extension != NULL, FALSE);
+
+  uri = g_file_get_uri (file);
+
+  uri_len = strlen (uri);
+  ext_len = strlen (extension);
+
+  if (uri_len && ext_len && (uri_len > ext_len))
+    {
+      if (g_ascii_strcasecmp (uri + uri_len - ext_len, extension) == 0)
+        result = TRUE;
+    }
+
+  g_free (uri);
+
+  return result;
+}
 
 /**
  * gimp_strip_uline:
@@ -731,48 +809,4 @@ gimp_flags_value_get_help (GFlagsClass *flags_class,
                      flags_desc->value_help);
 
   return NULL;
-}
-
-gboolean
-gimp_output_stream_printf (GOutputStream  *stream,
-                           gsize          *bytes_written,
-                           GCancellable   *cancellable,
-                           GError        **error,
-                           const gchar    *format,
-                           ...)
-{
-  va_list  args;
-  gboolean success;
-
-  va_start (args, format);
-  success = gimp_output_stream_vprintf (stream, bytes_written, cancellable,
-                                        error, format, args);
-  va_end (args);
-
-  return success;
-}
-
-gboolean
-gimp_output_stream_vprintf (GOutputStream  *stream,
-                            gsize          *bytes_written,
-                            GCancellable   *cancellable,
-                            GError        **error,
-                            const gchar    *format,
-                            va_list         args)
-{
-  gchar    *text;
-  gboolean  success;
-
-  g_return_val_if_fail (G_IS_OUTPUT_STREAM (stream), FALSE);
-  g_return_val_if_fail (cancellable == NULL || G_IS_CANCELLABLE (stream), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
-  g_return_val_if_fail (format != NULL, FALSE);
-
-  text = g_strdup_vprintf (format, args);
-  success = g_output_stream_write_all (stream,
-                                       text, strlen (text),
-                                       bytes_written, cancellable, error);
-  g_free (text);
-
-  return success;
 }

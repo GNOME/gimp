@@ -395,7 +395,6 @@ gimp_gradient_get_color_at (GimpGradient        *gradient,
   GimpRGB  rgb;
 
   g_return_val_if_fail (GIMP_IS_GRADIENT (gradient), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
   pos = CLAMP (pos, 0.0, 1.0);

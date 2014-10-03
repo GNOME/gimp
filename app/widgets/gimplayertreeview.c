@@ -43,7 +43,6 @@
 #include "text/gimptextlayer.h"
 
 #include "file/file-open.h"
-#include "file/file-utils.h"
 
 #include "gimpactiongroup.h"
 #include "gimpcellrendererviewable.h"
@@ -708,6 +707,7 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
   for (list = uri_list; list; list = g_list_next (list))
     {
       const gchar       *uri   = list->data;
+      GFile             *file  = g_file_new_for_uri (uri);
       GList             *new_layers;
       GimpPDBStatusType  status;
       GError            *error = NULL;
@@ -716,7 +716,7 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
                                      gimp_container_view_get_context (cont_view),
                                      NULL,
                                      image, FALSE,
-                                     uri, GIMP_RUN_INTERACTIVE, NULL,
+                                     file, GIMP_RUN_INTERACTIVE, NULL,
                                      &status, &error);
 
       if (new_layers)
@@ -733,15 +733,13 @@ gimp_layer_tree_view_drop_uri_list (GimpContainerTreeView   *view,
         }
       else if (status != GIMP_PDB_CANCEL)
         {
-          gchar *filename = file_utils_uri_display_name (uri);
-
           gimp_message (image->gimp, G_OBJECT (view), GIMP_MESSAGE_ERROR,
                         _("Opening '%s' failed:\n\n%s"),
-                        filename, error->message);
-
+                        gimp_file_get_utf8_name (file), error->message);
           g_clear_error (&error);
-          g_free (filename);
         }
+
+      g_object_unref (file);
     }
 
   gimp_image_flush (image);

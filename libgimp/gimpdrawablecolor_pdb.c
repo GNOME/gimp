@@ -174,18 +174,17 @@ gimp_drawable_colorize_hsl (gint32  drawable_ID,
  * gimp_drawable_curves_explicit:
  * @drawable_ID: The drawable.
  * @channel: The channel to modify.
- * @num_bytes: The number of bytes in the new curve (always 256).
- * @curve: The explicit curve.
+ * @num_values: The number of values in the new curve.
+ * @values: The explicit curve.
  *
  * Modifies the intensity curve(s) for specified drawable.
  *
  * Modifies the intensity mapping for one channel in the specified
- * drawable. The drawable must be either grayscale or RGB, and the
- * channel can be either an intensity component, or the value. The
- * 'curve' parameter is an array of bytes which explicitly defines how
- * each pixel value in the drawable will be modified. Use the
- * gimp_curves_spline() function to modify intensity levels with
- * Catmull Rom splines.
+ * drawable. The channel can be either an intensity component, or the
+ * value. The 'values' parameter is an array of doubles which
+ * explicitly defines how each pixel value in the drawable will be
+ * modified. Use the gimp_curves_spline() function to modify intensity
+ * levels with Catmull Rom splines.
  *
  * Returns: TRUE on success.
  *
@@ -194,8 +193,8 @@ gimp_drawable_colorize_hsl (gint32  drawable_ID,
 gboolean
 gimp_drawable_curves_explicit (gint32                drawable_ID,
                                GimpHistogramChannel  channel,
-                               gint                  num_bytes,
-                               const guint8         *curve)
+                               gint                  num_values,
+                               const gdouble        *values)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -205,8 +204,8 @@ gimp_drawable_curves_explicit (gint32                drawable_ID,
                                     &nreturn_vals,
                                     GIMP_PDB_DRAWABLE, drawable_ID,
                                     GIMP_PDB_INT32, channel,
-                                    GIMP_PDB_INT32, num_bytes,
-                                    GIMP_PDB_INT8ARRAY, curve,
+                                    GIMP_PDB_INT32, num_values,
+                                    GIMP_PDB_FLOATARRAY, values,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
@@ -221,17 +220,16 @@ gimp_drawable_curves_explicit (gint32                drawable_ID,
  * @drawable_ID: The drawable.
  * @channel: The channel to modify.
  * @num_points: The number of values in the control point array.
- * @control_pts: The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }.
+ * @points: The spline control points: { cp1.x, cp1.y, cp2.x, cp2.y, ... }.
  *
  * Modifies the intensity curve(s) for specified drawable.
  *
  * Modifies the intensity mapping for one channel in the specified
- * drawable. The drawable must be either grayscale or RGB, and the
- * channel can be either an intensity component, or the value. The
- * 'control_pts' parameter is an array of integers which define a set
- * of control points which describe a Catmull Rom spline which yields
- * the final intensity curve. Use the gimp_curves_explicit() function
- * to explicitly modify intensity levels.
+ * drawable. The channel can be either an intensity component, or the
+ * value. The 'points' parameter is an array of doubles which define a
+ * set of control points which describe a Catmull Rom spline which
+ * yields the final intensity curve. Use the gimp_curves_explicit()
+ * function to explicitly modify intensity levels.
  *
  * Returns: TRUE on success.
  *
@@ -241,7 +239,7 @@ gboolean
 gimp_drawable_curves_spline (gint32                drawable_ID,
                              GimpHistogramChannel  channel,
                              gint                  num_points,
-                             const guint8         *control_pts)
+                             const gdouble        *points)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -252,7 +250,7 @@ gimp_drawable_curves_spline (gint32                drawable_ID,
                                     GIMP_PDB_DRAWABLE, drawable_ID,
                                     GIMP_PDB_INT32, channel,
                                     GIMP_PDB_INT32, num_points,
-                                    GIMP_PDB_INT8ARRAY, control_pts,
+                                    GIMP_PDB_FLOATARRAY, points,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

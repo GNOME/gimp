@@ -418,7 +418,7 @@ gimp_operation_shrink_process (GeglOperation       *operation,
       gegl_buffer_set (output,
                        GEGL_RECTANGLE (roi->x, roi->y + y,
                                        roi->width, 1),
-                       1.0, output_format, out,
+                       0, output_format, out,
                        GEGL_AUTO_ROWSTRIDE);
     }
 

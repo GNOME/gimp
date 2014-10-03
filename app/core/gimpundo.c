@@ -37,6 +37,8 @@
 #include "gimpundo.h"
 #include "gimpundostack.h"
 
+#include "gimp-priorities.h"
+
 #include "gimp-intl.h"
 
 
@@ -135,7 +137,7 @@ gimp_undo_class_init (GimpUndoClass *klass)
 
   gimp_object_class->get_memsize    = gimp_undo_get_memsize;
 
-  viewable_class->default_icon_name = "gtk-undo";
+  viewable_class->default_icon_name = "edit-undo";
   viewable_class->get_popup_size    = gimp_undo_get_popup_size;
   viewable_class->get_new_preview   = gimp_undo_get_new_preview;
 
@@ -424,7 +426,7 @@ gimp_undo_create_preview (GimpUndo    *undo,
         idle->context = g_object_ref (context);
 
       undo->preview_idle_id =
-        g_idle_add_full (GIMP_VIEWABLE_PRIORITY_IDLE,
+        g_idle_add_full (GIMP_PRIORITY_VIEWABLE_IDLE,
                          gimp_undo_create_preview_idle, idle,
                          (GDestroyNotify) gimp_undo_idle_free);
     }

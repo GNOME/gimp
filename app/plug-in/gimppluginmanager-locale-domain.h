@@ -25,13 +25,13 @@ void          gimp_plug_in_manager_locale_domain_exit (GimpPlugInManager   *mana
 
 /* Add a locale domain */
 void          gimp_plug_in_manager_add_locale_domain  (GimpPlugInManager   *manager,
-                                                       const gchar         *prog_name,
+                                                       GFile               *file,
                                                        const gchar         *domain_name,
                                                        const gchar         *domain_path);
 
 /* Retrieve a plug-ins locale domain */
 const gchar * gimp_plug_in_manager_get_locale_domain  (GimpPlugInManager   *manager,
-                                                       const gchar         *prog_name,
+                                                       GFile               *file,
                                                        const gchar        **locale_path);
 
 /* Retrieve all locale domains */

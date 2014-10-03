@@ -40,8 +40,6 @@
 /contrast-normalize.exe
 /contrast-retinex
 /contrast-retinex.exe
-/convolution-matrix
-/convolution-matrix.exe
 /crop-zealous
 /crop-zealous.exe
 /curve-bend
@@ -74,6 +72,8 @@
 /file-aa.exe
 /file-cel
 /file-cel.exe
+/file-compressor
+/file-compressor.exe
 /file-csource
 /file-csource.exe
 /file-desktop-link

@@ -21,7 +21,7 @@
 
 gboolean   gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                                       GimpContext          *context,
-                                      GimpBucketFillMode    fill_mode,
+                                      GimpFillType          fill_type,
                                       gint                  paint_mode,
                                       gdouble               opacity,
                                       gboolean              fill_transparent,

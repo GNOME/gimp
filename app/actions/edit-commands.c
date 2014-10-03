@@ -497,13 +497,23 @@ edit_fill_cmd_callback (GtkAction *action,
   GimpImage    *image;
   GimpDrawable *drawable;
   GimpFillType  fill_type;
+  GError       *error = NULL;
   return_if_no_drawable (image, drawable, data);
 
   fill_type = (GimpFillType) value;
 
-  gimp_edit_fill (image, drawable, action_data_get_context (data),
-                  fill_type, GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
-  gimp_image_flush (image);
+  if (gimp_edit_fill (image, drawable, action_data_get_context (data),
+                      fill_type, GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                      &error))
+    {
+      gimp_image_flush (image);
+    }
+  else
+    {
+      gimp_message_literal (image->gimp, NULL, GIMP_MESSAGE_WARNING,
+                            error->message);
+      g_clear_error (&error);
+    }
 }
 
 

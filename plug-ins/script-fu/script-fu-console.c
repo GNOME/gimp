@@ -47,8 +47,6 @@ typedef struct
   GtkWidget     *proc_browser;
   GtkWidget     *save_dialog;
 
-  gint32         input_id;
-
   GList         *history;
   gint           history_len;
   gint           history_cur;
@@ -124,7 +122,6 @@ script_fu_console_interface (void)
 
   gimp_ui_init ("script-fu", FALSE);
 
-  console.input_id    = -1;
   console.history_max = 50;
 
   console.dialog = gimp_dialog_new (_("Script-Fu Console"),
@@ -248,8 +245,6 @@ script_fu_console_interface (void)
   gtk_widget_show (console.dialog);
 
   gtk_main ();
-
-  g_source_remove (console.input_id);
 
   if (console.save_dialog)
     gtk_widget_destroy (console.save_dialog);

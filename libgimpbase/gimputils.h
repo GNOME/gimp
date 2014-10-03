@@ -34,6 +34,10 @@ gchar         * gimp_any_to_utf8             (const gchar  *str,
                                               ...) G_GNUC_PRINTF (3, 4) G_GNUC_MALLOC;
 const gchar   * gimp_filename_to_utf8        (const gchar  *filename);
 
+const gchar   * gimp_file_get_utf8_name      (GFile        *file);
+gboolean        gimp_file_has_extension      (GFile        *file,
+                                              const gchar  *extension);
+
 gchar         * gimp_strip_uline             (const gchar  *str) G_GNUC_MALLOC;
 gchar         * gimp_escape_uline            (const gchar  *str) G_GNUC_MALLOC;
 
@@ -65,21 +69,6 @@ const gchar   * gimp_flags_value_get_desc    (GFlagsClass  *flags_class,
 const gchar   * gimp_flags_value_get_help    (GFlagsClass  *flags_class,
                                               GFlagsValue  *flags_value);
 
-/* temporary, to be removed when we depend on glib 2.40, which will
- * clearly be before gimp 2.10
- */
-gboolean        gimp_output_stream_printf    (GOutputStream  *stream,
-                                              gsize          *bytes_written,
-                                              GCancellable   *cancellable,
-                                              GError        **error,
-                                              const gchar    *format,
-                                              ...) G_GNUC_PRINTF (5, 6);
-gboolean        gimp_output_stream_vprintf   (GOutputStream  *stream,
-                                              gsize          *bytes_written,
-                                              GCancellable   *cancellable,
-                                              GError        **error,
-                                              const gchar    *format,
-                                              va_list         args) G_GNUC_PRINTF (5, 0);
 
 G_END_DECLS
 

@@ -17,6 +17,9 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+#include <string.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -50,6 +53,10 @@ struct _GimpDisplayXfer
   cairo_surface_t *render_surface[NUM_PAGES];
   gint             page;
 };
+
+
+gint GIMP_DISPLAY_RENDER_BUF_WIDTH  = 256;
+gint GIMP_DISPLAY_RENDER_BUF_HEIGHT = 256;
 
 
 static RTreeNode *
@@ -203,6 +210,25 @@ gimp_display_xfer_realize (GtkWidget *widget)
 {
   GdkScreen       *screen;
   GimpDisplayXfer *xfer;
+  const gchar     *env;
+
+  env = g_getenv ("GIMP_DISPLAY_RENDER_BUF_SIZE");
+  if (env)
+    {
+      gint width  = atoi (env);
+      gint height = width;
+
+      env = strchr (env, 'x');
+      if (env)
+        height = atoi (env + 1);
+
+      if (width  > 0 && width  <= 8192 &&
+          height > 0 && height <= 8192)
+        {
+          GIMP_DISPLAY_RENDER_BUF_WIDTH  = width;
+          GIMP_DISPLAY_RENDER_BUF_HEIGHT = height;
+        }
+    }
 
   screen = gtk_widget_get_screen (widget);
   xfer = g_object_get_data (G_OBJECT (screen), "gimp-display-xfer");

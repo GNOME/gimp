@@ -184,7 +184,10 @@ sub get_theme_dir {
     %invoke = (
 	code => <<'CODE'
 {
-  theme_dir = g_strdup (gimp_get_theme_dir (gimp));
+  GFile *file = gimp_get_theme_dir (gimp);
+
+  if (file)
+    theme_dir = g_file_get_path (file);
 }
 CODE
     );

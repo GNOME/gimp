@@ -435,6 +435,9 @@ load_image (const gchar  *filename,
   long      offset;
   gint32    image_ID = -1;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   fp = g_fopen (filename, "rb");
 
   if (! fp)
@@ -444,9 +447,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /* Is file big enough for a footer? */
   if (!fseek (fp, -26L, SEEK_END))
@@ -773,7 +773,7 @@ flip_line (guchar   *buf,
 
   alt = buf + (info->bytes * (info->width - 1));
 
-  for (x = 0; x * 2 <= info->width; x++)
+  for (x = 0; x * 2 < info->width; x++)
     {
       for (s = 0; s < info->bytes; ++s)
         {
@@ -1173,6 +1173,9 @@ save_image (const gchar  *filename,
   width  = gegl_buffer_get_width  (buffer);
   height = gegl_buffer_get_height (buffer);
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   if ((fp = g_fopen (filename, "wb")) == NULL)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
@@ -1180,9 +1183,6 @@ save_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   header[0] = 0; /* No image identifier / description */
 

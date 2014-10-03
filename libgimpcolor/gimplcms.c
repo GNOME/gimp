@@ -62,33 +62,75 @@ gimp_lcms_error_quark (void)
 }
 
 GimpColorProfile
-gimp_lcms_profile_open_from_file (const gchar  *filename,
-                                  GError      **error)
+gimp_lcms_profile_open_from_file (GFile   *file,
+                                  GError **error)
 {
-  GimpColorProfile  profile;
-  GMappedFile      *file;
-  const guint8     *data;
-  gsize             length;
+  GimpColorProfile  profile = NULL;
+  gchar            *path;
 
-  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  file = g_mapped_file_new (filename, FALSE, error);
+  path = g_file_get_path (file);
 
-  if (! file)
-    return NULL;
+  if (path)
+    {
+      GMappedFile  *mapped;
+      const guint8 *data;
+      gsize         length;
 
-  data   = (const guint8 *) g_mapped_file_get_contents (file);
-  length = g_mapped_file_get_length (file);
+      mapped = g_mapped_file_new (path, FALSE, error);
 
-  profile = cmsOpenProfileFromMem (data, length);
+      if (! mapped)
+        return NULL;
 
-  if (! profile)
+      data   = (const guint8 *) g_mapped_file_get_contents (mapped);
+      length = g_mapped_file_get_length (mapped);
+
+      profile = cmsOpenProfileFromMem (data, length);
+
+      g_mapped_file_unref (mapped);
+    }
+  else
+    {
+      GFileInfo *info;
+
+      info = g_file_query_info (file,
+                                G_FILE_ATTRIBUTE_STANDARD_SIZE,
+                                G_FILE_QUERY_INFO_NONE,
+                                NULL, error);
+      if (info)
+        {
+          GInputStream *input;
+          goffset       length = g_file_info_get_size (info);
+          guint8       *data   = g_malloc (length);
+
+          g_object_unref (info);
+
+          input = G_INPUT_STREAM (g_file_read (file, NULL, error));
+
+          if (input)
+            {
+              gsize bytes_read;
+
+              if (g_input_stream_read_all (input, data, length,
+                                           &bytes_read, NULL, error) &&
+                  bytes_read == length)
+                {
+                  profile = cmsOpenProfileFromMem (data, length);
+                }
+
+              g_object_unref (input);
+            }
+
+          g_free (data);
+        }
+    }
+
+  if (! profile && error && *error == NULL)
     g_set_error (error, gimp_lcms_error_quark (), 0,
                  _("'%s' does not appear to be an ICC color profile"),
-                 gimp_filename_to_utf8 (filename));
-
-  g_mapped_file_unref (file);
+                 gimp_file_get_utf8_name (file));
 
   return profile;
 }

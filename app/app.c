@@ -140,8 +140,8 @@ app_exit (gint status)
 void
 app_run (const gchar         *full_prog_name,
          const gchar        **filenames,
-         const gchar         *alternate_system_gimprc,
-         const gchar         *alternate_gimprc,
+         GFile               *alternate_system_gimprc,
+         GFile               *alternate_gimprc,
          const gchar         *session_name,
          const gchar         *batch_interpreter,
          const gchar        **batch_commands,
@@ -155,6 +155,7 @@ app_run (const gchar         *full_prog_name,
          gboolean             use_cpu_accel,
          gboolean             console_messages,
          gboolean             use_debug_handler,
+         gboolean             show_playground,
          GimpStackTraceMode   stack_trace_mode,
          GimpPDBCompatMode    pdb_compat_mode)
 {
@@ -162,14 +163,14 @@ app_run (const gchar         *full_prog_name,
   Gimp               *gimp;
   GMainLoop          *loop;
   GMainLoop          *run_loop;
-  gchar              *default_folder = NULL;
+  GFile              *default_folder = NULL;
 
   if (filenames && filenames[0] && ! filenames[1] &&
       g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
     {
       if (g_path_is_absolute (filenames[0]))
         {
-          default_folder = g_filename_to_uri (filenames[0], NULL, NULL);
+          default_folder = g_file_new_for_path (filenames[0]);
         }
       else
         {
@@ -177,7 +178,7 @@ app_run (const gchar         *full_prog_name,
                                           g_get_current_dir (),
                                           filenames[0],
                                           NULL);
-          default_folder = g_filename_to_uri (absolute, NULL, NULL);
+          default_folder = g_file_new_for_path (absolute);
           g_free (absolute);
         }
 
@@ -197,8 +198,12 @@ app_run (const gchar         *full_prog_name,
                    use_shm,
                    use_cpu_accel,
                    console_messages,
+                   show_playground,
                    stack_trace_mode,
                    pdb_compat_mode);
+
+  if (default_folder)
+    g_object_unref (default_folder);
 
   gimp_cpu_accel_set_use (use_cpu_accel);
 
@@ -208,7 +213,9 @@ app_run (const gchar         *full_prog_name,
 
   /*  Check if the user's gimp_directory exists
    */
-  if (! g_file_test (gimp_directory (), G_FILE_TEST_IS_DIR))
+  if (g_file_query_file_type (gimp_directory_file (NULL),
+                              G_FILE_QUERY_INFO_NONE, NULL) !=
+      G_FILE_TYPE_DIRECTORY)
     {
       GimpUserInstall *install = gimp_user_install_new (be_verbose);
 
@@ -277,9 +284,15 @@ app_run (const gchar         *full_prog_name,
       for (i = 0; filenames[i] != NULL; i++)
         {
           if (run_loop)
-            file_open_from_command_line (gimp, filenames[i], as_new,
-                                         initial_screen,
-                                         initial_monitor);
+            {
+              GFile *file = g_file_new_for_commandline_arg (filenames[i]);
+
+              file_open_from_command_line (gimp, file, as_new,
+                                           initial_screen,
+                                           initial_monitor);
+
+              g_object_unref (file);
+            }
         }
     }
 

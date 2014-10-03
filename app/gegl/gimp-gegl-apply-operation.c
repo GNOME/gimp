@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <cairo.h>
+#include <gio/gio.h>
 #include <gegl.h>
 
 #include "gimp-gegl-types.h"
@@ -42,16 +44,49 @@ gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
                            GeglBuffer          *dest_buffer,
                            const GeglRectangle *dest_rect)
 {
+  gimp_gegl_apply_cached_operation (src_buffer,
+                                    progress, undo_desc,
+                                    operation,
+                                    dest_buffer,
+                                    dest_rect,
+                                    NULL, NULL, 0,
+                                    FALSE);
+}
+
+static void
+gimp_gegl_apply_operation_cancel (GimpProgress *progress,
+                                  gboolean     *cancel)
+{
+  *cancel = TRUE;
+}
+
+gboolean
+gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
+                                  GimpProgress        *progress,
+                                  const gchar         *undo_desc,
+                                  GeglNode            *operation,
+                                  GeglBuffer          *dest_buffer,
+                                  const GeglRectangle *dest_rect,
+                                  GeglBuffer          *cache,
+                                  const GeglRectangle *valid_rects,
+                                  gint                 n_valid_rects,
+                                  gboolean             cancellable)
+{
   GeglNode      *gegl;
   GeglNode      *dest_node;
   GeglRectangle  rect = { 0, };
+  GeglProcessor *processor        = NULL;
+  gboolean       progress_started = FALSE;
   gdouble        value;
-  gboolean       progress_active = FALSE;
+  gboolean       cancel           = FALSE;
 
-  g_return_if_fail (src_buffer == NULL || GEGL_IS_BUFFER (src_buffer));
-  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
-  g_return_if_fail (GEGL_IS_NODE (operation));
-  g_return_if_fail (GEGL_IS_BUFFER (dest_buffer));
+  g_return_val_if_fail (src_buffer == NULL || GEGL_IS_BUFFER (src_buffer), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+  g_return_val_if_fail (GEGL_IS_NODE (operation), FALSE);
+  g_return_val_if_fail (GEGL_IS_BUFFER (dest_buffer), FALSE);
+  g_return_val_if_fail (cache == NULL || GEGL_IS_BUFFER (cache), FALSE);
+  g_return_val_if_fail (valid_rects == NULL || cache != NULL, FALSE);
+  g_return_val_if_fail (valid_rects == NULL || n_valid_rects != 0, FALSE);
 
   if (dest_rect)
     {
@@ -96,43 +131,143 @@ gimp_gegl_apply_operation (GeglBuffer          *src_buffer,
                                    "buffer",    dest_buffer,
                                    NULL);
 
-
   gegl_node_connect_to (operation, "output",
                         dest_node, "input");
 
   if (progress)
     {
-      GeglProcessor *processor;
-
       processor = gegl_node_new_processor (dest_node, &rect);
 
-      progress_active = gimp_progress_is_active (progress);
-
-      if (progress_active)
+      if (gimp_progress_is_active (progress))
         {
           if (undo_desc)
-            gimp_progress_set_text (progress, undo_desc);
+            gimp_progress_set_text_literal (progress, undo_desc);
+
+          progress_started = FALSE;
+          cancellable      = FALSE;
         }
       else
         {
-          gimp_progress_start (progress, undo_desc, FALSE);
+          gimp_progress_start (progress, cancellable, "%s", undo_desc);
+
+          if (cancellable)
+            g_signal_connect (progress, "cancel",
+                              G_CALLBACK (gimp_gegl_apply_operation_cancel),
+                              &cancel);
+
+          progress_started = TRUE;
+        }
+    }
+
+  if (cache)
+    {
+      cairo_region_t *region;
+      gint            all_pixels;
+      gint            done_pixels = 0;
+      gint            n_rects;
+      gint            i;
+
+      region = cairo_region_create_rectangle ((cairo_rectangle_int_t *) &rect);
+
+      all_pixels = rect.width * rect.height;
+
+      for (i = 0; i < n_valid_rects; i++)
+        {
+          gegl_buffer_copy (cache,       valid_rects + i,
+                            dest_buffer, valid_rects + i);
+
+          cairo_region_subtract_rectangle (region,
+                                           (cairo_rectangle_int_t *)
+                                           valid_rects + i);
+
+          done_pixels += valid_rects[i].width * valid_rects[i].height;
+
+          if (progress)
+            gimp_progress_set_value (progress,
+                                     (gdouble) done_pixels /
+                                     (gdouble) all_pixels);
         }
 
-      while (gegl_processor_work (processor, &value))
-        gimp_progress_set_value (progress, value);
+      n_rects = cairo_region_num_rectangles (region);
 
-      g_object_unref (processor);
+      for (i = 0; ! cancel && (i < n_rects); i++)
+        {
+          cairo_rectangle_int_t render_rect;
+
+          cairo_region_get_rectangle (region, i, &render_rect);
+
+          if (progress)
+            {
+              gint rect_pixels = render_rect.width * render_rect.height;
+
+#ifdef REUSE_PROCESSOR
+              gegl_processor_set_rectangle (processor,
+                                            (GeglRectangle *) &render_rect);
+#else
+              g_object_unref (processor);
+              processor = gegl_node_new_processor (dest_node,
+                                                   (GeglRectangle *) &render_rect);
+#endif
+
+              while (! cancel && gegl_processor_work (processor, &value))
+                {
+                  gimp_progress_set_value (progress,
+                                           ((gdouble) done_pixels +
+                                            value * rect_pixels) /
+                                           (gdouble) all_pixels);
+
+                  if (cancellable)
+                    while (! cancel && g_main_context_pending (NULL))
+                      g_main_context_iteration (NULL, FALSE);
+                }
+
+              done_pixels += rect_pixels;
+            }
+          else
+            {
+              gegl_node_blit (dest_node, 1.0, (GeglRectangle *) &render_rect,
+                              NULL, NULL, 0, GEGL_BLIT_DEFAULT);
+            }
+        }
+
+      cairo_region_destroy (region);
     }
   else
     {
-      gegl_node_blit (dest_node, 1.0, &rect,
-                      NULL, NULL, 0, GEGL_BLIT_DEFAULT);
+      if (progress)
+        {
+          while (! cancel && gegl_processor_work (processor, &value))
+            {
+              gimp_progress_set_value (progress, value);
+
+              if (cancellable)
+                while (! cancel && g_main_context_pending (NULL))
+                  g_main_context_iteration (NULL, FALSE);
+            }
+        }
+      else
+        {
+          gegl_node_blit (dest_node, 1.0, &rect,
+                          NULL, NULL, 0, GEGL_BLIT_DEFAULT);
+        }
     }
+
+  if (processor)
+    g_object_unref (processor);
 
   g_object_unref (gegl);
 
-  if (progress && ! progress_active)
-    gimp_progress_end (progress);
+  if (progress_started)
+    {
+      gimp_progress_end (progress);
+
+      if (cancellable)
+        g_signal_handlers_disconnect_by_func (progress,
+                                              gimp_gegl_apply_operation_cancel,
+                                              &cancel);
+    }
+
+  return ! cancel;
 }
 
 void

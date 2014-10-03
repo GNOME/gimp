@@ -38,6 +38,7 @@ struct _GimpImagePrivate
 
   GimpPlugInProcedure *load_proc;           /*  procedure used for loading   */
   GimpPlugInProcedure *save_proc;           /*  last save procedure used     */
+  GimpPlugInProcedure *export_proc;         /*  last export procedure used   */
 
   gchar             *display_name;          /*  display basename             */
   gchar             *display_path;          /*  display full path            */
@@ -57,8 +58,14 @@ struct _GimpImagePrivate
 
   GimpMetadata      *metadata;              /*  image's metadata             */
 
+  GFile             *file;                  /*  the image's XCF file         */
+  GFile             *imported_file;         /*  the image's source file      */
+  GFile             *exported_file;         /*  the image's export file      */
+  GFile             *save_a_copy_file;      /*  the image's save-a-copy file */
+  GFile             *untitled_file;         /*  a file saying "Untitled"     */
+
   gint               dirty;                 /*  dirty flag -- # of ops       */
-  guint              dirty_time;            /*  time when image became dirty */
+  gint64             dirty_time;            /*  time when image became dirty */
   gint               export_dirty;          /*  'dirty' but for export       */
 
   gint               undo_freeze_count;     /*  counts the _freeze's         */

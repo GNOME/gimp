@@ -551,7 +551,7 @@ view_actions_setup (GimpActionGroup *group)
                                        10000,
                                        G_CALLBACK (view_zoom_explicit_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group, "view-rotate-action",
+  gimp_action_group_add_enum_actions (group, "view-action",
                                       view_rotate_actions,
                                       G_N_ELEMENTS (view_rotate_actions),
                                       G_CALLBACK (view_rotate_cmd_callback));

@@ -41,7 +41,7 @@ struct _Gimp
                                         * for the preferences dialog
                                         */
   gchar                  *session_name;
-  gchar                  *default_folder;
+  GFile                  *default_folder;
 
   gboolean                be_verbose;
   gboolean                no_data;
@@ -52,6 +52,7 @@ struct _Gimp
   gboolean                use_cpu_accel;
   GimpMessageHandlerType  message_handler;
   gboolean                console_messages;
+  gboolean                show_playground;
   GimpStackTraceMode      stack_trace_mode;
   GimpPDBCompatMode       pdb_compat_mode;
 
@@ -79,7 +80,6 @@ struct _Gimp
   guint32                 next_guide_ID;
   guint32                 next_sample_point_ID;
   GimpIdTable            *image_table;
-
   GimpIdTable            *item_table;
 
   GimpContainer          *displays;
@@ -138,7 +138,7 @@ struct _GimpClass
 
   /*  emitted if an image is loaded and opened with a display  */
   void     (* image_opened)   (Gimp               *gimp,
-                               const gchar        *uri);
+                               GFile              *file);
 };
 
 
@@ -146,7 +146,7 @@ GType          gimp_get_type             (void) G_GNUC_CONST;
 
 Gimp         * gimp_new                  (const gchar         *name,
                                           const gchar         *session_name,
-                                          const gchar         *default_folder,
+                                          GFile               *default_folder,
                                           gboolean             be_verbose,
                                           gboolean             no_data,
                                           gboolean             no_fonts,
@@ -154,6 +154,7 @@ Gimp         * gimp_new                  (const gchar         *name,
                                           gboolean             use_shm,
                                           gboolean             use_cpu_accel,
                                           gboolean             console_messages,
+                                          gboolean             show_playground,
                                           GimpStackTraceMode   stack_trace_mode,
                                           GimpPDBCompatMode    pdb_compat_mode);
 void           gimp_set_show_gui         (Gimp                *gimp,
@@ -161,8 +162,8 @@ void           gimp_set_show_gui         (Gimp                *gimp,
 gboolean       gimp_get_show_gui         (Gimp                *gimp);
 
 void           gimp_load_config          (Gimp                *gimp,
-                                          const gchar         *alternate_system_gimprc,
-                                          const gchar         *alternate_gimprc);
+                                          GFile               *alternate_system_gimprc,
+                                          GFile               *alternate_gimprc);
 void           gimp_initialize           (Gimp                *gimp,
                                           GimpInitStatusFunc   status_callback);
 void           gimp_restore              (Gimp                *gimp,
@@ -215,9 +216,9 @@ void           gimp_message_literal      (Gimp                *gimp,
                                           const gchar         *message);
 
 void           gimp_image_opened         (Gimp                *gimp,
-                                          const gchar         *uri);
+                                          GFile               *file);
 
-gchar        * gimp_get_temp_filename    (Gimp                *gimp,
+GFile        * gimp_get_temp_file        (Gimp                *gimp,
                                           const gchar         *extension);
 
 

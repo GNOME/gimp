@@ -81,6 +81,10 @@ void          gimp_tool_gui_set_overlay            (GimpToolGui      *gui,
                                                     gboolean          overlay);
 gboolean      gimp_tool_gui_get_overlay            (GimpToolGui      *gui);
 
+void          gimp_tool_gui_set_auto_overlay       (GimpToolGui      *gui,
+                                                    gboolean          auto_overlay);
+gboolean      gimp_tool_gui_get_auto_overlay       (GimpToolGui      *gui);
+
 void          gimp_tool_gui_set_focus_on_map       (GimpToolGui      *gui,
                                                     gboolean          focus_on_map);
 gboolean      gimp_tool_gui_get_focus_on_map       (GimpToolGui      *gui);

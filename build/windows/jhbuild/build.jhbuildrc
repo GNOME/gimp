@@ -26,20 +26,26 @@ else:
         flavour_opt = "--enable-debug=yes"
         flavour_cflags = " -g -O0 "
 
+buildarch = os.environ.get('BUILD_ARCH', 'i686')
+
+if buildarch != "i686" and buildarch != "x86_64":
+	print ("Warning: BUILD_ARCH not recognized")
+
 # checkoutroot: path to download packages elsewhere
 # prefix:       target path to install the compiled binaries
 checkoutroot = os.environ['PWD']+'/checkout/'
-prefix = os.environ['PWD'] + '/targets/' + module + flavour_ext + '/'
+prefix = os.environ['PWD'] + '/targets/' + module + flavour_ext + '-' + buildarch + '/'
+tarballdir = None
 
 os.environ['prefix'] = prefix
 
-searchprefix = os.environ['PWD']+'/targets/gimp-common' + flavour_ext + '/'
+searchprefix = os.environ['PWD']+'/targets/gimp-common' + flavour_ext + '-' + buildarch + '/'
 
 #The host value is obtained with the result of executing
 #the config.guess script on any of the packages.
 #This value must be valid for most linux/x86 out there
 os.environ['HOST'] = 'x86_64-unknown-linux-gnu'
-os.environ['TARGET'] = os.environ.get('MINGW_TARGET', 'i686-w64-mingw32')
+os.environ['TARGET'] = os.environ.get('MINGW_TARGET', buildarch + '-w64-mingw32')
 
 os.environ['PKG_CONFIG_LIBDIR'] = ""
 addpath('PKG_CONFIG_LIBDIR', os.path.join(searchprefix, 'lib', 'pkgconfig'))
@@ -136,7 +142,8 @@ module_autogenargs['cairo']      = autogenargs + """ --enable-xlib=no \
                                                      --enable-xcb=no \
                                                      --enable-xcb-shm=no \
                                                      --enable-pthread=no \
-                                                     --enable-win32-font=yes"""
+                                                     --enable-win32-font=yes \
+                                                     --disable-lto"""
 
 module_autogenargs['pixman']     = autogenargs + """ --enable-gtk=no"""
 
@@ -181,9 +188,6 @@ module_autogenargs['ghostscript']= autogenargs + """ --without-jasper \
                                                      --without-x \
                                                      --disable-cups \
                                                      --disable-contrib """
-
-module_autogenargs['poppler']= autogenargs + """ ac_cv_func_strcpy_s='no'\
-                                                 ac_cv_func_strcat_s='no' """
 
 module_autogenargs['libgexiv2']  = autogenargs + "--disable-introspection"
 

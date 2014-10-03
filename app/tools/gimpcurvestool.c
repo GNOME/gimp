@@ -93,10 +93,10 @@ static GeglNode * gimp_curves_tool_get_operation  (GimpImageMapTool     *image_m
 static void       gimp_curves_tool_dialog         (GimpImageMapTool     *image_map_tool);
 static void       gimp_curves_tool_reset          (GimpImageMapTool     *image_map_tool);
 static gboolean   gimp_curves_tool_settings_import(GimpImageMapTool     *image_map_tool,
-                                                   const gchar          *filename,
+                                                   GInputStream         *input,
                                                    GError              **error);
 static gboolean   gimp_curves_tool_settings_export(GimpImageMapTool     *image_map_tool,
-                                                   const gchar          *filename,
+                                                   GOutputStream        *output,
                                                    GError              **error);
 
 static void       gimp_curves_tool_export_setup   (GimpSettingsBox      *settings_box,
@@ -118,19 +118,12 @@ static gboolean   curves_menu_sensitivity         (gint                  value,
 static void       curves_curve_type_callback      (GtkWidget            *widget,
                                                    GimpCurvesTool       *tool);
 
+static const GimpRGB * curves_get_channel_color   (GimpHistogramChannel  channel);
+
 
 G_DEFINE_TYPE (GimpCurvesTool, gimp_curves_tool, GIMP_TYPE_IMAGE_MAP_TOOL)
 
 #define parent_class gimp_curves_tool_parent_class
-
-static GimpRGB channel_colors[GIMP_HISTOGRAM_RGB] =
-{
-  { 0.0, 0.0, 0.0, 1.0 },
-  { 1.0, 0.0, 0.0, 1.0 },
-  { 0.0, 1.0, 0.0, 1.0 },
-  { 0.0, 0.0, 1.0, 1.0 },
-  { 0.5, 0.5, 0.5, 1.0 }
-};
 
 
 /*  public functions  */
@@ -502,7 +495,7 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
                 NULL);
   gimp_curve_view_set_curve (GIMP_CURVE_VIEW (tool->graph),
                              config->curve[config->channel],
-                             &channel_colors[config->channel]);
+                             curves_get_channel_color (config->channel));
   gtk_container_add (GTK_CONTAINER (frame), tool->graph);
   gtk_widget_show (tool->graph);
 
@@ -594,86 +587,43 @@ gimp_curves_tool_reset (GimpImageMapTool *image_map_tool)
 
 static gboolean
 gimp_curves_tool_settings_import (GimpImageMapTool  *image_map_tool,
-                                  const gchar       *filename,
+                                  GInputStream      *input,
                                   GError           **error)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
-  FILE           *file;
   gchar           header[64];
+  gsize           bytes_read;
 
-  file = g_fopen (filename, "rt");
-
-  if (! file)
+  if (! g_input_stream_read_all (input, header, sizeof (header),
+                                 &bytes_read, NULL, error) ||
+      bytes_read != sizeof (header))
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename),
-                   g_strerror (errno));
+      g_prefix_error (error, _("Could not read header: "));
       return FALSE;
     }
 
-  if (! fgets (header, sizeof (header), file))
-    {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not read header from '%s': %s"),
-                   gimp_filename_to_utf8 (filename),
-                   g_strerror (errno));
-      fclose (file);
-      return FALSE;
-    }
+  g_seekable_seek (G_SEEKABLE (input), 0, G_SEEK_SET, NULL, NULL);
 
   if (g_str_has_prefix (header, "# GIMP Curves File\n"))
-    {
-      gboolean success;
-
-      rewind (file);
-
-      success = gimp_curves_config_load_cruft (tool->config, file, error);
-
-      fclose (file);
-
-      return success;
-    }
-
-  fclose (file);
+    return gimp_curves_config_load_cruft (tool->config, input, error);
 
   return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_import (image_map_tool,
-                                                                    filename,
+                                                                    input,
                                                                     error);
 }
 
 static gboolean
 gimp_curves_tool_settings_export (GimpImageMapTool  *image_map_tool,
-                                  const gchar       *filename,
+                                  GOutputStream     *output,
                                   GError           **error)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (image_map_tool);
 
   if (tool->export_old_format)
-    {
-      FILE     *file;
-      gboolean  success;
-
-      file = g_fopen (filename, "wt");
-
-      if (! file)
-        {
-          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Could not open '%s' for writing: %s"),
-                       gimp_filename_to_utf8 (filename),
-                       g_strerror (errno));
-          return FALSE;
-        }
-
-      success = gimp_curves_config_save_cruft (tool->config, file, error);
-
-      fclose (file);
-
-      return success;
-    }
+    return gimp_curves_config_save_cruft (tool->config, output, error);
 
   return GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->settings_export (image_map_tool,
-                                                                    filename,
+                                                                    output,
                                                                     error);
 }
 
@@ -764,13 +714,13 @@ gimp_curves_tool_config_notify (GObject        *object,
           if (channel == config->channel)
             {
               gimp_curve_view_set_curve (GIMP_CURVE_VIEW (tool->graph), curve,
-                                         &channel_colors[channel]);
+                                         curves_get_channel_color (channel));
             }
           else
             {
               gimp_curve_view_add_background (GIMP_CURVE_VIEW (tool->graph),
                                               config->curve[channel],
-                                              &channel_colors[channel]);
+                                              curves_get_channel_color (channel));
             }
         }
 
@@ -848,4 +798,22 @@ curves_curve_type_callback (GtkWidget      *widget,
       if (config->curve[config->channel]->curve_type != curve_type)
         gimp_curve_set_curve_type (config->curve[config->channel], curve_type);
     }
+}
+
+static const GimpRGB *
+curves_get_channel_color (GimpHistogramChannel channel)
+{
+  static const GimpRGB channel_colors[GIMP_HISTOGRAM_RGB] =
+  {
+    { 0.0, 0.0, 0.0, 1.0 },
+    { 1.0, 0.0, 0.0, 1.0 },
+    { 0.0, 1.0, 0.0, 1.0 },
+    { 0.0, 0.0, 1.0, 1.0 },
+    { 0.5, 0.5, 0.5, 1.0 }
+  };
+
+  if (channel == GIMP_HISTOGRAM_VALUE)
+    return NULL;
+
+  return &channel_colors[channel];
 }

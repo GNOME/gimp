@@ -46,8 +46,8 @@ struct _GimpDocumentListClass
 GType           gimp_document_list_get_type (void) G_GNUC_CONST;
 GimpContainer * gimp_document_list_new      (Gimp             *gimp);
 
-GimpImagefile * gimp_document_list_add_uri  (GimpDocumentList *document_list,
-                                             const gchar      *uri,
+GimpImagefile * gimp_document_list_add_file (GimpDocumentList *document_list,
+                                             GFile            *file,
                                              const gchar      *mime_type);
 
 

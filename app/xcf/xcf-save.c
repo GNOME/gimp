@@ -18,6 +18,7 @@
 #include "config.h"
 
 #include <string.h>
+#include <zlib.h>
 
 #include <cairo.h>
 #include <gegl.h>
@@ -109,6 +110,11 @@ static gboolean xcf_save_tile_rle      (XcfInfo           *info,
                                         const Babl        *format,
                                         guchar            *rlebuf,
                                         GError           **error);
+static gboolean xcf_save_tile_zlib     (XcfInfo           *info,
+                                        GeglBuffer        *buffer,
+                                        GeglRectangle     *tile_rect,
+                                        const Babl        *format,
+                                        GError           **error);
 static gboolean xcf_save_parasite      (XcfInfo           *info,
                                         GimpParasite      *parasite,
                                         GError           **error);
@@ -179,54 +185,7 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
   } G_STMT_END
 
 
-void
-xcf_save_choose_format (XcfInfo   *info,
-                        GimpImage *image)
-{
-  GList *list;
-  gint   save_version = 0;  /* default to oldest */
-
-  /* need version 1 for colormaps */
-  if (gimp_image_get_colormap (image))
-    save_version = 1;
-
-  for (list = gimp_image_get_layer_iter (image);
-       list && save_version < 3;
-       list = g_list_next (list))
-    {
-      GimpLayer *layer = GIMP_LAYER (list->data);
-
-      switch (gimp_layer_get_mode (layer))
-        {
-          /* new layer modes not supported by gimp-1.2 */
-        case GIMP_SOFTLIGHT_MODE:
-        case GIMP_GRAIN_EXTRACT_MODE:
-        case GIMP_GRAIN_MERGE_MODE:
-        case GIMP_COLOR_ERASE_MODE:
-          save_version = MAX (2, save_version);
-          break;
-
-        default:
-          break;
-        }
-
-      /* need version 3 for layer trees */
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
-        save_version = MAX (3, save_version);
-    }
-
-  /* need version 6 for new metadata */
-  if (gimp_image_get_metadata (image))
-    save_version = MAX (6, save_version);
-
-  /* need version 7 for high bit depth images */
-  if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_GAMMA)
-    save_version = MAX (7, save_version);
-
-  info->file_version = save_version;
-}
-
-gint
+gboolean
 xcf_save_image (XcfInfo    *info,
                 GimpImage  *image,
                 GError    **error)
@@ -1506,11 +1465,12 @@ xcf_save_level (XcfInfo     *info,
                                               rlebuf, error));
           break;
         case COMPRESS_ZLIB:
-          g_error ("xcf: zlib compression unimplemented");
+          xcf_check_error (xcf_save_tile_zlib (info, buffer, &rect, format,
+                                               error));
           break;
         case COMPRESS_FRACTAL:
-          g_error ("xcf: fractal compression unimplemented");
-          break;
+          g_warning ("xcf: fractal compression unimplemented");
+          return FALSE;
         }
 
       /* seek back to where we are to write out the next
@@ -1538,7 +1498,6 @@ xcf_save_level (XcfInfo     *info,
   xcf_write_int32_check_error (info, &offset, 1);
 
   return TRUE;
-
 }
 
 static gboolean
@@ -1677,6 +1636,74 @@ xcf_save_tile_rle (XcfInfo        *info,
 
   xcf_write_int8_check_error (info, rlebuf, len);
 
+  return TRUE;
+}
+
+static gboolean
+xcf_save_tile_zlib (XcfInfo        *info,
+                    GeglBuffer     *buffer,
+                    GeglRectangle  *tile_rect,
+                    const Babl     *format,
+                    GError        **error)
+{
+  gint      bpp       = babl_format_get_bytes_per_pixel (format);
+  gint      tile_size = bpp * tile_rect->width * tile_rect->height;
+  guchar   *tile_data = g_alloca (tile_size);
+  /* The buffer for compressed data. */
+  guchar   *buf       = g_alloca (tile_size);
+  GError   *tmp_error = NULL;
+  z_stream  strm;
+  int       action;
+  int       status;
+
+  gegl_buffer_get (buffer, tile_rect, 1.0, format, tile_data,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+  /* allocate deflate state */
+  strm.zalloc = Z_NULL;
+  strm.zfree  = Z_NULL;
+  strm.opaque = Z_NULL;
+
+  status = deflateInit (&strm, Z_DEFAULT_COMPRESSION);
+  if (status != Z_OK)
+    return FALSE;
+
+  strm.next_in   = tile_data;
+  strm.avail_in  = tile_size;
+  strm.next_out  = buf;
+  strm.avail_out = tile_size;
+
+  action = Z_NO_FLUSH;
+
+  while (status == Z_OK || status == Z_BUF_ERROR)
+    {
+      if (strm.avail_in == 0)
+        {
+          /* Finish the encoding. */
+          action = Z_FINISH;
+        }
+
+      status = deflate (&strm, action);
+
+      if (status == Z_STREAM_END || status == Z_BUF_ERROR)
+        {
+          size_t write_size = tile_size - strm.avail_out;
+
+          xcf_write_int8_check_error (info, buf, write_size);
+
+          /* Reset next_out and avail_out. */
+          strm.next_out  = buf;
+          strm.avail_out = tile_size;
+        }
+      else if (status != Z_OK)
+        {
+          g_printerr ("xcf: tile compression failed: %s", zError (status));
+          deflateEnd (&strm);
+          return FALSE;
+        }
+    }
+
+  deflateEnd (&strm);
   return TRUE;
 }
 

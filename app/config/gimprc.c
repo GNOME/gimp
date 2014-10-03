@@ -93,16 +93,16 @@ gimp_rc_class_init (GimpRcClass *klass)
                                                          G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_SYSTEM_GIMPRC,
-                                   g_param_spec_string ("system-gimprc",
+                                   g_param_spec_object ("system-gimprc",
                                                         NULL, NULL,
-                                                        NULL,
+                                                        G_TYPE_FILE,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_USER_GIMPRC,
-                                   g_param_spec_string ("user-gimprc",
+                                   g_param_spec_object ("user-gimprc",
                                                         NULL, NULL,
-                                                        NULL,
+                                                        G_TYPE_FILE,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
 }
@@ -132,12 +132,13 @@ gimp_rc_finalize (GObject *object)
 
   if (rc->system_gimprc)
     {
-      g_free (rc->system_gimprc);
+      g_object_unref (rc->system_gimprc);
       rc->system_gimprc = NULL;
     }
+
   if (rc->user_gimprc)
     {
-      g_free (rc->user_gimprc);
+      g_object_unref (rc->user_gimprc);
       rc->user_gimprc = NULL;
     }
 
@@ -150,18 +151,7 @@ gimp_rc_set_property (GObject      *object,
                       const GValue *value,
                       GParamSpec   *pspec)
 {
-  GimpRc      *rc       = GIMP_RC (object);
-  const gchar *filename = NULL;
-
-  switch (property_id)
-    {
-    case PROP_SYSTEM_GIMPRC:
-    case PROP_USER_GIMPRC:
-      filename = g_value_get_string (value);
-      break;
-    default:
-      break;
-    }
+  GimpRc *rc = GIMP_RC (object);
 
   switch (property_id)
     {
@@ -170,22 +160,23 @@ gimp_rc_set_property (GObject      *object,
       break;
 
     case PROP_SYSTEM_GIMPRC:
-      g_free (rc->system_gimprc);
+      if (rc->system_gimprc)
+        g_object_unref (rc->system_gimprc);
 
-      if (filename)
-        rc->system_gimprc = g_strdup (filename);
+      if (g_value_get_object (value))
+        rc->system_gimprc = g_value_dup_object (value);
       else
-        rc->system_gimprc = g_build_filename (gimp_sysconf_directory (),
-                                              "gimprc", NULL);
+        rc->system_gimprc = gimp_sysconf_directory_file ("gimprc", NULL);
       break;
 
     case PROP_USER_GIMPRC:
-      g_free (rc->user_gimprc);
+      if (rc->user_gimprc)
+        g_object_unref (rc->user_gimprc);
 
-      if (filename)
-        rc->user_gimprc = g_strdup (filename);
+      if (g_value_get_object (value))
+        rc->user_gimprc = g_value_dup_object (value);
       else
-        rc->user_gimprc = gimp_personal_rc_file ("gimprc");
+        rc->user_gimprc = gimp_directory_file ("gimprc", NULL);
       break;
 
    default:
@@ -208,11 +199,12 @@ gimp_rc_get_property (GObject    *object,
       g_value_set_boolean (value, rc->verbose);
       break;
     case PROP_SYSTEM_GIMPRC:
-      g_value_set_string (value, rc->system_gimprc);
+      g_value_set_object (value, rc->system_gimprc);
       break;
     case PROP_USER_GIMPRC:
-      g_value_set_string (value, rc->user_gimprc);
+      g_value_set_object (value, rc->user_gimprc);
       break;
+
    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -257,10 +249,10 @@ gimp_rc_load (GimpRc *rc)
 
   if (rc->verbose)
     g_print ("Parsing '%s'\n",
-             gimp_filename_to_utf8 (rc->system_gimprc));
+             gimp_file_get_utf8_name (rc->system_gimprc));
 
-  if (! gimp_config_deserialize_file (GIMP_CONFIG (rc),
-                                      rc->system_gimprc, NULL, &error))
+  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (rc),
+                                       rc->system_gimprc, NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         g_message ("%s", error->message);
@@ -270,10 +262,10 @@ gimp_rc_load (GimpRc *rc)
 
   if (rc->verbose)
     g_print ("Parsing '%s'\n",
-             gimp_filename_to_utf8 (rc->user_gimprc));
+             gimp_file_get_utf8_name (rc->user_gimprc));
 
-  if (! gimp_config_deserialize_file (GIMP_CONFIG (rc),
-                                      rc->user_gimprc, NULL, &error))
+  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (rc),
+                                       rc->user_gimprc, NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         {
@@ -322,15 +314,22 @@ gimp_rc_notify (GimpRc     *rc,
  * Returns: the new #GimpRc.
  */
 GimpRc *
-gimp_rc_new (const gchar *system_gimprc,
-             const gchar *user_gimprc,
-             gboolean     verbose)
+gimp_rc_new (GFile    *system_gimprc,
+             GFile    *user_gimprc,
+             gboolean  verbose)
 {
-  GimpRc *rc = g_object_new (GIMP_TYPE_RC,
-                             "verbose",       verbose,
-                             "system-gimprc", system_gimprc,
-                             "user-gimprc",   user_gimprc,
-                             NULL);
+  GimpRc *rc;
+
+  g_return_val_if_fail (system_gimprc == NULL || G_IS_FILE (system_gimprc),
+                        NULL);
+  g_return_val_if_fail (user_gimprc == NULL || G_IS_FILE (user_gimprc),
+                        NULL);
+
+  rc = g_object_new (GIMP_TYPE_RC,
+                     "verbose",       verbose,
+                     "system-gimprc", system_gimprc,
+                     "user-gimprc",   user_gimprc,
+                     NULL);
 
   gimp_rc_load (rc);
 
@@ -509,19 +508,20 @@ gimp_rc_save (GimpRc *rc)
 
   global = g_object_new (GIMP_TYPE_RC, NULL);
 
-  gimp_config_deserialize_file (GIMP_CONFIG (global),
-                                rc->system_gimprc, NULL, NULL);
+  gimp_config_deserialize_gfile (GIMP_CONFIG (global),
+                                 rc->system_gimprc, NULL, NULL);
 
-  header = g_strconcat (top, rc->system_gimprc, bottom, NULL);
+  header = g_strconcat (top, gimp_file_get_utf8_name (rc->system_gimprc),
+                        bottom, NULL);
 
   if (rc->verbose)
     g_print ("Writing '%s'\n",
-             gimp_filename_to_utf8 (rc->user_gimprc));
+             gimp_file_get_utf8_name (rc->user_gimprc));
 
-  if (! gimp_config_serialize_to_file (GIMP_CONFIG (rc),
-                                       rc->user_gimprc,
-                                       header, footer, global,
-                                       &error))
+  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (rc),
+                                        rc->user_gimprc,
+                                        header, footer, global,
+                                        &error))
     {
       g_message ("%s", error->message);
       g_error_free (error);

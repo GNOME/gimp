@@ -15,36 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if 0
-
 #ifndef  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__
 #define  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__
 
 
-/*  general API (as seen from the PDB)  */
-
-void       gimp_drawable_foreground_extract (GimpDrawable              *drawable,
-                                             GimpForegroundExtractMode  mode,
-                                             GimpDrawable              *mask,
-                                             GimpProgress              *progress);
-
-/*  SIOX specific API  */
-
-SioxState * gimp_drawable_foreground_extract_siox_init   (GimpDrawable *drawable,
-                                                          gint          x,
-                                                          gint          y,
-                                                          gint          width,
-                                                          gint          height);
-void        gimp_drawable_foreground_extract_siox  (GimpDrawable       *mask,
-                                                    SioxState          *state,
-                                                    SioxRefinementType  refinemane,
-                                                    gint                smoothness,
-                                                    const gdouble       sensitivity[3],
-                                                    gboolean            multiblob,
-                                                    GimpProgress       *progress);
-void        gimp_drawable_foreground_extract_siox_done (SioxState      *state);
+GeglBuffer * gimp_drawable_foreground_extract (GimpDrawable       *drawable,
+                                               GimpMattingEngine   engine,
+                                               gint                global_iterations,
+                                               gint                levin_levels,
+                                               gint                levin_active_levels,
+                                               GeglBuffer         *trimap,
+                                               GimpProgress       *progress);
 
 
 #endif  /*  __GIMP_DRAWABLE_FOREGROUND_EXTRACT_H__  */
-
-#endif

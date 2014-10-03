@@ -13,11 +13,11 @@ endif
 
 if OS_WIN32
 gimpcolor_def = gimpcolor.def
-libgimpcolor_export_symbols = -export-symbols gimpcolor.def
+libgimpcolor_export_symbols = -export-symbols $(srcdir)/gimpcolor.def
 
 install-libtool-import-lib:
 	$(INSTALL) .libs/libgimpcolor-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) gimpcolor.def $(DESTDIR)$(libdir)
+	$(INSTALL) $(srcdir)/gimpcolor.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
 	-rm $(DESTDIR)$(libdir)/libgimpcolor-$(GIMP_API_VERSION).dll.a

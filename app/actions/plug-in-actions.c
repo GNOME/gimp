@@ -52,7 +52,7 @@
 /*  local function prototypes  */
 
 static void     plug_in_actions_menu_branch_added    (GimpPlugInManager   *manager,
-                                                      const gchar         *progname,
+                                                      GFile               *file,
                                                       const gchar         *menu_path,
                                                       const gchar         *menu_label,
                                                       GimpActionGroup     *group);
@@ -111,6 +111,8 @@ static const GimpActionEntry plug_in_actions[] =
                                              "_Render")           },
   { "plug-in-render-clouds-menu",  NULL, NC_("plug-in-action",
                                              "_Clouds")           },
+  { "plug-in-render-fractals-menu", NULL, NC_("plug-in-action",
+                                             "_Fractals")         },
   { "plug-in-render-nature-menu",  NULL, NC_("plug-in-action",
                                              "_Nature")           },
   { "plug-in-render-noise-menu",   NULL, NC_("plug-in-action",
@@ -173,7 +175,7 @@ plug_in_actions_setup (GimpActionGroup *group)
       GimpPlugInMenuBranch *branch = list->data;
 
       plug_in_actions_menu_branch_added (manager,
-                                         branch->prog_name,
+                                         branch->file,
                                          branch->menu_path,
                                          branch->menu_label,
                                          group);
@@ -190,7 +192,7 @@ plug_in_actions_setup (GimpActionGroup *group)
     {
       GimpPlugInProcedure *plug_in_proc = list->data;
 
-      if (plug_in_proc->prog)
+      if (plug_in_proc->file)
         plug_in_actions_register_procedure (group->gimp->pdb,
                                             GIMP_PROCEDURE (plug_in_proc),
                                             group);
@@ -298,7 +300,7 @@ plug_in_actions_update (GimpActionGroup *group,
 
 static void
 plug_in_actions_menu_branch_added (GimpPlugInManager *manager,
-                                   const gchar       *progname,
+                                   GFile             *file,
                                    const gchar       *menu_path,
                                    const gchar       *menu_label,
                                    GimpActionGroup   *group)
@@ -309,8 +311,7 @@ plug_in_actions_menu_branch_added (GimpPlugInManager *manager,
   gchar       *full;
   gchar       *full_translated;
 
-  locale_domain = gimp_plug_in_manager_get_locale_domain (manager,
-                                                          progname, NULL);
+  locale_domain = gimp_plug_in_manager_get_locale_domain (manager, file, NULL);
 
   path_translated  = dgettext (locale_domain, menu_path);
   label_translated = dgettext (locale_domain, menu_label);

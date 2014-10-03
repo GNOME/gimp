@@ -728,15 +728,15 @@ vectors_import_response (GtkWidget           *widget,
   if (response_id == GTK_RESPONSE_OK)
     {
       GtkFileChooser *chooser = GTK_FILE_CHOOSER (widget);
-      gchar          *filename;
+      GFile          *file;
       GError         *error = NULL;
 
       vectors_import_merge = dialog->merge_vectors;
       vectors_import_scale = dialog->scale_vectors;
 
-      filename = gtk_file_chooser_get_filename (chooser);
+      file = gtk_file_chooser_get_file (chooser);
 
-      if (gimp_vectors_import_file (dialog->image, filename,
+      if (gimp_vectors_import_file (dialog->image, file,
                                     vectors_import_merge, vectors_import_scale,
                                     GIMP_IMAGE_ACTIVE_PARENT, -1,
                                     NULL, &error))
@@ -752,7 +752,7 @@ vectors_import_response (GtkWidget           *widget,
           return;
         }
 
-      g_free (filename);
+      g_object_unref (file);
 
       g_object_set_data_full (G_OBJECT (dialog->image->gimp),
                               "gimp-vectors-import-folder",
@@ -772,17 +772,17 @@ vectors_export_response (GtkWidget           *widget,
     {
       GtkFileChooser *chooser = GTK_FILE_CHOOSER (widget);
       GimpVectors    *vectors = NULL;
-      gchar          *filename;
+      GFile          *file;
       GError         *error   = NULL;
 
       vectors_export_active_only = dialog->active_only;
 
-      filename = gtk_file_chooser_get_filename (chooser);
+      file = gtk_file_chooser_get_file (chooser);
 
       if (vectors_export_active_only)
         vectors = gimp_image_get_active_vectors (dialog->image);
 
-      if (! gimp_vectors_export_file (dialog->image, vectors, filename, &error))
+      if (! gimp_vectors_export_file (dialog->image, vectors, file, &error))
         {
           gimp_message (dialog->image->gimp, G_OBJECT (widget),
                         GIMP_MESSAGE_ERROR,
@@ -791,7 +791,7 @@ vectors_export_response (GtkWidget           *widget,
           return;
         }
 
-      g_free (filename);
+      g_object_unref (file);
 
       g_object_set_data_full (G_OBJECT (dialog->image->gimp),
                               "gimp-vectors-export-folder",

@@ -17,11 +17,8 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <stdarg.h>
 #include <stdlib.h>
 
-#include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -42,8 +39,6 @@
 
 static void   themes_apply_theme         (Gimp                   *gimp,
                                           const gchar            *theme_name);
-static void   themes_directories_foreach (const GimpDatafileData *file_data,
-                                          gpointer                user_data);
 static void   themes_list_themes_foreach (gpointer                key,
                                           gpointer                value,
                                           gpointer                data);
@@ -74,20 +69,62 @@ themes_init (Gimp *gimp)
   themes_hash = g_hash_table_new_full (g_str_hash,
                                        g_str_equal,
                                        g_free,
-                                       g_free);
+                                       g_object_unref);
 
   if (config->theme_path)
     {
-      gchar *path;
+      GList *path;
+      GList *list;
 
-      path = gimp_config_path_expand (config->theme_path, TRUE, NULL);
+      path = gimp_config_path_expand_to_files (config->theme_path, NULL);
 
-      gimp_datafiles_read_directories (path,
-                                       G_FILE_TEST_IS_DIR,
-                                       themes_directories_foreach,
-                                       gimp);
+      for (list = path; list; list = g_list_next (list))
+        {
+          GFile           *dir = list->data;
+          GFileEnumerator *enumerator;
 
-      g_free (path);
+          enumerator =
+            g_file_enumerate_children (dir,
+                                       G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                       G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                       G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                       G_FILE_QUERY_INFO_NONE,
+                                       NULL, NULL);
+
+          if (enumerator)
+            {
+              GFileInfo *info;
+
+              while ((info = g_file_enumerator_next_file (enumerator,
+                                                          NULL, NULL)))
+                {
+                  if (! g_file_info_get_is_hidden (info) &&
+                      g_file_info_get_file_type (info) == G_FILE_TYPE_DIRECTORY)
+                    {
+                      GFile       *file;
+                      const gchar *name;
+                      gchar       *basename;
+
+                      file = g_file_enumerator_get_child (enumerator, info);
+                      name = gimp_file_get_utf8_name (file);
+
+                      basename = g_path_get_basename (name);
+
+                      if (gimp->be_verbose)
+                        g_print ("Adding theme '%s' (%s)\n",
+                                 basename, name);
+
+                      g_hash_table_insert (themes_hash, basename, file);
+                    }
+
+                  g_object_unref (info);
+                }
+
+              g_object_unref (enumerator);
+            }
+        }
+
+      g_list_free_full (path, (GDestroyNotify) g_object_unref);
     }
 
   themes_apply_theme (gimp, config->theme);
@@ -146,7 +183,7 @@ themes_list_themes (Gimp *gimp,
   return NULL;
 }
 
-const gchar *
+GFile *
 themes_get_theme_dir (Gimp        *gimp,
                       const gchar *theme_name)
 {
@@ -158,51 +195,57 @@ themes_get_theme_dir (Gimp        *gimp,
   return g_hash_table_lookup (themes_hash, theme_name);
 }
 
-gchar *
+GFile *
 themes_get_theme_file (Gimp        *gimp,
                        const gchar *first_component,
                        ...)
 {
   GimpGuiConfig *gui_config;
-  gchar         *file;
-  gchar         *component;
-  gchar         *path;
+  GFile         *file;
+  const gchar   *component;
   va_list        args;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (first_component != NULL, NULL);
 
-  file = g_strdup (first_component);
+  gui_config = GIMP_GUI_CONFIG (gimp->config);
+
+  file      = g_object_ref (themes_get_theme_dir (gimp, gui_config->theme));
+  component = first_component;
 
   va_start (args, first_component);
 
-  while ((component = va_arg (args, gchar *)))
+  do
     {
-      gchar *tmp;
-
-      tmp = g_build_filename (file, component, NULL);
-      g_free (file);
+      GFile *tmp = g_file_get_child (file, component);
+      g_object_unref (file);
       file = tmp;
     }
+  while ((component = va_arg (args, gchar *)));
 
   va_end (args);
 
-  gui_config = GIMP_GUI_CONFIG (gimp->config);
-
-  path = g_build_filename (themes_get_theme_dir (gimp, gui_config->theme),
-                           file, NULL);
-
-  if (! g_file_test (path, G_FILE_TEST_EXISTS))
+  if (! g_file_query_exists (file, NULL))
     {
-      g_free (path);
+      g_object_unref (file);
 
-      path = g_build_filename (themes_get_theme_dir (gimp, NULL),
-                               file, NULL);
+      file      = g_object_ref (themes_get_theme_dir (gimp, NULL));
+      component = first_component;
+
+      va_start (args, first_component);
+
+      do
+        {
+          GFile *tmp = g_file_get_child (file, component);
+          g_object_unref (file);
+          file = tmp;
+        }
+      while ((component = va_arg (args, gchar *)));
+
+      va_end (args);
     }
 
-  g_free (file);
-
-  return path;
+  return file;
 }
 
 
@@ -212,49 +255,58 @@ static void
 themes_apply_theme (Gimp        *gimp,
                     const gchar *theme_name)
 {
-  const gchar *theme_dir;
-  gchar       *gtkrc_theme;
-  gchar       *gtkrc_user;
-  gchar       *themerc;
-  FILE        *file;
+  GFile         *themerc;
+  GOutputStream *output;
+  GError        *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  theme_dir = themes_get_theme_dir (gimp, theme_name);
-
-  if (theme_dir)
-    {
-      gtkrc_theme = g_build_filename (theme_dir, "gtkrc", NULL);
-    }
-  else
-    {
-      /*  get the hardcoded default theme gtkrc  */
-      gtkrc_theme = g_strdup (gimp_gtkrc ());
-    }
-
-  gtkrc_user = gimp_personal_rc_file ("gtkrc");
-
-  themerc = gimp_personal_rc_file ("themerc");
+  themerc = gimp_directory_file ("themerc", NULL);
 
   if (gimp->be_verbose)
-    g_print ("Writing '%s'\n",
-             gimp_filename_to_utf8 (themerc));
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (themerc));
 
-  file = g_fopen (themerc, "w");
-
-  if (! file)
+  output = G_OUTPUT_STREAM (g_file_replace (themerc,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, &error));
+  if (! output)
     {
       gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
                     _("Could not open '%s' for writing: %s"),
-                    gimp_filename_to_utf8 (themerc), g_strerror (errno));
-      goto cleanup;
+                    gimp_file_get_utf8_name (themerc), error->message);
+      g_clear_error (&error);
     }
+  else
+    {
+      GFile *theme_dir = themes_get_theme_dir (gimp, theme_name);
+      GFile *gtkrc_theme;
+      GFile *gtkrc_user;
+      gchar *esc_gtkrc_theme;
+      gchar *esc_gtkrc_user;
+      gchar *tmp;
 
-  {
-    gchar *esc_gtkrc_theme = g_strescape (gtkrc_theme, NULL);
-    gchar *esc_gtkrc_user  = g_strescape (gtkrc_user, NULL);
+      if (theme_dir)
+        {
+          gtkrc_theme = g_file_get_child (theme_dir, "gtkrc");
+        }
+      else
+        {
+          /*  get the hardcoded default theme gtkrc  */
+          gtkrc_theme = g_file_new_for_path (gimp_gtkrc ());
+        }
 
-    fprintf (file,
+      gtkrc_user = gimp_directory_file ("gtkrc", NULL);
+
+      tmp = g_file_get_path (gtkrc_theme);
+      esc_gtkrc_theme = g_strescape (tmp, NULL);
+      g_free (tmp);
+
+      tmp = g_file_get_path (gtkrc_user);
+      esc_gtkrc_user = g_strescape (tmp, NULL);
+      g_free (tmp);
+
+      if (! g_output_stream_printf
+            (output, NULL, NULL, &error,
              "# GIMP themerc\n"
              "#\n"
              "# This file is written on GIMP startup and on every theme change.\n"
@@ -265,36 +317,25 @@ themes_apply_theme (Gimp        *gimp,
              "include \"%s\"\n"
              "\n"
              "# end of themerc\n",
-             gtkrc_user,
+             gimp_file_get_utf8_name (gtkrc_user),
              esc_gtkrc_theme,
-             esc_gtkrc_user);
+             esc_gtkrc_user) ||
+          ! g_output_stream_close (output, NULL, &error))
+        {
+          gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                        _("Error writing '%s': %s"),
+                        gimp_file_get_utf8_name (themerc), error->message);
+          g_clear_error (&error);
+        }
 
-    g_free (esc_gtkrc_theme);
-    g_free (esc_gtkrc_user);
-  }
+      g_free (esc_gtkrc_theme);
+      g_free (esc_gtkrc_user);
+      g_object_unref (gtkrc_theme);
+      g_object_unref (gtkrc_user);
+      g_object_unref (output);
+    }
 
-  fclose (file);
-
- cleanup:
-  g_free (gtkrc_theme);
-  g_free (gtkrc_user);
-  g_free (themerc);
-}
-
-static void
-themes_directories_foreach (const GimpDatafileData *file_data,
-                            gpointer                user_data)
-{
-  Gimp *gimp = GIMP (user_data);
-
-  if (gimp->be_verbose)
-    g_print ("Adding theme '%s' (%s)\n",
-             gimp_filename_to_utf8 (file_data->basename),
-             gimp_filename_to_utf8 (file_data->filename));
-
-  g_hash_table_insert (themes_hash,
-                       g_strdup (file_data->basename),
-                       g_strdup (file_data->filename));
+  g_object_unref (themerc);
 }
 
 static void

@@ -247,10 +247,11 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
                           GArray          *dash_info)
 {
   sc->do_stroke = TRUE;
-  sc->width = width;
-  sc->join  = join;
-  sc->cap   = cap;
-  sc->miter = miter;
+  sc->width     = width;
+  sc->join      = join;
+  sc->cap       = cap;
+  sc->miter     = miter;
+
   if (sc->dash_info)
     {
       g_array_free (sc->dash_info, TRUE);
@@ -481,7 +482,7 @@ gimp_scan_convert_render_full (GimpScanConvert *sc,
   bpp    = babl_format_get_bytes_per_pixel (format);
 
   iter = gegl_buffer_iterator_new (buffer, NULL, 0, format,
-                                   GEGL_BUFFER_READWRITE, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
   roi = &iter->roi[0];
 
   while (gegl_buffer_iterator_next (iter))

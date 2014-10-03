@@ -90,21 +90,21 @@ resize_dialog_new (GimpViewable       *viewable,
                    GimpResizeCallback  callback,
                    gpointer            user_data)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *main_vbox;
-  GtkWidget    *vbox;
-  GtkWidget    *abox;
-  GtkWidget    *frame;
-  GtkWidget    *button;
-  GtkWidget    *spinbutton;
-  GtkWidget    *entry;
-  GtkObject    *adjustment;
-  GdkPixbuf    *pixbuf;
-  ResizeDialog *private;
-  GimpImage    *image = NULL;
-  const gchar  *text  = NULL;
-  gint          width, height;
-  gdouble       xres, yres;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *vbox;
+  GtkWidget     *abox;
+  GtkWidget     *frame;
+  GtkWidget     *button;
+  GtkWidget     *spinbutton;
+  GtkWidget     *entry;
+  GtkAdjustment *adjustment;
+  GdkPixbuf     *pixbuf;
+  ResizeDialog  *private;
+  GimpImage     *image = NULL;
+  const gchar   *text  = NULL;
+  gint           width, height;
+  gdouble        xres, yres;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -206,9 +206,9 @@ resize_dialog_new (GimpViewable       *viewable,
   gtk_widget_show (vbox);
 
   /*  the offset sizeentry  */
-  spinbutton = gimp_spin_button_new (&adjustment,
-                                     1, 1, 1, 1, 10, 0,
-                                     1, 2);
+  adjustment = (GtkAdjustment *) gtk_adjustment_new (1, 1, 1, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adjustment, 1.0, 2);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
   private->offset = entry = gimp_size_entry_new (1, unit, "%p",

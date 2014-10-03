@@ -1,10 +1,12 @@
 #!/bin/sh
 set -e
 
+BUILD_ARCH=${BUILD_ARCH:-i686}
+
 if [ "x$BUILD_FLAVOUR" = "xdbg" ]; then
-	EXT="-dbg"
+	EXT="-dbg-$BUILD_ARCH"
 else
-	EXT=""
+	EXT="-$BUILD_ARCH"
 fi
 
 init_target (){

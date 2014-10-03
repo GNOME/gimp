@@ -156,10 +156,10 @@ void             gimp_text_buffer_get_iter_at_index (GimpTextBuffer    *buffer,
                                                      gboolean           layout_index);
 
 gboolean         gimp_text_buffer_load              (GimpTextBuffer    *buffer,
-                                                     const gchar       *filename,
+                                                     GFile             *file,
                                                      GError           **error);
 gboolean         gimp_text_buffer_save              (GimpTextBuffer    *buffer,
-                                                     const gchar       *filename,
+                                                     GFile             *file,
                                                      gboolean           selection_only,
                                                      GError           **error);
 

@@ -37,8 +37,8 @@
 #include "gegl/gimp-babl.h"
 
 #include "gimp.h"
+#include "gimp-memsize.h"
 #include "gimp-parasites.h"
-#include "gimp-utils.h"
 #include "gimpcontext.h"
 #include "gimpdrawablestack.h"
 #include "gimpgrid.h"
@@ -48,6 +48,7 @@
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-guides.h"
+#include "gimpimage-item-list.h"
 #include "gimpimage-metadata.h"
 #include "gimpimage-sample-points.h"
 #include "gimpimage-preview.h"
@@ -75,6 +76,7 @@
 
 #include "vectors/gimpvectors.h"
 
+#include "gimp-log.h"
 #include "gimp-intl.h"
 
 
@@ -83,11 +85,6 @@
 #else
 #define TRC(x)
 #endif
-
-/* Data keys for GimpImage */
-#define GIMP_FILE_EXPORT_URI_KEY        "gimp-file-export-uri"
-#define GIMP_FILE_SAVE_A_COPY_URI_KEY   "gimp-file-save-a-copy-uri"
-#define GIMP_FILE_IMPORT_SOURCE_URI_KEY "gimp-file-import-source-uri"
 
 
 enum
@@ -417,9 +414,9 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, saved),
                   NULL, NULL,
-                  gimp_marshal_VOID__STRING,
+                  gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  G_TYPE_STRING);
+                  G_TYPE_FILE);
 
   gimp_image_signals[EXPORTED] =
     g_signal_new ("exported",
@@ -427,9 +424,9 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, exported),
                   NULL, NULL,
-                  gimp_marshal_VOID__STRING,
+                  gimp_marshal_VOID__OBJECT,
                   G_TYPE_NONE, 1,
-                  G_TYPE_STRING);
+                  G_TYPE_FILE);
 
   gimp_image_signals[GUIDE_ADDED] =
     g_signal_new ("guide-added",
@@ -972,6 +969,36 @@ gimp_image_finalize (GObject *object)
       private->metadata = NULL;
     }
 
+  if (private->file)
+    {
+      g_object_unref (private->file);
+      private->file = NULL;
+    }
+
+  if (private->imported_file)
+    {
+      g_object_unref (private->imported_file);
+      private->imported_file = NULL;
+    }
+
+  if (private->exported_file)
+    {
+      g_object_unref (private->exported_file);
+      private->exported_file = NULL;
+    }
+
+  if (private->save_a_copy_file)
+    {
+      g_object_unref (private->save_a_copy_file);
+      private->save_a_copy_file = NULL;
+    }
+
+  if (private->untitled_file)
+    {
+      g_object_unref (private->untitled_file);
+      private->untitled_file = NULL;
+    }
+
   if (private->layers)
     {
       g_object_unref (private->layers);
@@ -1084,7 +1111,19 @@ gimp_image_name_changed (GimpObject *object)
    */
   name = gimp_object_get_name (object);
   if (name && strlen (name) == 0)
-    gimp_object_name_free (object);
+    {
+      gimp_object_name_free (object);
+      name = NULL;
+    }
+
+  if (private->file)
+    {
+      g_object_unref (private->file);
+      private->file = NULL;
+    }
+
+  if (name)
+    private->file = g_file_new_for_uri (name);
 }
 
 static gint64
@@ -1630,6 +1669,81 @@ gimp_image_new (Gimp              *gimp,
                        NULL);
 }
 
+gint64
+gimp_image_estimate_memsize (const GimpImage   *image,
+                             GimpComponentType  component_type,
+                             gint               width,
+                             gint               height)
+{
+  GList  *drawables;
+  GList  *list;
+  gint    current_width;
+  gint    current_height;
+  gint64  current_size;
+  gint64  scalable_size = 0;
+  gint64  scaled_size   = 0;
+  gint64  new_size;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
+
+  current_width  = gimp_image_get_width (image);
+  current_height = gimp_image_get_height (image);
+  current_size   = gimp_object_get_memsize (GIMP_OBJECT (image), NULL);
+
+  /*  the part of the image's memsize that scales linearly with the image  */
+  drawables = gimp_image_item_list_get_list (image, NULL,
+                                             GIMP_ITEM_TYPE_LAYERS |
+                                             GIMP_ITEM_TYPE_CHANNELS,
+                                             GIMP_ITEM_SET_ALL);
+
+  gimp_image_item_list_filter (NULL, drawables, TRUE, FALSE);
+
+  drawables = g_list_prepend (drawables, gimp_image_get_mask (image));
+
+  for (list = drawables; list; list = g_list_next (list))
+    {
+      GimpDrawable *drawable = list->data;
+      gdouble       drawable_width;
+      gdouble       drawable_height;
+
+      drawable_width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+      drawable_height = gimp_item_get_height (GIMP_ITEM (drawable));
+
+      scalable_size += gimp_drawable_estimate_memsize (drawable,
+                                                       gimp_drawable_get_component_type (drawable),
+                                                       drawable_width,
+                                                       drawable_height);
+
+      scaled_size += gimp_drawable_estimate_memsize (drawable,
+                                                     component_type,
+                                                     drawable_width * width /
+                                                     current_width,
+                                                     drawable_height * height /
+                                                     current_height);
+    }
+
+  g_list_free (drawables);
+
+  scalable_size +=
+    gimp_projection_estimate_memsize (gimp_image_get_base_type (image),
+                                      gimp_image_get_component_type (image),
+                                      gimp_image_get_width (image),
+                                      gimp_image_get_height (image));
+
+  scaled_size +=
+    gimp_projection_estimate_memsize (gimp_image_get_base_type (image),
+                                      component_type,
+                                      width, height);
+
+  GIMP_LOG (IMAGE_SCALE,
+            "scalable_size = %"G_GINT64_FORMAT"  scaled_size = %"G_GINT64_FORMAT,
+            scalable_size, scaled_size);
+
+  new_size = current_size - scalable_size + scaled_size;
+
+  return new_size;
+}
+
 GimpImageBaseType
 gimp_image_get_base_type (const GimpImage *image)
 {
@@ -1732,210 +1846,237 @@ gimp_image_get_by_ID (Gimp *gimp,
 }
 
 void
-gimp_image_set_uri (GimpImage   *image,
-                    const gchar *uri)
+gimp_image_set_file (GimpImage *image,
+                     GFile     *file)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  gimp_object_set_name (GIMP_OBJECT (image), uri);
-}
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
-static void
-gimp_image_take_uri (GimpImage *image,
-                     gchar     *uri)
-{
-  gimp_object_take_name (GIMP_OBJECT (image), uri);
-}
-
-/**
- * gimp_image_get_untitled_string:
- *
- * Returns: The (translated) "Untitled" string for newly created
- * images.
- **/
-const gchar *
-gimp_image_get_string_untitled (void)
-{
-  return _("Untitled");
+  if (private->file != file)
+    {
+      gimp_object_take_name (GIMP_OBJECT (image),
+                             file ? g_file_get_uri (file) : NULL);
+    }
 }
 
 /**
- * gimp_image_get_uri_or_untitled:
- * @image: A #GimpImage.
+ * gimp_image_get_untitled_file:
  *
- * Get the URI of the XCF image, or "Untitled" if there is no URI.
- *
- * Returns: The URI, or "Untitled".
+ * Returns: A #GFile saying "Untitled" for newly created images.
  **/
-const gchar *
-gimp_image_get_uri_or_untitled (const GimpImage *image)
+GFile *
+gimp_image_get_untitled_file (const GimpImage *image)
 {
-  const gchar *uri;
+  GimpImagePrivate *private;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_image_get_uri (image);
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  return uri ? uri : gimp_image_get_string_untitled ();
+  if (! private->untitled_file)
+    private->untitled_file = g_file_new_for_uri (_("Untitled"));
+
+  return private->untitled_file;
 }
 
 /**
- * gimp_image_get_uri:
+ * gimp_image_get_file_or_untitled:
  * @image: A #GimpImage.
  *
- * Get the URI of the XCF image, or NULL if there is no URI.
+ * Get the file of the XCF image, or the "Untitled" file if there is no file.
  *
- * Returns: The URI, or NULL.
+ * Returns: A #GFile.
  **/
-const gchar *
-gimp_image_get_uri (const GimpImage *image)
+GFile *
+gimp_image_get_file_or_untitled (const GimpImage *image)
+{
+  GFile *file;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  file = gimp_image_get_file (image);
+
+  if (! file)
+    file = gimp_image_get_untitled_file (image);
+
+  return file;
+}
+
+/**
+ * gimp_image_get_file:
+ * @image: A #GimpImage.
+ *
+ * Get the file of the XCF image, or NULL if there is no file.
+ *
+ * Returns: The file, or NULL.
+ **/
+GFile *
+gimp_image_get_file (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return gimp_object_get_name (image);
+  return GIMP_IMAGE_GET_PRIVATE (image)->file;
 }
 
 void
 gimp_image_set_filename (GimpImage   *image,
                          const gchar *filename)
 {
+  GFile *file = NULL;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   if (filename && strlen (filename))
-    {
-      gimp_image_take_uri (image,
-                           file_utils_filename_to_uri (image->gimp,
-                                                       filename,
-                                                       NULL));
-    }
-  else
-    {
-      gimp_image_set_uri (image, NULL);
-    }
+    file = file_utils_filename_to_file (image->gimp, filename, NULL);
+
+  gimp_image_set_file (image, file);
+
+  if (file)
+    g_object_unref (file);
 }
 
 /**
- * gimp_image_get_imported_uri:
+ * gimp_image_get_imported_file:
  * @image: A #GimpImage.
  *
- * Returns: The URI of the imported image, or NULL if the image has
+ * Returns: The file of the imported image, or NULL if the image has
  * been saved as XCF after it was imported.
  **/
-const gchar *
-gimp_image_get_imported_uri (const GimpImage *image)
+GFile *
+gimp_image_get_imported_file (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return g_object_get_data (G_OBJECT (image),
-                            GIMP_FILE_IMPORT_SOURCE_URI_KEY);
+  return GIMP_IMAGE_GET_PRIVATE (image)->imported_file;
 }
 
 /**
- * gimp_image_get_exported_uri:
+ * gimp_image_get_exported_file:
  * @image: A #GimpImage.
  *
- * Returns: The URI of the image last exported from this XCF file, or
+ * Returns: The file of the image last exported from this XCF file, or
  * NULL if the image has never been exported.
  **/
-const gchar *
-gimp_image_get_exported_uri (const GimpImage *image)
+GFile *
+gimp_image_get_exported_file (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return g_object_get_data (G_OBJECT (image),
-                            GIMP_FILE_EXPORT_URI_KEY);
+  return GIMP_IMAGE_GET_PRIVATE (image)->exported_file;
 }
 
 /**
- * gimp_image_get_save_a_copy_uri:
+ * gimp_image_get_save_a_copy_file:
  * @image: A #GimpImage.
  *
  * Returns: The URI of the last copy that was saved of this XCF file.
  **/
-const gchar *
-gimp_image_get_save_a_copy_uri (const GimpImage *image)
+GFile *
+gimp_image_get_save_a_copy_file (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  return g_object_get_data (G_OBJECT (image),
-                            GIMP_FILE_SAVE_A_COPY_URI_KEY);
+  return GIMP_IMAGE_GET_PRIVATE (image)->save_a_copy_file;
 }
 
 /**
- * gimp_image_get_any_uri:
+ * gimp_image_get_any_file:
  * @image: A #GimpImage.
  *
- * Returns: The XCF file URI, the imported file URI, or the exported
- * file URI, in that order of precedence.
+ * Returns: The XCF file, the imported file, or the exported file, in
+ * that order of precedence.
  **/
-const gchar *
-gimp_image_get_any_uri (const GimpImage *image)
+GFile *
+gimp_image_get_any_file (const GimpImage *image)
 {
-  const gchar *uri;
+  GFile *file;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_image_get_uri (image);
-  if (! uri)
+  file = gimp_image_get_file (image);
+  if (! file)
     {
-      uri = gimp_image_get_imported_uri (image);
-      if (! uri)
+      file = gimp_image_get_imported_file (image);
+      if (! file)
         {
-          uri = gimp_image_get_exported_uri (image);
+          file = gimp_image_get_exported_file (image);
         }
     }
 
-  return uri;
+  return file;
 }
 
 /**
  * gimp_image_set_imported_uri:
  * @image: A #GimpImage.
- * @uri:
+ * @file:
  *
  * Sets the URI this file was imported from.
  **/
 void
-gimp_image_set_imported_uri (GimpImage   *image,
-                             const gchar *uri)
+gimp_image_set_imported_file (GimpImage *image,
+                              GFile     *file)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  if (gimp_image_get_imported_uri (image) == uri)
-    return;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  g_object_set_data_full (G_OBJECT (image), GIMP_FILE_IMPORT_SOURCE_URI_KEY,
-                          g_strdup (uri), (GDestroyNotify) g_free);
+  if (private->imported_file != file)
+    {
+      if (private->imported_file)
+        g_object_unref (private->imported_file);
 
-  gimp_object_name_changed (GIMP_OBJECT (image));
+      private->imported_file = file;
+
+      if (private->imported_file)
+        g_object_ref (private->imported_file);
+
+      gimp_object_name_changed (GIMP_OBJECT (image));
+    }
 }
 
 /**
- * gimp_image_set_exported_uri:
+ * gimp_image_set_exported_file:
  * @image: A #GimpImage.
- * @uri:
+ * @file:
  *
- * Sets the URI this file was last exported to. Note that saving as
+ * Sets the file this image was last exported to. Note that saving as
  * XCF is not "exporting".
  **/
 void
-gimp_image_set_exported_uri (GimpImage   *image,
-                             const gchar *uri)
+gimp_image_set_exported_file (GimpImage *image,
+                              GFile     *file)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  if (gimp_image_get_exported_uri (image) == uri)
-    return;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  g_object_set_data_full (G_OBJECT (image),
-                          GIMP_FILE_EXPORT_URI_KEY,
-                          g_strdup (uri), (GDestroyNotify) g_free);
+  if (private->exported_file != file)
+    {
+      if (private->exported_file)
+        g_object_unref (private->exported_file);
 
-  gimp_object_name_changed (GIMP_OBJECT (image));
+      private->exported_file = file;
+
+      if (private->exported_file)
+        g_object_ref (private->exported_file);
+
+      gimp_object_name_changed (GIMP_OBJECT (image));
+    }
 }
 
 /**
- * gimp_image_set_save_a_copy_uri:
+ * gimp_image_set_save_a_copy_file:
  * @image: A #GimpImage.
  * @uri:
  *
@@ -1943,32 +2084,41 @@ gimp_image_set_exported_uri (GimpImage   *image,
  * "save a copy" action.
  **/
 void
-gimp_image_set_save_a_copy_uri (GimpImage   *image,
-                                const gchar *uri)
+gimp_image_set_save_a_copy_file (GimpImage *image,
+                                 GFile     *file)
 {
+  GimpImagePrivate *private;
+
   g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
 
-  if (gimp_image_get_save_a_copy_uri (image) == uri)
-    return;
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
-  g_object_set_data_full (G_OBJECT (image),
-                          GIMP_FILE_SAVE_A_COPY_URI_KEY,
-                          g_strdup (uri), (GDestroyNotify) g_free);
+  if (private->save_a_copy_file != file)
+    {
+      if (private->save_a_copy_file)
+        g_object_unref (private->save_a_copy_file);
+
+      private->save_a_copy_file = file;
+
+      if (private->save_a_copy_file)
+        g_object_ref (private->save_a_copy_file);
+    }
 }
 
 gchar *
 gimp_image_get_filename (const GimpImage *image)
 {
-  const gchar *uri;
+  GFile *file;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri = gimp_image_get_uri (image);
+  file = gimp_image_get_file (image);
 
-  if (! uri)
+  if (! file)
     return NULL;
 
-  return g_filename_from_uri (uri, NULL, NULL);
+  return g_file_get_path (file);
 }
 
 static gchar *
@@ -1977,9 +2127,10 @@ gimp_image_format_display_uri (GimpImage *image,
 {
   const gchar *uri_format    = NULL;
   const gchar *export_status = NULL;
-  const gchar *uri;
-  const gchar *source;
-  const gchar *dest;
+  GFile       *file          = NULL;
+  GFile       *source        = NULL;
+  GFile       *dest          = NULL;
+  GFile       *display_file  = NULL;
   gboolean     is_imported;
   gboolean     is_exported;
   gchar       *display_uri   = NULL;
@@ -1988,29 +2139,29 @@ gimp_image_format_display_uri (GimpImage *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  uri    = gimp_image_get_uri (image);
-  source = gimp_image_get_imported_uri (image);
-  dest   = gimp_image_get_exported_uri (image);
+  file   = gimp_image_get_file (image);
+  source = gimp_image_get_imported_file (image);
+  dest   = gimp_image_get_exported_file (image);
 
   is_imported = (source != NULL);
   is_exported = (dest   != NULL);
 
-  if (uri)
+  if (file)
     {
-      display_uri = g_strdup (uri);
-      uri_format  = "%s";
+      display_file = file;
+      uri_format   = "%s";
     }
   else
     {
       if (is_imported)
-        display_uri = g_strdup (source);
+        display_file = source;
 
       /* Calculate filename suffix */
       if (! gimp_image_is_export_dirty (image))
         {
           if (is_exported)
             {
-              display_uri   = g_strdup (dest);
+              display_file  = dest;
               export_status = _(" (exported)");
             }
           else if (is_imported)
@@ -2027,32 +2178,19 @@ gimp_image_format_display_uri (GimpImage *image,
           export_status = _(" (imported)");
         }
 
-      if (display_uri)
-        {
-          gchar *tmp = file_utils_uri_with_new_ext (display_uri, NULL);
-          g_free (display_uri);
-          display_uri = tmp;
-        }
+      if (display_file)
+        display_file = file_utils_file_with_new_ext (display_file, NULL);
 
       uri_format = "[%s]";
     }
 
-  if (! display_uri)
-    {
-      display_uri = g_strdup (gimp_image_get_string_untitled ());
-    }
-  else if (basename)
-    {
-      tmp = file_utils_uri_display_basename (display_uri);
-      g_free (display_uri);
-      display_uri = tmp;
-    }
+  if (! display_file)
+    display_file = gimp_image_get_untitled_file (image);
+
+  if (basename)
+    display_uri = g_path_get_basename (gimp_file_get_utf8_name (display_file));
   else
-    {
-      tmp = file_utils_uri_display_name (display_uri);
-      g_free (display_uri);
-      display_uri = tmp;
-    }
+    display_uri = g_strdup (gimp_file_get_utf8_name (display_file));
 
   format_string = g_strconcat (uri_format, export_status, NULL);
 
@@ -2127,6 +2265,100 @@ gimp_image_get_save_proc (const GimpImage *image)
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   return GIMP_IMAGE_GET_PRIVATE (image)->save_proc;
+}
+
+void
+gimp_image_set_export_proc (GimpImage           *image,
+                            GimpPlugInProcedure *proc)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  GIMP_IMAGE_GET_PRIVATE (image)->export_proc = proc;
+}
+
+GimpPlugInProcedure *
+gimp_image_get_export_proc (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->export_proc;
+}
+
+gint
+gimp_image_get_xcf_version (GimpImage    *image,
+                            gboolean      zlib_compression,
+                            gint         *gimp_version,
+                            const gchar **version_string)
+{
+  GList *list;
+  gint   version = 0;  /* default to oldest */
+
+  /* need version 1 for colormaps */
+  if (gimp_image_get_colormap (image))
+    version = 1;
+
+  for (list = gimp_image_get_layer_iter (image);
+       list && version < 3;
+       list = g_list_next (list))
+    {
+      GimpLayer *layer = GIMP_LAYER (list->data);
+
+      switch (gimp_layer_get_mode (layer))
+        {
+          /* new layer modes not supported by gimp-1.2 */
+        case GIMP_SOFTLIGHT_MODE:
+        case GIMP_GRAIN_EXTRACT_MODE:
+        case GIMP_GRAIN_MERGE_MODE:
+        case GIMP_COLOR_ERASE_MODE:
+          version = MAX (2, version);
+          break;
+
+        default:
+          break;
+        }
+
+      /* need version 3 for layer trees */
+      if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
+        version = MAX (3, version);
+    }
+
+  /* need version 6 for new metadata */
+  if (gimp_image_get_metadata (image))
+    version = MAX (6, version);
+
+  /* need version 7 for high bit depth images */
+  if (gimp_image_get_precision (image) != GIMP_PRECISION_U8_GAMMA)
+    version = MAX (7, version);
+
+  /* need version 8 for zlib compression */
+  if (zlib_compression)
+    version = MAX (8, version);
+
+  switch (version)
+    {
+    case 0:
+    case 1:
+    case 2:
+      if (gimp_version)   *gimp_version   = 206;
+      if (version_string) *version_string = "GIMP 2.6";
+      break;
+
+    case 3:
+      if (gimp_version)   *gimp_version   = 208;
+      if (version_string) *version_string = "GIMP 2.8";
+      break;
+
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+      if (gimp_version)   *gimp_version   = 210;
+      if (version_string) *version_string = "GIMP 2.10";
+      break;
+    }
+
+  return version;
 }
 
 void
@@ -2910,7 +3142,7 @@ gimp_image_is_export_dirty (const GimpImage *image)
   return GIMP_IMAGE_GET_PRIVATE (image)->export_dirty != 0;
 }
 
-gint
+gint64
 gimp_image_get_dirty_time (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), 0);
@@ -2921,37 +3153,37 @@ gimp_image_get_dirty_time (const GimpImage *image)
 /**
  * gimp_image_saved:
  * @image:
- * @uri:
+ * @file:
  *
  * Emits the "saved" signal, indicating that @image was saved to the
- * location specified by @uri.
+ * location specified by @file.
  */
 void
-gimp_image_saved (GimpImage   *image,
-                  const gchar *uri)
+gimp_image_saved (GimpImage *image,
+                  GFile     *file)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (uri != NULL);
+  g_return_if_fail (G_IS_FILE (file));
 
-  g_signal_emit (image, gimp_image_signals[SAVED], 0, uri);
+  g_signal_emit (image, gimp_image_signals[SAVED], 0, file);
 }
 
 /**
  * gimp_image_exported:
  * @image:
- * @uri:
+ * @file:
  *
  * Emits the "exported" signal, indicating that @image was exported to the
- * location specified by @uri.
+ * location specified by @file.
  */
 void
-gimp_image_exported (GimpImage   *image,
-                     const gchar *uri)
+gimp_image_exported (GimpImage *image,
+                     GFile     *file)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (uri != NULL);
+  g_return_if_fail (G_IS_FILE (file));
 
-  g_signal_emit (image, gimp_image_signals[EXPORTED], 0, uri);
+  g_signal_emit (image, gimp_image_signals[EXPORTED], 0, file);
 }
 
 
@@ -3944,9 +4176,6 @@ gimp_image_remove_layer (GimpImage *image,
 
       g_list_free (children);
     }
-
-  if (! new_active && private->layer_stack)
-    new_active = private->layer_stack->data;
 
   new_active =
     GIMP_LAYER (gimp_item_tree_remove_item (private->layers,

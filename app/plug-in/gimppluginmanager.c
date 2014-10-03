@@ -32,7 +32,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
-#include "core/gimp-utils.h"
+#include "core/gimp-memsize.h"
 #include "core/gimpmarshal.h"
 
 #include "pdb/gimppdb.h"
@@ -113,9 +113,9 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
                   G_STRUCT_OFFSET (GimpPlugInManagerClass,
                                    menu_branch_added),
                   NULL, NULL,
-                  gimp_marshal_VOID__STRING_STRING_STRING,
+                  gimp_marshal_VOID__OBJECT_STRING_STRING,
                   G_TYPE_NONE, 1,
-                  G_TYPE_STRING,
+                  G_TYPE_FILE,
                   G_TYPE_STRING,
                   G_TYPE_STRING);
 
@@ -138,26 +138,6 @@ gimp_plug_in_manager_class_init (GimpPlugInManagerClass *klass)
 static void
 gimp_plug_in_manager_init (GimpPlugInManager *manager)
 {
-  manager->gimp               = NULL;
-
-  manager->plug_in_defs       = NULL;
-  manager->write_pluginrc     = FALSE;
-
-  manager->plug_in_procedures = NULL;
-  manager->load_procs         = NULL;
-  manager->save_procs         = NULL;
-  manager->export_procs       = NULL;
-
-  manager->current_plug_in    = NULL;
-  manager->open_plug_ins      = NULL;
-  manager->plug_in_stack      = NULL;
-  manager->history            = NULL;
-
-  manager->shm                = NULL;
-  manager->interpreter_db     = gimp_interpreter_db_new ();
-  manager->environ_table      = gimp_environ_table_new ();
-  manager->debug              = NULL;
-  manager->data_list          = NULL;
 }
 
 static void
@@ -280,7 +260,9 @@ gimp_plug_in_manager_new (Gimp *gimp)
 
   manager = g_object_new (GIMP_TYPE_PLUG_IN_MANAGER, NULL);
 
-  manager->gimp = gimp;
+  manager->gimp           = gimp;
+  manager->interpreter_db = gimp_interpreter_db_new (gimp->be_verbose);
+  manager->environ_table  = gimp_environ_table_new (gimp->be_verbose);
 
   return manager;
 }
@@ -289,24 +271,25 @@ void
 gimp_plug_in_manager_initialize (GimpPlugInManager  *manager,
                                  GimpInitStatusFunc  status_callback)
 {
-  gchar *path;
+  GimpCoreConfig *config;
+  GList          *path;
 
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
   g_return_if_fail (status_callback != NULL);
 
+  config = manager->gimp->config;
+
   status_callback (NULL, _("Plug-In Interpreters"), 0.8);
 
-  path = gimp_config_path_expand (manager->gimp->config->interpreter_path,
-                                  TRUE, NULL);
+  path = gimp_config_path_expand_to_files (config->interpreter_path, NULL);
   gimp_interpreter_db_load (manager->interpreter_db, path);
-  g_free (path);
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   status_callback (NULL, _("Plug-In Environment"), 0.9);
 
-  path = gimp_config_path_expand (manager->gimp->config->environ_path,
-                                  TRUE, NULL);
+  path = gimp_config_path_expand_to_files (config->environ_path, NULL);
   gimp_environ_table_load (manager->environ_table, path);
-  g_free (path);
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   /*  allocate a piece of shared memory for use in transporting tiles
    *  to plug-ins. if we can't allocate a piece of shared memory then
@@ -359,7 +342,7 @@ gimp_plug_in_manager_add_procedure (GimpPlugInManager   *manager,
           g_printerr ("Removing duplicate PDB procedure '%s' "
                       "registered by '%s'\n",
                       gimp_object_get_name (tmp_proc),
-                      gimp_filename_to_utf8 (tmp_proc->prog));
+                      gimp_file_get_utf8_name (tmp_proc->file));
 
           /* search the plugin list to see if any plugins had references to
            * the tmp_proc.

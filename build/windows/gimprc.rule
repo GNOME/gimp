@@ -1,10 +1,11 @@
 # Version resources for Microsoft Windows
 
-GIMPAPPRC = $(top_srcdir)/build/windows/gimp.rc
+GIMPAPPRC = $(top_builddir)/build/windows/gimp.rc
 
 %.rc.o: 
 	$(WINDRES) --define ORIGINALFILENAME_STR="$*$(EXEEXT)" \
 		--define INTERNALNAME_STR="$*" \
 		--define TOP_SRCDIR="$(top_srcdir)" \
 		-I$(top_srcdir)/app \
+		-I$(top_builddir)/app \
 		$(GIMPAPPRC) $@

@@ -32,32 +32,6 @@
 #define MAX4(a,b,c,d) MAX (MAX ((a), (b)), MAX ((c), (d)))
 
 
-gint64       gimp_g_type_instance_get_memsize      (GTypeInstance   *instance);
-gint64       gimp_g_object_get_memsize             (GObject         *object);
-gint64       gimp_g_hash_table_get_memsize         (GHashTable      *hash,
-                                                    gint64           data_size);
-gint64       gimp_g_hash_table_get_memsize_foreach (GHashTable      *hash,
-                                                    GimpMemsizeFunc  func,
-                                                    gint64          *gui_size);
-gint64       gimp_g_slist_get_memsize              (GSList          *slist,
-                                                    gint64           data_size);
-gint64       gimp_g_slist_get_memsize_foreach      (GSList          *slist,
-                                                    GimpMemsizeFunc  func,
-                                                    gint64          *gui_size);
-gint64       gimp_g_list_get_memsize               (GList           *list,
-                                                    gint64           data_size);
-gint64       gimp_g_list_get_memsize_foreach       (GList            *slist,
-                                                    GimpMemsizeFunc  func,
-                                                    gint64          *gui_size);
-gint64       gimp_g_value_get_memsize              (GValue          *value);
-gint64       gimp_g_param_spec_get_memsize         (GParamSpec      *pspec);
-
-gint64       gimp_gegl_buffer_get_memsize          (GeglBuffer      *buffer);
-
-gint64       gimp_string_get_memsize               (const gchar     *string);
-gint64       gimp_parasite_get_memsize             (GimpParasite    *parasite,
-                                                    gint64          *gui_size);
-
 gint         gimp_get_pid                          (void);
 guint64      gimp_get_physical_memory_size         (void);
 gchar      * gimp_get_backtrace                    (void);
@@ -80,6 +54,12 @@ gchar      * gimp_markup_extract_text              (const gchar     *markup);
 const gchar* gimp_enum_get_value_name              (GType            enum_type,
                                                     gint             value);
 
+gboolean     gimp_get_fill_params                  (GimpContext      *context,
+                                                    GimpFillType      fill_type,
+                                                    GimpRGB          *color,
+                                                    GimpPattern     **pattern,
+                                                    GError          **error);
+
 /* Common values for the n_snap_lines parameter of
  * gimp_constrain_line.
  */
@@ -92,6 +72,10 @@ void         gimp_constrain_line                   (gdouble          start_x,
                                                     gdouble         *end_x,
                                                     gdouble         *end_y,
                                                     gint             n_snap_lines);
+
+gint         gimp_file_compare                     (GFile           *file1,
+                                                    GFile           *file2);
+gboolean     gimp_file_is_executable               (GFile           *file);
 
 void         gimp_create_image_from_buffer         (Gimp            *gimp,
                                                     GeglBuffer      *buffer);

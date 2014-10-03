@@ -27,7 +27,6 @@
 #include <string.h>
 
 #include <gegl.h>
-#include <gegl-plugin.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -278,16 +277,9 @@ gamma_hack (GtkToggleButton  *button,
 {
   if (image_map_tool->image_map)
     {
-      GimpTool *tool = GIMP_TOOL (image_map_tool);
-
-      gimp_tool_control_push_preserve (tool->control, TRUE);
-
-      gimp_image_map_tool_create_map (image_map_tool);
       gimp_image_map_set_gamma_hack (image_map_tool->image_map,
                                      gtk_toggle_button_get_active (button));
       gimp_image_map_tool_preview (image_map_tool);
-
-      gimp_tool_control_pop_preserve (tool->control);
     }
 }
 
@@ -380,26 +372,24 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       if (image_map_tool->config && klass->settings_name)
         {
           GtkWidget *settings_ui;
-          gchar     *settings_filename;
-          gchar     *default_folder;
+          GFile     *default_folder;
+          GFile     *settings_file;
 
-          settings_filename =
-            gimp_tool_info_build_options_filename (tool_info, ".settings");
-
-          default_folder =
-            g_build_filename (gimp_directory (), klass->settings_name, NULL);
+          settings_file = gimp_tool_info_get_options_file (tool_info,
+                                                           ".settings");
+          default_folder = gimp_directory_file (klass->settings_name, NULL);
 
           settings_ui = klass->get_settings_ui (image_map_tool,
                                                 klass->recent_settings,
-                                                settings_filename,
+                                                settings_file,
                                                 klass->import_dialog_title,
                                                 klass->export_dialog_title,
                                                 tool_info->help_id,
                                                 default_folder,
                                                 &image_map_tool->settings_box);
 
-          g_free (settings_filename);
-          g_free (default_folder);
+          g_object_unref (default_folder);
+          g_object_unref (settings_file);
 
           gtk_box_pack_start (GTK_BOX (vbox), settings_ui, FALSE, FALSE, 0);
           gtk_widget_show (settings_ui);
@@ -524,13 +514,12 @@ gimp_image_map_tool_options_notify (GimpTool         *tool,
                                     GimpToolOptions  *options,
                                     const GParamSpec *pspec)
 {
-  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
+  GimpImageMapTool    *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
+  GimpImageMapOptions *im_options     = GIMP_IMAGE_MAP_OPTIONS (options);
 
   if (! strcmp (pspec->name, "preview") &&
       image_map_tool->image_map)
     {
-      GimpImageMapOptions *im_options = GIMP_IMAGE_MAP_OPTIONS (options);
-
       if (im_options->preview)
         {
           gimp_tool_control_push_preserve (tool->control, TRUE);
@@ -551,12 +540,8 @@ gimp_image_map_tool_options_notify (GimpTool         *tool,
   else if (! strcmp (pspec->name, "region") &&
            image_map_tool->image_map)
     {
-      gimp_tool_control_push_preserve (tool->control, TRUE);
-
-      gimp_image_map_tool_create_map (image_map_tool);
+      gimp_image_map_set_region (image_map_tool->image_map, im_options->region);
       gimp_image_map_tool_preview (image_map_tool);
-
-      gimp_tool_control_pop_preserve (tool->control);
     }
 }
 
@@ -664,8 +649,7 @@ gimp_image_map_tool_commit (GimpImageMapTool *im_tool)
       if (! options->preview)
         gimp_image_map_tool_map (im_tool);
 
-      gimp_image_map_commit (im_tool->image_map,
-                             GIMP_PROGRESS (tool));
+      gimp_image_map_commit (im_tool->image_map, GIMP_PROGRESS (tool), TRUE);
       g_object_unref (im_tool->image_map);
       im_tool->image_map = NULL;
 

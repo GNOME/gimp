@@ -20,9 +20,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-
 #include <gio/gio.h>
 #include <gegl.h>
 
@@ -72,7 +69,8 @@ static const gchar* attribute_name_to_value                (const gchar        *
 gboolean
 gimp_tags_user_install (void)
 {
-  gchar             *filename;
+  GFile             *file;
+  GOutputStream     *output;
   GMarkupParser      markup_parser;
   GimpXmlParser     *xml_parser;
   const char        *tags_locale;
@@ -105,9 +103,6 @@ gimp_tags_user_install (void)
   g_string_append (tags_installer.buf, "<?xml version='1.0' encoding='UTF-8'?>\n");
   g_string_append (tags_installer.buf, "<tags>\n");
 
-  filename = g_build_filename (gimp_data_directory (), "tags",
-                               "gimp-tags-default.xml", NULL);
-
   markup_parser.start_element = gimp_tags_installer_load_start_element;
   markup_parser.end_element   = gimp_tags_installer_load_end_element;
   markup_parser.text          = gimp_tags_installer_load_text;
@@ -116,9 +111,10 @@ gimp_tags_user_install (void)
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &tags_installer);
 
-  result = gimp_xml_parser_parse_file (xml_parser, filename, &error);
+  file = gimp_data_directory_file ("tags", "gimp-tags-default.xml", NULL);
+  result = gimp_xml_parser_parse_gfile (xml_parser, file, &error);
+  g_object_unref (file);
 
-  g_free (filename);
   gimp_xml_parser_free (xml_parser);
 
   if (! result)
@@ -129,22 +125,36 @@ gimp_tags_user_install (void)
 
   g_string_append (tags_installer.buf, "\n</tags>\n");
 
-  filename = g_build_filename (gimp_directory (), GIMP_TAGS_FILE, NULL);
+  file = gimp_directory_file (GIMP_TAGS_FILE, NULL);
 
-  result = g_file_set_contents (filename, tags_installer.buf->str,
-                                tags_installer.buf->len, &error);
-
-  g_free (filename);
-  g_string_free (tags_installer.buf, TRUE);
-
-  if (! result)
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, &error));
+  if (! output)
     {
-      g_warning ("Error while creating tags.xml: %s\n", error->message);
-      g_error_free (error);
-      return FALSE;
+      g_printerr (_("Could not open '%s' for writing: %s"),
+                  gimp_file_get_utf8_name (file), error->message);
+      result = FALSE;
+    }
+  else if (! g_output_stream_write_all (output,
+                                        tags_installer.buf->str,
+                                        tags_installer.buf->len,
+                                        NULL, NULL, &error) ||
+           ! g_output_stream_close (output, NULL, &error))
+    {
+      g_printerr (_("Error writing '%s': %s"),
+                  gimp_file_get_utf8_name (file), error->message);
+      result = FALSE;
     }
 
-  return TRUE;
+  if (output)
+    g_object_unref (output);
+
+  g_clear_error (&error);
+  g_object_unref (file);
+  g_string_free (tags_installer.buf, TRUE);
+
+  return result;
 }
 
 static  void

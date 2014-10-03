@@ -425,10 +425,13 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
 
   if (filename && ! (label && *label))
     {
+      GFile       *file;
       cmsHPROFILE  profile;
       GError      *error = NULL;
 
-      profile = gimp_lcms_profile_open_from_file (filename, &error);
+      file = g_file_new_for_path (filename);
+      profile = gimp_lcms_profile_open_from_file (file, &error);
+      g_object_unref (file);
 
       if (! profile)
         {

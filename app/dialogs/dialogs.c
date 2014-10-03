@@ -569,8 +569,8 @@ dialogs_ensure_factory_entry_on_recent_dock (GimpSessionInfo *info)
     }
 }
 
-static char *
-dialogs_get_dockrc_filename (void)
+static GFile *
+dialogs_get_dockrc_file (void)
 {
   const gchar *basename;
 
@@ -578,31 +578,33 @@ dialogs_get_dockrc_filename (void)
   if (! basename)
     basename = "dockrc";
 
-  return gimp_personal_rc_file (basename);
+  return gimp_directory_file (basename, NULL);
 }
 
 void
 dialogs_load_recent_docks (Gimp *gimp)
 {
-  gchar  *filename;
+  GFile  *file;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = dialogs_get_dockrc_filename ();
+  file = dialogs_get_dockrc_file ();
 
   if (gimp->be_verbose)
-    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_deserialize_file (GIMP_CONFIG (global_recent_docks),
-                                      filename,
-                                      NULL, &error))
+  if (! gimp_config_deserialize_gfile (GIMP_CONFIG (global_recent_docks),
+                                       file,
+                                       NULL, &error))
     {
       if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
         gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
 
       g_clear_error (&error);
     }
+
+  g_object_unref (file);
 
   /* In GIMP 2.6 dockrc did not contain the factory entries for the
    * session infos, so set that up manually if needed
@@ -612,34 +614,32 @@ dialogs_load_recent_docks (Gimp *gimp)
                           NULL);
 
   gimp_list_reverse (GIMP_LIST (global_recent_docks));
-
-  g_free (filename);
 }
 
 void
 dialogs_save_recent_docks (Gimp *gimp)
 {
-  gchar  *filename;
+  GFile  *file;
   GError *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = dialogs_get_dockrc_filename ();
+  file = dialogs_get_dockrc_file ();
 
   if (gimp->be_verbose)
-    g_print ("Writing '%s'\n", gimp_filename_to_utf8 (filename));
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
 
-  if (! gimp_config_serialize_to_file (GIMP_CONFIG (global_recent_docks),
-                                       filename,
-                                       "recently closed docks",
-                                       "end of recently closed docks",
-                                       NULL, &error))
+  if (! gimp_config_serialize_to_gfile (GIMP_CONFIG (global_recent_docks),
+                                        file,
+                                        "recently closed docks",
+                                        "end of recently closed docks",
+                                        NULL, &error))
     {
       gimp_message_literal (gimp, NULL, GIMP_MESSAGE_ERROR, error->message);
       g_clear_error (&error);
     }
 
-  g_free (filename);
+  g_object_unref (file);
 }
 
 GtkWidget *

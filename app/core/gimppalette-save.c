@@ -17,18 +17,9 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -42,28 +33,22 @@
 
 
 gboolean
-gimp_palette_save (GimpData  *data,
-                   GError   **error)
+gimp_palette_save (GimpData       *data,
+                   GOutputStream  *output,
+                   GError        **error)
 {
   GimpPalette *palette = GIMP_PALETTE (data);
+  GString     *string;
   GList       *list;
-  FILE        *file;
 
-  file = g_fopen (gimp_data_get_filename (data), "wb");
+  string = g_string_new ("GIMP Palette\n");
 
-  if (! file)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (gimp_data_get_filename (data)),
-                   g_strerror (errno));
-      return FALSE;
-    }
-
-  fprintf (file, "GIMP Palette\n");
-  fprintf (file, "Name: %s\n", gimp_object_get_name (palette));
-  fprintf (file, "Columns: %d\n#\n", CLAMP (gimp_palette_get_columns (palette),
-                                            0, 256));
+  g_string_append_printf (string,
+                          "Name: %s\n"
+                          "Columns: %d\n"
+                          "#\n",
+                          gimp_object_get_name (palette),
+                          CLAMP (gimp_palette_get_columns (palette), 0, 256));
 
   for (list = gimp_palette_get_colors (palette);
        list;
@@ -74,10 +59,19 @@ gimp_palette_save (GimpData  *data,
 
       gimp_rgb_get_uchar (&entry->color, &r, &g, &b);
 
-      fprintf (file, "%3d %3d %3d\t%s\n", r, g, b, entry->name);
+      g_string_append_printf (string, "%3d %3d %3d\t%s\n",
+                              r, g, b, entry->name);
     }
 
-  fclose (file);
+  if (! g_output_stream_write_all (output, string->str, string->len,
+                                   NULL, NULL, error))
+    {
+      g_string_free (string, TRUE);
+
+      return FALSE;
+    }
+
+  g_string_free (string, TRUE);
 
   return TRUE;
 }

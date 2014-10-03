@@ -328,18 +328,7 @@ CODE
 }
 
 sub curves_spline {
-    $blurb = 'Modifies the intensity curve(s) for specified drawable.';
-
-    $help = <<'HELP';
-Modifies the intensity mapping for one channel in the specified drawable. The
-drawable must be either grayscale or RGB, and the channel can be either an
-intensity component, or the value. The 'control_pts' parameter is an array of
-integers which define a set of control points which describe a Catmull Rom
-spline which yields the final intensity curve. Use the gimp_curves_explicit()
-function to explicitly modify intensity levels.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-drawable-curves-spline');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -366,9 +355,9 @@ HELP
       (! gimp_drawable_is_gray (drawable) ||
        channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
     {
-      GObject *config = gimp_curves_config_new_spline (channel,
-                                                       control_pts,
-                                                       num_points);
+      GObject *config = gimp_curves_config_new_spline_cruft (channel,
+                                                             control_pts,
+                                                             num_points / 2);
 
       gimp_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Curves"),
@@ -384,18 +373,7 @@ CODE
 }
 
 sub curves_explicit {
-    $blurb = 'Modifies the intensity curve(s) for specified drawable.';
-
-    $help = <<'HELP';
-Modifies the intensity mapping for one channel in the specified drawable. The
-drawable must be either grayscale or RGB, and the channel can be either an
-intensity component, or the value. The 'curve' parameter is an array of bytes
-which explicitly defines how each pixel value in the drawable will be modified.
-Use the gimp_curves_spline() function to modify intensity levels with Catmull
-Rom splines.
-HELP
-
-    &std_pdb_misc;
+    &std_pdb_deprecated ('gimp-drawable-curves-explicit');
 
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
@@ -421,9 +399,9 @@ HELP
       (! gimp_drawable_is_gray (drawable) ||
        channel == GIMP_HISTOGRAM_VALUE || channel == GIMP_HISTOGRAM_ALPHA))
     {
-      GObject *config = gimp_curves_config_new_spline (channel,
-                                                       curve,
-                                                       num_bytes);
+      GObject *config = gimp_curves_config_new_explicit_cruft (channel,
+                                                               curve,
+                                                               num_bytes);
 
       gimp_drawable_apply_operation_by_name (drawable, progress,
                                              C_("undo-type", "Curves"),

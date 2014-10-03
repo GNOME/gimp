@@ -1651,7 +1651,8 @@ static gunichar basic_inchar(port *pt) {
       len = pt->rep.string.past_the_end - pt->rep.string.curr;
       c = g_utf8_get_char_validated(pt->rep.string.curr, len);
 
-      if (c >= 0)   /* Valid UTF-8 character? */
+      if (c != (gunichar) -1 &&
+          c != (gunichar) -2)   /* Valid UTF-8 character? */
       {
         len = g_unichar_to_utf8(c, NULL);   /* Length of UTF-8 sequence */
         pt->rep.string.curr += len;
@@ -2122,8 +2123,7 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
      } else if (l == sc->EOF_OBJ) {
           p = "#<EOF>";
      } else if (is_port(l)) {
-          p = sc->strbuff;
-          snprintf(p, STRBUFFSIZE, "#<PORT>");
+          p = "#<PORT>";
      } else if (is_number(l)) {
           p = sc->strbuff;
           if (f <= 1 || f == 10) /* f is the base for numbers if > 1 */ {
@@ -2178,17 +2178,17 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
           } else {
                switch(c) {
                case ' ':
-                    snprintf(p,STRBUFFSIZE,"#\\space"); break;
+                    p = "#\\space";
                case '\n':
-                    snprintf(p,STRBUFFSIZE,"#\\newline"); break;
+                    p = "#\\newline";
                case '\r':
-                    snprintf(p,STRBUFFSIZE,"#\\return"); break;
+                    p = "#\\return";
                case '\t':
-                    snprintf(p,STRBUFFSIZE,"#\\tab"); break;
+                    p = "#\\tab";
                default:
 #if USE_ASCII_NAMES
                     if(c==127) {
-                         snprintf(p,STRBUFFSIZE, "#\\del");
+                         p = "#\\del";
                          break;
                     } else if(c<32) {
                          snprintf(p,STRBUFFSIZE, "#\\%s", charnames[c]);
@@ -5113,6 +5113,8 @@ void scheme_load_named_file(scheme *sc, FILE *fin, const char *filename) {
   sc->load_stack[0].rep.stdio.curr_line = 0;
   if(fin!=stdin && filename)
     sc->load_stack[0].rep.stdio.filename = store_string(sc, strlen(filename), filename, 0);
+  else
+    sc->load_stack[0].rep.stdio.filename = NULL;
 #endif
 
   sc->inport=sc->loadport;

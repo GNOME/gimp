@@ -133,9 +133,11 @@ static gboolean            console_messages  = FALSE;
 static gboolean            use_debug_handler = FALSE;
 
 #ifdef GIMP_UNSTABLE
+static gboolean            show_playground   = TRUE;
 static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_QUERY;
 static GimpPDBCompatMode   pdb_compat_mode   = GIMP_PDB_COMPAT_WARN;
 #else
+static gboolean            show_playground   = FALSE;
 static GimpStackTraceMode  stack_trace_mode  = GIMP_STACK_TRACE_NEVER;
 static GimpPDBCompatMode   pdb_compat_mode   = GIMP_PDB_COMPAT_ON;
 #endif
@@ -271,6 +273,11 @@ static const GOptionEntry main_entries[] =
     N_("Output a sorted list of deprecated procedures in the PDB"), NULL
   },
   {
+    "show-playground", 0, G_OPTION_FLAG_HIDDEN,
+    G_OPTION_ARG_NONE, &show_playground,
+    N_("Show a preferences page with experimental features"), NULL
+  },
+  {
     G_OPTION_REMAINING, 0, 0,
     G_OPTION_ARG_FILENAME_ARRAY, &filenames,
     NULL, NULL
@@ -286,6 +293,8 @@ main (int    argc,
   GError         *error = NULL;
   const gchar    *abort_message;
   gchar          *basename;
+  GFile          *system_gimprc_file = NULL;
+  GFile          *user_gimprc_file   = NULL;
   gint            i;
 
 #if defined (__GNUC__) && defined (_WIN64)
@@ -336,12 +345,8 @@ main (int    argc,
 
   g_set_application_name (GIMP_NAME);
 
-#if GLIB_CHECK_VERSION (2, 39, 90)
 #ifdef G_OS_WIN32
   argv = g_win32_get_command_line ();
-#else
-  argv = g_strdupv (argv);
-#endif
 #else
   argv = g_strdupv (argv);
 #endif
@@ -401,11 +406,7 @@ main (int    argc,
 
   app_libs_init (context, no_interface);
 
-#if GLIB_CHECK_VERSION (2, 39, 90)
   if (! g_option_context_parse_strv (context, &argv, &error))
-#else
-  if (! g_option_context_parse (context, &argc, &argv, &error))
-#endif
     {
       if (error)
         {
@@ -449,10 +450,16 @@ main (int    argc,
 
   gimp_init_signal_handlers (stack_trace_mode);
 
+  if (system_gimprc)
+    system_gimprc_file = g_file_new_for_commandline_arg (system_gimprc);
+
+  if (user_gimprc)
+    user_gimprc_file = g_file_new_for_commandline_arg (user_gimprc);
+
   app_run (argv[0],
            filenames,
-           system_gimprc,
-           user_gimprc,
+           system_gimprc_file,
+           user_gimprc_file,
            session_name,
            batch_interpreter,
            batch_commands,
@@ -466,8 +473,15 @@ main (int    argc,
            use_cpu_accel,
            console_messages,
            use_debug_handler,
+           show_playground,
            stack_trace_mode,
            pdb_compat_mode);
+
+  if (system_gimprc_file)
+    g_object_unref (system_gimprc_file);
+
+  if (user_gimprc_file)
+    g_object_unref (user_gimprc_file);
 
   g_strfreev (argv);
 

@@ -94,7 +94,7 @@ static gint       gimp_help_get_help_domains         (Gimp    *gimp,
 static gchar    * gimp_help_get_default_domain_uri   (Gimp    *gimp);
 static gchar    * gimp_help_get_locales              (Gimp    *gimp);
 
-static gchar    * gimp_help_get_user_manual_basedir  (void);
+static GFile    * gimp_help_get_user_manual_basedir  (void);
 
 static void       gimp_help_query_user_manual_online (GimpIdleHelp *idle_help);
 
@@ -140,7 +140,7 @@ gimp_help_show (Gimp         *gimp,
 gboolean
 gimp_help_user_manual_is_installed (Gimp *gimp)
 {
-  gchar    *basedir;
+  GFile    *basedir;
   gboolean  found = FALSE;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
@@ -151,7 +151,8 @@ gimp_help_user_manual_is_installed (Gimp *gimp)
 
   basedir = gimp_help_get_user_manual_basedir ();
 
-  if (g_file_test (basedir, G_FILE_TEST_IS_DIR))
+  if (g_file_query_file_type (basedir, G_FILE_QUERY_INFO_NONE, NULL) ==
+      G_FILE_TYPE_DIRECTORY)
     {
       gchar       *locales = gimp_help_get_locales (gimp);
       const gchar *s       = locales;
@@ -160,13 +161,14 @@ gimp_help_user_manual_is_installed (Gimp *gimp)
       for (p = strchr (s, ':'); p && !found; p = strchr (s, ':'))
         {
           gchar *locale = g_strndup (s, p - s);
-          gchar *path;
+          GFile *file1  = g_file_get_child (basedir, locale);
+          GFile *file2  = g_file_get_child (file1, "gimp-help.xml");
 
-          path = g_build_filename (basedir, locale, "gimp-help.xml", NULL);
+          found = (g_file_query_file_type (file2, G_FILE_QUERY_INFO_NONE,
+                                           NULL) == G_FILE_TYPE_REGULAR);
 
-          found = g_file_test (path, G_FILE_TEST_IS_REGULAR);
-
-          g_free (path);
+          g_object_unref (file1);
+          g_object_unref (file2);
           g_free (locale);
 
           s = p + 1;
@@ -176,15 +178,18 @@ gimp_help_user_manual_is_installed (Gimp *gimp)
 
       if (! found)
         {
-          gchar *path = g_build_filename (basedir, "en", "gimp-help.xml", NULL);
+          GFile *file1  = g_file_get_child (basedir, "en");
+          GFile *file2  = g_file_get_child (file1, "gimp-help.xml");
 
-          found = g_file_test (path, G_FILE_TEST_IS_REGULAR);
+          found = (g_file_query_file_type (file2, G_FILE_QUERY_INFO_NONE,
+                                           NULL) == G_FILE_TYPE_REGULAR);
 
-          g_free (path);
+          g_object_unref (file1);
+          g_object_unref (file2);
         }
     }
 
-  g_free (basedir);
+  g_object_unref (basedir);
 
   return found;
 }
@@ -555,7 +560,7 @@ static gchar *
 gimp_help_get_default_domain_uri (Gimp *gimp)
 {
   GimpGuiConfig *config = GIMP_GUI_CONFIG (gimp->config);
-  gchar         *dir;
+  GFile         *dir;
   gchar         *uri;
 
   if (g_getenv ("GIMP2_HELP_URI"))
@@ -565,8 +570,8 @@ gimp_help_get_default_domain_uri (Gimp *gimp)
     return g_strdup (config->user_manual_online_uri);
 
   dir = gimp_help_get_user_manual_basedir ();
-  uri = g_filename_to_uri (dir, NULL, NULL);
-  g_free (dir);
+  uri = g_file_get_uri (dir);
+  g_object_unref (dir);
 
   return uri;
 }
@@ -582,10 +587,10 @@ gimp_help_get_locales (Gimp *gimp)
   return g_strjoinv (":", (gchar **) g_get_language_names ());
 }
 
-static gchar *
+static GFile *
 gimp_help_get_user_manual_basedir (void)
 {
-  return g_build_filename (gimp_data_directory (), "help", NULL);
+  return gimp_data_directory_file ("help", NULL);
 }
 
 

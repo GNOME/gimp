@@ -331,7 +331,9 @@ load_image (const gchar  *filename,
   gboolean        is_signed         = FALSE;
   guint8          in_sequence       = 0;
 
-  /* open the file */
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   DICOM = g_fopen (filename, "rb");
 
   if (! DICOM)
@@ -341,9 +343,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /* allocate the necessary structures */
   dicominfo = g_new0 (DicomInfo, 1);

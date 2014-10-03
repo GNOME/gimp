@@ -731,6 +731,9 @@ load_image (const gchar  *filename,
     0xff, 0xff, 0xff            /* white */
   };
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   fp = g_fopen (filename, "rb");
   if (! fp)
     {
@@ -739,9 +742,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   comment = fgetcomment (fp);
 
@@ -1023,6 +1023,9 @@ save_image (const gchar  *filename,
         dark = 1;
     }
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   /* Now actually save the data. */
   fp = g_fopen (filename, "w");
   if (! fp)
@@ -1032,9 +1035,6 @@ save_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /* Maybe write the image comment. */
 #if 0
@@ -1175,15 +1175,15 @@ save_image (const gchar  *filename,
 static gboolean
 save_dialog (gint32 drawable_ID)
 {
-  GtkWidget *dialog;
-  GtkWidget *frame;
-  GtkWidget *vbox;
-  GtkWidget *toggle;
-  GtkWidget *table;
-  GtkWidget *entry;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  gboolean   run;
+  GtkWidget     *dialog;
+  GtkWidget     *frame;
+  GtkWidget     *vbox;
+  GtkWidget     *toggle;
+  GtkWidget     *table;
+  GtkWidget     *entry;
+  GtkWidget     *spinbutton;
+  GtkAdjustment *adj;
+  gboolean       run;
 
   dialog = gimp_export_dialog_new (_("XBM"), PLUG_IN_BINARY, SAVE_PROC);
 
@@ -1259,22 +1259,30 @@ save_dialog (gint32 drawable_ID)
                           table,  "sensitive",
                           G_BINDING_SYNC_CREATE);
 
-  spinbutton = gimp_spin_button_new (&adj, xsvals.x_hot, 0,
-                                     gimp_drawable_width (drawable_ID) - 1,
-                                     1, 10, 0, 0, 0);
+  adj = (GtkAdjustment *)
+    gtk_adjustment_new (xsvals.x_hot, 0,
+                        gimp_drawable_width (drawable_ID) - 1,
+                        1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Hot spot _X:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xsvals.x_hot);
 
-  spinbutton = gimp_spin_button_new (&adj, xsvals.y_hot, 0,
-                                     gimp_drawable_height (drawable_ID) - 1,
-                                     1, 10, 0, 0, 0);
+  adj = (GtkAdjustment *)
+    gtk_adjustment_new (xsvals.y_hot, 0,
+                        gimp_drawable_height (drawable_ID) - 1,
+                        1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Hot spot _Y:"), 0.0, 0.5,
                              spinbutton, 1, TRUE);
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &xsvals.y_hot);

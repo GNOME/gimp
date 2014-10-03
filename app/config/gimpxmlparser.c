@@ -22,7 +22,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gio/gio.h>
 
 #include "config-types.h"
 
@@ -101,6 +101,37 @@ gimp_xml_parser_parse_file (GimpXmlParser  *parser,
 }
 
 /**
+ * gimp_xml_parser_parse_gfile:
+ * @parser: a #GimpXmlParser
+ * @file: the #GFile to parse
+ * @error: return location for possible errors
+ *
+ * This function creates a GIOChannel for @file and calls
+ * gimp_xml_parser_parse_io_channel() for you.
+ *
+ * Return value: %TRUE on success, %FALSE otherwise
+ **/
+gboolean
+gimp_xml_parser_parse_gfile (GimpXmlParser  *parser,
+                             GFile          *file,
+                             GError        **error)
+{
+  gchar    *path;
+  gboolean  success;
+
+  g_return_val_if_fail (parser != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
+
+  path = g_file_get_path (file);
+
+  success = gimp_xml_parser_parse_file (parser, path, error);
+
+  g_free (path);
+
+  return success;
+}
+
+/**
  * gimp_xml_parser_parse_fd:
  * @parser: a #GimpXmlParser
  * @fd:     a file descriptor
@@ -122,7 +153,11 @@ gimp_xml_parser_parse_fd (GimpXmlParser  *parser,
   g_return_val_if_fail (parser != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
+#ifdef G_OS_WIN32
+  io = g_io_channel_win32_new_fd (fd);
+#else
   io = g_io_channel_unix_new (fd);
+#endif
 
   success = gimp_xml_parser_parse_io_channel (parser, io, error);
 

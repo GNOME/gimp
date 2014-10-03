@@ -30,10 +30,9 @@
 
 #include "gegl/gimp-babl.h"
 
-#include "gimpdrawable.h"
-#include "gimpimage.h"
-#include "gimpimage-contiguous-region.h"
+#include "gimp-utils.h" /* GIMP_TIMER */
 #include "gimppickable.h"
+#include "gimppickable-contiguous-region.h"
 
 
 /*  local function prototypes  */
@@ -64,8 +63,9 @@ static gboolean find_contiguous_segment   (const gfloat        *col,
                                            gint                 initial_x,
                                            gint                 initial_y,
                                            gint                *start,
-                                           gint                *end);
-static void find_contiguous_region_helper (GeglBuffer          *src_buffer,
+                                           gint                *end,
+                                           gfloat              *row);
+static void     find_contiguous_region    (GeglBuffer          *src_buffer,
                                            GeglBuffer          *mask_buffer,
                                            const Babl          *format,
                                            gint                 n_components,
@@ -82,31 +82,23 @@ static void find_contiguous_region_helper (GeglBuffer          *src_buffer,
 /*  public functions  */
 
 GeglBuffer *
-gimp_image_contiguous_region_by_seed (GimpImage           *image,
-                                      GimpDrawable        *drawable,
-                                      gboolean             sample_merged,
-                                      gboolean             antialias,
-                                      gfloat               threshold,
-                                      gboolean             select_transparent,
-                                      GimpSelectCriterion  select_criterion,
-                                      gint                 x,
-                                      gint                 y)
+gimp_pickable_contiguous_region_by_seed (GimpPickable        *pickable,
+                                         gboolean             antialias,
+                                         gfloat               threshold,
+                                         gboolean             select_transparent,
+                                         GimpSelectCriterion  select_criterion,
+                                         gint                 x,
+                                         gint                 y)
 {
-  GimpPickable *pickable;
-  GeglBuffer   *src_buffer;
-  GeglBuffer   *mask_buffer;
-  const Babl   *format;
-  gint          n_components;
-  gboolean      has_alpha;
-  gfloat        start_col[MAX_CHANNELS];
+  GeglBuffer    *src_buffer;
+  GeglBuffer    *mask_buffer;
+  const Babl    *format;
+  GeglRectangle  extent;
+  gint           n_components;
+  gboolean       has_alpha;
+  gfloat         start_col[MAX_CHANNELS];
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  if (sample_merged)
-    pickable = GIMP_PICKABLE (image);
-  else
-    pickable = GIMP_PICKABLE (drawable);
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
 
   gimp_pickable_flush (pickable);
 
@@ -134,36 +126,42 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
       select_transparent = FALSE;
     }
 
-  mask_buffer = gegl_buffer_new (gegl_buffer_get_extent (src_buffer),
-                                 babl_format ("Y float"));
+  extent = *gegl_buffer_get_extent (src_buffer);
 
-  find_contiguous_region_helper (src_buffer, mask_buffer,
-                                 format, n_components, has_alpha,
-                                 select_transparent, select_criterion,
-                                 antialias, threshold,
-                                 x, y, start_col);
+  mask_buffer = gegl_buffer_new (&extent, babl_format ("Y float"));
+
+  if (x >= extent.x && x < (extent.x + extent.width) &&
+      y >= extent.y && y < (extent.y + extent.height))
+    {
+      GIMP_TIMER_START();
+
+      find_contiguous_region (src_buffer, mask_buffer,
+                              format, n_components, has_alpha,
+                              select_transparent, select_criterion,
+                              antialias, threshold,
+                              x, y, start_col);
+
+      GIMP_TIMER_END("foo");
+    }
 
   return mask_buffer;
 }
 
 GeglBuffer *
-gimp_image_contiguous_region_by_color (GimpImage            *image,
-                                       GimpDrawable         *drawable,
-                                       gboolean              sample_merged,
-                                       gboolean              antialias,
-                                       gfloat                threshold,
-                                       gboolean              select_transparent,
-                                       GimpSelectCriterion   select_criterion,
-                                       const GimpRGB        *color)
+gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
+                                          gboolean             antialias,
+                                          gfloat               threshold,
+                                          gboolean             select_transparent,
+                                          GimpSelectCriterion  select_criterion,
+                                          const GimpRGB       *color)
 {
-  /*  Scan over the image's active layer, finding pixels within the
+  /*  Scan over the pickable's active layer, finding pixels within the
    *  specified threshold from the given R, G, & B values.  If
    *  antialiasing is on, use the same antialiasing scheme as in
-   *  fuzzy_select.  Modify the image's mask to reflect the
+   *  fuzzy_select.  Modify the pickable's mask to reflect the
    *  additional selection
    */
   GeglBufferIterator *iter;
-  GimpPickable       *pickable;
   GeglBuffer         *src_buffer;
   GeglBuffer         *mask_buffer;
   const Babl         *format;
@@ -171,14 +169,8 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
   gboolean            has_alpha;
   gfloat              start_col[MAX_CHANNELS];
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
   g_return_val_if_fail (color != NULL, NULL);
-
-  if (sample_merged)
-    pickable = GIMP_PICKABLE (image);
-  else
-    pickable = GIMP_PICKABLE (drawable);
 
   gimp_pickable_flush (pickable);
 
@@ -209,11 +201,11 @@ gimp_image_contiguous_region_by_color (GimpImage            *image,
 
   iter = gegl_buffer_iterator_new (src_buffer,
                                    NULL, 0, format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   gegl_buffer_iterator_add (iter, mask_buffer,
                             NULL, 0, babl_format ("Y float"),
-                            GEGL_BUFFER_WRITE, GEGL_ABYSS_NONE);
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
     {
@@ -257,17 +249,17 @@ choose_format (GeglBuffer          *buffer,
     {
     case GIMP_SELECT_CRITERION_COMPOSITE:
       if (babl_format_is_palette (format))
-        format = babl_format ("RGBA float");
+        format = babl_format ("R'G'B'A float");
       else
         format = gimp_babl_format (gimp_babl_format_get_base_type (format),
-                                   GIMP_PRECISION_FLOAT_LINEAR,
+                                   GIMP_PRECISION_FLOAT_GAMMA,
                                    *has_alpha);
       break;
 
     case GIMP_SELECT_CRITERION_R:
     case GIMP_SELECT_CRITERION_G:
     case GIMP_SELECT_CRITERION_B:
-      format = babl_format ("RGBA float");
+      format = babl_format ("R'G'B'A float");
       break;
 
     case GIMP_SELECT_CRITERION_H:
@@ -380,6 +372,8 @@ pixel_difference (const gfloat        *col1,
     }
 }
 
+/* #define FETCH_ROW 1 */
+
 static gboolean
 find_contiguous_segment (const gfloat        *col,
                          GeglBuffer          *src_buffer,
@@ -395,14 +389,24 @@ find_contiguous_segment (const gfloat        *col,
                          gint                 initial_x,
                          gint                 initial_y,
                          gint                *start,
-                         gint                *end)
+                         gint                *end,
+                         gfloat              *row)
 {
-  gfloat s[MAX_CHANNELS];
-  gfloat mask_row[width];
-  gfloat diff;
+  gfloat *s;
+  gfloat  mask_row[width];
+  gfloat  diff;
+
+#ifdef FETCH_ROW
+  gegl_buffer_get (src_buffer, GEGL_RECTANGLE (0, initial_y, width, 1), 1.0,
+                   format,
+                   row, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+  s = row + initial_x * n_components;
+#else
+  s = g_alloca (n_components * sizeof (gfloat));
 
   gegl_buffer_sample (src_buffer, initial_x, initial_y, NULL, s, format,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+#endif
 
   diff = pixel_difference (col, s, antialias, threshold,
                            n_components, has_alpha, select_transparent,
@@ -415,11 +419,16 @@ find_contiguous_segment (const gfloat        *col,
   mask_row[initial_x] = diff;
 
   *start = initial_x - 1;
+#ifdef FETCH_ROW
+  s = row + *start * n_components;
+#endif
 
   while (*start >= 0 && diff)
     {
+#ifndef FETCH_ROW
       gegl_buffer_sample (src_buffer, *start, initial_y, NULL, s, format,
                           GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+#endif
 
       diff = pixel_difference (col, s, antialias, threshold,
                                n_components, has_alpha, select_transparent,
@@ -428,16 +437,26 @@ find_contiguous_segment (const gfloat        *col,
       mask_row[*start] = diff;
 
       if (diff)
-        (*start)--;
+        {
+          (*start)--;
+#ifdef FETCH_ROW
+          s -= n_components;
+#endif
+        }
     }
 
   diff = 1;
   *end = initial_x + 1;
+#ifdef FETCH_ROW
+  s = row + *end * n_components;
+#endif
 
   while (*end < width && diff)
     {
+#ifndef FETCH_ROW
       gegl_buffer_sample (src_buffer, *end, initial_y, NULL, s, format,
                           GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
+#endif
 
       diff = pixel_difference (col, s, antialias, threshold,
                                n_components, has_alpha, select_transparent,
@@ -446,7 +465,12 @@ find_contiguous_segment (const gfloat        *col,
       mask_row[*end] = diff;
 
       if (diff)
-        (*end)++;
+        {
+          (*end)++;
+#ifdef FETCH_ROW
+          s += n_components;
+#endif
+        }
     }
 
   gegl_buffer_set (mask_buffer, GEGL_RECTANGLE (*start, initial_y,
@@ -458,22 +482,27 @@ find_contiguous_segment (const gfloat        *col,
 }
 
 static void
-find_contiguous_region_helper (GeglBuffer          *src_buffer,
-                               GeglBuffer          *mask_buffer,
-                               const Babl          *format,
-                               gint                 n_components,
-                               gboolean             has_alpha,
-                               gboolean             select_transparent,
-                               GimpSelectCriterion  select_criterion,
-                               gboolean             antialias,
-                               gfloat               threshold,
-                               gint                 x,
-                               gint                 y,
-                               const gfloat        *col)
+find_contiguous_region (GeglBuffer          *src_buffer,
+                        GeglBuffer          *mask_buffer,
+                        const Babl          *format,
+                        gint                 n_components,
+                        gboolean             has_alpha,
+                        gboolean             select_transparent,
+                        GimpSelectCriterion  select_criterion,
+                        gboolean             antialias,
+                        gfloat               threshold,
+                        gint                 x,
+                        gint                 y,
+                        const gfloat        *col)
 {
   gint    start, end;
   gint    new_start, new_end;
   GQueue *coord_stack;
+  gfloat *row = NULL;
+
+#ifdef FETCH_ROW
+  row = g_new (gfloat, gegl_buffer_get_width (src_buffer) * n_components);
+#endif
 
   coord_stack = g_queue_new ();
 
@@ -509,7 +538,8 @@ find_contiguous_region_helper (GeglBuffer          *src_buffer,
                                          gegl_buffer_get_width (src_buffer),
                                          select_transparent, select_criterion,
                                          antialias, threshold, x, y,
-                                         &new_start, &new_end))
+                                         &new_start, &new_end,
+                                         row))
             continue;
 
           if (y + 1 < gegl_buffer_get_height (src_buffer))
@@ -530,4 +560,8 @@ find_contiguous_region_helper (GeglBuffer          *src_buffer,
   while (! g_queue_is_empty (coord_stack));
 
   g_queue_free (coord_stack);
+
+#ifdef FETCH_ROW
+  g_free (row);
+#endif
 }

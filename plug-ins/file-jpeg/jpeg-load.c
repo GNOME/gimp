@@ -86,6 +86,9 @@ load_image (const gchar  *filename,
   if (!preview)
     {
       jerr.pub.output_message = my_output_message;
+
+      gimp_progress_init_printf (_("Opening '%s'"),
+                                 gimp_filename_to_utf8 (filename));
     }
 
   if ((infile = g_fopen (filename, "rb")) == NULL)
@@ -95,10 +98,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
-
-  if (!preview)
-    gimp_progress_init_printf (_("Opening '%s'"),
-                               gimp_filename_to_utf8 (filename));
 
   image_ID = -1;
 

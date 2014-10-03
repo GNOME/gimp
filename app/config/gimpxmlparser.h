@@ -27,6 +27,9 @@ GimpXmlParser * gimp_xml_parser_new              (const GMarkupParser *markup_pa
 gboolean        gimp_xml_parser_parse_file       (GimpXmlParser       *parser,
                                                   const gchar         *filename,
                                                   GError             **error);
+gboolean        gimp_xml_parser_parse_gfile      (GimpXmlParser       *parser,
+                                                  GFile               *file,
+                                                  GError             **error);
 gboolean        gimp_xml_parser_parse_fd         (GimpXmlParser       *parser,
                                                   gint                 fd,
                                                   GError             **error);

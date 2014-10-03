@@ -122,6 +122,9 @@ load_image (const gchar  *filename,
   if (g_stat (filename, &st) == -1)
     return -1;
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   IFDBG(1) g_debug ("Open file %s", gimp_filename_to_utf8 (filename));
   f = g_fopen (filename, "rb");
   if (f == NULL)
@@ -131,9 +134,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return -1;
     }
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /* ----- Read the PSD file Header block ----- */
   IFDBG(2) g_debug ("Read header block");
@@ -1345,7 +1345,7 @@ add_layers (gint32     image_id,
                                          image_type, 0, GIMP_NORMAL_MODE);
               g_free (lyr_a[lidx]->name);
               gimp_image_insert_layer (image_id, layer_id, parent_group_id, -1);
-              gimp_drawable_fill (layer_id, GIMP_TRANSPARENT_FILL);
+              gimp_drawable_fill (layer_id, GIMP_FILL_TRANSPARENT);
               gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
               if (lyr_a[lidx]->id)
                 gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
@@ -1505,8 +1505,7 @@ add_layers (gint32     image_id,
                       gimp_layer_set_apply_mask (layer_id,
                                                  ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
                     }
-                  if (pixels)
-                    g_free (pixels);
+                  g_free (pixels);
                 }
             }
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)

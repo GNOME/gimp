@@ -31,7 +31,7 @@
 #include "gegl/gimp-babl-compat.h"
 
 #include "core/gimp.h"
-#include "core/gimp-utils.h"
+#include "core/gimp-memsize.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpparamspecs.h"
@@ -71,7 +71,7 @@ static void          gimp_plug_in_procedure_execute_async  (GimpProcedure  *proc
                                                             GimpValueArray *args,
                                                             GimpObject     *display);
 
-const gchar     * gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedure *procedure);
+GFile * gimp_plug_in_procedure_real_get_file (const GimpPlugInProcedure *procedure);
 
 
 G_DEFINE_TYPE (GimpPlugInProcedure, gimp_plug_in_procedure,
@@ -106,7 +106,7 @@ gimp_plug_in_procedure_class_init (GimpPlugInProcedureClass *klass)
   proc_class->execute            = gimp_plug_in_procedure_execute;
   proc_class->execute_async      = gimp_plug_in_procedure_execute_async;
 
-  klass->get_progname            = gimp_plug_in_procedure_real_get_progname;
+  klass->get_file                = gimp_plug_in_procedure_real_get_file;
   klass->menu_path_added         = NULL;
 }
 
@@ -124,7 +124,7 @@ gimp_plug_in_procedure_finalize (GObject *object)
 {
   GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (object);
 
-  g_free (proc->prog);
+  g_object_unref (proc->file);
   g_free (proc->menu_label);
 
   g_list_free_full (proc->menu_paths, (GDestroyNotify) g_free);
@@ -157,7 +157,7 @@ gimp_plug_in_procedure_get_memsize (GimpObject *object,
   GList               *list;
   GSList              *slist;
 
-  memsize += gimp_string_get_memsize (proc->prog);
+  memsize += gimp_g_object_get_memsize (G_OBJECT (proc->file));
   memsize += gimp_string_get_memsize (proc->menu_label);
 
   for (list = proc->menu_paths; list; list = g_list_next (list))
@@ -238,10 +238,10 @@ gimp_plug_in_procedure_execute_async (GimpProcedure  *procedure,
     }
 }
 
-const gchar *
-gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedure *procedure)
+GFile *
+gimp_plug_in_procedure_real_get_file (const GimpPlugInProcedure *procedure)
 {
-  return procedure->prog;
+  return procedure->file;
 }
 
 
@@ -249,17 +249,17 @@ gimp_plug_in_procedure_real_get_progname (const GimpPlugInProcedure *procedure)
 
 GimpProcedure *
 gimp_plug_in_procedure_new (GimpPDBProcType  proc_type,
-                            const gchar     *prog)
+                            GFile           *file)
 {
   GimpPlugInProcedure *proc;
 
   g_return_val_if_fail (proc_type == GIMP_PLUGIN ||
                         proc_type == GIMP_EXTENSION, NULL);
-  g_return_val_if_fail (prog != NULL, NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
 
   proc = g_object_new (GIMP_TYPE_PLUG_IN_PROCEDURE, NULL);
 
-  proc->prog = g_strdup (prog);
+  proc->file = g_object_ref (file);
 
   GIMP_PROCEDURE (proc)->proc_type = proc_type;
 
@@ -283,12 +283,12 @@ gimp_plug_in_procedure_find (GSList      *list,
   return NULL;
 }
 
-const gchar *
-gimp_plug_in_procedure_get_progname (const GimpPlugInProcedure *proc)
+GFile *
+gimp_plug_in_procedure_get_file (const GimpPlugInProcedure *proc)
 {
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 
-  return GIMP_PLUG_IN_PROCEDURE_GET_CLASS (proc)->get_progname (proc);
+  return GIMP_PLUG_IN_PROCEDURE_GET_CLASS (proc)->get_file (proc);
 }
 
 void
@@ -345,7 +345,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
   p = strchr (menu_path, '>');
   if (p == NULL || (*(++p) && *p != '/'))
     {
-      basename = g_filename_display_basename (proc->prog);
+      basename = g_path_get_basename (gimp_file_get_utf8_name (proc->file));
 
       g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
                    "Plug-In \"%s\"\n(%s)\n"
@@ -353,7 +353,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                    "in the invalid menu location \"%s\".\n"
                    "The menu path must look like either \"<Prefix>\" "
                    "or \"<Prefix>/path/to/item\".",
-                   basename, gimp_filename_to_utf8 (proc->prog),
+                   basename, gimp_file_get_utf8_name (proc->file),
                    gimp_object_get_name (proc),
                    menu_path);
       goto failure;
@@ -467,7 +467,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
     }
   else
     {
-      basename = g_filename_display_basename (proc->prog);
+      basename = g_path_get_basename (gimp_file_get_utf8_name (proc->file));
 
       g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
                    "Plug-In \"%s\"\n(%s)\n"
@@ -478,7 +478,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
                    "\"<Colormap>\", \"<Brushes>\", \"<Dynamics>\", "
                    "\"<Gradients>\", \"<Palettes>\", \"<Patterns>\", "
                    "\"<ToolPresets>\", \"<Fonts>\" or \"<Buffers>\".",
-                   basename, gimp_filename_to_utf8 (proc->prog),
+                   basename, gimp_file_get_utf8_name (proc->file),
                    gimp_object_get_name (proc),
                    menu_path);
       goto failure;
@@ -503,14 +503,14 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
       p = strchr (prefix, '>') + 1;
       *p = '\0';
 
-      basename = g_filename_display_basename (proc->prog);
+      basename = g_path_get_basename (gimp_file_get_utf8_name (proc->file));
 
       g_set_error (error, GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_FAILED,
                    "Plug-In \"%s\"\n(%s)\n\n"
                    "attempted to install %s procedure \"%s\" "
                    "which does not take the standard %s Plug-In "
                    "arguments: (%s).",
-                   basename, gimp_filename_to_utf8 (proc->prog),
+                   basename, gimp_file_get_utf8_name (proc->file),
                    prefix, gimp_object_get_name (proc), prefix,
                    required);
 
@@ -804,10 +804,11 @@ image_types_parse (const gchar *name,
               g_printerr ("%s: image-type contains unrecognizable parts:"
                           "'%s'\n", name, type_spec);
 
+              /* skip to next token */
               while (*image_types &&
-                     ((*image_types != ' ') ||
-                      (*image_types != '\t') ||
-                      (*image_types != ',')))
+                     *image_types != ' '  &&
+                     *image_types != '\t' &&
+                     *image_types != ',')
                 {
                   image_types++;
                 }

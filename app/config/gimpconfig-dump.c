@@ -23,21 +23,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#ifdef G_OS_WIN32
+#include <gio/gwin32outputstream.h>
+#else
+#include <gio/gunixoutputstream.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
-
-#ifdef G_OS_WIN32
-#include "libgimpbase/gimpwin32-io.h"
-#endif
 
 #include "config-types.h"
 
@@ -48,23 +46,31 @@
 
 static void    dump_gimprc_system   (GimpConfig       *rc,
                                      GimpConfigWriter *writer,
-                                     gint              fd);
+                                     GOutputStream    *output);
 static void    dump_gimprc_manpage  (GimpConfig       *rc,
                                      GimpConfigWriter *writer,
-                                     gint              fd);
+                                     GOutputStream    *output);
 static gchar * dump_describe_param  (GParamSpec       *param_spec);
-static void    dump_with_linebreaks (gint              fd,
+static void    dump_with_linebreaks (GOutputStream    *output,
                                      const gchar      *text);
 
 
 gboolean
 gimp_config_dump (GimpConfigDumpFormat  format)
 {
+  GOutputStream    *output;
   GimpConfigWriter *writer;
   GimpConfig       *rc;
 
   rc = g_object_new (GIMP_TYPE_RC, NULL);
-  writer = gimp_config_writer_new_fd (1);
+
+#ifdef G_OS_WIN32
+  output = g_win32_output_stream_new ((gpointer) 1, FALSE);
+#else
+  output = g_unix_output_stream_new (1, FALSE);
+#endif
+
+  writer = gimp_config_writer_new_stream (output, NULL, NULL);
 
   switch (format)
     {
@@ -80,15 +86,16 @@ gimp_config_dump (GimpConfigDumpFormat  format)
       break;
 
     case GIMP_CONFIG_DUMP_GIMPRC_SYSTEM:
-      dump_gimprc_system (rc, writer, 1);
+      dump_gimprc_system (rc, writer, output);
       break;
 
     case GIMP_CONFIG_DUMP_GIMPRC_MANPAGE:
-      dump_gimprc_manpage (rc, writer, 1);
+      dump_gimprc_manpage (rc, writer, output);
       break;
     }
 
   gimp_config_writer_finish (writer, NULL, NULL);
+  g_object_unref (output);
   g_object_unref (rc);
 
   return TRUE;
@@ -113,7 +120,7 @@ static const gchar system_gimprc_header[] =
 static void
 dump_gimprc_system (GimpConfig       *rc,
                     GimpConfigWriter *writer,
-                    gint              fd)
+                    GOutputStream    *output)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
@@ -168,7 +175,7 @@ static const gchar man_page_header[] =
 ".B gimprc\n"
 "file is a configuration file read by GIMP when it starts up.  There\n"
 "are two of these: one system-wide one stored in\n"
-"@gimpsysconfdir@/gimprc and a per-user \\fB$HOME\\fP/@gimpdir@/gimprc\n"
+"@gimpsysconfdir@/gimprc and a per-user @manpage_gimpdir@/gimprc\n"
 "which may override system settings.\n"
 "\n"
 "Comments are introduced by a hash sign (#), and continue until the end\n"
@@ -210,7 +217,7 @@ static const gchar *man_page_path =
 ".TP\n"
 ".I gimp_dir\n"
 "The personal gimp directory which is set to the value of the environment\n"
-"variable GIMP2_DIRECTORY or to ~/@gimpdir@.\n"
+"variable GIMP2_DIRECTORY or to @manpage_gimpdir@.\n"
 ".TP\n"
 ".I gimp_data_dir\n"
 "Base for paths to shareable data, which is set to the value of the\n"
@@ -234,7 +241,7 @@ static const gchar man_page_footer[] =
 ".I @gimpsysconfdir@/gimprc\n"
 "System-wide configuration file\n"
 ".TP\n"
-".I \\fB$HOME\\fP/@gimpdir@/gimprc\n"
+".I @manpage_gimpdir@/gimprc\n"
 "Per-user configuration file\n"
 "\n"
 ".SH \"SEE ALSO\"\n"
@@ -244,14 +251,15 @@ static const gchar man_page_footer[] =
 static void
 dump_gimprc_manpage (GimpConfig       *rc,
                      GimpConfigWriter *writer,
-                     gint              fd)
+                     GOutputStream    *output)
 {
   GObjectClass  *klass;
   GParamSpec   **property_specs;
   guint          n_property_specs;
   guint          i;
 
-  write (fd, man_page_header, strlen (man_page_header));
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "%s", man_page_header);
 
   klass = G_OBJECT_GET_CLASS (rc);
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
@@ -267,16 +275,20 @@ dump_gimprc_manpage (GimpConfig       *rc,
       if (prop_spec->flags & GIMP_CONFIG_PARAM_IGNORE)
         continue;
 
-      write (fd, ".TP\n", strlen (".TP\n"));
+      g_output_stream_printf (output, NULL, NULL, NULL,
+                              ".TP\n");
 
       if (gimp_config_serialize_property (rc, prop_spec, writer))
         {
-          write (fd, "\n", 1);
+          g_output_stream_printf (output, NULL, NULL, NULL,
+                                  "\n");
 
           desc = dump_describe_param (prop_spec);
 
-          dump_with_linebreaks (fd, desc);
-          write (fd, "\n", 1);
+          dump_with_linebreaks (output, desc);
+
+          g_output_stream_printf (output, NULL, NULL, NULL,
+                                  "\n");
 
           g_free (desc);
         }
@@ -284,8 +296,10 @@ dump_gimprc_manpage (GimpConfig       *rc,
 
   g_free (property_specs);
 
-  write (fd, man_page_path,   strlen (man_page_path));
-  write (fd, man_page_footer, strlen (man_page_footer));
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "%s", man_page_path);
+  g_output_stream_printf (output, NULL, NULL, NULL,
+                          "%s", man_page_footer);
 }
 
 
@@ -321,7 +335,8 @@ static const gchar display_format_description[] =
 "%x  the width of the active layer/channel in pixels\n"
 "%X  the width of the active layer/channel in real-world units\n"
 "%y  the height of the active layer/channel in pixels\n"
-"%Y  the height of the active layer/channel in real-world units\n\n";
+"%Y  the height of the active layer/channel in real-world units\n"
+"%o  the name of the image's color profile\n\n";
 
 
 static gchar *
@@ -495,8 +510,8 @@ dump_describe_param (GParamSpec *param_spec)
 #define LINE_LENGTH 78
 
 static void
-dump_with_linebreaks (gint         fd,
-                      const gchar *text)
+dump_with_linebreaks (GOutputStream *output,
+                      const gchar   *text)
 {
   gint len = strlen (text);
 
@@ -507,7 +522,8 @@ dump_with_linebreaks (gint         fd,
 
       /*  groff doesn't like lines to start with a single quote  */
       if (*text == '\'')
-        write (fd, "\\&", 2);  /*  this represents a zero width space  */
+        g_output_stream_printf (output, NULL, NULL, NULL,
+                                "\\&");  /*  a zero width space  */
 
       for (t = text, i = 0, space = 0;
            *t != '\n' && (i <= LINE_LENGTH || space == 0) && i < len;
@@ -520,11 +536,13 @@ dump_with_linebreaks (gint         fd,
       if (i > LINE_LENGTH && space && *t != '\n')
         i = space;
 
-      write (fd, text, i);
-      write (fd, "\n", 1);
+      g_output_stream_write_all (output, text, i, NULL, NULL, NULL);
+      g_output_stream_printf (output, NULL, NULL, NULL,
+                              "\n");
 
       if (*t == '\n')
-        write (fd, ".br\n", 4);
+        g_output_stream_printf (output, NULL, NULL, NULL,
+                                ".br\n");
 
       i++;
 

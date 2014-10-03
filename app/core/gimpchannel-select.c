@@ -34,7 +34,8 @@
 #include "gimpchannel.h"
 #include "gimpchannel-select.h"
 #include "gimpchannel-combine.h"
-#include "gimpimage-contiguous-region.h"
+#include "gimppickable.h"
+#include "gimppickable-contiguous-region.h"
 #include "gimpscanconvert.h"
 
 #include "vectors/gimpstroke.h"
@@ -498,25 +499,26 @@ gimp_channel_select_fuzzy (GimpChannel         *channel,
                            gdouble              feather_radius_x,
                            gdouble              feather_radius_y)
 {
-  GimpItem   *item;
-  GeglBuffer *add_on;
-  gint        add_on_x = 0;
-  gint        add_on_y = 0;
+  GimpPickable *pickable;
+  GeglBuffer   *add_on;
+  gint          add_on_x = 0;
+  gint          add_on_y = 0;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  item = GIMP_ITEM (channel);
+  if (sample_merged)
+    pickable = GIMP_PICKABLE (gimp_item_get_image (GIMP_ITEM (drawable)));
+  else
+    pickable = GIMP_PICKABLE (drawable);
 
-  add_on = gimp_image_contiguous_region_by_seed (gimp_item_get_image (item),
-                                                 drawable,
-                                                 sample_merged,
-                                                 antialias,
-                                                 threshold,
-                                                 select_transparent,
-                                                 select_criterion,
-                                                 x, y);
+  add_on = gimp_pickable_contiguous_region_by_seed (pickable,
+                                                    antialias,
+                                                    threshold,
+                                                    select_transparent,
+                                                    select_criterion,
+                                                    x, y);
 
   if (! sample_merged)
     gimp_item_get_offset (GIMP_ITEM (drawable), &add_on_x, &add_on_y);
@@ -544,26 +546,27 @@ gimp_channel_select_by_color (GimpChannel         *channel,
                               gdouble              feather_radius_x,
                               gdouble              feather_radius_y)
 {
-  GimpItem   *item;
-  GeglBuffer *add_on;
-  gint        add_on_x = 0;
-  gint        add_on_y = 0;
+  GimpPickable *pickable;
+  GeglBuffer   *add_on;
+  gint          add_on_x = 0;
+  gint          add_on_y = 0;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (color != NULL);
 
-  item = GIMP_ITEM (channel);
+  if (sample_merged)
+    pickable = GIMP_PICKABLE (gimp_item_get_image (GIMP_ITEM (drawable)));
+  else
+    pickable = GIMP_PICKABLE (drawable);
 
-  add_on = gimp_image_contiguous_region_by_color (gimp_item_get_image (item),
-                                                  drawable,
-                                                  sample_merged,
-                                                  antialias,
-                                                  threshold,
-                                                  select_transparent,
-                                                  select_criterion,
-                                                  color);
+  add_on = gimp_pickable_contiguous_region_by_color (pickable,
+                                                     antialias,
+                                                     threshold,
+                                                     select_transparent,
+                                                     select_criterion,
+                                                     color);
 
   if (! sample_merged)
     gimp_item_get_offset (GIMP_ITEM (drawable), &add_on_x, &add_on_y);

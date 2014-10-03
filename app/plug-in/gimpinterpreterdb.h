@@ -36,6 +36,8 @@ struct _GimpInterpreterDB
 {
   GObject     parent_instance;
 
+  gboolean    verbose;
+
   GHashTable *programs;
 
   GSList     *magics;
@@ -52,10 +54,10 @@ struct _GimpInterpreterDBClass
 
 
 GType               gimp_interpreter_db_get_type (void) G_GNUC_CONST;
-GimpInterpreterDB * gimp_interpreter_db_new      (void);
+GimpInterpreterDB * gimp_interpreter_db_new      (gboolean            verbose);
 
 void                gimp_interpreter_db_load     (GimpInterpreterDB  *db,
-                                                  const gchar        *interp_path);
+                                                  GList              *path);
 
 void                gimp_interpreter_db_clear    (GimpInterpreterDB  *db);
 

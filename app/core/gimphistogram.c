@@ -317,12 +317,12 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
   gimp_histogram_alloc_values (histogram, n_components, n_bins);
 
   iter = gegl_buffer_iterator_new (buffer, buffer_rect, 0, format,
-                                   GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
   if (mask)
     gegl_buffer_iterator_add (iter, mask, mask_rect, 0,
                               babl_format ("Y float"),
-                              GEGL_BUFFER_READ, GEGL_ABYSS_NONE);
+                              GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
 #define VALUE(c,i) (priv->values[(c) * priv->n_bins + \
                                  (gint) (CLAMP ((i), 0.0, 1.0) * \

@@ -322,6 +322,9 @@ load_image (const gchar  *filename,
   * Open the file for reading...
   */
 
+  gimp_progress_init_printf (_("Opening '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   sgip = sgiOpen (filename, SGI_READ, 0, 0, 0, 0, 0);
   if (sgip == NULL)
     {
@@ -330,9 +333,6 @@ load_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename));
       return -1;
     };
-
-  gimp_progress_init_printf (_("Opening '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /*
    * Get the image dimensions and create the image...
@@ -574,6 +574,9 @@ save_image (const gchar  *filename,
    * Open the file for writing...
    */
 
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
   sgip = sgiOpen (filename, SGI_WRITE, compression, 1,
                   width, height, zsize);
   if (sgip == NULL)
@@ -583,9 +586,6 @@ save_image (const gchar  *filename,
                    gimp_filename_to_utf8 (filename));
       return FALSE;
     };
-
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
   /*
    * Allocate memory for "tile_height" rows...

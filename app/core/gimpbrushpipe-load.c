@@ -19,27 +19,9 @@
 #include "config.h"
 
 #include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-
-#include <sys/types.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#include <fcntl.h>
-
-#ifndef _O_BINARY
-#define _O_BINARY 0
-#endif
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <glib/gstdio.h>
 #include <gegl.h>
-
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpparasiteio.h"
@@ -54,9 +36,10 @@
 
 
 GList *
-gimp_brush_pipe_load (GimpContext  *context,
-                      const gchar  *filename,
-                      GError      **error)
+gimp_brush_pipe_load (GimpContext   *context,
+                      GFile         *file,
+                      GInputStream  *input,
+                      GError       **error)
 {
   GimpBrushPipe     *pipe = NULL;
   GimpPixPipeParams  params;
@@ -66,35 +49,30 @@ gimp_brush_pipe_load (GimpContext  *context,
   gchar             *paramstring;
   GString           *buffer;
   gchar              c;
-  gint               fd;
+  gsize              bytes_read;
 
-  g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (G_IS_FILE (file), NULL);
+  g_return_val_if_fail (G_IS_INPUT_STREAM (input), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
-
-  if (fd == -1)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for reading: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
-      return NULL;
-    }
 
   /* The file format starts with a painfully simple text header */
 
   /*  get the name  */
   buffer = g_string_new (NULL);
-  while (read (fd, &c, 1) == 1 && c != '\n' && buffer->len < 1024)
-    g_string_append_c (buffer, c);
+  while (g_input_stream_read_all (input, &c, 1, &bytes_read, NULL, NULL) &&
+         bytes_read == 1 &&
+         c != '\n'       &&
+         buffer->len < 1024)
+    {
+      g_string_append_c (buffer, c);
+    }
 
   if (buffer->len > 0 && buffer->len < 1024)
     {
       gchar *utf8 =
         gimp_any_to_utf8 (buffer->str, buffer->len,
                           _("Invalid UTF-8 string in brush file '%s'."),
-                          gimp_filename_to_utf8 (filename));
+                          gimp_file_get_utf8_name (file));
 
       pipe = g_object_new (GIMP_TYPE_BRUSH_PIPE,
                            "name",      utf8,
@@ -111,15 +89,19 @@ gimp_brush_pipe_load (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "File is corrupt."),
-                   gimp_filename_to_utf8 (filename));
-      close (fd);
+                   gimp_file_get_utf8_name (file));
       return NULL;
     }
 
   /*  get the number of brushes  */
   buffer = g_string_new (NULL);
-  while (read (fd, &c, 1) == 1 && c != '\n' && buffer->len < 1024)
-    g_string_append_c (buffer, c);
+  while (g_input_stream_read_all (input, &c, 1, &bytes_read, NULL, NULL) &&
+         bytes_read == 1 &&
+         c != '\n'       &&
+         buffer->len < 1024)
+    {
+      g_string_append_c (buffer, c);
+    }
 
   if (buffer->len > 0 && buffer->len < 1024)
     {
@@ -131,8 +113,7 @@ gimp_brush_pipe_load (GimpContext  *context,
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
                      "File is corrupt."),
-                   gimp_filename_to_utf8 (filename));
-      close (fd);
+                   gimp_file_get_utf8_name (file));
       g_object_unref (pipe);
       g_string_free (buffer, TRUE);
       return NULL;
@@ -209,11 +190,9 @@ gimp_brush_pipe_load (GimpContext  *context,
 
   while (pipe->n_brushes < num_of_brushes)
     {
-      GError *my_error = NULL;
-
       pipe->brushes[pipe->n_brushes] = gimp_brush_load_brush (context,
-                                                              fd, filename,
-                                                              &my_error);
+                                                              file, input,
+                                                              error);
 
       if (pipe->brushes[pipe->n_brushes])
         {
@@ -222,16 +201,12 @@ gimp_brush_pipe_load (GimpContext  *context,
         }
       else
         {
-          g_propagate_error (error, my_error);
-          close (fd);
           g_object_unref (pipe);
           return NULL;
         }
 
       pipe->n_brushes++;
     }
-
-  close (fd);
 
   /* Current brush is the first one. */
   pipe->current = pipe->brushes[0];

@@ -39,7 +39,7 @@
 
 typedef struct
 {
-  gchar    *uri;
+  GFile    *file;
   gboolean  as_new;
 } OpenData;
 
@@ -60,7 +60,7 @@ static gboolean   gimp_dbus_service_open_as_new    (GimpDBusServiceUI     *servi
                                                     const gchar           *uri);
 
 static void       gimp_dbus_service_gimp_opened    (Gimp                  *gimp,
-						    const gchar           *uri,
+						    GFile                 *file,
 						    GimpDBusService       *service);
 
 static gboolean   gimp_dbus_service_queue_open     (GimpDBusService       *service,
@@ -212,10 +212,14 @@ gimp_dbus_service_open_as_new (GimpDBusServiceUI     *service,
 
 static void
 gimp_dbus_service_gimp_opened (Gimp            *gimp,
-			       const gchar     *uri,
+			       GFile           *file,
 			       GimpDBusService *service)
 {
+  gchar *uri = g_file_get_uri (file);
+
   g_signal_emit_by_name (service, "opened", uri);
+
+  g_free (uri);
 }
 
 /*
@@ -265,7 +269,7 @@ gimp_dbus_service_open_idle (GimpDBusService *service)
 
   if (data)
     {
-      file_open_from_command_line (service->gimp, data->uri, data->as_new,
+      file_open_from_command_line (service->gimp, data->file, data->as_new,
                                    NULL, /* FIXME monitor */
                                    0 /* FIXME monitor */);
 
@@ -286,7 +290,7 @@ gimp_dbus_service_open_data_new (GimpDBusService *service,
 {
   OpenData *data = g_slice_new (OpenData);
 
-  data->uri    = g_strdup (uri);
+  data->file   = g_file_new_for_uri (uri);
   data->as_new = as_new;
 
   return data;
@@ -295,6 +299,6 @@ gimp_dbus_service_open_data_new (GimpDBusService *service,
 static void
 gimp_dbus_service_open_data_free (OpenData *data)
 {
-  g_free (data->uri);
+  g_object_unref (data->file);
   g_slice_free (OpenData, data);
 }

@@ -24,7 +24,7 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
-#include "gimp-utils.h"
+#include "gimp-memsize.h"
 #include "gimpchannel.h"
 #include "gimpmaskundo.h"
 

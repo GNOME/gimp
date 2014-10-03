@@ -34,8 +34,12 @@
 #include "core/gimpparamspecs.h"
 
 #include "gimppdb.h"
+#include "gimppdberror.h"
+#include "gimppdb-utils.h"
 #include "gimpprocedure.h"
 #include "internal-procs.h"
+
+#include "gimp-intl.h"
 
 
 static GimpValueArray *
@@ -133,7 +137,7 @@ image_delete_guide_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpGuide *g = gimp_image_get_guide (image, guide);
+      GimpGuide *g = gimp_pdb_image_get_guide (image, guide, error);
 
       if (g)
         gimp_image_remove_guide (image, g, TRUE);
@@ -168,6 +172,13 @@ image_find_next_guide_invoker (GimpProcedure         *procedure,
 
       if (g)
         next_guide = gimp_guide_get_ID (g);
+
+      if (! success)
+        g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
+                     _("Image '%s' (%d) does not contain guide with ID %d"),
+                     gimp_image_get_display_name (image),
+                     gimp_image_get_ID (image),
+                     guide);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -198,7 +209,7 @@ image_get_guide_orientation_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpGuide *g = gimp_image_get_guide (image, guide);
+      GimpGuide *g = gimp_pdb_image_get_guide (image, guide, error);
 
       if (g)
         orientation = gimp_guide_get_orientation (g);
@@ -234,7 +245,7 @@ image_get_guide_position_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpGuide *g = gimp_image_get_guide (image, guide);
+      GimpGuide *g = gimp_pdb_image_get_guide (image, guide, error);
 
       if (g)
         position = gimp_guide_get_position (g);

@@ -107,10 +107,10 @@ void
 patterns_actions_update (GimpActionGroup *group,
                          gpointer         user_data)
 {
-  GimpContext *context  = action_data_get_context (user_data);
-  GimpPattern *pattern  = NULL;
-  GimpData    *data     = NULL;
-  const gchar *filename = NULL;
+  GimpContext *context = action_data_get_context (user_data);
+  GimpPattern *pattern = NULL;
+  GimpData    *data    = NULL;
+  GFile       *file    = NULL;
 
   if (context)
     {
@@ -125,7 +125,7 @@ patterns_actions_update (GimpActionGroup *group,
         {
           data = GIMP_DATA (pattern);
 
-          filename = gimp_data_get_filename (data);
+          file = gimp_data_get_file (data);
         }
     }
 
@@ -133,9 +133,9 @@ patterns_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
   SET_SENSITIVE ("patterns-edit",          pattern && FALSE);
-  SET_SENSITIVE ("patterns-open-as-image", pattern && filename);
+  SET_SENSITIVE ("patterns-open-as-image", pattern && file);
   SET_SENSITIVE ("patterns-duplicate",     pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("patterns-copy-location", pattern && filename);
+  SET_SENSITIVE ("patterns-copy-location", pattern && file);
   SET_SENSITIVE ("patterns-delete",        pattern && gimp_data_is_deletable (data));
 
 #undef SET_SENSITIVE

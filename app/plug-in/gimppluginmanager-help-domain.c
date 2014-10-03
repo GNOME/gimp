@@ -21,7 +21,7 @@
 
 #include <string.h>
 
-#include <glib-object.h>
+#include <gio/gio.h>
 
 #include "plug-in-types.h"
 
@@ -33,7 +33,7 @@ typedef struct _GimpPlugInHelpDomain GimpPlugInHelpDomain;
 
 struct _GimpPlugInHelpDomain
 {
-  gchar *prog_name;
+  GFile *file;
   gchar *domain_name;
   gchar *domain_uri;
 };
@@ -50,7 +50,7 @@ gimp_plug_in_manager_help_domain_exit (GimpPlugInManager *manager)
     {
       GimpPlugInHelpDomain *domain = list->data;
 
-      g_free (domain->prog_name);
+      g_object_unref (domain->file);
       g_free (domain->domain_name);
       g_free (domain->domain_uri);
       g_slice_free (GimpPlugInHelpDomain, domain);
@@ -62,19 +62,19 @@ gimp_plug_in_manager_help_domain_exit (GimpPlugInManager *manager)
 
 void
 gimp_plug_in_manager_add_help_domain (GimpPlugInManager *manager,
-                                      const gchar       *prog_name,
+                                      GFile             *file,
                                       const gchar       *domain_name,
                                       const gchar       *domain_uri)
 {
   GimpPlugInHelpDomain *domain;
 
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-  g_return_if_fail (prog_name != NULL);
+  g_return_if_fail (G_IS_FILE (file));
   g_return_if_fail (domain_name != NULL);
 
   domain = g_slice_new (GimpPlugInHelpDomain);
 
-  domain->prog_name   = g_strdup (prog_name);
+  domain->file        = g_object_ref (file);
   domain->domain_name = g_strdup (domain_name);
   domain->domain_uri  = g_strdup (domain_uri);
 
@@ -89,26 +89,27 @@ gimp_plug_in_manager_add_help_domain (GimpPlugInManager *manager,
 
 const gchar *
 gimp_plug_in_manager_get_help_domain (GimpPlugInManager  *manager,
-                                      const gchar        *prog_name,
+                                      GFile              *file,
                                       const gchar       **domain_uri)
 {
   GSList *list;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+  g_return_val_if_fail (file == NULL || G_IS_FILE (file), NULL);
 
   if (domain_uri)
     *domain_uri = NULL;
 
   /*  A NULL prog_name is GIMP itself, return the default domain  */
-  if (! prog_name)
+  if (! file)
     return NULL;
 
   for (list = manager->help_domains; list; list = list->next)
     {
       GimpPlugInHelpDomain *domain = list->data;
 
-      if (domain && domain->prog_name &&
-          ! strcmp (domain->prog_name, prog_name))
+      if (domain && domain->file &&
+          g_file_equal (domain->file, file))
         {
           if (domain_uri && domain->domain_uri)
             *domain_uri = domain->domain_uri;

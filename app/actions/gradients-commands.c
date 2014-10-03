@@ -123,19 +123,22 @@ gradients_save_as_pov_ray_response (GtkWidget    *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filename;
-      GError      *error = NULL;
+      GFile  *file;
+      GError *error = NULL;
 
-      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+      file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
 
-      if (! gimp_gradient_save_pov (gradient, filename, &error))
+      if (! gimp_gradient_save_pov (gradient, file, &error))
         {
           gimp_message_literal (g_object_get_data (G_OBJECT (dialog), "gimp"),
                                 G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
                                 error->message);
           g_clear_error (&error);
+          g_object_unref (file);
           return;
         }
+
+      g_object_unref (file);
     }
 
   gtk_widget_destroy (dialog);

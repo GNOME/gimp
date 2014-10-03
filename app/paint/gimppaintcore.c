@@ -429,7 +429,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
 
   if (paint_options->use_applicator)
     {
-      core->applicator = gimp_applicator_new (NULL, core->linear_mode);
+      core->applicator = gimp_applicator_new (NULL, core->linear_mode, FALSE);
 
       if (core->mask_buffer)
         {

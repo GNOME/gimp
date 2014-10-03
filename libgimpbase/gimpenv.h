@@ -54,6 +54,17 @@ const gchar * gimp_locale_directory           (void) G_GNUC_CONST;
 const gchar * gimp_sysconf_directory          (void) G_GNUC_CONST;
 const gchar * gimp_plug_in_directory          (void) G_GNUC_CONST;
 
+GFile       * gimp_directory_file             (const gchar *first_element,
+                                               ...) G_GNUC_MALLOC;
+GFile       * gimp_data_directory_file        (const gchar *first_element,
+                                               ...) G_GNUC_MALLOC;
+GFile       * gimp_locale_directory_file      (const gchar *first_element,
+                                               ...) G_GNUC_MALLOC;
+GFile       * gimp_sysconf_directory_file     (const gchar *first_element,
+                                               ...) G_GNUC_MALLOC;
+GFile       * gimp_plug_in_directory_file     (const gchar *first_element,
+                                               ...) G_GNUC_MALLOC;
+
 #ifndef GIMP_DISABLE_DEPRECATED
 GIMP_DEPRECATED_FOR(g_get_user_special_dir)
 const gchar * gimp_user_directory             (GimpUserDirectory   type) G_GNUC_CONST;

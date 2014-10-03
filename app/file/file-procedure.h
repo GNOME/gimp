@@ -31,12 +31,16 @@ typedef enum
 
 
 GimpPlugInProcedure *file_procedure_find              (GSList               *procs,
-                                                       const gchar          *filename,
+                                                       GFile                *file,
                                                        GError              **error);
 GimpPlugInProcedure *file_procedure_find_by_prefix    (GSList               *procs,
-                                                       const gchar          *uri);
+                                                       GFile                *file);
 GimpPlugInProcedure *file_procedure_find_by_extension (GSList               *procs,
-                                                       const gchar          *uri);
+                                                       GFile                *file);
+
+GimpPlugInProcedure *file_procedure_find_by_mime_type (GSList               *procs,
+                                                       const gchar          *mime_type);
+
 gboolean             file_procedure_in_group          (GimpPlugInProcedure  *file_proc,
                                                        FileProcedureGroup    group);
 

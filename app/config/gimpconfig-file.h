@@ -26,10 +26,11 @@ gboolean   gimp_config_file_copy             (const gchar        *source,
                                               const gchar        *dest,
                                               const gchar        *old_options_regexp,
                                               GRegexEvalCallback  update_callback,
-                                              GError      **error);
-gboolean   gimp_config_file_backup_on_error  (const gchar  *filename,
-                                              const gchar  *name,
-                                              GError      **error);
+                                              GError            **error);
+
+gboolean   gimp_config_file_backup_on_error  (GFile              *file,
+                                              const gchar        *name,
+                                              GError            **error);
 
 
 #endif  /* __GIMP_CONFIG_FILE_H__ */

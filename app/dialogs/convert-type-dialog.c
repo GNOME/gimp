@@ -100,7 +100,7 @@ convert_type_dialog_new (GimpImage    *image,
   GtkWidget     *vbox;
   GtkWidget     *hbox;
   GtkWidget     *label;
-  GtkObject     *adjustment;
+  GtkAdjustment *adjustment;
   GtkWidget     *spinbutton;
   GtkWidget     *frame;
   GtkWidget     *toggle;
@@ -197,8 +197,10 @@ convert_type_dialog_new (GimpImage    *image,
   if (dialog->num_colors == 256 && gimp_image_has_alpha (image))
     dialog->num_colors = 255;
 
-  spinbutton = gimp_spin_button_new (&adjustment, dialog->num_colors,
-                                     2, 256, 1, 8, 0, 1, 0);
+  adjustment = (GtkAdjustment *)
+    gtk_adjustment_new (dialog->num_colors, 2, 256, 1, 8, 0);
+  spinbutton = gtk_spin_button_new (adjustment, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
@@ -303,8 +305,8 @@ convert_dialog_response (GtkWidget     *widget,
       GimpProgress *progress;
       GError       *error = NULL;
 
-      progress = gimp_progress_start (dialog->progress,
-                                      _("Converting to indexed colors"), FALSE);
+      progress = gimp_progress_start (dialog->progress, FALSE,
+                                      _("Converting to indexed colors"));
 
       /*  Convert the image to indexed color  */
       if (! gimp_image_convert_type (dialog->image,

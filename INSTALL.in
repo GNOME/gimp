@@ -29,12 +29,14 @@ header files installed.
   ******************************************************************
 
 
-  1. You need to have installed a recent version of pkg-config available
+  1. You need to have installed a recent version of pkg-config (>= @GIMP_PKGCONFIG_VERSION@) available
      from http://www.freedesktop.org/software/pkgconfig/.
 
   2. You need intltool (at least @INTLTOOL_REQUIRED_VERSION@, but preferably a newer version).
      Intltool can be downloaded from
      http://ftp.gnome.org/pub/gnome/sources/intltool/
+     You are recommended to install gettext version @XGETTEXT_RECOMMENDED_VERSION@ or over. Earlier gettext had
+     issues with script-fu localization, ending up in incomplete GIMP localization.
 
   3. You need to have GEGL version @GEGL_REQUIRED_VERSION@ or newer and babl version
      @BABL_REQUIRED_VERSION@ or newer. You can get them from http://gegl.org/ or clone
@@ -57,63 +59,97 @@ header files installed.
      and fontconfig @FONTCONFIG_REQUIRED_VERSION@ or newer. Older versions are known to have
      bugs that seriously affect the stability of GIMP.
 
+     On Windows platforms in particular, we recommend fontconfig @FONTCONFIG_WIN32_RECOMMENDED_VERSION@
+     or newer. Older versions may end up in broken font handling, due to
+     inadequate font configuration: font aliases not configured,
+     synthetic bold/italic variants unavailable, cache folder in temp
+     directory resulting in slow startups, etc.
+
      We also require HarfBuzz @HARFBUZZ_REQUIRED_VERSION@ or newer, an
      OpenType text shaping tool. As this is a dependency for Pango, you
      will likely have it installed, but you may have to install a
      development package for the headers.
 
-  7. Access of remote files is implemented in the URI plug-in. There
-     are several possible implementations for this. The implementation
-     used is determined when you configure GIMP. By default the
-     GIO/GVfs backend is used. If you don't have GVfs support on your
-     target platform, you should pass the '--without-gvfs' option to
-     configure. The configure script will then try to detect another
-     method for accessing remote files.
-
-  8. The file-compressor plug-in requires zlib, libbzip2, and liblzma to
+  7. The file-compressor plug-in requires zlib, libbzip2, and liblzma to
      be installed. All these libraries are required dependencies.
 
-  9. For metadata access GIMP requires the gexiv2 library. It is hosted 
-     at http://redmine.yorba.org/projects/gexiv2/wiki .
+  8. For metadata access GIMP requires the gexiv2 library. It is hosted
+     at https://wiki.gnome.org/Projects/gexiv2 .
 
- 10. Some other third party libraries or programs are needed for some
-     of the available plug-ins. libpng, libjpeg and lcms are hard
-     dependencies that can not be disabled.
+  9. libpng, libjpeg and lcms are hard dependencies that can not be
+     disabled.
 
- 11. You may want to install other third party libraries or programs
+ 10. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
-     to check that the following libraries are installed: libpoppler,
-     libtiff, webkit, libmng, librsvg, libwmf, libgs (Ghostscript),
-     libaa and libjasper.
+     to check that the following libraries are installed: libjasper,
+     libpoppler-glib, libtiff, webkit, libmng, librsvg, libwmf, libaa
+     and libgs (Ghostscript).
 
- 12. The Python extension requires Python development headers to be
-     present. You will also need PyGTK and the respective development
-     headers.
+     Note that to be able to render CJK (Asian) and Cyrillic characters
+     in pdf-imported files, the data package `poppler-data` needs to be
+     installed as well. It is only possible to automatically check its
+     existence since version @POPPLER_DATA_REQUIRED_VERSION@, but there is no strong requirement
+     in our `configure` script because older versions of poppler-data may
+     still work. Thus if poppler-data was not detected during ./configure,
+     but you are sure it is installed, you are advised to test your build
+     afterwards.
 
- 13. Configure GIMP by running the `configure' script. You may want
+ 11. The Python extension requires Python 2 development headers (@PYTHON2_REQUIRED_VERSION@
+     or newer) to be present. You will also need PyGTK and the
+     respective development headers.
+
+ 12. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
- 14. Build GIMP by running `make'. The use of GNU make is recommended.
+ 13. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
- 15. Install GIMP by running `make install'. In order to avoid clashes
+ 14. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-@GIMP_APP_VERSION@.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-@GIMP_APP_VERSION@.
 
- 16. Summary of required packages and what version you need:
+ 15. Summary of required packages and what version you need:
 
-     gtk+: @GTK_REQUIRED_VERSION@
-     cairo: @CAIRO_REQUIRED_VERSION@
-     glib: @GLIB_REQUIRED_VERSION@
-     pangocairo: @PANGOCAIRO_REQUIRED_VERSION@
-     atk: @ATK_REQUIRED_VERSION@
-     fontconfig: @FONTCONFIG_REQUIRED_VERSION@
+     ATK: @ATK_REQUIRED_VERSION@
      babl: @BABL_REQUIRED_VERSION@
-     gdk_pixbuf: @GDK_PIXBUF_REQUIRED_VERSION@
-     gegl: @GEGL_REQUIRED_VERSION@
+     cairo: @CAIRO_REQUIRED_VERSION@
+     Fontconfig: @FONTCONFIG_REQUIRED_VERSION@
      freetype2: @FREETYPE2_REQUIRED_VERSION@
+     GDK-PixBuf: @GDK_PIXBUF_REQUIRED_VERSION@
+     GEGL: @GEGL_REQUIRED_VERSION@
+     GLib: @GLIB_REQUIRED_VERSION@
+     GTK+: @GTK_REQUIRED_VERSION@
+     HarfBuzz: @HARFBUZZ_REQUIRED_VERSION@
+     libbzip2
+     libjpeg
+     libpng: @LIBPNG_REQUIRED_VERSION@
+     liblzma: @LIBLZMA_REQUIRED_VERSION@
+     Little CMS: @LCMS_REQUIRED_VERSION@
+     pangocairo: @PANGOCAIRO_REQUIRED_VERSION@
+     zlib
+
+ 16. Summary of optional packages:
+
+     Package Name	Version		Feature
+
+     libaa		-		ASCII art
+     gs			-		ghostscript
+     webkit		@WEBKIT_REQUIRED_VERSION@		Help browser & webpage
+     libjasper		-		JPEG 2000
+     libmng		-		MNG
+     openexr		@OPENEXR_REQUIRED_VERSION@		OpenEXR
+     libpoppler-glib	@POPPLER_REQUIRED_VERSION@		PDF import
+     poppler-data	@POPPLER_DATA_REQUIRED_VERSION@		PDF import (optional: rendering of CJK and Cyrillic)
+     cairo-pdf		@CAIRO_PDF_REQUIRED_VERSION@		PDF export
+     python 2		@PYTHON2_REQUIRED_VERSION@		Python plug-ins
+     librsvg		@RSVG_REQUIRED_VERSION@		SVG
+     libtiff		-		TIFF
+     libwmf		@WMF_REQUIRED_VERSION@		WMF
+     libXcursor		-		X11 Mouse Cursor
+     libxpm		-		XPM
+
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries
 lying around on your system, otherwise configure may fail to find the
@@ -209,12 +245,6 @@ These are:
 
   --without-print.  If for some reason you don't want to build the Print
      plug-in based on the GtkPrint API, you can build with --without-print.
-
-  --without-gvfs.  If you don't want to use GIO/GVfs to access remote
-     files, you can pass --without-gvfs to the configure script.
-
-  --without-libcurl.  If you don't want to use libcurl to access remote
-     files, you can pass --without-libcurl to the configure script.
 
   --without-alsa.  If you don't want to compile ALSA support into the
      MIDI input controller module, you can use the --without-alsa option.

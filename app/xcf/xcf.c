@@ -74,7 +74,8 @@ static GimpXcfLoaderFunc * const xcf_loaders[] =
   xcf_load_image,   /* version 4 */
   xcf_load_image,   /* version 5 */
   xcf_load_image,   /* version 6 */
-  xcf_load_image    /* version 7 */
+  xcf_load_image,   /* version 7 */
+  xcf_load_image    /* version 8 */
 };
 
 
@@ -82,6 +83,7 @@ void
 xcf_init (Gimp *gimp)
 {
   GimpPlugInProcedure *proc;
+  GFile               *file;
   GimpProcedure       *procedure;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -96,7 +98,10 @@ xcf_init (Gimp *gimp)
    */
 
   /*  gimp-xcf-save  */
-  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, "gimp-xcf-save");
+  file = g_file_new_for_path ("gimp-xcf-save");
+  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, file);
+  g_object_unref (file);
+
   procedure->proc_type    = GIMP_INTERNAL;
   procedure->marshal_func = xcf_save_invoker;
 
@@ -167,7 +172,10 @@ xcf_init (Gimp *gimp)
   g_object_unref (procedure);
 
   /*  gimp-xcf-load  */
-  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, "gimp-xcf-load");
+  file = g_file_new_for_path ("gimp-xcf-load");
+  procedure = gimp_plug_in_procedure_new (GIMP_PLUGIN, file);
+  g_object_unref (file);
+
   procedure->proc_type    = GIMP_INTERNAL;
   procedure->marshal_func = xcf_load_invoker;
 
@@ -278,15 +286,7 @@ xcf_load_invoker (GimpProcedure         *procedure,
       info.compression = COMPRESS_NONE;
 
       if (progress)
-        {
-          gchar *name = g_filename_display_name (filename);
-          gchar *msg  = g_strdup_printf (_("Opening '%s'"), name);
-
-          gimp_progress_start (progress, msg, FALSE);
-
-          g_free (msg);
-          g_free (name);
-        }
+        gimp_progress_start (progress, FALSE, _("Opening '%s'"), filename);
 
       success = TRUE;
 
@@ -387,26 +387,33 @@ xcf_save_invoker (GimpProcedure         *procedure,
 
   if (info.output)
     {
-      info.gimp        = gimp;
-      info.seekable    = G_SEEKABLE (info.output);
-      info.progress    = progress;
-      info.filename    = filename;
-      info.compression = COMPRESS_RLE;
+      info.gimp         = gimp;
+      info.seekable     = G_SEEKABLE (info.output);
+      info.progress     = progress;
+      info.filename     = filename;
+      info.compression  = COMPRESS_ZLIB;
+      info.file_version = gimp_image_get_xcf_version (image,
+                                                      info.compression ==
+                                                      COMPRESS_ZLIB,
+                                                      NULL, NULL);
 
       if (progress)
+        gimp_progress_start (progress, FALSE, _("Saving '%s'"), filename);
+
+      success = xcf_save_image (&info, image, &my_error);
+
+      if (success)
         {
-          gchar *name = g_filename_display_name (filename);
-          gchar *msg  = g_strdup_printf (_("Saving '%s'"), name);
+          if (progress)
+            gimp_progress_set_text (progress, _("Closing '%s'"), filename);
 
-          gimp_progress_start (progress, msg, FALSE);
-
-          g_free (msg);
-          g_free (name);
+          success = g_output_stream_close (info.output, NULL, &my_error);
         }
 
-      xcf_save_choose_format (&info, image);
-
-      success = xcf_save_image (&info, image, error);
+      if (! success)
+        g_propagate_prefixed_error (error, my_error,
+                                    _("Error writing '%s': "),
+                                    filename);
 
       g_object_unref (info.output);
 

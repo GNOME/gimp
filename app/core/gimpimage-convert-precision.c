@@ -104,7 +104,7 @@ gimp_image_convert_precision (GimpImage     *image,
     }
 
   if (progress)
-    gimp_progress_start (progress, undo_desc, FALSE);
+    gimp_progress_start (progress, FALSE, "%s", undo_desc);
 
   g_object_freeze_notify (G_OBJECT (image));
 

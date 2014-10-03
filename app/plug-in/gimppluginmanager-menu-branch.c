@@ -19,7 +19,7 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gio/gio.h>
 
 #include "plug-in-types.h"
 
@@ -41,7 +41,7 @@ gimp_plug_in_manager_menu_branch_exit (GimpPlugInManager *manager)
     {
       GimpPlugInMenuBranch *branch = list->data;
 
-      g_free (branch->prog_name);
+      g_object_unref (branch->file);
       g_free (branch->menu_path);
       g_free (branch->menu_label);
       g_slice_free (GimpPlugInMenuBranch, branch);
@@ -53,27 +53,27 @@ gimp_plug_in_manager_menu_branch_exit (GimpPlugInManager *manager)
 
 void
 gimp_plug_in_manager_add_menu_branch (GimpPlugInManager *manager,
-                                      const gchar       *prog_name,
+                                      GFile             *file,
                                       const gchar       *menu_path,
                                       const gchar       *menu_label)
 {
   GimpPlugInMenuBranch *branch;
 
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
-  g_return_if_fail (prog_name != NULL);
+  g_return_if_fail (G_IS_FILE (file));
   g_return_if_fail (menu_path != NULL);
   g_return_if_fail (menu_label != NULL);
 
   branch = g_slice_new (GimpPlugInMenuBranch);
 
-  branch->prog_name  = g_strdup (prog_name);
+  branch->file       = g_object_ref (file);
   branch->menu_path  = plug_in_menu_path_map (menu_path, menu_label);
   branch->menu_label = g_strdup (menu_label);
 
   manager->menu_branches = g_slist_append (manager->menu_branches, branch);
 
   g_signal_emit_by_name (manager, "menu-branch-added",
-                         branch->prog_name,
+                         branch->file,
                          branch->menu_path,
                          branch->menu_label);
 

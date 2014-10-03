@@ -791,6 +791,11 @@ save_image (const gchar *filename,
     }
 
 
+  /* init the progress meter */
+  gimp_progress_init_printf (_("Saving '%s'"),
+                             gimp_filename_to_utf8 (filename));
+
+
   /* open the destination file for writing */
   outfile = g_fopen (filename, "wb");
   if (!outfile)
@@ -800,11 +805,6 @@ save_image (const gchar *filename,
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
-
-
-  /* init the progress meter */
-  gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
 
 
   /* write the GIFheader */
