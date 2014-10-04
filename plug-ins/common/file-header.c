@@ -39,7 +39,7 @@ static void       run           (const gchar      *name,
                                  gint             *nreturn_vals,
                                  GimpParam       **return_vals);
 
-static gboolean   output_printf (GOutputStream    *output,
+static gboolean   print         (GOutputStream    *output,
                                  GError          **error,
                                  const gchar      *format,
                                  ...) G_GNUC_PRINTF (3, 0);
@@ -167,10 +167,10 @@ run (const gchar      *name,
 }
 
 static gboolean
-output_printf (GOutputStream  *output,
-               GError        **error,
-               const gchar    *format,
-               ...)
+print (GOutputStream  *output,
+       GError        **error,
+       const gchar    *format,
+       ...)
 {
   va_list  args;
   gboolean success;
@@ -229,16 +229,16 @@ save_image (GFile   *file,
 
   drawable_type = gimp_drawable_type (drawable_ID);
 
-  if (! output_printf (output, error,
-                       "/*  GIMP header image file format (%s): %s  */\n\n",
-                       GIMP_RGB_IMAGE == drawable_type ? "RGB" : "INDEXED",
-                       gimp_file_get_utf8_name (file)) ||
-      ! output_printf (output, error,
-                       "static unsigned int width = %d;\n", width) ||
-      ! output_printf (output, error,
-                       "static unsigned int height = %d;\n\n", height) ||
-      ! output_printf (output, error,
-                       "/*  Call this macro repeatedly.  After each use, the pixel data can be extracted  */\n\n"))
+  if (! print (output, error,
+               "/*  GIMP header image file format (%s): %s  */\n\n",
+               GIMP_RGB_IMAGE == drawable_type ? "RGB" : "INDEXED",
+               gimp_file_get_utf8_name (file)) ||
+      ! print (output, error,
+               "static unsigned int width = %d;\n", width) ||
+      ! print (output, error,
+               "static unsigned int height = %d;\n\n", height) ||
+      ! print (output, error,
+               "/*  Call this macro repeatedly.  After each use, the pixel data can be extracted  */\n\n"))
     {
       goto fail;
     }
@@ -246,14 +246,14 @@ save_image (GFile   *file,
   switch (drawable_type)
     {
     case GIMP_RGB_IMAGE:
-      if (! output_printf (output, error,
-                           "#define HEADER_PIXEL(data,pixel) {\\\n"
-                           "pixel[0] = (((data[0] - 33) << 2) | ((data[1] - 33) >> 4)); \\\n"
-                           "pixel[1] = ((((data[1] - 33) & 0xF) << 4) | ((data[2] - 33) >> 2)); \\\n"
-                           "pixel[2] = ((((data[2] - 33) & 0x3) << 6) | ((data[3] - 33))); \\\n"
-                           "data += 4; \\\n}\n") ||
-          ! output_printf (output, error,
-                           "static char *header_data =\n\t\""))
+      if (! print (output, error,
+                   "#define HEADER_PIXEL(data,pixel) {\\\n"
+                   "pixel[0] = (((data[0] - 33) << 2) | ((data[1] - 33) >> 4)); \\\n"
+                   "pixel[1] = ((((data[1] - 33) & 0xF) << 4) | ((data[2] - 33) >> 2)); \\\n"
+                   "pixel[2] = ((((data[2] - 33) & 0x3) << 6) | ((data[3] - 33))); \\\n"
+                   "data += 4; \\\n}\n") ||
+          ! print (output, error,
+                   "static char *header_data =\n\t\""))
         {
           goto fail;
         }
@@ -282,17 +282,17 @@ save_image (GFile   *file,
                 {
                   if (buf[b] == '"')
                     {
-                      if (! output_printf (output, error, "%s", quote))
+                      if (! print (output, error, "%s", quote))
                         goto fail;
                     }
                   else if (buf[b] == '\\')
                     {
-                      if (! output_printf (output, error, "%s", backslash))
+                      if (! print (output, error, "%s", backslash))
                         goto fail;
                     }
                   else
                     {
-                      if (! output_printf (output, error, "%c", buf[b]))
+                      if (! print (output, error, "%c", buf[b]))
                         goto fail;
                     }
                 }
@@ -300,7 +300,7 @@ save_image (GFile   *file,
               c++;
               if (c >= 16)
                 {
-                  if (! output_printf (output, error, "%s", newline))
+                  if (! print (output, error, "%s", newline))
                     goto fail;
 
                   c = 0;
@@ -308,17 +308,17 @@ save_image (GFile   *file,
             }
         }
 
-      if (! output_printf (output, error, "\";\n"))
+      if (! print (output, error, "\";\n"))
         goto fail;
       break;
 
     case GIMP_INDEXED_IMAGE:
-      if (! output_printf (output, error,
-                           "#define HEADER_PIXEL(data,pixel) {\\\n"
-                           "pixel[0] = header_data_cmap[(unsigned char)data[0]][0]; \\\n"
-                           "pixel[1] = header_data_cmap[(unsigned char)data[0]][1]; \\\n"
-                           "pixel[2] = header_data_cmap[(unsigned char)data[0]][2]; \\\n"
-                           "data ++; }\n\n"))
+      if (! print (output, error,
+                   "#define HEADER_PIXEL(data,pixel) {\\\n"
+                   "pixel[0] = header_data_cmap[(unsigned char)data[0]][0]; \\\n"
+                   "pixel[1] = header_data_cmap[(unsigned char)data[0]][1]; \\\n"
+                   "pixel[2] = header_data_cmap[(unsigned char)data[0]][2]; \\\n"
+                   "data ++; }\n\n"))
         {
           goto fail;
         }
@@ -326,22 +326,22 @@ save_image (GFile   *file,
       /* save colormap */
       cmap = gimp_image_get_colormap (image_ID, &colors);
 
-      if (! output_printf (output, error,
-                           "static char header_data_cmap[256][3] = {") ||
-          ! output_printf (output, error,
-                           "\n\t{%3d,%3d,%3d}",
-                           (gint) cmap[0], (gint) cmap[1], (gint) cmap[2]))
+      if (! print (output, error,
+                   "static char header_data_cmap[256][3] = {") ||
+          ! print (output, error,
+                   "\n\t{%3d,%3d,%3d}",
+                   (gint) cmap[0], (gint) cmap[1], (gint) cmap[2]))
         {
           goto fail;
         }
 
       for (c = 1; c < colors; c++)
         {
-          if (! output_printf (output, error,
-                               ",\n\t{%3d,%3d,%3d}",
-                               (gint) cmap[3 * c],
-                               (gint) cmap[3 * c + 1],
-                               (gint) cmap[3 * c + 2]))
+          if (! print (output, error,
+                       ",\n\t{%3d,%3d,%3d}",
+                       (gint) cmap[3 * c],
+                       (gint) cmap[3 * c + 1],
+                       (gint) cmap[3 * c + 2]))
             {
               goto fail;
             }
@@ -350,18 +350,18 @@ save_image (GFile   *file,
       /* fill the rest */
       for ( ; c < 256; c++)
         {
-          if (! output_printf (output, error, ",\n\t{255,255,255}"))
+          if (! print (output, error, ",\n\t{255,255,255}"))
             goto fail;
         }
 
       /* close bracket */
-      if (! output_printf (output, error, "\n\t};\n"))
+      if (! print (output, error, "\n\t};\n"))
         goto fail;
 
       g_free (cmap);
 
       /* save image */
-      if (! output_printf (output, error, "static char header_data[] = {\n\t"))
+      if (! print (output, error, "static char header_data[] = {\n\t"))
         goto fail;
 
       data = g_new (guchar, width * 1);
@@ -377,13 +377,13 @@ save_image (GFile   *file,
             {
               d = data + x * 1;
 
-              if (! output_printf (output, error, "%d,", (gint) d[0]))
+              if (! print (output, error, "%d,", (gint) d[0]))
                 goto fail;
 
               c++;
               if (c >= 16)
                 {
-                  if (! output_printf (output, error, "\n\t"))
+                  if (! print (output, error, "\n\t"))
                     goto fail;
 
                   c = 0;
@@ -392,19 +392,19 @@ save_image (GFile   *file,
 
           if (y != height - 1)
             {
-              if (! output_printf (output, error, "%d,\n\t", (gint) d[1]))
+              if (! print (output, error, "%d,\n\t", (gint) d[1]))
                 goto fail;
             }
           else
             {
-              if (! output_printf (output, error, "%d\n\t", (gint) d[1]))
+              if (! print (output, error, "%d\n\t", (gint) d[1]))
                 goto fail;
             }
 
           c = 0; /* reset line counter */
         }
 
-      if (! output_printf (output, error, "};\n"))
+      if (! print (output, error, "};\n"))
         goto fail;
       break;
 
