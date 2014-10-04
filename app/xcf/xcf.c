@@ -382,8 +382,9 @@ xcf_save_invoker (GimpProcedure         *procedure,
 #endif
   filename = g_file_get_parse_name (file);
 
-  info.output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL,
-                                                 &my_error));
+  info.output = G_OUTPUT_STREAM (g_file_replace (file,
+                                                 NULL, FALSE, G_FILE_CREATE_NONE,
+                                                 NULL, &my_error));
 
   if (info.output)
     {
@@ -419,12 +420,6 @@ xcf_save_invoker (GimpProcedure         *procedure,
 
       if (progress)
         gimp_progress_end (progress);
-    }
-  else
-    {
-      g_propagate_prefixed_error (error, my_error,
-                                  _("Could not open '%s' for writing: "),
-                                  filename);
     }
 
   g_free (filename);
