@@ -264,7 +264,8 @@ file_save_cmd_callback (GtkAction *action,
                                                    gimp, image, file,
                                                    save_proc,
                                                    GIMP_RUN_WITH_LAST_VALS,
-                                                   TRUE, FALSE, FALSE, TRUE);
+                                                   TRUE, FALSE, FALSE,
+                                                   FALSE, TRUE);
               break;
             }
 
@@ -338,7 +339,7 @@ file_save_cmd_callback (GtkAction *action,
                                                  GIMP_RUN_WITH_LAST_VALS,
                                                  FALSE,
                                                  overwrite, ! overwrite,
-                                                 TRUE);
+                                                 FALSE, TRUE);
           }
       }
       break;

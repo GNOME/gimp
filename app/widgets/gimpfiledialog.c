@@ -98,6 +98,7 @@ static void     gimp_file_dialog_add_filters            (GimpFileDialog   *dialo
                                                                            action,
                                                          GSList           *file_procs,
                                                          GSList           *file_procs_all_images);
+static void     gimp_file_dialog_add_compat_toggle      (GimpFileDialog   *dialog);
 static void     gimp_file_dialog_process_procedure      (GimpPlugInProcedure
                                                                           *file_proc,
                                                          GtkFileFilter   **filter_out,
@@ -114,6 +115,8 @@ static void     gimp_file_dialog_selection_changed      (GtkFileChooser   *choos
 static void     gimp_file_dialog_update_preview         (GtkFileChooser   *chooser,
                                                          GimpFileDialog   *dialog);
 
+static void     gimp_file_dialog_compat_toggled         (GtkToggleButton  *button,
+                                                         GimpFileDialog   *dialog);
 static void     gimp_file_dialog_proc_changed           (GimpFileProcView *view,
                                                          GimpFileDialog   *dialog);
 
@@ -398,6 +401,13 @@ gimp_file_dialog_new (Gimp                  *gimp,
                                 file_procs,
                                 file_procs_all_images);
 
+  dialog->extra_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog),
+                                     dialog->extra_vbox);
+  gtk_widget_show (dialog->extra_vbox);
+
+  gimp_file_dialog_add_compat_toggle (dialog);
+
   gimp_file_dialog_add_proc_selection (dialog, gimp, file_procs, automatic,
                                        automatic_help_id);
 
@@ -496,6 +506,11 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
 
   if (! export)
     {
+      gint         rle_version;
+      gint         zlib_version;
+      const gchar *version_string;
+      gchar       *tooltip;
+
       /*
        * Priority of default paths for Save:
        *
@@ -564,6 +579,32 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
         g_object_ref (ext_file);
       else
         ext_file = g_file_new_for_uri ("file:///we/only/care/about/extension.xcf");
+
+      gimp_image_get_xcf_version (image, FALSE, &rle_version,  &version_string);
+      gimp_image_get_xcf_version (image, TRUE,  &zlib_version, NULL);
+
+      if (rle_version == zlib_version)
+        {
+          gtk_widget_set_sensitive (dialog->compat_toggle, FALSE);
+
+          tooltip = g_strdup_printf (_("The image uses features from %s and "
+                                       "cannot be saved for older GIMP "
+                                       "versions."),
+                                     version_string);
+        }
+      else
+        {
+          gtk_widget_set_sensitive (dialog->compat_toggle, TRUE);
+
+          tooltip = g_strdup_printf (_("Disables compression to make the XCF "
+                                       "file readable by %s and later."),
+                                     version_string);
+        }
+
+      gimp_help_set_help_data (dialog->compat_toggle, tooltip, NULL);
+      g_free (tooltip);
+
+      gtk_widget_show (dialog->compat_toggle);
     }
   else /* if (export) */
     {
@@ -642,7 +683,12 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
         g_object_ref (ext_file);
       else
         ext_file = g_file_new_for_uri ("file:///we/only/care/about/extension.png");
+
+      gtk_widget_hide (dialog->compat_toggle);
     }
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->compat_toggle),
+                                FALSE);
 
   if (ext_file)
     {
@@ -847,6 +893,17 @@ gimp_file_dialog_add_filters (GimpFileDialog        *dialog,
     gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), all);
 }
 
+static void
+gimp_file_dialog_add_compat_toggle (GimpFileDialog *dialog)
+{
+  dialog->compat_toggle = gtk_check_button_new_with_label (_("Save this XCF file with maximum compatibility"));
+  gtk_box_pack_start (GTK_BOX (dialog->extra_vbox), dialog->compat_toggle,
+                      FALSE, FALSE, 0);
+
+  g_signal_connect (dialog->compat_toggle, "toggled",
+                    G_CALLBACK (gimp_file_dialog_compat_toggled),
+                    dialog);
+}
 
 /**
  * gimp_file_dialog_process_procedure:
@@ -939,8 +996,8 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog,
   GtkWidget *scrolled_window;
 
   dialog->proc_expander = gtk_expander_new_with_mnemonic (NULL);
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog),
-                                     dialog->proc_expander);
+  gtk_box_pack_start (GTK_BOX (dialog->extra_vbox), dialog->proc_expander,
+                      TRUE, TRUE, 0);
   gtk_widget_show (dialog->proc_expander);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -979,6 +1036,13 @@ gimp_file_dialog_update_preview (GtkFileChooser *chooser,
 {
   gimp_thumb_box_take_file (GIMP_THUMB_BOX (dialog->thumb_box),
                             gtk_file_chooser_get_preview_file (chooser));
+}
+
+static void
+gimp_file_dialog_compat_toggled (GtkToggleButton *button,
+                                 GimpFileDialog  *dialog)
+{
+  dialog->compat = gtk_toggle_button_get_active (button);
 }
 
 static void

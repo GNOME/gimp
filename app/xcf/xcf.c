@@ -376,11 +376,18 @@ xcf_save_invoker (GimpProcedure         *procedure,
 
   if (info.output)
     {
+      gboolean compat_mode = gimp_image_get_xcf_compat_mode (image);
+
       info.gimp         = gimp;
       info.seekable     = G_SEEKABLE (info.output);
       info.progress     = progress;
       info.filename     = filename;
-      info.compression  = COMPRESS_ZLIB;
+
+      if (compat_mode)
+        info.compression = COMPRESS_RLE;
+      else
+        info.compression = COMPRESS_ZLIB;
+
       info.file_version = gimp_image_get_xcf_version (image,
                                                       info.compression ==
                                                       COMPRESS_ZLIB,

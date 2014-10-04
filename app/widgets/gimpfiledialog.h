@@ -44,10 +44,13 @@ struct _GimpFileDialog
   gboolean              open_as_layers;
   gboolean              save_a_copy;
   gboolean              export;
+  gboolean              compat;
   gboolean              close_after_saving;
   GimpObject           *display_to_close;
 
   GtkWidget            *thumb_box;
+  GtkWidget            *extra_vbox;
+  GtkWidget            *compat_toggle;
   GtkWidget            *proc_expander;
   GtkWidget            *proc_view;
   GtkWidget            *progress;
