@@ -64,6 +64,7 @@
 #define PLUG_IN_BINARY "file-html-table"
 #define PLUG_IN_ROLE   "gimp-file-html-table"
 
+
 /* Typedefs */
 
 typedef struct
@@ -81,22 +82,6 @@ typedef struct
   gint     cellspacing;
 } GTMValues;
 
-/* Variables */
-
-static GTMValues gtmvals =
-{
-  "Made with GIMP Table Magic",  /* caption text */
-  "&nbsp;",  /* cellcontent text */
-  "",        /* cell width text */
-  "",        /* cell height text */
-  TRUE,      /* fulldoc */
-  FALSE,     /* caption */
-  2,         /* border */
-  FALSE,     /* spantags */
-  FALSE,     /* tdcomp */
-  4,         /* cellpadding */
-  0          /* cellspacing */
-};
 
 /* Declare some local functions */
 
@@ -114,15 +99,26 @@ static gboolean save_dialog              (gint32            image_ID);
 
 static gboolean color_comp               (guchar           *buffer,
                                           guchar           *buf2);
-static void     gtm_caption_callback     (GtkWidget        *widget,
-                                          gpointer          data);
-static void     gtm_cellcontent_callback (GtkWidget        *widget,
-                                          gpointer          data);
-static void     gtm_clwidth_callback     (GtkWidget        *widget,
-                                          gpointer          data);
-static void     gtm_clheight_callback    (GtkWidget        *widget,
-                                          gpointer          data);
+static void     entry_changed_callback   (GtkEntry         *entry,
+                                          gchar            *string);
 
+
+/* Variables */
+
+static GTMValues gtmvals =
+{
+  "Made with GIMP Table Magic",  /* caption text */
+  "&nbsp;",  /* cellcontent text */
+  "",        /* cell width text */
+  "",        /* cell height text */
+  TRUE,      /* fulldoc */
+  FALSE,     /* caption */
+  2,         /* border */
+  FALSE,     /* spantags */
+  FALSE,     /* tdcomp */
+  4,         /* cellpadding */
+  0          /* cellspacing */
+};
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -187,9 +183,7 @@ run (const gchar      *name,
 
   if (save_dialog (param[1].data.d_int32))
     {
-      GeglBuffer *buffer;
-
-      buffer = gimp_drawable_get_buffer (param[2].data.d_int32);
+      GeglBuffer *buffer = gimp_drawable_get_buffer (param[2].data.d_int32);
 
       if (save_image (param[3].data.d_string, buffer, &error))
         {
@@ -223,7 +217,9 @@ save_image (const gchar  *filename,
             GError      **error)
 {
   const Babl *format = babl_format ("R'G'B'A u8");
-  gint        row, col, cols, rows, x, y;
+  gint        row, col;
+  gint        cols, rows;
+  gint        x, y;
   gint        colcount, colspan, rowspan;
   gint       *palloc;
   guchar     *buf, *buf2;
@@ -532,8 +528,8 @@ save_dialog (gint32 image_ID)
   gimp_help_set_help_data (entry, _("The text for the table caption."), NULL);
 
   g_signal_connect (entry, "changed",
-                    G_CALLBACK (gtm_caption_callback),
-                    NULL);
+                    G_CALLBACK (entry_changed_callback),
+                    gtmvals.captiontxt);
 
   g_object_bind_property (toggle, "active",
                           entry,  "sensitive",
@@ -550,8 +546,8 @@ save_dialog (gint32 image_ID)
   gimp_help_set_help_data (entry, _("The text to go into each cell."), NULL);
 
   g_signal_connect (entry, "changed",
-                    G_CALLBACK (gtm_cellcontent_callback),
-                    NULL);
+                    G_CALLBACK (entry_changed_callback),
+                    gtmvals.cellcontent);
 
   gtk_widget_show (table);
   gtk_widget_show (frame);
@@ -594,8 +590,8 @@ save_dialog (gint32 image_ID)
                            NULL);
 
   g_signal_connect (entry, "changed",
-                    G_CALLBACK (gtm_clwidth_callback),
-                    NULL);
+                    G_CALLBACK (entry_changed_callback),
+                    gtmvals.clwidth);
 
   entry = gtk_entry_new ();
   gtk_widget_set_size_request (entry, 60, -1);
@@ -610,8 +606,8 @@ save_dialog (gint32 image_ID)
                            NULL);
 
   g_signal_connect (entry, "changed",
-                    G_CALLBACK (gtm_clheight_callback),
-                    NULL);
+                    G_CALLBACK (entry_changed_callback),
+                    gtmvals.clheight);
 
   adj = (GtkAdjustment *) gtk_adjustment_new (gtmvals.cellpadding,
                                               0, 1000, 1, 10, 0);
@@ -667,29 +663,8 @@ color_comp (guchar *buf,
 /*  Save interface functions  */
 
 static void
-gtm_caption_callback (GtkWidget *widget,
-                      gpointer   data)
+entry_changed_callback (GtkEntry *entry,
+                        gchar    *string)
 {
-  strncpy (gtmvals.captiontxt, gtk_entry_get_text (GTK_ENTRY (widget)), 255);
-}
-
-static void
-gtm_cellcontent_callback (GtkWidget *widget,
-                          gpointer   data)
-{
-  strncpy (gtmvals.cellcontent, gtk_entry_get_text (GTK_ENTRY (widget)), 255);
-}
-
-static void
-gtm_clwidth_callback (GtkWidget *widget,
-                      gpointer   data)
-{
-  strncpy (gtmvals.clwidth, gtk_entry_get_text (GTK_ENTRY (widget)), 255);
-}
-
-static void
-gtm_clheight_callback (GtkWidget *widget,
-                       gpointer   data)
-{
-  strncpy (gtmvals.clheight, gtk_entry_get_text (GTK_ENTRY (widget)), 255);
+  strncpy (string, gtk_entry_get_text (entry), 255);
 }
