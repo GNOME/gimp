@@ -92,11 +92,15 @@ static void     run                      (const gchar      *name,
                                           gint             *nreturn_vals,
                                           GimpParam       **return_vals);
 
-static gboolean save_image               (const gchar      *filename,
+static gboolean save_image               (GFile            *file,
                                           GeglBuffer       *buffer,
                                           GError          **error);
 static gboolean save_dialog              (gint32            image_ID);
 
+static gboolean print                    (GOutputStream    *output,
+                                          GError          **error,
+                                          const gchar      *format,
+                                          ...) G_GNUC_PRINTF (3, 0);
 static gboolean color_comp               (guchar           *buffer,
                                           guchar           *buf2);
 static void     entry_changed_callback   (GtkEntry         *entry,
@@ -156,6 +160,7 @@ query (void)
                           save_args, NULL);
 
   gimp_register_file_handler_mime (SAVE_PROC, "text/html");
+  gimp_register_file_handler_uri (SAVE_PROC);
   gimp_register_save_handler (SAVE_PROC, "html,htm", "");
 }
 
@@ -185,7 +190,8 @@ run (const gchar      *name,
     {
       GeglBuffer *buffer = gimp_drawable_get_buffer (param[2].data.d_int32);
 
-      if (save_image (param[3].data.d_string, buffer, &error))
+      if (save_image (g_file_new_for_uri (param[3].data.d_string),
+                      buffer, &error))
         {
           gimp_set_data (SAVE_PROC, &gtmvals, sizeof (GTMValues));
         }
@@ -212,33 +218,41 @@ run (const gchar      *name,
 }
 
 static gboolean
-save_image (const gchar  *filename,
-            GeglBuffer   *buffer,
-            GError      **error)
+save_image (GFile       *file,
+            GeglBuffer  *buffer,
+            GError     **error)
 {
-  const Babl *format = babl_format ("R'G'B'A u8");
-  gint        row, col;
-  gint        cols, rows;
-  gint        x, y;
-  gint        colcount, colspan, rowspan;
-  gint       *palloc;
-  guchar     *buf, *buf2;
-  gchar      *width, *height;
-  FILE       *fp;
+  const Babl    *format = babl_format ("R'G'B'A u8");
+  GOutputStream *output;
+  gint           row, col;
+  gint           cols, rows;
+  gint           x, y;
+  gint           colcount, colspan, rowspan;
+  gint          *palloc;
+  guchar        *buf, *buf2;
+  gchar         *width  = NULL;
+  gchar         *height = NULL;
 
   cols = gegl_buffer_get_width  (buffer);
   rows = gegl_buffer_get_height (buffer);
 
   gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
-  fp = g_fopen (filename, "w");
-
-  if (! fp)
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, error));
+  if (output)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      GOutputStream *buffered;
+
+      buffered = g_buffered_output_stream_new (output);
+      g_object_unref (output);
+
+      output = buffered;
+    }
+  else
+    {
       return FALSE;
     }
 
@@ -246,23 +260,30 @@ save_image (const gchar  *filename,
 
   if (gtmvals.fulldoc)
     {
-      fprintf (fp, "<HTML>\n<HEAD><TITLE>%s</TITLE></HEAD>\n<BODY>\n",
-               filename);
-      fprintf (fp, "<H1>%s</H1>\n",
-               filename);
+      if (! print (output, error,
+                   "<HTML>\n<HEAD><TITLE>%s</TITLE></HEAD>\n<BODY>\n",
+                   gimp_file_get_utf8_name (file)) ||
+          ! print (output, error, "<H1>%s</H1>\n",
+                   gimp_file_get_utf8_name (file)))
+        {
+          goto fail;
+        }
     }
 
-  fprintf (fp, "<TABLE BORDER=%d CELLPADDING=%d CELLSPACING=%d>\n",
-           gtmvals.border, gtmvals.cellpadding, gtmvals.cellspacing);
+  if (! print (output, error,
+               "<TABLE BORDER=%d CELLPADDING=%d CELLSPACING=%d>\n",
+               gtmvals.border, gtmvals.cellpadding, gtmvals.cellspacing))
+    goto fail;
 
   if (gtmvals.caption)
-    fprintf (fp, "<CAPTION>%s</CAPTION>\n",
-             gtmvals.captiontxt);
+    {
+      if (! print (output, error, "<CAPTION>%s</CAPTION>\n",
+                   gtmvals.captiontxt))
+        goto fail;
+    }
 
   buf  = g_newa (guchar, babl_format_get_bytes_per_pixel (format));
   buf2 = g_newa (guchar, babl_format_get_bytes_per_pixel (format));
-
-  width = height = NULL;
 
   if (strcmp (gtmvals.clwidth, "") != 0)
     {
@@ -291,7 +312,8 @@ save_image (const gchar  *filename,
 
   for (y = 0; y < rows; y++)
     {
-      fprintf (fp,"   <TR>\n");
+      if (! print (output, error, "   <TR>\n"))
+        goto fail;
 
       for (x = 0; x < cols; x++)
         {
@@ -353,41 +375,76 @@ save_image (const gchar  *filename,
             }
 
           if (palloc[cols * y + x] == 1)
-            fprintf (fp, "      <TD%s%sBGCOLOR=#%02x%02x%02x>",
-                     width, height, buf[0], buf[1], buf[2]);
+            {
+              if (! print (output, error,
+                           "      <TD%s%sBGCOLOR=#%02x%02x%02x>",
+                           width, height, buf[0], buf[1], buf[2]))
+                goto fail;
+            }
 
           if (palloc[cols * y + x] == 2)
-            fprintf (fp,"      <TD ROWSPAN=\"%d\" COLSPAN=\"%d\"%s%sBGCOLOR=#%02x%02x%02x>",
-                     rowspan, colspan, width, height,
-                     buf[0], buf[1], buf[2]);
+            {
+              if (! print (output, error,
+                           "      <TD ROWSPAN=\"%d\" COLSPAN=\"%d\"%s%sBGCOLOR=#%02x%02x%02x>",
+                           rowspan, colspan, width, height,
+                           buf[0], buf[1], buf[2]))
+                goto fail;
+            }
 
           if (palloc[cols * y + x] != 0)
             {
               if (gtmvals.tdcomp)
-                fprintf (fp, "%s</TD>\n", gtmvals.cellcontent);
+                {
+                  if (! print (output, error,
+                               "%s</TD>\n", gtmvals.cellcontent))
+                    goto fail;
+                }
               else
-                fprintf (fp, "\n      %s\n      </TD>\n", gtmvals.cellcontent);
+                {
+                  if (! print (output, error,
+                               "\n      %s\n      </TD>\n", gtmvals.cellcontent))
+                    goto fail;
+                }
             }
         }
 
-      fprintf (fp,"   </TR>\n");
+      if (! print (output, error, "   </TR>\n"))
+        goto fail;
 
       gimp_progress_update ((double) y / (double) rows);
     }
 
-  gimp_progress_update (1.0);
-
   if (gtmvals.fulldoc)
-    fprintf (fp, "</TABLE></BODY></HTML>\n");
+    {
+      if (! print (output, error, "</TABLE></BODY></HTML>\n"))
+        goto fail;
+    }
   else
-    fprintf (fp, "</TABLE>\n");
+    {
+      if (! print (output, error, "</TABLE>\n"))
+        goto fail;
+    }
 
-  fclose (fp);
+  if (! g_output_stream_close (output, NULL, error))
+    goto fail;
+
+  g_object_unref (output);
   g_free (width);
   g_free (height);
   g_free (palloc);
 
+  gimp_progress_update (1.0);
+
   return TRUE;
+
+ fail:
+
+  g_object_unref (output);
+  g_free (width);
+  g_free (height);
+  g_free (palloc);
+
+  return FALSE;
 }
 
 static gint
@@ -649,6 +706,23 @@ save_dialog (gint32 image_ID)
   gtk_widget_destroy (dialog);
 
   return run;
+}
+
+static gboolean
+print (GOutputStream  *output,
+       GError        **error,
+       const gchar    *format,
+       ...)
+{
+  va_list  args;
+  gboolean success;
+
+  va_start (args, format);
+  success = g_output_stream_vprintf (output, NULL, NULL,
+                                     error, format, args);
+  va_end (args);
+
+  return success;
 }
 
 static gboolean
