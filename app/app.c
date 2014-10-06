@@ -164,6 +164,7 @@ app_run (const gchar         *full_prog_name,
   GMainLoop          *loop;
   GMainLoop          *run_loop;
   GFile              *default_folder = NULL;
+  GFile              *gimpdir;
 
   if (filenames && filenames[0] && ! filenames[1] &&
       g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
@@ -213,8 +214,9 @@ app_run (const gchar         *full_prog_name,
 
   /*  Check if the user's gimp_directory exists
    */
-  if (g_file_query_file_type (gimp_directory_file (NULL),
-                              G_FILE_QUERY_INFO_NONE, NULL) !=
+  gimpdir = gimp_directory_file (NULL);
+
+  if (g_file_query_file_type (gimpdir, G_FILE_QUERY_INFO_NONE, NULL) !=
       G_FILE_TYPE_DIRECTORY)
     {
       GimpUserInstall *install = gimp_user_install_new (be_verbose);
@@ -230,6 +232,8 @@ app_run (const gchar         *full_prog_name,
 
       gimp_user_install_free (install);
     }
+
+  g_object_unref (gimpdir);
 
   gimp_load_config (gimp, alternate_system_gimprc, alternate_gimprc);
 
