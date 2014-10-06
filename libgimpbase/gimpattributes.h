@@ -65,6 +65,11 @@ GimpAttributes *                          gimp_attributes_deserialize           
 gboolean                                  gimp_attributes_has_tag_type                               (GimpAttributes      *attributes,
                                                                                                       GimpAttributeTagType tag_type);
 void                                      gimp_attributes_print                                      (GimpAttributes      *attributes);
+GList *                                   gimp_attributes_iter_init                                  (GimpAttributes      *attributes,
+                                                                                                      GList              **iter);
+gboolean                                  gimp_attributes_iter_next                                  (GimpAttributes      *attributes,
+                                                                                                      GimpAttribute      **attribute,
+                                                                                                      GList              **prev);
 
 
 

@@ -8,6 +8,7 @@ EXPORTS
 	gimp_attribute_get_attribute_tag
 	gimp_attribute_get_interpreted_string
 	gimp_attribute_get_name
+	gimp_attribute_get_sortable_name
 	gimp_attribute_get_string
 	gimp_attribute_get_structure_type
 	gimp_attribute_get_tag_type
@@ -30,6 +31,8 @@ EXPORTS
 	gimp_attributes_get_resolution
 	gimp_attributes_get_table
 	gimp_attributes_has_tag_type
+	gimp_attributes_iter_init
+	gimp_attributes_iter_next
 	gimp_attributes_new
 	gimp_attributes_new_attribute
 	gimp_attributes_print

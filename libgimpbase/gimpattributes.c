@@ -64,6 +64,7 @@ struct _GimpAttributesClass {
 
 struct _GimpAttributesPrivate {
   GHashTable *attribute_table;
+  GHashTable *sorted_to_attribute;
   GList      *sorted_key_list;
 };
 
@@ -128,6 +129,8 @@ static const gchar*            gimp_attributes_name_to_value               (cons
 
 static gboolean                has_xmp_structure                           (GSList              *xmp_list,
                                                                             const gchar         *entry);
+static GimpAttribute *         gimp_attributes_get_attribute_sorted        (GimpAttributes      *attributes,
+                                                                            const gchar         *sorted_name);
 
 /**
  * gimp_attributes_new:
@@ -190,6 +193,7 @@ gimp_attributes_instance_init (GimpAttributes * attributes)
 {
   attributes->priv = GIMP_ATTRIBUTES_GET_PRIVATE (attributes);
   attributes->priv->attribute_table = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
+  attributes->priv->sorted_to_attribute = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
   attributes->priv->sorted_key_list = NULL;
 }
 
@@ -206,6 +210,7 @@ gimp_attributes_finalize (GObject* obj)
   attributes = G_TYPE_CHECK_INSTANCE_CAST (obj, GIMP_TYPE_ATTRIBUTES, GimpAttributes);
 
   g_hash_table_unref (attributes->priv->attribute_table);
+  g_hash_table_unref (attributes->priv->sorted_to_attribute);
   g_list_free_full (attributes->priv->sorted_key_list, (GDestroyNotify) g_free);
 
   G_OBJECT_CLASS (gimp_attributes_parent_class)->finalize (obj);
@@ -349,7 +354,7 @@ gimp_attributes_add_attribute (GimpAttributes      *attributes,
                                GimpAttribute       *attribute)
 {
   const gchar *name;
-  const gchar *lowchar;
+  gchar       *lowchar;
 
   g_return_if_fail (GIMP_IS_ATTRIBUTES (attributes));
   g_return_if_fail (GIMP_IS_ATTRIBUTE (attribute));
@@ -363,9 +368,25 @@ gimp_attributes_add_attribute (GimpAttributes      *attributes,
       /* FIXME: really simply add? That means, that an older value is overwritten */
 
       if (g_hash_table_insert (attributes->priv->attribute_table, (gpointer) g_strdup (lowchar), (gpointer) attribute))
-        attributes->priv->sorted_key_list = g_list_insert_sorted (attributes->priv->sorted_key_list,
-                                                                  (gpointer) g_strdup (lowchar),
-                                                                  (GCompareFunc) g_strcmp0);
+        {
+          gchar *sortable_tag;
+
+          sortable_tag = g_ascii_strdown (gimp_attribute_get_sortable_name (attribute), -1);
+
+          if (g_hash_table_insert (attributes->priv->sorted_to_attribute, (gpointer) g_strdup (sortable_tag), (gpointer) g_strdup (lowchar)))
+            {
+              attributes->priv->sorted_key_list = g_list_insert_sorted (attributes->priv->sorted_key_list,
+                                                                        (gpointer) g_strdup (sortable_tag),
+                                                                        (GCompareFunc) g_strcmp0);
+            }
+          else
+            {
+              g_hash_table_remove (attributes->priv->attribute_table, (gpointer) g_strdup (lowchar));
+            }
+
+          g_free (sortable_tag);
+        }
+      g_free (lowchar);
     }
 }
 
@@ -403,6 +424,49 @@ gimp_attributes_get_attribute (GimpAttributes      *attributes,
 }
 
 /**
+ * gimp_attributes_get_attribute_sorted:
+ *
+ * @attributes: a #GimpAttributes
+ * @name : a #gchar array
+ *
+ * gets the #GimpAttribute object with @sorted_name as
+ * sortable_name
+ * see GimpAttribute::get_sortable_name
+ *
+ * Return value: the #GimpAttribute object if found, NULL otherwise.
+ *
+ * Since : 2.10
+ */
+static GimpAttribute *
+gimp_attributes_get_attribute_sorted (GimpAttributes      *attributes,
+                                      const gchar         *sorted_name)
+{
+  gchar          *lowchar;
+  GimpAttribute  *attribute_data = NULL;
+  gpointer       *data;
+  gchar          *name_of_tag;
+
+  g_return_val_if_fail (GIMP_IS_ATTRIBUTES (attributes), NULL);
+  g_return_val_if_fail (sorted_name != NULL, NULL);
+
+  lowchar = g_ascii_strdown (sorted_name, -1);
+
+  data = g_hash_table_lookup (attributes->priv->sorted_to_attribute, (gpointer) lowchar);
+
+  name_of_tag = (gchar *) data;
+
+  data = g_hash_table_lookup (attributes->priv->attribute_table, (gpointer) name_of_tag);
+  if (data)
+    {
+      attribute_data = (GimpAttribute *) data;
+    }
+
+  g_free (lowchar);
+
+  return attribute_data;
+}
+
+/**
  * gimp_attributes_remove_attribute:
  *
  * @attributes: a #GimpAttributes
@@ -418,15 +482,49 @@ gboolean
 gimp_attributes_remove_attribute (GimpAttributes      *attributes,
                                   const gchar         *name)
 {
-  gchar *lowchar;
-  gboolean success;
+  gchar            *lowchar;
+  gboolean          success = FALSE;
+  GHashTableIter    iter_remove;
+  gpointer          key, value;
+  gchar            *tag_to_remove;
+  gchar            *name_of_tag;
 
   lowchar = g_ascii_strdown (name, -1);
 
-  success = g_hash_table_remove (attributes->priv->attribute_table, (gpointer) lowchar);
+  if (g_hash_table_remove (attributes->priv->attribute_table, (gpointer) lowchar))
+    {
+      gchar *tag_list_remove = NULL;
 
-  attributes->priv->sorted_key_list = g_list_remove (attributes->priv->sorted_key_list,
-                                                     (gpointer) lowchar);
+      g_hash_table_iter_init (&iter_remove, attributes->priv->sorted_to_attribute);
+      while (g_hash_table_iter_next (&iter_remove, &key, &value))
+        {
+          tag_to_remove  = (gchar *) key;
+          name_of_tag    = (gchar *) value;
+
+          if (! g_strcmp0 (lowchar, name_of_tag))
+            break;
+        }
+
+      tag_list_remove = g_strdup (tag_to_remove); /* because removing from hashtable frees tag_to_remove */
+
+      if (g_hash_table_remove (attributes->priv->sorted_to_attribute, (gpointer) tag_to_remove))
+        {
+          attributes->priv->sorted_key_list = g_list_remove (attributes->priv->sorted_key_list,
+                                                             (gconstpointer) tag_list_remove);
+          success = TRUE;
+        }
+      else
+        {
+          if (name_of_tag)
+            g_free (name_of_tag);
+          if (tag_to_remove)
+            g_free (tag_to_remove);
+          success = FALSE;
+        }
+
+      g_free (tag_list_remove);
+    }
+
   g_free (lowchar);
 
   return success;
@@ -528,7 +626,7 @@ gimp_attributes_serialize (GimpAttributes *attributes)
       GimpAttribute  *attribute = NULL;
       gchar          *p_key = (gchar *) key_list->data;
 
-      attribute      = gimp_attributes_get_attribute (attributes, p_key);
+      attribute      = gimp_attributes_get_attribute_sorted (attributes, p_key);
 
       xml = gimp_attribute_get_xml (attribute);
 
@@ -772,7 +870,7 @@ gimp_attributes_print (GimpAttributes *attributes)
       GimpAttribute  *attribute;
       gchar          *p_key = (gchar *) key_list->data;
 
-      attribute      = gimp_attributes_get_attribute (attributes, p_key);
+      attribute      = gimp_attributes_get_attribute_sorted (attributes, p_key);
 
       if (! attribute)
         continue;
@@ -846,7 +944,7 @@ gimp_attributes_to_metadata (GimpAttributes *attributes,
       write_tag      = FALSE;
       namespace      = FALSE;
 
-      attribute      = gimp_attributes_get_attribute (attributes, p_key);
+      attribute      = gimp_attributes_get_attribute_sorted (attributes, p_key);
 
       if (! attribute)
         continue;
@@ -1105,7 +1203,7 @@ gimp_attributes_to_xmp_packet (GimpAttributes *attributes,
       write_tag     = FALSE;
       namespace = FALSE;
 
-      attribute = gimp_attributes_get_attribute (attributes, p_key);
+      attribute = gimp_attributes_get_attribute_sorted (attributes, p_key);
 
       if (! attribute)
         continue;
@@ -1345,6 +1443,41 @@ gimp_attributes_has_tag_type (GimpAttributes       *attributes,
 
     }
   return FALSE;
+}
+
+GList *
+gimp_attributes_iter_init (GimpAttributes *attributes, GList **iter)
+{
+  g_return_val_if_fail (GIMP_IS_ATTRIBUTES (attributes), NULL);
+
+  *iter = attributes->priv->sorted_key_list;
+
+  return attributes->priv->sorted_key_list;
+}
+
+gboolean
+gimp_attributes_iter_next (GimpAttributes *attributes, GimpAttribute **attribute, GList **prev)
+{
+  gchar         *sorted;
+  GList         *tmp;
+
+  g_return_val_if_fail (GIMP_IS_ATTRIBUTES (attributes), FALSE);
+
+  *attribute = NULL;
+
+  tmp = g_list_next (*prev);
+  if (tmp)
+    {
+      *prev = tmp;
+      sorted = (gchar *) tmp->data;
+
+      *attribute = gimp_attributes_get_attribute_sorted (attributes, sorted);
+    }
+  if (*attribute)
+    return TRUE;
+  else
+    return FALSE;
+
 }
 
 /**

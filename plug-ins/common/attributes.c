@@ -75,6 +75,7 @@ enum
   C_IFD = 0,
   C_TAG,
   C_VALUE,
+  C_SORT,
   NUM_COL
 };
 
@@ -459,9 +460,8 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
   GtkTreeView    *xmp_treeview;
   GtkTreeView    *iptc_treeview;
   GtkWidget      *attributes_notebook;
-  GHashTableIter  hash_iter;
-  GHashTable     *table;
-  gpointer        p_key, p_value;
+  GList          *iter_list   = NULL;
+  GimpAttribute  *attribute   = NULL;
 
   exif_store = GTK_TREE_STORE (gtk_builder_get_object (builder,
                                                        "exif-treestore"));
@@ -480,29 +480,26 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
   attributes_notebook = GTK_WIDGET (gtk_builder_get_object (builder,
                                                        "attributes-notebook"));
 
-  table = gimp_attributes_get_table (attributes);
+  gimp_attributes_iter_init (attributes, &iter_list);
 
-  g_hash_table_iter_init (&hash_iter, table);
-
-  while (g_hash_table_iter_next (&hash_iter, &p_key, &p_value))
+  while (gimp_attributes_iter_next (attributes, &attribute, &iter_list))
     {
       const gchar    *name;
       const gchar    *type;
       const gchar    *ifd;
       const gchar    *tag;
       const gchar    *value;
+      const gchar    *tag_sorted;
       gchar          *value_utf;
-      GimpAttribute  *attribute;
       GtkTreeIter    *parent = NULL;
       GtkTreeIter    *iter = g_slice_new (GtkTreeIter);
 
-      attribute = (GimpAttribute *) p_value;
-
-      name      = gimp_attribute_get_name (attribute);
-      type      = gimp_attribute_get_attribute_type (attribute);
-      ifd       = gimp_attribute_get_attribute_ifd (attribute);
-      tag       = gimp_attribute_get_attribute_tag (attribute);
-      value     = gimp_attribute_get_interpreted_string (attribute);
+      name       = gimp_attribute_get_name (attribute);
+      type       = gimp_attribute_get_attribute_type (attribute);
+      ifd        = gimp_attribute_get_attribute_ifd (attribute);
+      tag        = gimp_attribute_get_attribute_tag (attribute);
+      tag_sorted = gimp_attribute_get_sortable_name (attribute);
+      value      = gimp_attribute_get_interpreted_string (attribute);
 
       value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
 
@@ -521,6 +518,7 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
                                     C_IFD, ifd,
                                     C_TAG, "",
                                     C_VALUE, "",
+                                    C_SORT, "",
                                     -1);
                 parent = iter;
                 gtk_tree_store_append (exif_store, &child, parent);
@@ -528,6 +526,7 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
                                     C_IFD, "",
                                     C_TAG, tag,
                                     C_VALUE, value_utf,
+                                    C_SORT, tag_sorted,
                                     -1);
                 attributes_add_parent (type, ifd, parent);
               }
@@ -538,6 +537,7 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
                                     C_IFD, "",
                                     C_TAG, tag,
                                     C_VALUE, value_utf,
+                                    C_SORT, tag_sorted,
                                     -1);
               }
           }
@@ -552,6 +552,7 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
                                     C_IFD, ifd,
                                     C_TAG, "",
                                     C_VALUE, "",
+                                    C_SORT, "",
                                     -1);
                 parent = iter;
                 gtk_tree_store_append (xmp_store, &child, parent);
@@ -559,6 +560,7 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
                                     C_IFD, "",
                                     C_TAG, tag,
                                     C_VALUE, value_utf,
+                                    C_SORT, tag_sorted,
                                     -1);
                 attributes_add_parent (type, ifd, parent);
               }
@@ -569,6 +571,7 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
                                     C_IFD, "",
                                     C_TAG, tag,
                                     C_VALUE, value_utf,
+                                    C_SORT, tag_sorted,
                                     -1);
               }
           }
@@ -583,6 +586,7 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
                                     C_IFD, ifd,
                                     C_TAG, "",
                                     C_VALUE, "",
+                                    C_SORT, "",
                                     -1);
                 parent = iter;
                 gtk_tree_store_append (iptc_store, &child, parent);
@@ -590,6 +594,7 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
                                     C_IFD, "",
                                     C_TAG, tag,
                                     C_VALUE, value_utf,
+                                    C_SORT, tag_sorted,
                                     -1);
                 attributes_add_parent (type, ifd, parent);
               }
@@ -600,6 +605,7 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
                                     C_IFD, "",
                                     C_TAG, tag,
                                     C_VALUE, value_utf,
+                                    C_SORT, tag_sorted,
                                     -1);
               }
           }
@@ -623,14 +629,14 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
     }
   gtk_tree_view_expand_all (exif_treeview);
   gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(exif_store),
-                                       C_TAG, GTK_SORT_ASCENDING);
+                                       C_SORT, GTK_SORT_ASCENDING);
 
   gtk_tree_view_expand_all (xmp_treeview);
   gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(xmp_store),
-                                       C_TAG, GTK_SORT_ASCENDING);
+                                       C_SORT, GTK_SORT_ASCENDING);
   gtk_tree_view_expand_all (iptc_treeview);
   gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(iptc_store),
-                                       C_TAG, GTK_SORT_ASCENDING);
+                                       C_SORT, GTK_SORT_ASCENDING);
 }
 
 static GtkTreeIter *

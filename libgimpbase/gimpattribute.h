@@ -75,6 +75,7 @@ const gchar*                gimp_attribute_get_attribute_ifd              (GimpA
 const gchar*                gimp_attribute_get_attribute_tag              (GimpAttribute              *attribute);
 const gboolean              gimp_attribute_is_new_namespace               (GimpAttribute              *attribute);
 const gchar*                gimp_attribute_get_name                       (GimpAttribute              *attribute);
+const gchar*                gimp_attribute_get_sortable_name              (GimpAttribute              *attribute);
 GValue                      gimp_attribute_get_value                      (GimpAttribute              *attribute);
 gchar*                      gimp_attribute_get_string                     (GimpAttribute              *attribute);
 GimpAttributeTagType        gimp_attribute_get_tag_type                   (GimpAttribute              *attribute);

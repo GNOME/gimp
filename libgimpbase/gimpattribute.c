@@ -73,6 +73,7 @@ struct _GimpAttributeClass {
 
 struct _GimpAttributePrivate {
   gchar                      *name;
+  gchar                      *sorted_name;
 
   gchar                      *tag_value;
   gchar                      *interpreted_value;
@@ -90,7 +91,6 @@ struct _GimpAttributePrivate {
   gboolean                    has_structure;
   GimpAttributeStructureType  structure_type;
   GSList                     *attribute_structure;
-
 };
 
 enum  {
@@ -165,6 +165,10 @@ static gboolean                get_tag_date                          (gchar     
 static gchar *                 gimp_attribute_escape_value           (gchar               *name,
                                                                       gchar               *value,
                                                                       gboolean            *encoded);
+static gchar *                 gimp_attribute_get_structure_number   (gchar               *cptag,
+                                                                      gint                 start,
+                                                                      gint                *struct_number);
+
 static gchar*                  string_replace_str                    (const gchar         *original,
                                                                       const gchar         *old_pattern,
                                                                       const gchar         *replacement);
@@ -229,6 +233,31 @@ gimp_attribute_get_name (GimpAttribute* attribute)
   g_return_val_if_fail (attribute != NULL, NULL);
   private = GIMP_ATTRIBUTE_GET_PRIVATE (attribute);
   return (const gchar *) private->name;
+}
+
+/**
+ * gimp_attribute_get_sortable_name:
+ *
+ * @attribute:    a @GimpAttribute
+ *
+ * Return value: name of the #GimpAttribute object for sorting
+ * e.g. from tag:
+ *  "xmp.xmpMM.History[2]..."
+ * it returns:
+ *  "xmp.xmpMM.History[000002]..."
+ *
+ * Since: 2.10
+ */
+const gchar*
+gimp_attribute_get_sortable_name (GimpAttribute* attribute)
+{
+  GimpAttributePrivate *private;
+  g_return_val_if_fail (attribute != NULL, NULL);
+  private = GIMP_ATTRIBUTE_GET_PRIVATE (attribute);
+  if (private->sorted_name)
+    return (const gchar *) private->sorted_name;
+  else
+    return (const gchar *) private->name;
 }
 
 /**
@@ -1066,29 +1095,39 @@ gimp_attribute_set_name (GimpAttribute* attribute, const gchar* value)
   else if (!g_strcmp0 (lowchar, "xmp"))
     {
       gint     j;
-      gint     p1 = 0;
-      gint     p2 = 0;
-      gboolean is_known = FALSE;
+      gint     p1                 = 0;
+      gint     p2                 = 0;
+      gboolean is_known           = FALSE;
+      gchar   *structure_tag_name = NULL;
+
+      structure_tag_name = g_strdup (private->name);
+
       private->tag_type = TAG_XMP;
 
       while (p2 != -1)
         {
-
-          p2 = string_index_of (private->name, "[", p1);
+          p2 = string_index_of (structure_tag_name, "[", p1);
 
           if (p2 > -1)
             {
               gchar *struct_string = NULL;
+              gint   struct_number;
 
               private->has_structure = TRUE;
-              private->structure_type = STRUCTURE_TYPE_BAG;
+              private->structure_type = STRUCTURE_TYPE_BAG; /* there's no way to get the real type from gexiv2 */
 
-              struct_string = string_substring (private->name, 0, p2);
+              struct_string = string_substring (structure_tag_name, 0, p2);
               private->attribute_structure = g_slist_prepend (private->attribute_structure, struct_string);
+              structure_tag_name = gimp_attribute_get_structure_number (structure_tag_name, p2, &struct_number);
 
               p1 = p2 + 1;
             }
         }
+
+      if (g_strcmp0 (private->name, structure_tag_name))
+        private->sorted_name = structure_tag_name;
+      else
+        private->sorted_name = NULL;
 
       for (j = 0; j < G_N_ELEMENTS (xmp_namespaces); j++)
         {
@@ -1341,6 +1380,7 @@ gimp_attribute_instance_init (GimpAttribute * attribute)
   private = GIMP_ATTRIBUTE_GET_PRIVATE (attribute);
 
   private->name                    = NULL;
+  private->sorted_name             = NULL;
   private->tag_value               = NULL;
   private->interpreted_value       = NULL;
   private->exif_type               = NULL;
@@ -1374,6 +1414,9 @@ gimp_attribute_finalize (GObject* obj)
 
   if(private->name)
     _g_free0 (private->name);
+
+  if(private->sorted_name)
+    _g_free0 (private->sorted_name);
 
   if(private->tag_value)
     _g_free0 (private->tag_value);
@@ -1423,6 +1466,51 @@ gimp_attribute_set_property (GObject * object,
                              const GValue * value,
                              GParamSpec * pspec)
 {
+}
+
+static gchar *
+gimp_attribute_get_structure_number (gchar *cptag, gint start, gint *number)
+{
+  gint p1;
+  gchar *tag;
+  gchar *new_tag;
+  gchar *oldnr;
+  gchar *newnr;
+
+  start++;
+
+  tag = g_strdup (cptag);
+
+  p1 = string_index_of (tag, "]", start);
+
+  if (p1 > -1)
+    {
+      gchar *number_string = NULL;
+      gint   len;
+
+      len = p1-start;
+
+      number_string = string_substring (tag, start, len);
+
+      *number = atoi (number_string);
+
+      oldnr = g_strdup_printf ("[%d]", *number);
+      newnr = g_strdup_printf ("[%06d]", *number);
+      new_tag = string_replace_str (tag, oldnr, newnr);
+
+      g_free (oldnr);
+      g_free (newnr);
+      g_free (tag);
+      g_free (number_string);
+
+      return new_tag;
+    }
+  else
+    {
+      *number = -1;
+      return NULL;
+    }
+
 }
 
 /**
@@ -1481,7 +1569,8 @@ gimp_attribute_get_type (void)
  *
  * Since: 2.10
  */
-static gboolean get_tag_time (gchar *input, TagTime *tm)
+static gboolean
+get_tag_time (gchar *input, TagTime *tm)
 {
   long     val;
   GString *string = NULL;
@@ -1586,7 +1675,8 @@ static gboolean get_tag_time (gchar *input, TagTime *tm)
  *
  * Since: 2.10
  */
-static gboolean get_tag_date (gchar *input, TagDate *dt)
+static gboolean
+get_tag_date (gchar *input, TagDate *dt)
 {
   long     val;
   GString *string = NULL;
@@ -1855,4 +1945,3 @@ string_substring (gchar* string, glong offset, glong len)
   result = g_strndup (((gchar*) string) + offset, (gsize) len);
   return result;
 }
-
