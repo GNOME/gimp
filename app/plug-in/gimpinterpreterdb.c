@@ -327,6 +327,8 @@ gimp_interpreter_db_add_binfmt_misc (GimpInterpreterDB *db,
 
   tokens = g_strsplit (buffer + 1, del, -1);
 
+  g_free (buffer);
+
   name    = tokens[0];
   type    = tokens[1];
   program = tokens[5];
