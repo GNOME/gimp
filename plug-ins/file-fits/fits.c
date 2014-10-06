@@ -596,7 +596,7 @@ load_fits (const gchar *filename,
       replacetransform = 1.0 / 255.0;
       break;
     case -64:
-      iprecision = GIMP_PRECISION_FLOAT_LINEAR;
+      iprecision = GIMP_PRECISION_DOUBLE_LINEAR;
       type = babl_type ("double");
       datamax = 1.0;
       replacetransform = 1.0 / 255.0;
@@ -649,7 +649,8 @@ load_fits (const gchar *filename,
                                 NULL);
     }
 
-  image_ID = create_new_image (filename, picnum, width, height, itype, dtype, iprecision,
+  image_ID = create_new_image (filename, picnum, width, height,
+                               itype, dtype, iprecision,
                                &layer_ID, &buffer);
 
   tile_height = gimp_tile_height ();
@@ -870,6 +871,7 @@ create_fits_header (FitsFile *ofp,
       break;
     case -64:
       hdulist->datamax = 1.0;
+      break;
     default:
       return NULL;
     }
@@ -933,14 +935,18 @@ save_fits (FitsFile *ofp,
     {
       bitpix = 32;
     }
-  else if (type == babl_type ("float"))
-    {
-      bitpix = -32;
-    }
   else if (type == babl_type ("half"))
     {
       bitpix = -32;
       type = babl_type ("float");
+    }
+  else if (type == babl_type ("float"))
+    {
+      bitpix = -32;
+    }
+  else if (type == babl_type ("double"))
+    {
+      bitpix = -64;
     }
   else
     {
@@ -1066,6 +1072,20 @@ save_fits (FitsFile *ofp,
               case -32:
                 for (j = 0; j < width; j++)
                   {
+                    putc (*(src + 3), ofp->fp);
+                    putc (*(src + 2), ofp->fp);
+                    putc (*(src + 1), ofp->fp);
+                    putc (*(src + 0), ofp->fp);
+                    src += bpp;
+                  }
+                break;
+              case -64:
+                for (j = 0; j < width; j++)
+                  {
+                    putc (*(src + 7), ofp->fp);
+                    putc (*(src + 6), ofp->fp);
+                    putc (*(src + 5), ofp->fp);
+                    putc (*(src + 4), ofp->fp);
                     putc (*(src + 3), ofp->fp);
                     putc (*(src + 2), ofp->fp);
                     putc (*(src + 1), ofp->fp);
