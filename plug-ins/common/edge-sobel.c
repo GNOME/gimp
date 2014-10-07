@@ -173,9 +173,9 @@ run (const gchar      *name,
         }
       else
         {
-          bvals.horizontal = (param[4].data.d_int32) ? TRUE : FALSE;
-          bvals.vertical   = (param[5].data.d_int32) ? TRUE : FALSE;
-          bvals.keep_sign  = (param[6].data.d_int32) ? TRUE : FALSE;
+          bvals.horizontal = (param[3].data.d_int32) ? TRUE : FALSE;
+          bvals.vertical   = (param[4].data.d_int32) ? TRUE : FALSE;
+          bvals.keep_sign  = (param[5].data.d_int32) ? TRUE : FALSE;
         }
       break;
 
