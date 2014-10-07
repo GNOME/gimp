@@ -2148,7 +2148,7 @@ gimp_image_format_display_uri (GimpImage *image,
 
   if (file)
     {
-      display_file = file;
+      display_file = g_object_ref (file);
       uri_format   = "%s";
     }
   else
@@ -2185,12 +2185,14 @@ gimp_image_format_display_uri (GimpImage *image,
     }
 
   if (! display_file)
-    display_file = gimp_image_get_untitled_file (image);
+    display_file = g_object_ref (gimp_image_get_untitled_file (image));
 
   if (basename)
     display_uri = g_path_get_basename (gimp_file_get_utf8_name (display_file));
   else
     display_uri = g_strdup (gimp_file_get_utf8_name (display_file));
+
+  g_object_unref (display_file);
 
   format_string = g_strconcat (uri_format, export_status, NULL);
 
