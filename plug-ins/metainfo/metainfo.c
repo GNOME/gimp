@@ -139,6 +139,7 @@ if (! strcmp (name, EDITOR_PROC))
             {
               g_message (_("General attributes failure."));
             }
+          g_object_unref (attributes);
         }
       else
         status = GIMP_PDB_CALLING_ERROR;
