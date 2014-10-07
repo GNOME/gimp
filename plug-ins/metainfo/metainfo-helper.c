@@ -260,9 +260,9 @@ get_widget_from_label (GtkBuilder *builder, const gchar *label)
 }
 
 void
-set_save_attributes_button (GtkButton *button)
+set_save_attributes_button (GtkWidget *button)
 {
-  save_attributes_button = GTK_WIDGET (button);
+  save_attributes_button = button;
 }
 
 void

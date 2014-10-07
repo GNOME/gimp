@@ -28,54 +28,54 @@
 
 G_BEGIN_DECLS
 
-typedef enum
-{
-  WIDGET_TYPE_ENTRY,
-  WIDGET_TYPE_COMBOBOX
-} WidgetType;
-
-typedef enum
-{
-  LIST_TYPE_NONE,
-  LIST_TYPE_SEQ,
-  LIST_TYPE_BAG,
-  LIST_TYPE_LANGALT
-} ListType;
-
-typedef struct _ComboBoxData      ComboBoxData;
-
-struct _ComboBoxData
-{
-  const gchar  *val_in_combo;                          /* translateable - value shown in the combobox */
-  const gchar  *val_in_tag;                            /* value saved as tag value */
-};
-
-
-typedef struct _MetadataEntry     MetadataEntry;
-
-struct _MetadataEntry
-{
-        gchar      *label;                             /* translateable - label of the widget */
-  const gchar      *ui_label;                          /* name of the label widget in GtkBuilder ui file */
-  const gchar      *ui_entry;                          /* name of the entry widget in GtkBuilder ui file */
-  const gchar      *xmp_tag;                           /* xmp tag, saved in GimpAttribute.name */
-  WidgetType        widget_type;                       /* type of entry widget in GtkBuilder ui : GtkEntry or GtkComboBox */
-        gint        number_of_comboarray;              /*number of entry in ComboBoxData - array. Only valid for combobox entries */
-};
-
-typedef struct _StructureElement StructureElement;
-
-struct _StructureElement
-{
-  gint                        number_of_element;       /* simply the number, corresponding to STRUCTURES_ON_PAGE */
-  const gchar                *identifier;              /* translateble - identifier for combobox entries */
-  const gchar                *struct_tag;              /* structure tag without array number */
-  GimpAttributeStructureType  struct_type;               /* type of structure, gexiv2 cannot get the right list type from tag*/
-  const gchar                *struct_combo_widget;     /* name of the combobox widget for this structure */
-  const gchar                *struct_liststore_widget; /* name of the liststore of the combobox for this structure */
-  const gchar                *add_widget;              /* name of the add structure button for this structure */
-  const gchar                *remove_widget;           /* name of the remove structure button for this structure */
-};
+//typedef enum
+//{
+//  WIDGET_TYPE_ENTRY,
+//  WIDGET_TYPE_COMBOBOX
+//} WidgetType;
+//
+//typedef enum
+//{
+//  LIST_TYPE_NONE,
+//  LIST_TYPE_SEQ,
+//  LIST_TYPE_BAG,
+//  LIST_TYPE_LANGALT
+//} ListType;
+//
+//typedef struct _ComboBoxData      ComboBoxData;
+//
+//struct _ComboBoxData
+//{
+//  const gchar  *val_in_combo;                          /* translateable - value shown in the combobox */
+//  const gchar  *val_in_tag;                            /* value saved as tag value */
+//};
+//
+//
+//typedef struct _MetadataEntry     MetadataEntry;
+//
+//struct _MetadataEntry
+//{
+//        gchar      *label;                             /* translateable - label of the widget */
+//  const gchar      *ui_label;                          /* name of the label widget in GtkBuilder ui file */
+//  const gchar      *ui_entry;                          /* name of the entry widget in GtkBuilder ui file */
+//  const gchar      *xmp_tag;                           /* xmp tag, saved in GimpAttribute.name */
+//  WidgetType        widget_type;                       /* type of entry widget in GtkBuilder ui : GtkEntry or GtkComboBox */
+//        gint        number_of_comboarray;              /*number of entry in ComboBoxData - array. Only valid for combobox entries */
+//};
+//
+//typedef struct _StructureElement StructureElement;
+//
+//struct _StructureElement
+//{
+//  gint                        number_of_element;       /* simply the number, corresponding to STRUCTURES_ON_PAGE */
+//  const gchar                *identifier;              /* translateble - identifier for combobox entries */
+//  const gchar                *struct_tag;              /* structure tag without array number */
+//  GimpAttributeStructureType  struct_type;               /* type of structure, gexiv2 cannot get the right list type from tag*/
+//  const gchar                *struct_combo_widget;     /* name of the combobox widget for this structure */
+//  const gchar                *struct_liststore_widget; /* name of the liststore of the combobox for this structure */
+//  const gchar                *add_widget;              /* name of the add structure button for this structure */
+//  const gchar                *remove_widget;           /* name of the remove structure button for this structure */
+//};
 
 
 gchar*                  string_replace_str                        (const gchar         *original,
@@ -91,7 +91,7 @@ gchar*                  string_substring                          (const gchar  
                                                                    glong                len);
 GObject*                get_widget_from_label                     (GtkBuilder          *builder,
                                                                    const gchar         *label);
-void                    set_save_attributes_button                (GtkButton           *button);
+void                    set_save_attributes_button                (GtkWidget           *button);
 void                    set_save_attributes_button_sensitive      (gboolean             sensitive);
 
 

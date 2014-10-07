@@ -24,9 +24,9 @@
 
 G_BEGIN_DECLS
 
-void                          page_artwork_read_from_attributes       (GimpAttributes        *attributes,
-                                                                       GtkBuilder            *builder);
-void                          page_artwork_save_to_attributes         (GimpAttributes        *attributes);
+void                          page_artwork_start                      (GtkBuilder      *builder,
+                                                                       GimpAttributes  *attributes);
+void                          page_artwork_get_attributes             (GimpAttributes **attributes);
 
 G_END_DECLS
 

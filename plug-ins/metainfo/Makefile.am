@@ -30,6 +30,8 @@ metainfo_SOURCES = \
 	interface.c		\
 	metainfo-helper.c		\
 	metainfo-helper.h		\
+	datapage.c		\
+	datapage.h		\
 	page-description.c		\
 	page-description.h	\
 	page-artwork.c		\

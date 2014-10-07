@@ -46,8 +46,14 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
+#include "metainfo-helper.h"
 #include "interface.h"
 #include "metainfo.h"
+
+#include "page-description.h"
+#include "page-artwork.h"
+#include "page-administration.h"
+#include "page-rights.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -57,9 +63,9 @@ static GtkWidget  *save_button;
 /* show a transient message dialog */
 void
 metainfo_message_dialog (GtkMessageType  type,
-                         GtkWindow      *parent,
-                         const gchar    *title,
-                         const gchar    *message)
+                               GtkWindow      *parent,
+                               const gchar    *title,
+                               const gchar    *message)
 {
   GtkWidget *dlg;
 
@@ -83,10 +89,10 @@ metainfo_dialog_response (GtkWidget *widget,
   switch (response_id)
     {
     case METAINFO_RESPONSE_SAVE:
-      page_description_save_to_attributes (attributes);
-      page_artwork_save_to_attributes (attributes);
-      page_administration_save_to_attributes (attributes);
-      page_rights_save_to_attributes (attributes);
+      page_description_get_attributes (&attributes);
+      page_artwork_get_attributes (&attributes);
+      page_administration_get_attributes (&attributes);
+      page_rights_get_attributes (&attributes);
       save_attributes_to_image = TRUE;
       break;
     case GTK_RESPONSE_OK:
@@ -105,7 +111,7 @@ metainfo_get_save_attributes (void)
 
 gboolean
 metainfo_dialog (gint32          image_id,
-                 GimpAttributes *attributes)
+                       GimpAttributes *attributes)
 {
   GtkBuilder *builder;
   GtkWidget  *dialog;
@@ -219,14 +225,14 @@ metainfo_dialog (gint32          image_id,
         }
     }
 
-  page_description_read_from_attributes    (attributes,
-                                            builder);
-  page_artwork_read_from_attributes        (attributes,
-                                            builder);
-  page_administration_read_from_attributes (attributes,
-                                            builder);
-  page_rights_read_from_attributes         (attributes,
-                                            builder);
+  page_description_start    (builder,
+                             attributes);
+  page_artwork_start    (builder,
+                             attributes);
+  page_administration_start    (builder,
+                             attributes);
+  page_rights_start    (builder,
+                             attributes);
 
   gtk_widget_show (GTK_WIDGET (dialog));
 
