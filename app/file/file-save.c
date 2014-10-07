@@ -113,6 +113,7 @@ file_save (Gimp                *gimp,
         {
           g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                _("Not a regular file"));
+          g_object_unref (info);
           goto out;
         }
 
@@ -121,8 +122,11 @@ file_save (Gimp                *gimp,
         {
           g_set_error_literal (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                                _("Permission denied"));
+          g_object_unref (info);
           goto out;
         }
+
+      g_object_unref (info);
     }
 
   if (! g_file_is_native (file) &&
