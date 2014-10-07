@@ -1440,6 +1440,7 @@ gimp_attribute_finalize (GObject* obj)
     g_slist_free_full (private->attribute_structure, g_free);
 
   G_OBJECT_CLASS (gimp_attribute_parent_class)->finalize (obj);
+  obj = NULL;
 }
 
 /**

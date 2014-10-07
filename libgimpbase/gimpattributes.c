@@ -453,12 +453,15 @@ gimp_attributes_get_attribute_sorted (GimpAttributes      *attributes,
 
   data = g_hash_table_lookup (attributes->priv->sorted_to_attribute, (gpointer) lowchar);
 
-  name_of_tag = (gchar *) data;
-
-  data = g_hash_table_lookup (attributes->priv->attribute_table, (gpointer) name_of_tag);
   if (data)
     {
-      attribute_data = (GimpAttribute *) data;
+      name_of_tag = (gchar *) data;
+
+      data = g_hash_table_lookup (attributes->priv->attribute_table, (gpointer) name_of_tag);
+      if (data)
+        {
+          attribute_data = (GimpAttribute *) data;
+        }
     }
 
   g_free (lowchar);
@@ -509,8 +512,21 @@ gimp_attributes_remove_attribute (GimpAttributes      *attributes,
 
       if (g_hash_table_remove (attributes->priv->sorted_to_attribute, (gpointer) tag_to_remove))
         {
-          attributes->priv->sorted_key_list = g_list_remove (attributes->priv->sorted_key_list,
-                                                             (gconstpointer) tag_list_remove);
+          GList *list = NULL;
+
+          for (list = attributes->priv->sorted_key_list; list; list = list->next)
+            {
+              gchar *s_tag = (gchar *) list->data;
+
+              if (! g_strcmp0 (s_tag, tag_list_remove))
+                {
+                  attributes->priv->sorted_key_list = g_list_remove (attributes->priv->sorted_key_list,
+                                                                     (gconstpointer) s_tag);
+                  g_free (s_tag);
+                  break;
+                }
+            }
+          g_free (tag_list_remove);
           success = TRUE;
         }
       else
@@ -521,8 +537,6 @@ gimp_attributes_remove_attribute (GimpAttributes      *attributes,
             g_free (tag_to_remove);
           success = FALSE;
         }
-
-      g_free (tag_list_remove);
     }
 
   g_free (lowchar);
