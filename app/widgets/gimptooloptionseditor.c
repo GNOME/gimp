@@ -255,7 +255,6 @@ gimp_tool_options_editor_dispose (GObject *object)
 
       for (list = options; list; list = g_list_next (list))
         {
-          g_object_ref (list->data);
           gtk_container_remove (GTK_CONTAINER (editor->p->options_vbox),
                                 GTK_WIDGET (list->data));
         }
