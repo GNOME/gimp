@@ -46,6 +46,7 @@ struct _DatapagePrivate {
   GQueue      *current_shown_structure;
   GQueue      *highest_structure;
   GQueue      *combo_signal_handlers;
+  GQueue      *expander_texts;
 };
 
 enum  {
@@ -100,6 +101,8 @@ static void                         datapage_init_combobox                (Datap
 static void                         datapage_set_entry_sensitive          (Datapage             *datapage,
                                                                            const gchar          *struct_name,
                                                                            gboolean              sensitive);
+static void                         datapage_set_label_text               (Datapage             *datapage,
+                                                                           gint                  struct_nr);
 
 static gpointer datapage_parent_class = NULL;
 
@@ -140,6 +143,8 @@ datapage_instance_init (Datapage *datapage)
   private->current_shown_structure = g_queue_new ();
   private->highest_structure = g_queue_new ();
   private->combo_signal_handlers = g_queue_new ();
+  private->expander_texts = g_queue_new ();
+
 }
 
 
@@ -299,6 +304,7 @@ datapage_init_ui (Datapage      *datapage,
   GObject *obj;
   gint     i;
 
+  DatapagePrivate *private = DATAPAGE_GET_PRIVATE(datapage);
 
   for (i = 0; i < datapage->metadata_entry_count; i++)
     {
@@ -364,6 +370,12 @@ datapage_init_ui (Datapage      *datapage,
 
   for (i = 0; i < datapage->structure_element_count; i++) /*get info about structure */
     {
+      const gchar *label_text;
+
+      obj = G_OBJECT (get_widget_from_label (builder, datapage->struct_element[i].expand_label_widget));
+      label_text = gtk_label_get_text (GTK_LABEL (obj));
+      g_queue_push_nth (private->expander_texts, g_strdup (label_text), datapage->struct_element[i].number_of_element);
+
       obj = G_OBJECT (get_widget_from_label (builder, datapage->struct_element[i].add_widget));
       gtk_widget_set_name (GTK_WIDGET (obj), datapage->struct_element[i].add_widget);
       g_signal_connect (obj, "clicked",
@@ -583,6 +595,9 @@ datapage_structure_add (GtkButton *button,
           g_signal_handlers_unblock_by_func(G_OBJECT (combo), G_CALLBACK (datapage_combobox_changed_callback), datapage);
 
           g_free (line);
+
+          datapage_set_label_text (datapage, sct);
+
           break;
        }
     }
@@ -644,6 +659,9 @@ datapage_structure_remove (GtkButton *button,
           datapage_set_highest_structure (datapage, sct, --new_highest);
 
           repaint = datapage->struct_element[sct].number_of_element;
+
+          datapage_set_label_text (datapage, sct);
+
           break;
        }
     }
@@ -748,6 +766,7 @@ datapage_structure_remove (GtkButton *button,
   set_save_attributes_button_sensitive (TRUE);
 
   datapage_set_to_ui (datapage, datapage->builder, repaint);
+
 }
 
 static void
@@ -976,6 +995,7 @@ datapage_init_combobox (Datapage   *datapage,
 
       g_signal_handlers_unblock_by_func(G_OBJECT (combo), G_CALLBACK (datapage_combobox_changed_callback), datapage);
 
+      datapage_set_label_text (datapage, sct);
     }
 }
 
@@ -999,6 +1019,31 @@ datapage_set_entry_sensitive (Datapage    *datapage,
         }
     }
 
+}
+
+static void
+datapage_set_label_text (Datapage        *datapage,
+                         gint             struct_nr)
+{
+  DatapagePrivate *private;
+  GtkLabel         label;
+  GObject         *obj;
+  gchar           *label_text;
+  gint             high;
+
+  private = DATAPAGE_GET_PRIVATE (datapage);
+
+  obj = get_widget_from_label (datapage->builder, datapage->struct_element[struct_nr].expand_label_widget);
+
+  high = datapage_get_highest_structure (datapage, datapage->struct_element[struct_nr].number_of_element);
+
+  label_text = g_strdup_printf ("%s (%d)", (gchar *) g_queue_peek_nth (private->expander_texts,
+                                                             datapage->struct_element[struct_nr].number_of_element),
+                                high);
+
+  gtk_label_set_text (GTK_LABEL (obj), label_text);
+
+  g_free (label_text);
 }
 
 void

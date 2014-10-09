@@ -38,6 +38,7 @@ static StructureElement struct_element [] =
             N_("Artwork or Object"),
             "Xmp.iptcExt.ArtworkOrObject",
             STRUCTURE_TYPE_BAG,
+            "artworkorobject-label",
             "artworkorobject-combo",
             "artworkorobject-liststore",
             "artworkorobject-button-plus",

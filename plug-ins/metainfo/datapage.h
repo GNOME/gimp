@@ -75,7 +75,8 @@ struct _StructureElement
   gint                        number_of_element;       /* simply the number, corresponding to STRUCTURES_ON_PAGE */
   const gchar                *identifier;              /* translateble - identifier for combobox entries */
   const gchar                *struct_tag;              /* structure tag without array number */
-  GimpAttributeStructureType  struct_type;               /* type of structure, gexiv2 cannot get the right list type from tag*/
+  GimpAttributeStructureType  struct_type;             /* type of structure, gexiv2 cannot get the right list type from tag*/
+  const gchar                *expand_label_widget;     /* name of the expander label widget */
   const gchar                *struct_combo_widget;     /* name of the combobox widget for this structure */
   const gchar                *struct_liststore_widget; /* name of the liststore of the combobox for this structure */
   const gchar                *add_widget;              /* name of the add structure button for this structure */
