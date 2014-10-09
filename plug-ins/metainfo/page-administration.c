@@ -35,7 +35,7 @@
 static StructureElement struct_element [] =
     {
         {0,
-            N_("Image supplier"),
+            "Image supplier",
             "Xmp.plus.ImageSupplier",
             STRUCTURE_TYPE_SEQ,
             "imagesupplier-label",
@@ -45,7 +45,7 @@ static StructureElement struct_element [] =
             "imagesupplier-button-minus"},
 
         {1,
-            N_("Registry ID"),
+            "Registry ID",
             "Xmp.iptcExt.RegistryId",
             STRUCTURE_TYPE_BAG,
             "registryid-label",
@@ -70,56 +70,56 @@ static ComboBoxData combobox_data[][6] =
 
 static MetadataEntry administration_entries[] =
     {
-        {N_("Image supplier name"),
+        {"Image supplier name",
             "imagesupplier-name-label",
             "imagesupplier-name-entry",
             "Xmp.plus.ImageSupplier[x]/plus:ImageSupplierName",
             WIDGET_TYPE_ENTRY,
             -1},
 
-        {N_("Image supplier ID"),
+        {"Image supplier ID",
             "imagesupplier-id-label",
             "imagesupplier-id-entry",
             "Xmp.plus.ImageSupplier[x]/plus:ImageSupplierID",
             WIDGET_TYPE_ENTRY,
             -1},
 
-        {N_("Image supplier image ID"),
+        {"Image supplier image ID",
             "imagesupplier-imageid-label",
             "imagesupplier-imageid-entry",
             "Xmp.plus.ImageSupplierImageID",
             WIDGET_TYPE_ENTRY,
             -1},
 
-        {N_("Registry organistaion ID"),
+        {"Registry organistaion ID",
             "regorgid-label",
             "regorgid-entry",
             "Xmp.iptcExt.RegistryId[x]/iptcExt:RegOrgId",
             WIDGET_TYPE_ENTRY,
             -1},
 
-        {N_("Registry item ID"),
+        {"Registry item ID",
             "regitemid-label",
             "regitemid-entry",
             "Xmp.iptcExt.RegistryId[x]/iptcExt:RegItemId",
             WIDGET_TYPE_ENTRY,
             -1},
 
-        {N_("Max available height"),
+        {"Max available height",
             "maxavailheight-label",
             "maxavailheight-entry",
             "Xmp.iptcExt.MaxAvailHeight",
             WIDGET_TYPE_ENTRY,
             -1},
 
-        {N_("Max available width"),
+        {"Max available width",
             "maxavailwidth-label",
             "maxavailwidth-entry",
             "Xmp.iptcExt.MaxAvailWidth",
              WIDGET_TYPE_ENTRY,
              -1},
 
-        {N_("Digital source type"),
+        {"Digital source type",
             "digitalsourcetype-label",
             "digitalsourcetype-combobox",
             "Xmp.iptcExt.DigitalSourceType",

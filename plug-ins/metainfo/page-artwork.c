@@ -35,7 +35,7 @@
 static StructureElement struct_element [] =
     {
         {0,
-            N_("Artwork or Object"),
+            "Artwork or Object",
             "Xmp.iptcExt.ArtworkOrObject",
             STRUCTURE_TYPE_BAG,
             "artworkorobject-label",
@@ -75,42 +75,42 @@ static ComboBoxData combobox_data[][14] =
 
 static MetadataEntry artwork_entries[] =
     {
-        {N_("Title"),
+        {"Title",
             "artworkorobject-title-label",
             "artworkorobject-title-entry",
             "Xmp.iptcExt.ArtworkOrObject[x]/iptcExt:AOTitle",
             WIDGET_TYPE_ENTRY,
             -1},
 
-        {N_("Date created"),
+        {"Date created",
             "artworkorobject-datecreated-label",
             "artworkorobject-datecreated-entry",
             "Xmp.iptcExt.ArtworkOrObject[x]/iptcExt:AODateCreated",
             WIDGET_TYPE_ENTRY,
             -1},
 
-        {N_("Creator"),
+        {"Creator",
             "artworkorobject-creator-label",
             "artworkorobject-creator-entry",
             "Xmp.iptcExt.ArtworkOrObject[x]/iptcExt:AOCreator",
             WIDGET_TYPE_ENTRY,
             -1},
 
-        {N_("Source"),
+        {"Source",
             "artworkorobject-source-label",
             "artworkorobject-source-entry",
             "Xmp.iptcExt.ArtworkOrObject[x]/iptcExt:AOSource",
             WIDGET_TYPE_ENTRY,
             -1},
 
-        {N_("Source inventory number"),
+        {"Source inventory number",
             "artworkorobject-sourceinvno-label",
             "artworkorobject-sourceinvno-entry",
             "Xmp.iptcExt.ArtworkOrObject[x]/iptcExt:AOSourceInvNo",
             WIDGET_TYPE_ENTRY,
             -1},
 
-        {N_("Copyright notice"),
+        {"Copyright notice",
             "artworkorobject-copyrightnotice-label",
             "artworkorobject-copyrightnotice-entry",
             "Xmp.iptcExt.ArtworkOrObject[x]/iptcExt:AOCopyrightNotice",
@@ -118,35 +118,35 @@ static MetadataEntry artwork_entries[] =
             -1},
 
 
-        {N_("Additional model information"),
+        {"Additional model information",
             "addlmodelinfo-label",
             "addlmodelinfo-entry",
             "Xmp.iptcExt.AddlModelInfo",
              WIDGET_TYPE_ENTRY,
              -1},
 
-        {N_("Model age"),
+        {"Model age",
             "modelage-label",
             "modelage-entry",
             "Xmp.iptcExt.ModelAge",
             WIDGET_TYPE_ENTRY,
             -1},
 
-        {N_("Model release ID"),
+        {"Model release ID",
             "modelreleaseid-label",
             "modelreleaseid-entry",
             "Xmp.plus.ModelReleaseID",
             WIDGET_TYPE_ENTRY,
             -1},
 
-        {N_("Minor model age"),
+        {"Minor model age",
             "minormodelagedisclosure-label",
             "minormodelagedisclosure-combobox",
             "Xmp.plus.MinorModelAgeDisclosure",
             WIDGET_TYPE_COMBOBOX,
             0},
 
-        {N_("Model release status"),
+        {"Model release status",
             "modelreleasestatus-label",
             "modelreleasestatus-combobox",
             "Xmp.plus.ModelReleaseStatus",

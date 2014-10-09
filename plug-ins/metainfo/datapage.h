@@ -60,7 +60,7 @@ typedef struct _MetadataEntry     MetadataEntry;
 
 struct _MetadataEntry
 {
-        gchar      *label;                             /* translateable - label of the widget */
+        gchar      *label;                             /* label of the widget */
   const gchar      *ui_label;                          /* name of the label widget in GtkBuilder ui file */
   const gchar      *ui_entry;                          /* name of the entry widget in GtkBuilder ui file */
   const gchar      *xmp_tag;                           /* xmp tag, saved in GimpAttribute.name */
@@ -73,7 +73,7 @@ typedef struct _StructureElement StructureElement;
 struct _StructureElement
 {
   gint                        number_of_element;       /* simply the number, corresponding to STRUCTURES_ON_PAGE */
-  const gchar                *identifier;              /* translateble - identifier for combobox entries */
+  const gchar                *identifier;              /* identifier for combobox entries */
   const gchar                *struct_tag;              /* structure tag without array number */
   GimpAttributeStructureType  struct_type;             /* type of structure, gexiv2 cannot get the right list type from tag*/
   const gchar                *expand_label_widget;     /* name of the expander label widget */

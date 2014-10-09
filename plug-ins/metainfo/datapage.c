@@ -308,10 +308,6 @@ datapage_init_ui (Datapage      *datapage,
 
   for (i = 0; i < datapage->metadata_entry_count; i++)
     {
-      obj = G_OBJECT (get_widget_from_label (builder, datapage->metadata_entry[i].ui_label));
-
-      gtk_label_set_text (GTK_LABEL (obj), datapage->metadata_entry[i].label);
-
       obj = G_OBJECT (get_widget_from_label (builder, datapage->metadata_entry[i].ui_entry));
       gtk_widget_set_name (GTK_WIDGET (obj), datapage->metadata_entry[i].ui_entry);
 
@@ -348,7 +344,6 @@ datapage_init_ui (Datapage      *datapage,
               for (i = 0; i < array_length; i++) /*get info about structure */
                 {
                   const gchar  *val_in_combo = datapage->combobox_data[(array_nr * datapage->max_combobox_entries) + i].val_in_combo;
-//                  const gchar  *val_in_combo = combobox_data[array_nr][i].val_in_combo;
 
                   if (! val_in_combo)
                     break;
@@ -1026,7 +1021,6 @@ datapage_set_label_text (Datapage        *datapage,
                          gint             struct_nr)
 {
   DatapagePrivate *private;
-  GtkLabel         label;
   GObject         *obj;
   gchar           *label_text;
   gint             high;
@@ -1037,8 +1031,9 @@ datapage_set_label_text (Datapage        *datapage,
 
   high = datapage_get_highest_structure (datapage, datapage->struct_element[struct_nr].number_of_element);
 
-  label_text = g_strdup_printf ("%s (%d)", (gchar *) g_queue_peek_nth (private->expander_texts,
-                                                             datapage->struct_element[struct_nr].number_of_element),
+  label_text = g_strdup_printf ("%s (%d)",
+                                (gchar *) g_queue_peek_nth (private->expander_texts,
+                                                            datapage->struct_element[struct_nr].number_of_element),
                                 high);
 
   gtk_label_set_text (GTK_LABEL (obj), label_text);
