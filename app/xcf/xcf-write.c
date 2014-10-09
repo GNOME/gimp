@@ -108,21 +108,21 @@ xcf_write_float (FILE           *fp,
  *
  * Returns: @count
  */
-
-/* TODO: shouldn't the return value (i.e. local variable total) mean the number of written bytes? */
 guint
 xcf_write_int8 (FILE           *fp,
                 const guint8   *data,
                 gint            count,
                 GError        **error)
 {
-  guint total = count;
+  guint total = 0;
 
   while (count > 0)
     {
       gint bytes = fwrite ((const gchar*) data, sizeof (gchar), count, fp);
 
-      if (bytes != count)
+      total += bytes;
+
+      if (bytes == 0)
         {
           g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Error writing XCF: %s"), g_strerror (errno));
