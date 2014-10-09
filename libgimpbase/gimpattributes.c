@@ -35,9 +35,9 @@
 #endif
 
 #include "gimpbasetypes.h"
+#include "gimpmetadata.h"
 #include "gimpattribute.h"
 #include "gimpattributes.h"
-#include "gimpmetadata.h"
 
 /**
  * SECTION: gimpattributes
@@ -953,7 +953,6 @@ gimp_attributes_to_metadata (GimpAttributes *attributes,
       gboolean                  has_structure = FALSE;
       GimpAttribute            *attribute;
       GimpAttributeValueType    tag_value_type;
-      GError                   *error = NULL;
 
       write_tag      = FALSE;
       namespace      = FALSE;
@@ -1097,12 +1096,7 @@ gimp_attributes_to_metadata (GimpAttributes *attributes,
 
                   if (is_xmp)
                     {
-                      t_packet = gexiv2_metadata_generate_xmp_packet (metadata, useCompactFormat  | omitAllFormatting, 0, &error);
-                      if (error)
-                        {
-                          g_print ("error: %s\n", error->message);
-                          g_clear_error (&error);
-                        }
+                      t_packet = gexiv2_metadata_generate_xmp_packet (metadata, USE_COMPACT_FORMAT | OMIT_ALL_FORMATTING, 0);
 
                       if (! g_strcmp0 (t_packet, o_packet))
                         {
@@ -1183,7 +1177,6 @@ gimp_attributes_to_xmp_packet (GimpAttributes *attributes,
   GimpMetadata   *metadata;
   GSList         *xmp_structure_list = NULL;
   GList          *key_list           = NULL;
-  GError         *error              = NULL;
 
   g_return_val_if_fail (GIMP_IS_ATTRIBUTES (attributes), NULL);
 
@@ -1388,7 +1381,7 @@ gimp_attributes_to_xmp_packet (GimpAttributes *attributes,
 
                   }
 
-                  t_packet = gexiv2_metadata_generate_xmp_packet (metadata, useCompactFormat  | omitAllFormatting, 0, &error);
+                  t_packet = gexiv2_metadata_generate_xmp_packet (metadata, USE_COMPACT_FORMAT | OMIT_ALL_FORMATTING, 0);
 
                   if (! t_packet || ! g_strcmp0 (t_packet, o_packet))
                     {
@@ -1420,7 +1413,7 @@ gimp_attributes_to_xmp_packet (GimpAttributes *attributes,
   if (xmp_structure_list)
     g_slist_free (xmp_structure_list);
 
-  packet_string = gexiv2_metadata_generate_xmp_packet (metadata, useCompactFormat | writeAliasComments, 0, &error);
+  packet_string = gexiv2_metadata_generate_xmp_packet (metadata, USE_COMPACT_FORMAT | WRITE_ALIAS_COMMENTS, 0);
   return packet_string;
 }
 
