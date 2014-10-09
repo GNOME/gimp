@@ -35,7 +35,7 @@
 static StructureElement struct_element [] =
     {
         {0,
-            "Artwork or Object",
+            N_("Artwork or Object"),
             "Xmp.iptcExt.ArtworkOrObject",
             STRUCTURE_TYPE_BAG,
             "artworkorobject-label",

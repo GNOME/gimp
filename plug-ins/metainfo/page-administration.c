@@ -35,7 +35,7 @@
 static StructureElement struct_element [] =
     {
         {0,
-            "Image supplier",
+            N_("Image supplier"),
             "Xmp.plus.ImageSupplier",
             STRUCTURE_TYPE_SEQ,
             "imagesupplier-label",
@@ -45,7 +45,7 @@ static StructureElement struct_element [] =
             "imagesupplier-button-minus"},
 
         {1,
-            "Registry ID",
+            N_("Registry ID"),
             "Xmp.iptcExt.RegistryId",
             STRUCTURE_TYPE_BAG,
             "registryid-label",

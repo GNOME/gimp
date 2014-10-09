@@ -31,7 +31,7 @@
 static StructureElement struct_element [] =
     {
         {0,
-            "Location created",
+            N_("Location created"),
             "Xmp.iptcExt.LocationCreated",
             STRUCTURE_TYPE_BAG,
             "location-created-label",
@@ -41,7 +41,7 @@ static StructureElement struct_element [] =
             "location-created-button-minus"},
 
         {1,
-            "Location shown",
+            N_("Location shown"),
             "Xmp.iptcExt.LocationShown",
             STRUCTURE_TYPE_SEQ,
             "location-shown-label",

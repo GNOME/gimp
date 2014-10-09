@@ -73,7 +73,7 @@ typedef struct _StructureElement StructureElement;
 struct _StructureElement
 {
   gint                        number_of_element;       /* simply the number, corresponding to STRUCTURES_ON_PAGE */
-  const gchar                *identifier;              /* identifier for combobox entries */
+  const gchar                *identifier;              /* translateable - identifier for combobox entries */
   const gchar                *struct_tag;              /* structure tag without array number */
   GimpAttributeStructureType  struct_type;             /* type of structure, gexiv2 cannot get the right list type from tag*/
   const gchar                *expand_label_widget;     /* name of the expander label widget */

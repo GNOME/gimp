@@ -34,7 +34,7 @@
 static StructureElement struct_element [] =
     {
         {0,
-            "Image creator",
+            N_("Image creator"),
             "Xmp.plus.ImageCreator",
             STRUCTURE_TYPE_SEQ,
             "imagecreator-label",
@@ -44,7 +44,7 @@ static StructureElement struct_element [] =
             "imagecreator-button-minus"},
 
         {1,
-            "Copyright Owner",
+            N_("Copyright Owner"),
             "Xmp.plus.CopyrightOwner",
             STRUCTURE_TYPE_SEQ,
             "copyrightowner-label",
@@ -54,7 +54,7 @@ static StructureElement struct_element [] =
             "copyrightowner-button-minus"},
 
         {2,
-            "Licensor",
+            N_("Licensor"),
             "Xmp.plus.Licensor",
             STRUCTURE_TYPE_BAG,
             "licensor-label",
