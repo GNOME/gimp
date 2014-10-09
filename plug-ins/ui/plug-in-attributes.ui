@@ -2,6 +2,18 @@
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
   <!-- interface-naming-policy toplevel-contextual -->
+  <object class="GtkTreeStore" id="exif-treestore">
+    <columns>
+      <!-- column-name c-exif-ifd -->
+      <column type="gchararray"/>
+      <!-- column-name c-exif-tag -->
+      <column type="gchararray"/>
+      <!-- column-name c-exif-value -->
+      <column type="gchararray"/>
+      <!-- column-name sortable -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkVBox" id="attributes-vbox">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -147,8 +159,15 @@
                     <property name="sizing">fixed</property>
                     <property name="min_width">1</property>
                     <property name="max_width">1</property>
+                    <property name="visible">FALSE</property>
                     <property name="title" translatable="yes">Sort</property>
                     <property name="sort_column_id">3</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="exif_sort_cell_renderer"/>
+                      <attributes>
+                        <attribute name="text">3</attribute>
+                      </attributes>
+                    </child>
                   </object>
                 </child>
               </object>
@@ -226,6 +245,7 @@
                     <property name="sizing">fixed</property>
                     <property name="min_width">1</property>
                     <property name="max_width">1</property>
+                    <property name="visible">FALSE</property>
                     <property name="title" translatable="yes">Sort</property>
                     <property name="sort_column_id">3</property>
                     <child>
@@ -314,6 +334,7 @@
                     <property name="sizing">fixed</property>
                     <property name="min_width">1</property>
                     <property name="max_width">1</property>
+                    <property name="visible">FALSE</property>
                     <property name="title" translatable="yes">Sort</property>
                     <property name="sort_column_id">3</property>
                     <child>
@@ -351,18 +372,6 @@
         <property name="position">1</property>
       </packing>
     </child>
-  </object>
-  <object class="GtkTreeStore" id="exif-treestore">
-    <columns>
-      <!-- column-name c-exif-ifd -->
-      <column type="gchararray"/>
-      <!-- column-name c-exif-tag -->
-      <column type="gchararray"/>
-      <!-- column-name c-exif-value -->
-      <column type="gchararray"/>
-      <!-- column-name sortable -->
-      <column type="gchararray"/>
-    </columns>
   </object>
   <object class="GtkTreeStore" id="iptc-treestore">
     <columns>

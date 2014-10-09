@@ -127,6 +127,8 @@ const GimpPlugInInfo PLUG_IN_INFO =
 static GHashTable *ifd_table = NULL;
 static GHashTable *tab_table = NULL;
 
+static gchar      *item_name = NULL;
+
 /*  functions  */
 
 MAIN ()
@@ -315,7 +317,6 @@ attributes_dialog (gint32           item_id,
   gchar      *header;
   gchar      *ui_file;
   gchar      *title;
-  gchar      *fname;
   gchar      *role;
   GError     *error = NULL;
 
@@ -324,7 +325,7 @@ attributes_dialog (gint32           item_id,
   switch (source)
   {
     case ATT_IMAGE:
-      fname = g_filename_display_basename (gimp_image_get_uri (item_id));
+      item_name = g_filename_display_basename (gimp_image_get_uri (item_id));
       header  = g_strdup_printf ("Image");
       role  = g_strdup_printf ("gimp-image-attributes-dialog");
       pixbuf = gimp_image_get_thumbnail (item_id, THUMB_SIZE, THUMB_SIZE,
@@ -332,28 +333,28 @@ attributes_dialog (gint32           item_id,
 
       break;
     case ATT_LAYER:
-      fname = gimp_item_get_name (item_id);
+      item_name = gimp_item_get_name (item_id);
       header  = g_strdup_printf ("Layer");
       role  = g_strdup_printf ("gimp-layer-attributes-dialog");
       pixbuf = gimp_drawable_get_thumbnail (item_id, THUMB_SIZE, THUMB_SIZE,
                                             GIMP_PIXBUF_SMALL_CHECKS);
       break;
     case ATT_CHANNEL:
-      fname = gimp_item_get_name (item_id);
+      item_name = gimp_item_get_name (item_id);
       header  = g_strdup_printf ("Channel");
       role  = g_strdup_printf ("gimp-channel-attributes-dialog");
       pixbuf = gimp_drawable_get_thumbnail (item_id, THUMB_SIZE, THUMB_SIZE,
                                             GIMP_PIXBUF_SMALL_CHECKS);
       break;
     default:
-      fname = g_strdup_printf ("unknown");
+      item_name = g_strdup_printf ("unknown");
       header  = g_strdup_printf ("Unknown");
       role  = g_strdup_printf ("gimp-attributes-dialog");
       pixbuf = NULL;
       break;
   }
 
-  title = g_strdup_printf ("Attributes: %s", fname);
+  title = g_strdup_printf ("Attributes: %s", item_name);
 
   builder = gtk_builder_new ();
 
@@ -418,10 +419,9 @@ attributes_dialog (gint32           item_id,
   gimp_label_set_attributes (GTK_LABEL (label_info),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_SMALL,
                              -1);
-  gtk_label_set_text (GTK_LABEL (label_info), fname);
+  gtk_label_set_text (GTK_LABEL (label_info), item_name);
 
   g_free (header);
-  g_free (fname);
 
   if (pixbuf)
     {
@@ -761,7 +761,10 @@ attributes_file_export_dialog (GtkWidget      *parent,
                                GimpAttributes *attributes)
 {
   static GtkWidget *dlg = NULL;
+  gchar            *suggest_file;
 //                                          GTK_WINDOW (parent),
+
+  suggest_file = g_strdup_printf ("%s.xmp", item_name);
 
   if (! dlg)
     {
@@ -783,12 +786,16 @@ attributes_file_export_dialog (GtkWidget      *parent,
       gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dlg),
                                                       TRUE);
 
+      gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dlg), suggest_file);
+
       g_signal_connect (dlg, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &dlg);
       g_signal_connect (dlg, "response",
                         G_CALLBACK (attributes_export_dialog_response),
                         attributes);
+
+      g_free (suggest_file);
     }
   gtk_window_present (GTK_WINDOW (dlg));
 //  gtk_dialog_run (GTK_DIALOG (dlg));
