@@ -235,7 +235,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USER_MANUAL_ONLINE,
                                     "user-manual-online",
                                     USER_MANUAL_ONLINE_BLURB,
-                                    TRUE,
+                                    FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_USER_MANUAL_ONLINE_URI,
                                    "user-manual-online-uri",
