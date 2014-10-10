@@ -501,7 +501,10 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
       tag_sorted = gimp_attribute_get_sortable_name (attribute);
       value      = gimp_attribute_get_interpreted_string (attribute);
 
-      value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
+      if (! g_utf8_validate (value, -1, NULL))
+        value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
+      else
+        value_utf = g_strdup (value);
 
       parent = attributes_get_parent (type, ifd);
 
