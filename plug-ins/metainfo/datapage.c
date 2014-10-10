@@ -99,7 +99,7 @@ static void                         datapage_set_to_ui                    (Datap
 static void                         datapage_init_combobox                (Datapage             *datapage,
                                                                            GtkBuilder           *builder);
 static void                         datapage_set_entry_sensitive          (Datapage             *datapage,
-                                                                           const gchar          *struct_name,
+                                                                           StructureElement      struct_element,
                                                                            gboolean              sensitive);
 static void                         datapage_set_label_text               (Datapage             *datapage,
                                                                            gint                  struct_nr);
@@ -475,10 +475,16 @@ datapage_store_in_hash_table (Datapage      *datapage,
   gint             number = 0;
   gboolean         success;
   DatapagePrivate *private;
+  gchar           *value_utf = NULL;
 
   g_return_val_if_fail (entry_name != NULL, FALSE);
 
   private = DATAPAGE_GET_PRIVATE (datapage);
+
+  if (! g_utf8_validate (value, -1, NULL))
+    value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
+  else
+    value_utf = g_strdup (value);
 
   if (nr > 0)
     number = nr;
@@ -527,7 +533,7 @@ datapage_store_in_hash_table (Datapage      *datapage,
 
           if (value && g_strcmp0 (value, ""))
             {
-              if (g_hash_table_insert (private->elements_table, (gpointer) g_strdup (new_tag), (gpointer) g_strdup (value)))
+              if (g_hash_table_insert (private->elements_table, (gpointer) g_strdup (new_tag), (gpointer) g_strdup (value_utf)))
                 success = TRUE;
             }
           else
@@ -540,6 +546,8 @@ datapage_store_in_hash_table (Datapage      *datapage,
           break;
         }
     }
+
+  g_free (value_utf);
   return success;
 }
 
@@ -585,7 +593,7 @@ datapage_structure_add (GtkButton *button,
           gtk_combo_box_set_active (combo, number_to_add-1);
 
           if (number_to_add == 1)
-            datapage_set_entry_sensitive (datapage, datapage->struct_element[sct].struct_tag, TRUE);
+            datapage_set_entry_sensitive (datapage, datapage->struct_element[sct], TRUE);
 
           g_signal_handlers_unblock_by_func(G_OBJECT (combo), G_CALLBACK (datapage_combobox_changed_callback), datapage);
 
@@ -608,23 +616,22 @@ datapage_structure_remove (GtkButton *button,
   DatapagePrivate *private;
   GtkListStore    *liststore;
   GHashTableIter   iter_remove;
-  gboolean         found;
-  gchar           *nr_string;
-  gchar           *nr_string_new;
-  gpointer         key, value;
-  GSList          *delete_key_list   = NULL;
-  GSList          *list;
-  gchar           *tag_prefix;
-  gchar           *new_key;
-  gint             number_to_delete;
   GtkComboBox     *combo;
   GtkTreeIter      combo_iter;
+  GHashTable      *reorder_table;
+  gchar           *nr_string            = NULL;
+  gchar           *nr_string_new        = NULL;
+  GSList          *delete_key_list      = NULL;
+  GSList          *list                 = NULL;
+  gchar           *tag_prefix           = NULL;
+  gchar           *new_key              = NULL;
   const gchar     *widget_name;
+  gboolean         found;
+  gpointer         key, value;
+  gint             number_to_delete;
   gint             sct;
   gint             repaint;
   gint             combo_to_del;
-
-  GHashTable           *reorder_table;
 
   private = DATAPAGE_GET_PRIVATE (datapage);
 
@@ -738,10 +745,14 @@ datapage_structure_remove (GtkButton *button,
 
   }
 
-  g_free (tag_prefix);
-  g_free (nr_string);
-  g_free (nr_string_new);
-  g_free (new_key);
+  if (tag_prefix)
+    g_free (tag_prefix);
+  if (nr_string)
+    g_free (nr_string);
+  if (nr_string_new)
+    g_free (nr_string_new);
+  if (new_key)
+    g_free (new_key);
 
   g_hash_table_unref (reorder_table);
 
@@ -752,7 +763,7 @@ datapage_structure_remove (GtkButton *button,
     gtk_list_store_remove (liststore, &combo_iter);
 
   if (datapage_get_curr_shown_structure (datapage, repaint) == 0)
-    datapage_set_entry_sensitive (datapage, datapage->struct_element[sct].struct_tag, FALSE);
+    datapage_set_entry_sensitive (datapage, datapage->struct_element[sct], FALSE);
   else
     gtk_combo_box_set_active (combo, datapage_get_curr_shown_structure (datapage, repaint) - 1);
 
@@ -761,7 +772,6 @@ datapage_structure_remove (GtkButton *button,
   set_save_attributes_button_sensitive (TRUE);
 
   datapage_set_to_ui (datapage, datapage->builder, repaint);
-
 }
 
 static void
@@ -796,12 +806,23 @@ datapage_structure_save (Datapage *datapage,
               {
                 case WIDGET_TYPE_ENTRY:
                   {
-                    gchar *value;
+                    gchar *value     = NULL;
+                    gchar *value_utf = NULL;
+
                     value = g_strdup (gtk_entry_get_text (GTK_ENTRY (obj)));
+
+                    if (! g_utf8_validate (value, -1, NULL))
+                      value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
+                    else
+                      value_utf = g_strdup (value);
+
                     if (value && g_strcmp0 (value, ""))
-                      g_hash_table_insert (private->elements_table, (gpointer) g_strdup (tag), (gpointer) g_strdup (value));
+                      g_hash_table_insert (private->elements_table, (gpointer) g_strdup (tag), (gpointer) g_strdup (value_utf));
                     else
                       g_hash_table_remove (private->elements_table, (gpointer) tag);
+
+                    g_free (value);
+                    g_free (value_utf);
                   }
                   break;
                 case WIDGET_TYPE_COMBOBOX:
@@ -984,9 +1005,9 @@ datapage_init_combobox (Datapage   *datapage,
       gtk_combo_box_set_active (combo, active-1);
 
       if (active >= 1)
-        datapage_set_entry_sensitive (datapage, datapage->struct_element[sct].struct_tag, TRUE);
+        datapage_set_entry_sensitive (datapage, datapage->struct_element[sct], TRUE);
       else
-        datapage_set_entry_sensitive (datapage, datapage->struct_element[sct].struct_tag, FALSE);
+        datapage_set_entry_sensitive (datapage, datapage->struct_element[sct], FALSE);
 
       g_signal_handlers_unblock_by_func(G_OBJECT (combo), G_CALLBACK (datapage_combobox_changed_callback), datapage);
 
@@ -995,24 +1016,26 @@ datapage_init_combobox (Datapage   *datapage,
 }
 
 static void
-datapage_set_entry_sensitive (Datapage    *datapage,
-                              const gchar *struct_name,
-                              gboolean     sensitive)
+datapage_set_entry_sensitive (Datapage          *datapage,
+                              StructureElement   struct_element,
+                              gboolean           sensitive)
 {
   gint i;
+  GObject       *obj;
 
   for (i = 0; i < datapage->metadata_entry_count; i++)
     {
       const gchar   *tag;
-      GObject       *obj;
 
       tag = datapage->metadata_entry[i].xmp_tag;
-      if (g_str_has_prefix (tag, struct_name))
+      if (g_str_has_prefix (tag, struct_element.struct_tag))
         {
           obj = G_OBJECT (get_widget_from_label (datapage->builder, datapage->metadata_entry[i].ui_entry));
           gtk_widget_set_sensitive (GTK_WIDGET (obj), sensitive);
         }
     }
+  obj = G_OBJECT (get_widget_from_label (datapage->builder, struct_element.remove_widget));
+  gtk_widget_set_sensitive (GTK_WIDGET (obj), sensitive);
 
 }
 
@@ -1067,9 +1090,9 @@ datapage_read_from_attributes (Datapage        *datapage,
 
       tag =g_strdup (o_tag);
 
-//      if (g_str_has_prefix (tag, "Xmp.plus.ImageCreator"))
-//          g_print ("found\n");
-//
+      if (g_str_has_prefix (tag, "Xmp.iptcExt.LocationShown"))
+        g_print ("found\n");
+
       p = string_index_of (tag, "[x]", 0);  /* is it a structure tag? */
 
       if (p > -1) /* yes! */
@@ -1106,23 +1129,32 @@ datapage_read_from_attributes (Datapage        *datapage,
 
                       if (struct_attribute)
                         {
-                          gint sct;
+                          gint    sct;
+                          gchar  *value_utf = NULL;
+
                           value = gimp_attribute_get_string (struct_attribute);
+
+                          if (! g_utf8_validate (value, -1, NULL))
+                            value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
+                          else
+                            value_utf = g_strdup (value);
 
                           for (sct = 0; sct < datapage->structure_element_count; sct ++)
                             {
                               if (g_str_has_prefix (new_tag, datapage->struct_element[sct].struct_tag))
                                 {
-                                  datapage_set_highest_structure (datapage, datapage->struct_element[sct].number_of_element, counter);
+                                  if (counter > num)
+                                    datapage_set_highest_structure (datapage, datapage->struct_element[sct].number_of_element, counter);
                                   break;
                                 }
                             }
                           g_hash_table_insert (private->elements_table,
                                                (gpointer) g_strdup (new_tag),
-                                               (gpointer) g_strdup (value));
+                                               (gpointer) g_strdup (value_utf));
 
                           gimp_attributes_remove_attribute (*attributes, new_tag);
                           g_free (value);
+                          g_free (value_utf);
                         }
                       g_free (nr_string);
                       g_free (new_tag);
@@ -1136,13 +1168,23 @@ datapage_read_from_attributes (Datapage        *datapage,
           attribute = gimp_attributes_get_attribute (*attributes, tag);
           if (attribute)
             {
-              gchar *value = gimp_attribute_get_string (attribute);
+              gchar  *value     = NULL;
+              gchar  *value_utf = NULL;
+
+              value = gimp_attribute_get_string (attribute);
+
+              if (! g_utf8_validate (value, -1, NULL))
+                value_utf = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
+              else
+                value_utf = g_strdup (value);
+
               g_hash_table_insert (private->elements_table,
                                    (gpointer) g_strdup (datapage->metadata_entry[i].xmp_tag),
-                                   (gpointer) g_strdup (value));
+                                   (gpointer) g_strdup (value_utf));
 
               gimp_attributes_remove_attribute (*attributes, datapage->metadata_entry[i].xmp_tag);
               g_free (value);
+              g_free (value_utf);
             }
         }
       g_free (tag);
@@ -1176,13 +1218,14 @@ datapage_save_to_attributes (Datapage *datapage, GimpAttributes **attributes)
     {
       GimpAttribute                   *attribute     = NULL;
       gchar                           *tag = (gchar *) key;
-      gchar                           *value         = NULL;
+      gchar                           *entry_value   = NULL;
       gint                             p;
       gint                             sct;
       gint i;
 
-      value = (gchar *) g_hash_table_lookup (private->elements_table, (gpointer) tag);
-      attribute = gimp_attribute_new_string (tag, value, TYPE_ASCII);
+      entry_value = (gchar *) g_hash_table_lookup (private->elements_table, (gpointer) tag);
+
+      attribute = gimp_attribute_new_string (tag, entry_value, TYPE_ASCII);
 
       if (attribute)
         {
@@ -1247,7 +1290,7 @@ datapage_save_to_attributes (Datapage *datapage, GimpAttributes **attributes)
                           if (! val_in_tag)
                             break;
 
-                          if (! g_strcmp0 (value, val_in_tag))
+                          if (! g_strcmp0 (entry_value, val_in_tag))
                             {
                               interpreted_val =  datapage->combobox_data[number_in_comboarray * datapage->max_combobox_entries + combobox_data_counter].val_in_combo;
                               gimp_attribute_set_interpreted_string (attribute, interpreted_val);
