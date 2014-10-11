@@ -695,6 +695,7 @@
 	<menuitem action="filters-cartoon" />
 	<menuitem action="filters-cubism" />
 	<menuitem action="filters-tile-glass" />
+	<menuitem action="filters-oilify" />
 	<menuitem action="filters-photocopy" />
 	<menuitem action="filters-softglow" />
       </menu>
