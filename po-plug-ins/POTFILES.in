@@ -33,7 +33,6 @@ plug-ins/common/displace.c
 plug-ins/common/edge.c
 plug-ins/common/edge-dog.c
 plug-ins/common/edge-neon.c
-plug-ins/common/edge-sobel.c
 plug-ins/common/emboss.c
 plug-ins/common/engrave.c
 plug-ins/common/file-aa.c
