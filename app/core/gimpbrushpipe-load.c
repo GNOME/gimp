@@ -29,6 +29,7 @@
 #include "core-types.h"
 
 #include "gimpbrush-load.h"
+#include "gimpbrush-private.h"
 #include "gimpbrushpipe.h"
 #include "gimpbrushpipe-load.h"
 
@@ -212,11 +213,11 @@ gimp_brush_pipe_load (GimpContext   *context,
   pipe->current = pipe->brushes[0];
 
   /*  just to satisfy the code that relies on this crap  */
-  GIMP_BRUSH (pipe)->spacing  = pipe->current->spacing;
-  GIMP_BRUSH (pipe)->x_axis   = pipe->current->x_axis;
-  GIMP_BRUSH (pipe)->y_axis   = pipe->current->y_axis;
-  GIMP_BRUSH (pipe)->mask     = pipe->current->mask;
-  GIMP_BRUSH (pipe)->pixmap   = pipe->current->pixmap;
+  GIMP_BRUSH (pipe)->priv->spacing  = pipe->current->priv->spacing;
+  GIMP_BRUSH (pipe)->priv->x_axis   = pipe->current->priv->x_axis;
+  GIMP_BRUSH (pipe)->priv->y_axis   = pipe->current->priv->y_axis;
+  GIMP_BRUSH (pipe)->priv->mask     = pipe->current->priv->mask;
+  GIMP_BRUSH (pipe)->priv->pixmap   = pipe->current->priv->pixmap;
 
   return g_list_prepend (NULL, pipe);
 }

@@ -29,6 +29,7 @@
 #include "gimpbrush.h"
 #include "gimpbrush-header.h"
 #include "gimpbrush-load.h"
+#include "gimpbrush-private.h"
 #include "gimptempbuf.h"
 
 #include "gimp-intl.h"
@@ -256,10 +257,10 @@ gimp_brush_load_brush (GimpContext   *context,
                         NULL);
   g_free (name);
 
-  brush->mask = gimp_temp_buf_new (header.width, header.height,
-                                   babl_format ("Y u8"));
+  brush->priv->mask = gimp_temp_buf_new (header.width, header.height,
+                                         babl_format ("Y u8"));
 
-  mask = gimp_temp_buf_get_data (brush->mask);
+  mask = gimp_temp_buf_get_data (brush->priv->mask);
   size = header.width * header.height * header.bytes;
 
   switch (header.bytes)
@@ -332,9 +333,9 @@ gimp_brush_load_brush (GimpContext   *context,
       {
         guchar buf[8 * 1024];
 
-        brush->pixmap = gimp_temp_buf_new (header.width, header.height,
-                                           babl_format ("R'G'B' u8"));
-        pixmap = gimp_temp_buf_get_data (brush->pixmap);
+        brush->priv->pixmap = gimp_temp_buf_new (header.width, header.height,
+                                                 babl_format ("R'G'B' u8"));
+        pixmap = gimp_temp_buf_get_data (brush->priv->pixmap);
 
         for (i = 0; success && i < size;)
           {
@@ -379,11 +380,11 @@ gimp_brush_load_brush (GimpContext   *context,
       return NULL;
     }
 
-  brush->spacing  = header.spacing;
-  brush->x_axis.x = header.width  / 2.0;
-  brush->x_axis.y = 0.0;
-  brush->y_axis.x = 0.0;
-  brush->y_axis.y = header.height / 2.0;
+  brush->priv->spacing  = header.spacing;
+  brush->priv->x_axis.x = header.width  / 2.0;
+  brush->priv->x_axis.y = 0.0;
+  brush->priv->y_axis.x = 0.0;
+  brush->priv->y_axis.y = header.height / 2.0;
 
   return brush;
 }
@@ -667,15 +668,15 @@ gimp_brush_load_abr_brush_v12 (GDataInputStream  *input,
 
         g_free (name);
 
-        brush->spacing  = abr_sampled_brush_hdr.spacing;
-        brush->x_axis.x = width / 2.0;
-        brush->x_axis.y = 0.0;
-        brush->y_axis.x = 0.0;
-        brush->y_axis.y = height / 2.0;
-        brush->mask     = gimp_temp_buf_new (width, height,
-                                             babl_format ("Y u8"));
+        brush->priv->spacing  = abr_sampled_brush_hdr.spacing;
+        brush->priv->x_axis.x = width / 2.0;
+        brush->priv->x_axis.y = 0.0;
+        brush->priv->y_axis.x = 0.0;
+        brush->priv->y_axis.y = height / 2.0;
+        brush->priv->mask     = gimp_temp_buf_new (width, height,
+                                                   babl_format ("Y u8"));
 
-        mask = gimp_temp_buf_get_data (brush->mask);
+        mask = gimp_temp_buf_get_data (brush->priv->mask);
         size = width * height * bytes;
 
         compress = abr_read_char (input, error);
@@ -809,15 +810,15 @@ gimp_brush_load_abr_brush_v6 (GDataInputStream  *input,
 
   g_free (name);
 
-  brush->spacing  = 25; /* real value needs 8BIMdesc section parser */
-  brush->x_axis.x = width / 2.0;
-  brush->x_axis.y = 0.0;
-  brush->y_axis.x = 0.0;
-  brush->y_axis.y = height / 2.0;
-  brush->mask     = gimp_temp_buf_new (width, height,
-                                       babl_format ("Y u8"));
+  brush->priv->spacing  = 25; /* real value needs 8BIMdesc section parser */
+  brush->priv->x_axis.x = width / 2.0;
+  brush->priv->x_axis.y = 0.0;
+  brush->priv->y_axis.x = 0.0;
+  brush->priv->y_axis.y = height / 2.0;
+  brush->priv->mask     = gimp_temp_buf_new (width, height,
+                                             babl_format ("Y u8"));
 
-  mask = gimp_temp_buf_get_data (brush->mask);
+  mask = gimp_temp_buf_get_data (brush->priv->mask);
 
   /* data decoding */
   if (! compress)

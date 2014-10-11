@@ -38,7 +38,7 @@
 
 /*  local function prototypes  */
 
-static void    gimp_brush_transform_bounding_box     (GimpTempBuf       *brush,
+static void    gimp_brush_transform_bounding_box     (GimpBrush         *brush,
                                                       const GimpMatrix3 *matrix,
                                                       gint              *x,
                                                       gint              *y,
@@ -67,11 +67,11 @@ gimp_brush_real_transform_size (GimpBrush *brush,
   GimpMatrix3 matrix;
   gint        x, y;
 
-  gimp_brush_transform_matrix (gimp_temp_buf_get_width  (brush->mask),
-                               gimp_temp_buf_get_height (brush->mask),
+  gimp_brush_transform_matrix (gimp_brush_get_width  (brush),
+                               gimp_brush_get_height (brush),
                                scale, aspect_ratio, angle, &matrix);
 
-  gimp_brush_transform_bounding_box (brush->mask, &matrix, &x, &y, width, height);
+  gimp_brush_transform_bounding_box (brush, &matrix, &x, &y, width, height);
 }
 
 /*
@@ -172,10 +172,10 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
    */
   const guint fraction_bitmask = pow(2, fraction_bits) - 1 ;
 
-  source = brush->mask;
+  source = gimp_brush_get_mask (brush);
 
-  src_width  = gimp_temp_buf_get_width  (source);
-  src_height = gimp_temp_buf_get_height (source);
+  src_width  = gimp_brush_get_width  (brush);
+  src_height = gimp_brush_get_height (brush);
 
   gimp_brush_transform_matrix (src_width, src_height,
                                scale, aspect_ratio, angle, &matrix);
@@ -186,13 +186,13 @@ gimp_brush_real_transform_mask (GimpBrush *brush,
   src_width_minus_one  = src_width  - 1;
   src_height_minus_one = src_height - 1;
 
-  gimp_brush_transform_bounding_box (source, &matrix,
+  gimp_brush_transform_bounding_box (brush, &matrix,
                                      &x, &y, &dest_width, &dest_height);
   gimp_matrix3_translate (&matrix, -x, -y);
   gimp_matrix3_invert (&matrix);
 
   result = gimp_temp_buf_new (dest_width, dest_height,
-                              gimp_temp_buf_get_format (brush->mask));
+                              gimp_temp_buf_get_format (source));
 
   dest = gimp_temp_buf_get_data (result);
   src  = gimp_temp_buf_get_data (source);
@@ -471,10 +471,10 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
    */
   const guint fraction_bitmask = pow(2, fraction_bits)- 1 ;
 
-  source = brush->pixmap;
+  source = gimp_brush_get_pixmap (brush);
 
-  src_width  = gimp_temp_buf_get_width  (source);
-  src_height = gimp_temp_buf_get_height (source);
+  src_width  = gimp_brush_get_width  (brush);
+  src_height = gimp_brush_get_height (brush);
 
   gimp_brush_transform_matrix (src_width, src_height,
                                scale, aspect_ratio, angle, &matrix);
@@ -485,13 +485,13 @@ gimp_brush_real_transform_pixmap (GimpBrush *brush,
   src_width_minus_one  = src_width  - 1;
   src_height_minus_one = src_height - 1;
 
-  gimp_brush_transform_bounding_box (source, &matrix,
+  gimp_brush_transform_bounding_box (brush, &matrix,
                                      &x, &y, &dest_width, &dest_height);
   gimp_matrix3_translate (&matrix, -x, -y);
   gimp_matrix3_invert (&matrix);
 
   result = gimp_temp_buf_new (dest_width, dest_height,
-                              gimp_temp_buf_get_format (brush->pixmap));
+                              gimp_temp_buf_get_format (source));
 
   dest = gimp_temp_buf_get_data (result);
   src  = gimp_temp_buf_get_data (source);
@@ -683,8 +683,8 @@ gimp_brush_transform_matrix (gdouble      width,
 {
   const gdouble center_x = width  / 2;
   const gdouble center_y = height / 2;
-  gdouble scale_x = scale;
-  gdouble scale_y = scale;
+  gdouble       scale_x  = scale;
+  gdouble       scale_y  = scale;
 
   if (aspect_ratio < 0.0)
     {
@@ -708,15 +708,15 @@ gimp_brush_transform_matrix (gdouble      width,
 /*  private functions  */
 
 static void
-gimp_brush_transform_bounding_box (GimpTempBuf       *brush,
+gimp_brush_transform_bounding_box (GimpBrush         *brush,
                                    const GimpMatrix3 *matrix,
                                    gint              *x,
                                    gint              *y,
                                    gint              *width,
                                    gint              *height)
 {
-  const gdouble  w = gimp_temp_buf_get_width  (brush);
-  const gdouble  h = gimp_temp_buf_get_height (brush);
+  const gdouble  w = gimp_brush_get_width  (brush);
+  const gdouble  h = gimp_brush_get_height (brush);
   gdouble        x1, x2, x3, x4;
   gdouble        y1, y2, y3, y4;
   gdouble        temp_x;

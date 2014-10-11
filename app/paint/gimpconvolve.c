@@ -164,8 +164,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                           fade_point));
 
   gimp_convolve_calculate_matrix (convolve, options->type,
-                                  gimp_temp_buf_get_width  (brush_core->brush->mask) / 2,
-                                  gimp_temp_buf_get_height (brush_core->brush->mask) / 2,
+                                  gimp_brush_get_width  (brush_core->brush) / 2,
+                                  gimp_brush_get_height (brush_core->brush) / 2,
                                   rate);
 
   /*  need a linear buffer for gimp_gegl_convolve()  */

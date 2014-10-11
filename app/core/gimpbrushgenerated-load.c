@@ -228,7 +228,7 @@ gimp_brush_generated_load (GimpContext   *context,
                                                 hardness, aspect_ratio, angle));
   g_free (name);
 
-  brush->spacing = spacing;
+  gimp_brush_set_spacing (brush, spacing);
 
   return g_list_prepend (NULL, brush);
 

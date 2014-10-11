@@ -27,6 +27,7 @@
 
 #include "core-types.h"
 
+#include "gimpbrush-private.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushgenerated-load.h"
 #include "gimpbrushgenerated-save.h"
@@ -253,18 +254,18 @@ gimp_brush_generated_dirty (GimpData *data)
   GimpBrushGenerated *brush  = GIMP_BRUSH_GENERATED (data);
   GimpBrush          *gbrush = GIMP_BRUSH (brush);
 
-  if (gbrush->mask)
-    gimp_temp_buf_unref (gbrush->mask);
+  if (gbrush->priv->mask)
+    gimp_temp_buf_unref (gbrush->priv->mask);
 
-  gbrush->mask = gimp_brush_generated_calc (brush,
-                                            brush->shape,
-                                            brush->radius,
-                                            brush->spikes,
-                                            brush->hardness,
-                                            brush->aspect_ratio,
-                                            brush->angle,
-                                            &gbrush->x_axis,
-                                            &gbrush->y_axis);
+  gbrush->priv->mask = gimp_brush_generated_calc (brush,
+                                                  brush->shape,
+                                                  brush->radius,
+                                                  brush->spikes,
+                                                  brush->hardness,
+                                                  brush->aspect_ratio,
+                                                  brush->angle,
+                                                  &gbrush->priv->x_axis,
+                                                  &gbrush->priv->y_axis);
 
   GIMP_DATA_CLASS (parent_class)->dirty (data);
 }

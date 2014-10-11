@@ -281,10 +281,13 @@ brush_get_info_invoker (GimpProcedure         *procedure,
 
       if (brush)
         {
-          width     = gimp_temp_buf_get_width  (brush->mask);
-          height    = gimp_temp_buf_get_height (brush->mask);
-          mask_bpp  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (brush->mask));
-          color_bpp = brush->pixmap ? babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (brush->pixmap)) : 0;
+          GimpTempBuf *mask   = gimp_brush_get_mask (brush);
+          GimpTempBuf *pixmap = gimp_brush_get_pixmap (brush);
+
+          width     = gimp_brush_get_width  (brush);
+          height    = gimp_brush_get_height (brush);
+          mask_bpp  = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (mask));
+          color_bpp = pixmap ? babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pixmap)) : 0;
         }
       else
         success = FALSE;
@@ -332,21 +335,24 @@ brush_get_pixels_invoker (GimpProcedure         *procedure,
 
       if (brush)
         {
-          width          = gimp_temp_buf_get_width  (brush->mask);
-          height         = gimp_temp_buf_get_height (brush->mask);
-          mask_bpp       = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (brush->mask));
-          num_mask_bytes = gimp_temp_buf_get_height (brush->mask) *
-                           gimp_temp_buf_get_width  (brush->mask) * mask_bpp;
-          mask_bytes     = g_memdup (gimp_temp_buf_get_data (brush->mask),
+          GimpTempBuf *mask   = gimp_brush_get_mask (brush);
+          GimpTempBuf *pixmap = gimp_brush_get_pixmap (brush);
+
+          width          = gimp_temp_buf_get_width  (mask);
+          height         = gimp_temp_buf_get_height (mask);
+          mask_bpp       = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (mask));
+          num_mask_bytes = gimp_temp_buf_get_height (mask) *
+                           gimp_temp_buf_get_width  (mask) * mask_bpp;
+          mask_bytes     = g_memdup (gimp_temp_buf_get_data (mask),
                                      num_mask_bytes);
 
-          if (brush->pixmap)
+          if (pixmap)
             {
-              color_bpp       = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (brush->pixmap));
-              num_color_bytes = gimp_temp_buf_get_height (brush->pixmap) *
-                                gimp_temp_buf_get_width  (brush->pixmap) *
+              color_bpp       = babl_format_get_bytes_per_pixel (gimp_temp_buf_get_format (pixmap));
+              num_color_bytes = gimp_temp_buf_get_height (pixmap) *
+                                gimp_temp_buf_get_width  (pixmap) *
                                 color_bpp;
-              color_bytes     = g_memdup (gimp_temp_buf_get_data (brush->pixmap),
+              color_bytes     = g_memdup (gimp_temp_buf_get_data (pixmap),
                                           num_color_bytes);
             }
         }

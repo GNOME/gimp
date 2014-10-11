@@ -110,8 +110,8 @@ brushes_get_brush_invoker (GimpProcedure         *procedure,
   if (brush)
     {
       name    = g_strdup (gimp_object_get_name (brush));
-      width   = gimp_temp_buf_get_width  (brush->mask);
-      height  = gimp_temp_buf_get_height (brush->mask);
+      width   = gimp_brush_get_width  (brush);
+      height  = gimp_brush_get_height (brush);
       spacing = gimp_brush_get_spacing (brush);
     }
   else
@@ -214,14 +214,16 @@ brushes_get_brush_data_invoker (GimpProcedure         *procedure,
 
       if (brush)
         {
+          GimpTempBuf *mask = gimp_brush_get_mask (brush);
+
           actual_name = g_strdup (gimp_object_get_name (brush));
           opacity     = 1.0;
           spacing     = gimp_brush_get_spacing (brush);
           paint_mode  = 0;
-          width       = gimp_temp_buf_get_width  (brush->mask);
-          height      = gimp_temp_buf_get_height (brush->mask);
-          length      = gimp_temp_buf_get_data_size (brush->mask);
-          mask_data   = g_memdup (gimp_temp_buf_get_data (brush->mask), length);
+          width       = gimp_brush_get_width  (brush);
+          height      = gimp_brush_get_height (brush);
+          length      = gimp_temp_buf_get_data_size (mask);
+          mask_data   = g_memdup (gimp_temp_buf_get_data (mask), length);
         }
       else
         success = FALSE;

@@ -68,6 +68,7 @@ libappcore_a_sources = \
 	gimpbrush-header.h			\
 	gimpbrush-load.c			\
 	gimpbrush-load.h			\
+	gimpbrush-private.h			\
 	gimpbrush-transform.c			\
 	gimpbrush-transform.h			\
 	gimpbrushcache.c			\
