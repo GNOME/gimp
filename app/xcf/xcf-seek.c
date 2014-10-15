@@ -26,6 +26,7 @@
 
 #include "gimp-intl.h"
 
+
 gboolean
 xcf_seek_pos (XcfInfo  *info,
               guint     pos,
@@ -47,25 +48,6 @@ xcf_seek_pos (XcfInfo  *info,
 
       g_assert (info->cp == g_seekable_tell (info->seekable));
     }
-
-  return TRUE;
-}
-
-gboolean
-xcf_seek_end (XcfInfo  *info,
-              GError  **error)
-{
-  GError *my_error = NULL;
-
-  if (! g_seekable_seek (info->seekable, 0, G_SEEK_END,
-                         NULL, &my_error))
-    {
-      g_propagate_prefixed_error (error, my_error,
-                                  _("Could not seek in XCF file: "));
-      return FALSE;
-    }
-
-  info->cp = g_seekable_tell (info->seekable);
 
   return TRUE;
 }
