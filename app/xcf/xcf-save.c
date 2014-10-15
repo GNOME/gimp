@@ -956,14 +956,10 @@ xcf_save_prop (XcfInfo    *info,
             xcf_check_error (xcf_save_parasite_list (info, list, error));
 
             length = info->cp - base;
+
             /* go back to the saved position and write the length */
             xcf_check_error (xcf_seek_pos (info, pos, error));
-            xcf_write_int32 (info->output, &length, 1, &tmp_error);
-            if (tmp_error)
-              {
-                g_propagate_error (error, tmp_error);
-                return FALSE;
-              }
+            xcf_write_int32_check_error (info, &length, 1);
 
             xcf_check_error (xcf_seek_pos (info, base + length, error));
           }
@@ -1005,12 +1001,7 @@ xcf_save_prop (XcfInfo    *info,
 
         /* go back to the saved position and write the length */
         xcf_check_error (xcf_seek_pos (info, pos, error));
-        xcf_write_int32 (info->output, &length, 1, &tmp_error);
-        if (tmp_error)
-          {
-            g_propagate_error (error, tmp_error);
-            return FALSE;
-          }
+        xcf_write_int32_check_error (info, &length, 1);
 
         xcf_check_error (xcf_seek_pos (info, base + length, error));
       }
@@ -1071,12 +1062,7 @@ xcf_save_prop (XcfInfo    *info,
 
         /* go back to the saved position and write the length */
         xcf_check_error (xcf_seek_pos (info, pos, error));
-        xcf_write_int32 (info->output, &length, 1, &tmp_error);
-        if (tmp_error)
-          {
-            g_propagate_error (error, tmp_error);
-            return FALSE;
-          }
+        xcf_write_int32_check_error (info, &length, 1);
 
         xcf_check_error (xcf_seek_pos (info, base + length, error));
       }
