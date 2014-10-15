@@ -1355,7 +1355,7 @@ xcf_save_level (XcfInfo     *info,
   gint        n_tile_cols;
   guint       ntiles;
   gint        i;
-  guchar     *rlebuf;
+  guchar     *rlebuf    = NULL;
   GError     *tmp_error = NULL;
 
   format = gegl_buffer_get_format (buffer);
@@ -1372,7 +1372,8 @@ xcf_save_level (XcfInfo     *info,
   /* allocate a temporary buffer to store the rle data before it is
    * written to disk
    */
-  rlebuf = g_alloca (XCF_TILE_WIDTH * XCF_TILE_HEIGHT * bpp * 1.5);
+  if (info->compression == COMPRESS_RLE)
+    rlebuf = g_alloca (XCF_TILE_WIDTH * XCF_TILE_HEIGHT * bpp * 1.5);
 
   n_tile_rows = gimp_gegl_buffer_get_n_tile_rows (buffer, XCF_TILE_HEIGHT);
   n_tile_cols = gimp_gegl_buffer_get_n_tile_cols (buffer, XCF_TILE_WIDTH);
