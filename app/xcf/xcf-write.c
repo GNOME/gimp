@@ -76,6 +76,33 @@ xcf_write_int32 (FILE           *fp,
 }
 
 /**
+ * xcf_write_zero_int32:
+ * @fp:     output file stream
+ * @count:  number of words to write
+ * @error:  container for occurred errors
+ *
+ * Write @count 4-byte zeros to @fp.
+ *
+ * Returns: count (in numbers of bytes, not words)
+ */
+guint
+xcf_write_zero_int32 (FILE    *fp,
+                      gint     count,
+                      GError **error)
+{
+  if (count > 0)
+    {
+      guint32 *tmp = g_alloca (count * 4);
+
+      memset (tmp, 0, count * 4);
+
+      return xcf_write_int8 (fp, (const guint8 *) tmp, count * 4, error);
+    }
+
+  return 0;
+}
+
+/**
  * xcf_write_float:
  * @fp:     output file stream
  * @data:   source data array
