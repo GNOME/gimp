@@ -56,6 +56,23 @@ xcf_write_int32 (GOutputStream  *output,
 }
 
 guint
+xcf_write_zero_int32 (GOutputStream  *output,
+                      gint            count,
+                      GError        **error)
+{
+  if (count > 0)
+    {
+      guint32 *tmp = g_alloca (count * 4);
+
+      memset (tmp, 0, count * 4);
+
+      return xcf_write_int8 (output, (const guint8 *) tmp, count * 4, error);
+    }
+
+  return 0;
+}
+
+guint
 xcf_write_float (GOutputStream  *output,
                  const gfloat   *data,
                  gint            count,
