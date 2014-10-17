@@ -113,9 +113,7 @@ xcf_init (Gimp *gimp)
   gimp_plug_in_procedure_set_image_types (proc, "RGB*, GRAY*, INDEXED*");
   gimp_plug_in_procedure_set_file_proc (proc, "xcf", "", NULL);
   gimp_plug_in_procedure_set_mime_type (proc, "image/xcf");
-#ifdef GIO_IS_FIXED
   gimp_plug_in_procedure_set_handles_uri (proc);
-#endif
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-xcf-save");
   gimp_procedure_set_static_strings (procedure,
@@ -188,9 +186,7 @@ xcf_init (Gimp *gimp)
   gimp_plug_in_procedure_set_file_proc (proc, "xcf", "",
                                         "0,string,gimp\\040xcf\\040");
   gimp_plug_in_procedure_set_mime_type (proc, "image/xcf");
-#ifdef GIO_IS_FIXED
   gimp_plug_in_procedure_set_handles_uri (proc);
-#endif
 
   gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-xcf-load");
   gimp_procedure_set_static_strings (procedure,
@@ -268,11 +264,7 @@ xcf_load_invoker (GimpProcedure         *procedure,
   gimp_set_busy (gimp);
 
   uri      = g_value_get_string (gimp_value_array_index (args, 1));
-#ifdef GIO_IS_FIXED
   file     = g_file_new_for_uri (uri);
-#else
-  file     = g_file_new_for_path (uri);
-#endif
   filename = g_file_get_parse_name (file);
 
   info.input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
@@ -375,11 +367,7 @@ xcf_save_invoker (GimpProcedure         *procedure,
 
   image    = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
   uri      = g_value_get_string (gimp_value_array_index (args, 3));
-#ifdef GIO_IS_FIXED
   file     = g_file_new_for_uri (uri);
-#else
-  file     = g_file_new_for_path (uri);
-#endif
   filename = g_file_get_parse_name (file);
 
   info.output = G_OUTPUT_STREAM (g_file_replace (file,
