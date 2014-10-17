@@ -43,6 +43,7 @@
 #include "file/file-utils.h"
 #include "plug-in/gimppluginmanager-file.h"
 #include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "gimppdb.h"
 #include "gimpprocedure.h"
@@ -75,19 +76,30 @@ file_load_invoker (GimpProcedure         *procedure,
   file_proc = file_procedure_find (gimp->plug_in_manager->load_procs,
                                    file, error);
 
-  g_object_unref (file);
-
   if (! file_proc)
-    return gimp_procedure_get_return_values (procedure, FALSE,
-                                             error ? *error : NULL);
+    {
+      g_object_unref (file);
+
+      return gimp_procedure_get_return_values (procedure, FALSE,
+                                               error ? *error : NULL);
+    }
 
   proc = GIMP_PROCEDURE (file_proc);
 
   new_args = gimp_procedure_get_arguments (proc);
 
-  for (i = 0; i < 3; i++)
-    g_value_transform (gimp_value_array_index (args, i),
-                       gimp_value_array_index (new_args, i));
+  g_value_transform (gimp_value_array_index (args, 0),
+                     gimp_value_array_index (new_args, 0));
+
+  if (file_proc->handles_uri)
+    g_value_take_string (gimp_value_array_index (new_args, 1),
+                         g_file_get_uri (file));
+  else
+    g_value_transform (gimp_value_array_index (args, 1),
+                       gimp_value_array_index (new_args, 1));
+
+  g_value_transform (gimp_value_array_index (args, 2),
+                     gimp_value_array_index (new_args, 2));
 
   for (i = 3; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
@@ -113,6 +125,8 @@ file_load_invoker (GimpProcedure         *procedure,
           gimp_image_set_load_proc (image, file_proc);
         }
     }
+
+  g_object_unref (file);
 
   return return_vals;
 }
@@ -272,19 +286,34 @@ file_save_invoker (GimpProcedure         *procedure,
     file_proc = file_procedure_find (gimp->plug_in_manager->export_procs,
                                      file, error);
 
-  g_object_unref (file);
-
   if (! file_proc)
-    return gimp_procedure_get_return_values (procedure, FALSE,
-                                             error ? *error : NULL);
+    {
+      g_object_unref (file);
+
+      return gimp_procedure_get_return_values (procedure, FALSE,
+                                               error ? *error : NULL);
+    }
 
   proc = GIMP_PROCEDURE (file_proc);
 
   new_args = gimp_procedure_get_arguments (proc);
 
-  for (i = 0; i < 5; i++)
-    g_value_transform (gimp_value_array_index (args, i),
-                       gimp_value_array_index (new_args, i));
+  g_value_transform (gimp_value_array_index (args, 0),
+                     gimp_value_array_index (new_args, 0));
+  g_value_transform (gimp_value_array_index (args, 1),
+                     gimp_value_array_index (new_args, 1));
+  g_value_transform (gimp_value_array_index (args, 2),
+                     gimp_value_array_index (new_args, 2));
+
+  if (file_proc->handles_uri)
+    g_value_take_string (gimp_value_array_index (new_args, 3),
+                         g_file_get_uri (file));
+  else
+    g_value_transform (gimp_value_array_index (args, 3),
+                       gimp_value_array_index (new_args, 3));
+
+  g_value_transform (gimp_value_array_index (args, 4),
+                     gimp_value_array_index (new_args, 4));
 
   for (i = 5; i < proc->num_args; i++)
     if (G_IS_PARAM_SPEC_STRING (proc->args[i]))
@@ -297,6 +326,8 @@ file_save_invoker (GimpProcedure         *procedure,
                                              new_args);
 
   gimp_value_array_unref (new_args);
+
+  g_object_unref (file);
 
   return return_vals;
 }
