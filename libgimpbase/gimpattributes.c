@@ -90,7 +90,7 @@ struct Namespaces namespaces_table[] = {
 
 static   gpointer                  gimp_attributes_parent_class = NULL;
 static   GimpAttribute            *current_attribute            = NULL;
-
+static   gboolean                  iter_initialized           = FALSE;
 
 
 static GimpAttributes*         gimp_attributes_construct                   (GType                object_type);
@@ -486,11 +486,11 @@ gimp_attributes_remove_attribute (GimpAttributes      *attributes,
                                   const gchar         *name)
 {
   gchar            *lowchar;
-  gboolean          success = FALSE;
+  gboolean          success       = FALSE;
   GHashTableIter    iter_remove;
   gpointer          key, value;
-  gchar            *tag_to_remove;
-  gchar            *name_of_tag;
+  gchar            *tag_to_remove = NULL;
+  gchar            *name_of_tag   = NULL;
 
   lowchar = g_ascii_strdown (name, -1);
 
@@ -1458,6 +1458,7 @@ gimp_attributes_iter_init (GimpAttributes *attributes, GList **iter)
   g_return_val_if_fail (GIMP_IS_ATTRIBUTES (attributes), NULL);
 
   *iter = attributes->priv->sorted_key_list;
+  iter_initialized = TRUE;
 
   return attributes->priv->sorted_key_list;
 }
@@ -1472,7 +1473,15 @@ gimp_attributes_iter_next (GimpAttributes *attributes, GimpAttribute **attribute
 
   *attribute = NULL;
 
-  tmp = g_list_next (*prev);
+  if (iter_initialized)
+    {
+      tmp = g_list_first (*prev);
+    }
+  else
+    {
+      tmp = g_list_next (*prev);
+    }
+
   if (tmp)
     {
       *prev = tmp;
@@ -1480,6 +1489,9 @@ gimp_attributes_iter_next (GimpAttributes *attributes, GimpAttribute **attribute
 
       *attribute = gimp_attributes_get_attribute_sorted (attributes, sorted);
     }
+
+  iter_initialized = FALSE;
+
   if (*attribute)
     return TRUE;
   else
@@ -1648,8 +1660,8 @@ gimp_attributes_deserialize_text (GMarkupParseContext  *context,
                                   gpointer              user_data,
                                   GError              **error)
 {
-  GimpAttributesParseData *parse_data = user_data;
-  GimpAttribute           *attribute;
+  GimpAttributesParseData *parse_data       = user_data;
+  GimpAttribute           *attribute        = NULL;
   const gchar             *current_element;
 
   current_element = g_markup_parse_context_get_element (context);
@@ -1657,6 +1669,12 @@ gimp_attributes_deserialize_text (GMarkupParseContext  *context,
   if (! g_strcmp0 (current_element, "value"))
     {
       gchar *value = g_strndup (text, text_len);
+
+//      if (g_str_has_prefix (parse_data->name, "Exif.GPSInfo"))
+//      if (! g_strcmp0 (private->name, "Exif.Image.ResolutionUnit"))
+//        {
+//          g_print ("found: %s\n", parse_data->name);
+//        }
 
       if (parse_data->base64)
         {
@@ -1681,7 +1699,7 @@ gimp_attributes_deserialize_text (GMarkupParseContext  *context,
 
       g_free (value);
 
-      if (gimp_attribute_is_valid (attribute))
+      if (attribute && gimp_attribute_is_valid (attribute))
         {
           gimp_attributes_add_attribute (parse_data->attributes, attribute);
           current_attribute = attribute;
