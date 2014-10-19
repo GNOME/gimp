@@ -62,6 +62,7 @@
 
 #define POINT_GRAB_THRESHOLD_SQ (SQR (HANDLE_DIAMETER / 2))
 #define FULL_HANDLE_THRESHOLD_SQ (POINT_GRAB_THRESHOLD_SQ * 9)
+#define PARTIAL_HANDLE_THRESHOLD_SQ (FULL_HANDLE_THRESHOLD_SQ * 5)
 
 /*  local function prototypes  */
 
@@ -651,6 +652,19 @@ gimp_blend_tool_update_items (GimpBlendTool *blend_tool)
     }
 }
 
+static gint
+calc_handle_diameter (gdouble distance)
+{
+  /* Calculate the handle size based on distance from the cursor */
+  gdouble size = 1.0 - (distance - FULL_HANDLE_THRESHOLD_SQ) /
+          (PARTIAL_HANDLE_THRESHOLD_SQ - FULL_HANDLE_THRESHOLD_SQ);
+
+  if      (size > 1.0) size = 1.0;
+  else if (size < 0.0) size = 0.0;
+
+  return (gint)(size * HANDLE_DIAMETER);
+}
+
 static void
 gimp_blend_tool_update_item_hilight (GimpBlendTool *blend_tool)
 {
@@ -658,7 +672,8 @@ gimp_blend_tool_update_item_hilight (GimpBlendTool *blend_tool)
   if (gimp_draw_tool_is_active (draw_tool))
     {
       GimpBlendToolPoint hilight_point;
-      gboolean           start_visible, end_visible;
+      gboolean           start_visible,  end_visible;
+      gint               start_diameter, end_diameter;
 
       /* Calculate handle visibility */
       if (blend_tool->grabbed_point)
@@ -676,7 +691,8 @@ gimp_blend_tool_update_item_hilight (GimpBlendTool *blend_tool)
                                                       blend_tool->start_x,
                                                       blend_tool->start_y);
 
-          start_visible = dist < FULL_HANDLE_THRESHOLD_SQ;
+          start_diameter = calc_handle_diameter (dist);
+          start_visible  = start_diameter > 2;
 
           dist = gimp_draw_tool_calc_distance_square (draw_tool,
                                                       draw_tool->display,
@@ -685,7 +701,8 @@ gimp_blend_tool_update_item_hilight (GimpBlendTool *blend_tool)
                                                       blend_tool->end_x,
                                                       blend_tool->end_y);
 
-          end_visible = dist < FULL_HANDLE_THRESHOLD_SQ;
+          end_diameter = calc_handle_diameter (dist);
+          end_visible  = end_diameter > 2;
         }
 
       gimp_canvas_item_set_visible (blend_tool->start_handle_circle,
@@ -698,6 +715,26 @@ gimp_blend_tool_update_item_hilight (GimpBlendTool *blend_tool)
         hilight_point = blend_tool->grabbed_point;
       else
         hilight_point = gimp_blend_tool_get_point_under_cursor (blend_tool);
+
+      if (start_visible)
+        {
+          gimp_canvas_item_begin_change (blend_tool->start_handle_circle);
+          g_object_set (blend_tool->start_handle_circle,
+                        "width", start_diameter,
+                        "height", start_diameter,
+                        NULL);
+          gimp_canvas_item_end_change (blend_tool->start_handle_circle);
+        }
+
+      if (end_visible)
+        {
+          gimp_canvas_item_begin_change (blend_tool->end_handle_circle);
+          g_object_set (blend_tool->end_handle_circle,
+                        "width", end_diameter,
+                        "height", end_diameter,
+                        NULL);
+          gimp_canvas_item_end_change (blend_tool->end_handle_circle);
+        }
 
       gimp_canvas_item_set_highlight (blend_tool->start_handle_circle,
                                       hilight_point == POINT_START);
