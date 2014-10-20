@@ -1,0 +1,274 @@
+===================================
+Compositing and layer modes in GIMP
+===================================
+
+This document describes the process of compositing layers and the layer modes
+in GIMP.
+
+License
+-------
+This is free documentation; you can modify and/or redistribute
+it according to the terms of the GNU General Public License
+as published by the Free Software Foundation, either version
+2 of the license, or (at your option) any later version.
+
+About this document
+-------------------
+
+This document was originally written by Henning Makholm and part of the 
+XCF file format specification. Because the topics here are more general
+in the context of GIMP they have been moved into a separate document.
+
+9. COMPOSITING AND LAYER MODES
+===============================
+
+This section describes the "flattening" process that GIMP applies
+when a multi-layer image is displayed in the editor or exported to
+other image file formats. It is present for reference only; an XCF
+consumer may well elect to do something different with pixel data from
+the layers than flattening them.
+
+Most XCF consumers will need to react to the layer mode property of
+each layer; such a reaction must be informed by knowledge of how the
+different layer modes affect the flattening process. In some
+applications it might be acceptable for an XCF consumer to refuse
+processing images with layer modes other than "Normal", but such an
+application will probably not be considered fully XCF capable by its
+users.
+
+In this section we consider primary color (or grayscale) intensities
+and alpha values for pixels to be real numbers ranging from 0.0 to
+1.0. This makes many of the formulas easier; the reader is asked to
+keep in mind that a (linear) conversion from the integral 0..255 scale
+of the actual XCF scale is implied whenever data from the XCF file is
+mentioned.
+
+Any practical implementation of the computations specified below may
+suffer rounding errors; this specification do not detail how these are
+to be handled. GIMP itself rounds values to an integral number of
+255ths at many points in the computation. This specification does not
+specify exactly which these points are, and authors of XCF renderers
+that aim to reproduce the effects of GIMP's flattening down to the
+least significant bits are referred to studying its source code.
+
+In the description below, the variable letter "a" is used for alpha
+values. The variable letter "r", "g", "b" are used for primary
+intensities, "y" is used for grayscale intensities, and "i" is used
+for color map indexed. The letter "c" is used for the complete
+color information for a pixel; depending on the color mode of the
+image that is either an (r,g,b) triple, a y, or a c.
+
+The flattening process works independently for each pixel in the
+canvas area. The description of some layer modes in the GIMP manual
+may give the impression that they involve filters that let pixels
+influence neighbor pixels, but that is not true.
+
+This description does not attempt to preserve the color information
+for completely transparent pixels in a layer. If an application uses
+this color information, it should document explicitly how it behaves
+when transparent pixels from several different layers cover the same
+point of the canvas.
+
+Flattening overview
+-------------------
+
+This is how to compute the flattened result for a single pixel
+position (in theory, that is - efficient implementations will of
+course follow this procedure or an equivalent one for many pixels in
+parallel):
+
+1. Initialize a "working pixel" (a1,c1) to be completely transparent
+   (that is, a1=0.0 and the value of c1 is immaterial).
+
+2. Do the following for each visible layer in the image, starting with
+   the one that comes LAST in the master layer list:
+
+   3. Ignore the layer if it is the floating selection, or if it
+      does not overlap the pixel position in question.
+
+   4. Let (a2,c2) be the pixel data for the layer at the pixel
+      position in question. If the layer does not have an alpha
+      channel, then set a1 to 1.0.
+
+   5. If the layer is the one that the floating selection is attached
+      to and the floating selection overlaps the pixel position in
+      question, then do the following:
+
+      6. Let (a3,c3) be the pixel data for the floating selection
+         layer at the pixel position in question.
+
+      7. If there is a selection channel, then let x be its value
+         at the pixel position in question, and set a3 to a3*x.
+
+      8. Let m3 be the layer mode of the floating selection.
+
+      9. Set (a2,c2) to COMPOSITE(a2,c2, a3,c3,m3).
+         The COMPOSITE function is defined below.
+
+   10. If the layer has a layer mask and it is enabled, then let x be
+       the value of the layer mask at the pixel position in question,
+       and set a2 to a2*x.
+
+   11. Let m2 be the layer mode of the layer.
+
+   12. If the layer is the bottommost visible layer (i.e., if it is
+       the last visible layer in the master layer list) and m2 is not
+       "Normal" or "Dissolve", then set m2 to "Normal".
+
+   13. Set (a1,c1) to COMPOSITE(a1,c1, a2,c2,m2).
+       The COMPOSITE function is defined below.
+
+14. If the flattened image is to be shown against a background of
+    color c0, then actually visible pixel is
+    COMPOSITE(1.0,c0, a1,c1,Normal).
+
+    Note that unless all layers have mode Normal, it would give the
+    wrong result to start by initializing (a1,c1) to (1.0,c0).
+
+Helper functions
+----------------
+
+The following auxiliary functions are used in the definition of
+COMPOSITE below:
+
+ MIN(x1,...,xn) is the least value of x1...xn
+
+ MAX(x1,...,xn) is the largest value of x1..xn
+
+ MID(x1,...,xn) = (MIN(x1,...,xn)+MAX(x1,...,xn))/2
+
+ CLAMP(x) = if x < 0 then 0.0 else if x > 1 then 1.0 else x
+
+ BLEND(a1,x1, a2,x2) = (1-k)*x1 + k*x2
+                       where k = a2/(1-(1-a1)*(1-a2))
+
+Layer modes
+-----------
+
+This and the following sections define the COMPOSITE function used in
+the general flattening algorithm.
+
+"Normal" mode for RGB or grayscale images is the usual mode of
+compositing in computer graphics with alpha channels. In indexed
+mode, the alpha value gets rounded to either 1.0 or 0.0 such that
+no colors outside the color map get produced:
+
+  COMPOSITE(a1,y1, a2,y2,Normal)
+     = ( 1-(1-a1)*(1-a2), BLEND(a1,y1, a2,y2) )
+
+  COMPOSITE(a1,r1,g1,b1, a2,r2,g2,b2,Normal)
+     = ( 1-(1-a1)*(1-a2), BLEND(a1,r1, a2,r2),
+                          BLEND(a1,g1, a2,g2),
+                          BLEND(a1,b1, a2,b2) )
+
+  COMPOSITE(a1,i1, a2,i2,Normal) = if a2 > 0.5 then (1.0,i2) else (a1,i1)
+
+"Dissolve" mode corresponds to randomly dithering the alpha channel to
+the set {0.0, 1.0}:
+
+  COMPOSITE(a1,c1, a2,c2,Dissolve) = chose pseudo-randomly between
+                                     (1.0,c2) with probability a2
+                                     (a1,c1)  with probability 1-a2
+
+These two modes are the only ones that make sense for all of the RGB,
+grayscale and indexed color models. In the indexed color model, all
+layer modes except Dissolve are treated as Normal.
+
+Most layer modes belong to the following group, which makes sense for
+RGB and grayscale images, but not for indexed ones:
+
+  COMPOSITE(a1,y2, a2,y2,m)
+     = ( a1, BLEND(a1,y1, MIN(a1,a2),f(y1,y2, m)) )
+
+  COMPOSITE(a1,r1,g1,b1, a2,r2,g2,b2,m)
+     = ( a1, BLEND(a1,r2, MIN(a1,a2),f(r1,r2, m)),
+             BLEND(a1,g1, MIN(a1,a2),f(g1,g2, m)),
+             BLEND(a1,b1, MIN(a1,a2),f(b1,g2, m)) )
+
+when 3 <= m <= 10 or 15 <= m <= 21.
+
+The  following table defines f(x1,x2,m):
+
+  Multiply:      f(x1,x2,  3) = x1*x2
+  Screen:        f(x1,x2,  4) = 1-(1-x1)*(1-x2)
+  Overlay:       f(x1,x2,  5) = (1-x2)*x1^2 + x2*(1-(1-x2)^2)
+  Difference:    f(x1,x2,  6) = if x1 > x2 then x1-x2 else x2-x1
+  Addition:      f(x1,x2,  7) = CLAMP(x1+x2)
+  Subtract:      f(x1,x2,  8) = CLAMP(x1-x2)
+  Darken Only:   f(x1,x2,  9) = MIN(x1,x2)
+  Lighten Only:  f(x1,x2, 10) = MAX(x1,x2)
+  Divide:        f(x1,x2, 15) = CLAMP(x1/x2)
+  Dodge:         f(x1,x2, 16) = CLAMP(x1/(1-x2))
+  Burn           f(x1,x2, 17) = CLAMP(1-(1-x1)/x2)
+  Hard Light:    f(x1,x2, 18) = if x2 < 0.5 then 2*x1*x2 else 1-2*(1-x1)(1-x2)
+  Soft Light:    f(x1,x2, 19) = (1-x2)*x1^2 + x2*(1-(1-x2)^2)
+  Grain Extract: f(x1,x2, 20) = CLAMP(x1-x2+0.5)
+  Grain Merge:   f(x1,x2, 21) = CLAMP(x1+x2-0.5)
+
+Note that the "Overlay" and "Soft Light" modes have identical effects.
+In the "Divide", "Dodge", and "Burn" modes, division by zero should
+be considered to produce a number so large that CLAMP(x/0) = 1 unless
+x=0, in which case CLAMP(0/0) = 0.
+
+The remaining four layer modes only make sense in the RGB color model;
+if the color mode of the image is grayscale or indexed they will be
+interpreted as Normal.
+
+  COMPOSITE(a1,r1,g1,b1, a2,r2,g2,b2,m)
+     = ( a1, BLEND(a1,r2, MIN(a1,a2),r0),
+             BLEND(a1,g1, MIN(a1,a2),g0),
+             BLEND(a1,b1, MIN(a1,a2),b0) )
+       where (r0,g0,b0) = h(r1,g1,b1, r2,g2,b2, m)
+
+when 11 <= m <= 14.
+
+For defining these modes, we say that
+
+(r,g,b) has the _hue_ of (r',g',b')
+  if r' = g' = b' and r >= g = b
+  or there exist p and q such that p>=0 and r=p*r'+q and b=p*b'+q and g=p*g'+q
+
+(r,g,b) has the _value_ of (r',g',b')
+  if MAX(r,g,b) = MAX(r',g',b')
+
+(r,g,b) has the _HSV-saturation_ of (r',g',b')
+  if r' = g' = b' = 0 and r = g = b
+  or MIN(r,g,b) = MAX(r,g,b)*MIN(r',g',b')/MAX(r',g',b')
+
+(r,g,b) has the _luminosity_ of (r',g',b')
+  if MID(r,g,b) = MID(r',g',b')
+
+(r,g,b) has the _HSL-saturation_ of (r',g',b')
+  if r' = g' = b' and r = g = b
+  or MAX(r,g,b)-MIN(r,g,b) = MIN(MID(r,g,b),1-MID(r,g,b)) *
+            (MAX(r',g',b')-MIN(r',g',b'))/MIN(MID(r',g',b'),1-MID(r',g',b'))
+
+Mode 11: Hue (H of HSV)
+
+  h(r1,g1,b1, r2,g2,b2, 11) is
+   if r2=g2=b2 then (r1,g1,b1) unchanged
+   otherwise: the color that has
+                the hue of (r1,g2,b2)
+                the value of (r1,g1,b1)
+                the HSV-saturation of (r1,g1,b1)
+
+Mode 12: Saturation (S of HSV)
+
+  h(r1,g1,b1, r2,g2,b2, 12) is the color that has
+    the hue of (r1,g1,b1)
+    the value of (r1,g1,b1)
+    the HSV-saturation of (r2,g2,b2)
+
+Mode 13: Color (H and S of HSL)
+
+  h(r1,g1,b1, r2,g2,b2, 13) is the color that has
+    the hue of (r2,g2,b2)
+    the luminosity of (r1,g1,b1)
+    the HSL-saturation of (r2,g2,b2)
+
+Mode 14: Value (V of HSV)
+
+  h(r1,g1,b1, r2,g2,b2, 14) is the color that has
+    the hue of (r1,g1,b1)
+    the value of (r2,g2,b2)
+    the HSV-saturation of (r1,g1,b1)
