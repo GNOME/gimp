@@ -121,13 +121,13 @@ query (void)
     { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
     { GIMP_PDB_FLOAT,    "quality",      "Quality of saved image (0 <= quality <= 1)" },
     { GIMP_PDB_FLOAT,    "smoothing",    "Smoothing factor for saved image (0 <= smoothing <= 1)" },
-    { GIMP_PDB_INT32,    "optimize",     "Optimization of entropy encoding parameters (0/1)" },
-    { GIMP_PDB_INT32,    "progressive",  "Enable progressive jpeg image loading (0/1)" },
+    { GIMP_PDB_INT32,    "optimize",     "Use optimized tables during Huffman coding (0/1)" },
+    { GIMP_PDB_INT32,    "progressive",  "Create progressive JPEG images (0/1)" },
     { GIMP_PDB_STRING,   "comment",      "Image comment" },
-    { GIMP_PDB_INT32,    "subsmp",       "The subsampling option number" },
+    { GIMP_PDB_INT32,    "subsmp",       "Sub-sampling type { 0, 1, 2, 3 } 0 == 4:2:0 (chroma quartered), 1 == 4:2:2 Horizontal (chroma halved), 2 == 4:4:4 (best quality), 3 == 4:2:2 Vertical (chroma halved)" },
     { GIMP_PDB_INT32,    "baseline",     "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all decoders) (0/1)" },
     { GIMP_PDB_INT32,    "restart",      "Interval of restart markers (in MCU rows, 0 = no restart markers)" },
-    { GIMP_PDB_INT32,    "dct",          "DCT algorithm to use (speed/quality tradeoff)" }
+    { GIMP_PDB_INT32,    "dct",          "DCT method to use { INTEGER (0), FIXED (1), FLOAT (2) }" }
   };
 
   gimp_install_procedure (LOAD_PROC,
