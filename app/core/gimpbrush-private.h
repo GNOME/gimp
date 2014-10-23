@@ -15,39 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "config.h"
-
-#include <gio/gio.h>
-
-#include "core/core-types.h"
-
-#include "xcf-private.h"
-#include "xcf-seek.h"
-
-#include "gimp-intl.h"
+#ifndef __GIMP_BRUSH_PRIVATE_H__
+#define __GIMP_BRUSH_PRIVATE_H__
 
 
-gboolean
-xcf_seek_pos (XcfInfo  *info,
-              guint     pos,
-              GError  **error)
+struct _GimpBrushPrivate
 {
-  if (info->cp != pos)
-    {
-      GError *my_error = NULL;
+  GimpTempBuf    *mask;       /*  the actual mask                */
+  GimpTempBuf    *pixmap;     /*  optional pixmap data           */
 
-      info->cp = pos;
+  gint            spacing;    /*  brush's spacing                */
+  GimpVector2     x_axis;     /*  for calculating brush spacing  */
+  GimpVector2     y_axis;     /*  for calculating brush spacing  */
 
-      if (! g_seekable_seek (info->seekable, info->cp, G_SEEK_SET,
-                             NULL, &my_error))
-        {
-          g_propagate_prefixed_error (error, my_error,
-                                      _("Could not seek in XCF file: "));
-          return FALSE;
-        }
+  gint            use_count;  /*  for keeping the caches alive   */
+  GimpBrushCache *mask_cache;
+  GimpBrushCache *pixmap_cache;
+  GimpBrushCache *boundary_cache;
+};
 
-      g_assert (info->cp == g_seekable_tell (info->seekable));
-    }
 
-  return TRUE;
-}
+#endif /* __GIMP_BRUSH_PRIVATE_H__ */

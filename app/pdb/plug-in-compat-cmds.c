@@ -2272,6 +2272,54 @@ plug_in_shift_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_sobel_invoker (GimpProcedure         *procedure,
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gboolean horizontal;
+  gboolean vertical;
+  gboolean keep_sign;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  horizontal = g_value_get_boolean (gimp_value_array_index (args, 3));
+  vertical = g_value_get_boolean (gimp_value_array_index (args, 4));
+  keep_sign = g_value_get_boolean (gimp_value_array_index (args, 5));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation",  "gegl:edge-sobel",
+                                 "horizontal", horizontal,
+                                 "vertical",   vertical,
+                                 "keep-sign",  keep_sign,
+                                 NULL);
+
+          node = wrap_in_gamma_cast (node, drawable);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Sobel"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_spread_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
@@ -4653,6 +4701,60 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Orientation { ORIENTATION-VERTICAL (0), ORIENTATION-HORIZONTAL (1) }",
                                                       0, 1, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-sobel
+   */
+  procedure = gimp_procedure_new (plug_in_sobel_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-sobel");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-sobel",
+                                     "Specialized direction-dependent edge detection",
+                                     "This plugin calculates the gradient with a sobel operator. The user can specify which direction to use. When both directions are used, the result is the RMS of the two gradients; if only one direction is used, the result either the absolute value of the gradient, or 127 + gradient (if the 'keep sign' switch is on). This way, information about the direction of the gradient is preserved. Resulting images are not autoscaled.\"",
+                                     "Compatibility procedure. Please see 'gegl:edge-sobel' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:edge-sobel' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("horizontal",
+                                                     "horizontal",
+                                                     "Sobel in horizontal direction",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("vertical",
+                                                     "vertical",
+                                                     "Sobel in vertical direction",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("keep-sign",
+                                                     "keep sign",
+                                                     "Keep sign of result (one direction only)",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

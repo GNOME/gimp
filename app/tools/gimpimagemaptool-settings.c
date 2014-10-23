@@ -219,12 +219,10 @@ gimp_image_map_tool_settings_export (GimpSettingsBox  *box,
                                             NULL, &error));
   if (! output)
     {
-      gimp_message (GIMP_TOOL (tool)->tool_info->gimp,
-                    G_OBJECT (gimp_tool_gui_get_dialog (tool->gui)),
-                    GIMP_MESSAGE_ERROR,
-                    _("Could not open '%s' for writing: %s"),
-                    gimp_file_get_utf8_name (file),
-                    error->message);
+      gimp_message_literal (GIMP_TOOL (tool)->tool_info->gimp,
+                            G_OBJECT (gimp_tool_gui_get_dialog (tool->gui)),
+                            GIMP_MESSAGE_ERROR,
+                            error->message);
       g_clear_error (&error);
       return FALSE;
     }

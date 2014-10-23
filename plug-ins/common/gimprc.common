@@ -29,7 +29,6 @@ displace_RC = displace.rc.o
 edge_RC = edge.rc.o
 edge_dog_RC = edge-dog.rc.o
 edge_neon_RC = edge-neon.rc.o
-edge_sobel_RC = edge-sobel.rc.o
 emboss_RC = emboss.rc.o
 engrave_RC = engrave.rc.o
 file_aa_RC = file-aa.rc.o

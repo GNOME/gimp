@@ -75,7 +75,6 @@ libexec_PROGRAMS = \
 	edge \
 	edge-dog \
 	edge-neon \
-	edge-sobel \
 	emboss \
 	engrave \
 	$(FILE_AA) \
@@ -716,23 +715,6 @@ edge_neon_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(edge_neon_RC)
-
-edge_sobel_SOURCES = \
-	edge-sobel.c
-
-edge_sobel_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(edge_sobel_RC)
 
 emboss_SOURCES = \
 	emboss.c

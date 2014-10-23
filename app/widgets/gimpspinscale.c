@@ -1018,10 +1018,10 @@ gimp_spin_scale_set_label (GimpSpinScale *scale,
   private->label = g_strdup (label);
 
   g_free (private->label_text);
-  private->label_text = g_strdup (text);
+  private->label_text = text; /* don't dup */
 
   g_free (private->label_pattern);
-  private->label_pattern = g_strdup (pattern);
+  private->label_pattern = pattern; /* don't dup */
 
   if (private->mnemonic_keyval != accel_key)
     {

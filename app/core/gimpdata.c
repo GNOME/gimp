@@ -554,12 +554,6 @@ gimp_data_save (GimpData  *data,
 
           g_object_unref (output);
         }
-      else
-        {
-          g_prefix_error (error,
-                          _("Could not open '%s' for writing: "),
-                          gimp_file_get_utf8_name (private->file));
-        }
     }
 
   if (success)

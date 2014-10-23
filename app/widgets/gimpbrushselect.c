@@ -259,11 +259,12 @@ gimp_brush_select_run_callback (GimpPdbDialog  *dialog,
                                 GError        **error)
 {
   GimpBrush      *brush = GIMP_BRUSH (object);
+  GimpTempBuf    *mask  = gimp_brush_get_mask (brush);
   GimpArray      *array;
   GimpValueArray *return_vals;
 
-  array = gimp_array_new (gimp_temp_buf_get_data (brush->mask),
-                          gimp_temp_buf_get_data_size (brush->mask),
+  array = gimp_array_new (gimp_temp_buf_get_data (mask),
+                          gimp_temp_buf_get_data_size (mask),
                           TRUE);
 
   return_vals =
@@ -275,8 +276,8 @@ gimp_brush_select_run_callback (GimpPdbDialog  *dialog,
                                         G_TYPE_DOUBLE,        gimp_context_get_opacity (dialog->context) * 100.0,
                                         GIMP_TYPE_INT32,      GIMP_BRUSH_SELECT (dialog)->spacing,
                                         GIMP_TYPE_INT32,      gimp_context_get_paint_mode (dialog->context),
-                                        GIMP_TYPE_INT32,      gimp_temp_buf_get_width  (brush->mask),
-                                        GIMP_TYPE_INT32,      gimp_temp_buf_get_height (brush->mask),
+                                        GIMP_TYPE_INT32,      gimp_brush_get_width  (brush),
+                                        GIMP_TYPE_INT32,      gimp_brush_get_height (brush),
                                         GIMP_TYPE_INT32,      array->length,
                                         GIMP_TYPE_INT8_ARRAY, array,
                                         GIMP_TYPE_INT32,      closing,

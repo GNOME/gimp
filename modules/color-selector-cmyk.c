@@ -372,11 +372,11 @@ color_config_get_cmyk_profile (GimpColorConfig *config)
 static void
 colorsel_cmyk_config_changed (ColorselCmyk *module)
 {
-  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (module);
-  GimpColorConfig   *config   = module->config;
-  cmsUInt32Number    flags    = 0;
-  cmsHPROFILE        rgb_profile;
-  cmsHPROFILE        cmyk_profile;
+  GimpColorSelector *selector     = GIMP_COLOR_SELECTOR (module);
+  GimpColorConfig   *config       = module->config;
+  cmsUInt32Number    flags        = 0;
+  cmsHPROFILE        rgb_profile  = NULL;
+  cmsHPROFILE        cmyk_profile = NULL;
   gchar             *label;
   gchar             *summary;
   gchar             *text;
@@ -431,10 +431,14 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
                                          config->display_intent,
                                          flags);
 
-  cmsCloseProfile (rgb_profile);
-  cmsCloseProfile (cmyk_profile);
-
  out:
+
+  if (rgb_profile)
+    cmsCloseProfile (rgb_profile);
+
+  if (cmyk_profile)
+    cmsCloseProfile (cmyk_profile);
+
   if (! module->in_destruction)
     colorsel_cmyk_set_color (selector, &selector->rgb, &selector->hsv);
 }

@@ -259,6 +259,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:noise-spread",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_SPREAD */ },
 
+  { "filters-oilify", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Oili_fy..."), NULL, NULL,
+    "gegl:oilify",
+    NULL /* FIXME GIMP_HELP_FILTER_OILIFY */ },
+
   { "filters-panorama-projection", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Panorama Projection..."), NULL, NULL,
     "gegl:panorama-projection",
@@ -447,6 +452,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-grid",                    writable);
   SET_SENSITIVE ("filters-kaleidoscope",            writable);
+  SET_SENSITIVE ("filters-lens-distortion",         writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
   SET_SENSITIVE ("filters-mosaic",                  writable);
   SET_SENSITIVE ("filters-motion-blur-circular",    writable);
@@ -463,7 +469,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-noise-simplex",           writable);
   SET_SENSITIVE ("filters-noise-slur",              writable);
   SET_SENSITIVE ("filters-noise-spread",            writable);
-  SET_SENSITIVE ("filters-lens-distortion",         writable);
+  SET_SENSITIVE ("filters-oilify",                  writable);
   SET_SENSITIVE ("filters-panorama-projection",     writable);
   SET_SENSITIVE ("filters-photocopy",               writable);
   SET_SENSITIVE ("filters-pixelize",                writable);

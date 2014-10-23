@@ -445,7 +445,9 @@ save_image (GFile   *file,
   gint           x, y, pad, n_bytes, bpp;
   gint           drawable_bpp;
 
-  output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, error));
   if (output)
     {
       GOutputStream *buffered;

@@ -170,37 +170,30 @@ gimp_config_writer_new_gfile (GFile        *file,
 {
   GimpConfigWriter *writer;
   GOutputStream    *output;
-  GError           *my_error = NULL;
 
   g_return_val_if_fail (G_IS_FILE (file), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (atomic)
     {
-      output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE,
-                                                G_FILE_CREATE_NONE,
-                                                NULL, &my_error));
+      output = G_OUTPUT_STREAM (g_file_replace (file,
+                                                NULL, FALSE, G_FILE_CREATE_NONE,
+                                                NULL, error));
       if (! output)
-        g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-                     _("Could not create temporary file for '%s': %s"),
-                     gimp_file_get_utf8_name (file), my_error->message);
+        g_prefix_error (error,
+                        _("Could not create temporary file for '%s': "),
+                        gimp_file_get_utf8_name (file));
     }
   else
     {
-      output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE,
+      output = G_OUTPUT_STREAM (g_file_replace (file,
+                                                NULL, FALSE,
                                                 G_FILE_CREATE_REPLACE_DESTINATION,
-                                                NULL, &my_error));
-      if (! output)
-        g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-                     _("Could not open '%s' for writing: %s"),
-                     gimp_file_get_utf8_name (file), my_error->message);
+                                                NULL, error));
     }
 
   if (! output)
-    {
-      g_clear_error (&my_error);
-      return NULL;
-    }
+    return NULL;
 
   writer = g_slice_new0 (GimpConfigWriter);
 

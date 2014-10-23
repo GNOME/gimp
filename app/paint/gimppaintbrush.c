@@ -169,7 +169,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
       paint_appl_mode = GIMP_PAINT_INCREMENTAL;
     }
-  else if (brush_core->brush && brush_core->brush->pixmap)
+  else if (brush_core->brush && gimp_brush_get_pixmap (brush_core->brush))
     {
       /* otherwise check if the brush has a pixmap and use that to
        * color the area

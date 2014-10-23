@@ -137,15 +137,9 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
                                             NULL, FALSE, G_FILE_CREATE_NONE,
-                                            NULL, &my_error));
+                                            NULL, error));
   if (! output)
-    {
-      g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_OPEN,
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file), my_error->message);
-      g_clear_error (&my_error);
-      return FALSE;
-    }
+    return FALSE;
 
   string = g_string_new ("/* color_map file created by GIMP */\n"
                          "/* http://www.gimp.org/           */\n"

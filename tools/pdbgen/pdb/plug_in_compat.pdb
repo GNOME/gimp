@@ -2379,6 +2379,66 @@ CODE
     );
 }
 
+sub plug_in_sobel {
+    $blurb = 'Specialized direction-dependent edge detection';
+
+    $help = <<'HELP';
+This plugin calculates the gradient with a sobel operator. The user
+can specify which direction to use. When both directions are used, the
+result is the RMS of the two gradients; if only one direction is used,
+the result either the absolute value of the gradient, or 127 +
+gradient (if the 'keep sign' switch is on). This way, information
+about the direction of the gradient is preserved. Resulting images are
+not autoscaled."
+HELP
+
+    &std_pdb_compat('gegl:edge-sobel');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'horizontal', type => 'boolean',
+	  desc => 'Sobel in horizontal direction' },
+	{ name => 'vertical', type => 'boolean',
+	  desc => 'Sobel in vertical direction' },
+	{ name => 'keep_sign', type => 'boolean',
+	  desc => 'Keep sign of result (one direction only)' },
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation",  "gegl:edge-sobel",
+                             "horizontal", horizontal,
+                             "vertical",   vertical,
+                             "keep-sign",  keep_sign,
+                             NULL);
+
+      node = wrap_in_gamma_cast (node, drawable);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Sobel"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_spread {
     $blurb = 'Move pixels around randomly';
 
@@ -2856,6 +2916,7 @@ CODE
             plug_in_noisify
             plug_in_semiflatten
             plug_in_shift
+            plug_in_sobel
             plug_in_spread
             plug_in_threshold_alpha
             plug_in_vinvert

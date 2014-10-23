@@ -348,10 +348,22 @@ gimp_dispose (GObject *object)
 static void
 gimp_finalize (GObject *object)
 {
-  Gimp *gimp = GIMP (object);
+  Gimp  *gimp      = GIMP (object);
+  GList *standards = NULL;
 
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
+
+  standards = g_list_prepend (standards,
+                              gimp_brush_get_standard (gimp->user_context));
+  standards = g_list_prepend (standards,
+                              gimp_dynamics_get_standard (gimp->user_context));
+  standards = g_list_prepend (standards,
+                              gimp_pattern_get_standard (gimp->user_context));
+  standards = g_list_prepend (standards,
+                              gimp_gradient_get_standard (gimp->user_context));
+  standards = g_list_prepend (standards,
+                              gimp_palette_get_standard (gimp->user_context));
 
   gimp_contexts_exit (gimp);
 
@@ -512,9 +524,20 @@ gimp_finalize (GObject *object)
 
   if (gimp->context_list)
     {
+      GList *list;
+
+      g_warning ("%s: list of contexts not empty upon exit (%d contexts left)\n",
+                 G_STRFUNC, g_list_length (gimp->context_list));
+
+      for (list = gimp->context_list; list; list = g_list_next (list))
+        g_printerr ("stale context: %s\n", gimp_object_get_name (list->data));
+
       g_list_free (gimp->context_list);
       gimp->context_list = NULL;
     }
+
+  g_list_foreach (standards, (GFunc) g_object_unref, NULL);
+  g_list_free (standards);
 
   gimp_units_exit (gimp);
 

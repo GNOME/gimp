@@ -137,6 +137,15 @@ gimp_module_db_finalize (GObject *object)
 
   if (db->modules)
     {
+      GList *list;
+
+      for (list = db->modules; list; list = g_list_next (list))
+        {
+          g_signal_handlers_disconnect_by_func (list->data,
+                                                gimp_module_db_module_modified,
+                                                db);
+        }
+
       g_list_free (db->modules);
       db->modules = NULL;
     }

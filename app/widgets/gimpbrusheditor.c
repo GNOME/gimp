@@ -449,7 +449,7 @@ gimp_brush_editor_notify_brush (GimpBrushGenerated   *brush,
   else if (! strcmp (pspec->name, "spacing"))
     {
       adj   = editor->spacing_data;
-      value = GIMP_BRUSH (brush)->spacing;
+      value = gimp_brush_get_spacing (GIMP_BRUSH (brush));
     }
 
   if (adj)

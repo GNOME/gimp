@@ -327,8 +327,8 @@ gimp_brush_core_pre_paint (GimpPaintCore    *paint_core,
                                                         paint_core->pixel_dist);
 
               scale = paint_options->brush_size /
-                      MAX (gimp_temp_buf_get_width  (core->main_brush->mask),
-                           gimp_temp_buf_get_height (core->main_brush->mask)) *
+                      MAX (gimp_brush_get_width  (core->main_brush),
+                           gimp_brush_get_height (core->main_brush)) *
                       gimp_dynamics_get_linear_value (core->dynamics,
                                                       GIMP_DYNAMICS_OUTPUT_SIZE,
                                                       &current_coords,
@@ -548,14 +548,14 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
     }
 
   /* calculate the distance traveled in the coordinate space of the brush */
-  temp_vec = core->brush->x_axis;
+  temp_vec = gimp_brush_get_x_axis (core->brush);
   gimp_vector2_mul (&temp_vec, core->scale);
   gimp_vector2_rotate (&temp_vec, core->angle * G_PI * 2);
 
   mag = gimp_vector2_length (&temp_vec);
   xd  = gimp_vector2_inner_product (&delta_vec, &temp_vec) / (mag * mag);
 
-  temp_vec = core->brush->y_axis;
+  temp_vec = gimp_brush_get_y_axis (core->brush);
   gimp_vector2_mul (&temp_vec, core->scale);
   gimp_vector2_rotate (&temp_vec, core->angle * G_PI * 2);
 
@@ -733,9 +733,14 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
 
       if (core->jitter > 0.0)
         {
-          gdouble dyn_jitter;
-          gdouble jitter_dist;
-          gint32  jitter_angle;
+          GimpVector2 x_axis;
+          GimpVector2 y_axis;
+          gdouble     dyn_jitter;
+          gdouble     jitter_dist;
+          gint32      jitter_angle;
+
+          x_axis = gimp_brush_get_x_axis (core->brush);
+          y_axis = gimp_brush_get_y_axis (core->brush);
 
           dyn_jitter = (core->jitter *
                         gimp_dynamics_get_linear_value (core->dynamics,
@@ -749,11 +754,11 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
                                            0, BRUSH_CORE_JITTER_LUTSIZE);
 
           current_coords.x +=
-            (core->brush->x_axis.x + core->brush->y_axis.x) *
+            (x_axis.x + y_axis.x) *
             jitter_dist * core->jitter_lut_x[jitter_angle] * core->scale;
 
           current_coords.y +=
-            (core->brush->y_axis.y + core->brush->x_axis.y) *
+            (y_axis.y + x_axis.y) *
             jitter_dist * core->jitter_lut_y[jitter_angle] * core->scale;
         }
 
@@ -1476,8 +1481,8 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
 {
   if (core->main_brush)
     core->scale = paint_options->brush_size /
-                  MAX (gimp_temp_buf_get_width  (core->main_brush->mask),
-                       gimp_temp_buf_get_height (core->main_brush->mask));
+                  MAX (gimp_brush_get_width  (core->main_brush),
+                       gimp_brush_get_height (core->main_brush));
   else
     core->scale = -1;
 
@@ -1565,7 +1570,7 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   const GimpTempBuf  *brush_mask;
 
   g_return_if_fail (GIMP_IS_BRUSH (core->brush));
-  g_return_if_fail (core->brush->pixmap != NULL);
+  g_return_if_fail (gimp_brush_get_pixmap (core->brush) != NULL);
 
   /*  scale the brushes  */
   pixmap_mask = gimp_brush_core_transform_pixmap (core, core->brush);

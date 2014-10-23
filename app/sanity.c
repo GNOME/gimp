@@ -520,6 +520,7 @@ sanity_check_gegl_ops (void)
     "gegl:noise-rgb",
     "gegl:noise-slur",
     "gegl:noise-spread",
+    "gegl:oilify",
     "gegl:opacity",
     "gegl:over",
     "gegl:panorama-projection",

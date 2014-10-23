@@ -56,11 +56,13 @@
 
 #include "gimp-intl.h"
 
+#define SHOW_LINE TRUE
 #define HANDLE_CROSS_DIAMETER 18
 #define HANDLE_DIAMETER 40
 
 #define POINT_GRAB_THRESHOLD_SQ (SQR (HANDLE_DIAMETER / 2))
 #define FULL_HANDLE_THRESHOLD_SQ (POINT_GRAB_THRESHOLD_SQ * 9)
+#define PARTIAL_HANDLE_THRESHOLD_SQ (FULL_HANDLE_THRESHOLD_SQ * 5)
 
 /*  local function prototypes  */
 
@@ -109,6 +111,8 @@ static void   gimp_blend_tool_cursor_update       (GimpTool              *tool,
                                                    GimpDisplay           *display);
 
 static void   gimp_blend_tool_draw                (GimpDrawTool          *draw_tool);
+static void   gimp_blend_tool_update_items        (GimpBlendTool         *blend_tool);
+static void   gimp_blend_tool_update_item_hilight (GimpBlendTool         *blend_tool);
 
 static GimpBlendToolPoint gimp_blend_tool_get_point_under_cursor (GimpBlendTool *blend_tool);
 
@@ -290,12 +294,11 @@ gimp_blend_tool_oper_update (GimpTool         *tool,
                              GimpDisplay      *display)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-  GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
 
-  gimp_draw_tool_pause (draw_tool);
   blend_tool->mouse_x = coords->x;
   blend_tool->mouse_y = coords->y;
-  gimp_draw_tool_resume (draw_tool);
+
+  gimp_blend_tool_update_item_hilight (blend_tool);
 }
 
 static void
@@ -307,7 +310,6 @@ gimp_blend_tool_button_press (GimpTool            *tool,
                               GimpDisplay         *display)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-  GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
 
   blend_tool->mouse_x = coords->x;
   blend_tool->mouse_y = coords->y;
@@ -318,13 +320,11 @@ gimp_blend_tool_button_press (GimpTool            *tool,
       gimp_blend_tool_halt_preview (blend_tool);
     }
 
-  gimp_draw_tool_pause (draw_tool);
-
   blend_tool->grabbed_point = gimp_blend_tool_get_point_under_cursor (blend_tool);
 
   if (blend_tool->grabbed_point == POINT_NONE)
     {
-      if (gimp_draw_tool_is_active (draw_tool))
+      if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
         {
           gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
           gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
@@ -347,8 +347,7 @@ gimp_blend_tool_button_press (GimpTool            *tool,
                                 state & gimp_get_constrain_behavior_mask ());
 
   tool->display = display;
-
-  gimp_draw_tool_resume (draw_tool);
+  gimp_blend_tool_update_items (blend_tool);
 
   if (blend_tool->grabbed_point != POINT_FILL_MODE &&
       blend_tool->grabbed_point != POINT_INIT_MODE)
@@ -403,15 +402,10 @@ gimp_blend_tool_motion (GimpTool         *tool,
                         GimpDisplay      *display)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-  GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
-  gdouble last_x;
-  gdouble last_y;
-
-  gimp_draw_tool_pause (draw_tool);
 
   /* Save the mouse coordinates from last call */
-  last_x = blend_tool->mouse_x;
-  last_y = blend_tool->mouse_y;
+  gdouble last_x = blend_tool->mouse_x;
+  gdouble last_y = blend_tool->mouse_y;
 
   blend_tool->mouse_x = coords->x;
   blend_tool->mouse_y = coords->y;
@@ -443,7 +437,7 @@ gimp_blend_tool_motion (GimpTool         *tool,
   gimp_tool_pop_status (tool, display);
   gimp_blend_tool_push_status (blend_tool, state, display);
 
-  gimp_draw_tool_resume (draw_tool);
+  gimp_blend_tool_update_items (blend_tool);
 
   gimp_blend_tool_update_preview_coords (blend_tool);
   gimp_image_map_apply (blend_tool->image_map, NULL);
@@ -520,16 +514,15 @@ gimp_blend_tool_active_modifier_key (GimpTool        *tool,
                                      GimpDisplay     *display)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-  GimpDrawTool  *draw_tool  = GIMP_DRAW_TOOL (tool);
 
   if (key == gimp_get_constrain_behavior_mask ())
     {
-      gimp_draw_tool_pause (draw_tool);
       gimp_blend_tool_point_motion (blend_tool, press);
-      gimp_draw_tool_resume (draw_tool);
 
       gimp_tool_pop_status (tool, display);
       gimp_blend_tool_push_status (blend_tool, state, display);
+
+      gimp_blend_tool_update_items (blend_tool);
 
       gimp_blend_tool_update_preview_coords (blend_tool);
       gimp_image_map_apply (blend_tool->image_map, NULL);
@@ -578,18 +571,27 @@ gimp_blend_tool_cursor_update (GimpTool         *tool,
 static void
 gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpBlendTool      *blend_tool = GIMP_BLEND_TOOL (draw_tool);
-  GimpCanvasItem     *start_handle_cross, *end_handle_cross;
-  GimpBlendToolPoint  hilight_point;
-  gboolean            start_visible, end_visible;
+  GimpBlendTool   *blend_tool = GIMP_BLEND_TOOL (draw_tool);
 
-  gimp_draw_tool_add_line (draw_tool,
-                           blend_tool->start_x,
-                           blend_tool->start_y,
-                           blend_tool->end_x,
-                           blend_tool->end_y);
+  blend_tool->line =
+    gimp_draw_tool_add_line (draw_tool,
+                             blend_tool->start_x,
+                             blend_tool->start_y,
+                             blend_tool->end_x,
+                             blend_tool->end_y);
 
-  start_handle_cross =
+  gimp_canvas_item_set_visible (blend_tool->line, SHOW_LINE);
+
+  blend_tool->start_handle_circle =
+    gimp_draw_tool_add_handle (draw_tool,
+                               GIMP_HANDLE_CIRCLE,
+                               blend_tool->start_x,
+                               blend_tool->start_y,
+                               HANDLE_DIAMETER,
+                               HANDLE_DIAMETER,
+                               GIMP_HANDLE_ANCHOR_CENTER);
+
+  blend_tool->start_handle_cross =
     gimp_draw_tool_add_handle (draw_tool,
                                GIMP_HANDLE_CROSS,
                                blend_tool->start_x,
@@ -598,7 +600,16 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
                                HANDLE_CROSS_DIAMETER,
                                GIMP_HANDLE_ANCHOR_CENTER);
 
-  end_handle_cross =
+  blend_tool->end_handle_circle =
+    gimp_draw_tool_add_handle (draw_tool,
+                               GIMP_HANDLE_CIRCLE,
+                               blend_tool->end_x,
+                               blend_tool->end_y,
+                               HANDLE_DIAMETER,
+                               HANDLE_DIAMETER,
+                               GIMP_HANDLE_ANCHOR_CENTER);
+
+  blend_tool->end_handle_cross =
     gimp_draw_tool_add_handle (draw_tool,
                                GIMP_HANDLE_CROSS,
                                blend_tool->end_x,
@@ -607,78 +618,134 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
                                HANDLE_CROSS_DIAMETER,
                                GIMP_HANDLE_ANCHOR_CENTER);
 
-  /* Calculate handle visibility */
-  if (blend_tool->grabbed_point)
+  gimp_blend_tool_update_item_hilight (blend_tool);
+}
+
+static void
+gimp_blend_tool_update_items (GimpBlendTool *blend_tool)
+{
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
     {
-      start_visible = FALSE;
-      end_visible = FALSE;
+      gimp_canvas_line_set (blend_tool->line,
+                            blend_tool->start_x,
+                            blend_tool->start_y,
+                            blend_tool->end_x,
+                            blend_tool->end_y);
+
+      gimp_canvas_handle_set_position (blend_tool->start_handle_circle,
+                                       blend_tool->start_x,
+                                       blend_tool->start_y);
+
+      gimp_canvas_handle_set_position (blend_tool->start_handle_cross,
+                                       blend_tool->start_x,
+                                       blend_tool->start_y);
+
+      gimp_canvas_handle_set_position (blend_tool->end_handle_circle,
+                                       blend_tool->end_x,
+                                       blend_tool->end_y);
+
+      gimp_canvas_handle_set_position (blend_tool->end_handle_cross,
+                                       blend_tool->end_x,
+                                       blend_tool->end_y);
+
+      gimp_blend_tool_update_item_hilight (blend_tool);
     }
-  else
+}
+
+static gint
+calc_handle_diameter (gdouble distance)
+{
+  /* Calculate the handle size based on distance from the cursor */
+  gdouble size = 1.0 - (distance - FULL_HANDLE_THRESHOLD_SQ) /
+          (PARTIAL_HANDLE_THRESHOLD_SQ - FULL_HANDLE_THRESHOLD_SQ);
+
+  if      (size > 1.0) size = 1.0;
+  else if (size < 0.0) size = 0.0;
+
+  return (gint)(size * HANDLE_DIAMETER);
+}
+
+static void
+gimp_blend_tool_update_item_hilight (GimpBlendTool *blend_tool)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (blend_tool);
+  if (gimp_draw_tool_is_active (draw_tool))
     {
-      gdouble dist;
-      dist = gimp_draw_tool_calc_distance_square (draw_tool,
-                                                  draw_tool->display,
-                                                  blend_tool->mouse_x,
-                                                  blend_tool->mouse_y,
-                                                  blend_tool->start_x,
-                                                  blend_tool->start_y);
+      GimpBlendToolPoint hilight_point;
+      gboolean           start_visible,  end_visible;
+      gint               start_diameter, end_diameter;
 
-      start_visible = dist < FULL_HANDLE_THRESHOLD_SQ;
+      /* Calculate handle visibility */
+      if (blend_tool->grabbed_point)
+        {
+          start_visible = FALSE;
+          end_visible = FALSE;
+        }
+      else
+        {
+          gdouble            dist;
+          dist = gimp_draw_tool_calc_distance_square (draw_tool,
+                                                      draw_tool->display,
+                                                      blend_tool->mouse_x,
+                                                      blend_tool->mouse_y,
+                                                      blend_tool->start_x,
+                                                      blend_tool->start_y);
 
-      dist = gimp_draw_tool_calc_distance_square (draw_tool,
-                                                  draw_tool->display,
-                                                  blend_tool->mouse_x,
-                                                  blend_tool->mouse_y,
-                                                  blend_tool->end_x,
-                                                  blend_tool->end_y);
+          start_diameter = calc_handle_diameter (dist);
+          start_visible  = start_diameter > 2;
 
-      end_visible = dist < FULL_HANDLE_THRESHOLD_SQ;
-    }
+          dist = gimp_draw_tool_calc_distance_square (draw_tool,
+                                                      draw_tool->display,
+                                                      blend_tool->mouse_x,
+                                                      blend_tool->mouse_y,
+                                                      blend_tool->end_x,
+                                                      blend_tool->end_y);
 
-  /* Update hilights */
-  if (blend_tool->grabbed_point)
-    hilight_point = blend_tool->grabbed_point;
-  else
-    hilight_point = gimp_blend_tool_get_point_under_cursor (blend_tool);
+          end_diameter = calc_handle_diameter (dist);
+          end_visible  = end_diameter > 2;
+        }
 
-  if (start_visible)
-    {
-      GimpCanvasItem *start_handle_circle;
+      gimp_canvas_item_set_visible (blend_tool->start_handle_circle,
+                                    start_visible);
+      gimp_canvas_item_set_visible (blend_tool->end_handle_circle,
+                                    end_visible);
 
-      start_handle_circle =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_CIRCLE,
-                                   blend_tool->start_x,
-                                   blend_tool->start_y,
-                                   HANDLE_DIAMETER,
-                                   HANDLE_DIAMETER,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
+      /* Update hilights */
+      if (blend_tool->grabbed_point)
+        hilight_point = blend_tool->grabbed_point;
+      else
+        hilight_point = gimp_blend_tool_get_point_under_cursor (blend_tool);
 
-      gimp_canvas_item_set_highlight (start_handle_circle,
+      if (start_visible)
+        {
+          gimp_canvas_item_begin_change (blend_tool->start_handle_circle);
+          g_object_set (blend_tool->start_handle_circle,
+                        "width", start_diameter,
+                        "height", start_diameter,
+                        NULL);
+          gimp_canvas_item_end_change (blend_tool->start_handle_circle);
+        }
+
+      if (end_visible)
+        {
+          gimp_canvas_item_begin_change (blend_tool->end_handle_circle);
+          g_object_set (blend_tool->end_handle_circle,
+                        "width", end_diameter,
+                        "height", end_diameter,
+                        NULL);
+          gimp_canvas_item_end_change (blend_tool->end_handle_circle);
+        }
+
+      gimp_canvas_item_set_highlight (blend_tool->start_handle_circle,
                                       hilight_point == POINT_START);
-    }
+      gimp_canvas_item_set_highlight (blend_tool->start_handle_cross,
+                                      hilight_point == POINT_START);
 
-  if (end_visible)
-    {
-      GimpCanvasItem *end_handle_circle;
-
-      end_handle_circle =
-        gimp_draw_tool_add_handle (draw_tool,
-                                   GIMP_HANDLE_CIRCLE,
-                                   blend_tool->end_x,
-                                   blend_tool->end_y,
-                                   HANDLE_DIAMETER,
-                                   HANDLE_DIAMETER,
-                                   GIMP_HANDLE_ANCHOR_CENTER);
-
-      gimp_canvas_item_set_highlight (end_handle_circle,
+      gimp_canvas_item_set_highlight (blend_tool->end_handle_circle,
                                       hilight_point == POINT_END);
-    }
-
-  gimp_canvas_item_set_highlight (start_handle_cross,
-                                  hilight_point == POINT_START);
-  gimp_canvas_item_set_highlight (end_handle_cross,
-                                  hilight_point == POINT_END);
+      gimp_canvas_item_set_highlight (blend_tool->end_handle_cross,
+                                      hilight_point == POINT_END);
+  }
 }
 
 static GimpBlendToolPoint

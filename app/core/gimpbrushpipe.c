@@ -25,6 +25,7 @@
 
 #include "core-types.h"
 
+#include "gimpbrush-private.h"
 #include "gimpbrushpipe.h"
 #include "gimpbrushpipe-load.h"
 
@@ -128,8 +129,8 @@ gimp_brush_pipe_finalize (GObject *object)
       pipe->index = NULL;
     }
 
-  GIMP_BRUSH (pipe)->mask   = NULL;
-  GIMP_BRUSH (pipe)->pixmap = NULL;
+  GIMP_BRUSH (pipe)->priv->mask   = NULL;
+  GIMP_BRUSH (pipe)->priv->pixmap = NULL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

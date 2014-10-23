@@ -536,7 +536,9 @@ save_image (GFile   *file,
   gimp_progress_init_printf (_("Saving '%s'"),
                              g_file_get_parse_name (file));
 
-  output = G_OUTPUT_STREAM (g_file_replace (file, NULL, FALSE, 0, NULL, error));
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, error));
   if (! output)
     return FALSE;
 

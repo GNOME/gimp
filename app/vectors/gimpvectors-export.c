@@ -74,16 +74,9 @@ gimp_vectors_export_file (const GimpImage    *image,
 
   output = G_OUTPUT_STREAM (g_file_replace (file,
                                             NULL, FALSE, G_FILE_CREATE_NONE,
-                                            NULL, &my_error));
+                                            NULL, error));
   if (! output)
-    {
-      g_set_error (error, my_error->domain, my_error->code,
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_file_get_utf8_name (file),
-                   my_error->message);
-      g_clear_error (&my_error);
-      return FALSE;
-    }
+    return FALSE;
 
   string = gimp_vectors_export (image, vectors);
 

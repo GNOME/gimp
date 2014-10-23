@@ -132,8 +132,7 @@ gimp_tags_user_install (void)
                                             NULL, &error));
   if (! output)
     {
-      g_printerr (_("Could not open '%s' for writing: %s"),
-                  gimp_file_get_utf8_name (file), error->message);
+      g_printerr ("%s\n", error->message);
       result = FALSE;
     }
   else if (! g_output_stream_write_all (output,

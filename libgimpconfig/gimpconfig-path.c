@@ -348,6 +348,8 @@ gimp_config_path_expand_to_files (const gchar  *path,
 
   files = gimp_path_parse (expanded, 256, FALSE, NULL);
 
+  g_free (expanded);
+
   for (list = files; list; list = g_list_next (list))
     {
       gchar *dir = list->data;

@@ -433,14 +433,13 @@ gimp_tag_cache_save (GimpTagCache *cache)
                                             NULL, &error));
   if (! output)
     {
-      g_printerr (_("Could not open '%s' for writing: %s"),
-                  gimp_file_get_utf8_name (file), error->message);
+      g_printerr ("%s\n", error->message);
     }
   else if (! g_output_stream_write_all (output, buf->str, buf->len,
                                         NULL, NULL, &error) ||
            ! g_output_stream_close (output, NULL, &error))
     {
-      g_printerr (_("Error writing '%s': %s"),
+      g_printerr (_("Error writing '%s': %s\n"),
                   gimp_file_get_utf8_name (file), error->message);
     }
 
