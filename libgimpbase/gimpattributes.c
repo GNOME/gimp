@@ -1096,7 +1096,7 @@ gimp_attributes_to_metadata (GimpAttributes *attributes,
 
                   if (is_xmp)
                     {
-                      t_packet = gexiv2_metadata_generate_xmp_packet (metadata, USE_COMPACT_FORMAT | OMIT_ALL_FORMATTING, 0);
+                      t_packet = gexiv2_metadata_generate_xmp_packet (metadata, GEXIV2_USE_COMPACT_FORMAT | GEXIV2_OMIT_ALL_FORMATTING, 0);
 
                       if (! g_strcmp0 (t_packet, o_packet))
                         {
@@ -1381,7 +1381,7 @@ gimp_attributes_to_xmp_packet (GimpAttributes *attributes,
 
                   }
 
-                  t_packet = gexiv2_metadata_generate_xmp_packet (metadata, USE_COMPACT_FORMAT | OMIT_ALL_FORMATTING, 0);
+                  t_packet = gexiv2_metadata_generate_xmp_packet (metadata, GEXIV2_USE_COMPACT_FORMAT | GEXIV2_OMIT_ALL_FORMATTING, 0);
 
                   if (! t_packet || ! g_strcmp0 (t_packet, o_packet))
                     {
@@ -1413,7 +1413,7 @@ gimp_attributes_to_xmp_packet (GimpAttributes *attributes,
   if (xmp_structure_list)
     g_slist_free (xmp_structure_list);
 
-  packet_string = gexiv2_metadata_generate_xmp_packet (metadata, USE_COMPACT_FORMAT | WRITE_ALIAS_COMMENTS, 0);
+  packet_string = gexiv2_metadata_generate_xmp_packet (metadata, GEXIV2_USE_COMPACT_FORMAT | GEXIV2_WRITE_ALIAS_COMMENTS, 0);
   return packet_string;
 }
 
