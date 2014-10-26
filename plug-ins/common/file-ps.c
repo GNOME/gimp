@@ -171,86 +171,101 @@ static const char hex[] = "0123456789abcdef";
 
 /* Declare some local functions.
  */
-static void   query            (void);
-static void   run              (const gchar       *name,
-                                gint               nparams,
-                                const GimpParam   *param,
-                                gint              *nreturn_vals,
-                                GimpParam        **return_vals);
+static void      query            (void);
+static void      run              (const gchar       *name,
+                                   gint               nparams,
+                                   const GimpParam   *param,
+                                   gint              *nreturn_vals,
+                                   GimpParam        **return_vals);
 
-static gint32 load_image       (const gchar       *filename,
-                                GError           **error);
-static gint   save_image       (const gchar       *filename,
-                                gint32             image_ID,
-                                gint32             drawable_ID,
-                                GError           **error);
+static gint32    load_image       (const gchar       *filename,
+                                   GError           **error);
+static gboolean  save_image       (GFile             *file,
+                                   gint32             image_ID,
+                                   gint32             drawable_ID,
+                                   GError           **error);
 
-static gint   save_gray        (FILE              *ofp,
-                                gint32             image_ID,
-                                gint32             drawable_ID);
-static gint   save_bw          (FILE              *ofp,
-                                gint32             image_ID,
-                                gint32             drawable_ID);
-static gint   save_index       (FILE              *ofp,
-                                gint32             image_ID,
-                                gint32             drawable_ID);
-static gint   save_rgb         (FILE              *ofp,
-                                gint32             image_ID,
-                                gint32             drawable_ID);
+static gboolean  save_ps_header   (GOutputStream     *output,
+                                   GFile             *file,
+                                   GError           **error);
+static gboolean  save_ps_setup    (GOutputStream     *output,
+                                   gint32             drawable_ID,
+                                   gint               width,
+                                   gint               height,
+                                   gint               bpp,
+                                   GError           **error);
+static gboolean  save_ps_trailer  (GOutputStream     *output,
+                                   GError           **error);
 
-static gint32 create_new_image (const gchar       *filename,
-                                guint              pagenum,
-                                guint              width,
-                                guint              height,
-                                GimpImageBaseType  type,
-                                gint32            *layer_ID);
+static gboolean  save_ps_preview  (GOutputStream     *output,
+                                   gint32             drawable_ID,
+                                   GError           **error);
 
-static void   check_load_vals  (void);
-static void   check_save_vals  (void);
+static gboolean  save_gray        (GOutputStream     *output,
+                                   gint32             image_ID,
+                                   gint32             drawable_ID,
+                                   GError           **error);
+static gboolean  save_bw          (GOutputStream     *output,
+                                   gint32             image_ID,
+                                   gint32             drawable_ID,
+                                   GError           **error);
+static gboolean  save_index       (GOutputStream     *output,
+                                   gint32             image_ID,
+                                   gint32             drawable_ID,
+                                   GError           **error);
+static gboolean  save_rgb         (GOutputStream     *output,
+                                   gint32             image_ID,
+                                   gint32             drawable_ID,
+                                   GError           **error);
 
-static gint   page_in_list     (gchar             *list,
-                                guint              pagenum);
+static gboolean  print            (GOutputStream     *output,
+                                   GError           **error,
+                                   const gchar       *format,
+                                   ...) G_GNUC_PRINTF (3, 4);
 
-static gint   get_bbox         (const gchar       *filename,
-                                gint              *x0,
-                                gint              *y0,
-                                gint              *x1,
-                                gint              *y1);
+static gint32    create_new_image (const gchar       *filename,
+                                   guint              pagenum,
+                                   guint              width,
+                                   guint              height,
+                                   GimpImageBaseType  type,
+                                   gint32            *layer_ID);
 
-static FILE * ps_open          (const gchar       *filename,
-                                const PSLoadVals  *loadopt,
-                                gint              *llx,
-                                gint              *lly,
-                                gint              *urx,
-                                gint              *ury,
-                                gboolean          *is_epsf);
+static void      check_load_vals  (void);
+static void      check_save_vals  (void);
 
-static void   ps_close         (FILE              *ifp);
+static gint      page_in_list     (gchar             *list,
+                                   guint              pagenum);
 
-static gboolean  skip_ps       (FILE              *ifp);
+static gint      get_bbox         (const gchar       *filename,
+                                   gint              *x0,
+                                   gint              *y0,
+                                   gint              *x1,
+                                   gint              *y1);
 
-static gint32 load_ps          (const gchar       *filename,
-                                guint              pagenum,
-                                FILE              *ifp,
-                                gint               llx,
-                                gint               lly,
-                                gint               urx,
-                                gint               ury);
+static FILE    * ps_open         (const gchar       *filename,
+                                  const PSLoadVals  *loadopt,
+                                  gint              *llx,
+                                  gint              *lly,
+                                  gint              *urx,
+                                  gint              *ury,
+                                  gboolean          *is_epsf);
 
-static void   save_ps_header   (FILE              *ofp,
-                                const gchar       *filename);
-static void   save_ps_setup    (FILE              *ofp,
-                                gint32             drawable_ID,
-                                gint               width,
-                                gint               height,
-                                gint               bpp);
-static void   save_ps_trailer  (FILE              *ofp);
-static void   save_ps_preview  (FILE              *ofp,
-                                gint32             drawable_ID);
-static void   dither_grey      (const guchar      *grey,
-                                guchar            *bw,
-                                gint               npix,
-                                gint               linecount);
+static void      ps_close         (FILE              *ifp);
+
+static gboolean  skip_ps          (FILE              *ifp);
+
+static gint32    load_ps          (const gchar       *filename,
+                                   guint              pagenum,
+                                   FILE              *ifp,
+                                   gint               llx,
+                                   gint               lly,
+                                   gint               urx,
+                                   gint               ury);
+
+static void      dither_grey      (const guchar      *grey,
+                                   guchar            *bw,
+                                   gint               npix,
+                                   gint               linecount);
 
 
 /* Dialog-handling */
@@ -301,87 +316,127 @@ static GimpPageSelectorTarget ps_pagemode = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
 static void
 ascii85_init (void)
 {
-  ascii85_len = 0;
+  ascii85_len       = 0;
   ascii85_linewidth = 0;
 }
 
-static void
-ascii85_flush (FILE *ofp)
+static gboolean
+ascii85_flush (GOutputStream  *output,
+               GError        **error)
 {
-  char c[5];
-  int i;
+  gchar    c[5];
+  gint     i;
   gboolean zero_case = (ascii85_buf == 0);
-  static int max_linewidth = 75;
+  GString  *string   = g_string_new (NULL);
 
-  for (i=4; i >= 0; i--)
+  static gint max_linewidth = 75;
+
+  for (i = 4; i >= 0; i--)
     {
       c[i] = (ascii85_buf % 85) + '!';
       ascii85_buf /= 85;
     }
+
   /* check for special case: "!!!!!" becomes "z", but only if not
    * at end of data. */
   if (zero_case && (ascii85_len == 4))
     {
       if (ascii85_linewidth >= max_linewidth)
-      {
-        putc ('\n', ofp);
-        ascii85_linewidth = 0;
-      }
-      putc ('z', ofp);
+        {
+          g_string_append_c (string, '\n');
+
+          ascii85_linewidth = 0;
+        }
+
+      g_string_append_c (string, 'z');
+
       ascii85_linewidth++;
     }
   else
     {
-      for (i=0; i < ascii85_len+1; i++)
-      {
-        if ((ascii85_linewidth >= max_linewidth) && (c[i] != '%'))
+      for (i = 0; i < ascii85_len + 1; i++)
         {
-          putc ('\n', ofp);
-          ascii85_linewidth = 0;
+          if ((ascii85_linewidth >= max_linewidth) && (c[i] != '%'))
+            {
+              g_string_append_c (string, '\n');
+
+              ascii85_linewidth = 0;
+            }
+
+          g_string_append_c (string, c[i]);
+
+          ascii85_linewidth++;
         }
-        putc (c[i], ofp);
-        ascii85_linewidth++;
-      }
     }
 
   ascii85_len = 0;
   ascii85_buf = 0;
+
+  if (string->len > 0 &&
+      ! g_output_stream_write_all (output,
+                                   string->str, string->len, NULL,
+                                   NULL, error))
+    {
+      g_string_free (string, TRUE);
+
+      return FALSE;
+    }
+
+  g_string_free (string, TRUE);
+
+  return TRUE;
 }
 
-static inline void
-ascii85_out (unsigned char byte, FILE *ofp)
+static inline gboolean
+ascii85_out (GOutputStream  *output,
+             guchar          byte,
+             GError        **error)
 {
   if (ascii85_len == 4)
-    ascii85_flush (ofp);
+    if (! ascii85_flush (output, error))
+      return FALSE;
 
   ascii85_buf <<= 8;
   ascii85_buf |= byte;
   ascii85_len++;
+
+  return TRUE;
 }
 
-static void
-ascii85_nout (int n, unsigned char *uptr, FILE *ofp)
+static gboolean
+ascii85_nout (GOutputStream  *output,
+              gint            n,
+              guchar         *uptr,
+              GError        **error)
 {
- while (n-- > 0)
- {
-   ascii85_out (*uptr, ofp);
-   uptr++;
- }
+  while (n-- > 0)
+    {
+      if (! ascii85_out (output, *uptr, error))
+        return FALSE;
+
+      uptr++;
+    }
+
+  return TRUE;
 }
 
-static void
-ascii85_done (FILE *ofp)
+static gboolean
+ascii85_done (GOutputStream  *output,
+              GError        **error)
 {
   if (ascii85_len)
     {
       /* zero any unfilled buffer portion, then flush */
-      ascii85_buf <<= (8 * (4-ascii85_len));
-      ascii85_flush (ofp);
+      ascii85_buf <<= (8 * (4 - ascii85_len));
+
+      if (! ascii85_flush (output, error))
+        return FALSE;
     }
 
-  putc ('~', ofp);
-  putc ('>', ofp);
-  putc ('\n', ofp);
+  if (! print (output, error, "~>\n"))
+    return FALSE;
+
+  return TRUE;
 }
 
 
@@ -471,46 +526,65 @@ compress_packbits (int nin,
 
 typedef struct
 {
-  long eol;
-  long begin_data;
+  goffset eol;
+  goffset begin_data;
 } PS_DATA_POS;
 
 static PS_DATA_POS ps_data_pos = { 0, 0 };
 
-static void
-ps_begin_data (FILE *ofp)
-
+static gboolean
+ps_begin_data (GOutputStream  *output,
+               GError        **error)
 {
-                   /* %%BeginData: 123456789012 ASCII Bytes */
- fprintf (ofp, "%s", "%%BeginData:                         ");
- fflush (ofp);
- ps_data_pos.eol = ftell (ofp);
- fprintf (ofp, "\n");
- fflush (ofp);
- ps_data_pos.begin_data = ftell (ofp);
+  /*                                 %%BeginData: 123456789012 ASCII Bytes */
+  if (! print (output, error, "%s", "%%BeginData:                         "))
+    return FALSE;
+
+  ps_data_pos.eol = g_seekable_tell (G_SEEKABLE (output));
+
+  if (! print (output, error, "\n"))
+    return FALSE;
+
+  ps_data_pos.begin_data = g_seekable_tell (G_SEEKABLE (output));
+
+  return TRUE;
 }
 
-static void
-ps_end_data (FILE *ofp)
+static gboolean
+ps_end_data (GOutputStream  *output,
+             GError        **error)
+{
+  goffset end_data;
+  gchar   s[64];
 
-{long end_data;
- char s[64];
+  if ((ps_data_pos.begin_data > 0) && (ps_data_pos.eol > 0))
+    {
+      end_data = g_seekable_tell (G_SEEKABLE (output));
 
- if ((ps_data_pos.begin_data > 0) && (ps_data_pos.eol > 0))
- {
-   fflush (ofp);
-   end_data = ftell (ofp);
-   if (end_data > 0)
-   {
-     sprintf (s, "%ld ASCII Bytes", end_data - ps_data_pos.begin_data);
-     if (fseek (ofp, ps_data_pos.eol - strlen (s), SEEK_SET) == 0)
-     {
-       fprintf (ofp, "%s", s);
-       fseek (ofp, 0, SEEK_END);
-     }
-   }
- }
- fprintf (ofp, "%s\n", "%%EndData");
+      if (end_data > 0)
+        {
+          g_snprintf (s, sizeof (s),
+                      "%ld ASCII Bytes", end_data - ps_data_pos.begin_data);
+
+          if (! g_seekable_seek (G_SEEKABLE (output),
+                                 ps_data_pos.eol - strlen (s), G_SEEK_SET,
+                                 NULL, error))
+            return FALSE;
+
+          if (! print (output, error, "%s", s))
+            return FALSE;
+
+          if (! g_seekable_seek (G_SEEKABLE (output),
+                                 end_data, G_SEEK_SET,
+                                 NULL, error))
+            return FALSE;
+        }
+    }
+
+  if (! print (output, error, "%s\n", "%%EndData"))
+    return FALSE;
+
+  return TRUE;
 }
 
 
@@ -676,6 +750,7 @@ query (void)
                           save_args, NULL);
 
   gimp_register_file_handler_mime (SAVE_PS_PROC, "application/postscript");
+  gimp_register_file_handler_uri (SAVE_PS_PROC);
   gimp_register_save_handler (SAVE_PS_PROC, "ps", "");
 
   gimp_install_procedure (SAVE_EPS_PROC,
@@ -692,6 +767,7 @@ query (void)
                           save_args, NULL);
 
   gimp_register_file_handler_mime (SAVE_EPS_PROC, "application/x-eps");
+  gimp_register_file_handler_uri (SAVE_EPS_PROC);
   gimp_register_save_handler (SAVE_EPS_PROC, "eps", "");
 }
 
@@ -931,7 +1007,9 @@ run (const gchar      *name,
             ps_set_save_size (&psvals, orig_image_ID);
 
           check_save_vals ();
-          if (save_image (param[3].data.d_string, image_ID, drawable_ID,
+
+          if (save_image (g_file_new_for_uri (param[3].data.d_string),
+                          image_ID, drawable_ID,
                           &error))
             {
               /*  Store psvals data  */
@@ -1071,8 +1149,8 @@ load_image (const gchar  *filename,
             break;
 
           gimp_image_set_resolution (image_ID,
-                                     (double) plvals.resolution,
-                                     (double) plvals.resolution);
+                                     (gdouble) plvals.resolution,
+                                     (gdouble) plvals.resolution);
 
           if (n_images == max_images)
             {
@@ -1151,19 +1229,14 @@ load_image (const gchar  *filename,
 }
 
 
-static gint
-save_image (const gchar  *filename,
-            gint32        image_ID,
-            gint32        drawable_ID,
-            GError      **error)
+static gboolean
+save_image (GFile   *file,
+            gint32   image_ID,
+            gint32   drawable_ID,
+            GError **error)
 {
-  FILE* ofp;
-  GimpImageType drawable_type;
-  gint retval;
-
-  /* initialize */
-
-  retval = 0;
+  GOutputStream *output;
+  GimpImageType  drawable_type;
 
   drawable_type = gimp_drawable_type (drawable_ID);
 
@@ -1181,48 +1254,73 @@ save_image (const gchar  *filename,
     case GIMP_GRAY_IMAGE:
     case GIMP_RGB_IMAGE:
       break;
+
     default:
-      g_message (_("Cannot operate on unknown image types."));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Cannot operate on unknown image types."));
       return FALSE;
       break;
     }
 
   gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (filename));
+                             gimp_file_get_utf8_name (file));
 
-  /* Open the output file. */
-  ofp = g_fopen (filename, "wb");
-  if (!ofp)
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, error));
+  if (output)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      GOutputStream *buffered;
+
+      buffered = g_buffered_output_stream_new (output);
+      g_object_unref (output);
+
+      output = buffered;
+    }
+  else
+    {
       return FALSE;
     }
 
-  save_ps_header (ofp, filename);
+  if (! save_ps_header (output, file, error))
+    goto fail;
 
   switch (drawable_type)
     {
     case GIMP_INDEXED_IMAGE:
-      retval = save_index (ofp, image_ID, drawable_ID);
+      if (! save_index (output, image_ID, drawable_ID, error))
+        goto fail;
       break;
+
     case GIMP_GRAY_IMAGE:
-      retval = save_gray (ofp, image_ID, drawable_ID);
+      if (! save_gray (output, image_ID, drawable_ID, error))
+        goto fail;
       break;
+
     case GIMP_RGB_IMAGE:
-      retval = save_rgb (ofp, image_ID, drawable_ID);
+      if (! save_rgb (output, image_ID, drawable_ID, error))
+        goto fail;
       break;
+
     default:
-      g_message (_("Cannot operate on unknown image types."));
-      retval = FALSE;
+      g_return_val_if_reached (FALSE);
     }
 
-  save_ps_trailer (ofp);
+  if (! save_ps_trailer (output, error))
+    goto fail;
 
-  fclose (ofp);
+  if (! g_output_stream_close (output, NULL, error))
+    goto fail;
 
-  return retval;
+  g_object_unref (output);
+
+  return TRUE;
+
+ fail:
+
+  g_object_unref (output);
+
+  return FALSE;
 }
 
 
@@ -1970,7 +2068,7 @@ load_ps (const gchar *filename,
           scan_lines++;
           total_scan_lines++;
 
-          if ((scan_lines == tile_height) || ((i+1) == image_height))
+          if ((scan_lines == tile_height) || ((i + 1) == image_height))
             {
               gegl_buffer_set (buffer,
                                GEGL_RECTANGLE (0, i-scan_lines+1,
@@ -1984,7 +2082,7 @@ load_ps (const gchar *filename,
             }
 
           if ((i % 20) == 0)
-            gimp_progress_update ((double)(i+1) / (double)image_height);
+            gimp_progress_update ((gdouble) (i + 1) / (gdouble) image_height);
 
           if (err)
             break;
@@ -2006,7 +2104,7 @@ load_ps (const gchar *filename,
           scan_lines++;
           total_scan_lines++;
 
-          if ((scan_lines == tile_height) || ((i+1) == image_height))
+          if ((scan_lines == tile_height) || ((i + 1) == image_height))
             {
               gegl_buffer_set (buffer,
                                GEGL_RECTANGLE (0, i-scan_lines+1,
@@ -2020,7 +2118,7 @@ load_ps (const gchar *filename,
             }
 
           if ((i % 20) == 0)
-            gimp_progress_update ((double)(i+1) / (double)image_height);
+            gimp_progress_update ((gdouble) (i + 1) / (gdouble) image_height);
 
           if (err)
             break;
@@ -2042,49 +2140,75 @@ load_ps (const gchar *filename,
 
 
 /* Write out the PostScript file header */
-static void save_ps_header (FILE        *ofp,
-                            const gchar *filename)
+static gboolean
+save_ps_header (GOutputStream  *output,
+                GFile          *file,
+                GError        **error)
 {
-  gchar  *basename = g_path_get_basename (filename);
+  gchar  *basename = g_path_get_basename (gimp_file_get_utf8_name (file));
   time_t  cutime   = time (NULL);
 
-  fprintf (ofp, "%%!PS-Adobe-3.0%s\n", psvals.eps ? " EPSF-3.0" : "");
-  fprintf (ofp, "%%%%Creator: GIMP PostScript file plugin V %4.2f \
-by Peter Kirchgessner\n", VERSIO);
-  fprintf (ofp, "%%%%Title: %s\n", basename);
-  fprintf (ofp, "%%%%CreationDate: %s", ctime (&cutime));
-  fprintf (ofp, "%%%%DocumentData: Clean7Bit\n");
-  if (psvals.eps || (psvals.level > 1)) fprintf (ofp,"%%%%LanguageLevel: 2\n");
-  fprintf (ofp, "%%%%Pages: 1\n");
+  if (! print (output, error,
+               "%%!PS-Adobe-3.0%s\n", psvals.eps ? " EPSF-3.0" : ""))
+    goto fail;
+
+  if (! print (output, error,
+               "%%%%Creator: GIMP PostScript file plugin V %4.2f "
+               "by Peter Kirchgessner\n", VERSIO))
+    goto fail;
+
+  if (! print (output, error,
+               "%%%%Title: %s\n"
+               "%%%%CreationDate: %s"
+               "%%%%DocumentData: Clean7Bit\n",
+               basename, ctime (&cutime)))
+    goto fail;
+
+  if (psvals.eps || (psvals.level > 1))
+    if (! print (output, error,"%%%%LanguageLevel: 2\n"))
+      goto fail;
+
+  if (! print (output, error, "%%%%Pages: 1\n"))
+    goto fail;
 
   g_free (basename);
+
+  return TRUE;
+
+ fail:
+
+  g_free (basename);
+
+  return FALSE;
 }
 
 
 /* Write out transformation for image */
-static void
-save_ps_setup (FILE   *ofp,
-               gint32  drawable_ID,
-               gint    width,
-               gint    height,
-               gint    bpp)
+static gboolean
+save_ps_setup (GOutputStream  *output,
+               gint32          drawable_ID,
+               gint            width,
+               gint            height,
+               gint            bpp,
+               GError        **error)
 {
-  double x_offset, y_offset, x_size, y_size;
-  double urx, ury;
-  double width_inch, height_inch;
-  double f1, f2, dx, dy;
-  int xtrans, ytrans;
-  int i_urx, i_ury;
-  char tmpbuf[G_ASCII_DTOSTR_BUF_SIZE];
+  gdouble x_offset, y_offset, x_size, y_size;
+  gdouble urx, ury;
+  gdouble width_inch, height_inch;
+  gdouble f1, f2, dx, dy;
+  gint    xtrans, ytrans;
+  gint    i_urx, i_ury;
+  gchar   tmpbuf1[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar   tmpbuf2[G_ASCII_DTOSTR_BUF_SIZE];
 
   /* initialize */
 
   dx = 0.0;
   dy = 0.0;
 
-  x_offset = psvals.x_offset;
-  y_offset = psvals.y_offset;
-  width_inch = fabs (psvals.width);
+  x_offset    = psvals.x_offset;
+  y_offset    = psvals.y_offset;
+  width_inch  = fabs (psvals.width);
   height_inch = fabs (psvals.height);
 
   if (psvals.unit_mm)
@@ -2092,97 +2216,138 @@ save_ps_setup (FILE   *ofp,
       x_offset /= 25.4; y_offset /= 25.4;
       width_inch /= 25.4; height_inch /= 25.4;
     }
+
   if (psvals.keep_ratio)   /* Proportions to keep ? */
     {                        /* Fit the image into the allowed size */
       f1 = width_inch / width;
       f2 = height_inch / height;
       if (f1 < f2)
-        height_inch = width_inch * (double)(height)/(double)(width);
+        height_inch = width_inch * (gdouble) height / (gdouble) width;
       else
-        width_inch = fabs (height_inch) * (double)(width)/(double)(height);
+        width_inch = fabs (height_inch) * (gdouble) width / (gdouble) height;
     }
+
   if ((psvals.rotate == 0) || (psvals.rotate == 180))
     {
-      x_size = width_inch; y_size = height_inch;
+      x_size = width_inch;
+      y_size = height_inch;
     }
   else
-  {
-    y_size = width_inch; x_size = height_inch;
-  }
+    {
+      y_size = width_inch;
+      x_size = height_inch;
+    }
 
   /* Round up upper right corner only for non-integer values */
-  urx = (x_offset+x_size)*72.0;
-  ury = (y_offset+y_size)*72.0;
-  i_urx = (int)urx;
-  i_ury = (int)ury;
-  if (urx != (double)i_urx) i_urx++;  /* Check for non-integer value */
-  if (ury != (double)i_ury) i_ury++;
+  urx = (x_offset + x_size) * 72.0;
+  ury = (y_offset + y_size) * 72.0;
+  i_urx = (gint) urx;
+  i_ury = (gint) ury;
+  if (urx != (gdouble) i_urx) i_urx++;  /* Check for non-integer value */
+  if (ury != (gdouble) i_ury) i_ury++;
 
-  fprintf (ofp, "%%%%BoundingBox: %d %d %d %d\n",(int)(x_offset*72.0),
-           (int)(y_offset*72.0), i_urx, i_ury);
-  fprintf (ofp, "%%%%EndComments\n");
+  if (! print (output, error,
+               "%%%%BoundingBox: %d %d %d %d\n"
+               "%%%%EndComments\n",
+               (gint) (x_offset * 72.0), (gint) (y_offset * 72.0), i_urx, i_ury))
+    return FALSE;
 
   if (psvals.preview && (psvals.preview_size > 0))
     {
-      save_ps_preview (ofp, drawable_ID);
+      if (! save_ps_preview (output, drawable_ID, error))
+        return FALSE;
     }
 
-  fprintf (ofp, "%%%%BeginProlog\n");
-  fprintf (ofp, "%% Use own dictionary to avoid conflicts\n");
-  fprintf (ofp, "10 dict begin\n");
-  fprintf (ofp, "%%%%EndProlog\n");
-  fprintf (ofp, "%%%%Page: 1 1\n");
-  fprintf (ofp, "%% Translate for offset\n");
-  fprintf (ofp, "%s", g_ascii_dtostr (tmpbuf, sizeof (tmpbuf), x_offset*72.0));
-  fprintf (ofp, " %s translate\n", g_ascii_dtostr (tmpbuf, sizeof (tmpbuf), y_offset*72.0));
+  if (! print (output, error,
+               "%%%%BeginProlog\n"
+               "%% Use own dictionary to avoid conflicts\n"
+               "10 dict begin\n"
+               "%%%%EndProlog\n"
+               "%%%%Page: 1 1\n"
+               "%% Translate for offset\n"
+               "%s %s translate\n",
+               g_ascii_dtostr (tmpbuf1, sizeof (tmpbuf1), x_offset * 72.0),
+               g_ascii_dtostr (tmpbuf2, sizeof (tmpbuf2), y_offset * 72.0)))
+    return FALSE;
 
   /* Calculate translation to startpoint of first scanline */
   switch (psvals.rotate)
     {
-    case   0: dx = 0.0; dy = y_size*72.0;
+    case   0: dx = 0.0; dy = y_size * 72.0;
       break;
     case  90: dx = dy = 0.0;
       break;
-    case 180: dx = x_size*72.0; dy = 0.0;
+    case 180: dx = x_size * 72.0; dy = 0.0;
       break;
-    case 270: dx = x_size*72.0; dy = y_size*72.0;
+    case 270: dx = x_size * 72.0; dy = y_size * 72.0;
       break;
     }
+
   if ((dx != 0.0) || (dy != 0.0))
     {
-      fprintf (ofp, "%% Translate to begin of first scanline\n");
-      fprintf (ofp, "%s", g_ascii_dtostr (tmpbuf, sizeof (tmpbuf), dx));
-      fprintf (ofp, " %s translate\n", g_ascii_dtostr (tmpbuf, sizeof (tmpbuf), dy));
+      if (! print (output, error,
+                   "%% Translate to begin of first scanline\n"
+                   "%s %s translate\n",
+                   g_ascii_dtostr (tmpbuf1, sizeof (tmpbuf1), dx),
+                   g_ascii_dtostr (tmpbuf2, sizeof (tmpbuf2), dy)))
+        return FALSE;
     }
+
   if (psvals.rotate)
-    fprintf (ofp, "%d rotate\n", (int)psvals.rotate);
-  fprintf (ofp, "%s", g_ascii_dtostr (tmpbuf, sizeof (tmpbuf), 72.0*width_inch));
-  fprintf (ofp, " %s scale\n", g_ascii_dtostr (tmpbuf, sizeof (tmpbuf), -72.0*height_inch));
+    if (! print (output, error, "%d rotate\n", (gint) psvals.rotate))
+      return FALSE;
+
+  if (! print (output, error,
+               "%s %s scale\n",
+               g_ascii_dtostr (tmpbuf1, sizeof (tmpbuf1),  72.0 * width_inch),
+               g_ascii_dtostr (tmpbuf2, sizeof (tmpbuf2), -72.0 * height_inch)))
+    return FALSE;
 
   /* Write the PostScript procedures to read the image */
   if (psvals.level <= 1)
-  {
-    fprintf (ofp, "%% Variable to keep one line of raster data\n");
-    if (bpp == 1)
-      fprintf (ofp, "/scanline %d string def\n", (width+7)/8);
-    else
-      fprintf (ofp, "/scanline %d %d mul string def\n", width, bpp/8);
-  }
-  fprintf (ofp, "%% Image geometry\n%d %d %d\n", width, height,
-           (bpp == 1) ? 1 : 8);
-  fprintf (ofp, "%% Transformation matrix\n");
+    {
+      if (! print (output, error,
+                   "%% Variable to keep one line of raster data\n"))
+        return FALSE;
+
+      if (bpp == 1)
+        {
+          if (! print (output, error,
+                       "/scanline %d string def\n", (width + 7) / 8))
+            return FALSE;
+        }
+      else
+        {
+          if (! print (output, error,
+                       "/scanline %d %d mul string def\n", width, bpp / 8))
+            return FALSE;
+        }
+    }
+
+  if (! print (output, error,
+               "%% Image geometry\n%d %d %d\n"
+               "%% Transformation matrix\n",
+               width, height, (bpp == 1) ? 1 : 8))
+    return FALSE;
+
   xtrans = ytrans = 0;
-  if (psvals.width < 0.0) { width = -width; xtrans = -width; }
+  if (psvals.width  < 0.0) { width  = -width;  xtrans = -width;  }
   if (psvals.height < 0.0) { height = -height; ytrans = -height; }
-  fprintf (ofp, "[ %d 0 0 %d %d %d ]\n", width, height, xtrans, ytrans);
+
+  if (! print (output, error,
+               "[ %d 0 0 %d %d %d ]\n", width, height, xtrans, ytrans))
+    return FALSE;
+
+  return TRUE;
 }
 
-
-static void
-save_ps_trailer (FILE *ofp)
+static gboolean
+save_ps_trailer (GOutputStream  *output,
+                 GError        **error)
 {
-  fprintf (ofp, "%%%%Trailer\n");
-  fprintf (ofp, "end\n%%%%EOF\n");
+  return print (output, error,
+                "%%%%Trailer\n"
+                "end\n%%%%EOF\n");
 }
 
 /* Do a Floyd-Steinberg dithering on a grayscale scanline. */
@@ -2195,18 +2360,18 @@ dither_grey (const guchar *grey,
              gint          npix,
              gint          linecount)
 {
-  static gboolean do_init_arrays = TRUE;
-  static gint *fs_error = NULL;
-  static gint  limit[1278];
-  static gint  east_error[256];
-  static gint  seast_error[256];
-  static gint  south_error[256];
-  static gint  swest_error[256];
+  static gboolean  do_init_arrays = TRUE;
+  static gint     *fs_error = NULL;
+  static gint      limit[1278];
+  static gint      east_error[256];
+  static gint      seast_error[256];
+  static gint      south_error[256];
+  static gint      swest_error[256];
 
   const guchar *greyptr;
-  guchar *bwptr, mask;
-  gint *fse;
-  gint x, greyval, fse_inline;
+  guchar       *bwptr, mask;
+  gint         *fse;
+  gint          x, greyval, fse_inline;
 
   if (linecount <= 0)
     {
@@ -2276,24 +2441,25 @@ dither_grey (const guchar *grey,
 }
 
 /* Write a device independent screen preview */
-static void
-save_ps_preview (FILE   *ofp,
-                 gint32  drawable_ID)
+static gboolean
+save_ps_preview (GOutputStream  *output,
+                 gint32          drawable_ID,
+                 GError        **error)
 {
   GimpImageType  drawable_type;
   GeglBuffer    *buffer = NULL;
   const Babl    *format;
-  int            bpp;
-  guchar *bwptr, *greyptr;
-  int width, height, x, y, nbsl, out_count;
-  int nchar_pl = 72, src_y;
-  double f1, f2;
-  guchar *grey, *bw, *src_row, *src_ptr;
-  guchar *cmap;
-  gint ncols, cind;
+  gint           bpp;
+  guchar        *bwptr, *greyptr;
+  gint           width, height, x, y, nbsl, out_count;
+  gint           nchar_pl = 72, src_y;
+  gdouble        f1, f2;
+  guchar        *grey, *bw, *src_row, *src_ptr;
+  guchar        *cmap;
+  gint           ncols, cind;
 
   if (psvals.preview_size <= 0)
-    return;
+    return TRUE;
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
   cmap = NULL;
@@ -2326,8 +2492,8 @@ save_ps_preview (FILE   *ofp,
   if ((width > psvals.preview_size) ||
       (height > psvals.preview_size))
     {
-      f1 = (double) psvals.preview_size / (double) width;
-      f2 = (double) psvals.preview_size / (double) height;
+      f1 = (gdouble) psvals.preview_size / (gdouble) width;
+      f2 = (gdouble) psvals.preview_size / (gdouble) height;
 
       if (f1 < f2)
         {
@@ -2345,14 +2511,17 @@ save_ps_preview (FILE   *ofp,
         }
     }
 
-  nbsl = (width+7)/8;  /* Number of bytes per scanline in bitmap */
+  nbsl = (width + 7) / 8;  /* Number of bytes per scanline in bitmap */
 
-  grey = g_new (guchar, width);
-  bw = g_new (guchar, nbsl);
+  grey    = g_new (guchar, width);
+  bw      = g_new (guchar, nbsl);
   src_row = g_new (guchar, gegl_buffer_get_width (buffer) * bpp);
 
-  fprintf (ofp, "%%%%BeginPreview: %d %d 1 %d\n", width, height,
-           ((nbsl*2+nchar_pl-1)/nchar_pl)*height);
+  if (! print (output, error,
+               "%%%%BeginPreview: %d %d 1 %d\n",
+               width, height,
+               ((nbsl * 2 + nchar_pl - 1) / nchar_pl) * height))
+    goto fail;
 
   for (y = 0; y < height; y++)
     {
@@ -2399,24 +2568,34 @@ save_ps_preview (FILE   *ofp,
       bwptr = bw;
       for (x = 0; x < nbsl; x++)
         {
-          if (out_count == 0) fprintf (ofp, "%% ");
-          fprintf (ofp, "%02x", *(bwptr++));
+          if (out_count == 0)
+            if (! print (output, error, "%% "))
+              goto fail;
+
+          if (! print (output, error, "%02x", *(bwptr++)))
+            goto fail;
+
           out_count += 2;
           if (out_count >= nchar_pl)
             {
-              fprintf (ofp, "\n");
+              if (! print (output, error, "\n"))
+                goto fail;
+
               out_count = 0;
             }
         }
-      if (out_count != 0)
-        fprintf (ofp, "\n");
+
+      if (! print (output, error, "\n"))
+        goto fail;
 
       if ((y % 20) == 0)
-        gimp_progress_update ((double)(y) / (double)height);
+        gimp_progress_update ((gdouble) y / (gdouble) height);
     }
+
   gimp_progress_update (1.0);
 
-  fprintf (ofp, "%%%%EndPreview\n");
+  if (! print (output, error, "%%%%EndPreview\n"))
+    goto fail;
 
   dither_grey (grey, bw, width, -1);
   g_free (src_row);
@@ -2424,26 +2603,40 @@ save_ps_preview (FILE   *ofp,
   g_free (grey);
 
   g_object_unref (buffer);
+
+  return TRUE;
+
+ fail:
+
+  g_free (src_row);
+  g_free (bw);
+  g_free (grey);
+
+  g_object_unref (buffer);
+
+  return FALSE;
 }
 
-static gint
-save_gray  (FILE   *ofp,
-            gint32  image_ID,
-            gint32  drawable_ID)
+static gboolean
+save_gray (GOutputStream  *output,
+           gint32          image_ID,
+           gint32          drawable_ID,
+           GError        **error)
 {
-  GeglBuffer    *buffer = NULL;
-  const Babl    *format;
-  int            bpp;
-  int height, width, i, j;
-  int tile_height;
-  unsigned char *data, *src;
-  unsigned char *packb = NULL;
-  int level2 = (psvals.level > 1);
+  GeglBuffer *buffer = NULL;
+  const Babl *format;
+  gint        bpp;
+  gint        height, width, i, j;
+  gint        tile_height;
+  guchar     *data;
+  guchar     *src;
+  guchar     *packb = NULL;
+  gboolean    level2 = (psvals.level > 1);
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
   format = babl_format ("Y' u8");
-  bpp = babl_format_get_bytes_per_pixel (format);
-  width = gegl_buffer_get_width (buffer);
+  bpp    = babl_format_get_bytes_per_pixel (format);
+  width  = gegl_buffer_get_width (buffer);
   height = gegl_buffer_get_height (buffer);
 
   tile_height = gimp_tile_height ();
@@ -2452,25 +2645,36 @@ save_gray  (FILE   *ofp,
   src = data = (guchar *) g_malloc (tile_height * width * bpp);
 
   /* Set up transformation in PostScript */
-  save_ps_setup (ofp, drawable_ID, width, height, 1*8);
+  if (! save_ps_setup (output, drawable_ID, width, height, 1 * 8, error))
+    goto fail;
 
   /* Write read image procedure */
-  if (!level2)
-  {
-    fprintf (ofp, "{ currentfile scanline readhexstring pop }\n");
-  }
+  if (! level2)
+    {
+      if (! print (output, error,
+                   "{ currentfile scanline readhexstring pop }\n"))
+        goto fail;
+    }
   else
-  {
-    fprintf (ofp,"currentfile /ASCII85Decode filter /RunLengthDecode filter\n");
-    ascii85_init ();
-    /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
-    packb = (guchar *)g_malloc ((width * 105)/100+2);
-  }
-  ps_begin_data (ofp);
-  fprintf (ofp, "image\n");
+    {
+      if (! print (output, error,
+                   "currentfile /ASCII85Decode filter /RunLengthDecode filter\n"))
+        goto fail;
+
+      ascii85_init ();
+
+      /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
+      packb = (guchar *) g_malloc ((width * 105) / 100 + 2);
+    }
+
+  if (! ps_begin_data (output, error))
+    goto fail;
+
+  if (! print (output, error, "image\n"))
+    goto fail;
 
 #define GET_GRAY_TILE(begin) \
-  {int scan_lines; \
+  { gint scan_lines;                                                    \
     scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i); \
     gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, scan_lines),  \
                      1.0, format, begin,                                \
@@ -2479,110 +2683,148 @@ save_gray  (FILE   *ofp,
 
   for (i = 0; i < height; i++)
     {
-      if ((i % tile_height) == 0) GET_GRAY_TILE (data); /* Get more data */
-      if (!level2)
+      if ((i % tile_height) == 0)
+        GET_GRAY_TILE (data); /* Get more data */
+
+      if (! level2)
         {
           for (j = 0; j < width; j++)
             {
-              putc (hex[(*src) >> 4], ofp);
-              putc (hex[(*(src++)) & 0x0f], ofp);
-              if (((j+1) % 39) == 0) putc ('\n', ofp);
-            }
-          putc ('\n', ofp);
+              if (! print (output, error, "%c", hex[(*src) >> 4]))
+                goto fail;
+
+              if (! print (output, error, "%c", hex[(*(src++)) & 0x0f]))
+                goto fail;
+
+              if (((j + 1) % 39) == 0)
+                if (! print (output, error, "\n"))
+                  goto fail;
+           }
+
+          if (! print (output, error, "\n"))
+            goto fail;
         }
       else
-        {int nout;
+        {
+          gint nout;
 
           compress_packbits (width, src, &nout, packb);
-          ascii85_nout (nout, packb, ofp);
+
+          if (! ascii85_nout (output, nout, packb, error))
+            goto fail;
+
           src += width;
         }
 
       if ((i % 20) == 0)
-        gimp_progress_update ((double) i / (double) height);
+        gimp_progress_update ((gdouble) i / (gdouble) height);
     }
+
   gimp_progress_update (1.0);
 
   if (level2)
     {
-      ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
-      ascii85_done (ofp);
+      /* Write EOD of RunLengthDecode filter */
+      if (! ascii85_out (output, 128, error))
+        goto fail;
+
+      if (! ascii85_done (output, error))
+        goto fail;
     }
 
-  ps_end_data (ofp);
-  fprintf (ofp, "showpage\n");
-  g_free (data);
+  if (! ps_end_data (output, error))
+    return FALSE;
 
-  if (packb)
-    g_free (packb);
+  if (! print (output, error, "showpage\n"))
+    goto fail;
+
+  g_free (data);
+  g_free (packb);
 
   g_object_unref (buffer);
 
-  if (ferror (ofp))
-    {
-      g_message (_("Write error occurred"));
-      return FALSE;
-    }
-
   return TRUE;
+
+ fail:
+
+  g_free (data);
+  g_free (packb);
+
+  g_object_unref (buffer);
+
+  return FALSE;
+
 #undef GET_GRAY_TILE
 }
 
-
-static gint
-save_bw (FILE   *ofp,
-         gint32  image_ID,
-         gint32  drawable_ID)
+static gboolean
+save_bw (GOutputStream  *output,
+         gint32          image_ID,
+         gint32          drawable_ID,
+         GError        **error)
 {
-  GeglBuffer    *buffer = NULL;
-  const Babl    *format;
-  int            bpp;
-  int height, width, i, j;
-  int ncols, nbsl, nwrite;
-  int tile_height;
-  guchar *cmap, *ct;
-  guchar *data, *src;
-  guchar *packb = NULL;
-  guchar *scanline, *dst, mask;
-  guchar *hex_scanline;
-  gint level2 = (psvals.level > 1);
+  GeglBuffer *buffer = NULL;
+  const Babl *format;
+  gint        bpp;
+  gint        height, width, i, j;
+  gint        ncols, nbsl, nwrite;
+  gint        tile_height;
+  guchar     *cmap, *ct;
+  guchar     *data, *src;
+  guchar     *packb = NULL;
+  guchar     *scanline, *dst, mask;
+  guchar     *hex_scanline;
+  gboolean    level2 = (psvals.level > 1);
 
   cmap = gimp_image_get_colormap (image_ID, &ncols);
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
   format = gimp_drawable_get_format (drawable_ID);
-  bpp = babl_format_get_bytes_per_pixel (format);
-  width = gegl_buffer_get_width (buffer);
+  bpp    = babl_format_get_bytes_per_pixel (format);
+  width  = gegl_buffer_get_width (buffer);
   height = gegl_buffer_get_height (buffer);
 
   tile_height = gimp_tile_height ();
 
   /* allocate a buffer for retrieving information from the pixel region  */
   src = data = g_new (guchar, tile_height * width * bpp);
-  nbsl = (width+7)/8;
-  scanline = g_new (guchar, nbsl + 1);
+
+  nbsl = (width + 7) / 8;
+
+  scanline     = g_new (guchar, nbsl + 1);
   hex_scanline = g_new (guchar, (nbsl + 1) * 2);
 
   /* Set up transformation in PostScript */
-  save_ps_setup (ofp, drawable_ID, width, height, 1);
+  if (! save_ps_setup (output, drawable_ID, width, height, 1, error))
+    goto fail;
 
   /* Write read image procedure */
-  if (!level2)
-  {
-    fprintf (ofp, "{ currentfile scanline readhexstring pop }\n");
-  }
+  if (! level2)
+    {
+      if (! print (output, error,
+                   "{ currentfile scanline readhexstring pop }\n"))
+        goto fail;
+    }
   else
-  {
-    fprintf (ofp,"currentfile /ASCII85Decode filter /RunLengthDecode filter\n");
-    ascii85_init ();
-    /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
-    packb = g_new (guchar, ((nbsl+1) * 105) / 100 + 2);
-  }
-  ps_begin_data (ofp);
-  fprintf (ofp, "image\n");
+    {
+      if (! print (output, error,
+                   "currentfile /ASCII85Decode filter /RunLengthDecode filter\n"))
+        goto fail;
+
+      ascii85_init ();
+
+      /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
+      packb = g_new (guchar, ((nbsl+1) * 105) / 100 + 2);
+    }
+
+  if (! ps_begin_data (output, error))
+    goto fail;
+
+  if (! print (output, error, "image\n"))
+    goto fail;
 
 #define GET_BW_TILE(begin) \
-  {int scan_lines; \
+  { gint scan_lines;                                                    \
     scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i); \
     gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, scan_lines),  \
                      1.0, format, begin,                                \
@@ -2591,95 +2833,132 @@ save_bw (FILE   *ofp,
 
   for (i = 0; i < height; i++)
     {
-      if ((i % tile_height) == 0) GET_BW_TILE (data); /* Get more data */
+      if ((i % tile_height) == 0)
+        GET_BW_TILE (data); /* Get more data */
+
       dst = scanline;
       memset (dst, 0, nbsl);
       mask = 0x80;
+
       /* Build a bitmap for a scanline */
       for (j = 0; j < width; j++)
         {
           ct = cmap + *(src++)*3;
           if (ct[0] || ct[1] || ct[2])
             *dst |= mask;
-          if (mask == 0x01) { mask = 0x80; dst++; } else mask >>= 1;
+
+          if (mask == 0x01)
+            {
+              mask = 0x80; dst++;
+            }
+          else
+            {
+              mask >>= 1;
+            }
         }
-      if (!level2)
+
+      if (! level2)
         {
           /* Convert to hexstring */
           for (j = 0; j < nbsl; j++)
             {
-              hex_scanline[j*2] = (unsigned char)hex[scanline[j] >> 4];
-              hex_scanline[j*2+1] = (unsigned char)hex[scanline[j] & 0x0f];
+              hex_scanline[j * 2]     = (guchar) hex[scanline[j] >> 4];
+              hex_scanline[j * 2 + 1] = (guchar) hex[scanline[j] & 0x0f];
             }
+
           /* Write out hexstring */
           j = nbsl * 2;
           dst = hex_scanline;
+
           while (j > 0)
             {
               nwrite = (j > 78) ? 78 : j;
-              fwrite (dst, nwrite, 1, ofp);
-              putc ('\n', ofp);
+
+              if (! g_output_stream_write_all (output,
+                                               dst, nwrite, NULL,
+                                               NULL, error))
+                goto fail;
+
+              if (! print (output, error, "\n"))
+                goto fail;
+
               j -= nwrite;
               dst += nwrite;
             }
         }
       else
-        {int nout;
+        {
+          gint nout;
 
           compress_packbits (nbsl, scanline, &nout, packb);
-          ascii85_nout (nout, packb, ofp);
+
+          if (! ascii85_nout (output, nout, packb, error))
+            goto fail;
         }
 
       if ((i % 20) == 0)
-        gimp_progress_update ((double) i / (double) height);
+        gimp_progress_update ((gdouble) i / (gdouble) height);
     }
+
   gimp_progress_update (1.0);
 
   if (level2)
     {
-      ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
-      ascii85_done (ofp);
+      /* Write EOD of RunLengthDecode filter */
+      if (! ascii85_out (output, 128, error))
+        goto fail;
+
+      if (! ascii85_done (output, error))
+        goto fail;
     }
 
-  ps_end_data (ofp);
-  fprintf (ofp, "showpage\n");
+  if (! ps_end_data (output, error))
+    goto fail;
+
+  if (! print (output, error, "showpage\n"))
+    goto fail;
 
   g_free (hex_scanline);
   g_free (scanline);
   g_free (data);
-
-  if (packb)
-    g_free (packb);
+  g_free (packb);
 
   g_object_unref (buffer);
 
-  if (ferror (ofp))
-    {
-      g_message (_("Write error occurred"));
-      return FALSE;
-    }
-
   return TRUE;
+
+ fail:
+
+  g_free (hex_scanline);
+  g_free (scanline);
+  g_free (data);
+  g_free (packb);
+
+  g_object_unref (buffer);
+
+  return FALSE;
+
 #undef GET_BW_TILE
 }
 
-
-static gint
-save_index (FILE   *ofp,
-            gint32  image_ID,
-            gint32  drawable_ID)
+static gboolean
+save_index (GOutputStream  *output,
+            gint32          image_ID,
+            gint32          drawable_ID,
+            GError        **error)
 {
-  GeglBuffer    *buffer = NULL;
-  const Babl    *format;
-  int            bpp;
-  int height, width, i, j;
-  int ncols, bw;
-  int tile_height;
-  guchar *cmap, *cmap_start;
-  guchar *data, *src;
-  guchar *packb = NULL, *plane = NULL;
-  char coltab[256*6], *ct;
-  int level2 = (psvals.level > 1);
+  GeglBuffer *buffer = NULL;
+  const Babl *format;
+  gint        bpp;
+  gint        height, width, i, j;
+  gint        ncols, bw;
+  gint        tile_height;
+  guchar     *cmap, *cmap_start;
+  guchar     *data, *src;
+  guchar     *packb = NULL;
+  guchar     *plane = NULL;
+  gchar       coltab[256 * 6], *ct;
+  gboolean    level2 = (psvals.level > 1);
 
   cmap = cmap_start = gimp_image_get_colormap (image_ID, &ncols);
 
@@ -2694,64 +2973,76 @@ save_index (FILE   *ofp,
         }
       else
         {
-          bw &=    ((cmap[0] == 0) && (cmap[1] == 0) && (cmap[2] == 0))
-            || ((cmap[0] == 255) && (cmap[1] == 255) && (cmap[2] == 255));
-          *(ct++) = (guchar)hex[(*cmap) >> 4];
-          *(ct++) = (guchar)hex[(*(cmap++)) & 0x0f];
-          *(ct++) = (guchar)hex[(*cmap) >> 4];
-          *(ct++) = (guchar)hex[(*(cmap++)) & 0x0f];
-          *(ct++) = (guchar)hex[(*cmap) >> 4];
-          *(ct++) = (guchar)hex[(*(cmap++)) & 0x0f];
+          bw &= ((cmap[0] == 0)   && (cmap[1] == 0)   && (cmap[2] == 0)) ||
+                ((cmap[0] == 255) && (cmap[1] == 255) && (cmap[2] == 255));
+
+          *(ct++) = (guchar) hex[(*cmap) >> 4];
+          *(ct++) = (guchar) hex[(*(cmap++)) & 0x0f];
+          *(ct++) = (guchar) hex[(*cmap) >> 4];
+          *(ct++) = (guchar) hex[(*(cmap++)) & 0x0f];
+          *(ct++) = (guchar) hex[(*cmap) >> 4];
+          *(ct++) = (guchar) hex[(*(cmap++)) & 0x0f];
         }
     }
+
   if (bw)
-    return (save_bw (ofp, image_ID, drawable_ID));
+    return save_bw (output, image_ID, drawable_ID, error);
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
   format = gimp_drawable_get_format (drawable_ID);
-  bpp = babl_format_get_bytes_per_pixel (format);
-  width = gegl_buffer_get_width (buffer);
+  bpp    = babl_format_get_bytes_per_pixel (format);
+  width  = gegl_buffer_get_width (buffer);
   height = gegl_buffer_get_height (buffer);
 
   tile_height = gimp_tile_height ();
 
   /* allocate a buffer for retrieving information from the pixel region  */
-  src = data = (guchar *)g_malloc (tile_height * width * bpp);
+  src = data = (guchar *) g_malloc (tile_height * width * bpp);
 
   /* Set up transformation in PostScript */
-  save_ps_setup (ofp, drawable_ID, width, height, 3*8);
+  if (! save_ps_setup (output, drawable_ID, width, height, 3 * 8, error))
+    goto fail;
 
   /* Write read image procedure */
-  if (!level2)
-  {
-    fprintf (ofp, "{ currentfile scanline readhexstring pop } false 3\n");
-  }
+  if (! level2)
+    {
+      if (! print (output, error,
+                   "{ currentfile scanline readhexstring pop } false 3\n"))
+        goto fail;
+    }
   else
-  {
-    fprintf (ofp, "%% Strings to hold RGB-samples per scanline\n");
-    fprintf (ofp, "/rstr %d string def\n", width);
-    fprintf (ofp, "/gstr %d string def\n", width);
-    fprintf (ofp, "/bstr %d string def\n", width);
-    fprintf (ofp,
-            "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
- rstr readstring pop}\n");
-    fprintf (ofp,
-            "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
- gstr readstring pop}\n");
-    fprintf (ofp,
-            "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
- bstr readstring pop}\n");
-    fprintf (ofp, "true 3\n");
+    {
+      if (! print (output, error,
+                   "%% Strings to hold RGB-samples per scanline\n"
+                   "/rstr %d string def\n"
+                   "/gstr %d string def\n"
+                   "/bstr %d string def\n",
+                   width, width, width))
+        goto fail;
 
-    /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
-    packb = (guchar *)g_malloc ((width * 105)/100+2);
-    plane = (guchar *)g_malloc (width);
-  }
-  ps_begin_data (ofp);
-  fprintf (ofp, "colorimage\n");
+      if (! print (output, error,
+                   "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
+ rstr readstring pop}\n"
+                   "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
+ gstr readstring pop}\n"
+                   "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
+ bstr readstring pop}\n"
+                   "true 3\n"))
+        goto fail;
+
+      /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
+      packb = (guchar *) g_malloc ((width * 105) / 100 + 2);
+      plane = (guchar *) g_malloc (width);
+    }
+
+  if (! ps_begin_data (output, error))
+    goto fail;
+
+  if (! print (output, error, "colorimage\n"))
+    goto fail;
 
 #define GET_INDEX_TILE(begin) \
-  {int scan_lines; \
+  { gint scan_lines;                                                    \
     scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i); \
     gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, scan_lines),  \
                      1.0, format, begin,                                \
@@ -2760,82 +3051,110 @@ save_index (FILE   *ofp,
 
   for (i = 0; i < height; i++)
     {
-      if ((i % tile_height) == 0) GET_INDEX_TILE (data); /* Get more data */
-      if (!level2)
+      if ((i % tile_height) == 0)
+        GET_INDEX_TILE (data); /* Get more data */
+
+      if (! level2)
         {
           for (j = 0; j < width; j++)
             {
-              fwrite (coltab+(*(src++))*6, 6, 1, ofp);
-              if (((j+1) % 13) == 0) putc ('\n', ofp);
+              if (! g_output_stream_write_all (output,
+                                               coltab + (*(src++)) * 6, 6, NULL,
+                                               NULL, error))
+                goto fail;
+
+              if (((j + 1) % 13) == 0)
+                if (! print (output, error, "\n"))
+                  goto fail;
             }
-          putc ('\n', ofp);
+
+          if (! print (output, error, "\n"))
+            goto fail;
         }
       else
-        {guchar *plane_ptr, *src_ptr;
-         int rgb, nout;
+        {
+          gint rgb;
 
           for (rgb = 0; rgb < 3; rgb++)
-          {
-            src_ptr = src;
-            plane_ptr = plane;
-            for (j = 0; j < width; j++)
-              *(plane_ptr++) = cmap_start[3 * *(src_ptr++) + rgb];
-            compress_packbits (width, plane, &nout, packb);
-            ascii85_init ();
-            ascii85_nout (nout, packb, ofp);
-            ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
-            ascii85_done (ofp);
-          }
+            {
+              guchar *src_ptr   = src;
+              guchar *plane_ptr = plane;
+              gint    nout;
+
+              for (j = 0; j < width; j++)
+                *(plane_ptr++) = cmap_start[3 * *(src_ptr++) + rgb];
+
+              compress_packbits (width, plane, &nout, packb);
+
+              ascii85_init ();
+
+              if (! ascii85_nout (output, nout, packb, error))
+                goto fail;
+
+              /* Write EOD of RunLengthDecode filter */
+              if (! ascii85_out (output, 128, error))
+                goto fail;
+
+              if (! ascii85_done (output, error))
+                goto fail;
+            }
+
           src += width;
         }
 
       if ((i % 20) == 0)
-        gimp_progress_update ((double) i / (double) height);
+        gimp_progress_update ((gdouble) i / (gdouble) height);
     }
+
   gimp_progress_update (1.0);
 
-  ps_end_data (ofp);
-  fprintf (ofp, "showpage\n");
+  if (! ps_end_data (output, error))
+    goto fail;
+
+  if (! print (output, error, "showpage\n"))
+    goto fail;
 
   g_free (data);
-
-  if (packb)
-    g_free (packb);
-
-  if (plane)
-    g_free (plane);
+  g_free (packb);
+  g_free (plane);
 
   g_object_unref (buffer);
 
-  if (ferror (ofp))
-    {
-      g_message (_("Write error occurred"));
-      return FALSE;
-    }
-
   return TRUE;
+
+ fail:
+
+  g_free (data);
+  g_free (packb);
+  g_free (plane);
+
+  g_object_unref (buffer);
+
+  return FALSE;
+
 #undef GET_INDEX_TILE
 }
 
-
-static gint
-save_rgb (FILE   *ofp,
-          gint32  image_ID,
-          gint32  drawable_ID)
+static gboolean
+save_rgb (GOutputStream  *output,
+          gint32          image_ID,
+          gint32          drawable_ID,
+          GError        **error)
 {
-  GeglBuffer    *buffer = NULL;
-  const Babl    *format;
-  int            bpp;
-  int height, width, tile_height;
-  int i, j;
-  guchar *data, *src;
-  guchar *packb = NULL, *plane = NULL;
-  int level2 = (psvals.level > 1);
+  GeglBuffer *buffer = NULL;
+  const Babl *format;
+  gint        bpp;
+  gint        height, width, tile_height;
+  gint        i, j;
+  guchar     *data, *src;
+  guchar     *packb = NULL;
+  guchar     *plane = NULL;
+  gboolean    level2 = (psvals.level > 1);
 
   buffer = gimp_drawable_get_buffer (drawable_ID);
   format = babl_format ("R'G'B' u8");
-  bpp = babl_format_get_bytes_per_pixel (format);
-  width = gegl_buffer_get_width (buffer);
+  bpp    = babl_format_get_bytes_per_pixel (format);
+  width  = gegl_buffer_get_width (buffer);
   height = gegl_buffer_get_height (buffer);
 
   tile_height = gimp_tile_height ();
@@ -2844,39 +3163,49 @@ save_rgb (FILE   *ofp,
   src = data = g_new (guchar, tile_height * width * bpp);
 
   /* Set up transformation in PostScript */
-  save_ps_setup (ofp, drawable_ID, width, height, 3*8);
+  if (! save_ps_setup (output, drawable_ID, width, height, 3 * 8, error))
+    goto fail;
 
   /* Write read image procedure */
-  if (!level2)
-  {
-    fprintf (ofp, "{ currentfile scanline readhexstring pop } false 3\n");
-  }
+  if (! level2)
+    {
+      if (! print (output, error,
+                   "{ currentfile scanline readhexstring pop } false 3\n"))
+        goto fail;
+    }
   else
-  {
-    fprintf (ofp, "%% Strings to hold RGB-samples per scanline\n");
-    fprintf (ofp, "/rstr %d string def\n", width);
-    fprintf (ofp, "/gstr %d string def\n", width);
-    fprintf (ofp, "/bstr %d string def\n", width);
-    fprintf (ofp,
-            "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
- rstr readstring pop}\n");
-    fprintf (ofp,
-            "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
- gstr readstring pop}\n");
-    fprintf (ofp,
-            "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
- bstr readstring pop}\n");
-    fprintf (ofp, "true 3\n");
+    {
+      if (! print (output, error,
+                   "%% Strings to hold RGB-samples per scanline\n"
+                   "/rstr %d string def\n"
+                   "/gstr %d string def\n"
+                   "/bstr %d string def\n",
+                   width, width, width))
+        goto fail;
 
-    /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
-    packb = g_new (guchar, (width * 105) / 100 + 2);
-    plane = g_new (guchar, width);
-  }
-  ps_begin_data (ofp);
-  fprintf (ofp, "colorimage\n");
+      if (! print (output, error,
+                   "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
+ rstr readstring pop}\n"
+                   "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
+ gstr readstring pop}\n"
+                   "{currentfile /ASCII85Decode filter /RunLengthDecode filter\
+ bstr readstring pop}\n"
+                   "true 3\n"))
+        goto fail;
+
+      /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
+      packb = g_new (guchar, (width * 105) / 100 + 2);
+      plane = g_new (guchar, width);
+    }
+
+  if (! ps_begin_data (output, error))
+    goto fail;
+
+  if (! print (output, error, "colorimage\n"))
+    goto fail;
 
 #define GET_RGB_TILE(begin) \
-  { int scan_lines;                                                     \
+  { gint scan_lines;                                                    \
     scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i); \
     gegl_buffer_get (buffer, GEGL_RECTANGLE (0, i, width, scan_lines),  \
                      1.0, format, begin,                                \
@@ -2885,50 +3214,90 @@ save_rgb (FILE   *ofp,
 
   for (i = 0; i < height; i++)
     {
-      if ((i % tile_height) == 0) GET_RGB_TILE (data); /* Get more data */
-      if (!level2)
+      if ((i % tile_height) == 0)
+        GET_RGB_TILE (data); /* Get more data */
+
+      if (! level2)
         {
           for (j = 0; j < width; j++)
             {
-              putc (hex[(*src) >> 4], ofp);        /* Red */
-              putc (hex[(*(src++)) & 0x0f], ofp);
-              putc (hex[(*src) >> 4], ofp);        /* Green */
-              putc (hex[(*(src++)) & 0x0f], ofp);
-              putc (hex[(*src) >> 4], ofp);        /* Blue */
-              putc (hex[(*(src++)) & 0x0f], ofp);
-              if (((j+1) % 13) == 0) putc ('\n', ofp);
+              if (! print (output, error, "%c",
+                           hex[(*src) >> 4]))        /* Red */
+                goto fail;
+
+              if (! print (output, error, "%c",
+                           hex[(*(src++)) & 0x0f]))
+                goto fail;
+
+              if (! print (output, error, "%c",
+                           hex[(*src) >> 4]))        /* Green */
+                goto fail;
+
+              if (! print (output, error, "%c",
+                           hex[(*(src++)) & 0x0f]))
+                goto fail;
+
+              if (! print (output, error, "%c",
+                           hex[(*src) >> 4]))        /* Blue */
+                goto fail;
+
+              if (! print (output, error, "%c",
+                           hex[(*(src++)) & 0x0f]))
+                goto fail;
+
+              if (((j+1) % 13) == 0)
+                if (! print (output, error, "\n"))
+                  goto fail;
             }
-          putc ('\n', ofp);
+
+          if (! print (output, error, "\n"))
+            goto fail;
         }
       else
-        {guchar *plane_ptr, *src_ptr;
-         int rgb, nout;
+        {
+          gint rgb;
 
           for (rgb = 0; rgb < 3; rgb++)
-          {
-            src_ptr = src + rgb;
-            plane_ptr = plane;
-            for (j = 0; j < width; j++)
             {
-              *(plane_ptr++) = *src_ptr;
-              src_ptr += 3;
+              guchar *src_ptr   = src + rgb;
+              guchar *plane_ptr = plane;
+              gint    nout;
+
+              for (j = 0; j < width; j++)
+                {
+                  *(plane_ptr++) = *src_ptr;
+                  src_ptr += 3;
+                }
+
+              compress_packbits (width, plane, &nout, packb);
+
+              ascii85_init ();
+
+              if (! ascii85_nout (output, nout, packb, error))
+                goto fail;
+
+              /* Write EOD of RunLengthDecode filter */
+              if (! ascii85_out (output, 128, error))
+                goto fail;
+
+              if (! ascii85_done (output, error))
+                goto fail;
             }
-            compress_packbits (width, plane, &nout, packb);
-            ascii85_init ();
-            ascii85_nout (nout, packb, ofp);
-            ascii85_out (128, ofp); /* Write EOD of RunLengthDecode filter */
-            ascii85_done (ofp);
-          }
-          src += 3*width;
+
+          src += 3 * width;
         }
 
       if ((i % 20) == 0)
-        gimp_progress_update ((double) i / (double) height);
+        gimp_progress_update ((gdouble) i / (gdouble) height);
     }
+
   gimp_progress_update (1.0);
 
-  ps_end_data (ofp);
-  fprintf (ofp, "showpage\n");
+  if (! ps_end_data (output, error))
+    goto fail;
+
+  if (! print (output, error, "showpage\n"))
+    goto fail;
 
   g_free (data);
   g_free (packb);
@@ -2936,14 +3305,36 @@ save_rgb (FILE   *ofp,
 
   g_object_unref (buffer);
 
-  if (ferror (ofp))
-    {
-      g_message (_("Write error occurred"));
-      return FALSE;
-    }
-
   return TRUE;
+
+ fail:
+
+  g_free (data);
+  g_free (packb);
+  g_free (plane);
+
+  g_object_unref (buffer);
+
+  return FALSE;
+
 #undef GET_RGB_TILE
+}
+
+static gboolean
+print (GOutputStream  *output,
+       GError        **error,
+       const gchar    *format,
+       ...)
+{
+  va_list  args;
+  gboolean success;
+
+  va_start (args, format);
+  success = g_output_stream_vprintf (output, NULL, NULL,
+                                     error, format, args);
+  va_end (args);
+
+  return success;
 }
 
 /*  Load interface functions  */
