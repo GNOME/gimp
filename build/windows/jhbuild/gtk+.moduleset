@@ -20,11 +20,9 @@
 		href="http://download.icu-project.org/files/" />
 
 <autotools id="cairo">
-	<branch version="1.12.16" repo="cairographics.org"
-			module="cairo-1.12.16.tar.xz"
-			hash="sha1:4f6e337d5d3edd7ea79d1426f575331552b003ec">
-		<!-- From cairo git -->
-		<patch file="cairo-disable-lto.patch" strip="1"/>
+	<branch version="1.14.0" repo="cairographics.org"
+			module="cairo-1.14.0.tar.xz"
+			hash="sha1:53cf589b983412ea7f78feee2e1ba9cea6e3ebae">
 	</branch>
 	<dependencies>
 		<dep package="zlib"/>

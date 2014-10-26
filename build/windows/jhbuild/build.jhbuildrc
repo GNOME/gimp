@@ -142,8 +142,7 @@ module_autogenargs['cairo']      = autogenargs + """ --enable-xlib=no \
                                                      --enable-xcb=no \
                                                      --enable-xcb-shm=no \
                                                      --enable-pthread=no \
-                                                     --enable-win32-font=yes \
-                                                     --disable-lto"""
+                                                     --enable-win32-font=yes"""
 
 module_autogenargs['pixman']     = autogenargs + """ --enable-gtk=no"""
 
@@ -238,6 +237,8 @@ module_extra_env.update (
 	{'PREFIX': prefix},
  'freetype2':
     {'LIBPNG_CFLAGS': ' ', 'LIBPNG_LDFLAGS': '-lpng'},
+ 'cairo':
+    {'ax_cv_c_float_words_bigendian': 'no'},
 
 # Ensure that gimp doesn't get the host machine's freetype-config
   'gimp-dev':
