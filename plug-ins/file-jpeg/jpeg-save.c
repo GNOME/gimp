@@ -1248,6 +1248,10 @@ load_defaults (void)
 
   gimp_parasite_free (parasite);
 
+  /* Initialize tmpvals in case fewer fields exist in the parasite
+     (e.g., when importing from a previous version of GIMP). */
+  memcpy(&tmpvals, &jsvals, sizeof jsvals);
+
   num_fields = sscanf (def_str,
                        "%lf %lf %d %d %d %d %d %d %d %d %d %d %d %d %d",
                        &tmpvals.quality,
