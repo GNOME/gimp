@@ -456,6 +456,7 @@ gfig_load (const gchar *filename,
       g_message ("File '%s' is not a gfig file",
                   gimp_filename_to_utf8 (gfig->filename));
       gfig_free (gfig);
+      fclose (fp);
       return NULL;
     }
 
@@ -476,6 +477,7 @@ gfig_load (const gchar *filename,
       g_message ("File '%s' corrupt file - Line %d Option section incorrect",
                  gimp_filename_to_utf8 (filename), line_no);
       gfig_free (gfig);
+      fclose (fp);
       return NULL;
     }
 
@@ -484,6 +486,7 @@ gfig_load (const gchar *filename,
       g_message ("File '%s' corrupt file - Line %d Option section incorrect",
                  gimp_filename_to_utf8 (filename), line_no);
       gfig_free (gfig);
+      fclose (fp);
       return NULL;
     }
 
@@ -500,6 +503,7 @@ gfig_load (const gchar *filename,
       g_message ("File '%s' corrupt file - Line %d Object count to small",
                  gimp_filename_to_utf8 (filename), line_no);
       gfig_free (gfig);
+      fclose (fp);
       return NULL;
     }
 
