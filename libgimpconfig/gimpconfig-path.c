@@ -522,7 +522,7 @@ gimp_config_path_extract_token (const gchar **str)
 
   p = *str + 2;
 
-  while (*p && (*p != '}'))
+  while (p && (*p != '}'))
     p = g_utf8_next_char (p);
 
   if (!p)
