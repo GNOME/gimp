@@ -1100,18 +1100,36 @@ script_fu_marshal_procedure_call (scheme  *sc,
                    sc->vptr->list_length (sc, sc->vptr->pair_car (a)) == 3)
             {
               pointer color_list;
-              guchar  r, g, b;
+              guchar  r = 0, g = 0, b = 0;
 
               color_list = sc->vptr->pair_car (a);
-              r = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)), 0, 255);
-              color_list = sc->vptr->pair_cdr (color_list);
-              g = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)), 0, 255);
-              color_list = sc->vptr->pair_cdr (color_list);
-              b = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)), 0, 255);
+              if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
+                r = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                           0, 255);
+              else
+                success = FALSE;
 
-              gimp_rgba_set_uchar (&args[i].data.d_color, r, g, b, 255);
+              color_list = sc->vptr->pair_cdr (color_list);
+              if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
+                g = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                           0, 255);
+              else
+                success = FALSE;
+
+              color_list = sc->vptr->pair_cdr (color_list);
+              if (sc->vptr->is_number (sc->vptr->pair_car (color_list)))
+                b = CLAMP (sc->vptr->ivalue (sc->vptr->pair_car (color_list)),
+                           0, 255);
+              else
+                success = FALSE;
+
+              if (success)
+                gimp_rgba_set_uchar (&args[i].data.d_color, r, g, b, 255);
 #if DEBUG_MARSHALL
-              g_printerr ("      (%d %d %d)\n", r, g, b);
+              if (success)
+                g_printerr ("      (%d %d %d)\n", r, g, b);
+              else
+                g_printerr ("      COLOR list contains non-numbers\n");
 #endif
             }
           else
