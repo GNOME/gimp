@@ -8883,7 +8883,7 @@ msgstr ""
 "Timo Jyrinki\n"
 "Janne Peltonen\n"
 "\n"
-"http://www.gnome.fi/"
+"https://l10n.gnome.org/teams/fi/"
 
 #: ../app/dialogs/about-dialog.c:521
 msgid "GIMP is brought to you by"

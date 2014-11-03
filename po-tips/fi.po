@@ -1,5 +1,5 @@
 # Finnish messages for gimp-tips.
-# Suomennos: http://gnome.fi/
+# Suomennos: https://l10n.gnome.org/teams/fi/
 # Ilkka Tuohela <hile@iki.fi>, 2006.
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2008.
 # Petri Järvisalo <reaby @ Freenode>, 2008.
