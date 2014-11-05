@@ -44,7 +44,9 @@
 #include "gimpcontainerview.h"
 #include "gimpdatafactoryview.h"
 #include "gimpdnd.h"
+#include "gimpdocked.h"
 #include "gimpmenufactory.h"
+#include "gimpsessioninfo-aux.h"
 #include "gimptagentry.h"
 #include "gimpuimanager.h"
 #include "gimpviewrenderer.h"
@@ -79,35 +81,45 @@ struct _GimpDataFactoryViewPriv
 };
 
 
+static void    gimp_data_factory_view_docked_iface_init (GimpDockedInterface *iface);
+
 static GObject *
-              gimp_data_factory_view_constructor    (GType                type,
-                                                     guint                n_construct_params,
-                                                     GObjectConstructParam *construct_params);
-static void   gimp_data_factory_view_constructed    (GObject             *object);
-static void   gimp_data_factory_view_dispose        (GObject             *object);
-static void   gimp_data_factory_view_set_property   (GObject             *object,
-                                                     guint                property_id,
-                                                     const GValue        *value,
-                                                     GParamSpec          *pspec);
-static void   gimp_data_factory_view_get_property   (GObject             *object,
-                                                     guint                property_id,
-                                                     GValue              *value,
-                                                     GParamSpec          *pspec);
+               gimp_data_factory_view_constructor    (GType                type,
+                                                      guint                n_construct_params,
+                                                      GObjectConstructParam *construct_params);
+static void    gimp_data_factory_view_constructed    (GObject             *object);
+static void    gimp_data_factory_view_dispose        (GObject             *object);
+static void    gimp_data_factory_view_set_property   (GObject             *object,
+                                                      guint                property_id,
+                                                      const GValue        *value,
+                                                      GParamSpec          *pspec);
+static void    gimp_data_factory_view_get_property   (GObject             *object,
+                                                      guint                property_id,
+                                                      GValue              *value,
+                                                      GParamSpec          *pspec);
 
-static void   gimp_data_factory_view_activate_item  (GimpContainerEditor *editor,
-                                                     GimpViewable        *viewable);
-static void   gimp_data_factory_view_select_item    (GimpContainerEditor *editor,
-                                                     GimpViewable        *viewable);
-static void gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
-                                                     const gchar         *path,
-                                                     const gchar         *name,
-                                                     GimpDataFactoryView *view);
+static void    gimp_data_factory_view_set_aux_info   (GimpDocked          *docked,
+                                                      GList               *aux_info);
+static GList * gimp_data_factory_view_get_aux_info   (GimpDocked          *docked);
+
+static void    gimp_data_factory_view_activate_item  (GimpContainerEditor *editor,
+                                                      GimpViewable        *viewable);
+static void    gimp_data_factory_view_select_item    (GimpContainerEditor *editor,
+                                                      GimpViewable        *viewable);
+static void  gimp_data_factory_view_tree_name_edited (GtkCellRendererText *cell,
+                                                      const gchar         *path,
+                                                      const gchar         *name,
+                                                      GimpDataFactoryView *view);
 
 
-G_DEFINE_TYPE (GimpDataFactoryView, gimp_data_factory_view,
-               GIMP_TYPE_CONTAINER_EDITOR)
+G_DEFINE_TYPE_WITH_CODE (GimpDataFactoryView, gimp_data_factory_view,
+                         GIMP_TYPE_CONTAINER_EDITOR,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_DOCKED,
+                                                gimp_data_factory_view_docked_iface_init))
 
 #define parent_class gimp_data_factory_view_parent_class
+
+static GimpDockedInterface *parent_docked_iface = NULL;
 
 
 static void
@@ -158,6 +170,18 @@ gimp_data_factory_view_init (GimpDataFactoryView *view)
   view->priv->duplicate_button = NULL;
   view->priv->delete_button    = NULL;
   view->priv->refresh_button   = NULL;
+}
+
+static void
+gimp_data_factory_view_docked_iface_init (GimpDockedInterface *iface)
+{
+  parent_docked_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_docked_iface)
+    parent_docked_iface = g_type_default_interface_peek (GIMP_TYPE_DOCKED);
+
+  iface->set_aux_info = gimp_data_factory_view_set_aux_info;
+  iface->get_aux_info = gimp_data_factory_view_get_aux_info;
 }
 
 static GObject *
@@ -361,6 +385,50 @@ gimp_data_factory_view_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+#define AUX_INFO_TAG_FILTER "tag-filter"
+
+static void
+gimp_data_factory_view_set_aux_info (GimpDocked *docked,
+                                     GList      *aux_info)
+{
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (docked);
+  GList               *list;
+
+  parent_docked_iface->set_aux_info (docked, aux_info);
+
+  for (list = aux_info; list; list = g_list_next (list))
+    {
+      GimpSessionInfoAux *aux = list->data;
+
+      if (! strcmp (aux->name, AUX_INFO_TAG_FILTER))
+        {
+          gtk_entry_set_text (GTK_ENTRY (view->priv->query_tag_entry),
+                              aux->value);
+        }
+    }
+}
+
+static GList *
+gimp_data_factory_view_get_aux_info (GimpDocked *docked)
+{
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (docked);
+  GList               *aux_info;
+  const gchar         *tag_filter;
+
+  aux_info = parent_docked_iface->get_aux_info (docked);
+
+  tag_filter = gtk_entry_get_text (GTK_ENTRY (view->priv->query_tag_entry));
+  if (tag_filter && *tag_filter)
+    {
+      GimpSessionInfoAux *aux;
+
+      aux = gimp_session_info_aux_new (AUX_INFO_TAG_FILTER, tag_filter);
+      aux_info = g_list_append (aux_info, aux);
+    }
+
+  return aux_info;
 }
 
 GtkWidget *
