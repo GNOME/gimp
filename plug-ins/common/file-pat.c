@@ -180,11 +180,13 @@ run (const gchar      *name,
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
+      GFile        *file;
       GimpParasite *parasite;
       gint32        orig_image_ID;
 
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
+      file        = g_file_new_for_uri (param[3].data.d_string);
 
       orig_image_ID = image_ID;
 
@@ -208,29 +210,44 @@ run (const gchar      *name,
 
           /*  Possibly retrieve data  */
           gimp_get_data (SAVE_PROC, description);
+
+          parasite = gimp_image_get_parasite (orig_image_ID,
+                                              "gimp-pattern-name");
+          if (parasite)
+            {
+              strncpy (description,
+                       gimp_parasite_data (parasite),
+                       MIN (sizeof (description),
+                            gimp_parasite_data_size (parasite)));
+              description[sizeof (description) - 1] = '\0';
+
+              gimp_parasite_free (parasite);
+            }
+          else
+            {
+              gchar *name = g_path_get_basename (gimp_file_get_utf8_name (file));
+
+              if (g_str_has_suffix (name, ".pat"))
+                name[strlen (name) - 4] = '\0';
+
+              if (strlen (name))
+                {
+                  strncpy (description, name, sizeof (description));
+                  description[sizeof (description) - 1] = '\0';
+                }
+
+              g_free (name);
+            }
           break;
 
         default:
           break;
         }
 
-      parasite = gimp_image_get_parasite (orig_image_ID, "gimp-pattern-name");
-      if (parasite)
-        {
-          gchar *name = g_strndup (gimp_parasite_data (parasite),
-                                   gimp_parasite_data_size (parasite));
-          gimp_parasite_free (parasite);
-
-          strncpy (description, name, sizeof (description));
-          description[sizeof (description) - 1] = '\0';
-
-          g_free (name);
-        }
-
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-          if (!save_dialog ())
+          if (! save_dialog ())
             status = GIMP_PDB_CANCEL;
           break;
 
@@ -253,8 +270,7 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (save_image (g_file_new_for_uri (param[3].data.d_string),
-                          image_ID, drawable_ID, &error))
+          if (save_image (file, image_ID, drawable_ID, &error))
             {
               gimp_set_data (SAVE_PROC, description, sizeof (description));
             }
@@ -599,9 +615,9 @@ save_dialog (void)
   gtk_widget_show (table);
 
   entry = gtk_entry_new ();
-  gtk_widget_set_size_request (entry, 200, -1);
-  gtk_entry_set_text (GTK_ENTRY (entry), description);
+  gtk_entry_set_width_chars (GTK_ENTRY (entry), 20);
   gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
+  gtk_entry_set_text (GTK_ENTRY (entry), description);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Description:"), 1.0, 0.5,
                              entry, 1, FALSE);
