@@ -163,9 +163,10 @@ void
 gimp_test_utils_synthesize_key_event (GtkWidget *widget,
                                       guint      keyval)
 {
-#ifdef G_OS_WIN32
-  /* gdk_test_simulate_key() has no implementation for win32 currently.
-   * Use this for now. */
+#if defined G_OS_WIN32 && ! GTK_CHECK_VERSION (2, 24, 25)
+  /* gdk_test_simulate_key() has no implementation for win32 until
+   * GTK+ 2.24.25.
+   * TODO: remove the below hack when our GTK+ requirement is over 2.24.25. */
   GdkKeymapKey *keys   = NULL;
   gint          n_keys = 0;
   INPUT         ip;
@@ -227,7 +228,7 @@ gimp_test_utils_synthesize_key_event (GtkWidget *widget,
     {
       g_warning ("%s: no win32 key mapping found for keyval %d.", G_STRFUNC, keyval);
     }
-#else /* G_OS_WIN32 */
+#else /* G_OS_WIN32  && ! GTK_CHECK_VERSION (2, 24, 25) */
   gdk_test_simulate_key (gtk_widget_get_window (widget),
                          -1, -1, /*x, y*/
                          keyval,
@@ -238,7 +239,7 @@ gimp_test_utils_synthesize_key_event (GtkWidget *widget,
                          keyval,
                          0 /*modifiers*/,
                          GDK_KEY_RELEASE);
-#endif /* G_OS_WIN32 */
+#endif /* G_OS_WIN32  && ! GTK_CHECK_VERSION (2, 24, 25) */
 }
 
 /**
