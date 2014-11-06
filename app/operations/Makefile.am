@@ -60,6 +60,8 @@ libappoperations_generic_a_sources = \
 	gimpoperationhistogramsink.h		\
 	gimpoperationmaskcomponents.c		\
 	gimpoperationmaskcomponents.h		\
+	gimpoperationscalarmultiply.c		\
+	gimpoperationscalarmultiply.h		\
 	gimpoperationsemiflatten.c		\
 	gimpoperationsemiflatten.h		\
 	gimpoperationsetalpha.c			\
