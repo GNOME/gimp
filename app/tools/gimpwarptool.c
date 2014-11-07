@@ -28,14 +28,19 @@
 
 #include "tools-types.h"
 
+#include "gegl/gimp-gegl-apply-operation.h"
+
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
+#include "core/gimplayer.h"
 #include "core/gimpprogress.h"
 #include "core/gimpprojection.h"
+#include "core/gimpsubprogress.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -113,7 +118,11 @@ static void       gimp_warp_tool_stroke_changed     (GeglPath              *stro
 static void       gimp_warp_tool_image_map_flush    (GimpImageMap          *image_map,
                                                      GimpTool              *tool);
 static void       gimp_warp_tool_add_op             (GimpWarpTool          *wt,
-                                                     GeglNode              *new_op);
+                                                     GeglNode              *op);
+static void       gimp_warp_tool_remove_op          (GimpWarpTool          *wt,
+                                                     GeglNode              *op);
+
+static void       gimp_warp_tool_animate            (GimpWarpTool          *wt);
 
 
 G_DEFINE_TYPE (GimpWarpTool, gimp_warp_tool, GIMP_TYPE_DRAW_TOOL)
@@ -455,7 +464,6 @@ gimp_warp_tool_undo (GimpTool    *tool,
 {
   GimpWarpTool *wt = GIMP_WARP_TOOL (tool);
   GeglNode     *to_delete;
-  GeglNode     *previous;
   const gchar  *type;
 
   if (! wt->render_node)
@@ -467,13 +475,9 @@ gimp_warp_tool_undo (GimpTool    *tool,
   if (strcmp (type, "gegl:warp"))
     return FALSE;
 
-  previous = gegl_node_get_producer (to_delete, "input", NULL);
-
-  gegl_node_disconnect (to_delete,       "input");
-  gegl_node_connect_to (previous,        "output",
-                        wt->render_node, "aux");
-
   wt->redo_stack = g_list_prepend (wt->redo_stack, g_object_ref (to_delete));
+
+  gimp_warp_tool_remove_op (wt, to_delete);
 
   gegl_node_remove_child (wt->graph, to_delete);
 
@@ -537,11 +541,12 @@ static void
 gimp_warp_tool_start (GimpWarpTool *wt,
                       GimpDisplay  *display)
 {
-  GimpTool      *tool     = GIMP_TOOL (wt);
-  GimpImage     *image    = gimp_display_get_image (display);
-  GimpDrawable  *drawable = gimp_image_get_active_drawable (image);
-  const Babl    *format;
-  GeglRectangle  bbox;
+  GimpTool        *tool     = GIMP_TOOL (wt);
+  GimpWarpOptions *options  = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  GimpImage       *image    = gimp_display_get_image (display);
+  GimpDrawable    *drawable = gimp_image_get_active_drawable (image);
+  const Babl      *format;
+  GeglRectangle    bbox;
 
   tool->display  = display;
   tool->drawable = drawable;
@@ -563,12 +568,22 @@ gimp_warp_tool_start (GimpWarpTool *wt,
 
   if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (wt)))
     gimp_draw_tool_start (GIMP_DRAW_TOOL (wt), display);
+
+  if (options->animate_button)
+    {
+      g_signal_connect_swapped (options->animate_button, "clicked",
+                                G_CALLBACK (gimp_warp_tool_animate),
+                                wt);
+
+      gtk_widget_set_sensitive (options->animate_button, TRUE);
+    }
 }
 
 static void
 gimp_warp_tool_halt (GimpWarpTool *wt)
 {
-  GimpTool *tool = GIMP_TOOL (wt);
+  GimpTool        *tool    = GIMP_TOOL (wt);
+  GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
 
   if (wt->coords_buffer)
     {
@@ -603,6 +618,15 @@ gimp_warp_tool_halt (GimpWarpTool *wt)
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (wt)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (wt));
+
+  if (options->animate_button)
+    {
+      gtk_widget_set_sensitive (options->animate_button, FALSE);
+
+      g_signal_handlers_disconnect_by_func (options->animate_button,
+                                            gimp_warp_tool_animate,
+                                            wt);
+    }
 }
 
 static void
@@ -769,19 +793,144 @@ gimp_warp_tool_image_map_flush (GimpImageMap *image_map,
 
 static void
 gimp_warp_tool_add_op (GimpWarpTool *wt,
-                       GeglNode     *new_op)
+                       GeglNode     *op)
 {
   GeglNode *last_op;
 
   g_return_if_fail (GEGL_IS_NODE (wt->render_node));
 
-  gegl_node_add_child (wt->graph, new_op);
+  gegl_node_add_child (wt->graph, op);
 
   last_op = gegl_node_get_producer (wt->render_node, "aux", NULL);
 
   gegl_node_disconnect (wt->render_node, "aux");
   gegl_node_connect_to (last_op,         "output",
-                        new_op,          "input");
-  gegl_node_connect_to (new_op,          "output",
+                        op    ,          "input");
+  gegl_node_connect_to (op,              "output",
                         wt->render_node, "aux");
+}
+
+static void
+gimp_warp_tool_remove_op (GimpWarpTool *wt,
+                          GeglNode     *op)
+{
+  GeglNode *previous;
+
+  g_return_if_fail (GEGL_IS_NODE (wt->render_node));
+
+  previous = gegl_node_get_producer (op, "input", NULL);
+
+  gegl_node_disconnect (op,              "input");
+  gegl_node_connect_to (previous,        "output",
+                        wt->render_node, "aux");
+
+  gegl_node_remove_child (wt->graph, op);
+}
+
+static void
+gimp_warp_tool_animate (GimpWarpTool *wt)
+{
+  GimpTool        *tool    = GIMP_TOOL (wt);
+  GimpWarpOptions *options = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  GimpImage       *orig_image;
+  GimpImage       *image;
+  GimpLayer       *layer;
+  GimpLayer       *first_layer;
+  GeglNode        *scale_node;
+  GimpProgress    *progress;
+  GtkWidget       *widget;
+  gint             i;
+
+  if (! gimp_warp_tool_get_undo_desc (tool, tool->display))
+    {
+      gimp_tool_message_literal (tool, tool->display,
+                                 _("Please add some warp strokes first."));
+      return;
+    }
+
+  /*  get rid of the image map so we can use wt->graph  */
+  if (wt->image_map)
+    {
+      gimp_image_map_abort (wt->image_map);
+      g_object_unref (wt->image_map);
+      wt->image_map = NULL;
+    }
+
+  gimp_progress_start (GIMP_PROGRESS (tool), FALSE,
+                       _("Rendering Frame %d"), 1);
+
+  orig_image = gimp_item_get_image (GIMP_ITEM (tool->drawable));
+
+  image = gimp_create_image (orig_image->gimp,
+                             gimp_item_get_width  (GIMP_ITEM (tool->drawable)),
+                             gimp_item_get_height (GIMP_ITEM (tool->drawable)),
+                             gimp_drawable_get_base_type (tool->drawable),
+                             gimp_drawable_get_precision (tool->drawable),
+                             TRUE);
+
+  /*  the first frame is always the unwarped image  */
+  layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (tool->drawable), image,
+                                         GIMP_TYPE_LAYER));
+  gimp_object_take_name (GIMP_OBJECT (layer),
+                         g_strdup_printf (_("Frame %d"), 1));
+
+  gimp_item_set_offset (GIMP_ITEM (layer), 0, 0);
+  gimp_item_set_visible (GIMP_ITEM (layer), TRUE, FALSE);
+  gimp_layer_set_mode (layer, GIMP_NORMAL_MODE, FALSE);
+  gimp_layer_set_opacity (layer, GIMP_OPACITY_OPAQUE, FALSE);
+  gimp_image_add_layer (image, layer, NULL, 0, FALSE);
+
+  first_layer = layer;
+
+  scale_node = gegl_node_new_child (NULL,
+                                    "operation",    "gimp:scalar-multiply",
+                                    "n-components", 2,
+                                    NULL);
+  gimp_warp_tool_add_op (wt, scale_node);
+
+  progress = gimp_sub_progress_new (GIMP_PROGRESS (tool));
+
+  for (i = 1; i < options->n_animation_frames; i++)
+    {
+      gimp_progress_set_text (GIMP_PROGRESS (tool),
+                              _("Rendering Frame %d"), i + 1);
+
+      gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (progress),
+                                  i, options->n_animation_frames);
+
+      layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (first_layer),
+                                               GIMP_TYPE_LAYER));
+      gimp_object_take_name (GIMP_OBJECT (layer),
+                             g_strdup_printf (_("Frame %d"), i + 1));
+
+      gegl_node_set (scale_node,
+                     "factor", (gdouble) i /
+                               (gdouble) (options->n_animation_frames - 1),
+                     NULL);
+
+      gimp_gegl_apply_operation (gimp_drawable_get_buffer (GIMP_DRAWABLE (first_layer)),
+                                 progress,
+                                 _("Frame"),
+                                 wt->graph,
+                                 gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)),
+                                 NULL);
+
+      gimp_image_add_layer (image, layer, NULL, 0, FALSE);
+    }
+
+  g_object_unref (progress);
+
+  gimp_warp_tool_remove_op (wt, scale_node);
+
+  gimp_progress_end (GIMP_PROGRESS (tool));
+
+  /*  recreate the image map  */
+  gimp_warp_tool_create_image_map (wt, tool->drawable);
+  gimp_image_map_apply (wt->image_map, NULL);
+
+  widget = GTK_WIDGET (gimp_display_get_shell (tool->display));
+  gimp_create_display (orig_image->gimp, image, GIMP_UNIT_PIXEL, 1.0,
+                       G_OBJECT (gtk_widget_get_screen (widget)),
+                       gimp_widget_get_monitor (widget));
+  g_object_unref (image);
 }

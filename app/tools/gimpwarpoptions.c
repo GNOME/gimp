@@ -42,7 +42,8 @@ enum
   PROP_BEHAVIOR,
   PROP_EFFECT_STRENGTH,
   PROP_EFFECT_SIZE,
-  PROP_EFFECT_HARDNESS
+  PROP_EFFECT_HARDNESS,
+  PROP_N_ANIMATION_FRAMES
 };
 
 
@@ -94,6 +95,12 @@ gimp_warp_options_class_init (GimpWarpOptionsClass *klass)
                                    _("Effect Hardness"),
                                    0.0, 1.0, 0.5,
                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_N_ANIMATION_FRAMES,
+                                "n-animation-frames",
+                                _("Number of animation frames"),
+                                3, 1000, 10,
+                                GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -122,6 +129,9 @@ gimp_warp_options_set_property (GObject      *object,
       break;
     case PROP_EFFECT_HARDNESS:
       options->effect_hardness = g_value_get_double (value);
+      break;
+    case PROP_N_ANIMATION_FRAMES:
+      options->n_animation_frames = g_value_get_int (value);
       break;
 
     default:
@@ -152,6 +162,9 @@ gimp_warp_options_get_property (GObject    *object,
     case PROP_EFFECT_HARDNESS:
       g_value_set_double (value, options->effect_hardness);
       break;
+    case PROP_N_ANIMATION_FRAMES:
+      g_value_set_int (value, options->n_animation_frames);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -162,10 +175,13 @@ gimp_warp_options_get_property (GObject    *object,
 GtkWidget *
 gimp_warp_options_gui (GimpToolOptions *tool_options)
 {
-  GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget *combo;
-  GtkWidget *scale;
+  GimpWarpOptions *options = GIMP_WARP_OPTIONS (tool_options);
+  GObject         *config  = G_OBJECT (tool_options);
+  GtkWidget       *vbox    = gimp_tool_options_gui (tool_options);
+  GtkWidget       *frame;
+  GtkWidget       *anim_vbox;
+  GtkWidget       *combo;
+  GtkWidget       *scale;
 
   combo = gimp_prop_enum_combo_box_new (config, "behavior", 0, 0);
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
@@ -192,6 +208,31 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 1.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
+
+  /*  the animation frame  */
+  frame = gimp_frame_new (_("Animate"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  anim_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_container_add (GTK_CONTAINER (frame), anim_vbox);
+  gtk_widget_show (anim_vbox);
+
+  scale = gimp_prop_spin_scale_new (config, "n-animation-frames",
+                                    _("Frames"),
+                                    0.01, 1.0, 2);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 3.0, 100.0);
+  gtk_box_pack_start (GTK_BOX (anim_vbox), scale, FALSE, FALSE, 0);
+  gtk_widget_show (scale);
+
+  options->animate_button = gtk_button_new_with_label (_("Create Animation"));
+  gtk_widget_set_sensitive (options->animate_button, FALSE);
+  gtk_box_pack_start (GTK_BOX (anim_vbox), options->animate_button,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (options->animate_button);
+
+  g_object_add_weak_pointer (G_OBJECT (options->animate_button),
+                             (gpointer) &options->animate_button);
 
   return vbox;
 }
