@@ -121,7 +121,6 @@ libexec_PROGRAMS = \
 	guillotine \
 	hot \
 	illusion \
-	iwarp \
 	jigsaw \
 	lcms \
 	lens-flare \
@@ -1547,23 +1546,6 @@ illusion_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(illusion_RC)
-
-iwarp_SOURCES = \
-	iwarp.c
-
-iwarp_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(iwarp_RC)
 
 jigsaw_SOURCES = \
 	jigsaw.c

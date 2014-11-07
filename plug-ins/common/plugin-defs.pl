@@ -76,7 +76,6 @@
     'guillotine' => {},
     'hot' => { ui => 1 },
     'illusion' => { ui => 1 },
-    'iwarp' => { ui => 1 },
     'jigsaw' => { ui => 1 },
     'lcms' => { ui => 1, gegl => 1, libs => 'LCMS_LIBS', cflags => 'LCMS_CFLAGS' },
     'lens-flare' => { ui => 1 },
