@@ -548,6 +548,7 @@
         <placeholder name="Colormap" />
         <separator />
 	<menuitem action="filters-alien-map" />
+	<menuitem action="filters-color-exchange" />
 	<menuitem action="filters-color-rotate" />
       </menu>
       <menu action="colors-info-menu" name="Info">
