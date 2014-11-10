@@ -941,6 +941,80 @@ plug_in_deinterlace_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_exchange_invoker (GimpProcedure         *procedure,
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  guint8 from_red;
+  guint8 from_green;
+  guint8 from_blue;
+  guint8 to_red;
+  guint8 to_green;
+  guint8 to_blue;
+  guint8 red_threshold;
+  guint8 green_threshold;
+  guint8 blue_threshold;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  from_red = g_value_get_uint (gimp_value_array_index (args, 3));
+  from_green = g_value_get_uint (gimp_value_array_index (args, 4));
+  from_blue = g_value_get_uint (gimp_value_array_index (args, 5));
+  to_red = g_value_get_uint (gimp_value_array_index (args, 6));
+  to_green = g_value_get_uint (gimp_value_array_index (args, 7));
+  to_blue = g_value_get_uint (gimp_value_array_index (args, 8));
+  red_threshold = g_value_get_uint (gimp_value_array_index (args, 9));
+  green_threshold = g_value_get_uint (gimp_value_array_index (args, 10));
+  blue_threshold = g_value_get_uint (gimp_value_array_index (args, 11));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GimpRGB    from;
+          GimpRGB    to;
+          GeglColor *gegl_from;
+          GeglColor *gegl_to;
+          GeglNode  *node;
+
+          gimp_rgb_set_uchar (&from, from_red, from_green, from_blue);
+          gimp_rgb_set_uchar (&to,   to_red,   to_green,   to_blue);
+
+          gegl_from = gimp_gegl_color_new (&from);
+          gegl_to   = gimp_gegl_color_new (&to);
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",       "gegl:color-exchange",
+                                      "from-color",      gegl_from,
+                                      "to-color",        gegl_to,
+                                      "red-threshold",   red_threshold   / 255.0,
+                                      "green-threshold", green_threshold / 255.0,
+                                      "blue-threshold",  blue_threshold  / 255.0,
+                                      NULL);
+
+          g_object_unref (gegl_from);
+          g_object_unref (gegl_to);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Color Exchange"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_gauss_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
@@ -3255,6 +3329,96 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Which lines to keep { KEEP-ODD (0), KEEP-EVEN (1)",
                                                       0, 1, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-exchange
+   */
+  procedure = gimp_procedure_new (plug_in_exchange_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-exchange");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-exchange",
+                                     "Swap one color with another",
+                                     "Exchange one color with another, optionally setting a threshold to convert from one shade to another.",
+                                     "Compatibility procedure. Please see 'gegl:color-exchange' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:color-exchange' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("from-red",
+                                                     "from red",
+                                                     "Red value (from)",
+                                                     0, G_MAXUINT8, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("from-green",
+                                                     "from green",
+                                                     "Green value (from)",
+                                                     0, G_MAXUINT8, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("from-blue",
+                                                     "from blue",
+                                                     "Blue value (from)",
+                                                     0, G_MAXUINT8, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("to-red",
+                                                     "to red",
+                                                     "Red value (to)",
+                                                     0, G_MAXUINT8, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("to-green",
+                                                     "to green",
+                                                     "Green value (to)",
+                                                     0, G_MAXUINT8, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("to-blue",
+                                                     "to blue",
+                                                     "Blue value (to)",
+                                                     0, G_MAXUINT8, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("red-threshold",
+                                                     "red threshold",
+                                                     "Red threshold",
+                                                     0, G_MAXUINT8, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("green-threshold",
+                                                     "green threshold",
+                                                     "Green threshold",
+                                                     0, G_MAXUINT8, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("blue-threshold",
+                                                     "blue threshold",
+                                                     "Blue threshold",
+                                                     0, G_MAXUINT8, 0,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
