@@ -40,9 +40,9 @@
 
 
 #define DEFAULT_BRUSH_SIZE             20.0
-#define DEFAULT_BRUSH_SPACING          10.0
 #define DEFAULT_BRUSH_ASPECT_RATIO     0.0
 #define DEFAULT_BRUSH_ANGLE            0.0
+#define DEFAULT_BRUSH_SPACING          10.0
 
 #define DEFAULT_APPLICATION_MODE       GIMP_PAINT_CONSTANT
 #define DEFAULT_HARD                   FALSE
@@ -78,9 +78,9 @@ enum
   PROP_USE_APPLICATOR, /* temp debug */
 
   PROP_BRUSH_SIZE,
-  PROP_BRUSH_SPACING,
   PROP_BRUSH_ASPECT_RATIO,
   PROP_BRUSH_ANGLE,
+  PROP_BRUSH_SPACING,
 
   PROP_APPLICATION_MODE,
   PROP_HARD,
@@ -159,11 +159,6 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    1.0, 10000.0, DEFAULT_BRUSH_SIZE,
                                    GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SPACING,
-                                   "brush-spacing", _("Brush Spacing"),
-                                   1.0, 5000.0, DEFAULT_BRUSH_SPACING,
-                                   GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ASPECT_RATIO,
                                    "brush-aspect-ratio", _("Brush Aspect Ratio"),
                                    -20.0, 20.0, DEFAULT_BRUSH_ASPECT_RATIO,
@@ -172,6 +167,11 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ANGLE,
                                    "brush-angle", _("Brush Angle"),
                                    -180.0, 180.0, DEFAULT_BRUSH_ANGLE,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SPACING,
+                                   "brush-spacing", _("Brush Spacing"),
+                                   1.0, 5000.0, DEFAULT_BRUSH_SPACING,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
@@ -352,16 +352,16 @@ gimp_paint_options_set_property (GObject      *object,
       options->brush_size = g_value_get_double (value);
       break;
 
-    case PROP_BRUSH_SPACING:
-      options->brush_spacing = g_value_get_double (value);
-      break;
-
     case PROP_BRUSH_ASPECT_RATIO:
       options->brush_aspect_ratio = g_value_get_double (value);
       break;
 
     case PROP_BRUSH_ANGLE:
       options->brush_angle = - 1.0 * g_value_get_double (value) / 360.0; /* let's make the angle mathematically correct */
+      break;
+
+    case PROP_BRUSH_SPACING:
+      options->brush_spacing = g_value_get_double (value);
       break;
 
     case PROP_APPLICATION_MODE:
@@ -480,16 +480,16 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_double (value, options->brush_size);
       break;
 
-    case PROP_BRUSH_SPACING:
-      g_value_set_double (value, options->brush_spacing);
-      break;
-
     case PROP_BRUSH_ASPECT_RATIO:
       g_value_set_double (value, options->brush_aspect_ratio);
       break;
 
     case PROP_BRUSH_ANGLE:
       g_value_set_double (value, - 1.0 * options->brush_angle * 360.0); /* mathematically correct -> intuitively correct */
+      break;
+
+    case PROP_BRUSH_SPACING:
+      g_value_set_double (value, options->brush_spacing);
       break;
 
     case PROP_APPLICATION_MODE:
