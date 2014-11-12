@@ -60,7 +60,7 @@ enum
 static void      gimp_brush_core_finalize           (GObject          *object);
 
 static gboolean  gimp_brush_core_start              (GimpPaintCore    *core,
-                                                    GimpDrawable     *drawable,
+                                                     GimpDrawable     *drawable,
                                                      GimpPaintOptions *paint_options,
                                                      const GimpCoords *coords,
                                                      GError          **error);
