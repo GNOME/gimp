@@ -162,6 +162,32 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
+      scale = gimp_prop_spin_scale_new (config, "brush-spacing",
+                                        _("Spacing"),
+                                        1.0, 10.0, 2);
+      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 200.0);
+      gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.7);
+      gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
+      gtk_widget_show (scale);
+
+      button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
+      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+      gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
+                                    GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
+      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      g_signal_connect (button, "clicked",
+                        G_CALLBACK (gimp_paint_options_gui_reset_spacing),
+                        options);
+
+      gimp_help_set_help_data (button,
+                               _("Reset size to brush's native spacing"), NULL);
+
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
       scale = gimp_prop_spin_scale_new (config, "brush-aspect-ratio",
                                         _("Aspect Ratio"),
                                         0.1, 1.0, 2);
@@ -205,32 +231,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       gimp_help_set_help_data (button,
                                _("Reset angle to zero"), NULL);
-
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      scale = gimp_prop_spin_scale_new (config, "brush-spacing",
-                                        _("Spacing"),
-                                        1.0, 10.0, 2);
-      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 200.0);
-      gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.7);
-      gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-      gtk_widget_show (scale);
-
-      button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
-      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-      gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                    GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
-      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
-      g_signal_connect (button, "clicked",
-                        G_CALLBACK (gimp_paint_options_gui_reset_spacing),
-                        options);
-
-      gimp_help_set_help_data (button,
-                               _("Reset size to brush's native spacing"), NULL);
 
       button = gimp_prop_dynamics_box_new (NULL, GIMP_CONTEXT (tool_options),
                                            _("Dynamics"), 2,
@@ -442,7 +442,7 @@ gimp_paint_options_gui_reset_size (GtkWidget        *button,
 
 static void
 gimp_paint_options_gui_reset_spacing (GtkWidget        *button,
-                                   GimpPaintOptions *paint_options)
+                                      GimpPaintOptions *paint_options)
 {
  GimpBrush *brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
 

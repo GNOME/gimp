@@ -83,9 +83,9 @@ struct _GimpPaintOptions
   gboolean                  use_applicator;
 
   gdouble                   brush_size;
+  gdouble                   brush_spacing;
   gdouble                   brush_angle;
   gdouble                   brush_aspect_ratio;
-  gdouble                   brush_spacing;
 
   GimpPaintApplicationMode  application_mode;
   GimpPaintApplicationMode  application_mode_save;
