@@ -544,6 +544,7 @@ sanity_check_gegl_ops (void)
     "gegl:translate",
     "gegl:unsharp-mask",
     "gegl:value-invert",
+    "gegl:video-degradation",
     "gegl:vignette",
     "gegl:warp",
     "gegl:waves",
