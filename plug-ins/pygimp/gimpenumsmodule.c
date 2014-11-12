@@ -130,15 +130,15 @@ add_compat_enums(PyObject *m)
     PyModule_AddIntConstant(m, "PATTERN_CLONE",
                             GIMP_CLONE_PATTERN);
 
-    PyModule_AddIntConstant(m, "FOREGROUND-FILL",
+    PyModule_AddIntConstant(m, "FOREGROUND_FILL",
                             GIMP_FILL_FOREGROUND);
-    PyModule_AddIntConstant(m, "BACKGROUND-FILL",
+    PyModule_AddIntConstant(m, "BACKGROUND_FILL",
                             GIMP_FILL_BACKGROUND);
-    PyModule_AddIntConstant(m, "WHITE-FILL",
+    PyModule_AddIntConstant(m, "WHITE_FILL",
                             GIMP_FILL_WHITE);
-    PyModule_AddIntConstant(m, "TRANSPARENT-FILL",
+    PyModule_AddIntConstant(m, "TRANSPARENT_FILL",
                             GIMP_FILL_TRANSPARENT);
-    PyModule_AddIntConstant(m, "PATTERN-FILL",
+    PyModule_AddIntConstant(m, "PATTERN_FILL",
                             GIMP_FILL_PATTERN);
 
     PyModule_AddIntConstant(m, "DODGE",
@@ -152,7 +152,7 @@ add_compat_enums(PyObject *m)
                             GIMP_TRANSFER_MIDTONES);
     PyModule_AddIntConstant(m, "HIGHLIGHTS",
                             GIMP_TRANSFER_HIGHLIGHTS);
-    
+
     PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_RGB",
                             GIMP_EXPORT_CAN_HANDLE_RGB);
     PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_GRAY",
@@ -171,7 +171,7 @@ add_compat_enums(PyObject *m)
                             GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS);
     PyModule_AddIntConstant(m, "EXPORT_NEEDS_ALPHA",
                             GIMP_EXPORT_NEEDS_ALPHA);
-    
+
     PyModule_AddIntConstant(m, "EXPORT_CANCEL",
                             GIMP_EXPORT_CANCEL);
     PyModule_AddIntConstant(m, "EXPORT_IGNORE",
