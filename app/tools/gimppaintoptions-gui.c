@@ -202,6 +202,17 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
     }
+  /*  the "Link size to zoom" toggle  */
+  if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
+    {
+      GtkWidget *button;
+
+      button = gimp_prop_check_button_new (config,
+                                           "brush-zoom",
+                                           _("Lock brush size to zoom"));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+    }
 
   /*  the "incremental" toggle  */
   if (tool_type == GIMP_TYPE_PENCIL_TOOL     ||

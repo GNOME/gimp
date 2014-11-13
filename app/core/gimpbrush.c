@@ -590,7 +590,7 @@ gimp_brush_transform_size (GimpBrush     *brush,
       ((angle == 0.0) || (angle == 0.5) || (angle == 1.0)))
     {
       *width  = gimp_temp_buf_get_width  (brush->priv->mask);
-      *height = gimp_temp_buf_get_height (brush->priv->mask);;
+      *height = gimp_temp_buf_get_height (brush->priv->mask);
 
       return;
     }

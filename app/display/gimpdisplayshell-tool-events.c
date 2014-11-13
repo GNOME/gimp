@@ -569,6 +569,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 last_motion.xtilt    = image_coords.xtilt;
                 last_motion.ytilt    = image_coords.ytilt;
                 last_motion.wheel    = image_coords.wheel;
+                last_motion.xscale   = image_coords.xscale;
+                last_motion.yscale   = image_coords.yscale;
 
                 image_coords = last_motion;
 

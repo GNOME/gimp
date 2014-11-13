@@ -322,6 +322,10 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
       coords.direction = start_coords.direction + dir_step * n;
 
       coords.direction = coords.direction - floor (coords.direction);
+      
+      coords.xscale = end_coords.xscale;
+
+      coords.yscale = end_coords.yscale;
 
       g_array_append_val (*ret_coords, coords);
 

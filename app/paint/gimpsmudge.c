@@ -63,6 +63,7 @@ static void       gimp_smudge_accumulator_coords (GimpPaintCore    *paint_core,
                                                   gint             *y);
 
 static void       gimp_smudge_accumulator_size   (GimpPaintOptions *paint_options,
+                                                  const GimpCoords *coords,
                                                   gint             *accumulator_size);
 
 
@@ -174,7 +175,7 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
   if (! paint_buffer)
     return FALSE;
 
-  gimp_smudge_accumulator_size (paint_options, &accum_size);
+  gimp_smudge_accumulator_size (paint_options, coords, &accum_size);
 
   /*  Allocate the accumulation buffer */
   smudge->accum_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -344,10 +345,18 @@ gimp_smudge_accumulator_coords (GimpPaintCore    *paint_core,
 
 static void
 gimp_smudge_accumulator_size (GimpPaintOptions *paint_options,
+                              const GimpCoords *coords,
                               gint             *accumulator_size)
 {
+  gdouble max_view_scale = 1.0;
+  gdouble max_brush_size;
+
+  if (paint_options->brush_zoom)
+    max_view_scale = MAX (coords->xscale, coords->yscale);
+  max_brush_size = MIN (paint_options->brush_size / max_view_scale, GIMP_BRUSH_MAX_SIZE);
+
   /* Note: the max brush mask size plus a border of 1 pixel and a
    * little headroom
    */
-  *accumulator_size = ceil (sqrt (2 * SQR (paint_options->brush_size + 1)) + 2);
+  *accumulator_size = ceil (sqrt (2 * SQR (max_brush_size + 1)) + 2);
 }

@@ -40,6 +40,8 @@
 
 
 #define DEFAULT_BRUSH_SIZE             20.0
+#define DEFAULT_BRUSH_ZOOM             FALSE
+
 #define DEFAULT_BRUSH_ASPECT_RATIO     0.0
 #define DEFAULT_BRUSH_ANGLE            0.0
 #define DEFAULT_BRUSH_SPACING          10.0
@@ -78,6 +80,7 @@ enum
   PROP_USE_APPLICATOR, /* temp debug */
 
   PROP_BRUSH_SIZE,
+  PROP_BRUSH_ZOOM,
   PROP_BRUSH_ASPECT_RATIO,
   PROP_BRUSH_ANGLE,
   PROP_BRUSH_SPACING,
@@ -156,8 +159,14 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SIZE,
                                    "brush-size", _("Brush Size"),
-                                   1.0, 10000.0, DEFAULT_BRUSH_SIZE,
+                                   1.0, GIMP_BRUSH_MAX_SIZE, DEFAULT_BRUSH_SIZE,
                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BRUSH_ZOOM,
+                                    "brush-zoom", _("Link brush with zoom"),
+                                    DEFAULT_BRUSH_ZOOM,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ASPECT_RATIO,
                                    "brush-aspect-ratio", _("Brush Aspect Ratio"),
@@ -352,6 +361,10 @@ gimp_paint_options_set_property (GObject      *object,
       options->brush_size = g_value_get_double (value);
       break;
 
+    case PROP_BRUSH_ZOOM:
+      options->brush_zoom = g_value_get_boolean (value);
+      break;
+
     case PROP_BRUSH_ASPECT_RATIO:
       options->brush_aspect_ratio = g_value_get_double (value);
       break;
@@ -478,6 +491,10 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_BRUSH_SIZE:
       g_value_set_double (value, options->brush_size);
+      break;
+
+    case PROP_BRUSH_ZOOM:
+      g_value_set_boolean (value, options->brush_zoom);
       break;
 
     case PROP_BRUSH_ASPECT_RATIO:
@@ -797,18 +814,21 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
   gdouble  brush_size;
   gdouble  brush_angle;
   gdouble  brush_aspect_ratio;
+  gboolean brush_zoom;
 
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
 
   g_object_get (src,
                 "brush-size", &brush_size,
+                "brush-zoom", &brush_zoom,
                 "brush-angle", &brush_angle,
                 "brush-aspect-ratio", &brush_aspect_ratio,
                 NULL);
 
   g_object_set (dest,
                 "brush-size", brush_size,
+                "brush-zoom", brush_zoom,
                 "brush-angle", brush_angle,
                 "brush-aspect-ratio", brush_aspect_ratio,
                 NULL);
