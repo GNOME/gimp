@@ -49,6 +49,10 @@ sub adrian_pdb_misc {
     contrib_pdb_misc('Adrian Likins', 'adrian@gimp.org', @_);
 }
 
+sub adeath_pdb_misc {
+    contrib_pdb_misc('Alexia Death', '', @_);
+}
+
 sub andy_pdb_misc {
     contrib_pdb_misc('Andy Thomas', '', @_);
 }

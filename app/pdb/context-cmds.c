@@ -656,6 +656,103 @@ context_set_brush_angle_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+context_get_brush_spacing_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  gdouble spacing = 0.0;
+
+  /* all options should have the same value, so pick a random one */
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "brush-spacing", &spacing,
+                   NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (gimp_value_array_index (return_vals, 1), spacing);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_brush_spacing_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  gboolean success = TRUE;
+  gdouble spacing;
+
+  spacing = g_value_get_double (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GList *options;
+      GList *list;
+
+      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+      for (list = options; list; list = g_list_next (list))
+        g_object_set (list->data,
+                      "brush-spacing", (gdouble) spacing,
+                       NULL);
+
+      g_list_free (options);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_set_brush_default_spacing_invoker (GimpProcedure         *procedure,
+                                           Gimp                  *gimp,
+                                           GimpContext           *context,
+                                           GimpProgress          *progress,
+                                           const GimpValueArray  *args,
+                                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    {
+      GList *options;
+      GList *list;
+
+      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+      for (list = options; list; list = g_list_next (list))
+        gimp_paint_options_set_default_brush_spacing (list->data, brush);
+
+      g_list_free (options);
+    }
+  else
+    {
+      success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 context_get_dynamics_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -2534,6 +2631,69 @@ register_context_procs (GimpPDB *pdb)
                                                     "angle in degrees",
                                                     -180, 180, -180,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-brush-spacing
+   */
+  procedure = gimp_procedure_new (context_get_brush_spacing_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-brush-spacing");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-brush-spacing",
+                                     "Get brush spacing as percent of size.",
+                                     "Get the brush spacing as percent of size for brush based paint tools.",
+                                     "Alexia Death",
+                                     "Alexia Death",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("spacing",
+                                                        "spacing",
+                                                        "brush spacing as percent of size",
+                                                        0, G_MAXDOUBLE, 0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-brush-spacing
+   */
+  procedure = gimp_procedure_new (context_set_brush_spacing_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-brush-spacing");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-brush-spacing",
+                                     "Set brush spacing as percent of size.",
+                                     "Set the brush spacing as percent of size for brush based paint tools.",
+                                     "Alexia Death",
+                                     "Alexia Death",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("spacing",
+                                                    "spacing",
+                                                    "brush spacing as percent of size",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-brush-default-spacing
+   */
+  procedure = gimp_procedure_new (context_set_brush_default_spacing_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-brush-default-spacing");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-brush-default-spacing",
+                                     "Set brush spacing to its default.",
+                                     "Set the brush spacing to the default for paintbrush, airbrush, or pencil tools.",
+                                     "Alexia Death",
+                                     "Alexia Death",
+                                     "2014",
+                                     NULL);
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
