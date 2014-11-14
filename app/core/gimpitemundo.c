@@ -187,7 +187,8 @@ gimp_item_undo_pop     (GimpUndo            *undo,
       break;
 
     default:
-      g_assert_not_reached ();
+//      g_assert_not_reached ();
+      break;
 
     }
 }

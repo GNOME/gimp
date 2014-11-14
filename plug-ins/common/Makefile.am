@@ -47,7 +47,7 @@ libexec_PROGRAMS = \
 	align-layers \
 	animation-optimize \
 	animation-play \
-	attributes \
+	attributes	\
 	blinds \
 	blur \
 	blur-gauss-selective \
@@ -121,8 +121,7 @@ libexec_PROGRAMS = \
 	guillotine \
 	hot \
 	illusion \
-	iptc \
-	iwarp \
+	iptc	\
 	jigsaw \
 	lcms \
 	lens-flare \
@@ -1568,23 +1567,6 @@ iptc_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(iptc_RC)
-
-iwarp_SOURCES = \
-	iwarp.c
-
-iwarp_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(iwarp_RC)
 
 jigsaw_SOURCES = \
 	jigsaw.c

@@ -76,7 +76,6 @@ guillotine_RC = guillotine.rc.o
 hot_RC = hot.rc.o
 illusion_RC = illusion.rc.o
 iptc_RC = iptc.rc.o
-iwarp_RC = iwarp.rc.o
 jigsaw_RC = jigsaw.rc.o
 lcms_RC = lcms.rc.o
 lens_flare_RC = lens-flare.rc.o
