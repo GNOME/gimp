@@ -67,6 +67,18 @@ static GtkWidget * jitter_options_gui          (GimpPaintOptions *paint_options,
                                                 GType             tool_type);
 static GtkWidget * smoothing_options_gui       (GimpPaintOptions *paint_options,
                                                 GType             tool_type);
+static GtkWidget * gimp_paint_options_gui_scale_with_reset_button
+                                               (GtkWidget *parent,
+                                                GObject   *config,
+                                                gchar     *prop_name,
+                                                gchar     *prop_descr,
+                                                gchar     *reset_tooltip,
+                                                gdouble    minor_step,
+                                                gdouble    major_step,
+                                                gdouble    min,
+                                                gdouble    max,
+                                                gdouble    gamma,
+                                                GCallback  callback);
 
 
 /*  public functions  */
@@ -122,7 +134,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {
       GtkWidget *button;
-      GtkWidget *hbox;
       GtkWidget *frame;
 
       button = gimp_prop_brush_box_new (NULL, GIMP_CONTEXT (tool_options),
@@ -132,105 +143,33 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+/*Size spinner*/
+      gimp_paint_options_gui_scale_with_reset_button
+                                (vbox, config, "brush-size", _("Size"),
+                                 _("Reset size to brush's native size"),
+                                 1.0, 10.0, 1.0, 1000.0, 1.7,
+                                 G_CALLBACK (gimp_paint_options_gui_reset_size));
 
-      scale = gimp_prop_spin_scale_new (config, "brush-size",
-                                        _("Size"),
-                                        1.0, 10.0, 2);
-      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
-      gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.7);
-      gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-      gtk_widget_show (scale);
+/*Aspect ratio spinner*/
+      gimp_paint_options_gui_scale_with_reset_button
+                                (vbox, config, "brush-aspect-ratio", _("Aspect Ratio"),
+                                 _("Reset size to brush's native size"),
+                                 0.1, 1.0, -20.0, 20.0, 1.0,
+                                 G_CALLBACK (gimp_paint_options_gui_reset_aspect_ratio));
 
-      button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
-      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-      gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                    GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
-      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
+/*Brush angle spinner*/
+      gimp_paint_options_gui_scale_with_reset_button
+                                (vbox, config, "brush-angle", _("Angle"),
+                                 _("Reset angle to zero"),
+                                 0.1, 1.0, -180.0, 180.0, 1.0,
+                                 G_CALLBACK (gimp_paint_options_gui_reset_angle));
 
-      g_signal_connect (button, "clicked",
-                        G_CALLBACK (gimp_paint_options_gui_reset_size),
-                        options);
-
-      gimp_help_set_help_data (button,
-                               _("Reset size to brush's native size"), NULL);
-
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      scale = gimp_prop_spin_scale_new (config, "brush-aspect-ratio",
-                                        _("Aspect Ratio"),
-                                        0.1, 1.0, 2);
-      gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-      gtk_widget_show (scale);
-
-      button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
-      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-      gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                    GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
-      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
-      g_signal_connect (button, "clicked",
-                        G_CALLBACK (gimp_paint_options_gui_reset_aspect_ratio),
-                        options);
-
-      gimp_help_set_help_data (button,
-                               _("Reset aspect ratio to brush's native"), NULL);
-
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      scale = gimp_prop_spin_scale_new (config, "brush-angle",
-                                        _("Angle"),
-                                        1.0, 5.0, 2);
-      gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-      gtk_widget_show (scale);
-
-      button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
-      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-      gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                    GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
-      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
-      g_signal_connect (button, "clicked",
-                        G_CALLBACK (gimp_paint_options_gui_reset_angle),
-                        options);
-
-      gimp_help_set_help_data (button,
-                               _("Reset angle to zero"), NULL);
-
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      scale = gimp_prop_spin_scale_new (config, "brush-spacing",
-                                        _("Spacing"),
-                                        1.0, 10.0, 2);
-      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 200.0);
-      gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.7);
-      gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-      gtk_widget_show (scale);
-
-      button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
-      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-      gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                    GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
-      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
-      g_signal_connect (button, "clicked",
-                        G_CALLBACK (gimp_paint_options_gui_reset_spacing),
-                        options);
-
-      gimp_help_set_help_data (button,
-                               _("Reset spacing to brush's native spacing"), NULL);
+/*Brush spacing spinner*/
+      gimp_paint_options_gui_scale_with_reset_button
+                                (vbox, config, "brush-spacing", _("Spacing"),
+                                 _("Reset spacing to zero"),
+                                 0.1, 1.0, 1.0, 200.0, 1.7,
+                                 G_CALLBACK (gimp_paint_options_gui_reset_spacing));
 
       button = gimp_prop_dynamics_box_new (NULL, GIMP_CONTEXT (tool_options),
                                            _("Dynamics"), 2,
@@ -466,4 +405,50 @@ gimp_paint_options_gui_reset_spacing (GtkWidget        *button,
 
   if (brush)
     gimp_paint_options_set_default_brush_spacing (paint_options, brush);
+}
+
+static GtkWidget *
+gimp_paint_options_gui_scale_with_reset_button (GtkWidget *parent,
+                                                GObject   *config,
+                                                gchar     *prop_name,
+                                                gchar     *prop_descr,
+                                                gchar     *reset_tooltip,
+                                                gdouble    minor_step,
+                                                gdouble    major_step,
+                                                gdouble    min,
+                                                gdouble    max,
+                                                gdouble    gamma,
+                                                GCallback  callback)
+{
+      GtkWidget *scale;
+      GtkWidget *hbox;
+      GtkWidget *button;
+
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+      gtk_box_pack_start (GTK_BOX (parent), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
+      scale = gimp_prop_spin_scale_new (config, prop_name,
+                                        prop_descr,
+                                        minor_step, major_step, 2);
+      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), min, max);
+      gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), gamma);
+      gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
+      gtk_widget_show (scale);
+
+      button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
+      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+      gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
+                                    GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
+      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
+
+      g_signal_connect (button, "clicked",
+                        callback,
+                        config);
+
+      gimp_help_set_help_data (button,
+                               reset_tooltip, NULL);
+
+      return hbox;
 }
