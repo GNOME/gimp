@@ -948,8 +948,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                         if (gimp_motion_buffer_motion_event (shell->motion_buffer,
                                                              &image_coords,
                                                              history_events[i]->time,
-                                                             shell->scale_x,
-                                                             shell->scale_y,
                                                              TRUE))
                           {
                             gimp_motion_buffer_request_stroke (shell->motion_buffer,
@@ -969,8 +967,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                     if (gimp_motion_buffer_motion_event (shell->motion_buffer,
                                                          &image_coords,
                                                          time,
-                                                         shell->scale_x,
-                                                         shell->scale_y,
                                                          event_fill))
                       {
                         gimp_motion_buffer_request_stroke (shell->motion_buffer,
@@ -990,8 +986,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             if (gimp_motion_buffer_motion_event (shell->motion_buffer,
                                                  &image_coords,
                                                  time,
-                                                 shell->scale_x,
-                                                 shell->scale_y,
                                                  FALSE))
               {
                 gimp_motion_buffer_request_hover (shell->motion_buffer,

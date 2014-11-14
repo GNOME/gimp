@@ -85,8 +85,6 @@ void       gimp_motion_buffer_end_stroke           (GimpMotionBuffer *buffer);
 gboolean   gimp_motion_buffer_motion_event         (GimpMotionBuffer *buffer,
                                                     GimpCoords       *coords,
                                                     guint32           time,
-                                                    gdouble           scale_x,
-                                                    gdouble           scale_y,
                                                     gboolean          event_fill);
 guint32    gimp_motion_buffer_get_last_motion_time (GimpMotionBuffer *buffer);
 

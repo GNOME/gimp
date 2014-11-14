@@ -231,8 +231,6 @@ gimp_motion_buffer_end_stroke (GimpMotionBuffer *buffer)
  * @buffer:
  * @coords:
  * @time:
- * @scale_x:
- * @scale_y:
  * @event_fill:
  *
  * This function evaluates the event to decide if the change is big
@@ -257,14 +255,14 @@ gboolean
 gimp_motion_buffer_motion_event (GimpMotionBuffer *buffer,
                                  GimpCoords       *coords,
                                  guint32           time,
-                                 gdouble           scale_x,
-                                 gdouble           scale_y,
                                  gboolean          event_fill)
 {
   gdouble  delta_time  = 0.001;
   gdouble  delta_x     = 0.0;
   gdouble  delta_y     = 0.0;
   gdouble  distance    = 1.0;
+  gdouble  scale_x     = coords->xscale;
+  gdouble  scale_y     = coords->yscale;
 
   g_return_val_if_fail (GIMP_IS_MOTION_BUFFER (buffer), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
