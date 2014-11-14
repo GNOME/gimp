@@ -28,8 +28,6 @@
 /color-cube-analyze.exe
 /color-enhance
 /color-enhance.exe
-/color-exchange
-/color-exchange.exe
 /colorify
 /colorify.exe
 /colormap-remap
@@ -156,8 +154,6 @@
 /hot.exe
 /illusion
 /illusion.exe
-/iwarp
-/iwarp.exe
 /jigsaw
 /jigsaw.exe
 /lcms

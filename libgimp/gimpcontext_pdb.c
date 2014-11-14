@@ -849,6 +849,99 @@ gimp_context_set_brush_angle (gdouble angle)
 }
 
 /**
+ * gimp_context_get_brush_spacing:
+ *
+ * Get brush spacing as percent of size.
+ *
+ * Get the brush spacing as percent of size for brush based paint
+ * tools.
+ *
+ * Returns: brush spacing as percent of size.
+ *
+ * Since: GIMP 2.9
+ **/
+gdouble
+gimp_context_get_brush_spacing (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble spacing = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-brush-spacing",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    spacing = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return spacing;
+}
+
+/**
+ * gimp_context_set_brush_spacing:
+ * @spacing: brush spacing as percent of size.
+ *
+ * Set brush spacing as percent of size.
+ *
+ * Set the brush spacing as percent of size for brush based paint
+ * tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.9
+ **/
+gboolean
+gimp_context_set_brush_spacing (gdouble spacing)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-brush-spacing",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, spacing,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_brush_default_spacing:
+ *
+ * Set brush spacing to its default.
+ *
+ * Set the brush spacing to the default for paintbrush, airbrush, or
+ * pencil tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.9
+ **/
+gboolean
+gimp_context_set_brush_default_spacing (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-brush-default-spacing",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_dynamics:
  *
  * Retrieve the currently active paint dynamics.

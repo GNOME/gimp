@@ -207,11 +207,13 @@ run (const gchar      *name,
     }
   else if (strcmp (name, SAVE_PROC) == 0)
     {
+      GFile        *file;
       GimpParasite *parasite;
       gint32        orig_image_ID;
 
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
+      file        = g_file_new_for_uri (param[3].data.d_string);
 
       orig_image_ID = image_ID;
 
@@ -235,23 +237,38 @@ run (const gchar      *name,
 
           /*  Possibly retrieve data  */
           gimp_get_data (SAVE_PROC, &info);
+
+          parasite = gimp_image_get_parasite (orig_image_ID,
+                                              "gimp-brush-name");
+          if (parasite)
+            {
+              strncpy (info.description,
+                       gimp_parasite_data (parasite),
+                       MIN (sizeof (info.description),
+                            gimp_parasite_data_size (parasite)));
+              info.description[sizeof (info.description) - 1] = '\0';
+
+              gimp_parasite_free (parasite);
+            }
+          else
+            {
+              gchar *name = g_path_get_basename (gimp_file_get_utf8_name (file));
+
+              if (g_str_has_suffix (name, ".gbr"))
+                name[strlen (name) - 4] = '\0';
+
+              if (strlen (name))
+                {
+                  strncpy (info.description, name, sizeof (info.description));
+                  info.description[sizeof (info.description) - 1] = '\0';
+                }
+
+              g_free (name);
+            }
           break;
 
         default:
           break;
-        }
-
-      parasite = gimp_image_get_parasite (orig_image_ID, "gimp-brush-name");
-      if (parasite)
-        {
-          gchar *name = g_strndup (gimp_parasite_data (parasite),
-                                   gimp_parasite_data_size (parasite));
-          gimp_parasite_free (parasite);
-
-          strncpy (info.description, name, sizeof (info.description));
-          info.description[sizeof (info.description) - 1] = '\0';
-
-          g_free (name);
         }
 
       switch (run_mode)
@@ -281,8 +298,7 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (save_image (g_file_new_for_uri (param[3].data.d_string),
-                          image_ID, drawable_ID, &error))
+          if (save_image (file, image_ID, drawable_ID, &error))
             {
               gimp_set_data (SAVE_PROC, &info, sizeof (info));
             }
@@ -295,7 +311,7 @@ run (const gchar      *name,
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
 
-      if (info.description && strlen (info.description))
+      if (strlen (info.description))
         {
           GimpParasite *parasite;
 
@@ -783,27 +799,29 @@ save_dialog (void)
                       table, TRUE, TRUE, 0);
   gtk_widget_show (table);
 
-  adj = (GtkAdjustment *) gtk_adjustment_new (info.spacing, 1, 1000, 1, 10, 0);
-  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Spacing:"), 1.0, 0.5,
-                             spinbutton, 1, TRUE);
-
-  g_signal_connect (adj, "value-changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &info.spacing);
-
   entry = gtk_entry_new ();
-  gtk_widget_set_size_request (entry, 200, -1);
+  gtk_entry_set_width_chars (GTK_ENTRY (entry), 20);
+  gtk_entry_set_activates_default (GTK_ENTRY (entry), TRUE);
   gtk_entry_set_text (GTK_ENTRY (entry), info.description);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Description:"), 1.0, 0.5,
                              entry, 1, FALSE);
 
   g_signal_connect (entry, "changed",
                     G_CALLBACK (entry_callback),
                     info.description);
+
+  adj = (GtkAdjustment *) gtk_adjustment_new (info.spacing, 1, 1000, 1, 10, 0);
+  spinbutton = gtk_spin_button_new (adj, 1.0, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("Spacing:"), 1.0, 0.5,
+                             spinbutton, 1, TRUE);
+
+  g_signal_connect (adj, "value-changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &info.spacing);
 
   gtk_widget_show (dialog);
 

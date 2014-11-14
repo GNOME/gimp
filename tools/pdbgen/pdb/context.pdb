@@ -702,6 +702,101 @@ CODE
     );
 }
 
+sub context_get_brush_spacing {
+    $blurb = 'Get brush spacing as percent of size.';
+    $help = 'Get the brush spacing as percent of size for brush based paint tools.';
+
+    &adeath_pdb_misc('2014', '2.9');
+
+    @outargs = (
+        { name => "spacing", type => "0 < float",
+          desc => "brush spacing as percent of size" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  /* all options should have the same value, so pick a random one */
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "brush-spacing", &spacing,
+                   NULL);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_set_brush_spacing {
+    $blurb = 'Set brush spacing as percent of size.';
+    $help = 'Set the brush spacing as percent of size for brush based paint tools.';
+
+    &adeath_pdb_misc('2014', '2.9');
+
+    @inargs = (
+        { name => "spacing", type => "0 < float",
+          desc => "brush spacing as percent of size" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GList *options;
+  GList *list;
+
+  options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+  for (list = options; list; list = g_list_next (list))
+    g_object_set (list->data,
+                  "brush-spacing", (gdouble) spacing,
+                   NULL);
+
+  g_list_free (options);
+}
+CODE
+    );
+}
+
+sub context_set_brush_default_spacing {
+    $blurb = 'Set brush spacing to its default.';
+    $help = <<'HELP';
+Set the brush spacing to the default  for
+paintbrush, airbrush, or pencil tools.
+HELP
+
+    &adeath_pdb_misc('2014', '2.9');
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    {
+      GList *options;
+      GList *list;
+
+      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+      for (list = options; list; list = g_list_next (list))
+        gimp_paint_options_set_default_brush_spacing (list->data, brush);
+
+      g_list_free (options);
+    }
+  else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
 sub context_get_dynamics {
     $blurb = 'Retrieve the currently active paint dynamics.';
 
@@ -2188,6 +2283,8 @@ CODE
             context_set_brush_size context_set_brush_default_size
             context_get_brush_aspect_ratio context_set_brush_aspect_ratio
             context_get_brush_angle context_set_brush_angle
+            context_get_brush_spacing
+            context_set_brush_spacing context_set_brush_default_spacing
             context_get_dynamics context_set_dynamics
             context_get_pattern context_set_pattern
             context_get_gradient context_set_gradient

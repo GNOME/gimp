@@ -50,7 +50,7 @@ static gint      load_palette   (const gchar  *file,
                                  GError      **error);
 static gint32    load_image     (const gchar  *file,
                                  GError      **error);
-static gboolean  save_image     (const gchar  *file,
+static gboolean  save_image     (GFile        *file,
                                  gint32        image,
                                  gint32        layer,
                                  GError      **error);
@@ -133,6 +133,7 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
+  gimp_register_file_handler_uri (SAVE_PROC);
   gimp_register_save_handler (SAVE_PROC, "cel", "");
 }
 
@@ -252,7 +253,7 @@ run (const gchar      *name,
           break;
         }
 
-      if (save_image (param[3].data.d_string,
+      if (save_image (g_file_new_for_uri (param[3].data.d_string),
                       image_ID, drawable_ID, &error))
         {
           gimp_set_data (SAVE_PROC, palette_file, data_length);
@@ -728,22 +729,23 @@ load_palette (const gchar *file,
 }
 
 static gboolean
-save_image (const gchar  *file,
-            gint32        image,
-            gint32        layer,
-            GError      **error)
+save_image (GFile   *file,
+            gint32   image,
+            gint32   layer,
+            GError **error)
 {
-  FILE          *fp;            /* Write file pointer */
+  GOutputStream *output;
   GeglBuffer    *buffer;
   const Babl    *format;
   gint           width;
   gint           height;
   guchar         header[32];    /* File header */
   gint           bpp;           /* Bit per pixel */
-  gint           colors, type; /* Number of colors, type of layer */
+  gint           colors;        /* Number of colors */
+  gint           type;          /* type of layer */
   gint           offx, offy;    /* Layer offsets */
-  guchar        *buf;           /* Temporary buffer */
-  guchar        *line;          /* Pixel data */
+  guchar        *buf  = NULL;   /* Temporary buffer */
+  guchar        *line = NULL;   /* Pixel data */
   gint           i, j, k;       /* Counters */
 
   /* Check that this is an indexed image, fail otherwise */
@@ -769,16 +771,22 @@ save_image (const gchar  *file,
   height = gegl_buffer_get_height (buffer);
 
   gimp_progress_init_printf (_("Saving '%s'"),
-                             gimp_filename_to_utf8 (file));
+                             gimp_file_get_utf8_name (file));
 
-  /* Open the file for writing */
-  fp = g_fopen (file, "w");
-
-  if (fp == NULL)
+  output = G_OUTPUT_STREAM (g_file_replace (file,
+                                            NULL, FALSE, G_FILE_CREATE_NONE,
+                                            NULL, error));
+  if (output)
     {
-      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Could not open '%s' for writing: %s"),
-                   gimp_filename_to_utf8 (file), g_strerror (errno));
+      GOutputStream *buffered;
+
+      buffered = g_buffered_output_stream_new (output);
+      g_object_unref (output);
+
+      output = buffered;
+    }
+  else
+    {
       return FALSE;
     }
 
@@ -815,7 +823,10 @@ save_image (const gchar  *file,
   header[13] = offx / 256;
   header[14] = offy % 256;
   header[15] = offy / 256;
-  fwrite (header, 32, 1, fp);
+
+  if (! g_output_stream_write_all (output, header, 32, NULL,
+                                   NULL, error))
+    goto fail;
 
   /* Arrange for memory etc. */
   buf  = g_new (guchar, width * 4);
@@ -840,7 +851,9 @@ save_image (const gchar  *file,
               buf[4 * j + 3] = line[4 * j + 3];   /* Alpha */
             }
 
-          fwrite (buf, width, 4, fp);
+          if (! g_output_stream_write_all (output, buf, width * 4, NULL,
+                                           NULL, error))
+            goto fail;
         }
       else if (colors > 16)
         {
@@ -852,7 +865,9 @@ save_image (const gchar  *file,
                 }
             }
 
-          fwrite (buf, width, 1, fp);
+          if (! g_output_stream_write_all (output, buf, width, NULL,
+                                           NULL, error))
+            goto fail;
         }
       else
         {
@@ -871,20 +886,34 @@ save_image (const gchar  *file,
                 }
             }
 
-          fwrite (buf, (width + 1) / 2, 1, fp);
+          if (! g_output_stream_write_all (output, buf, width + 1 / 2, NULL,
+                                           NULL, error))
+            goto fail;
         }
 
       gimp_progress_update ((float) i / (float) height);
     }
 
-  g_free (buf);
-  g_free (line);
-  g_object_unref (buffer);
-  fclose (fp);
+  if (! g_output_stream_close (output, NULL, error))
+    goto fail;
 
   gimp_progress_update (1.0);
 
+  g_free (buf);
+  g_free (line);
+  g_object_unref (buffer);
+  g_object_unref (output);
+
   return TRUE;
+
+ fail:
+
+  g_free (buf);
+  g_free (line);
+  g_object_unref (buffer);
+  g_object_unref (output);
+
+  return FALSE;
 }
 
 static void

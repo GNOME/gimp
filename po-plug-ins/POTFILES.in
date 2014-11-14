@@ -17,7 +17,6 @@ plug-ins/common/checkerboard.c
 plug-ins/common/cml-explorer.c
 plug-ins/common/color-cube-analyze.c
 plug-ins/common/color-enhance.c
-plug-ins/common/color-exchange.c
 plug-ins/common/colorify.c
 plug-ins/common/colormap-remap.c
 plug-ins/common/compose.c
@@ -81,7 +80,6 @@ plug-ins/common/grid.c
 plug-ins/common/guillotine.c
 plug-ins/common/hot.c
 plug-ins/common/illusion.c
-plug-ins/common/iwarp.c
 plug-ins/common/jigsaw.c
 plug-ins/common/lcms.c
 plug-ins/common/lens-flare.c

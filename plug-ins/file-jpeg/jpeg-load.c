@@ -687,6 +687,10 @@ jpeg_load_cmyk_to_rgb (guchar   *buf,
       return;
     }
 
+  /* NOTE: The following code assumes inverted CMYK values, even when an
+     APP14 marker doesn't exist. This is the behavior of recent versions
+     of PhotoShop as well. */
+
   while (pixels--)
     {
       guint c = src[0];

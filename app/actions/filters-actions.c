@@ -84,6 +84,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:checkerboard",
     NULL /* FIXME GIMP_HELP_FILTER_CHECKERBOARD */ },
 
+  { "filters-color-exchange", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Color Exchange..."), NULL, NULL,
+    "gegl:color-exchange",
+    NULL /* FIXME GIMP_HELP_FILTER_COLOR_EXCHANGE */ },
+
   { "filters-color-reduction", GIMP_STOCK_GEGL,
     NC_("filters-action", "Color _Reduction..."), NULL, NULL,
     "gegl:color-reduction",
@@ -344,6 +349,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:unsharp-mask",
     NULL /* FIXME GIMP_HELP_FILTER_UNSHARP_MASK */ },
 
+  { "filters-video-degradation", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Vi_deo Degradation..."), NULL, NULL,
+    "gegl:video-degradation",
+    NULL /* FIXME GIMP_HELP_FILTER_VIDEO_DEGRADATION */ },
+
   { "filters-vignette", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Vignette..."), NULL, NULL,
     "gegl:vignette",
@@ -434,6 +444,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
   SET_SENSITIVE ("filters-cartoon",                 writable);
   SET_SENSITIVE ("filters-checkerboard",            writable);
+  SET_SENSITIVE ("filters-color-exchange",          writable);
   SET_SENSITIVE ("filters-color-reduction",         writable);
   SET_SENSITIVE ("filters-color-rotate",            writable);
   SET_SENSITIVE ("filters-color-temperature",       writable && !gray);
@@ -486,6 +497,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-tile-glass",              writable);
   SET_SENSITIVE ("filters-tile-seamless",           writable);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);
+  SET_SENSITIVE ("filters-video-degradation",       writable);
   SET_SENSITIVE ("filters-vignette",                writable);
   SET_SENSITIVE ("filters-waves",                   writable);
   SET_SENSITIVE ("filters-whirl-pinch",             writable);

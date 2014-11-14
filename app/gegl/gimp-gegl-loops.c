@@ -194,7 +194,7 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                       if (mode != GIMP_NORMAL_CONVOL && total[b] < 0.0)
                         total[b] = - total[b];
 
-                      total[b] = CLAMP (total[b], 0.0, 1.0);
+                      *d++ = CLAMP (total[b], 0.0, 1.0);
                     }
                 }
             }

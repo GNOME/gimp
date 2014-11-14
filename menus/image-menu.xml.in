@@ -548,6 +548,7 @@
         <placeholder name="Colormap" />
         <separator />
 	<menuitem action="filters-alien-map" />
+	<menuitem action="filters-color-exchange" />
 	<menuitem action="filters-color-rotate" />
       </menu>
       <menu action="colors-info-menu" name="Info">
@@ -657,6 +658,7 @@
       	<menuitem action="filters-polar-coordinates" />
         <menuitem action="filters-ripple" />
         <menuitem action="filters-shift" />
+        <menuitem action="filters-video-degradation" />
         <menuitem action="filters-waves" />
         <menuitem action="filters-whirl-pinch" />
         <menuitem action="filters-wind" />

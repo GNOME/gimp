@@ -60,7 +60,7 @@ enum
 static void      gimp_brush_core_finalize           (GObject          *object);
 
 static gboolean  gimp_brush_core_start              (GimpPaintCore    *core,
-                                                    GimpDrawable     *drawable,
+                                                     GimpDrawable     *drawable,
                                                      GimpPaintOptions *paint_options,
                                                      const GimpCoords *coords,
                                                      GError          **error);
@@ -402,7 +402,7 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
                                                coords);
     }
 
-  core->spacing = (gdouble) gimp_brush_get_spacing (core->main_brush) / 100.0;
+  core->spacing = (gdouble) paint_options->brush_spacing / 100;
 
   core->brush = core->main_brush;
 

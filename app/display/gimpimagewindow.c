@@ -1720,6 +1720,30 @@ gimp_image_window_config_notify (GimpImageWindow *window,
           gimp_image_window_keep_canvas_pos (window);
           gtk_widget_set_visible (private->left_docks, show_docks);
           gtk_widget_set_visible (private->right_docks, show_docks);
+
+          /* If docks are being shown, and we are in multi-window-mode,
+           * and this is the window of the active display, try to set
+           * the keyboard focus to this window because it might have
+           * been stolen by a dock. See bug #567333.
+           */
+          if (strcmp (pspec->name, "hide-docks") == 0 &&
+              ! config->single_window_mode            &&
+              ! config->hide_docks)
+            {
+              GimpDisplayShell *shell;
+              GimpContext      *user_context;
+
+              shell        = gimp_image_window_get_active_shell (window);
+              user_context = gimp_get_user_context (private->gimp);
+
+              if (gimp_context_get_display (user_context) == shell->display)
+                {
+                  GdkWindow *w = gtk_widget_get_window (GTK_WIDGET (window));
+
+                  if (w)
+                    gdk_window_focus (w, gtk_get_current_event_time ());
+                }
+            }
         }
 
       gimp_image_window_update_tabs (window);

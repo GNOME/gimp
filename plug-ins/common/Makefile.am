@@ -58,7 +58,6 @@ libexec_PROGRAMS = \
 	cml-explorer \
 	color-cube-analyze \
 	color-enhance \
-	color-exchange \
 	colorify \
 	colormap-remap \
 	compose \
@@ -427,23 +426,6 @@ color_enhance_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(color_enhance_RC)
-
-color_exchange_SOURCES = \
-	color-exchange.c
-
-color_exchange_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(color_exchange_RC)
 
 colorify_SOURCES = \
 	colorify.c

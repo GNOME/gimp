@@ -85,6 +85,7 @@ struct _GimpPaintOptions
   gdouble                   brush_size;
   gdouble                   brush_angle;
   gdouble                   brush_aspect_ratio;
+  gdouble                   brush_spacing;
 
   GimpPaintApplicationMode  application_mode;
   GimpPaintApplicationMode  application_mode_save;
@@ -132,9 +133,14 @@ gboolean gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
                                                 GimpRGB          *color);
 
 GimpBrushApplicationMode
-             gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options);
+        gimp_paint_options_get_brush_mode      (GimpPaintOptions *paint_options);
 
-void gimp_paint_options_set_default_brush_size (GimpPaintOptions *paint_options,
+void    gimp_paint_options_set_default_brush_size
+                                               (GimpPaintOptions *paint_options,
+                                                GimpBrush        *brush);
+
+void    gimp_paint_options_set_default_brush_spacing
+                                               (GimpPaintOptions *paint_options,
                                                 GimpBrush        *brush);
 
 void    gimp_paint_options_copy_brush_props    (GimpPaintOptions *src,

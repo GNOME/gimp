@@ -844,6 +844,88 @@ CODE
     );
 }
 
+sub plug_in_exchange {
+    $blurb = 'Swap one color with another';
+
+    $help = <<'HELP';
+Exchange one color with another, optionally setting a threshold to
+convert from one shade to another.
+HELP
+
+    &std_pdb_compat('gegl:color-exchange');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+
+	{ name => 'from_red', type => 'int8',
+	  desc => 'Red value (from)' },
+	{ name => 'from_green', type => 'int8',
+	  desc => 'Green value (from)' },
+	{ name => 'from_blue', type => 'int8',
+	  desc => 'Blue value (from)' },
+	{ name => 'to_red', type => 'int8',
+	  desc => 'Red value (to)' },
+	{ name => 'to_green', type => 'int8',
+	  desc => 'Green value (to)' },
+	{ name => 'to_blue', type => 'int8',
+	  desc => 'Blue value (to)' },
+	{ name => 'red_threshold', type => 'int8',
+	  desc => 'Red threshold' },
+	{ name => 'green_threshold', type => 'int8',
+	  desc => 'Green threshold' },
+	{ name => 'blue_threshold', type => 'int8',
+	  desc => 'Blue threshold' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GimpRGB    from;
+      GimpRGB    to;
+      GeglColor *gegl_from;
+      GeglColor *gegl_to;
+      GeglNode  *node;
+
+      gimp_rgb_set_uchar (&from, from_red, from_green, from_blue);
+      gimp_rgb_set_uchar (&to,   to_red,   to_green,   to_blue);
+
+      gegl_from = gimp_gegl_color_new (&from);
+      gegl_to   = gimp_gegl_color_new (&to);
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",       "gegl:color-exchange",
+			          "from-color",      gegl_from,
+                                  "to-color",        gegl_to,
+				  "red-threshold",   red_threshold   / 255.0,
+				  "green-threshold", green_threshold / 255.0,
+				  "blue-threshold",  blue_threshold  / 255.0,
+                                  NULL);
+
+      g_object_unref (gegl_from);
+      g_object_unref (gegl_to);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Color Exchange"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_gauss {
     $blurb = 'Simplest, most commonly used way of blurring';
 
@@ -2890,6 +2972,7 @@ CODE
             plug_in_convmatrix
             plug_in_cubism
             plug_in_deinterlace
+            plug_in_exchange
             plug_in_gauss
             plug_in_gauss_iir
             plug_in_gauss_iir2
