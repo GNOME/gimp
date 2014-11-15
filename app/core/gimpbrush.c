@@ -580,19 +580,31 @@ gimp_brush_transform_size (GimpBrush     *brush,
                            gint          *width,
                            gint          *height)
 {
+  gdouble tmp_width;
+  gdouble tmp_height;
+ 
   g_return_if_fail (GIMP_IS_BRUSH (brush));
   g_return_if_fail (scale > 0.0);
   g_return_if_fail (width != NULL);
   g_return_if_fail (height != NULL);
 
+  tmp_width = gimp_temp_buf_get_width  (brush->priv->mask);
+  tmp_height = gimp_temp_buf_get_height (brush->priv->mask);
+
   if (scale        == 1.0 &&
       aspect_ratio == 0.0 &&
       ((angle == 0.0) || (angle == 0.5) || (angle == 1.0)))
     {
-      *width  = gimp_temp_buf_get_width  (brush->priv->mask);
-      *height = gimp_temp_buf_get_height (brush->priv->mask);;
+      *width  = tmp_width;
+      *height = tmp_height;
 
       return;
+    }
+
+  /*Cap transform result for brushes or OOM can occur*/
+  if (((gdouble) MAX (tmp_width, tmp_height)) > GIMP_BRUSH_MAX_SIZE)
+    {
+      scale = GIMP_BRUSH_MAX_SIZE / (gdouble) MAX (tmp_width, tmp_height);
     }
 
   GIMP_BRUSH_GET_CLASS (brush)->transform_size (brush,
