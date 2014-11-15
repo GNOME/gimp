@@ -1,5 +1,5 @@
 # Finnish messages for gimp-tips.
-# Suomennos: http://gnome.fi/
+# Suomennos: https://l10n.gnome.org/teams/fi/
 # Ilkka Tuohela <hile@iki.fi>, 2006.
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2008.
 # Petri Järvisalo <reaby @ Freenode>, 2008.
@@ -9,8 +9,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-26 20:31+0300\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-11-07 06:18+0000\n"
 "PO-Revision-Date: 2013-01-27 18:53+0200\n"
 "Last-Translator: Ville Skyttä <ville.skytta@iki.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
