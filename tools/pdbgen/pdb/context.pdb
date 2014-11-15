@@ -706,7 +706,7 @@ sub context_get_brush_spacing {
     $blurb = 'Get brush spacing as percent of size.';
     $help = 'Get the brush spacing as percent of size for brush based paint tools.';
 
-    &adeath_pdb_misc('2014', '2.9');
+    &adeath_pdb_misc('2014', '2.10');
 
     @outargs = (
         { name => "spacing", type => "0 < float",
@@ -736,7 +736,7 @@ sub context_set_brush_spacing {
     $blurb = 'Set brush spacing as percent of size.';
     $help = 'Set the brush spacing as percent of size for brush based paint tools.';
 
-    &adeath_pdb_misc('2014', '2.9');
+    &adeath_pdb_misc('2014', '2.10');
 
     @inargs = (
         { name => "spacing", type => "0 < float",
@@ -769,7 +769,7 @@ Set the brush spacing to the default  for
 paintbrush, airbrush, or pencil tools.
 HELP
 
-    &adeath_pdb_misc('2014', '2.9');
+    &adeath_pdb_misc('2014', '2.10');
 
     %invoke = (
 	code => <<'CODE'

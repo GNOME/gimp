@@ -858,7 +858,7 @@ gimp_context_set_brush_angle (gdouble angle)
  *
  * Returns: brush spacing as percent of size.
  *
- * Since: GIMP 2.9
+ * Since: GIMP 2.10
  **/
 gdouble
 gimp_context_get_brush_spacing (void)
@@ -890,7 +890,7 @@ gimp_context_get_brush_spacing (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.9
+ * Since: GIMP 2.10
  **/
 gboolean
 gimp_context_set_brush_spacing (gdouble spacing)
@@ -921,7 +921,7 @@ gimp_context_set_brush_spacing (gdouble spacing)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.9
+ * Since: GIMP 2.10
  **/
 gboolean
 gimp_context_set_brush_default_spacing (void)
