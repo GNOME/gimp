@@ -67,17 +67,18 @@ static GtkWidget * jitter_options_gui          (GimpPaintOptions *paint_options,
                                                 GType             tool_type);
 static GtkWidget * smoothing_options_gui       (GimpPaintOptions *paint_options,
                                                 GType             tool_type);
+
 static GtkWidget * gimp_paint_options_gui_scale_with_reset_button
                                                (GObject   *config,
                                                 gchar     *prop_name,
                                                 gchar     *prop_descr,
                                                 gchar     *reset_tooltip,
-                                                gdouble    minor_step,
-                                                gdouble    major_step,
-                                                gdouble    min,
-                                                gdouble    max,
+                                                gdouble    step_increment,
+                                                gdouble    page_increment,
+                                                gdouble    scale_min,
+                                                gdouble    scale_max,
                                                 gdouble    gamma,
-                                                GCallback  callback);
+                                                GCallback  reset_callback);
 
 
 /*  public functions  */
@@ -143,39 +144,35 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
-/*Size spinner*/
       hbox = gimp_paint_options_gui_scale_with_reset_button
-                                (config, "brush-size", _("Size"),
-                                 _("Reset size to brush's native size"),
-                                 1.0, 10.0, 1.0, 1000.0, 1.7,
-                                 G_CALLBACK (gimp_paint_options_gui_reset_size));
+        (config, "brush-size", _("Size"),
+         _("Reset size to brush's native size"),
+         1.0, 10.0, 1.0, 1000.0, 1.7,
+         G_CALLBACK (gimp_paint_options_gui_reset_size));
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-/*Aspect ratio spinner*/
       hbox = gimp_paint_options_gui_scale_with_reset_button
-                                 (config, "brush-aspect-ratio", _("Aspect Ratio"),
-                                 _("Reset size to brush's native size"),
-                                 0.1, 1.0, -20.0, 20.0, 1.0,
-                                 G_CALLBACK (gimp_paint_options_gui_reset_aspect_ratio));
+        (config, "brush-aspect-ratio", _("Aspect Ratio"),
+         _("Reset aspect ratio to brush's native"),
+         0.1, 1.0, -20.0, 20.0, 1.0,
+         G_CALLBACK (gimp_paint_options_gui_reset_aspect_ratio));
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-/*Brush angle spinner*/
       hbox = gimp_paint_options_gui_scale_with_reset_button
-                                (config, "brush-angle", _("Angle"),
-                                 _("Reset angle to zero"),
-                                 0.1, 1.0, -180.0, 180.0, 1.0,
-                                 G_CALLBACK (gimp_paint_options_gui_reset_angle));
+        (config, "brush-angle", _("Angle"),
+         _("Reset angle to zero"),
+         0.1, 1.0, -180.0, 180.0, 1.0,
+         G_CALLBACK (gimp_paint_options_gui_reset_angle));
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-/*Brush spacing spinner*/
       hbox = gimp_paint_options_gui_scale_with_reset_button
-                                (config, "brush-spacing", _("Spacing"),
-                                 _("Reset spacing to zero"),
-                                 0.1, 1.0, 1.0, 200.0, 1.7,
-                                 G_CALLBACK (gimp_paint_options_gui_reset_spacing));
+        (config, "brush-spacing", _("Spacing"),
+         _("Reset spacing to brush's native spacing"),
+         0.1, 1.0, 1.0, 200.0, 1.7,
+         G_CALLBACK (gimp_paint_options_gui_reset_spacing));
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
@@ -420,40 +417,41 @@ gimp_paint_options_gui_scale_with_reset_button (GObject   *config,
                                                 gchar     *prop_name,
                                                 gchar     *prop_descr,
                                                 gchar     *reset_tooltip,
-                                                gdouble    minor_step,
-                                                gdouble    major_step,
-                                                gdouble    min,
-                                                gdouble    max,
+                                                gdouble    step_increment,
+                                                gdouble    page_increment,
+                                                gdouble    scale_min,
+                                                gdouble    scale_max,
                                                 gdouble    gamma,
-                                                GCallback  callback)
+                                                GCallback  reset_callback)
 {
-      GtkWidget *scale;
-      GtkWidget *hbox;
-      GtkWidget *button;
+  GtkWidget *scale;
+  GtkWidget *hbox;
+  GtkWidget *button;
 
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
 
-      scale = gimp_prop_spin_scale_new (config, prop_name,
-                                        prop_descr,
-                                        minor_step, major_step, 2);
-      gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), min, max);
-      gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), gamma);
-      gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
-      gtk_widget_show (scale);
+  scale = gimp_prop_spin_scale_new (config, prop_name,
+                                    prop_descr,
+                                    step_increment, page_increment, 2);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),
+                                    scale_min, scale_max);
+  gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), gamma);
+  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
+  gtk_widget_show (scale);
 
-      button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
-      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-      gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
-                                    GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
-      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
+  button = gimp_icon_button_new (GIMP_STOCK_RESET, NULL);
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_image_set_from_icon_name (GTK_IMAGE (gtk_bin_get_child (GTK_BIN (button))),
+                                GIMP_STOCK_RESET, GTK_ICON_SIZE_MENU);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-      g_signal_connect (button, "clicked",
-                        callback,
-                        config);
+  g_signal_connect (button, "clicked",
+                    reset_callback,
+                    config);
 
-      gimp_help_set_help_data (button,
-                               reset_tooltip, NULL);
+  gimp_help_set_help_data (button,
+                           reset_tooltip, NULL);
 
-      return hbox;
+  return hbox;
 }
