@@ -5,8 +5,6 @@
 ;  if the blend colors are specified as high intensity, the sharp option
 ;   should be enabled or the logo will come out blurry
 
-(define (scale size percent) (* size percent))
-
 (define (apply-textured-logo-effect img
                                     logo-layer
                                     b-size
@@ -16,9 +14,9 @@
                                     blend-fg
                                     blend-bg)
   (let* (
-        (b-size-2 (scale b-size 0.5))
-        (f-size (scale b-size 0.75))
-        (ds-size (scale b-size 0.5))
+        (b-size-2 (* b-size 0.5))
+        (f-size (* b-size 0.75))
+        (ds-size (* b-size 0.5))
         (ts-size (- b-size-2 3))
         (width (car (gimp-drawable-width logo-layer)))
         (height (car (gimp-drawable-height logo-layer)))
@@ -146,7 +144,7 @@
                                  blend-fg
                                  blend-bg)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
-         (b-size (scale size 0.1))
+         (b-size (* size 0.1))
          (text-layer (car (gimp-text-fontname img -1 0 0 text b-size
                                               TRUE size PIXELS fontname))))
     (gimp-image-undo-disable img)
