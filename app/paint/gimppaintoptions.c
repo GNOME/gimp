@@ -814,6 +814,7 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
   gdouble  brush_size;
   gdouble  brush_angle;
   gdouble  brush_aspect_ratio;
+  gdouble  brush_spacing;
   gboolean brush_zoom;
 
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
@@ -824,6 +825,7 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
                 "brush-zoom", &brush_zoom,
                 "brush-angle", &brush_angle,
                 "brush-aspect-ratio", &brush_aspect_ratio,
+                "brush-spacing", &brush_spacing,
                 NULL);
 
   g_object_set (dest,
@@ -831,6 +833,7 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
                 "brush-zoom", brush_zoom,
                 "brush-angle", brush_angle,
                 "brush-aspect-ratio", brush_aspect_ratio,
+                "brush-spacing", brush_spacing,
                 NULL);
 }
 
