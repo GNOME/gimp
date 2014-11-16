@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2014-05-21 05:23+0000\n"
-"PO-Revision-Date: 2014-05-21 18:15+0300\n"
+"PO-Revision-Date: 2014-11-16 20:01+0200\n"
 "Last-Translator: Lasse Liehu <lasse.liehu@gmail.com>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "Language: fi\n"
@@ -721,7 +721,7 @@ msgstr "Lineaarinen"
 #: ../libgimpbase/gimpbaseenums.c:581
 msgctxt "interpolation-type"
 msgid "Cubic"
-msgstr "Parabolaarinen"
+msgstr "Kuutiollinen"
 
 #: ../libgimpbase/gimpbaseenums.c:582
 msgctxt "interpolation-type"
