@@ -151,7 +151,6 @@ libexec_PROGRAMS = \
 	unsharp-mask \
 	value-propagate \
 	van-gogh-lic \
-	video \
 	warp \
 	web-browser \
 	$(WEB_PAGE) \
@@ -2066,23 +2065,6 @@ van_gogh_lic_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(van_gogh_lic_RC)
-
-video_SOURCES = \
-	video.c
-
-video_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(video_RC)
 
 warp_SOURCES = \
 	warp.c

@@ -105,7 +105,6 @@ unit_editor_RC = unit-editor.rc.o
 unsharp_mask_RC = unsharp-mask.rc.o
 value_propagate_RC = value-propagate.rc.o
 van_gogh_lic_RC = van-gogh-lic.rc.o
-video_RC = video.rc.o
 warp_RC = warp.rc.o
 web_browser_RC = web-browser.rc.o
 web_page_RC = web-page.rc.o

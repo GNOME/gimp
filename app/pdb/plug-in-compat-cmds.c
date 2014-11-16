@@ -2479,6 +2479,52 @@ plug_in_threshold_alpha_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_video_invoker (GimpProcedure         *procedure,
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 pattern_number;
+  gboolean additive;
+  gboolean rotated;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  pattern_number = g_value_get_int (gimp_value_array_index (args, 3));
+  additive = g_value_get_boolean (gimp_value_array_index (args, 4));
+  rotated = g_value_get_boolean (gimp_value_array_index (args, 5));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gegl:video-degradation",
+                                 "pattern",   pattern_number,
+                                 "additive",  additive,
+                                 "rotated",   rotated,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Video"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_vinvert_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
@@ -5009,6 +5055,60 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Threshold",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-video
+   */
+  procedure = gimp_procedure_new (plug_in_video_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-video");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-video",
+                                     "Simulate distortion produced by a fuzzy or low-res monitor",
+                                     "This function simulates the degradation of being on an old low-dotpitch RGB video monitor to the specified drawable.",
+                                     "Compatibility procedure. Please see 'gegl:video-degradation' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:video-degradation' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("pattern-number",
+                                                      "pattern number",
+                                                      "Type of RGB pattern to use",
+                                                      0, 8, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("additive",
+                                                     "additive",
+                                                     "Whether the function adds the result to the original image",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("rotated",
+                                                     "rotated",
+                                                     "Whether to rotate the RGB pattern by ninety degrees",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

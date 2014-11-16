@@ -106,7 +106,6 @@
     'unsharp-mask' => { ui => 1 },
     'value-propagate' => { ui => 1 },
     'van-gogh-lic' => { ui => 1 },
-    'video' => { ui => 1 },
     'warp' => { ui => 1 },
     'web-browser' => { ui => 1 },
     'web-page' => { ui => 1, optional => 1, libs => 'WEBKIT_LIBS', cflags => 'WEBKIT_CFLAGS' },
