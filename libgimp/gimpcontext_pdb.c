@@ -642,7 +642,7 @@ gimp_context_set_brush (const gchar *name)
  *
  * Get the brush size in pixels for brush based paint tools.
  *
- * Returns: brush size in pixels.
+ * Returns: Brush size in pixels.
  *
  * Since: GIMP 2.8
  **/
@@ -667,7 +667,7 @@ gimp_context_get_brush_size (void)
 
 /**
  * gimp_context_set_brush_size:
- * @size: brush size in pixels.
+ * @size: Brush size in pixels.
  *
  * Set brush size in pixels.
  *
@@ -733,7 +733,7 @@ gimp_context_set_brush_default_size (void)
  *
  * Set the aspect ratio for brush based paint tools.
  *
- * Returns: aspect ratio.
+ * Returns: Aspect ratio.
  *
  * Since: GIMP 2.8
  **/
@@ -758,7 +758,7 @@ gimp_context_get_brush_aspect_ratio (void)
 
 /**
  * gimp_context_set_brush_aspect_ratio:
- * @aspect: aspect ratio.
+ * @aspect: Aspect ratio.
  *
  * Set brush aspect ratio.
  *
@@ -794,7 +794,7 @@ gimp_context_set_brush_aspect_ratio (gdouble aspect)
  *
  * Set the angle in degrees for brush based paint tools.
  *
- * Returns: angle in degrees.
+ * Returns: Angle in degrees.
  *
  * Since: GIMP 2.8
  **/
@@ -819,7 +819,7 @@ gimp_context_get_brush_angle (void)
 
 /**
  * gimp_context_set_brush_angle:
- * @angle: angle in degrees.
+ * @angle: Angle in degrees.
  *
  * Set brush angle in degrees.
  *
@@ -856,7 +856,7 @@ gimp_context_set_brush_angle (gdouble angle)
  * Get the brush spacing as percent of size for brush based paint
  * tools.
  *
- * Returns: brush spacing as percent of size.
+ * Returns: Brush spacing as percent of size.
  *
  * Since: GIMP 2.10
  **/
@@ -881,7 +881,7 @@ gimp_context_get_brush_spacing (void)
 
 /**
  * gimp_context_set_brush_spacing:
- * @spacing: brush spacing as percent of size.
+ * @spacing: Brush spacing as percent of size.
  *
  * Set brush spacing as percent of size.
  *
@@ -948,7 +948,7 @@ gimp_context_set_brush_default_spacing (void)
  *
  * Get the brush hardness for brush based paint tools.
  *
- * Returns: brush hardness.
+ * Returns: Brush hardness.
  *
  * Since: GIMP 2.10
  **/
@@ -973,7 +973,7 @@ gimp_context_get_brush_hardness (void)
 
 /**
  * gimp_context_set_brush_hardness:
- * @hardness: brush hardness.
+ * @hardness: Brush hardness.
  *
  * Set brush hardness.
  *
@@ -1039,7 +1039,7 @@ gimp_context_set_brush_default_hardness (void)
  *
  * Get the brush application force for brush based paint tools.
  *
- * Returns: brush application force.
+ * Returns: Brush application force.
  *
  * Since: GIMP 2.10
  **/
@@ -1064,7 +1064,7 @@ gimp_context_get_brush_force (void)
 
 /**
  * gimp_context_set_brush_force:
- * @force: brush application force.
+ * @force: Brush application force.
  *
  * Set brush application force.
  *

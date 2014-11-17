@@ -495,7 +495,7 @@ sub context_get_brush_size {
 
     @outargs = (
         { name => "size", type => "0 < float",
-          desc => "brush size in pixels" }
+          desc => "Brush size in pixels" }
     );
 
     %invoke = (
@@ -525,7 +525,7 @@ sub context_set_brush_size {
 
     @inargs = (
         { name => "size", type => "0 < float",
-          desc => "brush size in pixels" }
+          desc => "Brush size in pixels" }
     );
 
     %invoke = (
@@ -590,7 +590,7 @@ sub context_set_brush_aspect_ratio {
 
     @inargs = (
         { name => "aspect", type => "-20 <= float <= 20",
-          desc => "aspect ratio" }
+          desc => "Aspect ratio" }
     );
 
     %invoke = (
@@ -620,7 +620,7 @@ sub context_get_brush_aspect_ratio {
 
     @outargs = (
         { name => "aspect", type => "-20 <= float <= 20",
-          desc => "aspect ratio" }
+          desc => "Aspect ratio" }
     );
 
     %invoke = (
@@ -650,7 +650,7 @@ sub context_set_brush_angle {
 
     @inargs = (
 	{ name => "angle", type => "-180 <= float <= 180",
-	  desc => "angle in degrees" }
+	  desc => "Angle in degrees" }
     );
 
     %invoke = (
@@ -680,7 +680,7 @@ sub context_get_brush_angle {
 
     @outargs = (
 	{ name => "angle", type => "-180 <= float <= 180",
-	  desc => "angle in degrees" }
+	  desc => "Angle in degrees" }
     );
 
     %invoke = (
@@ -710,7 +710,7 @@ sub context_get_brush_spacing {
 
     @outargs = (
         { name => "spacing", type => "0 < float",
-          desc => "brush spacing as percent of size" }
+          desc => "Brush spacing as percent of size" }
     );
 
     %invoke = (
@@ -740,7 +740,7 @@ sub context_set_brush_spacing {
 
     @inargs = (
         { name => "spacing", type => "0 < float",
-          desc => "brush spacing as percent of size" }
+          desc => "Brush spacing as percent of size" }
     );
 
     %invoke = (
@@ -804,8 +804,8 @@ sub context_get_brush_hardness {
     &adeath_pdb_misc('2014', '2.10');
 
     @outargs = (
-        { name => "hardness", type => "0 < float",
-          desc => "brush hardness" }
+        { name => "hardness", type => "0.0 <= float <= 1.0",
+          desc => "Brush hardness" }
     );
 
     %invoke = (
@@ -834,8 +834,8 @@ sub context_set_brush_hardness {
     &adeath_pdb_misc('2014', '2.10');
 
     @inargs = (
-        { name => "hardness", type => "0 < float",
-          desc => "brush hardness" }
+        { name => "hardness", type => "0.0 <= float <= 1.0",
+          desc => "Brush hardness" }
     );
 
     %invoke = (
@@ -848,7 +848,7 @@ sub context_set_brush_hardness {
 
   for (list = options; list; list = g_list_next (list))
     g_object_set (list->data,
-                  "brush-spacing", (gdouble) hardness,
+                  "brush-hardness", (gdouble) hardness,
                    NULL);
 
   g_list_free (options);
@@ -899,8 +899,8 @@ sub context_get_brush_force {
     &adeath_pdb_misc('2014', '2.10');
 
     @outargs = (
-        { name => "force", type => "0 < float",
-          desc => "brush application force" }
+        { name => "force", type => "0.0 <= float <= 1.0",
+          desc => "Brush application force" }
     );
 
     %invoke = (
@@ -929,8 +929,8 @@ sub context_set_brush_force {
     &adeath_pdb_misc('2014', '2.10');
 
     @inargs = (
-        { name => "force", type => "0 < float",
-          desc => "brush application force" }
+        { name => "force", type => "0.0 <= float <= 1.0",
+          desc => "Brush application force" }
     );
 
     %invoke = (
@@ -943,7 +943,7 @@ sub context_set_brush_force {
 
   for (list = options; list; list = g_list_next (list))
     g_object_set (list->data,
-                  "brush-spacing", (gdouble) force,
+                  "brush-force", (gdouble) force,
                    NULL);
 
   g_list_free (options);

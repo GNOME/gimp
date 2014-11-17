@@ -807,7 +807,7 @@ context_set_brush_hardness_invoker (GimpProcedure         *procedure,
 
       for (list = options; list; list = g_list_next (list))
         g_object_set (list->data,
-                      "brush-spacing", (gdouble) hardness,
+                      "brush-hardness", (gdouble) hardness,
                        NULL);
 
       g_list_free (options);
@@ -904,7 +904,7 @@ context_set_brush_force_invoker (GimpProcedure         *procedure,
 
       for (list = options; list; list = g_list_next (list))
         g_object_set (list->data,
-                      "brush-spacing", (gdouble) force,
+                      "brush-force", (gdouble) force,
                        NULL);
 
       g_list_free (options);
@@ -2658,7 +2658,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("size",
                                                         "size",
-                                                        "brush size in pixels",
+                                                        "Brush size in pixels",
                                                         0, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2681,7 +2681,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
-                                                    "brush size in pixels",
+                                                    "Brush size in pixels",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2721,7 +2721,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("aspect",
                                                         "aspect",
-                                                        "aspect ratio",
+                                                        "Aspect ratio",
                                                         -20, 20, -20,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2744,7 +2744,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("aspect",
                                                     "aspect",
-                                                    "aspect ratio",
+                                                    "Aspect ratio",
                                                     -20, 20, -20,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2767,7 +2767,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle",
                                                         "angle",
-                                                        "angle in degrees",
+                                                        "Angle in degrees",
                                                         -180, 180, -180,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2790,7 +2790,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
-                                                    "angle in degrees",
+                                                    "Angle in degrees",
                                                     -180, 180, -180,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2813,7 +2813,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("spacing",
                                                         "spacing",
-                                                        "brush spacing as percent of size",
+                                                        "Brush spacing as percent of size",
                                                         0, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2836,7 +2836,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("spacing",
                                                     "spacing",
-                                                    "brush spacing as percent of size",
+                                                    "Brush spacing as percent of size",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2876,8 +2876,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("hardness",
                                                         "hardness",
-                                                        "brush hardness",
-                                                        0, G_MAXDOUBLE, 0,
+                                                        "Brush hardness",
+                                                        0.0, 1.0, 0.0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2899,8 +2899,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("hardness",
                                                     "hardness",
-                                                    "brush hardness",
-                                                    0, G_MAXDOUBLE, 0,
+                                                    "Brush hardness",
+                                                    0.0, 1.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2939,8 +2939,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("force",
                                                         "force",
-                                                        "brush application force",
-                                                        0, G_MAXDOUBLE, 0,
+                                                        "Brush application force",
+                                                        0.0, 1.0, 0.0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2962,8 +2962,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("force",
                                                     "force",
-                                                    "brush application force",
-                                                    0, G_MAXDOUBLE, 0,
+                                                    "Brush application force",
+                                                    0.0, 1.0, 0.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
