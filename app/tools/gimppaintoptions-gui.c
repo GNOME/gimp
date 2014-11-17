@@ -60,6 +60,11 @@ static void gimp_paint_options_gui_reset_angle (GtkWidget        *button,
 static void gimp_paint_options_gui_reset_spacing
                                                (GtkWidget        *button,
                                                 GimpPaintOptions *paint_options);
+static void gimp_paint_options_gui_reset_hardness
+                                               (GtkWidget        *button,
+                                                GimpPaintOptions *paint_options);
+static void gimp_paint_options_gui_reset_force (GtkWidget        *button,
+                                                GimpPaintOptions *paint_options);
 
 static GtkWidget * dynamics_options_gui        (GimpPaintOptions *paint_options,
                                                 GType             tool_type);
@@ -173,6 +178,24 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
          _("Reset spacing to brush's native spacing"),
          0.1, 1.0, 1.0, 200.0, 1.7,
          G_CALLBACK (gimp_paint_options_gui_reset_spacing));
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
+/*Brush hardness spinner*/
+      hbox = gimp_paint_options_gui_scale_with_reset_button
+                                (config, "brush-hardness", _("Hardness"),
+                                 _("Reset hardness to default"),
+                                 0.01, 0.1, 0.0, 1.0, 1.0,
+                                 G_CALLBACK (gimp_paint_options_gui_reset_hardness));
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
+/*Brush hardness spinner*/
+      hbox = gimp_paint_options_gui_scale_with_reset_button
+                                (config, "brush-force", _("Force"),
+                                 _("Reset force to default"),
+                                 0.01, 0.1, 0.0, 1.0, 1.0,
+                                 G_CALLBACK (gimp_paint_options_gui_reset_force));
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
@@ -421,6 +444,25 @@ gimp_paint_options_gui_reset_spacing (GtkWidget        *button,
 
   if (brush)
     gimp_paint_options_set_default_brush_spacing (paint_options, brush);
+}
+
+static void
+gimp_paint_options_gui_reset_hardness (GtkWidget        *button,
+                                       GimpPaintOptions *paint_options)
+{
+  GimpBrush *brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+
+  if (brush)
+    gimp_paint_options_set_default_brush_hardness (paint_options, brush);
+}
+
+static void
+gimp_paint_options_gui_reset_force (GtkWidget        *button,
+                                    GimpPaintOptions *paint_options)
+{
+  g_object_set (paint_options,
+                "brush-force", 0.0,
+                NULL);
 }
 
 static GtkWidget *

@@ -1523,6 +1523,8 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
   core->angle        = paint_options->brush_angle;
   core->aspect_ratio = paint_options->brush_aspect_ratio;
 
+  core->hardness     = paint_options->brush_hardness;
+
   if (! GIMP_IS_DYNAMICS (core->dynamics))
     return;
 
@@ -1553,11 +1555,11 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
                                                       paint_options,
                                                       fade_point);
 
-      core->hardness = gimp_dynamics_get_linear_value (core->dynamics,
-                                                       GIMP_DYNAMICS_OUTPUT_HARDNESS,
-                                                       coords,
-                                                       paint_options,
-                                                       fade_point);
+      core->hardness *= gimp_dynamics_get_linear_value (core->dynamics,
+                                                        GIMP_DYNAMICS_OUTPUT_HARDNESS,
+                                                        coords,
+                                                        paint_options,
+                                                        fade_point);
 
       output = gimp_dynamics_get_output (core->dynamics,
                                          GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO);

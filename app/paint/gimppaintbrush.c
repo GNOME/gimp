@@ -197,11 +197,12 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       g_object_unref (color);
     }
 
-  force = gimp_dynamics_get_linear_value (dynamics,
-                                          GIMP_DYNAMICS_OUTPUT_FORCE,
-                                          coords,
-                                          paint_options,
-                                          fade_point);
+  force = MAX (paint_options->brush_force,
+               gimp_dynamics_get_linear_value (dynamics,
+                                               GIMP_DYNAMICS_OUTPUT_FORCE,
+                                               coords,
+                                               paint_options,
+                                               fade_point));
 
   /* finally, let the brush core paste the colored area on the canvas */
   gimp_brush_core_paste_canvas (brush_core, drawable,

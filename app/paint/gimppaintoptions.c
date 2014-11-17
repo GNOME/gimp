@@ -28,6 +28,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
+#include "core/gimpbrushgenerated.h"
 #include "core/gimpimage.h"
 #include "core/gimpdynamics.h"
 #include "core/gimpdynamicsoutput.h"
@@ -45,6 +46,9 @@
 #define DEFAULT_BRUSH_ASPECT_RATIO     0.0
 #define DEFAULT_BRUSH_ANGLE            0.0
 #define DEFAULT_BRUSH_SPACING          10.0
+
+#define DEFAULT_BRUSH_HARDNESS         1.0 /*Generated brushes have their own*/
+#define DEFAULT_BRUSH_FORCE            0.0
 
 #define DEFAULT_APPLICATION_MODE       GIMP_PAINT_CONSTANT
 #define DEFAULT_HARD                   FALSE
@@ -84,6 +88,8 @@ enum
   PROP_BRUSH_ASPECT_RATIO,
   PROP_BRUSH_ANGLE,
   PROP_BRUSH_SPACING,
+  PROP_BRUSH_HARDNESS,
+  PROP_BRUSH_FORCE,
 
   PROP_APPLICATION_MODE,
   PROP_HARD,
@@ -181,6 +187,16 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SPACING,
                                    "brush-spacing", _("Brush Spacing"),
                                    1.0, 5000.0, DEFAULT_BRUSH_SPACING,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_HARDNESS,
+                                   "brush-hardness", _("Brush Hardness"),
+                                   0.0, 1.0, DEFAULT_BRUSH_HARDNESS,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_FORCE,
+                                   "brush-force", _("Brush Force"),
+                                   0.0, 1.0, DEFAULT_BRUSH_FORCE,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
@@ -377,6 +393,14 @@ gimp_paint_options_set_property (GObject      *object,
       options->brush_spacing = g_value_get_double (value);
       break;
 
+    case PROP_BRUSH_HARDNESS:
+      options->brush_hardness = g_value_get_double (value);
+      break;
+
+    case PROP_BRUSH_FORCE:
+      options->brush_force = g_value_get_double (value);
+      break;
+
     case PROP_APPLICATION_MODE:
       options->application_mode = g_value_get_enum (value);
       break;
@@ -507,6 +531,14 @@ gimp_paint_options_get_property (GObject    *object,
 
     case PROP_BRUSH_SPACING:
       g_value_set_double (value, options->brush_spacing);
+      break;
+
+    case PROP_BRUSH_HARDNESS:
+      g_value_set_double (value, options->brush_hardness);
+      break;
+
+    case PROP_BRUSH_FORCE:
+      g_value_set_double (value, options->brush_force);
       break;
 
     case PROP_APPLICATION_MODE:
@@ -746,6 +778,7 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
 {
   GimpDynamics       *dynamics;
   GimpDynamicsOutput *force_output;
+  gboolean            dynamic_force;
 
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), GIMP_BRUSH_SOFT);
 
@@ -758,9 +791,11 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
                                            GIMP_DYNAMICS_OUTPUT_FORCE);
 
   if (!force_output)
-    return GIMP_BRUSH_SOFT;
+    dynamic_force = FALSE;
+  else
+    dynamic_force = gimp_dynamics_output_is_enabled (force_output);
 
-  if (gimp_dynamics_output_is_enabled (force_output))
+  if (dynamic_force || (paint_options->brush_force > 0.0))
     return GIMP_BRUSH_PRESSURE;
 
   return GIMP_BRUSH_SOFT;
@@ -808,6 +843,33 @@ gimp_paint_options_set_default_brush_spacing (GimpPaintOptions *paint_options,
 }
 
 void
+gimp_paint_options_set_default_brush_hardness (GimpPaintOptions *paint_options,
+                                               GimpBrush        *brush)
+{
+  g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
+  g_return_if_fail (brush == NULL || GIMP_IS_BRUSH (brush));
+
+  if (! brush)
+    brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+
+  if (GIMP_IS_BRUSH_GENERATED(brush))
+    {
+      GimpBrushGenerated *generated_brush = GIMP_BRUSH_GENERATED(brush);
+
+      g_object_set (paint_options,
+                    "brush-hardness", (gdouble) gimp_brush_generated_get_hardness (generated_brush),
+                    NULL);
+    }
+  else
+    {
+      g_object_set (paint_options,
+                    "brush-hardness", DEFAULT_BRUSH_HARDNESS,
+                    NULL);
+    }
+}
+
+
+void
 gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
                                      GimpPaintOptions *dest)
 {
@@ -815,6 +877,8 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
   gdouble  brush_angle;
   gdouble  brush_aspect_ratio;
   gdouble  brush_spacing;
+  gdouble  brush_hardness;
+  gdouble  brush_force;
   gboolean brush_zoom;
 
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
@@ -826,6 +890,8 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
                 "brush-angle", &brush_angle,
                 "brush-aspect-ratio", &brush_aspect_ratio,
                 "brush-spacing", &brush_spacing,
+                "brush-hardness", &brush_hardness,
+                "brush-force", &brush_force,
                 NULL);
 
   g_object_set (dest,
@@ -834,6 +900,8 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
                 "brush-angle", brush_angle,
                 "brush-aspect-ratio", brush_aspect_ratio,
                 "brush-spacing", brush_spacing,
+                "brush-hardness", brush_hardness,
+                "brush-force", brush_force,
                 NULL);
 }
 
