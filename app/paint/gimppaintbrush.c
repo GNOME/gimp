@@ -211,9 +211,8 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   force = 0.5;
   option_force = paint_options->brush_force / 100.0;
 
-  if ((option_force != 0.5) && gimp_dynamics_output_is_enabled (dyn_output))
-    force = option_force + (1 - option_force) * dyn_force;
-
+  if (gimp_dynamics_output_is_enabled (dyn_output))
+    force = dyn_force;
   else if (option_force != 0.5)
     force = option_force;
 
