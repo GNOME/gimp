@@ -121,6 +121,9 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   gdouble                   fade_point;
   gdouble                   grad_point;
   gdouble                   force;
+  gdouble                   dyn_force;
+  GimpDynamicsOutput       *dyn_output = NULL;
+  gdouble                   option_force;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -197,12 +200,22 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       g_object_unref (color);
     }
 
-  force = MAX (paint_options->brush_force,
-               gimp_dynamics_get_linear_value (dynamics,
-                                               GIMP_DYNAMICS_OUTPUT_FORCE,
-                                               coords,
-                                               paint_options,
-                                               fade_point));
+  dyn_output = gimp_dynamics_get_output (dynamics,
+                                         GIMP_DYNAMICS_OUTPUT_FORCE);
+
+  dyn_force = gimp_dynamics_get_linear_value (dynamics,
+                                              GIMP_DYNAMICS_OUTPUT_FORCE,
+                                              coords,
+                                              paint_options,
+                                              fade_point);
+  force = 0.0;
+  option_force = paint_options->brush_force / 100.0;
+
+  if ((option_force > 0.0) && gimp_dynamics_output_is_enabled (dyn_output))
+    force = option_force + (1 - option_force) * dyn_force;
+
+  else if (option_force > 0.0)
+    force = option_force;
 
   /* finally, let the brush core paste the colored area on the canvas */
   gimp_brush_core_paste_canvas (brush_core, drawable,

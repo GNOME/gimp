@@ -185,7 +185,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       hbox = gimp_paint_options_gui_scale_with_reset_button
                                 (config, "brush-hardness", _("Hardness"),
                                  _("Reset hardness to default"),
-                                 0.01, 0.1, 0.0, 1.0, 1.0,
+                                 0.1, 1.0, 0.0, 100.0, 1.0,
                                  G_CALLBACK (gimp_paint_options_gui_reset_hardness));
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
@@ -194,7 +194,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       hbox = gimp_paint_options_gui_scale_with_reset_button
                                 (config, "brush-force", _("Force"),
                                  _("Reset force to default"),
-                                 0.01, 0.1, 0.0, 1.0, 1.0,
+                                 0.1, 1.0, 0.0, 100.0, 1.0,
                                  G_CALLBACK (gimp_paint_options_gui_reset_force));
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
@@ -461,7 +461,7 @@ gimp_paint_options_gui_reset_force (GtkWidget        *button,
                                     GimpPaintOptions *paint_options)
 {
   g_object_set (paint_options,
-                "brush-force", 0.0,
+                "brush-force", 50.0,
                 NULL);
 }
 

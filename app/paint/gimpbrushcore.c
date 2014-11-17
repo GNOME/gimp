@@ -1523,7 +1523,7 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
   core->angle        = paint_options->brush_angle;
   core->aspect_ratio = paint_options->brush_aspect_ratio;
 
-  core->hardness     = paint_options->brush_hardness;
+  core->hardness     = paint_options->brush_hardness / 100.0;
 
   if (! GIMP_IS_DYNAMICS (core->dynamics))
     return;
