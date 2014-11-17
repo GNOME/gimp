@@ -44,7 +44,7 @@
 
 #define DEFAULT_BRUSH_ASPECT_RATIO     0.0
 #define DEFAULT_BRUSH_ANGLE            0.0
-#define DEFAULT_BRUSH_SPACING          10.0
+#define DEFAULT_BRUSH_SPACING          0.1
 
 #define DEFAULT_BRUSH_HARDNESS         1.0 /* Generated brushes have their own */
 #define DEFAULT_BRUSH_FORCE            0.5
@@ -184,7 +184,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SPACING,
                                    "brush-spacing", _("Brush Spacing"),
-                                   1.0, 5000.0, DEFAULT_BRUSH_SPACING,
+                                   0.01, 50.0, DEFAULT_BRUSH_SPACING,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_HARDNESS,
@@ -833,7 +833,7 @@ gimp_paint_options_set_default_brush_spacing (GimpPaintOptions *paint_options,
   if (brush)
     {
       g_object_set (paint_options,
-                    "brush-spacing", (gdouble) gimp_brush_get_spacing (brush),
+                    "brush-spacing", (gdouble) gimp_brush_get_spacing (brush) / 100.0,
                     NULL);
     }
 }

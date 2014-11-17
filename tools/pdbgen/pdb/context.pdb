@@ -709,8 +709,8 @@ sub context_get_brush_spacing {
     &adeath_pdb_misc('2014', '2.10');
 
     @outargs = (
-        { name => "spacing", type => "0 < float",
-          desc => "Brush spacing as percent of size" }
+        { name => "spacing", type => "0.01 <= float <= 50.0",
+          desc => "Brush spacing as fraction of size" }
     );
 
     %invoke = (
@@ -739,8 +739,8 @@ sub context_set_brush_spacing {
     &adeath_pdb_misc('2014', '2.10');
 
     @inargs = (
-        { name => "spacing", type => "0 < float",
-          desc => "Brush spacing as percent of size" }
+        { name => "spacing", type => "0.01 <= float <= 50.0",
+          desc => "Brush spacing as fraction of size" }
     );
 
     %invoke = (

@@ -178,7 +178,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       hbox = gimp_paint_options_gui_scale_with_reset_button
         (config, "brush-spacing", _("Spacing"),
          _("Reset spacing to brush's native spacing"),
-         0.1, 1.0, 2, 1.0, 200.0, 1.0, 1.7,
+         0.1, 1.0, 1, 1.0, 200.0, 100.0, 1.7,
          G_CALLBACK (gimp_paint_options_gui_reset_spacing));
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
@@ -186,7 +186,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       hbox = gimp_paint_options_gui_scale_with_reset_button
         (config, "brush-hardness", _("Hardness"),
          _("Reset hardness to default"),
-         0.001, 0.01, 3, 0.0, 100.0, 100.0, 1.0,
+         0.1, 1.0, 1, 0.0, 100.0, 100.0, 1.0,
          G_CALLBACK (gimp_paint_options_gui_reset_hardness));
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
@@ -194,7 +194,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       hbox = gimp_paint_options_gui_scale_with_reset_button
         (config, "brush-force", _("Force"),
          _("Reset force to default"),
-         0.001, 0.01, 2, 0.0, 100.0, 100.0, 1.0,
+         0.1, 1.0, 1, 0.0, 100.0, 100.0, 1.0,
          G_CALLBACK (gimp_paint_options_gui_reset_force));
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);

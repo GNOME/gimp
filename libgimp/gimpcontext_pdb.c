@@ -856,7 +856,7 @@ gimp_context_set_brush_angle (gdouble angle)
  * Get the brush spacing as percent of size for brush based paint
  * tools.
  *
- * Returns: Brush spacing as percent of size.
+ * Returns: Brush spacing as fraction of size.
  *
  * Since: GIMP 2.10
  **/
@@ -881,7 +881,7 @@ gimp_context_get_brush_spacing (void)
 
 /**
  * gimp_context_set_brush_spacing:
- * @spacing: Brush spacing as percent of size.
+ * @spacing: Brush spacing as fraction of size.
  *
  * Set brush spacing as percent of size.
  *

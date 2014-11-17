@@ -2813,8 +2813,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("spacing",
                                                         "spacing",
-                                                        "Brush spacing as percent of size",
-                                                        0, G_MAXDOUBLE, 0,
+                                                        "Brush spacing as fraction of size",
+                                                        0.01, 50.0, 0.01,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2836,8 +2836,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("spacing",
                                                     "spacing",
-                                                    "Brush spacing as percent of size",
-                                                    0, G_MAXDOUBLE, 0,
+                                                    "Brush spacing as fraction of size",
+                                                    0.01, 50.0, 0.01,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

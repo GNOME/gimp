@@ -417,7 +417,7 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
                                                coords);
     }
 
-  core->spacing = (gdouble) paint_options->brush_spacing / 100;
+  core->spacing = paint_options->brush_spacing;
 
   core->brush = core->main_brush;
 
@@ -556,7 +556,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
        * spacing has a hard defined max.
        */
       dyn_spacing = (core->spacing +
-                     ((2.0 - core->spacing) * ( 1.0 - dyn_spacing)));
+                     ((2.0 - core->spacing) * (1.0 - dyn_spacing)));
 
       /*  Limiting spacing to minimum 1%  */
       dyn_spacing = MAX (core->spacing, dyn_spacing);
