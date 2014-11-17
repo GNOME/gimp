@@ -942,6 +942,158 @@ gimp_context_set_brush_default_spacing (void)
 }
 
 /**
+ * gimp_context_get_brush_hardness:
+ *
+ * Get brush hardness in paint options.
+ *
+ * Get the brush hardness for brush based paint tools.
+ *
+ * Returns: brush hardness.
+ *
+ * Since: GIMP 2.10
+ **/
+gdouble
+gimp_context_get_brush_hardness (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble hardness = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-brush-hardness",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    hardness = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return hardness;
+}
+
+/**
+ * gimp_context_set_brush_hardness:
+ * @hardness: brush hardness.
+ *
+ * Set brush hardness.
+ *
+ * Set the brush hardness for brush based paint tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_context_set_brush_hardness (gdouble hardness)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-brush-hardness",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, hardness,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_brush_default_hardness:
+ *
+ * Set brush spacing to its default.
+ *
+ * Set the brush spacing to the default for paintbrush, airbrush, or
+ * pencil tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_context_set_brush_default_hardness (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-brush-default-hardness",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_brush_force:
+ *
+ * Get brush force in paint options.
+ *
+ * Get the brush application force for brush based paint tools.
+ *
+ * Returns: brush application force.
+ *
+ * Since: GIMP 2.10
+ **/
+gdouble
+gimp_context_get_brush_force (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble force = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-brush-force",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    force = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return force;
+}
+
+/**
+ * gimp_context_set_brush_force:
+ * @force: brush application force.
+ *
+ * Set brush application force.
+ *
+ * Set the brush application force for brush based paint tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_context_set_brush_force (gdouble force)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-brush-force",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, force,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_dynamics:
  *
  * Retrieve the currently active paint dynamics.
