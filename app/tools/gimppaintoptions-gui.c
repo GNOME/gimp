@@ -181,21 +181,19 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-/*Brush hardness spinner*/
       hbox = gimp_paint_options_gui_scale_with_reset_button
-                                (config, "brush-hardness", _("Hardness"),
-                                 _("Reset hardness to default"),
-                                 0.1, 1.0, 0.0, 100.0, 1.0,
-                                 G_CALLBACK (gimp_paint_options_gui_reset_hardness));
+        (config, "brush-hardness", _("Hardness"),
+         _("Reset hardness to default"),
+         0.1, 1.0, 0.0, 100.0, 1.0,
+         G_CALLBACK (gimp_paint_options_gui_reset_hardness));
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-/*Brush hardness spinner*/
       hbox = gimp_paint_options_gui_scale_with_reset_button
-                                (config, "brush-force", _("Force"),
-                                 _("Reset force to default"),
-                                 0.1, 1.0, 0.0, 100.0, 1.0,
-                                 G_CALLBACK (gimp_paint_options_gui_reset_force));
+        (config, "brush-force", _("Force"),
+         _("Reset force to default"),
+         0.1, 1.0, 0.0, 100.0, 1.0,
+         G_CALLBACK (gimp_paint_options_gui_reset_force));
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
@@ -225,6 +223,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
     }
+
   /*  the "Link size to zoom" toggle  */
   if (g_type_is_a (tool_type, GIMP_TYPE_BRUSH_TOOL))
     {

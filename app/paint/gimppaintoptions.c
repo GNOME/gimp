@@ -27,7 +27,6 @@
 #include "paint-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpbrush.h"
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpimage.h"
 #include "core/gimpdynamics.h"
@@ -47,7 +46,7 @@
 #define DEFAULT_BRUSH_ANGLE            0.0
 #define DEFAULT_BRUSH_SPACING          10.0
 
-#define DEFAULT_BRUSH_HARDNESS         100.0 /*Generated brushes have their own*/
+#define DEFAULT_BRUSH_HARDNESS         100.0 /* Generated brushes have their own */
 #define DEFAULT_BRUSH_FORCE            50.0
 
 #define DEFAULT_APPLICATION_MODE       GIMP_PAINT_CONSTANT
@@ -169,10 +168,9 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BRUSH_ZOOM,
-                                    "brush-zoom", _("Link brush with zoom"),
+                                    "brush-zoom", _("Link brush size with canvas zoom"),
                                     DEFAULT_BRUSH_ZOOM,
                                     GIMP_PARAM_STATIC_STRINGS);
-
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_ASPECT_RATIO,
                                    "brush-aspect-ratio", _("Brush Aspect Ratio"),
@@ -852,9 +850,9 @@ gimp_paint_options_set_default_brush_hardness (GimpPaintOptions *paint_options,
   if (! brush)
     brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
 
-  if (GIMP_IS_BRUSH_GENERATED(brush))
+  if (GIMP_IS_BRUSH_GENERATED (brush))
     {
-      GimpBrushGenerated *generated_brush = GIMP_BRUSH_GENERATED(brush);
+      GimpBrushGenerated *generated_brush = GIMP_BRUSH_GENERATED (brush);
 
       g_object_set (paint_options,
                     "brush-hardness", (gdouble) gimp_brush_generated_get_hardness (generated_brush) * 100.0,
@@ -868,18 +866,17 @@ gimp_paint_options_set_default_brush_hardness (GimpPaintOptions *paint_options,
     }
 }
 
-
 void
 gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
                                      GimpPaintOptions *dest)
 {
   gdouble  brush_size;
+  gboolean brush_zoom;
   gdouble  brush_angle;
   gdouble  brush_aspect_ratio;
   gdouble  brush_spacing;
   gdouble  brush_hardness;
   gdouble  brush_force;
-  gboolean brush_zoom;
 
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));

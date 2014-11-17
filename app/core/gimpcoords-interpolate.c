@@ -322,9 +322,8 @@ gimp_coords_interpolate_catmull (const GimpCoords   catmul_pt1,
       coords.direction = start_coords.direction + dir_step * n;
 
       coords.direction = coords.direction - floor (coords.direction);
-      
-      coords.xscale = end_coords.xscale;
 
+      coords.xscale = end_coords.xscale;
       coords.yscale = end_coords.yscale;
 
       g_array_append_val (*ret_coords, coords);
@@ -341,7 +340,6 @@ gimp_coords_get_catmull_spline_point (const gdouble  t,
                                       const gdouble  p2,
                                       const gdouble  p3)
 {
-
   return ((((-t + 2.0) * t - 1.0) * t / 2.0)        * p0 +
           ((((3.0 * t - 5.0) * t) * t + 2.0) / 2.0) * p1 +
           (((-3.0 * t + 4.0) * t + 1.0) * t / 2.0)  * p2 +

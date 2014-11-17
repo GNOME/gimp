@@ -745,8 +745,8 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       current_coords.wheel     = last_coords.wheel    + p * delta_wheel;
       current_coords.velocity  = last_coords.velocity + p * delta_velocity;
       current_coords.direction = temp_direction;
-      current_coords.xscale   = last_coords.xscale;
-      current_coords.yscale   = last_coords.yscale;
+      current_coords.xscale    = last_coords.xscale;
+      current_coords.yscale    = last_coords.yscale;
 
       if (core->jitter > 0.0)
         {
@@ -1510,11 +1510,12 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
       if (paint_options->brush_zoom && MAX (coords->xscale, coords->yscale) > 0)
         {
           core->scale /= MAX (coords->xscale, coords->yscale);
-         /*Cap transform result for brushes or OOM can occur*/
-         if ((core->scale * max_side) > GIMP_BRUSH_MAX_SIZE)
-           {
+
+          /* Cap transform result for brushes or OOM can occur */
+          if ((core->scale * max_side) > GIMP_BRUSH_MAX_SIZE)
+            {
               core->scale = GIMP_BRUSH_MAX_SIZE / max_side;
-           }
+            }
         }
    }
   else

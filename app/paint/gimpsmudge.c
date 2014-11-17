@@ -353,7 +353,9 @@ gimp_smudge_accumulator_size (GimpPaintOptions *paint_options,
 
   if (paint_options->brush_zoom)
     max_view_scale = MAX (coords->xscale, coords->yscale);
-  max_brush_size = MIN (paint_options->brush_size / max_view_scale, GIMP_BRUSH_MAX_SIZE);
+
+  max_brush_size = MIN (paint_options->brush_size / max_view_scale,
+                        GIMP_BRUSH_MAX_SIZE);
 
   /* Note: the max brush mask size plus a border of 1 pixel and a
    * little headroom

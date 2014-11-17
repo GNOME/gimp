@@ -254,7 +254,7 @@ struct _GimpCoords
   gdouble wheel;
   gdouble velocity;
   gdouble direction;
-  gdouble xscale; /*some tools my care about the shell they passed through*/
+  gdouble xscale; /* the view scale */
   gdouble yscale;
 };
 
