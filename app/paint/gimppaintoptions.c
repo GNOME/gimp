@@ -46,8 +46,8 @@
 #define DEFAULT_BRUSH_ANGLE            0.0
 #define DEFAULT_BRUSH_SPACING          10.0
 
-#define DEFAULT_BRUSH_HARDNESS         100.0 /* Generated brushes have their own */
-#define DEFAULT_BRUSH_FORCE            50.0
+#define DEFAULT_BRUSH_HARDNESS         1.0 /* Generated brushes have their own */
+#define DEFAULT_BRUSH_FORCE            0.5
 
 #define DEFAULT_APPLICATION_MODE       GIMP_PAINT_CONSTANT
 #define DEFAULT_HARD                   FALSE
@@ -189,12 +189,12 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_HARDNESS,
                                    "brush-hardness", _("Brush Hardness"),
-                                   0.0, 100.0, DEFAULT_BRUSH_HARDNESS,
+                                   0.0, 1.0, DEFAULT_BRUSH_HARDNESS,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_FORCE,
                                    "brush-force", _("Brush Force"),
-                                   0.0, 100.0, DEFAULT_BRUSH_FORCE,
+                                   0.0, 1.0, DEFAULT_BRUSH_FORCE,
                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
@@ -855,7 +855,7 @@ gimp_paint_options_set_default_brush_hardness (GimpPaintOptions *paint_options,
       GimpBrushGenerated *generated_brush = GIMP_BRUSH_GENERATED (brush);
 
       g_object_set (paint_options,
-                    "brush-hardness", (gdouble) gimp_brush_generated_get_hardness (generated_brush) * 100.0,
+                    "brush-hardness", (gdouble) gimp_brush_generated_get_hardness (generated_brush),
                     NULL);
     }
   else

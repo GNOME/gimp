@@ -33,6 +33,7 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
+#include "core/gimpdynamicsoutput.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimptempbuf.h"
@@ -209,7 +210,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                               paint_options,
                                               fade_point);
   force = 0.5;
-  option_force = paint_options->brush_force / 100.0;
+  option_force = paint_options->brush_force;
 
   if (gimp_dynamics_output_is_enabled (dyn_output))
     force = dyn_force;
