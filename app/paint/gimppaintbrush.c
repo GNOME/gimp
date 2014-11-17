@@ -208,13 +208,13 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                               coords,
                                               paint_options,
                                               fade_point);
-  force = 0.0;
+  force = 0.5;
   option_force = paint_options->brush_force / 100.0;
 
-  if ((option_force > 0.0) && gimp_dynamics_output_is_enabled (dyn_output))
+  if ((option_force != 0.5) && gimp_dynamics_output_is_enabled (dyn_output))
     force = option_force + (1 - option_force) * dyn_force;
 
-  else if (option_force > 0.0)
+  else if (option_force != 0.5)
     force = option_force;
 
   /* finally, let the brush core paste the colored area on the canvas */
