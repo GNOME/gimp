@@ -36,7 +36,7 @@
 /* Velocity unit is screen pixels per millisecond we pass to tools as 1. */
 #define VELOCITY_UNIT        3.0
 #define EVENT_FILL_PRECISION 6.0
-#define DIRECTION_RADIUS     (1.5 / MAX (scale_x, scale_y))
+#define DIRECTION_RADIUS     (1.0 / MAX (scale_x, scale_y))
 #define SMOOTH_FACTOR        0.3
 
 
@@ -343,7 +343,7 @@ gimp_motion_buffer_motion_event (GimpMotionBuffer *buffer,
         }
       else
         {
-          gint x = 3;
+          gint x = CLAMP ((buffer->event_history->len - 1), 3, 15);
 
           while (((fabs (dir_delta_x) < DIRECTION_RADIUS) ||
                   (fabs (dir_delta_y) < DIRECTION_RADIUS)) &&
