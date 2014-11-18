@@ -329,10 +329,15 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:stretch-contrast-hsv",
     NULL /* FIXME GIMP_HELP_FILTER_STRETCH_CONTRAST_HSV */ },
 
+  { "filters-supernova", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Super_nova..."), NULL, NULL,
+    "gegl:supernova",
+    NULL /* FIXME GIMP_HELP_FILTER_SUPERNOVA */ },
+
   { "filters-threshold-alpha", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Threshold Alpha..."), NULL, NULL,
     "gimp:threshold-alpha",
-    NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
+    NULL /* FIXME GIMP_HELP_FILTER_THRESHOLD_ALPHA */ },
 
   { "filters-tile-glass", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Glass Tile..."), NULL, NULL,
@@ -493,6 +498,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-softglow",                writable);
   SET_SENSITIVE ("filters-stretch-contrast",        writable);
   SET_SENSITIVE ("filters-stretch-contrast-hsv",    writable);
+  SET_SENSITIVE ("filters-supernova",               writable);
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
   SET_SENSITIVE ("filters-tile-glass",              writable);
   SET_SENSITIVE ("filters-tile-seamless",           writable);

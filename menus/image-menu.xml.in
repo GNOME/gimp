@@ -664,7 +664,9 @@
         <menuitem action="filters-wind" />
       </menu>
       <menu action="plug-in-light-shadow-menu" name="Light and Shadow">
-        <placeholder name="Light" />
+        <placeholder name="Light">
+	  <menuitem action="filters-supernova" />
+	</placeholder>
         <separator />
         <placeholder name="Shadow">
 	  <menuitem action="filters-dropshadow" />
