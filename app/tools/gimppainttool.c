@@ -795,14 +795,73 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
         }
       else if (paint_tool->draw_circle)
         {
-          gint size = MAX (3, paint_tool->circle_radius * 2);
+          /** Lets make a sensible fallback cursor
+           *
+           * Sensible cursor is
+           *  * crossed to indicate draw point
+           *  * reactive to options alterations
+           *  * not a full circle that would be in the way  */
+
+
+          /* size as it could be */
+          gint    size       = (gint) paint_tool->circle_radius;
+          gdouble view_scale = MAX (core->cur_coords.xscale, core->cur_coords.xscale);
+          gdouble cross_size = 25.0 / view_scale;
+          gdouble cross_gap  = 18.0 / view_scale;
+
+          /* Cross to mark the spot*/
+          gimp_draw_tool_add_line (draw_tool,
+                                   cur_x + cross_gap, cur_y,
+                                   cur_x + cross_size, cur_y);
+
+          gimp_draw_tool_add_line (draw_tool,
+                                   cur_x - cross_size, cur_y,
+                                   cur_x - cross_gap, cur_y);
+
+          gimp_draw_tool_add_line (draw_tool,
+                                   cur_x, cur_y - cross_size,
+                                   cur_x, cur_y - cross_gap);
+
+          gimp_draw_tool_add_line (draw_tool,
+                                   cur_x, cur_y + cross_gap,
+                                   cur_x, cur_y + cross_size);
+
+#define TICKMARK_ANGLE 48
+#define ROTATION_ANGLE G_PI / 4
+          /* marks for indicating full size */
+          gimp_draw_tool_add_arc (draw_tool,
+                                  FALSE,
+                                  cur_x - (size / 2.0),
+                                  cur_y - (size / 2.0),
+                                  size, size,
+                                  ROTATION_ANGLE - (2.0 * G_PI) / (TICKMARK_ANGLE * 2),
+                                  (2.0 * G_PI) / TICKMARK_ANGLE);
 
           gimp_draw_tool_add_arc (draw_tool,
                                   FALSE,
                                   cur_x - (size / 2.0),
                                   cur_y - (size / 2.0),
                                   size, size,
-                                  0.0, 2.0 * G_PI);
+                                  ROTATION_ANGLE + G_PI / 2 - (2.0 * G_PI) / (TICKMARK_ANGLE * 2),
+                                  (2.0 * G_PI) / TICKMARK_ANGLE);
+
+          gimp_draw_tool_add_arc (draw_tool,
+                                  FALSE,
+                                  cur_x - (size / 2.0),
+                                  cur_y - (size / 2.0),
+                                  size, size,
+                                  ROTATION_ANGLE + G_PI - (2.0 * G_PI) / (TICKMARK_ANGLE * 2),
+                                  (2.0 * G_PI) / TICKMARK_ANGLE);
+
+          gimp_draw_tool_add_arc (draw_tool,
+                                  FALSE,
+                                  cur_x - (size / 2.0),
+                                  cur_y - (size / 2.0),
+                                  size, size,
+                                  ROTATION_ANGLE + 3 * G_PI / 2 - (2.0 * G_PI) / (TICKMARK_ANGLE * 2),
+                                  (2.0 * G_PI) / TICKMARK_ANGLE);
+
+
         }
       else if (! paint_tool->show_cursor)
         {
