@@ -1033,6 +1033,7 @@ gimp_draw_tool_on_handle (GimpDrawTool     *draw_tool,
     case GIMP_HANDLE_SQUARE:
     case GIMP_HANDLE_FILLED_SQUARE:
     case GIMP_HANDLE_CROSS:
+    case GIMP_HANDLE_CROSSHAIR:
       gimp_canvas_item_shift_to_north_west (anchor,
                                             handle_tx, handle_ty,
                                             width, height,

@@ -92,6 +92,7 @@ gimp_handle_type_get_type (void)
     { GIMP_HANDLE_DIAMOND, "GIMP_HANDLE_DIAMOND", "diamond" },
     { GIMP_HANDLE_FILLED_DIAMOND, "GIMP_HANDLE_FILLED_DIAMOND", "filled-diamond" },
     { GIMP_HANDLE_CROSS, "GIMP_HANDLE_CROSS", "cross" },
+    { GIMP_HANDLE_CROSSHAIR, "GIMP_HANDLE_CROSSHAIR", "crosshair" },
     { 0, NULL, NULL }
   };
 
@@ -104,6 +105,7 @@ gimp_handle_type_get_type (void)
     { GIMP_HANDLE_DIAMOND, "GIMP_HANDLE_DIAMOND", NULL },
     { GIMP_HANDLE_FILLED_DIAMOND, "GIMP_HANDLE_FILLED_DIAMOND", NULL },
     { GIMP_HANDLE_CROSS, "GIMP_HANDLE_CROSS", NULL },
+    { GIMP_HANDLE_CROSSHAIR, "GIMP_HANDLE_CROSSHAIR", NULL },
     { 0, NULL, NULL }
   };
 

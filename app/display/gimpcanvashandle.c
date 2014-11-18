@@ -272,6 +272,7 @@ gimp_canvas_handle_transform (GimpCanvasItem *item,
     case GIMP_HANDLE_CIRCLE:
     case GIMP_HANDLE_FILLED_CIRCLE:
     case GIMP_HANDLE_CROSS:
+    case GIMP_HANDLE_CROSSHAIR:
     case GIMP_HANDLE_DIAMOND:
     case GIMP_HANDLE_FILLED_DIAMOND:
       gimp_canvas_item_shift_to_center (private->anchor,
@@ -369,6 +370,22 @@ gimp_canvas_handle_draw (GimpCanvasItem *item,
       _gimp_canvas_item_stroke (item, cr);
       break;
 
+    case GIMP_HANDLE_CROSSHAIR:
+      cairo_move_to (cr, x - private->width / 2, y);
+      cairo_line_to (cr, x - private->width * 0.4, y);
+
+      cairo_move_to (cr, x + private->width / 2 - 0.5, y);
+      cairo_line_to (cr, x + private->width * 0.4, y);
+
+      cairo_move_to (cr, x, y - private->height / 2);
+      cairo_line_to (cr, x, y - private->height * 0.4 - 0.5);
+
+      cairo_move_to (cr, x, y + private->height / 2 - 0.5);
+      cairo_line_to (cr, x, y + private->height * 0.4 - 0.5);
+
+       _gimp_canvas_item_stroke (item, cr);
+      break;
+
     default:
       break;
     }
@@ -399,6 +416,7 @@ gimp_canvas_handle_get_extents (GimpCanvasItem *item)
     case GIMP_HANDLE_CIRCLE:
     case GIMP_HANDLE_FILLED_CIRCLE:
     case GIMP_HANDLE_CROSS:
+    case GIMP_HANDLE_CROSSHAIR:
     case GIMP_HANDLE_DIAMOND:
     case GIMP_HANDLE_FILLED_DIAMOND:
       rectangle.x      = x - private->width  / 2 - 2.0;
@@ -453,6 +471,7 @@ gimp_canvas_handle_hit (GimpCanvasItem *item,
     case GIMP_HANDLE_CIRCLE:
     case GIMP_HANDLE_FILLED_CIRCLE:
     case GIMP_HANDLE_CROSS:
+    case GIMP_HANDLE_CROSSHAIR:
       {
         gint width = private->width;
 

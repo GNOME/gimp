@@ -795,39 +795,26 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
         }
       else if (paint_tool->draw_circle)
         {
-          /** Lets make a sensible fallback cursor
+          /* Lets make a sensible fallback cursor
            *
            * Sensible cursor is
            *  * crossed to indicate draw point
            *  * reactive to options alterations
-           *  * not a full circle that would be in the way  */
+           *  * not a full circle that would be in the way
+           */
+          gint size = (gint) paint_tool->circle_radius;
 
-
-          /* size as it could be */
-          gint    size       = (gint) paint_tool->circle_radius;
-          gdouble view_scale = MAX (core->cur_coords.xscale, core->cur_coords.xscale);
-          gdouble cross_size = 25.0 / view_scale;
-          gdouble cross_gap  = 18.0 / view_scale;
-
-          /* Cross to mark the spot*/
-          gimp_draw_tool_add_line (draw_tool,
-                                   cur_x + cross_gap, cur_y,
-                                   cur_x + cross_size, cur_y);
-
-          gimp_draw_tool_add_line (draw_tool,
-                                   cur_x - cross_size, cur_y,
-                                   cur_x - cross_gap, cur_y);
-
-          gimp_draw_tool_add_line (draw_tool,
-                                   cur_x, cur_y - cross_size,
-                                   cur_x, cur_y - cross_gap);
-
-          gimp_draw_tool_add_line (draw_tool,
-                                   cur_x, cur_y + cross_gap,
-                                   cur_x, cur_y + cross_size);
+          /* Cross to mark the spot */
+          gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_CROSSHAIR,
+                                     cur_x, cur_y,
+                                     GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
+                                     GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
+                                     GIMP_HANDLE_ANCHOR_CENTER);
 
 #define TICKMARK_ANGLE 48
 #define ROTATION_ANGLE G_PI / 4
+
           /* marks for indicating full size */
           gimp_draw_tool_add_arc (draw_tool,
                                   FALSE,
@@ -870,10 +857,10 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
            */
           if (! line_drawn)
             gimp_draw_tool_add_handle (draw_tool,
-                                       GIMP_HANDLE_CIRCLE,
+                                       GIMP_HANDLE_CROSSHAIR,
                                        cur_x, cur_y,
-                                       GIMP_TOOL_HANDLE_SIZE_SMALL,
-                                       GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                       GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
+                                       GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
                                        GIMP_HANDLE_ANCHOR_CENTER);
         }
     }
