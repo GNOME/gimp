@@ -148,8 +148,10 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
 
   paint_tool->show_cursor   = TRUE;
   paint_tool->draw_brush    = TRUE;
+  paint_tool->draw_fallback = FALSE;
+  paint_tool->fallback_size = 0.0;
   paint_tool->draw_circle   = FALSE;
-  paint_tool->circle_radius = 0.0;
+  paint_tool->circle_size   = 0.0;
 
   paint_tool->status      = _("Click to paint");
   paint_tool->status_line = _("Click to draw the line");
@@ -781,7 +783,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
           line_drawn = TRUE;
         }
 
-      gimp_paint_tool_set_draw_circle (paint_tool, FALSE, 0.0);
+      gimp_paint_tool_set_draw_fallback (paint_tool, FALSE, 0.0);
 
       if (paint_tool->draw_brush)
         outline = gimp_paint_tool_get_outline (paint_tool,
@@ -793,7 +795,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
           gimp_draw_tool_add_item (draw_tool, outline);
           g_object_unref (outline);
         }
-      else if (paint_tool->draw_circle)
+      else if (paint_tool->draw_fallback)
         {
           /* Lets make a sensible fallback cursor
            *
@@ -802,7 +804,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
            *  * reactive to options alterations
            *  * not a full circle that would be in the way
            */
-          gint size = (gint) paint_tool->circle_radius;
+          gint size = (gint) paint_tool->fallback_size;
 
           /* Cross to mark the spot */
           gimp_draw_tool_add_handle (draw_tool,
@@ -848,6 +850,20 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                   ROTATION_ANGLE + 3 * G_PI / 2 - (2.0 * G_PI) / (TICKMARK_ANGLE * 2),
                                   (2.0 * G_PI) / TICKMARK_ANGLE);
 
+
+        }
+      else if (paint_tool->draw_circle)
+        {
+
+          gint size = (gint) paint_tool->circle_size;
+
+          /* draw an indicatory circle */
+          gimp_draw_tool_add_arc (draw_tool,
+                                  FALSE,
+                                  cur_x - (size / 2.0),
+                                  cur_y - (size / 2.0),
+                                  size, size,
+                                  0.0, (2.0 * G_PI));
 
         }
       else if (! paint_tool->show_cursor)
@@ -927,12 +943,23 @@ gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
 }
 
 void
-gimp_paint_tool_set_draw_circle (GimpPaintTool *tool,
-                                 gboolean       draw_circle,
-                                 gint           circle_radius)
+gimp_paint_tool_set_draw_fallback (GimpPaintTool *tool,
+                                   gboolean       draw_fallback,
+                                   gint           fallback_size)
 {
   g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
 
-  tool->draw_circle   = draw_circle;
-  tool->circle_radius = circle_radius;
+  tool->draw_fallback = draw_fallback;
+  tool->fallback_size= fallback_size;
+}
+
+void
+gimp_paint_tool_set_draw_circle (GimpPaintTool *tool,
+                                 gboolean       draw_circle,
+                                 gint           circle_size)
+{
+  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
+
+  tool->draw_circle = draw_circle;
+  tool->circle_size = circle_size;
 }

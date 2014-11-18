@@ -43,8 +43,10 @@ struct _GimpPaintTool
 
   gboolean       show_cursor;
   gboolean       draw_brush;
+  gboolean       draw_fallback;
+  gint           fallback_size;
   gboolean       draw_circle;
-  gint           circle_radius;
+  gint           circle_size;
 
   const gchar   *status;       /* status message */
   const gchar   *status_line;  /* status message when drawing a line */
@@ -69,9 +71,11 @@ GType   gimp_paint_tool_get_type            (void) G_GNUC_CONST;
 void    gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
                                              GimpColorPickMode  mode);
 
+void    gimp_paint_tool_set_draw_fallback   (GimpPaintTool     *tool,
+                                             gboolean           draw_fallback,
+                                             gint               fallback_size);
+
 void    gimp_paint_tool_set_draw_circle     (GimpPaintTool     *tool,
                                              gboolean           draw_circle,
-                                             gint               circle_radius);
-
-
+                                             gint               circle_size);
 #endif  /*  __GIMP_PAINT_TOOL_H__  */

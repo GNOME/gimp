@@ -239,8 +239,8 @@ gimp_brush_tool_get_outline (GimpPaintTool *paint_tool,
 
           options = GIMP_PAINT_TOOL_GET_OPTIONS (brush_tool);
 
-          gimp_paint_tool_set_draw_circle (paint_tool,
-                                           TRUE, options->brush_size);
+          gimp_paint_tool_set_draw_fallback (paint_tool,
+                                             TRUE, options->brush_size);
         }
     }
 
