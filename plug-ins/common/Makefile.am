@@ -129,7 +129,6 @@ libexec_PROGRAMS = \
 	newsprint \
 	nl-filter \
 	noise-solid \
-	nova \
 	oilify \
 	photocopy \
 	plugin-browser \
@@ -1687,23 +1686,6 @@ noise_solid_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(noise_solid_RC)
-
-nova_SOURCES = \
-	nova.c
-
-nova_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(nova_RC)
 
 oilify_SOURCES = \
 	oilify.c

@@ -1692,6 +1692,76 @@ CODE
     );
 }
 
+sub plug_in_nova {
+    $blurb = 'Add a starburst to the image';
+
+    $help = <<'HELP';
+This plug-in produces an effect like a supernova burst. The amount of
+the light effect is approximately in proportion to 1/r, where r is the
+distance from the center of the star.
+HELP
+
+    &std_pdb_compat('gegl:supernova');
+    $date = '2014';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image', dead => 1,
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'xcenter', type => 'int32',
+          desc => 'X coordinates of the center of supernova' },
+        { name => 'ycenter', type => 'int32',
+          desc => 'Y coordinates of the center of supernova' },
+	{ name => 'color', type => 'color',
+	  desc => 'Color of supernova' },
+        { name => 'radius', type => '1 <= int32 <= 3000',
+          desc => 'Radius of supernova' },
+        { name => 'nspoke', type => '1 <= int32 <= 1024',
+          desc => 'Number of spokes' },
+        { name => 'randomhue', type => '0 <= int32 <= 360',
+          desc => 'Random hue' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode  *node;
+      GeglColor *gegl_color = gimp_gegl_color_new (&color);
+      gdouble    center_x   = (gdouble) xcenter / (gdouble) gimp_item_get_width (GIMP_ITEM (drawable));
+      gdouble    center_y   = (gdouble) ycenter / (gdouble) gimp_item_get_height (GIMP_ITEM (drawable));
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",    "gegl:supernova",
+                                  "center-x",     center_x,
+                                  "center-y",     center_y,
+                                  "radius",       radius,
+                                  "spokes-count", nspoke,
+                                  "random-hue",   randomhue,
+                                  "color",        gegl_color,
+                                  "seed",         g_random_int (),
+                                  NULL);
+
+      g_object_unref (gegl_color);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Supernova"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_pixelize {
     $blurb = 'Simplify image into an array of solid-colored squares';
 
@@ -3039,6 +3109,7 @@ CODE
             plug_in_mblur
             plug_in_mblur_inward
             plug_in_mosaic
+            plug_in_nova
             plug_in_pixelize
             plug_in_pixelize2
             plug_in_plasma

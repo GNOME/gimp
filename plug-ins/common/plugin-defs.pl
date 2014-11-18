@@ -84,7 +84,6 @@
     'newsprint' => { ui => 1 },
     'nl-filter' => { ui => 1 },
     'noise-solid' => { ui => 1 },
-    'nova' => { ui => 1 },
     'oilify' => { ui => 1 },
     'photocopy' => { ui => 1 },
     'plugin-browser' => { ui => 1 },

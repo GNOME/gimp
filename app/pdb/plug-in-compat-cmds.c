@@ -1673,6 +1673,68 @@ plug_in_mosaic_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_nova_invoker (GimpProcedure         *procedure,
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 xcenter;
+  gint32 ycenter;
+  GimpRGB color;
+  gint32 radius;
+  gint32 nspoke;
+  gint32 randomhue;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  xcenter = g_value_get_int (gimp_value_array_index (args, 3));
+  ycenter = g_value_get_int (gimp_value_array_index (args, 4));
+  gimp_value_get_rgb (gimp_value_array_index (args, 5), &color);
+  radius = g_value_get_int (gimp_value_array_index (args, 6));
+  nspoke = g_value_get_int (gimp_value_array_index (args, 7));
+  randomhue = g_value_get_int (gimp_value_array_index (args, 8));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode  *node;
+          GeglColor *gegl_color = gimp_gegl_color_new (&color);
+          gdouble    center_x   = (gdouble) xcenter / (gdouble) gimp_item_get_width (GIMP_ITEM (drawable));
+          gdouble    center_y   = (gdouble) ycenter / (gdouble) gimp_item_get_height (GIMP_ITEM (drawable));
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",    "gegl:supernova",
+                                      "center-x",     center_x,
+                                      "center-y",     center_y,
+                                      "radius",       radius,
+                                      "spokes-count", nspoke,
+                                      "random-hue",   randomhue,
+                                      "color",        gegl_color,
+                                      "seed",         g_random_int (),
+                                      NULL);
+
+          g_object_unref (gegl_color);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Supernova"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_pixelize_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
@@ -4214,6 +4276,79 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "grout color",
                                                       "Grout color (black/white or fore/background) { BW (0), FG-BG (1) }",
                                                       0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-nova
+   */
+  procedure = gimp_procedure_new (plug_in_nova_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-nova");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-nova",
+                                     "Add a starburst to the image",
+                                     "This plug-in produces an effect like a supernova burst. The amount of the light effect is approximately in proportion to 1/r, where r is the distance from the center of the star.",
+                                     "Compatibility procedure. Please see 'gegl:supernova' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:supernova' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("xcenter",
+                                                      "xcenter",
+                                                      "X coordinates of the center of supernova",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("ycenter",
+                                                      "ycenter",
+                                                      "Y coordinates of the center of supernova",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_rgb ("color",
+                                                    "color",
+                                                    "Color of supernova",
+                                                    FALSE,
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("radius",
+                                                      "radius",
+                                                      "Radius of supernova",
+                                                      1, 3000, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("nspoke",
+                                                      "nspoke",
+                                                      "Number of spokes",
+                                                      1, 1024, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("randomhue",
+                                                      "randomhue",
+                                                      "Random hue",
+                                                      0, 360, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
