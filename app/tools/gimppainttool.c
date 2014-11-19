@@ -806,14 +806,6 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
            */
           gint size = (gint) paint_tool->fallback_size;
 
-          /* Cross to mark the spot */
-          gimp_draw_tool_add_handle (draw_tool,
-                                     GIMP_HANDLE_CROSSHAIR,
-                                     cur_x, cur_y,
-                                     GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
-                                     GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
-                                     GIMP_HANDLE_ANCHOR_CENTER);
-
 #define TICKMARK_ANGLE 48
 #define ROTATION_ANGLE G_PI / 4
 
@@ -849,12 +841,9 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                   size, size,
                                   ROTATION_ANGLE + 3 * G_PI / 2 - (2.0 * G_PI) / (TICKMARK_ANGLE * 2),
                                   (2.0 * G_PI) / TICKMARK_ANGLE);
-
-
         }
       else if (paint_tool->draw_circle)
         {
-
           gint size = (gint) paint_tool->circle_size;
 
           /* draw an indicatory circle */
@@ -864,20 +853,22 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                   cur_y - (size / 2.0),
                                   size, size,
                                   0.0, (2.0 * G_PI));
-
         }
-      else if (! paint_tool->show_cursor)
+
+      if (! outline                 &&
+          ! line_drawn              &&
+          ! paint_tool->show_cursor &&
+          ! paint_tool->draw_circle)
         {
           /*  don't leave the user without any indication and draw
            *  a fallback crosshair
            */
-          if (! line_drawn)
-            gimp_draw_tool_add_handle (draw_tool,
-                                       GIMP_HANDLE_CROSSHAIR,
-                                       cur_x, cur_y,
-                                       GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
-                                       GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
-                                       GIMP_HANDLE_ANCHOR_CENTER);
+          gimp_draw_tool_add_handle (draw_tool,
+                                     GIMP_HANDLE_CROSSHAIR,
+                                     cur_x, cur_y,
+                                     GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
+                                     GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
+                                     GIMP_HANDLE_ANCHOR_CENTER);
         }
     }
 
