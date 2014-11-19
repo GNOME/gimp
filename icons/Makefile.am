@@ -198,6 +198,7 @@ icons16_DATA = \
 	16/gimp-tool-rect-select.png			\
 	16/gimp-tool-rotate.png				\
 	16/gimp-tool-scale.png				\
+	16/gimp-tool-seamless-clone.png			\
 	16/gimp-tool-shear.png				\
 	16/gimp-tool-smudge.png				\
 	16/gimp-tool-text.png				\
@@ -305,6 +306,7 @@ icons22_DATA = \
 	22/gimp-tool-rect-select.png		\
 	22/gimp-tool-rotate.png			\
 	22/gimp-tool-scale.png			\
+	22/gimp-tool-seamless-clone.png		\
 	22/gimp-tool-shear.png			\
 	22/gimp-tool-smudge.png			\
 	22/gimp-tool-text.png			\
