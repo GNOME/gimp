@@ -314,6 +314,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:shift",
     NULL /* FIXME GIMP_HELP_FILTER_SHIFT */ },
 
+  { "filters-sinus", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Sinus..."), NULL, NULL,
+    "gegl:sinus",
+    NULL /* FIXME GIMP_HELP_FILTER_SINUS */ },
+
   { "filters-softglow", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Softglow..."), NULL, NULL,
     "gegl:softglow",
@@ -495,6 +500,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-ripple",                  writable);
   SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
   SET_SENSITIVE ("filters-shift",                   writable);
+  SET_SENSITIVE ("filters-sinus",                   writable);
   SET_SENSITIVE ("filters-softglow",                writable);
   SET_SENSITIVE ("filters-stretch-contrast",        writable);
   SET_SENSITIVE ("filters-stretch-contrast-hsv",    writable);

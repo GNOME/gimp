@@ -535,6 +535,8 @@ sanity_check_gegl_ops (void)
     "gegl:seamless-clone",
     "gegl:shift",
     "gegl:simplex-noise",
+    "gegl:shift",
+    "gegl:sinus",
     "gegl:softglow",
     "gegl:stretch-contrast",
     "gegl:stretch-contrast-hsv",
