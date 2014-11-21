@@ -97,7 +97,6 @@ plug-ins/common/ripple.c
 plug-ins/common/sample-colorize.c
 plug-ins/common/screenshot.c
 plug-ins/common/sharpen.c
-plug-ins/common/sinus.c
 plug-ins/common/smooth-palette.c
 plug-ins/common/softglow.c
 plug-ins/common/sparkle.c

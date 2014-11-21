@@ -2531,6 +2531,112 @@ CODE
     );
 }
 
+sub plug_in_sinus {
+    $blurb = 'Generate complex sinusoidal textures';
+    $help  = 'FIXME: sinus help',
+
+    &std_pdb_compat('gegl:sinus');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+        { name => 'xscale', type => '0 <= float',
+	  desc => 'Scale value for x axis' },
+        { name => 'yscale', type => '0 <= float',
+	  desc => 'Scale value for y axis' },
+        { name => 'complex', type => '0 <= float',
+	  desc => 'Complexity factor' },
+        { name => 'seed', type => '0 <= int32',
+	  desc => 'Seed value for random number generator' },
+        { name => 'tiling', type => 'boolean',
+	  desc => 'If set, the pattern generated will tile' },
+        { name => 'perturb', type => 'boolean',
+	  desc => 'If set, the pattern is a little more distorted...' },
+        { name => 'colors', type => '0 <= int32 <=2',
+	  desc => 'where to take the colors (0=B&W,  1=fg/bg, 2=col1/col2)' },
+        { name => 'col1', type => 'color',
+	  desc => 'fist color (sometimes unused)' },
+        { name => 'col2', type => 'color',
+	  desc => 'second color (sometimes unused)' },
+        { name => 'alpha1', type => '0 <= float <= 1',
+	  desc => 'alpha for the first color (used if the drawable has an alpha chanel)' },
+        { name => 'alpha2', type => '0 <= float <= 1',
+	  desc => 'alpha for the second color (used if the drawable has an alpha chanel)' },
+        { name => 'blend', type => '0 <= int32 <= 2',
+	  desc => '0=linear, 1=bilinear, 2=sinusoidal' },
+        { name => 'blend_power', type => 'float',
+	  desc => 'Power used to strech the blend' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode  *node;
+      GeglColor *gegl_color1;
+      GeglColor *gegl_color2;
+      gint      x, y, width, height;
+
+      switch (colors)
+        {
+	case 0:
+	  gimp_rgb_set (&col1, 0.0, 0.0, 0.0);
+	  gimp_rgb_set (&col2, 1.0, 1.0, 1.0);
+          break;
+
+        case 1:
+	  gimp_context_get_foreground (context, &col1);
+	  gimp_context_get_background (context, &col2);
+	  break;
+	}
+
+      gimp_rgb_set_alpha (&col1, alpha1);
+      gimp_rgb_set_alpha (&col2, alpha2);
+
+      gegl_color1 = gimp_gegl_color_new (&col1);
+      gegl_color2 = gimp_gegl_color_new (&col2);
+
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",    "gegl:sinus",
+                                  "x_scale",      xscale,
+                                  "y-scale",      yscale,
+                                  "complexity",   complex,
+                                  "seed",         seed,
+                                  "tiling",       tiling,
+                                  "perturbation", perturb,
+                                  "color1",       gegl_color1,
+                                  "color2",       gegl_color2,
+                                  "blend-mode",   blend,
+                                  "blend-power",  blend_power,
+				  "width",        width,
+				  "height",       height,
+                                  NULL);
+
+      g_object_unref (gegl_color1);
+      g_object_unref (gegl_color2);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Sinus"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_sobel {
     $blurb = 'Specialized direction-dependent edge detection';
 
@@ -3123,6 +3229,7 @@ CODE
             plug_in_noisify
             plug_in_semiflatten
             plug_in_shift
+            plug_in_sinus
             plug_in_sobel
             plug_in_spread
             plug_in_threshold_alpha

@@ -2408,6 +2408,109 @@ plug_in_shift_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_sinus_invoker (GimpProcedure         *procedure,
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble xscale;
+  gdouble yscale;
+  gdouble complex;
+  gint32 seed;
+  gboolean tiling;
+  gboolean perturb;
+  gint32 colors;
+  GimpRGB col1;
+  GimpRGB col2;
+  gdouble alpha1;
+  gdouble alpha2;
+  gint32 blend;
+  gdouble blend_power;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  xscale = g_value_get_double (gimp_value_array_index (args, 3));
+  yscale = g_value_get_double (gimp_value_array_index (args, 4));
+  complex = g_value_get_double (gimp_value_array_index (args, 5));
+  seed = g_value_get_int (gimp_value_array_index (args, 6));
+  tiling = g_value_get_boolean (gimp_value_array_index (args, 7));
+  perturb = g_value_get_boolean (gimp_value_array_index (args, 8));
+  colors = g_value_get_int (gimp_value_array_index (args, 9));
+  gimp_value_get_rgb (gimp_value_array_index (args, 10), &col1);
+  gimp_value_get_rgb (gimp_value_array_index (args, 11), &col2);
+  alpha1 = g_value_get_double (gimp_value_array_index (args, 12));
+  alpha2 = g_value_get_double (gimp_value_array_index (args, 13));
+  blend = g_value_get_int (gimp_value_array_index (args, 14));
+  blend_power = g_value_get_double (gimp_value_array_index (args, 15));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode  *node;
+          GeglColor *gegl_color1;
+          GeglColor *gegl_color2;
+          gint      x, y, width, height;
+
+          switch (colors)
+            {
+            case 0:
+              gimp_rgb_set (&col1, 0.0, 0.0, 0.0);
+              gimp_rgb_set (&col2, 1.0, 1.0, 1.0);
+              break;
+
+            case 1:
+              gimp_context_get_foreground (context, &col1);
+              gimp_context_get_background (context, &col2);
+              break;
+            }
+
+          gimp_rgb_set_alpha (&col1, alpha1);
+          gimp_rgb_set_alpha (&col2, alpha2);
+
+          gegl_color1 = gimp_gegl_color_new (&col1);
+          gegl_color2 = gimp_gegl_color_new (&col2);
+
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",    "gegl:sinus",
+                                      "x_scale",      xscale,
+                                      "y-scale",      yscale,
+                                      "complexity",   complex,
+                                      "seed",         seed,
+                                      "tiling",       tiling,
+                                      "perturbation", perturb,
+                                      "color1",       gegl_color1,
+                                      "color2",       gegl_color2,
+                                      "blend-mode",   blend,
+                                      "blend-power",  blend_power,
+                                      "width",        width,
+                                      "height",       height,
+                                      NULL);
+
+          g_object_unref (gegl_color1);
+          g_object_unref (gegl_color2);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Sinus"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_sobel_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
@@ -5046,6 +5149,122 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Orientation { ORIENTATION-VERTICAL (0), ORIENTATION-HORIZONTAL (1) }",
                                                       0, 1, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-sinus
+   */
+  procedure = gimp_procedure_new (plug_in_sinus_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-sinus");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-sinus",
+                                     "Generate complex sinusoidal textures",
+                                     "FIXME: sinus help",
+                                     "Compatibility procedure. Please see 'gegl:sinus' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:sinus' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("xscale",
+                                                    "xscale",
+                                                    "Scale value for x axis",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("yscale",
+                                                    "yscale",
+                                                    "Scale value for y axis",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("complex",
+                                                    "complex",
+                                                    "Complexity factor",
+                                                    0, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("seed",
+                                                      "seed",
+                                                      "Seed value for random number generator",
+                                                      0, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("tiling",
+                                                     "tiling",
+                                                     "If set, the pattern generated will tile",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("perturb",
+                                                     "perturb",
+                                                     "If set, the pattern is a little more distorted...",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("colors",
+                                                      "colors",
+                                                      "where to take the colors (0=B&W, 1=fg/bg, 2=col1/col2)",
+                                                      0, 2, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_rgb ("col1",
+                                                    "col1",
+                                                    "fist color (sometimes unused)",
+                                                    FALSE,
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_rgb ("col2",
+                                                    "col2",
+                                                    "second color (sometimes unused)",
+                                                    FALSE,
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("alpha1",
+                                                    "alpha1",
+                                                    "alpha for the first color (used if the drawable has an alpha chanel)",
+                                                    0, 1, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("alpha2",
+                                                    "alpha2",
+                                                    "alpha for the second color (used if the drawable has an alpha chanel)",
+                                                    0, 1, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("blend",
+                                                      "blend",
+                                                      "0=linear, 1=bilinear, 2=sinusoidal",
+                                                      0, 2, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("blend-power",
+                                                    "blend power",
+                                                    "Power used to strech the blend",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

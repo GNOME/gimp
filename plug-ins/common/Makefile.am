@@ -138,7 +138,6 @@ libexec_PROGRAMS = \
 	sample-colorize \
 	$(SCREENSHOT) \
 	sharpen \
-	sinus \
 	smooth-palette \
 	softglow \
 	sparkle \
@@ -1843,23 +1842,6 @@ sharpen_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(sharpen_RC)
-
-sinus_SOURCES = \
-	sinus.c
-
-sinus_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(sinus_RC)
 
 smooth_palette_SOURCES = \
 	smooth-palette.c
