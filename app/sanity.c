@@ -520,6 +520,7 @@ sanity_check_gegl_ops (void)
     "gegl:noise-pick",
     "gegl:noise-rgb",
     "gegl:noise-slur",
+    "gegl:noise-solid",
     "gegl:noise-spread",
     "gegl:oilify",
     "gegl:opacity",

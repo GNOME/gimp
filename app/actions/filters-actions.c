@@ -259,6 +259,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:noise-slur",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_SLUR */ },
 
+  { "filters-noise-solid", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Solid Noise..."), NULL, NULL,
+    "gegl:noise-solid",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_SOLID */ },
+
   { "filters-noise-spread", GIMP_STOCK_GEGL,
     NC_("filters-action", "Sp_read..."), NULL, NULL,
     "gegl:noise-spread",
@@ -489,6 +494,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-noise-rgb",               writable);
   SET_SENSITIVE ("filters-noise-simplex",           writable);
   SET_SENSITIVE ("filters-noise-slur",              writable);
+  SET_SENSITIVE ("filters-noise-solid",             writable);
   SET_SENSITIVE ("filters-noise-spread",            writable);
   SET_SENSITIVE ("filters-oilify",                  writable);
   SET_SENSITIVE ("filters-panorama-projection",     writable);
