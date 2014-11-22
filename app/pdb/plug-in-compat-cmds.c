@@ -2559,6 +2559,67 @@ plug_in_sobel_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_solid_noise_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gboolean tilable;
+  gboolean turbulent;
+  gint32 seed;
+  gint32 detail;
+  gdouble xsize;
+  gdouble ysize;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  tilable = g_value_get_boolean (gimp_value_array_index (args, 3));
+  turbulent = g_value_get_boolean (gimp_value_array_index (args, 4));
+  seed = g_value_get_int (gimp_value_array_index (args, 5));
+  detail = g_value_get_int (gimp_value_array_index (args, 6));
+  xsize = g_value_get_double (gimp_value_array_index (args, 7));
+  ysize = g_value_get_double (gimp_value_array_index (args, 8));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+          gint      x, y, width, height;
+
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+
+          node = gegl_node_new_child (NULL,
+                                      "operation", "gegl:noise-solid",
+                                      "x-size",    xsize,
+                                      "y-size",    ysize,
+                                      "detail",    detail,
+                                      "tilable",   tilable,
+                                      "turbulent", turbulent,
+                                      "seed",      seed,
+                                      "width",     width,
+                                      "height",    height,
+                                      NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Solid Noise"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_spread_invoker (GimpProcedure         *procedure,
                         Gimp                  *gimp,
                         GimpContext           *context,
@@ -5319,6 +5380,78 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      "Keep sign of result (one direction only)",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-solid-noise
+   */
+  procedure = gimp_procedure_new (plug_in_solid_noise_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-solid-noise");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-solid-noise",
+                                     "Create a random cloud-like texture",
+                                     "Generates 2D textures using Perlin's classic solid noise function.",
+                                     "Compatibility procedure. Please see 'gegl:noise-solid' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:noise-solid' for credits.",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("tilable",
+                                                     "tilable",
+                                                     "Create a tilable output",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("turbulent",
+                                                     "turbulent",
+                                                     "Make a turbulent noise",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("seed",
+                                                      "seed",
+                                                      "Random seed",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("detail",
+                                                      "detail",
+                                                      "Detail level",
+                                                      0, 15, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("xsize",
+                                                    "xsize",
+                                                    "Horizontal texture size",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("ysize",
+                                                    "ysize",
+                                                    "Vertical texture size",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -87,7 +87,6 @@ plug-ins/common/max-rgb.c
 plug-ins/common/metadata.c
 plug-ins/common/newsprint.c
 plug-ins/common/nl-filter.c
-plug-ins/common/noise-solid.c
 plug-ins/common/oilify.c
 plug-ins/common/photocopy.c
 plug-ins/common/plugin-browser.c

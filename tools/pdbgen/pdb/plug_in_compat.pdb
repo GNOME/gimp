@@ -2697,6 +2697,73 @@ CODE
     );
 }
 
+sub plug_in_solid_noise {
+    $blurb = 'Create a random cloud-like texture';
+
+    $help = <<'HELP';
+Generates 2D textures using Perlin's classic solid noise function.
+HELP
+
+    &std_pdb_compat('gegl:noise-solid');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+        { name => 'tilable', type => 'boolean',
+          desc => 'Create a tilable output' },
+        { name => 'turbulent', type => 'boolean',
+          desc => 'Make a turbulent noise' },
+        { name => 'seed', type => 'int32',
+          desc => 'Random seed' },
+        { name => 'detail', type => '0 <= int32 <= 15',
+          desc => 'Detail level' },
+        { name => 'xsize', type => 'float',
+          desc => 'Horizontal texture size' },
+        { name => 'ysize', type => 'float',
+          desc => 'Vertical texture size' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+      gint      x, y, width, height;
+
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+
+      node = gegl_node_new_child (NULL,
+                                  "operation", "gegl:noise-solid",
+                                  "x-size",    xsize,
+                                  "y-size",    ysize,
+                                  "detail",    detail,
+                                  "tilable",   tilable,
+                                  "turbulent", turbulent,
+                                  "seed",      seed,
+                                  "width",     width,
+                                  "height",    height,
+                                  NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Solid Noise"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_spread {
     $blurb = 'Move pixels around randomly';
 
@@ -3231,6 +3298,7 @@ CODE
             plug_in_shift
             plug_in_sinus
             plug_in_sobel
+            plug_in_solid_noise
             plug_in_spread
             plug_in_threshold_alpha
             plug_in_video

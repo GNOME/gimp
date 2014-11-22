@@ -128,7 +128,6 @@ libexec_PROGRAMS = \
 	metadata \
 	newsprint \
 	nl-filter \
-	noise-solid \
 	oilify \
 	photocopy \
 	plugin-browser \
@@ -1668,23 +1667,6 @@ nl_filter_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(nl_filter_RC)
-
-noise_solid_SOURCES = \
-	noise-solid.c
-
-noise_solid_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(noise_solid_RC)
 
 oilify_SOURCES = \
 	oilify.c
