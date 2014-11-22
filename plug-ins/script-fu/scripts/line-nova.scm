@@ -23,9 +23,11 @@
         (radius (max drw-height drw-width))
         (index 0)
         (dir-deg/line (/ 360 num-of-lines))
+        (fg-color (car (gimp-context-get-foreground)))
         )
     (gimp-context-push)
     (gimp-context-set-defaults)
+    (gimp-context-set-foreground fg-color)
 
     (define (draw-vector beg-x beg-y direction)
 
