@@ -3309,7 +3309,7 @@ CODE
 %exports = (app => [@procs], lib => []);
 
 $desc = 'Plug-In Compat';
-$doc_title = 'plugincolor';
+$doc_title = 'gimpplugincompat';
 $doc_short_desc = 'Compatibility for removed plug-ins.';
 $doc_long_desc = 'Functions that perform the operation of removed plug-ins using GEGL operations or other GIMP internal functions.';
 
