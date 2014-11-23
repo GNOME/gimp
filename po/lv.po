@@ -15152,7 +15152,7 @@ msgstr "Asis"
 #. the keys
 #: ../app/widgets/gimpdeviceinfoeditor.c:268
 msgid "Keys"
-msgstr "Tasutiņi"
+msgstr "Taustiņi"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:365
 #: ../app/widgets/gimpdeviceinfoeditor.c:583
