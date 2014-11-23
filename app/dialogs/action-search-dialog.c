@@ -74,6 +74,9 @@ typedef struct
 } SearchDialog;
 
 
+static gboolean     action_search_entry_key_pressed        (GtkWidget         *widget,
+                                                            GdkEventKey       *event,
+                                                            SearchDialog      *private);
 static void         action_search_entry_key_released       (GtkWidget         *widget,
                                                             GdkEventKey       *event,
                                                             SearchDialog      *private);
@@ -158,6 +161,9 @@ action_search_dialog_create (Gimp *gimp)
       g_signal_connect (private->keyword_entry, "key-release-event",
                         G_CALLBACK (action_search_entry_key_released),
                         private);
+      g_signal_connect (private->keyword_entry, "key-press-event",
+                        G_CALLBACK (action_search_entry_key_pressed),
+                        private);
 
       g_signal_connect (private->results_list, "key-press-event",
                         G_CALLBACK (action_search_list_key_pressed),
@@ -180,6 +186,29 @@ action_search_dialog_create (Gimp *gimp)
 }
 
 /* Private Functions */
+static gboolean
+action_search_entry_key_pressed (GtkWidget    *widget,
+                                 GdkEventKey  *event,
+                                 SearchDialog *private)
+{
+  gboolean event_processed = FALSE;
+
+  if (event->keyval == GDK_KEY_Down)
+    {
+      GtkTreeView *tree_view = GTK_TREE_VIEW (private->results_list);
+
+      /* When hitting the down key while editing, select directly the
+       * second item, since the first could have run directly with
+       * Enter. */
+      gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree_view),
+                                      gtk_tree_path_new_from_string ("1"));
+      gtk_widget_grab_focus (GTK_WIDGET (private->results_list));
+      event_processed = TRUE;
+    }
+
+  return event_processed;
+}
+
 static void
 action_search_entry_key_released (GtkWidget    *widget,
                                   GdkEventKey  *event,
