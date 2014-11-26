@@ -1,8 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 1995-2002 Spencer Kimball, Peter Mattis, and others
  *
- * color-history.h
- * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
+ * gimp-palettes.h
+ * Copyright (C) 2014 Michael Natterer  <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,14 +18,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __COLOR_HISTORY_H__
-#define __COLOR_HISTORY_H__
+#ifndef __GIMP_PALETTES__
+#define __GIMP_PALETTES__
 
 
-#define COLOR_HISTORY_SIZE 12
+void          gimp_palettes_init              (Gimp *gimp);
 
-void   color_history_save        (Gimp          *gimp);
-void   color_history_restore     (Gimp          *gimp);
+GimpPalette * gimp_palettes_get_color_history (Gimp *gimp);
 
 
-#endif /* __COLOR_HISTORY_H__ */
+#endif /* __GIMP_PALETTES__ */

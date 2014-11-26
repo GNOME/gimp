@@ -23,7 +23,8 @@
 
 #include "gimpviewabledialog.h"
 
-#include "gui/color-history.h"
+
+#define GIMP_COLOR_DIALOG_HISTORY_SIZE 12
 
 
 #define GIMP_TYPE_COLOR_DIALOG            (gimp_color_dialog_get_type ())
@@ -43,7 +44,7 @@ struct _GimpColorDialog
   gboolean             wants_updates;
 
   GtkWidget           *selection;
-  GtkWidget           *history[COLOR_HISTORY_SIZE];
+  GtkWidget           *history[GIMP_COLOR_DIALOG_HISTORY_SIZE];
 };
 
 struct _GimpColorDialogClass

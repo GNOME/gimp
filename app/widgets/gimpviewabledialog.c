@@ -83,7 +83,8 @@ gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
   g_object_class_install_property (object_class, PROP_CONTEXT,
                                    g_param_spec_object ("context", NULL, NULL,
                                                         GIMP_TYPE_CONTEXT,
-                                                        GIMP_PARAM_READWRITE));
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
 
   g_object_class_install_property (object_class, PROP_ICON_NAME,
                                    g_param_spec_string ("icon-name", NULL, NULL,

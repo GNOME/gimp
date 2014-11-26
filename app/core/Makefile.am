@@ -41,6 +41,8 @@ libappcore_a_sources = \
 	gimp-memsize.h				\
 	gimp-modules.c				\
 	gimp-modules.h				\
+	gimp-palettes.c				\
+	gimp-palettes.h				\
 	gimp-parasites.c			\
 	gimp-parasites.h			\
 	gimp-tags.c				\
@@ -314,6 +316,8 @@ libappcore_a_sources = \
 	gimppalette-load.h			\
 	gimppalette-save.c			\
 	gimppalette-save.h			\
+	gimppalettemru.c			\
+	gimppalettemru.h			\
 	gimpparamspecs.c			\
 	gimpparamspecs.h			\
 	gimpparamspecs-desc.c			\

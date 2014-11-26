@@ -134,6 +134,7 @@ typedef struct _GimpDynamics         GimpDynamics;
 typedef struct _GimpDynamicsOutput   GimpDynamicsOutput;
 typedef struct _GimpGradient         GimpGradient;
 typedef struct _GimpPalette          GimpPalette;
+typedef struct _GimpPaletteMru       GimpPaletteMru;
 typedef struct _GimpPattern          GimpPattern;
 typedef struct _GimpPatternClipboard GimpPatternClipboard;
 typedef struct _GimpToolPreset       GimpToolPreset;

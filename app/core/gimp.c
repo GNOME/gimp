@@ -47,6 +47,7 @@
 #include "gimp-gradients.h"
 #include "gimp-memsize.h"
 #include "gimp-modules.h"
+#include "gimp-palettes.h"
 #include "gimp-parasites.h"
 #include "gimp-templates.h"
 #include "gimp-units.h"
@@ -745,6 +746,9 @@ gimp_real_initialize (Gimp               *gimp,
 
   /*  add the builtin FG -> BG etc. gradients  */
   gimp_gradients_init (gimp);
+
+  /*  add the color history palette  */
+  gimp_palettes_init (gimp);
 
   /*  add the clipboard brush  */
   clipboard_brush = gimp_brush_clipboard_new (gimp);
