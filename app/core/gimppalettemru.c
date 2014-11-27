@@ -194,8 +194,8 @@ gimp_palette_mru_add (GimpPaletteMru *mru,
   GList            *list;
   gint              max_changed;
 
-  g_return_if_fail (GIMP_IS_PALETTE_MRU (mru));
-  g_return_if_fail (color != NULL);
+  g_return_val_if_fail (GIMP_IS_PALETTE_MRU (mru), 0);
+  g_return_val_if_fail (color != NULL, 0);
 
   palette = GIMP_PALETTE (mru);
 
