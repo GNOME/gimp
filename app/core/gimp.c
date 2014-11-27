@@ -810,6 +810,8 @@ gimp_real_exit (Gimp     *gimp,
 
   gimp_fonts_reset (gimp);
 
+  gimp_palettes_save (gimp);
+
   gimp_templates_save (gimp);
   gimp_parasiterc_save (gimp);
   gimp_unitrc_save (gimp);
@@ -1062,6 +1064,9 @@ gimp_restore (Gimp               *gimp,
   status_callback (NULL, _("Fonts (this may take a while)"), 0.6);
   if (! gimp->no_fonts)
     gimp_fonts_load (gimp);
+
+  /*  initialize the color history   */
+  gimp_palettes_load (gimp);
 
   /*  initialize the list of gimp tool presets if we have a GUI  */
   if (! gimp->no_interface)

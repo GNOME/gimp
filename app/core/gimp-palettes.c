@@ -23,6 +23,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "gimp.h"
@@ -58,6 +60,46 @@ gimp_palettes_init (Gimp *gimp)
                                        _("Color History"),
                                        COLOR_HISTORY_KEY);
   gimp_context_set_palette (gimp->user_context, palette);
+}
+
+void
+gimp_palettes_load (Gimp *gimp)
+{
+  GimpPalette *palette;
+  GFile       *file;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  palette = gimp_palettes_get_color_history (gimp);
+
+  file = gimp_directory_file ("colorrc", NULL);
+
+  if (gimp->be_verbose)
+    g_print ("Parsing '%s'\n", gimp_file_get_utf8_name (file));
+
+  gimp_palette_mru_load (GIMP_PALETTE_MRU (palette), file);
+
+  g_object_unref (file);
+}
+
+void
+gimp_palettes_save (Gimp *gimp)
+{
+  GimpPalette *palette;
+  GFile       *file;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  palette = gimp_palettes_get_color_history (gimp);
+
+  file = gimp_directory_file ("colorrc", NULL);
+
+  if (gimp->be_verbose)
+    g_print ("Writing '%s'\n", gimp_file_get_utf8_name (file));
+
+  gimp_palette_mru_save (GIMP_PALETTE_MRU (palette), file);
+
+  g_object_unref (file);
 }
 
 GimpPalette *

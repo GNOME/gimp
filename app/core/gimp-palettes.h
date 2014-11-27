@@ -24,6 +24,9 @@
 
 void          gimp_palettes_init              (Gimp *gimp);
 
+void          gimp_palettes_load              (Gimp *gimp);
+void          gimp_palettes_save              (Gimp *gimp);
+
 GimpPalette * gimp_palettes_get_color_history (Gimp *gimp);
 
 
