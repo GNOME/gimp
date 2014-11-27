@@ -1797,7 +1797,7 @@ gimp_transform_tool_get_active_item (GimpTransformTool *tr_tool,
         if (selection_mask && gimp_channel_is_empty (selection_mask))
           return NULL;
         else
-          return GIMP_ITEM (selection_mask));
+          return GIMP_ITEM (selection_mask);
       }
 
     case GIMP_TRANSFORM_TYPE_PATH:
