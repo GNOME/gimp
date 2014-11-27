@@ -1792,7 +1792,13 @@ gimp_transform_tool_get_active_item (GimpTransformTool *tr_tool,
       return GIMP_ITEM (gimp_image_get_active_drawable (image));
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      return GIMP_ITEM (gimp_image_get_mask (image));
+      {
+        GimpChannel *selection_mask = gimp_image_get_mask (image);
+        if (selection_mask && gimp_channel_is_empty (selection_mask))
+          return NULL;
+        else
+          return GIMP_ITEM (selection_mask));
+      }
 
     case GIMP_TRANSFORM_TYPE_PATH:
       return GIMP_ITEM (gimp_image_get_active_vectors (image));
@@ -1832,9 +1838,9 @@ gimp_transform_tool_check_active_item (GimpTransformTool  *tr_tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      /* cannot happen, so don't translate these messages */
-      null_message = "There is no selection to transform.";
+      null_message = _("There is no selection to transform.");
 
+      /* cannot happen, so don't translate these messages */
       if (item && gimp_item_is_content_locked (item))
         locked_message = "The selection's pixels are locked.";
       else
