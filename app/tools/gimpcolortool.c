@@ -245,7 +245,7 @@ gimp_color_tool_button_press (GimpTool            *tool,
 
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
-      gimp_color_tool_pick (color_tool, GIMP_COLOR_PICK_STATE_NEW,
+      gimp_color_tool_pick (color_tool, GIMP_COLOR_PICK_STATE_START,
                             coords->x, coords->y);
     }
 }
@@ -336,6 +336,9 @@ gimp_color_tool_button_release (GimpTool              *tool,
   else
     {
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
+      gimp_color_tool_pick (color_tool, GIMP_COLOR_PICK_STATE_END,
+                            coords->x, coords->y);
     }
 }
 
@@ -683,7 +686,7 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
             GimpData  *data;
 
             /* don't blink like mad when updating */
-            if (pick_state == GIMP_COLOR_PICK_STATE_UPDATE)
+            if (pick_state != GIMP_COLOR_PICK_STATE_START)
               gimp_dockable_blink_cancel (GIMP_DOCKABLE (dockable));
 
             palette_editor = gtk_bin_get_child (GTK_BIN (dockable));

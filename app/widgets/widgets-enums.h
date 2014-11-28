@@ -89,8 +89,9 @@ GType gimp_color_pick_state_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_COLOR_PICK_STATE_NEW,
-  GIMP_COLOR_PICK_STATE_UPDATE
+  GIMP_COLOR_PICK_STATE_START,
+  GIMP_COLOR_PICK_STATE_UPDATE,
+  GIMP_COLOR_PICK_STATE_END
 } GimpColorPickState;
 
 
