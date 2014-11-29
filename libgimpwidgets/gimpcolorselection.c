@@ -170,7 +170,7 @@ gimp_color_selection_init (GimpColorSelection *selection)
   selection->channel = GIMP_COLOR_SELECTOR_HUE;
 
   main_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_container_add (GTK_CONTAINER (selection), main_hbox);
+  gtk_box_pack_start (GTK_BOX (selection), main_hbox, TRUE, TRUE, 0);
   gtk_widget_show (main_hbox);
 
   /*  The left vbox with the notebook  */
