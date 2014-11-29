@@ -200,9 +200,9 @@ gimp_color_dialog_constructed (GObject *object)
 
   history = gimp_palettes_get_color_history (viewable_dialog->context->gimp);
 
-  g_signal_connect (history, "dirty",
-                    G_CALLBACK (gimp_color_history_changed),
-                    dialog);
+  g_signal_connect_object (history, "dirty",
+                           G_CALLBACK (gimp_color_history_changed),
+                           G_OBJECT (dialog), 0);
 
   gimp_color_history_changed (history, dialog);
 }
