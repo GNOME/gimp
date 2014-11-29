@@ -185,21 +185,18 @@ gimp_palette_mru_save (GimpPaletteMru *mru,
   gimp_config_writer_finish (writer, "end of colorrc", NULL);
 }
 
-gint
+void
 gimp_palette_mru_add (GimpPaletteMru *mru,
                       const GimpRGB  *color)
 {
   GimpPalette      *palette;
   GimpPaletteEntry *found = NULL;
   GList            *list;
-  gint              max_changed;
 
-  g_return_val_if_fail (GIMP_IS_PALETTE_MRU (mru), 0);
-  g_return_val_if_fail (color != NULL, 0);
+  g_return_if_fail (GIMP_IS_PALETTE_MRU (mru));
+  g_return_if_fail (color != NULL);
 
   palette = GIMP_PALETTE (mru);
-
-  max_changed = gimp_palette_get_n_colors (palette);
 
   /*  is the added color already there?  */
   for (list = gimp_palette_get_colors (palette);
@@ -244,13 +241,7 @@ gimp_palette_mru_add (GimpPaletteMru *mru,
  doit:
 
   if (found)
-    {
-      max_changed = found->position;
-
-      gimp_palette_delete_entry (palette, found);
-    }
+    gimp_palette_delete_entry (palette, found);
 
   found = gimp_palette_add_entry (palette, 0, _("History Color"), color);
-
-  return max_changed;
 }

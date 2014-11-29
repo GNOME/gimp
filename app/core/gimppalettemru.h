@@ -55,7 +55,7 @@ void       gimp_palette_mru_load     (GimpPaletteMru *mru,
 void       gimp_palette_mru_save     (GimpPaletteMru *mru,
                                       GFile          *file);
 
-gint       gimp_palette_mru_add      (GimpPaletteMru *mru,
+void       gimp_palette_mru_add      (GimpPaletteMru *mru,
                                       const GimpRGB  *color);
 
 
