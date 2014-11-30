@@ -692,15 +692,16 @@ gimp_layer_scale (GimpItem              *item,
 {
   GimpLayer *layer = GIMP_LAYER (item);
 
-  GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
-                                         new_offset_x, new_offset_y,
-                                         interpolation_type, progress);
-
+  /* scale mask first, see bug 733839 */
   if (layer->mask)
     gimp_item_scale (GIMP_ITEM (layer->mask),
                      new_width, new_height,
                      new_offset_x, new_offset_y,
                      interpolation_type, progress);
+
+  GIMP_ITEM_CLASS (parent_class)->scale (item, new_width, new_height,
+                                         new_offset_x, new_offset_y,
+                                         interpolation_type, progress);
 }
 
 static void
