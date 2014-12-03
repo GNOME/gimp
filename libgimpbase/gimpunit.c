@@ -558,11 +558,7 @@ gimp_param_unit_value_validate (GParamSpec *pspec,
   GimpParamSpecUnit *uspec = GIMP_PARAM_SPEC_UNIT (pspec);
   gint               oval  = value->data[0].v_int;
 
-  if (uspec->allow_percent && value->data[0].v_int == GIMP_UNIT_PERCENT)
-    {
-      value->data[0].v_int = value->data[0].v_int;
-    }
-  else
+  if (!(uspec->allow_percent && value->data[0].v_int == GIMP_UNIT_PERCENT))
     {
       value->data[0].v_int = CLAMP (value->data[0].v_int,
                                     ispec->minimum,
