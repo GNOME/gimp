@@ -1,0 +1,28 @@
+# Dutch translation for gimp.
+# Copyright (C) 2013 gimp's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp package.
+# André Schutten <andre_sch@zonnet.nl>, 2013.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp gimp-2-8\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2014-03-02 18:31+0000\n"
+"PO-Revision-Date: 2014-01-12 20:35+0100\n"
+"Last-Translator: Andre Schutten <andre_sch@zonnet.nl>\n"
+"Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.5.7\n"
+
+#: ../data/tags/gimp-tags-default.xml.in.h:1
+msgid "round"
+msgstr "rond"
+
+#. fuzzy as in a feathered, blurred, unfocused, soft brush
+#: ../data/tags/gimp-tags-default.xml.in.h:3
+msgid "fuzzy"
+msgstr "zacht"
