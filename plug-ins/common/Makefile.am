@@ -119,7 +119,6 @@ libexec_PROGRAMS = \
 	grid \
 	guillotine \
 	hot \
-	illusion \
 	jigsaw \
 	lcms \
 	lens-flare \
@@ -1507,23 +1506,6 @@ hot_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(hot_RC)
-
-illusion_SOURCES = \
-	illusion.c
-
-illusion_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(illusion_RC)
 
 jigsaw_SOURCES = \
 	jigsaw.c

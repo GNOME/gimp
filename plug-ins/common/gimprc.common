@@ -73,7 +73,6 @@ gradient_map_RC = gradient-map.rc.o
 grid_RC = grid.rc.o
 guillotine_RC = guillotine.rc.o
 hot_RC = hot.rc.o
-illusion_RC = illusion.rc.o
 jigsaw_RC = jigsaw.rc.o
 lcms_RC = lcms.rc.o
 lens_flare_RC = lens-flare.rc.o

@@ -1225,6 +1225,55 @@ CODE
     );
 }
 
+sub plug_in_illusion {
+    $blurb = 'Superimpose many altered copies of the image';
+
+    $help = <<'HELP';
+Produce illusion.
+HELP
+
+    &std_pdb_compat('gegl:illusion');
+    $date = '2014';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image', dead => 1,
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'division', type => '0 <= int32 <= 64',
+          desc => 'The number of divisions' },
+        { name => 'type', type => '0 <= int32 <= 1',
+          desc => 'Illusion type { TYPE1 (0), TYPE2 (1) }' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation",     "gegl:illusion",
+                             "division",      (gint) division,
+                             "illusion-type", (gint) type,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Illusion"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_laplace {
     $blurb = 'High-resolution edge detection';
 
@@ -3276,6 +3325,7 @@ CODE
             plug_in_gauss_rle2
             plug_in_glasstile
             plug_in_hsv_noise
+            plug_in_illusion
             plug_in_laplace
             plug_in_lens_distortion
             plug_in_make_seamless
