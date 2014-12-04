@@ -501,6 +501,7 @@ sanity_check_gegl_ops (void)
     "gegl:fractal-trace",
     "gegl:gaussian-blur",
     "gegl:grid",
+    "gegl:illusion",
     "gegl:introspect",
     "gegl:invert-gamma",
     "gegl:invert-linear",
