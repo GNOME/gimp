@@ -753,6 +753,168 @@ context_set_brush_default_spacing_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+context_get_brush_hardness_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  gdouble hardness = 0.0;
+
+  /* all options should have the same value, so pick a random one */
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "brush-hardness", &hardness,
+                   NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (gimp_value_array_index (return_vals, 1), hardness);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_brush_hardness_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
+{
+  gboolean success = TRUE;
+  gdouble hardness;
+
+  hardness = g_value_get_double (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GList *options;
+      GList *list;
+
+      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+      for (list = options; list; list = g_list_next (list))
+        g_object_set (list->data,
+                      "brush-hardness", (gdouble) hardness,
+                       NULL);
+
+      g_list_free (options);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_set_brush_default_hardness_invoker (GimpProcedure         *procedure,
+                                            Gimp                  *gimp,
+                                            GimpContext           *context,
+                                            GimpProgress          *progress,
+                                            const GimpValueArray  *args,
+                                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpBrush *brush = gimp_context_get_brush (context);
+
+  if (brush)
+    {
+      GList *options;
+      GList *list;
+
+      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+      for (list = options; list; list = g_list_next (list))
+        gimp_paint_options_set_default_brush_hardness (list->data, brush);
+
+      g_list_free (options);
+    }
+  else
+    {
+      success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+context_get_brush_force_invoker (GimpProcedure         *procedure,
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  gdouble force = 0.0;
+
+  /* all options should have the same value, so pick a random one */
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    g_object_get (options,
+                  "brush-force", &force,
+                   NULL);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_double (gimp_value_array_index (return_vals, 1), force);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_brush_force_invoker (GimpProcedure         *procedure,
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
+{
+  gboolean success = TRUE;
+  gdouble force;
+
+  force = g_value_get_double (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GList *options;
+      GList *list;
+
+      options = gimp_pdb_context_get_brush_options (GIMP_PDB_CONTEXT (context));
+
+      for (list = options; list; list = g_list_next (list))
+        g_object_set (list->data,
+                      "brush-force", (gdouble) force,
+                       NULL);
+
+      g_list_free (options);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 context_get_dynamics_invoker (GimpProcedure         *procedure,
                               Gimp                  *gimp,
                               GimpContext           *context,
@@ -2496,7 +2658,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("size",
                                                         "size",
-                                                        "brush size in pixels",
+                                                        "Brush size in pixels",
                                                         0, G_MAXDOUBLE, 0,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2519,7 +2681,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("size",
                                                     "size",
-                                                    "brush size in pixels",
+                                                    "Brush size in pixels",
                                                     0, G_MAXDOUBLE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2559,7 +2721,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("aspect",
                                                         "aspect",
-                                                        "aspect ratio",
+                                                        "Aspect ratio",
                                                         -20, 20, -20,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2582,7 +2744,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("aspect",
                                                     "aspect",
-                                                    "aspect ratio",
+                                                    "Aspect ratio",
                                                     -20, 20, -20,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2605,7 +2767,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("angle",
                                                         "angle",
-                                                        "angle in degrees",
+                                                        "Angle in degrees",
                                                         -180, 180, -180,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2628,7 +2790,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("angle",
                                                     "angle",
-                                                    "angle in degrees",
+                                                    "Angle in degrees",
                                                     -180, 180, -180,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2651,8 +2813,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("spacing",
                                                         "spacing",
-                                                        "brush spacing as percent of size",
-                                                        0, G_MAXDOUBLE, 0,
+                                                        "Brush spacing as fraction of size",
+                                                        0.01, 50.0, 0.01,
                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2674,8 +2836,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("spacing",
                                                     "spacing",
-                                                    "brush spacing as percent of size",
-                                                    0, G_MAXDOUBLE, 0,
+                                                    "Brush spacing as fraction of size",
+                                                    0.01, 50.0, 0.01,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2694,6 +2856,115 @@ register_context_procs (GimpPDB *pdb)
                                      "Alexia Death",
                                      "2014",
                                      NULL);
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-brush-hardness
+   */
+  procedure = gimp_procedure_new (context_get_brush_hardness_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-brush-hardness");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-brush-hardness",
+                                     "Get brush hardness in paint options.",
+                                     "Get the brush hardness for brush based paint tools.",
+                                     "Alexia Death",
+                                     "Alexia Death",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("hardness",
+                                                        "hardness",
+                                                        "Brush hardness",
+                                                        0.0, 1.0, 0.0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-brush-hardness
+   */
+  procedure = gimp_procedure_new (context_set_brush_hardness_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-brush-hardness");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-brush-hardness",
+                                     "Set brush hardness.",
+                                     "Set the brush hardness for brush based paint tools.",
+                                     "Alexia Death",
+                                     "Alexia Death",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("hardness",
+                                                    "hardness",
+                                                    "Brush hardness",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-brush-default-hardness
+   */
+  procedure = gimp_procedure_new (context_set_brush_default_hardness_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-brush-default-hardness");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-brush-default-hardness",
+                                     "Set brush spacing to its default.",
+                                     "Set the brush spacing to the default for paintbrush, airbrush, or pencil tools.",
+                                     "Alexia Death",
+                                     "Alexia Death",
+                                     "2014",
+                                     NULL);
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-brush-force
+   */
+  procedure = gimp_procedure_new (context_get_brush_force_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-brush-force");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-brush-force",
+                                     "Get brush force in paint options.",
+                                     "Get the brush application force for brush based paint tools.",
+                                     "Alexia Death",
+                                     "Alexia Death",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_double ("force",
+                                                        "force",
+                                                        "Brush application force",
+                                                        0.0, 1.0, 0.0,
+                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-brush-force
+   */
+  procedure = gimp_procedure_new (context_set_brush_force_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-brush-force");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-brush-force",
+                                     "Set brush application force.",
+                                     "Set the brush application force for brush based paint tools.",
+                                     "Alexia Death",
+                                     "Alexia Death",
+                                     "2014",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("force",
+                                                    "force",
+                                                    "Brush application force",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

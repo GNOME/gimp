@@ -121,6 +121,70 @@ static const GimpEnumActionEntry tools_ink_blob_angle_actions[] =
     NULL }
 };
 
+static const GimpEnumActionEntry tools_airbrush_rate_actions[] =
+{
+  { "tools-airbrush-rate-set", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Set Airrush Rate", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-airbrush-rate-minimum", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Minimum Rate", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "tools-airbrush-rate-maximum", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Maximum Rate", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "tools-airbrush-rate-decrease", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Decrease Rate", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-airbrush-rate-increase", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Increase Rate", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "tools-airbrush-rate-decrease-skip", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Decrease Rate More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "tools-airbrush-rate-increase-skip", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Increase Rate More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL }
+};
+
+static const GimpEnumActionEntry tools_airbrush_flow_actions[] =
+{
+  { "tools-airbrush-flow-set", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Set Airrush Flow", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-airbrush-flow-minimum", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Minimum Flow", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "tools-airbrush-flow-maximum", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Maximum Flow", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "tools-airbrush-flow-decrease", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Decrease Flow", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-airbrush-flow-increase", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Increase Flow", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "tools-airbrush-flow-decrease-skip", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Decrease Flow More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "tools-airbrush-flow-increase-skip", GIMP_STOCK_TOOL_AIRBRUSH,
+    "Increase Flow More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL }
+};
+
 static const GimpEnumActionEntry tools_foreground_select_brush_size_actions[] =
 {
   { "tools-foreground-select-brush-size-set",
@@ -423,6 +487,15 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_ink_blob_angle_actions,
                                       G_N_ELEMENTS (tools_ink_blob_angle_actions),
                                       G_CALLBACK (tools_ink_blob_angle_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group, NULL,
+                                      tools_airbrush_rate_actions,
+                                      G_N_ELEMENTS (tools_airbrush_rate_actions),
+                                      G_CALLBACK (tools_airbrush_rate_cmd_callback));
+  gimp_action_group_add_enum_actions (group, NULL,
+                                      tools_airbrush_flow_actions,
+                                      G_N_ELEMENTS (tools_airbrush_flow_actions),
+                                      G_CALLBACK (tools_airbrush_flow_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_foreground_select_brush_size_actions,

@@ -174,6 +174,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:grid",
     NULL /* FIXME GIMP_HELP_FILTER_GAUSSIAN_GRID */ },
 
+  { "filters-illusion", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Illusion..."), NULL, NULL,
+    "gegl:illusion",
+    NULL /* FIXME GIMP_HELP_FILTER_ILLUSION */ },
+
   { "filters-kaleidoscope", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Kaleidoscope..."), NULL, NULL,
     "gegl:mirrors",
@@ -259,6 +264,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:noise-slur",
     NULL /* FIXME GIMP_HELP_FILTER_NOISE_SLUR */ },
 
+  { "filters-noise-solid", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Solid Noise..."), NULL, NULL,
+    "gegl:noise-solid",
+    NULL /* FIXME GIMP_HELP_FILTER_NOISE_SOLID */ },
+
   { "filters-noise-spread", GIMP_STOCK_GEGL,
     NC_("filters-action", "Sp_read..."), NULL, NULL,
     "gegl:noise-spread",
@@ -314,6 +324,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:shift",
     NULL /* FIXME GIMP_HELP_FILTER_SHIFT */ },
 
+  { "filters-sinus", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Sinus..."), NULL, NULL,
+    "gegl:sinus",
+    NULL /* FIXME GIMP_HELP_FILTER_SINUS */ },
+
   { "filters-softglow", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Softglow..."), NULL, NULL,
     "gegl:softglow",
@@ -329,10 +344,15 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:stretch-contrast-hsv",
     NULL /* FIXME GIMP_HELP_FILTER_STRETCH_CONTRAST_HSV */ },
 
+  { "filters-supernova", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Super_nova..."), NULL, NULL,
+    "gegl:supernova",
+    NULL /* FIXME GIMP_HELP_FILTER_SUPERNOVA */ },
+
   { "filters-threshold-alpha", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Threshold Alpha..."), NULL, NULL,
     "gimp:threshold-alpha",
-    NULL /* FIXME GIMP_HELP_FILTER_POLAR_COORDINATES */ },
+    NULL /* FIXME GIMP_HELP_FILTER_THRESHOLD_ALPHA */ },
 
   { "filters-tile-glass", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Glass Tile..."), NULL, NULL,
@@ -462,6 +482,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-fractal-trace",           writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
   SET_SENSITIVE ("filters-grid",                    writable);
+  SET_SENSITIVE ("filters-illusion",                writable);
   SET_SENSITIVE ("filters-kaleidoscope",            writable);
   SET_SENSITIVE ("filters-lens-distortion",         writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
@@ -479,6 +500,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-noise-rgb",               writable);
   SET_SENSITIVE ("filters-noise-simplex",           writable);
   SET_SENSITIVE ("filters-noise-slur",              writable);
+  SET_SENSITIVE ("filters-noise-solid",             writable);
   SET_SENSITIVE ("filters-noise-spread",            writable);
   SET_SENSITIVE ("filters-oilify",                  writable);
   SET_SENSITIVE ("filters-panorama-projection",     writable);
@@ -490,9 +512,11 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-ripple",                  writable);
   SET_SENSITIVE ("filters-semi-flatten",            writable && alpha);
   SET_SENSITIVE ("filters-shift",                   writable);
+  SET_SENSITIVE ("filters-sinus",                   writable);
   SET_SENSITIVE ("filters-softglow",                writable);
   SET_SENSITIVE ("filters-stretch-contrast",        writable);
   SET_SENSITIVE ("filters-stretch-contrast-hsv",    writable);
+  SET_SENSITIVE ("filters-supernova",               writable);
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
   SET_SENSITIVE ("filters-tile-glass",              writable);
   SET_SENSITIVE ("filters-tile-seamless",           writable);

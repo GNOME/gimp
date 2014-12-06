@@ -344,25 +344,6 @@ gimp_overlay_box_new (void)
   return g_object_new (GIMP_TYPE_OVERLAY_BOX, NULL);
 }
 
-static void
-unset_double_buffered (GtkWidget *widget)
-{
-  gtk_widget_set_double_buffered (widget, FALSE);
-
-  if (GTK_IS_CONTAINER (widget))
-    {
-      GList *children = gtk_container_get_children (GTK_CONTAINER (widget));
-      GList *list;
-
-      for (list = children; list; list = g_list_next (list))
-        {
-          unset_double_buffered (list->data);
-        }
-
-      g_list_free (children);
-    }
-}
-
 void
 gimp_overlay_box_add_child (GimpOverlayBox *box,
                             GtkWidget      *widget,
@@ -373,8 +354,6 @@ gimp_overlay_box_add_child (GimpOverlayBox *box,
 
   g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
   g_return_if_fail (GTK_IS_WIDGET (widget));
-
-  unset_double_buffered (widget);
 
   child = gimp_overlay_child_new (box, widget, xalign, yalign, 0.0, 0.7);
 

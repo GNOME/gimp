@@ -309,8 +309,17 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
         {
           gimp_brush_begin_use (brush);
 
-          mask_buf = gimp_brush_transform_mask (brush, scale,
-                                                0.0, 0.0, 1.0);
+          if (GIMP_IS_BRUSH_GENERATED (brush))
+            {
+               GimpBrushGenerated *gen_brush = GIMP_BRUSH_GENERATED (brush);
+
+               mask_buf = gimp_brush_transform_mask (brush, scale,
+                                                     0.0, 0.0,
+                                                     gimp_brush_generated_get_hardness (gen_brush));
+            }
+          else
+            mask_buf = gimp_brush_transform_mask (brush, scale,
+                                                  0.0, 0.0, 1.0);
 
           if (! mask_buf)
             {
@@ -590,7 +599,7 @@ gimp_brush_transform_size (GimpBrush     *brush,
       ((angle == 0.0) || (angle == 0.5) || (angle == 1.0)))
     {
       *width  = gimp_temp_buf_get_width  (brush->priv->mask);
-      *height = gimp_temp_buf_get_height (brush->priv->mask);;
+      *height = gimp_temp_buf_get_height (brush->priv->mask);
 
       return;
     }

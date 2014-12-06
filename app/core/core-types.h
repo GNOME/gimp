@@ -64,13 +64,18 @@
 
 #define GIMP_COORDS_DEFAULT_DIRECTION 0.0
 
+#define GIMP_COORDS_DEFAULT_XSCALE    1.0
+#define GIMP_COORDS_DEFAULT_YSCALE    1.0
+
 #define GIMP_COORDS_DEFAULT_VALUES    { 0.0, 0.0, \
                                         GIMP_COORDS_DEFAULT_PRESSURE, \
                                         GIMP_COORDS_DEFAULT_TILT,     \
                                         GIMP_COORDS_DEFAULT_TILT,     \
                                         GIMP_COORDS_DEFAULT_WHEEL,    \
                                         GIMP_COORDS_DEFAULT_VELOCITY, \
-                                        GIMP_COORDS_DEFAULT_DIRECTION }
+                                        GIMP_COORDS_DEFAULT_DIRECTION,\
+                                        GIMP_COORDS_DEFAULT_XSCALE,   \
+                                        GIMP_COORDS_DEFAULT_YSCALE }
 
 
 /*  base classes  */
@@ -129,6 +134,7 @@ typedef struct _GimpDynamics         GimpDynamics;
 typedef struct _GimpDynamicsOutput   GimpDynamicsOutput;
 typedef struct _GimpGradient         GimpGradient;
 typedef struct _GimpPalette          GimpPalette;
+typedef struct _GimpPaletteMru       GimpPaletteMru;
 typedef struct _GimpPattern          GimpPattern;
 typedef struct _GimpPatternClipboard GimpPatternClipboard;
 typedef struct _GimpToolPreset       GimpToolPreset;
@@ -250,6 +256,8 @@ struct _GimpCoords
   gdouble wheel;
   gdouble velocity;
   gdouble direction;
+  gdouble xscale; /* the view scale */
+  gdouble yscale;
 };
 
 /*  temp hack as replacement for GdkSegment  */

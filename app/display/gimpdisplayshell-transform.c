@@ -600,6 +600,10 @@ gimp_display_shell_untransform_coords (const GimpDisplayShell *shell,
 
   image_coords->x /= shell->scale_x;
   image_coords->y /= shell->scale_y;
+
+  image_coords->xscale = shell->scale_x;
+  image_coords->yscale = shell->scale_y;
+
 }
 
 /**

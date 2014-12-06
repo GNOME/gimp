@@ -108,10 +108,6 @@ static gboolean   gimp_color_tool_real_pick  (GimpColorTool         *color_tool,
                                               const Babl           **sample_format,
                                               GimpRGB               *color,
                                               gint                  *color_index);
-static void   gimp_color_tool_pick           (GimpColorTool         *tool,
-                                              GimpColorPickState     pick_state,
-                                              gint                   x,
-                                              gint                   y);
 static void   gimp_color_tool_real_picked    (GimpColorTool         *color_tool,
                                               GimpColorPickState     pick_state,
                                               gdouble                x,
@@ -119,6 +115,11 @@ static void   gimp_color_tool_real_picked    (GimpColorTool         *color_tool,
                                               const Babl            *sample_format,
                                               const GimpRGB         *color,
                                               gint                   color_index);
+
+static void   gimp_color_tool_pick           (GimpColorTool         *tool,
+                                              GimpColorPickState     pick_state,
+                                              gint                   x,
+                                              gint                   y);
 
 
 G_DEFINE_TYPE (GimpColorTool, gimp_color_tool, GIMP_TYPE_DRAW_TOOL);
@@ -245,7 +246,7 @@ gimp_color_tool_button_press (GimpTool            *tool,
 
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 
-      gimp_color_tool_pick (color_tool, GIMP_COLOR_PICK_STATE_NEW,
+      gimp_color_tool_pick (color_tool, GIMP_COLOR_PICK_STATE_START,
                             coords->x, coords->y);
     }
 }
@@ -336,6 +337,9 @@ gimp_color_tool_button_release (GimpTool              *tool,
   else
     {
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
+      gimp_color_tool_pick (color_tool, GIMP_COLOR_PICK_STATE_END,
+                            coords->x, coords->y);
     }
 }
 
@@ -606,8 +610,8 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
                              const GimpRGB      *color,
                              gint                color_index)
 {
-  GimpTool          *tool = GIMP_TOOL (color_tool);
-  GimpContext       *context;
+  GimpTool    *tool = GIMP_TOOL (color_tool);
+  GimpContext *context;
 
   /*  use this tool's own options here (NOT color_tool->options)  */
   context = GIMP_CONTEXT (gimp_tool_get_options (tool));
@@ -623,29 +627,25 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
                                                     "gimp-indexed-palette");
           if (widget)
             {
-              GimpColormapEditor *editor;
+              GtkWidget *editor = gtk_bin_get_child (GTK_BIN (widget));
 
-              editor = GIMP_COLORMAP_EDITOR (gtk_bin_get_child (GTK_BIN (widget)));
-
-              gimp_colormap_editor_set_index (editor, color_index, NULL);
+              gimp_colormap_editor_set_index (GIMP_COLORMAP_EDITOR (editor),
+                                              color_index, NULL);
             }
         }
 
-      if (TRUE)
+      widget = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
+                                                "gimp-palette-editor");
+      if (widget)
         {
-          widget = gimp_dialog_factory_find_widget (gimp_dialog_factory_get_singleton (),
-                                                    "gimp-palette-editor");
-          if (widget)
-            {
-              GimpPaletteEditor *editor;
-              gint               index;
+          GtkWidget *editor = gtk_bin_get_child (GTK_BIN (widget));
+          gint       index;
 
-              editor = GIMP_PALETTE_EDITOR (gtk_bin_get_child (GTK_BIN (widget)));
-
-              index = gimp_palette_editor_get_index (editor, color);
-              if (index != -1)
-                gimp_palette_editor_set_index (editor, index, NULL);
-            }
+          index = gimp_palette_editor_get_index (GIMP_PALETTE_EDITOR (editor),
+                                                 color);
+          if (index != -1)
+            gimp_palette_editor_set_index (GIMP_PALETTE_EDITOR (editor),
+                                           index, NULL);
         }
     }
 
@@ -683,7 +683,7 @@ gimp_color_tool_real_picked (GimpColorTool      *color_tool,
             GimpData  *data;
 
             /* don't blink like mad when updating */
-            if (pick_state == GIMP_COLOR_PICK_STATE_UPDATE)
+            if (pick_state != GIMP_COLOR_PICK_STATE_START)
               gimp_dockable_blink_cancel (GIMP_DOCKABLE (dockable));
 
             palette_editor = gtk_bin_get_child (GTK_BIN (dockable));
@@ -729,6 +729,8 @@ gimp_color_tool_pick (GimpColorTool      *tool,
     }
 }
 
+
+/*  public functions  */
 
 void
 gimp_color_tool_enable (GimpColorTool    *color_tool,

@@ -642,7 +642,7 @@ gimp_context_set_brush (const gchar *name)
  *
  * Get the brush size in pixels for brush based paint tools.
  *
- * Returns: brush size in pixels.
+ * Returns: Brush size in pixels.
  *
  * Since: GIMP 2.8
  **/
@@ -667,7 +667,7 @@ gimp_context_get_brush_size (void)
 
 /**
  * gimp_context_set_brush_size:
- * @size: brush size in pixels.
+ * @size: Brush size in pixels.
  *
  * Set brush size in pixels.
  *
@@ -733,7 +733,7 @@ gimp_context_set_brush_default_size (void)
  *
  * Set the aspect ratio for brush based paint tools.
  *
- * Returns: aspect ratio.
+ * Returns: Aspect ratio.
  *
  * Since: GIMP 2.8
  **/
@@ -758,7 +758,7 @@ gimp_context_get_brush_aspect_ratio (void)
 
 /**
  * gimp_context_set_brush_aspect_ratio:
- * @aspect: aspect ratio.
+ * @aspect: Aspect ratio.
  *
  * Set brush aspect ratio.
  *
@@ -794,7 +794,7 @@ gimp_context_set_brush_aspect_ratio (gdouble aspect)
  *
  * Set the angle in degrees for brush based paint tools.
  *
- * Returns: angle in degrees.
+ * Returns: Angle in degrees.
  *
  * Since: GIMP 2.8
  **/
@@ -819,7 +819,7 @@ gimp_context_get_brush_angle (void)
 
 /**
  * gimp_context_set_brush_angle:
- * @angle: angle in degrees.
+ * @angle: Angle in degrees.
  *
  * Set brush angle in degrees.
  *
@@ -856,9 +856,9 @@ gimp_context_set_brush_angle (gdouble angle)
  * Get the brush spacing as percent of size for brush based paint
  * tools.
  *
- * Returns: brush spacing as percent of size.
+ * Returns: Brush spacing as fraction of size.
  *
- * Since: GIMP 2.9
+ * Since: GIMP 2.10
  **/
 gdouble
 gimp_context_get_brush_spacing (void)
@@ -881,7 +881,7 @@ gimp_context_get_brush_spacing (void)
 
 /**
  * gimp_context_set_brush_spacing:
- * @spacing: brush spacing as percent of size.
+ * @spacing: Brush spacing as fraction of size.
  *
  * Set brush spacing as percent of size.
  *
@@ -890,7 +890,7 @@ gimp_context_get_brush_spacing (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.9
+ * Since: GIMP 2.10
  **/
 gboolean
 gimp_context_set_brush_spacing (gdouble spacing)
@@ -921,7 +921,7 @@ gimp_context_set_brush_spacing (gdouble spacing)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.9
+ * Since: GIMP 2.10
  **/
 gboolean
 gimp_context_set_brush_default_spacing (void)
@@ -932,6 +932,158 @@ gimp_context_set_brush_default_spacing (void)
 
   return_vals = gimp_run_procedure ("gimp-context-set-brush-default-spacing",
                                     &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_brush_hardness:
+ *
+ * Get brush hardness in paint options.
+ *
+ * Get the brush hardness for brush based paint tools.
+ *
+ * Returns: Brush hardness.
+ *
+ * Since: GIMP 2.10
+ **/
+gdouble
+gimp_context_get_brush_hardness (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble hardness = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-brush-hardness",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    hardness = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return hardness;
+}
+
+/**
+ * gimp_context_set_brush_hardness:
+ * @hardness: Brush hardness.
+ *
+ * Set brush hardness.
+ *
+ * Set the brush hardness for brush based paint tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_context_set_brush_hardness (gdouble hardness)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-brush-hardness",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, hardness,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_set_brush_default_hardness:
+ *
+ * Set brush spacing to its default.
+ *
+ * Set the brush spacing to the default for paintbrush, airbrush, or
+ * pencil tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_context_set_brush_default_hardness (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-brush-default-hardness",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_brush_force:
+ *
+ * Get brush force in paint options.
+ *
+ * Get the brush application force for brush based paint tools.
+ *
+ * Returns: Brush application force.
+ *
+ * Since: GIMP 2.10
+ **/
+gdouble
+gimp_context_get_brush_force (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble force = 0.0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-brush-force",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    force = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return force;
+}
+
+/**
+ * gimp_context_set_brush_force:
+ * @force: Brush application force.
+ *
+ * Set brush application force.
+ *
+ * Set the brush application force for brush based paint tools.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.10
+ **/
+gboolean
+gimp_context_set_brush_force (gdouble force)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-brush-force",
+                                    &nreturn_vals,
+                                    GIMP_PDB_FLOAT, force,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

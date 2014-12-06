@@ -664,7 +664,9 @@
         <menuitem action="filters-wind" />
       </menu>
       <menu action="plug-in-light-shadow-menu" name="Light and Shadow">
-        <placeholder name="Light" />
+        <placeholder name="Light">
+	  <menuitem action="filters-supernova" />
+	</placeholder>
         <separator />
         <placeholder name="Shadow">
 	  <menuitem action="filters-dropshadow" />
@@ -705,6 +707,7 @@
       <menu action="plug-in-map-menu" name="Map">
         <menuitem action="filters-bump-map" />
         <menuitem action="filters-fractal-trace" />
+        <menuitem action="filters-illusion" />
         <menuitem action="filters-panorama-projection" />
         <menuitem action="filters-tile-seamless" />
       </menu>
@@ -717,10 +720,12 @@
 	  <menuitem action="filters-noise-perlin" />
 	  <menuitem action="filters-plasma" />
 	  <menuitem action="filters-noise-simplex" />
+	  <menuitem action="filters-noise-solid" />
 	</menu>
         <menu action="plug-in-render-pattern-menu" name="Pattern">
 	  <menuitem action="filters-checkerboard" />
 	  <menuitem action="filters-grid" />
+	  <menuitem action="filters-sinus" />
 	</menu>
         <separator />
       </menu>

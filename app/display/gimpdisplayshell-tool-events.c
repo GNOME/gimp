@@ -569,6 +569,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 last_motion.xtilt    = image_coords.xtilt;
                 last_motion.ytilt    = image_coords.ytilt;
                 last_motion.wheel    = image_coords.wheel;
+                last_motion.xscale   = image_coords.xscale;
+                last_motion.yscale   = image_coords.yscale;
 
                 image_coords = last_motion;
 
@@ -946,8 +948,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                         if (gimp_motion_buffer_motion_event (shell->motion_buffer,
                                                              &image_coords,
                                                              history_events[i]->time,
-                                                             shell->scale_x,
-                                                             shell->scale_y,
                                                              TRUE))
                           {
                             gimp_motion_buffer_request_stroke (shell->motion_buffer,
@@ -967,8 +967,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                     if (gimp_motion_buffer_motion_event (shell->motion_buffer,
                                                          &image_coords,
                                                          time,
-                                                         shell->scale_x,
-                                                         shell->scale_y,
                                                          event_fill))
                       {
                         gimp_motion_buffer_request_stroke (shell->motion_buffer,
@@ -988,8 +986,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             if (gimp_motion_buffer_motion_event (shell->motion_buffer,
                                                  &image_coords,
                                                  time,
-                                                 shell->scale_x,
-                                                 shell->scale_y,
                                                  FALSE))
               {
                 gimp_motion_buffer_request_hover (shell->motion_buffer,

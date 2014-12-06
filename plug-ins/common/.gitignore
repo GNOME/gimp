@@ -152,8 +152,6 @@
 /guillotine.exe
 /hot
 /hot.exe
-/illusion
-/illusion.exe
 /jigsaw
 /jigsaw.exe
 /lcms
@@ -170,10 +168,6 @@
 /newsprint.exe
 /nl-filter
 /nl-filter.exe
-/noise-solid
-/noise-solid.exe
-/nova
-/nova.exe
 /oilify
 /oilify.exe
 /photocopy
@@ -192,8 +186,6 @@
 /screenshot.exe
 /sharpen
 /sharpen.exe
-/sinus
-/sinus.exe
 /smooth-palette
 /smooth-palette.exe
 /softglow
@@ -216,8 +208,6 @@
 /value-propagate.exe
 /van-gogh-lic
 /van-gogh-lic.exe
-/video
-/video.exe
 /warp
 /warp.exe
 /web-browser

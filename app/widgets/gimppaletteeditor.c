@@ -464,7 +464,7 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
 
       switch (pick_state)
         {
-        case GIMP_COLOR_PICK_STATE_NEW:
+        case GIMP_COLOR_PICK_STATE_START:
           if (editor->color)
             index = editor->color->position + 1;
 
@@ -475,6 +475,7 @@ gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
           break;
 
         case GIMP_COLOR_PICK_STATE_UPDATE:
+        case GIMP_COLOR_PICK_STATE_END:
           gimp_palette_set_entry_color (GIMP_PALETTE (data),
                                         editor->color->position,
                                         color);

@@ -74,6 +74,9 @@ typedef struct
 } SearchDialog;
 
 
+static gboolean     action_search_entry_key_pressed        (GtkWidget         *widget,
+                                                            GdkEventKey       *event,
+                                                            SearchDialog      *private);
 static void         action_search_entry_key_released       (GtkWidget         *widget,
                                                             GdkEventKey       *event,
                                                             SearchDialog      *private);
@@ -120,6 +123,10 @@ action_search_dialog_create (Gimp *gimp)
   if (! private)
     {
       GtkWidget *action_search_dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+      GdkScreen *screen               = gdk_screen_get_default ();
+      GdkWindow *gdk_parent           = gdk_screen_get_active_window (screen);
+      gpointer   parent_widget;
+      GtkWindow *parent;
       GtkWidget *main_vbox;
 
       private = g_slice_new0 (SearchDialog);
@@ -133,6 +140,15 @@ action_search_dialog_create (Gimp *gimp)
                            "gimp-action-search-dialog");
       gtk_window_set_title (GTK_WINDOW (action_search_dialog),
                             _("Search Actions"));
+      gtk_window_set_modal (GTK_WINDOW (action_search_dialog), TRUE);
+      /* The user data for a GdkWindow is its associated widget. */
+      gdk_window_get_user_data (gdk_parent, &parent_widget);
+      parent = GTK_WINDOW(gtk_widget_get_toplevel (GTK_WIDGET (parent_widget)));
+      /* NOTE: gtk_window_set_keep_above() would be easier but would render
+       * the search dialog above any windows, even non-GIMP related, which
+       * some early testers found annoying.
+       * Setting it transient forces it above a single parent instead. */
+      gtk_window_set_transient_for (GTK_WINDOW (action_search_dialog), parent);
 
       main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
       gtk_container_add (GTK_CONTAINER (action_search_dialog), main_vbox);
@@ -158,6 +174,9 @@ action_search_dialog_create (Gimp *gimp)
       g_signal_connect (private->keyword_entry, "key-release-event",
                         G_CALLBACK (action_search_entry_key_released),
                         private);
+      g_signal_connect (private->keyword_entry, "key-press-event",
+                        G_CALLBACK (action_search_entry_key_pressed),
+                        private);
 
       g_signal_connect (private->results_list, "key-press-event",
                         G_CALLBACK (action_search_list_key_pressed),
@@ -180,6 +199,29 @@ action_search_dialog_create (Gimp *gimp)
 }
 
 /* Private Functions */
+static gboolean
+action_search_entry_key_pressed (GtkWidget    *widget,
+                                 GdkEventKey  *event,
+                                 SearchDialog *private)
+{
+  gboolean event_processed = FALSE;
+
+  if (event->keyval == GDK_KEY_Down)
+    {
+      GtkTreeView *tree_view = GTK_TREE_VIEW (private->results_list);
+
+      /* When hitting the down key while editing, select directly the
+       * second item, since the first could have run directly with
+       * Enter. */
+      gtk_tree_selection_select_path (gtk_tree_view_get_selection (tree_view),
+                                      gtk_tree_path_new_from_string ("1"));
+      gtk_widget_grab_focus (GTK_WIDGET (private->results_list));
+      event_processed = TRUE;
+    }
+
+  return event_processed;
+}
+
 static void
 action_search_entry_key_released (GtkWidget    *widget,
                                   GdkEventKey  *event,

@@ -47,6 +47,7 @@
 #include "gimp-gradients.h"
 #include "gimp-memsize.h"
 #include "gimp-modules.h"
+#include "gimp-palettes.h"
 #include "gimp-parasites.h"
 #include "gimp-templates.h"
 #include "gimp-units.h"
@@ -746,6 +747,9 @@ gimp_real_initialize (Gimp               *gimp,
   /*  add the builtin FG -> BG etc. gradients  */
   gimp_gradients_init (gimp);
 
+  /*  add the color history palette  */
+  gimp_palettes_init (gimp);
+
   /*  add the clipboard brush  */
   clipboard_brush = gimp_brush_clipboard_new (gimp);
   gimp_data_make_internal (GIMP_DATA (clipboard_brush),
@@ -805,6 +809,8 @@ gimp_real_exit (Gimp     *gimp,
   gimp_data_factory_data_save (gimp->tool_preset_factory);
 
   gimp_fonts_reset (gimp);
+
+  gimp_palettes_save (gimp);
 
   gimp_templates_save (gimp);
   gimp_parasiterc_save (gimp);
@@ -1058,6 +1064,9 @@ gimp_restore (Gimp               *gimp,
   status_callback (NULL, _("Fonts (this may take a while)"), 0.6);
   if (! gimp->no_fonts)
     gimp_fonts_load (gimp);
+
+  /*  initialize the color history   */
+  gimp_palettes_load (gimp);
 
   /*  initialize the list of gimp tool presets if we have a GUI  */
   if (! gimp->no_interface)

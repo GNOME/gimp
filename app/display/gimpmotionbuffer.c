@@ -36,7 +36,7 @@
 /* Velocity unit is screen pixels per millisecond we pass to tools as 1. */
 #define VELOCITY_UNIT        3.0
 #define EVENT_FILL_PRECISION 6.0
-#define DIRECTION_RADIUS     (1.5 / MAX (scale_x, scale_y))
+#define DIRECTION_RADIUS     (1.0 / MAX (scale_x, scale_y))
 #define SMOOTH_FACTOR        0.3
 
 
@@ -231,8 +231,6 @@ gimp_motion_buffer_end_stroke (GimpMotionBuffer *buffer)
  * @buffer:
  * @coords:
  * @time:
- * @scale_x:
- * @scale_y:
  * @event_fill:
  *
  * This function evaluates the event to decide if the change is big
@@ -257,14 +255,14 @@ gboolean
 gimp_motion_buffer_motion_event (GimpMotionBuffer *buffer,
                                  GimpCoords       *coords,
                                  guint32           time,
-                                 gdouble           scale_x,
-                                 gdouble           scale_y,
                                  gboolean          event_fill)
 {
   gdouble  delta_time  = 0.001;
   gdouble  delta_x     = 0.0;
   gdouble  delta_y     = 0.0;
   gdouble  distance    = 1.0;
+  gdouble  scale_x     = coords->xscale;
+  gdouble  scale_y     = coords->yscale;
 
   g_return_val_if_fail (GIMP_IS_MOTION_BUFFER (buffer), FALSE);
   g_return_val_if_fail (coords != NULL, FALSE);
@@ -345,7 +343,7 @@ gimp_motion_buffer_motion_event (GimpMotionBuffer *buffer,
         }
       else
         {
-          gint x = 3;
+          gint x = CLAMP ((buffer->event_history->len - 1), 3, 15);
 
           while (((fabs (dir_delta_x) < DIRECTION_RADIUS) ||
                   (fabs (dir_delta_y) < DIRECTION_RADIUS)) &&

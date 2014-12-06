@@ -361,7 +361,7 @@ gimp_brush_generated_transform_mask (GimpBrush *gbrush,
                                     brush->shape,
                                     brush->radius * scale,
                                     brush->spikes,
-                                    brush->hardness * hardness,
+                                    hardness,
                                     ratio,
                                     (brush->angle + 360 * angle),
                                     NULL, NULL);

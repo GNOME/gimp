@@ -218,6 +218,7 @@ gimp_color_picker_tool_oper_update (GimpTool         *tool,
   GIMP_COLOR_TOOL (tool)->pick_mode = options->pick_mode;
 
   gimp_tool_pop_status (tool, display);
+
   if (proximity)
     {
       gchar           *status_help = NULL;

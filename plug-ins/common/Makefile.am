@@ -120,7 +120,6 @@ libexec_PROGRAMS = \
 	grid \
 	guillotine \
 	hot \
-	illusion \
 	iptc	\
 	jigsaw \
 	lcms \
@@ -129,8 +128,6 @@ libexec_PROGRAMS = \
 	max-rgb \
 	newsprint \
 	nl-filter \
-	noise-solid \
-	nova \
 	oilify \
 	photocopy \
 	plugin-browser \
@@ -140,7 +137,6 @@ libexec_PROGRAMS = \
 	sample-colorize \
 	$(SCREENSHOT) \
 	sharpen \
-	sinus \
 	smooth-palette \
 	softglow \
 	sparkle \
@@ -152,7 +148,6 @@ libexec_PROGRAMS = \
 	unsharp-mask \
 	value-propagate \
 	van-gogh-lic \
-	video \
 	warp \
 	web-browser \
 	$(WEB_PAGE) \
@@ -1531,23 +1526,6 @@ hot_LDADD = \
 	$(INTLLIBS)		\
 	$(hot_RC)
 
-illusion_SOURCES = \
-	illusion.c
-
-illusion_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(illusion_RC)
-
 iptc_CFLAGS = $(GEXIV2_CFLAGS)
 
 iptc_SOURCES = \
@@ -1690,40 +1668,6 @@ nl_filter_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(nl_filter_RC)
-
-noise_solid_SOURCES = \
-	noise-solid.c
-
-noise_solid_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(noise_solid_RC)
-
-nova_SOURCES = \
-	nova.c
-
-nova_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(nova_RC)
 
 oilify_SOURCES = \
 	oilify.c
@@ -1881,23 +1825,6 @@ sharpen_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(sharpen_RC)
-
-sinus_SOURCES = \
-	sinus.c
-
-sinus_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(sinus_RC)
 
 smooth_palette_SOURCES = \
 	smooth-palette.c
@@ -2085,23 +2012,6 @@ van_gogh_lic_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(van_gogh_lic_RC)
-
-video_SOURCES = \
-	video.c
-
-video_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(video_RC)
 
 warp_SOURCES = \
 	warp.c

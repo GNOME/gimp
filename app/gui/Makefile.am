@@ -22,8 +22,6 @@ AM_CPPFLAGS = \
 noinst_LIBRARIES = libappgui.a
 
 libappgui_a_sources = \
-	color-history.c		\
-	color-history.h		\
 	gimpdbusservice.c	\
 	gimpdbusservice.h	\
 	gimpuiconfigurer.c	\
