@@ -69,7 +69,7 @@
                 (tab-style icon)
                 (aux-info
                     (edit-active "true")
-                    (current-data "Standard")
+                    (current-data "Color History")
                     (zoom-factor "2.80"))))))
 # Enable this when we have a way to handle that the toolbox size is
 # likely to change due to the use of GDK_HINT_RESIZE_INC
