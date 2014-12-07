@@ -327,6 +327,8 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_color_rotate },
   { "GimpGegl-gegl-convolution-matrix-config",
     _gimp_prop_gui_new_convolution_matrix },
+  { "GimpGegl-gegl-channel-mixer-config",
+    _gimp_prop_gui_new_channel_mixer },
   { NULL,
     _gimp_prop_gui_new_generic }
 };

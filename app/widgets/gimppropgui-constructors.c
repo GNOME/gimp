@@ -521,6 +521,109 @@ _gimp_prop_gui_new_convolution_matrix (GObject              *config,
   return main_vbox;
 }
 
+GtkWidget *
+_gimp_prop_gui_new_channel_mixer (GObject              *config,
+                                  GParamSpec          **param_specs,
+                                  guint                 n_param_specs,
+                                  GimpContext          *context,
+                                  GimpCreatePickerFunc  create_picker_func,
+                                  gpointer              picker_creator)
+{
+  GtkWidget   *main_vbox;
+  GtkWidget   *vbox;
+  GtkWidget   *set_label;
+  GtkWidget   *checkbox;
+  GtkWidget   *scale;
+  const gchar *label;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (param_specs != NULL, NULL);
+  g_return_val_if_fail (n_param_specs > 0, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  checkbox = gimp_prop_widget_new (config, "preserve-luminosity",
+                                   context, NULL, NULL, &label);
+  gtk_box_pack_start (GTK_BOX (vbox), checkbox, TRUE, TRUE, 0);
+  gtk_widget_show (checkbox);
+
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  set_label = gtk_label_new (_("Red channel"));
+  gtk_box_pack_start (GTK_BOX (vbox), set_label, FALSE, FALSE, 0);
+  gtk_widget_show (set_label);
+
+  scale = gimp_prop_widget_new (config, "rr-gain",
+                                context, NULL, NULL, &label);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, TRUE, TRUE, 0);
+  gtk_widget_show (scale);
+
+  scale = gimp_prop_widget_new (config, "rg-gain",
+                                context, NULL, NULL, &label);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, TRUE, TRUE, 0);
+  gtk_widget_show (scale);
+
+  scale = gimp_prop_widget_new (config, "rb-gain",
+                                context, NULL, NULL, &label);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, TRUE, TRUE, 0);
+  gtk_widget_show (scale);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  set_label = gtk_label_new (_("Green channel"));
+  gtk_box_pack_start (GTK_BOX (vbox), set_label, FALSE, FALSE, 0);
+  gtk_widget_show (set_label);
+
+  scale = gimp_prop_widget_new (config, "gr-gain",
+                                context, NULL, NULL, &label);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, TRUE, TRUE, 0);
+  gtk_widget_show (scale);
+
+  scale = gimp_prop_widget_new (config, "gg-gain",
+                                context, NULL, NULL, &label);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, TRUE, TRUE, 0);
+  gtk_widget_show (scale);
+
+  scale = gimp_prop_widget_new (config, "gb-gain",
+                                context, NULL, NULL, &label);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, TRUE, TRUE, 0);
+  gtk_widget_show (scale);
+
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  set_label = gtk_label_new (_("Blue channel"));
+  gtk_box_pack_start (GTK_BOX (vbox), set_label, FALSE, FALSE, 0);
+  gtk_widget_show (set_label);
+
+  scale = gimp_prop_widget_new (config, "br-gain",
+                                context, NULL, NULL, &label);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, TRUE, TRUE, 0);
+  gtk_widget_show (scale);
+
+  scale = gimp_prop_widget_new (config, "bg-gain",
+                                context, NULL, NULL, &label);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, TRUE, TRUE, 0);
+  gtk_widget_show (scale);
+
+  scale = gimp_prop_widget_new (config, "bb-gain",
+                                context, NULL, NULL, &label);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, TRUE, TRUE, 0);
+  gtk_widget_show (scale);
+
+  return main_vbox;
+}
 
 /*  private functions  */
 
