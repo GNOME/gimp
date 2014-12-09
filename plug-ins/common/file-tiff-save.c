@@ -289,7 +289,11 @@ run (const gchar      *name,
             {
               const TiffSaveVals *pvals = gimp_parasite_data (parasite);
 
-              tsvals.compression        = pvals->compression;
+              if (pvals->compression == COMPRESSION_DEFLATE)
+                tsvals.compression = COMPRESSION_ADOBE_DEFLATE;
+              else
+                tsvals.compression = pvals->compression;
+
               tsvals.save_transp_pixels = pvals->save_transp_pixels;
             }
           gimp_parasite_free (parasite);

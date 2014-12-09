@@ -761,6 +761,7 @@ load_image (const gchar        *filename,
             case COMPRESSION_LZW:
             case COMPRESSION_PACKBITS:
             case COMPRESSION_DEFLATE:
+            case COMPRESSION_ADOBE_DEFLATE:
             case COMPRESSION_JPEG:
             case COMPRESSION_CCITTFAX3:
             case COMPRESSION_CCITTFAX4:
