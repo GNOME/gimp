@@ -42,12 +42,15 @@ struct _GimpOperationTool
   gchar            *icon_name;
   GimpObject       *config;
   GeglNode         *aux_input;
+  GeglNode         *aux2_input;
 
   /* dialog */
   GtkWidget        *options_box;
   GtkWidget        *options_gui;
   GtkWidget        *aux_input_box;
   GtkWidget        *aux_input_button;
+  GtkWidget        *aux2_input_box;
+  GtkWidget        *aux2_input_button;
 };
 
 struct _GimpOperationToolClass
