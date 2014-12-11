@@ -256,6 +256,7 @@ gimp_cage_tool_control (GimpTool       *tool,
         }
 
       tool->display = NULL;
+      ct->tool_state = CAGE_STATE_INIT;
 
       g_object_set (gimp_tool_get_options (tool),
                     "cage-mode", GIMP_CAGE_MODE_CAGE_CHANGE,
@@ -403,12 +404,16 @@ gimp_cage_tool_key_press (GimpTool    *tool,
 {
   GimpCageTool *ct = GIMP_CAGE_TOOL (tool);
 
+  if (! ct->config)
+    return FALSE;
+
   switch (kevent->keyval)
     {
     case GDK_KEY_BackSpace:
       if (ct->tool_state == CAGE_STATE_WAIT)
         {
-          gimp_cage_tool_remove_last_handle (ct);
+          if (gimp_cage_config_get_n_points(ct->config) != 0)
+            gimp_cage_tool_remove_last_handle (ct);
         }
       else if (ct->tool_state == DEFORM_STATE_WAIT)
         {
