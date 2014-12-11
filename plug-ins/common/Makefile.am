@@ -498,6 +498,7 @@ crop_zealous_LDADD = \
 	$(libgimpbase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(crop_zealous_RC)
