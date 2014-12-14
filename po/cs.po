@@ -38,7 +38,7 @@ msgstr "Editor obrázků"
 
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
-msgstr "Vytvářet obrázky a upravovat fotografie"
+msgstr "Vytvářejte obrázky a upravujte fotografie"
 
 #: ../app/about.h:23
 msgid "GIMP"
