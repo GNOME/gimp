@@ -857,6 +857,56 @@ CODE
     );
 }
 
+sub plug_in_engrave {
+    $blurb = 'Simulate an antique engraving';
+
+    $help = <<'HELP';
+Creates a black-and-white 'engraved' version of an image as seen in
+old illustrations.
+HELP
+
+    &std_pdb_compat('gegl:engrave');
+    $date = '2014';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'height', type => '2 <= int32 <= 16',
+	  desc => 'Resolution in pixels' },
+	{ name => 'limit', type => 'boolean',
+	  desc => 'Limit line width' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",   "gegl:engrave",
+                                  "row-height",  height,
+                                  "limit",       limit,
+                                  NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Engrave"),
+                                     node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_exchange {
     $blurb = 'Swap one color with another';
 
@@ -3330,6 +3380,7 @@ CODE
             plug_in_convmatrix
             plug_in_cubism
             plug_in_deinterlace
+            plug_in_engrave
             plug_in_exchange
             plug_in_gauss
             plug_in_gauss_iir

@@ -74,7 +74,6 @@ libexec_PROGRAMS = \
 	edge-dog \
 	edge-neon \
 	emboss \
-	engrave \
 	$(FILE_AA) \
 	file-cel \
 	file-compressor \
@@ -690,23 +689,6 @@ emboss_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(emboss_RC)
-
-engrave_SOURCES = \
-	engrave.c
-
-engrave_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(engrave_RC)
 
 file_aa_SOURCES = \
 	file-aa.c
