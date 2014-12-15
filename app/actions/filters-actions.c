@@ -154,6 +154,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:emboss",
     NULL /* FIXME GIMP_HELP_FILTER_EMBOSS */ },
 
+  { "filters-engrave", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_En_grave..."), NULL, NULL,
+    "gegl:engrave",
+    NULL /* FIXME GIMP_HELP_FILTER_ENGRAVE */ },
+
   { "filters-exposure", GIMP_STOCK_GEGL,
     NC_("filters-action", "_E_xposure..."), NULL, NULL,
     "gegl:exposure",
@@ -478,6 +483,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-edge-laplace",            writable);
   SET_SENSITIVE ("filters-edge-sobel",              writable);
   SET_SENSITIVE ("filters-emboss",                  writable);
+  SET_SENSITIVE ("filters-engrave",                 writable);
   SET_SENSITIVE ("filters-exposure",                writable);
   SET_SENSITIVE ("filters-fractal-trace",           writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);

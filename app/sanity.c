@@ -497,6 +497,7 @@ sanity_check_gegl_ops (void)
     "gegl:edge-laplace",
     "gegl:edge-sobel",
     "gegl:emboss",
+    "gegl:engrave",
     "gegl:exposure",
     "gegl:fractal-trace",
     "gegl:gaussian-blur",
