@@ -271,8 +271,8 @@ gimp_operation_cage_transform_process (GeglOperation       *operation,
             }
           if (!output_set)
             {
-              output[0] = x;
-              output[1] = y;
+              output[0] = x + 0.5;
+              output[1] = y + 0.5;
             }
 
           output += 2;
@@ -385,8 +385,7 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs (GimpOperationCag
                                                                 gint                        recursion_depth,
                                                                 gfloat                     *coords)
 {
-  GeglRectangle rect = { 0, 0, 1, 1 };
-  gint          xmin, xmax, ymin, ymax;
+  gint xmin, xmax, ymin, ymax, x, y;
 
   /* Stop recursion if all 3 vertices of the triangle are outside the
    * ROI (left/right or above/below).
@@ -405,20 +404,24 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs (GimpOperationCag
       p2_d.y < roi->y &&
       p3_d.y < roi->y) return;
 
-  xmin = xmax = p1_d.x;
-  ymin = ymax = p1_d.y;
+  xmin = xmax = lrint (p1_d.x);
+  ymin = ymax = lrint (p1_d.y);
 
-  if (xmin > p2_d.x) xmin = p2_d.x;
-  if (xmin > p3_d.x) xmin = p3_d.x;
+  x = lrint (p2_d.x);
+  xmin = MIN (x, xmin);
+  xmax = MAX (x, xmax);
 
-  if (xmax < p2_d.x) xmax = p2_d.x;
-  if (xmax < p3_d.x) xmax = p3_d.x;
+  x = lrint (p3_d.x);
+  xmin = MIN (x, xmin);
+  xmax = MAX (x, xmax);
 
-  if (ymin > p2_d.y) ymin = p2_d.y;
-  if (ymin > p3_d.y) ymin = p3_d.y;
+  y = lrint (p2_d.y);
+  ymin = MIN (y, ymin);
+  ymax = MAX (y, ymax);
 
-  if (ymax < p2_d.y) ymax = p2_d.y;
-  if (ymax < p3_d.y) ymax = p3_d.y;
+  y = lrint (p3_d.y);
+  ymin = MIN (y, ymin);
+  ymax = MAX (y, ymax);
 
   /* test if there is no more pixel in the triangle */
   if (xmin == xmax || ymin == ymax)
@@ -438,11 +441,8 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs (GimpOperationCag
     {
       gdouble a, b, c, denom, x, y;
 
-      rect.x = xmax;
-      rect.y = ymax;
-
-      x = (gdouble) xmax;
-      y = (gdouble) ymax;
+      x = (gdouble) xmin + 0.5;
+      y = (gdouble) ymin + 0.5;
 
       denom = (p2_d.x - p1_d.x) * p3_d.y + (p1_d.x - p3_d.x) * p2_d.y + (p3_d.x - p2_d.x) * p1_d.y;
       a = ((p2_d.x - x) * p3_d.y + (x - p3_d.x) * p2_d.y + (p3_d.x - p2_d.x) * y) / denom;
@@ -454,6 +454,12 @@ gimp_operation_cage_transform_interpolate_source_coords_recurs (GimpOperationCag
        */
       if ((a > 0 && b > 0 && c > 0) || (a < 0 && b < 0 && c < 0))
         {
+          GeglRectangle rect = { 0, 0, 1, 1 };
+          gfloat        coords[2];
+
+          rect.x = xmin;
+          rect.y = ymin;
+
           coords[0] = (a * p1_s.x + b * p2_s.x + c * p3_s.x);
           coords[1] = (a * p1_s.y + b * p2_s.y + c * p3_s.y);
 
