@@ -864,7 +864,8 @@ apply_colormap (guchar       *dest,
                 const guchar *src,
                 guint         width,
                 const guchar *cmap,
-                gboolean      alpha)
+                gboolean      alpha,
+                guint16       index)
 {
   guint x;
 
@@ -872,10 +873,10 @@ apply_colormap (guchar       *dest,
     {
       for (x = 0; x < width; x++)
         {
-          *(dest++) = cmap[*src * 4];
-          *(dest++) = cmap[*src * 4 + 1];
-          *(dest++) = cmap[*src * 4 + 2];
-          *(dest++) = cmap[*src * 4 + 3];
+          *(dest++) = cmap[(*src - index) * 4];
+          *(dest++) = cmap[(*src - index) * 4 + 1];
+          *(dest++) = cmap[(*src - index) * 4 + 2];
+          *(dest++) = cmap[(*src - index) * 4 + 3];
 
           src++;
         }
@@ -884,12 +885,26 @@ apply_colormap (guchar       *dest,
     {
       for (x = 0; x < width; x++)
         {
-          *(dest++) = cmap[*src * 3];
-          *(dest++) = cmap[*src * 3 + 1];
-          *(dest++) = cmap[*src * 3 + 2];
+          *(dest++) = cmap[(*src - index) * 3];
+          *(dest++) = cmap[(*src - index) * 3 + 1];
+          *(dest++) = cmap[(*src - index) * 3 + 2];
 
           src++;
         }
+    }
+}
+
+static void
+apply_index (guchar       *dest,
+             const guchar *src,
+             guint         width,
+             guint16       index)
+{
+  guint x;
+
+  for (x = 0; x < width; x++)
+    {
+      *(dest++) = *(src++) - index;
     }
 }
 
@@ -930,7 +945,14 @@ read_line (FILE         *fp,
     {
       gboolean has_alpha = (info->alphaBits > 0);
 
-      apply_colormap (row, buffer, info->width, convert_cmap, has_alpha);
+      apply_colormap (row, buffer, info->width, convert_cmap, has_alpha,
+                      info->colorMapIndex);
+    }
+  else if (info->imageType == TGA_TYPE_MAPPED)
+    {
+      g_assert(drawable->bpp == 1);
+
+      apply_index (row, buffer, info->width, info->colorMapIndex);
     }
   else
     {
@@ -973,7 +995,7 @@ ReadImage (FILE        *fp,
           dtype = GIMP_RGBA_IMAGE;
           convert_cmap = g_new (guchar, info->colorMapLength * 4);
         }
-      else if (info->colorMapLength > 256)
+      else if (info->colorMapIndex + info->colorMapLength > 256)
         {
           /* more than 256 colormap entries => promoted to RGB */
           itype = GIMP_RGB;
