@@ -267,8 +267,8 @@ gimp_gegl_get_config_container (GType config_type)
   if (! config_containers)
     config_containers = g_hash_table_new_full (g_direct_hash,
                                                g_direct_equal,
-                                               (GDestroyNotify) g_free,
-                                               NULL);
+                                               NULL,
+                                               (GDestroyNotify) g_object_unref);
 
   container = g_hash_table_lookup (config_containers, (gpointer) config_type);
 
