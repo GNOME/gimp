@@ -507,6 +507,7 @@ sanity_check_gegl_ops (void)
     "gegl:invert-gamma",
     "gegl:invert-linear",
     "gegl:lens-distortion",
+    "gegl:lens-flare",
     "gegl:map-absolute",
     "gegl:map-relative",
     "gegl:matting-global",
