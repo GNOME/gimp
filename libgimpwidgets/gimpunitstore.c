@@ -923,7 +923,8 @@ _gimp_unit_store_sync_units (GimpUnitStore *store)
                           GIMP_UNIT_STORE_UNIT, &unit,
                           -1);
 
-      if (unit > private->synced_unit)
+      if (unit != GIMP_UNIT_PERCENT &&
+          unit > private->synced_unit)
         {
           GtkTreePath *path;
 
@@ -932,7 +933,6 @@ _gimp_unit_store_sync_units (GimpUnitStore *store)
           gtk_tree_path_free (path);
         }
     }
-
 
   private->synced_unit = gimp_unit_get_number_of_units () - 1;
 }
