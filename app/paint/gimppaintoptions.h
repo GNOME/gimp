@@ -90,6 +90,12 @@ struct _GimpPaintOptions
   gdouble                   brush_hardness;
   gdouble                   brush_force;
 
+  gboolean                  brush_link_size;
+  gboolean                  brush_link_aspect_ratio;
+  gboolean                  brush_link_angle;
+  gboolean                  brush_link_spacing;
+  gboolean                  brush_link_hardness;
+
   GimpPaintApplicationMode  application_mode;
   GimpPaintApplicationMode  application_mode_save;
 
