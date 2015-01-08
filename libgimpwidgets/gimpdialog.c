@@ -245,11 +245,17 @@ gimp_dialog_set_property (GObject      *object,
         if (parent)
           {
             if (GTK_IS_WINDOW (parent))
-              gtk_window_set_transient_for (GTK_WINDOW (object),
-                                            GTK_WINDOW (parent));
+              {
+                gtk_window_set_transient_for (GTK_WINDOW (object),
+                                              GTK_WINDOW (parent));
+              }
             else
-              gtk_window_set_screen (GTK_WINDOW (object),
-                                     gtk_widget_get_screen (parent));
+              {
+                gtk_window_set_screen (GTK_WINDOW (object),
+                                       gtk_widget_get_screen (parent));
+                gtk_window_set_position (GTK_WINDOW (object),
+                                         GTK_WIN_POS_MOUSE);
+              }
           }
       }
       break;
