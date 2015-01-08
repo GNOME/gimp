@@ -1071,6 +1071,54 @@ plug_in_exchange_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_flarefx_invoker (GimpProcedure         *procedure,
+                         Gimp                  *gimp,
+                         GimpContext           *context,
+                         GimpProgress          *progress,
+                         const GimpValueArray  *args,
+                         GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 pos_x;
+  gint32 pos_y;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  pos_x = g_value_get_int (gimp_value_array_index (args, 3));
+  pos_y = g_value_get_int (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+          gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+          gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+          gdouble   x      = (gdouble) pos_x / (gdouble) width;
+          gdouble   y      = (gdouble) pos_y / (gdouble) height;
+
+          node = gegl_node_new_child (NULL,
+                                      "operation", "gegl:lens-flare",
+                                      "pos-x",     x,
+                                      "pos-y",     y,
+                                      NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Lens Flare"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_gauss_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
@@ -3838,6 +3886,54 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                      "Blue threshold",
                                                      0, G_MAXUINT8, 0,
                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-flarefx
+   */
+  procedure = gimp_procedure_new (plug_in_flarefx_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-flarefx");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-flarefx",
+                                     "Add a lens flare effect",
+                                     "Adds a lens flare effects. Makes your image look like it was snapped with a cheap camera with a lot of lens :)",
+                                     "Compatibility procedure. Please see 'gegl:lens-flare' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:lens-flare' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("pos-x",
+                                                      "pos x",
+                                                      "X-Position",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("pos-y",
+                                                      "pos y",
+                                                      "Y-Position",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

@@ -120,7 +120,6 @@ libexec_PROGRAMS = \
 	hot \
 	jigsaw \
 	lcms \
-	lens-flare \
 	$(MAIL) \
 	max-rgb \
 	metadata \
@@ -1527,23 +1526,6 @@ lcms_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(lcms_RC)
-
-lens_flare_SOURCES = \
-	lens-flare.c
-
-lens_flare_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(lens_flare_RC)
 
 mail_SOURCES = \
 	mail.c

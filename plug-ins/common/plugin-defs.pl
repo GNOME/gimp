@@ -75,7 +75,6 @@
     'hot' => { ui => 1 },
     'jigsaw' => { ui => 1 },
     'lcms' => { ui => 1, gegl => 1, libs => 'LCMS_LIBS', cflags => 'LCMS_CFLAGS' },
-    'lens-flare' => { ui => 1 },
     'mail' => { ui => 1, optional => 1 },
     'max-rgb' => { ui => 1 },
     'metadata' => { ui => 1, libs => 'GEXIV2_LIBS', cflags => 'GEXIV2_CFLAGS' },

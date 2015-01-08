@@ -989,6 +989,61 @@ CODE
     );
 }
 
+sub plug_in_flarefx {
+    $blurb = 'Add a lens flare effect';
+
+    $help = <<'HELP';
+Adds a lens flare effects. Makes your image look like it was snapped
+with a cheap camera with a lot of lens :)
+HELP
+
+    &std_pdb_compat('gegl:lens-flare');
+    $date = '2015';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'pos_x', type => 'int32',
+	  desc => 'X-Position' },
+	{ name => 'pos_y', type => 'int32',
+	  desc => 'Y-Position' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+      gint      width  = gimp_item_get_width  (GIMP_ITEM (drawable));
+      gint      height = gimp_item_get_height (GIMP_ITEM (drawable));
+      gdouble   x      = (gdouble) pos_x / (gdouble) width;
+      gdouble   y      = (gdouble) pos_y / (gdouble) height;
+
+      node = gegl_node_new_child (NULL,
+                                  "operation", "gegl:lens-flare",
+                                  "pos-x",     x,
+                                  "pos-y",     y,
+                                  NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Lens Flare"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_gauss {
     $blurb = 'Simplest, most commonly used way of blurring';
 
@@ -3382,6 +3437,7 @@ CODE
             plug_in_deinterlace
             plug_in_engrave
             plug_in_exchange
+            plug_in_flarefx
             plug_in_gauss
             plug_in_gauss_iir
             plug_in_gauss_iir2
