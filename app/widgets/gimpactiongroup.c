@@ -28,6 +28,7 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpmarshal.h"
 #include "core/gimpviewable.h"
 
 #include "gimpactiongroup.h"
@@ -40,6 +41,11 @@
 
 #include "gimp-intl.h"
 
+enum
+{
+  ACTION_ADDED,
+  LAST_SIGNAL
+};
 
 enum
 {
@@ -64,6 +70,8 @@ static void   gimp_action_group_get_property  (GObject      *object,
 
 
 G_DEFINE_TYPE (GimpActionGroup, gimp_action_group, GTK_TYPE_ACTION_GROUP)
+
+static guint signals[LAST_SIGNAL] = { 0, };
 
 #define parent_class gimp_action_group_parent_class
 
@@ -101,6 +109,16 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
                                                         G_PARAM_CONSTRUCT_ONLY));
 
   klass->groups = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+
+  signals[ACTION_ADDED] =
+    g_signal_new ("action-added",
+                  G_OBJECT_CLASS_TYPE (klass),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (GimpActionGroupClass, action_added),
+                  NULL, NULL,
+                  gimp_marshal_VOID__OBJECT,
+                  G_TYPE_NONE, 1,
+                  GTK_TYPE_ACTION);
 }
 
 static void
@@ -367,6 +385,7 @@ gimp_action_group_add_actions (GimpActionGroup       *group,
       gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
                                               GTK_ACTION (action),
                                               entries[i].accelerator);
+      g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -422,6 +441,7 @@ gimp_action_group_add_toggle_actions (GimpActionGroup             *group,
       gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
                                               GTK_ACTION (action),
                                               entries[i].accelerator);
+      g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -484,6 +504,7 @@ gimp_action_group_add_radio_actions (GimpActionGroup            *group,
       gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
                                               GTK_ACTION (action),
                                               entries[i].accelerator);
+      g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -547,6 +568,7 @@ gimp_action_group_add_enum_actions (GimpActionGroup           *group,
       gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
                                               GTK_ACTION (action),
                                               entries[i].accelerator);
+      g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -602,6 +624,7 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
       gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
                                               GTK_ACTION (action),
                                               entries[i].accelerator);
+      g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,
@@ -643,6 +666,7 @@ gimp_action_group_add_plug_in_actions (GimpActionGroup             *group,
       gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
                                               GTK_ACTION (action),
                                               entries[i].accelerator);
+      g_signal_emit (group, signals[ACTION_ADDED], 0, action);
 
       if (entries[i].help_id)
         g_object_set_qdata_full (G_OBJECT (action), GIMP_HELP_ID,

@@ -190,6 +190,15 @@ gimp_menu_factory_get_registered_menus (GimpMenuFactory *factory)
   return factory->p->registered_menus;
 }
 
+static void
+gimp_menu_factory_manager_action_added (GimpActionGroup *group,
+                                        GtkAction       *action,
+                                        GtkAccelGroup   *accel_group)
+{
+  gtk_action_set_accel_group (action, accel_group);
+  gtk_action_connect_accelerator (action);
+}
+
 GimpUIManager *
 gimp_menu_factory_manager_new (GimpMenuFactory *factory,
                                const gchar     *identifier,
@@ -238,6 +247,10 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
                 }
 
               g_list_free (actions);
+
+              g_signal_connect_object (group, "action-added",
+                                       G_CALLBACK (gimp_menu_factory_manager_action_added),
+                                       accel_group, 0);
 
               gtk_ui_manager_insert_action_group (GTK_UI_MANAGER (manager),
                                                   GTK_ACTION_GROUP (group),
