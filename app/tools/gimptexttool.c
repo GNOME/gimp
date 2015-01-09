@@ -694,7 +694,8 @@ gimp_text_tool_cursor_update (GimpTool         *tool,
                                                   coords->y) &&
           ! text_tool->moving)
         {
-          gimp_tool_control_set_cursor          (tool->control, GDK_XTERM);
+          gimp_tool_control_set_cursor          (tool->control,
+                                                 (GimpCursorType) GDK_XTERM);
           gimp_tool_control_set_cursor_modifier (tool->control,
                                                  GIMP_CURSOR_MODIFIER_NONE);
         }
@@ -705,7 +706,8 @@ gimp_text_tool_cursor_update (GimpTool         *tool,
     }
   else
     {
-      gimp_tool_control_set_cursor          (tool->control, GDK_XTERM);
+      gimp_tool_control_set_cursor          (tool->control,
+                                             (GimpCursorType) GDK_XTERM);
       gimp_tool_control_set_cursor_modifier (tool->control,
                                              GIMP_CURSOR_MODIFIER_NONE);
     }

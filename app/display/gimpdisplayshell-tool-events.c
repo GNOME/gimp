@@ -1473,9 +1473,11 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
   shell->rotate_drag_angle = shell->rotate_angle;
 
   if (shell->rotating)
-    gimp_display_shell_set_override_cursor (shell, GDK_EXCHANGE);
+    gimp_display_shell_set_override_cursor (shell,
+                                            (GimpCursorType) GDK_EXCHANGE);
   else
-    gimp_display_shell_set_override_cursor (shell, GDK_FLEUR);
+    gimp_display_shell_set_override_cursor (shell,
+                                            (GimpCursorType) GDK_FLEUR);
 }
 
 static void
