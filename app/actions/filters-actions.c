@@ -84,6 +84,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:checkerboard",
     NULL /* FIXME GIMP_HELP_FILTER_CHECKERBOARD */ },
 
+  { "filters-color-enhance", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Color Enhance..."), NULL, NULL,
+    "gegl:color-enhance",
+    NULL /* FIXME GIMP_HELP_FILTER_COLOR_ENHANCE */ },
+
   { "filters-color-exchange", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Color Exchange..."), NULL, NULL,
     "gegl:color-exchange",
@@ -474,6 +479,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
   SET_SENSITIVE ("filters-cartoon",                 writable);
   SET_SENSITIVE ("filters-checkerboard",            writable);
+  SET_SENSITIVE ("filters-color-enhance",           writable);
   SET_SENSITIVE ("filters-color-exchange",          writable);
   SET_SENSITIVE ("filters-color-reduction",         writable);
   SET_SENSITIVE ("filters-color-rotate",            writable);

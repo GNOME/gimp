@@ -535,6 +535,7 @@
         <menuitem action="drawable-levels-stretch" />
 	<menuitem action="filters-stretch-contrast" />
 	<menuitem action="filters-stretch-contrast-hsv" />
+	<menuitem action="filters-color-enhance" />
       </menu>
       <menu action="colors-components-menu" name="Components">
 	<menuitem action="filters-channel-mixer" />
