@@ -479,7 +479,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
   SET_SENSITIVE ("filters-cartoon",                 writable);
   SET_SENSITIVE ("filters-checkerboard",            writable);
-  SET_SENSITIVE ("filters-color-enhance",           writable);
+  SET_SENSITIVE ("filters-color-enhance",           writable && !gray);
   SET_SENSITIVE ("filters-color-exchange",          writable);
   SET_SENSITIVE ("filters-color-reduction",         writable);
   SET_SENSITIVE ("filters-color-rotate",            writable);
