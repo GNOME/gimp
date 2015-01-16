@@ -23,12 +23,15 @@
  * does not contain any code from the netpbm or pbmplus distributions.
  *
  * 2006: pbm saving written by Martin K Collins (martin@mkcollins.org)
+ * 2015: pfm reading written by Tobias Ellinghaus (me@houz.org)
  */
 
 #include "config.h"
 
 #include <setjmp.h>
 #include <stdlib.h>
+#include <math.h>
+#include <errno.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -73,8 +76,10 @@ struct _PNMScanner
 struct _PNMInfo
 {
   gint          xres, yres;     /* The size of the image */
+  gboolean      float_format;   /* Whether it is a floating point format */
   gint          maxval;         /* For ascii image files, the max value
                                  * which we need to normalize to */
+  gfloat        scale_factor;   /* PFM files have a scale factor */
   gint          np;             /* Number of image planes (0 for pbm) */
   gboolean      asciibody;      /* 1 if ascii body, 0 if raw body */
   jmp_buf       jmpbuf;         /* Where to jump to on an error loading */
@@ -137,6 +142,9 @@ static void       pnm_load_raw             (PNMScanner    *scan,
 static void       pnm_load_rawpbm          (PNMScanner    *scan,
                                             PNMInfo       *info,
                                             GeglBuffer    *buffer);
+static void       pnm_load_rawpfm          (PNMScanner    *scan,
+                                            PNMInfo       *info,
+                                            GeglBuffer    *buffer);
 
 static gboolean   pnmsaverow_ascii         (PNMRowInfo    *ri,
                                             const guchar  *data,
@@ -188,12 +196,14 @@ static const struct
   PNMLoaderFunc loader;
 } pnm_types[] =
 {
-  { '1', 0, 1,   1, pnm_load_ascii  },  /* ASCII PBM */
-  { '2', 1, 1, 255, pnm_load_ascii  },  /* ASCII PGM */
-  { '3', 3, 1, 255, pnm_load_ascii  },  /* ASCII PPM */
-  { '4', 0, 0,   1, pnm_load_rawpbm },  /* RAW   PBM */
-  { '5', 1, 0, 255, pnm_load_raw    },  /* RAW   PGM */
-  { '6', 3, 0, 255, pnm_load_raw    },  /* RAW   PPM */
+  { '1', 0, 1,   1, pnm_load_ascii  },  /* ASCII PBM             */
+  { '2', 1, 1, 255, pnm_load_ascii  },  /* ASCII PGM             */
+  { '3', 3, 1, 255, pnm_load_ascii  },  /* ASCII PPM             */
+  { '4', 0, 0,   1, pnm_load_rawpbm },  /* RAW   PBM             */
+  { '5', 1, 0, 255, pnm_load_raw    },  /* RAW   PGM             */
+  { '6', 3, 0, 255, pnm_load_raw    },  /* RAW   PPM             */
+  { 'F', 3, 0,   0, pnm_load_rawpfm },  /* RAW   PFM (color)     */
+  { 'f', 1, 0,   0, pnm_load_rawpfm },  /* RAW   PFM (grayscale) */
   {  0 , 0, 0,   0, NULL}
 };
 
@@ -253,10 +263,11 @@ query (void)
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-portable-anymap");
   gimp_register_file_handler_uri (LOAD_PROC);
   gimp_register_magic_load_handler (LOAD_PROC,
-                                    "pnm,ppm,pgm,pbm",
+                                    "pnm,ppm,pgm,pbm,pfm",
                                     "",
-                                    "0,string,P1,0,string,P2,0,string,P3,0,"
-                                    "string,P4,0,string,P5,0,string,P6");
+                                    "0,string,P1,0,string,P2,0,string,P3,"
+                                    "0,string,P4,0,string,P5,0,string,P6,"
+                                    "0,string,PF,0,string,Pf");
 
   gimp_install_procedure (PNM_SAVE_PROC,
                           "Saves files in the PNM file format",
@@ -535,10 +546,11 @@ load_image (GFile   *file,
   for (ctr = 0; pnm_types[ctr].name; ctr++)
     if (buf[1] == pnm_types[ctr].name)
       {
-        pnminfo->np        = pnm_types[ctr].np;
-        pnminfo->asciibody = pnm_types[ctr].asciibody;
-        pnminfo->maxval    = pnm_types[ctr].maxval;
-        pnminfo->loader    = pnm_types[ctr].loader;
+        pnminfo->np           = pnm_types[ctr].np;
+        pnminfo->asciibody    = pnm_types[ctr].asciibody;
+        pnminfo->float_format = g_ascii_tolower (pnm_types[ctr].name) == 'f';
+        pnminfo->maxval       = pnm_types[ctr].maxval;
+        pnminfo->loader       = pnm_types[ctr].loader;
       }
 
   if (!pnminfo->loader)
@@ -565,7 +577,21 @@ load_image (GFile   *file,
   CHECK_FOR_ERROR (pnminfo->yres > GIMP_MAX_IMAGE_SIZE, pnminfo->jmpbuf,
                    _("Image height is larger than GIMP can handle."));
 
-  if (pnminfo->np != 0)         /* pbm's don't have a maxval field */
+  if (pnminfo->float_format)
+    {
+      gchar *endptr = NULL;
+
+      pnmscanner_gettoken (scan, buf, BUFLEN);
+      CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
+                       _("Premature end of file."));
+
+      pnminfo->scale_factor = g_ascii_strtod (buf, &endptr);
+      CHECK_FOR_ERROR (endptr == NULL || *endptr != 0 || errno == ERANGE,
+                       pnminfo->jmpbuf, _("Bogus scale factor."));
+      CHECK_FOR_ERROR (!isnormal (pnminfo->scale_factor),
+                       pnminfo->jmpbuf, _("Unsupported scale factor."));
+    }
+  else if (pnminfo->np != 0)         /* pbm's don't have a maxval field */
     {
       pnmscanner_gettoken (scan, buf, BUFLEN);
       CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
@@ -578,8 +604,10 @@ load_image (GFile   *file,
 
   /* Create a new image of the proper size and associate the filename with it.
    */
-  image_ID = gimp_image_new (pnminfo->xres, pnminfo->yres,
-                             (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY);
+  image_ID = gimp_image_new_with_precision (pnminfo->xres, pnminfo->yres,
+                                            (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY,
+                                            pnminfo->float_format ? GIMP_PRECISION_FLOAT_LINEAR
+                                                                  : GIMP_PRECISION_U8_GAMMA);
   gimp_image_set_filename (image_ID, g_file_get_uri (file));
 
   layer_ID = gimp_layer_new (image_ID, _("Background"),
@@ -859,6 +887,71 @@ pnm_load_rawpbm (PNMScanner *scan,
     }
 
   g_free (buf);
+  g_free (data);
+
+  gimp_progress_update (1.0);
+}
+
+static void
+pnm_load_rawpfm (PNMScanner *scan,
+                 PNMInfo    *info,
+                 GeglBuffer *buffer)
+{
+  GInputStream *input;
+  gfloat       *data;
+  gint          x, y;
+  gboolean      swap_byte_order;
+
+  swap_byte_order =
+    (info->scale_factor >= 0.0) ^ (G_BYTE_ORDER == G_BIG_ENDIAN);
+
+  data = g_new (gfloat, info->xres * info->np);
+
+  input = pnmscanner_input (scan);
+
+  for (y = info->yres - 1; y >= 0; y--)
+    {
+      gsize   bytes_read;
+      GError *error = NULL;
+
+      if (g_input_stream_read_all (input, data,
+                                   info->xres * info->np * sizeof (float),
+                                   &bytes_read, NULL, &error))
+        {
+          CHECK_FOR_ERROR
+              (info->xres * info->np * sizeof (float) != bytes_read,
+               info->jmpbuf, _("Premature end of file."));
+        }
+      else
+        {
+          CHECK_FOR_ERROR (FALSE, info->jmpbuf, "%s", error->message);
+        }
+
+      for (x = 0; x < info->xres * info->np; x++)
+        {
+          if (swap_byte_order)
+            {
+              union { gfloat f; guint32 i; } v;
+
+              v.f = data[x];
+              v.i = GUINT32_SWAP_LE_BE (v.i);
+              data[x] = v.f;
+            }
+
+          /* let's see if this is what people want, the PFM specs are a little vague
+           * about what the scale factor should be used for */
+          data[x] *= fabsf (info->scale_factor);
+          data[x] = fmaxf(0.0f, fminf(FLT_MAX, data[x]));
+        }
+
+        gegl_buffer_set (buffer,
+                       GEGL_RECTANGLE (0, y, info->xres, 1), 0,
+                       NULL, data, GEGL_AUTO_ROWSTRIDE);
+
+      if (y % 32 == 0)
+        gimp_progress_update ((double) y / (double) info->yres);
+    }
+
   g_free (data);
 
   gimp_progress_update (1.0);
