@@ -602,12 +602,14 @@ load_image (GFile   *file,
                        pnminfo->jmpbuf, _("Unsupported maximum value."));
     }
 
-  /* Create a new image of the proper size and associate the filename with it.
-   */
-  image_ID = gimp_image_new_with_precision (pnminfo->xres, pnminfo->yres,
-                                            (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY,
-                                            pnminfo->float_format ? GIMP_PRECISION_FLOAT_LINEAR
-                                                                  : GIMP_PRECISION_U8_GAMMA);
+  /* Create a new image of the proper size and associate the filename
+     with it. */
+  image_ID = gimp_image_new_with_precision
+    (pnminfo->xres, pnminfo->yres,
+     (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY,
+     (pnminfo->float_format ?
+      GIMP_PRECISION_FLOAT_LINEAR : GIMP_PRECISION_U8_GAMMA));
+
   gimp_image_set_filename (image_ID, g_file_get_uri (file));
 
   layer_ID = gimp_layer_new (image_ID, _("Background"),
@@ -938,10 +940,11 @@ pnm_load_rawpfm (PNMScanner *scan,
               data[x] = v.f;
             }
 
-          /* let's see if this is what people want, the PFM specs are a little vague
-           * about what the scale factor should be used for */
+          /* let's see if this is what people want, the PFM specs are a
+           * little vague about what the scale factor should be used
+           * for */
           data[x] *= fabsf (info->scale_factor);
-          data[x] = fmaxf(0.0f, fminf(FLT_MAX, data[x]));
+          data[x] = fmaxf (0.0f, fminf (FLT_MAX, data[x]));
         }
 
         gegl_buffer_set (buffer,
