@@ -116,6 +116,8 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   GimpRGB               background;
   GeglColor            *color;
   gdouble               force;
+  gdouble               dyn_force;
+  GimpDynamicsOutput   *dyn_output = NULL;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
@@ -148,11 +150,19 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   else
     paint_mode = GIMP_NORMAL_MODE;
 
-  force = gimp_dynamics_get_linear_value (dynamics,
-                                          GIMP_DYNAMICS_OUTPUT_FORCE,
-                                          coords,
-                                          paint_options,
-                                          fade_point);
+  dyn_output = gimp_dynamics_get_output (dynamics,
+                                         GIMP_DYNAMICS_OUTPUT_FORCE);
+
+  dyn_force = gimp_dynamics_get_linear_value (dynamics,
+                                              GIMP_DYNAMICS_OUTPUT_FORCE,
+                                              coords,
+                                              paint_options,
+                                              fade_point);
+
+  if (gimp_dynamics_output_is_enabled (dyn_output))
+    force = dyn_force;
+  else
+    force = paint_options->brush_force;
 
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
                                 coords,

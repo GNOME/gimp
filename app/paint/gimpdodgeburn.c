@@ -120,7 +120,9 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   gint                  paint_buffer_y;
   gdouble               fade_point;
   gdouble               opacity;
-  gdouble               hardness;
+  gdouble               force;
+  gdouble               dyn_force;
+  GimpDynamicsOutput   *dyn_output = NULL;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
@@ -152,11 +154,19 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                        options->type,
                        options->mode);
 
-  hardness = gimp_dynamics_get_linear_value (dynamics,
-                                             GIMP_DYNAMICS_OUTPUT_HARDNESS,
-                                             coords,
-                                             paint_options,
-                                             fade_point);
+  dyn_output = gimp_dynamics_get_output (dynamics,
+                                         GIMP_DYNAMICS_OUTPUT_FORCE);
+
+  dyn_force = gimp_dynamics_get_linear_value (dynamics,
+                                              GIMP_DYNAMICS_OUTPUT_FORCE,
+                                              coords,
+                                              paint_options,
+                                              fade_point);
+
+  if (gimp_dynamics_output_is_enabled (dyn_output))
+    force = dyn_force;
+  else
+    force = paint_options->brush_force;
 
   /* Replace the newly dodgedburned area (paint_area) to the image */
   gimp_brush_core_replace_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
@@ -164,6 +174,6 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),
                                   gimp_context_get_opacity (context),
                                   gimp_paint_options_get_brush_mode (paint_options),
-                                  hardness,
+                                  force,
                                   GIMP_PAINT_CONSTANT);
 }
