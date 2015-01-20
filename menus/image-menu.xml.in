@@ -727,6 +727,7 @@
 	</menu>
         <menu action="plug-in-render-pattern-menu" name="Pattern">
 	  <menuitem action="filters-checkerboard" />
+    <menuitem action="filters-diffraction-patternsd" />
 	  <menuitem action="filters-grid" />
 	  <menuitem action="filters-sinus" />
 	</menu>

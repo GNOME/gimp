@@ -493,6 +493,7 @@ sanity_check_gegl_ops (void)
     "gegl:cubism",
     "gegl:deinterlace",
     "gegl:difference-of-gaussians",
+    "gegl:diffraction-patterns",
     "gegl:distance-transform",
     "gegl:dropshadow",
     "gegl:edge-laplace",
