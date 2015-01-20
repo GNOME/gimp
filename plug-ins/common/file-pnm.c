@@ -1369,7 +1369,7 @@ save_image (GFile     *file,
 
       d += xres * (np ? np : 1);
 
-      if ((ypos % 20) == 0)
+      if (ypos % 32 == 0)
         gimp_progress_update ((double) ypos / (double) yres);
     }
 
