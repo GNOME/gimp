@@ -952,7 +952,7 @@ pnm_load_rawpfm (PNMScanner *scan,
                        NULL, data, GEGL_AUTO_ROWSTRIDE);
 
       if (y % 32 == 0)
-        gimp_progress_update ((double) y / (double) info->yres);
+        gimp_progress_update ((double) (info->yres - y) / (double) info->yres);
     }
 
   g_free (data);
