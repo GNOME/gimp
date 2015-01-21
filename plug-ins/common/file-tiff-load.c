@@ -1571,7 +1571,7 @@ load_contiguous (TIFF        *tif,
           src_buf = gegl_buffer_linear_new_from_data (buffer,
                                                       src_format,
                                                       GEGL_RECTANGLE (0, 0, cols, rows),
-                                                      GEGL_AUTO_ROWSTRIDE,
+                                                      tileWidth * bytes_per_pixel,
                                                       NULL, NULL);
 
           offset = 0;
