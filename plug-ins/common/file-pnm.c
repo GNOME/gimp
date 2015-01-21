@@ -1388,12 +1388,15 @@ save_image (GFile     *file,
       g_free (cmap);
     }
 
-  /* write out comment string */
-  comment = g_strdup_printf("# Created by GIMP version %s PNM plug-in\n",
-                            GIMP_VERSION);
+  if (!float_format)
+    {
+      /* write out comment string */
+      comment = g_strdup_printf("# Created by GIMP version %s PNM plug-in\n",
+                                GIMP_VERSION);
 
-  if (! output_write (output, comment, strlen (comment), error))
-      goto out;
+      if (! output_write (output, comment, strlen (comment), error))
+        goto out;
+    }
 
   /* write out resolution and maxval */
   if (pbm)
