@@ -668,7 +668,7 @@
       <menu action="plug-in-light-shadow-menu" name="Light and Shadow">
         <placeholder name="Light">
 	  <menuitem action="filters-supernova" />
-    <menuitem action="filters-lens-flare" />
+	  <menuitem action="filters-lens-flare" />
 	</placeholder>
         <separator />
         <placeholder name="Shadow">
@@ -727,7 +727,7 @@
 	</menu>
         <menu action="plug-in-render-pattern-menu" name="Pattern">
 	  <menuitem action="filters-checkerboard" />
-    <menuitem action="filters-diffraction-patternsd" />
+	  <menuitem action="filters-diffraction-patterns" />
 	  <menuitem action="filters-grid" />
 	  <menuitem action="filters-sinus" />
 	</menu>
