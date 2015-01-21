@@ -857,6 +857,91 @@ CODE
     );
 }
 
+sub plug_in_diffraction {
+    $blurb = 'Generate diffraction patterns';
+
+    $help = <<'HELP';
+Help?  What help?
+HELP
+
+    &std_pdb_compat('gegl:diffraction-patterns');
+    $date = '2015';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'lam_r', type => '0.0 <= float <= 20.0',
+	  desc => 'Light frequency (red)' },
+	{ name => 'lam_g', type => '0.0 <= float <= 20.0',
+	  desc => 'Light frequency (green)' },
+	{ name => 'lam_b', type => '0.0 <= float <= 20.0',
+	  desc => 'Light frequency (blue)' },
+	{ name => 'contour_r', type => '0.0 <= float <= 10.0',
+	  desc => 'Number of contours (red)' },
+	{ name => 'contour_g', type => '0.0 <= float <= 10.0',
+	  desc => 'Number of contours (green)' },
+	{ name => 'contour_b', type => '0.0 <= float <= 10.0',
+	  desc => 'Number of contours (blue)' },
+	{ name => 'edges_r', type => '0.0 <= float <= 1.0',
+	  desc => 'Number of sharp edges (red)' },
+	{ name => 'edges_g', type => '0.0 <= float <= 1.0',
+	  desc => 'Number of sharp edges (green)' },
+	{ name => 'edges_b', type => '0.0 <= float <= 1.0',
+	  desc => 'Number of sharp edges (blue)' },
+        { name => 'brightness', type => '0.0 <= float <= 1.0',
+	  desc => 'Brightness and shifting/fattening of contours' },
+	{ name => 'scattering', type => '0.0 <= float <= 100.0',
+	  desc => 'Scattering (Speed vs. quality)' },
+	{ name => 'polarization', type => '-1.0 <= float <= 1.0',
+	  desc => 'Polarization' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node;
+      gint      x, y, width, height;
+
+      gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",       "gegl:diffraction-patterns",
+                                  "red-frequency",   lam_r,
+                                  "green-frequency", lam_g,
+                                  "blue-frequency",  lam_b,
+                                  "red-contours",    contour_r,
+                                  "green-contours",  contour_g,
+                                  "blue-contours",   contour_b,
+                                  "red-sedges",      edges_r,
+                                  "green-sedges",    edges_g,
+                                  "blue-sedges",     edges_b,
+                                  "brightness",      brightness,
+                                  "scattering",      scattering,
+                                  "polarization",    polarization,
+                                  "width",           width,
+                                  "height",          height,
+                                  NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Diffraction Patterns"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_engrave {
     $blurb = 'Simulate an antique engraving';
 
@@ -3435,6 +3520,7 @@ CODE
             plug_in_convmatrix
             plug_in_cubism
             plug_in_deinterlace
+            plug_in_diffraction
             plug_in_engrave
             plug_in_exchange
             plug_in_flarefx

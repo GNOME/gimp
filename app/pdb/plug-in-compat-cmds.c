@@ -954,6 +954,85 @@ plug_in_deinterlace_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_diffraction_invoker (GimpProcedure         *procedure,
+                             Gimp                  *gimp,
+                             GimpContext           *context,
+                             GimpProgress          *progress,
+                             const GimpValueArray  *args,
+                             GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble lam_r;
+  gdouble lam_g;
+  gdouble lam_b;
+  gdouble contour_r;
+  gdouble contour_g;
+  gdouble contour_b;
+  gdouble edges_r;
+  gdouble edges_g;
+  gdouble edges_b;
+  gdouble brightness;
+  gdouble scattering;
+  gdouble polarization;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  lam_r = g_value_get_double (gimp_value_array_index (args, 3));
+  lam_g = g_value_get_double (gimp_value_array_index (args, 4));
+  lam_b = g_value_get_double (gimp_value_array_index (args, 5));
+  contour_r = g_value_get_double (gimp_value_array_index (args, 6));
+  contour_g = g_value_get_double (gimp_value_array_index (args, 7));
+  contour_b = g_value_get_double (gimp_value_array_index (args, 8));
+  edges_r = g_value_get_double (gimp_value_array_index (args, 9));
+  edges_g = g_value_get_double (gimp_value_array_index (args, 10));
+  edges_b = g_value_get_double (gimp_value_array_index (args, 11));
+  brightness = g_value_get_double (gimp_value_array_index (args, 12));
+  scattering = g_value_get_double (gimp_value_array_index (args, 13));
+  polarization = g_value_get_double (gimp_value_array_index (args, 14));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node;
+          gint      x, y, width, height;
+
+          gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height);
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",       "gegl:diffraction-patterns",
+                                      "red-frequency",   lam_r,
+                                      "green-frequency", lam_g,
+                                      "blue-frequency",  lam_b,
+                                      "red-contours",    contour_r,
+                                      "green-contours",  contour_g,
+                                      "blue-contours",   contour_b,
+                                      "red-sedges",      edges_r,
+                                      "green-sedges",    edges_g,
+                                      "blue-sedges",     edges_b,
+                                      "brightness",      brightness,
+                                      "scattering",      scattering,
+                                      "polarization",    polarization,
+                                      "width",           width,
+                                      "height",          height,
+                                      NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Diffraction Patterns"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_engrave_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
@@ -3748,6 +3827,114 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Which lines to keep { KEEP-ODD (0), KEEP-EVEN (1)",
                                                       0, 1, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-diffraction
+   */
+  procedure = gimp_procedure_new (plug_in_diffraction_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-diffraction");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-diffraction",
+                                     "Generate diffraction patterns",
+                                     "Help? What help?",
+                                     "Compatibility procedure. Please see 'gegl:diffraction-patterns' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:diffraction-patterns' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("lam-r",
+                                                    "lam r",
+                                                    "Light frequency (red)",
+                                                    0.0, 20.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("lam-g",
+                                                    "lam g",
+                                                    "Light frequency (green)",
+                                                    0.0, 20.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("lam-b",
+                                                    "lam b",
+                                                    "Light frequency (blue)",
+                                                    0.0, 20.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("contour-r",
+                                                    "contour r",
+                                                    "Number of contours (red)",
+                                                    0.0, 10.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("contour-g",
+                                                    "contour g",
+                                                    "Number of contours (green)",
+                                                    0.0, 10.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("contour-b",
+                                                    "contour b",
+                                                    "Number of contours (blue)",
+                                                    0.0, 10.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("edges-r",
+                                                    "edges r",
+                                                    "Number of sharp edges (red)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("edges-g",
+                                                    "edges g",
+                                                    "Number of sharp edges (green)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("edges-b",
+                                                    "edges b",
+                                                    "Number of sharp edges (blue)",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("brightness",
+                                                    "brightness",
+                                                    "Brightness and shifting/fattening of contours",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("scattering",
+                                                    "scattering",
+                                                    "Scattering (Speed vs. quality)",
+                                                    0.0, 100.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("polarization",
+                                                    "polarization",
+                                                    "Polarization",
+                                                    -1.0, 1.0, -1.0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

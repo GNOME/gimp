@@ -68,7 +68,6 @@ libexec_PROGRAMS = \
 	depth-merge \
 	despeckle \
 	destripe \
-	diffraction \
 	displace \
 	edge \
 	edge-dog \
@@ -586,23 +585,6 @@ destripe_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(destripe_RC)
-
-diffraction_SOURCES = \
-	diffraction.c
-
-diffraction_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(diffraction_RC)
 
 displace_SOURCES = \
 	displace.c
