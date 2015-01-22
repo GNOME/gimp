@@ -25,6 +25,7 @@
 	<dependencies>
 		<dep package="glib2"/>
 		<dep package="babl"/>
+		<dep package="json-glib"/>
 
 		<dep package="libpng"/>
 		<dep package="libjpeg-turbo"/>

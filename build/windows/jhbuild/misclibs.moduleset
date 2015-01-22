@@ -182,4 +182,14 @@
 	</dependencies>
 </autotools>
 
+<autotools id="json-glib" autogen-sh="configure">
+	<branch version="1.0.2" repo="gnome.org"
+			module="json-glib/1.0/json-glib-1.0.2.tar.xz"
+			hash="sha256:887bd192da8f5edc53b490ec51bf3ffebd958a671f5963e4f3af32c22e35660a">
+	</branch>
+	<dependencies>
+		<dep package="glib2"/>
+	</dependencies>
+</autotools>
+
 </moduleset>
