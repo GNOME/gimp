@@ -69,13 +69,11 @@ libexec_PROGRAMS = \
 	depth-merge \
 	despeckle \
 	destripe \
-	diffraction \
 	displace \
 	edge \
 	edge-dog \
 	edge-neon \
 	emboss \
-	engrave \
 	$(FILE_AA) \
 	file-cel \
 	file-compressor \
@@ -123,7 +121,6 @@ libexec_PROGRAMS = \
 	iptc	\
 	jigsaw \
 	lcms \
-	lens-flare \
 	$(MAIL) \
 	max-rgb \
 	newsprint \
@@ -517,6 +514,7 @@ crop_zealous_LDADD = \
 	$(libgimpbase)		\
 	$(CAIRO_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
+	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(crop_zealous_RC)
@@ -607,23 +605,6 @@ destripe_LDADD = \
 	$(INTLLIBS)		\
 	$(destripe_RC)
 
-diffraction_SOURCES = \
-	diffraction.c
-
-diffraction_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(diffraction_RC)
-
 displace_SOURCES = \
 	displace.c
 
@@ -708,23 +689,6 @@ emboss_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(emboss_RC)
-
-engrave_SOURCES = \
-	engrave.c
-
-engrave_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(engrave_RC)
 
 file_aa_SOURCES = \
 	file-aa.c
@@ -1583,23 +1547,6 @@ lcms_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(lcms_RC)
-
-lens_flare_SOURCES = \
-	lens-flare.c
-
-lens_flare_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(lens_flare_RC)
 
 mail_SOURCES = \
 	mail.c

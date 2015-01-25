@@ -39,40 +39,45 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_BRUSH_SIZE             20.0
-#define DEFAULT_BRUSH_ZOOM             FALSE
+#define DEFAULT_BRUSH_SIZE              20.0
+#define DEFAULT_BRUSH_ZOOM              FALSE
 
-#define DEFAULT_BRUSH_ASPECT_RATIO     0.0
-#define DEFAULT_BRUSH_ANGLE            0.0
-#define DEFAULT_BRUSH_SPACING          0.1
+#define DEFAULT_BRUSH_ASPECT_RATIO      0.0
+#define DEFAULT_BRUSH_ANGLE             0.0
+#define DEFAULT_BRUSH_SPACING           0.1
 
-#define DEFAULT_BRUSH_HARDNESS         1.0 /* Generated brushes have their own */
-#define DEFAULT_BRUSH_FORCE            0.5
+#define DEFAULT_BRUSH_HARDNESS          1.0 /* Generated brushes have their own */
+#define DEFAULT_BRUSH_FORCE             0.5
 
-#define DEFAULT_APPLICATION_MODE       GIMP_PAINT_CONSTANT
-#define DEFAULT_HARD                   FALSE
+#define DEFAULT_APPLICATION_MODE        GIMP_PAINT_CONSTANT
+#define DEFAULT_HARD                    FALSE
 
-#define DEFAULT_USE_JITTER             FALSE
-#define DEFAULT_JITTER_AMOUNT          0.2
+#define DEFAULT_USE_JITTER              FALSE
+#define DEFAULT_JITTER_AMOUNT           0.2
 
-#define DEFAULT_DYNAMICS_EXPANDED      FALSE
+#define DEFAULT_DYNAMICS_EXPANDED       FALSE
 
-#define DEFAULT_FADE_LENGTH            100.0
-#define DEFAULT_FADE_REVERSE           FALSE
-#define DEFAULT_FADE_REPEAT            GIMP_REPEAT_NONE
-#define DEFAULT_FADE_UNIT              GIMP_UNIT_PIXEL
+#define DEFAULT_FADE_LENGTH             100.0
+#define DEFAULT_FADE_REVERSE            FALSE
+#define DEFAULT_FADE_REPEAT             GIMP_REPEAT_NONE
+#define DEFAULT_FADE_UNIT               GIMP_UNIT_PIXEL
 
-#define DEFAULT_GRADIENT_REVERSE       FALSE
-#define DEFAULT_GRADIENT_REPEAT        GIMP_REPEAT_TRIANGULAR
-#define DEFAULT_GRADIENT_LENGTH        100.0
-#define DEFAULT_GRADIENT_UNIT          GIMP_UNIT_PIXEL
+#define DEFAULT_GRADIENT_REVERSE        FALSE
+#define DEFAULT_GRADIENT_REPEAT         GIMP_REPEAT_TRIANGULAR
+#define DEFAULT_GRADIENT_LENGTH         100.0
+#define DEFAULT_GRADIENT_UNIT           GIMP_UNIT_PIXEL
 
-#define DYNAMIC_MAX_VALUE              1.0
-#define DYNAMIC_MIN_VALUE              0.0
+#define DYNAMIC_MAX_VALUE               1.0
+#define DYNAMIC_MIN_VALUE               0.0
 
-#define DEFAULT_SMOOTHING_QUALITY      20
-#define DEFAULT_SMOOTHING_FACTOR       50
+#define DEFAULT_SMOOTHING_QUALITY       20
+#define DEFAULT_SMOOTHING_FACTOR        50
 
+#define DEFAULT_BRUSH_LINK_SIZE         TRUE
+#define DEFAULT_BRUSH_LINK_ASPECT_RATIO TRUE
+#define DEFAULT_BRUSH_LINK_ANGLE        TRUE
+#define DEFAULT_BRUSH_LINK_SPACING      TRUE
+#define DEFAULT_BRUSH_LINK_HARDNESS     TRUE
 
 enum
 {
@@ -116,7 +121,13 @@ enum
 
   PROP_USE_SMOOTHING,
   PROP_SMOOTHING_QUALITY,
-  PROP_SMOOTHING_FACTOR
+  PROP_SMOOTHING_FACTOR,
+
+  PROP_BRUSH_LINK_SIZE,
+  PROP_BRUSH_LINK_ASPECT_RATIO,
+  PROP_BRUSH_LINK_ANGLE,
+  PROP_BRUSH_LINK_SPACING,
+  PROP_BRUSH_LINK_HARDNESS
 };
 
 
@@ -130,6 +141,8 @@ static void    gimp_paint_options_get_property     (GObject      *object,
                                                     guint         property_id,
                                                     GValue       *value,
                                                     GParamSpec   *pspec);
+static void    gimp_paint_options_brush_changed    (GimpContext  *context,
+                                                    GimpBrush    *brush);
 
 
 
@@ -141,12 +154,15 @@ G_DEFINE_TYPE (GimpPaintOptions, gimp_paint_options, GIMP_TYPE_TOOL_OPTIONS)
 static void
 gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
+  GimpContextClass *context_class = GIMP_CONTEXT_CLASS (klass);
 
-  object_class->dispose      = gimp_paint_options_dispose;
-  object_class->finalize     = gimp_paint_options_finalize;
-  object_class->set_property = gimp_paint_options_set_property;
-  object_class->get_property = gimp_paint_options_get_property;
+  object_class->dispose        = gimp_paint_options_dispose;
+  object_class->finalize       = gimp_paint_options_finalize;
+  object_class->set_property   = gimp_paint_options_set_property;
+  object_class->get_property   = gimp_paint_options_get_property;
+
+  context_class->brush_changed = gimp_paint_options_brush_changed;
 
   g_object_class_install_property (object_class, PROP_PAINT_INFO,
                                    g_param_spec_object ("paint-info",
@@ -196,6 +212,36 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                    "brush-force", _("Brush Force"),
                                    0.0, 1.0, DEFAULT_BRUSH_FORCE,
                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_SIZE,
+                                    "brush-link-size",
+                                    _("Link brush size to brush native"),
+                                    DEFAULT_BRUSH_LINK_SIZE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_ASPECT_RATIO,
+                                    "brush-link-aspect-ratio",
+                                    _("Link brush aspect ratio to brush native"),
+                                    DEFAULT_BRUSH_LINK_ASPECT_RATIO,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_ANGLE,
+                                    "brush-link-angle",
+                                    _("Link brush angle to brush native"),
+                                    DEFAULT_BRUSH_LINK_ANGLE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_SPACING,
+                                    "brush-link-spacing",
+                                    _("Link brush spacing to brush native"),
+                                    DEFAULT_BRUSH_LINK_SPACING,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_BRUSH_LINK_HARDNESS,
+                                    "brush-link-hardness",
+                                    _("Link brush hardness to brush native"),
+                                    DEFAULT_BRUSH_LINK_HARDNESS,
+                                    GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
                                  "application-mode", _("Every stamp has its own opacity"),
@@ -355,10 +401,10 @@ gimp_paint_options_set_property (GObject      *object,
                                  const GValue *value,
                                  GParamSpec   *pspec)
 {
-  GimpPaintOptions    *options            = GIMP_PAINT_OPTIONS (object);
-  GimpFadeOptions     *fade_options       = options->fade_options;
-  GimpJitterOptions   *jitter_options     = options->jitter_options;
-  GimpGradientOptions *gradient_options   = options->gradient_options;
+  GimpPaintOptions     *options           = GIMP_PAINT_OPTIONS (object);
+  GimpFadeOptions      *fade_options      = options->fade_options;
+  GimpJitterOptions    *jitter_options    = options->jitter_options;
+  GimpGradientOptions  *gradient_options  = options->gradient_options;
   GimpSmoothingOptions *smoothing_options = options->smoothing_options;
 
   switch (property_id)
@@ -397,6 +443,26 @@ gimp_paint_options_set_property (GObject      *object,
 
     case PROP_BRUSH_FORCE:
       options->brush_force = g_value_get_double (value);
+      break;
+
+    case PROP_BRUSH_LINK_SIZE:
+      options->brush_link_size = g_value_get_boolean (value);
+      break;
+
+    case PROP_BRUSH_LINK_ASPECT_RATIO:
+      options->brush_link_aspect_ratio = g_value_get_boolean (value);
+      break;
+
+    case PROP_BRUSH_LINK_ANGLE:
+      options->brush_link_angle = g_value_get_boolean (value);
+      break;
+
+    case PROP_BRUSH_LINK_SPACING:
+      options->brush_link_spacing = g_value_get_boolean (value);
+      break;
+
+    case PROP_BRUSH_LINK_HARDNESS:
+      options->brush_link_hardness = g_value_get_boolean (value);
       break;
 
     case PROP_APPLICATION_MODE:
@@ -539,6 +605,26 @@ gimp_paint_options_get_property (GObject    *object,
       g_value_set_double (value, options->brush_force);
       break;
 
+    case PROP_BRUSH_LINK_SIZE:
+      g_value_set_boolean (value, options->brush_link_size);
+      break;
+
+    case PROP_BRUSH_LINK_ASPECT_RATIO:
+      g_value_set_boolean (value, options->brush_link_aspect_ratio);
+      break;
+
+    case PROP_BRUSH_LINK_ANGLE:
+      g_value_set_boolean (value, options->brush_link_angle);
+      break;
+
+    case PROP_BRUSH_LINK_SPACING:
+      g_value_set_boolean (value, options->brush_link_spacing);
+      break;
+
+    case PROP_BRUSH_LINK_HARDNESS:
+      g_value_set_boolean (value, options->brush_link_hardness);
+      break;
+
     case PROP_APPLICATION_MODE:
       g_value_set_enum (value, options->application_mode);
       break;
@@ -629,6 +715,34 @@ gimp_paint_options_get_property (GObject    *object,
     }
 }
 
+static void
+gimp_paint_options_brush_changed (GimpContext *context,
+                                  GimpBrush   *brush)
+{
+  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (context);
+
+  if (GIMP_IS_BRUSH (brush))
+    {
+      if (options->brush_link_size)
+        gimp_paint_options_set_default_brush_size (options, brush);
+
+      if (options->brush_link_aspect_ratio)
+        g_object_set (options,
+                      "brush-aspect-ratio", 0.0,
+                      NULL);
+
+      if (options->brush_link_angle)
+        g_object_set (options,
+                      "brush-angle", 0.0,
+                      NULL);
+
+      if (options->brush_link_spacing)
+        gimp_paint_options_set_default_brush_spacing (options, brush);
+
+      if (options->brush_link_hardness)
+        gimp_paint_options_set_default_brush_hardness (options, brush);
+    }
+}
 
 GimpPaintOptions *
 gimp_paint_options_new (GimpPaintInfo *paint_info)
@@ -876,6 +990,12 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
   gdouble  brush_hardness;
   gdouble  brush_force;
 
+  gboolean brush_link_size;
+  gboolean brush_link_aspect_ratio;
+  gboolean brush_link_angle;
+  gboolean brush_link_spacing;
+  gboolean brush_link_hardness;
+
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (src));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (dest));
 
@@ -887,6 +1007,11 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
                 "brush-spacing", &brush_spacing,
                 "brush-hardness", &brush_hardness,
                 "brush-force", &brush_force,
+                "brush-link-size", &brush_link_size,
+                "brush-link-angle", &brush_link_angle,
+                "brush-link-aspect-ratio", &brush_link_aspect_ratio,
+                "brush-link-spacing", &brush_link_spacing,
+                "brush-link-hardness", &brush_link_hardness,
                 NULL);
 
   g_object_set (dest,
@@ -897,6 +1022,11 @@ gimp_paint_options_copy_brush_props (GimpPaintOptions *src,
                 "brush-spacing", brush_spacing,
                 "brush-hardness", brush_hardness,
                 "brush-force", brush_force,
+                "brush-link-size", brush_link_size,
+                "brush-link-angle", brush_link_angle,
+                "brush-link-aspect-ratio", brush_link_aspect_ratio,
+                "brush-link-spacing", brush_link_spacing,
+                "brush-link-hardness", brush_link_hardness,
                 NULL);
 }
 

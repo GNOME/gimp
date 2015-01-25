@@ -1,47 +1,85 @@
 # GIMP sessionrc
 # 
 # This file takes session-specific info (that is info, you want to keep
-# between two GIMP sessions). You are not supposed to edit it manually, but
-# of course you can do. The sessionrc will be entirely rewritten every time
-# you quit GIMP. If this file isn't found, defaults are used.
+# between two GIMP sessions).  You are not supposed to edit it manually, but
+# of course you can do.  The sessionrc will be entirely rewritten every time
+# you quit GIMP.  If this file isn't found, defaults are used.
 
-(session-info "dock" "gimp-toolbox-window"
-    (position 0 0)
-    (size 170 820)
-    (open-on-exit)
-    (gimp-toolbox
-        (book
-            (dockable "gimp-tool-options"
-                (tab-style automatic)))))
-(session-info "dock" "gimp-dock-window"
-    (position -0 0)
-    (size 210 820)
-    (open-on-exit)
-    (gimp-dock
-        (book
-            (dockable "gimp-layer-list"
-                (tab-style automatic))
-            (dockable "gimp-channel-list"
-                (tab-style automatic))
-            (dockable "gimp-vectors-list"
-                (tab-style automatic))
-            (dockable "gimp-undo-history"
-                (tab-style automatic)))
-        (book
-            (position 420)
-            (dockable "gimp-brush-grid"
-                (tab-style automatic))
-            (dockable "gimp-pattern-grid"
-                (tab-style automatic))
-            (dockable "gimp-gradient-list"
-                (tab-style automatic)))))
 (session-info "toplevel"
     (factory-entry "gimp-empty-image-window")
-    (position 410 370)
-    (size 620 200))
+    (position 200 100)
+    (size 640 480))
 (session-info "toplevel"
     (factory-entry "gimp-single-image-window")
-    (position 160 70)
-    (size 1140 780))
+    (position 200 100)
+    (size 1024 768)
+    (open-on-exit)
+    (aux-info
+        (left-docks-width "188")
+        (right-docks-width "205")
+        (maximized "no"))
+    (gimp-toolbox
+        (side left)
+        (book
+            (current-page 0)
+            (dockable "gimp-tool-options"
+                (tab-style automatic)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-device-status"
+                (tab-style automatic)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-undo-history"
+                (tab-style automatic)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-image-list"
+                (tab-style automatic)
+                (aux-info
+                    (show-button-bar "true")))))
+    (gimp-dock
+        (side right)
+        (book
+            (current-page 0)
+            (dockable "gimp-brush-grid"
+                (tab-style automatic)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-pattern-grid"
+                (tab-style automatic)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-font-list"
+                (tab-style automatic)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-document-list"
+                (tab-style automatic)
+                (aux-info
+                    (show-button-bar "true"))))
+        (book
+            (position 336)
+            (current-page 0)
+            (dockable "gimp-layer-list"
+                (tab-style automatic)
+                (preview-size 32)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-channel-list"
+                (tab-style automatic)
+                (preview-size 32)
+                (aux-info
+                    (show-button-bar "true")))
+            (dockable "gimp-vectors-list"
+                (tab-style automatic)
+                (preview-size 32)
+                (aux-info
+                    (show-button-bar "true"))))))
+
+(hide-docks no)
+(single-window-mode yes)
+(tabs-position 0)
+(last-tip-shown 0)
 
 # end of sessionrc

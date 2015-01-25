@@ -84,6 +84,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:checkerboard",
     NULL /* FIXME GIMP_HELP_FILTER_CHECKERBOARD */ },
 
+  { "filters-color-enhance", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Color Enhance..."), NULL, NULL,
+    "gegl:color-enhance",
+    NULL /* FIXME GIMP_HELP_FILTER_COLOR_ENHANCE */ },
+
   { "filters-color-exchange", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Color Exchange..."), NULL, NULL,
     "gegl:color-exchange",
@@ -129,6 +134,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:difference-of-gaussians",
     NULL /* FIXME GIMP_HELP_FILTER_DIFFERENCE_OF_GAUSSIANS */ },
 
+  { "filters-diffraction-patterns", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Diffraction Patterns..."), NULL, NULL,
+    "gegl:diffraction-patterns",
+    NULL /* FIXME GIMP_HELP_FILTER_DIFFRACTION_PATTERNS */ },
+
   { "filters-distance-map", GIMP_STOCK_GEGL,
     NC_("filters-action", "Distance Map..."), NULL, NULL,
     "gegl:distance-transform",
@@ -153,6 +163,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "_Emboss..."), NULL, NULL,
     "gegl:emboss",
     NULL /* FIXME GIMP_HELP_FILTER_EMBOSS */ },
+
+  { "filters-engrave", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_En_grave..."), NULL, NULL,
+    "gegl:engrave",
+    NULL /* FIXME GIMP_HELP_FILTER_ENGRAVE */ },
 
   { "filters-exposure", GIMP_STOCK_GEGL,
     NC_("filters-action", "_E_xposure..."), NULL, NULL,
@@ -188,6 +203,11 @@ static const GimpStringActionEntry filters_actions[] =
     NC_("filters-action", "Lens Distortion..."), NULL, NULL,
     "gegl:lens-distortion",
     NULL /* FIXME GIMP_HELP_FILTER_LENS_DISTORTION */ },
+
+  { "filters-lens-flare", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Lens Flare..."), NULL, NULL,
+    "gegl:lens-flare",
+    NULL /* FIXME GIMP_HELP_FILTER_LENS_FLARE */ },
 
   { "filters-mono-mixer", GIMP_STOCK_GEGL,
     NC_("filters-action", "Mono Mixer..."), NULL, NULL,
@@ -464,6 +484,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-c2g",                     writable && !gray);
   SET_SENSITIVE ("filters-cartoon",                 writable);
   SET_SENSITIVE ("filters-checkerboard",            writable);
+  SET_SENSITIVE ("filters-color-enhance",           writable && !gray);
   SET_SENSITIVE ("filters-color-exchange",          writable);
   SET_SENSITIVE ("filters-color-reduction",         writable);
   SET_SENSITIVE ("filters-color-rotate",            writable);
@@ -473,11 +494,13 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-cubism",                  writable);
   SET_SENSITIVE ("filters-deinterlace",             writable);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
+  SET_SENSITIVE ("filters-diffraction-patterns", writable);
   SET_SENSITIVE ("filters-distance-map",            writable);
   SET_SENSITIVE ("filters-dropshadow",              writable && alpha);
   SET_SENSITIVE ("filters-edge-laplace",            writable);
   SET_SENSITIVE ("filters-edge-sobel",              writable);
   SET_SENSITIVE ("filters-emboss",                  writable);
+  SET_SENSITIVE ("filters-engrave",                 writable);
   SET_SENSITIVE ("filters-exposure",                writable);
   SET_SENSITIVE ("filters-fractal-trace",           writable);
   SET_SENSITIVE ("filters-gaussian-blur",           writable);
@@ -485,6 +508,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-illusion",                writable);
   SET_SENSITIVE ("filters-kaleidoscope",            writable);
   SET_SENSITIVE ("filters-lens-distortion",         writable);
+  SET_SENSITIVE ("filters-lens-flare",              writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
   SET_SENSITIVE ("filters-mosaic",                  writable);
   SET_SENSITIVE ("filters-motion-blur-circular",    writable);

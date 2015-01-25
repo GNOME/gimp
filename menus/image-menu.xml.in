@@ -535,6 +535,7 @@
         <menuitem action="drawable-levels-stretch" />
 	<menuitem action="filters-stretch-contrast" />
 	<menuitem action="filters-stretch-contrast-hsv" />
+	<menuitem action="filters-color-enhance" />
       </menu>
       <menu action="colors-components-menu" name="Components">
 	<menuitem action="filters-channel-mixer" />
@@ -652,6 +653,7 @@
       <menu action="plug-in-distorts-menu" name="Distorts">
       	<menuitem action="filters-apply-lens" />
       	<menuitem action="filters-emboss" />
+      	<menuitem action="filters-engrave" />
         <menuitem action="filters-lens-distortion" />
         <menuitem action="filters-kaleidoscope" />
         <menuitem action="filters-mosaic" />
@@ -666,6 +668,7 @@
       <menu action="plug-in-light-shadow-menu" name="Light and Shadow">
         <placeholder name="Light">
 	  <menuitem action="filters-supernova" />
+	  <menuitem action="filters-lens-flare" />
 	</placeholder>
         <separator />
         <placeholder name="Shadow">
@@ -724,6 +727,7 @@
 	</menu>
         <menu action="plug-in-render-pattern-menu" name="Pattern">
 	  <menuitem action="filters-checkerboard" />
+	  <menuitem action="filters-diffraction-patterns" />
 	  <menuitem action="filters-grid" />
 	  <menuitem action="filters-sinus" />
 	</menu>

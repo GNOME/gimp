@@ -50,8 +50,6 @@
 /despeckle.exe
 /destripe
 /destripe.exe
-/diffraction
-/diffraction.exe
 /displace
 /displace.exe
 /edge
@@ -62,8 +60,6 @@
 /edge-neon.exe
 /emboss
 /emboss.exe
-/engrave
-/engrave.exe
 /file-aa
 /file-aa.exe
 /file-cel
@@ -156,8 +152,6 @@
 /jigsaw.exe
 /lcms
 /lcms.exe
-/lens-flare
-/lens-flare.exe
 /mail
 /mail.exe
 /max-rgb

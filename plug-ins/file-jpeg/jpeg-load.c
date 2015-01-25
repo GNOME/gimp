@@ -156,8 +156,11 @@ load_image (const gchar  *filename,
   /* Step 4: set parameters for decompression */
 
   /* In this example, we don't need to change any of the defaults set by
-   * jpeg_read_header(), so we do nothing here.
+   * jpeg_read_header(), so we do nothing here, except set the DCT
+   * method.
    */
+
+  cinfo.dct_method = JDCT_FLOAT;
 
   /* Step 5: Start decompressor */
 

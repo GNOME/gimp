@@ -676,7 +676,7 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
   gimp_imagefile_set_file (box->imagefile, file);
 
   if (force ||
-      (gimp_thumbnail_peek_thumb (thumb, size) < GIMP_THUMB_STATE_FAILED &&
+      (gimp_thumbnail_peek_thumb (thumb, (GimpThumbSize) size) < GIMP_THUMB_STATE_FAILED &&
        ! gimp_thumbnail_has_failed (thumb)))
     {
       GError *error = NULL;

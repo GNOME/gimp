@@ -360,7 +360,7 @@ gimp_region_select_tool_get_mask (GimpRegionSelectTool *region_sel,
   GimpRegionSelectOptions *options = GIMP_REGION_SELECT_TOOL_GET_OPTIONS (region_sel);
   GimpDisplayShell        *shell   = gimp_display_get_shell (display);
 
-  gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
+  gimp_display_shell_set_override_cursor (shell, (GimpCursorType) GDK_WATCH);
 
   if (region_sel->segs)
     {

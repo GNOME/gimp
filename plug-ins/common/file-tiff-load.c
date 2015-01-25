@@ -844,6 +844,7 @@ load_image (const gchar        *filename,
             case COMPRESSION_LZW:
             case COMPRESSION_PACKBITS:
             case COMPRESSION_DEFLATE:
+            case COMPRESSION_ADOBE_DEFLATE:
             case COMPRESSION_JPEG:
             case COMPRESSION_CCITTFAX3:
             case COMPRESSION_CCITTFAX4:
@@ -1574,7 +1575,7 @@ load_contiguous (TIFF        *tif,
           src_buf = gegl_buffer_linear_new_from_data (buffer,
                                                       src_format,
                                                       GEGL_RECTANGLE (0, 0, cols, rows),
-                                                      GEGL_AUTO_ROWSTRIDE,
+                                                      tileWidth * bytes_per_pixel,
                                                       NULL, NULL);
 
           offset = 0;

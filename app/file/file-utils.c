@@ -256,7 +256,7 @@ file_utils_load_thumbnail (const gchar *filename)
       gimp_thumbnail_set_uri (thumbnail, uri);
 
       pixbuf = gimp_thumbnail_load_thumb (thumbnail,
-                                          GIMP_THUMBNAIL_SIZE_NORMAL,
+                                          (GimpThumbSize) GIMP_THUMBNAIL_SIZE_NORMAL,
                                           NULL);
     }
 

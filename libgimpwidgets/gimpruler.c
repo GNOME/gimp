@@ -119,7 +119,8 @@ static gboolean      gimp_ruler_expose        (GtkWidget      *widget,
                                                GdkEventExpose *event);
 
 static void          gimp_ruler_draw_ticks    (GimpRuler      *ruler);
-static void          gimp_ruler_draw_pos      (GimpRuler      *ruler);
+static void          gimp_ruler_draw_pos      (GimpRuler      *ruler,
+                                               cairo_t        *cr);
 static void          gimp_ruler_make_pixmap   (GimpRuler      *ruler);
 
 static PangoLayout * gimp_ruler_get_layout    (GtkWidget      *widget,
@@ -616,7 +617,7 @@ gimp_ruler_set_position (GimpRuler *ruler,
       priv->position = position;
       g_object_notify (G_OBJECT (ruler), "position");
 
-      gimp_ruler_draw_pos (ruler);
+      gimp_ruler_draw_pos (ruler, NULL);
     }
 }
 
@@ -894,7 +895,7 @@ gimp_ruler_expose (GtkWidget      *widget,
       cairo_set_source_surface (cr, priv->backing_store, 0, 0);
       cairo_paint (cr);
 
-      gimp_ruler_draw_pos (ruler);
+      gimp_ruler_draw_pos (ruler, cr);
 
       cairo_destroy (cr);
     }
@@ -1141,7 +1142,8 @@ out:
 }
 
 static void
-gimp_ruler_draw_pos (GimpRuler *ruler)
+gimp_ruler_draw_pos (GimpRuler *ruler,
+                     cairo_t   *cr)
 {
   GtkWidget        *widget = GTK_WIDGET (ruler);
   GtkStyle         *style  = gtk_widget_get_style (widget);
@@ -1183,25 +1185,33 @@ gimp_ruler_draw_pos (GimpRuler *ruler)
 
   if ((bs_width > 0) && (bs_height > 0))
     {
-      cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (widget));
       gdouble  lower;
       gdouble  upper;
       gdouble  position;
       gdouble  increment;
 
-      cairo_rectangle (cr,
-                       allocation.x, allocation.y,
-                       allocation.width, allocation.height);
-      cairo_clip (cr);
-
-      cairo_translate (cr, allocation.x, allocation.y);
-
-      /*  If a backing store exists, restore the ruler  */
-      if (priv->backing_store)
+      if (! cr)
         {
-          cairo_set_source_surface (cr, priv->backing_store, 0, 0);
-          cairo_rectangle (cr, priv->xsrc, priv->ysrc, bs_width, bs_height);
-          cairo_fill (cr);
+          cr = gdk_cairo_create (gtk_widget_get_window (widget));
+
+          cairo_rectangle (cr,
+                           allocation.x, allocation.y,
+                           allocation.width, allocation.height);
+          cairo_clip (cr);
+
+          cairo_translate (cr, allocation.x, allocation.y);
+
+          /*  If a backing store exists, restore the ruler  */
+          if (priv->backing_store)
+            {
+              cairo_set_source_surface (cr, priv->backing_store, 0, 0);
+              cairo_rectangle (cr, priv->xsrc, priv->ysrc, bs_width, bs_height);
+              cairo_fill (cr);
+            }
+        }
+      else
+        {
+          cairo_reference (cr);
         }
 
       position = gimp_ruler_get_position (ruler);

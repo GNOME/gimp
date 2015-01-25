@@ -57,6 +57,8 @@ typedef struct
 
 static gboolean parse_iso_codes                 (GHashTable  *base_lang_list,
                                                  GError     **error);
+
+#ifdef HAVE_ISO_CODES
 static void     iso_codes_parser_init           (void);
 static void     iso_codes_parser_start_element  (GMarkupParseContext  *context,
                                                  const gchar          *element_name,
@@ -71,6 +73,7 @@ static void     iso_codes_parser_end_element    (GMarkupParseContext  *context,
 
 static void     iso_codes_parser_start_unknown  (IsoCodesParser       *parser);
 static void     iso_codes_parser_end_unknown    (IsoCodesParser       *parser);
+#endif /* HAVE_ISO_CODES */
 
 /*
  * Language lists that we want to generate only once at program startup:
@@ -346,11 +349,12 @@ parse_iso_codes (GHashTable  *base_lang_list,
   gimp_xml_parser_free (xml_parser);
   g_hash_table_unref (parser.base_lang_list);
 
-#endif
+#endif /* HAVE_ISO_CODES */
 
   return success;
 }
 
+#ifdef HAVE_ISO_CODES
 static void
 iso_codes_parser_init (void)
 {
@@ -502,3 +506,4 @@ iso_codes_parser_end_unknown (IsoCodesParser *parser)
   if (parser->unknown_depth == 0)
     parser->state = parser->last_known_state;
 }
+#endif /* HAVE_ISO_CODES */

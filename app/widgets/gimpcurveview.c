@@ -906,7 +906,7 @@ gimp_curve_view_motion_notify (GtkWidget      *widget,
   GimpCurveView  *view       = GIMP_CURVE_VIEW (widget);
   GimpCurve      *curve      = view->curve;
   GtkAllocation   allocation;
-  GimpCursorType  new_cursor = GDK_X_CURSOR;
+  GdkCursorType   new_cursor = GDK_X_CURSOR;
   gint            border;
   gint            width, height;
   gdouble         x;

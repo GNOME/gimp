@@ -86,7 +86,7 @@
                 (aux-info
                     (show-button-bar "true")
                     (edit-active "true")
-                    (current-data "Standard")
+                    (current-data "Color History")
                     (zoom-factor "2.80"))))))
 (session-info "toplevel"
     (factory-entry "gimp-file-open-dialog")

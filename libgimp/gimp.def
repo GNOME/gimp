@@ -116,10 +116,10 @@ EXPORTS
 	gimp_context_set_brush_default_hardness
 	gimp_context_set_brush_default_size
 	gimp_context_set_brush_default_spacing
-	gimp_context_get_brush_force
+	gimp_context_set_brush_force
 	gimp_context_set_brush_hardness
 	gimp_context_set_brush_size
-	gimp_context_get_brush_spacing
+	gimp_context_set_brush_spacing
 	gimp_context_set_default_colors
 	gimp_context_set_defaults
 	gimp_context_set_dynamics

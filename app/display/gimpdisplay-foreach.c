@@ -285,7 +285,7 @@ gimp_displays_set_busy (Gimp *gimp)
       GimpDisplayShell *shell =
         gimp_display_get_shell (GIMP_DISPLAY (list->data));
 
-      gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
+      gimp_display_shell_set_override_cursor (shell, (GimpCursorType) GDK_WATCH);
     }
 }
 
