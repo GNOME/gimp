@@ -1388,6 +1388,7 @@ drawText (gint32    text_id,
   gdouble               letter_spacing;
   PangoAttribute       *letter_spacing_at;
   PangoAttrList        *attr_list = pango_attr_list_new ();
+  PangoFontMap         *fontmap;
 
   cairo_save (cr);
 
@@ -1440,8 +1441,13 @@ drawText (gint32    text_id,
   /* We are done with cairo's settings. It's time to create the
    * context
    */
-  cairo_set_font_options (cr, options);
-  context = pango_cairo_create_context (cr);
+  fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
+
+  pango_cairo_font_map_set_resolution (PANGO_CAIRO_FONT_MAP (fontmap), y_res);
+
+  context = pango_font_map_create_context (fontmap);
+  g_object_unref (fontmap);
+
   pango_cairo_context_set_font_options (context, options);
 
   /* Text Direction */
@@ -1458,6 +1464,7 @@ drawText (gint32    text_id,
    * layout
    */
   layout = pango_layout_new (context);
+  pango_layout_set_wrap (layout, PANGO_WRAP_WORD_CHAR);
 
   /* Font */
   font_family = gimp_text_layer_get_font (text_id);
@@ -1474,9 +1481,8 @@ drawText (gint32    text_id,
 
   pango_layout_set_font_description (layout, font_description);
 
-  /* Width and height */
+  /* Width */
   pango_layout_set_width (layout, gimp_drawable_width (text_id) * PANGO_SCALE);
-  pango_layout_set_height (layout, gimp_drawable_height (text_id) * PANGO_SCALE);
 
   /* Justification, and Alignment */
   justify = FALSE;
