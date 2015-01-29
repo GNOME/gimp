@@ -468,6 +468,22 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               }
               break;
 
+            case 'e': /* display's offsets in pixels */
+              {
+                gdouble scale = gimp_zoom_model_get_factor (shell->zoom);
+                gdouble offset_x = shell->offset_x / scale;
+                gdouble offset_y = shell->offset_y / scale;
+                i += print (title, title_len, i,
+                            scale >= 0.15 ? "%.0fx%.0f" : "%.2fx%.2f", offset_x, offset_y);
+              }
+            break;
+
+            case 'r': /* view rotation angle in degrees */
+              {
+                i += print (title, title_len, i, "%.1f", shell->rotate_angle);
+              }
+            break;
+
             case '\xc3': /* utf-8 extended char */
               {
                 format ++;

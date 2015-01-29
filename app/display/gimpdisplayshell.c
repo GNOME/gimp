@@ -1084,11 +1084,14 @@ gimp_display_shell_real_scrolled (GimpDisplayShell *shell)
   if (! shell->display)
     return;
 
+  gimp_display_shell_title_update (shell);
+
   user_context = gimp_get_user_context (shell->display->gimp);
 
   if (shell->display == gimp_context_get_display (user_context))
     {
       gimp_display_shell_set_priority_viewport (shell);
+
     }
 }
 
@@ -1099,6 +1102,8 @@ gimp_display_shell_real_rotated (GimpDisplayShell *shell)
 
   if (! shell->display)
     return;
+
+  gimp_display_shell_title_update (shell);
 
   user_context = gimp_get_user_context (shell->display->gimp);
 
