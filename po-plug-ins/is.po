@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&"
 "keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-01-08 06:16+0000\n"
-"PO-Revision-Date: 2015-01-26 15:29+0000\n"
+"PO-Revision-Date: 2015-01-29 16:13+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -3401,14 +3401,13 @@ msgstr "Villa við að skrifa úttaksskrá."
 
 #. translators: the %d is *always* 240 here
 #: ../plug-ins/common/file-gif-save.c:2395
-#, fuzzy, c-format
+#, c-format
 msgid "The default comment is limited to %d characters."
-msgstr "þessi textareitur er takmarkaður við %d tákn."
+msgstr "Sjálfgefin athugasemd er takmörkuð við %d stafi."
 
 #: ../plug-ins/common/file-gih.c:209 ../plug-ins/common/file-gih.c:230
-#, fuzzy
 msgid "GIMP brush (animated)"
-msgstr "Stöðva hreyfimyndir"
+msgstr "GIMP-pensill (hreyfimynd)"
 
 #: ../plug-ins/common/file-gih.c:482
 msgid "Error in GIMP brush pipe file."
@@ -3605,9 +3604,9 @@ msgid "JPEG 2000 image"
 msgstr "JPEG 2000 mynd"
 
 #: ../plug-ins/common/file-jp2-load.c:214
-#, fuzzy, c-format
+#, c-format
 msgid "Couldn't decode '%s'."
-msgstr "Gat ekki unnið úr myndskrá"
+msgstr "Gat ekki afkóðað '%s'."
 
 #: ../plug-ins/common/file-jp2-load.c:237
 #, c-format
@@ -3800,9 +3799,9 @@ msgid "ZSoft PCX image"
 msgstr "ZSoft PCX mynd"
 
 #: ../plug-ins/common/file-pcx.c:373
-#, fuzzy, c-format
+#, c-format
 msgid "Could not read header from '%s'"
-msgstr "Gat ekki lesið haus frá '%s': %s"
+msgstr "Gat ekki lesið haus frá '%s'"
 
 #: ../plug-ins/common/file-pcx.c:384
 #, c-format
@@ -3811,19 +3810,19 @@ msgstr "'%s' er ekki PCX skrá"
 
 #: ../plug-ins/common/file-pcx.c:398 ../plug-ins/file-bmp/bmp-read.c:689
 #: ../plug-ins/file-psd/psd-load.c:301
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported or invalid image width: %d"
-msgstr "Myndin er með ógild hæð og/eða breidd"
+msgstr "Óstudd eða ógild breidd myndar: %d"
 
 #: ../plug-ins/common/file-pcx.c:404 ../plug-ins/file-bmp/bmp-read.c:695
 #: ../plug-ins/file-psd/psd-load.c:293
-#, fuzzy, c-format
+#, c-format
 msgid "Unsupported or invalid image height: %d"
-msgstr "Myndin er með ógild hæð og/eða breidd"
+msgstr "Óstudd eða ógild hæð myndar: %d"
 
 #: ../plug-ins/common/file-pcx.c:410
 msgid "Invalid number of bytes per line in PCX header"
-msgstr ""
+msgstr "Ótækur fjöldi bæta per línu í PCX-haus"
 
 #: ../plug-ins/common/file-pcx.c:418
 #, c-format
@@ -3832,17 +3831,17 @@ msgstr ""
 
 #: ../plug-ins/common/file-pcx.c:467
 msgid "Unusual PCX flavour, giving up"
-msgstr ""
+msgstr "Óvenjulegt tilbrigði PCX, gefst upp"
 
 #: ../plug-ins/common/file-pcx.c:686
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid X offset: %d"
-msgstr "‚-o SPÁSSÍA‛  ótæk línuhliðrun: %s"
+msgstr "Ógild X hliðrun: %d"
 
 #: ../plug-ins/common/file-pcx.c:692
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid Y offset: %d"
-msgstr "‚-o SPÁSSÍA‛  ótæk línuhliðrun: %s"
+msgstr "Ógild Y hliðrun: %d"
 
 #: ../plug-ins/common/file-pcx.c:698
 #, c-format
@@ -3891,7 +3890,7 @@ msgstr "Flytja _inn"
 
 #: ../plug-ins/common/file-pdf-load.c:1126
 msgid "Error getting number of pages from the given PDF file."
-msgstr ""
+msgstr "Það tókst ekki að sækja blaðsíðufjölda úr tilgreindri PDF-skrá."
 
 #: ../plug-ins/common/file-pdf-load.c:1168
 msgid "_Width (pixels):"
@@ -3915,7 +3914,7 @@ msgstr "Nota _afstöllun"
 #: ../plug-ins/common/file-wmf.c:698 ../plug-ins/print/print-page-layout.c:301
 #, c-format
 msgid "pixels/%a"
-msgstr "Piksler/%a"
+msgstr "mynddílar/%a"
 
 #: ../plug-ins/common/file-pdf-save.c:315
 msgid "_Create multipage PDF..."
@@ -3971,9 +3970,8 @@ msgid "Remove the selected pages"
 msgstr "Fjarlægja valdar síður"
 
 #: ../plug-ins/common/file-pdf-save.c:915
-#, fuzzy
 msgid "Add this image"
-msgstr "Vista þessa mynd"
+msgstr "Bæta við þessari mynd"
 
 #: ../plug-ins/common/file-pdf-save.c:1028
 msgid "Error! In order to save the file, at least one image should be added!"
@@ -3994,9 +3992,9 @@ msgid "PNG image"
 msgstr "PNG mynd"
 
 #: ../plug-ins/common/file-png.c:645
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading PNG file: %s"
-msgstr "Villa við að hlaða inn forskoðun á skrá"
+msgstr "Villa við að hlaða inn PNG-skrá: %s"
 
 #: ../plug-ins/common/file-png.c:733
 #, c-format
@@ -4004,9 +4002,9 @@ msgid "Error creating PNG read struct while saving '%s'."
 msgstr ""
 
 #: ../plug-ins/common/file-png.c:743
-#, fuzzy, c-format
+#, c-format
 msgid "Error while reading '%s'. File corrupted?"
-msgstr "villa við lestur á asx skrá"
+msgstr "Villa við lestur á '%s'. Skráin skemmd?"
 
 #: ../plug-ins/common/file-png.c:877
 #, c-format
@@ -4056,9 +4054,9 @@ msgid "Error while saving '%s'. Could not save image."
 msgstr ""
 
 #: ../plug-ins/common/file-png.c:1979
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading UI file '%s': %s"
-msgstr "Villa við að hlaða inn forskoðun á skrá"
+msgstr "Villa við að hlaða inn UI-skrá '%s': %s"
 
 #: ../plug-ins/common/file-png.c:1980
 msgid "Unknown error"
@@ -12040,9 +12038,8 @@ msgid "Open IFS Fractal file"
 msgstr "get ekki opnað biðminnisskrá %1"
 
 #: ../plug-ins/imagemap/imap_about.c:42
-#, fuzzy
 msgid "Image Map Plug-In"
-msgstr "Hjálparforrit gat ekki opnað mynd"
+msgstr "Hjálparforrit myndhlutakorta"
 
 #: ../plug-ins/imagemap/imap_about.c:46
 msgid "Copyright © 1999-2005 by Maurits Rijk"
@@ -12335,14 +12332,12 @@ msgid "_URL to activate when this area is clicked: (required)"
 msgstr ""
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:264
-#, fuzzy
 msgid "Select HTML file"
-msgstr "Í HTML skrá..."
+msgstr "Veldu HTML skrá"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:273
-#, fuzzy
 msgid "Relati_ve link"
-msgstr "Afrita vistfang tengils"
+msgstr "_Afstæður tengill"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:279
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
@@ -12370,101 +12365,85 @@ msgid "_JavaScript"
 msgstr "_JavaScript"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:460
-#, fuzzy
 msgid "Area Settings"
-msgstr "Stillingar disksneiðar:"
+msgstr "Stillingar svæðis"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:502
-#, fuzzy, c-format
+#, c-format
 msgid "Area #%d Settings"
-msgstr "Stillingar disksneiðar:"
+msgstr "Stillingar #%d svæðis"
 
 #: ../plug-ins/imagemap/imap_file.c:47 ../plug-ins/imagemap/imap_menu.c:70
-#, fuzzy
 msgid "Error opening file"
 msgstr "Villa við opnun skráar"
 
 #: ../plug-ins/imagemap/imap_file.c:67
-#, fuzzy
 msgid "Load Image Map"
-msgstr "Hlaða XNU diskmynd."
+msgstr "Hlaða inn myndhlutakorti"
 
 #: ../plug-ins/imagemap/imap_file.c:122
-#, fuzzy
 msgid "Save Image Map"
-msgstr "Vista mynd sem"
+msgstr "Vista myndhlutakort"
 
 #: ../plug-ins/imagemap/imap_grid.c:196
 msgid "Grid Settings"
 msgstr "Stillingar hnitanets"
 
 #: ../plug-ins/imagemap/imap_grid.c:200
-#, fuzzy
 msgid "_Snap-to grid enabled"
-msgstr "Láta _glugga grípa í aðra glugga"
+msgstr "_Grípa í hnitanet virkt"
 
 #: ../plug-ins/imagemap/imap_grid.c:206
-#, fuzzy
 msgid "Grid Visibility and Type"
-msgstr "Movable Type og TypePad"
+msgstr "Gerð og sýnileiki hnitanets"
 
 #: ../plug-ins/imagemap/imap_grid.c:213
-#, fuzzy
 msgid "_Hidden"
 msgstr "_Falið"
 
 #: ../plug-ins/imagemap/imap_grid.c:221
-#, fuzzy
 msgid "_Lines"
-msgstr "Línur"
+msgstr "_Línur"
 
 #: ../plug-ins/imagemap/imap_grid.c:230
 msgid "C_rosses"
-msgstr ""
+msgstr "K_rossar"
 
 #: ../plug-ins/imagemap/imap_grid.c:238
-#, fuzzy
 msgid "Grid Granularity"
-msgstr "Sýna &grind"
+msgstr "Nákvæmni hnitanets"
 
 #: ../plug-ins/imagemap/imap_grid.c:245
-#, fuzzy
 msgid "_Width"
-msgstr "_Breidd:"
+msgstr "_Breidd"
 
 #: ../plug-ins/imagemap/imap_grid.c:251
-#, fuzzy
 msgid "_Height"
-msgstr "_Hæð:"
+msgstr "_Hæð"
 
 #: ../plug-ins/imagemap/imap_grid.c:265
-#, fuzzy
 msgid "Grid Offset"
-msgstr "Y staða"
+msgstr "Hliðrun hnitanets"
 
 #: ../plug-ins/imagemap/imap_grid.c:272
-#, fuzzy
 msgid "pixels from l_eft"
-msgstr "Skera af punkta að neðan"
+msgstr "mynddílar að _neðan"
 
 #: ../plug-ins/imagemap/imap_grid.c:277
-#, fuzzy
 msgid "pixels from _top"
-msgstr "Skera af punkta að ofan"
+msgstr "mynddílar að _ofan"
 
 #: ../plug-ins/imagemap/imap_grid.c:288
 msgid "_Preview"
-msgstr "_Forsýning"
+msgstr "_Forskoðun"
 
 #: ../plug-ins/imagemap/imap_main.c:121
-#, fuzzy
 msgid "Create a clickable imagemap"
-msgstr "HTML myndakortsritill"
+msgstr "Búa til ásmellanlegt myndahlutakort"
 
 #: ../plug-ins/imagemap/imap_main.c:126
-#, fuzzy
 msgid "_Image Map..."
-msgstr "Myndkort"
+msgstr "Mynd_hlutakort..."
 
 #: ../plug-ins/imagemap/imap_main.c:490
 #: ../plug-ins/imagemap/imap_settings.c:170
@@ -12472,39 +12451,33 @@ msgid "<Untitled>"
 msgstr "<Ónefnt>"
 
 #: ../plug-ins/imagemap/imap_main.c:632
-#, fuzzy
 msgid "Some data has been changed!"
-msgstr "Lykilorði hefur verið breytt."
+msgstr "Einhver gögn hafa breyst!"
 
 #: ../plug-ins/imagemap/imap_main.c:635
-#, fuzzy
 msgid "Do you really want to discard your changes?"
-msgstr "Viltu virkilega afmá allar óvistaðar breytingar?"
+msgstr "Viltu virkilega henda öllum óvistuðum breytingum?"
 
 #: ../plug-ins/imagemap/imap_main.c:847
-#, fuzzy, c-format
+#, c-format
 msgid "File \"%s\" saved."
-msgstr "Skrá vistuð."
+msgstr "Skrá \"%s\" vistuð."
 
 #: ../plug-ins/imagemap/imap_main.c:851
-#, fuzzy
 msgid "Couldn't save file:"
-msgstr "Gat ekki vistað skrána „%1$s“: %2$s"
+msgstr "Gat ekki vistað skrá:"
 
 #: ../plug-ins/imagemap/imap_main.c:864
-#, fuzzy
 msgid "Image size has changed."
-msgstr "BMP myndin er með óstudda stærð hausa"
+msgstr "Stærð myndar hefur breyst."
 
 #: ../plug-ins/imagemap/imap_main.c:865
-#, fuzzy
 msgid "Resize area's?"
-msgstr "svæði fyrir diskminni (swap)"
+msgstr "Breyta stærð svæðis?"
 
 #: ../plug-ins/imagemap/imap_main.c:898
-#, fuzzy
 msgid "Couldn't read file:"
-msgstr "Gat ekki lesið upphaf sniðskráar: %1"
+msgstr "Gat ekki lesið skrá:"
 
 #: ../plug-ins/imagemap/imap_main.c:945
 #, c-format
@@ -12566,9 +12539,8 @@ msgid "Edit Area _Info..."
 msgstr "Bre_yta vörpunarupplýsingum..."
 
 #: ../plug-ins/imagemap/imap_menu.c:166
-#, fuzzy
 msgid "Edit selected area info"
-msgstr "Breyta nafni valinnar myndar"
+msgstr "Breyta upplýsingum um valið svæði"
 
 #: ../plug-ins/imagemap/imap_menu.c:167
 msgid "Preferences"
