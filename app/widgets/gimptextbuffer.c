@@ -844,6 +844,10 @@ gimp_text_buffer_get_font_tag (GimpTextBuffer *buffer,
   GList      *list;
   GtkTextTag *tag;
   gchar       name[256];
+  PangoFontDescription *pfd = pango_font_description_from_string (font);
+  char *description = pango_font_description_to_string (pfd);
+
+  pango_font_description_free (pfd);
 
   for (list = buffer->font_tags; list; list = g_list_next (list))
     {
@@ -853,22 +857,23 @@ gimp_text_buffer_get_font_tag (GimpTextBuffer *buffer,
 
       tag_font = gimp_text_tag_get_font (tag);
 
-      if (! strcmp (font, tag_font))
+      if (! strcmp (description, tag_font))
         {
           g_free (tag_font);
+          g_free (description);
           return tag;
         }
 
       g_free (tag_font);
     }
 
-  g_snprintf (name, sizeof (name), "font-%s", font);
+  g_snprintf (name, sizeof (name), "font-%s", description);
 
   tag = gtk_text_buffer_create_tag (GTK_TEXT_BUFFER (buffer),
                                     name,
-                                    "font", font,
+                                    "font", description,
                                     NULL);
-
+  g_free (description);
   buffer->font_tags = g_list_prepend (buffer->font_tags, tag);
 
   return tag;
