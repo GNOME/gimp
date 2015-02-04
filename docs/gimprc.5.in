@@ -542,6 +542,10 @@ certain % character sequences are recognised and expanded as follows:
 .br
 %o  the name of the image's color profile
 .br
+%e  view offsets in display pixels
+.br
+%r  view rotation angle in degrees
+.br
 
 .br
 
@@ -612,6 +616,10 @@ certain % character sequences are recognised and expanded as follows:
 %Y  the height of the active layer/channel in real-world units
 .br
 %o  the name of the image's color profile
+.br
+%e  view offsets in display pixels
+.br
+%r  view rotation angle in degrees
 .br
 
 .br
