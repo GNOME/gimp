@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&"
 "keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-01-08 06:16+0000\n"
-"PO-Revision-Date: 2015-02-04 18:11+0000\n"
+"PO-Revision-Date: 2015-02-05 13:11+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -2884,7 +2884,7 @@ msgstr "St_yrkur:"
 
 #: ../plug-ins/common/edge-sobel.c:108
 msgid "Specialized direction-dependent edge detection"
-msgstr ""
+msgstr "Sértæk stefnuháð greining brúna"
 
 #: ../plug-ins/common/edge-sobel.c:121
 msgid "_Sobel..."
@@ -2892,80 +2892,71 @@ msgstr "_Sobel..."
 
 #: ../plug-ins/common/edge-sobel.c:231
 msgid "Sobel Edge Detection"
-msgstr ""
+msgstr "Sobel-greining brúna"
 
 #: ../plug-ins/common/edge-sobel.c:261
 msgid "Sobel _horizontally"
-msgstr ""
+msgstr "Sobel _lárétt"
 
 #: ../plug-ins/common/edge-sobel.c:273
-#, fuzzy
 msgid "Sobel _vertically"
-msgstr "Spegla lóðrétt"
+msgstr "Sobel lóð_rétt"
 
 #: ../plug-ins/common/edge-sobel.c:285
 msgid "_Keep sign of result (one direction only)"
 msgstr ""
 
 #: ../plug-ins/common/edge-sobel.c:372
-#, fuzzy
 msgid "Sobel edge detecting"
-msgstr "Leita að netbúnaði"
+msgstr "Leita að brúnum með Sobel-aðferðinni"
 
 #: ../plug-ins/common/edge.c:148
 msgid "Several simple methods for detecting edges"
-msgstr ""
+msgstr "Ýmsar einfaldar aðferðir við að finna brúnir/útlínur"
 
 #: ../plug-ins/common/edge.c:153
 msgid "_Edge..."
 msgstr "_Brún..."
 
 #: ../plug-ins/common/edge.c:225
-#, fuzzy
 msgid "Edge detection"
-msgstr "Sjálfvirk greining"
+msgstr "Greining brúna"
 
 #: ../plug-ins/common/edge.c:623
-#, fuzzy
 msgid "Edge Detection"
-msgstr "Sjálfvirk greining"
+msgstr "Greining brúna"
 
 #: ../plug-ins/common/edge.c:659
 msgid "Sobel"
 msgstr "Sobel"
 
 #: ../plug-ins/common/edge.c:660
-#, fuzzy
 msgid "Prewitt compass"
-msgstr "Merkingar Áttavita"
+msgstr "Prewitt áttaviti"
 
 #: ../plug-ins/common/edge.c:661 ../plug-ins/common/sinus.c:905
 msgid "Gradient"
 msgstr "Litstigull"
 
 #: ../plug-ins/common/edge.c:662
-#, fuzzy
 msgid "Roberts"
-msgstr "David Roberts"
+msgstr "Roberts"
 
 #: ../plug-ins/common/edge.c:663
-#, fuzzy
 msgid "Differential"
 msgstr "Diffurfall"
 
 #: ../plug-ins/common/edge.c:673
-#, fuzzy
 msgid "_Algorithm:"
 msgstr "R_eiknirit:"
 
 #: ../plug-ins/common/edge.c:681
-#, fuzzy
 msgid "A_mount:"
 msgstr "St_yrkur:"
 
 #: ../plug-ins/common/emboss.c:125
 msgid "Simulate an image created by embossing"
-msgstr ""
+msgstr "Herma eftir upphleyptri lágmynd"
 
 #: ../plug-ins/common/emboss.c:131
 msgid "_Emboss..."
@@ -2981,14 +2972,13 @@ msgstr "Aðgerð"
 
 #: ../plug-ins/common/emboss.c:480
 msgid "_Bumpmap"
-msgstr ""
+msgstr "Ó_jöfnumynd"
 
 #: ../plug-ins/common/emboss.c:481
 msgid "_Emboss"
 msgstr "_Upphleypa"
 
 #: ../plug-ins/common/emboss.c:513
-#, fuzzy
 msgid "E_levation:"
 msgstr "Hæ_kkun:"
 
@@ -3246,14 +3236,13 @@ msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgstr ""
 
 #: ../plug-ins/common/file-gbr.c:425 ../plug-ins/common/file-gbr.c:437
-#, fuzzy
 msgid "Unsupported brush format"
-msgstr "Skráarsnið ekki stutt"
+msgstr "Óstutt pensilsnið"
 
 #: ../plug-ins/common/file-gbr.c:449
-#, fuzzy, c-format
+#, c-format
 msgid "Error in GIMP brush file '%s'"
-msgstr "Villa við ritun '%s': %s"
+msgstr "Villa í GIMP-pensilskránni '%s'"
 
 #: ../plug-ins/common/file-gbr.c:457
 #, c-format
@@ -3296,7 +3285,7 @@ msgstr "Þetta er ekki GIF-skrá"
 
 #: ../plug-ins/common/file-gif-load.c:413
 msgid "Non-square pixels.  Image might look squashed."
-msgstr ""
+msgstr "Ekki ferningslaga mynddílar. Myndin gæti litið út sem kramin."
 
 #: ../plug-ins/common/file-gif-load.c:982
 #, c-format
@@ -3429,7 +3418,7 @@ msgstr "Nefnd pípa"
 
 #: ../plug-ins/common/file-gih.c:876
 msgid "Spacing (percent):"
-msgstr ""
+msgstr "Millibil (prósent):"
 
 #: ../plug-ins/common/file-gih.c:943
 msgid "Pixels"
@@ -3444,24 +3433,20 @@ msgid "Number of cells:"
 msgstr "Fjöldi reita:"
 
 #: ../plug-ins/common/file-gih.c:985
-#, fuzzy
 msgid " Rows of "
-msgstr "Raðir"
+msgstr " Raðir með "
 
 #: ../plug-ins/common/file-gih.c:997
-#, fuzzy
 msgid " Columns on each layer"
-msgstr "Vinna á laghulunni"
+msgstr " dálkum á hverju lagi"
 
 #: ../plug-ins/common/file-gih.c:1001
-#, fuzzy
 msgid " (Width Mismatch!) "
-msgstr "Lykilorð stemma ekki"
+msgstr " (breidd stemmir ekki!) "
 
 #: ../plug-ins/common/file-gih.c:1005
-#, fuzzy
 msgid " (Height Mismatch!) "
-msgstr "Lykilorð stemma ekki"
+msgstr " (hæð stemmir ekki!) "
 
 #: ../plug-ins/common/file-gih.c:1010
 msgid "Display as:"
