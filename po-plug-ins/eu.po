@@ -1,25 +1,26 @@
 # Basque translation of gimp-plug-ins.
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
-#
+# 
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2005, 2006, 2007, 2008, 2010.
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2011, 2013, 2014, 2015.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2011, 2013, 2014.
+# Edurne Labaka <elabaka@uzei.com>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins gimp-2-8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-20 21:10+0100\n"
-"PO-Revision-Date: 2015-01-20 21:13+0100\n"
+"POT-Creation-Date: 2015-02-07 15:35+0100\n"
+"PO-Revision-Date: 2015-01-29 15:23+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Poedit 1.6.10\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:120
@@ -261,7 +262,7 @@ msgstr "Alien mapa"
 #: ../plug-ins/common/alien-map.c:442 ../plug-ins/common/alien-map.c:466
 #: ../plug-ins/common/alien-map.c:490
 msgid "Number of cycles covering full value range"
-msgstr "Ziklo-kopurua balioen barruti osoa erabiliz"
+msgstr "Ziklo kopurua balioen barruti osoa erabiliz"
 
 #: ../plug-ins/common/alien-map.c:454 ../plug-ins/common/alien-map.c:478
 #: ../plug-ins/common/alien-map.c:502
@@ -426,7 +427,7 @@ msgstr "Animazioa optimizatzen"
 
 #: ../plug-ins/common/animation-play.c:169
 msgid "Preview a GIMP layer-based animation"
-msgstr "Aurrikusi GIMPeko geruzetan oinarritutako animazioa"
+msgstr "Aurreikusi GIMPeko geruzetan oinarritutako animazioa"
 
 #: ../plug-ins/common/animation-play.c:174
 msgid "_Playback..."
@@ -638,7 +639,7 @@ msgstr "_Desplazamendua:"
 
 #: ../plug-ins/common/blinds.c:321
 msgid "_Number of segments:"
-msgstr "_Segmentu-kopurua:"
+msgstr "_Segmentu kopurua:"
 
 #: ../plug-ins/common/blur-gauss-selective.c:104
 msgid "Blur neighboring pixels, but only in low-contrast areas"
@@ -733,7 +734,7 @@ msgstr "Mugimendu-lausotzea"
 
 #: ../plug-ins/common/blur-motion.c:1046
 msgid "Blur Type"
-msgstr "Lausotze-mota"
+msgstr "Lausotze mota"
 
 #: ../plug-ins/common/blur-motion.c:1050
 msgctxt "blur-type"
@@ -827,7 +828,7 @@ msgstr "_Lodiera:"
 #: ../plug-ins/common/border-average.c:412
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:910
 msgid "Number of Colors"
-msgstr "Kolore-kopurua"
+msgstr "Kolore kopurua"
 
 #: ../plug-ins/common/border-average.c:420
 msgid "_Bucket size:"
@@ -871,7 +872,7 @@ msgstr "Sinusoidala"
 
 #: ../plug-ins/common/bump-map.c:850
 msgid "_Map type:"
-msgstr "_Mapa-mota:"
+msgstr "_Mapa mota:"
 
 #. Compensate darkening
 #: ../plug-ins/common/bump-map.c:855
@@ -942,7 +943,7 @@ msgstr "Beltzaren _ehunekoa:"
 
 #: ../plug-ins/common/channel-mixer.c:175
 msgid "Alter colors by mixing RGB Channels"
-msgstr "Aldatu koloreak GBU kanalak nahastuz"
+msgstr "Aldatu koloreak GBU kanalak nahasiz"
 
 #: ../plug-ins/common/channel-mixer.c:180
 msgid "Channel Mi_xer..."
@@ -1331,7 +1332,7 @@ msgstr "(bat ere ez)"
 
 #: ../plug-ins/common/cml-explorer.c:460
 msgid "Create abstract Coupled-Map Lattice patterns"
-msgstr "Sortu Coupled-Map-Lattice eredu abstraktoak"
+msgstr "Sortu Coupled-Map-Lattice eredu abstraktuak"
 
 #: ../plug-ins/common/cml-explorer.c:471
 msgid "CML _Explorer..."
@@ -1449,7 +1450,7 @@ msgstr "_Hainb auk."
 
 #: ../plug-ins/common/cml-explorer.c:1572
 msgid "Function type:"
-msgstr "Funtzio-mota:"
+msgstr "Funtzio mota:"
 
 #: ../plug-ins/common/cml-explorer.c:1588
 msgid "Composition:"
@@ -1539,7 +1540,7 @@ msgstr "Abisua: '%s' ez da formatu zaharreko fitxategia."
 #: ../plug-ins/common/cml-explorer.c:2241
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
-msgstr "Abisua: '%s' CML arakaitzaile berriagorako parametro-fitxategia da."
+msgstr "Abisua: '%s' CML arakatzaile berriagorako parametro-fitxategia da."
 
 #: ../plug-ins/common/cml-explorer.c:2304
 msgid "Error: failed to load parameters"
@@ -2300,7 +2301,7 @@ msgstr "_Behekoa"
 
 #: ../plug-ins/common/curve-bend.c:1415
 msgid "Curve Type"
-msgstr "Kurba-mota"
+msgstr "Kurba mota"
 
 #: ../plug-ins/common/curve-bend.c:1419
 msgid "Smoot_h"
@@ -2550,7 +2551,7 @@ msgid ""
 "can be used for things like crop marks that have to show up on all channels."
 msgstr ""
 "Aurreko planoko koloreko pixelak beltzez agertuko dira irteerako irudi "
-"guztietan. Erabilpenetariko bat mozketako marken gisa erabiltzea da kanal "
+"guztietan. Erabileretako bat mozketako marken gisa erabiltzea da kanal "
 "guztietan erakusteko."
 
 #: ../plug-ins/common/deinterlace.c:91
@@ -2847,7 +2848,7 @@ msgstr "Garbitu"
 
 #: ../plug-ins/common/edge-neon.c:134
 msgid "Simulate the glowing boundary of a neon light"
-msgstr "Simulatu dirdira-muga (neoizko argiarena)"
+msgstr "Simulatu dirdira-muga (neonezko argiarena)"
 
 #: ../plug-ins/common/edge-neon.c:139
 msgid "_Neon..."
@@ -3206,7 +3207,7 @@ msgstr "Ezin izan da alfa kanalak dituzten irudiak gorde."
 #: ../plug-ins/common/file-ps.c:1217 ../plug-ins/common/file-xwd.c:627
 #: ../plug-ins/file-fits/fits.c:468 ../plug-ins/file-xjt/xjt.c:1695
 msgid "Cannot operate on unknown image types."
-msgstr "Ezin izan da irudi-mota ezezagunekin lan egin"
+msgstr "Ezin izan da irudi mota ezezagunekin lan egin"
 
 #: ../plug-ins/common/file-gbr.c:154 ../plug-ins/common/file-gbr.c:175
 msgid "GIMP brush"
@@ -3296,8 +3297,8 @@ msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
 msgstr ""
-"GIF: dokumentatu gabeko GIF %d konposaketa mota ezin da kudeatu. Animazioa "
-"ez da egokiro erreproduzituko edo berriro gordeko."
+"GIF: dokumentatu gabeko GIF %d konposizio mota ezin da kudeatu. Animazioa ez "
+"da egokiro erreproduzituko edo berriro gordeko."
 
 #: ../plug-ins/common/file-gif-save.c:476
 msgid "Couldn't simply reduce colors further. Saving as opaque."
@@ -3426,7 +3427,7 @@ msgstr "Gelaxka-tamaina:"
 
 #: ../plug-ins/common/file-gih.c:960
 msgid "Number of cells:"
-msgstr "Gelaxka-kopurua:"
+msgstr "Gelaxka kopurua:"
 
 #: ../plug-ins/common/file-gih.c:985
 msgid " Rows of "
@@ -3478,7 +3479,7 @@ msgstr ""
 "Zoratuta zaude?\n"
 "\n"
 "Izugarrizko HTML fitxategi bat\n"
-"sortzear zaude, eta horrek ziurrenik\n"
+"sortzear zaude, eta horrek ziur asko\n"
 "arakatzailea kraskatuko du."
 
 #. HTML Page Options
@@ -3560,7 +3561,7 @@ msgstr "_Ertza:"
 
 #: ../plug-ins/common/file-html-table.c:573
 msgid "The number of pixels in the table border."
-msgstr "Taularen ertzeko pixel-kopurua"
+msgstr "Taularen ertzeko pixel kopurua"
 
 #: ../plug-ins/common/file-html-table.c:588
 msgid "The width for each table cell.  Can be a number or a percent."
@@ -4017,7 +4018,7 @@ msgstr "Errorea '%s' irakurtzean. Fitxategia hondatuta dago?"
 #: ../plug-ins/common/file-png.c:877
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
-msgstr "Kolore modelu ezezaguna '%s' PNG fitxategian."
+msgstr "Kolore modelo ezezaguna '%s' PNG fitxategian."
 
 #: ../plug-ins/common/file-png.c:888
 #, c-format
@@ -4029,8 +4030,8 @@ msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr ""
-"PNG fitxategiak desplazamendu bat zehazten du, geruza irudiaren kanpoan "
-"kokatu dezakelarik."
+"PNG fitxategiak desplazamendu bat zehazten du, geruza irudiaren kanpoan koka "
+"dezakeena."
 
 #: ../plug-ins/common/file-png.c:1244
 msgid "Apply PNG Offset"
@@ -4398,7 +4399,7 @@ msgstr "B, G, R, X (bmp-estiloa)"
 
 #: ../plug-ins/common/file-raw.c:1194
 msgid "_Palette Type:"
-msgstr "_Paleta-mota:"
+msgstr "_Paleta mota:"
 
 #: ../plug-ins/common/file-raw.c:1205
 msgid "Off_set:"
@@ -4418,7 +4419,7 @@ msgstr "Irudi gordina"
 
 #: ../plug-ins/common/file-raw.c:1259
 msgid "RGB Save Type"
-msgstr "GBU gordetze-mota"
+msgstr "GBU gordetze mota"
 
 #: ../plug-ins/common/file-raw.c:1263
 msgid "Standard (R,G,B)"
@@ -4430,7 +4431,7 @@ msgstr "Planar (RRR,GGG,BBB)"
 
 #: ../plug-ins/common/file-raw.c:1269
 msgid "Indexed Palette Type"
-msgstr "Indexatutako paleta-mota"
+msgstr "Indexatutako paleta mota"
 
 #: ../plug-ins/common/file-sunras.c:217 ../plug-ins/common/file-sunras.c:237
 msgid "SUN Rasterfile image"
@@ -4443,7 +4444,7 @@ msgstr "Ezin da '%s' SUN-raster fitxategi gisa ireki"
 
 #: ../plug-ins/common/file-sunras.c:414
 msgid "The type of this SUN-rasterfile is not supported"
-msgstr "SUN-raster fitxategi-mota hori ez da onartzen"
+msgstr "SUN-raster fitxategi mota hori ez da onartzen"
 
 #: ../plug-ins/common/file-sunras.c:443
 #, c-format
@@ -4505,7 +4506,7 @@ msgstr "Alfa kanalak dituzten irudiak ezin dira SUNRAS gisa gorde."
 
 #: ../plug-ins/common/file-sunras.c:557
 msgid "Can't operate on unknown image types"
-msgstr "Ezin da irudi-mota ezezagunekin lan egin"
+msgstr "Ezin da irudi mota ezezagunekin lan egin"
 
 #: ../plug-ins/common/file-sunras.c:1086 ../plug-ins/common/file-sunras.c:1177
 #: ../plug-ins/common/file-sunras.c:1258 ../plug-ins/common/file-sunras.c:1353
@@ -4682,13 +4683,12 @@ msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
 msgstr ""
-"Soilik argazki monokromoak konprimi daitezke  \"CCITT Group 4\"-rekin edo "
-"\"CCITT "
-"Group 3\"-rekin."
+"Irudi monokromoak bakarrik konprima daitezke \"CCITT Group 4\" edo \"CCITT "
+"Group 3\" erabiliz."
 
 #: ../plug-ins/common/file-tiff-save.c:830
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
-msgstr "Indexatutako argazkiak ezin dira 'JPEG'-ekin konprimitu."
+msgstr "Irudi indexatuak ezin dira konprimatu \"JPEG\" erabiliz."
 
 #: ../plug-ins/common/file-tiff-save.c:933
 msgid ""
@@ -4788,7 +4788,7 @@ msgid ""
 "No image data type specified"
 msgstr ""
 "'%s':\n"
-"Ez da irudi-motarik zehaztu"
+"Ez da irudi motarik zehaztu"
 
 #. The image is not black-and-white.
 #: ../plug-ins/common/file-xbm.c:1000
@@ -4866,7 +4866,7 @@ msgid ""
 "You must arrange layers so that all of them have an intersection."
 msgstr ""
 "Ezin da puntu aktiboa ezarri.\n"
-"Geruzak antolatu behar dituzu guzti haiek gurutzapen bat edukitzeko."
+"Geruzak antolatu behar dituzu guzti haiek ebakidura bat edukitzeko."
 
 #: ../plug-ins/common/file-xmc.c:664
 #, c-format
@@ -5070,7 +5070,7 @@ msgid ""
 msgstr ""
 "Kurtsorea ongi gorde da, baina marko bat edo gehiago ditu %i px baino "
 "handiagoak diren zabalera edo altuerarekin.\n"
-"Ingurune batzuetan, pantaila ankazgora jarri dezake."
+"Ingurune batzuetan, pantaila hankaz gora jarri dezake."
 
 #: ../plug-ins/common/file-xmc.c:1719
 msgid ""
@@ -5162,7 +5162,7 @@ msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
 msgstr ""
-"%s XWD fitxategiak %d formatua, %d sakoneraeta %d bit pixeleko ditu.Une "
+"%s XWD fitxategiak %d formatua, %d sakonera eta %d bit pixeleko ditu. Une "
 "honetan hori ez da onartzen."
 
 #: ../plug-ins/common/file-xwd.c:616
@@ -5184,7 +5184,7 @@ msgstr "Errorea GBU irudia idaztean"
 
 #: ../plug-ins/common/film.c:217
 msgid "Combine several images on a film strip"
-msgstr "Konbinatu hainbat irudi filme baten zatian"
+msgstr "Konbinatu hainbat irudi film baten zatian"
 
 #: ../plug-ins/common/film.c:222
 msgid "_Filmstrip..."
@@ -5690,7 +5690,7 @@ msgstr "A_nimatu"
 
 #: ../plug-ins/common/iwarp.c:1050
 msgid "Number of _frames:"
-msgstr "_Marko-kopurua:"
+msgstr "_Marko kopurua:"
 
 #: ../plug-ins/common/iwarp.c:1059
 msgid "R_everse"
@@ -5791,7 +5791,7 @@ msgstr "Puzzlea"
 
 #: ../plug-ins/common/jigsaw.c:2423
 msgid "Number of Tiles"
-msgstr "Pieza-kopurua"
+msgstr "Pieza kopurua"
 
 #: ../plug-ins/common/jigsaw.c:2438
 msgid "Number of pieces going across"
@@ -5819,7 +5819,7 @@ msgstr "_Islak:"
 
 #: ../plug-ins/common/jigsaw.c:2500
 msgid "The amount of highlighting on the edges of each piece"
-msgstr "Pieza bakoitzaren ertzetako isla-kopurua"
+msgstr "Pieza bakoitzaren ertzetako isla kopurua"
 
 #. frame for primitive radio buttons
 #: ../plug-ins/common/jigsaw.c:2517
@@ -5950,7 +5950,7 @@ msgstr "GBU laneko espazioa (%s)"
 
 #: ../plug-ins/common/lcms.c:1576
 msgid "Convert to ICC Color Profile"
-msgstr "Bihurtu ICC kolore-profilara"
+msgstr "Bihurtu ICC kolore-profilera"
 
 #: ../plug-ins/common/lcms.c:1577
 msgid "Assign ICC Color Profile"
@@ -5986,19 +5986,19 @@ msgstr "Helburuko kolore-profila ez da GBU kolore-espaziokoa."
 
 #: ../plug-ins/common/lens-apply.c:108
 msgid "Simulate an elliptical lens over the image"
-msgstr "Simulatu lente eliptikoa irudiaren gainean"
+msgstr "Simulatu leiar eliptikoa irudiaren gainean"
 
 #: ../plug-ins/common/lens-apply.c:114
 msgid "Apply _Lens..."
-msgstr "Aplikatu _lentea..."
+msgstr "Aplikatu _leiarra..."
 
 #: ../plug-ins/common/lens-apply.c:181
 msgid "Applying lens"
-msgstr "Lenteak aplikatzen"
+msgstr "Leiarrak aplikatzen"
 
 #: ../plug-ins/common/lens-apply.c:394
 msgid "Lens Effect"
-msgstr "Lentearen efektua"
+msgstr "Leiarraren efektua"
 
 #: ../plug-ins/common/lens-apply.c:429
 msgid "_Keep original surroundings"
@@ -6018,23 +6018,23 @@ msgstr "_Bihurtu inguruak garden"
 
 #: ../plug-ins/common/lens-apply.c:477
 msgid "_Lens refraction index:"
-msgstr "_Lentearen errefrakzio-indizea:"
+msgstr "_Leiarraren errefrakzio-indizea:"
 
 #: ../plug-ins/common/lens-distortion.c:113
 msgid "Corrects lens distortion"
-msgstr "Lentearen distortsioa zuzentzen du"
+msgstr "Leiarraren distortsioa zuzentzen du"
 
 #: ../plug-ins/common/lens-distortion.c:118
 msgid "Lens Distortion..."
-msgstr "Lentearen distortsioa..."
+msgstr "Leiarraren distortsioa..."
 
 #: ../plug-ins/common/lens-distortion.c:379
 msgid "Lens distortion"
-msgstr "Lentearen distortsioa"
+msgstr "Leiarraren distortsioa"
 
 #: ../plug-ins/common/lens-distortion.c:479
 msgid "Lens Distortion"
-msgstr "Lentearen distortsioa"
+msgstr "Leiarraren distortsioa"
 
 #: ../plug-ins/common/lens-distortion.c:518
 msgid "_Main:"
@@ -6062,19 +6062,19 @@ msgstr "_Y desplazamendua:"
 
 #: ../plug-ins/common/lens-flare.c:183
 msgid "Add a lens flare effect"
-msgstr "Gehitu erlantz-efektuaren lentea"
+msgstr "Gehitu erlantz-efektuaren leiarra"
 
 #: ../plug-ins/common/lens-flare.c:190
 msgid "Lens _Flare..."
-msgstr "Lenteen _erlantza"
+msgstr "Leiarren _erlantza"
 
 #: ../plug-ins/common/lens-flare.c:265
 msgid "Render lens flare"
-msgstr "Errendatu lenteen erlantza"
+msgstr "Errendatu leiarren erlantza"
 
 #: ../plug-ins/common/lens-flare.c:301
 msgid "Lens Flare"
-msgstr "Lentees erlantza"
+msgstr "Leiarren erlantza"
 
 #: ../plug-ins/common/lens-flare.c:745
 msgid "Center of Flare Effect"
@@ -6129,7 +6129,7 @@ msgstr "Ezin izan da sendmail (%s) abiarazi"
 
 #: ../plug-ins/common/max-rgb.c:90
 msgid "Reduce image to pure red, green, and blue"
-msgstr "Murritzu irudia gorri, berde eta urdin garbietara"
+msgstr "Murriztu irudia gorri, berde eta urdin garbietara"
 
 #: ../plug-ins/common/max-rgb.c:95
 msgid "Maxim_um RGB..."
@@ -6187,7 +6187,7 @@ msgstr "Hexagonoak"
 
 #: ../plug-ins/common/mosaic.c:637
 msgid "Octagons & squares"
-msgstr "Oktagonoak eta karratuak"
+msgstr "Oktogonoak eta karratuak"
 
 #: ../plug-ins/common/mosaic.c:638
 msgid "Triangles"
@@ -6359,7 +6359,7 @@ msgstr "_Gainlaginketa:"
 
 #: ../plug-ins/common/nl-filter.c:119
 msgid "Nonlinear swiss army knife filter"
-msgstr "Erabilpen ugariko iragazki ez-lineala"
+msgstr "Erabilera ugariko iragazki ez-lineala"
 
 #: ../plug-ins/common/nl-filter.c:125
 msgid "_NL Filter..."
@@ -6391,7 +6391,7 @@ msgstr "A_lfa:"
 
 #: ../plug-ins/common/noise-hsv.c:103
 msgid "Randomize hue/saturation/value independently"
-msgstr "Ausaz nahastu ñabardura/saturazioa/balioa independenteki"
+msgstr "Ausaz nahasi ñabardura/saturazioa/balioa independenteki"
 
 #: ../plug-ins/common/noise-hsv.c:108
 msgid "HSV Noise..."
@@ -6423,7 +6423,7 @@ msgstr "Urtu ausaz"
 
 #: ../plug-ins/common/noise-randomize.c:202
 msgid "Completely randomize a fraction of pixels"
-msgstr "Erabat ausaz nahastu pixel frakzio bat"
+msgstr "Erabat ausaz nahasi pixel frakzio bat"
 
 #: ../plug-ins/common/noise-randomize.c:204
 msgid "Randomly interchange some pixels with neighbors"
@@ -6750,7 +6750,7 @@ msgstr "Menuaren bide-izena"
 #: ../plug-ins/common/plugin-browser.c:605
 #: ../plug-ins/common/plugin-browser.c:669
 msgid "Image Types"
-msgstr "Irudi-motak"
+msgstr "Irudi motak"
 
 #: ../plug-ins/common/plugin-browser.c:615
 #: ../plug-ins/common/plugin-browser.c:678
@@ -6830,15 +6830,15 @@ msgstr "Zerrendatu PDBko prozedura erabilgarriak"
 
 #: ../plug-ins/common/procedure-browser.c:88
 msgid "Procedure _Browser"
-msgstr "Prozedura _arakatzailea"
+msgstr "Prozedur_a-arakatzailea"
 
 #: ../plug-ins/common/procedure-browser.c:126
 msgid "Procedure Browser"
-msgstr "Prozedura arakatzailea"
+msgstr "Prozedura-arakatzailea"
 
 #: ../plug-ins/common/qbist.c:408
 msgid "Generate a huge variety of abstract patterns"
-msgstr "Sortu eredu abstrakto asko"
+msgstr "Sortu eredu abstraktu asko"
 
 #: ../plug-ins/common/qbist.c:416
 msgid "_Qbist..."
@@ -6923,7 +6923,7 @@ msgstr "_Hutsa"
 #. Wave toggle box
 #: ../plug-ins/common/ripple.c:610
 msgid "Wave Type"
-msgstr "Uhin-mota"
+msgstr "Uhin mota"
 
 #: ../plug-ins/common/ripple.c:614
 msgid "Saw_tooth"
@@ -7073,7 +7073,7 @@ msgstr "Zehaztutako leihoa ez da aurkitu"
 
 #: ../plug-ins/common/screenshot.c:1213
 msgid "S_nap"
-msgstr "_Atxikitu"
+msgstr "_Atxiki"
 
 #: ../plug-ins/common/screenshot.c:1243
 msgid "After the delay, the screenshot is taken."
@@ -7083,8 +7083,7 @@ msgstr "Atzerapenaren ondoren, pantailaren kaptura egingo da."
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
-"Atzerapenaren ondoren, sagua erabil dezakezu pantailaren eskualde laukiluzea "
-"hautatzeko."
+"Atzerapenaren ondoren, sagua erabil dezakezu pantailaren eremua hautatzeko."
 
 #: ../plug-ins/common/screenshot.c:1248
 msgid "At the end of the delay, click in a window to snap it."
@@ -7303,7 +7302,7 @@ msgstr "Sin_usoidala"
 
 #: ../plug-ins/common/sinus.c:933
 msgid "_Blend"
-msgstr "_Nahastu"
+msgstr "_Nahasi"
 
 #: ../plug-ins/common/sinus.c:1050
 msgid "Do _preview"
@@ -7395,7 +7394,7 @@ msgstr "Erp_in-puntuak:"
 
 #: ../plug-ins/common/sparkle.c:416
 msgid "Adjust the number of spikes"
-msgstr "Doitu erpin-kopurua"
+msgstr "Doitu erpin kopurua"
 
 #: ../plug-ins/common/sparkle.c:426
 msgid "Spi_ke angle (-1: random):"
@@ -7848,7 +7847,7 @@ msgstr "_Opakutasuna:"
 #. Lower frame saying howmany segments
 #: ../plug-ins/common/tile-small.c:594
 msgid "Number of Segments"
-msgstr "Segmentu-kopurua:"
+msgstr "Segmentu kopurua:"
 
 #: ../plug-ins/common/tile.c:101
 msgid "Create an array of copies of the image"
@@ -8468,7 +8467,7 @@ msgstr "Huts egin du DDE transakzioak."
 
 #: ../plug-ins/common/web-browser.c:159
 msgid "The DDE transaction timed out."
-msgstr "DDE transakzioaren denbora iraungituta."
+msgstr "DDE transakzioaren denbora iraungita."
 
 #: ../plug-ins/common/web-browser.c:162
 msgid "The specified DLL was not found."
@@ -8690,7 +8689,7 @@ msgstr "Onartu gabeko konpresioa (%lu) BMP fitxategian '%s'(e)tik"
 
 #: ../plug-ins/file-bmp/bmp-read.c:641
 msgid "Unrecognized or invalid BMP compression format."
-msgstr "BMP konpresio-formatu ezezagune edo baliogabea."
+msgstr "BMP konpresio-formatu ezezaguna edo baliogabea."
 
 #: ../plug-ins/file-bmp/bmp-read.c:683
 msgid "Unsupported or invalid bitdepth."
@@ -8766,7 +8765,7 @@ msgstr "bzip artxiboa"
 
 #: ../plug-ins/file-compressor/file-compressor.c:392
 msgid "No sensible file extension, saving as compressed XCF."
-msgstr "Ez dago luzapen garbirik, XCF konprimitu gisa gordeko da."
+msgstr "Ez dago luzapen garbirik, XCF konprimatu gisa gordeko da."
 
 #: ../plug-ins/file-compressor/file-compressor.c:448
 msgid "No sensible file extension, attempting to load with file magic."
@@ -8892,7 +8891,7 @@ msgstr "32 bpp, 8-bit alfa, paletarik gabe"
 
 #: ../plug-ins/file-ico/ico-dialog.c:183
 msgid "Compressed (PNG)"
-msgstr "Konprimituta (PNG)"
+msgstr "Konprimatuta (PNG)"
 
 #. read successfully. add to image
 #: ../plug-ins/file-ico/ico-load.c:615
@@ -8954,7 +8953,7 @@ msgstr "_Kalitatea:"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:890
 msgid "JPEG quality parameter"
-msgstr "JPEG kalitare-parametroa"
+msgstr "JPEG kalitate-parametroa"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:909
 msgid "Enable preview to obtain the file size."
@@ -9158,8 +9157,8 @@ msgid ""
 "cropped which may result in data loss."
 msgstr ""
 "Abisua\n"
-"Geruzaren maskara zati batean geruzaren mugetatik kanpo dago. Maskara "
-"moztu egingo da, datuen galera eraginez."
+"Geruza-maskararen zati bat geruza-mugatik kanpo dago. Maskara moztu egingo "
+"da, eta, beraz, datu batzuk galduko dira agian."
 
 #: ../plug-ins/file-psd/psd-load.c:1713
 msgid "Extra"
@@ -9186,7 +9185,7 @@ msgstr ""
 
 #: ../plug-ins/file-psd/psd-save.c:635
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr "Errorea: ezin da GIMP oinarriko irudi-mota PSD modura bihurtu"
+msgstr "Errorea: ezin da GIMP oinarriko irudi mota PSD modura bihurtu"
 
 #: ../plug-ins/file-psd/psd-save.c:1623
 #, c-format
@@ -9245,7 +9244,7 @@ msgstr "SGI"
 
 #: ../plug-ins/file-sgi/sgi.c:656
 msgid "Compression type"
-msgstr "Konprimatze-mota"
+msgstr "Konprimatze mota"
 
 #: ../plug-ins/file-sgi/sgi.c:660
 msgid "No compression"
@@ -9378,12 +9377,12 @@ msgstr "Kontuz: %d bide-izen mota ezezaguna gorde da XJT fitxategian"
 #: ../plug-ins/file-xjt/xjt.c:825
 #, c-format
 msgid "XJT file contains unknown unittype %d"
-msgstr "XJT fitxategiak %d unitate-mota ezezaguna du"
+msgstr "XJT fitxategiak %d unitate mota ezezaguna du"
 
 #: ../plug-ins/file-xjt/xjt.c:846
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
-msgstr "Kontuz: %d unitate-mota ezezaguna gorde da XJT fitxategian"
+msgstr "Kontuz: %d unitate mota ezezaguna gorde da XJT fitxategian"
 
 #: ../plug-ins/file-xjt/xjt.c:867
 msgid "XJT"
@@ -9459,7 +9458,7 @@ msgstr "Abia_dura:"
 
 #: ../plug-ins/flame/flame.c:735
 msgid "_Randomize"
-msgstr "_Ausaz nahastu"
+msgstr "_Ausaz nahasi"
 
 #: ../plug-ins/flame/flame.c:745
 msgid "Same"
@@ -9720,7 +9719,7 @@ msgstr "Gorde fraktal aktiboa fitxategian"
 #. Fractal type toggle box
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:831
 msgid "Fractal Type"
-msgstr "Fraktal-mota"
+msgstr "Fraktal mota"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:844
 msgid "Mandelbrot"
@@ -9756,11 +9755,11 @@ msgstr "Sierpinski"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:922
 msgid "Number of colors:"
-msgstr "Kolore-kopurua:"
+msgstr "Kolore kopurua:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:925
 msgid "Change the number of colors in the mapping"
-msgstr "Aldatu mapatzeko kolore-kopurua"
+msgstr "Aldatu mapatzeko kolore kopurua"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:932
 msgid "Use loglog smoothing"
@@ -10218,7 +10217,7 @@ msgstr "Isometrikoa"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1489
 msgid "Grid type:"
-msgstr "Sareta-mota:"
+msgstr "Sareta mota:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
@@ -10276,7 +10275,7 @@ msgstr "Irakurtzeko soilik den objektua editatzen - ezingo duzu gorde"
 
 #: ../plug-ins/gfig/gfig-poly.c:51
 msgid "Regular Polygon Number of Sides"
-msgstr "Poligono erregularra: alde-kopurua"
+msgstr "Poligono erregularra: alde kopurua"
 
 #: ../plug-ins/gfig/gfig-preview.c:337
 msgid "Object Details"
@@ -10289,11 +10288,11 @@ msgstr "XY posizioa:"
 
 #: ../plug-ins/gfig/gfig-spiral.c:55
 msgid "Spiral Number of Turns"
-msgstr "Espirala: bira-kopurua"
+msgstr "Espirala: bira kopurua"
 
 #: ../plug-ins/gfig/gfig-star.c:52
 msgid "Star Number of Points"
-msgstr "Izarra: puntu-kopurua"
+msgstr "Izarra: puntu kopurua"
 
 #: ../plug-ins/gfig/gfig-stock.c:40
 msgid "Create bezier curve"
@@ -10368,7 +10367,7 @@ msgstr "Ko_lorea"
 
 #: ../plug-ins/gimpressionist/color.c:69
 msgid "A_verage under brush"
-msgstr "Batezbeste_koa brotxaren azpian"
+msgstr "Batez beste_koa brotxaren azpian"
 
 #: ../plug-ins/gimpressionist/color.c:71
 msgid "C_enter of brush"
@@ -10484,7 +10483,7 @@ msgstr "Itzala zenbat \"lausotu\" behar den"
 
 #: ../plug-ins/gimpressionist/general.c:275
 msgid "Deviation threshold:"
-msgstr "Desbideraketaren muga:"
+msgstr "Desbideratzearen muga:"
 
 #: ../plug-ins/gimpressionist/general.c:279
 msgid "A bailout-value for adaptive selections"
@@ -10520,7 +10519,7 @@ msgstr "Noranzkoak:"
 
 #: ../plug-ins/gimpressionist/orientation.c:109
 msgid "The number of directions (i.e. brushes) to use"
-msgstr "Erabili beharreko noranzko-kopurua (hau da, brotxak)"
+msgstr "Erabili beharreko noranzko kopurua (hau da, brotxak)"
 
 #: ../plug-ins/gimpressionist/orientation.c:117
 msgid "Start angle:"
@@ -10840,7 +10839,7 @@ msgstr "Tamainaren aldaerak:"
 
 #: ../plug-ins/gimpressionist/size.c:112
 msgid "The number of sizes of brushes to use"
-msgstr "Erabili beharreko brotxen tamaina-kopurua"
+msgstr "Erabili beharreko brotxen tamaina kopurua"
 
 #: ../plug-ins/gimpressionist/size.c:120
 msgid "Minimum size:"
@@ -10971,7 +10970,7 @@ msgstr "GIF aukerak"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:5
 msgid "_Loop forever"
-msgstr "_Begiztatu betirako"
+msgstr "_Begiztatu betiko"
 
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:6
 msgid "_Delay between frames where unspecified:"
@@ -11039,7 +11038,7 @@ msgstr "Gainjarri"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:807
 msgid "Produce a lense flare effect using gradients"
-msgstr "Sortu erlantz-efektuaren lentea gradienteak erabiliz"
+msgstr "Sortu erlantz-efektuaren leiarra gradienteak erabiliz"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:812
 msgid "_Gradient Flare..."
@@ -11266,7 +11265,7 @@ msgstr "_Dirdira"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3737
 msgid "# of Spikes:"
-msgstr "Erpin-kopurua:"
+msgstr "Erpin kopurua:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3749
 msgid "Spike thickness:"
@@ -11324,11 +11323,11 @@ msgstr "Joan orrialde bat aurrera"
 
 #: ../plug-ins/help-browser/dialog.c:592
 msgid "_Reload"
-msgstr "_Birkargatu"
+msgstr "_Kargatu berriro"
 
 #: ../plug-ins/help-browser/dialog.c:592
 msgid "Reload current page"
-msgstr "Birkargatu uneko orrialdea"
+msgstr "Kargatu berriro uneko orrialdea"
 
 #: ../plug-ins/help-browser/dialog.c:597
 msgid "_Stop"
@@ -11368,7 +11367,7 @@ msgstr "Txandakatu albo-barraren ikusgaitasuna"
 
 #: ../plug-ins/help-browser/dialog.c:674
 msgid "Visit the GIMP documentation website"
-msgstr "Bisitatu GIMPen dokumentazioaren web gunea"
+msgstr "Bisitatu GIMPen dokumentazioaren webgunea"
 
 #: ../plug-ins/help-browser/dialog.c:1174
 msgid "Find:"
@@ -11398,7 +11397,7 @@ msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
 msgstr ""
-"Instalatu laguntzako pakete gehigarriak edo erabili likneako erabiltzeilaren "
+"Instalatu laguntzako pakete gehigarriak edo erabili lineako erabiltzailearen "
 "gida honako gunean: http://docs.gimp.org/."
 
 #: ../plug-ins/help/gimphelpdomain.c:196
@@ -11621,7 +11620,7 @@ msgstr "_Zirkulua"
 
 #: ../plug-ins/imagemap/imap_circle.c:263
 msgid "Center _x:"
-msgstr "_x zentrua:"
+msgstr "_x zentroa:"
 
 #: ../plug-ins/imagemap/imap_circle.c:268
 #: ../plug-ins/imagemap/imap_circle.c:275
@@ -11638,7 +11637,7 @@ msgstr "pixel"
 
 #: ../plug-ins/imagemap/imap_circle.c:270
 msgid "Center _y:"
-msgstr "_y zentrua:"
+msgstr "_y zentroa:"
 
 #: ../plug-ins/imagemap/imap_cmd_clear.c:50
 msgid "Clear"
@@ -11831,11 +11830,11 @@ msgstr "Desautatu guztiak"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:205
 msgid "Link Type"
-msgstr "Esteka-mota"
+msgstr "Esteka mota"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:214
 msgid "_Web Site"
-msgstr "_Web gunea"
+msgstr "_Webgunea"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:220
 msgid "_Ftp Site"
@@ -12215,7 +12214,7 @@ msgstr "Orokorra"
 
 #: ../plug-ins/imagemap/imap_preferences.c:364
 msgid "Default Map Type"
-msgstr "Mapa-mota lehenetsia"
+msgstr "Mapa mota lehenetsia"
 
 #: ../plug-ins/imagemap/imap_preferences.c:383
 msgid "_Prompt for area info"
@@ -12251,7 +12250,7 @@ msgstr "_Desegite-mailen kopurua (1 - 99):"
 
 #: ../plug-ins/imagemap/imap_preferences.c:410
 msgid "Number of M_RU entries (1 - 16):"
-msgstr "M_RU sarrera-kopurua (1 - 16):"
+msgstr "M_RU sarrera kopurua (1 - 16):"
 
 #: ../plug-ins/imagemap/imap_preferences.c:419
 msgid "Select Color"
@@ -12267,7 +12266,7 @@ msgstr "Hautatuta:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:442
 msgid "Interaction:"
-msgstr "Elkarreragilea:"
+msgstr "Interakzioa:"
 
 #: ../plug-ins/imagemap/imap_preferences.c:451
 msgid "Co_ntiguous Region"
@@ -12717,7 +12716,7 @@ msgstr "Kutxa"
 
 #: ../plug-ins/map-object/map-object-ui.c:441
 msgid "Type of object to map to"
-msgstr "Zein objektu-motatara mapatu behar den"
+msgstr "Zein objektu motatara mapatu behar den"
 
 #: ../plug-ins/map-object/map-object-ui.c:443
 msgid "Transparent background"
@@ -12911,7 +12910,7 @@ msgstr "Mapatu objektuari"
 
 #: ../plug-ins/map-object/map-object-ui.c:1375
 msgid "Show _wireframe"
-msgstr "Erakutsi _burdin-haria"
+msgstr "Erakutsi _burdin haria"
 
 #: ../plug-ins/map-object/map-object-ui.c:1384
 msgid "Update preview _live"
@@ -12963,11 +12962,11 @@ msgid ""
 "Tileable maze won't work perfectly."
 msgstr ""
 "Hautapenaren tamaina ez da uniformea.\n"
-"Mosaiko bihur daitekeen labirintuaren funtzionamendua ez da perfektua izango."
+"Mosaiko bihur daitekeen labirintoaren funtzionamendua ez da perfektua izango."
 
 #: ../plug-ins/maze/maze.c:122
 msgid "Draw a labyrinth"
-msgstr "Marraztu labirintua"
+msgstr "Marraztu labirintoa"
 
 #: ../plug-ins/maze/maze.c:129
 msgid "_Maze..."
