@@ -40,6 +40,7 @@
 #endif
 
 #include <glib/gstdio.h>
+#include <gio/gio.h>
 
 #ifdef G_OS_WIN32
 #include <io.h>
@@ -50,6 +51,7 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include <libgimpbase/gimpbase.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -62,6 +64,8 @@
 
 #define THUMB_SIZE       48
 #define RESPONSE_EXPORT   1
+#define RESPONSE_IMPORT   2
+#define RESPONSE_GPS      3
 
 typedef enum
 {
@@ -108,6 +112,8 @@ static void            attributes_file_export_dialog      (GtkWidget        *par
 static void            attributes_export_dialog_response  (GtkWidget        *dlg,
                                                            gint              response_id,
                                                            gpointer          data);
+static void            attributes_show_gps                (GtkWidget        *parent,
+                                                           GimpAttributes   *attributes);
 
 static void            attributes_message_dialog          (GtkMessageType    type,
                                                            GtkWindow        *parent,
@@ -128,6 +134,12 @@ static GHashTable *ifd_table = NULL;
 static GHashTable *tab_table = NULL;
 
 static gchar      *item_name = NULL;
+
+static GtkWidget   *gps_button;
+static gdouble      gps_latitude       = 0.0;
+static gdouble      gps_longitude      = 0.0;
+static gchar       *gps_latitude_ref   = "N";
+static gchar       *gps_longitude_ref  = "W";
 
 /*  functions  */
 
@@ -293,6 +305,14 @@ attributes_dialog_response (GtkWidget *widget,
     case RESPONSE_EXPORT:
       attributes_file_export_dialog (widget, attributes);
       break;
+    case RESPONSE_IMPORT:
+      attributes_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (widget),
+                               _("Failed"),
+                               _("Not yet implemented"));
+      break;
+    case RESPONSE_GPS:
+      attributes_show_gps (widget, attributes);
+      break;
 
     default:
       gtk_widget_destroy (widget);
@@ -378,8 +398,13 @@ attributes_dialog (gint32           item_id,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_HELP,
                             _("_Export XMP..."), RESPONSE_EXPORT,
+                            _("_Import XMP..."), RESPONSE_IMPORT,
+//                            _("_Show GPS..."), RESPONSE_GPS,
                             GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
                             NULL);
+
+  gps_button = gtk_dialog_add_button (GTK_DIALOG (dialog), _("_Show GPS..."), RESPONSE_GPS);
+  gtk_widget_set_sensitive (GTK_WIDGET (gps_button), FALSE);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (attributes_dialog_response),
@@ -397,7 +422,9 @@ attributes_dialog (gint32           item_id,
                                550);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           RESPONSE_GPS,
                                            RESPONSE_EXPORT,
+                                           RESPONSE_IMPORT,
                                            GTK_RESPONSE_CLOSE,
                                            -1);
 
@@ -462,6 +489,8 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
   GtkWidget      *attributes_notebook;
   GList          *iter_list   = NULL;
   GimpAttribute  *attribute   = NULL;
+  gboolean        gps_lat     = FALSE;
+  gboolean        gps_lon     = FALSE;
 
   exif_store = GTK_TREE_STORE (gtk_builder_get_object (builder,
                                                        "exif-treestore"));
@@ -507,6 +536,43 @@ attributes_dialog_set_attributes (GimpAttributes *attributes,
         value_utf = g_strdup (value);
 
       parent = attributes_get_parent (type, ifd);
+
+      if (! g_strcmp0 (name, "Exif.GPSInfo.GPSLatitude"))
+        {
+          gps_lat = TRUE;
+          gps_latitude = gimp_attribute_get_gps_degree (attribute);
+          if (gps_latitude < 0.0 && !gps_latitude_ref)
+            {
+              gps_latitude = gps_latitude * -1.0;
+              gps_latitude_ref = "S";
+            }
+
+        }
+      if (! g_strcmp0 (name, "Exif.GPSInfo.GPSLatitudeRef"))
+        {
+          gps_latitude_ref = gimp_attribute_get_string (attribute);
+        }
+      if (! g_strcmp0 (name, "Exif.GPSInfo.GPSLongitude"))
+        {
+          gps_lon = TRUE;
+          gps_longitude = gimp_attribute_get_gps_degree (attribute);
+          if (gps_longitude < 0.0 && !gps_longitude_ref)
+            {
+              gps_longitude = gps_longitude * -1.0;
+              gps_longitude_ref = "W";
+            }
+        }
+      if (! g_strcmp0 (name, "Exif.GPSInfo.GPSLongitudeRef"))
+        {
+          gps_longitude_ref = gimp_attribute_get_string (attribute);
+        }
+
+      if (gps_lat && gps_lon)
+        {
+          gtk_widget_set_sensitive (gps_button, TRUE);
+          gps_lat = FALSE;
+          gps_lon = FALSE;
+        }
 
       switch (gimp_attribute_get_tag_type (attribute))
       {
@@ -804,6 +870,41 @@ attributes_file_export_dialog (GtkWidget      *parent,
 //  gtk_dialog_run (GTK_DIALOG (dlg));
 }
 
+/* call default browser for google maps */
+static void
+attributes_show_gps (GtkWidget      *parent,
+                     GimpAttributes *attributes)
+{
+  GError  *error = NULL;
+  gchar   *uri   = NULL;
+  gchar    lat_buf[G_ASCII_DTOSTR_BUF_SIZE];
+  gchar    lon_buf[G_ASCII_DTOSTR_BUF_SIZE];
+
+  if (!g_strcmp0 (gps_latitude_ref, "S"))
+    gps_latitude = gps_latitude * -1.0;
+  if (!g_strcmp0 (gps_longitude_ref, "W"))
+    gps_longitude = gps_longitude * -1.0;
+
+  g_ascii_formatd (lat_buf, G_ASCII_DTOSTR_BUF_SIZE, "%.6f",
+                   gps_latitude);
+  g_ascii_formatd (lon_buf, G_ASCII_DTOSTR_BUF_SIZE, "%.6f",
+                   gps_longitude);
+
+  uri = g_strdup_printf ("http://maps.google.com?q=%s,%s&z=15",
+                         lat_buf,
+                         lon_buf);
+
+  g_app_info_launch_default_for_uri (uri, NULL, &error);
+  if (error)
+    {
+      attributes_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (parent),
+                               _("GPS failure"),
+                               error->message);
+    }
+
+
+}
+
 /* save XMP metadata to a file (only XMP, nothing else) */
 static void
 attributes_export_dialog_response (GtkWidget *dlg,
@@ -890,3 +991,4 @@ attributes_message_dialog (GtkMessageType  type,
   gtk_dialog_run (GTK_DIALOG (dlg));
   gtk_widget_destroy (dlg);
 }
+

@@ -829,6 +829,60 @@ gimp_attribute_print (GimpAttribute *attribute)
 }
 
 /**
+ * gimp_attribute_get_gps_degree:
+ *
+ * @attribute:    a @GimpAttribute
+ *
+ * returns the degree representation of the #GimpAttributes GPS value,
+ * -999.9 otherwise.
+ *
+ * Return value:  #gdouble degree representation of the #GimpAttributes GPS value
+ *
+ * Since: 2.10
+ */
+gdouble
+gimp_attribute_get_gps_degree (GimpAttribute *attribute)
+{
+  gdouble               return_val;
+  GimpAttributePrivate *private;
+
+  g_return_val_if_fail (attribute != NULL, TAG_INVALID);
+
+  private = GIMP_ATTRIBUTE_GET_PRIVATE (attribute);
+
+  if (private->value_type == TYPE_RATIONAL)
+    {
+      gint i;
+      gdouble        r_val    = 0.0;
+      Rational      *rational;
+
+      string_to_rational (private->tag_value, &rational);
+
+      for (i = 0; i < rational->length; i++)
+        {
+          RationalValue or;
+
+          or = g_array_index (rational->rational_array, RationalValue, i);
+
+          r_val = (gfloat)or.nom / (gfloat)or.denom;
+
+          if (i == 0)
+            return_val = r_val;
+          else if (i == 1)
+            return_val = return_val + (r_val / 60);
+          else if (i == 2)
+            return_val = return_val + (r_val / 3600);
+          else return -999.9;
+        }
+
+      return return_val;
+    }
+  else
+    return -999.9;
+
+}
+
+/**
  * gimp_attribute_get_xml:
  *
  * @attribute:    a @GimpAttribute

@@ -88,6 +88,7 @@ GSList*                     gimp_attribute_get_attribute_structure        (GimpA
 void                        gimp_attribute_set_structure_type             (GimpAttribute              *attribute,
                                                                            GimpAttributeStructureType  value);
 GimpAttributeStructureType  gimp_attribute_get_structure_type             (GimpAttribute              *attribute);
+gdouble                     gimp_attribute_get_gps_degree                 (GimpAttribute              *attribute);
 gchar*                      gimp_attribute_get_xml                        (GimpAttribute              *attribute);
 void                        gimp_attribute_print                          (GimpAttribute              *attribute);
 

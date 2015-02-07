@@ -15,6 +15,7 @@ EXPORTS
 	gimp_attribute_get_value
 	gimp_attribute_get_value_type
 	gimp_attribute_get_value_type_from_string
+	gimp_attribute_get_gps_degree
 	gimp_attribute_get_xml
 	gimp_attribute_has_structure
 	gimp_attribute_is_valid
