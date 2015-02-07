@@ -389,8 +389,13 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:unsharp-mask",
     NULL /* FIXME GIMP_HELP_FILTER_UNSHARP_MASK */ },
 
+  { "filters-value-propagate", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Value Propagate..."), NULL, NULL,
+    "gegl:value-propagate",
+    NULL /* FIXME GIMP_HELP_FILTER_VALUE_PROPAGATE */ },
+
   { "filters-video-degradation", GIMP_STOCK_GEGL,
-    NC_("filters-action", "_Vi_deo Degradation..."), NULL, NULL,
+    NC_("filters-action", "Vi_deo Degradation..."), NULL, NULL,
     "gegl:video-degradation",
     NULL /* FIXME GIMP_HELP_FILTER_VIDEO_DEGRADATION */ },
 

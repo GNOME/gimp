@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-25 20:15+0200\n"
-"PO-Revision-Date: 2014-07-25 20:16+0200\n"
+"POT-Creation-Date: 2015-01-28 14:52+0100\n"
+"PO-Revision-Date: 2015-01-28 14:53+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -40,22 +40,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1101
+#: ../libgimp/gimp.c:1106
 msgid "success"
 msgstr "azione riuscita"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1105
+#: ../libgimp/gimp.c:1110
 msgid "execution error"
 msgstr "errore di esecuzione"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1109
+#: ../libgimp/gimp.c:1114
 msgid "calling error"
 msgstr "errore di chiamata"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1113
+#: ../libgimp/gimp.c:1118
 msgid "cancelled"
 msgstr "annullato"
 
@@ -258,7 +258,7 @@ msgstr "Selezione gradiente"
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
 #.
-#: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:258
+#: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:251
 msgid "(Empty)"
 msgstr "(Vuoto)"
 
@@ -1391,28 +1391,23 @@ msgstr "durante l'analisi del token \"%s\": %s"
 msgid "fatal parse error"
 msgstr "errore di analisi irrimediabile"
 
-#: ../libgimpconfig/gimpconfig-path.c:437
+#: ../libgimpconfig/gimpconfig-path.c:439
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Impossibile espandere ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:90
-#: ../libgimpconfig/gimpconfigwriter.c:669
+#: ../libgimpconfig/gimpconfigwriter.c:88
+#: ../libgimpconfig/gimpconfigwriter.c:658
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Errore nello scrivere su \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:187
+#: ../libgimpconfig/gimpconfigwriter.c:184
 #, c-format
-msgid "Could not create temporary file for '%s': %s"
-msgstr "Impossibile creare il file temporaneo per \"%s\": %s"
+msgid "Could not create temporary file for '%s': "
+msgstr "Impossibile creare il file temporaneo per \"%s\": "
 
-#: ../libgimpconfig/gimpconfigwriter.c:197
-#, c-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "Impossibile aprire \"%s\" in scrittura: %s"
-
-#: ../libgimpconfig/gimpconfigwriter.c:772
+#: ../libgimpconfig/gimpconfigwriter.c:761
 #, c-format
 msgid "Error writing '%s': %s"
 msgstr "Errore durante la scrittura su \"%s\": %s"

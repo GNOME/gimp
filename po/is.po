@@ -1,5 +1,4 @@
 # translation of gimp.gimp-2-8.is.po to Icelandic
-# translation of gimp.gimp-2-8.is.po to
 # Icelandic translation of The GIMP. This is a compendium.
 # Copyright (C) 2008, 2009, 2015 Free Software Foundation, Inc.
 #
@@ -11,10 +10,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&"
-"keywords=I18N+L10N&component=general\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-01-08 06:14+0000\n"
-"PO-Revision-Date: 2015-01-09 14:15+0000\n"
+"PO-Revision-Date: 2015-01-23 10:22+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -22,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=1;\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -4544,10 +4542,8 @@ msgstr "Eyða sniðmáti"
 
 #: ../app/actions/templates-commands.c:237
 #, c-format
-msgid ""
-"Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr ""
-"Ertu viss um að þú viljir eyða sniðmátinu '%s' úr listanum og af diski?"
+msgid "Are you sure you want to delete template '%s' from the list and from disk?"
+msgstr "Ertu viss um að þú viljir eyða sniðmátinu '%s' úr listanum og af diski?"
 
 #: ../app/actions/text-editor-actions.c:43
 msgctxt "text-editor-action"
@@ -4740,8 +4736,7 @@ msgstr "Frumstilla alla verkfæravalkosti"
 
 #: ../app/actions/tool-options-commands.c:209
 msgid "Do you really want to reset all tool options to default values?"
-msgstr ""
-"Ertu viss um að þú viljir frumstilla alla verkfæravalkosti í sjálfgefin gildi?"
+msgstr "Ertu viss um að þú viljir frumstilla alla verkfæravalkosti í sjálfgefin gildi?"
 
 #: ../app/actions/tool-presets-actions.c:44
 msgctxt "tool-presets-action"
@@ -5123,7 +5118,7 @@ msgstr "Valkostir fyrir nýjan feril"
 #: ../app/actions/vectors-commands.c:392 ../app/tools/gimpvectoroptions.c:199
 #: ../app/tools/gimpvectortool.c:1975
 msgid "Stroke Path"
-msgstr "Ferill pensilstroku"
+msgstr "Mála eftir ferli"
 
 #: ../app/actions/view-actions.c:68
 msgctxt "view-action"
@@ -5657,8 +5652,7 @@ msgstr "Fela spjöld"
 
 #: ../app/actions/windows-actions.c:116
 msgctxt "windows-action"
-msgid ""
-"When enabled docks and other dialogs are hidden, leaving only image windows."
+msgid "When enabled docks and other dialogs are hidden, leaving only image windows."
 msgstr ""
 "Þegar þetta er virkjað eru hliðarspjöld og aðrir samskiptagluggar faldir, "
 "einungis myndagluggar eru sýnilegir."
@@ -6038,8 +6032,7 @@ msgstr "Stillir hvaða tegund bendla eigi að nota."
 
 #: ../app/config/gimprc-blurbs.h:52
 msgid "Sets the handedness for cursor positioning."
-msgstr ""
-"Stillir afstöðu bendla eftir því hvort um rétthenta/örvhenta er að ræða."
+msgstr "Stillir afstöðu bendla eftir því hvort um rétthenta/örvhenta er að ræða."
 
 #: ../app/config/gimprc-blurbs.h:55
 msgid ""
@@ -6060,8 +6053,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:93
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
-msgstr ""
-"Þetta er fjarlægðin í mynddílum sem virkjar grip í stoðlínur og hnitanet."
+msgstr "Þetta er fjarlægðin í mynddílum sem virkjar grip í stoðlínur og hnitanet."
 
 #: ../app/config/gimprc-blurbs.h:109
 msgid ""
@@ -6096,13 +6088,11 @@ msgstr "Þegar þetta er virkt verður valinn pensill notaður fyrir öll verkf�
 
 #: ../app/config/gimprc-blurbs.h:157
 msgid "When enabled, the selected dynamics will be used for all tools."
-msgstr ""
-"Þegar þetta er virkt verða valdar hreyfingar notaðar fyrir öll verkfæri."
+msgstr "Þegar þetta er virkt verða valdar hreyfingar notaðar fyrir öll verkfæri."
 
 #: ../app/config/gimprc-blurbs.h:163
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr ""
-"Þegar þetta er virkt verður valinn litstigull notaður fyrir öll verkfæri."
+msgstr "Þegar þetta er virkt verður valinn litstigull notaður fyrir öll verkfæri."
 
 #: ../app/config/gimprc-blurbs.h:166
 msgid "When enabled, the selected pattern will be used for all tools."
@@ -6129,8 +6119,7 @@ msgstr ""
 "annars birtist hún í kvarðanum 1:1."
 
 #: ../app/config/gimprc-blurbs.h:201
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Stillir stig brúunar (innskotsaðferð) sem notað er við stækkun og aðrar "
 "ummyndanir."
@@ -6253,21 +6242,17 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:295
 msgid "Let GIMP try to restore your last saved session on each startup."
-msgstr ""
-"Láta GIMP reyna að endurheimta síðustu vistuðu lotu þegar hann er ræstur."
+msgstr "Láta GIMP reyna að endurheimta síðustu vistuðu lotu þegar hann er ræstur."
 
 #: ../app/config/gimprc-blurbs.h:298
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr ""
-"Muna stillingar á verkfærum, mynstrum, litum og penslum á milli GIMP seta."
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgstr "Muna stillingar á verkfærum, mynstrum, litum og penslum á milli GIMP seta."
 
 #: ../app/config/gimprc-blurbs.h:302
 msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
-msgstr ""
-"Halda skrá yfir allar opnaðar og vistaðar skrár í lista yfir \"Nýleg skjöl\"."
+msgstr "Halda skrá yfir allar opnaðar og vistaðar skrár í lista yfir \"Nýleg skjöl\"."
 
 #: ../app/config/gimprc-blurbs.h:306
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
@@ -7492,8 +7477,7 @@ msgstr "Banvæn þáttunarvilla í pensilskránni '%s': Óþekkt útgáfa %d."
 #: ../app/core/gimpbrush-load.c:822
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
-msgstr ""
-"Banvæn þáttunarvilla í pensilskránni '%s'. Virðist vanta enda á skrána."
+msgstr "Banvæn þáttunarvilla í pensilskránni '%s'. Virðist vanta enda á skrána."
 
 #: ../app/core/gimpbrush-load.c:281 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
@@ -7531,8 +7515,7 @@ msgstr ""
 
 #: ../app/core/gimpbrush-load.c:471 ../app/core/gimpbrush-load.c:909
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': unable to decode abr format version %d."
+msgid "Fatal parse error in brush file '%s': unable to decode abr format version %d."
 msgstr ""
 "Banvæn þáttunarvilla í pensilskránni '%s': tókst ekki að afkóða snið abr "
 "útgáfa %d."
@@ -7555,16 +7538,14 @@ msgstr "Banvæn þáttunarvilla í pensilskránni '%s': Er ekki GIMP pensilskrá
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
+msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
 "Banvæn þáttunarvilla í pensilskránni '%s': Óþekkt útgáfa GIMP pensils á línu "
 "%d."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
-msgid ""
-"Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
+msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
 "Banvæn þáttunarvilla í pensilskránni '%s': Óþekkt lögun GIMP pensils á línu "
 "%d."
@@ -8021,8 +8002,7 @@ msgstr ""
 #: ../app/core/gimpgradient-load.c:242 ../app/core/gimpgradient-load.c:256
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
-msgstr ""
-"Litstigulskráin '%s' er skemmd: Litstigulgeirar spanna ekki sviðið 0-1."
+msgstr "Litstigulskráin '%s' er skemmd: Litstigulgeirar spanna ekki sviðið 0-1."
 
 #: ../app/core/gimpgradient-load.c:336
 #, c-format
@@ -8043,10 +8023,8 @@ msgid "The foreground color of the grid."
 msgstr "Forgrunnslitur hnitanetsins."
 
 #: ../app/core/gimpgrid.c:96
-msgid ""
-"The background color of the grid; only used in double dashed line style."
-msgstr ""
-"Bakgrunnslitur hnitanetsins; eingöngu notað fyrir línustíl tvístrikurnar."
+msgid "The background color of the grid; only used in double dashed line style."
+msgstr "Bakgrunnslitur hnitanetsins; eingöngu notað fyrir línustíl tvístrikurnar."
 
 #: ../app/core/gimpgrid.c:102
 msgid "Horizontal spacing of grid lines."
@@ -8057,8 +8035,7 @@ msgid "Vertical spacing of grid lines."
 msgstr "Lóðrétt millibil hnitanetslína."
 
 #: ../app/core/gimpgrid.c:116
-msgid ""
-"Horizontal offset of the first grid line; this may be a negative number."
+msgid "Horizontal offset of the first grid line; this may be a negative number."
 msgstr "Lárétt hliðrun fyrstu hnitanetslínu; þetta má vera neikvæð tala."
 
 #: ../app/core/gimpgrid.c:123
@@ -8254,8 +8231,7 @@ msgstr "Sameina sýnilega ferla"
 
 #: ../app/core/gimpimage-merge.c:406
 msgid "Not enough visible paths for a merge. There must be at least two."
-msgstr ""
-"Ekki nógu margir ferlar til að sameina. Þeir verða að vera a.m.k. tveir."
+msgstr "Ekki nógu margir ferlar til að sameina. Þeir verða að vera a.m.k. tveir."
 
 #: ../app/core/gimpimage-new.c:140
 msgid "Background"
@@ -8630,8 +8606,7 @@ msgstr "Banvæn þáttunarvilla í litaspjaldskrá '%s': Lesvilla á línu %d."
 #: ../app/core/gimppalette-load.c:96
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr ""
-"Banvæn þáttunarvilla í litaspjaldskrá '%s': Vantar galdrahaus (magic header)."
+msgstr "Banvæn þáttunarvilla í litaspjaldskrá '%s': Vantar galdrahaus (magic header)."
 
 #: ../app/core/gimppalette-load.c:125
 #, c-format
@@ -8685,10 +8660,8 @@ msgstr "Banvæn þáttunarvilla í mynsturskrá '%s'. Virðist vanta enda á skr
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
-msgid ""
-"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
-msgstr ""
-"Banvæn þáttunarvilla í mynsturskrá '%s'. Óþekkt útgáfa mynstursniða %d."
+msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgstr "Banvæn þáttunarvilla í mynsturskrá '%s'. Óþekkt útgáfa mynstursniða %d."
 
 #: ../app/core/gimppattern-load.c:114
 #, c-format
@@ -8961,10 +8934,8 @@ msgstr "Eyða '%s'?"
 
 #: ../app/dialogs/data-delete-dialog.c:107
 #, c-format
-msgid ""
-"Are you sure you want to remove '%s' from the list and delete it on disk?"
-msgstr ""
-"Ertu viss um að þú viljir fjarlægja '%s' af listanum og eyða henni af diski ?"
+msgid "Are you sure you want to remove '%s' from the list and delete it on disk?"
+msgstr "Ertu viss um að þú viljir fjarlægja '%s' af listanum og eyða henni af diski ?"
 
 #: ../app/dialogs/dialogs-constructors.c:203 ../app/gui/gui.c:162
 #: ../app/gui/gui-message.c:149
@@ -9260,8 +9231,7 @@ msgstr ""
 "stillt er fyrir \"Hámarksstærð myndar\" í kjörstillingum (er núna %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:260
-msgid ""
-"Scaling the image to the chosen size will shrink some layers completely away."
+msgid "Scaling the image to the chosen size will shrink some layers completely away."
 msgstr ""
 "Kvörðun myndarinnar í þá stærð sem var valin mun smækka einhver lög niður í "
 "ekki neitt."
@@ -9497,8 +9467,7 @@ msgstr "Frumstilla allar kjörstillingar"
 
 #: ../app/dialogs/preferences-dialog.c:286
 msgid "Do you really want to reset all preferences to default values?"
-msgstr ""
-"Ertu viss um að þú viljir frumstilla allar kjörstillingar á sjálfgefin gildi?"
+msgstr "Ertu viss um að þú viljir frumstilla allar kjörstillingar á sjálfgefin gildi?"
 
 #: ../app/dialogs/preferences-dialog.c:356
 msgid "You will have to restart GIMP for the following changes to take effect:"
@@ -10454,8 +10423,7 @@ msgstr "GIMP vísbendingaskránna virðist vanta!"
 #: ../app/dialogs/tips-dialog.c:94
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
-msgstr ""
-"Það ætti að vera til skrá með heitinu '%s'. Athugaðu uppsetninguna þína."
+msgstr "Það ætti að vera til skrá með heitinu '%s'. Athugaðu uppsetninguna þína."
 
 #: ../app/dialogs/tips-dialog.c:100
 msgid "The GIMP tips file could not be parsed!"
@@ -10669,10 +10637,8 @@ msgstr "Vista breytingar á myndinni '%s' áður en er lokað?"
 #: ../app/display/gimpdisplayshell-close.c:310
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d hours will be lost."
-msgstr[0] ""
-"Ef þú vistar ekki myndina munu allar breytingar síðasta klukkutímann tapast."
+msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
+msgstr[0] "Ef þú vistar ekki myndina munu allar breytingar síðasta klukkutímann tapast."
 msgstr[1] ""
 "Ef þú vistar ekki myndina munu allar breytingar síðustu %d klukkutímana "
 "tapast."
@@ -10695,12 +10661,9 @@ msgstr[1] ""
 #: ../app/display/gimpdisplayshell-close.c:333
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural ""
-"If you don't save the image, changes from the last %d minutes will be lost."
-msgstr[0] ""
-"Ef þú vistar ekki myndina munu allar breytingar síðustu mínútuna tapast."
-msgstr[1] ""
-"Ef þú vistar ekki myndina munu allar breytingar síðustu %d mínútur tapast."
+msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
+msgstr[0] "Ef þú vistar ekki myndina munu allar breytingar síðustu mínútuna tapast."
+msgstr[1] "Ef þú vistar ekki myndina munu allar breytingar síðustu %d mínútur tapast."
 
 #: ../app/display/gimpdisplayshell-close.c:354
 #, c-format
@@ -11305,14 +11268,12 @@ msgstr "Reynt að bæta atriðinu '%s' (%d) í ranga mynd"
 #: ../app/pdb/gimppdb-utils.c:496
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
-msgstr ""
-"Ekki er hægt að breyta atriðinu '%s' (%d) vegna þess að innihald þess er læst"
+msgstr "Ekki er hægt að breyta atriðinu '%s' (%d) vegna þess að innihald þess er læst"
 
 #: ../app/pdb/gimppdb-utils.c:516
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
-msgstr ""
-"Ekki er hægt að nota atriðið '%s' (%d) vegna þess að það er ekki hópatriði"
+msgstr "Ekki er hægt að nota atriðið '%s' (%d) vegna þess að það er ekki hópatriði"
 
 #: ../app/pdb/gimppdb-utils.c:536
 #, c-format
@@ -11437,8 +11398,7 @@ msgstr ""
 "'%s' (#%d, tegund %s). Þetta gildi er fyrir utan sviðið."
 
 #: ../app/pdb/image-cmds.c:2361
-msgid ""
-"Image resolution is out of bounds, using the default resolution instead."
+msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr "Upplausn myndar er út úr kortinu, nota sjálfgefna upplausn í staðinn."
 
 #: ../app/pdb/image-select-cmds.c:297 ../app/pdb/selection-tools-cmds.c:219
@@ -11696,8 +11656,7 @@ msgstr "Henda textaupplýsingum"
 
 #: ../app/text/gimptextlayer.c:582
 msgid "Due to lack of any fonts, text functionality is not available."
-msgstr ""
-"Þar sem engar leturskrár eru til staðar, eru textaaðgerðir ekki tiltækar."
+msgstr "Þar sem engar leturskrár eru til staðar, eru textaaðgerðir ekki tiltækar."
 
 #: ../app/text/gimptextlayer.c:640
 msgid "Empty Text Layer"
@@ -11852,8 +11811,7 @@ msgstr "Hliðrun:"
 
 #: ../app/tools/gimpaligntool.c:125
 msgid "Alignment Tool: Align or arrange layers and other objects"
-msgstr ""
-"Jöfnunarverkfæri: verkfæri til að hliðjafna eða raða lögum og öðrum myndhlutum"
+msgstr "Jöfnunarverkfæri: verkfæri til að hliðjafna eða raða lögum og öðrum myndhlutum"
 
 #: ../app/tools/gimpaligntool.c:126
 msgid "_Align"
@@ -11861,8 +11819,7 @@ msgstr "J_afna"
 
 #: ../app/tools/gimpaligntool.c:549
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
-msgstr ""
-"Smelltu á lag, feril eða stoðlínu, eða Smella-Draga til að velja nokkur lög"
+msgstr "Smelltu á lag, feril eða stoðlínu, eða Smella-Draga til að velja nokkur lög"
 
 #: ../app/tools/gimpaligntool.c:557
 msgid "Click to pick this layer as first item"
@@ -12277,10 +12234,8 @@ msgid "Choose what color picker will do"
 msgstr "Veldu hvað litaplokkarinn á að gera"
 
 #: ../app/tools/gimpcolorpickeroptions.c:80
-msgid ""
-"Open a floating dialog to view picked color values in various color models"
-msgstr ""
-"Opna fljótandi glugga með upplýsingum um plokkaða liti í ýmsum litaskölum"
+msgid "Open a floating dialog to view picked color values in various color models"
+msgstr "Opna fljótandi glugga með upplýsingum um plokkaða liti í ýmsum litaskölum"
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:163
@@ -12348,8 +12303,7 @@ msgstr "Afskerpa / Skerpa"
 
 #: ../app/tools/gimpconvolvetool.c:74
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
-msgstr ""
-"Móska / Skerpa: gera valin atriði móskuleg eða skörp með notkun pensils"
+msgstr "Móska / Skerpa: gera valin atriði móskuleg eða skörp með notkun pensils"
 
 #: ../app/tools/gimpconvolvetool.c:75
 msgid "Bl_ur / Sharpen"
@@ -12638,8 +12592,7 @@ msgid "Flip"
 msgstr "Fletta"
 
 #: ../app/tools/gimpfliptool.c:85
-msgid ""
-"Flip Tool: Reverse the layer, selection or path horizontally or vertically"
+msgid "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr "Flettiverkfæri: spegla lagi, vali eða ferli lárétt eða lóðrétt"
 
 #: ../app/tools/gimpfliptool.c:87
@@ -12775,8 +12728,7 @@ msgid "Foreground Select"
 msgstr "Val forgrunns"
 
 #: ../app/tools/gimpfreeselecttool.c:197
-msgid ""
-"Free Select Tool: Select a hand-drawn region with free and polygonal segments"
+msgid "Free Select Tool: Select a hand-drawn region with free and polygonal segments"
 msgstr "Fríhendisval: velja svæði með handteiknuðum og marghyrndum hlutum"
 
 #: ../app/tools/gimpfreeselecttool.c:198
@@ -12797,8 +12749,7 @@ msgstr "Enter staðfestir, Escape afboðar, Backspace fjarlægir síðasta hluta
 
 #: ../app/tools/gimpfreeselecttool.c:1043
 msgid "Click-Drag adds a free segment, Click adds a polygonal segment"
-msgstr ""
-"Smella-Draga bætir við fríhendishluta, Smella bætir við marghyrndum hluta"
+msgstr "Smella-Draga bætir við fríhendishluta, Smella bætir við marghyrndum hluta"
 
 #: ../app/tools/gimpfreeselecttool.c:1562
 msgctxt "command"
@@ -13397,8 +13348,7 @@ msgstr "Blýa_ntur"
 msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
-msgstr ""
-"Fjarvíddarklónun: Afrita svæði úr mynd eftir að fjarvídd hefur verið breytt"
+msgstr "Fjarvíddarklónun: Afrita svæði úr mynd eftir að fjarvídd hefur verið breytt"
 
 #: ../app/tools/gimpperspectiveclonetool.c:136
 msgid "_Perspective Clone"
@@ -13763,8 +13713,7 @@ msgid "Font size"
 msgstr "Leturstærð"
 
 #: ../app/tools/gimptextoptions.c:145
-msgid ""
-"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Hnikun breytir útlínum leturs þannig að bitamynd verði skörp með smáum "
 "leturstærðum"
@@ -13879,8 +13828,7 @@ msgstr "GIMP textaritill"
 
 #: ../app/tools/gimpthresholdtool.c:91
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
-msgstr ""
-"Litmarkaverkfæri: Smætta mynd niður í tvo liti með notkun litmarka (threshold)"
+msgstr "Litmarkaverkfæri: Smætta mynd niður í tvo liti með notkun litmarka (threshold)"
 
 #: ../app/tools/gimpthresholdtool.c:92
 msgid "_Threshold..."
@@ -13904,8 +13852,7 @@ msgstr "Litmarkaaðgerðir virka ekki á litnúmeruð lög."
 
 #: ../app/tools/gimpthresholdtool.c:270
 msgid "Automatically adjust to optimal binarization threshold"
-msgstr ""
-"Aðlaga sjálfkrafa að bestu tvíunduðu mörkum (optimal binarization threshold)"
+msgstr "Aðlaga sjálfkrafa að bestu tvíunduðu mörkum (optimal binarization threshold)"
 
 #: ../app/tools/gimptool.c:978
 msgid "Can't work on an empty image, add a layer first"
@@ -15036,8 +14983,7 @@ msgid "Auto"
 msgstr "Sjálfvirkt"
 
 #: ../app/widgets/gimpdockwindow.c:395
-msgid ""
-"When enabled the dialog automatically follows the image you are working on."
+msgid "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 "Þegar þetta er virkt fylgir samskiptaglugginn sjálfkrafa þeirri mynd sem þú "
 "ert að vinna með."
@@ -16114,5 +16060,4 @@ msgstr "Myndvinnsluforrit"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Búa til myndir og breyta ljósmyndum"
-
 

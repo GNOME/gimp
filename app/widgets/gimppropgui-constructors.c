@@ -624,6 +624,69 @@ _gimp_prop_gui_new_channel_mixer (GObject              *config,
   return main_vbox;
 }
 
+
+GtkWidget *
+_gimp_prop_gui_new_diffraction_patterns (GObject              *config,
+                                         GParamSpec          **param_specs,
+                                         guint                 n_param_specs,
+                                         GimpContext          *context,
+                                         GimpCreatePickerFunc  create_picker_func,
+                                         gpointer              picker_creator)
+{
+  GtkWidget *notebook;
+  GtkWidget *vbox;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (param_specs != NULL, NULL);
+  g_return_val_if_fail (n_param_specs > 0, NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  notebook = gtk_notebook_new ();
+
+  vbox = _gimp_prop_gui_new_generic (config,
+                                     param_specs + 0, 3,
+                                     context,
+                                     create_picker_func,
+                                     picker_creator);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
+                            gtk_label_new ("Frequencies"));
+  gtk_widget_show (vbox);
+
+  vbox = _gimp_prop_gui_new_generic (config,
+                                     param_specs + 3, 3,
+                                     context,
+                                     create_picker_func,
+                                     picker_creator);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
+                            gtk_label_new ("Contours"));
+  gtk_widget_show (vbox);
+
+  vbox = _gimp_prop_gui_new_generic (config,
+                                     param_specs + 6, 3,
+                                     context,
+                                     create_picker_func,
+                                     picker_creator);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
+                            gtk_label_new ("Sharp Edges"));
+  gtk_widget_show (vbox);
+
+  vbox = _gimp_prop_gui_new_generic (config,
+                                     param_specs + 9, 3,
+                                     context,
+                                     create_picker_func,
+                                     picker_creator);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
+                            gtk_label_new ("Other Options"));
+  gtk_widget_show (vbox);
+
+  return notebook;
+}
+
+
 /*  private functions  */
 
 static void

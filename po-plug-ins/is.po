@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&"
 "keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-01-08 06:16+0000\n"
-"PO-Revision-Date: 2015-01-15 17:10+0000\n"
+"PO-Revision-Date: 2015-02-04 18:11+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -677,7 +677,7 @@ msgstr "Há_marksmunur (delta):"
 
 #: ../plug-ins/common/blur-gauss.c:159
 msgid "Simplest, most commonly used way of blurring"
-msgstr ""
+msgstr "Einfaldasta og mest notaða aðferð við afskerpingu"
 
 #: ../plug-ins/common/blur-gauss.c:172
 msgid "_Gaussian Blur..."
@@ -12131,22 +12131,19 @@ msgstr "Hjálparforrit gat ekki opnað mynd"
 
 #: ../plug-ins/imagemap/imap_about.c:46
 msgid "Copyright © 1999-2005 by Maurits Rijk"
-msgstr ""
+msgstr "Höfundarréttur © 1999-2005 Maurits Rijk"
 
 #: ../plug-ins/imagemap/imap_about.c:48
-#, fuzzy
 msgid "Released under the GNU General Public License"
-msgstr "Leyft samkvæmt almenna GNU almennings hugbúnaðarleyfinu útgáfu 2"
+msgstr "Þessi hugbúnaður er gefinn út með GNU General Public notkunarleyfinu"
 
 #: ../plug-ins/imagemap/imap_circle.c:63
-#, fuzzy
 msgid "C_ircle"
-msgstr "Hringur"
+msgstr "Hr_ingur"
 
 #: ../plug-ins/imagemap/imap_circle.c:263
-#, fuzzy
 msgid "Center _x:"
-msgstr "Miðja"
+msgstr "Miðja _X:"
 
 #: ../plug-ins/imagemap/imap_circle.c:268
 #: ../plug-ins/imagemap/imap_circle.c:275
@@ -12159,12 +12156,11 @@ msgstr "Miðja"
 #: ../plug-ins/imagemap/imap_rectangle.c:406
 #: ../plug-ins/imagemap/imap_rectangle.c:413
 msgid "pixels"
-msgstr "pixlar"
+msgstr "mynddílar"
 
 #: ../plug-ins/imagemap/imap_circle.c:270
-#, fuzzy
 msgid "Center _y:"
-msgstr "Miðja"
+msgstr "Miðja _Y:"
 
 #: ../plug-ins/imagemap/imap_cmd_clear.c:50
 msgid "Clear"
@@ -12187,23 +12183,20 @@ msgid "Delete"
 msgstr "Eyða"
 
 #: ../plug-ins/imagemap/imap_cmd_delete_point.c:60
-#, fuzzy
 #: ../plug-ins/imagemap/imap_menu.c:178
 msgid "Delete Point"
-msgstr "Tengipunktur:"
+msgstr "Eyða punkti"
 
 #: ../plug-ins/imagemap/imap_cmd_edit_object.c:53
-#, fuzzy
 msgid "Edit Object"
-msgstr "Sýsla m&eð brellur hluta..."
+msgstr "Breyta hlut"
 
 #. Create the areas
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:116
-#, fuzzy
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:146
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:250
 msgid "Use Gimp Guides"
-msgstr "Stilla hvaða bendilsham GIMP notar."
+msgstr "Nota GIMP stoðlínur"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:159
 #, fuzzy
@@ -12211,14 +12204,12 @@ msgid "Al_ternate"
 msgstr "&Plata:"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:164
-#, fuzzy
 msgid "A_ll"
 msgstr "A_llt"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:168
-#, fuzzy
 msgid "Add Additional Guides"
-msgstr "Birta stoðlínur myndarinnar"
+msgstr "Bæta við aukastoðlínum"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:176
 #, fuzzy
@@ -12241,15 +12232,13 @@ msgid "Lo_wer border"
 msgstr "Neðri &mörk:"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:196
-#, fuzzy
 msgid "_Base URL:"
-msgstr "Grunnslóð"
+msgstr "Grunnslóð _URL:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:73
-#, fuzzy
 #: ../plug-ins/imagemap/imap_cmd_guides.c:139
 msgid "Create Guides"
-msgstr "Almennar leiðbeiningar"
+msgstr "Búa til stoðlínur"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:112
 #, c-format
@@ -12295,16 +12284,14 @@ msgid "No. _down:"
 msgstr "Færa &niður"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:211
-#, fuzzy
 msgid "Base _URL:"
-msgstr "Grunnslóð"
+msgstr "Grunnslóð _URL:"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:236
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
 msgstr ""
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:271
-#, fuzzy
 msgid "Guides"
 msgstr "Stoðlínur"
 
@@ -12326,14 +12313,12 @@ msgid "Move Sash"
 msgstr "Færa leiðara"
 
 #: ../plug-ins/imagemap/imap_cmd_move_selected.c:55
-#, fuzzy
 msgid "Move Selected Objects"
-msgstr "Hópa valda hluti saman"
+msgstr "Færa valda hluti"
 
 #: ../plug-ins/imagemap/imap_cmd_move_to_front.c:50
-#, fuzzy
 msgid "Move To Front"
-msgstr "Flytja fremst"
+msgstr "Færa fremst"
 
 #: ../plug-ins/imagemap/imap_cmd_move_up.c:52
 #: ../plug-ins/imagemap/imap_cmd_object_up.c:54
@@ -12351,22 +12336,18 @@ msgid "Select"
 msgstr "Velja"
 
 #: ../plug-ins/imagemap/imap_cmd_select_next.c:50
-#, fuzzy
 msgid "Select Next"
-msgstr "Velja næsta flipa"
+msgstr "Velja næsta"
 
 #: ../plug-ins/imagemap/imap_cmd_select_prev.c:50
-#, fuzzy
 msgid "Select Previous"
-msgstr "Velja fyrri flipa"
+msgstr "Velja fyrra"
 
 #: ../plug-ins/imagemap/imap_cmd_select_region.c:63
-#, fuzzy
 msgid "Select Region"
 msgstr "Velja svæði"
 
 #: ../plug-ins/imagemap/imap_cmd_send_to_back.c:50
-#, fuzzy
 msgid "Send To Back"
 msgstr "Setja aftast"
 
@@ -12379,9 +12360,8 @@ msgid "Unselect All"
 msgstr "Afvelja allt"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:205
-#, fuzzy
 msgid "Link Type"
-msgstr "Tegund skráakerfis %s"
+msgstr "Tegund tengils"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:214
 msgid "_Web Site"

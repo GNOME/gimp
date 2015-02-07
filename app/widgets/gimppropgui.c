@@ -329,6 +329,8 @@ gui_new_funcs[] =
     _gimp_prop_gui_new_convolution_matrix },
   { "GimpGegl-gegl-channel-mixer-config",
     _gimp_prop_gui_new_channel_mixer },
+  { "GimpGegl-gegl-diffraction-patterns-config",
+    _gimp_prop_gui_new_diffraction_patterns },
   { NULL,
     _gimp_prop_gui_new_generic }
 };

@@ -374,6 +374,20 @@ gimp_tool_preset_deserialize_property (GimpConfig *config,
                                 "gimp", tool_preset->gimp,
                                 NULL);
 
+        /*  Initialize all GimpContext object properties that can be
+         *  used by presets with some non-NULL object, so loading a
+         *  broken preset won't leave us with NULL objects that have
+         *  bad effects. See bug #742159.
+         */
+        gimp_context_copy_properties (gimp_get_user_context (tool_preset->gimp),
+                                      GIMP_CONTEXT (options),
+                                      GIMP_CONTEXT_BRUSH_MASK    |
+                                      GIMP_CONTEXT_DYNAMICS_MASK |
+                                      GIMP_CONTEXT_PATTERN_MASK  |
+                                      GIMP_CONTEXT_GRADIENT_MASK |
+                                      GIMP_CONTEXT_PALETTE_MASK  |
+                                      GIMP_CONTEXT_FONT_MASK);
+
         if (! GIMP_CONFIG_GET_INTERFACE (options)->deserialize (GIMP_CONFIG (options),
                                                                 scanner, 1,
                                                                 NULL))
