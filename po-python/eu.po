@@ -5,21 +5,23 @@
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2005, 2006, 2008.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007, 2011.
+# Edurne Labaka <elabaka@uzei.com>, 2015.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: eu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-15 18:21+0200\n"
-"PO-Revision-Date: 2011-09-13 12:04+0200\n"
+"Project-Id-Version: gimp-python gimp-2-8\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-02-07 15:38+0100\n"
+"PO-Revision-Date: 2014-11-11 14:31+0100\n"
 "Last-Translator: \n"
 "Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.0\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"\n"
+"X-Generator: Poedit 1.6.10\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:394
 msgid "Missing exception information"
@@ -43,15 +45,15 @@ msgstr "Ez"
 msgid "Yes"
 msgstr "Bai"
 
-#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:597 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu fitxategi-hautapena"
 
-#: ../plug-ins/pygimp/gimpfu.py:607
+#: ../plug-ins/pygimp/gimpfu.py:643
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu karpeta-hautapena"
 
-#: ../plug-ins/pygimp/gimpfu.py:696
+#: ../plug-ins/pygimp/gimpfu.py:732
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "'%s'(r)en baliogabeko sarrera"
@@ -244,7 +246,7 @@ msgstr "Irudi-formatua"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:440
 msgid "Separate image folder"
-msgstr "Bereiztu irudi-karpeta"
+msgstr "Bereizi irudi-karpeta"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:442
 msgid "Folder for image export"
@@ -291,7 +293,7 @@ msgstr "Gorde Python-FU kontsolaren irteera"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:216
 msgid "Interactive GIMP Python interpreter"
-msgstr "GIMP-Python interpretatzaile elkarreragilea"
+msgstr "GIMP-Python interpretatzaile interaktiboa"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:221
 msgid "_Console"
@@ -325,22 +327,22 @@ msgstr "Itzal jaurtiaren _X desplazamendua"
 msgid "Drop shadow _Y displacement"
 msgstr "Itzal jaurtiaren _Y desplazamendua"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:76
 msgid "Create a new brush with characters from a text sequence"
 msgstr "Sortu brotxa berria testu sekuentzia bateko karaktereekin"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:82
 msgid "New Brush from _Text..."
 msgstr "Brotxa berria _testutik..."
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
 msgid "Font"
 msgstr "Letra-tipoa"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
 msgid "Pixel Size"
 msgstr "Pixel-tamaina"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:87
 msgid "Text"
 msgstr "Testua"
