@@ -1,24 +1,26 @@
-# translation of eu.po to Basque
+# Basque translation for gimp-tips
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
-#
+# 
 # Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2004, 2006.
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007, 2013.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007, 2013, 2015.
+# Edurne Labaka <elabaka@uzei.com>, 2015.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: eu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-28 21:11+0200\n"
-"PO-Revision-Date: 2013-08-27 22:51+0200\n"
-"Last-Translator: \n"
-"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"Project-Id-Version: gimp-tips gimp-2-8\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-02-07 15:58+0100\n"
+"PO-Revision-Date: 2014-11-11 15:03+0100\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
+"Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Poedit 1.6.10\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid ""
@@ -86,7 +88,7 @@ msgid ""
 "(Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha "
 "Channel) or flatten it (Image→Flatten Image)."
 msgstr ""
-"Efektu guztiak ez dira berdin aplikatzen irudi-mota guztietan. Hori "
+"Efektu guztiak ez dira berdin aplikatzen irudi mota guztietan. Hori "
 "adierazteko, menu-sarrera lausotuta agertuko da. Agian irudiaren modua "
 "GBUra  (gorria, berdea, urdina) aldatu behar duzu (Irudia→Modua→GBU), alfa "
 "kanal bat gehitu (Geruzak→Gardentasuna→Gehitu alfa kanala) edo irudia "
@@ -121,7 +123,7 @@ msgid ""
 "hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr ""
 "Saguaren erdiko botoia erabil dezakezu irudiaren inguruan ibiltzeko (edo "
-"aukeran eduki <tt>Zuriunea</tt> tekla akatuta sagua mugitzen duzun "
+"aukeran eduki <tt>Zuriunea</tt> tekla sakatuta sagua mugitzen duzun "
 "bitartean)."
 
 #: ../data/tips/gimp-tips.xml.in.h:11
@@ -163,7 +165,7 @@ msgid ""
 msgstr ""
 "GIMPek gzip konprimatzea unean onartzen du. Fitxategi-izenari <tt>.gz</tt> "
 "gehitu besterik ez duzu egin behar (edo <tt>.bz2</tt>, bzip2 instalatuta "
-"baduzu) eta irudia konprimituta gordeko da. Noski, konprimitutako irudiak "
+"baduzu) eta irudia konprimatuta gordeko da. Noski, konprimatutako irudiak "
 "ere karga daitezke."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
@@ -325,7 +327,7 @@ msgstr ""
 #~ "GIMP allows you to undo most changes to the image, so feel free to "
 #~ "experiment."
 #~ msgstr ""
-#~ "GIMP-ek irudiaren aldaketa gehienak desegin ditzakenez, jolastu irudiekin."
+#~ "GIMPek irudiaren aldaketa gehienak desegin ditzakenez, jolastu irudiekin."
 
 #~ msgid ""
 #~ "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
