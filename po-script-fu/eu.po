@@ -1,24 +1,26 @@
-# Basque translation for gimp-script-fu.
+# Basque translation for gimp-script-fu
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
-#
+# 
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2005, 2006, 2008.
-# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007, 2011, 2015.
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2005, 2006, 2008.
+# Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2007, 2011.
+# Edurne Labaka <elabaka@uzei.com>, 2015.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu gimp-2-8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-20 21:15+0100\n"
-"PO-Revision-Date: 2015-01-20 21:18+0100\n"
+"POT-Creation-Date: 2015-02-07 15:42+0100\n"
+"PO-Revision-Date: 2014-11-11 14:54+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Poedit 1.6.10\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
@@ -215,7 +217,7 @@ msgstr "_Abiarazi zerbitzaria..."
 
 #: ../plug-ins/script-fu/script-fu-server.c:862
 msgid "Listen on IP:"
-msgstr "Entzun IPan:"
+msgstr "Entzun IPn:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:869
 msgid "Server port:"
@@ -230,9 +232,9 @@ msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
 msgstr ""
-"127.0.0.1 (0.0.0.0 bereziki) ez den beste edozer IP heblide batean "
-"entzuteak erasotzaileei urrunetik bertako ordenagailuan hautazko kodea "
-"exekutatzea baimen lezake."
+"127.0.0.1 ez den beste IP helbide batean entzuteak (bereziki 0.0.0.0) "
+"erasotzaileei bide eman diezaieke urrunetik intentzio txarreko kodea "
+"exekutatzeko makina honetan."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm:182
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:156
@@ -366,10 +368,10 @@ msgstr "IIR"
 #~ msgstr "Gainlagina"
 
 #~ msgid "Number of X tiles"
-#~ msgstr "Xeko lauza-kopurua"
+#~ msgstr "Xko lauza kopurua"
 
 #~ msgid "Number of Y tiles"
-#~ msgstr "Yko lauza-kopurua"
+#~ msgstr "Yko lauza kopurua"
 
 #~ msgid "Bumpmap"
 #~ msgstr "Erliebe-mapa"
@@ -523,7 +525,7 @@ msgstr "IIR"
 #~ msgstr "Hutsuneen zabalera"
 
 #~ msgid "Number of bands"
-#~ msgstr "Banda-kopurua"
+#~ msgstr "Banda kopurua"
 
 #~ msgid "Fade away"
 #~ msgstr "Iraungitu"
@@ -1175,7 +1177,7 @@ msgstr "IIR"
 #~ msgstr "Itzalaren pisua (%)"
 
 #~ msgid "Using _Paths"
-#~ msgstr "_Bideak erabiltzea"
+#~ msgstr "_Bide-izenak erabiltzea"
 
 #~ msgid "Bookmark to the user manual"
 #~ msgstr "Sortu erabiltzailearen eskuliburuaren laster-marka"
@@ -1326,7 +1328,7 @@ msgstr "IIR"
 #~ msgstr "Gehitu gida irudi-tamainaren ehunekotan zehaztutako posizioan"
 
 #~ msgid "Direction"
-#~ msgstr "Norabidea"
+#~ msgstr "Noranzkoa"
 
 #~ msgid "Vertical"
 #~ msgstr "Bertikala"
@@ -1397,7 +1399,7 @@ msgstr "IIR"
 #~ msgstr "Bete geruza kanporantz doazen izpiekin Aur.Planoko kolorea erabiliz"
 
 #~ msgid "Number of lines"
-#~ msgstr "Marra-kopurua"
+#~ msgstr "Marra kopurua"
 
 #~ msgid "Sharpness (degrees)"
 #~ msgstr "Zorroztasuna (gradutan)"
@@ -1576,13 +1578,13 @@ msgstr "IIR"
 #~ "Gehitu 'Harraparia' efektua hautatutako eskualdeari (edo gardentasunari)"
 
 #~ msgid "Edge amount"
-#~ msgstr "Ertza-kopurua"
+#~ msgstr "Ertz kopurua"
 
 #~ msgid "Pixelize"
 #~ msgstr "Pixelizatu"
 
 #~ msgid "Pixel amount"
-#~ msgstr "Pixel-kopurua"
+#~ msgstr "Pixel kopurua"
 
 #~ msgid "_Round Button..."
 #~ msgstr "Bo_toi biribila..."
@@ -1649,7 +1651,7 @@ msgstr "IIR"
 #~ msgstr "Izurtze-indarra"
 
 #~ msgid "Number of frames"
-#~ msgstr "Marko-kopurua"
+#~ msgstr "Marko kopurua"
 
 #~ msgid "Edge behavior"
 #~ msgstr "Ertzaren portaera"
@@ -1855,7 +1857,7 @@ msgstr "IIR"
 #~ msgstr "Sortu irudia zurrunbilodun mosaiko efektuarekin"
 
 #~ msgid "Whirl amount"
-#~ msgstr "Zurrunbilo-kopurua"
+#~ msgstr "Zurrunbilo kopurua"
 
 #~ msgid "_Swirly..."
 #~ msgstr "E_spiralean..."
@@ -1870,7 +1872,7 @@ msgstr "IIR"
 #~ msgstr "Espiralaren angelua"
 
 #~ msgid "Number of times to whirl"
-#~ msgstr "Biratu beharreko aldi-kopurua"
+#~ msgstr "Biratu beharreko aldi kopurua"
 
 #, fuzzy
 #~ msgid "_Sphere..."
@@ -1938,7 +1940,7 @@ msgstr "IIR"
 #~ msgstr "Lausotu horizontalki"
 
 #~ msgid "Blur type"
-#~ msgstr "Lausotze-mota"
+#~ msgstr "Lausotze mota"
 
 #~ msgid "RLE"
 #~ msgstr "RLE"
@@ -2004,7 +2006,7 @@ msgstr "IIR"
 #~ msgstr "Uhinaren luzera"
 
 #~ msgid "Invert direction"
-#~ msgstr "Alderantzikatu norabidea"
+#~ msgstr "Alderantzikatu noranzkoa"
 
 #~ msgid "_Weave..."
 #~ msgstr "_Bilbea..."
