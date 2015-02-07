@@ -8,9 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tags gimp-2-8\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-07 15:45+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-07 15:50+0100\n"
 "PO-Revision-Date: 2014-11-11 14:55+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
@@ -28,4 +27,4 @@ msgstr "biribila"
 #. fuzzy as in a feathered, blurred, unfocused, soft brush
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
-msgstr "zalantzazkoa"
+msgstr "lauzoa"
