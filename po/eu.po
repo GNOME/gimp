@@ -5,14 +5,15 @@
 # Hizkuntza Politikarako Sailburuordetza <hizpol@ej-gv.es>, 2004.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2004, 2005, 2006, 2007, 2008, 2010.
 # Iñaki Larrañaga Murgoitio <dooteo@zundan.com>, 2011, 2013, 2014, 2015.
+# Edurne Labaka <elabaka@uzei.com>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-20 18:14+0000\n"
-"PO-Revision-Date: 2015-01-20 21:05+0100\n"
+"POT-Creation-Date: 2015-02-07 15:24+0100\n"
+"PO-Revision-Date: 2015-02-07 15:25+0100\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <librezale@librezale.org>\n"
 "Language: eu\n"
@@ -1339,7 +1340,7 @@ msgstr "Erakutsi argibide lagungarri batzuk GIMP erabiltzean"
 #: ../app/actions/dialogs-actions.c:265 ../app/actions/dialogs-actions.c:271
 msgctxt "dialogs-action"
 msgid "About GIMP"
-msgstr "GIMP-i buruz"
+msgstr "GIMPi buruz"
 
 #: ../app/actions/dialogs-actions.c:267
 msgctxt "dialogs-action"
@@ -1637,7 +1638,7 @@ msgid ""
 "recent documents list."
 msgstr ""
 "Dokumentuaren historia garbitzean aplikazio guztien azken dokumentuen "
-"zerrendako irudi guztiak betirako kenduko ditu."
+"zerrendako irudi guztiak betiko kenduko ditu."
 
 #: ../app/actions/drawable-actions.c:45
 msgctxt "drawable-action"
@@ -1733,7 +1734,7 @@ msgstr "Irauli bertikalki"
 #: ../app/actions/drawable-actions.c:113
 msgctxt "drawable-action"
 msgid "Rotate 90° _clockwise"
-msgstr "Biratu 90° _erlojuaren norantzan"
+msgstr "Biratu 90° _erlojuaren noranzkoan"
 
 #: ../app/actions/drawable-actions.c:114
 msgctxt "drawable-action"
@@ -1753,7 +1754,7 @@ msgstr "Jarri buruz behera"
 #: ../app/actions/drawable-actions.c:125
 msgctxt "drawable-action"
 msgid "Rotate 90° counter-clock_wise"
-msgstr "Biratu 90° erlojuaren _aurkako norantzan"
+msgstr "Biratu 90° erlojuaren _aurkako noranzkoan"
 
 #: ../app/actions/drawable-actions.c:126
 msgctxt "drawable-action"
@@ -2098,7 +2099,7 @@ msgstr "_Berregin %s"
 #: ../app/actions/edit-actions.c:326
 #, c-format
 msgid "_Fade %s..."
-msgstr "_Iraungitu %s..."
+msgstr "_Iraungi %s..."
 
 #: ../app/actions/edit-actions.c:338
 msgid "_Undo"
@@ -2537,12 +2538,12 @@ msgstr "Esku_ineko amaiera-puntuaren kolorea..."
 #: ../app/actions/gradient-editor-actions.c:111
 msgctxt "gradient-editor-action"
 msgid "Ble_nd Endpoints' Colors"
-msgstr "Na_hastu amaiera-puntuen koloreak"
+msgstr "Na_hasi amaiera-puntuen koloreak"
 
 #: ../app/actions/gradient-editor-actions.c:116
 msgctxt "gradient-editor-action"
 msgid "Blend Endpoints' Opacit_y"
-msgstr "Nahastu amaiera-puntuen opakuta_suna"
+msgstr "Nahasi amaiera-puntuen opakuta_suna"
 
 #: ../app/actions/gradient-editor-actions.c:124
 msgctxt "gradient-editor-action"
@@ -3171,7 +3172,7 @@ msgstr "Irauli irudia bertikalki"
 #: ../app/actions/image-actions.c:175
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
-msgstr "Biratu 90° _erlojuaren norantzan"
+msgstr "Biratu 90° _erlojuaren noranzkoan"
 
 #: ../app/actions/image-actions.c:176
 msgctxt "image-action"
@@ -3191,7 +3192,7 @@ msgstr "Jarri irudia buruz behera"
 #: ../app/actions/image-actions.c:187
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
-msgstr "Biratu 90° erlojuaren _aurkako norantzan"
+msgstr "Biratu 90° erlojuaren _aurkako noranzkoan"
 
 #: ../app/actions/image-actions.c:188
 msgctxt "image-action"
@@ -5295,7 +5296,7 @@ msgstr "Erakutsi irudiaren kolorearen lagina-puntuak"
 #: ../app/actions/view-actions.c:175
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
-msgstr "Atxikitu gi_detara"
+msgstr "Atxiki gi_detara"
 
 #: ../app/actions/view-actions.c:176
 msgctxt "view-action"
@@ -5305,7 +5306,7 @@ msgstr "Tresnen eragiketak gidetara doitu"
 #: ../app/actions/view-actions.c:182
 msgctxt "view-action"
 msgid "Sna_p to Grid"
-msgstr "Atxikitu _saretara"
+msgstr "Atxiki _saretara"
 
 #: ../app/actions/view-actions.c:183
 msgctxt "view-action"
@@ -5315,7 +5316,7 @@ msgstr "Tresnen eragiketak saretara doitu"
 #: ../app/actions/view-actions.c:189
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
-msgstr "Atxikitu _oihalaren ertzetara"
+msgstr "Atxiki _oihalaren ertzetara"
 
 #: ../app/actions/view-actions.c:190
 msgctxt "view-action"
@@ -5325,7 +5326,7 @@ msgstr "Tresnen eragiketak oihalaren ertzetara doitu"
 #: ../app/actions/view-actions.c:196
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
-msgstr "Atxikitu bide _aktibora"
+msgstr "Atxiki bide _aktibora"
 
 #: ../app/actions/view-actions.c:197
 msgctxt "view-action"
@@ -6067,7 +6068,7 @@ msgid ""
 msgstr ""
 "'Hurbilketazko hautapena' eta 'gelaxka-betetzea' bezalako tresnek hazi-"
 "betetzearen algoritmoan oinarritutako eskualdeak bilatzen dituzte. Hazi-"
-"betetzea hasieran hautatutako pixelean hasten da eta norabide guztietan "
+"betetzea hasieran hautatutako pixelean hasten da eta noranzko guztietan "
 "joaten da, hasierako pixel-intentsitatearen aldea adierazitako muga baino "
 "handiagoa den arte. Balio horrek muga lehenetsia adierazten du."
 
@@ -6158,7 +6159,7 @@ msgid ""
 msgstr ""
 "Monitorearen bereizmen horizontala ezartzen du, puntu hazbeteko (dpi). 0 "
 "balioarekin ezartzen bada, X zerbitzariari bereizmen bai horizontalaren bai "
-"bertikalaren informazioa eskatzeko derrigortuko zaio."
+"bertikalaren informazioa eskatzeko behartuko zaio."
 
 #: ../app/config/gimprc-blurbs.h:233
 msgid ""
@@ -6168,7 +6169,7 @@ msgid ""
 msgstr ""
 "Monitorearen bereizmen bertikala ezartzen du, puntu hazbeteko (dpi). 0 "
 "balioarekin ezartzen bada, X zerbitzariari bereizmen bai horizontalaren bai "
-"bertikalaren informazioa eskatzeko derrigortuko zaio."
+"bertikalaren informazioa eskatzeko behartuko zaio."
 
 #: ../app/config/gimprc-blurbs.h:238
 msgid ""
@@ -6189,7 +6190,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:246
 msgid "Sets how many processors GIMP should try to use simultaneously."
-msgstr "Ezarri prozesadore-kopurua, GIMP-ek aldi berean erabiltzen saiatzeko."
+msgstr "Ezarri prozesadore kopurua, GIMPek aldi berean erabiltzen saiatzeko."
 
 #: ../app/config/gimprc-blurbs.h:259
 msgid ""
@@ -6259,8 +6260,8 @@ msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
 msgstr ""
-"Mantendu irekitako eta gordetako fitxategi guztien betirako erregistroa "
-"azken dokumentuen zerrendan."
+"Mantendu irekitako eta gordetako fitxategi guztien betiko erregistroa azken "
+"dokumentuen zerrendan."
 
 #: ../app/config/gimprc-blurbs.h:306
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
@@ -7871,7 +7872,7 @@ msgstr ""
 #: ../app/core/gimpdrawable-blend.c:245
 msgctxt "undo-type"
 msgid "Blend"
-msgstr "Nahastu"
+msgstr "Nahasi"
 
 #: ../app/core/gimpdrawable-brightness-contrast.c:70
 #: ../app/core/gimpdrawable-brightness-contrast.c:83
@@ -8042,7 +8043,7 @@ msgstr ""
 #: ../app/core/gimpgradient-load.c:336
 #, c-format
 msgid "No linear gradients found in '%s'"
-msgstr "Ez da gradiente linearrik aurkitu '%s'(e)n"
+msgstr "Ez da gradiente linealik aurkitu '%s'(e)n"
 
 #: ../app/core/gimpgradient-load.c:346
 #, c-format
@@ -8321,7 +8322,7 @@ msgstr " (esportatuta)"
 
 #: ../app/core/gimpimage.c:1788
 msgid " (overwritten)"
-msgstr " (gainidatzitza)"
+msgstr " (gainidatzita)"
 
 #: ../app/core/gimpimage.c:1797
 msgid " (imported)"
@@ -8662,7 +8663,7 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"'%s' paleta kargatzen: zutabe-kopuru baliogabea %d lerroan. Balio lehenetsia "
+"'%s' paleta kargatzen: zutabe kopuru baliogabea %d lerroan. Balio lehenetsia "
 "erabiltzen."
 
 #: ../app/core/gimppalette-load.c:185
@@ -8895,11 +8896,11 @@ msgstr "ehunekoa"
 
 #: ../app/dialogs/about-dialog.c:114
 msgid "About GIMP"
-msgstr "GIMP-i buruz"
+msgstr "GIMPi buruz"
 
 #: ../app/dialogs/about-dialog.c:123
 msgid "Visit the GIMP website"
-msgstr "Bisitatu GIMPen web gunea"
+msgstr "Bisitatu GIMPen webgunea"
 
 #. Translators: insert your names here,
 #. separated by newline
@@ -8939,7 +8940,7 @@ msgstr "_Bihurtu"
 
 #: ../app/dialogs/convert-dialog.c:190
 msgid "_Maximum number of colors:"
-msgstr "_Gehienezko kolore-kopurua:"
+msgstr "_Gehienezko kolore kopurua:"
 
 #: ../app/dialogs/convert-dialog.c:217
 msgid "_Remove unused colors from colormap"
@@ -8964,7 +8965,7 @@ msgstr "Kolore indexatuetara bihurtzen"
 
 #: ../app/dialogs/convert-dialog.c:416 ../app/pdb/convert-cmds.c:153
 msgid "Cannot convert to a palette with more than 256 colors."
-msgstr "Ezin da 256 kolore baino gehiagodun paletara bihurtu."
+msgstr "Ezin da 256 kolore baino gehiago dituen paletara bihurtu."
 
 #: ../app/dialogs/data-delete-dialog.c:81
 msgid "Delete Object"
@@ -9488,7 +9489,7 @@ msgstr "Pale_taren izena:"
 
 #: ../app/dialogs/palette-import-dialog.c:325
 msgid "N_umber of colors:"
-msgstr "_Kolore-kopurua:"
+msgstr "_Kolore kopurua:"
 
 #: ../app/dialogs/palette-import-dialog.c:338
 msgid "C_olumns:"
@@ -9509,7 +9510,7 @@ msgstr "Hautatutako iturburuak ez du kolorerik."
 
 #: ../app/dialogs/preferences-dialog.c:268
 msgid "Reset All Preferences"
-msgstr "Berrasieratu hobezpen guztiak"
+msgstr "Berrasieratu hobespen guztiak"
 
 #: ../app/dialogs/preferences-dialog.c:286
 msgid "Do you really want to reset all preferences to default values?"
@@ -9634,7 +9635,7 @@ msgstr "Gehienezko irudi _berriaren tamaina:"
 
 #: ../app/dialogs/preferences-dialog.c:1556
 msgid "Number of _processors to use:"
-msgstr "Erabili beharreko p_rozesadore-kopurua:"
+msgstr "Erabili beharreko p_rozesadore kopurua:"
 
 #. Image Thumbnails
 #: ../app/dialogs/preferences-dialog.c:1561
@@ -10120,7 +10121,7 @@ msgstr "Konfiguratu sarrerako gailu _hedatuak..."
 
 #: ../app/dialogs/preferences-dialog.c:2585
 msgid "_Save input device settings on exit"
-msgstr "_Gorde sarrerako gailuen ezarpenak irtetzean"
+msgstr "_Gorde sarrerako gailuen ezarpenak irtetean"
 
 #: ../app/dialogs/preferences-dialog.c:2589
 msgid "Save Input Device Settings _Now"
@@ -10352,7 +10353,7 @@ msgstr "Itxi irudi denak"
 
 #: ../app/dialogs/quit-dialog.c:212
 msgid "If you quit GIMP now, these changes will be lost."
-msgstr "GIMPetik irtetzen bazara, aldaketa guztiak galduko dituzu."
+msgstr "GIMPetik irteten bazara, aldaketa guztiak galduko dituzu."
 
 #: ../app/dialogs/quit-dialog.c:215
 msgid "If you close these images now, changes will be lost."
@@ -10540,7 +10541,7 @@ msgstr "Fitxategi guztiak (*.*)"
 
 #: ../app/dialogs/vectors-import-dialog.c:97
 msgid "Scalable SVG image (*.svg)"
-msgstr "SVG irudi eskalakorra (*.svg)"
+msgstr "SVG irudi eskalagarria (*.svg)"
 
 #: ../app/dialogs/vectors-import-dialog.c:108
 msgid "_Merge imported paths"
@@ -10990,11 +10991,11 @@ msgstr "Brotxaren tamaina"
 
 #: ../app/paint/gimppaintoptions.c:160
 msgid "Every stamp has its own opacity"
-msgstr "Zigilu bakoitzak bere opakotasun propioa dauka."
+msgstr "Zigilu bakoitzak bere opakutasun propioa dauka."
 
 #: ../app/paint/gimppaintoptions.c:166
 msgid "Ignore fuzziness of the current brush"
-msgstr "Ezikusi egin uneko brotxaren lausotasunari"
+msgstr "Ez ikusi egin uneko brotxaren lausotasunari"
 
 #: ../app/paint/gimppaintoptions.c:171
 msgid "Scatter brush as you paint"
@@ -11006,11 +11007,11 @@ msgstr "Barreiaketaren distantzia"
 
 #: ../app/paint/gimppaintoptions.c:185
 msgid "Distance over which strokes fade out"
-msgstr "Trazuak iraugitzen diren distantzia"
+msgstr "Trazuak iraungitzen diren distantzia"
 
 #: ../app/paint/gimppaintoptions.c:193
 msgid "Reverse direction of fading"
-msgstr "Alderantzikatu iraungitzearen norabidea"
+msgstr "Alderantzikatu iraungitzearen noranzkoa"
 
 #: ../app/paint/gimppaintoptions.c:197
 msgid "How fade is repeated as you paint"
@@ -11155,7 +11156,7 @@ msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
 "selection."
 msgstr ""
-"Ezin da geruza hau geruz normalean bihurtu, hautapen mugikorra ez delako."
+"Ezin da geruza hau geruza normal bihurtu, hautapen mugikorra ez delako."
 
 #: ../app/pdb/gimppdb-query.c:299 ../app/pdb/gimppdb.c:315
 #: ../app/pdb/gimppdb.c:385
@@ -11795,7 +11796,7 @@ msgstr "Lerrokatu helburuko ezker ertza"
 
 #: ../app/tools/gimpalignoptions.c:302
 msgid "Align center of target"
-msgstr "Lerrokatu helburuko zentrua"
+msgstr "Lerrokatu helburuko zentroa"
 
 #: ../app/tools/gimpalignoptions.c:306
 msgid "Align right edge of target"
@@ -11823,7 +11824,7 @@ msgstr "Banatu helburuko ezker ertzak"
 
 #: ../app/tools/gimpalignoptions.c:342
 msgid "Distribute horizontal centers of targets"
-msgstr "Banatu helburuko zentru horizontalak"
+msgstr "Banatu helburuko zentro horizontalak"
 
 #: ../app/tools/gimpalignoptions.c:346
 msgid "Distribute right edges of targets"
@@ -11835,7 +11836,7 @@ msgstr "Banatu helburuko goiko ertzak"
 
 #: ../app/tools/gimpalignoptions.c:358
 msgid "Distribute vertical centers of targets"
-msgstr "Banatu helburuko zentru bertikalak"
+msgstr "Banatu helburuko zentro bertikalak"
 
 #: ../app/tools/gimpalignoptions.c:362
 msgid "Distribute bottoms of targets"
@@ -11906,7 +11907,7 @@ msgstr "Gehien. sakonera"
 
 #: ../app/tools/gimpblendtool.c:109
 msgid "Blend"
-msgstr "Nahastuta"
+msgstr "Nahasita"
 
 #: ../app/tools/gimpblendtool.c:110
 msgid "Blend Tool: Fill selected area with a color gradient"
@@ -11914,7 +11915,7 @@ msgstr "Nahasteko tresna: bete hautatutako area kolore-gradiente batekin"
 
 #: ../app/tools/gimpblendtool.c:111
 msgid "Blen_d"
-msgstr "_Nahastuta"
+msgstr "_Nahasita"
 
 #: ../app/tools/gimpblendtool.c:166
 msgid "Blend does not operate on indexed layers."
@@ -12616,7 +12617,7 @@ msgstr "Desezabatu  (%s)"
 
 #: ../app/tools/gimpflipoptions.c:66
 msgid "Direction of flipping"
-msgstr "Iraulketaren norabidea"
+msgstr "Iraulketaren noranzkoa"
 
 #: ../app/tools/gimpflipoptions.c:133
 msgid "Affect:"
@@ -12710,7 +12711,7 @@ msgstr "Albokoa"
 #: ../app/tools/gimpforegroundselectoptions.c:286
 #, c-format
 msgid "Interactive refinement  (%s)"
-msgstr "Fintze-elkarreragilea (%s)"
+msgstr "Fintze interaktiboa (%s)"
 
 #: ../app/tools/gimpforegroundselectoptions.c:290
 msgid "Mark background"
@@ -13020,7 +13021,7 @@ msgstr ""
 
 #: ../app/tools/gimpiscissorsoptions.c:127
 msgid "Interactive boundary"
-msgstr "Muga elkarreragileak"
+msgstr "Muga interaktiboak"
 
 #: ../app/tools/gimpiscissorstool.c:275
 msgid "Scissors"
@@ -13137,7 +13138,7 @@ msgstr "Aldatu irudiaren leihoa tamainaz zoomaren maila berriro doitzeko"
 
 #: ../app/tools/gimpmagnifyoptions.c:86
 msgid "Direction of magnification"
-msgstr "Luparen norabidea"
+msgstr "Luparen noranzkoa"
 
 #: ../app/tools/gimpmagnifyoptions.c:172
 msgid "Auto-resize window"
@@ -13147,7 +13148,7 @@ msgstr "Aldatu leihoaren tamaina automatikoki"
 #: ../app/tools/gimpmagnifyoptions.c:177
 #, c-format
 msgid "Direction  (%s)"
-msgstr "Norabidea (%s)"
+msgstr "Noranzkoa (%s)"
 
 #: ../app/tools/gimpmagnifytool.c:91
 msgid "Zoom"
@@ -13438,7 +13439,7 @@ msgstr "Perspektiba"
 
 #: ../app/tools/gimpposterizetool.c:85
 msgid "Posterize Tool: Reduce to a limited set of colors"
-msgstr "Posterizatzeko tresna: murriztu kolore-kopuru mugatura"
+msgstr "Posterizatzeko tresna: murriztu kolore kopuru mugatura"
 
 #: ../app/tools/gimpposterizetool.c:86
 msgid "_Posterize..."
@@ -13446,7 +13447,7 @@ msgstr "P_osterizatu..."
 
 #: ../app/tools/gimpposterizetool.c:103
 msgid "Posterize (Reduce Number of Colors)"
-msgstr "Posterizatu (murriztu kolore-kopurua)"
+msgstr "Posterizatu (murriztu kolore kopurua)"
 
 #: ../app/tools/gimpposterizetool.c:152
 msgid "Posterize does not operate on indexed layers."
@@ -13467,7 +13468,7 @@ msgstr "Erabili ikusgai dauden geruza guztiak hautapena uzkurtzean"
 #: ../app/tools/gimprectangleoptions.c:122
 #: ../app/tools/gimptransformoptions.c:127
 msgid "Composition guides such as rule of thirds"
-msgstr "Konposaketako gidak (hirugarrengoen arauak bezala)"
+msgstr "Konposizioko gidak (hirugarrengoen arauak bezala)"
 
 #: ../app/tools/gimprectangleoptions.c:131
 msgid "X coordinate of top left corner"
@@ -13515,7 +13516,7 @@ msgstr "Zabalera, altuera edo tamaina finkoaren unitatea"
 
 #: ../app/tools/gimprectangleoptions.c:317
 msgid "Expand selection from center outwards"
-msgstr "Zabaldu hautapena zentrutik kanpora"
+msgstr "Zabaldu hautapena zentrotik kanpora"
 
 #. Current, as in what is currently in use.
 #: ../app/tools/gimprectangleoptions.c:761
@@ -13524,7 +13525,7 @@ msgstr "Unekoa"
 
 #: ../app/tools/gimprectangleoptions.c:839
 msgid "Expand from center"
-msgstr "Zabaldu zentrutik"
+msgstr "Zabaldu zentrotik"
 
 #: ../app/tools/gimprectangleoptions.c:862
 msgid "Fixed:"
@@ -13914,7 +13915,7 @@ msgstr "Ez da lanik egin irudi huts batean, gehitu geruza aurrenik"
 
 #: ../app/tools/gimptransformoptions.c:99
 msgid "Direction of transformation"
-msgstr "Eraldaketaren norabidea"
+msgstr "Eraldaketaren noranzkoa"
 
 #: ../app/tools/gimptransformoptions.c:105
 msgid "Interpolation method"
@@ -13930,7 +13931,7 @@ msgstr "Erakutsi eraldatutako irudiaren aurrebista"
 
 #: ../app/tools/gimptransformoptions.c:122
 msgid "Opacity of the preview image"
-msgstr "Aurrebistako irudiaren opakotasuna"
+msgstr "Aurrebistako irudiaren opakutasuna"
 
 #: ../app/tools/gimptransformoptions.c:133
 msgid "Size of a grid cell for variable number of composition guides"
@@ -13945,7 +13946,7 @@ msgstr "Eraldatu:"
 #: ../app/widgets/gimpdynamicseditor.c:143
 #: ../app/widgets/gimpdynamicsoutputeditor.c:71
 msgid "Direction"
-msgstr "Norabidea"
+msgstr "Noranzkoa"
 
 #. the interpolation menu
 #: ../app/tools/gimptransformoptions.c:291
@@ -13959,7 +13960,7 @@ msgstr "Mozketa"
 
 #: ../app/tools/gimptransformoptions.c:310
 msgid "Image opacity"
-msgstr "Irudiaren opakotasuna"
+msgstr "Irudiaren opakutasuna"
 
 #: ../app/tools/gimptransformoptions.c:312
 msgid "Show image preview"
@@ -14755,7 +14756,7 @@ msgid ""
 "removing it."
 msgstr ""
 "Kontroladore hau kontroladore-aktiboen zerrendatik kentzean konfiguratu "
-"dituzun gertaera-mapa guztiak betirako ezabatuko dira.\n"
+"dituzun gertaera-mapa guztiak betiko ezabatuko dira.\n"
 "\n"
 "\"Desgaitu kontroladorea\" hautatzean kontroladorea desgaitu egiten du, "
 "ezabatu gabe ordea."
@@ -15153,7 +15154,7 @@ msgstr "ÑSB (%0.1f, %0.1f, %0.1f)"
 #: ../app/widgets/gimpgradienteditor.c:958
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "Intentsitatea: %0.1f    Opakotasuna: %0.1f"
+msgstr "Intentsitatea: %0.1f    Opakutasuna: %0.1f"
 
 #: ../app/widgets/gimpgradienteditor.c:989
 #, c-format
@@ -15172,7 +15173,7 @@ msgstr "Ezarritako atzeko planoaren kolorea:"
 #: ../app/widgets/gimpgradienteditor.c:1296
 #, c-format
 msgid "%s-Drag: move & compress"
-msgstr "%s-Arrastatu: aldatu lekuz eta konprimitu"
+msgstr "%s-Arrastatu: aldatu lekuz eta konprimatu"
 
 #: ../app/widgets/gimpgradienteditor.c:1240
 msgid "Drag: move"
@@ -15370,19 +15371,19 @@ msgstr "Berregite-urratsak:"
 
 #: ../app/widgets/gimpimagepropview.c:152
 msgid "Number of pixels:"
-msgstr "Pixel-kopurua:"
+msgstr "Pixel kopurua:"
 
 #: ../app/widgets/gimpimagepropview.c:155
 msgid "Number of layers:"
-msgstr "Geruza-kopurua:"
+msgstr "Geruza kopurua:"
 
 #: ../app/widgets/gimpimagepropview.c:158
 msgid "Number of channels:"
-msgstr "Kanal-kopurua:"
+msgstr "Kanal kopurua:"
 
 #: ../app/widgets/gimpimagepropview.c:161
 msgid "Number of paths:"
-msgstr "Bide-kopurua:"
+msgstr "Bide kopurua:"
 
 #. no undo (or redo) steps available
 #: ../app/widgets/gimpimagepropview.c:410
@@ -15606,7 +15607,7 @@ msgstr "'%s' atributua ez da baliozkoa <%s> elementuan testuinguru honetan"
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Testuko kanpoko elementua <markup> izan behar du <%s>"
 
-#: ../app/widgets/gimptextbuffer.c:1454
+#: ../app/widgets/gimptextbuffer.c:1459
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "UTF-8 datu baliogabeak '%s' fitxategian."
