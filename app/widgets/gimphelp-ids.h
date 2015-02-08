@@ -171,6 +171,8 @@
 #define GIMP_HELP_LAYER_INVERT                    "gimp-layer-invert"
 #define GIMP_HELP_LAYER_WHITE_BALANCE             "gimp-layer-white-balance"
 #define GIMP_HELP_LAYER_EQUALIZE                  "gimp-layer-equalize"
+#define GIMP_HELP_LAYER_DILATE                    "gimp-layer-dilate"
+#define GIMP_HELP_LAYER_ERODE                     "gimp-layer-erode"
 #define GIMP_HELP_LAYER_VISIBLE                   "gimp-layer-visible"
 #define GIMP_HELP_LAYER_LINKED                    "gimp-layer-linked"
 #define GIMP_HELP_LAYER_OPACITY                   "gimp-layer-opacity"

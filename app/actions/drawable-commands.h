@@ -27,6 +27,10 @@ void   drawable_value_invert_cmd_callback   (GtkAction *action,
                                              gpointer   data);
 void   drawable_levels_stretch_cmd_callback (GtkAction *action,
                                              gpointer   data);
+void   drawable_dilate_cmd_callback         (GtkAction *action,
+                                             gpointer   data);
+void   drawable_erode_cmd_callback          (GtkAction *action,
+                                             gpointer   data);
 void   drawable_offset_cmd_callback         (GtkAction *action,
                                              gpointer   data);
 
