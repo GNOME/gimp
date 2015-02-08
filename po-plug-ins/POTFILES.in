@@ -101,7 +101,6 @@ plug-ins/common/tile-paper.c
 plug-ins/common/tile-small.c
 plug-ins/common/unit-editor.c
 plug-ins/common/unsharp-mask.c
-plug-ins/common/value-propagate.c
 plug-ins/common/van-gogh-lic.c
 plug-ins/common/warp.c
 plug-ins/common/web-browser.c
