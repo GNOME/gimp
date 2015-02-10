@@ -1905,14 +1905,20 @@ pygimp_layer_new(gint32 ID)
     PyGimpLayer *self;
 
     if (!gimp_item_is_valid(ID) || !gimp_item_is_layer(ID)) {
-	Py_INCREF(Py_None);
-	return Py_None;
+        Py_INCREF(Py_None);
+        return Py_None;
     }
 
-    self = PyObject_NEW(PyGimpLayer, &PyGimpLayer_Type);
+
+    if (gimp_item_is_group(ID)) {
+        self = PyObject_NEW(PyGimpGroupLayer, &PyGimpGroupLayer_Type);
+    }
+    else {
+        self = PyObject_NEW(PyGimpLayer, &PyGimpLayer_Type);
+    }
 
     if (self == NULL)
-	return NULL;
+        return NULL;
 
     self->ID = ID;
     self->drawable = NULL;
