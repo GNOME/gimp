@@ -96,12 +96,20 @@ gimp_operation_equalize_class_init (GimpOperationEqualizeClass *klass)
 static void
 gimp_operation_equalize_init (GimpOperationEqualize *self)
 {
+  self->values = NULL;
+  self->n_bins = 0;
 }
 
 static void
 gimp_operation_equalize_finalize (GObject *object)
 {
   GimpOperationEqualize *self = GIMP_OPERATION_EQUALIZE (object);
+
+  if (self->values)
+    {
+      g_free (self->values);
+      self->values = NULL;
+    }
 
   if (self->histogram)
     {
@@ -143,15 +151,33 @@ gimp_operation_equalize_set_property (GObject      *object,
     case PROP_HISTOGRAM:
       if (self->histogram)
         g_object_unref (self->histogram);
+
       self->histogram = g_value_dup_object (value);
+
       if (self->histogram)
         {
           gdouble pixels;
+          gint    n_bins;
           gint    max;
           gint    k;
 
+          n_bins = gimp_histogram_n_bins (self->histogram);
+
+          if ((self->values != NULL) && (self->n_bins != n_bins))
+            {
+              g_free (self->values);
+              self->values = NULL;
+            }
+
+          if (self->values == NULL)
+            {
+              self->values = g_new (gdouble, 3 * n_bins);
+            }
+
+          self->n_bins = n_bins;
+
           pixels = gimp_histogram_get_count (self->histogram,
-                                             GIMP_HISTOGRAM_VALUE, 0, 255);
+                                             GIMP_HISTOGRAM_VALUE, 0, n_bins - 1);
 
           if (gimp_histogram_n_channels (self->histogram) == 1 ||
               gimp_histogram_n_channels (self->histogram) == 2)
@@ -164,7 +190,7 @@ gimp_operation_equalize_set_property (GObject      *object,
               gdouble sum = 0;
               gint    i;
 
-             for (i = 0; i < 256; i++)
+             for (i = 0; i < n_bins; i++)
                 {
                   gdouble histi;
 
@@ -172,12 +198,12 @@ gimp_operation_equalize_set_property (GObject      *object,
 
                   sum += histi;
 
-                  self->part[k][i] = sum / pixels;
+                  self->values[k * n_bins + i] = sum / pixels;
 
                   if (max == 1)
                     {
-                      self->part[1][i] = self->part[0][i];
-                      self->part[2][i] = self->part[0][i];
+                      self->values[n_bins + i] = self->values[i];
+                      self->values[2 * n_bins + i] = self->values[i];
                     }
                 }
            }
@@ -195,9 +221,11 @@ gimp_operation_equalize_map (GimpOperationEqualize *self,
                              gint                   component,
                              gfloat                 value)
 {
-  gint index = (gint) CLAMP (value * 255.0, 0, 255);
+  gint index;
+  index = component * self->n_bins + \
+            (gint) (CLAMP (value * (self->n_bins - 1), 0.0, self->n_bins - 1));
 
-  return self->part[component][index];
+  return self->values[index];
 }
 
 static gboolean

@@ -41,7 +41,8 @@ struct _GimpOperationEqualize
   GimpOperationPointFilter  parent_instance;
 
   GimpHistogram            *histogram;
-  gfloat                    part[5][256];
+  gdouble                  *values;
+  gint                      n_bins;
 };
 
 struct _GimpOperationEqualizeClass
