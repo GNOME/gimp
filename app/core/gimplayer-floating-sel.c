@@ -45,6 +45,8 @@ floating_sel_attach (GimpLayer    *layer,
 {
   GimpImage *image;
   GimpLayer *floating_sel;
+  GimpLayer *parent   = NULL;
+  gint       position = 0;
 
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -73,7 +75,25 @@ floating_sel_attach (GimpLayer    *layer,
 
   gimp_layer_set_floating_sel_drawable (layer, drawable);
 
-  gimp_image_add_layer (image, layer, NULL, 0, TRUE);
+  /*  Floating selection layer placement, default to the top of the
+   *  layers stack; parent and position are adapted according to the
+   *  drawable associated with the floating selection.
+   */
+
+  if (GIMP_IS_LAYER_MASK (drawable))
+    {
+       GimpLayer *tmp = gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable));
+
+       parent   = GIMP_LAYER (gimp_item_get_parent (GIMP_ITEM (tmp)));
+       position = gimp_item_get_index (GIMP_ITEM (tmp));
+    }
+  else if (GIMP_IS_LAYER (drawable))
+    {
+      parent   = GIMP_LAYER (gimp_item_get_parent (GIMP_ITEM (drawable)));
+      position = gimp_item_get_index (GIMP_ITEM (drawable));
+    }
+
+  gimp_image_add_layer (image, layer, parent, position, TRUE);
 }
 
 void
