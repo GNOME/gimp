@@ -2338,6 +2338,16 @@ data/images/Makefile
 data/interpreters/Makefile
 data/palettes/Makefile
 data/patterns/Makefile
+data/patterns/Animal/Makefile
+data/patterns/Fabric/Makefile
+data/patterns/Food/Makefile
+data/patterns/Legacy/Makefile
+data/patterns/Paper/Makefile
+data/patterns/Plant/Makefile
+data/patterns/Sky/Makefile
+data/patterns/Stone/Makefile
+data/patterns/Water/Makefile
+data/patterns/Wood/Makefile
 data/tags/Makefile
 data/tips/Makefile
 data/tool-presets/Makefile
