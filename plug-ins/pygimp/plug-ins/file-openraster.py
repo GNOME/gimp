@@ -13,11 +13,10 @@
 # Based on MyPaint source code by Martin Renold
 # http://gitorious.org/mypaint/mypaint/blobs/edd84bcc1e091d0d56aa6d26637aa8a925987b6a/lib/document.py
 
-from gimpfu import *
-
-import tempfile, zipfile, os
+import os, sys, tempfile, zipfile
 import xml.etree.ElementTree as ET
 
+from gimpfu import *
 
 layermodes_map = {
     "svg:src-over": NORMAL_MODE,
@@ -95,9 +94,18 @@ def save_ora(img, drawable, filename, raw_filename):
 
     tempdir = tempfile.mkdtemp('gimp-plugin-file-openraster')
 
+    if isinstance(filename, str):
+        try:
+            filename = filename.decode("utf-8")
+        except UnicodeDecodeError:
+            # 1 - 1 correspondence between raw_bytes and UCS-2 used by Python
+            # Unicode characters
+            filename = filename.decode("latin1")
+    filename = filename.encode(sys.getfilesystemencoding())
+    tmp_sufix = ".tmpsave".encode(sys.getfilesystemencoding())
     # use .tmpsave extension, so we don't overwrite a valid file if
     # there is an exception
-    orafile = zipfile.ZipFile(filename + '.tmpsave', 'w', compression=zipfile.ZIP_STORED)
+    orafile = zipfile.ZipFile(filename + tmp_sufix, 'w', compression=zipfile.ZIP_STORED)
 
     write_file_str(orafile, 'mimetype', 'image/openraster') # must be the first file written
 
@@ -160,11 +168,19 @@ def save_ora(img, drawable, filename, raw_filename):
     os.rmdir(tempdir)
     if os.path.exists(filename):
         os.remove(filename) # win32 needs that
-    os.rename(filename + '.tmpsave', filename)
+    os.rename(filename + tmp_sufix, filename)
 
 def load_ora(filename, raw_filename):
     tempdir = tempfile.mkdtemp('gimp-plugin-file-openraster')
-    orafile = zipfile.ZipFile(filename)
+    original_name = filename
+    try:
+        if not isinstance(filename, str):
+            filename = filename.decode("utf-8")
+        orafile = zipfile.ZipFile(filename.encode(sys.getfilesystemencoding()))
+    except (UnicodeDecodeError, IOError):
+        # Someone may try to open an actually garbled name, and pass a raw
+        # non-utf 8 filename:
+        orafile = zipfile.ZipFile(original_name)
     stack, w, h = get_image_attributes(orafile)
 
     img = gimp.Image(w, h, RGB)
