@@ -94,6 +94,8 @@ endif
 
 if OS_WIN32
 win32_ldflags = -mwindows -Wl,--tsaware $(WIN32_LARGE_ADDRESS_AWARE)
+else
+libm = -lm
 endif
 
 if USE_BINRELOC
@@ -186,7 +188,8 @@ gimpconsoleldadd = \
 	$(LCMS_LIBS)			\
 	$(Z_LIBS)			\
 	$(INTLLIBS)			\
-	$(RT_LIBS)
+	$(RT_LIBS)			\
+	$(libm)
 
 gimp_@GIMP_APP_VERSION@_LDFLAGS = \
 	$(AM_LDFLAGS)		\
