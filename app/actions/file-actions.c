@@ -108,6 +108,12 @@ static const GimpActionEntry file_actions[] =
     G_CALLBACK (file_close_all_cmd_callback),
     GIMP_HELP_FILE_CLOSE_ALL },
 
+  { "file-show-in-file-manager", "gtk-directory",
+    NC_("file-action", "Show in File Manager"), "<primary><alt>F",
+    NC_("file-action", "Show in File Manager"),
+    G_CALLBACK (file_show_in_file_manager_cmd_callback),
+    GIMP_HELP_FILE_SHOW_IN_FILE_MANAGER },
+
   { "file-quit", "application-exit",
     NC_("file-action", "_Quit"), "<primary>Q",
     NC_("file-action", "Quit the GNU Image Manipulation Program"),
@@ -280,17 +286,18 @@ file_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("file-save",            drawable);
-  SET_SENSITIVE ("file-save-as",         drawable);
-  SET_SENSITIVE ("file-save-a-copy",     drawable);
-  SET_SENSITIVE ("file-save-and-close",  drawable);
-  SET_SENSITIVE ("file-revert",          image && (file || source));
-  SET_SENSITIVE ("file-export",          drawable);
-  SET_VISIBLE   ("file-export",          ! show_overwrite);
-  SET_SENSITIVE ("file-overwrite",       show_overwrite);
-  SET_VISIBLE   ("file-overwrite",       show_overwrite);
-  SET_SENSITIVE ("file-export-as",       drawable);
-  SET_SENSITIVE ("file-create-template", image);
+  SET_SENSITIVE ("file-save",                 drawable);
+  SET_SENSITIVE ("file-save-as",              drawable);
+  SET_SENSITIVE ("file-save-a-copy",          drawable);
+  SET_SENSITIVE ("file-save-and-close",       drawable);
+  SET_SENSITIVE ("file-revert",               file || source);
+  SET_SENSITIVE ("file-export",               drawable);
+  SET_VISIBLE   ("file-export",               ! show_overwrite);
+  SET_SENSITIVE ("file-overwrite",            show_overwrite);
+  SET_VISIBLE   ("file-overwrite",            show_overwrite);
+  SET_SENSITIVE ("file-export-as",            drawable);
+  SET_SENSITIVE ("file-create-template",      image);
+  SET_SENSITIVE ("file-show-in-file-manager", file || source || export);
 
   if (export)
     {

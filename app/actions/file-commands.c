@@ -471,6 +471,35 @@ file_close_all_cmd_callback (GtkAction *action,
 }
 
 void
+file_show_in_file_manager_cmd_callback (GtkAction *action,
+                                        gpointer   data)
+{
+  Gimp         *gimp;
+  GimpDisplay  *display;
+  GimpImage    *image;
+  GFile        *file;
+  return_if_no_gimp (gimp, data);
+  return_if_no_display (display, data);
+
+  image = gimp_display_get_image (display);
+
+  file = gimp_image_get_any_file (image);
+
+  if (file)
+    {
+      GError *error = NULL;
+
+      if (! gimp_file_show_in_file_manager (file, &error))
+        {
+          gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
+                        _("Can't show file in file manager: %s"),
+                        error->message);
+          g_clear_error (&error);
+        }
+    }
+}
+
+void
 file_quit_cmd_callback (GtkAction *action,
                         gpointer   data)
 {

@@ -35,6 +35,7 @@ EXPORTS
 	gimp_escape_uline
 	gimp_file_get_utf8_name
 	gimp_file_has_extension
+	gimp_file_show_in_file_manager
 	gimp_filename_to_utf8
 	gimp_fill_type_get_type
 	gimp_flags_get_first_desc

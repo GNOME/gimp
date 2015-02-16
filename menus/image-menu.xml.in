@@ -52,7 +52,9 @@
       <separator />
       <placeholder name="Send" />
       <separator />
-      <placeholder name="Info" />
+      <placeholder name="Info">
+	<menuitem action="file-show-in-file-manager" />
+      </placeholder>
       <separator />
       <menuitem action="view-close" />
       <menuitem action="file-close-all" />

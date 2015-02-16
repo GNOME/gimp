@@ -41,6 +41,7 @@
 #define GIMP_HELP_FILE_REVERT                     "gimp-file-revert"
 #define GIMP_HELP_FILE_CLOSE                      "gimp-file-close"
 #define GIMP_HELP_FILE_CLOSE_ALL                  "gimp-file-close-all"
+#define GIMP_HELP_FILE_SHOW_IN_FILE_MANAGER       "gimp-file-show-in-file-manager"
 #define GIMP_HELP_FILE_CREATE_TEMPLATE            "gimp-file-save-as-template" /* Update string along with gimp-help-2 */
 #define GIMP_HELP_FILE_QUIT                       "gimp-file-quit"
 

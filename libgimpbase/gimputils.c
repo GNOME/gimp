@@ -313,6 +313,120 @@ gimp_file_has_extension (GFile       *file,
 }
 
 /**
+ * gimp_file_show_in_file_manager:
+ * @file:  a #GFile
+ * @error: return location for a #GError
+ *
+ * Shows @file in the system file manager.
+ *
+ * Since: GIMP 2.10
+ *
+ * Return value: %TRUE on success, %FALSE otherwise. On %FASLE, @error
+ *               is set.
+ **/
+gboolean
+gimp_file_show_in_file_manager (GFile   *file,
+                                GError **error)
+{
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+#if defined(G_OS_WIN32)
+
+  {
+#if 0
+    /* found on stackoverflow, please turn this into working code...
+     */
+    void BrowseToFile(LPCTSTR filename)
+    {
+      ITEMIDLIST *pidl = ILCreateFromPath (filename);
+      if (pidl)
+        {
+          SHOpenFolderAndSelectItems (pidl, 0, 0, 0);
+          ILFree (pidl);
+        }
+    }
+#endif
+
+    g_set_error_literal (error, G_FILE_ERROR, 0,
+                         "Please implement something in "
+                         "gimp_file_show_in_file_manager().");
+    return FALSE;
+  }
+
+#elif defined(PLATFORM_OSX)
+
+  {
+#if 0
+    /* found on stackoverflow, please turn this into working code...
+     */
+    NSArray *fileURLs = [NSArray arrayWithObjects:fileURL1, /* ... */ nil];
+
+    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:fileURLs];
+#endif
+
+    g_set_error_literal (error, G_FILE_ERROR, 0,
+                         "Please implement something in "
+                         "gimp_file_show_in_file_manager().");
+    return FALSE;
+  }
+
+#else /* UNIX */
+
+  {
+    GDBusProxy      *proxy;
+    GVariant        *retval;
+    GVariantBuilder *builder;
+    gchar           *uri;
+
+    proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+                                           G_DBUS_PROXY_FLAGS_NONE,
+                                           NULL,
+                                           "org.freedesktop.FileManager1",
+                                           "/org/freedesktop/FileManager1",
+                                           "org.freedesktop.FileManager1",
+                                           NULL, error);
+
+    if (! proxy)
+      {
+        g_prefix_error (error,
+                        _("Connecting to org.freedesktop.FileManager1 failed: "));
+        return FALSE;
+      }
+
+    uri = g_file_get_uri (file);
+
+    builder = g_variant_builder_new (G_VARIANT_TYPE ("as"));
+    g_variant_builder_add (builder, "s", uri);
+
+    g_free (uri);
+
+    retval = g_dbus_proxy_call_sync (proxy,
+                                     "ShowItems",
+                                     g_variant_new ("(ass)",
+                                                    builder,
+                                                    ""),
+                                     G_DBUS_CALL_FLAGS_NONE,
+                                     -1, NULL, error);
+
+    g_variant_builder_unref (builder);
+    g_object_unref (proxy);
+
+    if (! retval)
+      {
+        g_prefix_error (error, _("Calling ShowItems failed: "));
+        return FALSE;
+      }
+
+    g_variant_unref (retval);
+
+    return TRUE;
+  }
+
+#endif
+}
+
+/**
  * gimp_strip_uline:
  * @str: underline infested string (or %NULL)
  *
