@@ -8,6 +8,7 @@
     <menuitem action="dynamics-new" />
     <menuitem action="dynamics-duplicate" />
     <menuitem action="dynamics-copy-location" />
+    <menuitem action="dynamics-show-in-file-manager" />
     <menuitem action="dynamics-delete" />
     <separator />
     <menuitem action="dynamics-refresh" />

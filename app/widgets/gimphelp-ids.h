@@ -323,6 +323,7 @@
 #define GIMP_HELP_BRUSH_NEW                       "gimp-brush-new"
 #define GIMP_HELP_BRUSH_DUPLICATE                 "gimp-brush-duplicate"
 #define GIMP_HELP_BRUSH_COPY_LOCATION             "gimp-brush-copy-location"
+#define GIMP_HELP_BRUSH_SHOW_IN_FILE_MANAGER      "gimp-brush-show-in-file-manager"
 #define GIMP_HELP_BRUSH_DELETE                    "gimp-brush-delete"
 #define GIMP_HELP_BRUSH_REFRESH                   "gimp-brush-refresh"
 
@@ -338,6 +339,7 @@
 #define GIMP_HELP_DYNAMICS_NEW                    "gimp-dynamics-new"
 #define GIMP_HELP_DYNAMICS_DUPLICATE              "gimp-dynamics-duplicate"
 #define GIMP_HELP_DYNAMICS_COPY_LOCATION          "gimp-dynamics-copy-location"
+#define GIMP_HELP_DYNAMICS_SHOW_IN_FILE_MANAGER   "gimp-dynamics-show-in-file-manager"
 #define GIMP_HELP_DYNAMICS_DELETE                 "gimp-dynamics-delete"
 #define GIMP_HELP_DYNAMICS_REFRESH                "gimp-dynamics-refresh"
 
@@ -347,6 +349,7 @@
 #define GIMP_HELP_PATTERN_NEW                     "gimp-pattern-new"
 #define GIMP_HELP_PATTERN_DUPLICATE               "gimp-pattern-duplicate"
 #define GIMP_HELP_PATTERN_COPY_LOCATION           "gimp-pattern-copy-location"
+#define GIMP_HELP_PATTERN_SHOW_IN_FILE_MANAGER    "gimp-pattern-show-in-file-manager"
 #define GIMP_HELP_PATTERN_DELETE                  "gimp-pattern-delete"
 #define GIMP_HELP_PATTERN_REFRESH                 "gimp-pattern-refresh"
 
@@ -355,6 +358,7 @@
 #define GIMP_HELP_GRADIENT_NEW                    "gimp-gradient-new"
 #define GIMP_HELP_GRADIENT_DUPLICATE              "gimp-gradient-duplicate"
 #define GIMP_HELP_GRADIENT_COPY_LOCATION          "gimp-gradient-copy-location"
+#define GIMP_HELP_GRADIENT_SHOW_IN_FILE_MANAGER   "gimp-gradient-show-in-file-manager"
 #define GIMP_HELP_GRADIENT_DELETE                 "gimp-gradient-delete"
 #define GIMP_HELP_GRADIENT_REFRESH                "gimp-gradient-refresh"
 #define GIMP_HELP_GRADIENT_SAVE_AS_POV            "gimp-gradient-save-as-pov"
@@ -387,6 +391,7 @@
 #define GIMP_HELP_PALETTE_NEW                     "gimp-palette-new"
 #define GIMP_HELP_PALETTE_DUPLICATE               "gimp-palette-duplicate"
 #define GIMP_HELP_PALETTE_COPY_LOCATION           "gimp-palette-copy-location"
+#define GIMP_HELP_PALETTE_SHOW_IN_FILE_MANAGER    "gimp-palette-show-in-file-manager"
 #define GIMP_HELP_PALETTE_DELETE                  "gimp-palette-delete"
 #define GIMP_HELP_PALETTE_REFRESH                 "gimp-palette-refresh"
 #define GIMP_HELP_PALETTE_IMPORT                  "gimp-palette-import"
@@ -417,11 +422,13 @@
 #define GIMP_HELP_TOOL_PRESET_NEW                 "gimp-tool-preset-new"
 #define GIMP_HELP_TOOL_PRESET_DUPLICATE           "gimp-tool-preset-duplicate"
 #define GIMP_HELP_TOOL_PRESET_COPY_LOCATION       "gimp-tool-preset-copy-location"
+#define GIMP_HELP_TOOL_PRESET_SHOW_IN_FILE_MANAGER "gimp-tool-preset-show-in-file-manager"
 #define GIMP_HELP_TOOL_PRESET_DELETE              "gimp-tool-preset-delete"
 #define GIMP_HELP_TOOL_PRESET_REFRESH             "gimp-tool-preset-refresh"
 
 #define GIMP_HELP_DOCUMENT_CLEAR                  "gimp-document-clear"
 #define GIMP_HELP_DOCUMENT_COPY_LOCATION          "gimp-document-copy-location"
+#define GIMP_HELP_DOCUMENT_SHOW_IN_FILE_MANAGER   "gimp-document-show-in-file-manager"
 #define GIMP_HELP_DOCUMENT_DIALOG                 "gimp-document-dialog"
 #define GIMP_HELP_DOCUMENT_OPEN                   "gimp-document-open"
 #define GIMP_HELP_DOCUMENT_REMOVE                 "gimp-document-remove"

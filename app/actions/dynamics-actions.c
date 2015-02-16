@@ -61,6 +61,12 @@ static const GimpActionEntry dynamics_actions[] =
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_DYNAMICS_COPY_LOCATION },
 
+  { "dynamics-show-in-file-manager", "gtk-directory",
+    NC_("dynamics-action", "Show Dynamics in _File Manager"), NULL,
+    NC_("dynamics-action", "Show dynamics file location in the file manager"),
+    G_CALLBACK (data_show_in_file_manager_cmd_callback),
+    GIMP_HELP_DYNAMICS_SHOW_IN_FILE_MANAGER },
+
   { "dynamics-delete", "edit-delete",
     NC_("dynamics-action", "_Delete Dynamics"), NULL,
     NC_("dynamics-action", "Delete this dynamics"),
@@ -121,10 +127,11 @@ dynamics_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("dynamics-edit",          dynamics);
-  SET_SENSITIVE ("dynamics-duplicate",     dynamics && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("dynamics-copy-location", dynamics && file);
-  SET_SENSITIVE ("dynamics-delete",        dynamics && gimp_data_is_deletable (data));
+  SET_SENSITIVE ("dynamics-edit",                 dynamics);
+  SET_SENSITIVE ("dynamics-duplicate",            dynamics && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("dynamics-copy-location",        file);
+  SET_SENSITIVE ("dynamics-show-in-file-manager", file);
+  SET_SENSITIVE ("dynamics-delete",               dynamics && gimp_data_is_deletable (data));
 
 #undef SET_SENSITIVE
 }

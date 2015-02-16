@@ -66,6 +66,12 @@ static const GimpActionEntry documents_actions[] =
     G_CALLBACK (documents_copy_location_cmd_callback),
     GIMP_HELP_DOCUMENT_COPY_LOCATION },
 
+  { "documents-show-in-file-manager", "gtk-directory",
+    NC_("documents-action", "Show Image in _File Manager"), NULL,
+    NC_("documents-action", "Show image location in the file manager"),
+    G_CALLBACK (documents_show_in_file_manager_cmd_callback),
+    GIMP_HELP_DOCUMENT_SHOW_IN_FILE_MANAGER },
+
   { "documents-remove", "list-remove",
     NC_("documents-action", "Remove _Entry"), NULL,
     NC_("documents-action", "Remove the selected entry"),
@@ -122,15 +128,16 @@ documents_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("documents-open",             imagefile);
-  SET_SENSITIVE ("documents-raise-or-open",    imagefile);
-  SET_SENSITIVE ("documents-file-open-dialog", TRUE);
-  SET_SENSITIVE ("documents-copy-location",    imagefile);
-  SET_SENSITIVE ("documents-remove",           imagefile);
-  SET_SENSITIVE ("documents-clear",            TRUE);
-  SET_SENSITIVE ("documents-recreate-preview", imagefile);
-  SET_SENSITIVE ("documents-reload-previews",  imagefile);
-  SET_SENSITIVE ("documents-remove-dangling",  imagefile);
+  SET_SENSITIVE ("documents-open",                 imagefile);
+  SET_SENSITIVE ("documents-raise-or-open",        imagefile);
+  SET_SENSITIVE ("documents-file-open-dialog",     TRUE);
+  SET_SENSITIVE ("documents-copy-location",        imagefile);
+  SET_SENSITIVE ("documents-show-in-file-manager", imagefile);
+  SET_SENSITIVE ("documents-remove",               imagefile);
+  SET_SENSITIVE ("documents-clear",                TRUE);
+  SET_SENSITIVE ("documents-recreate-preview",     imagefile);
+  SET_SENSITIVE ("documents-reload-previews",      imagefile);
+  SET_SENSITIVE ("documents-remove-dangling",      imagefile);
 
 #undef SET_SENSITIVE
 }

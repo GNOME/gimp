@@ -67,6 +67,12 @@ static const GimpActionEntry patterns_actions[] =
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_PATTERN_COPY_LOCATION },
 
+  { "patterns-show-in-file-manager", "gtk-directory",
+    NC_("patterns-action", "Show Pattern in _File Manager"), NULL,
+    NC_("patterns-action", "Show pattern file location in the file manager"),
+    G_CALLBACK (data_show_in_file_manager_cmd_callback),
+    GIMP_HELP_PATTERN_SHOW_IN_FILE_MANAGER },
+
   { "patterns-delete", "edit-delete",
     NC_("patterns-action", "_Delete Pattern"), NULL,
     NC_("patterns-action", "Delete this pattern"),
@@ -132,11 +138,12 @@ patterns_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("patterns-edit",          pattern && FALSE);
-  SET_SENSITIVE ("patterns-open-as-image", pattern && file);
-  SET_SENSITIVE ("patterns-duplicate",     pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("patterns-copy-location", pattern && file);
-  SET_SENSITIVE ("patterns-delete",        pattern && gimp_data_is_deletable (data));
+  SET_SENSITIVE ("patterns-edit",                 pattern && FALSE);
+  SET_SENSITIVE ("patterns-open-as-image",        file);
+  SET_SENSITIVE ("patterns-duplicate",            pattern && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("patterns-copy-location",        file);
+  SET_SENSITIVE ("patterns-show-in-file-manager", file);
+  SET_SENSITIVE ("patterns-delete",               pattern && gimp_data_is_deletable (data));
 
 #undef SET_SENSITIVE
 }

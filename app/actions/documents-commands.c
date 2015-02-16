@@ -167,6 +167,35 @@ documents_copy_location_cmd_callback (GtkAction *action,
 }
 
 void
+documents_show_in_file_manager_cmd_callback (GtkAction *action,
+                                             gpointer   data)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContext         *context;
+  GimpImagefile       *imagefile;
+
+  context   = gimp_container_view_get_context (editor->view);
+  imagefile = gimp_context_get_imagefile (context);
+
+  if (imagefile)
+    {
+      GFile  *file  = g_file_new_for_uri (gimp_object_get_name (imagefile));
+      GError *error = NULL;
+
+      if (! gimp_file_show_in_file_manager (file, &error))
+        {
+          gimp_message (context->gimp, G_OBJECT (editor),
+                        GIMP_MESSAGE_ERROR,
+                        _("Can't show file in file manager: %s"),
+                        error->message);
+          g_clear_error (&error);
+        }
+
+      g_object_unref (file);
+    }
+}
+
+void
 documents_remove_cmd_callback (GtkAction *action,
                                gpointer   data)
 {

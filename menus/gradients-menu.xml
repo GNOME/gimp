@@ -9,6 +9,7 @@
     <menuitem action="gradients-duplicate" />
     <menuitem action="gradients-save-as-pov" />
     <menuitem action="gradients-copy-location" />
+    <menuitem action="gradients-show-in-file-manager" />
     <menuitem action="gradients-delete" />
     <separator />
     <menuitem action="gradients-refresh" />
