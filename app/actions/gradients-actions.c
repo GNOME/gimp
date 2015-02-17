@@ -63,7 +63,7 @@ static const GimpActionEntry gradients_actions[] =
     GIMP_HELP_GRADIENT_COPY_LOCATION },
 
   { "gradients-show-in-file-manager", "gtk-directory",
-    NC_("gradients-action", "Show Gradient in _File Manager"), NULL,
+    NC_("gradients-action", "Show in _File Manager"), NULL,
     NC_("gradients-action", "Show gradient file location in the file manager"),
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_GRADIENT_SHOW_IN_FILE_MANAGER },

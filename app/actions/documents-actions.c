@@ -67,7 +67,7 @@ static const GimpActionEntry documents_actions[] =
     GIMP_HELP_DOCUMENT_COPY_LOCATION },
 
   { "documents-show-in-file-manager", "gtk-directory",
-    NC_("documents-action", "Show Image in _File Manager"), NULL,
+    NC_("documents-action", "Show in _File Manager"), NULL,
     NC_("documents-action", "Show image location in the file manager"),
     G_CALLBACK (documents_show_in_file_manager_cmd_callback),
     GIMP_HELP_DOCUMENT_SHOW_IN_FILE_MANAGER },

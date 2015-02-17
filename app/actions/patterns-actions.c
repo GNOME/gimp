@@ -68,7 +68,7 @@ static const GimpActionEntry patterns_actions[] =
     GIMP_HELP_PATTERN_COPY_LOCATION },
 
   { "patterns-show-in-file-manager", "gtk-directory",
-    NC_("patterns-action", "Show Pattern in _File Manager"), NULL,
+    NC_("patterns-action", "Show in _File Manager"), NULL,
     NC_("patterns-action", "Show pattern file location in the file manager"),
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_PATTERN_SHOW_IN_FILE_MANAGER },

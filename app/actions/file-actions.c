@@ -110,7 +110,7 @@ static const GimpActionEntry file_actions[] =
 
   { "file-show-in-file-manager", "gtk-directory",
     NC_("file-action", "Show in File Manager"), "<primary><alt>F",
-    NC_("file-action", "Show in File Manager"),
+    NC_("file-action", "Show image file location in the file manager"),
     G_CALLBACK (file_show_in_file_manager_cmd_callback),
     GIMP_HELP_FILE_SHOW_IN_FILE_MANAGER },
 
