@@ -53,6 +53,7 @@
       <placeholder name="Send" />
       <separator />
       <placeholder name="Info">
+	<menuitem action="file-copy-location" />
 	<menuitem action="file-show-in-file-manager" />
       </placeholder>
       <separator />

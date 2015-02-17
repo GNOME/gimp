@@ -108,8 +108,14 @@ static const GimpActionEntry file_actions[] =
     G_CALLBACK (file_close_all_cmd_callback),
     GIMP_HELP_FILE_CLOSE_ALL },
 
+  { "file-copy-location", "edit-copy",
+    NC_("file-action", "Copy _Image Location"), NULL,
+    NC_("file-action", "Copy image file location to clipboard"),
+    G_CALLBACK (file_copy_location_cmd_callback),
+    GIMP_HELP_FILE_COPY_LOCATION },
+
   { "file-show-in-file-manager", "gtk-directory",
-    NC_("file-action", "Show in File Manager"), "<primary><alt>F",
+    NC_("file-action", "Show in _File Manager"), "<primary><alt>F",
     NC_("file-action", "Show image file location in the file manager"),
     G_CALLBACK (file_show_in_file_manager_cmd_callback),
     GIMP_HELP_FILE_SHOW_IN_FILE_MANAGER },
@@ -297,6 +303,7 @@ file_actions_update (GimpActionGroup *group,
   SET_VISIBLE   ("file-overwrite",            show_overwrite);
   SET_SENSITIVE ("file-export-as",            drawable);
   SET_SENSITIVE ("file-create-template",      image);
+  SET_SENSITIVE ("file-copy-location",        file || source || export);
   SET_SENSITIVE ("file-show-in-file-manager", file || source || export);
 
   if (export)

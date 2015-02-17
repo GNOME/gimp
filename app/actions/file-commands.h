@@ -39,6 +39,8 @@ void   file_revert_cmd_callback               (GtkAction   *action,
                                                gpointer     data);
 void   file_close_all_cmd_callback            (GtkAction   *action,
                                                gpointer     data);
+void   file_copy_location_cmd_callback        (GtkAction   *action,
+                                               gpointer     data);
 void   file_show_in_file_manager_cmd_callback (GtkAction   *action,
                                                gpointer     data);
 void   file_quit_cmd_callback                 (GtkAction   *action,
