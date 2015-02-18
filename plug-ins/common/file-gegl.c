@@ -70,6 +70,20 @@ static gboolean save_image (const gchar      *filename,
 static const FileFormat file_formats[] =
 {
   {
+    N_("OpenEXR image"),
+    "image/x-exr",
+    "exr",
+    "0,lelong,20000630",
+
+    /* no EXR saving (implemented in native GIMP plug-in) */
+    NULL, NULL, NULL,
+
+    "file-exr-save",
+    "Saves files in the OpenEXR file format",
+    "This procedure saves images in the OpenEXR format, using gegl:save"
+  },
+
+  {
     N_("NEF image"),
     "image/x-nikon-nef",
     "nef",
@@ -139,25 +153,28 @@ query (void)
     {
       const FileFormat *format = &file_formats[i];
 
-      gimp_install_procedure (format->load_proc,
-                              format->load_blurb,
-                              format->load_help,
-                              "Simon Budig",
-                              "Simon Budig",
-                              "2012",
-                              format->file_type,
-                              NULL,
-                              GIMP_PLUGIN,
-                              G_N_ELEMENTS (load_args),
-                              G_N_ELEMENTS (load_return_vals),
-                              load_args, load_return_vals);
+      if (format->load_proc)
+        {
+          gimp_install_procedure (format->load_proc,
+                                  format->load_blurb,
+                                  format->load_help,
+                                  "Simon Budig",
+                                  "Simon Budig",
+                                  "2012",
+                                  format->file_type,
+                                  NULL,
+                                  GIMP_PLUGIN,
+                                  G_N_ELEMENTS (load_args),
+                                  G_N_ELEMENTS (load_return_vals),
+                                  load_args, load_return_vals);
 
-      gimp_register_file_handler_mime (format->load_proc,
-                                       format->mime_type);
-      gimp_register_magic_load_handler (format->load_proc,
-                                        format->extensions,
-                                        "",
-                                        format->magic);
+          gimp_register_file_handler_mime (format->load_proc,
+                                           format->mime_type);
+          gimp_register_magic_load_handler (format->load_proc,
+                                            format->extensions,
+                                            "",
+                                            format->magic);
+        }
 
       if (format->save_proc)
         {
