@@ -75,7 +75,7 @@ static const FileFormat file_formats[] =
     "exr",
     "0,lelong,20000630",
 
-    /* no EXR saving (implemented in native GIMP plug-in) */
+    /* no EXR loading (implemented in native GIMP plug-in) */
     NULL, NULL, NULL,
 
     "file-exr-save",
