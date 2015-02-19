@@ -386,18 +386,25 @@ gimp_dockbook_drag_motion (GtkWidget      *widget,
                            gint            y,
                            guint           time)
 {
-  GimpDockbook *dockbook          = GIMP_DOCKBOOK (widget);
-  gboolean      other_will_handle = FALSE;
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (widget);
 
-  other_will_handle = gimp_paned_box_will_handle_drag (dockbook->p->drag_handler,
-                                                       widget,
-                                                       context,
-                                                       x, y,
-                                                       time);
+  if (gimp_paned_box_will_handle_drag (dockbook->p->drag_handler,
+                                       widget,
+                                       context,
+                                       x, y,
+                                       time))
+    {
+      gdk_drag_status (context, 0, time);
+      gimp_highlight_widget (widget, FALSE);
 
-  gdk_drag_status (context, other_will_handle ? 0 : GDK_ACTION_MOVE, time);
-  gimp_highlight_widget (widget, ! other_will_handle);
-  return other_will_handle ? FALSE : TRUE;
+      return FALSE;
+    }
+
+  gdk_drag_status (context, GDK_ACTION_MOVE, time);
+  gimp_highlight_widget (widget, TRUE);
+
+  /* Return TRUE so drag_leave() is called */
+  return TRUE;
 }
 
 static gboolean
@@ -408,7 +415,7 @@ gimp_dockbook_drag_drop (GtkWidget      *widget,
                          guint           time)
 {
   GimpDockbook *dockbook = GIMP_DOCKBOOK (widget);
-  gboolean      handled  = FALSE;
+  gboolean      dropped;
 
   if (gimp_paned_box_will_handle_drag (dockbook->p->drag_handler,
                                        widget,
@@ -416,21 +423,15 @@ gimp_dockbook_drag_drop (GtkWidget      *widget,
                                        x, y,
                                        time))
     {
-      /* Make event fall through to the drag handler */
-      handled = FALSE;
-    }
-  else
-    {
-      handled =
-        gimp_dockbook_drop_dockable (dockbook,
-                                     gtk_drag_get_source_widget (context));
+      return FALSE;
     }
 
-  /* We must call gtk_drag_finish() ourselves */
-  if (handled)
-    gtk_drag_finish (context, TRUE, TRUE, time);
+  dropped = gimp_dockbook_drop_dockable (dockbook,
+                                         gtk_drag_get_source_widget (context));
 
-  return handled;
+  gtk_drag_finish (context, dropped, TRUE, time);
+
+  return TRUE;
 }
 
 static gboolean
@@ -1447,17 +1448,18 @@ gimp_dockbook_tab_drag_motion (GtkWidget      *widget,
   GimpDockbook  *dockbook = gimp_dockable_get_dockbook (dockable);
   GtkTargetList *target_list;
   GdkAtom        target_atom;
-  gboolean       handle   = FALSE;
+  gboolean       handle;
 
-  /* If the handler will handle the drag, return FALSE */
   if (gimp_paned_box_will_handle_drag (dockbook->p->drag_handler,
                                        widget,
                                        context,
                                        x, y,
                                        time))
     {
-      handle = FALSE;
-      goto finish;
+      gdk_drag_status (context, 0, time);
+      gimp_highlight_widget (widget, FALSE);
+
+      return FALSE;
     }
 
   if (! dockbook->p->tab_hover_timeout ||
@@ -1479,10 +1481,11 @@ gimp_dockbook_tab_drag_motion (GtkWidget      *widget,
 
   handle = gtk_target_list_find (target_list, target_atom, NULL);
 
- finish:
   gdk_drag_status (context, handle ? GDK_ACTION_MOVE : 0, time);
   gimp_highlight_widget (widget, handle);
-  return handle;
+
+  /* Return TRUE so drag_leave() is called */
+  return TRUE;
 }
 
 static gboolean
@@ -1494,21 +1497,19 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
 {
   GimpDockable *dest_dockable;
   GtkWidget    *source;
-  gboolean      handle = FALSE;
+  gboolean      dropped = FALSE;
 
   dest_dockable = g_object_get_data (G_OBJECT (widget), "gimp-dockable");
 
   source = gtk_drag_get_source_widget (context);
 
-  /* If the handler will handle the drag, return FALSE */
   if (gimp_paned_box_will_handle_drag (gimp_dockable_get_drag_handler (dest_dockable),
                                        widget,
                                        context,
                                        x, y,
                                        time))
     {
-      handle = FALSE;
-      goto finish;
+      return FALSE;
     }
 
   if (dest_dockable && source)
@@ -1535,7 +1536,7 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
 
               g_object_unref (src_dockable);
 
-              handle = TRUE;
+              dropped = TRUE;
             }
           else if (src_dockable != dest_dockable)
             {
@@ -1547,16 +1548,14 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
                              dockbook_signals[DOCKABLE_REORDERED], 0,
                              src_dockable);
 
-              handle = TRUE;
+              dropped = TRUE;
             }
         }
     }
 
- finish:
-  if (handle)
-    gtk_drag_finish (context, TRUE, TRUE, time);
+  gtk_drag_finish (context, dropped, TRUE, time);
 
-  return handle;
+  return TRUE;
 }
 
 static GtkWidget *

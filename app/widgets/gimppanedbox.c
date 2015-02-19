@@ -353,9 +353,10 @@ gimp_paned_box_drag_motion (GtkWidget      *widget,
                                        x, y,
                                        time))
     {
-      /* A parent widget will handle the event, just go to the end */
-      handle = FALSE;
-      goto finish;
+      gdk_drag_status (context, 0, time);
+      gimp_highlight_widget (widget, FALSE);
+
+      return FALSE;
     }
 
   gtk_widget_get_allocation (widget, &allocation);
@@ -433,10 +434,11 @@ gimp_paned_box_drag_motion (GtkWidget      *widget,
   /* Save the insert index for drag-drop */
   paned_box->p->insert_index = insert_index;
 
- finish:
   gdk_drag_status (context, handle ? GDK_ACTION_MOVE : 0, time);
   gimp_highlight_widget (widget, handle);
-  return handle;
+
+  /* Return TRUE so drag_leave() is called */
+  return TRUE;
 }
 
 static gboolean
@@ -446,8 +448,8 @@ gimp_paned_box_drag_drop (GtkWidget      *widget,
                           gint            y,
                           guint           time)
 {
-  gboolean      found   = FALSE;
   GimpPanedBox *paned_box = GIMP_PANED_BOX (widget);
+  gboolean      dropped;
 
   if (gimp_paned_box_will_handle_drag (paned_box->p->drag_handler,
                                        widget,
@@ -455,25 +457,22 @@ gimp_paned_box_drag_drop (GtkWidget      *widget,
                                        x, y,
                                        time))
     {
-      /* A parent widget will handle the event, just go to the end */
-      found = FALSE;
-      goto finish;
+      return FALSE;
     }
-  
+
   if (paned_box->p->dropped_cb)
     {
       GtkWidget *source = gtk_drag_get_source_widget (context);
 
       if (source)
-        found = paned_box->p->dropped_cb (source,
-                                          paned_box->p->insert_index,
-                                          paned_box->p->dropped_cb_data);
+        dropped = paned_box->p->dropped_cb (source,
+                                            paned_box->p->insert_index,
+                                            paned_box->p->dropped_cb_data);
     }
 
- finish:
-  if (found)
-    gtk_drag_finish (context, TRUE, TRUE, time);
-  return found;
+  gtk_drag_finish (context, dropped, TRUE, time);
+
+  return TRUE;
 }
 
 

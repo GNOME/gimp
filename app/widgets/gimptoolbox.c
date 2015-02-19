@@ -475,22 +475,27 @@ gimp_toolbox_drag_motion (GtkWidget      *widget,
                           guint           time,
                           GimpToolbox    *toolbox)
 {
-  gboolean other_will_handle = FALSE;
-  gboolean we_will_handle    = FALSE;
-  gboolean handled           = FALSE;
+  gboolean handle;
 
-  other_will_handle = gimp_paned_box_will_handle_drag (toolbox->p->drag_handler,
-                                                       widget,
-                                                       context,
-                                                       x, y,
-                                                       time);
-  we_will_handle = (gtk_drag_dest_find_target (widget, context, NULL) !=
-                    GDK_NONE);
+  if (gimp_paned_box_will_handle_drag (toolbox->p->drag_handler,
+                                       widget,
+                                       context,
+                                       x, y,
+                                       time))
+    {
+      gdk_drag_status (context, 0, time);
+      gimp_highlight_widget (widget, FALSE);
 
-  handled = ! other_will_handle && we_will_handle;
-  gdk_drag_status (context, handled ? GDK_ACTION_MOVE : 0, time);
-  gimp_highlight_widget (widget, handled);
-  return handled;
+      return FALSE;
+    }
+
+  handle = (gtk_drag_dest_find_target (widget, context, NULL) != GDK_NONE);
+
+  gdk_drag_status (context, handle ? GDK_ACTION_MOVE : 0, time);
+  gimp_highlight_widget (widget, handle);
+
+  /* Return TRUE so drag_leave() is called */
+  return TRUE;
 }
 
 static gboolean
@@ -501,7 +506,8 @@ gimp_toolbox_drag_drop (GtkWidget      *widget,
                         guint           time,
                         GimpToolbox    *toolbox)
 {
-  gboolean handled = FALSE;
+  GdkAtom  target;
+  gboolean dropped = FALSE;
 
   if (gimp_paned_box_will_handle_drag (toolbox->p->drag_handler,
                                        widget,
@@ -509,28 +515,21 @@ gimp_toolbox_drag_drop (GtkWidget      *widget,
                                        x, y,
                                        time))
     {
-      /* Make event fall through to the drag handler */
-      handled = FALSE;
+      return FALSE;
     }
-  else
+
+  target = gtk_drag_dest_find_target (widget, context, NULL);
+
+  if (target != GDK_NONE)
     {
-      GdkAtom target = gtk_drag_dest_find_target (widget, context, NULL);
-
-      if (target != GDK_NONE)
-        {
-          /* The URI handlers etc will handle this */
-          gtk_drag_get_data (widget, context, target, time);
-          handled = TRUE;
-        }
+      /* The URI handlers etc will handle this */
+      gtk_drag_get_data (widget, context, target, time);
+      dropped = TRUE;
     }
 
-  if (handled)
-    gtk_drag_finish (context,
-                     TRUE /*success*/,
-                     (context->action == GDK_ACTION_MOVE) /*del*/,
-                     time);
+  gtk_drag_finish (context, dropped, (context->action == GDK_ACTION_MOVE), time);
 
-  return handled;
+  return TRUE;
 }
 
 static gchar *
