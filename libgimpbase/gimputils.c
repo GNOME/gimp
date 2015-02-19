@@ -24,6 +24,10 @@
 #include <string.h>
 #include <stdio.h>
 
+#ifdef PLATFORM_OSX
+#include <AppKit/AppKit.h>
+#endif
+
 #include <gio/gio.h>
 
 #include "gimpbasetypes.h"
@@ -357,18 +361,31 @@ gimp_file_show_in_file_manager (GFile   *file,
 #elif defined(PLATFORM_OSX)
 
   {
-#if 0
-    /* found on stackoverflow, please turn this into working code...
-     */
-    NSArray *fileURLs = [NSArray arrayWithObjects:fileURL1, /* ... */ nil];
+    gchar    *uri;
+    NSString *filename;
+    NSURL    *url;
+    gboolean  retval = TRUE;
 
-    [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:fileURLs];
-#endif
+    uri = g_file_get_uri (file);
+    filename = [NSString stringWithUTF8String:uri];
 
-    g_set_error_literal (error, G_FILE_ERROR, 0,
-                         "Please implement something in "
-                         "gimp_file_show_in_file_manager().");
-    return FALSE;
+    url = [NSURL URLWithString:filename];
+    if (url)
+      {
+        NSArray *url_array = [NSArray arrayWithObject:url];
+
+        [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:url_array];
+      }
+    else
+      {
+        g_set_error (error, G_FILE_ERROR, 0,
+                     _("Cannot convert '%s' into a valid NSURL."), uri);
+        retval = FALSE;
+      }
+
+    g_free (uri);
+
+    return retval;
   }
 
 #else /* UNIX */
