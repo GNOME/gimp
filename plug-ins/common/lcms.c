@@ -948,8 +948,6 @@ lcms_layers_transform_rgb (gint                     *layers,
         }
       else if (type == babl_type ("half")) /* 16-bit floating point (half) */
         {
-#ifdef TYPE_RGB_HALF_FLT
-          /* half float types are only in lcms 2.4 and newer */
           if (has_alpha)
             {
               lcms_format = TYPE_RGBA_HALF_FLT;
@@ -960,7 +958,6 @@ lcms_layers_transform_rgb (gint                     *layers,
               lcms_format = TYPE_RGB_HALF_FLT;
               iter_format = babl_format ("R'G'B' float");
             }
-#endif /* TYPE_RGB_HALF_FLT */
         }
       else if (type == babl_type ("float"))
         {
