@@ -1287,6 +1287,13 @@ img_get_width(PyGimpImage *self, void *closure)
     return PyInt_FromLong(gimp_image_width(self->ID));
 }
 
+
+static PyObject *
+img_get_precision(PyGimpImage *self, void *closure)
+{
+    return PyInt_FromLong(gimp_image_get_precision(self->ID));
+}
+
 static PyObject *
 img_get_resolution(PyGimpImage *self, void *closure)
 {
@@ -1428,6 +1435,7 @@ static PyGetSetDef img_getsets[] = {
     { "height", (getter)img_get_height, (setter)0 },
     { "layers", (getter)img_get_layers, (setter)0 },
     { "name", (getter)img_get_name, (setter)0 },
+    { "precision", (getter)img_get_precision, (setter)0 },
     { "resolution", (getter)img_get_resolution, (setter)img_set_resolution },
     { "selection", (getter)img_get_selection, (setter)0 },
     { "tattoo_state", (getter)img_get_tattoo_state,
