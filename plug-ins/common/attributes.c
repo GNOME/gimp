@@ -64,7 +64,6 @@
 
 #define THUMB_SIZE       48
 #define RESPONSE_EXPORT   1
-#define RESPONSE_IMPORT   2
 #define RESPONSE_GPS      3
 
 typedef enum
@@ -305,11 +304,6 @@ attributes_dialog_response (GtkWidget *widget,
     case RESPONSE_EXPORT:
       attributes_file_export_dialog (widget, attributes);
       break;
-    case RESPONSE_IMPORT:
-      attributes_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (widget),
-                               _("Failed"),
-                               _("Not yet implemented"));
-      break;
     case RESPONSE_GPS:
       attributes_show_gps (widget, attributes);
       break;
@@ -398,8 +392,6 @@ attributes_dialog (gint32           item_id,
                             NULL, 0,
                             gimp_standard_help_func, PLUG_IN_HELP,
                             _("_Export XMP..."), RESPONSE_EXPORT,
-                            _("_Import XMP..."), RESPONSE_IMPORT,
-//                            _("_Show GPS..."), RESPONSE_GPS,
                             GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
                             NULL);
 
@@ -424,7 +416,6 @@ attributes_dialog (gint32           item_id,
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            RESPONSE_GPS,
                                            RESPONSE_EXPORT,
-                                           RESPONSE_IMPORT,
                                            GTK_RESPONSE_CLOSE,
                                            -1);
 
@@ -867,7 +858,6 @@ attributes_file_export_dialog (GtkWidget      *parent,
       g_free (suggest_file);
     }
   gtk_window_present (GTK_WINDOW (dlg));
-//  gtk_dialog_run (GTK_DIALOG (dlg));
 }
 
 /* call default browser for google maps */
