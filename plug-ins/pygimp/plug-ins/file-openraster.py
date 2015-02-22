@@ -101,8 +101,9 @@ def save_ora(img, drawable, filename, raw_filename):
             # 1 - 1 correspondence between raw_bytes and UCS-2 used by Python
             # Unicode characters
             filename = filename.decode("latin1")
-    filename = filename.encode(sys.getfilesystemencoding())
-    tmp_sufix = ".tmpsave".encode(sys.getfilesystemencoding())
+    encoding = sys.getfilesystemencoding() or "utf-8"
+    filename = filename.encode(encoding)
+    tmp_sufix = ".tmpsave".encode(encoding)
     # use .tmpsave extension, so we don't overwrite a valid file if
     # there is an exception
     orafile = zipfile.ZipFile(filename + tmp_sufix, 'w', compression=zipfile.ZIP_STORED)
@@ -176,7 +177,7 @@ def load_ora(filename, raw_filename):
     try:
         if not isinstance(filename, str):
             filename = filename.decode("utf-8")
-        orafile = zipfile.ZipFile(filename.encode(sys.getfilesystemencoding()))
+        orafile = zipfile.ZipFile(filename.encode(sys.getfilesystemencoding() or "utf-8"))
     except (UnicodeDecodeError, IOError):
         # Someone may try to open an actually garbled name, and pass a raw
         # non-utf 8 filename:
