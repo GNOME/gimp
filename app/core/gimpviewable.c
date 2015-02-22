@@ -1330,6 +1330,8 @@ gimp_viewable_set_attributes (GimpViewable   *viewable,
 
   if (attributes)
     {
+      if (viewable->attributes)
+        g_object_unref (viewable->attributes);
 
       viewable->attributes = attributes;
       g_object_ref (viewable->attributes);
