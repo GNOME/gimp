@@ -34,7 +34,7 @@ TW_UINT16 callDSM(pTW_IDENTITY, pTW_IDENTITY,
 		  TW_UINT16, TW_MEMREF);
 
 int twainIsAvailable(void);
-void twainQuitApplication ();
+void twainQuitApplication (void);
 gboolean twainSetupCallback (pTW_SESSION twSession);
 
 TW_HANDLE twainAllocHandle(size_t size);
@@ -42,7 +42,7 @@ TW_MEMREF twainLockHandle (TW_HANDLE handle);
 void twainUnlockHandle (TW_HANDLE handle);
 void twainFreeHandle (TW_HANDLE handle);
 
-int twainMain ();
-int scanImage ();
+int twainMain (void);
+int scanImage (void);
 
 #endif
