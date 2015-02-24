@@ -450,7 +450,7 @@ gimp_paned_box_drag_drop (GtkWidget      *widget,
                           guint           time)
 {
   GimpPanedBox *paned_box = GIMP_PANED_BOX (widget);
-  gboolean      dropped;
+  gboolean      dropped   = FALSE;
 
   if (gimp_paned_box_will_handle_drag (paned_box->p->drag_handler,
                                        widget,
