@@ -16,7 +16,11 @@
 import os, sys, tempfile, zipfile
 import xml.etree.ElementTree as ET
 
+
 from gimpfu import *
+
+NESTED_STACK_END = object()
+
 
 layermodes_map = {
     "svg:src-over": NORMAL_MODE,
@@ -62,6 +66,17 @@ def get_layer_attributes(layer):
 
     return path, name, x, y, opac, visible, layer_mode
 
+def get_group_layer_attributes(layer):
+    a = layer.attrib
+    name = a.get('name', '')
+    x = int(a.get('x', '0'))
+    y = int(a.get('y', '0'))
+    opac = float(a.get('opacity', '1.0'))
+    visible = a.get('visibility', 'visible') != 'hidden'
+    m = a.get('composite-op', 'svg:src-over')
+    layer_mode = layermodes_map.get(m, NORMAL_MODE)
+
+    return name, x, y, opac, visible, layer_mode
 
 def thumbnail_ora(filename, thumb_size):
     # FIXME: Untested. Does not seem to be used at all? should be run
@@ -89,7 +104,7 @@ def save_ora(img, drawable, filename, raw_filename):
         # work around a permission bug in the zipfile library:
         # http://bugs.python.org/issue3394
         zi = zipfile.ZipInfo(fname)
-        zi.external_attr = 0100644 << 16
+        zi.external_attr = int("100644", 8) << 16
         zfile.writestr(zi, data)
 
     tempdir = tempfile.mkdtemp('gimp-plugin-file-openraster')
@@ -126,11 +141,11 @@ def save_ora(img, drawable, filename, raw_filename):
         orafile.write(tmp, path)
         os.remove(tmp)
 
-    def add_layer(x, y, opac, gimp_layer, path, visible=True):
+    def add_layer(parent, x, y, opac, gimp_layer, path, visible=True):
         store_layer(img, gimp_layer, path)
         # create layer attributes
         layer = ET.Element('layer')
-        stack.append(layer)
+        parent.append(layer)
         a = layer.attrib
         a['src'] = path
         a['name'] = gimp_layer.name
@@ -141,11 +156,59 @@ def save_ora(img, drawable, filename, raw_filename):
         a['composite-op'] = reverse_map(layermodes_map).get(gimp_layer.mode, 'svg:src-over')
         return layer
 
+    def add_group_layer(parent, x, y, opac, gimp_layer, visible=True):
+        # create layer attributes
+        group_layer = ET.Element('stack')
+        parent.append(group_layer)
+        a = group_layer.attrib
+        a['name'] = gimp_layer.name
+        if x:
+            a['x'] = str(x)
+        if y:
+            a['y'] = str(y)
+        a['opacity'] = str(opac)
+        a['visibility'] = 'visible' if visible else 'hidden'
+        a['composite-op'] = reverse_map(layermodes_map).get(gimp_layer.mode, 'svg:src-over')
+        return group_layer
+
+
+    def enumerate_layers(group):
+        for layer in group.layers:
+            if not isinstance(layer, gimp.GroupLayer):
+                yield layer
+            else:
+                yield layer
+                for sublayer in enumerate_layers(layer):
+                    yield sublayer
+                yield NESTED_STACK_END
+
     # save layers
-    for i, lay in enumerate(img.layers):
+    parent_groups = []
+    i = 0
+    for lay in enumerate_layers(img):
+        if lay is NESTED_STACK_END:
+            parent_groups.pop()
+            continue
         x, y = lay.offsets
         opac = lay.opacity / 100.0 # needs to be between 0.0 and 1.0
-        add_layer(x, y, opac, lay, 'data/%03d.png' % i, lay.visible)
+
+        if not parent_groups:
+            path_name = 'data/{:03d}.png'.format(i)
+            i += 1
+        else:
+            path_name = 'data/{}-{:03d}.png'.format(
+                parent_groups[-1][1], parent_groups[-1][2])
+            parent_groups[-1][2] += 1
+
+        parent = stack if not parent_groups else parent_groups[-1][0]
+
+        if isinstance(lay, gimp.GroupLayer):
+            group = add_group_layer(parent, x, y, opac, lay, lay.visible)
+            group_path = ("{:03d}".format(i) if not parent_groups else
+                parent_groups[-1][1] + "-{:03d}".format(parent_groups[-1][2]))
+            parent_groups.append([group, group_path , 0])
+        else:
+            add_layer(parent, x, y, opac, lay, path_name, lay.visible)
 
     # save thumbnail
     w, h = img.width, img.height
@@ -171,6 +234,7 @@ def save_ora(img, drawable, filename, raw_filename):
         os.remove(filename) # win32 needs that
     os.rename(filename + tmp_sufix, filename)
 
+
 def load_ora(filename, raw_filename):
     tempdir = tempfile.mkdtemp('gimp-plugin-file-openraster')
     original_name = filename
@@ -188,47 +252,76 @@ def load_ora(filename, raw_filename):
     img.filename = filename
 
     def get_layers(root):
-        """returns a flattened list of all layers under root"""
-        res = []
+        """iterates over layers and nested stacks"""
         for item in root:
             if item.tag == 'layer':
-                res.append(item)
+                yield item
             elif item.tag == 'stack':
-                res += get_layers(item)
-        return res
+                yield item
+                for subitem in get_layers(item):
+                    yield subitem
+                yield NESTED_STACK_END
 
-    for layer_no, layer in enumerate(get_layers(stack)):
-        path, name, x, y, opac, visible, layer_mode = get_layer_attributes(layer)
+    parent_groups = []
 
-        if not path.lower().endswith('.png'):
+    layer_no = 0
+    for item in get_layers(stack):
+
+        if item is NESTED_STACK_END:
+            parent_groups.pop()
             continue
+
         if not name:
             # use the filename without extention as name
             n = os.path.basename(path)
             name = os.path.splitext(n)[0]
 
-        # create temp file. Needed because gimp cannot load files from inside a zip file
-        tmp = os.path.join(tempdir, 'tmp.png')
-        f = open(tmp, 'wb')
-        try:
-            data = orafile.read(path)
-        except KeyError:
-            # support for bad zip files (saved by old versions of this plugin)
-            data = orafile.read(path.encode('utf-8'))
-            print 'WARNING: bad OpenRaster ZIP file. There is an utf-8 encoded filename that does not have the utf-8 flag set:', repr(path)
-        f.write(data)
-        f.close()
+        if item.tag == 'stack':
+            name, x, y, opac, visible, layer_mode = get_group_layer_attributes(item)
+            gimp_layer = gimp.GroupLayer(img)
 
-        # import layer, set attributes and add to image
-        gimp_layer = pdb['gimp-file-load-layer'](img, tmp)
+        else:
+            path, name, x, y, opac, visible, layer_mode = get_layer_attributes(item)
+
+            if not path.lower().endswith('.png'):
+                continue
+            if not name:
+                # use the filename without extension as name
+                n = os.path.basename(path)
+                name = os.path.splitext(n)[0]
+
+            # create temp file. Needed because gimp cannot load files from inside a zip file
+            tmp = os.path.join(tempdir, 'tmp.png')
+            f = open(tmp, 'wb')
+            try:
+                data = orafile.read(path)
+            except KeyError:
+                # support for bad zip files (saved by old versions of this plugin)
+                data = orafile.read(path.encode('utf-8'))
+                print 'WARNING: bad OpenRaster ZIP file. There is an utf-8 encoded filename that does not have the utf-8 flag set:', repr(path)
+            f.write(data)
+            f.close()
+
+            # import layer, set attributes and add to image
+            gimp_layer = pdb['gimp-file-load-layer'](img, tmp)
+            os.remove(tmp)
         gimp_layer.name = name
         gimp_layer.mode = layer_mode
         gimp_layer.set_offsets(x, y)  # move to correct position
         gimp_layer.opacity = opac * 100  # a float between 0 and 100
         gimp_layer.visible = visible
-        img.add_layer(gimp_layer, layer_no)
 
-        os.remove(tmp)
+        pdb.gimp_image_insert_layer(img, gimp_layer,
+                                    parent_groups[-1][0] if parent_groups else None,
+                                    parent_groups[-1][1] if parent_groups else layer_no)
+        if parent_groups:
+            parent_groups[-1][1] += 1
+        else:
+            layer_no += 1
+
+        if isinstance(gimp_layer, gimp.GroupLayer):
+            parent_groups.append([gimp_layer, 0])
+
     os.rmdir(tempdir)
 
     return img
