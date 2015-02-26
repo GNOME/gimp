@@ -71,31 +71,36 @@ struct _GimpDataFactoryPriv
 };
 
 
-static void    gimp_data_factory_finalize       (GObject          *object);
+static void    gimp_data_factory_finalize       (GObject             *object);
 
-static gint64  gimp_data_factory_get_memsize    (GimpObject       *object,
-                                                 gint64           *gui_size);
+static gint64  gimp_data_factory_get_memsize    (GimpObject          *object,
+                                                 gint64              *gui_size);
 
-static void    gimp_data_factory_data_load      (GimpDataFactory  *factory,
-                                                 GimpContext      *context,
-                                                 GHashTable       *cache);
+static void    gimp_data_factory_data_foreach   (GimpDataFactory     *factory,
+                                                 gboolean             skip_internal,
+                                                 GimpDataForeachFunc  callback,
+                                                 gpointer             user_data);
 
-static GFile * gimp_data_factory_get_save_dir   (GimpDataFactory  *factory,
-                                                 GError          **error);
+static void    gimp_data_factory_data_load      (GimpDataFactory     *factory,
+                                                 GimpContext         *context,
+                                                 GHashTable          *cache);
 
-static void    gimp_data_factory_load_directory (GimpDataFactory  *factory,
-                                                 GimpContext      *context,
-                                                 GHashTable       *cache,
-                                                 gboolean          dir_writable,
-                                                 GFile            *directory,
-                                                 GFile            *top_directory);
-static void    gimp_data_factory_load_data      (GimpDataFactory  *factory,
-                                                 GimpContext      *context,
-                                                 GHashTable       *cache,
-                                                 gboolean          dir_writable,
-                                                 GFile            *file,
-                                                 guint64           mtime,
-                                                 GFile            *top_directory);
+static GFile * gimp_data_factory_get_save_dir   (GimpDataFactory     *factory,
+                                                 GError             **error);
+
+static void    gimp_data_factory_load_directory (GimpDataFactory     *factory,
+                                                 GimpContext         *context,
+                                                 GHashTable          *cache,
+                                                 gboolean             dir_writable,
+                                                 GFile               *directory,
+                                                 GFile               *top_directory);
+static void    gimp_data_factory_load_data      (GimpDataFactory     *factory,
+                                                 GimpContext         *context,
+                                                 GHashTable          *cache,
+                                                 gboolean             dir_writable,
+                                                 GFile               *file,
+                                                 guint64              mtime,
+                                                 GFile               *top_directory);
 
 
 G_DEFINE_TYPE (GimpDataFactory, gimp_data_factory, GIMP_TYPE_OBJECT)
@@ -249,6 +254,24 @@ gimp_data_factory_data_init (GimpDataFactory *factory,
     }
 
   gimp_container_thaw (factory->priv->container);
+}
+
+static void
+gimp_data_factory_clean_cb (GimpDataFactory *factory,
+                            GimpData        *data,
+                            gpointer         user_data)
+{
+  if (gimp_data_is_dirty (data))
+    gimp_data_clean (data);
+}
+
+void
+gimp_data_factory_data_clean (GimpDataFactory *factory)
+{
+  g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
+
+  gimp_data_factory_data_foreach (factory, TRUE,
+                                  gimp_data_factory_clean_cb, NULL);
 }
 
 static void

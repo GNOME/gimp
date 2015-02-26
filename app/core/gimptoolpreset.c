@@ -90,6 +90,9 @@ static void          gimp_tool_preset_set_options          (GimpToolPreset   *pr
 static void          gimp_tool_preset_options_notify       (GObject          *tool_options,
                                                             const GParamSpec *pspec,
                                                             GimpToolPreset   *preset);
+static void     gimp_tool_preset_options_prop_name_changed (GimpContext         *tool_options,
+                                                            GimpContextPropType  prop,
+                                                            GimpToolPreset      *preset);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpToolPreset, gimp_tool_preset, GIMP_TYPE_DATA,
@@ -449,6 +452,10 @@ gimp_tool_preset_set_options (GimpToolPreset  *preset,
                                             gimp_tool_preset_options_notify,
                                             preset);
 
+       g_signal_handlers_disconnect_by_func (preset->tool_options,
+                                             gimp_tool_preset_options_prop_name_changed,
+                                             preset);
+
       g_object_unref (preset->tool_options);
       preset->tool_options = NULL;
     }
@@ -491,6 +498,10 @@ gimp_tool_preset_set_options (GimpToolPreset  *preset,
       g_signal_connect (preset->tool_options, "notify",
                         G_CALLBACK (gimp_tool_preset_options_notify),
                         preset);
+
+      g_signal_connect (preset->tool_options, "prop-name-changed",
+                        G_CALLBACK (gimp_tool_preset_options_prop_name_changed),
+                        preset);
     }
 
   g_object_notify (G_OBJECT (preset), "tool-options");
@@ -501,7 +512,38 @@ gimp_tool_preset_options_notify (GObject          *tool_options,
                                  const GParamSpec *pspec,
                                  GimpToolPreset   *preset)
 {
-  g_object_notify (G_OBJECT (preset), "tool-options");
+  if (pspec->owner_type == GIMP_TYPE_CONTEXT)
+    {
+      GimpContextPropMask serialize_props;
+
+      serialize_props =
+        gimp_context_get_serialize_properties (GIMP_CONTEXT (tool_options));
+
+      if ((1 << pspec->param_id) & serialize_props)
+        {
+          g_object_notify (G_OBJECT (preset), "tool-options");
+        }
+    }
+  else if (pspec->flags & GIMP_CONFIG_PARAM_SERIALIZE)
+    {
+      g_object_notify (G_OBJECT (preset), "tool-options");
+    }
+}
+
+static void
+gimp_tool_preset_options_prop_name_changed (GimpContext         *tool_options,
+                                            GimpContextPropType  prop,
+                                            GimpToolPreset      *preset)
+{
+  GimpContextPropMask serialize_props;
+
+  serialize_props =
+    gimp_context_get_serialize_properties (GIMP_CONTEXT (preset->tool_options));
+
+  if ((1 << prop) & serialize_props)
+    {
+      g_object_notify (G_OBJECT (preset), "tool-options");
+    }
 }
 
 
