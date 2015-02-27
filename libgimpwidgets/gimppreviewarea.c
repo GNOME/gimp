@@ -747,30 +747,30 @@ gimp_preview_area_blend (GimpPreviewArea *area,
                             (((a << 8) + (b  - a) * opacity) >> 8) / inter[3];
                         }
                     }
+                }
 
-                  switch (inter[3])
-                    {
-                    case 0:
-                      d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
-                      break;
+              switch (inter[3])
+                {
+                case 0:
+                  d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
+                  break;
 
-                    case 255:
-                      d[0] = inter[0];
-                      d[1] = inter[1];
-                      d[2] = inter[2];
-                      break;
+                case 255:
+                  d[0] = inter[0];
+                  d[1] = inter[1];
+                  d[2] = inter[2];
+                  break;
 
-                    default:
-                      {
-                        register guint alpha = inter[3] + 1;
-                        register guint check = CHECK_COLOR (area, row, col);
+                default:
+                  {
+                    register guint alpha = inter[3] + 1;
+                    register guint check = CHECK_COLOR (area, row, col);
 
-                        d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
-                        d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
-                        d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
-                      }
-                      break;
-                    }
+                    d[0] = ((check << 8) + (inter[0] - check) * alpha) >> 8;
+                    d[1] = ((check << 8) + (inter[1] - check) * alpha) >> 8;
+                    d[2] = ((check << 8) + (inter[2] - check) * alpha) >> 8;
+                  }
+                  break;
                 }
             }
 
