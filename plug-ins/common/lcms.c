@@ -956,7 +956,7 @@ lcms_layers_transform_rgb (gint                     *layers,
           else
             {
               lcms_format = TYPE_RGB_HALF_FLT;
-              iter_format = babl_format ("R'G'B' float");
+              iter_format = babl_format ("R'G'B' half");
             }
         }
       else if (type == babl_type ("float"))
