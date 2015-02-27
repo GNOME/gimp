@@ -364,8 +364,7 @@ gimp_file_show_in_file_manager (GFile   *file,
     if (!filename)
       {
         g_set_error_literal (error, G_FILE_ERROR, 0,
-                             _("NULL path passed to "
-                               "gimp_file_show_in_file_manager()."));
+                             _("File path is NULL"));
         goto out;
       }
 
@@ -374,8 +373,7 @@ gimp_file_show_in_file_manager (GFile   *file,
     if (n == 0)
       {
         g_set_error_literal (error, G_FILE_ERROR, 0,
-                             _("Error converting UTF-8 filename in "
-                               "gimp_file_show_in_file_manager()."));
+                             _("Error converting UTF-8 filename to wide char"));
         goto out;
       }
 
@@ -386,8 +384,7 @@ gimp_file_show_in_file_manager (GFile   *file,
     if (n == 0)
       {
         g_set_error_literal (error, G_FILE_ERROR, 0,
-                             _("Error converting UTF-8 filename in "
-                               "gimp_file_show_in_file_manager()."));
+                             _("Error converting UTF-8 filename to wide char"));
         goto out;
       }
 
@@ -395,8 +392,7 @@ gimp_file_show_in_file_manager (GFile   *file,
     if (!pidl)
       {
         g_set_error_literal (error, G_FILE_ERROR, 0,
-                             _("ILCreateFromPath() failed in "
-                               "gimp_file_show_in_file_manager()."));
+                             _("ILCreateFromPath() failed"));
         goto out;
       }
 
