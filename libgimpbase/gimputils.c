@@ -30,6 +30,16 @@
 
 #include <gio/gio.h>
 
+#if defined(G_OS_WIN32)
+/* This is a hack for Windows known directory support.
+ * DATADIR (autotools-generated constant) is a type defined in objidl.h
+ * so we must #undef it before including shlobj.h in order to avoid a
+ * name clash. */
+#undef DATADIR
+#include <windows.h>
+#include <shlobj.h>
+#endif
+
 #include "gimpbasetypes.h"
 #include "gimputils.h"
 
@@ -338,24 +348,68 @@ gimp_file_show_in_file_manager (GFile   *file,
 #if defined(G_OS_WIN32)
 
   {
-#if 0
-    /* found on stackoverflow, please turn this into working code...
-     */
-    void BrowseToFile(LPCTSTR filename)
-    {
-      ITEMIDLIST *pidl = ILCreateFromPath (filename);
-      if (pidl)
-        {
-          SHOpenFolderAndSelectItems (pidl, 0, 0, 0);
-          ILFree (pidl);
-        }
-    }
-#endif
+    gboolean ret;
+    char *filename;
+    int n;
+    LPWSTR w_filename = NULL;
+    ITEMIDLIST *pidl = NULL;
 
-    g_set_error_literal (error, G_FILE_ERROR, 0,
-                         "Please implement something in "
-                         "gimp_file_show_in_file_manager().");
-    return FALSE;
+    ret = FALSE;
+
+    /* Calling this function mutiple times should do no harm, but it is
+       easier to put this here as it needs linking against ole32. */
+    CoInitialize (NULL);
+
+    filename = g_file_get_path (file);
+    if (!filename)
+      {
+        g_set_error_literal (error, G_FILE_ERROR, 0,
+                             _("NULL path passed to "
+                               "gimp_file_show_in_file_manager()."));
+        goto out;
+      }
+
+    n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
+                             filename, -1, NULL, 0);
+    if (n == 0)
+      {
+        g_set_error_literal (error, G_FILE_ERROR, 0,
+                             _("Error converting UTF-8 filename in "
+                               "gimp_file_show_in_file_manager()."));
+        goto out;
+      }
+
+    w_filename = g_malloc_n (n + 1, sizeof (wchar_t));
+    n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
+                             filename, -1,
+                             w_filename, (n + 1) * sizeof (wchar_t));
+    if (n == 0)
+      {
+        g_set_error_literal (error, G_FILE_ERROR, 0,
+                             _("Error converting UTF-8 filename in "
+                               "gimp_file_show_in_file_manager()."));
+        goto out;
+      }
+
+    pidl = ILCreateFromPathW (w_filename);
+    if (!pidl)
+      {
+        g_set_error_literal (error, G_FILE_ERROR, 0,
+                             _("ILCreateFromPath() failed in "
+                               "gimp_file_show_in_file_manager()."));
+        goto out;
+      }
+
+    SHOpenFolderAndSelectItems (pidl, 0, NULL, 0);
+    ret = TRUE;
+
+  out:
+    if (pidl)
+      ILFree (pidl);
+    g_free (w_filename);
+    g_free (filename);
+
+    return ret;
   }
 
 #elif defined(PLATFORM_OSX)
