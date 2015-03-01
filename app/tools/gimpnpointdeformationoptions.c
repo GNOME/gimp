@@ -35,15 +35,16 @@
 
 #include "gimp-intl.h"
 
+
 enum
 {
-    PROP_0,
-    PROP_SQUARE_SIZE,
-    PROP_RIGIDITY,
-    PROP_ASAP_DEFORMATION,
-    PROP_MLS_WEIGHTS,
-    PROP_MLS_WEIGHTS_ALPHA,
-    PROP_MESH_VISIBLE
+  PROP_0,
+  PROP_SQUARE_SIZE,
+  PROP_RIGIDITY,
+  PROP_ASAP_DEFORMATION,
+  PROP_MLS_WEIGHTS,
+  PROP_MLS_WEIGHTS_ALPHA,
+  PROP_MESH_VISIBLE
 };
 
 
@@ -92,7 +93,8 @@ gimp_n_point_deformation_options_class_init (GimpNPointDeformationOptionsClass *
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE  (object_class, PROP_MLS_WEIGHTS_ALPHA,
-                                    "MLS-weights-alpha", _("Amount of control points' influence"),
+                                    "MLS-weights-alpha",
+                                    _("Amount of control points' influence"),
                                     0.1, 2.0, 1.0,
                                     GIMP_PARAM_STATIC_STRINGS);
 
@@ -113,39 +115,34 @@ gimp_n_point_deformation_options_set_property (GObject      *object,
                                                const GValue *value,
                                                GParamSpec   *pspec)
 {
-  GimpNPointDeformationOptions *options = GIMP_N_POINT_DEFORMATION_OPTIONS (object);
+  GimpNPointDeformationOptions *options;
+
+  options = GIMP_N_POINT_DEFORMATION_OPTIONS (object);
 
   switch (property_id)
     {
-      case PROP_SQUARE_SIZE:
-        options->square_size = g_value_get_double (value);
-        break;
-      case PROP_RIGIDITY:
-        options->rigidity = g_value_get_double (value);
-        break;
-      case PROP_ASAP_DEFORMATION:
-        options->ASAP_deformation = g_value_get_boolean (value);
-        break;
-      case PROP_MLS_WEIGHTS:
-        options->MLS_weights = g_value_get_boolean (value);
+    case PROP_SQUARE_SIZE:
+      options->square_size = g_value_get_double (value);
+      break;
+    case PROP_RIGIDITY:
+      options->rigidity = g_value_get_double (value);
+      break;
+    case PROP_ASAP_DEFORMATION:
+      options->ASAP_deformation = g_value_get_boolean (value);
+      break;
+    case PROP_MLS_WEIGHTS:
+      options->MLS_weights = g_value_get_boolean (value);
+      break;
+    case PROP_MLS_WEIGHTS_ALPHA:
+      options->MLS_weights_alpha = g_value_get_double (value);
+      break;
+    case PROP_MESH_VISIBLE:
+      options->mesh_visible = g_value_get_boolean (value);
+      break;
 
-        if (options->scale_MLS_weights_alpha)
-          gtk_widget_set_sensitive (options->scale_MLS_weights_alpha,
-                                    options->MLS_weights);
-        break;
-      case PROP_MLS_WEIGHTS_ALPHA:
-        options->MLS_weights_alpha = g_value_get_double (value);
-        break;
-      case PROP_MESH_VISIBLE:
-        options->mesh_visible = g_value_get_boolean (value);
-
-        if (options->check_mesh_visible)
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->check_mesh_visible),
-                                        options->mesh_visible);
-        break;
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
     }
 }
 
@@ -155,72 +152,85 @@ gimp_n_point_deformation_options_get_property (GObject    *object,
                                                GValue     *value,
                                                GParamSpec *pspec)
 {
-  GimpNPointDeformationOptions *options = GIMP_N_POINT_DEFORMATION_OPTIONS (object);
+  GimpNPointDeformationOptions *options;
+
+  options = GIMP_N_POINT_DEFORMATION_OPTIONS (object);
 
   switch (property_id)
     {
-      case PROP_SQUARE_SIZE:
-        g_value_set_double (value, options->square_size);
-        break;
-      case PROP_RIGIDITY:
-        g_value_set_double (value, options->rigidity);
-        break;
-      case PROP_ASAP_DEFORMATION:
-        g_value_set_boolean (value, options->ASAP_deformation);
-        break;
-      case PROP_MLS_WEIGHTS:
-        g_value_set_boolean (value, options->MLS_weights);
-        break;
-      case PROP_MLS_WEIGHTS_ALPHA:
-        g_value_set_double (value, options->MLS_weights_alpha);
-        break;
-      case PROP_MESH_VISIBLE:
-        g_value_set_boolean (value, options->mesh_visible);
-        break;
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-        break;
+    case PROP_SQUARE_SIZE:
+      g_value_set_double (value, options->square_size);
+      break;
+    case PROP_RIGIDITY:
+      g_value_set_double (value, options->rigidity);
+      break;
+    case PROP_ASAP_DEFORMATION:
+      g_value_set_boolean (value, options->ASAP_deformation);
+      break;
+    case PROP_MLS_WEIGHTS:
+      g_value_set_boolean (value, options->MLS_weights);
+      break;
+    case PROP_MLS_WEIGHTS_ALPHA:
+      g_value_set_double (value, options->MLS_weights_alpha);
+      break;
+    case PROP_MESH_VISIBLE:
+      g_value_set_boolean (value, options->mesh_visible);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
     }
 }
 
 GtkWidget *
 gimp_n_point_deformation_options_gui (GimpToolOptions *tool_options)
 {
-  GimpNPointDeformationOptions *npd_options = GIMP_N_POINT_DEFORMATION_OPTIONS (tool_options);
-  GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget *widget;
+  GimpNPointDeformationOptions *npd_options;
+  GObject                      *config = G_OBJECT (tool_options);
+  GtkWidget                    *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget                    *widget;
 
-  widget = gimp_prop_check_button_new (config, "mesh-visible", _("Show lattice"));
+  npd_options = GIMP_N_POINT_DEFORMATION_OPTIONS (tool_options);
+
+  widget = gimp_prop_check_button_new (config, "mesh-visible",
+                                       _("Show lattice"));
   npd_options->check_mesh_visible = widget;
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  widget = gimp_prop_spin_scale_new (config, "square-size", _("Density"), 1.0, 10.0, 0);
+  widget = gimp_prop_spin_scale_new (config, "square-size",
+                                     _("Density"), 1.0, 10.0, 0);
   npd_options->scale_square_size = widget;
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 10.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  widget = gimp_prop_spin_scale_new (config, "rigidity", _("Rigidity"), 1.0, 10.0, 0);
+  widget = gimp_prop_spin_scale_new (config, "rigidity",
+                                     _("Rigidity"), 1.0, 10.0, 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 1.0, 2000.0);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  widget = gimp_prop_boolean_radio_frame_new (config, "ASAP-deformation", _("Deformation mode"), _("scale"), _("rigid (rubber)"));
+  widget = gimp_prop_boolean_radio_frame_new (config, "ASAP-deformation",
+                                              _("Deformation mode"),
+                                              _("scale"), _("rigid (rubber)"));
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  widget = gimp_prop_check_button_new (config, "MLS-weights", _("Use weights"));
+  widget = gimp_prop_check_button_new (config, "MLS-weights",
+                                       _("Use weights"));
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  widget = gimp_prop_spin_scale_new (config, "MLS-weights-alpha", _("Amount of control points' influence"), 0.1, 0.1, 1);
+  widget = gimp_prop_spin_scale_new (config, "MLS-weights-alpha",
+                                     _("Amount of control points' influence"),
+                                     0.1, 0.1, 1);
   npd_options->scale_MLS_weights_alpha = widget;
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 0.1, 2.0);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
@@ -228,15 +238,20 @@ gimp_n_point_deformation_options_gui (GimpToolOptions *tool_options)
   gtk_widget_set_sensitive (widget, npd_options->MLS_weights);
   gtk_widget_show (widget);
 
-  gimp_n_point_deformation_options_init_some_widgets (npd_options, FALSE);
+  g_object_bind_property (config, "MLS-weights",
+                          widget, "sensitive",
+                          G_BINDING_DEFAULT |
+                          G_BINDING_SYNC_CREATE);
+
+  gimp_n_point_deformation_options_set_sensitivity (npd_options, FALSE);
 
   return vbox;
 }
 
 void
-gimp_n_point_deformation_options_init_some_widgets (GimpNPointDeformationOptions *npd_options,
-                                                    gboolean                      is_tool_active)
+gimp_n_point_deformation_options_set_sensitivity (GimpNPointDeformationOptions *npd_options,
+                                                  gboolean                      tool_active)
 {
-  gtk_widget_set_sensitive (npd_options->scale_square_size, !is_tool_active);
-  gtk_widget_set_sensitive (npd_options->check_mesh_visible, is_tool_active);
+  gtk_widget_set_sensitive (npd_options->scale_square_size, ! tool_active);
+  gtk_widget_set_sensitive (npd_options->check_mesh_visible, tool_active);
 }

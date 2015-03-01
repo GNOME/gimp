@@ -43,7 +43,6 @@ struct _GimpNPointDeformationTool
 {
   GimpDrawTool      parent_instance;
 
-  GimpDisplay      *display;
   guint             draw_timeout_id;
   GThread          *deform_thread;
 
@@ -53,12 +52,9 @@ struct _GimpNPointDeformationTool
   GeglNode         *sink;
 
   GeglBuffer       *preview_buffer;
-  GeglBuffer       *source_buffer;
-
-  GimpDrawable     *drawable;
 
   NPDModel         *model;
-  NPDControlPoint  *selected_cp;    /* last selected control point */
+  NPDControlPoint  *selected_cp;    /* last selected control point     */
   GList            *selected_cps;   /* list of selected control points */
   NPDControlPoint  *hovering_cp;
 
@@ -67,36 +63,34 @@ struct _GimpNPointDeformationTool
   gdouble           cursor_x;
   gdouble           cursor_y;
 
-  gdouble           offset_x;
-  gdouble           offset_y;
+  gint              offset_x;
+  gint              offset_y;
 
   gdouble           movement_start_x;
   gdouble           movement_start_y;
 
   gfloat            cp_scaled_radius;       /* radius of a control point scaled
-                                             * according to display shell's scale */
+                                             * according to display shell's scale
+                                             */
 
   GList            *previous_cps_positions; /* list of NPDPoints holding previous
-                                             * positions of control points */
+                                             * positions of control points
+                                             */
 
   gboolean          active;
   volatile gboolean deformation_active;
   gboolean          rubber_band;
-  gboolean          apply_deformation;
 };
 
 struct _GimpNPointDeformationToolClass
 {
   GimpDrawToolClass parent_class;
-
-  /*  virtual function  */
-
-  void (* perform_deformation) (GimpNPointDeformationTool *npd_tool);
 };
 
 void    gimp_n_point_deformation_tool_register (GimpToolRegisterCallback  callback,
                                                 gpointer                  data);
 
 GType   gimp_n_point_deformation_tool_get_type (void) G_GNUC_CONST;
+
 
 #endif  /*  __GIMP_N_POINT_DEFORMATION_TOOL_H__  */

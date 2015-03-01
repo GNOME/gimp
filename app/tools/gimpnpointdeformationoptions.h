@@ -61,7 +61,8 @@ GType       gimp_n_point_deformation_options_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_n_point_deformation_options_gui      (GimpToolOptions *tool_options);
 
-void        gimp_n_point_deformation_options_init_some_widgets        (GimpNPointDeformationOptions *npd_options,
-                                                                       gboolean                      is_tool_active);
+void        gimp_n_point_deformation_options_set_sensitivity (GimpNPointDeformationOptions *npd_options,
+                                                              gboolean                      tool_active);
+
 
 #endif  /*  __GIMP_N_POINT_DEFORMATION_OPTIONS_H__  */
