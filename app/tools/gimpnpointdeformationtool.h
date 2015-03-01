@@ -60,22 +60,21 @@ struct _GimpNPointDeformationTool
 
   GimpVector2      *lattice_points;
 
+  gdouble           start_x;
+  gdouble           start_y;
+
+  gdouble           last_x;
+  gdouble           last_y;
+
   gdouble           cursor_x;
   gdouble           cursor_y;
 
   gint              offset_x;
   gint              offset_y;
 
-  gdouble           movement_start_x;
-  gdouble           movement_start_y;
-
-  gfloat            cp_scaled_radius;       /* radius of a control point scaled
-                                             * according to display shell's scale
-                                             */
-
-  GList            *previous_cps_positions; /* list of NPDPoints holding previous
-                                             * positions of control points
-                                             */
+  gfloat            cp_scaled_radius;  /* radius of a control point scaled
+                                        * according to display shell's scale
+                                        */
 
   gboolean          active;
   volatile gboolean deformation_active;
