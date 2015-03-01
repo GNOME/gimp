@@ -428,9 +428,6 @@ gimp_n_point_deformation_tool_key_press (GimpTool    *tool,
                                          GimpDisplay *display)
 {
   GimpNPointDeformationTool *npd_tool = GIMP_N_POINT_DEFORMATION_TOOL (tool);
-  NPDModel                  *model = npd_tool->model;
-  NPDControlPoint           *cp;
-  GArray                    *cps = model->control_points;
 
   switch (kevent->keyval)
     {
@@ -438,20 +435,26 @@ gimp_n_point_deformation_tool_key_press (GimpTool    *tool,
       /* if there is at least one control point, remove last added
        *  control point
        */
-      if (cps->len > 0)
+      if (npd_tool->model                 &&
+          npd_tool->model->control_points &&
+          npd_tool->model->control_points->len > 0)
         {
-          cp = &g_array_index (cps, NPDControlPoint, cps->len - 1);
+          GArray          *cps = npd_tool->model->control_points;
+          NPDControlPoint *cp  = &g_array_index (cps, NPDControlPoint,
+                                                 cps->len - 1);
+
           gimp_npd_debug (("removing last cp %p\n", cp));
           gimp_n_point_deformation_tool_remove_cp_from_selection (npd_tool, cp);
-          npd_remove_control_point (model, cp);
+          npd_remove_control_point (npd_tool->model, cp);
         }
       break;
 
     case GDK_KEY_Delete:
-      if (npd_tool->selected_cps)
+      if (npd_tool->model &&
+          npd_tool->selected_cps)
         {
           /* if there is at least one selected control point, remove it */
-          npd_remove_control_points (model, npd_tool->selected_cps);
+          npd_remove_control_points (npd_tool->model, npd_tool->selected_cps);
           gimp_n_point_deformation_tool_clear_selected_points_list (npd_tool);
         }
       break;
