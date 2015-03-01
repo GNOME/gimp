@@ -41,13 +41,12 @@ struct _GimpNPointDeformationOptions
 
   gdouble          square_size;
   gdouble          rigidity;
-  gboolean         ASAP_deformation;
-  gboolean         MLS_weights;
-  gdouble          MLS_weights_alpha;
+  gboolean         asap_deformation;
+  gboolean         mls_weights;
+  gdouble          mls_weights_alpha;
   gboolean         mesh_visible;
 
   GtkWidget       *scale_square_size;
-  GtkWidget       *scale_MLS_weights_alpha;
   GtkWidget       *check_mesh_visible;
 };
 

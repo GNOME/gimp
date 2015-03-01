@@ -83,17 +83,17 @@ gimp_n_point_deformation_options_class_init (GimpNPointDeformationOptionsClass *
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ASAP_DEFORMATION,
-                                    "ASAP-deformation", _("Deformation mode"),
+                                    "asap-deformation", _("Deformation mode"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MLS_WEIGHTS,
-                                    "MLS-weights", _("Use weights"),
+                                    "mls-weights", _("Use weights"),
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE  (object_class, PROP_MLS_WEIGHTS_ALPHA,
-                                    "MLS-weights-alpha",
+                                    "mls-weights-alpha",
                                     _("Amount of control points' influence"),
                                     0.1, 2.0, 1.0,
                                     GIMP_PARAM_STATIC_STRINGS);
@@ -128,13 +128,13 @@ gimp_n_point_deformation_options_set_property (GObject      *object,
       options->rigidity = g_value_get_double (value);
       break;
     case PROP_ASAP_DEFORMATION:
-      options->ASAP_deformation = g_value_get_boolean (value);
+      options->asap_deformation = g_value_get_boolean (value);
       break;
     case PROP_MLS_WEIGHTS:
-      options->MLS_weights = g_value_get_boolean (value);
+      options->mls_weights = g_value_get_boolean (value);
       break;
     case PROP_MLS_WEIGHTS_ALPHA:
-      options->MLS_weights_alpha = g_value_get_double (value);
+      options->mls_weights_alpha = g_value_get_double (value);
       break;
     case PROP_MESH_VISIBLE:
       options->mesh_visible = g_value_get_boolean (value);
@@ -165,13 +165,13 @@ gimp_n_point_deformation_options_get_property (GObject    *object,
       g_value_set_double (value, options->rigidity);
       break;
     case PROP_ASAP_DEFORMATION:
-      g_value_set_boolean (value, options->ASAP_deformation);
+      g_value_set_boolean (value, options->asap_deformation);
       break;
     case PROP_MLS_WEIGHTS:
-      g_value_set_boolean (value, options->MLS_weights);
+      g_value_set_boolean (value, options->mls_weights);
       break;
     case PROP_MLS_WEIGHTS_ALPHA:
-      g_value_set_double (value, options->MLS_weights_alpha);
+      g_value_set_double (value, options->mls_weights_alpha);
       break;
     case PROP_MESH_VISIBLE:
       g_value_set_boolean (value, options->mesh_visible);
@@ -215,30 +215,29 @@ gimp_n_point_deformation_options_gui (GimpToolOptions *tool_options)
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  widget = gimp_prop_boolean_radio_frame_new (config, "ASAP-deformation",
+  widget = gimp_prop_boolean_radio_frame_new (config, "asap-deformation",
                                               _("Deformation mode"),
-                                              _("scale"), _("rigid (rubber)"));
+                                              _("Scale"),
+                                              _("Rigid (Rubber)"));
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  widget = gimp_prop_check_button_new (config, "MLS-weights",
+  widget = gimp_prop_check_button_new (config, "mls-weights",
                                        _("Use weights"));
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
   gtk_widget_show (widget);
 
-  widget = gimp_prop_spin_scale_new (config, "MLS-weights-alpha",
+  widget = gimp_prop_spin_scale_new (config, "mls-weights-alpha",
                                      _("Amount of control points' influence"),
                                      0.1, 0.1, 1);
-  npd_options->scale_MLS_weights_alpha = widget;
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 0.1, 2.0);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
-  gtk_widget_set_sensitive (widget, npd_options->MLS_weights);
   gtk_widget_show (widget);
 
-  g_object_bind_property (config, "MLS-weights",
+  g_object_bind_property (config, "mls-weights",
                           widget, "sensitive",
                           G_BINDING_DEFAULT |
                           G_BINDING_SYNC_CREATE);

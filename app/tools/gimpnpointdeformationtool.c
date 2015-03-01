@@ -392,11 +392,11 @@ gimp_n_point_deformation_tool_set_options (GimpNPointDeformationTool    *npd_too
                                            GimpNPointDeformationOptions *npd_options)
 {
   gegl_node_set (npd_tool->npd_node,
-                 "square size",       (gint) npd_options->square_size,
+                 "square-size",       (gint) npd_options->square_size,
                  "rigidity",          (gint) npd_options->rigidity,
-                 "ASAP deformation",  npd_options->ASAP_deformation,
-                 "MLS weights",       npd_options->MLS_weights,
-                 "MLS weights alpha", npd_options->MLS_weights_alpha,
+                 "asap-deformation",  npd_options->asap_deformation,
+                 "mls-weights",       npd_options->mls_weights,
+                 "mls-weights-alpha", npd_options->mls_weights_alpha,
                  NULL);
 }
 
