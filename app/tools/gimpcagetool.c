@@ -201,12 +201,6 @@ gimp_cage_tool_init (GimpCageTool *self)
   self->config          = g_object_new (GIMP_TYPE_CAGE_CONFIG, NULL);
   self->hovering_handle = -1;
   self->tool_state      = CAGE_STATE_INIT;
-
-  self->coef            = NULL;
-  self->render_node     = NULL;
-  self->coef_node       = NULL;
-  self->cage_node       = NULL;
-  self->image_map       = NULL;
 }
 
 static void
@@ -241,8 +235,6 @@ gimp_cage_tool_start (GimpCageTool *ct,
   GimpTool     *tool     = GIMP_TOOL (ct);
   GimpImage    *image    = gimp_display_get_image (display);
   GimpDrawable *drawable = gimp_image_get_active_drawable (image);
-  gint          off_x;
-  gint          off_y;
 
   gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
 
@@ -284,10 +276,8 @@ gimp_cage_tool_start (GimpCageTool *ct,
   /* Setting up cage offset to convert the cage point coords to
    * drawable coords
    */
-  gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
-
-  ct->offset_x = off_x;
-  ct->offset_y = off_y;
+  gimp_item_get_offset (GIMP_ITEM (drawable),
+                        &ct->offset_x, &ct->offset_y);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (ct), display);
 }
@@ -378,15 +368,15 @@ gimp_cage_tool_key_press (GimpTool    *tool,
     case GDK_KEY_BackSpace:
       if (ct->tool_state == CAGE_STATE_WAIT)
         {
-          if (gimp_cage_config_get_n_points(ct->config) != 0)
+          if (gimp_cage_config_get_n_points (ct->config) != 0)
             gimp_cage_tool_remove_last_handle (ct);
         }
       else if (ct->tool_state == DEFORM_STATE_WAIT)
         {
-          gimp_cage_config_remove_selected_points(ct->config);
+          gimp_cage_config_remove_selected_points (ct->config);
 
           /* if the cage have less than 3 handles, we reopen it */
-          if (gimp_cage_config_get_n_points(ct->config) <= 2)
+          if (gimp_cage_config_get_n_points (ct->config) <= 2)
             {
               ct->tool_state = CAGE_STATE_WAIT;
             }
@@ -583,7 +573,8 @@ gimp_cage_tool_button_press (GimpTool            *tool,
           {
             /* User clicked on an edge, we add a new handle here and select it */
 
-            gimp_cage_config_insert_cage_point (ct->config, edge, coords->x, coords->y);
+            gimp_cage_config_insert_cage_point (ct->config, edge,
+                                                coords->x, coords->y);
             gimp_cage_config_select_point (ct->config, edge);
             ct->tool_state = CAGE_STATE_MOVE_HANDLE;
           }
@@ -765,7 +756,8 @@ gimp_cage_tool_cursor_update (GimpTool         *tool,
         {
           modifier = GIMP_CURSOR_MODIFIER_MOVE;
         }
-      else if (ct->hovering_edge != -1 && options->cage_mode == GIMP_CAGE_MODE_CAGE_CHANGE)
+      else if (ct->hovering_edge  != -1 &&
+               options->cage_mode == GIMP_CAGE_MODE_CAGE_CHANGE)
         {
           modifier = GIMP_CURSOR_MODIFIER_PLUS;
         }
