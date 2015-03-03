@@ -496,6 +496,7 @@ sanity_check_gegl_ops (void)
     "gegl:diffraction-patterns",
     "gegl:distance-transform",
     "gegl:dropshadow",
+    "gegl:edge",
     "gegl:edge-laplace",
     "gegl:edge-sobel",
     "gegl:emboss",

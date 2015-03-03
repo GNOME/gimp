@@ -696,6 +696,7 @@
       </menu>
       <menu action="plug-in-edge-detect-menu" name="Edge-Detect">
         <menuitem action="filters-difference-of-gaussians" />
+        <menuitem action="filters-edge" />
         <menuitem action="filters-edge-laplace" />
         <menuitem action="filters-edge-sobel" />
       </menu>
