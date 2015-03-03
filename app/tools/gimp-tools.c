@@ -329,6 +329,15 @@ gimp_tools_restore (Gimp *gimp)
       g_clear_error (&error);
     }
 
+  /*  make sure there is always a tool active, so broken config files
+   *  can't leave us with no initial tool
+   */
+  if (! gimp_context_get_tool (gimp_get_user_context (gimp)))
+    {
+      gimp_context_set_tool (gimp_get_user_context (gimp),
+                             gimp_get_tool_info_iter (gimp)->data);
+    }
+
   for (list = gimp_get_tool_info_iter (gimp);
        list;
        list = g_list_next (list))
