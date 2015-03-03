@@ -942,6 +942,78 @@ CODE
     );
 }
 
+sub plug_in_edge {
+    $blurb = 'Several simple methods for detecting edges';
+
+    $help = <<'HELP';
+Perform edge detection on the contents of the specified drawable.
+AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in
+(useful for tilable image). EDGEMODE sets the kind of matrix transform
+applied to the pixels, SOBEL was the method used in older versions.
+HELP
+
+    &std_pdb_compat('gegl:edge');
+    $date = '2015';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image', dead => 1,
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'amount', type => '1.0 <= float <= 10.0',
+          desc => 'Edge detection amount' },
+        { name => 'warpmode', type => '1 <= int32 <= 3',
+          desc => 'Edge detection behavior { WRAP (1), SMEAR (2), BLACK (3) }' },
+        { name => 'edgemode', type => '0 <= int32 <= 5',
+          desc => 'Edge detection algorithm { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3), DIFFERENTIAL (4), LAPLACE (5) }' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode        *node;
+      GeglAbyssPolicy  border_behavior = GEGL_ABYSS_NONE;
+
+      switch (warpmode)
+        {
+	case 1:
+	  border_behavior = GEGL_ABYSS_LOOP;
+	  break;
+
+        case 2:
+	  border_behavior = GEGL_ABYSS_CLAMP;
+	  break;
+
+        case 3:
+	  border_behavior = GEGL_ABYSS_BLACK;
+	  break;
+	}
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",       "gegl:edge",
+                                  "algorihm",        edgemode,
+                                  "amount",          amount,
+                                  "border-behavior", border_behavior,
+                                  NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Edge"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_engrave {
     $blurb = 'Simulate an antique engraving';
 
@@ -3761,6 +3833,7 @@ CODE
             plug_in_cubism
             plug_in_deinterlace
             plug_in_diffraction
+            plug_in_edge
             plug_in_engrave
             plug_in_exchange
             plug_in_flarefx

@@ -28,7 +28,6 @@ plug-ins/common/depth-merge.c
 plug-ins/common/despeckle.c
 plug-ins/common/destripe.c
 plug-ins/common/displace.c
-plug-ins/common/edge.c
 plug-ins/common/edge-dog.c
 plug-ins/common/edge-neon.c
 plug-ins/common/emboss.c
