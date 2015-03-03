@@ -63,7 +63,7 @@ struct _GimpGuiConfig
   gchar               *help_locales;
   GimpHelpBrowserType  help_browser;
 
-  /* Action Search preferences. */
+  /* action search preferences */
   gboolean             search_show_unavailable;
   gint                 action_history_size;
 
@@ -72,6 +72,9 @@ struct _GimpGuiConfig
   gchar               *user_manual_online_uri;
   GimpWindowHint       dock_window_hint;
   GimpHandedness       cursor_handedness;
+
+  /* experimental playground */
+  gboolean             playground_npd_tool;
 
   /* saved in sessionrc */
   gboolean             hide_docks;

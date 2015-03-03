@@ -31,6 +31,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h" /* playground */
+
 #include "gegl/gimp-gegl-utils.h"
 #include "gegl/gimp-gegl-apply-operation.h"
 
@@ -144,18 +146,22 @@ void
 gimp_n_point_deformation_tool_register (GimpToolRegisterCallback  callback,
                                         gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_N_POINT_DEFORMATION_TOOL,
-                GIMP_TYPE_N_POINT_DEFORMATION_OPTIONS,
-                gimp_n_point_deformation_options_gui,
-                0,
-                "gimp-n-point-deformation-tool",
-                _("N-Point Deformation"),
-                _("N-Point Deformation Tool: Rubber-like deformation of "
-                  "image using points"),
-                N_("_N-Point Deformation"), "<shift>N",
-                NULL, GIMP_HELP_TOOL_N_POINT_DEFORMATION,
-                GIMP_STOCK_TOOL_N_POINT_DEFORMATION,
-                data);
+  /* we should not know that "data" is a Gimp*, but what the heck this
+   * is experimental playground stuff
+   */
+  if (GIMP_GUI_CONFIG (GIMP (data)->config)->playground_npd_tool)
+    (* callback) (GIMP_TYPE_N_POINT_DEFORMATION_TOOL,
+                  GIMP_TYPE_N_POINT_DEFORMATION_OPTIONS,
+                  gimp_n_point_deformation_options_gui,
+                  0,
+                  "gimp-n-point-deformation-tool",
+                  _("N-Point Deformation"),
+                  _("N-Point Deformation Tool: Rubber-like deformation of "
+                    "image using points"),
+                  N_("_N-Point Deformation"), "<shift>N",
+                  NULL, GIMP_HELP_TOOL_N_POINT_DEFORMATION,
+                  GIMP_STOCK_TOOL_N_POINT_DEFORMATION,
+                  data);
 }
 
 static void
