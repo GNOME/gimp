@@ -281,6 +281,7 @@
 #define GIMP_HELP_TOOL_FOREGROUND_SELECT          "gimp-tool-foreground-select"
 #define GIMP_HELP_TOOL_FUZZY_SELECT               "gimp-tool-fuzzy-select"
 #define GIMP_HELP_TOOL_GEGL                       "gimp-tool-gegl"
+#define GIMP_HELP_TOOL_HANDLE_TRANSFORM           "gimp-tool-handle-transform"
 #define GIMP_HELP_TOOL_HEAL                       "gimp-tool-heal"
 #define GIMP_HELP_TOOL_HUE_SATURATION             "gimp-tool-hue-saturation"
 #define GIMP_HELP_TOOL_INK                        "gimp-tool-ink"

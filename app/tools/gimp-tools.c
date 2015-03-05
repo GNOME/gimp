@@ -61,6 +61,7 @@
 #include "gimpforegroundselecttool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimpgegltool.h"
+#include "gimphandletransformtool.h"
 #include "gimphealtool.h"
 #include "gimphuesaturationtool.h"
 #include "gimpinktool.h"
@@ -160,6 +161,7 @@ gimp_tools_init (Gimp *gimp)
     gimp_cage_tool_register,
     gimp_flip_tool_register,
     gimp_perspective_tool_register,
+    gimp_handle_transform_tool_register,
     gimp_shear_tool_register,
     gimp_scale_tool_register,
     gimp_rotate_tool_register,

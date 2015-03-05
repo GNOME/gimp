@@ -96,6 +96,10 @@ libapptools_a_sources = \
 	gimpfuzzyselecttool.h		\
 	gimpgegltool.c			\
 	gimpgegltool.h			\
+	gimphandletransformoptions.c	\
+	gimphandletransformoptions.h	\
+	gimphandletransformtool.c	\
+	gimphandletransformtool.h	\
 	gimphealtool.c			\
 	gimphealtool.h			\
 	gimphistogramoptions.c		\

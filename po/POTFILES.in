@@ -368,6 +368,8 @@ app/tools/gimpforegroundselecttool.c
 app/tools/gimpfreeselecttool.c
 app/tools/gimpfuzzyselecttool.c
 app/tools/gimpgegltool.c
+app/tools/gimphandletransformoptions.c
+app/tools/gimphandletransformtool.c
 app/tools/gimphealtool.c
 app/tools/gimphistogramoptions.c
 app/tools/gimphuesaturationtool.c
