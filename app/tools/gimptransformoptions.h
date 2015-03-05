@@ -30,8 +30,8 @@
 #define GIMP_TRANSFORM_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TRANSFORM_OPTIONS, GimpTransformOptionsClass))
 
 
-typedef struct _GimpTransformOptions GimpTransformOptions;
-typedef struct _GimpToolOptionsClass GimpTransformOptionsClass;
+typedef struct _GimpTransformOptions      GimpTransformOptions;
+typedef struct _GimpTransformOptionsClass GimpTransformOptionsClass;
 
 struct _GimpTransformOptions
 {
@@ -55,6 +55,11 @@ struct _GimpTransformOptions
   gboolean                  frompivot_perspective;
   gboolean                  cornersnap;
   gboolean                  fixedpivot;
+};
+
+struct _GimpTransformOptionsClass
+{
+  GimpToolOptions  parent_class;
 };
 
 
