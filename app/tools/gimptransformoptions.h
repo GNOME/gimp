@@ -59,7 +59,7 @@ struct _GimpTransformOptions
 
 struct _GimpTransformOptionsClass
 {
-  GimpToolOptions  parent_class;
+  GimpToolOptionsClass  parent_class;
 };
 
 
