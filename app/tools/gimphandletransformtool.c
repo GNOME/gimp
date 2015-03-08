@@ -44,8 +44,8 @@
 /* the transformation is defined by 8 points:
  *
  * 4 points on the original image and 4 corresponding points on the
- * transformed image. The first NUM points on the transformed image
- * are visible as handles.
+ * transformed image. The first N_HANDLES points on the transformed
+ * image are visible as handles.
  *
  * For these handles, the constants TRANSFORM_HANDLE_N,
  * TRANSFORM_HANDLE_S, TRANSFORM_HANDLE_E and TRANSFORM_HANDLE_W are
@@ -73,7 +73,7 @@ enum
   OY2,
   OX3,
   OY3,
-  NUM
+  N_HANDLES
 };
 
 
@@ -205,12 +205,12 @@ gimp_handle_transform_tool_button_press (GimpTool            *tool,
   GimpHandleTransformTool    *ht      = GIMP_HANDLE_TRANSFORM_TOOL (tool);
   GimpTransformTool          *tr_tool = GIMP_TRANSFORM_TOOL (tool);
   GimpHandleTransformOptions *options;
-  gint                        num;
+  gint                        n_handles;
   gint                        active_handle;
 
   options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
-  num           = (gint) tr_tool->trans_info[NUM];
+  n_handles     = (gint) tr_tool->trans_info[N_HANDLES];
   active_handle = tr_tool->function - TRANSFORM_HANDLE_N;
 
   /* There is nothing to be done on creation */
@@ -225,12 +225,12 @@ gimp_handle_transform_tool_button_press (GimpTool            *tool,
     {
       /* add handle */
 
-      if (num < 4 && tr_tool->function == TRANSFORM_HANDLE_NONE)
+      if (n_handles < 4 && tr_tool->function == TRANSFORM_HANDLE_NONE)
         {
-          tr_tool->trans_info[X0 + 2 * num] = coords->x;
-          tr_tool->trans_info[Y0 + 2 * num] = coords->y;
-          tr_tool->function = TRANSFORM_HANDLE_N + num;
-          tr_tool->trans_info[NUM]++;
+          tr_tool->trans_info[X0 + 2 * n_handles] = coords->x;
+          tr_tool->trans_info[Y0 + 2 * n_handles] = coords->y;
+          tr_tool->function = TRANSFORM_HANDLE_N + n_handles;
+          tr_tool->trans_info[N_HANDLES]++;
 
           /* check for valid position and calculating of OX0...OY3 is
            * done on button release
@@ -241,7 +241,7 @@ gimp_handle_transform_tool_button_press (GimpTool            *tool,
       ht->matrix_recalculation = FALSE;
     }
   else if (options->handle_mode == GIMP_HANDLE_MODE_REMOVE &&
-           num > 0            &&
+           n_handles > 0      &&
            active_handle >= 0 &&
            active_handle < 4)
     {
@@ -253,10 +253,10 @@ gimp_handle_transform_tool_button_press (GimpTool            *tool,
       gdouble tempoy = tr_tool->trans_info[OY0 + 2 * active_handle];
       gint    i;
 
-      num--;
-      tr_tool->trans_info[NUM]--;
+      n_handles--;
+      tr_tool->trans_info[N_HANDLES]--;
 
-      for (i = active_handle; i < num; i++)
+      for (i = active_handle; i < n_handles; i++)
         {
           tr_tool->trans_info[X0  + 2 * i] = tr_tool->trans_info[X1  + 2 * i];
           tr_tool->trans_info[Y0  + 2 * i] = tr_tool->trans_info[Y1  + 2 * i];
@@ -264,10 +264,10 @@ gimp_handle_transform_tool_button_press (GimpTool            *tool,
           tr_tool->trans_info[OY0 + 2 * i] = tr_tool->trans_info[OY1 + 2 * i];
         }
 
-      tr_tool->trans_info[X0  + 2 * num] = tempx;
-      tr_tool->trans_info[Y0  + 2 * num] = tempy;
-      tr_tool->trans_info[OX0 + 2 * num] = tempox;
-      tr_tool->trans_info[OY0 + 2 * num] = tempoy;
+      tr_tool->trans_info[X0  + 2 * n_handles] = tempx;
+      tr_tool->trans_info[Y0  + 2 * n_handles] = tempy;
+      tr_tool->trans_info[OX0 + 2 * n_handles] = tempox;
+      tr_tool->trans_info[OY0 + 2 * n_handles] = tempoy;
     }
 
   GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time,
@@ -380,7 +380,7 @@ gimp_handle_transform_tool_modifier_key (GimpTool        *tool,
 static void
 gimp_handle_transform_tool_dialog (GimpTransformTool *tr_tool)
 {
-  GimpHandleTransformTool *handle_transform = GIMP_HANDLE_TRANSFORM_TOOL (tr_tool);
+  GimpHandleTransformTool *ht_tool = GIMP_HANDLE_TRANSFORM_TOOL (tr_tool);
   GtkWidget               *frame;
   GtkWidget               *table;
   gint                     x, y;
@@ -397,18 +397,20 @@ gimp_handle_transform_tool_dialog (GimpTransformTool *tr_tool)
   gtk_widget_show (table);
 
   for (y = 0; y < 3; y++)
-    for (x = 0; x < 3; x++)
-      {
-        GtkWidget *label = gtk_label_new (" ");
+    {
+      for (x = 0; x < 3; x++)
+        {
+          GtkWidget *label = gtk_label_new (" ");
 
-        gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.0);
-        gtk_label_set_width_chars (GTK_LABEL (label), 12);
-        gtk_table_attach (GTK_TABLE (table), label,
-                          x, x + 1, y, y + 1, GTK_EXPAND, GTK_FILL, 0, 0);
-        gtk_widget_show (label);
+          gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.0);
+          gtk_label_set_width_chars (GTK_LABEL (label), 12);
+          gtk_table_attach (GTK_TABLE (table), label,
+                            x, x + 1, y, y + 1, GTK_EXPAND, GTK_FILL, 0, 0);
+          gtk_widget_show (label);
 
-        handle_transform->label[y][x] = label;
-      }
+          ht_tool->label[y][x] = label;
+        }
+    }
 }
 
 static void
@@ -436,23 +438,23 @@ gimp_handle_transform_tool_prepare (GimpTransformTool  *tr_tool)
 {
   GimpHandleTransformTool *ht_tool = GIMP_HANDLE_TRANSFORM_TOOL (tr_tool);
 
-  tr_tool->trans_info[X0]  = (gdouble) tr_tool->x1;
-  tr_tool->trans_info[Y0]  = (gdouble) tr_tool->y1;
-  tr_tool->trans_info[X1]  = (gdouble) tr_tool->x2;
-  tr_tool->trans_info[Y1]  = (gdouble) tr_tool->y1;
-  tr_tool->trans_info[X2]  = (gdouble) tr_tool->x1;
-  tr_tool->trans_info[Y2]  = (gdouble) tr_tool->y2;
-  tr_tool->trans_info[X3]  = (gdouble) tr_tool->x2;
-  tr_tool->trans_info[Y3]  = (gdouble) tr_tool->y2;
-  tr_tool->trans_info[OX0] = (gdouble) tr_tool->x1;
-  tr_tool->trans_info[OY0] = (gdouble) tr_tool->y1;
-  tr_tool->trans_info[OX1] = (gdouble) tr_tool->x2;
-  tr_tool->trans_info[OY1] = (gdouble) tr_tool->y1;
-  tr_tool->trans_info[OX2] = (gdouble) tr_tool->x1;
-  tr_tool->trans_info[OY2] = (gdouble) tr_tool->y2;
-  tr_tool->trans_info[OX3] = (gdouble) tr_tool->x2;
-  tr_tool->trans_info[OY3] = (gdouble) tr_tool->y2;
-  tr_tool->trans_info[NUM] = 0;
+  tr_tool->trans_info[X0]        = (gdouble) tr_tool->x1;
+  tr_tool->trans_info[Y0]        = (gdouble) tr_tool->y1;
+  tr_tool->trans_info[X1]        = (gdouble) tr_tool->x2;
+  tr_tool->trans_info[Y1]        = (gdouble) tr_tool->y1;
+  tr_tool->trans_info[X2]        = (gdouble) tr_tool->x1;
+  tr_tool->trans_info[Y2]        = (gdouble) tr_tool->y2;
+  tr_tool->trans_info[X3]        = (gdouble) tr_tool->x2;
+  tr_tool->trans_info[Y3]        = (gdouble) tr_tool->y2;
+  tr_tool->trans_info[OX0]       = (gdouble) tr_tool->x1;
+  tr_tool->trans_info[OY0]       = (gdouble) tr_tool->y1;
+  tr_tool->trans_info[OX1]       = (gdouble) tr_tool->x2;
+  tr_tool->trans_info[OY1]       = (gdouble) tr_tool->y1;
+  tr_tool->trans_info[OX2]       = (gdouble) tr_tool->x1;
+  tr_tool->trans_info[OY2]       = (gdouble) tr_tool->y2;
+  tr_tool->trans_info[OX3]       = (gdouble) tr_tool->x2;
+  tr_tool->trans_info[OY3]       = (gdouble) tr_tool->y2;
+  tr_tool->trans_info[N_HANDLES] = 0;
 
   ht_tool->matrix_recalculation = TRUE;
 }
@@ -461,20 +463,20 @@ static void
 gimp_handle_transform_tool_motion (GimpTransformTool *tr_tool)
 {
   GimpHandleTransformOptions *options;
+  gint                        n_handles;
   gint                        active_handle;
-  gint                        num;
 
   options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
+  n_handles     = (gint) tr_tool->trans_info[N_HANDLES];
   active_handle = tr_tool->function - TRANSFORM_HANDLE_N;
-  num           = (gint) tr_tool->trans_info[NUM];
 
   if (active_handle >= 0 && active_handle < 4)
     {
       if (options->handle_mode == GIMP_HANDLE_MODE_ADD_MOVE)
         {
-          tr_tool->trans_info[X0 + 2*active_handle] += tr_tool->curx - tr_tool->lastx;
-          tr_tool->trans_info[Y0 + 2*active_handle] += tr_tool->cury - tr_tool->lasty;
+          tr_tool->trans_info[X0 + 2 * active_handle] += tr_tool->curx - tr_tool->lastx;
+          tr_tool->trans_info[Y0 + 2 * active_handle] += tr_tool->cury - tr_tool->lasty;
           /* check for valid position and calculating of OX0...OY3 is
            * done on button release hopefully this makes the code run
            * faster Moving could be even faster if there was caching
@@ -493,21 +495,21 @@ gimp_handle_transform_tool_motion (GimpTransformTool *tr_tool)
           for (i = 0, j = 0; i < 4; i++)
             {
               /* Find all visible handles that are not being moved */
-              if (i < num && i != active_handle)
+              if (i < n_handles && i != active_handle)
                 {
-                  fixed_handles_x[j] = tr_tool->prev_trans_info[0][X0+i*2];
-                  fixed_handles_y[j] = tr_tool->prev_trans_info[0][Y0+i*2];
+                  fixed_handles_x[j] = tr_tool->prev_trans_info[0][X0 + i * 2];
+                  fixed_handles_y[j] = tr_tool->prev_trans_info[0][Y0 + i * 2];
                   j++;
                 }
 
-              newpos_x[i] = oldpos_x[i] = tr_tool->prev_trans_info[0][X0+i*2];
-              newpos_y[i] = oldpos_y[i] = tr_tool->prev_trans_info[0][Y0+i*2];
+              newpos_x[i] = oldpos_x[i] = tr_tool->prev_trans_info[0][X0 + i * 2];
+              newpos_y[i] = oldpos_y[i] = tr_tool->prev_trans_info[0][Y0 + i * 2];
             }
 
           newpos_x[active_handle] = oldpos_x[active_handle] + tr_tool->curx - tr_tool->mousex;
           newpos_y[active_handle] = oldpos_y[active_handle] + tr_tool->cury - tr_tool->mousey;
 
-          switch (num)
+          switch (n_handles)
             {
             case 1:
               /* move */
@@ -568,47 +570,49 @@ gimp_handle_transform_tool_motion (GimpTransformTool *tr_tool)
 static void
 gimp_handle_transform_tool_recalc_matrix (GimpTransformTool *tr_tool)
 {
-  gdouble coeff[8*9];
-  gdouble sol[8];
-  int i;
-  gdouble opos_x[4], opos_y[4];
-  gdouble pos_x[4], pos_y[4];
-  GimpHandleTransformTool *handle_transform = GIMP_HANDLE_TRANSFORM_TOOL (tr_tool);
+  GimpHandleTransformTool *ht_tool = GIMP_HANDLE_TRANSFORM_TOOL (tr_tool);
+  gdouble                  coeff[8 * 9];
+  gdouble                  sol[8];
+  gdouble                  opos_x[4];
+  gdouble                  opos_y[4];
+  gdouble                  pos_x[4];
+  gdouble                  pos_y[4];
+  gint                     i;
 
-  if (handle_transform->matrix_recalculation)
+  if (ht_tool->matrix_recalculation)
     {
       for (i = 0; i < 4; i++)
         {
-          pos_x[i] = tr_tool->trans_info[X0+i*2];
-          pos_y[i] = tr_tool->trans_info[Y0+i*2];
-          opos_x[i] = tr_tool->trans_info[OX0+i*2];
-          opos_y[i] = tr_tool->trans_info[OY0+i*2];
+          pos_x[i]  = tr_tool->trans_info[X0 + i * 2];
+          pos_y[i]  = tr_tool->trans_info[Y0 + i * 2];
+          opos_x[i] = tr_tool->trans_info[OX0 + i * 2];
+          opos_y[i] = tr_tool->trans_info[OY0 + i * 2];
         }
 
       for (i = 0; i < 4; i++)
         {
-          coeff[i*9+0] = opos_x[i];
-          coeff[i*9+1] = opos_y[i];
-          coeff[i*9+2] = 1;
-          coeff[i*9+3] = 0;
-          coeff[i*9+4] = 0;
-          coeff[i*9+5] = 0;
-          coeff[i*9+6] = -opos_x[i]*pos_x[i];
-          coeff[i*9+7] = -opos_y[i]*pos_x[i];
-          coeff[i*9+8] = pos_x[i];
+          coeff[i * 9 + 0] = opos_x[i];
+          coeff[i * 9 + 1] = opos_y[i];
+          coeff[i * 9 + 2] = 1;
+          coeff[i * 9 + 3] = 0;
+          coeff[i * 9 + 4] = 0;
+          coeff[i * 9 + 5] = 0;
+          coeff[i * 9 + 6] = -opos_x[i] * pos_x[i];
+          coeff[i * 9 + 7] = -opos_y[i] * pos_x[i];
+          coeff[i * 9 + 8] = pos_x[i];
 
-          coeff[(i+4)*9+0] = 0;
-          coeff[(i+4)*9+1] = 0;
-          coeff[(i+4)*9+2] = 0;
-          coeff[(i+4)*9+3] = opos_x[i];
-          coeff[(i+4)*9+4] = opos_y[i];
-          coeff[(i+4)*9+5] = 1;
-          coeff[(i+4)*9+6] = -opos_x[i]*pos_y[i];
-          coeff[(i+4)*9+7] = -opos_y[i]*pos_y[i];
-          coeff[(i+4)*9+8] = pos_y[i];
+          coeff[(i + 4) * 9 + 0] = 0;
+          coeff[(i + 4) * 9 + 1] = 0;
+          coeff[(i + 4) * 9 + 2] = 0;
+          coeff[(i + 4) * 9 + 3] = opos_x[i];
+          coeff[(i + 4) * 9 + 4] = opos_y[i];
+          coeff[(i + 4) * 9 + 5] = 1;
+          coeff[(i + 4) * 9 + 6] = -opos_x[i] * pos_y[i];
+          coeff[(i + 4) * 9 + 7] = -opos_y[i] * pos_y[i];
+          coeff[(i + 4) * 9 + 8] = pos_y[i];
         }
 
-      if (mod_gauss(coeff, sol, 8))
+      if (mod_gauss (coeff, sol, 8))
         {
           tr_tool->transform.coeff[0][0] = sol[0];
           tr_tool->transform.coeff[0][1] = sol[1];
@@ -622,8 +626,9 @@ gimp_handle_transform_tool_recalc_matrix (GimpTransformTool *tr_tool)
         }
       else
         {
-          /* this should not happen
-           * reset the matrix so the user sees that something went wrong */
+          /* this should not happen reset the matrix so the user sees
+           * that something went wrong
+           */
           gimp_matrix3_identity (&tr_tool->transform);
         }
     }
@@ -675,7 +680,7 @@ gimp_handle_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
   if (options->handle_mode == GIMP_HANDLE_MODE_TRANSFORM &&
       tr_tool->function > TRANSFORM_HANDLE_NONE)
     {
-      switch ((gint) tr_tool->trans_info[NUM])
+      switch ((gint) tr_tool->trans_info[N_HANDLES])
         {
         case 1:
           tool_cursor = GIMP_TOOL_CURSOR_MOVE;
@@ -717,38 +722,38 @@ gimp_handle_transform_tool_draw_gui (GimpTransformTool *tr_tool,
 
 #if 0
   /* show additional points for debugging */
-  for (i = tr_tool->trans_info[NUM]; i < 4; i++)
+  for (i = tr_tool->trans_info[N_HANDLES]; i < 4; i++)
     {
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_FILLED_CIRCLE,
-                                 tr_tool->trans_info[X0+2*i],
-                                 tr_tool->trans_info[Y0+2*i],
+                                 tr_tool->trans_info[X0 + 2 * i],
+                                 tr_tool->trans_info[Y0 + 2 * i],
                                  GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                  GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                  GIMP_HANDLE_ANCHOR_CENTER);
       gimp_draw_tool_add_handle (draw_tool,
                                  GIMP_HANDLE_FILLED_DIAMOND,
-                                 tr_tool->trans_info[OX0+2*i],
-                                 tr_tool->trans_info[OY0+2*i],
+                                 tr_tool->trans_info[OX0 + 2 * i],
+                                 tr_tool->trans_info[OY0 + 2 * i],
                                  GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                  GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                  GIMP_HANDLE_ANCHOR_CENTER);
       }
 
-  for (i = 0; i < tr_tool->trans_info[NUM]; i++)
+  for (i = 0; i < tr_tool->trans_info[N_HANDLES]; i++)
     {
       tr_tool->handles[TRANSFORM_HANDLE_N + i] =
         gimp_draw_tool_add_handle (draw_tool,
                                    GIMP_HANDLE_DIAMOND,
-                                   tr_tool->trans_info[OX0+2*i],
-                                   tr_tool->trans_info[OY0+2*i],
+                                   tr_tool->trans_info[OX0 + 2 * i],
+                                   tr_tool->trans_info[OY0 + 2 * i],
                                    GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                    GIMP_TOOL_HANDLE_SIZE_CIRCLE,
                                    GIMP_HANDLE_ANCHOR_CENTER);
     }
 #endif
 
-  for (i = 0; i < tr_tool->trans_info[NUM]; i++)
+  for (i = 0; i < tr_tool->trans_info[N_HANDLES]; i++)
     {
       tr_tool->handles[TRANSFORM_HANDLE_N + i] =
         gimp_draw_tool_add_handle (draw_tool,
@@ -768,13 +773,13 @@ is_handle_position_valid (GimpTransformTool *tr_tool,
 {
   gint i, j, k;
 
-  if (tr_tool->trans_info[NUM] < 3)
+  if (tr_tool->trans_info[N_HANDLES] < 3)
     {
       /* there aren't two other handles */
       return TRUE;
     }
 
-  if (tr_tool->trans_info[NUM] == 3)
+  if (tr_tool->trans_info[N_HANDLES] == 3)
     {
       return ((tr_tool->trans_info[X0] - tr_tool->trans_info[X1]) *
               (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y2]) !=
@@ -783,7 +788,7 @@ is_handle_position_valid (GimpTransformTool *tr_tool,
               (tr_tool->trans_info[Y0] - tr_tool->trans_info[Y1]));
     }
 
-  /* tr_tool->trans_info[NUM] == 4 */
+  /* tr_tool->trans_info[N_HANDLES] == 4 */
   for (i = 0; i < 2; i++)
     {
       for (j = i + 1; j < 3; j++)
