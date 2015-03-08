@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-28 14:54+0100\n"
-"PO-Revision-Date: 2015-01-28 14:55+0100\n"
+"POT-Creation-Date: 2015-03-09 00:50+0100\n"
+"PO-Revision-Date: 2015-03-09 00:51+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -265,12 +265,12 @@ msgstr "Velocità di riproduzione"
 
 #. 2 styles of default frame disposals: cumulative layers and one frame per layer.
 #: ../plug-ins/common/animation-play.c:925
-#: ../plug-ins/common/file-gif-save.c:1200
+#: ../plug-ins/common/file-gif-save.c:1226
 msgid "Cumulative layers (combine)"
 msgstr "Livelli cumulativi (combina)"
 
 #: ../plug-ins/common/animation-play.c:929
-#: ../plug-ins/common/file-gif-save.c:1202
+#: ../plug-ins/common/file-gif-save.c:1228
 msgid "One frame per layer (replace)"
 msgstr "Un fotogramma per livello (rimpiazza)"
 
@@ -328,11 +328,11 @@ msgstr "_Verticale"
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1008
 #: ../plug-ins/common/decompose.c:603 ../plug-ins/common/file-cel.c:438
 #: ../plug-ins/common/file-cel.c:441 ../plug-ins/common/file-dicom.c:611
-#: ../plug-ins/common/file-gegl.c:425 ../plug-ins/common/file-gif-load.c:980
+#: ../plug-ins/common/file-gegl.c:442 ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:394 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:443 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1012 ../plug-ins/common/file-pnm.c:669
-#: ../plug-ins/common/file-raw-data.c:985
+#: ../plug-ins/common/file-raw-data.c:970
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
 #: ../plug-ins/common/file-tiff-load.c:1107 ../plug-ins/common/file-xbm.c:904
 #: ../plug-ins/common/film.c:745 ../plug-ins/common/smooth-palette.c:255
@@ -988,7 +988,7 @@ msgid "Save CML Explorer Parameters"
 msgstr "Salva parametri Esploratore CML"
 
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
-#: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-gif-save.c:804
+#: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-gif-save.c:830
 #: ../plug-ins/common/file-mng.c:648 ../plug-ins/common/file-mng.c:985
 #: ../plug-ins/common/file-pcx.c:734 ../plug-ins/common/file-pdf-save.c:432
 #: ../plug-ins/common/file-png.c:1490 ../plug-ins/common/file-raw-data.c:785
@@ -1025,7 +1025,7 @@ msgstr "Carica parametri Esploratore CML"
 #: ../plug-ins/common/file-pcx.c:367 ../plug-ins/common/file-png.c:866
 #: ../plug-ins/common/file-ps.c:1100 ../plug-ins/common/file-ps.c:3369
 #: ../plug-ins/common/file-psp.c:1714 ../plug-ins/common/file-raw-data.c:271
-#: ../plug-ins/common/file-raw-data.c:909 ../plug-ins/common/file-sunras.c:436
+#: ../plug-ins/common/file-raw-data.c:894 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:709
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:659 ../plug-ins/common/file-xmc.c:840
@@ -1281,7 +1281,7 @@ msgid "_Redness cr709:"
 msgstr "Liv. _rosso cr709:"
 
 #: ../plug-ins/common/compose.c:191 ../plug-ins/common/decompose.c:176
-#: ../plug-ins/common/file-raw-data.c:1419
+#: ../plug-ins/common/file-raw-data.c:1404
 msgid "RGB"
 msgstr "RGB"
 
@@ -1868,7 +1868,7 @@ msgid "O_verlap:"
 msgstr "So_vrapponi:"
 
 #: ../plug-ins/common/depth-merge.c:775
-#: ../plug-ins/common/file-raw-data.c:1447
+#: ../plug-ins/common/file-raw-data.c:1432
 msgid "O_ffset:"
 msgstr "_Compensazione:"
 
@@ -1937,7 +1937,7 @@ msgstr "Destriscia"
 
 #: ../plug-ins/common/destripe.c:476 ../plug-ins/common/file-html-table.c:638
 #: ../plug-ins/common/file-ps.c:3495 ../plug-ins/common/file-ps.c:3700
-#: ../plug-ins/common/file-raw-data.c:1460
+#: ../plug-ins/common/file-raw-data.c:1445
 #: ../plug-ins/common/smooth-palette.c:435 ../plug-ins/common/tile.c:428
 #: ../plug-ins/common/tile-paper.c:303
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
@@ -2008,68 +2008,19 @@ msgstr "_Polare"
 msgid "Edge Behavior"
 msgstr "Comportamento contorni"
 
-#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:700
-#: ../plug-ins/common/fractal-trace.c:737 ../plug-ins/common/ripple.c:583
+#: ../plug-ins/common/displace.c:477 ../plug-ins/common/fractal-trace.c:737
+#: ../plug-ins/common/ripple.c:583
 msgid "_Wrap"
 msgstr "_Avvolto"
 
-#: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:713
-#: ../plug-ins/common/ripple.c:584
+#: ../plug-ins/common/displace.c:479 ../plug-ins/common/ripple.c:584
 msgid "_Smear"
 msgstr "_Macchia"
 
-#: ../plug-ins/common/displace.c:481 ../plug-ins/common/edge.c:726
-#: ../plug-ins/common/fractal-trace.c:741 ../plug-ins/common/newsprint.c:389
+#: ../plug-ins/common/displace.c:481 ../plug-ins/common/fractal-trace.c:741
+#: ../plug-ins/common/newsprint.c:389
 msgid "_Black"
 msgstr "_Nero"
-
-#: ../plug-ins/common/edge.c:148
-msgid "Several simple methods for detecting edges"
-msgstr "Diversi semplici metodi di rilevamento contorni"
-
-#: ../plug-ins/common/edge.c:153
-msgid "_Edge..."
-msgstr "_Contorni..."
-
-#: ../plug-ins/common/edge.c:225
-msgid "Edge detection"
-msgstr "Rilevamento contorni"
-
-#: ../plug-ins/common/edge.c:623
-msgid "Edge Detection"
-msgstr "Rilevamento contorni"
-
-#: ../plug-ins/common/edge.c:659
-msgid "Sobel"
-msgstr "Sobel"
-
-#: ../plug-ins/common/edge.c:660
-msgid "Prewitt compass"
-msgstr "Bussola di Prewitt"
-
-#: ../plug-ins/common/edge.c:661
-msgid "Gradient"
-msgstr "Gradiente"
-
-#: ../plug-ins/common/edge.c:662
-msgid "Roberts"
-msgstr "Roberts"
-
-#: ../plug-ins/common/edge.c:663
-msgid "Differential"
-msgstr "Differenziale"
-
-#: ../plug-ins/common/edge.c:664
-msgid "Laplace"
-msgstr "Laplace"
-
-#: ../plug-ins/common/edge.c:673
-msgid "_Algorithm:"
-msgstr "_Algoritmo:"
-
-#: ../plug-ins/common/edge.c:681
-msgid "A_mount:"
-msgstr "_Quantità:"
 
 #: ../plug-ins/common/edge-dog.c:135
 msgid "Edge detection with control of edge thickness"
@@ -2213,13 +2164,13 @@ msgstr ""
 #. * Open the file for reading...
 #.
 #: ../plug-ins/common/file-cel.c:339 ../plug-ins/common/file-dicom.c:334
-#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:309
+#: ../plug-ins/common/file-gbr.c:364 ../plug-ins/common/file-gegl.c:326
 #: ../plug-ins/common/file-gif-load.c:353 ../plug-ins/common/file-gih.c:668
 #: ../plug-ins/common/file-jp2-load.c:226 ../plug-ins/common/file-pat.c:336
 #: ../plug-ins/common/file-pcx.c:359 ../plug-ins/common/file-pdf-load.c:858
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:858
 #: ../plug-ins/common/file-pnm.c:562 ../plug-ins/common/file-ps.c:1092
-#: ../plug-ins/common/file-raw-data.c:902 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-raw-data.c:887 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-tiff-load.c:576
 #: ../plug-ins/common/file-wmf.c:985 ../plug-ins/common/file-xbm.c:740
 #: ../plug-ins/common/file-xmc.c:649 ../plug-ins/common/file-xpm.c:354
@@ -2305,7 +2256,7 @@ msgstr ""
 #. * Open the file for writing...
 #.
 #: ../plug-ins/common/file-cel.c:773 ../plug-ins/common/file-gbr.c:689
-#: ../plug-ins/common/file-gif-save.c:795 ../plug-ins/common/file-gih.c:1294
+#: ../plug-ins/common/file-gif-save.c:821 ../plug-ins/common/file-gih.c:1294
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-pat.c:533
 #: ../plug-ins/common/file-pcx.c:660 ../plug-ins/common/file-pix.c:536
 #: ../plug-ins/common/file-png.c:1483 ../plug-ins/common/file-pnm.c:1206
@@ -2470,15 +2421,19 @@ msgstr "Descrizione:"
 msgid "Spacing:"
 msgstr "Spaziatura:"
 
-#: ../plug-ins/common/file-gegl.c:73
+#: ../plug-ins/common/file-gegl.c:73 ../plug-ins/file-exr/file-exr.c:83
+msgid "OpenEXR image"
+msgstr "Immagine OpenEXR"
+
+#: ../plug-ins/common/file-gegl.c:87
 msgid "NEF image"
 msgstr "Immagine NEF"
 
-#: ../plug-ins/common/file-gegl.c:86
+#: ../plug-ins/common/file-gegl.c:100
 msgid "WebP image"
 msgstr "Immagine WebP"
 
-#: ../plug-ins/common/file-gegl.c:333
+#: ../plug-ins/common/file-gegl.c:350
 #, c-format
 msgid "Could not open '%s'"
 msgstr "Impossibile aprire \"%s\""
@@ -2526,11 +2481,11 @@ msgstr ""
 "GIF: il tipo composito GIF %d non documentato non è gestibile. L'animazione "
 "non può essere eseguita o salvata perfettamente."
 
-#: ../plug-ins/common/file-gif-save.c:481
+#: ../plug-ins/common/file-gif-save.c:507
 msgid "Couldn't simply reduce colors further. Saving as opaque."
 msgstr "Impossibile ridurre ulteriormente i colori. Salvataggio come opaco."
 
-#: ../plug-ins/common/file-gif-save.c:596
+#: ../plug-ins/common/file-gif-save.c:622
 #, c-format
 msgid ""
 "Unable to save '%s'.  The GIF file format does not support images that are "
@@ -2539,7 +2494,7 @@ msgstr ""
 "Impossibile salvare \"%s\". Il formato file GIF non supporta immagini più "
 "larghe o alte di %d pixel."
 
-#: ../plug-ins/common/file-gif-save.c:706
+#: ../plug-ins/common/file-gif-save.c:732
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -2547,20 +2502,20 @@ msgstr ""
 "Il formato GIF supporta solo commenti in codifica ASCII a 7bit. Commento non "
 "salvato."
 
-#: ../plug-ins/common/file-gif-save.c:770
+#: ../plug-ins/common/file-gif-save.c:796
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Impossibile salvare come immagine RGB a colori. Convertire prima in colore "
 "indicizzato o in scala di grigi."
 
-#: ../plug-ins/common/file-gif-save.c:945
+#: ../plug-ins/common/file-gif-save.c:971
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr ""
 "Ritardo inserito per prevenire l'uso di tutta la CPU da parte "
 "dell'animazione."
 
-#: ../plug-ins/common/file-gif-save.c:986
+#: ../plug-ins/common/file-gif-save.c:1012
 msgid ""
 "The image you are trying to save as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2568,7 +2523,7 @@ msgstr ""
 "L'immagine che si sta tentando di salvare in formato GIF contiene livelli "
 "che si estendono oltre i limiti dell'immagine."
 
-#: ../plug-ins/common/file-gif-save.c:1003
+#: ../plug-ins/common/file-gif-save.c:1029
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this save."
@@ -2576,11 +2531,11 @@ msgstr ""
 "Nei GIF ciò non è consentito. Potete tagliare tutti i livelli ai bordi \n"
 "dell'immagine o annullare il salvataggio."
 
-#: ../plug-ins/common/file-gif-save.c:1137
+#: ../plug-ins/common/file-gif-save.c:1163
 msgid "GIF"
 msgstr "GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1145
+#: ../plug-ins/common/file-gif-save.c:1171
 #, c-format
 msgid ""
 "Error loading UI file '%s':\n"
@@ -2589,11 +2544,11 @@ msgstr ""
 "Errore di caricamento file IU \"%s\":\n"
 "%s"
 
-#: ../plug-ins/common/file-gif-save.c:1198
+#: ../plug-ins/common/file-gif-save.c:1224
 msgid "I don't care"
 msgstr "Non importa"
 
-#: ../plug-ins/common/file-gif-save.c:1219
+#: ../plug-ins/common/file-gif-save.c:1245
 msgid ""
 "You can only export as animation when the image has more than one layer. The "
 "image you are trying to export only has one layer."
@@ -2602,12 +2557,12 @@ msgstr ""
 "un livello. L'immagine che si sta tentando di esportare possiede un solo "
 "livello."
 
-#: ../plug-ins/common/file-gif-save.c:2213
+#: ../plug-ins/common/file-gif-save.c:2239
 msgid "Error writing output file."
 msgstr "Errore durante la scrittura del file di uscita."
 
 #. translators: the %d is *always* 240 here
-#: ../plug-ins/common/file-gif-save.c:2336
+#: ../plug-ins/common/file-gif-save.c:2362
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Il commento predefinito è limitato a %d caratteri."
@@ -2777,7 +2732,7 @@ msgid "The width for each table cell.  Can be a number or a percent."
 msgstr "La larghezza di ogni cella. Può essere un numero o una percentuale."
 
 #: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3508
-#: ../plug-ins/common/file-ps.c:3712 ../plug-ins/common/file-raw-data.c:1476
+#: ../plug-ins/common/file-ps.c:3712 ../plug-ins/common/file-raw-data.c:1461
 #: ../plug-ins/common/film.c:1002 ../plug-ins/common/smooth-palette.c:440
 #: ../plug-ins/common/tile.c:432 ../plug-ins/common/tile-paper.c:314
 #: ../plug-ins/imagemap/imap_cmd_guides.c:173
@@ -3589,113 +3544,113 @@ msgstr "LZ77"
 msgid "Raw image data"
 msgstr "Dati immagine raw"
 
-#: ../plug-ins/common/file-raw-data.c:1371
+#: ../plug-ins/common/file-raw-data.c:1356
 msgid "Load Image from Raw Data"
 msgstr "Carica immagine da dati raw"
 
-#: ../plug-ins/common/file-raw-data.c:1409
+#: ../plug-ins/common/file-raw-data.c:1394
 msgid "Image"
 msgstr "Immagine"
 
-#: ../plug-ins/common/file-raw-data.c:1420
+#: ../plug-ins/common/file-raw-data.c:1405
 msgid "RGB Alpha"
 msgstr "Alfa RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1421
+#: ../plug-ins/common/file-raw-data.c:1406
 msgid "RGB565 Big Endian"
 msgstr "RGB565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1422
+#: ../plug-ins/common/file-raw-data.c:1407
 msgid "RGB565 Little Endian"
 msgstr "RGB565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1423
+#: ../plug-ins/common/file-raw-data.c:1408
 msgid "BGR565 Big Endian"
 msgstr "BGR565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1424
+#: ../plug-ins/common/file-raw-data.c:1409
 msgid "BGR565 Little Endian"
 msgstr "BGR565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1425
+#: ../plug-ins/common/file-raw-data.c:1410
 msgid "Planar RGB"
 msgstr "RGB planare"
 
-#: ../plug-ins/common/file-raw-data.c:1426
+#: ../plug-ins/common/file-raw-data.c:1411
 msgid "B&W 1 bit"
 msgstr "B&N 1 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1427
+#: ../plug-ins/common/file-raw-data.c:1412
 msgid "Gray 2 bit"
 msgstr "Grigio 2 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1428
+#: ../plug-ins/common/file-raw-data.c:1413
 msgid "Gray 4 bit"
 msgstr "Grigio 4 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1429
+#: ../plug-ins/common/file-raw-data.c:1414
 msgid "Gray 8 bit"
 msgstr "Grigio 8 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1430
+#: ../plug-ins/common/file-raw-data.c:1415
 msgid "Indexed"
 msgstr "Indicizzata"
 
-#: ../plug-ins/common/file-raw-data.c:1431
+#: ../plug-ins/common/file-raw-data.c:1416
 msgid "Indexed Alpha"
 msgstr "Alfa indicizzata"
 
-#: ../plug-ins/common/file-raw-data.c:1436
+#: ../plug-ins/common/file-raw-data.c:1421
 msgid "Image _Type:"
 msgstr "_Tipo immagine:"
 
-#: ../plug-ins/common/file-raw-data.c:1492
+#: ../plug-ins/common/file-raw-data.c:1477
 msgid "Palette"
 msgstr "Tavolozza"
 
-#: ../plug-ins/common/file-raw-data.c:1502
-#: ../plug-ins/common/file-raw-data.c:1587
+#: ../plug-ins/common/file-raw-data.c:1487
+#: ../plug-ins/common/file-raw-data.c:1572
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normale)"
 
-#: ../plug-ins/common/file-raw-data.c:1503
-#: ../plug-ins/common/file-raw-data.c:1589
+#: ../plug-ins/common/file-raw-data.c:1488
+#: ../plug-ins/common/file-raw-data.c:1574
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (stile bmp)"
 
-#: ../plug-ins/common/file-raw-data.c:1508
+#: ../plug-ins/common/file-raw-data.c:1493
 msgid "_Palette Type:"
 msgstr "_Tipo tavolozza:"
 
-#: ../plug-ins/common/file-raw-data.c:1519
+#: ../plug-ins/common/file-raw-data.c:1504
 msgid "Off_set:"
 msgstr "_Spostamento:"
 
-#: ../plug-ins/common/file-raw-data.c:1531
+#: ../plug-ins/common/file-raw-data.c:1516
 msgid "Select Palette File"
 msgstr "Seleziona il file tavolozza"
 
-#: ../plug-ins/common/file-raw-data.c:1537
+#: ../plug-ins/common/file-raw-data.c:1522
 msgid "Pal_ette File:"
 msgstr "Fil_e tavolozza:"
 
-#: ../plug-ins/common/file-raw-data.c:1565
+#: ../plug-ins/common/file-raw-data.c:1550
 msgid "Raw Image"
 msgstr "Immagine raw"
 
-#: ../plug-ins/common/file-raw-data.c:1573
+#: ../plug-ins/common/file-raw-data.c:1558
 msgid "RGB Save Type"
 msgstr "Tipo salvataggio RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1577
-msgid "Standard (R,G,B)"
-msgstr "Standard (R, G, B)"
+#: ../plug-ins/common/file-raw-data.c:1562
+msgid "Standard (RGB RGB RGB ...)"
+msgstr "Standard (RGB RGB RGB ...)"
 
-#: ../plug-ins/common/file-raw-data.c:1578
-msgid "Planar (RRR,GGG,BBB)"
-msgstr "Planare (RRR,GGG,BBB)"
+#: ../plug-ins/common/file-raw-data.c:1563
+msgid "Planar (RRR... GGG... BBB...)"
+msgstr "Planare (RRR... GGG... BBB...)"
 
-#: ../plug-ins/common/file-raw-data.c:1583
+#: ../plug-ins/common/file-raw-data.c:1568
 msgid "Indexed Palette Type"
 msgstr "Tipo tavolozza indicizzata"
 
@@ -4905,8 +4860,7 @@ msgstr "_Bollenti..."
 msgid "Hot"
 msgstr "Bollenti"
 
-#. Propagate Mode
-#: ../plug-ins/common/hot.c:613 ../plug-ins/common/value-propagate.c:1121
+#: ../plug-ins/common/hot.c:613
 msgid "Mode"
 msgstr "Modalità"
 
@@ -5039,7 +4993,7 @@ msgstr "Informazioni sul profilo di colore dell'immagine"
 msgid "Color Profile Information"
 msgstr "Informazioni sul profilo di colore"
 
-#: ../plug-ins/common/lcms.c:562 ../plug-ins/common/lcms.c:1288
+#: ../plug-ins/common/lcms.c:562 ../plug-ins/common/lcms.c:1285
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Il profilo di colore \"%s\" non è adatto allo spazio colore RGB."
@@ -5058,74 +5012,74 @@ msgstr "Il profilo di colore \"%s\" non è adatto allo spazio colore RGB"
 msgid "Converting from '%s' to '%s'"
 msgstr "Conversione da \"%s\" a \"%s\""
 
-#: ../plug-ins/common/lcms.c:1125
+#: ../plug-ins/common/lcms.c:1122
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "L'immagine \"%s\" possiede un profilo di colore incorporato:"
 
-#: ../plug-ins/common/lcms.c:1169
+#: ../plug-ins/common/lcms.c:1166
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Convertire l'immagine allo spazio di lavoro RGB (%s)?"
 
-#: ../plug-ins/common/lcms.c:1200
+#: ../plug-ins/common/lcms.c:1197
 msgid "Convert to RGB working space?"
 msgstr "Conversione nello spazio di lavoro RGB?"
 
-#: ../plug-ins/common/lcms.c:1205
+#: ../plug-ins/common/lcms.c:1202
 msgid "_Keep"
 msgstr "_Mantieni"
 
-#: ../plug-ins/common/lcms.c:1210
+#: ../plug-ins/common/lcms.c:1207
 msgid "_Convert"
 msgstr "_Converti"
 
-#: ../plug-ins/common/lcms.c:1238
+#: ../plug-ins/common/lcms.c:1235
 msgid "_Don't ask me again"
 msgstr "_Non chiedermelo più"
 
-#: ../plug-ins/common/lcms.c:1268
+#: ../plug-ins/common/lcms.c:1265
 msgid "Select destination profile"
 msgstr "Seleziona profilo di destinazione"
 
-#: ../plug-ins/common/lcms.c:1305
+#: ../plug-ins/common/lcms.c:1302
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "Spazio di lavoro RGB (%s)"
 
-#: ../plug-ins/common/lcms.c:1352
+#: ../plug-ins/common/lcms.c:1349
 msgid "Convert to ICC Color Profile"
 msgstr "Converti il profilo di colore ICC"
 
-#: ../plug-ins/common/lcms.c:1353
+#: ../plug-ins/common/lcms.c:1350
 msgid "Assign ICC Color Profile"
 msgstr "Assegna il profilo di colore ICC"
 
-#: ../plug-ins/common/lcms.c:1361
+#: ../plug-ins/common/lcms.c:1358
 msgid "_Assign"
 msgstr "_Assegna"
 
-#: ../plug-ins/common/lcms.c:1379
+#: ../plug-ins/common/lcms.c:1376
 msgid "Current Color Profile"
 msgstr "Profilo di colore corrente"
 
-#: ../plug-ins/common/lcms.c:1392
+#: ../plug-ins/common/lcms.c:1389
 msgid "Convert to"
 msgstr "Converti a"
 
-#: ../plug-ins/common/lcms.c:1392
+#: ../plug-ins/common/lcms.c:1389
 msgid "Assign"
 msgstr "Assegna"
 
-#: ../plug-ins/common/lcms.c:1416
+#: ../plug-ins/common/lcms.c:1413
 msgid "_Rendering Intent:"
 msgstr "Scopo del _rendering:"
 
-#: ../plug-ins/common/lcms.c:1432
+#: ../plug-ins/common/lcms.c:1429
 msgid "_Black Point Compensation"
 msgstr "Compensazione del punto _nero"
 
-#: ../plug-ins/common/lcms.c:1486
+#: ../plug-ins/common/lcms.c:1483
 msgid "Destination profile is not for RGB color space."
 msgstr "Il profilo di destinazione non è adatto allo spazio colore RGB."
 
@@ -6470,108 +6424,6 @@ msgstr "Maschera di contrasto"
 msgid "_Threshold:"
 msgstr "_Soglia:"
 
-#: ../plug-ins/common/value-propagate.c:189
-msgid "More _white (larger value)"
-msgstr "Più bianco (valori più grandi)"
-
-#: ../plug-ins/common/value-propagate.c:192
-msgid "More blac_k (smaller value)"
-msgstr "Più nero (valori più piccoli)"
-
-#: ../plug-ins/common/value-propagate.c:195
-msgid "_Middle value to peaks"
-msgstr "Dal valore _medio al picco"
-
-#: ../plug-ins/common/value-propagate.c:198
-msgid "_Foreground to peaks"
-msgstr "Dal _primo piano ai picchi"
-
-#: ../plug-ins/common/value-propagate.c:201
-msgid "O_nly foreground"
-msgstr "Solo _primo piano"
-
-#: ../plug-ins/common/value-propagate.c:204
-msgid "Only b_ackground"
-msgstr "Solo _sfondo"
-
-#: ../plug-ins/common/value-propagate.c:207
-msgid "Mor_e opaque"
-msgstr "Più _opaco"
-
-#: ../plug-ins/common/value-propagate.c:210
-msgid "More t_ransparent"
-msgstr "Più _trasparente"
-
-#: ../plug-ins/common/value-propagate.c:233
-msgid "Propagate certain colors to neighboring pixels"
-msgstr "Propaga certi colori ai pixel circostanti"
-
-#: ../plug-ins/common/value-propagate.c:238
-msgid "_Value Propagate..."
-msgstr "Propagazione _valore..."
-
-#: ../plug-ins/common/value-propagate.c:245
-msgid "Shrink lighter areas of the image"
-msgstr "Restringi le aree chiare dell'immagine"
-
-#: ../plug-ins/common/value-propagate.c:250
-msgid "E_rode"
-msgstr "E_rodi"
-
-#: ../plug-ins/common/value-propagate.c:257
-msgid "Grow lighter areas of the image"
-msgstr "Allarga le aree chiare dell'immagine"
-
-#: ../plug-ins/common/value-propagate.c:262
-msgid "_Dilate"
-msgstr "_Dilata"
-
-#: ../plug-ins/common/value-propagate.c:476
-#: ../plug-ins/common/value-propagate.c:1086
-msgid "Value Propagate"
-msgstr "Propagazione valore"
-
-#. Parameter settings
-#: ../plug-ins/common/value-propagate.c:1153
-msgid "Propagate"
-msgstr "Propagazione"
-
-#: ../plug-ins/common/value-propagate.c:1166
-msgid "Lower t_hreshold:"
-msgstr "Soglia _inferiore:"
-
-#: ../plug-ins/common/value-propagate.c:1178
-msgid "_Upper threshold:"
-msgstr "Soglia s_uperiore:"
-
-#: ../plug-ins/common/value-propagate.c:1190
-msgid "_Propagating rate:"
-msgstr "Velocità di _propagazione:"
-
-#: ../plug-ins/common/value-propagate.c:1201
-msgid "To l_eft"
-msgstr "A _sinistra"
-
-#: ../plug-ins/common/value-propagate.c:1204
-msgid "To _right"
-msgstr "A _destra"
-
-#: ../plug-ins/common/value-propagate.c:1207
-msgid "To _top"
-msgstr "In al_to"
-
-#: ../plug-ins/common/value-propagate.c:1210
-msgid "To _bottom"
-msgstr "In _basso"
-
-#: ../plug-ins/common/value-propagate.c:1219
-msgid "Propagating _alpha channel"
-msgstr "Propagazione canale _alfa"
-
-#: ../plug-ins/common/value-propagate.c:1230
-msgid "Propagating value channel"
-msgstr "Propagazione canale valore"
-
 #: ../plug-ins/common/van-gogh-lic.c:569 ../plug-ins/common/van-gogh-lic.c:644
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
@@ -7078,10 +6930,6 @@ msgstr "32 bits"
 #: ../plug-ins/file-bmp/bmp.c:123 ../plug-ins/file-bmp/bmp.c:142
 msgid "Windows BMP image"
 msgstr "Immagine BMP Windows"
-
-#: ../plug-ins/file-exr/file-exr.c:83
-msgid "OpenEXR image"
-msgstr "Immagine OpenEXR"
 
 #: ../plug-ins/file-exr/file-exr.c:181
 #, c-format

@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-28 14:52+0100\n"
-"PO-Revision-Date: 2015-01-28 14:53+0100\n"
+"POT-Creation-Date: 2015-03-09 00:43+0100\n"
+"PO-Revision-Date: 2015-03-09 00:50+0100\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -1210,9 +1210,34 @@ msgstr "Fallita l'analisi dei dati Exif."
 msgid "Parsing XMP data failed."
 msgstr "Fallita l'analisi dei dati XMP."
 
-#: ../libgimpbase/gimputils.c:178 ../libgimpbase/gimputils.c:183
+#: ../libgimpbase/gimputils.c:192 ../libgimpbase/gimputils.c:197
 msgid "(invalid UTF-8 string)"
 msgstr "(stringa UTF-8 non valida)"
+
+#: ../libgimpbase/gimputils.c:367
+msgid "File path is NULL"
+msgstr "Il percorso file è NULL"
+
+#: ../libgimpbase/gimputils.c:376 ../libgimpbase/gimputils.c:387
+msgid "Error converting UTF-8 filename to wide char"
+msgstr "Errore durante la conversione di un nome file UTF-8 in wide char"
+
+#: ../libgimpbase/gimputils.c:395
+msgid "ILCreateFromPath() failed"
+msgstr "ILCreateFromPath() è fallita"
+
+#: ../libgimpbase/gimputils.c:432
+#, c-format
+msgid "Cannot convert '%s' into a valid NSURL."
+msgstr "Impossibile convertire \"%s\" in un valido NSURL."
+
+#: ../libgimpbase/gimputils.c:460
+msgid "Connecting to org.freedesktop.FileManager1 failed: "
+msgstr "Connessione a org.freedesktop.FileManager1 fallita: "
+
+#: ../libgimpbase/gimputils.c:484
+msgid "Calling ShowItems failed: "
+msgstr "Chiamata a ShowItems fallita: "
 
 #: ../libgimpcolor/gimplcms.c:132
 #, c-format
@@ -1697,7 +1722,7 @@ msgstr "Spaziatura r_ighe"
 msgid "Re_size"
 msgstr "Ridimen_siona"
 
-#: ../libgimpwidgets/gimpstock.c:141 ../libgimpwidgets/gimpstock.c:273
+#: ../libgimpwidgets/gimpstock.c:141 ../libgimpwidgets/gimpstock.c:275
 msgid "_Scale"
 msgstr "_Scala"
 
@@ -1709,15 +1734,16 @@ msgstr "Rita_glia"
 msgid "_Select"
 msgstr "_Seleziona"
 
-#: ../libgimpwidgets/gimpstock.c:268 ../libgimpwidgets/gimpstock.c:279
+#: ../libgimpwidgets/gimpstock.c:259 ../libgimpwidgets/gimpstock.c:270
+#: ../libgimpwidgets/gimpstock.c:281
 msgid "_Transform"
 msgstr "_Trasforma"
 
-#: ../libgimpwidgets/gimpstock.c:272
+#: ../libgimpwidgets/gimpstock.c:274
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: ../libgimpwidgets/gimpstock.c:275
+#: ../libgimpwidgets/gimpstock.c:277
 msgid "_Shear"
 msgstr "_Inclina"
 
