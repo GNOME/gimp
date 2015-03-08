@@ -75,6 +75,7 @@ struct _GimpGuiConfig
 
   /* experimental playground */
   gboolean             playground_npd_tool;
+  gboolean             playground_handle_transform_tool;
 
   /* saved in sessionrc */
   gboolean             hide_docks;

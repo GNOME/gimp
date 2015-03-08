@@ -81,6 +81,7 @@ enum
   PROP_CURSOR_HANDEDNESS,
 
   PROP_PLAYGROUND_NPD_TOOL,
+  PROP_PLAYGROUND_HANDLE_TRANSFORM_TOOL,
 
   PROP_HIDE_DOCKS,
   PROP_SINGLE_WINDOW_MODE,
@@ -277,6 +278,13 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PLAYGROUND_NPD_TOOL,
                                     "playground-npd-tool",
                                     PLAYGROUND_NPD_TOOL_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS |
+                                    GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class,
+                                    PROP_PLAYGROUND_HANDLE_TRANSFORM_TOOL,
+                                    "playground-handle-transform-tool",
+                                    PLAYGROUND_HANDLE_TRANSFORM_TOOL_BLURB,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS |
                                     GIMP_CONFIG_PARAM_RESTART);
@@ -488,6 +496,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_PLAYGROUND_NPD_TOOL:
       gui_config->playground_npd_tool = g_value_get_boolean (value);
       break;
+    case PROP_PLAYGROUND_HANDLE_TRANSFORM_TOOL:
+      gui_config->playground_handle_transform_tool = g_value_get_boolean (value);
+      break;
 
     case PROP_HIDE_DOCKS:
       gui_config->hide_docks = g_value_get_boolean (value);
@@ -625,6 +636,9 @@ gimp_gui_config_get_property (GObject    *object,
 
     case PROP_PLAYGROUND_NPD_TOOL:
       g_value_set_boolean (value, gui_config->playground_npd_tool);
+      break;
+    case PROP_PLAYGROUND_HANDLE_TRANSFORM_TOOL:
+      g_value_set_boolean (value, gui_config->playground_handle_transform_tool);
       break;
 
     case PROP_HIDE_DOCKS:
