@@ -738,7 +738,7 @@ gimp_session_info_read_geometry (GimpSessionInfo   *info,
                                  GdkEventConfigure *cevent)
 {
   GdkWindow *window;
-  GdkScreen *screen  = gtk_widget_get_screen (info->p->widget);
+  GdkScreen *screen;
 
   g_return_if_fail (GIMP_IS_SESSION_INFO (info));
   g_return_if_fail (GTK_IS_WINDOW (info->p->widget));
