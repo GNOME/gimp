@@ -66,6 +66,13 @@ option "--disable-gtk-doc" to autogen.sh.  This will completely
 disable the support for gtk-doc so you will not be able to generate
 the API documentation.
 
+If you want to use libraries from a non-standard prefix, you should set
+PKG_CONFIG_PATH appropriately. Some libraries do not use pkgconfig, see
+the output of ./configure --help for information on what environment
+variables to set to point the compiler and linker to the correct path.
+Note that you need to do this even if you are installing Gimp itself
+into the same prefix as the library.
+
 
 Git
 ---

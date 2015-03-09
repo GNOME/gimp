@@ -52,7 +52,10 @@
       <separator />
       <placeholder name="Send" />
       <separator />
-      <placeholder name="Info" />
+      <placeholder name="Info">
+	<menuitem action="file-copy-location" />
+	<menuitem action="file-show-in-file-manager" />
+      </placeholder>
       <separator />
       <menuitem action="view-close" />
       <menuitem action="file-close-all" />
@@ -599,9 +602,15 @@
         <menuitem action="tools-shear" />
         <menuitem action="tools-perspective" />
         <menuitem action="tools-unified-transform" />
+	<!-- Enable when the tool leaves the playground
+             <menuitem action="tools-handle-transform" />
+	-->
         <menuitem action="tools-flip" />
         <menuitem action="tools-cage" />
         <menuitem action="tools-warp" />
+	<!-- Enable when the tool leaves the playground
+             <menuitem action="tools-n-point-deformation" />
+	-->
       </menu>
       <menu action="tools-color-menu" name="Color Tools">
         <menuitem action="tools-color-balance" />
@@ -690,12 +699,15 @@
       </menu>
       <menu action="plug-in-edge-detect-menu" name="Edge-Detect">
         <menuitem action="filters-difference-of-gaussians" />
+        <menuitem action="filters-edge" />
         <menuitem action="filters-edge-laplace" />
         <menuitem action="filters-edge-sobel" />
       </menu>
       <menu action="plug-in-generic-menu" name="Generic">
         <menuitem action="filters-convolution-matrix" />
         <menuitem action="filters-distance-map" />
+        <menuitem action="drawable-dilate" />
+        <menuitem action="drawable-erode" />
       </menu>
       <menu action="plug-in-combine-menu" name="Combine" />
       <menu action="plug-in-artistic-menu" name="Artistic">

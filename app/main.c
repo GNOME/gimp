@@ -353,6 +353,7 @@ main (int    argc,
 
   basename = g_path_get_basename (argv[0]);
   g_set_prgname (basename);
+  g_setenv ("GIMP_PROG_BASENAME", basename, TRUE);
   g_free (basename);
 
   /* Check argv[] for "--verbose" first */

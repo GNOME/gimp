@@ -22,6 +22,10 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
+#include <glib/gstdio.h>
+
+#include "libgimpconfig/gimpconfig.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "gimpwidgetstypes.h"
 
@@ -56,6 +60,11 @@ struct _GimpDialogPrivate
   GimpHelpFunc  help_func;
   gchar        *help_id;
   GtkWidget    *help_button;
+  gchar        *allocation_rc;
+  gint          dialog_width;
+  gint          dialog_height;
+  gint          dialog_x;
+  gint          dialog_y;
 };
 
 #define GET_PRIVATE(dialog) G_TYPE_INSTANCE_GET_PRIVATE (dialog, \
@@ -63,28 +72,36 @@ struct _GimpDialogPrivate
                                                          GimpDialogPrivate)
 
 
-static void       gimp_dialog_constructed  (GObject      *object);
-static void       gimp_dialog_dispose      (GObject      *object);
-static void       gimp_dialog_finalize     (GObject      *object);
-static void       gimp_dialog_set_property (GObject      *object,
-                                            guint         property_id,
-                                            const GValue *value,
-                                            GParamSpec   *pspec);
-static void       gimp_dialog_get_property (GObject      *object,
-                                            guint         property_id,
-                                            GValue       *value,
-                                            GParamSpec   *pspec);
+static void       gimp_dialog_constructed      (GObject      *object);
+static void       gimp_dialog_dispose          (GObject      *object);
+static void       gimp_dialog_finalize         (GObject      *object);
+static void       gimp_dialog_set_property     (GObject      *object,
+                                                guint         property_id,
+                                                const GValue *value,
+                                                GParamSpec   *pspec);
+static void       gimp_dialog_get_property     (GObject      *object,
+                                                guint         property_id,
+                                                GValue       *value,
+                                                GParamSpec   *pspec);
 
-static void       gimp_dialog_hide         (GtkWidget    *widget);
-static gboolean   gimp_dialog_delete_event (GtkWidget    *widget,
-                                            GdkEventAny  *event);
+static void       gimp_dialog_hide             (GtkWidget    *widget);
+static gboolean   gimp_dialog_delete_event     (GtkWidget    *widget,
+                                                GdkEventAny  *event);
 
-static void       gimp_dialog_close        (GtkDialog    *dialog);
+static void       gimp_dialog_close            (GtkDialog    *dialog);
 
-static void       gimp_dialog_help         (GObject      *dialog);
-static void       gimp_dialog_response     (GtkDialog    *dialog,
-                                            gint          response_id);
+static void       gimp_dialog_help             (GObject      *dialog);
+static void       gimp_dialog_response         (GtkDialog    *dialog,
+                                                gint          response_id);
+                                            
+static void       gimp_dialog_read_context     (GtkWidget    *dialog,
+                                                gchar        *name,
+                                                GtkAllocation *allocation);
+static void       gimp_dialog_save_context     (GtkDialog    *dialog,
+                                                GtkAllocation allocation);
 
+void              gimp_dialog_unmap_callback   (GtkDialog    *dialog);
+void              gimp_dialog_map_callback     (GtkDialog    *dialog);
 
 G_DEFINE_TYPE (GimpDialog, gimp_dialog, GTK_TYPE_DIALOG)
 
@@ -445,7 +462,9 @@ gimp_dialog_new_valist (const gchar    *title,
                         const gchar    *help_id,
                         va_list         args)
 {
-  GtkWidget *dialog;
+  GtkWidget   *dialog;
+  const gchar *prog_name;
+  const gchar *gimp_basename;
 
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
@@ -460,12 +479,36 @@ gimp_dialog_new_valist (const gchar    *title,
                          "parent",    parent,
                          NULL);
 
+  prog_name = g_get_prgname ();
+  gimp_basename = g_getenv ("GIMP_PROG_BASENAME");
+
   if (parent)
     {
       if (flags & GTK_DIALOG_DESTROY_WITH_PARENT)
         g_signal_connect_object (parent, "destroy",
                                  G_CALLBACK (gimp_dialog_close),
                                  dialog, G_CONNECT_SWAPPED);
+    }
+  else
+    {
+      if (dialog && strcmp (prog_name, gimp_basename))
+        {
+          GimpDialogPrivate *private = GET_PRIVATE (dialog);
+          GtkAllocation      allocation;
+
+          g_printerr ("allocating: %s\n", role);
+
+          private->allocation_rc = g_strdup (role);
+          gimp_dialog_read_context(dialog, private->allocation_rc, &allocation);
+
+          private->dialog_x = allocation.x;
+          private->dialog_y = allocation.y;
+          private->dialog_width = allocation.width;
+          private->dialog_height = allocation.height;
+
+          g_signal_connect(GTK_WIDGET(dialog), "unmap", G_CALLBACK(gimp_dialog_unmap_callback), NULL);
+          g_signal_connect (GTK_WIDGET(dialog), "map-event", G_CALLBACK (gimp_dialog_map_callback), NULL);
+        }
     }
 
   gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
@@ -684,4 +727,245 @@ void
 gimp_dialogs_show_help_button (gboolean  show)
 {
   show_help_button = show ? TRUE : FALSE;
+}
+
+enum
+{
+  POS_X,
+  POS_Y,
+  WIDTH,
+  HEIGHT
+};
+
+static void
+gimp_dialog_read_context(GtkWidget *dialog, gchar *name, GtkAllocation *allocation)
+{
+  GimpDialogPrivate *private = GET_PRIVATE (dialog);
+  gchar             *options_path;
+  GFile             *options_dir;
+  GFile             *options_file;
+  GScanner          *scanner;
+  GTokenType         token;
+  GError            *error = NULL;
+  gint               x=0, y=0, width=0, height=0;
+
+  allocation->height = height;
+  allocation->width = width;
+  allocation->x = x;
+  allocation->y = y;
+
+  g_return_if_fail (private->allocation_rc != NULL);
+
+  options_path = g_build_filename (g_strdup (gimp_directory ()),
+                                   "plugin-options",
+                                   NULL);
+
+  options_dir = g_file_new_for_path (options_path);
+  options_file = g_file_get_child(options_dir, g_strconcat (private->allocation_rc, ".rc", NULL));
+
+  scanner = gimp_scanner_new_gfile (options_file, &error);
+
+  if (! scanner)
+    {
+      g_clear_error (&error);
+      g_free (options_path);
+      g_object_unref (options_dir);
+      g_object_unref (options_file);
+      return;
+    }
+
+  g_scanner_scope_add_symbol (scanner, 0, "pos-x",
+                              GINT_TO_POINTER (POS_X));
+  g_scanner_scope_add_symbol (scanner, 0,  "pos-y",
+                              GINT_TO_POINTER (POS_Y));
+  g_scanner_scope_add_symbol (scanner, 0,  "width",
+                              GINT_TO_POINTER (WIDTH));
+  g_scanner_scope_add_symbol (scanner, 0,  "height",
+                              GINT_TO_POINTER (HEIGHT));
+
+  token = G_TOKEN_LEFT_PAREN;
+
+  while (g_scanner_peek_next_token (scanner) == token)
+    {
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          token = G_TOKEN_SYMBOL;
+          break;
+
+        case G_TOKEN_SYMBOL:
+          if (scanner->value.v_symbol == GINT_TO_POINTER (POS_X))
+            {
+              token = G_TOKEN_IDENTIFIER;
+
+              if (! gimp_scanner_parse_int (scanner, &x))
+                break;
+            }
+          else if (scanner->value.v_symbol == GINT_TO_POINTER (POS_Y))
+            {
+              token = G_TOKEN_IDENTIFIER;
+
+              if (! gimp_scanner_parse_int (scanner, &y))
+                break;
+            }
+          else if (scanner->value.v_symbol == GINT_TO_POINTER (WIDTH))
+            {
+              token = G_TOKEN_IDENTIFIER;
+
+              if (! gimp_scanner_parse_int (scanner, &width))
+                break;
+            }
+          else if (scanner->value.v_symbol == GINT_TO_POINTER (HEIGHT))
+            {
+              token = G_TOKEN_IDENTIFIER;
+
+              if (! gimp_scanner_parse_int (scanner, &height))
+                break;
+            }
+          token = G_TOKEN_RIGHT_PAREN;
+
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          token = G_TOKEN_LEFT_PAREN;
+          break;
+
+        default: /* do nothing */
+          break;
+        }
+    }
+
+  if (token != G_TOKEN_LEFT_PAREN)
+    {
+      g_scanner_get_next_token (scanner);
+      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL, "fatal parse error", TRUE);
+    }
+
+  if (error)
+    {
+      g_print("error: %s\n", error->message);
+      g_clear_error (&error);
+    }
+
+  allocation->height = height;
+  allocation->width = width;
+  allocation->x = x;
+  allocation->y = y;
+
+  gimp_scanner_destroy (scanner);
+
+  g_free (options_path);
+  g_object_unref (options_dir);
+  g_object_unref (options_file);
+}
+
+static void
+gimp_dialog_save_context(GtkDialog *dialog, GtkAllocation allocation)
+{
+  GimpDialogPrivate *private = GET_PRIVATE (dialog);
+  gchar             *options_path;
+  GFile             *options_dir;
+  GFile             *options_file;
+  GimpConfigWriter  *writer;
+  GError            *error = NULL;
+
+  g_return_if_fail (private->allocation_rc != NULL);
+
+  options_path = g_build_filename (g_strdup (gimp_directory ()),
+                                   "plugin-options",
+                                   NULL);
+
+  options_dir = g_file_new_for_path (options_path);
+
+  if (! g_file_query_exists (options_dir, NULL))
+    {
+      g_file_make_directory (options_dir, NULL, &error);
+    }
+
+  if (error)
+    {
+      g_clear_error (&error);
+      g_free (options_path);
+      g_object_unref (options_dir);
+      return;
+    }
+
+  g_clear_error (&error);
+
+  options_file = g_file_get_child(options_dir, g_strconcat (private->allocation_rc, ".rc", NULL));
+
+  writer =
+    gimp_config_writer_new_gfile (options_file,
+                                  TRUE,
+                                  "start of file\n",
+                                  NULL);
+  g_object_unref (options_dir);
+  g_object_unref (options_file);
+  g_free (options_path);
+
+  if (!writer)
+    {
+      return;
+    }
+
+  gimp_config_writer_open (writer, "pos-x");
+  gimp_config_writer_printf (writer, "%d", allocation.x);
+  gimp_config_writer_close (writer);
+  gimp_config_writer_open (writer, "pos-y");
+  gimp_config_writer_printf (writer, "%d", allocation.y);
+  gimp_config_writer_close (writer);
+  gimp_config_writer_open (writer, "width");
+  gimp_config_writer_printf (writer, "%d", allocation.width);
+  gimp_config_writer_close (writer);
+  gimp_config_writer_open (writer, "height");
+  gimp_config_writer_printf (writer, "%d", allocation.height);
+  gimp_config_writer_close (writer);
+
+  if (! gimp_config_writer_finish (writer, "end of file", &error))
+    {
+      g_clear_error (&error);
+    }
+}
+
+void
+gimp_dialog_unmap_callback (GtkDialog *dialog)
+{
+  GtkAllocation  allocation;
+  GdkRectangle   rect;
+  gint           dx, dy, dw, dh, dd;
+  gint           monitor;
+  GdkWindow     *window = gtk_widget_get_window (GTK_WIDGET(dialog));
+  GdkScreen     *screen = gtk_widget_get_screen (GTK_WIDGET(dialog));
+
+  gdk_window_get_frame_extents (window, &rect);
+  gdk_window_get_geometry (window, &dx, &dy, &dw, &dh, &dd);
+
+  if (window)
+    monitor = gdk_screen_get_monitor_at_window (screen, window);
+
+  allocation.x=rect.x;
+  allocation.y=rect.y;
+  allocation.width=dw;
+  allocation.height=dh;
+
+  gimp_dialog_save_context(dialog, allocation);
+}
+
+void
+gimp_dialog_map_callback (GtkDialog *dialog)
+{
+  GimpDialogPrivate *private = GET_PRIVATE (dialog);
+  GdkWindow         *window = gtk_widget_get_window (GTK_WIDGET(dialog));
+
+  if(private->dialog_width > 0 && private->dialog_height > 0)
+    {
+      gdk_window_move_resize (window,
+                              private->dialog_x,
+                              private->dialog_y,
+                              private->dialog_width,
+                              private->dialog_height);
+
+    }
 }

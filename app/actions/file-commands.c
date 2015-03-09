@@ -44,6 +44,7 @@
 #include "file/gimp-file.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpclipboard.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
@@ -467,6 +468,59 @@ file_close_all_cmd_callback (GtkAction *action,
                                         gtk_widget_get_screen (widget),
                                         gimp_widget_get_monitor (widget),
                                         "gimp-close-all-dialog", -1);
+    }
+}
+
+void
+file_copy_location_cmd_callback (GtkAction *action,
+                                 gpointer   data)
+{
+  Gimp         *gimp;
+  GimpDisplay  *display;
+  GimpImage    *image;
+  GFile        *file;
+  return_if_no_gimp (gimp, data);
+  return_if_no_display (display, data);
+
+  image = gimp_display_get_image (display);
+
+  file = gimp_image_get_any_file (image);
+
+  if (file)
+    {
+      gchar *uri = g_file_get_uri (file);
+
+      gimp_clipboard_set_text (gimp, uri);
+      g_free (uri);
+    }
+}
+
+void
+file_show_in_file_manager_cmd_callback (GtkAction *action,
+                                        gpointer   data)
+{
+  Gimp         *gimp;
+  GimpDisplay  *display;
+  GimpImage    *image;
+  GFile        *file;
+  return_if_no_gimp (gimp, data);
+  return_if_no_display (display, data);
+
+  image = gimp_display_get_image (display);
+
+  file = gimp_image_get_any_file (image);
+
+  if (file)
+    {
+      GError *error = NULL;
+
+      if (! gimp_file_show_in_file_manager (file, &error))
+        {
+          gimp_message (gimp, G_OBJECT (display), GIMP_MESSAGE_ERROR,
+                        _("Can't show file in file manager: %s"),
+                        error->message);
+          g_clear_error (&error);
+        }
     }
 }
 

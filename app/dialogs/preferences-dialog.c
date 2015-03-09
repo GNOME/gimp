@@ -1456,8 +1456,6 @@ prefs_dialog_new (Gimp       *gimp,
   /****************/
   if (gimp->show_playground)
     {
-      GtkWidget *label;
-
       pixbuf = prefs_get_pixbufs (dialog, "playground", &small_pixbuf);
       vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
                                       _("Experimental Playground"),
@@ -1471,9 +1469,12 @@ prefs_dialog_new (Gimp       *gimp,
       vbox2 = prefs_frame_new (_("Insane Options"),
                                GTK_CONTAINER (vbox), TRUE);
 
-      label = gtk_label_new ("Fuck Yeah!");
-      gtk_box_pack_start (GTK_BOX (vbox2), label, TRUE, TRUE, 0);
-      gtk_widget_show (label);
+      button = prefs_check_button_add (object, "playground-npd-tool",
+                                       _("_N-Point Deformation tool"),
+                                       GTK_BOX (vbox2));
+      button = prefs_check_button_add (object, "playground-handle-transform-tool",
+                                       _("_Handle Transform tool"),
+                                       GTK_BOX (vbox2));
     }
 
 

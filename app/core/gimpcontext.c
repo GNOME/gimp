@@ -301,6 +301,7 @@ enum
   BUFFER_CHANGED,
   IMAGEFILE_CHANGED,
   TEMPLATE_CHANGED,
+  PROP_NAME_CHANGED,
   LAST_SIGNAL
 };
 
@@ -553,6 +554,16 @@ gimp_context_class_init (GimpContextClass *klass)
                   G_TYPE_NONE, 1,
                   GIMP_TYPE_TEMPLATE);
 
+  gimp_context_signals[PROP_NAME_CHANGED] =
+    g_signal_new ("prop-name-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpContextClass, prop_name_changed),
+                  NULL, NULL,
+                  gimp_marshal_VOID__INT,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_INT);
+
   object_class->constructed      = gimp_context_constructed;
   object_class->set_property     = gimp_context_set_property;
   object_class->get_property     = gimp_context_get_property;
@@ -579,6 +590,7 @@ gimp_context_class_init (GimpContextClass *klass)
   klass->buffer_changed          = NULL;
   klass->imagefile_changed       = NULL;
   klass->template_changed        = NULL;
+  klass->prop_name_changed       = NULL;
 
   gimp_context_prop_types[GIMP_CONTEXT_PROP_IMAGE]       = GIMP_TYPE_IMAGE;
   gimp_context_prop_types[GIMP_CONTEXT_PROP_TOOL]        = GIMP_TYPE_TOOL_INFO;
@@ -2013,6 +2025,9 @@ gimp_context_tool_dirty (GimpToolInfo *tool_info,
 {
   g_free (context->tool_name);
   context->tool_name = g_strdup (gimp_object_get_name (tool_info));
+
+  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
+                 GIMP_CONTEXT_PROP_TOOL);
 }
 
 /*  the global tool list is there again after refresh  */
@@ -2137,6 +2152,9 @@ gimp_context_paint_info_dirty (GimpPaintInfo *paint_info,
 {
   g_free (context->paint_name);
   context->paint_name = g_strdup (gimp_object_get_name (paint_info));
+
+  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
+                 GIMP_CONTEXT_PROP_PAINT_INFO);
 }
 
 /*  the global paint info list is there again after refresh  */
@@ -2548,6 +2566,9 @@ gimp_context_brush_dirty (GimpBrush   *brush,
 {
   g_free (context->brush_name);
   context->brush_name = g_strdup (gimp_object_get_name (brush));
+
+  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
+                 GIMP_CONTEXT_PROP_BRUSH);
 }
 
 /*  the global brush list is there again after refresh  */
@@ -2668,6 +2689,9 @@ gimp_context_dynamics_dirty (GimpDynamics *dynamics,
 {
   g_free (context->dynamics_name);
   context->dynamics_name = g_strdup (gimp_object_get_name (dynamics));
+
+  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
+                 GIMP_CONTEXT_PROP_DYNAMICS);
 }
 
 static void
@@ -2786,6 +2810,9 @@ gimp_context_pattern_dirty (GimpPattern *pattern,
 {
   g_free (context->pattern_name);
   context->pattern_name = g_strdup (gimp_object_get_name (pattern));
+
+  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
+                 GIMP_CONTEXT_PROP_PATTERN);
 }
 
 /*  the global pattern list is there again after refresh  */
@@ -2906,6 +2933,9 @@ gimp_context_gradient_dirty (GimpGradient *gradient,
 {
   g_free (context->gradient_name);
   context->gradient_name = g_strdup (gimp_object_get_name (gradient));
+
+  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
+                 GIMP_CONTEXT_PROP_GRADIENT);
 }
 
 /*  the global gradient list is there again after refresh  */
@@ -3026,6 +3056,9 @@ gimp_context_palette_dirty (GimpPalette *palette,
 {
   g_free (context->palette_name);
   context->palette_name = g_strdup (gimp_object_get_name (palette));
+
+  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
+                 GIMP_CONTEXT_PROP_PALETTE);
 }
 
 /*  the global palette list is there again after refresh  */
@@ -3146,6 +3179,9 @@ gimp_context_tool_preset_dirty (GimpToolPreset *tool_preset,
 {
   g_free (context->tool_preset_name);
   context->tool_preset_name = g_strdup (gimp_object_get_name (tool_preset));
+
+  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
+                 GIMP_CONTEXT_PROP_TOOL_PRESET);
 }
 
 static void
@@ -3292,6 +3328,9 @@ gimp_context_font_dirty (GimpFont    *font,
 {
   g_free (context->font_name);
   context->font_name = g_strdup (gimp_object_get_name (font));
+
+  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
+                 GIMP_CONTEXT_PROP_FONT);
 }
 
 /*  the global font list is there again after refresh  */
@@ -3412,6 +3451,9 @@ gimp_context_buffer_dirty (GimpBuffer  *buffer,
 {
   g_free (context->buffer_name);
   context->buffer_name = g_strdup (gimp_object_get_name (buffer));
+
+  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
+                 GIMP_CONTEXT_PROP_BUFFER);
 }
 
 /*  the global buffer list is there again after refresh  */
@@ -3535,6 +3577,9 @@ gimp_context_imagefile_dirty (GimpImagefile *imagefile,
 {
   g_free (context->imagefile_name);
   context->imagefile_name = g_strdup (gimp_object_get_name (imagefile));
+
+  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
+                 GIMP_CONTEXT_PROP_IMAGEFILE);
 }
 
 /*  the global imagefile list is there again after refresh  */
@@ -3658,6 +3703,9 @@ gimp_context_template_dirty (GimpTemplate *template,
 {
   g_free (context->template_name);
   context->template_name = g_strdup (gimp_object_get_name (template));
+
+  g_signal_emit (context, gimp_context_signals[PROP_NAME_CHANGED], 0,
+                 GIMP_CONTEXT_PROP_TEMPLATE);
 }
 
 /*  the global template list is there again after refresh  */

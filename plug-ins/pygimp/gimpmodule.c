@@ -39,6 +39,8 @@
 
 #include <gtk/gtk.h>
 
+#include <gegl.h>
+
 
 PyObject *pygimp_error;
 
@@ -1990,6 +1992,9 @@ initgimp(void)
 
     /* set the default python encoding to utf-8 */
     PyUnicode_SetDefaultEncoding("utf-8");
+
+    /* initialize gegl */
+    gegl_init(0, NULL);
 
     /* Create the module and add the functions */
     m = Py_InitModule4("gimp", gimp_methods,

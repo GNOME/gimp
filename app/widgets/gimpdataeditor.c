@@ -579,7 +579,8 @@ gimp_data_editor_name_activate (GtkWidget      *widget,
       new_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (widget)));
       new_name = g_strstrip (new_name);
 
-      if (strlen (new_name))
+      if (strlen (new_name) &&
+          g_strcmp0 (new_name, gimp_object_get_name (editor->data)))
         {
           gimp_object_take_name (GIMP_OBJECT (editor->data), new_name);
         }

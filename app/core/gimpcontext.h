@@ -143,6 +143,9 @@ struct _GimpContextClass
                                GimpImagefile        *imagefile);
   void (* template_changed)   (GimpContext          *context,
                                GimpTemplate         *template);
+
+  void (* prop_name_changed)  (GimpContext          *context,
+                               GimpContextPropType   prop);
 };
 
 

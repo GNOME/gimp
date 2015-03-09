@@ -942,6 +942,78 @@ CODE
     );
 }
 
+sub plug_in_edge {
+    $blurb = 'Several simple methods for detecting edges';
+
+    $help = <<'HELP';
+Perform edge detection on the contents of the specified drawable.
+AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in
+(useful for tilable image). EDGEMODE sets the kind of matrix transform
+applied to the pixels, SOBEL was the method used in older versions.
+HELP
+
+    &std_pdb_compat('gegl:edge');
+    $date = '2015';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image', dead => 1,
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'amount', type => '1.0 <= float <= 10.0',
+          desc => 'Edge detection amount' },
+        { name => 'warpmode', type => '1 <= int32 <= 3',
+          desc => 'Edge detection behavior { WRAP (1), SMEAR (2), BLACK (3) }' },
+        { name => 'edgemode', type => '0 <= int32 <= 5',
+          desc => 'Edge detection algorithm { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3), DIFFERENTIAL (4), LAPLACE (5) }' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode        *node;
+      GeglAbyssPolicy  border_behavior = GEGL_ABYSS_NONE;
+
+      switch (warpmode)
+        {
+	case 1:
+	  border_behavior = GEGL_ABYSS_LOOP;
+	  break;
+
+        case 2:
+	  border_behavior = GEGL_ABYSS_CLAMP;
+	  break;
+
+        case 3:
+	  border_behavior = GEGL_ABYSS_BLACK;
+	  break;
+	}
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",       "gegl:edge",
+                                  "algorihm",        edgemode,
+                                  "amount",          amount,
+                                  "border-behavior", border_behavior,
+                                  NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Edge"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_engrave {
     $blurb = 'Simulate an antique engraving';
 
@@ -3215,6 +3287,246 @@ CODE
     );
 }
 
+sub plug_in_vpropagate {
+    $blurb = 'Propagate certain colors to neighboring pixels',
+
+    $help = <<'HELP';
+Propagate values of the layer.
+HELP
+
+    &std_pdb_compat('gegl:value-propagate');
+    $date = '2015';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'propagate_mode', type => '0 <= int32 <= 7',
+	  desc => 'Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }' },
+	{ name => 'propagating_channel', type => 'int32',
+	  desc => 'Channels which values are propagated' },
+	{ name => 'propagating_rate', type => '0.0 <= float <= 1.0',
+	  desc => 'Propagating rate' },
+	{ name => 'direction_mask', type => '0 <= int32 <= 15',
+	  desc => 'Direction mask' },
+	{ name => 'lower_limit', type => '0 <= int32 <= 255',
+	  desc => 'Lower limit' },
+	{ name => 'upper_limit', type => '0 <= int32 <= 255',
+	  desc => 'Upper limit' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode  *node;
+      GimpRGB    color;
+      GeglColor *gegl_color = NULL;
+      gint       gegl_mode  = 0;
+      gboolean   to_left    = (direction_mask & (0x1 << 0)) != 0;
+      gboolean   to_top     = (direction_mask & (0x1 << 1)) != 0;
+      gboolean   to_right   = (direction_mask & (0x1 << 2)) != 0;
+      gboolean   to_bottom  = (direction_mask & (0x1 << 3)) != 0;
+      gboolean   value      = (propagating_channel & (0x1 << 0)) != 0;
+      gboolean   alpha      = (propagating_channel & (0x1 << 1)) != 0;
+
+      switch (propagate_mode)
+        {
+        case 0:
+        case 1:
+        case 2:
+          gegl_mode = propagate_mode;
+          break;
+
+        case 3:
+          gegl_mode = propagate_mode;
+          /* fall thru */
+
+        case 4:
+        case 5:
+          gegl_mode = 4;
+
+          if (propagate_mode != 3)
+            gimp_context_get_foreground (context, &color);
+          else
+            gimp_context_get_background (context, &color);
+
+          gegl_color = gimp_gegl_color_new (&color);
+          break;
+
+        case 6:
+        case 7:
+          gegl_mode = propagate_mode - 1;
+          break;
+        }
+
+      node =
+        gegl_node_new_child (NULL,
+                             "operation",        "gegl:value-propagate",
+                             "mode",             gegl_mode,
+                             "lower-threshold",  (gdouble) lower_limit / 255.0,
+                             "upper-threshold",  (gdouble) upper_limit / 255.0,
+                             "rate",             propagating_rate,
+                             "color",            gegl_color,
+                             "top",              to_top,
+                             "left",             to_left,
+                             "right",            to_right,
+                             "bottom",           to_bottom,
+                             "value",            value,
+                             "alpha",            alpha,
+                             NULL);
+
+      if (gegl_color)
+        g_object_unref (gegl_color);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Value Propagate"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_dilate {
+    $blurb = 'Grow lighter areas of the image',
+
+    $help = <<'HELP';
+Dilate image.
+HELP
+
+    &std_pdb_compat('gegl:value-propagate');
+    $date = '2015';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'propagate_mode', type => '0 <= int32 <= 7', dead => 1,
+	  desc => 'Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }' },
+	{ name => 'propagating_channel', type => 'int32', dead => 1,
+	  desc => 'Channels which values are propagated' },
+	{ name => 'propagating_rate', type => '0.0 <= float <= 1.0', dead => 1,
+	  desc => 'Propagating rate' },
+	{ name => 'direction_mask', type => '0 <= int32 <= 15', dead => 1,
+	  desc => 'Direction mask' },
+	{ name => 'lower_limit', type => '0 <= int32 <= 255', dead => 1,
+	  desc => 'Lower limit' },
+	{ name => 'upper_limit', type => '0 <= int32 <= 255', dead => 1,
+	  desc => 'Upper limit' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation",       "gegl:value-propagate",
+                             "mode",            0, /* GEGL_VALUE_PROPAGATE_MODE_WHITE */
+                             "lower-threshold", 0.0,
+                             "upper-threshold", 1.0,
+                             "rate",            1.0,
+                             "top",             TRUE,
+                             "left",            TRUE,
+                             "right",           TRUE,
+                             "bottom",          TRUE,
+                             "value",           TRUE,
+                             "alpha",           FALSE,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Dilate"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_erode {
+    $blurb = 'Shrink lighter areas of the image',
+
+    $help = <<'HELP';
+Erode image.
+HELP
+
+    &std_pdb_compat('gegl:value-propagate');
+    $date = '2015';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'propagate_mode', type => '0 <= int32 <= 7', dead => 1,
+	  desc => 'Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }' },
+	{ name => 'propagating_channel', type => 'int32', dead => 1,
+	  desc => 'Channels which values are propagated' },
+	{ name => 'propagating_rate', type => '0.0 <= float <= 1.0', dead => 1,
+	  desc => 'Propagating rate' },
+	{ name => 'direction_mask', type => '0 <= int32 <= 15', dead => 1,
+	  desc => 'Direction mask' },
+	{ name => 'lower_limit', type => '0 <= int32 <= 255', dead => 1,
+	  desc => 'Lower limit' },
+	{ name => 'upper_limit', type => '0 <= int32 <= 255', dead => 1,
+	  desc => 'Upper limit' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation",       "gegl:value-propagate",
+                             "mode",            1, /* GEGL_VALUE_PROPAGATE_MODE_BLACK */
+                             "lower-threshold", 0.0,
+                             "upper-threshold", 1.0,
+                             "rate",            1.0,
+                             "top",             TRUE,
+                             "left",            TRUE,
+                             "right",           TRUE,
+                             "bottom",          TRUE,
+                             "value",           TRUE,
+                             "alpha",           FALSE,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Erode"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_waves {
     $blurb = 'Distort the image with waves';
 
@@ -3521,6 +3833,7 @@ CODE
             plug_in_cubism
             plug_in_deinterlace
             plug_in_diffraction
+            plug_in_edge
             plug_in_engrave
             plug_in_exchange
             plug_in_flarefx
@@ -3559,6 +3872,9 @@ CODE
             plug_in_threshold_alpha
             plug_in_video
             plug_in_vinvert
+            plug_in_vpropagate
+            plug_in_dilate
+            plug_in_erode
             plug_in_waves
             plug_in_whirl_pinch);
 

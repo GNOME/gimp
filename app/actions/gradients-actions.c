@@ -62,6 +62,12 @@ static const GimpActionEntry gradients_actions[] =
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_GRADIENT_COPY_LOCATION },
 
+  { "gradients-show-in-file-manager", "gtk-directory",
+    NC_("gradients-action", "Show in _File Manager"), NULL,
+    NC_("gradients-action", "Show gradient file location in the file manager"),
+    G_CALLBACK (data_show_in_file_manager_cmd_callback),
+    GIMP_HELP_GRADIENT_SHOW_IN_FILE_MANAGER },
+
   { "gradients-save-as-pov", "document-save-as",
     NC_("gradients-action", "Save as _POV-Ray..."), NULL,
     NC_("gradients-action", "Save gradient as POV-Ray"),
@@ -133,11 +139,12 @@ gradients_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("gradients-edit",          gradient);
-  SET_SENSITIVE ("gradients-duplicate",     gradient);
-  SET_SENSITIVE ("gradients-save-as-pov",   gradient);
-  SET_SENSITIVE ("gradients-copy-location", gradient && file);
-  SET_SENSITIVE ("gradients-delete",        gradient && gimp_data_is_deletable (data));
+  SET_SENSITIVE ("gradients-edit",                 gradient);
+  SET_SENSITIVE ("gradients-duplicate",            gradient);
+  SET_SENSITIVE ("gradients-save-as-pov",          gradient);
+  SET_SENSITIVE ("gradients-copy-location",        file);
+  SET_SENSITIVE ("gradients-show-in-file-manager", file);
+  SET_SENSITIVE ("gradients-delete",               gradient && gimp_data_is_deletable (data));
 
 #undef SET_SENSITIVE
 }

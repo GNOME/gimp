@@ -43,7 +43,7 @@ m4_define([gimp_stable],
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
-m4_define([babl_required_version], [0.1.11])
+m4_define([babl_required_version], [0.1.12])
 m4_define([gegl_required_version], [0.3.0])
 m4_define([glib_required_version], [2.40.0])
 m4_define([atk_required_version], [2.2.0])
@@ -66,7 +66,7 @@ m4_define([poppler_required_version], [0.12.4])
 m4_define([poppler_data_required_version], [0.4.7])
 m4_define([libgudev_required_version], [167])
 m4_define([gexiv2_required_version], [0.10.3])
-m4_define([lcms_required_version], [2.2])
+m4_define([lcms_required_version], [2.6])
 m4_define([libpng_required_version], [1.2.37])
 m4_define([liblzma_required_version], [5.0.0])
 m4_define([openexr_required_version], [1.6.1])
@@ -2339,6 +2339,16 @@ data/images/Makefile
 data/interpreters/Makefile
 data/palettes/Makefile
 data/patterns/Makefile
+data/patterns/Animal/Makefile
+data/patterns/Fabric/Makefile
+data/patterns/Food/Makefile
+data/patterns/Legacy/Makefile
+data/patterns/Paper/Makefile
+data/patterns/Plant/Makefile
+data/patterns/Sky/Makefile
+data/patterns/Stone/Makefile
+data/patterns/Water/Makefile
+data/patterns/Wood/Makefile
 data/tags/Makefile
 data/tips/Makefile
 data/tool-presets/Makefile

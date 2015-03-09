@@ -30,6 +30,8 @@
 
 #include <glib-object.h>
 
+#include <gegl.h>
+
 static void
 ensure_drawable(PyGimpDrawable *self)
 {
@@ -987,6 +989,86 @@ drw_transform_matrix_default(PyGimpDrawable *self, PyObject *args, PyObject *kwa
     return transform_result(self, id, "apply 2d matrix transform to");
 }
 
+static PyObject *
+drw_get_data(PyGimpDrawable *self, PyObject *args, PyObject *kwargs)
+{
+    static char *kwlist[] = { "format", NULL };
+    gchar  *format = "RGBA float";
+    const Babl *bbl_format;
+    void *output_buffer;
+    GeglBuffer *buffer;
+    int bpp;
+    Py_ssize_t size;
+    PyObject *buffer_data, *ret;
+    PyObject *array_module;
+    PyObject *array_type;
+    char array_data_type;
+
+    if (!PyArg_ParseTupleAndKeywords (args, kwargs,
+                                      "|s:get_data",
+                                      kwlist, &format
+                                      ))
+        return NULL;
+
+    if (g_str_has_suffix (format, "double")) {
+        array_data_type = 'd';
+    } else if (g_str_has_suffix (format, "float")) {
+        array_data_type = 'f';
+    }
+     else if (g_str_has_suffix (format, "u16")) {
+        array_data_type = 'H';
+    } else if (g_str_has_suffix (format, "u8")) {
+        array_data_type = 'B';
+    } else {
+        PyErr_Warn (PyExc_Warning, 
+            "Could not find apropriate data format - returning raw bytes");
+        array_data_type = 'B';
+    }
+
+    bbl_format = babl_format (format);
+    bpp = babl_format_get_bytes_per_pixel (bbl_format);
+    ensure_drawable(self);
+    buffer = gimp_drawable_get_buffer (self->ID);
+    size = bpp * self->drawable->width * self->drawable->height;
+    output_buffer = g_malloc ((gsize) size);
+    if (output_buffer == NULL) {
+        return PyErr_NoMemory();
+    }
+    gegl_buffer_get (buffer,
+                     GEGL_RECTANGLE (0, 0, self->drawable->width, self->drawable->height),
+                     1.0,
+                     bbl_format,
+                     output_buffer,
+                     GEGL_AUTO_ROWSTRIDE,
+                     GEGL_ABYSS_NONE);
+    buffer_data = PyString_FromStringAndSize (output_buffer, size);
+
+    array_module = PyImport_ImportModule ("array");
+    if (!array_module) {
+        PyErr_SetString (pygimp_error, "could not import array module");
+        return NULL;
+    }
+
+    array_type = PyObject_GetAttrString (array_module, "array");
+    Py_DECREF(array_module);
+    if (!array_type) {
+        PyErr_SetString (pygimp_error, "could not get array.array type");
+        return NULL;
+     }
+
+    ret = PyObject_CallFunction (array_type, "cO", array_data_type, buffer_data);
+    if (!ret) {
+        PyErr_SetString (pygimp_error, "could not create array object");
+        return NULL;
+     }
+
+    Py_DECREF (buffer_data);
+    g_free (output_buffer);
+
+    return ret;
+}
+
+
 /* for inclusion with the methods of layer and channel objects */
 static PyMethodDef drw_methods[] = {
     {"flush",	(PyCFunction)drw_flush,	METH_NOARGS},
@@ -997,6 +1079,8 @@ static PyMethodDef drw_methods[] = {
     {"get_tile",	(PyCFunction)drw_get_tile,	METH_VARARGS | METH_KEYWORDS},
     {"get_tile2",	(PyCFunction)drw_get_tile2,	METH_VARARGS | METH_KEYWORDS},
     {"get_pixel_rgn", (PyCFunction)drw_get_pixel_rgn, METH_VARARGS | METH_KEYWORDS},
+    {"get_data", (PyCFunction)drw_get_data, METH_VARARGS | METH_KEYWORDS,
+     "Takes a BABL format string, returns a Python array.array object"},
     {"offset", (PyCFunction)drw_offset, METH_VARARGS | METH_KEYWORDS},
     {"parasite_find",       (PyCFunction)drw_parasite_find, METH_VARARGS},
     {"parasite_attach",     (PyCFunction)drw_parasite_attach, METH_VARARGS},
@@ -1904,14 +1988,20 @@ pygimp_layer_new(gint32 ID)
     PyGimpLayer *self;
 
     if (!gimp_item_is_valid(ID) || !gimp_item_is_layer(ID)) {
-	Py_INCREF(Py_None);
-	return Py_None;
+        Py_INCREF(Py_None);
+        return Py_None;
     }
 
-    self = PyObject_NEW(PyGimpLayer, &PyGimpLayer_Type);
+
+    if (gimp_item_is_group(ID)) {
+        self = PyObject_NEW(PyGimpGroupLayer, &PyGimpGroupLayer_Type);
+    }
+    else {
+        self = PyObject_NEW(PyGimpLayer, &PyGimpLayer_Type);
+    }
 
     if (self == NULL)
-	return NULL;
+        return NULL;
 
     self->ID = ID;
     self->drawable = NULL;

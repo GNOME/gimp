@@ -400,7 +400,7 @@ sanity_check_babl (void)
 
 #define BABL_REQUIRED_MAJOR 0
 #define BABL_REQUIRED_MINOR 1
-#define BABL_REQUIRED_MICRO 11
+#define BABL_REQUIRED_MICRO 12
 
   babl_get_version (&babl_major_version,
                     &babl_minor_version,
@@ -496,6 +496,7 @@ sanity_check_gegl_ops (void)
     "gegl:diffraction-patterns",
     "gegl:distance-transform",
     "gegl:dropshadow",
+    "gegl:edge",
     "gegl:edge-laplace",
     "gegl:edge-sobel",
     "gegl:emboss",
@@ -527,6 +528,7 @@ sanity_check_gegl_ops (void)
     "gegl:noise-slur",
     "gegl:noise-solid",
     "gegl:noise-spread",
+    "gegl:npd",
     "gegl:oilify",
     "gegl:opacity",
     "gegl:over",

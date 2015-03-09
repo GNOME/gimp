@@ -47,6 +47,18 @@ typedef enum
 } GimpButtonReleaseType;
 
 
+#define GIMP_TYPE_TRANSFORM_HANDLE_MODE (gimp_transform_handle_mode_get_type ())
+
+GType gimp_transform_handle_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_HANDLE_MODE_ADD_MOVE,   /*< desc="Add/Move"  >*/
+  GIMP_HANDLE_MODE_REMOVE,     /*< desc="Remove"    >*/
+  GIMP_HANDLE_MODE_TRANSFORM,  /*< desc="Transform" >*/
+} GimpTransformHandleMode;
+
+
 #define GIMP_TYPE_RECTANGLE_CONSTRAINT (gimp_rectangle_constraint_get_type ())
 
 GType gimp_rectangle_constraint_get_type (void) G_GNUC_CONST;

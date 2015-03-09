@@ -180,6 +180,7 @@ icons16_DATA = \
 	16/gimp-tool-foreground-select.png		\
 	16/gimp-tool-free-select.png			\
 	16/gimp-tool-fuzzy-select.png			\
+	16/gimp-tool-handle-transform.png		\
 	16/gimp-tool-heal.png				\
 	16/gimp-tool-hue-saturation.png			\
 	16/gimp-tool-ink.png				\
@@ -187,6 +188,7 @@ icons16_DATA = \
 	16/gimp-tool-levels.png				\
 	16/gimp-tool-measure.png			\
 	16/gimp-tool-move.png				\
+	16/gimp-tool-n-point-deformation.png		\
 	16/gimp-tool-options.png			\
 	16/gimp-tool-paintbrush.png			\
 	16/gimp-tool-path.png				\
@@ -289,6 +291,7 @@ icons22_DATA = \
 	22/gimp-tool-foreground-select.png	\
 	22/gimp-tool-free-select.png		\
 	22/gimp-tool-fuzzy-select.png		\
+	22/gimp-tool-handle-transform.png	\
 	22/gimp-tool-heal.png			\
 	22/gimp-tool-hue-saturation.png		\
 	22/gimp-tool-ink.png			\
@@ -296,6 +299,7 @@ icons22_DATA = \
 	22/gimp-tool-levels.png			\
 	22/gimp-tool-measure.png		\
 	22/gimp-tool-move.png			\
+	22/gimp-tool-n-point-deformation.png	\
 	22/gimp-tool-paintbrush.png		\
 	22/gimp-tool-path.png			\
 	22/gimp-tool-pencil.png			\

@@ -52,8 +52,6 @@
 /destripe.exe
 /displace
 /displace.exe
-/edge
-/edge.exe
 /edge-dog
 /edge-dog.exe
 /edge-neon
@@ -198,8 +196,6 @@
 /unit-editor.exe
 /unsharp-mask
 /unsharp-mask.exe
-/value-propagate
-/value-propagate.exe
 /van-gogh-lic
 /van-gogh-lic.exe
 /warp

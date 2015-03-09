@@ -146,7 +146,7 @@ TW_UINT16 twainCallback(pTW_IDENTITY pOrigin,
   return TWRC_SUCCESS;
 }
 
-void twainQuitApplication ()
+void twainQuitApplication (void)
 {
   QuitApplicationEventLoop();
 }
@@ -192,6 +192,7 @@ static void twainSetupMacUI()
 
   /* Voodoo magic fix inspired by java_swt launcher */
   /* Without this the icon setting doesn't work about half the time. */
+
   CGrafPtr p = BeginQDContextForApplicationDockTile();
   EndQDContextForApplicationDockTile(p);
 
@@ -199,7 +200,7 @@ static void twainSetupMacUI()
 }
 
 int
-twainMain()
+twainMain(void)
 {
   EventLoopTimerRef timer;
   OSStatus err;

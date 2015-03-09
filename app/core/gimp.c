@@ -1101,6 +1101,17 @@ gimp_restore (Gimp               *gimp,
                                 gimp_data_factory_get_container (gimp->tool_preset_factory));
 
   g_signal_emit (gimp, gimp_signals[RESTORE], 0, status_callback);
+
+  /* when done, make sure everything is clean, to clean out dirty
+   * states from data object which reference each other and got
+   * dirtied by loading the referenced object
+   */
+  gimp_data_factory_data_clean (gimp->brush_factory);
+  gimp_data_factory_data_clean (gimp->dynamics_factory);
+  gimp_data_factory_data_clean (gimp->pattern_factory);
+  gimp_data_factory_data_clean (gimp->palette_factory);
+  gimp_data_factory_data_clean (gimp->gradient_factory);
+  gimp_data_factory_data_clean (gimp->tool_preset_factory);
 }
 
 /**

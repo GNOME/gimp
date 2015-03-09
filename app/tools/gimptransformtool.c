@@ -59,6 +59,7 @@
 #include "display/gimptoolgui.h"
 
 #include "gimptoolcontrol.h"
+#include "gimphandletransformtool.h"
 #include "gimpperspectivetool.h"
 #include "gimpunifiedtransformtool.h"
 #include "gimptransformoptions.h"
@@ -1088,9 +1089,14 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       if (gimp_transform_options_show_preview (options))
         {
           GimpMatrix3 matrix = tr_tool->transform;
+          gboolean    perspective;
 
           if (options->direction == GIMP_TRANSFORM_BACKWARD)
             gimp_matrix3_invert (&matrix);
+
+          perspective = (GIMP_IS_PERSPECTIVE_TOOL (tr_tool)      ||
+                         GIMP_IS_HANDLE_TRANSFORM_TOOL (tr_tool) ||
+                         GIMP_IS_UNIFIED_TRANSFORM_TOOL (tr_tool));
 
           gimp_draw_tool_add_transform_preview (draw_tool,
                                                 tool->drawable,
@@ -1099,8 +1105,7 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
                                                 tr_tool->y1,
                                                 tr_tool->x2,
                                                 tr_tool->y2,
-                                                GIMP_IS_PERSPECTIVE_TOOL (tr_tool) ||
-                                                GIMP_IS_UNIFIED_TRANSFORM_TOOL (tr_tool),
+                                                perspective,
                                                 options->preview_opacity);
         }
 

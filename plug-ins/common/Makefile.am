@@ -70,7 +70,6 @@ libexec_PROGRAMS = \
 	despeckle \
 	destripe \
 	displace \
-	edge \
 	edge-dog \
 	edge-neon \
 	emboss \
@@ -143,7 +142,6 @@ libexec_PROGRAMS = \
 	tile-small \
 	unit-editor \
 	unsharp-mask \
-	value-propagate \
 	van-gogh-lic \
 	warp \
 	web-browser \
@@ -621,23 +619,6 @@ displace_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(displace_RC)
-
-edge_SOURCES = \
-	edge.c
-
-edge_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(edge_RC)
 
 edge_dog_SOURCES = \
 	edge-dog.c
@@ -1925,23 +1906,6 @@ unsharp_mask_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(unsharp_mask_RC)
-
-value_propagate_SOURCES = \
-	value-propagate.c
-
-value_propagate_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(value_propagate_RC)
 
 van_gogh_lic_SOURCES = \
 	van-gogh-lic.c

@@ -380,29 +380,54 @@ run (const gchar      *name,
 typedef int (*ifunptr) (int, int);
 
 
-static gint find_unused_ia_color   (const guchar *pixels,
-                                     gint          numpixels,
-                                     gint          num_indices,
-                                     gint         *colors);
+static gint find_unused_ia_color           (const guchar *pixels,
+                                            gint          numpixels,
+                                            gint          num_indices,
+                                            gint         *colors);
 
-static void special_flatten_indexed_alpha (guchar *pixels,
-                                           gint    transparent,
-                                           gint    numpixels);
-static gint colors_to_bpp  (int);
-static gint bpp_to_colors  (int);
-static gint get_pixel      (int, int);
-static gint gif_next_pixel (ifunptr);
-static void bump_pixel     (void);
+static void special_flatten_indexed_alpha  (guchar      *pixels,
+                                            gint         transparent,
+                                            gint         numpixels);
 
-static void gif_encode_header              (FILE *, gboolean, int, int, int, int,
-                                            int *, int *, int *, ifunptr);
-static void gif_encode_graphic_control_ext (FILE *, int, int, int, int,
-                                            int, int, int, ifunptr);
-static void gif_encode_image_data          (FILE *, int, int, int, int,
-                                            ifunptr, gint, gint);
-static void gif_encode_close               (FILE *);
-static void gif_encode_loop_ext            (FILE *, guint);
-static void gif_encode_comment_ext         (FILE *, const gchar *comment);
+static gint colors_to_bpp                  (int          colors);
+static gint bpp_to_colors                  (int          bpp);
+static gint get_pixel                      (int          x,
+                                            int          y);
+static gint gif_next_pixel                 (ifunptr      getpixel);
+static void bump_pixel                     (void);
+
+static void gif_encode_header              (FILE        *fp,
+                                            gboolean     gif89,
+                                            int          GWidth,
+                                            int          GHeight,
+                                            int          Background,
+                                            int          BitsPerPixel,
+                                            int          Red[],
+                                            int          Green[],
+                                            int          Blue[],
+                                            ifunptr      get_pixel);
+static void gif_encode_graphic_control_ext (FILE        *fp,
+                                            int          Disposal,
+                                            int          Delay89,
+                                            int          NumFramesInImage,
+                                            int          GWidth,
+                                            int          GHeight,
+                                            int          Transparent,
+                                            int          BitsPerPixel,
+                                            ifunptr      get_pixel);
+static void gif_encode_image_data          (FILE        *fp,
+                                            int          GWidth,
+                                            int          GHeight,
+                                            int          GInterlace,
+                                            int          BitsPerPixel,
+                                            ifunptr      get_pixel,
+                                            gint         offset_x,
+                                            gint         offset_y);
+static void gif_encode_close               (FILE        *fp);
+static void gif_encode_loop_ext            (FILE        *fp,
+                                            guint        num_loops);
+static void gif_encode_comment_ext         (FILE        *fp,
+                                            const gchar *comment);
 
 static gint     rowstride;
 static guchar  *pixels;
@@ -422,20 +447,21 @@ static void normal_compress (int      init_bits,
                              FILE    *outfile,
                              ifunptr  ReadValue);
 
-static void put_word        (int, FILE *);
-static void output          (gint);
+static void put_word        (int      w,
+                             FILE    *fp);
+static void output          (gint     code);
 static void cl_block        (void);
-static void cl_hash         (glong);
+static void cl_hash         (glong    hsize);
 static void char_init       (void);
-static void char_out        (int);
+static void char_out        (int      c);
 static void flush_char      (void);
 
 
 static gint
 find_unused_ia_color (const guchar *pixels,
-                       gint          numpixels,
-                       gint          num_indices,
-                       gint         *colors)
+                      gint          numpixels,
+                      gint          num_indices,
+                      gint         *colors)
 {
   gboolean ix_used[256];
   gint     i;

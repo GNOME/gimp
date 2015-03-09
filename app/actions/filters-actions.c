@@ -149,6 +149,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:dropshadow",
     NULL /* FIXME GIMP_HELP_FILTER_DROPSHADOW */ },
 
+  { "filters-edge", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Edge..."), NULL, NULL,
+    "gegl:edge",
+    NULL /* FIXME GIMP_HELP_FILTER_EDGE_LAPLACE */ },
+
   { "filters-edge-laplace", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Laplace"), NULL, NULL,
     "gegl:edge-laplace",
@@ -502,6 +507,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-diffraction-patterns", writable);
   SET_SENSITIVE ("filters-distance-map",            writable);
   SET_SENSITIVE ("filters-dropshadow",              writable && alpha);
+  SET_SENSITIVE ("filters-edge",                    writable);
   SET_SENSITIVE ("filters-edge-laplace",            writable);
   SET_SENSITIVE ("filters-edge-sobel",              writable);
   SET_SENSITIVE ("filters-emboss",                  writable);

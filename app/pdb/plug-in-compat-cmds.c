@@ -1033,6 +1033,69 @@ plug_in_diffraction_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_edge_invoker (GimpProcedure         *procedure,
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble amount;
+  gint32 warpmode;
+  gint32 edgemode;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  amount = g_value_get_double (gimp_value_array_index (args, 3));
+  warpmode = g_value_get_int (gimp_value_array_index (args, 4));
+  edgemode = g_value_get_int (gimp_value_array_index (args, 5));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode        *node;
+          GeglAbyssPolicy  border_behavior = GEGL_ABYSS_NONE;
+
+          switch (warpmode)
+            {
+            case 1:
+              border_behavior = GEGL_ABYSS_LOOP;
+              break;
+
+            case 2:
+              border_behavior = GEGL_ABYSS_CLAMP;
+              break;
+
+            case 3:
+              border_behavior = GEGL_ABYSS_BLACK;
+              break;
+            }
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",       "gegl:edge",
+                                      "algorihm",        edgemode,
+                                      "amount",          amount,
+                                      "border-behavior", border_behavior,
+                                      NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Edge"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_engrave_invoker (GimpProcedure         *procedure,
                          Gimp                  *gimp,
                          GimpContext           *context,
@@ -3014,6 +3077,204 @@ plug_in_vinvert_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_vpropagate_invoker (GimpProcedure         *procedure,
+                            Gimp                  *gimp,
+                            GimpContext           *context,
+                            GimpProgress          *progress,
+                            const GimpValueArray  *args,
+                            GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 propagate_mode;
+  gint32 propagating_channel;
+  gdouble propagating_rate;
+  gint32 direction_mask;
+  gint32 lower_limit;
+  gint32 upper_limit;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  propagate_mode = g_value_get_int (gimp_value_array_index (args, 3));
+  propagating_channel = g_value_get_int (gimp_value_array_index (args, 4));
+  propagating_rate = g_value_get_double (gimp_value_array_index (args, 5));
+  direction_mask = g_value_get_int (gimp_value_array_index (args, 6));
+  lower_limit = g_value_get_int (gimp_value_array_index (args, 7));
+  upper_limit = g_value_get_int (gimp_value_array_index (args, 8));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode  *node;
+          GimpRGB    color;
+          GeglColor *gegl_color = NULL;
+          gint       gegl_mode  = 0;
+          gboolean   to_left    = (direction_mask & (0x1 << 0)) != 0;
+          gboolean   to_top     = (direction_mask & (0x1 << 1)) != 0;
+          gboolean   to_right   = (direction_mask & (0x1 << 2)) != 0;
+          gboolean   to_bottom  = (direction_mask & (0x1 << 3)) != 0;
+          gboolean   value      = (propagating_channel & (0x1 << 0)) != 0;
+          gboolean   alpha      = (propagating_channel & (0x1 << 1)) != 0;
+
+          switch (propagate_mode)
+            {
+            case 0:
+            case 1:
+            case 2:
+              gegl_mode = propagate_mode;
+              break;
+
+            case 3:
+              gegl_mode = propagate_mode;
+              /* fall thru */
+
+            case 4:
+            case 5:
+              gegl_mode = 4;
+
+              if (propagate_mode != 3)
+                gimp_context_get_foreground (context, &color);
+              else
+                gimp_context_get_background (context, &color);
+
+              gegl_color = gimp_gegl_color_new (&color);
+              break;
+
+            case 6:
+            case 7:
+              gegl_mode = propagate_mode - 1;
+              break;
+            }
+
+          node =
+            gegl_node_new_child (NULL,
+                                 "operation",        "gegl:value-propagate",
+                                 "mode",             gegl_mode,
+                                 "lower-threshold",  (gdouble) lower_limit / 255.0,
+                                 "upper-threshold",  (gdouble) upper_limit / 255.0,
+                                 "rate",             propagating_rate,
+                                 "color",            gegl_color,
+                                 "top",              to_top,
+                                 "left",             to_left,
+                                 "right",            to_right,
+                                 "bottom",           to_bottom,
+                                 "value",            value,
+                                 "alpha",            alpha,
+                                 NULL);
+
+          if (gegl_color)
+            g_object_unref (gegl_color);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Value Propagate"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_dilate_invoker (GimpProcedure         *procedure,
+                        Gimp                  *gimp,
+                        GimpContext           *context,
+                        GimpProgress          *progress,
+                        const GimpValueArray  *args,
+                        GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation",       "gegl:value-propagate",
+                                 "mode",            0, /* GEGL_VALUE_PROPAGATE_MODE_WHITE */
+                                 "lower-threshold", 0.0,
+                                 "upper-threshold", 1.0,
+                                 "rate",            1.0,
+                                 "top",             TRUE,
+                                 "left",            TRUE,
+                                 "right",           TRUE,
+                                 "bottom",          TRUE,
+                                 "value",           TRUE,
+                                 "alpha",           FALSE,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Dilate"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_erode_invoker (GimpProcedure         *procedure,
+                       Gimp                  *gimp,
+                       GimpContext           *context,
+                       GimpProgress          *progress,
+                       const GimpValueArray  *args,
+                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation",       "gegl:value-propagate",
+                                 "mode",            1, /* GEGL_VALUE_PROPAGATE_MODE_BLACK */
+                                 "lower-threshold", 0.0,
+                                 "upper-threshold", 1.0,
+                                 "rate",            1.0,
+                                 "top",             TRUE,
+                                 "left",            TRUE,
+                                 "right",           TRUE,
+                                 "bottom",          TRUE,
+                                 "value",           TRUE,
+                                 "alpha",           FALSE,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Erode"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_waves_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
@@ -3935,6 +4196,60 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     "Polarization",
                                                     -1.0, 1.0, -1.0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-edge
+   */
+  procedure = gimp_procedure_new (plug_in_edge_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-edge");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-edge",
+                                     "Several simple methods for detecting edges",
+                                     "Perform edge detection on the contents of the specified drawable. AMOUNT is an arbitrary constant, WRAPMODE is like displace plug-in (useful for tilable image). EDGEMODE sets the kind of matrix transform applied to the pixels, SOBEL was the method used in older versions.",
+                                     "Compatibility procedure. Please see 'gegl:edge' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:edge' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("amount",
+                                                    "amount",
+                                                    "Edge detection amount",
+                                                    1.0, 10.0, 1.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("warpmode",
+                                                      "warpmode",
+                                                      "Edge detection behavior { WRAP (1), SMEAR (2), BLACK (3) }",
+                                                      1, 3, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("edgemode",
+                                                      "edgemode",
+                                                      "Edge detection algorithm { SOBEL (0), PREWITT (1), GRADIENT (2), ROBERTS (3), DIFFERENTIAL (4), LAPLACE (5) }",
+                                                      0, 5, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -6110,6 +6425,222 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             "Input drawable",
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-vpropagate
+   */
+  procedure = gimp_procedure_new (plug_in_vpropagate_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-vpropagate");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-vpropagate",
+                                     "Propagate certain colors to neighboring pixels",
+                                     "Propagate values of the layer.",
+                                     "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("propagate-mode",
+                                                      "propagate mode",
+                                                      "Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }",
+                                                      0, 7, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("propagating-channel",
+                                                      "propagating channel",
+                                                      "Channels which values are propagated",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("propagating-rate",
+                                                    "propagating rate",
+                                                    "Propagating rate",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("direction-mask",
+                                                      "direction mask",
+                                                      "Direction mask",
+                                                      0, 15, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("lower-limit",
+                                                      "lower limit",
+                                                      "Lower limit",
+                                                      0, 255, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("upper-limit",
+                                                      "upper limit",
+                                                      "Upper limit",
+                                                      0, 255, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-dilate
+   */
+  procedure = gimp_procedure_new (plug_in_dilate_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-dilate");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-dilate",
+                                     "Grow lighter areas of the image",
+                                     "Dilate image.",
+                                     "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("propagate-mode",
+                                                      "propagate mode",
+                                                      "Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }",
+                                                      0, 7, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("propagating-channel",
+                                                      "propagating channel",
+                                                      "Channels which values are propagated",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("propagating-rate",
+                                                    "propagating rate",
+                                                    "Propagating rate",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("direction-mask",
+                                                      "direction mask",
+                                                      "Direction mask",
+                                                      0, 15, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("lower-limit",
+                                                      "lower limit",
+                                                      "Lower limit",
+                                                      0, 255, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("upper-limit",
+                                                      "upper limit",
+                                                      "Upper limit",
+                                                      0, 255, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-erode
+   */
+  procedure = gimp_procedure_new (plug_in_erode_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-erode");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-erode",
+                                     "Shrink lighter areas of the image",
+                                     "Erode image.",
+                                     "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:value-propagate' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("propagate-mode",
+                                                      "propagate mode",
+                                                      "Propagate mode { 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent }",
+                                                      0, 7, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("propagating-channel",
+                                                      "propagating channel",
+                                                      "Channels which values are propagated",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("propagating-rate",
+                                                    "propagating rate",
+                                                    "Propagating rate",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("direction-mask",
+                                                      "direction mask",
+                                                      "Direction mask",
+                                                      0, 15, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("lower-limit",
+                                                      "lower limit",
+                                                      "Lower limit",
+                                                      0, 255, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("upper-limit",
+                                                      "upper limit",
+                                                      "Upper limit",
+                                                      0, 255, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

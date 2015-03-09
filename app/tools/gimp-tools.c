@@ -61,6 +61,7 @@
 #include "gimpforegroundselecttool.h"
 #include "gimpfuzzyselecttool.h"
 #include "gimpgegltool.h"
+#include "gimphandletransformtool.h"
 #include "gimphealtool.h"
 #include "gimphuesaturationtool.h"
 #include "gimpinktool.h"
@@ -70,6 +71,7 @@
 #include "gimpmagnifytool.h"
 #include "gimpmeasuretool.h"
 #include "gimpmovetool.h"
+#include "gimpnpointdeformationtool.h"
 #include "gimppaintbrushtool.h"
 #include "gimppenciltool.h"
 #include "gimpperspectiveclonetool.h"
@@ -154,10 +156,12 @@ gimp_tools_init (Gimp *gimp)
 
     /*  transform tools  */
 
+    gimp_n_point_deformation_tool_register,
     gimp_warp_tool_register,
     gimp_cage_tool_register,
     gimp_flip_tool_register,
     gimp_perspective_tool_register,
+    gimp_handle_transform_tool_register,
     gimp_shear_tool_register,
     gimp_scale_tool_register,
     gimp_rotate_tool_register,
@@ -325,6 +329,15 @@ gimp_tools_restore (Gimp *gimp)
     {
       gimp_message_literal (gimp, NULL, GIMP_MESSAGE_WARNING, error->message);
       g_clear_error (&error);
+    }
+
+  /*  make sure there is always a tool active, so broken config files
+   *  can't leave us with no initial tool
+   */
+  if (! gimp_context_get_tool (gimp_get_user_context (gimp)))
+    {
+      gimp_context_set_tool (gimp_get_user_context (gimp),
+                             gimp_get_tool_info_iter (gimp)->data);
     }
 
   for (list = gimp_get_tool_info_iter (gimp);

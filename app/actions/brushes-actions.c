@@ -67,6 +67,12 @@ static const GimpActionEntry brushes_actions[] =
     G_CALLBACK (data_copy_location_cmd_callback),
     GIMP_HELP_BRUSH_COPY_LOCATION },
 
+  { "brushes-show-in-file-manager", "gtk-directory",
+    NC_("brushes-action", "Show in _File Manager"), NULL,
+    NC_("brushes-action", "Show brush file location in the file manager"),
+    G_CALLBACK (data_show_in_file_manager_cmd_callback),
+    GIMP_HELP_BRUSH_SHOW_IN_FILE_MANAGER },
+
   { "brushes-delete", "edit-delete",
     NC_("brushes-action", "_Delete Brush"), NULL,
     NC_("brushes-action", "Delete this brush"),
@@ -132,11 +138,12 @@ brushes_actions_update (GimpActionGroup *group,
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("brushes-edit",          brush);
-  SET_SENSITIVE ("brushes-open-as-image", brush && file && ! GIMP_IS_BRUSH_GENERATED (brush));
-  SET_SENSITIVE ("brushes-duplicate",     brush && GIMP_DATA_GET_CLASS (data)->duplicate);
-  SET_SENSITIVE ("brushes-copy-location", brush && file);
-  SET_SENSITIVE ("brushes-delete",        brush && gimp_data_is_deletable (data));
+  SET_SENSITIVE ("brushes-edit",                 brush);
+  SET_SENSITIVE ("brushes-open-as-image",        file && ! GIMP_IS_BRUSH_GENERATED (brush));
+  SET_SENSITIVE ("brushes-duplicate",            brush && GIMP_DATA_GET_CLASS (data)->duplicate);
+  SET_SENSITIVE ("brushes-copy-location",        file);
+  SET_SENSITIVE ("brushes-show-in-file-manager", file);
+  SET_SENSITIVE ("brushes-delete",               brush && gimp_data_is_deletable (data));
 
 #undef SET_SENSITIVE
 }

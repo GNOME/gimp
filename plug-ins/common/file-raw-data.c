@@ -725,11 +725,11 @@ save_image (const gchar  *filename,
   const Babl       *format = NULL;
   guchar           *cmap   = NULL;  /* colormap for indexed images */
   guchar           *buf;
-  guchar           *red, *green, *blue, *alpha = NULL;
-  gint32            width, height, bpp = 0;
-  gboolean          have_alpha = 0;
+  guchar           *components[4] = { 0, };
+  gint              n_components;
+  gint32            width, height, bpp;
   FILE             *fp;
-  gint              i, j = 0;
+  gint              i, j, c;
   gint              palsize = 0;
   GimpPDBStatusType ret = GIMP_PDB_EXECUTION_ERROR;
 
@@ -760,8 +760,8 @@ save_image (const gchar  *filename,
       break;
     }
 
-  bpp        = babl_format_get_bytes_per_pixel (format);
-  have_alpha = babl_format_has_alpha (format);
+  n_components = babl_format_get_n_components (format);
+  bpp          = babl_format_get_bytes_per_pixel (format);
 
   if (gimp_drawable_is_indexed (drawable_id))
     cmap = gimp_image_get_colormap (image_id, &palsize);
@@ -842,39 +842,24 @@ save_image (const gchar  *filename,
       break;
 
     case RAW_PLANAR:
-      red   = g_new (guchar, width * height);
-      green = g_new (guchar, width * height);
-      blue  = g_new (guchar, width * height);
-      if (have_alpha)
-        alpha = g_new (guchar, width * height);
+      for (c = 0; c < n_components; c++)
+        components[c] = g_new (guchar, width * height);
 
-      for (i = 0; i < width * height * bpp; i += bpp)
+      for (i = 0, j = 0; i < width * height * bpp; i += bpp, j++)
         {
-          red[j]   = buf[i + 0];
-          green[j] = buf[i + 1];
-          blue[j]  = buf[i + 2];
-          if (have_alpha)
-            alpha[j] = buf[i + 3];
-          j++;
+          for (c = 0; c < n_components; c++)
+            components[c][j] = buf[i + c];
         }
 
       ret = GIMP_PDB_SUCCESS;
-      if (!fwrite (red, width * height, 1, fp))
-        ret = GIMP_PDB_EXECUTION_ERROR;
-      if (!fwrite (green, width * height, 1, fp))
-        ret = GIMP_PDB_EXECUTION_ERROR;
-      if (!fwrite (blue, width * height, 1, fp))
-        ret = GIMP_PDB_EXECUTION_ERROR;
-      if (have_alpha)
+      for (c = 0; c < n_components; c++)
         {
-          if (!fwrite (alpha, width * height, 1, fp))
+          if (! fwrite (components[c], width * height, 1, fp))
             ret = GIMP_PDB_EXECUTION_ERROR;
+
+          g_free (components[c]);
         }
-      g_free (red);
-      g_free (green);
-      g_free (blue);
-      if (have_alpha)
-        g_free (alpha);
+
       fclose (fp);
       break;
 
@@ -1574,8 +1559,8 @@ save_dialog (const gchar *filename,
                                     G_CALLBACK (gimp_radio_button_update),
                                     &runtime->image_type,
                                     runtime->image_type,
-                                    _("Standard (R,G,B)"),     RAW_RGB,    NULL,
-                                    _("Planar (RRR,GGG,BBB)"), RAW_PLANAR, NULL,
+                                    _("Standard (RGB RGB RGB ...)"),    RAW_RGB,    NULL,
+                                    _("Planar (RRR... GGG... BBB...)"), RAW_PLANAR, NULL,
                                     NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

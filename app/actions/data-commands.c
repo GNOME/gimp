@@ -185,6 +185,40 @@ data_copy_location_cmd_callback (GtkAction *action,
 }
 
 void
+data_show_in_file_manager_cmd_callback (GtkAction *action,
+                                        gpointer   user_data)
+{
+  GimpDataFactoryView *view = GIMP_DATA_FACTORY_VIEW (user_data);
+  GimpContext         *context;
+  GimpData            *data;
+
+  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+
+  data = (GimpData *)
+    gimp_context_get_by_type (context,
+                              gimp_data_factory_view_get_children_type (view));
+
+  if (data)
+    {
+      GFile *file = gimp_data_get_file (data);
+
+      if (file)
+        {
+          GError *error = NULL;
+
+          if (! gimp_file_show_in_file_manager (file, &error))
+            {
+              gimp_message (context->gimp, G_OBJECT (view),
+                            GIMP_MESSAGE_ERROR,
+                            _("Can't show file in file manager: %s"),
+                            error->message);
+              g_clear_error (&error);
+            }
+        }
+    }
+}
+
+void
 data_delete_cmd_callback (GtkAction *action,
                           gpointer   user_data)
 {

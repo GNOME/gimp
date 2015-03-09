@@ -244,6 +244,7 @@ static const GimpDialogFactoryEntry entries[] =
   FOREIGN ("gimp-threshold-tool-dialog",           TRUE,  FALSE),
   FOREIGN ("gimp-perspective-tool-dialog",         TRUE,  FALSE),
   FOREIGN ("gimp-unified-transform-tool-dialog",   TRUE,  FALSE),
+  FOREIGN ("gimp-handle-transform-tool-dialog",    TRUE,  FALSE),
 
   FOREIGN ("gimp-toolbox-color-dialog",            TRUE,  FALSE),
   FOREIGN ("gimp-gradient-editor-color-dialog",    TRUE,  FALSE),

@@ -54,7 +54,7 @@ typedef enum
  * of the enums at the top of each transformation tool, stored in
  * trans_info and related
  */
-#define TRANS_INFO_SIZE 10
+#define TRANS_INFO_SIZE 17
 
 typedef gdouble TransInfo[TRANS_INFO_SIZE];
 
