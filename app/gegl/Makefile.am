@@ -40,8 +40,8 @@ libappgegl_a_sources = \
 	gimp-gegl-utils.h		\
 	gimpapplicator.c		\
 	gimpapplicator.h		\
-	gimptilehandlerprojection.c	\
-	gimptilehandlerprojection.h
+	gimptilehandlervalidate.c	\
+	gimptilehandlervalidate.h
 
 libappgegl_a_built_sources = gimp-gegl-enums.c
 
