@@ -373,6 +373,8 @@ libappcore_a_sources = \
 	gimpsymmetry.h			\
 	gimpsymmetry-mirror.c		\
 	gimpsymmetry-mirror.h	\
+	gimpsymmetry-tiling.c		\
+	gimpsymmetry-tiling.h	\
 	gimptag.c				\
 	gimptag.h				\
 	gimptagcache.c				\

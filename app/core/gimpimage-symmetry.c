@@ -30,6 +30,7 @@
 #include "gimpimage-private.h"
 #include "gimpimage-symmetry.h"
 #include "gimpsymmetry-mirror.h"
+#include "gimpsymmetry-tiling.h"
 
 /**
  * gimp_image_symmetry_list:
@@ -42,6 +43,7 @@ gimp_image_symmetry_list (void)
   GList *list = NULL;
 
   list = g_list_prepend (list, GINT_TO_POINTER (GIMP_TYPE_MIRROR));
+  list = g_list_prepend (list, GINT_TO_POINTER (GIMP_TYPE_TILING));
   return list;
 }
 
