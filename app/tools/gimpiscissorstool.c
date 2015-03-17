@@ -42,8 +42,6 @@
 
 /* Livewire boundary implementation done by Laramie Leavitt */
 
-#if 0
-
 #include "config.h"
 
 #include <stdlib.h>
@@ -56,12 +54,6 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
-
-#include "base/pixel-region.h"
-#include "base/tile-manager.h"
-#include "base/tile.h"
-
-#include "paint-funcs/paint-funcs.h"
 
 #include "gegl/gimp-gegl-utils.h"
 
@@ -80,17 +72,16 @@
 
 #include "gimpiscissorsoptions.h"
 #include "gimpiscissorstool.h"
+#include "gimptilehandleriscissors.h"
 #include "gimptoolcontrol.h"
 
 #include "gimp-intl.h"
 
 
 /*  defines  */
-#define  MAX_GRADIENT      179.606  /* == sqrt (127^2 + 127^2) */
 #define  GRADIENT_SEARCH   32  /* how far to look when snapping to an edge */
 #define  EXTEND_BY         0.2 /* proportion to expand cost map by */
 #define  FIXED             5   /* additional fixed size to expand cost map */
-#define  MIN_GRADIENT      63  /* gradients < this are directionless */
 
 #define  COST_WIDTH        2   /* number of bytes for each pixel in cost map  */
 
@@ -151,16 +142,18 @@ static gboolean gimp_iscissors_tool_key_press    (GimpTool              *tool,
                                                   GdkEventKey           *kevent,
                                                   GimpDisplay           *display);
 
-static void   gimp_iscissors_tool_apply          (GimpIscissorsTool     *iscissors,
-                                                  GimpDisplay           *display);
 static void   gimp_iscissors_tool_draw           (GimpDrawTool          *draw_tool);
 
+static void   gimp_iscissors_tool_halt           (GimpIscissorsTool     *iscissors,
+                                                  GimpDisplay           *display);
+static void   gimp_iscissors_tool_commit         (GimpIscissorsTool     *iscissors,
+                                                  GimpDisplay           *display);
 
 static void          iscissors_convert         (GimpIscissorsTool *iscissors,
                                                 GimpDisplay       *display);
-static TileManager * gradient_map_new          (GimpImage         *image);
+static GeglBuffer  * gradient_map_new          (GimpImage         *image);
 
-static void          find_optimal_path         (TileManager       *gradient_map,
+static void          find_optimal_path         (GeglBuffer        *gradient_map,
                                                 GimpTempBuf       *dp_buf,
                                                 gint               x1,
                                                 gint               y1,
@@ -200,12 +193,6 @@ static GPtrArray   * plot_pixels               (GimpIscissorsTool *iscissors,
                                                 gint               ye);
 
 
-G_DEFINE_TYPE (GimpIscissorsTool, gimp_iscissors_tool,
-               GIMP_TYPE_SELECTION_TOOL)
-
-#define parent_class gimp_iscissors_tool_parent_class
-
-
 /*  static variables  */
 
 /*  where to move on a given link direction  */
@@ -231,39 +218,16 @@ static const gint move[8][2] =
  * `---+---+---'
  */
 
-
-/*  temporary convolution buffers --  */
-static guchar  maxgrad_conv0[TILE_WIDTH * TILE_HEIGHT * 4] = "";
-static guchar  maxgrad_conv1[TILE_WIDTH * TILE_HEIGHT * 4] = "";
-static guchar  maxgrad_conv2[TILE_WIDTH * TILE_HEIGHT * 4] = "";
-
-
-static const gfloat horz_deriv[9] =
-{
-   1,  0, -1,
-   2,  0, -2,
-   1,  0, -1,
-};
-
-static const gfloat vert_deriv[9] =
-{
-   1,  2,  1,
-   0,  0,  0,
-  -1, -2, -1,
-};
-
-static const gfloat blur_32[9] =
-{
-   1,  1,  1,
-   1, 24,  1,
-   1,  1,  1,
-};
-
 static gfloat  distance_weights[GRADIENT_SEARCH * GRADIENT_SEARCH];
 
 static gint    diagonal_weight[256];
 static gint    direction_value[256][4];
-static Tile   *cur_tile    = NULL;
+
+
+G_DEFINE_TYPE (GimpIscissorsTool, gimp_iscissors_tool,
+               GIMP_TYPE_SELECTION_TOOL)
+
+#define parent_class gimp_iscissors_tool_parent_class
 
 
 void
@@ -374,50 +338,11 @@ gimp_iscissors_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      /*  Free and reset the curve list  */
-      while (! g_queue_is_empty (iscissors->curves))
-        {
-          ICurve *curve = g_queue_pop_head (iscissors->curves);
+      gimp_iscissors_tool_halt (iscissors, display);
+      break;
 
-          if (curve->points)
-            g_ptr_array_free (curve->points, TRUE);
-
-          g_slice_free (ICurve, curve);
-        }
-
-      /*  free mask  */
-      if (iscissors->mask)
-        {
-          g_object_unref (iscissors->mask);
-          iscissors->mask = NULL;
-        }
-
-      /* free the gradient map */
-      if (iscissors->gradient_map)
-        {
-          /* release any tile we were using */
-          if (cur_tile)
-            {
-              tile_release (cur_tile, FALSE);
-              cur_tile = NULL;
-            }
-
-          tile_manager_unref (iscissors->gradient_map);
-          iscissors->gradient_map = NULL;
-        }
-
-      iscissors->curve1      = NULL;
-      iscissors->curve2      = NULL;
-      iscissors->first_point = TRUE;
-      iscissors->connected   = FALSE;
-      iscissors->state       = NO_ACTION;
-
-      /*  Reset the dp buffers  */
-      if (iscissors->dp_buf)
-        {
-          gimp_temp_buf_unref (iscissors->dp_buf);
-          iscissors->dp_buf = NULL;
-        }
+    case GIMP_TOOL_ACTION_COMMIT:
+      gimp_iscissors_tool_commit (iscissors, display);
       break;
     }
 
@@ -481,7 +406,8 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
                                              iscissors->x,
                                              iscissors->y))
         {
-          gimp_iscissors_tool_apply (iscissors, display);
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
         }
       else if (! iscissors->connected)
         {
@@ -1070,7 +996,8 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
     case GDK_KEY_ISO_Enter:
       if (iscissors->connected && iscissors->mask)
         {
-          gimp_iscissors_tool_apply (iscissors, display);
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+          gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
           return TRUE;
         }
       return FALSE;
@@ -1085,27 +1012,69 @@ gimp_iscissors_tool_key_press (GimpTool    *tool,
 }
 
 static void
-gimp_iscissors_tool_apply (GimpIscissorsTool *iscissors,
-                           GimpDisplay       *display)
+gimp_iscissors_tool_halt (GimpIscissorsTool *iscissors,
+                          GimpDisplay       *display)
+{
+  /*  Free and reset the curve list  */
+  while (! g_queue_is_empty (iscissors->curves))
+    {
+      ICurve *curve = g_queue_pop_head (iscissors->curves);
+
+      if (curve->points)
+        g_ptr_array_free (curve->points, TRUE);
+
+      g_slice_free (ICurve, curve);
+    }
+
+  /*  free mask  */
+  if (iscissors->mask)
+    {
+      g_object_unref (iscissors->mask);
+      iscissors->mask = NULL;
+    }
+
+  /* free the gradient map */
+  if (iscissors->gradient_map)
+    {
+      g_object_unref (iscissors->gradient_map);
+      iscissors->gradient_map = NULL;
+    }
+
+  iscissors->curve1      = NULL;
+  iscissors->curve2      = NULL;
+  iscissors->first_point = TRUE;
+  iscissors->connected   = FALSE;
+  iscissors->state       = NO_ACTION;
+
+  /*  Reset the dp buffers  */
+  if (iscissors->dp_buf)
+    {
+      gimp_temp_buf_unref (iscissors->dp_buf);
+      iscissors->dp_buf = NULL;
+    }
+}
+
+static void
+gimp_iscissors_tool_commit (GimpIscissorsTool *iscissors,
+                            GimpDisplay       *display)
 {
   GimpTool             *tool    = GIMP_TOOL (iscissors);
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpImage            *image   = gimp_display_get_image (display);
 
-  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+  if (iscissors->connected && iscissors->mask)
+    {
+      gimp_channel_select_channel (gimp_image_get_mask (image),
+                                   tool->tool_info->blurb,
+                                   iscissors->mask,
+                                   0, 0,
+                                   options->operation,
+                                   options->feather,
+                                   options->feather_radius,
+                                   options->feather_radius);
 
-  gimp_channel_select_channel (gimp_image_get_mask (image),
-                               tool->tool_info->blurb,
-                               iscissors->mask,
-                               0, 0,
-                               options->operation,
-                               options->feather,
-                               options->feather_radius,
-                               options->feather_radius);
-
-  gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
-
-  gimp_image_flush (image);
+      gimp_image_flush (image);
+    }
 }
 
 
@@ -1345,8 +1314,8 @@ calculate_curve (GimpIscissorsTool *iscissors,
 
       /* Initialise the gradient map tile manager for this image if we
        * don't already have one. */
-      if (!iscissors->gradient_map)
-          iscissors->gradient_map = gradient_map_new (image);
+      if (! iscissors->gradient_map)
+        iscissors->gradient_map = gradient_map_new (image);
 
       /*  allocate the dynamic programming array  */
       if (iscissors->dp_buf)
@@ -1394,51 +1363,46 @@ calculate_curve (GimpIscissorsTool *iscissors,
 
 /* badly need to get a replacement - this is _way_ too expensive */
 static gboolean
-gradient_map_value (TileManager *map,
-                    gint         x,
-                    gint         y,
-                    guint8      *grad,
-                    guint8      *dir)
+gradient_map_value (GeglBuffer *map,
+                    gint        x,
+                    gint        y,
+                    guint8     *grad,
+                    guint8     *dir)
 {
-  static gint   cur_tilex;
-  static gint   cur_tiley;
-  const guint8 *p;
+  const GeglRectangle *extents;
 
-  if (! cur_tile ||
-      x / TILE_WIDTH != cur_tilex ||
-      y / TILE_HEIGHT != cur_tiley)
+  extents = gegl_buffer_get_extent (map);
+
+  if (x >= extents->x     &&
+      y >= extents->y     &&
+      x <  extents->width &&
+      y <  extents->height)
     {
-      if (cur_tile)
-        tile_release (cur_tile, FALSE);
+      guint8 sample[2];
 
-      cur_tile = tile_manager_get_tile (map, x, y, TRUE, FALSE);
+      gegl_buffer_sample (map, x, y, NULL, sample, NULL,
+                          GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
 
-      if (!cur_tile)
-        return FALSE;
+      *grad = sample[0];
+      *dir  = sample[1];
 
-      cur_tilex = x / TILE_WIDTH;
-      cur_tiley = y / TILE_HEIGHT;
+      return TRUE;
     }
 
-  p = tile_data_pointer (cur_tile, x, y);
-
-  *grad = p[0];
-  *dir  = p[1];
-
-  return TRUE;
+  return FALSE;
 }
 
 static gint
-calculate_link (TileManager *gradient_map,
-                gint         x,
-                gint         y,
-                guint32      pixel,
-                gint         link)
+calculate_link (GeglBuffer *gradient_map,
+                gint        x,
+                gint        y,
+                guint32     pixel,
+                gint        link)
 {
   gint   value = 0;
   guint8 grad1, dir1, grad2, dir2;
 
-  if (!gradient_map_value (gradient_map, x, y, &grad1, &dir1))
+  if (! gradient_map_value (gradient_map, x, y, &grad1, &dir1))
     {
       grad1 = 0;
       dir1 = 255;
@@ -1458,7 +1422,7 @@ calculate_link (TileManager *gradient_map,
   x += (gint8)(pixel & 0xff);
   y += (gint8)((pixel & 0xff00) >> 8);
 
-  if (!gradient_map_value (gradient_map, x, y, &grad2, &dir2))
+  if (! gradient_map_value (gradient_map, x, y, &grad2, &dir2))
     {
       grad2 = 0;
       dir2 = 255;
@@ -1521,7 +1485,7 @@ plot_pixels (GimpIscissorsTool *iscissors,
 
 
 static void
-find_optimal_path (TileManager *gradient_map,
+find_optimal_path (GeglBuffer  *gradient_map,
                    GimpTempBuf *dp_buf,
                    gint         x1,
                    gint         y1,
@@ -1654,159 +1618,30 @@ find_optimal_path (TileManager *gradient_map,
     }
 }
 
-
-/* Called to fill in a newly referenced tile in the gradient map */
-static void
-gradmap_tile_validate (TileManager *tm,
-                       Tile        *tile,
-                       GimpImage   *image)
-{
-  GimpPickable *pickable;
-  const Babl   *pickable_format;
-  GeglBuffer   *src_buffer;
-  Tile         *srctile;
-  PixelRegion   srcPR;
-  PixelRegion   destPR;
-  gint          x, y;
-  gint          dw, dh;
-  gint          sw, sh;
-  gint          i, j;
-  gint          b;
-  gfloat        gradient;
-  guint8       *tiledata;
-  guint8       *gradmap;
-
-  tile_manager_get_tile_coordinates (tm, tile, &x, &y);
-
-  dw = tile_ewidth (tile);
-  dh = tile_eheight (tile);
-
-  pickable = GIMP_PICKABLE (image);
-
-  gimp_pickable_flush (pickable);
-
-  /* get corresponding tile in the image */
-  src_buffer = gimp_pickable_get_buffer (pickable);
-  srctile = tile_manager_get_tile (gimp_gegl_buffer_get_tiles (src_buffer),
-                                   x, y, TRUE, FALSE);
-  if (! srctile)
-    return;
-
-  sw = tile_ewidth (srctile);
-  sh = tile_eheight (srctile);
-
-  pickable_format = gimp_pickable_get_format (pickable);
-
-  pixel_region_init_data (&srcPR,
-                          tile_data_pointer (srctile, 0, 0),
-                          babl_format_get_bytes_per_pixel (pickable_format),
-                          babl_format_get_bytes_per_pixel (pickable_format) *
-                          MIN (dw, sw),
-                          0, 0, MIN (dw, sw), MIN (dh, sh));
-
-
-  /* XXX tile edges? */
-
-  /*  Blur the source to get rid of noise  */
-  pixel_region_init_data (&destPR, maxgrad_conv0, 4, TILE_WIDTH * 4,
-                          0, 0, srcPR.w, srcPR.h);
-  convolve_region (&srcPR, &destPR, blur_32, 3, 32, GIMP_NORMAL_CONVOL, FALSE);
-
-  /*  Use the blurred region as the new source pixel region  */
-  pixel_region_init_data (&srcPR, maxgrad_conv0, 4, TILE_WIDTH * 4,
-                          0, 0, srcPR.w, srcPR.h);
-
-  /*  Get the horizontal derivative  */
-  pixel_region_init_data (&destPR, maxgrad_conv1, 4, TILE_WIDTH * 4,
-                          0, 0, srcPR.w, srcPR.h);
-  convolve_region (&srcPR, &destPR, horz_deriv, 3, 1, GIMP_NEGATIVE_CONVOL,
-                   FALSE);
-
-  /*  Get the vertical derivative  */
-  pixel_region_init_data (&destPR, maxgrad_conv2, 4, TILE_WIDTH * 4,
-                          0, 0, srcPR.w, srcPR.h);
-  convolve_region (&srcPR, &destPR, vert_deriv, 3, 1, GIMP_NEGATIVE_CONVOL,
-                   FALSE);
-
-  /* calculate overall gradient */
-  tiledata = tile_data_pointer (tile, 0, 0);
-
-  for (i = 0; i < srcPR.h; i++)
-    {
-      const guint8 *datah = maxgrad_conv1 + srcPR.rowstride * i;
-      const guint8 *datav = maxgrad_conv2 + srcPR.rowstride * i;
-
-      gradmap = tiledata + tile_ewidth (tile) * COST_WIDTH * i;
-
-      for (j = 0; j < srcPR.w; j++)
-        {
-          gint8 hmax = datah[0] - 128;
-          gint8 vmax = datav[0] - 128;
-
-          for (b = 1; b < srcPR.bytes; b++)
-            {
-              if (abs (datah[b] - 128) > abs (hmax))
-                hmax = datah[b] - 128;
-
-              if (abs (datav[b] - 128) > abs (vmax))
-                vmax = datav[b] - 128;
-            }
-
-          if (i == 0 || j == 0 || i == srcPR.h-1 || j == srcPR.w-1)
-            {
-              gradmap[j * COST_WIDTH + 0] = 0;
-              gradmap[j * COST_WIDTH + 1] = 255;
-              goto contin;
-            }
-
-          /* 1 byte absolute magnitude first */
-          gradient = sqrt (SQR (hmax) + SQR (vmax));
-          gradmap[j * COST_WIDTH] = gradient * 255 / MAX_GRADIENT;
-
-          /* then 1 byte direction */
-          if (gradient > MIN_GRADIENT)
-            {
-              gfloat direction;
-
-              if (!hmax)
-                direction = (vmax > 0) ? G_PI_2 : -G_PI_2;
-              else
-                direction = atan ((gdouble) vmax / (gdouble) hmax);
-
-              /* Scale the direction from between 0 and 254,
-               *  corresponding to -PI/2, PI/2 255 is reserved for
-               *  d9irectionless pixels */
-              gradmap[j * COST_WIDTH + 1] =
-                (guint8) (254 * (direction + G_PI_2) / G_PI);
-            }
-          else
-            {
-              gradmap[j * COST_WIDTH + 1] = 255; /* reserved for weak gradient */
-            }
-
-        contin:
-          datah += srcPR.bytes;
-          datav += srcPR.bytes;
-        }
-    }
-
-  tile_release (srctile, FALSE);
-}
-
-static TileManager *
+static GeglBuffer *
 gradient_map_new (GimpImage *image)
 {
-  TileManager *tm;
+  GeglBuffer      *buffer;
+  GeglTileHandler *handler;
 
-  tm = tile_manager_new (gimp_image_get_width  (image),
-                         gimp_image_get_height (image),
-                         sizeof (guint8) * COST_WIDTH);
+  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                            gimp_image_get_width  (image),
+                                            gimp_image_get_height (image)),
+                            babl_format_n (babl_type ("u8"), 2));
 
-  tile_manager_set_validate_proc (tm,
-                                  (TileValidateProc) gradmap_tile_validate,
-                                  image);
+  handler = gimp_tile_handler_iscissors_new (image);
 
-  return tm;
+  gimp_tile_handler_validate_assign (GIMP_TILE_HANDLER_VALIDATE (handler),
+                                     buffer);
+
+  gimp_tile_handler_validate_invalidate (GIMP_TILE_HANDLER_VALIDATE (handler),
+                                         0, 0,
+                                         gimp_image_get_width  (image),
+                                         gimp_image_get_height (image));
+
+  g_object_unref (handler);
+
+  return buffer;
 }
 
 static void
@@ -1815,14 +1650,12 @@ find_max_gradient (GimpIscissorsTool *iscissors,
                    gint              *x,
                    gint              *y)
 {
-  PixelRegion  srcPR;
-  gint         radius;
-  gint         i, j;
-  gint         endx, endy;
-  gint         cx, cy;
-  gint         x1, y1, x2, y2;
-  gpointer     pr;
-  gfloat       max_gradient;
+  GeglBufferIterator *iter;
+  GeglRectangle      *roi;
+  gint                radius;
+  gint                cx, cy;
+  gint                x1, y1, x2, y2;
+  gfloat              max_gradient;
 
   /* Initialise the gradient map tile manager for this image if we
    * don't already have one. */
@@ -1844,29 +1677,30 @@ find_max_gradient (GimpIscissorsTool *iscissors,
   *x = cx;
   *y = cy;
 
-  /*  Find the point of max gradient  */
-  pixel_region_init (&srcPR, iscissors->gradient_map,
-                     x1, y1, x2 - x1, y2 - y1, FALSE);
+  iter = gegl_buffer_iterator_new (iscissors->gradient_map,
+                                   GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
+                                   0, NULL,
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+  roi = &iter->roi[0];
 
-  /* this iterates over 1, 2 or 4 tiles only */
-  for (pr = pixel_regions_register (1, &srcPR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
+  while (gegl_buffer_iterator_next (iter))
     {
-      endx = srcPR.x + srcPR.w;
-      endy = srcPR.y + srcPR.h;
+      guint8 *data = iter->data[0];
+      gint    endx = roi->x + roi->width;
+      gint    endy = roi->y + roi->height;
+      gint    i, j;
 
-      for (i = srcPR.y; i < endy; i++)
+      for (i = roi->y; i < endy; i++)
         {
-          const guint8 *gradient = srcPR.data + srcPR.rowstride * (i - srcPR.y);
+          const guint8 *gradient = data + 2 * roi->width * (i - roi->y);
 
-          for (j = srcPR.x; j < endx; j++)
+          for (j = roi->x; j < endx; j++)
             {
               gfloat g = *gradient;
 
               gradient += COST_WIDTH;
 
-              g *= distance_weights [(i-y1) * GRADIENT_SEARCH + (j-x1)];
+              g *= distance_weights [(i - y1) * GRADIENT_SEARCH + (j - x1)];
 
               if (g > max_gradient)
                 {
@@ -1879,5 +1713,3 @@ find_max_gradient (GimpIscissorsTool *iscissors,
         }
     }
 }
-
-#endif

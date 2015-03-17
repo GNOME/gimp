@@ -192,6 +192,8 @@ libapptools_a_sources = \
 	gimptexttool-editor.h		\
 	gimpthresholdtool.c		\
 	gimpthresholdtool.h		\
+	gimptilehandleriscissors.c	\
+	gimptilehandleriscissors.h	\
 	gimptool.c			\
 	gimptool.h			\
 	gimptool-progress.c		\

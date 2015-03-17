@@ -183,9 +183,7 @@ gimp_tools_init (Gimp *gimp)
     /*  selection tools */
 
     gimp_foreground_select_tool_register,
-#if 0
     gimp_iscissors_tool_register,
-#endif
     gimp_by_color_select_tool_register,
     gimp_fuzzy_select_tool_register,
     gimp_free_select_tool_register,
