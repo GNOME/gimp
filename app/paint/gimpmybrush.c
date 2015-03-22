@@ -34,6 +34,9 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "config/gimpguiconfig.h" /* playground */
+
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
@@ -76,12 +79,13 @@ void
 gimp_mybrush_register (Gimp                      *gimp,
                        GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp,
-                GIMP_TYPE_MYBRUSH,
-                GIMP_TYPE_MYBRUSH_OPTIONS,
-                "gimp-mybrush",
-                _("Mybrush"),
-                "gimp-tool-mybrush");
+  if (GIMP_GUI_CONFIG (gimp->config)->playground_mybrush_tool)
+    (* callback) (gimp,
+                  GIMP_TYPE_MYBRUSH,
+                  GIMP_TYPE_MYBRUSH_OPTIONS,
+                  "gimp-mybrush",
+                  _("Mybrush"),
+                  "gimp-tool-mybrush");
 }
 
 static void
