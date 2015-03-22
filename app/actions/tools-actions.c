@@ -26,6 +26,8 @@
 
 #include "actions-types.h"
 
+#include "config/gimpguiconfig.h" /* playground */
+
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -505,10 +507,11 @@ tools_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (tools_airbrush_flow_actions),
                                       G_CALLBACK (tools_airbrush_flow_cmd_callback));
 
-  gimp_action_group_add_enum_actions (group, NULL,
-                                      tools_mybrush_radius_actions,
-                                      G_N_ELEMENTS (tools_mybrush_radius_actions),
-                                      G_CALLBACK (tools_mybrush_radius_cmd_callback));
+  if (GIMP_GUI_CONFIG (group->gimp->config)->playground_mybrush_tool)
+    gimp_action_group_add_enum_actions (group, NULL,
+                                        tools_mybrush_radius_actions,
+                                        G_N_ELEMENTS (tools_mybrush_radius_actions),
+                                        G_CALLBACK (tools_mybrush_radius_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_foreground_select_brush_size_actions,

@@ -25,7 +25,11 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h" /* playground */
+
 #include "paint/gimpmybrushoptions.h"
+
+#include "core/gimp.h"
 
 #include "widgets/gimphelp-ids.h"
 
@@ -55,20 +59,24 @@ void
 gimp_mybrush_tool_register (GimpToolRegisterCallback  callback,
                             gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_MYBRUSH_TOOL,
-                GIMP_TYPE_MYBRUSH_OPTIONS,
-                gimp_mybrush_options_gui,
-                GIMP_CONTEXT_FOREGROUND_MASK |
-                GIMP_CONTEXT_BACKGROUND_MASK |
-                GIMP_CONTEXT_OPACITY_MASK    |
-                GIMP_CONTEXT_PAINT_MODE_MASK,
-                "gimp-mybrush-tool",
-                _("MyPaint Brush"),
-                _("MyPaint Brush Tool: Use MyPaint brushes in GIMP"),
-                N_("M_yPaint Brush"), "Y",
-                NULL, GIMP_HELP_TOOL_MYBRUSH,
-                GIMP_STOCK_TOOL_MYBRUSH,
-                data);
+  /* we should not know that "data" is a Gimp*, but what the heck this
+   * is experimental playground stuff
+   */
+  if (GIMP_GUI_CONFIG (GIMP (data)->config)->playground_mybrush_tool)
+    (* callback) (GIMP_TYPE_MYBRUSH_TOOL,
+                  GIMP_TYPE_MYBRUSH_OPTIONS,
+                  gimp_mybrush_options_gui,
+                  GIMP_CONTEXT_FOREGROUND_MASK |
+                  GIMP_CONTEXT_BACKGROUND_MASK |
+                  GIMP_CONTEXT_OPACITY_MASK    |
+                  GIMP_CONTEXT_PAINT_MODE_MASK,
+                  "gimp-mybrush-tool",
+                  _("MyPaint Brush"),
+                  _("MyPaint Brush Tool: Use MyPaint brushes in GIMP"),
+                  N_("M_yPaint Brush"), "Y",
+                  NULL, GIMP_HELP_TOOL_MYBRUSH,
+                  GIMP_STOCK_TOOL_MYBRUSH,
+                  data);
 }
 
 static void
