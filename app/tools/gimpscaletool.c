@@ -116,12 +116,12 @@ gimp_scale_tool_init (GimpScaleTool *scale_tool)
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_RESIZE);
 
-  tr_tool->progress_text   = _("Scaling");
+  tr_tool->progress_text      = _("Scaling");
 
-  tr_tool->use_grid        = TRUE;
-  tr_tool->use_handles     = TRUE;
-  tr_tool->use_center      = TRUE;
-  tr_tool->use_mid_handles = TRUE;
+  tr_tool->use_grid           = TRUE;
+  tr_tool->use_corner_handles = TRUE;
+  tr_tool->use_side_handles   = TRUE;
+  tr_tool->use_center_handle  = TRUE;
 }
 
 static void

@@ -111,11 +111,13 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_PERSPECTIVE);
 
-  tr_tool->progress_text = _("Perspective transformation");
+  tr_tool->progress_text      = _("Perspective transformation");
 
-  tr_tool->use_grid      = TRUE;
-  tr_tool->use_handles   = TRUE;
-  tr_tool->use_center    = TRUE;
+  tr_tool->use_grid           = TRUE;
+  tr_tool->use_corner_handles = TRUE;
+  tr_tool->use_center_handle  = TRUE;
+
+  tr_tool->does_perspective   = TRUE;
 }
 
 static void
