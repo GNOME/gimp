@@ -371,6 +371,8 @@ libappcore_a_sources = \
 	gimpsubprogress.h			\
 	gimpsymmetry.c			\
 	gimpsymmetry.h			\
+	gimpsymmetry-mandala.c		\
+	gimpsymmetry-mandala.h		\
 	gimpsymmetry-mirror.c		\
 	gimpsymmetry-mirror.h	\
 	gimpsymmetry-tiling.c		\

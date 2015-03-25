@@ -1,0 +1,568 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimpsymmetry-mandala.c
+ * Copyright (C) 2015 Jehan <jehan@gimp.org>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "config.h"
+
+#include <string.h>
+
+#include <cairo.h>
+#include <gegl.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
+
+#include "libgimpconfig/gimpconfig.h"
+#include "libgimpmath/gimpmath.h"
+
+#include "core-types.h"
+
+#include "gimp.h"
+#include "gimp-cairo.h"
+#include "gimpdrawable.h"
+#include "gimpguide.h"
+#include "gimpimage.h"
+#include "gimpimage-guides.h"
+#include "gimpimage-symmetry.h"
+#include "gimpitem.h"
+#include "gimpsymmetry-mandala.h"
+
+#include "gimp-intl.h"
+
+enum
+{
+  PROP_0,
+
+  PROP_CENTER_X,
+  PROP_CENTER_Y,
+  PROP_SIZE,
+  PROP_DISABLE_TRANSFORMATION,
+};
+
+/* Local function prototypes */
+
+static void       gimp_mandala_constructed        (GObject      *object);
+static void       gimp_mandala_finalize           (GObject      *object);
+static void       gimp_mandala_set_property       (GObject      *object,
+                                                   guint         property_id,
+                                                   const GValue *value,
+                                                   GParamSpec   *pspec);
+static void       gimp_mandala_get_property       (GObject      *object,
+                                                   guint         property_id,
+                                                   GValue       *value,
+                                                   GParamSpec   *pspec);
+static void       gimp_mandala_active_changed     (GimpSymmetry *sym);
+
+static void       gimp_mandala_add_guide          (GimpMandala         *mandala,
+                                                   GimpOrientationType  orientation);
+static void       gimp_mandala_remove_guide       (GimpMandala         *mandala,
+                                                   GimpOrientationType  orientation);
+static void       gimp_mandala_guide_removed_cb   (GObject      *object,
+                                                   GimpMandala  *mandala);
+static void       gimp_mandala_guide_position_cb  (GObject      *object,
+                                                   GParamSpec   *pspec,
+                                                   GimpMandala  *mandala);
+
+static void       gimp_mandala_update_strokes     (GimpSymmetry *mandala,
+                                                   GimpDrawable *drawable,
+                                                   GimpCoords   *origin);
+static GeglNode * gimp_mandala_get_operation      (GimpSymmetry *mandala,
+                                                   gint          stroke,
+                                                   gint          paint_width,
+                                                   gint          paint_height);
+static GParamSpec ** gimp_mandala_get_settings    (GimpSymmetry *sym,
+                                                   gint         *n_settings);
+static void
+               gimp_mandala_image_size_changed_cb (GimpImage    *image ,
+                                                   gint          previous_origin_x,
+                                                   gint          previous_origin_y,
+                                                   gint          previous_width,
+                                                   gint          previous_height,
+                                                   GimpSymmetry *sym);
+
+G_DEFINE_TYPE (GimpMandala, gimp_mandala, GIMP_TYPE_SYMMETRY)
+
+#define parent_class gimp_mandala_parent_class
+
+static void
+gimp_mandala_class_init (GimpMandalaClass *klass)
+{
+  GObjectClass      *object_class   = G_OBJECT_CLASS (klass);
+  GimpSymmetryClass *symmetry_class = GIMP_SYMMETRY_CLASS (klass);
+
+  object_class->constructed         = gimp_mandala_constructed;
+  object_class->finalize            = gimp_mandala_finalize;
+  object_class->set_property        = gimp_mandala_set_property;
+  object_class->get_property        = gimp_mandala_get_property;
+
+  symmetry_class->label             = _("Mandala");
+  symmetry_class->update_strokes    = gimp_mandala_update_strokes;
+  symmetry_class->get_operation     = gimp_mandala_get_operation;
+  symmetry_class->get_settings      = gimp_mandala_get_settings;
+  symmetry_class->active_changed    = gimp_mandala_active_changed;
+
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CENTER_X,
+                                   "center-x", _("Center absisce"),
+                                   0.0, 10000.0, 0.0,
+                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CENTER_Y,
+                                   "center-y", _("Center ordinate"),
+                                   0.0, 10000.0, 0.0,
+                                   GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_SIZE,
+                                "size", _("Number of points"),
+                                1, 100, 6.0,
+                                GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DISABLE_TRANSFORMATION,
+                                    "disable-transformation",
+                                    _("Disable Brush Transformation (faster)"),
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+}
+
+static void
+gimp_mandala_init (GimpMandala *mandala)
+{
+}
+
+static void
+gimp_mandala_constructed (GObject *object)
+{
+  GimpSymmetry     *sym;
+  GParamSpecDouble *dspec;
+
+  sym = GIMP_SYMMETRY (object);
+
+  /* Update property values to actual image size. */
+  dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (object),
+                                                             "center-x"));
+  dspec->maximum = gimp_image_get_width (sym->image);
+
+  dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (object),
+                                                             "center-y"));
+  dspec->maximum = gimp_image_get_height (sym->image);
+
+  g_signal_connect (sym->image, "size-changed-detailed",
+                    G_CALLBACK (gimp_mandala_image_size_changed_cb),
+                    sym);
+}
+
+static void
+gimp_mandala_finalize (GObject *object)
+{
+  GimpMandala *mandala;
+
+  mandala = GIMP_MANDALA (object);
+
+  if (mandala->horizontal_guide)
+    g_object_unref (mandala->horizontal_guide);
+  mandala->horizontal_guide = NULL;
+
+  if (mandala->vertical_guide)
+    g_object_unref (mandala->vertical_guide);
+  mandala->vertical_guide = NULL;
+
+  if (mandala->ops)
+    {
+      GList *iter;
+
+      for (iter = mandala->ops; iter; iter = g_list_next (iter))
+        {
+          if (iter->data)
+            g_object_unref (G_OBJECT (iter->data));
+        }
+      g_list_free (mandala->ops);
+      mandala->ops = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_mandala_set_property (GObject      *object,
+                          guint         property_id,
+                          const GValue *value,
+                          GParamSpec   *pspec)
+{
+  GimpMandala *mandala = GIMP_MANDALA (object);
+
+  switch (property_id)
+    {
+    case PROP_CENTER_X:
+      mandala->center_x = g_value_get_double (value);
+      if (mandala->vertical_guide)
+        gimp_guide_set_position (mandala->vertical_guide,
+                                 mandala->center_x);
+      break;
+    case PROP_CENTER_Y:
+      mandala->center_y = g_value_get_double (value);
+      if (mandala->horizontal_guide)
+        gimp_guide_set_position (mandala->horizontal_guide,
+                                 mandala->center_y);
+      break;
+    case PROP_SIZE:
+      mandala->size = g_value_get_int (value);
+      break;
+    case PROP_DISABLE_TRANSFORMATION:
+      mandala->disable_transformation = g_value_get_boolean (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_mandala_get_property (GObject    *object,
+                          guint       property_id,
+                          GValue     *value,
+                          GParamSpec *pspec)
+{
+  GimpMandala *mandala = GIMP_MANDALA (object);
+
+  switch (property_id)
+    {
+    case PROP_CENTER_X:
+      g_value_set_double (value, mandala->center_x);
+      break;
+    case PROP_CENTER_Y:
+      g_value_set_double (value, mandala->center_y);
+      break;
+    case PROP_SIZE:
+      g_value_set_int (value, mandala->size);
+      break;
+    case PROP_DISABLE_TRANSFORMATION:
+      g_value_set_boolean (value, mandala->disable_transformation);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_mandala_active_changed (GimpSymmetry *sym)
+{
+  GimpMandala *mandala = GIMP_MANDALA (sym);
+
+  if (sym->active)
+    {
+      if (! mandala->horizontal_guide)
+        gimp_mandala_add_guide (mandala, GIMP_ORIENTATION_HORIZONTAL);
+      if (! mandala->vertical_guide)
+        gimp_mandala_add_guide (mandala, GIMP_ORIENTATION_VERTICAL);
+    }
+  else
+    {
+      if (mandala->horizontal_guide)
+        gimp_mandala_remove_guide (mandala, GIMP_ORIENTATION_HORIZONTAL);
+      if (mandala->vertical_guide)
+        gimp_mandala_remove_guide (mandala, GIMP_ORIENTATION_VERTICAL);
+    }
+}
+
+static void
+gimp_mandala_add_guide (GimpMandala         *mandala,
+                        GimpOrientationType  orientation)
+{
+  static GimpRGB  normal_fg = { 1.0, 1.0, 1.0, 1.0 };
+  static GimpRGB  normal_bg = { 0.0, 1.0, 1.0, 1.0 };
+  static GimpRGB  active_fg = { 0.0, 1.0, 1.0, 1.0 };
+  static GimpRGB  active_bg = { 1.0, 0.0, 0.0, 1.0 };
+  GimpSymmetry   *sym;
+  GimpImage      *image;
+  Gimp           *gimp;
+  GimpGuide      *guide;
+  gint            position;
+
+  g_return_if_fail (GIMP_IS_MANDALA (mandala));
+
+  sym   = GIMP_SYMMETRY (mandala);
+  image = sym->image;
+  gimp  = GIMP (image->gimp);
+
+  guide = gimp_guide_custom_new (orientation,
+                                 gimp->next_guide_ID++,
+                                 &normal_fg, &normal_bg,
+                                 &active_fg, &active_bg,
+                                 1.0);
+
+  if (orientation == GIMP_ORIENTATION_HORIZONTAL)
+    {
+      mandala->horizontal_guide = guide;
+
+      /* Mandala guide position at first activation is at canvas middle. */
+      if (mandala->center_y < 1.0)
+        mandala->center_y = (gdouble) gimp_image_get_height (image) / 2.0;
+      position = (gint) mandala->center_y;
+    }
+  else
+    {
+      mandala->vertical_guide = guide;
+
+      /* Mandala guide position at first activation is at canvas middle. */
+      if (mandala->center_x < 1.0)
+        mandala->center_x = (gdouble) gimp_image_get_width (image) / 2.0;
+      position = (gint) mandala->center_x;
+    }
+  g_signal_connect (G_OBJECT (guide), "removed",
+                    G_CALLBACK (gimp_mandala_guide_removed_cb),
+                    mandala);
+
+  gimp_image_add_guide (image, guide,
+                        (gint) position);
+
+  g_signal_connect (G_OBJECT (guide), "notify::position",
+                    G_CALLBACK (gimp_mandala_guide_position_cb),
+                    mandala);
+}
+
+static void
+gimp_mandala_remove_guide (GimpMandala         *mandala,
+                           GimpOrientationType  orientation)
+{
+  GimpSymmetry *sym;
+  GimpImage    *image;
+  GimpGuide    *guide;
+
+  g_return_if_fail (GIMP_IS_MANDALA (mandala));
+
+  sym   = GIMP_SYMMETRY (mandala);
+  image = sym->image;
+  guide = (orientation == GIMP_ORIENTATION_HORIZONTAL) ?
+    mandala->horizontal_guide : mandala->vertical_guide;
+
+  g_signal_handlers_disconnect_by_func (G_OBJECT (guide),
+                                        gimp_mandala_guide_removed_cb,
+                                        mandala);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (guide),
+                                        gimp_mandala_guide_position_cb,
+                                        mandala);
+  gimp_image_remove_guide (image, guide, FALSE);
+  g_object_unref (guide);
+
+  if (orientation == GIMP_ORIENTATION_HORIZONTAL)
+    mandala->horizontal_guide = NULL;
+  else
+    mandala->vertical_guide = NULL;
+}
+
+static void
+gimp_mandala_guide_removed_cb (GObject     *object,
+                               GimpMandala *mandala)
+{
+  GimpSymmetry *sym;
+
+  sym = GIMP_SYMMETRY (mandala);
+
+  g_signal_handlers_disconnect_by_func (object,
+                                        gimp_mandala_guide_removed_cb,
+                                        mandala);
+  g_signal_handlers_disconnect_by_func (object,
+                                        gimp_mandala_guide_position_cb,
+                                        mandala);
+  if (GIMP_GUIDE (object) == mandala->horizontal_guide)
+    {
+      g_object_unref (mandala->horizontal_guide);
+
+      mandala->horizontal_guide = NULL;
+      mandala->center_y         = 0.0;
+
+      gimp_mandala_remove_guide (mandala, GIMP_ORIENTATION_VERTICAL);
+    }
+  else if (GIMP_GUIDE (object) == mandala->vertical_guide)
+    {
+      g_object_unref (mandala->vertical_guide);
+      mandala->vertical_guide = NULL;
+      mandala->center_x       = 0.0;
+
+      gimp_mandala_remove_guide (mandala, GIMP_ORIENTATION_HORIZONTAL);
+    }
+
+  gimp_image_symmetry_remove (sym->image, sym);
+}
+
+static void
+gimp_mandala_guide_position_cb (GObject     *object,
+                                GParamSpec  *pspec,
+                                GimpMandala *mandala)
+{
+  GimpGuide *guide;
+
+  guide = GIMP_GUIDE (object);
+
+  if (guide == mandala->horizontal_guide)
+    {
+      mandala->center_y = (gdouble) gimp_guide_get_position (guide);
+    }
+  else if (guide == mandala->vertical_guide)
+    {
+      mandala->center_x = (gdouble) gimp_guide_get_position (guide);
+    }
+}
+
+static void
+gimp_mandala_update_strokes (GimpSymmetry *sym,
+                             GimpDrawable *drawable,
+                             GimpCoords   *origin)
+{
+  GimpMandala *mandala  = GIMP_MANDALA (sym);
+  GimpCoords  *coords;
+  GimpMatrix3  matrix;
+  gint         i;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (GIMP_IS_SYMMETRY (sym));
+
+  g_list_free_full (sym->strokes, g_free);
+  sym->strokes = NULL;
+
+  coords = g_memdup (sym->origin, sizeof (GimpCoords));
+  sym->strokes = g_list_prepend (sym->strokes, coords);
+
+  for (i = 1; i < mandala->size; i++)
+    {
+      gdouble new_x, new_y;
+
+      coords = g_memdup (sym->origin, sizeof (GimpCoords));
+      gimp_matrix3_identity (&matrix);
+      gimp_matrix3_translate (&matrix,
+                              - mandala->center_x,
+                              - mandala->center_y);
+      gimp_matrix3_rotate (&matrix, - i * 2.0 * G_PI / (gdouble) mandala->size);
+      gimp_matrix3_translate (&matrix,
+                              mandala->center_x,
+                              mandala->center_y);
+      gimp_matrix3_transform_point (&matrix,
+                                    coords->x,
+                                    coords->y,
+                                    &new_x,
+                                    &new_y);
+      coords->x = new_x;
+      coords->y = new_y;
+      sym->strokes = g_list_prepend (sym->strokes, coords);
+    }
+  sym->strokes = g_list_reverse (sym->strokes);
+
+  g_signal_emit_by_name (sym, "strokes-updated", sym->image);
+}
+
+static GeglNode *
+gimp_mandala_get_operation (GimpSymmetry *sym,
+                            gint          stroke,
+                            gint          paint_width,
+                            gint          paint_height)
+{
+  GimpMandala *mandala  = GIMP_MANDALA (sym);
+  GeglNode    *op       = NULL;
+  gint         i;
+
+  g_return_val_if_fail (GIMP_IS_MANDALA (sym), NULL);
+  g_return_val_if_fail (stroke < mandala->size, NULL);
+
+  if (! mandala->disable_transformation &&
+      stroke != 0                       &&
+      paint_width != 0                  &&
+      paint_height != 0)
+    {
+      if (mandala->size != mandala->cached_size      ||
+          mandala->cached_paint_width != paint_width ||
+          mandala->cached_paint_height != paint_height)
+        {
+          GList *iter;
+          if (mandala->ops)
+            {
+              for (iter = mandala->ops; iter; iter = g_list_next (iter))
+                {
+                  if (iter->data)
+                    g_object_unref (G_OBJECT (iter->data));
+                }
+              g_list_free (mandala->ops);
+              mandala->ops = NULL;
+            }
+
+          mandala->ops = g_list_prepend (mandala->ops, NULL);
+          for (i = 1; i < mandala->size; i++)
+            {
+              op = gegl_node_new_child (NULL,
+                                        "operation", "gegl:rotate",
+                                        "origin-x",
+                                        (gdouble) paint_width / 2.0,
+                                        "origin-y",
+                                        (gdouble) paint_height / 2.0,
+                                        "degrees",
+                                        i * 360.0 / (gdouble) mandala->size,
+                                        NULL);
+              mandala->ops = g_list_prepend (mandala->ops, op);
+            }
+          mandala->ops = g_list_reverse (mandala->ops);
+          mandala->cached_size = mandala->size;
+          mandala->cached_paint_width = paint_width;
+          mandala->cached_paint_height = paint_height;
+        }
+
+      op = g_list_nth_data (mandala->ops, stroke);
+    }
+
+  return op;
+}
+
+static GParamSpec **
+gimp_mandala_get_settings (GimpSymmetry *sym,
+                          gint         *n_settings)
+{
+  GParamSpec **pspecs;
+
+  *n_settings = 3;
+  pspecs = g_new (GParamSpec*, 3);
+
+  pspecs[0] = g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
+                                            "size");
+  pspecs[1] = NULL;
+  pspecs[2] = g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
+                                            "disable-transformation");
+
+  return pspecs;
+}
+
+static void
+gimp_mandala_image_size_changed_cb (GimpImage    *image,
+                                    gint          previous_origin_x,
+                                    gint          previous_origin_y,
+                                    gint          previous_width,
+                                    gint          previous_height,
+                                    GimpSymmetry *sym)
+{
+  GParamSpecDouble *dspec;
+
+  if (previous_width != gimp_image_get_width (image))
+    {
+      dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
+                                                                 "center-x"));
+      dspec->maximum = gimp_image_get_width (sym->image);
+    }
+  if (previous_height != gimp_image_get_height (image))
+    {
+      dspec = G_PARAM_SPEC_DOUBLE (g_object_class_find_property (G_OBJECT_GET_CLASS (sym),
+                                                                 "center-y"));
+      dspec->maximum = gimp_image_get_height (sym->image);
+    }
+
+  if (previous_width != gimp_image_get_width (image) ||
+      previous_height != gimp_image_get_height (image))
+    g_signal_emit_by_name (sym, "update-ui", sym->image);
+}
