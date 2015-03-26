@@ -172,6 +172,10 @@ app/core/gimppdbprogress.c
 app/core/gimpprogress.c
 app/core/gimpselection.c
 app/core/gimpstrokeoptions.c
+app/core/gimpsymmetry.c
+app/core/gimpsymmetry-mandala.c
+app/core/gimpsymmetry-mirror.c
+app/core/gimpsymmetry-tiling.c
 app/core/gimptagcache.c
 app/core/gimptemplate.c
 app/core/gimptooloptions.c
@@ -515,6 +519,7 @@ app/widgets/gimpsettingsbox.c
 app/widgets/gimpsettingseditor.c
 app/widgets/gimpsizebox.c
 app/widgets/gimpstrokeeditor.c
+app/widgets/gimpsymmetryeditor.c
 app/widgets/gimptagentry.c
 app/widgets/gimptemplateeditor.c
 app/widgets/gimptextbuffer-serialize.c
