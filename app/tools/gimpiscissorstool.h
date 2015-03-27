@@ -42,7 +42,7 @@ typedef enum
   ISCISSORS_OP_IMPOSSIBLE
 } IscissorsOps;
 
-typedef struct _ICurve ICurve;
+typedef struct _ISegment ISegment;
 
 
 #define GIMP_TYPE_ISCISSORS_TOOL            (gimp_iscissors_tool_get_type ())
@@ -64,27 +64,27 @@ struct _GimpIscissorsTool
 
   IscissorsOps    op;
 
-  gint            x, y;         /*  upper left hand coordinate            */
-  gint            ix, iy;       /*  initial coordinates                   */
-  gint            nx, ny;       /*  new coordinates                       */
+  gint            x, y;         /*  upper left hand coordinate              */
+  gint            ix, iy;       /*  initial coordinates                     */
+  gint            nx, ny;       /*  new coordinates                         */
 
-  GimpTempBuf    *dp_buf;       /*  dynamic programming buffer            */
+  GimpTempBuf    *dp_buf;       /*  dynamic programming buffer              */
 
-  ICurve         *livewire;     /*  livewire boundary curve               */
+  ISegment       *livewire;     /*  livewire boundary segment               */
 
-  ICurve         *curve1;       /*  1st curve connected to current point  */
-  ICurve         *curve2;       /*  2nd curve connected to current point  */
+  ISegment       *segment1;     /*  1st segment connected to current point  */
+  ISegment       *segment2;     /*  2nd segment connected to current point  */
 
-  GQueue         *curves;       /*  the list of curves                    */
+  GQueue         *curves;       /*  the list of segments                    */
 
-  gboolean        first_point;  /*  is this the first point?              */
-  gboolean        connected;    /*  is the region closed?                 */
+  gboolean        first_point;  /*  is this the first point?                */
+  gboolean        connected;    /*  is the region closed?                   */
 
-  IscissorsState  state;        /*  state of iscissors                    */
+  IscissorsState  state;        /*  state of iscissors                      */
 
   /* XXX might be useful */
-  GimpChannel    *mask;         /*  selection mask                        */
-  GeglBuffer     *gradient_map; /*  lazily filled gradient map            */
+  GimpChannel    *mask;         /*  selection mask                          */
+  GeglBuffer     *gradient_map; /*  lazily filled gradient map              */
 };
 
 struct _GimpIscissorsToolClass
