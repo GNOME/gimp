@@ -43,6 +43,7 @@ typedef enum
 } IscissorsOps;
 
 typedef struct _ISegment ISegment;
+typedef struct _ICurve   ICurve;
 
 
 #define GIMP_TYPE_ISCISSORS_TOOL            (gimp_iscissors_tool_get_type ())
@@ -75,10 +76,7 @@ struct _GimpIscissorsTool
   ISegment       *segment1;     /*  1st segment connected to current point  */
   ISegment       *segment2;     /*  2nd segment connected to current point  */
 
-  GQueue         *curves;       /*  the list of segments                    */
-
-  gboolean        first_point;  /*  is this the first point?                */
-  gboolean        connected;    /*  is the region closed?                   */
+  ICurve         *curve;        /*  the curve                               */
 
   IscissorsState  state;        /*  state of iscissors                      */
 
