@@ -683,9 +683,6 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
       switch (iscissors->state)
         {
         case SEED_PLACEMENT:
-          gimp_iscissors_tool_pop_undo (iscissors);
-          break;
-
         case SEED_ADJUSTMENT:
           gimp_iscissors_tool_pop_undo (iscissors);
           break;
@@ -695,7 +692,10 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
         }
     }
 
-  iscissors->state = WAITING;
+  if (iscissors->curve->first_point)
+    iscissors->state = NO_ACTION;
+  else
+    iscissors->state = WAITING;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
@@ -1187,6 +1187,13 @@ gimp_iscissors_tool_pop_undo (GimpIscissorsTool *iscissors)
 
   iscissors->undo_stack = g_list_remove (iscissors->undo_stack,
                                          iscissors->curve);
+
+  if (! iscissors->undo_stack)
+    {
+      iscissors->state = NO_ACTION;
+
+      gimp_draw_tool_stop (GIMP_DRAW_TOOL (iscissors));
+    }
 }
 
 static void
