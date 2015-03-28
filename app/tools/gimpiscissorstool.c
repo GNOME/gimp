@@ -658,17 +658,34 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
           break;
 
         case SEED_ADJUSTMENT:
-          /*  recalculate both segments  */
-          if (iscissors->segment1)
+          if (state & gimp_get_modify_selection_mask ())
             {
-              if (! options->interactive)
-                calculate_segment (iscissors, iscissors->segment1);
-            }
+              if (iscissors->segment1 && iscissors->segment2)
+                {
+                  iscissors->segment1->x1 = iscissors->segment2->x1;
+                  iscissors->segment1->y1 = iscissors->segment2->y1;
 
-          if (iscissors->segment2)
+                  g_queue_remove (iscissors->curve->segments,
+                                  iscissors->segment2);
+
+                  calculate_segment (iscissors, iscissors->segment1);
+                }
+            }
+          else
             {
-              if (! options->interactive)
-                calculate_segment (iscissors, iscissors->segment2);
+              /*  recalculate both segments  */
+
+              if (iscissors->segment1)
+                {
+                  if (! options->interactive)
+                    calculate_segment (iscissors, iscissors->segment1);
+                }
+
+              if (iscissors->segment2)
+                {
+                  if (! options->interactive)
+                    calculate_segment (iscissors, iscissors->segment2);
+                }
             }
 
           gimp_iscissors_tool_free_redo (iscissors);
@@ -910,14 +927,26 @@ gimp_iscissors_tool_oper_update (GimpTool         *tool,
 
   if (mouse_over_vertex (iscissors, coords->x, coords->y) > 1)
     {
-      gchar *status;
+      GdkModifierType remove_mask = gimp_get_modify_selection_mask ();
 
-      status = gimp_suggest_modifiers (_("Click-Drag to move this point"),
-                                       GDK_SHIFT_MASK & ~state,
-                                       _("%s: disable auto-snap"), NULL, NULL);
-      gimp_tool_replace_status (tool, display, "%s", status);
-      g_free (status);
-      iscissors->op = ISCISSORS_OP_MOVE_POINT;
+      if (state & remove_mask)
+        {
+          gimp_tool_replace_status (tool, display,
+                                    _("Click to remove this point"));
+          iscissors->op = ISCISSORS_OP_MOVE_POINT;
+        }
+      else
+        {
+          gchar *status =
+            gimp_suggest_modifiers (_("Click-Drag to move this point"),
+                                    (GDK_SHIFT_MASK | remove_mask) & ~state,
+                                    _("%s: disable auto-snap"),
+                                    _("%s: remove this point"),
+                                    NULL);
+          gimp_tool_replace_status (tool, display, "%s", status);
+          g_free (status);
+          iscissors->op = ISCISSORS_OP_MOVE_POINT;
+        }
     }
   else if (mouse_over_segment (iscissors, coords->x, coords->y))
     {
@@ -1026,6 +1055,10 @@ gimp_iscissors_tool_cursor_update (GimpTool         *tool,
 
     case ISCISSORS_OP_ADD_POINT:
       modifier = GIMP_CURSOR_MODIFIER_PLUS;
+      break;
+
+    case ISCISSORS_OP_REMOVE_POINT:
+      modifier = GIMP_CURSOR_MODIFIER_MINUS;
       break;
 
     case ISCISSORS_OP_CONNECT:
