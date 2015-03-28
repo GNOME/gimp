@@ -65,24 +65,21 @@ struct _GimpIscissorsTool
 
   IscissorsOps    op;
 
-  gint            x, y;         /*  upper left hand coordinate              */
-  gint            ix, iy;       /*  initial coordinates                     */
-  gint            nx, ny;       /*  new coordinates                         */
-
-  GimpTempBuf    *dp_buf;       /*  dynamic programming buffer              */
-
-  ISegment       *livewire;     /*  livewire boundary segment               */
+  gint            x, y;         /*  mouse coordinates                       */
 
   ISegment       *segment1;     /*  1st segment connected to current point  */
   ISegment       *segment2;     /*  2nd segment connected to current point  */
 
   ICurve         *curve;        /*  the curve                               */
 
+  GList          *undo_stack;   /*  stack of ICurves for undo               */
+  GList          *redo_stack;   /*  stack of ICurves for redo               */
+
   IscissorsState  state;        /*  state of iscissors                      */
 
-  /* XXX might be useful */
-  GimpChannel    *mask;         /*  selection mask                          */
   GeglBuffer     *gradient_map; /*  lazily filled gradient map              */
+  GimpTempBuf    *dp_buf;       /*  dynamic programming buffer              */
+  GimpChannel    *mask;         /*  selection mask                          */
 };
 
 struct _GimpIscissorsToolClass
