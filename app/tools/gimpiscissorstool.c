@@ -933,7 +933,7 @@ gimp_iscissors_tool_oper_update (GimpTool         *tool,
         {
           gimp_tool_replace_status (tool, display,
                                     _("Click to remove this point"));
-          iscissors->op = ISCISSORS_OP_MOVE_POINT;
+          iscissors->op = ISCISSORS_OP_REMOVE_POINT;
         }
       else
         {
