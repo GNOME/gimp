@@ -25,6 +25,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "gimpwidgetstypes.h"
 
 #undef GIMP_DISABLE_DEPRECATED
@@ -66,16 +68,18 @@ enum
 };
 
 
-static void   gimp_file_entry_dispose         (GObject       *object);
+static void   gimp_file_entry_dispose              (GObject       *object);
 
-static void   gimp_file_entry_entry_activate  (GtkWidget     *widget,
-                                               GimpFileEntry *entry);
-static gint   gimp_file_entry_entry_focus_out (GtkWidget     *widget,
-                                               GdkEvent      *event,
-                                               GimpFileEntry *entry);
-static void   gimp_file_entry_browse_clicked  (GtkWidget     *widget,
-                                               GimpFileEntry *entry);
-static void   gimp_file_entry_check_filename  (GimpFileEntry *entry);
+static void   gimp_file_entry_entry_activate       (GtkWidget     *widget,
+                                                    GimpFileEntry *entry);
+static gint   gimp_file_entry_entry_focus_out      (GtkWidget     *widget,
+                                                    GdkEvent      *event,
+                                                    GimpFileEntry *entry);
+static void   gimp_file_entry_file_manager_clicked (GtkWidget     *widget,
+                                                    GimpFileEntry *entry);
+static void   gimp_file_entry_browse_clicked       (GtkWidget     *widget,
+                                                    GimpFileEntry *entry);
+static void   gimp_file_entry_check_filename       (GimpFileEntry *entry);
 
 
 G_DEFINE_TYPE (GimpFileEntry, gimp_file_entry, GTK_TYPE_BOX)
@@ -113,6 +117,7 @@ static void
 gimp_file_entry_init (GimpFileEntry *entry)
 {
   GtkWidget *image;
+  GtkWidget *button;
 
   entry->title       = NULL;
   entry->file_dialog = NULL;
@@ -124,6 +129,21 @@ gimp_file_entry_init (GimpFileEntry *entry)
 
   gtk_box_set_spacing (GTK_BOX (entry), 4);
   gtk_box_set_homogeneous (GTK_BOX (entry), FALSE);
+
+  button = gtk_button_new ();
+  gtk_box_pack_end (GTK_BOX (entry), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  image = gtk_image_new_from_icon_name ("gtk-directory", GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (gimp_file_entry_file_manager_clicked),
+                    entry);
+
+  gimp_help_set_help_data (button,
+                           _("Show file location in the file manager"), NULL);
 
   entry->browse_button = gtk_button_new ();
   gtk_box_pack_end (GTK_BOX (entry), entry->browse_button, FALSE, FALSE, 0);
@@ -337,6 +357,28 @@ gimp_file_entry_chooser_response (GtkWidget     *dialog,
     }
 
   gtk_widget_hide (dialog);
+}
+
+static void
+gimp_file_entry_file_manager_clicked (GtkWidget     *widget,
+                                      GimpFileEntry *entry)
+{
+  gchar  *utf8;
+  GFile  *file;
+  GError *error = NULL;
+
+  utf8 = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
+  file = g_file_parse_name (utf8);
+  g_free (utf8);
+
+  if (! gimp_file_show_in_file_manager (file, &error))
+    {
+      g_message (_("Can't show file in file manager: %s"),
+                 error->message);
+      g_clear_error (&error);
+    }
+
+  g_object_unref (file);
 }
 
 static void
