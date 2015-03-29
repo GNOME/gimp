@@ -783,22 +783,6 @@ is_handle_position_valid (GimpTransformTool *tr_tool,
 {
   gint i, j, k;
 
-  if (tr_tool->trans_info[N_HANDLES] < 3)
-    {
-      /* there aren't two other handles */
-      return TRUE;
-    }
-
-  if (tr_tool->trans_info[N_HANDLES] == 3)
-    {
-      return ((tr_tool->trans_info[X0] - tr_tool->trans_info[X1]) *
-              (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y2]) !=
-
-              (tr_tool->trans_info[X1] - tr_tool->trans_info[X2]) *
-              (tr_tool->trans_info[Y0] - tr_tool->trans_info[Y1]));
-    }
-
-  /* tr_tool->trans_info[N_HANDLES] == 4 */
   for (i = 0; i < 2; i++)
     {
       for (j = i + 1; j < 3; j++)
