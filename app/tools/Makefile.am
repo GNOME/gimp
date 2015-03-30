@@ -136,10 +136,6 @@ libapptools_a_sources = \
 	gimpmoveoptions.h		\
 	gimpmovetool.c			\
 	gimpmovetool.h			\
-	gimpmybrushoptions-gui.c	\
-	gimpmybrushoptions-gui.h	\
-	gimpmybrushtool.c		\
-	gimpmybrushtool.h		\
 	gimpnpointdeformationoptions.c	\
 	gimpnpointdeformationoptions.h	\
 	gimpnpointdeformationtool.c	\
@@ -223,9 +219,17 @@ libapptools_a_sources = \
 	gimpwarptool.c			\
 	gimpwarptool.h
 
+if HAVE_LIBMYPAINT
+mybrushtool_sources = \
+	gimpmybrushoptions-gui.c	\
+	gimpmybrushoptions-gui.h	\
+	gimpmybrushtool.c		\
+	gimpmybrushtool.h
+endif
+
 libapptools_a_built_sources = tools-enums.c
 
-libapptools_a_SOURCES = $(libapptools_a_built_sources) $(libapptools_a_sources)
+libapptools_a_SOURCES = $(libapptools_a_built_sources) $(mybrushtool_sources) $(libapptools_a_sources)
 
 #
 # rules to generate built sources

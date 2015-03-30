@@ -52,10 +52,6 @@ libapppaint_a_sources = \
 	gimpinkoptions.h		\
 	gimpinkundo.c			\
 	gimpinkundo.h			\
-	gimpmybrush.c			\
-	gimpmybrush.h			\
-	gimpmybrushoptions.c		\
-	gimpmybrushoptions.h		\
 	gimppaintcore.c			\
 	gimppaintcore.h			\
 	gimppaintcore-loops.c		\
@@ -85,10 +81,17 @@ libapppaint_a_sources = \
 	gimpsourceoptions.c		\
 	gimpsourceoptions.h
 
+if HAVE_LIBMYPAINT
+mybrush_sources =	\
+	gimpmybrush.c			\
+	gimpmybrush.h			\
+	gimpmybrushoptions.c		\
+	gimpmybrushoptions.h
+endif
+
 libapppaint_a_built_sources = paint-enums.c
 
-libapppaint_a_SOURCES = $(libapppaint_a_built_sources) $(libapppaint_a_sources)
-
+libapppaint_a_SOURCES = $(libapppaint_a_built_sources) $(mybrush_sources) $(libapppaint_a_sources)
 #
 # rules to generate built sources
 #
