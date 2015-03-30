@@ -145,7 +145,9 @@ gimp_tools_init (Gimp *gimp)
     gimp_perspective_clone_tool_register,
     gimp_heal_tool_register,
     gimp_clone_tool_register,
+#ifdef HAVE_LIBMYPAINT
     gimp_mybrush_tool_register,
+#endif
     gimp_ink_tool_register,
     gimp_airbrush_tool_register,
     gimp_eraser_tool_register,
@@ -548,10 +550,12 @@ gimp_tools_register (GType                   tool_type,
     {
       paint_core_name = "gimp-ink";
     }
+#ifdef HAVE_LIBMYPAINT
   else if (tool_type == GIMP_TYPE_MYBRUSH_TOOL)
     {
       paint_core_name = "gimp-mybrush";
     }
+#endif
   else
     {
       paint_core_name = "gimp-paintbrush";

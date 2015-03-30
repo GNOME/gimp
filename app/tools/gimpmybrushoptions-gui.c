@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#ifdef HAVE_LIBMYPAINT
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -164,3 +166,5 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
 
   return vbox;
 }
+
+#endif

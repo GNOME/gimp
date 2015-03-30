@@ -294,6 +294,7 @@ tools_airbrush_flow_cmd_callback (GtkAction *action,
     }
 }
 
+#ifdef HAVE_LIBMYPAINT
 void
 tools_mybrush_radius_cmd_callback (GtkAction *action,
                                     gint       value,
@@ -314,6 +315,7 @@ tools_mybrush_radius_cmd_callback (GtkAction *action,
                               0.1, 0.1, 0.5, 1.0, FALSE);
     }
 }
+#endif
 
 void
 tools_fg_select_brush_size_cmd_callback (GtkAction *action,

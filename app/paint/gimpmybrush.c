@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#ifdef HAVE_LIBMYPAINT
+
 #include <string.h>
 
 #include <cairo.h>
@@ -249,3 +251,5 @@ gimp_mybrush_motion (GimpPaintCore    *paint_core,
       gimp_drawable_update (drawable, rect.x, rect.y, rect.width, rect.height);
     }
 }
+
+#endif

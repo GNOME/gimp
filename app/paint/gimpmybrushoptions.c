@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#ifdef HAVE_LIBMYPAINT
+
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
@@ -134,3 +136,5 @@ gimp_mybrush_options_get_property (GObject    *object,
       break;
     }
 }
+
+#endif

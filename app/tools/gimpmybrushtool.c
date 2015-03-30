@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#ifdef HAVE_LIBMYPAINT
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -130,3 +132,5 @@ gimp_mybrush_tool_get_outline (GimpPaintTool *paint_tool,
 
   return NULL;
 }
+
+#endif
