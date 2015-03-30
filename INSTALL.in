@@ -83,7 +83,7 @@ header files installed.
      compiled with GEGL support: `scons enable_gegl=true install`.
      Brushlib repository is hosted at:
 
-        https://gitorious.org/mypaint/libmypaint/
+        https://github.com/mypaint/libmypaint
 
  11. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
