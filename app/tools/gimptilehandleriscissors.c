@@ -235,17 +235,19 @@ gimp_tile_handler_iscissors_validate (GimpTileHandlerValidate *validate,
                       temp2, GEGL_RECTANGLE (0, 0, rect->width, rect->height),
                       vert_deriv, 3, 1, GIMP_NEGATIVE_CONVOL, FALSE);
 
-  maxgrad_conv1 = gegl_buffer_linear_open (temp1,
-                                           GEGL_RECTANGLE (0, 0,
-                                                           rect->width,
-                                                           rect->height),
-                                           &stride1, NULL);
+  maxgrad_conv1 =
+    (guchar *) gegl_buffer_linear_open (temp1,
+                                        GEGL_RECTANGLE (0, 0,
+                                                        rect->width,
+                                                        rect->height),
+                                        &stride1, NULL);
 
-  maxgrad_conv2 = gegl_buffer_linear_open (temp2,
-                                           GEGL_RECTANGLE (0, 0,
-                                                           rect->width,
-                                                           rect->height),
-                                           &stride2, NULL);
+  maxgrad_conv2 =
+    (guchar *) gegl_buffer_linear_open (temp2,
+                                        GEGL_RECTANGLE (0, 0,
+                                                        rect->width,
+                                                        rect->height),
+                                        &stride2, NULL);
 
   /* calculate overall gradient */
 
