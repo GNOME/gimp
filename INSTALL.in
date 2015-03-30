@@ -79,7 +79,7 @@ header files installed.
   9. libpng, libjpeg and lcms are hard dependencies that can not be
      disabled.
 
- 10. For mypaint brushes, GIMP requires brushlib (libmypaint) @LIBMYPAINT_REQUIRED_VERSION@,
+ 10. For optional mypaint brushes, you should install brushlib (libmypaint) @LIBMYPAINT_REQUIRED_VERSION@,
      compiled with GEGL support: `scons enable_gegl=true install`.
      Brushlib repository is hosted at:
 
@@ -120,7 +120,6 @@ header files installed.
 
      ATK: @ATK_REQUIRED_VERSION@
      babl: @BABL_REQUIRED_VERSION@
-     brushlib: @LIBMYPAINT_REQUIRED_VERSION@
      libbzip2
      cairo: @CAIRO_REQUIRED_VERSION@
      Fontconfig: @FONTCONFIG_REQUIRED_VERSION@
@@ -157,6 +156,7 @@ header files installed.
      libwmf		@WMF_REQUIRED_VERSION@		WMF
      libXcursor		-		X11 Mouse Cursor
      libxpm		-		XPM
+     libmypaint		@LIBMYPAINT_REQUIRED_VERSION@		MyPaint brushes
 
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries
