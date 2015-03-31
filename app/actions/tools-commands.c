@@ -254,8 +254,8 @@ tools_ink_blob_angle_cmd_callback (GtkAction *action,
 
 void
 tools_airbrush_rate_cmd_callback (GtkAction *action,
-                                   gint       value,
-                                   gpointer   data)
+                                  gint       value,
+                                  gpointer   data)
 {
   GimpContext  *context;
   GimpToolInfo *tool_info;
@@ -275,8 +275,8 @@ tools_airbrush_rate_cmd_callback (GtkAction *action,
 
 void
 tools_airbrush_flow_cmd_callback (GtkAction *action,
-                                   gint       value,
-                                   gpointer   data)
+                                  gint       value,
+                                  gpointer   data)
 {
   GimpContext  *context;
   GimpToolInfo *tool_info;
@@ -297,8 +297,8 @@ tools_airbrush_flow_cmd_callback (GtkAction *action,
 #ifdef HAVE_LIBMYPAINT
 void
 tools_mybrush_radius_cmd_callback (GtkAction *action,
-                                    gint       value,
-                                    gpointer   data)
+                                   gint       value,
+                                   gpointer   data)
 {
   GimpContext  *context;
   GimpToolInfo *tool_info;
