@@ -201,7 +201,7 @@ gimp_handle_transform_tool_init (GimpHandleTransformTool *ht_tool)
 
   tr_tool->does_perspective = TRUE;
 
-  ht_tool->saved_handle_mode = GIMP_HANDLE_MODE_TRANSFORM;
+  ht_tool->saved_handle_mode = GIMP_HANDLE_MODE_ADD_TRANSFORM;
 }
 
 static void
@@ -220,68 +220,102 @@ gimp_handle_transform_tool_button_press (GimpTool            *tool,
 
   options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
+  GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
+                                                press_type, display);
+
   n_handles     = (gint) tr_tool->trans_info[N_HANDLES];
   active_handle = tr_tool->function - TRANSFORM_HANDLE_N;
 
-  /* There is nothing to be done on creation */
-  if (tr_tool->function == TRANSFORM_CREATING)
+  switch (options->handle_mode)
     {
-      GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time,
-                                                    state, press_type, display);
-      return;
-    }
-
-  if (options->handle_mode == GIMP_HANDLE_MODE_ADD_MOVE)
-    {
-      /* add handle */
-
+    case GIMP_HANDLE_MODE_ADD_TRANSFORM:
       if (n_handles < 4 && tr_tool->function == TRANSFORM_HANDLE_NONE)
         {
-          tr_tool->trans_info[X0 + 2 * n_handles] = coords->x;
-          tr_tool->trans_info[Y0 + 2 * n_handles] = coords->y;
-          tr_tool->function = TRANSFORM_HANDLE_N + n_handles;
+          /* add handle */
+
+          GimpMatrix3 matrix;
+
+          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+          active_handle = n_handles;
+
+          tr_tool->trans_info[X0 + 2 * active_handle] = coords->x;
+          tr_tool->trans_info[Y0 + 2 * active_handle] = coords->y;
           tr_tool->trans_info[N_HANDLES]++;
 
-          /* check for valid position and calculating of OX0...OY3 is
-           * done on button release
+          if (! is_handle_position_valid (tr_tool, active_handle))
+            {
+              handle_micro_move (tr_tool, active_handle);
+            }
+
+          /* handle was added, calculate new original position */
+          matrix = tr_tool->transform;
+          gimp_matrix3_invert (&matrix);
+          gimp_matrix3_transform_point (&matrix,
+                                        tr_tool->trans_info[X0 + 2 * active_handle],
+                                        tr_tool->trans_info[Y0 + 2 * active_handle],
+                                        &tr_tool->trans_info[OX0 + 2 * active_handle],
+                                        &tr_tool->trans_info[OY0 + 2 * active_handle]);
+
+          /*  this is disgusting: we put the new handle's coordinates
+           *  into the prev_trans_info array, because our motion
+           *  handler needs them for doing the actual transform; we
+           *  can only do this because the values will be ignored by
+           *  anything but our motion handler because we don't
+           *  increase the N_HANDLES value in prev_trans_info.
            */
+          (*tr_tool->prev_trans_info)[X0 + 2 * active_handle] = tr_tool->trans_info[X0 + 2 * active_handle];
+          (*tr_tool->prev_trans_info)[Y0 + 2 * active_handle] = tr_tool->trans_info[Y0 + 2 * active_handle];
+
+          (*tr_tool->prev_trans_info)[OX0 + 2 * active_handle] = tr_tool->trans_info[OX0 + 2 * active_handle];
+          (*tr_tool->prev_trans_info)[OY0 + 2 * active_handle] = tr_tool->trans_info[OY0 + 2 * active_handle];
+
+          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+
+          tr_tool->function = TRANSFORM_HANDLE_N + active_handle;
         }
+      break;
+
+    case GIMP_HANDLE_MODE_MOVE:
+      /* check for valid position and calculating of OX0...OY3 is
+       * done on button release
+       */
 
       /* move handles without changing the transformation matrix */
       ht->matrix_recalculation = FALSE;
-    }
-  else if (options->handle_mode == GIMP_HANDLE_MODE_REMOVE &&
-           n_handles > 0      &&
-           active_handle >= 0 &&
-           active_handle < 4)
-    {
-      /* remove handle */
+      break;
 
-      gdouble tempx  = tr_tool->trans_info[X0  + 2 * active_handle];
-      gdouble tempy  = tr_tool->trans_info[Y0  + 2 * active_handle];
-      gdouble tempox = tr_tool->trans_info[OX0 + 2 * active_handle];
-      gdouble tempoy = tr_tool->trans_info[OY0 + 2 * active_handle];
-      gint    i;
-
-      n_handles--;
-      tr_tool->trans_info[N_HANDLES]--;
-
-      for (i = active_handle; i < n_handles; i++)
+    case GIMP_HANDLE_MODE_REMOVE:
+      if (n_handles > 0      &&
+          active_handle >= 0 &&
+          active_handle < 4)
         {
-          tr_tool->trans_info[X0  + 2 * i] = tr_tool->trans_info[X1  + 2 * i];
-          tr_tool->trans_info[Y0  + 2 * i] = tr_tool->trans_info[Y1  + 2 * i];
-          tr_tool->trans_info[OX0 + 2 * i] = tr_tool->trans_info[OX1 + 2 * i];
-          tr_tool->trans_info[OY0 + 2 * i] = tr_tool->trans_info[OY1 + 2 * i];
+          /* remove handle */
+
+          gdouble tempx  = tr_tool->trans_info[X0  + 2 * active_handle];
+          gdouble tempy  = tr_tool->trans_info[Y0  + 2 * active_handle];
+          gdouble tempox = tr_tool->trans_info[OX0 + 2 * active_handle];
+          gdouble tempoy = tr_tool->trans_info[OY0 + 2 * active_handle];
+          gint    i;
+
+          n_handles--;
+          tr_tool->trans_info[N_HANDLES]--;
+
+          for (i = active_handle; i < n_handles; i++)
+            {
+              tr_tool->trans_info[X0  + 2 * i] = tr_tool->trans_info[X1  + 2 * i];
+              tr_tool->trans_info[Y0  + 2 * i] = tr_tool->trans_info[Y1  + 2 * i];
+              tr_tool->trans_info[OX0 + 2 * i] = tr_tool->trans_info[OX1 + 2 * i];
+              tr_tool->trans_info[OY0 + 2 * i] = tr_tool->trans_info[OY1 + 2 * i];
+            }
+
+          tr_tool->trans_info[X0  + 2 * n_handles] = tempx;
+          tr_tool->trans_info[Y0  + 2 * n_handles] = tempy;
+          tr_tool->trans_info[OX0 + 2 * n_handles] = tempox;
+          tr_tool->trans_info[OY0 + 2 * n_handles] = tempoy;
         }
-
-      tr_tool->trans_info[X0  + 2 * n_handles] = tempx;
-      tr_tool->trans_info[Y0  + 2 * n_handles] = tempy;
-      tr_tool->trans_info[OX0 + 2 * n_handles] = tempox;
-      tr_tool->trans_info[OY0 + 2 * n_handles] = tempoy;
+      break;
     }
-
-  GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time,
-                                                state, press_type, display);
 }
 
 static void
@@ -301,7 +335,7 @@ gimp_handle_transform_tool_button_release (GimpTool              *tool,
 
   active_handle = tr_tool->function - TRANSFORM_HANDLE_N;
 
-  if (options->handle_mode == GIMP_HANDLE_MODE_ADD_MOVE &&
+  if (options->handle_mode == GIMP_HANDLE_MODE_MOVE &&
       active_handle >= 0 &&
       active_handle < 4)
     {
@@ -312,7 +346,7 @@ gimp_handle_transform_tool_button_release (GimpTool              *tool,
           handle_micro_move (tr_tool, active_handle);
         }
 
-      /* handle was added or moved. calculate new original position */
+      /* handle was moved, calculate new original position */
       matrix = tr_tool->transform;
       gimp_matrix3_invert (&matrix);
       gimp_matrix3_transform_point (&matrix,
@@ -320,13 +354,6 @@ gimp_handle_transform_tool_button_release (GimpTool              *tool,
                                     tr_tool->trans_info[Y0 + 2 * active_handle],
                                     &tr_tool->trans_info[OX0 + 2 * active_handle],
                                     &tr_tool->trans_info[OY0 + 2 * active_handle]);
-    }
-
-  if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
-    {
-      /* force redraw */
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
 
   ht->matrix_recalculation = TRUE;
@@ -371,7 +398,7 @@ gimp_handle_transform_tool_modifier_key (GimpTool        *tool,
 
   if (state & shift)
     {
-      handle_mode = GIMP_HANDLE_MODE_ADD_MOVE;
+      handle_mode = GIMP_HANDLE_MODE_MOVE;
     }
   else if (state & ctrl)
     {
@@ -483,17 +510,18 @@ gimp_handle_transform_tool_motion (GimpTransformTool *tr_tool)
 
   if (active_handle >= 0 && active_handle < 4)
     {
-      if (options->handle_mode == GIMP_HANDLE_MODE_ADD_MOVE)
+      if (options->handle_mode == GIMP_HANDLE_MODE_MOVE)
         {
           tr_tool->trans_info[X0 + 2 * active_handle] += tr_tool->curx - tr_tool->lastx;
           tr_tool->trans_info[Y0 + 2 * active_handle] += tr_tool->cury - tr_tool->lasty;
+
           /* check for valid position and calculating of OX0...OY3 is
            * done on button release hopefully this makes the code run
            * faster Moving could be even faster if there was caching
            * for the image preview
            */
         }
-      else if (options->handle_mode == GIMP_HANDLE_MODE_TRANSFORM)
+      else if (options->handle_mode == GIMP_HANDLE_MODE_ADD_TRANSFORM)
         {
           gdouble angle, angle_sin, angle_cos, scale;
           gdouble fixed_handles_x[3];
@@ -507,13 +535,13 @@ gimp_handle_transform_tool_motion (GimpTransformTool *tr_tool)
               /* Find all visible handles that are not being moved */
               if (i < n_handles && i != active_handle)
                 {
-                  fixed_handles_x[j] = tr_tool->prev_trans_info[0][X0 + i * 2];
-                  fixed_handles_y[j] = tr_tool->prev_trans_info[0][Y0 + i * 2];
+                  fixed_handles_x[j] = tr_tool->trans_info[X0 + i * 2];
+                  fixed_handles_y[j] = tr_tool->trans_info[Y0 + i * 2];
                   j++;
                 }
 
-              newpos_x[i] = oldpos_x[i] = tr_tool->prev_trans_info[0][X0 + i * 2];
-              newpos_y[i] = oldpos_y[i] = tr_tool->prev_trans_info[0][Y0 + i * 2];
+              newpos_x[i] = oldpos_x[i] = (*tr_tool->prev_trans_info)[X0 + i * 2];
+              newpos_y[i] = oldpos_y[i] = (*tr_tool->prev_trans_info)[Y0 + i * 2];
             }
 
           newpos_x[active_handle] = oldpos_x[active_handle] + tr_tool->curx - tr_tool->mousex;
@@ -570,8 +598,8 @@ gimp_handle_transform_tool_motion (GimpTransformTool *tr_tool)
 
           for (i = 0; i < 4; i++)
             {
-              tr_tool->trans_info[X0 + 2*i] = newpos_x[i];
-              tr_tool->trans_info[Y0 + 2*i] = newpos_y[i];
+              tr_tool->trans_info[X0 + 2 * i] = newpos_x[i];
+              tr_tool->trans_info[Y0 + 2 * i] = newpos_y[i];
             }
         }
     }
@@ -680,42 +708,56 @@ gimp_handle_transform_tool_cursor_update (GimpTransformTool  *tr_tool,
 
   options = GIMP_HANDLE_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
 
-  *cursor     = GIMP_CURSOR_CROSSHAIR_SMALL;
-  *modifier   = GIMP_CURSOR_MODIFIER_NONE;
+  *cursor   = GIMP_CURSOR_CROSSHAIR_SMALL;
+  *modifier = GIMP_CURSOR_MODIFIER_NONE;
 
   /* do not show modifiers when the tool isn't active */
   if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
     return;
 
-  if (options->handle_mode == GIMP_HANDLE_MODE_TRANSFORM &&
-      tr_tool->function > TRANSFORM_HANDLE_NONE)
+  switch (options->handle_mode)
     {
-      switch ((gint) tr_tool->trans_info[N_HANDLES])
+    case GIMP_HANDLE_MODE_ADD_TRANSFORM:
+      if (tr_tool->function > TRANSFORM_HANDLE_NONE)
         {
-        case 1:
-          tool_cursor = GIMP_TOOL_CURSOR_MOVE;
-          break;
-        case 2:
-          tool_cursor = GIMP_TOOL_CURSOR_ROTATE;
-          break;
-        case 3:
-          tool_cursor = GIMP_TOOL_CURSOR_SHEAR;
-          break;
-        case 4:
-          tool_cursor = GIMP_TOOL_CURSOR_PERSPECTIVE;
-          break;
+          switch ((gint) tr_tool->trans_info[N_HANDLES])
+            {
+            case 1:
+              tool_cursor = GIMP_TOOL_CURSOR_MOVE;
+              break;
+            case 2:
+              tool_cursor = GIMP_TOOL_CURSOR_ROTATE;
+              break;
+            case 3:
+              tool_cursor = GIMP_TOOL_CURSOR_SHEAR;
+              break;
+            case 4:
+              tool_cursor = GIMP_TOOL_CURSOR_PERSPECTIVE;
+              break;
+            }
         }
-    }
-  else if (options->handle_mode == GIMP_HANDLE_MODE_ADD_MOVE)
-    {
+      else
+        {
+          if ((gint) tr_tool->trans_info[N_HANDLES] < 4)
+            *modifier = GIMP_CURSOR_MODIFIER_PLUS;
+          else
+            *modifier = GIMP_CURSOR_MODIFIER_BAD;
+        }
+      break;
+
+    case GIMP_HANDLE_MODE_MOVE:
       if (tr_tool->function > TRANSFORM_HANDLE_NONE)
         *modifier = GIMP_CURSOR_MODIFIER_MOVE;
       else
-        *modifier = GIMP_CURSOR_MODIFIER_PLUS;
-    }
-  else if (options->handle_mode == GIMP_HANDLE_MODE_REMOVE)
-    {
-      *modifier = GIMP_CURSOR_MODIFIER_MINUS;
+        *modifier = GIMP_CURSOR_MODIFIER_BAD;
+      break;
+
+    case GIMP_HANDLE_MODE_REMOVE:
+      if (tr_tool->function > TRANSFORM_HANDLE_NONE)
+        *modifier = GIMP_CURSOR_MODIFIER_MINUS;
+      else
+        *modifier = GIMP_CURSOR_MODIFIER_BAD;
+      break;
     }
 
   gimp_tool_control_set_tool_cursor (GIMP_TOOL (tr_tool)->control,

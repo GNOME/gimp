@@ -53,9 +53,9 @@ GType gimp_transform_handle_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_HANDLE_MODE_ADD_MOVE,   /*< desc="Add/Move"  >*/
-  GIMP_HANDLE_MODE_REMOVE,     /*< desc="Remove"    >*/
-  GIMP_HANDLE_MODE_TRANSFORM,  /*< desc="Transform" >*/
+  GIMP_HANDLE_MODE_ADD_TRANSFORM, /*< desc="Add / Transform" >*/
+  GIMP_HANDLE_MODE_MOVE,          /*< desc="Move"            >*/
+  GIMP_HANDLE_MODE_REMOVE         /*< desc="Remove"          >*/
 } GimpTransformHandleMode;
 
 
