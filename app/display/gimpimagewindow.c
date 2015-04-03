@@ -239,6 +239,7 @@ static void      gimp_image_window_shell_icon_notify   (GimpDisplayShell    *she
 static GtkWidget *
                  gimp_image_window_create_tab_label    (GimpImageWindow     *window,
                                                         GimpDisplayShell    *shell);
+static void      gimp_image_window_update_tab_labels   (GimpImageWindow     *window);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpImageWindow, gimp_image_window, GIMP_TYPE_WINDOW,
@@ -1637,7 +1638,7 @@ gimp_image_window_keep_canvas_pos (GimpImageWindow *window)
  * procedure instead.
  **/
 void
-gimp_image_window_update_tabs (GimpImageWindow  *window)
+gimp_image_window_update_tabs (GimpImageWindow *window)
 {
   GimpImageWindowPrivate *private;
   GimpGuiConfig          *config;
@@ -1677,8 +1678,10 @@ gimp_image_window_update_tabs (GimpImageWindow  *window)
       position = GTK_POS_TOP;
       break;
     }
+
   gtk_notebook_set_tab_pos (GTK_NOTEBOOK (private->notebook), position);
 }
+
 
 /*  private functions  */
 
@@ -1901,6 +1904,8 @@ gimp_image_window_switch_page (GtkNotebook     *notebook,
                             active_display);
 
   gimp_ui_manager_update (private->menubar_manager, active_display);
+
+  gimp_image_window_update_tab_labels (window);
 }
 
 static void
@@ -2241,5 +2246,41 @@ gimp_image_window_create_tab_label (GimpImageWindow  *window,
                             G_CALLBACK (gimp_image_window_shell_close_button_callback),
                             shell);
 
+  g_object_set_data (G_OBJECT (hbox), "close-button", button);
+
   return hbox;
+}
+
+static void
+gimp_image_window_update_tab_labels (GimpImageWindow *window)
+{
+  GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
+  GList                  *children;
+  GList                  *list;
+
+  children = gtk_container_get_children (GTK_CONTAINER (private->notebook));
+
+  for (list = children; list; list = g_list_next (list))
+    {
+      GtkWidget *shell = list->data;
+      GtkWidget *tab_widget;
+      GtkWidget *close_button;
+
+      tab_widget = gtk_notebook_get_tab_label (GTK_NOTEBOOK (private->notebook),
+                                               shell);
+
+      close_button = g_object_get_data (G_OBJECT (tab_widget), "close-button");
+
+      if (gimp_context_get_display (gimp_get_user_context (private->gimp)) ==
+          GIMP_DISPLAY_SHELL (shell)->display)
+        {
+          gtk_widget_show (close_button);
+        }
+      else
+        {
+          gtk_widget_hide (close_button);
+        }
+    }
+
+  g_list_free (children);
 }
