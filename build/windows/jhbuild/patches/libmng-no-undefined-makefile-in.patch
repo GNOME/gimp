@@ -1,0 +1,11 @@
+--- a/Makefile.in	2015-04-03 13:27:40.555911000 -0400
++++ b/Makefile.in	2015-04-03 13:27:56.295616631 -0400
+@@ -369,7 +369,7 @@
+ 
+ # libmng release @VERSION@
+ libmng_la_LDFLAGS = \
+-	-version-number @MNG_MAJOR_NR@:@MNG_MINOR_NR@:@MNG_RELEASE_NR@
++	-version-number @MNG_MAJOR_NR@:@MNG_MINOR_NR@:@MNG_RELEASE_NR@ -no-undefined
+ 
+ lib_LTLIBRARIES = libmng.la
+ include_HEADERS = libmng.h libmng_conf.h libmng_types.h
