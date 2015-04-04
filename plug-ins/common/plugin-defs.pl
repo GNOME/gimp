@@ -1,7 +1,6 @@
 %plugins = (
     'align-layers' => { ui => 1 },
     'animation-optimize' => {},
-    'animation-play' => { ui => 1, gegl => 1 },
     'blinds' => { ui => 1 },
     'blur' => {},
     'border-average' => { ui => 1, gegl => 1 },

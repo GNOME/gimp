@@ -51,7 +51,6 @@ AM_CPPFLAGS = \
 libexec_PROGRAMS = \
 	align-layers \
 	animation-optimize \
-	animation-play \
 	blinds \
 	blur \
 	border-average \
@@ -199,24 +198,6 @@ animation_optimize_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(animation_optimize_RC)
-
-animation_play_SOURCES = \
-	animation-play.c
-
-animation_play_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(GEGL_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(animation_play_RC)
 
 blinds_SOURCES = \
 	blinds.c
