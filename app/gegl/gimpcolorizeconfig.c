@@ -41,19 +41,25 @@ enum
 };
 
 
-static void   gimp_colorize_config_get_property (GObject      *object,
-                                                 guint         property_id,
-                                                 GValue       *value,
-                                                 GParamSpec   *pspec);
-static void   gimp_colorize_config_set_property (GObject      *object,
-                                                 guint         property_id,
-                                                 const GValue *value,
-                                                 GParamSpec   *pspec);
+static void     gimp_colorize_config_iface_init   (GimpConfigInterface *iface);
+
+static void     gimp_colorize_config_get_property (GObject      *object,
+                                                   guint         property_id,
+                                                   GValue       *value,
+                                                   GParamSpec   *pspec);
+static void     gimp_colorize_config_set_property (GObject      *object,
+                                                   guint         property_id,
+                                                   const GValue *value,
+                                                   GParamSpec   *pspec);
+
+static gboolean gimp_colorize_config_equal        (GimpConfig   *a,
+                                                   GimpConfig   *b);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorizeConfig, gimp_colorize_config,
                          GIMP_TYPE_IMAGE_MAP_CONFIG,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_colorize_config_iface_init))
 
 #define parent_class gimp_colorize_config_parent_class
 
@@ -83,6 +89,12 @@ gimp_colorize_config_class_init (GimpColorizeConfigClass *klass)
                                    "lightness",
                                    "Lightness",
                                    -1.0, 1.0, 0.0, 0);
+}
+
+static void
+gimp_colorize_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->equal = gimp_colorize_config_equal;
 }
 
 static void
@@ -162,3 +174,21 @@ gimp_colorize_config_to_cruft (GimpColorizeConfig *config,
 
   colorize_calculate (cruft);
 }
+
+static gboolean
+gimp_colorize_config_equal (GimpConfig *a,
+                            GimpConfig *b)
+{
+  GimpColorizeConfig *config_a = GIMP_COLORIZE_CONFIG (a);
+  GimpColorizeConfig *config_b = GIMP_COLORIZE_CONFIG (b);
+
+  if (config_a->hue        != config_b->hue        ||
+      config_a->saturation != config_b->saturation ||
+      config_a->lightness  != config_b->lightness)
+    {
+      return FALSE;
+    }
+
+  return TRUE;
+}
+

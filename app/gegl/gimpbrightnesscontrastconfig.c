@@ -39,20 +39,26 @@ enum
 };
 
 
-static void   gimp_brightness_contrast_config_get_property (GObject      *object,
-                                                            guint         property_id,
-                                                            GValue       *value,
-                                                            GParamSpec   *pspec);
-static void   gimp_brightness_contrast_config_set_property (GObject      *object,
-                                                            guint         property_id,
-                                                            const GValue *value,
-                                                            GParamSpec   *pspec);
+static void     gimp_brightness_contrast_config_iface_init   (GimpConfigInterface *iface);
+
+static void     gimp_brightness_contrast_config_get_property (GObject      *object,
+                                                              guint         property_id,
+                                                              GValue       *value,
+                                                              GParamSpec   *pspec);
+static void     gimp_brightness_contrast_config_set_property (GObject      *object,
+                                                              guint         property_id,
+                                                              const GValue *value,
+                                                              GParamSpec   *pspec);
+
+static gboolean gimp_brightness_contrast_config_equal        (GimpConfig   *a,
+                                                              GimpConfig   *b);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpBrightnessContrastConfig,
                          gimp_brightness_contrast_config,
                          GIMP_TYPE_IMAGE_MAP_CONFIG,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_brightness_contrast_config_iface_init))
 
 #define parent_class gimp_brightness_contrast_config_parent_class
 
@@ -77,6 +83,12 @@ gimp_brightness_contrast_config_class_init (GimpBrightnessContrastConfigClass *k
                                    "contrast",
                                    "Contrast",
                                    -1.0, 1.0, 0.0, 0);
+}
+
+static void
+gimp_brightness_contrast_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->equal = gimp_brightness_contrast_config_equal;
 }
 
 static void
@@ -130,6 +142,22 @@ gimp_brightness_contrast_config_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gboolean
+gimp_brightness_contrast_config_equal (GimpConfig *a,
+                                       GimpConfig *b)
+{
+  GimpBrightnessContrastConfig *config_a = GIMP_BRIGHTNESS_CONTRAST_CONFIG (a);
+  GimpBrightnessContrastConfig *config_b = GIMP_BRIGHTNESS_CONTRAST_CONFIG (b);
+
+  if (config_a->brightness != config_b->brightness ||
+      config_a->contrast   != config_b->contrast)
+    {
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 

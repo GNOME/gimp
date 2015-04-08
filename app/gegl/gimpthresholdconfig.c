@@ -40,19 +40,25 @@ enum
 };
 
 
-static void   gimp_threshold_config_get_property (GObject      *object,
-                                                  guint         property_id,
-                                                  GValue       *value,
-                                                  GParamSpec   *pspec);
-static void   gimp_threshold_config_set_property (GObject      *object,
-                                                  guint         property_id,
-                                                  const GValue *value,
-                                                  GParamSpec   *pspec);
+static void     gimp_threshold_config_iface_init   (GimpConfigInterface *iface);
+
+static void     gimp_threshold_config_get_property (GObject      *object,
+                                                    guint         property_id,
+                                                    GValue       *value,
+                                                    GParamSpec   *pspec);
+static void     gimp_threshold_config_set_property (GObject      *object,
+                                                    guint         property_id,
+                                                    const GValue *value,
+                                                    GParamSpec   *pspec);
+
+static gboolean gimp_threshold_config_equal        (GimpConfig   *a,
+                                                    GimpConfig   *b);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpThresholdConfig, gimp_threshold_config,
                          GIMP_TYPE_IMAGE_MAP_CONFIG,
-                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG, NULL))
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_threshold_config_iface_init))
 
 #define parent_class gimp_threshold_config_parent_class
 
@@ -77,6 +83,12 @@ gimp_threshold_config_class_init (GimpThresholdConfigClass *klass)
                                    "high",
                                    "High threshold",
                                    0.0, 1.0, 1.0, 0);
+}
+
+static void
+gimp_threshold_config_iface_init (GimpConfigInterface *iface)
+{
+  iface->equal = gimp_threshold_config_equal;
 }
 
 static void
@@ -130,6 +142,22 @@ gimp_threshold_config_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gboolean
+gimp_threshold_config_equal (GimpConfig *a,
+                             GimpConfig *b)
+{
+  GimpThresholdConfig *config_a = GIMP_THRESHOLD_CONFIG (a);
+  GimpThresholdConfig *config_b = GIMP_THRESHOLD_CONFIG (b);
+
+  if (config_a->low  != config_b->low ||
+      config_a->high != config_b->high)
+    {
+      return FALSE;
+    }
+
+  return TRUE;
 }
 
 
