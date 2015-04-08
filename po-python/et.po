@@ -5,27 +5,29 @@
 # This file is distributed under the same license as the Gimp package.
 #
 # Olle Niit <olle@paalalinn.com>, 2005-2007.
+# Mattias Põldaru <mahfiaz@gmail.com>, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-09 03:35+0000\n"
-"PO-Revision-Date: 2007-10-02 23:54+0300\n"
-"Last-Translator: Olle Niit <olle@paalalinn.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-03-15 06:13+0000\n"
+"PO-Revision-Date: 2015-03-15 11:33+0300\n"
+"Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Emacs\n"
+"X-Generator: Poedit 1.5.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Missing exception information"
-msgstr ""
+msgstr "Puudub erandi info"
 
 #, python-format
-msgid "An error occured running %s"
-msgstr ""
+msgid "An error occurred running %s"
+msgstr "%s käivitamisel esines viga"
 
 msgid "_More Information"
 msgstr "Rohke_m teavet"
@@ -44,22 +46,22 @@ msgstr "Python-Fu kausta valimine"
 
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr ""
+msgstr "'%s' jaoks saadi sobimatu sisend"
 
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu värvi valimine"
 
 msgid "Saving as colored XHTML"
-msgstr ""
+msgstr "Salvestamine värvitud XHTMLina"
 
 msgid "Save as colored XHTML"
-msgstr ""
+msgstr "Salvesta värvitud XHTMLina"
 
 msgid "Colored XHTML"
-msgstr ""
+msgstr "Värvitud XHTML"
 
 msgid "Character _source"
-msgstr ""
+msgstr "_Märgiallikas"
 
 msgid "Source code"
 msgstr "Lähtekood"
@@ -68,48 +70,28 @@ msgid "Text file"
 msgstr "Tekstifail"
 
 msgid "Entry box"
-msgstr ""
+msgstr "Sisestuskast"
 
 msgid "_File to read or characters to use"
-msgstr ""
+msgstr "_Fail, mida lugeda, või märgiallikas, mida kasutada"
 
 msgid "Fo_nt size in pixels"
-msgstr ""
+msgstr "Fondi _suurus pikslites"
 
 msgid "_Write a separate CSS file"
-msgstr ""
+msgstr "_Kirjuta CSS fail eraldi"
 
-msgid "Python Console"
-msgstr "Python konsool"
+msgid "Gradient to use"
+msgstr "Kasutatav värviüleminek"
 
-msgid "_Browse..."
-msgstr "_Sirvi..."
-
-msgid "Python Procedure Browser"
-msgstr "Python protseduuride sirvija"
-
-#, python-format
-msgid "Could not open '%s' for writing: %s"
-msgstr "Ei suutnud avada faili '%s' kirjutamiseks: %s"
-
-#, python-format
-msgid "Could not write to '%s': %s"
-msgstr "Ei suutnud kirjutada faili '%s': %s"
-
-msgid "Save Python-Fu Console Output"
-msgstr "Salvesta Python-Fu puldi väljund"
-
-msgid "Interactive Gimp-Python interpreter"
-msgstr ""
-
-msgid "_Console"
-msgstr "_Pult"
+msgid "File Name"
+msgstr "Failinimi"
 
 msgid "Add a layer of fog"
-msgstr ""
+msgstr "Udu kihi lisamine"
 
 msgid "_Fog..."
-msgstr ""
+msgstr "_Udu..."
 
 msgid "_Layer name"
 msgstr "_Kihi nimi"
@@ -118,31 +100,31 @@ msgid "Clouds"
 msgstr "Pilved"
 
 msgid "_Fog color"
-msgstr ""
+msgstr "_Udu värv"
 
 msgid "_Turbulence"
-msgstr ""
+msgstr "_Turbulents"
 
 msgid "Op_acity"
-msgstr "Läbip_aistmatus"
+msgstr "_Katvus"
 
 msgid "Offset the colors in a palette"
-msgstr ""
+msgstr "Värvide nihe värvipaletis"
 
 msgid "_Offset Palette..."
-msgstr ""
+msgstr "_Nihuta paletti..."
 
 msgid "Palette"
-msgstr ""
+msgstr "Palett"
 
 msgid "Off_set"
 msgstr "_Nihe"
 
 msgid "Sort the colors in a palette"
-msgstr ""
+msgstr "Värvide sortimine paletis"
 
 msgid "_Sort Palette..."
-msgstr ""
+msgstr "_Sordi palett..."
 
 msgid "Color _model"
 msgstr "Värvi_mudel"
@@ -154,7 +136,7 @@ msgid "HSV"
 msgstr "HSV"
 
 msgid "Channel to _sort"
-msgstr ""
+msgstr "Kanal, mida _sortida"
 
 msgid "Red or Hue"
 msgstr "Punane või värvitoon"
@@ -169,28 +151,30 @@ msgid "_Ascending"
 msgstr "K_asvav"
 
 msgid "Create a repeating gradient using colors from the palette"
-msgstr ""
+msgstr "Korduva värviülemineku loomine kasutades paleti värve"
 
 msgid "Palette to _Repeating Gradient"
-msgstr ""
+msgstr "Palett _korduvaks värviüleminekuks"
 
 msgid "Create a gradient using colors from the palette"
-msgstr ""
+msgstr "Paleti värvide järgi värviülemineku loomine"
 
 msgid "Palette to _Gradient"
-msgstr ""
+msgstr "Paletist _värviüleminek"
 
 msgid "Slice"
 msgstr "Viiluta"
 
+#. table snippet means a small piece of HTML code here
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
+"Pildi tükeldamine juhtjoonte järgi, piltide ja HTML tabeli koodi loomine"
 
 msgid "_Slice..."
 msgstr "_Viiluta..."
 
 msgid "Path for HTML export"
-msgstr ""
+msgstr "HTMLi eksportimise asukoht"
 
 msgid "Filename for export"
 msgstr "Eksporditava faili nimi"
@@ -208,34 +192,115 @@ msgid "Folder for image export"
 msgstr "Kaust pildi eksportimiseks"
 
 msgid "Space between table elements"
-msgstr ""
+msgstr "vahe tabeli lahtrite vahel"
 
 msgid "Javascript for onmouseover and clicked"
-msgstr ""
+msgstr "Javascript hiire alla jäämise ja klõpsamise jaoks"
 
+#. table caps are table cells on the edge of the table
 msgid "Skip animation for table caps"
-msgstr ""
+msgstr "Tabeli servalahtrite animatsiooni ära jätmine"
+
+msgid "Python Console"
+msgstr "Python konsool"
+
+msgid "_Browse..."
+msgstr "_Sirvi..."
+
+msgid "Python Procedure Browser"
+msgstr "Pythoni protseduuride sirvija"
+
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Ei suutnud avada faili '%s' kirjutamiseks: %s"
+
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Ei suutnud kirjutada faili '%s': %s"
+
+msgid "Save Python-Fu Console Output"
+msgstr "Python-Fu konsooli väljundi salvestamine"
+
+msgid "Interactive GIMP Python interpreter"
+msgstr "Interaktiivne GIMPi Pythoni interpretaator"
+
+msgid "_Console"
+msgstr "_Konsool"
 
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr ""
+msgstr "Varju lisamine kihile ning valikul sellele tahkude tekitamine"
 
 msgid "_Drop Shadow and Bevel..."
-msgstr ""
+msgstr "_Vari ja tahud..."
 
 msgid "_Shadow blur"
-msgstr ""
+msgstr "_Varju hägu"
 
 msgid "_Bevel"
 msgstr "_Viltu"
 
 msgid "_Drop shadow"
-msgstr ""
+msgstr "_Vari"
 
 msgid "Drop shadow _X displacement"
-msgstr ""
+msgstr "Varju _X-nihe"
 
 msgid "Drop shadow _Y displacement"
-msgstr ""
+msgstr "Varju _Y-nihe"
+
+msgid "Create a new brush with characters from a text sequence"
+msgstr "Uue pintsli loomine tekstijada märkide järgi"
+
+msgid "New Brush from _Text..."
+msgstr "Uus pintsel _tekstist..."
+
+msgid "Font"
+msgstr "Font"
+
+msgid "Pixel Size"
+msgstr "Pikslisuurus"
+
+msgid "Text"
+msgstr "Tekst"
+
+#~ msgid "Red"
+#~ msgstr "Punane"
+
+#~ msgid "Green"
+#~ msgstr "Roheline"
+
+#~ msgid "Blue"
+#~ msgstr "Sinine"
+
+#~ msgid "Hue"
+#~ msgstr "Värvitoon"
+
+#~ msgid "Value"
+#~ msgstr "Valgsus"
+
+#~ msgid "Saturation (HSL)"
+#~ msgstr "Küllastus (HSL)"
+
+#~ msgid "Lightness (HSL)"
+#~ msgstr "Heledus (HSL)"
+
+#~ msgid "Index"
+#~ msgstr "Indeks"
+
+#~ msgid "Random"
+#~ msgstr "Juhuslik"
+
+#~ msgid "Lightness (LAB)"
+#~ msgstr "Heledus (LAB)"
+
+#~ msgid "A-color"
+#~ msgstr "A-värv"
+
+#~ msgid "B-color"
+#~ msgstr "B-värv"
+
+#~ msgid "All"
+#~ msgstr "Kõik"
 
 #, fuzzy
 #~ msgid "Gimp-Python Console"
