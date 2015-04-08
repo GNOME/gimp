@@ -7,13 +7,15 @@
 #
 # Olle Niit <olle@paalalinn.com>, 2005-2007
 # Priit Laes <amd@store20.com>, 2007
+# Mattias Põldaru <mahfiaz@gmail.com>, 2012-2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-25 16:28+0100\n"
-"PO-Revision-Date: 2007-10-30 23:27+0300\n"
-"Last-Translator: Priit Laes <amd@store20.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-03-15 06:11+0000\n"
+"PO-Revision-Date: 2012-12-19 15:57+0300\n"
+"Last-Translator: Mattias Põldaru <mahfiaz@gmail.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
@@ -21,6 +23,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Emacs\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. procedure executed successfully
+msgid "success"
+msgstr "edukas"
+
+#. procedure execution failed
+msgid "execution error"
+msgstr "käivitusviga"
+
+#. procedure called incorrectly
+msgid "calling error"
+msgstr "väljakutsumise viga"
+
+#. procedure execution cancelled
+msgid "cancelled"
+msgstr "katkestatud"
 
 msgid "Brush Selection"
 msgstr "Pintsli valik"
@@ -30,7 +48,7 @@ msgstr "_Sirvi..."
 
 #, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "%s pistik ei oska kihtidega midagi peale hakata"
+msgstr "%s plugin ei oska kihtidega midagi peale hakata"
 
 msgid "Merge Visible Layers"
 msgstr "Ühenda nähtavad kihid"
@@ -38,12 +56,12 @@ msgstr "Ühenda nähtavad kihid"
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
-"%s pistik ei oska midagi peale hakata kihi nihkega, suurusega või "
+"%s plugin ei oska midagi peale hakata kihi nihkega, suurusega või "
 "läbipaistmatusega"
 
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "%s pistik oskab kihte töödelda ainult kui animatsiooni kaadreid"
+msgstr "%s plugin oskab kihte töödelda ainult kui animatsiooni kaadreid"
 
 msgid "Save as Animation"
 msgstr "Salvesta animatsioonina"
@@ -53,32 +71,32 @@ msgstr "Ühenda kõik kihid"
 
 #, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr "%s pistik ei oska läbipaistvusega midagi peale hakata"
+msgstr "%s plugin ei oska läbipaistvusega midagi peale hakata"
 
 #, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr "%s pistik ei oska kihi maskiga midagi peale hakata"
+msgstr "%s plugin ei oska kihi maskiga midagi peale hakata"
 
 msgid "Apply Layer Masks"
 msgstr "Rakenda kihi maskid"
 
 #, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "%s pistik oskab töödelda ainult RGB pilte"
+msgstr "%s plugin oskab töödelda ainult RGB pilte"
 
 msgid "Convert to RGB"
 msgstr "Muuda RGB-ks"
 
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "%s pistik oskab töödelda ainult halltoonides pilte"
+msgstr "%s plugin oskab töödelda ainult halltoonides pilte"
 
 msgid "Convert to Grayscale"
 msgstr "Muuda halltoonideks"
 
 #, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "%s pistik oskab töödelda ainult indekseeritud pilte"
+msgstr "%s plugin oskab töödelda ainult indekseeritud pilte"
 
 msgid ""
 "Convert to Indexed using default settings\n"
@@ -90,7 +108,7 @@ msgstr ""
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
-"%s pistik oskab töödelda ainult bittraster (kaks värvi) indekseeritud pilte"
+"%s plugin oskab töödelda ainult bittrasteris (kaks värvi) indekseeritud pilte"
 
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
@@ -101,19 +119,19 @@ msgstr ""
 
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "%s pistik oskab töödelda ainult RGB või halltoonides pilte"
+msgstr "%s plugin oskab töödelda ainult RGB või halltoonides pilte"
 
 #, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "%s pistik oskab töödelda ainult RGB või indekseeritud pilte"
+msgstr "%s plugin oskab töödelda ainult RGB või indekseeritud pilte"
 
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "%s pistik oskab töödelda ainult halltoonides või indekseeritud pilte"
+msgstr "%s plugin oskab töödelda ainult halltoonides või indekseeritud pilte"
 
 #, c-format
 msgid "%s plug-in needs an alpha channel"
-msgstr "%s pistik vajab alfakanalit"
+msgstr "%s plugin vajab alfakanalit"
 
 msgid "Add Alpha Channel"
 msgstr "Lisa Alfakanal"
@@ -162,6 +180,9 @@ msgstr ""
 "Sa salvestad kanalit (salvestatud valikut) kui %s.\n"
 "See ei salvesta nähtavaid kihte."
 
+msgid "Export Image as "
+msgstr "Ekspordi pilt kui "
+
 msgid "Font Selection"
 msgstr "Fondi valimine"
 
@@ -171,6 +192,9 @@ msgstr "Sans"
 msgid "Gradient Selection"
 msgstr "Spektrikomplekti valimine"
 
+#. This string appears in an empty menu as in
+#. * "nothing selected and nothing to select"
+#.
 msgid "(Empty)"
 msgstr "(Tühi)"
 
@@ -201,6 +225,13 @@ msgstr "kuupäeva järgi"
 msgid "by type"
 msgstr "tüübi järgi"
 
+#. count label
+msgid "No matches"
+msgstr "Ei leitud"
+
+msgid "Search term invalid or incomplete"
+msgstr "Otsingutermin on vigane või pole täielik"
+
 msgid "Searching"
 msgstr "Otsimine"
 
@@ -217,7 +248,7 @@ msgid "Searching by author"
 msgstr "Autori järgi otsimine"
 
 msgid "Searching by copyright"
-msgstr "Copyright'i järgi otsimine"
+msgstr "Autoriõiguse järgi otsimine"
 
 msgid "Searching by date"
 msgstr "Kuupäeva järgi otsimine"
@@ -240,10 +271,6 @@ msgid_plural "%d procedures match your query"
 msgstr[0] "Sinu päringule vastab %d protseduur"
 msgstr[1] "Sinu päringule vastab %d protseduuri"
 
-#. count label
-msgid "No matches"
-msgstr "Ei leitud"
-
 msgid "Parameters"
 msgstr "Parameetrid"
 
@@ -260,335 +287,441 @@ msgid "Date:"
 msgstr "Kuupäev:"
 
 msgid "Copyright:"
-msgstr "Copyright:"
+msgstr "Autoriõigus:"
 
 msgid "percent"
 msgstr "protsenti"
 
+msgctxt "add-mask-type"
 msgid "_White (full opacity)"
 msgstr "_Valge (täiesti läbipaistmatu)"
 
+msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
 msgstr "_Must (täiesti läbipaistev)"
 
+msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "Kihi _alfakanal"
 
+msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
 msgstr "_Teisalda kihi alfakanal"
 
+msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "_Valik"
 
+msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
 msgstr "_Halltoonides koopia kihist"
 
+msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "_Kanal"
 
+msgctxt "blend-mode"
 msgid "FG to BG (RGB)"
-msgstr "esiplaan tagapõhjaks (RGB)"
+msgstr "Esiplaanivärv tagapõhjaks (RGB)"
 
+msgctxt "blend-mode"
 msgid "FG to BG (HSV)"
-msgstr "esiplaan tagapõhjaks (HSV)"
+msgstr "Esiplaanivärv tagapõhjaks (HSV)"
 
+msgctxt "blend-mode"
 msgid "FG to transparent"
 msgstr "Esiplaanivärv läbipaistvaks"
 
+msgctxt "blend-mode"
 msgid "Custom gradient"
-msgstr "Omatehtud spektrikomplekt"
+msgstr "Omatehtud värviüleminek"
 
+msgctxt "bucket-fill-mode"
 msgid "FG color fill"
 msgstr "Esiplaanivärviga täitmine"
 
+msgctxt "bucket-fill-mode"
 msgid "BG color fill"
 msgstr "Tagapõhjavärviga täitmine"
 
+msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "Mustriga täitmine"
 
+msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Liida olemasolevale valikule"
 
+msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Lahuta olemasolevast valikust"
 
+msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Asenda olemasolev valik"
 
+msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "Valituks osutub kahe valiku ühisosa"
 
+msgctxt "channel-type"
 msgid "Red"
 msgstr "Punane"
 
+msgctxt "channel-type"
 msgid "Green"
 msgstr "Roheline"
 
+msgctxt "channel-type"
 msgid "Blue"
 msgstr "Sinine"
 
+msgctxt "channel-type"
 msgid "Gray"
 msgstr "Hall"
 
+msgctxt "channel-type"
 msgid "Indexed"
 msgstr "Indekseeritud"
 
+msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Alfa"
 
+msgctxt "check-size"
 msgid "Small"
 msgstr "Väike"
 
+msgctxt "check-size"
 msgid "Medium"
 msgstr "Keskmine"
 
+msgctxt "check-size"
 msgid "Large"
 msgstr "Suur"
 
+msgctxt "check-type"
 msgid "Light checks"
 msgstr "Hele malelaud"
 
+msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Keskmine malelaud"
 
+msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Tume malelaud"
 
+msgctxt "check-type"
 msgid "White only"
 msgstr "Ainult valge"
 
+msgctxt "check-type"
 msgid "Gray only"
 msgstr "Ainult hall"
 
+msgctxt "check-type"
 msgid "Black only"
 msgstr "Ainult must"
 
+msgctxt "clone-type"
 msgid "Image"
 msgstr "Pilt"
 
+msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Muster"
 
+msgctxt "desaturate-mode"
 msgid "Lightness"
 msgstr "Valgustatus"
 
+msgctxt "desaturate-mode"
 msgid "Luminosity"
-msgstr "Paistvus"
+msgstr "Heledus"
 
+msgctxt "desaturate-mode"
 msgid "Average"
 msgstr "Keskmine"
 
+msgctxt "dodge-burn-type"
 msgid "Dodge"
-msgstr "Helenda"
+msgstr "Heledamaks"
 
+msgctxt "dodge-burn-type"
 msgid "Burn"
-msgstr "Tumenda"
+msgstr "Tumedamaks"
 
-msgid "gradient|Linear"
+msgctxt "gradient-type"
+msgid "Linear"
 msgstr "Lineaarne"
 
+msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Bi-lineaarne"
 
+msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Radiaalne"
 
+msgctxt "gradient-type"
 msgid "Square"
 msgstr "Ruut"
 
+msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Kooniline (sümm)"
 
+msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Kooniline (asüm)"
 
+msgctxt "gradient-type"
 msgid "Shaped (angular)"
-msgstr "Nurgeline"
+msgstr "Kujund (kooniline)"
 
+msgctxt "gradient-type"
 msgid "Shaped (spherical)"
-msgstr "Kerakujuline"
+msgstr "Kujund (sfääriline)"
 
+msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
-msgstr "Lohukujuline"
+msgstr "Kujund (lohuga)"
 
+msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Spiraalne (pärip)"
 
+msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Spiraalne (vastup)"
 
+msgctxt "grid-style"
 msgid "Intersections (dots)"
-msgstr ""
+msgstr "Lõikumine (punktid)"
 
+msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
-msgstr ""
+msgstr "Lõikumine (sihikud)"
 
+msgctxt "grid-style"
 msgid "Dashed"
-msgstr ""
+msgstr "Kriipsjoon"
 
+msgctxt "grid-style"
 msgid "Double dashed"
-msgstr ""
+msgstr "Kaksikkriipsjoon"
 
+msgctxt "grid-style"
 msgid "Solid"
 msgstr "Ühtlane"
 
+msgctxt "icon-type"
 msgid "Stock ID"
-msgstr ""
+msgstr "Lao-ID"
 
+msgctxt "icon-type"
 msgid "Inline pixbuf"
-msgstr ""
+msgstr "Sisemine pixbuf"
 
+msgctxt "icon-type"
 msgid "Image file"
 msgstr "Pildifail"
 
+msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "RGB värvid"
 
+msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Halltoonid"
 
+msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Indekseeritud värv"
 
+msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
+msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
+msgctxt "image-type"
+msgid "Grayscale"
+msgstr "Halltoonid"
+
+msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Halltoonid-alfa"
 
+msgctxt "image-type"
+msgid "Indexed"
+msgstr "Indekseeritud"
+
+msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Indekseeritud-alfa"
 
-msgid "interpolation|None"
-msgstr "Puudub"
-
-msgid "interpolation|Linear"
-msgstr "Lineaarne"
-
-msgid "Cubic"
-msgstr "Kuubik"
-
-msgid "Sinc (Lanczos3)"
-msgstr "Sinc (Lanczos3 algoritm)"
-
-msgid "Constant"
-msgstr "Muutumatu"
-
-msgid "Incremental"
-msgstr "Suurenev"
-
+msgctxt "interpolation-type"
 msgid "None"
 msgstr "Puudub"
 
+msgctxt "interpolation-type"
+msgid "Linear"
+msgstr "Lineaarne"
+
+msgctxt "interpolation-type"
+msgid "Cubic"
+msgstr "Kuubik"
+
+msgctxt "interpolation-type"
+msgid "Sinc (Lanczos3)"
+msgstr "Sinc (Lanczos3 algoritm)"
+
+msgctxt "paint-application-mode"
+msgid "Constant"
+msgstr "Muutumatu"
+
+msgctxt "paint-application-mode"
+msgid "Incremental"
+msgstr "Suurenev"
+
+msgctxt "repeat-mode"
+msgid "None"
+msgstr "Puudub"
+
+msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Saehamba laine"
 
+msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Kolmnurkne laine"
 
+msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Jooksuta interaktiivselt"
 
+msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Jooksuta mitte-interaktiivselt"
 
+msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Jooksuta viimati kasutatud väärtustega"
 
+msgctxt "size-type"
 msgid "Pixels"
-msgstr "Piksleid"
+msgstr "Pikslid"
 
+msgctxt "size-type"
 msgid "Points"
-msgstr "Punkti"
+msgstr "Punktid"
 
+msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Varjud"
 
+msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Kesktoonid"
 
+msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Heledaimad"
 
+msgctxt "transform-direction"
 msgid "Normal (Forward)"
-msgstr "Normaalne (Edasi)"
+msgstr "Normaalne (edasi)"
 
+msgctxt "transform-direction"
 msgid "Corrective (Backward)"
-msgstr ""
+msgstr "Parandav (tagasi)"
 
+msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Reguleeri"
 
+msgctxt "transform-resize"
 msgid "Clip"
-msgstr ""
+msgstr "Klipp"
 
+msgctxt "transform-resize"
 msgid "Crop to result"
-msgstr ""
+msgstr "Lõika tulemuseni"
 
+msgctxt "transform-resize"
 msgid "Crop with aspect"
-msgstr ""
+msgstr "Lõikamine külgede suhtega"
 
+msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Sisemine GIMP'i potseduur"
 
+msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
-msgstr "GIMP'i pistik"
+msgstr "GIMP'i plugin"
 
+msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "GIMP'i laiendus"
 
+msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Ajutine protseduur"
 
-#, c-format
-msgid "%d Byte"
-msgid_plural "%d Bytes"
-msgstr[0] "%d Baiti"
-msgstr[1] "%d Baiti"
+msgctxt "text-direction"
+msgid "From left to right"
+msgstr "Vasakult paremale"
 
-#, c-format
-msgid "%.2f KB"
-msgstr "%.2f KB"
+msgctxt "text-direction"
+msgid "From right to left"
+msgstr "Paremalt vasakule"
 
-#, c-format
-msgid "%.1f KB"
-msgstr "%.1f KB"
+msgctxt "text-hint-style"
+msgid "None"
+msgstr "Puudub"
 
-#, c-format
-msgid "%d KB"
-msgstr "%d KB"
+msgctxt "text-hint-style"
+msgid "Slight"
+msgstr "Pisut"
 
-#, c-format
-msgid "%.2f MB"
-msgstr "%.2f MB"
+msgctxt "text-hint-style"
+msgid "Medium"
+msgstr "Keskmine"
 
-#, c-format
-msgid "%.1f MB"
-msgstr "%.1f MB"
+msgctxt "text-hint-style"
+msgid "Full"
+msgstr "Täielik"
 
-#, c-format
-msgid "%d MB"
-msgstr "%d MB"
+msgctxt "text-justification"
+msgid "Left justified"
+msgstr "Joondatud vasakule"
 
-#, c-format
-msgid "%.2f GB"
-msgstr "%.2f GB"
+msgctxt "text-justification"
+msgid "Right justified"
+msgstr "Joondatud paremale"
 
-#, c-format
-msgid "%.1f GB"
-msgstr "%.1f GB"
+msgctxt "text-justification"
+msgid "Centered"
+msgstr "Keskel"
 
-#, c-format
-msgid "%d GB"
-msgstr "%d GB"
+msgctxt "text-justification"
+msgid "Filled"
+msgstr "Täidetud"
 
 msgid "(invalid UTF-8 string)"
 msgstr "(vigane UTF-8 tekstilõik)"
 
+#. *
+#. * SECTION: gimpcolorconfig
+#. * @title: GimpColorConfig
+#. * @short_description: Color management settings.
+#. *
+#. * Color management settings.
+#. *
 msgid "Mode of operation for color management."
 msgstr "Värvihalduse töörežiim"
 
@@ -630,27 +763,35 @@ msgstr ""
 
 msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
+"Värv, mida kasutatakse värviulatusest välja jäävate värvide märkimiseks."
 
+msgctxt "color-management-mode"
 msgid "No color management"
 msgstr "Värvihaldus puudub"
 
+msgctxt "color-management-mode"
 msgid "Color managed display"
 msgstr "Värvihaldusega ekraan"
 
+msgctxt "color-management-mode"
 msgid "Print simulation"
 msgstr "Trükkimise teesklemine"
 
+msgctxt "color-rendering-intent"
 msgid "Perceptual"
 msgstr "Tajutav"
 
+msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
-msgstr ""
+msgstr "Suhteline kolorimeetria"
 
-msgid "intent|Saturation"
+msgctxt "color-rendering-intent"
+msgid "Saturation"
 msgstr "Küllastatus"
 
+msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
-msgstr ""
+msgstr "Absoluutne kolorimeetria"
 
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
@@ -712,8 +853,14 @@ msgstr ""
 msgid "Could not create '%s': %s"
 msgstr "Ei suutnud '%s' luua: %s"
 
+#, c-format
 msgid "invalid UTF-8 string"
 msgstr "vigane UTF-8 tekstilõik"
+
+#. please don't translate 'yes' and 'no'
+#, c-format
+msgid "expected 'yes' or 'no' for boolean token, got '%s'"
+msgstr "loogikamuutuja väärtuseks eeldati 'yes' või 'no', aga saadi '%s'"
 
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
@@ -747,8 +894,9 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Ei suutnud luua pisipildikataloogi '%s'."
 
+#, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
-msgstr ""
+msgstr "Pisipilt ei sisalda Thumb::URI silti"
 
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
@@ -772,7 +920,8 @@ msgstr "_Valge"
 msgid "Select color profile from disk..."
 msgstr "Vali värviprofiil kettalt..."
 
-msgid "profile|None"
+msgctxt "profile"
+msgid "None"
 msgstr "Puudub"
 
 msgid "Scales"
@@ -806,6 +955,9 @@ msgstr "Vali kaust"
 msgid "Select File"
 msgstr "Vali fail"
 
+msgid "Press F1 for more help"
+msgstr "Abi saamiseks vajuta F1"
+
 msgid "Kilobytes"
 msgstr "Kilobaiti"
 
@@ -827,9 +979,6 @@ msgstr "Vali pii_rkond"
 
 msgid "Open _pages as"
 msgstr "Ava _lehed kui"
-
-msgid "Page 000"
-msgstr "Leht 000"
 
 #, c-format
 msgid "Page %d"
@@ -856,15 +1005,15 @@ msgid ""
 msgstr ""
 "Klõpsa pipetti, siis klõpsa värvi suvalises kohas ekraanil värvi valimiseks."
 
+#. toggle button to (de)activate the instant preview
+msgid "_Preview"
+msgstr "_Eelvaade"
+
 msgid "Check Size"
 msgstr "Kontrolli suurust"
 
 msgid "Check Style"
 msgstr "Kontrolli stiili"
-
-#. toggle button to (de)activate the instant preview
-msgid "_Preview"
-msgstr "_Eelvaade"
 
 #, c-format
 msgid "This text input field is limited to %d character."
@@ -954,53 +1103,410 @@ msgstr "Seemnega juhusliku arvu generaator väljamõeldud juhusliku arvuga"
 msgid "_Randomize"
 msgstr "_Juhuslik"
 
+msgctxt "input-mode"
+msgid "Disabled"
+msgstr "Keelatud"
+
+msgctxt "input-mode"
+msgid "Screen"
+msgstr "Ekraan"
+
+msgctxt "input-mode"
+msgid "Window"
+msgstr "Aken"
+
+msgctxt "aspect-type"
+msgid "Square"
+msgstr "Ruut"
+
+msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "Portree"
 
+msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "Maastik"
 
+msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_H"
 
 msgid "Hue"
 msgstr "Värvus"
 
+msgctxt "color-selector-channel"
 msgid "_S"
 msgstr "_S"
 
 msgid "Saturation"
 msgstr "Küllastatus"
 
+msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "_V"
 
 msgid "Value"
 msgstr "Väärtus"
 
+msgctxt "color-selector-channel"
 msgid "_R"
 msgstr "_R"
 
+msgid "Red"
+msgstr "Punane"
+
+msgctxt "color-selector-channel"
 msgid "_G"
 msgstr "_G"
 
+msgid "Green"
+msgstr "Roheline"
+
+msgctxt "color-selector-channel"
 msgid "_B"
 msgstr "_B"
 
+msgid "Blue"
+msgstr "Sinine"
+
+msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "_A"
 
+msgid "Alpha"
+msgstr "Alfa"
+
+msgctxt "page-selector-target"
 msgid "Layers"
-msgstr "Kihte"
+msgstr "Kihid"
 
+msgctxt "page-selector-target"
 msgid "Images"
-msgstr "Pilte"
+msgstr "Pildid"
 
+msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Suurendus"
 
+msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Vähendus"
+
+msgid "CMYK color selector (using color profile)"
+msgstr "CMYK värvide valija (kasutab värviprofiile)"
+
+msgid "CMYK"
+msgstr "CMYK"
+
+#. Cyan
+msgid "_C"
+msgstr "_C"
+
+#. Magenta
+msgid "_M"
+msgstr "_M"
+
+#. Yellow
+msgid "_Y"
+msgstr "_Y"
+
+#. Key (Black)
+msgid "_K"
+msgstr "_K"
+
+msgid "Cyan"
+msgstr "Tsüaan"
+
+msgid "Magenta"
+msgstr "Magenta"
+
+msgid "Yellow"
+msgstr "Kollane"
+
+msgid "Black"
+msgstr "Must"
+
+msgid "Profile: (none)"
+msgstr "Profiil: (puudub)"
+
+#, c-format
+msgid "Profile: %s"
+msgstr "Profiil: %s"
+
+msgid "CMYK color selector"
+msgstr "CMYK värvi valija"
+
+msgid "Black _pullout:"
+msgstr "Musta _eemaldamine:"
+
+msgid "The percentage of black to pull out of the colored inks."
+msgstr "Mitu protsenti musta eemaldada värvitindist."
+
+msgid "Watercolor style color selector"
+msgstr "Vesivärvi stiilis värvivalija"
+
+msgid "Watercolor"
+msgstr "Vesivärv"
+
+msgid "Pressure"
+msgstr "Surve"
+
+msgid "HSV color wheel"
+msgstr "HSV värviratas"
+
+msgid "Wheel"
+msgstr "Ratas"
+
+msgid "DirectX DirectInput event controller"
+msgstr "DirectX DirectInput sündmuste kontroller"
+
+msgid "Device:"
+msgstr "Seade:"
+
+msgid "The device to read DirectInput events from."
+msgstr "Seade, millest lugeda DirectInput sündmuseid."
+
+msgid "DirectX DirectInput"
+msgstr "DirectX DirectInput"
+
+#, c-format
+msgid "Button %d"
+msgstr "Nupp %d"
+
+#, c-format
+msgid "Button %d Press"
+msgstr "Nupp %d Vajuta"
+
+#, c-format
+msgid "Button %d Release"
+msgstr "Nupp %d Vabasta"
+
+msgid "X Move Left"
+msgstr "X liiguta vasakule"
+
+msgid "X Move Right"
+msgstr "X liiguta paremale"
+
+msgid "Y Move Away"
+msgstr "Y-telg, liikumine eemale"
+
+msgid "Y Move Near"
+msgstr "Y-telg, liikumine lähemale"
+
+msgid "Z Move Up"
+msgstr "Z liiguta üles"
+
+msgid "Z Move Down"
+msgstr "Z liiguta alla"
+
+msgid "X Axis Tilt Away"
+msgstr "X-telg, kallutus eemale"
+
+msgid "X Axis Tilt Near"
+msgstr "X-telg, kallutus lähemale"
+
+msgid "Y Axis Tilt Right"
+msgstr "Y-telg, kallutus paremale"
+
+msgid "Y Axis Tilt Left"
+msgstr "Y-telg, kallutus vasakule"
+
+msgid "Z Axis Turn Left"
+msgstr "Y-telg, vasakule pööramine"
+
+msgid "Z Axis Turn Right"
+msgstr "Y-telg, paremale pööramine"
+
+#, c-format
+msgid "Slider %d Increase"
+msgstr "Slaideri %d suurendamine"
+
+#, c-format
+msgid "Slider %d Decrease"
+msgstr "Slaideri %d vähendamine"
+
+#, c-format
+msgid "POV %d X View"
+msgstr "POV %d X vaade"
+
+#, c-format
+msgid "POV %d Y View"
+msgstr "POV %d Y vaade"
+
+#, c-format
+msgid "POV %d Return"
+msgstr "POV %d tagasi"
+
+msgid "DirectInput Events"
+msgstr "DirectInput sündmused"
+
+msgid "No device configured"
+msgstr "Ühtegi seadet pole häälestatud"
+
+msgid "Device not available"
+msgstr "Seade ei ole kättesaadav"
+
+msgid "Button 0"
+msgstr "Nupp 0"
+
+msgid "Button 1"
+msgstr "Nupp 1"
+
+msgid "Button 2"
+msgstr "Nupp 2"
+
+msgid "Button 3"
+msgstr "Nupp 3"
+
+msgid "Button 4"
+msgstr "Nupp 4"
+
+msgid "Button 5"
+msgstr "Nupp 5"
+
+msgid "Button 6"
+msgstr "Nupp 6"
+
+msgid "Button 7"
+msgstr "Nupp 7"
+
+msgid "Button 8"
+msgstr "Nupp 8"
+
+msgid "Button 9"
+msgstr "Nupp 9"
+
+msgid "Button Mouse"
+msgstr "Nupp hiire peal"
+
+msgid "Button Left"
+msgstr "Nupp Vasak"
+
+msgid "Button Right"
+msgstr "Nupp Parem"
+
+msgid "Button Middle"
+msgstr "Nupp Keskmine"
+
+msgid "Button Side"
+msgstr "Nupp küljel"
+
+msgid "Button Extra"
+msgstr "Nupp, lisa"
+
+msgid "Button Forward"
+msgstr "Nupp Edasi"
+
+msgid "Button Back"
+msgstr "Nupp Tagasi"
+
+msgid "Button Task"
+msgstr "Nupp, lisaülesandega"
+
+msgid "Button Wheel"
+msgstr "Nupp Ratas"
+
+msgid "Button Gear Down"
+msgstr "Nupp Käik alla"
+
+msgid "Button Gear Up"
+msgstr "Nupp Käik üles"
+
+msgid "Y Move Forward"
+msgstr "Y liiguta edasi"
+
+msgid "Y Move Back"
+msgstr "Y liiguta tagasi"
+
+msgid "X Axis Tilt Forward"
+msgstr "X-telg, kallutus ette"
+
+msgid "X Axis Tilt Back"
+msgstr "X-telg, kallutus taha"
+
+msgid "Horiz. Wheel Turn Back"
+msgstr "Horisontaalratas, tagasipööramine"
+
+msgid "Horiz. Wheel Turn Forward"
+msgstr "Horisontaalratas, edasipööramine"
+
+msgid "Dial Turn Left"
+msgstr "Valija pööramine vasakule"
+
+msgid "Dial Turn Right"
+msgstr "Valija pööramine paremale"
+
+msgid "Wheel Turn Left"
+msgstr "Ratta pööramine vasakule"
+
+msgid "Wheel Turn Right"
+msgstr "Ratta pööramine paremale"
+
+msgid "Linux input event controller"
+msgstr "Linuxi sisendseadmete kontroller"
+
+msgid "The name of the device to read Linux Input events from."
+msgstr "Seadme nimi, millest Linuxi sisendsündmusi lugeda."
+
+msgid "Linux Input"
+msgstr "Linuxi sisend"
+
+msgid "Linux Input Events"
+msgstr "Linuxi sisendi sündmused"
+
+#, c-format
+msgid "Reading from %s"
+msgstr "Loetakse kohast %s"
+
+#, c-format
+msgid "Device not available: %s"
+msgstr "Seade ei ole kättesaadav: %s"
+
+msgid "End of file"
+msgstr "Faili lõpp"
+
+msgid "MIDI event controller"
+msgstr "MIDI sündmuste kontroller"
+
+msgid "The name of the device to read MIDI events from."
+msgstr "Seadme nimi, millest MIDI sündmuseid lugeda."
+
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr "Sisesta 'alsa', et kasutada ALSA sekventserit."
+
+msgid "Channel:"
+msgstr "Kanal:"
+
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr ""
+"MIDI kanal, millest sündmuseid lugeda. Kõigi MIDI kanalite lugemiseks määra "
+"väärtuseks -1."
+
+msgid "MIDI"
+msgstr "MIDI"
+
+#, c-format
+msgid "Note %02x on"
+msgstr "Märkus %02x sees"
+
+#, c-format
+msgid "Note %02x off"
+msgstr "Märkus %02x väljas"
+
+#, c-format
+msgid "Controller %03d"
+msgstr "Sisendseade %03d"
+
+msgid "MIDI Events"
+msgstr "MIDI sündmused"
+
+msgid "GIMP"
+msgstr "GIMP"
+
+msgid "GIMP MIDI Input Controller"
+msgstr "GIMP MIDI sisendseade"
 
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (tundetu punase suhtes)"
@@ -1044,6 +1550,9 @@ msgstr "Värvihalduse ekraanifilter kasutab ICC värviprofiile"
 msgid "Color Management"
 msgstr "Värvihaldus"
 
+msgid "None"
+msgstr "Puudub"
+
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1081,324 +1590,70 @@ msgid "_Profile:"
 msgstr "_Profiil:"
 
 msgid "_Intent:"
-msgstr ""
+msgstr "_Kavatsus:"
 
 msgid "_Black Point Compensation"
 msgstr "_Musta punkti kompensatsioon"
 
-msgid "CMYK color selector"
-msgstr "CMYK värvi valija"
+#~ msgctxt "interpolation-type"
+#~ msgid "LoHalo"
+#~ msgstr "LoHalo"
 
-msgid "CMYK"
-msgstr "CMYK"
+#~ msgid "(unnamed profile)"
+#~ msgstr "(nimetu profiil)"
 
-#. Cyan
-msgid "_C"
-msgstr "_C"
+#~ msgid "Page 000"
+#~ msgstr "Leht 000"
 
-#. Magenta
-msgid "_M"
-msgstr "_M"
+#~ msgid "gradient|Linear"
+#~ msgstr "Lineaarne"
 
-#. Yellow
-msgid "_Y"
-msgstr "_Y"
+#~ msgid "interpolation|None"
+#~ msgstr "Puudub"
 
-#. Key (Black)
-msgid "_K"
-msgstr "_K"
+#~ msgid "interpolation|Linear"
+#~ msgstr "Lineaarne"
 
-msgid "Cyan"
-msgstr "Tsüaan"
+#~ msgid "%d Byte"
+#~ msgid_plural "%d Bytes"
+#~ msgstr[0] "%d Baiti"
+#~ msgstr[1] "%d Baiti"
 
-msgid "Magenta"
-msgstr "Magenta"
+#~ msgid "%.2f KB"
+#~ msgstr "%.2f KB"
 
-msgid "Yellow"
-msgstr "Kollane"
+#~ msgid "%.1f KB"
+#~ msgstr "%.1f KB"
 
-msgid "Black"
-msgstr "Must"
+#~ msgid "%d KB"
+#~ msgstr "%d KB"
 
-msgid "Black _pullout:"
-msgstr ""
+#~ msgid "%.2f MB"
+#~ msgstr "%.2f MB"
 
-msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+#~ msgid "%.1f MB"
+#~ msgstr "%.1f MB"
 
-msgid "CMYK color selector (using color profile)"
-msgstr "CMYK värvide valija (kasutab värviprofiile)"
+#~ msgid "%d MB"
+#~ msgstr "%d MB"
 
-msgid "Profile: (none)"
-msgstr "Profiil: (puudub)"
+#~ msgid "%.2f GB"
+#~ msgstr "%.2f GB"
 
-#, c-format
-msgid "Profile: %s"
-msgstr "Profiil: %s"
+#~ msgid "%.1f GB"
+#~ msgstr "%.1f GB"
 
-msgid "Painter-style triangle color selector"
-msgstr ""
+#~ msgid "%d GB"
+#~ msgstr "%d GB"
 
-msgid "Triangle"
-msgstr "Kolmnurk"
+#~ msgid "intent|Saturation"
+#~ msgstr "Küllastatus"
 
-msgid "Watercolor style color selector"
-msgstr "Vesivärvi stiilis värvivalija"
+#~ msgid "profile|None"
+#~ msgstr "Puudub"
 
-msgid "Watercolor"
-msgstr "Vesivärv"
-
-msgid "Pressure"
-msgstr "Surve"
-
-msgid "Button 0"
-msgstr "Nupp 0"
-
-msgid "Button 1"
-msgstr "Nupp 1"
-
-msgid "Button 2"
-msgstr "Nupp 2"
-
-msgid "Button 3"
-msgstr "Nupp 3"
-
-msgid "Button 4"
-msgstr "Nupp 4"
-
-msgid "Button 5"
-msgstr "Nupp 5"
-
-msgid "Button 6"
-msgstr "Nupp 6"
-
-msgid "Button 7"
-msgstr "Nupp 7"
-
-msgid "Button 8"
-msgstr "Nupp 8"
-
-msgid "Button 9"
-msgstr "Nupp 9"
-
-msgid "Button Mouse"
-msgstr ""
-
-msgid "Button Left"
-msgstr "Nupp Vasak"
-
-msgid "Button Right"
-msgstr "Nupp Parem"
-
-msgid "Button Middle"
-msgstr "Nupp Keskmine"
-
-msgid "Button Side"
-msgstr ""
-
-msgid "Button Extra"
-msgstr ""
-
-msgid "Button Forward"
-msgstr "Nupp Edasi"
-
-msgid "Button Back"
-msgstr "Nupp Tagasi"
-
-msgid "Button Task"
-msgstr ""
-
-msgid "Button Wheel"
-msgstr "Nupp Ratas"
-
-msgid "Button Gear Down"
-msgstr "Nupp Käik alla"
-
-msgid "Button Gear Up"
-msgstr "Nupp Käik üles"
-
-msgid "X Move Left"
-msgstr "X liiguta vasakule"
-
-msgid "X Move Right"
-msgstr "X liiguta paremale"
-
-msgid "Y Move Forward"
-msgstr "Y liiguta edasi"
-
-msgid "Y Move Back"
-msgstr "Y liiguta tagasi"
-
-msgid "Z Move Up"
-msgstr "Z liiguta üles"
-
-msgid "Z Move Down"
-msgstr "Z liiguta alla"
-
-msgid "X Axis Tilt Forward"
-msgstr ""
-
-msgid "X Axis Tilt Back"
-msgstr ""
-
-msgid "Y Axis Tilt Right"
-msgstr ""
-
-msgid "Y Axis Tilt Left"
-msgstr ""
-
-msgid "Z Axis Turn Left"
-msgstr ""
-
-msgid "Z Axis Turn Right"
-msgstr ""
-
-msgid "Horiz. Wheel Turn Back"
-msgstr ""
-
-msgid "Horiz. Wheel Turn Forward"
-msgstr ""
-
-msgid "Dial Turn Left"
-msgstr ""
-
-msgid "Dial Turn Right"
-msgstr ""
-
-msgid "Wheel Turn Left"
-msgstr ""
-
-msgid "Wheel Turn Right"
-msgstr ""
-
-msgid "Linux input event controller"
-msgstr ""
-
-msgid "Device:"
-msgstr "Seade:"
-
-msgid "The name of the device to read Linux Input events from."
-msgstr ""
-
-msgid "Linux Input"
-msgstr "Linuxi sisend"
-
-msgid "Linux Input Events"
-msgstr "Linuxi sisendi sündmused"
-
-msgid "No device configured"
-msgstr ""
-
-#, c-format
-msgid "Reading from %s"
-msgstr ""
-
-#, c-format
-msgid "Device not available: %s"
-msgstr "Seade ei ole kättesaadav: %s"
-
-msgid "Device not available"
-msgstr "Seade ei ole kättesaadav"
-
-msgid "End of file"
-msgstr "Faili lõpp"
-
-msgid "DirectX DirectInput event controller"
-msgstr ""
-
-msgid "The device to read DirectInput events from."
-msgstr ""
-
-msgid "DirectX DirectInput"
-msgstr ""
-
-#, c-format
-msgid "Button %d"
-msgstr "Nupp %d"
-
-#, c-format
-msgid "Button %d Press"
-msgstr "Nupp %d Vajuta"
-
-#, c-format
-msgid "Button %d Release"
-msgstr "Nupp %d Vabasta"
-
-msgid "Y Move Away"
-msgstr ""
-
-msgid "Y Move Near"
-msgstr ""
-
-msgid "X Axis Tilt Away"
-msgstr ""
-
-msgid "X Axis Tilt Near"
-msgstr ""
-
-#, c-format
-msgid "Slider %d Increase"
-msgstr ""
-
-#, c-format
-msgid "Slider %d Decrease"
-msgstr ""
-
-#, c-format
-msgid "POV %d X View"
-msgstr ""
-
-#, c-format
-msgid "POV %d Y View"
-msgstr ""
-
-#, c-format
-msgid "POV %d Return"
-msgstr ""
-
-msgid "DirectInput Events"
-msgstr ""
-
-msgid "MIDI event controller"
-msgstr ""
-
-msgid "The name of the device to read MIDI events from."
-msgstr ""
-
-msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr ""
-
-msgid "Channel:"
-msgstr "Kanal:"
-
-msgid ""
-"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
-"channels."
-msgstr ""
-
-msgid "MIDI"
-msgstr "MIDI"
-
-#, c-format
-msgid "Note %02x on"
-msgstr ""
-
-#, c-format
-msgid "Note %02x off"
-msgstr ""
-
-#, c-format
-msgid "Controller %03d"
-msgstr "Sisendseade %03d"
-
-msgid "MIDI Events"
-msgstr "MIDI sündmused"
-
-msgid "GIMP"
-msgstr "GIMP"
-
-msgid "GIMP MIDI Input Controller"
-msgstr "GIMP MIDI sisendseade"
+#~ msgid "Triangle"
+#~ msgstr "Kolmnurk"
 
 #~ msgid "Image source"
 #~ msgstr "Pilt"
@@ -1423,9 +1678,6 @@ msgstr "GIMP MIDI sisendseade"
 
 #~ msgid "RGB workspace profile:"
 #~ msgstr "RGB töötsooni värviprofiil:"
-
-#~ msgid "Linear"
-#~ msgstr "Lineaarne"
 
 #~ msgid "None (Fastest)"
 #~ msgstr "Puudub (kiireim)"
