@@ -40,7 +40,7 @@ struct _GimpOperationTool
   gchar            *operation;
   gchar            *undo_desc;
   gchar            *icon_name;
-  GimpObject       *config;
+
   GeglNode         *aux_input;
   GeglNode         *aux2_input;
 
