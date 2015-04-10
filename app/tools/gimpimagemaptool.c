@@ -838,7 +838,7 @@ gimp_image_map_tool_get_operation (GimpImageMapTool *image_map_tool)
   else
     {
       if (image_map_tool->region_combo)
-        gtk_widget_show (image_map_tool->region_combo);
+        gtk_widget_hide (image_map_tool->region_combo);
 
       g_object_set (GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (image_map_tool),
                     "region", GIMP_IMAGE_MAP_REGION_SELECTION,
