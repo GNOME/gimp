@@ -309,6 +309,40 @@ main (int    argc,
     if (p_SetDllDirectoryA)
       (*p_SetDllDirectoryA) ("");
   }
+
+  /* On Windows, set DLL search path to $INSTALLDIR/bin so that .exe
+     plug-ins in the plug-ins directory can find libgimp and file
+     library DLLs without needing to set external PATH. */
+  {
+    const gchar *install_dir;
+    gchar       *bin_dir;
+    LPWSTR       w_bin_dir;
+    int          n;
+
+    w_bin_dir = NULL;
+    install_dir = gimp_installation_directory ();
+    bin_dir = g_build_filename (install_dir, "bin", NULL);
+
+    n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
+                             bin_dir, -1, NULL, 0);
+    if (n == 0)
+      goto out;
+
+    w_bin_dir = g_malloc_n (n + 1, sizeof (wchar_t));
+    n = MultiByteToWideChar (CP_UTF8, MB_ERR_INVALID_CHARS,
+                             bin_dir, -1,
+                             w_bin_dir, (n + 1) * sizeof (wchar_t));
+    if (n == 0)
+      goto out;
+
+    SetDllDirectoryW (w_bin_dir);
+
+  out:
+    if (w_bin_dir)
+      g_free (w_bin_dir);
+    g_free (bin_dir);
+  }
+
 #ifndef _WIN64
   {
     typedef BOOL (WINAPI *t_SetProcessDEPPolicy) (DWORD dwFlags);
