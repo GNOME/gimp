@@ -74,7 +74,7 @@ static GeglNode  * gimp_operation_tool_get_operation   (GimpImageMapTool  *im_to
 static void        gimp_operation_tool_map             (GimpImageMapTool  *im_tool);
 static void        gimp_operation_tool_dialog          (GimpImageMapTool  *im_tool);
 static void        gimp_operation_tool_reset           (GimpImageMapTool  *im_tool);
-static GtkWidget * gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
+static GtkWidget * gimp_operation_tool_get_settings_ui (GimpImageMapTool  *im_tool,
                                                         GimpContainer     *settings,
                                                         GFile             *settings_file,
                                                         const gchar       *import_dialog_title,
@@ -168,12 +168,6 @@ gimp_operation_tool_finalize (GObject *object)
       tool->icon_name = NULL;
     }
 
-  if (tool->config)
-    {
-      g_object_unref (tool->config);
-      tool->config = NULL;
-    }
-
   if (tool->aux_input)
     {
       g_object_unref (tool->aux_input);
@@ -196,11 +190,12 @@ gimp_operation_tool_initialize (GimpTool     *tool,
 {
   if (GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
+      GimpImageMapTool  *im_tool  = GIMP_IMAGE_MAP_TOOL (tool);
       GimpOperationTool *op_tool  = GIMP_OPERATION_TOOL (tool);
       GimpImage         *image    = gimp_display_get_image (display);
       GimpDrawable      *drawable = gimp_image_get_active_drawable (image);
 
-      if (op_tool->config)
+      if (im_tool->config)
         gimp_operation_tool_sync_op (op_tool, drawable);
 
       return TRUE;
@@ -245,8 +240,9 @@ gimp_operation_tool_get_operation (GimpImageMapTool  *im_tool,
 {
   GimpOperationTool *tool = GIMP_OPERATION_TOOL (im_tool);
 
-  if (tool->config)
-    *config = g_object_ref (tool->config);
+  if (tool->operation)
+    *config = G_OBJECT (gimp_gegl_get_config_proxy (tool->operation,
+                                                    GIMP_TYPE_SETTINGS));
 
   if (tool->undo_desc)
     *undo_desc = g_strdup (tool->undo_desc);
@@ -262,21 +258,20 @@ gimp_operation_tool_get_operation (GimpImageMapTool  *im_tool,
 }
 
 static void
-gimp_operation_tool_map (GimpImageMapTool *image_map_tool)
+gimp_operation_tool_map (GimpImageMapTool *im_tool)
 {
-  GimpOperationTool *tool = GIMP_OPERATION_TOOL (image_map_tool);
-
-  if (tool->config)
-    gimp_gegl_config_proxy_sync (tool->config, image_map_tool->operation);
+  if (im_tool->config)
+    gimp_gegl_config_proxy_sync (GIMP_OBJECT (im_tool->config),
+                                 im_tool->operation);
 }
 
 static void
-gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
+gimp_operation_tool_dialog (GimpImageMapTool *im_tool)
 {
-  GimpOperationTool *tool = GIMP_OPERATION_TOOL (image_map_tool);
+  GimpOperationTool *tool = GIMP_OPERATION_TOOL (im_tool);
   GtkWidget         *main_vbox;
 
-  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
+  main_vbox = gimp_image_map_tool_dialog_get_vbox (im_tool);
 
   /*  The options vbox  */
   tool->options_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
@@ -315,18 +310,18 @@ gimp_operation_tool_dialog (GimpImageMapTool *image_map_tool)
 }
 
 static void
-gimp_operation_tool_reset (GimpImageMapTool *image_map_tool)
+gimp_operation_tool_reset (GimpImageMapTool *im_tool)
 {
-  GimpOperationTool *tool = GIMP_OPERATION_TOOL (image_map_tool);
+  GimpOperationTool *tool = GIMP_OPERATION_TOOL (im_tool);
 
-  GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->reset (image_map_tool);
+  GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->reset (im_tool);
 
-  if (tool->config && GIMP_TOOL (tool)->drawable)
+  if (im_tool->config && GIMP_TOOL (tool)->drawable)
     gimp_operation_tool_sync_op (tool, GIMP_TOOL (tool)->drawable);
 }
 
 static GtkWidget *
-gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
+gimp_operation_tool_get_settings_ui (GimpImageMapTool  *im_tool,
                                      GimpContainer     *settings,
                                      GFile             *settings_file,
                                      const gchar       *import_dialog_title,
@@ -335,8 +330,8 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
                                      GFile             *default_folder,
                                      GtkWidget        **settings_box)
 {
-  GimpOperationTool *tool = GIMP_OPERATION_TOOL (image_map_tool);
-  GType              type = G_TYPE_FROM_INSTANCE (tool->config);
+  GimpOperationTool *tool = GIMP_OPERATION_TOOL (im_tool);
+  GType              type = G_TYPE_FROM_INSTANCE (im_tool->config);
   GtkWidget         *widget;
   gchar             *basename;
   GFile             *file;
@@ -348,7 +343,8 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
     gimp_list_set_sort_func (GIMP_LIST (settings),
                              (GCompareFunc) gimp_settings_compare);
 
-  basename = g_strconcat (G_OBJECT_TYPE_NAME (tool->config), ".settings", NULL);
+  basename = g_strconcat (G_OBJECT_TYPE_NAME (im_tool->config),
+                          ".settings", NULL);
   file = gimp_directory_file ("filters", basename, NULL);
   g_free (basename);
 
@@ -356,7 +352,7 @@ gimp_operation_tool_get_settings_ui (GimpImageMapTool  *image_map_tool,
   export_title = g_strdup_printf (_("Export '%s' Settings"), tool->undo_desc);
 
   widget =
-    GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->get_settings_ui (image_map_tool,
+    GIMP_IMAGE_MAP_TOOL_CLASS (parent_class)->get_settings_ui (im_tool,
                                                                settings,
                                                                file,
                                                                import_title,
@@ -390,7 +386,7 @@ gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
     {
       GimpImageMapOptions *options      = GIMP_IMAGE_MAP_TOOL_GET_OPTIONS (tool);
       GimpDrawable        *drawable     = GIMP_TOOL (im_tool)->drawable;
-      GObjectClass        *object_class = G_OBJECT_GET_CLASS (tool->config);
+      GObjectClass        *object_class = G_OBJECT_GET_CLASS (im_tool->config);
       GParamSpec          *pspec_x;
       GParamSpec          *pspec_y;
       gint                 width        = 1;
@@ -452,7 +448,7 @@ gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
               g_param_value_validate (pspec_x, &value_x);
               g_param_value_validate (pspec_y, &value_y);
 
-              g_object_set (tool->config,
+              g_object_set (im_tool->config,
                             pspecs[0], g_value_get_int (&value_x),
                             pspecs[1], g_value_get_int (&value_y),
                             NULL);
@@ -465,7 +461,7 @@ gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
               g_param_value_validate (pspec_x, &value_x);
               g_param_value_validate (pspec_y, &value_y);
 
-              g_object_set (tool->config,
+              g_object_set (im_tool->config,
                             pspecs[0], g_value_get_double (&value_x),
                             pspecs[1], g_value_get_double (&value_y),
                             NULL);
@@ -482,7 +478,7 @@ gimp_operation_tool_color_picked (GimpImageMapTool  *im_tool,
     }
   else
     {
-      g_object_set (tool->config,
+      g_object_set (im_tool->config,
                     pspecs[0], color,
                     NULL);
     }
@@ -494,6 +490,7 @@ static void
 gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
                              GimpDrawable      *drawable)
 {
+  GimpImageMapTool *im_tool = GIMP_IMAGE_MAP_TOOL (op_tool);
   GimpToolOptions  *options = GIMP_TOOL_GET_OPTIONS (op_tool);
   GParamSpec      **pspecs;
   guint             n_pspecs;
@@ -507,7 +504,7 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
                             &bounds_x, &bounds_y,
                             &bounds_width, &bounds_height);
 
-  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (op_tool->config),
+  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (im_tool->config),
                                            &n_pspecs);
 
   for (i = 0; i < n_pspecs; i++)
@@ -521,22 +518,22 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
           if (HAS_KEY (pspec, "unit", "pixel-coordinate") &&
               HAS_KEY (pspec, "axis", "x"))
             {
-              g_object_set (op_tool->config, pspec->name, 0, NULL);
+              g_object_set (im_tool->config, pspec->name, 0, NULL);
             }
           else if (HAS_KEY (pspec, "unit", "pixel-coordinate") &&
                    HAS_KEY (pspec, "axis", "y"))
             {
-              g_object_set (op_tool->config, pspec->name, 0, NULL);
+              g_object_set (im_tool->config, pspec->name, 0, NULL);
             }
           else if (HAS_KEY (pspec, "unit", "pixel-distance") &&
                    HAS_KEY (pspec, "axis", "x"))
             {
-              g_object_set (op_tool->config, pspec->name, bounds_width, NULL);
+              g_object_set (im_tool->config, pspec->name, bounds_width, NULL);
             }
           else if (HAS_KEY (pspec, "unit", "pixel-distance") &&
                    HAS_KEY (pspec, "axis", "y"))
             {
-              g_object_set (op_tool->config, pspec->name, bounds_height, NULL);
+              g_object_set (im_tool->config, pspec->name, bounds_height, NULL);
             }
         }
       else if (HAS_KEY (pspec, "role", "color-primary"))
@@ -544,14 +541,14 @@ gimp_operation_tool_sync_op (GimpOperationTool *op_tool,
           GimpRGB color;
 
           gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
-          g_object_set (op_tool->config, pspec->name, &color, NULL);
+          g_object_set (im_tool->config, pspec->name, &color, NULL);
         }
       else if (HAS_KEY (pspec, "role", "color-secondary"))
         {
           GimpRGB color;
 
           gimp_context_get_background (GIMP_CONTEXT (options), &color);
-          g_object_set (op_tool->config, pspec->name, &color, NULL);
+          g_object_set (im_tool->config, pspec->name, &color, NULL);
         }
     }
 
@@ -601,12 +598,6 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
   tool->operation = g_strdup (operation);
   tool->undo_desc = g_strdup (undo_desc);
   tool->icon_name = g_strdup (icon_name);
-
-  if (tool->config)
-    g_object_unref (tool->config);
-
-  tool->config = gimp_gegl_get_config_proxy (tool->operation,
-                                             GIMP_TYPE_SETTINGS);
 
   if (tool->aux_input)
     {
@@ -737,11 +728,11 @@ gimp_operation_tool_set_operation (GimpOperationTool *tool,
                                tool->aux2_input, 0);
     }
 
-  if (tool->config)
+  if (im_tool->config)
     {
       tool->options_gui =
-        gimp_prop_gui_new (G_OBJECT (tool->config),
-                           G_TYPE_FROM_INSTANCE (tool->config),
+        gimp_prop_gui_new (G_OBJECT (im_tool->config),
+                           G_TYPE_FROM_INSTANCE (im_tool->config),
                            GIMP_CONTEXT (GIMP_TOOL_GET_OPTIONS (tool)),
                            (GimpCreatePickerFunc) gimp_image_map_tool_add_color_picker,
                            tool);

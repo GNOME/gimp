@@ -66,6 +66,7 @@ m4_define([poppler_required_version], [0.12.4])
 m4_define([poppler_data_required_version], [0.4.7])
 m4_define([libgudev_required_version], [167])
 m4_define([gexiv2_required_version], [0.10.3])
+m4_define([libmypaint_required_version], [1.1])
 m4_define([lcms_required_version], [2.6])
 m4_define([libpng_required_version], [1.2.37])
 m4_define([liblzma_required_version], [5.0.0])
@@ -140,6 +141,7 @@ GEXIV2_REQUIRED_VERSION=gexiv2_required_version
 LCMS_REQUIRED_VERSION=lcms_required_version
 LIBPNG_REQUIRED_VERSION=libpng_required_version
 LIBLZMA_REQUIRED_VERSION=liblzma_required_version
+LIBMYPAINT_REQUIRED_VERSION=libmypaint_required_version
 PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
 BABL_REQUIRED_VERSION=babl_required_version
 FONTCONFIG_REQUIRED_VERSION=fontconfig_required_version
@@ -166,6 +168,7 @@ AC_SUBST(GEXIV2_REQUIRED_VERSION)
 AC_SUBST(LCMS_REQUIRED_VERSION)
 AC_SUBST(LIBPNG_REQUIRED_VERSION)
 AC_SUBST(LIBLZMA_REQUIRED_VERSION)
+AC_SUBST(LIBMYPAINT_REQUIRED_VERSION)
 AC_SUBST(PANGOCAIRO_REQUIRED_VERSION)
 AC_SUBST(BABL_REQUIRED_VERSION)
 AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
@@ -395,6 +398,7 @@ CFLAGS="$CFLAGS $extra_warnings"
 # We really don't want anyone using code with missing prototypes, which
 # can cause random behavior. If compile breaks due to the following,
 # come to us and we will point you to a newer version which works.
+#
 GIMP_DETECT_CFLAGS(extra_warnings, '-Werror=missing-prototypes')
 CFLAGS="$CFLAGS $extra_warnings"
 
@@ -1448,6 +1452,26 @@ AC_SUBST(FILE_EXR)
 
 AM_CONDITIONAL(HAVE_OPENEXR, test "x$have_openexr" = xyes)
 
+######################
+# Check for libmypaint
+######################
+
+AC_ARG_WITH(libmypaint, [  --without-libmypaint    build without libmypaint support])
+
+have_libmypaint=no
+if test "x$with_libmypaint" != xno; then
+  PKG_CHECK_MODULES(LIBMYPAINTGEGL,
+    libmypaint-gegl >= libmypaint_required_version,
+    AC_DEFINE(HAVE_LIBMYPAINT, 1, [Define to 1 if libmypaint-gegl is available])
+    have_libmypaint=yes,
+    [have_libmypaint="no (libmypaint-gegl not found)"])
+fi
+
+AC_SUBST(LIBMYPAINTGEGL_CFLAGS)
+AC_SUBST(LIBMYPAINTGEGL_LIBS)
+
+AM_CONDITIONAL(HAVE_LIBMYPAINT, test "x$have_libmypaint" = xyes)
+
 
 ##################
 # Check for webkit
@@ -2399,6 +2423,7 @@ Extra Binaries:
 
 Optional Features:
   Language selection:  $have_iso_codes
+  MyPaint brushes:     $have_libmypaint
 
 Optional Plug-Ins:
   Ascii Art:           $have_libaa

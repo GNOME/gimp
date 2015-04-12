@@ -104,8 +104,6 @@ static void       website_callback        (GtkAction         *action,
 
 static void       update_actions          (void);
 
-static void       window_set_icons        (GtkWidget         *window);
-
 static void       row_activated           (GtkTreeView       *tree_view,
                                            GtkTreePath       *path,
                                            GtkTreeViewColumn *column);
@@ -181,14 +179,13 @@ browser_dialog_open (const gchar *plug_in_binary)
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
   gtk_window_set_role (GTK_WINDOW (window), plug_in_binary);
+  gtk_window_set_icon_name (GTK_WINDOW (window), GIMP_STOCK_USER_MANUAL);
 
   gtk_window_set_default_size (GTK_WINDOW (window), data.width, data.height);
 
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
-
-  window_set_icons (window);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
   gtk_container_add (GTK_CONTAINER (window), vbox);
@@ -330,25 +327,6 @@ browser_dialog_load (const gchar *uri)
   select_index (uri);
 
   gtk_window_present (GTK_WINDOW (gtk_widget_get_toplevel (view)));
-}
-
-static void
-window_set_icons (GtkWidget *window)
-{
-  GtkIconTheme *theme   = gtk_icon_theme_get_default ();
-  gint          sizes[] = { 16, 24, 32, 64 };
-  GList        *list    = NULL;
-  gint          i;
-
-  for (i = 0; i < G_N_ELEMENTS (sizes); i++)
-    list = g_list_prepend (list,
-                           gtk_icon_theme_load_icon (theme,
-                                                     GIMP_STOCK_USER_MANUAL,
-                                                     sizes[i], 0, NULL));
-
-  gtk_window_set_icon_list (GTK_WINDOW (window), list);
-
-  g_list_free_full (list, (GDestroyNotify) g_object_unref);
 }
 
 static void

@@ -78,17 +78,17 @@ gimp_transform_handle_mode_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_HANDLE_MODE_ADD_MOVE, "GIMP_HANDLE_MODE_ADD_MOVE", "add-move" },
+    { GIMP_HANDLE_MODE_ADD_TRANSFORM, "GIMP_HANDLE_MODE_ADD_TRANSFORM", "add-transform" },
+    { GIMP_HANDLE_MODE_MOVE, "GIMP_HANDLE_MODE_MOVE", "move" },
     { GIMP_HANDLE_MODE_REMOVE, "GIMP_HANDLE_MODE_REMOVE", "remove" },
-    { GIMP_HANDLE_MODE_TRANSFORM, "GIMP_HANDLE_MODE_TRANSFORM", "transform" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_HANDLE_MODE_ADD_MOVE, NC_("transform-handle-mode", "Add/Move"), NULL },
+    { GIMP_HANDLE_MODE_ADD_TRANSFORM, NC_("transform-handle-mode", "Add / Transform"), NULL },
+    { GIMP_HANDLE_MODE_MOVE, NC_("transform-handle-mode", "Move"), NULL },
     { GIMP_HANDLE_MODE_REMOVE, NC_("transform-handle-mode", "Remove"), NULL },
-    { GIMP_HANDLE_MODE_TRANSFORM, NC_("transform-handle-mode", "Transform"), NULL },
     { 0, NULL, NULL }
   };
 

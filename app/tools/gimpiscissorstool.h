@@ -15,8 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if 0
-
 #ifndef __GIMP_ISCISSORS_TOOL_H__
 #define __GIMP_ISCISSORS_TOOL_H__
 
@@ -40,11 +38,13 @@ typedef enum
   ISCISSORS_OP_SELECT,
   ISCISSORS_OP_MOVE_POINT,
   ISCISSORS_OP_ADD_POINT,
+  ISCISSORS_OP_REMOVE_POINT,
   ISCISSORS_OP_CONNECT,
   ISCISSORS_OP_IMPOSSIBLE
 } IscissorsOps;
 
-typedef struct _ICurve ICurve;
+typedef struct _ISegment ISegment;
+typedef struct _ICurve   ICurve;
 
 
 #define GIMP_TYPE_ISCISSORS_TOOL            (gimp_iscissors_tool_get_type ())
@@ -66,27 +66,21 @@ struct _GimpIscissorsTool
 
   IscissorsOps    op;
 
-  gint            x, y;         /*  upper left hand coordinate            */
-  gint            ix, iy;       /*  initial coordinates                   */
-  gint            nx, ny;       /*  new coordinates                       */
+  gint            x, y;         /*  mouse coordinates                       */
 
-  GimpTempBuf    *dp_buf;       /*  dynamic programming buffer            */
+  ISegment       *segment1;     /*  1st segment connected to current point  */
+  ISegment       *segment2;     /*  2nd segment connected to current point  */
 
-  ICurve         *livewire;     /*  livewire boundary curve               */
+  ICurve         *curve;        /*  the curve                               */
 
-  ICurve         *curve1;       /*  1st curve connected to current point  */
-  ICurve         *curve2;       /*  2nd curve connected to current point  */
+  GList          *undo_stack;   /*  stack of ICurves for undo               */
+  GList          *redo_stack;   /*  stack of ICurves for redo               */
 
-  GQueue         *curves;       /*  the list of curves                    */
+  IscissorsState  state;        /*  state of iscissors                      */
 
-  gboolean        first_point;  /*  is this the first point?              */
-  gboolean        connected;    /*  is the region closed?                 */
-
-  IscissorsState  state;        /*  state of iscissors                    */
-
-  /* XXX might be useful */
-  GimpChannel    *mask;         /*  selection mask                        */
-  TileManager    *gradient_map; /*  lazily filled gradient map            */
+  GeglBuffer     *gradient_map; /*  lazily filled gradient map              */
+  GimpTempBuf    *dp_buf;       /*  dynamic programming buffer              */
+  GimpChannel    *mask;         /*  selection mask                          */
 };
 
 struct _GimpIscissorsToolClass
@@ -102,5 +96,3 @@ GType   gimp_iscissors_tool_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_ISCISSORS_TOOL_H__  */
-
-#endif

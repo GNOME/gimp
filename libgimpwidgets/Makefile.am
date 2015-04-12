@@ -185,7 +185,6 @@ libgimpwidgets_sources = \
 	gimp3migration.h
 
 libgimpwidgets_built_sources = \
-	gimp-wilber-pixbufs.h	\
 	gimpwidgetsenums.c	\
 	gimpwidgetsmarshal.c	\
 	gimpwidgetsmarshal.h
@@ -275,35 +274,16 @@ libgimpwidgets_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libm)
 
 
-## Wilber icons for the window managaer, compiled in
-
-WILBER_IMAGES = \
-	wilber-16.png	\
-	wilber-32.png	\
-	wilber-48.png	\
-	wilber-64.png
-
-WILBER_VARIABLES = \
-	wilber_16  $(srcdir)/wilber-16.png	\
-	wilber_32  $(srcdir)/wilber-32.png	\
-	wilber_48  $(srcdir)/wilber-48.png	\
-	wilber_64  $(srcdir)/wilber-64.png
-
-
 EXTRA_DIST = \
 	gimpwidgets.def			\
-	$(libgimpwidgets_extra_sources)	\
-	$(WILBER_IMAGES)
-
-
-gimpwidgets-private.lo: gimp-wilber-pixbufs.h
+	$(libgimpwidgets_extra_sources)
 
 
 #
 # rules to generate built sources
 #
 # setup autogeneration dependancies
-gen_sources = xgen-wec xgen-wmh xgen-wmc gimp-wilber-pixbufs.h
+gen_sources = xgen-wec xgen-wmh xgen-wmc
 CLEANFILES = $(gen_sources)
 
 gimpwidgetsenums.c: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS)
@@ -330,10 +310,6 @@ gimpwidgetsmarshal.c: gimpwidgetsmarshal.h
 	&& $(GLIB_GENMARSHAL) --prefix=_gimp_widgets_marshal $(srcdir)/gimpwidgetsmarshal.list --body >> xgen-wmc \
 	&& cp xgen-wmc $(@F) \
 	&& rm -f xgen-wmc xgen-wmc~
-
-
-gimp-wilber-pixbufs.h: $(WILBER_IMAGES) Makefile.am
-	$(AM_V_GEN) $(GDK_PIXBUF_CSOURCE) --raw --build-list $(WILBER_VARIABLES) > $(@F)
 
 
 #

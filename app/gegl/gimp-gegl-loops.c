@@ -41,9 +41,10 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                     GimpConvolutionType  mode,
                     gboolean             alpha_weighting)
 {
-  GeglBufferIterator *iter;
-  GeglRectangle      *src_roi;
-  GeglRectangle      *dest_roi;
+  GeglBufferIterator *dest_iter;
+  gfloat             *src;
+  gint                src_rowstride;
+
   const Babl         *src_format;
   const Babl         *dest_format;
   gint                src_components;
@@ -74,29 +75,33 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
   src_components  = babl_format_get_n_components (src_format);
   dest_components = babl_format_get_n_components (dest_format);
 
-  iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0, src_format,
-                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-  src_roi = &iter->roi[0];
+  /* Set up dest iterator */
+  dest_iter = gegl_buffer_iterator_new (dest_buffer, dest_rect, 0, dest_format,
+                                        GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
 
-  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0, dest_format,
-                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-  dest_roi = &iter->roi[1];
+  /* Get source pixel data */
+  src_rowstride = src_components * src_rect->width;
+  src = g_malloc (sizeof(gfloat) * src_rowstride * src_rect->height);
+  gegl_buffer_get (src_buffer, src_rect, 1.0, src_format, src,
+                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-  while (gegl_buffer_iterator_next (iter))
+  while (gegl_buffer_iterator_next (dest_iter))
     {
       /*  Convolve the src image using the convolution kernel, writing
        *  to dest Convolve is not tile-enabled--use accordingly
        */
-      const gfloat *src         = iter->data[0];
-      gfloat       *dest        = iter->data[1];
+      gfloat       *dest        = dest_iter->data[0];
       const gint    components  = src_components;
       const gint    a_component = components - 1;
-      const gint    rowstride   = src_components * src_roi->width;
       const gint    margin      = kernel_size / 2;
-      const gint    x1          = src_roi->x;
-      const gint    y1          = src_roi->y;
-      const gint    x2          = src_roi->x + src_roi->width  - 1;
-      const gint    y2          = src_roi->y + src_roi->height - 1;
+      const gint    x1          = 0;
+      const gint    y1          = 0;
+      const gint    x2          = src_rect->width  - 1;
+      const gint    y2          = src_rect->height - 1;
+      const gint    dest_x1     = dest_iter->roi[0].x;
+      const gint    dest_y1     = dest_iter->roi[0].y;
+      const gint    dest_x2     = dest_iter->roi[0].x + dest_iter->roi[0].width;
+      const gint    dest_y2     = dest_iter->roi[0].y + dest_iter->roi[0].height;
       gint          x, y;
       gfloat        offset;
 
@@ -111,13 +116,13 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
           offset = 0.0;
         }
 
-      for (y = 0; y < dest_roi->height; y++)
+      for (y = dest_y1; y < dest_y2; y++)
         {
           gfloat *d = dest;
 
           if (alpha_weighting)
             {
-              for (x = 0; x < dest_roi->width; x++)
+              for (x = dest_x1; x < dest_x2; x++)
                 {
                   const gfloat *m                = kernel;
                   gdouble       total[4]         = { 0.0, 0.0, 0.0, 0.0 };
@@ -130,7 +135,7 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                         {
                           gint          xx = CLAMP (i, x1, x2);
                           gint          yy = CLAMP (j, y1, y2);
-                          const gfloat *s  = src + yy * rowstride + xx * components;
+                          const gfloat *s  = src + yy * src_rowstride + xx * components;
                           const gfloat  a  = s[a_component];
 
                           if (a)
@@ -168,7 +173,7 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
             }
           else
             {
-              for (x = 0; x < dest_roi->width; x++)
+              for (x = dest_x1; x < dest_x2; x++)
                 {
                   const gfloat *m        = kernel;
                   gdouble       total[4] = { 0.0, 0.0, 0.0, 0.0 };
@@ -180,7 +185,7 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                         {
                           gint          xx = CLAMP (i, x1, x2);
                           gint          yy = CLAMP (j, y1, y2);
-                          const gfloat *s  = src + yy * rowstride + xx * components;
+                          const gfloat *s  = src + yy * src_rowstride + xx * components;
 
                           for (b = 0; b < components; b++)
                             total[b] += *m * s[b];
@@ -199,9 +204,11 @@ gimp_gegl_convolve (GeglBuffer          *src_buffer,
                 }
             }
 
-          dest += dest_roi->width * dest_components;
+          dest += dest_iter->roi[0].width * dest_components;
         }
     }
+
+  g_free (src);
 }
 
 void

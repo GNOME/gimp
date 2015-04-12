@@ -32,8 +32,6 @@
 
 #include "libgimp/libgimp-intl.h"
 
-#include "gimp-wilber-pixbufs.h"
-
 
 GimpHelpFunc          _gimp_standard_help_func  = NULL;
 GimpGetColorFunc      _gimp_get_foreground_func = NULL;
@@ -66,18 +64,6 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 {
   static gboolean  gimp_widgets_initialized = FALSE;
 
-  GdkPixbuf *pixbuf;
-  GList     *icon_list = NULL;
-  gint       i;
-
-  const guint8 *inline_pixbufs[] =
-  {
-    wilber_64,
-    wilber_48,
-    wilber_32,
-    wilber_16
-  };
-
   g_return_if_fail (standard_help_func != NULL);
 
   if (gimp_widgets_initialized)
@@ -90,15 +76,7 @@ gimp_widgets_init (GimpHelpFunc          standard_help_func,
 
   gimp_stock_init ();
 
-  for (i = 0; i < G_N_ELEMENTS (inline_pixbufs); i++)
-    {
-      pixbuf = gdk_pixbuf_new_from_inline (-1, inline_pixbufs[i], FALSE, NULL);
-      icon_list = g_list_prepend (icon_list, pixbuf);
-    }
-
-  gtk_window_set_default_icon_list (icon_list);
-
-  g_list_free_full (icon_list, (GDestroyNotify) g_object_unref);
+  gtk_window_set_default_icon_name (GIMP_STOCK_WILBER);
 
   gimp_widgets_init_foreign_enums ();
 

@@ -26,6 +26,8 @@
 
 #include "actions-types.h"
 
+#include "config/gimpguiconfig.h" /* playground */
+
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -184,6 +186,16 @@ static const GimpEnumActionEntry tools_airbrush_flow_actions[] =
     GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL }
 };
+
+#ifdef HAVE_LIBMYPAINT
+static const GimpEnumActionEntry tools_mybrush_radius_actions[] =
+{
+  { "tools-mybrush-radius-set", GIMP_STOCK_TOOL_MYBRUSH,
+    "Set MyPaint Brush Radius", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL }
+};
+#endif
 
 static const GimpEnumActionEntry tools_foreground_select_brush_size_actions[] =
 {
@@ -496,6 +508,14 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_airbrush_flow_actions,
                                       G_N_ELEMENTS (tools_airbrush_flow_actions),
                                       G_CALLBACK (tools_airbrush_flow_cmd_callback));
+
+#ifdef HAVE_LIBMYPAINT
+  if (GIMP_GUI_CONFIG (group->gimp->config)->playground_mybrush_tool)
+    gimp_action_group_add_enum_actions (group, NULL,
+                                        tools_mybrush_radius_actions,
+                                        G_N_ELEMENTS (tools_mybrush_radius_actions),
+                                        G_CALLBACK (tools_mybrush_radius_cmd_callback));
+#endif
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_foreground_select_brush_size_actions,

@@ -1,14 +1,15 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Paint\"	\
-	-I$(top_builddir)		\
-	-I$(top_srcdir)			\
-	-I$(top_builddir)/app		\
-	-I$(top_srcdir)/app		\
-	$(CAIRO_CFLAGS)			\
-	$(GEGL_CFLAGS)			\
-	$(GDK_PIXBUF_CFLAGS)		\
+	-DG_LOG_DOMAIN=\"Gimp-Paint\"		\
+	-I$(top_builddir)			\
+	-I$(top_srcdir)				\
+	-I$(top_builddir)/app			\
+	-I$(top_srcdir)/app			\
+	$(CAIRO_CFLAGS)				\
+	$(GEGL_CFLAGS)				\
+	$(GDK_PIXBUF_CFLAGS)			\
+	$(LIBMYPAINTGEGL_CFLAGS)		\
 	-I$(includedir)
 
 noinst_LIBRARIES = libapppaint.a
@@ -51,6 +52,10 @@ libapppaint_a_sources = \
 	gimpinkoptions.h		\
 	gimpinkundo.c			\
 	gimpinkundo.h			\
+	gimpmybrush.c			\
+	gimpmybrush.h			\
+	gimpmybrushoptions.c		\
+	gimpmybrushoptions.h		\
 	gimppaintcore.c			\
 	gimppaintcore.h			\
 	gimppaintcore-loops.c		\

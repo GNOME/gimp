@@ -72,7 +72,7 @@ gimp_handle_transform_options_class_init (GimpHandleTransformOptionsClass *klass
                                  "handle-mode",
                                  N_("Handle mode"),
                                  GIMP_TYPE_TRANSFORM_HANDLE_MODE,
-                                 GIMP_HANDLE_MODE_TRANSFORM,
+                                 GIMP_HANDLE_MODE_ADD_TRANSFORM,
                                  GIMP_PARAM_STATIC_STRINGS);
 }
 
@@ -161,19 +161,19 @@ gimp_handle_transform_options_gui (GimpToolOptions *tool_options)
 
           switch (i)
             {
-            case GIMP_HANDLE_MODE_ADD_MOVE:
+            case GIMP_HANDLE_MODE_ADD_TRANSFORM:
+              modifier = 0;
+              tooltip  = _("Add handles and transform the image");
+              break;
+
+            case GIMP_HANDLE_MODE_MOVE:
               modifier = shift;
-              tooltip  = "Add or move transform handles";
+              tooltip  = _("Move transform handles");
               break;
 
             case GIMP_HANDLE_MODE_REMOVE:
               modifier = ctrl;
-              tooltip  = "Remove transform handles";
-              break;
-
-            case GIMP_HANDLE_MODE_TRANSFORM:
-              modifier = 0;
-              tooltip  = "Transform image by moving handles";
+              tooltip  = _("Remove transform handles");
               break;
             }
 

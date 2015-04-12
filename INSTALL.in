@@ -79,7 +79,13 @@ header files installed.
   9. libpng, libjpeg and lcms are hard dependencies that can not be
      disabled.
 
- 10. You may want to install other third party libraries or programs
+ 10. For optional mypaint brushes, you should install brushlib (libmypaint) @LIBMYPAINT_REQUIRED_VERSION@,
+     compiled with GEGL support: `scons enable_gegl=true install`.
+     Brushlib repository is hosted at:
+
+        https://github.com/mypaint/libmypaint
+
+ 11. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
      to check that the following libraries are installed: libjasper,
      libpoppler-glib, libtiff, webkit, libmng, librsvg, libwmf, libaa
@@ -94,26 +100,27 @@ header files installed.
      but you are sure it is installed, you are advised to test your build
      afterwards.
 
- 11. The Python extension requires Python 2 development headers (@PYTHON2_REQUIRED_VERSION@
+ 12. The Python extension requires Python 2 development headers (@PYTHON2_REQUIRED_VERSION@
      or newer) to be present. You will also need PyGTK and the
      respective development headers.
 
- 12. Configure GIMP by running the `configure' script. You may want
+ 13. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
- 13. Build GIMP by running `make'. The use of GNU make is recommended.
+ 14. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
- 14. Install GIMP by running `make install'. In order to avoid clashes
+ 15. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-@GIMP_APP_VERSION@.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-@GIMP_APP_VERSION@.
 
- 15. Summary of required packages and what version you need:
+ 16. Summary of required packages and what version you need:
 
      ATK: @ATK_REQUIRED_VERSION@
      babl: @BABL_REQUIRED_VERSION@
+     libbzip2
      cairo: @CAIRO_REQUIRED_VERSION@
      Fontconfig: @FONTCONFIG_REQUIRED_VERSION@
      freetype2: @FREETYPE2_REQUIRED_VERSION@
@@ -130,7 +137,7 @@ header files installed.
      pangocairo: @PANGOCAIRO_REQUIRED_VERSION@
      zlib
 
- 16. Summary of optional packages:
+ 17. Summary of optional packages:
 
      Package Name	Version		Feature
 
@@ -149,6 +156,7 @@ header files installed.
      libwmf		@WMF_REQUIRED_VERSION@		WMF
      libXcursor		-		X11 Mouse Cursor
      libxpm		-		XPM
+     libmypaint		@LIBMYPAINT_REQUIRED_VERSION@		MyPaint brushes
 
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries

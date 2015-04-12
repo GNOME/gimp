@@ -123,6 +123,8 @@ static void  subsampling_changed    (GtkWidget     *combo,
                                      GtkObject     *entry);
 static void  quality_changed        (GtkObject     *scale_entry,
                                      GtkWidget     *toggle);
+static void  subsampling_changed2   (GtkObject     *combo,
+                                     GtkWidget     *toggle);
 static void  use_orig_qual_changed  (GtkWidget     *toggle,
                                      GtkObject     *scale_entry);
 static void  use_orig_qual_changed2 (GtkWidget     *toggle,
@@ -1041,7 +1043,9 @@ save_dialog (void)
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 jsvals.use_orig_quality
-                                && (orig_quality > 0));
+                                && (orig_quality > 0)
+                                && (orig_subsmp == jsvals.subsmp)
+                               );
   gtk_widget_set_sensitive (toggle, (orig_quality > 0));
 
   /* changing quality disables custom quantization tables, and vice-versa */
@@ -1081,7 +1085,9 @@ save_dialog (void)
                                   jsvals.subsmp,
                                   G_CALLBACK (subsampling_changed),
                                   entry);
-
+      g_signal_connect (pg.subsmp, "changed",
+                        G_CALLBACK (subsampling_changed2),
+                        pg.use_orig_quality);
       g_signal_connect (pg.use_orig_quality, "toggled",
                         G_CALLBACK (use_orig_qual_changed2),
                         pg.subsmp);
@@ -1396,6 +1402,16 @@ quality_changed (GtkObject *scale_entry,
                  GtkWidget *toggle)
 {
   if (jsvals.use_orig_quality)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
+    }
+}
+
+static void
+subsampling_changed2 (GtkObject *combo,
+                      GtkWidget *toggle)
+{
+  if (jsvals.use_orig_quality && orig_subsmp != jsvals.subsmp)
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
     }

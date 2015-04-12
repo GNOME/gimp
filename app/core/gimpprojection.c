@@ -30,7 +30,7 @@
 
 #include "gegl/gimp-babl.h"
 #include "gegl/gimp-gegl-utils.h"
-#include "gegl/gimptilehandlerprojection.h"
+#include "gegl/gimptilehandlervalidate.h"
 
 #include "gimp.h"
 #include "gimp-memsize.h"
@@ -89,7 +89,7 @@ struct _GimpProjectionPrivate
   GimpProjectable           *projectable;
 
   GeglBuffer                *buffer;
-  gpointer                   validate_handler;
+  GimpTileHandlerValidate   *validate_handler;
 
   cairo_region_t            *update_region;
   GimpProjectionChunkRender  chunk_render;
@@ -391,13 +391,13 @@ gimp_projection_get_buffer (GimpPickable *pickable)
       proj->priv->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                             format);
 
-      proj->priv->validate_handler = gimp_tile_handler_projection_new (graph,
-                                                                       width,
-                                                                       height);
-      gimp_tile_handler_projection_assign (proj->priv->validate_handler,
-                                           proj->priv->buffer);
+      proj->priv->validate_handler =
+        GIMP_TILE_HANDLER_VALIDATE (gimp_tile_handler_validate_new (graph));
 
-      /*  This used to call gimp_tile_handler_projection_invalidate()
+      gimp_tile_handler_validate_assign (proj->priv->validate_handler,
+                                         proj->priv->buffer);
+
+      /*  This used to call gimp_tile_handler_validate_invalidate()
        *  which forced the entire projection to be constructed in one
        *  go for new images, causing a potentially huge delay. Now we
        *  initially validate stuff the normal way, which makes the
@@ -923,15 +923,15 @@ gimp_projection_paint_area (GimpProjection *proj,
                                 &x, &y, &w, &h))
     {
       if (proj->priv->validate_handler)
-        gimp_tile_handler_projection_invalidate (proj->priv->validate_handler,
-                                                 x, y, w, h);
+        gimp_tile_handler_validate_invalidate (proj->priv->validate_handler,
+                                               x, y, w, h);
       if (now)
         {
           GeglNode *graph = gimp_projectable_get_graph (proj->priv->projectable);
 
           if (proj->priv->validate_handler)
-            gimp_tile_handler_projection_undo_invalidate (proj->priv->validate_handler,
-                                                          x, y, w, h);
+            gimp_tile_handler_validate_undo_invalidate (proj->priv->validate_handler,
+                                                        x, y, w, h);
 
           gegl_node_blit_buffer (graph, proj->priv->buffer,
                                  GEGL_RECTANGLE (x, y, w, h));

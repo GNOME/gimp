@@ -574,9 +574,7 @@
         <menuitem action="tools-foreground-select" />
         <menuitem action="tools-fuzzy-select" />
         <menuitem action="tools-by-color-select" />
-	<!--
         <menuitem action="tools-iscissors" />
-	-->
       </menu>
       <menu action="tools-paint-menu" name="Paint Tools">
         <menuitem action="tools-bucket-fill" />
@@ -586,6 +584,9 @@
         <menuitem action="tools-eraser" />
         <menuitem action="tools-airbrush" />
         <menuitem action="tools-ink" />
+        <!-- Enable when the tool leaves the playground
+        <menuitem action="tools-mybrush" />
+        -->
         <menuitem action="tools-clone" />
         <menuitem action="tools-heal" />
         <menuitem action="tools-perspective-clone" />

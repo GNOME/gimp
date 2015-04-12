@@ -1398,6 +1398,8 @@ xcf_save_level (XcfInfo     *info,
                 GError     **error)
 {
   const Babl *format;
+  guint32    *offset_table;
+  guint32    *next_offset;
   guint32     saved_pos;
   guint32     offset;
   guint32     width;
@@ -1432,7 +1434,15 @@ xcf_save_level (XcfInfo     *info,
 
   ntiles = n_tile_rows * n_tile_cols;
 
-  /* 'saved_pos' is the next slot in the offset table */
+  /* allocate an offset table so we don't have to seek back after each
+   * tile, see bug #686862. allocate ntiles + 1 slots because a zero
+   * offset indicates the offset table's end.
+   */
+  offset_table = g_alloca ((ntiles + 1) * sizeof (gint32));
+  memset (offset_table, 0, (ntiles + 1) * sizeof (gint32));
+  next_offset = offset_table;
+
+  /* 'saved_pos' is the offset of the tile offset table  */
   saved_pos = info->cp;
 
   /* write an empty offset table */
@@ -1445,17 +1455,8 @@ xcf_save_level (XcfInfo     *info,
     {
       GeglRectangle rect;
 
-      /* seek back to the next slot in the offset table and write the
-       * offset of the tile
-       */
-      xcf_check_error (xcf_seek_pos (info, saved_pos, error));
-      xcf_write_int32_check_error (info, &offset, 1);
-
-      /* remember the next slot in the offset table */
-      saved_pos = info->cp;
-
-      /* seek to the tile offset and save the tile */
-      xcf_check_error (xcf_seek_pos (info, offset, error));
+      /* store the offset in the table and increment the next pointer */
+      *next_offset++ = offset;
 
       gimp_gegl_buffer_get_tile_rect (buffer,
                                       XCF_TILE_WIDTH, XCF_TILE_HEIGHT,
@@ -1485,9 +1486,12 @@ xcf_save_level (XcfInfo     *info,
       offset = info->cp;
     }
 
-  /* there is already a '0' at the end of the offset table to indicate
-   * the end of the tile offsets
-   */
+  /* seek back to the offset table and write it  */
+  xcf_check_error (xcf_seek_pos (info, saved_pos, error));
+  xcf_write_int32_check_error (info, offset_table, ntiles + 1);
+
+  /* seek to the end of the file */
+  xcf_check_error (xcf_seek_pos (info, offset, error));
 
   return TRUE;
 }

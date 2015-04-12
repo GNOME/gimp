@@ -271,6 +271,8 @@ app/paint/gimperaser.c
 app/paint/gimpheal.c
 app/paint/gimpink.c
 app/paint/gimpinkoptions.c
+app/paint/gimpmybrush.c
+app/paint/gimpmybrushoptions.c
 app/paint/gimppaintbrush.c
 app/paint/gimppaintcore-stroke.c
 app/paint/gimppaintcore.c
@@ -386,6 +388,8 @@ app/tools/gimpmeasureoptions.c
 app/tools/gimpmeasuretool.c
 app/tools/gimpmoveoptions.c
 app/tools/gimpmovetool.c
+app/tools/gimpmybrushoptions-gui.c
+app/tools/gimpmybrushtool.c
 app/tools/gimpnpointdeformationoptions.c
 app/tools/gimpnpointdeformationtool.c
 app/tools/gimpoperationtool.c

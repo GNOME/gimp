@@ -1475,6 +1475,11 @@ prefs_dialog_new (Gimp       *gimp,
       button = prefs_check_button_add (object, "playground-handle-transform-tool",
                                        _("_Handle Transform tool"),
                                        GTK_BOX (vbox2));
+#ifdef HAVE_LIBMYPAINT
+      button = prefs_check_button_add (object, "playground-mybrush-tool",
+                                       _("_MyPaint Brush tool"),
+                                       GTK_BOX (vbox2));
+#endif
     }
 
 

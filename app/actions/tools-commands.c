@@ -31,6 +31,7 @@
 
 #include "paint/gimpinkoptions.h"
 #include "paint/gimpairbrushoptions.h"
+#include "paint/gimpmybrushoptions.h"
 
 #include "widgets/gimpenumaction.h"
 #include "widgets/gimpuimanager.h"
@@ -253,8 +254,8 @@ tools_ink_blob_angle_cmd_callback (GtkAction *action,
 
 void
 tools_airbrush_rate_cmd_callback (GtkAction *action,
-                                   gint       value,
-                                   gpointer   data)
+                                  gint       value,
+                                  gpointer   data)
 {
   GimpContext  *context;
   GimpToolInfo *tool_info;
@@ -274,8 +275,8 @@ tools_airbrush_rate_cmd_callback (GtkAction *action,
 
 void
 tools_airbrush_flow_cmd_callback (GtkAction *action,
-                                   gint       value,
-                                   gpointer   data)
+                                  gint       value,
+                                  gpointer   data)
 {
   GimpContext  *context;
   GimpToolInfo *tool_info;
@@ -292,6 +293,29 @@ tools_airbrush_flow_cmd_callback (GtkAction *action,
                               0.1, 1.0, 10.0, 0.1, FALSE);
     }
 }
+
+#ifdef HAVE_LIBMYPAINT
+void
+tools_mybrush_radius_cmd_callback (GtkAction *action,
+                                   gint       value,
+                                   gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_MYBRUSH_OPTIONS (tool_info->tool_options))
+    {
+      action_select_property ((GimpActionSelectType) value,
+                              action_data_get_display (data),
+                              G_OBJECT (tool_info->tool_options),
+                              "radius",
+                              0.1, 0.1, 0.5, 1.0, FALSE);
+    }
+}
+#endif
 
 void
 tools_fg_select_brush_size_cmd_callback (GtkAction *action,

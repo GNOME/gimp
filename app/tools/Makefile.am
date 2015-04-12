@@ -136,6 +136,10 @@ libapptools_a_sources = \
 	gimpmoveoptions.h		\
 	gimpmovetool.c			\
 	gimpmovetool.h			\
+	gimpmybrushoptions-gui.c	\
+	gimpmybrushoptions-gui.h	\
+	gimpmybrushtool.c		\
+	gimpmybrushtool.h		\
 	gimpnpointdeformationoptions.c	\
 	gimpnpointdeformationoptions.h	\
 	gimpnpointdeformationtool.c	\
@@ -192,6 +196,8 @@ libapptools_a_sources = \
 	gimptexttool-editor.h		\
 	gimpthresholdtool.c		\
 	gimpthresholdtool.h		\
+	gimptilehandleriscissors.c	\
+	gimptilehandleriscissors.h	\
 	gimptool.c			\
 	gimptool.h			\
 	gimptool-progress.c		\
