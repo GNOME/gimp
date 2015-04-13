@@ -5,6 +5,8 @@
 		href="http://download.osgeo.org/" />
 	<repository type="tarball" name="sf.net"
 		href="http://downloads.sourceforge.net/project/" />
+	<repository type="tarball" name="download.sourceforge.net"
+		href="http://download.sourceforge.net/" />
 	<repository type="tarball" name="webp"
 		href="https://webp.googlecode.com/files/" />
 
@@ -21,9 +23,9 @@
 </autotools>
 
 <autotools id="libpng" autogen-sh="configure">
-	<branch version="1.6.15" repo="sf.net"
-			module="libpng/libpng16/1.6.15/libpng-1.6.15.tar.xz"
-			hash="sha1:bddeac8ca97fbcf54d6d32c6eefed5d94b49df88">
+	<branch version="1.6.17" repo="download.sourceforge.net"
+			module="libpng/libpng-1.6.17.tar.xz"
+			hash="md5:430a9b76b78533235cd4b9b26ce75c7e">
 	</branch>
 	<dependencies>
 		<dep package="zlib"/>
