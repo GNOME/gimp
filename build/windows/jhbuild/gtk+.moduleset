@@ -145,9 +145,9 @@
 </autotools>
 
 <autotools id="gdk-pixbuf2" autogen-sh="configure">
-	<branch version="2.30.7" repo="gnome.org"
-			module="gdk-pixbuf/2.30/gdk-pixbuf-2.30.7.tar.xz"
-			hash="sha256:0aafc365eab1083a53f15e4828333b968219ffcb1a995ac6289c0147c9ffad06">
+	<branch version="2.30.8" repo="gnome.org"
+			module="gdk-pixbuf/2.30/gdk-pixbuf-2.30.8.tar.xz"
+			hash="sha256:4853830616113db4435837992c0aebd94cbb993c44dc55063cee7f72a7bef8be">
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>
