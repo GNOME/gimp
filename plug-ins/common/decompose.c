@@ -234,11 +234,11 @@ static EXTRACT extract[] =
                                      N_("blueness-cb709"),
                                      N_("redness-cr709") }, extract_ycbcr709 },
 
-  { "YCbCr ITU R470 256", TRUE, 3, { N_("luma-y470f"),
+  { "YCbCr_ITU_R470_256", TRUE, 3, { N_("luma-y470f"),
                                      N_("blueness-cb470f"),
                                      N_("redness-cr470f") }, extract_ycbcr470f },
 
-  { "YCbCr ITU R709 256", TRUE, 3, { N_("luma-y709f"),
+  { "YCbCr_ITU_R709_256", TRUE, 3, { N_("luma-y709f"),
                                      N_("blueness-cb709f"),
                                      N_("redness-cr709f") }, extract_ycbcr709f }
 };
