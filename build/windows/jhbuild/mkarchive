@@ -63,8 +63,7 @@ dostuff (){
 	find -depth -type d -empty -exec rmdir {} \;
 
 	echo "@echo off
-SET PATH=%~dp0bin\\
-start $2" | unix2dos > run_gimp.bat
+start %~dp0bin\\$2" | unix2dos > run_gimp.bat
 
 	echo "gtk-fallback-icon-theme='gnome'" >> etc/gtk-2.0/gtkrc
 
