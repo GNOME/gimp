@@ -70,6 +70,8 @@ enum
 
 static void   gimp_file_entry_dispose              (GObject       *object);
 
+static void   gimp_file_entry_entry_changed        (GtkWidget     *widget,
+                                                    GtkWidget     *button);
 static void   gimp_file_entry_entry_activate       (GtkWidget     *widget,
                                                     GimpFileEntry *entry);
 static gint   gimp_file_entry_entry_focus_out      (GtkWidget     *widget,
@@ -134,6 +136,8 @@ gimp_file_entry_init (GimpFileEntry *entry)
   gtk_box_pack_end (GTK_BOX (entry), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
+  gtk_widget_set_sensitive (button, FALSE);
+
   image = gtk_image_new_from_icon_name ("gtk-directory", GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
   gtk_widget_show (image);
@@ -161,6 +165,9 @@ gimp_file_entry_init (GimpFileEntry *entry)
   gtk_box_pack_end (GTK_BOX (entry), entry->entry, TRUE, TRUE, 0);
   gtk_widget_show (entry->entry);
 
+  g_signal_connect (entry->entry, "changed",
+                    G_CALLBACK (gimp_file_entry_entry_changed),
+                    button);
   g_signal_connect (entry->entry, "activate",
                     G_CALLBACK (gimp_file_entry_entry_activate),
                     entry);
@@ -287,6 +294,18 @@ gimp_file_entry_set_filename (GimpFileEntry *entry,
   /*  update everything
    */
   gimp_file_entry_entry_activate (entry->entry, entry);
+}
+
+static void
+gimp_file_entry_entry_changed (GtkWidget *widget,
+                               GtkWidget *button)
+{
+  const gchar *text = gtk_entry_get_text (GTK_ENTRY (widget));
+
+  if (text && strlen (text))
+    gtk_widget_set_sensitive (button, TRUE);
+  else
+    gtk_widget_set_sensitive (button, FALSE);
 }
 
 static void
