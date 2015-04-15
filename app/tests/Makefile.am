@@ -128,6 +128,7 @@ LDADD = \
 	$(GIO_LIBS)						\
 	$(GEXIV2_LIBS)						\
 	$(LCMS_LIBS)						\
+	$(Z_LIBS)						\
 	$(JSON_C_LIBS)						\
 	$(LIBMYPAINTGEGL_LIBS)					\
 	$(INTLLIBS)						\
