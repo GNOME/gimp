@@ -119,7 +119,7 @@ static GimpCursor gimp_cursors[] =
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    "cursor-sid-_top.png",
+    "cursor-side-top.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
