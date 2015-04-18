@@ -1110,7 +1110,8 @@ load_resource_1039 (const PSDimageres  *res_a,
     }
 
   parasite = gimp_parasite_new (GIMP_PARASITE_ICC_PROFILE,
-                                GIMP_PARASITE_PERSISTENT,
+                                GIMP_PARASITE_PERSISTENT |
+                                GIMP_PARASITE_UNDOABLE,
                                 res_a->data_len, icc_profile);
   gimp_image_attach_parasite (image_id, parasite);
   gimp_parasite_free (parasite);
