@@ -102,7 +102,8 @@ static void             convert_1_bit              (const gchar *src,
                                                     guint32      rows,
                                                     guint32      columns);
 
-static const Babl*      get_pixel_format           (PSDimage    *img_a);
+static const Babl*      get_pixel_format           (PSDimage    *img_a,
+                                                    gboolean     mask_format);
 
 
 /* Main file load function */
@@ -1386,8 +1387,12 @@ add_layers (gint32     image_id,
               gimp_layer_set_offsets (layer_id, l_x, l_y);
               gimp_layer_set_lock_alpha  (layer_id, lyr_a[lidx]->layer_flags.trans_prot);
 	      buffer = gimp_drawable_get_buffer (layer_id);
-	      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
-			       0, get_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
+	      gegl_buffer_set (buffer,
+                               GEGL_RECTANGLE (0, 0,
+                                               gegl_buffer_get_width (buffer),
+                                               gegl_buffer_get_height (buffer)),
+			       0, get_pixel_format (img_a, FALSE),
+                               pixels, GEGL_AUTO_ROWSTRIDE);
               gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
               if (lyr_a[lidx]->id)
                 gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
@@ -1499,8 +1504,10 @@ add_layers (gint32     image_id,
                       IFDBG(3) g_debug ("New layer mask %d", mask_id);
                       gimp_layer_add_mask (layer_id, mask_id);
                       buffer = gimp_drawable_get_buffer (mask_id);
-                      gegl_buffer_set (buffer, GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h), 0,
-                                       get_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
+                      gegl_buffer_set (buffer,
+                                       GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h),
+                                       0, get_pixel_format (img_a, TRUE),
+                                       pixels, GEGL_AUTO_ROWSTRIDE);
                       g_object_unref (buffer);
                       gimp_layer_set_apply_mask (layer_id,
                                                  ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
@@ -1682,8 +1689,12 @@ add_merged_image (gint32     image_id,
                                  100, GIMP_NORMAL_MODE);
       gimp_image_insert_layer (image_id, layer_id, -1, 0);
       buffer = gimp_drawable_get_buffer (layer_id);
-      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
-		       0, get_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
+      gegl_buffer_set (buffer,
+                       GEGL_RECTANGLE (0, 0,
+                                       gegl_buffer_get_width (buffer),
+                                       gegl_buffer_get_height (buffer)),
+		       0, get_pixel_format (img_a, FALSE),
+                       pixels, GEGL_AUTO_ROWSTRIDE);
       g_object_unref (buffer);
       g_free (pixels);
     }
@@ -1774,8 +1785,11 @@ add_merged_image (gint32     image_id,
             gimp_item_set_tattoo (channel_id, alpha_id);
           gimp_item_set_visible (channel_id, alpha_visible);
 	  gegl_buffer_set (buffer,
-			   GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
-			   0, get_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
+			   GEGL_RECTANGLE (0, 0,
+                                           gegl_buffer_get_width (buffer),
+                                           gegl_buffer_get_height (buffer)),
+			   0, get_pixel_format (img_a, TRUE),
+                           pixels, GEGL_AUTO_ROWSTRIDE);
           g_object_unref (buffer);
           g_free (chn_a[cidx].data);
         }
@@ -2015,9 +2029,34 @@ convert_1_bit (const gchar *src,
 }
 
 static const Babl*
-get_pixel_format (PSDimage *img_a)
+get_pixel_format (PSDimage *img_a,
+                  gboolean  mask_format)
 {
-  const Babl *format;
+  const Babl *format = NULL;
+
+  if (mask_format)
+    {
+      switch (img_a->bps)
+	{
+	case 32:
+          format = babl_format ("Y u32");
+	  break;
+
+        case 16:
+          format = babl_format ("Y u16");
+	  break;
+
+        case 8:
+        case 1:
+          format = babl_format ("Y u8");
+	  break;
+
+        default:
+          break;
+	}
+
+      return format;
+    }
 
   switch (get_gimp_image_type (img_a->base_type, img_a->transparency))
     {
