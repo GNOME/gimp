@@ -162,9 +162,11 @@ typedef enum
   GIMP_GRAIN_EXTRACT_MODE,   /*< desc="Grain extract"        >*/
   GIMP_GRAIN_MERGE_MODE,     /*< desc="Grain merge"          >*/
   GIMP_COLOR_ERASE_MODE,     /*< desc="Color erase"          >*/
-  GIMP_ERASE_MODE,           /*< pdb-skip, desc="Erase"      >*/
-  GIMP_REPLACE_MODE,         /*< pdb-skip, desc="Replace"    >*/
-  GIMP_ANTI_ERASE_MODE       /*< pdb-skip, desc="Anti erase" >*/
+
+  /* internal modes, not available to the PDB */
+  GIMP_ERASE_MODE      = 1000, /*< pdb-skip, desc="Erase"      >*/
+  GIMP_REPLACE_MODE    = 1001, /*< pdb-skip, desc="Replace"    >*/
+  GIMP_ANTI_ERASE_MODE = 1002  /*< pdb-skip, desc="Anti erase" >*/
 } GimpLayerModeEffects;
 
 
