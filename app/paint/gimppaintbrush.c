@@ -33,7 +33,6 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimptempbuf.h"
@@ -121,7 +120,6 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   GimpPaintApplicationMode  paint_appl_mode;
   gdouble                   fade_point;
   gdouble                   grad_point;
-  GimpDynamicsOutput       *force_output;
   gdouble                   force;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -199,10 +197,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       g_object_unref (color);
     }
 
-  force_output = gimp_dynamics_get_output (dynamics,
-                                           GIMP_DYNAMICS_OUTPUT_FORCE);
-
-  if (gimp_dynamics_output_is_enabled (force_output))
+  if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
     force = gimp_dynamics_get_linear_value (dynamics,
                                             GIMP_DYNAMICS_OUTPUT_FORCE,
                                             coords,

@@ -549,9 +549,22 @@ gimp_dynamics_get_output (GimpDynamics           *dynamics,
       break;
 
     default:
-      return NULL;
+      g_return_val_if_reached (NULL);
       break;
     }
+}
+
+gboolean
+gimp_dynamics_is_output_enabled (GimpDynamics           *dynamics,
+                                 GimpDynamicsOutputType  type)
+{
+  GimpDynamicsOutput *output;
+
+  g_return_val_if_fail (GIMP_IS_DYNAMICS (dynamics), FALSE);
+
+  output = gimp_dynamics_get_output (dynamics, type);
+
+  return gimp_dynamics_output_is_enabled (output);
 }
 
 gdouble

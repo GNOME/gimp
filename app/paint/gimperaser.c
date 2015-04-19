@@ -27,7 +27,6 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 #include "core/gimpimage.h"
 
 #include "gimperaser.h"
@@ -116,7 +115,6 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   gint                  paint_buffer_y;
   GimpRGB               background;
   GeglColor            *color;
-  GimpDynamicsOutput   *force_output;
   gdouble               force;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
@@ -150,10 +148,7 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   else
     paint_mode = GIMP_NORMAL_MODE;
 
-  force_output = gimp_dynamics_get_output (dynamics,
-                                           GIMP_DYNAMICS_OUTPUT_FORCE);
-
-  if (gimp_dynamics_output_is_enabled (force_output))
+  if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
     force = gimp_dynamics_get_linear_value (dynamics,
                                             GIMP_DYNAMICS_OUTPUT_FORCE,
                                             coords,

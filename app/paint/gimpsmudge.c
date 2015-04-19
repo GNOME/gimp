@@ -30,7 +30,6 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
 #include "core/gimptempbuf.h"
@@ -234,23 +233,22 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                     GimpPaintOptions *paint_options,
                     const GimpCoords *coords)
 {
-  GimpSmudge         *smudge   = GIMP_SMUDGE (paint_core);
-  GimpSmudgeOptions  *options  = GIMP_SMUDGE_OPTIONS (paint_options);
-  GimpContext        *context  = GIMP_CONTEXT (paint_options);
-  GimpDynamics       *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage          *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-  GeglBuffer         *paint_buffer;
-  gint                paint_buffer_x;
-  gint                paint_buffer_y;
-  gint                paint_buffer_width;
-  gint                paint_buffer_height;
-  gdouble             fade_point;
-  gdouble             opacity;
-  gdouble             rate;
-  gdouble             dynamic_rate;
-  gint                x, y;
-  GimpDynamicsOutput *force_output;
-  gdouble             force;
+  GimpSmudge        *smudge   = GIMP_SMUDGE (paint_core);
+  GimpSmudgeOptions *options  = GIMP_SMUDGE_OPTIONS (paint_options);
+  GimpContext       *context  = GIMP_CONTEXT (paint_options);
+  GimpDynamics      *dynamics = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpImage         *image    = gimp_item_get_image (GIMP_ITEM (drawable));
+  GeglBuffer        *paint_buffer;
+  gint               paint_buffer_x;
+  gint               paint_buffer_y;
+  gint               paint_buffer_width;
+  gint               paint_buffer_height;
+  gdouble            fade_point;
+  gdouble            opacity;
+  gdouble            rate;
+  gdouble            dynamic_rate;
+  gint               x, y;
+  gdouble            force;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
@@ -318,10 +316,7 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
                     paint_buffer,
                     GEGL_RECTANGLE (0, 0, 0, 0));
 
-  force_output = gimp_dynamics_get_output (dynamics,
-                                           GIMP_DYNAMICS_OUTPUT_FORCE);
-
-  if (gimp_dynamics_output_is_enabled (force_output))
+  if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
     force = gimp_dynamics_get_linear_value (dynamics,
                                             GIMP_DYNAMICS_OUTPUT_FORCE,
                                             coords,

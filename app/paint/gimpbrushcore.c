@@ -1530,9 +1530,7 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_dynamic_transforming_brush)
     {
-      GimpDynamicsOutput *output;
-      gdouble             dyn_aspect_ratio = 0.0;
-      gdouble             fade_point       = 1.0;
+      gdouble fade_point = 1.0;
 
       if (drawable)
         {
@@ -1561,23 +1559,25 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
                                                         paint_options,
                                                         fade_point);
 
-      output = gimp_dynamics_get_output (core->dynamics,
-                                         GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO);
-      dyn_aspect_ratio = gimp_dynamics_output_get_aspect_value (output,
-                                                                coords,
-                                                                paint_options,
-                                                                fade_point);
-
-      /* Zero aspect ratio is special cased to half of all ar range,
-       * to force dynamics to have any effect. Forcing to full results
-       * in disapearing stamp if applied to maximum.
-       */
-      if (gimp_dynamics_output_is_enabled (output))
+      if (gimp_dynamics_is_output_enabled (core->dynamics,
+                                           GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO))
         {
+          gdouble dyn_aspect;
+
+          dyn_aspect = gimp_dynamics_get_aspect_value (core->dynamics,
+                                                       GIMP_DYNAMICS_OUTPUT_ASPECT_RATIO,
+                                                       coords,
+                                                       paint_options,
+                                                       fade_point);
+
+          /* Zero aspect ratio is special cased to half of all ar range,
+           * to force dynamics to have any effect. Forcing to full results
+           * in disapearing stamp if applied to maximum.
+           */
           if (core->aspect_ratio == 0.0)
-            core->aspect_ratio = 10.0 * dyn_aspect_ratio;
+            core->aspect_ratio = 10.0 * dyn_aspect;
           else
-            core->aspect_ratio *= dyn_aspect_ratio;
+            core->aspect_ratio *= dyn_aspect;
         }
     }
 }

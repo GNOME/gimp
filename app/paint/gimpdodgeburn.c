@@ -30,7 +30,6 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 #include "core/gimpimage.h"
 
 #include "gimpdodgeburn.h"
@@ -121,7 +120,6 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   gint                  paint_buffer_y;
   gdouble               fade_point;
   gdouble               opacity;
-  GimpDynamicsOutput   *force_output;
   gdouble               force;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
@@ -154,10 +152,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                        options->type,
                        options->mode);
 
-  force_output = gimp_dynamics_get_output (dynamics,
-                                           GIMP_DYNAMICS_OUTPUT_FORCE);
-
-  if (gimp_dynamics_output_is_enabled (force_output))
+  if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
     force = gimp_dynamics_get_linear_value (dynamics,
                                             GIMP_DYNAMICS_OUTPUT_FORCE,
                                             coords,
