@@ -121,9 +121,8 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   gint                  paint_buffer_y;
   gdouble               fade_point;
   gdouble               opacity;
+  GimpDynamicsOutput   *force_output;
   gdouble               force;
-  gdouble               dyn_force;
-  GimpDynamicsOutput   *dyn_output = NULL;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
@@ -155,17 +154,15 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                        options->type,
                        options->mode);
 
-  dyn_output = gimp_dynamics_get_output (dynamics,
-                                         GIMP_DYNAMICS_OUTPUT_FORCE);
+  force_output = gimp_dynamics_get_output (dynamics,
+                                           GIMP_DYNAMICS_OUTPUT_FORCE);
 
-  dyn_force = gimp_dynamics_get_linear_value (dynamics,
-                                              GIMP_DYNAMICS_OUTPUT_FORCE,
-                                              coords,
-                                              paint_options,
-                                              fade_point);
-
-  if (gimp_dynamics_output_is_enabled (dyn_output))
-    force = dyn_force;
+  if (gimp_dynamics_output_is_enabled (force_output))
+    force = gimp_dynamics_get_linear_value (dynamics,
+                                            GIMP_DYNAMICS_OUTPUT_FORCE,
+                                            coords,
+                                            paint_options,
+                                            fade_point);
   else
     force = paint_options->brush_force;
 

@@ -484,26 +484,23 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   GeglBuffer         *mask_buffer;
   const GimpTempBuf  *mask_buf;
   gdouble             fade_point;
+  GimpDynamicsOutput *force_output;
   gdouble             force;
   gint                mask_off_x;
   gint                mask_off_y;
-  gdouble             dyn_force;
-  GimpDynamicsOutput *dyn_output = NULL;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  dyn_output = gimp_dynamics_get_output (dynamics,
-                                         GIMP_DYNAMICS_OUTPUT_FORCE);
+  force_output = gimp_dynamics_get_output (dynamics,
+                                           GIMP_DYNAMICS_OUTPUT_FORCE);
 
-  dyn_force = gimp_dynamics_get_linear_value (dynamics,
-                                              GIMP_DYNAMICS_OUTPUT_FORCE,
-                                              coords,
-                                              paint_options,
-                                              fade_point);
-
-  if (gimp_dynamics_output_is_enabled (dyn_output))
-    force = dyn_force;
+  if (gimp_dynamics_output_is_enabled (force_output))
+    force = gimp_dynamics_get_linear_value (dynamics,
+                                            GIMP_DYNAMICS_OUTPUT_FORCE,
+                                            coords,
+                                            paint_options,
+                                            fade_point);
   else
     force = paint_options->brush_force;
 

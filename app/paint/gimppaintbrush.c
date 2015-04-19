@@ -121,9 +121,8 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   GimpPaintApplicationMode  paint_appl_mode;
   gdouble                   fade_point;
   gdouble                   grad_point;
+  GimpDynamicsOutput       *force_output;
   gdouble                   force;
-  gdouble                   dyn_force;
-  GimpDynamicsOutput       *dyn_output = NULL;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -200,17 +199,15 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       g_object_unref (color);
     }
 
-  dyn_output = gimp_dynamics_get_output (dynamics,
-                                         GIMP_DYNAMICS_OUTPUT_FORCE);
+  force_output = gimp_dynamics_get_output (dynamics,
+                                           GIMP_DYNAMICS_OUTPUT_FORCE);
 
-  dyn_force = gimp_dynamics_get_linear_value (dynamics,
-                                              GIMP_DYNAMICS_OUTPUT_FORCE,
-                                              coords,
-                                              paint_options,
-                                              fade_point);
-
-  if (gimp_dynamics_output_is_enabled (dyn_output))
-    force = dyn_force;
+  if (gimp_dynamics_output_is_enabled (force_output))
+    force = gimp_dynamics_get_linear_value (dynamics,
+                                            GIMP_DYNAMICS_OUTPUT_FORCE,
+                                            coords,
+                                            paint_options,
+                                            fade_point);
   else
     force = paint_options->brush_force;
 
