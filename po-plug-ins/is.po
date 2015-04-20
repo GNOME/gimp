@@ -10,9 +10,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.gimp-2-8.is\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&"
+"keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-03-25 06:26+0000\n"
-"PO-Revision-Date: 2015-03-16 14:55+0000\n"
+"PO-Revision-Date: 2015-04-20 13:45+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n%10!=1 || n%100==11);\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.5\n"
 
 #: ../plug-ins/color-rotate/color-rotate-dialog.c:120
 msgid "Original"
@@ -3292,7 +3293,8 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:763
-msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid ""
+"Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:941
@@ -3594,7 +3596,8 @@ msgstr ""
 
 #: ../plug-ins/common/file-jp2-load.c:345
 #, c-format
-msgid "Image component %d of image '%s' is signed. This is currently not supported."
+msgid ""
+"Image component %d of image '%s' is signed. This is currently not supported."
 msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
@@ -4501,7 +4504,8 @@ msgid "Import _paths"
 msgstr "_Flytja inn ferla"
 
 #: ../plug-ins/common/file-svg.c:944
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid ""
+"Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 
 #: ../plug-ins/common/file-svg.c:952
@@ -4854,7 +4858,8 @@ msgid "_Replace the delay of all frames even if it is specified."
 msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1234
-msgid "The part of copyright information that exceeded 65535 characters was removed."
+msgid ""
+"The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1244
@@ -4866,7 +4871,8 @@ msgid "_Copyright:"
 msgstr "_Höfundarréttur:"
 
 #: ../plug-ins/common/file-xmc.c:1262
-msgid "The part of license information that exceeded 65535 characters was removed."
+msgid ""
+"The part of license information that exceeded 65535 characters was removed."
 msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1272
@@ -5728,7 +5734,8 @@ msgid "Default RGB working space"
 msgstr "Sjálfgefin RGB litrýmd"
 
 #: ../plug-ins/common/lcms.c:865
-msgid "Data attached as 'icc-profile' does not appear to be an ICC color profile"
+msgid ""
+"Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr ""
 
 #: ../plug-ins/common/lcms.c:915
@@ -5832,15 +5839,15 @@ msgstr ""
 
 #: ../plug-ins/common/lens-apply.c:114
 msgid "Apply _Lens..."
-msgstr ""
+msgstr "Beita _linsu..."
 
 #: ../plug-ins/common/lens-apply.c:181
 msgid "Applying lens"
-msgstr ""
+msgstr "Beiti linsu"
 
 #: ../plug-ins/common/lens-apply.c:394
 msgid "Lens Effect"
-msgstr ""
+msgstr "Linsubrella"
 
 #: ../plug-ins/common/lens-apply.c:429
 msgid "_Keep original surroundings"
@@ -5896,19 +5903,19 @@ msgstr "Lýsa:"
 
 #: ../plug-ins/common/lens-distortion.c:574
 msgid "_X shift:"
-msgstr ""
+msgstr "_X hliðrun:"
 
 #: ../plug-ins/common/lens-distortion.c:588
 msgid "_Y shift:"
-msgstr ""
+msgstr "_Y hliðrun:"
 
 #: ../plug-ins/common/lens-flare.c:183
 msgid "Add a lens flare effect"
-msgstr ""
+msgstr "Bæta við linsuglampabrellu"
 
 #: ../plug-ins/common/lens-flare.c:190
 msgid "Lens _Flare..."
-msgstr ""
+msgstr "Linsu_glampi..."
 
 #: ../plug-ins/common/lens-flare.c:265
 msgid "Render lens flare"
@@ -5920,7 +5927,7 @@ msgstr "Linsuglampi"
 
 #: ../plug-ins/common/lens-flare.c:745
 msgid "Center of Flare Effect"
-msgstr ""
+msgstr "Miðja á linsuglampa"
 
 #: ../plug-ins/common/lens-flare.c:785 ../plug-ins/common/nova.c:475
 msgid "Show _position"
@@ -5975,19 +5982,19 @@ msgstr ""
 
 #: ../plug-ins/common/max-rgb.c:95
 msgid "Maxim_um RGB..."
-msgstr ""
+msgstr "Hám_ark RGB..."
 
 #: ../plug-ins/common/max-rgb.c:134 ../plug-ins/common/noise-hsv.c:158
 msgid "Can only operate on RGB drawables."
-msgstr ""
+msgstr "Einvörðungu hægt að nota á RGB-myndir."
 
 #: ../plug-ins/common/max-rgb.c:234
 msgid "Max RGB"
-msgstr ""
+msgstr "Hámark RGB"
 
 #: ../plug-ins/common/max-rgb.c:259
 msgid "Maximum RGB Value"
-msgstr ""
+msgstr "Hæsta gildi RGB"
 
 #: ../plug-ins/common/max-rgb.c:293
 msgid "_Hold the maximal channels"
@@ -6008,12 +6015,12 @@ msgstr "_Mósaík..."
 #. progress bar for gradient finding
 #: ../plug-ins/common/mosaic.c:509
 msgid "Finding edges"
-msgstr ""
+msgstr "Finna jaðra"
 
 #. Progress bar for rendering tiles
 #: ../plug-ins/common/mosaic.c:561
 msgid "Rendering tiles"
-msgstr ""
+msgstr "Myndgerðarreitir"
 
 #: ../plug-ins/common/mosaic.c:594
 msgid "Mosaic"
@@ -6093,11 +6100,11 @@ msgstr "Tígull"
 
 #: ../plug-ins/common/newsprint.c:144
 msgid "PS Square (Euclidean Dot)"
-msgstr ""
+msgstr "PS ferningur (Evklíðskur punktur)"
 
 #: ../plug-ins/common/newsprint.c:153
 msgid "PS Diamond"
-msgstr ""
+msgstr "PS demantur"
 
 #: ../plug-ins/common/newsprint.c:323
 msgid "_Grey"
@@ -6129,11 +6136,11 @@ msgstr ""
 
 #: ../plug-ins/common/newsprint.c:517
 msgid "Newsprin_t..."
-msgstr ""
+msgstr "Dagblaðapren_t..."
 
 #: ../plug-ins/common/newsprint.c:618 ../plug-ins/common/newsprint.c:1179
 msgid "Newsprint"
-msgstr ""
+msgstr "Dagblaðaprent"
 
 #: ../plug-ins/common/newsprint.c:1022
 msgid "_Spot function:"
@@ -6188,7 +6195,7 @@ msgstr ""
 
 #: ../plug-ins/common/newsprint.c:1408
 msgid "_Factory Defaults"
-msgstr ""
+msgstr "_Frumstillt gildi"
 
 #. anti-alias control
 #: ../plug-ins/common/newsprint.c:1434 ../plug-ins/gfig/gfig-dialog.c:1293
@@ -6772,7 +6779,7 @@ msgstr "Sínus"
 
 #: ../plug-ins/common/ripple.c:638
 msgid "_Period:"
-msgstr ""
+msgstr "_Umferðartími:"
 
 #: ../plug-ins/common/ripple.c:651
 msgid "A_mplitude:"
@@ -6780,7 +6787,7 @@ msgstr "_Sveifluvídd:"
 
 #: ../plug-ins/common/ripple.c:664
 msgid "Phase _shift:"
-msgstr ""
+msgstr "_Fasaskipti:"
 
 #: ../plug-ins/common/rotate.c:408
 msgid "You can not rotate the whole image if there's a selection."
@@ -6842,7 +6849,7 @@ msgstr "Sýna myndval"
 #: ../plug-ins/common/sample-colorize.c:1422
 #: ../plug-ins/common/sample-colorize.c:1449
 msgid "Show color"
-msgstr ""
+msgstr "Birta lit"
 
 #: ../plug-ins/common/sample-colorize.c:1563
 msgid "Input levels:"
@@ -6917,7 +6924,8 @@ msgid "After the delay, the screenshot is taken."
 msgstr "Eftir seinkunina er skjámyndin tekin"
 
 #: ../plug-ins/common/screenshot.c:1245
-msgid "After the delay, drag your mouse to select the region for the screenshot."
+msgid ""
+"After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Eftir seinkunina dragðu músarbendilinn til að velja svæðið sem skjámyndin "
 "tekin eftir."
@@ -7044,11 +7052,11 @@ msgstr ""
 
 #: ../plug-ins/common/sinus.c:701
 msgid "_X scale:"
-msgstr ""
+msgstr "_X kvarði:"
 
 #: ../plug-ins/common/sinus.c:710
 msgid "_Y scale:"
-msgstr ""
+msgstr "_Y kvarði:"
 
 #: ../plug-ins/common/sinus.c:719
 msgid "Co_mplexity:"
@@ -7433,7 +7441,7 @@ msgstr "Magn:"
 
 #: ../plug-ins/common/sphere-designer.c:2785
 msgid "Exp.:"
-msgstr ""
+msgstr "Veldi:"
 
 #: ../plug-ins/common/sphere-designer.c:2792
 msgid "Transformations"
@@ -7622,7 +7630,7 @@ msgstr ""
 
 #: ../plug-ins/common/tile-seamless.c:72
 msgid "_Make Seamless"
-msgstr ""
+msgstr "_Gera saumlaust"
 
 #: ../plug-ins/common/tile-seamless.c:335
 msgid "Tiler"
@@ -7723,7 +7731,8 @@ msgid "ID"
 msgstr "Auðkenni (ID)"
 
 #: ../plug-ins/common/unit-editor.c:96
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
 msgstr "Þetta er notað til að auðkenna eininguna í stillingaskrám GIMP."
 
 #: ../plug-ins/common/unit-editor.c:98
@@ -8276,7 +8285,8 @@ msgid "The specified path was not found."
 msgstr ""
 
 #: ../plug-ins/common/web-browser.c:144
-msgid "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
+msgid ""
+"The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
 
 #: ../plug-ins/common/web-browser.c:147
@@ -8660,7 +8670,8 @@ msgstr "Rammi (%i)"
 
 #: ../plug-ins/file-fli/fli-gimp.c:716
 msgid "Sorry, I can save only INDEXED and GRAY images."
-msgstr "Því miður, get einungis vistað litnúmeraðar (indexed) og grátóna myndir."
+msgstr ""
+"Því miður, get einungis vistað litnúmeraðar (indexed) og grátóna myndir."
 
 #: ../plug-ins/file-fli/fli-gimp.c:849
 msgid "GFLI 1.3 - Load framestack"
@@ -9501,7 +9512,8 @@ msgid "Bottom:"
 msgstr "Neðst:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:774
-msgid "The higher the number of iterations, the more details will be calculated"
+msgid ""
+"The higher the number of iterations, the more details will be calculated"
 msgstr ""
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:782
@@ -10109,7 +10121,8 @@ msgid "_Gfig..."
 msgstr "Gfig"
 
 #: ../plug-ins/gfig/gfig.c:738
-msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
+msgid ""
+"Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 
 #: ../plug-ins/gfig/gfig.c:765
@@ -10262,7 +10275,8 @@ msgid "Shadow depth:"
 msgstr "Dýpt skugga:"
 
 #: ../plug-ins/gimpressionist/general.c:261
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:266
@@ -10649,11 +10663,13 @@ msgid "Size depends on:"
 msgstr "Stærð veltur á:"
 
 #: ../plug-ins/gimpressionist/size.c:159
-msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
 msgstr ""
 
 #: ../plug-ins/gimpressionist/size.c:163
-msgid "The distance from the center of the image determines the size of the stroke"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
 msgstr ""
 
 #: ../plug-ins/gimpressionist/size.c:167
@@ -13088,4 +13104,5 @@ msgstr "_Skjámynd..."
 #: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "Engin gögn náðust"
+
 
