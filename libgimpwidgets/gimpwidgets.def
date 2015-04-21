@@ -175,6 +175,7 @@ EXPORTS
 	gimp_help_set_help_data_with_markup
 	gimp_hint_box_get_type
 	gimp_hint_box_new
+	gimp_icon_pixbufs_get_resource
 	gimp_int_adjustment_update
 	gimp_int_combo_box_append
 	gimp_int_combo_box_connect

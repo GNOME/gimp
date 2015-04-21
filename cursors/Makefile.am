@@ -89,9 +89,8 @@ noinst_DATA = \
 	gimp-color-picker-cursors.c
 
 CLEANFILES = \
-	gimp-tool-cursors.c			\
+	$(noinst_DATA)				\
 	gimp-tool-cursors.gresource.xml		\
-	gimp-color-picker-cursors.c		\
 	gimp-color-picker-cursors.gresource.xml
 
 
