@@ -498,7 +498,7 @@ gimp-core-pixbufs.gresource.xml: $(CORE_IMAGES) Makefile.am
 	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
 	  echo '<gresources>' >> $@; \
 	  echo '  <gresource prefix="/org/gimp/icons">' >> $@; \
-	  for image in $(CURSOR_IMAGES); do \
+	  for image in $(CORE_IMAGES); do \
 	    echo "    <file preprocess=\"to-pixdata\">$$image</file>" >> $@; \
 	  done; \
 	  echo '  </gresource>' >> $@; \
@@ -515,7 +515,7 @@ gimp-icon-pixbufs.gresource.xml: $(ICON_IMAGES) Makefile.am
 	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
 	  echo '<gresources>' >> $@; \
 	  echo '  <gresource prefix="/org/gimp/icons">' >> $@; \
-	  for image in $(CURSOR_IMAGES); do \
+	  for image in $(ICON_IMAGES); do \
 	    echo "    <file preprocess=\"to-pixdata\">$$image</file>" >> $@; \
 	  done; \
 	  echo '  </gresource>' >> $@; \
