@@ -1035,7 +1035,7 @@ load_resource_1033 (const PSDimageres  *res_a,
                              cinfo.output_height,
                              GIMP_RGB_IMAGE, 100, GIMP_NORMAL_MODE);
   buffer = gimp_drawable_get_buffer (layer_id);
-  format = babl_format ("R'G'B'A u8");
+  format = babl_format ("R'G'B' u8");
 
   /* Step 6: while (scan lines remain to be read) */
   /*           jpeg_read_scanlines(...); */
@@ -1043,27 +1043,30 @@ load_resource_1033 (const PSDimageres  *res_a,
     {
       jpeg_read_scanlines (&cinfo,
                            (JSAMPARRAY) &rowbuf[cinfo.output_scanline], 1);
-
-      if (res_a->id == PSD_THUMB_RES)   /* Order is BGR for resource 1033 */
-        {
-          guchar *dst = rgb_buf;
-          guchar *src = buf;
-
-          for (i = 0; i < gegl_buffer_get_width (buffer) * gegl_buffer_get_height (buffer); ++i)
-            {
-              guchar r, g, b;
-
-              r = *(src++);
-              g = *(src++);
-              b = *(src++);
-              *(dst++) = b;
-              *(dst++) = g;
-              *(dst++) = r;
-            }
-        }
-      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
-                       0, format, rgb_buf ? rgb_buf : buf, GEGL_AUTO_ROWSTRIDE);
     }
+
+  if (res_a->id == PSD_THUMB_RES)   /* Order is BGR for resource 1033 */
+    {
+      guchar *dst = rgb_buf;
+      guchar *src = buf;
+
+      for (i = 0; i < gegl_buffer_get_width (buffer) * gegl_buffer_get_height (buffer); ++i)
+        {
+          guchar r, g, b;
+
+          r = *(src++);
+          g = *(src++);
+          b = *(src++);
+          *(dst++) = b;
+          *(dst++) = g;
+          *(dst++) = r;
+        }
+    }
+
+  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0,
+                                           gegl_buffer_get_width (buffer),
+                                           gegl_buffer_get_height (buffer)),
+                   0, format, rgb_buf ? rgb_buf : buf, GEGL_AUTO_ROWSTRIDE);
 
   /* Step 7: Finish decompression */
   jpeg_finish_decompress (&cinfo);
