@@ -102,8 +102,10 @@ static void             convert_1_bit              (const gchar *src,
                                                     guint32      rows,
                                                     guint32      columns);
 
-static const Babl*      get_pixel_format           (PSDimage    *img_a,
-                                                    gboolean     mask_format);
+static const Babl*      get_layer_format           (PSDimage    *img_a,
+                                                    gboolean     alpha);
+static const Babl*      get_channel_format         (PSDimage    *img_a);
+static const Babl*      get_mask_format            (PSDimage    *img_a);
 
 
 /* Main file load function */
@@ -1391,7 +1393,7 @@ add_layers (gint32     image_id,
                                GEGL_RECTANGLE (0, 0,
                                                gegl_buffer_get_width (buffer),
                                                gegl_buffer_get_height (buffer)),
-			       0, get_pixel_format (img_a, FALSE),
+			       0, get_layer_format (img_a, alpha),
                                pixels, GEGL_AUTO_ROWSTRIDE);
               gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
               if (lyr_a[lidx]->id)
@@ -1506,7 +1508,7 @@ add_layers (gint32     image_id,
                       buffer = gimp_drawable_get_buffer (mask_id);
                       gegl_buffer_set (buffer,
                                        GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h),
-                                       0, get_pixel_format (img_a, TRUE),
+                                       0, get_mask_format (img_a),
                                        pixels, GEGL_AUTO_ROWSTRIDE);
                       g_object_unref (buffer);
                       gimp_layer_set_apply_mask (layer_id,
@@ -1693,7 +1695,7 @@ add_merged_image (gint32     image_id,
                        GEGL_RECTANGLE (0, 0,
                                        gegl_buffer_get_width (buffer),
                                        gegl_buffer_get_height (buffer)),
-		       0, get_pixel_format (img_a, FALSE),
+		       0, get_layer_format (img_a, img_a->transparency),
                        pixels, GEGL_AUTO_ROWSTRIDE);
       g_object_unref (buffer);
       g_free (pixels);
@@ -1788,7 +1790,7 @@ add_merged_image (gint32     image_id,
 			   GEGL_RECTANGLE (0, 0,
                                            gegl_buffer_get_width (buffer),
                                            gegl_buffer_get_height (buffer)),
-			   0, get_pixel_format (img_a, TRUE),
+			   0, get_channel_format (img_a),
                            pixels, GEGL_AUTO_ROWSTRIDE);
           g_object_unref (buffer);
           g_free (chn_a[cidx].data);
@@ -2029,36 +2031,12 @@ convert_1_bit (const gchar *src,
 }
 
 static const Babl*
-get_pixel_format (PSDimage *img_a,
-                  gboolean  mask_format)
+get_layer_format (PSDimage *img_a,
+                  gboolean  alpha)
 {
   const Babl *format = NULL;
 
-  if (mask_format)
-    {
-      switch (img_a->bps)
-	{
-	case 32:
-          format = babl_format ("Y u32");
-	  break;
-
-        case 16:
-          format = babl_format ("Y u16");
-	  break;
-
-        case 8:
-        case 1:
-          format = babl_format ("Y u8");
-	  break;
-
-        default:
-          break;
-	}
-
-      return format;
-    }
-
-  switch (get_gimp_image_type (img_a->base_type, img_a->transparency))
+  switch (get_gimp_image_type (img_a->base_type, alpha))
     {
     case GIMP_GRAY_IMAGE:
       switch (img_a->bps)
@@ -2152,6 +2130,60 @@ get_pixel_format (PSDimage *img_a,
 
     default:
       return NULL;
+      break;
+    }
+
+  return format;
+}
+
+static const Babl*
+get_channel_format (PSDimage *img_a)
+{
+  const Babl *format = NULL;
+
+  switch (img_a->bps)
+    {
+    case 32:
+      format = babl_format ("Y u32");
+      break;
+
+    case 16:
+      format = babl_format ("Y u16");
+      break;
+
+    case 8:
+    case 1:
+      format = babl_format ("Y u8");
+      break;
+
+    default:
+      break;
+    }
+
+  return format;
+}
+
+static const Babl*
+get_mask_format (PSDimage *img_a)
+{
+  const Babl *format = NULL;
+
+  switch (img_a->bps)
+    {
+    case 32:
+      format = babl_format ("Y u32");
+      break;
+
+    case 16:
+      format = babl_format ("Y u16");
+      break;
+
+    case 8:
+    case 1:
+      format = babl_format ("Y u8");
+      break;
+
+    default:
       break;
     }
 
