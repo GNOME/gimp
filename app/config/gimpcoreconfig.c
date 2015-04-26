@@ -341,7 +341,8 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                        "~/.mypaint/brushes",
                        NULL);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MYPAINT_BRUSH_PATH_WRITABLE,
-                                 "mypaint-brush-path-writable", NULL,
+                                 "mypaint-brush-path-writable",
+                                 MYPAINT_BRUSH_PATH_WRITABLE_BLURB,
                                  GIMP_CONFIG_PATH_DIR_LIST, path,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
