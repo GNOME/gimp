@@ -28,6 +28,10 @@
 
 #include "tools-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
+
 #include "paint/gimpmybrushoptions.h"
 
 #include "widgets/gimppropwidgets.h"
@@ -181,7 +185,7 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
 
-  path = gimp_config_path_expand_to_files ("/usr/share/mypaint/brushes", NULL);
+  path = gimp_config_path_expand_to_files (GIMP_CONTEXT (config)->gimp->config->mypaint_brush_path, NULL);
 
   for (list = path; list; list = g_list_next (list))
     {

@@ -60,6 +60,8 @@ struct _GimpCoreConfig
   gchar                  *tool_preset_path_writable;
   gchar                  *font_path;
   gchar                  *font_path_writable;  /*  unused  */
+  gchar                  *mypaint_brush_path;
+  gchar                  *mypaint_brush_path_writable;
   gchar                  *default_brush;
   gchar                  *default_dynamics;
   gchar                  *default_pattern;
@@ -67,6 +69,7 @@ struct _GimpCoreConfig
   gchar                  *default_tool_preset;
   gchar                  *default_gradient;
   gchar                  *default_font;
+  gchar                  *default_mypaint_brush;
   gboolean                global_brush;
   gboolean                global_dynamics;
   gboolean                global_pattern;
