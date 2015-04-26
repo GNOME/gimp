@@ -261,6 +261,9 @@ run (const gchar      *name,
 
   run_mode = param[0].data.d_int32;
 
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
   *nreturn_vals = 1;
   *return_vals  = values;
 
@@ -324,8 +327,6 @@ run (const gchar      *name,
                                                metadata, metadata_flags,
                                                file, NULL);
               g_object_unref (file);
-
-              g_object_unref (metadata);
             }
 
           values[0].data.d_status = GIMP_PDB_SUCCESS;
@@ -1353,8 +1354,12 @@ write_pixel_data (FILE   *fd,
       for (y = 0; y < height; y += tile_height)
         {
           int tlen;
-	  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, y, width, MIN (height - y, tile_height)),
-			   0, format, data, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+	  gegl_buffer_get (buffer,
+                           GEGL_RECTANGLE (0, y,
+                                           width,
+                                           MIN (height - y, tile_height)),
+			   1.0, format, data,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
           tlen = get_compress_channel_data (&data[chan],
                                              width,
                                              MIN(height - y, tile_height),
@@ -1418,8 +1423,12 @@ write_pixel_data (FILE   *fd,
           for (y = 0; y < height; y += tile_height)
             {
               int tlen;
-	      gegl_buffer_get (mbuffer, GEGL_RECTANGLE (0, y, width, MIN (height - y, tile_height)),
-			       0, format, data, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+	      gegl_buffer_get (mbuffer,
+                               GEGL_RECTANGLE (0, y,
+                                               width,
+                                               MIN (height - y, tile_height)),
+			       1.0, format, data,
+                               GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
               tlen = get_compress_channel_data (&data[0],
                                                 width,
                                                 MIN(height - y, tile_height),
