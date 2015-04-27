@@ -126,7 +126,6 @@ static gdouble  gradient_calc_shapeburst_dimpled_factor   (GeglBuffer *dist_buff
 static GeglBuffer * gradient_precalc_shapeburst (GimpImage           *image,
                                                  GimpDrawable        *drawable,
                                                  const GeglRectangle *region,
-                                                 gdouble              dist,
                                                  GimpProgress        *progress);
 
 static void     gradient_render_pixel       (gdouble              x,
@@ -532,7 +531,6 @@ static GeglBuffer *
 gradient_precalc_shapeburst (GimpImage           *image,
                              GimpDrawable        *drawable,
                              const GeglRectangle *region,
-                             gdouble              dist,
                              GimpProgress        *progress)
 {
   GimpChannel *mask;
@@ -868,7 +866,7 @@ gradient_fill_region (GimpImage           *image,
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
       rbd.dist_buffer = gradient_precalc_shapeburst (image, drawable,
                                                      buffer_region,
-                                                     rbd.dist, progress);
+                                                     progress);
       gimp_progress_set_text_literal (progress, _("Blending"));
       break;
 
