@@ -601,7 +601,7 @@ gradient_precalc_shapeburst (GimpImage           *image,
     }
 
   shapeburst = gegl_node_new_child (NULL,
-                                    "operation", "gegl:distance-transform",
+                                    "operation", "gimp:shapeburst",
                                     "normalize", TRUE,
                                     NULL);
 
