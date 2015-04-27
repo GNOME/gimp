@@ -125,6 +125,8 @@ static void   gimp_blend_tool_push_status         (GimpBlendTool         *blend_
                                                    GdkModifierType        state,
                                                    GimpDisplay           *display);
 
+static void   gimp_blend_tool_precalc_shapeburst  (GimpBlendTool         *blend_tool);
+
 static void   gimp_blend_tool_create_graph        (GimpBlendTool         *blend_tool);
 static void   gimp_blend_tool_update_preview_coords (GimpBlendTool       *blend_tool);
 static void   gimp_blend_tool_gradient_dirty      (GimpBlendTool         *blend_tool);
@@ -139,7 +141,6 @@ static void   gimp_blend_tool_create_image_map    (GimpBlendTool         *blend_
                                                    GimpDrawable          *drawable);
 static void   gimp_blend_tool_image_map_flush     (GimpImageMap          *image_map,
                                                    GimpTool              *tool);
-
 
 
 G_DEFINE_TYPE (GimpBlendTool, gimp_blend_tool, GIMP_TYPE_DRAW_TOOL)
@@ -329,10 +330,12 @@ gimp_blend_tool_button_press (GimpTool            *tool,
           gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
           gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
         }
-
-      if (gimp_blend_tool_is_shapeburst (blend_tool))
+      else if (gimp_blend_tool_is_shapeburst (blend_tool))
         {
           blend_tool->grabbed_point = POINT_FILL_MODE;
+
+          blend_tool->start_x = coords->x;/*XXX*/
+          blend_tool->start_y = coords->y;
         }
       else
         {
@@ -387,8 +390,10 @@ gimp_blend_tool_button_release (GimpTool              *tool,
   if (blend_tool->grabbed_point == POINT_FILL_MODE)
     {
       /* XXX: Temporary, until the handles are working properly for shapebursts */
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
-      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+      /*gimp_tool_control (tool, GIMP_TOOL_ACTION_COMMIT, display);
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);*/
+      gimp_blend_tool_precalc_shapeburst (blend_tool);
+      gimp_blend_tool_start_preview (blend_tool, display);
     }
 
   blend_tool->grabbed_point = POINT_NONE;
@@ -796,17 +801,13 @@ gimp_blend_tool_start_preview (GimpBlendTool *blend_tool,
   tool->display  = display;
   tool->drawable = drawable;
 
-  if (blend_tool->grabbed_point != POINT_FILL_MODE)
-    {
-      gimp_blend_tool_create_image_map (blend_tool, drawable);
+  gimp_blend_tool_create_image_map (blend_tool, drawable);
 
-      /* Initially sync all of the properties */
-      gimp_gegl_config_sync_node (GIMP_OBJECT (options),
-                                  blend_tool->render_node);
+  /* Initially sync all of the properties */
+  gimp_gegl_config_sync_node (GIMP_OBJECT (options), blend_tool->render_node);
 
-      /* Connect signal handlers for the gradient */
-      gimp_blend_tool_set_gradient (blend_tool, context->gradient);
-    }
+  /* Connect signal handlers for the gradient */
+  gimp_blend_tool_set_gradient (blend_tool, context->gradient);
 
   if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (blend_tool)))
     gimp_draw_tool_start (GIMP_DRAW_TOOL (blend_tool), display);
@@ -820,8 +821,19 @@ gimp_blend_tool_halt_preview (GimpBlendTool *blend_tool)
   if (blend_tool->graph)
     {
       g_object_unref (blend_tool->graph);
-      blend_tool->graph       = NULL;
-      blend_tool->render_node = NULL;
+      blend_tool->graph = NULL;
+
+      blend_tool->render_node    = NULL;
+      blend_tool->subtract_node  = NULL;
+      blend_tool->divide_node    = NULL;
+      blend_tool->dist_node      = NULL;
+      blend_tool->translate_node = NULL;
+    }
+
+  if (blend_tool->dist_buffer)
+    {
+      g_object_unref (blend_tool->dist_buffer);
+      blend_tool->dist_buffer = NULL;
     }
 
   if (blend_tool->image_map)
@@ -911,6 +923,42 @@ gimp_blend_tool_push_status (GimpBlendTool   *blend_tool,
   g_free (status_help);
 }
 
+static void
+gimp_blend_tool_precalc_shapeburst (GimpBlendTool *blend_tool)
+{
+  GimpTool     *tool     = GIMP_TOOL (blend_tool);
+  GimpImage    *image    = gimp_display_get_image (tool->display);
+  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+  GeglBuffer   *buf      = NULL;
+
+  gint x, y, width, height;
+
+  if (blend_tool->dist_buffer)
+    return;
+
+  if (! gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &width, &height))
+    return;
+
+  buf = gimp_drawable_blend_shapeburst_distmap (drawable, FALSE,
+                                                GEGL_RECTANGLE (0, 0, width, height),
+                                                GIMP_PROGRESS (blend_tool));
+
+  blend_tool->dist_buffer = buf;
+  blend_tool->dist_buffer_off_x = x;
+  blend_tool->dist_buffer_off_y = y;
+
+  if (blend_tool->dist_node)
+    gegl_node_set (blend_tool->dist_node,
+                   "buffer", blend_tool->dist_buffer,
+                   NULL);
+
+  if (blend_tool->translate_node)
+    gegl_node_set (blend_tool->translate_node,
+                   "x", (gdouble) blend_tool->dist_buffer_off_x,
+                   "y", (gdouble) blend_tool->dist_buffer_off_y,
+                   NULL);
+}
+
 /* gegl graph stuff */
 
 static void
@@ -918,7 +966,7 @@ gimp_blend_tool_create_graph (GimpBlendTool *blend_tool)
 {
   GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
   GimpContext      *context = GIMP_CONTEXT (options);
-  GeglNode *graph, *output, *render;
+  GeglNode         *graph, *output, *render, *shapeburst, *translate, *subtract, *divide;
 
   /* render_node is not supposed to be recreated */
   g_return_if_fail (blend_tool->graph == NULL);
@@ -930,32 +978,77 @@ gimp_blend_tool_create_graph (GimpBlendTool *blend_tool)
 
   render = gegl_node_new_child (graph,
                                 "operation", "gimp:blend",
+                                "context", context,
                                 NULL);
 
-  gegl_node_link (render, output);
+  translate = gegl_node_new_child (graph, "operation", "gegl:translate",
+                                   "x", (gdouble) blend_tool->dist_buffer_off_x,
+                                   "y", (gdouble) blend_tool->dist_buffer_off_y,
+                                   NULL);
 
-  blend_tool->graph       = graph;
-  blend_tool->render_node = render;
+  subtract = gegl_node_new_child (graph, "operation", "gegl:subtract", NULL);
+  divide = gegl_node_new_child (graph, "operation", "gegl:divide", NULL);
 
-  gegl_node_set (render,
-                 "context", context,
-                 NULL);
+  shapeburst = gegl_node_new_child (graph, "operation", "gegl:buffer-source",
+                                    "buffer", blend_tool->dist_buffer, NULL);
+
+  gegl_node_link_many (shapeburst, translate, subtract, divide,
+                       render, output, NULL);
+
+  blend_tool->graph          = graph;
+  blend_tool->render_node    = render;
+  blend_tool->subtract_node  = subtract;
+  blend_tool->divide_node    = divide;
+  blend_tool->dist_node      = shapeburst;
+  blend_tool->translate_node = translate;
+
+  gimp_blend_tool_update_preview_coords (blend_tool);
 }
 
 static void
 gimp_blend_tool_update_preview_coords (GimpBlendTool *blend_tool)
 {
   GimpTool *tool = GIMP_TOOL (blend_tool);
-  gint      off_x, off_y;
 
-  gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+  if (gimp_blend_tool_is_shapeburst (blend_tool))
+    {
+      gfloat start, end;
 
-  gegl_node_set (blend_tool->render_node,
-                 "start_x", blend_tool->start_x - off_x,
-                 "start_y", blend_tool->start_y - off_y,
-                 "end_x",   blend_tool->end_x - off_x,
-                 "end_y",   blend_tool->end_y - off_y,
-                 NULL);
+      gegl_buffer_get (blend_tool->dist_buffer,
+                       GEGL_RECTANGLE (blend_tool->start_x - blend_tool->dist_buffer_off_x,
+                                       blend_tool->start_y - blend_tool->dist_buffer_off_y,
+                                       1, 1),
+                       1.0, babl_format("Y float"), &start,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      gegl_buffer_get (blend_tool->dist_buffer,
+                       GEGL_RECTANGLE (blend_tool->end_x - blend_tool->dist_buffer_off_x,
+                                       blend_tool->end_y - blend_tool->dist_buffer_off_y,
+                                       1, 1),
+                       1.0, babl_format("Y float"), &end,
+                       GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+
+      if (start != end) {
+        gegl_node_set (blend_tool->subtract_node,
+                       "value", (gdouble) start,
+                       NULL);
+        gegl_node_set (blend_tool->divide_node,
+                       "value", (gdouble) (end - start),
+                       NULL);
+      }
+    }
+  else
+    {
+      gint off_x, off_y;
+      gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+
+      gegl_node_set (blend_tool->render_node,
+                     "start_x", blend_tool->start_x - off_x,
+                     "start_y", blend_tool->start_y - off_y,
+                     "end_x",   blend_tool->end_x - off_x,
+                     "end_y",   blend_tool->end_y - off_y,
+                     NULL);
+    }
 }
 
 static void
@@ -1042,6 +1135,14 @@ gimp_blend_tool_options_notify (GimpTool         *tool,
       gegl_node_set_property (blend_tool->render_node, pspec->name, &value);
 
       g_value_unset (&value);
+
+      if (! strcmp (pspec->name, "gradient-type"))
+        {
+          if (gimp_blend_tool_is_shapeburst (blend_tool))
+            gimp_blend_tool_precalc_shapeburst (blend_tool);
+
+          gimp_blend_tool_update_preview_coords (blend_tool);
+        }
 
       gimp_image_map_apply (blend_tool->image_map, NULL);
     }

@@ -68,6 +68,12 @@ struct _GimpBlendTool
 
   GeglNode       *graph;
   GeglNode       *render_node;
+  GeglNode       *subtract_node;
+  GeglNode       *divide_node;
+  GeglNode       *dist_node;
+  GeglNode       *translate_node;
+  GeglBuffer     *dist_buffer;
+  gint           dist_buffer_off_x, dist_buffer_off_y;
   GimpImageMap   *image_map;
 };
 
