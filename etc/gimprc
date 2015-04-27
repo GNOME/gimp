@@ -42,7 +42,7 @@
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 # specified the size defaults to being specified in kilobytes.
 # 
-# (tile-cache-size 6132474k)
+# (tile-cache-size 6132286k)
 
 # When enabled, uses OpenCL for some operations.  Possible values are yes and
 # no.
@@ -146,6 +146,15 @@
 # 
 # (font-path "${gimp_dir}/fonts:${gimp_data_dir}/fonts")
 
+# Sets the brush search path.  This is a colon-separated list of folders to
+# search.
+# 
+# (mypaint-brush-path "/usr/share/mypaint/brushes:/usr/local/share/mypaint/brushes:/local/head/share/mypaint/brushes:/home/mitch/.local/share/mypaint/brushes:~/.mypaint/brushes")
+
+# This is a colon-separated list of folders to search.
+# 
+# (mypaint-brush-path-writable "/home/mitch/.local/share/mypaint/brushes:~/.mypaint/brushes")
+
 # Specify a default brush.  The brush is searched for in the specified brush
 # path.  This is a string value.
 # 
@@ -176,6 +185,10 @@
 # Specify a default font.  This is a string value.
 # 
 # (default-font "Sans")
+
+# Specify a default MyPaint brush.  This is a string value.
+# 
+# (default-mypaint-brush "Fixme")
 
 # When enabled, the selected brush will be used for all tools.  Possible
 # values are yes and no.
@@ -247,7 +260,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 1569913344)
+# (undo-size 1569865216)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and
@@ -709,6 +722,18 @@
 # right.
 # 
 # (cursor-handedness right)
+
+# Enable the N-Point Deformation tool.  Possible values are yes and no.
+# 
+# (playground-npd-tool no)
+
+# Enable the Handle Transform tool.  Possible values are yes and no.
+# 
+# (playground-handle-transform-tool no)
+
+# Enable the MyPaint Brush tool.  Possible values are yes and no.
+# 
+# (playground-mybrush-tool no)
 
 # Where to search for fractals used by the Fractal Explorer plug-in.  This is
 # a colon-separated list of folders to search.
