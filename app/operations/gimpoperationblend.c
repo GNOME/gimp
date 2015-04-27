@@ -160,12 +160,13 @@ static void     gradient_put_pixel           (gint                x,
                                               gpointer            put_pixel_data);
 
 static gboolean gimp_operation_blend_process (GeglOperation       *operation,
+                                              GeglBuffer          *input,
                                               GeglBuffer          *output,
                                               const GeglRectangle *result,
                                               gint                 level);
 
 G_DEFINE_TYPE (GimpOperationBlend, gimp_operation_blend,
-               GEGL_TYPE_OPERATION_SOURCE)
+               GEGL_TYPE_OPERATION_FILTER)
 
 #define parent_class gimp_operation_blend_parent_class
 
@@ -174,7 +175,7 @@ gimp_operation_blend_class_init (GimpOperationBlendClass *klass)
 {
   GObjectClass             *object_class    = G_OBJECT_CLASS (klass);
   GeglOperationClass       *operation_class = GEGL_OPERATION_CLASS (klass);
-  GeglOperationSourceClass *source_class    = GEGL_OPERATION_SOURCE_CLASS (klass);
+  GeglOperationFilterClass *filter_class    = GEGL_OPERATION_FILTER_CLASS (klass);
 
   object_class->dispose        = gimp_operation_blend_dispose;
   object_class->set_property   = gimp_operation_blend_set_property;
@@ -183,7 +184,7 @@ gimp_operation_blend_class_init (GimpOperationBlendClass *klass)
   operation_class->prepare          = gimp_operation_blend_prepare;
   operation_class->get_bounding_box = gimp_operation_blend_get_bounding_box;
 
-  source_class->process             = gimp_operation_blend_process;
+  filter_class->process             = gimp_operation_blend_process;
 
   gegl_operation_class_set_keys (operation_class,
                                  "name",        "gimp:blend",
@@ -973,6 +974,7 @@ gradient_put_pixel (gint      x,
 
 static gboolean
 gimp_operation_blend_process (GeglOperation       *operation,
+                              GeglBuffer          *input,
                               GeglBuffer          *output,
                               const GeglRectangle *result,
                               gint                 level)
