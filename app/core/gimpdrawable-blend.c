@@ -123,11 +123,6 @@ static gdouble  gradient_calc_shapeburst_dimpled_factor   (GeglBuffer *dist_buff
                                                            gdouble     x,
                                                            gdouble     y);
 
-static GeglBuffer * gradient_precalc_shapeburst (GimpImage           *image,
-                                                 GimpDrawable        *drawable,
-                                                 const GeglRectangle *region,
-                                                 GimpProgress        *progress);
-
 static void     gradient_render_pixel       (gdouble              x,
                                              gdouble              y,
                                              GimpRGB             *color,
@@ -527,18 +522,26 @@ gradient_calc_shapeburst_dimpled_factor (GeglBuffer *dist_buffer,
   return value;
 }
 
-static GeglBuffer *
-gradient_precalc_shapeburst (GimpImage           *image,
-                             GimpDrawable        *drawable,
-                             const GeglRectangle *region,
-                             GimpProgress        *progress)
+GeglBuffer *
+gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
+                                        gboolean             legacy_shapeburst,
+                                        const GeglRectangle *region,
+                                        GimpProgress        *progress)
 {
   GimpChannel *mask;
+  GimpImage   *image;
   GeglBuffer  *dist_buffer;
   GeglBuffer  *temp_buffer;
   GeglNode    *shapeburst;
 
-  gimp_progress_set_text_literal (progress, _("Calculating distance map"));
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
+
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  if (progress)
+    gimp_progress_set_text_literal (progress, _("Calculating distance map"));
 
   /*  allocate the distance map  */
   dist_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -598,12 +601,19 @@ gradient_precalc_shapeburst (GimpImage           *image,
         }
     }
 
-  shapeburst = gegl_node_new_child (NULL,
-                                    "operation", "gimp:shapeburst",
-                                    "normalize", TRUE,
-                                    NULL);
+  if (legacy_shapeburst)
+    shapeburst = gegl_node_new_child (NULL,
+                                      "operation", "gimp:shapeburst",
+                                      "normalize", TRUE,
+                                      NULL);
+  else
+    shapeburst = gegl_node_new_child (NULL,
+                                      "operation", "gegl:distance-transform",
+                                      "normalize", FALSE,
+                                      NULL);
 
-  gimp_gegl_progress_connect (shapeburst, progress, NULL);
+  if (progress)
+    gimp_gegl_progress_connect (shapeburst, progress, NULL);
 
   gimp_gegl_apply_operation (temp_buffer, NULL, NULL,
                              shapeburst,
@@ -864,9 +874,10 @@ gradient_fill_region (GimpImage           *image,
     case GIMP_GRADIENT_SHAPEBURST_SPHERICAL:
     case GIMP_GRADIENT_SHAPEBURST_DIMPLED:
       rbd.dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
-      rbd.dist_buffer = gradient_precalc_shapeburst (image, drawable,
-                                                     buffer_region,
-                                                     progress);
+      rbd.dist_buffer = gimp_drawable_blend_shapeburst_distmap (drawable,
+                                                                TRUE,
+                                                                buffer_region,
+                                                                progress);
       gimp_progress_set_text_literal (progress, _("Blending"));
       break;
 

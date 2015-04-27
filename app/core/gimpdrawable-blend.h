@@ -38,5 +38,11 @@ void   gimp_drawable_blend (GimpDrawable         *drawable,
                             gdouble               endy,
                             GimpProgress         *progress);
 
+GeglBuffer *
+gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
+                                        gboolean             legacy_shapeburst,
+                                        const GeglRectangle *region,
+                                        GimpProgress        *progress);
+
 
 #endif /* __GIMP_DRAWABLE_BLEND_H__ */
