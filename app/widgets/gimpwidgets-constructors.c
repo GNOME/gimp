@@ -116,7 +116,7 @@ gimp_paint_mode_menu_new (gboolean with_behind_mode,
                                            GIMP_MULTIPLY_MODE,
                                            GIMP_BURN_MODE,
 
-                                           GIMP_OVERLAY_MODE,
+                                           GIMP_NEW_OVERLAY_MODE,
                                            GIMP_SOFTLIGHT_MODE,
                                            GIMP_HARDLIGHT_MODE,
 

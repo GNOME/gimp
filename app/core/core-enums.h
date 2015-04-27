@@ -144,7 +144,7 @@ typedef enum
   GIMP_BEHIND_MODE,          /*< desc="Behind"               >*/
   GIMP_MULTIPLY_MODE,        /*< desc="Multiply"             >*/
   GIMP_SCREEN_MODE,          /*< desc="Screen"               >*/
-  GIMP_OVERLAY_MODE,         /*< desc="Overlay"              >*/
+  GIMP_OVERLAY_MODE,         /*< desc="Old broken Overlay"   >*/
   GIMP_DIFFERENCE_MODE,      /*< desc="Difference"           >*/
   GIMP_ADDITION_MODE,        /*< desc="Addition"             >*/
   GIMP_SUBTRACT_MODE,        /*< desc="Subtract"             >*/
@@ -162,6 +162,7 @@ typedef enum
   GIMP_GRAIN_EXTRACT_MODE,   /*< desc="Grain extract"        >*/
   GIMP_GRAIN_MERGE_MODE,     /*< desc="Grain merge"          >*/
   GIMP_COLOR_ERASE_MODE,     /*< desc="Color erase"          >*/
+  GIMP_NEW_OVERLAY_MODE,     /*< desc="Overlay"              >*/
 
   /* internal modes, not available to the PDB */
   GIMP_ERASE_MODE      = 1000, /*< pdb-skip, desc="Erase"      >*/

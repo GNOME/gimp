@@ -59,6 +59,9 @@ HELP
   gboolean           has_alpha = FALSE;
   const Babl        *format;
 
+  if (mode == GIMP_OVERLAY_MODE)
+    mode = GIMP_SOFTLIGHT_MODE;
+
   switch (type)
     {
     case GIMP_RGB_IMAGE:
@@ -1182,6 +1185,9 @@ sub layer_set_mode {
     %invoke = (
 	code => <<'CODE'
 {
+  if (mode == GIMP_OVERLAY_MODE)
+    mode = GIMP_SOFTLIGHT_MODE;
+
   gimp_layer_set_mode (layer, mode, TRUE);
 }
 CODE

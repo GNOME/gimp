@@ -126,9 +126,21 @@ gimp_operation_softlight_mode_process_pixels (gfloat              *in,
 
           for (b = RED; b < ALPHA; b++)
             {
+#if 0
+              /* softlight is now used for what GIMP formerly called
+               * OVERLAY.  We fixed OVERLAY to use the right math
+               * (under the name NEW_OVERLAY), and redirect uses of
+               * the old OVERLAY blend mode here. This math was
+               * formerly used for OVERLAY and is exactly the same as
+               * the multiply, screen, comp math used below.
+               * See bug #673501.
+               */
+              gfloat comp = in[b] * (in[b] + (2.0 * layer[b]) * (1.0 - in[b]));
+#endif
+
               gfloat multiply = in[b] * layer[b];
-              gfloat screen = 1.0 - (1.0 - in[b]) * (1.0 - layer[b]);
-              gfloat comp = (1.0 - in[b]) * multiply + in[b] * screen;
+              gfloat screen   = 1.0 - (1.0 - in[b]) * (1.0 - layer[b]);
+              gfloat comp     = (1.0 - in[b]) * multiply + in[b] * screen;
 
               out[b] = comp * ratio + in[b] * (1.0 - ratio);
             }

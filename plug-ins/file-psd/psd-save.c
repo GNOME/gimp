@@ -234,10 +234,11 @@ psd_lmode_layer (gint32  idLayer,
     case GIMP_HARDLIGHT_MODE:
       strcpy (psdMode, "hLit");
       break;
+    case GIMP_OVERLAY_MODE:
     case GIMP_SOFTLIGHT_MODE:
       strcpy (psdMode, "sLit");
       break;
-    case GIMP_OVERLAY_MODE:
+    case GIMP_NEW_OVERLAY_MODE:
       strcpy (psdMode, "over");
       break;
     default:

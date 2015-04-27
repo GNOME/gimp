@@ -83,6 +83,9 @@ layer_new_invoker (GimpProcedure         *procedure,
       gboolean           has_alpha = FALSE;
       const Babl        *format;
 
+      if (mode == GIMP_OVERLAY_MODE)
+        mode = GIMP_SOFTLIGHT_MODE;
+
       switch (type)
         {
         case GIMP_RGB_IMAGE:
@@ -1128,6 +1131,9 @@ layer_set_mode_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      if (mode == GIMP_OVERLAY_MODE)
+        mode = GIMP_SOFTLIGHT_MODE;
+
       gimp_layer_set_mode (layer, mode, TRUE);
     }
 

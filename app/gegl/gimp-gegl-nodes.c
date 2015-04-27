@@ -155,7 +155,7 @@ gimp_gegl_mode_node_set_mode (GeglNode             *node,
     case GIMP_BEHIND_MODE:        operation = "gimp:behind-mode"; break;
     case GIMP_MULTIPLY_MODE:      operation = "gimp:multiply-mode"; break;
     case GIMP_SCREEN_MODE:        operation = "gimp:screen-mode"; break;
-    case GIMP_OVERLAY_MODE:       operation = "gimp:overlay-mode"; break;
+    case GIMP_OVERLAY_MODE:       operation = "gimp:softlight-mode"; break;
     case GIMP_DIFFERENCE_MODE:    operation = "gimp:difference-mode"; break;
     case GIMP_ADDITION_MODE:      operation = "gimp:addition-mode"; break;
     case GIMP_SUBTRACT_MODE:      operation = "gimp:subtract-mode"; break;
@@ -173,6 +173,7 @@ gimp_gegl_mode_node_set_mode (GeglNode             *node,
     case GIMP_GRAIN_EXTRACT_MODE: operation = "gimp:grain-extract-mode"; break;
     case GIMP_GRAIN_MERGE_MODE:   operation = "gimp:grain-merge-mode"; break;
     case GIMP_COLOR_ERASE_MODE:   operation = "gimp:color-erase-mode"; break;
+    case GIMP_NEW_OVERLAY_MODE:   operation = "gimp:overlay-mode"; break;
     case GIMP_ERASE_MODE:         operation = "gimp:erase-mode"; break;
     case GIMP_REPLACE_MODE:       operation = "gimp:replace-mode"; break;
     case GIMP_ANTI_ERASE_MODE:    operation = "gimp:anti-erase-mode"; break;

@@ -649,16 +649,7 @@ psd_to_gimp_blend_mode (const gchar *psd_mode)
   if (g_ascii_strncasecmp (psd_mode, "diss", 4) == 0)           /* Dissolve (ps3) */
     return GIMP_DISSOLVE_MODE;
   if (g_ascii_strncasecmp (psd_mode, "over", 4) == 0)           /* Overlay (ps3) */
-    {
-      if (CONVERSION_WARNINGS)
-        {
-          static gchar  *mode_name = "OVERLAY";
-          g_message ("Gimp uses a different equation to photoshop for "
-                     "blend mode: %s. Results will differ.",
-                     mode_name);
-        }
-      return GIMP_OVERLAY_MODE;
-    }
+    return GIMP_NEW_OVERLAY_MODE;
   if (g_ascii_strncasecmp (psd_mode, "hLit", 4) == 0)           /* Hard light (ps3) */
     return GIMP_HARDLIGHT_MODE;
   if (g_ascii_strncasecmp (psd_mode, "sLit", 4) == 0)           /* Soft light (ps3) */
@@ -776,11 +767,7 @@ gimp_to_psd_blend_mode (GimpLayerModeEffects gimp_layer_mode)
       case GIMP_SCREEN_MODE:
         psd_mode = g_strndup ("scrn", 4);                       /* Screen (ps3) */
         break;
-      case GIMP_OVERLAY_MODE:
-        if (CONVERSION_WARNINGS)
-          g_message ("Gimp uses a different equation to photoshop for "
-                     "blend mode: %s. Results will differ.",
-                     gimp_layer_mode_effects_name (gimp_layer_mode));
+      case GIMP_NEW_OVERLAY_MODE:
         psd_mode = g_strndup ("over", 4);                       /* Overlay (ps3) */
         break;
       case GIMP_DIFFERENCE_MODE:
@@ -836,6 +823,7 @@ gimp_to_psd_blend_mode (GimpLayerModeEffects gimp_layer_mode)
       case GIMP_HARDLIGHT_MODE:
         psd_mode = g_strndup ("hLit", 4);                       /* Hard Light (ps3) */
         break;
+      case GIMP_OVERLAY_MODE:
       case GIMP_SOFTLIGHT_MODE:
         if (CONVERSION_WARNINGS)
           g_message ("Unsupported blend mode: %s. Mode reverts to normal",

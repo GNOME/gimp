@@ -366,6 +366,9 @@ context_set_paint_mode_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
+      if (paint_mode == GIMP_OVERLAY_MODE)
+        paint_mode = GIMP_SOFTLIGHT_MODE;
+
       gimp_context_set_paint_mode (context, paint_mode);
     }
 

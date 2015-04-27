@@ -26,7 +26,7 @@ layermodes_map = {
     "svg:src-over": NORMAL_MODE,
     "svg:multiply": MULTIPLY_MODE,
     "svg:screen": SCREEN_MODE,
-    "svg:overlay": OVERLAY_MODE,
+    "svg:overlay": NEW_OVERLAY_MODE,
     "svg:darken": DARKEN_ONLY_MODE,
     "svg:lighten": LIGHTEN_ONLY_MODE,
     "svg:color-dodge": DODGE_MODE,
