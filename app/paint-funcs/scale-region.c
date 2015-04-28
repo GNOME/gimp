@@ -902,7 +902,7 @@ sinc (const gdouble x)
 gfloat *
 create_lanczos_lookup (void)
 {
-  const gdouble dx = LANCZOS_MIN;
+  const gdouble dx = LANCZOS_WIDTH / (gdouble) (LANCZOS_SAMPLES - 1);
 
   gfloat  *lookup = g_new (gfloat, LANCZOS_SAMPLES);
   gdouble  x      = 0.0;
@@ -921,7 +921,7 @@ create_lanczos_lookup (void)
 static gfloat *
 create_lanczos3_lookup (void)
 {
-  const gdouble dx = LANCZOS_MIN;
+  const gdouble dx = 3.0 / (gdouble) (LANCZOS_SAMPLES - 1);
 
   gfloat  *lookup = g_new (gfloat, LANCZOS_SAMPLES);
   gdouble  x      = 0.0;
