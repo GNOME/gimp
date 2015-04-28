@@ -159,6 +159,7 @@
 	<branch version="2.24.23" repo="gnome.org"
 			module="gtk+/2.24/gtk+-2.24.23.tar.xz"
 			hash="sha256:a0a406e27e9b5e7d6b2c4334212706ed5cdcd41e713e66c9ae950655dd61517c">
+		<patch file="gtk-horiz-scrolling.patch" strip="1"/>
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>

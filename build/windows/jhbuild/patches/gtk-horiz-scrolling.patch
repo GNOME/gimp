@@ -1,0 +1,65 @@
+From c0e0a1508be3ccf349717497af2e8a4d77027649 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?=D0=A0=D1=83=D1=81=D0=BB=D0=B0=D0=BD=20=D0=98=D0=B6=D0=B1?=
+ =?UTF-8?q?=D1=83=D0=BB=D0=B0=D1=82=D0=BE=D0=B2?= <lrn1986@gmail.com>
+Date: Thu, 16 Apr 2015 23:11:14 +0000
+Subject: W32: Support horizontal mouse wheel scrolling
+
+https://bugzilla.gnome.org/show_bug.cgi?id=748014
+
+diff --git a/gdk/win32/gdkevents-win32.c b/gdk/win32/gdkevents-win32.c
+index c55cee0..7ff7c08 100644
+--- a/gdk/win32/gdkevents-win32.c
++++ b/gdk/win32/gdkevents-win32.c
+@@ -2450,6 +2450,7 @@ gdk_event_translate (MSG  *msg,
+       break;
+ 
+     case WM_MOUSEWHEEL:
++    case WM_MOUSEHWHEEL:
+       GDK_NOTE (EVENTS, g_print (" %d", (short) HIWORD (msg->wParam)));
+ 
+       /* WM_MOUSEWHEEL is delivered to the focus window. Work around
+@@ -2500,8 +2501,13 @@ gdk_event_translate (MSG  *msg,
+ 
+       event = gdk_event_new (GDK_SCROLL);
+       event->scroll.window = window;
+-      event->scroll.direction = (((short) HIWORD (msg->wParam)) > 0) ?
+-	GDK_SCROLL_UP : GDK_SCROLL_DOWN;
++
++      if (msg->message == WM_MOUSEWHEEL)
++	  event->scroll.direction = (((short) HIWORD (msg->wParam)) > 0) ?
++	    GDK_SCROLL_UP : GDK_SCROLL_DOWN;
++      else if (msg->message == WM_MOUSEHWHEEL)
++	  event->scroll.direction = (((short) HIWORD (msg->wParam)) > 0) ?
++	    GDK_SCROLL_RIGHT : GDK_SCROLL_LEFT;
+       event->scroll.time = _gdk_win32_get_next_tick (msg->time);
+       event->scroll.x = (gint16) point.x;
+       event->scroll.y = (gint16) point.y;
+diff --git a/gdk/win32/gdkmain-win32.c b/gdk/win32/gdkmain-win32.c
+index f12c166..ee28ba6 100644
+--- a/gdk/win32/gdkmain-win32.c
++++ b/gdk/win32/gdkmain-win32.c
+@@ -759,6 +759,7 @@ _gdk_win32_message_to_string (UINT msg)
+       CASE (WM_MBUTTONUP);
+       CASE (WM_MBUTTONDBLCLK);
+       CASE (WM_MOUSEWHEEL);
++      CASE (WM_MOUSEHWHEEL);
+       CASE (WM_XBUTTONDOWN);
+       CASE (WM_XBUTTONUP);
+       CASE (WM_XBUTTONDBLCLK);
+diff --git a/gdk/win32/gdkprivate-win32.h b/gdk/win32/gdkprivate-win32.h
+index dbb9a79..a14d8f5 100644
+--- a/gdk/win32/gdkprivate-win32.h
++++ b/gdk/win32/gdkprivate-win32.h
+@@ -90,6 +90,9 @@
+ #ifndef WM_APPCOMMAND
+ #define WM_APPCOMMAND 0x319
+ #endif
++#ifndef WM_MOUSEHWHEEL
++#define WM_MOUSEHWHEEL 0x20E
++#endif
+ 
+ #ifndef CF_DIBV5
+ #define CF_DIBV5 17
+-- 
+cgit v0.10.2
+
