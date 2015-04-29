@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&"
 "keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-03-25 06:26+0000\n"
-"PO-Revision-Date: 2015-04-29 12:00+0000\n"
+"PO-Revision-Date: 2015-04-29 14:26+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -1481,8 +1481,9 @@ msgid "P(ower factor):"
 msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:1661
+#, fuzzy
 msgid "Parameter k:"
-msgstr ""
+msgstr "Færibreyta k:"
 
 #: ../plug-ins/common/cml-explorer.c:1670
 msgid "Range low:"
@@ -3366,11 +3367,11 @@ msgstr "GIMP-pensill (hreyfimynd)"
 
 #: ../plug-ins/common/file-gih.c:482
 msgid "Error in GIMP brush pipe file."
-msgstr ""
+msgstr "Villa í GIMP penslapípuskránni."
 
 #: ../plug-ins/common/file-gih.c:548
 msgid "GIMP brush file appears to be corrupted."
-msgstr ""
+msgstr "GIMP pensilskráina virðist vera skemmd."
 
 #: ../plug-ins/common/file-gih.c:698
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -3379,7 +3380,7 @@ msgstr ""
 #: ../plug-ins/common/file-gih.c:859
 #| msgid "_Brush"
 msgid "Brush Pipe"
-msgstr ""
+msgstr "Pensilpípa"
 
 #: ../plug-ins/common/file-gih.c:876
 msgid "Spacing (percent):"
@@ -3448,11 +3449,11 @@ msgstr ""
 #. HTML Page Options
 #: ../plug-ins/common/file-html-table.c:444
 msgid "HTML Page Options"
-msgstr ""
+msgstr "Valkostir HTML-síðu"
 
 #: ../plug-ins/common/file-html-table.c:451
 msgid "_Generate full HTML document"
-msgstr ""
+msgstr "Út_búa fullgert HTML-skjal"
 
 #: ../plug-ins/common/file-html-table.c:457
 msgid ""
@@ -3492,19 +3493,19 @@ msgstr "S_kýring"
 
 #: ../plug-ins/common/file-html-table.c:515
 msgid "Check if you would like to have the table captioned."
-msgstr ""
+msgstr "Merktu við ef þú vilt hafa fyrirsagnir í töflunni."
 
 #: ../plug-ins/common/file-html-table.c:530
 msgid "The text for the table caption."
-msgstr ""
+msgstr "Texti á fyrirsögn töflu."
 
 #: ../plug-ins/common/file-html-table.c:544
 msgid "C_ell content:"
-msgstr ""
+msgstr "_Innihald reits:"
 
 #: ../plug-ins/common/file-html-table.c:548
 msgid "The text to go into each cell."
-msgstr ""
+msgstr "Textinn sem á að birtast inn í hverjum reit."
 
 #. HTML Table Options
 #: ../plug-ins/common/file-html-table.c:558
@@ -3529,7 +3530,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-html-table.c:615
 msgid "Cell-_padding:"
-msgstr ""
+msgstr "Bil við _jaðra reita:"
 
 #: ../plug-ins/common/file-html-table.c:619
 msgid "The amount of cell padding."
@@ -3537,7 +3538,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-html-table.c:628
 msgid "Cell-_spacing:"
-msgstr ""
+msgstr "_Millibil reita:"
 
 #: ../plug-ins/common/file-html-table.c:632
 msgid "The amount of cell spacing."
@@ -5877,7 +5878,7 @@ msgstr ""
 
 #: ../plug-ins/common/lens-distortion.c:113
 msgid "Corrects lens distortion"
-msgstr ""
+msgstr "Leiðréttir linsubjögun"
 
 #: ../plug-ins/common/lens-distortion.c:118
 msgid "Lens Distortion..."
@@ -6688,7 +6689,7 @@ msgstr "Aðgerðavafri"
 
 #: ../plug-ins/common/qbist.c:408
 msgid "Generate a huge variety of abstract patterns"
-msgstr ""
+msgstr "Búa til ýmiskonar óhlutbundin mynstur"
 
 #: ../plug-ins/common/qbist.c:416
 msgid "_Qbist..."
@@ -6743,23 +6744,23 @@ msgstr "Fjarlægi rauð augu"
 
 #: ../plug-ins/common/ripple.c:126
 msgid "Displace pixels in a ripple pattern"
-msgstr ""
+msgstr "Færa til mynddíla í gárað mynstur"
 
 #: ../plug-ins/common/ripple.c:133
 msgid "_Ripple..."
-msgstr ""
+msgstr "_Gárur..."
 
 #: ../plug-ins/common/ripple.c:223
 msgid "Rippling"
-msgstr ""
+msgstr "Gárun"
 
 #: ../plug-ins/common/ripple.c:485
 msgid "Ripple"
-msgstr ""
+msgstr "Gárur"
 
 #: ../plug-ins/common/ripple.c:544
 msgid "_Retain tilability"
-msgstr ""
+msgstr "_Halda hæfileikanum til að flísaleggjast"
 
 #. Edges toggle box
 #: ../plug-ins/common/ripple.c:581
