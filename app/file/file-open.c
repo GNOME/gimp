@@ -115,13 +115,6 @@ file_open_image (Gimp                *gimp,
 
   *status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (! file_proc)
-    file_proc = file_procedure_find (gimp->plug_in_manager->load_procs, uri,
-                                     error);
-
-  if (! file_proc)
-    return NULL;
-
   filename = file_utils_filename_from_uri (uri);
 
   if (filename)
@@ -149,6 +142,16 @@ file_open_image (Gimp                *gimp,
   else
     {
       filename = g_strdup (uri);
+    }
+
+  if (! file_proc)
+    file_proc = file_procedure_find (gimp->plug_in_manager->load_procs, uri,
+                                     error);
+
+  if (! file_proc)
+    {
+      g_free (filename);
+      return NULL;
     }
 
   return_vals =
