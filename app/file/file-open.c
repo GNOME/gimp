@@ -107,13 +107,6 @@ file_open_image (Gimp                *gimp,
 
   *status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (! file_proc)
-    file_proc = file_procedure_find (gimp->plug_in_manager->load_procs, file,
-                                     error);
-
-  if (! file_proc)
-    return NULL;
-
   /* FIXME enable these tests for remote files again, needs testing */
   if (g_file_is_native (file) &&
       g_file_query_exists (file, NULL))
@@ -147,6 +140,13 @@ file_open_image (Gimp                *gimp,
 
       g_object_unref (info);
     }
+
+  if (! file_proc)
+    file_proc = file_procedure_find (gimp->plug_in_manager->load_procs, file,
+                                     error);
+
+  if (! file_proc)
+    return NULL;
 
   if (! g_file_is_native (file) &&
       ! file_remote_mount_file (gimp, file, progress, &my_error))
