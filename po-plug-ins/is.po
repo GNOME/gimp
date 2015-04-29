@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&"
 "keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-03-25 06:26+0000\n"
-"PO-Revision-Date: 2015-04-20 13:45+0000\n"
+"PO-Revision-Date: 2015-04-29 12:00+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
 "Language: is\n"
@@ -262,7 +262,7 @@ msgstr "Geimveru-gljái"
 #: ../plug-ins/common/alien-map.c:442 ../plug-ins/common/alien-map.c:466
 #: ../plug-ins/common/alien-map.c:490
 msgid "Number of cycles covering full value range"
-msgstr ""
+msgstr "Fjöldi umferða til að dekka fullt svið gilda"
 
 #: ../plug-ins/common/alien-map.c:454 ../plug-ins/common/alien-map.c:478
 #: ../plug-ins/common/alien-map.c:502
@@ -371,15 +371,15 @@ msgstr "Stærð _hnitanets:"
 
 #: ../plug-ins/common/align-layers.c:722
 msgid "_Ignore the bottom layer even if visible"
-msgstr ""
+msgstr "_Hunsa neðsta lagið jafnvel þótt það sé sýnilegt"
 
 #: ../plug-ins/common/align-layers.c:732
 msgid "_Use the (invisible) bottom layer as the base"
-msgstr ""
+msgstr "N_ota (ósýnilega) neðsta lagið sem grunn"
 
 #: ../plug-ins/common/animation-optimize.c:132
 msgid "Modify image to reduce size when saved as GIF animation"
-msgstr ""
+msgstr "Breyta mynd til að minnka stærð þegar vistað er sem GIF-hreyfimynd"
 
 #: ../plug-ins/common/animation-optimize.c:144
 msgid "Optimize (for _GIF)"
@@ -387,7 +387,7 @@ msgstr "Besta (fyrir _GIF)"
 
 #: ../plug-ins/common/animation-optimize.c:152
 msgid "Reduce file size where combining layers is possible"
-msgstr ""
+msgstr "Minnka skráarstærð þar sem mögulegt er að sameina lög"
 
 #: ../plug-ins/common/animation-optimize.c:162
 msgid "_Optimize (Difference)"
@@ -480,7 +480,7 @@ msgstr "Aftengja"
 
 #: ../plug-ins/common/animation-play.c:498
 msgid "Detach the animation from the dialog window"
-msgstr ""
+msgstr "Losa hreyfimyndina frá samskiptaglugganum"
 
 #: ../plug-ins/common/animation-play.c:590
 msgid "Animation Playback:"
@@ -643,7 +643,7 @@ msgstr "Fjöldi _búta:"
 
 #: ../plug-ins/common/blur-gauss-selective.c:104
 msgid "Blur neighboring pixels, but only in low-contrast areas"
-msgstr ""
+msgstr "Móða næstu mynddíla, en aðeins á svæðum með litlum birtuskilum"
 
 #: ../plug-ins/common/blur-gauss-selective.c:115
 msgid "_Selective Gaussian Blur..."
@@ -802,7 +802,7 @@ msgstr "Afskerping"
 
 #: ../plug-ins/common/border-average.c:99
 msgid "Set foreground to the average color of the image border"
-msgstr ""
+msgstr "Stilla forgrunnslit á meðallit jaðars myndarinnar"
 
 #: ../plug-ins/common/border-average.c:104
 msgid "_Border Average..."
@@ -836,7 +836,7 @@ msgstr "Stærð _fötu:"
 
 #: ../plug-ins/common/bump-map.c:257
 msgid "Create an embossing effect using a bump map"
-msgstr ""
+msgstr "Búa til ójöfnuáhrif með því að nota ójöfnuvörpun (bump map)"
 
 #: ../plug-ins/common/bump-map.c:267
 msgid "_Bump Map..."
@@ -906,6 +906,8 @@ msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
 msgstr ""
+"Hliðrunina má stilla með því að draga forskoðunina til með "
+"miðju-músarhnappnum."
 
 #: ../plug-ins/common/bump-map.c:950 ../plug-ins/common/file-ps.c:3264
 msgid "_Y offset:"
@@ -1516,15 +1518,15 @@ msgstr ""
 
 #: ../plug-ins/common/cml-explorer.c:1979
 msgid "Save CML Explorer Parameters"
-msgstr ""
+msgstr "Vista viðföng CML-vafra"
 
 #: ../plug-ins/common/cml-explorer.c:2112
 msgid "Load CML Explorer Parameters"
-msgstr ""
+msgstr "Hlaða inn viðföngum CML-vafra"
 
 #: ../plug-ins/common/cml-explorer.c:2230
 msgid "Error: it's not CML parameter file."
-msgstr ""
+msgstr "Villa: þetta er ekki viðfangaskrá fyrir CML-vafra"
 
 #: ../plug-ins/common/cml-explorer.c:2237
 #, c-format
@@ -1534,7 +1536,7 @@ msgstr "Aðvörun: '%s' er skrá með gamalt snið."
 #: ../plug-ins/common/cml-explorer.c:2241
 #, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
-msgstr ""
+msgstr "Aðvörun: '%s' er viðfangaskrá fyrir nýrri útgáfu CML-vafra"
 
 #: ../plug-ins/common/cml-explorer.c:2304
 msgid "Error: failed to load parameters"
@@ -1546,12 +1548,12 @@ msgstr "Greina samsetningu lita í myndinni"
 
 #: ../plug-ins/common/color-cube-analyze.c:112
 msgid "Colorcube A_nalysis..."
-msgstr ""
+msgstr "Grei_ning litasamsetningar..."
 
 #: ../plug-ins/common/color-cube-analyze.c:200
 #: ../plug-ins/common/color-cube-analyze.c:356
 msgid "Colorcube Analysis"
-msgstr ""
+msgstr "Greining litasamsetningar"
 
 #. output results
 #: ../plug-ins/common/color-cube-analyze.c:384
@@ -1665,7 +1667,7 @@ msgstr "í alfa"
 
 #: ../plug-ins/common/colorify.c:102
 msgid "Replace all colors with shades of a specified color"
-msgstr ""
+msgstr "Til að skipta út litum með tónum tiltekins litar"
 
 #: ../plug-ins/common/colorify.c:108
 msgid "Colorif_y..."
@@ -1742,6 +1744,8 @@ msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
 msgstr ""
+"Dragðu og slepptu litum til að endurraða litakortinu. Tölurnar eru upprunaleg "
+"litauðkenni. Hægrismelltu til að fá upp valmynd með röðunarmöguleikum."
 
 #: ../plug-ins/common/compose.c:189 ../plug-ins/common/decompose.c:170
 #: ../plug-ins/common/file-raw.c:1103
@@ -1860,7 +1864,7 @@ msgstr "_Rauðleiki cr709f:"
 
 #: ../plug-ins/common/compose.c:404
 msgid "Create an image using multiple gray images as color channels"
-msgstr ""
+msgstr "Búa til mynd með því að nota nokkrar grátóna myndir sem litrásir"
 
 #: ../plug-ins/common/compose.c:410
 msgid "C_ompose..."
@@ -1868,21 +1872,23 @@ msgstr "Sa_msetning..."
 
 #: ../plug-ins/common/compose.c:434
 msgid "Recompose an image that was previously decomposed"
-msgstr ""
+msgstr "Endursamsetja mynd sem áður hefur verið aðskilin"
 
 #: ../plug-ins/common/compose.c:442
 msgid "R_ecompose"
-msgstr ""
+msgstr "_Endursamsetning"
 
 #: ../plug-ins/common/compose.c:488
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
 msgstr ""
+"Þú getur einungis keyrt 'Endursamsetning' ef virka myndin var upphaflega gerð "
+"með aðgerðinni 'Aðskilja'."
 
 #: ../plug-ins/common/compose.c:512
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr ""
+msgstr "Villa við að skanna 'decompose-data' sníkil: of fá lög fundust"
 
 #: ../plug-ins/common/compose.c:545
 #, c-format
@@ -1895,7 +1901,7 @@ msgstr "Samsetning"
 
 #: ../plug-ins/common/compose.c:697 ../plug-ins/common/compose.c:1731
 msgid "At least one image is needed to compose"
-msgstr ""
+msgstr "Það þarf a.m.k. eina mynd til samsetningar"
 
 #: ../plug-ins/common/compose.c:708 ../plug-ins/common/compose.c:722
 #, c-format
@@ -1921,7 +1927,7 @@ msgstr "Þessi mynd er ekki grátóna (bpp=%d)"
 
 #: ../plug-ins/common/compose.c:824
 msgid "Unable to recompose, source layer not found"
-msgstr ""
+msgstr "Gat ekki endursamsett, grunnlagið fannst ekki"
 
 #: ../plug-ins/common/compose.c:1483
 msgid "Compose"
@@ -2189,11 +2195,11 @@ msgstr "Kúbísk umbreyting"
 
 #: ../plug-ins/common/curve-bend.c:526
 msgid "Bend the image using two control curves"
-msgstr ""
+msgstr "Sveigja mynd með tveimur stýriferlum"
 
 #: ../plug-ins/common/curve-bend.c:547
 msgid "_Curve Bend..."
-msgstr "Svei_gja ferils..."
+msgstr "Svei_gja með ferlum..."
 
 #: ../plug-ins/common/curve-bend.c:683 ../plug-ins/common/edge-dog.c:178
 msgid "Can operate on layers only (but was called on channel or mask)."
@@ -2216,7 +2222,7 @@ msgstr "Villa við lestur '%s': %s"
 #. The shell and main vbox
 #: ../plug-ins/common/curve-bend.c:1224 ../plug-ins/common/curve-bend.c:2955
 msgid "Curve Bend"
-msgstr "Sveigja ferils"
+msgstr "Sveigja með ferlum"
 
 #. Preview area, top of column
 #. preview
@@ -2225,7 +2231,7 @@ msgstr "Sveigja ferils"
 #: ../plug-ins/gimpressionist/sizemap.c:459
 #: ../plug-ins/print/print-page-layout.c:175
 msgid "Preview"
-msgstr "Forsýning"
+msgstr "Forskoðun"
 
 #. The preview button
 #: ../plug-ins/common/curve-bend.c:1290
@@ -2301,7 +2307,7 @@ msgstr "_Afrita"
 
 #: ../plug-ins/common/curve-bend.c:1440
 msgid "Copy the active curve to the other border"
-msgstr ""
+msgstr "Afrita virkan feril á hinn jaðarinn"
 
 #. The CopyInv button
 #: ../plug-ins/common/curve-bend.c:1447
@@ -2310,7 +2316,7 @@ msgstr "S_pegla"
 
 #: ../plug-ins/common/curve-bend.c:1452
 msgid "Mirror the active curve to the other border"
-msgstr ""
+msgstr "Spegla virkan feril á hinn jaðarinn"
 
 #. The Swap button
 #: ../plug-ins/common/curve-bend.c:1460
@@ -2319,7 +2325,7 @@ msgstr "_Víxla"
 
 #: ../plug-ins/common/curve-bend.c:1465
 msgid "Swap the two curves"
-msgstr ""
+msgstr "Víxla ferlunum tveimur"
 
 #: ../plug-ins/common/curve-bend.c:1477
 msgid "Reset the active curve"
@@ -2502,7 +2508,7 @@ msgstr "rauðleiki-cr709f"
 
 #: ../plug-ins/common/decompose.c:312 ../plug-ins/common/decompose.c:326
 msgid "Decompose an image into separate colorspace components"
-msgstr ""
+msgstr "Aðskilja (decompose) mynd í aðskildar litrýmdareiningar"
 
 #: ../plug-ins/common/decompose.c:318 ../plug-ins/common/decompose.c:336
 msgid "_Decompose..."
@@ -3130,25 +3136,25 @@ msgstr "Vi_sta athugasemd í skrá"
 #.
 #: ../plug-ins/common/file-csource.c:747
 msgid "_Use GLib types (guint8*)"
-msgstr ""
+msgstr "_Nota GLib týpur (guint8*)"
 
 #: ../plug-ins/common/file-csource.c:760
 msgid "Us_e macros instead of struct"
-msgstr ""
+msgstr "Not_a fjölva í staðinn fyrir struct"
 
 #: ../plug-ins/common/file-csource.c:773
 msgid "Use _1 byte Run-Length-Encoding"
-msgstr ""
+msgstr "Nota _1 bætis keyrslulínuþjöppun (Run-Length-Encoding)"
 
 #: ../plug-ins/common/file-csource.c:786
 msgid "Sa_ve alpha channel (RGBA/RGB)"
-msgstr ""
+msgstr "_Vista alfa-gegnsæisrás (RGBA/RGB)"
 
 #. RGB-565
 #.
 #: ../plug-ins/common/file-csource.c:798
 msgid "Save as _RGB565 (16-bit)"
-msgstr ""
+msgstr "Vista sem _RGB565 (16-bita)"
 
 #: ../plug-ins/common/file-csource.c:821
 msgid "Op_acity:"
@@ -3194,7 +3200,7 @@ msgstr "GIMP-pensill"
 #: ../plug-ins/common/file-gbr.c:401 ../plug-ins/common/file-pat.c:420
 #, c-format
 msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-msgstr ""
+msgstr "Ógild gögn í haus í '%s': breidd=%lu, hæð=%lu, bæti=%lu"
 
 #: ../plug-ins/common/file-gbr.c:425 ../plug-ins/common/file-gbr.c:437
 msgid "Unsupported brush format"
@@ -3277,7 +3283,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-gif-save.c:476
 msgid "Couldn't simply reduce colors further. Saving as opaque."
-msgstr ""
+msgstr "Gat ekki fækkað litum meira. Vista sem ógegnsætt."
 
 #: ../plug-ins/common/file-gif-save.c:591
 #, c-format
@@ -4839,7 +4845,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1164
 msgid "_Replace the size of all frames even if it is specified."
-msgstr ""
+msgstr "S_kipta út stærð allra ramma jafnvel þótt hún sé tilgreind."
 
 #: ../plug-ins/common/file-xmc.c:1198
 msgid "Enter time span in milliseconds in which each frame is rendered."
@@ -4855,7 +4861,7 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1209
 msgid "_Replace the delay of all frames even if it is specified."
-msgstr ""
+msgstr "S_kipta út töf allra ramma jafnvel þótt hún sé tilgreind."
 
 #: ../plug-ins/common/file-xmc.c:1234
 msgid ""
@@ -5200,19 +5206,19 @@ msgstr "Breyta litum myndar gagnvirkt"
 
 #: ../plug-ins/common/filter-pack.c:322
 msgid "_Filter Pack..."
-msgstr "Síu_Pakki..."
+msgstr "Litasíu_Pakki..."
 
 #: ../plug-ins/common/filter-pack.c:372
 msgid "FP can only be used on RGB images."
-msgstr "SíuPakka er einvörðungu hægt að nota á RGB-myndir."
+msgstr "LitasíuPakka er einvörðungu hægt að nota á RGB-myndir."
 
 #: ../plug-ins/common/filter-pack.c:382
 msgid "FP can only be run interactively."
-msgstr "SíuPakka er einvörðungu hægt að nota gagnvirkt."
+msgstr "LitasíuPakka er einvörðungu hægt að nota gagnvirkt."
 
 #: ../plug-ins/common/filter-pack.c:400
 msgid "Applying filter pack"
-msgstr "Beita SíuPakka"
+msgstr "Beita LitasíuPakka"
 
 #: ../plug-ins/common/filter-pack.c:524
 msgid "Original:"
@@ -5978,7 +5984,7 @@ msgstr "Gat ekki ræst sendmail (%s)"
 
 #: ../plug-ins/common/max-rgb.c:90
 msgid "Reduce image to pure red, green, and blue"
-msgstr ""
+msgstr "Fækka litum í mynd niður í hreint rautt, grænt og blátt"
 
 #: ../plug-ins/common/max-rgb.c:95
 msgid "Maxim_um RGB..."
@@ -6971,7 +6977,7 @@ msgstr "sekúndur"
 
 #: ../plug-ins/common/semi-flatten.c:67
 msgid "Replace partial transparency with the current background color"
-msgstr ""
+msgstr "Skipta út hlutagegnsæi með núverandi bakgrunnslit"
 
 #: ../plug-ins/common/semi-flatten.c:74
 msgid "_Semi-Flatten"
@@ -9937,7 +9943,7 @@ msgstr "Búa til spíral"
 
 #: ../plug-ins/gfig/gfig-dialog.c:956
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr ""
+msgstr "Búa til Bezier-feril. Shift + hnappur lýkur gerð formsins."
 
 #: ../plug-ins/gfig/gfig-dialog.c:960 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Move an object"
@@ -9970,11 +9976,11 @@ msgstr "Sýna stöðu"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1277
 msgid "Show control points"
-msgstr ""
+msgstr "Sýna stýripunkta"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1311
 msgid "Max undo:"
-msgstr ""
+msgstr "Hám. afturkallana:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1320
 #: ../plug-ins/gimpressionist/general.c:184
@@ -10027,11 +10033,11 @@ msgstr "Rétthyrningur"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1480
 msgid "Isometric"
-msgstr ""
+msgstr "Jafnlengdar (isometria)"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1489
 msgid "Grid type:"
-msgstr ""
+msgstr "Gerð hnitanets:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1496
 #: ../plug-ins/gradient-flare/gradient-flare.c:551
@@ -10077,7 +10083,7 @@ msgstr "Stefna:"
 
 #: ../plug-ins/gfig/gfig-dobject.c:580
 msgid "Hey where has the object gone ?"
-msgstr ""
+msgstr "Bíddu nú við - hvert hefur hluturinn farið?"
 
 #: ../plug-ins/gfig/gfig-dobject.c:922
 msgid "Error reading file"
@@ -10085,15 +10091,15 @@ msgstr "Villa við lestur skráar."
 
 #: ../plug-ins/gfig/gfig-dobject.c:1011
 msgid "Editing read-only object - you will not be able to save it"
-msgstr ""
+msgstr "Breyti skrifvörðum hlut - þú munt ekki geta vistað hann"
 
 #: ../plug-ins/gfig/gfig-poly.c:51
 msgid "Regular Polygon Number of Sides"
-msgstr ""
+msgstr "Venjulegur marghyrningur - Fjöldi hliða"
 
 #: ../plug-ins/gfig/gfig-preview.c:337
 msgid "Object Details"
-msgstr ""
+msgstr "Nánar um atriðið"
 
 #. Position labels
 #: ../plug-ins/gfig/gfig-preview.c:388
@@ -10102,23 +10108,23 @@ msgstr "XY staðsetning:"
 
 #: ../plug-ins/gfig/gfig-spiral.c:55
 msgid "Spiral Number of Turns"
-msgstr ""
+msgstr "Spírall - Fjöldi snúninga"
 
 #: ../plug-ins/gfig/gfig-star.c:52
 msgid "Star Number of Points"
-msgstr ""
+msgstr "Stjarna - Fjöldi punkta"
 
 #: ../plug-ins/gfig/gfig-stock.c:40
 msgid "Create bezier curve"
-msgstr ""
+msgstr "Búa til Bezier-feril"
 
 #: ../plug-ins/gfig/gfig.c:122
 msgid "Create geometric shapes"
-msgstr ""
+msgstr "Búa til rúmfræðiform"
 
 #: ../plug-ins/gfig/gfig.c:133
 msgid "_Gfig..."
-msgstr "Gfig"
+msgstr "_Gfig..."
 
 #: ../plug-ins/gfig/gfig.c:738
 msgid ""
@@ -10160,7 +10166,7 @@ msgstr "Stærðarhlutföll:"
 
 #: ../plug-ins/gimpressionist/brush.c:599
 msgid "Specifies the aspect ratio of the brush"
-msgstr ""
+msgstr "Skilgreinir stærðarhlutföll pensils"
 
 #: ../plug-ins/gimpressionist/brush.c:608
 #: ../plug-ins/gimpressionist/paper.c:205
@@ -10178,11 +10184,11 @@ msgstr "_Litur"
 
 #: ../plug-ins/gimpressionist/color.c:69
 msgid "A_verage under brush"
-msgstr ""
+msgstr "_Meðaltal undir pensli"
 
 #: ../plug-ins/gimpressionist/color.c:71
 msgid "C_enter of brush"
-msgstr ""
+msgstr "Miðja p_ensils"
 
 #: ../plug-ins/gimpressionist/color.c:78
 msgid "Color is computed from the average of all pixels under the brush"
@@ -10211,11 +10217,11 @@ msgstr "Halda upprunalegu"
 
 #: ../plug-ins/gimpressionist/general.c:150
 msgid "Preserve the original image as a background"
-msgstr ""
+msgstr "Varðveita upprunalega mynd sem bakgrunn"
 
 #: ../plug-ins/gimpressionist/general.c:155
 msgid "From paper"
-msgstr ""
+msgstr "Frá pappír"
 
 #: ../plug-ins/gimpressionist/general.c:156
 msgid "Copy the texture of the selected paper as a background"
@@ -10443,16 +10449,16 @@ msgstr "_Bæta við"
 
 #: ../plug-ins/gimpressionist/orientmap.c:623
 msgid "Add new vector"
-msgstr ""
+msgstr "Bæta við nýjum vigri"
 
 #: ../plug-ins/gimpressionist/orientmap.c:625
 #: ../plug-ins/gimpressionist/sizemap.c:496
 msgid "_Kill"
-msgstr ""
+msgstr "_Drepa"
 
 #: ../plug-ins/gimpressionist/orientmap.c:629
 msgid "Delete selected vector"
-msgstr ""
+msgstr "Eyða völdum vigri"
 
 #: ../plug-ins/gimpressionist/orientmap.c:640
 msgid "Type"
