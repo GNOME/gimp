@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.gimp-2-8.is\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&"
-"keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-01-08 06:16+0000\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
+"product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-03-15 06:11+0000\n"
 "PO-Revision-Date: 2015-01-10 14:22+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
@@ -289,7 +289,6 @@ msgid "Search term invalid or incomplete"
 msgstr "Leitarstrengur er ógildur eða ófullkominn"
 
 #: ../libgimp/gimpprocbrowserdialog.c:406
-#| msgid "_Search:"
 msgid "Searching"
 msgstr "Leita"
 
@@ -378,7 +377,6 @@ msgid "_Black (full transparency)"
 msgstr "_Svart (gegnsætt)"
 
 #: ../libgimpbase/gimpbaseenums.c:30
-#| msgid "Add Alpha Channel"
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "_Alfalitrás lags"
@@ -389,7 +387,6 @@ msgid "_Transfer layer's alpha channel"
 msgstr "_Flytja alfa gegnsæisrás lags"
 
 #: ../libgimpbase/gimpbaseenums.c:32
-#| msgid "_Selection"
 msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "_Valið"
@@ -400,19 +397,16 @@ msgid "_Grayscale copy of layer"
 msgstr "_Grátónaafrit af lagi"
 
 #: ../libgimpbase/gimpbaseenums.c:34
-#| msgid "Channel:"
 msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "_Litrás:"
 
 #: ../libgimpbase/gimpbaseenums.c:65
-#| msgid "FG to BG (RGB)"
 msgctxt "blend-mode"
 msgid "FG to BG (RGB)"
 msgstr "FG til BG (RGB)"
 
 #: ../libgimpbase/gimpbaseenums.c:66
-#| msgid "FG to BG (HSV)"
 msgctxt "blend-mode"
 msgid "FG to BG (HSV)"
 msgstr "FG til BG (HSV)"
@@ -438,97 +432,81 @@ msgid "BG color fill"
 msgstr "BG litafylla"
 
 #: ../libgimpbase/gimpbaseenums.c:100
-#| msgid "Pattern"
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "Mynsturfylla"
 
 #: ../libgimpbase/gimpbaseenums.c:131
-#| msgid "Add to the current selection"
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Bæta við val"
 
 #: ../libgimpbase/gimpbaseenums.c:132
-#| msgid "Subtract from the current selection"
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Draga frá vali"
 
 #: ../libgimpbase/gimpbaseenums.c:133
-#| msgid "Replace the current selection"
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Skipta út núverandi vali"
 
 #: ../libgimpbase/gimpbaseenums.c:134
-#| msgid "Intersect with the current selection"
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "Skara við núverandi val"
 
 #: ../libgimpbase/gimpbaseenums.c:167
-#| msgid "Red"
 msgctxt "channel-type"
 msgid "Red"
 msgstr "Rautt"
 
 #: ../libgimpbase/gimpbaseenums.c:168
-#| msgid "Green"
 msgctxt "channel-type"
 msgid "Green"
 msgstr "Grænt"
 
 #: ../libgimpbase/gimpbaseenums.c:169
-#| msgid "Blue"
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "Blátt"
 
 #: ../libgimpbase/gimpbaseenums.c:170
-#| msgid "Gray"
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "Grátt"
 
 #: ../libgimpbase/gimpbaseenums.c:171
-#| msgid "Indexed"
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "Litraðað"
 
 #: ../libgimpbase/gimpbaseenums.c:172
-#| msgid "Alpha"
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:202
-#| msgid "Small"
 msgctxt "check-size"
 msgid "Small"
 msgstr "Lítið"
 
 #: ../libgimpbase/gimpbaseenums.c:203
-#| msgid "Medium"
 msgctxt "check-size"
 msgid "Medium"
 msgstr "Miðlungs"
 
 #: ../libgimpbase/gimpbaseenums.c:204
-#| msgid "Large"
 msgctxt "check-size"
 msgid "Large"
 msgstr "Stórt"
 
 #: ../libgimpbase/gimpbaseenums.c:237
-#| msgid "Lightness"
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Ljósir reitir"
 
 #: ../libgimpbase/gimpbaseenums.c:238
-#| msgid "Midtones"
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Miðtónareitir"
@@ -544,55 +522,46 @@ msgid "White only"
 msgstr "Aðeins hvítt"
 
 #: ../libgimpbase/gimpbaseenums.c:241
-#| msgid "Gray"
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Aðeins grátt"
 
 #: ../libgimpbase/gimpbaseenums.c:242
-#| msgid "Black"
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Aðeins svart"
 
 #: ../libgimpbase/gimpbaseenums.c:271
-#| msgid "Image"
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Mynd"
 
 #: ../libgimpbase/gimpbaseenums.c:272
-#| msgid "Pattern"
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Mynstur"
 
 #: ../libgimpbase/gimpbaseenums.c:302
-#| msgid "Lightness"
 msgctxt "desaturate-mode"
 msgid "Lightness"
 msgstr "Ljósleiki"
 
 #: ../libgimpbase/gimpbaseenums.c:303
-#| msgid "Luminosity"
 msgctxt "desaturate-mode"
 msgid "Luminosity"
 msgstr "Skærleiki"
 
 #: ../libgimpbase/gimpbaseenums.c:304
-#| msgid "Average"
 msgctxt "desaturate-mode"
 msgid "Average"
 msgstr "Meðaltal"
 
 #: ../libgimpbase/gimpbaseenums.c:333
-#| msgid "Dodge"
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Upplita"
 
 #: ../libgimpbase/gimpbaseenums.c:334
-#| msgid "Burn"
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Brenna"
@@ -608,13 +577,11 @@ msgid "Bi-linear"
 msgstr "Tvílínulegt"
 
 #: ../libgimpbase/gimpbaseenums.c:402
-#| msgid "Radial"
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Frá miðju"
 
 #: ../libgimpbase/gimpbaseenums.c:403
-#| msgid "Square"
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Ferningslaga"
@@ -665,19 +632,16 @@ msgid "Intersections (crosshairs)"
 msgstr "Skörun (kross)"
 
 #: ../libgimpbase/gimpbaseenums.c:444
-#| msgid "Dashed"
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Strikað"
 
 #: ../libgimpbase/gimpbaseenums.c:445
-#| msgid "Dashed"
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Tvístrikað"
 
 #: ../libgimpbase/gimpbaseenums.c:446
-#| msgid "Solid"
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Gegnheilt"
@@ -693,7 +657,6 @@ msgid "Inline pixbuf"
 msgstr "Innfellt myndminni (pixbuf)"
 
 #: ../libgimpbase/gimpbaseenums.c:478
-#| msgid "Image"
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Myndskrá"
@@ -704,19 +667,16 @@ msgid "RGB color"
 msgstr "RGB-litur"
 
 #: ../libgimpbase/gimpbaseenums.c:509
-#| msgid "Grayscale"
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Grátóna"
 
 #: ../libgimpbase/gimpbaseenums.c:510
-#| msgid "Indexed"
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Númeraður litur"
 
 #: ../libgimpbase/gimpbaseenums.c:543
-#| msgid "RGB"
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
@@ -727,31 +687,26 @@ msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:545
-#| msgid "Grayscale"
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Grátóna"
 
 #: ../libgimpbase/gimpbaseenums.c:546
-#| msgid "Grayscale"
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Grátóna-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:547
-#| msgid "Indexed"
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "Litraðað"
 
 #: ../libgimpbase/gimpbaseenums.c:548
-#| msgid "Indexed"
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Litraðað-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:579
-#| msgid "None"
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Ekkert"
@@ -762,7 +717,6 @@ msgid "Linear"
 msgstr "Línulegt"
 
 #: ../libgimpbase/gimpbaseenums.c:581
-#| msgid "Cubic"
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Fernings"
@@ -773,19 +727,16 @@ msgid "Sinc (Lanczos3)"
 msgstr "Sinc (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:611
-#| msgid "Constant"
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Fast (constant)"
 
 #: ../libgimpbase/gimpbaseenums.c:612
-#| msgid "Incremental"
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Stighækkandi"
 
 #: ../libgimpbase/gimpbaseenums.c:642
-#| msgid "None"
 msgctxt "repeat-mode"
 msgid "None"
 msgstr "Ekkert"
@@ -816,31 +767,26 @@ msgid "Run with last used values"
 msgstr "Keyra með síðast notuðum gildum"
 
 #: ../libgimpbase/gimpbaseenums.c:705
-#| msgid "Pixels"
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Mynddílar"
 
 #: ../libgimpbase/gimpbaseenums.c:706
-#| msgid "Points"
 msgctxt "size-type"
 msgid "Points"
 msgstr "Punktar"
 
 #: ../libgimpbase/gimpbaseenums.c:736
-#| msgid "Shadows"
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Skuggar"
 
 #: ../libgimpbase/gimpbaseenums.c:737
-#| msgid "Midtones"
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Miðtónar"
 
 #: ../libgimpbase/gimpbaseenums.c:738
-#| msgid "Highlights"
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Hátónar"
@@ -876,55 +822,46 @@ msgid "Crop with aspect"
 msgstr "Utanskera með stærðarhlutföllum"
 
 #: ../libgimpbase/gimpbaseenums.c:935
-#| msgid "Internal GIMP procedure"
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Innri GIMP aðgerð"
 
 #: ../libgimpbase/gimpbaseenums.c:936
-#| msgid "GIMP Plug-In"
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
 msgstr "GIMP hjálparforrit"
 
 #: ../libgimpbase/gimpbaseenums.c:937
-#| msgid "GIMP Extension"
 msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "GIMP viðbót"
 
 #: ../libgimpbase/gimpbaseenums.c:938
-#| msgid "Temporary Procedure"
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Tímabundin aðgerð"
 
 #: ../libgimpbase/gimpbaseenums.c:1105
-#| msgid "From right to left"
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Frá vinstri til hægri"
 
 #: ../libgimpbase/gimpbaseenums.c:1106
-#| msgid "From right to left"
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Frá hægri til vinstri"
 
 #: ../libgimpbase/gimpbaseenums.c:1137
-#| msgid "None"
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Ekkert"
 
 #: ../libgimpbase/gimpbaseenums.c:1138
-#| msgid "Highlights"
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Örlítið"
 
 #: ../libgimpbase/gimpbaseenums.c:1139
-#| msgid "Medium"
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Miðlungs"
@@ -945,13 +882,11 @@ msgid "Right justified"
 msgstr "Hægri hliðjafnað"
 
 #: ../libgimpbase/gimpbaseenums.c:1173
-#| msgid "Centered"
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Miðjað"
 
 #: ../libgimpbase/gimpbaseenums.c:1174
-#| msgid "Filled"
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Fyllt"
@@ -1025,7 +960,6 @@ msgid "The color to use for marking colors which are out of gamut."
 msgstr "Litur sem notaður er til að merkja þá liti sem falla utan litrófs."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
-#| msgid "Color Management"
 msgctxt "color-management-mode"
 msgid "No color management"
 msgstr "Engin litstýring"
@@ -1041,7 +975,6 @@ msgid "Print simulation"
 msgstr "Sýndarprentun"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
-#| msgid "Perceptual"
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
 msgstr "Skynjanlegt"
@@ -1052,7 +985,6 @@ msgid "Relative colorimetric"
 msgstr "Afstæð litmæling"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
-#| msgid "Saturation"
 msgctxt "color-rendering-intent"
 msgid "Saturation"
 msgstr "Litmettun"
@@ -1148,7 +1080,6 @@ msgstr "ógildur UTF-8 strengur"
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpscanner.c:431
 #, c-format
-#| msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr "vænti 'já' eða 'nei' fyrir bólska teiknið, fékk '%s'"
 
@@ -1229,7 +1160,6 @@ msgid "Select color profile from disk..."
 msgstr "Veldu litasnið af diski..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
-#| msgid "None"
 msgctxt "profile"
 msgid "None"
 msgstr "Ekkert"
@@ -1267,12 +1197,10 @@ msgid "Open a file selector to browse your files"
 msgstr "Opna skráaveljara til að skoða skrárnar þínar"
 
 #: ../libgimpwidgets/gimpfileentry.c:361
-#| msgid "Select _All"
 msgid "Select Folder"
 msgstr "Veldu möppu"
 
 #: ../libgimpwidgets/gimpfileentry.c:363
-#| msgid "Select _All"
 msgid "Select File"
 msgstr "Veldu skrá"
 
@@ -1478,7 +1406,6 @@ msgid "Disabled"
 msgstr "Óvirkt"
 
 #: ../libgimpwidgets/gimpwidgets-private.c:50
-#| msgid "Green"
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Skjár"
@@ -1489,19 +1416,16 @@ msgid "Window"
 msgstr "Gluggi"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:24
-#| msgid "Square"
 msgctxt "aspect-type"
 msgid "Square"
 msgstr "Ferningur"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:25
-#| msgid "Portrait"
 msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "Lóðrétt"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:26
-#| msgid "Landscape"
 msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "Lárétt"
@@ -1534,7 +1458,6 @@ msgid "Value"
 msgstr "Litgildi"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:129
-#| msgid "_R"
 msgctxt "color-selector-channel"
 msgid "_R"
 msgstr "_R"
@@ -1544,7 +1467,6 @@ msgid "Red"
 msgstr "Rautt"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:130
-#| msgid "_G"
 msgctxt "color-selector-channel"
 msgid "_G"
 msgstr "_G"
@@ -1554,7 +1476,6 @@ msgid "Green"
 msgstr "Grænt"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:131
-#| msgid "_B"
 msgctxt "color-selector-channel"
 msgid "_B"
 msgstr "_B"
@@ -1573,25 +1494,21 @@ msgid "Alpha"
 msgstr "Alfa"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:161
-#| msgid "Layers"
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Lög"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:162
-#| msgid "Images"
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Myndir"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:223
-#| msgid "Zoom in"
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Renna að"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:224
-#| msgid "Zoom out"
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Renna frá"
@@ -2148,5 +2065,3 @@ msgstr "_Myndgerðarmarkmið (intent):"
 #: ../modules/display-filter-proof.c:482
 msgid "_Black Point Compensation"
 msgstr "_BPC svartgildisjöfnun"
-
-
