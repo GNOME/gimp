@@ -551,6 +551,7 @@ sanity_check_gegl_ops (void)
     "gegl:supernova",
     "gegl:threshold",
     "gegl:tile",
+    "gegl:tile-paper",
     "gegl:tile-glass",
     "gegl:tile-seamless",
     "gegl:transform",

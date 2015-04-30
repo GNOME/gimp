@@ -384,6 +384,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:tile-glass",
     NULL /* FIXME GIMP_HELP_FILTER_TILE_GLASS */ },
 
+  { "filters-tile-paper", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Paper Tile..."), NULL, NULL,
+    "gegl:tile-paper",
+    NULL /* FIXME GIMP_HELP_FILTER_TILE_GLASS */ },
+
   { "filters-tile-seamless", GIMP_STOCK_GEGL,
     NC_("filters-action", "_Tile Seamless..."), NULL, NULL,
     "gegl:tile-seamless",
@@ -554,6 +559,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-supernova",               writable);
   SET_SENSITIVE ("filters-threshold-alpha",         writable && alpha);
   SET_SENSITIVE ("filters-tile-glass",              writable);
+  SET_SENSITIVE ("filters-tile-paper",              writable);
   SET_SENSITIVE ("filters-tile-seamless",           writable);
   SET_SENSITIVE ("filters-unsharp-mask",            writable);
   SET_SENSITIVE ("filters-video-degradation",       writable);
