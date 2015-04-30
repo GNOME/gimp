@@ -2024,6 +2024,96 @@ plug_in_nova_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_papertile_invoker (GimpProcedure         *procedure,
+                           Gimp                  *gimp,
+                           GimpContext           *context,
+                           GimpProgress          *progress,
+                           const GimpValueArray  *args,
+                           GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 tile_size;
+  gdouble move_max;
+  gint32 fractional_type;
+  gboolean wrap_around;
+  gboolean centering;
+  gint32 background_type;
+  GimpRGB background_color;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  tile_size = g_value_get_int (gimp_value_array_index (args, 3));
+  move_max = g_value_get_double (gimp_value_array_index (args, 4));
+  fractional_type = g_value_get_int (gimp_value_array_index (args, 5));
+  wrap_around = g_value_get_boolean (gimp_value_array_index (args, 6));
+  centering = g_value_get_boolean (gimp_value_array_index (args, 7));
+  background_type = g_value_get_int (gimp_value_array_index (args, 8));
+  gimp_value_get_rgb (gimp_value_array_index (args, 9), &background_color);
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode  *node;
+          GimpRGB    color;
+          GeglColor *gegl_color;
+          gint       bg_type;
+
+          switch (background_type)
+            {
+            default:
+              bg_type = background_type;
+              gimp_rgba_set (&color, 0.0, 0.0, 1.0, 1.0);
+              break;
+
+            case 3:
+              bg_type = 3;
+              gimp_context_get_foreground (context, &color);
+              break;
+
+            case 4:
+              bg_type = 3;
+              gimp_context_get_background (context, &color);
+              break;
+
+            case 5:
+              bg_type = 3;
+              color = background_color;
+              break;
+            }
+
+          gegl_color = gimp_gegl_color_new (&color);
+
+          node = gegl_node_new_child (NULL,
+                                      "operation",       "gegl:tile-paper",
+                                      "tile-width",      tile_size,
+                                      "tile-height",     tile_size,
+                                      "move-rate",       move_max,
+                                      "bg-color",        gegl_color,
+                                      "centering",       centering,
+                                      "wrap-around",     wrap_around,
+                                      "background-type", bg_type,
+                                      "fractional-type", fractional_type,
+                                      NULL);
+
+          g_object_unref (gegl_color);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Paper Tile"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_pixelize_invoker (GimpProcedure         *procedure,
                           Gimp                  *gimp,
                           GimpContext           *context,
@@ -5306,6 +5396,91 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "randomhue",
                                                       "Random hue",
                                                       0, 360, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-papertile
+   */
+  procedure = gimp_procedure_new (plug_in_papertile_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-papertile");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-papertile",
+                                     "Cut image into paper tiles, and slide them",
+                                     "This plug-in cuts an image into paper tiles and slides each paper tile.",
+                                     "Compatibility procedure. Please see 'gegl:tile-paper' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:tile-paper' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("tile-size",
+                                                      "tile size",
+                                                      "Tile size (pixels)",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("move-max",
+                                                    "move max",
+                                                    "Max move rate (%)",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("fractional-type",
+                                                      "fractional type",
+                                                      "Fractional type { BACKGROUND (0), IGNORE (1), FORCE (2) }",
+                                                      0, 2, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("wrap-around",
+                                                     "wrap around",
+                                                     "Wrap around",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("centering",
+                                                     "centering",
+                                                     "Centering",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("background-type",
+                                                      "background type",
+                                                      "Background type { TRANSPARENT (0), INVERTED (1), IMAGE (2), FG (3), BG (4), COLOR (5) }",
+                                                      0, 5, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_rgb ("background-color",
+                                                    "background color",
+                                                    "Background color (for background-type == 5)",
+                                                    FALSE,
+                                                    NULL,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("background-alpha",
+                                                      "background alpha",
+                                                      "Background alpha (unused)",
+                                                      G_MININT32, G_MAXINT32, 0,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

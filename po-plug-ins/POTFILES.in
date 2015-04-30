@@ -96,7 +96,6 @@ plug-ins/common/softglow.c
 plug-ins/common/sparkle.c
 plug-ins/common/sphere-designer.c
 plug-ins/common/tile.c
-plug-ins/common/tile-paper.c
 plug-ins/common/tile-small.c
 plug-ins/common/unit-editor.c
 plug-ins/common/unsharp-mask.c
