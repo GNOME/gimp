@@ -12435,7 +12435,7 @@ msgstr "Cre_a una imatge nova"
 #: ../plug-ins/lighting/lighting-ui.c:328
 #: ../plug-ins/map-object/map-object-ui.c:481
 msgid "Create a new image when applying filter"
-msgstr "Crearà una imatge nova quant s'apliqui el filtre"
+msgstr "Crearà una imatge nova quan s'apliqui el filtre"
 
 #: ../plug-ins/lighting/lighting-ui.c:330
 msgid "High _quality preview"
