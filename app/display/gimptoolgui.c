@@ -810,8 +810,19 @@ gimp_tool_gui_dialog_response (GtkWidget   *dialog,
                                gint         response_id,
                                GimpToolGui *gui)
 {
-  g_signal_emit (gui, signals[RESPONSE], 0,
-                 response_id);
+  if (response_id == GIMP_RESPONSE_DETACH)
+    {
+      gimp_tool_gui_set_auto_overlay (gui, FALSE);
+      gimp_tool_gui_set_overlay (gui,
+                                 gtk_widget_get_screen (dialog),
+                                 gimp_widget_get_monitor (dialog),
+                                 FALSE);
+    }
+  else
+    {
+      g_signal_emit (gui, signals[RESPONSE], 0,
+                     response_id);
+    }
 }
 
 static void

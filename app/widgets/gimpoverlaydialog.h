@@ -25,6 +25,9 @@
 #include "gimpoverlayframe.h"
 
 
+#define GIMP_RESPONSE_DETACH 100
+
+
 #define GIMP_TYPE_OVERLAY_DIALOG            (gimp_overlay_dialog_get_type ())
 #define GIMP_OVERLAY_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_OVERLAY_DIALOG, GimpOverlayDialog))
 #define GIMP_OVERLAY_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_OVERLAY_DIALOG, GimpOverlayDialogClass))
@@ -46,6 +49,7 @@ struct _GimpOverlayDialog
   GtkWidget        *header;
   GtkWidget        *icon_image;
   GtkWidget        *title_label;
+  GtkWidget        *detach_button;
   GtkWidget        *close_button;
   GtkWidget        *action_area;
 };
@@ -57,6 +61,7 @@ struct _GimpOverlayDialogClass
   void (* response) (GimpOverlayDialog *overlay,
                      gint               response_id);
 
+  void (* detach)   (GimpOverlayDialog *overlay);
   void (* close)    (GimpOverlayDialog *overlay);
 };
 
