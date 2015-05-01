@@ -1242,7 +1242,8 @@ add_layers (gint32     image_id,
                         IFDBG(3) g_debug ("Raw data length: %d",
                                           lyr_a[lidx]->chn_info[cidx].data_len - 2);
                         if (read_channel_data (lyr_chn[cidx], img_a->bps,
-                            PSD_COMP_RAW, NULL, f, error) < 1)
+                                               PSD_COMP_RAW, NULL, f,
+                                               error) < 1)
                           return -1;
                         break;
 
@@ -1267,7 +1268,8 @@ add_layers (gint32     image_id,
 
                         IFDBG(3) g_debug ("RLE decode - data");
                         if (read_channel_data (lyr_chn[cidx], img_a->bps,
-                            PSD_COMP_RLE, rle_pack_len, f, error) < 1)
+                                               PSD_COMP_RLE, rle_pack_len, f,
+                                               error) < 1)
                           return -1;
 
                         g_free (rle_pack_len);
@@ -1635,7 +1637,8 @@ add_merged_image (gint32     image_id,
                 chn_a[cidx].columns = img_a->columns;
                 chn_a[cidx].rows = img_a->rows;
                 if (read_channel_data (&chn_a[cidx], img_a->bps,
-                    PSD_COMP_RAW, NULL, f, error) < 1)
+                                       PSD_COMP_RAW, NULL, f,
+                                       error) < 1)
                   return -1;
               }
             break;
@@ -1666,7 +1669,8 @@ add_merged_image (gint32     image_id,
             for (cidx = 0; cidx < total_channels; ++cidx)
               {
                 if (read_channel_data (&chn_a[cidx], img_a->bps,
-                    PSD_COMP_RLE, rle_pack_len[cidx], f, error) < 1)
+                                       PSD_COMP_RLE, rle_pack_len[cidx], f,
+                                       error) < 1)
                   return -1;
                 g_free (rle_pack_len[cidx]);
               }
