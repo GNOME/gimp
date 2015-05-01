@@ -1933,16 +1933,16 @@ read_channel_data (PSDchannel     *channel,
   gint      i;
 
   if (bps == 1)
-    readline_len = ((channel->columns + 7) >> 3);
+    readline_len = ((channel->columns + 7) / 8);
   else
-    readline_len = (channel->columns * bps >> 3);
+    readline_len = (channel->columns * bps / 8);
 
   IFDBG(3) g_debug ("raw data size %d x %d = %d", readline_len,
                     channel->rows, readline_len * channel->rows);
 
   /* sanity check, int overflow check (avoid divisions by zero) */
   if ((channel->rows == 0) || (channel->columns == 0) ||
-      (channel->rows > G_MAXINT32 / channel->columns / MAX (bps >> 3, 1)))
+      (channel->rows > G_MAXINT32 / channel->columns / MAX (bps / 8, 1)))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Unsupported or invalid channel size"));
@@ -2027,7 +2027,7 @@ convert_1_bit (const gchar *src,
 
   IFDBG(3)  g_debug ("Start 1 bit conversion");
 
-  for (i = 0; i < rows * ((columns + 7) >> 3); ++i)
+  for (i = 0; i < rows * ((columns + 7) / 8); ++i)
     {
       guchar    mask = 0x80;
       for (j = 0; j < 8 && row_pos < columns; ++j)
