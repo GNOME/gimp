@@ -45,10 +45,11 @@ EXTRA_DIST = \
 	new-resource-ids.txt
 
 AM_CPPFLAGS = \
-	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
-	$(EXIF_CFLAGS)		\
-	$(GEGL_CFLAGS)		\
+	-DG_LOG_DOMAIN=\"file-psd\"	\
+	-I$(top_srcdir)			\
+	$(GTK_CFLAGS)			\
+	$(EXIF_CFLAGS)			\
+	$(GEGL_CFLAGS)			\
 	-I$(includedir)
 
 file_psd_LDADD = \
