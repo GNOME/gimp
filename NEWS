@@ -20,17 +20,17 @@ Core:
 
 GUI:
 
- - Always show image tabs in the single window mode
- - Fix the switching of dock tab by DND hovering
+ - Always show image tabs in single window mode
+ - Fix switching of dock tabs by DND hovering
 
 
 Plug-ins:
 
  - Fix several issues in the BMP plug-in
  - Make Gfig work with the new brush size behavior again
- - Fix the font exporting to PDF
+ - Fix font export in the PDF plug-in
  - Support layer groups in OpenRaster files
- - Fix the loading of PSD files with layer groups
+ - Fix loading of PSD files with layer groups
 
 
 General:
