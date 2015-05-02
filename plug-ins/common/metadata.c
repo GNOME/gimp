@@ -201,7 +201,7 @@ metadata_dialog (gint32          image_id,
   GObject    *write_button;
   gchar      *ui_file;
   gchar      *title;
-  gchar      *fname;
+  gchar      *name;
   GError     *error = NULL;
 
   builder = gtk_builder_new ();
@@ -220,9 +220,10 @@ metadata_dialog (gint32          image_id,
     }
 
   g_free (ui_file);
-  fname = g_filename_display_basename (gimp_image_get_uri (image_id));
-  title = g_strdup_printf ("Metadata: %s", fname);
-  g_free (fname);
+
+  name = gimp_image_get_name (image_id);
+  title = g_strdup_printf ("Metadata: %s", name);
+  g_free (name);
 
   dialog = gimp_dialog_new (title,
                             "gimp-metadata-dialog",
