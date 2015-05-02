@@ -148,7 +148,7 @@ static TransformAction
 static void      gimp_transform_tool_halt                   (GimpTransformTool     *tr_tool);
 static void      gimp_transform_tool_set_function           (GimpTransformTool     *tr_tool,
                                                              TransformAction        function);
-static void      gimp_transform_tool_bounds                 (GimpTransformTool     *tr_tool,
+static gboolean  gimp_transform_tool_bounds                 (GimpTransformTool     *tr_tool,
                                                              GimpDisplay           *display);
 static void      gimp_transform_tool_dialog                 (GimpTransformTool     *tr_tool);
 static void      gimp_transform_tool_prepare                (GimpTransformTool     *tr_tool,
@@ -281,6 +281,16 @@ gimp_transform_tool_initialize (GimpTool     *tool,
 
       gimp_transform_tool_halt (tr_tool);
 
+      /*  Find the transform bounds for some tools (like scale,
+       *  perspective) that actually need the bounds for initializing
+       */
+      if (! gimp_transform_tool_bounds (tr_tool, display))
+        {
+          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
+                       _("The selection does not intersect with the layer."));
+          return FALSE;
+        }
+
       /*  Set the pointer to the active display  */
       tool->display  = display;
       tool->drawable = drawable;
@@ -288,11 +298,6 @@ gimp_transform_tool_initialize (GimpTool     *tool,
       /*  Initialize the transform tool dialog */
       if (! tr_tool->gui)
         gimp_transform_tool_dialog (tr_tool);
-
-      /*  Find the transform bounds for some tools (like scale,
-       *  perspective) that actually need the bounds for initializing
-       */
-      gimp_transform_tool_bounds (tr_tool, display);
 
       /*  Inizialize the tool-specific trans_info, and adjust the
        *  tool dialog
@@ -1536,12 +1541,13 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
                   tr_tool->ty4) / 4.0;
 }
 
-static void
+static gboolean
 gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
                             GimpDisplay       *display)
 {
-  GimpTransformOptions *options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
-  GimpImage            *image   = gimp_display_get_image (display);
+  GimpTransformOptions *options   = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tr_tool);
+  GimpImage            *image     = gimp_display_get_image (display);
+  gboolean              non_empty = TRUE;
 
   switch (options->type)
     {
@@ -1550,18 +1556,19 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
         GimpDrawable *drawable;
         gint          offset_x;
         gint          offset_y;
+        gint          x, y;
+        gint          width, height;
 
         drawable = gimp_image_get_active_drawable (image);
 
         gimp_item_get_offset (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
-        gimp_item_mask_bounds (GIMP_ITEM (drawable),
-                               &tr_tool->x1, &tr_tool->y1,
-                               &tr_tool->x2, &tr_tool->y2);
-        tr_tool->x1 += offset_x;
-        tr_tool->y1 += offset_y;
-        tr_tool->x2 += offset_x;
-        tr_tool->y2 += offset_y;
+        non_empty = gimp_item_mask_intersect (GIMP_ITEM (drawable),
+                                              &x, &y, &width, &height);
+        tr_tool->x1 = x + offset_x;
+        tr_tool->y1 = y + offset_y;
+        tr_tool->x2 = x + width  + offset_x;
+        tr_tool->y2 = y + height + offset_y;
       }
       break;
 
@@ -1575,6 +1582,8 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
 
   tr_tool->aspect = ((gdouble) (tr_tool->x2 - tr_tool->x1) /
                      (gdouble) (tr_tool->y2 - tr_tool->y1));
+
+  return non_empty;
 }
 
 static void
