@@ -5827,7 +5827,7 @@ msgstr "_Лишити як є"
 
 #: ../plug-ins/common/lcms.c:1236
 msgid "_Convert"
-msgstr "_Перетворили"
+msgstr "_Перетворити"
 
 #: ../plug-ins/common/lcms.c:1264 ../plug-ins/file-jpeg/jpeg-exif.c:436
 msgid "_Don't ask me again"
