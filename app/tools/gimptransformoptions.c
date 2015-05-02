@@ -477,33 +477,33 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
       }
       opt_list[] =
       {
-        { shift, NULL, "Constrain  (%s)" },
-        { shift, "constrain-move", "Move",
-          "Constrain movement to 45 degree angles from center  (%s)" },
-        { shift, "constrain-scale", "Scale",
-          "Maintain aspect ratio when scaling  (%s)" },
-        { shift, "constrain-rotate", "Rotate",
-          "Constrain rotation to 15 degree increments  (%s)" },
-        { shift, "constrain-shear", "Shear",
-          "Shear along edge direction only  (%s)" },
-        { shift, "constrain-perspective", "Perspective",
-          "Constrain perspective handles to move along edges and diagonal  (%s)" },
+        { shift, NULL, N_("Constrain  (%s)") },
+        { shift, "constrain-move", N_("Move"),
+          N_("Constrain movement to 45 degree angles from center  (%s)") },
+        { shift, "constrain-scale", N_("Scale"),
+          N_("Maintain aspect ratio when scaling  (%s)") },
+        { shift, "constrain-rotate", N_("Rotate"),
+          N_("Constrain rotation to 15 degree increments  (%s)") },
+        { shift, "constrain-shear", N_("Shear"),
+          N_("Shear along edge direction only  (%s)") },
+        { shift, "constrain-perspective", N_("Perspective"),
+          N_("Constrain perspective handles to move along edges and diagonal  (%s)") },
 
         { ctrl, NULL,
-          "From pivot  (%s)" },
-        { ctrl, "frompivot-scale", "Scale",
-          "Scale from pivot point  (%s)" },
-        { ctrl, "frompivot-shear", "Shear",
-          "Shear opposite edge by same amount  (%s)" },
-        { ctrl, "frompivot-perspective", "Perspective",
-          "Maintain position of pivot while changing perspective  (%s)" },
+          N_("From pivot  (%s)") },
+        { ctrl, "frompivot-scale", N_("Scale"),
+          N_("Scale from pivot point  (%s)") },
+        { ctrl, "frompivot-shear", N_("Shear"),
+          N_("Shear opposite edge by same amount  (%s)") },
+        { ctrl, "frompivot-perspective", N_("Perspective"),
+          N_("Maintain position of pivot while changing perspective  (%s)") },
 
         { 0, NULL,
-          "Pivot" },
-        { shift, "cornersnap", "Snap  (%s)",
-          "Snap pivot to corners and center  (%s)" },
-        { 0, "fixedpivot", "Lock",
-          "Lock pivot position to canvas" },
+          N_("Pivot") },
+        { shift, "cornersnap", N_("Snap  (%s)"),
+          N_("Snap pivot to corners and center  (%s)") },
+        { 0, "fixedpivot", N_("Lock"),
+          N_("Lock pivot position to canvas") },
       };
 
       GtkWidget *button;
@@ -520,7 +520,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
               continue;
             }
 
-          label = g_strdup_printf (opt_list[i].desc,
+          label = g_strdup_printf (gettext (opt_list[i].desc),
                                    gimp_get_mod_string (opt_list[i].mod));
 
           if (opt_list[i].name)
@@ -534,7 +534,7 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
               gtk_widget_show (button);
 
               g_free (label);
-              label = g_strdup_printf (opt_list[i].tip,
+              label = g_strdup_printf (gettext (opt_list[i].tip),
                                        gimp_get_mod_string (opt_list[i].mod));
 
               gimp_help_set_help_data (button, label, NULL);
