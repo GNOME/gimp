@@ -3116,6 +3116,9 @@ static pointer opexe_1(scheme *sc, enum scheme_opcodes op) {
                if ((sc->code = cdar(sc->code)) == sc->NIL) {
                     s_return(sc,sc->value);
                }
+               if(!sc->code) {
+                    Error_0(sc,"syntax error in cond");
+               }
                if(car(sc->code)==sc->FEED_TO) {
                     if(!is_pair(cdr(sc->code))) {
                          Error_0(sc,"syntax error in cond");
