@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-03 03:11+0300\n"
-"PO-Revision-Date: 2015-05-03 04:02+0300\n"
+"PO-Revision-Date: 2015-05-03 04:51+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: русский <>\n"
 "Language: ru\n"
@@ -2674,10 +2674,9 @@ msgid "Color _Reduction..."
 msgstr "Тон_ирование..."
 
 #: ../app/actions/filters-actions.c:103
-#, fuzzy
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
-msgstr "_Изменить цвет..."
+msgstr "_Вращение цветов..."
 
 #: ../app/actions/filters-actions.c:108
 msgctxt "filters-action"
@@ -2954,7 +2953,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:373
 msgctxt "filters-action"
 msgid "_Super_nova..."
-msgstr ""
+msgstr "Свер_хновая..."
 
 #: ../app/actions/filters-actions.c:378
 #, fuzzy
@@ -6457,9 +6456,9 @@ msgid "_Zoom (%s)"
 msgstr "_Масштаб (%s)"
 
 #: ../app/actions/view-actions.c:837
-#, fuzzy, c-format
+#, c-format
 msgid "_Rotate (%d°)"
-msgstr "_Вращение"
+msgstr "_Вращение холста (%d°)"
 
 #: ../app/actions/view-commands.c:656
 msgid "Set Canvas Padding Color"
@@ -11504,9 +11503,9 @@ msgstr ""
 #, c-format
 msgid "There is one image with unsaved changes:"
 msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] "Есть %d несохраненное изображение:"
-msgstr[1] "Есть %d несохраненных изображения:"
-msgstr[2] "Есть %d несохраненных изображений:"
+msgstr[0] "Есть %d несохранённое изображение:"
+msgstr[1] "Есть %d несохранённых изображения:"
+msgstr[2] "Есть %d несохранённых изображений:"
 
 #: ../app/dialogs/quit-dialog.c:311
 #, c-format
@@ -11927,18 +11926,16 @@ msgstr "Точки растра активного слоя заблокиров
 #: ../app/display/gimpdisplayshell-dnd.c:388
 #: ../app/widgets/gimpdrawabletreeview.c:242
 #: ../app/widgets/gimpdrawabletreeview.c:330
-#, fuzzy
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
-msgstr "Новый слой извне"
+msgstr "Но"
 
 #: ../app/display/gimpdisplayshell-dnd.c:389
 #: ../app/widgets/gimpdrawabletreeview.c:266
 #: ../app/widgets/gimpdrawabletreeview.c:331
-#, fuzzy
 msgctxt "undo-type"
 msgid "Drop color to layer"
-msgstr "Новые слои извне"
+msgstr ""
 
 #: ../app/display/gimpdisplayshell-dnd.c:547
 #: ../app/widgets/gimplayertreeview.c:728
@@ -13183,7 +13180,7 @@ msgstr "Мозаика"
 #: ../app/pdb/plug-in-compat-cmds.c:2014
 msgctxt "undo-type"
 msgid "Supernova"
-msgstr ""
+msgstr "Сверхновая"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2104
 msgctxt "undo-type"
@@ -14567,32 +14564,28 @@ msgid "Parameter for matting-global"
 msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:264
-#, fuzzy
 msgid "Draw Mode"
 msgstr "Режим рисования"
 
 #: ../app/tools/gimpforegroundselectoptions.c:275
-#, fuzzy
 msgid "Stroke width"
-msgstr "Обводка по контуру"
+msgstr "Толщина штрихов"
 
 #: ../app/tools/gimpforegroundselectoptions.c:294
 msgid "Reset stroke width native size"
 msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:299
-#, fuzzy
 msgid "Preview color"
-msgstr "Цвет просмотра:"
+msgstr "Цвет предпросмотра"
 
 #: ../app/tools/gimpforegroundselectoptions.c:310
 msgid "Engine"
 msgstr "Способ"
 
 #: ../app/tools/gimpforegroundselectoptions.c:337
-#, fuzzy
 msgid "Active levels"
-msgstr "Активные фильтры"
+msgstr "Активные уровни"
 
 #: ../app/tools/gimpforegroundselectoptions.c:350
 #, fuzzy
@@ -16558,22 +16551,19 @@ msgid "Move"
 msgstr "Перемещение"
 
 #: ../app/tools/tools-enums.c:339
-#, fuzzy
 msgctxt "matting-draw-mode"
 msgid "Draw foreground"
-msgstr "Пометить передний план"
+msgstr "Помечать передний план"
 
 #: ../app/tools/tools-enums.c:340
-#, fuzzy
 msgctxt "matting-draw-mode"
 msgid "Draw background"
-msgstr "Пометить фон"
+msgstr "Помечать фон"
 
 #: ../app/tools/tools-enums.c:341
-#, fuzzy
 msgctxt "matting-draw-mode"
 msgid "Draw unknown"
-msgstr "Неизвестный "
+msgstr "Помечать неизвестное"
 
 #: ../app/tools/tools-enums.c:374
 msgctxt "warp-behavior"
@@ -17494,7 +17484,7 @@ msgstr "Все экспортируемые изображения"
 
 #: ../app/widgets/gimpfiledialog.c:899
 msgid "Save this XCF file with maximum compatibility"
-msgstr ""
+msgstr "Сохранить этот файл XCF с максимальной совместимостью"
 
 #: ../app/widgets/gimpfiledialog.c:1059
 #, c-format
@@ -17915,71 +17905,71 @@ msgstr ""
 
 #: ../app/widgets/gimppropgui.c:468
 msgid "1,700 K – Match flame"
-msgstr ""
+msgstr "1,700 K – Пламя спички"
 
 #: ../app/widgets/gimppropgui.c:469
 msgid "1,850 K – Candle flame, sunset/sunrise"
-msgstr ""
+msgstr "1,850 K – Пламя свечи, рассвет/закат"
 
 #: ../app/widgets/gimppropgui.c:470
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
-msgstr ""
+msgstr "3,000 K – тёплый белый свет компактных флюоресцентных ламп"
 
 #: ../app/widgets/gimppropgui.c:471
 msgid "3,300 K – Incandescent lamps"
-msgstr ""
+msgstr "3,300 K – лампы накаливания"
 
 #: ../app/widgets/gimppropgui.c:472
 msgid "3,200 K – Studio lamps, photofloods, etc."
-msgstr ""
+msgstr "3,200 K – студийное освещение, лампы заливающего света и пр."
 
 #: ../app/widgets/gimppropgui.c:473
 msgid "3,350 K – Studio \"CP\" light"
-msgstr ""
+msgstr "3,350 K – студийное освещение"
 
 #: ../app/widgets/gimppropgui.c:474
 msgid "4,100 K – Moonlight"
-msgstr ""
+msgstr "4,100 K – Лунный свет"
 
 #: ../app/widgets/gimppropgui.c:475
 msgid "5,000 K – D50"
-msgstr ""
+msgstr "5,000 K – D50"
 
 #: ../app/widgets/gimppropgui.c:476
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
-msgstr ""
+msgstr "5,000 K – прохладный белый свет компактных флюоресцентных ламп"
 
 #: ../app/widgets/gimppropgui.c:477
 msgid "5,000 K – Horizon daylight"
-msgstr ""
+msgstr "5,000 K – дневной свет на горизонте"
 
 #: ../app/widgets/gimppropgui.c:478
 msgid "5,500 K – D55"
-msgstr ""
+msgstr "5,500 K – D55"
 
 #: ../app/widgets/gimppropgui.c:479
 msgid "5,500 K – Vertical daylight, electronic flash"
-msgstr ""
+msgstr "5,500 K – вертикальный дневной свет, электровспышка"
 
 #: ../app/widgets/gimppropgui.c:480
 msgid "6,200 K – Xenon short-arc lamp"
-msgstr ""
+msgstr "6,200 K – зеноновая лампа с короткой дугой"
 
 #: ../app/widgets/gimppropgui.c:481
 msgid "6,500 K – D65"
-msgstr ""
+msgstr "6,500 K – D65"
 
 #: ../app/widgets/gimppropgui.c:482
 msgid "6,500 K – Daylight, overcast"
-msgstr ""
+msgstr "6,500 K – дневной свет, пасмурно"
 
 #: ../app/widgets/gimppropgui.c:483
 msgid "7,500 K – D75"
-msgstr ""
+msgstr "7,500 K – D75"
 
 #: ../app/widgets/gimppropgui.c:484
 msgid "9,300 K"
-msgstr ""
+msgstr "9,300 K"
 
 #: ../app/widgets/gimpselectiondata.c:248
 #, c-format
