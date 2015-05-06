@@ -71,28 +71,28 @@ struct _CdisplayLcmsClass
 };
 
 
-GType               cdisplay_lcms_get_type             (void);
+GType                   cdisplay_lcms_get_type             (void);
 
-static void         cdisplay_lcms_finalize             (GObject           *object);
+static void             cdisplay_lcms_finalize             (GObject          *object);
 
-static GtkWidget  * cdisplay_lcms_configure            (GimpColorDisplay  *display);
-static void         cdisplay_lcms_convert_buffer       (GimpColorDisplay  *display,
-                                                        GeglBuffer        *buffer,
-                                                        GeglRectangle     *area);
-static void         cdisplay_lcms_changed              (GimpColorDisplay  *display);
+static GtkWidget      * cdisplay_lcms_configure            (GimpColorDisplay *display);
+static void             cdisplay_lcms_convert_buffer       (GimpColorDisplay *display,
+                                                            GeglBuffer       *buffer,
+                                                            GeglRectangle    *area);
+static void             cdisplay_lcms_changed              (GimpColorDisplay *display);
 
-static cmsHPROFILE  cdisplay_lcms_get_rgb_profile      (CdisplayLcms      *lcms);
-static cmsHPROFILE  cdisplay_lcms_get_display_profile  (CdisplayLcms      *lcms);
+static GimpColorProfile cdisplay_lcms_get_rgb_profile      (CdisplayLcms     *lcms);
+static GimpColorProfile cdisplay_lcms_get_display_profile  (CdisplayLcms     *lcms);
 
-static void         cdisplay_lcms_attach_labelled      (GtkTable          *table,
-                                                        gint               row,
-                                                        const gchar       *text,
-                                                        GtkWidget         *widget);
-static void         cdisplay_lcms_update_profile_label (CdisplayLcms      *lcms,
-                                                        const gchar       *name);
-static void         cdisplay_lcms_notify_profile       (GObject           *config,
-                                                        GParamSpec        *pspec,
-                                                        CdisplayLcms      *lcms);
+static void             cdisplay_lcms_attach_labelled      (GtkTable         *table,
+                                                            gint              row,
+                                                            const gchar      *text,
+                                                            GtkWidget        *widget);
+static void             cdisplay_lcms_update_profile_label (CdisplayLcms     *lcms,
+                                                            const gchar      *name);
+static void             cdisplay_lcms_notify_profile       (GObject          *config,
+                                                            GParamSpec       *pspec,
+                                                            CdisplayLcms     *lcms);
 
 
 static const GimpModuleInfo cdisplay_lcms_info =
@@ -162,23 +162,6 @@ cdisplay_lcms_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (cdisplay_lcms_parent_class)->finalize (object);
-}
-
-static void
-cdisplay_lcms_profile_get_info (cmsHPROFILE   profile,
-                                gchar       **label,
-                                gchar       **summary)
-{
-  if (profile)
-    {
-      *label   = gimp_lcms_profile_get_label (profile);
-      *summary = gimp_lcms_profile_get_summary (profile);
-    }
-  else
-    {
-      *label   = g_strdup (_("None"));
-      *summary = NULL;
-    }
 }
 
 static GtkWidget *
@@ -271,13 +254,14 @@ cdisplay_lcms_convert_buffer (GimpColorDisplay *display,
 static void
 cdisplay_lcms_changed (GimpColorDisplay *display)
 {
-  CdisplayLcms    *lcms   = CDISPLAY_LCMS (display);
-  GimpColorConfig *config = gimp_color_display_get_config (display);
+  CdisplayLcms     *lcms          = CDISPLAY_LCMS (display);
+  GimpColorConfig  *config;
+  GimpColorProfile  src_profile   = NULL;
+  GimpColorProfile  dest_profile  = NULL;
+  GimpColorProfile  proof_profile = NULL;
+  cmsUInt16Number   alarmCodes[cmsMAXCHANNELS] = { 0, };
 
-  cmsHPROFILE      src_profile   = NULL;
-  cmsHPROFILE      dest_profile  = NULL;
-  cmsHPROFILE      proof_profile = NULL;
-  cmsUInt16Number  alarmCodes[cmsMAXCHANNELS] = { 0, };
+  config = gimp_color_display_get_config (display);
 
   if (lcms->transform)
     {
@@ -371,12 +355,12 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
     gimp_lcms_profile_close (src_profile);
 }
 
-static cmsHPROFILE
+static GimpColorProfile
 cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
 {
   GimpColorConfig  *config;
   GimpColorManaged *managed;
-  cmsHPROFILE       profile = NULL;
+  GimpColorProfile  profile = NULL;
 
   config  = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
   managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
@@ -402,134 +386,21 @@ cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
   return profile;
 }
 
-static GdkScreen *
-cdisplay_lcms_get_screen (CdisplayLcms *lcms,
-                          gint         *monitor)
+static GimpColorProfile
+cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 {
+  GimpColorConfig  *config;
   GimpColorManaged *managed;
-  GdkScreen        *screen;
+  GtkWidget        *widget = NULL;
+  GimpColorProfile  profile;
 
+  config  = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
   managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
 
   if (GTK_IS_WIDGET (managed))
-    screen = gtk_widget_get_screen (GTK_WIDGET (managed));
-  else
-    screen = gdk_screen_get_default ();
+    widget = GTK_WIDGET (managed);
 
-  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
-
-  if (GTK_IS_WIDGET (managed) && gtk_widget_get_window (GTK_WIDGET (managed)))
-    {
-      GtkWidget *widget = GTK_WIDGET (managed);
-
-      *monitor = gdk_screen_get_monitor_at_window (screen,
-                                                   gtk_widget_get_window (widget));
-    }
-  else
-    {
-      *monitor = 0;
-    }
-
-  return screen;
-}
-
-
-static cmsHPROFILE
-cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
-{
-  GimpColorConfig *config;
-  cmsHPROFILE      profile = NULL;
-
-  config = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
-
-#if defined GDK_WINDOWING_X11
-  if (config->display_profile_from_gdk)
-    {
-      GdkScreen *screen;
-      GdkAtom    type    = GDK_NONE;
-      gint       format  = 0;
-      gint       nitems  = 0;
-      gint       monitor = 0;
-      gchar     *atom_name;
-      guchar    *data    = NULL;
-
-      screen = cdisplay_lcms_get_screen (lcms, &monitor);
-
-      if (monitor > 0)
-        atom_name = g_strdup_printf ("_ICC_PROFILE_%d", monitor);
-      else
-        atom_name = g_strdup ("_ICC_PROFILE");
-
-      if (gdk_property_get (gdk_screen_get_root_window (screen),
-                            gdk_atom_intern (atom_name, FALSE),
-                            GDK_NONE,
-                            0, 64 * 1024 * 1024, FALSE,
-                            &type, &format, &nitems, &data) && nitems > 0)
-        {
-          profile = cmsOpenProfileFromMem (data, nitems);
-          g_free (data);
-        }
-
-      g_free (atom_name);
-    }
-
-#elif defined GDK_WINDOWING_QUARTZ
-  if (config->display_profile_from_gdk)
-    {
-      CMProfileRef  prof    = NULL;
-      gint          monitor = 0;
-
-      cdisplay_lcms_get_screen (lcms, &monitor);
-
-      CMGetProfileByAVID (monitor, &prof);
-
-      if (prof)
-        {
-          CFDataRef data;
-
-          data = CMProfileCopyICCData (NULL, prof);
-          CMCloseProfile (prof);
-
-          if (data)
-            {
-              UInt8 *buffer = g_malloc (CFDataGetLength (data));
-
-              /* We cannot use CFDataGetBytesPtr(), because that returns
-               * a const pointer where cmsOpenProfileFromMem wants a
-               * non-const pointer.
-               */
-              CFDataGetBytes (data, CFRangeMake (0, CFDataGetLength (data)),
-                              buffer);
-
-              profile = cmsOpenProfileFromMem (buffer, CFDataGetLength (data));
-
-              g_free (buffer);
-              CFRelease (data);
-            }
-        }
-    }
-
-#elif defined G_OS_WIN32
-  if (config->display_profile_from_gdk)
-    {
-      HDC hdc = GetDC (NULL);
-
-      if (hdc)
-        {
-          gchar *path;
-          gint32 len = 0;
-
-          GetICMProfile (hdc, &len, NULL);
-          path = g_new (gchar, len);
-
-          if (GetICMProfile (hdc, &len, path))
-            profile = cmsOpenProfileFromFile (path, "r");
-
-          g_free (path);
-          ReleaseDC (NULL, hdc);
-        }
-    }
-#endif
+  profile = gimp_widget_get_color_profile (widget);
 
   if (! profile)
     profile = gimp_color_config_get_display_profile (config, NULL);
@@ -569,11 +440,11 @@ static void
 cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
                                     const gchar  *name)
 {
-  GimpColorConfig *config;
-  GtkWidget       *label;
-  cmsHPROFILE      profile = NULL;
-  gchar           *text    = NULL;
-  gchar           *tooltip = NULL;
+  GimpColorConfig  *config;
+  GtkWidget        *label;
+  GimpColorProfile  profile = NULL;
+  gchar            *text;
+  gchar            *tooltip;
 
   config = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
 
@@ -599,7 +470,16 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
       g_return_if_reached ();
     }
 
-  cdisplay_lcms_profile_get_info (profile, &text, &tooltip);
+  if (profile)
+    {
+      text    = gimp_lcms_profile_get_label (profile);
+      tooltip = gimp_lcms_profile_get_summary (profile);
+    }
+  else
+    {
+      text    = g_strdup (_("None"));
+      tooltip = NULL;
+    }
 
   gtk_label_set_text (GTK_LABEL (label), text);
   gimp_help_set_help_data (label, tooltip, NULL);
