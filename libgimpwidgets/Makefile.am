@@ -178,6 +178,8 @@ libgimpwidgets_sources = \
 	gimpwidgets.h			\
 	gimpwidgetsenums.h		\
 	gimpwidgetstypes.h		\
+	gimpwidgetsutils.c		\
+	gimpwidgetsutils.h		\
 	gimpzoommodel.c			\
 	gimpzoommodel.h			\
 	gimp3migration.c		\
@@ -253,6 +255,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpwidgets.h			\
 	gimpwidgetsenums.h		\
 	gimpwidgetstypes.h		\
+	gimpwidgetsutils.h		\
 	gimpzoommodel.h			\
 	gimp3migration.h
 
