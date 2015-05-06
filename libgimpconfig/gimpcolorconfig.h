@@ -77,7 +77,16 @@ struct _GimpColorConfigClass
 };
 
 
-GType  gimp_color_config_get_type (void) G_GNUC_CONST;
+GType            gimp_color_config_get_type            (void) G_GNUC_CONST;
+
+GimpColorProfile gimp_color_config_get_rgb_profile     (GimpColorConfig  *config,
+                                                        GError          **error);
+GimpColorProfile gimp_color_config_get_cmyk_profile    (GimpColorConfig  *config,
+                                                        GError          **error);
+GimpColorProfile gimp_color_config_get_display_profile (GimpColorConfig  *config,
+                                                        GError          **error);
+GimpColorProfile gimp_color_config_get_printer_profile (GimpColorConfig  *config,
+                                                        GError          **error);
 
 
 #endif /* GIMP_COLOR_CONFIG_H__ */
