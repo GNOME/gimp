@@ -186,6 +186,14 @@ gimp_lcms_profile_save_to_data (GimpColorProfile   profile,
   return NULL;
 }
 
+void
+gimp_lcms_profile_close (GimpColorProfile profile)
+{
+  g_return_if_fail (profile != NULL);
+
+  cmsCloseProfile (profile);
+}
+
 static gchar *
 gimp_lcms_profile_get_info (GimpColorProfile profile,
                             cmsInfoType      info)
@@ -462,7 +470,7 @@ gimp_lcms_create_srgb_profile (void)
       profile_data = gimp_lcms_profile_save_to_data (profile, &profile_length,
                                                      NULL);
 
-      cmsCloseProfile (profile);
+      gimp_lcms_profile_close (profile);
     }
 
   return gimp_lcms_profile_open_from_data (profile_data, profile_length, NULL);
