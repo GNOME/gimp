@@ -23,8 +23,6 @@
 
 #include <string.h>
 
-#include <lcms2.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -209,7 +207,7 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
     {
       gimp_color_profile_view_set_profile (dialog->priv->profile_view,
                                            profile);
-      cmsCloseProfile (profile);
+      gimp_lcms_profile_close (profile);
     }
 
   g_object_unref (file);

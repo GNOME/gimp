@@ -52,7 +52,6 @@ AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpWidgets\"	\
 	-DGIMP_WIDGETS_COMPILATION		\
 	-I$(top_srcdir)				\
-	$(LCMS_CFLAGS)				\
 	$(GEGL_CFLAGS)				\
 	$(GTK_CFLAGS)				\
 	-I$(includedir)
@@ -268,7 +267,6 @@ libgimpwidgets_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpbase)		\
 	$(libgimpcolor)		\
 	$(libgimpconfig)	\
-	$(LCMS_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
 	$(libm)

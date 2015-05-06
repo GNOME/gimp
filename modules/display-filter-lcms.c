@@ -83,7 +83,6 @@ static void         cdisplay_lcms_changed              (GimpColorDisplay  *displ
 
 static cmsHPROFILE  cdisplay_lcms_get_rgb_profile      (CdisplayLcms      *lcms);
 static cmsHPROFILE  cdisplay_lcms_get_display_profile  (CdisplayLcms      *lcms);
-static cmsHPROFILE  cdisplay_lcms_get_printer_profile  (CdisplayLcms      *lcms);
 
 static void         cdisplay_lcms_attach_labelled      (GtkTable          *table,
                                                         gint               row,
@@ -295,7 +294,7 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       return;
 
     case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
-      proof_profile = cdisplay_lcms_get_printer_profile (lcms);
+      proof_profile = gimp_color_config_get_printer_profile (config, NULL);
       /*  fallthru  */
 
     case GIMP_COLOR_MANAGEMENT_DISPLAY:
@@ -342,7 +341,7 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
                                                     config->simulation_intent,
                                                     config->display_intent,
                                                     softproof_flags);
-      cmsCloseProfile (proof_profile);
+      gimp_lcms_profile_close (proof_profile);
     }
   else if (src_profile || dest_profile)
     {
@@ -366,10 +365,10 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
     }
 
   if (dest_profile)
-    cmsCloseProfile (dest_profile);
+    gimp_lcms_profile_close (dest_profile);
 
   if (src_profile)
-    cmsCloseProfile (src_profile);
+    gimp_lcms_profile_close (src_profile);
 }
 
 static cmsHPROFILE
@@ -379,6 +378,7 @@ cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
   GimpColorManaged *managed;
   cmsHPROFILE       profile = NULL;
 
+  config  = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
   managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
 
   if (managed)
@@ -391,24 +391,13 @@ cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
 
       if (profile && ! gimp_lcms_profile_is_rgb (profile))
         {
-          cmsCloseProfile (profile);
+          gimp_lcms_profile_close (profile);
           profile = NULL;
         }
     }
 
   if (! profile)
-    {
-      config = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
-
-      if (config->rgb_profile)
-        profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
-
-      if (profile && ! gimp_lcms_profile_is_rgb (profile))
-        {
-          cmsCloseProfile (profile);
-          profile = NULL;
-        }
-    }
+    profile = gimp_color_config_get_rgb_profile (config, NULL);
 
   return profile;
 }
@@ -542,23 +531,10 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
     }
 #endif
 
-  if (! profile && config->display_profile)
-    profile = cmsOpenProfileFromFile (config->display_profile, "r");
+  if (! profile)
+    profile = gimp_color_config_get_display_profile (config, NULL);
 
   return profile;
-}
-
-static cmsHPROFILE
-cdisplay_lcms_get_printer_profile (CdisplayLcms *lcms)
-{
-  GimpColorConfig *config;
-
-  config = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
-
-  if (config->printer_profile)
-    return cmsOpenProfileFromFile (config->printer_profile, "r");
-
-  return NULL;
 }
 
 static void
@@ -593,10 +569,13 @@ static void
 cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
                                     const gchar  *name)
 {
-  GtkWidget   *label;
-  cmsHPROFILE  profile = NULL;
-  gchar       *text    = NULL;
-  gchar       *tooltip = NULL;
+  GimpColorConfig *config;
+  GtkWidget       *label;
+  cmsHPROFILE      profile = NULL;
+  gchar           *text    = NULL;
+  gchar           *tooltip = NULL;
+
+  config = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
 
   label = g_object_get_data (G_OBJECT (lcms), name);
 
@@ -613,7 +592,7 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
     }
   else if (strcmp (name, "printer-profile") == 0)
     {
-      profile = cdisplay_lcms_get_printer_profile (lcms);
+      profile = gimp_color_config_get_printer_profile (config, NULL);
     }
   else
     {
@@ -629,7 +608,7 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
   g_free (tooltip);
 
   if (profile)
-    cmsCloseProfile (profile);
+    gimp_lcms_profile_close (profile);
 }
 
 static void

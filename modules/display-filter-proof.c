@@ -322,9 +322,10 @@ cdisplay_proof_configure (GimpColorDisplay *display)
 static void
 cdisplay_proof_changed (GimpColorDisplay *display)
 {
-  CdisplayProof *proof = CDISPLAY_PROOF (display);
-  cmsHPROFILE    rgb_profile;
-  cmsHPROFILE    proof_profile;
+  CdisplayProof    *proof = CDISPLAY_PROOF (display);
+  GimpColorProfile  rgb_profile;
+  GimpColorProfile  proof_profile;
+  GFile            *file;
 
   if (proof->transform)
     {
@@ -337,7 +338,9 @@ cdisplay_proof_changed (GimpColorDisplay *display)
 
   rgb_profile = gimp_lcms_create_srgb_profile ();
 
-  proof_profile = cmsOpenProfileFromFile (proof->profile, "r");
+  file = g_file_new_for_path (proof->profile);
+  proof_profile = gimp_lcms_profile_open_from_file (file, NULL);
+  g_object_unref (file);
 
   if (proof_profile)
     {

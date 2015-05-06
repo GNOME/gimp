@@ -22,8 +22,6 @@
 
 #include <string.h>
 
-#include <lcms2.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -122,5 +120,5 @@ gimp_image_profile_view_update (GimpImageParasiteView *view)
 
   gimp_color_profile_view_set_profile (profile_view->profile_view, profile);
 
-  cmsCloseProfile (profile);
+  gimp_lcms_profile_close (profile);
 }
