@@ -282,7 +282,7 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       /*  fallthru  */
 
     case GIMP_COLOR_MANAGEMENT_DISPLAY:
-      src_profile = cdisplay_lcms_get_rgb_profile (lcms);
+      src_profile  = cdisplay_lcms_get_rgb_profile (lcms);
       dest_profile = cdisplay_lcms_get_display_profile (lcms);
       break;
     }
@@ -398,7 +398,7 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
   managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
 
   if (GTK_IS_WIDGET (managed))
-    widget = GTK_WIDGET (managed);
+    widget = gtk_widget_get_toplevel (GTK_WIDGET (managed));
 
   profile = gimp_widget_get_color_profile (widget);
 
