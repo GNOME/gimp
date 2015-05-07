@@ -199,7 +199,6 @@ gimp_brush_pipe_select_brush (GimpBrush        *brush,
 {
   GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
   gint           i, brushix, ix;
-  gdouble        velocity;
 
   if (pipe->n_brushes == 1)
     return GIMP_BRUSH (pipe->current);
@@ -221,10 +220,7 @@ gimp_brush_pipe_select_brush (GimpBrush        *brush,
           break;
 
         case PIPE_SELECT_VELOCITY:
-          velocity = current_coords->velocity;
-
-          /* Max velocity is 3.0, picking stamp as a ratio*/
-          ix = ROUND ((3.0 / velocity) * pipe->rank[i]);
+          ix = ROUND (current_coords->velocity * pipe->rank[i]);
           break;
 
         case PIPE_SELECT_RANDOM:
