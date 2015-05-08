@@ -620,3 +620,137 @@ gimp_lcms_create_srgb_profile (void)
 
   return gimp_lcms_profile_open_from_data (profile_data, profile_length, NULL);
 }
+
+/**
+ * gimp_lcms_get_format:
+ * @format:      a #Babl format
+ * @lcms_format: return location for an lcms format
+ *
+ * This function takes a #Babl format and returns the lcms format to
+ * be used with that @format. It also returns a #Babl format to be
+ * used instead of the passed @format, which usually is the same as
+ * @format, unless lcms doesn't support @format.
+ *
+ * Note that this function currently only supports RGB, RGBA, R'G'B' and
+ * R'G'B'A formats.
+ *
+ * Return value: the #Babl format to be used instead of @format, or %NULL
+ *               is the passed @format is not supported at all.
+ *
+ * Since: GIMP 2.10
+ **/
+const Babl *
+gimp_lcms_get_format (const Babl *format,
+                      guint32    *lcms_format)
+{
+  const Babl *output_format = NULL;
+  const Babl *type;
+  const Babl *model;
+  gboolean    has_alpha;
+  gboolean    linear;
+
+  g_return_val_if_fail (format != NULL, NULL);
+  g_return_val_if_fail (lcms_format != NULL, NULL);
+
+  has_alpha = babl_format_has_alpha (format);
+  type      = babl_format_get_type (format, 0);
+  model     = babl_format_get_model (format);
+
+  if (model == babl_model ("RGB") ||
+      model == babl_model ("RGBA"))
+    {
+      linear = TRUE;
+    }
+  else if (model == babl_model ("R'G'B'") ||
+           model == babl_model ("R'G'B'A"))
+    {
+      linear = FALSE;
+    }
+  else
+    {
+      g_return_val_if_reached (NULL);
+    }
+
+  *lcms_format = 0;
+
+  if (type == babl_type ("u8"))
+    {
+      if (has_alpha)
+        *lcms_format = TYPE_RGBA_8;
+      else
+        *lcms_format = TYPE_RGB_8;
+
+      output_format = format;
+    }
+  else if (type == babl_type ("u16"))
+    {
+      if (has_alpha)
+        *lcms_format = TYPE_RGBA_16;
+      else
+        *lcms_format = TYPE_RGB_16;
+
+      output_format = format;
+    }
+  else if (type == babl_type ("half")) /* 16-bit floating point (half) */
+    {
+      if (has_alpha)
+        *lcms_format = TYPE_RGBA_HALF_FLT;
+      else
+        *lcms_format = TYPE_RGB_HALF_FLT;
+
+      output_format = format;
+    }
+  else if (type == babl_type ("float"))
+    {
+      if (has_alpha)
+        *lcms_format = TYPE_RGBA_FLT;
+      else
+        *lcms_format = TYPE_RGB_FLT;
+
+      output_format = format;
+    }
+  else if (type == babl_type ("double"))
+    {
+      if (has_alpha)
+        {
+#ifdef TYPE_RGBA_DBL
+          /* RGBA double not implemented in lcms */
+          *lcms_format = TYPE_RGBA_DBL;
+          output_format = format;
+#endif /* TYPE_RGBA_DBL */
+        }
+      else
+        {
+          *lcms_format = TYPE_RGB_DBL;
+          output_format = format;
+        }
+    }
+
+  if (*lcms_format == 0)
+    {
+      g_printerr ("gimp_lcms_get_format: layer format %s not supported, "
+                  "falling back to float\n",
+                  babl_get_name (format));
+
+      if (has_alpha)
+        {
+          *lcms_format = TYPE_RGBA_FLT;
+
+          if (linear)
+            output_format = babl_format ("RGBA float");
+          else
+            output_format = babl_format ("R'G'B'A float");
+        }
+      else
+        {
+          *lcms_format = TYPE_RGB_FLT;
+
+          if (linear)
+            output_format = babl_format ("RGB float");
+          else
+            output_format = babl_format ("R'G'B' float");
+        }
+    }
+
+  return output_format;
+}

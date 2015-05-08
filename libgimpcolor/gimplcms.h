@@ -58,6 +58,9 @@ gboolean           gimp_lcms_profile_is_cmyk          (GimpColorProfile   profil
 
 GimpColorProfile   gimp_lcms_create_srgb_profile      (void);
 
+const Babl       * gimp_lcms_get_format               (const Babl        *format,
+                                                       guint32           *lcms_format);
+
 
 G_END_DECLS
 
