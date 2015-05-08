@@ -881,12 +881,9 @@ lcms_layers_transform_rgb (gint                     *layers,
   for (i = 0; i < num_layers; i++)
     {
       gint32           layer_id = layers[i];
-      const Babl      *layer_format;
-      gboolean         has_alpha;
-      const Babl      *type;
       const Babl      *iter_format = NULL;
       cmsUInt32Number  lcms_format = 0;
-      cmsHTRANSFORM    transform   = NULL;
+      cmsHTRANSFORM    transform;
       gint            *children;
       gint             num_children;
 
@@ -903,96 +900,8 @@ lcms_layers_transform_rgb (gint                     *layers,
           continue;
         }
 
-      layer_format = gimp_drawable_get_format (layer_id);
-      has_alpha    = babl_format_has_alpha (layer_format);
-      type         = babl_format_get_type (layer_format, 0);
-
-      if (type == babl_type ("u8"))
-        {
-          if (has_alpha)
-            {
-              lcms_format = TYPE_RGBA_8;
-              iter_format = babl_format ("R'G'B'A u8");
-            }
-          else
-            {
-              lcms_format = TYPE_RGB_8;
-              iter_format = babl_format ("R'G'B' u8");
-            }
-        }
-      else if (type == babl_type ("u16"))
-        {
-          if (has_alpha)
-            {
-              lcms_format = TYPE_RGBA_16;
-              iter_format = babl_format ("R'G'B'A u16");
-            }
-          else
-            {
-              lcms_format = TYPE_RGB_16;
-              iter_format = babl_format ("R'G'B' u16");
-            }
-        }
-      else if (type == babl_type ("half")) /* 16-bit floating point (half) */
-        {
-          if (has_alpha)
-            {
-              lcms_format = TYPE_RGBA_HALF_FLT;
-              iter_format = babl_format ("R'G'B'A half");
-            }
-          else
-            {
-              lcms_format = TYPE_RGB_HALF_FLT;
-              iter_format = babl_format ("R'G'B' half");
-            }
-        }
-      else if (type == babl_type ("float"))
-        {
-          if (has_alpha)
-            {
-              lcms_format = TYPE_RGBA_FLT;
-              iter_format = babl_format ("R'G'B'A float");
-            }
-          else
-            {
-              lcms_format = TYPE_RGB_FLT;
-              iter_format = babl_format ("R'G'B' float");
-            }
-        }
-      else if (type == babl_type ("double"))
-        {
-          if (has_alpha)
-            {
-#ifdef TYPE_RGBA_DBL
-              /* RGBA double not implemented in lcms */
-              lcms_format = TYPE_RGBA_DBL;
-              iter_format = babl_format ("R'G'B'A double");
-#endif /* TYPE_RGBA_DBL */
-            }
-          else
-            {
-              lcms_format = TYPE_RGB_DBL;
-              iter_format = babl_format ("R'G'B' double");
-            }
-        }
-
-      if (lcms_format == 0)
-        {
-          g_printerr ("lcms: layer format %s not supported, "
-                      "falling back to float\n",
-                      babl_get_name (layer_format));
-
-          if (has_alpha)
-            {
-              lcms_format = TYPE_RGBA_FLT;
-              iter_format = babl_format ("R'G'B'A float");
-            }
-          else
-            {
-              lcms_format = TYPE_RGB_FLT;
-              iter_format = babl_format ("R'G'B' float");
-            }
-        }
+      iter_format = gimp_lcms_get_format (gimp_drawable_get_format (layer_id),
+                                          &lcms_format);
 
       transform = cmsCreateTransform (src_profile,  lcms_format,
                                       dest_profile, lcms_format,
