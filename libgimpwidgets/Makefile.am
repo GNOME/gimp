@@ -54,6 +54,7 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)				\
 	$(GEGL_CFLAGS)				\
 	$(GTK_CFLAGS)				\
+	$(LCMS_CFLAGS)				\
 	-I$(includedir)
 
 lib_LTLIBRARIES = libgimpwidgets-@GIMP_API_VERSION@.la
@@ -272,6 +273,7 @@ libgimpwidgets_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpconfig)	\
 	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
+	$(LCMS_LIBS)		\
 	$(libm)
 
 
