@@ -81,20 +81,15 @@ buffers_paste_as_new_cmd_callback (GtkAction *action,
 
   if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
     {
-      GimpImage *image = gimp_context_get_image (context);
+      GtkWidget *widget = GTK_WIDGET (editor);
+      GimpImage *new_image;
 
-      if (image)
-        {
-          GtkWidget *widget = GTK_WIDGET (editor);
-          GimpImage *new_image;
-
-          new_image = gimp_image_new_from_buffer (image->gimp, image, buffer);
-          gimp_create_display (image->gimp, new_image,
-                               GIMP_UNIT_PIXEL, 1.0,
-                               G_OBJECT (gtk_widget_get_screen (widget)),
-                               gimp_widget_get_monitor (widget));
-          g_object_unref (new_image);
-        }
+      new_image = gimp_image_new_from_buffer (context->gimp, NULL, buffer);
+      gimp_create_display (context->gimp, new_image,
+                           GIMP_UNIT_PIXEL, 1.0,
+                           G_OBJECT (gtk_widget_get_screen (widget)),
+                           gimp_widget_get_monitor (widget));
+      g_object_unref (new_image);
     }
 }
 
