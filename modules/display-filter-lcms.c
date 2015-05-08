@@ -60,9 +60,9 @@ typedef struct _CdisplayLcmsClass CdisplayLcmsClass;
 
 struct _CdisplayLcms
 {
-  GimpColorDisplay  parent_instance;
+  GimpColorDisplay   parent_instance;
 
-  cmsHTRANSFORM     transform;
+  GimpColorTransform transform;
 };
 
 struct _CdisplayLcmsClass
@@ -254,14 +254,10 @@ cdisplay_lcms_convert_buffer (GimpColorDisplay *display,
 static void
 cdisplay_lcms_changed (GimpColorDisplay *display)
 {
-  CdisplayLcms     *lcms          = CDISPLAY_LCMS (display);
+  CdisplayLcms     *lcms   = CDISPLAY_LCMS (display);
+  GtkWidget        *widget = NULL;
+  GimpColorManaged *managed;
   GimpColorConfig  *config;
-  GimpColorProfile  src_profile   = NULL;
-  GimpColorProfile  dest_profile  = NULL;
-  GimpColorProfile  proof_profile = NULL;
-  cmsUInt16Number   alarmCodes[cmsMAXCHANNELS] = { 0, };
-
-  config = gimp_color_display_get_config (display);
 
   if (lcms->transform)
     {
@@ -269,90 +265,20 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       lcms->transform = NULL;
     }
 
-  if (! config)
+  managed = gimp_color_display_get_managed (display);
+  config  = gimp_color_display_get_config (display);
+
+  if (! config || ! managed)
     return;
 
-  switch (config->mode)
-    {
-    case GIMP_COLOR_MANAGEMENT_OFF:
-      return;
+  if (GTK_IS_WIDGET (managed))
+    widget = gtk_widget_get_toplevel (GTK_WIDGET (managed));
 
-    case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
-      proof_profile = gimp_color_config_get_printer_profile (config, NULL);
-      /*  fallthru  */
-
-    case GIMP_COLOR_MANAGEMENT_DISPLAY:
-      src_profile  = cdisplay_lcms_get_rgb_profile (lcms);
-      dest_profile = cdisplay_lcms_get_display_profile (lcms);
-      break;
-    }
-
-  if (proof_profile)
-    {
-      cmsUInt32Number softproof_flags = 0;
-
-      if (! src_profile)
-        src_profile = gimp_lcms_create_srgb_profile ();
-
-      if (! dest_profile)
-        dest_profile = gimp_lcms_create_srgb_profile ();
-
-      softproof_flags |= cmsFLAGS_SOFTPROOFING;
-
-      if (config->simulation_use_black_point_compensation)
-        {
-          softproof_flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
-        }
-
-      if (config->simulation_gamut_check)
-        {
-          guchar r, g, b;
-
-          softproof_flags |= cmsFLAGS_GAMUTCHECK;
-
-          gimp_rgb_get_uchar (&config->out_of_gamut_color, &r, &g, &b);
-
-          alarmCodes[0] = (cmsUInt16Number) r * 256;
-          alarmCodes[1] = (cmsUInt16Number) g * 256;
-          alarmCodes[2] = (cmsUInt16Number) b * 256;
-
-          cmsSetAlarmCodes (alarmCodes);
-        }
-
-      lcms->transform = cmsCreateProofingTransform (src_profile,  TYPE_RGBA_FLT,
-                                                    dest_profile, TYPE_RGBA_FLT,
-                                                    proof_profile,
-                                                    config->simulation_intent,
-                                                    config->display_intent,
-                                                    softproof_flags);
-      gimp_lcms_profile_close (proof_profile);
-    }
-  else if (src_profile || dest_profile)
-    {
-      cmsUInt32Number display_flags = 0;
-
-      if (! src_profile)
-        src_profile = gimp_lcms_create_srgb_profile ();
-
-      if (! dest_profile)
-        dest_profile = gimp_lcms_create_srgb_profile ();
-
-      if (config->display_use_black_point_compensation)
-        {
-          display_flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
-        }
-
-      lcms->transform = cmsCreateTransform (src_profile,  TYPE_RGBA_FLT,
-                                            dest_profile, TYPE_RGBA_FLT,
-                                            config->display_intent,
-                                            display_flags);
-    }
-
-  if (dest_profile)
-    gimp_lcms_profile_close (dest_profile);
-
-  if (src_profile)
-    gimp_lcms_profile_close (src_profile);
+  lcms->transform =
+    gimp_widget_get_color_transform (widget,
+                                     managed, config,
+                                     babl_format ("R'G'B'A float"),
+                                     babl_format ("R'G'B'A float"));
 }
 
 static GimpColorProfile
