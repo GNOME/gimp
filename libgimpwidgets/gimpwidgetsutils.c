@@ -21,6 +21,11 @@
 
 #include "config.h"
 
+#include <lcms2.h>
+
+#include <gegl.h>
+#include <gtk/gtk.h>
+
 #ifdef G_OS_WIN32
 #include <windows.h>
 #endif
@@ -30,11 +35,6 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreServices/CoreServices.h>
 #endif
-
-#include <lcms2.h>
-
-#include <gegl.h>
-#include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
