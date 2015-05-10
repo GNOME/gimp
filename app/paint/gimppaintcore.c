@@ -900,44 +900,27 @@ gimp_paint_core_paste (GimpPaintCore            *core,
           /* This step is skipped by the ink tool, which writes
            * directly to canvas_buffer
            */
-          src_buffer = core->undo_buffer;
-          combine_paint_canvas_buffer             (paint_mask,
-                                                   paint_buf,
-                                                   src_buffer,
-                                                   dest_buffer,
-                                                   core->mask_buffer,
-                                                   paint_mask_offset_x,
-                                                   paint_mask_offset_y,
-                                                   core->canvas_buffer,
-                                                   core->paint_buffer_x,
-                                                   core->paint_buffer_y,
-                                                   paint_opacity,
-                                                   GIMP_IS_AIRBRUSH (core),
-                                                   core->mask_x_offset,
-                                                   core->mask_y_offset,
-                                                   core->linear_mode,
-                                                   paint_mode);
-//          if (paint_mask != NULL)
-//            {
-//              /* Mix paint mask and canvas_buffer */
-//              combine_paint_mask_to_canvas_mask (paint_mask,
-//                                                 paint_mask_offset_x,
-//                                                 paint_mask_offset_y,
-//                                                 core->canvas_buffer,
-//                                                 core->paint_buffer_x,
-//                                                 core->paint_buffer_y,
-//                                                 paint_opacity,
-//                                                 GIMP_IS_AIRBRUSH (core));
-//            }
-//
-//          /* Write canvas_buffer to paint_buf */
-//          canvas_buffer_to_paint_buf_alpha (paint_buf,
-//                                            core->canvas_buffer,
-//                                            core->paint_buffer_x,
-//                                            core->paint_buffer_y);
-//
+          if (paint_mask != NULL)
+            {
+              /* Mix paint mask and canvas_buffer */
+              combine_paint_mask_to_canvas_mask (paint_mask,
+                                                 paint_mask_offset_x,
+                                                 paint_mask_offset_y,
+                                                 core->canvas_buffer,
+                                                 core->paint_buffer_x,
+                                                 core->paint_buffer_y,
+                                                 paint_opacity,
+                                                 GIMP_IS_AIRBRUSH (core));
+            }
+
+          /* Write canvas_buffer to paint_buf */
+          canvas_buffer_to_paint_buf_alpha (paint_buf,
+                                            core->canvas_buffer,
+                                            core->paint_buffer_x,
+                                            core->paint_buffer_y);
+
           /* undo buf -> paint_buf -> dest_buffer */
-//          src_buffer = core->undo_buffer;
+          src_buffer = core->undo_buffer;
         }
       else
         {
@@ -952,19 +935,19 @@ gimp_paint_core_paste (GimpPaintCore            *core,
 
           /* dest_buffer -> paint_buf -> dest_buffer */
           src_buffer = dest_buffer;
-
-          do_layer_blend (src_buffer,
-                          dest_buffer,
-                          paint_buf,
-                          core->mask_buffer,
-                          image_opacity,
-                          core->paint_buffer_x,
-                          core->paint_buffer_y,
-                          core->mask_x_offset,
-                          core->mask_y_offset,
-                          core->linear_mode,
-                          paint_mode);
         }
+
+      do_layer_blend (src_buffer,
+                      dest_buffer,
+                      paint_buf,
+                      core->mask_buffer,
+                      image_opacity,
+                      core->paint_buffer_x,
+                      core->paint_buffer_y,
+                      core->mask_x_offset,
+                      core->mask_y_offset,
+                      core->linear_mode,
+                      paint_mode);
 
       if (core->comp_buffer)
         {

@@ -15,24 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-void
-combine_paint_canvas_buffer             (const GimpTempBuf   *paint_mask,
-                                         GimpTempBuf         *paint_buf,
-                                         GeglBuffer          *src_buffer,
-                                         GeglBuffer          *dst_buffer,
-                                         GeglBuffer          *mask_buffer,
-                                         gint                 mask_x_offset,
-                                         gint                 mask_y_offset,
-                                         GeglBuffer          *canvas_buffer,
-                                         gint                 x_offset,
-                                         gint                 y_offset,
-                                         gfloat               opacity,
-                                         gboolean             stipple,
-                                         gint                 p_mask_x_offset,
-                                         gint                 p_mask_y_offset,
-                                         gboolean             linear_mode,
-                                         GimpLayerModeEffects paint_mode);
-
 void combine_paint_mask_to_canvas_mask  (const GimpTempBuf *paint_mask,
                                          gint               mask_x_offset,
                                          gint               mask_y_offset,
