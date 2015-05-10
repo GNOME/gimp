@@ -60,9 +60,11 @@ typedef struct _CdisplayLcmsClass CdisplayLcmsClass;
 
 struct _CdisplayLcms
 {
-  GimpColorDisplay   parent_instance;
+  GimpColorDisplay    parent_instance;
 
-  GimpColorTransform transform;
+  GimpColorTransform  transform;
+  const Babl         *src_format;
+  const Babl         *dest_format;
 };
 
 struct _CdisplayLcmsClass
@@ -240,7 +242,7 @@ cdisplay_lcms_convert_buffer (GimpColorDisplay *display,
     return;
 
   iter = gegl_buffer_iterator_new (buffer, area, 0,
-                                   babl_format ("R'G'B'A float"),
+                                   lcms->src_format,
                                    GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
@@ -274,11 +276,14 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
   if (GTK_IS_WIDGET (managed))
     widget = gtk_widget_get_toplevel (GTK_WIDGET (managed));
 
+  lcms->src_format  = babl_format ("R'G'B'A float");
+  lcms->dest_format = babl_format ("R'G'B'A float");
+
   lcms->transform =
     gimp_widget_get_color_transform (widget,
                                      managed, config,
-                                     babl_format ("R'G'B'A float"),
-                                     babl_format ("R'G'B'A float"));
+                                     &lcms->src_format,
+                                     &lcms->dest_format);
 }
 
 static GimpColorProfile

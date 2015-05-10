@@ -499,11 +499,11 @@ get_display_profile (GtkWidget       *widget,
 }
 
 GimpColorTransform
-gimp_widget_get_color_transform (GtkWidget        *widget,
-                                 GimpColorManaged *managed,
-                                 GimpColorConfig  *config,
-                                 const Babl       *src_format,
-                                 const Babl       *dest_format)
+gimp_widget_get_color_transform (GtkWidget         *widget,
+                                 GimpColorManaged  *managed,
+                                 GimpColorConfig   *config,
+                                 const Babl       **src_format,
+                                 const Babl       **dest_format)
 {
   GimpColorTransform transform     = NULL;
   GimpColorProfile   src_profile   = NULL;
@@ -534,8 +534,8 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
       break;
     }
 
-  src_format  = gimp_lcms_get_format (src_format,  &lcms_src_format);
-  dest_format = gimp_lcms_get_format (dest_format, &lcms_dest_format);
+  *src_format  = gimp_lcms_get_format (*src_format,  &lcms_src_format);
+  *dest_format = gimp_lcms_get_format (*dest_format, &lcms_dest_format);
 
   if (proof_profile)
     {
