@@ -26,9 +26,9 @@
 </autotools>
 
 <autotools id="libffi" autogen-sh="configure">
-	<branch version="3.0.13" repo="sourceware.org"
-			module="libffi/libffi-3.0.13.tar.gz"
-			hash="md5:45f3b6dbc9ee7c7dfbbbc5feba571529">
+	<branch version="3.2.1" repo="sourceware.org"
+			module="libffi/libffi-3.2.1.tar.gz"
+			hash="md5:83b89587607e3eb65c70d361f13bab43">
 	</branch>
 </autotools>
 
