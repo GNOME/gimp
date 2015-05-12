@@ -488,9 +488,10 @@ static GimpColorProfile
 get_display_profile (GtkWidget       *widget,
                      GimpColorConfig *config)
 {
-  GimpColorProfile profile;
+  GimpColorProfile profile = NULL;
 
-  profile = gimp_widget_get_color_profile (widget);
+  if (config->display_profile_from_gdk)
+    profile = gimp_widget_get_color_profile (widget);
 
   if (! profile)
     profile = gimp_color_config_get_display_profile (config, NULL);
