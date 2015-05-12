@@ -193,19 +193,52 @@ gimp_drawable_blend (GimpDrawable         *drawable,
   gimp_set_busy (image->gimp);
 
   /*  Always create an alpha temp buf (for generality) */
-  buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
+  buffer = gegl_buffer_new (GEGL_RECTANGLE (x, y, width, height),
                             gimp_drawable_get_format_with_alpha (drawable));
 
-  gradient_fill_region (image, drawable, context,
-                        buffer, GEGL_RECTANGLE (0, 0, width, height),
-                        gradient, gradient_type, offset, repeat, reverse,
-                        supersample, max_depth, threshold, dither,
-                        (startx - x), (starty - y),
-                        (endx - x), (endy - y),
-                        progress);
+  {
+    GeglBuffer  *shapeburst = NULL;
+    GeglNode    *render;
+
+    if (gradient_type >= GIMP_GRADIENT_SHAPEBURST_ANGULAR &&
+        gradient_type <= GIMP_GRADIENT_SHAPEBURST_DIMPLED)
+      {
+        shapeburst = gimp_drawable_blend_shapeburst_distmap (drawable, TRUE,
+                                                             GEGL_RECTANGLE (x, y, width, height),
+                                                             progress);
+      }
+
+    render = gegl_node_new_child (NULL,
+                                  "operation",             "gimp:blend",
+                                  "context",               context,
+                                  "gradient",              gradient,
+                                  "start-x",               startx,
+                                  "start-y",               starty,
+                                  "end-x",                 endx,
+                                  "end-y",                 endy,
+                                  "gradient-type",         gradient_type,
+                                  "gradient-repeat",       repeat,
+                                  "offset",                offset,
+                                  "gradient-reverse",      reverse,
+                                  "supersample",           supersample,
+                                  "supersample-depth",     max_depth,
+                                  "supersample-threshold", threshold,
+                                  "dither",                dither,
+                                  NULL);
+
+    gimp_gegl_apply_operation (shapeburst, progress, NULL,
+                               render,
+                               buffer, GEGL_RECTANGLE (x, y, width, height));
+
+    g_object_unref (render);
+
+    if (shapeburst)
+      g_object_unref (shapeburst);
+  }
+
 
   gimp_drawable_apply_buffer (drawable, buffer,
-                              GEGL_RECTANGLE (0, 0, width, height),
+                              GEGL_RECTANGLE (x, y, width, height),
                               TRUE, C_("undo-type", "Blend"),
                               opacity, paint_mode,
                               NULL, x, y);
