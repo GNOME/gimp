@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-02-22 06:15+0000\n"
-"PO-Revision-Date: 2015-02-22 08:44+0100\n"
+"POT-Creation-Date: 2015-05-12 05:27+0000\n"
+"PO-Revision-Date: 2015-05-12 09:47+0100\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 1.7.5\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -191,12 +191,12 @@ msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Vypíše usporiadaný zoznam zavrhnutých procedúr v PDB"
 
 # Tvar zadania parametrov v príkazovom riadku
-#: ../app/main.c:399
+#: ../app/main.c:433
 msgid "[FILE|URI...]"
 msgstr "[SÚBOR|URI...]"
 
 # chybová správa
-#: ../app/main.c:421
+#: ../app/main.c:455
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -205,23 +205,23 @@ msgstr ""
 "Uistite sa, že existuje správne nastavenie zobrazovacieho prostredia."
 
 # chybová správa
-#: ../app/main.c:440
+#: ../app/main.c:474
 msgid "Another GIMP instance is already running."
 msgstr "Práve je spustená iná inštancia GIMPu."
 
 # Titulok pre okno konzoly
-#: ../app/main.c:512
+#: ../app/main.c:546
 msgid "GIMP output. Type any character to close this window."
 msgstr "Výstup GIMPu. Stlačte ľubovoľný znak pre zatvorenie tohto okna."
 
 # výpis do konzoly
-#: ../app/main.c:513
+#: ../app/main.c:547
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Stlačte ľubovoľný znak pre zatvorenie tohto okna)\n"
 
 # Titulok pre okno konzoly
-#: ../app/main.c:530
+#: ../app/main.c:564
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Výstup GIMPu. Toto okno môžete minimalizovať, ale nezatvárajte ho."
 
@@ -986,7 +986,7 @@ msgctxt "cursor-info-action"
 msgid "Use the composite color of all visible layers"
 msgstr "Použije farbu zmiešanú zo vzoriek všetkých viditeľných vrstiev"
 
-#: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344 ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:232 ../app/dialogs/file-open-dialog.c:277 ../app/dialogs/file-open-location-dialog.c:213
+#: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344 ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:220 ../app/dialogs/file-open-dialog.c:265 ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225 ../app/display/gimpdisplayshell-dnd.c:592 ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:168 ../app/widgets/gimptoolbox.c:817
 #, c-format
 msgid ""
@@ -9586,7 +9586,7 @@ msgstr "_Režim:"
 msgid "_Opacity:"
 msgstr "_Krytie:"
 
-#: ../app/dialogs/file-open-dialog.c:266
+#: ../app/dialogs/file-open-dialog.c:254
 msgid "Open layers"
 msgstr "Otvoriť vrstvy"
 
@@ -11245,7 +11245,7 @@ msgid "Cannot modify the pixels of layer groups."
 msgstr "Pixely v skupine vrstiev sa nedajú upraviť."
 
 #: ../app/display/gimpdisplayshell-dnd.c:369 ../app/display/gimpdisplayshell-dnd.c:471 ../app/tools/gimpblendtool.c:180 ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325 ../app/tools/gimpimagemaptool.c:287
-#: ../app/tools/gimppainttool.c:266 ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1466
+#: ../app/tools/gimppainttool.c:266 ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1477
 msgid "The active layer's pixels are locked."
 msgstr "Pixely aktívnej vrstvy sú uzamknuté."
 
@@ -11317,30 +11317,30 @@ msgstr "(žiadna)"
 msgid "Cancel <i>%s</i>"
 msgstr "Zruší <i>%s</i>"
 
-#: ../app/file/file-open.c:136 ../app/file/file-save.c:115
+#: ../app/file/file-open.c:129 ../app/file/file-save.c:115
 msgid "Not a regular file"
 msgstr "Nie je bežný súbor"
 
-#: ../app/file/file-open.c:188
+#: ../app/file/file-open.c:191
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Zásuvný modul %s ohlásil ÚSPECH, ale neposlal obrázok"
 
-#: ../app/file/file-open.c:199
+#: ../app/file/file-open.c:202
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "Zásuvnému modulu %s sa nepodarilo otvoriť obrázok"
 
-#: ../app/file/file-open.c:530
+#: ../app/file/file-open.c:533
 msgid "Image doesn't contain any layers"
 msgstr "Obrázok neobsahuje žiadne vrstvy"
 
-#: ../app/file/file-open.c:590
+#: ../app/file/file-open.c:593
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Otvorenie „%s“ zlyhalo: %s"
 
-#: ../app/file/file-open.c:700
+#: ../app/file/file-open.c:703
 msgid "Color management has been disabled. It can be enabled again in the Preferences dialog."
 msgstr "Správa farieb bola vypnutá. Môžete ju zapnúť v dialógovom okne Nastavenia."
 
@@ -11410,7 +11410,7 @@ msgstr "Vyplniť pôvodnú pozíciu klietky jednoduchou farbou"
 #.
 #: ../app/gui/gui.c:208
 msgid "default:LTR"
-msgstr ""
+msgstr "default:LTR"
 
 #. initialize the document history
 #: ../app/gui/gui.c:433
@@ -14399,15 +14399,20 @@ msgstr "Zachová pôvodný pomer strán"
 msgid "Transforming"
 msgstr "Transformovanie..."
 
-#: ../app/tools/gimptransformtool.c:1465
+#: ../app/tools/gimptransformtool.c:269
+#, c-format
+msgid "The selection does not intersect with the layer."
+msgstr "Výber sa nepretína s vrstvou. "
+
+#: ../app/tools/gimptransformtool.c:1476
 msgid "There is no layer to transform."
 msgstr "Neexistuje žiadna vrstva na transformáciu."
 
-#: ../app/tools/gimptransformtool.c:1476
+#: ../app/tools/gimptransformtool.c:1487
 msgid "There is no path to transform."
 msgstr "Neexistuje žiadna cesta na transformáciu."
 
-#: ../app/tools/gimptransformtool.c:1477
+#: ../app/tools/gimptransformtool.c:1488
 msgid "The active path's strokes are locked."
 msgstr "Ťahy aktívnej cesty sú uzamknuté."
 
