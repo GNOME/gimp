@@ -827,7 +827,6 @@ gimp_blend_tool_halt_preview (GimpBlendTool *blend_tool)
       blend_tool->subtract_node  = NULL;
       blend_tool->divide_node    = NULL;
       blend_tool->dist_node      = NULL;
-      blend_tool->translate_node = NULL;
     }
 
   if (blend_tool->dist_buffer)
@@ -940,22 +939,14 @@ gimp_blend_tool_precalc_shapeburst (GimpBlendTool *blend_tool)
     return;
 
   buf = gimp_drawable_blend_shapeburst_distmap (drawable, FALSE,
-                                                GEGL_RECTANGLE (0, 0, width, height),
+                                                GEGL_RECTANGLE (x, y, width, height),
                                                 GIMP_PROGRESS (blend_tool));
 
   blend_tool->dist_buffer = buf;
-  blend_tool->dist_buffer_off_x = x;
-  blend_tool->dist_buffer_off_y = y;
 
   if (blend_tool->dist_node)
     gegl_node_set (blend_tool->dist_node,
                    "buffer", blend_tool->dist_buffer,
-                   NULL);
-
-  if (blend_tool->translate_node)
-    gegl_node_set (blend_tool->translate_node,
-                   "x", (gdouble) blend_tool->dist_buffer_off_x,
-                   "y", (gdouble) blend_tool->dist_buffer_off_y,
                    NULL);
 }
 
@@ -966,7 +957,7 @@ gimp_blend_tool_create_graph (GimpBlendTool *blend_tool)
 {
   GimpBlendOptions *options = GIMP_BLEND_TOOL_GET_OPTIONS (blend_tool);
   GimpContext      *context = GIMP_CONTEXT (options);
-  GeglNode         *graph, *output, *render, *shapeburst, *translate, *subtract, *divide;
+  GeglNode         *graph, *output, *render, *shapeburst, *subtract, *divide;
 
   /* render_node is not supposed to be recreated */
   g_return_if_fail (blend_tool->graph == NULL);
@@ -981,26 +972,19 @@ gimp_blend_tool_create_graph (GimpBlendTool *blend_tool)
                                 "context", context,
                                 NULL);
 
-  translate = gegl_node_new_child (graph, "operation", "gegl:translate",
-                                   "x", (gdouble) blend_tool->dist_buffer_off_x,
-                                   "y", (gdouble) blend_tool->dist_buffer_off_y,
-                                   NULL);
-
   subtract = gegl_node_new_child (graph, "operation", "gegl:subtract", NULL);
   divide = gegl_node_new_child (graph, "operation", "gegl:divide", NULL);
 
   shapeburst = gegl_node_new_child (graph, "operation", "gegl:buffer-source",
                                     "buffer", blend_tool->dist_buffer, NULL);
 
-  gegl_node_link_many (shapeburst, translate, subtract, divide,
-                       render, output, NULL);
+  gegl_node_link_many (shapeburst, subtract, divide, render, output, NULL);
 
   blend_tool->graph          = graph;
   blend_tool->render_node    = render;
   blend_tool->subtract_node  = subtract;
   blend_tool->divide_node    = divide;
   blend_tool->dist_node      = shapeburst;
-  blend_tool->translate_node = translate;
 
   gimp_blend_tool_update_preview_coords (blend_tool);
 }
@@ -1010,20 +994,23 @@ gimp_blend_tool_update_preview_coords (GimpBlendTool *blend_tool)
 {
   GimpTool *tool = GIMP_TOOL (blend_tool);
 
+  gint off_x, off_y;
+  gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
+
   if (gimp_blend_tool_is_shapeburst (blend_tool))
     {
       gfloat start, end;
 
       gegl_buffer_get (blend_tool->dist_buffer,
-                       GEGL_RECTANGLE (blend_tool->start_x - blend_tool->dist_buffer_off_x,
-                                       blend_tool->start_y - blend_tool->dist_buffer_off_y,
+                       GEGL_RECTANGLE (blend_tool->start_x - off_x,
+                                       blend_tool->start_y - off_y,
                                        1, 1),
                        1.0, babl_format("Y float"), &start,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
       gegl_buffer_get (blend_tool->dist_buffer,
-                       GEGL_RECTANGLE (blend_tool->end_x - blend_tool->dist_buffer_off_x,
-                                       blend_tool->end_y - blend_tool->dist_buffer_off_y,
+                       GEGL_RECTANGLE (blend_tool->end_x - off_x,
+                                       blend_tool->end_y - off_y,
                                        1, 1),
                        1.0, babl_format("Y float"), &end,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
@@ -1039,9 +1026,6 @@ gimp_blend_tool_update_preview_coords (GimpBlendTool *blend_tool)
     }
   else
     {
-      gint off_x, off_y;
-      gimp_item_get_offset (GIMP_ITEM (tool->drawable), &off_x, &off_y);
-
       gegl_node_set (blend_tool->render_node,
                      "start_x", blend_tool->start_x - off_x,
                      "start_y", blend_tool->start_y - off_y,

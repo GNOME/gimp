@@ -544,15 +544,11 @@ gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
     gimp_progress_set_text_literal (progress, _("Calculating distance map"));
 
   /*  allocate the distance map  */
-  dist_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                 region->width, region->height),
-                                 babl_format ("Y float"));
+  dist_buffer = gegl_buffer_new (region, babl_format ("Y float"));
 
   /*  allocate the selection mask copy
    */
-  temp_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                 region->width, region->height),
-                                 babl_format ("Y float"));
+  temp_buffer = gegl_buffer_new (region, babl_format ("Y float"));
 
   mask = gimp_image_get_mask (image);
 
@@ -568,9 +564,7 @@ gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
       /*  copy the mask to the temp mask  */
       gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
                         GEGL_RECTANGLE (x + off_x, y + off_y, width, height),
-                        GEGL_ABYSS_NONE,
-                        temp_buffer,
-                        GEGL_RECTANGLE (0, 0, 0, 0));
+                        GEGL_ABYSS_NONE, temp_buffer, region);
     }
   else
     {
@@ -583,12 +577,9 @@ gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
 
           /*  extract the aplha into the temp mask  */
           gegl_buffer_set_format (temp_buffer, component_format);
-          gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                            GEGL_RECTANGLE (region->x, region->y,
-                                            region->width, region->height),
+          gegl_buffer_copy (gimp_drawable_get_buffer (drawable), region,
                             GEGL_ABYSS_NONE,
-                            temp_buffer,
-                            GEGL_RECTANGLE (0, 0, 0, 0));
+                            temp_buffer, region);
           gegl_buffer_set_format (temp_buffer, NULL);
         }
       else
@@ -617,7 +608,7 @@ gimp_drawable_blend_shapeburst_distmap (GimpDrawable        *drawable,
 
   gimp_gegl_apply_operation (temp_buffer, NULL, NULL,
                              shapeburst,
-                             dist_buffer, NULL);
+                             dist_buffer, region);
 
   g_object_unref (shapeburst);
 
