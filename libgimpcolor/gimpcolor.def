@@ -37,6 +37,7 @@ EXPORTS
 	gimp_hsv_to_rgb_int
 	gimp_hsva_set
 	gimp_hwb_to_rgb
+	gimp_lcms_create_linear_rgb_profile
 	gimp_lcms_create_srgb_profile
 	gimp_lcms_get_format
 	gimp_lcms_profile_close
