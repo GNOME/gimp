@@ -135,39 +135,25 @@ GimpColorProfile
 gimp_image_get_profile (GimpImage  *image,
                         GError    **error)
 {
-  GimpColorConfig    *config;
   const GimpParasite *parasite;
   GimpColorProfile   *profile = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  config = image->gimp->config->color_management;
-
   parasite = gimp_image_get_icc_profile (image);
 
   if (parasite)
     {
-      return gimp_lcms_profile_open_from_data (gimp_parasite_data (parasite),
-                                               gimp_parasite_data_size (parasite),
-                                               error);
+      profile = gimp_lcms_profile_open_from_data (gimp_parasite_data (parasite),
+                                                  gimp_parasite_data_size (parasite),
+                                                  error);
     }
-  else if (config->rgb_profile)
+  else
     {
-      GFile *file = g_file_new_for_path (config->rgb_profile);
+      GimpColorConfig *config = image->gimp->config->color_management;
 
-      profile = gimp_lcms_profile_open_from_file (file, error);
-
-      if (profile && ! gimp_lcms_profile_is_rgb (profile))
-        {
-          g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-                       _("Color profile '%s' is not for RGB color space"),
-                       gimp_file_get_utf8_name (file));
-          cmsCloseProfile (profile);
-          profile = NULL;
-        }
-
-      g_object_unref (file);
+      profile = gimp_color_config_get_rgb_profile (config, error);
     }
 
   return profile;
