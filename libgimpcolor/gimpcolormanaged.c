@@ -91,8 +91,9 @@ gimp_color_managed_base_init (GimpColorManagedInterface *iface)
                       g_cclosure_marshal_VOID__VOID,
                       G_TYPE_NONE, 0);
 
-      iface->get_icc_profile = NULL;
-      iface->profile_changed = NULL;
+      iface->get_icc_profile   = NULL;
+      iface->get_color_profile = NULL;
+      iface->profile_changed   = NULL;
 
       initialized = TRUE;
     }
@@ -123,6 +124,31 @@ gimp_color_managed_get_icc_profile (GimpColorManaged *managed,
 
   if (iface->get_icc_profile)
     return iface->get_icc_profile (managed, len);
+
+  return NULL;
+}
+
+/**
+ * gimp_color_managed_get_color_profile:
+ * @managed: an object the implements the #GimpColorManaged interface
+ *
+ * This function, if implemented, always returns a #GimpColorProfile.
+ *
+ * Return value: The @managed's #GimpColorProfile.
+ *
+ * Since: GIMP 2.10
+ **/
+GimpColorProfile
+gimp_color_managed_get_color_profile (GimpColorManaged *managed)
+{
+  GimpColorManagedInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_MANAGED (managed), NULL);
+
+  iface = GIMP_COLOR_MANAGED_GET_INTERFACE (managed);
+
+  if (iface->get_color_profile)
+    return iface->get_color_profile (managed);
 
   return NULL;
 }
