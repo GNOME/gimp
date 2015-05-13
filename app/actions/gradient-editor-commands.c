@@ -382,19 +382,24 @@ gradient_editor_blending_func_cmd_callback (GtkAction *action,
 {
   GimpGradientEditor      *editor = GIMP_GRADIENT_EDITOR (data);
   GimpGradient            *gradient;
+  GEnumClass              *enum_class = NULL;
   GimpGradientSegmentType  type;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
   type = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  if (gradient && type >= 0)
+  enum_class = g_type_class_ref (GIMP_TYPE_GRADIENT_SEGMENT_TYPE);
+
+  if (gradient && g_enum_get_value (enum_class, type))
     {
       gimp_gradient_segment_range_set_blending_function (gradient,
                                                          editor->control_sel_l,
                                                          editor->control_sel_r,
                                                          type);
     }
+
+  g_type_class_unref (enum_class);
 }
 
 void
@@ -404,19 +409,24 @@ gradient_editor_coloring_type_cmd_callback (GtkAction *action,
 {
   GimpGradientEditor       *editor = GIMP_GRADIENT_EDITOR (data);
   GimpGradient             *gradient;
+  GEnumClass               *enum_class = NULL;
   GimpGradientSegmentColor  color;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
   color = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  if (gradient && color >= 0)
+  enum_class = g_type_class_ref (GIMP_TYPE_GRADIENT_SEGMENT_COLOR);
+
+  if (gradient && g_enum_get_value (enum_class, color))
     {
       gimp_gradient_segment_range_set_coloring_type (gradient,
                                                      editor->control_sel_l,
                                                      editor->control_sel_r,
                                                      color);
     }
+
+  g_type_class_unref (enum_class);
 }
 
 void
