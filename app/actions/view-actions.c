@@ -394,25 +394,37 @@ static const GimpRadioActionEntry view_zoom_explicit_actions[] =
     GIMP_HELP_VIEW_ZOOM_OTHER }
 };
 
-static const GimpEnumActionEntry view_rotate_actions[] =
+static const GimpEnumActionEntry view_rotate_relative_actions[] =
 {
+  { "view-rotate-15", GIMP_STOCK_ROTATE_90,
+    NC_("view-action", "Rotate 15° _clockwise"), NULL,
+    NC_("view-action", "Rotate 15 degrees to the right"),
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    GIMP_HELP_VIEW_ROTATE_15 },
+
   { "view-rotate-90", GIMP_STOCK_ROTATE_90,
     NC_("view-action", "Rotate 90° _clockwise"), NULL,
     NC_("view-action", "Rotate 90 degrees to the right"),
-    GIMP_ROTATE_90, FALSE,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     GIMP_HELP_VIEW_ROTATE_90 },
 
   { "view-rotate-180", GIMP_STOCK_ROTATE_180,
     NC_("view-action", "Rotate _180°"), NULL,
     NC_("view-action", "Turn upside-down"),
-    GIMP_ROTATE_180, FALSE,
+    GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_VIEW_ROTATE_180 },
 
   { "view-rotate-270", GIMP_STOCK_ROTATE_270,
     NC_("view-action", "Rotate 90° counter-clock_wise"), NULL,
     NC_("view-action", "Rotate 90 degrees to the left"),
-    GIMP_ROTATE_270, FALSE,
-    GIMP_HELP_VIEW_ROTATE_270 }
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    GIMP_HELP_VIEW_ROTATE_270 },
+
+  { "view-rotate-345", GIMP_STOCK_ROTATE_270,
+    NC_("view-action", "Rotate 15° counter-clock_wise"), NULL,
+    NC_("view-action", "Rotate 15 degrees to the left"),
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    GIMP_HELP_VIEW_ROTATE_345 }
 };
 
 static const GimpEnumActionEntry view_padding_color_actions[] =
@@ -552,9 +564,9 @@ view_actions_setup (GimpActionGroup *group)
                                        G_CALLBACK (view_zoom_explicit_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, "view-action",
-                                      view_rotate_actions,
-                                      G_N_ELEMENTS (view_rotate_actions),
-                                      G_CALLBACK (view_rotate_cmd_callback));
+                                      view_rotate_relative_actions,
+                                      G_N_ELEMENTS (view_rotate_relative_actions),
+                                      G_CALLBACK (view_rotate_relative_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, "view-padding-color",
                                       view_padding_color_actions,
@@ -686,6 +698,8 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-zoom-other",      image);
 
   SET_SENSITIVE ("view-rotate-reset",    image);
+  SET_SENSITIVE ("view-rotate-15",       image);
+  SET_SENSITIVE ("view-rotate-345",      image);
   SET_SENSITIVE ("view-rotate-90",       image);
   SET_SENSITIVE ("view-rotate-180",      image);
   SET_SENSITIVE ("view-rotate-270",      image);

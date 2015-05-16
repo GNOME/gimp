@@ -300,9 +300,9 @@ view_rotate_reset_cmd_callback (GtkAction *action,
 }
 
 void
-view_rotate_cmd_callback (GtkAction *action,
-                          gint       value,
-                          gpointer   data)
+view_rotate_relative_cmd_callback (GtkAction *action,
+                                   gint       value,
+                                   gpointer   data)
 {
   GimpDisplay      *display;
   GimpDisplayShell *shell;
@@ -311,12 +311,11 @@ view_rotate_cmd_callback (GtkAction *action,
 
   shell = gimp_display_get_shell (display);
 
-  switch ((GimpRotationType) value)
-    {
-    case GIMP_ROTATE_90:   delta =  90; break;
-    case GIMP_ROTATE_180:  delta = 180; break;
-    case GIMP_ROTATE_270:  delta = -90; break;
-    }
+  delta = action_select_value ((GimpActionSelectType) value,
+                               0.0,
+                               -180.0, 180.0, 0.0,
+                               1.0, 15.0, 90.0, 0.0,
+                               TRUE);
 
   gimp_display_shell_rotate (shell, delta);
 }
