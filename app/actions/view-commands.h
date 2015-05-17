@@ -48,7 +48,8 @@ void   view_scroll_vertical_cmd_callback       (GtkAction *action,
                                                 gint       value,
                                                 gpointer   data);
 
-void   view_rotate_reset_cmd_callback          (GtkAction *action,
+void   view_rotate_absolute_cmd_callback       (GtkAction *action,
+                                                gint       value,
                                                 gpointer   data);
 void   view_rotate_relative_cmd_callback       (GtkAction *action,
                                                 gint       value,

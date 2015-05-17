@@ -104,16 +104,10 @@ static const GimpActionEntry view_actions[] =
     G_CALLBACK (view_zoom_revert_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_REVERT },
 
-  { "view-rotate-reset", GIMP_STOCK_RESET,
-    NC_("view-action", "_Reset to 0°"), "exclam",
-    NC_("view-action", "Reset the angle of rotation to 0°"),
-    G_CALLBACK (view_rotate_reset_cmd_callback),
-    GIMP_HELP_VIEW_ROTATE_RESET },
-
   { "view-rotate-other", NULL,
     NC_("view-action", "Othe_r..."), NULL,
     NC_("view-action", "Set a custom rotation angle"),
-     G_CALLBACK (view_rotate_other_cmd_callback),
+    G_CALLBACK (view_rotate_other_cmd_callback),
     GIMP_HELP_VIEW_ROTATE_OTHER },
 
   { "view-navigation-window", GIMP_STOCK_NAVIGATION,
@@ -394,6 +388,20 @@ static const GimpRadioActionEntry view_zoom_explicit_actions[] =
     GIMP_HELP_VIEW_ZOOM_OTHER }
 };
 
+static const GimpEnumActionEntry view_rotate_absolute_actions[] =
+{
+  { "view-rotate-set-absolute", NULL,
+    "Display Rotation Absolute Angle Set", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+
+  { "view-rotate-reset", GIMP_STOCK_RESET,
+    NC_("view-action", "_Reset to 0°"), "exclam",
+    NC_("view-action", "Reset the angle of rotation to 0°"),
+    GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
+    GIMP_HELP_VIEW_ROTATE_RESET },
+};
+
 static const GimpEnumActionEntry view_rotate_relative_actions[] =
 {
   { "view-rotate-15", GIMP_STOCK_ROTATE_90,
@@ -562,6 +570,11 @@ view_actions_setup (GimpActionGroup *group)
                                        NULL,
                                        10000,
                                        G_CALLBACK (view_zoom_explicit_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group, "view-action",
+                                      view_rotate_absolute_actions,
+                                      G_N_ELEMENTS (view_rotate_absolute_actions),
+                                      G_CALLBACK (view_rotate_absolute_cmd_callback));
 
   gimp_action_group_add_enum_actions (group, "view-action",
                                       view_rotate_relative_actions,
