@@ -195,19 +195,34 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
       return;
     }
 
-  profile = gimp_lcms_profile_open_from_file (file, &error);
+  switch (g_file_query_file_type (file, G_FILE_QUERY_INFO_NONE, NULL))
+    {
+    case G_FILE_TYPE_REGULAR:
+      profile = gimp_lcms_profile_open_from_file (file, &error);
 
-  if (! profile)
-    {
+      if (! profile)
+        {
+          gimp_color_profile_view_set_error (dialog->priv->profile_view,
+                                             error->message);
+          g_clear_error (&error);
+        }
+      else
+        {
+          gimp_color_profile_view_set_profile (dialog->priv->profile_view,
+                                               profile);
+          gimp_lcms_profile_close (profile);
+        }
+      break;
+
+    case G_FILE_TYPE_DIRECTORY:
       gimp_color_profile_view_set_error (dialog->priv->profile_view,
-                                         error->message);
-      g_clear_error (&error);
-    }
-  else
-    {
-      gimp_color_profile_view_set_profile (dialog->priv->profile_view,
-                                           profile);
-      gimp_lcms_profile_close (profile);
+                                         _("Folder"));
+      break;
+
+    default:
+      gimp_color_profile_view_set_error (dialog->priv->profile_view,
+                                         _("Not a regular file."));
+      break;
     }
 
   g_object_unref (file);
