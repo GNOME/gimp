@@ -33,6 +33,7 @@
 #include "gimpcolorconfig-enums.h"
 
 #include "gimpcolorconfig.h"
+#include "gimpconfig-error.h"
 #include "gimpconfig-iface.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-path.h"
@@ -389,8 +390,8 @@ gimp_color_config_get_rgb_profile (GimpColorConfig  *config,
           gimp_lcms_profile_close (profile);
           profile = NULL;
 
-          g_set_error (error, 0, 0,
-                       _("Color profile '%s' is not for RGB color space"),
+          g_set_error (error, GIMP_CONFIG_ERROR, 0,
+                       _("Color profile '%s' is not for RGB color space."),
                        gimp_file_get_utf8_name (file));
         }
 
@@ -420,8 +421,8 @@ gimp_color_config_get_cmyk_profile (GimpColorConfig  *config,
           gimp_lcms_profile_close (profile);
           profile = NULL;
 
-          g_set_error (error, 0, 0,
-                       _("Color profile '%s' is not for RGB color space"),
+          g_set_error (error, GIMP_CONFIG_ERROR, 0,
+                       _("Color profile '%s' is not for CMYK color space."),
                        gimp_file_get_utf8_name (file));
         }
 
@@ -492,7 +493,7 @@ gimp_color_config_set_rgb_profile (GimpColorConfig  *config,
         {
           if (! gimp_lcms_profile_is_rgb (profile))
             {
-              g_set_error (error, 0, 0,
+              g_set_error (error, GIMP_CONFIG_ERROR, 0,
                            _("Color profile '%s' is not for RGB color space."),
                            gimp_file_get_utf8_name (file));
               success = FALSE;
@@ -533,7 +534,7 @@ gimp_color_config_set_cmyk_profile (GimpColorConfig  *config,
         {
           if (! gimp_lcms_profile_is_cmyk (profile))
             {
-              g_set_error (error, 0, 0,
+              g_set_error (error, GIMP_CONFIG_ERROR, 0,
                            _("Color profile '%s' is not for CMYK color space."),
                            gimp_file_get_utf8_name (file));
               success = FALSE;
