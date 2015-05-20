@@ -177,6 +177,10 @@ gimp_gegl_mode_node_set_mode (GeglNode             *node,
     case GIMP_ERASE_MODE:         operation = "gimp:erase-mode"; break;
     case GIMP_REPLACE_MODE:       operation = "gimp:replace-mode"; break;
     case GIMP_ANTI_ERASE_MODE:    operation = "gimp:anti-erase-mode"; break;
+    case GIMP_LCH_HUE_MODE:       operation = "gimp:lch-hue-mode"; break;
+    case GIMP_LCH_CHROMA_MODE:    operation = "gimp:lch-chroma-mode"; break;
+    case GIMP_LCH_COLOR_MODE:     operation = "gimp:lch-color-mode"; break;
+    case GIMP_LCH_LIGHTNESS_MODE: operation = "gimp:lch-lightness-mode"; break;
     default:
       break;
     }
