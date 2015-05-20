@@ -793,7 +793,31 @@ prefs_profile_combo_changed (GimpColorProfileComboBox *combo,
   g_free (filename);
 }
 
-static GtkWidget *
+static void
+prefs_profile_combo_notify (GObject                  *config,
+                            const GParamSpec         *param_spec,
+                            GimpColorProfileComboBox *combo)
+{
+  gchar *filename;
+
+  g_object_get (config,
+                param_spec->name, &filename,
+                NULL);
+
+  g_signal_handlers_block_by_func (combo,
+                                   prefs_profile_combo_changed,
+                                   config);
+
+  gimp_color_profile_combo_box_set_active (combo, filename, NULL);
+
+  g_signal_handlers_unblock_by_func (combo,
+                                     prefs_profile_combo_changed,
+                                     config);
+
+  g_free (filename);
+}
+
+static void
 prefs_profile_combo_add_tooltip (GtkWidget   *combo,
                                  GObject     *config,
                                  const gchar *property_name)
@@ -808,8 +832,6 @@ prefs_profile_combo_add_tooltip (GtkWidget   *combo,
 
   if (blurb)
     gimp_help_set_help_data (combo, blurb, NULL);
-
-  return combo;
 }
 
 static GtkWidget *
@@ -821,6 +843,7 @@ prefs_profile_combo_box_new (GObject      *config,
   GtkWidget *dialog = gimp_color_profile_chooser_dialog_new (label);
   GtkWidget *combo;
   gchar     *filename;
+  gchar     *notify_name;
 
   g_object_get (config, property_name, &filename, NULL);
 
@@ -839,7 +862,17 @@ prefs_profile_combo_box_new (GObject      *config,
                     G_CALLBACK (prefs_profile_combo_changed),
                     config);
 
-  return prefs_profile_combo_add_tooltip (combo, config, property_name);
+  notify_name = g_strconcat ("notify::", property_name, NULL);
+
+  g_signal_connect_object (config, notify_name,
+                           G_CALLBACK (prefs_profile_combo_notify),
+                           combo, 0);
+
+  g_free (notify_name);
+
+  prefs_profile_combo_add_tooltip (combo, config, property_name);
+
+  return combo;
 }
 
 static GtkWidget *
