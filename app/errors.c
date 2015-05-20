@@ -86,8 +86,10 @@ errors_init (Gimp               *gimp,
     "Gimp-Dialogs",
     "Gimp-Display",
     "Gimp-File",
+    "Gimp-GEGL",
     "Gimp-GUI",
     "Gimp-Menus",
+    "Gimp-Operations",
     "Gimp-PDB",
     "Gimp-Paint",
     "Gimp-Paint-Funcs",
@@ -96,7 +98,14 @@ errors_init (Gimp               *gimp,
     "Gimp-Tools",
     "Gimp-Vectors",
     "Gimp-Widgets",
-    "Gimp-XCF"
+    "Gimp-XCF",
+    "LibGimpBase",
+    "LibGimpColor",
+    "LibGimpConfig",
+    "LibGimpMath",
+    "LibGimpModule",
+    "LibGimpThumb",
+    "LibGimpWidgets"
   };
   gint i;
 

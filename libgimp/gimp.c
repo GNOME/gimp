@@ -491,15 +491,31 @@ gimp_main (const GimpPlugInInfo *info,
 
 
   /* set handler both for the "LibGimp" and "" domains */
+  {
+    const gchar * const log_domains[] =
+    {
+      "LibGimp",
+      "LibGimpBase",
+      "LibGimpColor",
+      "LibGimpConfig",
+      "LibGimpMath",
+      "LibGimpModule",
+      "LibGimpThumb",
+      "LibGimpWidgets"
+    };
+    gint i;
 
-  g_log_set_handler (G_LOG_DOMAIN,
-                     G_LOG_LEVEL_MESSAGE,
-                     gimp_message_func,
-                     NULL);
-  g_log_set_handler (NULL,
-                     G_LOG_LEVEL_MESSAGE,
-                     gimp_message_func,
-                     NULL);
+    for (i = 0; i < G_N_ELEMENTS (log_domains); i++)
+      g_log_set_handler (log_domains[i],
+                         G_LOG_LEVEL_MESSAGE,
+                         gimp_message_func,
+                         NULL);
+
+    g_log_set_handler (NULL,
+                       G_LOG_LEVEL_MESSAGE,
+                       gimp_message_func,
+                       NULL);
+  }
 
   if (gimp_debug_flags & GIMP_DEBUG_FATAL_WARNINGS)
     {
