@@ -105,15 +105,28 @@ enum
 };
 
 
-static void  gimp_color_config_finalize     (GObject      *object);
-static void  gimp_color_config_set_property (GObject      *object,
-                                             guint         property_id,
-                                             const GValue *value,
-                                             GParamSpec   *pspec);
-static void  gimp_color_config_get_property (GObject      *object,
-                                             guint         property_id,
-                                             GValue       *value,
-                                             GParamSpec   *pspec);
+static void  gimp_color_config_finalize            (GObject          *object);
+static void  gimp_color_config_set_property        (GObject          *object,
+                                                    guint             property_id,
+                                                    const GValue     *value,
+                                                    GParamSpec       *pspec);
+static void  gimp_color_config_get_property        (GObject          *object,
+                                                    guint             property_id,
+                                                    GValue           *value,
+                                                    GParamSpec       *pspec);
+
+static void  gimp_color_config_set_rgb_profile     (GimpColorConfig  *config,
+                                                    const gchar      *filename,
+                                                    GError          **error);
+static void  gimp_color_config_set_cmyk_profile    (GimpColorConfig  *config,
+                                                    const gchar      *filename,
+                                                    GError          **error);
+static void  gimp_color_config_set_display_profile (GimpColorConfig  *config,
+                                                    const gchar      *filename,
+                                                    GError          **error);
+static void  gimp_color_config_set_printer_profile (GimpColorConfig  *config,
+                                                    const gchar      *filename,
+                                                    GError          **error);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpColorConfig, gimp_color_config, G_TYPE_OBJECT,
@@ -235,6 +248,7 @@ gimp_color_config_set_property (GObject      *object,
                                 GParamSpec   *pspec)
 {
   GimpColorConfig *color_config = GIMP_COLOR_CONFIG (object);
+  GError          *error        = NULL;
 
   switch (property_id)
     {
@@ -242,23 +256,27 @@ gimp_color_config_set_property (GObject      *object,
       color_config->mode = g_value_get_enum (value);
       break;
     case PROP_RGB_PROFILE:
-      g_free (color_config->rgb_profile);
-      color_config->rgb_profile = g_value_dup_string (value);
+      gimp_color_config_set_rgb_profile (color_config,
+                                         g_value_get_string (value),
+                                         &error);
       break;
     case PROP_CMYK_PROFILE:
-      g_free (color_config->cmyk_profile);
-      color_config->cmyk_profile = g_value_dup_string (value);
+      gimp_color_config_set_cmyk_profile (color_config,
+                                          g_value_get_string (value),
+                                          &error);
       break;
     case PROP_DISPLAY_PROFILE:
-      g_free (color_config->display_profile);
-      color_config->display_profile = g_value_dup_string (value);
+      gimp_color_config_set_display_profile (color_config,
+                                             g_value_get_string (value),
+                                             &error);
       break;
     case PROP_DISPLAY_PROFILE_FROM_GDK:
       color_config->display_profile_from_gdk = g_value_get_boolean (value);
       break;
     case PROP_PRINTER_PROFILE:
-      g_free (color_config->printer_profile);
-      color_config->printer_profile = g_value_dup_string (value);
+      gimp_color_config_set_printer_profile (color_config,
+                                             g_value_get_string (value),
+                                             &error);
       break;
     case PROP_DISPLAY_RENDERING_INTENT:
       color_config->display_intent = g_value_get_enum (value);
@@ -282,9 +300,16 @@ gimp_color_config_set_property (GObject      *object,
       g_free (color_config->display_module);
       color_config->display_module = g_value_dup_string (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+
+  if (error)
+    {
+      g_message ("%s", error->message);
+      g_clear_error (&error);
     }
 }
 
@@ -337,6 +362,7 @@ gimp_color_config_get_property (GObject    *object,
     case PROP_DISPLAY_MODULE:
       g_value_set_string (value, color_config->display_module);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -443,4 +469,155 @@ gimp_color_config_get_printer_profile (GimpColorConfig  *config,
     }
 
   return profile;
+}
+
+
+/*  private functions  */
+
+static void
+gimp_color_config_set_rgb_profile (GimpColorConfig  *config,
+                                   const gchar      *filename,
+                                   GError          **error)
+{
+  gboolean success = TRUE;
+
+  if (filename)
+    {
+      GimpColorProfile  profile;
+      GFile            *file = g_file_new_for_path (filename);
+
+      profile = gimp_lcms_profile_open_from_file (file, error);
+
+      if (profile)
+        {
+          if (! gimp_lcms_profile_is_rgb (profile))
+            {
+              g_set_error (error, 0, 0,
+                           _("Color profile '%s' is not for RGB color space."),
+                           gimp_file_get_utf8_name (file));
+              success = FALSE;
+            }
+
+          gimp_lcms_profile_close (profile);
+        }
+      else
+        {
+          success = FALSE;
+        }
+
+      g_object_unref (file);
+    }
+
+  if (success)
+    {
+      g_free (config->rgb_profile);
+      config->rgb_profile = g_strdup (filename);
+    }
+}
+
+static void
+gimp_color_config_set_cmyk_profile (GimpColorConfig  *config,
+                                    const gchar      *filename,
+                                    GError          **error)
+{
+  gboolean success = TRUE;
+
+  if (filename)
+    {
+      GimpColorProfile  profile;
+      GFile            *file = g_file_new_for_path (filename);
+
+      profile = gimp_lcms_profile_open_from_file (file, error);
+
+      if (profile)
+        {
+          if (! gimp_lcms_profile_is_cmyk (profile))
+            {
+              g_set_error (error, 0, 0,
+                           _("Color profile '%s' is not for CMYK color space."),
+                           gimp_file_get_utf8_name (file));
+              success = FALSE;
+            }
+
+          gimp_lcms_profile_close (profile);
+        }
+      else
+        {
+          success = FALSE;
+        }
+
+      g_object_unref (file);
+    }
+
+  if (success)
+    {
+      g_free (config->cmyk_profile);
+      config->cmyk_profile = g_strdup (filename);
+    }
+}
+
+static void
+gimp_color_config_set_display_profile (GimpColorConfig  *config,
+                                       const gchar      *filename,
+                                       GError          **error)
+{
+  gboolean success = TRUE;
+
+  if (filename)
+    {
+      GimpColorProfile  profile;
+      GFile            *file = g_file_new_for_path (filename);
+
+      profile = gimp_lcms_profile_open_from_file (file, error);
+
+      if (profile)
+        {
+          gimp_lcms_profile_close (profile);
+        }
+      else
+        {
+          success = FALSE;
+        }
+
+      g_object_unref (file);
+    }
+
+  if (success)
+    {
+      g_free (config->display_profile);
+      config->display_profile = g_strdup (filename);
+    }
+}
+
+static void
+gimp_color_config_set_printer_profile (GimpColorConfig  *config,
+                                       const gchar      *filename,
+                                       GError          **error)
+{
+  gboolean success = TRUE;
+
+  if (filename)
+    {
+      GimpColorProfile  profile;
+      GFile            *file = g_file_new_for_path (filename);
+
+      profile = gimp_lcms_profile_open_from_file (file, error);
+
+      if (profile)
+        {
+          gimp_lcms_profile_close (profile);
+        }
+      else
+        {
+          success = FALSE;
+        }
+
+      g_object_unref (file);
+    }
+
+  if (success)
+    {
+      g_free (config->printer_profile);
+      config->printer_profile = g_strdup (filename);
+    }
 }
