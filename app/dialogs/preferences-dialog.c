@@ -780,15 +780,29 @@ prefs_table_new (gint          rows,
   return table;
 }
 
-static void
+static void   prefs_profile_combo_notify (GObject                  *config,
+                                          const GParamSpec         *param_spec,
+                                          GimpColorProfileComboBox *combo);
+
+  static void
 prefs_profile_combo_changed (GimpColorProfileComboBox *combo,
                              GObject                  *config)
 {
   gchar *filename = gimp_color_profile_combo_box_get_active (combo);
 
+  if (! filename)
+    g_signal_handlers_block_by_func (config,
+                                     prefs_profile_combo_notify,
+                                     combo);
+
   g_object_set (config,
                 g_object_get_data (G_OBJECT (combo), "property-name"), filename,
                 NULL);
+
+  if (! filename)
+    g_signal_handlers_unblock_by_func (config,
+                                       prefs_profile_combo_notify,
+                                       combo);
 
   g_free (filename);
 }
