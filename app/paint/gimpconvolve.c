@@ -180,6 +180,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                     paint_buffer_y,
                                     gegl_buffer_get_width  (paint_buffer),
                                     gegl_buffer_get_height (paint_buffer)),
+                    GEGL_ABYSS_NONE,
                     convolve_buffer,
                     GEGL_RECTANGLE (0, 0, 0, 0));
 

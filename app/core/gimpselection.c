@@ -350,9 +350,6 @@ gimp_selection_invalidate_boundary (GimpDrawable *drawable)
                           gimp_item_get_width  (GIMP_ITEM (layer)),
                           gimp_item_get_height (GIMP_ITEM (layer)));
 
-#ifdef __GNUC__
-#warning FIXME is this still needed?
-#endif
 #if 0
   /*  invalidate the preview  */
   drawable->private->preview_valid = FALSE;
@@ -616,6 +613,7 @@ gimp_selection_load (GimpSelection *selection,
   /*  copy the channel to the mask  */
   gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                     NULL,
+                    GEGL_ABYSS_NONE,
                     gimp_drawable_get_buffer (GIMP_DRAWABLE (selection)),
                     NULL);
 
@@ -740,6 +738,7 @@ gimp_selection_extract (GimpSelection *selection,
 
   /*  First, copy the pixels, possibly doing INDEXED->RGB and adding alpha  */
   gegl_buffer_copy (src_buffer,  GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
+                    GEGL_ABYSS_NONE,
                     dest_buffer, GEGL_RECTANGLE (0, 0, 0, 0));
 
   if (non_empty)

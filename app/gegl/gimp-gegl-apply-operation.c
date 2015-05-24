@@ -173,7 +173,7 @@ gimp_gegl_apply_cached_operation (GeglBuffer          *src_buffer,
 
       for (i = 0; i < n_valid_rects; i++)
         {
-          gegl_buffer_copy (cache,       valid_rects + i,
+          gegl_buffer_copy (cache,       valid_rects + i, GEGL_ABYSS_NONE,
                             dest_buffer, valid_rects + i);
 
           cairo_region_subtract_rectangle (region,

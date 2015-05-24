@@ -608,7 +608,7 @@ gimp_drawable_resize (GimpItem    *item,
                         GEGL_RECTANGLE (copy_x - gimp_item_get_offset_x (item),
                                         copy_y - gimp_item_get_offset_y (item),
                                         copy_width,
-                                        copy_height),
+                                        copy_height), GEGL_ABYSS_NONE,
                         new_buffer,
                         GEGL_RECTANGLE (copy_x - new_offset_x,
                                         copy_y - new_offset_y, 0, 0));
@@ -805,7 +805,7 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                      gimp_item_get_height (GIMP_ITEM (drawable))),
                      format);
 
-  gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+  gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL, GEGL_ABYSS_NONE,
                     dest_buffer, NULL);
 
   gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
@@ -876,7 +876,7 @@ gimp_drawable_real_push_undo (GimpDrawable *drawable,
                                 gimp_drawable_get_format (drawable));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                        GEGL_RECTANGLE (x, y, width, height),
+                        GEGL_RECTANGLE (x, y, width, height), GEGL_ABYSS_NONE,
                         buffer,
                         GEGL_RECTANGLE (0, 0, 0, 0));
     }
@@ -905,11 +905,11 @@ gimp_drawable_real_swap_pixels (GimpDrawable *drawable,
   tmp = gegl_buffer_dup (buffer);
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                    GEGL_RECTANGLE (x, y, width, height),
+                    GEGL_RECTANGLE (x, y, width, height), GEGL_ABYSS_NONE,
                     buffer,
                     GEGL_RECTANGLE (0, 0, 0, 0));
   gegl_buffer_copy (tmp,
-                    GEGL_RECTANGLE (0, 0, width, height),
+                    GEGL_RECTANGLE (0, 0, width, height), GEGL_ABYSS_NONE,
                     gimp_drawable_get_buffer (drawable),
                     GEGL_RECTANGLE (x, y, 0, 0));
 

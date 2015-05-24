@@ -296,7 +296,7 @@ ico_dialog_update_icon_preview (GtkWidget *dialog,
                        format, buf,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      gegl_buffer_copy (buffer, NULL, tmp, NULL);
+      gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, tmp, NULL);
 
       g_object_unref (tmp);
       g_object_unref (buffer);
@@ -388,7 +388,7 @@ ico_dialog_update_icon_preview (GtkWidget *dialog,
       buffer = gimp_drawable_get_buffer (layer);
       tmp    = gimp_drawable_get_buffer (tmp_layer);
 
-      gegl_buffer_copy (buffer, NULL, tmp, NULL);
+      gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, tmp, NULL);
 
       g_object_unref (tmp);
       g_object_unref (buffer);

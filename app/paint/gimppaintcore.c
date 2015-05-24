@@ -545,6 +545,7 @@ gimp_paint_core_finish (GimpPaintCore *core,
 
       gegl_buffer_copy (core->undo_buffer,
                         GEGL_RECTANGLE (x, y, width, height),
+                        GEGL_ABYSS_NONE,
                         buffer,
                         GEGL_RECTANGLE (0, 0, 0, 0));
 
@@ -595,6 +596,7 @@ gimp_paint_core_cancel (GimpPaintCore *core,
     {
       gegl_buffer_copy (core->undo_buffer,
                         GEGL_RECTANGLE (x, y, width, height),
+                        GEGL_ABYSS_NONE,
                         gimp_drawable_get_buffer (drawable),
                         GEGL_RECTANGLE (x, y, width, height));
     }

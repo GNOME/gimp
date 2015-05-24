@@ -752,7 +752,7 @@ perform_composition (COMPOSE_DSC   curr_compose_dsc,
 
           temp[i] = gegl_buffer_new (extent, gray_format);
 
-          gegl_buffer_copy (buffer_src[i], NULL, temp[i], NULL);
+          gegl_buffer_copy (buffer_src[i], NULL, GEGL_ABYSS_NONE, temp[i], NULL);
 
           if (cpn_dsc.range_min != 0.0 || cpn_dsc.range_max != 1.0)
             cpn_affine_transform (temp[i], cpn_dsc.range_min, cpn_dsc.range_max);
@@ -779,7 +779,7 @@ perform_composition (COMPOSE_DSC   curr_compose_dsc,
   gimp_progress_update ((gdouble) num_images / (gdouble) (num_images + 1.0));
 
   /* Copy back to the format GIMP wants (and perform the conversion in itself) */
-  gegl_buffer_copy (dst_temp, NULL, buffer_dst, NULL);
+  gegl_buffer_copy (dst_temp, NULL, GEGL_ABYSS_NONE, buffer_dst, NULL);
 
   for (i = 0; i< num_images; i++)
     if( inputs[i].is_ID)

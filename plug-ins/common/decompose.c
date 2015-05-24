@@ -745,7 +745,7 @@ copy_one_component (GeglBuffer      *src,
 
   /* we want to copy the component as is */
   gegl_buffer_set_format (temp, component_format);
-  gegl_buffer_copy (src, NULL, temp, NULL);
+  gegl_buffer_copy (src, NULL, GEGL_ABYSS_NONE, temp, NULL);
 
   if (component.range_min != 0.0 || component.range_max != 1.0 || clamp)
     cpn_affine_transform_clamp (temp, component.range_min, component.range_max);
@@ -754,7 +754,7 @@ copy_one_component (GeglBuffer      *src,
   gegl_buffer_set_format (temp, NULL);
 
   /* Now we let babl convert it back to the format that dst needs */
-  gegl_buffer_copy (temp, NULL, dst, NULL);
+  gegl_buffer_copy (temp, NULL, GEGL_ABYSS_NONE, dst, NULL);
 
   g_object_unref (temp);
 }

@@ -155,6 +155,7 @@ gimp_image_convert_precision (GimpImage     *image,
                               gimp_image_get_mask_format (image));
 
     gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)), NULL,
+                      GEGL_ABYSS_NONE,
                       buffer, NULL);
 
     gimp_drawable_set_buffer (GIMP_DRAWABLE (mask), FALSE, NULL, buffer);

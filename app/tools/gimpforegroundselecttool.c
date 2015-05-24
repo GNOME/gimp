@@ -1257,6 +1257,7 @@ gimp_foreground_select_undo_new (GeglBuffer          *trimap,
                                         gegl_buffer_get_format (trimap));
 
   gegl_buffer_copy (trimap,             GEGL_RECTANGLE (x1, y1, width, height),
+                    GEGL_ABYSS_NONE,
                     undo->saved_trimap, GEGL_RECTANGLE (0, 0, width, height));
 
   undo->trimap_x = x1;
@@ -1283,11 +1284,13 @@ gimp_foreground_select_undo_pop (StrokeUndo *undo,
   gegl_buffer_copy (trimap,
                     GEGL_RECTANGLE (undo->trimap_x, undo->trimap_y,
                                     width, height),
+                    GEGL_ABYSS_NONE,
                     undo->saved_trimap,
                     GEGL_RECTANGLE (0, 0, width, height));
 
   gegl_buffer_copy (buffer,
                     GEGL_RECTANGLE (0, 0, width, height),
+                    GEGL_ABYSS_NONE,
                     trimap,
                     GEGL_RECTANGLE (undo->trimap_x, undo->trimap_y,
                                     width, height));

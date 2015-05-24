@@ -447,7 +447,7 @@ load_image (const gchar  *filename,
 
   gimp_progress_update (0.66);
 
-  gegl_buffer_copy (src_buf, NULL, dest_buf, NULL);
+  gegl_buffer_copy (src_buf, NULL, GEGL_ABYSS_NONE, dest_buf, NULL);
 
   g_object_unref (src_buf);
   g_object_unref (dest_buf);

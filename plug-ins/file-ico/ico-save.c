@@ -637,7 +637,7 @@ ico_image_get_reduced_buf (guint32   layer,
                        format, buf,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
 
-      gegl_buffer_copy (buffer, NULL, tmp, NULL);
+      gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, tmp, NULL);
 
       g_object_unref (tmp);
 

@@ -749,7 +749,7 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
 
   buffer = gimp_cairo_surface_create_buffer (surface);
 
-  gegl_buffer_copy (buffer, NULL,
+  gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
                     gimp_drawable_get_buffer (drawable), NULL);
 
   g_object_unref (buffer);

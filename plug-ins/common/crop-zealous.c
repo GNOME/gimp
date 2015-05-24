@@ -268,6 +268,7 @@ do_zcrop (gint32  drawable_id,
         {
           gegl_buffer_copy (drawable_buffer,
                             GEGL_RECTANGLE (0, y, width, 1),
+                            GEGL_ABYSS_NONE,
                             shadow_buffer,
                             GEGL_RECTANGLE (0, destrow, width, 1));
 
@@ -286,6 +287,7 @@ do_zcrop (gint32  drawable_id,
         {
           gegl_buffer_copy (shadow_buffer,
                             GEGL_RECTANGLE (x, 0, 1, height),
+                            GEGL_ABYSS_NONE,
                             shadow_buffer,
                             GEGL_RECTANGLE (destcol, 0, 1, height));
 
