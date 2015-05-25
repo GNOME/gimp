@@ -31,7 +31,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-05-25 08:44+0200\n"
-"PO-Revision-Date: 2015-05-25 08:46+0200\n"
+"PO-Revision-Date: 2015-05-25 14:30+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -16128,9 +16128,7 @@ msgstr "Inclica i bordi opposti della stessa quantità (%s)"
 #: ../app/tools/gimptransformoptions.c:499
 #, c-format
 msgid "Maintain position of pivot while changing perspective  (%s)"
-msgstr ""
-"Mantiene la posizionme dei perni durante il cambiamento della prospettiva "
-"(%s)"
+msgstr "Mantiene la posizione dei perni durante il cambiamento della prospettiva (%s)"
 
 #: ../app/tools/gimptransformoptions.c:502
 msgid "Pivot"
