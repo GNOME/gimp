@@ -131,6 +131,7 @@ gimp_mybrush_paint (GimpPaintCore    *paint_core,
                                                 gimp_item_get_height (GIMP_ITEM (drawable))),
                                 gegl_buffer_get_format (buffer));
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                        GEGL_ABYSS_NONE,
                         buffer, NULL);
       mypaint_gegl_tiled_surface_set_buffer (mybrush->private->surface, buffer);
       g_object_unref (buffer);
@@ -240,6 +241,7 @@ gimp_mybrush_motion (GimpPaintCore    *paint_core,
 
       gegl_buffer_copy (src,
                         (GeglRectangle *) &rect,
+                        GEGL_ABYSS_NONE,
                         gimp_drawable_get_buffer (drawable),
                         NULL);
 

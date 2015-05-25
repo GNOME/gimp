@@ -208,7 +208,8 @@ gimp_drawable_offset (GimpDrawable   *drawable,
               dest_rect.y = 0;
             }
 
-          gegl_buffer_copy (src_buffer, &src_rect, GEGL_ABYSS_NONE, new_buffer, &dest_rect);
+          gegl_buffer_copy (src_buffer, &src_rect, GEGL_ABYSS_NONE,
+                            new_buffer, &dest_rect);
         }
 
       /*  X offset  */

@@ -288,7 +288,7 @@ gimp_layer_new_from_surface (gint32                image_ID,
       dest_buffer = gimp_drawable_get_buffer (layer);
 
       gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE,
-			dest_buffer, NULL);
+                        dest_buffer, NULL);
 
       g_object_unref (src_buffer);
       g_object_unref (dest_buffer);

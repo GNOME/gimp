@@ -212,7 +212,7 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
           dest_buffer = gimp_temp_buf_create_buffer (brush->priv->mask);
 
           gegl_buffer_set_format (dest_buffer, babl_format ("A u8"));
-          gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, 
+          gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
                             dest_buffer, NULL);
 
           g_object_unref (dest_buffer);
@@ -226,7 +226,8 @@ gimp_brush_clipboard_buffer_changed (Gimp      *gimp,
       /*  copy the color channels into the brush's pixmap  */
       dest_buffer = gimp_temp_buf_create_buffer (brush->priv->pixmap);
 
-      gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
+      gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
+                        dest_buffer, NULL);
 
       g_object_unref (dest_buffer);
     }

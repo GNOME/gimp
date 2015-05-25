@@ -875,7 +875,8 @@ gimp_channel_convert_type (GimpDrawable      *drawable,
 
   if (mask_dither_type == 0)
     {
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL, GEGL_ABYSS_NONE,
+      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                        GEGL_ABYSS_NONE,
                         dest_buffer, NULL);
     }
   else
@@ -1606,7 +1607,8 @@ gimp_channel_new_from_alpha (GimpImage     *image,
   gegl_buffer_set_format (dest_buffer,
                           gimp_drawable_get_component_format (drawable,
                                                               GIMP_ALPHA_CHANNEL));
-  gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL, GEGL_ABYSS_NONE,
+  gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                    GEGL_ABYSS_NONE,
                     dest_buffer, NULL);
   gegl_buffer_set_format (dest_buffer, NULL);
 
