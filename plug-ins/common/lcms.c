@@ -707,7 +707,7 @@ lcms_image_get_profile (GimpColorConfig  *config,
 
       gimp_parasite_free (parasite);
     }
-  else if (config->rgb_profile)
+  else
     {
       profile = gimp_color_config_get_rgb_profile (config, error);
     }
@@ -1157,6 +1157,7 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   gchar       *name;
   const gchar *rgb_filename = NULL;
   cmsHPROFILE  profile      = NULL;
+  GError      *error        = NULL;
 
   dialog = gimp_color_profile_chooser_dialog_new (_("Select destination profile"));
 
@@ -1164,21 +1165,16 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   combo = gimp_color_profile_combo_box_new (dialog, history);
   g_free (history);
 
-  if (config->rgb_profile)
+  profile = gimp_color_config_get_rgb_profile (config, &error);
+
+  if (profile)
     {
-      GError *error = NULL;
-
-      profile = gimp_color_config_get_rgb_profile (config, &error);
-
-      if (! profile)
-        {
-          g_message ("%s", error->message);
-          g_clear_error (&error);
-        }
-      else
-        {
-          rgb_filename = config->rgb_profile;
-        }
+      rgb_filename = config->rgb_profile;
+    }
+  else if (error)
+    {
+      g_message ("%s", error->message);
+      g_clear_error (&error);
     }
 
   if (! profile)
