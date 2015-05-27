@@ -460,31 +460,6 @@ gimp_widget_get_color_profile (GtkWidget *widget)
 }
 
 static GimpColorProfile
-get_rgb_profile (GimpColorManaged *managed,
-                 GimpColorConfig  *config)
-{
-  GimpColorProfile  profile = NULL;
-  const guint8     *data;
-  gsize             len;
-
-  data = gimp_color_managed_get_icc_profile (managed, &len);
-
-  if (data)
-    profile = gimp_lcms_profile_open_from_data (data, len, NULL);
-
-  if (profile && ! gimp_lcms_profile_is_rgb (profile))
-    {
-      gimp_lcms_profile_close (profile);
-      profile = NULL;
-    }
-
-  if (! profile)
-    profile = gimp_color_config_get_rgb_profile (config, NULL);
-
-  return profile;
-}
-
-static GimpColorProfile
 get_display_profile (GtkWidget       *widget,
                      GimpColorConfig *config)
 {
@@ -530,7 +505,7 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
       /*  fallthru  */
 
     case GIMP_COLOR_MANAGEMENT_DISPLAY:
-      src_profile  = get_rgb_profile (managed, config);
+      src_profile  = gimp_color_managed_get_color_profile (managed);
       dest_profile = get_display_profile (widget, config);
       break;
     }

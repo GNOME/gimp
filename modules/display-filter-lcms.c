@@ -83,7 +83,6 @@ static void             cdisplay_lcms_convert_buffer       (GimpColorDisplay *di
                                                             GeglRectangle    *area);
 static void             cdisplay_lcms_changed              (GimpColorDisplay *display);
 
-static GimpColorProfile cdisplay_lcms_get_rgb_profile      (CdisplayLcms     *lcms);
 static GimpColorProfile cdisplay_lcms_get_display_profile  (CdisplayLcms     *lcms);
 
 static void             cdisplay_lcms_attach_labelled      (GtkTable         *table,
@@ -279,42 +278,10 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
   lcms->src_format  = babl_format ("R'G'B'A float");
   lcms->dest_format = babl_format ("R'G'B'A float");
 
-  lcms->transform =
-    gimp_widget_get_color_transform (widget,
-                                     managed, config,
-                                     &lcms->src_format,
-                                     &lcms->dest_format);
-}
-
-static GimpColorProfile
-cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
-{
-  GimpColorConfig  *config;
-  GimpColorManaged *managed;
-  GimpColorProfile  profile = NULL;
-
-  config  = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
-  managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
-
-  if (managed)
-    {
-      gsize         len;
-      const guint8 *data = gimp_color_managed_get_icc_profile (managed, &len);
-
-      if (data)
-        profile = cmsOpenProfileFromMem ((gpointer) data, len);
-
-      if (profile && ! gimp_lcms_profile_is_rgb (profile))
-        {
-          gimp_lcms_profile_close (profile);
-          profile = NULL;
-        }
-    }
-
-  if (! profile)
-    profile = gimp_color_config_get_rgb_profile (config, NULL);
-
-  return profile;
+  lcms->transform = gimp_widget_get_color_transform (widget,
+                                                     managed, config,
+                                                     &lcms->src_format,
+                                                     &lcms->dest_format);
 }
 
 static GimpColorProfile
@@ -372,12 +339,14 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
                                     const gchar  *name)
 {
   GimpColorConfig  *config;
+  GimpColorManaged *managed;
   GtkWidget        *label;
   GimpColorProfile  profile = NULL;
   gchar            *text;
   gchar            *tooltip;
 
-  config = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
+  config  = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
+  managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
 
   label = g_object_get_data (G_OBJECT (lcms), name);
 
@@ -386,7 +355,7 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
 
   if (strcmp (name, "rgb-profile") == 0)
     {
-      profile = cdisplay_lcms_get_rgb_profile (lcms);
+      profile = gimp_color_managed_get_color_profile (managed);
     }
   else if (g_str_has_prefix (name, "display-profile"))
     {
