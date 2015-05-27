@@ -30,6 +30,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-expose.h"
 #include "gimpdisplayshell-filter.h"
+#include "gimpdisplayshell-profile.h"
 
 
 /*  local function prototypes  */
@@ -114,7 +115,9 @@ gimp_display_shell_filter_changed_idle (gpointer data)
 {
   GimpDisplayShell *shell = data;
 
+  gimp_display_shell_profile_update (shell);
   gimp_display_shell_expose_full (shell);
+
   shell->filter_idle_id = 0;
 
   return FALSE;
