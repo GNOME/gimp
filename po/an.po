@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: gimp gimp-2-8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
 "ywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-22 18:12+0000\n"
-"PO-Revision-Date: 2015-04-27 21:12+0200\n"
+"POT-Creation-Date: 2015-05-06 17:17+0000\n"
+"PO-Revision-Date: 2015-05-12 19:18+0200\n"
 "Last-Translator: Daniel <entaltoaragon@gmail.com>\n"
 "Language-Team: Aragonese <softaragones@googlegroups.com>\n"
 "Language: an\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.1.1\n"
-"X-POOTLE-MTIME: 1430165560.000000\n"
+"X-POOTLE-MTIME: 1431454702.000000\n"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -55,8 +55,8 @@ msgid ""
 msgstr ""
 "GIMP ye software libre: puede redistribuir-lo y/u modificar-lo baixo os "
 "termins d'a Licencia Publica Cheneral de GNU seguntes se troba publicada por "
-"a Free Software Foundation, bien d'a versión 3 de dita Licencia u bien ("
-"seguntes a suya esleción) de qualsiquier versión posterior.\n"
+"a Free Software Foundation, bien d'a versión 3 de dita Licencia u bien "
+"(seguntes a suya esleción) de qualsiquier versión posterior.\n"
 "\n"
 "GIMP se distribuye con a esperanza que sía util, pero SIN GARRA GUARENCIA, "
 "mesmo sin a guarencia MERCANTIL implicita ni a de guarenciar l'ADEQUACIÓN A "
@@ -64,8 +64,8 @@ msgstr ""
 "detalles.\n"
 "\n"
 "Habría d'haber recibiu una copia d'a Licencia Publica Cheneral de GNU de "
-"conchunta con iste programa.  Si no ha estau asinas, consulte "
-"http://www.gnu.org/licenses/."
+"conchunta con iste programa.  Si no ha estau asinas, consulte http://www.gnu."
+"org/licenses/."
 
 #: ../app/app.c:225
 #, c-format
@@ -151,7 +151,8 @@ msgstr "Fer servir un fichero de sistema gimprc alternativo"
 
 #: ../app/main.c:218
 msgid "Batch command to run (can be used multiple times)"
-msgstr "Instrucción por lotes que executar (puet fer-se servir quantas vegadas)"
+msgstr ""
+"Instrucción por lotes que executar (puet fer-se servir quantas vegadas)"
 
 #: ../app/main.c:223
 msgid "The procedure to process batch commands with"
@@ -188,11 +189,11 @@ msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr ""
 "Amostrar una lista ordenada d'os procedimientos obsoletos adintro d'o PDB"
 
-#: ../app/main.c:399
+#: ../app/main.c:433
 msgid "[FILE|URI...]"
 msgstr "[FICHERO|URI…]"
 
-#: ../app/main.c:421
+#: ../app/main.c:455
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -200,21 +201,21 @@ msgstr ""
 "GIMP no ha puesto inicializar a interficie grafica d'usuario.\n"
 "S'asegure que exista una instalación apropiada ta la suya pantalla."
 
-#: ../app/main.c:440
+#: ../app/main.c:474
 msgid "Another GIMP instance is already running."
 msgstr "Ya se ye executando unatra instancia de GIMP."
 
-#: ../app/main.c:512
+#: ../app/main.c:546
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 "Salida d'o GIMP. Tecleye un caracter qualsiquiera ta zarrar ista finestra."
 
-#: ../app/main.c:513
+#: ../app/main.c:547
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Tecleye un caracter qualsiquiera ta zarrar ista finestra)\n"
 
-#: ../app/main.c:530
+#: ../app/main.c:564
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Salida d'o GIMP. Puet minimizar ista finestra, pero no la zarre."
 
@@ -734,7 +735,8 @@ msgctxt "channels-action"
 msgid "Intersect this channel with the current selection"
 msgstr "Intersectar ista canal con a selección actual"
 
-#: ../app/actions/channels-commands.c:85 ../app/actions/channels-commands.c:402
+#: ../app/actions/channels-commands.c:85
+#: ../app/actions/channels-commands.c:402
 msgid "Channel Attributes"
 msgstr "Atributos d'a canal"
 
@@ -746,7 +748,8 @@ msgstr "Editar os atributos d'a canal"
 msgid "Edit Channel Color"
 msgstr "Editar a color d'a canal"
 
-#: ../app/actions/channels-commands.c:91 ../app/actions/channels-commands.c:123
+#: ../app/actions/channels-commands.c:91
+#: ../app/actions/channels-commands.c:123
 msgid "_Fill opacity:"
 msgstr "Opacidat d'o _repleno:"
 
@@ -967,8 +970,8 @@ msgid "Use the composite color of all visible layers"
 msgstr "Fer servir a color composada de todas as capas visibles"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:232
-#: ../app/dialogs/file-open-dialog.c:277
+#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:220
+#: ../app/dialogs/file-open-dialog.c:265
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:592
@@ -6015,8 +6018,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to "
-"focus\"."
+"receives the focus. This is useful for window managers using \"click to focus"
+"\"."
 msgstr ""
 "Quan ye activau, una imachen se convertirá en activa en recibir o foco a "
 "finestra d'a suya imachen. Isto ye muit util t'os chestors de finestras que "
@@ -6220,7 +6223,8 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:246
 msgid "Sets how many processors GIMP should try to use simultaneously."
-msgstr "Estableix quántos procesadors ha d'intentar usar simultaniament o GIMP."
+msgstr ""
+"Estableix quántos procesadors ha d'intentar usar simultaniament o GIMP."
 
 #: ../app/config/gimprc-blurbs.h:259
 msgid ""
@@ -6351,8 +6355,8 @@ msgid ""
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr ""
 "Quan ye activau as barras de desplazamiento son visibles de traza "
-"predeterminada. Ixo tamién se puet activar con a instrucción \"Veyer->"
-"Amostrar as barras de desplazamiento\"."
+"predeterminada. Ixo tamién se puet activar con a instrucción \"Veyer-"
+">Amostrar as barras de desplazamiento\"."
 
 #: ../app/config/gimprc-blurbs.h:340
 msgid ""
@@ -6376,8 +6380,8 @@ msgid ""
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 "Quan ye activau o limite d'a capa ye visible de traza predeterminada. Ixo "
-"tamién puet activar-se con a instrucción \"Veyer->Amostrar o limite d'a "
-"capa\"."
+"tamién puet activar-se con a instrucción \"Veyer->Amostrar o limite d'a capa"
+"\"."
 
 #: ../app/config/gimprc-blurbs.h:352
 msgid ""
@@ -8705,8 +8709,8 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"Leyendo lo fichero de paleta '%s': numero no valido de columnas en a linia %"
-"d. Fendo servir a valor predeterminada."
+"Leyendo lo fichero de paleta '%s': numero no valido de columnas en a linia "
+"%d. Fendo servir a valor predeterminada."
 
 #: ../app/core/gimppalette-load.c:185
 #, c-format
@@ -9117,7 +9121,7 @@ msgstr "_Modo:"
 msgid "_Opacity:"
 msgstr "_Opacidat:"
 
-#: ../app/dialogs/file-open-dialog.c:266
+#: ../app/dialogs/file-open-dialog.c:254
 msgid "Open layers"
 msgstr "Ubrir capas"
 
@@ -9290,8 +9294,8 @@ msgid ""
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
 msgstr ""
 "Una imachen d'a grandaria trigada ferá servir mas de memoria que no ye "
-"configurada como \"Grandaria maxima d'a imachen\" en o dialogo Preferencias ("
-"actualment %s)."
+"configurada como \"Grandaria maxima d'a imachen\" en o dialogo Preferencias "
+"(actualment %s)."
 
 #: ../app/dialogs/image-properties-dialog.c:60
 #: ../app/dialogs/image-properties-dialog.c:63
@@ -9574,7 +9578,8 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:356
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr "Amenesterá renchegar o GIMP ta que os siguients cambeos tiengan efecto:"
+msgstr ""
+"Amenesterá renchegar o GIMP ta que os siguients cambeos tiengan efecto:"
 
 #: ../app/dialogs/preferences-dialog.c:538
 msgid ""
@@ -9886,7 +9891,8 @@ msgstr "Definir capa u rota como activa"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1963
-#: ../app/dialogs/preferences-dialog.c:2162 ../app/widgets/gimpgrideditor.c:134
+#: ../app/dialogs/preferences-dialog.c:2162
+#: ../app/widgets/gimpgrideditor.c:134
 msgid "Appearance"
 msgstr "Apariencia"
 
@@ -10234,7 +10240,8 @@ msgstr "Alzar as posicions d'as finestras _agora"
 
 #: ../app/dialogs/preferences-dialog.c:2670
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr "R_estaurar as posicions de finestra alzadas t'as valors predeterminadas"
+msgstr ""
+"R_estaurar as posicions de finestra alzadas t'as valors predeterminadas"
 
 #: ../app/dialogs/preferences-dialog.c:2685
 msgid "Folders"
@@ -10446,7 +10453,8 @@ msgstr "Prete %s ta descartar totz os cambeos y salir."
 msgid "Press %s to discard all changes and close all images."
 msgstr "Prete %s ta descartar totz os cambeos y zarrar todas as imachens."
 
-#: ../app/dialogs/quit-dialog.c:341 ../app/display/gimpdisplayshell-close.c:180
+#: ../app/dialogs/quit-dialog.c:341
+#: ../app/display/gimpdisplayshell-close.c:180
 msgid "_Discard Changes"
 msgstr "_Descartar cambeos"
 
@@ -10768,7 +10776,8 @@ msgstr[1] ""
 msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
-msgstr[0] "Si no alza la imachen, os cambeos dende o zaguer menuto se perderán."
+msgstr[0] ""
+"Si no alza la imachen, os cambeos dende o zaguer menuto se perderán."
 msgstr[1] ""
 "Si no alza a imachen, os cambeos dende os zaguers %d menutos se perderán."
 
@@ -10798,7 +10807,7 @@ msgstr "No se pueden modificar pixels d'os grupos de capas."
 #: ../app/display/gimpdisplayshell-dnd.c:471 ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1466
+#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1477
 msgid "The active layer's pixels are locked."
 msgstr "Os pixels d'a capa activa son blocaus."
 
@@ -10870,30 +10879,30 @@ msgstr "(garra)"
 msgid "Cancel <i>%s</i>"
 msgstr "Cancelar <i>%s</i>"
 
-#: ../app/file/file-open.c:136 ../app/file/file-save.c:115
+#: ../app/file/file-open.c:129 ../app/file/file-save.c:115
 msgid "Not a regular file"
 msgstr "No ye un fichero regular"
 
-#: ../app/file/file-open.c:188
+#: ../app/file/file-open.c:191
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "O complemento %s ha rematau correctament pero no ha tornau una imachen"
 
-#: ../app/file/file-open.c:199
+#: ../app/file/file-open.c:202
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "O complemento %s no ha puesto ubrir a imachen"
 
-#: ../app/file/file-open.c:530
+#: ../app/file/file-open.c:533
 msgid "Image doesn't contain any layers"
 msgstr "A imachen no contién garra capa"
 
-#: ../app/file/file-open.c:590
+#: ../app/file/file-open.c:593
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "A obridura de '%s' ha fallau: %s"
 
-#: ../app/file/file-open.c:700
+#: ../app/file/file-open.c:703
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -11496,8 +11505,8 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"O procedimiento '%s' ha tornau '%s' como valor de retorno '%s' (#%d, tipo %s)"
-". Ista valor ye difuera d'os limites."
+"O procedimiento '%s' ha tornau '%s' como valor de retorno '%s' (#%d, tipo "
+"%s). Ista valor ye difuera d'os limites."
 
 #: ../app/pdb/gimpprocedure.c:767
 #, c-format
@@ -11505,8 +11514,8 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
-"O procedimiento '%s' s'ha clamau con una valor '%s' ta l'argumento '%s' (#%"
-"d, tipo %s). Ista valor ye difuera d'os limites."
+"O procedimiento '%s' s'ha clamau con una valor '%s' ta l'argumento '%s' (#"
+"%d, tipo %s). Ista valor ye difuera d'os limites."
 
 #: ../app/pdb/image-cmds.c:2361
 msgid ""
@@ -11829,7 +11838,8 @@ msgstr ""
 
 #: ../app/tools/gimpairbrushtool.c:55
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
-msgstr "Ferramienta aerografo: pintar con presión variable por meyo d'un pincel"
+msgstr ""
+"Ferramienta aerografo: pintar con presión variable por meyo d'un pincel"
 
 #: ../app/tools/gimpairbrushtool.c:56
 msgid "_Airbrush"
@@ -12196,7 +12206,8 @@ msgstr "%s ta fixar un orichen de clonau nuevo"
 msgid "Click to set a new clone source"
 msgstr "Prete ta fixar un orichen de clonau"
 
-#: ../app/tools/gimpclonetool.c:109 ../app/tools/gimpperspectiveclonetool.c:899
+#: ../app/tools/gimpclonetool.c:109
+#: ../app/tools/gimpperspectiveclonetool.c:899
 msgid "Source"
 msgstr "Orichen"
 
@@ -12311,15 +12322,18 @@ msgstr "Coloriar no funciona que sobre as capas de color RGB."
 msgid "Select Color"
 msgstr "Seleccionar a color"
 
-#: ../app/tools/gimpcolorizetool.c:241 ../app/tools/gimphuesaturationtool.c:381
+#: ../app/tools/gimpcolorizetool.c:241
+#: ../app/tools/gimphuesaturationtool.c:381
 msgid "_Hue:"
 msgstr "_Ton:"
 
-#: ../app/tools/gimpcolorizetool.c:254 ../app/tools/gimphuesaturationtool.c:413
+#: ../app/tools/gimpcolorizetool.c:254
+#: ../app/tools/gimphuesaturationtool.c:413
 msgid "_Saturation:"
 msgstr "_Saturación:"
 
-#: ../app/tools/gimpcolorizetool.c:267 ../app/tools/gimphuesaturationtool.c:397
+#: ../app/tools/gimpcolorizetool.c:267
+#: ../app/tools/gimphuesaturationtool.c:397
 msgid "_Lightness:"
 msgstr "_Luminosidat:"
 
@@ -12329,7 +12343,8 @@ msgstr "Radio promeyo d'o selector d'a color"
 
 #: ../app/tools/gimpcoloroptions.c:157
 #: ../app/tools/gimprectangleselectoptions.c:163
-#: ../app/tools/gimpselectionoptions.c:277 ../app/widgets/gimpbrusheditor.c:155
+#: ../app/tools/gimpselectionoptions.c:277
+#: ../app/widgets/gimpbrusheditor.c:155
 msgid "Radius"
 msgstr "Radio"
 
@@ -13059,7 +13074,8 @@ msgid "Size"
 msgstr "Grandaria"
 
 #: ../app/tools/gimpinkoptions-gui.c:71
-#: ../app/tools/gimppaintoptions-gui.c:181 ../app/widgets/gimpbrusheditor.c:199
+#: ../app/tools/gimppaintoptions-gui.c:181
+#: ../app/widgets/gimpbrusheditor.c:199
 msgid "Angle"
 msgstr "Anglo"
 
@@ -13421,7 +13437,8 @@ msgstr "Opcions de l'esvaneiximiento"
 msgid "Fade length"
 msgstr "Longaria de l'esvaneiximiento"
 
-#: ../app/tools/gimppaintoptions-gui.c:332 ../app/widgets/gimpviewablebox.c:311
+#: ../app/tools/gimppaintoptions-gui.c:332
+#: ../app/widgets/gimpviewablebox.c:311
 msgid "Reverse"
 msgstr "Invertiu"
 
@@ -13855,7 +13872,8 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:153
 msgid "The text language may have an effect on the way the text is rendered."
-msgstr "L'idioma d'o texto puet afectar a la traza en que o texto se renderiza."
+msgstr ""
+"L'idioma d'o texto puet afectar a la traza en que o texto se renderiza."
 
 #: ../app/tools/gimptextoptions.c:164
 msgid "Text alignment"
@@ -13944,8 +13962,8 @@ msgstr "Creyar una capa _nueva"
 #: ../app/tools/gimptexttool.c:1557
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
-"tools. Editing the layer with the text tool will discard these modifications."
-"\n"
+"tools. Editing the layer with the text tool will discard these "
+"modifications.\n"
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
@@ -14074,15 +14092,20 @@ msgstr "Mantener a relación d'aspecto orichinal"
 msgid "Transforming"
 msgstr "Transformando"
 
-#: ../app/tools/gimptransformtool.c:1465
+#: ../app/tools/gimptransformtool.c:269
+#, c-format
+msgid "The selection does not intersect with the layer."
+msgstr "A seleccion no fa interseccion con a capa."
+
+#: ../app/tools/gimptransformtool.c:1476
 msgid "There is no layer to transform."
 msgstr "No bi ha garra capa que transformar."
 
-#: ../app/tools/gimptransformtool.c:1476
+#: ../app/tools/gimptransformtool.c:1487
 msgid "There is no path to transform."
 msgstr "No bi ha garra rota que transformar."
 
-#: ../app/tools/gimptransformtool.c:1477
+#: ../app/tools/gimptransformtool.c:1488
 msgid "The active path's strokes are locked."
 msgstr "Os trazos d'a rota activa son blocaus"
 
@@ -14480,7 +14503,8 @@ msgstr "_Reasignar a combinación de teclas"
 #: ../app/widgets/gimpactionview.c:691
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
-msgstr "A combinación de teclas \"%s\" ya la fa servir \"%s\" d'o grupo \"%s\"."
+msgstr ""
+"A combinación de teclas \"%s\" ya la fa servir \"%s\" d'o grupo \"%s\"."
 
 #: ../app/widgets/gimpactionview.c:695
 #, c-format
@@ -14508,7 +14532,8 @@ msgid "Aspect ratio"
 msgstr "Proporción d'aspecto"
 
 #: ../app/widgets/gimpbrusheditor.c:210
-#: ../app/widgets/gimpbrushfactoryview.c:80 ../app/widgets/gimpgrideditor.c:174
+#: ../app/widgets/gimpbrushfactoryview.c:80
+#: ../app/widgets/gimpgrideditor.c:174
 msgid "Spacing"
 msgstr "Espaciau"
 
@@ -15687,8 +15712,8 @@ msgstr "L'atributo \"%s\" no ye valido sobre l'elemento <%s> en iste contexto"
 #, c-format
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr ""
-"L'elemento mas externo dentro d'o texto ha d'estar <markup> en cuentas de "
-"<%s>"
+"L'elemento mas externo dentro d'o texto ha d'estar <markup> en cuentas de <"
+"%s>"
 
 #: ../app/widgets/gimptextbuffer.c:1459
 #, c-format
