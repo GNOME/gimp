@@ -456,7 +456,8 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
             case 'o': /* image's color profile name */
               {
-                GimpColorProfile *profile = gimp_image_get_profile (image, NULL);
+                GimpColorProfile *profile = gimp_image_get_color_profile (image,
+                                                                          NULL);
 
                 if (! profile)
                   profile = gimp_lcms_create_srgb_profile ();

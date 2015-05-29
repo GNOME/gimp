@@ -132,8 +132,8 @@ gimp_image_set_icc_profile (GimpImage          *image,
 }
 
 GimpColorProfile
-gimp_image_get_profile (GimpImage  *image,
-                        GError    **error)
+gimp_image_get_color_profile (GimpImage  *image,
+                              GError    **error)
 {
   const GimpParasite *parasite;
   GimpColorProfile   *profile = NULL;

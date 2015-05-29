@@ -107,7 +107,7 @@ gimp_image_profile_view_update (GimpImageParasiteView *view)
 
   image = gimp_image_parasite_view_get_image (view);
 
-  profile = gimp_image_get_profile (image, &error);
+  profile = gimp_image_get_color_profile (image, &error);
 
   if (! profile && error)
     {
