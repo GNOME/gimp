@@ -19,8 +19,6 @@
 
 #include <string.h>
 
-#include <lcms2.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -39,7 +37,6 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-profile.h"
 #include "core/gimpitem.h"
 
 #include "gimpdisplay.h"
@@ -456,16 +453,15 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
             case 'o': /* image's color profile name */
               {
-                GimpColorProfile *profile = gimp_image_get_color_profile (image,
-                                                                          NULL);
+                GimpColorManaged *managed = GIMP_COLOR_MANAGED (image);
+                GimpColorProfile *profile;
 
-                if (! profile)
-                  profile = gimp_lcms_create_srgb_profile ();
+                profile = gimp_color_managed_get_color_profile (managed);
 
                 i += print (title, title_len, i, "%s",
                             gimp_lcms_profile_get_label (profile));
 
-                cmsCloseProfile (profile);
+                gimp_lcms_profile_close (profile);
               }
               break;
 
