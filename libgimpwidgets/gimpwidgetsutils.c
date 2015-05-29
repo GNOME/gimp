@@ -471,6 +471,9 @@ get_display_profile (GtkWidget       *widget,
   if (! profile)
     profile = gimp_color_config_get_display_profile (config, NULL);
 
+  if (! profile)
+    profile = gimp_lcms_create_srgb_profile ();
+
   return profile;
 }
 
@@ -517,12 +520,6 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
     {
       cmsUInt32Number softproof_flags = 0;
 
-      if (! src_profile)
-        src_profile = gimp_lcms_create_srgb_profile ();
-
-      if (! dest_profile)
-        dest_profile = gimp_lcms_create_srgb_profile ();
-
       softproof_flags |= cmsFLAGS_SOFTPROOFING;
 
       if (config->simulation_use_black_point_compensation)
@@ -555,15 +552,9 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
 
       gimp_lcms_profile_close (proof_profile);
     }
-  else if (src_profile || dest_profile)
+  else if (! gimp_lcms_profile_is_equal (src_profile, dest_profile))
     {
       cmsUInt32Number display_flags = 0;
-
-      if (! src_profile)
-        src_profile = gimp_lcms_create_srgb_profile ();
-
-      if (! dest_profile)
-        dest_profile = gimp_lcms_create_srgb_profile ();
 
       if (config->display_use_black_point_compensation)
         {
@@ -577,11 +568,8 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
                             display_flags);
     }
 
-  if (src_profile)
-    gimp_lcms_profile_close (src_profile);
-
-  if (dest_profile)
-    gimp_lcms_profile_close (dest_profile);
+  gimp_lcms_profile_close (src_profile);
+  gimp_lcms_profile_close (dest_profile);
 
   return transform;
 }
