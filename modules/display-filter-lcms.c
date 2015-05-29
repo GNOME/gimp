@@ -289,8 +289,8 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 {
   GimpColorConfig  *config;
   GimpColorManaged *managed;
-  GtkWidget        *widget = NULL;
-  GimpColorProfile  profile;
+  GtkWidget        *widget  = NULL;
+  GimpColorProfile  profile = NULL;
 
   config  = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
   managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
@@ -298,7 +298,8 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
   if (GTK_IS_WIDGET (managed))
     widget = gtk_widget_get_toplevel (GTK_WIDGET (managed));
 
-  profile = gimp_widget_get_color_profile (widget);
+  if (config->display_profile_from_gdk)
+    profile = gimp_widget_get_color_profile (widget);
 
   if (! profile)
     profile = gimp_color_config_get_display_profile (config, NULL);
