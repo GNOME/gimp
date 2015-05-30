@@ -21,11 +21,13 @@
 
 #include "config.h"
 
-#include <glib-object.h>
+#include <gio/gio.h>
+#include <gegl.h>
 
 #include "gimpcolortypes.h"
 
 #include "gimpcolormanaged.h"
+#include "gimplcms.h"
 
 
 /**
@@ -132,7 +134,8 @@ gimp_color_managed_get_icc_profile (GimpColorManaged *managed,
  * gimp_color_managed_get_color_profile:
  * @managed: an object the implements the #GimpColorManaged interface
  *
- * This function, if implemented, always returns a #GimpColorProfile.
+ * This function always returns a #GimpColorProfile and falls back to
+ * gimp_lcms_create_srgb_profile() if the method is not implemented.
  *
  * Return value: The @managed's #GimpColorProfile.
  *
@@ -150,7 +153,8 @@ gimp_color_managed_get_color_profile (GimpColorManaged *managed)
   if (iface->get_color_profile)
     return iface->get_color_profile (managed);
 
-  return NULL;
+  /* never return a NULL profile */
+  return gimp_lcms_create_srgb_profile ();
 }
 
 /**
