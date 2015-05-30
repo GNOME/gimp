@@ -30,6 +30,7 @@ pdb_sources = \
 	pdb/image_grid.pdb		\
 	pdb/image_guides.pdb		\
 	pdb/image_select.pdb		\
+	pdb/image_transform.pdb		\
 	pdb/image_undo.pdb		\
 	pdb/item.pdb			\
 	pdb/item_transform.pdb		\

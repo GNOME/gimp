@@ -299,6 +299,7 @@ app/pdb/image-cmds.c
 app/pdb/image-convert-cmds.c
 app/pdb/image-guides-cmds.c
 app/pdb/image-select-cmds.c
+app/pdb/image-transform-cmds.c
 app/pdb/image-undo-cmds.c
 app/pdb/item-transform-cmds.c
 app/pdb/layer-cmds.c

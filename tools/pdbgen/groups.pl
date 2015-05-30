@@ -28,6 +28,7 @@
     image_grid
     image_guides
     image_select
+    image_transform
     image_undo
     item
     item_transform
