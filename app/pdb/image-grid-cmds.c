@@ -382,7 +382,7 @@ image_grid_set_style_invoker (GimpProcedure         *procedure,
 }
 
 void
-register_grid_procs (GimpPDB *pdb)
+register_image_grid_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 

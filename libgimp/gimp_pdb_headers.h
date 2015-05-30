@@ -49,11 +49,11 @@
 #include <libgimp/gimpgradient_pdb.h>
 #include <libgimp/gimpgradients_pdb.h>
 #include <libgimp/gimpgradientselect_pdb.h>
-#include <libgimp/gimpgrid_pdb.h>
 #include <libgimp/gimpguides_pdb.h>
 #include <libgimp/gimphelp_pdb.h>
 #include <libgimp/gimpimage_pdb.h>
 #include <libgimp/gimpimageconvert_pdb.h>
+#include <libgimp/gimpimagegrid_pdb.h>
 #include <libgimp/gimpimageselect_pdb.h>
 #include <libgimp/gimpimageundo_pdb.h>
 #include <libgimp/gimpitem_pdb.h>

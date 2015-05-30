@@ -22,11 +22,11 @@
     gradient
     gradient_select
     gradients
-    grid
     guides
     help
     image
     image_convert
+    image_grid
     image_select
     image_undo
     item
