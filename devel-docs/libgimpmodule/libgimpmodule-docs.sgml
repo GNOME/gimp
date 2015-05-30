@@ -32,6 +32,9 @@
   <index role="GIMP 2.8" id="libgimpmodule-index-new-in-2-8">
     <title>Index of new symbols in GIMP 2.8</title>
   </index>
+  <index role="GIMP 2.10" id="libgimpmodule-index-new-in-2-10">
+    <title>Index of new symbols in GIMP 2.10</title>
+  </index>
   <index role="deprecated" id="libgimpmodule-index-deprecated">
     <title>Index of deprecated symbols</title>
   </index>
