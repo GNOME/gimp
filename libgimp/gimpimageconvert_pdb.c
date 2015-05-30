@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpconvert_pdb.c
+ * gimpimageconvert_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,8 +26,8 @@
 
 
 /**
- * SECTION: gimpconvert
- * @title: gimpconvert
+ * SECTION: gimpimageconvert
+ * @title: gimpimageconvert
  * @short_description: Conversions between RGB, indexed, and grayscale modes.
  *
  * Conversions between RGB, indexed, and grayscale modes.

@@ -7,7 +7,6 @@
     channel
     color
     context
-    convert
     display
     drawable
     drawable_color
@@ -27,6 +26,7 @@
     guides
     help
     image
+    image_convert
     image_select
     image_undo
     item

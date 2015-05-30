@@ -41,7 +41,6 @@ libappinternal_procs_a_SOURCES = \
 	channel-cmds.c			\
 	color-cmds.c			\
 	context-cmds.c			\
-	convert-cmds.c			\
 	display-cmds.c			\
 	drawable-cmds.c			\
 	drawable-color-cmds.c		\
@@ -61,6 +60,7 @@ libappinternal_procs_a_SOURCES = \
 	guides-cmds.c			\
 	help-cmds.c			\
 	image-cmds.c			\
+	image-convert-cmds.c		\
 	image-select-cmds.c		\
 	image-undo-cmds.c		\
 	item-cmds.c			\

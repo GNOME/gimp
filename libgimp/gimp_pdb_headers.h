@@ -35,7 +35,6 @@
 #include <libgimp/gimpchannel_pdb.h>
 #include <libgimp/gimpcolor_pdb.h>
 #include <libgimp/gimpcontext_pdb.h>
-#include <libgimp/gimpconvert_pdb.h>
 #include <libgimp/gimpdisplay_pdb.h>
 #include <libgimp/gimpdrawable_pdb.h>
 #include <libgimp/gimpdrawablecolor_pdb.h>
@@ -54,6 +53,7 @@
 #include <libgimp/gimpguides_pdb.h>
 #include <libgimp/gimphelp_pdb.h>
 #include <libgimp/gimpimage_pdb.h>
+#include <libgimp/gimpimageconvert_pdb.h>
 #include <libgimp/gimpimageselect_pdb.h>
 #include <libgimp/gimpimageundo_pdb.h>
 #include <libgimp/gimpitem_pdb.h>

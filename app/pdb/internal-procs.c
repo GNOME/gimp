@@ -42,7 +42,6 @@ internal_procs_init (GimpPDB *pdb)
   register_channel_procs (pdb);
   register_color_procs (pdb);
   register_context_procs (pdb);
-  register_convert_procs (pdb);
   register_display_procs (pdb);
   register_drawable_procs (pdb);
   register_drawable_color_procs (pdb);
@@ -62,6 +61,7 @@ internal_procs_init (GimpPDB *pdb)
   register_guides_procs (pdb);
   register_help_procs (pdb);
   register_image_procs (pdb);
+  register_image_convert_procs (pdb);
   register_image_select_procs (pdb);
   register_image_undo_procs (pdb);
   register_item_procs (pdb);

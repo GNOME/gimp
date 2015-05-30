@@ -83,7 +83,6 @@ PDB_WRAPPERS_C = \
 	gimpchannel_pdb.c		\
 	gimpcolor_pdb.c			\
 	gimpcontext_pdb.c		\
-	gimpconvert_pdb.c		\
 	gimpdisplay_pdb.c		\
 	gimpdrawable_pdb.c		\
 	gimpdrawablecolor_pdb.c		\
@@ -102,6 +101,7 @@ PDB_WRAPPERS_C = \
 	gimpgrid_pdb.c			\
 	gimphelp_pdb.c			\
 	gimpimage_pdb.c			\
+	gimpimageconvert_pdb.c		\
 	gimpimageselect_pdb.c		\
 	gimpimageundo_pdb.c		\
 	gimpitem_pdb.c			\
@@ -137,7 +137,6 @@ PDB_WRAPPERS_H = \
 	gimpchannel_pdb.h		\
 	gimpcolor_pdb.h			\
 	gimpcontext_pdb.h		\
-	gimpconvert_pdb.h		\
 	gimpdisplay_pdb.h		\
 	gimpdrawable_pdb.h		\
 	gimpdrawablecolor_pdb.h		\
@@ -156,6 +155,7 @@ PDB_WRAPPERS_H = \
 	gimpguides_pdb.h		\
 	gimphelp_pdb.h			\
 	gimpimage_pdb.h			\
+	gimpimageconvert_pdb.h		\
 	gimpimageselect_pdb.h		\
 	gimpimageundo_pdb.h		\
 	gimpitem_pdb.h			\

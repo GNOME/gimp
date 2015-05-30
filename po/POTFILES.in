@@ -285,7 +285,6 @@ app/paint/paint-enums.c
 
 app/pdb/channel-cmds.c
 app/pdb/color-cmds.c
-app/pdb/convert-cmds.c
 app/pdb/drawable-cmds.c
 app/pdb/drawable-color-cmds.c
 app/pdb/drawable-transform-cmds.c
@@ -298,6 +297,7 @@ app/pdb/gimppdbcontext.c
 app/pdb/gimpprocedure.c
 app/pdb/guides-cmds.c
 app/pdb/image-cmds.c
+app/pdb/image-convert-cmds.c
 app/pdb/image-select-cmds.c
 app/pdb/image-undo-cmds.c
 app/pdb/item-transform-cmds.c

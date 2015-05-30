@@ -277,8 +277,8 @@ CODE
 
 %exports = (app => [@procs], lib => [@procs]);
 
-$desc = 'Convert';
-$doc_title = 'gimpconvert';
+$desc = 'Image Convert';
+$doc_title = 'gimpimageconvert';
 $doc_short_desc = 'Conversions between RGB, indexed, and grayscale modes.';
 $doc_long_desc = 'Conversions between RGB, indexed, and grayscale modes.';
 

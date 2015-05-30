@@ -9,7 +9,6 @@ pdb_sources = \
 	pdb/channel.pdb			\
 	pdb/color.pdb			\
 	pdb/context.pdb			\
-	pdb/convert.pdb			\
 	pdb/display.pdb			\
 	pdb/drawable.pdb		\
 	pdb/drawable_color.pdb		\
@@ -29,6 +28,7 @@ pdb_sources = \
 	pdb/guides.pdb			\
 	pdb/help.pdb			\
 	pdb/image.pdb			\
+	pdb/image_convert.pdb		\
 	pdb/image_select.pdb		\
 	pdb/image_undo.pdb		\
 	pdb/item.pdb			\
