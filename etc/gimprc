@@ -42,7 +42,7 @@
 # specified in bytes, kilobytes, megabytes or gigabytes. If no suffix is
 # specified the size defaults to being specified in kilobytes.
 # 
-# (tile-cache-size 6132286k)
+# (tile-cache-size 6119688k)
 
 # When enabled, uses OpenCL for some operations.  Possible values are yes and
 # no.
@@ -149,11 +149,11 @@
 # Sets the brush search path.  This is a colon-separated list of folders to
 # search.
 # 
-# (mypaint-brush-path "/usr/share/mypaint/brushes:/usr/local/share/mypaint/brushes:/local/head/share/mypaint/brushes:/home/mitch/.local/share/mypaint/brushes:~/.mypaint/brushes")
+# (mypaint-brush-path "/usr/share/mypaint/brushes:/usr/local/share/mypaint/brushes:~/.mypaint/brushes")
 
 # This is a colon-separated list of folders to search.
 # 
-# (mypaint-brush-path-writable "/home/mitch/.local/share/mypaint/brushes:~/.mypaint/brushes")
+# (mypaint-brush-path-writable "~/.mypaint/brushes")
 
 # Specify a default brush.  The brush is searched for in the specified brush
 # path.  This is a string value.
@@ -260,7 +260,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 1569865216)
+# (undo-size 1529922k)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and
