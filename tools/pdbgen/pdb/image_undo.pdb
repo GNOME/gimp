@@ -298,9 +298,9 @@ CODE
 
 %exports = (app => [@procs], lib => [@procs]);
 
-$desc = 'Undo';
-$doc_title = 'gimpundo';
-$doc_short_desc = 'Control of undo/redo.';
-$doc_long_desc = 'Control of undo/redo.';
+$desc = 'Image Undo';
+$doc_title = 'gimpimageundo';
+$doc_short_desc = 'Control of image undo/redo.';
+$doc_long_desc = 'Control of image undo/redo.';
 
 1;

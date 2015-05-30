@@ -103,6 +103,7 @@ PDB_WRAPPERS_C = \
 	gimphelp_pdb.c			\
 	gimpimage_pdb.c			\
 	gimpimageselect_pdb.c		\
+	gimpimageundo_pdb.c		\
 	gimpitem_pdb.c			\
 	gimpitemtransform_pdb.c		\
 	gimplayer_pdb.c			\
@@ -123,7 +124,6 @@ PDB_WRAPPERS_C = \
 	gimptextlayer_pdb.c		\
 	gimptexttool_pdb.c		\
 	gimptransformtools_pdb.c	\
-	gimpundo_pdb.c			\
 	gimpunit_pdb.c			\
 	gimpvectors_pdb.c
 
@@ -157,6 +157,7 @@ PDB_WRAPPERS_H = \
 	gimphelp_pdb.h			\
 	gimpimage_pdb.h			\
 	gimpimageselect_pdb.h		\
+	gimpimageundo_pdb.h		\
 	gimpitem_pdb.h			\
 	gimpitemtransform_pdb.h		\
 	gimplayer_pdb.h			\
@@ -177,7 +178,6 @@ PDB_WRAPPERS_H = \
 	gimptextlayer_pdb.h		\
 	gimptexttool_pdb.h		\
 	gimptransformtools_pdb.h	\
-	gimpundo_pdb.h			\
 	gimpunit_pdb.h			\
 	gimpvectors_pdb.h
 

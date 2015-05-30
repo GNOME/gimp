@@ -55,6 +55,7 @@
 #include <libgimp/gimphelp_pdb.h>
 #include <libgimp/gimpimage_pdb.h>
 #include <libgimp/gimpimageselect_pdb.h>
+#include <libgimp/gimpimageundo_pdb.h>
 #include <libgimp/gimpitem_pdb.h>
 #include <libgimp/gimpitemtransform_pdb.h>
 #include <libgimp/gimplayer_pdb.h>
@@ -75,7 +76,6 @@
 #include <libgimp/gimptextlayer_pdb.h>
 #include <libgimp/gimptexttool_pdb.h>
 #include <libgimp/gimptransformtools_pdb.h>
-#include <libgimp/gimpundo_pdb.h>
 #include <libgimp/gimpunit_pdb.h>
 #include <libgimp/gimpvectors_pdb.h>
 

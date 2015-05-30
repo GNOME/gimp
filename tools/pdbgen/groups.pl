@@ -28,6 +28,7 @@
     help
     image
     image_select
+    image_undo
     item
     item_transform
     layer
@@ -49,7 +50,6 @@
     text_layer
     text_tool
     transform_tools
-    undo
     unit
     vectors
 );

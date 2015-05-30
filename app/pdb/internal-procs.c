@@ -63,6 +63,7 @@ internal_procs_init (GimpPDB *pdb)
   register_help_procs (pdb);
   register_image_procs (pdb);
   register_image_select_procs (pdb);
+  register_image_undo_procs (pdb);
   register_item_procs (pdb);
   register_item_transform_procs (pdb);
   register_layer_procs (pdb);
@@ -84,7 +85,6 @@ internal_procs_init (GimpPDB *pdb)
   register_text_layer_procs (pdb);
   register_text_tool_procs (pdb);
   register_transform_tools_procs (pdb);
-  register_undo_procs (pdb);
   register_unit_procs (pdb);
   register_vectors_procs (pdb);
 }

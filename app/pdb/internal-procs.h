@@ -52,6 +52,7 @@ void   register_guides_procs             (GimpPDB *pdb);
 void   register_help_procs               (GimpPDB *pdb);
 void   register_image_procs              (GimpPDB *pdb);
 void   register_image_select_procs       (GimpPDB *pdb);
+void   register_image_undo_procs         (GimpPDB *pdb);
 void   register_item_procs               (GimpPDB *pdb);
 void   register_item_transform_procs     (GimpPDB *pdb);
 void   register_layer_procs              (GimpPDB *pdb);
@@ -73,7 +74,6 @@ void   register_selection_tools_procs    (GimpPDB *pdb);
 void   register_text_layer_procs         (GimpPDB *pdb);
 void   register_text_tool_procs          (GimpPDB *pdb);
 void   register_transform_tools_procs    (GimpPDB *pdb);
-void   register_undo_procs               (GimpPDB *pdb);
 void   register_unit_procs               (GimpPDB *pdb);
 void   register_vectors_procs            (GimpPDB *pdb);
 

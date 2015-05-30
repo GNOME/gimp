@@ -62,6 +62,7 @@ libappinternal_procs_a_SOURCES = \
 	help-cmds.c			\
 	image-cmds.c			\
 	image-select-cmds.c		\
+	image-undo-cmds.c		\
 	item-cmds.c			\
 	item-transform-cmds.c		\
 	layer-cmds.c			\
@@ -83,6 +84,5 @@ libappinternal_procs_a_SOURCES = \
 	text-layer-cmds.c		\
 	text-tool-cmds.c		\
 	transform-tools-cmds.c		\
-	undo-cmds.c			\
 	unit-cmds.c			\
 	vectors-cmds.c

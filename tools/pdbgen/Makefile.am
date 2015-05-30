@@ -30,6 +30,7 @@ pdb_sources = \
 	pdb/help.pdb			\
 	pdb/image.pdb			\
 	pdb/image_select.pdb		\
+	pdb/image_undo.pdb		\
 	pdb/item.pdb			\
 	pdb/item_transform.pdb		\
 	pdb/layer.pdb			\
@@ -51,7 +52,6 @@ pdb_sources = \
 	pdb/text_layer.pdb		\
 	pdb/text_tool.pdb		\
 	pdb/transform_tools.pdb		\
-	pdb/undo.pdb			\
 	pdb/unit.pdb			\
 	pdb/vectors.pdb
 
