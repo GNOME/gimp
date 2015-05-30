@@ -263,7 +263,7 @@ image_get_guide_position_invoker (GimpProcedure         *procedure,
 }
 
 void
-register_guides_procs (GimpPDB *pdb)
+register_image_guides_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 

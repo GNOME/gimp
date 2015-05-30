@@ -24,11 +24,11 @@ pdb_sources = \
 	pdb/gradient.pdb		\
 	pdb/gradient_select.pdb		\
 	pdb/gradients.pdb		\
-	pdb/guides.pdb			\
 	pdb/help.pdb			\
 	pdb/image.pdb			\
 	pdb/image_convert.pdb		\
 	pdb/image_grid.pdb		\
+	pdb/image_guides.pdb		\
 	pdb/image_select.pdb		\
 	pdb/image_undo.pdb		\
 	pdb/item.pdb			\

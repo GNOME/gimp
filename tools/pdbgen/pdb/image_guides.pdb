@@ -261,9 +261,9 @@ CODE
 
 %exports = (app => [@procs], lib => [@procs]);
 
-$desc = 'Guide procedures';
-$doc_title = 'gimpguides';
-$doc_short_desc = 'Functions for manipulating guides.';
-$doc_long_desc = 'Functions for manipulating guides.';
+$desc = 'Image Guide procedures';
+$doc_title = 'gimpimageguides';
+$doc_short_desc = 'Functions for manipulating an image\'s guides.';
+$doc_long_desc = 'Functions for manipulating an image\'s guides.';
 
 1;

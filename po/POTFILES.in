@@ -295,9 +295,9 @@ app/pdb/gimppdb-utils.c
 app/pdb/gimppdb.c
 app/pdb/gimppdbcontext.c
 app/pdb/gimpprocedure.c
-app/pdb/guides-cmds.c
 app/pdb/image-cmds.c
 app/pdb/image-convert-cmds.c
+app/pdb/image-guides-cmds.c
 app/pdb/image-select-cmds.c
 app/pdb/image-undo-cmds.c
 app/pdb/item-transform-cmds.c
