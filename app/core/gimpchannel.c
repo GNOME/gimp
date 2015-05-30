@@ -626,6 +626,7 @@ gimp_channel_translate (GimpItem *item,
 
       gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                         GEGL_RECTANGLE (x1 - off_x, y1 - off_y, width, height),
+                        GEGL_ABYSS_NONE,
                         tmp_buffer,
                         GEGL_RECTANGLE (0, 0, 0, 0));
     }
@@ -638,8 +639,7 @@ gimp_channel_translate (GimpItem *item,
     {
       /*  copy the temp mask back to the mask  */
 
-      gegl_buffer_copy (tmp_buffer,
-                        NULL,
+      gegl_buffer_copy (tmp_buffer, NULL, GEGL_ABYSS_NONE,
                         gimp_drawable_get_buffer (GIMP_DRAWABLE (channel)),
                         GEGL_RECTANGLE (x1, y1, 0, 0));
 
@@ -890,6 +890,7 @@ gimp_channel_convert_type (GimpDrawable      *drawable,
   if (mask_dither_type == 0)
     {
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                        GEGL_ABYSS_NONE,
                         dest_buffer, NULL);
     }
   else
@@ -1588,7 +1589,7 @@ gimp_channel_new_from_buffer (GeglBuffer    *buffer,
                               name, color);
 
   dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
-  gegl_buffer_copy (buffer, NULL, dest, NULL);
+  gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, dest, NULL);
 
   return channel;
 }
@@ -1621,6 +1622,7 @@ gimp_channel_new_from_alpha (GimpImage     *image,
                           gimp_drawable_get_component_format (drawable,
                                                               GIMP_ALPHA_CHANNEL));
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                    GEGL_ABYSS_NONE,
                     dest_buffer, NULL);
   gegl_buffer_set_format (dest_buffer, NULL);
 
@@ -1659,7 +1661,7 @@ gimp_channel_new_from_component (GimpImage       *image,
   dest_buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
   gegl_buffer_set_format (dest_buffer, format);
-  gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
+  gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
   gegl_buffer_set_format (dest_buffer, NULL);
 
   return channel;

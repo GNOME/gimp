@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpguides_pdb.c
+ * gimpimageguides_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,11 +26,11 @@
 
 
 /**
- * SECTION: gimpguides
- * @title: gimpguides
- * @short_description: Functions for manipulating guides.
+ * SECTION: gimpimageguides
+ * @title: gimpimageguides
+ * @short_description: Functions for manipulating an image's guides.
  *
- * Functions for manipulating guides.
+ * Functions for manipulating an image's guides.
  **/
 
 

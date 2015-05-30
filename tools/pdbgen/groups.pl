@@ -7,7 +7,6 @@
     channel
     color
     context
-    convert
     display
     drawable
     drawable_color
@@ -23,11 +22,13 @@
     gradient
     gradient_select
     gradients
-    grid
-    guides
     help
     image
+    image_convert
+    image_grid
+    image_guides
     image_select
+    image_undo
     item
     item_transform
     layer
@@ -49,7 +50,6 @@
     text_layer
     text_tool
     transform_tools
-    undo
     unit
     vectors
 );

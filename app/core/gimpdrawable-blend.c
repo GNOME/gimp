@@ -567,6 +567,7 @@ gradient_precalc_shapeburst (GimpImage           *image,
       /*  copy the mask to the temp mask  */
       gegl_buffer_copy (gimp_drawable_get_buffer (GIMP_DRAWABLE (mask)),
                         GEGL_RECTANGLE (x + off_x, y + off_y, width, height),
+                        GEGL_ABYSS_NONE,
                         temp_buffer,
                         GEGL_RECTANGLE (0, 0, 0, 0));
     }
@@ -584,6 +585,7 @@ gradient_precalc_shapeburst (GimpImage           *image,
           gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                             GEGL_RECTANGLE (region->x, region->y,
                                             region->width, region->height),
+                            GEGL_ABYSS_NONE,
                             temp_buffer,
                             GEGL_RECTANGLE (0, 0, 0, 0));
           gegl_buffer_set_format (temp_buffer, NULL);

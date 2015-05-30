@@ -1040,6 +1040,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
                         GEGL_RECTANGLE (x - temp_buf_x,
                                         y - temp_buf_y,
                                         width, height),
+                        GEGL_ABYSS_NONE,
                         dest_buffer,
                         GEGL_RECTANGLE (0, 0, 0, 0));
 
@@ -1069,6 +1070,7 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
                         GEGL_RECTANGLE (x - temp_buf_x,
                                         y - temp_buf_y,
                                         width, height),
+                        GEGL_ABYSS_NONE,
                         dest_buffer,
                         GEGL_RECTANGLE (x, y, 0, 0));
 

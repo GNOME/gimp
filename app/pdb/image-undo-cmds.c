@@ -280,7 +280,7 @@ image_undo_thaw_invoker (GimpProcedure         *procedure,
 }
 
 void
-register_undo_procs (GimpPDB *pdb)
+register_image_undo_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 

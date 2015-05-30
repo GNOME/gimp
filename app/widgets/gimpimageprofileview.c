@@ -102,21 +102,13 @@ gimp_image_profile_view_update (GimpImageParasiteView *view)
 {
   GimpImageProfileView *profile_view = GIMP_IMAGE_PROFILE_VIEW (view);
   GimpImage            *image;
-  GimpColorProfile     *profile;
-  GError               *error = NULL;
+  GimpColorManaged     *managed;
+  GimpColorProfile      profile;
 
-  image = gimp_image_parasite_view_get_image (view);
+  image   = gimp_image_parasite_view_get_image (view);
+  managed = GIMP_COLOR_MANAGED (image);
 
-  profile = gimp_image_get_profile (image, &error);
-
-  if (! profile && error)
-    {
-      g_message ("%s", error->message);
-      g_clear_error (&error);
-    }
-
-  if (! profile)
-    profile = gimp_lcms_create_srgb_profile ();
+  profile = gimp_color_managed_get_color_profile (managed);
 
   gimp_color_profile_view_set_profile (profile_view->profile_view, profile);
 

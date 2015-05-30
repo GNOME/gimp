@@ -66,6 +66,7 @@
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-items.h"
+#include "gimpdisplayshell-profile.h"
 #include "gimpdisplayshell-progress.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-rotate.h"
@@ -146,9 +147,12 @@ static void      gimp_display_shell_real_scaled    (GimpDisplayShell *shell);
 static void      gimp_display_shell_real_scrolled  (GimpDisplayShell *shell);
 static void      gimp_display_shell_real_rotated   (GimpDisplayShell *shell);
 
-static const guint8 * gimp_display_shell_get_icc_profile
-                                                   (GimpColorManaged *managed,
+static const guint8 *
+                 gimp_display_shell_get_icc_profile(GimpColorManaged *managed,
                                                     gsize            *len);
+static GimpColorProfile
+               gimp_display_shell_get_color_profile(GimpColorManaged *managed);
+static void      gimp_display_shell_profile_changed(GimpColorManaged *managed);
 
 static void      gimp_display_shell_menu_position  (GtkMenu          *menu,
                                                     gint             *x,
@@ -302,7 +306,9 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 static void
 gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 {
-  iface->get_icc_profile = gimp_display_shell_get_icc_profile;
+  iface->get_icc_profile   = gimp_display_shell_get_icc_profile;
+  iface->get_color_profile = gimp_display_shell_get_color_profile;
+  iface->profile_changed   = gimp_display_shell_profile_changed;
 }
 
 static void
@@ -806,6 +812,8 @@ gimp_display_shell_dispose (GObject *object)
       shell->checkerboard = NULL;
     }
 
+  gimp_display_shell_profile_dispose (shell);
+
   if (shell->filter_buffer)
     {
       g_object_unref (shell->filter_buffer);
@@ -1126,6 +1134,27 @@ gimp_display_shell_get_icc_profile (GimpColorManaged *managed,
     return gimp_color_managed_get_icc_profile (GIMP_COLOR_MANAGED (image), len);
 
   return NULL;
+}
+
+static GimpColorProfile
+gimp_display_shell_get_color_profile (GimpColorManaged *managed)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (managed);
+  GimpImage        *image = gimp_display_get_image (shell->display);
+
+  if (image)
+    return gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+
+  return NULL;
+}
+
+static void
+gimp_display_shell_profile_changed (GimpColorManaged *managed)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (managed);
+
+  gimp_display_shell_profile_update (shell);
+  gimp_display_shell_expose_full (shell);
 }
 
 static void

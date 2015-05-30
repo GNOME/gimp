@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpconvert_pdb.h
+ * gimpimageconvert_pdb.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -24,8 +24,8 @@
 #error "Only <libgimp/gimp.h> can be included directly."
 #endif
 
-#ifndef __GIMP_CONVERT_PDB_H__
-#define __GIMP_CONVERT_PDB_H__
+#ifndef __GIMP_IMAGE_CONVERT_PDB_H__
+#define __GIMP_IMAGE_CONVERT_PDB_H__
 
 G_BEGIN_DECLS
 
@@ -51,4 +51,4 @@ gboolean gimp_image_convert_precision         (gint32                  image_ID,
 
 G_END_DECLS
 
-#endif /* __GIMP_CONVERT_PDB_H__ */
+#endif /* __GIMP_IMAGE_CONVERT_PDB_H__ */

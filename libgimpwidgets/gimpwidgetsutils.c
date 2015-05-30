@@ -460,50 +460,29 @@ gimp_widget_get_color_profile (GtkWidget *widget)
 }
 
 static GimpColorProfile
-get_rgb_profile (GimpColorManaged *managed,
-                 GimpColorConfig  *config)
-{
-  GimpColorProfile  profile = NULL;
-  const guint8     *data;
-  gsize             len;
-
-  data = gimp_color_managed_get_icc_profile (managed, &len);
-
-  if (data)
-    profile = gimp_lcms_profile_open_from_data (data, len, NULL);
-
-  if (profile && ! gimp_lcms_profile_is_rgb (profile))
-    {
-      gimp_lcms_profile_close (profile);
-      profile = NULL;
-    }
-
-  if (! profile)
-    profile = gimp_color_config_get_rgb_profile (config, NULL);
-
-  return profile;
-}
-
-static GimpColorProfile
 get_display_profile (GtkWidget       *widget,
                      GimpColorConfig *config)
 {
-  GimpColorProfile profile;
+  GimpColorProfile profile = NULL;
 
-  profile = gimp_widget_get_color_profile (widget);
+  if (config->display_profile_from_gdk)
+    profile = gimp_widget_get_color_profile (widget);
 
   if (! profile)
     profile = gimp_color_config_get_display_profile (config, NULL);
+
+  if (! profile)
+    profile = gimp_lcms_create_srgb_profile ();
 
   return profile;
 }
 
 GimpColorTransform
-gimp_widget_get_color_transform (GtkWidget        *widget,
-                                 GimpColorManaged *managed,
-                                 GimpColorConfig  *config,
-                                 const Babl       *src_format,
-                                 const Babl       *dest_format)
+gimp_widget_get_color_transform (GtkWidget         *widget,
+                                 GimpColorManaged  *managed,
+                                 GimpColorConfig   *config,
+                                 const Babl       **src_format,
+                                 const Babl       **dest_format)
 {
   GimpColorTransform transform     = NULL;
   GimpColorProfile   src_profile   = NULL;
@@ -529,23 +508,17 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
       /*  fallthru  */
 
     case GIMP_COLOR_MANAGEMENT_DISPLAY:
-      src_profile  = get_rgb_profile (managed, config);
+      src_profile  = gimp_color_managed_get_color_profile (managed);
       dest_profile = get_display_profile (widget, config);
       break;
     }
 
-  src_format  = gimp_lcms_get_format (src_format,  &lcms_src_format);
-  dest_format = gimp_lcms_get_format (dest_format, &lcms_dest_format);
+  *src_format  = gimp_lcms_get_format (*src_format,  &lcms_src_format);
+  *dest_format = gimp_lcms_get_format (*dest_format, &lcms_dest_format);
 
   if (proof_profile)
     {
       cmsUInt32Number softproof_flags = 0;
-
-      if (! src_profile)
-        src_profile = gimp_lcms_create_srgb_profile ();
-
-      if (! dest_profile)
-        dest_profile = gimp_lcms_create_srgb_profile ();
 
       softproof_flags |= cmsFLAGS_SOFTPROOFING;
 
@@ -579,15 +552,9 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
 
       gimp_lcms_profile_close (proof_profile);
     }
-  else if (src_profile || dest_profile)
+  else if (! gimp_lcms_profile_is_equal (src_profile, dest_profile))
     {
       cmsUInt32Number display_flags = 0;
-
-      if (! src_profile)
-        src_profile = gimp_lcms_create_srgb_profile ();
-
-      if (! dest_profile)
-        dest_profile = gimp_lcms_create_srgb_profile ();
 
       if (config->display_use_black_point_compensation)
         {
@@ -601,11 +568,8 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
                             display_flags);
     }
 
-  if (src_profile)
-    gimp_lcms_profile_close (src_profile);
-
-  if (dest_profile)
-    gimp_lcms_profile_close (dest_profile);
+  gimp_lcms_profile_close (src_profile);
+  gimp_lcms_profile_close (dest_profile);
 
   return transform;
 }

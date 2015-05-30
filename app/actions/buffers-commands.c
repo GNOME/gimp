@@ -20,6 +20,8 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpwidgets/gimpwidgets.h"
+
 #include "actions-types.h"
 
 #include "core/gimp.h"
@@ -32,7 +34,6 @@
 #include "widgets/gimpbufferview.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpcontainerview-utils.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"

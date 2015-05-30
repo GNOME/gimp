@@ -113,6 +113,7 @@ gimp_drawable_real_apply_buffer (GimpDrawable         *drawable,
                             GEGL_RECTANGLE (buffer_region->x + (x - base_x),
                                             buffer_region->y + (y - base_y),
                                             width, height),
+                            GEGL_ABYSS_NONE,
                             undo->applied_buffer,
                             GEGL_RECTANGLE (0, 0, width, height));
         }
@@ -228,6 +229,7 @@ gimp_drawable_real_replace_buffer (GimpDrawable        *drawable,
       gegl_buffer_copy (src_buffer,
                         GEGL_RECTANGLE (x + offset_x, y + offset_y,
                                         width, height),
+                        GEGL_ABYSS_NONE,
                         dest_buffer,
                         GEGL_RECTANGLE (0, 0, 0, 0));
 

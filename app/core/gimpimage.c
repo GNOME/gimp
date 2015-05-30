@@ -180,6 +180,8 @@ static void     gimp_image_real_colormap_changed (GimpImage         *image,
 static const guint8 *
         gimp_image_color_managed_get_icc_profile (GimpColorManaged  *managed,
                                                   gsize             *len);
+static GimpColorProfile
+      gimp_image_color_managed_get_color_profile (GimpColorManaged  *managed);
 
 static void        gimp_image_projectable_flush  (GimpProjectable   *projectable,
                                                   gboolean           invalidate_preview);
@@ -627,7 +629,8 @@ gimp_image_class_init (GimpImageClass *klass)
 static void
 gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 {
-  iface->get_icc_profile = gimp_image_color_managed_get_icc_profile;
+  iface->get_icc_profile   = gimp_image_color_managed_get_icc_profile;
+  iface->get_color_profile = gimp_image_color_managed_get_color_profile;
 }
 
 static void
@@ -1382,6 +1385,27 @@ gimp_image_color_managed_get_icc_profile (GimpColorManaged *managed,
     }
 
   return NULL;
+}
+
+static GimpColorProfile
+gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
+{
+  GimpImage        *image = GIMP_IMAGE (managed);
+  GimpColorProfile  profile;
+
+  profile = gimp_image_get_color_profile (image, NULL);
+
+  if (! profile)
+    {
+      const Babl *format = gimp_image_get_layer_format (image, FALSE);
+
+      if (gimp_babl_format_get_linear (format))
+        profile = gimp_lcms_create_linear_rgb_profile ();
+      else
+        profile = gimp_lcms_create_srgb_profile ();
+    }
+
+  return profile;
 }
 
 static void

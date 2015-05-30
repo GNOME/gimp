@@ -256,7 +256,7 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
           src_rect.x  = i + orig_x;
           dest_rect.x = new_x + new_width - i - 1;
 
-          gegl_buffer_copy (orig_buffer, &src_rect,
+          gegl_buffer_copy (orig_buffer, &src_rect, GEGL_ABYSS_NONE,
                             new_buffer, &dest_rect);
         }
       break;
@@ -277,7 +277,7 @@ gimp_drawable_transform_buffer_flip (GimpDrawable        *drawable,
           src_rect.y  = i + orig_y;
           dest_rect.y = new_y + new_height - i - 1;
 
-          gegl_buffer_copy (orig_buffer, &src_rect,
+          gegl_buffer_copy (orig_buffer, &src_rect, GEGL_ABYSS_NONE,
                             new_buffer, &dest_rect);
         }
       break;

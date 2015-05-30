@@ -9,7 +9,6 @@ pdb_sources = \
 	pdb/channel.pdb			\
 	pdb/color.pdb			\
 	pdb/context.pdb			\
-	pdb/convert.pdb			\
 	pdb/display.pdb			\
 	pdb/drawable.pdb		\
 	pdb/drawable_color.pdb		\
@@ -25,11 +24,13 @@ pdb_sources = \
 	pdb/gradient.pdb		\
 	pdb/gradient_select.pdb		\
 	pdb/gradients.pdb		\
-	pdb/grid.pdb			\
-	pdb/guides.pdb			\
 	pdb/help.pdb			\
 	pdb/image.pdb			\
+	pdb/image_convert.pdb		\
+	pdb/image_grid.pdb		\
+	pdb/image_guides.pdb		\
 	pdb/image_select.pdb		\
+	pdb/image_undo.pdb		\
 	pdb/item.pdb			\
 	pdb/item_transform.pdb		\
 	pdb/layer.pdb			\
@@ -51,7 +52,6 @@ pdb_sources = \
 	pdb/text_layer.pdb		\
 	pdb/text_tool.pdb		\
 	pdb/transform_tools.pdb		\
-	pdb/undo.pdb			\
 	pdb/unit.pdb			\
 	pdb/vectors.pdb
 

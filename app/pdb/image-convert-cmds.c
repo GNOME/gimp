@@ -260,7 +260,7 @@ image_convert_precision_invoker (GimpProcedure         *procedure,
 }
 
 void
-register_convert_procs (GimpPDB *pdb)
+register_image_convert_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
 

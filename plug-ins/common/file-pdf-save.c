@@ -1273,7 +1273,7 @@ get_drawable_image (gint32 drawable_ID,
 
   dest_buffer = gimp_cairo_surface_create_buffer (surface);
 
-  gegl_buffer_copy (src_buffer, NULL, dest_buffer, NULL);
+  gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
 
   cairo_surface_mark_dirty (surface);
 

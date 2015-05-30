@@ -60,9 +60,11 @@ typedef struct _CdisplayLcmsClass CdisplayLcmsClass;
 
 struct _CdisplayLcms
 {
-  GimpColorDisplay   parent_instance;
+  GimpColorDisplay    parent_instance;
 
-  GimpColorTransform transform;
+  GimpColorTransform  transform;
+  const Babl         *src_format;
+  const Babl         *dest_format;
 };
 
 struct _CdisplayLcmsClass
@@ -81,7 +83,6 @@ static void             cdisplay_lcms_convert_buffer       (GimpColorDisplay *di
                                                             GeglRectangle    *area);
 static void             cdisplay_lcms_changed              (GimpColorDisplay *display);
 
-static GimpColorProfile cdisplay_lcms_get_rgb_profile      (CdisplayLcms     *lcms);
 static GimpColorProfile cdisplay_lcms_get_display_profile  (CdisplayLcms     *lcms);
 
 static void             cdisplay_lcms_attach_labelled      (GtkTable         *table,
@@ -240,7 +241,7 @@ cdisplay_lcms_convert_buffer (GimpColorDisplay *display,
     return;
 
   iter = gegl_buffer_iterator_new (buffer, area, 0,
-                                   babl_format ("R'G'B'A float"),
+                                   lcms->src_format,
                                    GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE);
 
   while (gegl_buffer_iterator_next (iter))
@@ -274,42 +275,13 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
   if (GTK_IS_WIDGET (managed))
     widget = gtk_widget_get_toplevel (GTK_WIDGET (managed));
 
-  lcms->transform =
-    gimp_widget_get_color_transform (widget,
-                                     managed, config,
-                                     babl_format ("R'G'B'A float"),
-                                     babl_format ("R'G'B'A float"));
-}
+  lcms->src_format  = babl_format ("R'G'B'A float");
+  lcms->dest_format = babl_format ("R'G'B'A float");
 
-static GimpColorProfile
-cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
-{
-  GimpColorConfig  *config;
-  GimpColorManaged *managed;
-  GimpColorProfile  profile = NULL;
-
-  config  = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
-  managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
-
-  if (managed)
-    {
-      gsize         len;
-      const guint8 *data = gimp_color_managed_get_icc_profile (managed, &len);
-
-      if (data)
-        profile = cmsOpenProfileFromMem ((gpointer) data, len);
-
-      if (profile && ! gimp_lcms_profile_is_rgb (profile))
-        {
-          gimp_lcms_profile_close (profile);
-          profile = NULL;
-        }
-    }
-
-  if (! profile)
-    profile = gimp_color_config_get_rgb_profile (config, NULL);
-
-  return profile;
+  lcms->transform = gimp_widget_get_color_transform (widget,
+                                                     managed, config,
+                                                     &lcms->src_format,
+                                                     &lcms->dest_format);
 }
 
 static GimpColorProfile
@@ -317,8 +289,8 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 {
   GimpColorConfig  *config;
   GimpColorManaged *managed;
-  GtkWidget        *widget = NULL;
-  GimpColorProfile  profile;
+  GtkWidget        *widget  = NULL;
+  GimpColorProfile  profile = NULL;
 
   config  = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
   managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
@@ -326,7 +298,8 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
   if (GTK_IS_WIDGET (managed))
     widget = gtk_widget_get_toplevel (GTK_WIDGET (managed));
 
-  profile = gimp_widget_get_color_profile (widget);
+  if (config->display_profile_from_gdk)
+    profile = gimp_widget_get_color_profile (widget);
 
   if (! profile)
     profile = gimp_color_config_get_display_profile (config, NULL);
@@ -367,12 +340,14 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
                                     const gchar  *name)
 {
   GimpColorConfig  *config;
+  GimpColorManaged *managed;
   GtkWidget        *label;
   GimpColorProfile  profile = NULL;
   gchar            *text;
   gchar            *tooltip;
 
-  config = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
+  config  = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
+  managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
 
   label = g_object_get_data (G_OBJECT (lcms), name);
 
@@ -381,7 +356,7 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
 
   if (strcmp (name, "rgb-profile") == 0)
     {
-      profile = cdisplay_lcms_get_rgb_profile (lcms);
+      profile = gimp_color_managed_get_color_profile (managed);
     }
   else if (g_str_has_prefix (name, "display-profile"))
     {

@@ -365,7 +365,7 @@ CODE
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Image grid procedures';
-$doc_title = 'gimpgrid';
+$doc_title = 'gimpimagegrid';
 $doc_short_desc = "Functions manuipulating an image's grid.";
 $doc_long_desc = "Functions manuipulating an image's grid.";
 

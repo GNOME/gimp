@@ -276,6 +276,8 @@
       <menu action="view-rotate-menu" name="Rotate">
         <menuitem action="view-rotate-reset" />
         <separator />
+        <menuitem action="view-rotate-15" />
+        <menuitem action="view-rotate-345" />
         <menuitem action="view-rotate-90" />
         <menuitem action="view-rotate-270" />
         <menuitem action="view-rotate-180" />

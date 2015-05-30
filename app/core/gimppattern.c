@@ -159,6 +159,7 @@ gimp_pattern_get_new_preview (GimpViewable *viewable,
   dest_buffer = gimp_temp_buf_create_buffer (temp_buf);
 
   gegl_buffer_copy (src_buffer,  GEGL_RECTANGLE (0, 0, copy_width, copy_height),
+                    GEGL_ABYSS_NONE,
                     dest_buffer, GEGL_RECTANGLE (0, 0, 0, 0));
 
   g_object_unref (src_buffer);

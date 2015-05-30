@@ -83,7 +83,6 @@ PDB_WRAPPERS_C = \
 	gimpchannel_pdb.c		\
 	gimpcolor_pdb.c			\
 	gimpcontext_pdb.c		\
-	gimpconvert_pdb.c		\
 	gimpdisplay_pdb.c		\
 	gimpdrawable_pdb.c		\
 	gimpdrawablecolor_pdb.c		\
@@ -98,11 +97,13 @@ PDB_WRAPPERS_C = \
 	gimpgradient_pdb.c		\
 	gimpgradients_pdb.c		\
 	gimpgradientselect_pdb.c	\
-	gimpguides_pdb.c		\
-	gimpgrid_pdb.c			\
 	gimphelp_pdb.c			\
 	gimpimage_pdb.c			\
+	gimpimageconvert_pdb.c		\
+	gimpimagegrid_pdb.c		\
+	gimpimageguides_pdb.c		\
 	gimpimageselect_pdb.c		\
+	gimpimageundo_pdb.c		\
 	gimpitem_pdb.c			\
 	gimpitemtransform_pdb.c		\
 	gimplayer_pdb.c			\
@@ -123,7 +124,6 @@ PDB_WRAPPERS_C = \
 	gimptextlayer_pdb.c		\
 	gimptexttool_pdb.c		\
 	gimptransformtools_pdb.c	\
-	gimpundo_pdb.c			\
 	gimpunit_pdb.c			\
 	gimpvectors_pdb.c
 
@@ -137,7 +137,6 @@ PDB_WRAPPERS_H = \
 	gimpchannel_pdb.h		\
 	gimpcolor_pdb.h			\
 	gimpcontext_pdb.h		\
-	gimpconvert_pdb.h		\
 	gimpdisplay_pdb.h		\
 	gimpdrawable_pdb.h		\
 	gimpdrawablecolor_pdb.h		\
@@ -152,11 +151,13 @@ PDB_WRAPPERS_H = \
 	gimpgradient_pdb.h		\
 	gimpgradients_pdb.h		\
 	gimpgradientselect_pdb.h	\
-	gimpgrid_pdb.h			\
-	gimpguides_pdb.h		\
 	gimphelp_pdb.h			\
 	gimpimage_pdb.h			\
+	gimpimageconvert_pdb.h		\
+	gimpimagegrid_pdb.h		\
+	gimpimageguides_pdb.h		\
 	gimpimageselect_pdb.h		\
+	gimpimageundo_pdb.h		\
 	gimpitem_pdb.h			\
 	gimpitemtransform_pdb.h		\
 	gimplayer_pdb.h			\
@@ -177,7 +178,6 @@ PDB_WRAPPERS_H = \
 	gimptextlayer_pdb.h		\
 	gimptexttool_pdb.h		\
 	gimptransformtools_pdb.h	\
-	gimpundo_pdb.h			\
 	gimpunit_pdb.h			\
 	gimpvectors_pdb.h
 

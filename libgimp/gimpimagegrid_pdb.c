@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2003 Peter Mattis and Spencer Kimball
  *
- * gimpgrid_pdb.c
+ * gimpimagegrid_pdb.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,8 +26,8 @@
 
 
 /**
- * SECTION: gimpgrid
- * @title: gimpgrid
+ * SECTION: gimpimagegrid
+ * @title: gimpimagegrid
  * @short_description: Functions manuipulating an image's grid.
  *
  * Functions manuipulating an image's grid.

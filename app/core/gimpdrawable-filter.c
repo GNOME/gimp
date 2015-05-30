@@ -116,6 +116,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
                         GEGL_RECTANGLE (rect.x, rect.y,
                                         rect.width, rect.height),
+                        GEGL_ABYSS_NONE,
                         undo_buffer,
                         GEGL_RECTANGLE (0, 0, 0, 0));
 
@@ -150,6 +151,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
                    */
                   gegl_buffer_copy (cache,
                                     &rects[i],
+                                    GEGL_ABYSS_NONE,
                                     apply_buffer,
                                     GEGL_RECTANGLE (rects[i].x - rect.x,
                                                     rects[i].y - rect.y,
@@ -197,6 +199,7 @@ gimp_drawable_merge_filter (GimpDrawable *drawable,
 
           gegl_buffer_copy (undo_buffer,
                             GEGL_RECTANGLE (0, 0, rect.width, rect.height),
+                            GEGL_ABYSS_NONE,
                             gimp_drawable_get_buffer (drawable),
                             GEGL_RECTANGLE (rect.x, rect.y, 0, 0));
 

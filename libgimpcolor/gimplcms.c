@@ -621,6 +621,80 @@ gimp_lcms_create_srgb_profile (void)
   return gimp_lcms_profile_open_from_data (profile_data, profile_length, NULL);
 }
 
+static GimpColorProfile
+gimp_lcms_create_linear_rgb_profile_internal (void)
+{
+  cmsHPROFILE profile;
+
+  /* white point is D65 from the sRGB specs */
+  cmsCIExyY whitepoint = { 0.3127, 0.3290, 1.0 };
+
+  /* primaries are ITU‐R BT.709‐5 (xYY), which are also the primaries
+   * from the sRGB specs, modified to properly account for hexadecimal
+   * quantization during the profile making process.
+   */
+  cmsCIExyYTRIPLE primaries =
+    {
+      /* R { 0.6400, 0.3300, 1.0 }, */
+      /* G { 0.3000, 0.6000, 1.0 }, */
+      /* B { 0.1500, 0.0600, 1.0 }  */
+      /* R */ { 0.639998686, 0.330010138, 1.0 },
+      /* G */ { 0.300003784, 0.600003357, 1.0 },
+      /* B */ { 0.150002046, 0.059997204, 1.0 }
+    };
+
+  /* linear light */
+  cmsToneCurve *linear[3];
+
+  linear[0] = linear[1] = linear[2] = cmsBuildGamma (NULL, 1.0);
+
+  /* create the profile, cleanup, and return */
+  profile = cmsCreateRGBProfile (&whitepoint, &primaries, linear);
+  cmsFreeToneCurve (linear[0]);
+
+  gimp_lcms_profile_set_tag (profile, cmsSigProfileDescriptionTag,
+                             "GIMP built-in Linear RGB");
+  gimp_lcms_profile_set_tag (profile, cmsSigDeviceMfgDescTag,
+                             "GIMP");
+  gimp_lcms_profile_set_tag (profile, cmsSigDeviceModelDescTag,
+                             "Linear RGB");
+  gimp_lcms_profile_set_tag (profile, cmsSigCopyrightTag,
+                             "Public Domain");
+
+  return profile;
+}
+
+/**
+ * gimp_lcms_create_linear_rgb_profile:
+ *
+ * This function creates a profile for babl_model("RGB"). Please
+ * somebody write someting smarter here.
+ *
+ * Return value: the linear RGB cmsHPROFILE.
+ *
+ * Since: GIMP 2.10
+ **/
+GimpColorProfile
+gimp_lcms_create_linear_rgb_profile (void)
+{
+  static guint8 *profile_data   = NULL;
+  static gsize   profile_length = 0;
+
+  if (G_UNLIKELY (profile_data == NULL))
+    {
+      GimpColorProfile profile;
+
+      profile = gimp_lcms_create_linear_rgb_profile_internal ();
+
+      profile_data = gimp_lcms_profile_save_to_data (profile, &profile_length,
+                                                     NULL);
+
+      gimp_lcms_profile_close (profile);
+    }
+
+  return gimp_lcms_profile_open_from_data (profile_data, profile_length, NULL);
+}
+
 /**
  * gimp_lcms_get_format:
  * @format:      a #Babl format

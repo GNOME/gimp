@@ -109,6 +109,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-icon.h			\
 	gimpdisplayshell-items.c		\
 	gimpdisplayshell-items.h		\
+	gimpdisplayshell-profile.c		\
+	gimpdisplayshell-profile.h		\
 	gimpdisplayshell-progress.c		\
 	gimpdisplayshell-progress.h		\
 	gimpdisplayshell-render.c		\

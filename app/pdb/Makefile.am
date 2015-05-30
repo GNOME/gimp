@@ -41,7 +41,6 @@ libappinternal_procs_a_SOURCES = \
 	channel-cmds.c			\
 	color-cmds.c			\
 	context-cmds.c			\
-	convert-cmds.c			\
 	display-cmds.c			\
 	drawable-cmds.c			\
 	drawable-color-cmds.c		\
@@ -57,11 +56,13 @@ libappinternal_procs_a_SOURCES = \
 	gradient-cmds.c			\
 	gradient-select-cmds.c		\
 	gradients-cmds.c		\
-	grid-cmds.c			\
-	guides-cmds.c			\
 	help-cmds.c			\
 	image-cmds.c			\
+	image-convert-cmds.c		\
+	image-grid-cmds.c		\
+	image-guides-cmds.c		\
 	image-select-cmds.c		\
+	image-undo-cmds.c		\
 	item-cmds.c			\
 	item-transform-cmds.c		\
 	layer-cmds.c			\
@@ -83,6 +84,5 @@ libappinternal_procs_a_SOURCES = \
 	text-layer-cmds.c		\
 	text-tool-cmds.c		\
 	transform-tools-cmds.c		\
-	undo-cmds.c			\
 	unit-cmds.c			\
 	vectors-cmds.c
