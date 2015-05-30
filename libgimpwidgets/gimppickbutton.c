@@ -31,7 +31,7 @@
 #include "gimppickbutton.h"
 #include "gimpstock.h"
 
-#include "cursors/gimp-color-picker-cursors.h"
+#include "cursors/gimp-color-picker-cursors.c"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -175,16 +175,27 @@ gimp_pick_button_new (void)
 static GdkCursor *
 make_cursor (GdkDisplay *display)
 {
-  GdkCursor           *cursor;
-  GdkPixbuf           *pixbuf;
+  GdkPixbuf *pixbuf;
+  GError    *error = NULL;
 
-  pixbuf = gdk_pixbuf_new_from_inline (-1, cursor_color_picker, FALSE, NULL);
+  pixbuf = gdk_pixbuf_new_from_resource ("/org/gimp/color-picker-cursors/cursor-color-picker.png",
+                                         &error);
 
-  cursor = gdk_cursor_new_from_pixbuf (display, pixbuf, 1, 30);
+  if (pixbuf)
+    {
+      GdkCursor *cursor = gdk_cursor_new_from_pixbuf (display, pixbuf, 1, 30);
 
-  g_object_unref (pixbuf);
+      g_object_unref (pixbuf);
 
-  return cursor;
+      return cursor;
+    }
+  else
+    {
+      g_critical ("Failed to create cursor image: %s", error->message);
+      g_clear_error (&error);
+    }
+
+  return NULL;
 }
 
 static void

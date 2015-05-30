@@ -23,9 +23,14 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
+
+#include "config/gimpcoreconfig.h"
+
+#include "core/gimp.h"
 
 #include "paint/gimpmybrushoptions.h"
 
@@ -38,64 +43,89 @@
 
 
 static void
-gimp_mybrush_options_load_brush (const GimpDatafileData *file_data,
-                                 gpointer                user_data)
+gimp_mybrush_options_load_brush (GFile        *file,
+                                 GtkTreeModel *model)
 {
-  if (gimp_datafiles_check_extension (file_data->basename, ".myb"))
-    {
-      GtkListStore *store  = user_data;
-      GtkTreeIter   iter   = { 0, };
-      GdkPixbuf    *pixbuf = NULL;
-      gchar        *filename;
-      gchar        *basename;
-      gchar        *preview_filename;
+  GtkListStore *store  = GTK_LIST_STORE (model);
+  GtkTreeIter   iter   = { 0, };
+  GdkPixbuf    *pixbuf = NULL;
+  gchar        *filename;
+  gchar        *basename;
+  gchar        *preview_filename;
 
-      filename = g_strdup (file_data->filename);
-      g_object_weak_ref (G_OBJECT (store), (GWeakNotify) g_free, filename);
+  filename = g_file_get_path (file);
+  g_object_weak_ref (G_OBJECT (store), (GWeakNotify) g_free, filename);
 
-      basename = g_strndup (filename, strlen (filename) - 4);
-      preview_filename = g_strconcat (basename, "_prev.png", NULL);
-      g_free (basename);
+  basename = g_strndup (filename, strlen (filename) - 4);
+  preview_filename = g_strconcat (basename, "_prev.png", NULL);
+  g_free (basename);
 
-      pixbuf = gdk_pixbuf_new_from_file (preview_filename, NULL);
-      g_free (preview_filename);
+  pixbuf = gdk_pixbuf_new_from_file_at_size (preview_filename,
+                                             48, 48, NULL);
+  g_free (preview_filename);
 
-      if (pixbuf)
-        {
-          GdkPixbuf *scaled;
-          gint       width  = gdk_pixbuf_get_width (pixbuf);
-          gint       height = gdk_pixbuf_get_height (pixbuf);
-          gdouble    factor = 48.0 / height;
+  basename = g_file_get_basename (file);
 
-          scaled = gdk_pixbuf_scale_simple (pixbuf,
-                                            width * factor,
-                                            height * factor,
-                                            GDK_INTERP_NEAREST);
+  gtk_list_store_append (store, &iter);
+  gtk_list_store_set (store, &iter,
+                      GIMP_INT_STORE_LABEL,     gimp_filename_to_utf8 (basename),
+                      GIMP_INT_STORE_PIXBUF,    pixbuf,
+                      GIMP_INT_STORE_USER_DATA, filename,
+                      -1);
 
-          g_object_unref (pixbuf);
-          pixbuf = scaled;
-        }
+  g_free (basename);
 
-      gtk_list_store_append (store, &iter);
-      gtk_list_store_set (store, &iter,
-                          GIMP_INT_STORE_LABEL,     file_data->basename,
-                          GIMP_INT_STORE_PIXBUF,    pixbuf,
-                          GIMP_INT_STORE_USER_DATA, filename,
-                          -1);
-
-      if (pixbuf)
-        g_object_unref (pixbuf);
-    }
+  if (pixbuf)
+    g_object_unref (pixbuf);
 }
 
 static void
-gimp_mybrush_options_load_recursive (const GimpDatafileData *file_data,
-                                     gpointer                user_data)
+gimp_mybrush_options_load_recursive (GFile        *dir,
+                                     GtkTreeModel *model)
 {
-  gimp_datafiles_read_directories (file_data->filename,
-                                   G_FILE_TEST_IS_REGULAR,
-                                   gimp_mybrush_options_load_brush,
-                                   user_data);
+  GFileEnumerator *enumerator;
+
+  enumerator = g_file_enumerate_children (dir,
+                                          G_FILE_ATTRIBUTE_STANDARD_NAME ","
+                                          G_FILE_ATTRIBUTE_STANDARD_IS_HIDDEN ","
+                                          G_FILE_ATTRIBUTE_STANDARD_TYPE,
+                                          G_FILE_QUERY_INFO_NONE,
+                                          NULL, NULL);
+
+  if (enumerator)
+    {
+      GFileInfo *info;
+
+      while ((info = g_file_enumerator_next_file (enumerator,
+                                                  NULL, NULL)))
+        {
+          if (! g_file_info_get_is_hidden (info))
+            {
+              GFile *file = g_file_enumerator_get_child (enumerator, info);
+
+              switch (g_file_info_get_file_type (info))
+                {
+                case G_FILE_TYPE_DIRECTORY:
+                  gimp_mybrush_options_load_recursive (file, model);
+                  break;
+
+                case G_FILE_TYPE_REGULAR:
+                  if (gimp_file_has_extension (file, ".myb"))
+                    gimp_mybrush_options_load_brush (file, model);
+                  break;
+
+                default:
+                  break;
+                }
+
+              g_object_unref (file);
+            }
+
+          g_object_unref (info);
+        }
+
+      g_object_unref (enumerator);
+    }
 }
 
 static void
@@ -128,6 +158,8 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
   GtkWidget    *scale;
   GtkWidget    *combo;
   GtkTreeModel *model;
+  GList        *path;
+  GList        *list;
 
   /* radius */
   scale = gimp_prop_spin_scale_new (config, "radius",
@@ -153,10 +185,16 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
 
-  gimp_datafiles_read_directories ("/usr/share/mypaint/brushes",
-                                   G_FILE_TEST_IS_DIR,
-                                   gimp_mybrush_options_load_recursive,
-                                   model);
+  path = gimp_config_path_expand_to_files (GIMP_CONTEXT (config)->gimp->config->mypaint_brush_path, NULL);
+
+  for (list = path; list; list = g_list_next (list))
+    {
+      GFile *dir = list->data;
+
+      gimp_mybrush_options_load_recursive (dir, model);
+    }
+
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (gimp_mybrush_options_brush_changed),

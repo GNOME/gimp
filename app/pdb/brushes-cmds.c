@@ -207,6 +207,9 @@ brushes_get_brush_data_invoker (GimpProcedure         *procedure,
     {
       GimpBrush *brush;
 
+      if (paint_mode == GIMP_OVERLAY_MODE)
+        paint_mode = GIMP_SOFTLIGHT_MODE;
+
       if (name && strlen (name))
         brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
       else

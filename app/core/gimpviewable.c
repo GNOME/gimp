@@ -39,7 +39,7 @@
 #include "gimptempbuf.h"
 #include "gimpviewable.h"
 
-#include "icons/gimp-core-pixbufs.h"
+#include "icons/gimp-core-pixbufs.c"
 
 
 enum
@@ -1111,6 +1111,7 @@ gimp_viewable_get_dummy_pixbuf (GimpViewable  *viewable,
 {
   GdkPixbuf *icon;
   GdkPixbuf *pixbuf;
+  GError    *error = NULL;
   gdouble    ratio;
   gint       w, h;
 
@@ -1118,9 +1119,14 @@ gimp_viewable_get_dummy_pixbuf (GimpViewable  *viewable,
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  icon = gdk_pixbuf_new_from_inline (-1, gimp_question_64, FALSE, NULL);
-
-  g_return_val_if_fail (icon != NULL, NULL);
+  icon = gdk_pixbuf_new_from_resource ("/org/gimp/icons/64/gimp-question.png",
+                                       &error);
+  if (! icon)
+    {
+      g_critical ("Failed to create icon image: %s", error->message);
+      g_clear_error (&error);
+      return NULL;
+    }
 
   w = gdk_pixbuf_get_width (icon);
   h = gdk_pixbuf_get_height (icon);

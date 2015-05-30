@@ -108,7 +108,12 @@ gimp_operation_overlay_mode_process_pixels (gfloat              *in,
 
           for (b = RED; b < ALPHA; b++)
             {
-              gfloat comp = in[b] * (in[b] + (2.0 * layer[b]) * (1.0 - in[b]));
+              gfloat comp;
+
+              if (in[b] < 0.5)
+                comp = 2.0 * in[b] * layer[b];
+              else
+                comp = 1.0 - 2.0 * (1.0 - layer[b]) * (1.0 - in[b]);
 
               out[b] = comp * ratio + in[b] * (1.0 - ratio);
             }

@@ -342,3 +342,105 @@ gimp_color_config_get_property (GObject    *object,
       break;
     }
 }
+
+GimpColorProfile
+gimp_color_config_get_rgb_profile (GimpColorConfig  *config,
+                                   GError          **error)
+{
+  GimpColorProfile profile = NULL;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (config->rgb_profile)
+    {
+      GFile *file = g_file_new_for_path (config->rgb_profile);
+
+      profile = gimp_lcms_profile_open_from_file (file, error);
+
+      if (profile && ! gimp_lcms_profile_is_rgb (profile))
+        {
+          gimp_lcms_profile_close (profile);
+          profile = NULL;
+
+          g_set_error (error, 0, 0,
+                       _("Color profile '%s' is not for RGB color space"),
+                       gimp_file_get_utf8_name (file));
+        }
+
+      g_object_unref (file);
+    }
+
+  return profile;
+}
+
+GimpColorProfile
+gimp_color_config_get_cmyk_profile (GimpColorConfig  *config,
+                                    GError          **error)
+{
+  GimpColorProfile profile = NULL;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (config->cmyk_profile)
+    {
+      GFile *file = g_file_new_for_path (config->cmyk_profile);
+
+      profile = gimp_lcms_profile_open_from_file (file, error);
+
+      if (profile && ! gimp_lcms_profile_is_cmyk (profile))
+        {
+          gimp_lcms_profile_close (profile);
+          profile = NULL;
+
+          g_set_error (error, 0, 0,
+                       _("Color profile '%s' is not for RGB color space"),
+                       gimp_file_get_utf8_name (file));
+        }
+
+      g_object_unref (file);
+    }
+
+  return profile;
+}
+
+GimpColorProfile
+gimp_color_config_get_display_profile (GimpColorConfig  *config,
+                                       GError          **error)
+{
+  GimpColorProfile profile = NULL;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (config->display_profile)
+    {
+      GFile *file = g_file_new_for_path (config->display_profile);
+
+      profile = gimp_lcms_profile_open_from_file (file, error);
+      g_object_unref (file);
+    }
+
+  return profile;
+}
+
+GimpColorProfile
+gimp_color_config_get_printer_profile (GimpColorConfig  *config,
+                                       GError          **error)
+{
+  GimpColorProfile profile = NULL;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  if (config->printer_profile)
+    {
+      GFile *file = g_file_new_for_path (config->printer_profile);
+
+      profile = gimp_lcms_profile_open_from_file (file, error);
+      g_object_unref (file);
+    }
+
+  return profile;
+}

@@ -55,9 +55,9 @@
 </autotools>
 
 <autotools id="atk" autogen-sh="configure" makeinstallargs="install -j1">
-	<branch version="2.12.0" repo="gnome.org"
-			module="atk/2.12/atk-2.12.0.tar.xz"
-			hash="sha256:48a8431974639c5a59c24fcd3ece1a19709872d5dfe78907524d9f5e9993f18f">
+	<branch version="2.16.0" repo="gnome.org"
+			module="atk/2.16/atk-2.16.0.tar.xz"
+			hash="sha256:095f986060a6a0b22eb15eef84ae9f14a1cf8082488faa6886d94c37438ae562">
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>
@@ -145,9 +145,9 @@
 </autotools>
 
 <autotools id="gdk-pixbuf2" autogen-sh="configure">
-	<branch version="2.30.7" repo="gnome.org"
-			module="gdk-pixbuf/2.30/gdk-pixbuf-2.30.7.tar.xz"
-			hash="sha256:0aafc365eab1083a53f15e4828333b968219ffcb1a995ac6289c0147c9ffad06">
+	<branch version="2.30.8" repo="gnome.org"
+			module="gdk-pixbuf/2.30/gdk-pixbuf-2.30.8.tar.xz"
+			hash="sha256:4853830616113db4435837992c0aebd94cbb993c44dc55063cee7f72a7bef8be">
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>
@@ -159,6 +159,7 @@
 	<branch version="2.24.23" repo="gnome.org"
 			module="gtk+/2.24/gtk+-2.24.23.tar.xz"
 			hash="sha256:a0a406e27e9b5e7d6b2c4334212706ed5cdcd41e713e66c9ae950655dd61517c">
+		<patch file="gtk-horiz-scrolling.patch" strip="1"/>
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>

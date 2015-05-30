@@ -347,36 +347,14 @@ colorsel_cmyk_adj_update (GtkAdjustment *adj,
   gimp_color_selector_color_changed (selector);
 }
 
-static cmsHPROFILE
-color_config_get_rgb_profile (GimpColorConfig *config)
-{
-  cmsHPROFILE profile = NULL;
-
-  if (config->rgb_profile)
-    profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
-
-  return profile ? profile : gimp_lcms_create_srgb_profile ();
-}
-
-static cmsHPROFILE
-color_config_get_cmyk_profile (GimpColorConfig *config)
-{
-  cmsHPROFILE profile = NULL;
-
-  if (config->cmyk_profile)
-    profile = cmsOpenProfileFromFile (config->cmyk_profile, "r");
-
-  return profile;
-}
-
 static void
 colorsel_cmyk_config_changed (ColorselCmyk *module)
 {
   GimpColorSelector *selector     = GIMP_COLOR_SELECTOR (module);
   GimpColorConfig   *config       = module->config;
   cmsUInt32Number    flags        = 0;
-  cmsHPROFILE        rgb_profile  = NULL;
-  cmsHPROFILE        cmyk_profile = NULL;
+  GimpColorProfile   rgb_profile  = NULL;
+  GimpColorProfile   cmyk_profile = NULL;
   gchar             *label;
   gchar             *summary;
   gchar             *text;
@@ -399,8 +377,11 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   if (! config)
     goto out;
 
-  rgb_profile  = color_config_get_rgb_profile (config);
-  cmyk_profile = color_config_get_cmyk_profile (config);
+  rgb_profile  = gimp_color_config_get_rgb_profile (config, NULL);
+  cmyk_profile = gimp_color_config_get_cmyk_profile (config, NULL);
+
+  if (! rgb_profile)
+    rgb_profile = gimp_lcms_create_srgb_profile ();
 
   if (! cmyk_profile)
     goto out;
@@ -434,10 +415,10 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
  out:
 
   if (rgb_profile)
-    cmsCloseProfile (rgb_profile);
+    gimp_lcms_profile_close (rgb_profile);
 
   if (cmyk_profile)
-    cmsCloseProfile (cmyk_profile);
+    gimp_lcms_profile_close (cmyk_profile);
 
   if (! module->in_destruction)
     colorsel_cmyk_set_color (selector, &selector->rgb, &selector->hsv);

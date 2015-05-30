@@ -854,26 +854,21 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
                                        gdouble           pixel_dist,
                                        GimpRGB          *color)
 {
-  GimpGradientOptions *gradient_options;
-  GimpGradient        *gradient;
-  GimpDynamics        *dynamics;
-  GimpDynamicsOutput  *color_output;
+  GimpDynamics *dynamics;
 
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (color != NULL, FALSE);
 
-  gradient_options = paint_options->gradient_options;
-
-  gradient = gimp_context_get_gradient (GIMP_CONTEXT (paint_options));
-
   dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
 
-  color_output = gimp_dynamics_get_output (dynamics,
-                                           GIMP_DYNAMICS_OUTPUT_COLOR);
-
-  if (gimp_dynamics_output_is_enabled (color_output))
+  if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_COLOR))
     {
+      GimpGradientOptions *gradient_options = paint_options->gradient_options;
+      GimpGradient        *gradient;
+
+      gradient = gimp_context_get_gradient (GIMP_CONTEXT (paint_options));
+
       gimp_gradient_get_color_at (gradient, GIMP_CONTEXT (paint_options),
                                   NULL, grad_point,
                                   gradient_options->gradient_reverse,
@@ -888,9 +883,8 @@ gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
 GimpBrushApplicationMode
 gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
 {
-  GimpDynamics       *dynamics;
-  GimpDynamicsOutput *force_output;
-  gboolean            dynamic_force = FALSE;
+  GimpDynamics *dynamics;
+  gboolean      dynamic_force = FALSE;
 
   g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), GIMP_BRUSH_SOFT);
 
@@ -899,11 +893,8 @@ gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options)
 
   dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
 
-  force_output = gimp_dynamics_get_output (dynamics,
-                                           GIMP_DYNAMICS_OUTPUT_FORCE);
-
-  if (force_output)
-    dynamic_force = gimp_dynamics_output_is_enabled (force_output);
+  dynamic_force = gimp_dynamics_is_output_enabled (dynamics,
+                                                   GIMP_DYNAMICS_OUTPUT_FORCE);
 
   if (dynamic_force || (paint_options->brush_force > 0.0))
     return GIMP_BRUSH_PRESSURE;

@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-09 00:43+0100\n"
-"PO-Revision-Date: 2015-03-09 00:50+0100\n"
+"POT-Creation-Date: 2015-04-17 16:37+0200\n"
+"PO-Revision-Date: 2015-04-17 16:38+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -40,22 +40,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1106
+#: ../libgimp/gimp.c:1140
 msgid "success"
 msgstr "azione riuscita"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1110
+#: ../libgimp/gimp.c:1144
 msgid "execution error"
 msgstr "errore di esecuzione"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1114
+#: ../libgimp/gimp.c:1148
 msgid "calling error"
 msgstr "errore di chiamata"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1118
+#: ../libgimp/gimp.c:1152
 msgid "cancelled"
 msgstr "annullato"
 
@@ -1561,19 +1561,28 @@ msgstr ""
 msgid "HTML _notation:"
 msgstr "_Notazione HTML:"
 
-#: ../libgimpwidgets/gimpfileentry.c:200
+#: ../libgimpwidgets/gimpfileentry.c:150
+msgid "Show file location in the file manager"
+msgstr "Mostra posizione file nel gestore file"
+
+#: ../libgimpwidgets/gimpfileentry.c:227
 msgid "Open a file selector to browse your folders"
 msgstr "Apre un selettore file per esplorare le proprie cartelle"
 
-#: ../libgimpwidgets/gimpfileentry.c:201
+#: ../libgimpwidgets/gimpfileentry.c:228
 msgid "Open a file selector to browse your files"
 msgstr "Apre un selettore file per esplorare i propri documenti"
 
-#: ../libgimpwidgets/gimpfileentry.c:361
+#: ../libgimpwidgets/gimpfileentry.c:395
+#, c-format
+msgid "Can't show file in file manager: %s"
+msgstr "Impossibile mostrare il file nel gestore file: %s"
+
+#: ../libgimpwidgets/gimpfileentry.c:422
 msgid "Select Folder"
 msgstr "Seleziona cartella"
 
-#: ../libgimpwidgets/gimpfileentry.c:363
+#: ../libgimpwidgets/gimpfileentry.c:424
 msgid "Select File"
 msgstr "Seleziona file"
 
@@ -1722,7 +1731,7 @@ msgstr "Spaziatura r_ighe"
 msgid "Re_size"
 msgstr "Ridimen_siona"
 
-#: ../libgimpwidgets/gimpstock.c:141 ../libgimpwidgets/gimpstock.c:275
+#: ../libgimpwidgets/gimpstock.c:141 ../libgimpwidgets/gimpstock.c:276
 msgid "_Scale"
 msgstr "_Scala"
 
@@ -1734,16 +1743,16 @@ msgstr "Rita_glia"
 msgid "_Select"
 msgstr "_Seleziona"
 
-#: ../libgimpwidgets/gimpstock.c:259 ../libgimpwidgets/gimpstock.c:270
-#: ../libgimpwidgets/gimpstock.c:281
+#: ../libgimpwidgets/gimpstock.c:259 ../libgimpwidgets/gimpstock.c:271
+#: ../libgimpwidgets/gimpstock.c:282
 msgid "_Transform"
 msgstr "_Trasforma"
 
-#: ../libgimpwidgets/gimpstock.c:274
+#: ../libgimpwidgets/gimpstock.c:275
 msgid "_Rotate"
 msgstr "_Ruota"
 
-#: ../libgimpwidgets/gimpstock.c:277
+#: ../libgimpwidgets/gimpstock.c:278
 msgid "_Shear"
 msgstr "_Inclina"
 
@@ -1783,17 +1792,17 @@ msgstr "Generatore del seme di casualità con un numero generato casualmente"
 msgid "_Randomize"
 msgstr "_Casualizza"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:49
+#: ../libgimpwidgets/gimpwidgets-private.c:47
 msgctxt "input-mode"
 msgid "Disabled"
 msgstr "Disabilitata"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:50
+#: ../libgimpwidgets/gimpwidgets-private.c:48
 msgctxt "input-mode"
 msgid "Screen"
 msgstr "Schermo"
 
-#: ../libgimpwidgets/gimpwidgets-private.c:51
+#: ../libgimpwidgets/gimpwidgets-private.c:49
 msgctxt "input-mode"
 msgid "Window"
 msgstr "Finestra"

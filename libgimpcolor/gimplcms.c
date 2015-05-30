@@ -46,6 +46,14 @@
  * Definitions and Functions relating to LCMS.
  **/
 
+/**
+ * GimpColorProfile:
+ *
+ * Simply a typedef to #gpointer, but actually is a cmsHPROFILE. It's
+ * used in public GIMP APIs in order to avoid having to include LCMS
+ * headers.
+ **/
+
 
 #define GIMP_LCMS_MD5_DIGEST_LENGTH 16
 
@@ -61,6 +69,18 @@ gimp_lcms_error_quark (void)
   return quark;
 }
 
+/**
+ * gimp_lcms_profile_open_from_file:
+ * @file:  a #GFile
+ * @error: return location for #GError
+ *
+ * This function opens an ICC color profile from @file.
+ *
+ * Return value: the #GimpColorProfile, or %NULL. On error, %NULL is
+ *               returned and @error is set.
+ *
+ * Since: GIMP 2.10
+ **/
 GimpColorProfile
 gimp_lcms_profile_open_from_file (GFile   *file,
                                   GError **error)
@@ -135,6 +155,19 @@ gimp_lcms_profile_open_from_file (GFile   *file,
   return profile;
 }
 
+/**
+ * gimp_lcms_profile_open_from_data:
+ * @data:   pointer to memory containing an ICC profile
+ * @length: lenght of the profile in memory, in bytes
+ * @error:  return location for #GError
+ *
+ * This function opens an ICC color profile from memory. On error,
+ * %NULL is returned and @error is set.
+ *
+ * Return value: the #GimpColorProfile, or %NULL.
+ *
+ * Since: GIMP 2.10
+ **/
 GimpColorProfile
 gimp_lcms_profile_open_from_data (const guint8  *data,
                                   gsize          length,
@@ -155,6 +188,20 @@ gimp_lcms_profile_open_from_data (const guint8  *data,
   return profile;
 }
 
+/**
+ * gimp_lcms_profile_dave_to_data:
+ * @profile: a #GimpColorProfile
+ * @length:  return location for the number of bytes written
+ * @error:   return location for #GError
+ *
+ * This function saves @profile to an ICC color profile in newly
+ * allocated memory. On error, %NULL is returned and @error is set.
+ *
+ * Return value: a pointer to the written IIC profile in memory, or
+ *               %NULL. Free with g_free().
+ *
+ * Since: GIMP 2.10
+ **/
 guint8 *
 gimp_lcms_profile_save_to_data (GimpColorProfile   profile,
                                 gsize             *length,
@@ -186,6 +233,22 @@ gimp_lcms_profile_save_to_data (GimpColorProfile   profile,
   return NULL;
 }
 
+/**
+ * gimp_lcms_profile_close:
+ * @profile: a #GimpColorProfile
+ *
+ * This function closes a #GimpColorProfile and frees its memory.
+ *
+ * Since: GIMP 2.10
+ **/
+void
+gimp_lcms_profile_close (GimpColorProfile profile)
+{
+  g_return_if_fail (profile != NULL);
+
+  cmsCloseProfile (profile);
+}
+
 static gchar *
 gimp_lcms_profile_get_info (GimpColorProfile profile,
                             cmsInfoType      info)
@@ -212,30 +275,78 @@ gimp_lcms_profile_get_info (GimpColorProfile profile,
   return text;
 }
 
+/**
+ * gimp_lcms_profile_get_description:
+ * @profile: a #GimpColorProfile
+ *
+ * Return value: a newly allocated string containing @profile's
+ *               description. Free with g_free().
+ *
+ * Since: GIMP 2.10
+ **/
 gchar *
 gimp_lcms_profile_get_description (GimpColorProfile profile)
 {
   return gimp_lcms_profile_get_info (profile, cmsInfoDescription);
 }
 
+/**
+ * gimp_lcms_profile_get_manufacturer:
+ * @profile: a #GimpColorProfile
+ *
+ * Return value: a newly allocated string containing @profile's
+ *               manufacturer. Free with g_free().
+ *
+ * Since: GIMP 2.10
+ **/
 gchar *
 gimp_lcms_profile_get_manufacturer (GimpColorProfile profile)
 {
   return gimp_lcms_profile_get_info (profile, cmsInfoManufacturer);
 }
 
+/**
+ * gimp_lcms_profile_get_model:
+ * @profile: a #GimpColorProfile
+ *
+ * Return value: a newly allocated string containing @profile's
+ *               model. Free with g_free().
+ *
+ * Since: GIMP 2.10
+ **/
 gchar *
 gimp_lcms_profile_get_model (GimpColorProfile profile)
 {
   return gimp_lcms_profile_get_info (profile, cmsInfoModel);
 }
 
+/**
+ * gimp_lcms_profile_get_copyright:
+ * @profile: a #GimpColorProfile
+ *
+ * Return value: a newly allocated string containing @profile's
+ *               copyright. Free with g_free().
+ *
+ * Since: GIMP 2.10
+ **/
 gchar *
 gimp_lcms_profile_get_copyright (GimpColorProfile profile)
 {
   return gimp_lcms_profile_get_info (profile, cmsInfoCopyright);
 }
 
+/**
+ * gimp_lcms_profile_get_label:
+ * @profile: a #GimpColorProfile
+ *
+ * This function returns a newly allocated string containing
+ * @profile's "title", a string that can be used to label the profile
+ * in a user interface.
+ *
+ * Return value: the @profile's label. Free with g_free().
+ *
+ * Since: GIMP 2.10
+ **/
 gchar *
 gimp_lcms_profile_get_label (GimpColorProfile profile)
 {
@@ -266,6 +377,19 @@ gimp_lcms_profile_get_label (GimpColorProfile profile)
   return label;
 }
 
+/**
+ * gimp_lcms_profile_get_summary:
+ * @profile: a #GimpColorProfile
+ *
+ * This function return a newly allocated string containing a
+ * multi-line summary of @profile's description, model, manufacturer
+ * and copyright, to be used as detailled information about the
+ * prpfile in a user interface.
+ *
+ * Return value: the @profile's summary. Free with g_free().
+ *
+ * Since: GIMP 2.10
+ **/
 gchar *
 gimp_lcms_profile_get_summary (GimpColorProfile profile)
 {
@@ -313,6 +437,17 @@ gimp_lcms_profile_get_summary (GimpColorProfile profile)
   return g_string_free (string, FALSE);
 }
 
+/**
+ * gimp_lcms_profile_is_equal:
+ * @profile1: a #GimpColorProfile
+ * @profile2: a #GimpColorProfile
+ *
+ * Compares two profiles.
+ *
+ * Return value: %TRUE if the profiles are equal, %FALSE otherwise.
+ *
+ * Since: GIMP 2.10
+ **/
 gboolean
 gimp_lcms_profile_is_equal (GimpColorProfile profile1,
                             GimpColorProfile profile2)
@@ -335,6 +470,15 @@ gimp_lcms_profile_is_equal (GimpColorProfile profile1,
   return (memcmp (digest1, digest2, GIMP_LCMS_MD5_DIGEST_LENGTH) == 0);
 }
 
+/**
+ * gimp_lcms_profile_is_rgb:
+ * @profile: a #GimpColorProfile
+ *
+ * Return value: %TRUE if the profile's color space is RGB, %FALSE
+ * otherwise.
+ *
+ * Since: GIMP 2.10
+ **/
 gboolean
 gimp_lcms_profile_is_rgb (GimpColorProfile profile)
 {
@@ -343,6 +487,15 @@ gimp_lcms_profile_is_rgb (GimpColorProfile profile)
   return (cmsGetColorSpace (profile) == cmsSigRgbData);
 }
 
+/**
+ * gimp_lcms_profile_is_cmyk:
+ * @profile: a #GimpColorProfile
+ *
+ * Return value: %TRUE if the profile's color space is CMYK, %FALSE
+ * otherwise.
+ *
+ * Since: GIMP 2.10
+ **/
 gboolean
 gimp_lcms_profile_is_cmyk (GimpColorProfile profile)
 {
@@ -462,8 +615,142 @@ gimp_lcms_create_srgb_profile (void)
       profile_data = gimp_lcms_profile_save_to_data (profile, &profile_length,
                                                      NULL);
 
-      cmsCloseProfile (profile);
+      gimp_lcms_profile_close (profile);
     }
 
   return gimp_lcms_profile_open_from_data (profile_data, profile_length, NULL);
+}
+
+/**
+ * gimp_lcms_get_format:
+ * @format:      a #Babl format
+ * @lcms_format: return location for an lcms format
+ *
+ * This function takes a #Babl format and returns the lcms format to
+ * be used with that @format. It also returns a #Babl format to be
+ * used instead of the passed @format, which usually is the same as
+ * @format, unless lcms doesn't support @format.
+ *
+ * Note that this function currently only supports RGB, RGBA, R'G'B' and
+ * R'G'B'A formats.
+ *
+ * Return value: the #Babl format to be used instead of @format, or %NULL
+ *               is the passed @format is not supported at all.
+ *
+ * Since: GIMP 2.10
+ **/
+const Babl *
+gimp_lcms_get_format (const Babl *format,
+                      guint32    *lcms_format)
+{
+  const Babl *output_format = NULL;
+  const Babl *type;
+  const Babl *model;
+  gboolean    has_alpha;
+  gboolean    linear;
+
+  g_return_val_if_fail (format != NULL, NULL);
+  g_return_val_if_fail (lcms_format != NULL, NULL);
+
+  has_alpha = babl_format_has_alpha (format);
+  type      = babl_format_get_type (format, 0);
+  model     = babl_format_get_model (format);
+
+  if (model == babl_model ("RGB") ||
+      model == babl_model ("RGBA"))
+    {
+      linear = TRUE;
+    }
+  else if (model == babl_model ("R'G'B'") ||
+           model == babl_model ("R'G'B'A"))
+    {
+      linear = FALSE;
+    }
+  else
+    {
+      g_return_val_if_reached (NULL);
+    }
+
+  *lcms_format = 0;
+
+  if (type == babl_type ("u8"))
+    {
+      if (has_alpha)
+        *lcms_format = TYPE_RGBA_8;
+      else
+        *lcms_format = TYPE_RGB_8;
+
+      output_format = format;
+    }
+  else if (type == babl_type ("u16"))
+    {
+      if (has_alpha)
+        *lcms_format = TYPE_RGBA_16;
+      else
+        *lcms_format = TYPE_RGB_16;
+
+      output_format = format;
+    }
+  else if (type == babl_type ("half")) /* 16-bit floating point (half) */
+    {
+      if (has_alpha)
+        *lcms_format = TYPE_RGBA_HALF_FLT;
+      else
+        *lcms_format = TYPE_RGB_HALF_FLT;
+
+      output_format = format;
+    }
+  else if (type == babl_type ("float"))
+    {
+      if (has_alpha)
+        *lcms_format = TYPE_RGBA_FLT;
+      else
+        *lcms_format = TYPE_RGB_FLT;
+
+      output_format = format;
+    }
+  else if (type == babl_type ("double"))
+    {
+      if (has_alpha)
+        {
+#ifdef TYPE_RGBA_DBL
+          /* RGBA double not implemented in lcms */
+          *lcms_format = TYPE_RGBA_DBL;
+          output_format = format;
+#endif /* TYPE_RGBA_DBL */
+        }
+      else
+        {
+          *lcms_format = TYPE_RGB_DBL;
+          output_format = format;
+        }
+    }
+
+  if (*lcms_format == 0)
+    {
+      g_printerr ("gimp_lcms_get_format: layer format %s not supported, "
+                  "falling back to float\n",
+                  babl_get_name (format));
+
+      if (has_alpha)
+        {
+          *lcms_format = TYPE_RGBA_FLT;
+
+          if (linear)
+            output_format = babl_format ("RGBA float");
+          else
+            output_format = babl_format ("R'G'B'A float");
+        }
+      else
+        {
+          *lcms_format = TYPE_RGB_FLT;
+
+          if (linear)
+            output_format = babl_format ("RGB float");
+          else
+            output_format = babl_format ("R'G'B' float");
+        }
+    }
+
+  return output_format;
 }

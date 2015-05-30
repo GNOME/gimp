@@ -1009,7 +1009,7 @@ gimp_layer_mode_from_psp_blend_mode (PSPBlendModes mode)
     case PSP_BLEND_DISSOLVE:
       return GIMP_DISSOLVE_MODE;
     case PSP_BLEND_OVERLAY:
-      return GIMP_OVERLAY_MODE;
+      return GIMP_NEW_OVERLAY_MODE;
     case PSP_BLEND_HARD_LIGHT:
       return GIMP_HARDLIGHT_MODE;
     case PSP_BLEND_SOFT_LIGHT:

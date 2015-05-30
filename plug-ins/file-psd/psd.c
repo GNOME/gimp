@@ -27,11 +27,8 @@
 
 #include "psd.h"
 #include "psd-load.h"
-#include "psd-thumb-load.h"
-
-#ifdef PSD_SAVE
 #include "psd-save.h"
-#endif
+#include "psd-thumb-load.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -62,7 +59,6 @@ MAIN ()
 static void
 query (void)
 {
-  /* Register parameters */
   /* File Load */
   static const GimpParamDef load_args[] =
   {
@@ -90,7 +86,6 @@ query (void)
     { GIMP_PDB_INT32,  "image-height", "Height of full-sized image"    }
   };
 
-#ifdef PSD_SAVE
   /* File save */
   static const GimpParamDef save_args[] =
   {
@@ -98,11 +93,10 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",        "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" }
+    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
+    { GIMP_PDB_INT32,    "compression",  "Compression type: { NONE (0), LZW (1), PACKBITS (2)" },
+    { GIMP_PDB_INT32,    "fill-order",   "Fill Order: { MSB to LSB (0), LSB to MSB (1)" }
   };
-#endif /* PSD_SAVE */
-
-  /* Register procedures */
 
   /* File load */
   gimp_install_procedure (LOAD_PROC,
@@ -142,24 +136,20 @@ query (void)
 
   gimp_register_thumbnail_loader (LOAD_PROC, LOAD_THUMB_PROC);
 
-#ifdef PSD_SAVE
-  /* File save*/
   gimp_install_procedure (SAVE_PROC,
-                          "Saves images to the Photoshop PSD file format",
-                          "This plug-in saves images in Adobe "
-                          "Photoshop (TM) native PSD format.",
-                          "John Marshall",
-                          "John Marshall",
-                          "2007",
+                          "saves files in the Photoshop(tm) PSD file format",
+                          "This filter saves files of Adobe Photoshop(tm) native PSD format.  These files may be of any image type supported by GIMP, with or without layers, layer masks, aux channels and guides.",
+                          "Monigotes",
+                          "Monigotes",
+                          "2000",
                           N_("Photoshop image"),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_save_handler (SAVE_PROC, "psd", "");
   gimp_register_file_handler_mime (SAVE_PROC, "image/x-psd");
-#endif /* PSD_SAVE */
+  gimp_register_save_handler (SAVE_PROC, "psd", "");
 }
 
 static void
@@ -174,10 +164,6 @@ run (const gchar      *name,
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32            image_ID;
   GError           *error  = NULL;
-#ifdef PSD_SAVE
-  gint32            drawable_ID;
-  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
-#endif /* PSD_SAVE */
 
   run_mode = param[0].data.d_int32;
 
@@ -190,7 +176,6 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  /* File load */
   if (strcmp (name, LOAD_PROC) == 0)
     {
       gboolean resolution_loaded = FALSE;
@@ -244,8 +229,6 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-
-  /* Thumbnail load */
   else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
       if (nparams < 2)
@@ -276,13 +259,18 @@ run (const gchar      *name,
             }
         }
     }
-
-#ifdef PSD_SAVE
-  /* File save */
   else if (strcmp (name, SAVE_PROC) == 0)
     {
-      image_ID = param[1].data.d_int32;
-      drawable_ID = param[2].data.d_int32;
+      gint32                 drawable_id;
+      GimpAttributes        *attributes;
+      GimpMetadataSaveFlags  metadata_flags;
+      GimpExportReturn       export = GIMP_EXPORT_IGNORE;
+
+      IFDBG(2) g_debug ("\n---------------- %s ----------------\n",
+                        param[3].data.d_string);
+
+      image_ID    = param[1].data.d_int32;
+      drawable_id = param[2].data.d_int32;
 
       switch (run_mode)
         {
@@ -290,7 +278,7 @@ run (const gchar      *name,
         case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-          export = gimp_export_image (&image_ID, &drawable_ID, "PSD",
+          export = gimp_export_image (&image_ID, &drawable_id, "PSD",
                                       GIMP_EXPORT_CAN_HANDLE_RGB     |
                                       GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                       GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -304,26 +292,51 @@ run (const gchar      *name,
               return;
             }
           break;
+
         default:
           break;
         }
 
-      if (status == GIMP_PDB_SUCCESS)
+      attributes = gimp_image_metadata_save_prepare (image_ID,
+                                                   "image/x-psd",
+                                                   &metadata_flags);
+
+      if (save_image (param[3].data.d_string, image_ID, &error))
         {
-          if (save_image (param[3].data.d_string, image_ID, drawable_ID,
-                          &error))
+          if (attributes)
             {
+              GFile *file;
+
+              gimp_attributes_new_attribute (attributes, "Exif.Image.BitsPerSample", "8", TYPE_SHORT);
+
+              file = g_file_new_for_path (param[3].data.d_string);
+              gimp_image_metadata_save_finish (image_ID,
+                                               "image/x-psd",
+                                               attributes, metadata_flags,
+                                               file, NULL);
+              g_object_unref (file);
+
+              g_object_unref (attributes);
             }
-          else
+
+          values[0].data.d_status = GIMP_PDB_SUCCESS;
+        }
+      else
+        {
+          values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
+
+          if (error)
             {
-              status = GIMP_PDB_EXECUTION_ERROR;
+              *nreturn_vals = 2;
+              values[1].type          = GIMP_PDB_STRING;
+              values[1].data.d_string = error->message;
             }
         }
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);
+
     }
-#endif /* PSD_SAVE */
 
   /* Unknown procedure */
   else

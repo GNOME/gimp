@@ -184,6 +184,7 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:supernova",
     "gegl:texturize-canvas",
     "gegl:tile-glass",
+    "gegl:tile-paper",
     "gegl:tile-seamless",
     "gegl:unsharp-mask",
     "gegl:value-invert",
@@ -202,10 +203,13 @@ gimp_gegl_tool_operation_blacklisted (const gchar *name,
     "gegl:hstack", /* pointless */
     "gegl:introspect", /* pointless */
     "gegl:layer", /* we use gimp's ops */
+    "gegl:lcms-from-profile", /* not usable here */
+    "gegl:linear-gradient", /* we use the blend tool */
     "gegl:matting-global", /* used in the foreground select tool */
     "gegl:opacity", /* poinless */
     "gegl:path",
     "gegl:posterize", /* we use gimp's op */
+    "gegl:radial-gradient", /* we use the blend tool */
     "gegl:seamless-clone", /* used in the seamless clone tool */
     "gegl:text", /* we use gimp's text rendering */
     "gegl:threshold", /* we use gimp's op */

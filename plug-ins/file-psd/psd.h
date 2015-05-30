@@ -21,12 +21,6 @@
 #ifndef __PSD_H__
 #define __PSD_H__
 
-/* Temporary disable of save functionality */
-#ifdef PSD_SAVE
-#undef PSD_SAVE
-#else
-/* #define PSD_SAVE */
-#endif
 
 /* Set to the level of debugging output you want, 0 for none.
  *   Setting higher than 2 will result in a very large amount of debug

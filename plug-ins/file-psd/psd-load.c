@@ -102,7 +102,10 @@ static void             convert_1_bit              (const gchar *src,
                                                     guint32      rows,
                                                     guint32      columns);
 
-static const Babl*      get_pixel_format           (PSDimage    *img_a);
+static const Babl*      get_layer_format           (PSDimage    *img_a,
+                                                    gboolean     alpha);
+static const Babl*      get_channel_format         (PSDimage    *img_a);
+static const Babl*      get_mask_format            (PSDimage    *img_a);
 
 
 /* Main file load function */
@@ -835,9 +838,9 @@ read_layer_block (PSDimage  *img_a,
 
                   block_rem -= 12;
 
-		  //Round up to the nearest even byte
-		  while (res_a.data_len % 4 != 0)
-		    res_a.data_len++;
+                  //Round up to the nearest even byte
+                  while (res_a.data_len % 4 != 0)
+                    res_a.data_len++;
 
                   if (res_a.data_len > block_rem)
                     {
@@ -962,7 +965,7 @@ create_gimp_image (PSDimage    *img_a,
   /* Create gimp image */
   IFDBG(2) g_debug ("Create image");
   image_id = gimp_image_new_with_precision (img_a->columns, img_a->rows,
-					    img_a->base_type, precision);
+                                            img_a->base_type, precision);
   gimp_image_set_filename (image_id, filename);
   gimp_image_undo_disable (image_id);
 
@@ -1125,25 +1128,34 @@ add_layers (gint32     image_id,
         }
       else
         {
-	  if (lyr_a[lidx]->group_type != 0)
-	    {
-	      if (lyr_a[lidx]->group_type == 3)
-	        {
-		/* the </Layer group> marker layers are used to
-		   assemble the layer structure in a single pass */
-		layer_id = gimp_layer_group_new (image_id);
-	        }
-	      else /* group-type == 1 || group_type == 2 */
-	        {
-		  layer_id = g_array_index (parent_group_stack, gint32,
-					    parent_group_stack->len-1);
-		  /* since the layers are stored in reverse, the group
-		     layer start marker actually means we're done with
-		     that layer group */
-		  g_array_remove_index (parent_group_stack,
-					parent_group_stack->len-1);
-		}
-	    }
+          if (lyr_a[lidx]->group_type != 0)
+            {
+              if (lyr_a[lidx]->group_type == 3)
+                {
+                  /* the </Layer group> marker layers are used to
+                   * assemble the layer structure in a single pass
+                   */
+                  layer_id = gimp_layer_group_new (image_id);
+                }
+              else /* group-type == 1 || group_type == 2 */
+                {
+                  if (parent_group_stack->len)
+                    {
+                      layer_id = g_array_index (parent_group_stack, gint32,
+                                                parent_group_stack->len - 1);
+                      /* since the layers are stored in reverse, the group
+                       * layer start marker actually means we're done with
+                       * that layer group
+                       */
+                      g_array_remove_index (parent_group_stack,
+                                            parent_group_stack->len - 1);
+                    }
+                  else
+                    {
+                      layer_id = -1;
+                    }
+                }
+            }
 
           /* Empty layer */
           if (lyr_a[lidx]->bottom - lyr_a[lidx]->top == 0
@@ -1230,7 +1242,8 @@ add_layers (gint32     image_id,
                         IFDBG(3) g_debug ("Raw data length: %d",
                                           lyr_a[lidx]->chn_info[cidx].data_len - 2);
                         if (read_channel_data (lyr_chn[cidx], img_a->bps,
-                            PSD_COMP_RAW, NULL, f, error) < 1)
+                                               PSD_COMP_RAW, NULL, f,
+                                               error) < 1)
                           return -1;
                         break;
 
@@ -1255,13 +1268,14 @@ add_layers (gint32     image_id,
 
                         IFDBG(3) g_debug ("RLE decode - data");
                         if (read_channel_data (lyr_chn[cidx], img_a->bps,
-                            PSD_COMP_RLE, rle_pack_len, f, error) < 1)
+                                               PSD_COMP_RLE, rle_pack_len, f,
+                                               error) < 1)
                           return -1;
 
                         g_free (rle_pack_len);
                         break;
 
-		      case PSD_COMP_ZIP:                 /* ? */
+                      case PSD_COMP_ZIP:                 /* ? */
                       case PSD_COMP_ZIP_PRED:
                       default:
                         g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
@@ -1284,8 +1298,11 @@ add_layers (gint32     image_id,
           l_y = 0;
           l_w = img_a->columns;
           l_h = img_a->rows;
-          parent_group_id = g_array_index (parent_group_stack, gint32,
-                                           parent_group_stack->len-1);
+          if (parent_group_stack->len > 0)
+            parent_group_id = g_array_index (parent_group_stack, gint32,
+                                             parent_group_stack->len - 1);
+          else
+            parent_group_id = -1; /* root */
 
           IFDBG(3) g_debug ("Re-hash channel indices");
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
@@ -1325,15 +1342,19 @@ add_layers (gint32     image_id,
               else
                 {
                   IFDBG(2) g_debug ("End group layer id %d.", layer_id);
-                  layer_mode = psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode);
-                  gimp_layer_set_mode (layer_id, layer_mode);
-                  gimp_layer_set_opacity (layer_id, 
-                                          lyr_a[lidx]->opacity * 100 / 255);
-                  gimp_item_set_name (layer_id, lyr_a[lidx]->name);
-                  g_free (lyr_a[lidx]->name);
-                  gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
-                  if (lyr_a[lidx]->id)
-                    gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
+                  if (layer_id != -1)
+                    {
+                      layer_mode = psd_to_gimp_blend_mode (lyr_a[lidx]->blend_mode);
+                      gimp_layer_set_mode (layer_id, layer_mode);
+                      gimp_layer_set_opacity (layer_id,
+                                              lyr_a[lidx]->opacity * 100 / 255);
+                      gimp_item_set_name (layer_id, lyr_a[lidx]->name);
+                      g_free (lyr_a[lidx]->name);
+                      gimp_item_set_visible (layer_id,
+                                             lyr_a[lidx]->layer_flags.visible);
+                      if (lyr_a[lidx]->id)
+                        gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
+                    }
                 }
             }
           else if (empty)
@@ -1363,16 +1384,16 @@ add_layers (gint32     image_id,
               image_type = get_gimp_image_type (img_a->base_type, alpha);
               IFDBG(3) g_debug ("Layer type %d", image_type);
               layer_size = l_w * l_h;
-	      bps = img_a->bps / 8;
-	      if (bps == 0)
-		bps++;
+              bps = img_a->bps / 8;
+              if (bps == 0)
+                bps++;
               pixels = g_malloc (layer_size * layer_channels * bps);
               for (cidx = 0; cidx < layer_channels; ++cidx)
                 {
                   IFDBG(3) g_debug ("Start channel %d", channel_idx[cidx]);
                   for (i = 0; i < layer_size; ++i)
-		    memcpy (&pixels[((i * layer_channels) + cidx) * bps],
-			    &lyr_chn[channel_idx[cidx]]->data[i * bps], bps);
+                    memcpy (&pixels[((i * layer_channels) + cidx) * bps],
+                            &lyr_chn[channel_idx[cidx]]->data[i * bps], bps);
                   g_free (lyr_chn[channel_idx[cidx]]->data);
                 }
 
@@ -1385,9 +1406,13 @@ add_layers (gint32     image_id,
               gimp_image_insert_layer (image_id, layer_id, parent_group_id, -1);
               gimp_layer_set_offsets (layer_id, l_x, l_y);
               gimp_layer_set_lock_alpha  (layer_id, lyr_a[lidx]->layer_flags.trans_prot);
-	      buffer = gimp_drawable_get_buffer (layer_id);
-	      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
-			       0, get_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
+              buffer = gimp_drawable_get_buffer (layer_id);
+              gegl_buffer_set (buffer,
+                               GEGL_RECTANGLE (0, 0,
+                                               gegl_buffer_get_width (buffer),
+                                               gegl_buffer_get_height (buffer)),
+                               0, get_layer_format (img_a, alpha),
+                               pixels, GEGL_AUTO_ROWSTRIDE);
               gimp_item_set_visible (layer_id, lyr_a[lidx]->layer_flags.visible);
               if (lyr_a[lidx]->id)
                 gimp_item_set_tattoo (layer_id, lyr_a[lidx]->id);
@@ -1499,8 +1524,10 @@ add_layers (gint32     image_id,
                       IFDBG(3) g_debug ("New layer mask %d", mask_id);
                       gimp_layer_add_mask (layer_id, mask_id);
                       buffer = gimp_drawable_get_buffer (mask_id);
-                      gegl_buffer_set (buffer, GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h), 0,
-                                       get_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
+                      gegl_buffer_set (buffer,
+                                       GEGL_RECTANGLE (lm_x, lm_y, lm_w, lm_h),
+                                       0, get_mask_format (img_a),
+                                       pixels, GEGL_AUTO_ROWSTRIDE);
                       g_object_unref (buffer);
                       gimp_layer_set_apply_mask (layer_id,
                                                  ! lyr_a[lidx]->layer_mask.mask_flags.disabled);
@@ -1610,7 +1637,8 @@ add_merged_image (gint32     image_id,
                 chn_a[cidx].columns = img_a->columns;
                 chn_a[cidx].rows = img_a->rows;
                 if (read_channel_data (&chn_a[cidx], img_a->bps,
-                    PSD_COMP_RAW, NULL, f, error) < 1)
+                                       PSD_COMP_RAW, NULL, f,
+                                       error) < 1)
                   return -1;
               }
             break;
@@ -1641,7 +1669,8 @@ add_merged_image (gint32     image_id,
             for (cidx = 0; cidx < total_channels; ++cidx)
               {
                 if (read_channel_data (&chn_a[cidx], img_a->bps,
-                    PSD_COMP_RLE, rle_pack_len[cidx], f, error) < 1)
+                                       PSD_COMP_RLE, rle_pack_len[cidx], f,
+                                       error) < 1)
                   return -1;
                 g_free (rle_pack_len[cidx]);
               }
@@ -1668,8 +1697,8 @@ add_merged_image (gint32     image_id,
         {
           for (i = 0; i < layer_size; ++i)
             {
-	      memcpy (&pixels[((i * base_channels) + cidx) * bps],
-		      &chn_a[cidx].data[i * bps], bps);
+              memcpy (&pixels[((i * base_channels) + cidx) * bps],
+                      &chn_a[cidx].data[i * bps], bps);
             }
           g_free (chn_a[cidx].data);
         }
@@ -1682,8 +1711,12 @@ add_merged_image (gint32     image_id,
                                  100, GIMP_NORMAL_MODE);
       gimp_image_insert_layer (image_id, layer_id, -1, 0);
       buffer = gimp_drawable_get_buffer (layer_id);
-      gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
-		       0, get_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
+      gegl_buffer_set (buffer,
+                       GEGL_RECTANGLE (0, 0,
+                                       gegl_buffer_get_width (buffer),
+                                       gegl_buffer_get_height (buffer)),
+                       0, get_layer_format (img_a, img_a->transparency),
+                       pixels, GEGL_AUTO_ROWSTRIDE);
       g_object_unref (buffer);
       g_free (pixels);
     }
@@ -1773,9 +1806,12 @@ add_merged_image (gint32     image_id,
           if (alpha_id)
             gimp_item_set_tattoo (channel_id, alpha_id);
           gimp_item_set_visible (channel_id, alpha_visible);
-	  gegl_buffer_set (buffer,
-			   GEGL_RECTANGLE (0, 0, gegl_buffer_get_width (buffer), gegl_buffer_get_height (buffer)),
-			   0, get_pixel_format (img_a), pixels, GEGL_AUTO_ROWSTRIDE);
+          gegl_buffer_set (buffer,
+                           GEGL_RECTANGLE (0, 0,
+                                           gegl_buffer_get_width (buffer),
+                                           gegl_buffer_get_height (buffer)),
+                           0, get_channel_format (img_a),
+                           pixels, GEGL_AUTO_ROWSTRIDE);
           g_object_unref (buffer);
           g_free (chn_a[cidx].data);
         }
@@ -1901,16 +1937,16 @@ read_channel_data (PSDchannel     *channel,
   gint      i;
 
   if (bps == 1)
-    readline_len = ((channel->columns + 7) >> 3);
+    readline_len = ((channel->columns + 7) / 8);
   else
-    readline_len = (channel->columns * bps >> 3);
+    readline_len = (channel->columns * bps / 8);
 
   IFDBG(3) g_debug ("raw data size %d x %d = %d", readline_len,
                     channel->rows, readline_len * channel->rows);
 
   /* sanity check, int overflow check (avoid divisions by zero) */
   if ((channel->rows == 0) || (channel->columns == 0) ||
-      (channel->rows > G_MAXINT32 / channel->columns / MAX (bps >> 3, 1)))
+      (channel->rows > G_MAXINT32 / channel->columns / MAX (bps / 8, 1)))
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                    _("Unsupported or invalid channel size"));
@@ -1972,7 +2008,7 @@ read_channel_data (PSDchannel     *channel,
         break;
 
       default:
-	return -1;
+        return -1;
         break;
     }
 
@@ -1995,7 +2031,7 @@ convert_1_bit (const gchar *src,
 
   IFDBG(3)  g_debug ("Start 1 bit conversion");
 
-  for (i = 0; i < rows * ((columns + 7) >> 3); ++i)
+  for (i = 0; i < rows * ((columns + 7) / 8); ++i)
     {
       guchar    mask = 0x80;
       for (j = 0; j < 8 && row_pos < columns; ++j)
@@ -2015,40 +2051,41 @@ convert_1_bit (const gchar *src,
 }
 
 static const Babl*
-get_pixel_format (PSDimage *img_a)
+get_layer_format (PSDimage *img_a,
+                  gboolean  alpha)
 {
-  const Babl *format;
+  const Babl *format = NULL;
 
-  switch (get_gimp_image_type (img_a->base_type, img_a->transparency))
+  switch (get_gimp_image_type (img_a->base_type, alpha))
     {
     case GIMP_GRAY_IMAGE:
       switch (img_a->bps)
-	{
-	case 32:
+        {
+        case 32:
           format = babl_format ("Y u32");
-	  break;
+          break;
 
         case 16:
           format = babl_format ("Y u16");
-	  break;
+          break;
 
         case 8:
         case 1:
           format = babl_format ("Y u8");
-	  break;
+          break;
 
         default:
           return NULL;
-	  break;
-	}
+          break;
+        }
       break;
 
     case GIMP_GRAYA_IMAGE:
       switch (img_a->bps)
-	{
-	case 32:
+        {
+        case 32:
           format = babl_format ("YA u32");
-	  break;
+          break;
 
         case 16:
           format = babl_format ("YA u16");
@@ -2060,18 +2097,18 @@ get_pixel_format (PSDimage *img_a)
           break;
 
         default:
-	  return NULL;
-	  break;
-	}
+          return NULL;
+          break;
+        }
       break;
 
     case GIMP_RGB_IMAGE:
     case GIMP_INDEXED_IMAGE:
       switch (img_a->bps)
-	{
-	case 32:
+        {
+        case 32:
           format = babl_format ("RGB u32");
-	  break;
+          break;
 
         case 16:
           format = babl_format ("RGB u16");
@@ -2083,22 +2120,22 @@ get_pixel_format (PSDimage *img_a)
           break;
 
         default:
-	  return NULL;
-	  break;
-	}
+          return NULL;
+          break;
+        }
       break;
 
     case GIMP_RGBA_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
       switch (img_a->bps)
-	{
-	case 32:
+        {
+        case 32:
           format = babl_format ("RGBA u32");
-	  break;
+          break;
 
         case 16:
           format = babl_format ("RGBA u16");
-	  break;
+          break;
 
         case 8:
         case 1:
@@ -2106,13 +2143,67 @@ get_pixel_format (PSDimage *img_a)
           break;
 
         default:
-	  return NULL;
-	  break;
-	}
+          return NULL;
+          break;
+        }
       break;
 
     default:
       return NULL;
+      break;
+    }
+
+  return format;
+}
+
+static const Babl*
+get_channel_format (PSDimage *img_a)
+{
+  const Babl *format = NULL;
+
+  switch (img_a->bps)
+    {
+    case 32:
+      format = babl_format ("Y u32");
+      break;
+
+    case 16:
+      format = babl_format ("Y u16");
+      break;
+
+    case 8:
+    case 1:
+      format = babl_format ("Y u8");
+      break;
+
+    default:
+      break;
+    }
+
+  return format;
+}
+
+static const Babl*
+get_mask_format (PSDimage *img_a)
+{
+  const Babl *format = NULL;
+
+  switch (img_a->bps)
+    {
+    case 32:
+      format = babl_format ("Y u32");
+      break;
+
+    case 16:
+      format = babl_format ("Y u16");
+      break;
+
+    case 8:
+    case 1:
+      format = babl_format ("Y u8");
+      break;
+
+    default:
       break;
     }
 

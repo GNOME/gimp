@@ -468,15 +468,8 @@ icons64_DATA = \
 CORE_IMAGES = \
 	64/gimp-question.png
 
-CORE_VARIABLES = \
-	gimp_question_64	$(srcdir)/64/gimp-question.png
-
 ICON_IMAGES = \
 	64/gimp-wilber-eek.png
-
-ICON_VARIABLES = \
-	gimp_wilber_eek_64	$(srcdir)/64/gimp-wilber-eek.png
-
 
 EXTRA_DIST = \
 	$(icons_DATA)	\
@@ -491,16 +484,44 @@ EXTRA_DIST = \
 	$(icons64_DATA)
 
 noinst_DATA = \
-	gimp-core-pixbufs.h	\
-	gimp-icon-pixbufs.h
+	gimp-core-pixbufs.c	\
+	gimp-icon-pixbufs.c
 
-CLEANFILES = $(noinst_DATA)
+CLEANFILES = \
+	$(noinst_DATA)			\
+	gimp-core-pixbufs.gresource.xml	\
+	gimp-icon-pixbufs.gresource.xml
 
 
-gimp-core-pixbufs.h: $(CORE_IMAGES) Makefile.am
-	$(AM_V_GEN) $(GDK_PIXBUF_CSOURCE) \
-	--raw --build-list $(CORE_VARIABLES) > $(@F)
+gimp-core-pixbufs.gresource.xml: $(CORE_IMAGES) Makefile.am
+	$(AM_V_GEN) ( rm -f $@; \
+	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
+	  echo '<gresources>' >> $@; \
+	  echo '  <gresource prefix="/org/gimp/icons">' >> $@; \
+	  for image in $(CORE_IMAGES); do \
+	    echo "    <file preprocess=\"to-pixdata\">$$image</file>" >> $@; \
+	  done; \
+	  echo '  </gresource>' >> $@; \
+	  echo '</gresources>' >> $@ )
 
-gimp-icon-pixbufs.h: $(ICON_IMAGES) Makefile.am
-	$(AM_V_GEN) $(GDK_PIXBUF_CSOURCE) \
-	--raw --build-list $(ICON_VARIABLES) > $(@F)
+gimp-core-pixbufs.c: gimp-core-pixbufs.gresource.xml
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-source \
+	  --target=$@ gimp-core-pixbufs.gresource.xml
+
+
+gimp-icon-pixbufs.gresource.xml: $(ICON_IMAGES) Makefile.am
+	$(AM_V_GEN) ( rm -f $@; \
+	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
+	  echo '<gresources>' >> $@; \
+	  echo '  <gresource prefix="/org/gimp/icons">' >> $@; \
+	  for image in $(ICON_IMAGES); do \
+	    echo "    <file preprocess=\"to-pixdata\">$$image</file>" >> $@; \
+	  done; \
+	  echo '  </gresource>' >> $@; \
+	  echo '</gresources>' >> $@ )
+
+gimp-icon-pixbufs.c: gimp-icon-pixbufs.gresource.xml
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-source \
+	  --target=$@ gimp-icon-pixbufs.gresource.xml

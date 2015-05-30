@@ -52,9 +52,9 @@ AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpWidgets\"	\
 	-DGIMP_WIDGETS_COMPILATION		\
 	-I$(top_srcdir)				\
-	$(LCMS_CFLAGS)				\
 	$(GEGL_CFLAGS)				\
 	$(GTK_CFLAGS)				\
+	$(LCMS_CFLAGS)				\
 	-I$(includedir)
 
 lib_LTLIBRARIES = libgimpwidgets-@GIMP_API_VERSION@.la
@@ -179,6 +179,8 @@ libgimpwidgets_sources = \
 	gimpwidgets.h			\
 	gimpwidgetsenums.h		\
 	gimpwidgetstypes.h		\
+	gimpwidgetsutils.c		\
+	gimpwidgetsutils.h		\
 	gimpzoommodel.c			\
 	gimpzoommodel.h			\
 	gimp3migration.c		\
@@ -254,6 +256,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpwidgets.h			\
 	gimpwidgetsenums.h		\
 	gimpwidgetstypes.h		\
+	gimpwidgetsutils.h		\
 	gimpzoommodel.h			\
 	gimp3migration.h
 
@@ -268,9 +271,9 @@ libgimpwidgets_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpbase)		\
 	$(libgimpcolor)		\
 	$(libgimpconfig)	\
-	$(LCMS_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
+	$(LCMS_LIBS)		\
 	$(libm)
 
 

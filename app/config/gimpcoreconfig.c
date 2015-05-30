@@ -41,14 +41,15 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_BRUSH       "Round Fuzzy"
-#define DEFAULT_DYNAMICS    "Dynamics Off"
-#define DEFAULT_PATTERN     "Pine"
-#define DEFAULT_PALETTE     "Default"
-#define DEFAULT_GRADIENT    "FG to BG (RGB)"
-#define DEFAULT_TOOL_PRESET "Current Options"
-#define DEFAULT_FONT        "Sans"
-#define DEFAULT_COMMENT     "Created with GIMP"
+#define DEFAULT_BRUSH         "Round Fuzzy"
+#define DEFAULT_DYNAMICS      "Dynamics Off"
+#define DEFAULT_PATTERN       "Pine"
+#define DEFAULT_PALETTE       "Default"
+#define DEFAULT_GRADIENT      "FG to BG (RGB)"
+#define DEFAULT_TOOL_PRESET   "Current Options"
+#define DEFAULT_FONT          "Sans"
+#define DEFAULT_MYPAINT_BRUSH "Fixme"
+#define DEFAULT_COMMENT       "Created with GIMP"
 
 
 enum
@@ -75,6 +76,8 @@ enum
   PROP_TOOL_PRESET_PATH_WRITABLE,
   PROP_FONT_PATH,
   PROP_FONT_PATH_WRITABLE,
+  PROP_MYPAINT_BRUSH_PATH,
+  PROP_MYPAINT_BRUSH_PATH_WRITABLE,
   PROP_DEFAULT_BRUSH,
   PROP_DEFAULT_DYNAMICS,
   PROP_DEFAULT_PATTERN,
@@ -82,6 +85,7 @@ enum
   PROP_DEFAULT_GRADIENT,
   PROP_DEFAULT_TOOL_PRESET,
   PROP_DEFAULT_FONT,
+  PROP_DEFAULT_MYPAINT_BRUSH,
   PROP_GLOBAL_BRUSH,
   PROP_GLOBAL_DYNAMICS,
   PROP_GLOBAL_PATTERN,
@@ -140,6 +144,8 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   gchar        *path;
+  gchar        *dir1;
+  gchar        *dir2;
   GimpRGB       red          = { 1.0, 0, 0, 0.5 };
   guint64       undo_size;
 
@@ -310,6 +316,39 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_CONFIG_PATH_DIR_LIST, NULL,
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_IGNORE);
+
+  /* FIXME */
+  dir1 = g_build_filename (DATADIR, "mypaint", "brushes", NULL);
+  dir2 = g_build_filename (g_get_user_data_dir (), "mypaint", "brushes", NULL);
+  path = g_build_path (G_SEARCHPATH_SEPARATOR_S,
+                       "/usr/share/mypaint/brushes",
+                       "/usr/local/share/mypaint/brushes",
+                       dir1,
+                       dir2,
+                       "~/.mypaint/brushes",
+                       NULL);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MYPAINT_BRUSH_PATH,
+                                 "mypaint-brush-path", MYPAINT_BRUSH_PATH_BLURB,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_PARAM_STATIC_STRINGS |
+                                 GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  g_free (dir1);
+
+  /* FIXME */
+  path = g_build_path (G_SEARCHPATH_SEPARATOR_S,
+                       dir2,
+                       "~/.mypaint/brushes",
+                       NULL);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MYPAINT_BRUSH_PATH_WRITABLE,
+                                 "mypaint-brush-path-writable",
+                                 MYPAINT_BRUSH_PATH_WRITABLE_BLURB,
+                                 GIMP_CONFIG_PATH_DIR_LIST, path,
+                                 GIMP_PARAM_STATIC_STRINGS |
+                                 GIMP_CONFIG_PARAM_RESTART);
+  g_free (path);
+  g_free (dir2);
+
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,
                                    "default-brush", DEFAULT_BRUSH_BLURB,
                                    DEFAULT_BRUSH,
@@ -338,6 +377,11 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    "default-font", DEFAULT_FONT_BLURB,
                                    DEFAULT_FONT,
                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_MYPAINT_BRUSH,
+                                   "default-mypaint-brush", DEFAULT_MYPAINT_BRUSH_BLURB,
+                                   DEFAULT_MYPAINT_BRUSH,
+                                   GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_BRUSH,
                                     "global-brush", GLOBAL_BRUSH_BLURB,
                                     TRUE,
@@ -623,6 +667,14 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->font_path_writable);
       core_config->font_path_writable = g_value_dup_string (value);
       break;
+    case PROP_MYPAINT_BRUSH_PATH:
+      g_free (core_config->mypaint_brush_path);
+      core_config->mypaint_brush_path = g_value_dup_string (value);
+      break;
+    case PROP_MYPAINT_BRUSH_PATH_WRITABLE:
+      g_free (core_config->mypaint_brush_path_writable);
+      core_config->mypaint_brush_path_writable = g_value_dup_string (value);
+      break;
     case PROP_DEFAULT_BRUSH:
       g_free (core_config->default_brush);
       core_config->default_brush = g_value_dup_string (value);
@@ -650,6 +702,10 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_DEFAULT_FONT:
       g_free (core_config->default_font);
       core_config->default_font = g_value_dup_string (value);
+      break;
+    case PROP_DEFAULT_MYPAINT_BRUSH:
+      g_free (core_config->default_mypaint_brush);
+      core_config->default_mypaint_brush = g_value_dup_string (value);
       break;
     case PROP_GLOBAL_BRUSH:
       core_config->global_brush = g_value_get_boolean (value);
@@ -806,6 +862,12 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_FONT_PATH_WRITABLE:
       g_value_set_string (value, core_config->font_path_writable);
       break;
+    case PROP_MYPAINT_BRUSH_PATH:
+      g_value_set_string (value, core_config->mypaint_brush_path);
+      break;
+    case PROP_MYPAINT_BRUSH_PATH_WRITABLE:
+      g_value_set_string (value, core_config->mypaint_brush_path_writable);
+      break;
     case PROP_DEFAULT_BRUSH:
       g_value_set_string (value, core_config->default_brush);
       break;
@@ -826,6 +888,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_DEFAULT_FONT:
       g_value_set_string (value, core_config->default_font);
+      break;
+    case PROP_DEFAULT_MYPAINT_BRUSH:
+      g_value_set_string (value, core_config->default_mypaint_brush);
       break;
     case PROP_GLOBAL_BRUSH:
       g_value_set_boolean (value, core_config->global_brush);

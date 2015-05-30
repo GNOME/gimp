@@ -33,6 +33,8 @@
 
 #include "gimpoverlaydialog.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -44,6 +46,7 @@ enum
 enum
 {
   RESPONSE,
+  DETACH,
   CLOSE,
   LAST_SIGNAL
 };
@@ -79,6 +82,9 @@ static void       gimp_overlay_dialog_forall        (GtkContainer      *containe
                                                      GtkCallback        callback,
                                                      gpointer           callback_data);
 
+static void       gimp_overlay_dialog_detach        (GimpOverlayDialog *dialog);
+static void       gimp_overlay_dialog_real_detach   (GimpOverlayDialog *dialog);
+
 static void       gimp_overlay_dialog_close         (GimpOverlayDialog *dialog);
 static void       gimp_overlay_dialog_real_close    (GimpOverlayDialog *dialog);
 
@@ -112,6 +118,7 @@ gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
 
   container_class->forall     = gimp_overlay_dialog_forall;
 
+  klass->detach               = gimp_overlay_dialog_real_detach;
   klass->close                = gimp_overlay_dialog_real_close;
 
   g_object_class_install_property (object_class, PROP_TITLE,
@@ -137,6 +144,15 @@ gimp_overlay_dialog_class_init (GimpOverlayDialogClass *klass)
                   gimp_marshal_VOID__INT,
                   G_TYPE_NONE, 1,
                   G_TYPE_INT);
+
+  signals[DETACH] =
+    g_signal_new ("detach",
+                  G_OBJECT_CLASS_TYPE (klass),
+                  G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                  G_STRUCT_OFFSET (GimpOverlayDialogClass, detach),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
 
   signals[CLOSE] =
     g_signal_new ("close",
@@ -200,6 +216,26 @@ gimp_overlay_dialog_constructed (GObject *object)
 
   g_signal_connect_object (button, "clicked",
                            G_CALLBACK (gimp_overlay_dialog_close),
+                           G_OBJECT (dialog),
+                           G_CONNECT_SWAPPED);
+
+  dialog->detach_button = button = gtk_button_new ();
+  gtk_widget_set_can_focus (button, FALSE);
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+  gtk_box_pack_end (GTK_BOX (dialog->header), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  gimp_help_set_help_data (dialog->close_button,
+                           _("Detach dialog from canvas"), NULL);
+
+  image = gtk_image_new_from_icon_name (GIMP_STOCK_MENU_LEFT,
+                                        GTK_ICON_SIZE_MENU);
+  gtk_image_set_pixel_size (GTK_IMAGE (image), 12);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+
+  g_signal_connect_object (button, "clicked",
+                           G_CALLBACK (gimp_overlay_dialog_detach),
                            G_OBJECT (dialog),
                            G_CONNECT_SWAPPED);
 }
@@ -411,6 +447,18 @@ gimp_overlay_dialog_forall (GtkContainer *container,
 }
 
 static void
+gimp_overlay_dialog_detach (GimpOverlayDialog *dialog)
+{
+  g_signal_emit (dialog, signals[DETACH], 0);
+}
+
+static void
+gimp_overlay_dialog_real_detach (GimpOverlayDialog *dialog)
+{
+  gimp_overlay_dialog_response (dialog, GIMP_RESPONSE_DETACH);
+}
+
+static void
 gimp_overlay_dialog_close (GimpOverlayDialog *dialog)
 {
   g_signal_emit (dialog, signals[CLOSE], 0);
@@ -497,7 +545,8 @@ gimp_overlay_dialog_add_button (GimpOverlayDialog *dialog,
   g_return_val_if_fail (button_text != NULL, NULL);
 
   if (response_id == GTK_RESPONSE_CANCEL ||
-      response_id == GTK_RESPONSE_CLOSE)
+      response_id == GTK_RESPONSE_CLOSE  ||
+      response_id == GIMP_RESPONSE_DETACH)
     return NULL;
 
   button = gtk_button_new_from_stock (button_text);
@@ -555,6 +604,11 @@ gimp_overlay_dialog_set_response_sensitive (GimpOverlayDialog *overlay,
       response_id == GTK_RESPONSE_CLOSE)
     {
       gtk_widget_set_sensitive (overlay->close_button, sensitive);
+    }
+
+  if (response_id == GIMP_RESPONSE_DETACH)
+    {
+      gtk_widget_set_sensitive (overlay->detach_button, sensitive);
     }
 
   children = gtk_container_get_children (GTK_CONTAINER (overlay->action_area));

@@ -325,8 +325,8 @@ static gchar *
 sanity_check_gdk_pixbuf (void)
 {
 #define GDK_PIXBUF_REQUIRED_MAJOR 2
-#define GDK_PIXBUF_REQUIRED_MINOR 24
-#define GDK_PIXBUF_REQUIRED_MICRO 1
+#define GDK_PIXBUF_REQUIRED_MINOR 30
+#define GDK_PIXBUF_REQUIRED_MICRO 8
 
   if (! sanity_check_version (gdk_pixbuf_major_version, GDK_PIXBUF_REQUIRED_MAJOR,
                               gdk_pixbuf_minor_version, GDK_PIXBUF_REQUIRED_MINOR,
@@ -551,6 +551,7 @@ sanity_check_gegl_ops (void)
     "gegl:supernova",
     "gegl:threshold",
     "gegl:tile",
+    "gegl:tile-paper",
     "gegl:tile-glass",
     "gegl:tile-seamless",
     "gegl:transform",

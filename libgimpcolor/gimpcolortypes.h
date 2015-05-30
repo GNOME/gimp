@@ -31,6 +31,7 @@ G_BEGIN_DECLS
 typedef struct _GimpColorManaged GimpColorManaged;  /* dummy typedef */
 
 typedef gpointer GimpColorProfile;
+typedef gpointer GimpColorTransform;
 
 
 /*  usually we don't keep the structure definitions in the types file

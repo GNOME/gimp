@@ -86,6 +86,10 @@ static gint64     gimp_context_get_memsize    (GimpObject            *object,
 static gboolean   gimp_context_serialize            (GimpConfig       *config,
                                                      GimpConfigWriter *writer,
                                                      gpointer          data);
+static gboolean   gimp_context_deserialize          (GimpConfig       *config,
+                                                     GScanner         *scanner,
+                                                     gint              nest_level,
+                                                     gpointer          data);
 static gboolean   gimp_context_serialize_property   (GimpConfig       *config,
                                                      guint             property_id,
                                                      const GValue     *value,
@@ -777,6 +781,7 @@ static void
 gimp_context_config_iface_init (GimpConfigInterface *iface)
 {
   iface->serialize            = gimp_context_serialize;
+  iface->deserialize          = gimp_context_deserialize;
   iface->serialize_property   = gimp_context_serialize_property;
   iface->deserialize_property = gimp_context_deserialize_property;
 }
@@ -1249,6 +1254,27 @@ gimp_context_serialize (GimpConfig       *config,
                         gpointer          data)
 {
   return gimp_config_serialize_changed_properties (config, writer);
+}
+
+static gboolean
+gimp_context_deserialize (GimpConfig *config,
+                          GScanner   *scanner,
+                          gint        nest_level,
+                          gpointer    data)
+{
+  GimpContext          *context        = GIMP_CONTEXT (config);
+  GimpLayerModeEffects  old_paint_mode = context->paint_mode;
+  gboolean              success;
+
+  success = gimp_config_deserialize_properties (config, scanner, nest_level);
+
+  if (context->paint_mode != old_paint_mode)
+    {
+      if (context->paint_mode == GIMP_OVERLAY_MODE)
+        g_object_set (context, "paint-mode", GIMP_SOFTLIGHT_MODE, NULL);
+    }
+
+  return success;
 }
 
 static gboolean

@@ -92,7 +92,6 @@ softglow_RC = softglow.rc.o
 sparkle_RC = sparkle.rc.o
 sphere_designer_RC = sphere-designer.rc.o
 tile_RC = tile.rc.o
-tile_paper_RC = tile-paper.rc.o
 tile_small_RC = tile-small.rc.o
 unit_editor_RC = unit-editor.rc.o
 unsharp_mask_RC = unsharp-mask.rc.o

@@ -65,7 +65,7 @@ get_layer_mode_function (GimpLayerModeEffects paint_mode)
       case GIMP_BEHIND_MODE:        func = gimp_operation_behind_mode_process_pixels; break;
       case GIMP_MULTIPLY_MODE:      func = gimp_operation_multiply_mode_process_pixels; break;
       case GIMP_SCREEN_MODE:        func = gimp_operation_screen_mode_process_pixels; break;
-      case GIMP_OVERLAY_MODE:       func = gimp_operation_overlay_mode_process_pixels; break;
+      case GIMP_OVERLAY_MODE:       func = gimp_operation_softlight_mode_process_pixels; break;
       case GIMP_DIFFERENCE_MODE:    func = gimp_operation_difference_mode_process_pixels; break;
       case GIMP_ADDITION_MODE:      func = gimp_operation_addition_mode_process_pixels; break;
       case GIMP_SUBTRACT_MODE:      func = gimp_operation_subtract_mode_process_pixels; break;
@@ -83,6 +83,7 @@ get_layer_mode_function (GimpLayerModeEffects paint_mode)
       case GIMP_GRAIN_EXTRACT_MODE: func = gimp_operation_grain_extract_mode_process_pixels; break;
       case GIMP_GRAIN_MERGE_MODE:   func = gimp_operation_grain_merge_mode_process_pixels; break;
       case GIMP_COLOR_ERASE_MODE:   func = gimp_operation_color_erase_mode_process_pixels; break;
+      case GIMP_NEW_OVERLAY_MODE:   func = gimp_operation_overlay_mode_process_pixels; break;
       case GIMP_ERASE_MODE:         func = gimp_operation_erase_mode_process_pixels; break;
       case GIMP_REPLACE_MODE:       func = gimp_operation_replace_mode_process_pixels; break;
       case GIMP_ANTI_ERASE_MODE:    func = gimp_operation_anti_erase_mode_process_pixels; break;

@@ -2086,6 +2086,104 @@ CODE
     );
 }
 
+sub plug_in_papertile {
+    $blurb = 'Cut image into paper tiles, and slide them';
+
+    $help = <<'HELP';
+This plug-in cuts an image into paper tiles and slides each paper tile.
+HELP
+
+    &std_pdb_compat('gegl:tile-paper');
+    $date = '2015';
+
+    @inargs = (
+        { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+          desc => 'The run mode' },
+        { name => 'image', type => 'image', dead => 1,
+          desc => 'Input image (unused)' },
+        { name => 'drawable', type => 'drawable',
+          desc => 'Input drawable' },
+        { name => 'tile_size', type => 'int32',
+          desc => 'Tile size (pixels)' },
+        { name => 'move_max', type => 'float',
+          desc => 'Max move rate (%)' },
+	{ name => 'fractional_type', type => '0 <= int32 <= 2',
+	  desc => 'Fractional type { BACKGROUND (0), IGNORE (1), FORCE (2) }' },
+        { name => 'wrap_around', type => 'boolean',
+          desc => 'Wrap around' },
+        { name => 'centering', type => 'boolean',
+          desc => 'Centering' },
+        { name => 'background_type', type => '0 <= int32 <= 5',
+          desc => 'Background type { TRANSPARENT (0), INVERTED (1), IMAGE (2), FG (3), BG (4), COLOR (5) }' },
+        { name => 'background_color', type => 'color',
+          desc => 'Background color (for background-type == 5)' },
+        { name => 'background_alpha', type => 'int32', dead => 1,
+          desc => 'Background alpha (unused)' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode  *node;
+      GimpRGB    color;
+      GeglColor *gegl_color;
+      gint       bg_type;
+
+      switch (background_type)
+        {
+        default:
+          bg_type = background_type;
+          gimp_rgba_set (&color, 0.0, 0.0, 1.0, 1.0);
+          break;
+
+        case 3:
+          bg_type = 3;
+          gimp_context_get_foreground (context, &color);
+	  break;
+
+	case 4:
+          bg_type = 3;
+          gimp_context_get_background (context, &color);
+	  break;
+
+	case 5:
+          bg_type = 3;
+          color = background_color;
+	  break;
+        }
+
+      gegl_color = gimp_gegl_color_new (&color);
+
+      node = gegl_node_new_child (NULL,
+                                  "operation",       "gegl:tile-paper",
+                                  "tile-width",      tile_size,
+                                  "tile-height",     tile_size,
+                                  "move-rate",       move_max,
+                                  "bg-color",        gegl_color,
+                                  "centering",       centering,
+                                  "wrap-around",     wrap_around,
+                                  "background-type", bg_type,
+                                  "fractional-type", fractional_type,
+                                  NULL);
+
+      g_object_unref (gegl_color);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Paper Tile"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_pixelize {
     $blurb = 'Simplify image into an array of solid-colored squares';
 
@@ -3852,6 +3950,7 @@ CODE
             plug_in_mblur_inward
             plug_in_mosaic
             plug_in_nova
+            plug_in_papertile
             plug_in_pixelize
             plug_in_pixelize2
             plug_in_plasma

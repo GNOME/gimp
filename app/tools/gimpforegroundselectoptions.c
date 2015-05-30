@@ -109,19 +109,19 @@ gimp_foreground_select_options_class_init (GimpForegroundSelectOptionsClass *kla
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_LEVELS,
                                  "levels",
-                                 _("Parameter for matting-levin"),
+                                 _("Number of downsampled levels to use"),
                                  1, 10, 2,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_ACTIVE_LEVELS,
                                  "active-levels",
-                                 _("Parameter for matting-levin"),
+                                 _("Number of levels to perform solving"),
                                  1, 10, 2,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_ITERATIONS,
                                  "iterations",
-                                 _("Parameter for matting-global"),
+                                 _("Number of iterations to perform"),
                                  1, 10, 2,
                                  GIMP_PARAM_STATIC_STRINGS);
 }

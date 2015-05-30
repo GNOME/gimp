@@ -1433,8 +1433,8 @@ get_scale (gint index)
         gdouble zoom = g_strtod (active_text, NULL);
 
         /* Negative scales are inconsistent. And we want to avoid huge scaling. */
-        if (zoom > 300.0)
-          zoom = 300.0;
+        if (zoom > 400.0)
+          zoom = 400.0;
         else if (zoom <= 50.0)
           /* FIXME: scales under 0.5 are broken. See bug 690265. */
           zoom = 50.1;

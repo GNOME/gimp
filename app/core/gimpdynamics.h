@@ -52,6 +52,9 @@ GimpData           * gimp_dynamics_get_standard (GimpContext            *context
 GimpDynamicsOutput * gimp_dynamics_get_output   (GimpDynamics           *dynamics,
                                                  GimpDynamicsOutputType  type);
 
+gboolean        gimp_dynamics_is_output_enabled (GimpDynamics           *dynamics,
+                                                 GimpDynamicsOutputType  type);
+
 gdouble         gimp_dynamics_get_linear_value  (GimpDynamics           *dynamics,
                                                  GimpDynamicsOutputType  type,
                                                  const GimpCoords       *coords,

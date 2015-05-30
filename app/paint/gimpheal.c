@@ -35,7 +35,6 @@
 #include "core/gimpbrush.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
-#include "core/gimpdynamicsoutput.h"
 #include "core/gimperror.h"
 #include "core/gimpimage.h"
 #include "core/gimppickable.h"
@@ -476,34 +475,27 @@ gimp_heal_motion (GimpSourceCore   *source_core,
                   gint              paint_area_width,
                   gint              paint_area_height)
 {
-  GimpPaintCore      *paint_core = GIMP_PAINT_CORE (source_core);
-  GimpContext        *context    = GIMP_CONTEXT (paint_options);
-  GimpDynamics       *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
-  GimpImage          *image      = gimp_item_get_image (GIMP_ITEM (drawable));
-  GeglBuffer         *src_copy;
-  GeglBuffer         *mask_buffer;
-  const GimpTempBuf  *mask_buf;
-  gdouble             fade_point;
-  gdouble             force;
-  gint                mask_off_x;
-  gint                mask_off_y;
-  gdouble             dyn_force;
-  GimpDynamicsOutput *dyn_output = NULL;
+  GimpPaintCore     *paint_core = GIMP_PAINT_CORE (source_core);
+  GimpContext       *context    = GIMP_CONTEXT (paint_options);
+  GimpDynamics      *dynamics   = GIMP_BRUSH_CORE (paint_core)->dynamics;
+  GimpImage         *image      = gimp_item_get_image (GIMP_ITEM (drawable));
+  GeglBuffer        *src_copy;
+  GeglBuffer        *mask_buffer;
+  const GimpTempBuf *mask_buf;
+  gdouble            fade_point;
+  gdouble            force;
+  gint               mask_off_x;
+  gint               mask_off_y;
 
   fade_point = gimp_paint_options_get_fade (paint_options, image,
                                             paint_core->pixel_dist);
 
-  dyn_output = gimp_dynamics_get_output (dynamics,
-                                         GIMP_DYNAMICS_OUTPUT_FORCE);
-
-  dyn_force = gimp_dynamics_get_linear_value (dynamics,
-                                              GIMP_DYNAMICS_OUTPUT_FORCE,
-                                              coords,
-                                              paint_options,
-                                              fade_point);
-
-  if (gimp_dynamics_output_is_enabled (dyn_output))
-    force = dyn_force;
+  if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_FORCE))
+    force = gimp_dynamics_get_linear_value (dynamics,
+                                            GIMP_DYNAMICS_OUTPUT_FORCE,
+                                            coords,
+                                            paint_options,
+                                            fade_point);
   else
     force = paint_options->brush_force;
 

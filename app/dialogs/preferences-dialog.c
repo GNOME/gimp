@@ -1256,6 +1256,7 @@ prefs_dialog_new (Gimp       *gimp,
   GObject           *object;
   GimpCoreConfig    *core_config;
   GimpDisplayConfig *display_config;
+  GimpGuiConfig     *gui_config;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
@@ -1263,6 +1264,7 @@ prefs_dialog_new (Gimp       *gimp,
   object         = G_OBJECT (config);
   core_config    = GIMP_CORE_CONFIG (config);
   display_config = GIMP_DISPLAY_CONFIG (config);
+  gui_config     = GIMP_GUI_CONFIG (config);
 
   dialog = gimp_dialog_new (_("Preferences"), "gimp-preferences",
                             NULL, 0,
@@ -2638,6 +2640,12 @@ prefs_dialog_new (Gimp       *gimp,
         GIMP_HELP_PREFS_FOLDERS_TOOL_PRESETS,
         N_("Select Tool Preset Folders"),
         "tool-preset-path", "tool-preset-path-writable" },
+#ifdef HAVE_LIBMYPAINT
+      { N_("MyPaint Brushes"), N_("MyPaint Brush Folders"), "folders-mypaint-brushes",
+        GIMP_HELP_PREFS_FOLDERS_MYPAINT_BRUSHES,
+        N_("Select MyPaint Brush Folders"),
+        "mypaint-brush-path", "mypaint-brush-path-writable" },
+#endif
       { N_("Plug-Ins"), N_("Plug-In Folders"), "folders-plug-ins",
         GIMP_HELP_PREFS_FOLDERS_PLUG_INS,
         N_("Select Plug-In Folders"),
@@ -2667,6 +2675,14 @@ prefs_dialog_new (Gimp       *gimp,
     for (i = 0; i < G_N_ELEMENTS (paths); i++)
       {
         GtkWidget *editor;
+
+#ifdef HAVE_LIBMYPAINT
+        if (! gui_config->playground_mybrush_tool &&
+            ! strcmp (paths[i].path_property_name, "mypaint-brush-path"))
+          {
+            continue;
+          }
+#endif
 
         pixbuf = prefs_get_pixbufs (dialog, paths[i].icon, &small_pixbuf);
         vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),

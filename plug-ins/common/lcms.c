@@ -562,7 +562,7 @@ lcms_icc_apply (GimpColorConfig          *config,
           g_message (_("Color profile '%s' is not for RGB color space."),
                      gimp_file_get_utf8_name (file));
 
-          cmsCloseProfile (dest_profile);
+          gimp_lcms_profile_close (dest_profile);
           g_object_unref (file);
           return GIMP_PDB_EXECUTION_ERROR;
         }
@@ -590,8 +590,8 @@ lcms_icc_apply (GimpColorConfig          *config,
       gchar *src_label  = gimp_lcms_profile_get_label (src_profile);
       gchar *dest_label = gimp_lcms_profile_get_label (dest_profile);
 
-      cmsCloseProfile (src_profile);
-      cmsCloseProfile (dest_profile);
+      gimp_lcms_profile_close (src_profile);
+      gimp_lcms_profile_close (dest_profile);
 
       g_printerr ("lcms: skipping conversion because profiles seem to be equal:\n");
       g_printerr (" %s\n", src_label);
@@ -620,8 +620,8 @@ lcms_icc_apply (GimpColorConfig          *config,
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  cmsCloseProfile (src_profile);
-  cmsCloseProfile (dest_profile);
+  gimp_lcms_profile_close (src_profile);
+  gimp_lcms_profile_close (dest_profile);
 
   if (file)
     g_object_unref (file);
@@ -657,7 +657,7 @@ lcms_icc_info (GimpColorConfig *config,
   if (desc) *desc = gimp_lcms_profile_get_description (profile);
   if (info) *info = gimp_lcms_profile_get_summary (profile);
 
-  cmsCloseProfile (profile);
+  gimp_lcms_profile_close (profile);
 
   return GIMP_PDB_SUCCESS;
 }
@@ -680,7 +680,7 @@ lcms_icc_file_info (GFile   *file,
   *desc = gimp_lcms_profile_get_description (profile);
   *info = gimp_lcms_profile_get_summary (profile);
 
-  cmsCloseProfile (profile);
+  gimp_lcms_profile_close (profile);
 
   return GIMP_PDB_SUCCESS;
 }
@@ -709,20 +709,7 @@ lcms_image_get_profile (GimpColorConfig  *config,
     }
   else if (config->rgb_profile)
     {
-      GFile *file = g_file_new_for_path (config->rgb_profile);
-
-      profile = gimp_lcms_profile_open_from_file (file, error);
-
-      if (profile && ! gimp_lcms_profile_is_rgb (profile))
-        {
-          g_set_error (error, 0, 0,
-                       _("Color profile '%s' is not for RGB color space"),
-                       gimp_file_get_utf8_name (file));
-          cmsCloseProfile (profile);
-          profile = NULL;
-        }
-
-      g_object_unref (file);
+      profile = gimp_color_config_get_rgb_profile (config, error);
     }
 
   return profile;
@@ -757,7 +744,7 @@ lcms_image_set_profile (gint32       image,
       profile_data = gimp_lcms_profile_save_to_data (file_profile,
                                                      &profile_length,
                                                      &error);
-      cmsCloseProfile (file_profile);
+      gimp_lcms_profile_close (file_profile);
 
       if (! profile_data)
         {
@@ -894,12 +881,9 @@ lcms_layers_transform_rgb (gint                     *layers,
   for (i = 0; i < num_layers; i++)
     {
       gint32           layer_id = layers[i];
-      const Babl      *layer_format;
-      gboolean         has_alpha;
-      const Babl      *type;
       const Babl      *iter_format = NULL;
       cmsUInt32Number  lcms_format = 0;
-      cmsHTRANSFORM    transform   = NULL;
+      cmsHTRANSFORM    transform;
       gint            *children;
       gint             num_children;
 
@@ -916,96 +900,8 @@ lcms_layers_transform_rgb (gint                     *layers,
           continue;
         }
 
-      layer_format = gimp_drawable_get_format (layer_id);
-      has_alpha    = babl_format_has_alpha (layer_format);
-      type         = babl_format_get_type (layer_format, 0);
-
-      if (type == babl_type ("u8"))
-        {
-          if (has_alpha)
-            {
-              lcms_format = TYPE_RGBA_8;
-              iter_format = babl_format ("R'G'B'A u8");
-            }
-          else
-            {
-              lcms_format = TYPE_RGB_8;
-              iter_format = babl_format ("R'G'B' u8");
-            }
-        }
-      else if (type == babl_type ("u16"))
-        {
-          if (has_alpha)
-            {
-              lcms_format = TYPE_RGBA_16;
-              iter_format = babl_format ("R'G'B'A u16");
-            }
-          else
-            {
-              lcms_format = TYPE_RGB_16;
-              iter_format = babl_format ("R'G'B' u16");
-            }
-        }
-      else if (type == babl_type ("half")) /* 16-bit floating point (half) */
-        {
-          if (has_alpha)
-            {
-              lcms_format = TYPE_RGBA_HALF_FLT;
-              iter_format = babl_format ("R'G'B'A half");
-            }
-          else
-            {
-              lcms_format = TYPE_RGB_HALF_FLT;
-              iter_format = babl_format ("R'G'B' half");
-            }
-        }
-      else if (type == babl_type ("float"))
-        {
-          if (has_alpha)
-            {
-              lcms_format = TYPE_RGBA_FLT;
-              iter_format = babl_format ("R'G'B'A float");
-            }
-          else
-            {
-              lcms_format = TYPE_RGB_FLT;
-              iter_format = babl_format ("R'G'B' float");
-            }
-        }
-      else if (type == babl_type ("double"))
-        {
-          if (has_alpha)
-            {
-#ifdef TYPE_RGBA_DBL
-              /* RGBA double not implemented in lcms */
-              lcms_format = TYPE_RGBA_DBL;
-              iter_format = babl_format ("R'G'B'A double");
-#endif /* TYPE_RGBA_DBL */
-            }
-          else
-            {
-              lcms_format = TYPE_RGB_DBL;
-              iter_format = babl_format ("R'G'B' double");
-            }
-        }
-
-      if (lcms_format == 0)
-        {
-          g_printerr ("lcms: layer format %s not supported, "
-                      "falling back to float\n",
-                      babl_get_name (layer_format));
-
-          if (has_alpha)
-            {
-              lcms_format = TYPE_RGBA_FLT;
-              iter_format = babl_format ("R'G'B'A float");
-            }
-          else
-            {
-              lcms_format = TYPE_RGB_FLT;
-              iter_format = babl_format ("R'G'B' float");
-            }
-        }
+      iter_format = gimp_lcms_get_format (gimp_drawable_get_format (layer_id),
+                                          &lcms_format);
 
       transform = cmsCreateTransform (src_profile,  lcms_format,
                                       dest_profile, lcms_format,
@@ -1270,29 +1166,19 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
 
   if (config->rgb_profile)
     {
-      GFile  *file  = g_file_new_for_path (config->rgb_profile);
       GError *error = NULL;
 
-      profile = gimp_lcms_profile_open_from_file (file, &error);
+      profile = gimp_color_config_get_rgb_profile (config, &error);
 
       if (! profile)
         {
           g_message ("%s", error->message);
           g_clear_error (&error);
         }
-      else if (! gimp_lcms_profile_is_rgb (profile))
-        {
-          g_message (_("Color profile '%s' is not for RGB color space."),
-                     gimp_filename_to_utf8 (config->rgb_profile));
-          cmsCloseProfile (profile);
-          profile = NULL;
-        }
       else
         {
           rgb_filename = config->rgb_profile;
         }
-
-      g_object_unref (file);
     }
 
   if (! profile)
@@ -1302,7 +1188,7 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   label = g_strdup_printf (_("RGB workspace (%s)"), name);
   g_free (name);
 
-  cmsCloseProfile (profile);
+  gimp_lcms_profile_close (profile);
 
   gimp_color_profile_combo_box_add (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
                                     rgb_filename, label);
@@ -1480,10 +1366,10 @@ lcms_dialog (GimpColorConfig *config,
             }
           else
             {
-              gimp_message (_("Destination profile is not for RGB color space."));
+              g_message (_("Destination profile is not for RGB color space."));
             }
 
-          cmsCloseProfile (dest_profile);
+          gimp_lcms_profile_close (dest_profile);
         }
 
       if (file)
@@ -1497,7 +1383,7 @@ lcms_dialog (GimpColorConfig *config,
 
   gtk_widget_destroy (dialog);
 
-  cmsCloseProfile (src_profile);
+  gimp_lcms_profile_close (src_profile);
 
   return (run ?
           (success ? GIMP_PDB_SUCCESS : GIMP_PDB_EXECUTION_ERROR) :

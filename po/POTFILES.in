@@ -489,6 +489,7 @@ app/widgets/gimplanguagestore-parser.c
 app/widgets/gimplayertreeview.c
 app/widgets/gimpmenudock.c
 app/widgets/gimpmessagebox.c
+app/widgets/gimpoverlaydialog.c
 app/widgets/gimppaletteeditor.c
 app/widgets/gimppanedbox.c
 app/widgets/gimppdbdialog.c

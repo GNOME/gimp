@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
 
@@ -49,7 +50,6 @@
 #include "vectors/gimpvectors-import.h"
 
 #include "widgets/gimpdnd.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"

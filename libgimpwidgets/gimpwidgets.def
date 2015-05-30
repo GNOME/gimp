@@ -72,6 +72,7 @@ EXPORTS
 	gimp_color_hex_entry_set_color
 	gimp_color_notebook_get_type
 	gimp_color_notebook_set_has_page
+	gimp_color_picker_cursors_get_resource
 	gimp_color_profile_chooser_dialog_get_type
 	gimp_color_profile_chooser_dialog_new
 	gimp_color_profile_combo_box_add
@@ -166,6 +167,7 @@ EXPORTS
 	gimp_float_adjustment_update
 	gimp_frame_get_type
 	gimp_frame_new
+	gimp_get_monitor_at_pointer
 	gimp_help_connect
 	gimp_help_disable_tooltips
 	gimp_help_enable_tooltips
@@ -174,6 +176,7 @@ EXPORTS
 	gimp_help_set_help_data_with_markup
 	gimp_hint_box_get_type
 	gimp_hint_box_new
+	gimp_icon_pixbufs_get_resource
 	gimp_int_adjustment_update
 	gimp_int_combo_box_append
 	gimp_int_combo_box_connect
@@ -398,6 +401,9 @@ EXPORTS
 	gimp_unit_store_set_pixel_values
 	gimp_unit_store_set_resolution
 	gimp_unit_store_set_resolutions
+	gimp_widget_get_color_profile
+	gimp_widget_get_color_transform
+	gimp_widget_get_monitor
 	gimp_widgets_error_quark
 	gimp_widgets_init
 	gimp_zoom_button_new

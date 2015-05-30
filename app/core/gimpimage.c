@@ -2317,6 +2317,11 @@ gimp_image_get_xcf_version (GimpImage    *image,
           version = MAX (2, version);
           break;
 
+          /* new layer modes not supported by gimp-2.8 */
+        case GIMP_NEW_OVERLAY_MODE:
+          version = MAX (9, version);
+          break;
+
         default:
           break;
         }
@@ -2353,6 +2358,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 6:
     case 7:
     case 8:
+    case 9:
       if (gimp_version)   *gimp_version   = 210;
       if (version_string) *version_string = "GIMP 2.10";
       break;

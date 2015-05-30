@@ -27,7 +27,7 @@
 
 #include "gimpstock.h"
 
-#include "icons/gimp-icon-pixbufs.h"
+#include "icons/gimp-icon-pixbufs.c"
 
 #include "libgimp/libgimp-intl.h"
 
@@ -360,6 +360,7 @@ gimp_stock_init (void)
   static gboolean initialized = FALSE;
 
   GdkPixbuf *pixbuf;
+  GError    *error = NULL;
   gchar     *icons_dir;
   gint       i;
 
@@ -401,9 +402,19 @@ gimp_stock_init (void)
                                       icons_dir);
   g_free (icons_dir);
 
-  pixbuf = gdk_pixbuf_new_from_inline (-1, gimp_wilber_eek_64, FALSE, NULL);
-  gtk_icon_theme_add_builtin_icon (GIMP_STOCK_WILBER_EEK, 64, pixbuf);
-  g_object_unref (pixbuf);
+  pixbuf = gdk_pixbuf_new_from_resource ("/org/gimp/icons/64/gimp-wilber-eek.png",
+                                         &error);
+
+  if (pixbuf)
+    {
+      gtk_icon_theme_add_builtin_icon (GIMP_STOCK_WILBER_EEK, 64, pixbuf);
+      g_object_unref (pixbuf);
+    }
+  else
+    {
+      g_critical ("Failed to create icon image: %s", error->message);
+      g_clear_error (&error);
+    }
 
   initialized = TRUE;
 }

@@ -604,6 +604,9 @@ edit_bucket_fill_invoker (GimpProcedure         *procedure,
           GimpImage    *image = gimp_item_get_image (GIMP_ITEM (drawable));
           GimpFillType  fill_type;
 
+          if (paint_mode == GIMP_OVERLAY_MODE)
+            paint_mode = GIMP_SOFTLIGHT_MODE;
+
           switch (fill_mode)
             {
             default:
@@ -684,6 +687,9 @@ edit_bucket_fill_full_invoker (GimpProcedure         *procedure,
         {
           GimpImage    *image = gimp_item_get_image (GIMP_ITEM (drawable));
           GimpFillType  fill_type;
+
+          if (paint_mode == GIMP_OVERLAY_MODE)
+            paint_mode = GIMP_SOFTLIGHT_MODE;
 
           switch (fill_mode)
             {
@@ -787,6 +793,9 @@ edit_blend_invoker (GimpProcedure         *procedure,
       if (success)
         {
           GimpGradient *gradient;
+
+          if (paint_mode == GIMP_OVERLAY_MODE)
+            paint_mode = GIMP_SOFTLIGHT_MODE;
 
           if (progress)
             gimp_progress_start (progress, FALSE, _("Blending"));

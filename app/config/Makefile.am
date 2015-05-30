@@ -10,6 +10,7 @@ libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Config\"				\
 	-DGIMP_APP_VERSION_STRING=\"$(GIMP_APP_VERSION)\"	\
+	-DDATADIR=\""$(datadir)"\"				\
 	-I$(top_builddir)					\
 	-I$(top_srcdir)						\
 	-I$(top_builddir)/app					\
@@ -116,7 +117,9 @@ test_config_LDADD = \
 	$(GEGL_LIBS)				\
 	$(GIO_LIBS)				\
 	$(GEXIV2_LIBS)				\
-	$(Z_LIBS)
+	$(Z_LIBS)				\
+	$(JSON_C_LIBS)				\
+	$(LIBMYPAINTGEGL_LIBS)
 
 CLEANFILES = $(EXTRA_PROGRAMS) foorc
 

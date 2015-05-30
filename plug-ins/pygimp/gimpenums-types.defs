@@ -162,6 +162,7 @@
     '("grain-extract-mode" "GIMP_GRAIN_EXTRACT_MODE")
     '("grain-merge-mode" "GIMP_GRAIN_MERGE_MODE")
     '("color-erase-mode" "GIMP_COLOR_ERASE_MODE")
+    '("new-overlay-mode" "GIMP_NEW_OVERLAY_MODE")
   )
 )
 

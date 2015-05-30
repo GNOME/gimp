@@ -48,7 +48,7 @@ m4_define([gegl_required_version], [0.3.0])
 m4_define([glib_required_version], [2.40.0])
 m4_define([atk_required_version], [2.2.0])
 m4_define([gtk_required_version], [2.24.10])
-m4_define([gdk_pixbuf_required_version], [2.24.1])
+m4_define([gdk_pixbuf_required_version], [2.30.8])
 m4_define([cairo_required_version], [1.12.2])
 m4_define([cairo_pdf_required_version], [1.12.2])
 m4_define([pangocairo_required_version], [1.29.4])
@@ -587,6 +587,11 @@ if test "x$os_win32" = "xyes"; then
   PKG_CHECK_MODULES(GIO_WINDOWS, gio-windows-2.0)
 else
   PKG_CHECK_MODULES(GIO_UNIX, gio-unix-2.0)
+fi
+
+AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources, no)
+if test "x$GLIB_COMPILE_RESOURCES" = xno; then
+  AC_MSG_ERROR(Could not find glib-compile-resources in your PATH)
 fi
 
 AC_PATH_PROG(GDBUS_CODEGEN, gdbus-codegen, no)

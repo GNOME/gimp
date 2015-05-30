@@ -73,14 +73,10 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
+#include "psd-save.h"
+
 #include "libgimp/stdplugins-intl.h"
 
-
-/* *** DEFINES *** */
-
-#define SAVE_PROC      "file-psd-save"
-#define PLUG_IN_BINARY "file-psd-save"
-#define PLUG_IN_ROLE   "gimp-file-psd-save"
 
 /* set to TRUE if you want debugging, FALSE otherwise */
 #define DEBUG FALSE
@@ -93,8 +89,6 @@
 
 #define PSD_UNIT_INCH 1
 #define PSD_UNIT_CM   2
-
-/* *** END OF DEFINES *** */
 
 
 /* Local types etc
@@ -134,14 +128,6 @@ static PSD_Image_Data PSDImageData;
 /* Declare some local functions.
  */
 
-static void        query                (void);
-
-static void        run                  (const gchar         *name,
-					 gint                 nparams,
-					 const GimpParam     *param,
-					 gint                *nreturn_vals,
-					 GimpParam           **return_vals);
-
 static void        psd_lmode_layer      (gint32               idLayer,
 					 gchar               *psdMode);
 
@@ -161,10 +147,6 @@ static void        save_layer_and_mask  (FILE                *fd,
 
 static void        save_data            (FILE                *fd,
 					 gint32               image_id);
-
-static gint        save_image           (const gchar         *filename,
-					 gint32               image_id,
-					 GError             **error);
 
 static void        xfwrite              (FILE                *fd,
 					 gconstpointer        buf,
@@ -206,146 +188,6 @@ static gint32      create_merged_image  (gint32              imageID);
 
 static const Babl* get_pixel_format     (gint32 drawableID);
 
-const GimpPlugInInfo PLUG_IN_INFO =
-{
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
-};
-
-
-MAIN()
-
-
-static void
-query (void)
-{
-  static const GimpParamDef save_args[] =
-  {
-    { GIMP_PDB_INT32,    "run-mode",     "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
-    { GIMP_PDB_IMAGE,    "image",        "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
-    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
-    { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },
-    { GIMP_PDB_INT32,    "compression",  "Compression type: { NONE (0), LZW (1), PACKBITS (2)" },
-    { GIMP_PDB_INT32,    "fill-order",   "Fill Order: { MSB to LSB (0), LSB to MSB (1)" }
-  };
-
-  gimp_install_procedure (SAVE_PROC,
-                          "saves files in the Photoshop(tm) PSD file format",
-                          "This filter saves files of Adobe Photoshop(tm) native PSD format.  These files may be of any image type supported by GIMP, with or without layers, layer masks, aux channels and guides.",
-                          "Monigotes",
-                          "Monigotes",
-                          "2000",
-                          N_("Photoshop image"),
-                          "RGB*, GRAY*, INDEXED*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (save_args), 0,
-                          save_args, NULL);
-
-  gimp_register_file_handler_mime (SAVE_PROC, "image/x-psd");
-  gimp_register_save_handler (SAVE_PROC, "psd", "");
-}
-
-static void
-run (const gchar      *name,
-     gint              nparams,
-     const GimpParam  *param,
-     gint             *nreturn_vals,
-     GimpParam       **return_vals)
-{
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GError           *error = NULL;
-
-  run_mode = param[0].data.d_int32;
-
-  *nreturn_vals = 1;
-  *return_vals  = values;
-
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-
-  if (strcmp (name, SAVE_PROC) == 0)
-    {
-      gint32                 image_id;
-      gint32                 drawable_id;
-      GimpAttributes        *attributes;
-      GimpMetadataSaveFlags  metadata_flags;
-      GimpExportReturn       export = GIMP_EXPORT_IGNORE;
-
-      IFDBG printf ("\n---------------- %s ----------------\n",
-                    param[3].data.d_string);
-
-      image_id    = param[1].data.d_int32;
-      drawable_id = param[2].data.d_int32;
-
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
-          gimp_ui_init (PLUG_IN_BINARY, FALSE);
-
-          export = gimp_export_image (&image_id, &drawable_id, "PSD",
-                                      GIMP_EXPORT_CAN_HANDLE_RGB     |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
-                                      GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                      GIMP_EXPORT_CAN_HANDLE_ALPHA   |
-                                      GIMP_EXPORT_CAN_HANDLE_LAYERS  |
-                                      GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS);
-
-          if (export == GIMP_EXPORT_CANCEL)
-            {
-              values[0].data.d_status = GIMP_PDB_CANCEL;
-              return;
-            }
-          break;
-
-        default:
-          break;
-        }
-
-      attributes = gimp_image_metadata_save_prepare (image_id,
-                                                   "image/x-psd",
-                                                   &metadata_flags);
-
-      if (save_image (param[3].data.d_string, image_id, &error))
-        {
-          if (attributes)
-            {
-              GFile *file;
-
-              gimp_attributes_new_attribute (attributes, "Exif.Image.BitsPerSample", "8", TYPE_SHORT);
-
-              file = g_file_new_for_path (param[3].data.d_string);
-              gimp_image_metadata_save_finish (image_id,
-                                               "image/x-psd",
-                                               attributes, metadata_flags,
-                                               file, NULL);
-              g_object_unref (file);
-
-              g_object_unref (attributes);
-            }
-
-          values[0].data.d_status = GIMP_PDB_SUCCESS;
-        }
-      else
-        {
-          values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
-
-          if (error)
-            {
-              *nreturn_vals = 2;
-              values[1].type          = GIMP_PDB_STRING;
-              values[1].data.d_string = error->message;
-            }
-        }
-
-      if (export == GIMP_EXPORT_EXPORT)
-        gimp_image_delete (image_id);
-    }
-}
 
 static void
 psd_lmode_layer (gint32  idLayer,
@@ -392,10 +234,11 @@ psd_lmode_layer (gint32  idLayer,
     case GIMP_HARDLIGHT_MODE:
       strcpy (psdMode, "hLit");
       break;
+    case GIMP_OVERLAY_MODE:
     case GIMP_SOFTLIGHT_MODE:
       strcpy (psdMode, "sLit");
       break;
-    case GIMP_OVERLAY_MODE:
+    case GIMP_NEW_OVERLAY_MODE:
       strcpy (psdMode, "over");
       break;
     default:
@@ -1350,8 +1193,12 @@ write_pixel_data (FILE   *fd,
       for (y = 0; y < height; y += tile_height)
         {
           int tlen;
-	  gegl_buffer_get (buffer, GEGL_RECTANGLE (0, y, width, MIN (height - y, tile_height)),
-			   0, format, data, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+	  gegl_buffer_get (buffer,
+                           GEGL_RECTANGLE (0, y,
+                                           width,
+                                           MIN (height - y, tile_height)),
+			   1.0, format, data,
+                           GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
           tlen = get_compress_channel_data (&data[chan],
                                              width,
                                              MIN(height - y, tile_height),
@@ -1415,8 +1262,12 @@ write_pixel_data (FILE   *fd,
           for (y = 0; y < height; y += tile_height)
             {
               int tlen;
-	      gegl_buffer_get (mbuffer, GEGL_RECTANGLE (0, y, width, MIN (height - y, tile_height)),
-			       0, format, data, GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
+	      gegl_buffer_get (mbuffer,
+                               GEGL_RECTANGLE (0, y,
+                                               width,
+                                               MIN (height - y, tile_height)),
+			       1.0, format, data,
+                               GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
               tlen = get_compress_channel_data (&data[0],
                                                 width,
                                                 MIN(height - y, tile_height),
@@ -1508,7 +1359,7 @@ create_merged_image (gint32 image_id)
 {
   gint32  projection;
 
-  projection = gimp_layer_new_from_visible (image_id, image_id, SAVE_PROC);
+  projection = gimp_layer_new_from_visible (image_id, image_id, "psd-save");
 
   if (gimp_image_base_type (image_id) != GIMP_INDEXED)
     {
@@ -1600,7 +1451,7 @@ get_image_data (FILE   *fd,
   PSDImageData.layersDim = g_new (PSD_Layer_Dimension, PSDImageData.nLayers);
 }
 
-static gint
+gboolean
 save_image (const gchar  *filename,
             gint32        image_id,
             GError      **error)

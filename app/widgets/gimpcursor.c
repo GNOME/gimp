@@ -23,7 +23,7 @@
 
 #include "gimpcursor.h"
 
-#include "cursors/gimp-tool-cursors.h"
+#include "cursors/gimp-tool-cursors.c"
 
 
 #define cursor_default_x_hot 10
@@ -43,10 +43,10 @@ typedef struct _GimpCursor GimpCursor;
 
 struct _GimpCursor
 {
-  const guint8 *pixbuf_data;
-  const gint    x_hot, y_hot;
+  const gchar *resource_name;
+  const gint   x_hot, y_hot;
 
-  GdkPixbuf    *pixbuf;
+  GdkPixbuf   *pixbuf;
 };
 
 
@@ -55,99 +55,99 @@ static GimpCursor gimp_cursors[] =
   /* these have to match up with enum GimpCursorType in widgets-enums.h */
 
   {
-    cursor_none,
+    "cursor-none.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_mouse,
+    "cursor-mouse.png",
     cursor_mouse_x_hot, cursor_mouse_y_hot
   },
   {
-    cursor_crosshair,
+    "cursor-crosshair.png",
     cursor_crosshair_x_hot, cursor_crosshair_y_hot
   },
   {
-    cursor_crosshair_small,
+    "cursor-crosshair-small.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_bad,
+    "cursor-bad.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_move,
+    "cursor-move.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_zoom,
+    "cursor-zoom.png",
     cursor_zoom_x_hot, cursor_zoom_y_hot
   },
   {
-    cursor_color_picker,
+    "cursor-color-picker.png",
     cursor_color_picker_x_hot, cursor_color_picker_y_hot
   },
   {
-    cursor_corner_top,
+    "cursor-corner-top.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_corner_top_right,
+    "cursor-corner-top-right.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_corner_right,
+    "cursor-corner-right.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_corner_bottom_right,
+    "cursor-corner-bottom-right.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_corner_bottom,
+    "cursor-corner-bottom.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_corner_bottom_left,
+    "cursor-corner-bottom-left.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_corner_left,
+    "cursor-corner-left.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_corner_top_left,
+    "cursor-corner-top-left.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_side_top,
+    "cursor-side-top.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_side_top_right,
+    "cursor-side-top-right.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_side_right,
+    "cursor-side-right.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_side_bottom_right,
+    "cursor-side-bottom-right.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_side_bottom,
+    "cursor-side-bottom.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_side_bottom_left,
+    "cursor-side-bottom-left.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_side_left,
+    "cursor-side-left.png",
     cursor_default_x_hot, cursor_default_y_hot
   },
   {
-    cursor_side_top_left,
+    "cursor-side-top-left.png",
     cursor_default_x_hot, cursor_default_y_hot
   }
 };
@@ -157,42 +157,42 @@ static GimpCursor gimp_tool_cursors[] =
   /* these have to match up with enum GimpToolCursorType in widgets-enums.h */
 
   { NULL },
-  { tool_rect_select },
-  { tool_ellipse_select },
-  { tool_free_select },
-  { tool_polygon_select },
-  { tool_fuzzy_select },
-  { tool_paths },
-  { tool_paths_anchor },
-  { tool_paths_control },
-  { tool_paths_segment },
-  { tool_iscissors },
-  { tool_move },
-  { tool_zoom },
-  { tool_crop },
-  { tool_resize },
-  { tool_rotate },
-  { tool_shear },
-  { tool_perspective },
-  { tool_flip_horizontal },
-  { tool_flip_vertical },
-  { tool_text },
-  { tool_color_picker },
-  { tool_bucket_fill },
-  { tool_blend },
-  { tool_pencil },
-  { tool_paintbrush },
-  { tool_airbrush },
-  { tool_ink },
-  { tool_clone },
-  { tool_heal },
-  { tool_eraser },
-  { tool_smudge },
-  { tool_blur },
-  { tool_dodge },
-  { tool_burn },
-  { tool_measure },
-  { tool_hand }
+  { "tool-rect-select.png" },
+  { "tool-ellipse-select.png" },
+  { "tool-free-select.png" },
+  { "tool-polygon-select.png" },
+  { "tool-fuzzy-select.png" },
+  { "tool-paths.png" },
+  { "tool-paths-anchor.png" },
+  { "tool-paths-control.png" },
+  { "tool-paths-segment.png" },
+  { "tool-iscissors.png" },
+  { "tool-move.png" },
+  { "tool-zoom.png" },
+  { "tool-crop.png" },
+  { "tool-resize.png" },
+  { "tool-rotate.png" },
+  { "tool-shear.png" },
+  { "tool-perspective.png" },
+  { "tool-flip-horizontal.png" },
+  { "tool-flip-vertical.png" },
+  { "tool-text.png" },
+  { "tool-color-picker.png" },
+  { "tool-bucket-fill.png" },
+  { "tool-blend.png" },
+  { "tool-pencil.png" },
+  { "tool-paintbrush.png" },
+  { "tool-airbrush.png" },
+  { "tool-ink.png" },
+  { "tool-clone.png" },
+  { "tool-heal.png" },
+  { "tool-eraser.png" },
+  { "tool-smudge.png" },
+  { "tool-blur.png" },
+  { "tool-dodge.png" },
+  { "tool-burn.png" },
+  { "tool-measure.png" },
+  { "tool-hand.png" }
 };
 
 static GimpCursor gimp_cursor_modifiers[] =
@@ -200,19 +200,19 @@ static GimpCursor gimp_cursor_modifiers[] =
   /* these have to match up with enum GimpCursorModifier in widgets-enums.h */
 
   { NULL },
-  { modifier_bad },
-  { modifier_plus },
-  { modifier_minus },
-  { modifier_intersect },
-  { modifier_move },
-  { modifier_resize },
-  { modifier_control },
-  { modifier_anchor },
-  { modifier_foreground },
-  { modifier_background },
-  { modifier_pattern },
-  { modifier_join },
-  { modifier_select }
+  { "modifier-bad.png" },
+  { "modifier-plus.png" },
+  { "modifier-minus.png" },
+  { "modifier-intersect.png" },
+  { "modifier-move.png" },
+  { "modifier-resize.png" },
+  { "modifier-control.png" },
+  { "modifier-anchor.png" },
+  { "modifier-foreground.png" },
+  { "modifier-background.png" },
+  { "modifier-pattern.png" },
+  { "modifier-join.png" },
+  { "modifier-select.png" }
 };
 
 
@@ -220,10 +220,23 @@ static const GdkPixbuf *
 get_cursor_pixbuf (GimpCursor *cursor)
 {
   if (! cursor->pixbuf)
-    cursor->pixbuf = gdk_pixbuf_new_from_inline (-1,
-                                                 cursor->pixbuf_data,
-                                                 FALSE, NULL);
-  g_return_val_if_fail (cursor->pixbuf != NULL, NULL);
+    {
+      gchar  *resource_path;
+      GError *error = NULL;
+
+      resource_path = g_strconcat ("/org/gimp/tool-cursors/",
+                                   cursor->resource_name, NULL);
+
+      cursor->pixbuf = gdk_pixbuf_new_from_resource (resource_path, &error);
+
+      if (! cursor->pixbuf)
+        {
+          g_critical ("Failed to create cursor image: %s", error->message);
+          g_clear_error (&error);
+        }
+
+      g_free (resource_path);
+    }
 
   return cursor->pixbuf;
 }

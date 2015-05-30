@@ -85,33 +85,44 @@ EXTRA_DIST = \
 	gimp-tool-cursors.xcf
 
 noinst_DATA = \
-	gimp-tool-cursors.h			\
-	gimp-color-picker-cursors.h
+	gimp-tool-cursors.c			\
+	gimp-color-picker-cursors.c
 
 CLEANFILES = \
-	gimp-tool-cursors.h			\
-	tool-cursors.list			\
-	gimp-color-picker-cursors.h		\
-	color-picker-cursors.list
+	$(noinst_DATA)				\
+	gimp-tool-cursors.gresource.xml		\
+	gimp-color-picker-cursors.gresource.xml
 
-tool-cursors.list: $(CURSOR_IMAGES) Makefile.am
+
+gimp-tool-cursors.gresource.xml: $(CURSOR_IMAGES) Makefile.am
 	$(AM_V_GEN) ( rm -f $@; \
+	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
+	  echo '<gresources>' >> $@; \
+	  echo '  <gresource prefix="/org/gimp/tool-cursors">' >> $@; \
 	  for image in $(CURSOR_IMAGES); do \
-	    echo $$image | \
-	      sed -e 's|.*/||' -e 's|-|_|g' -e 's|\.png$$||' >> $@; \
-	    echo "  $(srcdir)/$$image" >> $@; \
-	  done )
+	    echo "    <file preprocess=\"to-pixdata\">$$image</file>" >> $@; \
+	  done; \
+	  echo '  </gresource>' >> $@; \
+	  echo '</gresources>' >> $@ )
 
-color-picker-cursors.list: $(COLOR_PICKER_IMAGES) Makefile.am
+gimp-tool-cursors.c: gimp-tool-cursors.gresource.xml
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-source \
+	  --target=$@ gimp-tool-cursors.gresource.xml
+
+
+gimp-color-picker-cursors.gresource.xml: $(CURSOR_IMAGES) Makefile.am
 	$(AM_V_GEN) ( rm -f $@; \
-	  for image in $(COLOR_PICKER_IMAGES); do \
-	    echo $$image | \
-	      sed -e 's|.*/||' -e 's|-|_|g' -e 's|\.png$$||' >> $@; \
-	    echo "  $(srcdir)/$$image" >> $@; \
-	  done )
+	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
+	  echo '<gresources>' >> $@; \
+	  echo '  <gresource prefix="/org/gimp/color-picker-cursors">' >> $@; \
+	  for image in $(CURSOR_IMAGES); do \
+	    echo "    <file preprocess=\"to-pixdata\">$$image</file>" >> $@; \
+	  done; \
+	  echo '  </gresource>' >> $@; \
+	  echo '</gresources>' >> $@ )
 
-$(srcdir)/gimp-tool-cursors.h: tool-cursors.list
-	$(AM_V_GEN) $(GDK_PIXBUF_CSOURCE) --raw --build-list `cat tool-cursors.list` > $(@F)
-
-$(srcdir)/gimp-color-picker-cursors.h: color-picker-cursors.list
-	$(AM_V_GEN) $(GDK_PIXBUF_CSOURCE) --raw --build-list `cat color-picker-cursors.list` > $(@F)
+gimp-color-picker-cursors.c: gimp-color-picker-cursors.gresource.xml
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) \
+	  --sourcedir=$(srcdir) --generate-source \
+	  --target=$@ gimp-color-picker-cursors.gresource.xml

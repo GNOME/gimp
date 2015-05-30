@@ -83,6 +83,9 @@ _("When enabled, this will ensure that each pixel of an image gets " \
 #define DEFAULT_IMAGE_BLURB \
 "Sets the default image in the \"File/New\" dialog."
 
+#define DEFAULT_MYPAINT_BRUSH_BLURB \
+"Specify a default MyPaint brush."
+
 #define DEFAULT_PATTERN_BLURB \
 "Specify a default pattern."
 
@@ -237,6 +240,11 @@ _("Sets the monitor's vertical resolution, in dots per inch.  If set to " \
 #define MOVE_TOOL_CHANGES_ACTIVE_BLURB \
 _("If enabled, the move tool sets the edited layer or path as active.  " \
   "This used to be the default behaviour in older versions.")
+
+#define MYPAINT_BRUSH_PATH_BLURB \
+"Sets the brush search path."
+
+#define MYPAINT_BRUSH_PATH_WRITABLE_BLURB ""
 
 #define NAVIGATION_PREVIEW_SIZE_BLURB \
 _("Sets the size of the navigation preview available in the lower right " \

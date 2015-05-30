@@ -709,14 +709,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         else
           {
             GdkEventButton *bevent = (GdkEventButton *) event;
-            GimpController *mouse;
-
-            mouse = gimp_controllers_get_mouse (gimp);
+            GimpController *mouse  = gimp_controllers_get_mouse (gimp);
 
             if (!(shell->scrolling || shell->pointer_grabbed) &&
                 mouse && gimp_controller_mouse_button (GIMP_CONTROLLER_MOUSE (mouse),
                                                        bevent))
-              return TRUE;
+              {
+                return TRUE;
+              }
           }
 
         return_val = TRUE;
@@ -725,10 +725,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
     case GDK_SCROLL:
       {
-        GdkEventScroll     *sevent = (GdkEventScroll *) event;
-        GimpController     *wheel;
-
-        wheel = gimp_controllers_get_wheel (gimp);
+        GdkEventScroll *sevent = (GdkEventScroll *) event;
+        GimpController *wheel  = gimp_controllers_get_wheel (gimp);
 
         if (! wheel ||
             ! gimp_controller_wheel_scroll (GIMP_CONTROLLER_WHEEL (wheel),

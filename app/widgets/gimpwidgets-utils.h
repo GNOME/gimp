@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_WIDGETS_UTILS_H__
-#define __GIMP_WIDGETS_UTILS_H__
+#ifndef __APP_GIMP_WIDGETS_UTILS_H__
+#define __APP_GIMP_WIDGETS_UTILS_H__
 
 
 void              gimp_menu_position               (GtkMenu              *menu,
@@ -108,8 +108,5 @@ const gchar     * gimp_print_event                 (const GdkEvent       *event)
 void              gimp_session_write_position      (GimpConfigWriter     *writer,
                                                     gint                  position);
 
-gint              gimp_widget_get_monitor          (GtkWidget            *widget);
-gint              gimp_get_monitor_at_pointer      (GdkScreen           **screen);
 
-
-#endif /* __GIMP_WIDGETS_UTILS_H__ */
+#endif /* __APP_GIMP_WIDGETS_UTILS_H__ */

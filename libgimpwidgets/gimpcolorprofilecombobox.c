@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <lcms2.h>
-
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -425,9 +423,9 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
 
   if (filename && ! (label && *label))
     {
-      GFile       *file;
-      cmsHPROFILE  profile;
-      GError      *error = NULL;
+      GFile            *file;
+      GimpColorProfile  profile;
+      GError           *error = NULL;
 
       file = g_file_new_for_path (filename);
       profile = gimp_lcms_profile_open_from_file (file, &error);
@@ -441,7 +439,7 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
       else
         {
           l = gimp_lcms_profile_get_label (profile);
-          cmsCloseProfile (profile);
+          gimp_lcms_profile_close (profile);
         }
     }
   else
