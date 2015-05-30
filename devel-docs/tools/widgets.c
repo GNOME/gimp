@@ -175,7 +175,7 @@ create_browser (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Browser"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-browser", vbox, MEDIUM);
+  return new_widget_info ("gimp-widget-browser", vbox, MEDIUM);
 }
 
 static WidgetInfo *
@@ -190,7 +190,7 @@ create_button (void)
   align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_container_add (GTK_CONTAINER (align), widget);
 
-  return new_widget_info ("gimp-button", align, SMALL);
+  return new_widget_info ("gimp-widget-button", align, SMALL);
 }
 
 static WidgetInfo *
@@ -237,7 +237,7 @@ create_chain_button (void)
   gtk_box_pack_end (GTK_BOX (vbox), gtk_label_new ("Chain Button"),
                     TRUE, TRUE, 0);
 
-  return new_widget_info ("gimp-chain-button", vbox, MEDIUM);
+  return new_widget_info ("gimp-widget-chain-button", vbox, MEDIUM);
 }
 
 static WidgetInfo *
@@ -260,7 +260,7 @@ create_color_area (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Color Area"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-color-area", vbox, SMALL);
+  return new_widget_info ("gimp-widget-color-area", vbox, SMALL);
 }
 
 static WidgetInfo *
@@ -283,7 +283,7 @@ create_color_button (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Color Button"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-color-button", vbox, SMALL);
+  return new_widget_info ("gimp-widget-color-button", vbox, SMALL);
 }
 
 static WidgetInfo *
@@ -305,7 +305,7 @@ create_color_hex_entry (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Color Hex Entry"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-color-hex-entry", vbox, SMALL);
+  return new_widget_info ("gimp-widget-color-hex-entry", vbox, SMALL);
 }
 
 static WidgetInfo *
@@ -327,7 +327,7 @@ create_color_profile_combo_box (void)
                       gtk_label_new ("Color Profile Combo Box"),
                       FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-color-profile-combo-box", vbox, SMALL);
+  return new_widget_info ("gimp-widget-color-profile-combo-box", vbox, SMALL);
 }
 
 static WidgetInfo *
@@ -353,7 +353,7 @@ create_color_scale (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Color Scale"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-color-scale", vbox, SMALL);
+  return new_widget_info ("gimp-widget-color-scale", vbox, SMALL);
 }
 
 static WidgetInfo *
@@ -377,7 +377,7 @@ create_color_selection (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Color Selection"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-color-selection", vbox, ASIS);
+  return new_widget_info ("gimp-widget-color-selection", vbox, ASIS);
 }
 
 static WidgetInfo *
@@ -389,7 +389,7 @@ create_dialog (void)
   GtkWidget  *label;
 
   widget = gimp_dialog_new ("Gimp Dialog",
-                            "gimp-dialog",
+                            "gimp-widget-dialog",
                             NULL, 0, NULL, NULL,
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK,     GTK_RESPONSE_OK,
@@ -400,7 +400,7 @@ create_dialog (void)
   content = gtk_dialog_get_content_area (GTK_DIALOG (widget));
   gtk_container_add (GTK_CONTAINER (content), label);
   gtk_widget_show (label);
-  info = new_widget_info ("gimp-dialog", widget, MEDIUM);
+  info = new_widget_info ("gimp-widget-dialog", widget, MEDIUM);
   info->include_decorations = TRUE;
 
   return info;
@@ -422,7 +422,7 @@ create_enum_combo_box (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Enum Combo Box"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-enum-combo-box", vbox, SMALL);
+  return new_widget_info ("gimp-widget-enum-combo-box", vbox, SMALL);
 }
 
 static WidgetInfo *
@@ -440,7 +440,7 @@ create_enum_label (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Enum Label"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-enum-label", vbox, SMALL);
+  return new_widget_info ("gimp-widget-enum-label", vbox, SMALL);
 }
 
 static WidgetInfo *
@@ -460,7 +460,7 @@ create_file_entry (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("File Entry"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-file-entry", vbox, SMALL);
+  return new_widget_info ("gimp-widget-file-entry", vbox, SMALL);
 }
 
 static WidgetInfo *
@@ -474,7 +474,7 @@ create_frame (void)
   gtk_misc_set_alignment (GTK_MISC (content), 0.0, 0.0);
   gtk_container_add (GTK_CONTAINER (frame), content);
 
-  return new_widget_info ("gimp-frame", frame, MEDIUM);
+  return new_widget_info ("gimp-widget-frame", frame, MEDIUM);
 }
 
 static WidgetInfo *
@@ -482,7 +482,7 @@ create_hint_box (void)
 {
   GtkWidget *box = gimp_hint_box_new ("This is a user hint.");
 
-  return new_widget_info ("gimp-hint-box", box, MEDIUM);
+  return new_widget_info ("gimp-widget-hint-box", box, MEDIUM);
 }
 
 static WidgetInfo *
@@ -501,7 +501,7 @@ create_number_pair_entry (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Number Pair Entry"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-number-pair-entry", vbox, SMALL);
+  return new_widget_info ("gimp-widget-number-pair-entry", vbox, SMALL);
 }
 
 static WidgetInfo *
@@ -527,7 +527,7 @@ create_int_combo_box (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Int Combo Box"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-int-combo-box", vbox, SMALL);
+  return new_widget_info ("gimp-widget-int-combo-box", vbox, SMALL);
 }
 
 static WidgetInfo *
@@ -546,7 +546,7 @@ create_memsize_entry (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Memsize Entry"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-memsize-entry", vbox, SMALL);
+  return new_widget_info ("gimp-widget-memsize-entry", vbox, SMALL);
 }
 
 static WidgetInfo *
@@ -570,7 +570,7 @@ create_offset_area (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Offset Area"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-offset-area", vbox, LARGE);
+  return new_widget_info ("gimp-widget-offset-area", vbox, LARGE);
 }
 
 static WidgetInfo *
@@ -589,7 +589,7 @@ create_page_selector (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Page Selector"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-page-selector", vbox, ASIS);
+  return new_widget_info ("gimp-widget-page-selector", vbox, ASIS);
 }
 
 static WidgetInfo *
@@ -613,7 +613,7 @@ create_path_editor (void)
   g_free (path);
   g_free (config);
 
-  return new_widget_info ("gimp-path-editor", vbox, ASIS);
+  return new_widget_info ("gimp-widget-path-editor", vbox, ASIS);
 }
 
 static WidgetInfo *
@@ -631,7 +631,7 @@ create_pick_button (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Pick Button"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-pick-button", vbox, SMALL);
+  return new_widget_info ("gimp-widget-pick-button", vbox, SMALL);
 }
 
 static gboolean
@@ -674,7 +674,7 @@ create_preview_area (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Preview Area"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-preview-area", vbox, MEDIUM);
+  return new_widget_info ("gimp-widget-preview-area", vbox, MEDIUM);
 }
 
 static WidgetInfo *
@@ -699,7 +699,7 @@ create_string_combo_box (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("String Combo Box"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-string-combo-box", vbox, SMALL);
+  return new_widget_info ("gimp-widget-string-combo-box", vbox, SMALL);
 }
 
 static WidgetInfo *
@@ -717,7 +717,7 @@ create_unit_menu (void)
   gtk_box_pack_start (GTK_BOX (vbox),
                       gtk_label_new ("Unit Menu"), FALSE, FALSE, 0);
 
-  return new_widget_info ("gimp-unit-menu", vbox, SMALL);
+  return new_widget_info ("gimp-widget-unit-menu", vbox, SMALL);
 }
 
 GList *

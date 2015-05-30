@@ -30,43 +30,42 @@ GimpStock
 
 <!-- ##### MACRO GIMP_STOCK_ANCHOR ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-anchor-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-anchor.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CENTER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-center-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-center-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-center.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_DUPLICATE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-duplicate-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-duplicate.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_EDIT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-edit-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-edit.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_RESET ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-reset-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-reset.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CLOSE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-close-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-close.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -80,410 +79,361 @@ GimpStock
 
 <!-- ##### MACRO GIMP_STOCK_MENU_LEFT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-menu-left-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-menu-left.png" format="png"></inlinegraphic>
 RTL variant
-<inlinegraphic fileref="stock-menu-right-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-menu-right.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_MENU_RIGHT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-menu-right-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-menu-right.png" format="png"></inlinegraphic>
 RTL variant
-<inlinegraphic fileref="stock-menu-left-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-menu-left.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_MOVE_TO_SCREEN ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-move-to-screen-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-move-to-screen-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-move-to-screen.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_INVERT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-invert-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-invert.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_LAYER_TO_IMAGESIZE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-layer-to-imagesize-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-layer-to-imagesize.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_MERGE_DOWN ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-merge-down-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-merge-down.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_NAVIGATION ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-navigation-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-navigation.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_PASTE_AS_NEW ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-paste-as-new-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-paste-as-new.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_PASTE_INTO ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-paste-into-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-paste-into.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_PATH_STROKE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-path-stroke-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-path-stroke.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_PLUGIN ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-plugin-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-plugin.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_QUICK_MASK_OFF ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-quick-mask-off-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-quick-mask-off.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_QUICK_MASK_ON ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-quick-mask-on-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-quick-mask-on.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_HISTOGRAM ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-histogram-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-histogram-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-histogram.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_HISTOGRAM_LINEAR ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-histogram-linear-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-histogram-linear.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_HISTOGRAM_LOGARITHMIC ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-histogram-logarithmic-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-histogram-logarithmic.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_RESHOW_FILTER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-reshow-filter-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-reshow-filter.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_RESIZE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-resize-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-resize.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_FLIP_HORIZONTAL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-flip-horizontal-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-flip-horizontal.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_FLIP_VERTICAL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-flip-vertical-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-flip-vertical.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_ROTATE_180 ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-rotate-180-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-rotate-180.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_ROTATE_270 ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-rotate-270-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-rotate-270.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_ROTATE_90 ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-rotate-90-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-rotate-90.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SCALE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-scale-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-scale.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_LINKED ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-linked-20.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-linked-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-linked.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_VISIBLE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-eye-20.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-eye-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-visible.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_LIST ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-list-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-list.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRID ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-grid-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-grid.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_PORTRAIT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-portrait-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-portrait.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_LANDSCAPE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-landscape-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-landscape.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_VIDEO ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-video-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-video-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-video.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_WEB ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-web-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-web-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-web.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_IMAGE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-image-48.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-image-32.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-image-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-image-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-image.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_LAYER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-layer-48.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-layer-32.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-layer-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-layer-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-layer.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_LAYER_MASK ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-layer-mask-48.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-layer-mask-32.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-layer-mask-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-layer-mask-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-layer-mask.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CHANNEL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-channel-48.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-32.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-channel.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CHANNEL_RED ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-channel-red-48.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-red-32.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-red-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-red-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-channel-red.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CHANNEL_GREEN ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-channel-green-48.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-green-32.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-green-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-green-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-channel-green.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CHANNEL_BLUE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-channel-blue-48.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-blue-32.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-blue-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-blue-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-channel-blue.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CHANNEL_GRAY ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-channel-gray-48.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-gray-32.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-gray-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-gray-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-channel-gray.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CHANNEL_INDEXED ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-channel-indexed-48.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-indexed-32.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-indexed-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-indexed-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-channel-indexed.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CHANNEL_ALPHA ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-channel-alpha-48.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-alpha-32.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-alpha-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channel-alpha-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-channel-alpha.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_PATH ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-path-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-path-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-path.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TEXT_LAYER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-text-layer-48.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-text-layer-32.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-text-layer-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-text-layer-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-text-layer.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_FLOATING_SELECTION ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-floating-selection-48.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-floating-selection-32.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-floating-selection-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-floating-selection-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-floating-selection.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TEMPLATE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-template-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-template-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-template.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_IMAGES ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-images-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-images-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-images.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_LAYERS ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-layers-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-layers-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-layers.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CHANNELS ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-channels-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-channels-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-channels.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_PATHS ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-paths-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-paths-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-paths.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_COLORMAP ##### -->
 <para>
-<inlinegraphic fileref="stock-colormap-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-colormap-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-colormap.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -497,1064 +447,994 @@ RTL variant
 
 <!-- ##### MACRO GIMP_STOCK_CURSOR ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-cursor-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-cursor-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-cursor.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SAMPLE_POINT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-sample-point-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-sample-point-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-sample-point.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SHAPE_CIRCLE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-shape-circle-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-shape-circle.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SHAPE_SQUARE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-shape-square-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-shape-square.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SHAPE_DIAMOND ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-shape-diamond-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-shape-diamond.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CAP_BUTT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-cap-butt-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-cap-butt.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CAP_ROUND ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-cap-round-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-cap-round.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CAP_SQUARE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-cap-square-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-cap-square.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_JOIN_MITER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-join-miter-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-join-miter.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_JOIN_ROUND ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-join-round-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-join-round.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_JOIN_BEVEL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-join-bevel-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-join-bevel.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-selection-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-selection.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_ALL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-selection-all-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-selection-all.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_NONE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-selection-none-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-selection-none.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_GROW ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-selection-grow-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-selection-grow.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_SHRINK ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-selection-shrink-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-selection-shrink.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_BORDER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-selection-border-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-selection-border.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_ADD ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-selection-add-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-selection-add.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_SUBTRACT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-selection-subtract-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-selection-subtract.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_REPLACE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-selection-replace-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-selection-replace.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_INTERSECT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-selection-intersect-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-selection-intersect.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_STROKE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-selection-stroke-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-selection-stroke.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_TO_CHANNEL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-selection-to-channel-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-selection-to-channel.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SELECTION_TO_PATH ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-selection-to-path-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-selection-to-path.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRADIENT_LINEAR ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gradient-linear-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gradient-linear.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRADIENT_BILINEAR ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gradient-bilinear-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gradient-bilinear.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRADIENT_RADIAL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gradient-radial-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gradient-radial.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRADIENT_SQUARE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gradient-square-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gradient-square.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRADIENT_CONICAL_SYMMETRIC ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gradient-conical-symmetric-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gradient-conical-symmetric.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRADIENT_CONICAL_ASYMMETRIC ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gradient-conical-asymmetric-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gradient-conical-asymmetric.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRADIENT_SHAPEBURST_SPHERICAL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gradient-shapeburst-spherical-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gradient-shapeburst-spherical.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRADIENT_SHAPEBURST_ANGULAR ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gradient-shapeburst-angular-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gradient-shapeburst-angular.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRADIENT_SHAPEBURST_DIMPLED ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gradient-shapeburst-dimpled-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gradient-shapeburst-dimpled.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRADIENT_SPIRAL_CLOCKWISE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gradient-spiral-clockwise-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gradient-spiral-clockwise.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRADIENT_SPIRAL_ANTICLOCKWISE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gradient-spiral-anticlockwise-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gradient-spiral-anticlockwise.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRAVITY_NORTH_WEST ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gravity-north-west-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gravity-north-west.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRAVITY_NORTH ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gravity-north-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gravity-north.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRAVITY_NORTH_EAST ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gravity-north-east-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gravity-north-east.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRAVITY_WEST ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gravity-west-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gravity-west.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRAVITY_EAST ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gravity-east-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gravity-east.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRAVITY_SOUTH_WEST ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gravity-south-west-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gravity-south-west.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRAVITY_SOUTH ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gravity-south-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gravity-south.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GRAVITY_SOUTH_EAST ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gravity-south-east-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gravity-south-east.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_HCENTER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-hcenter-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-hcenter.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_VCENTER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-vcenter-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-vcenter.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CHAR_PICKER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-char-picker-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-char-picker.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_LETTER_SPACING ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-letter-spacing-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-letter-spacing.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_LINE_SPACING ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-line-spacing-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-line-spacing.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TEXT_DIR_LTR ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-text-dir-ltr-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-text-dir-ltr.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TEXT_DIR_RTL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-text-dir-rtl-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-text-dir-rtl.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_PRINT_RESOLUTION ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-print-resolution-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-print-resolution-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-print-resolution.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOLS ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tools-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tools-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tools.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_OPTIONS ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-options-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-options-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-options.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_DEVICE_STATUS ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-device-status-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-device-status-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-device-status.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_INPUT_DEVICE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-input-device-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-input-device-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-input-device.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_DISPLAY_FILTER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-display-filter-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-display-filter-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-display-filter.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CURVE_FREE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-curve-free-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-curve-free.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CURVE_SMOOTH ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-curve-smooth-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-curve-smooth.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_BLACK ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-color-picker-black-18.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-color-picker-black.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_GRAY ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-color-picker-gray-18.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-color-picker-gray.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_COLOR_PICKER_WHITE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-color-picker-white-18.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-color-picker-white.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_COLOR_TRIANGLE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-color-triangle-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-color-triangle.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_COLOR_PICK_FROM_SCREEN ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-color-pick-from-screen-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-color-pick-from-screen.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CONVERT_GRAYSCALE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-convert-grayscale-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-convert-grayscale.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CONVERT_INDEXED ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-convert-indexed-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-convert-indexed.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CONVERT_RGB ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-convert-rgb-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-convert-rgb.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TRANSPARENCY ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-transparency-24.png" format="png"></inlinegraphic><inlinegraphic fileref="stock-transparency-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-transparency.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_DEFAULT_COLORS ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-default-colors-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-default-colors.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_SWAP_COLORS ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-swap-colors-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-swap-colors.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_UNDO_HISTORY ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-undo-history-24.png" format="png"></inlinegraphic><inlinegraphic fileref="stock-undo-history-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-undo-history.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_HCHAIN ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-hchain-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-hchain.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_HCHAIN_BROKEN ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-hchain-broken-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-hchain-broken.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_VCHAIN ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-vchain-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-vchain.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_VCHAIN_BROKEN ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-vchain-broken-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-vchain-broken.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TEXTURE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-texture-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-texture.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_FRAME ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-frame-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-frame.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_ERROR ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-error-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-error.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_INFO ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-info-64.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-info-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-info-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-info.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_QUESTION ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-question-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-question.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_WARNING ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-warning-64.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-warning-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-warning-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-warning.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_GEGL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-gegl-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-gegl-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-gegl.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_USER_MANUAL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-user-manual-64.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-user-manual-32.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-user-manual-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-user-manual-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-user-manual.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_WILBER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-wilber-64.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-wilber-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-wilber.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_WILBER_EEK ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-wilber-eek-64.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-wilber-eek.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_ZOOM_FOLLOW_WINDOW ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-zoom-follow-window-12.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-zoom-follow-window.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_AIRBRUSH ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-airbrush-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-airbrush-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-airbrush.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_ALIGN ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-align-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-align-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-align.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_BLEND ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-blend-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-blend-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-blend.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_BLUR ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-blur-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-blur-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-blur.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-brightness-contrast-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-brightness-contrast-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-brightness-contrast.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_BUCKET_FILL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-bucket-fill-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-bucket-fill-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-bucket-fill.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_BY_COLOR_SELECT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-by-color-select-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-by-color-select-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-by-color-select.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_CAGE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-cage-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-cage-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-cage.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_CLONE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-clone-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-clone-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-clone.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_COLOR_BALANCE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-color-balance-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-color-balance-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-color-balance.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_COLOR_PICKER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-color-picker-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-color-picker-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-color-picker.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_COLORIZE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-colorize-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-colorize-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-colorize.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_CROP ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-crop-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-crop-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-crop.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_CURVES ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-curves-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-curves-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-curves.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_DESATURATE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-convert-grayscale-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-convert-grayscale.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_DODGE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-dodge-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-dodge-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-dodge.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_ELLIPSE_SELECT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-ellipse-select-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-ellipse-select-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-ellipse-select.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_ERASER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-eraser-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-eraser-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-eraser.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_FLIP ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-flip-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-flip-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-flip.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_FOREGROUND_SELECT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-foreground-select-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-foreground-select-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-foreground-select.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_FREE_SELECT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-free-select-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-free-select-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-free-select.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_FUZZY_SELECT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-fuzzy-select-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-fuzzy-select-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-fuzzy-select.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_HEAL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-heal-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-heal-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-heal.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_HUE_SATURATION ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-hue-saturation-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-hue-saturation-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-hue-saturation.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_INK ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-ink-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-ink-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-ink.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_ISCISSORS ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-iscissors-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-iscissors-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-iscissors.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_LEVELS ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-levels-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-levels-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-levels.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_MEASURE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-measure-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-measure-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-measure.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_MOVE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-move-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-move-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-move.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_PAINTBRUSH ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-paintbrush-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-paintbrush-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-paintbrush.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_PATH ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-path-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-path-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-path.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_PENCIL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-pencil-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-pencil-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-pencil.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_PERSPECTIVE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-perspective-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-perspective-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-perspective.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_PERSPECTIVE_CLONE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-perspective-clone-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-perspective-clone-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-perspective-clone.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_POSTERIZE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-posterize-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-posterize-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-posterize.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_RECT_SELECT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-rect-select-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-rect-select-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-rect-select.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_ROTATE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-rotate-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-rotate-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-rotate.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_SEAMLESS_CLONE ##### -->
 <para>
-
+<inlinegraphic fileref="gimp-tool-seamless-clone.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_SCALE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-scale-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-scale-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-scale.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_SHEAR ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-shear-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-shear-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-shear.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_SMUDGE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-smudge-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-smudge-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-smudge.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_TEXT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-text-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-text-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-text.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_THRESHOLD ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-threshold-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-threshold-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-threshold.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_UNIFIED_TRANSFORM ##### -->
 <para>
-
+<inlinegraphic fileref="gimp-tool-unified-transform.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_WARP ##### -->
 <para>
-
+<inlinegraphic fileref="gimp-tool-warp.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_TOOL_ZOOM ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-tool-zoom-22.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-tool-zoom-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-tool-zoom.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CONTROLLER ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-controller-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-controller-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-controller.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CONTROLLER_KEYBOARD ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-controller-keyboard-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-controller-keyboard-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-controller-keyboard.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CONTROLLER_LINUX_INPUT ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-controller-linux-input-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-controller-linux-input-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-controller-linux-input.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CONTROLLER_MIDI ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-controller-midi-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-controller-midi-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-controller-midi.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CONTROLLER_MOUSE ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-controller-mouse-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-controller-mouse-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-controller-mouse.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_CONTROLLER_WHEEL ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-controller-wheel-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-controller-wheel-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-controller-wheel.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_DISPLAY_FILTER_COLORBLIND ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-display-filter-colorblind-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-display-filter-colorblind-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-display-filter-colorblind.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_DISPLAY_FILTER_CONTRAST ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-display-filter-contrast-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-display-filter-contrast-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-display-filter-contrast.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_DISPLAY_FILTER_GAMMA ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-display-filter-gamma-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-display-filter-gamma-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-display-filter-gamma.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_DISPLAY_FILTER_LCMS ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-display-filter-lcms-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-display-filter-lcms-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-display-filter-lcms.png" format="png"></inlinegraphic>
 </para>
 
 
 
 <!-- ##### MACRO GIMP_STOCK_DISPLAY_FILTER_PROOF ##### -->
 <para xml:base="../gimpstock.xml">
-<inlinegraphic fileref="stock-display-filter-proof-24.png" format="png"></inlinegraphic>
-<inlinegraphic fileref="stock-display-filter-proof-16.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="gimp-display-filter-proof.png" format="png"></inlinegraphic>
 </para>
 
 
