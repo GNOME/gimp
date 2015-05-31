@@ -203,20 +203,20 @@ GIMP_COLOR_SELECTION_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimpcolorprofilestore</FILE>
-<TITLE>GimpColorProfileStore</TITLE>
-GimpColorProfileStore
-gimp_color_profile_store_new
-gimp_color_profile_store_add
+<FILE>gimpcolorprofilechooserdialog</FILE>
+<TITLE>GimpColorProfileChooserDialog</TITLE>
+gimp_color_profile_chooser_dialog_new
 <SUBSECTION Standard>
-GimpColorProfileStoreClass
-GIMP_COLOR_PROFILE_STORE
-GIMP_IS_COLOR_PROFILE_STORE
-GIMP_TYPE_COLOR_PROFILE_STORE
-gimp_color_profile_store_get_type
-GIMP_COLOR_PROFILE_STORE_CLASS
-GIMP_IS_COLOR_PROFILE_STORE_CLASS
-GIMP_COLOR_PROFILE_STORE_GET_CLASS
+GIMP_COLOR_PROFILE_CHOOSER_DIALOG
+GIMP_COLOR_PROFILE_CHOOSER_DIALOG_CLASS
+GIMP_COLOR_PROFILE_CHOOSER_DIALOG_GET_CLASS
+GIMP_IS_COLOR_PROFILE_CHOOSER_DIALOG
+GIMP_IS_COLOR_PROFILE_CHOOSER_DIALOG_CLASS
+GIMP_TYPE_COLOR_PROFILE_CHOOSER_DIALOG
+GimpColorProfileChooserDialog
+GimpColorProfileChooserDialogClass
+GimpColorProfileChooserDialogPrivate
+gimp_color_profile_chooser_dialog_get_type
 </SECTION>
 
 <SECTION>
@@ -240,6 +240,42 @@ GIMP_COLOR_PROFILE_COMBO_BOX_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpcolorprofilestore</FILE>
+<TITLE>GimpColorProfileStore</TITLE>
+GimpColorProfileStore
+gimp_color_profile_store_new
+gimp_color_profile_store_add
+<SUBSECTION Standard>
+GimpColorProfileStoreClass
+GIMP_COLOR_PROFILE_STORE
+GIMP_IS_COLOR_PROFILE_STORE
+GIMP_TYPE_COLOR_PROFILE_STORE
+gimp_color_profile_store_get_type
+GIMP_COLOR_PROFILE_STORE_CLASS
+GIMP_IS_COLOR_PROFILE_STORE_CLASS
+GIMP_COLOR_PROFILE_STORE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpcolorprofileview</FILE>
+<TITLE>GimpColorProfileView</TITLE>
+gimp_color_profile_view_new
+gimp_color_profile_view_set_profile
+gimp_color_profile_view_set_error
+<SUBSECTION Standard>
+GIMP_COLOR_PROFILE_VIEW
+GIMP_COLOR_PROFILE_VIEW_CLASS
+GIMP_COLOR_PROFILE_VIEW_GET_CLASS
+GIMP_IS_COLOR_PROFILE_VIEW
+GIMP_IS_COLOR_PROFILE_VIEW_CLASS
+GIMP_TYPE_COLOR_PROFILE_VIEW
+GimpColorProfileView
+GimpColorProfileViewClass
+GimpColorProfileViewPrivate
+gimp_color_profile_view_get_type
+</SECTION>
+
+<SECTION>
 <FILE>gimpenumstore</FILE>
 <TITLE>GimpEnumStore</TITLE>
 GimpEnumStore
@@ -248,6 +284,7 @@ gimp_enum_store_new_with_range
 gimp_enum_store_new_with_values
 gimp_enum_store_new_with_values_valist
 gimp_enum_store_set_stock_prefix
+gimp_enum_store_set_icon_prefix
 <SUBSECTION Standard>
 GimpEnumStoreClass
 GIMP_ENUM_STORE
@@ -266,6 +303,7 @@ GimpEnumComboBox
 gimp_enum_combo_box_new
 gimp_enum_combo_box_new_with_model
 gimp_enum_combo_box_set_stock_prefix
+gimp_enum_combo_box_set_icon_prefix
 <SUBSECTION Standard>
 GimpEnumComboBoxClass
 GIMP_ENUM_COMBO_BOX
@@ -832,6 +870,8 @@ GIMP_STOCK_GRAVITY_SOUTH
 GIMP_STOCK_GRAVITY_SOUTH_EAST
 GIMP_STOCK_HCENTER
 GIMP_STOCK_VCENTER
+GIMP_STOCK_HFILL
+GIMP_STOCK_VFILL
 GIMP_STOCK_CHAR_PICKER
 GIMP_STOCK_LETTER_SPACING
 GIMP_STOCK_LINE_SPACING
@@ -894,6 +934,7 @@ GIMP_STOCK_TOOL_FLIP
 GIMP_STOCK_TOOL_FOREGROUND_SELECT
 GIMP_STOCK_TOOL_FREE_SELECT
 GIMP_STOCK_TOOL_FUZZY_SELECT
+GIMP_STOCK_TOOL_HANDLE_TRANSFORM
 GIMP_STOCK_TOOL_HEAL
 GIMP_STOCK_TOOL_HUE_SATURATION
 GIMP_STOCK_TOOL_INK
@@ -901,6 +942,8 @@ GIMP_STOCK_TOOL_ISCISSORS
 GIMP_STOCK_TOOL_LEVELS
 GIMP_STOCK_TOOL_MEASURE
 GIMP_STOCK_TOOL_MOVE
+GIMP_STOCK_TOOL_MYBRUSH
+GIMP_STOCK_TOOL_N_POINT_DEFORMATION
 GIMP_STOCK_TOOL_PAINTBRUSH
 GIMP_STOCK_TOOL_PATH
 GIMP_STOCK_TOOL_PENCIL
@@ -952,6 +995,9 @@ gimp_enum_radio_frame_new_with_range
 gimp_enum_stock_box_new
 gimp_enum_stock_box_new_with_range
 gimp_enum_stock_box_set_child_padding
+gimp_enum_icon_box_new
+gimp_enum_icon_box_new_with_range
+gimp_enum_icon_box_set_child_padding
 </SECTION>
 
 <SECTION>
@@ -986,8 +1032,6 @@ gimp_int_adjustment_update
 gimp_uint_adjustment_update
 gimp_float_adjustment_update
 gimp_double_adjustment_update
-gimp_table_attach_aligned
-gimp_label_set_attributes
 GIMP_WIDGETS_ERROR
 gimp_widgets_error_quark
 </SECTION>
@@ -1008,10 +1052,12 @@ gimp_prop_enum_label_new
 gimp_prop_enum_radio_box_new
 gimp_prop_enum_radio_frame_new
 gimp_prop_enum_stock_box_new
+gimp_prop_enum_icon_box_new
 gimp_prop_expander_new
 gimp_prop_file_chooser_button_new
 gimp_prop_file_chooser_button_new_with_dialog
 gimp_prop_hscale_new
+gimp_prop_icon_image_new
 gimp_prop_int_combo_box_new
 gimp_prop_label_new
 gimp_prop_memsize_entry_new
@@ -1039,6 +1085,7 @@ gimp_color_display_get_config
 gimp_color_display_get_managed
 gimp_color_display_convert
 gimp_color_display_convert_surface
+gimp_color_display_convert_buffer
 gimp_color_display_load_state
 gimp_color_display_save_state
 gimp_color_display_configure
@@ -1068,6 +1115,7 @@ gimp_color_display_stack_reorder_up
 gimp_color_display_stack_reorder_down
 gimp_color_display_stack_convert
 gimp_color_display_stack_convert_surface
+gimp_color_display_stack_convert_buffer
 <SUBSECTION Standard>
 GimpColorDisplayStackClass
 GIMP_COLOR_DISPLAY_STACK
@@ -1231,6 +1279,16 @@ gimp_scrolled_preview_get_type
 GIMP_SCROLLED_PREVIEW_CLASS
 GIMP_IS_SCROLLED_PREVIEW_CLASS
 GIMP_SCROLLED_PREVIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpwidgetsutils</FILE>
+gimp_table_attach_aligned
+gimp_label_set_attributes
+gimp_widget_get_monitor
+gimp_get_monitor_at_pointer
+gimp_widget_get_color_profile
+gimp_widget_get_color_transform
 </SECTION>
 
 <SECTION>

@@ -40,7 +40,6 @@
       <title>Manupulating Images and their Properties</title>
       <xi:include href="xml/gimpchannel.xml" />
       <xi:include href="xml/gimpcolor.xml" />
-      <xi:include href="xml/gimpconvert.xml" />
       <xi:include href="xml/gimpdisplay.xml" />
       <xi:include href="xml/gimpdrawable.xml" />
       <xi:include href="xml/gimpdrawablecolor.xml" />
@@ -48,10 +47,13 @@
       <xi:include href="xml/gimpedit.xml" />
       <xi:include href="xml/gimpfileops.xml" />
       <xi:include href="xml/gimpfloatingsel.xml" />
-      <xi:include href="xml/gimpgrid.xml" />
-      <xi:include href="xml/gimpguides.xml" />
       <xi:include href="xml/gimpimage.xml" />
+      <xi:include href="xml/gimpimageconvert.xml" />
+      <xi:include href="xml/gimpimagegrid.xml" />
+      <xi:include href="xml/gimpimageguides.xml" />
       <xi:include href="xml/gimpimageselect.xml" />
+      <xi:include href="xml/gimpimagetransform.xml" />
+      <xi:include href="xml/gimpimageundo.xml" />
       <xi:include href="xml/gimpmetadata.xml" />
       <xi:include href="xml/gimpitem.xml" />
       <xi:include href="xml/gimpitemtransform.xml" />
@@ -68,7 +70,6 @@
       <xi:include href="xml/gimppainttools.xml" />
       <xi:include href="xml/gimpselectiontools.xml" />
       <xi:include href="xml/gimptransformtools.xml" />
-      <xi:include href="xml/gimpundo.xml" />
       <xi:include href="xml/gimpvectors.xml" />
     </chapter>
 

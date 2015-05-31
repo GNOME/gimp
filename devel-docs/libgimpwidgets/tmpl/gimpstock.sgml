@@ -760,6 +760,20 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_HFILL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_VFILL ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_CHAR_PICKER ##### -->
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="gimp-char-picker.png" format="png"></inlinegraphic>
@@ -1194,6 +1208,13 @@ RTL variant
 
 
 
+<!-- ##### MACRO GIMP_STOCK_TOOL_HANDLE_TRANSFORM ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_TOOL_HEAL ##### -->
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="gimp-tool-heal.png" format="png"></inlinegraphic>
@@ -1239,6 +1260,20 @@ RTL variant
 <!-- ##### MACRO GIMP_STOCK_TOOL_MOVE ##### -->
 <para xml:base="../gimpstock.xml">
 <inlinegraphic fileref="gimp-tool-move.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_MYBRUSH ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_TOOL_N_POINT_DEFORMATION ##### -->
+<para>
+
 </para>
 
 
