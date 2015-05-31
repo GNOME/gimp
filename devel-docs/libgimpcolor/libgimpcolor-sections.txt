@@ -33,8 +33,10 @@ gimp_hsl_get_type
 <SECTION>
 <FILE>gimplcms</FILE>
 GimpColorProfile
+GimpColorTransform
 gimp_lcms_profile_open_from_file
 gimp_lcms_profile_open_from_data
+gimp_lcms_profile_close
 gimp_lcms_profile_save_to_data
 gimp_lcms_profile_get_description
 gimp_lcms_profile_get_manufacturer
@@ -46,6 +48,8 @@ gimp_lcms_profile_is_equal
 gimp_lcms_profile_is_rgb
 gimp_lcms_profile_is_cmyk
 gimp_lcms_create_srgb_profile
+gimp_lcms_create_linear_rgb_profile
+gimp_lcms_get_format
 </SECTION>
 
 <SECTION>
@@ -141,6 +145,7 @@ gimp_hsv_to_rgb4
 GimpColorManaged
 GimpColorManagedInterface
 gimp_color_managed_get_icc_profile
+gimp_color_managed_get_color_profile
 gimp_color_managed_profile_changed
 <SUBSECTION Standard>
 GIMP_COLOR_MANAGED
@@ -172,8 +177,8 @@ gimp_bilinear_pixels_8
 </SECTION>
 
 <SECTION>
-<FILE>gimpcairocolor</FILE>
-<TITLE>GimpCairoColor</TITLE>
+<FILE>gimpcairo</FILE>
+<TITLE>GimpCairo</TITLE>
 gimp_cairo_set_source_rgb
 gimp_cairo_set_source_rgba
 gimp_cairo_checkerboard_create
