@@ -555,8 +555,7 @@ gimp_lcms_create_srgb_profile_internal (void)
   gimp_lcms_profile_set_tag (srgb_profile, cmsSigCopyrightTag,
                              "Public Domain");
 
-  /**
-   * The following line produces a V2 profile with a point curve TRC.
+  /* The following line produces a V2 profile with a point curve TRC.
    * Profiles with point curve TRCs can't be used in LCMS2 unbounded
    * mode ICC profile conversions. A V2 profile might be appropriate
    * for embedding in sRGB images saved to disk, if the image is to be
@@ -564,7 +563,7 @@ gimp_lcms_create_srgb_profile_internal (void)
    * profiles.
    *
    * cmsSetProfileVersion (srgb_profile, 2.1);
-   **/
+   */
 
   return srgb_profile;
 }

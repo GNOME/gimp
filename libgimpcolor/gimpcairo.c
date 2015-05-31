@@ -142,6 +142,17 @@ gimp_cairo_checkerboard_create (cairo_t       *cr,
   return pattern;
 }
 
+/**
+ * gimp_cairo_surface_get_format:
+ * @surface: a Cairo surface
+ *
+ * This function returns a #Babl format that corresponds to @surface's
+ * pixel format.
+ *
+ * Return value: the #Babl format of @surface.
+ *
+ * Since: GIMP 2.10
+ **/
 const Babl *
 gimp_cairo_surface_get_format (cairo_surface_t *surface)
 {
@@ -161,6 +172,18 @@ gimp_cairo_surface_get_format (cairo_surface_t *surface)
   g_return_val_if_reached (NULL);
 }
 
+/**
+ * gimp_cairo_surface_create_buffer:
+ * @surface: a Cairo surface
+ *
+ * This function returns a #GeglBuffer which wraps @surface's pixels.
+ * It must only be called on image surfaces, calling it on other surface
+ * types is an error.
+ *
+ * Return value: a #GeglBuffer
+ *
+ * Since: GIMP 2.10
+ **/
 GeglBuffer *
 gimp_cairo_surface_create_buffer (cairo_surface_t *surface)
 {
