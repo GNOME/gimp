@@ -133,7 +133,7 @@ gimp_rgb_set_alpha (GimpRGB *rgb,
 }
 
 /**
- * gimp_rgb_set:
+ * gimp_rgb_set_pixel:
  * @rgb:    a #GimpRGB struct
  * @format: a Babl format
  * @pixel:  pointer to the source pixel
@@ -159,7 +159,7 @@ gimp_rgb_set_pixel (GimpRGB       *rgb,
 }
 
 /**
- * gimp_rgb_get:
+ * gimp_rgb_get_pixel:
  * @rgb:    a #GimpRGB struct
  * @format: a Babl format
  * @pixel:  pointer to the destination pixel
@@ -438,7 +438,7 @@ gimp_rgb_composite (GimpRGB              *color1,
 /*  RGBA functions  */
 
 /**
- * gimp_rgba_set:
+ * gimp_rgba_set_pixel:
  * @rgba:   a #GimpRGB struct
  * @format: a Babl format
  * @pixel:  pointer to the source pixel
@@ -464,7 +464,7 @@ gimp_rgba_set_pixel (GimpRGB       *rgba,
 }
 
 /**
- * gimp_rgba_get:
+ * gimp_rgba_get_pixel:
  * @rgba:   a #GimpRGB struct
  * @format: a Babl format
  * @pixel:  pointer to the destination pixel
