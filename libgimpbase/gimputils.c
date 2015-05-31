@@ -335,7 +335,7 @@ gimp_file_has_extension (GFile       *file,
  *
  * Since: GIMP 2.10
  *
- * Return value: %TRUE on success, %FALSE otherwise. On %FASLE, @error
+ * Return value: %TRUE on success, %FALSE otherwise. On %FALSE, @error
  *               is set.
  **/
 gboolean

@@ -34,7 +34,7 @@
  * @short_description: A container structure to maintain an array of
  *     generic values
  * @see_also: #GValue, #GParamSpecValueArray, gimp_param_spec_value_array()
- * @title: Value arrays
+ * @title: GimpValueArray
  *
  * The prime purpose of a #GimpValueArray is for it to be used as an
  * object property that holds an array of values. A #GimpValueArray wraps
@@ -48,8 +48,6 @@
 
 /**
  * GimpValueArray:
- * @n_values: number of values contained in the array
- * @values: array of values
  *
  * A #GimpValueArray contains an array of #GValue elements.
  *
@@ -255,7 +253,7 @@ gimp_value_array_append (GimpValueArray *value_array,
 /**
  * gimp_value_array_insert:
  * @value_array: #GimpValueArray to add an element to
- * @index: insertion position, must be &lt;= value_array-&gt;n_values
+ * @index: insertion position, must be &lt;= gimp_value_array_length()
  * @value: (allow-none): #GValue to copy into #GimpValueArray, or %NULL
  *
  * Insert a copy of @value at specified position into @value_array. If @value
@@ -297,8 +295,7 @@ gimp_value_array_insert (GimpValueArray *value_array,
  * gimp_value_array_remove:
  * @value_array: #GimpValueArray to remove an element from
  * @index: position of value to remove, which must be less than
- *         <code>value_array-><link
- *         linkend="GimpValueArray.n-values">n_values</link></code>
+ *         gimp_value_array_length()
  *
  * Remove the value at position @index from @value_array.
  *
