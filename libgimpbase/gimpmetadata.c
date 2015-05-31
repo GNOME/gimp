@@ -746,8 +746,8 @@ gimp_metadata_set_pixel_size (GimpMetadata *metadata,
 
 /**
  * gimp_metadata_set_bits_per_sample:
- * @metadata: A #GimpMetadata instance.
- * @bps:      Bytes per pixel, per component
+ * @metadata:        A #GimpMetadata instance.
+ * @bits_per_sample: Bits per pixel, per component
  *
  * Sets Exif.Image.BitsPerSample on @metadata.
  *
@@ -755,13 +755,14 @@ gimp_metadata_set_pixel_size (GimpMetadata *metadata,
  */
 void
 gimp_metadata_set_bits_per_sample (GimpMetadata *metadata,
-                                   gint          bps)
+                                   gint          bits_per_sample)
 {
   gchar buffer[32];
 
   g_return_if_fail (GEXIV2_IS_METADATA (metadata));
 
-  g_snprintf (buffer, sizeof (buffer), "%d %d %d", bps, bps, bps);
+  g_snprintf (buffer, sizeof (buffer), "%d %d %d",
+              bits_per_sample, bits_per_sample, bits_per_sample);
   gexiv2_metadata_set_tag_string (metadata, "Exif.Image.BitsPerSample", buffer);
 }
 

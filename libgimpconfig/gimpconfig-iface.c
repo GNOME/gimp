@@ -341,14 +341,14 @@ gimp_config_serialize_to_gfile (GimpConfig   *config,
 /**
  * gimp_config_serialize_to_stream:
  * @config: a #GObject that implements the #GimpConfigInterface.
- * @stream: the #GOutputStream to write the configuration to.
+ * @output: the #GOutputStream to write the configuration to.
  * @header: optional file header (must be ASCII only)
  * @footer: optional file footer (must be ASCII only)
  * @data: user data passed to the serialize implementation.
  * @error: return location for a possible error
  *
  * Serializes the object properties of @config to the stream specified
- * by @stream.
+ * by @output.
  *
  * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
  *
