@@ -156,7 +156,7 @@ gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
    *
    * The title to be used for the pattern selection popup dialog.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_TITLE,
                                    g_param_spec_string ("title",
@@ -171,7 +171,7 @@ gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
    *
    * The name of the currently selected pattern.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_PATTERN_NAME,
                                    g_param_spec_string ("pattern-name",
@@ -192,7 +192,7 @@ gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
    *
    * The ::pattern-set signal is emitted when the user selects a pattern.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   pattern_button_signals[PATTERN_SET] =
     g_signal_new ("pattern-set",
@@ -246,7 +246,7 @@ gimp_pattern_select_button_init (GimpPatternSelectButton *button)
  *
  * Returns: A #GtkWidget that you can use in your UI.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_pattern_select_button_new (const gchar *title,
@@ -275,7 +275,7 @@ gimp_pattern_select_button_new (const gchar *title,
  *
  * Returns: an internal copy of the pattern name which must not be freed.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 const gchar *
 gimp_pattern_select_button_get_pattern (GimpPatternSelectButton *button)
@@ -295,7 +295,7 @@ gimp_pattern_select_button_get_pattern (GimpPatternSelectButton *button)
  *
  * Sets the current pattern for the pattern select button.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 void
 gimp_pattern_select_button_set_pattern (GimpPatternSelectButton *button,

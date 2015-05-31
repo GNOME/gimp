@@ -158,7 +158,7 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
    *
    * The drawable the #GimpZoomPreview is attached to.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_DRAWABLE,
                                    g_param_spec_pointer ("drawable", NULL, NULL,
@@ -170,7 +170,7 @@ gimp_zoom_preview_class_init (GimpZoomPreviewClass *klass)
    *
    * The #GimpZoomModel used by this #GimpZoomPreview.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_MODEL,
                                    g_param_spec_object ("model", NULL, NULL,
@@ -729,7 +729,7 @@ gimp_zoom_preview_get_source_area (GimpPreview *preview,
  *
  * Creates a new #GimpZoomPreview widget for @drawable.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  *
  * Returns: a new #GimpZoomPreview.
  **/
@@ -756,7 +756,7 @@ gimp_zoom_preview_new (GimpDrawable *drawable)
  * example you want to have two zoom previews that keep their zoom
  * factor in sync.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  *
  * Returns: a new #GimpZoomPreview.
  **/
@@ -783,7 +783,7 @@ gimp_zoom_preview_new_with_model (GimpDrawable  *drawable,
  *
  * Return Value: the #GimpDrawable that was passed to gimp_zoom_preview_new().
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GimpDrawable *
 gimp_zoom_preview_get_drawable (GimpZoomPreview *preview)
@@ -801,7 +801,7 @@ gimp_zoom_preview_get_drawable (GimpZoomPreview *preview)
  *
  * Return Value: a pointer to the #GimpZoomModel owned by the @preview
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GimpZoomModel *
 gimp_zoom_preview_get_model (GimpZoomPreview *preview)
@@ -819,7 +819,7 @@ gimp_zoom_preview_get_model (GimpZoomPreview *preview)
  *
  * Return Value: the current zoom factor
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gdouble
 gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
@@ -850,7 +850,7 @@ gimp_zoom_preview_get_factor (GimpZoomPreview *preview)
  * Return Value: newly allocated data that should be released using g_free()
  *               when it is not any longer needed
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 guchar *
 gimp_zoom_preview_get_source (GimpZoomPreview *preview,

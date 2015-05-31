@@ -190,7 +190,7 @@ gimp_table_attach_aligned (GtkTable    *table,
  * you need to set attributes on part of the label, you will have to
  * use the PangoAttributes API directly.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_label_set_attributes (GtkLabel *label,

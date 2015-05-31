@@ -340,7 +340,7 @@ gimp_frame_get_label_spacing (GtkFrame *frame)
  *
  * Return value: a new #GimpFrame widget
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_frame_new (const gchar *label)

@@ -106,7 +106,7 @@ gimp_layer_copy (gint32  layer_ID)
  *
  * Returns: The newly created layer.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 gint32
 gimp_layer_new_from_pixbuf (gint32                image_ID,
@@ -235,7 +235,7 @@ gimp_layer_new_from_pixbuf (gint32                image_ID,
  *
  * Returns: The newly created layer.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  */
 gint32
 gimp_layer_new_from_surface (gint32                image_ID,

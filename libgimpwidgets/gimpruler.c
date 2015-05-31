@@ -349,7 +349,7 @@ gimp_ruler_get_property (GObject    *object,
  *
  * Return value: a new #GimpRuler widget.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 GtkWidget *
 gimp_ruler_new (GtkOrientation orientation)
@@ -491,7 +491,7 @@ gimp_ruler_track_widget_motion_notify (GtkWidget      *widget,
  * for the track widget's children, regardless of whether they are
  * ordinary children of off-screen children.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  */
 void
 gimp_ruler_add_track_widget (GimpRuler *ruler,
@@ -524,7 +524,7 @@ gimp_ruler_add_track_widget (GimpRuler *ruler,
  * Removes a previously added track widget from the ruler. See
  * gimp_ruler_add_track_widget().
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  */
 void
 gimp_ruler_remove_track_widget (GimpRuler *ruler,
@@ -556,7 +556,7 @@ gimp_ruler_remove_track_widget (GimpRuler *ruler,
  *
  * This sets the unit of the ruler.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  */
 void
 gimp_ruler_set_unit (GimpRuler *ruler,
@@ -583,7 +583,7 @@ gimp_ruler_set_unit (GimpRuler *ruler,
  *
  * Return value: the unit currently used in the @ruler widget.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 GimpUnit
 gimp_ruler_get_unit (GimpRuler *ruler)
@@ -600,7 +600,7 @@ gimp_ruler_get_unit (GimpRuler *ruler)
  *
  * This sets the position of the ruler.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  */
 void
 gimp_ruler_set_position (GimpRuler *ruler,
@@ -627,7 +627,7 @@ gimp_ruler_set_position (GimpRuler *ruler,
  *
  * Return value: the current position of the @ruler widget.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_ruler_get_position (GimpRuler *ruler)
@@ -647,7 +647,7 @@ gimp_ruler_get_position (GimpRuler *ruler)
  *
  * This sets the range of the ruler.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  */
 void
 gimp_ruler_set_range (GimpRuler *ruler,
@@ -693,7 +693,7 @@ gimp_ruler_set_range (GimpRuler *ruler,
  * Retrieves values indicating the range and current position of a #GimpRuler.
  * See gimp_ruler_set_range().
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 void
 gimp_ruler_get_range (GimpRuler *ruler,

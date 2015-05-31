@@ -54,7 +54,7 @@ static GdkPixbuf * gimp_pixbuf_from_data (guchar                 *data,
  *
  * Return value: a new #GdkPixbuf
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GdkPixbuf *
 gimp_image_get_thumbnail (gint32                  image_ID,
@@ -95,7 +95,7 @@ gimp_image_get_thumbnail (gint32                  image_ID,
  *
  * Return value: a new #GdkPixbuf
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GdkPixbuf *
 gimp_drawable_get_thumbnail (gint32                  drawable_ID,
@@ -141,7 +141,7 @@ gimp_drawable_get_thumbnail (gint32                  drawable_ID,
  *
  * Return value: a new #GdkPixbuf
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GdkPixbuf *
 gimp_drawable_get_sub_thumbnail (gint32                  drawable_ID,

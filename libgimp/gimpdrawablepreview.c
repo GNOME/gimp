@@ -113,7 +113,7 @@ gimp_drawable_preview_class_init (GimpDrawablePreviewClass *klass)
   /**
    * GimpDrawablePreview:drawable:
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_DRAWABLE,
                                    g_param_spec_pointer ("drawable", NULL, NULL,
@@ -548,7 +548,7 @@ _gimp_drawable_preview_get_bounds (GimpDrawable *drawable,
  *
  * Returns: A pointer to the new #GimpDrawablePreview widget.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_drawable_preview_new (GimpDrawable *drawable,
@@ -568,7 +568,7 @@ gimp_drawable_preview_new (GimpDrawable *drawable,
  * Return value: the #GimpDrawable that has been passed to
  *               gimp_drawable_preview_new().
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GimpDrawable *
 gimp_drawable_preview_get_drawable (GimpDrawablePreview *preview)
@@ -583,7 +583,7 @@ gimp_drawable_preview_get_drawable (GimpDrawablePreview *preview)
  * @preview: a #GimpDrawablePreview widget
  * @region:  a #GimpPixelRgn
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_drawable_preview_draw_region (GimpDrawablePreview *preview,

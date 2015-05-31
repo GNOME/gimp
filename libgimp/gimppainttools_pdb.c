@@ -482,7 +482,7 @@ gimp_eraser_default (gint32         drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_heal (gint32         drawable_ID,
@@ -530,7 +530,7 @@ gimp_heal (gint32         drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_heal_default (gint32         drawable_ID,

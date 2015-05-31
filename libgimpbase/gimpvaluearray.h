@@ -33,7 +33,7 @@ G_BEGIN_DECLS
  * The type ID of the "GimpValueArray" type which is a boxed type,
  * used to pass around pointers to GimpValueArrays.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 #define GIMP_TYPE_VALUE_ARRAY (gimp_value_array_get_type ())
 

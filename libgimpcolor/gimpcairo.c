@@ -53,7 +53,7 @@
  *
  * This function calls cairo_set_source_rgb() for you.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 void
 gimp_cairo_set_source_rgb (cairo_t       *cr,
@@ -72,7 +72,7 @@ gimp_cairo_set_source_rgb (cairo_t       *cr,
  *
  * This function calls cairo_set_source_rgba() for you.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 void
 gimp_cairo_set_source_rgba (cairo_t       *cr,
@@ -92,7 +92,7 @@ gimp_cairo_set_source_rgba (cairo_t       *cr,
  *
  * Return value: a new Cairo pattern that can be used as a source on @cr.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 cairo_pattern_t *
 gimp_cairo_checkerboard_create (cairo_t       *cr,
@@ -151,7 +151,7 @@ gimp_cairo_checkerboard_create (cairo_t       *cr,
  *
  * Return value: the #Babl format of @surface.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 const Babl *
 gimp_cairo_surface_get_format (cairo_surface_t *surface)
@@ -182,7 +182,7 @@ gimp_cairo_surface_get_format (cairo_surface_t *surface)
  *
  * Return value: a #GeglBuffer
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GeglBuffer *
 gimp_cairo_surface_create_buffer (cairo_surface_t *surface)

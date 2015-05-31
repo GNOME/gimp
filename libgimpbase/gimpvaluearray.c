@@ -51,7 +51,7 @@
  *
  * A #GimpValueArray contains an array of #GValue elements.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 struct _GimpValueArray
 {
@@ -76,7 +76,7 @@ G_DEFINE_BOXED_TYPE (GimpValueArray, gimp_value_array,
  *
  * Returns: (transfer none): pointer to a value at @index in @value_array
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GValue *
 gimp_value_array_index (const GimpValueArray *value_array,
@@ -131,7 +131,7 @@ value_array_shrink (GimpValueArray *value_array)
  *
  * Returns: a newly allocated #GimpValueArray with 0 values
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpValueArray *
 gimp_value_array_new (gint n_prealloced)
@@ -156,7 +156,7 @@ gimp_value_array_new (gint n_prealloced)
  *
  * Return value: the same @value_array
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpValueArray *
 gimp_value_array_ref (GimpValueArray *value_array)
@@ -175,7 +175,7 @@ gimp_value_array_ref (GimpValueArray *value_array)
  * Unref a #GimpValueArray. If the reference count drops to zero, the
  * array including its contents are freed.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 void
 gimp_value_array_unref (GimpValueArray *value_array)
@@ -218,7 +218,7 @@ gimp_value_array_length (const GimpValueArray *value_array)
  *
  * Returns: (transfer none): the #GimpValueArray passed in as @value_array
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpValueArray *
 gimp_value_array_prepend (GimpValueArray *value_array,
@@ -239,7 +239,7 @@ gimp_value_array_prepend (GimpValueArray *value_array,
  *
  * Returns: (transfer none): the #GimpValueArray passed in as @value_array
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpValueArray *
 gimp_value_array_append (GimpValueArray *value_array,
@@ -261,7 +261,7 @@ gimp_value_array_append (GimpValueArray *value_array,
  *
  * Returns: (transfer none): the #GimpValueArray passed in as @value_array
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpValueArray *
 gimp_value_array_insert (GimpValueArray *value_array,
@@ -301,7 +301,7 @@ gimp_value_array_insert (GimpValueArray *value_array,
  *
  * Returns: (transfer none): the #GimpValueArray passed in as @value_array
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpValueArray *
 gimp_value_array_remove (GimpValueArray *value_array,

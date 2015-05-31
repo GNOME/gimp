@@ -49,7 +49,7 @@ GeglBuffer      * gimp_cairo_surface_create_buffer (cairo_surface_t *surface);
  *
  * Sets a single pixel in an Cairo image surface in %CAIRO_FORMAT_RGB24.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
 #define GIMP_CAIRO_RGB24_SET_PIXEL(d, r, g, b) \
@@ -69,7 +69,7 @@ GeglBuffer      * gimp_cairo_surface_create_buffer (cairo_surface_t *surface);
  *
  * Gets a single pixel from a Cairo image surface in %CAIRO_FORMAT_RGB24.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
 #define GIMP_CAIRO_RGB24_GET_PIXEL(s, r, g, b) \
@@ -90,7 +90,7 @@ GeglBuffer      * gimp_cairo_surface_create_buffer (cairo_surface_t *surface);
  *
  * Sets a single pixel in an Cairo image surface in %CAIRO_FORMAT_ARGB32.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
 #define GIMP_CAIRO_ARGB32_SET_PIXEL(d, r, g, b, a) \
@@ -127,7 +127,7 @@ GeglBuffer      * gimp_cairo_surface_create_buffer (cairo_surface_t *surface);
  *
  * Gets a single pixel from a Cairo image surface in %CAIRO_FORMAT_ARGB32.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 #if G_BYTE_ORDER == G_LITTLE_ENDIAN
 #define GIMP_CAIRO_ARGB32_GET_PIXEL(s, r, g, b, a) \

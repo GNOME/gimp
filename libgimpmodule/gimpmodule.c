@@ -418,7 +418,7 @@ gimp_module_register_enum (GTypeModule      *module,
  *
  * Return value: the #GQuark that defines the GIMP module error domain.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 GQuark
 gimp_module_error_quark (void)

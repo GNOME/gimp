@@ -110,7 +110,7 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
  *
  * Returns: The exif/ptc/xmp metadata, or %NULL if there is none.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GimpMetadata *
 gimp_image_get_metadata (gint32 image_ID)
@@ -140,7 +140,7 @@ gimp_image_get_metadata (gint32 image_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_image_set_metadata (gint32        image_ID,
@@ -203,7 +203,7 @@ gimp_image_set_cmap (gint32        image_ID,
  *
  * Returns: The position of the layer in the layer stack.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gint
 gimp_image_get_layer_position (gint32 image_ID,
@@ -285,7 +285,7 @@ gimp_image_lower_layer_to_bottom (gint32 image_ID,
  *
  * Returns: The position of the channel in the channel stack.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gint
 gimp_image_get_channel_position (gint32 image_ID,
@@ -335,7 +335,7 @@ gimp_image_lower_channel (gint32 image_ID,
  *
  * Returns: The position of the vectors object in the vectors stack.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gint
 gimp_image_get_vectors_position (gint32 image_ID,
@@ -353,7 +353,7 @@ gimp_image_get_vectors_position (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_image_raise_vectors (gint32 image_ID,
@@ -371,7 +371,7 @@ gimp_image_raise_vectors (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_image_lower_vectors (gint32 image_ID,
@@ -389,7 +389,7 @@ gimp_image_lower_vectors (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_image_raise_vectors_to_top (gint32 image_ID,
@@ -407,7 +407,7 @@ gimp_image_raise_vectors_to_top (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_image_lower_vectors_to_bottom (gint32 image_ID,

@@ -48,7 +48,7 @@
  *
  * Returns: Whether the image ID is valid.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_image_is_valid (gint32 image_ID)
@@ -170,7 +170,7 @@ gimp_image_new (gint              width,
  *
  * Returns: The ID of the newly created image.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gint32
 gimp_image_new_with_precision (gint              width,
@@ -304,7 +304,7 @@ gimp_image_base_type (gint32 image_ID)
  *
  * Returns: The image's precision.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GimpPrecision
 gimp_image_get_precision (gint32 image_ID)
@@ -515,7 +515,7 @@ gimp_image_get_channels (gint32  image_ID,
  * Returns: The list of vectors contained in the image. The returned
  * value must be freed with g_free().
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gint *
 gimp_image_get_vectors (gint32  image_ID,
@@ -1092,7 +1092,7 @@ gimp_image_insert_vectors (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_image_remove_vectors (gint32 image_ID,
@@ -1129,7 +1129,7 @@ gimp_image_remove_vectors (gint32 image_ID,
  *
  * Returns: The position of the item in its level in the item tree.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gint
 gimp_image_get_item_position (gint32 image_ID,
@@ -1165,7 +1165,7 @@ gimp_image_get_item_position (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_raise_item (gint32 image_ID,
@@ -1200,7 +1200,7 @@ gimp_image_raise_item (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_lower_item (gint32 image_ID,
@@ -1235,7 +1235,7 @@ gimp_image_lower_item (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_raise_item_to_top (gint32 image_ID,
@@ -1271,7 +1271,7 @@ gimp_image_raise_item_to_top (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_lower_item_to_bottom (gint32 image_ID,
@@ -1307,7 +1307,7 @@ gimp_image_lower_item_to_bottom (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_reorder_item (gint32 image_ID,
@@ -2185,7 +2185,7 @@ gimp_image_set_filename (gint32       image_ID,
  *
  * Returns: The URI. The returned value must be freed with g_free().
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gchar *
 gimp_image_get_uri (gint32 image_ID)
@@ -2219,7 +2219,7 @@ gimp_image_get_uri (gint32 image_ID)
  * Returns: The imported URI. The returned value must be freed with
  * g_free().
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gchar *
 gimp_image_get_xcf_uri (gint32 image_ID)
@@ -2255,7 +2255,7 @@ gimp_image_get_xcf_uri (gint32 image_ID)
  * Returns: The imported URI. The returned value must be freed with
  * g_free().
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gchar *
 gimp_image_get_imported_uri (gint32 image_ID)
@@ -2290,7 +2290,7 @@ gimp_image_get_imported_uri (gint32 image_ID)
  * Returns: The exported URI. The returned value must be freed with
  * g_free().
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gchar *
 gimp_image_get_exported_uri (gint32 image_ID)
@@ -2652,7 +2652,7 @@ gimp_image_get_channel_by_tattoo (gint32 image_ID,
  *
  * Returns: The vectors with the specified tattoo.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gint32
 gimp_image_get_vectors_by_tattoo (gint32 image_ID,
@@ -2688,7 +2688,7 @@ gimp_image_get_vectors_by_tattoo (gint32 image_ID,
  *
  * Returns: The layer with the specified name.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gint32
 gimp_image_get_layer_by_name (gint32       image_ID,
@@ -2724,7 +2724,7 @@ gimp_image_get_layer_by_name (gint32       image_ID,
  *
  * Returns: The channel with the specified name.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gint32
 gimp_image_get_channel_by_name (gint32       image_ID,
@@ -2760,7 +2760,7 @@ gimp_image_get_channel_by_name (gint32       image_ID,
  *
  * Returns: The vectors with the specified name.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gint32
 gimp_image_get_vectors_by_name (gint32       image_ID,
@@ -2796,7 +2796,7 @@ gimp_image_get_vectors_by_name (gint32       image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_attach_parasite (gint32              image_ID,
@@ -2831,7 +2831,7 @@ gimp_image_attach_parasite (gint32              image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_detach_parasite (gint32       image_ID,
@@ -2866,7 +2866,7 @@ gimp_image_detach_parasite (gint32       image_ID,
  *
  * Returns: The found parasite.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 GimpParasite *
 gimp_image_get_parasite (gint32       image_ID,
@@ -2902,7 +2902,7 @@ gimp_image_get_parasite (gint32       image_ID,
  * Returns: The names of currently attached parasites. The returned
  * value must be freed with g_strfreev().
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gchar **
 gimp_image_get_parasite_list (gint32  image_ID,

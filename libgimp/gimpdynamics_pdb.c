@@ -45,7 +45,7 @@
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_dynamics_refresh (void)
@@ -78,7 +78,7 @@ gimp_dynamics_refresh (void)
  * Returns: The list of paint dynamics names. The returned value must
  * be freed with g_strfreev().
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gchar **
 gimp_dynamics_get_list (const gchar *filter,

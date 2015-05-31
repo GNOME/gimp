@@ -30,6 +30,14 @@
 
 
 /**
+ * SECTION: gimppixbuf
+ * @title: GimpPixbuf
+ * @short_description: Definitions and Functions relating to GdkPixbuf.
+ *
+ * Definitions and Functions relating to GdkPixbuf.
+ **/
+
+/**
  * gimp_pixbuf_get_format:
  * @pixbuf: a #GdkPixbuf
  *
@@ -37,7 +45,7 @@
  *
  * Return value: the @pixbuf's pixel format
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 const Babl *
 gimp_pixbuf_get_format (GdkPixbuf *pixbuf)
@@ -66,7 +74,7 @@ gimp_pixbuf_get_format (GdkPixbuf *pixbuf)
  *
  * Return value: a new #GeglBuffer.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GeglBuffer *
 gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)

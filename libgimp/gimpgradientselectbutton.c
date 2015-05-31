@@ -148,7 +148,7 @@ gimp_gradient_select_button_class_init (GimpGradientSelectButtonClass *klass)
    *
    * The title to be used for the gradient selection popup dialog.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_TITLE,
                                    g_param_spec_string ("title",
@@ -163,7 +163,7 @@ gimp_gradient_select_button_class_init (GimpGradientSelectButtonClass *klass)
    *
    * The name of the currently selected gradient.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_GRADIENT_NAME,
                                    g_param_spec_string ("gradient-name",
@@ -182,7 +182,7 @@ gimp_gradient_select_button_class_init (GimpGradientSelectButtonClass *klass)
    *
    * The ::gradient-set signal is emitted when the user selects a gradient.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   gradient_button_signals[GRADIENT_SET] =
     g_signal_new ("gradient-set",
@@ -227,7 +227,7 @@ gimp_gradient_select_button_init (GimpGradientSelectButton *button)
  *
  * Returns: A #GtkWidget that you can use in your UI.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_gradient_select_button_new (const gchar *title,
@@ -256,7 +256,7 @@ gimp_gradient_select_button_new (const gchar *title,
  *
  * Returns: an internal copy of the gradient name which must not be freed.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 const gchar *
 gimp_gradient_select_button_get_gradient (GimpGradientSelectButton *button)
@@ -276,7 +276,7 @@ gimp_gradient_select_button_get_gradient (GimpGradientSelectButton *button)
  *
  * Sets the current gradient for the gradient select button.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 void
 gimp_gradient_select_button_set_gradient (GimpGradientSelectButton *button,

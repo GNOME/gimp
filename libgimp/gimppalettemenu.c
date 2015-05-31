@@ -66,7 +66,7 @@ static void compat_callback_data_free (CompatCallbackData      *data);
  *
  * Returns: A #GtkWidget that you can use in your UI.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  */
 GtkWidget *
 gimp_palette_select_widget_new (const gchar            *title,
@@ -100,7 +100,7 @@ gimp_palette_select_widget_new (const gchar            *title,
  *
  * Closes the popup window associated with @widget.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  */
 void
 gimp_palette_select_widget_close (GtkWidget *widget)
@@ -119,7 +119,7 @@ gimp_palette_select_widget_close (GtkWidget *widget)
  * callback function if one was supplied in the call to
  * gimp_palette_select_widget_new().
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  */
 void
 gimp_palette_select_widget_set (GtkWidget   *widget,

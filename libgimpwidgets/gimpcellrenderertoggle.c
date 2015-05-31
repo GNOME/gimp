@@ -518,7 +518,7 @@ gimp_cell_renderer_toggle_create_pixbuf (GimpCellRendererToggle *toggle,
  *
  * Return value: a new #GimpCellRendererToggle
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkCellRenderer *
 gimp_cell_renderer_toggle_new (const gchar *icon_name)
@@ -536,7 +536,7 @@ gimp_cell_renderer_toggle_new (const gchar *icon_name)
  *
  * Emits the "clicked" signal from a #GimpCellRendererToggle.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_cell_renderer_toggle_clicked (GimpCellRendererToggle *cell,

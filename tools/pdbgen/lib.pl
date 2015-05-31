@@ -447,7 +447,7 @@ CODE
         unless ($retdesc =~ /[\.\!\?]$/) { $retdesc .= '.' }
 
         if ($proc->{since}) {
-	    $sincedesc = "\n *\n * Since: GIMP $proc->{since}";
+	    $sincedesc = "\n *\n * Since: $proc->{since}";
 	}
 
 	if ($proc->{deprecated}) {

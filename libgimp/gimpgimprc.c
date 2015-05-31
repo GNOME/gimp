@@ -31,7 +31,7 @@
  * Returns: A copy of the core's #GimpColorConfig. You should unref
  *          this copy if you don't need it any longer.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 GimpColorConfig *
 gimp_get_color_configuration (void)

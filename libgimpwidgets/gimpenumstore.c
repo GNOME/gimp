@@ -79,7 +79,7 @@ gimp_enum_store_class_init (GimpEnumStoreClass *klass)
    *
    * Sets the #GType of the enum to be used in the store.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class,
                                    PROP_ENUM_TYPE,
@@ -174,7 +174,7 @@ gimp_enum_store_add_value (GtkListStore *store,
  *
  * Return value: a new #GimpEnumStore.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkListStore *
 gimp_enum_store_new (GType enum_type)
@@ -207,7 +207,7 @@ gimp_enum_store_new (GType enum_type)
  *
  * Return value: a new #GimpEnumStore.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkListStore *
 gimp_enum_store_new_with_range (GType  enum_type,
@@ -248,7 +248,7 @@ gimp_enum_store_new_with_range (GType  enum_type,
  *
  * Return value: a new #GimpEnumStore.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkListStore *
 gimp_enum_store_new_with_values (GType enum_type,
@@ -277,7 +277,7 @@ gimp_enum_store_new_with_values (GType enum_type,
  *
  * Return value: a new #GimpEnumStore.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkListStore *
 gimp_enum_store_new_with_values_valist (GType     enum_type,
@@ -317,7 +317,7 @@ gimp_enum_store_new_with_values_valist (GType     enum_type,
  *
  * See also: gimp_enum_combo_box_set_stock_prefix().
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  *
  * Deprecated: GIMP 2.10
  **/
@@ -338,7 +338,7 @@ gimp_enum_store_set_stock_prefix (GimpEnumStore *store,
  *
  * See also: gimp_enum_combo_box_set_icon_prefix().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 void
 gimp_enum_store_set_icon_prefix (GimpEnumStore *store,

@@ -244,7 +244,7 @@ gimp_help_set_help_data (GtkWidget   *widget,
  * which is marked up with <link linkend="PangoMarkupFormat">Pango
  * text markup language</link>.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 void
 gimp_help_set_help_data_with_markup (GtkWidget   *widget,
@@ -295,7 +295,7 @@ gimp_context_help (GtkWidget *widget)
  *
  * Return value: The #GQuark.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GQuark
 gimp_help_id_quark (void)

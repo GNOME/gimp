@@ -992,7 +992,7 @@ gimp_export_image (gint32                 *image_ID,
  *
  * Returns: The new export dialog.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 GtkWidget *
 gimp_export_dialog_new (const gchar *format_name,
@@ -1036,7 +1036,7 @@ gimp_export_dialog_new (const gchar *format_name,
  *
  * Returns: The #GtkVBox to fill with export options.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 GtkWidget *
 gimp_export_dialog_get_content_area (GtkWidget *dialog)

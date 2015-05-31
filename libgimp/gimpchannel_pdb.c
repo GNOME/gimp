@@ -101,7 +101,7 @@ _gimp_channel_new (gint32         image_ID,
  *
  * Returns: The newly created channel.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gint32
 gimp_channel_new_from_component (gint32           image_ID,

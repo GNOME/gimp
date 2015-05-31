@@ -46,7 +46,7 @@
  *
  * Returns: The flipped drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_flip_simple (gint32              drawable_ID,
@@ -93,7 +93,7 @@ gimp_drawable_transform_flip_simple (gint32              drawable_ID,
  *
  * Returns: The flipped drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_flip (gint32                 drawable_ID,
@@ -147,7 +147,7 @@ gimp_drawable_transform_flip (gint32                 drawable_ID,
  *
  * Returns: The flipped drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_flip_default (gint32   drawable_ID,
@@ -202,7 +202,7 @@ gimp_drawable_transform_flip_default (gint32   drawable_ID,
  *
  * Returns: The newly mapped drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_perspective (gint32                 drawable_ID,
@@ -268,7 +268,7 @@ gimp_drawable_transform_perspective (gint32                 drawable_ID,
  *
  * Returns: The newly mapped drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_perspective_default (gint32              drawable_ID,
@@ -323,7 +323,7 @@ gimp_drawable_transform_perspective_default (gint32              drawable_ID,
  *
  * Returns: The rotated drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_rotate_simple (gint32           drawable_ID,
@@ -372,7 +372,7 @@ gimp_drawable_transform_rotate_simple (gint32           drawable_ID,
  *
  * Returns: The rotated drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_rotate (gint32                 drawable_ID,
@@ -426,7 +426,7 @@ gimp_drawable_transform_rotate (gint32                 drawable_ID,
  *
  * Returns: The rotated drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_rotate_default (gint32              drawable_ID,
@@ -477,7 +477,7 @@ gimp_drawable_transform_rotate_default (gint32              drawable_ID,
  *
  * Returns: The scaled drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_scale (gint32                 drawable_ID,
@@ -531,7 +531,7 @@ gimp_drawable_transform_scale (gint32                 drawable_ID,
  *
  * Returns: The scaled drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_scale_default (gint32              drawable_ID,
@@ -580,7 +580,7 @@ gimp_drawable_transform_scale_default (gint32              drawable_ID,
  *
  * Returns: The sheared drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_shear (gint32                 drawable_ID,
@@ -628,7 +628,7 @@ gimp_drawable_transform_shear (gint32                 drawable_ID,
  *
  * Returns: The sheared drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_shear_default (gint32              drawable_ID,
@@ -678,7 +678,7 @@ gimp_drawable_transform_shear_default (gint32              drawable_ID,
  *
  * Returns: The transformed drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_2d (gint32                 drawable_ID,
@@ -741,7 +741,7 @@ gimp_drawable_transform_2d (gint32                 drawable_ID,
  *
  * Returns: The transformed drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_2d_default (gint32              drawable_ID,
@@ -803,7 +803,7 @@ gimp_drawable_transform_2d_default (gint32              drawable_ID,
  *
  * Returns: The transformed drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_matrix (gint32                 drawable_ID,
@@ -872,7 +872,7 @@ gimp_drawable_transform_matrix (gint32                 drawable_ID,
  *
  * Returns: The transformed drawable.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_drawable_transform_matrix_default (gint32              drawable_ID,

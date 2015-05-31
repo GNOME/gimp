@@ -221,7 +221,7 @@ gimp_progress_bar_get_window (gpointer user_data)
  *
  * Return value: the new widget.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_progress_bar_new (void)

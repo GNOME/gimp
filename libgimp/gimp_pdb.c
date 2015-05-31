@@ -72,7 +72,7 @@ gimp_version (void)
  *
  * Returns: The PID.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gint
 gimp_getpid (void)
@@ -103,7 +103,7 @@ gimp_getpid (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_attach_parasite (const GimpParasite *parasite)
@@ -135,7 +135,7 @@ gimp_attach_parasite (const GimpParasite *parasite)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_detach_parasite (const gchar *name)
@@ -166,7 +166,7 @@ gimp_detach_parasite (const gchar *name)
  *
  * Returns: The found parasite.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 GimpParasite *
 gimp_get_parasite (const gchar *name)
@@ -199,7 +199,7 @@ gimp_get_parasite (const gchar *name)
  * Returns: The names of currently attached parasites. The returned
  * value must be freed with g_strfreev().
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gchar **
 gimp_get_parasite_list (gint *num_parasites)

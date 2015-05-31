@@ -369,7 +369,7 @@ gimp_number_pair_entry_finalize (GObject *object)
  *
  * Return value: The new #GimpNumberPairEntry widget.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_number_pair_entry_new (const gchar *separators,
@@ -447,7 +447,7 @@ gimp_number_pair_entry_ratio_to_fraction (gdouble  ratio,
  * An attempt is made to convert the decimal number into a fraction
  * with left_number and right_number < 1000.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_number_pair_entry_set_ratio (GimpNumberPairEntry *entry,
@@ -471,7 +471,7 @@ gimp_number_pair_entry_set_ratio (GimpNumberPairEntry *entry,
  *
  * Returns: The ratio value.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gdouble
 gimp_number_pair_entry_get_ratio (GimpNumberPairEntry *entry)
@@ -495,7 +495,7 @@ gimp_number_pair_entry_get_ratio (GimpNumberPairEntry *entry)
  * ignoring if the user has set his/her own value. The state of
  * user-override will not be changed.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_number_pair_entry_set_values (GimpNumberPairEntry *entry,
@@ -579,7 +579,7 @@ gimp_number_pair_entry_set_values (GimpNumberPairEntry *entry,
  *
  * Gets the numbers displayed by a #GimpNumberPairEntry.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_number_pair_entry_get_values (GimpNumberPairEntry *entry,
@@ -612,7 +612,7 @@ gimp_number_pair_entry_get_values (GimpNumberPairEntry *entry,
  * Set the default string to %NULL to display default values as
  * normal.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 void
 gimp_number_pair_entry_set_default_text (GimpNumberPairEntry *entry,
@@ -639,7 +639,7 @@ gimp_number_pair_entry_set_default_text (GimpNumberPairEntry *entry,
  * Returns: the string manully set to be shown, or %NULL if values are
  *          shown in a normal fashion.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 const gchar *
 gimp_number_pair_entry_get_default_text (GimpNumberPairEntry *entry)
@@ -662,7 +662,7 @@ gimp_number_pair_entry_get_default_text (GimpNumberPairEntry *entry)
  * right_number if necessary (or setting them to 1.0 in case that
  * @aspect is %GIMP_ASPECT_SQUARE).
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_number_pair_entry_set_aspect (GimpNumberPairEntry *entry,
@@ -702,7 +702,7 @@ gimp_number_pair_entry_set_aspect (GimpNumberPairEntry *entry,
  *
  * Returns: The entry's current aspect.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GimpAspectType
 gimp_number_pair_entry_get_aspect (GimpNumberPairEntry *entry)
@@ -770,7 +770,7 @@ gimp_number_pair_entry_modify_font (GimpNumberPairEntry *entry,
  * change when the default values are changed. When in user overridden
  * mode, setting default values will not affect the active values.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_number_pair_entry_set_user_override (GimpNumberPairEntry *entry,
@@ -802,7 +802,7 @@ gimp_number_pair_entry_set_user_override (GimpNumberPairEntry *entry,
  *
  * Returns: Whether or not the the widget is in user overridden mode.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_number_pair_entry_get_user_override (GimpNumberPairEntry *entry)
@@ -1207,7 +1207,7 @@ gimp_number_pair_entry_get_property (GObject    *object,
  * @left:  Default left value in the entry.
  * @right: Default right value in the entry.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_number_pair_entry_set_default_values (GimpNumberPairEntry *entry,
@@ -1237,7 +1237,7 @@ gimp_number_pair_entry_set_default_values (GimpNumberPairEntry *entry,
  * @left:  Pointer of where to put left value.
  * @right: Pointer of where to put right value.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_number_pair_entry_get_default_values (GimpNumberPairEntry *entry,

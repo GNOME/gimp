@@ -79,7 +79,7 @@ gimp_lcms_error_quark (void)
  * Return value: the #GimpColorProfile, or %NULL. On error, %NULL is
  *               returned and @error is set.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GimpColorProfile
 gimp_lcms_profile_open_from_file (GFile   *file,
@@ -166,7 +166,7 @@ gimp_lcms_profile_open_from_file (GFile   *file,
  *
  * Return value: the #GimpColorProfile, or %NULL.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GimpColorProfile
 gimp_lcms_profile_open_from_data (const guint8  *data,
@@ -200,7 +200,7 @@ gimp_lcms_profile_open_from_data (const guint8  *data,
  * Return value: a pointer to the written IIC profile in memory, or
  *               %NULL. Free with g_free().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 guint8 *
 gimp_lcms_profile_save_to_data (GimpColorProfile   profile,
@@ -239,7 +239,7 @@ gimp_lcms_profile_save_to_data (GimpColorProfile   profile,
  *
  * This function closes a #GimpColorProfile and frees its memory.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 void
 gimp_lcms_profile_close (GimpColorProfile profile)
@@ -282,7 +282,7 @@ gimp_lcms_profile_get_info (GimpColorProfile profile,
  * Return value: a newly allocated string containing @profile's
  *               description. Free with g_free().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gchar *
 gimp_lcms_profile_get_description (GimpColorProfile profile)
@@ -297,7 +297,7 @@ gimp_lcms_profile_get_description (GimpColorProfile profile)
  * Return value: a newly allocated string containing @profile's
  *               manufacturer. Free with g_free().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gchar *
 gimp_lcms_profile_get_manufacturer (GimpColorProfile profile)
@@ -312,7 +312,7 @@ gimp_lcms_profile_get_manufacturer (GimpColorProfile profile)
  * Return value: a newly allocated string containing @profile's
  *               model. Free with g_free().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gchar *
 gimp_lcms_profile_get_model (GimpColorProfile profile)
@@ -327,7 +327,7 @@ gimp_lcms_profile_get_model (GimpColorProfile profile)
  * Return value: a newly allocated string containing @profile's
  *               copyright. Free with g_free().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gchar *
 gimp_lcms_profile_get_copyright (GimpColorProfile profile)
@@ -345,7 +345,7 @@ gimp_lcms_profile_get_copyright (GimpColorProfile profile)
  *
  * Return value: the @profile's label. Free with g_free().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gchar *
 gimp_lcms_profile_get_label (GimpColorProfile profile)
@@ -388,7 +388,7 @@ gimp_lcms_profile_get_label (GimpColorProfile profile)
  *
  * Return value: the @profile's summary. Free with g_free().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gchar *
 gimp_lcms_profile_get_summary (GimpColorProfile profile)
@@ -446,7 +446,7 @@ gimp_lcms_profile_get_summary (GimpColorProfile profile)
  *
  * Return value: %TRUE if the profiles are equal, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_lcms_profile_is_equal (GimpColorProfile profile1,
@@ -477,7 +477,7 @@ gimp_lcms_profile_is_equal (GimpColorProfile profile1,
  * Return value: %TRUE if the profile's color space is RGB, %FALSE
  * otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_lcms_profile_is_rgb (GimpColorProfile profile)
@@ -494,7 +494,7 @@ gimp_lcms_profile_is_rgb (GimpColorProfile profile)
  * Return value: %TRUE if the profile's color space is CMYK, %FALSE
  * otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_lcms_profile_is_cmyk (GimpColorProfile profile)
@@ -597,7 +597,7 @@ gimp_lcms_create_srgb_profile_internal (void)
  *
  * Return value: the sRGB cmsHPROFILE.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GimpColorProfile
 gimp_lcms_create_srgb_profile (void)
@@ -671,7 +671,7 @@ gimp_lcms_create_linear_rgb_profile_internal (void)
  *
  * Return value: the linear RGB cmsHPROFILE.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GimpColorProfile
 gimp_lcms_create_linear_rgb_profile (void)
@@ -710,7 +710,7 @@ gimp_lcms_create_linear_rgb_profile (void)
  * Return value: the #Babl format to be used instead of @format, or %NULL
  *               is the passed @format is not supported at all.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 const Babl *
 gimp_lcms_get_format (const Babl *format,

@@ -524,7 +524,7 @@ gimp_color_selection_color_changed (GimpColorSelection *selection)
  *
  * Sets the color management configuration to use with this color selection.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 void
 gimp_color_selection_set_config (GimpColorSelection *selection,

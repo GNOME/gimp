@@ -45,7 +45,7 @@
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_push (void)
@@ -77,7 +77,7 @@ gimp_context_push (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_pop (void)
@@ -110,7 +110,7 @@ gimp_context_pop (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_defaults (void)
@@ -142,7 +142,7 @@ gimp_context_set_defaults (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_context_list_paint_methods (gint    *num_paint_methods,
@@ -186,7 +186,7 @@ gimp_context_list_paint_methods (gint    *num_paint_methods,
  *
  * Returns: The name of the active paint method.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gchar *
 gimp_context_get_paint_method (void)
@@ -222,7 +222,7 @@ gimp_context_get_paint_method (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_context_set_paint_method (const gchar *name)
@@ -255,7 +255,7 @@ gimp_context_set_paint_method (const gchar *name)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_get_foreground (GimpRGB *foreground)
@@ -290,7 +290,7 @@ gimp_context_get_foreground (GimpRGB *foreground)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_set_foreground (const GimpRGB *foreground)
@@ -323,7 +323,7 @@ gimp_context_set_foreground (const GimpRGB *foreground)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_get_background (GimpRGB *background)
@@ -359,7 +359,7 @@ gimp_context_get_background (GimpRGB *background)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_set_background (const GimpRGB *background)
@@ -391,7 +391,7 @@ gimp_context_set_background (const GimpRGB *background)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_set_default_colors (void)
@@ -422,7 +422,7 @@ gimp_context_set_default_colors (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_swap_colors (void)
@@ -452,7 +452,7 @@ gimp_context_swap_colors (void)
  *
  * Returns: The opacity.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gdouble
 gimp_context_get_opacity (void)
@@ -484,7 +484,7 @@ gimp_context_get_opacity (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_set_opacity (gdouble opacity)
@@ -516,7 +516,7 @@ gimp_context_set_opacity (gdouble opacity)
  *
  * Returns: The paint mode.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GimpLayerModeEffects
 gimp_context_get_paint_mode (void)
@@ -547,7 +547,7 @@ gimp_context_get_paint_mode (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_set_paint_mode (GimpLayerModeEffects paint_mode)
@@ -579,7 +579,7 @@ gimp_context_set_paint_mode (GimpLayerModeEffects paint_mode)
  *
  * Returns: The name of the active brush.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gchar *
 gimp_context_get_brush (void)
@@ -614,7 +614,7 @@ gimp_context_get_brush (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_set_brush (const gchar *name)
@@ -644,7 +644,7 @@ gimp_context_set_brush (const gchar *name)
  *
  * Returns: Brush size in pixels.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_context_get_brush_size (void)
@@ -675,7 +675,7 @@ gimp_context_get_brush_size (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_brush_size (gdouble size)
@@ -706,7 +706,7 @@ gimp_context_set_brush_size (gdouble size)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_brush_default_size (void)
@@ -735,7 +735,7 @@ gimp_context_set_brush_default_size (void)
  *
  * Returns: Aspect ratio.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_context_get_brush_aspect_ratio (void)
@@ -766,7 +766,7 @@ gimp_context_get_brush_aspect_ratio (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_brush_aspect_ratio (gdouble aspect)
@@ -796,7 +796,7 @@ gimp_context_set_brush_aspect_ratio (gdouble aspect)
  *
  * Returns: Angle in degrees.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_context_get_brush_angle (void)
@@ -827,7 +827,7 @@ gimp_context_get_brush_angle (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_brush_angle (gdouble angle)
@@ -858,7 +858,7 @@ gimp_context_set_brush_angle (gdouble angle)
  *
  * Returns: Brush spacing as fraction of size.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gdouble
 gimp_context_get_brush_spacing (void)
@@ -890,7 +890,7 @@ gimp_context_get_brush_spacing (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_context_set_brush_spacing (gdouble spacing)
@@ -921,7 +921,7 @@ gimp_context_set_brush_spacing (gdouble spacing)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_context_set_brush_default_spacing (void)
@@ -950,7 +950,7 @@ gimp_context_set_brush_default_spacing (void)
  *
  * Returns: Brush hardness.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gdouble
 gimp_context_get_brush_hardness (void)
@@ -981,7 +981,7 @@ gimp_context_get_brush_hardness (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_context_set_brush_hardness (gdouble hardness)
@@ -1012,7 +1012,7 @@ gimp_context_set_brush_hardness (gdouble hardness)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_context_set_brush_default_hardness (void)
@@ -1041,7 +1041,7 @@ gimp_context_set_brush_default_hardness (void)
  *
  * Returns: Brush application force.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gdouble
 gimp_context_get_brush_force (void)
@@ -1072,7 +1072,7 @@ gimp_context_get_brush_force (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_context_set_brush_force (gdouble force)
@@ -1104,7 +1104,7 @@ gimp_context_set_brush_force (gdouble force)
  *
  * Returns: The name of the active paint dynamics.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gchar *
 gimp_context_get_dynamics (void)
@@ -1140,7 +1140,7 @@ gimp_context_get_dynamics (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_dynamics (const gchar *name)
@@ -1172,7 +1172,7 @@ gimp_context_set_dynamics (const gchar *name)
  *
  * Returns: The name of the active pattern.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gchar *
 gimp_context_get_pattern (void)
@@ -1208,7 +1208,7 @@ gimp_context_get_pattern (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_set_pattern (const gchar *name)
@@ -1238,7 +1238,7 @@ gimp_context_set_pattern (const gchar *name)
  *
  * Returns: The name of the active gradient.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gchar *
 gimp_context_get_gradient (void)
@@ -1274,7 +1274,7 @@ gimp_context_get_gradient (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_set_gradient (const gchar *name)
@@ -1304,7 +1304,7 @@ gimp_context_set_gradient (const gchar *name)
  *
  * Returns: The name of the active palette.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gchar *
 gimp_context_get_palette (void)
@@ -1340,7 +1340,7 @@ gimp_context_get_palette (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_set_palette (const gchar *name)
@@ -1370,7 +1370,7 @@ gimp_context_set_palette (const gchar *name)
  *
  * Returns: The name of the active font.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gchar *
 gimp_context_get_font (void)
@@ -1405,7 +1405,7 @@ gimp_context_get_font (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_context_set_font (const gchar *name)
@@ -1435,7 +1435,7 @@ gimp_context_set_font (const gchar *name)
  *
  * Returns: The antialias setting.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_get_antialias (void)
@@ -1474,7 +1474,7 @@ gimp_context_get_antialias (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_antialias (gboolean antialias)
@@ -1504,7 +1504,7 @@ gimp_context_set_antialias (gboolean antialias)
  *
  * Returns: The feather setting.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_get_feather (void)
@@ -1543,7 +1543,7 @@ gimp_context_get_feather (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_feather (gboolean feather)
@@ -1575,7 +1575,7 @@ gimp_context_set_feather (gboolean feather)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_get_feather_radius (gdouble *feather_radius_x,
@@ -1618,7 +1618,7 @@ gimp_context_get_feather_radius (gdouble *feather_radius_x,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_feather_radius (gdouble feather_radius_x,
@@ -1650,7 +1650,7 @@ gimp_context_set_feather_radius (gdouble feather_radius_x,
  *
  * Returns: The sample merged setting.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_get_sample_merged (void)
@@ -1689,7 +1689,7 @@ gimp_context_get_sample_merged (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_sample_merged (gboolean sample_merged)
@@ -1719,7 +1719,7 @@ gimp_context_set_sample_merged (gboolean sample_merged)
  *
  * Returns: The sample criterion setting.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 GimpSelectCriterion
 gimp_context_get_sample_criterion (void)
@@ -1756,7 +1756,7 @@ gimp_context_get_sample_criterion (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_sample_criterion (GimpSelectCriterion sample_criterion)
@@ -1786,7 +1786,7 @@ gimp_context_set_sample_criterion (GimpSelectCriterion sample_criterion)
  *
  * Returns: The sample threshold setting.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_context_get_sample_threshold (void)
@@ -1824,7 +1824,7 @@ gimp_context_get_sample_threshold (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_sample_threshold (gdouble sample_threshold)
@@ -1855,7 +1855,7 @@ gimp_context_set_sample_threshold (gdouble sample_threshold)
  *
  * Returns: The sample threshold setting.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gint
 gimp_context_get_sample_threshold_int (void)
@@ -1887,7 +1887,7 @@ gimp_context_get_sample_threshold_int (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_sample_threshold_int (gint sample_threshold)
@@ -1917,7 +1917,7 @@ gimp_context_set_sample_threshold_int (gint sample_threshold)
  *
  * Returns: The sample transparent setting.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_get_sample_transparent (void)
@@ -1954,7 +1954,7 @@ gimp_context_get_sample_transparent (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_sample_transparent (gboolean sample_transparent)
@@ -1988,7 +1988,7 @@ gimp_context_set_sample_transparent (gboolean sample_transparent)
  *
  * Returns: The interpolation type.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 GimpInterpolationType
 gimp_context_get_interpolation (void)
@@ -2025,7 +2025,7 @@ gimp_context_get_interpolation (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_interpolation (GimpInterpolationType interpolation)
@@ -2057,7 +2057,7 @@ gimp_context_set_interpolation (GimpInterpolationType interpolation)
  *
  * Returns: The transform direction.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 GimpTransformDirection
 gimp_context_get_transform_direction (void)
@@ -2093,7 +2093,7 @@ gimp_context_get_transform_direction (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_transform_direction (GimpTransformDirection transform_direction)
@@ -2125,7 +2125,7 @@ gimp_context_set_transform_direction (GimpTransformDirection transform_direction
  *
  * Returns: The transform resize type.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 GimpTransformResize
 gimp_context_get_transform_resize (void)
@@ -2165,7 +2165,7 @@ gimp_context_get_transform_resize (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_transform_resize (GimpTransformResize transform_resize)
@@ -2248,7 +2248,7 @@ gimp_context_set_transform_recursion (gint transform_recursion)
  *
  * Returns: ink blob size in pixels.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_context_get_ink_size (void)
@@ -2279,7 +2279,7 @@ gimp_context_get_ink_size (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_ink_size (gdouble size)
@@ -2309,7 +2309,7 @@ gimp_context_set_ink_size (gdouble size)
  *
  * Returns: ink angle in degrees.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_context_get_ink_angle (void)
@@ -2340,7 +2340,7 @@ gimp_context_get_ink_angle (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_ink_angle (gdouble angle)
@@ -2370,7 +2370,7 @@ gimp_context_set_ink_angle (gdouble angle)
  *
  * Returns: ink size sensitivity.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_context_get_ink_size_sensitivity (void)
@@ -2401,7 +2401,7 @@ gimp_context_get_ink_size_sensitivity (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_ink_size_sensitivity (gdouble size)
@@ -2431,7 +2431,7 @@ gimp_context_set_ink_size_sensitivity (gdouble size)
  *
  * Returns: ink tilt sensitivity.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_context_get_ink_tilt_sensitivity (void)
@@ -2462,7 +2462,7 @@ gimp_context_get_ink_tilt_sensitivity (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_ink_tilt_sensitivity (gdouble tilt)
@@ -2492,7 +2492,7 @@ gimp_context_set_ink_tilt_sensitivity (gdouble tilt)
  *
  * Returns: ink speed sensitivity.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_context_get_ink_speed_sensitivity (void)
@@ -2523,7 +2523,7 @@ gimp_context_get_ink_speed_sensitivity (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_ink_speed_sensitivity (gdouble speed)
@@ -2553,7 +2553,7 @@ gimp_context_set_ink_speed_sensitivity (gdouble speed)
  *
  * Returns: Ink blob type.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 GimpInkBlobType
 gimp_context_get_ink_blob_type (void)
@@ -2584,7 +2584,7 @@ gimp_context_get_ink_blob_type (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_ink_blob_type (GimpInkBlobType type)
@@ -2614,7 +2614,7 @@ gimp_context_set_ink_blob_type (GimpInkBlobType type)
  *
  * Returns: ink blob aspect ratio.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_context_get_ink_blob_aspect_ratio (void)
@@ -2645,7 +2645,7 @@ gimp_context_get_ink_blob_aspect_ratio (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_ink_blob_aspect_ratio (gdouble aspect)
@@ -2675,7 +2675,7 @@ gimp_context_set_ink_blob_aspect_ratio (gdouble aspect)
  *
  * Returns: ink blob angle in degrees.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_context_get_ink_blob_angle (void)
@@ -2706,7 +2706,7 @@ gimp_context_get_ink_blob_angle (void)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_context_set_ink_blob_angle (gdouble angle)

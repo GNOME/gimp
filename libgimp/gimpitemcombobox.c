@@ -182,7 +182,7 @@ gimp_drawable_combo_box_init (GimpDrawableComboBox *combo_box)
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
@@ -229,7 +229,7 @@ gimp_channel_combo_box_init (GimpChannelComboBox *combo_box)
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_channel_combo_box_new (GimpDrawableConstraintFunc constraint,
@@ -276,7 +276,7 @@ gimp_layer_combo_box_init (GimpLayerComboBox *combo_box)
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_layer_combo_box_new (GimpDrawableConstraintFunc constraint,
@@ -331,7 +331,7 @@ gimp_vectors_combo_box_init (GimpVectorsComboBox *combo_box)
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_vectors_combo_box_new (GimpVectorsConstraintFunc constraint,

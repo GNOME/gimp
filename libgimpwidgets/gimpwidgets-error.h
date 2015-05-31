@@ -40,7 +40,7 @@ typedef enum
  *
  * The GIMP widgets error domain.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  */
 #define GIMP_WIDGETS_ERROR (gimp_widgets_error_quark ())
 

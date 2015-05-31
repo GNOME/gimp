@@ -58,7 +58,7 @@
  *
  * Return value: a new #GtkVBox holding a group of #GtkRadioButtons.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_enum_radio_box_new (GType       enum_type,
@@ -100,7 +100,7 @@ gimp_enum_radio_box_new (GType       enum_type,
  *
  * Return value: a new #GtkVBox holding a group of #GtkRadioButtons.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_enum_radio_box_new_with_range (GType       enum_type,
@@ -172,7 +172,7 @@ gimp_enum_radio_box_new_with_range (GType       enum_type,
  *
  * Return value: a new #GtkFrame holding a group of #GtkRadioButtons.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_enum_radio_frame_new (GType       enum_type,
@@ -221,7 +221,7 @@ gimp_enum_radio_frame_new (GType       enum_type,
  *
  * Return value: a new #GtkFrame holding a group of #GtkRadioButtons.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_enum_radio_frame_new_with_range (GType       enum_type,
@@ -275,7 +275,7 @@ gimp_enum_radio_frame_new_with_range (GType       enum_type,
  *
  * Return value: a new #GtkHBox holding a group of #GtkRadioButtons.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  *
  * Deprecated: GIMP 2.10
  **/
@@ -310,7 +310,7 @@ gimp_enum_stock_box_new (GType         enum_type,
  *
  * Return value: a new #GtkHBox holding a group of #GtkRadioButtons.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  *
  * Deprecated: GIMP 2.10
  **/
@@ -339,7 +339,7 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
  * Sets the padding of all buttons in a box created by
  * gimp_enum_stock_box_new().
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  *
  * Deprecated: GIMP 2.10
  **/
@@ -367,7 +367,7 @@ gimp_enum_stock_box_set_child_padding (GtkWidget *stock_box,
  *
  * Return value: a new #GtkHBox holding a group of #GtkRadioButtons.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GtkWidget *
 gimp_enum_icon_box_new (GType         enum_type,
@@ -414,7 +414,7 @@ gimp_enum_icon_box_new (GType         enum_type,
  *
  * Return value: a new #GtkHBox holding a group of #GtkRadioButtons.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GtkWidget *
 gimp_enum_icon_box_new_with_range (GType         enum_type,
@@ -500,7 +500,7 @@ gimp_enum_icon_box_new_with_range (GType         enum_type,
  * Sets the padding of all buttons in a box created by
  * gimp_enum_icon_box_new().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 void
 gimp_enum_icon_box_set_child_padding (GtkWidget *icon_box,

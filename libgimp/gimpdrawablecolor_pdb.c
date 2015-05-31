@@ -49,7 +49,7 @@
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_brightness_contrast (gint32  drawable_ID,
@@ -96,7 +96,7 @@ gimp_drawable_brightness_contrast (gint32  drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_color_balance (gint32           drawable_ID,
@@ -143,7 +143,7 @@ gimp_drawable_color_balance (gint32           drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_colorize_hsl (gint32  drawable_ID,
@@ -188,7 +188,7 @@ gimp_drawable_colorize_hsl (gint32  drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_curves_explicit (gint32                drawable_ID,
@@ -233,7 +233,7 @@ gimp_drawable_curves_explicit (gint32                drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_curves_spline (gint32                drawable_ID,
@@ -274,7 +274,7 @@ gimp_drawable_curves_spline (gint32                drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_desaturate (gint32             drawable_ID,
@@ -314,7 +314,7 @@ gimp_drawable_desaturate (gint32             drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_equalize (gint32   drawable_ID,
@@ -371,7 +371,7 @@ gimp_drawable_equalize (gint32   drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_histogram (gint32                drawable_ID,
@@ -440,7 +440,7 @@ gimp_drawable_histogram (gint32                drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_hue_saturation (gint32       drawable_ID,
@@ -483,7 +483,7 @@ gimp_drawable_hue_saturation (gint32       drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_invert (gint32 drawable_ID)
@@ -531,7 +531,7 @@ gimp_drawable_invert (gint32 drawable_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_levels (gint32               drawable_ID,
@@ -576,7 +576,7 @@ gimp_drawable_levels (gint32               drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_levels_stretch (gint32 drawable_ID)
@@ -609,7 +609,7 @@ gimp_drawable_levels_stretch (gint32 drawable_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_posterize (gint32 drawable_ID,
@@ -647,7 +647,7 @@ gimp_drawable_posterize (gint32 drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_drawable_threshold (gint32 drawable_ID,

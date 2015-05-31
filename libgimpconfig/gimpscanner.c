@@ -77,7 +77,7 @@ static void       gimp_scanner_message (GScanner     *scanner,
  *
  * Return value:
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GScanner *
 gimp_scanner_new_file (const gchar  *filename,
@@ -103,7 +103,7 @@ gimp_scanner_new_file (const gchar  *filename,
  *
  * Return value: The new #GScanner.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GScanner *
 gimp_scanner_new_gfile (GFile   *file,
@@ -181,7 +181,7 @@ gimp_scanner_new_gfile (GFile   *file,
  *
  * Return value: The new #GScanner.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GScanner *
 gimp_scanner_new_stream (GInputStream  *input,
@@ -254,7 +254,7 @@ gimp_scanner_new_stream (GInputStream  *input,
  *
  * Return value:
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GScanner *
 gimp_scanner_new_string (const gchar  *text,
@@ -312,7 +312,7 @@ gimp_scanner_new (const gchar  *name,
  * @scanner: A #GScanner created by gimp_scanner_new_file() or
  *           gimp_scanner_new_string()
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_scanner_destroy (GScanner *scanner)
@@ -343,7 +343,7 @@ gimp_scanner_destroy (GScanner *scanner)
  *
  * Return value: %TRUE on success
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_scanner_parse_token (GScanner   *scanner,
@@ -365,7 +365,7 @@ gimp_scanner_parse_token (GScanner   *scanner,
  *
  * Return value: %TRUE on success
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_scanner_parse_identifier (GScanner    *scanner,
@@ -390,7 +390,7 @@ gimp_scanner_parse_identifier (GScanner    *scanner,
  *
  * Return value: %TRUE on success
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_scanner_parse_string (GScanner  *scanner,
@@ -427,7 +427,7 @@ gimp_scanner_parse_string (GScanner  *scanner,
  *
  * Return value: %TRUE on success
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_scanner_parse_string_no_validate (GScanner  *scanner,
@@ -455,7 +455,7 @@ gimp_scanner_parse_string_no_validate (GScanner  *scanner,
  *
  * Return value: %TRUE on success
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_scanner_parse_data (GScanner  *scanner,
@@ -483,7 +483,7 @@ gimp_scanner_parse_data (GScanner  *scanner,
  *
  * Return value: %TRUE on success
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_scanner_parse_int (GScanner *scanner,
@@ -518,7 +518,7 @@ gimp_scanner_parse_int (GScanner *scanner,
  *
  * Return value: %TRUE on success
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_scanner_parse_int64 (GScanner *scanner,
@@ -553,7 +553,7 @@ gimp_scanner_parse_int64 (GScanner *scanner,
  *
  * Return value: %TRUE on success
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_scanner_parse_float (GScanner *scanner,
@@ -577,7 +577,7 @@ gimp_scanner_parse_float (GScanner *scanner,
  *
  * Return value: %TRUE on success
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_scanner_parse_boolean (GScanner *scanner,
@@ -628,7 +628,7 @@ enum
  *
  * Return value: %TRUE on success
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_scanner_parse_color (GScanner *scanner,
@@ -751,7 +751,7 @@ gimp_scanner_parse_color (GScanner *scanner,
  *
  * Return value: %TRUE on success
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_scanner_parse_matrix2 (GScanner    *scanner,

@@ -104,7 +104,7 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
    *
    * The channel which is edited by the color scale.
    *
-   * Since: GIMP 2.8
+   * Since: 2.8
    */
   g_object_class_install_property (object_class, PROP_CHANNEL,
                                    g_param_spec_enum ("channel", NULL, NULL,

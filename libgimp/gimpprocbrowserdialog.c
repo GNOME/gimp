@@ -224,7 +224,7 @@ gimp_proc_browser_dialog_init (GimpProcBrowserDialog *dialog)
  *
  * Return Value: a newly created #GimpProcBrowserDialog.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_proc_browser_dialog_new (const gchar  *title,
@@ -264,7 +264,7 @@ gimp_proc_browser_dialog_new (const gchar  *title,
  * Return Value: The name of the selected procedure of %NULL if no
  *               procedure is selected.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gchar *
 gimp_proc_browser_dialog_get_selected (GimpProcBrowserDialog *dialog)

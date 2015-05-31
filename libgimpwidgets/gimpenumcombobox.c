@@ -141,7 +141,7 @@ gimp_enum_combo_box_get_property (GObject    *object,
  *
  * Return value: a new #GimpEnumComboBox.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_enum_combo_box_new (GType enum_type)
@@ -170,7 +170,7 @@ gimp_enum_combo_box_new (GType enum_type)
  *
  * Return value: a new #GimpEnumComboBox.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_enum_combo_box_new_with_model (GimpEnumStore *enum_store)
@@ -191,7 +191,7 @@ gimp_enum_combo_box_new_with_model (GimpEnumStore *enum_store)
  * gimp_enum_store_set_stock_prefix() to find out what to use as
  * @stock_prefix.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  *
  * Deprecated: GIMP 2.10
  **/
@@ -211,7 +211,7 @@ gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
  * gimp_enum_store_set_icon_prefix() to find out what to use as
  * @icon_prefix.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 void
 gimp_enum_combo_box_set_icon_prefix (GimpEnumComboBox *combo_box,

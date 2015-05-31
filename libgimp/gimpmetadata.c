@@ -59,7 +59,7 @@ static gboolean    gimp_image_metadata_rotate_dialog (gint32             image_I
  *
  * Returns: The file's metadata.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpMetadata *
 gimp_image_metadata_load_prepare (gint32        image_ID,
@@ -118,7 +118,7 @@ gimp_image_metadata_load_prepare (gint32        image_ID,
  * gimp_image_metadata_load_prepare() to the image, taking into account
  * the passed @flags.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 void
 gimp_image_metadata_load_finish (gint32                 image_ID,
@@ -195,7 +195,7 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
  *
  * Returns: The image's metadata, prepared for saving.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpMetadata *
 gimp_image_metadata_save_prepare (gint32                 image_ID,
@@ -357,7 +357,7 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
  *
  * Return value: Whether the save was successful.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 gboolean
 gimp_image_metadata_save_finish (gint32                  image_ID,

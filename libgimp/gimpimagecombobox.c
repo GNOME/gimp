@@ -124,7 +124,7 @@ gimp_image_combo_box_init (GimpImageComboBox *combo_box)
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_image_combo_box_new (GimpImageConstraintFunc constraint,

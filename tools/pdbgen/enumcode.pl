@@ -171,7 +171,7 @@ static gboolean enums_initialized = FALSE;
  * It's not necessary for plug-ins to call this directly, because
  * the normal plug-in initialization code will handle it implicitly.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_enums_init (void)
@@ -201,7 +201,7 @@ gimp_enums_init (void)
  *
  * Return value: an array with type names
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 const gchar **
 gimp_enums_get_type_names (gint *n_type_names)

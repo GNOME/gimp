@@ -94,7 +94,7 @@ gimp_image_resize (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_image_resize_to_layers (gint32 image_ID)
@@ -165,7 +165,7 @@ gimp_image_scale (gint32 image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_image_scale_full (gint32                image_ID,

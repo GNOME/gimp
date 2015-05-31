@@ -150,7 +150,7 @@ static const guint wilber_jpg_len = G_N_ELEMENTS (wilber_jpg);
  *
  * Return value: The new #GimpMetadata.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpMetadata *
 gimp_metadata_new (void)
@@ -181,7 +181,7 @@ gimp_metadata_new (void)
  *
  * Return value: The new #GimpMetadata, or %NULL if @metadata is %NULL.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpMetadata *
 gimp_metadata_duplicate (GimpMetadata *metadata)
@@ -330,7 +330,7 @@ gimp_metadata_deserialize_error (GMarkupParseContext *context,
  *
  * Return value: The new #GimpMetadata.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpMetadata *
 gimp_metadata_deserialize (const gchar *metadata_xml)
@@ -419,7 +419,7 @@ gimp_metadata_append_tag (GString     *string,
  *
  * Return value: The serialized XML string.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 gchar *
 gimp_metadata_serialize (GimpMetadata *metadata)
@@ -502,7 +502,7 @@ gimp_metadata_serialize (GimpMetadata *metadata)
  *
  * Return value: The loaded #GimpMetadata.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpMetadata  *
 gimp_metadata_load_from_file (GFile   *file,
@@ -560,7 +560,7 @@ gimp_metadata_load_from_file (GFile   *file,
  *
  * Return value: %TRUE on success, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 gboolean
 gimp_metadata_save_to_file (GimpMetadata  *metadata,
@@ -610,7 +610,7 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
  *
  * Return value: %TRUE on success, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 gboolean
 gimp_metadata_set_from_exif (GimpMetadata  *metadata,
@@ -677,7 +677,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
  *
  * Return value: %TRUE on success, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 gboolean
 gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
@@ -726,7 +726,7 @@ gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
  *
  * Sets Exif.Image.ImageWidth and Exif.Image.ImageLength on @metadata.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 void
 gimp_metadata_set_pixel_size (GimpMetadata *metadata,
@@ -751,7 +751,7 @@ gimp_metadata_set_pixel_size (GimpMetadata *metadata,
  *
  * Sets Exif.Image.BitsPerSample on @metadata.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 void
 gimp_metadata_set_bits_per_sample (GimpMetadata *metadata,
@@ -778,7 +778,7 @@ gimp_metadata_set_bits_per_sample (GimpMetadata *metadata,
  *
  * Return value: %TRUE on success, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 gboolean
 gimp_metadata_get_resolution (GimpMetadata *metadata,
@@ -858,7 +858,7 @@ gimp_metadata_get_resolution (GimpMetadata *metadata,
  * Sets Exif.Image.XResolution, Exif.Image.YResolution and
  * Exif.Image.ResolutionUnit @metadata.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 void
 gimp_metadata_set_resolution (GimpMetadata *metadata,
@@ -912,7 +912,7 @@ gimp_metadata_set_resolution (GimpMetadata *metadata,
  *
  * Return value: %TRUE if the @tag supported with @mime_type, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 gboolean
 gimp_metadata_is_tag_supported (const gchar *tag,

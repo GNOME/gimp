@@ -104,7 +104,7 @@ gimp_color_profile_store_class_init (GimpColorProfileStoreClass *klass)
    *
    * Filename of the color history used to populate the profile store.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class,
                                    PROP_HISTORY,
@@ -236,7 +236,7 @@ gimp_color_profile_store_get_property (GObject    *object,
  *
  * Return value: a new #GimpColorProfileStore
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkListStore *
 gimp_color_profile_store_new (const gchar *history)
@@ -262,7 +262,7 @@ gimp_color_profile_store_new (const gchar *history)
  * @label will be set to the string "None" for you (and translated for
  * the user).
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_color_profile_store_add (GimpColorProfileStore *store,
@@ -299,7 +299,7 @@ gimp_color_profile_store_add (GimpColorProfileStore *store,
  *
  * Return value: %TRUE if the iter is valid and pointing to the item
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 _gimp_color_profile_store_history_add (GimpColorProfileStore *store,
@@ -383,7 +383,7 @@ _gimp_color_profile_store_history_add (GimpColorProfileStore *store,
  *
  * Moves the entry pointed to by @iter to the front of the MRU list.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 _gimp_color_profile_store_history_reorder (GimpColorProfileStore *store,

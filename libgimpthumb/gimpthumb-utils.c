@@ -198,7 +198,7 @@ gimp_thumb_init (const gchar *creator,
  *
  * Returns: the thumbnails cache directory.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 const gchar *
 gimp_thumb_get_thumb_base_dir (void)
@@ -239,7 +239,7 @@ gimp_thumb_get_thumb_dir (GimpThumbSize  size)
  *
  * Return value: the thumbnail directory in the encoding of the filesystem
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gchar *
 gimp_thumb_get_thumb_dir_local (const gchar   *dirname,
@@ -318,7 +318,7 @@ gimp_thumb_ensure_thumb_dir (GimpThumbSize   size,
  * Return value: %TRUE is the directory exists, %FALSE if it could not
  *               be created
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_thumb_ensure_thumb_dir_local (const gchar    *dirname,
@@ -413,7 +413,7 @@ gimp_thumb_name_from_uri (const gchar   *uri,
  *               filesystem or %NULL if @uri is a remote file or
  *               points to the user's thumbnail repository.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gchar *
 gimp_thumb_name_from_uri_local (const gchar   *uri,
@@ -598,7 +598,7 @@ gimp_thumb_file_test (const gchar *filename,
  * Deletes all thumbnails for the image file specified by @uri from the
  * user's thumbnail repository.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_thumbs_delete_for_uri (const gchar *uri)
@@ -627,7 +627,7 @@ gimp_thumbs_delete_for_uri (const gchar *uri)
  * Deletes all thumbnails for the image file specified by @uri from
  * the local thumbnail repository.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_thumbs_delete_for_uri_local (const gchar *uri)

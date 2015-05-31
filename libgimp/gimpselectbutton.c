@@ -77,7 +77,7 @@ gimp_select_button_dispose (GObject *object)
  *
  * Closes the popup window associated with @button.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 void
 gimp_select_button_close_popup (GimpSelectButton *button)

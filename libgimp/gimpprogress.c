@@ -74,7 +74,7 @@ static const gdouble   gimp_progress_step    = (1.0 / 256.0);
  *
  * Return value: the name of the temporary procedure that's been installed
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 const gchar *
 gimp_progress_install (GimpProgressStartCallback start_callback,
@@ -105,7 +105,7 @@ gimp_progress_install (GimpProgressStartCallback start_callback,
  *
  * Return value: the name of the temporary procedure that's been installed
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 const gchar *
 gimp_progress_install_vtable (const GimpProgressVtable *vtable,
@@ -192,7 +192,7 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
  *
  * Return value: the @user_data that was passed to gimp_progress_install().
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gpointer
 gimp_progress_uninstall (const gchar *progress_callback)
@@ -253,7 +253,7 @@ gimp_progress_init (const gchar  *message)
  *
  * Returns: %TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_progress_init_printf (const gchar *format,
@@ -289,7 +289,7 @@ gimp_progress_init_printf (const gchar *format,
  *
  * Returns: %TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_progress_set_text_printf (const gchar *format,

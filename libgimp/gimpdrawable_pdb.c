@@ -46,7 +46,7 @@
  *
  * Returns: The drawable's Babl format.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gchar *
 _gimp_drawable_get_format (gint32 drawable_ID)
@@ -497,7 +497,7 @@ gimp_drawable_mask_bounds (gint32  drawable_ID,
  *
  * Returns: TRUE if the returned area is not empty.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_drawable_mask_intersect (gint32  drawable_ID,
@@ -577,7 +577,7 @@ gimp_drawable_merge_shadow (gint32   drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_drawable_free_shadow (gint32 drawable_ID)
@@ -914,7 +914,7 @@ _gimp_drawable_thumbnail (gint32   drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
@@ -983,7 +983,7 @@ _gimp_drawable_sub_thumbnail (gint32   drawable_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_drawable_foreground_extract (gint32                    drawable_ID,
