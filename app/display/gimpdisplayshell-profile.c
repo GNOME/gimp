@@ -91,7 +91,7 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
   src_format = gimp_pickable_get_format (GIMP_PICKABLE (image));
 
   if (gimp_display_shell_has_filter (shell))
-    dest_format = babl_format ("R'G'B'A float");
+    dest_format = shell->filter_format;
   else
     dest_format = babl_format ("R'G'B'A u8");
 

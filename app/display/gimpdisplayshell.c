@@ -336,6 +336,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->cursor_modifier   = GIMP_CURSOR_MODIFIER_NONE;
   shell->override_cursor   = (GimpCursorType) -1;
 
+  shell->filter_format     = babl_format ("R'G'B'A float");
+
   shell->motion_buffer   = gimp_motion_buffer_new ();
 
   g_signal_connect (shell->motion_buffer, "stroke",

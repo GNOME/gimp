@@ -63,7 +63,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 #ifdef USE_NODE_BLIT
   GeglNode        *node;
 #endif
-  const Babl      *filter_format = babl_format ("R'G'B'A float");
   gdouble          scale_x       = 1.0;
   gdouble          scale_y       = 1.0;
   gdouble          buffer_scale  = 1.0;
@@ -177,14 +176,14 @@ gimp_display_shell_render (GimpDisplayShell *shell,
           gint h = GIMP_DISPLAY_RENDER_BUF_HEIGHT * GIMP_DISPLAY_RENDER_MAX_SCALE;
 
           shell->filter_data =
-            gegl_malloc (w * h * babl_format_get_bytes_per_pixel (filter_format));
+            gegl_malloc (w * h * babl_format_get_bytes_per_pixel (shell->filter_format));
 
           shell->filter_stride =
-            w * babl_format_get_bytes_per_pixel (filter_format);
+            w * babl_format_get_bytes_per_pixel (shell->filter_format);
 
           shell->filter_buffer =
             gegl_buffer_linear_new_from_data (shell->filter_data,
-                                              filter_format,
+                                              shell->filter_format,
                                               GEGL_RECTANGLE (0, 0, w, h),
                                               GEGL_AUTO_ROWSTRIDE,
                                               (GDestroyNotify) gegl_free,
@@ -255,7 +254,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            GEGL_RECTANGLE (scaled_x, scaled_y,
                                            scaled_width, scaled_height),
                            buffer_scale,
-                           filter_format,
+                           shell->filter_format,
                            shell->filter_data, shell->filter_stride,
                            GEGL_ABYSS_CLAMP);
 #else
@@ -263,7 +262,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                           buffer_scale,
                           GEGL_RECTANGLE (scaled_x, scaled_y,
                                           scaled_width, scaled_height),
-                          filter_format,
+                          shell->filter_format,
                           shell->filter_data, shell->filter_stride,
                           GEGL_BLIT_CACHE);
 #endif
