@@ -38,6 +38,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-profile.h"
 #include "gimpdisplayxfer.h"
 
@@ -89,16 +90,10 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
 
   src_format = gimp_pickable_get_format (GIMP_PICKABLE (image));
 
-  if (shell->filter_stack && shell->filter_stack->filters)
-    dest_format = gimp_babl_format (GIMP_RGB,
-                                    gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
-                                                         gimp_babl_format_get_linear (src_format)),
-                                    TRUE);
+  if (gimp_display_shell_has_filter (shell))
+    dest_format = babl_format ("R'G'B'A float");
   else
-    dest_format = gimp_babl_format (GIMP_RGB,
-                                    gimp_babl_precision (GIMP_COMPONENT_TYPE_FLOAT,
-                                                         gimp_babl_format_get_linear (src_format)),
-                                    TRUE);
+    dest_format = babl_format ("R'G'B'A u8");
 
   g_printerr ("src_format: %s\n", babl_get_name (src_format));
   g_printerr ("dest_format: %s\n", babl_get_name (dest_format));
