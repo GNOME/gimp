@@ -74,6 +74,14 @@ gimp_display_shell_filter_set (GimpDisplayShell      *shell,
   gimp_display_shell_filter_changed (NULL, shell);
 }
 
+gboolean
+gimp_display_shell_has_filter (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return shell->filter_stack && shell->filter_stack->filters;
+}
+
 GimpColorDisplayStack *
 gimp_display_shell_filter_new (GimpDisplayShell *shell,
                                GimpColorConfig  *config)
