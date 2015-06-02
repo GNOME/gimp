@@ -31,6 +31,9 @@ void                 gimp_image_set_icc_profile      (GimpImage           *image
 
 GimpColorProfile     gimp_image_get_color_profile    (GimpImage           *image,
                                                       GError             **error);
+gboolean             gimp_image_set_color_profile    (GimpImage           *image,
+                                                      GimpColorProfile     profile,
+                                                      GError             **error);
 
 
 #endif /* __GIMP_IMAGE_PROFILE_H__ */

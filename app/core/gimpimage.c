@@ -1395,6 +1395,13 @@ gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
 
   if (! profile)
     {
+      GimpColorConfig *config = image->gimp->config->color_management;
+
+      profile = gimp_color_config_get_rgb_profile (config, NULL);
+    }
+
+  if (! profile)
+    {
       const Babl *format = gimp_image_get_layer_format (image, FALSE);
 
       if (gimp_babl_format_get_linear (format))

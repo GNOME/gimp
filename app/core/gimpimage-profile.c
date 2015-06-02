@@ -19,8 +19,6 @@
 
 #include <string.h>
 
-#include <lcms2.h>
-
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
@@ -95,11 +93,11 @@ gimp_image_validate_icc_profile (GimpImage           *image,
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("ICC profile validation failed: "
                              "Color profile is not for RGB color space"));
-      cmsCloseProfile (profile);
+      gimp_lcms_profile_close (profile);
       return FALSE;
     }
 
-  cmsCloseProfile (profile);
+  gimp_lcms_profile_close (profile);
 
   return TRUE;
 }
@@ -136,7 +134,6 @@ gimp_image_get_color_profile (GimpImage  *image,
                               GError    **error)
 {
   const GimpParasite *parasite;
-  GimpColorProfile   *profile = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -144,17 +141,47 @@ gimp_image_get_color_profile (GimpImage  *image,
   parasite = gimp_image_get_icc_profile (image);
 
   if (parasite)
-    {
-      profile = gimp_lcms_profile_open_from_data (gimp_parasite_data (parasite),
-                                                  gimp_parasite_data_size (parasite),
-                                                  error);
-    }
-  else
-    {
-      GimpColorConfig *config = image->gimp->config->color_management;
+    return gimp_lcms_profile_open_from_data (gimp_parasite_data (parasite),
+                                             gimp_parasite_data_size (parasite),
+                                             error);
 
-      profile = gimp_color_config_get_rgb_profile (config, error);
+  return NULL;
+}
+
+gboolean
+gimp_image_set_color_profile (GimpImage         *image,
+                              GimpColorProfile   profile,
+                              GError           **error)
+{
+  GimpParasite *parasite = NULL;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (profile)
+    {
+      guint8 *data;
+      gsize   length;
+
+      data = gimp_lcms_profile_save_to_data (profile, &length, error);
+      if (! data)
+        return FALSE;
+
+      parasite = gimp_parasite_new (GIMP_ICC_PROFILE_PARASITE_NAME,
+                                    GIMP_PARASITE_PERSISTENT |
+                                    GIMP_PARASITE_UNDOABLE,
+                                    length, data);
+      g_free (data);
     }
 
-  return profile;
+  if (! gimp_image_validate_icc_profile (image, parasite, error))
+    {
+      gimp_parasite_free (parasite);
+      return FALSE;
+    }
+
+  gimp_image_set_icc_profile (image, parasite);
+  gimp_parasite_free (parasite);
+
+  return FALSE;
 }
