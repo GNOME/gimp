@@ -709,7 +709,7 @@ lcms_image_get_profile (GimpColorConfig  *config,
     }
   else
     {
-      profile = gimp_color_config_get_rgb_profile (config, error);
+      profile = gimp_color_config_get_rgb_color_profile (config, error);
     }
 
   return profile;
@@ -1165,7 +1165,7 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   combo = gimp_color_profile_combo_box_new (dialog, history);
   g_free (history);
 
-  profile = gimp_color_config_get_rgb_profile (config, &error);
+  profile = gimp_color_config_get_rgb_color_profile (config, &error);
 
   if (profile)
     {

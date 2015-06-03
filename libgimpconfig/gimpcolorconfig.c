@@ -371,8 +371,8 @@ gimp_color_config_get_property (GObject    *object,
 }
 
 GimpColorProfile
-gimp_color_config_get_rgb_profile (GimpColorConfig  *config,
-                                   GError          **error)
+gimp_color_config_get_rgb_color_profile (GimpColorConfig  *config,
+                                         GError          **error)
 {
   GimpColorProfile profile = NULL;
 
@@ -402,8 +402,8 @@ gimp_color_config_get_rgb_profile (GimpColorConfig  *config,
 }
 
 GimpColorProfile
-gimp_color_config_get_cmyk_profile (GimpColorConfig  *config,
-                                    GError          **error)
+gimp_color_config_get_cmyk_color_profile (GimpColorConfig  *config,
+                                          GError          **error)
 {
   GimpColorProfile profile = NULL;
 
@@ -433,8 +433,8 @@ gimp_color_config_get_cmyk_profile (GimpColorConfig  *config,
 }
 
 GimpColorProfile
-gimp_color_config_get_display_profile (GimpColorConfig  *config,
-                                       GError          **error)
+gimp_color_config_get_display_color_profile (GimpColorConfig  *config,
+                                             GError          **error)
 {
   GimpColorProfile profile = NULL;
 
@@ -453,8 +453,8 @@ gimp_color_config_get_display_profile (GimpColorConfig  *config,
 }
 
 GimpColorProfile
-gimp_color_config_get_printer_profile (GimpColorConfig  *config,
-                                       GError          **error)
+gimp_color_config_get_printer_color_profile (GimpColorConfig  *config,
+                                             GError          **error)
 {
   GimpColorProfile profile = NULL;
 

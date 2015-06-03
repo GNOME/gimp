@@ -1397,7 +1397,7 @@ gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
     {
       GimpColorConfig *config = image->gimp->config->color_management;
 
-      profile = gimp_color_config_get_rgb_profile (config, NULL);
+      profile = gimp_color_config_get_rgb_color_profile (config, NULL);
     }
 
   if (! profile)

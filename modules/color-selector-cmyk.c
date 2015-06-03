@@ -377,8 +377,8 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   if (! config)
     goto out;
 
-  rgb_profile  = gimp_color_config_get_rgb_profile (config, NULL);
-  cmyk_profile = gimp_color_config_get_cmyk_profile (config, NULL);
+  rgb_profile  = gimp_color_config_get_rgb_color_profile (config, NULL);
+  cmyk_profile = gimp_color_config_get_cmyk_color_profile (config, NULL);
 
   if (! rgb_profile)
     rgb_profile = gimp_color_profile_new_srgb ();

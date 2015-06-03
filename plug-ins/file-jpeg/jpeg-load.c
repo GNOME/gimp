@@ -617,7 +617,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
 
   /*  if that fails, try to load the CMYK profile configured in the prefs  */
   if (! cmyk_profile)
-    cmyk_profile = gimp_color_config_get_cmyk_profile (config, NULL);
+    cmyk_profile = gimp_color_config_get_cmyk_color_profile (config, NULL);
 
   /*  bail out if we can't load any CMYK profile  */
   if (! cmyk_profile)
@@ -627,7 +627,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
     }
 
   /*  try to load the RGB profile configured in the prefs  */
-  rgb_profile = gimp_color_config_get_rgb_profile (config, NULL);
+  rgb_profile = gimp_color_config_get_rgb_color_profile (config, NULL);
 
   /*  make the real sRGB profile as a fallback  */
   if (! rgb_profile)

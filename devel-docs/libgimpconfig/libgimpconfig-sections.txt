@@ -152,10 +152,14 @@ gimp_scanner_parse_matrix2
 <SECTION>
 <FILE>gimpcolorconfig</FILE>
 <TITLE>GimpColorConfig</TITLE>
-GimpColorConfig
 GimpColorManagementMode
 GimpColorRenderingIntent
+gimp_color_config_get_rgb_color_profile
+gimp_color_config_get_cmyk_color_profile
+gimp_color_config_get_display_color_profile
+gimp_color_config_get_printer_color_profile
 <SUBSECTION Standard>
+GimpColorConfig
 GimpColorConfigClass
 GIMP_COLOR_CONFIG
 GIMP_IS_COLOR_CONFIG
