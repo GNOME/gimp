@@ -198,7 +198,7 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
   switch (g_file_query_file_type (file, G_FILE_QUERY_INFO_NONE, NULL))
     {
     case G_FILE_TYPE_REGULAR:
-      profile = gimp_lcms_profile_open_from_file (file, &error);
+      profile = gimp_color_profile_open_from_file (file, &error);
 
       if (! profile)
         {
@@ -210,7 +210,7 @@ gimp_color_profile_chooser_dialog_update_preview (GimpColorProfileChooserDialog 
         {
           gimp_color_profile_view_set_profile (dialog->priv->profile_view,
                                                profile);
-          gimp_lcms_profile_close (profile);
+          gimp_color_profile_close (profile);
         }
       break;
 

@@ -112,5 +112,5 @@ gimp_image_profile_view_update (GimpImageParasiteView *view)
 
   gimp_color_profile_view_set_profile (profile_view->profile_view, profile);
 
-  gimp_lcms_profile_close (profile);
+  gimp_color_profile_close (profile);
 }

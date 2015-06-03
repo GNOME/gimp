@@ -428,7 +428,7 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
       GError           *error = NULL;
 
       file = g_file_new_for_path (filename);
-      profile = gimp_lcms_profile_open_from_file (file, &error);
+      profile = gimp_color_profile_open_from_file (file, &error);
       g_object_unref (file);
 
       if (! profile)
@@ -438,8 +438,8 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
         }
       else
         {
-          l = gimp_lcms_profile_get_label (profile);
-          gimp_lcms_profile_close (profile);
+          l = gimp_color_profile_get_label (profile);
+          gimp_color_profile_close (profile);
         }
     }
   else

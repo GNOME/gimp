@@ -1148,7 +1148,7 @@ gimp_display_shell_get_color_profile (GimpColorManaged *managed)
     return gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
   /* never return a NULL profile */
-  return gimp_lcms_create_srgb_profile ();;
+  return gimp_color_profile_new_srgb ();;
 }
 
 static void

@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * gimplcms.c
+ * gimpcolorprofile.c
  * Copyright (C) 2014  Michael Natterer <mitch@gimp.org>
  *                     Elle Stone <ellestone@ninedegreesbelow.com>
  *
@@ -33,14 +33,14 @@
 
 #include "gimpcolortypes.h"
 
-#include "gimplcms.h"
+#include "gimpcolorprofile.h"
 
 #include "libgimp/libgimp-intl.h"
 
 
 /**
- * SECTION: gimplcms
- * @title: GimpLcms
+ * SECTION: gimpcolorprofile
+ * @title: GimpColorProfile
  * @short_description: Definitions and Functions relating to LCMS.
  *
  * Definitions and Functions relating to LCMS.
@@ -59,18 +59,18 @@
 
 
 static GQuark
-gimp_lcms_error_quark (void)
+gimp_color_profile_error_quark (void)
 {
   static GQuark quark = 0;
 
   if (G_UNLIKELY (quark == 0))
-    quark = g_quark_from_static_string ("gimp-lcms-error-quark");
+    quark = g_quark_from_static_string ("gimp-color-profile-error-quark");
 
   return quark;
 }
 
 /**
- * gimp_lcms_profile_open_from_file:
+ * gimp_color_profile_open_from_file:
  * @file:  a #GFile
  * @error: return location for #GError
  *
@@ -82,8 +82,8 @@ gimp_lcms_error_quark (void)
  * Since: 2.10
  **/
 GimpColorProfile
-gimp_lcms_profile_open_from_file (GFile   *file,
-                                  GError **error)
+gimp_color_profile_open_from_file (GFile   *file,
+                                   GError **error)
 {
   GimpColorProfile  profile = NULL;
   gchar            *path;
@@ -148,7 +148,7 @@ gimp_lcms_profile_open_from_file (GFile   *file,
     }
 
   if (! profile && error && *error == NULL)
-    g_set_error (error, gimp_lcms_error_quark (), 0,
+    g_set_error (error, gimp_color_profile_error_quark (), 0,
                  _("'%s' does not appear to be an ICC color profile"),
                  gimp_file_get_utf8_name (file));
 
@@ -156,7 +156,7 @@ gimp_lcms_profile_open_from_file (GFile   *file,
 }
 
 /**
- * gimp_lcms_profile_open_from_data:
+ * gimp_color_profile_open_from_data:
  * @data:   pointer to memory containing an ICC profile
  * @length: lenght of the profile in memory, in bytes
  * @error:  return location for #GError
@@ -169,9 +169,9 @@ gimp_lcms_profile_open_from_file (GFile   *file,
  * Since: 2.10
  **/
 GimpColorProfile
-gimp_lcms_profile_open_from_data (const guint8  *data,
-                                  gsize          length,
-                                  GError       **error)
+gimp_color_profile_open_from_data (const guint8  *data,
+                                   gsize          length,
+                                   GError       **error)
 {
   GimpColorProfile  profile;
 
@@ -182,14 +182,14 @@ gimp_lcms_profile_open_from_data (const guint8  *data,
   profile = cmsOpenProfileFromMem (data, length);
 
   if (! profile)
-    g_set_error_literal (error, gimp_lcms_error_quark (), 0,
+    g_set_error_literal (error, gimp_color_profile_error_quark (), 0,
                          _("Data does not appear to be an ICC color profile"));
 
   return profile;
 }
 
 /**
- * gimp_lcms_profile_dave_to_data:
+ * gimp_color_profile_dave_to_data:
  * @profile: a #GimpColorProfile
  * @length:  return location for the number of bytes written
  * @error:   return location for #GError
@@ -203,9 +203,9 @@ gimp_lcms_profile_open_from_data (const guint8  *data,
  * Since: 2.10
  **/
 guint8 *
-gimp_lcms_profile_save_to_data (GimpColorProfile   profile,
-                                gsize             *length,
-                                GError           **error)
+gimp_color_profile_save_to_data (GimpColorProfile   profile,
+                                 gsize             *length,
+                                 GError           **error)
 {
   cmsUInt32Number size;
 
@@ -227,14 +227,14 @@ gimp_lcms_profile_save_to_data (GimpColorProfile   profile,
       g_free (data);
     }
 
-  g_set_error_literal (error, gimp_lcms_error_quark (), 0,
+  g_set_error_literal (error, gimp_color_profile_error_quark (), 0,
                        _("Could not save color profile to memory"));
 
   return NULL;
 }
 
 /**
- * gimp_lcms_profile_close:
+ * gimp_color_profile_close:
  * @profile: a #GimpColorProfile
  *
  * This function closes a #GimpColorProfile and frees its memory.
@@ -242,7 +242,7 @@ gimp_lcms_profile_save_to_data (GimpColorProfile   profile,
  * Since: 2.10
  **/
 void
-gimp_lcms_profile_close (GimpColorProfile profile)
+gimp_color_profile_close (GimpColorProfile profile)
 {
   g_return_if_fail (profile != NULL);
 
@@ -250,8 +250,8 @@ gimp_lcms_profile_close (GimpColorProfile profile)
 }
 
 static gchar *
-gimp_lcms_profile_get_info (GimpColorProfile profile,
-                            cmsInfoType      info)
+gimp_color_profile_get_info (GimpColorProfile profile,
+                             cmsInfoType      info)
 {
   cmsUInt32Number  size;
   gchar           *text = NULL;
@@ -276,7 +276,7 @@ gimp_lcms_profile_get_info (GimpColorProfile profile,
 }
 
 /**
- * gimp_lcms_profile_get_description:
+ * gimp_color_profile_get_description:
  * @profile: a #GimpColorProfile
  *
  * Return value: a newly allocated string containing @profile's
@@ -285,13 +285,13 @@ gimp_lcms_profile_get_info (GimpColorProfile profile,
  * Since: 2.10
  **/
 gchar *
-gimp_lcms_profile_get_description (GimpColorProfile profile)
+gimp_color_profile_get_description (GimpColorProfile profile)
 {
-  return gimp_lcms_profile_get_info (profile, cmsInfoDescription);
+  return gimp_color_profile_get_info (profile, cmsInfoDescription);
 }
 
 /**
- * gimp_lcms_profile_get_manufacturer:
+ * gimp_color_profile_get_manufacturer:
  * @profile: a #GimpColorProfile
  *
  * Return value: a newly allocated string containing @profile's
@@ -300,13 +300,13 @@ gimp_lcms_profile_get_description (GimpColorProfile profile)
  * Since: 2.10
  **/
 gchar *
-gimp_lcms_profile_get_manufacturer (GimpColorProfile profile)
+gimp_color_profile_get_manufacturer (GimpColorProfile profile)
 {
-  return gimp_lcms_profile_get_info (profile, cmsInfoManufacturer);
+  return gimp_color_profile_get_info (profile, cmsInfoManufacturer);
 }
 
 /**
- * gimp_lcms_profile_get_model:
+ * gimp_color_profile_get_model:
  * @profile: a #GimpColorProfile
  *
  * Return value: a newly allocated string containing @profile's
@@ -315,13 +315,13 @@ gimp_lcms_profile_get_manufacturer (GimpColorProfile profile)
  * Since: 2.10
  **/
 gchar *
-gimp_lcms_profile_get_model (GimpColorProfile profile)
+gimp_color_profile_get_model (GimpColorProfile profile)
 {
-  return gimp_lcms_profile_get_info (profile, cmsInfoModel);
+  return gimp_color_profile_get_info (profile, cmsInfoModel);
 }
 
 /**
- * gimp_lcms_profile_get_copyright:
+ * gimp_color_profile_get_copyright:
  * @profile: a #GimpColorProfile
  *
  * Return value: a newly allocated string containing @profile's
@@ -330,13 +330,13 @@ gimp_lcms_profile_get_model (GimpColorProfile profile)
  * Since: 2.10
  **/
 gchar *
-gimp_lcms_profile_get_copyright (GimpColorProfile profile)
+gimp_color_profile_get_copyright (GimpColorProfile profile)
 {
-  return gimp_lcms_profile_get_info (profile, cmsInfoCopyright);
+  return gimp_color_profile_get_info (profile, cmsInfoCopyright);
 }
 
 /**
- * gimp_lcms_profile_get_label:
+ * gimp_color_profile_get_label:
  * @profile: a #GimpColorProfile
  *
  * This function returns a newly allocated string containing
@@ -348,13 +348,13 @@ gimp_lcms_profile_get_copyright (GimpColorProfile profile)
  * Since: 2.10
  **/
 gchar *
-gimp_lcms_profile_get_label (GimpColorProfile profile)
+gimp_color_profile_get_label (GimpColorProfile profile)
 {
   gchar *label;
 
   g_return_val_if_fail (profile != NULL, NULL);
 
-  label = gimp_lcms_profile_get_description (profile);
+  label = gimp_color_profile_get_description (profile);
 
   if (label && ! strlen (label))
     {
@@ -363,7 +363,7 @@ gimp_lcms_profile_get_label (GimpColorProfile profile)
     }
 
   if (! label)
-    label = gimp_lcms_profile_get_model (profile);
+    label = gimp_color_profile_get_model (profile);
 
   if (label && ! strlen (label))
     {
@@ -378,7 +378,7 @@ gimp_lcms_profile_get_label (GimpColorProfile profile)
 }
 
 /**
- * gimp_lcms_profile_get_summary:
+ * gimp_color_profile_get_summary:
  * @profile: a #GimpColorProfile
  *
  * This function return a newly allocated string containing a
@@ -391,7 +391,7 @@ gimp_lcms_profile_get_label (GimpColorProfile profile)
  * Since: 2.10
  **/
 gchar *
-gimp_lcms_profile_get_summary (GimpColorProfile profile)
+gimp_color_profile_get_summary (GimpColorProfile profile)
 {
   GString *string;
   gchar   *text;
@@ -400,14 +400,14 @@ gimp_lcms_profile_get_summary (GimpColorProfile profile)
 
   string = g_string_new (NULL);
 
-  text = gimp_lcms_profile_get_description (profile);
+  text = gimp_color_profile_get_description (profile);
   if (text)
     {
       g_string_append (string, text);
       g_free (text);
     }
 
-  text = gimp_lcms_profile_get_model (profile);
+  text = gimp_color_profile_get_model (profile);
   if (text)
     {
       if (string->len > 0)
@@ -416,7 +416,7 @@ gimp_lcms_profile_get_summary (GimpColorProfile profile)
       g_string_append (string, text);
     }
 
-  text = gimp_lcms_profile_get_manufacturer (profile);
+  text = gimp_color_profile_get_manufacturer (profile);
   if (text)
     {
       if (string->len > 0)
@@ -425,7 +425,7 @@ gimp_lcms_profile_get_summary (GimpColorProfile profile)
       g_string_append (string, text);
     }
 
-  text = gimp_lcms_profile_get_copyright (profile);
+  text = gimp_color_profile_get_copyright (profile);
   if (text)
     {
       if (string->len > 0)
@@ -438,7 +438,7 @@ gimp_lcms_profile_get_summary (GimpColorProfile profile)
 }
 
 /**
- * gimp_lcms_profile_is_equal:
+ * gimp_color_profile_is_equal:
  * @profile1: a #GimpColorProfile
  * @profile2: a #GimpColorProfile
  *
@@ -449,7 +449,7 @@ gimp_lcms_profile_get_summary (GimpColorProfile profile)
  * Since: 2.10
  **/
 gboolean
-gimp_lcms_profile_is_equal (GimpColorProfile profile1,
+gimp_color_profile_is_equal (GimpColorProfile profile1,
                             GimpColorProfile profile2)
 {
   cmsUInt8Number digest1[GIMP_LCMS_MD5_DIGEST_LENGTH];
@@ -471,7 +471,7 @@ gimp_lcms_profile_is_equal (GimpColorProfile profile1,
 }
 
 /**
- * gimp_lcms_profile_is_rgb:
+ * gimp_color_profile_is_rgb:
  * @profile: a #GimpColorProfile
  *
  * Return value: %TRUE if the profile's color space is RGB, %FALSE
@@ -480,7 +480,7 @@ gimp_lcms_profile_is_equal (GimpColorProfile profile1,
  * Since: 2.10
  **/
 gboolean
-gimp_lcms_profile_is_rgb (GimpColorProfile profile)
+gimp_color_profile_is_rgb (GimpColorProfile profile)
 {
   g_return_val_if_fail (profile != NULL, FALSE);
 
@@ -488,7 +488,7 @@ gimp_lcms_profile_is_rgb (GimpColorProfile profile)
 }
 
 /**
- * gimp_lcms_profile_is_cmyk:
+ * gimp_color_profile_is_cmyk:
  * @profile: a #GimpColorProfile
  *
  * Return value: %TRUE if the profile's color space is CMYK, %FALSE
@@ -497,7 +497,7 @@ gimp_lcms_profile_is_rgb (GimpColorProfile profile)
  * Since: 2.10
  **/
 gboolean
-gimp_lcms_profile_is_cmyk (GimpColorProfile profile)
+gimp_color_profile_is_cmyk (GimpColorProfile profile)
 {
   g_return_val_if_fail (profile != NULL, FALSE);
 
@@ -505,9 +505,9 @@ gimp_lcms_profile_is_cmyk (GimpColorProfile profile)
 }
 
 static void
-gimp_lcms_profile_set_tag (cmsHPROFILE      profile,
-                           cmsTagSignature  sig,
-                           const gchar     *tag)
+gimp_color_profile_set_tag (cmsHPROFILE      profile,
+                            cmsTagSignature  sig,
+                            const gchar     *tag)
 {
   cmsMLU *mlu;
 
@@ -518,7 +518,7 @@ gimp_lcms_profile_set_tag (cmsHPROFILE      profile,
 }
 
 static GimpColorProfile
-gimp_lcms_create_srgb_profile_internal (void)
+gimp_color_profile_new_srgb_internal (void)
 {
   cmsHPROFILE srgb_profile;
   cmsCIExyY   d65_srgb_specs = { 0.3127, 0.3290, 1.0 };
@@ -546,14 +546,14 @@ gimp_lcms_create_srgb_profile_internal (void)
 
   cmsFreeToneCurve (srgb_parametric_curve);
 
-  gimp_lcms_profile_set_tag (srgb_profile, cmsSigProfileDescriptionTag,
-                             "GIMP built-in sRGB");
-  gimp_lcms_profile_set_tag (srgb_profile, cmsSigDeviceMfgDescTag,
-                             "GIMP");
-  gimp_lcms_profile_set_tag (srgb_profile, cmsSigDeviceModelDescTag,
-                             "sRGB");
-  gimp_lcms_profile_set_tag (srgb_profile, cmsSigCopyrightTag,
-                             "Public Domain");
+  gimp_color_profile_set_tag (srgb_profile, cmsSigProfileDescriptionTag,
+                              "GIMP built-in sRGB");
+  gimp_color_profile_set_tag (srgb_profile, cmsSigDeviceMfgDescTag,
+                              "GIMP");
+  gimp_color_profile_set_tag (srgb_profile, cmsSigDeviceModelDescTag,
+                              "sRGB");
+  gimp_color_profile_set_tag (srgb_profile, cmsSigCopyrightTag,
+                              "Public Domain");
 
   /* The following line produces a V2 profile with a point curve TRC.
    * Profiles with point curve TRCs can't be used in LCMS2 unbounded
@@ -569,7 +569,7 @@ gimp_lcms_create_srgb_profile_internal (void)
 }
 
 /**
- * gimp_lcms_create_srgb_profile:
+ * gimp_color_profile_new_srgb:
  *
  * This function is a replacement for cmsCreate_sRGBProfile() and
  * returns an sRGB profile that is functionally the same as the
@@ -600,7 +600,7 @@ gimp_lcms_create_srgb_profile_internal (void)
  * Since: 2.10
  **/
 GimpColorProfile
-gimp_lcms_create_srgb_profile (void)
+gimp_color_profile_new_srgb (void)
 {
   static guint8 *profile_data   = NULL;
   static gsize   profile_length = 0;
@@ -609,19 +609,19 @@ gimp_lcms_create_srgb_profile (void)
     {
       GimpColorProfile profile;
 
-      profile = gimp_lcms_create_srgb_profile_internal ();
+      profile = gimp_color_profile_new_srgb_internal ();
 
-      profile_data = gimp_lcms_profile_save_to_data (profile, &profile_length,
-                                                     NULL);
+      profile_data = gimp_color_profile_save_to_data (profile, &profile_length,
+                                                      NULL);
 
-      gimp_lcms_profile_close (profile);
+      gimp_color_profile_close (profile);
     }
 
-  return gimp_lcms_profile_open_from_data (profile_data, profile_length, NULL);
+  return gimp_color_profile_open_from_data (profile_data, profile_length, NULL);
 }
 
 static GimpColorProfile
-gimp_lcms_create_linear_rgb_profile_internal (void)
+gimp_color_profile_new_linear_rgb_internal (void)
 {
   cmsHPROFILE profile;
 
@@ -651,20 +651,20 @@ gimp_lcms_create_linear_rgb_profile_internal (void)
   profile = cmsCreateRGBProfile (&whitepoint, &primaries, linear);
   cmsFreeToneCurve (linear[0]);
 
-  gimp_lcms_profile_set_tag (profile, cmsSigProfileDescriptionTag,
-                             "GIMP built-in Linear RGB");
-  gimp_lcms_profile_set_tag (profile, cmsSigDeviceMfgDescTag,
-                             "GIMP");
-  gimp_lcms_profile_set_tag (profile, cmsSigDeviceModelDescTag,
-                             "Linear RGB");
-  gimp_lcms_profile_set_tag (profile, cmsSigCopyrightTag,
-                             "Public Domain");
+  gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
+                              "GIMP built-in Linear RGB");
+  gimp_color_profile_set_tag (profile, cmsSigDeviceMfgDescTag,
+                              "GIMP");
+  gimp_color_profile_set_tag (profile, cmsSigDeviceModelDescTag,
+                              "Linear RGB");
+  gimp_color_profile_set_tag (profile, cmsSigCopyrightTag,
+                              "Public Domain");
 
   return profile;
 }
 
 /**
- * gimp_lcms_create_linear_rgb_profile:
+ * gimp_color_profile_new_linear_rgb:
  *
  * This function creates a profile for babl_model("RGB"). Please
  * somebody write someting smarter here.
@@ -674,7 +674,7 @@ gimp_lcms_create_linear_rgb_profile_internal (void)
  * Since: 2.10
  **/
 GimpColorProfile
-gimp_lcms_create_linear_rgb_profile (void)
+gimp_color_profile_new_linear_rgb (void)
 {
   static guint8 *profile_data   = NULL;
   static gsize   profile_length = 0;
@@ -683,19 +683,19 @@ gimp_lcms_create_linear_rgb_profile (void)
     {
       GimpColorProfile profile;
 
-      profile = gimp_lcms_create_linear_rgb_profile_internal ();
+      profile = gimp_color_profile_new_linear_rgb_internal ();
 
-      profile_data = gimp_lcms_profile_save_to_data (profile, &profile_length,
+      profile_data = gimp_color_profile_save_to_data (profile, &profile_length,
                                                      NULL);
 
-      gimp_lcms_profile_close (profile);
+      gimp_color_profile_close (profile);
     }
 
-  return gimp_lcms_profile_open_from_data (profile_data, profile_length, NULL);
+  return gimp_color_profile_open_from_data (profile_data, profile_length, NULL);
 }
 
 /**
- * gimp_lcms_get_format:
+ * gimp_color_profile_get_format:
  * @format:      a #Babl format
  * @lcms_format: return location for an lcms format
  *
@@ -713,8 +713,8 @@ gimp_lcms_create_linear_rgb_profile (void)
  * Since: 2.10
  **/
 const Babl *
-gimp_lcms_get_format (const Babl *format,
-                      guint32    *lcms_format)
+gimp_color_profile_get_format (const Babl *format,
+                               guint32    *lcms_format)
 {
   const Babl *output_format = NULL;
   const Babl *type;

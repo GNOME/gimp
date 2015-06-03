@@ -383,11 +383,11 @@ gimp_color_config_get_rgb_profile (GimpColorConfig  *config,
     {
       GFile *file = g_file_new_for_path (config->rgb_profile);
 
-      profile = gimp_lcms_profile_open_from_file (file, error);
+      profile = gimp_color_profile_open_from_file (file, error);
 
-      if (profile && ! gimp_lcms_profile_is_rgb (profile))
+      if (profile && ! gimp_color_profile_is_rgb (profile))
         {
-          gimp_lcms_profile_close (profile);
+          gimp_color_profile_close (profile);
           profile = NULL;
 
           g_set_error (error, GIMP_CONFIG_ERROR, 0,
@@ -414,11 +414,11 @@ gimp_color_config_get_cmyk_profile (GimpColorConfig  *config,
     {
       GFile *file = g_file_new_for_path (config->cmyk_profile);
 
-      profile = gimp_lcms_profile_open_from_file (file, error);
+      profile = gimp_color_profile_open_from_file (file, error);
 
-      if (profile && ! gimp_lcms_profile_is_cmyk (profile))
+      if (profile && ! gimp_color_profile_is_cmyk (profile))
         {
-          gimp_lcms_profile_close (profile);
+          gimp_color_profile_close (profile);
           profile = NULL;
 
           g_set_error (error, GIMP_CONFIG_ERROR, 0,
@@ -445,7 +445,7 @@ gimp_color_config_get_display_profile (GimpColorConfig  *config,
     {
       GFile *file = g_file_new_for_path (config->display_profile);
 
-      profile = gimp_lcms_profile_open_from_file (file, error);
+      profile = gimp_color_profile_open_from_file (file, error);
       g_object_unref (file);
     }
 
@@ -465,7 +465,7 @@ gimp_color_config_get_printer_profile (GimpColorConfig  *config,
     {
       GFile *file = g_file_new_for_path (config->printer_profile);
 
-      profile = gimp_lcms_profile_open_from_file (file, error);
+      profile = gimp_color_profile_open_from_file (file, error);
       g_object_unref (file);
     }
 
@@ -487,11 +487,11 @@ gimp_color_config_set_rgb_profile (GimpColorConfig  *config,
       GimpColorProfile  profile;
       GFile            *file = g_file_new_for_path (filename);
 
-      profile = gimp_lcms_profile_open_from_file (file, error);
+      profile = gimp_color_profile_open_from_file (file, error);
 
       if (profile)
         {
-          if (! gimp_lcms_profile_is_rgb (profile))
+          if (! gimp_color_profile_is_rgb (profile))
             {
               g_set_error (error, GIMP_CONFIG_ERROR, 0,
                            _("Color profile '%s' is not for RGB color space."),
@@ -499,7 +499,7 @@ gimp_color_config_set_rgb_profile (GimpColorConfig  *config,
               success = FALSE;
             }
 
-          gimp_lcms_profile_close (profile);
+          gimp_color_profile_close (profile);
         }
       else
         {
@@ -528,11 +528,11 @@ gimp_color_config_set_cmyk_profile (GimpColorConfig  *config,
       GimpColorProfile  profile;
       GFile            *file = g_file_new_for_path (filename);
 
-      profile = gimp_lcms_profile_open_from_file (file, error);
+      profile = gimp_color_profile_open_from_file (file, error);
 
       if (profile)
         {
-          if (! gimp_lcms_profile_is_cmyk (profile))
+          if (! gimp_color_profile_is_cmyk (profile))
             {
               g_set_error (error, GIMP_CONFIG_ERROR, 0,
                            _("Color profile '%s' is not for CMYK color space."),
@@ -540,7 +540,7 @@ gimp_color_config_set_cmyk_profile (GimpColorConfig  *config,
               success = FALSE;
             }
 
-          gimp_lcms_profile_close (profile);
+          gimp_color_profile_close (profile);
         }
       else
         {
@@ -569,11 +569,11 @@ gimp_color_config_set_display_profile (GimpColorConfig  *config,
       GimpColorProfile  profile;
       GFile            *file = g_file_new_for_path (filename);
 
-      profile = gimp_lcms_profile_open_from_file (file, error);
+      profile = gimp_color_profile_open_from_file (file, error);
 
       if (profile)
         {
-          gimp_lcms_profile_close (profile);
+          gimp_color_profile_close (profile);
         }
       else
         {
@@ -602,11 +602,11 @@ gimp_color_config_set_printer_profile (GimpColorConfig  *config,
       GimpColorProfile  profile;
       GFile            *file = g_file_new_for_path (filename);
 
-      profile = gimp_lcms_profile_open_from_file (file, error);
+      profile = gimp_color_profile_open_from_file (file, error);
 
       if (profile)
         {
-          gimp_lcms_profile_close (profile);
+          gimp_color_profile_close (profile);
         }
       else
         {

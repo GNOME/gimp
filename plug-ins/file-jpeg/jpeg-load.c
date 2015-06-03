@@ -604,13 +604,13 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
   /*  try to load the embedded CMYK profile  */
   if (profile_data)
     {
-      cmyk_profile = gimp_lcms_profile_open_from_data (profile_data,
-                                                       profile_len,
-                                                       NULL);
+      cmyk_profile = gimp_color_profile_open_from_data (profile_data,
+                                                        profile_len,
+                                                        NULL);
 
-      if (cmyk_profile && ! gimp_lcms_profile_is_cmyk (cmyk_profile))
+      if (cmyk_profile && ! gimp_color_profile_is_cmyk (cmyk_profile))
         {
-          gimp_lcms_profile_close (cmyk_profile);
+          gimp_color_profile_close (cmyk_profile);
           cmyk_profile = NULL;
         }
     }
@@ -631,7 +631,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
 
   /*  make the real sRGB profile as a fallback  */
   if (! rgb_profile)
-    rgb_profile = gimp_lcms_create_srgb_profile ();
+    rgb_profile = gimp_color_profile_new_srgb ();
 
   if (config->display_intent ==
       GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
@@ -644,8 +644,8 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
                                   config->display_intent,
                                   flags);
 
-  gimp_lcms_profile_close (cmyk_profile);
-  gimp_lcms_profile_close (rgb_profile);
+  gimp_color_profile_close (cmyk_profile);
+  gimp_color_profile_close (rgb_profile);
 
   g_object_unref (config);
 

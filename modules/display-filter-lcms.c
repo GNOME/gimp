@@ -373,8 +373,8 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
 
   if (profile)
     {
-      text    = gimp_lcms_profile_get_label (profile);
-      tooltip = gimp_lcms_profile_get_summary (profile);
+      text    = gimp_color_profile_get_label (profile);
+      tooltip = gimp_color_profile_get_summary (profile);
     }
   else
     {
@@ -389,7 +389,7 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
   g_free (tooltip);
 
   if (profile)
-    gimp_lcms_profile_close (profile);
+    gimp_color_profile_close (profile);
 }
 
 static void

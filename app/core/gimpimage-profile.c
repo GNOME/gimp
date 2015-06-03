@@ -78,9 +78,9 @@ gimp_image_validate_icc_profile (GimpImage           *image,
       return FALSE;
     }
 
-  profile = gimp_lcms_profile_open_from_data (gimp_parasite_data (icc_profile),
-                                              gimp_parasite_data_size (icc_profile),
-                                              error);
+  profile = gimp_color_profile_open_from_data (gimp_parasite_data (icc_profile),
+                                               gimp_parasite_data_size (icc_profile),
+                                               error);
 
   if (! profile)
     {
@@ -88,16 +88,16 @@ gimp_image_validate_icc_profile (GimpImage           *image,
       return FALSE;
     }
 
-  if (! gimp_lcms_profile_is_rgb (profile))
+  if (! gimp_color_profile_is_rgb (profile))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("ICC profile validation failed: "
                              "Color profile is not for RGB color space"));
-      gimp_lcms_profile_close (profile);
+      gimp_color_profile_close (profile);
       return FALSE;
     }
 
-  gimp_lcms_profile_close (profile);
+  gimp_color_profile_close (profile);
 
   return TRUE;
 }
@@ -141,9 +141,9 @@ gimp_image_get_color_profile (GimpImage  *image,
   parasite = gimp_image_get_icc_profile (image);
 
   if (parasite)
-    return gimp_lcms_profile_open_from_data (gimp_parasite_data (parasite),
-                                             gimp_parasite_data_size (parasite),
-                                             error);
+    return gimp_color_profile_open_from_data (gimp_parasite_data (parasite),
+                                              gimp_parasite_data_size (parasite),
+                                              error);
 
   return NULL;
 }
@@ -163,7 +163,7 @@ gimp_image_set_color_profile (GimpImage         *image,
       guint8 *data;
       gsize   length;
 
-      data = gimp_lcms_profile_save_to_data (profile, &length, error);
+      data = gimp_color_profile_save_to_data (profile, &length, error);
       if (! data)
         return FALSE;
 
