@@ -1077,7 +1077,7 @@ plug_in_edge_invoker (GimpProcedure         *procedure,
 
           node = gegl_node_new_child (NULL,
                                       "operation",       "gegl:edge",
-                                      "algorihm",        edgemode,
+                                      "algorithm",       edgemode,
                                       "amount",          amount,
                                       "border-behavior", border_behavior,
                                       NULL);
