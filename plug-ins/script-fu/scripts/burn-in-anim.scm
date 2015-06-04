@@ -137,7 +137,7 @@
                   (begin
                     ;--- add some brightness to whole text
                     (if (= fadeout TRUE)
-                        (gimp-brightness-contrast bl-layer 100 0)
+                        (gimp-drawable-brightness-contrast bl-layer 0.787 0)
                     )
 
           ;--- blend glow color inside the letters
