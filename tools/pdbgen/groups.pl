@@ -24,6 +24,7 @@
     gradients
     help
     image
+    image_color_profile
     image_convert
     image_grid
     image_guides

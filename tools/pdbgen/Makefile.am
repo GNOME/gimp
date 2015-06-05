@@ -26,6 +26,7 @@ pdb_sources = \
 	pdb/gradients.pdb		\
 	pdb/help.pdb			\
 	pdb/image.pdb			\
+	pdb/image_color_profile.pdb	\
 	pdb/image_convert.pdb		\
 	pdb/image_grid.pdb		\
 	pdb/image_guides.pdb		\

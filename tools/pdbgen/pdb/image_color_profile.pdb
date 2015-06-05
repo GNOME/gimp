@@ -1,0 +1,114 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub image_get_color_profile {
+    $blurb = "Returns the image's color profile";
+
+    $help = <<'HELP';
+This procedure returns the image's color profile.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'profile_data', type => 'int8array', wrap => 1,
+          desc => "The image's serialized color profile. The returned value must be freed with g_free()",
+          array => { name => 'num_bytes',
+                     desc => 'Number of bytes in the color_profile array' } }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-profile.h") ],
+        code => <<'CODE'
+{
+  GimpColorProfile profile;
+
+  profile = gimp_image_get_color_profile (image, NULL);
+
+  if (profile)
+    {
+      gsize length;
+
+      profile_data = gimp_color_profile_save_to_data (profile, &length, NULL);
+      num_bytes = length;
+
+      gimp_color_profile_close (profile);
+    }
+}
+CODE
+    );
+}
+
+sub image_set_color_profile {
+    $blurb = "Sets the image's color profile";
+
+    $help = <<'HELP';
+This procedure sets the image's color profile.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'color_profile', type => 'int8array', wrap => 1,
+          desc => 'The new serialized color profile',
+          array => { name => 'num_bytes',
+                     desc => 'Number of bytes in the color_profile array' } }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-profile.h") ],
+        code => <<'CODE'
+{
+  GimpColorProfile profile;
+
+  profile = gimp_color_profile_open_from_data (color_profile, num_bytes, error);
+
+  if (profile)
+    {
+      success = gimp_image_set_color_profile (image, profile, error);
+      gimp_color_profile_close (profile);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+@headers = qw(<cairo.h>
+              "libgimpcolor/gimpcolor.h"
+              "gimp-intl.h");
+
+@procs = qw(image_get_color_profile
+            image_set_color_profile);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Image Color Profile';
+$doc_title = 'gimpimagecolorprofile';
+$doc_short_desc = 'Operations on an image\'s color profile.';
+$doc_long_desc = 'Operations on an image\'s color profile.';
+
+1;

@@ -99,6 +99,7 @@ PDB_WRAPPERS_C = \
 	gimpgradientselect_pdb.c	\
 	gimphelp_pdb.c			\
 	gimpimage_pdb.c			\
+	gimpimagecolorprofile_pdb.c	\
 	gimpimageconvert_pdb.c		\
 	gimpimagegrid_pdb.c		\
 	gimpimageguides_pdb.c		\
@@ -154,6 +155,7 @@ PDB_WRAPPERS_H = \
 	gimpgradientselect_pdb.h	\
 	gimphelp_pdb.h			\
 	gimpimage_pdb.h			\
+	gimpimagecolorprofile_pdb.h	\
 	gimpimageconvert_pdb.h		\
 	gimpimagegrid_pdb.h		\
 	gimpimageguides_pdb.h		\
@@ -208,6 +210,8 @@ libgimp_sources = \
 	gimpgradientselect.h	\
 	gimpimage.c		\
 	gimpimage.h		\
+	gimpimagecolorprofile.c	\
+	gimpimagecolorprofile.h	\
 	gimplayer.c		\
 	gimplayer.h		\
 	gimppalette.c		\
@@ -329,6 +333,7 @@ gimpinclude_HEADERS = \
 	gimpgradients.h			\
 	gimpgradientselect.h		\
 	gimpimage.h			\
+	gimpimagecolorprofile.h		\
 	gimplayer.h			\
 	gimppalette.h			\
 	gimppalettes.h			\
