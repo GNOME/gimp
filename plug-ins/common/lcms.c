@@ -104,7 +104,8 @@ static GimpPDBStatusType  lcms_icc_file_info (GFile            *file,
                                               gchar           **info,
                                               GError          **error);
 
-static cmsHPROFILE  lcms_image_get_profile       (GimpColorConfig *config,
+static GimpColorProfile
+                    lcms_image_get_profile       (GimpColorConfig *config,
                                                   gint32           image,
                                                   GError         **error);
 static gboolean     lcms_image_set_profile       (gint32           image,
@@ -685,32 +686,19 @@ lcms_icc_file_info (GFile   *file,
   return GIMP_PDB_SUCCESS;
 }
 
-static cmsHPROFILE
+static GimpColorProfile
 lcms_image_get_profile (GimpColorConfig  *config,
                         gint32            image,
                         GError          **error)
 {
-  GimpParasite *parasite;
-  cmsHPROFILE   profile = NULL;
+  GimpColorProfile profile;
 
   g_return_val_if_fail (image != -1, NULL);
 
-  parasite = gimp_image_get_parasite (image, "icc-profile");
+  profile = gimp_image_get_color_profile (image);
 
-  if (parasite)
-    {
-      profile = gimp_color_profile_open_from_data (gimp_parasite_data (parasite),
-                                                   gimp_parasite_data_size (parasite),
-                                                   error);
-      if (! profile)
-        g_prefix_error (error, _("Error parsing 'icc-profile': "));
-
-      gimp_parasite_free (parasite);
-    }
-  else
-    {
-      profile = gimp_color_config_get_rgb_color_profile (config, error);
-    }
+  if (! profile)
+    profile = gimp_color_config_get_rgb_color_profile (config, error);
 
   return profile;
 }
