@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-05-29 17:30+0000\n"
-"PO-Revision-Date: 2015-05-29 22:18+0100\n"
+"POT-Creation-Date: 2015-06-06 05:41+0000\n"
+"PO-Revision-Date: 2015-06-06 11:42+0100\n"
 "Last-Translator: Peter Mráz <etkinator@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -973,22 +973,22 @@ msgctxt "context-action"
 msgid "Exchange foreground and background colors"
 msgstr "Vymení farbu popredia a farbu pozadia"
 
-#: ../app/actions/context-commands.c:427
+#: ../app/actions/context-commands.c:431
 #, c-format
 msgid "Paint Mode: %s"
 msgstr "Režim maľby: %s"
 
-#: ../app/actions/context-commands.c:553
+#: ../app/actions/context-commands.c:557
 #, c-format
 msgid "Brush Shape: %s"
 msgstr "Tvar štetca: %s"
 
-#: ../app/actions/context-commands.c:613
+#: ../app/actions/context-commands.c:617
 #, c-format
 msgid "Brush Radius: %2.2f"
 msgstr "Polomer štetca: %2.2f"
 
-#: ../app/actions/context-commands.c:721
+#: ../app/actions/context-commands.c:725
 #, c-format
 msgid "Brush Angle: %2.2f"
 msgstr "Otočenie štetca: %2.2f"
@@ -1020,7 +1020,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74 ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1905 ../app/core/gimppalette.c:399 ../app/core/gimppalette-import.c:208 ../app/core/gimppalette-load.c:186
+#: ../app/actions/data-commands.c:114 ../app/actions/tool-options-commands.c:74 ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1912 ../app/core/gimppalette.c:399 ../app/core/gimppalette-import.c:208 ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:94
 msgid "Untitled"
 msgstr "Bez názvu"
@@ -3667,11 +3667,9 @@ msgid "Copy gradient file location to clipboard"
 msgstr "Skopíruje cestu k súboru prechodu do schránky"
 
 #: ../app/actions/gradients-actions.c:66
-#, fuzzy
-#| msgid "Module Manager"
 msgctxt "gradients-action"
 msgid "Show in _File Manager"
-msgstr "Správca modulov"
+msgstr "_Zobraziť v správcovi súborov"
 
 #: ../app/actions/gradients-actions.c:67
 #, fuzzy
@@ -3769,11 +3767,9 @@ msgid "_Mode"
 msgstr "_Režim"
 
 #: ../app/actions/image-actions.c:57
-#, fuzzy
-#| msgid "Direction"
 msgctxt "image-action"
 msgid "_Precision"
-msgstr "Smer"
+msgstr "_Presnosť"
 
 #: ../app/actions/image-actions.c:58
 msgctxt "image-action"
@@ -3812,11 +3808,9 @@ msgid "C_omponents"
 msgstr "_Súčasti"
 
 #: ../app/actions/image-actions.c:66
-#, fuzzy
-#| msgid "Desaturate"
 msgctxt "image-action"
 msgid "D_esaturate"
-msgstr "Odfarbenie"
+msgstr "O_dfarbiť"
 
 #: ../app/actions/image-actions.c:69
 msgctxt "image-action"
@@ -4238,13 +4232,13 @@ msgid "Flipping"
 msgstr "Preklápa sa"
 
 # indikátor priebehu
-#: ../app/actions/image-commands.c:483 ../app/pdb/drawable-transform-cmds.c:617 ../app/pdb/drawable-transform-cmds.c:711 ../app/pdb/image-cmds.c:619 ../app/pdb/item-transform-cmds.c:443 ../app/pdb/transform-tools-cmds.c:255
+#: ../app/actions/image-commands.c:483 ../app/pdb/drawable-transform-cmds.c:617 ../app/pdb/drawable-transform-cmds.c:711 ../app/pdb/image-transform-cmds.c:250 ../app/pdb/item-transform-cmds.c:443 ../app/pdb/transform-tools-cmds.c:255
 #: ../app/tools/gimprotatetool.c:126
 msgid "Rotating"
 msgstr "Otáča sa"
 
 # upozornenie
-#: ../app/actions/image-commands.c:509 ../app/actions/layers-commands.c:693
+#: ../app/actions/image-commands.c:509 ../app/actions/layers-commands.c:697
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nie je možné orezať aktuálny výber, pretože je prázdny."
 
@@ -4272,8 +4266,8 @@ msgstr "Zmeniť mierku"
 
 # indikátor priebehu
 #. Scaling
-#: ../app/actions/image-commands.c:811 ../app/actions/layers-commands.c:1189 ../app/dialogs/preferences-dialog.c:1787 ../app/pdb/drawable-transform-cmds.c:800 ../app/pdb/drawable-transform-cmds.c:891 ../app/pdb/image-cmds.c:491
-#: ../app/pdb/image-cmds.c:527 ../app/pdb/item-transform-cmds.c:534 ../app/pdb/layer-cmds.c:386 ../app/pdb/layer-cmds.c:433 ../app/pdb/transform-tools-cmds.c:346 ../app/tools/gimpscaletool.c:119
+#: ../app/actions/image-commands.c:811 ../app/actions/layers-commands.c:1193 ../app/dialogs/preferences-dialog.c:1787 ../app/pdb/drawable-transform-cmds.c:800 ../app/pdb/drawable-transform-cmds.c:891 ../app/pdb/image-transform-cmds.c:122
+#: ../app/pdb/image-transform-cmds.c:158 ../app/pdb/item-transform-cmds.c:534 ../app/pdb/layer-cmds.c:386 ../app/pdb/layer-cmds.c:433 ../app/pdb/transform-tools-cmds.c:346 ../app/tools/gimpscaletool.c:119
 msgid "Scaling"
 msgstr "Mení sa mierka"
 
@@ -4417,12 +4411,9 @@ msgid "Create a new layer from what is visible in this image"
 msgstr "Vytvorí novú vrstvu z toho, čo je na obrázku viditeľné"
 
 #: ../app/actions/layers-actions.c:101
-#, fuzzy
-#| msgctxt "layers-action"
-#| msgid "New Layer _Group..."
 msgctxt "layers-action"
 msgid "New Layer _Group"
-msgstr "Nová _skupina vrstiev..."
+msgstr "Nová _skupina vrstiev"
 
 #: ../app/actions/layers-actions.c:102
 msgctxt "layers-action"
@@ -4874,77 +4865,71 @@ msgid "To _New Layer"
 msgstr "Do _novej vrstvy"
 
 # titulok dialógového okna
-#: ../app/actions/layers-commands.c:205
+#: ../app/actions/layers-commands.c:209
 msgid "Layer Attributes"
 msgstr "Atribúty vrstvy"
 
-#: ../app/actions/layers-commands.c:208
+#: ../app/actions/layers-commands.c:212
 msgid "Edit Layer Attributes"
 msgstr "Upraviť atribúty vrstvy"
 
 # titulok dialógového okna
-#: ../app/actions/layers-commands.c:252 ../app/core/gimplayer.c:302
+#: ../app/actions/layers-commands.c:256 ../app/core/gimplayer.c:302
 msgid "Layer"
 msgstr "Vrstva"
 
 # titulok dialógového okna (okrem iného)
-#: ../app/actions/layers-commands.c:254 ../app/actions/layers-commands.c:322 ../app/widgets/gimpdrawabletreeview.c:319 ../app/widgets/gimplayertreeview.c:838
+#: ../app/actions/layers-commands.c:258 ../app/actions/layers-commands.c:326 ../app/widgets/gimpdrawabletreeview.c:319 ../app/widgets/gimplayertreeview.c:838
 msgid "New Layer"
 msgstr "Nová vrstva"
 
-#: ../app/actions/layers-commands.c:257
+#: ../app/actions/layers-commands.c:261
 msgid "Create a New Layer"
 msgstr "Vytvoriť novú vrstvu"
 
-#: ../app/actions/layers-commands.c:358
+#: ../app/actions/layers-commands.c:362
 msgid "Visible"
 msgstr "Viditeľná"
 
 # titulok dialógového okna
-#: ../app/actions/layers-commands.c:620
+#: ../app/actions/layers-commands.c:624
 msgid "Set Layer Boundary Size"
 msgstr "Nastaviť veľkosť okraja vrstvy"
 
 # titulok dialógového okna
-#: ../app/actions/layers-commands.c:665
+#: ../app/actions/layers-commands.c:669
 msgid "Scale Layer"
 msgstr "Zmeniť mierku vrstvy"
 
-#: ../app/actions/layers-commands.c:703
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "_Crop to Selection"
+#: ../app/actions/layers-commands.c:707
 msgid "Crop Layer to Selection"
-msgstr "_Orezať podľa výberu"
+msgstr "Orezanie vrstvy podľa výberu"
 
 # názov operácie pre Undo
-#: ../app/actions/layers-commands.c:732
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Lower Layer to Bottom"
+#: ../app/actions/layers-commands.c:736
 msgid "Crop Layer to Content"
-msgstr "Presunutie vrstvy naspodok"
+msgstr "Orezanie vrstvy podľa obsahu"
 
 # upozornenie
-#: ../app/actions/layers-commands.c:744
+#: ../app/actions/layers-commands.c:748
 #, fuzzy
 #| msgid "Cannot crop because the current selection is empty."
 msgid "Cannot crop because the active layer has no content."
 msgstr "Nie je možné orezať aktuálny výber, pretože je prázdny."
 
 # upozornenie
-#: ../app/actions/layers-commands.c:750
+#: ../app/actions/layers-commands.c:754
 #, fuzzy
 #| msgid "Cannot crop because the current selection is empty."
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr "Nie je možné orezať aktuálny výber, pretože je prázdny."
 
 # upozornenie
-#: ../app/actions/layers-commands.c:1124
+#: ../app/actions/layers-commands.c:1128
 msgid "Please select a channel first"
 msgstr "Prosím, vyberte najprv kanál"
 
-#: ../app/actions/layers-commands.c:1132 ../app/dialogs/layer-add-mask-dialog.c:82
+#: ../app/actions/layers-commands.c:1136 ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
 msgstr "Pridať masku vrstvy"
 
@@ -6302,12 +6287,9 @@ msgid "L_ock strokes"
 msgstr "Uzamknúť _obtiahnutia"
 
 #: ../app/actions/vectors-actions.c:165
-#, fuzzy
-#| msgctxt "vectors-action"
-#| msgid "L_ock strokes"
 msgctxt "vectors-action"
 msgid "L_ock position"
-msgstr "Uzamknúť _obtiahnutia"
+msgstr "Uzamknúť _pozíciu"
 
 #: ../app/actions/vectors-actions.c:174
 msgctxt "vectors-action"
@@ -7015,10 +6997,10 @@ msgid "_Zoom (%s)"
 msgstr "_Mierka zobrazienia (%s)"
 
 #: ../app/actions/view-actions.c:864
-#, fuzzy, c-format
+#, c-format
 #| msgid "_Rotate"
 msgid "_Rotate (%d°)"
-msgstr "_Otočenie"
+msgstr "_Otočiť (%d°)"
 
 # Titulok okna
 #: ../app/actions/view-commands.c:663
@@ -7849,689 +7831,723 @@ msgid "RGB"
 msgstr "RGB"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:287
+#: ../app/core/core-enums.c:291
 msgctxt "layer-mode-effects"
 msgid "Normal"
 msgstr "Normálny"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:288
+#: ../app/core/core-enums.c:292
 msgctxt "layer-mode-effects"
 msgid "Dissolve"
 msgstr "Roztrúsiť"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:289
+#: ../app/core/core-enums.c:293
 msgctxt "layer-mode-effects"
 msgid "Behind"
 msgstr "Pod kresbou"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:290
+#: ../app/core/core-enums.c:294
 msgctxt "layer-mode-effects"
 msgid "Multiply"
 msgstr "Násobiť"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:291
+#: ../app/core/core-enums.c:295
 msgctxt "layer-mode-effects"
 msgid "Screen"
 msgstr "Presvietiť"
 
-#: ../app/core/core-enums.c:292
+#: ../app/core/core-enums.c:296
 msgctxt "layer-mode-effects"
 msgid "Old broken Overlay"
 msgstr ""
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:293
+#: ../app/core/core-enums.c:297
 msgctxt "layer-mode-effects"
 msgid "Difference"
 msgstr "Rozdiel"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:294
+#: ../app/core/core-enums.c:298
 msgctxt "layer-mode-effects"
 msgid "Addition"
 msgstr "Súčet"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:295
+#: ../app/core/core-enums.c:299
 msgctxt "layer-mode-effects"
 msgid "Subtract"
 msgstr "Odčítať"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:296
+#: ../app/core/core-enums.c:300
 msgctxt "layer-mode-effects"
 msgid "Darken only"
 msgstr "Len stmavenie"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:297
+#: ../app/core/core-enums.c:301
 msgctxt "layer-mode-effects"
 msgid "Lighten only"
 msgstr "Len zosvetlenie"
 
-# Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:298
+#: ../app/core/core-enums.c:302
 msgctxt "layer-mode-effects"
-msgid "Hue"
-msgstr "Odtieň"
+msgid "Hue (HSV)"
+msgstr ""
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:299
+#: ../app/core/core-enums.c:303
+#, fuzzy
+#| msgctxt "layer-mode-effects"
+#| msgid "Saturation"
 msgctxt "layer-mode-effects"
-msgid "Saturation"
+msgid "Saturation (HSV)"
 msgstr "Sýtosť"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:300
+#: ../app/core/core-enums.c:304
+#, fuzzy
+#| msgctxt "layer-mode-effects"
+#| msgid "Color"
 msgctxt "layer-mode-effects"
-msgid "Color"
+msgid "Color (HSV)"
 msgstr "Farba"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:301
+#: ../app/core/core-enums.c:305
+#, fuzzy
+#| msgctxt "layer-mode-effects"
+#| msgid "Value"
 msgctxt "layer-mode-effects"
-msgid "Value"
+msgid "Value (HSV)"
 msgstr "Jas"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:302
+#: ../app/core/core-enums.c:306
 msgctxt "layer-mode-effects"
 msgid "Divide"
 msgstr "Deliť"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:303
+#: ../app/core/core-enums.c:307
 msgctxt "layer-mode-effects"
 msgid "Dodge"
 msgstr "Zosvetliť"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:304
+#: ../app/core/core-enums.c:308
 msgctxt "layer-mode-effects"
 msgid "Burn"
 msgstr "Stmaviť"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:305
+#: ../app/core/core-enums.c:309
 msgctxt "layer-mode-effects"
 msgid "Hard light"
 msgstr "Tvrdé svetlo"
 
 # PM: Vraj sa používa tvrde a mäkke tvrde je kontrastne, ako napoludnie v lete, s hlbokymi tienmi. makke je v pripade zatiahnutej oblohy, s nizkymi kontrastami
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:306
+#: ../app/core/core-enums.c:310
 msgctxt "layer-mode-effects"
 msgid "Soft light"
 msgstr "Mäkké svetlo"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:307
+#: ../app/core/core-enums.c:311
 msgctxt "layer-mode-effects"
 msgid "Grain extract"
 msgstr "Extrakcia zrnitosti"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:308
+#: ../app/core/core-enums.c:312
 msgctxt "layer-mode-effects"
 msgid "Grain merge"
 msgstr "Zlúčenie zrnitosti"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:309
+#: ../app/core/core-enums.c:313
 msgctxt "layer-mode-effects"
 msgid "Color erase"
 msgstr "Vymazanie farby"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:310
+#: ../app/core/core-enums.c:314
 msgctxt "layer-mode-effects"
 msgid "Overlay"
 msgstr "Zatieniť"
 
+#: ../app/core/core-enums.c:315
+msgctxt "layer-mode-effects"
+msgid "Hue (LCH)"
+msgstr ""
+
+#: ../app/core/core-enums.c:316
+msgctxt "layer-mode-effects"
+msgid "Chroma (LCH)"
+msgstr ""
+
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:311
+#: ../app/core/core-enums.c:317
+#, fuzzy
+#| msgctxt "layer-mode-effects"
+#| msgid "Color"
+msgctxt "layer-mode-effects"
+msgid "Color (LCH)"
+msgstr "Farba"
+
+#: ../app/core/core-enums.c:318
+#, fuzzy
+#| msgid "Lightness"
+msgctxt "layer-mode-effects"
+msgid "Lightness (LCH)"
+msgstr "Svetlosti"
+
+# Režim prekryvu vrstvy
+#: ../app/core/core-enums.c:319
 msgctxt "layer-mode-effects"
 msgid "Erase"
 msgstr "Guma"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:312
+#: ../app/core/core-enums.c:320
 msgctxt "layer-mode-effects"
 msgid "Replace"
 msgstr "Nahradiť"
 
 # Režim prekryvu vrstvy
-#: ../app/core/core-enums.c:313
+#: ../app/core/core-enums.c:321
 msgctxt "layer-mode-effects"
 msgid "Anti erase"
 msgstr "Anti guma"
 
-#: ../app/core/core-enums.c:341
+#: ../app/core/core-enums.c:349
 msgctxt "matting-engine"
 msgid "Matting Global"
 msgstr ""
 
-#: ../app/core/core-enums.c:342
+#: ../app/core/core-enums.c:350
 msgctxt "matting-engine"
 msgid "Matting Levin"
 msgstr ""
 
 # Typ zarovnaia Relative to:
-#: ../app/core/core-enums.c:427
+#: ../app/core/core-enums.c:435
 msgctxt "align-reference-type"
 msgid "First item"
 msgstr "prvej položke"
 
 # Typ zarovnaia Relative to:
-#: ../app/core/core-enums.c:428
+#: ../app/core/core-enums.c:436
 msgctxt "align-reference-type"
 msgid "Image"
 msgstr "obrázku"
 
 # Typ zarovnaia Relative to:
-#: ../app/core/core-enums.c:429
+#: ../app/core/core-enums.c:437
 msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "výberu"
 
 # Typ zarovnaia Relative to:
-#: ../app/core/core-enums.c:430
+#: ../app/core/core-enums.c:438
 msgctxt "align-reference-type"
 msgid "Active layer"
 msgstr "aktívnej vrstve"
 
 # Typ zarovnaia Relative to:
-#: ../app/core/core-enums.c:431
+#: ../app/core/core-enums.c:439
 msgctxt "align-reference-type"
 msgid "Active channel"
 msgstr "aktívnemu kanálu"
 
 # Typ zarovnaia Relative to:
-#: ../app/core/core-enums.c:432
+#: ../app/core/core-enums.c:440
 msgctxt "align-reference-type"
 msgid "Active path"
 msgstr "aktívnej ceste"
 
 # štýl výplne
-#: ../app/core/core-enums.c:460
+#: ../app/core/core-enums.c:468
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr "Jednoliata farba"
 
 # štýl výplne
-#: ../app/core/core-enums.c:461
+#: ../app/core/core-enums.c:469
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Vzor"
 
-#: ../app/core/core-enums.c:489
+#: ../app/core/core-enums.c:497
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Obťahová čiara"
 
-#: ../app/core/core-enums.c:490
+#: ../app/core/core-enums.c:498
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Obtiahnuť kresliacim nástrojom"
 
 # štýl spojenia (čiar)
-#: ../app/core/core-enums.c:519
+#: ../app/core/core-enums.c:527
 msgctxt "join-style"
 msgid "Miter"
 msgstr "Ostrý"
 
 # štýl spojenia (čiar)
-#: ../app/core/core-enums.c:520
+#: ../app/core/core-enums.c:528
 msgctxt "join-style"
 msgid "Round"
 msgstr "Okrúhly"
 
 # štýl spojenia (čiar)
-#: ../app/core/core-enums.c:521
+#: ../app/core/core-enums.c:529
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "Šikmý"
 
 # štýl zakončenia (čiar)
-#: ../app/core/core-enums.c:550
+#: ../app/core/core-enums.c:558
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Useknutý"
 
 # štýl zakončenia (čiar)
-#: ../app/core/core-enums.c:551
+#: ../app/core/core-enums.c:559
 msgctxt "cap-style"
 msgid "Round"
 msgstr "Okrúhly"
 
 # štýl zakončenia (čiar)
-#: ../app/core/core-enums.c:552
+#: ../app/core/core-enums.c:560
 msgctxt "cap-style"
 msgid "Square"
 msgstr "Hranatý"
 
 # Prednastavenie čiarkovania
-#: ../app/core/core-enums.c:589
+#: ../app/core/core-enums.c:597
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "Vlastné"
 
 # Prednastavenie čiarkovania
-#: ../app/core/core-enums.c:590
+#: ../app/core/core-enums.c:598
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Plná čiara"
 
 # Prednastavenie čiarkovania
-#: ../app/core/core-enums.c:591
+#: ../app/core/core-enums.c:599
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "Dlhé čiarky"
 
 # Prednastavenie čiarkovania
-#: ../app/core/core-enums.c:592
+#: ../app/core/core-enums.c:600
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "Stredné dlhé čiarky"
 
 # Prednastavenie čiarkovania
-#: ../app/core/core-enums.c:593
+#: ../app/core/core-enums.c:601
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "Krátke čiarky"
 
 # Prednastavenie čiarkovania
-#: ../app/core/core-enums.c:594
+#: ../app/core/core-enums.c:602
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "Riedke bodkovanie"
 
 # Prednastavenie čiarkovania
-#: ../app/core/core-enums.c:595
+#: ../app/core/core-enums.c:603
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Normálne bodkovanie"
 
 # Prednastavenie čiarkovania
-#: ../app/core/core-enums.c:596
+#: ../app/core/core-enums.c:604
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Husté bodkovanie"
 
 # Prednastavenie čiarkovania
-#: ../app/core/core-enums.c:597
+#: ../app/core/core-enums.c:605
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "Veľmi husté bodkovanie"
 
 # Prednastavenie čiarkovania
-#: ../app/core/core-enums.c:598
+#: ../app/core/core-enums.c:606
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Čiarka bodka..."
 
 # Prednastavenie čiarkovania
-#: ../app/core/core-enums.c:599
+#: ../app/core/core-enums.c:607
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Čiarka bodka bodka..."
 
 # Zmeniť veľkosti vrstiev:
-#: ../app/core/core-enums.c:630
+#: ../app/core/core-enums.c:638
 msgctxt "item-set"
 msgid "None"
 msgstr "Žiadne"
 
 # Zmeniť veľkosti vrstiev:
-#: ../app/core/core-enums.c:631
+#: ../app/core/core-enums.c:639
 msgctxt "item-set"
 msgid "All layers"
 msgstr "Všetky vrstvy"
 
 # Zmeniť veľkosti vrstiev:
-#: ../app/core/core-enums.c:632
+#: ../app/core/core-enums.c:640
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "Vrstvy s veľkosťou obrázka"
 
 # Zmeniť veľkosti vrstiev:
-#: ../app/core/core-enums.c:633
+#: ../app/core/core-enums.c:641
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "Všetky viditeľné vrstvy"
 
 # Zmeniť veľkosti vrstiev:
-#: ../app/core/core-enums.c:634
+#: ../app/core/core-enums.c:642
 msgctxt "item-set"
 msgid "All linked layers"
 msgstr "Všetky previazané vrstvy"
 
 # Veľkosť náhľadu
-#: ../app/core/core-enums.c:669
+#: ../app/core/core-enums.c:677
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Drobná"
 
 # Veľkosť náhľadu
-#: ../app/core/core-enums.c:670
+#: ../app/core/core-enums.c:678
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Veľmi malá"
 
 # Veľkosť náhľadu
-#: ../app/core/core-enums.c:671
+#: ../app/core/core-enums.c:679
 msgctxt "view-size"
 msgid "Small"
 msgstr "Malá"
 
 # Veľkosť náhľadu
-#: ../app/core/core-enums.c:672
+#: ../app/core/core-enums.c:680
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Stredná"
 
 # Veľkosť náhľadu
-#: ../app/core/core-enums.c:673
+#: ../app/core/core-enums.c:681
 msgctxt "view-size"
 msgid "Large"
 msgstr "Veľká"
 
 # Veľkosť náhľadu
-#: ../app/core/core-enums.c:674
+#: ../app/core/core-enums.c:682
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Veľmi veľká"
 
 # Veľkosť náhľadu
-#: ../app/core/core-enums.c:675
+#: ../app/core/core-enums.c:683
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Obrovská"
 
 # Veľkosť náhľadu
-#: ../app/core/core-enums.c:676
+#: ../app/core/core-enums.c:684
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Enormná"
 
 # Veľkosť náhľadu
-#: ../app/core/core-enums.c:677
+#: ../app/core/core-enums.c:685
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Gigantická"
 
 # typ zobrazenia
-#: ../app/core/core-enums.c:705
+#: ../app/core/core-enums.c:713
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Zobraziť ako zoznam"
 
 # typ zobrazenia
-#: ../app/core/core-enums.c:706
+#: ../app/core/core-enums.c:714
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Zobraziť ako mriežku"
 
 # Veľkosť minatúr
-#: ../app/core/core-enums.c:735
+#: ../app/core/core-enums.c:743
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Bez miniatúr"
 
 # Veľkosť minatúr
-#: ../app/core/core-enums.c:736
+#: ../app/core/core-enums.c:744
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Normálne (128x128)"
 
 # Veľkosť minatúr
-#: ../app/core/core-enums.c:737
+#: ../app/core/core-enums.c:745
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Veľké (256x256)"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:919
+#: ../app/core/core-enums.c:927
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<neplatný>>"
 
 # názov operácie pre Undo
 # PM: rozmýšľam či nebude lepšie (vrátiť) Zmenu mierky, ak súhlasíš treba prejsť všetky reťazce s komentárom "názov operácie pre Undo"
-#: ../app/core/core-enums.c:920
+#: ../app/core/core-enums.c:928
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Zmena mierky obrázka"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:921
+#: ../app/core/core-enums.c:929
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Zmena veľkosti obrázka"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:922
+#: ../app/core/core-enums.c:930
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Preklopenie obrázka"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:923
+#: ../app/core/core-enums.c:931
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Otočenie obrázka"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:924
+#: ../app/core/core-enums.c:932
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Orezanie obrázka"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:925
+#: ../app/core/core-enums.c:933
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Konvertovanie obrázka"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:926
+#: ../app/core/core-enums.c:934
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Odobranie položky"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:927
+#: ../app/core/core-enums.c:935
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Zlúčenie vrstiev"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:928
+#: ../app/core/core-enums.c:936
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Zlúčenie ciest"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:929
+#: ../app/core/core-enums.c:937
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Rýchla maska"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:930 ../app/core/core-enums.c:961 ../app/core/gimpimage-grid.c:64
+#: ../app/core/core-enums.c:938 ../app/core/core-enums.c:969 ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Mriežka"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:931 ../app/core/core-enums.c:964
+#: ../app/core/core-enums.c:939 ../app/core/core-enums.c:972
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Vodidlo"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:932 ../app/core/core-enums.c:965
+#: ../app/core/core-enums.c:940 ../app/core/core-enums.c:973
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Bodová vzorka"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:933 ../app/core/core-enums.c:966
+#: ../app/core/core-enums.c:941 ../app/core/core-enums.c:974
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Vrstva/kanál"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:934 ../app/core/core-enums.c:967
+#: ../app/core/core-enums.c:942 ../app/core/core-enums.c:975
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Upravenie vrstvy/kanála"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:935 ../app/core/core-enums.c:968
+#: ../app/core/core-enums.c:943 ../app/core/core-enums.c:976
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Maska výberu"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:936 ../app/core/core-enums.c:972
+#: ../app/core/core-enums.c:944 ../app/core/core-enums.c:980
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Viditeľnosť položky"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:937 ../app/core/core-enums.c:973
+#: ../app/core/core-enums.c:945 ../app/core/core-enums.c:981
 msgctxt "undo-type"
 msgid "Link/Unlink item"
 msgstr "Pripojenie/odpojenie položky"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:938
+#: ../app/core/core-enums.c:946
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Vlastnosti položky"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:939 ../app/core/core-enums.c:971
+#: ../app/core/core-enums.c:947 ../app/core/core-enums.c:979
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Presunutie položky"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:940
+#: ../app/core/core-enums.c:948
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Zmena mierky položky"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:941
+#: ../app/core/core-enums.c:949
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Zmena veľkosti položky"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:942
+#: ../app/core/core-enums.c:950
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Pridanie vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:943 ../app/core/core-enums.c:987
+#: ../app/core/core-enums.c:951 ../app/core/core-enums.c:995
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Pridanie masky vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:944 ../app/core/core-enums.c:989
+#: ../app/core/core-enums.c:952 ../app/core/core-enums.c:997
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Použitie masky vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:945 ../app/core/core-enums.c:997
+#: ../app/core/core-enums.c:953 ../app/core/core-enums.c:1005
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Vloženie plávajúceho výberu do vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:946
+#: ../app/core/core-enums.c:954
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Plávajúci výber"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:947
+#: ../app/core/core-enums.c:955
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Ukotvenie plávajúceho výberu"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:948 ../app/core/gimp-edit.c:286
+#: ../app/core/core-enums.c:956 ../app/core/gimp-edit.c:286
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Vloženie"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:949 ../app/core/gimp-edit.c:594
+#: ../app/core/core-enums.c:957 ../app/core/gimp-edit.c:594
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Vystrihnutie"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:950
+#: ../app/core/core-enums.c:958
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Text"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:951 ../app/core/core-enums.c:998 ../app/core/gimpdrawable-transform.c:636
+#: ../app/core/core-enums.c:959 ../app/core/core-enums.c:1006 ../app/core/gimpdrawable-transform.c:636
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transformovanie"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:952 ../app/core/core-enums.c:999
+#: ../app/core/core-enums.c:960 ../app/core/core-enums.c:1007
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Maľba"
 
 # názov operácie pre Undo
 # PM: čo je to za parazit?
-#: ../app/core/core-enums.c:953 ../app/core/core-enums.c:1002
+#: ../app/core/core-enums.c:961 ../app/core/core-enums.c:1010
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Pripojenie parazita"
 
 # názov operácie pre Undo
 # PM: čo je to za parazit?
-#: ../app/core/core-enums.c:954 ../app/core/core-enums.c:1003
+#: ../app/core/core-enums.c:962 ../app/core/core-enums.c:1011
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Odpojenie parazita"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:955
+#: ../app/core/core-enums.c:963
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Importovanie cesty"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:956
+#: ../app/core/core-enums.c:964
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Zásuvný modul"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:957
+#: ../app/core/core-enums.c:965
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Typ obrázka"
 
-#: ../app/core/core-enums.c:958
+#: ../app/core/core-enums.c:966
 #, fuzzy
 #| msgid "Image Properties"
 msgctxt "undo-type"
@@ -8539,19 +8555,19 @@ msgid "Image precision"
 msgstr "Vlastnosti obrázka"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:959
+#: ../app/core/core-enums.c:967
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Veľkosť obrázka"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:960
+#: ../app/core/core-enums.c:968
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Zmena rozlíšenia obrázka"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:962
+#: ../app/core/core-enums.c:970
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Change Image Unit"
@@ -8560,25 +8576,25 @@ msgid "Change metadata"
 msgstr "Zmena jednotky obrázka"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:963
+#: ../app/core/core-enums.c:971
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Zmena indexovanej palety"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:969
+#: ../app/core/core-enums.c:977
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Zmena poradia položky"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:970
+#: ../app/core/core-enums.c:978
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Premenovanie položiek"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:974
+#: ../app/core/core-enums.c:982
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Lock/Unlock alpha channel"
@@ -8587,7 +8603,7 @@ msgid "Lock/Unlock content"
 msgstr "Zamknutie/odomknute alfa kanála"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:975
+#: ../app/core/core-enums.c:983
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Lock/Unlock alpha channel"
@@ -8596,67 +8612,67 @@ msgid "Lock/Unlock position"
 msgstr "Zamknutie/odomknute alfa kanála"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:976
+#: ../app/core/core-enums.c:984
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Nová vrstva"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:977
+#: ../app/core/core-enums.c:985
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Odstránenie vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:978
+#: ../app/core/core-enums.c:986
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Nastavenie režimu vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:979
+#: ../app/core/core-enums.c:987
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Nastavenie krytia vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:980
+#: ../app/core/core-enums.c:988
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Zamknutie/odomknute alfa kanála"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:981
+#: ../app/core/core-enums.c:989
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Pozastavenie zmien veľkosti pre skupinu vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:982
+#: ../app/core/core-enums.c:990
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Povolenie zmien veľkosti pre skupinu vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:983
+#: ../app/core/core-enums.c:991
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Konverzia skupiny vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:984
+#: ../app/core/core-enums.c:992
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Textová vrstva"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:985
+#: ../app/core/core-enums.c:993
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Zmena texovej vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:986
+#: ../app/core/core-enums.c:994
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Convert group layer"
@@ -8665,176 +8681,176 @@ msgid "Convert text layer"
 msgstr "Konverzia skupiny vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:988
+#: ../app/core/core-enums.c:996
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Odstránenie masky vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:990
+#: ../app/core/core-enums.c:998
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Zobrazenie masky vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:991
+#: ../app/core/core-enums.c:999
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Nový kanál"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:992
+#: ../app/core/core-enums.c:1000
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Odstránenie kanála"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:993
+#: ../app/core/core-enums.c:1001
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Farba kanála"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:994
+#: ../app/core/core-enums.c:1002
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Nová cesta"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:995
+#: ../app/core/core-enums.c:1003
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Odstránenie cesty"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:996
+#: ../app/core/core-enums.c:1004
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Zmena cesty"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:1000
+#: ../app/core/core-enums.c:1008
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Atrament"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:1001
+#: ../app/core/core-enums.c:1009
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Nastavenie farby popredia"
 
 # názov operácie pre Undo
-#: ../app/core/core-enums.c:1004
+#: ../app/core/core-enums.c:1012
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Nevrátiteľná"
 
 # dôležitosť správy
-#: ../app/core/core-enums.c:1117
+#: ../app/core/core-enums.c:1125
 msgctxt "message-severity"
 msgid "Message"
 msgstr "Správa"
 
 # dôležitosť správy
-#: ../app/core/core-enums.c:1118
+#: ../app/core/core-enums.c:1126
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "Varovanie"
 
 # dôležitosť správy
-#: ../app/core/core-enums.c:1119
+#: ../app/core/core-enums.c:1127
 msgctxt "message-severity"
 msgid "Error"
 msgstr "Chyba"
 
 # Politika profilu farieb
-#: ../app/core/core-enums.c:1148
+#: ../app/core/core-enums.c:1156
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Opýtať sa čo urobiť"
 
 # Politika profilu farieb
-#: ../app/core/core-enums.c:1149
+#: ../app/core/core-enums.c:1157
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Ponechať začlenený profil"
 
 # Politika profilu farieb
-#: ../app/core/core-enums.c:1150
+#: ../app/core/core-enums.c:1158
 msgctxt "color-profile-policy"
 msgid "Convert to RGB workspace"
 msgstr "Skonvertovať na RGB farby"
 
 # Typ výstupu dynamiky pri použití tabletu
-#: ../app/core/core-enums.c:1187
+#: ../app/core/core-enums.c:1195
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Krytie"
 
 # Typ výstupu dynamiky pri použití tabletu
-#: ../app/core/core-enums.c:1188
+#: ../app/core/core-enums.c:1196
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Veľkosť"
 
 # Typ výstupu dynamiky pri použití tabletu
-#: ../app/core/core-enums.c:1189
+#: ../app/core/core-enums.c:1197
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Uhol"
 
 # Typ výstupu dynamiky pri použití tabletu
-#: ../app/core/core-enums.c:1190
+#: ../app/core/core-enums.c:1198
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Farba"
 
 # Typ výstupu dynamiky pri použití tabletu
-#: ../app/core/core-enums.c:1191
+#: ../app/core/core-enums.c:1199
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Tvrdosť"
 
 # Typ výstupu dynamiky pri použití tabletu
-#: ../app/core/core-enums.c:1192
+#: ../app/core/core-enums.c:1200
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Sila"
 
 # Typ výstupu dynamiky pri použití tabletu
-#: ../app/core/core-enums.c:1193
+#: ../app/core/core-enums.c:1201
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Pomer strán"
 
 # Typ výstupu dynamiky pri použití tabletu
-#: ../app/core/core-enums.c:1194
+#: ../app/core/core-enums.c:1202
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Medzera"
 
 # Typ výstupu dynamiky pri použití tabletu
-#: ../app/core/core-enums.c:1195
+#: ../app/core/core-enums.c:1203
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Miera"
 
 # Typ výstupu dynamiky pri použití tabletu
 # PM: ide o to ako sa budú správať kresliace nástroje pri rôznom prítlaku pera tabletu na podložku
-#: ../app/core/core-enums.c:1196
+#: ../app/core/core-enums.c:1204
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Prúdenie"
 
 # Typ výstupu dynamiky pri použití tabletu
-#: ../app/core/core-enums.c:1197
+#: ../app/core/core-enums.c:1205
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Rozptyl"
 
 # tooltip
-#: ../app/core/core-enums.c:1225
+#: ../app/core/core-enums.c:1233
 #, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the selection editor"
@@ -8842,7 +8858,7 @@ msgctxt "image-map-region"
 msgid "Use the selection as input"
 msgstr "Otvorí editor výberu "
 
-#: ../app/core/core-enums.c:1226
+#: ../app/core/core-enums.c:1234
 #, fuzzy
 #| msgid "Use the online version"
 msgctxt "image-map-region"
@@ -9105,20 +9121,19 @@ msgid "Brush Spacing"
 msgstr "Rozostup štetca"
 
 #: ../app/core/gimpbrushgenerated-load.c:75
-#, fuzzy, c-format
-#| msgid "not a GIMP Curves file"
+#, c-format
 msgid "Not a GIMP brush file."
-msgstr "nie je to súbor kriviek programu GIMP"
+msgstr "Nie je súborom štetca "
 
 #: ../app/core/gimpbrushgenerated-load.c:95
 #, c-format
 msgid "Unknown GIMP brush version."
-msgstr ""
+msgstr "Neznáma verzia štetca aplikácie GIMP."
 
 #: ../app/core/gimpbrushgenerated-load.c:152
 #, c-format
 msgid "Unknown GIMP brush shape."
-msgstr ""
+msgstr "Neznámy tvar štetca aplikácie GIMP."
 
 #: ../app/core/gimpbrushgenerated-load.c:242
 #, c-format
@@ -9366,16 +9381,14 @@ msgid "Paint Mode"
 msgstr "Režim maľby"
 
 #: ../app/core/gimpdata.c:537 ../app/core/gimpdata.c:545
-#, fuzzy, c-format
-#| msgid "Error reading '%s': %s"
+#, c-format
 msgid "Error saving '%s': "
-msgstr "Chyba počas čítania „%s“: %s"
+msgstr "Chyba počas ukladania „%s“: "
 
 #: ../app/core/gimpdata.c:551
-#, fuzzy, c-format
-#| msgid "Error running '%s'"
+#, c-format
 msgid "Error saving '%s'"
-msgstr "Chyba pri behu „%s“"
+msgstr "Chyba počas ukladania „%s“"
 
 #: ../app/core/gimpdatafactory.c:434 ../app/core/gimpdatafactory.c:463 ../app/core/gimpdatafactory.c:629 ../app/core/gimpdatafactory.c:651
 #, c-format
@@ -9414,22 +9427,19 @@ msgid "You don't have any writable data folder configured."
 msgstr "Nenastavili ste zapisovateľný dátový priečinok."
 
 #: ../app/core/gimpdatafactory.c:907
-#, fuzzy, c-format
-#| msgid "Error reading '%s': %s"
+#, c-format
 msgid "Error loading '%s': "
-msgstr "Chyba počas čítania „%s“: %s"
+msgstr "Chyba počas čítania „%s“: "
 
 #: ../app/core/gimpdatafactory.c:913
-#, fuzzy, c-format
-#| msgid "Error reading '%s': %s"
+#, c-format
 msgid "Error loading '%s'"
-msgstr "Chyba počas čítania „%s“: %s"
+msgstr "Chyba počas čítania „%s“"
 
 #: ../app/core/gimpdatafactory.c:922 ../app/xcf/xcf.c:332
-#, fuzzy, c-format
-#| msgid "Could not open '%s' for reading: %s"
+#, c-format
 msgid "Could not open '%s' for reading: "
-msgstr "Nebolo možné otvoriť „%s“ na čítanie: %s"
+msgstr "Nie je možné otvoriť „%s“ na čítanie: "
 
 #: ../app/core/gimpdatafactory.c:981
 #, c-format
@@ -9529,10 +9539,9 @@ msgid "Output type"
 msgstr "Výstupný typ"
 
 #: ../app/core/gimpgradient-load.c:72
-#, fuzzy, c-format
-#| msgid "not a GIMP Curves file"
+#, c-format
 msgid "Not a GIMP gradient file."
-msgstr "nie je to súbor kriviek programu GIMP"
+msgstr "Nie je súborom prechodu aplikácie GIMP."
 
 #: ../app/core/gimpgradient-load.c:95
 #, c-format
@@ -9542,7 +9551,7 @@ msgstr "Nesprávny UTF-8 reťazec v súbore s prechodom „%s“."
 #: ../app/core/gimpgradient-load.c:121
 #, c-format
 msgid "File is corrupt."
-msgstr ""
+msgstr "Súbor je poškodený."
 
 #: ../app/core/gimpgradient-load.c:195 ../app/core/gimpgradient-load.c:203
 #, c-format
@@ -9556,10 +9565,9 @@ msgid "Segments do not span the range 0-1."
 msgstr "Súbor prechodu „%s“ je poškodený: Časti nie sú v rozpätí 0 až 1."
 
 #: ../app/core/gimpgradient-load.c:239
-#, fuzzy, c-format
-#| msgid "Invalid empty gradient name"
+#, c-format
 msgid "In line %d of gradient file: "
-msgstr "Neplatný prázdny názov prechodu"
+msgstr "Na riadku %d súboru prechodu: "
 
 #: ../app/core/gimpgradient-load.c:315
 #, fuzzy, c-format
@@ -9568,10 +9576,9 @@ msgid "No linear gradients found."
 msgstr "Nebol nájdený lineárny prechod v „%s“"
 
 #: ../app/core/gimpgradient-save.c:211
-#, fuzzy, c-format
-#| msgid "Opening '%s' failed: %s"
+#, c-format
 msgid "Writing POV file '%s' failed: %s"
-msgstr "Otvorenie „%s“ zlyhalo: %s"
+msgstr "Zápis súboru POV „%s“ zlyhal: %s"
 
 #: ../app/core/gimpgrid.c:86
 msgid "Line style used for the grid."
@@ -9648,82 +9655,82 @@ msgid "Transform Layer Group"
 msgstr "Transformácia skupiny vrstiev"
 
 # (obrázok)
-#: ../app/core/gimpimage.c:2189
+#: ../app/core/gimpimage.c:2196
 msgid " (exported)"
 msgstr " (exportovaný)"
 
 # (obrázok)
-#: ../app/core/gimpimage.c:2193
+#: ../app/core/gimpimage.c:2200
 msgid " (overwritten)"
 msgstr " (prepísaný)"
 
 # (obrázok)
-#: ../app/core/gimpimage.c:2202
+#: ../app/core/gimpimage.c:2209
 msgid " (imported)"
 msgstr " (importovaný)"
 
 # názov operácie pre Undo
-#: ../app/core/gimpimage.c:2433
+#: ../app/core/gimpimage.c:2440
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Zmena rozlíšenia obrázka"
 
 # názov operácie pre Undo
-#: ../app/core/gimpimage.c:2485
+#: ../app/core/gimpimage.c:2492
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Zmena jednotky obrázka"
 
 # názov operácie pre Undo
-#: ../app/core/gimpimage.c:3374
+#: ../app/core/gimpimage.c:3381
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Pripojenie parazita k obrázku"
 
 # názov operácie pre Undo
-#: ../app/core/gimpimage.c:3415
+#: ../app/core/gimpimage.c:3422
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Odstránenie parazita z obrázku"
 
 # názov operácie pre Undo
-#: ../app/core/gimpimage.c:4124
+#: ../app/core/gimpimage.c:4131
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Pridanie vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/gimpimage.c:4174 ../app/core/gimpimage.c:4194
+#: ../app/core/gimpimage.c:4181 ../app/core/gimpimage.c:4201
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Odstránenie vrstvy"
 
 # názov operácie pre Undo
-#: ../app/core/gimpimage.c:4188
+#: ../app/core/gimpimage.c:4195
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Odstránenie plávajúceho výberu"
 
 # názov operácie pre Undo
-#: ../app/core/gimpimage.c:4353
+#: ../app/core/gimpimage.c:4360
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Pridanie kanála"
 
 # názov operácie pre Undo
-#: ../app/core/gimpimage.c:4391 ../app/core/gimpimage.c:4404
+#: ../app/core/gimpimage.c:4398 ../app/core/gimpimage.c:4411
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Odstránenie kanála"
 
 # názov operácie pre Undo
-#: ../app/core/gimpimage.c:4458
+#: ../app/core/gimpimage.c:4465
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Pridanie cesty"
 
 # názov operácie pre Undo
-#: ../app/core/gimpimage.c:4489
+#: ../app/core/gimpimage.c:4496
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Odstránenie cesty"
@@ -10015,23 +10022,23 @@ msgstr "Málo viditeľných ciest na zlúčenie. Musia byť najmenej dve."
 msgid "Background"
 msgstr "Pozadie"
 
-#: ../app/core/gimpimage-profile.c:61
+#: ../app/core/gimpimage-profile.c:59
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
 
-#: ../app/core/gimpimage-profile.c:70
+#: ../app/core/gimpimage-profile.c:68
 msgid "ICC profile validation failed: Parasite's flags are not (PERSISTENT | UNDOABLE)"
 msgstr ""
 
-#: ../app/core/gimpimage-profile.c:78
+#: ../app/core/gimpimage-profile.c:76
 msgid "ICC profile validation failed: Cannot attach a color profile to a GRAY image"
 msgstr ""
 
-#: ../app/core/gimpimage-profile.c:89
+#: ../app/core/gimpimage-profile.c:87
 msgid "ICC profile validation failed: "
 msgstr ""
 
-#: ../app/core/gimpimage-profile.c:96
+#: ../app/core/gimpimage-profile.c:94
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 
@@ -10117,7 +10124,7 @@ msgstr[0] "%d x %d pixelov"
 msgstr[1] "%d x %d pixel"
 msgstr[2] "%d x %d pixely"
 
-#: ../app/core/gimpimagefile.c:876 ../app/display/gimpdisplayshell-title.c:327
+#: ../app/core/gimpimagefile.c:876 ../app/display/gimpdisplayshell-title.c:324
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -10772,7 +10779,7 @@ msgstr "Povoliť rozptyl _priehľadnosti"
 msgid "Converting to indexed colors"
 msgstr "Konverzia na indexované farby"
 
-#: ../app/dialogs/convert-type-dialog.c:439 ../app/pdb/convert-cmds.c:162
+#: ../app/dialogs/convert-type-dialog.c:439 ../app/pdb/image-convert-cmds.c:162
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "Nie je možné konvertovať paletu s viac než 256 farbami."
 
@@ -11129,7 +11136,7 @@ msgstr "Nastaviť názov z _textu"
 #: ../app/dialogs/lebl-dialog.c:124
 #, c-format
 msgid "<b>GAME OVER</b> at level %d!"
-msgstr ""
+msgstr "<b>KONIEC HRY</b> na úrovni %d!"
 
 #. Translators: the first and third strings are similar to a
 #. * title, and the second string is a small information text.
@@ -11138,11 +11145,11 @@ msgstr ""
 #: ../app/dialogs/lebl-dialog.c:131
 #, c-format
 msgid "%1$s   %2$s   %3$s"
-msgstr ""
+msgstr "%1$s   %2$s   %3$s"
 
 #: ../app/dialogs/lebl-dialog.c:132
 msgid "Press 'q' to quit"
-msgstr ""
+msgstr "Stlačte „q“ na ukončenie"
 
 # názov operácie pre Undo
 #: ../app/dialogs/lebl-dialog.c:137
@@ -11163,7 +11170,7 @@ msgstr "Stlačte „p“ na zrušenie pozastavenia"
 #: ../app/dialogs/lebl-dialog.c:147
 #, c-format
 msgid "Level: %s,  Lives: %s"
-msgstr ""
+msgstr "Úroveň: %s,  Životy: %s"
 
 #: ../app/dialogs/lebl-dialog.c:152
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
@@ -12663,26 +12670,26 @@ msgid "_Sample Merged"
 msgstr "Odo_brať zlúčenú vzorku"
 
 # tooltip
-#: ../app/display/gimpdisplayshell.c:535
+#: ../app/display/gimpdisplayshell.c:537
 msgid "Access the image menu"
 msgstr "Otvorí ponuku obrázka"
 
 # tooltip
-#: ../app/display/gimpdisplayshell.c:646
+#: ../app/display/gimpdisplayshell.c:648
 msgid "Zoom image when window size changes"
 msgstr "Zmení mierku obrázka pri zmene veľkosti okna"
 
 # tooltip
-#: ../app/display/gimpdisplayshell.c:675
+#: ../app/display/gimpdisplayshell.c:677
 msgid "Toggle Quick Mask"
 msgstr "Prepne rýchlu masku"
 
 # tooltip
-#: ../app/display/gimpdisplayshell.c:698
+#: ../app/display/gimpdisplayshell.c:700
 msgid "Navigate the image display"
 msgstr "Umožňuje posúvanie po obrázku"
 
-#: ../app/display/gimpdisplayshell.c:770 ../app/display/gimpdisplayshell.c:1467 ../app/widgets/gimptoolbox.c:251
+#: ../app/display/gimpdisplayshell.c:772 ../app/display/gimpdisplayshell.c:1470 ../app/widgets/gimptoolbox.c:251
 msgid "Drop image files here to open them"
 msgstr "Presuňte sem súbor s obrázkom, ktorý chcete otvoriť"
 
@@ -12847,17 +12854,17 @@ msgid "Zoom:"
 msgstr "Mierka:"
 
 # (obrázok)
-#: ../app/display/gimpdisplayshell-title.c:292
+#: ../app/display/gimpdisplayshell-title.c:289
 msgid "(modified)"
 msgstr "(zmenený)"
 
 # (obrázok)
-#: ../app/display/gimpdisplayshell-title.c:297
+#: ../app/display/gimpdisplayshell-title.c:294
 msgid "(clean)"
 msgstr "(čistý)"
 
 # 1,2 kresba, 3 farba
-#: ../app/display/gimpdisplayshell-title.c:343 ../app/display/gimpdisplayshell-title.c:352 ../app/widgets/gimpactiongroup.c:884
+#: ../app/display/gimpdisplayshell-title.c:340 ../app/display/gimpdisplayshell-title.c:349 ../app/widgets/gimpactiongroup.c:884
 msgid "(none)"
 msgstr "(žiadna)"
 
@@ -13710,7 +13717,7 @@ msgstr "Obrázok „%s“ (%d) je typu „%s“, ale očakával sa obrázok typu
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "Obrázok „%s“ (%d) je už typu „%s“"
 
-#: ../app/pdb/gimppdb-utils.c:698 ../app/pdb/guides-cmds.c:178
+#: ../app/pdb/gimppdb-utils.c:698 ../app/pdb/image-guides-cmds.c:178
 #, fuzzy, c-format
 #| msgid "Vectors object %d does not contain stroke with ID %d"
 msgid "Image '%s' (%d) does not contain guide with ID %d"
@@ -13775,7 +13782,7 @@ msgstr "Procedúra „%s“ vrátila „%s“ ako návratovú hodnotu „%s“ (
 msgid "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %s). This value is out of range."
 msgstr "Procedúra „%s“  bola volaná s hodnotou „%s“ pre argument  „%s“ (č. %d, typu %s). Táto hodnota je mimo rozsahu."
 
-#: ../app/pdb/image-cmds.c:2520
+#: ../app/pdb/image-cmds.c:2300
 msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr "Rozlíšenie obrázka je mimo rozsah, namiesto neho sa použije štandardné rozlíšenie."
 
@@ -15358,17 +15365,13 @@ msgid "Number of iterations to perform"
 msgstr "Počet používaných p_rocesorov:"
 
 #: ../app/tools/gimpforegroundselectoptions.c:264
-#, fuzzy
-#| msgid "Paint Mode"
 msgid "Draw Mode"
-msgstr "Režim maľby"
+msgstr "Režim kreslenia"
 
 # titulok dialógového okna (okrem iného)
 #: ../app/tools/gimpforegroundselectoptions.c:275
-#, fuzzy
-#| msgid "Stroke Path"
 msgid "Stroke width"
-msgstr "Obtiahnuť cestu"
+msgstr "Šírka obtiahnutia"
 
 #: ../app/tools/gimpforegroundselectoptions.c:294
 #, fuzzy
@@ -15387,16 +15390,12 @@ msgid "Engine"
 msgstr ""
 
 #: ../app/tools/gimpforegroundselectoptions.c:337
-#, fuzzy
-#| msgid "Active Filters"
 msgid "Active levels"
-msgstr "Aktívne filtre"
+msgstr "Aktívne úrovne"
 
 #: ../app/tools/gimpforegroundselectoptions.c:350
-#, fuzzy
-#| msgid "Interpolation:"
 msgid "Iterations"
-msgstr "Interpolácia:"
+msgstr "Iterácie"
 
 #: ../app/tools/gimpforegroundselecttool.c:183
 msgid "Foreground Select"
@@ -15684,8 +15683,6 @@ msgid "Select Primary Color to Adjust"
 msgstr "Vyberte primárnu farbu pre úpravu"
 
 #: ../app/tools/gimphuesaturationtool.c:288
-#, fuzzy
-#| msgid "_Overlap:"
 msgid "_Overlap"
 msgstr "Pre_krytie"
 
@@ -16015,41 +16012,29 @@ msgid "Move Guide: "
 msgstr "Presunúť vodidlo: "
 
 #: ../app/tools/gimpmovetool.c:293
-#, fuzzy
-#| msgid "There is no path to transform."
 msgid "There is no path to move."
-msgstr "Neexistuje žiadna cesta na transformáciu."
+msgstr "Neexistuje žiadna cesta na presunutie."
 
 #: ../app/tools/gimpmovetool.c:294 ../app/tools/gimptransformtool.c:1855
-#, fuzzy
-#| msgid "The active path is locked."
 msgid "The active path's position is locked."
-msgstr "Aktívna cesta je uzamknutá."
+msgstr "Pozícia aktívnej cesty je uzamknutá."
 
 # tooltip
 #: ../app/tools/gimpmovetool.c:325
-#, fuzzy
-#| msgid "Feather selection by"
 msgid "The selection is empty."
-msgstr "Rozsah zjemnenia okrajov"
+msgstr "Výber je prázdny."
 
 #: ../app/tools/gimpmovetool.c:333
-#, fuzzy
-#| msgid "There is no layer to transform."
 msgid "There is no layer to move."
-msgstr "Neexistuje žiadna vrstva na transformáciu."
+msgstr "Neexistuje žiadna vrstva na presunutie."
 
 #: ../app/tools/gimpmovetool.c:337 ../app/tools/gimpmovetool.c:363
-#, fuzzy
-#| msgid "The active layer's pixels are locked."
 msgid "The active layer's position is locked."
-msgstr "Pixely aktívnej vrstvy sú uzamknuté."
+msgstr "Pozícia aktívnej vrstvy je uzamknutá."
 
 #: ../app/tools/gimpmovetool.c:350
-#, fuzzy
-#| msgid "The active path is locked."
 msgid "The active channel's position is locked."
-msgstr "Aktívna cesta je uzamknutá."
+msgstr "Pozícia aktívneho kanála je uzamknutá."
 
 #: ../app/tools/gimpmovetool.c:602
 msgid "Remove Guide"
@@ -16072,38 +16057,28 @@ msgid "Brush"
 msgstr "Š_tetec"
 
 #: ../app/tools/gimpmybrushtool.c:76
-#, fuzzy
-#| msgid "Paintbrush"
 msgid "MyPaint Brush"
-msgstr "Štetec"
+msgstr "Štetec aplikácie MyPaint"
 
 #: ../app/tools/gimpmybrushtool.c:77
-#, fuzzy
-#| msgid "Paintbrush Tool: Paint smooth strokes using a brush"
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
-msgstr "Nástroj štetec: Kreslí plynulé ťahy vybraným tvarom štetca"
+msgstr "Nástroj štetcov aplikácie MyPaint: Používanie štetcov aplikácie MyPaint v GIMPe"
 
 #: ../app/tools/gimpmybrushtool.c:78
-#, fuzzy
-#| msgid "_Paintbrush"
 msgid "M_yPaint Brush"
-msgstr "_Štetec"
+msgstr "_Štetec aplikácie MyPaint"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:76 ../app/tools/gimpnpointdeformationoptions.c:204
-#, fuzzy
-#| msgid "Sensitivity"
 msgid "Density"
-msgstr "Citlivosť"
+msgstr "Hustota"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:81 ../app/tools/gimpnpointdeformationoptions.c:212
 msgid "Rigidity"
 msgstr ""
 
 #: ../app/tools/gimpnpointdeformationoptions.c:86 ../app/tools/gimpnpointdeformationoptions.c:219
-#, fuzzy
-#| msgid "Interpolation method"
 msgid "Deformation mode"
-msgstr "Metóda interpolácie"
+msgstr "Režim deformácie"
 
 # check button
 #: ../app/tools/gimpnpointdeformationoptions.c:91 ../app/tools/gimpnpointdeformationoptions.c:227
@@ -16153,16 +16128,14 @@ msgid "Operation Tool: Use an arbitrary GEGL operation"
 msgstr "Nástroj GEGL: Umožní použiť niektorú GEGL operáciu"
 
 #: ../app/tools/gimpoperationtool.c:351
-#, fuzzy, c-format
-#| msgid "Import Threshold Settings"
+#, c-format
 msgid "Import '%s' Settings"
-msgstr "Importovať nastavenia prahu"
+msgstr "Importovať nastavenia „%s“"
 
 #: ../app/tools/gimpoperationtool.c:352
-#, fuzzy, c-format
-#| msgid "Export Threshold Settings"
+#, c-format
 msgid "Export '%s' Settings"
-msgstr "Exportovať nastavenia prahu"
+msgstr "Exportovať nastavenia „%s“"
 
 #: ../app/tools/gimpoperationtool.c:663
 msgid "_Aux Input"
@@ -16356,10 +16329,8 @@ msgid "Posterize (Reduce Number of Colors)"
 msgstr "Posterizácia (Redukcia počtu farieb)"
 
 #: ../app/tools/gimpposterizetool.c:110
-#, fuzzy
-#| msgid "Posterize _levels:"
 msgid "Posterize _levels"
-msgstr "_Úrovne posterizácie:"
+msgstr "_Úrovne posterizácie"
 
 # tooltip
 #: ../app/tools/gimprectangleoptions.c:105
@@ -16526,9 +16497,8 @@ msgstr "Vybrať priehľadné oblasti"
 # label
 #: ../app/tools/gimpregionselectoptions.c:239
 #, fuzzy
-#| msgid "Select by:"
 msgid "Select by"
-msgstr "Vybrať pomocou:"
+msgstr "Vybrať pomocou"
 
 #: ../app/tools/gimpregionselectoptions.c:245
 msgid "Draw Mask"
@@ -16913,16 +16883,12 @@ msgid "Direction"
 msgstr "Smer"
 
 #: ../app/tools/gimptransformoptions.c:404
-#, fuzzy
-#| msgid "Interpolation:"
 msgid "Interpolation"
-msgstr "Interpolácia:"
+msgstr "Interpolácia"
 
 #: ../app/tools/gimptransformoptions.c:411
-#, fuzzy
-#| msgid "Clipping:"
 msgid "Clipping"
-msgstr "Orezanie:"
+msgstr "Orezanie"
 
 #: ../app/tools/gimptransformoptions.c:418
 msgid "Image opacity"
@@ -17295,17 +17261,12 @@ msgid "Effect Size"
 msgstr "Veľkosť efektu"
 
 #: ../app/tools/gimpwarpoptions.c:95
-#, fuzzy
-#| msgid "Hardness"
 msgid "Effect Hardness"
-msgstr "Tvrdosť:"
+msgstr "Tvrdosť efektu"
 
 #: ../app/tools/gimpwarpoptions.c:101
-#, fuzzy
-#| msgctxt "guides-type"
-#| msgid "Number of lines"
 msgid "Number of animation frames"
-msgstr "Počet čiar"
+msgstr "Počet snímok animácie"
 
 #: ../app/tools/gimpwarpoptions.c:192
 msgid "Strength"
@@ -17495,9 +17456,6 @@ msgstr "Uzamkne pixely"
 
 # názov operácie pre Undo
 #: ../app/tools/tools-enums.c:375
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Grow Channel"
 msgctxt "warp-behavior"
 msgid "Grow area"
 msgstr "Zväčšenie kanála"
@@ -17651,10 +17609,9 @@ msgid "Transform Path"
 msgstr "Transformovanie cesty"
 
 #: ../app/vectors/gimpvectors-export.c:87
-#, fuzzy, c-format
-#| msgid "Opening '%s' failed: %s"
+#, c-format
 msgid "Writing SVG file '%s' failed: %s"
-msgstr "Otvorenie „%s“ zlyhalo: %s"
+msgstr "Zápis súboru SVG „%s“ zlyhal: %s"
 
 # asi názov operácie pre Undo
 #: ../app/vectors/gimpvectors-import.c:331
@@ -18543,27 +18500,16 @@ msgid "From File..."
 msgstr "Zo súboru..."
 
 #: ../app/widgets/gimpiconpicker.c:254
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "_Copy Named..."
 msgid "From Named Icons..."
-msgstr "_Kopírovať do pomenovanej..."
+msgstr "Z pomenovaných ikôn..."
 
-# tooltip
 #: ../app/widgets/gimpiconpicker.c:263
-#, fuzzy
-#| msgctxt "documents-action"
-#| msgid "Copy image location to clipboard"
 msgid "Copy Icon to Clipboard"
-msgstr "Skopíruje cestu k obrázku do schránky"
+msgstr "Skopírovať ikonu do schránky"
 
-# tooltip
 #: ../app/widgets/gimpiconpicker.c:272
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "Paste the content of the clipboard"
 msgid "Paste Icon from Clipboard"
-msgstr "Vloží obsah schránky"
+msgstr "Vložiť ikonu zo schránky"
 
 #: ../app/widgets/gimpiconpicker.c:512
 msgid "Load Icon Image"
@@ -18595,10 +18541,8 @@ msgid "Color space:"
 msgstr "Priestor farieb:"
 
 #: ../app/widgets/gimpimagepropview.c:124
-#, fuzzy
-#| msgid "Version:"
 msgid "Precision:"
-msgstr "Verzia:"
+msgstr "Presnosť:"
 
 #: ../app/widgets/gimpimagepropview.c:129
 msgid "File Name:"
@@ -18696,10 +18640,8 @@ msgid "You can drop dockable dialogs here"
 msgstr "Sem môžete potiahnuť dokovateľné dialógové okná"
 
 #: ../app/widgets/gimppickablepopup.c:206 ../app/widgets/gimppickablepopup.c:432
-#, fuzzy
-#| msgid "Select an operation from the list above"
 msgid "Select an image in the left pane"
-msgstr "Vyberte operáciu z predchádzajúceho zoznamu"
+msgstr "Vyberte obrázok v ľavom paneli"
 
 #: ../app/widgets/gimpprogressdialog.c:223
 msgid "Progress"
@@ -18716,17 +18658,13 @@ msgid "Clockwise"
 msgstr ""
 
 #: ../app/widgets/gimppropgui-constructors.c:387
-#, fuzzy
-#| msgid "Source"
 msgid "Source Range"
-msgstr "Zdroj"
+msgstr "Zdrojový rozsah"
 
 # button
 #: ../app/widgets/gimppropgui-constructors.c:398
-#, fuzzy
-#| msgid "R_eset Range"
 msgid "Destination Range"
-msgstr "O_bnoviť rozsah"
+msgstr "Cieľový rozsah"
 
 #: ../app/widgets/gimppropgui-constructors.c:409
 #, fuzzy
@@ -18736,27 +18674,18 @@ msgstr "Ťahanie riadiaceho bodu"
 
 # názov operácie pre Undo
 #: ../app/widgets/gimppropgui-constructors.c:547
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "New channel"
 msgid "Red channel"
-msgstr "Nový kanál"
+msgstr "Červený kanál"
 
 # názov operácie pre Undo
 #: ../app/widgets/gimppropgui-constructors.c:571
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "New channel"
 msgid "Green channel"
-msgstr "Nový kanál"
+msgstr "Zelený kanál"
 
 # názov operácie pre Undo
 #: ../app/widgets/gimppropgui-constructors.c:595
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "New channel"
 msgid "Blue channel"
-msgstr "Nový kanál"
+msgstr "Modrý kanál"
 
 # Titulok dialógového okna
 #: ../app/widgets/gimppropgui.c:113
@@ -18764,10 +18693,8 @@ msgid "New Seed"
 msgstr "Nové semeno"
 
 #: ../app/widgets/gimppropgui.c:295
-#, fuzzy
-#| msgid "Color Picker Tool: Set colors from image pixels"
 msgid "Pick color from the image"
-msgstr "Farebná pipeta: Nastavuje farbu podľa farby pixelu"
+msgstr "Vybrať farbu z obrázka"
 
 #: ../app/widgets/gimppropgui.c:398
 msgid "This operation has no editable properties"
@@ -18961,7 +18888,7 @@ msgstr "vložiť značky"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1735
+#: ../app/widgets/gimptagentry.c:1742
 msgid ","
 msgstr ","
 
@@ -18979,10 +18906,8 @@ msgid "Color _space:"
 msgstr "_Priestor farieb:"
 
 #: ../app/widgets/gimptemplateeditor.c:393
-#, fuzzy
-#| msgid "_X resolution:"
 msgid "_Precision:"
-msgstr "_X rozlíšenie:"
+msgstr "_Presnosť:"
 
 #: ../app/widgets/gimptemplateeditor.c:400
 msgid "_Fill with:"
@@ -19021,10 +18946,9 @@ msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Najvyšším prvkom v texte musí byť <markup> nie <%s>"
 
 #: ../app/widgets/gimptextbuffer.c:1449
-#, fuzzy, c-format
-#| msgid "Fatal parse error in pattern file '%s': File appears truncated."
+#, c-format
 msgid "Input file '%s' appears truncated: %s"
-msgstr "Závažná chyba v súbore vzoru „%s“: Súbor sa zdá byť skrátený."
+msgstr "Vstupný súbor „%s“ sa zdá byť skrátený: %s"
 
 #: ../app/widgets/gimptextbuffer.c:1467
 #, c-format
@@ -19032,16 +18956,9 @@ msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Nesprávne UTF-8 dáta v súbore „%s“."
 
 #: ../app/widgets/gimptextbuffer.c:1516
-#, fuzzy, c-format
-#| msgid ""
-#| "Reverting to '%s' failed:\n"
-#| "\n"
-#| "%s"
+#, c-format
 msgid "Writing palette file '%s' failed: %s"
-msgstr ""
-"Vrátenie „%s“ zlyhalo:\n"
-"\n"
-"%s"
+msgstr "Zápis súboru palety „%s“ zlyhal: %s"
 
 #: ../app/widgets/gimptexteditor.c:223
 msgid "_Use selected font"
@@ -19265,11 +19182,10 @@ msgstr "[ základný obrázok ]"
 msgid "Lock path strokes"
 msgstr "Uzamkne obtiahnutia ciest"
 
+# tooltip
 #: ../app/widgets/gimpvectorstreeview.c:115
-#, fuzzy
-#| msgid "Lock path strokes"
 msgid "Lock path position"
-msgstr "Uzamkne obtiahnutia ciest"
+msgstr "Uzamkne pozíciu cesty"
 
 #: ../app/widgets/gimpviewablebox.c:89
 msgid "Open the brush selection dialog"
@@ -19512,6 +19428,11 @@ msgstr "okrúhly"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "rozstrapkaný"
+
+# Režim prekryvu vrstvy
+#~ msgctxt "layer-mode-effects"
+#~ msgid "Hue"
+#~ msgstr "Odtieň"
 
 #~ msgctxt "file-action"
 #~ msgid "Export to"
