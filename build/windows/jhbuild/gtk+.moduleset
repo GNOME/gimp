@@ -20,9 +20,9 @@
 		href="http://download.icu-project.org/files/" />
 
 <autotools id="cairo">
-	<branch version="1.14.0" repo="cairographics.org"
-			module="cairo-1.14.0.tar.xz"
-			hash="sha1:53cf589b983412ea7f78feee2e1ba9cea6e3ebae">
+	<branch version="1.14.2" repo="cairographics.org"
+			module="cairo-1.14.2.tar.xz"
+			hash="sha1:c8da68aa66ca0855b5d0ff552766d3e8679e1d24">
 	</branch>
 	<dependencies>
 		<dep package="zlib"/>
