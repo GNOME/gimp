@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-06-06 05:45+0000\n"
-"PO-Revision-Date: 2015-06-06 15:36+0100\n"
+"POT-Creation-Date: 2015-06-06 13:42+0000\n"
+"PO-Revision-Date: 2015-06-06 15:45+0100\n"
 "Last-Translator: Marcel Telka <marcel@telka.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "Language: sk\n"
@@ -120,9 +120,10 @@ msgstr "Vývoj interaktívnej schémy"
 msgid "_Browse..."
 msgstr "_Prechádzať..."
 
+# dialog title
 #: ../plug-ins/script-fu/script-fu-console.c:288
 msgid "Save Script-Fu Console Output"
-msgstr "Uložiť výstup konzoly skriptu Script-Fu"
+msgstr "Uloženie výstupu konzoly skriptu Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:335
 #, c-format
