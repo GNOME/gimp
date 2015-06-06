@@ -1986,7 +1986,7 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
-                               _("Fit to window"),
+                               _("Show entire image"),
                                "1:1",
                                _("Initial zoom _ratio:"),
                                GTK_TABLE (table), 0, size_group);
