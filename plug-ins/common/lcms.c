@@ -109,7 +109,6 @@ static GimpColorProfile
                                                   gint32           image,
                                                   GError         **error);
 static gboolean     lcms_image_set_profile       (gint32           image,
-                                                  cmsHPROFILE      profile,
                                                   GFile           *file);
 static gboolean     lcms_image_apply_profile     (gint32           image,
                                                   cmsHPROFILE      src_profile,
@@ -514,7 +513,7 @@ lcms_icc_set (GimpColorConfig *config,
   else if (config->rgb_profile)
     file = g_file_new_for_path (config->rgb_profile);
 
-  success = lcms_image_set_profile (image, NULL, file);
+  success = lcms_image_set_profile (image, file);
 
   if (file)
     g_object_unref (file);
@@ -704,66 +703,37 @@ lcms_image_get_profile (GimpColorConfig  *config,
 }
 
 static gboolean
-lcms_image_set_profile (gint32       image,
-                        cmsHPROFILE  profile,
-                        GFile       *file)
+lcms_image_set_profile (gint32  image,
+                        GFile  *file)
 {
+  GimpColorProfile profile = NULL;
+
   g_return_val_if_fail (image != -1, FALSE);
 
   if (file)
     {
-      cmsHPROFILE   file_profile;
-      GimpParasite *parasite;
-      guint8       *profile_data;
-      gsize         profile_length;
-      GError       *error = NULL;
+      GError *error = NULL;
 
-      /* check that this file is actually an ICC profile */
-      file_profile = gimp_color_profile_open_from_file (file, &error);
+      profile = gimp_color_profile_open_from_file (file, &error);
 
-      if (! file_profile)
+      if (! profile)
         {
           g_message ("%s", error->message);
           g_clear_error (&error);
 
           return FALSE;
         }
-
-      profile_data = gimp_color_profile_save_to_data (file_profile,
-                                                      &profile_length,
-                                                      &error);
-      gimp_color_profile_close (file_profile);
-
-      if (! profile_data)
-        {
-          g_message ("%s", error->message);
-          g_clear_error (&error);
-
-          return FALSE;
-        }
-
-      gimp_image_undo_group_start (image);
-
-      parasite = gimp_parasite_new ("icc-profile",
-                                    GIMP_PARASITE_PERSISTENT |
-                                    GIMP_PARASITE_UNDOABLE,
-                                    profile_length, profile_data);
-
-      g_free (profile_data);
-
-      gimp_image_attach_parasite (image, parasite);
-      gimp_parasite_free (parasite);
-    }
-  else
-    {
-      gimp_image_undo_group_start (image);
-
-      gimp_image_detach_parasite (image, "icc-profile");
     }
 
+  gimp_image_undo_group_start (image);
+
+  gimp_image_set_color_profile (image, profile);
   gimp_image_detach_parasite (image, "icc-profile-name");
 
   gimp_image_undo_group_end (image);
+
+  if (profile)
+    gimp_color_profile_close (profile);
 
   return TRUE;
 }
@@ -782,7 +752,7 @@ lcms_image_apply_profile (gint32                    image,
 
   gimp_image_undo_group_start (image);
 
-  if (! lcms_image_set_profile (image, dest_profile, file))
+  if (! lcms_image_set_profile (image, file))
     {
       gimp_image_undo_group_end (image);
 
@@ -1345,8 +1315,7 @@ lcms_dialog (GimpColorConfig *config,
                                                     values->intent,
                                                     values->bpc);
               else
-                success = lcms_image_set_profile (image,
-                                                  dest_profile, file);
+                success = lcms_image_set_profile (image, file);
             }
           else
             {
