@@ -1230,6 +1230,15 @@ gimp_tag_entry_container_changed (GimpContainer *container,
 
   if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
     {
+      for (list = tag_entry->selected_items; list; list = g_list_next (list))
+        {
+          if (gimp_tagged_get_tags (GIMP_TAGGED (list->data)) &&
+              gimp_container_have (GIMP_CONTAINER (tag_entry->container),
+                                   GIMP_OBJECT (list->data)))
+            {
+              break;
+            }
+        }
 
       if (! list)
         {
