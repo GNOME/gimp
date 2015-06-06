@@ -172,16 +172,18 @@ gimp_image_set_color_profile (GimpImage         *image,
                                     GIMP_PARASITE_UNDOABLE,
                                     length, data);
       g_free (data);
-    }
 
-  if (! gimp_image_validate_icc_profile (image, parasite, error))
-    {
-      gimp_parasite_free (parasite);
-      return FALSE;
+      if (! gimp_image_validate_icc_profile (image, parasite, error))
+        {
+          gimp_parasite_free (parasite);
+          return FALSE;
+        }
     }
 
   gimp_image_set_icc_profile (image, parasite);
-  gimp_parasite_free (parasite);
+
+  if (parasite)
+    gimp_parasite_free (parasite);
 
   return FALSE;
 }
