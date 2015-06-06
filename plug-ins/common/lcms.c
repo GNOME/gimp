@@ -104,10 +104,6 @@ static GimpPDBStatusType  lcms_icc_file_info (GFile            *file,
                                               gchar           **info,
                                               GError          **error);
 
-static GimpColorProfile
-                    lcms_image_get_profile       (GimpColorConfig *config,
-                                                  gint32           image,
-                                                  GError         **error);
 static gboolean     lcms_image_set_profile       (gint32           image,
                                                   GFile           *file);
 static gboolean     lcms_image_apply_profile     (gint32           image,
@@ -531,9 +527,8 @@ lcms_icc_apply (GimpColorConfig          *config,
                 gboolean                 *dont_ask)
 {
   GimpPDBStatusType status       = GIMP_PDB_SUCCESS;
-  cmsHPROFILE       src_profile  = NULL;
-  cmsHPROFILE       dest_profile = NULL;
-  GError           *error        = NULL;
+  GimpColorProfile  src_profile  = NULL;
+  GimpColorProfile  dest_profile = NULL;
 
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (image != -1, GIMP_PDB_CALLING_ERROR);
@@ -568,19 +563,7 @@ lcms_icc_apply (GimpColorConfig          *config,
         }
     }
 
-  src_profile = lcms_image_get_profile (config, image, &error);
-
-  if (error)
-    {
-      g_message ("%s", error->message);
-      g_clear_error (&error);
-    }
-
-  if (! src_profile && ! dest_profile)
-    return GIMP_PDB_SUCCESS;
-
-  if (! src_profile)
-    src_profile = gimp_color_profile_new_srgb ();
+  src_profile = gimp_image_get_effective_color_profile (image);
 
   if (! dest_profile)
     dest_profile = gimp_color_profile_new_srgb ();
@@ -636,22 +619,12 @@ lcms_icc_info (GimpColorConfig *config,
                gchar          **desc,
                gchar          **info)
 {
-  cmsHPROFILE  profile;
-  GError      *error = NULL;
+  GimpColorProfile profile;
 
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (image != -1, GIMP_PDB_CALLING_ERROR);
 
-  profile = lcms_image_get_profile (config, image, &error);
-
-  if (error)
-    {
-      g_message ("%s", error->message);
-      g_clear_error (&error);
-    }
-
-  if (! profile)
-    profile = gimp_color_profile_new_srgb ();
+  profile = gimp_image_get_effective_color_profile (image);
 
   if (name) *name = gimp_color_profile_get_model (profile);
   if (desc) *desc = gimp_color_profile_get_description (profile);
@@ -683,23 +656,6 @@ lcms_icc_file_info (GFile   *file,
   gimp_color_profile_close (profile);
 
   return GIMP_PDB_SUCCESS;
-}
-
-static GimpColorProfile
-lcms_image_get_profile (GimpColorConfig  *config,
-                        gint32            image,
-                        GError          **error)
-{
-  GimpColorProfile profile;
-
-  g_return_val_if_fail (image != -1, NULL);
-
-  profile = gimp_image_get_color_profile (image);
-
-  if (! profile)
-    profile = gimp_color_config_get_rgb_color_profile (config, error);
-
-  return profile;
 }
 
 static gboolean
@@ -1166,22 +1122,12 @@ lcms_dialog (GimpColorConfig *config,
   GtkWidget                *frame;
   GtkWidget                *label;
   GtkWidget                *combo;
-  cmsHPROFILE               src_profile;
+  GimpColorProfile          src_profile;
   gchar                    *name;
   gboolean                  success = FALSE;
   gboolean                  run;
-  GError                   *error   = NULL;
 
-  src_profile = lcms_image_get_profile (config, image, &error);
-
-  if (error)
-    {
-      g_message ("%s", error->message);
-      g_clear_error (&error);
-    }
-
-  if (! src_profile)
-    src_profile = gimp_color_profile_new_srgb ();
+  src_profile = gimp_image_get_effective_color_profile (image);
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -1278,14 +1224,17 @@ lcms_dialog (GimpColorConfig *config,
 
   while ((run = gimp_dialog_run (GIMP_DIALOG (dialog))) == GTK_RESPONSE_OK)
     {
-      gchar       *filename = gimp_color_profile_combo_box_get_active (box);
-      GFile       *file     = NULL;
-      cmsHPROFILE  dest_profile;
+      gchar            *filename = gimp_color_profile_combo_box_get_active (box);
+      GFile            *file     = NULL;
+      GimpColorProfile  dest_profile;
 
       gtk_widget_set_sensitive (dialog, FALSE);
 
       if (filename)
-        file = g_file_new_for_path (filename);
+        {
+          file = g_file_new_for_path (filename);
+          g_free (filename);
+        }
 
       if (file)
         {
