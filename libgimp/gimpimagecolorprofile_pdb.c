@@ -43,7 +43,8 @@
  *
  * Returns the image's color profile
  *
- * This procedure returns the image's color profile.
+ * This procedure returns the image's color profile, or NULL if the
+ * image has no color profile assigned.
  *
  * Returns: The image's serialized color profile. The returned value
  * must be freed with g_free().
@@ -87,7 +88,8 @@ _gimp_image_get_color_profile (gint32  image_ID,
  *
  * Sets the image's color profile
  *
- * This procedure sets the image's color profile.
+ * This procedure sets the image's color profile, or unsets it if NULL
+ * is passed as 'color_profile'.
  *
  * Returns: TRUE on success.
  *
@@ -114,4 +116,52 @@ _gimp_image_set_color_profile (gint32        image_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 
   return success;
+}
+
+/**
+ * _gimp_image_get_effective_color_profile:
+ * @image_ID: The image.
+ * @num_bytes: Number of bytes in the color_profile array.
+ *
+ * Returns the color profile that is used for the image
+ *
+ * This procedure returns the color profile that is actually used for
+ * this image, which is the profile returned by
+ * gimp_image_get_color_profile() if the image has a profile assigned,
+ * or the default RGB profile from preferences if no profile is
+ * assigned to the image. If there is no default RGB profile configured
+ * in preferences either, a generated default RGB profile is returned.
+ *
+ * Returns: The image's serialized color profile. The returned value
+ * must be freed with g_free().
+ *
+ * Since: 2.10
+ **/
+guint8 *
+_gimp_image_get_effective_color_profile (gint32  image_ID,
+                                         gint   *num_bytes)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  guint8 *profile_data = NULL;
+
+  return_vals = gimp_run_procedure ("gimp-image-get-effective-color-profile",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  *num_bytes = 0;
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    {
+      *num_bytes = return_vals[1].data.d_int32;
+      profile_data = g_new (guint8, *num_bytes);
+      memcpy (profile_data,
+              return_vals[2].data.d_int8array,
+              *num_bytes * sizeof (guint8));
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return profile_data;
 }

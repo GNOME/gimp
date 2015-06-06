@@ -20,7 +20,8 @@ sub image_get_color_profile {
     $blurb = "Returns the image's color profile";
 
     $help = <<'HELP';
-This procedure returns the image's color profile.
+This procedure returns the image's color profile, or NULL if the image
+has no color profile assigned.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -38,7 +39,6 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-profile.h") ],
         code => <<'CODE'
 {
   GimpColorProfile profile;
@@ -63,7 +63,8 @@ sub image_set_color_profile {
     $blurb = "Sets the image's color profile";
 
     $help = <<'HELP';
-This procedure sets the image's color profile.
+This procedure sets the image's color profile, or unsets it if NULL is
+passed as 'color_profile'.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -78,20 +79,70 @@ HELP
     );
 
     %invoke = (
-        headers => [ qw("core/gimpimage-profile.h") ],
+        code => <<'CODE'
+{
+  if (color_profile)
+    {
+      GimpColorProfile profile;
+
+      profile = gimp_color_profile_open_from_data (color_profile, num_bytes,
+                                                   error);
+
+      if (profile)
+        {
+          success = gimp_image_set_color_profile (image, profile, error);
+          gimp_color_profile_close (profile);
+        }
+      else
+        success = FALSE;
+    }
+  else
+    {
+      success = gimp_image_set_color_profile (image, NULL, error);
+    }
+}
+CODE
+    );
+}
+
+sub image_get_effective_color_profile {
+    $blurb = "Returns the color profile that is used for the image";
+
+    $help = <<'HELP';
+This procedure returns the color profile that is actually used for
+this image, which is the profile returned by
+gimp_image_get_color_profile() if the image has a profile assigned, or
+the default RGB profile from preferences if no profile is assigned to
+the image. If there is no default RGB profile configured in
+preferences either, a generated default RGB profile is returned.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'profile_data', type => 'int8array', wrap => 1,
+          desc => "The image's serialized color profile. The returned value must be freed with g_free()",
+          array => { name => 'num_bytes',
+                     desc => 'Number of bytes in the color_profile array' } }
+    );
+
+    %invoke = (
         code => <<'CODE'
 {
   GimpColorProfile profile;
+  gsize            length;
 
-  profile = gimp_color_profile_open_from_data (color_profile, num_bytes, error);
+  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-  if (profile)
-    {
-      success = gimp_image_set_color_profile (image, profile, error);
-      gimp_color_profile_close (profile);
-    }
-  else
-    success = FALSE;
+  profile_data = gimp_color_profile_save_to_data (profile, &length, NULL);
+  num_bytes = length;
+
+  gimp_color_profile_close (profile);
 }
 CODE
     );
@@ -99,10 +150,12 @@ CODE
 
 @headers = qw(<cairo.h>
               "libgimpcolor/gimpcolor.h"
+              "core/gimpimage-profile.h"
               "gimp-intl.h");
 
 @procs = qw(image_get_color_profile
-            image_set_color_profile);
+            image_set_color_profile
+            image_get_effective_color_profile);
 
 %exports = (app => [@procs], lib => [@procs]);
 
