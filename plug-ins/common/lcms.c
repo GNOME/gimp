@@ -39,18 +39,6 @@
 #define PLUG_IN_PROC_APPLY      "plug-in-icc-profile-apply"
 #define PLUG_IN_PROC_APPLY_RGB  "plug-in-icc-profile-apply-rgb"
 
-#define PLUG_IN_PROC_INFO       "plug-in-icc-profile-info"
-#define PLUG_IN_PROC_FILE_INFO  "plug-in-icc-profile-file-info"
-
-
-enum
-{
-  STATUS,
-  PROFILE_NAME,
-  PROFILE_DESC,
-  PROFILE_INFO,
-  NUM_RETURN_VALS
-};
 
 enum
 {
@@ -58,8 +46,6 @@ enum
   PROC_SET_RGB,
   PROC_APPLY,
   PROC_APPLY_RGB,
-  PROC_INFO,
-  PROC_FILE_INFO,
   NONE
 };
 
@@ -93,16 +79,6 @@ static GimpPDBStatusType  lcms_icc_apply     (GimpColorConfig  *config,
                                               GimpColorRenderingIntent intent,
                                               gboolean          bpc,
                                               gboolean         *dont_ask);
-static GimpPDBStatusType  lcms_icc_info      (GimpColorConfig  *config,
-                                              gint32            image,
-                                              gchar           **name,
-                                              gchar           **desc,
-                                              gchar           **info);
-static GimpPDBStatusType  lcms_icc_file_info (GFile            *file,
-                                              gchar           **name,
-                                              gchar           **desc,
-                                              gchar           **info,
-                                              GError          **error);
 
 static gboolean     lcms_image_set_profile       (gint32           image,
                                                   GFile           *file);
@@ -166,23 +142,13 @@ static const GimpParamDef apply_rgb_args[] =
   { GIMP_PDB_INT32,  "intent",       "Rendering intent (enum GimpColorRenderingIntent)" },
   { GIMP_PDB_INT32,  "bpc",          "Black point compensation"         }
 };
-static const GimpParamDef info_args[] =
-{
-  { GIMP_PDB_IMAGE,  "image",        "Input image"                      },
-};
-static const GimpParamDef file_info_args[] =
-{
-  { GIMP_PDB_STRING, "profile",      "Filename of an ICC color profile" }
-};
 
 static const Procedure procedures[] =
 {
   { PLUG_IN_PROC_SET,       2 },
   { PLUG_IN_PROC_SET_RGB,   2 },
   { PLUG_IN_PROC_APPLY,     2 },
-  { PLUG_IN_PROC_APPLY_RGB, 2 },
-  { PLUG_IN_PROC_INFO,      1 },
-  { PLUG_IN_PROC_FILE_INFO, 1 }
+  { PLUG_IN_PROC_APPLY_RGB, 2 }
 };
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -198,13 +164,6 @@ MAIN ()
 static void
 query (void)
 {
-  static const GimpParamDef info_return_vals[] =
-  {
-    { GIMP_PDB_STRING, "profile-name", "Name"        },
-    { GIMP_PDB_STRING, "profile-desc", "Description" },
-    { GIMP_PDB_STRING, "profile-info", "Info"        }
-  };
-
   gimp_install_procedure (PLUG_IN_PROC_SET,
                           N_("Set a color profile on the image"),
                           "This procedure sets an ICC color profile on an "
@@ -270,35 +229,6 @@ query (void)
                           G_N_ELEMENTS (apply_rgb_args), 0,
                           apply_rgb_args, NULL);
 
-  gimp_install_procedure (PLUG_IN_PROC_INFO,
-                          "Retrieve information about an image's color profile",
-                          "This procedure returns information about the RGB "
-                          "color profile attached to an image. If no RGB "
-                          "color profile is attached, sRGB is assumed.",
-                          "Sven Neumann",
-                          "Sven Neumann",
-                          "2006, 2007",
-                          N_("Image Color Profile Information"),
-                          "*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (info_args),
-                          G_N_ELEMENTS (info_return_vals),
-                          info_args, info_return_vals);
-
-  gimp_install_procedure (PLUG_IN_PROC_FILE_INFO,
-                          "Retrieve information about a color profile",
-                          "This procedure returns information about an ICC "
-                          "color profile on disk.",
-                          "Sven Neumann",
-                          "Sven Neumann",
-                          "2006, 2007",
-                          N_("Color Profile Information"),
-                          "*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (file_info_args),
-                          G_N_ELEMENTS (info_return_vals),
-                          file_info_args, info_return_vals);
-
   gimp_plugin_menu_register (PLUG_IN_PROC_SET,
                              "<Image>/Image/Mode/Color Profile");
   gimp_plugin_menu_register (PLUG_IN_PROC_APPLY,
@@ -343,17 +273,11 @@ run (const gchar      *name,
   if (nparams < procedures[proc].min_params)
     goto done;
 
-  if (proc != PROC_FILE_INFO)
-    {
-      config = gimp_get_color_configuration ();
-      /* Later code relies on config != NULL if proc != PROC_FILE_INFO */
-      g_return_if_fail (config != NULL);
-      intent = config->display_intent;
-    }
-  else
-    intent = GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL;
+  config = gimp_get_color_configuration ();
+  g_return_if_fail (config != NULL);
 
-  bpc = (intent == GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
+  intent = config->display_intent;
+  bpc    = (intent == GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
 
   switch (proc)
     {
@@ -387,14 +311,6 @@ run (const gchar      *name,
         intent = param[2].data.d_int32;
       if (nparams > 3)
         bpc    = param[3].data.d_int32 ? TRUE : FALSE;
-      break;
-
-    case PROC_INFO:
-      image    = param[0].data.d_image;
-      break;
-
-    case PROC_FILE_INFO:
-      file = g_file_new_for_path (param[0].data.d_string);
       break;
     }
 
@@ -442,42 +358,6 @@ run (const gchar      *name,
           values[1].type         = GIMP_PDB_INT32;
           values[1].data.d_int32 = dont_ask;
         }
-      break;
-
-    case PROC_INFO:
-    case PROC_FILE_INFO:
-      {
-        gchar  *name  = NULL;
-        gchar  *desc  = NULL;
-        gchar  *info  = NULL;
-        GError *error = NULL;
-
-        if (proc == PROC_INFO)
-          status = lcms_icc_info (config, image, &name, &desc, &info);
-        else
-          status = lcms_icc_file_info (file, &name, &desc, &info, &error);
-
-        if (status == GIMP_PDB_SUCCESS)
-          {
-            *nreturn_vals = NUM_RETURN_VALS;
-
-            values[PROFILE_NAME].type          = GIMP_PDB_STRING;
-            values[PROFILE_NAME].data.d_string = name;
-
-            values[PROFILE_DESC].type          = GIMP_PDB_STRING;
-            values[PROFILE_DESC].data.d_string = desc;
-
-            values[PROFILE_INFO].type          = GIMP_PDB_STRING;
-            values[PROFILE_INFO].data.d_string = info;
-          }
-        else if (error)
-          {
-            *nreturn_vals = 2;
-
-            values[1].type          = GIMP_PDB_STRING;
-            values[1].data.d_string = error->message;
-          }
-      }
       break;
     }
 
@@ -610,52 +490,6 @@ lcms_icc_apply (GimpColorConfig          *config,
     g_object_unref (file);
 
   return status;
-}
-
-static GimpPDBStatusType
-lcms_icc_info (GimpColorConfig *config,
-               gint32           image,
-               gchar          **name,
-               gchar          **desc,
-               gchar          **info)
-{
-  GimpColorProfile profile;
-
-  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), GIMP_PDB_CALLING_ERROR);
-  g_return_val_if_fail (image != -1, GIMP_PDB_CALLING_ERROR);
-
-  profile = gimp_image_get_effective_color_profile (image);
-
-  if (name) *name = gimp_color_profile_get_model (profile);
-  if (desc) *desc = gimp_color_profile_get_description (profile);
-  if (info) *info = gimp_color_profile_get_summary (profile);
-
-  gimp_color_profile_close (profile);
-
-  return GIMP_PDB_SUCCESS;
-}
-
-static GimpPDBStatusType
-lcms_icc_file_info (GFile   *file,
-                    gchar  **name,
-                    gchar  **desc,
-                    gchar  **info,
-                    GError **error)
-{
-  cmsHPROFILE profile;
-
-  profile = gimp_color_profile_open_from_file (file, error);
-
-  if (! profile)
-    return GIMP_PDB_EXECUTION_ERROR;
-
-  *name = gimp_color_profile_get_model (profile);
-  *desc = gimp_color_profile_get_description (profile);
-  *info = gimp_color_profile_get_summary (profile);
-
-  gimp_color_profile_close (profile);
-
-  return GIMP_PDB_SUCCESS;
 }
 
 static gboolean

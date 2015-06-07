@@ -1500,6 +1500,104 @@ CODE
     );
 }
 
+sub plug_in_icc_profile_info {
+    $blurb = "Retrieve information about an image's color profile";
+
+    $help = <<'HELP';
+This procedure returns information about the RGB color profile
+attached to an image. If no RGB color profile is attached, sRGB is
+assumed.
+HELP
+
+    &neo_pdb_misc;
+    $date = '2015';
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'Input image' }
+    );
+
+    @outargs = (
+        { name => 'profile_name', type => 'string',
+          desc => 'Name' },
+        { name => 'profile_desc', type => 'string',
+          desc => 'Description' },
+        { name => 'profile_info', type => 'string',
+          desc => 'Info' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpColorProfile profile;
+
+  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+
+  profile_name = gimp_color_profile_get_model (profile);
+  profile_desc = gimp_color_profile_get_description (profile);
+  profile_info = gimp_color_profile_get_summary (profile);
+
+  gimp_color_profile_close (profile);
+
+}
+CODE
+    );
+}
+
+sub plug_in_icc_profile_file_info {
+    $blurb = "Retrieve information about a color profile";
+
+    $help = <<'HELP';
+This procedure returns information about an ICC color profile on disk.
+HELP
+
+    &neo_pdb_misc;
+    $date = '2015';
+
+    @inargs = (
+        { name => 'profile', type => 'string',
+          desc => 'Filename of an ICC color profile', allow_non_utf8 => 1 }
+    );
+
+    @outargs = (
+        { name => 'profile_name', type => 'string',
+          desc => 'Name' },
+        { name => 'profile_desc', type => 'string',
+          desc => 'Description' },
+        { name => 'profile_info', type => 'string',
+          desc => 'Info' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GFile *file = g_file_new_for_path (profile);
+
+  if (file)
+    {
+      GimpColorProfile p;
+
+      p = gimp_color_profile_open_from_file (file, error);
+      g_object_unref (file);
+
+      if (p)
+        {
+          profile_name = gimp_color_profile_get_model (p);
+          profile_desc = gimp_color_profile_get_description (p);
+          profile_info = gimp_color_profile_get_summary (p);
+
+          gimp_color_profile_close (p);
+        }
+      else
+        success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_illusion {
     $blurb = 'Superimpose many altered copies of the image';
 
@@ -3942,6 +4040,8 @@ CODE
             plug_in_gauss_rle2
             plug_in_glasstile
             plug_in_hsv_noise
+            plug_in_icc_profile_info
+            plug_in_icc_profile_file_info
             plug_in_illusion
             plug_in_laplace
             plug_in_lens_distortion
