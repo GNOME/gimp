@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-06-06 05:41+0000\n"
-"PO-Revision-Date: 2015-06-06 11:42+0100\n"
+"POT-Creation-Date: 2015-06-07 05:32+0000\n"
+"PO-Revision-Date: 2015-06-07 08:18+0100\n"
 "Last-Translator: Peter Mráz <etkinator@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
@@ -1028,7 +1028,7 @@ msgstr "Bez názvu"
 #: ../app/actions/data-commands.c:213 ../app/actions/documents-commands.c:189 ../app/actions/file-commands.c:520
 #, c-format
 msgid "Can't show file in file manager: %s"
-msgstr ""
+msgstr "Nedá sa zobraziť súbor v správcovi súborov: %s"
 
 #: ../app/actions/dialogs-actions.c:47
 msgctxt "windows-action"
@@ -1424,7 +1424,7 @@ msgstr "_O programe"
 #: ../app/actions/dialogs-actions.c:275
 msgctxt "help-action"
 msgid "_Search and Run a Command"
-msgstr ""
+msgstr "_Vyhľadať a spustiť príkaz"
 
 #: ../app/actions/dialogs-actions.c:276
 msgctxt "help-action"
@@ -2880,7 +2880,7 @@ msgstr "O_dstránenie prekladania..."
 #: ../app/actions/filters-actions.c:133
 msgctxt "filters-action"
 msgid "Difference of Gaussians..."
-msgstr ""
+msgstr "Gaussov _rozdiel..."
 
 #: ../app/actions/filters-actions.c:138
 #, fuzzy
@@ -2962,7 +2962,7 @@ msgstr "_Ilúzia..."
 #: ../app/actions/filters-actions.c:203
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
-msgstr ""
+msgstr "_Kaleidoskop..."
 
 #: ../app/actions/filters-actions.c:208
 #, fuzzy
@@ -3092,7 +3092,7 @@ msgstr "_Olejomaľba"
 #: ../app/actions/filters-actions.c:308
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
-msgstr ""
+msgstr "Projekcia _panorámy..."
 
 #: ../app/actions/filters-actions.c:313
 msgctxt "filters-action"
@@ -3117,7 +3117,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:333
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
-msgstr ""
+msgstr "O_dstránenie červených očí"
 
 #: ../app/actions/filters-actions.c:338
 msgctxt "filters-action"
@@ -3230,7 +3230,7 @@ msgstr "_Indexovaný..."
 
 #: ../app/actions/filters-commands.c:75
 msgid "..."
-msgstr ""
+msgstr "..."
 
 # názov ponuky
 #: ../app/actions/fonts-actions.c:44
@@ -3891,7 +3891,7 @@ msgstr "Oreže obrázok podľa ohraničenia výberu"
 #: ../app/actions/image-actions.c:111
 msgctxt "image-action"
 msgid "Crop to C_ontent"
-msgstr ""
+msgstr "Orezať podľa _obsahu"
 
 #: ../app/actions/image-actions.c:112
 #, fuzzy
@@ -4619,7 +4619,7 @@ msgstr "Oreže vrstvu podľa ohraničenia výberu"
 #: ../app/actions/layers-actions.c:216
 msgctxt "layers-action"
 msgid "Crop to C_ontent"
-msgstr ""
+msgstr "Orezať podľa _obsahu"
 
 # tooltip
 #: ../app/actions/layers-actions.c:217
@@ -5071,20 +5071,15 @@ msgid "Copy palette file location to clipboard"
 msgstr "Skopíruje cestu k súboru palety do schránky"
 
 #: ../app/actions/palettes-actions.c:78
-#, fuzzy
-#| msgid "Module Manager"
 msgctxt "palettes-action"
 msgid "Show in _File Manager"
-msgstr "Správca modulov"
+msgstr "_Zobraziť v správcovi súborov"
 
 # tooltip
 #: ../app/actions/palettes-actions.c:79
-#, fuzzy
-#| msgctxt "palettes-action"
-#| msgid "Copy palette file location to clipboard"
 msgctxt "palettes-action"
 msgid "Show palette file location in the file manager"
-msgstr "Skopíruje cestu k súboru palety do schránky"
+msgstr "Zobrazí umiestnenie súboru palety v správcovi súborov"
 
 #: ../app/actions/palettes-actions.c:84
 msgctxt "palettes-action"
@@ -5178,11 +5173,9 @@ msgid "Copy pattern file location to clipboard"
 msgstr "Skopíruje cestu k súboru vzoru do schránky"
 
 #: ../app/actions/patterns-actions.c:71
-#, fuzzy
-#| msgid "Module Manager"
 msgctxt "patterns-action"
 msgid "Show in _File Manager"
-msgstr "Správca modulov"
+msgstr "_Zobraziť v správcovi súborov"
 
 # tooltip
 #: ../app/actions/patterns-actions.c:72
@@ -5327,12 +5320,9 @@ msgstr "_Príroda"
 
 # filtre pre pridanie šumu
 #: ../app/actions/plug-in-actions.c:119
-#, fuzzy
-#| msgctxt "plug-in-action"
-#| msgid "_Noise"
 msgctxt "plug-in-action"
 msgid "N_oise"
-msgstr "_Šum"
+msgstr "Š_um"
 
 # filtre vytvárania farebných obrázkov  pomocou zadaných postupov, vytváranie vzorov farby, mriežka, šachovnica, bludisko,...
 #: ../app/actions/plug-in-actions.c:121
@@ -6017,11 +6007,9 @@ msgid "Copy tool preset file location to clipboard"
 msgstr "Skopíruje cestu k súboru predvolieb nástroja do schránky"
 
 #: ../app/actions/tool-presets-actions.c:67
-#, fuzzy
-#| msgid "Module Manager"
 msgctxt "tool-presets-action"
 msgid "Show in _File Manager"
-msgstr "Správca modulov"
+msgstr "_Zobraziť v správcovi súborov"
 
 # tooltip
 #: ../app/actions/tool-presets-actions.c:68
@@ -6846,7 +6834,7 @@ msgstr "Nastaví vlastnú mierku"
 #: ../app/actions/view-actions.c:399
 msgctxt "view-action"
 msgid "_Reset to 0°"
-msgstr ""
+msgstr "_Obnoviť na 0°"
 
 #: ../app/actions/view-actions.c:400
 #, fuzzy
@@ -6998,7 +6986,6 @@ msgstr "_Mierka zobrazienia (%s)"
 
 #: ../app/actions/view-actions.c:864
 #, c-format
-#| msgid "_Rotate"
 msgid "_Rotate (%d°)"
 msgstr "_Otočiť (%d°)"
 
@@ -7299,10 +7286,9 @@ msgid "Could not open '%s' for writing: %s"
 msgstr "Nepodarilo sa otvoriť „%s“ na zápis: %s"
 
 #: ../app/config/gimpconfig-file.c:116
-#, fuzzy, c-format
-#| msgid "Error writing '%s': %s"
+#, c-format
 msgid "Error parsing '%%s': line longer than %s characters."
-msgstr "Chyba pri zapisovaní „%s“: %s"
+msgstr "Chyba pri analýze „%%s“: riadok je dlhší ako %s znakov."
 
 #: ../app/config/gimpconfig-file.c:152 ../app/config/gimpconfig-file.c:196 ../app/core/gimp-tags.c:144 ../app/gui/themes.c:324 ../app/tools/gimpimagemaptool-settings.c:235
 #, c-format
@@ -7632,7 +7618,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:392
 msgid "Enable the MyPaint Brush tool."
-msgstr ""
+msgstr "Povoliť nástroj štetcov aplikácie MyPaint."
 
 # tooltip
 #: ../app/config/gimprc-blurbs.h:395
@@ -7744,10 +7730,8 @@ msgstr "Keď je povolené, stlačením F1 sa spustí prehliadač pomocníka."
 
 # tooltip
 #: ../app/config/gimprc-blurbs.h:482
-#, fuzzy
-#| msgid "When enabled, menus can be torn off."
 msgid "When enabled, uses OpenCL for some operations."
-msgstr "Keď je povolené, ponuku je možné odtrhnúť."
+msgstr "Keď je povolené, použije sa OpenCL pre niektoré operácie."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:135 ../app/core/gimp-units.c:168 ../app/gui/session.c:292 ../app/plug-in/plug-in-rc.c:241
 msgid "fatal parse error"
@@ -7898,34 +7882,25 @@ msgstr "Len zosvetlenie"
 #: ../app/core/core-enums.c:302
 msgctxt "layer-mode-effects"
 msgid "Hue (HSV)"
-msgstr ""
+msgstr "Odtieň (HSV)"
 
 # Režim prekryvu vrstvy
 #: ../app/core/core-enums.c:303
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Saturation"
 msgctxt "layer-mode-effects"
 msgid "Saturation (HSV)"
-msgstr "Sýtosť"
+msgstr "Sýtosť (HSV)"
 
 # Režim prekryvu vrstvy
 #: ../app/core/core-enums.c:304
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Color"
 msgctxt "layer-mode-effects"
 msgid "Color (HSV)"
-msgstr "Farba"
+msgstr "Farba (HSV)"
 
 # Režim prekryvu vrstvy
 #: ../app/core/core-enums.c:305
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Value"
 msgctxt "layer-mode-effects"
 msgid "Value (HSV)"
-msgstr "Jas"
+msgstr "Hodnota (HSV)"
 
 # Režim prekryvu vrstvy
 #: ../app/core/core-enums.c:306
@@ -7985,28 +7960,23 @@ msgstr "Zatieniť"
 #: ../app/core/core-enums.c:315
 msgctxt "layer-mode-effects"
 msgid "Hue (LCH)"
-msgstr ""
+msgstr "Odtieň (LCH)"
 
 #: ../app/core/core-enums.c:316
 msgctxt "layer-mode-effects"
 msgid "Chroma (LCH)"
-msgstr ""
+msgstr "Chroma (LCH)"
 
 # Režim prekryvu vrstvy
 #: ../app/core/core-enums.c:317
-#, fuzzy
-#| msgctxt "layer-mode-effects"
-#| msgid "Color"
 msgctxt "layer-mode-effects"
 msgid "Color (LCH)"
-msgstr "Farba"
+msgstr "Farba (LCH)"
 
 #: ../app/core/core-enums.c:318
-#, fuzzy
-#| msgid "Lightness"
 msgctxt "layer-mode-effects"
 msgid "Lightness (LCH)"
-msgstr "Svetlosti"
+msgstr "Svetlosť (LCH)"
 
 # Režim prekryvu vrstvy
 #: ../app/core/core-enums.c:319
@@ -8548,11 +8518,9 @@ msgid "Image type"
 msgstr "Typ obrázka"
 
 #: ../app/core/core-enums.c:966
-#, fuzzy
-#| msgid "Image Properties"
 msgctxt "undo-type"
 msgid "Image precision"
-msgstr "Vlastnosti obrázka"
+msgstr "Presnosť obrázka"
 
 # názov operácie pre Undo
 #: ../app/core/core-enums.c:967
@@ -8568,12 +8536,9 @@ msgstr "Zmena rozlíšenia obrázka"
 
 # názov operácie pre Undo
 #: ../app/core/core-enums.c:970
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Change Image Unit"
 msgctxt "undo-type"
 msgid "Change metadata"
-msgstr "Zmena jednotky obrázka"
+msgstr "Zmena metaúdajov"
 
 # názov operácie pre Undo
 #: ../app/core/core-enums.c:971
@@ -8595,21 +8560,15 @@ msgstr "Premenovanie položiek"
 
 # názov operácie pre Undo
 #: ../app/core/core-enums.c:982
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock alpha channel"
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
-msgstr "Zamknutie/odomknute alfa kanála"
+msgstr "Zamknutie/odomknutie obsahu"
 
 # názov operácie pre Undo
 #: ../app/core/core-enums.c:983
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock alpha channel"
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
-msgstr "Zamknutie/odomknute alfa kanála"
+msgstr "Zamknutie/odomknutie pozície"
 
 # názov operácie pre Undo
 #: ../app/core/core-enums.c:984
@@ -8673,12 +8632,9 @@ msgstr "Zmena texovej vrstvy"
 
 # názov operácie pre Undo
 #: ../app/core/core-enums.c:994
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Convert group layer"
 msgctxt "undo-type"
 msgid "Convert text layer"
-msgstr "Konverzia skupiny vrstvy"
+msgstr "Konverzia textovej vrstvy"
 
 # názov operácie pre Undo
 #: ../app/core/core-enums.c:996
@@ -9138,7 +9094,7 @@ msgstr "Neznámy tvar štetca aplikácie GIMP."
 #: ../app/core/gimpbrushgenerated-load.c:242
 #, c-format
 msgid "In line %d of brush file: "
-msgstr ""
+msgstr "Na riadku %d súboru štetca: "
 
 #: ../app/core/gimpbrushgenerated.c:130
 msgid "Brush Shape"
@@ -9486,7 +9442,7 @@ msgstr "Ekvalizovať"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:65
 msgid "Computing alpha of unknown pixels"
-msgstr ""
+msgstr "Vypočítava sa alfa kanál neznámych pixelov"
 
 #: ../app/core/gimpdrawable-levels.c:72 ../app/tools/gimpforegroundselectoptions.c:324 ../app/tools/gimplevelstool.c:133
 msgid "Levels"
@@ -9556,7 +9512,7 @@ msgstr "Súbor je poškodený."
 #: ../app/core/gimpgradient-load.c:195 ../app/core/gimpgradient-load.c:203
 #, c-format
 msgid "Corrupt segment %d."
-msgstr ""
+msgstr "Poškodená časť %d."
 
 #: ../app/core/gimpgradient-load.c:214 ../app/core/gimpgradient-load.c:224
 #, fuzzy, c-format
@@ -10398,64 +10354,51 @@ msgid "Reading palette file '%s': RGB value out of range in line %d."
 msgstr "Čítanie súboru palety „%s“: RGB hodnota na riadku %d je mimo rozsahu."
 
 #: ../app/core/gimppalette-load.c:209 ../app/core/gimppalette-load.c:456
-#, fuzzy, c-format
-#| msgid "Reading palette file '%s': RGB value out of range in line %d."
+#, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
-msgstr "Čítanie súboru palety „%s“: RGB hodnota na riadku %d je mimo rozsahu."
+msgstr "Čítanie súboru palety „%s“: Načítaných %d farieb zo skráteného súboru: %s"
 
 #: ../app/core/gimppalette-load.c:233
-#, fuzzy, c-format
-#| msgid "Unknown type of palette file: %s"
+#, c-format
 msgid "In line %d of palette file: "
-msgstr "Neznámy typ súboru palety: %s"
+msgstr "Na riadku %d súboru palety: "
 
 #: ../app/core/gimppalette-load.c:429
-#, fuzzy, c-format
-#| msgid "Could not read header from palette file '%s'"
+#, c-format
 msgid "Could not read header from palette file '%s': "
-msgstr "Nie je možné čítať hlavičku palety súboru „%s“"
+msgstr "Nie je možné čítať hlavičku zo súboru palety „%s“: "
 
 #: ../app/core/gimppalette-load.c:461
 msgid "Premature end of file."
 msgstr ""
 
 #: ../app/core/gimppalettemru.c:120 ../app/core/gimppalettemru.c:246
-#, fuzzy
-#| msgid "History"
 msgid "History Color"
-msgstr "História"
+msgstr "História farieb"
 
 # PM: podľa zdrojaku je riadok kratší ako má byť
 #: ../app/core/gimppattern-load.c:60
-#, fuzzy
-#| msgid "File is truncated in line %d"
 msgid "File appears truncated: "
-msgstr "Riadok %d je v súbore skrátený"
+msgstr "Súbor sa zdá byť skrátený: "
 
 #: ../app/core/gimppattern-load.c:77
-#, fuzzy, c-format
-#| msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+#, c-format
 msgid "Unknown pattern format version %d."
-msgstr "Závažná chyba v súbore vzoru „%s“: Neznáma verzia formátu vzoru %d."
+msgstr "Neznáma verzia formátu vzoru %d."
 
 #: ../app/core/gimppattern-load.c:86
-#, fuzzy, c-format
-#| msgid ""
-#| "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
-#| "GIMP Patterns must be GRAY or RGB."
+#, c-format
 msgid ""
 "Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Závažná chyba v súbore vzoru „%s“: Nepodporovaná hĺbka vzoru %d.\n"
+"Nepodporovaná hĺbka vzoru %d.\n"
 "Vzorky programu GIMP musia byť sivé alebo RGB."
 
 # PM: podľa zdrojaku je riadok kratší ako má byť
 #: ../app/core/gimppattern-load.c:103 ../app/core/gimppattern-load.c:141
-#, fuzzy
-#| msgid "File is truncated in line %d"
 msgid "File appears truncated."
-msgstr "Riadok %d je v súbore skrátený"
+msgstr "Súbor sa zdá byť skrátený."
 
 #: ../app/core/gimppattern-load.c:109
 #, c-format
@@ -10463,10 +10406,8 @@ msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Neplatný UTF-8 reťazec v súbore vzoru „%s“."
 
 #: ../app/core/gimppattern-load.c:152
-#, fuzzy
-#| msgid "Fatal parse error in palette file '%s'"
 msgid "Fatal parse error in pattern file: "
-msgstr "Závažná chyba v súbore palety „%s“"
+msgstr "Závažná chyba v súbore vzoru: "
 
 #: ../app/core/gimppdbprogress.c:282 ../app/widgets/gimppdbdialog.c:332
 #, c-format
@@ -10560,10 +10501,9 @@ msgid "Convert a mitered join to a bevelled join if the miter would extend to a 
 msgstr "Zmení bod ostrosti na skosený bod, ak sklon bude prečnievať na väčšiu vzdialenosť ako je limit ostrosti*šírka čiary, z aktuálneho bodu spojenia."
 
 #: ../app/core/gimptagcache.c:442
-#, fuzzy, c-format
-#| msgid "Error writing '%s': %s"
+#, c-format
 msgid "Error writing '%s': %s\n"
-msgstr "Chyba pri zapisovaní „%s“: %s"
+msgstr "Chyba pri zápise „%s“: %s\n"
 
 #: ../app/core/gimptemplate.c:135
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -10578,10 +10518,8 @@ msgid "The vertical image resolution."
 msgstr "Zvislé rozlíšenie obrázka."
 
 #: ../app/core/gimptoolpreset-load.c:64
-#, fuzzy
-#| msgid "Tool Preset Editor"
 msgid "Tool preset file is corrupt."
-msgstr "Editor predvolieb nástroja"
+msgstr "Súbor predvoľby nástroja je poškodený."
 
 #: ../app/core/gimpunit.c:60
 msgctxt "unit-singular"
@@ -10669,10 +10607,8 @@ msgid "This is an unstable development release."
 msgstr "Toto je nestabilné vývojové vydanie."
 
 #: ../app/dialogs/action-search-dialog.c:138
-#, fuzzy
-#| msgid "Selection"
 msgid "Search Actions"
-msgstr "Výber"
+msgstr "Akcie vyhľadávania"
 
 #: ../app/dialogs/channel-options-dialog.c:146
 msgid "Channel _name:"
@@ -10685,17 +10621,13 @@ msgstr "Inicializovať z _výberu"
 
 # názov operácie pre Undo
 #: ../app/dialogs/convert-precision-dialog.c:128
-#, fuzzy, c-format
-#| msgctxt "undo-type"
-#| msgid "Convert Image to RGB"
+#, c-format
 msgid "Convert Image to %s"
-msgstr "Konvertovanie obrázka do RGB"
+msgstr "Konvertovanie obrázka do %s"
 
 #: ../app/dialogs/convert-precision-dialog.c:132
-#, fuzzy
-#| msgid "Version:"
 msgid "Precision Conversion"
-msgstr "Verzia:"
+msgstr "Konverzia presnosti"
 
 # button
 #: ../app/dialogs/convert-precision-dialog.c:147 ../app/dialogs/convert-type-dialog.c:141
@@ -10709,27 +10641,20 @@ msgid "Dithering"
 msgstr "Rozptyľovanie"
 
 #: ../app/dialogs/convert-precision-dialog.c:197
-#, fuzzy
-#| msgctxt "dialogs-action"
-#| msgid "_Layers"
 msgid "_Layers:"
-msgstr "_Vrstvy"
+msgstr "_Vrstvy:"
 
 #: ../app/dialogs/convert-precision-dialog.c:219
-#, fuzzy
-#| msgid "Text Layer"
 msgid "_Text Layers:"
-msgstr "Textová vrstva"
+msgstr "_Textové vrstvy:"
 
 #: ../app/dialogs/convert-precision-dialog.c:236 ../app/dialogs/convert-type-dialog.c:289
 msgid "Dithering text layers will make them uneditable"
 msgstr ""
 
 #: ../app/dialogs/convert-precision-dialog.c:245
-#, fuzzy
-#| msgid "Channel _name:"
 msgid "_Channels and Masks:"
-msgstr "Názov _kanálu:"
+msgstr "_Kanály a masky:"
 
 # názov operácie pre Undo
 #: ../app/dialogs/convert-precision-dialog.c:279
@@ -11841,9 +11766,12 @@ msgstr "Zmeniť veľkosť okna pri _zmene mierky zobrazenia"
 msgid "Resize window on image _size change"
 msgstr "Zmeniť veľkosť okna pri zmene _rozmerov obrázka"
 
+# checkbox
 #: ../app/dialogs/preferences-dialog.c:1989
-msgid "Fit to window"
-msgstr "Prispôsobiť oknu"
+#, fuzzy
+#| msgid "Show active _image"
+msgid "Show entire image"
+msgstr "Zobraziť aktívny _obrázok"
 
 #: ../app/dialogs/preferences-dialog.c:1991
 msgid "Initial zoom _ratio:"
@@ -11944,16 +11872,12 @@ msgid "Behavior"
 msgstr "Správanie"
 
 #: ../app/dialogs/preferences-dialog.c:2192
-#, fuzzy
-#| msgid "Default Appearance in Normal Mode"
 msgid "Default Behavior in Normal Mode"
-msgstr "Štandardný vzhľad v bežnom režime"
+msgstr "Predvolené správanie v normálnom režime"
 
 #: ../app/dialogs/preferences-dialog.c:2196
-#, fuzzy
-#| msgid "Default Appearance in Fullscreen Mode"
 msgid "Default Behavior in Fullscreen Mode"
-msgstr "Štandardný vzhľad v celoobrazovkovom režime"
+msgstr "Predvolené správanie v režime na celú obrazovku"
 
 #: ../app/dialogs/preferences-dialog.c:2205
 msgid "Display"
@@ -12440,10 +12364,8 @@ msgid "Resize _layers:"
 msgstr "Zmeniť veľkosti _vrstiev:"
 
 #: ../app/dialogs/resize-dialog.c:316
-#, fuzzy
-#| msgid "Resize Text Layer"
 msgid "Resize _text layers"
-msgstr "Zmena veľkosti textovej vrstvy"
+msgstr "Zmeniť veľkosti _textových vrstiev"
 
 # dialog title
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
@@ -12978,34 +12900,22 @@ msgstr "Odtiene šedej-alfa"
 
 #: ../app/gegl/gimp-babl.c:311 ../app/gegl/gimp-babl.c:312 ../app/gegl/gimp-babl.c:313 ../app/gegl/gimp-babl.c:314 ../app/gegl/gimp-babl.c:315 ../app/gegl/gimp-babl.c:316 ../app/gegl/gimp-babl.c:317 ../app/gegl/gimp-babl.c:318 ../app/gegl/gimp-babl.c:319
 #: ../app/gegl/gimp-babl.c:320 ../app/gegl/gimp-babl.c:321 ../app/gegl/gimp-babl.c:322
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "C_omponents"
 msgid "Red component"
-msgstr "_Súčasti"
+msgstr "Červená zložka"
 
 #: ../app/gegl/gimp-babl.c:324 ../app/gegl/gimp-babl.c:325 ../app/gegl/gimp-babl.c:326 ../app/gegl/gimp-babl.c:327 ../app/gegl/gimp-babl.c:328 ../app/gegl/gimp-babl.c:329 ../app/gegl/gimp-babl.c:330 ../app/gegl/gimp-babl.c:331 ../app/gegl/gimp-babl.c:332
 #: ../app/gegl/gimp-babl.c:333 ../app/gegl/gimp-babl.c:334 ../app/gegl/gimp-babl.c:335
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "C_omponents"
 msgid "Green component"
-msgstr "_Súčasti"
+msgstr "Zelená zložka"
 
 #: ../app/gegl/gimp-babl.c:337 ../app/gegl/gimp-babl.c:338 ../app/gegl/gimp-babl.c:339 ../app/gegl/gimp-babl.c:340 ../app/gegl/gimp-babl.c:341 ../app/gegl/gimp-babl.c:342 ../app/gegl/gimp-babl.c:343 ../app/gegl/gimp-babl.c:344 ../app/gegl/gimp-babl.c:345
 #: ../app/gegl/gimp-babl.c:346 ../app/gegl/gimp-babl.c:347 ../app/gegl/gimp-babl.c:348
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "C_omponents"
 msgid "Blue component"
-msgstr "_Súčasti"
+msgstr "Modrá zložka"
 
 #: ../app/gegl/gimp-babl.c:350 ../app/gegl/gimp-babl.c:351 ../app/gegl/gimp-babl.c:352 ../app/gegl/gimp-babl.c:353 ../app/gegl/gimp-babl.c:354 ../app/gegl/gimp-babl.c:355
-#, fuzzy
-#| msgctxt "image-action"
-#| msgid "C_omponents"
 msgid "Alpha component"
-msgstr "_Súčasti"
+msgstr "Alfa zložka"
 
 #: ../app/gegl/gimp-babl.c:383
 msgid "Indexed-alpha"
@@ -13042,7 +12952,7 @@ msgstr "Kontrast"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:96 ../app/operations/gimphuesaturationconfig.c:94
 msgid "The affected range"
-msgstr ""
+msgstr "Ovplyvnený rozsah"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:102
 #, fuzzy
@@ -13085,11 +12995,8 @@ msgstr "Svetlosti"
 
 # názov operácie pre Undo
 #: ../app/operations/gimpcurvesconfig.c:104 ../app/operations/gimplevelsconfig.c:105
-#, fuzzy
-#| msgctxt "undo-type"
-#| msgid "Delete channel"
 msgid "The affected channel"
-msgstr "Odstránenie kanála"
+msgstr "Ovplyvnený kanál"
 
 #: ../app/operations/gimpcurvesconfig.c:110
 msgid "Curve"
@@ -13101,17 +13008,15 @@ msgstr "nie je to súbor kriviek programu GIMP"
 
 #: ../app/operations/gimpcurvesconfig.c:555
 msgid "Parse error, didn't find 2 integers"
-msgstr ""
+msgstr "Chyba analýzy, nenašli sa 2 celé čísla"
 
 #: ../app/operations/gimpcurvesconfig.c:671
 msgid "Writing curves file failed: "
-msgstr ""
+msgstr "Zápis súboru kriviek zlyhal: "
 
 #: ../app/operations/gimpdesaturateconfig.c:73
-#, fuzzy
-#| msgid "Desaturate"
 msgid "Desaturate mode"
-msgstr "Odfarbenie"
+msgstr "Režim odfarbenia"
 
 #: ../app/operations/gimphuesaturationconfig.c:115
 #, fuzzy
@@ -13149,7 +13054,7 @@ msgstr "chyba pri analýze"
 
 #: ../app/operations/gimplevelsconfig.c:872
 msgid "Writing levels file failed: "
-msgstr ""
+msgstr "Zápis súboru úrovní zlyhal: "
 
 #: ../app/operations/gimpoperationcagecoefcalc.c:69
 msgid "Compute a set of coefficient buffer for the GIMP cage tool"
@@ -13291,10 +13196,8 @@ msgid "Link brush size with canvas zoom"
 msgstr ""
 
 #: ../app/paint/gimppaintoptions.c:212
-#, fuzzy
-#| msgid "Brush Folders"
 msgid "Brush Force"
-msgstr "Priečinky štetcov"
+msgstr "Sila štetca"
 
 #: ../app/paint/gimppaintoptions.c:218
 #, fuzzy
@@ -13526,10 +13429,9 @@ msgid "Cannot convert this layer to a normal layer because it is not a floating 
 msgstr "Táto vrstva sa nedá skonvertovať, pretože to nie je plávajúci výber."
 
 #: ../app/pdb/gimppdb-query.c:139
-#, fuzzy, c-format
-#| msgid "Opening '%s' failed: %s"
+#, c-format
 msgid "Writing PDB file '%s' failed: %s"
-msgstr "Otvorenie „%s“ zlyhalo: %s"
+msgstr "Zápis súboru PDB „%s“ zlyhal: %s"
 
 #: ../app/pdb/gimppdb-query.c:314 ../app/pdb/gimppdb.c:306 ../app/pdb/gimppdb.c:377
 #, c-format
@@ -13674,10 +13576,9 @@ msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr "Položka „%s“ (%d) nemôže byť upravená, lebo jej obsah je uzamknutý"
 
 #: ../app/pdb/gimppdb-utils.c:506
-#, fuzzy, c-format
-#| msgid "Item '%s' (%d) cannot be modified because its contents are locked"
+#, c-format
 msgid "Item '%s' (%d) cannot be modified because its position and size are locked"
-msgstr "Položka „%s“ (%d) nemôže byť upravená, lebo jej obsah je uzamknutý"
+msgstr "Položka „%s“ (%d) nemôže byť upravená, lebo jej pozícia a veľkosť sú uzamknuté"
 
 #: ../app/pdb/gimppdb-utils.c:526
 #, c-format
@@ -13700,22 +13601,19 @@ msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr "Obrázok „%s“ (%d) je typu „%s“, ale očakával sa obrázok typu „%s“"
 
 #: ../app/pdb/gimppdb-utils.c:631
-#, fuzzy, c-format
-#| msgid "Image '%s' (%d) is already of type '%s'"
+#, c-format
 msgid "Image '%s' (%d) must not be of type '%s'"
-msgstr "Obrázok „%s“ (%d) je už typu „%s“"
+msgstr "Obrázok „%s“ (%d) nesmie byť typu „%s“"
 
 #: ../app/pdb/gimppdb-utils.c:651
-#, fuzzy, c-format
-#| msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
+#, c-format
 msgid "Image '%s' (%d) has precision '%s', but an image of precision '%s' is expected"
-msgstr "Obrázok „%s“ (%d) je typu „%s“, ale očakával sa obrázok typu „%s“"
+msgstr "Obrázok „%s“ (%d) má presnosť „%s“, ale očakáva sa obrázok s presnosťou „%s“"
 
 #: ../app/pdb/gimppdb-utils.c:674
-#, fuzzy, c-format
-#| msgid "Image '%s' (%d) is already of type '%s'"
+#, c-format
 msgid "Image '%s' (%d) must not be of precision '%s'"
-msgstr "Obrázok „%s“ (%d) je už typu „%s“"
+msgstr "Obrázok „%s“ (%d) nesmie mať presnosť „%s“"
 
 #: ../app/pdb/gimppdb-utils.c:698 ../app/pdb/image-guides-cmds.c:178
 #, fuzzy, c-format
@@ -13805,8 +13703,6 @@ msgid "Alien Map"
 msgstr "Mimozemské mapovanie"
 
 #: ../app/pdb/plug-in-compat-cmds.c:296
-#, fuzzy
-#| msgid "Antialiasing"
 msgctxt "undo-type"
 msgid "Antialias"
 msgstr "Vyhladzovanie"
@@ -14621,10 +14517,8 @@ msgid "_Brightness"
 msgstr "_Jas"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:261
-#, fuzzy
-#| msgid "Con_trast:"
 msgid "_Contrast"
-msgstr "_Kontrast:"
+msgstr "_Kontrast"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:268
 msgid "Edit these Settings as Levels"
@@ -14683,10 +14577,8 @@ msgid "Sample merged"
 msgstr "Zlúčená vzorka"
 
 #: ../app/tools/gimpbucketfilloptions.c:292
-#, fuzzy
-#| msgid "Fill by:"
 msgid "Fill by"
-msgstr "Vyplniť pomocou:"
+msgstr "Vyplniť pomocou"
 
 #: ../app/tools/gimpbucketfilltool.c:87
 msgid "Bucket Fill"
@@ -17072,11 +16964,9 @@ msgid "Transform Matrix"
 msgstr "Transformačná matica"
 
 #: ../app/tools/gimpunifiedtransformtool.c:1319
-#, fuzzy
-#| msgid "Cage Transform"
 msgctxt "undo-type"
 msgid "Unified Transform"
-msgstr "Transformácia klietkou"
+msgstr "Unifikovaná transformácia"
 
 #: ../app/tools/gimpvectoroptions.c:77
 msgid "Restrict editing to polygons"
@@ -18888,7 +18778,7 @@ msgstr "vložiť značky"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1742
+#: ../app/widgets/gimptagentry.c:1751
 msgid ","
 msgstr ","
 
@@ -19428,6 +19318,9 @@ msgstr "okrúhly"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "rozstrapkaný"
+
+#~ msgid "Fit to window"
+#~ msgstr "Prispôsobiť oknu"
 
 # Režim prekryvu vrstvy
 #~ msgctxt "layer-mode-effects"
