@@ -494,6 +494,7 @@ sanity_check_gegl_ops (void)
     "gegl:deinterlace",
     "gegl:difference-of-gaussians",
     "gegl:diffraction-patterns",
+    "gegl:displace",
     "gegl:distance-transform",
     "gegl:dropshadow",
     "gegl:edge",

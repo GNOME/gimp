@@ -139,6 +139,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:diffraction-patterns",
     NULL /* FIXME GIMP_HELP_FILTER_DIFFRACTION_PATTERNS */ },
 
+  { "filters-displace", GIMP_STOCK_GEGL,
+    NC_("filters-action", "Displace..."), NULL, NULL,
+    "gegl:displace",
+    NULL /* FIXME GIMP_HELP_FILTER_DISPLACE */ },
+
   { "filters-distance-map", GIMP_STOCK_GEGL,
     NC_("filters-action", "Distance Map..."), NULL, NULL,
     "gegl:distance-transform",
@@ -509,7 +514,8 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-cubism",                  writable);
   SET_SENSITIVE ("filters-deinterlace",             writable);
   SET_SENSITIVE ("filters-difference-of-gaussians", writable);
-  SET_SENSITIVE ("filters-diffraction-patterns", writable);
+  SET_SENSITIVE ("filters-diffraction-patterns",    writable);
+  SET_SENSITIVE ("filters-displace",                writable);
   SET_SENSITIVE ("filters-distance-map",            writable);
   SET_SENSITIVE ("filters-dropshadow",              writable && alpha);
   SET_SENSITIVE ("filters-edge",                    writable);
