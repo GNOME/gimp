@@ -70,14 +70,6 @@ gimp_image_validate_icc_profile (GimpImage           *image,
       return FALSE;
     }
 
-  if (gimp_image_get_base_type (image) == GIMP_GRAY)
-    {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("ICC profile validation failed: "
-                             "Cannot attach a color profile to a GRAY image"));
-      return FALSE;
-    }
-
   profile = gimp_color_profile_open_from_data (gimp_parasite_data (icc_profile),
                                                gimp_parasite_data_size (icc_profile),
                                                error);
@@ -88,11 +80,8 @@ gimp_image_validate_icc_profile (GimpImage           *image,
       return FALSE;
     }
 
-  if (! gimp_color_profile_is_rgb (profile))
+  if (! gimp_image_validate_color_profile (image, profile, error))
     {
-      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("ICC profile validation failed: "
-                             "Color profile is not for RGB color space"));
       gimp_color_profile_close (profile);
       return FALSE;
     }
@@ -129,6 +118,34 @@ gimp_image_set_icc_profile (GimpImage          *image,
     }
 }
 
+gboolean
+gimp_image_validate_color_profile (GimpImage        *image,
+                                   GimpColorProfile  profile,
+                                   GError          **error)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (profile != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (gimp_image_get_base_type (image) == GIMP_GRAY)
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("ICC profile validation failed: "
+                             "Cannot attach a color profile to a GRAY image"));
+      return FALSE;
+    }
+
+  if (! gimp_color_profile_is_rgb (profile))
+    {
+      g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
+                           _("ICC profile validation failed: "
+                             "Color profile is not for RGB color space"));
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
 GimpColorProfile
 gimp_image_get_color_profile (GimpImage  *image,
                               GError    **error)
@@ -163,6 +180,9 @@ gimp_image_set_color_profile (GimpImage         *image,
       guint8 *data;
       gsize   length;
 
+      if (! gimp_image_validate_color_profile (image, profile, error))
+        return FALSE;
+
       data = gimp_color_profile_save_to_data (profile, &length, error);
       if (! data)
         return FALSE;
@@ -172,12 +192,6 @@ gimp_image_set_color_profile (GimpImage         *image,
                                     GIMP_PARASITE_UNDOABLE,
                                     length, data);
       g_free (data);
-
-      if (! gimp_image_validate_icc_profile (image, parasite, error))
-        {
-          gimp_parasite_free (parasite);
-          return FALSE;
-        }
     }
 
   gimp_image_set_icc_profile (image, parasite);
