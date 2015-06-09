@@ -1083,10 +1083,10 @@ gimp_image_convert_type (GimpImage               *image,
     case GIMP_RGB:
     case GIMP_INDEXED:
       if (old_type == GIMP_GRAY)
-        gimp_image_set_icc_profile (image, NULL);
+        gimp_image_set_color_profile (image, NULL, NULL);
       break;
     case GIMP_GRAY:
-        gimp_image_set_icc_profile (image, NULL);
+      gimp_image_set_color_profile (image, NULL, NULL);
       break;
     default:
       break;
