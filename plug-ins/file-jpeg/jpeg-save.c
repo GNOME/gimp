@@ -99,8 +99,8 @@ typedef struct
   GtkAdjustment *scale_data;            /*for restart markers*/
   gulong         handler_id_restart;
 
-  GtkObject     *quality;               /*quality slidebar*/
-  GtkObject     *smoothing;             /*smoothing slidebar*/
+  GtkAdjustment *quality;               /*quality slidebar*/
+  GtkAdjustment *smoothing;             /*smoothing slidebar*/
   GtkWidget     *optimize;              /*optimize toggle*/
   GtkWidget     *arithmetic_coding;     /*arithmetic coding toggle*/
   GtkWidget     *progressive;           /*progressive toggle*/
@@ -120,13 +120,13 @@ static void  make_preview           (void);
 static void  save_restart_update    (GtkAdjustment *adjustment,
                                      GtkWidget     *toggle);
 static void  subsampling_changed    (GtkWidget     *combo,
-                                     GtkObject     *entry);
-static void  quality_changed        (GtkObject     *scale_entry,
+                                     GtkAdjustment *entry);
+static void  quality_changed        (GtkAdjustment *scale_entry,
                                      GtkWidget     *toggle);
-static void  subsampling_changed2   (GtkObject     *combo,
+static void  subsampling_changed2   (GtkWidget     *combo,
                                      GtkWidget     *toggle);
 static void  use_orig_qual_changed  (GtkWidget     *toggle,
-                                     GtkObject     *scale_entry);
+                                     GtkAdjustment *scale_entry);
 static void  use_orig_qual_changed2 (GtkWidget     *toggle,
                                      GtkWidget     *combo);
 
@@ -724,7 +724,7 @@ save_dialog (void)
   JpegSaveGui    pg;
   GtkWidget     *dialog;
   GtkWidget     *vbox;
-  GtkObject     *entry;
+  GtkAdjustment *entry;
   GtkWidget     *table;
   GtkWidget     *table2;
   GtkWidget     *tabledefaults;
@@ -763,7 +763,8 @@ save_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  pg.quality = entry = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+  pg.quality = entry = (GtkAdjustment *)
+                       gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                              _("_Quality:"),
                                              SCALE_WIDTH, 0, jsvals.quality,
                                              0.0, 100.0, 1.0, 10.0, 0,
@@ -831,7 +832,8 @@ save_dialog (void)
                     2, 6, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (table2);
 
-  pg.smoothing = entry = gimp_scale_entry_new (GTK_TABLE (table2), 0, 0,
+  pg.smoothing = entry = (GtkAdjustment *)
+                         gimp_scale_entry_new (GTK_TABLE (table2), 0, 0,
                                                _("S_moothing:"),
                                                100, 0, jsvals.smoothing,
                                                0.0, 1.0, 0.01, 0.1, 2,
@@ -1379,8 +1381,8 @@ save_restart_update (GtkAdjustment *adjustment,
 }
 
 static void
-subsampling_changed (GtkWidget *combo,
-                     GtkObject *entry)
+subsampling_changed (GtkWidget     *combo,
+                     GtkAdjustment *entry)
 {
   gint value;
 
@@ -1389,7 +1391,7 @@ subsampling_changed (GtkWidget *combo,
   jsvals.subsmp = value;
 
   /*  smoothing is not supported with nonstandard sampling ratios  */
-  gimp_scale_entry_set_sensitive (entry,
+  gimp_scale_entry_set_sensitive ((gpointer) entry,
                                   jsvals.subsmp != JPEG_SUBSAMPLING_2x1_1x1_1x1 &&
                                   jsvals.subsmp != JPEG_SUBSAMPLING_1x2_1x1_1x1);
 
@@ -1397,8 +1399,8 @@ subsampling_changed (GtkWidget *combo,
 }
 
 static void
-quality_changed (GtkObject *scale_entry,
-                 GtkWidget *toggle)
+quality_changed (GtkAdjustment *scale_entry,
+                 GtkWidget     *toggle)
 {
   if (jsvals.use_orig_quality)
     {
@@ -1407,7 +1409,7 @@ quality_changed (GtkObject *scale_entry,
 }
 
 static void
-subsampling_changed2 (GtkObject *combo,
+subsampling_changed2 (GtkWidget *combo,
                       GtkWidget *toggle)
 {
   if (jsvals.use_orig_quality && orig_subsmp != jsvals.subsmp)
@@ -1417,13 +1419,13 @@ subsampling_changed2 (GtkObject *combo,
 }
 
 static void
-use_orig_qual_changed (GtkWidget *toggle,
-                       GtkObject *scale_entry)
+use_orig_qual_changed (GtkWidget     *toggle,
+                       GtkAdjustment *scale_entry)
 {
   if (jsvals.use_orig_quality && orig_quality > 0)
     {
       g_signal_handlers_block_by_func (scale_entry, quality_changed, toggle);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (scale_entry), orig_quality);
+      gtk_adjustment_set_value (scale_entry, orig_quality);
       g_signal_handlers_unblock_by_func (scale_entry, quality_changed, toggle);
     }
 }
