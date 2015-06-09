@@ -134,3 +134,48 @@ gimp_image_get_effective_color_profile (gint32 image_ID)
 
   return NULL;
 }
+
+/**
+ * gimp_image_convert_color_profile:
+ * @image_ID: The image.
+ * @profile: The color profile to convert to.
+ * @intent: Rendering intent.
+ * @bpc: Black point compensation.
+ *
+ * Convert the image's layers to a color profile
+ *
+ * This procedure converts from the image's color profile (or the
+ * default RGB profile if none is set) to the given color profile. Only
+ * RGB color profiles are accepted.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_image_convert_color_profile (gint32                    image_ID,
+                                  GimpColorProfile          profile,
+                                  GimpColorRenderingIntent  intent,
+                                  gboolean                  bpc)
+{
+  guint8   *data   = NULL;
+  gint      length = 0;
+  gboolean  success;
+
+  if (profile)
+    {
+      gsize l;
+
+      data = gimp_color_profile_save_to_data (profile, &l, NULL);
+      length = l;
+
+      if (! data)
+        return FALSE;
+    }
+
+  success = _gimp_image_convert_color_profile (image_ID, length, data,
+                                               intent, bpc);
+  g_free (data);
+
+  return success;
+}

@@ -30,11 +30,16 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-GimpColorProfile  gimp_image_get_color_profile           (gint32           image_ID);
-gboolean          gimp_image_set_color_profile           (gint32           image_ID,
-                                                          GimpColorProfile profile);
+GimpColorProfile  gimp_image_get_color_profile           (gint32                    image_ID);
+gboolean          gimp_image_set_color_profile           (gint32                    image_ID,
+                                                          GimpColorProfile          profile);
 
-GimpColorProfile  gimp_image_get_effective_color_profile (gint32           image_ID);
+GimpColorProfile  gimp_image_get_effective_color_profile (gint32                    image_ID);
+
+gboolean          gimp_image_convert_color_profile       (gint32                    image_ID,
+                                                          GimpColorProfile          profile,
+                                                          GimpColorRenderingIntent  intent,
+                                                          gboolean                  bpc);
 
 G_END_DECLS
 

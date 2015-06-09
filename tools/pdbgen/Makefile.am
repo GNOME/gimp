@@ -73,8 +73,9 @@ EXTRA_DIST = \
 	$(pdb_sources)
 
 enum_headers = \
-	../../libgimpbase/gimpbaseenums.h	\
-	../../app/core/core-enums.h		\
+	../../libgimpbase/gimpbaseenums.h		\
+	../../libgimpconfig/gimpcolorconfig-enums.h	\
+	../../app/core/core-enums.h			\
 	../../app/paint/paint-enums.h
 
 pdb_scripts = \
