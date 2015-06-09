@@ -17,6 +17,7 @@ AM_CPPFLAGS = \
 	$(GEGL_CFLAGS)					\
 	$(GDK_PIXBUF_CFLAGS)				\
 	$(GEXIV2_CFLAGS)				\
+	$(LCMS_CFLAGS)					\
 	-I$(includedir)					\
 	$(xobjective_c)
 

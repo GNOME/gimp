@@ -1,6 +1,9 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpimage-profile.h
+ * Copyright (C) 2015 Michael Natterer <mitch@gimp.org>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -37,6 +40,13 @@ GimpColorProfile     gimp_image_get_color_profile      (GimpImage           *ima
 gboolean             gimp_image_set_color_profile      (GimpImage           *image,
                                                         GimpColorProfile     profile,
                                                         GError             **error);
+
+gboolean             gimp_image_convert_color_profile  (GimpImage                *image,
+                                                        GimpColorProfile          dest_profile,
+                                                        GimpColorRenderingIntent  intent,
+                                                        gboolean                  bpc,
+                                                        GimpProgress             *progress,
+                                                        GError                  **error);
 
 
 #endif /* __GIMP_IMAGE_PROFILE_H__ */
