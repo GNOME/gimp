@@ -35,6 +35,8 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "gimp.h"
 #include "gimpdrawable.h"
 #include "gimperror.h"
@@ -235,6 +237,8 @@ gimp_image_convert_color_profile (GimpImage                *image,
                                   GError                  **error)
 {
   GimpColorProfile  src_profile;
+  GimpColorProfile  builtin_profile;
+  const Babl       *layer_format;
   gchar            *src_label;
   gchar            *dest_label;
 
@@ -267,6 +271,28 @@ gimp_image_convert_color_profile (GimpImage                *image,
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                _("Color profile conversion"));
+
+  layer_format = gimp_image_get_layer_format (image, FALSE);
+
+  if (gimp_babl_format_get_linear (layer_format))
+    builtin_profile = gimp_color_profile_new_linear_rgb ();
+  else
+    builtin_profile = gimp_color_profile_new_srgb ();
+
+  if (gimp_color_profile_is_equal (dest_profile, builtin_profile))
+    {
+      /*  don't tag the image with the built-in profile  */
+      gimp_image_set_color_profile (image, NULL, NULL);
+    }
+  else
+    {
+      gimp_image_set_color_profile (image, dest_profile, NULL);
+    }
+
+  gimp_color_profile_close (builtin_profile);
+
+  /*  omg...  */
+  gimp_image_parasite_detach (image, "icc-profile-name");
 
   switch (gimp_image_get_base_type (image))
     {
