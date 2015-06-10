@@ -82,28 +82,6 @@ static GimpPDBStatusType  lcms_icc_apply     (GimpColorConfig  *config,
 
 static gboolean     lcms_image_set_profile       (gint32           image,
                                                   GFile           *file);
-static gboolean     lcms_image_apply_profile     (gint32           image,
-                                                  cmsHPROFILE      src_profile,
-                                                  cmsHPROFILE      dest_profile,
-                                                  GFile           *file,
-                                                  GimpColorRenderingIntent intent,
-                                                  gboolean          bpc);
-static void         lcms_image_transform_rgb     (gint32           image,
-                                                  cmsHPROFILE      src_profile,
-                                                  cmsHPROFILE      dest_profile,
-                                                  GimpColorRenderingIntent intent,
-                                                  gboolean          bpc);
-static void         lcms_layers_transform_rgb    (gint            *layers,
-                                                  gint             num_layers,
-                                                  cmsHPROFILE      src_profile,
-                                                  cmsHPROFILE      dest_profile,
-                                                  GimpColorRenderingIntent intent,
-                                                  gboolean          bpc);
-static void         lcms_image_transform_indexed (gint32           image,
-                                                  cmsHPROFILE      src_profile,
-                                                  cmsHPROFILE      dest_profile,
-                                                  GimpColorRenderingIntent intent,
-                                                  gboolean          bpc);
 
 static gboolean     lcms_icc_apply_dialog        (gint32           image,
                                                   cmsHPROFILE      src_profile,
@@ -476,9 +454,7 @@ lcms_icc_apply (GimpColorConfig          *config,
     }
 
   if (status == GIMP_PDB_SUCCESS &&
-      ! lcms_image_apply_profile (image,
-                                  src_profile, dest_profile, file,
-                                  intent, bpc))
+      ! gimp_image_convert_color_profile (image, dest_profile, intent, bpc))
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
@@ -526,229 +502,6 @@ lcms_image_set_profile (gint32  image,
     gimp_color_profile_close (profile);
 
   return TRUE;
-}
-
-static gboolean
-lcms_image_apply_profile (gint32                    image,
-                          cmsHPROFILE               src_profile,
-                          cmsHPROFILE               dest_profile,
-                          GFile                    *file,
-                          GimpColorRenderingIntent  intent,
-                          gboolean                  bpc)
-{
-  gchar  *src_label;
-  gchar  *dest_label;
-  gint32  saved_selection = -1;
-
-  gimp_image_undo_group_start (image);
-
-  if (! lcms_image_set_profile (image, file))
-    {
-      gimp_image_undo_group_end (image);
-
-      return FALSE;
-    }
-
-  src_label  = gimp_color_profile_get_label (src_profile);
-  dest_label = gimp_color_profile_get_label (dest_profile);
-
-  gimp_progress_init_printf (_("Converting from '%s' to '%s'"),
-                             src_label, dest_label);
-
-  g_printerr ("lcms: converting from '%s' to '%s'\n", src_label, dest_label);
-
-  g_free (dest_label);
-  g_free (src_label);
-
-  if (! gimp_selection_is_empty (image))
-    {
-      saved_selection = gimp_selection_save (image);
-      gimp_selection_none (image);
-    }
-
-  switch (gimp_image_base_type (image))
-    {
-    case GIMP_RGB:
-      lcms_image_transform_rgb (image,
-                                src_profile, dest_profile, intent, bpc);
-      break;
-
-    case GIMP_GRAY:
-      g_warning ("colorspace conversion not implemented for "
-                 "grayscale images");
-      break;
-
-    case GIMP_INDEXED:
-      lcms_image_transform_indexed (image,
-                                    src_profile, dest_profile, intent, bpc);
-      break;
-    }
-
-  if (saved_selection != -1)
-    {
-      gimp_image_select_item (image, GIMP_CHANNEL_OP_REPLACE, saved_selection);
-      gimp_image_remove_channel (image, saved_selection);
-    }
-
-  gimp_progress_update (1.0);
-
-  gimp_image_undo_group_end (image);
-
-  return TRUE;
-}
-
-static void
-lcms_image_transform_rgb (gint32                    image,
-                          cmsHPROFILE               src_profile,
-                          cmsHPROFILE               dest_profile,
-                          GimpColorRenderingIntent  intent,
-                          gboolean                  bpc)
-{
-  gint *layers;
-  gint  num_layers;
-
-  layers = gimp_image_get_layers (image, &num_layers);
-
-  lcms_layers_transform_rgb (layers, num_layers,
-                             src_profile, dest_profile,
-                             intent, bpc);
-
-  g_free (layers);
-}
-
-static void
-lcms_layers_transform_rgb (gint                     *layers,
-                           gint                      num_layers,
-                           cmsHPROFILE               src_profile,
-                           cmsHPROFILE               dest_profile,
-                           GimpColorRenderingIntent  intent,
-                           gboolean                  bpc)
-{
-  gint i;
-
-  for (i = 0; i < num_layers; i++)
-    {
-      gint32           layer_id = layers[i];
-      const Babl      *iter_format = NULL;
-      cmsUInt32Number  lcms_format = 0;
-      cmsHTRANSFORM    transform;
-      gint            *children;
-      gint             num_children;
-
-      children = gimp_item_get_children (layer_id, &num_children);
-
-      if (children)
-        {
-          lcms_layers_transform_rgb (children, num_children,
-                                     src_profile, dest_profile,
-                                     intent, bpc);
-
-          g_free (children);
-
-          continue;
-        }
-
-      iter_format = gimp_color_profile_get_format (gimp_drawable_get_format (layer_id),
-                                                   &lcms_format);
-
-      transform = cmsCreateTransform (src_profile,  lcms_format,
-                                      dest_profile, lcms_format,
-                                      intent,
-                                      cmsFLAGS_NOOPTIMIZE |
-                                      (bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0));
-
-      if (transform)
-        {
-          GeglBuffer         *src_buffer;
-          GeglBuffer         *dest_buffer;
-          GeglBufferIterator *iter;
-          gint                layer_width;
-          gint                layer_height;
-          gint                layer_bpp;
-          gboolean            layer_alpha;
-          gdouble             progress_start = (gdouble) i / num_layers;
-          gdouble             progress_end   = (gdouble) (i + 1) / num_layers;
-          gdouble             range          = progress_end - progress_start;
-          gint                count          = 0;
-          gint                done           = 0;
-
-          src_buffer   = gimp_drawable_get_buffer (layer_id);
-          dest_buffer  = gimp_drawable_get_shadow_buffer (layer_id);
-          layer_width  = gegl_buffer_get_width (src_buffer);
-          layer_height = gegl_buffer_get_height (src_buffer);
-          layer_bpp    = babl_format_get_bytes_per_pixel (iter_format);
-          layer_alpha  = babl_format_has_alpha (iter_format);
-
-          iter = gegl_buffer_iterator_new (src_buffer, NULL, 0,
-                                           iter_format,
-                                           GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
-
-          gegl_buffer_iterator_add (iter, dest_buffer, NULL, 0,
-                                    iter_format,
-                                    GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
-
-          while (gegl_buffer_iterator_next (iter))
-            {
-              /*  lcms doesn't touch the alpha channel, simply
-               *  copy everything to dest before the transform
-               */
-              if (layer_alpha)
-                memcpy (iter->data[1], iter->data[0],
-                        iter->length * layer_bpp);
-
-              cmsDoTransform (transform,
-                              iter->data[0], iter->data[1], iter->length);
-            }
-
-          g_object_unref (src_buffer);
-          g_object_unref (dest_buffer);
-
-          gimp_drawable_merge_shadow (layer_id, TRUE);
-          gimp_drawable_update (layer_id, 0, 0, layer_width, layer_height);
-
-          if (count++ % 32 == 0)
-            {
-              gimp_progress_update (progress_start +
-                                    (gdouble) done /
-                                    (layer_width * layer_height) * range);
-            }
-
-          cmsDeleteTransform (transform);
-        }
-    }
-}
-
-static void
-lcms_image_transform_indexed (gint32                    image,
-                              cmsHPROFILE               src_profile,
-                              cmsHPROFILE               dest_profile,
-                              GimpColorRenderingIntent  intent,
-                              gboolean                  bpc)
-{
-  cmsHTRANSFORM    transform;
-  guchar          *cmap;
-  gint             n_cmap_bytes;
-  cmsUInt32Number  format = TYPE_RGB_8;
-
-  cmap = gimp_image_get_colormap (image, &n_cmap_bytes);
-
-  transform = cmsCreateTransform (src_profile,  format,
-                                  dest_profile, format,
-                                  intent,
-                                  cmsFLAGS_NOOPTIMIZE |
-                                  (bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0));
-
-  if (transform)
-    {
-      cmsDoTransform (transform, cmap, cmap, n_cmap_bytes / 3);
-      cmsDeleteTransform (transform);
-    }
-  else
-    {
-      g_warning ("cmsCreateTransform() failed!");
-    }
-
-  gimp_image_set_colormap (image, cmap, n_cmap_bytes);
 }
 
 static GtkWidget *
@@ -1092,11 +845,10 @@ lcms_dialog (GimpColorConfig *config,
           if (gimp_color_profile_is_rgb (dest_profile))
             {
               if (apply)
-                success = lcms_image_apply_profile (image,
-                                                    src_profile, dest_profile,
-                                                    file,
-                                                    values->intent,
-                                                    values->bpc);
+                success = gimp_image_convert_color_profile (image,
+                                                            dest_profile,
+                                                            values->intent,
+                                                            values->bpc);
               else
                 success = lcms_image_set_profile (image, file);
             }
