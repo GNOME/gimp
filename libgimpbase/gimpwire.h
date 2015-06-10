@@ -57,28 +57,28 @@ void      gimp_wire_set_reader    (GimpWireIOFunc       read_func);
 void      gimp_wire_set_writer    (GimpWireIOFunc       write_func);
 void      gimp_wire_set_flusher   (GimpWireFlushFunc    flush_func);
 
-gboolean  gimp_wire_read          (GIOChannel           *channel,
-                                   guint8          *buf,
-                                   gsize            count,
-                                   gpointer         user_data);
-gboolean  gimp_wire_write         (GIOChannel      *channel,
-                                   const guint8    *buf,
-                                   gsize            count,
-                                   gpointer         user_data);
-gboolean  gimp_wire_flush         (GIOChannel      *channel,
-                                   gpointer         user_data);
+gboolean  gimp_wire_read          (GIOChannel          *channel,
+                                   guint8              *buf,
+                                   gsize                count,
+                                   gpointer             user_data);
+gboolean  gimp_wire_write         (GIOChannel          *channel,
+                                   const guint8        *buf,
+                                   gsize                count,
+                                   gpointer             user_data);
+gboolean  gimp_wire_flush         (GIOChannel          *channel,
+                                   gpointer             user_data);
 
 gboolean  gimp_wire_error         (void);
 void      gimp_wire_clear_error   (void);
 
 gboolean  gimp_wire_read_msg      (GIOChannel          *channel,
-                                   GimpWireMessage *msg,
-                                   gpointer         user_data);
+                                   GimpWireMessage     *msg,
+                                   gpointer             user_data);
 gboolean  gimp_wire_write_msg     (GIOChannel          *channel,
-                                   GimpWireMessage *msg,
-                                   gpointer         user_data);
+                                   GimpWireMessage     *msg,
+                                   gpointer             user_data);
 
-void      gimp_wire_destroy       (GimpWireMessage *msg);
+void      gimp_wire_destroy       (GimpWireMessage     *msg);
 
 
 /*  for internal use in libgimpbase  */
