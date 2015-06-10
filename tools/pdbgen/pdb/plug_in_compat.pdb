@@ -3852,6 +3852,64 @@ CODE
     );
 }
 
+sub plug_in_wind {
+    $blurb = 'Smear image to give windblown effect';
+
+    $help = <<'HELP';
+Renders a wind effect.
+HELP
+
+    &std_pdb_compat('gegl:wind');
+    $date = '2015';
+
+    @inargs = (
+  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+    desc => 'The run mode' },
+  { name => 'image', type => 'image', dead => 1,
+    desc => 'Input image (unused)' },
+  { name => 'drawable', type => 'drawable',
+    desc => 'Input drawable' },
+  { name => 'threshold', type => '0 <= int32 <= 50',
+    desc => 'Controls where blending will be done' },
+  { name => 'direction', type => '0 <= int32 <= 3',
+    desc => 'Wind direction { 0:left, 1:right, 2:top, 3:bottom }' },
+  { name => 'strength', type => '1 <= int32 <= 100',
+    desc => 'Controls the extent of the blending' },
+  { name => 'algorithm', type => '0 <= int32 <= 1',
+    desc => 'Algorithm { WIND (0), BLAST (1) }' },
+  { name => 'edge', type => '0 <= int32 <= 2',
+    desc => 'Affected edge { BOTH (0), LEADING (1), TRAILING (2) }' },
+    );
+
+    %invoke = (
+  code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *node =
+        gegl_node_new_child (NULL,
+                             "operation", "gegl:wind",
+                             "threshold", threshold,
+                             "direction", direction,
+                             "strength",  strength,
+                             "style",     algorithm,
+                             "edge",      edge,
+                             NULL);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Wind"),
+                                     node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 $extra{app}->{code} = <<'CODE';
 static GeglNode *
 wrap_in_selection_bounds (GeglNode     *node,
@@ -4075,7 +4133,8 @@ CODE
             plug_in_dilate
             plug_in_erode
             plug_in_waves
-            plug_in_whirl_pinch);
+            plug_in_whirl_pinch
+            plug_in_wind);
 
 %exports = (app => [@procs], lib => []);
 
