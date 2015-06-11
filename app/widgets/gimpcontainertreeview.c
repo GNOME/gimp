@@ -90,6 +90,9 @@ static void          gimp_container_tree_view_set_view_size     (GimpContainerVi
 
 static void          gimp_container_tree_view_real_edit_name    (GimpContainerTreeView       *tree_view);
 
+static gboolean      gimp_container_tree_view_edit_focus_out    (GtkWidget                   *widget,
+                                                                 GdkEvent                    *event,
+                                                                 gpointer                     user_data);
 static void          gimp_container_tree_view_name_started      (GtkCellRendererText         *cell,
                                                                  GtkCellEditable             *editable,
                                                                  const gchar                 *path_str,
@@ -847,6 +850,17 @@ gimp_container_tree_view_real_edit_name (GimpContainerTreeView *tree_view)
 
 /*  callbacks  */
 
+static gboolean
+gimp_container_tree_view_edit_focus_out (GtkWidget *widget,
+                                         GdkEvent  *event,
+                                         gpointer   user_data)
+{
+  /* When focusing out of a tree view, I want its content to be updated
+   * as though it had been activated. */
+  g_signal_emit_by_name (widget, "activate", 0);
+  return TRUE;
+}
+
 static void
 gimp_container_tree_view_name_started (GtkCellRendererText   *cell,
                                        GtkCellEditable       *editable,
@@ -857,6 +871,10 @@ gimp_container_tree_view_name_started (GtkCellRendererText   *cell,
   GtkTreeIter  iter;
 
   path = gtk_tree_path_new_from_string (path_str);
+
+  g_signal_connect (GTK_ENTRY (editable), "focus-out-event",
+                    G_CALLBACK (gimp_container_tree_view_edit_focus_out),
+                    tree_view);
 
   if (gtk_tree_model_get_iter (tree_view->model, &iter, path))
     {
