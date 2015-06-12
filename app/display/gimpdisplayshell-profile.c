@@ -88,7 +88,9 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
   config         = GIMP_CORE_CONFIG (display_config)->color_management;
   managed        = GIMP_COLOR_MANAGED (shell);
 
-  src_format = gimp_pickable_get_format (GIMP_PICKABLE (image));
+  src_format = gimp_babl_format (GIMP_RGB,
+                                 gimp_image_get_precision (image),
+                                 TRUE);
 
   if (gimp_display_shell_has_filter (shell))
     dest_format = shell->filter_format;
