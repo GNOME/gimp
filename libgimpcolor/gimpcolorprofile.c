@@ -801,9 +801,9 @@ gimp_color_profile_get_format (const Babl *format,
 
   if (*lcms_format == 0)
     {
-      g_printerr ("gimp_lcms_get_format: layer format %s not supported, "
+      g_printerr ("%s: layer format %s not supported, "
                   "falling back to float\n",
-                  babl_get_name (format));
+                  G_STRFUNC, babl_get_name (format));
 
       if (has_alpha)
         {
