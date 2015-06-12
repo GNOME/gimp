@@ -163,13 +163,17 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   if (shell->profile_transform ||
       gimp_display_shell_has_filter (shell))
     {
+      gboolean can_convert_to_u8;
+
       /*  if there is a profile transform or a display filter, we need
        *  to use temp buffers
        */
 
+      can_convert_to_u8 = gimp_display_shell_profile_can_convert_to_u8 (shell);
+
       /*  create the filter buffer if we have filters
        */
-      if (gimp_display_shell_has_filter (shell) &&
+      if ((gimp_display_shell_has_filter (shell) || ! can_convert_to_u8) &&
           ! shell->filter_buffer)
         {
           gint w = GIMP_DISPLAY_RENDER_BUF_WIDTH  * GIMP_DISPLAY_RENDER_MAX_SCALE;
@@ -213,7 +217,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                           GEGL_BLIT_CACHE);
 #endif
 
-          if (gimp_display_shell_has_filter (shell))
+          if (gimp_display_shell_has_filter (shell) || ! can_convert_to_u8)
             {
               /*  if there are filters, convert the pixels from the
                *  profile_buffer to the filter_buffer
@@ -277,7 +281,10 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                                    GEGL_RECTANGLE (0, 0,
                                                                    scaled_width,
                                                                    scaled_height));
+        }
 
+      if (gimp_display_shell_has_filter (shell) || ! can_convert_to_u8)
+        {
           /*  finally, copy the filter buffer to the cairo-ARGB32 buffer
            */
           gegl_buffer_get (shell->filter_buffer,

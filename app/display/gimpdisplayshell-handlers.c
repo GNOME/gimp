@@ -117,6 +117,8 @@ static void   gimp_display_shell_sample_point_move_handler  (GimpImage        *i
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_invalidate_preview_handler (GimpImage        *image,
                                                              GimpDisplayShell *shell);
+static void   gimp_display_shell_precision_changed_handler  (GimpImage        *image,
+                                                             GimpDisplayShell *shell);
 static void   gimp_display_shell_profile_changed_handler    (GimpColorManaged *image,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_saved_handler              (GimpImage        *image,
@@ -251,8 +253,14 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (image, "invalidate-preview",
                     G_CALLBACK (gimp_display_shell_invalidate_preview_handler),
                     shell);
+  g_signal_connect (image, "precision-changed",
+                    G_CALLBACK (gimp_display_shell_precision_changed_handler),
+                    shell);
   g_signal_connect (image, "profile-changed",
                     G_CALLBACK (gimp_display_shell_profile_changed_handler),
+                    shell);
+  g_signal_connect (image, "precision-changed",
+                    G_CALLBACK (gimp_display_shell_precision_changed_handler),
                     shell);
   g_signal_connect (image, "saved",
                     G_CALLBACK (gimp_display_shell_saved_handler),
@@ -452,6 +460,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_profile_changed_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_shell_precision_changed_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_invalidate_preview_handler,
@@ -791,12 +802,18 @@ gimp_display_shell_invalidate_preview_handler (GimpImage        *image,
 }
 
 static void
+gimp_display_shell_precision_changed_handler (GimpImage        *image,
+                                              GimpDisplayShell *shell)
+{
+  gimp_display_shell_profile_update (shell);
+}
+
+static void
 gimp_display_shell_profile_changed_handler (GimpColorManaged *image,
                                             GimpDisplayShell *shell)
 {
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
 }
-
 
 static void
 gimp_display_shell_saved_handler (GimpImage        *image,

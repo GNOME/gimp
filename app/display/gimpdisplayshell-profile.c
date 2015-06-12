@@ -34,6 +34,7 @@
 
 #include "gegl/gimp-babl.h"
 
+#include "core/gimpimage.h"
 #include "core/gimppickable.h"
 
 #include "gimpdisplay.h"
@@ -92,10 +93,15 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
                                  gimp_image_get_precision (image),
                                  TRUE);
 
-  if (gimp_display_shell_has_filter (shell))
-    dest_format = shell->filter_format;
+  if (gimp_display_shell_has_filter (shell) ||
+      ! gimp_display_shell_profile_can_convert_to_u8 (shell))
+    {
+      dest_format = shell->filter_format;
+    }
   else
-    dest_format = babl_format ("R'G'B'A u8");
+    {
+      dest_format = babl_format ("R'G'B'A u8");
+    }
 
   g_printerr ("src_format: %s\n", babl_get_name (src_format));
   g_printerr ("dest_format: %s\n", babl_get_name (dest_format));
@@ -128,6 +134,30 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
                                           (GDestroyNotify) gegl_free,
                                           shell->profile_data);
     }
+}
+
+gboolean
+gimp_display_shell_profile_can_convert_to_u8 (GimpDisplayShell *shell)
+{
+  GimpImage *image;
+
+  image = gimp_display_get_image (shell->display);
+
+  if (image)
+    {
+      switch (gimp_image_get_component_type (image))
+        {
+        case GIMP_COMPONENT_TYPE_U8:
+        case GIMP_COMPONENT_TYPE_U16:
+        case GIMP_COMPONENT_TYPE_U32:
+          return TRUE;
+
+        default:
+          break;
+        }
+    }
+
+  return FALSE;
 }
 
 void
