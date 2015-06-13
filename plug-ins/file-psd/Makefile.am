@@ -67,4 +67,5 @@ file_psd_LDADD = \
 	$(IPTCDATA_LIBS)	\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
+	$(Z_LIBS)		\
 	$(file_psd_RC)
