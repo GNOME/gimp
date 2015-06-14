@@ -103,6 +103,7 @@ static void       gimp_curves_tool_export_setup   (GimpSettingsBox      *setting
                                                    GtkFileChooserDialog *dialog,
                                                    gboolean              export,
                                                    GimpCurvesTool       *tool);
+static void       gimp_curves_tool_update_channel (GimpCurvesTool       *tool);
 static void       gimp_curves_tool_config_notify  (GObject              *object,
                                                    GParamSpec           *pspec,
                                                    GimpCurvesTool       *tool);
@@ -493,9 +494,6 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
                 "border-width", RADIUS,
                 "subdivisions", 1,
                 NULL);
-  gimp_curve_view_set_curve (GIMP_CURVE_VIEW (tool->graph),
-                             config->curve[config->channel],
-                             curves_get_channel_color (config->channel));
   gtk_container_add (GTK_CONTAINER (frame), tool->graph);
   gtk_widget_show (tool->graph);
 
@@ -547,6 +545,8 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (combo);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
+
+  gimp_curves_tool_update_channel (tool);
 }
 
 static void
@@ -650,6 +650,77 @@ gimp_curves_tool_export_setup (GimpSettingsBox      *settings_box,
 }
 
 static void
+gimp_curves_tool_update_channel (GimpCurvesTool *tool)
+{
+  GimpCurvesConfig     *config = GIMP_CURVES_TOOL (tool)->config;
+  GimpCurve            *curve  = config->curve[config->channel];
+  GimpHistogramChannel  channel;
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
+                                 config->channel);
+
+  switch (config->channel)
+    {
+      guchar r[256];
+      guchar g[256];
+      guchar b[256];
+
+    case GIMP_HISTOGRAM_VALUE:
+    case GIMP_HISTOGRAM_ALPHA:
+    case GIMP_HISTOGRAM_RGB:
+      gimp_curve_get_uchar (curve, sizeof (r), r);
+
+      gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
+                                  r, r, r);
+      break;
+
+    case GIMP_HISTOGRAM_RED:
+    case GIMP_HISTOGRAM_GREEN:
+    case GIMP_HISTOGRAM_BLUE:
+      gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_RED],
+                            sizeof (r), r);
+      gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_GREEN],
+                            sizeof (g), g);
+      gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_BLUE],
+                            sizeof (b), b);
+
+      gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
+                                  r, g, b);
+      break;
+    }
+
+  gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->graph),
+                                   config->channel);
+  gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
+                            tool->picked_color[config->channel]);
+
+  gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->yrange),
+                              config->channel);
+
+  gimp_curve_view_remove_all_backgrounds (GIMP_CURVE_VIEW (tool->graph));
+
+  for (channel = GIMP_HISTOGRAM_VALUE;
+       channel <= GIMP_HISTOGRAM_ALPHA;
+       channel++)
+    {
+      if (channel == config->channel)
+        {
+          gimp_curve_view_set_curve (GIMP_CURVE_VIEW (tool->graph), curve,
+                                     curves_get_channel_color (channel));
+        }
+      else
+        {
+          gimp_curve_view_add_background (GIMP_CURVE_VIEW (tool->graph),
+                                          config->curve[channel],
+                                          curves_get_channel_color (channel));
+        }
+    }
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->curve_type),
+                                 curve->curve_type);
+}
+
+static void
 gimp_curves_tool_config_notify (GObject        *object,
                                 GParamSpec     *pspec,
                                 GimpCurvesTool *tool)
@@ -662,70 +733,7 @@ gimp_curves_tool_config_notify (GObject        *object,
 
   if (! strcmp (pspec->name, "channel"))
     {
-      GimpHistogramChannel channel;
-
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->channel_menu),
-                                     config->channel);
-
-      switch (config->channel)
-        {
-          guchar r[256];
-          guchar g[256];
-          guchar b[256];
-
-        case GIMP_HISTOGRAM_VALUE:
-        case GIMP_HISTOGRAM_ALPHA:
-        case GIMP_HISTOGRAM_RGB:
-          gimp_curve_get_uchar (curve, sizeof (r), r);
-
-          gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
-                                      r, r, r);
-          break;
-
-        case GIMP_HISTOGRAM_RED:
-        case GIMP_HISTOGRAM_GREEN:
-        case GIMP_HISTOGRAM_BLUE:
-          gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_RED],
-                                sizeof (r), r);
-          gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_GREEN],
-                                sizeof (g), g);
-          gimp_curve_get_uchar (config->curve[GIMP_HISTOGRAM_BLUE],
-                                sizeof (b), b);
-
-          gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
-                                      r, g, b);
-          break;
-        }
-
-      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                       config->channel);
-      gimp_curve_view_set_xpos (GIMP_CURVE_VIEW (tool->graph),
-                                tool->picked_color[config->channel]);
-
-      gimp_color_bar_set_channel (GIMP_COLOR_BAR (tool->yrange),
-                                  config->channel);
-
-      gimp_curve_view_remove_all_backgrounds (GIMP_CURVE_VIEW (tool->graph));
-
-      for (channel = GIMP_HISTOGRAM_VALUE;
-           channel <= GIMP_HISTOGRAM_ALPHA;
-           channel++)
-        {
-          if (channel == config->channel)
-            {
-              gimp_curve_view_set_curve (GIMP_CURVE_VIEW (tool->graph), curve,
-                                         curves_get_channel_color (channel));
-            }
-          else
-            {
-              gimp_curve_view_add_background (GIMP_CURVE_VIEW (tool->graph),
-                                              config->curve[channel],
-                                              curves_get_channel_color (channel));
-            }
-        }
-
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (tool->curve_type),
-                                     curve->curve_type);
+      gimp_curves_tool_update_channel (GIMP_CURVES_TOOL (tool));
     }
   else if (! strcmp (pspec->name, "curve"))
     {
