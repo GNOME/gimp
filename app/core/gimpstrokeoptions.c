@@ -577,6 +577,8 @@ gimp_stroke_options_prepare (GimpStrokeOptions *options,
                                             GIMP_CONTEXT_PAINT_PROPS_MASK,
                                             FALSE);
             gimp_context_set_parent (GIMP_CONTEXT (paint_options), context);
+
+            g_object_ref (paint_options);
           }
         else
           {
@@ -609,6 +611,7 @@ gimp_stroke_options_prepare (GimpStrokeOptions *options,
           }
 
         g_object_set (options, "paint-options", paint_options, NULL);
+        g_object_unref (paint_options);
       }
       break;
 
