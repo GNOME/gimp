@@ -8,18 +8,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp20\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
+"ywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-06-07 05:32+0000\n"
-"PO-Revision-Date: 2015-06-12 14:51+0100\n"
+"PO-Revision-Date: 2015-06-14 14:24+0200\n"
 "Last-Translator: Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
-"Language-Team: www.totenoc.eu\n"
+"Language-Team: Tot En Òc\n"
 "Language: oc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.8\n"
+"X-Generator: Virtaal 0.7.1\n"
 "Langívol-Team: Occitan (lengadocian) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "Langívol: \n"
 "X-Launchpad-Export-Date: 2015-05-20 15:16+0000\n"
@@ -268,9 +268,9 @@ msgstr ""
 "Lo nom del repertòri contenant la configuracion utilizaire de GIMP pòt pas "
 "èsser converti en UTF-8 : %s\n"
 "\n"
-"Très probablement lo sistèma de fichièrs stocke los fichièrs amb un encodatge "
-"différent d'UTF-8 e vous ne l'avez pas déclaré auprès de GLib. Définissez la "
-"valor de la variable d'environament G_FILENAME_ENCODING."
+"Fòrça probablement lo sistèma de fichièrs stocke los fichièrs amb un "
+"encodatge différent d'UTF-8 e vous ne l'avez pas déclaré auprès de GLib. "
+"Définissez la valor de la variable d'environament G_FILENAME_ENCODING."
 
 #. show versions of libraries used by GIMP
 #: ../app/version.c:63 ../app/version.c:130
@@ -556,7 +556,7 @@ msgstr "Copiar l'emplaçament del fichièr de bròssa dins lo quichapapièrs"
 #| msgid "Module Manager"
 msgctxt "brushes-action"
 msgid "Show in _File Manager"
-msgstr "Gestionari de modules"
+msgstr "Gestionari de modul"
 
 #: ../app/actions/brushes-actions.c:72
 #, fuzzy
@@ -649,7 +649,7 @@ msgstr "Menú dels canals"
 #: ../app/actions/channels-actions.c:48
 msgctxt "channels-action"
 msgid "_Edit Channel Attributes..."
-msgstr "Mo_dificar les atributs del canal..."
+msgstr "Mo_dificar los atributs del canal..."
 
 #: ../app/actions/channels-actions.c:49
 msgctxt "channels-action"
@@ -871,7 +871,7 @@ msgstr "_Contèxte"
 #: ../app/actions/context-actions.c:49
 msgctxt "context-action"
 msgid "_Colors"
-msgstr "Coule_urs"
+msgstr "Col_ors"
 
 #: ../app/actions/context-actions.c:51
 msgctxt "context-action"
@@ -921,7 +921,7 @@ msgstr "_Forme"
 #: ../app/actions/context-actions.c:70
 msgctxt "context-action"
 msgid "_Radius"
-msgstr "_Rayon"
+msgstr "_Rai"
 
 #: ../app/actions/context-actions.c:72
 msgctxt "context-action"
@@ -958,12 +958,12 @@ msgstr ""
 #: ../app/actions/context-actions.c:88
 msgctxt "context-action"
 msgid "S_wap Colors"
-msgstr "Échan_ger las colors"
+msgstr "Escam_biar las colors"
 
 #: ../app/actions/context-actions.c:89
 msgctxt "context-action"
 msgid "Exchange foreground and background colors"
-msgstr "Échange las colors de primièr plan e de rèire plan"
+msgstr "Escàmbia las colors de primièr plan e de rèire plan"
 
 #: ../app/actions/context-commands.c:431
 #, c-format
@@ -1040,7 +1040,7 @@ msgstr "_Bóstia d'aisinas"
 #: ../app/actions/dialogs-actions.c:53
 msgctxt "dialogs-action"
 msgid "Tool _Options"
-msgstr "Opcions de l'ou_til"
+msgstr "Opcions de l'ai_sina"
 
 #: ../app/actions/dialogs-actions.c:54
 msgctxt "dialogs-action"
@@ -1360,12 +1360,12 @@ msgstr "Dobrís l'editor de acorchis de clavièr"
 #: ../app/actions/dialogs-actions.c:250
 msgctxt "dialogs-action"
 msgid "_Modules"
-msgstr "_Modules"
+msgstr "_Moduls"
 
 #: ../app/actions/dialogs-actions.c:251
 msgctxt "dialogs-action"
 msgid "Open the module manager dialog"
-msgstr "Dobrís la bóstia de dialòg del gestionari de modules"
+msgstr "Dobrís la bóstia de dialòg del gestionari de moduls"
 
 #: ../app/actions/dialogs-actions.c:256
 msgctxt "dialogs-action"
@@ -1449,7 +1449,7 @@ msgstr "Afichar la _seleccion d'imatge"
 #: ../app/actions/dock-actions.c:70
 msgctxt "dock-action"
 msgid "Auto _Follow Activa Image"
-msgstr "Suivre automaticament l'_imatge active"
+msgstr "Seguir automaticament l'_imatge actiu"
 
 #: ../app/actions/dockable-actions.c:49
 msgctxt "dockable-action"
@@ -1489,12 +1489,12 @@ msgstr "_Minuscula"
 #: ../app/actions/dockable-actions.c:87
 msgctxt "preview-size"
 msgid "E_xtra Small"
-msgstr "_Très petit"
+msgstr "_Fòrça pichon"
 
 #: ../app/actions/dockable-actions.c:89
 msgctxt "preview-size"
 msgid "_Small"
-msgstr "_Petit"
+msgstr "_Pichon"
 
 #: ../app/actions/dockable-actions.c:91
 msgctxt "preview-size"
@@ -1631,7 +1631,7 @@ msgstr "Copiar l'emplaçament de l'imatge dins lo quichapapièrs"
 #| msgid "Module Manager"
 msgctxt "documents-action"
 msgid "Show in _File Manager"
-msgstr "Gestionari de modules"
+msgstr "Gestionari de moduls"
 
 #: ../app/actions/documents-actions.c:71
 #, fuzzy
@@ -1674,12 +1674,12 @@ msgstr "Regénère l'apercebut"
 #: ../app/actions/documents-actions.c:94
 msgctxt "documents-action"
 msgid "Reload _all Previews"
-msgstr "Recharger totes les _apercebuts"
+msgstr "Recargar totes les _apercebuts"
 
 #: ../app/actions/documents-actions.c:95
 msgctxt "documents-action"
 msgid "Reload all previews"
-msgstr "Recharge totes los apercebuts"
+msgstr "Recarga totes los apercebuts"
 
 #: ../app/actions/documents-actions.c:100
 msgctxt "documents-action"
@@ -1982,7 +1982,7 @@ msgstr "Menú Editor de dinamic de bròssa"
 #: ../app/actions/dynamics-editor-actions.c:51
 msgctxt "dynamics-editor-action"
 msgid "Edit Activa Dynamics"
-msgstr "Modifica la dinamica active"
+msgstr "Modifica la dinamica activa"
 
 #: ../app/actions/edit-actions.c:65
 msgctxt "edit-action"
@@ -2440,7 +2440,7 @@ msgstr "_Restablir"
 #: ../app/actions/file-actions.c:101
 msgctxt "file-action"
 msgid "Reload the image file from disk"
-msgstr "Recharge lo fichièr imatge dempuèi lo disc"
+msgstr "Recarga lo fichièr imatge dempuèi lo disc"
 
 #: ../app/actions/file-actions.c:106
 msgctxt "file-action"
@@ -2473,7 +2473,7 @@ msgstr "Copiar l'emplaçament de l'imatge dins lo quichapapièrs"
 #| msgid "Module Manager"
 msgctxt "file-action"
 msgid "Show in _File Manager"
-msgstr "Gestionari de modules"
+msgstr "Gestionari de moduls"
 
 #: ../app/actions/file-actions.c:119
 msgctxt "file-action"
@@ -2488,7 +2488,7 @@ msgstr "_Quitar"
 #: ../app/actions/file-actions.c:125
 msgctxt "file-action"
 msgid "Quit the GNU Image Manipulation Program"
-msgstr "Quitte l'editor d'imatge GIMP"
+msgstr "Quita l'editor d'imatge GIMP"
 
 #: ../app/actions/file-actions.c:133
 msgctxt "file-action"
@@ -2555,7 +2555,7 @@ msgstr "É_craser"
 msgctxt "file-action"
 msgid "Export the image back to the imported file in the import format"
 msgstr ""
-"Ré-exporte l'imatge dins lo fichièr importé, dins lo format d'importation"
+"Ré-exporte l'imatge dins lo fichièr importat, dins lo format d'importation"
 
 #: ../app/actions/file-actions.c:171
 #, fuzzy
@@ -3159,7 +3159,7 @@ msgstr "_Recargar la lista de las poliças"
 #: ../app/actions/fonts-actions.c:49
 msgctxt "fonts-action"
 msgid "Rescan the installed fonts"
-msgstr "Recharge les poliças installadas"
+msgstr "Recarga les poliças installadas"
 
 #: ../app/actions/gradient-editor-actions.c:46
 msgctxt "gradient-editor-action"
@@ -3560,7 +3560,7 @@ msgstr "Còpia l'emplaçament del fichièr de degradat dins lo quichapapièrs"
 #| msgid "Module Manager"
 msgctxt "gradients-action"
 msgid "Show in _File Manager"
-msgstr "Gestionari de modules"
+msgstr "Gestionari de moduls"
 
 #: ../app/actions/gradients-actions.c:67
 #, fuzzy
@@ -4200,7 +4200,7 @@ msgstr "Activa l'aisina tèxte sus aqueste calc de tèxte"
 #: ../app/actions/layers-actions.c:76
 msgctxt "layers-action"
 msgid "_Edit Layer Attributes..."
-msgstr "Mo_dificar les atributs del calc..."
+msgstr "Mo_dificar los atributs del calc..."
 
 #: ../app/actions/layers-actions.c:77
 msgctxt "layers-action"
@@ -4666,7 +4666,7 @@ msgstr "Atributs del calc"
 
 #: ../app/actions/layers-commands.c:212
 msgid "Edit Layer Attributes"
-msgstr "Modificar les atributs del calc"
+msgstr "Modificar los atributs del calc"
 
 #: ../app/actions/layers-commands.c:256 ../app/core/gimplayer.c:302
 msgid "Layer"
@@ -4757,7 +4757,7 @@ msgstr "Suprimís la color causida"
 #: ../app/actions/palette-editor-actions.c:63
 msgctxt "palette-editor-action"
 msgid "Edit Activa Palette"
-msgstr "Modificar la paleta active"
+msgstr "Modificar la paleta activa"
 
 #: ../app/actions/palette-editor-actions.c:72
 msgctxt "palette-editor-action"
@@ -4859,7 +4859,7 @@ msgstr "Còpia l'emplaçament del fichièr de la paleta dins lo quichapapièrs"
 #| msgid "Module Manager"
 msgctxt "palettes-action"
 msgid "Show in _File Manager"
-msgstr "Gestionari de modules"
+msgstr "Gestionari de moduls"
 
 #: ../app/actions/palettes-actions.c:79
 #, fuzzy
@@ -4957,7 +4957,7 @@ msgstr "Còpia l'emplaçament del fichièr de motiu dins lo quichapapièrs"
 #| msgid "Module Manager"
 msgctxt "patterns-action"
 msgid "Show in _File Manager"
-msgstr "Gestionari de modules"
+msgstr "Gestionari de moduls"
 
 #: ../app/actions/patterns-actions.c:72
 #, fuzzy
@@ -5198,7 +5198,7 @@ msgstr "Atributs de la masqueta rapida"
 
 #: ../app/actions/quick-mask-commands.c:108
 msgid "Edit Quick Mask Attributes"
-msgstr "Modificar les atributs de la masqueta rapida"
+msgstr "Modificar los atributs de la masqueta rapida"
 
 #: ../app/actions/quick-mask-commands.c:110
 msgid "Edit Quick Mask Color"
@@ -5611,7 +5611,7 @@ msgstr "Tèxte lo long d'un camin"
 #: ../app/actions/text-tool-actions.c:98
 msgctxt "text-tool-action"
 msgid "Bend the text along the currently activa path"
-msgstr "Déforme aqueste calc de tèxte segon lo camin actual"
+msgstr "Defòrma aqueste calc de tèxte segon lo camin actual"
 
 #: ../app/actions/text-tool-actions.c:106
 msgctxt "text-tool-action"
@@ -5666,7 +5666,7 @@ msgstr "Reïnicializa a las valors per defaut"
 #: ../app/actions/tool-options-actions.c:88
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
-msgstr "Reïnicializar _toutes las opcions de l'aisina"
+msgstr "Reïnicializar _totas las opcions de l'aisina"
 
 #: ../app/actions/tool-options-actions.c:89
 msgctxt "tool-options-action"
@@ -5833,12 +5833,12 @@ msgstr "Aisina Che_min"
 #: ../app/actions/vectors-actions.c:53
 msgctxt "vectors-action"
 msgid "_Edit Path Attributes..."
-msgstr "Mo_dificar les atributs del camin..."
+msgstr "Mo_dificar los atributs del camin..."
 
 #: ../app/actions/vectors-actions.c:54
 msgctxt "vectors-action"
 msgid "Edit path attributes"
-msgstr "Modifica les atributs del camin"
+msgstr "Modifica los atributs del camin"
 
 #: ../app/actions/vectors-actions.c:59
 msgctxt "vectors-action"
@@ -5883,7 +5883,7 @@ msgstr "Suprimís lo camin"
 #: ../app/actions/vectors-actions.c:83
 msgctxt "vectors-action"
 msgid "Merge _Visible Paths"
-msgstr "Fusionar les camins _visibles"
+msgstr "Fusionar los camins _visibles"
 
 #: ../app/actions/vectors-actions.c:88
 msgctxt "vectors-action"
@@ -6267,7 +6267,7 @@ msgstr "Afichar les g_uides"
 #: ../app/actions/view-actions.c:163
 msgctxt "view-action"
 msgid "Display the image's guides"
-msgstr "Aficha les guides de l'imatge"
+msgstr "Aficha los guidas de l'imatge"
 
 #: ../app/actions/view-actions.c:169
 msgctxt "view-action"
@@ -6297,12 +6297,12 @@ msgstr "Alinhar sus les _guides"
 #: ../app/actions/view-actions.c:184
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
-msgstr "Aligne las operacions de las aisinas sus les guides"
+msgstr "Alinha las operacions de las aisinas suls guidas"
 
 #: ../app/actions/view-actions.c:190
 msgctxt "view-action"
 msgid "Sna_p to Grid"
-msgstr "Alinhar sus la gri_lle"
+msgstr "Alinhar sus la grasi_lha"
 
 #: ../app/actions/view-actions.c:191
 msgctxt "view-action"
@@ -6342,7 +6342,7 @@ msgstr "Aficha la barra de menú d'aquesta fenèstra"
 #: ../app/actions/view-actions.c:218
 msgctxt "view-action"
 msgid "Show R_ulers"
-msgstr "Afichar les _règles"
+msgstr "Afichar las _règlas"
 
 #: ../app/actions/view-actions.c:219
 msgctxt "view-action"
@@ -6605,12 +6605,12 @@ msgstr "Utiliza la color de rèire plan del tèma actual"
 #: ../app/actions/view-actions.c:447
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
-msgstr "Color _claire del damièr"
+msgstr "Color _clara del damièr"
 
 #: ../app/actions/view-actions.c:448
 msgctxt "view-padding-color"
 msgid "Use the light check color"
-msgstr "Utiliza la color claire del damièr"
+msgstr "Utiliza la color clara del damièr"
 
 #: ../app/actions/view-actions.c:453
 msgctxt "view-padding-color"
@@ -6834,7 +6834,7 @@ msgstr "Depuis lo tèma"
 #: ../app/config/config-enums.c:57
 msgctxt "canvas-padding-mode"
 msgid "Light check color"
-msgstr "Color claire del damièr"
+msgstr "Color clara del damièr"
 
 #: ../app/config/config-enums.c:58
 msgctxt "canvas-padding-mode"
@@ -6982,7 +6982,7 @@ msgid ""
 "receives the focus. This is useful for window managers using \"click to focus"
 "\"."
 msgstr ""
-"Se aquesta opcion es activada, un imatge deviendra l'imatge activa quand sa "
+"Se aquesta opcion es activada, un imatge deviendra l'imatge actiu quand sa "
 "fenèstra recevra lo focus. C'est pratique per les gestionaris de fenèstra "
 "utilisant una « seleccion per clic »."
 
@@ -7191,11 +7191,12 @@ msgid ""
 "painting with large brushes should be more accurate, but it may be slower.  "
 "Conversely, on some X servers enabling this option results in faster painting."
 msgstr ""
-"Se aquesta opcion es activada, GIMP interrogera lo servidor X sus la posicion "
-"de la mirga a chaque eveniment de desplaçament, plutôt que se fier a l'indice "
-"approximatif de posicion. Dessenhar amb una grande bròssa devrait alors èsser "
-"mai précis, mas potentiellement mai lent. Paradoxalement, sus certains "
-"servidors X, activer aquesta opcion a coma resultat un dessenh mai rapide."
+"Se aquesta opcion es activada, GIMP interrogera lo servidor X sus la "
+"posicion de la mirga a chaque eveniment de desplaçament, plutôt que se fier "
+"a l'indice approximatif de posicion. Dessenhar amb una grande bròssa devrait "
+"alors èsser mai précis, mas potentiellement mai lent. Paradoxalement, sus "
+"certains servidors X, activar aquesta opcion a coma resultat un dessenh mai "
+"rapide."
 
 #: ../app/config/gimprc-blurbs.h:283
 msgid ""
@@ -7357,9 +7358,9 @@ msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr ""
-"Se aquesta opcion es activada, les guides seràn visibles per defaut. Aquò pòt "
-"aussi èsser activat o désactivat via lo menú « Afichatge -> Afichar les "
-"guides »."
+"Se aquesta opcion es activada, los guidas seràn visibles per defaut. Aquò "
+"pòt aussi èsser activat o désactivat via lo menú « Afichatge -> Afichar los "
+"guidas »."
 
 #: ../app/config/gimprc-blurbs.h:369
 msgid ""
@@ -7442,11 +7443,11 @@ msgid ""
 msgstr ""
 "Se aquesta opcion es activada, podètz cambiar a la volée los acorchis de "
 "clavièr dels elements dels menú en appuiant sus una combinaison de tòcas "
-"tandis que l'element de menú es surligné."
+"mentre que l'element de menú es surligné."
 
 #: ../app/config/gimprc-blurbs.h:414
 msgid "Save changed keyboard shortcuts when GIMP exits."
-msgstr "Enregistrar los acorchis de clavièr modifiés lorsqu'on quitte GIMP."
+msgstr "Enregistrar los acorchis de clavièr modificats quand se quita GIMP."
 
 #: ../app/config/gimprc-blurbs.h:417
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
@@ -7503,7 +7504,7 @@ msgstr "Aficha las bròssas, motius e degradats actius dins la bóstia d'aisinas
 
 #: ../app/config/gimprc-blurbs.h:451
 msgid "Show the currently activa image in the toolbox."
-msgstr "Aficha l'imatge activa dins la bóstia d'aisinas."
+msgstr "Aficha l'imatge actiu dins la bóstia d'aisinas."
 
 #: ../app/config/gimprc-blurbs.h:457
 msgid "Sets the manner in which transparency is displayed in images."
@@ -7519,8 +7520,8 @@ msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since it "
 "was opened."
 msgstr ""
-"Se aquesta opcion es activada, GIMP n'enregistrara l'imatge que se elle a été "
-"modifiée dempuèi son ouverture."
+"Se aquesta opcion es activada, GIMP n'enregistrara l'imatge que se elle a "
+"été modificada dempuèi son ouverture."
 
 #: ../app/config/gimprc-blurbs.h:467
 msgid ""
@@ -7834,7 +7835,7 @@ msgstr "Camin actiu"
 #: ../app/core/core-enums.c:468
 msgctxt "fill-style"
 msgid "Solid color"
-msgstr "Color pleine"
+msgstr "Color plena"
 
 #: ../app/core/core-enums.c:469
 msgctxt "fill-style"
@@ -7844,7 +7845,7 @@ msgstr "Motiu"
 #: ../app/core/core-enums.c:497
 msgctxt "stroke-method"
 msgid "Stroke line"
-msgstr "Ligne de traçat"
+msgstr "Linha de traçat"
 
 #: ../app/core/core-enums.c:498
 msgctxt "stroke-method"
@@ -7854,12 +7855,12 @@ msgstr "Traçar en utilizant un aisina de pintrura"
 #: ../app/core/core-enums.c:527
 msgctxt "join-style"
 msgid "Miter"
-msgstr "Puntu"
+msgstr "Ponchut"
 
 #: ../app/core/core-enums.c:528
 msgctxt "join-style"
 msgid "Round"
-msgstr "Arrondi"
+msgstr "Arredondit"
 
 #: ../app/core/core-enums.c:529
 msgctxt "join-style"
@@ -7889,7 +7890,7 @@ msgstr "Personalizat"
 #: ../app/core/core-enums.c:598
 msgctxt "dash-preset"
 msgid "Line"
-msgstr "Ligne"
+msgstr "Linha"
 
 #: ../app/core/core-enums.c:599
 msgctxt "dash-preset"
@@ -7969,12 +7970,12 @@ msgstr "Minuscula"
 #: ../app/core/core-enums.c:678
 msgctxt "view-size"
 msgid "Very small"
-msgstr "Très petit"
+msgstr "Fòrça pichon"
 
 #: ../app/core/core-enums.c:679
 msgctxt "view-size"
 msgid "Small"
-msgstr "Petit"
+msgstr "Pichon"
 
 #: ../app/core/core-enums.c:680
 msgctxt "view-size"
@@ -7989,7 +7990,7 @@ msgstr "Grande"
 #: ../app/core/core-enums.c:682
 msgctxt "view-size"
 msgid "Very large"
-msgstr "Très grand"
+msgstr "Fòrça grand"
 
 #: ../app/core/core-enums.c:683
 msgctxt "view-size"
@@ -8079,7 +8080,7 @@ msgstr "Fusionar los calques"
 #: ../app/core/core-enums.c:936
 msgctxt "undo-type"
 msgid "Merge paths"
-msgstr "Fusionar les camins"
+msgstr "Fusionar los camins"
 
 #: ../app/core/core-enums.c:937
 msgctxt "undo-type"
@@ -8229,10 +8230,9 @@ msgid "Image type"
 msgstr "Tipe d'imatge"
 
 #: ../app/core/core-enums.c:966
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image precision"
-msgstr "Proprietats de l'imatge"
+msgstr "Precision de l'imatge"
 
 #: ../app/core/core-enums.c:967
 msgctxt "undo-type"
@@ -8294,7 +8294,7 @@ msgstr "Suprimir lo calc"
 #: ../app/core/core-enums.c:986
 msgctxt "undo-type"
 msgid "Set layer mode"
-msgstr "Definir lo mòde de calque"
+msgstr "Definir lo mòde de calc"
 
 #: ../app/core/core-enums.c:987
 msgctxt "undo-type"
@@ -8391,7 +8391,7 @@ msgstr "Seleccionar la color de primièr plan"
 #: ../app/core/core-enums.c:1012
 msgctxt "undo-type"
 msgid "Not undoable"
-msgstr "Non annulable"
+msgstr "Pas anullable"
 
 #: ../app/core/core-enums.c:1125
 msgctxt "message-severity"
@@ -8525,7 +8525,7 @@ msgstr "Poliças (aquò pòt prene un moment)"
 #. initialize the module list
 #: ../app/core/gimp.c:1084 ../app/dialogs/preferences-dialog.c:2704
 msgid "Modules"
-msgstr "Modules"
+msgstr "Moduls"
 
 #. update tag cache
 #: ../app/core/gimp.c:1088
@@ -8829,7 +8829,7 @@ msgstr "Seleccion elliptique"
 #: ../app/core/gimpchannel-select.c:172
 msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
-msgstr "Seleccion rectangulaire arrondie"
+msgstr "Seleccion rectangulaire arredondida"
 
 #: ../app/core/gimpchannel-select.c:439 ../app/core/gimplayer.c:310
 msgctxt "undo-type"
@@ -9054,9 +9054,10 @@ msgid ""
 "your data search path. You probably edited the gimprc file manually, please "
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
-"Avètz configuré un dorsièr de donadas en escritura, mas il ne fait pas partie "
-"del camin de recèrca de donadas. Avètz probablement modifié manuellement lo "
-"fichièr gimprc. Corrigez-le dins la section « Dorsièrs » de las preferéncias."
+"Avètz configuré un dorsièr de donadas en escritura, mas il ne fait pas "
+"partie del camin de recèrca de donadas. Avètz probablement modificat "
+"manuellement lo fichièr gimprc. Corrigez-le dins la section « Dorsièrs » de "
+"las preferéncias."
 
 #: ../app/core/gimpdatafactory.c:775
 #, c-format
@@ -9303,7 +9304,7 @@ msgstr " (écrasée)"
 
 #: ../app/core/gimpimage.c:2209
 msgid " (imported)"
-msgstr " (importée)"
+msgstr " (importada)"
 
 #: ../app/core/gimpimage.c:2440
 msgctxt "undo-type"
@@ -9574,7 +9575,7 @@ msgstr "Fusionar lo grop de calques"
 #: ../app/core/gimpimage-merge.c:370
 msgctxt "undo-type"
 msgid "Merge Visible Paths"
-msgstr "Fusionar les camins visibles"
+msgstr "Fusionar los camins visibles"
 
 #: ../app/core/gimpimage-merge.c:406
 msgid "Not enough visible paths for a merge. There must be at least two."
@@ -10750,7 +10751,7 @@ msgstr "GEGL tueurs de l'espaci intersidéral"
 
 #: ../app/dialogs/module-dialog.c:127
 msgid "Module Manager"
-msgstr "Gestionari de modules"
+msgstr "Gestionari de moduls"
 
 #: ../app/dialogs/module-dialog.c:151
 msgid "You will have to restart GIMP for the changes to take effect."
@@ -10758,7 +10759,7 @@ msgstr "Vos cal relancer GIMP per que ces cambiaments prennent effet."
 
 #: ../app/dialogs/module-dialog.c:192
 msgid "Module"
-msgstr "Module"
+msgstr "Modul"
 
 #: ../app/dialogs/module-dialog.c:469
 msgid "Only in memory"
@@ -11206,7 +11207,7 @@ msgstr "Seleccionar un tèma"
 
 #: ../app/dialogs/preferences-dialog.c:1630
 msgid "Reload C_urrent Theme"
-msgstr "Recharger lo _tèma actual"
+msgstr "Recargar lo _tèma actual"
 
 #: ../app/dialogs/preferences-dialog.c:1642
 msgid "Help System"
@@ -11304,7 +11305,7 @@ msgstr "_Restablir las opcions de las aisinas a las valors per defaut"
 #. Snapping Distance
 #: ../app/dialogs/preferences-dialog.c:1778
 msgid "Guide & Grid Snapping"
-msgstr "Alinhament sus les guides e la grasilha"
+msgstr "Alinhament suls guidas e la grasilha"
 
 #: ../app/dialogs/preferences-dialog.c:1783
 msgid "_Snap distance:"
@@ -11356,7 +11357,7 @@ msgstr "Afichar les _bròssas, motius e degradats actius"
 
 #: ../app/dialogs/preferences-dialog.c:1855
 msgid "Show activa _image"
-msgstr "Afichar l'_imatge active"
+msgstr "Afichar l'_imatge actiu"
 
 #. Tool Editor
 #: ../app/dialogs/preferences-dialog.c:1863
@@ -11418,7 +11419,7 @@ msgstr "Redimensionar la fenèstra aprèp un cambiament de _taille d'imatge"
 #, fuzzy
 #| msgid "Show activa _image"
 msgid "Show entire image"
-msgstr "Afichar l'_imatge active"
+msgstr "Afichar l'_imatge actiu"
 
 #: ../app/dialogs/preferences-dialog.c:1991
 msgid "Initial zoom _ratio:"
@@ -11843,7 +11844,7 @@ msgstr "Dorsièrs dels moduls"
 
 #: ../app/dialogs/preferences-dialog.c:2706
 msgid "Select Module Folders"
-msgstr "Seleccionar los dorsièrs de modules"
+msgstr "Seleccionar los dorsièrs de moduls"
 
 #: ../app/dialogs/preferences-dialog.c:2708
 msgid "Interpreters"
@@ -12102,7 +12103,7 @@ msgstr "Exportar lo camin actiu"
 
 #: ../app/dialogs/vectors-export-dialog.c:91
 msgid "Export all paths from this image"
-msgstr "Exportar totes les camins d'aqueste imatge"
+msgstr "Exportar totes los camins d'aqueste imatge"
 
 #: ../app/dialogs/vectors-import-dialog.c:58
 msgid "Import Paths from SVG"
@@ -12118,11 +12119,11 @@ msgstr "Imatge vectorielle SVG (*.svg)"
 
 #: ../app/dialogs/vectors-import-dialog.c:108
 msgid "_Merge imported paths"
-msgstr "_Fusionne les camins importés"
+msgstr "_Fusiona los camins importats"
 
 #: ../app/dialogs/vectors-import-dialog.c:118
 msgid "_Scale imported paths to fit image"
-msgstr "_Cambiar l'escala dels camins importés per les ajustar a l'imatge"
+msgstr "_Cambiar l'escala dels camins importats per los ajustar a l'imatge"
 
 #: ../app/dialogs/vectors-options-dialog.c:122
 msgid "Path name:"
@@ -12136,7 +12137,7 @@ msgstr "Aucun guide"
 #: ../app/display/display-enums.c:61
 msgctxt "guides-type"
 msgid "Center lines"
-msgstr "Lignes de centre"
+msgstr "Linhas de centre"
 
 #: ../app/display/display-enums.c:62
 msgctxt "guides-type"
@@ -12156,7 +12157,7 @@ msgstr "Sections d'or"
 #: ../app/display/display-enums.c:65
 msgctxt "guides-type"
 msgid "Diagonal lines"
-msgstr "Lignes diagonales"
+msgstr "Linhas diagonales"
 
 #: ../app/display/display-enums.c:66
 msgctxt "guides-type"
@@ -12226,7 +12227,7 @@ msgstr "Zoom l'imatge quand la fenèstra change de talha"
 
 #: ../app/display/gimpdisplayshell.c:677
 msgid "Toggle Quick Mask"
-msgstr "(Dés)activer la masqueta rapide"
+msgstr "(Dés)activar la masqueta rapide"
 
 #: ../app/display/gimpdisplayshell.c:700
 msgid "Navigate the image display"
@@ -12867,7 +12868,7 @@ msgstr "Aerograf"
 #: ../app/tools/gimprectangleselectoptions.c:164
 #: ../app/tools/gimpselectionoptions.c:278 ../app/widgets/gimpbrusheditor.c:156
 msgid "Radius"
-msgstr "Rayon"
+msgstr "Rai"
 
 #: ../app/paint/gimppaintbrush.c:65 ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
@@ -13302,15 +13303,17 @@ msgstr "Tentative d'ajout de l'element « %s » (%d) a la mauvaise imatge"
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
-"L'element « %s » (%d) pòt pas èsser modifié perque son contengut es varrolhat"
+"L'element « %s » (%d) pòt pas èsser modificat perque son contengut es "
+"varrolhat"
 
 #: ../app/pdb/gimppdb-utils.c:506
-#, fuzzy, c-format
+#, c-format
 #| msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
 msgstr ""
-"L'element « %s » (%d) pòt pas èsser modifié perque son contengut es varrolhat"
+"L'element « %s » (%d) pòt pas èsser modificat perque son emplaçament e sa "
+"talha son varrolhats"
 
 #: ../app/pdb/gimppdb-utils.c:526
 #, c-format
@@ -13323,7 +13326,7 @@ msgstr ""
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
 msgstr ""
-"L'element « %s » (%d) pòt pas èsser modifié, perque il s'agit d'un element "
+"L'element « %s » (%d) pòt pas èsser modificat, perque il s'agit d'un element "
 "grop"
 
 #: ../app/pdb/gimppdb-utils.c:567
@@ -13410,7 +13413,7 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"La procedura « %s » a renvoyé un ID erronèu per lo paramètre « %s ». Très "
+"La procedura « %s » a renvoyé un ID erronèu per lo paramètre « %s ». Fòrça "
 "probablement un empeuton es en train d'essayer de travailler sus un calc qui "
 "n'existe plus."
 
@@ -13421,8 +13424,8 @@ msgid ""
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
 "La procedura « %s » a été appelée amb un ID erronèu per lo paramètre « %s ». "
-"Très probablement un empeuton es en train d'essayer de travailler sur un calc "
-"qui n'existe plus."
+"Fòrça probablement un empeuton es en train d'essayer de travailler sur un "
+"calc qui n'existe plus."
 
 #: ../app/pdb/gimpprocedure.c:721
 #, c-format
@@ -13430,7 +13433,7 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"La procedura « %s » a renvoyé un ID erronèu per lo paramètre « %s ». Très "
+"La procedura « %s » a renvoyé un ID erronèu per lo paramètre « %s ». Fòrça "
 "probablement un empeuton es en train d'essayer de travailler sus un imatge "
 "qui n'existe plus."
 
@@ -13441,7 +13444,7 @@ msgid ""
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
 "La procedura « %s » a été appelée amb un ID erronèu per lo paramètre « %s ». "
-"Très probablement un empeuton es en train d'essayer de travailler sur un "
+"Fòrça probablement un empeuton es en train d'essayer de travailler sur un "
 "imatge qui n'existe plus."
 
 #: ../app/pdb/gimpprocedure.c:755
@@ -13614,12 +13617,11 @@ msgid "Glass Tile"
 msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:1488
-#, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Noise"
 msgctxt "undo-type"
 msgid "Noise HSV"
-msgstr "_Bruit"
+msgstr "Bruch HSV"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1531
 msgctxt "undo-type"
@@ -13737,12 +13739,11 @@ msgid "Shift"
 msgstr ""
 
 #: ../app/pdb/plug-in-compat-cmds.c:2880
-#, fuzzy
 #| msgctxt "gradient-editor-blending"
 #| msgid "_Sinusoidal"
 msgctxt "undo-type"
 msgid "Sinus"
-msgstr "_Sinusoïdal"
+msgstr "Sinusoïdal"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2928
 msgctxt "undo-type"
@@ -14143,10 +14144,9 @@ msgid "Align"
 msgstr "Alinhament"
 
 #: ../app/tools/gimpalignoptions.c:288
-#, fuzzy
 #| msgid "Relative to:"
 msgid "Relative to"
-msgstr "Relatiu a :"
+msgstr "Relatiu a"
 
 #: ../app/tools/gimpalignoptions.c:299
 msgid "Align left edge of target"
@@ -14257,7 +14257,7 @@ msgstr "Degradat"
 #. Blob shape widgets
 #: ../app/tools/gimpblendoptions.c:221 ../app/tools/gimpinkoptions-gui.c:108
 msgid "Shape"
-msgstr "Forme"
+msgstr "Forma"
 
 #: ../app/tools/gimpblendoptions.c:230 ../app/tools/gimppaintoptions-gui.c:350
 #| msgid "Repeat:"
@@ -16227,15 +16227,15 @@ msgstr "Reduccion fusionnée"
 
 #: ../app/tools/gimprectangleselectoptions.c:84
 msgid "Round corners of selection"
-msgstr "Arrondit les coins de la seleccion"
+msgstr "Arredondís les coins de la seleccion"
 
 #: ../app/tools/gimprectangleselectoptions.c:90
 msgid "Radius of rounding in pixels"
-msgstr "Rai de l'arrondi en pixèls"
+msgstr "Rai de l'arredondit en pixèls"
 
 #: ../app/tools/gimprectangleselectoptions.c:168
 msgid "Rounded corners"
-msgstr "Coins arrondis"
+msgstr "Coins arredondits"
 
 #: ../app/tools/gimprectangleselecttool.c:166
 msgid "Rectangle Select"
@@ -16504,7 +16504,7 @@ msgstr "Talha de poliça"
 msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Los indices d'ajustament altèrent les poliças per produire de lettres nettes "
-"dins les petites talhas"
+"dins les pichonas talhas"
 
 #: ../app/tools/gimptextoptions.c:154
 msgid "The text langívol may have an effect on the way the text is rendered."
@@ -16602,9 +16602,9 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
-"Lo calc que vous avez seleccionat es un calc de tèxte mas il a été modifié en "
-"utilizant d'autres aisinas. L'edicion del calc amb l'aisina tèxte suprimira "
-"ces modificacions.\n"
+"Lo calc que vous avez seleccionat es un calc de tèxte mas il a été modificat "
+"en utilizant d'autres aisinas. L'edicion del calc amb l'aisina tèxte "
+"suprimira ces modificacions.\n"
 "\n"
 "Podètz éditer lo calc o crear un novèl calc de tèxte dempuèi ses atributs de "
 "tèxte."
@@ -17400,7 +17400,7 @@ msgstr "Importar de camins"
 
 #: ../app/vectors/gimpvectors-import.c:342
 msgid "Imported Path"
-msgstr "Camin importé"
+msgstr "Camin importat"
 
 #: ../app/vectors/gimpvectors-import.c:373
 #, c-format
@@ -18433,7 +18433,7 @@ msgid ""
 "Replace the current image comment with the default comment set in "
 "Edit→Preferences→Default Image."
 msgstr ""
-"Remplaça lo comentari de l'imatge activa per celui défini dins "
+"Remplaça lo comentari de l'imatge actiu per celui défini dins "
 "Edicion→Preferéncias→Imatge per defaut."
 
 #: ../app/widgets/gimpimagepropview.c:112
