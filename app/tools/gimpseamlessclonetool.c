@@ -29,6 +29,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h" /* playground */
+
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpimage.h"
@@ -176,17 +178,21 @@ void
 gimp_seamless_clone_tool_register (GimpToolRegisterCallback  callback,
                                    gpointer                  data)
 {
-  (* callback) (GIMP_TYPE_SEAMLESS_CLONE_TOOL,
-                GIMP_TYPE_SEAMLESS_CLONE_OPTIONS,
-                gimp_seamless_clone_options_gui,
-                0,
-                "gimp-seamless-clone-tool",
-                _("Seamless Clone"),
-                _("Seamless Clone: Seamlessly paste one image into another"),
-                N_("_Seamless Clone"), "<shift>L",
-                NULL, GIMP_HELP_TOOL_SEAMLESS_CLONE,
-                GIMP_STOCK_TOOL_SEAMLESS_CLONE,
-                data);
+  /* we should not know that "data" is a Gimp*, but what the heck this
+   * is experimental playground stuff
+   */
+  if (GIMP_GUI_CONFIG (GIMP (data)->config)->playground_seamless_clone_tool)
+    (* callback) (GIMP_TYPE_SEAMLESS_CLONE_TOOL,
+                  GIMP_TYPE_SEAMLESS_CLONE_OPTIONS,
+                  gimp_seamless_clone_options_gui,
+                  0,
+                  "gimp-seamless-clone-tool",
+                  _("Seamless Clone"),
+                  _("Seamless Clone: Seamlessly paste one image into another"),
+                  N_("_Seamless Clone"), "<shift>L",
+                  NULL, GIMP_HELP_TOOL_SEAMLESS_CLONE,
+                  GIMP_STOCK_TOOL_SEAMLESS_CLONE,
+                  data);
 }
 
 static void
