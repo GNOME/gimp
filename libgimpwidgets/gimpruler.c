@@ -164,7 +164,7 @@ gimp_ruler_class_init (GimpRulerClass *klass)
                                                       GIMP_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
-                                   PROP_LOWER,
+                                   PROP_UNIT,
                                    gimp_param_spec_unit ("unit",
                                                          "Unit",
                                                          "Unit of ruler",
