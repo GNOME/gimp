@@ -208,9 +208,9 @@ query (void)
                           apply_rgb_args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC_SET,
-                             "<Image>/Image/Mode/Color Profile");
+                             "<Image>/Image/Color Management");
   gimp_plugin_menu_register (PLUG_IN_PROC_APPLY,
-                             "<Image>/Image/Mode/Color Profile");
+                             "<Image>/Image/Color Management");
 }
 
 static void

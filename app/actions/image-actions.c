@@ -52,11 +52,13 @@ static const GimpActionEntry image_actions[] =
     NC_("image-action", "Image Menu"), NULL, NULL, NULL,
     GIMP_HELP_IMAGE_WINDOW },
 
-  { "image-menu",             NULL, NC_("image-action", "_Image")      },
-  { "image-mode-menu",        NULL, NC_("image-action", "_Mode")       },
-  { "image-precision-menu",   NULL, NC_("image-action", "_Precision")  },
-  { "image-transform-menu",   NULL, NC_("image-action", "_Transform")  },
-  { "image-guides-menu",      NULL, NC_("image-action", "_Guides")     },
+  { "image-menu",                  NULL, NC_("image-action", "_Image")     },
+  { "image-mode-menu",             NULL, NC_("image-action", "_Mode")      },
+  { "image-precision-menu",        NULL, NC_("image-action", "_Precision") },
+  { "image-color-management-menu", NULL, NC_("image-action",
+                                             "_Color Management")          },
+  { "image-transform-menu",        NULL, NC_("image-action", "_Transform") },
+  { "image-guides-menu",           NULL, NC_("image-action", "_Guides")    },
 
   { "colors-menu",            NULL, NC_("image-action", "_Colors")     },
   { "colors-info-menu",       NULL, NC_("image-action", "I_nfo")       },

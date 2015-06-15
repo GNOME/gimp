@@ -325,13 +325,12 @@
       <placeholder name="New">
         <menuitem action="image-duplicate" />
       </placeholder>
+      <separator />
       <menu action="image-mode-menu" name="Mode">
         <menuitem action="image-convert-rgb" />
         <menuitem action="image-convert-grayscale" />
         <menuitem action="image-convert-indexed" />
-        <separator />
-        <placeholder name="Color Profile" />
-        <separator />
+	<separator />
       </menu>
       <menu action="image-precision-menu" name="Precision">
         <menuitem action="image-convert-u8-linear" />
@@ -348,6 +347,9 @@
         <menuitem action="image-convert-double-gamma" />
         <separator />
       </menu>
+      <menu action="image-color-management-menu" name="Color Management">
+      </menu>
+      <separator />
       <menu action="image-transform-menu" name="Transform">
         <placeholder name="Flip">
           <menuitem action="image-flip-horizontal" />
@@ -361,7 +363,6 @@
         </placeholder>
         <separator />
       </menu>
-      <separator />
       <placeholder name="Resize">
         <menuitem action="image-resize" />
         <menuitem action="image-resize-to-layers" />
