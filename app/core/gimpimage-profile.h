@@ -25,11 +25,11 @@
 #define GIMP_ICC_PROFILE_PARASITE_NAME "icc-profile"
 
 
-gboolean             gimp_image_validate_icc_profile   (GimpImage           *image,
+gboolean             gimp_image_validate_icc_parasite  (GimpImage           *image,
                                                         const GimpParasite  *icc_profile,
                                                         GError             **error);
-const GimpParasite * gimp_image_get_icc_profile        (GimpImage           *image);
-void                 gimp_image_set_icc_profile        (GimpImage           *image,
+const GimpParasite * gimp_image_get_icc_parasite       (GimpImage           *image);
+void                 gimp_image_set_icc_parasite       (GimpImage           *image,
                                                         const GimpParasite  *icc_profile);
 
 gboolean             gimp_image_validate_color_profile (GimpImage           *image,

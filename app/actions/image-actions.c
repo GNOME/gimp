@@ -414,7 +414,7 @@ image_actions_update (GimpActionGroup *group,
 
       groups = ! gimp_item_stack_is_flat (GIMP_ITEM_STACK (layers));
 
-      profile = (gimp_image_get_icc_profile (image) != NULL);
+      profile = (gimp_image_get_icc_parasite (image) != NULL);
     }
 
 #define SET_SENSITIVE(action,condition) \

@@ -824,7 +824,7 @@ file_open_handle_color_profile (GimpImage    *image,
                                 GimpProgress *progress,
                                 GimpRunMode   run_mode)
 {
-  if (gimp_image_get_icc_profile (image))
+  if (gimp_image_get_icc_parasite (image))
     {
       gimp_image_undo_disable (image);
 

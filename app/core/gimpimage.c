@@ -1368,7 +1368,7 @@ gimp_image_color_managed_get_icc_profile (GimpColorManaged *managed,
 {
   const GimpParasite *parasite;
 
-  parasite = gimp_image_get_icc_profile (GIMP_IMAGE (managed));
+  parasite = gimp_image_get_icc_parasite (GIMP_IMAGE (managed));
 
   if (parasite)
     {
@@ -3353,7 +3353,7 @@ gimp_image_parasite_validate (GimpImage           *image,
 
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     {
-      return gimp_image_validate_icc_profile (image, parasite, error);
+      return gimp_image_validate_icc_parasite (image, parasite, error);
     }
 
   return TRUE;
