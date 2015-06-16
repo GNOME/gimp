@@ -646,6 +646,14 @@ gimp_item_tree_uniquefy_name (GimpItemTree *tree,
       gimp_object_set_name (GIMP_OBJECT (item), new_name);
     }
 
+  /* Remove any trailing whitespace. */
+  if (gimp_object_get_name (item))
+    {
+      gchar *name = g_strchomp (g_strdup (gimp_object_get_name (item)));
+
+      gimp_object_take_name (GIMP_OBJECT (item), name);
+    }
+
   if (g_hash_table_lookup (private->name_hash,
                            gimp_object_get_name (item)))
     {
