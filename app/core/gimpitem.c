@@ -512,22 +512,17 @@ gimp_item_real_duplicate (GimpItem *item,
   /*  formulate the new name  */
   {
     const gchar *name;
-    gchar       *ext;
-    gint         number;
     gint         len;
 
     name = gimp_object_get_name (item);
 
     g_return_val_if_fail (name != NULL, NULL);
 
-
-    ext = strrchr (name, '#');
     len = strlen (_("copy"));
 
     if ((strlen (name) >= len &&
          strcmp (&name[strlen (name) - len], _("copy")) == 0) ||
-        (ext && (number = atoi (ext + 1)) > 0 &&
-         ((int)(log10 (number) + 1)) == strlen (ext + 1)))
+        g_regex_match_simple ("([0-9]+)\\s*$", name, 0, 0))
       {
         /* don't have redundant "copy"s */
         new_name = g_strdup (name);
