@@ -518,9 +518,7 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
 
   if (proof_profile)
     {
-      cmsUInt32Number softproof_flags = 0;
-
-      softproof_flags |= cmsFLAGS_SOFTPROOFING;
+      cmsUInt32Number softproof_flags = cmsFLAGS_SOFTPROOFING;
 
       if (config->simulation_use_black_point_compensation)
         {
@@ -542,13 +540,12 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
           cmsSetAlarmCodes (alarmCodes);
         }
 
-      transform =
-        cmsCreateProofingTransform (src_profile,  lcms_src_format,
-                                    dest_profile, lcms_dest_format,
-                                    proof_profile,
-                                    config->simulation_intent,
-                                    config->display_intent,
-                                    softproof_flags);
+      transform = cmsCreateProofingTransform (src_profile,  lcms_src_format,
+                                              dest_profile, lcms_dest_format,
+                                              proof_profile,
+                                              config->simulation_intent,
+                                              config->display_intent,
+                                              softproof_flags);
 
       gimp_color_profile_close (proof_profile);
     }
@@ -561,11 +558,10 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
           display_flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
         }
 
-      transform =
-        cmsCreateTransform (src_profile,  lcms_src_format,
-                            dest_profile, lcms_dest_format,
-                            config->display_intent,
-                            display_flags);
+      transform = cmsCreateTransform (src_profile,  lcms_src_format,
+                                      dest_profile, lcms_dest_format,
+                                      config->display_intent,
+                                      display_flags);
     }
 
   gimp_color_profile_close (src_profile);
