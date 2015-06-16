@@ -46,8 +46,7 @@ gboolean             gimp_image_set_icc_profile        (GimpImage           *ima
 gboolean             gimp_image_validate_color_profile (GimpImage           *image,
                                                         GimpColorProfile     profile,
                                                         GError             **error);
-GimpColorProfile     gimp_image_get_color_profile      (GimpImage           *image,
-                                                        GError             **error);
+GimpColorProfile     gimp_image_get_color_profile      (GimpImage           *image);
 gboolean             gimp_image_set_color_profile      (GimpImage           *image,
                                                         GimpColorProfile     profile,
                                                         GError             **error);

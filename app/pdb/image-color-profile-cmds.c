@@ -62,7 +62,7 @@ image_get_color_profile_invoker (GimpProcedure         *procedure,
     {
       GimpColorProfile profile;
 
-      profile = gimp_image_get_color_profile (image, NULL);
+      profile = gimp_image_get_color_profile (image);
 
       if (profile)
         {

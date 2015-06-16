@@ -1391,7 +1391,7 @@ gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
   GimpImage        *image = GIMP_IMAGE (managed);
   GimpColorProfile  profile;
 
-  profile = gimp_image_get_color_profile (image, NULL);
+  profile = gimp_image_get_color_profile (image);
 
   if (! profile)
     {

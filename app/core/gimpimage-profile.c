@@ -246,20 +246,18 @@ gimp_image_validate_color_profile (GimpImage        *image,
 }
 
 GimpColorProfile
-gimp_image_get_color_profile (GimpImage  *image,
-                              GError    **error)
+gimp_image_get_color_profile (GimpImage *image)
 {
   const GimpParasite *parasite;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   parasite = gimp_image_get_icc_parasite (image);
 
   if (parasite)
     return gimp_color_profile_open_from_data (gimp_parasite_data (parasite),
                                               gimp_parasite_data_size (parasite),
-                                              error);
+                                              NULL);
 
   return NULL;
 }
