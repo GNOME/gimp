@@ -59,6 +59,7 @@ EXPORTS
 	gimp_param_spec_rgb_has_alpha
 	gimp_pixbuf_create_buffer
 	gimp_pixbuf_get_format
+	gimp_pixbuf_get_icc_profile
 	gimp_rgb_add
 	gimp_rgb_clamp
 	gimp_rgb_composite
