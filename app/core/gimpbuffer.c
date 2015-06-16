@@ -271,7 +271,8 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
 {
   GimpBuffer *gimp_buffer;
   GeglBuffer *buffer;
-  gchar      *icc_base64 = NULL;
+  guint8     *icc_data;
+  gsize       icc_len;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (name != NULL, NULL);
@@ -281,21 +282,12 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
   gimp_buffer = gimp_buffer_new (buffer, name,
                                  offset_x, offset_y, FALSE);
 
-  g_object_get (pixbuf, "icc-profile", icc_base64, NULL);
+  icc_data = gimp_pixbuf_get_icc_profile (pixbuf, &icc_len);
 
-  if (icc_base64)
+  if (icc_data)
     {
-      guint8 *icc_data;
-      gsize   icc_len;
-
-      icc_data = g_base64_decode (icc_base64, &icc_len);
-      g_free (icc_base64);
-
-      if (icc_data)
-        {
-          gimp_buffer_set_icc_profile (gimp_buffer, icc_data, icc_len);
-          g_free (icc_data);
-        }
+      gimp_buffer_set_icc_profile (gimp_buffer, icc_data, icc_len);
+      g_free (icc_data);
     }
 
   g_object_unref (buffer);
