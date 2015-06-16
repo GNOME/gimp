@@ -26,11 +26,22 @@
 
 
 gboolean             gimp_image_validate_icc_parasite  (GimpImage           *image,
-                                                        const GimpParasite  *icc_profile,
+                                                        const GimpParasite  *icc_parasite,
                                                         GError             **error);
 const GimpParasite * gimp_image_get_icc_parasite       (GimpImage           *image);
 void                 gimp_image_set_icc_parasite       (GimpImage           *image,
-                                                        const GimpParasite  *icc_profile);
+                                                        const GimpParasite  *icc_parasite);
+
+gboolean             gimp_image_validate_icc_profile   (GimpImage           *image,
+                                                        const guint8        *data,
+                                                        gsize                length,
+                                                        GError             **error);
+const guint8       * gimp_image_get_icc_profile        (GimpImage           *image,
+                                                        gsize               *length);
+gboolean             gimp_image_set_icc_profile        (GimpImage           *image,
+                                                        const guint8        *data,
+                                                        gsize                length,
+                                                        GError             **error);
 
 gboolean             gimp_image_validate_color_profile (GimpImage           *image,
                                                         GimpColorProfile     profile,

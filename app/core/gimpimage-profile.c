@@ -69,16 +69,14 @@ static void   gimp_image_convert_profile_indexed (GimpImage                *imag
 
 gboolean
 gimp_image_validate_icc_parasite (GimpImage           *image,
-                                  const GimpParasite  *icc_profile,
+                                  const GimpParasite  *icc_parasite,
                                   GError             **error)
 {
-  GimpColorProfile *profile;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (icc_profile != NULL, FALSE);
+  g_return_val_if_fail (icc_parasite != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (strcmp (gimp_parasite_name (icc_profile),
+  if (strcmp (gimp_parasite_name (icc_parasite),
               GIMP_ICC_PROFILE_PARASITE_NAME) != 0)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
@@ -87,8 +85,8 @@ gimp_image_validate_icc_parasite (GimpImage           *image,
       return FALSE;
     }
 
-  if (gimp_parasite_flags (icc_profile) != (GIMP_PARASITE_PERSISTENT |
-                                            GIMP_PARASITE_UNDOABLE))
+  if (gimp_parasite_flags (icc_parasite) != (GIMP_PARASITE_PERSISTENT |
+                                             GIMP_PARASITE_UNDOABLE))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
                            _("ICC profile validation failed: "
@@ -96,9 +94,53 @@ gimp_image_validate_icc_parasite (GimpImage           *image,
       return FALSE;
     }
 
-  profile = gimp_color_profile_open_from_data (gimp_parasite_data (icc_profile),
-                                               gimp_parasite_data_size (icc_profile),
-                                               error);
+  return gimp_image_validate_icc_profile (image,
+                                          gimp_parasite_data (icc_parasite),
+                                          gimp_parasite_data_size (icc_parasite),
+                                          error);
+}
+
+const GimpParasite *
+gimp_image_get_icc_parasite (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return gimp_image_parasite_find (image, GIMP_ICC_PROFILE_PARASITE_NAME);
+}
+
+void
+gimp_image_set_icc_parasite (GimpImage          *image,
+                             const GimpParasite *icc_parasite)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  if (icc_parasite)
+    {
+      g_return_if_fail (gimp_image_validate_icc_parasite (image, icc_parasite,
+                                                          NULL) == TRUE);
+
+      gimp_image_parasite_attach (image, icc_parasite);
+    }
+  else
+    {
+      gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME);
+    }
+}
+
+gboolean
+gimp_image_validate_icc_profile (GimpImage     *image,
+                                 const guint8  *data,
+                                 gsize          length,
+                                 GError       **error)
+{
+  GimpColorProfile profile;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (data != NULL, FALSE);
+  g_return_val_if_fail (length != 0, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  profile = gimp_color_profile_open_from_data (data, length, error);
 
   if (! profile)
     {
@@ -117,31 +159,62 @@ gimp_image_validate_icc_parasite (GimpImage           *image,
   return TRUE;
 }
 
-const GimpParasite *
-gimp_image_get_icc_parasite (GimpImage *image)
+const guint8 *
+gimp_image_get_icc_profile (GimpImage *image,
+                            gsize     *length)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  const GimpParasite *parasite;
 
-  return gimp_image_parasite_find (image, GIMP_ICC_PROFILE_PARASITE_NAME);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  parasite = gimp_image_parasite_find (image, GIMP_ICC_PROFILE_PARASITE_NAME);
+
+  if (parasite)
+    {
+      if (length)
+        *length = gimp_parasite_data_size (parasite);
+
+      return gimp_parasite_data (parasite);
+    }
+
+  if (length)
+    *length = 0;
+
+  return NULL;
 }
 
-void
-gimp_image_set_icc_parasite (GimpImage          *image,
-                             const GimpParasite *icc_profile)
+gboolean
+gimp_image_set_icc_profile (GimpImage     *image,
+                            const guint8  *data,
+                            gsize          length,
+                            GError       **error)
 {
-  g_return_if_fail (GIMP_IS_IMAGE (image));
+  GimpParasite *parasite = NULL;
 
-  if (icc_profile)
-    {
-      g_return_if_fail (gimp_image_validate_icc_parasite (image, icc_profile,
-                                                          NULL) == TRUE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (data == NULL || length != 0, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-      gimp_image_parasite_attach (image, icc_profile);
-    }
-  else
+  if (data)
     {
-      gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME);
+      parasite = gimp_parasite_new (GIMP_ICC_PROFILE_PARASITE_NAME,
+                                    GIMP_PARASITE_PERSISTENT |
+                                    GIMP_PARASITE_UNDOABLE,
+                                    length, data);
+
+      if (! gimp_image_validate_icc_parasite (image, parasite, error))
+        {
+          gimp_parasite_free (parasite);
+          return FALSE;
+        }
     }
+
+  gimp_image_set_icc_parasite (image, parasite);
+
+  if (parasite)
+    gimp_parasite_free (parasite);
+
+  return TRUE;
 }
 
 gboolean
@@ -196,36 +269,29 @@ gimp_image_set_color_profile (GimpImage         *image,
                               GimpColorProfile   profile,
                               GError           **error)
 {
-  GimpParasite *parasite = NULL;
+  guint8 *data   = NULL;
+  gsize   length = 0;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (profile)
     {
-      guint8 *data;
-      gsize   length;
-
-      if (! gimp_image_validate_color_profile (image, profile, error))
-        return FALSE;
-
       data = gimp_color_profile_save_to_data (profile, &length, error);
       if (! data)
         return FALSE;
-
-      parasite = gimp_parasite_new (GIMP_ICC_PROFILE_PARASITE_NAME,
-                                    GIMP_PARASITE_PERSISTENT |
-                                    GIMP_PARASITE_UNDOABLE,
-                                    length, data);
-      g_free (data);
     }
 
-  gimp_image_set_icc_parasite (image, parasite);
+  if (! gimp_image_set_icc_profile (image, data, length, error))
+    {
+      g_free (data);
 
-  if (parasite)
-    gimp_parasite_free (parasite);
+      return FALSE;
+    }
 
-  return FALSE;
+  g_free (data);
+
+  return TRUE;
 }
 
 gboolean
