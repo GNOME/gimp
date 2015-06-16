@@ -39,6 +39,9 @@ struct _GimpBuffer
   GeglBuffer    *buffer;
   gint           offset_x;
   gint           offset_y;
+
+  guint8        *icc_profile;
+  gsize          icc_profile_len;
 };
 
 struct _GimpBufferClass
@@ -64,6 +67,12 @@ gint            gimp_buffer_get_height      (const GimpBuffer *buffer);
 const Babl    * gimp_buffer_get_format      (const GimpBuffer *buffer);
 
 GeglBuffer    * gimp_buffer_get_buffer      (const GimpBuffer *buffer);
+
+void            gimp_buffer_set_icc_profile (GimpBuffer       *buffer,
+                                             const guint8     *data,
+                                             gsize             length);
+const guint8  * gimp_buffer_get_icc_profile (const GimpBuffer *buffer,
+                                             gsize            *length);
 
 
 #endif /* __GIMP_BUFFER_H__ */
