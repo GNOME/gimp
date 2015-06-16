@@ -1366,23 +1366,7 @@ static const guint8 *
 gimp_image_color_managed_get_icc_profile (GimpColorManaged *managed,
                                           gsize            *len)
 {
-  const GimpParasite *parasite;
-
-  parasite = gimp_image_get_icc_parasite (GIMP_IMAGE (managed));
-
-  if (parasite)
-    {
-      gsize data_size = gimp_parasite_data_size (parasite);
-
-      if (data_size > 0)
-        {
-          *len = data_size;
-
-          return gimp_parasite_data (parasite);
-        }
-    }
-
-  return NULL;
+  return gimp_image_get_icc_profile (GIMP_IMAGE (managed), len);
 }
 
 static GimpColorProfile
