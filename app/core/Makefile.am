@@ -284,6 +284,8 @@ libappcore_a_sources = \
 	gimplayer.h				\
 	gimplayer-floating-sel.c		\
 	gimplayer-floating-sel.h		\
+	gimplayer-new.c				\
+	gimplayer-new.h				\
 	gimplayermask.c				\
 	gimplayermask.h				\
 	gimplayermaskpropundo.c			\

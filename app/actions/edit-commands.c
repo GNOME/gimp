@@ -33,6 +33,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-new.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-new.h"
 #include "core/gimpimage-undo.h"

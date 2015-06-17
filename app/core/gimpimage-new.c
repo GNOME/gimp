@@ -41,6 +41,7 @@
 #include "gimpimage-profile.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
+#include "gimplayer-new.h"
 #include "gimptemplate.h"
 
 #include "gimp-intl.h"

@@ -43,6 +43,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
+#include "gimplayer-new.h"
 #include "gimppickable.h"
 #include "gimpprogress.h"
 #include "gimpselection.h"

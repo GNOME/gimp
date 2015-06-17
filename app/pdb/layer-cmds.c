@@ -35,6 +35,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem-linked.h"
+#include "core/gimplayer-new.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparamspecs.h"

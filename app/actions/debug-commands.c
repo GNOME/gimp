@@ -32,6 +32,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-new.h"
 #include "core/gimppickable.h"
 #include "core/gimpprojectable.h"
 #include "core/gimpprojection.h"

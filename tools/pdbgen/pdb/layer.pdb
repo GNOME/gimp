@@ -1199,6 +1199,7 @@ CODE
               "core/gimpimage-undo.h"
               "core/gimpitem-linked.h"
               "core/gimpgrouplayer.h"
+              "core/gimplayer-new.h"
               "core/gimppickable.h"
               "core/gimpprogress.h"
               "gimppdbcontext.h"

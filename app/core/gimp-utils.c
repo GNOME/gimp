@@ -751,6 +751,7 @@ gimp_file_is_executable (GFile *file)
 #include "gegl/gimp-babl.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
+#include "gimplayer-new.h"
 
 void
 gimp_create_image_from_buffer (Gimp       *gimp,

@@ -37,6 +37,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpitemundo.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-new.h"
 #include "core/gimplayermask.h"
 #include "core/gimptreehandler.h"
 
