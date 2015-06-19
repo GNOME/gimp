@@ -357,11 +357,13 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
 
   gimp_pickable_flush (pickable);
 
-  layer = gimp_layer_new_from_buffer (gimp_pickable_get_buffer (pickable),
-                                      image,
-                                      gimp_image_get_layer_format (image, TRUE),
-                                      _("Visible"),
-                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+  layer = gimp_layer_new_from_gegl_buffer (gimp_pickable_get_buffer (pickable),
+                                           image,
+                                           gimp_image_get_layer_format (image,
+                                                                        TRUE),
+                                           _("Visible"),
+                                           GIMP_OPACITY_OPAQUE,
+                                           GIMP_NORMAL_MODE);
 
   gimp_image_add_layer (image, layer,
                         GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);

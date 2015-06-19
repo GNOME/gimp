@@ -19,26 +19,32 @@
 #define __GIMP_LAYER_NEW_H__
 
 
-GimpLayer * gimp_layer_new             (GimpImage            *image,
-                                        gint                  width,
-                                        gint                  height,
-                                        const Babl           *format,
-                                        const gchar          *name,
-                                        gdouble               opacity,
-                                        GimpLayerModeEffects  mode);
+GimpLayer * gimp_layer_new                  (GimpImage            *image,
+                                             gint                  width,
+                                             gint                  height,
+                                             const Babl           *format,
+                                             const gchar          *name,
+                                             gdouble               opacity,
+                                             GimpLayerModeEffects  mode);
 
-GimpLayer * gimp_layer_new_from_buffer (GeglBuffer           *buffer,
-                                        GimpImage            *dest_image,
-                                        const Babl           *format,
-                                        const gchar          *name,
-                                        gdouble               opacity,
-                                        GimpLayerModeEffects  mode);
-GimpLayer * gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
-                                        GimpImage            *dest_image,
-                                        const Babl           *format,
-                                        const gchar          *name,
-                                        gdouble               opacity,
-                                        GimpLayerModeEffects  mode);
+GimpLayer * gimp_layer_new_from_buffer      (GimpBuffer           *buffer,
+                                             GimpImage            *dest_image,
+                                             const Babl           *format,
+                                             const gchar          *name,
+                                             gdouble               opacity,
+                                             GimpLayerModeEffects  mode);
+GimpLayer * gimp_layer_new_from_gegl_buffer (GeglBuffer           *buffer,
+                                             GimpImage            *dest_image,
+                                             const Babl           *format,
+                                             const gchar          *name,
+                                             gdouble               opacity,
+                                             GimpLayerModeEffects  mode);
+GimpLayer * gimp_layer_new_from_pixbuf      (GdkPixbuf            *pixbuf,
+                                             GimpImage            *dest_image,
+                                             const Babl           *format,
+                                             const gchar          *name,
+                                             gdouble               opacity,
+                                             GimpLayerModeEffects  mode);
 
 
 #endif /* __GIMP_LAYER_NEW_H__ */

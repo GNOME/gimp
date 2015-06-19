@@ -25,6 +25,7 @@
 
 #include "core-types.h"
 
+#include "gimpbuffer.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
 #include "gimplayer-new.h"
@@ -75,12 +76,44 @@ gimp_layer_new (GimpImage            *image,
  * Return value: The new layer.
  **/
 GimpLayer *
-gimp_layer_new_from_buffer (GeglBuffer           *buffer,
+gimp_layer_new_from_buffer (GimpBuffer           *buffer,
                             GimpImage            *dest_image,
                             const Babl           *format,
                             const gchar          *name,
                             gdouble               opacity,
                             GimpLayerModeEffects  mode)
+{
+  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
+  g_return_val_if_fail (format != NULL, NULL);
+
+  return gimp_layer_new_from_gegl_buffer (gimp_buffer_get_buffer (buffer),
+                                          dest_image, format,
+                                          name, opacity, mode);
+}
+
+/**
+ * gimp_layer_new_from_gegl_buffer:
+ * @buffer:     The buffer to make the new layer from.
+ * @dest_image: The image the new layer will be added to.
+ * @format:     The #Babl format of the new layer.
+ * @name:       The new layer's name.
+ * @opacity:    The new layer's opacity.
+ * @mode:       The new layer's mode.
+ *
+ * Copies %buffer to a layer taking into consideration the
+ * possibility of transforming the contents to meet the requirements
+ * of the target image type
+ *
+ * Return value: The new layer.
+ **/
+GimpLayer *
+gimp_layer_new_from_gegl_buffer (GeglBuffer           *buffer,
+                                 GimpImage            *dest_image,
+                                 const Babl           *format,
+                                 const gchar          *name,
+                                 gdouble               opacity,
+                                 GimpLayerModeEffects  mode)
 {
   GimpLayer  *layer;
   GeglBuffer *dest;

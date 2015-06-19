@@ -316,8 +316,7 @@ gimp_image_new_from_buffer (Gimp       *gimp,
   if (icc_data)
     gimp_image_set_icc_profile (image, icc_data, icc_len, NULL);
 
-  layer = gimp_layer_new_from_buffer (gimp_buffer_get_buffer (paste),
-                                      image,
+  layer = gimp_layer_new_from_buffer (paste, image,
                                       gimp_image_get_layer_format (image,
                                                                    has_alpha),
                                       _("Pasted Layer"),
