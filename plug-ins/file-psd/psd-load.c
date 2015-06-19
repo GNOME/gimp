@@ -1854,8 +1854,8 @@ add_merged_image (gint32     image_id,
             }
 
           cidx = base_channels + i;
-          pixels = g_realloc (pixels, chn_a[cidx].columns * chn_a[cidx].rows);
-          memcpy (pixels, chn_a[cidx].data, chn_a[cidx].columns * chn_a[cidx].rows);
+          pixels = g_realloc (pixels, chn_a[cidx].columns * chn_a[cidx].rows * bps);
+          memcpy (pixels, chn_a[cidx].data, chn_a[cidx].columns * chn_a[cidx].rows * bps);
           channel_id = gimp_channel_new (image_id, alpha_name,
                                          chn_a[cidx].columns, chn_a[cidx].rows,
                                          alpha_opacity, &alpha_rgb);
