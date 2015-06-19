@@ -363,7 +363,8 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
                                                                         TRUE),
                                            _("Visible"),
                                            GIMP_OPACITY_OPAQUE,
-                                           GIMP_NORMAL_MODE);
+                                           GIMP_NORMAL_MODE,
+                                           NULL, 0 /* same image */);
 
   gimp_image_add_layer (image, layer,
                         GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);

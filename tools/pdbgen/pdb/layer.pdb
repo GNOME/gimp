@@ -143,8 +143,12 @@ HELP
 	code => <<'CODE'
 {
   GimpPickable *pickable = GIMP_PICKABLE (image);
+  const guint8 *icc_data;
+  gsize         icc_len;
 
   gimp_pickable_flush (pickable);
+
+  icc_data = gimp_image_get_icc_profile (image, &icc_len);
 
   layer = gimp_layer_new_from_gegl_buffer (gimp_pickable_get_buffer (pickable),
                                            dest_image,
@@ -152,7 +156,8 @@ HELP
                                                                         TRUE),
                                            name,
                                            GIMP_OPACITY_OPAQUE,
-                                           GIMP_NORMAL_MODE);
+                                           GIMP_NORMAL_MODE,
+                                           icc_data, icc_len);
 }
 CODE
     );
@@ -1197,6 +1202,7 @@ CODE
 
 @headers = qw("libgimpbase/gimpbase.h"
               "core/gimp.h"
+              "core/gimpimage-profile.h"
               "core/gimpimage-undo.h"
               "core/gimpitem-linked.h"
               "core/gimpgrouplayer.h"

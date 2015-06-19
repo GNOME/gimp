@@ -31,6 +31,15 @@
 #include "gimplayer-new.h"
 
 
+/*  local function prototypes  */
+
+static void   gimp_layer_new_convert_profile (GimpLayer    *layer,
+                                              const guint8 *icc_data,
+                                              gsize         icc_length);
+
+
+/*  public functions  */
+
 GimpLayer *
 gimp_layer_new (GimpImage            *image,
                 gint                  width,
@@ -83,13 +92,19 @@ gimp_layer_new_from_buffer (GimpBuffer           *buffer,
                             gdouble               opacity,
                             GimpLayerModeEffects  mode)
 {
+  const guint8 *icc_data;
+  gsize         icc_len;
+
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (format != NULL, NULL);
 
+  icc_data = gimp_buffer_get_icc_profile (buffer, &icc_len);
+
   return gimp_layer_new_from_gegl_buffer (gimp_buffer_get_buffer (buffer),
                                           dest_image, format,
-                                          name, opacity, mode);
+                                          name, opacity, mode,
+                                          icc_data, icc_len);
 }
 
 /**
@@ -113,7 +128,9 @@ gimp_layer_new_from_gegl_buffer (GeglBuffer           *buffer,
                                  const Babl           *format,
                                  const gchar          *name,
                                  gdouble               opacity,
-                                 GimpLayerModeEffects  mode)
+                                 GimpLayerModeEffects  mode,
+                                 const guint8         *buffer_icc_data,
+                                 gsize                 buffer_icc_length)
 {
   GimpLayer  *layer;
   GeglBuffer *dest;
@@ -121,6 +138,7 @@ gimp_layer_new_from_gegl_buffer (GeglBuffer           *buffer,
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (format != NULL, NULL);
+  g_return_val_if_fail (buffer_icc_data != NULL || buffer_icc_length == 0, NULL);
 
   /*  do *not* use the buffer's format because this function gets
    *  buffers of any format passed, and converts them
@@ -133,6 +151,9 @@ gimp_layer_new_from_gegl_buffer (GeglBuffer           *buffer,
 
   dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
   gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, dest, NULL);
+
+  if (buffer_icc_data)
+    gimp_layer_new_convert_profile (layer, buffer_icc_data, buffer_icc_length);
 
   return layer;
 }
@@ -164,6 +185,8 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
   GimpLayer  *layer;
   gint        width;
   gint        height;
+  guint8     *icc_data;
+  gsize       icc_len;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
@@ -182,5 +205,23 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
                    gdk_pixbuf_get_pixels (pixbuf),
                    gdk_pixbuf_get_rowstride (pixbuf));
 
+  icc_data = gimp_pixbuf_get_icc_profile (pixbuf, &icc_len);
+  if (icc_data)
+    {
+      gimp_layer_new_convert_profile (layer, icc_data, icc_len);
+      g_free (icc_data);
+    }
+
   return layer;
+}
+
+
+/*  private functions  */
+
+static void
+gimp_layer_new_convert_profile (GimpLayer    *layer,
+                                const guint8 *icc_data,
+                                gsize         icc_length)
+{
+  /* FIXME implement */
 }

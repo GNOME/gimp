@@ -32,6 +32,7 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgrouplayer.h"
+#include "core/gimpimage-profile.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem-linked.h"
@@ -165,8 +166,12 @@ layer_new_from_visible_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GimpPickable *pickable = GIMP_PICKABLE (image);
+      const guint8 *icc_data;
+      gsize         icc_len;
 
       gimp_pickable_flush (pickable);
+
+      icc_data = gimp_image_get_icc_profile (image, &icc_len);
 
       layer = gimp_layer_new_from_gegl_buffer (gimp_pickable_get_buffer (pickable),
                                                dest_image,
@@ -174,7 +179,8 @@ layer_new_from_visible_invoker (GimpProcedure         *procedure,
                                                                             TRUE),
                                                name,
                                                GIMP_OPACITY_OPAQUE,
-                                               GIMP_NORMAL_MODE);
+                                               GIMP_NORMAL_MODE,
+                                               icc_data, icc_len);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

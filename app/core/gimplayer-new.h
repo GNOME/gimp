@@ -38,7 +38,9 @@ GimpLayer * gimp_layer_new_from_gegl_buffer (GeglBuffer           *buffer,
                                              const Babl           *format,
                                              const gchar          *name,
                                              gdouble               opacity,
-                                             GimpLayerModeEffects  mode);
+                                             GimpLayerModeEffects  mode,
+                                             const guint8         *buffer_icc_data,
+                                             gsize                 buffer_icc_length);
 GimpLayer * gimp_layer_new_from_pixbuf      (GdkPixbuf            *pixbuf,
                                              GimpImage            *dest_image,
                                              const Babl           *format,
