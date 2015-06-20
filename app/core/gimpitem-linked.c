@@ -48,7 +48,7 @@ gimp_item_linked_is_locked (const GimpItem *item)
                                         GIMP_ITEM_TYPE_ALL,
                                         GIMP_ITEM_SET_LINKED);
 
-  list = gimp_image_item_list_filter (item, list, TRUE);
+  list = gimp_image_item_list_filter (item, list);
 
   for (l = list; l && ! locked; l = g_list_next (l))
     {
@@ -87,7 +87,7 @@ gimp_item_linked_translate (GimpItem *item,
                                         GIMP_ITEM_TYPE_ALL,
                                         GIMP_ITEM_SET_LINKED);
 
-  list = gimp_image_item_list_filter (item, list, TRUE);
+  list = gimp_image_item_list_filter (item, list);
 
   gimp_image_item_list_translate (gimp_item_get_image (item), list,
                                   offset_x, offset_y, push_undo);
@@ -113,7 +113,7 @@ gimp_item_linked_flip (GimpItem            *item,
                                         GIMP_ITEM_TYPE_ALL,
                                         GIMP_ITEM_SET_LINKED);
 
-  list = gimp_image_item_list_filter (item, list, TRUE);
+  list = gimp_image_item_list_filter (item, list);
 
   gimp_image_item_list_flip (gimp_item_get_image (item), list, context,
                              flip_type, axis, clip_result);
@@ -141,7 +141,7 @@ gimp_item_linked_rotate (GimpItem         *item,
                                         GIMP_ITEM_TYPE_VECTORS,
                                         GIMP_ITEM_SET_LINKED);
 
-  list = gimp_image_item_list_filter (item, list, TRUE);
+  list = gimp_image_item_list_filter (item, list);
 
   gimp_image_item_list_rotate (gimp_item_get_image (item), list, context,
                                rotate_type, center_x, center_y, clip_result);
@@ -152,7 +152,7 @@ gimp_item_linked_rotate (GimpItem         *item,
                                         GIMP_ITEM_TYPE_CHANNELS,
                                         GIMP_ITEM_SET_LINKED);
 
-  list = gimp_image_item_list_filter (item, list, TRUE);
+  list = gimp_image_item_list_filter (item, list);
 
   gimp_image_item_list_rotate (gimp_item_get_image (item), list, context,
                                rotate_type, center_x, center_y, TRUE);
@@ -181,7 +181,7 @@ gimp_item_linked_transform (GimpItem               *item,
                                         GIMP_ITEM_TYPE_ALL,
                                         GIMP_ITEM_SET_LINKED);
 
-  list = gimp_image_item_list_filter (item, list, TRUE);
+  list = gimp_image_item_list_filter (item, list);
 
   gimp_image_item_list_transform (gimp_item_get_image (item), list, context,
                                   matrix, direction,
