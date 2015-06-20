@@ -242,8 +242,7 @@ gimp_image_item_list_remove_children (GList          *list,
 GList *
 gimp_image_item_list_filter (const GimpItem *exclude,
                              GList          *list,
-                             gboolean        remove_children,
-                             gboolean        remove_locked)
+                             gboolean        remove_children)
 {
   GList *l;
 
@@ -267,21 +266,6 @@ gimp_image_item_list_filter (const GimpItem *exclude,
           l->next = next;
           if (next)
             next->prev = l;
-        }
-    }
-
-  if (remove_locked)
-    {
-      l = list;
-
-      while (l)
-        {
-          GimpItem *item = l->data;
-
-          l = g_list_next (l);
-
-          if (gimp_item_is_content_locked (item))
-            list = g_list_remove (list, item);
         }
     }
 
