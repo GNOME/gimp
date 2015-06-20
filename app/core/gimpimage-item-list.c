@@ -241,8 +241,7 @@ gimp_image_item_list_remove_children (GList          *list,
 
 GList *
 gimp_image_item_list_filter (const GimpItem *exclude,
-                             GList          *list,
-                             gboolean        remove_children)
+                             GList          *list)
 {
   GList *l;
 
@@ -251,22 +250,19 @@ gimp_image_item_list_filter (const GimpItem *exclude,
   if (! list)
     return NULL;
 
-  if (remove_children)
+  if (exclude)
+    list = gimp_image_item_list_remove_children (list, exclude);
+
+  for (l = list; l; l = g_list_next (l))
     {
-      if (exclude)
-        list = gimp_image_item_list_remove_children (list, exclude);
+      GimpItem *item = l->data;
+      GList    *next;
 
-      for (l = list; l; l = g_list_next (l))
-        {
-          GimpItem *item = l->data;
-          GList    *next;
+      next = gimp_image_item_list_remove_children (g_list_next (l), item);
 
-          next = gimp_image_item_list_remove_children (g_list_next (l), item);
-
-          l->next = next;
-          if (next)
-            next->prev = l;
-        }
+      l->next = next;
+      if (next)
+        next->prev = l;
     }
 
   return list;

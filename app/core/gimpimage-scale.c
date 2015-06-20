@@ -286,7 +286,7 @@ gimp_image_scale_check (const GimpImage *image,
                                              GIMP_ITEM_TYPE_CHANNELS,
                                              GIMP_ITEM_SET_ALL);
 
-  gimp_image_item_list_filter (NULL, drawables, TRUE);
+  gimp_image_item_list_filter (NULL, drawables);
 
   drawables = g_list_prepend (drawables, gimp_image_get_mask (image));
 
