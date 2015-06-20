@@ -1711,7 +1711,7 @@ gimp_image_estimate_memsize (const GimpImage   *image,
                                              GIMP_ITEM_TYPE_CHANNELS,
                                              GIMP_ITEM_SET_ALL);
 
-  gimp_image_item_list_filter (NULL, drawables, TRUE, FALSE);
+  gimp_image_item_list_filter (NULL, drawables, TRUE);
 
   drawables = g_list_prepend (drawables, gimp_image_get_mask (image));
 
