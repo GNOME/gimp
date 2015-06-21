@@ -482,19 +482,19 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
             g_object_unref (thumb);
 
           g_free (label);
+        }
 
-          if (gimp_item_is_group (items[i]))
-            {
-              gint32 *children;
-              gint    n_children;
+      if (gimp_item_is_group (items[i]))
+        {
+          gint32 *children;
+          gint    n_children;
 
-              children = gimp_item_get_children (items[i], &n_children);
-              gimp_item_combo_box_model_add (combo_box, store,
-                                             image,
-                                             n_children, children,
-                                             tree_level + 1);
-              g_free (children);
-            }
+          children = gimp_item_get_children (items[i], &n_children);
+          gimp_item_combo_box_model_add (combo_box, store,
+                                         image,
+                                         n_children, children,
+                                         tree_level + 1);
+          g_free (children);
         }
     }
 
