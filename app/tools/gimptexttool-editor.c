@@ -61,48 +61,57 @@
 
 /*  local function prototypes  */
 
-static void   gimp_text_tool_ensure_proxy       (GimpTextTool    *text_tool);
-static void   gimp_text_tool_move_cursor        (GimpTextTool    *text_tool,
-                                                 GtkMovementStep  step,
-                                                 gint             count,
-                                                 gboolean         extend_selection);
-static void   gimp_text_tool_insert_at_cursor   (GimpTextTool    *text_tool,
-                                                 const gchar     *str);
-static void   gimp_text_tool_delete_from_cursor (GimpTextTool    *text_tool,
-                                                 GtkDeleteType    type,
-                                                 gint             count);
-static void   gimp_text_tool_backspace          (GimpTextTool    *text_tool);
-static void   gimp_text_tool_toggle_overwrite   (GimpTextTool    *text_tool);
-static void   gimp_text_tool_select_all         (GimpTextTool    *text_tool,
-                                                 gboolean         select);
-static void   gimp_text_tool_change_size        (GimpTextTool    *text_tool,
-                                                 gdouble          amount);
-static void   gimp_text_tool_change_baseline    (GimpTextTool    *text_tool,
-                                                 gdouble          amount);
-static void   gimp_text_tool_change_kerning     (GimpTextTool    *text_tool,
-                                                 gdouble          amount);
+static void     gimp_text_tool_ensure_proxy       (GimpTextTool    *text_tool);
+static void     gimp_text_tool_move_cursor        (GimpTextTool    *text_tool,
+                                                   GtkMovementStep  step,
+                                                   gint             count,
+                                                   gboolean         extend_selection);
+static void     gimp_text_tool_insert_at_cursor   (GimpTextTool    *text_tool,
+                                                   const gchar     *str);
+static void     gimp_text_tool_delete_from_cursor (GimpTextTool    *text_tool,
+                                                   GtkDeleteType    type,
+                                                   gint             count);
+static void     gimp_text_tool_backspace          (GimpTextTool    *text_tool);
+static void     gimp_text_tool_toggle_overwrite   (GimpTextTool    *text_tool);
+static void     gimp_text_tool_select_all         (GimpTextTool    *text_tool,
+                                                   gboolean         select);
+static void     gimp_text_tool_change_size        (GimpTextTool    *text_tool,
+                                                   gdouble          amount);
+static void     gimp_text_tool_change_baseline    (GimpTextTool    *text_tool,
+                                                   gdouble          amount);
+static void     gimp_text_tool_change_kerning     (GimpTextTool    *text_tool,
+                                                   gdouble          amount);
 
-static void   gimp_text_tool_options_notify     (GimpTextOptions *options,
-                                                 GParamSpec      *pspec,
-                                                 GimpTextTool    *text_tool);
-static void   gimp_text_tool_editor_dialog      (GimpTextTool    *text_tool);
-static void   gimp_text_tool_editor_destroy     (GtkWidget       *dialog,
-                                                 GimpTextTool    *text_tool);
-static void   gimp_text_tool_enter_text         (GimpTextTool    *text_tool,
-                                                 const gchar     *str);
-static void   gimp_text_tool_xy_to_iter         (GimpTextTool    *text_tool,
-                                                 gdouble          x,
-                                                 gdouble          y,
-                                                 GtkTextIter     *iter);
-static void   gimp_text_tool_im_commit          (GtkIMContext    *context,
-                                                 const gchar     *str,
-                                                 GimpTextTool    *text_tool);
-static void   gimp_text_tool_im_preedit_start   (GtkIMContext    *context,
-                                                 GimpTextTool    *text_tool);
-static void   gimp_text_tool_im_preedit_end     (GtkIMContext    *context,
-                                                 GimpTextTool    *text_tool);
-static void   gimp_text_tool_im_preedit_changed (GtkIMContext    *context,
-                                                 GimpTextTool    *text_tool);
+static void     gimp_text_tool_options_notify     (GimpTextOptions *options,
+                                                   GParamSpec      *pspec,
+                                                   GimpTextTool    *text_tool);
+static void     gimp_text_tool_editor_dialog      (GimpTextTool    *text_tool);
+static void     gimp_text_tool_editor_destroy     (GtkWidget       *dialog,
+                                                   GimpTextTool    *text_tool);
+static void     gimp_text_tool_enter_text         (GimpTextTool    *text_tool,
+                                                   const gchar     *str);
+static void     gimp_text_tool_xy_to_iter         (GimpTextTool    *text_tool,
+                                                   gdouble          x,
+                                                   gdouble          y,
+                                                   GtkTextIter     *iter);
+
+static void     gimp_text_tool_im_preedit_start   (GtkIMContext    *context,
+                                                   GimpTextTool    *text_tool);
+static void     gimp_text_tool_im_preedit_end     (GtkIMContext    *context,
+                                                   GimpTextTool    *text_tool);
+static void     gimp_text_tool_im_preedit_changed (GtkIMContext    *context,
+                                                   GimpTextTool    *text_tool);
+static void     gimp_text_tool_im_commit          (GtkIMContext    *context,
+                                                   const gchar     *str,
+                                                   GimpTextTool    *text_tool);
+static gboolean gimp_text_tool_im_retrieve_surrounding
+                                                  (GtkIMContext    *context,
+                                                   GimpTextTool    *text_tool);
+static gboolean gimp_text_tool_im_delete_surrounding
+                                                  (GtkIMContext    *context,
+                                                   gint             offset,
+                                                   gint             n_chars,
+                                                   GimpTextTool    *text_tool);
 
 
 /*  public functions  */
@@ -118,9 +127,6 @@ gimp_text_tool_editor_init (GimpTextTool *text_tool)
   text_tool->overwrite_mode = FALSE;
   text_tool->x_pos          = -1;
 
-  g_signal_connect (text_tool->im_context, "commit",
-                    G_CALLBACK (gimp_text_tool_im_commit),
-                    text_tool);
   g_signal_connect (text_tool->im_context, "preedit-start",
                     G_CALLBACK (gimp_text_tool_im_preedit_start),
                     text_tool);
@@ -130,7 +136,15 @@ gimp_text_tool_editor_init (GimpTextTool *text_tool)
   g_signal_connect (text_tool->im_context, "preedit-changed",
                     G_CALLBACK (gimp_text_tool_im_preedit_changed),
                     text_tool);
-
+  g_signal_connect (text_tool->im_context, "commit",
+                    G_CALLBACK (gimp_text_tool_im_commit),
+                    text_tool);
+  g_signal_connect (text_tool->im_context, "retrieve-surrounding",
+                    G_CALLBACK (gimp_text_tool_im_retrieve_surrounding),
+                    text_tool);
+  g_signal_connect (text_tool->im_context, "delete-surrounding",
+                    G_CALLBACK (gimp_text_tool_im_delete_surrounding),
+                    text_tool);
 }
 
 void
@@ -1332,14 +1346,6 @@ gimp_text_tool_xy_to_iter (GimpTextTool *text_tool,
 }
 
 static void
-gimp_text_tool_im_commit (GtkIMContext *context,
-                          const gchar  *str,
-                          GimpTextTool *text_tool)
-{
-  gimp_text_tool_enter_text (text_tool, str);
-}
-
-static void
 gimp_text_tool_im_preedit_start (GtkIMContext *context,
                                  GimpTextTool *text_tool)
 {
@@ -1414,7 +1420,72 @@ gimp_text_tool_im_preedit_changed (GtkIMContext *context,
                                      &text_tool->preedit_string, NULL,
                                      &text_tool->preedit_cursor);
 
-  if (text_tool->preedit_label)
-    gtk_label_set_text (GTK_LABEL (text_tool->preedit_label),
-                        text_tool->preedit_string);
+  if (text_tool->preedit_string && *text_tool->preedit_string)
+    {
+      if (! text_tool->preedit_overlay)
+        gimp_text_tool_im_preedit_start (context, text_tool);
+
+      gtk_label_set_text (GTK_LABEL (text_tool->preedit_label),
+                          text_tool->preedit_string);
+    }
+  else
+    {
+      /* an empty string marks the end of preedit */
+      gimp_text_tool_im_preedit_end (context, text_tool);
+    }
+}
+
+static void
+gimp_text_tool_im_commit (GtkIMContext *context,
+                          const gchar  *str,
+                          GimpTextTool *text_tool)
+{
+  gimp_text_tool_enter_text (text_tool, str);
+}
+
+static gboolean
+gimp_text_tool_im_retrieve_surrounding (GtkIMContext *context,
+                                        GimpTextTool *text_tool)
+{
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+  GtkTextIter    start;
+  GtkTextIter    end;
+  gint           pos;
+  gchar         *text;
+
+  gtk_text_buffer_get_iter_at_mark (buffer, &start,
+                                    gtk_text_buffer_get_insert (buffer));
+  end = start;
+
+  pos = gtk_text_iter_get_line_index (&start);
+  gtk_text_iter_set_line_offset (&start, 0);
+  gtk_text_iter_forward_to_line_end (&end);
+
+  text = gtk_text_iter_get_slice (&start, &end);
+  gtk_im_context_set_surrounding (context, text, -1, pos);
+  g_free (text);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_text_tool_im_delete_surrounding (GtkIMContext *context,
+                                      gint          offset,
+                                      gint          n_chars,
+                                      GimpTextTool *text_tool)
+{
+  GtkTextBuffer *buffer = GTK_TEXT_BUFFER (text_tool->buffer);
+  GtkTextIter    start;
+  GtkTextIter    end;
+
+  gtk_text_buffer_get_iter_at_mark (buffer, &start,
+                                    gtk_text_buffer_get_insert (buffer));
+  end = start;
+
+  gtk_text_iter_forward_chars (&start, offset);
+  gtk_text_iter_forward_chars (&end, offset + n_chars);
+
+  gtk_text_buffer_delete_interactive (buffer, &start, &end, TRUE);
+
+  return TRUE;
 }
