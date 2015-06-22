@@ -150,7 +150,17 @@ gimp_fonts_add_directories (FcConfig    *config,
   path = gimp_path_parse (path_str, 256, TRUE, NULL);
 
   for (list = path; list; list = list->next)
-    FcConfigAppFontAddDir (config, (const guchar *) list->data);
+    {
+#ifdef G_OS_WIN32
+      gchar *dir = g_win32_locale_filename_from_utf8 (list->data);
+#else
+      gchar *dir = g_strdup (list->data);
+#endif
+
+      FcConfigAppFontAddDir (config, (const FcChar8 *) dir);
+
+      g_free (dir);
+    }
 
   gimp_path_free (path);
 }
