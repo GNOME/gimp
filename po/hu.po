@@ -10,16 +10,16 @@
 # Arpad Biro <biro arpad gmail>, 2004, 2007, 2008.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2007, 2008, 2009, 2012.
 # András Prim <gimme_at_primandras.hu>, 2012.
-# Balázs Úr <urbalazs at gmail dot com>, 2013, 2014.
+# Balázs Úr <urbalazs at gmail dot com>, 2013, 2014, 2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-8\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-09-20 17:27+0000\n"
-"PO-Revision-Date: 2014-09-20 23:42+0200\n"
+"POT-Creation-Date: 2015-06-23 08:35+0000\n"
+"PO-Revision-Date: 2015-06-23 13:55+0200\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
-"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"Language-Team: Hungarian <openscope at googlegroups dot com>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -193,11 +193,11 @@ msgstr "A kimenetre küld egy gimprc fájlt az alapértelmezett beállításokka
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "A PDB elavult eljárásainak kiíratása egy rendezett listában"
 
-#: ../app/main.c:399
+#: ../app/main.c:433
 msgid "[FILE|URI...]"
 msgstr "[FÁJL|URI…]"
 
-#: ../app/main.c:421
+#: ../app/main.c:455
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -205,20 +205,20 @@ msgstr ""
 "A program nem tudta inicializálni a grafikus felületet.\n"
 "Ellenőrizze, hogy helyesen van-e beállítva a megjelenítési környezet."
 
-#: ../app/main.c:440
+#: ../app/main.c:474
 msgid "Another GIMP instance is already running."
 msgstr "Már fut egy másik GIMP-példány."
 
-#: ../app/main.c:512
+#: ../app/main.c:546
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP-kimenet. Az ablak bezárásához nyomjon le egy gombot."
 
-#: ../app/main.c:513
+#: ../app/main.c:547
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Az ablak bezárásához nyomjon le egy gombot)\n"
 
-#: ../app/main.c:530
+#: ../app/main.c:564
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP-kimenet. Minimalizálhatja az ablakot, de ne zárja be."
 
@@ -439,7 +439,7 @@ msgid "Text Editor"
 msgstr "Szövegszerkesztő"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
-#: ../app/dialogs/preferences-dialog.c:1861 ../app/gui/gui.c:436
+#: ../app/dialogs/preferences-dialog.c:1861 ../app/gui/gui.c:441
 msgid "Tool Options"
 msgstr "Eszközbeállítások"
 
@@ -975,13 +975,13 @@ msgid "Use the composite color of all visible layers"
 msgstr "Az összes látható réteg összesített színe alapján"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:232
-#: ../app/dialogs/file-open-dialog.c:277
+#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:220
+#: ../app/dialogs/file-open-dialog.c:265
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:592
 #: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:168
-#: ../app/widgets/gimptoolbox.c:818
+#: ../app/widgets/gimptoolbox.c:817
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1352,8 +1352,6 @@ msgid "About GIMP"
 msgstr "A GIMP névjegye"
 
 #: ../app/actions/dialogs-actions.c:267
-#| msgctxt "dialogs-action"
-#| msgid "_About"
 msgctxt "dialogs-action"
 msgid "About"
 msgstr "Névjegy"
@@ -1364,7 +1362,7 @@ msgid "_About"
 msgstr "_Névjegy"
 
 #: ../app/actions/dialogs-actions.c:333
-#: ../app/dialogs/preferences-dialog.c:1951 ../app/widgets/gimptoolbox.c:540
+#: ../app/dialogs/preferences-dialog.c:1951 ../app/widgets/gimptoolbox.c:539
 msgid "Toolbox"
 msgstr "Eszköztár"
 
@@ -4636,7 +4634,7 @@ msgstr "Szöveges fájl megnyitása (UTF-8)"
 #: ../app/core/gimppalette-load.c:274 ../app/core/gimppalette-load.c:320
 #: ../app/core/gimppalette-load.c:377 ../app/core/gimppalette-load.c:467
 #: ../app/core/gimppalette-load.c:634 ../app/core/gimppattern-load.c:76
-#: ../app/tools/gimpcurvestool.c:649 ../app/tools/gimplevelstool.c:747
+#: ../app/tools/gimpcurvestool.c:642 ../app/tools/gimplevelstool.c:747
 #: ../app/xcf/xcf.c:359
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -6005,7 +6003,7 @@ msgstr "Jobbkezes"
 #: ../app/config/gimpconfig-file.c:67 ../app/core/gimpbrushgenerated-save.c:62
 #: ../app/core/gimpcurve-save.c:52 ../app/core/gimpgradient-save.c:50
 #: ../app/core/gimpgradient-save.c:144 ../app/core/gimppalette-save.c:56
-#: ../app/gui/themes.c:248 ../app/tools/gimpcurvestool.c:702
+#: ../app/gui/themes.c:248 ../app/tools/gimpcurvestool.c:695
 #: ../app/tools/gimplevelstool.c:800 ../app/vectors/gimpvectors-export.c:81
 #: ../app/xcf/xcf.c:452
 #, c-format
@@ -8586,7 +8584,7 @@ msgstr "A réteget nem lehet feljebb helyezni."
 msgid "Layer cannot be lowered more."
 msgstr "A réteget nem lehet még lejjebb helyezni."
 
-#: ../app/core/gimplayer.c:450 ../app/core/gimplayer.c:1528
+#: ../app/core/gimplayer.c:450 ../app/core/gimplayer.c:1529
 #: ../app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -8601,46 +8599,46 @@ msgstr ""
 "Lebegő kijelölés\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1448
+#: ../app/core/gimplayer.c:1449
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Nem lehet rétegmaszkot hozzáadni, mert már van egy rétegmaszk."
 
-#: ../app/core/gimplayer.c:1459
+#: ../app/core/gimplayer.c:1460
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Nem lehet a megadott rétegtől eltérő dimenziójú rétegmaszkot hozzáadni."
 
-#: ../app/core/gimplayer.c:1465
+#: ../app/core/gimplayer.c:1466
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Rétegmaszk hozzáadása"
 
-#: ../app/core/gimplayer.c:1583
+#: ../app/core/gimplayer.c:1584
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Alfa átvitele a maszkra"
 
-#: ../app/core/gimplayer.c:1753
+#: ../app/core/gimplayer.c:1754
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Rétegmaszk alkalmazása"
 
-#: ../app/core/gimplayer.c:1754
+#: ../app/core/gimplayer.c:1755
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Rétegmaszk törlése"
 
-#: ../app/core/gimplayer.c:1873
+#: ../app/core/gimplayer.c:1874
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Alfa csatorna hozzáadása"
 
-#: ../app/core/gimplayer.c:1927
+#: ../app/core/gimplayer.c:1928
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Alfa csatorna eltávolítása"
 
-#: ../app/core/gimplayer.c:1947
+#: ../app/core/gimplayer.c:1948
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Réteg kép-méretűvé alakítása"
@@ -8870,7 +8868,6 @@ msgstr ""
 
 #: ../app/core/gimptoolpreset-load.c:61
 #, c-format
-#| msgid "Error while writing '%s': %s"
 msgid "Error while parsing '%s'"
 msgstr "Hiba a(z) „%s” feldolgozása közben"
 
@@ -9122,7 +9119,7 @@ msgstr "_Mód:"
 msgid "_Opacity:"
 msgstr "Át_látszatlanság:"
 
-#: ../app/dialogs/file-open-dialog.c:266
+#: ../app/dialogs/file-open-dialog.c:254
 msgid "Open layers"
 msgstr "Rétegek megnyitása"
 
@@ -10729,7 +10726,7 @@ msgid "Navigate the image display"
 msgstr "Navigálás a megjelenített képen"
 
 #: ../app/display/gimpdisplayshell.c:746
-#: ../app/display/gimpdisplayshell.c:1327 ../app/widgets/gimptoolbox.c:253
+#: ../app/display/gimpdisplayshell.c:1331 ../app/widgets/gimptoolbox.c:253
 msgid "Drop image files here to open them"
 msgstr "Képfájlok megnyitásához ejtse azokat ide"
 
@@ -10816,7 +10813,7 @@ msgstr "A rétegcsoportok képpontjai nem módosíthatók."
 #: ../app/display/gimpdisplayshell-dnd.c:471 ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1466
+#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1477
 msgid "The active layer's pixels are locked."
 msgstr "Az aktív réteg képpontjai zárolva vannak."
 
@@ -10880,7 +10877,7 @@ msgstr "(tiszta)"
 
 #: ../app/display/gimpdisplayshell-title.c:338
 #: ../app/display/gimpdisplayshell-title.c:351
-#: ../app/widgets/gimpactiongroup.c:860
+#: ../app/widgets/gimpactiongroup.c:884
 msgid "(none)"
 msgstr "(nincs)"
 
@@ -10889,31 +10886,31 @@ msgstr "(nincs)"
 msgid "Cancel <i>%s</i>"
 msgstr "<i>%s</i> megszakítása"
 
-#: ../app/file/file-open.c:136 ../app/file/file-save.c:115
+#: ../app/file/file-open.c:129 ../app/file/file-save.c:115
 msgid "Not a regular file"
 msgstr "Nem szabályos fájl"
 
-#: ../app/file/file-open.c:188
+#: ../app/file/file-open.c:191
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr ""
 "A(z) %s bővítmény sikeres lefutást jelzett, viszont nem adott vissza képet"
 
-#: ../app/file/file-open.c:199
+#: ../app/file/file-open.c:202
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "A(z) %s bővítmény nem tudta megnyitni a képet"
 
-#: ../app/file/file-open.c:530
+#: ../app/file/file-open.c:533
 msgid "Image doesn't contain any layers"
 msgstr "A kép nem tartalmaz réteget"
 
-#: ../app/file/file-open.c:590
+#: ../app/file/file-open.c:593
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "„%s” megnyitása sikertelen: %s"
 
-#: ../app/file/file-open.c:700
+#: ../app/file/file-open.c:703
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -10982,18 +10979,17 @@ msgstr "Kitöltés homogén színnel"
 msgid "Fill the original position of the cage with a plain color"
 msgstr "A ketrec eredeti területének kitöltése homogén színnel."
 
-#. Normally this should have been taken care of during command line
-#. * parsing as a post-parse hook of gtk_get_option_group(), using the
-#. * system locales.
-#. * But user config may have overriden the language, therefore we must
-#. * check the widget directions again.
+#. TRANSLATORS: there is no need to translate this in GIMP. This uses
+#. * "gtk20" domain as a special trick to determine language direction,
+#. * but xgettext extracts it anyway mistakenly into GIMP po files.
+#. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:208
+#: ../app/gui/gui.c:207
 msgid "default:LTR"
 msgstr "default:LTR"
 
 #. initialize the document history
-#: ../app/gui/gui.c:433
+#: ../app/gui/gui.c:438
 msgid "Documents"
 msgstr "Dokumentumok"
 
@@ -11735,7 +11731,7 @@ msgstr ""
 "abcdefghijklmnopqrstuvwxyz\n"
 "áÁéÉíÍóÓöÖőŐúÚüÜűŰ"
 
-#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1402
+#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1415
 msgid "Add Text Layer"
 msgstr "Szövegréteg hozzáadása"
 
@@ -12152,7 +12148,7 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Kijelölés szín szerint"
 
-#: ../app/tools/gimpcagetool.c:158 ../app/tools/gimpcagetool.c:1123
+#: ../app/tools/gimpcagetool.c:158 ../app/tools/gimpcagetool.c:1128
 msgid "Cage Transform"
 msgstr "Ketrec átalakítás"
 
@@ -12164,15 +12160,15 @@ msgstr "Ketrec átalakítás: a kijelölést deformálja egy ketrec segítségé
 msgid "_Cage Transform"
 msgstr "_Ketrec átalakítás"
 
-#: ../app/tools/gimpcagetool.c:356
+#: ../app/tools/gimpcagetool.c:357
 msgid "Press ENTER to commit the transform"
 msgstr "Az átalakítás véglegesítéséhez nyomja meg az Entert"
 
-#: ../app/tools/gimpcagetool.c:1064
+#: ../app/tools/gimpcagetool.c:1069
 msgid "Computing Cage Coefficients"
 msgstr "Ketrec együtthatók számítása"
 
-#: ../app/tools/gimpcagetool.c:1241
+#: ../app/tools/gimpcagetool.c:1246
 msgid "Cage transform"
 msgstr "Ketrec átalakítás"
 
@@ -12510,65 +12506,65 @@ msgstr "Vágás: kattintással vagy Enter lenyomásával"
 msgid "There is no active layer to crop."
 msgstr "Nincs aktív réteg, ahonnan vágni lehetne."
 
-#: ../app/tools/gimpcurvestool.c:150
+#: ../app/tools/gimpcurvestool.c:144
 msgid "Curves"
 msgstr "Görbék"
 
-#: ../app/tools/gimpcurvestool.c:151
+#: ../app/tools/gimpcurvestool.c:145
 msgid "Curves Tool: Adjust color curves"
 msgstr "Görbeeszköz: színgörbék beállítása"
 
-#: ../app/tools/gimpcurvestool.c:152
+#: ../app/tools/gimpcurvestool.c:146
 msgid "_Curves..."
 msgstr "_Görbék…"
 
-#: ../app/tools/gimpcurvestool.c:178
+#: ../app/tools/gimpcurvestool.c:172
 msgid "Adjust Color Curves"
 msgstr "Színgörbék beállítása"
 
-#: ../app/tools/gimpcurvestool.c:180
+#: ../app/tools/gimpcurvestool.c:174
 msgid "Import Curves"
 msgstr "Görbék importálása"
 
-#: ../app/tools/gimpcurvestool.c:181
+#: ../app/tools/gimpcurvestool.c:175
 msgid "Export Curves"
 msgstr "Görbék exportálása"
 
-#: ../app/tools/gimpcurvestool.c:232
+#: ../app/tools/gimpcurvestool.c:226
 msgid "Curves does not operate on indexed layers."
 msgstr "A görbeeszköz nem használható indexelt rétegeken."
 
-#: ../app/tools/gimpcurvestool.c:340
+#: ../app/tools/gimpcurvestool.c:334
 msgid "Click to add a control point"
 msgstr "Kattintson vezérlőpont felvételéhez"
 
-#: ../app/tools/gimpcurvestool.c:345
+#: ../app/tools/gimpcurvestool.c:339
 msgid "Click to add control points to all channels"
 msgstr "Kattintson vezérlőpontok felvételéhez minden csatornába"
 
-#: ../app/tools/gimpcurvestool.c:350
+#: ../app/tools/gimpcurvestool.c:344
 msgid "Click to locate on curve (try Shift, Ctrl)"
 msgstr ""
 "Kattintással azonosíthat egy pontot a görbén (Shift, Ctrl is használható)"
 
-#: ../app/tools/gimpcurvestool.c:463 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:457 ../app/tools/gimplevelstool.c:384
 msgid "Cha_nnel:"
 msgstr "_Csatorna:"
 
-#: ../app/tools/gimpcurvestool.c:489 ../app/tools/gimplevelstool.c:408
+#: ../app/tools/gimpcurvestool.c:483 ../app/tools/gimplevelstool.c:408
 msgid "R_eset Channel"
 msgstr "Csatorna v_isszaállítása"
 
-#: ../app/tools/gimpcurvestool.c:583 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:574 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "Görbe_típus:"
 
-#: ../app/tools/gimpcurvestool.c:658 ../app/tools/gimplevelstool.c:756
+#: ../app/tools/gimpcurvestool.c:651 ../app/tools/gimplevelstool.c:756
 #, c-format
 msgid "Could not read header from '%s': %s"
 msgstr "Nem lehet beolvasni a fejlécet ebből: „%s”: %s"
 
-#: ../app/tools/gimpcurvestool.c:731
+#: ../app/tools/gimpcurvestool.c:724
 msgid "Use _old curves file format"
 msgstr "Régebb_i görbefájl-formátum használata"
 
@@ -12653,12 +12649,12 @@ msgid "Move Selection"
 msgstr "Kijelölés áthelyezése"
 
 #: ../app/tools/gimpeditselectiontool.c:246
-#: ../app/tools/gimpeditselectiontool.c:1241
+#: ../app/tools/gimpeditselectiontool.c:1235
 msgid "Move Floating Selection"
 msgstr "Lebegő kijelölés áthelyezése"
 
-#: ../app/tools/gimpeditselectiontool.c:455
-#: ../app/tools/gimpeditselectiontool.c:732
+#: ../app/tools/gimpeditselectiontool.c:453
+#: ../app/tools/gimpeditselectiontool.c:728
 msgid "Move: "
 msgstr "Áthelyezés: "
 
@@ -13943,19 +13939,19 @@ msgstr "Szövegeszköz: szövegrétegek létrehozása vagy szerkesztése"
 msgid "Te_xt"
 msgstr "Szöve_g"
 
-#: ../app/tools/gimptexttool.c:959
+#: ../app/tools/gimptexttool.c:972
 msgid "Reshape Text Layer"
 msgstr "Szövegréteg átformálása"
 
-#: ../app/tools/gimptexttool.c:1513 ../app/tools/gimptexttool.c:1516
+#: ../app/tools/gimptexttool.c:1526 ../app/tools/gimptexttool.c:1529
 msgid "Confirm Text Editing"
 msgstr "Szövegszerkesztés megerősítése"
 
-#: ../app/tools/gimptexttool.c:1520
+#: ../app/tools/gimptexttool.c:1533
 msgid "Create _New Layer"
 msgstr "Ú_j réteg létrehozása"
 
-#: ../app/tools/gimptexttool.c:1544
+#: ../app/tools/gimptexttool.c:1557
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -13970,7 +13966,7 @@ msgstr ""
 "Szerkesztheti a réteget vagy létrehozhat egy új szövegréteget annak "
 "szövegtulajdonságaival."
 
-#: ../app/tools/gimptexttool-editor.c:1199
+#: ../app/tools/gimptexttool-editor.c:1236
 msgid "GIMP Text Editor"
 msgstr "GIMP szövegszerkesztő"
 
@@ -14086,15 +14082,21 @@ msgstr "Eredeti méretarány megtartása"
 msgid "Transforming"
 msgstr "Átalakítás"
 
-#: ../app/tools/gimptransformtool.c:1465
+#: ../app/tools/gimptransformtool.c:269
+#, c-format
+#| msgid "The given file extension does not match the chosen file type."
+msgid "The selection does not intersect with the layer."
+msgstr "A kijelölés nem metszi a réteget."
+
+#: ../app/tools/gimptransformtool.c:1476
 msgid "There is no layer to transform."
 msgstr "Nincs átalakítható réteg."
 
-#: ../app/tools/gimptransformtool.c:1476
+#: ../app/tools/gimptransformtool.c:1487
 msgid "There is no path to transform."
 msgstr "Nincs átalakítható útvonal."
 
-#: ../app/tools/gimptransformtool.c:1477
+#: ../app/tools/gimptransformtool.c:1488
 msgid "The active path's strokes are locked."
 msgstr "Az aktív útvonal vonalai zárolva vannak."
 
@@ -14459,7 +14461,7 @@ msgstr "Nem sikerült útvonalakat importálni ebből: „%s”: %s"
 msgid "_Search:"
 msgstr "_Keresés:"
 
-#: ../app/widgets/gimpactiongroup.c:857
+#: ../app/widgets/gimpactiongroup.c:881
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -15650,7 +15652,7 @@ msgstr "írjon be címkéket"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1734
+#: ../app/widgets/gimptagentry.c:1750
 msgid ","
 msgstr ","
 
@@ -15703,7 +15705,7 @@ msgstr "„%s” attribútum <%s> elemen érvénytelen ebben a szövegkörnyezet
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "A szöveg legkülső eleme <markup> kell legyen, nem pedig <%s>"
 
-#: ../app/widgets/gimptextbuffer.c:1454
+#: ../app/widgets/gimptextbuffer.c:1459
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Érvénytelen UTF-8 adat a(z) „%s” fájlban."
@@ -16114,12 +16116,12 @@ msgstr ""
 msgid "Invalid UTF-8 string in XCF file"
 msgstr "Érvénytelen UTF-8 karakterlánc az XCF-fájlban"
 
-#: ../app/xcf/xcf-write.c:128
+#: ../app/xcf/xcf-write.c:155
 #, c-format
 msgid "Error writing XCF: %s"
 msgstr "Hiba az XCF írása közben: %s"
 
-#: ../app/xcf/xcf-seek.c:61 ../app/xcf/xcf-seek.c:87 ../app/xcf/xcf-seek.c:98
+#: ../app/xcf/xcf-seek.c:61
 #, c-format
 msgid "Could not seek in XCF file: %s"
 msgstr "Nem lehet pozicionálni az XCF-fájlban: %s"
@@ -16179,12 +16181,6 @@ msgstr ""
 "átalakítóként, stb."
 
 #: ../desktop/gimp.appdata.xml.in.h:3
-#| msgid ""
-#| "GIMP is expandable and extensible. It is designed to be augmented with "
-#| "plug-ins and extensions to do just about anything. The advanced scripting "
-#| "interface allows everything from the simplest task to the most complex "
-#| "image manipulation procedures to be easily scripted. GIMP is also "
-#| "available for Microsoft Windows and OS X."
 msgid ""
 "GIMP is expandable and extensible. It is designed to be augmented with plug-"
 "ins and extensions to do just about anything. The advanced scripting "
