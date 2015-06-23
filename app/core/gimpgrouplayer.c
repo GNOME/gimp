@@ -1208,6 +1208,9 @@ gimp_group_layer_update_size (GimpGroupLayer *group)
            */
           gimp_projectable_invalidate (GIMP_PROJECTABLE (group),
                                        x, y, width, height);
+
+          /*  see comment in gimp_group_layer_stack_update() below  */
+          gimp_pickable_flush (GIMP_PICKABLE (GET_PRIVATE (group)->projection));
         }
     }
 }
