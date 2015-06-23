@@ -187,7 +187,8 @@ static void        write_pixel_data     (FILE               *fd,
 static gint32      create_merged_image  (gint32              imageID);
 
 static const Babl* get_pixel_format     (gint32 drawableID);
-
+static const Babl* get_channel_format     (gint32 drawableID);
+static const Babl* get_mask_format     (gint32 drawableID);
 
 static void
 psd_lmode_layer (gint32  idLayer,
@@ -1121,7 +1122,13 @@ write_pixel_data (FILE   *fd,
                   gint32  ltable_offset)
 {
   GeglBuffer   *buffer = gimp_drawable_get_buffer (drawableID);
-  const Babl   *format = get_pixel_format (drawableID);
+  const Babl   *format;
+  if (gimp_item_is_channel(drawableID)) {
+    format = get_channel_format(drawableID);
+  }
+  else {
+    format = get_pixel_format (drawableID);
+  }
   gint32        tile_height = gimp_tile_height();
   gint32        height = gegl_buffer_get_height (buffer);
   gint32        width  = gegl_buffer_get_width (buffer);
@@ -1233,6 +1240,8 @@ write_pixel_data (FILE   *fd,
       if (maskID != -1)
         {
           GeglBuffer *mbuffer = gimp_drawable_get_buffer (maskID);
+          const Babl  *mformat = get_mask_format(maskID);
+
           len = 0;
 
           if (ChanLenPosition)
@@ -1266,7 +1275,7 @@ write_pixel_data (FILE   *fd,
                                GEGL_RECTANGLE (0, y,
                                                width,
                                                MIN (height - y, tile_height)),
-			       1.0, format, data,
+			       1.0, mformat, data,
                                GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
               tlen = get_compress_channel_data (&data[0],
                                                 width,
@@ -1349,7 +1358,7 @@ save_data (FILE   *fd,
       IFDBG printf ("\t\tWriting compressed channel data for channel %d\n",
                     i);
       write_pixel_data (fd, PSDImageData.lChannels[i], NULL,
-                        offset + 2*imageHeight*chan);
+                        offset + 2*imageHeight*chan); //check how imgs are channels here
       chan++;
     }
 }
@@ -1543,27 +1552,54 @@ get_pixel_format (gint32 drawableID)
   switch (gimp_drawable_type (drawableID))
     {
     case GIMP_GRAY_IMAGE:
-      format = babl_format ("Y u8");
+      format = babl_format ("Y' u8");
       break;
 
     case GIMP_GRAYA_IMAGE:
-      format = babl_format ("YA u8");
+      format = babl_format ("Y'A u8");
       break;
 
     case GIMP_RGB_IMAGE:
-    case GIMP_INDEXED_IMAGE:
-      format = babl_format ("RGB u8");
+      format = babl_format ("R'G'B' u8");
       break;
 
     case GIMP_RGBA_IMAGE:
+      format = babl_format ("R'G'B'A u8");
+      break;
+
+    case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
-      format = babl_format ("RGBA u8");
+      format = gimp_drawable_get_format(drawableID);
       break;
 
     default:
       return NULL;
       break;
     }
+
+  return format;
+}
+
+static const Babl *
+get_channel_format (gint32 drawableID)
+{
+  const Babl *format;
+
+  /* eventually we'll put a switch statement for bit depth here to
+   * support higher depth exports */
+  format = babl_format ("Y u8");
+
+  return format;
+}
+
+static const Babl *
+get_mask_format (gint32 drawableID)
+{
+  const Babl *format;
+
+  /* eventually we'll put a switch statement for bit depth here to
+   * support higher depth exports */
+  format = babl_format ("Y u8");
 
   return format;
 }
