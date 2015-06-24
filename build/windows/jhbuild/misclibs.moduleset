@@ -52,9 +52,9 @@
 </autotools>
 
 <autotools id="lcms2" autogen-sh="configure">
-	<branch version="2.6" repo="sf.net"
-			module="lcms/lcms/2.6/lcms2-2.6.tar.gz"
-			hash="sha1:b0ecee5cb8391338e6c281d1c11dcae2bc22a5d2">
+	<branch version="2.7" repo="sf.net"
+			module="lcms/lcms/2.7/lcms2-2.7.tar.gz"
+			hash="sha1:625f0d74bad4a0f6f917120fd992437d26f754d2">
 	</branch>
 </autotools>
 
