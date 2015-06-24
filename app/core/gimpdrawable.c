@@ -831,6 +831,8 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
 
   old_has_alpha = gimp_drawable_has_alpha (drawable);
 
+  g_object_freeze_notify (G_OBJECT (drawable));
+
   gimp_drawable_invalidate_boundary (drawable);
 
   if (push_undo)
@@ -845,6 +847,11 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
 
   drawable->private->buffer = buffer;
 
+  if (drawable->private->buffer_source_node)
+    gegl_node_set (drawable->private->buffer_source_node,
+                   "buffer", gimp_drawable_get_buffer (drawable),
+                   NULL);
+
   gimp_item_set_offset (item, offset_x, offset_y);
   gimp_item_set_size (item,
                       gegl_buffer_get_width  (buffer),
@@ -853,12 +860,9 @@ gimp_drawable_real_set_buffer (GimpDrawable *drawable,
   if (old_has_alpha != gimp_drawable_has_alpha (drawable))
     gimp_drawable_alpha_changed (drawable);
 
-  if (drawable->private->buffer_source_node)
-    gegl_node_set (drawable->private->buffer_source_node,
-                   "buffer", gimp_drawable_get_buffer (drawable),
-                   NULL);
-
   g_object_notify (G_OBJECT (drawable), "buffer");
+
+  g_object_thaw_notify (G_OBJECT (drawable));
 }
 
 static void
