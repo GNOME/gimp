@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
 "ywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-06-07 10:55+0000\n"
-"PO-Revision-Date: 2015-06-18 07:20+0200\n"
+"PO-Revision-Date: 2015-06-22 21:14+0200\n"
 "Last-Translator: Cédric Valmary (totenoc.eu) <cvalmary@yahoo.fr>\n"
 "Language-Team: Tot En Òc\n"
 "Language: oc\n"
@@ -34,7 +34,7 @@ msgstr "Alinhar los calques _visibles..."
 
 #: ../plug-ins/common/align-layers.c:207
 msgid "There are not enough layers to align."
-msgstr "I a pas pro de calques a aligner."
+msgstr "I a pas pro de calques a alinhar."
 
 #: ../plug-ins/common/align-layers.c:626
 msgid "Align Visible Layers"
@@ -194,7 +194,7 @@ msgstr "Arrestar la lectura"
 #, fuzzy
 #| msgid "Step to next frame"
 msgid "Step back to previous frame"
-msgstr "Pas cap a la prochaine imatge"
+msgstr "Pas cap a l'imatge que ven"
 
 #: ../plug-ins/common/animation-play.c:596
 msgid "_Step"
@@ -202,7 +202,7 @@ msgstr "_Pas"
 
 #: ../plug-ins/common/animation-play.c:596
 msgid "Step to next frame"
-msgstr "Pas cap a la prochaine imatge"
+msgstr "Pas cap a l'imatge que ven"
 
 #: ../plug-ins/common/animation-play.c:600
 msgid "Rewind the animation"
@@ -212,7 +212,7 @@ msgstr "Rembobiner l'animacion"
 #, fuzzy
 #| msgid "Rotate Image?"
 msgid "Reload the image"
-msgstr "Tourner l'imatge ?"
+msgstr "Virar l'imatge ?"
 
 #: ../plug-ins/common/animation-play.c:622
 msgid "Faster"
@@ -1286,7 +1286,7 @@ msgstr "Crominància _blava_cb470 :"
 
 #: ../plug-ins/common/compose.c:181
 msgid "_Redness cr470:"
-msgstr "Crominància _rouge_cr470 :"
+msgstr "Crominància _roge_cr470 :"
 
 #: ../plug-ins/common/compose.c:183
 msgid "_Luma y709:"
@@ -1298,7 +1298,7 @@ msgstr "Crominància _blava_cb 709 :"
 
 #: ../plug-ins/common/compose.c:185
 msgid "_Redness cr709:"
-msgstr "Crominància _rouge_cr709 :"
+msgstr "Crominància _roge_cr709 :"
 
 #: ../plug-ins/common/compose.c:191 ../plug-ins/common/decompose.c:176
 #: ../plug-ins/common/file-raw-data.c:1404
@@ -1743,7 +1743,7 @@ msgstr "crominància blava-cb470"
 
 #: ../plug-ins/common/decompose.c:167
 msgid "redness-cr470"
-msgstr "crominància rouge-cr470"
+msgstr "crominància roge-cr470"
 
 #: ../plug-ins/common/decompose.c:169
 msgid "luma-y709"
@@ -1755,7 +1755,7 @@ msgstr "crominància blava-cb709"
 
 #: ../plug-ins/common/decompose.c:171
 msgid "redness-cr709"
-msgstr "crominància rouge-cr709"
+msgstr "crominància roge-cr709"
 
 #. Redmode radio frame
 #: ../plug-ins/common/decompose.c:178
@@ -5428,7 +5428,7 @@ msgstr "Simule la distorsion de color produite per una photocopieuse"
 
 #: ../plug-ins/common/photocopy.c:158
 msgid "_Photocopy..."
-msgstr "Ph_otocopie..."
+msgstr "F_otocòpia..."
 
 #: ../plug-ins/common/photocopy.c:840
 msgid "Photocopy"
@@ -6086,7 +6086,7 @@ msgstr "Exp. :"
 
 #: ../plug-ins/common/sphere-designer.c:2792
 msgid "Transformations"
-msgstr "Transformations"
+msgstr "Transformacions"
 
 #: ../plug-ins/common/sphere-designer.c:2808
 #: ../plug-ins/map-object/map-object-ui.c:1097
@@ -9723,7 +9723,7 @@ msgstr "Complète"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:682
 msgid "IFS Fractal: Red"
-msgstr "Fractalas : rouge"
+msgstr "Fractalas : roge"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:690
 msgid "IFS Fractal: Green"
@@ -9743,11 +9743,11 @@ msgstr "Fractalas"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:854
 msgid "Spatial Transformation"
-msgstr "Transformation Spatiale"
+msgstr "Transformacion Spatiale"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:860
 msgid "Color Transformation"
-msgstr "Transformation de Color"
+msgstr "Transformacion de Color"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:870
 msgid "Relative probability:"
@@ -9778,15 +9778,15 @@ msgstr "Desplaçar"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1060
 msgid "Rotate"
-msgstr "Tourner"
+msgstr "Virar"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1060
 msgid "Rotate / Scale"
-msgstr "Tourner / Étirer"
+msgstr "Virar / Estirar"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1063
 msgid "Stretch"
-msgstr "Étendre"
+msgstr "Espandir"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:1161
 msgid "IFS Fractal Render Options"
@@ -9812,7 +9812,7 @@ msgstr "Rendut de Fractalas en cors (%d/%d)"
 #: ../plug-ins/ifs-compose/ifs-compose.c:1447
 #, c-format
 msgid "Transformation %s"
-msgstr "Transformation %s"
+msgstr "Transformacion %s"
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2395
 msgid "Save failed"
