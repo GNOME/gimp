@@ -24,10 +24,13 @@
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-item-list.h"
+#include "gimpimage-undo.h"
 #include "gimpitem.h"
 #include "gimpitem-linked.h"
 #include "gimplist.h"
 #include "gimpprogress.h"
+
+#include "gimp-intl.h"
 
 
 /*  public functions  */
@@ -63,23 +66,25 @@ gimp_item_linked_flip (GimpItem            *item,
                        gdouble              axis,
                        gboolean             clip_result)
 {
-  GList *list;
+  GimpImage *image;
+  GList     *items;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (gimp_item_get_linked (item) == TRUE);
   g_return_if_fail (gimp_item_is_attached (item));
 
-  list = gimp_image_item_list_get_list (gimp_item_get_image (item), item,
-                                        GIMP_ITEM_TYPE_ALL,
-                                        GIMP_ITEM_SET_LINKED);
+  image = gimp_item_get_image (item);
 
-  list = gimp_image_item_list_filter (item, list);
+  items = gimp_image_item_list_get_list (image, NULL,
+                                         GIMP_ITEM_TYPE_ALL,
+                                         GIMP_ITEM_SET_LINKED);
+  items = gimp_image_item_list_filter (NULL, items);
 
-  gimp_image_item_list_flip (gimp_item_get_image (item), list, context,
+  gimp_image_item_list_flip (image, items, context,
                              flip_type, axis, clip_result);
 
-  g_list_free (list);
+  g_list_free (items);
 }
 
 void
@@ -90,35 +95,42 @@ gimp_item_linked_rotate (GimpItem         *item,
                          gdouble           center_y,
                          gboolean          clip_result)
 {
-  GList *list;
+  GimpImage *image;
+  GList     *items;
+  GList     *channels;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (gimp_item_get_linked (item) == TRUE);
   g_return_if_fail (gimp_item_is_attached (item));
 
-  list = gimp_image_item_list_get_list (gimp_item_get_image (item), item,
-                                        GIMP_ITEM_TYPE_LAYERS |
-                                        GIMP_ITEM_TYPE_VECTORS,
-                                        GIMP_ITEM_SET_LINKED);
+  image = gimp_item_get_image (item);
 
-  list = gimp_image_item_list_filter (item, list);
+  items = gimp_image_item_list_get_list (image, NULL,
+                                         GIMP_ITEM_TYPE_LAYERS |
+                                         GIMP_ITEM_TYPE_VECTORS,
+                                         GIMP_ITEM_SET_LINKED);
+  items = gimp_image_item_list_filter (NULL, items);
 
-  gimp_image_item_list_rotate (gimp_item_get_image (item), list, context,
+  channels = gimp_image_item_list_get_list (image, NULL,
+                                            GIMP_ITEM_TYPE_CHANNELS,
+                                            GIMP_ITEM_SET_LINKED);
+  channels = gimp_image_item_list_filter (NULL, channels);
+
+  if (items && channels)
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
+                                 C_("undo-type", "Rotate Items"));
+
+  gimp_image_item_list_rotate (image, items, context,
                                rotate_type, center_x, center_y, clip_result);
-
-  g_list_free (list);
-
-  list = gimp_image_item_list_get_list (gimp_item_get_image (item), item,
-                                        GIMP_ITEM_TYPE_CHANNELS,
-                                        GIMP_ITEM_SET_LINKED);
-
-  list = gimp_image_item_list_filter (item, list);
-
-  gimp_image_item_list_rotate (gimp_item_get_image (item), list, context,
+  gimp_image_item_list_rotate (image, channels, context,
                                rotate_type, center_x, center_y, TRUE);
 
-  g_list_free (list);
+  if (items && channels)
+    gimp_image_undo_group_end (image);
+
+  g_list_free (items);
+  g_list_free (channels);
 }
 
 void
@@ -131,7 +143,8 @@ gimp_item_linked_transform (GimpItem               *item,
                             GimpTransformResize     clip_result,
                             GimpProgress           *progress)
 {
-  GList *list;
+  GimpImage *image;
+  GList     *items;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
@@ -139,16 +152,18 @@ gimp_item_linked_transform (GimpItem               *item,
   g_return_if_fail (gimp_item_is_attached (item));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  list = gimp_image_item_list_get_list (gimp_item_get_image (item), item,
-                                        GIMP_ITEM_TYPE_ALL,
-                                        GIMP_ITEM_SET_LINKED);
+  image = gimp_item_get_image (item);
 
-  list = gimp_image_item_list_filter (item, list);
+  items = gimp_image_item_list_get_list (image, NULL,
+                                         GIMP_ITEM_TYPE_ALL,
+                                         GIMP_ITEM_SET_LINKED);
 
-  gimp_image_item_list_transform (gimp_item_get_image (item), list, context,
+  items = gimp_image_item_list_filter (NULL, items);
+
+  gimp_image_item_list_transform (image, items, context,
                                   matrix, direction,
                                   interpolation_type, recursion_level,
                                   clip_result, progress);
 
-  g_list_free (list);
+  g_list_free (items);
 }

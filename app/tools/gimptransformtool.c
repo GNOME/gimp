@@ -998,15 +998,6 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
   progress = gimp_progress_start (GIMP_PROGRESS (tool),
                                   tr_tool->progress_text, FALSE);
 
-  if (gimp_item_get_linked (active_item))
-    gimp_item_linked_transform (active_item, context,
-                                &tr_tool->transform,
-                                options->direction,
-                                options->interpolation,
-                                options->recursion_level,
-                                clip,
-                                progress);
-
   if (orig_tiles)
     {
       /*  this happens when transforming a selection cut out of a
@@ -1038,18 +1029,31 @@ gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
     {
       /*  this happens for entire drawables, paths and layer groups  */
 
-      /*  always clip layer masks so they keep their size
-       */
-      if (GIMP_IS_CHANNEL (active_item))
-        clip = GIMP_TRANSFORM_RESIZE_CLIP;
+      if (gimp_item_get_linked (active_item))
+        {
+          gimp_item_linked_transform (active_item, context,
+                                      &tr_tool->transform,
+                                      options->direction,
+                                      options->interpolation,
+                                      options->recursion_level,
+                                      clip,
+                                      progress);
+        }
+      else
+        {
+          /*  always clip layer masks so they keep their size
+           */
+          if (GIMP_IS_CHANNEL (active_item))
+            clip = GIMP_TRANSFORM_RESIZE_CLIP;
 
-      gimp_item_transform (active_item, context,
-                           &tr_tool->transform,
-                           options->direction,
-                           options->interpolation,
-                           options->recursion_level,
-                           clip,
-                           progress);
+          gimp_item_transform (active_item, context,
+                               &tr_tool->transform,
+                               options->direction,
+                               options->interpolation,
+                               options->recursion_level,
+                               clip,
+                               progress);
+        }
     }
 
   if (progress)

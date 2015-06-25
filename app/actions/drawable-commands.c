@@ -264,17 +264,14 @@ drawable_flip_cmd_callback (GtkAction *action,
     }
 
   if (gimp_item_get_linked (item))
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
-                                 GIMP_ITEM_GET_CLASS (item)->flip_desc);
-
-  gimp_item_flip (item, context,
-                  (GimpOrientationType) value, axis, FALSE);
-
-  if (gimp_item_get_linked (item))
     {
       gimp_item_linked_flip (item, context,
                              (GimpOrientationType) value, axis, FALSE);
-      gimp_image_undo_group_end (image);
+    }
+  else
+    {
+      gimp_item_flip (item, context,
+                      (GimpOrientationType) value, axis, FALSE);
     }
 
   gimp_image_flush (image);
@@ -302,21 +299,18 @@ drawable_rotate_cmd_callback (GtkAction *action,
   center_x = ((gdouble) off_x + (gdouble) gimp_item_get_width  (item) / 2.0);
   center_y = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
 
-  if (gimp_item_get_linked (item))
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
-                                 GIMP_ITEM_GET_CLASS (item)->rotate_desc);
-
   if (GIMP_IS_CHANNEL (item))
     clip_result = TRUE;
-
-  gimp_item_rotate (item, context, (GimpRotationType) value,
-                    center_x, center_y, clip_result);
 
   if (gimp_item_get_linked (item))
     {
       gimp_item_linked_rotate (item, context, (GimpRotationType) value,
                                center_x, center_y, FALSE);
-      gimp_image_undo_group_end (image);
+    }
+  else
+    {
+      gimp_item_rotate (item, context, (GimpRotationType) value,
+                        center_x, center_y, clip_result);
     }
 
   gimp_image_flush (image);
