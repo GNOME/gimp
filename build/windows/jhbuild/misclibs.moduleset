@@ -147,9 +147,9 @@
 </cmake>
 
 <autotools id="libgexiv2" autogen-sh="configure">
-	<branch version="0.10.1" repo="gnome.org"
-			module="gexiv2/0.10/gexiv2-0.10.1.tar.xz"
-			hash="sha256:7675752a59c2f091560be1f39514ef492ec705b9fdea5f52281672e6b3eba2c7">
+	<branch version="0.10.3" repo="gnome.org"
+			module="gexiv2/0.10/gexiv2-0.10.3.tar.xz"
+			hash="sha256:390cfb966197fa9f3f32200bc578d7c7f3560358c235e6419657206a362d3988">
 	</branch>
 	<dependencies>
 		<dep package="exiv2"/>
