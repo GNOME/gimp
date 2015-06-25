@@ -353,6 +353,8 @@ gimp_image_window_constructed (GObject *object)
   GimpImageWindowPrivate *private = GIMP_IMAGE_WINDOW_GET_PRIVATE (window);
   GimpGuiConfig          *config;
 
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
   g_assert (GIMP_IS_GIMP (private->gimp));
   g_assert (GIMP_IS_UI_MANAGER (private->menubar_manager));
 
