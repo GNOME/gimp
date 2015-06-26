@@ -41,22 +41,25 @@ gimp_item_linked_translate (GimpItem *item,
                             gint      offset_y,
                             gboolean  push_undo)
 {
-  GList *list;
+  GimpImage *image;
+  GList     *items;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (gimp_item_get_linked (item) == TRUE);
   g_return_if_fail (gimp_item_is_attached (item));
 
-  list = gimp_image_item_list_get_list (gimp_item_get_image (item), item,
-                                        GIMP_ITEM_TYPE_ALL,
-                                        GIMP_ITEM_SET_LINKED);
+  image = gimp_item_get_image (item);
 
-  list = gimp_image_item_list_filter (item, list);
+  items = gimp_image_item_list_get_list (image, NULL,
+                                         GIMP_ITEM_TYPE_ALL,
+                                         GIMP_ITEM_SET_LINKED);
 
-  gimp_image_item_list_translate (gimp_item_get_image (item), list,
+  items = gimp_image_item_list_filter (NULL, items);
+
+  gimp_image_item_list_translate (gimp_item_get_image (item), items,
                                   offset_x, offset_y, push_undo);
 
-  g_list_free (list);
+  g_list_free (items);
 }
 
 void

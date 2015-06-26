@@ -469,17 +469,14 @@ layer_translate_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
-
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                   _("Move Layer"));
-
-      gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
       if (gimp_item_get_linked (GIMP_ITEM (layer)))
-        gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
-      gimp_image_undo_group_end (image);
+        {
+          gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+        }
+      else
+        {
+          gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -505,23 +502,21 @@ layer_set_offsets_invoker (GimpProcedure      *procedure,
 
   if (success)
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
-      gint       offset_x;
-      gint       offset_y;
-
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                   _("Move Layer"));
+      gint offset_x;
+      gint offset_y;
 
       gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
       offx -= offset_x;
       offy -= offset_y;
 
-      gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
       if (gimp_item_get_linked (GIMP_ITEM (layer)))
-        gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
-      gimp_image_undo_group_end (image);
+        {
+          gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+        }
+      else
+        {
+          gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
