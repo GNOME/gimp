@@ -1284,11 +1284,14 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
     case GIMP_TRANSLATE_MODE_VECTORS:
     case GIMP_TRANSLATE_MODE_CHANNEL:
     case GIMP_TRANSLATE_MODE_LAYER:
-      gimp_item_translate (item, inc_x, inc_y, push_undo);
-
-      /*  translate all linked items as well  */
       if (gimp_item_get_linked (item))
-        gimp_item_linked_translate (item, inc_x, inc_y, push_undo);
+        {
+          gimp_item_linked_translate (item, inc_x, inc_y, push_undo);
+        }
+      else
+        {
+          gimp_item_translate (item, inc_x, inc_y, push_undo);
+        }
       break;
 
     case GIMP_TRANSLATE_MODE_FLOATING_SEL:
