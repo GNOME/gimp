@@ -16,9 +16,9 @@
 </autotools>
 
 <autotools id="gettext" autogen-sh="configure">
-	<branch version="0.18.3.2" repo="gnu.org"
-			module="gettext/gettext-0.18.3.2.tar.gz"
-			hash="sha256:d1a4e452d60eb407ab0305976529a45c18124bd518d976971ac6dc7aa8b4c5d7">
+	<branch version="0.19.4" repo="gnu.org"
+			module="gettext/gettext-0.19.4.tar.gz"
+			hash="sha256:8ac9f1ed1a5f8c4e656a2f37f5ba6b9ee04c4df79a575e876b0b6946aa417f3f">
 		<patch file="gettext_0_18_crossbuild_override_tools_fix.patch"/>
 	</branch>
 	<dependencies>
