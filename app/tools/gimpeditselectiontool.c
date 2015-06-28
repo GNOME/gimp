@@ -336,11 +336,10 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
             GList *linked;
             GList *list;
 
-            linked = gimp_image_item_list_get_list (image, NULL,
+            linked = gimp_image_item_list_get_list (image,
                                                     GIMP_ITEM_TYPE_LAYERS,
                                                     GIMP_ITEM_SET_LINKED);
-
-            linked = gimp_image_item_list_filter (NULL, linked);
+            linked = gimp_image_item_list_filter (linked);
 
             for (list = linked; list; list = g_list_next (list))
               {
@@ -377,11 +376,10 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
               GList *linked;
               GList *list;
 
-              linked = gimp_image_item_list_get_list (image, NULL,
+              linked = gimp_image_item_list_get_list (image,
                                                       GIMP_ITEM_TYPE_VECTORS,
                                                       GIMP_ITEM_SET_LINKED);
-
-              linked = gimp_image_item_list_filter (NULL, linked);
+              linked = gimp_image_item_list_filter (linked);
 
               for (list = linked; list; list = g_list_next (list))
                 {
@@ -425,19 +423,19 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
         case GIMP_TRANSLATE_MODE_LAYER:
         case GIMP_TRANSLATE_MODE_VECTORS:
           edit_select->live_items =
-            gimp_image_item_list_get_list (image, NULL,
+            gimp_image_item_list_get_list (image,
                                            GIMP_ITEM_TYPE_LAYERS |
                                            GIMP_ITEM_TYPE_VECTORS,
                                            GIMP_ITEM_SET_LINKED);
           edit_select->live_items =
-            gimp_image_item_list_filter (NULL, edit_select->live_items);
+            gimp_image_item_list_filter (edit_select->live_items);
 
           edit_select->delayed_items =
-            gimp_image_item_list_get_list (image, NULL,
+            gimp_image_item_list_get_list (image,
                                            GIMP_ITEM_TYPE_CHANNELS,
                                            GIMP_ITEM_SET_LINKED);
           edit_select->delayed_items =
-            gimp_image_item_list_filter (NULL, edit_select->delayed_items);
+            gimp_image_item_list_filter (edit_select->delayed_items);
           break;
 
         default:
@@ -823,11 +821,10 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             GList *linked;
             GList *list;
 
-            linked = gimp_image_item_list_get_list (image, NULL,
+            linked = gimp_image_item_list_get_list (image,
                                                     GIMP_ITEM_TYPE_LAYERS,
                                                     GIMP_ITEM_SET_LINKED);
-
-            linked = gimp_image_item_list_filter (NULL, linked);
+            linked = gimp_image_item_list_filter (linked);
 
             for (list = linked; list; list = g_list_next (list))
               {
@@ -868,11 +865,10 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             GList *linked;
             GList *list;
 
-            linked = gimp_image_item_list_get_list (image, NULL,
+            linked = gimp_image_item_list_get_list (image,
                                                     GIMP_ITEM_TYPE_VECTORS,
                                                     GIMP_ITEM_SET_LINKED);
-
-            linked = gimp_image_item_list_filter (NULL, linked);
+            linked = gimp_image_item_list_filter (linked);
 
             for (list = linked; list; list = g_list_next (list))
               {
