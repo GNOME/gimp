@@ -85,7 +85,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_RESIZE,
                                C_("undo-type", "Resize Image"));
 
-  resize_layers = gimp_image_item_list_get_list (image, NULL,
+  resize_layers = gimp_image_item_list_get_list (image,
                                                  GIMP_ITEM_TYPE_LAYERS,
                                                  layer_set);
 

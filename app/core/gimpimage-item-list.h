@@ -48,12 +48,10 @@ void    gimp_image_item_list_transform (GimpImage              *image,
                                         GimpProgress           *progress);
 
 GList * gimp_image_item_list_get_list  (const GimpImage        *image,
-                                        const GimpItem         *exclude,
                                         GimpItemTypeMask        type,
                                         GimpItemSet             set);
 
-GList * gimp_image_item_list_filter    (const GimpItem         *exclude,
-                                        GList                  *list);
+GList * gimp_image_item_list_filter    (GList                  *list);
 
 
 #endif /* __GIMP_IMAGE_ITEM_LIST_H__ */

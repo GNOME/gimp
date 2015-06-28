@@ -281,12 +281,12 @@ gimp_image_scale_check (const GimpImage *image,
   current_size = gimp_object_get_memsize (GIMP_OBJECT (image), NULL);
 
   /*  the part of the image's memsize that scales linearly with the image  */
-  drawables = gimp_image_item_list_get_list (image, NULL,
+  drawables = gimp_image_item_list_get_list (image,
                                              GIMP_ITEM_TYPE_LAYERS |
                                              GIMP_ITEM_TYPE_CHANNELS,
                                              GIMP_ITEM_SET_ALL);
 
-  gimp_image_item_list_filter (NULL, drawables);
+  drawables = gimp_image_item_list_filter (drawables);
 
   drawables = g_list_prepend (drawables, gimp_image_get_mask (image));
 

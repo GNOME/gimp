@@ -50,11 +50,11 @@ gimp_item_linked_translate (GimpItem *item,
 
   image = gimp_item_get_image (item);
 
-  items = gimp_image_item_list_get_list (image, NULL,
+  items = gimp_image_item_list_get_list (image,
                                          GIMP_ITEM_TYPE_ALL,
                                          GIMP_ITEM_SET_LINKED);
 
-  items = gimp_image_item_list_filter (NULL, items);
+  items = gimp_image_item_list_filter (items);
 
   gimp_image_item_list_translate (gimp_item_get_image (item), items,
                                   offset_x, offset_y, push_undo);
@@ -79,10 +79,10 @@ gimp_item_linked_flip (GimpItem            *item,
 
   image = gimp_item_get_image (item);
 
-  items = gimp_image_item_list_get_list (image, NULL,
+  items = gimp_image_item_list_get_list (image,
                                          GIMP_ITEM_TYPE_ALL,
                                          GIMP_ITEM_SET_LINKED);
-  items = gimp_image_item_list_filter (NULL, items);
+  items = gimp_image_item_list_filter (items);
 
   gimp_image_item_list_flip (image, items, context,
                              flip_type, axis, clip_result);
@@ -109,16 +109,16 @@ gimp_item_linked_rotate (GimpItem         *item,
 
   image = gimp_item_get_image (item);
 
-  items = gimp_image_item_list_get_list (image, NULL,
+  items = gimp_image_item_list_get_list (image,
                                          GIMP_ITEM_TYPE_LAYERS |
                                          GIMP_ITEM_TYPE_VECTORS,
                                          GIMP_ITEM_SET_LINKED);
-  items = gimp_image_item_list_filter (NULL, items);
+  items = gimp_image_item_list_filter (items);
 
-  channels = gimp_image_item_list_get_list (image, NULL,
+  channels = gimp_image_item_list_get_list (image,
                                             GIMP_ITEM_TYPE_CHANNELS,
                                             GIMP_ITEM_SET_LINKED);
-  channels = gimp_image_item_list_filter (NULL, channels);
+  channels = gimp_image_item_list_filter (channels);
 
   if (items && channels)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TRANSFORM,
@@ -157,11 +157,10 @@ gimp_item_linked_transform (GimpItem               *item,
 
   image = gimp_item_get_image (item);
 
-  items = gimp_image_item_list_get_list (image, NULL,
+  items = gimp_image_item_list_get_list (image,
                                          GIMP_ITEM_TYPE_ALL,
                                          GIMP_ITEM_SET_LINKED);
-
-  items = gimp_image_item_list_filter (NULL, items);
+  items = gimp_image_item_list_filter (items);
 
   gimp_image_item_list_transform (image, items, context,
                                   matrix, direction,
