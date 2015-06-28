@@ -342,7 +342,7 @@ gimp_color_display_clone (GimpColorDisplay *display)
  *
  * Converts all pixels in @area of @buffer.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 void
 gimp_color_display_convert_buffer (GimpColorDisplay *display,
@@ -367,7 +367,7 @@ gimp_color_display_convert_buffer (GimpColorDisplay *display,
  *
  * Converts all pixels in @surface.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  *
  * Deprecated: GIMP 2.8: Use gimp_color_display_convert_buffer() instead.
  **/
@@ -531,7 +531,7 @@ gimp_color_display_get_enabled (GimpColorDisplay *display)
  *
  * Return value: a pointer to the #GimpColorConfig object or %NULL.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GimpColorConfig *
 gimp_color_display_get_config (GimpColorDisplay *display)
@@ -547,7 +547,7 @@ gimp_color_display_get_config (GimpColorDisplay *display)
  *
  * Return value: a pointer to the #GimpColorManaged object or %NULL.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GimpColorManaged *
 gimp_color_display_get_managed (GimpColorDisplay *display)

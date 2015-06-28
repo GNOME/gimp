@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
-               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<!DOCTYPE book PUBLIC '-//OASIS//DTD DocBook XML V4.5//EN'
+                      'http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd'>
 
-<book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
+<book lang="en" id="libgimpcolor" xmlns:xi="http://www.w3.org/2003/XInclude">
 
   <bookinfo>
     <title>GIMP Color Library Reference Manual</title>
@@ -11,36 +11,47 @@
     </releaseinfo>
   </bookinfo>
 
-  <part id="libgimpcolor">
+  <part>
     <title>GIMP Color Library</title>
     <xi:include href="xml/gimprgb.xml" />
     <xi:include href="xml/gimphsv.xml" />
     <xi:include href="xml/gimpcmyk.xml" />
     <xi:include href="xml/gimpcolorspace.xml" />
     <xi:include href="xml/gimpcolormanaged.xml" />
+    <xi:include href="xml/gimpcolorprofile.xml" />
     <xi:include href="xml/gimpadaptivesupersample.xml" />
     <xi:include href="xml/gimpbilinear.xml" />
-    <xi:include href="xml/gimpcairocolor.xml" />
-    <xi:include href="xml/gimplcms.xml" />
+    <xi:include href="xml/gimpcairo.xml" />
+    <xi:include href="xml/gimppixbuf.xml" />
   </part>
 
-  <index id="libgimpcolor-index">
+  <index id="api-index-full">
     <title>Index</title>
+    <xi:include href="xml/api-index-full.xml"><xi:fallback /></xi:include>
   </index>
-  <index role="GIMP 2.2" id="libgimpcolor-index-new-in-2-2">
+  <index role="2.2" id="api-index-2-2">
     <title>Index of new symbols in GIMP 2.2</title>
+    <xi:include href="xml/api-index-2.2.xml"><xi:fallback /></xi:include>
   </index>
-  <index role="GIMP 2.4" id="libgimpcolor-index-new-in-2-4">
+  <index role="2.4" id="api-index-2-4">
     <title>Index of new symbols in GIMP 2.4</title>
+    <xi:include href="xml/api-index-2.4.xml"><xi:fallback /></xi:include>
   </index>
-  <index role="GIMP 2.6" id="libgimpcolor-index-new-in-2-6">
+  <index role="2.6" id="api-index-2-6">
     <title>Index of new symbols in GIMP 2.6</title>
+    <xi:include href="xml/api-index-2.6.xml"><xi:fallback /></xi:include>
   </index>
-  <index role="GIMP 2.8" id="libgimpcolor-index-new-in-2-8">
+  <index role="2.8" id="api-index-2-8">
     <title>Index of new symbols in GIMP 2.8</title>
+    <xi:include href="xml/api-index-2.8.xml"><xi:fallback /></xi:include>
   </index>
-  <index role="deprecated" id="libgimpcolor-index-deprecated">
+  <index role="2.10" id="api-index-2-10">
+    <title>Index of new symbols in GIMP 2.10</title>
+    <xi:include href="xml/api-index-2.10.xml"><xi:fallback /></xi:include>
+  </index>
+  <index role="deprecated" id="api-index-deprecated">
     <title>Index of deprecated symbols</title>
+    <xi:include href="xml/api-index-deprecated.xml"><xi:fallback /></xi:include>
   </index>
 
 </book>

@@ -646,35 +646,38 @@ gimp_item_tree_uniquefy_name (GimpItemTree *tree,
       gimp_object_set_name (GIMP_OBJECT (item), new_name);
     }
 
+  /* Remove any trailing whitespace. */
+  if (gimp_object_get_name (item))
+    {
+      gchar *name = g_strchomp (g_strdup (gimp_object_get_name (item)));
+
+      gimp_object_take_name (GIMP_OBJECT (item), name);
+    }
+
   if (g_hash_table_lookup (private->name_hash,
                            gimp_object_get_name (item)))
     {
-      gchar *name     = g_strdup (gimp_object_get_name (item));
-      gchar *ext      = strrchr (name, '#');
-      gchar *new_name = NULL;
-      gint   number   = 0;
+      gchar      *name        = g_strdup (gimp_object_get_name (item));
+      gchar      *new_name    = NULL;
+      gint        number      = 0;
+      gboolean    hashed      = TRUE;
+      GRegex     *end_numbers = g_regex_new ("(^|[^0-9])([0-9]+)\\s*$", 0, 0, NULL);
+      GMatchInfo *match_info  = NULL;
 
-      if (ext)
+      if (g_regex_match (end_numbers, name, 0, &match_info))
         {
-          gchar ext_str[8];
+          /* Allow counting styles without a hash as alternative. */
+          gint start_pos;
 
-          number = atoi (ext + 1);
+          hashed = FALSE;
+          number = atoi (g_match_info_fetch (match_info, 2));
 
-          g_snprintf (ext_str, sizeof (ext_str), "%d", number);
-
-          /*  check if the extension really is of the form "#<n>"  */
-          if (! strcmp (ext_str, ext + 1))
-            {
-              if (ext > name && *(ext - 1) == ' ')
-                ext--;
-
-              *ext = '\0';
-            }
-          else
-            {
-              number = 0;
-            }
+          g_match_info_fetch_pos (match_info, 2,
+                                  &start_pos, NULL);
+          name[start_pos] = '\0';
         }
+      g_match_info_free (match_info);
+      g_regex_unref (end_numbers);
 
       do
         {
@@ -682,7 +685,10 @@ gimp_item_tree_uniquefy_name (GimpItemTree *tree,
 
           g_free (new_name);
 
-          new_name = g_strdup_printf ("%s #%d", name, number);
+          new_name = g_strdup_printf ("%s%s%d",
+                                      name,
+                                      hashed ? " #" : "",
+                                      number);
         }
       while (g_hash_table_lookup (private->name_hash, new_name));
 

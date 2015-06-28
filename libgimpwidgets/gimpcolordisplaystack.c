@@ -293,7 +293,7 @@ gimp_color_display_stack_reorder_down (GimpColorDisplayStack *stack,
  *
  * Runs all the stack's filters on all pixels in @area of @buffer.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 void
 gimp_color_display_stack_convert_buffer (GimpColorDisplayStack *stack,
@@ -320,7 +320,7 @@ gimp_color_display_stack_convert_buffer (GimpColorDisplayStack *stack,
  *
  * Runs all the stack's filters on all pixels in @surface.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  *
  * Deprecated: GIMP 2.10: Use gimp_color_display_stack_convert_buffer() instead.
  **/

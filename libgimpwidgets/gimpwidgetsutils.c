@@ -190,7 +190,7 @@ gimp_table_attach_aligned (GtkTable    *table,
  * you need to set attributes on part of the label, you will have to
  * use the PangoAttributes API directly.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_label_set_attributes (GtkLabel *label,
@@ -391,7 +391,7 @@ gimp_widget_get_color_profile (GtkWidget *widget)
                           0, 64 * 1024 * 1024, FALSE,
                           &type, &format, &nitems, &data) && nitems > 0)
       {
-        profile = gimp_lcms_profile_open_from_data (data, nitems, NULL);
+        profile = gimp_color_profile_open_from_data (data, nitems, NULL);
         g_free (data);
       }
 
@@ -421,9 +421,9 @@ gimp_widget_get_color_profile (GtkWidget *widget)
             CFDataGetBytes (data, CFRangeMake (0, CFDataGetLength (data)),
                             buffer);
 
-            profile = gimp_lcms_profile_open_from_data (data,
-                                                        CFDataGetLength (data),
-                                                        NULL);
+            profile = gimp_color_profile_open_from_data (data,
+                                                         CFDataGetLength (data),
+                                                         NULL);
 
             g_free (buffer);
             CFRelease (data);
@@ -446,7 +446,7 @@ gimp_widget_get_color_profile (GtkWidget *widget)
           {
             GFile *file = g_file_new_for_path (path);
 
-            profile = gimp_lcms_profile_open_from_file (file, NULL);
+            profile = gimp_color_profile_open_from_file (file, NULL);
             g_object_unref (file);
           }
 
@@ -469,10 +469,10 @@ get_display_profile (GtkWidget       *widget,
     profile = gimp_widget_get_color_profile (widget);
 
   if (! profile)
-    profile = gimp_color_config_get_display_profile (config, NULL);
+    profile = gimp_color_config_get_display_color_profile (config, NULL);
 
   if (! profile)
-    profile = gimp_lcms_create_srgb_profile ();
+    profile = gimp_color_profile_new_srgb ();
 
   return profile;
 }
@@ -504,7 +504,7 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
       return NULL;
 
     case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
-      proof_profile = gimp_color_config_get_printer_profile (config, NULL);
+      proof_profile = gimp_color_config_get_printer_color_profile (config, NULL);
       /*  fallthru  */
 
     case GIMP_COLOR_MANAGEMENT_DISPLAY:
@@ -513,14 +513,12 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
       break;
     }
 
-  *src_format  = gimp_lcms_get_format (*src_format,  &lcms_src_format);
-  *dest_format = gimp_lcms_get_format (*dest_format, &lcms_dest_format);
+  *src_format  = gimp_color_profile_get_format (*src_format,  &lcms_src_format);
+  *dest_format = gimp_color_profile_get_format (*dest_format, &lcms_dest_format);
 
   if (proof_profile)
     {
-      cmsUInt32Number softproof_flags = 0;
-
-      softproof_flags |= cmsFLAGS_SOFTPROOFING;
+      cmsUInt32Number softproof_flags = cmsFLAGS_SOFTPROOFING;
 
       if (config->simulation_use_black_point_compensation)
         {
@@ -542,17 +540,16 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
           cmsSetAlarmCodes (alarmCodes);
         }
 
-      transform =
-        cmsCreateProofingTransform (src_profile,  lcms_src_format,
-                                    dest_profile, lcms_dest_format,
-                                    proof_profile,
-                                    config->simulation_intent,
-                                    config->display_intent,
-                                    softproof_flags);
+      transform = cmsCreateProofingTransform (src_profile,  lcms_src_format,
+                                              dest_profile, lcms_dest_format,
+                                              proof_profile,
+                                              config->simulation_intent,
+                                              config->display_intent,
+                                              softproof_flags);
 
-      gimp_lcms_profile_close (proof_profile);
+      gimp_color_profile_close (proof_profile);
     }
-  else if (! gimp_lcms_profile_is_equal (src_profile, dest_profile))
+  else if (! gimp_color_profile_is_equal (src_profile, dest_profile))
     {
       cmsUInt32Number display_flags = 0;
 
@@ -561,15 +558,14 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
           display_flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
         }
 
-      transform =
-        cmsCreateTransform (src_profile,  lcms_src_format,
-                            dest_profile, lcms_dest_format,
-                            config->display_intent,
-                            display_flags);
+      transform = cmsCreateTransform (src_profile,  lcms_src_format,
+                                      dest_profile, lcms_dest_format,
+                                      config->display_intent,
+                                      display_flags);
     }
 
-  gimp_lcms_profile_close (src_profile);
-  gimp_lcms_profile_close (dest_profile);
+  gimp_color_profile_close (src_profile);
+  gimp_color_profile_close (dest_profile);
 
   return transform;
 }

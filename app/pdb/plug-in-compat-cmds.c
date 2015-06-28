@@ -1077,7 +1077,7 @@ plug_in_edge_invoker (GimpProcedure         *procedure,
 
           node = gegl_node_new_child (NULL,
                                       "operation",       "gegl:edge",
-                                      "algorihm",        edgemode,
+                                      "algorithm",       edgemode,
                                       "amount",          amount,
                                       "border-behavior", border_behavior,
                                       NULL);
@@ -1495,6 +1495,106 @@ plug_in_hsv_noise_invoker (GimpProcedure         *procedure,
 
   return gimp_procedure_get_return_values (procedure, success,
                                            error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_icc_profile_info_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpImage *image;
+  gchar *profile_name = NULL;
+  gchar *profile_desc = NULL;
+  gchar *profile_info = NULL;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 0), gimp);
+
+  if (success)
+    {
+      GimpColorProfile profile;
+
+      profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+
+      profile_name = gimp_color_profile_get_model (profile);
+      profile_desc = gimp_color_profile_get_description (profile);
+      profile_info = gimp_color_profile_get_summary (profile);
+
+      gimp_color_profile_close (profile);
+
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_take_string (gimp_value_array_index (return_vals, 1), profile_name);
+      g_value_take_string (gimp_value_array_index (return_vals, 2), profile_desc);
+      g_value_take_string (gimp_value_array_index (return_vals, 3), profile_info);
+    }
+
+  return return_vals;
+}
+
+static GimpValueArray *
+plug_in_icc_profile_file_info_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  const gchar *profile;
+  gchar *profile_name = NULL;
+  gchar *profile_desc = NULL;
+  gchar *profile_info = NULL;
+
+  profile = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GFile *file = g_file_new_for_path (profile);
+
+      if (file)
+        {
+          GimpColorProfile p;
+
+          p = gimp_color_profile_open_from_file (file, error);
+          g_object_unref (file);
+
+          if (p)
+            {
+              profile_name = gimp_color_profile_get_model (p);
+              profile_desc = gimp_color_profile_get_description (p);
+              profile_info = gimp_color_profile_get_summary (p);
+
+              gimp_color_profile_close (p);
+            }
+          else
+            success = FALSE;
+        }
+      else
+        success = FALSE;
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_take_string (gimp_value_array_index (return_vals, 1), profile_name);
+      g_value_take_string (gimp_value_array_index (return_vals, 2), profile_desc);
+      g_value_take_string (gimp_value_array_index (return_vals, 3), profile_info);
+    }
+
+  return return_vals;
 }
 
 static GimpValueArray *
@@ -3475,6 +3575,58 @@ plug_in_whirl_pinch_invoker (GimpProcedure         *procedure,
                                            error ? *error : NULL);
 }
 
+static GimpValueArray *
+plug_in_wind_invoker (GimpProcedure         *procedure,
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint32 threshold;
+  gint32 direction;
+  gint32 strength;
+  gint32 algorithm;
+  gint32 edge;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  threshold = g_value_get_int (gimp_value_array_index (args, 3));
+  direction = g_value_get_int (gimp_value_array_index (args, 4));
+  strength = g_value_get_int (gimp_value_array_index (args, 5));
+  algorithm = g_value_get_int (gimp_value_array_index (args, 6));
+  edge = g_value_get_int (gimp_value_array_index (args, 7));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode *node =
+            gegl_node_new_child (NULL,
+                                 "operation", "gegl:wind",
+                                 "threshold", threshold,
+                                 "direction", direction,
+                                 "strength",  strength,
+                                 "style",     algorithm,
+                                 "edge",      edge,
+                                 NULL);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Wind"),
+                                         node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
 void
 register_plug_in_compat_procs (GimpPDB *pdb)
 {
@@ -4892,6 +5044,95 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                       "Distribution distance on value axis",
                                                       0, 255, 0,
                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-icc-profile-info
+   */
+  procedure = gimp_procedure_new (plug_in_icc_profile_info_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-icc-profile-info");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-icc-profile-info",
+                                     "Retrieve information about an image's color profile",
+                                     "This procedure returns information about the RGB color profile attached to an image. If no RGB color profile is attached, sRGB is assumed.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("profile-name",
+                                                           "profile name",
+                                                           "Name",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("profile-desc",
+                                                           "profile desc",
+                                                           "Description",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("profile-info",
+                                                           "profile info",
+                                                           "Info",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-icc-profile-file-info
+   */
+  procedure = gimp_procedure_new (plug_in_icc_profile_file_info_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-icc-profile-file-info");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-icc-profile-file-info",
+                                     "Retrieve information about a color profile",
+                                     "This procedure returns information about an ICC color profile on disk.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("profile",
+                                                       "profile",
+                                                       "Filename of an ICC color profile",
+                                                       TRUE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("profile-name",
+                                                           "profile name",
+                                                           "Name",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("profile-desc",
+                                                           "profile desc",
+                                                           "Description",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string ("profile-info",
+                                                           "profile info",
+                                                           "Info",
+                                                           FALSE, FALSE, FALSE,
+                                                           NULL,
+                                                           GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -6936,6 +7177,72 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     "Radius (1.0 is the largest circle that fits in the image, and 2.0 goes all the way to the corners)",
                                                     0, 2, 0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-wind
+   */
+  procedure = gimp_procedure_new (plug_in_wind_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-wind");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-wind",
+                                     "Smear image to give windblown effect",
+                                     "Renders a wind effect.",
+                                     "Compatibility procedure. Please see 'gegl:wind' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:wind' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("threshold",
+                                                      "threshold",
+                                                      "Controls where blending will be done",
+                                                      0, 50, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("direction",
+                                                      "direction",
+                                                      "Wind direction { 0:left, 1:right, 2:top, 3:bottom }",
+                                                      0, 3, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("strength",
+                                                      "strength",
+                                                      "Controls the extent of the blending",
+                                                      1, 100, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("algorithm",
+                                                      "algorithm",
+                                                      "Algorithm { WIND (0), BLAST (1) }",
+                                                      0, 1, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("edge",
+                                                      "edge",
+                                                      "Affected edge { BOTH (0), LEADING (1), TRAILING (2) }",
+                                                      0, 2, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 }

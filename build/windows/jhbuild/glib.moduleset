@@ -11,13 +11,14 @@
 	<branch version="1.14" repo="gnu.org"
 			module="libiconv/libiconv-1.14.tar.gz"
 			hash="sha256:72b24ded17d687193c3366d0ebe7cde1e6b18f0df8c55438ac95be39e8a30613">
+		<patch file="iconv-fix-inline.patch" strip="1"/>
 	</branch>
 </autotools>
 
 <autotools id="gettext" autogen-sh="configure">
-	<branch version="0.18.3.2" repo="gnu.org"
-			module="gettext/gettext-0.18.3.2.tar.gz"
-			hash="sha256:d1a4e452d60eb407ab0305976529a45c18124bd518d976971ac6dc7aa8b4c5d7">
+	<branch version="0.19.4" repo="gnu.org"
+			module="gettext/gettext-0.19.4.tar.gz"
+			hash="sha256:8ac9f1ed1a5f8c4e656a2f37f5ba6b9ee04c4df79a575e876b0b6946aa417f3f">
 		<patch file="gettext_0_18_crossbuild_override_tools_fix.patch"/>
 	</branch>
 	<dependencies>
@@ -33,9 +34,9 @@
 </autotools>
 
 <autotools id="glib2">
-	<branch version="2.44.0" repo="gnome.org"
-			module="glib/2.44/glib-2.44.0.tar.xz"
-			hash="sha256:f2d362b106a08fa801770d41829a06fcfe287a00421018869eebf5efc796f5b9">
+	<branch version="2.44.1" repo="gnome.org"
+			module="glib/2.44/glib-2.44.1.tar.xz"
+			hash="sha256:8811deacaf8a503d0a9b701777ea079ca6a4277be10e3d730d2112735d5eca07">
 	</branch>
 	<dependencies>
 		<dep package="gettext"/>

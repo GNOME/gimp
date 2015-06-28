@@ -3,16 +3,9 @@
 ;
 ; Circuit board effect
 ; Copyright (c) 1997 Adrian Likins
-; aklikins@eos.ncsu.ed
 ;
-;  Genrates what looks a little like the back of an old circuit board.
-;  Looks even better when gradmapped with a suitable gradient.
-;
-; This script doesn't handle or color combos well. ie, black/black
-;  doesn't work..
-;  The effect seems to work best on odd shaped selections because of some
-; limitations in the maze codes selection handling ablity
-;
+; Generates what looks a little like the back of an old circuit board.
+; Looks even better when gradient-mapp'ed with a suitable gradient.
 ;
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -107,7 +100,7 @@
     (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask-size 0)
     (plug-in-edge RUN-NONINTERACTIVE image active-layer 2 1 0)
     (if (= type RGBA-IMAGE)
-      (gimp-desaturate active-layer))
+      (gimp-desaturate-drawable active-layer DESATURATE-LIGHTNESS))
 
     (if (and
          (= remove-bg TRUE)

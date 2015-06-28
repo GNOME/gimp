@@ -148,7 +148,7 @@ static const guint wilber_jpg_len = G_N_ELEMENTS (wilber_jpg);
  *
  * Return value: The new #GimpMetadata.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpMetadata *
 gimp_metadata_new (void)
@@ -171,6 +171,38 @@ gimp_metadata_new (void)
   return metadata;
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * gimp_metadata_duplicate:
+ * @metadata: The object to duplicate, or %NULL.
+ *
+ * Duplicates a #GimpMetadata instance.
+ *
+ * Return value: The new #GimpMetadata, or %NULL if @metadata is %NULL.
+ *
+ * Since: 2.10
+ */
+GimpMetadata *
+gimp_metadata_duplicate (GimpMetadata *metadata)
+{
+  GimpMetadata *new_metadata = NULL;
+
+  g_return_val_if_fail (metadata == NULL || GEXIV2_IS_METADATA (metadata), NULL);
+
+  if (metadata)
+    {
+      gchar *xml;
+
+      xml = gimp_metadata_serialize (metadata);
+      new_metadata = gimp_metadata_deserialize (xml);
+      g_free (xml);
+    }
+
+  return new_metadata;
+}
+
+>>>>>>> remotes/origin/master
 typedef struct
 {
   gchar         name[1024];
@@ -178,6 +210,293 @@ typedef struct
   GimpMetadata *metadata;
 } GimpMetadataParseData;
 
+<<<<<<< HEAD
+=======
+static const gchar*
+gimp_metadata_attribute_name_to_value (const gchar **attribute_names,
+                                       const gchar **attribute_values,
+                                       const gchar  *name)
+{
+  while (*attribute_names)
+    {
+      if (! strcmp (*attribute_names, name))
+        {
+          return *attribute_values;
+        }
+
+      attribute_names++;
+      attribute_values++;
+    }
+
+  return NULL;
+}
+
+static void
+gimp_metadata_deserialize_start_element (GMarkupParseContext *context,
+                                         const gchar         *element_name,
+                                         const gchar        **attribute_names,
+                                         const gchar        **attribute_values,
+                                         gpointer             user_data,
+                                         GError             **error)
+{
+  GimpMetadataParseData *parse_data = user_data;
+
+  if (! strcmp (element_name, "tag"))
+    {
+      const gchar *name;
+      const gchar *encoding;
+
+      name = gimp_metadata_attribute_name_to_value (attribute_names,
+                                                    attribute_values,
+                                                    "name");
+      encoding = gimp_metadata_attribute_name_to_value (attribute_names,
+                                                        attribute_values,
+                                                        "encoding");
+
+      if (! name)
+        {
+          g_set_error (error, gimp_metadata_error_quark (), 1001,
+                       "Element 'tag' does not contain required attribute 'name'.");
+          return;
+        }
+
+      strncpy (parse_data->name, name, sizeof (parse_data->name));
+      parse_data->name[sizeof (parse_data->name) - 1] = 0;
+
+      parse_data->base64 = (encoding && ! strcmp (encoding, "base64"));
+    }
+}
+
+static void
+gimp_metadata_deserialize_end_element (GMarkupParseContext *context,
+                                       const gchar         *element_name,
+                                       gpointer             user_data,
+                                       GError             **error)
+{
+}
+
+static void
+gimp_metadata_deserialize_text (GMarkupParseContext  *context,
+                                const gchar          *text,
+                                gsize                 text_len,
+                                gpointer              user_data,
+                                GError              **error)
+{
+  GimpMetadataParseData *parse_data = user_data;
+  const gchar           *current_element;
+
+  current_element = g_markup_parse_context_get_element (context);
+
+  if (! g_strcmp0 (current_element, "tag"))
+    {
+      gchar *value = g_strndup (text, text_len);
+
+      if (parse_data->base64)
+        {
+          guchar *decoded;
+          gsize   len;
+
+          decoded = g_base64_decode (value, &len);
+
+          if (decoded[len - 1] == '\0')
+            gexiv2_metadata_set_tag_string (parse_data->metadata,
+                                            parse_data->name,
+                                            (const gchar *) decoded);
+
+          g_free (decoded);
+        }
+      else
+        {
+          gexiv2_metadata_set_tag_string (parse_data->metadata,
+                                          parse_data->name,
+                                          value);
+        }
+
+      g_free (value);
+    }
+}
+
+static  void
+gimp_metadata_deserialize_error (GMarkupParseContext *context,
+                                 GError              *error,
+                                 gpointer             user_data)
+{
+  g_printerr ("Metadata parse error: %s\n", error->message);
+}
+
+/**
+ * gimp_metadata_deserialize:
+ * @metadata_xml: A string of serialized metadata XML.
+ *
+ * Deserializes a string of XML that has been created by
+ * gimp_metadata_serialize().
+ *
+ * Return value: The new #GimpMetadata.
+ *
+ * Since: 2.10
+ */
+GimpMetadata *
+gimp_metadata_deserialize (const gchar *metadata_xml)
+{
+  GimpMetadata          *metadata;
+  GMarkupParser          markup_parser;
+  GimpMetadataParseData  parse_data;
+  GMarkupParseContext   *context;
+
+  g_return_val_if_fail (metadata_xml != NULL, NULL);
+
+  metadata = gimp_metadata_new ();
+
+  parse_data.metadata = metadata;
+
+  markup_parser.start_element = gimp_metadata_deserialize_start_element;
+  markup_parser.end_element   = gimp_metadata_deserialize_end_element;
+  markup_parser.text          = gimp_metadata_deserialize_text;
+  markup_parser.passthrough   = NULL;
+  markup_parser.error         = gimp_metadata_deserialize_error;
+
+  context = g_markup_parse_context_new (&markup_parser, 0, &parse_data, NULL);
+
+  g_markup_parse_context_parse (context,
+                                metadata_xml, strlen (metadata_xml),
+                                NULL);
+
+  g_markup_parse_context_unref (context);
+
+  return metadata;
+}
+
+static gchar *
+gimp_metadata_escape (const gchar *name,
+                      const gchar *value,
+                      gboolean    *base64)
+{
+  if (! g_utf8_validate (value, -1, NULL))
+    {
+      gchar *encoded;
+
+      encoded = g_base64_encode ((const guchar *) value, strlen (value) + 1);
+
+      g_printerr ("Invalid UTF-8 in metadata value %s, encoding as base64: %s\n",
+                  name, encoded);
+
+      *base64 = TRUE;
+
+      return encoded;
+    }
+
+  *base64 = FALSE;
+
+  return g_markup_escape_text (value, -1);
+}
+
+static void
+gimp_metadata_append_tag (GString     *string,
+                          const gchar *name,
+                          gchar       *value,
+                          gboolean     base64)
+{
+  if (value)
+    {
+      if (base64)
+        {
+          g_string_append_printf (string, "  <tag name=\"%s\" encoding=\"base64\">%s</tag>\n",
+                                  name, value);
+        }
+      else
+        {
+          g_string_append_printf (string, "  <tag name=\"%s\">%s</tag>\n",
+                                  name, value);
+        }
+
+      g_free (value);
+    }
+}
+
+/**
+ * gimp_metadata_serialize:
+ * @metadata: A #GimpMetadata instance.
+ *
+ * Serializes @metadata into an XML string that can later be deserialized
+ * using gimp_metadata_deserialize().
+ *
+ * Return value: The serialized XML string.
+ *
+ * Since: 2.10
+ */
+gchar *
+gimp_metadata_serialize (GimpMetadata *metadata)
+{
+  GString  *string;
+  gchar   **exif_data = NULL;
+  gchar   **iptc_data = NULL;
+  gchar   **xmp_data  = NULL;
+  gchar    *value;
+  gchar    *escaped;
+  gboolean  base64;
+  gint      i;
+
+  g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), NULL);
+
+  string = g_string_new (NULL);
+
+  g_string_append (string, "<?xml version='1.0' encoding='UTF-8'?>\n");
+  g_string_append (string, "<metadata>\n");
+
+  exif_data = gexiv2_metadata_get_exif_tags (metadata);
+
+  if (exif_data)
+    {
+      for (i = 0; exif_data[i] != NULL; i++)
+        {
+          value = gexiv2_metadata_get_tag_string (metadata, exif_data[i]);
+          escaped = gimp_metadata_escape (exif_data[i], value, &base64);
+          g_free (value);
+
+          gimp_metadata_append_tag (string, exif_data[i], escaped, base64);
+        }
+
+      g_strfreev (exif_data);
+    }
+
+  xmp_data = gexiv2_metadata_get_xmp_tags (metadata);
+
+  if (xmp_data)
+    {
+      for (i = 0; xmp_data[i] != NULL; i++)
+        {
+          value = gexiv2_metadata_get_tag_string (metadata, xmp_data[i]);
+          escaped = gimp_metadata_escape (xmp_data[i], value, &base64);
+          g_free (value);
+
+          gimp_metadata_append_tag (string, xmp_data[i], escaped, base64);
+        }
+
+      g_strfreev (xmp_data);
+    }
+
+  iptc_data = gexiv2_metadata_get_iptc_tags (metadata);
+
+  if (iptc_data)
+    {
+      for (i = 0; iptc_data[i] != NULL; i++)
+        {
+          value = gexiv2_metadata_get_tag_string (metadata, iptc_data[i]);
+          escaped = gimp_metadata_escape (iptc_data[i], value, &base64);
+          g_free (value);
+
+          gimp_metadata_append_tag (string, iptc_data[i], escaped, base64);
+        }
+
+      g_strfreev (iptc_data);
+    }
+
+  g_string_append (string, "</metadata>\n");
+
+  return g_string_free (string, FALSE);
+}
+
+>>>>>>> remotes/origin/master
 /**
  * gimp_metadata_load_from_file:
  * @file:  The #GFile to load the metadata from
@@ -187,7 +506,7 @@ typedef struct
  *
  * Return value: The loaded #GimpMetadata.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GimpMetadata  *
 gimp_metadata_load_from_file (GFile   *file,
@@ -245,7 +564,7 @@ gimp_metadata_load_from_file (GFile   *file,
  *
  * Return value: %TRUE on success, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 gboolean
 gimp_metadata_save_to_file (GimpMetadata  *metadata,
@@ -295,7 +614,7 @@ gimp_metadata_save_to_file (GimpMetadata  *metadata,
  *
  * Return value: %TRUE on success, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 gboolean
 gimp_metadata_set_from_exif (GimpMetadata  *metadata,
@@ -362,7 +681,7 @@ gimp_metadata_set_from_exif (GimpMetadata  *metadata,
  *
  * Return value: %TRUE on success, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 gboolean
 gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
@@ -404,6 +723,194 @@ gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * gimp_metadata_set_pixel_size:
+ * @metadata: A #GimpMetadata instance.
+ * @width:    Width in pixels
+ * @height:   Height in pixels
+ *
+ * Sets Exif.Image.ImageWidth and Exif.Image.ImageLength on @metadata.
+ *
+ * Since: 2.10
+ */
+void
+gimp_metadata_set_pixel_size (GimpMetadata *metadata,
+                              gint          width,
+                              gint          height)
+{
+  gchar buffer[32];
+
+  g_return_if_fail (GEXIV2_IS_METADATA (metadata));
+
+  g_snprintf (buffer, sizeof (buffer), "%d", width);
+  gexiv2_metadata_set_tag_string (metadata, "Exif.Image.ImageWidth", buffer);
+
+  g_snprintf (buffer, sizeof (buffer), "%d", height);
+  gexiv2_metadata_set_tag_string (metadata, "Exif.Image.ImageLength", buffer);
+}
+
+/**
+ * gimp_metadata_set_bits_per_sample:
+ * @metadata:        A #GimpMetadata instance.
+ * @bits_per_sample: Bits per pixel, per component
+ *
+ * Sets Exif.Image.BitsPerSample on @metadata.
+ *
+ * Since: 2.10
+ */
+void
+gimp_metadata_set_bits_per_sample (GimpMetadata *metadata,
+                                   gint          bits_per_sample)
+{
+  gchar buffer[32];
+
+  g_return_if_fail (GEXIV2_IS_METADATA (metadata));
+
+  g_snprintf (buffer, sizeof (buffer), "%d %d %d",
+              bits_per_sample, bits_per_sample, bits_per_sample);
+  gexiv2_metadata_set_tag_string (metadata, "Exif.Image.BitsPerSample", buffer);
+}
+
+/**
+ * gimp_metadata_get_resolution:
+ * @metadata: A #GimpMetadata instance.
+ * @xres:     Return location for the X Resolution, in ppi
+ * @yres:     Return location for the Y Resolution, in ppi
+ * @unit:     Return location for the unit unit
+ *
+ * Returns values based on Exif.Image.XResolution,
+ * Exif.Image.YResolution and Exif.Image.ResolutionUnit of @metadata.
+ *
+ * Return value: %TRUE on success, %FALSE otherwise.
+ *
+ * Since: 2.10
+ */
+gboolean
+gimp_metadata_get_resolution (GimpMetadata *metadata,
+                              gdouble      *xres,
+                              gdouble      *yres,
+                              GimpUnit     *unit)
+{
+  gint xnom, xdenom;
+  gint ynom, ydenom;
+
+  g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
+
+  if (gexiv2_metadata_get_exif_tag_rational (metadata,
+                                             "Exif.Image.XResolution",
+                                             &xnom, &xdenom) &&
+      gexiv2_metadata_get_exif_tag_rational (metadata,
+                                             "Exif.Image.YResolution",
+                                             &ynom, &ydenom))
+    {
+      gchar *un;
+      gint   exif_unit = 2;
+
+      un = gexiv2_metadata_get_tag_string (metadata,
+                                           "Exif.Image.ResolutionUnit");
+      if (un)
+        {
+          exif_unit = atoi (un);
+          g_free (un);
+        }
+
+      if (xnom != 0 && xdenom != 0 &&
+          ynom != 0 && ydenom != 0)
+        {
+          gdouble xresolution = (gdouble) xnom / (gdouble) xdenom;
+          gdouble yresolution = (gdouble) ynom / (gdouble) ydenom;
+
+          if (exif_unit == 3)
+            {
+              xresolution *= 2.54;
+              yresolution *= 2.54;
+            }
+
+         if (xresolution >= GIMP_MIN_RESOLUTION &&
+             xresolution <= GIMP_MAX_RESOLUTION &&
+             yresolution >= GIMP_MIN_RESOLUTION &&
+             yresolution <= GIMP_MAX_RESOLUTION)
+           {
+             if (xres)
+               *xres = xresolution;
+
+             if (yres)
+               *yres = yresolution;
+
+             if (unit)
+               {
+                 if (exif_unit == 3)
+                   *unit = GIMP_UNIT_MM;
+                 else
+                   *unit = GIMP_UNIT_INCH;
+               }
+
+             return TRUE;
+           }
+        }
+    }
+
+  return FALSE;
+}
+
+/**
+ * gimp_metadata_set_resolution:
+ * @metadata: A #GimpMetadata instance.
+ * @xres:     The image's X Resolution, in ppi
+ * @yres:     The image's Y Resolution, in ppi
+ * @unit:     The image's unit
+ *
+ * Sets Exif.Image.XResolution, Exif.Image.YResolution and
+ * Exif.Image.ResolutionUnit @metadata.
+ *
+ * Since: 2.10
+ */
+void
+gimp_metadata_set_resolution (GimpMetadata *metadata,
+                              gdouble       xres,
+                              gdouble       yres,
+                              GimpUnit      unit)
+{
+  gchar buffer[32];
+  gint  exif_unit;
+  gint  factor;
+
+  g_return_if_fail (GEXIV2_IS_METADATA (metadata));
+
+  if (gimp_unit_is_metric (unit))
+    {
+      xres /= 2.54;
+      yres /= 2.54;
+
+      exif_unit = 3;
+    }
+  else
+    {
+      exif_unit = 2;
+    }
+
+  for (factor = 1; factor <= 100 /* arbitrary */; factor++)
+    {
+      if (fabs (xres * factor - ROUND (xres * factor)) < 0.01 &&
+          fabs (yres * factor - ROUND (yres * factor)) < 0.01)
+        break;
+    }
+
+  gexiv2_metadata_set_exif_tag_rational (metadata,
+                                         "Exif.Image.XResolution",
+                                         ROUND (xres * factor), factor);
+
+  gexiv2_metadata_set_exif_tag_rational (metadata,
+                                         "Exif.Image.YResolution",
+                                         ROUND (yres * factor), factor);
+
+  g_snprintf (buffer, sizeof (buffer), "%d", exif_unit);
+  gexiv2_metadata_set_tag_string (metadata, "Exif.Image.ResolutionUnit", buffer);
+}
+
+/**
+>>>>>>> remotes/origin/master
  * gimp_metadata_is_tag_supported:
  * @tag:       A metadata tag name
  * @mime_type: A mime type
@@ -412,7 +919,7 @@ gimp_metadata_set_from_xmp (GimpMetadata  *metadata,
  *
  * Return value: %TRUE if the @tag supported with @mime_type, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 gboolean
 gimp_metadata_is_tag_supported (const gchar *tag,

@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-03-11 06:27+0000\n"
-"PO-Revision-Date: 2015-03-14 17:56+0300\n"
+"POT-Creation-Date: 2015-06-19 05:34+0000\n"
+"PO-Revision-Date: 2015-06-20 09:44+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: www.gnome.gr\n"
 "Language: el\n"
@@ -352,7 +352,7 @@ msgstr "Κά_θετος"
 #: ../plug-ins/file-exr/file-exr.c:245 ../plug-ins/file-faxg3/faxg3.c:525
 #: ../plug-ins/file-fits/fits.c:529 ../plug-ins/file-jpeg/jpeg-load.c:239
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
-#: ../plug-ins/file-psd/psd-load.c:1679 ../plug-ins/file-sgi/sgi.c:411
+#: ../plug-ins/file-psd/psd-load.c:1767 ../plug-ins/file-sgi/sgi.c:411
 #: ../plug-ins/gfig/gfig-dialog.c:1319
 #: ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
@@ -361,7 +361,6 @@ msgid "Background"
 msgstr "Παρασκήνιο"
 
 #: ../plug-ins/common/blinds.c:281 ../plug-ins/common/fractal-trace.c:739
-#: ../plug-ins/common/tile-paper.c:385
 msgid "_Transparent"
 msgstr "Δια_φανές"
 
@@ -1028,7 +1027,7 @@ msgstr "Αποθήκευση παραμέτρων περιηγητή CML"
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:326 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:748 ../plug-ins/file-ico/ico-save.c:1066
-#: ../plug-ins/file-jpeg/jpeg-save.c:326 ../plug-ins/file-psd/psd-save.c:1656
+#: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1504
 #: ../plug-ins/flame/flame.c:442
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:792 ../plug-ins/ifs-compose/ifs-compose.c:2390
@@ -1064,7 +1063,7 @@ msgstr "Φόρτωση παραμέτρων περιηγητή CML"
 #: ../plug-ins/file-fits/fits.c:360 ../plug-ins/file-fli/fli-gimp.c:462
 #: ../plug-ins/file-fli/fli-gimp.c:501 ../plug-ins/file-ico/ico-load.c:649
 #: ../plug-ins/file-ico/ico-load.c:727 ../plug-ins/file-jpeg/jpeg-load.c:97
-#: ../plug-ins/file-jpeg/jpeg-load.c:513 ../plug-ins/file-psd/psd-load.c:133
+#: ../plug-ins/file-jpeg/jpeg-load.c:513 ../plug-ins/file-psd/psd-load.c:138
 #: ../plug-ins/file-psd/psd-thumb-load.c:82 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:923
@@ -2002,7 +2001,6 @@ msgstr "Αποράβδωση"
 #: ../plug-ins/common/file-ps.c:3495 ../plug-ins/common/file-ps.c:3700
 #: ../plug-ins/common/file-raw-data.c:1445
 #: ../plug-ins/common/smooth-palette.c:435 ../plug-ins/common/tile.c:428
-#: ../plug-ins/common/tile-paper.c:303
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
 #: ../plug-ins/print/print-page-layout.c:282
@@ -2247,7 +2245,7 @@ msgstr "Τέλος αρχείου ή σφάλμα ανάγνωσης κεφαλ�
 #: ../plug-ins/common/file-xwd.c:438 ../plug-ins/file-bmp/bmp-read.c:200
 #: ../plug-ins/file-exr/file-exr.c:174 ../plug-ins/file-faxg3/faxg3.c:218
 #: ../plug-ins/file-fli/fli-gimp.c:494 ../plug-ins/file-ico/ico-load.c:642
-#: ../plug-ins/file-jpeg/jpeg-load.c:90 ../plug-ins/file-psd/psd-load.c:125
+#: ../plug-ins/file-jpeg/jpeg-load.c:90 ../plug-ins/file-psd/psd-load.c:130
 #: ../plug-ins/file-sgi/sgi.c:325
 #, c-format
 msgid "Opening '%s'"
@@ -2333,7 +2331,7 @@ msgstr "'%s': τέλος αρχείου ή σφάλμα ανάγνωσης δε�
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:641
 #: ../plug-ins/file-bmp/bmp-write.c:318 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:716 ../plug-ins/file-ico/ico-save.c:1060
-#: ../plug-ins/file-jpeg/jpeg-save.c:283 ../plug-ins/file-psd/psd-save.c:1649
+#: ../plug-ins/file-jpeg/jpeg-save.c:285 ../plug-ins/file-psd/psd-save.c:1497
 #: ../plug-ins/file-sgi/sgi.c:577
 #, c-format
 msgid "Saving '%s'"
@@ -2819,8 +2817,7 @@ msgstr ""
 #: ../plug-ins/common/file-html-table.c:654 ../plug-ins/common/file-ps.c:3508
 #: ../plug-ins/common/file-ps.c:3712 ../plug-ins/common/file-raw-data.c:1461
 #: ../plug-ins/common/film.c:1002 ../plug-ins/common/smooth-palette.c:440
-#: ../plug-ins/common/tile.c:432 ../plug-ins/common/tile-paper.c:314
-#: ../plug-ins/imagemap/imap_cmd_guides.c:173
+#: ../plug-ins/common/tile.c:432 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
 #: ../plug-ins/print/print-page-layout.c:284
 msgid "_Height:"
@@ -3077,13 +3074,13 @@ msgid "'%s' is not a PCX file"
 msgstr "Το '%s' δεν είναι αρχείο PCX"
 
 #: ../plug-ins/common/file-pcx.c:402 ../plug-ins/file-bmp/bmp-read.c:688
-#: ../plug-ins/file-psd/psd-load.c:301
+#: ../plug-ins/file-psd/psd-load.c:306
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Μη υποστηριζόμενη ή άκυρη εικόνα πλάτους: %d"
 
 #: ../plug-ins/common/file-pcx.c:408 ../plug-ins/file-bmp/bmp-read.c:694
-#: ../plug-ins/file-psd/psd-load.c:293
+#: ../plug-ins/file-psd/psd-load.c:298
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Μη υποστηριζόμενη ή άκυρη εικόνα ύψους: %d"
@@ -3379,7 +3376,6 @@ msgid "PPM image"
 msgstr "Εικόνα PPM"
 
 #: ../plug-ins/common/file-pnm.c:334
-#| msgid "PNM image"
 msgid "PFM image"
 msgstr "Εικόνα PFM"
 
@@ -3424,7 +3420,6 @@ msgid "Bogus scale factor."
 msgstr "Συντελεστής κλίμακας ανυπόστατος."
 
 #: ../plug-ins/common/file-pnm.c:646
-#| msgid "Unsupported brush format"
 msgid "Unsupported scale factor."
 msgstr "Μη υποστηριζόμενος συντελεστής κλίμακας."
 
@@ -3760,12 +3755,10 @@ msgid "RGB Save Type"
 msgstr "Αποθήκευση τύπου RGB"
 
 #: ../plug-ins/common/file-raw-data.c:1562
-#| msgid "Standard (R,G,B)"
 msgid "Standard (RGB RGB RGB ...)"
 msgstr "Πρότυπο (RGB RGB RGB ...)"
 
 #: ../plug-ins/common/file-raw-data.c:1563
-#| msgid "Planar (RRR,GGG,BBB)"
 msgid "Planar (RRR... GGG... BBB...)"
 msgstr "Επίπεδο (RRR... GGG... BBB...)"
 
@@ -4560,7 +4553,7 @@ msgid "Composing images"
 msgstr "Σύνθεση εικόνων"
 
 #: ../plug-ins/common/film.c:423 ../plug-ins/common/guillotine.c:215
-#: ../plug-ins/help-browser/dialog.c:1128
+#: ../plug-ins/help-browser/dialog.c:1106
 msgid "Untitled"
 msgstr "Άτιτλο"
 
@@ -5117,126 +5110,104 @@ msgstr "Κάθε κομμάτι έχει ευθείες πλευρές"
 msgid "Each piece has curved sides"
 msgstr "Κάθε κομμάτι έχει καμπύλες πλευρές"
 
-#: ../plug-ins/common/lcms.c:213
+#: ../plug-ins/common/lcms.c:146
 msgid "Set a color profile on the image"
 msgstr "Ορισμός χρώματος κατατομής στην εικόνα"
 
-#: ../plug-ins/common/lcms.c:220
+#: ../plug-ins/common/lcms.c:153
 msgid "_Assign Color Profile..."
 msgstr "_Απόδοση χρωματικής κατατομής..."
 
-#: ../plug-ins/common/lcms.c:236
+#: ../plug-ins/common/lcms.c:169
 msgid "Assign default RGB Profile"
 msgstr "Απόδοση προεπιλεγμένης κατατομής RGB"
 
-#: ../plug-ins/common/lcms.c:243
+#: ../plug-ins/common/lcms.c:176
 msgid "Apply a color profile on the image"
 msgstr "Εφαρμογή χρωματικής κατατομής στην εικόνα"
 
-#: ../plug-ins/common/lcms.c:253
+#: ../plug-ins/common/lcms.c:186
 msgid "_Convert to Color Profile..."
 msgstr "_Μετατροπή σε χρωματική κατατομή..."
 
-#: ../plug-ins/common/lcms.c:271
+#: ../plug-ins/common/lcms.c:204
 msgid "Convert to default RGB Profile"
 msgstr "Μετατροπή στην προεπιλεγμένη κατατομή RGB"
 
-#: ../plug-ins/common/lcms.c:285
-msgid "Image Color Profile Information"
-msgstr "Πληροφορίες χρωματικής κατατομής εικόνας"
-
-#: ../plug-ins/common/lcms.c:299
-msgid "Color Profile Information"
-msgstr "Πληροφορίες χρωματικής κατατομής"
-
-#: ../plug-ins/common/lcms.c:562 ../plug-ins/common/lcms.c:1285
+#: ../plug-ins/common/lcms.c:415
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Η χρωματική κατατομή '%s' δεν είναι για το χρωματικό χώρο RGB."
 
-#: ../plug-ins/common/lcms.c:706
-msgid "Error parsing 'icc-profile': "
-msgstr "Σφάλμα ανάλυσης 'κατατομής icc': "
-
-#: ../plug-ins/common/lcms.c:719
-#, c-format
-msgid "Color profile '%s' is not for RGB color space"
-msgstr "Η χρωματική κατατομή '%s' δεν είναι για το χρωματικό χώρο RGB."
-
-#: ../plug-ins/common/lcms.c:820
-#, c-format
-msgid "Converting from '%s' to '%s'"
-msgstr "Μετατροπή από '%s' σε '%s'"
-
-#: ../plug-ins/common/lcms.c:1122
+#: ../plug-ins/common/lcms.c:519
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Η εικόνα '%s' έχει μια ενσωματωμένη χρωματική κατατομή:"
 
-#: ../plug-ins/common/lcms.c:1166
+#: ../plug-ins/common/lcms.c:563
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Μετατροπή εικόνας σε χώρο εργασίας RGB (%s);"
 
-#: ../plug-ins/common/lcms.c:1197
+#: ../plug-ins/common/lcms.c:594
 msgid "Convert to RGB working space?"
 msgstr "Μετατροπή σε χώρο εργασίας RGB;"
 
 #
-#: ../plug-ins/common/lcms.c:1202
+#: ../plug-ins/common/lcms.c:599
 msgid "_Keep"
 msgstr "Διατήρ_ηση"
 
-#: ../plug-ins/common/lcms.c:1207
+#: ../plug-ins/common/lcms.c:604
 msgid "_Convert"
 msgstr "_Μετατροπή"
 
-#: ../plug-ins/common/lcms.c:1235
+#: ../plug-ins/common/lcms.c:632
 msgid "_Don't ask me again"
 msgstr "Μ_ην με ξαναρωτήσεις"
 
-#: ../plug-ins/common/lcms.c:1265
+#: ../plug-ins/common/lcms.c:663
 msgid "Select destination profile"
 msgstr "Επιλογή κατατομής προορισμού"
 
-#: ../plug-ins/common/lcms.c:1302
+#: ../plug-ins/common/lcms.c:685
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "Χώρος εργασίας RGB (%s)"
 
-#: ../plug-ins/common/lcms.c:1349
+#: ../plug-ins/common/lcms.c:722
 msgid "Convert to ICC Color Profile"
 msgstr "Μετατροπή σε χρωματική κατατομή ICC"
 
-#: ../plug-ins/common/lcms.c:1350
+#: ../plug-ins/common/lcms.c:723
 msgid "Assign ICC Color Profile"
 msgstr "Απόδοση χρωματικής κατατομής ICC"
 
-#: ../plug-ins/common/lcms.c:1358
+#: ../plug-ins/common/lcms.c:731
 msgid "_Assign"
 msgstr "_Απόδοση"
 
-#: ../plug-ins/common/lcms.c:1376
+#: ../plug-ins/common/lcms.c:749
 msgid "Current Color Profile"
 msgstr "Τρέχουσα χρωματική κατατομή"
 
-#: ../plug-ins/common/lcms.c:1389
+#: ../plug-ins/common/lcms.c:762
 msgid "Convert to"
 msgstr "Μετατροπή σε"
 
-#: ../plug-ins/common/lcms.c:1389
+#: ../plug-ins/common/lcms.c:762
 msgid "Assign"
 msgstr "Απόδοση"
 
-#: ../plug-ins/common/lcms.c:1413
+#: ../plug-ins/common/lcms.c:786
 msgid "_Rendering Intent:"
 msgstr "Στό_χος απόδοσης:"
 
-#: ../plug-ins/common/lcms.c:1429
+#: ../plug-ins/common/lcms.c:802
 msgid "_Black Point Compensation"
 msgstr "Αντιστά_θμιση μαύρου σημείου"
 
-#: ../plug-ins/common/lcms.c:1483
+#: ../plug-ins/common/lcms.c:857
 msgid "Destination profile is not for RGB color space."
 msgstr "Η κατατομή προορισμού δεν είναι για χρωματικό χώρο RGB."
 
@@ -6300,102 +6271,6 @@ msgstr "Παράθεση σε νέο μέγεθος"
 msgid "C_reate new image"
 msgstr "Δημιου_ργία νέας εικόνας"
 
-#: ../plug-ins/common/tile-paper.c:243 ../plug-ins/common/tile-paper.c:557
-msgid "Paper Tile"
-msgstr "Παράθεση χαρτιού"
-
-#: ../plug-ins/common/tile-paper.c:270
-msgid "Division"
-msgstr "Διαίρεση"
-
-#: ../plug-ins/common/tile-paper.c:283 ../plug-ins/flame/flame.c:1250
-#: ../plug-ins/gradient-flare/gradient-flare.c:2724
-#: ../plug-ins/lighting/lighting-ui.c:479
-msgid "_X:"
-msgstr "_Χ:"
-
-#: ../plug-ins/common/tile-paper.c:292 ../plug-ins/flame/flame.c:1264
-#: ../plug-ins/gradient-flare/gradient-flare.c:2728
-#: ../plug-ins/lighting/lighting-ui.c:494
-msgid "_Y:"
-msgstr "_Y:"
-
-#: ../plug-ins/common/tile-paper.c:320
-msgid "Fractional Pixels"
-msgstr "Κλασματικά εικονοστοιχεία"
-
-#
-#: ../plug-ins/common/tile-paper.c:325
-msgid "_Background"
-msgstr "Πα_ρασκήνιο"
-
-#: ../plug-ins/common/tile-paper.c:327
-msgid "_Ignore"
-msgstr "_Αγνόηση"
-
-#
-#: ../plug-ins/common/tile-paper.c:329
-msgid "_Force"
-msgstr "Ε_ξαναγκασμός"
-
-#: ../plug-ins/common/tile-paper.c:336
-msgid "C_entering"
-msgstr "Κ_εντράρισμα"
-
-#: ../plug-ins/common/tile-paper.c:351
-msgid "Movement"
-msgstr "Μετακίνηση"
-
-#: ../plug-ins/common/tile-paper.c:364
-msgid "_Max (%):"
-msgstr "_Μέγιστο (%):"
-
-#: ../plug-ins/common/tile-paper.c:370
-msgid "_Wrap around"
-msgstr "Ανα_δίπλωση γύρω από"
-
-#: ../plug-ins/common/tile-paper.c:380
-msgid "Background Type"
-msgstr "Τύπος παρασκηνίου"
-
-#: ../plug-ins/common/tile-paper.c:387
-msgid "I_nverted image"
-msgstr "Α_ντεστραμμένη Εικόνα"
-
-#
-#: ../plug-ins/common/tile-paper.c:389
-msgid "Im_age"
-msgstr "Εικόν_α"
-
-#: ../plug-ins/common/tile-paper.c:391
-msgid "Fo_reground color"
-msgstr "Χ_ρώμα προσκηνίου"
-
-#: ../plug-ins/common/tile-paper.c:393
-msgid "Bac_kground color"
-msgstr "Χρώμα παρασ_κηνίου"
-
-#
-#: ../plug-ins/common/tile-paper.c:395
-msgid "S_elect here:"
-msgstr "_Επιλογή εδώ:"
-
-#: ../plug-ins/common/tile-paper.c:402
-msgid "Background Color"
-msgstr "Χρώμα παρασκηνίου"
-
-#: ../plug-ins/common/tile-paper.c:848
-msgid "Cut image into paper tiles, and slide them"
-msgstr "Κόψιμο εικόνας σε μικρά κομμάτια και μετακίνηση τους"
-
-#: ../plug-ins/common/tile-paper.c:853
-msgid "September 31, 1999"
-msgstr "31 Σεπτεμβρίου 1999"
-
-#: ../plug-ins/common/tile-paper.c:854
-msgid "_Paper Tile..."
-msgstr "_Παράθεση χαρτιού..."
-
 #: ../plug-ins/common/tile-small.c:222
 msgid "Tile image into smaller versions of the original"
 msgstr "Παράθεση εικόνας σε πιο μικρές εκδόσεις της αρχικής"
@@ -6615,7 +6490,7 @@ msgstr "Συγχώνευση"
 msgid "Unsharp Mask"
 msgstr "Μάσκα απόξυνσης"
 
-#: ../plug-ins/common/unsharp-mask.c:897 ../plug-ins/common/wind.c:1006
+#: ../plug-ins/common/unsharp-mask.c:897
 #: ../plug-ins/imagemap/imap_preferences.c:455
 #: ../plug-ins/map-object/map-object-ui.c:539
 msgid "_Threshold:"
@@ -6957,92 +6832,6 @@ msgstr "Μεταφορά εικόνας ιστοσελίδας για '%s'"
 msgid "Webpage"
 msgstr "Ιστοσελίδα"
 
-#: ../plug-ins/common/wind.c:175
-msgid "Smear image to give windblown effect"
-msgstr "Επάλειψη εικόνας για να δώσει εφέ ανέμου"
-
-#: ../plug-ins/common/wind.c:180
-msgid "Wi_nd..."
-msgstr "Ά_νεμος..."
-
-#
-#: ../plug-ins/common/wind.c:314
-msgid "Rendering blast"
-msgstr "Απόδοση ριπής"
-
-#
-#: ../plug-ins/common/wind.c:444
-msgid "Rendering wind"
-msgstr "Απόδοση ανέμου"
-
-#: ../plug-ins/common/wind.c:876
-msgid "Wind"
-msgstr "Άνεμος"
-
-#. ********************************************************
-#. radio buttons for choosing wind rendering algorithm
-#. *****************************************************
-#: ../plug-ins/common/wind.c:919
-msgid "Style"
-msgstr "Μορφοποίηση"
-
-#: ../plug-ins/common/wind.c:923
-msgid "_Wind"
-msgstr "Ά_νεμος"
-
-#: ../plug-ins/common/wind.c:924
-msgid "_Blast"
-msgstr "_Ριπή"
-
-#. *****************************************************
-#. radio buttons for choosing LEFT or RIGHT
-#. *************************************************
-#: ../plug-ins/common/wind.c:943 ../plug-ins/lighting/lighting-ui.c:520
-msgid "Direction"
-msgstr "Κατεύθυνση"
-
-#
-#: ../plug-ins/common/wind.c:947
-msgid "_Left"
-msgstr "_Αριστερά"
-
-#
-#: ../plug-ins/common/wind.c:948
-msgid "_Right"
-msgstr "_Δεξιά"
-
-#. ****************************************************
-#. radio buttons for choosing BOTH, LEADING, TRAILING
-#. **************************************************
-#: ../plug-ins/common/wind.c:967
-msgid "Edge Affected"
-msgstr "Επηρεαζόμενη άκρη"
-
-#: ../plug-ins/common/wind.c:971
-msgid "L_eading"
-msgstr "Αρ_χικό"
-
-#: ../plug-ins/common/wind.c:972
-msgid "Tr_ailing"
-msgstr "Τ_ελικό"
-
-#
-#: ../plug-ins/common/wind.c:973
-msgid "Bot_h"
-msgstr "Και τα _δύο"
-
-#: ../plug-ins/common/wind.c:1010
-msgid "Higher values restrict the effect to fewer areas of the image"
-msgstr "Υψηλότερες τιμές περιορίζουν το εφέ σε λιγότερες περιοχές της εικόνας"
-
-#: ../plug-ins/common/wind.c:1025 ../plug-ins/gimpressionist/orientmap.c:693
-msgid "_Strength:"
-msgstr "­_Δύναμη:"
-
-#: ../plug-ins/common/wind.c:1029
-msgid "Higher values increase the magnitude of the effect"
-msgstr "Υψηλότερες τιμές αυξάνουν το μέγεθος του εφέ"
-
 #: ../plug-ins/file-bmp/bmp-read.c:138
 msgid "Bad colormap"
 msgstr "Λαθεμένο χρωματολόγιο"
@@ -7118,7 +6907,7 @@ msgstr ""
 "μην γράψει πληροφορίες χρωματικού χώρου στο αρχείο."
 
 #. Advanced Options
-#: ../plug-ins/file-bmp/bmp-write.c:926 ../plug-ins/file-jpeg/jpeg-save.c:804
+#: ../plug-ins/file-bmp/bmp-write.c:926 ../plug-ins/file-jpeg/jpeg-save.c:807
 msgid "_Advanced Options"
 msgstr "Προχ_ωρημένες επιλογές"
 
@@ -7309,97 +7098,97 @@ msgstr "Εικονίδιο Microsoft Windows"
 msgid "JPEG preview"
 msgstr "Προεπισκόπηση JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:202 ../plug-ins/file-jpeg/jpeg-save.c:209
+#: ../plug-ins/file-jpeg/jpeg-save.c:204 ../plug-ins/file-jpeg/jpeg-save.c:211
 #, c-format
 msgid "File size: %s"
 msgstr "Μέγεθος Αρχείου: %s"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:596
+#: ../plug-ins/file-jpeg/jpeg-save.c:598
 msgid "Calculating file size..."
 msgstr "Υπολογισμός μεγέθους αρχείου..."
 
 #
-#: ../plug-ins/file-jpeg/jpeg-save.c:680 ../plug-ins/file-jpeg/jpeg-save.c:779
+#: ../plug-ins/file-jpeg/jpeg-save.c:682 ../plug-ins/file-jpeg/jpeg-save.c:782
 msgid "File size: unknown"
 msgstr "Μέγεθος αρχείου: άγνωστο"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:742
+#: ../plug-ins/file-jpeg/jpeg-save.c:744
 msgid "JPEG"
 msgstr "JPEG"
 
 #
-#: ../plug-ins/file-jpeg/jpeg-save.c:765
+#: ../plug-ins/file-jpeg/jpeg-save.c:768
 msgid "_Quality:"
 msgstr "_Ποιότητα:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:769
+#: ../plug-ins/file-jpeg/jpeg-save.c:772
 msgid "JPEG quality parameter"
 msgstr "Παράμετροι ποιότητας JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:789
+#: ../plug-ins/file-jpeg/jpeg-save.c:792
 msgid "Enable preview to obtain the file size."
 msgstr "Ενεργοποίηση προεπισκόπησης για λήψη μεγέθους αρχείου."
 
 #
-#: ../plug-ins/file-jpeg/jpeg-save.c:792
+#: ../plug-ins/file-jpeg/jpeg-save.c:795
 msgid "Sho_w preview in image window"
 msgstr "Εμ_φάνιση προεπισκόπησης σε παράθυρο εικόνας"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:833
+#: ../plug-ins/file-jpeg/jpeg-save.c:837
 msgid "S_moothing:"
 msgstr "Ε_ξομάλυνση:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:846
+#: ../plug-ins/file-jpeg/jpeg-save.c:850
 msgid "Interval (MCU rows):"
 msgstr "Μεσοδιάστημα (γραμμές MCU):"
 
 #
-#: ../plug-ins/file-jpeg/jpeg-save.c:864
+#: ../plug-ins/file-jpeg/jpeg-save.c:868
 msgid "Use _restart markers"
 msgstr "Χρή_ση σημειωτών επανεκκίνησης"
 
 #
 #. Optimize
-#: ../plug-ins/file-jpeg/jpeg-save.c:883
+#: ../plug-ins/file-jpeg/jpeg-save.c:887
 msgid "_Optimize"
 msgstr "Βελτιστ_οποίηση"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:906
+#: ../plug-ins/file-jpeg/jpeg-save.c:910
 msgid "Use arithmetic _coding"
 msgstr "Χρήση αριθμητικής κ_ωδικοποίησης"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:908
+#: ../plug-ins/file-jpeg/jpeg-save.c:912
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
 "Παλιότερα λογισμικά μπορεί να έχουν πρόβλημα κατά το άνοιγμα αριθμητικά "
 "κωδικοποιημένων εικόνων"
 
 #
-#: ../plug-ins/file-jpeg/jpeg-save.c:931
+#: ../plug-ins/file-jpeg/jpeg-save.c:935
 msgid "_Progressive"
 msgstr "_Σταδιακός"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:950
+#: ../plug-ins/file-jpeg/jpeg-save.c:954
 msgid "Save _Exif data"
 msgstr "Αποθήκευση δεδομένων _Exif"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:969
+#: ../plug-ins/file-jpeg/jpeg-save.c:973
 msgid "Save _thumbnail"
 msgstr "Αποθήκευση _μικρογραφίας"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:986
+#: ../plug-ins/file-jpeg/jpeg-save.c:990
 msgid "Save _XMP data"
 msgstr "Αποθήκευση δεδομένων _XMP"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1005
+#: ../plug-ins/file-jpeg/jpeg-save.c:1009
 msgid "Save _IPTC data"
 msgstr "Αποθήκευση δεδομένων _IPTC"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1024
+#: ../plug-ins/file-jpeg/jpeg-save.c:1028
 msgid "_Use quality settings from original image"
 msgstr "Χρήση ρυ_θμίσεων ποιότητας από την αρχική εικόνα"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1031
+#: ../plug-ins/file-jpeg/jpeg-save.c:1035
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -7410,54 +7199,54 @@ msgstr ""
 "για να πάρετε σχεδόν την ίδια ποιότητα και μέγεθος αρχείου."
 
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:1055
+#: ../plug-ins/file-jpeg/jpeg-save.c:1061
 msgid "Su_bsampling:"
 msgstr "Υποδειγματολη_ψία:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1062
+#: ../plug-ins/file-jpeg/jpeg-save.c:1068
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (άριστη ποιότητα)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1064
+#: ../plug-ins/file-jpeg/jpeg-save.c:1070
 msgid "4:2:2 horizontal (chroma halved)"
 msgstr "4:2:2 οριζόντια (υποδιπλασιασμένο χρώμα)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1066
+#: ../plug-ins/file-jpeg/jpeg-save.c:1072
 msgid "4:2:2 vertical (chroma halved)"
 msgstr "4:2:2 κάθετο (υποδιπλασιασμένο χρώμα)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1068
+#: ../plug-ins/file-jpeg/jpeg-save.c:1074
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (υποτετραπλασιασμένο χρώμα)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:1098
+#: ../plug-ins/file-jpeg/jpeg-save.c:1106
 msgid "_DCT method:"
 msgstr "Μέθοδος _DCT:"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1104
+#: ../plug-ins/file-jpeg/jpeg-save.c:1112
 msgid "Fast Integer"
 msgstr "Γρήγορος ακέραιος"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1105
+#: ../plug-ins/file-jpeg/jpeg-save.c:1113
 msgid "Integer"
 msgstr "Ακέραιος"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1106
+#: ../plug-ins/file-jpeg/jpeg-save.c:1114
 msgid "Floating-Point"
 msgstr "Κινητή υποδιαστολή"
 
 #
-#: ../plug-ins/file-jpeg/jpeg-save.c:1122
+#: ../plug-ins/file-jpeg/jpeg-save.c:1130
 msgid "Comment"
 msgstr "Σχόλιο"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1159
+#: ../plug-ins/file-jpeg/jpeg-save.c:1167
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
 msgid "_Load Defaults"
 msgstr "Φόρτωση προεπι_λογών"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:1168
+#: ../plug-ins/file-jpeg/jpeg-save.c:1176
 msgid "Sa_ve Defaults"
 msgstr "Απο_θήκευση προεπιλογών"
 
@@ -7470,103 +7259,98 @@ msgstr "Εικόνα JPEG"
 msgid "Export Preview"
 msgstr "Προεπισκόπηση εξαγωγής"
 
-#: ../plug-ins/file-psd/psd-load.c:214
+#: ../plug-ins/file-psd/psd-load.c:219
 #: ../plug-ins/file-psd/psd-thumb-load.c:130
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Σφάλμα φόρτωσης αρχείου PSD: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:269
+#: ../plug-ins/file-psd/psd-load.c:274
 #, c-format
 msgid "Not a valid Photoshop document file"
 msgstr "Το αρχείο εγγράφου photoshop δεν είναι ένα έγκυρο"
 
-#: ../plug-ins/file-psd/psd-load.c:276
+#: ../plug-ins/file-psd/psd-load.c:281
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Μη υποστηριζόμενη έκδοση τύπου αρχείου: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:283
+#: ../plug-ins/file-psd/psd-load.c:288
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Υπερβολικά κανάλια σε αρχείο: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:310
+#: ../plug-ins/file-psd/psd-load.c:315
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος εικόνας: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:322
+#: ../plug-ins/file-psd/psd-load.c:327
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Μη υποστηριζόμενη κατάσταση χρώματος: %s"
 
-#: ../plug-ins/file-psd/psd-load.c:348
+#: ../plug-ins/file-psd/psd-load.c:353
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Μη υποστηριζόμενη βάθος δυαδικού: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:382 ../plug-ins/file-psd/psd-load.c:392
-#: ../plug-ins/file-psd/psd-load.c:628 ../plug-ins/file-psd/psd-load.c:846
+#: ../plug-ins/file-psd/psd-load.c:387 ../plug-ins/file-psd/psd-load.c:397
+#: ../plug-ins/file-psd/psd-load.c:608 ../plug-ins/file-psd/psd-load.c:826
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Το αρχείο είναι κατεστραμμένο!"
 
-#: ../plug-ins/file-psd/psd-load.c:556
+#: ../plug-ins/file-psd/psd-load.c:536
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Υπερβολικά κανάλια σε στρώση: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:564
+#: ../plug-ins/file-psd/psd-load.c:544
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Μη υποστηριζόμενο ή άκυρο ύψος στρώσης: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:572
+#: ../plug-ins/file-psd/psd-load.c:552
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Μη υποστηριζόμενο ή άκυρο πλάτος στρώσης: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:581
+#: ../plug-ins/file-psd/psd-load.c:561
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος στρώσης: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:767
+#: ../plug-ins/file-psd/psd-load.c:747
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Μη υποστηριζόμενο ή άκυρο ύψος μάσκας στρώσης: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:775
+#: ../plug-ins/file-psd/psd-load.c:755
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Μη υποστηριζόμενο ή άκυρο πλάτος μάσκας στρώσης: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:784
+#: ../plug-ins/file-psd/psd-load.c:764
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος μάσκας στρώσης: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1268 ../plug-ins/file-psd/psd-load.c:1654
+#: ../plug-ins/file-psd/psd-load.c:1341 ../plug-ins/file-psd/psd-load.c:1742
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Μη υποστηριζόμενη κατάσταση συμπίεσης: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:1745
+#: ../plug-ins/file-psd/psd-load.c:1837
 msgid "Extra"
 msgstr "Πρόσθετο"
 
-#: ../plug-ins/file-psd/psd-load.c:1916
+#: ../plug-ins/file-psd/psd-load.c:2025
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Μη υποστηριζόμενο ή άκυρο μέγεθος καναλιού"
 
-#: ../plug-ins/file-psd/psd-save.c:241 ../plug-ins/file-psd/psd.c:115
-#: ../plug-ins/file-psd/psd.c:154
-msgid "Photoshop image"
-msgstr "Εικόνα Photoshop"
-
-#: ../plug-ins/file-psd/psd-save.c:412
+#: ../plug-ins/file-psd/psd-save.c:252
 #, c-format
 msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
@@ -7576,11 +7360,11 @@ msgstr ""
 "είτε το πρόσθετο αποθήκευσης δεν το υποστηρίζουν, θα χρησιμοποιηθεί η "
 "κανονική κατάσταση."
 
-#: ../plug-ins/file-psd/psd-save.c:662
+#: ../plug-ins/file-psd/psd-save.c:502
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Σφάλμα: Αδυναμία μετατροπής τύπου εικόνας βάσης GIMP σε κατάσταση PSD"
 
-#: ../plug-ins/file-psd/psd-save.c:1623
+#: ../plug-ins/file-psd/psd-save.c:1471
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images that are "
@@ -7589,7 +7373,7 @@ msgstr ""
 "Αδυναμία αποθήκευσης '%s'. Ο τύπος αρχείου PSD δεν υποστηρίζει εικόνες που "
 "είναι πιο πλατιές ή ψηλές από 30000 εικονοστοιχεία."
 
-#: ../plug-ins/file-psd/psd-save.c:1638
+#: ../plug-ins/file-psd/psd-save.c:1486
 #, c-format
 msgid ""
 "Unable to save '%s'.  The PSD file format does not support images with "
@@ -7601,6 +7385,10 @@ msgstr ""
 #: ../plug-ins/file-psd/psd-util.c:50
 msgid "Unexpected end of file"
 msgstr "Αναπάντεχο τέλος αρχείου"
+
+#: ../plug-ins/file-psd/psd.c:109 ../plug-ins/file-psd/psd.c:145
+msgid "Photoshop image"
+msgstr "Εικόνα Photoshop"
 
 #: ../plug-ins/file-sgi/sgi.c:121 ../plug-ins/file-sgi/sgi.c:141
 msgid "Silicon Graphics IRIS image"
@@ -7863,6 +7651,18 @@ msgstr "Κάμερ_α"
 #: ../plug-ins/flame/flame.c:1236
 msgid "_Zoom:"
 msgstr "Εστία_ση:"
+
+#: ../plug-ins/flame/flame.c:1250
+#: ../plug-ins/gradient-flare/gradient-flare.c:2724
+#: ../plug-ins/lighting/lighting-ui.c:479
+msgid "_X:"
+msgstr "_Χ:"
+
+#: ../plug-ins/flame/flame.c:1264
+#: ../plug-ins/gradient-flare/gradient-flare.c:2728
+#: ../plug-ins/lighting/lighting-ui.c:494
+msgid "_Y:"
+msgstr "_Y:"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:546
 #: ../plug-ins/gfig/gfig-dialog.c:273 ../plug-ins/gimpressionist/utils.c:139
@@ -9003,6 +8803,10 @@ msgstr "Γ_ωνία μετατόπισης:"
 msgid "Offset all vectors with a given angle"
 msgstr "Μετατόπιση όλων των διανυσμάτων με μια δεδομένη γωνία"
 
+#: ../plug-ins/gimpressionist/orientmap.c:693
+msgid "_Strength:"
+msgstr "­_Δύναμη:"
+
 #
 #: ../plug-ins/gimpressionist/orientmap.c:697
 msgid "Change the strength of the selected vector"
@@ -9586,8 +9390,9 @@ msgid "A_uto update preview"
 msgstr "Α_υτόματη ενημέρωση προεπισκόπησης"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2464
-msgid "`Default' is created."
-msgstr "Δημιουργία `Προεπιλογής'."
+#| msgid "`Default' is created."
+msgid "'Default' is created."
+msgstr "Δημιουργήθηκε η 'Προεπιλογή'."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2465
 msgid "Default"
@@ -9654,6 +9459,7 @@ msgid "Enter a name for the new GFlare"
 msgstr "Εισαγωγή ονόματος για τη νέα GFlare"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3083
+#: ../plug-ins/gradient-flare/gradient-flare.c:3164
 #, c-format
 msgid "The name '%s' is used already!"
 msgstr "Το όνομα '%s' χρησιμοποιείται ήδη!"
@@ -9665,11 +9471,6 @@ msgstr "Αντιγραφή λάμψης διαβάθμισης"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3142
 msgid "Enter a name for the copied GFlare"
 msgstr "Εισαγωγή ονόματος για το αντίγραφο GFlare"
-
-#: ../plug-ins/gradient-flare/gradient-flare.c:3164
-#, c-format
-msgid "The name `%s' is used already!"
-msgstr "Το όνομα `%s' χρησιμοποιείται ήδη!"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3195
 msgid "Cannot delete!! There must be at least one GFlare."
@@ -9814,81 +9615,81 @@ msgstr "Τυχαίος σπόρος:"
 msgid "_Second Flares"
 msgstr "_Δεύτερες λάμψεις"
 
-#: ../plug-ins/help-browser/dialog.c:182
-#: ../plug-ins/help-browser/dialog.c:1129
+#: ../plug-ins/help-browser/dialog.c:180
+#: ../plug-ins/help-browser/dialog.c:1107
 msgid "GIMP Help Browser"
 msgstr "Περιηγητής βοήθειας GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:578
+#: ../plug-ins/help-browser/dialog.c:556
 msgid "Go back one page"
 msgstr "Πίσω μια σελίδα"
 
-#: ../plug-ins/help-browser/dialog.c:583
+#: ../plug-ins/help-browser/dialog.c:561
 msgid "Go forward one page"
 msgstr "Μπροστά μια σελίδα"
 
 #
-#: ../plug-ins/help-browser/dialog.c:588
+#: ../plug-ins/help-browser/dialog.c:566
 msgid "_Reload"
 msgstr "Επαναφό_ρτωση"
 
-#: ../plug-ins/help-browser/dialog.c:588
+#: ../plug-ins/help-browser/dialog.c:566
 msgid "Reload current page"
 msgstr "Επαναφόρτωση τρέχουσας σελίδας"
 
-#: ../plug-ins/help-browser/dialog.c:593
+#: ../plug-ins/help-browser/dialog.c:571
 msgid "_Stop"
 msgstr "_Στάση"
 
-#: ../plug-ins/help-browser/dialog.c:593
+#: ../plug-ins/help-browser/dialog.c:571
 msgid "Stop loading this page"
 msgstr "Σταμάτημα φόρτωσης αυτής της σελίδας"
 
-#: ../plug-ins/help-browser/dialog.c:598
+#: ../plug-ins/help-browser/dialog.c:576
 msgid "Go to the index page"
 msgstr "Μετάβαση στο δείκτη σελίδας"
 
 #
-#: ../plug-ins/help-browser/dialog.c:603
+#: ../plug-ins/help-browser/dialog.c:581
 msgid "C_opy location"
 msgstr "Αντιγραφή τ_οποθεσίας"
 
-#: ../plug-ins/help-browser/dialog.c:604
+#: ../plug-ins/help-browser/dialog.c:582
 msgid "Copy the location of this page to the clipboard"
 msgstr "Αντιγραφή της τοποθεσίας αυτής της σελίδας στο πρόχειρο"
 
-#: ../plug-ins/help-browser/dialog.c:624
+#: ../plug-ins/help-browser/dialog.c:602
 msgid "Find text in current page"
 msgstr "Εύρεση κειμένου στην τρέχουσα σελίδα"
 
-#: ../plug-ins/help-browser/dialog.c:629
+#: ../plug-ins/help-browser/dialog.c:607
 msgid "Find _Again"
 msgstr "Εύ_ρεση πάλι"
 
 #
-#: ../plug-ins/help-browser/dialog.c:648
+#: ../plug-ins/help-browser/dialog.c:626
 msgid "S_how Index"
 msgstr "Εμφάνισ_η δείκτη"
 
-#: ../plug-ins/help-browser/dialog.c:649
+#: ../plug-ins/help-browser/dialog.c:627
 msgid "Toggle the visibility of the sidebar"
 msgstr "Εναλλαγή ορατότητας της πλευρικής γραμμής εργαλείων"
 
-#: ../plug-ins/help-browser/dialog.c:670
+#: ../plug-ins/help-browser/dialog.c:648
 msgid "Visit the GIMP documentation website"
 msgstr "Επίσκεψη της ιστοσελίδας τεκμηρίωσης του GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:1170
+#: ../plug-ins/help-browser/dialog.c:1148
 msgid "Find:"
 msgstr "Εύρεση:"
 
 #
-#: ../plug-ins/help-browser/dialog.c:1187
+#: ../plug-ins/help-browser/dialog.c:1165
 msgctxt "search"
 msgid "_Previous"
 msgstr "_Προηγούμενο"
 
-#: ../plug-ins/help-browser/dialog.c:1199
+#: ../plug-ins/help-browser/dialog.c:1177
 msgctxt "search"
 msgid "_Next"
 msgstr "Επόμε_νο"
@@ -11067,6 +10868,10 @@ msgstr "_Z:"
 msgid "Light source Z position in XYZ space"
 msgstr "Θέση Z της πηγής φωτός στο χώρο XYZ"
 
+#: ../plug-ins/lighting/lighting-ui.c:520
+msgid "Direction"
+msgstr "Κατεύθυνση"
+
 #: ../plug-ins/lighting/lighting-ui.c:537
 #: ../plug-ins/map-object/map-object-ui.c:691
 msgid "Light source X direction in XYZ space"
@@ -12037,6 +11842,142 @@ msgstr "_Στιγμιότυπο..."
 #: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "Χωρίς λήψη δεδομένων"
+
+#~ msgid "Image Color Profile Information"
+#~ msgstr "Πληροφορίες χρωματικής κατατομής εικόνας"
+
+#~ msgid "Color Profile Information"
+#~ msgstr "Πληροφορίες χρωματικής κατατομής"
+
+#~ msgid "Error parsing 'icc-profile': "
+#~ msgstr "Σφάλμα ανάλυσης 'κατατομής icc': "
+
+#~ msgid "Color profile '%s' is not for RGB color space"
+#~ msgstr "Η χρωματική κατατομή '%s' δεν είναι για το χρωματικό χώρο RGB."
+
+#~ msgid "Converting from '%s' to '%s'"
+#~ msgstr "Μετατροπή από '%s' σε '%s'"
+
+#~ msgid "Paper Tile"
+#~ msgstr "Παράθεση χαρτιού"
+
+#~ msgid "Division"
+#~ msgstr "Διαίρεση"
+
+#~ msgid "Fractional Pixels"
+#~ msgstr "Κλασματικά εικονοστοιχεία"
+
+#
+#~ msgid "_Background"
+#~ msgstr "Πα_ρασκήνιο"
+
+#~ msgid "_Ignore"
+#~ msgstr "_Αγνόηση"
+
+#
+#~ msgid "_Force"
+#~ msgstr "Ε_ξαναγκασμός"
+
+#~ msgid "C_entering"
+#~ msgstr "Κ_εντράρισμα"
+
+#~ msgid "Movement"
+#~ msgstr "Μετακίνηση"
+
+#~ msgid "_Max (%):"
+#~ msgstr "_Μέγιστο (%):"
+
+#~ msgid "_Wrap around"
+#~ msgstr "Ανα_δίπλωση γύρω από"
+
+#~ msgid "Background Type"
+#~ msgstr "Τύπος παρασκηνίου"
+
+#~ msgid "I_nverted image"
+#~ msgstr "Α_ντεστραμμένη Εικόνα"
+
+#
+#~ msgid "Im_age"
+#~ msgstr "Εικόν_α"
+
+#~ msgid "Fo_reground color"
+#~ msgstr "Χ_ρώμα προσκηνίου"
+
+#~ msgid "Bac_kground color"
+#~ msgstr "Χρώμα παρασ_κηνίου"
+
+#
+#~ msgid "S_elect here:"
+#~ msgstr "_Επιλογή εδώ:"
+
+#~ msgid "Background Color"
+#~ msgstr "Χρώμα παρασκηνίου"
+
+#~ msgid "Cut image into paper tiles, and slide them"
+#~ msgstr "Κόψιμο εικόνας σε μικρά κομμάτια και μετακίνηση τους"
+
+#~ msgid "September 31, 1999"
+#~ msgstr "31 Σεπτεμβρίου 1999"
+
+#~ msgid "_Paper Tile..."
+#~ msgstr "_Παράθεση χαρτιού..."
+
+#~ msgid "Smear image to give windblown effect"
+#~ msgstr "Επάλειψη εικόνας για να δώσει εφέ ανέμου"
+
+#~ msgid "Wi_nd..."
+#~ msgstr "Ά_νεμος..."
+
+#
+#~ msgid "Rendering blast"
+#~ msgstr "Απόδοση ριπής"
+
+#
+#~ msgid "Rendering wind"
+#~ msgstr "Απόδοση ανέμου"
+
+#~ msgid "Wind"
+#~ msgstr "Άνεμος"
+
+#~ msgid "Style"
+#~ msgstr "Μορφοποίηση"
+
+#~ msgid "_Wind"
+#~ msgstr "Ά_νεμος"
+
+#~ msgid "_Blast"
+#~ msgstr "_Ριπή"
+
+#
+#~ msgid "_Left"
+#~ msgstr "_Αριστερά"
+
+#
+#~ msgid "_Right"
+#~ msgstr "_Δεξιά"
+
+#~ msgid "Edge Affected"
+#~ msgstr "Επηρεαζόμενη άκρη"
+
+#~ msgid "L_eading"
+#~ msgstr "Αρ_χικό"
+
+#~ msgid "Tr_ailing"
+#~ msgstr "Τ_ελικό"
+
+#
+#~ msgid "Bot_h"
+#~ msgstr "Και τα _δύο"
+
+#~ msgid "Higher values restrict the effect to fewer areas of the image"
+#~ msgstr ""
+#~ "Υψηλότερες τιμές περιορίζουν το εφέ σε λιγότερες περιοχές της εικόνας"
+
+#~ msgid "Higher values increase the magnitude of the effect"
+#~ msgstr "Υψηλότερες τιμές αυξάνουν το μέγεθος του εφέ"
+
+#~ msgid "The name `%s' is used already!"
+#~ msgstr "Το όνομα `%s' χρησιμοποιείται ήδη!"
 
 #~ msgid "Swap one color with another"
 #~ msgstr "Εναλλαγή ενός χρώματος με άλλο"

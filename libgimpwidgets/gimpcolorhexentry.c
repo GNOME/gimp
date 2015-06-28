@@ -160,7 +160,7 @@ gimp_color_hex_entry_init (GimpColorHexEntry *entry)
  *
  * Return value: a new #GimpColorHexEntry widget
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_color_hex_entry_new (void)
@@ -177,7 +177,7 @@ gimp_color_hex_entry_new (void)
  * is different to the previously set color, the "color-changed"
  * signal is emitted.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_color_hex_entry_set_color (GimpColorHexEntry *entry,
@@ -213,7 +213,7 @@ gimp_color_hex_entry_set_color (GimpColorHexEntry *entry,
  *
  * Retrieves the color value displayed by a #GimpColorHexEntry.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_color_hex_entry_get_color (GimpColorHexEntry *entry,

@@ -30,6 +30,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-profile.h"
 #include "core/gimpitemstack.h"
 
 #include "widgets/gimpactiongroup.h"
@@ -52,11 +53,13 @@ static const GimpActionEntry image_actions[] =
     NC_("image-action", "Image Menu"), NULL, NULL, NULL,
     GIMP_HELP_IMAGE_WINDOW },
 
-  { "image-menu",             NULL, NC_("image-action", "_Image")      },
-  { "image-mode-menu",        NULL, NC_("image-action", "_Mode")       },
-  { "image-precision-menu",   NULL, NC_("image-action", "_Precision")  },
-  { "image-transform-menu",   NULL, NC_("image-action", "_Transform")  },
-  { "image-guides-menu",      NULL, NC_("image-action", "_Guides")     },
+  { "image-menu",                  NULL, NC_("image-action", "_Image")     },
+  { "image-mode-menu",             NULL, NC_("image-action", "_Mode")      },
+  { "image-precision-menu",        NULL, NC_("image-action", "_Precision") },
+  { "image-color-management-menu", NULL, NC_("image-action",
+                                             "_Color Management")          },
+  { "image-transform-menu",        NULL, NC_("image-action", "_Transform") },
+  { "image-guides-menu",           NULL, NC_("image-action", "_Guides")    },
 
   { "colors-menu",            NULL, NC_("image-action", "_Colors")     },
   { "colors-info-menu",       NULL, NC_("image-action", "I_nfo")       },
@@ -70,6 +73,24 @@ static const GimpActionEntry image_actions[] =
     NC_("image-action", "Create a new image"),
     G_CALLBACK (image_new_cmd_callback),
     GIMP_HELP_FILE_NEW },
+
+  { "image-color-profile-assign", NULL,
+    NC_("image-action", "_Assign Color Profile..."), NULL,
+    NC_("image-action", "Set a color profile on the image"),
+    G_CALLBACK (image_color_profile_assign_cmd_callback),
+    GIMP_HELP_IMAGE_COLOR_PROFILE_ASSIGN },
+
+  { "image-color-profile-convert", NULL,
+    NC_("image-action", "_Convert to Color Profile..."), NULL,
+    NC_("image-action", "Apply a color profile to the image"),
+    G_CALLBACK (image_color_profile_convert_cmd_callback),
+    GIMP_HELP_IMAGE_COLOR_PROFILE_CONVERT },
+
+  { "image-color-profile-discard", NULL,
+    NC_("image-action", "_Discard Color Profile"), NULL,
+    NC_("image-action", "Remove the image's color profile"),
+    G_CALLBACK (image_color_profile_discard_cmd_callback),
+    GIMP_HELP_IMAGE_COLOR_PROFILE_DISCARD },
 
   { "image-resize", GIMP_STOCK_RESIZE,
     NC_("image-action", "Can_vas Size..."), NULL,
@@ -324,6 +345,7 @@ image_actions_update (GimpActionGroup *group,
   gboolean   lp          = FALSE;
   gboolean   sel         = FALSE;
   gboolean   groups      = FALSE;
+  gboolean   profile     = FALSE;
 
   if (image)
     {
@@ -391,6 +413,8 @@ image_actions_update (GimpActionGroup *group,
       layers = gimp_image_get_layers (image);
 
       groups = ! gimp_item_stack_is_flat (GIMP_ITEM_STACK (layers));
+
+      profile = (gimp_image_get_icc_parasite (image) != NULL);
     }
 
 #define SET_SENSITIVE(action,condition) \
@@ -412,6 +436,10 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-convert-float-linear",  image && !is_indexed);
   SET_SENSITIVE ("image-convert-double-gamma",  image && !is_indexed);
   SET_SENSITIVE ("image-convert-double-linear", image && !is_indexed);
+
+  SET_SENSITIVE ("image-color-profile-assign",  image);
+  SET_SENSITIVE ("image-color-profile-convert", image);
+  SET_SENSITIVE ("image-color-profile-discard", image && profile);
 
   SET_SENSITIVE ("image-flip-horizontal", image);
   SET_SENSITIVE ("image-flip-vertical",   image);

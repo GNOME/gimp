@@ -53,7 +53,7 @@
  *
  * Return value: %TRUE if the intersection is non-empty, %FALSE otherwise
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_rectangle_intersect (gint  x1,
@@ -102,7 +102,7 @@ gimp_rectangle_intersect (gint  x1,
  *
  * Calculates the union of two rectangles.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 void
 gimp_rectangle_union (gint  x1,

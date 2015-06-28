@@ -809,7 +809,7 @@ gimp_scrolled_preview_set_cursor (GimpPreview *preview)
  * @x:       horizontal scroll offset
  * @y:       vertical scroll offset
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_scrolled_preview_set_position (GimpScrolledPreview *preview,
@@ -840,7 +840,7 @@ gimp_scrolled_preview_set_position (GimpScrolledPreview *preview,
  * @hscrollbar_policy: policy for horizontal scrollbar
  * @vscrollbar_policy: policy for vertical scrollbar
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_scrolled_preview_set_policy (GimpScrolledPreview *preview,
@@ -870,7 +870,7 @@ gimp_scrolled_preview_set_policy (GimpScrolledPreview *preview,
  * This function should only be used to implement widgets derived from
  * #GimpScrolledPreview. There is no point in calling this from a plug-in.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_scrolled_preview_freeze (GimpScrolledPreview *preview)
@@ -894,7 +894,7 @@ gimp_scrolled_preview_freeze (GimpScrolledPreview *preview)
  * This function should only be used to implement widgets derived from
  * #GimpScrolledPreview. There is no point in calling this from a plug-in.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_scrolled_preview_thaw (GimpScrolledPreview *preview)

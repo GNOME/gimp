@@ -90,7 +90,7 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
    * The column in the associated GtkTreeModel that holds unique
    * string IDs.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class,
                                    PROP_ID_COLUMN,
@@ -105,7 +105,7 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
    * The column in the associated GtkTreeModel that holds strings to
    * be used as labels in the combo-box.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class,
                                    PROP_LABEL_COLUMN,
@@ -122,7 +122,7 @@ gimp_string_combo_box_class_init (GimpStringComboBoxClass *klass)
    * if the cell renderer does not have enough room to display the
    * entire string.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class,
                                    PROP_ELLIPSIZE,
@@ -258,7 +258,7 @@ gimp_string_model_lookup (GtkTreeModel *model,
  *
  * Return value: a new #GimpStringComboBox.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_string_combo_box_new (GtkTreeModel *model,
@@ -289,7 +289,7 @@ gimp_string_combo_box_new (GtkTreeModel *model,
  * Return value: %TRUE on success or %FALSE if there was no item for
  *               this value.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_string_combo_box_set_active (GimpStringComboBox *combo_box,
@@ -331,7 +331,7 @@ gimp_string_combo_box_set_active (GimpStringComboBox *combo_box,
  *
  * Return value: newly allocated ID string or %NULL if nothing was selected
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gchar *
 gimp_string_combo_box_get_active (GimpStringComboBox *combo_box)

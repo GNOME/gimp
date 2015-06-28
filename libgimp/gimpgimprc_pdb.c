@@ -145,7 +145,7 @@ gimp_get_default_comment (void)
  *
  * Returns: Default unit.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GimpUnit
 gimp_get_default_unit (void)
@@ -246,7 +246,7 @@ gimp_get_theme_dir (void)
  *
  * Returns: Serialized color management configuration.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gchar *
 _gimp_get_color_configuration (void)

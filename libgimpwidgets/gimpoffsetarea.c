@@ -144,7 +144,7 @@ gimp_offset_area_new (gint orig_width,
  * Sets the pixbuf which represents the original image/drawable which
  * is being offset.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_offset_area_set_pixbuf (GimpOffsetArea *area,

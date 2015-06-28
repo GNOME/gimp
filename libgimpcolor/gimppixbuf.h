@@ -31,8 +31,11 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-const Babl * gimp_pixbuf_get_format    (GdkPixbuf *pixbuf);
-GeglBuffer * gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf);
+const Babl * gimp_pixbuf_get_format      (GdkPixbuf *pixbuf);
+GeglBuffer * gimp_pixbuf_create_buffer   (GdkPixbuf *pixbuf);
+
+guint8     * gimp_pixbuf_get_icc_profile (GdkPixbuf *pixbuf,
+                                          gsize     *length);
 
 
 G_END_DECLS

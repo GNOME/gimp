@@ -170,7 +170,7 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
    *
    * The title to be used for the brush selection popup dialog.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_TITLE,
                                    g_param_spec_string ("title",
@@ -185,7 +185,7 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
    *
    * The name of the currently selected brush.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_BRUSH_NAME,
                                    g_param_spec_string ("brush-name",
@@ -199,7 +199,7 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
    *
    * The opacity of the currently selected brush.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_BRUSH_OPACITY,
                                    g_param_spec_double ("brush-opacity",
@@ -213,7 +213,7 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
    *
    * The spacing of the currently selected brush.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_BRUSH_SPACING,
                                    g_param_spec_int ("brush-spacing",
@@ -227,7 +227,7 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
    *
    * The name of the currently selected brush.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_BRUSH_PAINT_MODE,
                                    g_param_spec_int ("brush-paint-mode",
@@ -251,7 +251,7 @@ gimp_brush_select_button_class_init (GimpBrushSelectButtonClass *klass)
    *
    * The ::brush-set signal is emitted when the user selects a brush.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   brush_button_signals[BRUSH_SET] =
     g_signal_new ("brush-set",
@@ -321,7 +321,7 @@ gimp_brush_select_button_init (GimpBrushSelectButton *button)
  *
  * Returns: A #GtkWidget that you can use in your UI.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_brush_select_button_new (const gchar          *title,
@@ -362,7 +362,7 @@ gimp_brush_select_button_new (const gchar          *title,
  *
  * Returns: an internal copy of the brush name which must not be freed.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 const gchar *
 gimp_brush_select_button_get_brush (GimpBrushSelectButton *button,
@@ -399,7 +399,7 @@ gimp_brush_select_button_get_brush (GimpBrushSelectButton *button,
  * Sets the current brush and other values for the brush select
  * button.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 void
 gimp_brush_select_button_set_brush (GimpBrushSelectButton *button,

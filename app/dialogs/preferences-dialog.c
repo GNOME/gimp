@@ -1529,6 +1529,10 @@ prefs_dialog_new (Gimp       *gimp,
                                        _("_MyPaint Brush tool"),
                                        GTK_BOX (vbox2));
 #endif
+
+      button = prefs_check_button_add (object, "playground-seamless-clone-tool",
+                                       _("_Seamless Clone tool"),
+                                       GTK_BOX (vbox2));
     }
 
 
@@ -1986,7 +1990,7 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
-                               _("Fit to window"),
+                               _("Show entire image"),
                                "1:1",
                                _("Initial zoom _ratio:"),
                                GTK_TABLE (table), 0, size_group);

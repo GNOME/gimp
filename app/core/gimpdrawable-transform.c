@@ -43,6 +43,7 @@
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
+#include "gimplayer-new.h"
 #include "gimppickable.h"
 #include "gimpprogress.h"
 #include "gimpselection.h"
@@ -892,8 +893,8 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
       gint x, y, w, h;
 
       /* set the keep_indexed flag to FALSE here, since we use
-       * gimp_layer_new_from_buffer() later which assumes that the buffer
-       * are either RGB or GRAY.  Eeek!!!              (Sven)
+       * gimp_layer_new_from_gegl_buffer() later which assumes that
+       * the buffer are either RGB or GRAY.  Eeek!!!  (Sven)
        */
       if (gimp_item_mask_intersect (GIMP_ITEM (drawable), &x, &y, &w, &h))
         {
@@ -958,10 +959,11 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
   if (new_layer)
     {
       layer =
-        gimp_layer_new_from_buffer (buffer, image,
-                                    gimp_drawable_get_format_with_alpha (drawable),
-                                    _("Transformation"),
-                                    GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+        gimp_layer_new_from_gegl_buffer (buffer, image,
+                                         gimp_drawable_get_format_with_alpha (drawable),
+                                         _("Transformation"),
+                                         GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
+                                         NULL, 0 /* same image */);
 
       gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
 

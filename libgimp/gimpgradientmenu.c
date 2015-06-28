@@ -68,7 +68,7 @@ static void compat_callback_data_free (CompatCallbackData       *data);
  *
  * Returns: A #GtkWidget that you can use in your UI.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  */
 GtkWidget *
 gimp_gradient_select_widget_new (const gchar             *title,

@@ -142,6 +142,14 @@ libappoperations_generic_a_sources = \
 	gimpoperationgrainmergemode.h   	\
 	gimpoperationcolorerasemode.c   	\
 	gimpoperationcolorerasemode.h   	\
+	gimpoperationlchhuemode.c		\
+	gimpoperationlchhuemode.h		\
+	gimpoperationlchchromamode.c		\
+	gimpoperationlchchromamode.h		\
+	gimpoperationlchcolormode.c		\
+	gimpoperationlchcolormode.h		\
+	gimpoperationlchlightnessmode.c		\
+	gimpoperationlchlightnessmode.h		\
 	gimpoperationerasemode.c        	\
 	gimpoperationerasemode.h        	\
 	gimpoperationreplacemode.c      	\

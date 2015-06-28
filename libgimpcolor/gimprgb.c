@@ -133,7 +133,7 @@ gimp_rgb_set_alpha (GimpRGB *rgb,
 }
 
 /**
- * gimp_rgb_set:
+ * gimp_rgb_set_pixel:
  * @rgb:    a #GimpRGB struct
  * @format: a Babl format
  * @pixel:  pointer to the source pixel
@@ -142,7 +142,7 @@ gimp_rgb_set_alpha (GimpRGB *rgb,
  * stored in @pixel. The pixel format of @pixel is determined by
  * @format.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 void
 gimp_rgb_set_pixel (GimpRGB       *rgb,
@@ -159,7 +159,7 @@ gimp_rgb_set_pixel (GimpRGB       *rgb,
 }
 
 /**
- * gimp_rgb_get:
+ * gimp_rgb_get_pixel:
  * @rgb:    a #GimpRGB struct
  * @format: a Babl format
  * @pixel:  pointer to the destination pixel
@@ -168,7 +168,7 @@ gimp_rgb_set_pixel (GimpRGB       *rgb,
  * color stored in @pixel. The pixel format of @pixel is determined by
  * @format.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 void
 gimp_rgb_get_pixel (const GimpRGB *rgb,
@@ -324,7 +324,7 @@ gimp_rgb_gamma (GimpRGB *rgb,
  *
  * Return value: the luminous intensity of the range from 0.0 to 1.0.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gdouble
 gimp_rgb_luminance (const GimpRGB *rgb)
@@ -344,7 +344,7 @@ gimp_rgb_luminance (const GimpRGB *rgb)
  *
  * Return value: the luminous intensity in the range from 0 to 255.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 guchar
 gimp_rgb_luminance_uchar (const GimpRGB *rgb)
@@ -438,7 +438,7 @@ gimp_rgb_composite (GimpRGB              *color1,
 /*  RGBA functions  */
 
 /**
- * gimp_rgba_set:
+ * gimp_rgba_set_pixel:
  * @rgba:   a #GimpRGB struct
  * @format: a Babl format
  * @pixel:  pointer to the source pixel
@@ -447,7 +447,7 @@ gimp_rgb_composite (GimpRGB              *color1,
  * color stored in @pixel. The pixel format of @pixel is determined
  * by @format.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 void
 gimp_rgba_set_pixel (GimpRGB       *rgba,
@@ -464,7 +464,7 @@ gimp_rgba_set_pixel (GimpRGB       *rgba,
 }
 
 /**
- * gimp_rgba_get:
+ * gimp_rgba_get_pixel:
  * @rgba:   a #GimpRGB struct
  * @format: a Babl format
  * @pixel:  pointer to the destination pixel
@@ -473,7 +473,7 @@ gimp_rgba_set_pixel (GimpRGB       *rgba,
  * color stored in @pixel. The pixel format of @pixel is determined by
  * @format.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 void
 gimp_rgba_get_pixel (const GimpRGB *rgba,
@@ -642,7 +642,7 @@ static gint       gimp_param_rgb_values_cmp  (GParamSpec      *pspec,
  *
  * Returns: the #GType for a GimpParamRGB object
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GType
 gimp_param_rgb_get_type (void)
@@ -783,7 +783,7 @@ gimp_param_rgb_values_cmp (GParamSpec   *pspec,
  *
  * Returns: a newly allocated #GParamSpec instance
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GParamSpec *
 gimp_param_spec_rgb (const gchar   *name,
@@ -812,7 +812,7 @@ gimp_param_spec_rgb (const gchar   *name,
  *
  * Returns: %TRUE if the alpha channel is relevant.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_param_spec_rgb_has_alpha (GParamSpec *pspec)

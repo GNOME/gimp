@@ -36,6 +36,7 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimplayer.h"
+#include "gimplayer-new.h"
 #include "gimplayermask.h"
 #include "gimplayer-floating-sel.h"
 #include "gimppickable.h"
@@ -840,10 +841,12 @@ gimp_selection_float (GimpSelection *selection,
    *  because it may be different from the image's type if we cut from
    *  a channel or layer mask
    */
-  layer = gimp_layer_new_from_buffer (buffer, image,
-                                      gimp_drawable_get_format_with_alpha (drawable),
-                                      _("Floated Layer"),
-                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+  layer = gimp_layer_new_from_gegl_buffer (buffer, image,
+                                           gimp_drawable_get_format_with_alpha (drawable),
+                                           _("Floated Layer"),
+                                           GIMP_OPACITY_OPAQUE,
+                                           GIMP_NORMAL_MODE,
+                                           NULL, 0 /* same image */);
 
   /*  Set the offsets  */
   gimp_item_set_offset (GIMP_ITEM (layer), x1 + off_x, y1 + off_y);

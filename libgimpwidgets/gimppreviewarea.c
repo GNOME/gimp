@@ -1614,7 +1614,7 @@ gimp_preview_area_fill (GimpPreviewArea *area,
  * Sets the offsets of the previewed area. This information is used
  * when drawing the checkerboard and to determine the dither offsets.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_preview_area_set_offsets (GimpPreviewArea *area,
@@ -1675,7 +1675,7 @@ gimp_preview_area_set_colormap (GimpPreviewArea *area,
  * maximum size. If a larger size is allocated for the widget, the
  * preview will draw itself centered into the allocated area.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_preview_area_set_max_size (GimpPreviewArea *area,
@@ -1782,7 +1782,7 @@ gimp_preview_area_menu_new (GimpPreviewArea *area,
  * Creates a popup menu that allows one to configure the size and type of
  * the checkerboard pattern that the @area uses to visualize transparency.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_preview_area_menu_popup (GimpPreviewArea *area,

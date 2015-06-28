@@ -121,7 +121,7 @@ gimp_chain_button_class_init (GimpChainButtonClass *klass)
    *
    * The position in which the chain button will be used.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_POSITION,
                                    g_param_spec_enum ("position", NULL, NULL,

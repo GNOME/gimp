@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
-               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<!DOCTYPE book PUBLIC '-//OASIS//DTD DocBook XML V4.5//EN'
+                      'http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd'>
 
-<book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
+<book lang="en" id="libgimp-libgimpui" xmlns:xi="http://www.w3.org/2003/XInclude">
 
   <bookinfo>
     <title>GIMP Library Reference Manual</title>
@@ -40,7 +40,6 @@
       <title>Manupulating Images and their Properties</title>
       <xi:include href="xml/gimpchannel.xml" />
       <xi:include href="xml/gimpcolor.xml" />
-      <xi:include href="xml/gimpconvert.xml" />
       <xi:include href="xml/gimpdisplay.xml" />
       <xi:include href="xml/gimpdrawable.xml" />
       <xi:include href="xml/gimpdrawablecolor.xml" />
@@ -48,10 +47,13 @@
       <xi:include href="xml/gimpedit.xml" />
       <xi:include href="xml/gimpfileops.xml" />
       <xi:include href="xml/gimpfloatingsel.xml" />
-      <xi:include href="xml/gimpgrid.xml" />
-      <xi:include href="xml/gimpguides.xml" />
       <xi:include href="xml/gimpimage.xml" />
+      <xi:include href="xml/gimpimageconvert.xml" />
+      <xi:include href="xml/gimpimagegrid.xml" />
+      <xi:include href="xml/gimpimageguides.xml" />
       <xi:include href="xml/gimpimageselect.xml" />
+      <xi:include href="xml/gimpimagetransform.xml" />
+      <xi:include href="xml/gimpimageundo.xml" />
       <xi:include href="xml/gimpmetadata.xml" />
       <xi:include href="xml/gimpitem.xml" />
       <xi:include href="xml/gimpitemtransform.xml" />
@@ -68,7 +70,6 @@
       <xi:include href="xml/gimppainttools.xml" />
       <xi:include href="xml/gimpselectiontools.xml" />
       <xi:include href="xml/gimptransformtools.xml" />
-      <xi:include href="xml/gimpundo.xml" />
       <xi:include href="xml/gimpvectors.xml" />
     </chapter>
 
@@ -129,23 +130,33 @@
     <xi:include href="xml/gimpprocview.xml" />
   </part>
 
-  <index id="libgimp-index">
+  <index id="api-index-full">
     <title>Index</title>
+    <xi:include href="xml/api-index-full.xml"><xi:fallback /></xi:include>
   </index>
-  <index role="GIMP 2.2" id="libgimp-index-new-in-2-2">
+  <index role="2.2" id="api-index-2-2">
     <title>Index of new symbols in GIMP 2.2</title>
+    <xi:include href="xml/api-index-2.2.xml"><xi:fallback /></xi:include>
   </index>
-  <index role="GIMP 2.4" id="libgimp-index-new-in-2-4">
+  <index role="2.4" id="api-index-2-4">
     <title>Index of new symbols in GIMP 2.4</title>
+    <xi:include href="xml/api-index-2.4.xml"><xi:fallback /></xi:include>
   </index>
-  <index role="GIMP 2.6" id="libgimp-index-new-in-2-6">
+  <index role="2.6" id="api-index-2-6">
     <title>Index of new symbols in GIMP 2.6</title>
+    <xi:include href="xml/api-index-2.6.xml"><xi:fallback /></xi:include>
   </index>
-  <index role="GIMP 2.8" id="libgimp-index-new-in-2-8">
+  <index role="2.8" id="api-index-2-8">
     <title>Index of new symbols in GIMP 2.8</title>
+    <xi:include href="xml/api-index-2.8.xml"><xi:fallback /></xi:include>
   </index>
-  <index role="deprecated" id="libgimp-index-deprecated">
+  <index role="2.10" id="api-index-2-10">
+    <title>Index of new symbols in GIMP 2.10</title>
+    <xi:include href="xml/api-index-2.10.xml"><xi:fallback /></xi:include>
+  </index>
+  <index role="deprecated" id="api-index-deprecated">
     <title>Index of deprecated symbols</title>
+    <xi:include href="xml/api-index-deprecated.xml"><xi:fallback /></xi:include>
   </index>
 
 </book>

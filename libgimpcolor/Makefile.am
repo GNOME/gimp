@@ -74,14 +74,14 @@ libgimpcolor_@GIMP_API_VERSION@_la_SOURCES = \
 	gimpcmyk.h			\
 	gimpcolormanaged.c		\
 	gimpcolormanaged.h		\
+	gimpcolorprofile.c		\
+	gimpcolorprofile.h		\
 	gimpcolorspace.c		\
 	gimpcolorspace.h		\
 	gimphsl.c			\
 	gimphsl.h			\
 	gimphsv.c			\
 	gimphsv.h			\
-	gimplcms.c			\
-	gimplcms.h			\
 	gimppixbuf.c			\
 	gimppixbuf.h			\
 	gimprgb.c			\
@@ -96,10 +96,10 @@ libgimpcolorinclude_HEADERS = \
 	gimpcairo.h			\
 	gimpcmyk.h			\
 	gimpcolormanaged.h		\
+	gimpcolorprofile.h		\
 	gimpcolorspace.h		\
 	gimphsl.h			\
 	gimphsv.h			\
-	gimplcms.h			\
 	gimppixbuf.h			\
 	gimprgb.h
 

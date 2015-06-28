@@ -111,7 +111,7 @@ const guint gimp_micro_version = GIMP_MICRO_VERSION;
  * you automatically (by means of the MAIN() macro that every plug-in
  * runs). Calling it again will cause a fatal error.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 void
 gimp_env_init (gboolean plug_in)
@@ -360,7 +360,7 @@ DllMain (HINSTANCE hinstDLL,
  * GLib, which isn't necessarily UTF-8. (On Windows it always is
  * UTF-8.)
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  *
  * Returns: The toplevel installation directory of GIMP.
  **/
@@ -621,7 +621,7 @@ gimp_child_file (const gchar *parent,
  *
  * See also: gimp_directory().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  *
  * Returns: a new @GFile for the path, Free with g_object_unref().
  **/
@@ -651,7 +651,7 @@ gimp_directory_file (const gchar *first_element,
  *
  * See also: gimp_data_directory().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  *
  * Returns: a new @GFile for the path, Free with g_object_unref().
  **/
@@ -681,7 +681,7 @@ gimp_data_directory_file (const gchar *first_element,
  *
  * See also: gimp_locale_directory().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  *
  * Returns: a new @GFile for the path, Free with g_object_unref().
  **/
@@ -711,7 +711,7 @@ gimp_locale_directory_file (const gchar *first_element,
  *
  * See also: gimp_sysconf_directory().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  *
  * Returns: a new @GFile for the path, Free with g_object_unref().
  **/
@@ -741,7 +741,7 @@ gimp_sysconf_directory_file (const gchar *first_element,
  *
  * See also: gimp_plug_in_directory().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  *
  * Returns: a new @GFile for the path, Free with g_object_unref().
  **/
@@ -768,7 +768,7 @@ gimp_plug_in_directory_file (const gchar *first_element,
  * Returns: The path to the specified user directory, or %NULL if the
  *          logical ID was not found.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 const gchar *
 gimp_user_directory (GimpUserDirectory type)

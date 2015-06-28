@@ -130,7 +130,7 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
    *
    * The title to be used for the font selection popup dialog.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_TITLE,
                                    g_param_spec_string ("title",
@@ -145,7 +145,7 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
    *
    * The name of the currently selected font.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_FONT_NAME,
                                    g_param_spec_string ("font-name",
@@ -162,7 +162,7 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
    *
    * The ::font-set signal is emitted when the user selects a font.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   font_button_signals[FONT_SET] =
     g_signal_new ("font-set",
@@ -203,7 +203,7 @@ gimp_font_select_button_init (GimpFontSelectButton *button)
  *
  * Returns: A #GtkWidget that you can use in your UI.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 GtkWidget *
 gimp_font_select_button_new (const gchar *title,
@@ -232,7 +232,7 @@ gimp_font_select_button_new (const gchar *title,
  *
  * Returns: an internal copy of the font name which must not be freed.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 const gchar *
 gimp_font_select_button_get_font (GimpFontSelectButton *button)
@@ -252,7 +252,7 @@ gimp_font_select_button_get_font (GimpFontSelectButton *button)
  *
  * Sets the current font for the font select button.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 void
 gimp_font_select_button_set_font (GimpFontSelectButton *button,

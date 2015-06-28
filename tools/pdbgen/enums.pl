@@ -602,6 +602,28 @@ package Gimp::CodeGen::enums;
 	  symbols => [ qw(GIMP_VECTORS_STROKE_TYPE_BEZIER) ],
 	  mapping => { GIMP_VECTORS_STROKE_TYPE_BEZIER => '0' }
 	},
+    GimpColorManagementMode =>
+	{ contig => 1,
+	  header => 'libgimpconfig/gimpcolorconfig-enums.h',
+	  symbols => [ qw(GIMP_COLOR_MANAGEMENT_OFF
+			  GIMP_COLOR_MANAGEMENT_DISPLAY
+			  GIMP_COLOR_MANAGEMENT_SOFTPROOF) ],
+	  mapping => { GIMP_COLOR_MANAGEMENT_OFF => '0',
+		       GIMP_COLOR_MANAGEMENT_DISPLAY => '1',
+		       GIMP_COLOR_MANAGEMENT_SOFTPROOF => '2' }
+	},
+    GimpColorRenderingIntent =>
+	{ contig => 1,
+	  header => 'libgimpconfig/gimpcolorconfig-enums.h',
+	  symbols => [ qw(GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL
+			  GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC
+			  GIMP_COLOR_RENDERING_INTENT_SATURATION
+			  GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC) ],
+	  mapping => { GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL => '0',
+		       GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC => '1',
+		       GIMP_COLOR_RENDERING_INTENT_SATURATION => '2',
+		       GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC => '3' }
+	},
     GimpConvertDitherType =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',
@@ -638,7 +660,9 @@ package Gimp::CodeGen::enums;
 			  GIMP_BURN_MODE GIMP_HARDLIGHT_MODE
 			  GIMP_SOFTLIGHT_MODE GIMP_GRAIN_EXTRACT_MODE
 			  GIMP_GRAIN_MERGE_MODE GIMP_COLOR_ERASE_MODE
-			  GIMP_NEW_OVERLAY_MODE) ],
+			  GIMP_NEW_OVERLAY_MODE GIMP_LCH_HUE_MODE
+			  GIMP_LCH_CHROMA_MODE GIMP_LCH_COLOR_MODE
+			  GIMP_LCH_LIGHTNESS_MODE) ],
 	  mapping => { GIMP_NORMAL_MODE => '0',
 		       GIMP_DISSOLVE_MODE => '1',
 		       GIMP_BEHIND_MODE => '2',
@@ -662,7 +686,11 @@ package Gimp::CodeGen::enums;
 		       GIMP_GRAIN_EXTRACT_MODE => '20',
 		       GIMP_GRAIN_MERGE_MODE => '21',
 		       GIMP_COLOR_ERASE_MODE => '22',
-		       GIMP_NEW_OVERLAY_MODE => '23' }
+		       GIMP_NEW_OVERLAY_MODE => '23',
+		       GIMP_LCH_HUE_MODE => '24',
+		       GIMP_LCH_CHROMA_MODE => '25',
+		       GIMP_LCH_COLOR_MODE => '26',
+		       GIMP_LCH_LIGHTNESS_MODE => '27' }
 	},
     GimpBrushApplicationMode =>
 	{ contig => 1,

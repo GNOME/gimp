@@ -75,18 +75,17 @@ plug_in_params_to_args (GParamSpec **pspecs,
           /*  are there param specs left?  */
           if (pspec_index < n_pspecs)
             {
+              GType          pspec_gtype;
               GimpPDBArgType pspec_arg_type;
 
-              pspec_arg_type = gimp_pdb_compat_arg_type_from_gtype
-                (G_PARAM_SPEC_VALUE_TYPE (pspecs[pspec_index]));
+              pspec_gtype    = G_PARAM_SPEC_VALUE_TYPE (pspecs[pspec_index]);
+              pspec_arg_type = gimp_pdb_compat_arg_type_from_gtype (pspec_gtype);
 
               /*  if the param spec's GType, mapped to a pdb type, matches
                *  the passed pdb type, use the param spec's GType
                */
               if (pspec_arg_type == params[i].type)
-                {
-                  type = G_PARAM_SPEC_VALUE_TYPE (pspecs[pspec_index]);
-                }
+                type = pspec_gtype;
             }
         }
 

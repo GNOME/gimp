@@ -64,7 +64,7 @@ void   gimp_context_help                   (GtkWidget    *widget);
  *
  * The #GQuark used to attach GIMP help IDs to widgets.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 #define GIMP_HELP_ID (gimp_help_id_quark ())
 

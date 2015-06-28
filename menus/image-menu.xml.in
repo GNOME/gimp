@@ -325,13 +325,12 @@
       <placeholder name="New">
         <menuitem action="image-duplicate" />
       </placeholder>
+      <separator />
       <menu action="image-mode-menu" name="Mode">
         <menuitem action="image-convert-rgb" />
         <menuitem action="image-convert-grayscale" />
         <menuitem action="image-convert-indexed" />
-        <separator />
-        <placeholder name="Color Profile" />
-        <separator />
+	<separator />
       </menu>
       <menu action="image-precision-menu" name="Precision">
         <menuitem action="image-convert-u8-linear" />
@@ -348,6 +347,14 @@
         <menuitem action="image-convert-double-gamma" />
         <separator />
       </menu>
+      <menu action="image-color-management-menu" name="Color Management">
+	<!-- disabled until the actions are implemented
+         <menuitem action="image-color-profile-assign" />
+         <menuitem action="image-color-profile-convert" />
+	-->
+         <menuitem action="image-color-profile-discard" />
+     </menu>
+      <separator />
       <menu action="image-transform-menu" name="Transform">
         <placeholder name="Flip">
           <menuitem action="image-flip-horizontal" />
@@ -361,7 +368,6 @@
         </placeholder>
         <separator />
       </menu>
-      <separator />
       <placeholder name="Resize">
         <menuitem action="image-resize" />
         <menuitem action="image-resize-to-layers" />
@@ -725,6 +731,7 @@
       <menu action="plug-in-decor-menu" name="Decor" />
       <menu action="plug-in-map-menu" name="Map">
         <menuitem action="filters-bump-map" />
+        <menuitem action="filters-displace" />
         <menuitem action="filters-fractal-trace" />
         <menuitem action="filters-illusion" />
         <menuitem action="filters-panorama-projection" />

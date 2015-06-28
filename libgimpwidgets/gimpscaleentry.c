@@ -364,7 +364,7 @@ gimp_color_scale_entry_new (GtkTable    *table,
  * ranges, but smaller selections on that range require a finer
  * adjustment.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
@@ -491,7 +491,7 @@ gimp_scale_entry_set_logarithmic (GtkObject *adjustment,
  * Return value: %TRUE if the the entry's scale widget will behave in
  *               logharithmic fashion, %FALSE for linear behaviour.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_scale_entry_get_logarithmic (GtkObject *adjustment)

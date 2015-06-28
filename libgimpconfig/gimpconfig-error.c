@@ -42,7 +42,7 @@
  *
  * Return value: the #GQuark that defines the GimpConfig error domain.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GQuark
 gimp_config_error_quark (void)

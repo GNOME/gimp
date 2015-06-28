@@ -47,7 +47,7 @@
  * Retrieves the actual shades of gray to use when drawing a
  * checkerboard for a certain #GimpCheckType.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_checks_get_shades (GimpCheckType  type,

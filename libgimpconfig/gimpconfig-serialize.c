@@ -61,7 +61,7 @@ static gboolean  gimp_config_serialize_rgb (const GValue *value,
  *
  * Returns: %TRUE if serialization succeeded, %FALSE otherwise
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_config_serialize_properties (GimpConfig       *config,
@@ -107,7 +107,7 @@ gimp_config_serialize_properties (GimpConfig       *config,
  *
  * Returns: %TRUE if serialization succeeded, %FALSE otherwise
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_config_serialize_changed_properties (GimpConfig       *config,
@@ -162,7 +162,7 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
  *
  * Returns: %TRUE if serialization succeeded, %FALSE otherwise
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_config_serialize_property (GimpConfig       *config,
@@ -328,7 +328,7 @@ gimp_config_serialize_property (GimpConfig       *config,
  *
  * Returns: %TRUE if serialization succeeded, %FALSE otherwise
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_config_serialize_property_by_name (GimpConfig       *config,
@@ -356,7 +356,7 @@ gimp_config_serialize_property_by_name (GimpConfig       *config,
  *
  * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_config_serialize_value (const GValue *value,

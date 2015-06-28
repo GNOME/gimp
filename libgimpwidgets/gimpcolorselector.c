@@ -278,7 +278,7 @@ gimp_color_selector_channel_changed (GimpColorSelector *selector)
  *
  * Sets the color management configuration to use with this color selector.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 void
 gimp_color_selector_set_config (GimpColorSelector *selector,

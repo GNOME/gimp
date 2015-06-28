@@ -49,12 +49,18 @@
 #include "gimpoperationgrainextractmode.h"
 #include "gimpoperationgrainmergemode.h"
 #include "gimpoperationcolorerasemode.h"
+#include "gimpoperationlchhuemode.h"
+#include "gimpoperationlchchromamode.h"
+#include "gimpoperationlchcolormode.h"
+#include "gimpoperationlchlightnessmode.h"
 #include "gimpoperationerasemode.h"
 #include "gimpoperationreplacemode.h"
 #include "gimpoperationantierasemode.h"
 
+
 GimpLayerModeFunction
-get_layer_mode_function (GimpLayerModeEffects paint_mode)
+get_layer_mode_function (GimpLayerModeEffects paint_mode,
+                         gboolean             linear_mode)
 {
   GimpLayerModeFunction func = gimp_operation_normal_mode_process_pixels;
 
@@ -84,9 +90,22 @@ get_layer_mode_function (GimpLayerModeEffects paint_mode)
       case GIMP_GRAIN_MERGE_MODE:   func = gimp_operation_grain_merge_mode_process_pixels; break;
       case GIMP_COLOR_ERASE_MODE:   func = gimp_operation_color_erase_mode_process_pixels; break;
       case GIMP_NEW_OVERLAY_MODE:   func = gimp_operation_overlay_mode_process_pixels; break;
+      case GIMP_LCH_HUE_MODE:       func = linear_mode ?
+                                            gimp_operation_lch_hue_mode_process_pixels_linear :
+                                            gimp_operation_lch_hue_mode_process_pixels; break;
+      case GIMP_LCH_CHROMA_MODE:    func = linear_mode ?
+                                            gimp_operation_lch_chroma_mode_process_pixels_linear :
+                                            gimp_operation_lch_chroma_mode_process_pixels; break;
+      case GIMP_LCH_COLOR_MODE:     func = linear_mode ?
+                                            gimp_operation_lch_color_mode_process_pixels_linear :
+                                            gimp_operation_lch_color_mode_process_pixels; break;
+      case GIMP_LCH_LIGHTNESS_MODE: func = linear_mode ?
+                                            gimp_operation_lch_lightness_mode_process_pixels_linear :
+                                            gimp_operation_lch_lightness_mode_process_pixels; break;
       case GIMP_ERASE_MODE:         func = gimp_operation_erase_mode_process_pixels; break;
       case GIMP_REPLACE_MODE:       func = gimp_operation_replace_mode_process_pixels; break;
       case GIMP_ANTI_ERASE_MODE:    func = gimp_operation_anti_erase_mode_process_pixels; break;
+
       default:
         g_warning ("No direct function for layer mode (%d), using gimp:normal-mode", paint_mode);
         func = gimp_operation_normal_mode_process_pixels;

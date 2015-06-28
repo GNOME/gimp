@@ -53,7 +53,7 @@
  *
  * Returns: The new text layer.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gint32
 gimp_text_layer_new (gint32       image_ID,
@@ -93,7 +93,7 @@ gimp_text_layer_new (gint32       image_ID,
  *
  * Returns: The text from the specified text layer.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gchar *
 gimp_text_layer_get_text (gint32 layer_ID)
@@ -126,7 +126,7 @@ gimp_text_layer_get_text (gint32 layer_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_set_text (gint32       layer_ID,
@@ -164,7 +164,7 @@ gimp_text_layer_set_text (gint32       layer_ID,
  * Returns: The markup which represents the style of the specified text
  * layer.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gchar *
 gimp_text_layer_get_markup (gint32 layer_ID)
@@ -196,7 +196,7 @@ gimp_text_layer_get_markup (gint32 layer_ID)
  *
  * Returns: The font which is used in the specified text layer.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gchar *
 gimp_text_layer_get_font (gint32 layer_ID)
@@ -229,7 +229,7 @@ gimp_text_layer_get_font (gint32 layer_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_set_font (gint32       layer_ID,
@@ -265,7 +265,7 @@ gimp_text_layer_set_font (gint32       layer_ID,
  *
  * Returns: The font size.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gdouble
 gimp_text_layer_get_font_size (gint32    layer_ID,
@@ -304,7 +304,7 @@ gimp_text_layer_get_font_size (gint32    layer_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_set_font_size (gint32   layer_ID,
@@ -341,7 +341,7 @@ gimp_text_layer_set_font_size (gint32   layer_ID,
  * Returns: A flag which is true if antialiasing is used for rendering
  * the font in the text layer.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_get_antialias (gint32 layer_ID)
@@ -375,7 +375,7 @@ gimp_text_layer_get_antialias (gint32 layer_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_set_antialias (gint32   layer_ID,
@@ -410,7 +410,7 @@ gimp_text_layer_set_antialias (gint32   layer_ID,
  *
  * Returns: The hint style used for font outlines.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 GimpTextHintStyle
 gimp_text_layer_get_hint_style (gint32 layer_ID)
@@ -445,7 +445,7 @@ gimp_text_layer_get_hint_style (gint32 layer_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_text_layer_set_hint_style (gint32            layer_ID,
@@ -479,7 +479,7 @@ gimp_text_layer_set_hint_style (gint32            layer_ID,
  *
  * Returns: A flag which is true if kerning is used in the text layer.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_get_kerning (gint32 layer_ID)
@@ -512,7 +512,7 @@ gimp_text_layer_get_kerning (gint32 layer_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_set_kerning (gint32   layer_ID,
@@ -546,7 +546,7 @@ gimp_text_layer_set_kerning (gint32   layer_ID,
  *
  * Returns: The language used in the text layer.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gchar *
 gimp_text_layer_get_language (gint32 layer_ID)
@@ -580,7 +580,7 @@ gimp_text_layer_get_language (gint32 layer_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_set_language (gint32       layer_ID,
@@ -614,7 +614,7 @@ gimp_text_layer_set_language (gint32       layer_ID,
  *
  * Returns: The based direction used for the text layer.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 GimpTextDirection
 gimp_text_layer_get_base_direction (gint32 layer_ID)
@@ -648,7 +648,7 @@ gimp_text_layer_get_base_direction (gint32 layer_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_set_base_direction (gint32            layer_ID,
@@ -682,7 +682,7 @@ gimp_text_layer_set_base_direction (gint32            layer_ID,
  *
  * Returns: The justification used in the text layer.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 GimpTextJustification
 gimp_text_layer_get_justification (gint32 layer_ID)
@@ -716,7 +716,7 @@ gimp_text_layer_get_justification (gint32 layer_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_set_justification (gint32                layer_ID,
@@ -750,7 +750,7 @@ gimp_text_layer_set_justification (gint32                layer_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_get_color (gint32   layer_ID,
@@ -786,7 +786,7 @@ gimp_text_layer_get_color (gint32   layer_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_set_color (gint32         layer_ID,
@@ -820,7 +820,7 @@ gimp_text_layer_set_color (gint32         layer_ID,
  *
  * Returns: The indentation value of the first line.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gdouble
 gimp_text_layer_get_indent (gint32 layer_ID)
@@ -854,7 +854,7 @@ gimp_text_layer_get_indent (gint32 layer_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_set_indent (gint32  layer_ID,
@@ -888,7 +888,7 @@ gimp_text_layer_set_indent (gint32  layer_ID,
  *
  * Returns: The line-spacing value.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gdouble
 gimp_text_layer_get_line_spacing (gint32 layer_ID)
@@ -922,7 +922,7 @@ gimp_text_layer_get_line_spacing (gint32 layer_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_set_line_spacing (gint32  layer_ID,
@@ -956,7 +956,7 @@ gimp_text_layer_set_line_spacing (gint32  layer_ID,
  *
  * Returns: The letter-spacing value.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gdouble
 gimp_text_layer_get_letter_spacing (gint32 layer_ID)
@@ -990,7 +990,7 @@ gimp_text_layer_get_letter_spacing (gint32 layer_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_set_letter_spacing (gint32  layer_ID,
@@ -1027,7 +1027,7 @@ gimp_text_layer_set_letter_spacing (gint32  layer_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_text_layer_resize (gint32  layer_ID,
@@ -1095,7 +1095,7 @@ gimp_text_layer_get_hinting (gint32    layer_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_text_layer_set_hinting (gint32   layer_ID,

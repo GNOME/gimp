@@ -41,6 +41,7 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-transform.h"
 #include "gimpdisplayshell-filter.h"
+#include "gimpdisplayshell-profile.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayxfer.h"
@@ -62,9 +63,9 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 #ifdef USE_NODE_BLIT
   GeglNode        *node;
 #endif
-  gdouble          scale_x      = 1.0;
-  gdouble          scale_y      = 1.0;
-  gdouble          buffer_scale = 1.0;
+  gdouble          scale_x       = 1.0;
+  gdouble          scale_y       = 1.0;
+  gdouble          buffer_scale  = 1.0;
   gint             viewport_offset_x;
   gint             viewport_offset_y;
   gint             viewport_width;
@@ -78,8 +79,9 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   gint             xfer_src_y;
   gint             mask_src_x = 0;
   gint             mask_src_y = 0;
-  gint             stride;
-  guchar          *data;
+  gint             cairo_stride;
+  guchar          *cairo_data;
+  GeglBuffer      *cairo_buffer;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (cr != NULL);
@@ -146,76 +148,167 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                                             &xfer_src_y);
     }
 
-  stride = cairo_image_surface_get_stride (xfer);
-  data = cairo_image_surface_get_data (xfer);
-  data += xfer_src_y * stride + xfer_src_x * 4;
+  cairo_stride = cairo_image_surface_get_stride (xfer);
+  cairo_data   = cairo_image_surface_get_data (xfer) +
+                 xfer_src_y * cairo_stride + xfer_src_x * 4;
 
-  /*  apply filters to the rendered projection  */
-  if (shell->filter_stack)
+  cairo_buffer = gegl_buffer_linear_new_from_data (cairo_data,
+                                                   babl_format ("cairo-ARGB32"),
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   scaled_width,
+                                                                   scaled_height),
+                                                   cairo_stride,
+                                                   NULL, NULL);
+
+  if (shell->profile_transform ||
+      gimp_display_shell_has_filter (shell))
     {
-      const Babl *filter_format = babl_format ("R'G'B'A float");
+      gboolean can_convert_to_u8;
 
-      if (! shell->filter_buffer)
+      /*  if there is a profile transform or a display filter, we need
+       *  to use temp buffers
+       */
+
+      can_convert_to_u8 = gimp_display_shell_profile_can_convert_to_u8 (shell);
+
+      /*  create the filter buffer if we have filters
+       */
+      if ((gimp_display_shell_has_filter (shell) || ! can_convert_to_u8) &&
+          ! shell->filter_buffer)
         {
           gint w = GIMP_DISPLAY_RENDER_BUF_WIDTH  * GIMP_DISPLAY_RENDER_MAX_SCALE;
           gint h = GIMP_DISPLAY_RENDER_BUF_HEIGHT * GIMP_DISPLAY_RENDER_MAX_SCALE;
 
           shell->filter_data =
-            gegl_malloc (w * h * babl_format_get_bytes_per_pixel (filter_format));
+            gegl_malloc (w * h * babl_format_get_bytes_per_pixel (shell->filter_format));
 
-          shell->filter_stride = w * babl_format_get_bytes_per_pixel (filter_format);
+          shell->filter_stride =
+            w * babl_format_get_bytes_per_pixel (shell->filter_format);
 
           shell->filter_buffer =
             gegl_buffer_linear_new_from_data (shell->filter_data,
-                                              filter_format,
+                                              shell->filter_format,
                                               GEGL_RECTANGLE (0, 0, w, h),
                                               GEGL_AUTO_ROWSTRIDE,
                                               (GDestroyNotify) gegl_free,
                                               shell->filter_data);
         }
 
+      if (shell->profile_transform)
+        {
+          /*  if there is a profile transform, load the projection
+           *  pixels into the profile_buffer
+           */
 #ifndef USE_NODE_BLIT
-      gegl_buffer_get (buffer,
-                       GEGL_RECTANGLE (scaled_x, scaled_y,
-                                       scaled_width, scaled_height),
-                       buffer_scale,
-                       filter_format,
-                       shell->filter_data, shell->filter_stride,
-                       GEGL_ABYSS_CLAMP);
+          gegl_buffer_get (buffer,
+                           GEGL_RECTANGLE (scaled_x, scaled_y,
+                                           scaled_width, scaled_height),
+                           buffer_scale,
+                           shell->profile_src_format,
+                           shell->profile_data, shell->profile_stride,
+                           GEGL_ABYSS_CLAMP);
 #else
-      gegl_node_blit (node,
-                      buffer_scale,
-                      GEGL_RECTANGLE (scaled_x, scaled_y,
-                                      scaled_width, scaled_height),
-                      filter_format,
-                      shell->filter_data, shell->filter_stride,
-                      GEGL_BLIT_CACHE);
+          gegl_node_blit (node,
+                          buffer_scale,
+                          GEGL_RECTANGLE (scaled_x, scaled_y,
+                                          scaled_width, scaled_height),
+                          shell->profile_src_format,
+                          shell->profile_data, shell->profile_stride,
+                          GEGL_BLIT_CACHE);
 #endif
 
-      gimp_color_display_stack_convert_buffer (shell->filter_stack,
-                                               shell->filter_buffer,
-                                               GEGL_RECTANGLE (0, 0,
-                                                               scaled_width,
-                                                               scaled_height));
+          if (gimp_display_shell_has_filter (shell) || ! can_convert_to_u8)
+            {
+              /*  if there are filters, convert the pixels from the
+               *  profile_buffer to the filter_buffer
+               */
+              gimp_display_shell_profile_convert_buffer (shell,
+                                                         shell->profile_buffer,
+                                                         GEGL_RECTANGLE (0, 0,
+                                                                         scaled_width,
+                                                                         scaled_height),
+                                                         shell->filter_buffer,
+                                                         GEGL_RECTANGLE (0, 0,
+                                                                         scaled_width,
+                                                                         scaled_height));
+            }
+          else
+            {
+              /*  otherwise, convert the profile_buffer directly into
+               *  the cairo_buffer
+               */
+              gimp_display_shell_profile_convert_buffer (shell,
+                                                         shell->profile_buffer,
+                                                         GEGL_RECTANGLE (0, 0,
+                                                                         scaled_width,
+                                                                         scaled_height),
+                                                         cairo_buffer,
+                                                         GEGL_RECTANGLE (0, 0,
+                                                                         scaled_width,
+                                                                         scaled_height));
+            }
+        }
+      else
+        {
+          /*  otherwise, load the projection pixels directly into the
+           *  filter_buffer
+           */
+#ifndef USE_NODE_BLIT
+          gegl_buffer_get (buffer,
+                           GEGL_RECTANGLE (scaled_x, scaled_y,
+                                           scaled_width, scaled_height),
+                           buffer_scale,
+                           shell->filter_format,
+                           shell->filter_data, shell->filter_stride,
+                           GEGL_ABYSS_CLAMP);
+#else
+          gegl_node_blit (node,
+                          buffer_scale,
+                          GEGL_RECTANGLE (scaled_x, scaled_y,
+                                          scaled_width, scaled_height),
+                          shell->filter_format,
+                          shell->filter_data, shell->filter_stride,
+                          GEGL_BLIT_CACHE);
+#endif
+        }
 
-      gegl_buffer_get (shell->filter_buffer,
-                       GEGL_RECTANGLE (0, 0,
-                                       scaled_width,
-                                       scaled_height),
-                       1.0,
-                       babl_format ("cairo-ARGB32"),
-                       data, stride,
-                       GEGL_ABYSS_CLAMP);
+      if (gimp_display_shell_has_filter (shell))
+        {
+          /*  convert the filter_buffer in place
+           */
+          gimp_color_display_stack_convert_buffer (shell->filter_stack,
+                                                   shell->filter_buffer,
+                                                   GEGL_RECTANGLE (0, 0,
+                                                                   scaled_width,
+                                                                   scaled_height));
+        }
+
+      if (gimp_display_shell_has_filter (shell) || ! can_convert_to_u8)
+        {
+          /*  finally, copy the filter buffer to the cairo-ARGB32 buffer
+           */
+          gegl_buffer_get (shell->filter_buffer,
+                           GEGL_RECTANGLE (0, 0,
+                                           scaled_width,
+                                           scaled_height),
+                           1.0,
+                           babl_format ("cairo-ARGB32"),
+                           cairo_data, cairo_stride,
+                           GEGL_ABYSS_CLAMP);
+        }
     }
   else
     {
+      /*  otherwise we can copy the projection pixels straight to the
+       *  cairo-ARGB32 buffer
+       */
 #ifndef USE_NODE_BLIT
       gegl_buffer_get (buffer,
                        GEGL_RECTANGLE (scaled_x, scaled_y,
                                        scaled_width, scaled_height),
                        buffer_scale,
                        babl_format ("cairo-ARGB32"),
-                       data, stride,
+                       cairo_data, cairo_stride,
                        GEGL_ABYSS_CLAMP);
 #else
       gegl_node_blit (node,
@@ -223,10 +316,12 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                       GEGL_RECTANGLE (scaled_x, scaled_y,
                                       scaled_width, scaled_height),
                       babl_format ("cairo-ARGB32"),
-                      data, stride,
+                      cairo_data, cairo_stride,
                       GEGL_BLIT_CACHE);
 #endif
     }
+
+  g_object_unref (cairo_buffer);
 
   if (shell->mask)
     {
@@ -242,16 +337,16 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
       cairo_surface_mark_dirty (shell->mask_surface);
 
-      stride = cairo_image_surface_get_stride (shell->mask_surface);
-      data = cairo_image_surface_get_data (shell->mask_surface);
-      data += mask_src_y * stride + mask_src_x * 4;
+      cairo_stride = cairo_image_surface_get_stride (shell->mask_surface);
+      cairo_data   = cairo_image_surface_get_data (shell->mask_surface) +
+                     mask_src_y * cairo_stride + mask_src_x * 4;
 
       gegl_buffer_get (shell->mask,
                        GEGL_RECTANGLE (scaled_x, scaled_y,
                                        scaled_width, scaled_height),
                        buffer_scale,
                        babl_format ("Y u8"),
-                       data, stride,
+                       cairo_data, cairo_stride,
                        GEGL_ABYSS_CLAMP);
 
       if (shell->mask_inverted)
@@ -261,7 +356,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
           while (mask_height--)
             {
               gint    mask_width = scaled_width;
-              guchar *d          = data;
+              guchar *d          = cairo_data;
 
               while (mask_width--)
                 {
@@ -270,7 +365,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                   *d++ = inv;
                 }
 
-              data += stride;
+              cairo_data += cairo_stride;
             }
         }
     }

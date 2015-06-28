@@ -106,7 +106,7 @@ gimp_int_store_class_init (GimpIntStoreClass *klass)
    * to use the GIMP_INT_STORE_USER_DATA column and want to have the store
    * handle ref-counting of your user data.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class,
                                    PROP_USER_DATA_TYPE,
@@ -263,7 +263,7 @@ gimp_int_store_add_empty (GimpIntStore *store)
  *
  * Return value: a new #GimpIntStore.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkListStore *
 gimp_int_store_new (void)
@@ -282,7 +282,7 @@ gimp_int_store_new (void)
  * Return value: %TRUE if the value has been located and @iter is
  *               valid, %FALSE otherwise.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_int_store_lookup_by_value (GtkTreeModel *model,

@@ -30,6 +30,14 @@
 
 
 /**
+ * SECTION: gimppixbuf
+ * @title: GimpPixbuf
+ * @short_description: Definitions and Functions relating to GdkPixbuf.
+ *
+ * Definitions and Functions relating to GdkPixbuf.
+ **/
+
+/**
  * gimp_pixbuf_get_format:
  * @pixbuf: a #GdkPixbuf
  *
@@ -37,7 +45,7 @@
  *
  * Return value: the @pixbuf's pixel format
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 const Babl *
 gimp_pixbuf_get_format (GdkPixbuf *pixbuf)
@@ -66,7 +74,7 @@ gimp_pixbuf_get_format (GdkPixbuf *pixbuf)
  *
  * Return value: a new #GeglBuffer.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GeglBuffer *
 gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
@@ -105,4 +113,41 @@ gimp_pixbuf_create_buffer (GdkPixbuf *pixbuf)
 
       return buffer;
     }
+}
+
+/**
+ * gimp_pixbuf_get_icc_profile:
+ * @pixbuf: a #GdkPixbuf
+ * @length: return location for the ICC profile's length
+ *
+ * Returns the ICC profile attached to the @pixbuf, or %NULL if there
+ * is none.
+ *
+ * Return value: The ICC profile data, or %NULL. The value should be freed
+ *               with g_free().
+ *
+ * Since: 2.10
+ **/
+guint8 *
+gimp_pixbuf_get_icc_profile (GdkPixbuf *pixbuf,
+                             gsize     *length)
+{
+  gchar *icc_base64 = NULL;
+
+  g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
+  g_return_val_if_fail (length != NULL, NULL);
+
+  g_object_get (pixbuf, "icc-profile", icc_base64, NULL);
+
+  if (icc_base64)
+    {
+      guint8 *icc_data;
+
+      icc_data = g_base64_decode (icc_base64, length);
+      g_free (icc_base64);
+
+      return icc_data;
+    }
+
+  return NULL;
 }

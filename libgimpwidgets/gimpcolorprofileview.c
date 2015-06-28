@@ -118,8 +118,8 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
 
   gtk_text_buffer_get_start_iter (buffer, &iter);
 
-  label   = gimp_lcms_profile_get_label (profile);
-  summary = gimp_lcms_profile_get_summary (profile);
+  label   = gimp_color_profile_get_label (profile);
+  summary = gimp_color_profile_get_summary (profile);
 
   if (label && strlen (label))
     {

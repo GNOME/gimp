@@ -144,8 +144,10 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   gchar        *path;
+#if 0
   gchar        *dir1;
   gchar        *dir2;
+#endif
   GimpRGB       red          = { 1.0, 0, 0, 0.5 };
   guint64       undo_size;
 
@@ -317,14 +319,20 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_IGNORE);
 
-  /* FIXME */
+#if 0
+  /* FIXME these are useful dirs, disabled until we figure how to
+   * properly generate a default gimprc
+   */
   dir1 = g_build_filename (DATADIR, "mypaint", "brushes", NULL);
   dir2 = g_build_filename (g_get_user_data_dir (), "mypaint", "brushes", NULL);
+#endif
   path = g_build_path (G_SEARCHPATH_SEPARATOR_S,
                        "/usr/share/mypaint/brushes",
                        "/usr/local/share/mypaint/brushes",
+#if 0
                        dir1,
                        dir2,
+#endif
                        "~/.mypaint/brushes",
                        NULL);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MYPAINT_BRUSH_PATH,
@@ -333,11 +341,15 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+#if 0
   g_free (dir1);
+#endif
 
-  /* FIXME */
   path = g_build_path (G_SEARCHPATH_SEPARATOR_S,
+#if 0
+  /* FIXME see above */
                        dir2,
+#endif
                        "~/.mypaint/brushes",
                        NULL);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MYPAINT_BRUSH_PATH_WRITABLE,
@@ -347,7 +359,9 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_PARAM_STATIC_STRINGS |
                                  GIMP_CONFIG_PARAM_RESTART);
   g_free (path);
+#if 0
   g_free (dir2);
+#endif
 
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,
                                    "default-brush", DEFAULT_BRUSH_BLURB,

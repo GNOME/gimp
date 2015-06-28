@@ -189,7 +189,7 @@ gimp_browser_dispose (GObject *object)
  *
  * Return Value: a newly created #GimpBrowser.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_browser_new (void)
@@ -206,7 +206,7 @@ gimp_browser_new (void)
  *
  * Populates the #GtkComboBox with search types.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_browser_add_search_types (GimpBrowser *browser,
@@ -261,7 +261,7 @@ gimp_browser_add_search_types (GimpBrowser *browser,
  *
  * Sets the widget to appear on the right side of the @browser.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_browser_set_widget (GimpBrowser *browser,
@@ -296,7 +296,7 @@ gimp_browser_set_widget (GimpBrowser *browser,
  * side already contains a #GtkLabel, the widget previously added with
  * gimp_browser_set_widget() is removed and replaced by a #GtkLabel.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_browser_show_message (GimpBrowser *browser,

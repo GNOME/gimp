@@ -52,7 +52,7 @@ static GQuark  gimp_value_descriptions_quark  (void) G_GNUC_CONST;
  * to use it when registering a #G_TYPE_ENUM with translatable value
  * names.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_type_set_translation_domain (GType        type,
@@ -74,7 +74,7 @@ gimp_type_set_translation_domain (GType        type,
  * Return value: the translation domain associated with @type
  *               or %NULL if no domain was set
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 const gchar *
 gimp_type_get_translation_domain (GType type)
@@ -92,7 +92,7 @@ gimp_type_get_translation_domain (GType type)
  * to a #GType. The only purpose of this function is to use it when
  * registering a #G_TYPE_ENUM with translatable value names.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 void
 gimp_type_set_translation_context (GType        type,
@@ -114,7 +114,7 @@ gimp_type_set_translation_context (GType        type,
  * Return value: the translation context associated with @type
  *               or %NULL if no context was set
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 const gchar *
 gimp_type_get_translation_context (GType type)
@@ -131,7 +131,7 @@ gimp_type_get_translation_context (GType type)
  * Sets the array of human readable and translatable descriptions
  * and help texts for enum values.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_enum_set_value_descriptions (GType               enum_type,
@@ -154,7 +154,7 @@ gimp_enum_set_value_descriptions (GType               enum_type,
  *
  * Returns: a %NULL terminated constant array of #GimpEnumDesc
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 const GimpEnumDesc *
 gimp_enum_get_value_descriptions (GType enum_type)
@@ -173,7 +173,7 @@ gimp_enum_get_value_descriptions (GType enum_type)
  * Sets the array of human readable and translatable descriptions
  * and help texts for flags values.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_flags_set_value_descriptions (GType                flags_type,
@@ -196,7 +196,7 @@ gimp_flags_set_value_descriptions (GType                flags_type,
  *
  * Returns: a %NULL terminated constant array of #GimpFlagsDesc
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 const GimpFlagsDesc *
 gimp_flags_get_value_descriptions (GType flags_type)

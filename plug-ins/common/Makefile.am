@@ -144,8 +144,8 @@ libexec_PROGRAMS = \
 	van-gogh-lic \
 	warp \
 	web-browser \
-	$(WEB_PAGE) \
-	wind
+	$(WEB_PAGE)
+
 
 EXTRA_PROGRAMS = \
 	file-aa \
@@ -1959,20 +1959,3 @@ web_page_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(web_page_RC)
-
-wind_SOURCES = \
-	wind.c
-
-wind_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(wind_RC)

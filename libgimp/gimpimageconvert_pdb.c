@@ -170,7 +170,7 @@ gimp_image_convert_indexed (gint32                  image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_image_convert_set_dither_matrix (gint          width,
@@ -210,7 +210,7 @@ gimp_image_convert_set_dither_matrix (gint          width,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_image_convert_precision (gint32        image_ID,

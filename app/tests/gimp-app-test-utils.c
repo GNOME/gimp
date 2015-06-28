@@ -32,6 +32,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-new.h"
 
 #include "tests.h"
 

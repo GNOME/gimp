@@ -24,10 +24,12 @@
     gradients
     help
     image
+    image_color_profile
     image_convert
     image_grid
     image_guides
     image_select
+    image_transform
     image_undo
     item
     item_transform

@@ -751,17 +751,22 @@ gimp_file_is_executable (GFile *file)
 #include "gegl/gimp-babl.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
+#include "gimplayer-new.h"
 
-void
-gimp_create_image_from_buffer (Gimp       *gimp,
-                               GeglBuffer *buffer)
+GimpImage *
+gimp_create_image_from_buffer (Gimp        *gimp,
+                               GeglBuffer  *buffer,
+                               const gchar *image_name)
 {
   GimpImage  *image;
   GimpLayer  *layer;
   const Babl *format;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (GEGL_IS_BUFFER (buffer));
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
+
+  if (! image_name)
+    image_name = "Debug Image";
 
   format = gegl_buffer_get_format (buffer);
 
@@ -772,14 +777,18 @@ gimp_create_image_from_buffer (Gimp       *gimp,
                              gimp_babl_format_get_precision (format),
                              FALSE);
 
-  layer = gimp_layer_new_from_buffer (buffer, image, format,
-                                      "Debug Image",
-                                      GIMP_OPACITY_OPAQUE,
-                                      GIMP_NORMAL_MODE);
+  layer = gimp_layer_new_from_gegl_buffer (buffer, image, format,
+                                           image_name,
+                                           GIMP_OPACITY_OPAQUE,
+                                           GIMP_NORMAL_MODE,
+                                           NULL, 0 /* same image */);
   gimp_image_add_layer (image, layer, NULL, -1, FALSE);
 
   gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0, NULL, 0);
 
   /* unref the image unconditionally, even when no display was created */
+  g_object_add_weak_pointer (G_OBJECT (image), (gpointer) &image);
   g_object_unref (image);
+
+  return image;
 }

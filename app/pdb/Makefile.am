@@ -58,9 +58,11 @@ libappinternal_procs_a_SOURCES = \
 	gradients-cmds.c		\
 	help-cmds.c			\
 	image-cmds.c			\
+	image-color-profile-cmds.c	\
 	image-convert-cmds.c		\
 	image-grid-cmds.c		\
 	image-guides-cmds.c		\
+	image-transform-cmds.c		\
 	image-select-cmds.c		\
 	image-undo-cmds.c		\
 	item-cmds.c			\

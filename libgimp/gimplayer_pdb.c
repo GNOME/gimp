@@ -103,7 +103,7 @@ _gimp_layer_new (gint32                image_ID,
  *
  * Returns: The newly created layer.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gint32
 gimp_layer_new_from_visible (gint32       image_ID,
@@ -182,7 +182,7 @@ gimp_layer_new_from_drawable (gint32 drawable_ID,
  *
  * Returns: The newly created layer group.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gint32
 gimp_layer_group_new (gint32 image_ID)
@@ -288,7 +288,7 @@ gimp_layer_add_alpha (gint32 layer_ID)
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_layer_flatten (gint32 layer_ID)
@@ -364,7 +364,7 @@ gimp_layer_scale (gint32   layer_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_layer_scale_full (gint32                layer_ID,
@@ -638,7 +638,7 @@ gimp_layer_get_mask (gint32 layer_ID)
  *
  * Returns: The mask's layer.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gint32
 gimp_layer_from_mask (gint32 mask_ID)

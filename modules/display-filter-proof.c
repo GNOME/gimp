@@ -336,10 +336,10 @@ cdisplay_proof_changed (GimpColorDisplay *display)
   if (! proof->profile)
     return;
 
-  rgb_profile = gimp_lcms_create_srgb_profile ();
+  rgb_profile = gimp_color_profile_new_srgb ();
 
   file = g_file_new_for_path (proof->profile);
-  proof_profile = gimp_lcms_profile_open_from_file (file, NULL);
+  proof_profile = gimp_color_profile_open_from_file (file, NULL);
   g_object_unref (file);
 
   if (proof_profile)
@@ -356,8 +356,8 @@ cdisplay_proof_changed (GimpColorDisplay *display)
                                                      proof->intent,
                                                      flags);
 
-      cmsCloseProfile (proof_profile);
+      gimp_color_profile_close (proof_profile);
     }
 
-  cmsCloseProfile (rgb_profile);
+  gimp_color_profile_close (rgb_profile);
 }

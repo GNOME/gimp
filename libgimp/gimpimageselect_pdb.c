@@ -61,7 +61,7 @@
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_select_color (gint32          image_ID,
@@ -124,7 +124,7 @@ gimp_image_select_color (gint32          image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_select_contiguous_color (gint32         image_ID,
@@ -172,7 +172,7 @@ gimp_image_select_contiguous_color (gint32         image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_select_rectangle (gint32         image_ID,
@@ -227,7 +227,7 @@ gimp_image_select_rectangle (gint32         image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_select_round_rectangle (gint32         image_ID,
@@ -282,7 +282,7 @@ gimp_image_select_round_rectangle (gint32         image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_select_ellipse (gint32         image_ID,
@@ -336,7 +336,7 @@ gimp_image_select_ellipse (gint32         image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_select_polygon (gint32          image_ID,
@@ -381,7 +381,7 @@ gimp_image_select_polygon (gint32          image_ID,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_image_select_item (gint32         image_ID,

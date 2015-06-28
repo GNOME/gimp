@@ -1261,7 +1261,7 @@ gimp_color_wheel_focus (GtkWidget        *widget,
  *
  * Return value: A newly-created HSV color selector.
  *
- * Since: 2.14
+ * Since: 2.10
  */
 GtkWidget*
 gimp_color_wheel_new (void)
@@ -1279,7 +1279,7 @@ gimp_color_wheel_new (void)
  * Sets the current color in an HSV color selector.
  * Color component values must be in the [0.0, 1.0] range.
  *
- * Since: 2.14
+ * Since: 2.10
  */
 void
 gimp_color_wheel_set_color (GimpColorWheel *wheel,
@@ -1315,7 +1315,7 @@ gimp_color_wheel_set_color (GimpColorWheel *wheel,
  * Queries the current color in an HSV color selector.
  * Returned values will be in the [0.0, 1.0] range.
  *
- * Since: 2.14
+ * Since: 2.10
  */
 void
 gimp_color_wheel_get_color (GimpColorWheel *wheel,
@@ -1341,7 +1341,7 @@ gimp_color_wheel_get_color (GimpColorWheel *wheel,
  *
  * Sets the ring fraction of a wheel color selector.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 void
 gimp_color_wheel_set_ring_fraction (GimpColorWheel *hsv,
@@ -1364,7 +1364,7 @@ gimp_color_wheel_set_ring_fraction (GimpColorWheel *hsv,
  *
  * Returns value: The ring fraction of the wheel color selector.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 gdouble
 gimp_color_wheel_get_ring_fraction (GimpColorWheel *wheel)
@@ -1391,7 +1391,7 @@ gimp_color_wheel_get_ring_fraction (GimpColorWheel *wheel)
  *     since they may be transitory, or %FALSE if they should consider
  *     the color value status to be final.
  *
- * Since: 2.14
+ * Since: 2.10
  */
 gboolean
 gimp_color_wheel_is_adjusting (GimpColorWheel *wheel)

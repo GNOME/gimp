@@ -45,6 +45,7 @@
 #include "gimpitemstack.h"
 #include "gimpitem-metadata.h"
 #include "gimplayer-floating-sel.h"
+#include "gimplayer-new.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"

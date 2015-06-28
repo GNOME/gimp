@@ -50,7 +50,7 @@
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_pattern_get_info (const gchar *name,
@@ -102,7 +102,7 @@ gimp_pattern_get_info (const gchar *name,
  *
  * Returns: TRUE on success.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_pattern_get_pixels (const gchar  *name,

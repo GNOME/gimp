@@ -1437,7 +1437,7 @@ gimp_size_entry_eevl_unit_resolver (const gchar      *identifier,
  * Controls whether a unit menu is shown in the size entry.  If
  * @show is #TRUE, the menu is shown; otherwise it is hidden.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_size_entry_show_unit_menu (GimpSizeEntry *gse,
@@ -1501,7 +1501,7 @@ gimp_size_entry_grab_focus (GimpSizeEntry *gse)
  * Iterates over all entries in the #GimpSizeEntry and calls
  * gtk_entry_set_activates_default() on them.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_size_entry_set_activates_default (GimpSizeEntry *gse,

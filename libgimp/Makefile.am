@@ -99,10 +99,12 @@ PDB_WRAPPERS_C = \
 	gimpgradientselect_pdb.c	\
 	gimphelp_pdb.c			\
 	gimpimage_pdb.c			\
+	gimpimagecolorprofile_pdb.c	\
 	gimpimageconvert_pdb.c		\
 	gimpimagegrid_pdb.c		\
 	gimpimageguides_pdb.c		\
 	gimpimageselect_pdb.c		\
+	gimpimagetransform_pdb.c	\
 	gimpimageundo_pdb.c		\
 	gimpitem_pdb.c			\
 	gimpitemtransform_pdb.c		\
@@ -153,10 +155,12 @@ PDB_WRAPPERS_H = \
 	gimpgradientselect_pdb.h	\
 	gimphelp_pdb.h			\
 	gimpimage_pdb.h			\
+	gimpimagecolorprofile_pdb.h	\
 	gimpimageconvert_pdb.h		\
 	gimpimagegrid_pdb.h		\
 	gimpimageguides_pdb.h		\
 	gimpimageselect_pdb.h		\
+	gimpimagetransform_pdb.h	\
 	gimpimageundo_pdb.h		\
 	gimpitem_pdb.h			\
 	gimpitemtransform_pdb.h		\
@@ -206,6 +210,8 @@ libgimp_sources = \
 	gimpgradientselect.h	\
 	gimpimage.c		\
 	gimpimage.h		\
+	gimpimagecolorprofile.c	\
+	gimpimagecolorprofile.h	\
 	gimpitem.c		\
 	gimpitem.h		\
 	gimplayer.c		\
@@ -329,6 +335,7 @@ gimpinclude_HEADERS = \
 	gimpgradients.h			\
 	gimpgradientselect.h		\
 	gimpimage.h			\
+	gimpimagecolorprofile.h		\
 	gimpitem.h			\
 	gimplayer.h			\
 	gimppalette.h			\
@@ -427,7 +434,7 @@ CLEANFILES = $(gen_sources)
 
 gimpenums.c: $(srcdir)/gimpenums.h $(srcdir)/gimpenums.c.tail $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
-		--fhead "#include \"config.h\"\n#include <gio/gio.h>\n#undef GIMP_DISABLE_DEPRECATED\n#include \"libgimpbase/gimpbase.h\"\n#include \"gimpenums.h\"" \
+		--fhead "#include \"config.h\"\n#include <gio/gio.h>\n#undef GIMP_DISABLE_DEPRECATED\n#include \"libgimpbase/gimpbase.h\"\n#include \"libgimpconfig/gimpcolorconfig-enums.h\"\n#include \"gimpenums.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static const G@Type@Value values[] =\n  {" \
 		--vprod "    { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \

@@ -355,8 +355,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                                                     GIMP_ITEM_TYPE_LAYERS,
                                                     GIMP_ITEM_SET_LINKED);
 
-            linked = gimp_image_item_list_filter (active_item, linked,
-                                                  TRUE, FALSE);
+            linked = gimp_image_item_list_filter (active_item, linked);
 
             /*  Expand the rectangle to include all linked layers as well  */
             for (list = linked; list; list = g_list_next (list))
@@ -399,8 +398,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                                                       GIMP_ITEM_TYPE_VECTORS,
                                                       GIMP_ITEM_SET_LINKED);
 
-              linked = gimp_image_item_list_filter (active_item, linked,
-                                                    TRUE, FALSE);
+              linked = gimp_image_item_list_filter (active_item, linked);
 
               for (list = linked; list; list = g_list_next (list))
                 {
@@ -532,8 +530,7 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
                                                       GIMP_ITEM_TYPE_CHANNELS,
                                                       GIMP_ITEM_SET_LINKED);
 
-              linked = gimp_image_item_list_filter (active_item, linked,
-                                                    TRUE, FALSE);
+              linked = gimp_image_item_list_filter (active_item, linked);
 
               gimp_image_item_list_translate (image,
                                               linked,
@@ -665,8 +662,7 @@ gimp_edit_selection_tool_update_motion (GimpEditSelectionTool *edit_select,
                                                       GIMP_ITEM_TYPE_VECTORS,
                                                       GIMP_ITEM_SET_LINKED);
 
-              linked = gimp_image_item_list_filter (active_item, linked,
-                                                    TRUE, FALSE);
+              linked = gimp_image_item_list_filter (active_item, linked);
 
               gimp_image_item_list_translate (image,
                                               linked,
@@ -879,8 +875,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                                                     GIMP_ITEM_TYPE_LAYERS,
                                                     GIMP_ITEM_SET_LINKED);
 
-            linked = gimp_image_item_list_filter (active_item, linked,
-                                                  TRUE, FALSE);
+            linked = gimp_image_item_list_filter (active_item, linked);
 
             for (list = linked; list; list = g_list_next (list))
               {
@@ -929,8 +924,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
                                                     GIMP_ITEM_TYPE_VECTORS,
                                                     GIMP_ITEM_SET_LINKED);
 
-            linked = gimp_image_item_list_filter (active_item, linked,
-                                                  TRUE, FALSE);
+            linked = gimp_image_item_list_filter (active_item, linked);
 
             for (list = linked; list; list = g_list_next (list))
               {
@@ -1290,11 +1284,14 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
     case GIMP_TRANSLATE_MODE_VECTORS:
     case GIMP_TRANSLATE_MODE_CHANNEL:
     case GIMP_TRANSLATE_MODE_LAYER:
-      gimp_item_translate (item, inc_x, inc_y, push_undo);
-
-      /*  translate all linked items as well  */
       if (gimp_item_get_linked (item))
-        gimp_item_linked_translate (item, inc_x, inc_y, push_undo);
+        {
+          gimp_item_linked_translate (item, inc_x, inc_y, push_undo);
+        }
+      else
+        {
+          gimp_item_translate (item, inc_x, inc_y, push_undo);
+        }
       break;
 
     case GIMP_TRANSLATE_MODE_FLOATING_SEL:

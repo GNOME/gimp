@@ -2197,7 +2197,7 @@ _______EOF
 /**
  * GIMP_API_VERSION:
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 #define GIMP_API_VERSION                                "$gimp_api_ver"
 

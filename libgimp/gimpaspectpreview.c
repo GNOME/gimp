@@ -116,7 +116,7 @@ gimp_aspect_preview_class_init (GimpAspectPreviewClass *klass)
   /**
    * GimpAspectPreview:drawable:
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_DRAWABLE,
                                    g_param_spec_pointer ("drawable", NULL, NULL,
@@ -373,7 +373,7 @@ gimp_aspect_preview_set_drawable (GimpAspectPreview *preview,
  * necessary as the preview itself now stores this state, as well as
  * the scroll offset.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  *
  * Returns: a new #GimpAspectPreview.
  **/

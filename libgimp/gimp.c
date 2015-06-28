@@ -1141,7 +1141,7 @@ gimp_destroy_paramdefs (GimpParamDef *paramdefs,
  *
  * Return value: the error message
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 const gchar *
 gimp_get_pdb_error (void)
@@ -1317,7 +1317,7 @@ gimp_show_tool_tips (void)
  *
  * Return value: the show_help_button boolean
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_show_help_button (void)
@@ -1334,7 +1334,7 @@ gimp_show_help_button (void)
  *
  * Return value: the check_size value
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GimpCheckSize
 gimp_check_size (void)
@@ -1351,7 +1351,7 @@ gimp_check_size (void)
  *
  * Return value: the check_type value
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GimpCheckType
 gimp_check_type (void)
@@ -1433,7 +1433,7 @@ gimp_monitor_number (void)
  *
  * Return value: timestamp for plug-in window
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 guint32
 gimp_user_time (void)

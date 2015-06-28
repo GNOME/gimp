@@ -60,7 +60,7 @@ static gboolean  use_cpu_accel = TRUE;
  *
  * Return value: #GimpCpuAccelFlags as supported by the CPU.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 GimpCpuAccelFlags
 gimp_cpu_accel_get_support (void)
@@ -74,7 +74,7 @@ gimp_cpu_accel_get_support (void)
  *
  * This function is for internal use only.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 void
 gimp_cpu_accel_set_use (gboolean use)

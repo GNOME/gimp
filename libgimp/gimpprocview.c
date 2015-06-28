@@ -81,7 +81,7 @@ static GtkWidget * gimp_proc_view_create_params (const GimpParamDef *params,
  *
  * Return value: a new widget providing a view on a GIMP procedure
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_proc_view_new (const gchar        *name,

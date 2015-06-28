@@ -48,9 +48,9 @@
   (set! theLayer (car (gimp-image-flatten theImage)))
 
   (if (= inSepia TRUE)
-      (begin (gimp-desaturate theLayer)
-             (gimp-brightness-contrast theLayer -20 -40)
-             (gimp-color-balance theLayer 0 TRUE 30 0 -30)
+      (begin (gimp-drawable-desaturate theLayer DESATURATE-LIGHTNESS)
+             (gimp-drawable-brightness-contrast theLayer -0.078125 -0.15625)
+             (gimp-drawable-color-balance theLayer TRANSFER-SHADOWS TRUE 30 0 -30)
       )
   )
   (set! theWidth (car (gimp-image-width theImage)))

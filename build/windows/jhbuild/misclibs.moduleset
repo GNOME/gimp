@@ -52,9 +52,9 @@
 </autotools>
 
 <autotools id="lcms2" autogen-sh="configure">
-	<branch version="2.6" repo="sf.net"
-			module="lcms/lcms/2.6/lcms2-2.6.tar.gz"
-			hash="sha1:b0ecee5cb8391338e6c281d1c11dcae2bc22a5d2">
+	<branch version="2.7" repo="sf.net"
+			module="lcms/lcms/2.7/lcms2-2.7.tar.gz"
+			hash="sha1:625f0d74bad4a0f6f917120fd992437d26f754d2">
 	</branch>
 </autotools>
 
@@ -66,9 +66,9 @@
 </autotools>
 
 <autotools id="iso-codes" autogen-sh="configure">
-	<branch version="3.52" repo="pkg-isocodes"
-			module="iso-codes-3.52.tar.xz"
-			hash="sha1:2b023294a0c68583032d34290c9f58187d2e26a4">
+	<branch version="3.58" repo="pkg-isocodes"
+			module="iso-codes-3.58.tar.xz"
+			hash="sha1:9f231aac990f5ce781970cebf02fb673baf1c44f">
 	</branch>
 </autotools>
 
@@ -147,9 +147,9 @@
 </cmake>
 
 <autotools id="libgexiv2" autogen-sh="configure">
-	<branch version="0.10.1" repo="gnome.org"
-			module="gexiv2/0.10/gexiv2-0.10.1.tar.xz"
-			hash="sha256:7675752a59c2f091560be1f39514ef492ec705b9fdea5f52281672e6b3eba2c7">
+	<branch version="0.10.3" repo="gnome.org"
+			module="gexiv2/0.10/gexiv2-0.10.3.tar.xz"
+			hash="sha256:390cfb966197fa9f3f32200bc578d7c7f3560358c235e6419657206a362d3988">
 	</branch>
 	<dependencies>
 		<dep package="exiv2"/>

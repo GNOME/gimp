@@ -50,7 +50,7 @@
  *
  * Returns: the #GType for a GimpConfigPath string property
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GType
 gimp_config_path_get_type (void)
@@ -93,7 +93,7 @@ static void  gimp_param_config_path_class_init (GParamSpecClass *class);
  *
  * Returns: the #GType for a directory path object
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GType
 gimp_param_config_path_get_type (void)
@@ -141,7 +141,7 @@ gimp_param_config_path_class_init (GParamSpecClass *class)
  *
  * Returns: a newly allocated #GParamSpec instance
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GParamSpec *
 gimp_param_spec_config_path (const gchar        *name,
@@ -172,7 +172,7 @@ gimp_param_spec_config_path (const gchar        *name,
  *
  * Returns: a #GimpConfigPathType value
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GimpConfigPathType
 gimp_param_spec_config_path_type (GParamSpec *pspec)
@@ -207,7 +207,7 @@ static inline gchar * gimp_config_path_extract_token (const gchar **str);
  *
  * Returns: a newly allocated string
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gchar *
 gimp_config_build_data_path (const gchar *name)
@@ -233,7 +233,7 @@ gimp_config_build_data_path (const gchar *name)
  *
  * Returns: a newly allocated string
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gchar *
 gimp_config_build_plug_in_path (const gchar *name)
@@ -258,7 +258,7 @@ gimp_config_build_plug_in_path (const gchar *name)
  *
  * Returns: a newly allocated string
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gchar *
 gimp_config_build_writable_path (const gchar *name)
@@ -283,7 +283,7 @@ gimp_config_build_writable_path (const gchar *name)
  *
  * Return value: a newly allocated NUL-terminated string
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gchar *
 gimp_config_path_expand (const gchar  *path,
@@ -328,7 +328,7 @@ gimp_config_path_expand (const gchar  *path,
  *
  * Return value: a #GList of newly allocated #GFile objects.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 GList *
 gimp_config_path_expand_to_files (const gchar  *path,

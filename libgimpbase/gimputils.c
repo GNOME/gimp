@@ -264,7 +264,7 @@ gimp_filename_to_utf8 (const gchar *filename)
  *
  * See g_file_get_parse_name().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  *
  * Return value: A temporarily valid UTF-8 representation of @file's name.
  *               This string must not be changed or freed.
@@ -293,7 +293,7 @@ gimp_file_get_utf8_name (GFile *file)
  * like g_str_has_suffix() on g_file_get_uri(), except that the string
  * comparison is done case-insensitively using g_ascii_strcasecmp().
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  *
  * Return value: %TRUE if @file's URI ends with @extension,
  *               %FALSE otherwise.
@@ -333,9 +333,9 @@ gimp_file_has_extension (GFile       *file,
  *
  * Shows @file in the system file manager.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  *
- * Return value: %TRUE on success, %FALSE otherwise. On %FASLE, @error
+ * Return value: %TRUE on success, %FALSE otherwise. On %FALSE, @error
  *               is set.
  **/
 gboolean
@@ -569,7 +569,7 @@ gimp_strip_uline (const gchar *str)
  * Return value: A (possibly escaped) copy of @str which should be
  * freed using g_free() when it is not needed any longer.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gchar *
 gimp_escape_uline (const gchar *str)
@@ -614,7 +614,7 @@ gimp_escape_uline (const gchar *str)
  *               allocated string that should be freed with g_free()
  *               when no longer needed.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gchar *
 gimp_canonicalize_identifier (const gchar *identifier)
@@ -651,7 +651,7 @@ gimp_canonicalize_identifier (const gchar *identifier)
  *
  * Return value: the value's #GimpEnumDesc.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GimpEnumDesc *
 gimp_enum_get_desc (GEnumClass *enum_class,
@@ -695,7 +695,7 @@ gimp_enum_get_desc (GEnumClass *enum_class,
  * Return value: %TRUE if @value is valid for the @enum_type,
  *               %FALSE otherwise
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_enum_get_value (GType         enum_type,
@@ -777,7 +777,7 @@ gimp_enum_get_value (GType         enum_type,
  *
  * Return value: the translated description of the enum value
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 const gchar *
 gimp_enum_value_get_desc (GEnumClass *enum_class,
@@ -816,7 +816,7 @@ gimp_enum_value_get_desc (GEnumClass *enum_class,
  *
  * Return value: the translated help of the enum value
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 const gchar *
 gimp_enum_value_get_help (GEnumClass *enum_class,
@@ -843,7 +843,7 @@ gimp_enum_value_get_help (GEnumClass *enum_class,
  *
  * Return value: the value's #GimpFlagsDesc.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GimpFlagsDesc *
 gimp_flags_get_first_desc (GFlagsClass *flags_class,
@@ -887,7 +887,7 @@ gimp_flags_get_first_desc (GFlagsClass *flags_class,
  * Return value: %TRUE if @value is valid for the @flags_type,
  *               %FALSE otherwise
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_flags_get_first_value (GType         flags_type,
@@ -947,7 +947,7 @@ gimp_flags_get_first_value (GType         flags_type,
  *
  * Return value: the translated description of the flags value
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 const gchar *
 gimp_flags_value_get_desc (GFlagsClass *flags_class,
@@ -974,7 +974,7 @@ gimp_flags_value_get_desc (GFlagsClass *flags_class,
  *
  * Return value: the translated help of the flags value
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 const gchar *
 gimp_flags_value_get_help (GFlagsClass *flags_class,

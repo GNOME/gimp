@@ -40,6 +40,7 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitemundo.h"
 #include "core/gimplayer-floating-sel.h"
+#include "core/gimplayer-new.h"
 #include "core/gimppickable.h"
 #include "core/gimppickable-auto-shrink.h"
 #include "core/gimptoolinfo.h"
@@ -97,7 +98,11 @@ static const GimpLayerModeEffects layer_modes[] =
   GIMP_HUE_MODE,
   GIMP_SATURATION_MODE,
   GIMP_COLOR_MODE,
-  GIMP_VALUE_MODE
+  GIMP_VALUE_MODE,
+  GIMP_LCH_HUE_MODE,
+  GIMP_LCH_CHROMA_MODE,
+  GIMP_LCH_COLOR_MODE,
+  GIMP_LCH_LIGHTNESS_MODE
 };
 
 
@@ -352,11 +357,14 @@ layers_new_from_visible_cmd_callback (GtkAction *action,
 
   gimp_pickable_flush (pickable);
 
-  layer = gimp_layer_new_from_buffer (gimp_pickable_get_buffer (pickable),
-                                      image,
-                                      gimp_image_get_layer_format (image, TRUE),
-                                      _("Visible"),
-                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+  layer = gimp_layer_new_from_gegl_buffer (gimp_pickable_get_buffer (pickable),
+                                           image,
+                                           gimp_image_get_layer_format (image,
+                                                                        TRUE),
+                                           _("Visible"),
+                                           GIMP_OPACITY_OPAQUE,
+                                           GIMP_NORMAL_MODE,
+                                           NULL, 0 /* same image */);
 
   gimp_image_add_layer (image, layer,
                         GIMP_IMAGE_ACTIVE_PARENT, -1, TRUE);

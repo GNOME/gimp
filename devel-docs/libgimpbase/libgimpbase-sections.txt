@@ -126,7 +126,6 @@ gimp_brush_generated_shape_get_type
 gimp_component_type_get_type
 gimp_convert_palette_type_get_type
 gimp_convolve_type_get_type
-gimp_file_get_utf8_name
 gimp_fill_type_get_type
 gimp_gradient_segment_color_get_type
 gimp_gradient_segment_type_get_type
@@ -136,9 +135,6 @@ gimp_mask_apply_mode_get_type
 gimp_merge_type_get_type
 gimp_offset_type_get_type
 gimp_orientation_type_get_type
-gimp_output_stream_printf
-gimp_output_stream_vprintf
-gimp_personal_rc_gfile
 gimp_precision_get_type
 gimp_rotation_type_get_type
 gimp_select_criterion_get_type
@@ -205,6 +201,11 @@ gimp_data_directory
 gimp_locale_directory
 gimp_plug_in_directory
 gimp_sysconf_directory
+gimp_directory_file
+gimp_data_directory_file
+gimp_locale_directory_file
+gimp_sysconf_directory_file
+gimp_plug_in_directory_file
 gimp_user_directory
 gimp_personal_rc_file
 gimp_gtkrc
@@ -354,6 +355,9 @@ gimp_param_unit_get_type
 <FILE>gimputils</FILE>
 gimp_any_to_utf8
 gimp_filename_to_utf8
+gimp_file_get_utf8_name
+gimp_file_has_extension
+gimp_file_show_in_file_manager
 gimp_utf8_strtrim
 gimp_escape_uline
 gimp_strip_uline

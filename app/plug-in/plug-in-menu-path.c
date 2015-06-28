@@ -60,11 +60,12 @@ static const MenuPathMapping menu_path_mappings[] =
   { "<Toolbox>/Xtns",                 NULL, "<Image>/Filters/Extensions"          },
   { "<Toolbox>/Help",                 NULL, "<Image>/Help"                        },
 
-  { "<Toolbox>/File/Acquire",         NULL, "<Image>/File/Create/Acquire"         },
-  { "<Toolbox>",                      NULL, "<Image>"                             },
-  { "<Image>/File/Acquire",           NULL, "<Image>/File/Create/Acquire"         },
-  { "<Image>/File/New",               NULL, "<Image>/File/Create"                 },
-  { NULL, NULL, NULL                                                              }
+  { "<Toolbox>/File/Acquire",           NULL, "<Image>/File/Create/Acquire"       },
+  { "<Toolbox>",                        NULL, "<Image>"                           },
+  { "<Image>/File/Acquire",             NULL, "<Image>/File/Create/Acquire"       },
+  { "<Image>/File/New",                 NULL, "<Image>/File/Create"               },
+  { "<Image>/Image/Mode/Color Profile", NULL, "<Image>/Image/Color Management"    },
+  { NULL, NULL, NULL }
 };
 
 

@@ -1,8 +1,8 @@
 EXPORTS
-	gimp_color_config_get_cmyk_profile
-	gimp_color_config_get_display_profile
-	gimp_color_config_get_printer_profile
-	gimp_color_config_get_rgb_profile
+	gimp_color_config_get_cmyk_color_profile
+	gimp_color_config_get_display_color_profile
+	gimp_color_config_get_printer_color_profile
+	gimp_color_config_get_rgb_color_profile
 	gimp_color_config_get_type
 	gimp_color_management_mode_get_type
 	gimp_color_rendering_intent_get_type

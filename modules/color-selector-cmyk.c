@@ -377,17 +377,17 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   if (! config)
     goto out;
 
-  rgb_profile  = gimp_color_config_get_rgb_profile (config, NULL);
-  cmyk_profile = gimp_color_config_get_cmyk_profile (config, NULL);
+  rgb_profile  = gimp_color_config_get_rgb_color_profile (config, NULL);
+  cmyk_profile = gimp_color_config_get_cmyk_color_profile (config, NULL);
 
   if (! rgb_profile)
-    rgb_profile = gimp_lcms_create_srgb_profile ();
+    rgb_profile = gimp_color_profile_new_srgb ();
 
   if (! cmyk_profile)
     goto out;
 
-  label   = gimp_lcms_profile_get_label (cmyk_profile);
-  summary = gimp_lcms_profile_get_summary (cmyk_profile);
+  label   = gimp_color_profile_get_label (cmyk_profile);
+  summary = gimp_color_profile_get_summary (cmyk_profile);
 
   text = g_strdup_printf (_("Profile: %s"), label);
   gtk_label_set_text (GTK_LABEL (module->name_label), text);
@@ -415,10 +415,10 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
  out:
 
   if (rgb_profile)
-    gimp_lcms_profile_close (rgb_profile);
+    gimp_color_profile_close (rgb_profile);
 
   if (cmyk_profile)
-    gimp_lcms_profile_close (cmyk_profile);
+    gimp_color_profile_close (cmyk_profile);
 
   if (! module->in_destruction)
     colorsel_cmyk_set_color (selector, &selector->rgb, &selector->hsv);

@@ -1210,10 +1210,26 @@ gimp_tag_entry_container_changed (GimpContainer *container,
                                   GimpObject    *object,
                                   GimpTagEntry  *tag_entry)
 {
+  GList *list;
+
+  if (! gimp_container_have (GIMP_CONTAINER (tag_entry->container),
+                             object))
+    {
+      GList *selected_items = NULL;
+
+      for (list = tag_entry->selected_items; list; list = g_list_next (list))
+        {
+          if (list->data != object)
+            selected_items = g_list_prepend (selected_items, list->data);
+        }
+
+      selected_items = g_list_reverse (selected_items);
+      gimp_tag_entry_set_selected_items (tag_entry, selected_items);
+      g_list_free (selected_items);
+    }
+
   if (tag_entry->mode == GIMP_TAG_ENTRY_MODE_ASSIGN)
     {
-      GList *list;
-
       for (list = tag_entry->selected_items; list; list = g_list_next (list))
         {
           if (gimp_tagged_get_tags (GIMP_TAGGED (list->data)) &&

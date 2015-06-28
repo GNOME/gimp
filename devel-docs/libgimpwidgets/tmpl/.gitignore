@@ -13,8 +13,10 @@
 /gimpcolordisplaystack.sgml
 /gimpcolorhexentry.sgml
 /gimpcolornotebook.sgml
+/gimpcolorprofilechooserdialog.sgml
 /gimpcolorprofilecombobox.sgml
 /gimpcolorprofilestore.sgml
+/gimpcolorprofileview.sgml
 /gimpcolorscale.sgml
 /gimpcolorscales.sgml
 /gimpcolorselect.sgml
@@ -52,4 +54,5 @@
 /gimpunitmenu.sgml
 /gimpunitstore.sgml
 /gimpwidgets.sgml
+/gimpwidgetsutils.sgml
 /gimpzoommodel.sgml

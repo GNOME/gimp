@@ -123,7 +123,7 @@ scanner_string_utf8_valid (GScanner    *scanner,
  *
  * Return value: %TRUE on success, %FALSE otherwise.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_config_deserialize_properties (GimpConfig *config,
@@ -228,7 +228,7 @@ gimp_config_deserialize_properties (GimpConfig *config,
  * expected #GTokenType or %G_TOKEN_NONE if the expected token was
  * found but couldn't be parsed.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GTokenType
 gimp_config_deserialize_property (GimpConfig *config,

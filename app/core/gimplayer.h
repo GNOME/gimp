@@ -76,27 +76,6 @@ struct _GimpLayerClass
 
 GType           gimp_layer_get_type            (void) G_GNUC_CONST;
 
-GimpLayer     * gimp_layer_new                 (GimpImage            *image,
-                                                gint                  width,
-                                                gint                  height,
-                                                const Babl           *format,
-                                                const gchar          *name,
-                                                gdouble               opacity,
-                                                GimpLayerModeEffects  mode);
-
-GimpLayer     * gimp_layer_new_from_buffer     (GeglBuffer           *buffer,
-                                                GimpImage            *dest_image,
-                                                const Babl           *format,
-                                                const gchar          *name,
-                                                gdouble               opacity,
-                                                GimpLayerModeEffects  mode);
-GimpLayer     * gimp_layer_new_from_pixbuf     (GdkPixbuf            *pixbuf,
-                                                GimpImage            *dest_image,
-                                                const Babl           *format,
-                                                const gchar          *name,
-                                                gdouble               opacity,
-                                                GimpLayerModeEffects  mode);
-
 GimpLayer     * gimp_layer_get_parent          (GimpLayer            *layer);
 
 GimpLayerMask * gimp_layer_get_mask            (const GimpLayer      *layer);

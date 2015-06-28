@@ -32,9 +32,11 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgrouplayer.h"
+#include "core/gimpimage-profile.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
 #include "core/gimpitem-linked.h"
+#include "core/gimplayer-new.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpparamspecs.h"
@@ -164,15 +166,21 @@ layer_new_from_visible_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GimpPickable *pickable = GIMP_PICKABLE (image);
+      const guint8 *icc_data;
+      gsize         icc_len;
 
       gimp_pickable_flush (pickable);
 
-      layer = gimp_layer_new_from_buffer (gimp_pickable_get_buffer (pickable),
-                                          dest_image,
-                                          gimp_image_get_layer_format (dest_image,
-                                                                       TRUE),
-                                          name,
-                                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+      icc_data = gimp_image_get_icc_profile (image, &icc_len);
+
+      layer = gimp_layer_new_from_gegl_buffer (gimp_pickable_get_buffer (pickable),
+                                               dest_image,
+                                               gimp_image_get_layer_format (dest_image,
+                                                                            TRUE),
+                                               name,
+                                               GIMP_OPACITY_OPAQUE,
+                                               GIMP_NORMAL_MODE,
+                                               icc_data, icc_len);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -534,17 +542,14 @@ layer_translate_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
                                        GIMP_PDB_ITEM_POSITION, error))
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
-
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                       _("Move Layer"));
-
-          gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
           if (gimp_item_get_linked (GIMP_ITEM (layer)))
-            gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
-          gimp_image_undo_group_end (image);
+            {
+              gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+            }
+          else
+            {
+              gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+            }
         }
       else
         success = FALSE;
@@ -576,23 +581,21 @@ layer_set_offsets_invoker (GimpProcedure         *procedure,
       if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
                                        GIMP_PDB_ITEM_POSITION, error))
         {
-          GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
-          gint       offset_x;
-          gint       offset_y;
-
-          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                       _("Move Layer"));
+          gint offset_x;
+          gint offset_y;
 
           gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
           offx -= offset_x;
           offy -= offset_y;
 
-          gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
           if (gimp_item_get_linked (GIMP_ITEM (layer)))
-            gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
-          gimp_image_undo_group_end (image);
+            {
+              gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+            }
+          else
+            {
+              gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+            }
         }
       else
         success = FALSE;

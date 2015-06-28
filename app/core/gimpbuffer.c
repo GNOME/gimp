@@ -101,6 +101,8 @@ gimp_buffer_finalize (GObject *object)
       buffer->buffer = NULL;
     }
 
+  gimp_buffer_set_icc_profile (buffer, NULL, 0);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -112,6 +114,7 @@ gimp_buffer_get_memsize (GimpObject *object,
   gint64      memsize = 0;
 
   memsize += gimp_gegl_buffer_get_memsize (buffer->buffer);
+  memsize += buffer->icc_profile_len;
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -268,6 +271,8 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
 {
   GimpBuffer *gimp_buffer;
   GeglBuffer *buffer;
+  guint8     *icc_data;
+  gsize       icc_len;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (name != NULL, NULL);
@@ -276,6 +281,14 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
 
   gimp_buffer = gimp_buffer_new (buffer, name,
                                  offset_x, offset_y, FALSE);
+
+  icc_data = gimp_pixbuf_get_icc_profile (pixbuf, &icc_len);
+
+  if (icc_data)
+    {
+      gimp_buffer_set_icc_profile (gimp_buffer, icc_data, icc_len);
+      g_free (icc_data);
+    }
 
   g_object_unref (buffer);
 
@@ -312,4 +325,41 @@ gimp_buffer_get_buffer (const GimpBuffer *buffer)
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
 
   return buffer->buffer;
+}
+
+void
+gimp_buffer_set_icc_profile (GimpBuffer   *buffer,
+                             const guint8 *data,
+                             gsize         length)
+{
+  g_return_if_fail (GIMP_IS_BUFFER (buffer));
+  g_return_if_fail (data == NULL || length != 0);
+
+  if (data != buffer->icc_profile)
+    {
+      if (buffer->icc_profile)
+        {
+          g_free (buffer->icc_profile);
+          buffer->icc_profile     = NULL;
+          buffer->icc_profile_len = 0;
+        }
+
+      if (data)
+        {
+          buffer->icc_profile     = g_memdup (data, length);
+          buffer->icc_profile_len = length;
+        }
+    }
+}
+
+const guint8 *
+gimp_buffer_get_icc_profile (const GimpBuffer *buffer,
+                             gsize            *length)
+{
+  g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
+
+  if (length)
+    *length = buffer->icc_profile_len;
+
+  return buffer->icc_profile;
 }

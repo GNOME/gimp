@@ -150,10 +150,10 @@ typedef enum
   GIMP_SUBTRACT_MODE,        /*< desc="Subtract"             >*/
   GIMP_DARKEN_ONLY_MODE,     /*< desc="Darken only"          >*/
   GIMP_LIGHTEN_ONLY_MODE,    /*< desc="Lighten only"         >*/
-  GIMP_HUE_MODE,             /*< desc="Hue"                  >*/
-  GIMP_SATURATION_MODE,      /*< desc="Saturation"           >*/
-  GIMP_COLOR_MODE,           /*< desc="Color"                >*/
-  GIMP_VALUE_MODE,           /*< desc="Value"                >*/
+  GIMP_HUE_MODE,             /*< desc="Hue (HSV)"            >*/
+  GIMP_SATURATION_MODE,      /*< desc="Saturation (HSV)"     >*/
+  GIMP_COLOR_MODE,           /*< desc="Color (HSV)"          >*/
+  GIMP_VALUE_MODE,           /*< desc="Value (HSV)"          >*/
   GIMP_DIVIDE_MODE,          /*< desc="Divide"               >*/
   GIMP_DODGE_MODE,           /*< desc="Dodge"                >*/
   GIMP_BURN_MODE,            /*< desc="Burn"                 >*/
@@ -163,6 +163,10 @@ typedef enum
   GIMP_GRAIN_MERGE_MODE,     /*< desc="Grain merge"          >*/
   GIMP_COLOR_ERASE_MODE,     /*< desc="Color erase"          >*/
   GIMP_NEW_OVERLAY_MODE,     /*< desc="Overlay"              >*/
+  GIMP_LCH_HUE_MODE,         /*< desc="Hue (LCH)"            >*/
+  GIMP_LCH_CHROMA_MODE,      /*< desc="Chroma (LCH)"         >*/
+  GIMP_LCH_COLOR_MODE,       /*< desc="Color (LCH)"          >*/
+  GIMP_LCH_LIGHTNESS_MODE,   /*< desc="Lightness (LCH)"      >*/
 
   /* internal modes, not available to the PDB */
   GIMP_ERASE_MODE      = 1000, /*< pdb-skip, desc="Erase"      >*/

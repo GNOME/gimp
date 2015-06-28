@@ -41,6 +41,7 @@
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
+#include "gimplayer-new.h"
 #include "gimplist.h"
 #include "gimppattern.h"
 #include "gimppickable.h"
@@ -177,8 +178,7 @@ gimp_edit_paste (GimpImage    *image,
   else
     format = gimp_image_get_layer_format (image, TRUE);
 
-  layer = gimp_layer_new_from_buffer (gimp_buffer_get_buffer (paste),
-                                      image,
+  layer = gimp_layer_new_from_buffer (paste, image,
                                       format,
                                       _("Pasted Layer"),
                                       GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
@@ -591,7 +591,8 @@ gimp_edit_extract (GimpImage     *image,
   gint        offset_y;
 
   if (cut_pixels)
-    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT, C_("undo-type", "Cut"));
+    gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT,
+                                 C_("undo-type", "Cut"));
 
   /*  Cut/copy the mask portion from the image  */
   buffer = gimp_selection_extract (GIMP_SELECTION (gimp_image_get_mask (image)),
@@ -607,6 +608,19 @@ gimp_edit_extract (GimpImage     *image,
       GimpBuffer *gimp_buffer = gimp_buffer_new (buffer, _("Global Buffer"),
                                                  offset_x, offset_y, FALSE);
       g_object_unref (buffer);
+
+      if (GIMP_IS_LAYER (pickable))
+        {
+          const guint8 *icc_data;
+          gsize         icc_len;
+
+          icc_data =
+            gimp_color_managed_get_icc_profile (GIMP_COLOR_MANAGED (image),
+                                                &icc_len);
+
+          if (icc_data)
+            gimp_buffer_set_icc_profile (gimp_buffer, icc_data, icc_len);
+        }
 
       return gimp_buffer;
     }

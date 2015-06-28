@@ -414,7 +414,7 @@ print (gchar       *buf,
  * Returns: A newly allocated string with above percent expressions
  *          replaced with the resp. strings for @unit.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gchar *
 gimp_unit_format_string (const gchar *format,
@@ -516,7 +516,7 @@ static gboolean  gimp_param_unit_value_validate (GParamSpec      *pspec,
  *
  * Returns: the #GType for a unit param object
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GType
 gimp_param_unit_get_type (void)
@@ -583,7 +583,7 @@ gimp_param_unit_value_validate (GParamSpec *pspec,
  *
  * Returns: a newly allocated #GParamSpec instance
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GParamSpec *
 gimp_param_spec_unit (const gchar *name,
@@ -621,7 +621,7 @@ gimp_param_spec_unit (const gchar *name,
  *
  * Returns: @pixels converted to units.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_pixels_to_units (gdouble  pixels,
@@ -644,7 +644,7 @@ gimp_pixels_to_units (gdouble  pixels,
  *
  * Returns: @value converted to pixels.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_units_to_pixels (gdouble  value,
@@ -667,7 +667,7 @@ gimp_units_to_pixels (gdouble  value,
  *
  * Returns: @value converted to points.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gdouble
 gimp_units_to_points (gdouble  value,
@@ -696,7 +696,7 @@ gimp_units_to_points (gdouble  value,
  *
  * Returns: %TRUE if the @unit is metric.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_unit_is_metric (GimpUnit unit)

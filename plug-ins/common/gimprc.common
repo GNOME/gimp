@@ -99,4 +99,3 @@ van_gogh_lic_RC = van-gogh-lic.rc.o
 warp_RC = warp.rc.o
 web_browser_RC = web-browser.rc.o
 web_page_RC = web-page.rc.o
-wind_RC = wind.rc.o

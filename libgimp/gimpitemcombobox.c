@@ -182,7 +182,7 @@ gimp_drawable_combo_box_init (GimpDrawableComboBox *combo_box)
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
@@ -229,7 +229,7 @@ gimp_channel_combo_box_init (GimpChannelComboBox *combo_box)
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_channel_combo_box_new (GimpDrawableConstraintFunc constraint,
@@ -276,7 +276,7 @@ gimp_layer_combo_box_init (GimpLayerComboBox *combo_box)
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_layer_combo_box_new (GimpDrawableConstraintFunc constraint,
@@ -331,7 +331,7 @@ gimp_vectors_combo_box_init (GimpVectorsComboBox *combo_box)
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_vectors_combo_box_new (GimpVectorsConstraintFunc constraint,
@@ -483,19 +483,19 @@ gimp_item_combo_box_model_add (GimpIntComboBox *combo_box,
             g_object_unref (thumb);
 
           g_free (label);
+        }
 
-          if (gimp_item_is_group (items[i]))
-            {
-              gint32 *children;
-              gint    n_children;
+      if (gimp_item_is_group (items[i]))
+        {
+          gint32 *children;
+          gint    n_children;
 
-              children = gimp_item_get_children (items[i], &n_children);
-              gimp_item_combo_box_model_add (combo_box, store,
-                                             image,
-                                             n_children, children,
-                                             tree_level + 1);
-              g_free (children);
-            }
+          children = gimp_item_get_children (items[i], &n_children);
+          gimp_item_combo_box_model_add (combo_box, store,
+                                         image,
+                                         n_children, children,
+                                         tree_level + 1);
+          g_free (children);
         }
     }
 

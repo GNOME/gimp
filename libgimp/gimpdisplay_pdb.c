@@ -45,7 +45,7 @@
  *
  * Returns: Whether the display ID is valid.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_display_is_valid (gint32 display_ID)
@@ -149,7 +149,7 @@ gimp_display_delete (gint32 display_ID)
  *
  * Returns: The native window handle or 0.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gint
 gimp_display_get_window_handle (gint32 display_ID)

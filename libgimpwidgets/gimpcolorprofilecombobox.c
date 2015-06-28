@@ -106,7 +106,7 @@ gimp_color_profile_combo_box_class_init (GimpColorProfileComboBoxClass *klass)
    * #GtkDialog to present when the user selects the
    * "Select color profile from disk..." item.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class,
                                    PROP_DIALOG,
@@ -121,7 +121,7 @@ gimp_color_profile_combo_box_class_init (GimpColorProfileComboBoxClass *klass)
    * #GimpColorProfileComboBox requires the model to be a
    * #GimpColorProfileStore.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class,
                                    PROP_MODEL,
@@ -318,7 +318,7 @@ gimp_color_profile_combo_box_changed (GtkComboBox *combo)
  *
  * Return value: a new #GimpColorProfileComboBox.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_color_profile_combo_box_new (GtkWidget   *dialog,
@@ -352,7 +352,7 @@ gimp_color_profile_combo_box_new (GtkWidget   *dialog,
  *
  * Return value: a new #GimpColorProfileComboBox.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 GtkWidget *
 gimp_color_profile_combo_box_new_with_model (GtkWidget    *dialog,
@@ -378,7 +378,7 @@ gimp_color_profile_combo_box_new_with_model (GtkWidget    *dialog,
  * #GimpColorProfileStore. Please refer to the documentation of
  * gimp_color_profile_store_add() for details.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_color_profile_combo_box_add (GimpColorProfileComboBox *combo,
@@ -406,7 +406,7 @@ gimp_color_profile_combo_box_add (GimpColorProfileComboBox *combo,
  * item.  If the profile is not listed in the @combo, then it is added
  * with the given @label (or @filename in case that @label is %NULL).
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
@@ -428,7 +428,7 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
       GError           *error = NULL;
 
       file = g_file_new_for_path (filename);
-      profile = gimp_lcms_profile_open_from_file (file, &error);
+      profile = gimp_color_profile_open_from_file (file, &error);
       g_object_unref (file);
 
       if (! profile)
@@ -438,8 +438,8 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
         }
       else
         {
-          l = gimp_lcms_profile_get_label (profile);
-          gimp_lcms_profile_close (profile);
+          l = gimp_color_profile_get_label (profile);
+          gimp_color_profile_close (profile);
         }
     }
   else
@@ -464,7 +464,7 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
  *               This is a newly allocated string and should be released
  *               using g_free() when it is not any longer needed.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gchar *
 gimp_color_profile_combo_box_get_active (GimpColorProfileComboBox *combo)

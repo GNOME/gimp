@@ -192,7 +192,7 @@ G_BEGIN_DECLS
 
 #ifndef GIMP_DISABLE_DEPRECATED
 #define GIMP_STOCK_INDEXED_PALETTE          "gimp-colormap"
-#endif /* GIMP_DISABLE_DEPRECATED */
+#endif
 
 #define GIMP_STOCK_IMAGES                   "gimp-images"
 #define GIMP_STOCK_LAYERS                   "gimp-layers"
@@ -212,7 +212,7 @@ G_BEGIN_DECLS
 #ifndef GIMP_DISABLE_DEPRECATED
 #define GIMP_STOCK_QMASK_OFF                "gimp-quick-mask-off"
 #define GIMP_STOCK_QMASK_ON                 "gimp-quick-mask-on"
-#endif /* GIMP_DISABLE_DEPRECATED */
+#endif
 
 #define GIMP_STOCK_HISTOGRAM                "gimp-histogram"
 #define GIMP_STOCK_HISTOGRAM_LINEAR         "gimp-histogram-linear"

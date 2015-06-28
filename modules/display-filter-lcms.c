@@ -302,7 +302,7 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
     profile = gimp_widget_get_color_profile (widget);
 
   if (! profile)
-    profile = gimp_color_config_get_display_profile (config, NULL);
+    profile = gimp_color_config_get_display_color_profile (config, NULL);
 
   return profile;
 }
@@ -364,7 +364,7 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
     }
   else if (strcmp (name, "printer-profile") == 0)
     {
-      profile = gimp_color_config_get_printer_profile (config, NULL);
+      profile = gimp_color_config_get_printer_color_profile (config, NULL);
     }
   else
     {
@@ -373,8 +373,8 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
 
   if (profile)
     {
-      text    = gimp_lcms_profile_get_label (profile);
-      tooltip = gimp_lcms_profile_get_summary (profile);
+      text    = gimp_color_profile_get_label (profile);
+      tooltip = gimp_color_profile_get_summary (profile);
     }
   else
     {
@@ -389,7 +389,7 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
   g_free (tooltip);
 
   if (profile)
-    gimp_lcms_profile_close (profile);
+    gimp_color_profile_close (profile);
 }
 
 static void

@@ -272,7 +272,7 @@ gimp_config_iface_copy (GimpConfig  *src,
  *
  * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_config_serialize_to_file (GimpConfig   *config,
@@ -313,7 +313,7 @@ gimp_config_serialize_to_file (GimpConfig   *config,
  *
  * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_config_serialize_to_gfile (GimpConfig   *config,
@@ -341,18 +341,18 @@ gimp_config_serialize_to_gfile (GimpConfig   *config,
 /**
  * gimp_config_serialize_to_stream:
  * @config: a #GObject that implements the #GimpConfigInterface.
- * @stream: the #GOutputStream to write the configuration to.
+ * @output: the #GOutputStream to write the configuration to.
  * @header: optional file header (must be ASCII only)
  * @footer: optional file footer (must be ASCII only)
  * @data: user data passed to the serialize implementation.
  * @error: return location for a possible error
  *
  * Serializes the object properties of @config to the stream specified
- * by @stream.
+ * by @output.
  *
  * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_config_serialize_to_stream (GimpConfig     *config,
@@ -388,7 +388,7 @@ gimp_config_serialize_to_stream (GimpConfig     *config,
  *
  * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_config_serialize_to_fd (GimpConfig *config,
@@ -418,7 +418,7 @@ gimp_config_serialize_to_fd (GimpConfig *config,
  *
  * Return value: a newly allocated NUL-terminated string.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gchar *
 gimp_config_serialize_to_string (GimpConfig *config,
@@ -453,7 +453,7 @@ gimp_config_serialize_to_string (GimpConfig *config,
  *
  * Return value: %TRUE if deserialization succeeded, %FALSE otherwise.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_config_deserialize_file (GimpConfig   *config,
@@ -501,7 +501,7 @@ gimp_config_deserialize_file (GimpConfig   *config,
  *
  * Return value: %TRUE if deserialization succeeded, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_config_deserialize_gfile (GimpConfig  *config,
@@ -549,7 +549,7 @@ gimp_config_deserialize_gfile (GimpConfig  *config,
  *
  * Return value: %TRUE if deserialization succeeded, %FALSE otherwise.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 gboolean
 gimp_config_deserialize_stream (GimpConfig    *config,
@@ -597,7 +597,7 @@ gimp_config_deserialize_stream (GimpConfig    *config,
  *
  * Returns: %TRUE if deserialization succeeded, %FALSE otherwise.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_config_deserialize_string (GimpConfig      *config,
@@ -638,7 +638,7 @@ gimp_config_deserialize_string (GimpConfig      *config,
  *
  * Returns:
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_config_deserialize_return (GScanner     *scanner,
@@ -687,7 +687,7 @@ gimp_config_deserialize_return (GScanner     *scanner,
  *
  * Returns: %TRUE if serialization succeeded, %FALSE otherwise.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_config_serialize (GimpConfig       *config,
@@ -712,7 +712,7 @@ gimp_config_serialize (GimpConfig       *config,
  *
  * Returns: %TRUE if deserialization succeeded, %FALSE otherwise.
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 gboolean
 gimp_config_deserialize (GimpConfig *config,
@@ -739,7 +739,7 @@ gimp_config_deserialize (GimpConfig *config,
  *
  * Return value: the duplicated #GimpConfig object
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gpointer
 gimp_config_duplicate (GimpConfig *config)
@@ -761,7 +761,7 @@ gimp_config_duplicate (GimpConfig *config)
  *
  * Return value: %TRUE if the two objects are equal.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 gboolean
 gimp_config_is_equal_to (GimpConfig *a,
@@ -783,7 +783,7 @@ gimp_config_is_equal_to (GimpConfig *a,
  * #GimpConfigInterface only works for objects that are completely defined by
  * their properties.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_config_reset (GimpConfig *config)
@@ -811,7 +811,7 @@ gimp_config_reset (GimpConfig *config)
  *
  * Return value: %TRUE if @dest was modified, %FALSE otherwise
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_config_copy (GimpConfig  *src,

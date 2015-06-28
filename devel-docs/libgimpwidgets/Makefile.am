@@ -42,7 +42,7 @@ HTML_IMAGES = \
 	$(top_srcdir)/icons/32/gimp-*.png	\
 	$(top_srcdir)/icons/48/gimp-*.png	\
 	$(top_srcdir)/icons/64/gimp-*.png	\
-	$(srcdir)/images/gimp-*.png	
+	$(srcdir)/images/gimp-widget-*.png
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)
 content_files = visual-index.xml

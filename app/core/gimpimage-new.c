@@ -17,10 +17,12 @@
 
 #include "config.h"
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
@@ -36,8 +38,10 @@
 #include "gimpimage.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-new.h"
+#include "gimpimage-profile.h"
 #include "gimpimage-undo.h"
 #include "gimplayer.h"
+#include "gimplayer-new.h"
 #include "gimptemplate.h"
 
 #include "gimp-intl.h"
@@ -188,9 +192,20 @@ gimp_image_new_from_drawable (Gimp         *gimp,
   gimp_image_set_unit (new_image, gimp_image_get_unit (image));
 
   if (GIMP_IS_LAYER (drawable))
-    new_type = G_TYPE_FROM_INSTANCE (drawable);
+    {
+      const guint8 *icc_data;
+      gsize         icc_len;
+
+      icc_data = gimp_image_get_icc_profile (image, &icc_len);
+      if (icc_data)
+        gimp_image_set_icc_profile (new_image, icc_data, icc_len, NULL);
+
+      new_type = G_TYPE_FROM_INSTANCE (drawable);
+    }
   else
-    new_type = GIMP_TYPE_LAYER;
+    {
+      new_type = GIMP_TYPE_LAYER;
+    }
 
   new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (drawable),
                                              new_image, new_type));
@@ -264,10 +279,12 @@ gimp_image_new_from_buffer (Gimp       *gimp,
                             GimpImage  *invoke,
                             GimpBuffer *paste)
 {
-  GimpImage  *image;
-  GimpLayer  *layer;
-  const Babl *format;
-  gboolean    has_alpha;
+  GimpImage    *image;
+  GimpLayer    *layer;
+  const Babl   *format;
+  gboolean      has_alpha;
+  const guint8 *icc_data;
+  gsize         icc_len;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (invoke == NULL || GIMP_IS_IMAGE (invoke), NULL);
@@ -295,8 +312,11 @@ gimp_image_new_from_buffer (Gimp       *gimp,
       gimp_image_set_unit (image, gimp_image_get_unit (invoke));
     }
 
-  layer = gimp_layer_new_from_buffer (gimp_buffer_get_buffer (paste),
-                                      image,
+  icc_data = gimp_buffer_get_icc_profile (paste, &icc_len);
+  if (icc_data)
+    gimp_image_set_icc_profile (image, icc_data, icc_len, NULL);
+
+  layer = gimp_layer_new_from_buffer (paste, image,
                                       gimp_image_get_layer_format (image,
                                                                    has_alpha),
                                       _("Pasted Layer"),
@@ -317,7 +337,9 @@ gimp_image_new_from_pixbuf (Gimp        *gimp,
   GimpImage         *new_image;
   GimpLayer         *layer;
   GimpImageBaseType  base_type;
-  gboolean           has_alpha = FALSE;
+  gboolean           has_alpha;
+  guint8            *icc_data;
+  gsize              icc_len;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
@@ -344,6 +366,13 @@ gimp_image_new_from_pixbuf (Gimp        *gimp,
                                  FALSE);
 
   gimp_image_undo_disable (new_image);
+
+  icc_data = gimp_pixbuf_get_icc_profile (pixbuf, &icc_len);
+  if (icc_data)
+    {
+      gimp_image_set_icc_profile (new_image, icc_data, icc_len, NULL);
+      g_free (icc_data);
+    }
 
   layer = gimp_layer_new_from_pixbuf (pixbuf, new_image,
                                       gimp_image_get_layer_format (new_image,

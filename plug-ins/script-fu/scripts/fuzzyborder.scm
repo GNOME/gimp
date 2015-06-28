@@ -110,8 +110,8 @@
                                    (car (gimp-layer-copy theLayer FALSE)) 0 -1)
           (gimp-layer-scale theLayer
                             (- theWidth inSize) (- theHeight inSize) TRUE)
-          (gimp-desaturate theLayer)
-          (gimp-brightness-contrast theLayer 127 127)
+          (gimp-drawable-desaturate theLayer DESATURATE-LIGHTNESS)
+          (gimp-drawable-brightness-contrast theLayer 0.5 0.5)
           (gimp-invert theLayer)
           (gimp-layer-resize theLayer
                              theWidth

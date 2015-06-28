@@ -159,6 +159,7 @@ struct _GimpDisplayShell
   guint                  filter_idle_id;
   GtkWidget             *filters_dialog; /* color display filter dialog       */
 
+  const Babl        *filter_format;    /*  filter_buffer's format             */
   GeglBuffer        *filter_buffer;    /*  buffer for display filters         */
   guchar            *filter_data;      /*  filter_buffer's pixels             */
   gint               filter_stride;    /*  filter_buffer's stride             */

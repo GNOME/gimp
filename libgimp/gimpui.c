@@ -185,7 +185,7 @@ gimp_ui_get_foreign_window (guint32 window)
  *               unref the window using g_object_unref() as soon as
  *               you don't need it any longer.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 GdkWindow *
 gimp_ui_get_display_window (guint32 gdisp_ID)
@@ -215,7 +215,7 @@ gimp_ui_get_display_window (guint32 gdisp_ID)
  *               unref the window using g_object_unref() as soon as
  *               you don't need it any longer.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 GdkWindow *
 gimp_ui_get_progress_window (void)
@@ -254,7 +254,7 @@ gimp_window_transient_show (GtkWidget *window)
  * Most of the time you will want to use the convenience function
  * gimp_window_set_transient().
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 void
 gimp_window_set_transient_for_display (GtkWindow *window,
@@ -288,7 +288,7 @@ gimp_window_set_transient_for_display (GtkWindow *window,
  * associated with the GIMP window that the plug-in has been
  * started from. See also gimp_window_set_transient_for_display().
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 void
 gimp_window_set_transient (GtkWindow *window)

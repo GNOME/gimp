@@ -131,7 +131,7 @@ gimp_dialog_class_init (GimpDialogClass *klass)
   /**
    * GimpDialog:help-func:
    *
-   * Since: GIMP 2.2
+   * Since: 2.2
    **/
   g_object_class_install_property (object_class, PROP_HELP_FUNC,
                                    g_param_spec_pointer ("help-func", NULL, NULL,
@@ -141,7 +141,7 @@ gimp_dialog_class_init (GimpDialogClass *klass)
   /**
    * GimpDialog:help-id:
    *
-   * Since: GIMP 2.2
+   * Since: 2.2
    **/
   g_object_class_install_property (object_class, PROP_HELP_ID,
                                    g_param_spec_string ("help-id", NULL, NULL,
@@ -152,7 +152,7 @@ gimp_dialog_class_init (GimpDialogClass *klass)
   /**
    * GimpDialog:parent:
    *
-   * Since: GIMP 2.8
+   * Since: 2.8
    **/
   g_object_class_install_property (object_class, PROP_PARENT,
                                    g_param_spec_object ("parent", NULL, NULL,
@@ -721,7 +721,7 @@ gimp_dialog_run (GimpDialog *dialog)
  *
  * This function is for internal use only.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_dialogs_show_help_button (gboolean  show)

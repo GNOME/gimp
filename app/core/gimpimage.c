@@ -1368,23 +1368,7 @@ static const guint8 *
 gimp_image_color_managed_get_icc_profile (GimpColorManaged *managed,
                                           gsize            *len)
 {
-  const GimpParasite *parasite;
-
-  parasite = gimp_image_get_icc_profile (GIMP_IMAGE (managed));
-
-  if (parasite)
-    {
-      gsize data_size = gimp_parasite_data_size (parasite);
-
-      if (data_size > 0)
-        {
-          *len = data_size;
-
-          return gimp_parasite_data (parasite);
-        }
-    }
-
-  return NULL;
+  return gimp_image_get_icc_profile (GIMP_IMAGE (managed), len);
 }
 
 static GimpColorProfile
@@ -1393,16 +1377,23 @@ gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
   GimpImage        *image = GIMP_IMAGE (managed);
   GimpColorProfile  profile;
 
-  profile = gimp_image_get_color_profile (image, NULL);
+  profile = gimp_image_get_color_profile (image);
+
+  if (! profile)
+    {
+      GimpColorConfig *config = image->gimp->config->color_management;
+
+      profile = gimp_color_config_get_rgb_color_profile (config, NULL);
+    }
 
   if (! profile)
     {
       const Babl *format = gimp_image_get_layer_format (image, FALSE);
 
       if (gimp_babl_format_get_linear (format))
-        profile = gimp_lcms_create_linear_rgb_profile ();
+        profile = gimp_color_profile_new_linear_rgb ();
       else
-        profile = gimp_lcms_create_srgb_profile ();
+        profile = gimp_color_profile_new_srgb ();
     }
 
   return profile;
@@ -1722,7 +1713,7 @@ gimp_image_estimate_memsize (const GimpImage   *image,
                                              GIMP_ITEM_TYPE_CHANNELS,
                                              GIMP_ITEM_SET_ALL);
 
-  gimp_image_item_list_filter (NULL, drawables, TRUE, FALSE);
+  gimp_image_item_list_filter (NULL, drawables);
 
   drawables = g_list_prepend (drawables, gimp_image_get_mask (image));
 
@@ -3344,7 +3335,7 @@ gimp_image_parasite_validate (GimpImage           *image,
 
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     {
-      return gimp_image_validate_icc_profile (image, parasite, error);
+      return gimp_image_validate_icc_parasite (image, parasite, error);
     }
 
   return TRUE;

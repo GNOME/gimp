@@ -74,6 +74,14 @@ gimp_display_shell_filter_set (GimpDisplayShell      *shell,
   gimp_display_shell_filter_changed (NULL, shell);
 }
 
+gboolean
+gimp_display_shell_has_filter (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return shell->filter_stack && shell->filter_stack->filters;
+}
+
 GimpColorDisplayStack *
 gimp_display_shell_filter_new (GimpDisplayShell *shell,
                                GimpColorConfig  *config)
@@ -81,6 +89,10 @@ gimp_display_shell_filter_new (GimpDisplayShell *shell,
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
 
+#if 0
+  /*  disabled because we use gimpdisplayshell-profile now, keep
+   *  the code around for reference.
+   */
   if (config->display_module)
     {
       GType type = g_type_from_name (config->display_module);
@@ -103,6 +115,7 @@ gimp_display_shell_filter_new (GimpDisplayShell *shell,
           return stack;
         }
     }
+#endif
 
   return NULL;
 }

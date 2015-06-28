@@ -61,7 +61,7 @@ gimp_hsl_copy (const GimpHSL *hsl)
  * @s:
  * @l:
  *
- * Since: GIMP 2.8
+ * Since: 2.8
  **/
 void
 gimp_hsl_set (GimpHSL *hsl,
@@ -81,7 +81,7 @@ gimp_hsl_set (GimpHSL *hsl,
  * @hsl:
  * @a:
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 void
 gimp_hsl_set_alpha (GimpHSL *hsl,

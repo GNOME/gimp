@@ -2461,7 +2461,7 @@ dlg_setup_gflare (void)
       dlg->gflare = gflares_list_lookup ("Default");
       if (!dlg->gflare)
         {
-          g_warning (_("`Default' is created."));
+          g_warning (_("'Default' is created."));
           dlg->gflare = gflare_new_with_default (_("Default"));
           gflares_list_insert (dlg->gflare);
         }
@@ -3161,7 +3161,7 @@ dlg_selector_copy_ok_callback (GtkWidget   *widget,
 
   if (gflares_list_lookup (copy_name))
     {
-      g_warning (_("The name `%s' is used already!"), copy_name);
+      g_warning (_("The name '%s' is used already!"), copy_name);
       return;
     }
 

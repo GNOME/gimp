@@ -143,15 +143,21 @@ HELP
 	code => <<'CODE'
 {
   GimpPickable *pickable = GIMP_PICKABLE (image);
+  const guint8 *icc_data;
+  gsize         icc_len;
 
   gimp_pickable_flush (pickable);
 
-  layer = gimp_layer_new_from_buffer (gimp_pickable_get_buffer (pickable),
-                                      dest_image,
-                                      gimp_image_get_layer_format (dest_image,
-                                                                   TRUE),
-                                      name,
-                                      GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+  icc_data = gimp_image_get_icc_profile (image, &icc_len);
+
+  layer = gimp_layer_new_from_gegl_buffer (gimp_pickable_get_buffer (pickable),
+                                           dest_image,
+                                           gimp_image_get_layer_format (dest_image,
+                                                                        TRUE),
+                                           name,
+                                           GIMP_OPACITY_OPAQUE,
+                                           GIMP_NORMAL_MODE,
+                                           icc_data, icc_len);
 }
 CODE
     );
@@ -621,17 +627,14 @@ HELP
   if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
                                    GIMP_PDB_ITEM_POSITION, error))
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
-
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                   _("Move Layer"));
-
-      gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
       if (gimp_item_get_linked (GIMP_ITEM (layer)))
-        gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
-      gimp_image_undo_group_end (image);
+        {
+          gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+        }
+      else
+        {
+          gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+        }
     }
   else
     success = FALSE;
@@ -733,23 +736,21 @@ HELP
   if (gimp_pdb_item_is_modifyable (GIMP_ITEM (layer),
                                    GIMP_PDB_ITEM_POSITION, error))
     {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (layer));
-      gint       offset_x;
-      gint       offset_y;
-
-      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                                   _("Move Layer"));
+      gint offset_x;
+      gint offset_y;
 
       gimp_item_get_offset (GIMP_ITEM (layer), &offset_x, &offset_y);
       offx -= offset_x;
       offy -= offset_y;
 
-      gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
       if (gimp_item_get_linked (GIMP_ITEM (layer)))
-        gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
-
-      gimp_image_undo_group_end (image);
+        {
+          gimp_item_linked_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+        }
+      else
+        {
+          gimp_item_translate (GIMP_ITEM (layer), offx, offy, TRUE);
+        }
     }
   else
     success = FALSE;
@@ -1196,9 +1197,11 @@ CODE
 
 @headers = qw("libgimpbase/gimpbase.h"
               "core/gimp.h"
+              "core/gimpimage-profile.h"
               "core/gimpimage-undo.h"
               "core/gimpitem-linked.h"
               "core/gimpgrouplayer.h"
+              "core/gimplayer-new.h"
               "core/gimppickable.h"
               "core/gimpprogress.h"
               "gimppdbcontext.h"

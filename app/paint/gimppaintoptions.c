@@ -131,24 +131,34 @@ enum
 };
 
 
-static void    gimp_paint_options_dispose          (GObject      *object);
-static void    gimp_paint_options_finalize         (GObject      *object);
-static void    gimp_paint_options_set_property     (GObject      *object,
+static void   gimp_paint_options_config_iface_init (GimpConfigInterface *config_iface);
+
+static void   gimp_paint_options_dispose           (GObject      *object);
+static void   gimp_paint_options_finalize          (GObject      *object);
+static void   gimp_paint_options_set_property      (GObject      *object,
                                                     guint         property_id,
                                                     const GValue *value,
                                                     GParamSpec   *pspec);
-static void    gimp_paint_options_get_property     (GObject      *object,
+static void   gimp_paint_options_get_property      (GObject      *object,
                                                     guint         property_id,
                                                     GValue       *value,
                                                     GParamSpec   *pspec);
-static void    gimp_paint_options_brush_changed    (GimpContext  *context,
+
+static GimpConfig * gimp_paint_options_duplicate   (GimpConfig   *config);
+
+static void   gimp_paint_options_brush_changed     (GimpContext  *context,
                                                     GimpBrush    *brush);
 
 
 
-G_DEFINE_TYPE (GimpPaintOptions, gimp_paint_options, GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE_WITH_CODE (GimpPaintOptions, gimp_paint_options,
+                         GIMP_TYPE_TOOL_OPTIONS,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_paint_options_config_iface_init))
 
 #define parent_class gimp_paint_options_parent_class
+
+static GimpConfigInterface *parent_config_iface = NULL;
 
 
 static void
@@ -355,6 +365,17 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
                                     * less than velcoty results in numeric
                                     * instablility */
                                    GIMP_PARAM_STATIC_STRINGS);
+}
+
+static void
+gimp_paint_options_config_iface_init (GimpConfigInterface *config_iface)
+{
+  parent_config_iface = g_type_interface_peek_parent (config_iface);
+
+  if (! parent_config_iface)
+    parent_config_iface = g_type_default_interface_peek (GIMP_TYPE_CONFIG);
+
+  config_iface->duplicate = gimp_paint_options_duplicate;
 }
 
 static void
@@ -713,6 +734,29 @@ gimp_paint_options_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static GimpConfig *
+gimp_paint_options_duplicate (GimpConfig *config)
+{
+  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (config);
+  GimpPaintOptions *new_options;
+
+  new_options = GIMP_PAINT_OPTIONS (parent_config_iface->duplicate (config));
+
+  /*  after duplicating, copy those properties again which might have
+   *  changed by setting the brush on the copy, see
+   *  gimp_paint_options_brush_changed().
+   */
+  g_object_set (new_options,
+                "brush-size",         options->brush_size,
+                "brush-aspect-ratio", options->brush_aspect_ratio,
+                "brush-angle",        options->brush_angle,
+                "brush-spacing",      options->brush_spacing,
+                "brush-hardness",     options->brush_hardness,
+                NULL);
+
+  return GIMP_CONFIG (new_options);
 }
 
 static void

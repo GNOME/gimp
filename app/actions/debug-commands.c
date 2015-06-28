@@ -19,7 +19,6 @@
 
 #include <string.h>
 
-#include <glib/gprintf.h>
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -31,8 +30,6 @@
 #include "core/gimp-utils.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimplayer.h"
-#include "core/gimppickable.h"
 #include "core/gimpprojectable.h"
 #include "core/gimpprojection.h"
 
@@ -308,18 +305,18 @@ debug_benchmark_projection (GimpDisplay *display)
 static gboolean
 debug_show_image_graph (GimpImage *source_image)
 {
-  Gimp            *gimp        = source_image->gimp;
-  GimpProjectable *projectable = GIMP_PROJECTABLE (source_image);
-  GeglNode        *image_graph = gimp_projectable_get_graph (projectable);
-  GeglNode        *output_node = gegl_node_get_output_proxy (image_graph, "output");
-  GimpImage       *new_image   = NULL;
-  GimpLayer       *layer       = NULL;
-  GeglNode        *introspect  = NULL;
-  GeglNode        *sink        = NULL;
-  GeglBuffer      *buffer      = NULL;
-  gchar           *new_name    = NULL;
+  GeglNode   *image_graph;
+  GeglNode   *output_node;
+  GimpImage  *new_image;
+  GeglNode   *introspect;
+  GeglNode   *sink;
+  GeglBuffer *buffer;
+  gchar      *new_name;
 
-  /* Setup and process the introspection graph */
+  image_graph = gimp_projectable_get_graph (GIMP_PROJECTABLE (source_image));
+
+  output_node = gegl_node_get_output_proxy (image_graph, "output");
+
   introspect = gegl_node_new_child (NULL,
                                     "operation", "gegl:introspect",
                                     "node",      output_node,
@@ -328,35 +325,24 @@ debug_show_image_graph (GimpImage *source_image)
                               "operation", "gegl:buffer-sink",
                               "buffer",    &buffer,
                               NULL);
+
   gegl_node_link_many (introspect, sink, NULL);
   gegl_node_process (sink);
 
-  /* Create a new image of the result */
   new_name = g_strdup_printf ("%s GEGL graph",
                               gimp_image_get_display_name (source_image));
-  new_image = gimp_create_image (gimp,
-                                 gegl_buffer_get_width (buffer),
-                                 gegl_buffer_get_height (buffer),
-                                 GIMP_RGB,
-                                 GIMP_PRECISION_U8_GAMMA,
-                                 FALSE);
-  gimp_image_set_file (new_image, g_file_new_for_uri (new_name));
-  layer = gimp_layer_new_from_buffer (buffer,
-                                      new_image,
-                                      gimp_image_get_layer_format (new_image,
-                                                                   TRUE),
-                                      new_name,
-                                      1.0,
-                                      GIMP_NORMAL_MODE);
-  gimp_image_add_layer (new_image, layer, NULL, 0, FALSE);
-  gimp_create_display (gimp, new_image, GIMP_UNIT_PIXEL, 1.0, NULL, 0);
 
-  /* Cleanup */
-  g_object_unref (new_image);
+  new_image = gimp_create_image_from_buffer (source_image->gimp,
+                                             buffer, new_name);
+  gimp_image_set_file (new_image, g_file_new_for_uri (new_name));
+
   g_free (new_name);
+
   g_object_unref (buffer);
+
   g_object_unref (sink);
   g_object_unref (introspect);
+
   g_object_unref (source_image);
 
   return FALSE;

@@ -106,7 +106,7 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
    * if the cell renderer does not have enough room to display the
    * entire string.
    *
-   * Since: GIMP 2.4
+   * Since: 2.4
    */
   g_object_class_install_property (object_class, PROP_ELLIPSIZE,
                                    g_param_spec_enum ("ellipsize", NULL, NULL,
@@ -119,7 +119,7 @@ gimp_int_combo_box_class_init (GimpIntComboBoxClass *klass)
    *
    * Sets a label on the combo-box, see gimp_int_combo_box_set_label().
    *
-   * Since: GIMP 2.10
+   * Since: 2.10
    */
   g_object_class_install_property (object_class, PROP_LABEL,
                                    g_param_spec_string ("label", NULL, NULL,
@@ -232,7 +232,7 @@ gimp_int_combo_box_get_property (GObject    *object,
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_int_combo_box_new (const gchar *first_label,
@@ -262,7 +262,7 @@ gimp_int_combo_box_new (const gchar *first_label,
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_int_combo_box_new_valist (const gchar *first_label,
@@ -304,7 +304,7 @@ gimp_int_combo_box_new_valist (const gchar *first_label,
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 GtkWidget *
 gimp_int_combo_box_new_array (gint         n_values,
@@ -349,7 +349,7 @@ gimp_int_combo_box_new_array (gint         n_values,
  *
  * The column number must be taken from the enum #GimpIntStoreColumns.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_int_combo_box_prepend (GimpIntComboBox *combo_box,
@@ -382,7 +382,7 @@ gimp_int_combo_box_prepend (GimpIntComboBox *combo_box,
  *
  * The column number must be taken from the enum #GimpIntStoreColumns.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 void
 gimp_int_combo_box_append (GimpIntComboBox *combo_box,
@@ -415,7 +415,7 @@ gimp_int_combo_box_append (GimpIntComboBox *combo_box,
  * Return value: %TRUE on success or %FALSE if there was no item for
  *               this value.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
@@ -447,7 +447,7 @@ gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
  * Return value: %TRUE if @value has been set or %FALSE if no item was
  *               active.
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gboolean
 gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
@@ -489,7 +489,7 @@ gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
  *
  * Return value: the signal handler ID as returned by g_signal_connect()
  *
- * Since: GIMP 2.2
+ * Since: 2.2
  **/
 gulong
 gimp_int_combo_box_connect (GimpIntComboBox *combo_box,
@@ -520,7 +520,7 @@ gimp_int_combo_box_connect (GimpIntComboBox *combo_box,
  * contents of the box will be right-aligned. This is useful for
  * places where screen estate is rare, like in tool options.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 void
 gimp_int_combo_box_set_label (GimpIntComboBox *combo_box,
@@ -568,7 +568,7 @@ gimp_int_combo_box_set_label (GimpIntComboBox *combo_box,
  *
  * Return value: the @combo_box' label.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  **/
 const gchar *
 gimp_int_combo_box_get_label (GimpIntComboBox *combo_box)
@@ -592,7 +592,7 @@ gimp_int_combo_box_get_label (GimpIntComboBox *combo_box)
  * Calling gtk_widget_queue_draw() on the @combo_box will cause the
  * sensitivity to be updated.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  **/
 void
 gimp_int_combo_box_set_sensitivity (GimpIntComboBox        *combo_box,

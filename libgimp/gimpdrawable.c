@@ -332,7 +332,7 @@ gimp_drawable_get_sub_thumbnail_data (gint32  drawable_ID,
  *
  * Returns: Whether the drawable ID is valid.
  *
- * Since: GIMP 2.4
+ * Since: 2.4
  */
 gboolean
 gimp_drawable_is_valid (gint32 drawable_ID)
@@ -362,7 +362,7 @@ gimp_drawable_is_layer (gint32 drawable_ID)
  *
  * Returns: TRUE if the drawable is a text layer, FALSE otherwise.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  */
 gboolean
 gimp_drawable_is_text_layer (gint32 drawable_ID)
@@ -662,7 +662,7 @@ gimp_drawable_attach_new_parasite (gint32          drawable_ID,
  *
  * See Also: gimp_drawable_get_shadow_buffer()
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GeglBuffer *
 gimp_drawable_get_buffer (gint32 drawable_ID)
@@ -704,7 +704,7 @@ gimp_drawable_get_buffer (gint32 drawable_ID)
  *
  * See Also: gimp_drawable_get_shadow_buffer()
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 GeglBuffer *
 gimp_drawable_get_shadow_buffer (gint32 drawable_ID)
@@ -738,7 +738,7 @@ gimp_drawable_get_shadow_buffer (gint32 drawable_ID)
  *
  * Return value: The #Babl format.
  *
- * Since: GIMP 2.10
+ * Since: 2.10
  */
 const Babl *
 gimp_drawable_get_format (gint32 drawable_ID)

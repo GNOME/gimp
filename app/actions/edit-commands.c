@@ -33,6 +33,7 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-new.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-new.h"
 #include "core/gimpimage-undo.h"
@@ -359,12 +360,12 @@ edit_paste_as_new_layer_cmd_callback (GtkAction *action,
     {
       GimpLayer *layer;
 
-      layer = gimp_layer_new_from_buffer (gimp_buffer_get_buffer (buffer),
-                                          image,
+      layer = gimp_layer_new_from_buffer (buffer, image,
                                           gimp_image_get_layer_format (image,
                                                                        TRUE),
                                           _("Clipboard"),
-                                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+                                          GIMP_OPACITY_OPAQUE,
+                                          GIMP_NORMAL_MODE);
       g_object_unref (buffer);
 
       gimp_image_add_layer (image, layer,

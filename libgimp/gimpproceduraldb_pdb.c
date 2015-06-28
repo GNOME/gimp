@@ -184,7 +184,7 @@ gimp_procedural_db_query (const gchar   *name,
  *
  * Returns: Whether a procedure of that name is registered.
  *
- * Since: GIMP 2.6
+ * Since: 2.6
  **/
 gboolean
 gimp_procedural_db_proc_exists (const gchar *procedure_name)

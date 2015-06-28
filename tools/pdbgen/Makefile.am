@@ -26,10 +26,12 @@ pdb_sources = \
 	pdb/gradients.pdb		\
 	pdb/help.pdb			\
 	pdb/image.pdb			\
+	pdb/image_color_profile.pdb	\
 	pdb/image_convert.pdb		\
 	pdb/image_grid.pdb		\
 	pdb/image_guides.pdb		\
 	pdb/image_select.pdb		\
+	pdb/image_transform.pdb		\
 	pdb/image_undo.pdb		\
 	pdb/item.pdb			\
 	pdb/item_transform.pdb		\
@@ -71,8 +73,9 @@ EXTRA_DIST = \
 	$(pdb_sources)
 
 enum_headers = \
-	../../libgimpbase/gimpbaseenums.h	\
-	../../app/core/core-enums.h		\
+	../../libgimpbase/gimpbaseenums.h		\
+	../../libgimpconfig/gimpcolorconfig-enums.h	\
+	../../app/core/core-enums.h			\
 	../../app/paint/paint-enums.h
 
 pdb_scripts = \
