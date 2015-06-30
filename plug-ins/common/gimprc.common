@@ -22,7 +22,6 @@ decompose_RC = decompose.rc.o
 depth_merge_RC = depth-merge.rc.o
 despeckle_RC = despeckle.rc.o
 destripe_RC = destripe.rc.o
-displace_RC = displace.rc.o
 edge_dog_RC = edge-dog.rc.o
 edge_neon_RC = edge-neon.rc.o
 emboss_RC = emboss.rc.o

@@ -23,7 +23,6 @@
     'depth-merge' => { ui => 1 },
     'despeckle' => { ui => 1 },
     'destripe' => { ui => 1 },
-    'displace' => { ui => 1 },
     'edge-dog' => { ui => 1 },
     'edge-neon' => { ui => 1 },
     'emboss' => { ui => 1 },

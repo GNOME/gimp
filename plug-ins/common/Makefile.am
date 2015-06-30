@@ -68,7 +68,6 @@ libexec_PROGRAMS = \
 	depth-merge \
 	despeckle \
 	destripe \
-	displace \
 	edge-dog \
 	edge-neon \
 	emboss \
@@ -582,23 +581,6 @@ destripe_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(destripe_RC)
-
-displace_SOURCES = \
-	displace.c
-
-displace_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(displace_RC)
 
 edge_dog_SOURCES = \
 	edge-dog.c

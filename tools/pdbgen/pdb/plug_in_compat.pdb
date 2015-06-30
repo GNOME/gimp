@@ -942,6 +942,113 @@ CODE
     );
 }
 
+sub plug_in_displace {
+    $blurb = 'Displace pixels as indicated by displacement maps';
+
+    $help = <<'HELP';
+Displaces the contents of the specified drawable by the amounts specified
+by 'amount-x' and 'amount-y' multiplied by the luminance of corresponding
+pixels in the 'displace-map' drawables.
+HELP
+
+    &std_pdb_compat('gegl:displace');
+    $date = '2015';
+
+    @inargs = (
+  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+    desc => 'The run mode' },
+  { name => 'image', type => 'image', dead => 1,
+    desc => 'Input image (unused)' },
+  { name => 'drawable', type => 'drawable',
+    desc => 'Input drawable' },
+  { name => 'amount_x', type => '-500.0 <= float <= 500.0',
+    desc => 'Displace multiplier for x direction' },
+  { name => 'amount_y', type => '-500.0 <= float <= 500.0',
+    desc => 'Displace multiplier for y direction' },
+  { name => 'do_x', type => 'boolean',
+    desc => 'Displace in x direction ?' },
+  { name => 'do_y', type => 'boolean',
+    desc => 'Displace in y direction ?' },
+  { name => 'displace_map_x', type => 'drawable',
+    desc => 'Displacement map for x direction' },
+  { name => 'displace_map_y', type => 'drawable',
+    desc => 'Displacement map for y direction' },
+  { name => 'displace_type', type => '1 <= int32 <= 3',
+    desc => 'Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }' }
+    );
+
+    %invoke = (
+  code => <<'CODE'
+{
+  success = displace (drawable,
+                      amount_x,
+                      amount_y,
+                      do_x,
+                      do_y,
+                      displace_map_x,
+                      displace_map_y,
+                      displace_type,
+                      0,
+                      progress,
+                      error);
+}
+CODE
+    );
+}
+
+sub plug_in_displace_polar {
+    $blurb = 'Displace pixels as indicated by displacement maps';
+
+    $help = <<'HELP';
+Just like plug-in-displace but working in polar coordinates.
+The drawable is whirled and pinched according to the map.
+HELP
+
+    &std_pdb_compat('gegl:displace');
+    $date = '2015';
+
+    @inargs = (
+  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+    desc => 'The run mode' },
+  { name => 'image', type => 'image', dead => 1,
+    desc => 'Input image (unused)' },
+  { name => 'drawable', type => 'drawable',
+    desc => 'Input drawable' },
+  { name => 'amount_x', type => '-500.0 <= float <= 500.0',
+    desc => 'Displace multiplier for radial direction' },
+  { name => 'amount_y', type => '-500.0 <= float <= 500.0',
+    desc => 'Displace multiplier for tangent direction' },
+  { name => 'do_x', type => 'boolean',
+    desc => 'Displace in radial direction ?' },
+  { name => 'do_y', type => 'boolean',
+    desc => 'Displace in tangent direction ?' },
+  { name => 'displace_map_x', type => 'drawable',
+    desc => 'Displacement map for radial direction' },
+  { name => 'displace_map_y', type => 'drawable',
+    desc => 'Displacement map for tangent direction' },
+  { name => 'displace_type', type => '1 <= int32 <= 3',
+    desc => 'Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }' }
+    );
+
+    %invoke = (
+  code => <<'CODE'
+{
+  success = displace (drawable,
+                      amount_x,
+                      amount_y,
+                      do_x,
+                      do_y,
+                      displace_map_x,
+                      displace_map_y,
+                      displace_type,
+                      1,
+                      progress,
+                      error);
+}
+CODE
+    );
+}
+
 sub plug_in_edge {
     $blurb = 'Several simple methods for detecting edges';
 
@@ -4024,6 +4131,96 @@ wrap_in_gamma_cast (GeglNode     *node,
     }
 }
 
+static GeglNode *
+create_buffer_source_node (GeglNode     *parent,
+                           GimpDrawable *drawable)
+{
+  GeglNode   *new_node;
+  GeglBuffer *buffer;
+
+  buffer = gimp_drawable_get_buffer (drawable);
+  g_object_ref (buffer);
+  new_node = gegl_node_new_child (parent,
+                                  "operation", "gegl:buffer-source",
+                                  "buffer", buffer,
+                                  NULL);
+  g_object_unref (buffer);
+  return new_node;
+}
+
+static gboolean
+displace (GimpDrawable  *drawable,
+          gdouble        amount_x,
+          gdouble        amount_y,
+          gboolean       do_x,
+          gboolean       do_y,
+          GimpDrawable  *displace_map_x,
+          GimpDrawable  *displace_map_y,
+          gint           displace_type,
+          gint           displace_mode,
+          GimpProgress  *progress,
+          GError       **error)
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      if (do_x || do_y)
+        {
+          GeglNode *gegl;
+          GeglNode *node;
+          GeglAbyssPolicy abyss_policy = GEGL_ABYSS_NONE;
+
+          switch (displace_type)
+            {
+              case 1:
+                abyss_policy = GEGL_ABYSS_LOOP;
+                break;
+              case 2:
+                abyss_policy = GEGL_ABYSS_CLAMP;
+                break;
+              case 3:
+                abyss_policy = GEGL_ABYSS_BLACK;
+                break;
+            }
+
+          gegl = gegl_node_new ();
+
+          node = gegl_node_new_child (gegl,
+                                      "operation",     "gegl:displace",
+                                      "displace_mode", displace_mode,
+                                      "sampler_type",  GEGL_SAMPLER_CUBIC,
+                                      "abyss_policy",  abyss_policy,
+                                      "amount_x",      amount_x,
+                                      "amount_y",      amount_y,
+                                      NULL);
+
+          if (do_x)
+            {
+              GeglNode *src_node;
+              src_node = create_buffer_source_node (gegl, displace_map_x);
+              gegl_node_connect_to (src_node, "output", node, "aux");
+            }
+
+          if (do_y)
+            {
+              GeglNode *src_node;
+              src_node = create_buffer_source_node (gegl, displace_map_y);
+              gegl_node_connect_to (src_node, "output", node, "aux2");
+            }
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Displace"),
+                                         node);
+          g_object_unref (gegl);
+        }
+
+      return TRUE;
+    }
+  else
+    return FALSE;
+}
+
 static gboolean
 gaussian_blur (GimpDrawable  *drawable,
                gdouble        horizontal,
@@ -4087,6 +4284,8 @@ CODE
             plug_in_cubism
             plug_in_deinterlace
             plug_in_diffraction
+            plug_in_displace
+            plug_in_displace_polar
             plug_in_edge
             plug_in_engrave
             plug_in_exchange

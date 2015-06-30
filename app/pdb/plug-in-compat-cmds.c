@@ -169,6 +169,96 @@ wrap_in_gamma_cast (GeglNode     *node,
     }
 }
 
+static GeglNode *
+create_buffer_source_node (GeglNode     *parent,
+                           GimpDrawable *drawable)
+{
+  GeglNode   *new_node;
+  GeglBuffer *buffer;
+
+  buffer = gimp_drawable_get_buffer (drawable);
+  g_object_ref (buffer);
+  new_node = gegl_node_new_child (parent,
+                                  "operation", "gegl:buffer-source",
+                                  "buffer", buffer,
+                                  NULL);
+  g_object_unref (buffer);
+  return new_node;
+}
+
+static gboolean
+displace (GimpDrawable  *drawable,
+          gdouble        amount_x,
+          gdouble        amount_y,
+          gboolean       do_x,
+          gboolean       do_y,
+          GimpDrawable  *displace_map_x,
+          GimpDrawable  *displace_map_y,
+          gint           displace_type,
+          gint           displace_mode,
+          GimpProgress  *progress,
+          GError       **error)
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      if (do_x || do_y)
+        {
+          GeglNode *gegl;
+          GeglNode *node;
+          GeglAbyssPolicy abyss_policy = GEGL_ABYSS_NONE;
+
+          switch (displace_type)
+            {
+              case 1:
+                abyss_policy = GEGL_ABYSS_LOOP;
+                break;
+              case 2:
+                abyss_policy = GEGL_ABYSS_CLAMP;
+                break;
+              case 3:
+                abyss_policy = GEGL_ABYSS_BLACK;
+                break;
+            }
+
+          gegl = gegl_node_new ();
+
+          node = gegl_node_new_child (gegl,
+                                      "operation",     "gegl:displace",
+                                      "displace_mode", displace_mode,
+                                      "sampler_type",  GEGL_SAMPLER_CUBIC,
+                                      "abyss_policy",  abyss_policy,
+                                      "amount_x",      amount_x,
+                                      "amount_y",      amount_y,
+                                      NULL);
+
+          if (do_x)
+            {
+              GeglNode *src_node;
+              src_node = create_buffer_source_node (gegl, displace_map_x);
+              gegl_node_connect_to (src_node, "output", node, "aux");
+            }
+
+          if (do_y)
+            {
+              GeglNode *src_node;
+              src_node = create_buffer_source_node (gegl, displace_map_y);
+              gegl_node_connect_to (src_node, "output", node, "aux2");
+            }
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Displace"),
+                                         node);
+          g_object_unref (gegl);
+        }
+
+      return TRUE;
+    }
+  else
+    return FALSE;
+}
+
 static gboolean
 gaussian_blur (GimpDrawable  *drawable,
                gdouble        horizontal,
@@ -1026,6 +1116,98 @@ plug_in_diffraction_invoker (GimpProcedure         *procedure,
         }
       else
         success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_displace_invoker (GimpProcedure         *procedure,
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble amount_x;
+  gdouble amount_y;
+  gboolean do_x;
+  gboolean do_y;
+  GimpDrawable *displace_map_x;
+  GimpDrawable *displace_map_y;
+  gint32 displace_type;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  amount_x = g_value_get_double (gimp_value_array_index (args, 3));
+  amount_y = g_value_get_double (gimp_value_array_index (args, 4));
+  do_x = g_value_get_boolean (gimp_value_array_index (args, 5));
+  do_y = g_value_get_boolean (gimp_value_array_index (args, 6));
+  displace_map_x = gimp_value_get_drawable (gimp_value_array_index (args, 7), gimp);
+  displace_map_y = gimp_value_get_drawable (gimp_value_array_index (args, 8), gimp);
+  displace_type = g_value_get_int (gimp_value_array_index (args, 9));
+
+  if (success)
+    {
+      success = displace (drawable,
+                          amount_x,
+                          amount_y,
+                          do_x,
+                          do_y,
+                          displace_map_x,
+                          displace_map_y,
+                          displace_type,
+                          0,
+                          progress,
+                          error);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_displace_polar_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gdouble amount_x;
+  gdouble amount_y;
+  gboolean do_x;
+  gboolean do_y;
+  GimpDrawable *displace_map_x;
+  GimpDrawable *displace_map_y;
+  gint32 displace_type;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  amount_x = g_value_get_double (gimp_value_array_index (args, 3));
+  amount_y = g_value_get_double (gimp_value_array_index (args, 4));
+  do_x = g_value_get_boolean (gimp_value_array_index (args, 5));
+  do_y = g_value_get_boolean (gimp_value_array_index (args, 6));
+  displace_map_x = gimp_value_get_drawable (gimp_value_array_index (args, 7), gimp);
+  displace_map_y = gimp_value_get_drawable (gimp_value_array_index (args, 8), gimp);
+  displace_type = g_value_get_int (gimp_value_array_index (args, 9));
+
+  if (success)
+    {
+      success = displace (drawable,
+                          amount_x,
+                          amount_y,
+                          do_x,
+                          do_y,
+                          displace_map_x,
+                          displace_map_y,
+                          displace_type,
+                          1,
+                          progress,
+                          error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -4438,6 +4620,162 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                     "Polarization",
                                                     -1.0, 1.0, -1.0,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-displace
+   */
+  procedure = gimp_procedure_new (plug_in_displace_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-displace");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-displace",
+                                     "Displace pixels as indicated by displacement maps",
+                                     "Displaces the contents of the specified drawable by the amounts specified by 'amount-x' and 'amount-y' multiplied by the luminance of corresponding pixels in the 'displace-map' drawables.",
+                                     "Compatibility procedure. Please see 'gegl:displace' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:displace' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("amount-x",
+                                                    "amount x",
+                                                    "Displace multiplier for x direction",
+                                                    -500.0, 500.0, -500.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("amount-y",
+                                                    "amount y",
+                                                    "Displace multiplier for y direction",
+                                                    -500.0, 500.0, -500.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("do-x",
+                                                     "do x",
+                                                     "Displace in x direction ?",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("do-y",
+                                                     "do y",
+                                                     "Displace in y direction ?",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("displace-map-x",
+                                                            "displace map x",
+                                                            "Displacement map for x direction",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("displace-map-y",
+                                                            "displace map y",
+                                                            "Displacement map for y direction",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("displace-type",
+                                                      "displace type",
+                                                      "Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }",
+                                                      1, 3, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-displace-polar
+   */
+  procedure = gimp_procedure_new (plug_in_displace_polar_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-displace-polar");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-displace-polar",
+                                     "Displace pixels as indicated by displacement maps",
+                                     "Just like plug-in-displace but working in polar coordinates. The drawable is whirled and pinched according to the map.",
+                                     "Compatibility procedure. Please see 'gegl:displace' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:displace' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("amount-x",
+                                                    "amount x",
+                                                    "Displace multiplier for radial direction",
+                                                    -500.0, 500.0, -500.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("amount-y",
+                                                    "amount y",
+                                                    "Displace multiplier for tangent direction",
+                                                    -500.0, 500.0, -500.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("do-x",
+                                                     "do x",
+                                                     "Displace in radial direction ?",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("do-y",
+                                                     "do y",
+                                                     "Displace in tangent direction ?",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("displace-map-x",
+                                                            "displace map x",
+                                                            "Displacement map for radial direction",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("displace-map-y",
+                                                            "displace map y",
+                                                            "Displacement map for tangent direction",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("displace-type",
+                                                      "displace type",
+                                                      "Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }",
+                                                      1, 3, 1,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
