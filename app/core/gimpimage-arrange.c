@@ -24,8 +24,6 @@
 
 #include "core-types.h"
 
-#include "vectors/gimpvectors.h"
-
 #include "gimpimage.h"
 #include "gimpimage-arrange.h"
 #include "gimpimage-guides.h"
@@ -36,6 +34,7 @@
 #include "gimpguide.h"
 
 #include "gimp-intl.h"
+
 
 static GList * sort_by_offset  (GList             *list);
 static void    compute_offsets (GList             *list,
@@ -322,26 +321,17 @@ compute_offset (GObject *object,
   else if (GIMP_IS_ITEM (object))
     {
       GimpItem *item = GIMP_ITEM (object);
+      gint      off_x, off_y;
 
-      if (GIMP_IS_VECTORS (object))
-        {
-          gdouble x1_f, y1_f, x2_f, y2_f;
+      gimp_item_bounds (item,
+                        &object_offset_x,
+                        &object_offset_y,
+                        &object_width,
+                        &object_height);
 
-          gimp_vectors_bounds (GIMP_VECTORS (item),
-                               &x1_f, &y1_f,
-                               &x2_f, &y2_f);
-
-          object_offset_x = ROUND (x1_f);
-          object_offset_y = ROUND (y1_f);
-          object_height   = ROUND (y2_f - y1_f);
-          object_width    = ROUND (x2_f - x1_f);
-        }
-      else
-        {
-          gimp_item_get_offset (item, &object_offset_x, &object_offset_y);
-          object_width  = gimp_item_get_width  (item);
-          object_height = gimp_item_get_height (item);
-        }
+      gimp_item_get_offset (item, &off_x, &off_y);
+      object_offset_x += off_x;
+      object_offset_y += off_y;
     }
   else if (GIMP_IS_GUIDE (object))
     {

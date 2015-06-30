@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -42,8 +43,6 @@
 #include "core/gimpprojection.h"
 #include "core/gimpselection.h"
 #include "core/gimpundostack.h"
-
-#include "vectors/gimpvectors.h"
 
 #include "widgets/gimpwidgets-utils.h"
 
@@ -364,10 +363,9 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
 
       case GIMP_TRANSLATE_MODE_VECTORS:
         {
-          gdouble  xd1, yd1, xd2, yd2;
-
-          gimp_vectors_bounds (GIMP_VECTORS (active_item),
-                               &xd1, &yd1, &xd2, &yd2);
+          gimp_item_bounds (active_item, &x1, &y1, &x2, &y2);
+          x2 += x1;
+          y2 += y1;
 
           if (gimp_item_get_linked (active_item))
             {
@@ -384,22 +382,19 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
               for (list = linked; list; list = g_list_next (list))
                 {
                   GimpItem *item = list->data;
-                  gdouble   x3, y3;
-                  gdouble   x4, y4;
+                  gint      x3, y3;
+                  gint      x4, y4;
 
-                  gimp_vectors_bounds (GIMP_VECTORS (item), &x3, &y3, &x4, &y4);
+                  gimp_item_bounds (item, &x3, &y3, &x4, &y4);
+                  x4 += x3;
+                  y4 += y3;
 
-                  xd1 = MIN (xd1, x3);
-                  yd1 = MIN (yd1, y3);
-                  xd2 = MAX (xd2, x4);
-                  yd2 = MAX (yd2, y4);
+                  x1 = MIN (x1, x3);
+                  y1 = MIN (y1, y3);
+                  x2 = MAX (x2, x4);
+                  y2 = MAX (y2, y4);
                 }
             }
-
-          x1 = ROUND (floor (xd1));
-          y1 = ROUND (floor (yd1));
-          x2 = ROUND (ceil (xd2));
-          y2 = ROUND (ceil (yd2));
         }
         break;
       }
@@ -840,9 +835,9 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
     case GIMP_TRANSLATE_MODE_VECTORS:
       {
-        gdouble x1, y1, x2, y2;
+        gint x, y, w, h;
 
-        gimp_vectors_bounds (GIMP_VECTORS (active_item), &x1, &y1, &x2, &y2);
+        gimp_item_bounds (active_item, &x, &y, &w, &h);
 
         if (gimp_item_get_linked (active_item))
           {
@@ -859,28 +854,21 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             for (list = linked; list; list = g_list_next (list))
               {
                 GimpItem *item = list->data;
-                gdouble   x3, y3;
-                gdouble   x4, y4;
+                gint      x2, y2;
+                gint      w2, h2;
 
-                gimp_vectors_bounds (GIMP_VECTORS (item), &x3, &y3, &x4, &y4);
+                gimp_item_bounds (item, &x2, &y2, &w2, &h2);
 
-                x1 = MIN (x1, x3);
-                y1 = MIN (y1, y3);
-                x2 = MAX (x2, x4);
-                y2 = MAX (y2, y4);
+                gimp_rectangle_union (x, y, w, h,
+                                      x2, y2, w2, h2,
+                                      &x, &y, &w, &h);
               }
 
             g_list_free (linked);
           }
 
-        x1 = floor (x1);
-        y1 = floor (y1);
-        x2 = ceil (x2);
-        y2 = ceil (y2);
-
         gimp_draw_tool_add_rectangle (draw_tool, FALSE,
-                                      x1, y1,
-                                      x2 - x1, y2 - y1);
+                                      x, y, w, h);
       }
       break;
 
