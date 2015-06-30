@@ -77,6 +77,11 @@ static GeglNode * gimp_channel_get_node      (GimpFilter        *filter);
 
 static gboolean   gimp_channel_is_attached   (const GimpItem    *item);
 static GimpItemTree * gimp_channel_get_tree  (GimpItem          *item);
+static gboolean   gimp_channel_item_bounds   (GimpItem          *item,
+                                              gdouble           *x,
+                                              gdouble           *y,
+                                              gdouble           *width,
+                                              gdouble           *height);
 static GimpItem * gimp_channel_duplicate     (GimpItem          *item,
                                               GType              new_type);
 static void       gimp_channel_convert       (GimpItem          *item,
@@ -262,6 +267,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   item_class->is_attached          = gimp_channel_is_attached;
   item_class->get_tree             = gimp_channel_get_tree;
+  item_class->bounds               = gimp_channel_item_bounds;
   item_class->duplicate            = gimp_channel_duplicate;
   item_class->convert              = gimp_channel_convert;
   item_class->translate            = gimp_channel_translate;
@@ -479,6 +485,26 @@ gimp_channel_get_tree (GimpItem *item)
     }
 
   return NULL;
+}
+
+static gboolean
+gimp_channel_item_bounds (GimpItem *item,
+                          gdouble  *x,
+                          gdouble  *y,
+                          gdouble  *width,
+                          gdouble  *height)
+{
+  gint    x1, y1, x2, y2;
+  gdouble retval;
+
+  retval = gimp_channel_bounds (GIMP_CHANNEL (item), &x1, &y1, &x2, &y2);
+
+  *x      = x1;
+  *y      = y1;
+  *width  = x2 - x1;
+  *height = y2 - y1;
+
+  return retval;
 }
 
 static GimpItem *

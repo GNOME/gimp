@@ -54,6 +54,11 @@ struct _GimpItemClass
   gboolean        (* is_content_locked)  (const GimpItem         *item);
   gboolean        (* is_position_locked) (const GimpItem         *item);
   GimpItemTree  * (* get_tree)           (GimpItem               *item);
+  gboolean        (* bounds)             (GimpItem               *item,
+                                          gdouble                *x,
+                                          gdouble                *y,
+                                          gdouble                *width,
+                                          gdouble                *height);
   GimpItem      * (* duplicate)          (GimpItem               *item,
                                           GType                   new_type);
   void            (* convert)            (GimpItem               *item,
@@ -155,6 +160,17 @@ GimpContainer * gimp_item_get_container      (GimpItem           *item);
 GList         * gimp_item_get_container_iter (GimpItem           *item);
 gint            gimp_item_get_index          (GimpItem           *item);
 GList         * gimp_item_get_path           (GimpItem           *item);
+
+gboolean        gimp_item_bounds             (GimpItem           *item,
+                                              gint               *x,
+                                              gint               *y,
+                                              gint               *width,
+                                              gint               *height);
+gboolean        gimp_item_bounds_f           (GimpItem           *item,
+                                              gdouble            *x,
+                                              gdouble            *y,
+                                              gdouble            *width,
+                                              gdouble            *height);
 
 GimpItem      * gimp_item_duplicate          (GimpItem           *item,
                                               GType               new_type);

@@ -125,6 +125,11 @@ static void       gimp_item_real_visibility_changed (GimpItem       *item);
 
 static gboolean   gimp_item_real_is_content_locked  (const GimpItem *item);
 static gboolean   gimp_item_real_is_position_locked (const GimpItem *item);
+static gboolean   gimp_item_real_bounds             (GimpItem       *item,
+                                                     gdouble        *x,
+                                                     gdouble        *y,
+                                                     gdouble        *width,
+                                                     gdouble        *height);
 static GimpItem * gimp_item_real_duplicate          (GimpItem       *item,
                                                      GType           new_type);
 static void       gimp_item_real_convert            (GimpItem       *item,
@@ -232,6 +237,7 @@ gimp_item_class_init (GimpItemClass *klass)
   klass->is_content_locked         = gimp_item_real_is_content_locked;
   klass->is_position_locked        = gimp_item_real_is_position_locked;
   klass->get_tree                  = NULL;
+  klass->bounds                    = gimp_item_real_bounds;
   klass->duplicate                 = gimp_item_real_duplicate;
   klass->convert                   = gimp_item_real_convert;
   klass->rename                    = gimp_item_real_rename;
@@ -492,6 +498,23 @@ gimp_item_real_is_position_locked (const GimpItem *item)
       return TRUE;
 
   return GET_PRIVATE (item)->lock_position;
+}
+
+static gboolean
+gimp_item_real_bounds (GimpItem *item,
+                       gdouble  *x,
+                       gdouble  *y,
+                       gdouble  *width,
+                       gdouble  *height)
+{
+  GimpItemPrivate *private = GET_PRIVATE (item);
+
+  *x      = 0;
+  *y      = 0;
+  *width  = private->width;
+  *height = private->height;
+
+  return TRUE;
 }
 
 static GimpItem *
@@ -880,6 +903,54 @@ gimp_item_get_path (GimpItem *item)
     }
 
   return path;
+}
+
+gboolean
+gimp_item_bounds (GimpItem *item,
+                  gint     *x,
+                  gint     *y,
+                  gint     *width,
+                  gint     *height)
+{
+  gdouble  tmp_x, tmp_y, tmp_width, tmp_height;
+  gboolean retval;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  retval = GIMP_ITEM_GET_CLASS (item)->bounds (item,
+                                               &tmp_x, &tmp_y,
+                                               &tmp_width, &tmp_height);
+
+  if (x)      *x      = floor (tmp_x);
+  if (y)      *y      = floor (tmp_y);
+  if (width)  *width  = ceil (tmp_x + tmp_width)  - floor (tmp_x);
+  if (height) *height = ceil (tmp_y + tmp_height) - floor (tmp_y);
+
+  return retval;
+}
+
+gboolean
+gimp_item_bounds_f (GimpItem *item,
+                    gdouble  *x,
+                    gdouble  *y,
+                    gdouble  *width,
+                    gdouble  *height)
+{
+  gdouble  tmp_x, tmp_y, tmp_width, tmp_height;
+  gboolean retval;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  retval = GIMP_ITEM_GET_CLASS (item)->bounds (item,
+                                               &tmp_x, &tmp_y,
+                                               &tmp_width, &tmp_height);
+
+  if (x)      *x      = tmp_x;
+  if (y)      *y      = tmp_y;
+  if (width)  *width  = tmp_width;
+  if (height) *height = tmp_height;
+
+  return retval;
 }
 
 /**

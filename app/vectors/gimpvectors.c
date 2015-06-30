@@ -69,6 +69,11 @@ static gint64     gimp_vectors_get_memsize   (GimpObject        *object,
 
 static gboolean   gimp_vectors_is_attached   (const GimpItem    *item);
 static GimpItemTree * gimp_vectors_get_tree  (GimpItem          *item);
+static gboolean   gimp_vectors_item_bounds   (GimpItem          *item,
+                                              gdouble           *x,
+                                              gdouble           *y,
+                                              gdouble           *width,
+                                              gdouble           *height);
 static GimpItem * gimp_vectors_duplicate     (GimpItem          *item,
                                               GType              new_type);
 static void       gimp_vectors_convert       (GimpItem          *item,
@@ -194,6 +199,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
 
   item_class->is_attached           = gimp_vectors_is_attached;
   item_class->get_tree              = gimp_vectors_get_tree;
+  item_class->bounds                = gimp_vectors_item_bounds;
   item_class->duplicate             = gimp_vectors_duplicate;
   item_class->convert               = gimp_vectors_convert;
   item_class->translate             = gimp_vectors_translate;
@@ -314,6 +320,26 @@ gimp_vectors_get_tree (GimpItem *item)
     }
 
   return NULL;
+}
+
+static gboolean
+gimp_vectors_item_bounds (GimpItem *item,
+                          gdouble  *x,
+                          gdouble  *y,
+                          gdouble  *width,
+                          gdouble  *height)
+{
+  gdouble x1, y1, x2, y2;
+  gdouble retval;
+
+  retval = gimp_vectors_bounds (GIMP_VECTORS (item), &x1, &y1, &x2, &y2);
+
+  *x      = x1;
+  *y      = y1;
+  *width  = x2 - x1;
+  *height = y2 - y1;
+
+  return retval;
 }
 
 static GimpItem *
