@@ -187,6 +187,63 @@ create_buffer_source_node (GeglNode     *parent,
 }
 
 static gboolean
+bump_map (GimpDrawable *drawable,
+          GimpDrawable *bump_map,
+          gdouble       azimuth,
+          gdouble       elevation,
+          gint          depth,
+          gint          offset_x,
+          gint          offset_y,
+          gdouble       waterlevel,
+          gdouble       ambient,
+          gboolean      compensate,
+          gboolean      invert,
+          gint          type,
+          gboolean      tiled,
+          GimpProgress  *progress,
+          GError       **error)
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *gegl;
+      GeglNode *node;
+      GeglNode *src_node;
+
+      gegl = gegl_node_new ();
+
+      node = gegl_node_new_child (gegl,
+                                  "operation", "gegl:bump-map",
+                                  "tiled",      tiled,
+                                  "type",       type,
+                                  "compensate", compensate,
+                                  "invert",     invert,
+                                  "azimuth",    azimuth,
+                                  "elevation",  elevation,
+                                  "depth",      depth,
+                                  "offset_x",   offset_x,
+                                  "offset_y",   offset_y,
+                                  "waterlevel", waterlevel,
+                                  "ambient",    ambient,
+                                  NULL);
+
+      src_node = create_buffer_source_node (gegl, bump_map);
+
+      gegl_node_connect_to (src_node, "output", node, "aux");
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Bump Map"),
+                                     node);
+      g_object_unref (gegl);
+
+      return TRUE;
+    }
+    else
+      return FALSE;
+}
+
+static gboolean
 displace (GimpDrawable  *drawable,
           gdouble        amount_x,
           gdouble        amount_y,
@@ -642,6 +699,122 @@ plug_in_autostretch_hsv_invoker (GimpProcedure         *procedure,
         }
       else
         success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_bump_map_invoker (GimpProcedure         *procedure,
+                          Gimp                  *gimp,
+                          GimpContext           *context,
+                          GimpProgress          *progress,
+                          const GimpValueArray  *args,
+                          GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  GimpDrawable *bumpmap;
+  gdouble azimuth;
+  gdouble elevation;
+  gint32 depth;
+  gint32 xofs;
+  gint32 yofs;
+  gdouble waterlevel;
+  gdouble ambient;
+  gboolean compensate;
+  gboolean invert;
+  gint32 type;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  bumpmap = gimp_value_get_drawable (gimp_value_array_index (args, 3), gimp);
+  azimuth = g_value_get_double (gimp_value_array_index (args, 4));
+  elevation = g_value_get_double (gimp_value_array_index (args, 5));
+  depth = g_value_get_int (gimp_value_array_index (args, 6));
+  xofs = g_value_get_int (gimp_value_array_index (args, 7));
+  yofs = g_value_get_int (gimp_value_array_index (args, 8));
+  waterlevel = g_value_get_double (gimp_value_array_index (args, 9));
+  ambient = g_value_get_double (gimp_value_array_index (args, 10));
+  compensate = g_value_get_boolean (gimp_value_array_index (args, 11));
+  invert = g_value_get_boolean (gimp_value_array_index (args, 12));
+  type = g_value_get_int (gimp_value_array_index (args, 13));
+
+  if (success)
+    {
+      success = bump_map (drawable,
+                          bumpmap,
+                          azimuth,
+                          elevation,
+                          depth,
+                          xofs,
+                          yofs,
+                          waterlevel,
+                          ambient,
+                          compensate,
+                          invert,
+                          type,
+                          FALSE,
+                          progress,
+                          error);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_bump_map_tiled_invoker (GimpProcedure         *procedure,
+                                Gimp                  *gimp,
+                                GimpContext           *context,
+                                GimpProgress          *progress,
+                                const GimpValueArray  *args,
+                                GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  GimpDrawable *bumpmap;
+  gdouble azimuth;
+  gdouble elevation;
+  gint32 depth;
+  gint32 xofs;
+  gint32 yofs;
+  gdouble waterlevel;
+  gdouble ambient;
+  gboolean compensate;
+  gboolean invert;
+  gint32 type;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  bumpmap = gimp_value_get_drawable (gimp_value_array_index (args, 3), gimp);
+  azimuth = g_value_get_double (gimp_value_array_index (args, 4));
+  elevation = g_value_get_double (gimp_value_array_index (args, 5));
+  depth = g_value_get_int (gimp_value_array_index (args, 6));
+  xofs = g_value_get_int (gimp_value_array_index (args, 7));
+  yofs = g_value_get_int (gimp_value_array_index (args, 8));
+  waterlevel = g_value_get_double (gimp_value_array_index (args, 9));
+  ambient = g_value_get_double (gimp_value_array_index (args, 10));
+  compensate = g_value_get_boolean (gimp_value_array_index (args, 11));
+  invert = g_value_get_boolean (gimp_value_array_index (args, 12));
+  type = g_value_get_int (gimp_value_array_index (args, 13));
+
+  if (success)
+    {
+      success = bump_map (drawable,
+                          bumpmap,
+                          azimuth,
+                          elevation,
+                          depth,
+                          xofs,
+                          yofs,
+                          waterlevel,
+                          ambient,
+                          compensate,
+                          invert,
+                          type,
+                          TRUE,
+                          progress,
+                          error);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -4159,6 +4332,210 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             "Input drawable",
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-bump-map
+   */
+  procedure = gimp_procedure_new (plug_in_bump_map_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-bump-map");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-bump-map",
+                                     "Create an embossing effect using a bump map",
+                                     "This plug-in uses the algorithm described by John Schlag, \"Fast Embossing Effects on Raster Image Data\" in Graphics GEMS IV (ISBN 0-12-336155-9). It takes a drawable to be applied as a bump map to another image and produces a nice embossing effect.",
+                                     "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("bumpmap",
+                                                            "bumpmap",
+                                                            "Bump map drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("azimuth",
+                                                    "azimuth",
+                                                    "Azimuth",
+                                                    0.0, 360.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("elevation",
+                                                    "elevation",
+                                                    "Elevation",
+                                                    0.5, 90.0, 0.5,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("depth",
+                                                      "depth",
+                                                      "Depth",
+                                                      1, 65, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("xofs",
+                                                      "xofs",
+                                                      "X offset",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("yofs",
+                                                      "yofs",
+                                                      "Y offset",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("waterlevel",
+                                                    "waterlevel",
+                                                    "Level that full transparency should represent",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("ambient",
+                                                    "ambient",
+                                                    "Ambient lighting factor",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("compensate",
+                                                     "compensate",
+                                                     "Compensate for darkening",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("invert",
+                                                     "invert",
+                                                     "Invert bumpmap",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("type",
+                                                      "type",
+                                                      "Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }",
+                                                      0, 3, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-bump-map-tiled
+   */
+  procedure = gimp_procedure_new (plug_in_bump_map_tiled_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-bump-map-tiled");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-bump-map-tiled",
+                                     "Create an embossing effect using a tiled image as a bump map",
+                                     "This plug-in uses the algorithm described by John Schlag, \"Fast Embossing Effects on Raster Image Data\" in Graphics GEMS IV (ISBN 0-12-336155-9). It takes a drawable to be tiled and applied as a bump map to another image and produces a nice embossing effect.",
+                                     "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:bump-map' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("bumpmap",
+                                                            "bumpmap",
+                                                            "Bump map drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("azimuth",
+                                                    "azimuth",
+                                                    "Azimuth",
+                                                    0.0, 360.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("elevation",
+                                                    "elevation",
+                                                    "Elevation",
+                                                    0.5, 90.0, 0.5,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("depth",
+                                                      "depth",
+                                                      "Depth",
+                                                      1, 65, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("xofs",
+                                                      "xofs",
+                                                      "X offset",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("yofs",
+                                                      "yofs",
+                                                      "Y offset",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("waterlevel",
+                                                    "waterlevel",
+                                                    "Level that full transparency should represent",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_double ("ambient",
+                                                    "ambient",
+                                                    "Ambient lighting factor",
+                                                    0.0, 1.0, 0.0,
+                                                    GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("compensate",
+                                                     "compensate",
+                                                     "Compensate for darkening",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("invert",
+                                                     "invert",
+                                                     "Invert bumpmap",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("type",
+                                                      "type",
+                                                      "Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }",
+                                                      0, 3, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

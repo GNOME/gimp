@@ -419,6 +419,142 @@ CODE
     );
 }
 
+sub plug_in_bump_map {
+    $blurb = 'Create an embossing effect using a bump map';
+
+    $help = <<'HELP';
+This plug-in uses the algorithm described by John Schlag,
+"Fast Embossing Effects on Raster Image Data" in
+Graphics GEMS IV (ISBN 0-12-336155-9).
+It takes a drawable to be applied as a bump
+map to another image and produces a nice embossing effect.
+HELP
+
+    &std_pdb_compat('gegl:bump-map');
+    $date = '2015';
+
+    @inargs = (
+  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+    desc => 'The run mode' },
+  { name => 'image', type => 'image', dead => 1,
+    desc => 'Input image (unused)' },
+  { name => 'drawable', type => 'drawable',
+    desc => 'Input drawable' },
+  { name => 'bumpmap', type => 'drawable',
+    desc => 'Bump map drawable' },
+  { name => 'azimuth', type => '0.0 <= float <= 360.0',
+    desc => 'Azimuth' },
+  { name => 'elevation', type => '0.5 <= float <= 90.0',
+    desc => 'Elevation' },
+  { name => 'depth', type => '1 <= int32 <= 65',
+    desc => 'Depth' },
+  { name => 'xofs', type => 'int32',
+    desc => 'X offset' },
+  { name => 'yofs', type => 'int32',
+    desc => 'Y offset' },
+  { name => 'waterlevel', type => '0.0 <= float <= 1.0',
+    desc => 'Level that full transparency should represent' },
+  { name => 'ambient', type => '0.0 <= float <= 1.0',
+    desc => 'Ambient lighting factor' },
+  { name => 'compensate', type => 'boolean',
+    desc => 'Compensate for darkening' },
+  { name => 'invert', type => 'boolean',
+    desc => 'Invert bumpmap' },
+  { name => 'type', type => '0 <= int32 <= 3',
+    desc => 'Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }' }
+    );
+
+    %invoke = (
+  code => <<'CODE'
+{
+  success = bump_map (drawable,
+                      bumpmap,
+                      azimuth,
+                      elevation,
+                      depth,
+                      xofs,
+                      yofs,
+                      waterlevel,
+                      ambient,
+                      compensate,
+                      invert,
+                      type,
+                      FALSE,
+                      progress,
+                      error);
+}
+CODE
+    );
+}
+
+sub plug_in_bump_map_tiled {
+    $blurb = 'Create an embossing effect using a tiled image as a bump map';
+
+    $help = <<'HELP';
+This plug-in uses the algorithm described by John Schlag,
+"Fast Embossing Effects on Raster Image Data" in
+Graphics GEMS IV (ISBN 0-12-336155-9).
+It takes a drawable to be tiled and applied as a bump map
+to another image and produces a nice embossing effect.
+HELP
+
+    &std_pdb_compat('gegl:bump-map');
+    $date = '2015';
+
+    @inargs = (
+  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+    desc => 'The run mode' },
+  { name => 'image', type => 'image', dead => 1,
+    desc => 'Input image (unused)' },
+  { name => 'drawable', type => 'drawable',
+    desc => 'Input drawable' },
+  { name => 'bumpmap', type => 'drawable',
+    desc => 'Bump map drawable' },
+  { name => 'azimuth', type => '0.0 <= float <= 360.0',
+    desc => 'Azimuth' },
+  { name => 'elevation', type => '0.5 <= float <= 90.0',
+    desc => 'Elevation' },
+  { name => 'depth', type => '1 <= int32 <= 65',
+    desc => 'Depth' },
+  { name => 'xofs', type => 'int32',
+    desc => 'X offset' },
+  { name => 'yofs', type => 'int32',
+    desc => 'Y offset' },
+  { name => 'waterlevel', type => '0.0 <= float <= 1.0',
+    desc => 'Level that full transparency should represent' },
+  { name => 'ambient', type => '0.0 <= float <= 1.0',
+    desc => 'Ambient lighting factor' },
+  { name => 'compensate', type => 'boolean',
+    desc => 'Compensate for darkening' },
+  { name => 'invert', type => 'boolean',
+    desc => 'Invert bumpmap' },
+  { name => 'type', type => '0 <= int32 <= 3',
+    desc => 'Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }' }
+    );
+
+    %invoke = (
+  code => <<'CODE'
+{
+  success = bump_map (drawable,
+                      bumpmap,
+                      azimuth,
+                      elevation,
+                      depth,
+                      xofs,
+                      yofs,
+                      waterlevel,
+                      ambient,
+                      compensate,
+                      invert,
+                      type,
+                      TRUE,
+                      progress,
+                      error);
+}
+CODE
+    );
+}
+
 sub plug_in_c_astretch {
     $blurb = 'Stretch contrast to cover the maximum possible range';
 
@@ -4149,6 +4285,63 @@ create_buffer_source_node (GeglNode     *parent,
 }
 
 static gboolean
+bump_map (GimpDrawable *drawable,
+          GimpDrawable *bump_map,
+          gdouble       azimuth,
+          gdouble       elevation,
+          gint          depth,
+          gint          offset_x,
+          gint          offset_y,
+          gdouble       waterlevel,
+          gdouble       ambient,
+          gboolean      compensate,
+          gboolean      invert,
+          gint          type,
+          gboolean      tiled,
+          GimpProgress  *progress,
+          GError       **error)
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *gegl;
+      GeglNode *node;
+      GeglNode *src_node;
+
+      gegl = gegl_node_new ();
+
+      node = gegl_node_new_child (gegl,
+                                  "operation", "gegl:bump-map",
+                                  "tiled",      tiled,
+                                  "type",       type,
+                                  "compensate", compensate,
+                                  "invert",     invert,
+                                  "azimuth",    azimuth,
+                                  "elevation",  elevation,
+                                  "depth",      depth,
+                                  "offset_x",   offset_x,
+                                  "offset_y",   offset_y,
+                                  "waterlevel", waterlevel,
+                                  "ambient",    ambient,
+                                  NULL);
+
+      src_node = create_buffer_source_node (gegl, bump_map);
+
+      gegl_node_connect_to (src_node, "output", node, "aux");
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Bump Map"),
+                                     node);
+      g_object_unref (gegl);
+
+      return TRUE;
+    }
+    else
+      return FALSE;
+}
+
+static gboolean
 displace (GimpDrawable  *drawable,
           gdouble        amount_x,
           gdouble        amount_y,
@@ -4277,6 +4470,8 @@ CODE
             plug_in_autocrop
             plug_in_autocrop_layer
             plug_in_autostretch_hsv
+            plug_in_bump_map
+            plug_in_bump_map_tiled
             plug_in_c_astretch
             plug_in_colors_channel_mixer
             plug_in_colortoalpha

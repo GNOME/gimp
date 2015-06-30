@@ -5,7 +5,6 @@ blinds_RC = blinds.rc.o
 blur_RC = blur.rc.o
 blur_gauss_selective_RC = blur-gauss-selective.rc.o
 border_average_RC = border-average.rc.o
-bump_map_RC = bump-map.rc.o
 cartoon_RC = cartoon.rc.o
 checkerboard_RC = checkerboard.rc.o
 cml_explorer_RC = cml-explorer.rc.o

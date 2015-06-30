@@ -10,7 +10,6 @@ plug-ins/common/blinds.c
 plug-ins/common/blur.c
 plug-ins/common/blur-gauss-selective.c
 plug-ins/common/border-average.c
-plug-ins/common/bump-map.c
 plug-ins/common/cartoon.c
 plug-ins/common/checkerboard.c
 plug-ins/common/cml-explorer.c

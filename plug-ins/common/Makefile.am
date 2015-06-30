@@ -51,7 +51,6 @@ libexec_PROGRAMS = \
 	blur \
 	blur-gauss-selective \
 	border-average \
-	bump-map \
 	cartoon \
 	checkerboard \
 	cml-explorer \
@@ -292,23 +291,6 @@ border_average_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(border_average_RC)
-
-bump_map_SOURCES = \
-	bump-map.c
-
-bump_map_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(bump_map_RC)
 
 cartoon_SOURCES = \
 	cartoon.c

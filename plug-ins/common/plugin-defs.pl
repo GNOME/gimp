@@ -6,7 +6,6 @@
     'blur' => {},
     'blur-gauss-selective' => { ui => 1, cflags => 'MMX_EXTRA_CFLAGS' },
     'border-average' => { ui => 1, gegl => 1 },
-    'bump-map' => { ui => 1 },
     'cartoon' => { ui => 1 },
     'checkerboard' => { ui => 1 },
     'cml-explorer' => { ui => 1 },
