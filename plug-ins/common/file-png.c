@@ -765,6 +765,7 @@ load_image (const gchar  *filename,
     }
 
   png_init_io (pp, fp);
+  png_set_compression_buffer_size (pp, 512);
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
