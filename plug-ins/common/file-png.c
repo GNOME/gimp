@@ -767,6 +767,7 @@ on_read_error (png_structp     png_ptr,
                          GEGL_RECTANGLE (0, begin, error_data->width, num));
     }
 
+  g_object_unref (error_data->buffer);
   longjmp (png_jmpbuf (png_ptr), 1);
 }
 
@@ -869,6 +870,7 @@ load_image (const gchar  *filename,
     }
 
   png_init_io (pp, fp);
+  png_set_compression_buffer_size (pp, 512);
 
   /*
    * Get the image dimensions and create the image...
