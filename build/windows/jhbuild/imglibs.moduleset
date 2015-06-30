@@ -7,8 +7,8 @@
 		href="http://downloads.sourceforge.net/project/" />
 	<repository type="tarball" name="download.sourceforge.net"
 		href="http://download.sourceforge.net/" />
-	<repository type="tarball" name="webp"
-		href="https://webp.googlecode.com/files/" />
+	<repository type="tarball" name="webmproject.org"
+		href="http://downloads.webmproject.org/releases/" />
 
 	<include href="compresslibs.moduleset"/>
 
@@ -77,9 +77,9 @@
 </autotools>
 
 <autotools id="libwebp" autogen-sh="configure">
-	<branch version="0.4.0" repo="webp"
-			module="libwebp-0.4.0.tar.gz"
-			hash="sha1:326c4b6787a01e5e32a9b30bae76442d18d2d1b6">
+	<branch version="0.4.3" repo="webmproject.org"
+			module="webp/libwebp-0.4.3.tar.gz"
+			hash="sha1:1c307a61c4d0018620b4ba9a58e8f48a8d6640ef">
 	</branch>
 </autotools>
 
