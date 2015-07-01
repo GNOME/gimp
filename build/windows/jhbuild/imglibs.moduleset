@@ -64,9 +64,9 @@
 </metamodule>
 
 <autotools id="libmng" autogen-sh="configure">
-	<branch version="2.0.2" repo="sf.net"
-			module="libmng/libmng-devel/2.0.2/libmng-2.0.2.tar.xz"
-			hash="sha1:7dd35369ff5916e1823cbacef984ab1b87714b69">
+	<branch version="2.0.3" repo="sf.net"
+			module="libmng/libmng-devel/2.0.3/libmng-2.0.3.tar.xz"
+			hash="sha1:0f141482ffcef6f8cd4413f945a59310ac2e49af">
 		<patch file="libmng-no-undefined-makefile-in.patch" strip="1"/>
 	</branch>
 	<dependencies>
