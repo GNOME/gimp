@@ -30,7 +30,6 @@
 
 #include "core/core-enums.h"
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-convert-precision.h"
@@ -44,6 +43,7 @@
 #include "core/gimpimage-rotate.h"
 #include "core/gimpimage-scale.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpitem.h"
 #include "core/gimppickable.h"
 #include "core/gimppickable-auto-shrink.h"
 #include "core/gimpprogress.h"
@@ -529,12 +529,13 @@ image_crop_to_selection_cmd_callback (GtkAction *action,
 {
   GimpImage *image;
   GtkWidget *widget;
-  gint       x1, y1, x2, y2;
+  gint       x, y;
+  gint       width, height;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_channel_bounds (gimp_image_get_mask (image),
-                             &x1, &y1, &x2, &y2))
+  if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                          &x, &y, &width, &height))
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
@@ -543,7 +544,7 @@ image_crop_to_selection_cmd_callback (GtkAction *action,
     }
 
   gimp_image_crop (image, action_data_get_context (data),
-                   x1, y1, x2, y2, TRUE);
+                   x, y, x + width, y + height, TRUE);
   gimp_image_flush (image);
 }
 
