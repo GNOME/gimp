@@ -265,15 +265,14 @@ selection_draw (Selection *selection)
 static void
 selection_undraw (Selection *selection)
 {
-  gint x1, y1, x2, y2;
+  gint x, y, w, h;
 
   selection_stop (selection);
 
-  if (gimp_display_shell_mask_bounds (selection->shell, &x1, &y1, &x2, &y2))
+  if (gimp_display_shell_mask_bounds (selection->shell, &x, &y, &w, &h))
     {
       /* expose will restart the selection */
-      gimp_display_shell_expose_area (selection->shell,
-                                      x1, y1, (x2 - x1), (y2 - y1));
+      gimp_display_shell_expose_area (selection->shell, x, y, w, h);
     }
   else
     {
