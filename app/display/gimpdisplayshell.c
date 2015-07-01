@@ -1761,8 +1761,6 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
   GimpLayer *layer;
   gdouble    x1_f, y1_f;
   gdouble    x2_f, y2_f;
-  gdouble    x3_f, y3_f;
-  gdouble    x4_f, y4_f;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
   g_return_val_if_fail (x1 != NULL, FALSE);
@@ -1802,16 +1800,15 @@ gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
       return FALSE;
     }
 
-  gimp_display_shell_transform_xy_f (shell, *x1, *y1, &x1_f, &y1_f);
-  gimp_display_shell_transform_xy_f (shell, *x1, *y2, &x2_f, &y2_f);
-  gimp_display_shell_transform_xy_f (shell, *x2, *y1, &x3_f, &y3_f);
-  gimp_display_shell_transform_xy_f (shell, *x2, *y2, &x4_f, &y4_f);
+  gimp_display_shell_transform_bounds (shell,
+                                       *x1, *y1, *x2, *y2,
+                                       &x1_f, &y1_f, &x2_f, &y2_f);
 
   /*  Make sure the extents are within bounds  */
-  *x1 = CLAMP (floor (MIN4 (x1_f, x2_f, x3_f, x4_f)), 0, shell->disp_width);
-  *y1 = CLAMP (floor (MIN4 (y1_f, y2_f, y3_f, y4_f)), 0, shell->disp_height);
-  *x2 = CLAMP (ceil (MAX4 (x1_f, x2_f, x3_f, x4_f)),  0, shell->disp_width);
-  *y2 = CLAMP (ceil (MAX4 (y1_f, y2_f, y3_f, y4_f)),  0, shell->disp_height);
+  *x1 = CLAMP (floor (x1_f), 0, shell->disp_width);
+  *y1 = CLAMP (floor (y1_f), 0, shell->disp_height);
+  *x2 = CLAMP (ceil (x2_f),  0, shell->disp_width);
+  *y2 = CLAMP (ceil (y2_f),  0, shell->disp_height);
 
   return ((*x2 - *x1) > 0) && ((*y2 - *y1) > 0);
 }
