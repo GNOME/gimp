@@ -718,10 +718,8 @@ gimp_assert_mainimage (GimpImage *image,
   GimpRGB             expected_channel_color = GIMP_MAINIMAGE_CHANNEL1_COLOR;
   GimpRGB             actual_channel_color   = { 0, };
   GimpChannel        *selection              = NULL;
-  gint                x1                     = -1;
-  gint                y1                     = -1;
-  gint                x2                     = -1;
-  gint                y2                     = -1;
+  gint                x                      = -1;
+  gint                y                      = -1;
   gint                w                      = -1;
   gint                h                      = -1;
   GimpCoords          vectors1_coords[]      = GIMP_MAINIMAGE_VECTORS1_COORDS;
@@ -900,13 +898,11 @@ gimp_assert_mainimage (GimpImage *image,
   if (! with_unusual_stuff)
     {
       selection = gimp_image_get_mask (image);
-      gimp_channel_bounds (selection, &x1, &y1, &x2, &y2);
-      w = x2 - x1;
-      h = y2 - y1;
-      g_assert_cmpint (x1,
+      gimp_item_bounds (GIMP_ITEM (selection), &x, &y, &w, &h);
+      g_assert_cmpint (x,
                        ==,
                        GIMP_MAINIMAGE_SELECTION_X);
-      g_assert_cmpint (y1,
+      g_assert_cmpint (y,
                        ==,
                        GIMP_MAINIMAGE_SELECTION_Y);
       g_assert_cmpint (w,
