@@ -39,6 +39,7 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-sample-points.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-new.h"
 #include "core/gimpsamplepoint.h"
 #include "core/gimpselection.h"
 

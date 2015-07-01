@@ -55,6 +55,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-new.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimptooloptions.h"
 
