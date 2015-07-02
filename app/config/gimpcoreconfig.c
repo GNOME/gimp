@@ -47,7 +47,7 @@
 #define DEFAULT_PALETTE       "Default"
 #define DEFAULT_GRADIENT      "FG to BG (RGB)"
 #define DEFAULT_TOOL_PRESET   "Current Options"
-#define DEFAULT_FONT          "Sans"
+#define DEFAULT_FONT          "Sans-serif"
 #define DEFAULT_MYPAINT_BRUSH "Fixme"
 #define DEFAULT_COMMENT       "Created with GIMP"
 

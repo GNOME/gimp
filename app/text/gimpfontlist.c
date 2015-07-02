@@ -179,7 +179,7 @@ static void
 gimp_font_list_load_aliases (GimpFontList *list,
                              PangoContext *context)
 {
-  const gchar *families[] = { "Sans", "Serif", "Monospace" };
+  const gchar *families[] = { "Sans-serif", "Serif", "Monospace" };
   gint         i;
 
   for (i = 0; i < 3; i++)

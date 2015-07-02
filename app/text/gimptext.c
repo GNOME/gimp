@@ -144,7 +144,7 @@ gimp_text_class_init (GimpTextClass *klass)
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_FONT,
                                    "font", NULL,
-                                   "Sans",
+                                   "Sans-serif",
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_FONT_SIZE,
                                    "font-size", NULL,
