@@ -32,7 +32,6 @@
 
 #include "display-types.h"
 
-#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
@@ -632,33 +631,26 @@ gimp_cursor_view_shell_unit_changed (GimpCursorView   *view,
     }
 }
 
-static void gimp_cursor_view_update_selection_info (GimpCursorView *view,
-                                                    GimpImage      *image,
-                                                    GimpUnit        unit)
+static void
+gimp_cursor_view_update_selection_info (GimpCursorView *view,
+                                        GimpImage      *image,
+                                        GimpUnit        unit)
 {
-  gboolean bounds_exist = FALSE;
-  gint     x1, y1, x2, y2;
+  gint x, y, width, height;
 
-  if (image)
+  if (image &&
+      gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                        &x, &y, &width, &height))
     {
-      bounds_exist = gimp_channel_bounds (gimp_image_get_mask (image), &x1, &y1, &x2, &y2);
-    }
-
-  if (bounds_exist)
-    {
-      gint    width, height;
       gdouble xres, yres;
       gchar   buf[32];
 
-      width  = x2 - x1;
-      height = y2 - y1;
-
       gimp_image_get_resolution (image, &xres, &yres);
 
-      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), x1, xres);
+      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), x, xres);
       gtk_label_set_text (GTK_LABEL (view->priv->selection_x_label), buf);
 
-      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), y1, yres);
+      gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), y, yres);
       gtk_label_set_text (GTK_LABEL (view->priv->selection_y_label), buf);
 
       gimp_cursor_view_format_as_unit (unit, buf, sizeof (buf), width, xres);
@@ -669,10 +661,14 @@ static void gimp_cursor_view_update_selection_info (GimpCursorView *view,
     }
   else
     {
-      gtk_label_set_text (GTK_LABEL (view->priv->selection_x_label),      _("n/a"));
-      gtk_label_set_text (GTK_LABEL (view->priv->selection_y_label),      _("n/a"));
-      gtk_label_set_text (GTK_LABEL (view->priv->selection_width_label),  _("n/a"));
-      gtk_label_set_text (GTK_LABEL (view->priv->selection_height_label), _("n/a"));
+      gtk_label_set_text (GTK_LABEL (view->priv->selection_x_label),
+                          _("n/a"));
+      gtk_label_set_text (GTK_LABEL (view->priv->selection_y_label),
+                          _("n/a"));
+      gtk_label_set_text (GTK_LABEL (view->priv->selection_width_label),
+                          _("n/a"));
+      gtk_label_set_text (GTK_LABEL (view->priv->selection_height_label),
+                          _("n/a"));
     }
 }
 
