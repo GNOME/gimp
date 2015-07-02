@@ -320,76 +320,29 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
 
       case GIMP_TRANSLATE_MODE_LAYER:
       case GIMP_TRANSLATE_MODE_FLOATING_SEL:
-        gimp_item_bounds (active_item, &x, &y, &w, &h);
-        x += off_x;
-        y += off_y;
-
-        if (gimp_item_get_linked (active_item))
-          {
-            /*  Expand the rectangle to include all linked layers as well  */
-
-            GList *linked;
-            GList *list;
-
-            linked = gimp_image_item_list_get_list (image,
-                                                    GIMP_ITEM_TYPE_LAYERS,
-                                                    GIMP_ITEM_SET_LINKED);
-            linked = gimp_image_item_list_filter (linked);
-
-            for (list = linked; list; list = g_list_next (list))
-              {
-                GimpItem *item = list->data;
-                gint      x2, y2, w2, h2;
-                gint      off_x2, off_y2;
-
-                gimp_item_bounds (item, &x2, &y2, &w2, &h2);
-                gimp_item_get_offset (item, &off_x2, &off_y2);
-                x2 += off_x2;
-                y2 += off_y2;
-
-                gimp_rectangle_union (x, y, w, h,
-                                      x2, y2, w2, h2,
-                                      &x, &y, &w, &h);
-              }
-
-            g_list_free (linked);
-          }
-        break;
-
       case GIMP_TRANSLATE_MODE_VECTORS:
-        gimp_item_bounds (active_item, &x, &y, &w, &h);
-        x += off_x;
-        y += off_y;
-
         if (gimp_item_get_linked (active_item))
           {
-            /*  Expand the rectangle to include all linked vectors as well  */
-
             GList *linked;
-            GList *list;
 
             linked = gimp_image_item_list_get_list (image,
+                                                    GIMP_IS_LAYER (active_item) ?
+                                                    GIMP_ITEM_TYPE_LAYERS :
                                                     GIMP_ITEM_TYPE_VECTORS,
                                                     GIMP_ITEM_SET_LINKED);
             linked = gimp_image_item_list_filter (linked);
 
-            for (list = linked; list; list = g_list_next (list))
-              {
-                GimpItem *item = list->data;
-                gint      x2, y2, w2, h2;
-                gint      off_x2, off_y2;
+            gimp_image_item_list_bounds (image, linked, &x, &y, &w, &h);
 
-                gimp_item_bounds (item, &x2, &y2, &w2, &h2);
-                gimp_item_get_offset (item, &off_x2, &off_y2);
-                x2 += off_x2;
-                y2 += off_y2;
-
-                gimp_rectangle_union (x, y, w, h,
-                                      x2, y2, w2, h2,
-                                      &x, &y, &w, &h);
-              }
+            g_list_free (linked);
           }
-        break;
+        else
+          {
+            gimp_item_bounds (active_item, &x, &y, &w, &h);
+            x += off_x;
+            y += off_y;
+          }
+       break;
       }
 
     gimp_tool_control_set_snap_offsets (tool->control,
@@ -707,8 +660,12 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
   GimpDisplay           *display     = GIMP_TOOL (draw_tool)->display;
   GimpImage             *image       = gimp_display_get_image (display);
   GimpItem              *active_item;
+  gint                   off_x;
+  gint                   off_y;
 
   active_item = gimp_edit_selection_tool_get_active_item (edit_select, image);
+
+  gimp_item_get_offset (active_item, &off_x, &off_y);
 
   switch (edit_select->edit_mode)
     {
@@ -717,10 +674,6 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
     case GIMP_TRANSLATE_MODE_MASK:
       {
         gboolean floating_sel = FALSE;
-        gint     off_x;
-        gint     off_y;
-
-        gimp_item_get_offset (active_item, &off_x, &off_y);
 
         if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_MASK)
           {
@@ -763,106 +716,39 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
 
     case GIMP_TRANSLATE_MODE_MASK_TO_LAYER:
     case GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER:
-      {
-        gint off_x;
-        gint off_y;
-
-        gimp_item_get_offset (active_item, &off_x, &off_y);
-
-        gimp_draw_tool_add_rectangle (draw_tool,
-                                      FALSE,
-                                      edit_select->x1 + off_x,
-                                      edit_select->y1 + off_y,
-                                      edit_select->x2 - edit_select->x1,
-                                      edit_select->y2 - edit_select->y1);
-      }
+      gimp_draw_tool_add_rectangle (draw_tool,
+                                    FALSE,
+                                    edit_select->x1 + off_x,
+                                    edit_select->y1 + off_y,
+                                    edit_select->x2 - edit_select->x1,
+                                    edit_select->y2 - edit_select->y1);
       break;
 
     case GIMP_TRANSLATE_MODE_LAYER:
-      {
-        gint x, y, w, h;
-        gint off_x, off_y;
-
-        gimp_item_bounds (active_item, &x, &y, &w, &h);
-        gimp_item_get_offset (active_item, &off_x, &off_y);
-        x += off_x;
-        y += off_y;
-
-        if (gimp_item_get_linked (active_item))
-          {
-            /*  Expand the rectangle to include all linked layers as well  */
-
-            GList *linked;
-            GList *list;
-
-            linked = gimp_image_item_list_get_list (image,
-                                                    GIMP_ITEM_TYPE_LAYERS,
-                                                    GIMP_ITEM_SET_LINKED);
-            linked = gimp_image_item_list_filter (linked);
-
-            for (list = linked; list; list = g_list_next (list))
-              {
-                GimpItem *item = list->data;
-                gint      x2, y2, w2, h2;
-                gint      off_x2, off_y2;
-
-                gimp_item_bounds (item, &x2, &y2, &w2, &h2);
-                gimp_item_get_offset (item, &off_x2, &off_y2);
-                x2 += off_x2;
-                y2 += off_y2;
-
-                gimp_rectangle_union (x, y, w, h,
-                                      x2, y2, w2, h2,
-                                      &x, &y, &w, &h);
-              }
-
-            g_list_free (linked);
-          }
-
-        gimp_draw_tool_add_rectangle (draw_tool, FALSE,
-                                      x, y, w, h);
-      }
-      break;
-
     case GIMP_TRANSLATE_MODE_VECTORS:
       {
         gint x, y, w, h;
-        gint off_x, off_y;
-
-        gimp_item_bounds (active_item, &x, &y, &w, &h);
-        gimp_item_get_offset (active_item, &off_x, &off_y);
-        x += off_x;
-        y += off_y;
 
         if (gimp_item_get_linked (active_item))
           {
-            /*  Expand the rectangle to include all linked vectors as well  */
-
             GList *linked;
-            GList *list;
 
             linked = gimp_image_item_list_get_list (image,
+                                                    GIMP_IS_LAYER (active_item) ?
+                                                    GIMP_ITEM_TYPE_LAYERS :
                                                     GIMP_ITEM_TYPE_VECTORS,
                                                     GIMP_ITEM_SET_LINKED);
             linked = gimp_image_item_list_filter (linked);
 
-            for (list = linked; list; list = g_list_next (list))
-              {
-                GimpItem *item = list->data;
-                gint      x2, y2, w2, h2;
-                gint      off_x2, off_y2;
-
-                gimp_item_bounds (item, &x2, &y2, &w2, &h2);
-                gimp_item_get_offset (item, &off_x2, &off_y2);
-                x2 += off_x2;
-                y2 += off_y2;
-
-                gimp_rectangle_union (x, y, w, h,
-                                      x2, y2, w2, h2,
-                                      &x, &y, &w, &h);
-              }
+            gimp_image_item_list_bounds (image, linked, &x, &y, &w, &h);
 
             g_list_free (linked);
+          }
+        else
+          {
+            gimp_item_bounds (active_item, &x, &y, &w, &h);
+            x += off_x;
+            y += off_y;
           }
 
         gimp_draw_tool_add_rectangle (draw_tool, FALSE,
