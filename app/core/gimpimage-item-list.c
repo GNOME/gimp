@@ -20,6 +20,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "gimpcontext.h"
@@ -33,6 +35,65 @@
 
 
 /*  public functions  */
+
+gboolean
+gimp_image_item_list_bounds (GimpImage *image,
+                             GList     *list,
+                             gint      *x,
+                             gint      *y,
+                             gint      *width,
+                             gint      *height)
+{
+  GList    *l;
+  gboolean  bounds = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (x != 0, FALSE);
+  g_return_val_if_fail (y != 0, FALSE);
+  g_return_val_if_fail (width != 0, FALSE);
+  g_return_val_if_fail (height != 0, FALSE);
+
+  for (l = list; l; l = g_list_next (l))
+    {
+      GimpItem *item = l->data;
+      gint      tmp_x, tmp_y;
+      gint      tmp_w, tmp_h;
+
+      if (gimp_item_bounds (item, &tmp_x, &tmp_y, &tmp_w, &tmp_h))
+        {
+          gint off_x, off_y;
+
+          gimp_item_get_offset (item, &off_x, &off_y);
+
+          if (bounds)
+            {
+              gimp_rectangle_union (*x, *y, *width, *height,
+                                    tmp_x + off_x, tmp_y + off_y,
+                                    tmp_w, tmp_h,
+                                    x, y, width, height);
+            }
+          else
+            {
+              *x      = tmp_x + off_x;
+              *y      = tmp_y + off_y;
+              *width  = tmp_w;
+              *height = tmp_h;
+
+              bounds = TRUE;
+            }
+        }
+    }
+
+  if (! bounds)
+    {
+      *x      = 0;
+      *y      = 0;
+      *width  = gimp_image_get_width  (image);
+      *height = gimp_image_get_height (image);
+    }
+
+  return bounds;
+}
 
 void
 gimp_image_item_list_translate (GimpImage *image,
