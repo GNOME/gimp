@@ -682,11 +682,17 @@ gimp_selection_extract (GimpSelection *selection,
    *  actual selection mask
    */
   if (GIMP_IS_DRAWABLE (pickable))
-    non_empty = gimp_item_mask_bounds (GIMP_ITEM (pickable),
-                                       &x1, &y1, &x2, &y2);
+    {
+      non_empty = gimp_item_mask_bounds (GIMP_ITEM (pickable),
+                                         &x1, &y1, &x2, &y2);
+    }
   else
-    non_empty = gimp_channel_bounds (GIMP_CHANNEL (selection),
-                                     &x1, &y1, &x2, &y2);
+    {
+      non_empty = gimp_item_bounds (GIMP_ITEM (selection),
+                                    &x1, &y1, &x2, &y2);
+      x2 += x1;
+      y2 += y1;
+    }
 
   if (non_empty && ((x1 == x2) || (y1 == y2)))
     {

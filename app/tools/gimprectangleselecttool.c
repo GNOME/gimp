@@ -759,15 +759,15 @@ gimp_rectangle_select_tool_execute (GimpRectangleTool *rectangle,
       if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
                                         pressx, pressy) > 0.5)
         {
-          gint x1, y1, x2, y2;
+          gint x, y, w, h;
 
-          if (gimp_channel_bounds (selection, &x1, &y1, &x2, &y2))
+          if (gimp_item_bounds (GIMP_ITEM (selection), &x, &y, &w, &h))
             {
               g_object_set (rectangle,
-                            "x1", x1,
-                            "y1", y1,
-                            "x2", x2,
-                            "y2", y2,
+                            "x1", x,
+                            "y1", y,
+                            "x2", x + w,
+                            "y2", y + h,
                             NULL);
             }
 
