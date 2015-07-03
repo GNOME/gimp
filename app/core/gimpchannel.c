@@ -77,7 +77,7 @@ static GeglNode * gimp_channel_get_node      (GimpFilter        *filter);
 
 static gboolean   gimp_channel_is_attached   (const GimpItem    *item);
 static GimpItemTree * gimp_channel_get_tree  (GimpItem          *item);
-static gboolean   gimp_channel_item_bounds   (GimpItem          *item,
+static gboolean   gimp_channel_bounds        (GimpItem          *item,
                                               gdouble           *x,
                                               gdouble           *y,
                                               gdouble           *width,
@@ -192,11 +192,6 @@ static gboolean   gimp_channel_real_boundary (GimpChannel         *channel,
                                               gint                 y1,
                                               gint                 x2,
                                               gint                 y2);
-static gboolean   gimp_channel_real_bounds   (GimpChannel         *channel,
-                                              gint                *x1,
-                                              gint                *y1,
-                                              gint                *x2,
-                                              gint                *y2);
 static gboolean   gimp_channel_real_is_empty (GimpChannel         *channel);
 static void       gimp_channel_real_feather  (GimpChannel         *channel,
                                               gdouble              radius_x,
@@ -267,7 +262,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   item_class->is_attached          = gimp_channel_is_attached;
   item_class->get_tree             = gimp_channel_get_tree;
-  item_class->bounds               = gimp_channel_item_bounds;
+  item_class->bounds               = gimp_channel_bounds;
   item_class->duplicate            = gimp_channel_duplicate;
   item_class->convert              = gimp_channel_convert;
   item_class->translate            = gimp_channel_translate;
@@ -306,7 +301,6 @@ gimp_channel_class_init (GimpChannelClass *klass)
   drawable_class->swap_pixels           = gimp_channel_swap_pixels;
 
   klass->boundary       = gimp_channel_real_boundary;
-  klass->bounds         = gimp_channel_real_bounds;
   klass->is_empty       = gimp_channel_real_is_empty;
   klass->feather        = gimp_channel_real_feather;
   klass->sharpen        = gimp_channel_real_sharpen;
@@ -488,23 +482,33 @@ gimp_channel_get_tree (GimpItem *item)
 }
 
 static gboolean
-gimp_channel_item_bounds (GimpItem *item,
-                          gdouble  *x,
-                          gdouble  *y,
-                          gdouble  *width,
-                          gdouble  *height)
+gimp_channel_bounds (GimpItem *item,
+                     gdouble  *x,
+                     gdouble  *y,
+                     gdouble  *width,
+                     gdouble  *height)
 {
-  gint    x1, y1, x2, y2;
-  gdouble retval;
+  GimpChannel *channel = GIMP_CHANNEL (item);
 
-  retval = gimp_channel_bounds (GIMP_CHANNEL (item), &x1, &y1, &x2, &y2);
+  if (! channel->bounds_known)
+    {
+      GeglBuffer *buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
-  *x      = x1;
-  *y      = y1;
-  *width  = x2 - x1;
-  *height = y2 - y1;
+      channel->empty = ! gimp_gegl_mask_bounds (buffer,
+                                                &channel->x1,
+                                                &channel->y1,
+                                                &channel->x2,
+                                                &channel->y2);
 
-  return retval;
+      channel->bounds_known = TRUE;
+    }
+
+  *x      = channel->x1;
+  *y      = channel->y1;
+  *width  = channel->x2 - channel->x1;
+  *height = channel->y2 - channel->y1;
+
+  return ! channel->empty;
 }
 
 static GimpItem *
@@ -608,7 +612,9 @@ gimp_channel_translate (GimpItem *item,
   gint         width, height;
   gint         x1, y1, x2, y2;
 
-  gimp_channel_bounds (channel, &x1, &y1, &x2, &y2);
+  gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2);
+  x2 += x1;
+  y2 += y1;
 
   /*  update the old area  */
   gimp_drawable_update (GIMP_DRAWABLE (item), x1, y1, x2 - x1, y2 - y1);
@@ -1082,10 +1088,13 @@ gimp_channel_real_boundary (GimpChannel         *channel,
       g_free (channel->segs_in);
       g_free (channel->segs_out);
 
-      if (gimp_channel_bounds (channel, &x3, &y3, &x4, &y4))
+      if (gimp_item_bounds (GIMP_ITEM (channel), &x3, &y3, &x4, &y4))
         {
-          GeglBuffer *buffer;
-          GeglRectangle  rect = { x3, y3, x4 - x3, y4 - y3 };
+          GeglBuffer    *buffer;
+          GeglRectangle  rect = { x3, y3, x4, y4 };
+
+          x4 += x3;
+          y4 += y3;
 
           buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
 
@@ -1135,40 +1144,6 @@ gimp_channel_real_boundary (GimpChannel         *channel,
 }
 
 static gboolean
-gimp_channel_real_bounds (GimpChannel *channel,
-                          gint        *x1,
-                          gint        *y1,
-                          gint        *x2,
-                          gint        *y2)
-{
-  GeglBuffer *buffer;
-
-  /*  if the channel's bounds have already been reliably calculated...  */
-  if (channel->bounds_known)
-    {
-      *x1 = channel->x1;
-      *y1 = channel->y1;
-      *x2 = channel->x2;
-      *y2 = channel->y2;
-
-      return ! channel->empty;
-    }
-
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
-
-  channel->empty = ! gimp_gegl_mask_bounds (buffer, x1, y1, x2, y2);
-
-  channel->x1 = *x1;
-  channel->y1 = *y1;
-  channel->x2 = *x2;
-  channel->y2 = *y2;
-
-  channel->bounds_known = TRUE;
-
-  return ! channel->empty;
-}
-
-static gboolean
 gimp_channel_real_is_empty (GimpChannel *channel)
 {
   GeglBuffer *buffer;
@@ -1213,8 +1188,11 @@ gimp_channel_real_feather (GimpChannel *channel,
   if (radius_x <= 0.0 && radius_y <= 0.0)
     return;
 
-  if (! gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
+  if (! gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2))
     return;
+
+  x2 += x1;
+  y2 += y1;
 
   if (gimp_channel_is_empty (channel))
     return;
@@ -1386,8 +1364,11 @@ gimp_channel_real_border (GimpChannel *channel,
   if (radius_x < 0 || radius_y < 0)
     return;
 
-  if (! gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
+  if (! gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2))
     return;
+
+  x2 += x1;
+  y2 += y1;
 
   if (gimp_channel_is_empty (channel))
     return;
@@ -1451,8 +1432,11 @@ gimp_channel_real_grow (GimpChannel *channel,
   if (radius_x < 0 || radius_y < 0)
     return;
 
-  if (! gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
+  if (! gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2))
     return;
+
+  x2 += x1;
+  y2 += y1;
 
   if (gimp_channel_is_empty (channel))
     return;
@@ -1517,8 +1501,11 @@ gimp_channel_real_shrink (GimpChannel *channel,
   if (radius_x < 0 || radius_y < 0)
     return;
 
-  if (! gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
+  if (! gimp_item_bounds (GIMP_ITEM (channel), &x1, &y1, &x2, &y2))
     return;
+
+  x2 += x1;
+  y2 += y1;
 
   if (gimp_channel_is_empty (channel))
     return;
@@ -1888,30 +1875,6 @@ gimp_channel_boundary (GimpChannel         *channel,
                                                      num_segs_in, num_segs_out,
                                                      x1, y1,
                                                      x2, y2);
-}
-
-gboolean
-gimp_channel_bounds (GimpChannel *channel,
-                     gint        *x1,
-                     gint        *y1,
-                     gint        *x2,
-                     gint        *y2)
-{
-  gint     tmp_x1, tmp_y1, tmp_x2, tmp_y2;
-  gboolean retval;
-
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
-
-  retval = GIMP_CHANNEL_GET_CLASS (channel)->bounds (channel,
-                                                     &tmp_x1, &tmp_y1,
-                                                     &tmp_x2, &tmp_y2);
-
-  if (x1) *x1 = tmp_x1;
-  if (y1) *y1 = tmp_y1;
-  if (x2) *x2 = tmp_x2;
-  if (y2) *y2 = tmp_y2;
-
-  return retval;
 }
 
 gboolean
