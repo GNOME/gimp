@@ -529,13 +529,12 @@ image_crop_to_selection_cmd_callback (GtkAction *action,
 {
   GimpImage *image;
   GtkWidget *widget;
-  gint       x, y;
-  gint       width, height;
+  gint       x, y, w, h;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
   if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
-                          &x, &y, &width, &height))
+                          &x, &y, &w, &h))
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
@@ -544,7 +543,7 @@ image_crop_to_selection_cmd_callback (GtkAction *action,
     }
 
   gimp_image_crop (image, action_data_get_context (data),
-                   x, y, x + width, y + height, TRUE);
+                   x, y, w, h, TRUE);
   gimp_image_flush (image);
 }
 
@@ -566,7 +565,7 @@ image_crop_to_content_cmd_callback (GtkAction *action,
     {
     case GIMP_AUTO_SHRINK_SHRINK:
       gimp_image_crop (image, action_data_get_context (data),
-                       x1, y1, x2, y2, TRUE);
+                       x1, y1, x2 - x1, y2 - y1, TRUE);
       gimp_image_flush (image);
       break;
 

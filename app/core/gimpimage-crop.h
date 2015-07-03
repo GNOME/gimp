@@ -21,10 +21,10 @@
 
 void   gimp_image_crop (GimpImage   *image,
                         GimpContext *context,
-                        gint         x1,
-                        gint         y1,
-                        gint         x2,
-                        gint         y2,
+                        gint         x,
+                        gint         y,
+                        gint         width,
+                        gint         height,
                         gboolean     crop_layers);
 
 

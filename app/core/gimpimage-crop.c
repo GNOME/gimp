@@ -42,24 +42,21 @@
 void
 gimp_image_crop (GimpImage   *image,
                  GimpContext *context,
-                 gint         x1,
-                 gint         y1,
-                 gint         x2,
-                 gint         y2,
+                 gint         x,
+                 gint         y,
+                 gint         width,
+                 gint         height,
                  gboolean     crop_layers)
 {
   GList *list;
-  gint   width, height;
-  gint   previous_width, previous_height;
+  gint   previous_width;
+  gint   previous_height;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  previous_width  = gimp_image_get_width (image);
+  previous_width  = gimp_image_get_width  (image);
   previous_height = gimp_image_get_height (image);
-
-  width  = x2 - x1;
-  height = y2 - y1;
 
   /*  Make sure new width and height are non-zero  */
   if (width < 1 || height < 1)
@@ -78,7 +75,7 @@ gimp_image_crop (GimpImage   *image,
 
   /*  Push the image size to the stack  */
   gimp_image_undo_push_image_size (image, NULL,
-                                   x1, y1, width, height);
+                                   x, y, width, height);
 
   /*  Set the new width and height  */
   g_object_set (image,
@@ -93,7 +90,7 @@ gimp_image_crop (GimpImage   *image,
     {
       GimpItem *item = list->data;
 
-      gimp_item_resize (item, context, width, height, -x1, -y1);
+      gimp_item_resize (item, context, width, height, -x, -y);
     }
 
   /*  Resize all vectors  */
@@ -103,12 +100,12 @@ gimp_image_crop (GimpImage   *image,
     {
       GimpItem *item = list->data;
 
-      gimp_item_resize (item, context, width, height, -x1, -y1);
+      gimp_item_resize (item, context, width, height, -x, -y);
     }
 
   /*  Don't forget the selection mask!  */
   gimp_item_resize (GIMP_ITEM (gimp_image_get_mask (image)), context,
-                    width, height, -x1, -y1);
+                    width, height, -x, -y);
 
   /*  crop all layers  */
   list = gimp_image_get_layer_iter (image);
@@ -119,7 +116,7 @@ gimp_image_crop (GimpImage   *image,
 
       list = g_list_next (list);
 
-      gimp_item_translate (item, -x1, -y1, TRUE);
+      gimp_item_translate (item, -x, -y, TRUE);
 
       if (crop_layers)
         {
@@ -166,17 +163,17 @@ gimp_image_crop (GimpImage   *image,
       switch (gimp_guide_get_orientation (guide))
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          if ((position < y1) || (position > y2))
+          if ((position < y) || (position > (y + height)))
             remove_guide = TRUE;
           else
-            position -= y1;
+            position -= y;
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-          if ((position < x1) || (position > x2))
+          if ((position < x) || (position > (x + width)))
             remove_guide = TRUE;
           else
-            position -= x1;
+            position -= x;
           break;
 
         default:
@@ -201,12 +198,12 @@ gimp_image_crop (GimpImage   *image,
 
       list = g_list_next (list);
 
-      new_y -= y1;
-      if ((sample_point->y < y1) || (sample_point->y > y2))
+      new_y -= y;
+      if ((sample_point->y < y) || (sample_point->y > (y + height)))
         remove_sample_point = TRUE;
 
-      new_x -= x1;
-      if ((sample_point->x < x1) || (sample_point->x > x2))
+      new_x -= x;
+      if ((sample_point->x < x) || (sample_point->x > (x + width)))
         remove_sample_point = TRUE;
 
       if (remove_sample_point)
@@ -219,7 +216,7 @@ gimp_image_crop (GimpImage   *image,
   gimp_image_undo_group_end (image);
 
   gimp_image_size_changed_detailed (image,
-                                    -x1, -y1,
+                                    -x, -y,
                                     previous_width, previous_height);
 
   g_object_thaw_notify (G_OBJECT (image));

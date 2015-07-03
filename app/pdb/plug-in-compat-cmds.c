@@ -611,7 +611,7 @@ plug_in_autocrop_invoker (GimpProcedure         *procedure,
             }
 
           gimp_image_crop (image, context,
-                           x1, y1, x2, y2, TRUE);
+                           x1, y1, x2 - x1, y2 - y1, TRUE);
 
           gimp_image_undo_group_end (image);
         }
