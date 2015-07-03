@@ -103,6 +103,12 @@ gimp_pickable_auto_shrink (GimpPickable *pickable,
   x2 = MIN (start_x2, gegl_buffer_get_width  (buffer));
   y2 = MIN (start_y2, gegl_buffer_get_height (buffer));
 
+  /* By default, return the start values */
+  *shrunk_x1 = x1;
+  *shrunk_y1 = y1;
+  *shrunk_x2 = x2;
+  *shrunk_y2 = y2;
+
   format = babl_format ("R'G'B'A u8");
 
   switch (gimp_pickable_guess_bgcolor (pickable, bgcolor,
