@@ -105,6 +105,8 @@ struct _GimpEditSelectionToolClass
 };
 
 
+static void       gimp_edit_selection_tool_finalize            (GObject               *object);
+
 static void       gimp_edit_selection_tool_button_release      (GimpTool              *tool,
                                                                 const GimpCoords      *coords,
                                                                 guint32                time,
@@ -136,8 +138,11 @@ G_DEFINE_TYPE (GimpEditSelectionTool, gimp_edit_selection_tool,
 static void
 gimp_edit_selection_tool_class_init (GimpEditSelectionToolClass *klass)
 {
+  GObjectClass      *object_class = G_OBJECT_CLASS (klass);
   GimpToolClass     *tool_class   = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
+
+  object_class->finalize          = gimp_edit_selection_tool_finalize;
 
   tool_class->button_release      = gimp_edit_selection_tool_button_release;
   tool_class->motion              = gimp_edit_selection_tool_motion;
@@ -150,6 +155,40 @@ static void
 gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_select)
 {
   edit_select->first_move = TRUE;
+}
+
+static void
+gimp_edit_selection_tool_finalize (GObject *object)
+{
+  GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (object);
+
+  if (edit_select->segs_in)
+    {
+      g_free (edit_select->segs_in);
+      edit_select->segs_in     = NULL;
+      edit_select->num_segs_in = 0;
+    }
+
+  if (edit_select->segs_out)
+    {
+      g_free (edit_select->segs_out);
+      edit_select->segs_out     = NULL;
+      edit_select->num_segs_out = 0;
+    }
+
+  if (edit_select->live_items)
+    {
+      g_list_free (edit_select->live_items);
+      edit_select->live_items = NULL;
+    }
+
+  if (edit_select->delayed_items)
+    {
+      g_list_free (edit_select->delayed_items);
+      edit_select->delayed_items = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -528,20 +567,6 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
     }
 
   gimp_image_flush (image);
-
-  g_free (edit_select->segs_in);
-  g_free (edit_select->segs_out);
-
-  edit_select->segs_in      = NULL;
-  edit_select->segs_out     = NULL;
-  edit_select->num_segs_in  = 0;
-  edit_select->num_segs_out = 0;
-
-  g_list_free (edit_select->live_items);
-  g_list_free (edit_select->delayed_items);
-
-  edit_select->live_items    = NULL;
-  edit_select->delayed_items = NULL;
 
   if (edit_select->propagate_release &&
       tool_manager_get_active (display->gimp))
