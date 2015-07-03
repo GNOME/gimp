@@ -38,6 +38,7 @@
 #include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-crop.h"
+#include "core/gimpimage-resize.h"
 #include "core/gimpimage-rotate.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage.h"
@@ -576,35 +577,43 @@ plug_in_autocrop_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error))
         {
           gint x1, y1, x2, y2;
+          gint off_x, off_y;
 
-          switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
-                                             0, 0,
-                                             gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                             gimp_item_get_height (GIMP_ITEM (drawable)),
-                                             &x1, &y1, &x2, &y2))
+          gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+                                     0, 0,
+                                     gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                     gimp_item_get_height (GIMP_ITEM (drawable)),
+                                     &x1, &y1, &x2, &y2);
+
+          gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+          x1 += off_x; x2 += off_x;
+          y1 += off_y; y2 += off_y;
+
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                                       _("Autocrop image"));
+
+          if (x1 < 0 || y1 < 0 ||
+              x2 > gimp_image_get_width  (image) ||
+              y2 > gimp_image_get_height (image))
             {
-            case GIMP_AUTO_SHRINK_SHRINK:
-              {
-                gint off_x, off_y;
+              /*
+               * partially outside the image area, we need to
+               * resize the image to be able to crop properly.
+               */
+              gimp_image_resize (image, context,
+                                 x2 - x1, y2 - y1, -x1, -y1, NULL);
 
-                gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+              x2 -= x1;
+              y2 -= y1;
 
-                x1 += off_x; x2 += off_x;
-                y1 += off_y; y2 += off_y;
-
-                gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                                             _("Autocrop image"));
-
-                gimp_image_crop (image, context,
-                                 x2 - x1, y2 - y1, -x1, -y1, TRUE);
-
-                gimp_image_undo_group_end (image);
-              }
-              break;
-
-            default:
-              break;
+              x1 = y1 = 0;
             }
+
+          gimp_image_crop (image, context,
+                           x1, y1, x2, y2, TRUE);
+
+          gimp_image_undo_group_end (image);
         }
       else
         success = FALSE;
