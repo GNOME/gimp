@@ -128,6 +128,11 @@ static void       gimp_edit_selection_tool_draw                (GimpDrawTool    
 
 static GimpItem * gimp_edit_selection_tool_get_active_item     (GimpEditSelectionTool *edit_select,
                                                                 GimpImage             *image);
+static void       gimp_edit_selection_tool_calc_coords         (GimpEditSelectionTool *edit_select,
+                                                                gdouble                x,
+                                                                gdouble                y);
+static void       gimp_edit_selection_tool_start_undo_group    (GimpEditSelectionTool *edit_select,
+                                                                GimpImage             *image);
 
 
 G_DEFINE_TYPE (GimpEditSelectionTool, gimp_edit_selection_tool,
@@ -196,24 +201,6 @@ gimp_edit_selection_tool_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void
-gimp_edit_selection_tool_calc_coords (GimpEditSelectionTool *edit_select,
-                                      gdouble                x,
-                                      gdouble                y)
-{
-  gdouble x1, y1;
-  gdouble dx, dy;
-
-  dx = x - edit_select->origx;
-  dy = y - edit_select->origy;
-
-  x1 = edit_select->x1 + dx;
-  y1 = edit_select->y1 + dy;
-
-  edit_select->x = (gint) floor (x1) - (edit_select->x1 - edit_select->origx);
-  edit_select->y = (gint) floor (y1) - (edit_select->y1 - edit_select->origy);
-}
-
 void
 gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                                 GimpDisplay       *display,
@@ -230,7 +217,6 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   gint                   off_x, off_y;
   const BoundSeg        *segs_in;
   const BoundSeg        *segs_out;
-  const gchar           *undo_desc = NULL;
 
   edit_select = g_object_new (GIMP_TYPE_EDIT_SELECTION_TOOL,
                               "tool-info", parent_tool->tool_info,
@@ -263,32 +249,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
 
   active_item = gimp_edit_selection_tool_get_active_item (edit_select, image);
 
-  switch (edit_select->edit_mode)
-    {
-    case GIMP_TRANSLATE_MODE_VECTORS:
-    case GIMP_TRANSLATE_MODE_CHANNEL:
-    case GIMP_TRANSLATE_MODE_LAYER_MASK:
-    case GIMP_TRANSLATE_MODE_MASK:
-    case GIMP_TRANSLATE_MODE_LAYER:
-      undo_desc = GIMP_ITEM_GET_CLASS (active_item)->translate_desc;
-      break;
-
-    case GIMP_TRANSLATE_MODE_MASK_TO_LAYER:
-    case GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER:
-    case GIMP_TRANSLATE_MODE_FLOATING_SEL:
-      undo_desc = _("Move Floating Selection");
-      break;
-
-    default:
-      g_return_if_reached ();
-    }
-
-  gimp_image_undo_group_start (image,
-                               edit_select->edit_mode ==
-                               GIMP_TRANSLATE_MODE_MASK ?
-                               GIMP_UNDO_GROUP_MASK :
-                               GIMP_UNDO_GROUP_ITEM_DISPLACE,
-                               undo_desc);
+  gimp_edit_selection_tool_start_undo_group (edit_select, image);
 
   gimp_item_get_offset (active_item, &off_x, &off_y);
 
@@ -976,6 +937,61 @@ gimp_edit_selection_tool_get_active_item (GimpEditSelectionTool *edit_select,
     }
 
   return active_item;
+}
+
+static void
+gimp_edit_selection_tool_calc_coords (GimpEditSelectionTool *edit_select,
+                                      gdouble                x,
+                                      gdouble                y)
+{
+  gdouble x1, y1;
+  gdouble dx, dy;
+
+  dx = x - edit_select->origx;
+  dy = y - edit_select->origy;
+
+  x1 = edit_select->x1 + dx;
+  y1 = edit_select->y1 + dy;
+
+  edit_select->x = (gint) floor (x1) - (edit_select->x1 - edit_select->origx);
+  edit_select->y = (gint) floor (y1) - (edit_select->y1 - edit_select->origy);
+}
+
+static void
+gimp_edit_selection_tool_start_undo_group (GimpEditSelectionTool *edit_select,
+                                           GimpImage             *image)
+{
+  GimpItem    *active_item;
+  const gchar *undo_desc = NULL;
+
+  active_item = gimp_edit_selection_tool_get_active_item (edit_select, image);
+
+  switch (edit_select->edit_mode)
+    {
+    case GIMP_TRANSLATE_MODE_VECTORS:
+    case GIMP_TRANSLATE_MODE_CHANNEL:
+    case GIMP_TRANSLATE_MODE_LAYER_MASK:
+    case GIMP_TRANSLATE_MODE_MASK:
+    case GIMP_TRANSLATE_MODE_LAYER:
+      undo_desc = GIMP_ITEM_GET_CLASS (active_item)->translate_desc;
+      break;
+
+    case GIMP_TRANSLATE_MODE_MASK_TO_LAYER:
+    case GIMP_TRANSLATE_MODE_MASK_COPY_TO_LAYER:
+    case GIMP_TRANSLATE_MODE_FLOATING_SEL:
+      undo_desc = _("Move Floating Selection");
+      break;
+
+    default:
+      g_return_if_reached ();
+    }
+
+  gimp_image_undo_group_start (image,
+                               edit_select->edit_mode ==
+                               GIMP_TRANSLATE_MODE_MASK ?
+                               GIMP_UNDO_GROUP_MASK :
+                               GIMP_UNDO_GROUP_ITEM_DISPLACE,
+                               undo_desc);
 }
 
 static gint
