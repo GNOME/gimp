@@ -39,6 +39,7 @@
 #include "core/gimpimage-duplicate.h"
 #include "core/gimpimage-flip.h"
 #include "core/gimpimage-merge.h"
+#include "core/gimpimage-profile.h"
 #include "core/gimpimage-resize.h"
 #include "core/gimpimage-rotate.h"
 #include "core/gimpimage-scale.h"
