@@ -14,10 +14,10 @@ msgstr ""
 "Project-Id-Version: gimp.master.el.po\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&k"
 "eywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-06-19 05:31+0000\n"
-"PO-Revision-Date: 2015-06-22 10:45+0300\n"
+"POT-Creation-Date: 2015-07-02 05:33+0000\n"
+"PO-Revision-Date: 2015-07-03 09:47+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
-"Language-Team: team@lists.gnome.gr\n"
+"Language-Team: www.gnome.gr\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2298,7 +2298,7 @@ msgstr "Αντιγραμμένα εικονοστοιχεία στο πρόχε�
 msgid "There is no image data in the clipboard to paste."
 msgstr "Δεν υπάρχουν δεδομένα εικόνας στο πρόχειρο για επικόλληση."
 
-#: ../app/actions/edit-commands.c:367 ../app/core/gimpbrushclipboard.c:168
+#: ../app/actions/edit-commands.c:366 ../app/core/gimpbrushclipboard.c:168
 #: ../app/core/gimppatternclipboard.c:168 ../app/widgets/gimpclipboard.c:346
 msgid "Clipboard"
 msgstr "Πρόχειρο"
@@ -2759,8 +2759,6 @@ msgid "Diffraction Patterns..."
 msgstr "Μοτίβα διάθλασης..."
 
 #: ../app/actions/filters-actions.c:143
-#| msgctxt "filters-action"
-#| msgid "_Deinterlace..."
 msgctxt "filters-action"
 msgid "Displace..."
 msgstr "Μετατόπιση..."
@@ -3565,7 +3563,6 @@ msgid "_Precision"
 msgstr "Α_κρίβεια"
 
 #: ../app/actions/image-actions.c:60
-#| msgid "Color Management"
 msgctxt "image-action"
 msgid "_Color Management"
 msgstr "Διαχείριση _χρωμάτων"
@@ -3622,38 +3619,31 @@ msgid "Create a new image"
 msgstr "Δημιουργία νέας εικόνας"
 
 #: ../app/actions/image-actions.c:78
-#| msgid "Color Profile"
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
 msgstr "_Απόδοση χρωματικής κατατομής..."
 
 #: ../app/actions/image-actions.c:79
-#| msgid "Can't apply color profile to grayscale image (%s)"
 msgctxt "image-action"
 msgid "Set a color profile on the image"
 msgstr "Ορισμός χρωματικής κατατομής στην εικόνα"
 
 #: ../app/actions/image-actions.c:84
-#| msgid "Select Monitor Color Profile"
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
 msgstr "_Μετατροπή σε χρωματική κατατομή..."
 
 #: ../app/actions/image-actions.c:85
-#| msgid "Can't apply color profile to grayscale image (%s)"
 msgctxt "image-action"
 msgid "Apply a color profile to the image"
 msgstr "Εφαρμογή χρωματικής κατατομής στην εικόνα"
 
 #: ../app/actions/image-actions.c:90
-#| msgid "Color Profile"
 msgctxt "image-action"
 msgid "_Discard Color Profile"
 msgstr "Απόρρι_ψη χρωματικής κατατομής"
 
 #: ../app/actions/image-actions.c:91
-#| msgctxt "view-action"
-#| msgid "Display the image's color sample points"
 msgctxt "image-action"
 msgid "Remove the image's color profile"
 msgstr "Αφαίρεση χρωματικής κατατομής της εικόνας"
@@ -4014,7 +4004,7 @@ msgstr "Αναστροφή"
 msgid "Rotating"
 msgstr "Περιστροφή"
 
-#: ../app/actions/image-commands.c:540 ../app/actions/layers-commands.c:698
+#: ../app/actions/image-commands.c:540 ../app/actions/layers-commands.c:701
 msgid "Cannot crop because the current selection is empty."
 msgstr "Δεν μπορεί να γίνει περικοπή, γιατί η τρέχουσα επιλογή είναι κενή."
 
@@ -4036,13 +4026,13 @@ msgid "Scale Image"
 msgstr "Κλιμάκωση εικόνας"
 
 #. Scaling
-#: ../app/actions/image-commands.c:842 ../app/actions/layers-commands.c:1194
+#: ../app/actions/image-commands.c:842 ../app/actions/layers-commands.c:1197
 #: ../app/dialogs/preferences-dialog.c:1791
 #: ../app/pdb/drawable-transform-cmds.c:800
 #: ../app/pdb/drawable-transform-cmds.c:891
 #: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/image-transform-cmds.c:158
-#: ../app/pdb/item-transform-cmds.c:534 ../app/pdb/layer-cmds.c:387
-#: ../app/pdb/layer-cmds.c:434 ../app/pdb/transform-tools-cmds.c:346
+#: ../app/pdb/item-transform-cmds.c:534 ../app/pdb/layer-cmds.c:394
+#: ../app/pdb/layer-cmds.c:441 ../app/pdb/transform-tools-cmds.c:346
 #: ../app/tools/gimpscaletool.c:119
 msgid "Scaling"
 msgstr "Κλιμάκωση"
@@ -4620,42 +4610,42 @@ msgstr "Νέα στρώση"
 msgid "Create a New Layer"
 msgstr "Δημιουργία νέας στρώσης"
 
-#: ../app/actions/layers-commands.c:363
+#: ../app/actions/layers-commands.c:364
 msgid "Visible"
 msgstr "Ορατή"
 
-#: ../app/actions/layers-commands.c:625
+#: ../app/actions/layers-commands.c:628
 msgid "Set Layer Boundary Size"
 msgstr "Ρύθμιση μεγέθους ορίου στρώσης"
 
 #
-#: ../app/actions/layers-commands.c:670
+#: ../app/actions/layers-commands.c:673
 msgid "Scale Layer"
 msgstr "Κλιμάκωση στρώσης"
 
-#: ../app/actions/layers-commands.c:708
+#: ../app/actions/layers-commands.c:711
 msgid "Crop Layer to Selection"
 msgstr "Περικοπή στρώσης στην επιλογή"
 
-#: ../app/actions/layers-commands.c:737
+#: ../app/actions/layers-commands.c:740
 msgid "Crop Layer to Content"
 msgstr "Περικοπή στρώσης στο περιεχόμενο"
 
-#: ../app/actions/layers-commands.c:749
+#: ../app/actions/layers-commands.c:752
 msgid "Cannot crop because the active layer has no content."
 msgstr "Αδύνατη η περικοπή επειδή η ενεργή στρώση δεν έχει περιεχόμενο."
 
-#: ../app/actions/layers-commands.c:755
+#: ../app/actions/layers-commands.c:758
 msgid "Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Αδύνατη η περικοπή επειδή η ενεργή στρώση είναι ήδη περικομμένη στο "
 "περιεχόμενό της."
 
-#: ../app/actions/layers-commands.c:1129
+#: ../app/actions/layers-commands.c:1132
 msgid "Please select a channel first"
 msgstr "Παρακαλώ, πρώτα επιλέξτε ένα κανάλι"
 
-#: ../app/actions/layers-commands.c:1137
+#: ../app/actions/layers-commands.c:1140
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add Layer Mask"
 msgstr "Προσθήκη μάσκας στρώσης"
@@ -7274,7 +7264,6 @@ msgid "Enable the MyPaint Brush tool."
 msgstr "Ενεργοποίηση του εργαλείου πινέλου ΒαφήΜου."
 
 #: ../app/config/gimprc-blurbs.h:395
-#| msgid "Enable the Handle Transform tool."
 msgid "Enable the Seamless Clone tool."
 msgstr "Ενεργοποίηση του εργαλείου κλωνοποίησης χωρίς ραφή."
 
@@ -7557,22 +7546,16 @@ msgid "Hue (HSV)"
 msgstr "Απόχρωση (HSV)"
 
 #: ../app/core/core-enums.c:303
-#| msgctxt "layer-mode-effects"
-#| msgid "Saturation"
 msgctxt "layer-mode-effects"
 msgid "Saturation (HSV)"
 msgstr "Κορεσμός (HSV)"
 
 #: ../app/core/core-enums.c:304
-#| msgctxt "layer-mode-effects"
-#| msgid "Color"
 msgctxt "layer-mode-effects"
 msgid "Color (HSV)"
 msgstr "Χρώμα (HSV)"
 
 #: ../app/core/core-enums.c:305
-#| msgctxt "layer-mode-effects"
-#| msgid "Value"
 msgctxt "layer-mode-effects"
 msgid "Value (HSV)"
 msgstr "Τιμή (HSV)"
@@ -7633,14 +7616,11 @@ msgid "Chroma (LCH)"
 msgstr "Χρωματικότητα (LCH)"
 
 #: ../app/core/core-enums.c:317
-#| msgctxt "layer-mode-effects"
-#| msgid "Color"
 msgctxt "layer-mode-effects"
 msgid "Color (LCH)"
 msgstr "Χρώμα (LCH)"
 
 #: ../app/core/core-enums.c:318
-#| msgid "Lightness"
 msgctxt "layer-mode-effects"
 msgid "Lightness (LCH)"
 msgstr "Φωτεινότητα (LCH)"
@@ -8046,12 +8026,12 @@ msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Αγκίστρωση αιωρούμενης επιλογής"
 
-#: ../app/core/core-enums.c:956 ../app/core/gimp-edit.c:287
+#: ../app/core/core-enums.c:956 ../app/core/gimp-edit.c:286
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Επικόλληση"
 
-#: ../app/core/core-enums.c:957 ../app/core/gimp-edit.c:596
+#: ../app/core/core-enums.c:957 ../app/core/gimp-edit.c:595
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Αποκοπή"
@@ -8393,41 +8373,41 @@ msgstr "Ανανέωση μνήμης ετικετών"
 msgid "Deleting \"%s\" failed: %s"
 msgstr "Η διαγραφή του \"%s\" απέτυχε: %s"
 
-#: ../app/core/gimp-edit.c:184 ../app/core/gimpimage-new.c:323
+#: ../app/core/gimp-edit.c:183 ../app/core/gimpimage-new.c:322
 msgid "Pasted Layer"
 msgstr "Επικολλημένη στρώση"
 
-#: ../app/core/gimp-edit.c:421
+#: ../app/core/gimp-edit.c:420
 msgctxt "undo-type"
 msgid "Clear"
 msgstr "Καθαρισμός"
 
-#: ../app/core/gimp-edit.c:449
+#: ../app/core/gimp-edit.c:448
 msgctxt "undo-type"
 msgid "Fill with Foreground Color"
 msgstr "Γέμισμα με το χρώμα προσκηνίου"
 
-#: ../app/core/gimp-edit.c:453
+#: ../app/core/gimp-edit.c:452
 msgctxt "undo-type"
 msgid "Fill with Background Color"
 msgstr "Γέμισμα με το χρώμα παρασκηνίου"
 
-#: ../app/core/gimp-edit.c:457
+#: ../app/core/gimp-edit.c:456
 msgctxt "undo-type"
 msgid "Fill with White"
 msgstr "Γέμισμα με λευκό"
 
-#: ../app/core/gimp-edit.c:461
+#: ../app/core/gimp-edit.c:460
 msgctxt "undo-type"
 msgid "Fill with Transparency"
 msgstr "Γέμισμα με διαφάνεια"
 
-#: ../app/core/gimp-edit.c:465
+#: ../app/core/gimp-edit.c:464
 msgctxt "undo-type"
 msgid "Fill with Pattern"
 msgstr "Γέμισμα με μοτίβο"
 
-#: ../app/core/gimp-edit.c:609
+#: ../app/core/gimp-edit.c:608
 msgid "Global Buffer"
 msgstr "Καθολική μνήμη"
 
@@ -9332,17 +9312,17 @@ msgctxt "undo-type"
 msgid "Translate Items"
 msgstr "Μετάφραση στοιχείων"
 
-#: ../app/core/gimpimage-item-list.c:79
+#: ../app/core/gimpimage-item-list.c:80
 msgctxt "undo-type"
 msgid "Flip Items"
 msgstr "Αναστροφή στοιχείων"
 
-#: ../app/core/gimpimage-item-list.c:106
+#: ../app/core/gimpimage-item-list.c:109 ../app/core/gimpitem-linked.c:164
 msgctxt "undo-type"
 msgid "Rotate Items"
 msgstr "Περιστροφή στοιχείων"
 
-#: ../app/core/gimpimage-item-list.c:135
+#: ../app/core/gimpimage-item-list.c:140
 msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Μετασχηματισμός στοιχείων"
@@ -9432,12 +9412,10 @@ msgstr ""
 
 #: ../app/core/gimpimage-profile.c:330
 #, c-format
-#| msgid "Revert '%s' to '%s'?"
 msgid "Converting from '%s' to '%s'"
 msgstr "Μετατροπή από '%s' σε '%s'"
 
 #: ../app/core/gimpimage-profile.c:337
-#| msgid "Color Profile"
 msgid "Color profile conversion"
 msgstr "Μετατροπή χρωματικής κατατομής"
 
@@ -10997,7 +10975,6 @@ msgid "_MyPaint Brush tool"
 msgstr "Εργαλείο πινέλου _ΒαφήΜου"
 
 #: ../app/dialogs/preferences-dialog.c:1534
-#| msgid "_Seamless Clone"
 msgid "_Seamless Clone tool"
 msgstr "Εργαλείο κλωνοποίησης _χωρίς ραφή"
 
@@ -11212,7 +11189,6 @@ msgid "Resize window on image _size change"
 msgstr "Αλλαγή μεγέθους παραθύρου στην αλλαγή με_γέθους εικόνας"
 
 #: ../app/dialogs/preferences-dialog.c:1993
-#| msgid "Show active _image"
 msgid "Show entire image"
 msgstr "Εμφάνιση ολόκληρης εικόνας"
 
@@ -12145,7 +12121,7 @@ msgstr "Δεν επιτρέπεται η τροποποίηση εικονοστ
 #: ../app/display/gimpdisplayshell-dnd.c:469 ../app/tools/gimpblendtool.c:234
 #: ../app/tools/gimpbucketfilltool.c:144 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:312 ../app/tools/gimppainttool.c:278
-#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1827
+#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1831
 msgid "The active layer's pixels are locked."
 msgstr "Τα εικονοστοιχεία της ενεργής στρώσης είναι κλειδωμένα."
 
@@ -13252,282 +13228,291 @@ msgstr ""
 msgid "Free Select"
 msgstr "Ελεύθερη επιλογή"
 
-#: ../app/pdb/layer-cmds.c:541 ../app/pdb/layer-cmds.c:585
-msgid "Move Layer"
-msgstr "Μετακίνηση στρώσης"
+#: ../app/pdb/plug-in-compat-cmds.c:236
+#| msgctxt "filters-action"
+#| msgid "_Bump Map..."
+msgctxt "undo-type"
+msgid "Bump Map"
+msgstr "Χάρτης ανάγλυφου"
 
-#: ../app/pdb/plug-in-compat-cmds.c:194
+#: ../app/pdb/plug-in-compat-cmds.c:308
+#| msgctxt "filters-action"
+#| msgid "Displace..."
+msgctxt "undo-type"
+msgid "Displace"
+msgstr "Μετατόπιση"
+
+#: ../app/pdb/plug-in-compat-cmds.c:341
 msgctxt "undo-type"
 msgid "Gaussian Blur"
 msgstr "Θόλωση Γκάους"
 
-#: ../app/pdb/plug-in-compat-cmds.c:259
+#: ../app/pdb/plug-in-compat-cmds.c:406
 msgctxt "undo-type"
 msgid "Alien Map"
 msgstr "Απεικόνιση παράξενου"
 
-#: ../app/pdb/plug-in-compat-cmds.c:296
+#: ../app/pdb/plug-in-compat-cmds.c:443
 msgctxt "undo-type"
 msgid "Antialias"
 msgstr "Εξομάλυνση"
 
-#: ../app/pdb/plug-in-compat-cmds.c:339
+#: ../app/pdb/plug-in-compat-cmds.c:486
 msgctxt "undo-type"
 msgid "Apply Canvas"
 msgstr "Εφαρμογή καμβά"
 
-#: ../app/pdb/plug-in-compat-cmds.c:399
+#: ../app/pdb/plug-in-compat-cmds.c:546
 msgctxt "undo-type"
 msgid "Apply Lens"
 msgstr "Εφαρμογή φακού"
 
-#: ../app/pdb/plug-in-compat-cmds.c:449
+#: ../app/pdb/plug-in-compat-cmds.c:596
 msgid "Autocrop image"
 msgstr "Αυτόματη περικοπή εικόνας"
 
 # # FIX?  see above for "send to back"
-#: ../app/pdb/plug-in-compat-cmds.c:503
+#: ../app/pdb/plug-in-compat-cmds.c:650
 msgid "Autocrop layer"
 msgstr "Αυτόματη περικοπή στρώσης"
 
-#: ../app/pdb/plug-in-compat-cmds.c:549
+#: ../app/pdb/plug-in-compat-cmds.c:696
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
 msgstr "Επέκταση αντίθεσης HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:587
+#: ../app/pdb/plug-in-compat-cmds.c:850
 msgctxt "undo-type"
 msgid "Stretch Contrast"
 msgstr "Επέκταση αντίθεσης"
 
-#: ../app/pdb/plug-in-compat-cmds.c:667
+#: ../app/pdb/plug-in-compat-cmds.c:930
 msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "Μείκτης καναλιού"
 
-#: ../app/pdb/plug-in-compat-cmds.c:711
+#: ../app/pdb/plug-in-compat-cmds.c:974
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "Χρώμα σε άλφα"
 
-#: ../app/pdb/plug-in-compat-cmds.c:757
+#: ../app/pdb/plug-in-compat-cmds.c:1020
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
 msgstr "Η διάταξη 'πίνακας' έχει μόνο %d μέλη, πρέπει να έχει 25"
 
-#: ../app/pdb/plug-in-compat-cmds.c:765
+#: ../app/pdb/plug-in-compat-cmds.c:1028
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
 msgstr "Η διάταξη 'κανάλια' έχει μόνο %d μέλη, πρέπει να έχει 5"
 
-#: ../app/pdb/plug-in-compat-cmds.c:837
+#: ../app/pdb/plug-in-compat-cmds.c:1100
 msgctxt "undo-type"
 msgid "Convolution Matrix"
 msgstr "Πίνακας συνέλιξης"
 
-#: ../app/pdb/plug-in-compat-cmds.c:899
+#: ../app/pdb/plug-in-compat-cmds.c:1162
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr "Κυβισμός"
 
-#: ../app/pdb/plug-in-compat-cmds.c:944
+#: ../app/pdb/plug-in-compat-cmds.c:1207
 msgctxt "undo-type"
 msgid "Deinterlace"
 msgstr "Απόπλεξη"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1023
+#: ../app/pdb/plug-in-compat-cmds.c:1286
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
 msgstr "Μοτίβα διάθλασης"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1086
+#: ../app/pdb/plug-in-compat-cmds.c:1441
 msgctxt "undo-type"
 msgid "Edge"
 msgstr "Άκρη"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1130
+#: ../app/pdb/plug-in-compat-cmds.c:1485
 msgctxt "undo-type"
 msgid "Engrave"
 msgstr "Χάραξη"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1203
+#: ../app/pdb/plug-in-compat-cmds.c:1558
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "Ανταλλαγή χρώματος"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1251
+#: ../app/pdb/plug-in-compat-cmds.c:1606
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "Λάμψη φακών"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1435
+#: ../app/pdb/plug-in-compat-cmds.c:1790
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "Παράθεση γυαλιού"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1488
+#: ../app/pdb/plug-in-compat-cmds.c:1843
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Θόρυβος HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1631
+#: ../app/pdb/plug-in-compat-cmds.c:1986
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Aυταπάτη"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1668
+#: ../app/pdb/plug-in-compat-cmds.c:2023
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Λαπλάς"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1744
+#: ../app/pdb/plug-in-compat-cmds.c:2099
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Παραμόρφωση φακών"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1784
+#: ../app/pdb/plug-in-compat-cmds.c:2139
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Παράθεση χωρίς ραφή"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1867 ../app/pdb/plug-in-compat-cmds.c:1951
+#: ../app/pdb/plug-in-compat-cmds.c:2222 ../app/pdb/plug-in-compat-cmds.c:2306
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Θόλωση κίνησης"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2052
+#: ../app/pdb/plug-in-compat-cmds.c:2407
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Μωσαϊκό"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2114
+#: ../app/pdb/plug-in-compat-cmds.c:2469
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Υπερκαινοφανής"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2204
+#: ../app/pdb/plug-in-compat-cmds.c:2559
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Πλακίδιο χαρτιού"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2245 ../app/pdb/plug-in-compat-cmds.c:2288
+#: ../app/pdb/plug-in-compat-cmds.c:2600 ../app/pdb/plug-in-compat-cmds.c:2643
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Εικονοστοιχείωση"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2339
+#: ../app/pdb/plug-in-compat-cmds.c:2694
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Πλάσμα"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2393
+#: ../app/pdb/plug-in-compat-cmds.c:2748
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Πολικές συντεταγμένες"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2433
+#: ../app/pdb/plug-in-compat-cmds.c:2788
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Αφαίρεση κόκκινων ματιών"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2486
+#: ../app/pdb/plug-in-compat-cmds.c:2841
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Τυχαία εκπομπή"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2539
+#: ../app/pdb/plug-in-compat-cmds.c:2894
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Τυχαία επιλογή"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2592
+#: ../app/pdb/plug-in-compat-cmds.c:2947
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Τυχαία σύντηξη"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2667
+#: ../app/pdb/plug-in-compat-cmds.c:3022
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "Θόρυβος RGB"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2790
+#: ../app/pdb/plug-in-compat-cmds.c:3145
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Τυχαίος θόρυβος"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2834
+#: ../app/pdb/plug-in-compat-cmds.c:3189
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Ημιισοπέδωση"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2877
+#: ../app/pdb/plug-in-compat-cmds.c:3232
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Μετατόπιση"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2980
+#: ../app/pdb/plug-in-compat-cmds.c:3335
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Ημίτονο"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3028
+#: ../app/pdb/plug-in-compat-cmds.c:3383
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3089
+#: ../app/pdb/plug-in-compat-cmds.c:3444
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Συμπαγής θόρυβος"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3133
+#: ../app/pdb/plug-in-compat-cmds.c:3488
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Διασπορά"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3174
+#: ../app/pdb/plug-in-compat-cmds.c:3529
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Κατώφλι άλφα"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3220
+#: ../app/pdb/plug-in-compat-cmds.c:3575
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Βίντεο"
 
 #
-#: ../app/pdb/plug-in-compat-cmds.c:3257
+#: ../app/pdb/plug-in-compat-cmds.c:3612
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Αντιστροφή τιμής"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3361
+#: ../app/pdb/plug-in-compat-cmds.c:3716
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Διάδοση τιμής"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3408
+#: ../app/pdb/plug-in-compat-cmds.c:3763
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Διαστολή"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3455
+#: ../app/pdb/plug-in-compat-cmds.c:3810
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Διάβρωση"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3518
+#: ../app/pdb/plug-in-compat-cmds.c:3873
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Κύματα"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3566
+#: ../app/pdb/plug-in-compat-cmds.c:3921
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Στροβιλισμός και πίεση"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3618
-#| msgid "Windows"
+#: ../app/pdb/plug-in-compat-cmds.c:3973
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Άνεμος"
@@ -14019,7 +14004,7 @@ msgstr "Ανάμει_ξη"
 #: ../app/tools/gimpblendtool.c:241 ../app/tools/gimpbucketfilltool.c:151
 #: ../app/tools/gimpforegroundselecttool.c:286
 #: ../app/tools/gimpimagemaptool.c:319 ../app/tools/gimppainttool.c:285
-#: ../app/tools/gimptransformtool.c:1834
+#: ../app/tools/gimptransformtool.c:1838
 msgid "The active layer is not visible."
 msgstr "Η ενεργή στρώση δεν είναι ορατή."
 
@@ -14668,17 +14653,13 @@ msgstr "Περιοχή"
 msgid "Exposure"
 msgstr "Έκθεση"
 
-#: ../app/tools/gimpeditselectiontool.c:237
-msgid "Move Selection"
-msgstr "Μετακίνηση επιλογής"
-
-#: ../app/tools/gimpeditselectiontool.c:241
-#: ../app/tools/gimpeditselectiontool.c:1236
+#: ../app/tools/gimpeditselectiontool.c:235
+#: ../app/tools/gimpeditselectiontool.c:1188
 msgid "Move Floating Selection"
 msgstr "Μετακίνηση αιωρούμενης επιλογής"
 
-#: ../app/tools/gimpeditselectiontool.c:450
-#: ../app/tools/gimpeditselectiontool.c:727
+#: ../app/tools/gimpeditselectiontool.c:479
+#: ../app/tools/gimpeditselectiontool.c:679
 msgid "Move: "
 msgstr "Μετακίνηση: "
 
@@ -15423,7 +15404,7 @@ msgstr "Μετακίνηση οδηγού: "
 msgid "There is no path to move."
 msgstr "Δεν υπάρχει μονοπάτι για να μετακινηθεί."
 
-#: ../app/tools/gimpmovetool.c:294 ../app/tools/gimptransformtool.c:1855
+#: ../app/tools/gimpmovetool.c:294 ../app/tools/gimptransformtool.c:1859
 msgid "The active path's position is locked."
 msgstr "Η θέση του ενεργού μονοπατιού είναι κλειδωμένη."
 
@@ -16217,7 +16198,7 @@ msgstr ""
 "Μπορείτε να επεξεργαστείτε τη στρώση, ή να δημιουργήσετε νέα στρώση κειμένου "
 "από τα ίδια γνωρίσματα του κειμένου."
 
-#: ../app/tools/gimptexttool-editor.c:1237
+#: ../app/tools/gimptexttool-editor.c:1251
 msgid "GIMP Text Editor"
 msgstr "Επεξεργαστής κειμένου GIMP"
 
@@ -16413,23 +16394,23 @@ msgstr "Η επιλογή δεν τέμνει τη στρώση."
 msgid "Transform Step"
 msgstr "Βήμα μετασχηματισμού"
 
-#: ../app/tools/gimptransformtool.c:1824
+#: ../app/tools/gimptransformtool.c:1828
 msgid "There is no layer to transform."
 msgstr "Δεν υπάρχει στρώση για να μετασχηματιστεί."
 
-#: ../app/tools/gimptransformtool.c:1829
+#: ../app/tools/gimptransformtool.c:1833
 msgid "The active layer's position and size are locked."
 msgstr "Η θέση και το μέγεθος της ενεργής στρώσης είναι κλειδωμένα."
 
-#: ../app/tools/gimptransformtool.c:1840
+#: ../app/tools/gimptransformtool.c:1844
 msgid "There is no selection to transform."
 msgstr "Δεν υπάρχει επιλογή για μετασχηματισμό."
 
-#: ../app/tools/gimptransformtool.c:1850
+#: ../app/tools/gimptransformtool.c:1854
 msgid "There is no path to transform."
 msgstr "Δεν υπάρχει μονοπάτι για να μετασχηματιστεί."
 
-#: ../app/tools/gimptransformtool.c:1853
+#: ../app/tools/gimptransformtool.c:1857
 msgid "The active path's strokes are locked."
 msgstr "Οι πινελιές του ενεργού μονοπατιού είναι κλειδωμένες."
 
@@ -18913,6 +18894,12 @@ msgstr "στρογγυλή"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "θολή"
+
+#~ msgid "Move Layer"
+#~ msgstr "Μετακίνηση στρώσης"
+
+#~ msgid "Move Selection"
+#~ msgstr "Μετακίνηση επιλογής"
 
 #~ msgctxt "layer-mode-effects"
 #~ msgid "Hue"
