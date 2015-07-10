@@ -55,9 +55,6 @@
  **/
 
 
-#define GIMP_LCMS_MD5_DIGEST_LENGTH 16
-
-
 struct _GimpColorProfilePrivate
 {
   cmsHPROFILE  lcms_profile;
@@ -578,22 +575,15 @@ gboolean
 gimp_color_profile_is_equal (GimpColorProfile *profile1,
                              GimpColorProfile *profile2)
 {
-  cmsUInt8Number digest1[GIMP_LCMS_MD5_DIGEST_LENGTH];
-  cmsUInt8Number digest2[GIMP_LCMS_MD5_DIGEST_LENGTH];
+  const gsize header_len = sizeof (cmsICCHeader);
 
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile1), FALSE);
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile1), FALSE);
 
-  if (! cmsMD5computeID (profile1->priv->lcms_profile) ||
-      ! cmsMD5computeID (profile2->priv->lcms_profile))
-    {
-      return FALSE;
-    }
-
-  cmsGetHeaderProfileID (profile1->priv->lcms_profile, digest1);
-  cmsGetHeaderProfileID (profile2->priv->lcms_profile, digest2);
-
-  return (memcmp (digest1, digest2, GIMP_LCMS_MD5_DIGEST_LENGTH) == 0);
+  return (profile1->priv->length == profile2->priv->length &&
+          memcmp (profile1->priv->data + header_len,
+                  profile2->priv->data + header_len,
+                  profile1->priv->length - header_len) == 0);
 }
 
 /**
