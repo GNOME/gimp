@@ -1880,7 +1880,7 @@ plug_in_icc_profile_info_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpColorProfile profile;
+      GimpColorProfile *profile;
 
       profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
@@ -1888,7 +1888,7 @@ plug_in_icc_profile_info_invoker (GimpProcedure         *procedure,
       profile_desc = gimp_color_profile_get_description (profile);
       profile_info = gimp_color_profile_get_summary (profile);
 
-      gimp_color_profile_close (profile);
+      g_object_unref (profile);
 
     }
 
@@ -1928,9 +1928,9 @@ plug_in_icc_profile_file_info_invoker (GimpProcedure         *procedure,
 
       if (file)
         {
-          GimpColorProfile p;
+          GimpColorProfile *p;
 
-          p = gimp_color_profile_open_from_file (file, error);
+          p = gimp_color_profile_new_from_file (file, error);
           g_object_unref (file);
 
           if (p)
@@ -1939,7 +1939,7 @@ plug_in_icc_profile_file_info_invoker (GimpProcedure         *procedure,
               profile_desc = gimp_color_profile_get_description (p);
               profile_info = gimp_color_profile_get_summary (p);
 
-              gimp_color_profile_close (p);
+              g_object_unref (p);
             }
           else
             success = FALSE;

@@ -73,27 +73,27 @@ struct _CdisplayLcmsClass
 };
 
 
-GType                   cdisplay_lcms_get_type             (void);
+GType                     cdisplay_lcms_get_type             (void);
 
-static void             cdisplay_lcms_finalize             (GObject          *object);
+static void               cdisplay_lcms_finalize             (GObject          *object);
 
-static GtkWidget      * cdisplay_lcms_configure            (GimpColorDisplay *display);
-static void             cdisplay_lcms_convert_buffer       (GimpColorDisplay *display,
-                                                            GeglBuffer       *buffer,
-                                                            GeglRectangle    *area);
-static void             cdisplay_lcms_changed              (GimpColorDisplay *display);
+static GtkWidget        * cdisplay_lcms_configure            (GimpColorDisplay *display);
+static void               cdisplay_lcms_convert_buffer       (GimpColorDisplay *display,
+                                                              GeglBuffer       *buffer,
+                                                              GeglRectangle    *area);
+static void               cdisplay_lcms_changed              (GimpColorDisplay *display);
 
-static GimpColorProfile cdisplay_lcms_get_display_profile  (CdisplayLcms     *lcms);
+static GimpColorProfile * cdisplay_lcms_get_display_profile  (CdisplayLcms     *lcms);
 
-static void             cdisplay_lcms_attach_labelled      (GtkTable         *table,
-                                                            gint              row,
-                                                            const gchar      *text,
-                                                            GtkWidget        *widget);
-static void             cdisplay_lcms_update_profile_label (CdisplayLcms     *lcms,
-                                                            const gchar      *name);
-static void             cdisplay_lcms_notify_profile       (GObject          *config,
-                                                            GParamSpec       *pspec,
-                                                            CdisplayLcms     *lcms);
+static void               cdisplay_lcms_attach_labelled      (GtkTable         *table,
+                                                              gint              row,
+                                                              const gchar      *text,
+                                                              GtkWidget        *widget);
+static void               cdisplay_lcms_update_profile_label (CdisplayLcms     *lcms,
+                                                              const gchar      *name);
+static void               cdisplay_lcms_notify_profile       (GObject          *config,
+                                                              GParamSpec       *pspec,
+                                                              CdisplayLcms     *lcms);
 
 
 static const GimpModuleInfo cdisplay_lcms_info =
@@ -284,13 +284,13 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
                                                      &lcms->dest_format);
 }
 
-static GimpColorProfile
+static GimpColorProfile *
 cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 {
   GimpColorConfig  *config;
   GimpColorManaged *managed;
   GtkWidget        *widget  = NULL;
-  GimpColorProfile  profile = NULL;
+  GimpColorProfile *profile = NULL;
 
   config  = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
   managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
@@ -342,7 +342,7 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
   GimpColorConfig  *config;
   GimpColorManaged *managed;
   GtkWidget        *label;
-  GimpColorProfile  profile = NULL;
+  GimpColorProfile *profile = NULL;
   gchar            *text;
   gchar            *tooltip;
 
@@ -389,7 +389,7 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
   g_free (tooltip);
 
   if (profile)
-    gimp_color_profile_close (profile);
+    g_object_unref (profile);
 }
 
 static void

@@ -143,7 +143,6 @@ libexec_PROGRAMS = \
 	web-browser \
 	$(WEB_PAGE)
 
-
 EXTRA_PROGRAMS = \
 	file-aa \
 	file-jp2-load \
@@ -1432,8 +1431,6 @@ jigsaw_LDADD = \
 	$(INTLLIBS)		\
 	$(jigsaw_RC)
 
-lcms_CFLAGS = $(LCMS_CFLAGS)
-
 lcms_SOURCES = \
 	lcms.c
 
@@ -1448,7 +1445,6 @@ lcms_LDADD = \
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
-	$(LCMS_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(lcms_RC)

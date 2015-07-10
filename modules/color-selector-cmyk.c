@@ -353,8 +353,10 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   GimpColorSelector *selector     = GIMP_COLOR_SELECTOR (module);
   GimpColorConfig   *config       = module->config;
   cmsUInt32Number    flags        = 0;
-  GimpColorProfile   rgb_profile  = NULL;
-  GimpColorProfile   cmyk_profile = NULL;
+  GimpColorProfile  *rgb_profile  = NULL;
+  GimpColorProfile  *cmyk_profile = NULL;
+  cmsHPROFILE        rgb_lcms;
+  cmsHPROFILE        cmyk_lcms;
   gchar             *label;
   gchar             *summary;
   gchar             *text;
@@ -397,28 +399,31 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   g_free (label);
   g_free (summary);
 
+  rgb_lcms  = gimp_color_profile_get_lcms_profile (rgb_profile);
+  cmyk_lcms = gimp_color_profile_get_lcms_profile (cmyk_profile);
+
   if (config->display_intent ==
       GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
     {
       flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
     }
 
-  module->rgb2cmyk = cmsCreateTransform (rgb_profile,  TYPE_RGB_DBL,
-                                         cmyk_profile, TYPE_CMYK_DBL,
+  module->rgb2cmyk = cmsCreateTransform (rgb_lcms,  TYPE_RGB_DBL,
+                                         cmyk_lcms, TYPE_CMYK_DBL,
                                          config->display_intent,
                                          flags);
-  module->cmyk2rgb = cmsCreateTransform (cmyk_profile, TYPE_CMYK_DBL,
-                                         rgb_profile,  TYPE_RGB_DBL,
+  module->cmyk2rgb = cmsCreateTransform (cmyk_lcms, TYPE_CMYK_DBL,
+                                         rgb_lcms,  TYPE_RGB_DBL,
                                          config->display_intent,
                                          flags);
 
  out:
 
   if (rgb_profile)
-    gimp_color_profile_close (rgb_profile);
+    g_object_unref (rgb_profile);
 
   if (cmyk_profile)
-    gimp_color_profile_close (cmyk_profile);
+    g_object_unref (cmyk_profile);
 
   if (! module->in_destruction)
     colorsel_cmyk_set_color (selector, &selector->rgb, &selector->hsv);

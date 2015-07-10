@@ -370,11 +370,11 @@ gimp_color_config_get_property (GObject    *object,
     }
 }
 
-GimpColorProfile
+GimpColorProfile *
 gimp_color_config_get_rgb_color_profile (GimpColorConfig  *config,
                                          GError          **error)
 {
-  GimpColorProfile profile = NULL;
+  GimpColorProfile *profile = NULL;
 
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -383,11 +383,11 @@ gimp_color_config_get_rgb_color_profile (GimpColorConfig  *config,
     {
       GFile *file = g_file_new_for_path (config->rgb_profile);
 
-      profile = gimp_color_profile_open_from_file (file, error);
+      profile = gimp_color_profile_new_from_file (file, error);
 
       if (profile && ! gimp_color_profile_is_rgb (profile))
         {
-          gimp_color_profile_close (profile);
+          g_object_unref (profile);
           profile = NULL;
 
           g_set_error (error, GIMP_CONFIG_ERROR, 0,
@@ -401,11 +401,11 @@ gimp_color_config_get_rgb_color_profile (GimpColorConfig  *config,
   return profile;
 }
 
-GimpColorProfile
+GimpColorProfile *
 gimp_color_config_get_cmyk_color_profile (GimpColorConfig  *config,
                                           GError          **error)
 {
-  GimpColorProfile profile = NULL;
+  GimpColorProfile *profile = NULL;
 
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -414,11 +414,11 @@ gimp_color_config_get_cmyk_color_profile (GimpColorConfig  *config,
     {
       GFile *file = g_file_new_for_path (config->cmyk_profile);
 
-      profile = gimp_color_profile_open_from_file (file, error);
+      profile = gimp_color_profile_new_from_file (file, error);
 
       if (profile && ! gimp_color_profile_is_cmyk (profile))
         {
-          gimp_color_profile_close (profile);
+          g_object_unref (profile);
           profile = NULL;
 
           g_set_error (error, GIMP_CONFIG_ERROR, 0,
@@ -432,11 +432,11 @@ gimp_color_config_get_cmyk_color_profile (GimpColorConfig  *config,
   return profile;
 }
 
-GimpColorProfile
+GimpColorProfile *
 gimp_color_config_get_display_color_profile (GimpColorConfig  *config,
                                              GError          **error)
 {
-  GimpColorProfile profile = NULL;
+  GimpColorProfile *profile = NULL;
 
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -445,18 +445,18 @@ gimp_color_config_get_display_color_profile (GimpColorConfig  *config,
     {
       GFile *file = g_file_new_for_path (config->display_profile);
 
-      profile = gimp_color_profile_open_from_file (file, error);
+      profile = gimp_color_profile_new_from_file (file, error);
       g_object_unref (file);
     }
 
   return profile;
 }
 
-GimpColorProfile
+GimpColorProfile *
 gimp_color_config_get_printer_color_profile (GimpColorConfig  *config,
                                              GError          **error)
 {
-  GimpColorProfile profile = NULL;
+  GimpColorProfile *profile = NULL;
 
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
@@ -465,7 +465,7 @@ gimp_color_config_get_printer_color_profile (GimpColorConfig  *config,
     {
       GFile *file = g_file_new_for_path (config->printer_profile);
 
-      profile = gimp_color_profile_open_from_file (file, error);
+      profile = gimp_color_profile_new_from_file (file, error);
       g_object_unref (file);
     }
 
@@ -484,10 +484,10 @@ gimp_color_config_set_rgb_profile (GimpColorConfig  *config,
 
   if (filename)
     {
-      GimpColorProfile  profile;
+      GimpColorProfile *profile;
       GFile            *file = g_file_new_for_path (filename);
 
-      profile = gimp_color_profile_open_from_file (file, error);
+      profile = gimp_color_profile_new_from_file (file, error);
 
       if (profile)
         {
@@ -499,7 +499,7 @@ gimp_color_config_set_rgb_profile (GimpColorConfig  *config,
               success = FALSE;
             }
 
-          gimp_color_profile_close (profile);
+          g_object_unref (profile);
         }
       else
         {
@@ -525,10 +525,10 @@ gimp_color_config_set_cmyk_profile (GimpColorConfig  *config,
 
   if (filename)
     {
-      GimpColorProfile  profile;
+      GimpColorProfile *profile;
       GFile            *file = g_file_new_for_path (filename);
 
-      profile = gimp_color_profile_open_from_file (file, error);
+      profile = gimp_color_profile_new_from_file (file, error);
 
       if (profile)
         {
@@ -540,7 +540,7 @@ gimp_color_config_set_cmyk_profile (GimpColorConfig  *config,
               success = FALSE;
             }
 
-          gimp_color_profile_close (profile);
+          g_object_unref (profile);
         }
       else
         {
@@ -566,14 +566,14 @@ gimp_color_config_set_display_profile (GimpColorConfig  *config,
 
   if (filename)
     {
-      GimpColorProfile  profile;
+      GimpColorProfile *profile;
       GFile            *file = g_file_new_for_path (filename);
 
-      profile = gimp_color_profile_open_from_file (file, error);
+      profile = gimp_color_profile_new_from_file (file, error);
 
       if (profile)
         {
-          gimp_color_profile_close (profile);
+          g_object_unref (profile);
         }
       else
         {
@@ -599,14 +599,14 @@ gimp_color_config_set_printer_profile (GimpColorConfig  *config,
 
   if (filename)
     {
-      GimpColorProfile  profile;
+      GimpColorProfile *profile;
       GFile            *file = g_file_new_for_path (filename);
 
-      profile = gimp_color_profile_open_from_file (file, error);
+      profile = gimp_color_profile_new_from_file (file, error);
 
       if (profile)
         {
-          gimp_color_profile_close (profile);
+          g_object_unref (profile);
         }
       else
         {

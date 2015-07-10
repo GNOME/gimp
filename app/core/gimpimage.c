@@ -180,7 +180,7 @@ static void     gimp_image_real_colormap_changed (GimpImage         *image,
 static const guint8 *
         gimp_image_color_managed_get_icc_profile (GimpColorManaged  *managed,
                                                   gsize             *len);
-static GimpColorProfile
+static GimpColorProfile *
       gimp_image_color_managed_get_color_profile (GimpColorManaged  *managed);
 
 static void        gimp_image_projectable_flush  (GimpProjectable   *projectable,
@@ -1369,11 +1369,11 @@ gimp_image_color_managed_get_icc_profile (GimpColorManaged *managed,
   return gimp_image_get_icc_profile (GIMP_IMAGE (managed), len);
 }
 
-static GimpColorProfile
+static GimpColorProfile *
 gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
 {
   GimpImage        *image = GIMP_IMAGE (managed);
-  GimpColorProfile  profile;
+  GimpColorProfile *profile;
 
   profile = gimp_image_get_color_profile (image);
 

@@ -44,15 +44,15 @@ gboolean             gimp_image_set_icc_profile        (GimpImage           *ima
                                                         GError             **error);
 
 gboolean             gimp_image_validate_color_profile (GimpImage           *image,
-                                                        GimpColorProfile     profile,
+                                                        GimpColorProfile    *profile,
                                                         GError             **error);
-GimpColorProfile     gimp_image_get_color_profile      (GimpImage           *image);
+GimpColorProfile   * gimp_image_get_color_profile      (GimpImage           *image);
 gboolean             gimp_image_set_color_profile      (GimpImage           *image,
-                                                        GimpColorProfile     profile,
+                                                        GimpColorProfile    *profile,
                                                         GError             **error);
 
 gboolean             gimp_image_convert_color_profile  (GimpImage                *image,
-                                                        GimpColorProfile          dest_profile,
+                                                        GimpColorProfile         *dest_profile,
                                                         GimpColorRenderingIntent  intent,
                                                         gboolean                  bpc,
                                                         GimpProgress             *progress,

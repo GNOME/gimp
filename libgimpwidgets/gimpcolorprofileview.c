@@ -34,11 +34,12 @@
 
 struct _GimpColorProfileViewPrivate
 {
-  GimpColorProfile profile;
+  GimpColorProfile *profile;
 };
 
 
 static void   gimp_color_profile_view_constructed  (GObject *object);
+static void   gimp_color_profile_view_finalize     (GObject *object);
 
 
 G_DEFINE_TYPE (GimpColorProfileView, gimp_color_profile_view,
@@ -53,6 +54,7 @@ gimp_color_profile_view_class_init (GimpColorProfileViewClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructed = gimp_color_profile_view_constructed;
+  object_class->finalize    = gimp_color_profile_view_finalize;
 
   g_type_class_add_private (klass, sizeof (GimpColorProfileViewPrivate));
 }
@@ -90,6 +92,20 @@ gimp_color_profile_view_constructed (GObject *object)
   gtk_text_view_set_right_margin (GTK_TEXT_VIEW (object), 6);
 }
 
+static void
+gimp_color_profile_view_finalize (GObject *object)
+{
+  GimpColorProfileView *view = GIMP_COLOR_PROFILE_VIEW (object);
+
+  if (view->priv->profile)
+    {
+      g_object_unref (view->priv->profile);
+      view->priv->profile = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
 GtkWidget *
 gimp_color_profile_view_new (void)
 {
@@ -98,42 +114,52 @@ gimp_color_profile_view_new (void)
 
 void
 gimp_color_profile_view_set_profile (GimpColorProfileView *view,
-                                     GimpColorProfile      profile)
+                                     GimpColorProfile     *profile)
 {
   GtkTextBuffer *buffer;
-  GtkTextIter    iter;
-  gchar         *label;
-  gchar         *summary;
 
   g_return_if_fail (GIMP_IS_COLOR_PROFILE_VIEW (view));
+  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
+
+  if (profile == view->priv->profile)
+    return;
 
   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
 
   gtk_text_buffer_set_text (buffer, "", 0);
 
+  if (view->priv->profile)
+    g_object_unref (view->priv->profile);
+
   view->priv->profile = profile;
 
-  if (! profile)
-    return;
-
-  gtk_text_buffer_get_start_iter (buffer, &iter);
-
-  label   = gimp_color_profile_get_label (profile);
-  summary = gimp_color_profile_get_summary (profile);
-
-  if (label && strlen (label))
+  if (view->priv->profile)
     {
-      gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
-                                                label, -1,
-                                                "strong", NULL);
-      gtk_text_buffer_insert (buffer, &iter, "\n", 1);
+      GtkTextIter  iter;
+      gchar       *label;
+      gchar       *summary;
+
+      g_object_ref (view->priv->profile);
+
+      gtk_text_buffer_get_start_iter (buffer, &iter);
+
+      label   = gimp_color_profile_get_label (profile);
+      summary = gimp_color_profile_get_summary (profile);
+
+      if (label && strlen (label))
+        {
+          gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
+                                                    label, -1,
+                                                    "strong", NULL);
+          gtk_text_buffer_insert (buffer, &iter, "\n", 1);
+        }
+
+      if (summary)
+        gtk_text_buffer_insert (buffer, &iter, summary, -1);
+
+      g_free (label);
+      g_free (summary);
     }
-
-  if (summary)
-    gtk_text_buffer_insert (buffer, &iter, summary, -1);
-
-  g_free (label);
-  g_free (summary);
 }
 
 void

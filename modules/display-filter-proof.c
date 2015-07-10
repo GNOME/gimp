@@ -323,8 +323,8 @@ static void
 cdisplay_proof_changed (GimpColorDisplay *display)
 {
   CdisplayProof    *proof = CDISPLAY_PROOF (display);
-  GimpColorProfile  rgb_profile;
-  GimpColorProfile  proof_profile;
+  GimpColorProfile *rgb_profile;
+  GimpColorProfile *proof_profile;
   GFile            *file;
 
   if (proof->transform)
@@ -339,25 +339,30 @@ cdisplay_proof_changed (GimpColorDisplay *display)
   rgb_profile = gimp_color_profile_new_srgb ();
 
   file = g_file_new_for_path (proof->profile);
-  proof_profile = gimp_color_profile_open_from_file (file, NULL);
+  proof_profile = gimp_color_profile_new_from_file (file, NULL);
   g_object_unref (file);
 
   if (proof_profile)
     {
+      cmsHPROFILE     rgb_lcms;
+      cmsHPROFILE     proof_lcms;
       cmsUInt32Number flags = cmsFLAGS_SOFTPROOFING;
+
+      rgb_lcms   = gimp_color_profile_get_lcms_profile (rgb_profile);
+      proof_lcms = gimp_color_profile_get_lcms_profile (proof_profile);
 
       if (proof->bpc)
         flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
 
-      proof->transform = cmsCreateProofingTransform (rgb_profile, TYPE_RGBA_FLT,
-                                                     rgb_profile, TYPE_RGBA_FLT,
-                                                     proof_profile,
+      proof->transform = cmsCreateProofingTransform (rgb_lcms, TYPE_RGBA_FLT,
+                                                     rgb_lcms, TYPE_RGBA_FLT,
+                                                     proof_lcms,
                                                      proof->intent,
                                                      proof->intent,
                                                      flags);
 
-      gimp_color_profile_close (proof_profile);
+      g_object_unref (proof_profile);
     }
 
-  gimp_color_profile_close (rgb_profile);
+  g_object_unref (rgb_profile);
 }

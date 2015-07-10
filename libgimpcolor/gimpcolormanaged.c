@@ -141,7 +141,7 @@ gimp_color_managed_get_icc_profile (GimpColorManaged *managed,
  *
  * Since: 2.10
  **/
-GimpColorProfile
+GimpColorProfile *
 gimp_color_managed_get_color_profile (GimpColorManaged *managed)
 {
   GimpColorManagedInterface *iface;

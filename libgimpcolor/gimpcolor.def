@@ -25,22 +25,23 @@ EXPORTS
 	gimp_color_managed_get_icc_profile
 	gimp_color_managed_interface_get_type
 	gimp_color_managed_profile_changed
-	gimp_color_profile_close
 	gimp_color_profile_get_copyright
 	gimp_color_profile_get_description
 	gimp_color_profile_get_format
+	gimp_color_profile_get_icc_profile
 	gimp_color_profile_get_label
+	gimp_color_profile_get_lcms_profile
 	gimp_color_profile_get_manufacturer
 	gimp_color_profile_get_model
 	gimp_color_profile_get_summary
 	gimp_color_profile_is_cmyk
 	gimp_color_profile_is_equal
 	gimp_color_profile_is_rgb
+	gimp_color_profile_new_from_file
+	gimp_color_profile_new_from_icc_profile
+	gimp_color_profile_new_from_lcms_profile
 	gimp_color_profile_new_linear_rgb
 	gimp_color_profile_new_srgb
-	gimp_color_profile_open_from_data
-	gimp_color_profile_open_from_file
-	gimp_color_profile_save_to_data
 	gimp_hsl_get_type
 	gimp_hsl_set
 	gimp_hsl_set_alpha

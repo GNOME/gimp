@@ -150,7 +150,7 @@ static void      gimp_display_shell_real_rotated   (GimpDisplayShell *shell);
 static const guint8 *
                  gimp_display_shell_get_icc_profile(GimpColorManaged *managed,
                                                     gsize            *len);
-static GimpColorProfile
+static GimpColorProfile *
                gimp_display_shell_get_color_profile(GimpColorManaged *managed);
 static void      gimp_display_shell_profile_changed(GimpColorManaged *managed);
 
@@ -1138,7 +1138,7 @@ gimp_display_shell_get_icc_profile (GimpColorManaged *managed,
   return NULL;
 }
 
-static GimpColorProfile
+static GimpColorProfile *
 gimp_display_shell_get_color_profile (GimpColorManaged *managed)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (managed);

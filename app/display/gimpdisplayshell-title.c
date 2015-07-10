@@ -461,7 +461,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                 i += print (title, title_len, i, "%s",
                             gimp_color_profile_get_label (profile));
 
-                gimp_color_profile_close (profile);
+                g_object_unref (profile);
               }
               break;
 

@@ -60,18 +60,21 @@ image_get_color_profile_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpColorProfile profile;
+      GimpColorProfile *profile;
 
       profile = gimp_image_get_color_profile (image);
 
       if (profile)
         {
-          gsize length;
+          const guint8 *data;
+          gsize         length;
 
-          profile_data = gimp_color_profile_save_to_data (profile, &length, NULL);
+          data = gimp_color_profile_get_icc_profile (profile, &length);
+
+          profile_data = g_memdup (data, length);
           num_bytes = length;
 
-          gimp_color_profile_close (profile);
+          g_object_unref (profile);
         }
     }
 
@@ -108,15 +111,16 @@ image_set_color_profile_invoker (GimpProcedure         *procedure,
     {
       if (color_profile)
         {
-          GimpColorProfile profile;
+          GimpColorProfile *profile;
 
-          profile = gimp_color_profile_open_from_data (color_profile, num_bytes,
-                                                       error);
+          profile = gimp_color_profile_new_from_icc_profile (color_profile,
+                                                             num_bytes,
+                                                             error);
 
           if (profile)
             {
               success = gimp_image_set_color_profile (image, profile, error);
-              gimp_color_profile_close (profile);
+              g_object_unref (profile);
             }
           else
             success = FALSE;
@@ -149,15 +153,18 @@ image_get_effective_color_profile_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpColorProfile profile;
-      gsize            length;
+      GimpColorProfile *profile;
+      const guint8     *data;
+      gsize             length;
 
       profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-      profile_data = gimp_color_profile_save_to_data (profile, &length, NULL);
+      data = gimp_color_profile_get_icc_profile (profile, &length);
+
+      profile_data = g_memdup (data, length);
       num_bytes = length;
 
-      gimp_color_profile_close (profile);
+      g_object_unref (profile);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -197,16 +204,18 @@ image_convert_color_profile_invoker (GimpProcedure         *procedure,
     {
       if (color_profile)
         {
-          GimpColorProfile profile;
+          GimpColorProfile *profile;
 
-          profile = gimp_color_profile_open_from_data (color_profile, num_bytes,
-                                                       error);
+          profile = gimp_color_profile_new_from_icc_profile (color_profile,
+                                                             num_bytes,
+                                                             error);
 
           if (profile)
             {
               success = gimp_image_convert_color_profile (image, profile,
                                                           intent, bpc,
                                                           progress, error);
+              g_object_unref (profile);
             }
           else
             success = FALSE;
