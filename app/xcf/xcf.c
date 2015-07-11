@@ -416,6 +416,12 @@ xcf_save_invoker (GimpProcedure         *procedure,
       if (progress)
         gimp_progress_end (progress);
     }
+  else
+    {
+      g_propagate_prefixed_error (error, my_error,
+                                  _("Error creating '%s': "),
+                                  filename);
+    }
 
   g_free (filename);
   g_object_unref (file);
