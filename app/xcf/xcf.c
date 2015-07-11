@@ -407,17 +407,9 @@ xcf_save_invoker (GimpProcedure         *procedure,
         }
 
       if (! success)
-        {
-          g_propagate_prefixed_error (error, my_error,
-                                      _("Error writing '%s': "),
-                                      filename);
-        }
-      else
-        {
-          gimp_image_set_file (image, file);
-          gimp_image_saved (image, file);
-          gimp_image_clean_all (image);
-        }
+        g_propagate_prefixed_error (error, my_error,
+                                    _("Error writing '%s': "),
+                                    filename);
 
       g_object_unref (info.output);
 
