@@ -153,9 +153,8 @@ xcf_init (Gimp *gimp)
                                                        "Filename",
                                                        "The name of the file "
                                                        "to save the image in, "
-                                                       "in the on-disk "
-                                                       "character set and "
-                                                       "encoding",
+                                                       "in URI format and "
+                                                       "UTF-8 encoding",
                                                        TRUE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
