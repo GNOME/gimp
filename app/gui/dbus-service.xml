@@ -14,6 +14,12 @@
       <arg type="b" name="success" direction="out" />
     </method>
 
+    <method name="BatchRun">
+      <arg type="s" name="interpreter" direction="in" />
+      <arg type="s" name="command" direction="in" />
+      <arg type="b" name="success" direction="out" />
+    </method>
+
     <method name="Activate" />
 
     <signal name="Opened">

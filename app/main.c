@@ -483,6 +483,9 @@ main (int    argc,
 	g_print ("%s\n",
 		 _("Another GIMP instance is already running."));
 
+      if (batch_commands)
+        gimp_unique_batch_run (batch_interpreter, batch_commands);
+
       gdk_notify_startup_complete ();
 
       return EXIT_SUCCESS;
