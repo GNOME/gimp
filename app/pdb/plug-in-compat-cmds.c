@@ -1884,9 +1884,9 @@ plug_in_icc_profile_info_invoker (GimpProcedure         *procedure,
 
       profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-      profile_name = gimp_color_profile_get_model (profile);
-      profile_desc = gimp_color_profile_get_description (profile);
-      profile_info = gimp_color_profile_get_summary (profile);
+      profile_name = g_strdup (gimp_color_profile_get_model (profile));
+      profile_desc = g_strdup (gimp_color_profile_get_description (profile));
+      profile_info = g_strdup (gimp_color_profile_get_summary (profile));
 
       g_object_unref (profile);
 
@@ -1935,9 +1935,9 @@ plug_in_icc_profile_file_info_invoker (GimpProcedure         *procedure,
 
           if (p)
             {
-              profile_name = gimp_color_profile_get_model (p);
-              profile_desc = gimp_color_profile_get_description (p);
-              profile_info = gimp_color_profile_get_summary (p);
+              profile_name = g_strdup (gimp_color_profile_get_model (p));
+              profile_desc = g_strdup (gimp_color_profile_get_description (p));
+              profile_info = g_strdup (gimp_color_profile_get_summary (p));
 
               g_object_unref (p);
             }

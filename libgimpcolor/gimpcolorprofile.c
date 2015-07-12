@@ -60,6 +60,13 @@ struct _GimpColorProfilePrivate
   cmsHPROFILE  lcms_profile;
   guint8      *data;
   gsize        length;
+
+  gchar       *description;
+  gchar       *manufacturer;
+  gchar       *model;
+  gchar       *copyright;
+  gchar       *label;
+  gchar       *summary;
 };
 
 
@@ -118,6 +125,13 @@ gimp_color_profile_finalize (GObject *object)
       profile->priv->data   = NULL;
       profile->priv->length = 0;
     }
+
+  g_free (profile->priv->description);
+  g_free (profile->priv->manufacturer);
+  g_free (profile->priv->model);
+  g_free (profile->priv->copyright);
+  g_free (profile->priv->label);
+  g_free (profile->priv->summary);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -376,8 +390,6 @@ gimp_color_profile_get_info (GimpColorProfile *profile,
   cmsUInt32Number  size;
   gchar           *text = NULL;
 
-  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
-
   size = cmsGetProfileInfoASCII (profile->priv->lcms_profile, info,
                                  "en", "US", NULL, 0);
   if (size > 0)
@@ -399,165 +411,181 @@ gimp_color_profile_get_info (GimpColorProfile *profile,
  * gimp_color_profile_get_description:
  * @profile: a #GimpColorProfile
  *
- * Return value: a newly allocated string containing @profile's
- *               description. Free with g_free().
+ * Return value: a string containing @profile's description. The
+ *               returned value belongs to @profile and must not be
+ *               modified or freed.
  *
  * Since: 2.10
  **/
-gchar *
+const gchar *
 gimp_color_profile_get_description (GimpColorProfile *profile)
 {
-  return gimp_color_profile_get_info (profile, cmsInfoDescription);
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
+
+  if (! profile->priv->description)
+    profile->priv->description =
+      gimp_color_profile_get_info (profile, cmsInfoDescription);
+
+  return profile->priv->description;
 }
 
 /**
  * gimp_color_profile_get_manufacturer:
  * @profile: a #GimpColorProfile
  *
- * Return value: a newly allocated string containing @profile's
- *               manufacturer. Free with g_free().
+ * Return value: a string containing @profile's manufacturer. The
+ *               returned value belongs to @profile and must not be
+ *               modified or freed.
  *
  * Since: 2.10
  **/
-gchar *
+const gchar *
 gimp_color_profile_get_manufacturer (GimpColorProfile *profile)
 {
-  return gimp_color_profile_get_info (profile, cmsInfoManufacturer);
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
+
+  if (! profile->priv->manufacturer)
+    profile->priv->manufacturer =
+      gimp_color_profile_get_info (profile, cmsInfoManufacturer);
+
+  return profile->priv->manufacturer;
 }
 
 /**
  * gimp_color_profile_get_model:
  * @profile: a #GimpColorProfile
  *
- * Return value: a newly allocated string containing @profile's
- *               model. Free with g_free().
+ * Return value: a string containing @profile's model. The returned
+ *               value belongs to @profile and must not be modified or
+ *               freed.
  *
  * Since: 2.10
  **/
-gchar *
+const gchar *
 gimp_color_profile_get_model (GimpColorProfile *profile)
 {
-  return gimp_color_profile_get_info (profile, cmsInfoModel);
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
+
+  if (! profile->priv->model)
+    profile->priv->model =
+      gimp_color_profile_get_info (profile, cmsInfoModel);
+
+  return profile->priv->model;
 }
 
 /**
  * gimp_color_profile_get_copyright:
  * @profile: a #GimpColorProfile
  *
- * Return value: a newly allocated string containing @profile's
- *               copyright. Free with g_free().
+ * Return value: a string containing @profile's copyright. The
+ *               returned value belongs to @profile and must not be
+ *               modified or freed.
  *
  * Since: 2.10
  **/
-gchar *
+const gchar *
 gimp_color_profile_get_copyright (GimpColorProfile *profile)
 {
-  return gimp_color_profile_get_info (profile, cmsInfoCopyright);
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
+
+  if (! profile->priv->copyright)
+    profile->priv->copyright =
+      gimp_color_profile_get_info (profile, cmsInfoCopyright);
+
+  return profile->priv->copyright;
 }
 
 /**
  * gimp_color_profile_get_label:
  * @profile: a #GimpColorProfile
  *
- * This function returns a newly allocated string containing
- * @profile's "title", a string that can be used to label the profile
- * in a user interface.
+ * This function returns a string containing @profile's "title", a
+ * string that can be used to label the profile in a user interface.
  *
- * Return value: the @profile's label. Free with g_free().
+ * Return value: the @profile's label. The returned value belongs to
+ *               @profile and must not be modified or freed.
  *
  * Since: 2.10
  **/
-gchar *
+const gchar *
 gimp_color_profile_get_label (GimpColorProfile *profile)
 {
-  gchar *label;
 
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
 
-  label = gimp_color_profile_get_description (profile);
-
-  if (label && ! strlen (label))
+  if (! profile->priv->label)
     {
-      g_free (label);
-      label = NULL;
+      const gchar *label = gimp_color_profile_get_description (profile);
+
+      if (! label || ! strlen (label))
+        label = gimp_color_profile_get_model (profile);
+
+      if (! label || ! strlen (label))
+        label = _("(unnamed profile)");
+
+      profile->priv->label = g_strdup (label);
     }
 
-  if (! label)
-    label = gimp_color_profile_get_model (profile);
-
-  if (label && ! strlen (label))
-    {
-      g_free (label);
-      label = NULL;
-    }
-
-  if (! label)
-    label = g_strdup (_("(unnamed profile)"));
-
-  return label;
+  return profile->priv->label;
 }
 
 /**
  * gimp_color_profile_get_summary:
  * @profile: a #GimpColorProfile
  *
- * This function return a newly allocated string containing a
- * multi-line summary of @profile's description, model, manufacturer
- * and copyright, to be used as detailled information about the
- * prpfile in a user interface.
+ * This function return a string containing a multi-line summary of
+ * @profile's description, model, manufacturer and copyright, to be
+ * used as detailled information about the profile in a user
+ * interface.
  *
- * Return value: the @profile's summary. Free with g_free().
+ * Return value: the @profile's summary. The returned value belongs to
+ *               @profile and must not be modified or freed.
  *
  * Since: 2.10
  **/
-gchar *
+const gchar *
 gimp_color_profile_get_summary (GimpColorProfile *profile)
 {
-  GString *string;
-  gchar   *text;
-
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
 
-  string = g_string_new (NULL);
-
-  text = gimp_color_profile_get_description (profile);
-  if (text)
+  if (! profile->priv->summary)
     {
-      g_string_append (string, text);
-      g_free (text);
+      GString     *string = g_string_new (NULL);
+      const gchar *text;
+
+      text = gimp_color_profile_get_description (profile);
+      if (text)
+        g_string_append (string, text);
+
+      text = gimp_color_profile_get_model (profile);
+      if (text)
+        {
+          if (string->len > 0)
+            g_string_append (string, "\n");
+
+          g_string_append (string, text);
+        }
+
+      text = gimp_color_profile_get_manufacturer (profile);
+      if (text)
+        {
+          if (string->len > 0)
+            g_string_append (string, "\n");
+
+          g_string_append (string, text);
+        }
+
+      text = gimp_color_profile_get_copyright (profile);
+      if (text)
+        {
+          if (string->len > 0)
+            g_string_append (string, "\n");
+        }
+
+      profile->priv->summary = g_string_free (string, FALSE);
     }
 
-  text = gimp_color_profile_get_model (profile);
-  if (text)
-    {
-      if (string->len > 0)
-        g_string_append (string, "\n");
-
-      g_string_append (string, text);
-      g_free (text);
-    }
-
-  text = gimp_color_profile_get_manufacturer (profile);
-  if (text)
-    {
-      if (string->len > 0)
-        g_string_append (string, "\n");
-
-      g_string_append (string, text);
-      g_free (text);
-    }
-
-  text = gimp_color_profile_get_copyright (profile);
-  if (text)
-    {
-      if (string->len > 0)
-        g_string_append (string, "\n");
-
-      g_string_append (string, text);
-      g_free (text);
-    }
-
-  return g_string_free (string, FALSE);
+  return profile->priv->summary;
 }
 
 /**

@@ -343,8 +343,8 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
   GimpColorManaged *managed;
   GtkWidget        *label;
   GimpColorProfile *profile = NULL;
-  gchar            *text;
-  gchar            *tooltip;
+  const gchar      *text;
+  const gchar      *tooltip;
 
   config  = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
   managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
@@ -378,15 +378,12 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
     }
   else
     {
-      text    = g_strdup (_("None"));
+      text    = _("None");
       tooltip = NULL;
     }
 
   gtk_label_set_text (GTK_LABEL (label), text);
   gimp_help_set_help_data (label, tooltip, NULL);
-
-  g_free (text);
-  g_free (tooltip);
 
   if (profile)
     g_object_unref (profile);

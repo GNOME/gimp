@@ -80,13 +80,13 @@ const guint8     * gimp_color_profile_get_icc_profile       (GimpColorProfile  *
                                                              gsize             *length);
 gpointer           gimp_color_profile_get_lcms_profile      (GimpColorProfile  *profile);
 
-gchar            * gimp_color_profile_get_description       (GimpColorProfile  *profile);
-gchar            * gimp_color_profile_get_manufacturer      (GimpColorProfile  *profile);
-gchar            * gimp_color_profile_get_model             (GimpColorProfile  *profile);
-gchar            * gimp_color_profile_get_copyright         (GimpColorProfile  *profile);
+const gchar      * gimp_color_profile_get_description       (GimpColorProfile  *profile);
+const gchar      * gimp_color_profile_get_manufacturer      (GimpColorProfile  *profile);
+const gchar      * gimp_color_profile_get_model             (GimpColorProfile  *profile);
+const gchar      * gimp_color_profile_get_copyright         (GimpColorProfile  *profile);
 
-gchar            * gimp_color_profile_get_label             (GimpColorProfile  *profile);
-gchar            * gimp_color_profile_get_summary           (GimpColorProfile  *profile);
+const gchar      * gimp_color_profile_get_label             (GimpColorProfile  *profile);
+const gchar      * gimp_color_profile_get_summary           (GimpColorProfile  *profile);
 
 gboolean           gimp_color_profile_is_equal              (GimpColorProfile  *profile1,
                                                              GimpColorProfile  *profile2);

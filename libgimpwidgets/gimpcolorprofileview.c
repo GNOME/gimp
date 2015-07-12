@@ -136,8 +136,8 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
   if (view->priv->profile)
     {
       GtkTextIter  iter;
-      gchar       *label;
-      gchar       *summary;
+      const gchar *label;
+      const gchar *summary;
 
       g_object_ref (view->priv->profile);
 
@@ -156,9 +156,6 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
 
       if (summary)
         gtk_text_buffer_insert (buffer, &iter, summary, -1);
-
-      g_free (label);
-      g_free (summary);
     }
 }
 

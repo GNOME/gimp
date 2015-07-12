@@ -292,8 +292,6 @@ gimp_image_convert_color_profile (GimpImage                *image,
   GimpColorProfile *src_profile;
   GimpColorProfile *builtin_profile;
   const Babl       *layer_format;
-  gchar            *src_label;
-  gchar            *dest_label;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (dest_profile != NULL, FALSE);
@@ -311,16 +309,11 @@ gimp_image_convert_color_profile (GimpImage                *image,
       return TRUE;
     }
 
-  src_label  = gimp_color_profile_get_label (src_profile);
-  dest_label = gimp_color_profile_get_label (dest_profile);
-
   if (progress)
     gimp_progress_start (progress, FALSE,
                          _("Converting from '%s' to '%s'"),
-                         src_label, dest_label);
-
-  g_free (dest_label);
-  g_free (src_label);
+                         gimp_color_profile_get_label (src_profile),
+                         gimp_color_profile_get_label (dest_profile));
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                _("Color profile conversion"));

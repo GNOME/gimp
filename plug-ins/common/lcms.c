@@ -426,18 +426,14 @@ lcms_icc_apply (GimpColorConfig          *config,
 
   if (gimp_color_profile_is_equal (src_profile, dest_profile))
     {
-      gchar *src_label  = gimp_color_profile_get_label (src_profile);
-      gchar *dest_label = gimp_color_profile_get_label (dest_profile);
+      g_printerr ("lcms: skipping conversion because profiles are equal:\n"
+                  " %s\n"
+                  " %s\n",
+                  gimp_color_profile_get_label (src_profile),
+                  gimp_color_profile_get_label (dest_profile));
 
       g_object_unref (src_profile);
       g_object_unref (dest_profile);
-
-      g_printerr ("lcms: skipping conversion because profiles seem to be equal:\n");
-      g_printerr (" %s\n", src_label);
-      g_printerr (" %s\n", dest_label);
-
-      g_free (src_label);
-      g_free (dest_label);
 
       if (file)
         g_object_unref (file);
@@ -530,16 +526,14 @@ lcms_icc_profile_src_label_new (gint32            image,
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  name = gimp_color_profile_get_label (profile);
   label = g_object_new (GTK_TYPE_LABEL,
-                        "label",   name,
+                        "label",   gimp_color_profile_get_label (profile),
                         "wrap",    TRUE,
                         "justify", GTK_JUSTIFY_LEFT,
                         "xalign",  0.0,
                         "yalign",  0.0,
                         "xpad",    24,
                         NULL);
-  g_free (name);
 
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
@@ -554,13 +548,10 @@ static GtkWidget *
 lcms_icc_profile_dest_label_new (GimpColorProfile *profile)
 {
   GtkWidget *label;
-  gchar     *name;
   gchar     *text;
 
-  name = gimp_color_profile_get_label (profile);
   text = g_strdup_printf (_("Convert the image to the RGB working space (%s)?"),
-                          name);
-  g_free (name);
+                          gimp_color_profile_get_label (profile));
 
   label = g_object_new (GTK_TYPE_LABEL,
                         "label",   text,
@@ -653,7 +644,6 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   GtkWidget        *dialog;
   gchar            *history;
   gchar            *label;
-  gchar            *name;
   const gchar      *rgb_filename = NULL;
   GimpColorProfile *profile      = NULL;
   GError           *error        = NULL;
@@ -679,9 +669,8 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   if (! profile)
     profile = gimp_color_profile_new_srgb ();
 
-  name = gimp_color_profile_get_label (profile);
-  label = g_strdup_printf (_("RGB workspace (%s)"), name);
-  g_free (name);
+  label = g_strdup_printf (_("RGB workspace (%s)"),
+                           gimp_color_profile_get_label (profile));
 
   g_object_unref (profile);
 
@@ -708,7 +697,6 @@ lcms_dialog (GimpColorConfig *config,
   GtkWidget                *label;
   GtkWidget                *combo;
   GimpColorProfile         *src_profile;
-  gchar                    *name;
   gboolean                  success = FALSE;
   gboolean                  run;
 
@@ -748,14 +736,10 @@ lcms_dialog (GimpColorConfig *config,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  name = gimp_color_profile_get_label (src_profile);
-
-  label = gtk_label_new (name);
+  label = gtk_label_new (gimp_color_profile_get_label (src_profile));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_container_add (GTK_CONTAINER (frame), label);
   gtk_widget_show (label);
-
-  g_free (name);
 
   frame = gimp_frame_new (apply ? _("Convert to") : _("Assign"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);

@@ -415,7 +415,6 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
-  gchar        *l = NULL;
 
   g_return_if_fail (GIMP_IS_COLOR_PROFILE_COMBO_BOX (combo));
 
@@ -438,22 +437,16 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
         }
       else
         {
-          l = gimp_color_profile_get_label (profile);
+          label = gimp_color_profile_get_label (profile);
           g_object_unref (profile);
         }
     }
-  else
-    {
-      l = g_strdup (label);
-    }
 
   if (_gimp_color_profile_store_history_add (GIMP_COLOR_PROFILE_STORE (model),
-                                             filename, l, &iter))
+                                             filename, label, &iter))
     {
       gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
     }
-
-  g_free (l);
 }
 
 /**
