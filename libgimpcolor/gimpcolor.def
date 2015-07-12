@@ -34,6 +34,7 @@ EXPORTS
 	gimp_color_profile_get_manufacturer
 	gimp_color_profile_get_model
 	gimp_color_profile_get_summary
+	gimp_color_profile_get_type
 	gimp_color_profile_is_cmyk
 	gimp_color_profile_is_equal
 	gimp_color_profile_is_rgb
