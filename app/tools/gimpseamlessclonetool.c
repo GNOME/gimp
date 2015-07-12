@@ -618,7 +618,7 @@ gimp_seamless_clone_tool_options_notify (GimpTool         *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  if (! strcmp (pspec->name, "max-refine-steps"))
+  if (! strcmp (pspec->name, "max-refine-scale"))
     {
       if (gimp_seamless_clone_tool_render_node_update (sc))
         {
@@ -689,7 +689,7 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
 
   op = gegl_node_new_child (node,
                             "operation",         "gegl:seamless-clone",
-                            "max-refine-steps",  options->max_refine_steps,
+                            "max-refine-scale",  options->max_refine_scale,
                             NULL);
 
   overlay = gegl_node_new_child (node,
@@ -723,7 +723,7 @@ gimp_seamless_clone_tool_create_render_node (GimpSeamlessCloneTool *sc)
 static gboolean
 gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
 {
-  static gint rendered__max_refine_steps = -1;
+  static gint rendered__max_refine_scale = -1;
   static gint rendered_xoff              = G_MAXINT;
   static gint rendered_yoff              = G_MAXINT;
 
@@ -732,7 +732,7 @@ gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
   gint          off_x, off_y;
 
   /* All properties stay the same. No need to update. */
-  if (rendered__max_refine_steps == options->max_refine_steps &&
+  if (rendered__max_refine_scale == options->max_refine_scale &&
       rendered_xoff == sc->xoff                               &&
       rendered_yoff == sc->yoff)
     return FALSE;
@@ -742,10 +742,10 @@ gimp_seamless_clone_tool_render_node_update (GimpSeamlessCloneTool *sc)
   gegl_node_set (sc->sc_node,
                  "xoff", (gint) sc->xoff - off_x,
                  "yoff", (gint) sc->yoff - off_y,
-                 "max-refine-steps", (gint) options->max_refine_steps,
+                 "max-refine-scale", (gint) options->max_refine_scale,
                  NULL);
 
-  rendered__max_refine_steps = options->max_refine_steps;
+  rendered__max_refine_scale = options->max_refine_scale;
   rendered_xoff              = sc->xoff;
   rendered_yoff              = sc->yoff;
 

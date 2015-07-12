@@ -39,7 +39,7 @@
 enum
 {
   PROP_0,
-  PROP_MAX_REFINE_STEPS,
+  PROP_MAX_REFINE_SCALE,
 };
 
 
@@ -67,10 +67,10 @@ gimp_seamless_clone_options_class_init (GimpSeamlessCloneOptionsClass *klass)
   object_class->set_property = gimp_seamless_clone_options_set_property;
   object_class->get_property = gimp_seamless_clone_options_get_property;
 
-  GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_MAX_REFINE_STEPS,
-                                 "max-refine-steps",
-                                 _("Maximal amount of refinement points to be used for the interpolation mesh"),
-                                 0, 100000, 2000,
+  GIMP_CONFIG_INSTALL_PROP_INT  (object_class, PROP_MAX_REFINE_SCALE,
+                                 "max-refine-scale",
+                                 _("Maximal scale of refinement points to be used for the interpolation mesh"),
+                                 0, 50, 5,
                                  GIMP_PARAM_STATIC_STRINGS);
 }
 
@@ -89,8 +89,8 @@ gimp_seamless_clone_options_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_MAX_REFINE_STEPS:
-      options->max_refine_steps = g_value_get_int (value);
+    case PROP_MAX_REFINE_SCALE:
+      options->max_refine_scale = g_value_get_int (value);
       break;
 
     default:
@@ -109,8 +109,8 @@ gimp_seamless_clone_options_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_MAX_REFINE_STEPS:
-      g_value_set_int (value, options->max_refine_steps);
+    case PROP_MAX_REFINE_SCALE:
+      g_value_set_int (value, options->max_refine_scale);
       break;
 
     default:
@@ -126,10 +126,10 @@ gimp_seamless_clone_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *scale;
 
-  scale = gimp_prop_spin_scale_new (config, "max-refine-steps",
-                                    _("Refinement points"),
+  scale = gimp_prop_spin_scale_new (config, "max-refine-scale",
+                                    _("Refinement scale"),
                                     1.0, 10.0, 0);
-  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 100000.0);
+  gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 50.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
