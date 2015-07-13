@@ -45,6 +45,7 @@
 
 #include "file/file-procedure.h"
 #include "file/file-save.h"
+#include "file/file-utils.h"
 
 #include "gimpdnd-xds.h"
 #include "gimpfiledialog.h"
@@ -81,21 +82,29 @@ gimp_dnd_xds_source_set (GdkDragContext *context,
 
   if (image)
     {
-      GdkAtom  type     = gdk_atom_intern_static_string ("text/plain");
-      gchar   *filename = gimp_image_get_filename (image);
+      GdkAtom  type = gdk_atom_intern_static_string ("text/plain");
+      GFile   *untitled;
+      GFile   *file;
       gchar   *basename;
 
-      if (filename)
+      basename = g_strconcat (_("Untitled"), ".xcf", NULL);
+      untitled = g_file_new_for_path (basename);
+      g_free (basename);
+
+      file = gimp_image_get_any_file (image);
+
+      if (file)
         {
-          basename = g_path_get_basename (filename);
+          GFile *xcf_file = file_utils_file_with_new_ext (file, untitled);
+          basename = g_file_get_basename (xcf_file);
+          g_object_unref (xcf_file);
         }
       else
         {
-          gchar *tmp = g_strconcat (_("Untitled"), ".xcf", NULL);
-          basename = g_filename_from_utf8 (tmp, -1, NULL, NULL, NULL);
-          g_free (tmp);
+          basename = g_file_get_path (untitled);
         }
 
+      g_object_unref (untitled);
 
       gdk_property_change (context->source_window,
                            property, type, 8, GDK_PROP_MODE_REPLACE,
@@ -103,7 +112,6 @@ gimp_dnd_xds_source_set (GdkDragContext *context,
                            basename ? strlen (basename) : 0);
 
       g_free (basename);
-      g_free (filename);
     }
   else
     {
