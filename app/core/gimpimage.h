@@ -151,7 +151,6 @@ void            gimp_image_set_save_a_copy_file  (GimpImage          *image,
 
 void            gimp_image_set_filename          (GimpImage          *image,
                                                   const gchar        *filename);
-gchar         * gimp_image_get_filename          (const GimpImage    *image);
 
 const gchar   * gimp_image_get_display_name      (GimpImage          *image);
 const gchar   * gimp_image_get_display_path      (GimpImage          *image);

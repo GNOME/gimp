@@ -2121,21 +2121,6 @@ gimp_image_set_save_a_copy_file (GimpImage *image,
     }
 }
 
-gchar *
-gimp_image_get_filename (const GimpImage *image)
-{
-  GFile *file;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  file = gimp_image_get_file (image);
-
-  if (! file)
-    return NULL;
-
-  return g_file_get_path (file);
-}
-
 static gchar *
 gimp_image_format_display_uri (GimpImage *image,
                                gboolean   basename)
