@@ -2049,7 +2049,17 @@ HELP
     success = FALSE;
 
   if (success)
-    gimp_image_set_filename (image, filename);
+    {
+      GFile *file = NULL;
+
+      if (filename && strlen (filename))
+        file = file_utils_filename_to_file (image->gimp, filename, NULL);
+
+      gimp_image_set_file (image, file);
+
+      if (file)
+        g_object_unref (file);
+    }
 }
 CODE
     );
@@ -2816,6 +2826,7 @@ CODE
               "core/gimpprogress.h"
               "core/gimptempbuf.h"
               "core/gimpunit.h"
+              "file/file-utils.h"
               "plug-in/gimpplugin.h"
               "plug-in/gimppluginmanager.h"
               "gimppdbcontext.h"

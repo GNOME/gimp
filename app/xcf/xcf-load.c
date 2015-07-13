@@ -506,7 +506,7 @@ xcf_load_image (Gimp     *gimp,
   if (info->active_channel)
     gimp_image_set_active_channel (image, info->active_channel);
 
-  gimp_image_set_filename (image, info->filename);
+  gimp_image_set_file (image, info->file);
 
   if (info->tattoo_state > 0)
     gimp_image_set_tattoo_state (image, info->tattoo_state);

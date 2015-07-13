@@ -1937,23 +1937,6 @@ gimp_image_get_file (const GimpImage *image)
   return GIMP_IMAGE_GET_PRIVATE (image)->file;
 }
 
-void
-gimp_image_set_filename (GimpImage   *image,
-                         const gchar *filename)
-{
-  GFile *file = NULL;
-
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  if (filename && strlen (filename))
-    file = file_utils_filename_to_file (image->gimp, filename, NULL);
-
-  gimp_image_set_file (image, file);
-
-  if (file)
-    g_object_unref (file);
-}
-
 /**
  * gimp_image_get_imported_file:
  * @image: A #GimpImage.

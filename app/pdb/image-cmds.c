@@ -53,6 +53,7 @@
 #include "core/gimpselection.h"
 #include "core/gimptempbuf.h"
 #include "core/gimpunit.h"
+#include "file/file-utils.h"
 #include "plug-in/gimpplugin.h"
 #include "plug-in/gimppluginmanager.h"
 #include "vectors/gimpvectors.h"
@@ -2078,7 +2079,17 @@ image_set_filename_invoker (GimpProcedure         *procedure,
         success = FALSE;
 
       if (success)
-        gimp_image_set_filename (image, filename);
+        {
+          GFile *file = NULL;
+
+          if (filename && strlen (filename))
+            file = file_utils_filename_to_file (image->gimp, filename, NULL);
+
+          gimp_image_set_file (image, file);
+
+          if (file)
+            g_object_unref (file);
+        }
     }
 
   return gimp_procedure_get_return_values (procedure, success,
