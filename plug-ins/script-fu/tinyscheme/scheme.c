@@ -2197,13 +2197,14 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
                     } else if(c<32) {
                          snprintf(p,STRBUFFSIZE, "#\\%s", charnames[c]);
                          break;
-                     }
+                    }
 #else
                     if(c<32) {
-                      snprintf(p,STRBUFFSIZE,"#\\x%x",c); break;
+                      snprintf(p,STRBUFFSIZE,"#\\x%x",c);
+                      break;
                     }
 #endif
-                    snprintf(p,STRBUFFSIZE,"#\\%c",c); break;
+                    snprintf(p,STRBUFFSIZE,"#\\%c",c);
                     break;
                }
           }
