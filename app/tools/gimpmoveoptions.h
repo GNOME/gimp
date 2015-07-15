@@ -35,7 +35,7 @@ typedef struct _GimpToolOptionsClass GimpMoveOptionsClass;
 
 struct _GimpMoveOptions
 {
-  GimpToolOptions    parent_instence;
+  GimpToolOptions    parent_instance;
 
   GimpTransformType  move_type;
   gboolean           move_current;

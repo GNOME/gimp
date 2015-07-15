@@ -35,7 +35,7 @@ typedef struct _GimpToolOptionsClass GimpCropOptionsClass;
 
 struct _GimpCropOptions
 {
-  GimpToolOptions  parent_instence;
+  GimpToolOptions  parent_instance;
 
   /* Work on the current layer rather than the image. */
   gboolean         layer_only;
@@ -44,6 +44,7 @@ struct _GimpCropOptions
    * will resize the image/layer.
    */
   gboolean         allow_growing;
+  
 };
 
 

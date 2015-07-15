@@ -38,7 +38,7 @@ typedef struct _GimpAlignOptionsClass GimpAlignOptionsClass;
 
 struct _GimpAlignOptions
 {
-  GimpToolOptions         parent_instence;
+  GimpToolOptions         parent_instance;
 
   GimpAlignReferenceType  align_reference;
   gdouble                 offset_x;
