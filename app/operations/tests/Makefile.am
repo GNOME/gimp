@@ -13,6 +13,11 @@ libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
+if OS_WIN32
+else
+libm = -lm
+endif
+
 AM_CPPFLAGS = \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/app	\
@@ -57,7 +62,8 @@ LDADD = \
 	$(GDK_PIXBUF_LIBS)					\
 	$(PANGOCAIRO_LIBS)					\
 	$(GEGL_LIBS)						\
-	$(GLIB_LIBS)						
+	$(GLIB_LIBS)						\
+	$(libm)
 
 output-dir:
 	mkdir -p output
