@@ -413,8 +413,9 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
                                          const gchar              *filename,
                                          const gchar              *label)
 {
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
+  GimpColorProfile *profile = NULL;
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
 
   g_return_if_fail (GIMP_IS_COLOR_PROFILE_COMBO_BOX (combo));
 
@@ -422,9 +423,8 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
 
   if (filename && ! (label && *label))
     {
-      GFile            *file;
-      GimpColorProfile *profile;
-      GError           *error = NULL;
+      GFile  *file;
+      GError *error = NULL;
 
       file = g_file_new_for_path (filename);
       profile = gimp_color_profile_new_from_file (file, &error);
@@ -438,7 +438,6 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
       else
         {
           label = gimp_color_profile_get_label (profile);
-          g_object_unref (profile);
         }
     }
 
@@ -447,6 +446,9 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
     {
       gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
     }
+
+  if (profile)
+    g_object_unref (profile);
 }
 
 /**
