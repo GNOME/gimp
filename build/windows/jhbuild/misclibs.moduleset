@@ -29,10 +29,9 @@
 </autotools>
 
 <autotools id="librsvg" autogen-sh="configure">
-	<branch version="2.40.2" repo="gnome.org"
-			module="librsvg/2.40/librsvg-2.40.2.tar.xz"
-			hash="sha256:48049b643294636df7de1a4b997414d699666f5dc44776945c218a257d2a291c">
-		<patch file="librsvg-bug710163.patch" strip="1"/>
+	<branch version="2.40.9" repo="gnome.org"
+			module="librsvg/2.40/librsvg-2.40.9.tar.xz"
+			hash="sha256:13964c5d35357552b47d365c34215eee0a63bf0e6059b689f048648c6bf5f43a">
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>
