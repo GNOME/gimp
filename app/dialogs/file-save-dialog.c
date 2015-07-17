@@ -182,6 +182,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
     }
 
   g_object_ref (dialog);
+  g_object_ref (dialog->image);
 
   switch (file_save_dialog_check_file (save_dialog, gimp,
                                        &file, &basename, &save_proc))
@@ -256,6 +257,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
       break;
     }
 
+  g_object_unref (dialog->image);
   g_object_unref (dialog);
 }
 
