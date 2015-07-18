@@ -222,6 +222,8 @@ module_autogenargs['gimp-gtk3']  = autogenargs + """ --disable-python \
 
 module_autogenargs['gdb']        = autogenargs.replace ("--disable-static", "")
 
+module_cmakeargs['openjpeg2'] = cmakeargs + " -DBUILD_PKGCONFIG_FILES=ON"
+
 module_makeargs['mingw32-pthreads']= " CROSS=" + mingw_tool_prefix
 
 module_extra_env.update (

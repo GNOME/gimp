@@ -83,4 +83,11 @@
 	</branch>
 </autotools>
 
+<cmake id="openjpeg2">
+    <branch version="2.1.0" repo="sf.net"
+            module="openjpeg.mirror/2.1.0/openjpeg-2.1.0.tar.gz"
+            hash="sha1:c2a255f6b51ca96dc85cd6e85c89d300018cb1cb">
+    </branch>
+</cmake>
+
 </moduleset>
