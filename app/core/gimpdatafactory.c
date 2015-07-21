@@ -411,6 +411,7 @@ gimp_data_factory_data_refresh (GimpDataFactory *factory,
 void
 gimp_data_factory_data_save (GimpDataFactory *factory)
 {
+  GList  *dirty = NULL;
   GList  *list;
   gchar  *writable_dir;
   GError *error = NULL;
@@ -418,6 +419,22 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
   if (gimp_container_is_empty (factory->priv->container))
+    return;
+
+  for (list = GIMP_LIST (factory->priv->container)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpData *data = list->data;
+
+      if (gimp_data_is_dirty (data) &&
+          gimp_data_is_writable (data))
+        {
+          dirty = g_list_prepend (dirty, data);
+        }
+    }
+
+  if (! dirty)
     return;
 
   writable_dir = gimp_data_factory_get_save_dir (factory, &error);
@@ -429,40 +446,37 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
                     error->message);
       g_clear_error (&error);
 
+      g_list_free (dirty);
+
       return;
     }
 
-  for (list = GIMP_LIST (factory->priv->container)->list;
-       list;
-       list = g_list_next (list))
+  for (list = dirty; list; list = g_list_next (list))
     {
-      GimpData *data = list->data;
+      GimpData *data  = list->data;
+      GError   *error = NULL;
 
       if (! gimp_data_get_filename (data))
         gimp_data_create_filename (data, writable_dir);
 
-      if (gimp_data_is_dirty (data) &&
-          gimp_data_is_writable (data))
+      if (! gimp_data_save (data, &error))
         {
-          GError *error = NULL;
-
-          if (! gimp_data_save (data, &error))
+          /*  check if there actually was an error (no error
+           *  means the data class does not implement save)
+           */
+          if (error)
             {
-              /*  check if there actually was an error (no error
-               *  means the data class does not implement save)
-               */
-              if (error)
-                {
-                  gimp_message (factory->priv->gimp, NULL, GIMP_MESSAGE_ERROR,
-                                _("Failed to save data:\n\n%s"),
-                                error->message);
-                  g_clear_error (&error);
-                }
+              gimp_message (factory->priv->gimp, NULL, GIMP_MESSAGE_ERROR,
+                            _("Failed to save data:\n\n%s"),
+                            error->message);
+              g_clear_error (&error);
             }
         }
     }
 
   g_free (writable_dir);
+
+  g_list_free (dirty);
 }
 
 static void
