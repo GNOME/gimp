@@ -6,9 +6,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-8\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
-"ywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-05-06 17:19+0000\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
+"cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-07-23 07:48+0000\n"
 "PO-Revision-Date: 2015-05-28 09:34+0200\n"
 "Last-Translator: Chorche <jorgtum@gmail.com>\n"
 "Language-Team: Aragonese <softaragones@googlegroups.com>\n"
@@ -609,7 +609,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-gif-load.c:980
 #: ../plug-ins/common/file-jp2-load.c:356 ../plug-ins/common/file-pcx.c:426
 #: ../plug-ins/common/file-pcx.c:432 ../plug-ins/common/file-pix.c:384
-#: ../plug-ins/common/file-png.c:897 ../plug-ins/common/file-pnm.c:585
+#: ../plug-ins/common/file-png.c:898 ../plug-ins/common/file-pnm.c:585
 #: ../plug-ins/common/file-raw.c:766 ../plug-ins/common/file-sunras.c:979
 #: ../plug-ins/common/file-tga.c:1095 ../plug-ins/common/file-tiff-load.c:1011
 #: ../plug-ins/common/file-xbm.c:898 ../plug-ins/common/film.c:745
@@ -1063,7 +1063,7 @@ msgstr "Alzar a configuración d'o mezclador de canals"
 #: ../plug-ins/common/file-html-table.c:236 ../plug-ins/common/file-mng.c:649
 #: ../plug-ins/common/file-mng.c:984 ../plug-ins/common/file-pat.c:488
 #: ../plug-ins/common/file-pcx.c:713 ../plug-ins/common/file-pdf-save.c:438
-#: ../plug-ins/common/file-pix.c:528 ../plug-ins/common/file-png.c:1369
+#: ../plug-ins/common/file-pix.c:528 ../plug-ins/common/file-png.c:1370
 #: ../plug-ins/common/file-pnm.c:1012 ../plug-ins/common/file-ps.c:1195
 #: ../plug-ins/common/file-raw.c:609 ../plug-ins/common/file-raw.c:637
 #: ../plug-ins/common/file-sunras.c:567 ../plug-ins/common/file-tga.c:1202
@@ -3043,7 +3043,7 @@ msgstr "Fin de fichero u error en leyer o capitero d'a imachen"
 #: ../plug-ins/common/file-gih.c:647 ../plug-ins/common/file-jp2-load.c:189
 #: ../plug-ins/common/file-pat.c:344 ../plug-ins/common/file-pcx.c:367
 #: ../plug-ins/common/file-pdf-load.c:861 ../plug-ins/common/file-pix.c:350
-#: ../plug-ins/common/file-png.c:769 ../plug-ins/common/file-pnm.c:501
+#: ../plug-ins/common/file-png.c:770 ../plug-ins/common/file-pnm.c:501
 #: ../plug-ins/common/file-ps.c:1025 ../plug-ins/common/file-raw.c:719
 #: ../plug-ins/common/file-sunras.c:489 ../plug-ins/common/file-tga.c:448
 #: ../plug-ins/common/file-tiff-load.c:611 ../plug-ins/common/file-wmf.c:994
@@ -3124,7 +3124,7 @@ msgstr "'%s': Fin de fichero u error en leyer os datos d'a paleta"
 #: ../plug-ins/common/file-gif-save.c:799 ../plug-ins/common/file-gih.c:1265
 #: ../plug-ins/common/file-html-table.c:257 ../plug-ins/common/file-pat.c:493
 #: ../plug-ins/common/file-pcx.c:645 ../plug-ins/common/file-pix.c:533
-#: ../plug-ins/common/file-png.c:1376 ../plug-ins/common/file-pnm.c:1017
+#: ../plug-ins/common/file-png.c:1377 ../plug-ins/common/file-pnm.c:1017
 #: ../plug-ins/common/file-ps.c:1200 ../plug-ins/common/file-sunras.c:572
 #: ../plug-ins/common/file-tga.c:1207 ../plug-ins/common/file-tiff-save.c:713
 #: ../plug-ins/common/file-xbm.c:1042 ../plug-ins/common/file-xmc.c:1454
@@ -3675,7 +3675,7 @@ msgstr ""
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1913
+#: ../plug-ins/common/file-mng.c:534 ../plug-ins/common/file-png.c:1914
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "No s'ha puesto alzar a transparencia sin perdas, Se ye alzando a opacidat en "
@@ -3710,7 +3710,7 @@ msgid "Save creation time"
 msgstr "Alzar a hora de creyación"
 
 #. Dialog init
-#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1962
+#: ../plug-ins/common/file-mng.c:1411 ../plug-ins/common/file-png.c:1963
 msgid "PNG"
 msgstr "PNG"
 
@@ -4026,17 +4026,17 @@ msgstr "Error en creyar a estructura de lectura PNG en alzar '%s'."
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Ha ocurriu una error en leyer o fichero '%s'. Ye corrupto lo fichero?"
 
-#: ../plug-ins/common/file-png.c:877
+#: ../plug-ins/common/file-png.c:878
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Modelo de color desconoixida en o fichero PNG '%s'."
 
-#: ../plug-ins/common/file-png.c:888
+#: ../plug-ins/common/file-png.c:889
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "No s'ha puesto creyar una imachen nueva ta '%s': %s"
 
-#: ../plug-ins/common/file-png.c:942
+#: ../plug-ins/common/file-png.c:943
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -4044,19 +4044,19 @@ msgstr ""
 "O fichero PNG especifica un desplazamiento que ha causau que a capa siga "
 "posicionada difuera d'a imachen."
 
-#: ../plug-ins/common/file-png.c:1244
+#: ../plug-ins/common/file-png.c:1245
 msgid "Apply PNG Offset"
 msgstr "Aplicar o desplazamiento de PNG"
 
-#: ../plug-ins/common/file-png.c:1248
+#: ../plug-ins/common/file-png.c:1249
 msgid "Ignore PNG offset"
 msgstr "Ignorar o desplazamiento de PNG"
 
-#: ../plug-ins/common/file-png.c:1249
+#: ../plug-ins/common/file-png.c:1250
 msgid "Apply PNG offset to layer"
 msgstr "Aplicar o desplazamiento de PNG a la capa"
 
-#: ../plug-ins/common/file-png.c:1273
+#: ../plug-ins/common/file-png.c:1274
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -4065,22 +4065,22 @@ msgstr ""
 "A imachen PNG que ye importando especifica un desplazamiento de %d, %d. "
 "Quier aplicar iste desplazamiento a la capa?"
 
-#: ../plug-ins/common/file-png.c:1341
+#: ../plug-ins/common/file-png.c:1342
 #, c-format
 msgid "Error creating PNG write struct while saving '%s'."
 msgstr "Error en creyar a estructura d'escritura PNG en alzar '%s'."
 
-#: ../plug-ins/common/file-png.c:1351
+#: ../plug-ins/common/file-png.c:1352
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Ha ocurriu una error en alzar '%s'. No s'ha puesto alzar a imachen."
 
-#: ../plug-ins/common/file-png.c:1979
+#: ../plug-ins/common/file-png.c:1980
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Ha ocurriu una error en cargar o fichero d'UI '%s': %s"
 
-#: ../plug-ins/common/file-png.c:1980
+#: ../plug-ins/common/file-png.c:1981
 msgid "Unknown error"
 msgstr "Error desconoixida"
 
@@ -11746,7 +11746,7 @@ msgstr "S_elector"
 #: ../plug-ins/gradient-flare/gradient-flare.c:3060
 #, fuzzy
 msgid "New Gradient Flare"
-msgstr "Destello con degradau nuevo"
+msgstr " Destello con degradau nuevo"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3063
 #, fuzzy
@@ -12042,7 +12042,7 @@ msgstr "Creyar un fractal d'o sistema de función iterada (IFS)"
 #: ../plug-ins/ifs-compose/ifs-compose.c:345
 #, fuzzy
 msgid "_IFS Fractal..."
-msgstr " _Fractal IFS…"
+msgstr "_Fractal IFS…"
 
 #. X
 #: ../plug-ins/ifs-compose/ifs-compose.c:525
@@ -12348,8 +12348,8 @@ msgid ""
 msgstr ""
 "Las guidas son rectanglos predefinius que cubren a imachen. Puet definir-ne "
 "por a suya amplaria, altaria y espaciau entre cadagún. Isto le permit de "
-"creyar rapidament o tipo mas común de mapa d'imachen,una colección de \""
-"miniaturas\", apropiada ta barras de navegación."
+"creyar rapidament o tipo mas común de mapa d'imachen,una colección de "
+"\"miniaturas\", apropiada ta barras de navegación."
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:169
 msgid "_Left start at:"
@@ -12502,7 +12502,7 @@ msgstr "Vinclo relati_vo"
 #: ../plug-ins/imagemap/imap_edit_area_info.c:279
 #, fuzzy
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
-msgstr "Nombre/ITZ d'o _marco destín: (opcional - solament usau ta MARCOS)"
+msgstr " Nombre/ITZ d'o _marco destín: (opcional - solament usau ta MARCOS)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:282
 #, fuzzy

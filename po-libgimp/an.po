@@ -6,10 +6,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp gimp-2-8\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&ke"
-"ywords=I18N+L10N&component=general\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug."
+"cgi?product=gimp&keywords=I18N+L10N&component=general\n"
 "POT-Creation-Date: 2015-05-06 17:18+0000\n"
-"PO-Revision-Date: 2015-05-07 18:51+0200\n"
+"PO-Revision-Date: 2015-07-23 10:06+0200\n"
 "Last-Translator: Daniel <entaltoaragon@gmail.com>\n"
 "Language-Team: Aragonese <softaragones@googlegroups.com>\n"
 "Language: an\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.1.1\n"
-"X-POOTLE-MTIME: 1431021098.000000\n"
+"X-POOTLE-MTIME: 1437642396.000000\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1136
@@ -450,7 +450,6 @@ msgid "Add to the current selection"
 msgstr "Adhibir a la selección actual"
 
 #: ../libgimpbase/gimpbaseenums.c:132
-#, fuzzy
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Extrayer d'a selección actual"
@@ -624,13 +623,11 @@ msgid "Shaped (dimpled)"
 msgstr "Contorno (con hoyuelos)"
 
 #: ../libgimpbase/gimpbaseenums.c:409
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Espiral (sentiu horario)"
 
 #: ../libgimpbase/gimpbaseenums.c:410
-#, fuzzy
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Espiral (sentiu antihorario)"
@@ -999,7 +996,6 @@ msgid "Perceptual"
 msgstr "Perceptible"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#, fuzzy
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
 msgstr "Colorimétrica relativa"
@@ -1010,21 +1006,20 @@ msgid "Saturation"
 msgstr "Saturación"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:60
-#, fuzzy
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Colorimétrica absoluta"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:109
-#, fuzzy, c-format
+#, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "a valor ta l'elemento %s no ye una cadena UTF-8 valida"
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpconfig-deserialize.c:451
-#, fuzzy, c-format
+#, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "s'asperaba «yes» u «no» ta o sinyal booleano %s, s'obtenió «%s»"
+msgstr "s'asperaba 'yes' u 'no' ta o testigo booleano %s, s'obtenió '%s'"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
@@ -1032,14 +1027,14 @@ msgid "invalid value '%s' for token %s"
 msgstr "valor no valida '%s' ta o testigo %s"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:540
-#, fuzzy, c-format
+#, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "valor no valida «%ld» ta o sinyal %s"
+msgstr "valor no valida '%ld' ta o testigo %s"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:609
-#, fuzzy, c-format
+#, c-format
 msgid "while parsing token '%s': %s"
-msgstr " mientres s'analisaba o sinyal «%s»: %s"
+msgstr "mientres s'analisaba o testigo '%s': %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:482
 #: ../libgimpconfig/gimpconfig-iface.c:495 ../libgimpconfig/gimpscanner.c:559
@@ -1139,8 +1134,8 @@ msgid ""
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "No s'ha puesto determinar una carpeta personal valida.\n"
-"As miniaturas en cuentas s'almagazenarán en a carpeta ta fichers temporals "
-"(%s)."
+"As miniaturas en cuentas s'almagazenarán en a carpeta ta fichers temporals ("
+"%s)."
 
 #: ../libgimpthumb/gimpthumb-utils.c:277 ../libgimpthumb/gimpthumb-utils.c:345
 #, c-format
@@ -1351,7 +1346,6 @@ msgid "Visible"
 msgstr "Visible"
 
 #: ../libgimpwidgets/gimpstock.c:171 ../libgimpwidgets/gimpstock.c:175
-#, fuzzy
 msgid "_Stroke"
 msgstr "_Trazo"
 
@@ -1384,7 +1378,6 @@ msgid "_Rotate"
 msgstr "_Rotar"
 
 #: ../libgimpwidgets/gimpstock.c:341
-#, fuzzy
 msgid "_Shear"
 msgstr "_Cizallar"
 
@@ -1405,23 +1398,21 @@ msgid "Factor"
 msgstr "Factor"
 
 #: ../libgimpwidgets/gimpwidgets.c:516
-#, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Use ista valor como simient ta o generador de numeros aleatorios (permite "
-"que una operación «aleatoria» dada se pueda repetir)"
+"Use ista valor como simient ta o chenerador de numeros aleatorios (permite "
+"que una operación \"aleatoria\" dada se pueda repetir)"
 
 #: ../libgimpwidgets/gimpwidgets.c:520
 msgid "_New Seed"
 msgstr "_Nueva simient"
 
 #: ../libgimpwidgets/gimpwidgets.c:533
-#, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
-"Prener simient ta generador de numeros aleatorios con un numero aleatorio "
+"Prener simient ta chenerador de numeros aleatorios con un numero aleatorio "
 "chenerau"
 
 #: ../libgimpwidgets/gimpwidgets.c:537
@@ -1599,7 +1590,7 @@ msgid "Profile: (none)"
 msgstr "Perfil: (garra)"
 
 #: ../modules/color-selector-cmyk-lcms.c:488
-#, fuzzy, c-format
+#, c-format
 msgid "Profile: %s"
 msgstr "Perfil: %s"
 
@@ -1685,12 +1676,10 @@ msgid "Y Move Near"
 msgstr "Amanar en Y"
 
 #: ../modules/controller-dx-dinput.c:459 ../modules/controller-linux-input.c:93
-#, fuzzy
 msgid "Z Move Up"
 msgstr "Puyar en Z"
 
 #: ../modules/controller-dx-dinput.c:462 ../modules/controller-linux-input.c:94
-#, fuzzy
 msgid "Z Move Down"
 msgstr "Baixar en Z"
 
@@ -1826,17 +1815,14 @@ msgid "Button Extra"
 msgstr "Botón extra"
 
 #: ../modules/controller-linux-input.c:73
-#, fuzzy
 msgid "Button Forward"
 msgstr "Botón abance"
 
 #: ../modules/controller-linux-input.c:74
-#, fuzzy
 msgid "Button Back"
 msgstr "Botón enta zaga"
 
 #: ../modules/controller-linux-input.c:75
-#, fuzzy
 msgid "Button Task"
 msgstr "Botón quefer"
 
@@ -1845,23 +1831,20 @@ msgid "Button Wheel"
 msgstr "Botón rueda"
 
 #: ../modules/controller-linux-input.c:80
-#, fuzzy
 msgid "Button Gear Down"
 msgstr "Botón rueda abaixo"
 
 #: ../modules/controller-linux-input.c:83
-#, fuzzy
 msgid "Button Gear Up"
 msgstr "Botón rueda alto"
 
 #: ../modules/controller-linux-input.c:91
-#, fuzzy
 msgid "Y Move Forward"
-msgstr "Mover-se abance en Y"
+msgstr "Mover-se entaabant en Y"
 
 #: ../modules/controller-linux-input.c:92
 msgid "Y Move Back"
-msgstr "Mover-se dezaga en Y"
+msgstr "Mover-se entazaga en Y"
 
 #: ../modules/controller-linux-input.c:96
 msgid "X Axis Tilt Forward"
@@ -1869,15 +1852,15 @@ msgstr "Bascular en l'eixe X enta debant"
 
 #: ../modules/controller-linux-input.c:97
 msgid "X Axis Tilt Back"
-msgstr "Bascular en l'eixe X enta zaga"
+msgstr "Bascular en l'eixe X entazaga"
 
 #: ../modules/controller-linux-input.c:103
 msgid "Horiz. Wheel Turn Back"
-msgstr "Chirar a rueda horiz. enta zaga"
+msgstr "Chirar a rueda horiz. entazaga"
 
 #: ../modules/controller-linux-input.c:104
 msgid "Horiz. Wheel Turn Forward"
-msgstr "Chirar a rueda horiz. enta debant"
+msgstr "Chirar a rueda horiz. entabant"
 
 #: ../modules/controller-linux-input.c:105
 msgid "Dial Turn Left"
@@ -1900,7 +1883,6 @@ msgid "Linux input event controller"
 msgstr "Controlador d'eventos de dentrada de Linux"
 
 #: ../modules/controller-linux-input.c:218
-#, fuzzy
 msgid "The name of the device to read Linux Input events from."
 msgstr ""
 "Nombre d'o dispositivo dende o qual leyer os eventos de dentrada de Linux."
@@ -1996,7 +1978,6 @@ msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopía (insensibilidat a o verde)"
 
 #: ../modules/display-filter-color-blind.c:71
-#, fuzzy
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopía (insensibilidat a l'azul)"
 
