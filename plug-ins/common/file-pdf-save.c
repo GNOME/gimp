@@ -508,9 +508,38 @@ run (const gchar      *name,
        */
       cairo_scale (cr, x_scale, y_scale);
 
-      /* Now, we should loop over the layers of each image */
       layers = gimp_image_get_layers (image_ID, &n_layers);
 
+      /* Fill image with background color -
+       * otherwise the output PDF will always show white for background,
+       * and may display artifacts at transparency boundaries
+       */
+      if (gimp_drawable_has_alpha(layers[n_layers - 1]))
+        {
+          GimpRGB color;
+          gint width=0, height=0;
+          for (j = 0; j < n_layers; j++)
+            {
+              gint32 layer_ID   = layers [n_layers - j - 1];
+
+              if (gimp_item_get_visible (layer_ID) &&
+                 (! optimize.ignore_hidden ||
+                  (optimize.ignore_hidden && gimp_layer_get_opacity (layer_ID) > 0.0)))
+                {
+                  width = MAX (width, gimp_drawable_width (layer_ID));
+                  height = MAX (height, gimp_drawable_height (layer_ID));
+                }
+            }
+          cairo_rectangle (cr, 0, 0, width, height);
+          gimp_context_get_background (&color);
+          cairo_set_source_rgb (cr,
+                                color.r,
+                                color.g,
+                                color.b);
+          cairo_fill (cr);
+        }
+
+      /* Now, we should loop over the layers of each image */
       for (j = 0; j < n_layers; j++)
         {
           gint32           layer_ID   = layers [n_layers - j - 1];
