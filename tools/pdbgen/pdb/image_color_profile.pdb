@@ -62,6 +62,52 @@ CODE
     );
 }
 
+sub image_get_effective_color_profile {
+    $blurb = "Returns the color profile that is used for the image";
+
+    $help = <<'HELP';
+This procedure returns the color profile that is actually used for
+this image, which is the profile returned by
+gimp_image_get_color_profile() if the image has a profile assigned, or
+the default RGB profile from preferences if no profile is assigned to
+the image. If there is no default RGB profile configured in
+preferences either, a generated default RGB profile is returned.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'profile_data', type => 'int8array', wrap => 1,
+          desc => "The image's serialized color profile. The returned value must be freed with g_free()",
+          array => { name => 'num_bytes',
+                     desc => 'Number of bytes in the color_profile array' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpColorProfile *profile;
+  const guint8     *data;
+  gsize             length;
+
+  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+
+  data = gimp_color_profile_get_icc_profile (profile, &length);
+
+  profile_data = g_memdup (data, length);
+  num_bytes = length;
+
+  g_object_unref (profile);
+}
+CODE
+    );
+}
+
 sub image_set_color_profile {
     $blurb = "Sets the image's color profile";
 
@@ -104,52 +150,6 @@ HELP
     {
       success = gimp_image_set_color_profile (image, NULL, error);
     }
-}
-CODE
-    );
-}
-
-sub image_get_effective_color_profile {
-    $blurb = "Returns the color profile that is used for the image";
-
-    $help = <<'HELP';
-This procedure returns the color profile that is actually used for
-this image, which is the profile returned by
-gimp_image_get_color_profile() if the image has a profile assigned, or
-the default RGB profile from preferences if no profile is assigned to
-the image. If there is no default RGB profile configured in
-preferences either, a generated default RGB profile is returned.
-HELP
-
-    &mitch_pdb_misc('2015', '2.10');
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' }
-    );
-
-    @outargs = (
-        { name => 'profile_data', type => 'int8array', wrap => 1,
-          desc => "The image's serialized color profile. The returned value must be freed with g_free()",
-          array => { name => 'num_bytes',
-                     desc => 'Number of bytes in the color_profile array' } }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  GimpColorProfile *profile;
-  const guint8     *data;
-  gsize             length;
-
-  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
-
-  data = gimp_color_profile_get_icc_profile (profile, &length);
-
-  profile_data = g_memdup (data, length);
-  num_bytes = length;
-
-  g_object_unref (profile);
 }
 CODE
     );
@@ -213,8 +213,8 @@ CODE
               "gimp-intl.h");
 
 @procs = qw(image_get_color_profile
-            image_set_color_profile
             image_get_effective_color_profile
+            image_set_color_profile
             image_convert_color_profile);
 
 %exports = (app => [@procs], lib => [@procs]);
