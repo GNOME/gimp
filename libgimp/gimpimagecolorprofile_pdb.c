@@ -137,7 +137,8 @@ _gimp_image_get_effective_color_profile (gint32  image_ID,
  * Sets the image's color profile
  *
  * This procedure sets the image's color profile, or unsets it if NULL
- * is passed as 'color_profile'.
+ * is passed as 'color_profile'. This procedure does no color
+ * conversion.
  *
  * Returns: TRUE on success.
  *
@@ -157,6 +158,42 @@ _gimp_image_set_color_profile (gint32        image_ID,
                                     GIMP_PDB_IMAGE, image_ID,
                                     GIMP_PDB_INT32, num_bytes,
                                     GIMP_PDB_INT8ARRAY, color_profile,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_set_color_profile_from_file:
+ * @image_ID: The image.
+ * @uri: The URI of the file containing the new color profile.
+ *
+ * Sets the image's color profile from an ICC file
+ *
+ * This procedure sets the image's color profile from a file containing
+ * an ICC profile, or unsets it if NULL is passed as 'uri'. This
+ * procedure does no color conversion.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_image_set_color_profile_from_file (gint32       image_ID,
+                                        const gchar *uri)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-image-set-color-profile-from-file",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_STRING, uri,
                                     GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
