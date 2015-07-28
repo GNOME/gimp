@@ -379,6 +379,7 @@ EXPORTS
 	gimp_image_base_type
 	gimp_image_clean_all
 	gimp_image_convert_color_profile
+	gimp_image_convert_color_profile_from_file
 	gimp_image_convert_grayscale
 	gimp_image_convert_indexed
 	gimp_image_convert_precision

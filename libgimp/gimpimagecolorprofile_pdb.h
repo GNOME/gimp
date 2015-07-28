@@ -32,20 +32,24 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-G_GNUC_INTERNAL guint8*  _gimp_image_get_color_profile           (gint32                    image_ID,
-                                                                  gint                     *num_bytes);
-G_GNUC_INTERNAL guint8*  _gimp_image_get_effective_color_profile (gint32                    image_ID,
-                                                                  gint                     *num_bytes);
-G_GNUC_INTERNAL gboolean _gimp_image_set_color_profile           (gint32                    image_ID,
-                                                                  gint                      num_bytes,
-                                                                  const guint8             *color_profile);
-gboolean                 gimp_image_set_color_profile_from_file  (gint32                    image_ID,
-                                                                  const gchar              *uri);
-G_GNUC_INTERNAL gboolean _gimp_image_convert_color_profile       (gint32                    image_ID,
-                                                                  gint                      num_bytes,
-                                                                  const guint8             *color_profile,
-                                                                  GimpColorRenderingIntent  intent,
-                                                                  gboolean                  bpc);
+G_GNUC_INTERNAL guint8*  _gimp_image_get_color_profile              (gint32                    image_ID,
+                                                                     gint                     *num_bytes);
+G_GNUC_INTERNAL guint8*  _gimp_image_get_effective_color_profile    (gint32                    image_ID,
+                                                                     gint                     *num_bytes);
+G_GNUC_INTERNAL gboolean _gimp_image_set_color_profile              (gint32                    image_ID,
+                                                                     gint                      num_bytes,
+                                                                     const guint8             *color_profile);
+gboolean                 gimp_image_set_color_profile_from_file     (gint32                    image_ID,
+                                                                     const gchar              *uri);
+G_GNUC_INTERNAL gboolean _gimp_image_convert_color_profile          (gint32                    image_ID,
+                                                                     gint                      num_bytes,
+                                                                     const guint8             *color_profile,
+                                                                     GimpColorRenderingIntent  intent,
+                                                                     gboolean                  bpc);
+gboolean                 gimp_image_convert_color_profile_from_file (gint32                    image_ID,
+                                                                     const gchar              *uri,
+                                                                     GimpColorRenderingIntent  intent,
+                                                                     gboolean                  bpc);
 
 
 G_END_DECLS

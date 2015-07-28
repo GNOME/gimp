@@ -254,6 +254,57 @@ CODE
     );
 }
 
+sub image_convert_color_profile_from_file {
+    $blurb = "Convert the image's layers to a color profile";
+
+    $help = <<'HELP';
+This procedure converts from the image's color profile (or the default
+RGB profile if none is set) to an ICC profile precified by 'uri'.
+Only RGB color profiles are accepted.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'uri', type => 'string',
+          desc => 'The URI of the file containing the new color profile' },
+        { name => 'intent', type => 'enum GimpColorRenderingIntent',
+          desc => 'Rendering intent' },
+        { name => 'bpc', type => 'boolean',
+          desc => 'Black point compensation' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (uri)
+    {
+      GFile            *file = g_file_new_for_uri (uri);
+      GimpColorProfile *profile;
+
+      profile = gimp_color_profile_new_from_file (file, error);
+
+      if (profile)
+        {
+          success = gimp_image_convert_color_profile (image, profile,
+                                                      intent, bpc,
+                                                      progress, error);
+          g_object_unref (profile);
+        }
+      else
+        success = FALSE;
+
+      g_object_unref (file);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 @headers = qw(<cairo.h>
               "libgimpcolor/gimpcolor.h"
               "core/gimpimage-profile.h"
@@ -263,7 +314,8 @@ CODE
             image_get_effective_color_profile
             image_set_color_profile
             image_set_color_profile_from_file
-            image_convert_color_profile);
+            image_convert_color_profile
+            image_convert_color_profile_from_file);
 
 %exports = (app => [@procs], lib => [@procs]);
 
