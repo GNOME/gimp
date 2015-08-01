@@ -637,16 +637,15 @@ lcms_icc_apply_dialog (gint32            image,
 }
 
 static GtkWidget *
-lcms_icc_combo_box_new (GimpColorConfig *config,
-                        const gchar     *filename)
+lcms_icc_combo_box_new (GimpColorConfig *config)
 {
   GtkWidget        *combo;
   GtkWidget        *dialog;
   gchar            *history;
   gchar            *label;
-  const gchar      *rgb_filename = NULL;
-  GimpColorProfile *profile      = NULL;
-  GError           *error        = NULL;
+  GFile            *rgb_file = NULL;
+  GimpColorProfile *profile  = NULL;
+  GError           *error    = NULL;
 
   dialog = gimp_color_profile_chooser_dialog_new (_("Select destination profile"));
 
@@ -658,7 +657,7 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
 
   if (profile)
     {
-      rgb_filename = config->rgb_profile;
+      rgb_file = g_file_new_for_path (config->rgb_profile);
     }
   else if (error)
     {
@@ -674,12 +673,14 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
 
   g_object_unref (profile);
 
-  gimp_color_profile_combo_box_add (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                    rgb_filename, label);
+  gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                         rgb_file, label);
+  if (rgb_file)
+    g_object_unref (rgb_file);
   g_free (label);
 
-  gimp_color_profile_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                           filename, NULL);
+  gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                                NULL, NULL);
 
   return combo;
 }
@@ -745,7 +746,7 @@ lcms_dialog (GimpColorConfig *config,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  combo = lcms_icc_combo_box_new (config, NULL);
+  combo = lcms_icc_combo_box_new (config);
   gtk_container_add (GTK_CONTAINER (frame), combo);
   gtk_widget_show (combo);
 
@@ -793,17 +794,10 @@ lcms_dialog (GimpColorConfig *config,
 
   while ((run = gimp_dialog_run (GIMP_DIALOG (dialog))) == GTK_RESPONSE_OK)
     {
-      gchar            *filename = gimp_color_profile_combo_box_get_active (box);
-      GFile            *file     = NULL;
+      GFile            *file = gimp_color_profile_combo_box_get_active_file (box);
       GimpColorProfile *dest_profile;
 
       gtk_widget_set_sensitive (dialog, FALSE);
-
-      if (filename)
-        {
-          file = g_file_new_for_path (filename);
-          g_free (filename);
-        }
 
       if (file)
         {

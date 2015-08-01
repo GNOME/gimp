@@ -68,7 +68,7 @@ static void      gimp_color_profile_store_get_property   (GObject               
 
 static gboolean  gimp_color_profile_store_history_insert (GimpColorProfileStore *store,
                                                           GtkTreeIter           *iter,
-                                                          const gchar           *filename,
+                                                          GFile                 *file,
                                                           const gchar           *label,
                                                           gint                   index);
 static void      gimp_color_profile_store_get_separator  (GimpColorProfileStore  *store,
@@ -119,10 +119,10 @@ gimp_color_profile_store_init (GimpColorProfileStore *store)
 {
   GType types[] =
     {
-      G_TYPE_INT,     /*  GIMP_COLOR_PROFILE_STORE_ITEM_TYPE  */
-      G_TYPE_STRING,  /*  GIMP_COLOR_PROFILE_STORE_LABEL      */
-      G_TYPE_STRING,  /*  GIMP_COLOR_PROFILE_STORE_FILENAME   */
-      G_TYPE_INT      /*  GIMP_COLOR_PROFILE_STORE_INDEX      */
+      G_TYPE_INT,    /*  GIMP_COLOR_PROFILE_STORE_ITEM_TYPE  */
+      G_TYPE_STRING, /*  GIMP_COLOR_PROFILE_STORE_LABEL      */
+      G_TYPE_FILE,   /*  GIMP_COLOR_PROFILE_STORE_FILE       */
+      G_TYPE_INT     /*  GIMP_COLOR_PROFILE_STORE_INDEX      */
     };
 
   gtk_list_store_set_column_types (GTK_LIST_STORE (store),
@@ -262,6 +262,8 @@ gimp_color_profile_store_new (const gchar *history)
  * @label will be set to the string "None" for you (and translated for
  * the user).
  *
+ * Deprecated: use gimp_color_profile_store_add_file() instead.
+ *
  * Since: 2.4
  **/
 void
@@ -269,13 +271,49 @@ gimp_color_profile_store_add (GimpColorProfileStore *store,
                               const gchar           *filename,
                               const gchar           *label)
 {
-  GtkTreeIter  separator;
-  GtkTreeIter  iter;
+  GFile *file = NULL;
 
   g_return_if_fail (GIMP_IS_COLOR_PROFILE_STORE (store));
   g_return_if_fail (label != NULL || filename == NULL);
 
-  if (! filename && ! label)
+  if (filename)
+    file = g_file_new_for_path (filename);
+
+  gimp_color_profile_store_add_file (store, file, label);
+
+  g_object_unref (file);
+}
+
+/**
+ * gimp_color_profile_store_add_file:
+ * @store: a #GimpColorProfileStore
+ * @file:  file of the profile to add (or %NULL)
+ * @label: label to use for the profile
+ *         (may only be %NULL if @filename is %NULL)
+ *
+ * Adds a color profile item to the #GimpColorProfileStore. Items
+ * added with this function will be kept at the top, separated from
+ * the history of last used color profiles.
+ *
+ * This function is often used to add a selectable item for the %NULL
+ * file. If you pass %NULL for both @file and @label, the @label will
+ * be set to the string "None" for you (and translated for the user).
+ *
+ * Since: 2.10
+ **/
+void
+gimp_color_profile_store_add_file (GimpColorProfileStore *store,
+                                   GFile                 *file,
+                                   const gchar           *label)
+{
+  GtkTreeIter separator;
+  GtkTreeIter iter;
+
+  g_return_if_fail (GIMP_IS_COLOR_PROFILE_STORE (store));
+  g_return_if_fail (label != NULL || file == NULL);
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
+
+  if (! file && ! label)
     label = C_("profile", "None");
 
   gimp_color_profile_store_get_separator (store, &separator, TRUE);
@@ -284,7 +322,7 @@ gimp_color_profile_store_add (GimpColorProfileStore *store,
   gtk_list_store_set (GTK_LIST_STORE (store), &iter,
                       GIMP_COLOR_PROFILE_STORE_ITEM_TYPE,
                       GIMP_COLOR_PROFILE_STORE_ITEM_FILE,
-                      GIMP_COLOR_PROFILE_STORE_FILENAME, filename,
+                      GIMP_COLOR_PROFILE_STORE_FILE,  file,
                       GIMP_COLOR_PROFILE_STORE_LABEL, label,
                       GIMP_COLOR_PROFILE_STORE_INDEX, -1,
                       -1);
@@ -292,10 +330,10 @@ gimp_color_profile_store_add (GimpColorProfileStore *store,
 
 /**
  * _gimp_color_profile_store_history_add:
- * @store:    a #GimpColorProfileStore
- * @filename: filename of the profile to add (or %NULL)
- * @label:    label to use for the profile (or %NULL)
- * @iter:     a #GtkTreeIter
+ * @store: a #GimpColorProfileStore
+ * @file:  file of the profile to add (or %NULL)
+ * @label: label to use for the profile (or %NULL)
+ * @iter:  a #GtkTreeIter
  *
  * Return value: %TRUE if the iter is valid and pointing to the item
  *
@@ -303,7 +341,7 @@ gimp_color_profile_store_add (GimpColorProfileStore *store,
  **/
 gboolean
 _gimp_color_profile_store_history_add (GimpColorProfileStore *store,
-                                       const gchar           *filename,
+                                       GFile                 *file,
                                        const gchar           *label,
                                        GtkTreeIter           *iter)
 {
@@ -322,7 +360,7 @@ _gimp_color_profile_store_history_add (GimpColorProfileStore *store,
     {
       gint   type;
       gint   index;
-      gchar *this;
+      GFile *this;
 
       gtk_tree_model_get (model, iter,
                           GIMP_COLOR_PROFILE_STORE_ITEM_TYPE, &type,
@@ -337,11 +375,11 @@ _gimp_color_profile_store_history_add (GimpColorProfileStore *store,
 
       /*  check if we found a filename match  */
       gtk_tree_model_get (model, iter,
-                          GIMP_COLOR_PROFILE_STORE_FILENAME, &this,
+                          GIMP_COLOR_PROFILE_STORE_FILE, &this,
                           -1);
 
-      if ((this && filename && strcmp (filename, this) == 0) ||
-          (! this && ! filename))
+      if ((this && file && g_file_equal (this, file)) ||
+          (! this && ! file))
         {
           /*  update the label  */
           if (label && *label)
@@ -349,26 +387,32 @@ _gimp_color_profile_store_history_add (GimpColorProfileStore *store,
                                 GIMP_COLOR_PROFILE_STORE_LABEL, label,
                                 -1);
 
-          g_free (this);
+          if (this)
+            g_object_unref (this);
+
           return TRUE;
         }
+
+      if (this)
+        g_object_unref (this);
     }
 
-  if (! filename)
+  if (! file)
     return FALSE;
 
   if (label && *label)
     {
       iter_valid = gimp_color_profile_store_history_insert (store, iter,
-                                                            filename, label,
+                                                            file, label,
                                                             ++max);
     }
   else
     {
-      gchar *basename = g_filename_display_basename (filename);
+      const gchar *utf8     = gimp_file_get_utf8_name (file);
+      gchar       *basename = g_path_get_basename (utf8);
 
       iter_valid = gimp_color_profile_store_history_insert (store, iter,
-                                                            filename, basename,
+                                                            file, basename,
                                                             ++max);
       g_free (basename);
     }
@@ -438,7 +482,7 @@ _gimp_color_profile_store_history_reorder (GimpColorProfileStore *store,
 static gboolean
 gimp_color_profile_store_history_insert (GimpColorProfileStore *store,
                                          GtkTreeIter           *iter,
-                                         const gchar           *filename,
+                                         GFile                 *file,
                                          const gchar           *label,
                                          gint                   index)
 {
@@ -446,7 +490,7 @@ gimp_color_profile_store_history_insert (GimpColorProfileStore *store,
   GtkTreeIter   sibling;
   gboolean      iter_valid;
 
-  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (label != NULL, FALSE);
   g_return_val_if_fail (index > -1, FALSE);
 
@@ -495,9 +539,9 @@ gimp_color_profile_store_history_insert (GimpColorProfileStore *store,
     gtk_list_store_set (GTK_LIST_STORE (store), iter,
                         GIMP_COLOR_PROFILE_STORE_ITEM_TYPE,
                         GIMP_COLOR_PROFILE_STORE_ITEM_FILE,
-                        GIMP_COLOR_PROFILE_STORE_FILENAME, filename,
-                        GIMP_COLOR_PROFILE_STORE_LABEL,    label,
-                        GIMP_COLOR_PROFILE_STORE_INDEX,    index,
+                        GIMP_COLOR_PROFILE_STORE_FILE,  file,
+                        GIMP_COLOR_PROFILE_STORE_LABEL, label,
+                        GIMP_COLOR_PROFILE_STORE_INDEX, index,
                         -1);
 
   return iter_valid;
@@ -587,15 +631,19 @@ gimp_color_profile_store_load_profile (GimpColorProfileStore *store,
   if (gimp_scanner_parse_string (scanner, &label) &&
       gimp_scanner_parse_string (scanner, &uri))
     {
-      gchar *filename = g_filename_from_uri (uri, NULL, NULL);
+      GFile *file = g_file_new_for_uri (uri);
 
-      if (filename && g_file_test (filename, G_FILE_TEST_IS_REGULAR))
+      if (file)
         {
-          gimp_color_profile_store_history_insert (store, &iter,
-                                                   filename, label, index);
+          if (g_file_query_file_type (file, 0, NULL) == G_FILE_TYPE_REGULAR)
+            {
+              gimp_color_profile_store_history_insert (store, &iter,
+                                                       file, label, index);
+            }
+
+          g_object_unref (file);
         }
 
-      g_free (filename);
       g_free (label);
       g_free (uri);
 
@@ -668,8 +716,8 @@ gimp_color_profile_store_save (GimpColorProfileStore  *store,
   GimpConfigWriter *writer;
   GtkTreeModel     *model;
   GtkTreeIter       iter;
-  gchar            *labels[HISTORY_SIZE]    = { NULL, };
-  gchar            *filenames[HISTORY_SIZE] = { NULL, };
+  gchar            *labels[HISTORY_SIZE] = { NULL, };
+  GFile            *files[HISTORY_SIZE]  = { NULL, };
   gboolean          iter_valid;
   gint              i;
 
@@ -698,14 +746,14 @@ gimp_color_profile_store_save (GimpColorProfileStore  *store,
           index >= 0                                 &&
           index < HISTORY_SIZE)
         {
-          if (labels[index] || filenames[index])
+          if (labels[index] || files[index])
             g_warning ("%s: double index %d", G_STRFUNC, index);
 
           gtk_tree_model_get (model, &iter,
                               GIMP_COLOR_PROFILE_STORE_LABEL,
                               &labels[index],
-                              GIMP_COLOR_PROFILE_STORE_FILENAME,
-                              &filenames[index],
+                              GIMP_COLOR_PROFILE_STORE_FILE,
+                              &files[index],
                               -1);
         }
     }
@@ -713,9 +761,9 @@ gimp_color_profile_store_save (GimpColorProfileStore  *store,
 
   for (i = 0; i < HISTORY_SIZE; i++)
     {
-      if (filenames[i] && labels[i])
+      if (files[i] && labels[i])
         {
-          gchar *uri = g_filename_to_uri (filenames[i], NULL, NULL);
+          gchar *uri = g_file_get_uri (files[i]);
 
           if (uri)
             {
@@ -728,7 +776,9 @@ gimp_color_profile_store_save (GimpColorProfileStore  *store,
             }
         }
 
-      g_free (filenames[i]);
+      if (files[i])
+        g_object_unref (files[i]);
+
       g_free (labels[i]);
     }
 

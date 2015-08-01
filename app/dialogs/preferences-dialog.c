@@ -788,23 +788,30 @@ static void   prefs_profile_combo_notify (GObject                  *config,
 prefs_profile_combo_changed (GimpColorProfileComboBox *combo,
                              GObject                  *config)
 {
-  gchar *filename = gimp_color_profile_combo_box_get_active (combo);
+  GFile *file = gimp_color_profile_combo_box_get_active_file (combo);
+  gchar *path = NULL;
 
-  if (! filename)
+  if (file)
+    path = g_file_get_path (file);
+
+  if (! path)
     g_signal_handlers_block_by_func (config,
                                      prefs_profile_combo_notify,
                                      combo);
 
   g_object_set (config,
-                g_object_get_data (G_OBJECT (combo), "property-name"), filename,
+                g_object_get_data (G_OBJECT (combo), "property-name"), path,
                 NULL);
 
-  if (! filename)
+  if (! path)
     g_signal_handlers_unblock_by_func (config,
                                        prefs_profile_combo_notify,
                                        combo);
 
-  g_free (filename);
+  g_free (path);
+
+  if (file)
+    g_object_unref (file);
 }
 
 static void
@@ -812,23 +819,31 @@ prefs_profile_combo_notify (GObject                  *config,
                             const GParamSpec         *param_spec,
                             GimpColorProfileComboBox *combo)
 {
-  gchar *filename;
+  gchar *path;
+  GFile *file = NULL;
 
   g_object_get (config,
-                param_spec->name, &filename,
+                param_spec->name, &path,
                 NULL);
+
+  if (path)
+    {
+      file = g_file_new_for_path (path);
+      g_free (path);
+    }
 
   g_signal_handlers_block_by_func (combo,
                                    prefs_profile_combo_changed,
                                    config);
 
-  gimp_color_profile_combo_box_set_active (combo, filename, NULL);
+  gimp_color_profile_combo_box_set_active_file (combo, file, NULL);
 
   g_signal_handlers_unblock_by_func (combo,
                                      prefs_profile_combo_changed,
                                      config);
 
-  g_free (filename);
+  if (file)
+    g_object_unref (file);
 }
 
 static void
@@ -856,10 +871,17 @@ prefs_profile_combo_box_new (GObject      *config,
 {
   GtkWidget *dialog = gimp_color_profile_chooser_dialog_new (label);
   GtkWidget *combo;
-  gchar     *filename;
+  gchar     *path;
   gchar     *notify_name;
+  GFile     *file = NULL;
 
-  g_object_get (config, property_name, &filename, NULL);
+  g_object_get (config, property_name, &path, NULL);
+
+  if (path)
+    {
+      file = g_file_new_for_path (path);
+      g_free (path);
+    }
 
   combo = gimp_color_profile_combo_box_new_with_model (dialog,
                                                        GTK_TREE_MODEL (store));
@@ -867,10 +889,11 @@ prefs_profile_combo_box_new (GObject      *config,
   g_object_set_data (G_OBJECT (combo),
                      "property-name", (gpointer) property_name);
 
-  gimp_color_profile_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                           filename, NULL);
+  gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                                file, NULL);
 
-  g_free (filename);
+  if (file)
+    g_object_unref (file);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (prefs_profile_combo_changed),
@@ -2377,7 +2400,8 @@ prefs_dialog_new (Gimp       *gimp,
     store = gimp_color_profile_store_new (filename);
     g_free (filename);
 
-    gimp_color_profile_store_add (GIMP_COLOR_PROFILE_STORE (store), NULL, NULL);
+    gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (store),
+                                       NULL, NULL);
 
     for (i = 0; i < G_N_ELEMENTS (profiles); i++)
       {

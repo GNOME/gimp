@@ -261,15 +261,22 @@ static void
 cdisplay_proof_profile_changed (GtkWidget     *combo,
                                 CdisplayProof *proof)
 {
-  gchar *profile;
+  GFile *file;
+  gchar *path = NULL;
 
-  profile = gimp_color_profile_combo_box_get_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo));
+  file = gimp_color_profile_combo_box_get_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo));
+
+  if (file)
+    {
+      path = g_file_get_path (file);
+      g_object_unref (file);
+    }
 
   g_object_set (proof,
-                "profile", profile,
+                "profile", path,
                 NULL);
 
-  g_free (profile);
+  g_free (path);
 }
 
 static GtkWidget *
@@ -297,8 +304,13 @@ cdisplay_proof_configure (GimpColorDisplay *display)
                     proof);
 
   if (proof->profile)
-    gimp_color_profile_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                             proof->profile, NULL);
+    {
+      GFile *file = g_file_new_for_path (proof->profile);
+
+      gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                                    file, NULL);
+      g_object_unref (file);
+    }
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("_Profile:"), 0.0, 0.5,
