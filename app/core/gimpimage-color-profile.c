@@ -281,6 +281,21 @@ gimp_image_set_color_profile (GimpImage         *image,
   return gimp_image_set_icc_profile (image, data, length, error);
 }
 
+GimpColorProfile *
+gimp_image_get_builtin_color_profile (GimpImage *image)
+{
+  const Babl *format;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  format = gimp_image_get_layer_format (image, FALSE);
+
+  if (gimp_babl_format_get_linear (format))
+    return gimp_color_profile_new_linear_rgb ();
+  else
+    return gimp_color_profile_new_srgb ();
+}
+
 gboolean
 gimp_image_convert_color_profile (GimpImage                *image,
                                   GimpColorProfile         *dest_profile,
@@ -291,7 +306,6 @@ gimp_image_convert_color_profile (GimpImage                *image,
 {
   GimpColorProfile *src_profile;
   GimpColorProfile *builtin_profile;
-  const Babl       *layer_format;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (dest_profile != NULL, FALSE);
@@ -318,12 +332,7 @@ gimp_image_convert_color_profile (GimpImage                *image,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                _("Color profile conversion"));
 
-  layer_format = gimp_image_get_layer_format (image, FALSE);
-
-  if (gimp_babl_format_get_linear (layer_format))
-    builtin_profile = gimp_color_profile_new_linear_rgb ();
-  else
-    builtin_profile = gimp_color_profile_new_srgb ();
+  builtin_profile = gimp_image_get_builtin_color_profile (image);
 
   if (gimp_color_profile_is_equal (dest_profile, builtin_profile))
     {

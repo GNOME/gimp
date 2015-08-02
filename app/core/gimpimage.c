@@ -1385,14 +1385,7 @@ gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
     }
 
   if (! profile)
-    {
-      const Babl *format = gimp_image_get_layer_format (image, FALSE);
-
-      if (gimp_babl_format_get_linear (format))
-        profile = gimp_color_profile_new_linear_rgb ();
-      else
-        profile = gimp_color_profile_new_srgb ();
-    }
+    profile = gimp_image_get_builtin_color_profile (image);
 
   return profile;
 }

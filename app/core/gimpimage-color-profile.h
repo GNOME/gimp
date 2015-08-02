@@ -51,6 +51,9 @@ gboolean             gimp_image_set_color_profile      (GimpImage           *ima
                                                         GimpColorProfile    *profile,
                                                         GError             **error);
 
+GimpColorProfile   * gimp_image_get_builtin_color_profile
+                                                       (GimpImage           *image);
+
 gboolean             gimp_image_convert_color_profile  (GimpImage                *image,
                                                         GimpColorProfile         *dest_profile,
                                                         GimpColorRenderingIntent  intent,
