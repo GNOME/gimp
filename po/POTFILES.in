@@ -179,6 +179,7 @@ app/core/gimpunit.c
 app/dialogs/about-dialog.c
 app/dialogs/action-search-dialog.c
 app/dialogs/channel-options-dialog.c
+app/dialogs/color-profile-dialog.c
 app/dialogs/convert-precision-dialog.c
 app/dialogs/convert-type-dialog.c
 app/dialogs/data-delete-dialog.c

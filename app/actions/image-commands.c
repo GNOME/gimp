@@ -56,6 +56,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
+#include "dialogs/color-profile-dialog.h"
 #include "dialogs/convert-precision-dialog.h"
 #include "dialogs/convert-type-dialog.h"
 #include "dialogs/grid-dialog.h"
@@ -74,6 +75,8 @@
 
 #define IMAGE_CONVERT_PRECISION_DIALOG_KEY "image-convert-precision-dialog"
 #define IMAGE_CONVERT_TYPE_DIALOG_KEY      "image-convert-type-dialog"
+#define IMAGE_PROFILE_CONVERT_DIALOG_KEY   "image-profile-convert-dialog"
+#define IMAGE_PROFILE_ASSIGN_DIALOG_KEY    "image-profile-assign-dialog"
 
 
 typedef struct
@@ -292,24 +295,82 @@ image_convert_precision_cmd_callback (GtkAction *action,
   gimp_image_flush (image);
 }
 
+static void
+image_profile_assign_dialog_unset (GimpImage *image)
+{
+  g_object_set_data (G_OBJECT (image), IMAGE_PROFILE_ASSIGN_DIALOG_KEY, NULL);
+}
+
 void
 image_color_profile_assign_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {
-  GimpImage *image;
+  GimpImage   *image;
+  GimpDisplay *display;
+  GtkWidget   *widget;
+  GtkWidget   *dialog;
   return_if_no_image (image, data);
+  return_if_no_display (display, data);
+  return_if_no_widget (widget, data);
 
-  g_message ("FIXME: implement image_color_profile_assign_cmd_callback()");
+  dialog = g_object_get_data (G_OBJECT (image),
+                              IMAGE_PROFILE_ASSIGN_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      dialog = color_profile_assign_dialog_new (image,
+                                                action_data_get_context (data),
+                                                widget,
+                                                GIMP_PROGRESS (display));
+
+      g_object_set_data (G_OBJECT (image),
+                         IMAGE_PROFILE_ASSIGN_DIALOG_KEY, dialog);
+
+      g_signal_connect_object (dialog, "destroy",
+                               G_CALLBACK (image_profile_assign_dialog_unset),
+                               image, G_CONNECT_SWAPPED);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
+}
+
+static void
+image_profile_convert_dialog_unset (GimpImage *image)
+{
+  g_object_set_data (G_OBJECT (image), IMAGE_PROFILE_CONVERT_DIALOG_KEY, NULL);
 }
 
 void
 image_color_profile_convert_cmd_callback (GtkAction *action,
                                           gpointer   data)
 {
-  GimpImage *image;
+  GimpImage   *image;
+  GimpDisplay *display;
+  GtkWidget   *widget;
+  GtkWidget   *dialog;
   return_if_no_image (image, data);
+  return_if_no_display (display, data);
+  return_if_no_widget (widget, data);
 
-  g_message ("FIXME: implement image_color_profile_convert_cmd_callback()");
+  dialog = g_object_get_data (G_OBJECT (image),
+                              IMAGE_PROFILE_CONVERT_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      dialog = color_profile_convert_dialog_new (image,
+                                                 action_data_get_context (data),
+                                                 widget,
+                                                 GIMP_PROGRESS (display));
+
+      g_object_set_data (G_OBJECT (image),
+                         IMAGE_PROFILE_CONVERT_DIALOG_KEY, dialog);
+
+      g_signal_connect_object (dialog, "destroy",
+                               G_CALLBACK (image_profile_convert_dialog_unset),
+                               image, G_CONNECT_SWAPPED);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
