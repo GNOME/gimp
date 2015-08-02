@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimage-profile.c
+ * gimpimage-color-profile.c
  * Copyright (C) 2015 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,8 +41,8 @@
 #include "gimpdrawable.h"
 #include "gimperror.h"
 #include "gimpimage.h"
+#include "gimpimage-color-profile.h"
 #include "gimpimage-colormap.h"
-#include "gimpimage-profile.h"
 #include "gimpimage-undo.h"
 #include "gimpprogress.h"
 

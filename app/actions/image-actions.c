@@ -30,7 +30,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-profile.h"
+#include "core/gimpimage-color-profile.h"
 #include "core/gimpitemstack.h"
 
 #include "widgets/gimpactiongroup.h"

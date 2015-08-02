@@ -31,7 +31,7 @@
 
 #include "pdb-types.h"
 
-#include "core/gimpimage-profile.h"
+#include "core/gimpimage-color-profile.h"
 #include "core/gimpimage.h"
 #include "core/gimpparamspecs.h"
 

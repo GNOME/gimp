@@ -207,6 +207,8 @@ libappcore_a_sources = \
 	gimpimage.h				\
 	gimpimage-arrange.c			\
 	gimpimage-arrange.h			\
+	gimpimage-color-profile.c		\
+	gimpimage-color-profile.h		\
 	gimpimage-colormap.c			\
 	gimpimage-colormap.h			\
 	gimpimage-convert-fsdither.h		\
@@ -240,8 +242,6 @@ libappcore_a_sources = \
 	gimpimage-preview.c			\
 	gimpimage-preview.h			\
 	gimpimage-private.h			\
-	gimpimage-profile.c			\
-	gimpimage-profile.h			\
 	gimpimage-quick-mask.c			\
 	gimpimage-quick-mask.h			\
 	gimpimage-resize.c			\

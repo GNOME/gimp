@@ -307,7 +307,7 @@ CODE
 
 @headers = qw(<cairo.h>
               "libgimpcolor/gimpcolor.h"
-              "core/gimpimage-profile.h"
+              "core/gimpimage-color-profile.h"
               "gimp-intl.h");
 
 @procs = qw(image_get_color_profile

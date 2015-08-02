@@ -33,14 +33,14 @@
 #include "widgets-types.h"
 
 #include "core/gimpimage.h"
-#include "core/gimpimage-profile.h"
+#include "core/gimpimage-color-profile.h"
 
 #include "gimpimageprofileview.h"
 
 #include "gimp-intl.h"
 
 
-static void  gimp_image_profile_view_update  (GimpImageParasiteView *view);
+static void   gimp_image_profile_view_update (GimpImageParasiteView *view);
 
 
 G_DEFINE_TYPE (GimpImageProfileView,
