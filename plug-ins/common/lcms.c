@@ -31,17 +31,12 @@
 #define PLUG_IN_BINARY          "lcms"
 #define PLUG_IN_ROLE            "gimp-lcms"
 
-#define PLUG_IN_PROC_SET        "plug-in-icc-profile-set"
-#define PLUG_IN_PROC_SET_RGB    "plug-in-icc-profile-set-rgb"
-
 #define PLUG_IN_PROC_APPLY      "plug-in-icc-profile-apply"
 #define PLUG_IN_PROC_APPLY_RGB  "plug-in-icc-profile-apply-rgb"
 
 
 enum
 {
-  PROC_SET,
-  PROC_SET_RGB,
   PROC_APPLY,
   PROC_APPLY_RGB,
   NONE
@@ -67,9 +62,6 @@ static void  run   (const gchar      *name,
                     gint             *nreturn_vals,
                     GimpParam       **return_vals);
 
-static GimpPDBStatusType  lcms_icc_set       (GimpColorConfig   *config,
-                                              gint32             image,
-                                              GFile             *file);
 static GimpPDBStatusType  lcms_icc_apply     (GimpColorConfig   *config,
                                               GimpRunMode        run_mode,
                                               gint32             image,
@@ -77,9 +69,6 @@ static GimpPDBStatusType  lcms_icc_apply     (GimpColorConfig   *config,
                                               GimpColorRenderingIntent intent,
                                               gboolean           bpc,
                                               gboolean          *dont_ask);
-
-static gboolean     lcms_image_set_profile   (gint32            image,
-                                              GFile            *file);
 
 static gboolean     lcms_icc_apply_dialog    (gint32            image,
                                               GimpColorProfile *src_profile,
@@ -116,8 +105,6 @@ static const GimpParamDef apply_rgb_args[] =
 
 static const Procedure procedures[] =
 {
-  { PLUG_IN_PROC_SET,       2 },
-  { PLUG_IN_PROC_SET_RGB,   2 },
   { PLUG_IN_PROC_APPLY,     2 },
   { PLUG_IN_PROC_APPLY_RGB, 2 }
 };
@@ -135,36 +122,6 @@ MAIN ()
 static void
 query (void)
 {
-  gimp_install_procedure (PLUG_IN_PROC_SET,
-                          N_("Set a color profile on the image"),
-                          "This procedure sets an ICC color profile on an "
-                          "image using the 'icc-profile' parasite. It does "
-                          "not do any color conversion.",
-                          "Sven Neumann",
-                          "Sven Neumann",
-                          "2006, 2007",
-                          N_("_Assign Color Profile..."),
-                          "RGB*, INDEXED*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (set_args), 0,
-                          set_args, NULL);
-
-  gimp_install_procedure (PLUG_IN_PROC_SET_RGB,
-                          "Set the default RGB color profile on the image",
-                          "This procedure sets the user-configured RGB "
-                          "profile on an image using the 'icc-profile' "
-                          "parasite. If no RGB profile is configured, sRGB "
-                          "is assumed and the parasite is unset. This "
-                          "procedure does not do any color conversion.",
-                          "Sven Neumann",
-                          "Sven Neumann",
-                          "2006, 2007",
-                          N_("Assign default RGB Profile"),
-                          "RGB*, INDEXED*",
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (set_rgb_args), 0,
-                          set_rgb_args, NULL);
-
   gimp_install_procedure (PLUG_IN_PROC_APPLY,
                           _("Apply a color profile on the image"),
                           "This procedure transform from the image's color "
@@ -247,13 +204,6 @@ run (const gchar      *name,
 
   switch (proc)
     {
-    case PROC_SET:
-      run_mode = param[0].data.d_int32;
-      image    = param[1].data.d_image;
-      if (nparams > 2)
-        file = g_file_new_for_path (param[2].data.d_string);
-      break;
-
     case PROC_APPLY:
       run_mode = param[0].data.d_int32;
       image    = param[1].data.d_image;
@@ -263,11 +213,6 @@ run (const gchar      *name,
         intent = param[3].data.d_int32;
       if (nparams > 4)
         bpc    = param[4].data.d_int32 ? TRUE : FALSE;
-      break;
-
-    case PROC_SET_RGB:
-      run_mode = param[0].data.d_int32;
-      image    = param[1].data.d_image;
       break;
 
     case PROC_APPLY_RGB:
@@ -280,26 +225,8 @@ run (const gchar      *name,
       break;
     }
 
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    {
-      switch (proc)
-        {
-        case PROC_SET:
-        case PROC_APPLY:
-          goto done;
-
-        default:
-          break;
-        }
-    }
-
   switch (proc)
     {
-    case PROC_SET:
-    case PROC_SET_RGB:
-      status = lcms_icc_set (config, image, file);
-      break;
-
     case PROC_APPLY:
     case PROC_APPLY_RGB:
       status = lcms_icc_apply (config, run_mode,
@@ -324,29 +251,6 @@ run (const gchar      *name,
     g_object_unref (file);
 
   values[0].data.d_status = status;
-}
-
-static GimpPDBStatusType
-lcms_icc_set (GimpColorConfig *config,
-              gint32           image,
-              GFile           *file)
-{
-  gboolean success;
-
-  g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), GIMP_PDB_CALLING_ERROR);
-  g_return_val_if_fail (image != -1, GIMP_PDB_CALLING_ERROR);
-
-  if (file)
-    g_object_ref (file);
-  else if (config->rgb_profile)
-    file = g_file_new_for_path (config->rgb_profile);
-
-  success = lcms_image_set_profile (image, file);
-
-  if (file)
-    g_object_unref (file);
-
-  return success ? GIMP_PDB_SUCCESS : GIMP_PDB_EXECUTION_ERROR;
 }
 
 static GimpPDBStatusType
@@ -436,42 +340,6 @@ lcms_icc_apply (GimpColorConfig          *config,
     g_object_unref (file);
 
   return status;
-}
-
-static gboolean
-lcms_image_set_profile (gint32  image,
-                        GFile  *file)
-{
-  GimpColorProfile *profile = NULL;
-
-  g_return_val_if_fail (image != -1, FALSE);
-
-  if (file)
-    {
-      GError *error = NULL;
-
-      profile = gimp_color_profile_new_from_file (file, &error);
-
-      if (! profile)
-        {
-          g_message ("%s", error->message);
-          g_clear_error (&error);
-
-          return FALSE;
-        }
-    }
-
-  gimp_image_undo_group_start (image);
-
-  gimp_image_set_color_profile (image, profile);
-  gimp_image_detach_parasite (image, "icc-profile-name");
-
-  gimp_image_undo_group_end (image);
-
-  if (profile)
-    g_object_unref (profile);
-
-  return TRUE;
 }
 
 static GtkWidget *

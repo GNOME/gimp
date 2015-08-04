@@ -27,16 +27,20 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "libgimpbase/gimpbase.h"
 
 #include "pdb-types.h"
 
+#include "config/gimpcoreconfig.h"
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-operation.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage-color-profile.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-resize.h"
 #include "core/gimpimage-rotate.h"
@@ -1959,6 +1963,130 @@ plug_in_icc_profile_file_info_invoker (GimpProcedure         *procedure,
     }
 
   return return_vals;
+}
+
+static GimpValueArray *
+plug_in_icc_profile_set_invoker (GimpProcedure         *procedure,
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  const gchar *profile;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  profile = g_value_get_string (gimp_value_array_index (args, 2));
+
+  if (success)
+    {
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
+        {
+          GFile            *file = NULL;
+          GimpColorProfile *p    = NULL;
+
+          if (profile)
+            file = g_file_new_for_path (profile);
+          else if (image->gimp->config->color_management->rgb_profile)
+            file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
+
+          if (file)
+            {
+              p = gimp_color_profile_new_from_file (file, error);
+
+              if (! p)
+                success = FALSE;
+
+              g_object_unref (file);
+            }
+
+          if (success)
+            {
+              gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC,
+                                           _("Set color profile"));
+
+              if (gimp_image_set_color_profile (image, p, error))
+                gimp_image_parasite_detach (image, "icc-profile-name");
+              else
+                success = FALSE;
+
+              gimp_image_undo_group_end (image);
+
+              if (! success)
+                gimp_image_undo (image);
+
+              if (p)
+                g_object_unref (p);
+            }
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_icc_profile_set_rgb_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+
+  if (success)
+    {
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
+        {
+          GFile            *file = NULL;
+          GimpColorProfile *p    = NULL;
+
+          if (image->gimp->config->color_management->rgb_profile)
+            file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
+
+          if (file)
+            {
+              p = gimp_color_profile_new_from_file (file, error);
+
+              if (! p)
+                success = FALSE;
+
+              g_object_unref (file);
+            }
+
+          if (success)
+            {
+              gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC,
+                                           _("Set color profile"));
+
+              if (gimp_image_set_color_profile (image, p, error))
+                gimp_image_parasite_detach (image, "icc-profile-name");
+              else
+                success = FALSE;
+
+              gimp_image_undo_group_end (image);
+
+              if (! success)
+                gimp_image_undo (image);
+
+              if (p)
+                g_object_unref (p);
+            }
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
 }
 
 static GimpValueArray *
@@ -5857,6 +5985,73 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-icc-profile-set
+   */
+  procedure = gimp_procedure_new (plug_in_icc_profile_set_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-icc-profile-set");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-icc-profile-set",
+                                     "Set a color profile on the image",
+                                     "This procedure sets the user-configured RGB profile on an image using the 'icc-profile' parasite. This procedure does not do any color conversion.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("profile",
+                                                       "profile",
+                                                       "Filename of an ICC color profile",
+                                                       TRUE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-icc-profile-set-rgb
+   */
+  procedure = gimp_procedure_new (plug_in_icc_profile_set_rgb_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-icc-profile-set-rgb");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-icc-profile-set-rgb",
+                                     "Set the default RGB color profile on the image",
+                                     "This procedure sets the user-configured RGB profile on an image using the 'icc-profile' parasite. If no RGB profile is configured, sRGB is assumed and the parasite is unset. This procedure does not do any color conversion.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
