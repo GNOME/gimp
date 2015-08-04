@@ -86,11 +86,6 @@ static gboolean     lcms_icc_apply_dialog    (gint32            image,
                                               GimpColorProfile *dest_profile,
                                               gboolean         *dont_ask);
 
-static GimpPDBStatusType  lcms_dialog        (GimpColorConfig  *config,
-                                              gint32            image,
-                                              gboolean          apply,
-                                              LcmsValues       *values);
-
 
 static const GimpParamDef set_args[] =
 {
@@ -204,11 +199,6 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (apply_rgb_args), 0,
                           apply_rgb_args, NULL);
-
-  gimp_plugin_menu_register (PLUG_IN_PROC_SET,
-                             "<Image>/Image/Color Management");
-  gimp_plugin_menu_register (PLUG_IN_PROC_APPLY,
-                             "<Image>/Image/Color Management");
 }
 
 static void
@@ -290,23 +280,12 @@ run (const gchar      *name,
       break;
     }
 
-  if (run_mode == GIMP_RUN_INTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     {
-      LcmsValues values = { intent, bpc };
-
       switch (proc)
         {
         case PROC_SET:
-          status = lcms_dialog (config, image, FALSE, &values);
-          goto done;
-
         case PROC_APPLY:
-          gimp_get_data (name, &values);
-
-          status = lcms_dialog (config, image, TRUE, &values);
-
-          if (status == GIMP_PDB_SUCCESS)
-            gimp_set_data (name, &values, sizeof (LcmsValues));
           goto done;
 
         default:
@@ -338,9 +317,6 @@ run (const gchar      *name,
     }
 
  done:
-  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-    gimp_displays_flush ();
-
   if (config)
     g_object_unref (config);
 
@@ -634,222 +610,4 @@ lcms_icc_apply_dialog (gint32            image,
   gtk_widget_destroy (dialog);
 
   return run;
-}
-
-static GtkWidget *
-lcms_icc_combo_box_new (GimpColorConfig *config)
-{
-  GtkWidget        *combo;
-  GtkWidget        *dialog;
-  gchar            *history;
-  gchar            *label;
-  GFile            *rgb_file = NULL;
-  GimpColorProfile *profile  = NULL;
-  GError           *error    = NULL;
-
-  dialog = gimp_color_profile_chooser_dialog_new (_("Select destination profile"));
-
-  history = gimp_personal_rc_file ("profilerc");
-  combo = gimp_color_profile_combo_box_new (dialog, history);
-  g_free (history);
-
-  profile = gimp_color_config_get_rgb_color_profile (config, &error);
-
-  if (profile)
-    {
-      rgb_file = g_file_new_for_path (config->rgb_profile);
-    }
-  else if (error)
-    {
-      g_message ("%s", error->message);
-      g_clear_error (&error);
-    }
-
-  if (! profile)
-    profile = gimp_color_profile_new_srgb ();
-
-  label = g_strdup_printf (_("RGB workspace (%s)"),
-                           gimp_color_profile_get_label (profile));
-
-  g_object_unref (profile);
-
-  gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                         rgb_file, label);
-  if (rgb_file)
-    g_object_unref (rgb_file);
-  g_free (label);
-
-  gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                                NULL, NULL);
-
-  return combo;
-}
-
-static GimpPDBStatusType
-lcms_dialog (GimpColorConfig *config,
-             gint32           image,
-             gboolean         apply,
-             LcmsValues      *values)
-{
-  GimpColorProfileComboBox *box;
-  GtkWidget                *dialog;
-  GtkWidget                *main_vbox;
-  GtkWidget                *frame;
-  GtkWidget                *label;
-  GtkWidget                *combo;
-  GimpColorProfile         *src_profile;
-  gboolean                  success = FALSE;
-  gboolean                  run;
-
-  src_profile = gimp_image_get_effective_color_profile (image);
-
-  gimp_ui_init (PLUG_IN_BINARY, FALSE);
-
-  dialog = gimp_dialog_new (apply ?
-                            _("Convert to ICC Color Profile") :
-                            _("Assign ICC Color Profile"),
-                            PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func,
-                            apply ? PLUG_IN_PROC_APPLY : PLUG_IN_PROC_SET,
-
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-
-                            apply ? GTK_STOCK_CONVERT : _("_Assign"),
-                            GTK_RESPONSE_OK,
-
-                            NULL);
-
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_window_set_transient (GTK_WINDOW (dialog));
-
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
-
-  frame = gimp_frame_new (_("Current Color Profile"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  label = gtk_label_new (gimp_color_profile_get_label (src_profile));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_container_add (GTK_CONTAINER (frame), label);
-  gtk_widget_show (label);
-
-  frame = gimp_frame_new (apply ? _("Convert to") : _("Assign"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  combo = lcms_icc_combo_box_new (config);
-  gtk_container_add (GTK_CONTAINER (frame), combo);
-  gtk_widget_show (combo);
-
-  box = GIMP_COLOR_PROFILE_COMBO_BOX (combo);
-
-  if (apply)
-    {
-      GtkWidget *vbox;
-      GtkWidget *hbox;
-      GtkWidget *toggle;
-
-      vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-      gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
-      gtk_widget_show (vbox);
-
-      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      label = gtk_label_new_with_mnemonic (_("_Rendering Intent:"));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      combo = gimp_enum_combo_box_new (GIMP_TYPE_COLOR_RENDERING_INTENT);
-      gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
-      gtk_widget_show (combo);
-
-      gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                                  values->intent,
-                                  G_CALLBACK (gimp_int_combo_box_get_active),
-                                  &values->intent);
-
-      gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
-
-      toggle =
-        gtk_check_button_new_with_mnemonic (_("_Black Point Compensation"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), values->bpc);
-      gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-      gtk_widget_show (toggle);
-
-      g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_toggle_button_update),
-                        &values->bpc);
-    }
-
-  while ((run = gimp_dialog_run (GIMP_DIALOG (dialog))) == GTK_RESPONSE_OK)
-    {
-      GFile            *file = gimp_color_profile_combo_box_get_active_file (box);
-      GimpColorProfile *dest_profile;
-
-      gtk_widget_set_sensitive (dialog, FALSE);
-
-      if (file)
-        {
-          GError *error = NULL;
-
-          dest_profile = gimp_color_profile_new_from_file (file, &error);
-
-          if (! dest_profile)
-            {
-              g_message ("%s", error->message);
-              g_clear_error (&error);
-            }
-        }
-      else
-        {
-          dest_profile = gimp_color_profile_new_srgb ();
-        }
-
-      if (dest_profile)
-        {
-          if (gimp_color_profile_is_rgb (dest_profile))
-            {
-              if (apply)
-                success = gimp_image_convert_color_profile (image,
-                                                            dest_profile,
-                                                            values->intent,
-                                                            values->bpc);
-              else
-                success = lcms_image_set_profile (image, file);
-            }
-          else
-            {
-              g_message (_("Destination profile is not for RGB color space."));
-            }
-
-          g_object_unref (dest_profile);
-        }
-
-      if (file)
-        g_object_unref (file);
-
-      if (success)
-        break;
-      else
-        gtk_widget_set_sensitive (dialog, TRUE);
-    }
-
-  gtk_widget_destroy (dialog);
-
-  g_object_unref (src_profile);
-
-  return (run ?
-          (success ? GIMP_PDB_SUCCESS : GIMP_PDB_EXECUTION_ERROR) :
-          GIMP_PDB_CANCEL);
 }
