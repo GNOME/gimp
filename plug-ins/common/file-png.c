@@ -804,17 +804,17 @@ load_image (const gchar  *filename,
             GError      **error)
 {
   int i,                        /* Looping var */
-    trns,                       /* Transparency present */
-    bpp,                        /* Bytes per pixel */
-    width,                      /* image width */
-    height,                     /* image height */
-    empty,                      /* Number of fully transparent indices */
-    num_passes,                 /* Number of interlace passes in file */
-    pass,                       /* Current pass in file */
-    tile_height,                /* Height of tile in GIMP */
-    begin,                      /* Beginning tile row */
-    end,                        /* Ending tile row */
-    num;                        /* Number of rows to load */
+  trns,                         /* Transparency present */
+  bpp,                          /* Bytes per pixel */
+  width,                        /* image width */
+  height,                       /* image height */
+  empty,                        /* Number of fully transparent indices */
+  num_passes,                   /* Number of interlace passes in file */
+  pass,                         /* Current pass in file */
+  tile_height,                  /* Height of tile in GIMP */
+  begin,                        /* Beginning tile row */
+  end,                          /* Ending tile row */
+  num;                          /* Number of rows to load */
   GimpImageBaseType image_type; /* Type of image */
   GimpPrecision image_precision;/* Precision of image */
   GimpImageType layer_type;     /* Type of drawable/layer */
@@ -826,11 +826,11 @@ load_image (const gchar  *filename,
   png_structp pp;               /* PNG read pointer */
   png_infop info;               /* PNG info pointers */
   guchar **pixels,              /* Pixel rows */
-   *pixel;                      /* Pixel data */
+ *pixel;                        /* Pixel data */
   guchar alpha[256],            /* Index -> Alpha */
-   *alpha_ptr;                  /* Temporary pointer */
+ *alpha_ptr;                    /* Temporary pointer */
   struct read_error_data
-   error_data;
+  error_data;
 
   png_textp  text;
   gint       num_texts;
