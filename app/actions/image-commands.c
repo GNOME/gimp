@@ -30,9 +30,9 @@
 
 #include "core/core-enums.h"
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-color-profile.h"
 #include "core/gimpimage-convert-precision.h"
 #include "core/gimpimage-convert-type.h"
 #include "core/gimpimage-crop.h"
@@ -43,6 +43,7 @@
 #include "core/gimpimage-rotate.h"
 #include "core/gimpimage-scale.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpitem.h"
 #include "core/gimppickable.h"
 #include "core/gimppickable-auto-shrink.h"
 #include "core/gimpprogress.h"
@@ -55,6 +56,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
+#include "dialogs/color-profile-dialog.h"
 #include "dialogs/convert-precision-dialog.h"
 #include "dialogs/convert-type-dialog.h"
 #include "dialogs/grid-dialog.h"
@@ -73,6 +75,8 @@
 
 #define IMAGE_CONVERT_PRECISION_DIALOG_KEY "image-convert-precision-dialog"
 #define IMAGE_CONVERT_TYPE_DIALOG_KEY      "image-convert-type-dialog"
+#define IMAGE_PROFILE_CONVERT_DIALOG_KEY   "image-profile-convert-dialog"
+#define IMAGE_PROFILE_ASSIGN_DIALOG_KEY    "image-profile-assign-dialog"
 
 
 typedef struct
@@ -291,24 +295,82 @@ image_convert_precision_cmd_callback (GtkAction *action,
   gimp_image_flush (image);
 }
 
+static void
+image_profile_assign_dialog_unset (GimpImage *image)
+{
+  g_object_set_data (G_OBJECT (image), IMAGE_PROFILE_ASSIGN_DIALOG_KEY, NULL);
+}
+
 void
 image_color_profile_assign_cmd_callback (GtkAction *action,
                                          gpointer   data)
 {
-  GimpImage *image;
+  GimpImage   *image;
+  GimpDisplay *display;
+  GtkWidget   *widget;
+  GtkWidget   *dialog;
   return_if_no_image (image, data);
+  return_if_no_display (display, data);
+  return_if_no_widget (widget, data);
 
-  g_message ("FIXME: implement image_color_profile_assign_cmd_callback()");
+  dialog = g_object_get_data (G_OBJECT (image),
+                              IMAGE_PROFILE_ASSIGN_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      dialog = color_profile_assign_dialog_new (image,
+                                                action_data_get_context (data),
+                                                widget,
+                                                GIMP_PROGRESS (display));
+
+      g_object_set_data (G_OBJECT (image),
+                         IMAGE_PROFILE_ASSIGN_DIALOG_KEY, dialog);
+
+      g_signal_connect_object (dialog, "destroy",
+                               G_CALLBACK (image_profile_assign_dialog_unset),
+                               image, G_CONNECT_SWAPPED);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
+}
+
+static void
+image_profile_convert_dialog_unset (GimpImage *image)
+{
+  g_object_set_data (G_OBJECT (image), IMAGE_PROFILE_CONVERT_DIALOG_KEY, NULL);
 }
 
 void
 image_color_profile_convert_cmd_callback (GtkAction *action,
                                           gpointer   data)
 {
-  GimpImage *image;
+  GimpImage   *image;
+  GimpDisplay *display;
+  GtkWidget   *widget;
+  GtkWidget   *dialog;
   return_if_no_image (image, data);
+  return_if_no_display (display, data);
+  return_if_no_widget (widget, data);
 
-  g_message ("FIXME: implement image_color_profile_convert_cmd_callback()");
+  dialog = g_object_get_data (G_OBJECT (image),
+                              IMAGE_PROFILE_CONVERT_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      dialog = color_profile_convert_dialog_new (image,
+                                                 action_data_get_context (data),
+                                                 widget,
+                                                 GIMP_PROGRESS (display));
+
+      g_object_set_data (G_OBJECT (image),
+                         IMAGE_PROFILE_CONVERT_DIALOG_KEY, dialog);
+
+      g_signal_connect_object (dialog, "destroy",
+                               G_CALLBACK (image_profile_convert_dialog_unset),
+                               image, G_CONNECT_SWAPPED);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 void
@@ -528,12 +590,12 @@ image_crop_to_selection_cmd_callback (GtkAction *action,
 {
   GimpImage *image;
   GtkWidget *widget;
-  gint       x1, y1, x2, y2;
+  gint       x, y, w, h;
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_channel_bounds (gimp_image_get_mask (image),
-                             &x1, &y1, &x2, &y2))
+  if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                          &x, &y, &w, &h))
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
@@ -542,7 +604,7 @@ image_crop_to_selection_cmd_callback (GtkAction *action,
     }
 
   gimp_image_crop (image, action_data_get_context (data),
-                   x1, y1, x2, y2, TRUE);
+                   x, y, w, h, TRUE);
   gimp_image_flush (image);
 }
 
@@ -564,7 +626,7 @@ image_crop_to_content_cmd_callback (GtkAction *action,
     {
     case GIMP_AUTO_SHRINK_SHRINK:
       gimp_image_crop (image, action_data_get_context (data),
-                       x1, y1, x2, y2, TRUE);
+                       x1, y1, x2 - x1, y2 - y1, TRUE);
       gimp_image_flush (image);
       break;
 

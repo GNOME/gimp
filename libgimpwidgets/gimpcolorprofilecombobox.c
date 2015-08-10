@@ -376,7 +376,9 @@ gimp_color_profile_combo_box_new_with_model (GtkWidget    *dialog,
  *
  * This function delegates to the underlying
  * #GimpColorProfileStore. Please refer to the documentation of
- * gimp_color_profile_store_add() for details.
+ * gimp_color_profile_store_add_file() for details.
+ *
+ * Deprecated: use gimp_color_profile_combo_box_add_file() instead.
  *
  * Since: 2.4
  **/
@@ -385,15 +387,48 @@ gimp_color_profile_combo_box_add (GimpColorProfileComboBox *combo,
                                   const gchar              *filename,
                                   const gchar              *label)
 {
-  GtkTreeModel *model;
+  GFile *file = NULL;
 
   g_return_if_fail (GIMP_IS_COLOR_PROFILE_COMBO_BOX (combo));
   g_return_if_fail (label != NULL || filename == NULL);
 
+  if (filename)
+    file = g_file_new_for_path (filename);
+
+  gimp_color_profile_combo_box_add_file (combo, file, label);
+
+  if (file)
+    g_object_unref (file);
+}
+
+/**
+ * gimp_color_profile_combo_box_add_file:
+ * @combo: a #GimpColorProfileComboBox
+ * @file:  file of the profile to add (or %NULL)
+ * @label: label to use for the profile
+ *         (may only be %NULL if @file is %NULL)
+ *
+ * This function delegates to the underlying
+ * #GimpColorProfileStore. Please refer to the documentation of
+ * gimp_color_profile_store_add_file() for details.
+ *
+ * Since: 2.10
+ **/
+void
+gimp_color_profile_combo_box_add_file (GimpColorProfileComboBox *combo,
+                                       GFile                    *file,
+                                       const gchar              *label)
+{
+  GtkTreeModel *model;
+
+  g_return_if_fail (GIMP_IS_COLOR_PROFILE_COMBO_BOX (combo));
+  g_return_if_fail (label != NULL || file == NULL);
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
+
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
 
-  gimp_color_profile_store_add (GIMP_COLOR_PROFILE_STORE (model),
-                                filename, label);
+  gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (model),
+                                     file, label);
 }
 
 /**
@@ -406,6 +441,8 @@ gimp_color_profile_combo_box_add (GimpColorProfileComboBox *combo,
  * item.  If the profile is not listed in the @combo, then it is added
  * with the given @label (or @filename in case that @label is %NULL).
  *
+ * Deprecated: use gimp_color_profile_combo_box_set_active_file() instead.
+ *
  * Since: 2.4
  **/
 void
@@ -413,23 +450,50 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
                                          const gchar              *filename,
                                          const gchar              *label)
 {
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-  gchar        *l = NULL;
+  GFile *file = NULL;
 
   g_return_if_fail (GIMP_IS_COLOR_PROFILE_COMBO_BOX (combo));
 
+  if (filename)
+    file = g_file_new_for_path (filename);
+
+  gimp_color_profile_combo_box_set_active_file (combo, file, label);
+
+  if (file)
+    g_object_unref (file);
+}
+
+/**
+ * gimp_color_profile_combo_box_set_active_file:
+ * @combo: a #GimpColorProfileComboBox
+ * @file:  file of the profile to select
+ * @label: label to use when adding a new entry (can be %NULL)
+ *
+ * Selects a color profile from the @combo and makes it the active
+ * item.  If the profile is not listed in the @combo, then it is added
+ * with the given @label (or @file in case that @label is %NULL).
+ *
+ * Since: 2.10
+ **/
+void
+gimp_color_profile_combo_box_set_active_file (GimpColorProfileComboBox *combo,
+                                              GFile                    *file,
+                                              const gchar              *label)
+{
+  GimpColorProfile *profile = NULL;
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
+
+  g_return_if_fail (GIMP_IS_COLOR_PROFILE_COMBO_BOX (combo));
+  g_return_if_fail (file == NULL || G_IS_FILE (file));
+
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
 
-  if (filename && ! (label && *label))
+  if (file && ! (label && *label))
     {
-      GFile            *file;
-      GimpColorProfile  profile;
-      GError           *error = NULL;
+      GError *error = NULL;
 
-      file = g_file_new_for_path (filename);
-      profile = gimp_color_profile_open_from_file (file, &error);
-      g_object_unref (file);
+      profile = gimp_color_profile_new_from_file (file, &error);
 
       if (! profile)
         {
@@ -438,36 +502,63 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
         }
       else
         {
-          l = gimp_color_profile_get_label (profile);
-          gimp_color_profile_close (profile);
+          label = gimp_color_profile_get_label (profile);
         }
-    }
-  else
-    {
-      l = g_strdup (label);
     }
 
   if (_gimp_color_profile_store_history_add (GIMP_COLOR_PROFILE_STORE (model),
-                                             filename, l, &iter))
+                                             file, label, &iter))
     {
       gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
     }
 
-  g_free (l);
+  if (profile)
+    g_object_unref (profile);
 }
 
 /**
  * gimp_color_profile_combo_box_get_active:
  * @combo: a #GimpColorProfileComboBox
  *
- * Return value: The filename of the currently selected color profile.
+ * Return value: The filename of the currently selected color profile,
  *               This is a newly allocated string and should be released
  *               using g_free() when it is not any longer needed.
+ *
+ * Deprecated: use gimp_color_profile_combo_box_get_active_file() inatead.
  *
  * Since: 2.4
  **/
 gchar *
 gimp_color_profile_combo_box_get_active (GimpColorProfileComboBox *combo)
+{
+  GFile *file;
+  gchar *path = NULL;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE_COMBO_BOX (combo), NULL);
+
+  file = gimp_color_profile_combo_box_get_active_file (combo);
+
+  if (file)
+    {
+      path = g_file_get_path (file);
+      g_object_unref (file);
+    }
+
+  return path;
+}
+
+/**
+ * gimp_color_profile_combo_box_get_active_file:
+ * @combo: a #GimpColorProfileComboBox
+ *
+ * Return value: The file of the currently selected color profile,
+ *               release using g_object_unref() when it is not any
+ *               longer needed.
+ *
+ * Since: 2.10
+ **/
+GFile *
+gimp_color_profile_combo_box_get_active_file (GimpColorProfileComboBox *combo)
 {
   GtkTreeModel *model;
   GtkTreeIter   iter;
@@ -478,18 +569,19 @@ gimp_color_profile_combo_box_get_active (GimpColorProfileComboBox *combo)
 
   if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo), &iter))
     {
-      gchar *filename;
+      GFile *file;
       gint   type;
 
       gtk_tree_model_get (model, &iter,
                           GIMP_COLOR_PROFILE_STORE_ITEM_TYPE, &type,
-                          GIMP_COLOR_PROFILE_STORE_FILENAME,  &filename,
+                          GIMP_COLOR_PROFILE_STORE_FILE,      &file,
                           -1);
 
       if (type == GIMP_COLOR_PROFILE_STORE_ITEM_FILE)
-        return filename;
+        return file;
 
-      g_free (filename);
+      if (file)
+        g_object_unref (file);
     }
 
   return NULL;
@@ -524,15 +616,15 @@ gimp_color_profile_combo_dialog_response (GimpColorProfileChooserDialog *dialog,
 {
   if (response == GTK_RESPONSE_ACCEPT)
     {
-      gchar *filename;
+      GFile *file;
 
-      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+      file = gtk_file_chooser_get_file (GTK_FILE_CHOOSER (dialog));
 
-      if (filename)
+      if (file)
         {
-          gimp_color_profile_combo_box_set_active (combo, filename, NULL);
+          gimp_color_profile_combo_box_set_active_file (combo, file, NULL);
 
-          g_free (filename);
+          g_object_unref (file);
         }
     }
 

@@ -46,6 +46,7 @@
 #include "gimpguide.h"
 #include "gimpidtable.h"
 #include "gimpimage.h"
+#include "gimpimage-color-profile.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-item-list.h"
@@ -53,7 +54,6 @@
 #include "gimpimage-sample-points.h"
 #include "gimpimage-preview.h"
 #include "gimpimage-private.h"
-#include "gimpimage-profile.h"
 #include "gimpimage-quick-mask.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
@@ -180,7 +180,7 @@ static void     gimp_image_real_colormap_changed (GimpImage         *image,
 static const guint8 *
         gimp_image_color_managed_get_icc_profile (GimpColorManaged  *managed,
                                                   gsize             *len);
-static GimpColorProfile
+static GimpColorProfile *
       gimp_image_color_managed_get_color_profile (GimpColorManaged  *managed);
 
 static void        gimp_image_projectable_flush  (GimpProjectable   *projectable,
@@ -1371,11 +1371,11 @@ gimp_image_color_managed_get_icc_profile (GimpColorManaged *managed,
   return gimp_image_get_icc_profile (GIMP_IMAGE (managed), len);
 }
 
-static GimpColorProfile
+static GimpColorProfile *
 gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
 {
   GimpImage        *image = GIMP_IMAGE (managed);
-  GimpColorProfile  profile;
+  GimpColorProfile *profile;
 
   profile = gimp_image_get_color_profile (image);
 
@@ -1387,14 +1387,7 @@ gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
     }
 
   if (! profile)
-    {
-      const Babl *format = gimp_image_get_layer_format (image, FALSE);
-
-      if (gimp_babl_format_get_linear (format))
-        profile = gimp_color_profile_new_linear_rgb ();
-      else
-        profile = gimp_color_profile_new_srgb ();
-    }
+    profile = gimp_image_get_builtin_color_profile (image);
 
   return profile;
 }
@@ -1708,12 +1701,12 @@ gimp_image_estimate_memsize (const GimpImage   *image,
   current_size   = gimp_object_get_memsize (GIMP_OBJECT (image), NULL);
 
   /*  the part of the image's memsize that scales linearly with the image  */
-  drawables = gimp_image_item_list_get_list (image, NULL,
+  drawables = gimp_image_item_list_get_list (image,
                                              GIMP_ITEM_TYPE_LAYERS |
                                              GIMP_ITEM_TYPE_CHANNELS,
                                              GIMP_ITEM_SET_ALL);
 
-  gimp_image_item_list_filter (NULL, drawables);
+  gimp_image_item_list_filter (drawables);
 
   drawables = g_list_prepend (drawables, gimp_image_get_mask (image));
 
@@ -1939,23 +1932,6 @@ gimp_image_get_file (const GimpImage *image)
   return GIMP_IMAGE_GET_PRIVATE (image)->file;
 }
 
-void
-gimp_image_set_filename (GimpImage   *image,
-                         const gchar *filename)
-{
-  GFile *file = NULL;
-
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  if (filename && strlen (filename))
-    file = file_utils_filename_to_file (image->gimp, filename, NULL);
-
-  gimp_image_set_file (image, file);
-
-  if (file)
-    g_object_unref (file);
-}
-
 /**
  * gimp_image_get_imported_file:
  * @image: A #GimpImage.
@@ -2121,21 +2097,6 @@ gimp_image_set_save_a_copy_file (GimpImage *image,
       if (private->save_a_copy_file)
         g_object_ref (private->save_a_copy_file);
     }
-}
-
-gchar *
-gimp_image_get_filename (const GimpImage *image)
-{
-  GFile *file;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  file = gimp_image_get_file (image);
-
-  if (! file)
-    return NULL;
-
-  return g_file_get_path (file);
 }
 
 static gchar *

@@ -26,7 +26,6 @@
 
 #include "gimp.h"
 #include "gimpcontainer.h"
-#include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
@@ -89,7 +88,7 @@ gimp_image_resize_with_layers (GimpImage    *image,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_RESIZE,
                                C_("undo-type", "Resize Image"));
 
-  resize_layers = gimp_image_item_list_get_list (image, NULL,
+  resize_layers = gimp_image_item_list_get_list (image,
                                                  GIMP_ITEM_TYPE_LAYERS,
                                                  layer_set);
 
@@ -313,16 +312,12 @@ gimp_image_resize_to_selection (GimpImage    *image,
                                 GimpProgress *progress)
 {
   GimpChannel *selection = gimp_image_get_mask (image);
-  gint         x1, y1;
-  gint         x2, y2;
+  gint         x, y, w, h;
 
-  if (gimp_channel_is_empty (selection))
-    return;
-
-  gimp_channel_bounds (selection, &x1, &y1, &x2, &y2);
-
-  gimp_image_resize (image, context,
-                     x2 - x1, y2 - y1,
-                     - x1, - y1,
-                     progress);
+  if (gimp_item_bounds (GIMP_ITEM (selection), &x, &y, &w, &h))
+    {
+      gimp_image_resize (image, context,
+                         w, h, -x, -y,
+                         progress);
+    }
 }

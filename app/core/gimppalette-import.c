@@ -366,11 +366,8 @@ gimp_palette_import_from_image (GimpImage   *image,
 
   if (selection_only)
     {
-      gimp_channel_bounds (gimp_image_get_mask (image),
-                           &x, &y, &width, &height);
-
-      width  -= x;
-      height -= y;
+      gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                        &x, &y, &width, &height);
     }
   else
     {

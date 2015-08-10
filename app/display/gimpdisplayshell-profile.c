@@ -148,8 +148,13 @@ gimp_display_shell_profile_can_convert_to_u8 (GimpDisplayShell *shell)
       switch (gimp_image_get_component_type (image))
         {
         case GIMP_COMPONENT_TYPE_U8:
+#if 0
+          /* would like to convert directly for these too, but it
+           * produces inferior results, see bug 750874
+           */
         case GIMP_COMPONENT_TYPE_U16:
         case GIMP_COMPONENT_TYPE_U32:
+#endif
           return TRUE;
 
         default:

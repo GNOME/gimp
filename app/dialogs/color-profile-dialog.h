@@ -1,6 +1,9 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * color-profile-dialog.h
+ * Copyright (C) 2015 Michael Natterer <mitch@gimp.org>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -15,17 +18,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_CROP_H__
-#define __GIMP_IMAGE_CROP_H__
+#ifndef __COLOR_PROFILE_DIALOG_H__
+#define __COLOR_PROFILE_DIALOG_H__
 
 
-void   gimp_image_crop (GimpImage   *image,
-                        GimpContext *context,
-                        gint         x,
-                        gint         y,
-                        gint         width,
-                        gint         height,
-                        gboolean     crop_layers);
+GtkWidget * color_profile_assign_dialog_new  (GimpImage    *image,
+                                              GimpContext  *context,
+                                              GtkWidget    *parent,
+                                              GimpProgress *progress);
+
+GtkWidget * color_profile_convert_dialog_new (GimpImage    *image,
+                                              GimpContext  *context,
+                                              GtkWidget    *parent,
+                                              GimpProgress *progress);
 
 
-#endif  /* __GIMP_IMAGE_CROP_H__ */
+#endif  /*  __COLOR_PROFILE_DIALOG_H__  */

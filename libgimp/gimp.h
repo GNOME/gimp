@@ -343,14 +343,14 @@ gint           gimp_min_colors          (void) G_GNUC_CONST;
 
 GIMP_DEPRECATED_FOR(gimp_get_parasite)
 GimpParasite * gimp_parasite_find       (const gchar        *name);
-GIMP_DEPRECATED_FOR(gimp_parasite_attach)
+GIMP_DEPRECATED_FOR(gimp_attach_parasite)
 gboolean       gimp_parasite_attach     (const GimpParasite *parasite);
-GIMP_DEPRECATED_FOR(gimp_parasite_detach)
+GIMP_DEPRECATED_FOR(gimp_detach_parasite)
 gboolean       gimp_parasite_detach     (const gchar        *name);
 GIMP_DEPRECATED_FOR(gimp_get_parasite_list)
 gboolean       gimp_parasite_list       (gint               *num_parasites,
                                          gchar            ***parasites);
-GIMP_DEPRECATED_FOR(gimp_parasite_attach)
+GIMP_DEPRECATED_FOR(gimp_attach_parasite)
 gboolean       gimp_attach_new_parasite (const gchar        *name,
                                          gint                flags,
                                          gint                size,

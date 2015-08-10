@@ -308,8 +308,8 @@ do_layer_blend (GeglBuffer  *src_buffer,
   roi.width  = gimp_temp_buf_get_width (paint_buf);
   roi.height = gimp_temp_buf_get_height (paint_buf);
 
-  mask_roi.x = roi.x + mask_x_offset;
-  mask_roi.y = roi.y + mask_y_offset;
+  mask_roi.x = roi.x - mask_x_offset;
+  mask_roi.y = roi.y - mask_y_offset;
   mask_roi.width  = roi.width;
   mask_roi.height = roi.height;
 

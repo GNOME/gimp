@@ -41,9 +41,9 @@ typedef struct _GimpColorProfileStoreClass  GimpColorProfileStoreClass;
 
 struct _GimpColorProfileStore
 {
-  GtkListStore       parent_instance;
+  GtkListStore  parent_instance;
 
-  gchar             *history;
+  gchar        *history;
 };
 
 struct _GimpColorProfileStoreClass
@@ -61,8 +61,13 @@ GType          gimp_color_profile_store_get_type (void) G_GNUC_CONST;
 
 GtkListStore * gimp_color_profile_store_new      (const gchar           *history);
 
+GIMP_DEPRECATED_FOR(gimp_color_profile_store_add_file)
 void           gimp_color_profile_store_add      (GimpColorProfileStore *store,
                                                   const gchar           *filename,
+                                                  const gchar           *label);
+
+void           gimp_color_profile_store_add_file (GimpColorProfileStore *store,
+                                                  GFile                 *file,
                                                   const gchar           *label);
 
 

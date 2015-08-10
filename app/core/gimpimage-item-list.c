@@ -20,6 +20,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "gimpcontext.h"
@@ -33,6 +35,65 @@
 
 
 /*  public functions  */
+
+gboolean
+gimp_image_item_list_bounds (GimpImage *image,
+                             GList     *list,
+                             gint      *x,
+                             gint      *y,
+                             gint      *width,
+                             gint      *height)
+{
+  GList    *l;
+  gboolean  bounds = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (x != 0, FALSE);
+  g_return_val_if_fail (y != 0, FALSE);
+  g_return_val_if_fail (width != 0, FALSE);
+  g_return_val_if_fail (height != 0, FALSE);
+
+  for (l = list; l; l = g_list_next (l))
+    {
+      GimpItem *item = l->data;
+      gint      tmp_x, tmp_y;
+      gint      tmp_w, tmp_h;
+
+      if (gimp_item_bounds (item, &tmp_x, &tmp_y, &tmp_w, &tmp_h))
+        {
+          gint off_x, off_y;
+
+          gimp_item_get_offset (item, &off_x, &off_y);
+
+          if (bounds)
+            {
+              gimp_rectangle_union (*x, *y, *width, *height,
+                                    tmp_x + off_x, tmp_y + off_y,
+                                    tmp_w, tmp_h,
+                                    x, y, width, height);
+            }
+          else
+            {
+              *x      = tmp_x + off_x;
+              *y      = tmp_y + off_y;
+              *width  = tmp_w;
+              *height = tmp_h;
+
+              bounds = TRUE;
+            }
+        }
+    }
+
+  if (! bounds)
+    {
+      *x      = 0;
+      *y      = 0;
+      *width  = gimp_image_get_width  (image);
+      *height = gimp_image_get_height (image);
+    }
+
+  return bounds;
+}
 
 void
 gimp_image_item_list_translate (GimpImage *image,
@@ -153,18 +214,16 @@ gimp_image_item_list_transform (GimpImage              *image,
 /**
  * gimp_image_item_list_get_list:
  * @image:   An @image.
- * @exclude: An item to exclude.
  * @type:    Which type of items to return.
  * @set:     Set the returned items are part of.
  *
  * This function returns a #GList of #GimpItem<!-- -->s for which the
  * @type and @set criterions match.
  *
- * Return value: The list of items, excluding @exclude.
+ * Return value: The list of items.
  **/
 GList *
 gimp_image_item_list_get_list (const GimpImage  *image,
-                               const GimpItem   *exclude,
                                GimpItemTypeMask  type,
                                GimpItemSet       set)
 {
@@ -173,7 +232,6 @@ gimp_image_item_list_get_list (const GimpImage  *image,
   GList *return_list = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (exclude == NULL || GIMP_IS_ITEM (exclude), NULL);
 
   if (type & GIMP_ITEM_TYPE_LAYERS)
     {
@@ -183,7 +241,7 @@ gimp_image_item_list_get_list (const GimpImage  *image,
         {
           GimpItem *item = list->data;
 
-          if (item != exclude && gimp_item_is_in_set (item, set))
+          if (gimp_item_is_in_set (item, set))
             return_list = g_list_prepend (return_list, item);
         }
 
@@ -198,7 +256,7 @@ gimp_image_item_list_get_list (const GimpImage  *image,
         {
           GimpItem *item = list->data;
 
-          if (item != exclude && gimp_item_is_in_set (item, set))
+          if (gimp_item_is_in_set (item, set))
             return_list = g_list_prepend (return_list, item);
         }
 
@@ -213,7 +271,7 @@ gimp_image_item_list_get_list (const GimpImage  *image,
         {
           GimpItem *item = list->data;
 
-          if (item != exclude && gimp_item_is_in_set (item, set))
+          if (gimp_item_is_in_set (item, set))
             return_list = g_list_prepend (return_list, item);
         }
 
@@ -246,18 +304,12 @@ gimp_image_item_list_remove_children (GList          *list,
 }
 
 GList *
-gimp_image_item_list_filter (const GimpItem *exclude,
-                             GList          *list)
+gimp_image_item_list_filter (GList *list)
 {
   GList *l;
 
-  g_return_val_if_fail (exclude == NULL || GIMP_IS_ITEM (exclude), NULL);
-
   if (! list)
     return NULL;
-
-  if (exclude)
-    list = gimp_image_item_list_remove_children (list, exclude);
 
   for (l = list; l; l = g_list_next (l))
     {

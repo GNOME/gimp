@@ -7,6 +7,11 @@ libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
 libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
+if OS_WIN32
+else
+libm = -lm
+endif
+
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Config\"				\
 	-DGIMP_APP_VERSION_STRING=\"$(GIMP_APP_VERSION)\"	\
@@ -119,7 +124,8 @@ test_config_LDADD = \
 	$(GEXIV2_LIBS)				\
 	$(Z_LIBS)				\
 	$(JSON_C_LIBS)				\
-	$(LIBMYPAINTGEGL_LIBS)
+	$(LIBMYPAINTGEGL_LIBS)		\
+	$(libm)
 
 CLEANFILES = $(EXTRA_PROGRAMS) foorc
 

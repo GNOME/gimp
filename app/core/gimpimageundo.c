@@ -33,11 +33,11 @@
 #include "gimpdrawable.h"
 #include "gimpgrid.h"
 #include "gimpimage.h"
+#include "gimpimage-color-profile.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-grid.h"
 #include "gimpimage-metadata.h"
 #include "gimpimage-private.h"
-#include "gimpimage-profile.h"
 #include "gimpimageundo.h"
 #include "gimpparasitelist.h"
 

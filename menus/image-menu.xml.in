@@ -348,11 +348,9 @@
         <separator />
       </menu>
       <menu action="image-color-management-menu" name="Color Management">
-	<!-- disabled until the actions are implemented
-         <menuitem action="image-color-profile-assign" />
-         <menuitem action="image-color-profile-convert" />
-	-->
-         <menuitem action="image-color-profile-discard" />
+        <menuitem action="image-color-profile-assign" />
+        <menuitem action="image-color-profile-convert" />
+        <menuitem action="image-color-profile-discard" />
      </menu>
       <separator />
       <menu action="image-transform-menu" name="Transform">

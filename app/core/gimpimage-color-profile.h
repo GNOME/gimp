@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpimage-profile.h
+ * gimpimage-color-profile.h
  * Copyright (C) 2015 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __GIMP_IMAGE_PROFILE_H__
-#define __GIMP_IMAGE_PROFILE_H__
+#ifndef __GIMP_IMAGE_COLOR_PROFILE_H__
+#define __GIMP_IMAGE_COLOR_PROFILE_H__
 
 
 #define GIMP_ICC_PROFILE_PARASITE_NAME "icc-profile"
@@ -44,19 +44,22 @@ gboolean             gimp_image_set_icc_profile        (GimpImage           *ima
                                                         GError             **error);
 
 gboolean             gimp_image_validate_color_profile (GimpImage           *image,
-                                                        GimpColorProfile     profile,
+                                                        GimpColorProfile    *profile,
                                                         GError             **error);
-GimpColorProfile     gimp_image_get_color_profile      (GimpImage           *image);
+GimpColorProfile   * gimp_image_get_color_profile      (GimpImage           *image);
 gboolean             gimp_image_set_color_profile      (GimpImage           *image,
-                                                        GimpColorProfile     profile,
+                                                        GimpColorProfile    *profile,
                                                         GError             **error);
 
+GimpColorProfile   * gimp_image_get_builtin_color_profile
+                                                       (GimpImage           *image);
+
 gboolean             gimp_image_convert_color_profile  (GimpImage                *image,
-                                                        GimpColorProfile          dest_profile,
+                                                        GimpColorProfile         *dest_profile,
                                                         GimpColorRenderingIntent  intent,
                                                         gboolean                  bpc,
                                                         GimpProgress             *progress,
                                                         GError                  **error);
 
 
-#endif /* __GIMP_IMAGE_PROFILE_H__ */
+#endif /* __GIMP_IMAGE_COLOR_PROFILE_H__ */

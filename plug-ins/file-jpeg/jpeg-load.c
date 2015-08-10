@@ -599,21 +599,23 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
                           gsize   profile_len)
 {
   GimpColorConfig  *config       = gimp_get_color_configuration ();
-  GimpColorProfile  cmyk_profile = NULL;
-  GimpColorProfile  rgb_profile  = NULL;
+  GimpColorProfile *cmyk_profile = NULL;
+  GimpColorProfile *rgb_profile  = NULL;
+  cmsHPROFILE       cmyk_lcms;
+  cmsHPROFILE       rgb_lcms;
   cmsUInt32Number   flags        = 0;
   cmsHTRANSFORM     transform;
 
   /*  try to load the embedded CMYK profile  */
   if (profile_data)
     {
-      cmyk_profile = gimp_color_profile_open_from_data (profile_data,
-                                                        profile_len,
-                                                        NULL);
+      cmyk_profile = gimp_color_profile_new_from_icc_profile (profile_data,
+                                                              profile_len,
+                                                              NULL);
 
       if (cmyk_profile && ! gimp_color_profile_is_cmyk (cmyk_profile))
         {
-          gimp_color_profile_close (cmyk_profile);
+          g_object_unref (cmyk_profile);
           cmyk_profile = NULL;
         }
     }
@@ -636,19 +638,22 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
   if (! rgb_profile)
     rgb_profile = gimp_color_profile_new_srgb ();
 
+  cmyk_lcms = gimp_color_profile_get_lcms_profile (cmyk_profile);
+  rgb_lcms  = gimp_color_profile_get_lcms_profile (rgb_profile);
+
   if (config->display_intent ==
       GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
     {
       flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
     }
 
-  transform = cmsCreateTransform (cmyk_profile, TYPE_CMYK_8_REV,
-                                  rgb_profile,  TYPE_RGB_8,
+  transform = cmsCreateTransform (cmyk_lcms, TYPE_CMYK_8_REV,
+                                  rgb_lcms,  TYPE_RGB_8,
                                   config->display_intent,
                                   flags);
 
-  gimp_color_profile_close (cmyk_profile);
-  gimp_color_profile_close (rgb_profile);
+  g_object_unref (cmyk_profile);
+  g_object_unref (rgb_profile);
 
   g_object_unref (config);
 

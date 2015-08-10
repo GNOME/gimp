@@ -19,40 +19,45 @@
 #define __GIMP_IMAGE_ITEM_LIST_H__
 
 
-void    gimp_image_item_list_translate (GimpImage              *image,
-                                        GList                  *list,
-                                        gint                    offset_x,
-                                        gint                    offset_y,
-                                        gboolean                push_undo);
-void    gimp_image_item_list_flip      (GimpImage              *image,
-                                        GList                  *list,
-                                        GimpContext            *context,
-                                        GimpOrientationType     flip_type,
-                                        gdouble                 axis,
-                                        gboolean                clip_result);
-void    gimp_image_item_list_rotate    (GimpImage              *image,
-                                        GList                  *list,
-                                        GimpContext            *context,
-                                        GimpRotationType        rotate_type,
-                                        gdouble                 center_x,
-                                        gdouble                 center_y,
-                                        gboolean                clip_result);
-void    gimp_image_item_list_transform (GimpImage              *image,
-                                        GList                  *list,
-                                        GimpContext            *context,
-                                        const GimpMatrix3      *matrix,
-                                        GimpTransformDirection  direction,
-                                        GimpInterpolationType   interpolation_type,
-                                        GimpTransformResize     clip_result,
-                                        GimpProgress           *progress);
+gboolean   gimp_image_item_list_bounds    (GimpImage              *image,
+                                           GList                  *list,
+                                           gint                   *x,
+                                           gint                   *y,
+                                           gint                   *width,
+                                           gint                   *height);
 
-GList * gimp_image_item_list_get_list  (const GimpImage        *image,
-                                        const GimpItem         *exclude,
-                                        GimpItemTypeMask        type,
-                                        GimpItemSet             set);
+void       gimp_image_item_list_translate (GimpImage              *image,
+                                           GList                  *list,
+                                           gint                    offset_x,
+                                           gint                    offset_y,
+                                           gboolean                push_undo);
+void       gimp_image_item_list_flip      (GimpImage              *image,
+                                           GList                  *list,
+                                           GimpContext            *context,
+                                           GimpOrientationType     flip_type,
+                                           gdouble                 axis,
+                                           gboolean                clip_result);
+void       gimp_image_item_list_rotate    (GimpImage              *image,
+                                           GList                  *list,
+                                           GimpContext            *context,
+                                           GimpRotationType        rotate_type,
+                                           gdouble                 center_x,
+                                           gdouble                 center_y,
+                                           gboolean                clip_result);
+void       gimp_image_item_list_transform (GimpImage              *image,
+                                           GList                  *list,
+                                           GimpContext            *context,
+                                           const GimpMatrix3      *matrix,
+                                           GimpTransformDirection  direction,
+                                           GimpInterpolationType   interpolation_type,
+                                           GimpTransformResize     clip_result,
+                                           GimpProgress           *progress);
 
-GList * gimp_image_item_list_filter    (const GimpItem         *exclude,
-                                        GList                  *list);
+GList    * gimp_image_item_list_get_list  (const GimpImage        *image,
+                                           GimpItemTypeMask        type,
+                                           GimpItemSet             set);
+
+GList    * gimp_image_item_list_filter    (GList                  *list);
 
 
 #endif /* __GIMP_IMAGE_ITEM_LIST_H__ */

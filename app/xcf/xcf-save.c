@@ -210,7 +210,6 @@ xcf_save_image (XcfInfo    *info,
   guint    n_channels;
   guint    progress = 0;
   guint    max_progress;
-  gint     t1, t2, t3, t4;
   gchar    version_tag[16];
   GError  *tmp_error = NULL;
 
@@ -247,8 +246,7 @@ xcf_save_image (XcfInfo    *info,
   all_channels = gimp_image_get_channel_list (image);
 
   /* check and see if we have to save out the selection */
-  if (gimp_channel_bounds (gimp_image_get_mask (image),
-                           &t1, &t2, &t3, &t4))
+  if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
     {
       all_channels = g_list_append (all_channels, gimp_image_get_mask (image));
     }

@@ -69,6 +69,11 @@ static gint64     gimp_vectors_get_memsize   (GimpObject        *object,
 
 static gboolean   gimp_vectors_is_attached   (const GimpItem    *item);
 static GimpItemTree * gimp_vectors_get_tree  (GimpItem          *item);
+static gboolean   gimp_vectors_bounds        (GimpItem          *item,
+                                              gdouble           *x,
+                                              gdouble           *y,
+                                              gdouble           *width,
+                                              gdouble           *height);
 static GimpItem * gimp_vectors_duplicate     (GimpItem          *item,
                                               GType              new_type);
 static void       gimp_vectors_convert       (GimpItem          *item,
@@ -194,6 +199,7 @@ gimp_vectors_class_init (GimpVectorsClass *klass)
 
   item_class->is_attached           = gimp_vectors_is_attached;
   item_class->get_tree              = gimp_vectors_get_tree;
+  item_class->bounds                = gimp_vectors_bounds;
   item_class->duplicate             = gimp_vectors_duplicate;
   item_class->convert               = gimp_vectors_convert;
   item_class->translate             = gimp_vectors_translate;
@@ -314,6 +320,72 @@ gimp_vectors_get_tree (GimpItem *item)
     }
 
   return NULL;
+}
+
+static gboolean
+gimp_vectors_bounds (GimpItem *item,
+                     gdouble  *x,
+                     gdouble  *y,
+                     gdouble  *width,
+                     gdouble  *height)
+{
+  GimpVectors *vectors = GIMP_VECTORS (item);
+
+  if (! vectors->bounds_valid)
+    {
+      GimpStroke *stroke;
+
+      vectors->bounds_empty = TRUE;
+      vectors->bounds_x1 = vectors->bounds_x2 = 0.0;
+      vectors->bounds_y1 = vectors->bounds_y2 = 0.0;
+
+      for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
+           stroke;
+           stroke = gimp_vectors_stroke_get_next (vectors, stroke))
+        {
+          GArray   *stroke_coords;
+          gboolean  closed;
+
+          stroke_coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
+
+          if (stroke_coords)
+            {
+              GimpCoords point;
+              gint       i;
+
+              if (vectors->bounds_empty && stroke_coords->len > 0)
+                {
+                  point = g_array_index (stroke_coords, GimpCoords, 0);
+
+                  vectors->bounds_x1 = vectors->bounds_x2 = point.x;
+                  vectors->bounds_y1 = vectors->bounds_y2 = point.y;
+
+                  vectors->bounds_empty = FALSE;
+                }
+
+              for (i = 0; i < stroke_coords->len; i++)
+                {
+                  point = g_array_index (stroke_coords, GimpCoords, i);
+
+                  vectors->bounds_x1 = MIN (vectors->bounds_x1, point.x);
+                  vectors->bounds_y1 = MIN (vectors->bounds_y1, point.y);
+                  vectors->bounds_x2 = MAX (vectors->bounds_x2, point.x);
+                  vectors->bounds_y2 = MAX (vectors->bounds_y2, point.y);
+                }
+
+              g_array_free (stroke_coords, TRUE);
+            }
+        }
+
+      vectors->bounds_valid = TRUE;
+    }
+
+  *x      = vectors->bounds_x1;
+  *y      = vectors->bounds_y1;
+  *width  = vectors->bounds_x2 - vectors->bounds_x1;
+  *height = vectors->bounds_y2 - vectors->bounds_y1;
+
+  return ! vectors->bounds_empty;
 }
 
 static GimpItem *
@@ -1025,74 +1097,6 @@ gimp_vectors_real_get_distance (const GimpVectors *vectors,
   g_printerr ("gimp_vectors_get_distance: default implementation\n");
 
   return 0;
-}
-
-gboolean
-gimp_vectors_bounds (GimpVectors *vectors,
-                     gdouble     *x1,
-                     gdouble     *y1,
-                     gdouble     *x2,
-                     gdouble     *y2)
-{
-  g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
-  g_return_val_if_fail (x1 != NULL && y1 != NULL &&
-                        x2 != NULL && y2 != NULL, FALSE);
-
-  if (! vectors->bounds_valid)
-    {
-      GimpStroke *stroke;
-
-      vectors->bounds_empty = TRUE;
-      vectors->bounds_x1 = vectors->bounds_x2 = 0.0;
-      vectors->bounds_y1 = vectors->bounds_y2 = 0.0;
-
-      for (stroke = gimp_vectors_stroke_get_next (vectors, NULL);
-           stroke;
-           stroke = gimp_vectors_stroke_get_next (vectors, stroke))
-        {
-          GArray   *stroke_coords;
-          gboolean  closed;
-
-          stroke_coords = gimp_stroke_interpolate (stroke, 1.0, &closed);
-
-          if (stroke_coords)
-            {
-              GimpCoords point;
-              gint       i;
-
-              if (vectors->bounds_empty && stroke_coords->len > 0)
-                {
-                  point = g_array_index (stroke_coords, GimpCoords, 0);
-
-                  vectors->bounds_x1 = vectors->bounds_x2 = point.x;
-                  vectors->bounds_y1 = vectors->bounds_y2 = point.y;
-
-                  vectors->bounds_empty = FALSE;
-                }
-
-              for (i = 0; i < stroke_coords->len; i++)
-                {
-                  point = g_array_index (stroke_coords, GimpCoords, i);
-
-                  vectors->bounds_x1 = MIN (vectors->bounds_x1, point.x);
-                  vectors->bounds_y1 = MIN (vectors->bounds_y1, point.y);
-                  vectors->bounds_x2 = MAX (vectors->bounds_x2, point.x);
-                  vectors->bounds_y2 = MAX (vectors->bounds_y2, point.y);
-                }
-
-              g_array_free (stroke_coords, TRUE);
-            }
-        }
-
-      vectors->bounds_valid = TRUE;
-    }
-
-  *x1 = vectors->bounds_x1;
-  *y1 = vectors->bounds_y1;
-  *x2 = vectors->bounds_x2;
-  *y2 = vectors->bounds_y2;
-
-  return (! vectors->bounds_empty);
 }
 
 gint

@@ -29,8 +29,8 @@ G_BEGIN_DECLS
 
 
 typedef struct _GimpColorManaged GimpColorManaged;  /* dummy typedef */
+typedef struct _GimpColorProfile GimpColorProfile;
 
-typedef gpointer GimpColorProfile;
 typedef gpointer GimpColorTransform;
 
 

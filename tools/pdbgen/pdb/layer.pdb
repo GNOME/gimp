@@ -1197,7 +1197,7 @@ CODE
 
 @headers = qw("libgimpbase/gimpbase.h"
               "core/gimp.h"
-              "core/gimpimage-profile.h"
+              "core/gimpimage-color-profile.h"
               "core/gimpimage-undo.h"
               "core/gimpitem-linked.h"
               "core/gimpgrouplayer.h"

@@ -29,10 +29,9 @@
 </autotools>
 
 <autotools id="librsvg" autogen-sh="configure">
-	<branch version="2.40.2" repo="gnome.org"
-			module="librsvg/2.40/librsvg-2.40.2.tar.xz"
-			hash="sha256:48049b643294636df7de1a4b997414d699666f5dc44776945c218a257d2a291c">
-		<patch file="librsvg-bug710163.patch" strip="1"/>
+	<branch version="2.40.9" repo="gnome.org"
+			module="librsvg/2.40/librsvg-2.40.9.tar.xz"
+			hash="sha256:13964c5d35357552b47d365c34215eee0a63bf0e6059b689f048648c6bf5f43a">
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>
@@ -112,21 +111,24 @@
 </autotools>
 
 <autotools id="poppler-data" autogen-sh=" || true" makeinstallargs="install prefix=$PREFIX">
-	<branch version="0.4.6" repo="poppler"
-			module="poppler-data-0.4.6.tar.gz"
-			hash="sha1:f030563eed9f93912b1a546e6d87936d07d7f27d">
+	<branch version="0.4.7" repo="poppler"
+			module="poppler-data-0.4.7.tar.gz"
+			hash="sha1:556a5bebd0eb743e0d91819ba11fd79947d8c674">
 	</branch>
 </autotools>
 
 <autotools id="poppler" autogen-sh="configure">
-	<branch version="0.26.3" repo="poppler"
-			module="poppler-0.26.3.tar.xz"
-			hash="sha1:544f64ac2801c0625c519213a999e0c86a9a6bd6">
+	<branch version="0.34.0" repo="poppler"
+			module="poppler-0.34.0.tar.xz"
+			hash="sha1:f204cb6a57730971ef561732a269e7bafc8e8476">
+		<!-- https://bugs.freedesktop.org/show_bug.cgi?id=91384 -->
+		<patch file="poppler-windows-h.patch" strip="1"/>
 	</branch>
 	<dependencies>
 		<dep package="freetype2"/>
 		<dep package="imglibs"/>
 		<dep package="cairo"/>
+		<dep package="openjpeg2"/>
 	</dependencies>
 	<suggests>
 		<dep package="poppler-data"/>

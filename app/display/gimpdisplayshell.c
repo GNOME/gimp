@@ -150,7 +150,7 @@ static void      gimp_display_shell_real_rotated   (GimpDisplayShell *shell);
 static const guint8 *
                  gimp_display_shell_get_icc_profile(GimpColorManaged *managed,
                                                     gsize            *len);
-static GimpColorProfile
+static GimpColorProfile *
                gimp_display_shell_get_color_profile(GimpColorManaged *managed);
 static void      gimp_display_shell_profile_changed(GimpColorManaged *managed);
 
@@ -1138,7 +1138,7 @@ gimp_display_shell_get_icc_profile (GimpColorManaged *managed,
   return NULL;
 }
 
-static GimpColorProfile
+static GimpColorProfile *
 gimp_display_shell_get_color_profile (GimpColorManaged *managed)
 {
   GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (managed);
@@ -1752,68 +1752,80 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
 
 gboolean
 gimp_display_shell_mask_bounds (GimpDisplayShell *shell,
-                                gint             *x1,
-                                gint             *y1,
-                                gint             *x2,
-                                gint             *y2)
+                                gint             *x,
+                                gint             *y,
+                                gint             *width,
+                                gint             *height)
 {
   GimpImage *image;
   GimpLayer *layer;
+  gint       x1, y1;
+  gint       x2, y2;
   gdouble    x1_f, y1_f;
   gdouble    x2_f, y2_f;
-  gdouble    x3_f, y3_f;
-  gdouble    x4_f, y4_f;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
-  g_return_val_if_fail (x1 != NULL, FALSE);
-  g_return_val_if_fail (y1 != NULL, FALSE);
-  g_return_val_if_fail (x2 != NULL, FALSE);
-  g_return_val_if_fail (y2 != NULL, FALSE);
+  g_return_val_if_fail (x != NULL, FALSE);
+  g_return_val_if_fail (y != NULL, FALSE);
+  g_return_val_if_fail (width != NULL, FALSE);
+  g_return_val_if_fail (height != NULL, FALSE);
 
   image = gimp_display_get_image (shell->display);
 
   /*  If there is a floating selection, handle things differently  */
   if ((layer = gimp_image_get_floating_selection (image)))
     {
-      gint off_x;
-      gint off_y;
+      gint fs_x;
+      gint fs_y;
+      gint fs_width;
+      gint fs_height;
 
-      gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
+      gimp_item_get_offset (GIMP_ITEM (layer), &fs_x, &fs_y);
+      fs_width  = gimp_item_get_width  (GIMP_ITEM (layer));
+      fs_height = gimp_item_get_height (GIMP_ITEM (layer));
 
-      if (! gimp_channel_bounds (gimp_image_get_mask (image),
-                                 x1, y1, x2, y2))
+      if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                              x, y, width, height))
         {
-          *x1 = off_x;
-          *y1 = off_y;
-          *x2 = off_x + gimp_item_get_width  (GIMP_ITEM (layer));
-          *y2 = off_y + gimp_item_get_height (GIMP_ITEM (layer));
+          *x      = fs_x;
+          *y      = fs_y;
+          *width  = fs_width;
+          *height = fs_height;
         }
       else
         {
-          *x1 = MIN (off_x, *x1);
-          *y1 = MIN (off_y, *y1);
-          *x2 = MAX (off_x + gimp_item_get_width  (GIMP_ITEM (layer)), *x2);
-          *y2 = MAX (off_y + gimp_item_get_height (GIMP_ITEM (layer)), *y2);
+          gimp_rectangle_union (*x, *y, *width, *height,
+                                fs_x, fs_y, fs_width, fs_height,
+                                x, y, width, height);
         }
     }
-  else if (! gimp_channel_bounds (gimp_image_get_mask (image),
-                                  x1, y1, x2, y2))
+  else if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                               x, y, width, height))
     {
       return FALSE;
     }
 
-  gimp_display_shell_transform_xy_f (shell, *x1, *y1, &x1_f, &y1_f);
-  gimp_display_shell_transform_xy_f (shell, *x1, *y2, &x2_f, &y2_f);
-  gimp_display_shell_transform_xy_f (shell, *x2, *y1, &x3_f, &y3_f);
-  gimp_display_shell_transform_xy_f (shell, *x2, *y2, &x4_f, &y4_f);
+  x1 = *x;
+  y1 = *y;
+  x2 = *x + *width;
+  y2 = *y + *height;
+
+  gimp_display_shell_transform_bounds (shell,
+                                       x1, y1, x2, y2,
+                                       &x1_f, &y1_f, &x2_f, &y2_f);
 
   /*  Make sure the extents are within bounds  */
-  *x1 = CLAMP (floor (MIN4 (x1_f, x2_f, x3_f, x4_f)), 0, shell->disp_width);
-  *y1 = CLAMP (floor (MIN4 (y1_f, y2_f, y3_f, y4_f)), 0, shell->disp_height);
-  *x2 = CLAMP (ceil (MAX4 (x1_f, x2_f, x3_f, x4_f)),  0, shell->disp_width);
-  *y2 = CLAMP (ceil (MAX4 (y1_f, y2_f, y3_f, y4_f)),  0, shell->disp_height);
+  x1 = CLAMP (floor (x1_f), 0, shell->disp_width);
+  y1 = CLAMP (floor (y1_f), 0, shell->disp_height);
+  x2 = CLAMP (ceil (x2_f),  0, shell->disp_width);
+  y2 = CLAMP (ceil (y2_f),  0, shell->disp_height);
 
-  return ((*x2 - *x1) > 0) && ((*y2 - *y1) > 0);
+  *x      = x1;
+  *y      = y1;
+  *width  = x2 - x1;
+  *height = y2 - y1;
+
+  return (*width > 0) && (*height > 0);
 }
 
 void

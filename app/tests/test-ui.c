@@ -55,6 +55,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-new.h"
 #include "core/gimptoolinfo.h"
 #include "core/gimptooloptions.h"
 
@@ -363,11 +364,9 @@ alt_click_is_layer_to_selection (gconstpointer data)
   gtk_tree_view = gtk_test_find_widget (dockable,
                                         "Lock:",
                                         GTK_TYPE_TREE_VIEW);
-  
+
   /* First make sure there is no selection */
-  g_assert (! gimp_channel_bounds (selection,
-                                   NULL, NULL, /*x1, y1*/
-                                   NULL, NULL  /*x2, y2*/));
+  g_assert (gimp_channel_is_empty (selection));
 
   /* Now simulate alt-click on the background layer */
   g_assert (gimp_ui_synthesize_click (gtk_tree_view,
@@ -380,9 +379,7 @@ alt_click_is_layer_to_selection (gconstpointer data)
   /* Make sure we got a selection and that the active layer didn't
    * change
    */
-  g_assert (gimp_channel_bounds (selection,
-                                 NULL, NULL, /*x1, y1*/
-                                 NULL, NULL  /*x2, y2*/));
+  g_assert (! gimp_channel_is_empty (selection));
   g_assert (gimp_image_get_active_layer (image) == active_layer);
 
   /* Now simulate alt-click on the empty layer */
@@ -396,9 +393,7 @@ alt_click_is_layer_to_selection (gconstpointer data)
   /* Make sure that emptied the selection and that the active layer
    * still didn't change
    */
-  g_assert (! gimp_channel_bounds (selection,
-                                   NULL, NULL, /*x1, y1*/
-                                   NULL, NULL  /*x2, y2*/));
+  g_assert (gimp_channel_is_empty (selection));
   g_assert (gimp_image_get_active_layer (image) == active_layer);
 #endif
 }

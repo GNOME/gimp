@@ -10050,7 +10050,7 @@ msgstr "Habilita el tramat de les capes de text"
 
 #: ../app/dialogs/convert-type-dialog.c:309
 msgid "Converting to indexed colors"
-msgstr "S'està indexant els colors"
+msgstr "S'estan indexant els colors"
 
 #: ../app/dialogs/convert-type-dialog.c:439 ../app/pdb/convert-cmds.c:162
 msgid "Cannot convert to a palette with more than 256 colors."
@@ -13327,7 +13327,7 @@ msgstr "Tria aleatòria"
 #: ../app/pdb/plug-in-compat-cmds.c:2492
 msgctxt "undo-type"
 msgid "Random Slur"
-msgstr "Barreja alatòria"
+msgstr "Barreja aleatòria"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2567
 msgctxt "undo-type"
@@ -17598,7 +17598,7 @@ msgstr "Massa missatges d'error!"
 
 #: ../app/widgets/gimperrordialog.c:152
 msgid "Messages are redirected to stderr."
-msgstr "Els missatges són redireccionats a la sortida estàndard."
+msgstr "Els missatges són redirigits a la sortida estàndard."
 
 #. %s is a message domain,
 #. * like "GIMP Message" or

@@ -18,6 +18,8 @@
 		href="git://anongit.freedesktop.org/"/>
 	<repository type="tarball" name="icu-project.org"
 		href="http://download.icu-project.org/files/" />
+	<repository type="tarball" name="github-tarball"
+		href="https://github.com/"/>
 
 <autotools id="cairo">
 	<branch version="1.14.2" repo="cairographics.org"
@@ -41,9 +43,9 @@
 </autotools>
 
 <autotools id="pango" autogen-sh="configure">
-	<branch version="1.36.5" repo="gnome.org"
-			module="pango/1.36/pango-1.36.5.tar.xz"
-			hash="sha256:be0e94b2e5c7459f0b6db21efab6253556c8f443837200b8736d697071276ac8">
+	<branch version="1.36.8" repo="gnome.org"
+			module="pango/1.36/pango-1.36.8.tar.xz"
+			hash="sha256:18dbb51b8ae12bae0ab7a958e7cf3317c9acfc8a1e1103ec2f147164a0fc2d07">
 	</branch>
 	<dependencies>
 		<dep package="cairo"/>
@@ -75,9 +77,9 @@
 </autotools>
 
 <autotools id="freetype2" autogen-sh="configure">
-	<branch version="2.5.3" repo="savannah.gnu.org"
-			module="freetype/freetype-2.5.3.tar.bz2"
-			hash="sha256:c0848b29d52ef3ca27ad92e08351f023c5e24ce8cea7d8fe69fc96358e65f75e">
+	<branch version="2.5.5" repo="savannah.gnu.org"
+			module="freetype/freetype-2.5.5.tar.bz2"
+			hash="sha256:387bcc4b780b12484aa2ec9f7db1a55d8286eb5639f45fbc0fbba7a4e5a1afb9">
 	</branch>
 	<dependencies>
 		<dep package="bzip2"/>
@@ -109,9 +111,9 @@
 </autotools>
 
 <autotools id="harfbuzz">
-	<branch version="0.9.34" repo="freedesktop.org"
-			module="harfbuzz/release/harfbuzz-0.9.34.tar.bz2"
-			hash="sha256:a8e6d76aec0691f7e14e7b75d677eb25949a8906740b824b2889879c32d8ba39">
+	<branch version="0.9.41" repo="freedesktop.org"
+			module="harfbuzz/release/harfbuzz-0.9.41.tar.bz2"
+			hash="sha256:d81aa53d0c02b437beeaac159d7fc16394d676bbce0860fb6f6a10b587dc057c">
 	</branch>
 	<dependencies>
 		<dep package="cairo"/>
@@ -155,6 +157,13 @@
 	</dependencies>
 </autotools>
 
+<autotools id="libepoxy" autogen-sh="configure">
+	<branch version="1.3.1" repo="github-tarball"
+			module="anholt/libepoxy/releases/download/v1.3.1/libepoxy-1.3.1.tar.bz2"
+			hash="sha256:1d8668b0a259c709899e1c4bab62d756d9002d546ce4f59c9665e2fc5f001a64">
+	</branch>
+</autotools>
+
 <autotools id="gtk2" autogen-sh="configure" makeargs=" || rm -f gtk/gtk.def &amp;&amp; make" makeinstallargs="install -j1">
 	<branch version="2.24.28" repo="gnome.org"
 			module="gtk+/2.24/gtk+-2.24.28.tar.xz"
@@ -170,9 +179,9 @@
 </autotools>
 
 <autotools id="gtk3" autogen-sh="configure" makeinstallargs="install -j1">
-	<branch version="3.8.2" repo="gnome.org"
-			module="gtk+/3.8/gtk+-3.8.2.tar.xz"
-			hash="sha256:1ca80c9c15a1df95d74cefb8c2afe4682ba272a4b489106f04877be2a7aff297">
+	<branch version="3.16.5" repo="gnome.org"
+			module="gtk+/3.16/gtk+-3.16.5.tar.xz"
+			hash="sha256:b87c99d127eb962fc857c246b77a65322cdffd7dcbcf46a83bce2040e0f4bc31">
 	</branch>
 	<dependencies>
 		<dep package="glib2"/>
@@ -180,6 +189,7 @@
 		<dep package="cairo"/>
 		<dep package="atk"/>
 		<dep package="pango"/>
+		<dep package="libepoxy"/>
 	</dependencies>
 </autotools>
 

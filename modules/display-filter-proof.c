@@ -261,15 +261,22 @@ static void
 cdisplay_proof_profile_changed (GtkWidget     *combo,
                                 CdisplayProof *proof)
 {
-  gchar *profile;
+  GFile *file;
+  gchar *path = NULL;
 
-  profile = gimp_color_profile_combo_box_get_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo));
+  file = gimp_color_profile_combo_box_get_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo));
+
+  if (file)
+    {
+      path = g_file_get_path (file);
+      g_object_unref (file);
+    }
 
   g_object_set (proof,
-                "profile", profile,
+                "profile", path,
                 NULL);
 
-  g_free (profile);
+  g_free (path);
 }
 
 static GtkWidget *
@@ -297,8 +304,13 @@ cdisplay_proof_configure (GimpColorDisplay *display)
                     proof);
 
   if (proof->profile)
-    gimp_color_profile_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                             proof->profile, NULL);
+    {
+      GFile *file = g_file_new_for_path (proof->profile);
+
+      gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                                    file, NULL);
+      g_object_unref (file);
+    }
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("_Profile:"), 0.0, 0.5,
@@ -323,8 +335,8 @@ static void
 cdisplay_proof_changed (GimpColorDisplay *display)
 {
   CdisplayProof    *proof = CDISPLAY_PROOF (display);
-  GimpColorProfile  rgb_profile;
-  GimpColorProfile  proof_profile;
+  GimpColorProfile *rgb_profile;
+  GimpColorProfile *proof_profile;
   GFile            *file;
 
   if (proof->transform)
@@ -339,25 +351,30 @@ cdisplay_proof_changed (GimpColorDisplay *display)
   rgb_profile = gimp_color_profile_new_srgb ();
 
   file = g_file_new_for_path (proof->profile);
-  proof_profile = gimp_color_profile_open_from_file (file, NULL);
+  proof_profile = gimp_color_profile_new_from_file (file, NULL);
   g_object_unref (file);
 
   if (proof_profile)
     {
+      cmsHPROFILE     rgb_lcms;
+      cmsHPROFILE     proof_lcms;
       cmsUInt32Number flags = cmsFLAGS_SOFTPROOFING;
+
+      rgb_lcms   = gimp_color_profile_get_lcms_profile (rgb_profile);
+      proof_lcms = gimp_color_profile_get_lcms_profile (proof_profile);
 
       if (proof->bpc)
         flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
 
-      proof->transform = cmsCreateProofingTransform (rgb_profile, TYPE_RGBA_FLT,
-                                                     rgb_profile, TYPE_RGBA_FLT,
-                                                     proof_profile,
+      proof->transform = cmsCreateProofingTransform (rgb_lcms, TYPE_RGBA_FLT,
+                                                     rgb_lcms, TYPE_RGBA_FLT,
+                                                     proof_lcms,
                                                      proof->intent,
                                                      proof->intent,
                                                      flags);
 
-      gimp_color_profile_close (proof_profile);
+      g_object_unref (proof_profile);
     }
 
-  gimp_color_profile_close (rgb_profile);
+  g_object_unref (rgb_profile);
 }

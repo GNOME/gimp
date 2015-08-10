@@ -26,6 +26,8 @@ libappdialogs_a_sources = \
 	action-search-dialog.h		\
 	channel-options-dialog.c	\
 	channel-options-dialog.h	\
+	color-profile-dialog.c		\
+	color-profile-dialog.h		\
 	convert-precision-dialog.c	\
 	convert-precision-dialog.h	\
 	convert-type-dialog.c		\

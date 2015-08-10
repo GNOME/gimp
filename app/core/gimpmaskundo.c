@@ -94,31 +94,30 @@ static void
 gimp_mask_undo_constructed (GObject *object)
 {
   GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (object);
-  GimpChannel  *channel;
+  GimpItem     *item;
   GimpDrawable *drawable;
-  gint          x1, y1, x2, y2;
+  gint          x, y, w, h;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   g_assert (GIMP_IS_CHANNEL (GIMP_ITEM_UNDO (object)->item));
 
-  channel  = GIMP_CHANNEL (GIMP_ITEM_UNDO (object)->item);
-  drawable = GIMP_DRAWABLE (channel);
+  item     = GIMP_ITEM_UNDO (object)->item;
+  drawable = GIMP_DRAWABLE (item);
 
-  if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
+  if (gimp_item_bounds (item, &x, &y, &w, &h))
     {
-      mask_undo->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                           x2 - x1, y2 - y1),
+      mask_undo->buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, w, h),
                                            gimp_drawable_get_format (drawable));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                        GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
+                        GEGL_RECTANGLE (x, y, w, h),
                         GEGL_ABYSS_NONE,
                         mask_undo->buffer,
                         GEGL_RECTANGLE (0, 0, 0, 0));
 
-      mask_undo->x = x1;
-      mask_undo->y = y1;
+      mask_undo->x = x;
+      mask_undo->y = y;
     }
 
   mask_undo->format = gimp_drawable_get_format (drawable);
@@ -183,29 +182,30 @@ gimp_mask_undo_pop (GimpUndo            *undo,
                     GimpUndoAccumulator *accum)
 {
   GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (undo);
-  GimpChannel  *channel   = GIMP_CHANNEL (GIMP_ITEM_UNDO (undo)->item);
-  GimpDrawable *drawable  = GIMP_DRAWABLE (channel);
+  GimpItem     *item      = GIMP_ITEM_UNDO (undo)->item;
+  GimpDrawable *drawable  = GIMP_DRAWABLE (item);
+  GimpChannel  *channel   = GIMP_CHANNEL (item);
   GeglBuffer   *new_buffer;
   const Babl   *format;
-  gint          x1, y1, x2, y2;
+  gint          x, y, w, h;
   gint          width  = 0;
   gint          height = 0;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
+  if (gimp_item_bounds (item, &x, &y, &w, &h))
     {
-      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, x2 - x1, y2 - y1),
+      new_buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, w, h),
                                     gimp_drawable_get_format (drawable));
 
       gegl_buffer_copy (gimp_drawable_get_buffer (drawable),
-                        GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1),
+                        GEGL_RECTANGLE (x, y, w, h),
                         GEGL_ABYSS_NONE,
                         new_buffer,
                         GEGL_RECTANGLE (0, 0, 0, 0));
 
       gegl_buffer_clear (gimp_drawable_get_buffer (drawable),
-                         GEGL_RECTANGLE (x1, y1, x2 - x1, y2 - y1));
+                         GEGL_RECTANGLE (x, y, w, h));
     }
   else
     {
@@ -217,8 +217,8 @@ gimp_mask_undo_pop (GimpUndo            *undo,
   if (mask_undo->convert_format)
     {
       GeglBuffer *buffer;
-      gint        width  = gimp_item_get_width  (GIMP_ITEM (channel));
-      gint        height = gimp_item_get_height (GIMP_ITEM (channel));
+      gint        width  = gimp_item_get_width  (item);
+      gint        height = gimp_item_get_height (item);
 
       buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
                                 mask_undo->format);
@@ -258,8 +258,8 @@ gimp_mask_undo_pop (GimpUndo            *undo,
       channel->empty = TRUE;
       channel->x1    = 0;
       channel->y1    = 0;
-      channel->x2    = gimp_item_get_width  (GIMP_ITEM (channel));
-      channel->y2    = gimp_item_get_height (GIMP_ITEM (channel));
+      channel->x2    = gimp_item_get_width  (item);
+      channel->y2    = gimp_item_get_height (item);
     }
 
   /* we know the bounds */
@@ -267,14 +267,14 @@ gimp_mask_undo_pop (GimpUndo            *undo,
 
   /*  set the new mask undo parameters  */
   mask_undo->buffer = new_buffer;
-  mask_undo->x      = x1;
-  mask_undo->y      = y1;
+  mask_undo->x      = x;
+  mask_undo->y      = y;
   mask_undo->format = format;
 
-  gimp_drawable_update (GIMP_DRAWABLE (channel),
+  gimp_drawable_update (drawable,
                         0, 0,
-                        gimp_item_get_width  (GIMP_ITEM (channel)),
-                        gimp_item_get_height (GIMP_ITEM (channel)));
+                        gimp_item_get_width  (item),
+                        gimp_item_get_height (item));
 }
 
 static void

@@ -275,35 +275,43 @@ HELP
                                  GIMP_PDB_ITEM_CONTENT, error))
     {
       gint x1, y1, x2, y2;
+      gint off_x, off_y;
 
-      switch (gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
-                                         0, 0,
-                                         gimp_item_get_width  (GIMP_ITEM (drawable)),
-                                         gimp_item_get_height (GIMP_ITEM (drawable)),
-                                         &x1, &y1, &x2, &y2))
+      gimp_pickable_auto_shrink (GIMP_PICKABLE (drawable),
+                                 0, 0,
+                                 gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                 gimp_item_get_height (GIMP_ITEM (drawable)),
+                                 &x1, &y1, &x2, &y2);
+
+      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+
+      x1 += off_x; x2 += off_x;
+      y1 += off_y; y2 += off_y;
+
+      gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
+                                   _("Autocrop image"));
+
+      if (x1 < 0 || y1 < 0 ||
+          x2 > gimp_image_get_width  (image) ||
+          y2 > gimp_image_get_height (image))
         {
-        case GIMP_AUTO_SHRINK_SHRINK:
-	  {
-            gint off_x, off_y;
+          /*
+           * partially outside the image area, we need to
+           * resize the image to be able to crop properly.
+           */
+          gimp_image_resize (image, context,
+                             x2 - x1, y2 - y1, -x1, -y1, NULL);
 
-            gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+          x2 -= x1;
+          y2 -= y1;
 
-            x1 += off_x; x2 += off_x;
-            y1 += off_y; y2 += off_y;
-
-            gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
-                                         _("Autocrop image"));
-
-            gimp_image_crop (image, context,
-                             x2 - x1, y2 - y1, -x1, -y1, TRUE);
-
-            gimp_image_undo_group_end (image);
-          }
-	  break;
-
-        default:
-	  break;
+          x1 = y1 = 0;
         }
+
+      gimp_image_crop (image, context,
+                       x1, y1, x2 - x1, y2 - y1, TRUE);
+
+      gimp_image_undo_group_end (image);
     }
   else
     success = FALSE;
@@ -414,6 +422,142 @@ HELP
     }
   else
     success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_bump_map {
+    $blurb = 'Create an embossing effect using a bump map';
+
+    $help = <<'HELP';
+This plug-in uses the algorithm described by John Schlag,
+"Fast Embossing Effects on Raster Image Data" in
+Graphics GEMS IV (ISBN 0-12-336155-9).
+It takes a drawable to be applied as a bump
+map to another image and produces a nice embossing effect.
+HELP
+
+    &std_pdb_compat('gegl:bump-map');
+    $date = '2015';
+
+    @inargs = (
+  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+    desc => 'The run mode' },
+  { name => 'image', type => 'image', dead => 1,
+    desc => 'Input image (unused)' },
+  { name => 'drawable', type => 'drawable',
+    desc => 'Input drawable' },
+  { name => 'bumpmap', type => 'drawable',
+    desc => 'Bump map drawable' },
+  { name => 'azimuth', type => '0.0 <= float <= 360.0',
+    desc => 'Azimuth' },
+  { name => 'elevation', type => '0.5 <= float <= 90.0',
+    desc => 'Elevation' },
+  { name => 'depth', type => '1 <= int32 <= 65',
+    desc => 'Depth' },
+  { name => 'xofs', type => 'int32',
+    desc => 'X offset' },
+  { name => 'yofs', type => 'int32',
+    desc => 'Y offset' },
+  { name => 'waterlevel', type => '0.0 <= float <= 1.0',
+    desc => 'Level that full transparency should represent' },
+  { name => 'ambient', type => '0.0 <= float <= 1.0',
+    desc => 'Ambient lighting factor' },
+  { name => 'compensate', type => 'boolean',
+    desc => 'Compensate for darkening' },
+  { name => 'invert', type => 'boolean',
+    desc => 'Invert bumpmap' },
+  { name => 'type', type => '0 <= int32 <= 3',
+    desc => 'Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }' }
+    );
+
+    %invoke = (
+  code => <<'CODE'
+{
+  success = bump_map (drawable,
+                      bumpmap,
+                      azimuth,
+                      elevation,
+                      depth,
+                      xofs,
+                      yofs,
+                      waterlevel,
+                      ambient,
+                      compensate,
+                      invert,
+                      type,
+                      FALSE,
+                      progress,
+                      error);
+}
+CODE
+    );
+}
+
+sub plug_in_bump_map_tiled {
+    $blurb = 'Create an embossing effect using a tiled image as a bump map';
+
+    $help = <<'HELP';
+This plug-in uses the algorithm described by John Schlag,
+"Fast Embossing Effects on Raster Image Data" in
+Graphics GEMS IV (ISBN 0-12-336155-9).
+It takes a drawable to be tiled and applied as a bump map
+to another image and produces a nice embossing effect.
+HELP
+
+    &std_pdb_compat('gegl:bump-map');
+    $date = '2015';
+
+    @inargs = (
+  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+    desc => 'The run mode' },
+  { name => 'image', type => 'image', dead => 1,
+    desc => 'Input image (unused)' },
+  { name => 'drawable', type => 'drawable',
+    desc => 'Input drawable' },
+  { name => 'bumpmap', type => 'drawable',
+    desc => 'Bump map drawable' },
+  { name => 'azimuth', type => '0.0 <= float <= 360.0',
+    desc => 'Azimuth' },
+  { name => 'elevation', type => '0.5 <= float <= 90.0',
+    desc => 'Elevation' },
+  { name => 'depth', type => '1 <= int32 <= 65',
+    desc => 'Depth' },
+  { name => 'xofs', type => 'int32',
+    desc => 'X offset' },
+  { name => 'yofs', type => 'int32',
+    desc => 'Y offset' },
+  { name => 'waterlevel', type => '0.0 <= float <= 1.0',
+    desc => 'Level that full transparency should represent' },
+  { name => 'ambient', type => '0.0 <= float <= 1.0',
+    desc => 'Ambient lighting factor' },
+  { name => 'compensate', type => 'boolean',
+    desc => 'Compensate for darkening' },
+  { name => 'invert', type => 'boolean',
+    desc => 'Invert bumpmap' },
+  { name => 'type', type => '0 <= int32 <= 3',
+    desc => 'Type of map { LINEAR (0), SPHERICAL (1), SINUSOIDAL (2) }' }
+    );
+
+    %invoke = (
+  code => <<'CODE'
+{
+  success = bump_map (drawable,
+                      bumpmap,
+                      azimuth,
+                      elevation,
+                      depth,
+                      xofs,
+                      yofs,
+                      waterlevel,
+                      ambient,
+                      compensate,
+                      invert,
+                      type,
+                      TRUE,
+                      progress,
+                      error);
 }
 CODE
     );
@@ -937,6 +1081,113 @@ HELP
     }
   else
     success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_displace {
+    $blurb = 'Displace pixels as indicated by displacement maps';
+
+    $help = <<'HELP';
+Displaces the contents of the specified drawable by the amounts specified
+by 'amount-x' and 'amount-y' multiplied by the luminance of corresponding
+pixels in the 'displace-map' drawables.
+HELP
+
+    &std_pdb_compat('gegl:displace');
+    $date = '2015';
+
+    @inargs = (
+  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+    desc => 'The run mode' },
+  { name => 'image', type => 'image', dead => 1,
+    desc => 'Input image (unused)' },
+  { name => 'drawable', type => 'drawable',
+    desc => 'Input drawable' },
+  { name => 'amount_x', type => '-500.0 <= float <= 500.0',
+    desc => 'Displace multiplier for x direction' },
+  { name => 'amount_y', type => '-500.0 <= float <= 500.0',
+    desc => 'Displace multiplier for y direction' },
+  { name => 'do_x', type => 'boolean',
+    desc => 'Displace in x direction ?' },
+  { name => 'do_y', type => 'boolean',
+    desc => 'Displace in y direction ?' },
+  { name => 'displace_map_x', type => 'drawable',
+    desc => 'Displacement map for x direction' },
+  { name => 'displace_map_y', type => 'drawable',
+    desc => 'Displacement map for y direction' },
+  { name => 'displace_type', type => '1 <= int32 <= 3',
+    desc => 'Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }' }
+    );
+
+    %invoke = (
+  code => <<'CODE'
+{
+  success = displace (drawable,
+                      amount_x,
+                      amount_y,
+                      do_x,
+                      do_y,
+                      displace_map_x,
+                      displace_map_y,
+                      displace_type,
+                      0,
+                      progress,
+                      error);
+}
+CODE
+    );
+}
+
+sub plug_in_displace_polar {
+    $blurb = 'Displace pixels as indicated by displacement maps';
+
+    $help = <<'HELP';
+Just like plug-in-displace but working in polar coordinates.
+The drawable is whirled and pinched according to the map.
+HELP
+
+    &std_pdb_compat('gegl:displace');
+    $date = '2015';
+
+    @inargs = (
+  { name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+    desc => 'The run mode' },
+  { name => 'image', type => 'image', dead => 1,
+    desc => 'Input image (unused)' },
+  { name => 'drawable', type => 'drawable',
+    desc => 'Input drawable' },
+  { name => 'amount_x', type => '-500.0 <= float <= 500.0',
+    desc => 'Displace multiplier for radial direction' },
+  { name => 'amount_y', type => '-500.0 <= float <= 500.0',
+    desc => 'Displace multiplier for tangent direction' },
+  { name => 'do_x', type => 'boolean',
+    desc => 'Displace in radial direction ?' },
+  { name => 'do_y', type => 'boolean',
+    desc => 'Displace in tangent direction ?' },
+  { name => 'displace_map_x', type => 'drawable',
+    desc => 'Displacement map for radial direction' },
+  { name => 'displace_map_y', type => 'drawable',
+    desc => 'Displacement map for tangent direction' },
+  { name => 'displace_type', type => '1 <= int32 <= 3',
+    desc => 'Edge behavior { WRAP (1), SMEAR (2), BLACK (3) }' }
+    );
+
+    %invoke = (
+  code => <<'CODE'
+{
+  success = displace (drawable,
+                      amount_x,
+                      amount_y,
+                      do_x,
+                      do_y,
+                      displace_map_x,
+                      displace_map_y,
+                      displace_type,
+                      1,
+                      progress,
+                      error);
 }
 CODE
     );
@@ -1529,15 +1780,15 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  GimpColorProfile profile;
+  GimpColorProfile *profile;
 
   profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-  profile_name = gimp_color_profile_get_model (profile);
-  profile_desc = gimp_color_profile_get_description (profile);
-  profile_info = gimp_color_profile_get_summary (profile);
+  profile_name = g_strdup (gimp_color_profile_get_model (profile));
+  profile_desc = g_strdup (gimp_color_profile_get_description (profile));
+  profile_info = g_strdup (gimp_color_profile_get_summary (profile));
 
-  gimp_color_profile_close (profile);
+  g_object_unref (profile);
 
 }
 CODE
@@ -1575,21 +1826,158 @@ HELP
 
   if (file)
     {
-      GimpColorProfile p;
+      GimpColorProfile *p;
 
-      p = gimp_color_profile_open_from_file (file, error);
+      p = gimp_color_profile_new_from_file (file, error);
       g_object_unref (file);
 
       if (p)
         {
-          profile_name = gimp_color_profile_get_model (p);
-          profile_desc = gimp_color_profile_get_description (p);
-          profile_info = gimp_color_profile_get_summary (p);
+          profile_name = g_strdup (gimp_color_profile_get_model (p));
+          profile_desc = g_strdup (gimp_color_profile_get_description (p));
+          profile_info = g_strdup (gimp_color_profile_get_summary (p));
 
-          gimp_color_profile_close (p);
+          g_object_unref (p);
         }
       else
         success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_icc_profile_set {
+    $blurb = "Set a color profile on the image";
+
+    $help = <<'HELP';
+This procedure sets the user-configured RGB profile on an image using
+the 'icc-profile' parasite. This procedure does not do any color
+conversion.
+HELP
+
+    &neo_pdb_misc;
+    $date = '2015';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+        { name => 'image', type => 'image',
+          desc => 'Input image' },
+        { name => 'profile', type => 'string',
+          desc => 'Filename of an ICC color profile', allow_non_utf8 => 1 }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
+    {
+      GFile            *file = NULL;
+      GimpColorProfile *p    = NULL;
+
+      if (profile)
+        file = g_file_new_for_path (profile);
+      else if (image->gimp->config->color_management->rgb_profile)
+        file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
+
+      if (file)
+        {
+          p = gimp_color_profile_new_from_file (file, error);
+
+          if (! p)
+	    success = FALSE;
+
+          g_object_unref (file);
+	}
+
+      if (success)
+        {
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC,
+                                       _("Set color profile"));
+
+          if (gimp_image_set_color_profile (image, p, error))
+            gimp_image_parasite_detach (image, "icc-profile-name");
+          else
+            success = FALSE;
+
+          gimp_image_undo_group_end (image);
+
+          if (! success)
+	    gimp_image_undo (image);
+
+          if (p)
+            g_object_unref (p);
+	}
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_icc_profile_set_rgb {
+    $blurb = "Set the default RGB color profile on the image";
+
+    $help = <<'HELP';
+This procedure sets the user-configured RGB profile on an image using
+the 'icc-profile' parasite. If no RGB profile is configured, sRGB is
+assumed and the parasite is unset. This procedure does not do any
+color conversion.
+HELP
+
+    &neo_pdb_misc;
+    $date = '2015';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+        { name => 'image', type => 'image',
+          desc => 'Input image' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
+    {
+      GFile            *file = NULL;
+      GimpColorProfile *p    = NULL;
+
+      if (image->gimp->config->color_management->rgb_profile)
+        file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
+
+      if (file)
+        {
+          p = gimp_color_profile_new_from_file (file, error);
+
+          if (! p)
+	    success = FALSE;
+
+          g_object_unref (file);
+	}
+
+      if (success)
+        {
+          gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC,
+                                       _("Set color profile"));
+
+          if (gimp_image_set_color_profile (image, p, error))
+            gimp_image_parasite_detach (image, "icc-profile-name");
+          else
+            success = FALSE;
+
+          gimp_image_undo_group_end (image);
+
+          if (! success)
+	    gimp_image_undo (image);
+
+          if (p)
+            g_object_unref (p);
+	}
     }
   else
     success = FALSE;
@@ -4024,6 +4412,153 @@ wrap_in_gamma_cast (GeglNode     *node,
     }
 }
 
+static GeglNode *
+create_buffer_source_node (GeglNode     *parent,
+                           GimpDrawable *drawable)
+{
+  GeglNode   *new_node;
+  GeglBuffer *buffer;
+
+  buffer = gimp_drawable_get_buffer (drawable);
+  g_object_ref (buffer);
+  new_node = gegl_node_new_child (parent,
+                                  "operation", "gegl:buffer-source",
+                                  "buffer", buffer,
+                                  NULL);
+  g_object_unref (buffer);
+  return new_node;
+}
+
+static gboolean
+bump_map (GimpDrawable *drawable,
+          GimpDrawable *bump_map,
+          gdouble       azimuth,
+          gdouble       elevation,
+          gint          depth,
+          gint          offset_x,
+          gint          offset_y,
+          gdouble       waterlevel,
+          gdouble       ambient,
+          gboolean      compensate,
+          gboolean      invert,
+          gint          type,
+          gboolean      tiled,
+          GimpProgress  *progress,
+          GError       **error)
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode *gegl;
+      GeglNode *node;
+      GeglNode *src_node;
+
+      gegl = gegl_node_new ();
+
+      node = gegl_node_new_child (gegl,
+                                  "operation", "gegl:bump-map",
+                                  "tiled",      tiled,
+                                  "type",       type,
+                                  "compensate", compensate,
+                                  "invert",     invert,
+                                  "azimuth",    azimuth,
+                                  "elevation",  elevation,
+                                  "depth",      depth,
+                                  "offset_x",   offset_x,
+                                  "offset_y",   offset_y,
+                                  "waterlevel", waterlevel,
+                                  "ambient",    ambient,
+                                  NULL);
+
+      src_node = create_buffer_source_node (gegl, bump_map);
+
+      gegl_node_connect_to (src_node, "output", node, "aux");
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Bump Map"),
+                                     node);
+      g_object_unref (gegl);
+
+      return TRUE;
+    }
+    else
+      return FALSE;
+}
+
+static gboolean
+displace (GimpDrawable  *drawable,
+          gdouble        amount_x,
+          gdouble        amount_y,
+          gboolean       do_x,
+          gboolean       do_y,
+          GimpDrawable  *displace_map_x,
+          GimpDrawable  *displace_map_y,
+          gint           displace_type,
+          gint           displace_mode,
+          GimpProgress  *progress,
+          GError       **error)
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      if (do_x || do_y)
+        {
+          GeglNode *gegl;
+          GeglNode *node;
+          GeglAbyssPolicy abyss_policy = GEGL_ABYSS_NONE;
+
+          switch (displace_type)
+            {
+              case 1:
+                abyss_policy = GEGL_ABYSS_LOOP;
+                break;
+              case 2:
+                abyss_policy = GEGL_ABYSS_CLAMP;
+                break;
+              case 3:
+                abyss_policy = GEGL_ABYSS_BLACK;
+                break;
+            }
+
+          gegl = gegl_node_new ();
+
+          node = gegl_node_new_child (gegl,
+                                      "operation",     "gegl:displace",
+                                      "displace_mode", displace_mode,
+                                      "sampler_type",  GEGL_SAMPLER_CUBIC,
+                                      "abyss_policy",  abyss_policy,
+                                      "amount_x",      amount_x,
+                                      "amount_y",      amount_y,
+                                      NULL);
+
+          if (do_x)
+            {
+              GeglNode *src_node;
+              src_node = create_buffer_source_node (gegl, displace_map_x);
+              gegl_node_connect_to (src_node, "output", node, "aux");
+            }
+
+          if (do_y)
+            {
+              GeglNode *src_node;
+              src_node = create_buffer_source_node (gegl, displace_map_y);
+              gegl_node_connect_to (src_node, "output", node, "aux2");
+            }
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Displace"),
+                                         node);
+          g_object_unref (gegl);
+        }
+
+      return TRUE;
+    }
+  else
+    return FALSE;
+}
+
 static gboolean
 gaussian_blur (GimpDrawable  *drawable,
                gdouble        horizontal,
@@ -4058,13 +4593,18 @@ gaussian_blur (GimpDrawable  *drawable,
 CODE
 
 @headers = qw("libgimpbase/gimpbase.h"
+              "libgimpconfig/gimpconfig.h"
               "libgimpmath/gimpmath.h"
               "gegl/gimp-babl.h"
               "gegl/gimp-gegl-utils.h"
+              "config/gimpcoreconfig.h"
+              "core/gimp.h"
               "core/gimpchannel.h"
               "core/gimpcontext.h"
               "core/gimpdrawable-operation.h"
+              "core/gimpimage-color-profile.h"
               "core/gimpimage-crop.h"
+              "core/gimpimage-resize.h"
               "core/gimpimage-rotate.h"
               "core/gimpimage-undo.h"
               "core/gimppickable.h"
@@ -4080,6 +4620,8 @@ CODE
             plug_in_autocrop
             plug_in_autocrop_layer
             plug_in_autostretch_hsv
+            plug_in_bump_map
+            plug_in_bump_map_tiled
             plug_in_c_astretch
             plug_in_colors_channel_mixer
             plug_in_colortoalpha
@@ -4087,6 +4629,8 @@ CODE
             plug_in_cubism
             plug_in_deinterlace
             plug_in_diffraction
+            plug_in_displace
+            plug_in_displace_polar
             plug_in_edge
             plug_in_engrave
             plug_in_exchange
@@ -4100,6 +4644,8 @@ CODE
             plug_in_hsv_noise
             plug_in_icc_profile_info
             plug_in_icc_profile_file_info
+            plug_in_icc_profile_set
+            plug_in_icc_profile_set_rgb
             plug_in_illusion
             plug_in_laplace
             plug_in_lens_distortion

@@ -94,7 +94,7 @@ struct _XcfInfo
   GOutputStream      *output;
   GSeekable          *seekable;
   guint               cp;
-  const gchar        *filename;
+  GFile              *file;
   GimpTattoo          tattoo_state;
   GimpLayer          *active_layer;
   GimpChannel        *active_channel;

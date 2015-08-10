@@ -337,7 +337,7 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
       else
         {
           gimp_image_crop (image, GIMP_CONTEXT (options),
-                           x, y, w + x, h + y,
+                           x, y, w, h,
                            TRUE);
         }
 

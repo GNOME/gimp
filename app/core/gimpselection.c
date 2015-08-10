@@ -100,11 +100,6 @@ static gboolean   gimp_selection_boundary      (GimpChannel         *channel,
                                                 gint                 y1,
                                                 gint                 x2,
                                                 gint                 y2);
-static gboolean   gimp_selection_bounds        (GimpChannel         *channel,
-                                                gint                *x1,
-                                                gint                *y1,
-                                                gint                *x2,
-                                                gint                *y2);
 static gboolean   gimp_selection_is_empty      (GimpChannel         *channel);
 static void       gimp_selection_feather       (GimpChannel         *channel,
                                                 gdouble              radius_x,
@@ -167,7 +162,6 @@ gimp_selection_class_init (GimpSelectionClass *klass)
   drawable_class->invalidate_boundary = gimp_selection_invalidate_boundary;
 
   channel_class->boundary             = gimp_selection_boundary;
-  channel_class->bounds               = gimp_selection_bounds;
   channel_class->is_empty             = gimp_selection_is_empty;
   channel_class->feather              = gimp_selection_feather;
   channel_class->sharpen              = gimp_selection_sharpen;
@@ -443,16 +437,6 @@ gimp_selection_boundary (GimpChannel         *channel,
 }
 
 static gboolean
-gimp_selection_bounds (GimpChannel *channel,
-                       gint        *x1,
-                       gint        *y1,
-                       gint        *x2,
-                       gint        *y2)
-{
-  return GIMP_CHANNEL_CLASS (parent_class)->bounds (channel, x1, y1, x2, y2);
-}
-
-static gboolean
 gimp_selection_is_empty (GimpChannel *channel)
 {
   GimpSelection *selection = GIMP_SELECTION (channel);
@@ -682,11 +666,17 @@ gimp_selection_extract (GimpSelection *selection,
    *  actual selection mask
    */
   if (GIMP_IS_DRAWABLE (pickable))
-    non_empty = gimp_item_mask_bounds (GIMP_ITEM (pickable),
-                                       &x1, &y1, &x2, &y2);
+    {
+      non_empty = gimp_item_mask_bounds (GIMP_ITEM (pickable),
+                                         &x1, &y1, &x2, &y2);
+    }
   else
-    non_empty = gimp_channel_bounds (GIMP_CHANNEL (selection),
-                                     &x1, &y1, &x2, &y2);
+    {
+      non_empty = gimp_item_bounds (GIMP_ITEM (selection),
+                                    &x1, &y1, &x2, &y2);
+      x2 += x1;
+      y2 += y1;
+    }
 
   if (non_empty && ((x1 == x2) || (y1 == y2)))
     {

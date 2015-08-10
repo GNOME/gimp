@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-13 08:32+0200\n"
-"PO-Revision-Date: 2015-05-13 08:33+0200\n"
+"POT-Creation-Date: 2015-06-29 17:24+0200\n"
+"PO-Revision-Date: 2015-06-29 17:25+0200\n"
 "Last-Translator: Luca Ferretti <elle.uca@libero.it>\n"
 "Language-Team: Italian <tp@lists.linux.it>\n"
 "Language: it\n"
@@ -40,22 +40,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1140
+#: ../libgimp/gimp.c:1156
 msgid "success"
 msgstr "azione riuscita"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1144
+#: ../libgimp/gimp.c:1160
 msgid "execution error"
 msgstr "errore di esecuzione"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1148
+#: ../libgimp/gimp.c:1164
 msgid "calling error"
 msgstr "errore di chiamata"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1152
+#: ../libgimp/gimp.c:1168
 msgid "cancelled"
 msgstr "annullato"
 
@@ -1239,20 +1239,20 @@ msgstr "Connessione a org.freedesktop.FileManager1 fallita: "
 msgid "Calling ShowItems failed: "
 msgstr "Chiamata a ShowItems fallita: "
 
-#: ../libgimpcolor/gimplcms.c:152
+#: ../libgimpcolor/gimpcolorprofile.c:152
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "\"%s\" non sembra essere un profilo di colore ICC"
 
-#: ../libgimpcolor/gimplcms.c:186
+#: ../libgimpcolor/gimpcolorprofile.c:186
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Il dati non sembrano essere un profilo di colore ICC"
 
-#: ../libgimpcolor/gimplcms.c:231
+#: ../libgimpcolor/gimpcolorprofile.c:231
 msgid "Could not save color profile to memory"
 msgstr "Impossibile salvare il profilo di colore in memoria"
 
-#: ../libgimpcolor/gimplcms.c:375
+#: ../libgimpcolor/gimpcolorprofile.c:375
 msgid "(unnamed profile)"
 msgstr "(profilo senza nome)"
 
@@ -1263,15 +1263,15 @@ msgstr "(profilo senza nome)"
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:53
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "Mode of operation for color management."
 msgstr "Modalità di operazione per la gestione del colore."
 
-#: ../libgimpconfig/gimpcolorconfig.c:55
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "The color profile of your (primary) monitor."
 msgstr "Il profilo di colore del monitor (principale)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:57
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -1281,15 +1281,15 @@ msgstr ""
 "dall'ambiente grafico. Il profilo del monitor configurato verrà usato solo "
 "come ripiego."
 
-#: ../libgimpconfig/gimpcolorconfig.c:61
+#: ../libgimpconfig/gimpcolorconfig.c:62
 msgid "The default RGB working space color profile."
 msgstr "Il profilo di colore RGB predefinito dello spazio di lavoro."
 
-#: ../libgimpconfig/gimpcolorconfig.c:63
+#: ../libgimpconfig/gimpcolorconfig.c:64
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "Il profilo di colore CMYK usato per convertire tra RGB e CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:65
+#: ../libgimpconfig/gimpcolorconfig.c:66
 msgid ""
 "The color profile to use for soft proofing from your image's color space to "
 "some other color space, including soft proofing to a printer or other output "
@@ -1299,7 +1299,7 @@ msgstr ""
 "dell'immagine verso qualche altro spazio colore, comprese le simulazioni in "
 "stampa o verso altro profilo di dispositivo di uscita. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:69
+#: ../libgimpconfig/gimpcolorconfig.c:70
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1312,14 +1312,14 @@ msgstr ""
 "di monitor sono matrici), scegliendo intento percettivo si ottiene in realtà "
 "un colorimetrico relativo."
 
-#: ../libgimpconfig/gimpcolorconfig.c:74
+#: ../libgimpconfig/gimpcolorconfig.c:75
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to). "
 msgstr ""
 "Usare la compensazione del punto nero (a meno che non si abbia una buona "
 "ragione per non farlo). "
 
-#: ../libgimpconfig/gimpcolorconfig.c:76
+#: ../libgimpconfig/gimpcolorconfig.c:77
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
@@ -1329,14 +1329,14 @@ msgstr ""
 "dispositivo di simulazione (solitamente un monitor). Provarli tutti e "
 "scegliere quello che sembra il migliore. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:80
+#: ../libgimpconfig/gimpcolorconfig.c:81
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
 "Provare con e senza la compensazione del punto nero e scegliere quello che "
 "rende meglio. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:83
+#: ../libgimpconfig/gimpcolorconfig.c:84
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
@@ -1344,15 +1344,21 @@ msgstr ""
 "Se abilitata, la simulazione di stampa contrassegna i colori che non "
 "potranno essere rappresentati nello spazio di colore di destinazione."
 
-#: ../libgimpconfig/gimpcolorconfig.c:86
+#: ../libgimpconfig/gimpcolorconfig.c:87
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Il colore da usare per contrassegnare i colori fuori gamma."
 
-#: ../libgimpconfig/gimpcolorconfig.c:367
-#: ../libgimpconfig/gimpcolorconfig.c:398
+#: ../libgimpconfig/gimpcolorconfig.c:394
+#: ../libgimpconfig/gimpcolorconfig.c:497
 #, c-format
-msgid "Color profile '%s' is not for RGB color space"
-msgstr "Il profilo colore \"%s\" non è per una spazio colore RGB"
+msgid "Color profile '%s' is not for RGB color space."
+msgstr "Il profilo colore \"%s\" non è per una spazio colore RGB."
+
+#: ../libgimpconfig/gimpcolorconfig.c:425
+#: ../libgimpconfig/gimpcolorconfig.c:538
+#, c-format
+msgid "Color profile '%s' is not for CMYK color space."
+msgstr "Il profilo colore \"%s\" non è per una spazio colore CMYK."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgctxt "color-management-mode"
@@ -1534,6 +1540,15 @@ msgstr "Tutti i file (*.*)"
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profilo colore ICC (*.icc, *.icm)"
 
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:219
+#: ../libgimpwidgets/gimppatheditor.c:248
+msgid "Folder"
+msgstr "Cartella"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:224
+msgid "Not a regular file."
+msgstr "Non è un file normale."
+
 #: ../libgimpwidgets/gimpcolorprofilestore.c:145
 msgid "Select color profile from disk..."
 msgstr "Seleziona il profilo di colore da disco..."
@@ -1648,10 +1663,6 @@ msgstr[1] "Selezionate tutte le pagine (%d)"
 #: ../libgimpwidgets/gimppatheditor.c:239
 msgid "Writable"
 msgstr "Scrivibile"
-
-#: ../libgimpwidgets/gimppatheditor.c:248
-msgid "Folder"
-msgstr "Cartella"
 
 #: ../libgimpwidgets/gimppickbutton.c:131
 msgid ""
@@ -2381,16 +2392,16 @@ msgstr "Contrasto"
 msgid "Contrast c_ycles:"
 msgstr "_Cicli di contrasto:"
 
-#: ../modules/display-filter-lcms.c:103
+#: ../modules/display-filter-lcms.c:102
 msgid "Color management display filter using ICC color profiles"
 msgstr ""
 "Il filtro di gestione del colore del display usa i profili di colore ICC"
 
-#: ../modules/display-filter-lcms.c:135
+#: ../modules/display-filter-lcms.c:134
 msgid "Color Management"
 msgstr "Gestione del colore"
 
-#: ../modules/display-filter-lcms.c:185
+#: ../modules/display-filter-lcms.c:184
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -2398,24 +2409,24 @@ msgstr ""
 "Questo filtro prende la sua configurazione dalla sezione gestione del colore "
 "nella finestra delle preferenze."
 
-#: ../modules/display-filter-lcms.c:199
+#: ../modules/display-filter-lcms.c:198
 msgid "Mode of operation:"
 msgstr "Modalità di operazione:"
 
-#: ../modules/display-filter-lcms.c:206
+#: ../modules/display-filter-lcms.c:205
 msgid "Image profile:"
 msgstr "Profilo dell'immagine:"
 
-#: ../modules/display-filter-lcms.c:214
+#: ../modules/display-filter-lcms.c:213
 msgid "Monitor profile:"
 msgstr "Profilo del monitor:"
 
-#: ../modules/display-filter-lcms.c:222
+#: ../modules/display-filter-lcms.c:221
 msgid "Print simulation profile:"
 msgstr "Profilo di simulazione di stampa:"
 
 # repeat-mode
-#: ../modules/display-filter-lcms.c:411
+#: ../modules/display-filter-lcms.c:381
 msgid "None"
 msgstr "Nessuna"
 

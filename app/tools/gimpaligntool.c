@@ -622,26 +622,13 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
       if (GIMP_IS_ITEM (list->data))
         {
           GimpItem *item = list->data;
+          gint      off_x, off_y;
 
-          if (GIMP_IS_VECTORS (item))
-            {
-              gdouble x1_f, y1_f, x2_f, y2_f;
+          gimp_item_bounds (item, &x, &y, &w, &h);
 
-              gimp_vectors_bounds (GIMP_VECTORS (item),
-                                   &x1_f, &y1_f,
-                                   &x2_f, &y2_f);
-              x = ROUND (x1_f);
-              y = ROUND (y1_f);
-              w = ROUND (x2_f - x1_f);
-              h = ROUND (y2_f - y1_f);
-            }
-          else
-            {
-              gimp_item_get_offset (item, &x, &y);
-
-              w = gimp_item_get_width  (item);
-              h = gimp_item_get_height (item);
-            }
+          gimp_item_get_offset (item, &off_x, &off_y);
+          x += off_x;
+          y += off_y;
 
           gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
                                      x, y,

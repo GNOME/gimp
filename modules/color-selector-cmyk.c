@@ -353,10 +353,10 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   GimpColorSelector *selector     = GIMP_COLOR_SELECTOR (module);
   GimpColorConfig   *config       = module->config;
   cmsUInt32Number    flags        = 0;
-  GimpColorProfile   rgb_profile  = NULL;
-  GimpColorProfile   cmyk_profile = NULL;
-  gchar             *label;
-  gchar             *summary;
+  GimpColorProfile  *rgb_profile  = NULL;
+  GimpColorProfile  *cmyk_profile = NULL;
+  cmsHPROFILE        rgb_lcms;
+  cmsHPROFILE        cmyk_lcms;
   gchar             *text;
 
   if (module->rgb2cmyk)
@@ -386,16 +386,17 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   if (! cmyk_profile)
     goto out;
 
-  label   = gimp_color_profile_get_label (cmyk_profile);
-  summary = gimp_color_profile_get_summary (cmyk_profile);
-
-  text = g_strdup_printf (_("Profile: %s"), label);
+  text = g_strdup_printf (_("Profile: %s"),
+                          gimp_color_profile_get_label (cmyk_profile));
   gtk_label_set_text (GTK_LABEL (module->name_label), text);
-  gimp_help_set_help_data (module->name_label, summary, NULL);
-
   g_free (text);
-  g_free (label);
-  g_free (summary);
+
+  gimp_help_set_help_data (module->name_label,
+                           gimp_color_profile_get_summary (cmyk_profile),
+                           NULL);
+
+  rgb_lcms  = gimp_color_profile_get_lcms_profile (rgb_profile);
+  cmyk_lcms = gimp_color_profile_get_lcms_profile (cmyk_profile);
 
   if (config->display_intent ==
       GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
@@ -403,22 +404,22 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
       flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
     }
 
-  module->rgb2cmyk = cmsCreateTransform (rgb_profile,  TYPE_RGB_DBL,
-                                         cmyk_profile, TYPE_CMYK_DBL,
+  module->rgb2cmyk = cmsCreateTransform (rgb_lcms,  TYPE_RGB_DBL,
+                                         cmyk_lcms, TYPE_CMYK_DBL,
                                          config->display_intent,
                                          flags);
-  module->cmyk2rgb = cmsCreateTransform (cmyk_profile, TYPE_CMYK_DBL,
-                                         rgb_profile,  TYPE_RGB_DBL,
+  module->cmyk2rgb = cmsCreateTransform (cmyk_lcms, TYPE_CMYK_DBL,
+                                         rgb_lcms,  TYPE_RGB_DBL,
                                          config->display_intent,
                                          flags);
 
  out:
 
   if (rgb_profile)
-    gimp_color_profile_close (rgb_profile);
+    g_object_unref (rgb_profile);
 
   if (cmyk_profile)
-    gimp_color_profile_close (cmyk_profile);
+    g_object_unref (cmyk_profile);
 
   if (! module->in_destruction)
     colorsel_cmyk_set_color (selector, &selector->rgb, &selector->hsv);

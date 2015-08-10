@@ -33,14 +33,14 @@
 #include "widgets-types.h"
 
 #include "core/gimpimage.h"
-#include "core/gimpimage-profile.h"
+#include "core/gimpimage-color-profile.h"
 
 #include "gimpimageprofileview.h"
 
 #include "gimp-intl.h"
 
 
-static void  gimp_image_profile_view_update  (GimpImageParasiteView *view);
+static void   gimp_image_profile_view_update (GimpImageParasiteView *view);
 
 
 G_DEFINE_TYPE (GimpImageProfileView,
@@ -103,7 +103,7 @@ gimp_image_profile_view_update (GimpImageParasiteView *view)
   GimpImageProfileView *profile_view = GIMP_IMAGE_PROFILE_VIEW (view);
   GimpImage            *image;
   GimpColorManaged     *managed;
-  GimpColorProfile      profile;
+  GimpColorProfile     *profile;
 
   image   = gimp_image_parasite_view_get_image (view);
   managed = GIMP_COLOR_MANAGED (image);
@@ -112,5 +112,5 @@ gimp_image_profile_view_update (GimpImageParasiteView *view)
 
   gimp_color_profile_view_set_profile (profile_view->profile_view, profile);
 
-  gimp_color_profile_close (profile);
+  g_object_unref (profile);
 }

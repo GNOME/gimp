@@ -52,7 +52,6 @@ libexec_PROGRAMS = \
 	blur \
 	blur-gauss-selective \
 	border-average \
-	bump-map \
 	cartoon \
 	checkerboard \
 	cml-explorer \
@@ -69,7 +68,6 @@ libexec_PROGRAMS = \
 	depth-merge \
 	despeckle \
 	destripe \
-	displace \
 	edge-dog \
 	edge-neon \
 	emboss \
@@ -145,7 +143,6 @@ libexec_PROGRAMS = \
 	warp \
 	web-browser \
 	$(WEB_PAGE)
-
 
 EXTRA_PROGRAMS = \
 	file-aa \
@@ -312,23 +309,6 @@ border_average_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(border_average_RC)
-
-bump_map_SOURCES = \
-	bump-map.c
-
-bump_map_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(bump_map_RC)
 
 cartoon_SOURCES = \
 	cartoon.c
@@ -601,23 +581,6 @@ destripe_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(destripe_RC)
-
-displace_SOURCES = \
-	displace.c
-
-displace_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(displace_RC)
 
 edge_dog_SOURCES = \
 	edge-dog.c
@@ -1507,8 +1470,6 @@ jigsaw_LDADD = \
 	$(INTLLIBS)		\
 	$(jigsaw_RC)
 
-lcms_CFLAGS = $(LCMS_CFLAGS)
-
 lcms_SOURCES = \
 	lcms.c
 
@@ -1523,7 +1484,6 @@ lcms_LDADD = \
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
 	$(GEGL_LIBS)		\
-	$(LCMS_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(lcms_RC)

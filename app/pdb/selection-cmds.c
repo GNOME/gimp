@@ -66,8 +66,15 @@ selection_bounds_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      non_empty = gimp_channel_bounds (gimp_image_get_mask (image),
-                                       &x1, &y1, &x2, &y2);
+      gint x, y, w, h;
+
+      non_empty = gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                                    &x, &y, &w, &h);
+
+      x1 = x;
+      y1 = y;
+      x2 = x + w;
+      y2 = y + h;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

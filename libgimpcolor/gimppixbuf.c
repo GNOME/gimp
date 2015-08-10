@@ -132,19 +132,18 @@ guint8 *
 gimp_pixbuf_get_icc_profile (GdkPixbuf *pixbuf,
                              gsize     *length)
 {
-  gchar *icc_base64 = NULL;
+  const gchar *icc_base64;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (length != NULL, NULL);
 
-  g_object_get (pixbuf, "icc-profile", icc_base64, NULL);
+  icc_base64 = gdk_pixbuf_get_option (pixbuf, "icc-profile");
 
   if (icc_base64)
     {
       guint8 *icc_data;
 
       icc_data = g_base64_decode (icc_base64, length);
-      g_free (icc_base64);
 
       return icc_data;
     }

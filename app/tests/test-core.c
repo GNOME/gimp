@@ -26,6 +26,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-new.h"
 
 #include "operations/gimplevelsconfig.h"
 

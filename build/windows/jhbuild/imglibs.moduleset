@@ -7,8 +7,8 @@
 		href="http://downloads.sourceforge.net/project/" />
 	<repository type="tarball" name="download.sourceforge.net"
 		href="http://download.sourceforge.net/" />
-	<repository type="tarball" name="webp"
-		href="https://webp.googlecode.com/files/" />
+	<repository type="tarball" name="webmproject.org"
+		href="http://downloads.webmproject.org/releases/" />
 
 	<include href="compresslibs.moduleset"/>
 
@@ -64,9 +64,9 @@
 </metamodule>
 
 <autotools id="libmng" autogen-sh="configure">
-	<branch version="2.0.2" repo="sf.net"
-			module="libmng/libmng-devel/2.0.2/libmng-2.0.2.tar.xz"
-			hash="sha1:7dd35369ff5916e1823cbacef984ab1b87714b69">
+	<branch version="2.0.3" repo="sf.net"
+			module="libmng/libmng-devel/2.0.3/libmng-2.0.3.tar.xz"
+			hash="sha1:0f141482ffcef6f8cd4413f945a59310ac2e49af">
 		<patch file="libmng-no-undefined-makefile-in.patch" strip="1"/>
 	</branch>
 	<dependencies>
@@ -77,10 +77,17 @@
 </autotools>
 
 <autotools id="libwebp" autogen-sh="configure">
-	<branch version="0.4.0" repo="webp"
-			module="libwebp-0.4.0.tar.gz"
-			hash="sha1:326c4b6787a01e5e32a9b30bae76442d18d2d1b6">
+	<branch version="0.4.3" repo="webmproject.org"
+			module="webp/libwebp-0.4.3.tar.gz"
+			hash="sha1:1c307a61c4d0018620b4ba9a58e8f48a8d6640ef">
 	</branch>
 </autotools>
+
+<cmake id="openjpeg2">
+    <branch version="2.1.0" repo="sf.net"
+            module="openjpeg.mirror/2.1.0/openjpeg-2.1.0.tar.gz"
+            hash="sha1:c2a255f6b51ca96dc85cd6e85c89d300018cb1cb">
+    </branch>
+</cmake>
 
 </moduleset>

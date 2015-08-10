@@ -153,9 +153,8 @@ xcf_init (Gimp *gimp)
                                                        "Filename",
                                                        "The name of the file "
                                                        "to save the image in, "
-                                                       "in the on-disk "
-                                                       "character set and "
-                                                       "encoding",
+                                                       "in URI format and "
+                                                       "UTF-8 encoding",
                                                        TRUE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
@@ -256,7 +255,6 @@ xcf_load_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage      *image   = NULL;
   const gchar    *uri;
-  gchar          *filename;
   GFile          *file;
   gboolean        success = FALSE;
   gchar           id[14];
@@ -264,9 +262,8 @@ xcf_load_invoker (GimpProcedure         *procedure,
 
   gimp_set_busy (gimp);
 
-  uri      = g_value_get_string (gimp_value_array_index (args, 1));
-  file     = g_file_new_for_uri (uri);
-  filename = g_file_get_parse_name (file);
+  uri  = g_value_get_string (gimp_value_array_index (args, 1));
+  file = g_file_new_for_uri (uri);
 
   info.input = G_INPUT_STREAM (g_file_read (file, NULL, &my_error));
 
@@ -275,11 +272,12 @@ xcf_load_invoker (GimpProcedure         *procedure,
       info.gimp        = gimp;
       info.seekable    = G_SEEKABLE (info.input);
       info.progress    = progress;
-      info.filename    = filename;
+      info.file        = file;
       info.compression = COMPRESS_NONE;
 
       if (progress)
-        gimp_progress_start (progress, FALSE, _("Opening '%s'"), filename);
+        gimp_progress_start (progress, FALSE, _("Opening '%s'"),
+                             gimp_file_get_utf8_name (file));
 
       success = TRUE;
 
@@ -330,10 +328,9 @@ xcf_load_invoker (GimpProcedure         *procedure,
     {
       g_propagate_prefixed_error (error, my_error,
                                   _("Could not open '%s' for reading: "),
-                                  filename);
+                                  gimp_file_get_utf8_name (file));
     }
 
-  g_free (filename);
   g_object_unref (file);
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -359,17 +356,15 @@ xcf_save_invoker (GimpProcedure         *procedure,
   GimpValueArray *return_vals;
   GimpImage      *image;
   const gchar    *uri;
-  gchar          *filename;
   GFile          *file;
   gboolean        success  = FALSE;
   GError         *my_error = NULL;
 
   gimp_set_busy (gimp);
 
-  image    = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
-  uri      = g_value_get_string (gimp_value_array_index (args, 3));
-  file     = g_file_new_for_uri (uri);
-  filename = g_file_get_parse_name (file);
+  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  uri   = g_value_get_string (gimp_value_array_index (args, 3));
+  file  = g_file_new_for_uri (uri);
 
   info.output = G_OUTPUT_STREAM (g_file_replace (file,
                                                  NULL, FALSE, G_FILE_CREATE_NONE,
@@ -379,10 +374,10 @@ xcf_save_invoker (GimpProcedure         *procedure,
     {
       gboolean compat_mode = gimp_image_get_xcf_compat_mode (image);
 
-      info.gimp         = gimp;
-      info.seekable     = G_SEEKABLE (info.output);
-      info.progress     = progress;
-      info.filename     = filename;
+      info.gimp     = gimp;
+      info.seekable = G_SEEKABLE (info.output);
+      info.progress = progress;
+      info.file     = file;
 
       if (compat_mode)
         info.compression = COMPRESS_RLE;
@@ -395,14 +390,16 @@ xcf_save_invoker (GimpProcedure         *procedure,
                                                       NULL, NULL);
 
       if (progress)
-        gimp_progress_start (progress, FALSE, _("Saving '%s'"), filename);
+        gimp_progress_start (progress, FALSE, _("Saving '%s'"),
+                             gimp_file_get_utf8_name (file));
 
       success = xcf_save_image (&info, image, &my_error);
 
       if (success)
         {
           if (progress)
-            gimp_progress_set_text (progress, _("Closing '%s'"), filename);
+            gimp_progress_set_text (progress, _("Closing '%s'"),
+                                    gimp_file_get_utf8_name (file));
 
           success = g_output_stream_close (info.output, NULL, &my_error);
         }
@@ -410,15 +407,20 @@ xcf_save_invoker (GimpProcedure         *procedure,
       if (! success)
         g_propagate_prefixed_error (error, my_error,
                                     _("Error writing '%s': "),
-                                    filename);
+                                    gimp_file_get_utf8_name (file));
 
       g_object_unref (info.output);
 
       if (progress)
         gimp_progress_end (progress);
     }
+  else
+    {
+      g_propagate_prefixed_error (error, my_error,
+                                  _("Error creating '%s': "),
+                                  gimp_file_get_utf8_name (file));
+    }
 
-  g_free (filename);
   g_object_unref (file);
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

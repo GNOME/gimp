@@ -159,7 +159,6 @@ file_save_dialog_response (GtkWidget *save_dialog,
   GFile               *file;
   gchar               *basename;
   GimpPlugInProcedure *save_proc;
-  gulong               handler_id;
 
   if (! dialog->export)
     {
@@ -182,9 +181,8 @@ file_save_dialog_response (GtkWidget *save_dialog,
       return;
     }
 
-  handler_id = g_signal_connect (dialog, "destroy",
-                                 G_CALLBACK (gtk_widget_destroyed),
-                                 &dialog);
+  g_object_ref (dialog);
+  g_object_ref (dialog->image);
 
   switch (file_save_dialog_check_file (save_dialog, gimp,
                                        &file, &basename, &save_proc))
@@ -247,9 +245,7 @@ file_save_dialog_response (GtkWidget *save_dialog,
       g_object_unref (file);
       g_free (basename);
 
-      if (dialog)
-        gimp_file_dialog_set_sensitive (dialog, TRUE);
-
+      gimp_file_dialog_set_sensitive (dialog, TRUE);
       break;
 
     case CHECK_URI_SWITCH_DIALOGS:
@@ -261,8 +257,8 @@ file_save_dialog_response (GtkWidget *save_dialog,
       break;
     }
 
-  if (dialog)
-    g_signal_handler_disconnect (dialog, handler_id);
+  g_object_unref (dialog->image);
+  g_object_unref (dialog);
 }
 
 /* IMPORTANT: When changing this function, keep

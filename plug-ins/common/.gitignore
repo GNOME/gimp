@@ -16,8 +16,6 @@
 /blur-gauss-selective.exe
 /border-average
 /border-average.exe
-/bump-map
-/bump-map.exe
 /cartoon
 /cartoon.exe
 /checkerboard
@@ -50,8 +48,6 @@
 /despeckle.exe
 /destripe
 /destripe.exe
-/displace
-/displace.exe
 /edge-dog
 /edge-dog.exe
 /edge-neon

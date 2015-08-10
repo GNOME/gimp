@@ -151,7 +151,7 @@ gimp_font_select_button_class_init (GimpFontSelectButtonClass *klass)
                                    g_param_spec_string ("font-name",
                                                         "Font name",
                                                         "The name of the currently selected font",
-                                                        _("Sans"),
+                                                        "Sans-serif",
                                                         GIMP_PARAM_READWRITE));
 
   /**

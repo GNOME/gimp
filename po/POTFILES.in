@@ -136,6 +136,7 @@ app/core/gimpgrid.c
 app/core/gimpgrouplayer.c
 app/core/gimpimage.c
 app/core/gimpimage-arrange.c
+app/core/gimpimage-color-profile.c
 app/core/gimpimage-colormap.c
 app/core/gimpimage-convert-precision.c
 app/core/gimpimage-convert-type.c
@@ -145,7 +146,6 @@ app/core/gimpimage-guides.c
 app/core/gimpimage-item-list.c
 app/core/gimpimage-merge.c
 app/core/gimpimage-new.c
-app/core/gimpimage-profile.c
 app/core/gimpimage-quick-mask.c
 app/core/gimpimage-resize.c
 app/core/gimpimage-sample-points.c
@@ -179,6 +179,7 @@ app/core/gimpunit.c
 app/dialogs/about-dialog.c
 app/dialogs/action-search-dialog.c
 app/dialogs/channel-options-dialog.c
+app/dialogs/color-profile-dialog.c
 app/dialogs/convert-precision-dialog.c
 app/dialogs/convert-type-dialog.c
 app/dialogs/data-delete-dialog.c

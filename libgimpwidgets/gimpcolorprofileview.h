@@ -59,7 +59,7 @@ GType       gimp_color_profile_view_get_type    (void) G_GNUC_CONST;
 GtkWidget * gimp_color_profile_view_new         (void);
 
 void        gimp_color_profile_view_set_profile (GimpColorProfileView *view,
-                                                 GimpColorProfile      profile);
+                                                 GimpColorProfile     *profile);
 void        gimp_color_profile_view_set_error   (GimpColorProfileView *view,
                                                  const gchar          *message);
 

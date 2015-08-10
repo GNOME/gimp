@@ -688,13 +688,14 @@ layers_crop_to_selection_cmd_callback (GtkAction *action,
   GimpImage *image;
   GimpLayer *layer;
   GtkWidget *widget;
-  gint       x1, y1, x2, y2;
+  gint       x, y;
+  gint       width, height;
   gint       off_x, off_y;
   return_if_no_layer (image, layer, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_channel_bounds (gimp_image_get_mask (image),
-                             &x1, &y1, &x2, &y2))
+  if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                          &x, &y, &width, &height))
     {
       gimp_message_literal (image->gimp,
                             G_OBJECT (widget), GIMP_MESSAGE_WARNING,
@@ -703,15 +704,14 @@ layers_crop_to_selection_cmd_callback (GtkAction *action,
     }
 
   gimp_item_get_offset (GIMP_ITEM (layer), &off_x, &off_y);
-
-  off_x -= x1;
-  off_y -= y1;
+  off_x -= x;
+  off_y -= y;
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_ITEM_RESIZE,
                                _("Crop Layer to Selection"));
 
   gimp_item_resize (GIMP_ITEM (layer), action_data_get_context (data),
-                    x2 - x1, y2 - y1, off_x, off_y);
+                    width, height, off_x, off_y);
 
   gimp_image_undo_group_end (image);
 
