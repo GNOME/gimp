@@ -82,7 +82,7 @@ os.environ['RC'] = os.environ['WINDRES']
 
 #Exporting tool flags enviroment variables
 os.environ['LDFLAGS']  = '-L'+searchprefix+'/lib'
-os.environ['CFLAGS']   = '-mms-bitfields -I'+searchprefix+'/include -DLIBXML_STATIC '
+os.environ['CFLAGS']   = '-mms-bitfields -I'+searchprefix+'/include '
 os.environ['CPPFLAGS'] = '-I'+searchprefix+'/include'
 os.environ['CXXFLAGS'] = '-mms-bitfields'
 
@@ -171,7 +171,8 @@ module_autogenargs['fontconfig'] = autogenargs + """ --with-arch=i686 \
 module_autogenargs['icu']        = autogenargs + """ --with-cross-build=$(pwd)/../icu-native/ """
 
 module_autogenargs['libxml2']    = autogenargs + """ --with-python=no \
-                                                     --with-iconv=yes"""
+                                                     --with-iconv=yes \
+                                                     --with-zlib=no """
 
 module_autogenargs['librsvg']    = autogenargs + """ --enable-introspection=no"""
 
