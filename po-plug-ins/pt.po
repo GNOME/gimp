@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-07-21 17:31+0000\n"
-"PO-Revision-Date: 2015-08-13 10:37+0100\n"
+"POT-Creation-Date: 2015-08-13 09:41+0000\n"
+"PO-Revision-Date: 2015-08-13 10:53+0100\n"
 "Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
 "Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: Portuguese\n"
@@ -2592,7 +2592,6 @@ msgid "Cell-_padding:"
 msgstr "Es_Paço dentro da célula:"
 
 #: ../plug-ins/common/file-html-table.c:675
-#| msgid "The amount of cellpadding."
 msgid "The amount of cell padding."
 msgstr ""
 "Colocar algum espaço entre a margem da célula e o respetivo texto "
@@ -2962,60 +2961,60 @@ msgstr ""
 "Certifique-se que inseriu um nome de ficheiro válido e que a localização "
 "selecionada não é só de leitura!"
 
-#: ../plug-ins/common/file-pdf-save.c:825
-#: ../plug-ins/common/file-pdf-save.c:947
+#: ../plug-ins/common/file-pdf-save.c:854
+#: ../plug-ins/common/file-pdf-save.c:976
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Omitir camadas ocultas e camadas com opacidade 0"
 
-#: ../plug-ins/common/file-pdf-save.c:830
-#: ../plug-ins/common/file-pdf-save.c:952
+#: ../plug-ins/common/file-pdf-save.c:859
+#: ../plug-ins/common/file-pdf-save.c:981
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Converter mapas de bits para gráficos vetoriais sempre que possível"
 
-#: ../plug-ins/common/file-pdf-save.c:835
-#: ../plug-ins/common/file-pdf-save.c:957
+#: ../plug-ins/common/file-pdf-save.c:864
+#: ../plug-ins/common/file-pdf-save.c:986
 msgid "Apply layer masks before saving"
 msgstr "Aplicar máscaras de camada antes de gravar"
 
-#: ../plug-ins/common/file-pdf-save.c:839
-#: ../plug-ins/common/file-pdf-save.c:961
+#: ../plug-ins/common/file-pdf-save.c:868
+#: ../plug-ins/common/file-pdf-save.c:990
 msgid "Keeping the masks will not change the output"
 msgstr "Manter as máscaras não altera o resultado"
 
-#: ../plug-ins/common/file-pdf-save.c:892
+#: ../plug-ins/common/file-pdf-save.c:921
 msgid "Save to:"
 msgstr "Gravar em:"
 
-#: ../plug-ins/common/file-pdf-save.c:896
+#: ../plug-ins/common/file-pdf-save.c:925
 msgid "Browse..."
 msgstr "Navegar..."
 
-#: ../plug-ins/common/file-pdf-save.c:897
+#: ../plug-ins/common/file-pdf-save.c:926
 msgid "Multipage PDF export"
 msgstr "Exportação PDF multipáginas"
 
-#: ../plug-ins/common/file-pdf-save.c:932
+#: ../plug-ins/common/file-pdf-save.c:961
 msgid "Remove the selected pages"
 msgstr "Remover as páginas selecionadas"
 
-#: ../plug-ins/common/file-pdf-save.c:942
+#: ../plug-ins/common/file-pdf-save.c:971
 msgid "Add this image"
 msgstr "Adicionar esta imagem"
 
-#: ../plug-ins/common/file-pdf-save.c:1050
-#: ../plug-ins/common/file-pdf-save.c:1118
-#: ../plug-ins/common/file-pdf-save.c:1216 ../plug-ins/common/file-ps.c:1915
+#: ../plug-ins/common/file-pdf-save.c:1079
+#: ../plug-ins/common/file-pdf-save.c:1147
+#: ../plug-ins/common/file-pdf-save.c:1245 ../plug-ins/common/file-ps.c:1915
 #: ../plug-ins/common/file-tiff-load.c:1109
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
 
-#: ../plug-ins/common/file-pdf-save.c:1087
+#: ../plug-ins/common/file-pdf-save.c:1116
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 "Erro! Para gravar este ficheiro, tem de adicionar pelo menos uma imagem!"
 
-#: ../plug-ins/common/file-pdf-save.c:1260
+#: ../plug-ins/common/file-pdf-save.c:1289
 #: ../plug-ins/print/print-draw-page.c:118
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Impossível gerir o tamanho (largura ou altura) da imagem."
@@ -3123,7 +3122,6 @@ msgid "PPM image"
 msgstr "Imagem PPM"
 
 #: ../plug-ins/common/file-pnm.c:334
-#| msgid "PNM image"
 msgid "PFM image"
 msgstr "Imagem PNM"
 
@@ -3164,7 +3162,6 @@ msgid "Bogus scale factor."
 msgstr "Fator de escala falso."
 
 #: ../plug-ins/common/file-pnm.c:646
-#| msgid "Unsupported brush format"
 msgid "Unsupported scale factor."
 msgstr "Fator de escala não suportado"
 
@@ -3494,12 +3491,10 @@ msgid "RGB Save Type"
 msgstr "Tipo de gravação RGB"
 
 #: ../plug-ins/common/file-raw-data.c:1562
-#| msgid "Standard (R,G,B)"
 msgid "Standard (RGB RGB RGB ...)"
 msgstr "Padrão (R,G,B)"
 
 #: ../plug-ins/common/file-raw-data.c:1563
-#| msgid "Planar (RRR,GGG,BBB)"
 msgid "Planar (RRR... GGG... BBB...)"
 msgstr "Plano (RRR, GGG, BBB)"
 
@@ -3897,6 +3892,11 @@ msgstr "Mapa de bits em formato _X10"
 msgid "_Identifier prefix:"
 msgstr "_Prefixo identificador:"
 
+#: ../plug-ins/common/file-xbm.c:1285
+#| msgid "Co_mment:"
+msgid "Comment:"
+msgstr "Comentário:"
+
 #. hotspot toggle
 #: ../plug-ins/common/file-xbm.c:1293
 msgid "_Write hot spot values"
@@ -3981,15 +3981,11 @@ msgid "XMC Options"
 msgstr "Opções XMC"
 
 #: ../plug-ins/common/file-xmc.c:1072
-#| msgid ""
-#| "Enter the X coordinate of the hot spot.The origin is top left corner."
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Insira a coordenada X do ponto quente. A origem é o canto superior esquerdo."
 
 #: ../plug-ins/common/file-xmc.c:1095
-#| msgid ""
-#| "Enter the Y coordinate of the hot spot.The origin is top left corner."
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Insira a coordenada Y do ponto quente. A origem é o canto superior esquerdo."
@@ -4123,10 +4119,6 @@ msgstr "A largura e/ou altura da moldura \"%s\" é zero!"
 
 #: ../plug-ins/common/file-xmc.c:1577
 #, c-format
-#| msgid ""
-#| "Cannot save the cursor because the hot spot is not on '%s'.\n"
-#| "Try to change the hot spot position, layer geometry or save without auto-"
-#| "crop."
 msgid ""
 "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
 "Try to change the hot spot position, layer geometry or save without auto-"
@@ -4139,10 +4131,6 @@ msgstr ""
 
 #: ../plug-ins/common/file-xmc.c:1740
 #, c-format
-#| msgid ""
-#| "Your cursor was successfully saved but it contains one or more frames "
-#| "which width or height is more than %ipx.\n"
-#| "It will clutter the screen in some environments."
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
 "width or height is more than %ipx.\n"
@@ -4822,105 +4810,48 @@ msgstr "O recorte de cada peça é feito com lados retilíneos"
 msgid "Each piece has curved sides"
 msgstr "O recorte de cada peça é feito com lados curvos"
 
-#: ../plug-ins/common/lcms.c:144
-msgid "Set a color profile on the image"
-msgstr "Definir um perfil de cor para a imagem"
-
-#: ../plug-ins/common/lcms.c:151
-msgid "_Assign Color Profile..."
-msgstr "_Atribuir um perfil de cor..."
-
-#: ../plug-ins/common/lcms.c:167
-msgid "Assign default RGB Profile"
-msgstr "Atribuir o perfil de cor RGB predefinido"
-
-#: ../plug-ins/common/lcms.c:174
+#: ../plug-ins/common/lcms.c:126
 msgid "Apply a color profile on the image"
 msgstr "Aplicar um perfil de cor à imagem"
 
-#: ../plug-ins/common/lcms.c:184
+#: ../plug-ins/common/lcms.c:136
 msgid "_Convert to Color Profile..."
 msgstr "_Converter em perfil de cor..."
 
-#: ../plug-ins/common/lcms.c:202
+#: ../plug-ins/common/lcms.c:154
 msgid "Convert to default RGB Profile"
 msgstr "Converter em perfil de cor RGB predefinido"
 
-#: ../plug-ins/common/lcms.c:413
+#: ../plug-ins/common/lcms.c:293
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "O perfil de cor \"%s\"  não é para o espaço de cor RGB."
 
-#: ../plug-ins/common/lcms.c:513
+#: ../plug-ins/common/lcms.c:357
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "A imagem \"%s\" tem embutido um perfil de cor:"
 
-#: ../plug-ins/common/lcms.c:553
+#: ../plug-ins/common/lcms.c:397
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Converter a imagem para o espaço de trabalho RGB (%s)?"
 
-#: ../plug-ins/common/lcms.c:583
+#: ../plug-ins/common/lcms.c:427
 msgid "Convert to RGB working space?"
 msgstr "Converter em espaço de trabalho RGB?"
 
-#: ../plug-ins/common/lcms.c:588
+#: ../plug-ins/common/lcms.c:432
 msgid "_Keep"
 msgstr "_Manter"
 
-#: ../plug-ins/common/lcms.c:593
+#: ../plug-ins/common/lcms.c:437
 msgid "_Convert"
 msgstr "_Converter"
 
-#: ../plug-ins/common/lcms.c:621
+#: ../plug-ins/common/lcms.c:465
 msgid "_Don't ask me again"
 msgstr "_Não perguntar novamente"
-
-#: ../plug-ins/common/lcms.c:651
-msgid "Select destination profile"
-msgstr "Selecionar perfil de destino"
-
-#: ../plug-ins/common/lcms.c:672
-#, c-format
-msgid "RGB workspace (%s)"
-msgstr "Espaço de trabalho RGB (%s)"
-
-#: ../plug-ins/common/lcms.c:708
-msgid "Convert to ICC Color Profile"
-msgstr "Converter em perfil de cor ICC"
-
-#: ../plug-ins/common/lcms.c:709
-msgid "Assign ICC Color Profile"
-msgstr "Atribuir um perfil de cor ICC"
-
-#: ../plug-ins/common/lcms.c:717
-msgid "_Assign"
-msgstr "_Atribuir"
-
-#: ../plug-ins/common/lcms.c:735
-msgid "Current Color Profile"
-msgstr "Perfil de cor atual"
-
-#: ../plug-ins/common/lcms.c:744
-msgid "Convert to"
-msgstr "Converter em"
-
-#: ../plug-ins/common/lcms.c:744
-msgid "Assign"
-msgstr "Atribuir"
-
-#: ../plug-ins/common/lcms.c:768
-msgid "_Rendering Intent:"
-msgstr "_Intenção do desenho:"
-
-#: ../plug-ins/common/lcms.c:784
-msgid "_Black Point Compensation"
-msgstr "_Compensação de ponto preto"
-
-#: ../plug-ins/common/lcms.c:839
-msgid "Destination profile is not for RGB color space."
-msgstr "O perfil de destino não é para o espaço de cores RGB."
 
 #: ../plug-ins/common/mail.c:188
 msgid "Send the image by email"
@@ -6816,7 +6747,7 @@ msgstr "_Otimizar"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:910
 msgid "Use arithmetic _coding"
-msgstr ""
+msgstr "Usar _Codificação aritmética"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:912
 msgid "Older software may have trouble opening arithmetic-coded images"
@@ -7973,7 +7904,8 @@ msgid "Orientation:"
 msgstr "Orientação:"
 
 #: ../plug-ins/gfig/gfig-dobject.c:580
-msgid "Hey where has the object gone ?"
+#| msgid "Hey where has the object gone ?"
+msgid "Hey, where has the object gone?"
 msgstr "Ei, para onde é que foi o objeto?"
 
 #: ../plug-ins/gfig/gfig-dobject.c:922
@@ -8832,7 +8764,6 @@ msgid "Captionwriter"
 msgstr "Escritor da legenda"
 
 #: ../plug-ins/ui/plug-in-metadata.ui.h:12
-#| msgid "Create line"
 msgid "Headline"
 msgstr "Título"
 
@@ -8978,7 +8909,6 @@ msgid "A_uto update preview"
 msgstr "At_Ualização automática da antevisão"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2464
-#| msgid "`Default' is created."
 msgid "'Default' is created."
 msgstr "Foi criado um \"predefinido\""
 
@@ -11208,7 +11138,6 @@ msgstr ""
 "parametrizar."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:313
-#| msgid "Deviation threshold:"
 msgid "Reparametrize Threshold:"
 msgstr "Tolerância de re-parametrização:"
 
@@ -11322,6 +11251,48 @@ msgstr "_Captura de ecrã..."
 #: ../plug-ins/win-snap/winsnap.c:1149
 msgid "No data captured"
 msgstr "Não foi capturado nada"
+
+#~ msgid "Set a color profile on the image"
+#~ msgstr "Definir um perfil de cor para a imagem"
+
+#~ msgid "_Assign Color Profile..."
+#~ msgstr "_Atribuir um perfil de cor..."
+
+#~ msgid "Assign default RGB Profile"
+#~ msgstr "Atribuir o perfil de cor RGB predefinido"
+
+#~ msgid "Select destination profile"
+#~ msgstr "Selecionar perfil de destino"
+
+#~ msgid "RGB workspace (%s)"
+#~ msgstr "Espaço de trabalho RGB (%s)"
+
+#~ msgid "Convert to ICC Color Profile"
+#~ msgstr "Converter em perfil de cor ICC"
+
+#~ msgid "Assign ICC Color Profile"
+#~ msgstr "Atribuir um perfil de cor ICC"
+
+#~ msgid "_Assign"
+#~ msgstr "_Atribuir"
+
+#~ msgid "Current Color Profile"
+#~ msgstr "Perfil de cor atual"
+
+#~ msgid "Convert to"
+#~ msgstr "Converter em"
+
+#~ msgid "Assign"
+#~ msgstr "Atribuir"
+
+#~ msgid "_Rendering Intent:"
+#~ msgstr "_Intenção do desenho:"
+
+#~ msgid "_Black Point Compensation"
+#~ msgstr "_Compensação de ponto preto"
+
+#~ msgid "Destination profile is not for RGB color space."
+#~ msgstr "O perfil de destino não é para o espaço de cores RGB."
 
 #~ msgid "Original"
 #~ msgstr "Original"
