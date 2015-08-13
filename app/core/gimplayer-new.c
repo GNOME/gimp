@@ -17,14 +17,20 @@
 
 #include "config.h"
 
+#include <lcms2.h>
+
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "gimp.h"
 #include "gimpbuffer.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
@@ -33,9 +39,10 @@
 
 /*  local function prototypes  */
 
-static void   gimp_layer_new_convert_profile (GimpLayer    *layer,
-                                              const guint8 *icc_data,
-                                              gsize         icc_length);
+static gboolean   gimp_layer_new_convert_profile (GimpLayer     *layer,
+                                                  const guint8  *icc_data,
+                                                  gsize          icc_length,
+                                                  GError       **error);
 
 
 /*  public functions  */
@@ -153,7 +160,8 @@ gimp_layer_new_from_gegl_buffer (GeglBuffer           *buffer,
   gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, dest, NULL);
 
   if (buffer_icc_data)
-    gimp_layer_new_convert_profile (layer, buffer_icc_data, buffer_icc_length);
+    gimp_layer_new_convert_profile (layer, buffer_icc_data, buffer_icc_length,
+                                    NULL);
 
   return layer;
 }
@@ -208,7 +216,7 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
   icc_data = gimp_pixbuf_get_icc_profile (pixbuf, &icc_len);
   if (icc_data)
     {
-      gimp_layer_new_convert_profile (layer, icc_data, icc_len);
+      gimp_layer_new_convert_profile (layer, icc_data, icc_len, NULL);
       g_free (icc_data);
     }
 
@@ -218,10 +226,77 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
 
 /*  private functions  */
 
-static void
-gimp_layer_new_convert_profile (GimpLayer    *layer,
-                                const guint8 *icc_data,
-                                gsize         icc_length)
+static gboolean
+gimp_layer_new_convert_profile (GimpLayer     *layer,
+                                const guint8  *icc_data,
+                                gsize          icc_length,
+                                GError       **error)
 {
-  /* FIXME implement */
+  GimpDrawable     *drawable = GIMP_DRAWABLE (layer);
+  GimpImage        *image    = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpColorConfig  *config   = image->gimp->config->color_management;
+  GimpColorProfile *src_profile;
+  GimpColorProfile *dest_profile;
+  cmsHPROFILE       src_lcms;
+  cmsHPROFILE       dest_lcms;
+  const Babl       *iter_format;
+  cmsUInt32Number   lcms_format;
+  cmsHTRANSFORM     transform;
+
+  if (! gimp_drawable_is_rgb (drawable))
+    return TRUE;
+
+  if (config->mode == GIMP_COLOR_MANAGEMENT_OFF)
+    return TRUE;
+
+  src_profile = gimp_color_profile_new_from_icc_profile (icc_data, icc_length,
+                                                         error);
+  if (! src_profile)
+    return FALSE;
+
+  dest_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+
+  if (gimp_color_profile_is_equal (src_profile, dest_profile))
+    {
+      g_object_unref (src_profile);
+      g_object_unref (dest_profile);
+
+      return TRUE;
+    }
+
+  src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
+  dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
+
+  iter_format =
+    gimp_color_profile_get_format (gimp_drawable_get_format (drawable),
+                                   &lcms_format);
+
+  transform = cmsCreateTransform (src_lcms,  lcms_format,
+                                  dest_lcms, lcms_format,
+                                  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                  cmsFLAGS_NOOPTIMIZE);
+
+  if (transform)
+    {
+      GeglBuffer         *buffer = gimp_drawable_get_buffer (drawable);
+      GeglBufferIterator *iter;
+
+      iter = gegl_buffer_iterator_new (buffer, NULL, 0,
+                                       iter_format,
+                                       GEGL_ACCESS_READWRITE,
+                                       GEGL_ABYSS_NONE);
+
+      while (gegl_buffer_iterator_next (iter))
+        {
+          cmsDoTransform (transform,
+                          iter->data[0], iter->data[0], iter->length);
+        }
+
+      cmsDeleteTransform (transform);
+    }
+
+  g_object_unref (src_profile);
+  g_object_unref (dest_profile);
+
+  return TRUE;
 }
