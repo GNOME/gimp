@@ -17,8 +17,6 @@
 
 #include "config.h"
 
-#include <lcms2.h>
-
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
@@ -31,6 +29,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
 
 #include "gimp.h"
 #include "gimpbuffer.h"
@@ -246,80 +245,30 @@ gimp_layer_new_convert_profile (GimpLayer     *layer,
   GeglBuffer       *dest_buffer = gimp_drawable_get_buffer (drawable);
   GimpColorProfile *src_profile;
   GimpColorProfile *dest_profile;
-  const Babl       *src_format;
-  const Babl       *dest_format;
-  cmsHPROFILE       src_lcms;
-  cmsHPROFILE       dest_lcms;
-  cmsUInt32Number   lcms_src_format;
-  cmsUInt32Number   lcms_dest_format;
-  cmsHTRANSFORM     transform;
-
-  /*  FIXME: we need the unconditional full copy only in two cases:
-   *  - if we return without doing anything
-   *  - if there is an alpha channel, because lcms doesn't copy it
-   */
-  gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
 
   /*  FIXME: this is the wrong check, need something like file import
    *  conversion config
    */
   if (config->mode == GIMP_COLOR_MANAGEMENT_OFF)
-    return TRUE;
-
-  src_format  = gegl_buffer_get_format (src_buffer);
-  dest_format = gegl_buffer_get_format (dest_buffer);
-
-  if ((gimp_babl_format_get_base_type (src_format)  != GIMP_RGB) ||
-      (gimp_babl_format_get_base_type (dest_format) != GIMP_RGB))
-    return TRUE;
+    {
+      gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
+      return TRUE;
+    }
 
   src_profile = gimp_color_profile_new_from_icc_profile (icc_data, icc_length,
                                                          error);
   if (! src_profile)
-    return FALSE;
+    {
+      gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
+      return FALSE;
+    }
 
   dest_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-  if (gimp_color_profile_is_equal (src_profile, dest_profile))
-    {
-      g_object_unref (src_profile);
-      g_object_unref (dest_profile);
-      return TRUE;
-    }
-
-  src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
-  dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
-
-  src_format  = gimp_color_profile_get_format (src_format,  &lcms_src_format);
-  dest_format = gimp_color_profile_get_format (dest_format, &lcms_dest_format);
-
-  transform = cmsCreateTransform (src_lcms,  lcms_src_format,
-                                  dest_lcms, lcms_dest_format,
-                                  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                  cmsFLAGS_NOOPTIMIZE);
-
-  if (transform)
-    {
-      GeglBufferIterator *iter;
-
-      iter = gegl_buffer_iterator_new (src_buffer, NULL, 0,
-                                       src_format,
-                                       GEGL_ACCESS_READ,
-                                       GEGL_ABYSS_NONE);
-
-      gegl_buffer_iterator_add (iter, dest_buffer, NULL, 0,
-                                dest_format,
-                                GEGL_ACCESS_WRITE,
-                                GEGL_ABYSS_NONE);
-
-      while (gegl_buffer_iterator_next (iter))
-        {
-          cmsDoTransform (transform,
-                          iter->data[0], iter->data[1], iter->length);
-        }
-
-      cmsDeleteTransform (transform);
-    }
+  gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
+                                   dest_buffer, NULL, dest_profile,
+                                   GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                   FALSE);
 
   g_object_unref (src_profile);
   g_object_unref (dest_profile);
