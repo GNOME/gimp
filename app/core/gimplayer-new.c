@@ -30,6 +30,8 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "gimp.h"
 #include "gimpbuffer.h"
 #include "gimpimage.h"
@@ -40,6 +42,7 @@
 /*  local function prototypes  */
 
 static gboolean   gimp_layer_new_convert_profile (GimpLayer     *layer,
+                                                  GeglBuffer    *src_buffer,
                                                   const guint8  *icc_data,
                                                   gsize          icc_length,
                                                   GError       **error);
@@ -139,8 +142,7 @@ gimp_layer_new_from_gegl_buffer (GeglBuffer           *buffer,
                                  const guint8         *buffer_icc_data,
                                  gsize                 buffer_icc_length)
 {
-  GimpLayer  *layer;
-  GeglBuffer *dest;
+  GimpLayer *layer;
 
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
@@ -156,12 +158,17 @@ gimp_layer_new_from_gegl_buffer (GeglBuffer           *buffer,
                           format,
                           name, opacity, mode);
 
-  dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-  gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, dest, NULL);
-
   if (buffer_icc_data)
-    gimp_layer_new_convert_profile (layer, buffer_icc_data, buffer_icc_length,
-                                    NULL);
+    {
+      gimp_layer_new_convert_profile (layer, buffer,
+                                      buffer_icc_data, buffer_icc_length,
+                                      NULL);
+    }
+  else
+    {
+      gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
+                        gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)), NULL);
+    }
 
   return layer;
 }
@@ -189,10 +196,8 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
                             gdouble               opacity,
                             GimpLayerModeEffects  mode)
 {
-  GeglBuffer *buffer;
   GimpLayer  *layer;
-  gint        width;
-  gint        height;
+  GeglBuffer *buffer;
   guint8     *icc_data;
   gsize       icc_len;
 
@@ -200,25 +205,27 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (format != NULL, NULL);
 
-  width  = gdk_pixbuf_get_width (pixbuf);
-  height = gdk_pixbuf_get_height (pixbuf);
-
-  layer = gimp_layer_new (dest_image, width, height,
+  layer = gimp_layer_new (dest_image,
+                          gdk_pixbuf_get_width  (pixbuf),
+                          gdk_pixbuf_get_height (pixbuf),
                           format, name, opacity, mode);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-
-  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
-                   gimp_pixbuf_get_format (pixbuf),
-                   gdk_pixbuf_get_pixels (pixbuf),
-                   gdk_pixbuf_get_rowstride (pixbuf));
+  buffer = gimp_pixbuf_create_buffer (pixbuf);
 
   icc_data = gimp_pixbuf_get_icc_profile (pixbuf, &icc_len);
+
   if (icc_data)
     {
-      gimp_layer_new_convert_profile (layer, icc_data, icc_len, NULL);
+      gimp_layer_new_convert_profile (layer, buffer, icc_data, icc_len, NULL);
       g_free (icc_data);
     }
+  else
+    {
+      gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
+                        gimp_drawable_get_buffer (GIMP_DRAWABLE (layer)), NULL);
+    }
+
+  g_object_unref (buffer);
 
   return layer;
 }
@@ -228,25 +235,42 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
 
 static gboolean
 gimp_layer_new_convert_profile (GimpLayer     *layer,
+                                GeglBuffer    *src_buffer,
                                 const guint8  *icc_data,
                                 gsize          icc_length,
                                 GError       **error)
 {
-  GimpDrawable     *drawable = GIMP_DRAWABLE (layer);
-  GimpImage        *image    = gimp_item_get_image (GIMP_ITEM (layer));
-  GimpColorConfig  *config   = image->gimp->config->color_management;
+  GimpDrawable     *drawable    = GIMP_DRAWABLE (layer);
+  GimpImage        *image       = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpColorConfig  *config      = image->gimp->config->color_management;
+  GeglBuffer       *dest_buffer = gimp_drawable_get_buffer (drawable);
   GimpColorProfile *src_profile;
   GimpColorProfile *dest_profile;
+  const Babl       *src_format;
+  const Babl       *dest_format;
   cmsHPROFILE       src_lcms;
   cmsHPROFILE       dest_lcms;
-  const Babl       *iter_format;
-  cmsUInt32Number   lcms_format;
+  cmsUInt32Number   lcms_src_format;
+  cmsUInt32Number   lcms_dest_format;
   cmsHTRANSFORM     transform;
 
-  if (! gimp_drawable_is_rgb (drawable))
+  /*  FIXME: we need the unconditional full copy only in two cases:
+   *  - if we return without doing anything
+   *  - if there is an alpha channel, because lcms doesn't copy it
+   */
+  gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
+
+  /*  FIXME: this is the wrong check, need something like file import
+   *  conversion config
+   */
+  if (config->mode == GIMP_COLOR_MANAGEMENT_OFF)
     return TRUE;
 
-  if (config->mode == GIMP_COLOR_MANAGEMENT_OFF)
+  src_format  = gegl_buffer_get_format (src_buffer);
+  dest_format = gegl_buffer_get_format (dest_buffer);
+
+  if ((gimp_babl_format_get_base_type (src_format)  != GIMP_RGB) ||
+      (gimp_babl_format_get_base_type (dest_format) != GIMP_RGB))
     return TRUE;
 
   src_profile = gimp_color_profile_new_from_icc_profile (icc_data, icc_length,
@@ -260,36 +284,38 @@ gimp_layer_new_convert_profile (GimpLayer     *layer,
     {
       g_object_unref (src_profile);
       g_object_unref (dest_profile);
-
       return TRUE;
     }
 
   src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
   dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
 
-  iter_format =
-    gimp_color_profile_get_format (gimp_drawable_get_format (drawable),
-                                   &lcms_format);
+  src_format  = gimp_color_profile_get_format (src_format,  &lcms_src_format);
+  dest_format = gimp_color_profile_get_format (dest_format, &lcms_dest_format);
 
-  transform = cmsCreateTransform (src_lcms,  lcms_format,
-                                  dest_lcms, lcms_format,
+  transform = cmsCreateTransform (src_lcms,  lcms_src_format,
+                                  dest_lcms, lcms_dest_format,
                                   GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                   cmsFLAGS_NOOPTIMIZE);
 
   if (transform)
     {
-      GeglBuffer         *buffer = gimp_drawable_get_buffer (drawable);
       GeglBufferIterator *iter;
 
-      iter = gegl_buffer_iterator_new (buffer, NULL, 0,
-                                       iter_format,
-                                       GEGL_ACCESS_READWRITE,
+      iter = gegl_buffer_iterator_new (src_buffer, NULL, 0,
+                                       src_format,
+                                       GEGL_ACCESS_READ,
                                        GEGL_ABYSS_NONE);
+
+      gegl_buffer_iterator_add (iter, dest_buffer, NULL, 0,
+                                dest_format,
+                                GEGL_ACCESS_WRITE,
+                                GEGL_ABYSS_NONE);
 
       while (gegl_buffer_iterator_next (iter))
         {
           cmsDoTransform (transform,
-                          iter->data[0], iter->data[0], iter->length);
+                          iter->data[0], iter->data[1], iter->length);
         }
 
       cmsDeleteTransform (transform);
