@@ -609,7 +609,8 @@ gimp_edit_extract (GimpImage     *image,
                                                  offset_x, offset_y, FALSE);
       g_object_unref (buffer);
 
-      if (GIMP_IS_LAYER (pickable))
+      if (GIMP_IS_LAYER (pickable) ||
+          GIMP_IS_IMAGE (pickable))
         {
           const guint8 *icc_data;
           gsize         icc_len;
