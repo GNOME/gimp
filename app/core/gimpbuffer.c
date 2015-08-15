@@ -289,6 +289,16 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
       gimp_buffer_set_icc_profile (gimp_buffer, icc_data, icc_len);
       g_free (icc_data);
     }
+  else if (gdk_pixbuf_get_colorspace (pixbuf) == GDK_COLORSPACE_RGB)
+    {
+      GimpColorProfile *profile = gimp_color_profile_new_srgb ();
+      const guint8     *icc_data;
+
+      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_len);
+      gimp_buffer_set_icc_profile (gimp_buffer, icc_data, icc_len);
+
+      g_object_unref (profile);
+    }
 
   g_object_unref (buffer);
 

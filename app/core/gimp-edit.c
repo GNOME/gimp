@@ -612,15 +612,17 @@ gimp_edit_extract (GimpImage     *image,
       if (GIMP_IS_LAYER (pickable) ||
           GIMP_IS_IMAGE (pickable))
         {
-          const guint8 *icc_data;
-          gsize         icc_len;
+          GimpColorProfile *profile;
+          const guint8     *icc_data;
+          gsize             icc_len;
 
-          icc_data =
-            gimp_color_managed_get_icc_profile (GIMP_COLOR_MANAGED (image),
-                                                &icc_len);
+          profile =
+            gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-          if (icc_data)
-            gimp_buffer_set_icc_profile (gimp_buffer, icc_data, icc_len);
+          icc_data = gimp_color_profile_get_icc_profile (profile, &icc_len);
+          gimp_buffer_set_icc_profile (gimp_buffer, icc_data, icc_len);
+
+          g_object_unref (profile);
         }
 
       return gimp_buffer;

@@ -218,6 +218,16 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
       gimp_layer_new_convert_profile (layer, buffer, icc_data, icc_len, NULL);
       g_free (icc_data);
     }
+  else if (gdk_pixbuf_get_colorspace (pixbuf) == GDK_COLORSPACE_RGB)
+    {
+      GimpColorProfile *profile = gimp_color_profile_new_srgb ();
+      const guint8     *icc_data;
+
+      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_len);
+      gimp_layer_new_convert_profile (layer, buffer, icc_data, icc_len, NULL);
+
+      g_object_unref (profile);
+    }
   else
     {
       gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE,
