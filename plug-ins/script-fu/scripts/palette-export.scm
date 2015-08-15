@@ -18,28 +18,19 @@
 
 ; Converts a decimal number to another base. The returned number is a string
 (define (convert-decimal-to-base num base)
-  (define (highest-order num base)
-    (if (and (<= 0 num) (< num base))
-        0
-        (+ 1 (highest-order (quotient num base) base))
-        )
-    )
-  (define (calc base num str)
-    (let ((max-order (highest-order num base)))
-      (cond ((not (= 0 max-order))
-             (let ((num-of-times (quotient
-				  num (inexact->exact (expt base max-order)))))
-               (calc base
-                     (- num (* num-of-times (expt base max-order)))
-                     (string-append str
-				    (list-ref conversion-digits num-of-times)))
-               )
-             )
-            (else (string-append str (list-ref conversion-digits num)))
-            ))
-    )
-  (calc base num "")
-  )
+  (if (< num base) 
+    (list-ref conversion-digits num) 
+    (let loop ((val num)
+               (order (inexact->exact (truncate (/ (log num) 
+                                                   (log base)))))
+               (result ""))
+      (let* ((power (expt base order))
+             (digit (quotient val power)))
+        (if (zero? order)
+          (string-append result (list-ref conversion-digits digit)) 
+          (loop (- val (* digit power))
+                (pred order)
+                (string-append result (list-ref conversion-digits digit))))))))
 
 ; Convert a string representation of a number in some base, to a decimal number
 (define (convert-base-to-decimal base num-str)
