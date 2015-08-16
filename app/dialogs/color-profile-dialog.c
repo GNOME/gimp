@@ -401,6 +401,10 @@ color_profile_dialog_response (GtkWidget     *widget,
               success = gimp_image_set_color_profile (dialog->image,
                                                       dest_profile,
                                                       &error);
+
+              /*  omg...  */
+              if (success)
+                gimp_image_parasite_detach (dialog->image, "icc-profile-name");
             }
 
           if (success)
