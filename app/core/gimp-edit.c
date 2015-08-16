@@ -612,16 +612,10 @@ gimp_edit_extract (GimpImage     *image,
       if (GIMP_IS_LAYER (pickable) ||
           GIMP_IS_IMAGE (pickable))
         {
-          GimpColorProfile *profile;
-          const guint8     *icc_data;
-          gsize             icc_len;
-
-          profile =
+          GimpColorProfile *profile =
             gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-          icc_data = gimp_color_profile_get_icc_profile (profile, &icc_len);
-          gimp_buffer_set_icc_profile (gimp_buffer, icc_data, icc_len);
-
+          gimp_buffer_set_color_profile (gimp_buffer, profile);
           g_object_unref (profile);
         }
 

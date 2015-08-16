@@ -836,7 +836,7 @@ gimp_selection_float (GimpSelection *selection,
                                            _("Floated Layer"),
                                            GIMP_OPACITY_OPAQUE,
                                            GIMP_NORMAL_MODE,
-                                           NULL, 0 /* same image */);
+                                           NULL /* same image */);
 
   /*  Set the offsets  */
   gimp_item_set_offset (GIMP_ITEM (layer), x1 + off_x, y1 + off_y);

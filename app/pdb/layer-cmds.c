@@ -19,11 +19,14 @@
 
 #include "config.h"
 
+#include <cairo.h>
+
 #include <gegl.h>
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "libgimpbase/gimpbase.h"
 
@@ -165,13 +168,12 @@ layer_new_from_visible_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      GimpPickable *pickable = GIMP_PICKABLE (image);
-      const guint8 *icc_data;
-      gsize         icc_len;
+      GimpPickable     *pickable = GIMP_PICKABLE (image);
+      GimpColorProfile *profile;
 
       gimp_pickable_flush (pickable);
 
-      icc_data = gimp_image_get_icc_profile (image, &icc_len);
+      profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
       layer = gimp_layer_new_from_gegl_buffer (gimp_pickable_get_buffer (pickable),
                                                dest_image,
@@ -180,7 +182,9 @@ layer_new_from_visible_invoker (GimpProcedure         *procedure,
                                                name,
                                                GIMP_OPACITY_OPAQUE,
                                                GIMP_NORMAL_MODE,
-                                               icc_data, icc_len);
+                                               profile);
+
+      g_object_unref (profile);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

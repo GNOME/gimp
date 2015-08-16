@@ -101,7 +101,7 @@ gimp_buffer_finalize (GObject *object)
       buffer->buffer = NULL;
     }
 
-  gimp_buffer_set_icc_profile (buffer, NULL, 0);
+  gimp_buffer_set_color_profile (buffer, NULL);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -114,7 +114,7 @@ gimp_buffer_get_memsize (GimpObject *object,
   gint64      memsize = 0;
 
   memsize += gimp_gegl_buffer_get_memsize (buffer->buffer);
-  memsize += buffer->icc_profile_len;
+  memsize += gimp_g_object_get_memsize (G_OBJECT (buffer->color_profile));
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -269,10 +269,11 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
                              gint         offset_x,
                              gint         offset_y)
 {
-  GimpBuffer *gimp_buffer;
-  GeglBuffer *buffer;
-  guint8     *icc_data;
-  gsize       icc_len;
+  GimpBuffer       *gimp_buffer;
+  GeglBuffer       *buffer;
+  guint8           *icc_data;
+  gsize             icc_len;
+  GimpColorProfile *profile = NULL;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (name != NULL, NULL);
@@ -283,20 +284,21 @@ gimp_buffer_new_from_pixbuf (GdkPixbuf   *pixbuf,
                                  offset_x, offset_y, FALSE);
 
   icc_data = gimp_pixbuf_get_icc_profile (pixbuf, &icc_len);
-
   if (icc_data)
     {
-      gimp_buffer_set_icc_profile (gimp_buffer, icc_data, icc_len);
+      profile = gimp_color_profile_new_from_icc_profile (icc_data, icc_len,
+                                                         NULL);
       g_free (icc_data);
     }
-  else if (gdk_pixbuf_get_colorspace (pixbuf) == GDK_COLORSPACE_RGB)
+
+  if (! profile && gdk_pixbuf_get_colorspace (pixbuf) == GDK_COLORSPACE_RGB)
     {
-      GimpColorProfile *profile = gimp_color_profile_new_srgb ();
-      const guint8     *icc_data;
+      profile = gimp_color_profile_new_srgb ();
+    }
 
-      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_len);
-      gimp_buffer_set_icc_profile (gimp_buffer, icc_data, icc_len);
-
+  if (profile)
+    {
+      gimp_buffer_set_color_profile (gimp_buffer, profile);
       g_object_unref (profile);
     }
 
@@ -338,38 +340,31 @@ gimp_buffer_get_buffer (const GimpBuffer *buffer)
 }
 
 void
-gimp_buffer_set_icc_profile (GimpBuffer   *buffer,
-                             const guint8 *data,
-                             gsize         length)
+gimp_buffer_set_color_profile (GimpBuffer       *buffer,
+                               GimpColorProfile *profile)
 {
   g_return_if_fail (GIMP_IS_BUFFER (buffer));
-  g_return_if_fail (data == NULL || length != 0);
+  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
 
-  if (data != buffer->icc_profile)
+  if (profile != buffer->color_profile)
     {
-      if (buffer->icc_profile)
+      if (buffer->color_profile)
         {
-          g_free (buffer->icc_profile);
-          buffer->icc_profile     = NULL;
-          buffer->icc_profile_len = 0;
+          g_object_unref (buffer->color_profile);
+          buffer->color_profile = NULL;
         }
 
-      if (data)
+      if (profile)
         {
-          buffer->icc_profile     = g_memdup (data, length);
-          buffer->icc_profile_len = length;
+          buffer->color_profile = g_object_ref (profile);
         }
     }
 }
 
-const guint8 *
-gimp_buffer_get_icc_profile (const GimpBuffer *buffer,
-                             gsize            *length)
+GimpColorProfile *
+gimp_buffer_get_color_profile (const GimpBuffer *buffer)
 {
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
 
-  if (length)
-    *length = buffer->icc_profile_len;
-
-  return buffer->icc_profile;
+  return buffer->color_profile;
 }

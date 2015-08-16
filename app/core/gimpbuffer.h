@@ -34,14 +34,13 @@ typedef struct _GimpBufferClass GimpBufferClass;
 
 struct _GimpBuffer
 {
-  GimpViewable   parent_instance;
+  GimpViewable      parent_instance;
 
-  GeglBuffer    *buffer;
-  gint           offset_x;
-  gint           offset_y;
+  GeglBuffer       *buffer;
+  gint              offset_x;
+  gint              offset_y;
 
-  guint8        *icc_profile;
-  gsize          icc_profile_len;
+  GimpColorProfile *color_profile;
 };
 
 struct _GimpBufferClass
@@ -50,29 +49,27 @@ struct _GimpBufferClass
 };
 
 
-GType           gimp_buffer_get_type        (void) G_GNUC_CONST;
+GType              gimp_buffer_get_type          (void) G_GNUC_CONST;
 
-GimpBuffer    * gimp_buffer_new             (GeglBuffer       *buffer,
-                                             const gchar      *name,
-                                             gint              offset_x,
-                                             gint              offset_y,
-                                             gboolean          copy_pixels);
-GimpBuffer    * gimp_buffer_new_from_pixbuf (GdkPixbuf        *pixbuf,
-                                             const gchar      *name,
-                                             gint              offset_x,
-                                             gint              offset_y);
+GimpBuffer       * gimp_buffer_new               (GeglBuffer       *buffer,
+                                                  const gchar      *name,
+                                                  gint              offset_x,
+                                                  gint              offset_y,
+                                                  gboolean          copy_pixels);
+GimpBuffer       * gimp_buffer_new_from_pixbuf   (GdkPixbuf        *pixbuf,
+                                                  const gchar      *name,
+                                                  gint              offset_x,
+                                                  gint              offset_y);
 
-gint            gimp_buffer_get_width       (const GimpBuffer *buffer);
-gint            gimp_buffer_get_height      (const GimpBuffer *buffer);
-const Babl    * gimp_buffer_get_format      (const GimpBuffer *buffer);
+gint               gimp_buffer_get_width         (const GimpBuffer *buffer);
+gint               gimp_buffer_get_height        (const GimpBuffer *buffer);
+const Babl       * gimp_buffer_get_format        (const GimpBuffer *buffer);
 
-GeglBuffer    * gimp_buffer_get_buffer      (const GimpBuffer *buffer);
+GeglBuffer       * gimp_buffer_get_buffer        (const GimpBuffer *buffer);
 
-void            gimp_buffer_set_icc_profile (GimpBuffer       *buffer,
-                                             const guint8     *data,
-                                             gsize             length);
-const guint8  * gimp_buffer_get_icc_profile (const GimpBuffer *buffer,
-                                             gsize            *length);
+void               gimp_buffer_set_color_profile (GimpBuffer       *buffer,
+                                                  GimpColorProfile *profile);
+GimpColorProfile * gimp_buffer_get_color_profile (const GimpBuffer *buffer);
 
 
 #endif /* __GIMP_BUFFER_H__ */
