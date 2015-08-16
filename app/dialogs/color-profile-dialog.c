@@ -39,6 +39,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-color-profile.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpprogress.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -398,6 +399,10 @@ color_profile_dialog_response (GtkWidget     *widget,
             }
           else
             {
+              gimp_image_undo_group_start (dialog->image,
+                                           GIMP_UNDO_GROUP_PARASITE_ATTACH,
+                                           _("Assign color profile"));
+
               success = gimp_image_set_color_profile (dialog->image,
                                                       dest_profile,
                                                       &error);
@@ -405,6 +410,11 @@ color_profile_dialog_response (GtkWidget     *widget,
               /*  omg...  */
               if (success)
                 gimp_image_parasite_detach (dialog->image, "icc-profile-name");
+
+              gimp_image_undo_group_end (dialog->image);
+
+              if (! success)
+                gimp_image_undo (dialog->image);
             }
 
           if (success)
