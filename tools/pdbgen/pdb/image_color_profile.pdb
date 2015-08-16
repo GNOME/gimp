@@ -54,8 +54,6 @@ HELP
 
       profile_data = g_memdup (data, length);
       num_bytes = length;
-
-      g_object_unref (profile);
     }
 }
 CODE

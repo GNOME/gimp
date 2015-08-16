@@ -55,6 +55,7 @@ struct _GimpImagePrivate
   GimpPalette       *palette;               /*  palette of colormap          */
   const Babl        *babl_palette_rgb;      /*  palette's RGB Babl format    */
   const Babl        *babl_palette_rgba;     /*  palette's RGBA Babl format   */
+  GimpColorProfile  *color_profile;         /*  image's color profile        */
 
   GimpMetadata      *metadata;              /*  image's metadata             */
 

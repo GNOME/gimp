@@ -966,6 +966,12 @@ gimp_image_finalize (GObject *object)
   if (private->colormap)
     gimp_image_colormap_free (image);
 
+  if (private->color_profile)
+    {
+      g_object_unref (private->color_profile);
+      private->color_profile = NULL;
+    }
+
   if (private->metadata)
     {
       g_object_unref (private->metadata);
@@ -1376,6 +1382,8 @@ gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
   GimpColorProfile *profile;
 
   profile = gimp_image_get_color_profile (image);
+  if (profile)
+    g_object_ref (profile);
 
   if (! profile)
     {
@@ -1385,7 +1393,10 @@ gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
     }
 
   if (! profile)
-    profile = gimp_image_get_builtin_color_profile (image);
+    {
+      profile = gimp_image_get_builtin_color_profile (image);
+      g_object_ref (profile);
+    }
 
   return profile;
 }
@@ -3308,10 +3319,13 @@ void
 gimp_image_parasite_attach (GimpImage          *image,
                             const GimpParasite *parasite)
 {
-  GimpParasite  copy;
+  GimpImagePrivate *priv;
+  GimpParasite      copy;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (parasite != NULL);
+
+  priv = GIMP_IMAGE_GET_PRIVATE (image);
 
   /*  make a temporary copy of the GimpParasite struct because
    *  gimp_parasite_shift_parent() changes it
@@ -3332,7 +3346,7 @@ gimp_image_parasite_attach (GimpImage          *image,
    *  Now we simply attach the parasite without pushing an undo. That way
    *  it's undoable but does not block the undo system.   --Sven
    */
-  gimp_parasite_list_add (GIMP_IMAGE_GET_PRIVATE (image)->parasites, &copy);
+  gimp_parasite_list_add (priv->parasites, &copy);
 
   if (gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_PARENT))
     {
@@ -3344,7 +3358,19 @@ gimp_image_parasite_attach (GimpImage          *image,
                  gimp_parasite_name (parasite));
 
   if (strcmp (gimp_parasite_name (parasite), GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
-    gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+    {
+      GimpColorProfile *profile =
+        gimp_color_profile_new_from_icc_profile (gimp_parasite_data (parasite),
+                                                 gimp_parasite_data_size (parasite),
+                                                 NULL);
+
+      if (priv->color_profile)
+        g_object_unref (priv->color_profile);
+
+      priv->color_profile = profile;
+
+      gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+    }
 }
 
 void

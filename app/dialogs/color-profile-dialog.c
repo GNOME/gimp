@@ -301,7 +301,10 @@ color_profile_combo_box_new (ProfileDialog *dialog)
     }
 
   if (! profile)
-    profile = gimp_image_get_builtin_color_profile (dialog->image);
+    {
+      profile = gimp_image_get_builtin_color_profile (dialog->image);
+      g_object_ref (profile);
+    }
 
   label = g_strdup_printf (_("RGB workspace (%s)"),
                            gimp_color_profile_get_label (profile));
@@ -360,6 +363,7 @@ color_profile_dialog_response (GtkWidget     *widget,
               else
                 {
                   dest_profile = gimp_image_get_builtin_color_profile (dialog->image);
+                  g_object_ref (dest_profile);
                 }
             }
         }

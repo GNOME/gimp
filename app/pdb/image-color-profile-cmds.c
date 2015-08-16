@@ -73,8 +73,6 @@ image_get_color_profile_invoker (GimpProcedure         *procedure,
 
           profile_data = g_memdup (data, length);
           num_bytes = length;
-
-          g_object_unref (profile);
         }
     }
 

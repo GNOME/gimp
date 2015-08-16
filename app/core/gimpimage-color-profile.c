@@ -43,6 +43,7 @@
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
 #include "gimpimage-colormap.h"
+#include "gimpimage-private.h"
 #include "gimpimage-undo.h"
 #include "gimpprogress.h"
 
@@ -248,18 +249,9 @@ gimp_image_validate_color_profile (GimpImage        *image,
 GimpColorProfile *
 gimp_image_get_color_profile (GimpImage *image)
 {
-  const GimpParasite *parasite;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  parasite = gimp_image_get_icc_parasite (image);
-
-  if (parasite)
-    return gimp_color_profile_new_from_icc_profile (gimp_parasite_data (parasite),
-                                                    gimp_parasite_data_size (parasite),
-                                                    NULL);
-
-  return NULL;
+  return GIMP_IMAGE_GET_PRIVATE (image)->color_profile;
 }
 
 gboolean
@@ -284,16 +276,42 @@ gimp_image_set_color_profile (GimpImage         *image,
 GimpColorProfile *
 gimp_image_get_builtin_color_profile (GimpImage *image)
 {
-  const Babl *format;
+  static GimpColorProfile *srgb_profile       = NULL;
+  static GimpColorProfile *linear_rgb_profile = NULL;
+  const  Babl             *format;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  if (! srgb_profile)
+    {
+      srgb_profile       = gimp_color_profile_new_srgb ();
+      linear_rgb_profile = gimp_color_profile_new_linear_rgb ();
+    }
 
   format = gimp_image_get_layer_format (image, FALSE);
 
   if (gimp_babl_format_get_linear (format))
-    return gimp_color_profile_new_linear_rgb ();
+    {
+      if (! srgb_profile)
+        {
+          srgb_profile = gimp_color_profile_new_srgb ();
+          g_object_add_weak_pointer (G_OBJECT (srgb_profile),
+                                     (gpointer) &srgb_profile);
+        }
+
+      return linear_rgb_profile;
+    }
   else
-    return gimp_color_profile_new_srgb ();
+    {
+      if (! linear_rgb_profile)
+        {
+          linear_rgb_profile = gimp_color_profile_new_linear_rgb ();
+          g_object_add_weak_pointer (G_OBJECT (linear_rgb_profile),
+                                     (gpointer) &linear_rgb_profile);
+        }
+
+      return srgb_profile;
+    }
 }
 
 gboolean
@@ -343,8 +361,6 @@ gimp_image_convert_color_profile (GimpImage                *image,
     {
       gimp_image_set_color_profile (image, dest_profile, NULL);
     }
-
-  g_object_unref (builtin_profile);
 
   /*  omg...  */
   gimp_image_parasite_detach (image, "icc-profile-name");
