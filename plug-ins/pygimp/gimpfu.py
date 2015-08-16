@@ -443,6 +443,7 @@ def _interact(proc_name, start_params):
         def __init__(self, default=""):
             gtk.Entry.__init__(self)
             self.set_text(str(default))
+            self.set_activates_default(True)
 
         def get_value(self):
             return self.get_text()
