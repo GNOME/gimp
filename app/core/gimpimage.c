@@ -3319,13 +3319,13 @@ void
 gimp_image_parasite_attach (GimpImage          *image,
                             const GimpParasite *parasite)
 {
-  GimpImagePrivate *priv;
+  GimpImagePrivate *private;
   GimpParasite      copy;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (parasite != NULL);
 
-  priv = GIMP_IMAGE_GET_PRIVATE (image);
+  private = GIMP_IMAGE_GET_PRIVATE (image);
 
   /*  make a temporary copy of the GimpParasite struct because
    *  gimp_parasite_shift_parent() changes it
@@ -3346,7 +3346,7 @@ gimp_image_parasite_attach (GimpImage          *image,
    *  Now we simply attach the parasite without pushing an undo. That way
    *  it's undoable but does not block the undo system.   --Sven
    */
-  gimp_parasite_list_add (priv->parasites, &copy);
+  gimp_parasite_list_add (private->parasites, &copy);
 
   if (gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_PARENT))
     {
@@ -3364,10 +3364,10 @@ gimp_image_parasite_attach (GimpImage          *image,
                                                  gimp_parasite_data_size (parasite),
                                                  NULL);
 
-      if (priv->color_profile)
-        g_object_unref (priv->color_profile);
+      if (private->color_profile)
+        g_object_unref (private->color_profile);
 
-      priv->color_profile = profile;
+      private->color_profile = profile;
 
       gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
     }
@@ -3399,7 +3399,15 @@ gimp_image_parasite_detach (GimpImage   *image,
                  name);
 
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
-    gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+    {
+      if (private->color_profile)
+        {
+          g_object_unref (private->color_profile);
+          private->color_profile = NULL;
+        }
+
+      gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+    }
 }
 
 
