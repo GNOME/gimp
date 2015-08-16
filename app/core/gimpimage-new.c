@@ -193,12 +193,8 @@ gimp_image_new_from_drawable (Gimp         *gimp,
 
   if (GIMP_IS_LAYER (drawable))
     {
-      const guint8 *icc_data;
-      gsize         icc_len;
-
-      icc_data = gimp_image_get_icc_profile (image, &icc_len);
-      if (icc_data)
-        gimp_image_set_icc_profile (new_image, icc_data, icc_len, NULL);
+      GimpColorProfile *profile = gimp_image_get_color_profile (image);
+      gimp_image_set_color_profile (new_image, profile, NULL);
 
       new_type = G_TYPE_FROM_INSTANCE (drawable);
     }
