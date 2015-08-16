@@ -85,7 +85,8 @@ static gboolean   gimp_channel_bounds        (GimpItem          *item,
 static GimpItem * gimp_channel_duplicate     (GimpItem          *item,
                                               GType              new_type);
 static void       gimp_channel_convert       (GimpItem          *item,
-                                              GimpImage         *dest_image);
+                                              GimpImage         *dest_image,
+                                              GType              old_type);
 static void       gimp_channel_translate     (GimpItem          *item,
                                               gint               off_x,
                                               gint               off_y,
@@ -141,6 +142,7 @@ static void       gimp_channel_convert_type  (GimpDrawable      *drawable,
                                               GimpPrecision      new_precision,
                                               gint               layer_dither_type,
                                               gint               mask_dither_type,
+                                              gboolean           convert_profile,
                                               gboolean           push_undo);
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
@@ -543,7 +545,8 @@ gimp_channel_duplicate (GimpItem *item,
 
 static void
 gimp_channel_convert (GimpItem  *item,
-                      GimpImage *dest_image)
+                      GimpImage *dest_image,
+                      GType      old_type)
 {
   GimpChannel  *channel  = GIMP_CHANNEL (item);
   GimpDrawable *drawable = GIMP_DRAWABLE (item);
@@ -552,7 +555,7 @@ gimp_channel_convert (GimpItem  *item,
     {
       gimp_drawable_convert_type (drawable, dest_image, GIMP_GRAY,
                                   gimp_image_get_precision (dest_image),
-                                  0, 0,
+                                  0, 0, FALSE,
                                   FALSE);
     }
 
@@ -598,7 +601,7 @@ gimp_channel_convert (GimpItem  *item,
         }
     }
 
-  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image);
+  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image, old_type);
 }
 
 static void
@@ -895,6 +898,7 @@ gimp_channel_convert_type (GimpDrawable      *drawable,
                            GimpPrecision      new_precision,
                            gint               layer_dither_type,
                            gint               mask_dither_type,
+                           gboolean           convert_profile,
                            gboolean           push_undo)
 {
   GeglBuffer *dest_buffer;

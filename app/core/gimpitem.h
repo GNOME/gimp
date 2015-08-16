@@ -62,7 +62,8 @@ struct _GimpItemClass
   GimpItem      * (* duplicate)          (GimpItem               *item,
                                           GType                   new_type);
   void            (* convert)            (GimpItem               *item,
-                                          GimpImage              *dest_image);
+                                          GimpImage              *dest_image,
+                                          GType                   old_type);
   gboolean        (* rename)             (GimpItem               *item,
                                           const gchar            *new_name,
                                           const gchar            *undo_desc,

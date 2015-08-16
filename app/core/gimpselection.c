@@ -88,6 +88,7 @@ static void       gimp_selection_convert_type  (GimpDrawable        *drawable,
                                                 GimpPrecision        new_precision,
                                                 gint                 layer_dither_type,
                                                 gint                 mask_dither_type,
+                                                gboolean             convert_profile,
                                                 gboolean             push_undo);
 static void gimp_selection_invalidate_boundary (GimpDrawable        *drawable);
 
@@ -309,6 +310,7 @@ gimp_selection_convert_type (GimpDrawable      *drawable,
                              GimpPrecision      new_precision,
                              gint               layer_dither_type,
                              gint               mask_dither_type,
+                             gboolean           convert_profile,
                              gboolean           push_undo)
 {
   new_format = gimp_babl_mask_format (new_precision);
@@ -319,6 +321,7 @@ gimp_selection_convert_type (GimpDrawable      *drawable,
                                                     new_precision,
                                                     layer_dither_type,
                                                     mask_dither_type,
+                                                    convert_profile,
                                                     push_undo);
 }
 

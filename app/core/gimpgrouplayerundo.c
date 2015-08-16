@@ -128,7 +128,7 @@ gimp_group_layer_undo_pop (GimpUndo            *undo,
                                     gimp_item_get_image (GIMP_ITEM (group)),
                                     group_layer_undo->prev_type,
                                     group_layer_undo->prev_precision,
-                                    0, 0,
+                                    0, 0, FALSE,
                                     FALSE);
 
         group_layer_undo->prev_type      = type;

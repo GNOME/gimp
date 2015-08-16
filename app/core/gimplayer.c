@@ -26,13 +26,17 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
+#include "config/gimpcoreconfig.h" /* FIXME profile convert config */
+
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-nodes.h"
 
+#include "gimp.h" /* FIXME profile convert config */
 #include "gimpboundary.h"
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
@@ -105,7 +109,8 @@ static GimpItemTree * gimp_layer_get_tree       (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
                                                  GType               new_type);
 static void       gimp_layer_convert            (GimpItem           *item,
-                                                 GimpImage          *dest_image);
+                                                 GimpImage          *dest_image,
+                                                 GType               old_type);
 static gboolean   gimp_layer_rename             (GimpItem           *item,
                                                  const gchar        *new_name,
                                                  const gchar        *undo_desc,
@@ -163,6 +168,7 @@ static void    gimp_layer_convert_type          (GimpDrawable       *drawable,
                                                  GimpPrecision       new_precision,
                                                  gint                layer_dither_type,
                                                  gint                mask_dither_type,
+                                                 gboolean            convert_type,
                                                  gboolean            push_undo);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
@@ -743,14 +749,18 @@ gimp_layer_duplicate (GimpItem *item,
 
 static void
 gimp_layer_convert (GimpItem  *item,
-                    GimpImage *dest_image)
+                    GimpImage *dest_image,
+                    GType      old_type)
 {
   GimpLayer         *layer    = GIMP_LAYER (item);
   GimpDrawable      *drawable = GIMP_DRAWABLE (item);
+  GimpImage         *image    = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpColorConfig   *config   = image->gimp->config->color_management;
   GimpImageBaseType  old_base_type;
   GimpImageBaseType  new_base_type;
   GimpPrecision      old_precision;
   GimpPrecision      new_precision;
+  gboolean           convert_profile;
 
   old_base_type = gimp_drawable_get_base_type (drawable);
   new_base_type = gimp_image_get_base_type (dest_image);
@@ -758,19 +768,27 @@ gimp_layer_convert (GimpItem  *item,
   old_precision = gimp_drawable_get_precision (drawable);
   new_precision = gimp_image_get_precision (dest_image);
 
+  convert_profile = (g_type_is_a (old_type, GIMP_TYPE_LAYER) &&
+                     /*  FIXME: this is the wrong check, need
+                      *  something like file import conversion config
+                      */
+                     (config->mode != GIMP_COLOR_MANAGEMENT_OFF));
+
   if (old_base_type != new_base_type ||
-      old_precision != new_precision)
+      old_precision != new_precision ||
+      convert_profile)
     {
       gimp_drawable_convert_type (drawable, dest_image,
                                   new_base_type, new_precision,
                                   0, 0,
+                                  convert_profile,
                                   FALSE);
     }
 
   if (layer->mask)
     gimp_item_set_image (GIMP_ITEM (layer->mask), dest_image);
 
-  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image);
+  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image, old_type);
 }
 
 static gboolean
@@ -1005,6 +1023,7 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                          GimpPrecision      new_precision,
                          gint               layer_dither_type,
                          gint               mask_dither_type,
+                         gboolean           convert_profile,
                          gboolean           push_undo)
 {
   GimpLayer  *layer = GIMP_LAYER (drawable);
@@ -1043,6 +1062,7 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
       gimp_drawable_convert_type (GIMP_DRAWABLE (layer->mask), dest_image,
                                   GIMP_GRAY, new_precision,
                                   layer_dither_type, mask_dither_type,
+                                  convert_profile,
                                   push_undo);
     }
 }

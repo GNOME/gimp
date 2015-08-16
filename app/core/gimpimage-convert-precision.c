@@ -134,6 +134,7 @@ gimp_image_convert_precision (GimpImage     *image,
                                   precision,
                                   dither_type,
                                   mask_dither_type,
+                                  FALSE,
                                   TRUE);
 
       if (progress)

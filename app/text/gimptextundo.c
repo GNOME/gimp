@@ -273,7 +273,8 @@ gimp_text_undo_pop (GimpUndo            *undo,
                                     gimp_item_get_image (GIMP_ITEM (layer)),
                                     gimp_babl_format_get_base_type (text_undo->format),
                                     gimp_babl_format_get_precision (text_undo->format),
-                                    0, 0, FALSE);
+                                    0, 0, FALSE,
+                                    FALSE);
         text_undo->format = format;
       }
       break;

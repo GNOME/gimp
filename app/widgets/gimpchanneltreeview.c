@@ -269,7 +269,8 @@ gimp_channel_tree_view_drop_component (GimpContainerTreeView   *tree_view,
   g_free (name);
 
   if (src_image != image)
-    GIMP_ITEM_GET_CLASS (new_item)->convert (new_item, image);
+    GIMP_ITEM_GET_CLASS (new_item)->convert (new_item, image,
+                                             GIMP_TYPE_CHANNEL);
 
   gimp_image_add_channel (image, GIMP_CHANNEL (new_item), parent, index, TRUE);
 

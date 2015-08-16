@@ -91,6 +91,7 @@ static void       gimp_text_layer_convert_type   (GimpDrawable      *drawable,
                                                   GimpPrecision      new_precision,
                                                   gint               layer_dither_type,
                                                   gint               mask_dither_type,
+                                                  gboolean           convert_profile,
                                                   gboolean           push_undo);
 static void       gimp_text_layer_set_buffer     (GimpDrawable      *drawable,
                                                   gboolean           push_undo,
@@ -318,6 +319,7 @@ gimp_text_layer_convert_type (GimpDrawable      *drawable,
                               GimpPrecision      new_precision,
                               gint               layer_dither_type,
                               gint               mask_dither_type,
+                              gboolean           convert_profile,
                               gboolean           push_undo)
 {
   GimpTextLayer *layer = GIMP_TEXT_LAYER (drawable);
@@ -331,6 +333,7 @@ gimp_text_layer_convert_type (GimpDrawable      *drawable,
                                                         new_precision,
                                                         layer_dither_type,
                                                         mask_dither_type,
+                                                        convert_profile,
                                                         push_undo);
     }
   else

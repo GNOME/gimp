@@ -94,7 +94,8 @@ static gboolean  gimp_group_layer_is_position_locked (const GimpItem  *item);
 static GimpItem      * gimp_group_layer_duplicate    (GimpItem        *item,
                                                       GType            new_type);
 static void            gimp_group_layer_convert      (GimpItem        *item,
-                                                      GimpImage       *dest_image);
+                                                      GimpImage       *dest_image,
+                                                      GType            old_type);
 static void            gimp_group_layer_translate    (GimpItem        *item,
                                                       gint             offset_x,
                                                       gint             offset_y,
@@ -142,6 +143,7 @@ static void            gimp_group_layer_convert_type (GimpDrawable      *drawabl
                                                       GimpPrecision      new_precision,
                                                       gint               layer_dither_type,
                                                       gint               mask_dither_type,
+                                                      gboolean           convert_profile,
                                                       gboolean           push_undo);
 
 static const Babl    * gimp_group_layer_get_format   (GimpProjectable *projectable);
@@ -493,7 +495,8 @@ gimp_group_layer_duplicate (GimpItem *item,
 
 static void
 gimp_group_layer_convert (GimpItem  *item,
-                          GimpImage *dest_image)
+                          GimpImage *dest_image,
+                          GType      old_type)
 {
   GimpGroupLayerPrivate *private = GET_PRIVATE (item);
   GList                 *list;
@@ -504,10 +507,11 @@ gimp_group_layer_convert (GimpItem  *item,
     {
       GimpItem *child = list->data;
 
-      GIMP_ITEM_GET_CLASS (child)->convert (child, dest_image);
+      GIMP_ITEM_GET_CLASS (child)->convert (child, dest_image,
+                                            G_TYPE_FROM_INSTANCE (child));
     }
 
-  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image);
+  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image, old_type);
 }
 
 static void
@@ -878,6 +882,7 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
                                GimpPrecision      new_precision,
                                gint               layer_dither_type,
                                gint               mask_dither_type,
+                               gboolean           convert_profile,
                                gboolean           push_undo)
 {
   GimpGroupLayer        *group   = GIMP_GROUP_LAYER (drawable);
@@ -921,6 +926,7 @@ gimp_group_layer_convert_type (GimpDrawable      *drawable,
       gimp_drawable_convert_type (GIMP_DRAWABLE (mask), dest_image,
                                   GIMP_GRAY, new_precision,
                                   layer_dither_type, mask_dither_type,
+                                  convert_profile,
                                   push_undo);
     }
 }
