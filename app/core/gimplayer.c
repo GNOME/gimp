@@ -34,6 +34,7 @@
 #include "config/gimpcoreconfig.h" /* FIXME profile convert config */
 
 #include "gegl/gimp-gegl-apply-operation.h"
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
 
 #include "gimp.h" /* FIXME profile convert config */
@@ -1027,7 +1028,30 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                          gboolean           push_undo)
 {
   GimpLayer  *layer = GIMP_LAYER (drawable);
+  GeglBuffer *src_buffer;
   GeglBuffer *dest_buffer;
+
+  if (layer_dither_type == 0)
+    {
+      src_buffer = g_object_ref (gimp_drawable_get_buffer (drawable));
+    }
+  else
+    {
+      gint bits;
+
+      src_buffer =
+        gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                         gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                         gimp_item_get_height (GIMP_ITEM (drawable))),
+                         gimp_drawable_get_format (drawable));
+
+      bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
+              babl_format_get_n_components (new_format));
+
+      gimp_gegl_apply_color_reduction (gimp_drawable_get_buffer (drawable),
+                                       NULL, NULL,
+                                       src_buffer, bits, layer_dither_type);
+    }
 
   dest_buffer =
     gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -1035,25 +1059,34 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                                      gimp_item_get_height (GIMP_ITEM (drawable))),
                      new_format);
 
-  if (layer_dither_type == 0)
+  if (convert_profile)
     {
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
-                        GEGL_ABYSS_NONE,
-                        dest_buffer, NULL);
+      GimpImage        *src_image = gimp_item_get_image (GIMP_ITEM (layer));
+      GimpColorProfile *src_profile;
+      GimpColorProfile *dest_profile;
+
+      src_profile =
+        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (src_image));
+
+      dest_profile =
+        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (dest_image));
+
+      gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
+                                       dest_buffer, NULL, dest_profile,
+                                       GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                       FALSE);
+
+      g_object_unref (src_profile);
+      g_object_unref (dest_profile);
     }
   else
     {
-      gint bits;
-
-      bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
-              babl_format_get_n_components (new_format));
-
-      gimp_gegl_apply_color_reduction (gimp_drawable_get_buffer (drawable),
-                                       NULL, NULL,
-                                       dest_buffer, bits, layer_dither_type);
+      gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
     }
 
   gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
+
+  g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
 
   if (layer->mask &&
