@@ -489,7 +489,23 @@ gimp_image_undo_pop (GimpUndo            *undo,
         name = parasite ? parasite->name : image_undo->parasite_name;
 
         if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
-          gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+          {
+            if (private->color_profile)
+              {
+                g_object_unref (private->color_profile);
+                private->color_profile = NULL;
+              }
+
+            if (parasite)
+              {
+                private->color_profile =
+                  gimp_color_profile_new_from_icc_profile (gimp_parasite_data (parasite),
+                                                           gimp_parasite_data_size (parasite),
+                                                           NULL);
+              }
+
+            gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+          }
 
         if (parasite)
           gimp_parasite_free (parasite);
