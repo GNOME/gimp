@@ -71,6 +71,7 @@ static void   gimp_image_convert_profile_indexed (GimpImage                *imag
 gboolean
 gimp_image_validate_icc_parasite (GimpImage           *image,
                                   const GimpParasite  *icc_parasite,
+                                  gboolean            *is_builtin,
                                   GError             **error)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -98,6 +99,7 @@ gimp_image_validate_icc_parasite (GimpImage           *image,
   return gimp_image_validate_icc_profile (image,
                                           gimp_parasite_data (icc_parasite),
                                           gimp_parasite_data_size (icc_parasite),
+                                          is_builtin,
                                           error);
 }
 
@@ -118,7 +120,7 @@ gimp_image_set_icc_parasite (GimpImage          *image,
   if (icc_parasite)
     {
       g_return_if_fail (gimp_image_validate_icc_parasite (image, icc_parasite,
-                                                          NULL) == TRUE);
+                                                          NULL, NULL) == TRUE);
 
       gimp_image_parasite_attach (image, icc_parasite);
     }
@@ -132,6 +134,7 @@ gboolean
 gimp_image_validate_icc_profile (GimpImage     *image,
                                  const guint8  *data,
                                  gsize          length,
+                                 gboolean      *is_builtin,
                                  GError       **error)
 {
   GimpColorProfile *profile;
@@ -149,7 +152,7 @@ gimp_image_validate_icc_profile (GimpImage     *image,
       return FALSE;
     }
 
-  if (! gimp_image_validate_color_profile (image, profile, error))
+  if (! gimp_image_validate_color_profile (image, profile, is_builtin, error))
     {
       g_object_unref (profile);
       return FALSE;
@@ -198,15 +201,25 @@ gimp_image_set_icc_profile (GimpImage     *image,
 
   if (data)
     {
+      gboolean is_builtin;
+
       parasite = gimp_parasite_new (GIMP_ICC_PROFILE_PARASITE_NAME,
                                     GIMP_PARASITE_PERSISTENT |
                                     GIMP_PARASITE_UNDOABLE,
                                     length, data);
 
-      if (! gimp_image_validate_icc_parasite (image, parasite, error))
+      if (! gimp_image_validate_icc_parasite (image, parasite, &is_builtin,
+                                              error))
         {
           gimp_parasite_free (parasite);
           return FALSE;
+        }
+
+      /*  don't tag the image with the built-in profile  */
+      if (is_builtin)
+        {
+          gimp_parasite_free (parasite);
+          parasite = NULL;
         }
     }
 
@@ -221,6 +234,7 @@ gimp_image_set_icc_profile (GimpImage     *image,
 gboolean
 gimp_image_validate_color_profile (GimpImage        *image,
                                    GimpColorProfile *profile,
+                                   gboolean         *is_builtin,
                                    GError          **error)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
@@ -241,6 +255,15 @@ gimp_image_validate_color_profile (GimpImage        *image,
                            _("ICC profile validation failed: "
                              "Color profile is not for RGB color space"));
       return FALSE;
+    }
+
+  if (is_builtin)
+    {
+      GimpColorProfile *builtin;
+
+      builtin = gimp_image_get_builtin_color_profile (image);
+
+      *is_builtin = gimp_color_profile_is_equal (profile, builtin);
     }
 
   return TRUE;
@@ -323,14 +346,13 @@ gimp_image_convert_color_profile (GimpImage                *image,
                                   GError                  **error)
 {
   GimpColorProfile *src_profile;
-  GimpColorProfile *builtin_profile;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (dest_profile != NULL, FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! gimp_image_validate_color_profile (image, dest_profile, error))
+  if (! gimp_image_validate_color_profile (image, dest_profile, NULL, error))
     return FALSE;
 
   src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
@@ -350,18 +372,7 @@ gimp_image_convert_color_profile (GimpImage                *image,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                _("Color profile conversion"));
 
-  builtin_profile = gimp_image_get_builtin_color_profile (image);
-
-  if (gimp_color_profile_is_equal (dest_profile, builtin_profile))
-    {
-      /*  don't tag the image with the built-in profile  */
-      gimp_image_set_color_profile (image, NULL, NULL);
-    }
-  else
-    {
-      gimp_image_set_color_profile (image, dest_profile, NULL);
-    }
-
+  gimp_image_set_color_profile (image, dest_profile, NULL);
   /*  omg...  */
   gimp_image_parasite_detach (image, "icc-profile-name");
 

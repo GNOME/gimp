@@ -27,6 +27,7 @@
 
 gboolean             gimp_image_validate_icc_parasite  (GimpImage           *image,
                                                         const GimpParasite  *icc_parasite,
+                                                        gboolean            *is_builtin,
                                                         GError             **error);
 const GimpParasite * gimp_image_get_icc_parasite       (GimpImage           *image);
 void                 gimp_image_set_icc_parasite       (GimpImage           *image,
@@ -35,6 +36,7 @@ void                 gimp_image_set_icc_parasite       (GimpImage           *ima
 gboolean             gimp_image_validate_icc_profile   (GimpImage           *image,
                                                         const guint8        *data,
                                                         gsize                length,
+                                                        gboolean            *is_builtin,
                                                         GError             **error);
 const guint8       * gimp_image_get_icc_profile        (GimpImage           *image,
                                                         gsize               *length);
@@ -45,6 +47,7 @@ gboolean             gimp_image_set_icc_profile        (GimpImage           *ima
 
 gboolean             gimp_image_validate_color_profile (GimpImage           *image,
                                                         GimpColorProfile    *profile,
+                                                        gboolean            *is_builtin,
                                                         GError             **error);
 GimpColorProfile   * gimp_image_get_color_profile      (GimpImage           *image);
 gboolean             gimp_image_set_color_profile      (GimpImage           *image,

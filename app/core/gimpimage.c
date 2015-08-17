@@ -3309,7 +3309,7 @@ gimp_image_parasite_validate (GimpImage           *image,
 
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     {
-      return gimp_image_validate_icc_parasite (image, parasite, error);
+      return gimp_image_validate_icc_parasite (image, parasite, NULL, error);
     }
 
   return TRUE;
@@ -3326,6 +3326,27 @@ gimp_image_parasite_attach (GimpImage          *image,
   g_return_if_fail (parasite != NULL);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  /*  this is so ugly and is only for the PDB  */
+  if (strcmp (gimp_parasite_name (parasite), GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
+    {
+      GimpColorProfile *profile;
+      GimpColorProfile *builtin;
+
+      profile =
+        gimp_color_profile_new_from_icc_profile (gimp_parasite_data (parasite),
+                                                 gimp_parasite_data_size (parasite),
+                                                 NULL);
+      builtin = gimp_image_get_builtin_color_profile (image);
+
+      if (gimp_color_profile_is_equal (profile, builtin))
+        {
+          gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME);
+          g_object_unref (profile);
+        }
+
+      g_object_unref (profile);
+    }
 
   /*  make a temporary copy of the GimpParasite struct because
    *  gimp_parasite_shift_parent() changes it
