@@ -41,4 +41,10 @@ LDADD = \
 	$(animation_play_RC)
 
 animation_play_SOURCES = \
+	animation-utils.h	\
+	animation-utils.c	\
+	animation-dialog.h	\
+	animation-dialog.c	\
+	animation.h		\
+	animation.c		\
 	animation-play.c
