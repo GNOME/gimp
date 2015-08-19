@@ -840,6 +840,84 @@ gimp_color_profile_new_linear_rgb (void)
   return gimp_color_profile_new_from_icc_profile (data, length, NULL);
 }
 
+static cmsHPROFILE *
+gimp_color_profile_new_adobe_rgb_internal (void)
+{
+  cmsHPROFILE profile;
+  cmsCIExyY   d65_srgb_specs = { 0.3127, 0.3290, 1.0 };
+
+  /* AdobeRGB1998 and sRGB have the same white point.
+   *
+   * The primaries below are technically correct, but because of
+   * hexadecimal rounding these primaries don't make a profile that
+   * matches the original.
+   *
+   *  cmsCIExyYTRIPLE adobe_primaries = {
+   *    { 0.6400, 0.3300, 1.0 },
+   *    { 0.2100, 0.7100, 1.0 },
+   *    { 0.1500, 0.0600, 1.0 }
+   *  };
+   */
+  cmsCIExyYTRIPLE adobe_compatible_primaries_prequantized =
+    {
+      {0.639996511, 0.329996864, 1.0},
+      {0.210005295, 0.710004866, 1.0},
+      {0.149997606, 0.060003644, 1.0}
+    };
+
+  cmsToneCurve *tone_curve[3];
+  cmsToneCurve *gamma22[3];
+
+  gamma22[0] = gamma22[1] = gamma22[2] = cmsBuildGamma (NULL, 2.19921875);
+  tone_curve[0] = tone_curve[1] = tone_curve[2] = gamma22[0];
+
+  profile = cmsCreateRGBProfile (&d65_srgb_specs,
+                                 &adobe_compatible_primaries_prequantized,
+                                 tone_curve);
+
+  gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
+                              "Compatible with Adobe RGB (1998)");
+  gimp_color_profile_set_tag (profile, cmsSigDeviceMfgDescTag,
+                              "GIMP");
+  gimp_color_profile_set_tag (profile, cmsSigDeviceModelDescTag,
+                              "Compatible with Adobe RGB (1998)");
+  gimp_color_profile_set_tag (profile, cmsSigCopyrightTag,
+                              "Public Domain");
+
+  return profile;
+}
+
+/**
+ * gimp_color_profile_new_adobe_rgb:
+ *
+ * This function creates a profile compatible with AbobeRGB (1998).
+ *
+ * Return value: the AdobeRGB-compatible #GimpColorProfile.
+ *
+ * Since: 2.10
+ **/
+GimpColorProfile *
+gimp_color_profile_new_adobe_rgb (void)
+{
+  static GimpColorProfile *profile = NULL;
+
+  const guint8 *data;
+  gsize         length;
+
+  if (G_UNLIKELY (profile == NULL))
+    {
+      cmsHPROFILE lcms_profile = gimp_color_profile_new_adobe_rgb_internal ();
+
+      profile = gimp_color_profile_new_from_lcms_profile (lcms_profile, NULL);
+
+      cmsCloseProfile (lcms_profile);
+    }
+
+  data = gimp_color_profile_get_icc_profile (profile, &length);
+
+  return gimp_color_profile_new_from_icc_profile (data, length, NULL);
+}
+
 /**
  * gimp_color_profile_get_format:
  * @format:      a #Babl format
