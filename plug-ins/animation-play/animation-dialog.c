@@ -1948,7 +1948,7 @@ da_size_callback (GtkWidget       *drawing_area,
       /* As we re-allocated the drawn data, let's render it again. */
       if (animation_loaded (priv->animation))
         {
-          if (is_detached (dialog) && ! gtk_widget_get_realized (drawing_area))
+          if (! gtk_widget_get_realized (drawing_area))
             {
               /* Render will crash if the drawing are is not realized yet.
                * So I connect a handler to render on realization. */
@@ -2068,7 +2068,7 @@ render_on_realize (GtkWidget       *drawing_area,
 
 static void
 render_frame (AnimationDialog *dialog,
-                GeglBuffer      *buffer)
+              GeglBuffer      *buffer)
 {
   AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
   static gchar  *shape_preview_mask      = NULL;
