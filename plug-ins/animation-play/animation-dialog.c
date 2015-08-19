@@ -1118,9 +1118,12 @@ update_ui_sensitivity (AnimationDialog *dialog)
 /**** UI CALLBACKS ****/
 
 static void
-close_callback (GtkAction           *action,
+close_callback (GtkAction       *action,
                 AnimationDialog *dialog)
 {
+  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+
+  animation_stop (priv->animation);
   gtk_widget_destroy (GTK_WIDGET (dialog));
 }
 
