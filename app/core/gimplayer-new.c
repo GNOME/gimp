@@ -255,7 +255,7 @@ gimp_layer_new_convert_buffer (GimpLayer         *layer,
   gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
                                    dest_buffer, NULL, dest_profile,
                                    GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                   FALSE);
+                                   TRUE);
 
   g_object_unref (dest_profile);
 }
