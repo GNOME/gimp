@@ -1354,6 +1354,7 @@ animation_time_to_next (Animation *animation,
   AnimationPrivate *priv = ANIMATION_GET_PRIVATE (animation);
   static gint64     start_time = -1;
   static gint       frames = 0;
+  static gboolean   prev_low_framerate = FALSE;
   gdouble           expected_time_from_start = 0.0;
   gdouble           duration;
 
@@ -1381,8 +1382,21 @@ animation_time_to_next (Animation *animation,
 
       if (duration < 1.0)
         {
+          if (prev_low_framerate)
+            {
+              /* Let's only warn the user if several subsequent frames slow. */
+              gdouble real_framerate = (gdouble) frames * 1000000.0 / (g_get_monotonic_time () - start_time);
+              g_signal_emit (animation, animation_signals[LOW_FRAMERATE], 0,
+                             real_framerate);
+            }
           duration = 1.0;
+          prev_low_framerate = TRUE;
         }
+      else
+        {
+          prev_low_framerate = FALSE;
+        }
+
     }
 
   return duration;

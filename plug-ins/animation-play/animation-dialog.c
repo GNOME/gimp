@@ -202,6 +202,9 @@ static void        framerate_changed         (Animation        *animation,
 static void        disposal_changed          (Animation        *animation,
                                               gint              disposal,
                                               AnimationDialog  *dialog);
+static void        low_framerate_cb          (Animation        *animation,
+                                              gdouble           real_framerate,
+                                              AnimationDialog  *dialog);
 
 /* Rendering/Playing Functions */
 static gboolean    repaint_da                (GtkWidget        *darea,
@@ -771,6 +774,9 @@ animation_dialog_constructed (GObject *object)
                     dialog);
   g_signal_connect (priv->animation, "render",
                     G_CALLBACK (render_callback),
+                    dialog);
+  g_signal_connect (priv->animation, "low-framerate-playback",
+                    G_CALLBACK (low_framerate_cb),
                     dialog);
 }
 
@@ -1504,6 +1510,12 @@ play_callback (GtkToggleAction *action,
     {
       gtk_action_set_icon_name (GTK_ACTION (action), "media-playback-start");
       animation_stop (priv->animation);
+
+      /* The framerate combo might have been modified to display slowness
+       * warnings. */
+      gtk_widget_modify_text (gtk_bin_get_child (GTK_BIN (priv->fpscombo)), GTK_STATE_NORMAL, NULL);
+      gimp_help_set_help_data (priv->fpscombo, _("Frame Rate"), NULL);
+      framerate_changed (priv->animation, animation_get_framerate (priv->animation), dialog);
     }
 
   g_object_set (action,
@@ -1766,6 +1778,38 @@ disposal_changed (Animation        *animation,
   g_signal_handlers_unblock_by_func (priv->disposalcombo,
                                      G_CALLBACK (disposalcombo_changed),
                                      dialog);
+}
+
+static void
+low_framerate_cb (Animation       *animation,
+                  gdouble          real_framerate,
+                  AnimationDialog *dialog)
+{
+  AnimationDialogPrivate *priv = GET_PRIVATE (dialog);
+  GdkColor                gdk_red;
+  gchar                  *text;
+
+  gdk_red.red = 65535;
+  gdk_red.green = 0;
+  gdk_red.blue = 0;
+
+  g_signal_handlers_block_by_func (priv->fpscombo,
+                                   G_CALLBACK (fpscombo_changed),
+                                   dialog);
+  g_signal_handlers_block_by_func (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->fpscombo))),
+                                   G_CALLBACK (fpscombo_activated),
+                                   dialog);
+  gtk_widget_modify_text (gtk_bin_get_child (GTK_BIN (priv->fpscombo)), GTK_STATE_NORMAL, &gdk_red);
+  text = g_strdup_printf  (_("%g fps"), real_framerate);
+  gtk_entry_set_text (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->fpscombo))), text);
+  g_signal_handlers_unblock_by_func (priv->fpscombo,
+                                     G_CALLBACK (fpscombo_changed),
+                                     dialog);
+  g_signal_handlers_unblock_by_func (GTK_ENTRY (gtk_bin_get_child (GTK_BIN (priv->fpscombo))),
+                                     G_CALLBACK (fpscombo_activated),
+                                     dialog);
+  gtk_widget_set_tooltip_text (priv->fpscombo,
+                               _ ("Playback is too slow. We would drop a frame if frame dropping were implemented."));
 }
 
 /* Rendering Functions */
