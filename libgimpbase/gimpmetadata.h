@@ -29,6 +29,7 @@ typedef enum
   GIMP_METADATA_LOAD_COMMENT     = 1 << 0,
   GIMP_METADATA_LOAD_RESOLUTION  = 1 << 1,
   GIMP_METADATA_LOAD_ORIENTATION = 1 << 2,
+  GIMP_METADATA_LOAD_COLORSPACE  = 1 << 3,
 
   GIMP_METADATA_LOAD_ALL         = 0xffffffff
 } GimpMetadataLoadFlags;

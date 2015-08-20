@@ -175,6 +175,32 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
                                         metadata, interactive);
     }
 
+  if (flags & GIMP_METADATA_LOAD_COLORSPACE)
+    {
+      gchar *value;
+
+      value = gexiv2_metadata_get_tag_interpreted_string (metadata,
+                                                          "Exif.Iop.InteroperabilityIndex");
+
+      if (! g_strcmp0 (value, "R03"))
+        {
+          GimpColorProfile *profile = gimp_image_get_color_profile (image_ID);
+
+          if (! profile)
+            {
+              /* honor the R03 InteroperabilityIndex only if the
+               * image didn't contain an ICC profile
+               */
+              profile = gimp_color_profile_new_adobe_rgb ();
+              gimp_image_set_color_profile (image_ID, profile);
+            }
+
+          g_object_unref (profile);
+        }
+
+      g_free (value);
+    }
+
   gimp_image_set_metadata (image_ID, metadata);
 }
 
