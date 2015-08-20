@@ -1076,18 +1076,20 @@ save_image (const gchar  *filename,
   /* do we have an ICC profile? If so, write it to the TIFF file */
 #ifdef TIFFTAG_ICCPROFILE
   {
-    GimpParasite *parasite;
-    uint32        profile_size;
-    const guchar *icc_profile;
+    GimpColorProfile *profile;
 
-    parasite = gimp_image_get_parasite (orig_image, "icc-profile");
-    if (parasite)
+    profile = gimp_image_get_color_profile (orig_image);
+
+    if (profile)
       {
-        profile_size = gimp_parasite_data_size (parasite);
-        icc_profile = gimp_parasite_data (parasite);
+        const guint8 *icc_data;
+        gsize         icc_length;
 
-        TIFFSetField (tif, TIFFTAG_ICCPROFILE, profile_size, icc_profile);
-        gimp_parasite_free (parasite);
+        icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+
+        TIFFSetField (tif, TIFFTAG_ICCPROFILE, icc_length, icc_data);
+
+        g_object_unref (profile);
       }
   }
 #endif

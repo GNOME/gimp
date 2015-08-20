@@ -919,19 +919,25 @@ load_image (const gchar        *filename,
         }
 
 
-      /* attach a parasite containing an ICC profile - if found in the TIFF */
+      /* set the ICC profile - if found in the TIFF */
 
 #ifdef TIFFTAG_ICCPROFILE
-      /* If TIFFTAG_ICCPROFILE is defined we are dealing with a libtiff version
-       * that can handle ICC profiles. Otherwise just ignore this section. */
+      /* If TIFFTAG_ICCPROFILE is defined we are dealing with a
+       * libtiff version that can handle ICC profiles. Otherwise just
+       * ignore this section.
+       */
       if (TIFFGetField (tif, TIFFTAG_ICCPROFILE, &profile_size, &icc_profile))
         {
-          parasite = gimp_parasite_new ("icc-profile",
-                                        GIMP_PARASITE_PERSISTENT |
-                                        GIMP_PARASITE_UNDOABLE,
-                                        profile_size, icc_profile);
-          gimp_image_attach_parasite (image, parasite);
-          gimp_parasite_free (parasite);
+          GimpColorProfile *profile;
+
+          profile = gimp_color_profile_new_from_icc_profile (icc_profile,
+                                                             profile_size,
+                                                             NULL);
+          if (profile)
+            {
+              gimp_image_set_color_profile (image, profile);
+              g_object_unref (profile);
+            }
         }
 #endif
 

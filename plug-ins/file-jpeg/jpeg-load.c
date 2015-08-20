@@ -244,9 +244,9 @@ load_image (const gchar  *filename,
 
   if (! preview)
     {
-      GString  *comment_buffer = NULL;
-      guint8   *profile        = NULL;
-      guint     profile_size   = 0;
+      GString *comment_buffer = NULL;
+      guint8  *icc_data       = NULL;
+      guint    icc_length     = 0;
 
       /* Step 5.0: save the original JPEG settings in a parasite */
       jpeg_detect_original_settings (&cinfo, image_ID);
@@ -309,25 +309,27 @@ load_image (const gchar  *filename,
         }
 
       /* Step 5.3: check for an embedded ICC profile in APP2 markers */
-      jpeg_icc_read_profile (&cinfo, &profile, &profile_size);
+      jpeg_icc_read_profile (&cinfo, &icc_data, &icc_length);
 
       if (cinfo.out_color_space == JCS_CMYK)
         {
-          cmyk_transform = jpeg_load_cmyk_transform (profile, profile_size);
+          cmyk_transform = jpeg_load_cmyk_transform (icc_data, icc_length);
         }
-      else if (profile) /* don't attach the profile if we are transforming */
+      else if (icc_data) /* don't attach the profile if we are transforming */
         {
-          GimpParasite *parasite;
+          GimpColorProfile *profile;
 
-          parasite = gimp_parasite_new ("icc-profile",
-                                        GIMP_PARASITE_PERSISTENT |
-                                        GIMP_PARASITE_UNDOABLE,
-                                        profile_size, profile);
-          gimp_image_attach_parasite (image_ID, parasite);
-          gimp_parasite_free (parasite);
+          profile = gimp_color_profile_new_from_icc_profile (icc_data,
+                                                             icc_length,
+                                                             NULL);
+          if (profile)
+            {
+              gimp_image_set_color_profile (image_ID, profile);
+              g_object_unref (profile);
+            }
         }
 
-      g_free (profile);
+      g_free (icc_data);
 
       /* Do not attach the "jpeg-save-options" parasite to the image
        * because this conflicts with the global defaults (bug #75398).

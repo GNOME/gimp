@@ -1254,36 +1254,38 @@ load_image (const gchar  *filename,
   {
     png_uint_32 proflen;
     png_charp   profname;
-    png_bytep   profile;
+    png_charp   prof;
     int         profcomp;
 
-    if (png_get_iCCP (pp, info, &profname, &profcomp, &profile, &proflen))
+    if (png_get_iCCP (pp, info, &profname, &profcomp, &prof, &proflen))
       {
-        GimpParasite *parasite;
+        GimpColorProfile *profile;
 
-        parasite = gimp_parasite_new ("icc-profile",
-                                      GIMP_PARASITE_PERSISTENT |
-                                      GIMP_PARASITE_UNDOABLE,
-                                      proflen, profile);
-
-        gimp_image_attach_parasite (image, parasite);
-        gimp_parasite_free (parasite);
-
-        if (profname)
+        profile = gimp_color_profile_new_from_icc_profile ((guint8 *) prof,
+                                                           proflen, NULL);
+        if (profile)
           {
-            gchar *tmp = g_convert (profname, strlen (profname),
-                                    "ISO-8859-1", "UTF-8", NULL, NULL, NULL);
+            gimp_image_set_color_profile (image, profile);
+            g_object_unref (profile);
 
-            if (tmp)
+            if (profname)
               {
-                parasite = gimp_parasite_new ("icc-profile-name",
-                                              GIMP_PARASITE_PERSISTENT |
-                                              GIMP_PARASITE_UNDOABLE,
-                                              strlen (tmp), tmp);
-                gimp_image_attach_parasite (image, parasite);
-                gimp_parasite_free (parasite);
+                gchar *tmp = g_convert (profname, strlen (profname),
+                                        "ISO-8859-1", "UTF-8", NULL, NULL, NULL);
 
-                g_free (tmp);
+                if (tmp)
+                  {
+                    GimpParasite *parasite;
+
+                    parasite = gimp_parasite_new ("icc-profile-name",
+                                                  GIMP_PARASITE_PERSISTENT |
+                                                  GIMP_PARASITE_UNDOABLE,
+                                                  strlen (tmp), tmp);
+                    gimp_image_attach_parasite (image, parasite);
+                    gimp_parasite_free (parasite);
+
+                    g_free (tmp);
+                  }
               }
           }
       }
@@ -1653,15 +1655,21 @@ save_image (const gchar  *filename,
 
 #if defined(PNG_iCCP_SUPPORTED)
   {
-    GimpParasite *profile_parasite;
-    gchar        *profile_name = NULL;
+    GimpColorProfile *profile;
 
-    profile_parasite = gimp_image_get_parasite (orig_image_ID, "icc-profile");
+    profile = gimp_image_get_color_profile (orig_image_ID);
 
-    if (profile_parasite)
+    if (profile)
       {
-        GimpParasite *parasite = gimp_image_get_parasite (orig_image_ID,
-                                                          "icc-profile-name");
+        GimpParasite *parasite;
+        gchar        *profile_name = NULL;
+        const guint8 *icc_data;
+        gsize         icc_length;
+
+        icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+
+        parasite = gimp_image_get_parasite (orig_image_ID,
+                                            "icc-profile-name");
         if (parasite)
           profile_name = g_convert (gimp_parasite_data (parasite),
                                     gimp_parasite_data_size (parasite),
@@ -1671,10 +1679,12 @@ save_image (const gchar  *filename,
                       info,
                       profile_name ? profile_name : "ICC profile",
                       0,
-                      (guchar *) gimp_parasite_data (profile_parasite),
-                      gimp_parasite_data_size (profile_parasite));
+                      (png_charp) icc_data,
+                      icc_length);
 
         g_free (profile_name);
+
+        g_object_unref (profile);
       }
   }
 #endif

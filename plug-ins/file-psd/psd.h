@@ -40,7 +40,6 @@
 #define DECODE_XMP_PROC                 "plug-in-metadata-decode-xmp"
 
 #define GIMP_PARASITE_COMMENT           "gimp-comment"
-#define GIMP_PARASITE_ICC_PROFILE       "icc-profile"
 #define GIMP_PARASITE_EXIF              "exif-data"
 #define GIMP_PARASITE_IPTC              "iptc-data"
 

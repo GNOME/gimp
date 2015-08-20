@@ -1099,8 +1099,8 @@ load_resource_1039 (const PSDimageres  *res_a,
                     GError            **error)
 {
   /* Load ICC profile */
-  GimpParasite  *parasite;
-  gchar         *icc_profile;
+  GimpColorProfile *profile;
+  gchar            *icc_profile;
 
   IFDBG(2) g_debug ("Process image resource block: 1039: ICC Profile");
 
@@ -1112,12 +1112,15 @@ load_resource_1039 (const PSDimageres  *res_a,
       return -1;
     }
 
-  parasite = gimp_parasite_new (GIMP_PARASITE_ICC_PROFILE,
-                                GIMP_PARASITE_PERSISTENT |
-                                GIMP_PARASITE_UNDOABLE,
-                                res_a->data_len, icc_profile);
-  gimp_image_attach_parasite (image_id, parasite);
-  gimp_parasite_free (parasite);
+  profile = gimp_color_profile_new_from_icc_profile ((guint8 *) icc_profile,
+                                                     res_a->data_len,
+                                                     NULL);
+  if (profile)
+    {
+      gimp_image_set_color_profile (image_id, profile);
+      g_object_unref (profile);
+    }
+
   g_free (icc_profile);
 
   return 0;

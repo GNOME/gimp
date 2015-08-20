@@ -265,18 +265,18 @@ save_image (const gchar  *filename,
             gboolean      preview,
             GError      **error)
 {
-  GimpImageType  drawable_type;
-  GeglBuffer    *buffer = NULL;
-  const Babl    *format;
-  GimpParasite  *parasite;
   static struct jpeg_compress_struct cinfo;
   static struct my_error_mgr         jerr;
-  JpegSubsampling             subsampling;
-  FILE     * volatile outfile;
-  guchar   *data;
-  guchar   *src;
-  gboolean  has_alpha;
-  gint      rowstride, yend;
+
+  GimpImageType    drawable_type;
+  GeglBuffer      *buffer;
+  const Babl      *format;
+  JpegSubsampling  subsampling;
+  FILE            * volatile outfile;
+  guchar          *data;
+  guchar          *src;
+  gboolean         has_alpha;
+  gint             rowstride, yend;
 
   drawable_type = gimp_drawable_type (drawable_ID);
   buffer = gimp_drawable_get_buffer (drawable_ID);
@@ -540,14 +540,21 @@ save_image (const gchar  *filename,
     }
 
   /* Step 4.2: store the color profile if there is one */
-  parasite = gimp_image_get_parasite (orig_image_ID, "icc-profile");
-  if (parasite)
-    {
-      jpeg_icc_write_profile (&cinfo,
-                              gimp_parasite_data (parasite),
-                              gimp_parasite_data_size (parasite));
-      gimp_parasite_free (parasite);
+  {
+    GimpColorProfile *profile = gimp_image_get_color_profile (orig_image_ID);
+
+    if (profile)
+      {
+        const guint8 *icc_data;
+        gsize         icc_length;
+
+        icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+
+        jpeg_icc_write_profile (&cinfo, icc_data, icc_length);
+
+        g_object_unref (profile);
     }
+  }
 
   /* Step 5: while (scan lines remain to be written) */
   /*           jpeg_write_scanlines(...); */
