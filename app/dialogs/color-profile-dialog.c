@@ -276,10 +276,9 @@ color_profile_combo_box_new (ProfileDialog *dialog)
   GtkWidget        *combo;
   GtkWidget        *chooser;
   gchar            *history;
+  GimpColorProfile *profile;
   gchar            *label;
-  GFile            *rgb_file = NULL;
-  GimpColorProfile *profile  = NULL;
-  GError           *error    = NULL;
+  GError           *error = NULL;
 
   chooser = gimp_color_profile_chooser_dialog_new (_("Select destination profile"));
 
@@ -287,11 +286,32 @@ color_profile_combo_box_new (ProfileDialog *dialog)
   combo = gimp_color_profile_combo_box_new (chooser, history);
   g_free (history);
 
+  profile = gimp_image_get_builtin_color_profile (dialog->image);
+
+  label = g_strdup_printf (_("Built-in RGB (%s)"),
+                           gimp_color_profile_get_label (profile));
+
+  gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                         NULL, label);
+
+  g_free (label);
+
   profile = gimp_color_config_get_rgb_color_profile (dialog->config, &error);
 
   if (profile)
     {
-      rgb_file = g_file_new_for_path (dialog->config->rgb_profile);
+      GFile *file = g_file_new_for_path (dialog->config->rgb_profile);
+
+      label = g_strdup_printf (_("Preferred RGB (%s)"),
+                               gimp_color_profile_get_label (profile));
+
+      g_object_unref (profile);
+
+      gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                             file, label);
+
+      g_object_unref (file);
+      g_free (label);
     }
   else if (error)
     {
@@ -300,25 +320,6 @@ color_profile_combo_box_new (ProfileDialog *dialog)
                     "%s", error->message);
       g_clear_error (&error);
     }
-
-  if (! profile)
-    {
-      profile = gimp_image_get_builtin_color_profile (dialog->image);
-      g_object_ref (profile);
-    }
-
-  label = g_strdup_printf (_("RGB workspace (%s)"),
-                           gimp_color_profile_get_label (profile));
-
-  g_object_unref (profile);
-
-  gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                         rgb_file, label);
-
-  if (rgb_file)
-    g_object_unref (rgb_file);
-
-  g_free (label);
 
   gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
                                                 NULL, NULL);
@@ -352,21 +353,8 @@ color_profile_dialog_response (GtkWidget     *widget,
         }
       else
         {
-          dest_profile = gimp_color_config_get_rgb_color_profile (dialog->config,
-                                                                  &error);
-
-          if (! dest_profile)
-            {
-              if (error)
-                {
-                  success = FALSE;
-                }
-              else
-                {
-                  dest_profile = gimp_image_get_builtin_color_profile (dialog->image);
-                  g_object_ref (dest_profile);
-                }
-            }
+          dest_profile = gimp_image_get_builtin_color_profile (dialog->image);
+          g_object_ref (dest_profile);
         }
 
       if (success)

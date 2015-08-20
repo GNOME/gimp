@@ -52,38 +52,52 @@
 
 #define COLOR_MANAGEMENT_MODE_BLURB \
   _("Mode of operation for color management.")
+
 #define DISPLAY_PROFILE_BLURB \
   _("The color profile of your (primary) monitor.")
+
 #define DISPLAY_PROFILE_FROM_GDK_BLURB \
   _("When enabled, GIMP will try to use the display color profile from " \
     "the windowing system.  The configured monitor profile is then only " \
     "used as a fallback.")
+
 #define RGB_PROFILE_BLURB \
-  _("The default RGB working space color profile.")
+  _("The preferred RGB working space color profile. It will be offered " \
+    "next to the built-in RGB profile when a color profile can be chosen.")
+
 #define CMYK_PROFILE_BLURB \
   _("The CMYK color profile used to convert between RGB and CMYK.")
+
 #define PRINTER_PROFILE_BLURB \
   _("The color profile to use for soft proofing from your image's " \
-    "color space to some other color space, including "             \
+    "color space to some other color space, including " \
     "soft proofing to a printer or other output device profile. ")
+
 #define DISPLAY_RENDERING_INTENT_BLURB \
-  _("How colors are converted from your image's color space to your display device. " \
-    "Relative colorimetric is usually the best choice. "                \
-    "Unless you use a LUT monitor profile (most monitor profiles are matrix), " \
-    "choosing perceptual intent really gives you relative colorimetric." )
+  _("How colors are converted from your image's color space to your " \
+    "display device. Relative colorimetric is usually the best choice. " \
+    "Unless you use a LUT monitor profile (most monitor profiles are " \
+    "matrix), choosing perceptual intent really gives you relative " \
+    "colorimetric." )
+
 #define DISPLAY_USE_BPC_BLURB \
-  _("Do use black point compensation (unless you know you have a reason not to). ")
-#define SIMULATION_RENDERING_INTENT_BLURB                             \
+  _("Do use black point compensation (unless you know you have a reason " \
+    "not to). ")
+
+#define SIMULATION_RENDERING_INTENT_BLURB \
   _("How colors are converted from your image's color space to the "  \
-    "output simulation device (usually your monitor). "               \
+    "output simulation device (usually your monitor). " \
     "Try them all and choose what looks the best. ")
-#define SIMULATION_USE_BPC_BLURB                        \
+
+#define SIMULATION_USE_BPC_BLURB \
   _("Try with and without black point compensation "\
     "and choose what looks best. ")
-#define SIMULATION_GAMUT_CHECK_BLURB                        \
+
+#define SIMULATION_GAMUT_CHECK_BLURB \
   _("When enabled, the print simulation will mark colors " \
     "which can not be represented in the target color space.")
-#define OUT_OF_GAMUT_COLOR_BLURB                                        \
+
+#define OUT_OF_GAMUT_COLOR_BLURB \
   _("The color to use for marking colors which are out of gamut.")
 
 

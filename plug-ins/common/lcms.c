@@ -270,11 +270,6 @@ lcms_icc_apply (GimpColorConfig          *config,
   g_return_val_if_fail (image != -1, GIMP_PDB_CALLING_ERROR);
 
   if (file)
-    g_object_ref (file);
-  else if (config->rgb_profile)
-    file = g_file_new_for_path (config->rgb_profile);
-
-  if (file)
     {
       GError *error = NULL;
 
@@ -335,9 +330,6 @@ lcms_icc_apply (GimpColorConfig          *config,
 
   g_object_unref (src_profile);
   g_object_unref (dest_profile);
-
-  if (file)
-    g_object_unref (file);
 
   return status;
 }

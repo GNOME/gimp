@@ -1382,23 +1382,11 @@ gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
   GimpColorProfile *profile;
 
   profile = gimp_image_get_color_profile (image);
-  if (profile)
-    g_object_ref (profile);
 
   if (! profile)
-    {
-      GimpColorConfig *config = image->gimp->config->color_management;
+    profile = gimp_image_get_builtin_color_profile (image);
 
-      profile = gimp_color_config_get_rgb_color_profile (config, NULL);
-    }
-
-  if (! profile)
-    {
-      profile = gimp_image_get_builtin_color_profile (image);
-      g_object_ref (profile);
-    }
-
-  return profile;
+  return g_object_ref (profile);
 }
 
 static void
