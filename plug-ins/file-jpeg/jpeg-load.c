@@ -630,12 +630,8 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
       return NULL;
     }
 
-  /*  try to load the RGB profile configured in the prefs  */
-  rgb_profile = gimp_color_config_get_rgb_color_profile (config, NULL);
-
-  /*  make the real sRGB profile as a fallback  */
-  if (! rgb_profile)
-    rgb_profile = gimp_color_profile_new_srgb ();
+  /*  always convert to sRGB  */
+  rgb_profile = gimp_color_profile_new_srgb ();
 
   cmyk_lcms = gimp_color_profile_get_lcms_profile (cmyk_profile);
   rgb_lcms  = gimp_color_profile_get_lcms_profile (rgb_profile);
