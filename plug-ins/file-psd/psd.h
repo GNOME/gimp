@@ -37,14 +37,7 @@
 #define PLUG_IN_BINARY                  "file-psd"
 #define PLUG_IN_ROLE                    "gimp-file-psd"
 
-#define DECODE_XMP_PROC                 "plug-in-metadata-decode-xmp"
-
 #define GIMP_PARASITE_COMMENT           "gimp-comment"
-#define GIMP_PARASITE_EXIF              "exif-data"
-#define GIMP_PARASITE_IPTC              "iptc-data"
-
-#define METADATA_PARASITE               "gimp-metadata"
-#define METADATA_MARKER                 "GIMP_XMP_1"
 
 #define PSD_PARASITE_DUOTONE_DATA       "psd-duotone-data"
 
