@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * animation-dialog.c
- * Copyright (C) 2015 Jehan <jehan@gimp.org>
+ * Copyright (C) 2015-2016 Jehan <jehan@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,8 +41,8 @@ struct _AnimationDialogClass
   GtkWindowClass  parent_class;
 };
 
-GType       animation_dialog_get_type (void) G_GNUC_CONST;
+GType       animation_dialog_get_type             (void) G_GNUC_CONST;
 
-GtkWidget * animation_dialog_new      (Animation *animation);
+GtkWidget * animation_dialog_new                  (gint32 image_id);
 
 #endif  /*  __ANIMATION_DIALOG_H__  */

@@ -1,3 +1,5 @@
+AUTOMAKE_OPTIONS = subdir-objects
+
 if OS_WIN32
 mwindows = -mwindows
 else
@@ -41,10 +43,12 @@ LDADD = \
 	$(animation_play_RC)
 
 animation_play_SOURCES = \
-	animation-utils.h	\
-	animation-utils.c	\
-	animation-dialog.h	\
-	animation-dialog.c	\
-	animation.h		\
-	animation.c		\
+	core/animation.h				\
+	core/animation.c				\
+	core/animationlegacy.h				\
+	core/animationlegacy.c				\
+	widgets/animation-dialog.h		\
+	widgets/animation-dialog.c		\
+	animation-utils.h				\
+	animation-utils.c				\
 	animation-play.c

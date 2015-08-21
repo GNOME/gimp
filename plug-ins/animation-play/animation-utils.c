@@ -1,7 +1,7 @@
 /*
  * Animation Playback plug-in version 0.99.1
  *
- * (c) Jehan : 2012-2014 : jehan at girinstud.io
+ * (c) Jehan : 2012-2015 : jehan at girinstud.io
  *
  * GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
