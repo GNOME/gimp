@@ -55,6 +55,7 @@ EXTRA_DIST = \
 	ChangeLog.pre-2-2	\
 	ChangeLog.pre-2-4	\
 	ChangeLog.pre-2-6	\
+	ChangeLog.pre-git	\
 	HACKING			\
 	INSTALL			\
 	LICENSE			\
