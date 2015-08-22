@@ -77,7 +77,6 @@ gimp_color_profile_chooser_dialog_constructed (GObject *object)
 {
   GimpColorProfileChooserDialog *dialog;
   GtkFileFilter                 *filter;
-  GtkWidget                     *frame;
   GtkWidget                     *scrolled_window;
   GtkWidget                     *profile_view;
 
@@ -116,16 +115,13 @@ gimp_color_profile_chooser_dialog_constructed (GObject *object)
 
   /*  the preview widget  */
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_widget_set_size_request (frame, 300, -1);
-
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_size_request (scrolled_window, 300, -1);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                       GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
-  gtk_widget_show (scrolled_window);
 
   profile_view = gimp_color_profile_view_new ();
   gtk_container_add (GTK_CONTAINER (scrolled_window), profile_view);
@@ -133,7 +129,8 @@ gimp_color_profile_chooser_dialog_constructed (GObject *object)
 
   dialog->priv->profile_view = GIMP_COLOR_PROFILE_VIEW (profile_view);
 
-  gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog), frame);
+  gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog),
+                                       scrolled_window);
 
   g_signal_connect (dialog, "update-preview",
                     G_CALLBACK (gimp_color_profile_chooser_dialog_update_preview),
