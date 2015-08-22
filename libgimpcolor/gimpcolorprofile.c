@@ -502,6 +502,9 @@ gimp_color_profile_get_copyright (GimpColorProfile *profile)
  * This function returns a string containing @profile's "title", a
  * string that can be used to label the profile in a user interface.
  *
+ * Unlike gimp_color_profile_get_description(), this function always
+ * returns a string (as a fallback, it returns "(unnamed profile)".
+ *
  * Return value: the @profile's label. The returned value belongs to
  *               @profile and must not be modified or freed.
  *
@@ -516,9 +519,6 @@ gimp_color_profile_get_label (GimpColorProfile *profile)
   if (! profile->priv->label)
     {
       const gchar *label = gimp_color_profile_get_description (profile);
-
-      if (! label || ! strlen (label))
-        label = gimp_color_profile_get_model (profile);
 
       if (! label || ! strlen (label))
         label = _("(unnamed profile)");
@@ -563,7 +563,7 @@ gimp_color_profile_get_summary (GimpColorProfile *profile)
           if (string->len > 0)
             g_string_append (string, "\n");
 
-          g_string_append (string, text);
+          g_string_append_printf (string, _("Model: %s"), text);
         }
 
       text = gimp_color_profile_get_manufacturer (profile);
@@ -572,7 +572,7 @@ gimp_color_profile_get_summary (GimpColorProfile *profile)
           if (string->len > 0)
             g_string_append (string, "\n");
 
-          g_string_append (string, text);
+          g_string_append_printf (string, _("Manufacturer: %s"), text);
         }
 
       text = gimp_color_profile_get_copyright (profile);
@@ -580,6 +580,8 @@ gimp_color_profile_get_summary (GimpColorProfile *profile)
         {
           if (string->len > 0)
             g_string_append (string, "\n");
+
+          g_string_append_printf (string, _("Copyright: %s"), text);
         }
 
       profile->priv->summary = g_string_free (string, FALSE);
