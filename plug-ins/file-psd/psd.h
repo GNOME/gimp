@@ -95,6 +95,7 @@
 #define PSD_LPRP_PROTECT        "lspf"          /* Protected setting (PS6) */
 #define PSD_LPRP_COLOR          "lclr"          /* Sheet color setting (PS6) */
 #define PSD_LPRP_REF_POINT      "fxrp"          /* Reference point (PS6) */
+#define PSD_LPRP_VERSION        "lyvr"          /* Layer version (PS7) */
 
 /* Vector mask */
 #define PSD_LMSK_VMASK          "vmsk"          /* Vector mask setting (PS6) */
