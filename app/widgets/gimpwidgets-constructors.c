@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -223,6 +224,24 @@ gimp_icon_button_new (const gchar *icon_name,
     }
 
   return button;
+}
+
+GtkWidget *
+gimp_color_profile_label_new (GimpColorProfile *profile)
+{
+  GtkWidget *expander;
+  GtkWidget *view;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
+
+  expander = gtk_expander_new (gimp_color_profile_get_label (profile));
+
+  view = gimp_color_profile_view_new ();
+  gimp_color_profile_view_set_profile (GIMP_COLOR_PROFILE_VIEW (view), profile);
+  gtk_container_add (GTK_CONTAINER (expander), view);
+  gtk_widget_show (view);
+
+  return expander;
 }
 
 

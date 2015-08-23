@@ -44,6 +44,7 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
+#include "widgets/gimpwidgets-constructors.h"
 
 #include "color-profile-dialog.h"
 
@@ -211,8 +212,7 @@ color_profile_dialog_new (GimpImage    *image,
 
   src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-  label = gtk_label_new (gimp_color_profile_get_label (src_profile));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gimp_color_profile_label_new (src_profile);
   gtk_container_add (GTK_CONTAINER (frame), label);
   gtk_widget_show (label);
 
