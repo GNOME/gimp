@@ -1,8 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * plug-in-icc-profile.h
- * Copyright (C) 2006  Sven Neumann <sven@gimp.org>
+ * color-profile-import-dialog.h
+ * Copyright (C) 2015 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,15 +18,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __PLUG_IN_ICC_PROFILE_H__
-#define __PLUG_IN_ICC_PROFILE_H__
+#ifndef __COLOR_PROFILE_IMPORT_DIALOG_H__
+#define __COLOR_PROFILE_IMPORT_DIALOG_H__
 
 
-gboolean  plug_in_icc_profile_apply_rgb (GimpImage     *image,
-                                         GimpContext   *context,
-                                         GimpProgress  *progress,
-                                         GimpRunMode    run_mode,
-                                         GError       **error);
+GimpColorProfilePolicy
+        color_profile_import_dialog_run (GimpImage         *image,
+                                         GimpContext       *context,
+                                         GtkWidget         *parent,
+                                         GimpColorProfile **dest_profile,
+                                         gboolean          *dont_ask);
 
 
-#endif /* __PLUG_IN_ICC_PROFILE_H__ */
+#endif  /*  __COLOR_PROFILE_IMPORT_DIALOG_H__  */

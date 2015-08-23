@@ -48,8 +48,6 @@
 
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginprocedure.h"
-#include "plug-in/gimppluginerror.h"
-#include "plug-in/plug-in-icc-profile.h"
 
 #include "file-open.h"
 #include "file-procedure.h"
@@ -65,10 +63,6 @@ static void     file_open_sanitize_image       (GimpImage                 *image
 static void     file_open_convert_items        (GimpImage                 *dest_image,
                                                 const gchar               *basename,
                                                 GList                     *items);
-static void     file_open_handle_color_profile (GimpImage                 *image,
-                                                GimpContext               *context,
-                                                GimpProgress              *progress,
-                                                GimpRunMode                run_mode);
 static GList *  file_open_get_layers           (const GimpImage           *image,
                                                 gboolean                   merge_visible,
                                                 gint                      *n_visible);
@@ -255,7 +249,9 @@ file_open_image (Gimp                *gimp,
 
   if (image)
     {
-      file_open_handle_color_profile (image, context, progress, run_mode);
+      gimp_image_import_color_profile (image, context, progress,
+                                       run_mode == GIMP_RUN_INTERACTIVE ?
+                                       TRUE : FALSE);
 
       if (file_open_file_proc_is_import (file_proc))
         {
@@ -772,81 +768,6 @@ file_open_convert_items (GimpImage   *dest_image,
         }
 
       list->data = item;
-    }
-}
-
-static void
-file_open_profile_apply_rgb (GimpImage    *image,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             GimpRunMode   run_mode)
-{
-  GimpColorConfig *config = image->gimp->config->color_management;
-  GError          *error  = NULL;
-
-  if (gimp_image_get_base_type (image) == GIMP_GRAY)
-    return;
-
-  if (config->mode == GIMP_COLOR_MANAGEMENT_OFF)
-    return;
-
-  if (! plug_in_icc_profile_apply_rgb (image, context, progress, run_mode,
-                                       &error))
-    {
-      if (error->domain == GIMP_PLUG_IN_ERROR &&
-          error->code   == GIMP_PLUG_IN_NOT_FOUND)
-        {
-          gchar *msg = g_strdup_printf ("%s\n\n%s",
-                                        error->message,
-                                        _("Color management has been disabled. "
-                                          "It can be enabled again in the "
-                                          "Preferences dialog."));
-
-          g_object_set (config, "mode", GIMP_COLOR_MANAGEMENT_OFF, NULL);
-
-          gimp_message_literal (image->gimp, G_OBJECT (progress),
-                                GIMP_MESSAGE_WARNING, msg);
-          g_free (msg);
-        }
-      else
-        {
-          gimp_message_literal (image->gimp, G_OBJECT (progress),
-                                GIMP_MESSAGE_ERROR, error->message);
-        }
-
-      g_error_free (error);
-    }
-}
-
-static void
-file_open_handle_color_profile (GimpImage    *image,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                GimpRunMode   run_mode)
-{
-  if (gimp_image_get_color_profile (image))
-    {
-      gimp_image_undo_disable (image);
-
-      switch (image->gimp->config->color_profile_policy)
-        {
-        case GIMP_COLOR_PROFILE_POLICY_ASK:
-          if (run_mode == GIMP_RUN_INTERACTIVE)
-            file_open_profile_apply_rgb (image, context, progress,
-                                         GIMP_RUN_INTERACTIVE);
-          break;
-
-        case GIMP_COLOR_PROFILE_POLICY_KEEP:
-          break;
-
-        case GIMP_COLOR_PROFILE_POLICY_CONVERT:
-          file_open_profile_apply_rgb (image, context, progress,
-                                       GIMP_RUN_NONINTERACTIVE);
-          break;
-        }
-
-      gimp_image_clean_all (image);
-      gimp_image_undo_enable (image);
     }
 }
 

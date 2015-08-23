@@ -76,6 +76,8 @@
 
 #include "menus/menus.h"
 
+#include "dialogs/color-profile-import-dialog.h"
+
 #include "gui.h"
 #include "gui-message.h"
 #include "gui-vtable.h"
@@ -144,8 +146,16 @@ static gboolean       gui_recent_list_add_file   (Gimp                *gimp,
                                                   const gchar         *mime_type);
 static void           gui_recent_list_load       (Gimp                *gimp);
 
-static GMountOperation * gui_get_mount_operation (Gimp                *gimp,
+static GMountOperation
+                    * gui_get_mount_operation    (Gimp                *gimp,
                                                   GimpProgress        *progress);
+
+static GimpColorProfilePolicy
+                      gui_query_profile_policy   (Gimp                *gimp,
+                                                  GimpImage           *image,
+                                                  GimpContext         *context,
+                                                  GimpColorProfile   **dest_profile,
+                                                  gboolean            *dont_ask);
 
 
 /*  public functions  */
@@ -182,6 +192,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.recent_list_add_file   = gui_recent_list_add_file;
   gimp->gui.recent_list_load       = gui_recent_list_load;
   gimp->gui.get_mount_operation    = gui_get_mount_operation;
+  gimp->gui.query_profile_policy   = gui_query_profile_policy;
 }
 
 
@@ -749,4 +760,15 @@ gui_get_mount_operation (Gimp         *gimp,
     toplevel = gtk_widget_get_toplevel (GTK_WIDGET (progress));
 
   return gtk_mount_operation_new (GTK_WINDOW (toplevel));
+}
+
+static GimpColorProfilePolicy
+gui_query_profile_policy (Gimp              *gimp,
+                          GimpImage         *image,
+                          GimpContext       *context,
+                          GimpColorProfile **dest_profile,
+                          gboolean          *dont_ask)
+{
+  return color_profile_import_dialog_run (image, context, NULL,
+                                          dest_profile, dont_ask);
 }

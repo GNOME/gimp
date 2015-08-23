@@ -180,6 +180,7 @@ app/dialogs/about-dialog.c
 app/dialogs/action-search-dialog.c
 app/dialogs/channel-options-dialog.c
 app/dialogs/color-profile-dialog.c
+app/dialogs/color-profile-import-dialog.c
 app/dialogs/convert-precision-dialog.c
 app/dialogs/convert-type-dialog.c
 app/dialogs/data-delete-dialog.c
@@ -326,7 +327,6 @@ app/plug-in/gimppluginprocedure.c
 app/plug-in/gimppluginprocframe.c
 app/plug-in/gimptemporaryprocedure.c
 app/plug-in/plug-in-enums.c
-app/plug-in/plug-in-icc-profile.c
 app/plug-in/plug-in-rc.c
 
 app/text/gimpfont.c

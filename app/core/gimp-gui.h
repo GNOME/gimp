@@ -93,8 +93,16 @@ struct _GimpGui
                                              const gchar         *mime_type);
   void           (* recent_list_load)       (Gimp                *gimp);
 
-  GMountOperation * (* get_mount_operation) (Gimp                *gimp,
+  GMountOperation
+               * (* get_mount_operation)    (Gimp                *gimp,
                                              GimpProgress        *progress);
+
+  GimpColorProfilePolicy
+                 (* query_profile_policy)   (Gimp                *gimp,
+                                             GimpImage           *image,
+                                             GimpContext         *context,
+                                             GimpColorProfile   **dest_profile,
+                                             gboolean            *dont_ask);
 };
 
 
@@ -173,8 +181,16 @@ gboolean       gimp_recent_list_add_file   (Gimp                *gimp,
                                             const gchar         *mime_type);
 void           gimp_recent_list_load       (Gimp                *gimp);
 
-GMountOperation * gimp_get_mount_operation (Gimp                *gimp,
+GMountOperation
+             * gimp_get_mount_operation    (Gimp                *gimp,
                                             GimpProgress        *progress);
+
+GimpColorProfilePolicy
+               gimp_query_profile_policy   (Gimp                *gimp,
+                                            GimpImage           *image,
+                                            GimpContext         *context,
+                                            GimpColorProfile   **dest_profile,
+                                            gboolean            *dont_ask);
 
 
 #endif  /* __GIMP_GUI_H__ */

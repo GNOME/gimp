@@ -72,10 +72,7 @@ libappplug_in_a_SOURCES = \
 	plug-in-params.c			\
 	plug-in-params.h			\
 	plug-in-rc.c				\
-	plug-in-rc.h				\
-	\
-	plug-in-icc-profile.c			\
-	plug-in-icc-profile.h
+	plug-in-rc.h
 
 #
 # rules to generate built sources

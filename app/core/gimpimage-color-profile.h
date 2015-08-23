@@ -64,5 +64,10 @@ gboolean             gimp_image_convert_color_profile  (GimpImage               
                                                         GimpProgress             *progress,
                                                         GError                  **error);
 
+void                 gimp_image_import_color_profile   (GimpImage     *image,
+                                                        GimpContext   *context,
+                                                        GimpProgress  *progress,
+                                                        gboolean       interactive);
+
 
 #endif /* __GIMP_IMAGE_COLOR_PROFILE_H__ */

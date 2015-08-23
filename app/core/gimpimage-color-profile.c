@@ -38,6 +38,7 @@
 #include "gegl/gimp-babl.h"
 
 #include "gimp.h"
+#include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimperror.h"
 #include "gimpimage.h"
@@ -404,6 +405,83 @@ gimp_image_convert_color_profile (GimpImage                *image,
   g_object_unref (src_profile);
 
   return TRUE;
+}
+
+void
+gimp_image_import_color_profile (GimpImage    *image,
+                                 GimpContext  *context,
+                                 GimpProgress *progress,
+                                 gboolean      interactive)
+{
+  GimpColorConfig *config = image->gimp->config->color_management;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
+
+  config = image->gimp->config->color_management;
+
+  if (gimp_image_get_base_type (image) == GIMP_GRAY)
+    return;
+
+  if (config->mode == GIMP_COLOR_MANAGEMENT_OFF)
+    return;
+
+  if (gimp_image_get_color_profile (image))
+    {
+      GimpColorProfilePolicy  policy;
+      GimpColorProfile       *dest_profile = NULL;
+
+      policy = image->gimp->config->color_profile_policy;
+
+      if (policy == GIMP_COLOR_PROFILE_POLICY_ASK)
+        {
+          if (interactive)
+            {
+              gboolean dont_ask = FALSE;
+
+              policy = gimp_query_profile_policy (image->gimp, image, context,
+                                                  &dest_profile, &dont_ask);
+
+              if (dont_ask)
+                {
+                  g_object_set (G_OBJECT (image->gimp->config),
+                                "color-profile-policy", policy,
+                                NULL);
+                }
+            }
+          else
+            {
+              policy = GIMP_COLOR_PROFILE_POLICY_KEEP;
+            }
+        }
+
+      if (policy == GIMP_COLOR_PROFILE_POLICY_CONVERT)
+        {
+          GimpColorRenderingIntent  intent;
+          gboolean                  bpc;
+
+          if (! dest_profile)
+            {
+              dest_profile = gimp_image_get_builtin_color_profile (image);
+              g_object_ref (dest_profile);
+            }
+
+          intent = config->display_intent;
+          bpc    = (intent == GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
+
+          gimp_image_undo_disable (image);
+
+          gimp_image_convert_color_profile (image, dest_profile,
+                                            intent, bpc,
+                                            progress, NULL);
+
+          gimp_image_clean_all (image);
+          gimp_image_undo_enable (image);
+
+          g_object_unref (dest_profile);
+        }
+    }
 }
 
 
