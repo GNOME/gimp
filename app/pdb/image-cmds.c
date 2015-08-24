@@ -711,8 +711,8 @@ image_pick_color_invoker (GimpProcedure         *procedure,
                                            sample_average,
                                            average_radius,
                                            NULL,
-                                           &color,
-                                           NULL);
+                                           NULL,
+                                           &color);
         }
     }
 

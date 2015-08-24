@@ -37,8 +37,8 @@ gimp_image_pick_color (GimpImage     *image,
                        gboolean       sample_average,
                        gdouble        average_radius,
                        const Babl   **sample_format,
-                       GimpRGB       *color,
-                       gint          *color_index)
+                       gpointer       pixel,
+                       GimpRGB       *color)
 {
   GimpPickable *pickable;
 
@@ -82,5 +82,5 @@ gimp_image_pick_color (GimpImage     *image,
 
   return gimp_pickable_pick_color (pickable, x, y,
                                    sample_average, average_radius,
-                                   color, color_index);
+                                   pixel, color);
 }

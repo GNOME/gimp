@@ -60,8 +60,8 @@ struct _GimpColorToolClass
                        gint                x,
                        gint                y,
                        const Babl        **sample_format,
-                       GimpRGB            *color,
-                       gint               *color_index);
+                       gpointer            pixel,
+                       GimpRGB            *color);
 
   /*  signals  */
   void     (* picked) (GimpColorTool      *tool,
@@ -69,8 +69,8 @@ struct _GimpColorToolClass
                        gdouble             x,
                        gdouble             y,
                        const Babl         *sample_format,
-                       const GimpRGB      *color,
-                       gint                color_index);
+                       gpointer            pixel,
+                       const GimpRGB      *color);
 };
 
 

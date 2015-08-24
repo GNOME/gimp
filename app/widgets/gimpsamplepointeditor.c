@@ -467,8 +467,8 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
           GimpSamplePoint *sample_point = list->data;
           GimpColorFrame  *color_frame;
           const Babl      *format;
+          guchar           pixel[32];
           GimpRGB          color;
-          gint             color_index;
 
           editor->dirty[i] = FALSE;
 
@@ -480,11 +480,11 @@ gimp_sample_point_editor_update (GimpSamplePointEditor *editor)
                                      editor->sample_merged,
                                      FALSE, 0.0,
                                      &format,
-                                     &color,
-                                     &color_index))
+                                     pixel,
+                                     &color))
             {
-              gimp_color_frame_set_color (color_frame, format,
-                                          &color, color_index);
+              gimp_color_frame_set_color (color_frame, FALSE,
+                                          format, pixel, &color);
             }
           else
             {

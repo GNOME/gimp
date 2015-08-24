@@ -26,6 +26,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <cairo.h>
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -222,18 +224,23 @@ gimp_pickable_pick_color (GimpPickable *pickable,
                           gint          y,
                           gboolean      sample_average,
                           gdouble       average_radius,
-                          GimpRGB      *color,
-                          gint         *color_index)
+                          gpointer      pixel,
+                          GimpRGB      *color)
 {
   const Babl *format;
-  gdouble     pixel[4];
+  gdouble     sample[4];
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
 
-  format = babl_format ("RGBA double");
+  format = gimp_pickable_get_format (pickable);
 
-  if (! gimp_pickable_get_pixel_at (pickable, x, y, format, pixel))
+  if (! gimp_pickable_get_pixel_at (pickable, x, y, format, sample))
     return FALSE;
+
+  gimp_rgba_set_pixel (color, format, sample);
+
+  if (pixel)
+    memcpy (pixel, sample, babl_format_get_bytes_per_pixel (format));
 
   if (sample_average)
     {
@@ -242,42 +249,26 @@ gimp_pickable_pick_color (GimpPickable *pickable,
       gint    radius       = (gint) average_radius;
       gint    i, j;
 
+      format = babl_format ("RGBA double");
+
       for (i = x - radius; i <= x + radius; i++)
         for (j = y - radius; j <= y + radius; j++)
-          if (gimp_pickable_get_pixel_at (pickable, i, j, format, pixel))
+          if (gimp_pickable_get_pixel_at (pickable, i, j, format, sample))
             {
               count++;
 
-              color_avg[RED]   += pixel[RED];
-              color_avg[GREEN] += pixel[GREEN];
-              color_avg[BLUE]  += pixel[BLUE];
-              color_avg[ALPHA] += pixel[ALPHA];
+              color_avg[RED]   += sample[RED];
+              color_avg[GREEN] += sample[GREEN];
+              color_avg[BLUE]  += sample[BLUE];
+              color_avg[ALPHA] += sample[ALPHA];
             }
 
-      pixel[RED]   = color_avg[RED]   / count;
-      pixel[GREEN] = color_avg[GREEN] / count;
-      pixel[BLUE]  = color_avg[BLUE]  / count;
-      pixel[ALPHA] = color_avg[ALPHA] / count;
-    }
+      sample[RED]   = color_avg[RED]   / count;
+      sample[GREEN] = color_avg[GREEN] / count;
+      sample[BLUE]  = color_avg[BLUE]  / count;
+      sample[ALPHA] = color_avg[ALPHA] / count;
 
-  gimp_rgba_set_pixel (color, format, pixel);
-
-  if (color_index)
-    {
-      format = gimp_pickable_get_format (pickable);
-
-      if (babl_format_is_palette (format) && ! sample_average)
-        {
-          guchar indexed_pixel[4];
-
-          gimp_pickable_get_pixel_at (pickable, x, y, format, indexed_pixel);
-
-          *color_index = indexed_pixel[0];
-        }
-      else
-        {
-          *color_index = -1;
-        }
+      gimp_rgba_set_pixel (color, format, sample);
     }
 
   return TRUE;
