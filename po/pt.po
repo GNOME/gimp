@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-08-20 05:36+0000\n"
-"PO-Revision-Date: 2015-08-20 11:22+0100\n"
+"POT-Creation-Date: 2015-08-25 05:36+0000\n"
+"PO-Revision-Date: 2015-08-25 07:31+0100\n"
 "Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
 "Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: Portuguese\n"
@@ -1024,7 +1024,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:114
 #: ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1900
+#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1888
 #: ../app/core/gimppalette.c:399 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:90
@@ -9006,69 +9006,69 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformar grupo de camadas"
 
-#: ../app/core/gimpimage.c:2152
+#: ../app/core/gimpimage.c:2140
 msgid " (exported)"
 msgstr "(exportada)"
 
-#: ../app/core/gimpimage.c:2156
+#: ../app/core/gimpimage.c:2144
 msgid " (overwritten)"
 msgstr "(sobrescrita)"
 
-#: ../app/core/gimpimage.c:2165
+#: ../app/core/gimpimage.c:2153
 msgid " (imported)"
 msgstr "(importada)"
 
-#: ../app/core/gimpimage.c:2396
+#: ../app/core/gimpimage.c:2384
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Alterar resolução da imagem"
 
-#: ../app/core/gimpimage.c:2448
+#: ../app/core/gimpimage.c:2436
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Alterar unidade da imagem"
 
-#: ../app/core/gimpimage.c:3361
+#: ../app/core/gimpimage.c:3349
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Anexar parasita à imagem"
 
-#: ../app/core/gimpimage.c:3414
+#: ../app/core/gimpimage.c:3402
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Remover parasita da imagem"
 
-#: ../app/core/gimpimage.c:4131
+#: ../app/core/gimpimage.c:4119
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Adicionar camada"
 
-#: ../app/core/gimpimage.c:4181 ../app/core/gimpimage.c:4201
+#: ../app/core/gimpimage.c:4169 ../app/core/gimpimage.c:4189
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Remover camada"
 
-#: ../app/core/gimpimage.c:4195
+#: ../app/core/gimpimage.c:4183
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Remover seleção flutuante"
 
-#: ../app/core/gimpimage.c:4360
+#: ../app/core/gimpimage.c:4348
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Adicionar canal"
 
-#: ../app/core/gimpimage.c:4398 ../app/core/gimpimage.c:4411
+#: ../app/core/gimpimage.c:4386 ../app/core/gimpimage.c:4399
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Remover canal"
 
-#: ../app/core/gimpimage.c:4465
+#: ../app/core/gimpimage.c:4453
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Adicionar caminho"
 
-#: ../app/core/gimpimage.c:4496
+#: ../app/core/gimpimage.c:4484
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Remover caminho"
@@ -9078,12 +9078,12 @@ msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Dispor objetos"
 
-#: ../app/core/gimpimage-color-profile.c:85
+#: ../app/core/gimpimage-color-profile.c:86
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
 "Validação de perfil ICC falhou: o nome do parasita não é \"icc-profile\""
 
-#: ../app/core/gimpimage-color-profile.c:94
+#: ../app/core/gimpimage-color-profile.c:95
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
@@ -9091,29 +9091,29 @@ msgstr ""
 "Validação de perfil ICC falhou: as bandeiras do parasita não são (PERSISTENT "
 "| UNDOABLE)"
 
-#: ../app/core/gimpimage-color-profile.c:151
+#: ../app/core/gimpimage-color-profile.c:152
 msgid "ICC profile validation failed: "
 msgstr "Validação de perfil ICC falhou: "
 
-#: ../app/core/gimpimage-color-profile.c:247
+#: ../app/core/gimpimage-color-profile.c:248
 msgid ""
 "ICC profile validation failed: Cannot attach a color profile to a GRAY image"
 msgstr ""
 "Validação de perfil ICC falhou: impossível anexar um perfil de cor a uma "
 "imagem CINZENTA"
 
-#: ../app/core/gimpimage-color-profile.c:255
+#: ../app/core/gimpimage-color-profile.c:256
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "Validação de perfil ICC falhou: o perfil de cor não é para o espaço de cor "
 "RGB"
 
-#: ../app/core/gimpimage-color-profile.c:368
+#: ../app/core/gimpimage-color-profile.c:369
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "A converter \"%s\" para \"%s\""
 
-#: ../app/core/gimpimage-color-profile.c:373
+#: ../app/core/gimpimage-color-profile.c:374
 msgid "Color profile conversion"
 msgstr "Conversão de perfil de cores"
 
@@ -9886,17 +9886,17 @@ msgctxt "plural"
 msgid "percent"
 msgstr "percentagem"
 
-#: ../app/dialogs/about-dialog.c:115
+#: ../app/dialogs/about-dialog.c:117
 msgid "About GIMP"
 msgstr "Sobre o GIMP"
 
-#: ../app/dialogs/about-dialog.c:124
+#: ../app/dialogs/about-dialog.c:126
 msgid "Visit the GIMP website"
 msgstr "Visite o site do GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
-#: ../app/dialogs/about-dialog.c:130
+#: ../app/dialogs/about-dialog.c:132
 msgid "translator-credits"
 msgstr ""
 "Pedro Barreira (Tradução e revisão) \n"
@@ -9925,13 +9925,19 @@ msgstr ""
 "  lijealso https://launchpad.net/~lijealso\n"
 "  peter https://launchpad.net/~nudos2003"
 
-#: ../app/dialogs/about-dialog.c:529
+#: ../app/dialogs/about-dialog.c:531
 msgid "GIMP is brought to you by"
 msgstr "O GIMP é trazido até si por"
 
-#: ../app/dialogs/about-dialog.c:604
-msgid "This is an unstable development release."
-msgstr "Esta é uma versão de desenvolvimento instável."
+#: ../app/dialogs/about-dialog.c:611
+#, c-format
+#| msgid "This is an unstable development release."
+msgid ""
+"This is an unstable development release\n"
+"commit %s"
+msgstr ""
+"Esta é uma versão de desenvolvimento instável\n"
+"submissão %s"
 
 #: ../app/dialogs/action-search-dialog.c:138
 msgid "Search Actions"
@@ -9945,27 +9951,27 @@ msgstr "_Nome do canal:"
 msgid "Initialize from _selection"
 msgstr "Inicializar a partir da _Seleção"
 
-#: ../app/dialogs/color-profile-dialog.c:157
+#: ../app/dialogs/color-profile-dialog.c:158
 msgid "Convert to ICC Color Profile"
 msgstr "_Converter para perfil de cor ICC..."
 
-#: ../app/dialogs/color-profile-dialog.c:160
+#: ../app/dialogs/color-profile-dialog.c:161
 msgid "Convert the image to a color profile"
 msgstr "Converter a imagem num perfil de cor"
 
-#: ../app/dialogs/color-profile-dialog.c:174
+#: ../app/dialogs/color-profile-dialog.c:175
 msgid "Assign ICC Color Profile"
 msgstr "Atribuir perfil de cor ICC..."
 
-#: ../app/dialogs/color-profile-dialog.c:177
+#: ../app/dialogs/color-profile-dialog.c:178
 msgid "Assign a color profile to the image"
 msgstr "Atribuir um perfil de cor à imagem"
 
-#: ../app/dialogs/color-profile-dialog.c:183
+#: ../app/dialogs/color-profile-dialog.c:184
 msgid "_Assign"
 msgstr "_Atribuir"
 
-#: ../app/dialogs/color-profile-dialog.c:208
+#: ../app/dialogs/color-profile-dialog.c:209
 msgid "Current Color Profile"
 msgstr "Perfil de cor atual"
 
@@ -9985,24 +9991,66 @@ msgstr "_Intenção de desenho:"
 msgid "_Black Point Compensation"
 msgstr "_Compensação de ponto negro"
 
-#: ../app/dialogs/color-profile-dialog.c:284
+#: ../app/dialogs/color-profile-dialog.c:283
 msgid "Select destination profile"
 msgstr "Selecionar perfil de destino"
 
-#: ../app/dialogs/color-profile-dialog.c:310
+#: ../app/dialogs/color-profile-dialog.c:291
 #, c-format
-msgid "RGB workspace (%s)"
-msgstr "Espaço de trabalho RGB (%s)"
+#| msgid "Direction  (%s)"
+msgid "Built-in RGB (%s)"
+msgstr "RGB interno (%s)"
 
-#: ../app/dialogs/color-profile-dialog.c:382
+#: ../app/dialogs/color-profile-dialog.c:305
+#, c-format
+msgid "Preferred RGB (%s)"
+msgstr "RGB preferido (%s)"
+
+#: ../app/dialogs/color-profile-dialog.c:370
 #, c-format
 msgid "Converting to '%s'"
 msgstr "A converter para \"%s\""
 
-#: ../app/dialogs/color-profile-dialog.c:404
-#| msgid "Assign ICC Color Profile"
+#: ../app/dialogs/color-profile-dialog.c:392
 msgid "Assign color profile"
 msgstr "Atribuir perfil de cor..."
+
+#: ../app/dialogs/color-profile-import-dialog.c:78
+#| msgctxt "color-profile-policy"
+#| msgid "Convert to RGB workspace"
+msgid "Convert to RGB Working Space?"
+msgstr "Converter para espaço de trabalho RGB?"
+
+#: ../app/dialogs/color-profile-import-dialog.c:81
+#| msgid "Convert the image to a color profile"
+msgid "Import the image from a color profile"
+msgstr "Importar a imagem de um perfil de cor"
+
+#: ../app/dialogs/color-profile-import-dialog.c:86
+msgid "Keep"
+msgstr "Manter"
+
+#: ../app/dialogs/color-profile-import-dialog.c:87
+#| msgid "C_onvert"
+msgid "Convert"
+msgstr "Converter"
+
+#: ../app/dialogs/color-profile-import-dialog.c:104
+#, c-format
+#| msgctxt "image-action"
+#| msgid "Remove the image's color profile"
+msgid "The image '%s' has an embedded color profile"
+msgstr "A imagem \"%s\" tem um perfil de cores embutido"
+
+#: ../app/dialogs/color-profile-import-dialog.c:115
+#| msgctxt "image-convert-action"
+#| msgid "Convert the image to the RGB colorspace"
+msgid "Convert the image to the RGB working space?"
+msgstr "Converter imagem para espaço de cores RGB?"
+
+#: ../app/dialogs/color-profile-import-dialog.c:125
+msgid "_Don't ask me again"
+msgstr "_Não perguntar novamente"
 
 #: ../app/dialogs/convert-precision-dialog.c:128
 #, c-format
@@ -11307,8 +11355,9 @@ msgid "Color Management"
 msgstr "Gestão de cores"
 
 #: ../app/dialogs/preferences-dialog.c:2377
-msgid "_RGB profile:"
-msgstr "Perfil _RGB:"
+#| msgid "_RGB profile:"
+msgid "Preferred _RGB profile:"
+msgstr "Perfil _RGB preferido:"
 
 #: ../app/dialogs/preferences-dialog.c:2378
 msgid "Select RGB Color Profile"
@@ -11892,7 +11941,7 @@ msgstr "Espaçamento das linhas"
 #: ../app/display/gimpcursorview.c:669 ../app/display/gimpcursorview.c:671
 #: ../app/display/gimpcursorview.c:784 ../app/display/gimpcursorview.c:785
 #: ../app/display/gimpcursorview.c:786 ../app/display/gimpcursorview.c:787
-#: ../app/widgets/gimpcolorframe.c:686
+#: ../app/widgets/gimpcolorframe.c:702
 msgid "n/a"
 msgstr "n/d"
 
@@ -12150,40 +12199,32 @@ msgstr "(nenhum)"
 msgid "Cancel <i>%s</i>"
 msgstr "Cancelar <i>%s</i>"
 
-#: ../app/file/file-open.c:127 ../app/file/file-save.c:115
+#: ../app/file/file-open.c:121 ../app/file/file-save.c:115
 msgid "Not a regular file"
 msgstr "Não é um ficheiro normal"
 
-#: ../app/file/file-open.c:136 ../app/file/file-save.c:124
+#: ../app/file/file-open.c:130 ../app/file/file-save.c:124
 msgid "Permission denied"
 msgstr "Permissão negada"
 
-#: ../app/file/file-open.c:239
+#: ../app/file/file-open.c:233
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "A extensão %s devolveu \"SUCESSO\", mas não devolveu uma imagem"
 
-#: ../app/file/file-open.c:250
+#: ../app/file/file-open.c:244
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "A extensão %s não pôde abrir a imagem"
 
-#: ../app/file/file-open.c:638
+#: ../app/file/file-open.c:634
 msgid "Image doesn't contain any layers"
 msgstr "A imagem não contém nenhuma camada"
 
-#: ../app/file/file-open.c:697
+#: ../app/file/file-open.c:693
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Falha ao abrir \"%s\": %s"
-
-#: ../app/file/file-open.c:801
-msgid ""
-"Color management has been disabled. It can be enabled again in the "
-"Preferences dialog."
-msgstr ""
-"A gestão de cores foi desativada. Pode ser ativada de novo no diálogo "
-"Preferências."
 
 #: ../app/file/file-procedure.c:211
 msgid "Unknown file type"
@@ -13584,21 +13625,6 @@ msgstr ""
 "Erro ao executar \"%s\": \n"
 "%s"
 
-#: ../app/plug-in/plug-in-icc-profile.c:68
-#, c-format
-msgid "Can't apply color profile to grayscale image (%s)"
-msgstr "Impossível aplicar perfil de cor a imagem em tons de cinzento (%s)"
-
-#: ../app/plug-in/plug-in-icc-profile.c:111
-#, c-format
-msgid "Error running '%s'"
-msgstr "Erro ao executar \"%s\""
-
-#: ../app/plug-in/plug-in-icc-profile.c:135
-#, c-format
-msgid "Plug-In missing (%s)"
-msgstr "Extensão em falta (%s)"
-
 #: ../app/plug-in/plug-in-rc.c:227
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
@@ -14284,35 +14310,35 @@ msgstr "Modo de escolha (%s)"
 msgid "Use info window  (%s)"
 msgstr "Usar janela de informações (%s)"
 
-#: ../app/tools/gimpcolorpickertool.c:95
+#: ../app/tools/gimpcolorpickertool.c:96
 msgid "Color Picker"
 msgstr "Pipeta"
 
-#: ../app/tools/gimpcolorpickertool.c:96
+#: ../app/tools/gimpcolorpickertool.c:97
 msgid "Color Picker Tool: Set colors from image pixels"
 msgstr "Ferramenta Pipeta: seleciona cores a partir de pixels da imagem"
 
-#: ../app/tools/gimpcolorpickertool.c:97
+#: ../app/tools/gimpcolorpickertool.c:98
 msgid "C_olor Picker"
 msgstr "_Pipeta"
 
-#: ../app/tools/gimpcolorpickertool.c:233
+#: ../app/tools/gimpcolorpickertool.c:234
 msgid "Click in any image to view its color"
 msgstr "Clique em qualquer imagem para ver a sua cor"
 
-#: ../app/tools/gimpcolorpickertool.c:240 ../app/tools/gimppainttool.c:497
+#: ../app/tools/gimpcolorpickertool.c:241 ../app/tools/gimppainttool.c:497
 msgid "Click in any image to pick the foreground color"
 msgstr "Clique em qualquer imagem para obter a cor de 1º plano"
 
-#: ../app/tools/gimpcolorpickertool.c:248 ../app/tools/gimppainttool.c:503
+#: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:503
 msgid "Click in any image to pick the background color"
 msgstr "Clique em qualquer imagem para obter a cor de fundo"
 
-#: ../app/tools/gimpcolorpickertool.c:256
+#: ../app/tools/gimpcolorpickertool.c:257
 msgid "Click in any image to add the color to the palette"
 msgstr "Clique em qualquer imagem para adicionar a cor à paleta"
 
-#: ../app/tools/gimpcolorpickertool.c:316
+#: ../app/tools/gimpcolorpickertool.c:318
 msgid "Color Picker Information"
 msgstr "Informação da pipeta"
 
@@ -16940,57 +16966,57 @@ msgstr ""
 "Notação de cor hexadecimal como a usada em HTML e CSS. Esta entrada também "
 "aceita nomes de cores CSS."
 
-#: ../app/widgets/gimpcolorframe.c:559 ../app/widgets/gimpcolorframe.c:629
+#: ../app/widgets/gimpcolorframe.c:576 ../app/widgets/gimpcolorframe.c:645
 msgid "Value:"
 msgstr "Valor:"
 
-#: ../app/widgets/gimpcolorframe.c:562 ../app/widgets/gimpcolorframe.c:571
-#: ../app/widgets/gimpcolorframe.c:602 ../app/widgets/gimpcolorframe.c:632
-#: ../app/widgets/gimpcolorframe.c:657
+#: ../app/widgets/gimpcolorframe.c:579 ../app/widgets/gimpcolorframe.c:588
+#: ../app/widgets/gimpcolorframe.c:618 ../app/widgets/gimpcolorframe.c:648
+#: ../app/widgets/gimpcolorframe.c:673
 msgid "Alpha:"
 msgstr "Alfa:"
 
-#: ../app/widgets/gimpcolorframe.c:566 ../app/widgets/gimpcolorframe.c:597
+#: ../app/widgets/gimpcolorframe.c:583 ../app/widgets/gimpcolorframe.c:613
 msgid "Red:"
 msgstr "Vermelho:"
 
-#: ../app/widgets/gimpcolorframe.c:567 ../app/widgets/gimpcolorframe.c:598
+#: ../app/widgets/gimpcolorframe.c:584 ../app/widgets/gimpcolorframe.c:614
 msgid "Green:"
 msgstr "Verde:"
 
-#: ../app/widgets/gimpcolorframe.c:568 ../app/widgets/gimpcolorframe.c:599
+#: ../app/widgets/gimpcolorframe.c:585 ../app/widgets/gimpcolorframe.c:615
 msgid "Blue:"
 msgstr "Azul:"
 
-#: ../app/widgets/gimpcolorframe.c:575
+#: ../app/widgets/gimpcolorframe.c:592
 msgid "Index:"
 msgstr "Índice:"
 
-#: ../app/widgets/gimpcolorframe.c:614
+#: ../app/widgets/gimpcolorframe.c:630
 msgid "Hex:"
 msgstr "Hex:"
 
-#: ../app/widgets/gimpcolorframe.c:627
+#: ../app/widgets/gimpcolorframe.c:643
 msgid "Hue:"
 msgstr "Matiz:"
 
-#: ../app/widgets/gimpcolorframe.c:628
+#: ../app/widgets/gimpcolorframe.c:644
 msgid "Sat.:"
 msgstr "Sat.:"
 
-#: ../app/widgets/gimpcolorframe.c:651
+#: ../app/widgets/gimpcolorframe.c:667
 msgid "Cyan:"
 msgstr "Ciano:"
 
-#: ../app/widgets/gimpcolorframe.c:652
+#: ../app/widgets/gimpcolorframe.c:668
 msgid "Magenta:"
 msgstr "Magenta:"
 
-#: ../app/widgets/gimpcolorframe.c:653
+#: ../app/widgets/gimpcolorframe.c:669
 msgid "Yellow:"
 msgstr "Amarelo:"
 
-#: ../app/widgets/gimpcolorframe.c:654
+#: ../app/widgets/gimpcolorframe.c:670
 msgid "Black:"
 msgstr "Preto:"
 
@@ -18728,6 +18754,25 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "difuso"
+
+#~ msgid "RGB workspace (%s)"
+#~ msgstr "Espaço de trabalho RGB (%s)"
+
+#~ msgid ""
+#~ "Color management has been disabled. It can be enabled again in the "
+#~ "Preferences dialog."
+#~ msgstr ""
+#~ "A gestão de cores foi desativada. Pode ser ativada de novo no diálogo "
+#~ "Preferências."
+
+#~ msgid "Can't apply color profile to grayscale image (%s)"
+#~ msgstr "Impossível aplicar perfil de cor a imagem em tons de cinzento (%s)"
+
+#~ msgid "Error running '%s'"
+#~ msgstr "Erro ao executar \"%s\""
+
+#~ msgid "Plug-In missing (%s)"
+#~ msgstr "Extensão em falta (%s)"
 
 #~ msgid "Image '%s' (%d) is already of type '%s'"
 #~ msgstr "A imagem \"%s\" (%d) já é do tipo \"%s\""
