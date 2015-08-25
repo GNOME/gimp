@@ -25,6 +25,7 @@
 
 #include "actions-types.h"
 
+#include "core/gimpchannel-select.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
@@ -131,6 +132,27 @@ colormap_add_color_cmd_callback (GtkAction *action,
       gimp_image_add_colormap_entry (image, &color);
       gimp_image_flush (image);
     }
+}
+
+void
+colormap_to_selection_cmd_callback (GtkAction *action,
+                                    gint       value,
+                                    gpointer   data)
+{
+  GimpColormapEditor *editor;
+  GimpImage          *image;
+  GimpChannelOps      op;
+  return_if_no_image (image, data);
+
+  editor = GIMP_COLORMAP_EDITOR (data);
+
+  op = (GimpChannelOps) value;
+
+  gimp_channel_select_by_index (gimp_image_get_mask (image),
+                                gimp_image_get_active_drawable (image),
+                                editor->col_index,
+                                op,
+                                FALSE, 0.0, 0.0);
 }
 
 

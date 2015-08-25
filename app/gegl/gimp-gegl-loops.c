@@ -624,6 +624,43 @@ gimp_gegl_replace (GeglBuffer          *top_buffer,
     }
 }
 
+void
+gimp_gegl_index_to_mask (GeglBuffer          *indexed_buffer,
+                         const GeglRectangle *indexed_rect,
+                         const Babl          *indexed_format,
+                         GeglBuffer          *mask_buffer,
+                         const GeglRectangle *mask_rect,
+                         gint                 index)
+{
+  GeglBufferIterator *iter;
+
+  iter = gegl_buffer_iterator_new (indexed_buffer, indexed_rect, 0,
+                                   indexed_format,
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+  gegl_buffer_iterator_add (iter, mask_buffer, mask_rect, 0,
+                            babl_format ("Y float"),
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      const guchar *indexed = iter->data[0];
+      gfloat       *mask    = iter->data[1];
+      gint          count   = iter->length;
+
+      while (count--)
+        {
+          if (*indexed == index)
+            *mask = 1.0;
+          else
+            *mask = 0.0;
+
+          indexed++;
+          mask++;
+        }
+    }
+}
+
 static gboolean
 gimp_color_profile_can_gegl_copy (GimpColorProfile *src_profile,
                                   GimpColorProfile *dest_profile)

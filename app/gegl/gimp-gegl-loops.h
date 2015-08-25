@@ -81,6 +81,13 @@ void   gimp_gegl_replace               (GeglBuffer               *top_buffer,
                                         gdouble                   opacity,
                                         const gboolean           *affect);
 
+void   gimp_gegl_index_to_mask         (GeglBuffer               *indexed_buffer,
+                                        const GeglRectangle      *indexed_rect,
+                                        const Babl               *indexed_format,
+                                        GeglBuffer               *mask_buffer,
+                                        const GeglRectangle      *mask_rect,
+                                        gint                      index);
+
 void   gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
                                         const GeglRectangle      *src_rect,
                                         GimpColorProfile         *src_profile,

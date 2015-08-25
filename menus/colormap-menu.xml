@@ -7,5 +7,10 @@
     <menuitem action="colormap-add-color-from-fg" />
     <menuitem action="colormap-add-color-from-bg" />
     <separator />
+    <menuitem action="colormap-selection-replace" />
+    <menuitem action="colormap-selection-add" />
+    <menuitem action="colormap-selection-subtract" />
+    <menuitem action="colormap-selection-intersect" />
+    <separator />
   </popup>
 </ui>

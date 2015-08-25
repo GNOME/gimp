@@ -504,6 +504,10 @@
 #define GIMP_HELP_INDEXED_PALETTE_DIALOG          "gimp-indexed-palette-dialog"
 #define GIMP_HELP_INDEXED_PALETTE_EDIT            "gimp-indexed-palette-edit"
 #define GIMP_HELP_INDEXED_PALETTE_ADD             "gimp-indexed-palette-add"
+#define GIMP_HELP_INDEXED_PALETTE_SELECTION_REPLACE "gimp-indexed-palette-selection-replace"
+#define GIMP_HELP_INDEXED_PALETTE_SELECTION_ADD   "gimp-indexed-palette-selection-add"
+#define GIMP_HELP_INDEXED_PALETTE_SELECTION_SUBTRACT "gimp-indexed-palette-selection-subtract"
+#define GIMP_HELP_INDEXED_PALETTE_SELECTION_INTERSECT "gimp-indexed-palette-selection-intersect"
 
 #define GIMP_HELP_POINTER_INFO_DIALOG             "gimp-pointer-info-dialog"
 #define GIMP_HELP_POINTER_INFO_SAMPLE_MERGED      "gimp-pointer-info-sample-merged"
