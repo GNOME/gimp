@@ -511,11 +511,27 @@ gimp_thumb_box_thumbnail_clicked (GtkWidget       *widget,
 }
 
 static void
+this_is_ugly (GtkWidget     *widget,
+              GtkAllocation *allocation,
+              gpointer       data)
+{
+  gtk_widget_queue_resize (widget);
+
+  g_signal_handlers_disconnect_by_func (widget,
+                                        this_is_ugly,
+                                        data);
+}
+
+static void
 gimp_thumb_box_imagefile_info_changed (GimpImagefile *imagefile,
                                        GimpThumbBox  *box)
 {
   gtk_label_set_text (GTK_LABEL (box->info),
                       gimp_imagefile_get_desc_string (imagefile));
+
+  g_signal_connect_after (box->info, "size-allocate",
+                          G_CALLBACK (this_is_ugly),
+                          "this too");
 }
 
 static void
