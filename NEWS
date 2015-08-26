@@ -16,12 +16,17 @@ Core:
  - Seek much less when writing XCF
  - Don't seek past the end of the file when writing XCF
  - Windows: call SetDLLDirectory() for less DLL hell
+ - Fix velocity parameter on .GIH brushes
+ - Fix brokenness while transforming certain sets of linked layers
 
 
 GUI:
 
  - Always show image tabs in single window mode
  - Fix switching of dock tabs by DND hovering
+ - Don't make the scroll area for tags too small
+ - Fixed a crash in the save dialog
+ - Fix issue where ruler updates made things very slow on Windows
 
 
 Plug-ins:
