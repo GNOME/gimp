@@ -56,6 +56,7 @@ typedef struct
   GtkWidget                *dialog;
   GtkWidget                *main_vbox;
   GtkWidget                *combo;
+  GtkWidget                *dest_view;
 
   GimpImage                *image;
   GimpProgress             *progress;
@@ -75,6 +76,8 @@ static ProfileDialog * color_profile_dialog_new      (GimpImage     *image,
 static GtkWidget     * color_profile_combo_box_new   (ProfileDialog *dialog);
 static void            color_profile_dialog_response (GtkWidget     *widget,
                                                       gint           response_id,
+                                                      ProfileDialog *dialog);
+static void            color_profile_dest_changed    (GtkWidget     *combo,
                                                       ProfileDialog *dialog);
 static void            color_profile_dialog_free     (ProfileDialog *dialog);
 
@@ -125,6 +128,8 @@ color_profile_dialog_new (GimpImage    *image,
 {
   ProfileDialog    *dialog;
   GtkWidget        *frame;
+  GtkWidget        *vbox;
+  GtkWidget        *expander;
   GtkWidget        *label;
   GimpColorProfile *src_profile;
 
@@ -222,9 +227,27 @@ color_profile_dialog_new (GimpImage    *image,
   gtk_box_pack_start (GTK_BOX (dialog->main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
   dialog->combo = color_profile_combo_box_new (dialog);
-  gtk_container_add (GTK_CONTAINER (frame), dialog->combo);
+  gtk_box_pack_start (GTK_BOX (vbox), dialog->combo, FALSE, FALSE, 0);
   gtk_widget_show (dialog->combo);
+
+  expander = gtk_expander_new_with_mnemonic (_("Profile _details"));
+  gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
+  gtk_widget_show (expander);
+
+  dialog->dest_view = gimp_color_profile_view_new ();
+  gtk_container_add (GTK_CONTAINER (expander), dialog->dest_view);
+  gtk_widget_show (dialog->dest_view);
+
+  g_signal_connect (dialog->combo, "changed",
+                    G_CALLBACK (color_profile_dest_changed),
+                    dialog);
+
+  color_profile_dest_changed (dialog->combo, dialog);
 
   if (convert)
     {
@@ -422,6 +445,41 @@ color_profile_dialog_response (GtkWidget     *widget,
                     GIMP_MESSAGE_ERROR,
                     "%s", error->message);
       g_clear_error (&error);
+    }
+}
+
+static void
+color_profile_dest_changed (GtkWidget     *combo,
+                            ProfileDialog *dialog)
+{
+  GimpColorProfile *dest_profile = NULL;
+  GFile            *file;
+  GError           *error        = NULL;
+
+  file = gimp_color_profile_combo_box_get_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo));
+
+  if (file)
+    {
+      dest_profile = gimp_color_profile_new_from_file (file, &error);
+      g_object_unref (file);
+    }
+  else
+    {
+      dest_profile = gimp_image_get_builtin_color_profile (dialog->image);
+      g_object_ref (dest_profile);
+    }
+
+  if (! dest_profile)
+    {
+      gimp_color_profile_view_set_error (GIMP_COLOR_PROFILE_VIEW (dialog->dest_view),
+                                         error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      gimp_color_profile_view_set_profile (GIMP_COLOR_PROFILE_VIEW (dialog->dest_view),
+                                           dest_profile);
+      g_object_unref (dest_profile);
     }
 }
 
