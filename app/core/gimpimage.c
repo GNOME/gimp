@@ -3367,19 +3367,7 @@ gimp_image_parasite_attach (GimpImage          *image,
                  gimp_parasite_name (parasite));
 
   if (strcmp (gimp_parasite_name (parasite), GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
-    {
-      GimpColorProfile *profile =
-        gimp_color_profile_new_from_icc_profile (gimp_parasite_data (parasite),
-                                                 gimp_parasite_data_size (parasite),
-                                                 NULL);
-
-      if (private->color_profile)
-        g_object_unref (private->color_profile);
-
-      private->color_profile = profile;
-
-      gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
-    }
+    _gimp_image_update_color_profile (image, parasite);
 }
 
 void
@@ -3408,15 +3396,7 @@ gimp_image_parasite_detach (GimpImage   *image,
                  name);
 
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
-    {
-      if (private->color_profile)
-        {
-          g_object_unref (private->color_profile);
-          private->color_profile = NULL;
-        }
-
-      gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
-    }
+    _gimp_image_update_color_profile (image, NULL);
 }
 
 

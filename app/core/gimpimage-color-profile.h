@@ -57,17 +57,23 @@ gboolean             gimp_image_set_color_profile      (GimpImage           *ima
 GimpColorProfile   * gimp_image_get_builtin_color_profile
                                                        (GimpImage           *image);
 
-gboolean             gimp_image_convert_color_profile  (GimpImage                *image,
-                                                        GimpColorProfile         *dest_profile,
+gboolean             gimp_image_convert_color_profile  (GimpImage           *image,
+                                                        GimpColorProfile    *dest_profile,
                                                         GimpColorRenderingIntent  intent,
-                                                        gboolean                  bpc,
-                                                        GimpProgress             *progress,
-                                                        GError                  **error);
+                                                        gboolean             bpc,
+                                                        GimpProgress        *progress,
+                                                        GError             **error);
 
-void                 gimp_image_import_color_profile   (GimpImage     *image,
-                                                        GimpContext   *context,
-                                                        GimpProgress  *progress,
-                                                        gboolean       interactive);
+void                 gimp_image_import_color_profile   (GimpImage           *image,
+                                                        GimpContext         *context,
+                                                        GimpProgress        *progress,
+                                                        gboolean             interactive);
+
+
+/*  internal API, to be called only from the icc-profile parasite setters  */
+
+void                 _gimp_image_update_color_profile  (GimpImage           *image,
+                                                        const GimpParasite  *icc_parasite);
 
 
 #endif /* __GIMP_IMAGE_COLOR_PROFILE_H__ */

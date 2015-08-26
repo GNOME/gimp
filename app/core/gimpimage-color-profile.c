@@ -613,3 +613,29 @@ gimp_image_convert_profile_indexed (GimpImage                *image,
 
   g_free (cmap);
 }
+
+
+/*  internal API  */
+
+void
+_gimp_image_update_color_profile (GimpImage          *image,
+                                  const GimpParasite *icc_parasite)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->color_profile)
+    {
+      g_object_unref (private->color_profile);
+      private->color_profile = NULL;
+    }
+
+  if (icc_parasite)
+    {
+      private->color_profile =
+        gimp_color_profile_new_from_icc_profile (gimp_parasite_data (icc_parasite),
+                                                 gimp_parasite_data_size (icc_parasite),
+                                                 NULL);
+    }
+
+  gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+}
