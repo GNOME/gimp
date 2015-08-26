@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-08-25 05:36+0000\n"
-"PO-Revision-Date: 2015-08-25 07:31+0100\n"
+"POT-Creation-Date: 2015-08-26 05:31+0000\n"
+"PO-Revision-Date: 2015-08-26 06:39+0100\n"
 "Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
 "Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: Portuguese\n"
@@ -825,47 +825,102 @@ msgstr "Cor do novo canal"
 msgid "%s Channel Copy"
 msgstr "Cópia do canal %s"
 
-#: ../app/actions/colormap-actions.c:44
+#: ../app/actions/colormap-actions.c:45
 msgctxt "colormap-action"
 msgid "Colormap Menu"
 msgstr "Menu do mapa de cores"
 
-#: ../app/actions/colormap-actions.c:48
+#: ../app/actions/colormap-actions.c:49
 msgctxt "colormap-action"
 msgid "_Edit Color..."
 msgstr "_Editar cor..."
 
-#: ../app/actions/colormap-actions.c:49
+#: ../app/actions/colormap-actions.c:50
 msgctxt "colormap-action"
 msgid "Edit this color"
 msgstr "Editar esta cor"
 
-#: ../app/actions/colormap-actions.c:57
+#: ../app/actions/colormap-actions.c:58
 msgctxt "colormap-action"
 msgid "_Add Color from FG"
 msgstr "_Adicionar cor a partir do 1ºP"
 
-#: ../app/actions/colormap-actions.c:58
+#: ../app/actions/colormap-actions.c:59
 msgctxt "colormap-action"
 msgid "Add current foreground color"
 msgstr "Adicionar cor de 1º plano atual"
 
-#: ../app/actions/colormap-actions.c:63
+#: ../app/actions/colormap-actions.c:64
 msgctxt "colormap-action"
 msgid "_Add Color from BG"
 msgstr "_Adicionar cor a partir do FD"
 
-#: ../app/actions/colormap-actions.c:64
+#: ../app/actions/colormap-actions.c:65
 msgctxt "colormap-action"
 msgid "Add current background color"
 msgstr "Adicionar cor de fundo atual"
 
-#: ../app/actions/colormap-commands.c:73
+#: ../app/actions/colormap-actions.c:73
+#| msgid "Select Color"
+msgctxt "colormap-action"
+msgid "_Select this Color"
+msgstr "_Selecionar esta cor"
+
+#: ../app/actions/colormap-actions.c:74
+#| msgctxt "tools-action"
+#| msgid "Select regions with similar colors"
+msgctxt "colormap-action"
+msgid "Select all pixels with this color"
+msgstr "Selecionar todos os pixels com esta cor"
+
+#: ../app/actions/colormap-actions.c:79
+#| msgctxt "channels-action"
+#| msgid "_Add to Selection"
+msgctxt "colormap-action"
+msgid "_Add to Selection"
+msgstr "_Adicionar à seleção"
+
+#: ../app/actions/colormap-actions.c:80
+#| msgctxt "channels-action"
+#| msgid "Add this channel to the current selection"
+msgctxt "colormap-action"
+msgid "Add all pixels with this color to the current selection"
+msgstr "Adicionar todos os pixels com esta cor à seleção atual"
+
+#: ../app/actions/colormap-actions.c:85
+#| msgctxt "channels-action"
+#| msgid "_Subtract from Selection"
+msgctxt "colormap-action"
+msgid "_Subtract from Selection"
+msgstr "_Subtrair da seleção"
+
+#: ../app/actions/colormap-actions.c:86
+#| msgctxt "channels-action"
+#| msgid "Subtract this channel from the current selection"
+msgctxt "colormap-action"
+msgid "Subtract all pixels with this color from the current selection"
+msgstr "Subtrair todos os pixels com esta cor da seleção atual"
+
+#: ../app/actions/colormap-actions.c:91
+#| msgctxt "channels-action"
+#| msgid "_Intersect with Selection"
+msgctxt "colormap-action"
+msgid "_Intersect with Selection"
+msgstr "_Intersectar com a seleção"
+
+#: ../app/actions/colormap-actions.c:92
+#| msgctxt "channels-action"
+#| msgid "Intersect this channel with the current selection"
+msgctxt "colormap-action"
+msgid "Intersect all pixels with this color with the current selection"
+msgstr "Intersetar todos os pixels com esta cor com a seleção atual"
+
+#: ../app/actions/colormap-commands.c:74
 #, c-format
 msgid "Edit colormap entry #%d"
 msgstr "Editar cor do mapa #%d"
 
-#: ../app/actions/colormap-commands.c:80
+#: ../app/actions/colormap-commands.c:81
 msgid "Edit Colormap Entry"
 msgstr "Editar entrada no mapa de cores"
 
@@ -8546,41 +8601,48 @@ msgstr ""
 "Erro fatal de processamento no ficheiro de pincel \"%s\": o ficheiro está "
 "corrompido."
 
-#: ../app/core/gimpchannel-select.c:65
+#: ../app/core/gimpchannel-select.c:66
 msgctxt "undo-type"
 msgid "Rectangle Select"
 msgstr "Seleção retangular"
 
-#: ../app/core/gimpchannel-select.c:117
+#: ../app/core/gimpchannel-select.c:118
 msgctxt "undo-type"
 msgid "Ellipse Select"
 msgstr "Seleção elíptica"
 
-#: ../app/core/gimpchannel-select.c:172
+#: ../app/core/gimpchannel-select.c:173
 msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Seleção de retângulo arredondado"
 
-#: ../app/core/gimpchannel-select.c:439 ../app/core/gimplayer.c:317
+#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:317
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa em seleção"
 
-#: ../app/core/gimpchannel-select.c:477
+#: ../app/core/gimpchannel-select.c:478
 #, c-format
 msgctxt "undo-type"
 msgid "%s Channel to Selection"
 msgstr "Canal %s em seleção"
 
-#: ../app/core/gimpchannel-select.c:526
+#: ../app/core/gimpchannel-select.c:527
 msgctxt "undo-type"
 msgid "Fuzzy Select"
 msgstr "Seleção difusa"
 
-#: ../app/core/gimpchannel-select.c:574
+#: ../app/core/gimpchannel-select.c:575
 msgctxt "undo-type"
 msgid "Select by Color"
 msgstr "Selecionar por cor"
+
+#: ../app/core/gimpchannel-select.c:614
+#| msgctxt "undo-type"
+#| msgid "Select by Color"
+msgctxt "undo-type"
+msgid "Select by Indexed Color"
+msgstr "Selecionar por cor indexada"
 
 #: ../app/core/gimpchannel.c:279
 msgctxt "undo-type"
@@ -9931,7 +9993,6 @@ msgstr "O GIMP é trazido até si por"
 
 #: ../app/dialogs/about-dialog.c:611
 #, c-format
-#| msgid "This is an unstable development release."
 msgid ""
 "This is an unstable development release\n"
 "commit %s"
@@ -9997,7 +10058,6 @@ msgstr "Selecionar perfil de destino"
 
 #: ../app/dialogs/color-profile-dialog.c:291
 #, c-format
-#| msgid "Direction  (%s)"
 msgid "Built-in RGB (%s)"
 msgstr "RGB interno (%s)"
 
@@ -10016,13 +10076,10 @@ msgid "Assign color profile"
 msgstr "Atribuir perfil de cor..."
 
 #: ../app/dialogs/color-profile-import-dialog.c:78
-#| msgctxt "color-profile-policy"
-#| msgid "Convert to RGB workspace"
 msgid "Convert to RGB Working Space?"
 msgstr "Converter para espaço de trabalho RGB?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:81
-#| msgid "Convert the image to a color profile"
 msgid "Import the image from a color profile"
 msgstr "Importar a imagem de um perfil de cor"
 
@@ -10031,20 +10088,15 @@ msgid "Keep"
 msgstr "Manter"
 
 #: ../app/dialogs/color-profile-import-dialog.c:87
-#| msgid "C_onvert"
 msgid "Convert"
 msgstr "Converter"
 
 #: ../app/dialogs/color-profile-import-dialog.c:104
 #, c-format
-#| msgctxt "image-action"
-#| msgid "Remove the image's color profile"
 msgid "The image '%s' has an embedded color profile"
 msgstr "A imagem \"%s\" tem um perfil de cores embutido"
 
 #: ../app/dialogs/color-profile-import-dialog.c:115
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to the RGB colorspace"
 msgid "Convert the image to the RGB working space?"
 msgstr "Converter imagem para espaço de cores RGB?"
 
@@ -11355,7 +11407,6 @@ msgid "Color Management"
 msgstr "Gestão de cores"
 
 #: ../app/dialogs/preferences-dialog.c:2377
-#| msgid "_RGB profile:"
 msgid "Preferred _RGB profile:"
 msgstr "Perfil _RGB preferido:"
 
@@ -17028,7 +17079,7 @@ msgstr "Índice de cores:"
 msgid "HTML notation:"
 msgstr "Notação HTML:"
 
-#: ../app/widgets/gimpcolormapeditor.c:468
+#: ../app/widgets/gimpcolormapeditor.c:485
 msgid "Only indexed images have a colormap."
 msgstr "Só as imagens indexadas é que têm um mapa de cores."
 
@@ -18334,12 +18385,12 @@ msgstr "_Antevisão"
 msgid "No selection"
 msgstr "Sem seleção"
 
-#: ../app/widgets/gimpthumbbox.c:596 ../app/widgets/gimpthumbbox.c:617
+#: ../app/widgets/gimpthumbbox.c:612 ../app/widgets/gimpthumbbox.c:633
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniatura %d de %d"
 
-#: ../app/widgets/gimpthumbbox.c:724 ../app/widgets/gimpthumbbox.c:734
+#: ../app/widgets/gimpthumbbox.c:740 ../app/widgets/gimpthumbbox.c:750
 msgid "Creating preview..."
 msgstr "A criar antevisão..."
 
