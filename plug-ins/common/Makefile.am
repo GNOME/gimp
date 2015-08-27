@@ -115,7 +115,6 @@ libexec_PROGRAMS = \
 	guillotine \
 	hot \
 	jigsaw \
-	lcms \
 	$(MAIL) \
 	max-rgb \
 	metadata \
@@ -1430,24 +1429,6 @@ jigsaw_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(jigsaw_RC)
-
-lcms_SOURCES = \
-	lcms.c
-
-lcms_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(GEGL_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(lcms_RC)
 
 mail_SOURCES = \
 	mail.c

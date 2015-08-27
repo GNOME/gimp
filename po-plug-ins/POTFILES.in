@@ -74,7 +74,6 @@ plug-ins/common/grid.c
 plug-ins/common/guillotine.c
 plug-ins/common/hot.c
 plug-ins/common/jigsaw.c
-plug-ins/common/lcms.c
 plug-ins/common/mail.c
 plug-ins/common/max-rgb.c
 plug-ins/common/metadata.c

@@ -1849,6 +1849,133 @@ CODE
     );
 }
 
+sub plug_in_icc_profile_apply {
+    $blurb = "Apply a color profile on the image";
+
+    $help = <<'HELP';
+This procedure transform from the image's color profile (or the
+default RGB profile if none is set) to the given ICC color
+profile. Only RGB color profiles are accepted. The profile is then set
+on the image using the 'icc-profile' "parasite.
+HELP
+
+    &neo_pdb_misc;
+    $date = '2015';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+        { name => 'image', type => 'image',
+          desc => 'Input image' },
+        { name => 'profile', type => 'string',
+          desc => 'Filename of an ICC color profile', allow_non_utf8 => 1 },
+        { name => 'intent', type => 'enum GimpColorRenderingIntent',
+          desc => 'Rendering intent' },
+        { name => 'bpc', type => 'boolean',
+          desc => 'Black point compensation' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
+    {
+      GFile            *file = NULL;
+      GimpColorProfile *p    = NULL;
+
+      if (profile)
+        file = g_file_new_for_path (profile);
+      else if (image->gimp->config->color_management->rgb_profile)
+        file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
+
+      if (file)
+        {
+          p = gimp_color_profile_new_from_file (file, error);
+
+          if (! p)
+	    success = FALSE;
+
+          g_object_unref (file);
+	}
+
+      if (success)
+        {
+          if (! p)
+            p = gimp_image_get_builtin_color_profile (image);
+
+          success = gimp_image_convert_color_profile (image, p, intent, bpc,
+                                                      progress, error);
+	}
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_icc_profile_apply_rgb {
+    $blurb = "Apply default RGB color profile on the image";
+
+    $help = <<'HELP';
+This procedure transform from the image's color profile (or the
+default RGB profile if none is set) to the configured default RGB
+color profile.  The profile is then set on the image using the
+'icc-profile' parasite.  If no RGB color profile is configured, sRGB
+is assumed and the parasite is unset.
+HELP
+
+    &neo_pdb_misc;
+    $date = '2015';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+        { name => 'image', type => 'image',
+          desc => 'Input image' },
+        { name => 'intent', type => 'enum GimpColorRenderingIntent',
+          desc => 'Rendering intent' },
+        { name => 'bpc', type => 'boolean',
+          desc => 'Black point compensation' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
+    {
+      GFile            *file = NULL;
+      GimpColorProfile *p    = NULL;
+
+      if (image->gimp->config->color_management->rgb_profile)
+        file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
+
+      if (file)
+        {
+          p = gimp_color_profile_new_from_file (file, error);
+
+          if (! p)
+	    success = FALSE;
+
+          g_object_unref (file);
+	}
+
+      if (success)
+        {
+          if (! p)
+            p = gimp_image_get_builtin_color_profile (image);
+
+         success = gimp_image_convert_color_profile (image, p, intent, bpc,
+                                                     progress, error);
+	}
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub plug_in_icc_profile_set {
     $blurb = "Set a color profile on the image";
 
@@ -4644,6 +4771,8 @@ CODE
             plug_in_hsv_noise
             plug_in_icc_profile_info
             plug_in_icc_profile_file_info
+            plug_in_icc_profile_apply
+            plug_in_icc_profile_apply_rgb
             plug_in_icc_profile_set
             plug_in_icc_profile_set_rgb
             plug_in_illusion

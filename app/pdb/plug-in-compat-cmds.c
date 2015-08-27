@@ -1966,6 +1966,118 @@ plug_in_icc_profile_file_info_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_icc_profile_apply_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  const gchar *profile;
+  gint32 intent;
+  gboolean bpc;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  profile = g_value_get_string (gimp_value_array_index (args, 2));
+  intent = g_value_get_enum (gimp_value_array_index (args, 3));
+  bpc = g_value_get_boolean (gimp_value_array_index (args, 4));
+
+  if (success)
+    {
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
+        {
+          GFile            *file = NULL;
+          GimpColorProfile *p    = NULL;
+
+          if (profile)
+            file = g_file_new_for_path (profile);
+          else if (image->gimp->config->color_management->rgb_profile)
+            file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
+
+          if (file)
+            {
+              p = gimp_color_profile_new_from_file (file, error);
+
+              if (! p)
+                success = FALSE;
+
+              g_object_unref (file);
+            }
+
+          if (success)
+            {
+              if (! p)
+                p = gimp_image_get_builtin_color_profile (image);
+
+              success = gimp_image_convert_color_profile (image, p, intent, bpc,
+                                                          progress, error);
+            }
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+plug_in_icc_profile_apply_rgb_invoker (GimpProcedure         *procedure,
+                                       Gimp                  *gimp,
+                                       GimpContext           *context,
+                                       GimpProgress          *progress,
+                                       const GimpValueArray  *args,
+                                       GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gint32 intent;
+  gboolean bpc;
+
+  image = gimp_value_get_image (gimp_value_array_index (args, 1), gimp);
+  intent = g_value_get_enum (gimp_value_array_index (args, 2));
+  bpc = g_value_get_boolean (gimp_value_array_index (args, 3));
+
+  if (success)
+    {
+      if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
+        {
+          GFile            *file = NULL;
+          GimpColorProfile *p    = NULL;
+
+          if (image->gimp->config->color_management->rgb_profile)
+            file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
+
+          if (file)
+            {
+              p = gimp_color_profile_new_from_file (file, error);
+
+              if (! p)
+                success = FALSE;
+
+              g_object_unref (file);
+            }
+
+          if (success)
+            {
+              if (! p)
+                p = gimp_image_get_builtin_color_profile (image);
+
+             success = gimp_image_convert_color_profile (image, p, intent, bpc,
+                                                         progress, error);
+            }
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_icc_profile_set_invoker (GimpProcedure         *procedure,
                                  Gimp                  *gimp,
                                  GimpContext           *context,
@@ -5985,6 +6097,99 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                            FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-icc-profile-apply
+   */
+  procedure = gimp_procedure_new (plug_in_icc_profile_apply_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-icc-profile-apply");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-icc-profile-apply",
+                                     "Apply a color profile on the image",
+                                     "This procedure transform from the image's color profile (or the default RGB profile if none is set) to the given ICC color profile. Only RGB color profiles are accepted. The profile is then set on the image using the 'icc-profile' \"parasite.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("profile",
+                                                       "profile",
+                                                       "Filename of an ICC color profile",
+                                                       TRUE, FALSE, FALSE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("intent",
+                                                  "intent",
+                                                  "Rendering intent",
+                                                  GIMP_TYPE_COLOR_RENDERING_INTENT,
+                                                  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("bpc",
+                                                     "bpc",
+                                                     "Black point compensation",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-icc-profile-apply-rgb
+   */
+  procedure = gimp_procedure_new (plug_in_icc_profile_apply_rgb_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-icc-profile-apply-rgb");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-icc-profile-apply-rgb",
+                                     "Apply default RGB color profile on the image",
+                                     "This procedure transform from the image's color profile (or the default RGB profile if none is set) to the configured default RGB color profile. The profile is then set on the image using the 'icc-profile' parasite. If no RGB color profile is configured, sRGB is assumed and the parasite is unset.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("intent",
+                                                  "intent",
+                                                  "Rendering intent",
+                                                  GIMP_TYPE_COLOR_RENDERING_INTENT,
+                                                  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("bpc",
+                                                     "bpc",
+                                                     "Black point compensation",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

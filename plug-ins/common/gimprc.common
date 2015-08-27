@@ -69,7 +69,6 @@ grid_RC = grid.rc.o
 guillotine_RC = guillotine.rc.o
 hot_RC = hot.rc.o
 jigsaw_RC = jigsaw.rc.o
-lcms_RC = lcms.rc.o
 mail_RC = mail.rc.o
 max_rgb_RC = max-rgb.rc.o
 metadata_RC = metadata.rc.o
