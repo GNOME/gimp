@@ -87,7 +87,6 @@ test_config_LDFLAGS = \
 	-Wl,-u,$(SYMPREFIX)gimp_pdb_new					\
 	-Wl,-u,$(SYMPREFIX)internal_procs_init				\
 	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore			\
-	-Wl,-u,$(SYMPREFIX)plug_in_icc_profile_apply_rgb		\
 	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type			\
 	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type		\
 	-Wl,-u,$(SYMPREFIX)gimp_vectors_prop_undo_get_type		\

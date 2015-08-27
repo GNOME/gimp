@@ -132,11 +132,6 @@ workaround_that_core_depends_on_pdb = \
 workaround_that_plug_in_depends_on_pdb = \
 	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec
 
-# FIXME: file should not depend on plug-in
-workaround_that_file_depends_on_plug_in = \
-	-Wl,-u,$(SYMPREFIX)plug_in_icc_profile_apply_rgb	\
-	-Wl,-u,$(SYMPREFIX)gimp_settings_get_type
-
 # core, vectors and gegl are on the same architectural layer, prevent
 # the linker from panicing
 calm_down_linker = \
@@ -152,8 +147,7 @@ AM_LDFLAGS = \
 	$(calm_down_linker)				\
 	$(workaround_that_core_depends_on_xcf)		\
 	$(workaround_that_core_depends_on_pdb)		\
-	$(workaround_that_plug_in_depends_on_pdb)	\
-	$(workaround_that_file_depends_on_plug_in)
+	$(workaround_that_plug_in_depends_on_pdb)
 
 gimpconsoleldadd = \
 	xcf/libappxcf.a			\
