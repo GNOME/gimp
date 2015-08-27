@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-08-26 05:31+0000\n"
-"PO-Revision-Date: 2015-08-26 06:39+0100\n"
+"POT-Creation-Date: 2015-08-27 05:36+0000\n"
+"PO-Revision-Date: 2015-08-27 09:51+0100\n"
 "Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
 "Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: Portuguese\n"
@@ -861,56 +861,41 @@ msgid "Add current background color"
 msgstr "Adicionar cor de fundo atual"
 
 #: ../app/actions/colormap-actions.c:73
-#| msgid "Select Color"
 msgctxt "colormap-action"
 msgid "_Select this Color"
 msgstr "_Selecionar esta cor"
 
 #: ../app/actions/colormap-actions.c:74
-#| msgctxt "tools-action"
-#| msgid "Select regions with similar colors"
 msgctxt "colormap-action"
 msgid "Select all pixels with this color"
 msgstr "Selecionar todos os pixels com esta cor"
 
 #: ../app/actions/colormap-actions.c:79
-#| msgctxt "channels-action"
-#| msgid "_Add to Selection"
 msgctxt "colormap-action"
 msgid "_Add to Selection"
 msgstr "_Adicionar à seleção"
 
 #: ../app/actions/colormap-actions.c:80
-#| msgctxt "channels-action"
-#| msgid "Add this channel to the current selection"
 msgctxt "colormap-action"
 msgid "Add all pixels with this color to the current selection"
 msgstr "Adicionar todos os pixels com esta cor à seleção atual"
 
 #: ../app/actions/colormap-actions.c:85
-#| msgctxt "channels-action"
-#| msgid "_Subtract from Selection"
 msgctxt "colormap-action"
 msgid "_Subtract from Selection"
 msgstr "_Subtrair da seleção"
 
 #: ../app/actions/colormap-actions.c:86
-#| msgctxt "channels-action"
-#| msgid "Subtract this channel from the current selection"
 msgctxt "colormap-action"
 msgid "Subtract all pixels with this color from the current selection"
 msgstr "Subtrair todos os pixels com esta cor da seleção atual"
 
 #: ../app/actions/colormap-actions.c:91
-#| msgctxt "channels-action"
-#| msgid "_Intersect with Selection"
 msgctxt "colormap-action"
 msgid "_Intersect with Selection"
 msgstr "_Intersectar com a seleção"
 
 #: ../app/actions/colormap-actions.c:92
-#| msgctxt "channels-action"
-#| msgid "Intersect this channel with the current selection"
 msgctxt "colormap-action"
 msgid "Intersect all pixels with this color with the current selection"
 msgstr "Intersetar todos os pixels com esta cor com a seleção atual"
@@ -8638,8 +8623,6 @@ msgid "Select by Color"
 msgstr "Selecionar por cor"
 
 #: ../app/core/gimpchannel-select.c:614
-#| msgctxt "undo-type"
-#| msgid "Select by Color"
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Selecionar por cor indexada"
@@ -8889,7 +8872,7 @@ msgstr "Misturar"
 msgid "Calculating distance map"
 msgstr "A calcular mapa de distâncias"
 
-#: ../app/core/gimpdrawable-blend.c:868 ../app/pdb/edit-cmds.c:801
+#: ../app/core/gimpdrawable-blend.c:872 ../app/pdb/edit-cmds.c:801
 #: ../app/tools/gimpblendtool.c:857
 msgid "Blending"
 msgstr "A misturar"
@@ -9095,42 +9078,42 @@ msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Anexar parasita à imagem"
 
-#: ../app/core/gimpimage.c:3402
+#: ../app/core/gimpimage.c:3390
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Remover parasita da imagem"
 
-#: ../app/core/gimpimage.c:4119
+#: ../app/core/gimpimage.c:4099
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Adicionar camada"
 
-#: ../app/core/gimpimage.c:4169 ../app/core/gimpimage.c:4189
+#: ../app/core/gimpimage.c:4149 ../app/core/gimpimage.c:4169
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Remover camada"
 
-#: ../app/core/gimpimage.c:4183
+#: ../app/core/gimpimage.c:4163
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Remover seleção flutuante"
 
-#: ../app/core/gimpimage.c:4348
+#: ../app/core/gimpimage.c:4328
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Adicionar canal"
 
-#: ../app/core/gimpimage.c:4386 ../app/core/gimpimage.c:4399
+#: ../app/core/gimpimage.c:4366 ../app/core/gimpimage.c:4379
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Remover canal"
 
-#: ../app/core/gimpimage.c:4453
+#: ../app/core/gimpimage.c:4433
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Adicionar caminho"
 
-#: ../app/core/gimpimage.c:4484
+#: ../app/core/gimpimage.c:4464
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Remover caminho"
@@ -10012,66 +9995,70 @@ msgstr "_Nome do canal:"
 msgid "Initialize from _selection"
 msgstr "Inicializar a partir da _Seleção"
 
-#: ../app/dialogs/color-profile-dialog.c:158
+#: ../app/dialogs/color-profile-dialog.c:163
 msgid "Convert to ICC Color Profile"
 msgstr "_Converter para perfil de cor ICC..."
 
-#: ../app/dialogs/color-profile-dialog.c:161
+#: ../app/dialogs/color-profile-dialog.c:166
 msgid "Convert the image to a color profile"
 msgstr "Converter a imagem num perfil de cor"
 
-#: ../app/dialogs/color-profile-dialog.c:175
+#: ../app/dialogs/color-profile-dialog.c:180
 msgid "Assign ICC Color Profile"
 msgstr "Atribuir perfil de cor ICC..."
 
-#: ../app/dialogs/color-profile-dialog.c:178
+#: ../app/dialogs/color-profile-dialog.c:183
 msgid "Assign a color profile to the image"
 msgstr "Atribuir um perfil de cor à imagem"
 
-#: ../app/dialogs/color-profile-dialog.c:184
+#: ../app/dialogs/color-profile-dialog.c:189
 msgid "_Assign"
 msgstr "_Atribuir"
 
-#: ../app/dialogs/color-profile-dialog.c:209
+#: ../app/dialogs/color-profile-dialog.c:214
 msgid "Current Color Profile"
 msgstr "Perfil de cor atual"
 
-#: ../app/dialogs/color-profile-dialog.c:221
+#: ../app/dialogs/color-profile-dialog.c:226
 msgid "Convert to"
 msgstr "COnverter em"
 
-#: ../app/dialogs/color-profile-dialog.c:221
+#: ../app/dialogs/color-profile-dialog.c:226
 msgid "Assign"
 msgstr "Atribuir"
 
-#: ../app/dialogs/color-profile-dialog.c:244
+#: ../app/dialogs/color-profile-dialog.c:238
+msgid "Profile _details"
+msgstr "_Detalhes do perfil"
+
+#: ../app/dialogs/color-profile-dialog.c:267
 msgid "_Rendering Intent:"
 msgstr "_Intenção de desenho:"
 
-#: ../app/dialogs/color-profile-dialog.c:260
+#: ../app/dialogs/color-profile-dialog.c:283
 msgid "_Black Point Compensation"
 msgstr "_Compensação de ponto negro"
 
-#: ../app/dialogs/color-profile-dialog.c:283
+#: ../app/dialogs/color-profile-dialog.c:306
 msgid "Select destination profile"
 msgstr "Selecionar perfil de destino"
 
-#: ../app/dialogs/color-profile-dialog.c:291
+#: ../app/dialogs/color-profile-dialog.c:314
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "RGB interno (%s)"
 
-#: ../app/dialogs/color-profile-dialog.c:305
+#: ../app/dialogs/color-profile-dialog.c:328
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "RGB preferido (%s)"
 
-#: ../app/dialogs/color-profile-dialog.c:370
+#: ../app/dialogs/color-profile-dialog.c:393
 #, c-format
 msgid "Converting to '%s'"
 msgstr "A converter para \"%s\""
 
-#: ../app/dialogs/color-profile-dialog.c:392
+#: ../app/dialogs/color-profile-dialog.c:415
 msgid "Assign color profile"
 msgstr "Atribuir perfil de cor..."
 
