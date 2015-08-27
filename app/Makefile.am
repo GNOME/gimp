@@ -119,35 +119,17 @@ AM_CPPFLAGS = \
 	-I$(includedir)			\
 	-I$(builddir)/gui
 
-# FIXME: core should not depend on xcf
-workaround_that_core_depends_on_xcf = \
-	-Wl,-u,$(SYMPREFIX)xcf_init
-
-# FIXME: core should not depend on pdb
-workaround_that_core_depends_on_pdb = \
-	-Wl,-u,$(SYMPREFIX)internal_procs_init		\
-	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore
-
-# FIXME: plug-in should not depend on pdb
-workaround_that_plug_in_depends_on_pdb = \
-	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec
-
-# core, vectors and gegl are on the same architectural layer, prevent
-# the linker from panicing
-calm_down_linker = \
+# We need this due to circular dependencies
+AM_LDFLAGS = \
+	$(munix)						\
 	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type		\
 	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_prop_undo_get_type	\
-	-Wl,-u,$(SYMPREFIX)gimp_curve_map_pixels		\
 	-Wl,-u,$(SYMPREFIX)gimp_param_spec_duplicate		\
-	-Wl,-u,$(SYMPREFIX)gimp_operations_init
-
-AM_LDFLAGS = \
-	$(munix)					\
-	$(calm_down_linker)				\
-	$(workaround_that_core_depends_on_xcf)		\
-	$(workaround_that_core_depends_on_pdb)		\
-	$(workaround_that_plug_in_depends_on_pdb)
+	-Wl,-u,$(SYMPREFIX)gimp_operations_init			\
+	-Wl,-u,$(SYMPREFIX)xcf_init				\
+	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
+	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
+	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec
 
 gimpconsoleldadd = \
 	xcf/libappxcf.a			\

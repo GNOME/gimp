@@ -64,32 +64,23 @@ AM_CPPFLAGS = \
 	$(GEGL_CFLAGS)		\
 	-I$(includedir)
 
-# We need this due to circular dependencies, see more detailed
-# comments about it in app/Makefile.am
+# We need this due to circular dependencies
 AM_LDFLAGS = \
+	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type		\
+	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
+	-Wl,-u,$(SYMPREFIX)gimp_param_spec_duplicate		\
+	-Wl,-u,$(SYMPREFIX)gimp_operations_init			\
 	-Wl,-u,$(SYMPREFIX)xcf_init				\
 	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
 	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
 	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec		\
 	-Wl,-u,$(SYMPREFIX)gui_init				\
-	-Wl,-u,$(SYMPREFIX)gimp_image_map_config_get_type	\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type		\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_prop_undo_get_type	\
-	-Wl,-u,$(SYMPREFIX)actions_init				\
-	-Wl,-u,$(SYMPREFIX)gimp_error_dialog_new		\
-	-Wl,-u,$(SYMPREFIX)menus_save				\
-	-Wl,-u,$(SYMPREFIX)gimp_tools_save			\
-	-Wl,-u,$(SYMPREFIX)gimp_curve_map_pixels		\
-	-Wl,-u,$(SYMPREFIX)gimp_image_base_type			\
-	-Wl,-u,$(SYMPREFIX)gimp_param_spec_duplicate		\
 	-Wl,-u,$(SYMPREFIX)gimp_lebl_dialog
 
 # Note that we have some duplicate entries here too to work around
 # circular dependencies and systems on the same architectural layer as
 # an alternative to LDFLAGS above
 LDADD = \
-	$(top_builddir)/app/dialogs/preferences-dialog.o	\
 	$(top_builddir)/app/gui/libappgui.a			\
 	$(top_builddir)/app/tools/libapptools.a			\
 	$(top_builddir)/app/dialogs/libappdialogs.a		\

@@ -79,19 +79,15 @@ TESTS = test-config
 
 test_config_DEPENDENCIES = $(gimpconfig_libs)
 
-# We need this due to circular dependencies, see more detailed
-# comments about it in app/Makefile.am
+# We need this due to circular dependencies
 test_config_LDFLAGS = \
-	-Wl,-u,$(SYMPREFIX)gimp_cairo_image_surface_create_buffer	\
-	-Wl,-u,$(SYMPREFIX)xcf_init					\
-	-Wl,-u,$(SYMPREFIX)gimp_pdb_new					\
-	-Wl,-u,$(SYMPREFIX)internal_procs_init				\
-	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore			\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type			\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type		\
-	-Wl,-u,$(SYMPREFIX)gimp_vectors_prop_undo_get_type		\
-	-Wl,-u,$(SYMPREFIX)gimp_image_map_config_get_type		\
-	-Wl,-u,$(SYMPREFIX)erode_region
+	-Wl,-u,$(SYMPREFIX)gimp_vectors_undo_get_type		\
+	-Wl,-u,$(SYMPREFIX)gimp_vectors_mod_undo_get_type	\
+	-Wl,-u,$(SYMPREFIX)gimp_param_spec_duplicate		\
+	-Wl,-u,$(SYMPREFIX)xcf_init				\
+	-Wl,-u,$(SYMPREFIX)internal_procs_init			\
+	-Wl,-u,$(SYMPREFIX)gimp_plug_in_manager_restore		\
+	-Wl,-u,$(SYMPREFIX)gimp_pdb_compat_param_spec
 
 test_config_LDADD = \
 	../xcf/libappxcf.a			\
