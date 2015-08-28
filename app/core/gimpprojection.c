@@ -119,6 +119,8 @@ static gint64      gimp_projection_get_memsize           (GimpObject      *objec
 static void        gimp_projection_pickable_flush        (GimpPickable    *pickable);
 static GimpImage * gimp_projection_get_image             (GimpPickable    *pickable);
 static const Babl * gimp_projection_get_format           (GimpPickable    *pickable);
+static GimpColorProfile
+                 * gimp_projection_get_color_profile     (GimpPickable    *pickable);
 static GeglBuffer * gimp_projection_get_buffer           (GimpPickable    *pickable);
 static gboolean    gimp_projection_get_pixel_at          (GimpPickable    *pickable,
                                                           gint             x,
@@ -237,6 +239,7 @@ gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_image             = gimp_projection_get_image;
   iface->get_format            = gimp_projection_get_format;
   iface->get_format_with_alpha = gimp_projection_get_format; /* sic */
+  iface->get_color_profile     = gimp_projection_get_color_profile;
   iface->get_buffer            = gimp_projection_get_buffer;
   iface->get_pixel_at          = gimp_projection_get_pixel_at;
   iface->get_opacity_at        = gimp_projection_get_opacity_at;
@@ -370,6 +373,14 @@ gimp_projection_get_format (GimpPickable *pickable)
   GimpProjection *proj = GIMP_PROJECTION (pickable);
 
   return gimp_projectable_get_format (proj->priv->projectable);
+}
+
+static GimpColorProfile *
+gimp_projection_get_color_profile (GimpPickable *pickable)
+{
+  GimpProjection *proj = GIMP_PROJECTION (pickable);
+
+  return gimp_projectable_get_color_profile (proj->priv->projectable);
 }
 
 static GeglBuffer *

@@ -177,7 +177,22 @@ gimp_projectable_get_format (GimpProjectable *projectable)
   if (iface->get_format)
     return iface->get_format (projectable);
 
-  return 0;
+  return NULL;
+}
+
+GimpColorProfile *
+gimp_projectable_get_color_profile (GimpProjectable *projectable)
+{
+  GimpProjectableInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_PROJECTABLE (projectable), NULL);
+
+  iface = GIMP_PROJECTABLE_GET_INTERFACE (projectable);
+
+  if (iface->get_color_profile)
+    return iface->get_color_profile (projectable);
+
+  return NULL;
 }
 
 void
