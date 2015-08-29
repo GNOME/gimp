@@ -28,6 +28,7 @@
 #include "gimpchannel.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
+#include "gimpimage-color-profile.h"
 #include "gimpimage-colormap.h"
 #include "gimpimage-duplicate.h"
 #include "gimpimage-grid.h"
@@ -78,6 +79,8 @@ static void          gimp_image_duplicate_quick_mask       (GimpImage *image,
                                                             GimpImage *new_image);
 static void          gimp_image_duplicate_parasites        (GimpImage *image,
                                                             GimpImage *new_image);
+static void          gimp_image_duplicate_color_profile    (GimpImage *image,
+                                                            GimpImage *new_image);
 
 
 GimpImage *
@@ -109,6 +112,10 @@ gimp_image_duplicate (GimpImage *image)
 
   /*  Copy resolution information  */
   gimp_image_duplicate_resolution (image, new_image);
+
+  /*  Copy parasites first so we have a color profile  */
+  gimp_image_duplicate_parasites (image, new_image);
+  gimp_image_duplicate_color_profile (image, new_image);
 
   /*  Copy the layers  */
   active_layer = gimp_image_duplicate_layers (image, new_image);
@@ -152,9 +159,6 @@ gimp_image_duplicate (GimpImage *image)
 
   /*  Copy the quick mask info  */
   gimp_image_duplicate_quick_mask (image, new_image);
-
-  /*  Copy parasites  */
-  gimp_image_duplicate_parasites (image, new_image);
 
   gimp_image_undo_enable (new_image);
 
@@ -511,4 +515,13 @@ gimp_image_duplicate_parasites (GimpImage *image,
       g_object_unref (new_private->parasites);
       new_private->parasites = gimp_parasite_list_copy (private->parasites);
     }
+}
+
+static void
+gimp_image_duplicate_color_profile (GimpImage *image,
+                                    GimpImage *new_image)
+{
+  GimpColorProfile *profile = gimp_image_get_color_profile (image);
+
+  gimp_image_set_color_profile (new_image, profile, NULL);
 }
