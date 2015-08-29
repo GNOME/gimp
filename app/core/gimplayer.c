@@ -481,14 +481,37 @@ gimp_layer_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static GimpLayerModeEffects
-gimp_layer_get_visible_mode (GimpLayer *layer)
+static void
+gimp_layer_update_mode_node (GimpLayer *layer)
 {
-  if (layer->mode != GIMP_DISSOLVE_MODE &&
-      gimp_filter_get_is_last_node (GIMP_FILTER (layer)))
-    return GIMP_NORMAL_MODE;
+  GeglNode             *mode_node;
+  GimpLayerModeEffects  visible_mode;
+  gboolean              linear;
 
-  return layer->mode;
+  mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
+
+  if (layer->show_mask)
+    {
+      visible_mode = GIMP_NORMAL_MODE;
+      linear       = TRUE;
+    }
+  else
+    {
+      if (layer->mode != GIMP_DISSOLVE_MODE &&
+          gimp_filter_get_is_last_node (GIMP_FILTER (layer)))
+        {
+          visible_mode = GIMP_NORMAL_MODE;
+        }
+      else
+        {
+          visible_mode = layer->mode;
+        }
+
+      linear = gimp_drawable_get_linear (GIMP_DRAWABLE (layer));
+    }
+
+  gimp_gegl_mode_node_set_mode (mode_node, visible_mode, linear);
+  gimp_gegl_mode_node_set_opacity (mode_node, layer->opacity);
 }
 
 static void
@@ -498,21 +521,12 @@ gimp_layer_notify (GObject    *object,
   if (! strcmp (pspec->name, "is-last-node") &&
       gimp_filter_peek_node (GIMP_FILTER (object)))
     {
-      GimpLayer *layer = GIMP_LAYER (object);
-      GeglNode  *mode_node;
-      gboolean   linear;
+      gimp_layer_update_mode_node (GIMP_LAYER (object));
 
-      mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
-      linear    = gimp_drawable_get_linear (GIMP_DRAWABLE (layer));
-
-      gimp_gegl_mode_node_set_mode (mode_node,
-                                    gimp_layer_get_visible_mode (layer),
-                                    linear);
-
-      gimp_drawable_update (GIMP_DRAWABLE (layer),
+      gimp_drawable_update (GIMP_DRAWABLE (object),
                             0, 0,
-                            gimp_item_get_width  (GIMP_ITEM (layer)),
-                            gimp_item_get_height (GIMP_ITEM (layer)));
+                            gimp_item_get_width  (GIMP_ITEM (object)),
+                            gimp_item_get_height (GIMP_ITEM (object)));
     }
 }
 
@@ -581,7 +595,6 @@ gimp_layer_get_node (GimpFilter *filter)
   GeglNode     *node;
   GeglNode     *source;
   GeglNode     *mode_node;
-  gboolean      linear;
   gboolean      source_node_hijacked = FALSE;
 
   node = GIMP_FILTER_CLASS (parent_class)->get_node (filter);
@@ -605,13 +618,7 @@ gimp_layer_get_node (GimpFilter *filter)
    * the layer and its mask
    */
   mode_node = gimp_drawable_get_mode_node (drawable);
-  linear    = gimp_drawable_get_linear (drawable);
-
-  gimp_gegl_mode_node_set_mode (mode_node,
-                                gimp_layer_get_visible_mode (layer),
-                                linear);
-  gimp_gegl_mode_node_set_opacity (mode_node,
-                                   layer->opacity);
+  gimp_layer_update_mode_node (layer);
 
   /* the layer's offset node */
   layer->layer_offset_node = gegl_node_new_child (node,
@@ -1175,16 +1182,7 @@ gimp_layer_set_buffer (GimpDrawable *drawable,
       gboolean new_linear = gimp_drawable_get_linear (drawable);
 
       if (old_linear != new_linear)
-        {
-          GimpLayer *layer = GIMP_LAYER (drawable);
-          GeglNode  *mode_node;
-
-          mode_node = gimp_drawable_get_mode_node (drawable);
-
-          gimp_gegl_mode_node_set_mode (mode_node,
-                                        gimp_layer_get_visible_mode (layer),
-                                        new_linear);
-        }
+        gimp_layer_update_mode_node (GIMP_LAYER (drawable));
     }
 }
 
@@ -1331,6 +1329,8 @@ gimp_layer_add_mask (GimpLayer      *layer,
           gegl_node_connect_to (layer->mask_offset_node, "output",
                                 mode_node,               "aux2");
         }
+
+        gimp_layer_update_mode_node (layer);
     }
 
   if (gimp_layer_get_apply_mask (layer) ||
@@ -1792,6 +1792,8 @@ gimp_layer_set_show_mask (GimpLayer *layer,
                                         mode_node,               "aux2");
                 }
             }
+
+            gimp_layer_update_mode_node (layer);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
@@ -1972,13 +1974,7 @@ gimp_layer_set_opacity (GimpLayer *layer,
       g_object_notify (G_OBJECT (layer), "opacity");
 
       if (gimp_filter_peek_node (GIMP_FILTER (layer)))
-        {
-          GeglNode *mode_node;
-
-          mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
-
-          gimp_gegl_mode_node_set_opacity (mode_node, layer->opacity);
-        }
+        gimp_layer_update_mode_node (layer);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
@@ -2017,17 +2013,7 @@ gimp_layer_set_mode (GimpLayer            *layer,
       g_object_notify (G_OBJECT (layer), "mode");
 
       if (gimp_filter_peek_node (GIMP_FILTER (layer)))
-        {
-          GeglNode *mode_node;
-          gboolean  linear;
-
-          mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
-          linear    = gimp_drawable_get_linear (GIMP_DRAWABLE (layer));
-
-          gimp_gegl_mode_node_set_mode (mode_node,
-                                        gimp_layer_get_visible_mode (layer),
-                                        linear);
-        }
+        gimp_layer_update_mode_node (layer);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
