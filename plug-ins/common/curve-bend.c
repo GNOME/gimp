@@ -2534,17 +2534,26 @@ p_init_gdrw (t_GDRW       *gdrw,
              int           dirty,
              int           shadow)
 {
+  gint w, h;
+
   gdrw->drawable = drawable;
   gdrw->pft = gimp_pixel_fetcher_new (drawable, FALSE);
   gimp_pixel_fetcher_set_edge_mode (gdrw->pft, GIMP_PIXEL_FETCHER_EDGE_BLACK);
   gdrw->tile_width = gimp_tile_width ();
   gdrw->tile_height = gimp_tile_height ();
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &gdrw->x1,
-                             &gdrw->y1, &gdrw->x2, &gdrw->y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &gdrw->x1, &gdrw->y1, &w, &h))
+    {
+      w = 0;
+      h = 0;
+    }
+
+  gdrw->x2 = gdrw->x1 + w;
+  gdrw->y2 = gdrw->y1 + h;
 
   gdrw->bpp = drawable->bpp;
-  if (gimp_drawable_has_alpha(drawable->drawable_id))
+  if (gimp_drawable_has_alpha (drawable->drawable_id))
     {
       /* index of the alpha channelbyte {1|3} */
       gdrw->index_alpha = gdrw->bpp - 1;

@@ -176,11 +176,21 @@ run (const gchar      *name,
   image.height = gimp_drawable_height (drawable->drawable_id);
   image.bpp    = gimp_drawable_bpp (drawable->drawable_id);
   image.alpha  = gimp_drawable_has_alpha (drawable->drawable_id);
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &selection.x1, &selection.y1,
-                             &selection.x2, &selection.y2);
-  selection.width    = selection.x2 - selection.x1;
-  selection.height   = selection.y2 - selection.y1;
+
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &selection.x1, &selection.y1,
+                                      &selection.width, &selection.height))
+    {
+      returns[0].type          = GIMP_PDB_STATUS;
+      returns[0].data.d_status = status;
+      *retc = 1;
+      *rets = returns;
+
+      return;
+    }
+
+  selection.x2       = selection.x1 + selection.width;
+  selection.y2       = selection.y1 + selection.height;
   selection.center_x = selection.x1 + (gdouble) selection.width / 2.0;
   selection.center_y = selection.y1 + (gdouble) selection.height / 2.0;
 

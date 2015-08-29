@@ -430,7 +430,7 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam values[1];
-  gint sel_x1, sel_y1, sel_x2, sel_y2;
+  gint sel_x1, sel_y1, sel_width, sel_height;
   gint img_height, img_width;
 
   GimpDrawable      *drawable;
@@ -455,11 +455,19 @@ run (const gchar      *name,
 
   img_width = gimp_drawable_width (drawable->drawable_id);
   img_height = gimp_drawable_height (drawable->drawable_id);
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
-  if (!gimp_drawable_is_rgb (drawable->drawable_id))
+  if (! gimp_drawable_is_rgb (drawable->drawable_id))
     status = GIMP_PDB_CALLING_ERROR;
+
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &sel_x1, &sel_y1,
+                                      &sel_width, &sel_height))
+    {
+      values[0].type          = GIMP_PDB_STATUS;
+      values[0].data.d_status = status;
+
+      return;
+    }
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -527,22 +535,21 @@ run (const gchar      *name,
                          imagePR.x,
                          imagePR.y + row,
                          imagePR.w,
-                         sel_x2 - sel_x1,
-                         sel_y2 - sel_y1,
+                         sel_width,
+                         sel_height,
                          imagePR.bpp,
                          qbist_info.oversampling);
                 }
 
               gimp_progress_update ((gfloat) (imagePR.y - sel_y1) /
-                                    (gfloat) (sel_y2 - sel_y1));
+                                    (gfloat) sel_height);
             }
 
           gimp_progress_update (1.0);
           gimp_drawable_flush (drawable);
           gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-          gimp_drawable_update (drawable->drawable_id,
-                                sel_x1, sel_y1,
-                                (sel_x2 - sel_x1), (sel_y2 - sel_y1));
+          gimp_drawable_update (drawable->drawable_id, sel_x1, sel_y1,
+						  sel_width, sel_height);
 
           gimp_displays_flush ();
         }

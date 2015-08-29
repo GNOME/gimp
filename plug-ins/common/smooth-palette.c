@@ -90,6 +90,8 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), G_N_ELEMENTS (return_vals),
                           args, return_vals);
+
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Info");
 }
 
 static struct
@@ -243,7 +245,7 @@ smooth_palette (GimpDrawable *drawable,
   gint          psize, i, j;
   guchar       *pal;
   guint         bpp = drawable->bpp;
-  gint          sel_x1, sel_x2, sel_y1, sel_y2;
+  gint          sel_x1, sel_y1;
   gint          width, height;
   GimpPixelRgn  pr;
   GRand        *gr;
@@ -263,10 +265,9 @@ smooth_palette (GimpDrawable *drawable,
 
   pal = g_new (guchar, psize * bpp);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
-  width = sel_x2 - sel_x1;
-  height = sel_y2 - sel_y1;
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &sel_x1, &sel_y1, &width, &height))
+    return new_image_id;
 
   gimp_pixel_rgn_init (&pr, drawable, sel_x1, sel_y1, width, height,
                        FALSE, FALSE);

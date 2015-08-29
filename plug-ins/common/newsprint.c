@@ -1801,7 +1801,14 @@ newsprint (GimpDrawable *drawable,
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      gint w, h;
+
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x1, &y1, &w, &h))
+	return;
+
+      x2 = x1 + w;
+      y2 = y1 + h;
     }
 
   has_alpha  = gimp_drawable_has_alpha (drawable->drawable_id);

@@ -905,7 +905,7 @@ nlfilter (GimpDrawable *drawable,
   GimpPixelRgn  srcPr, dstPr;
   guchar       *srcbuf, *dstbuf;
   guchar       *lastrow, *thisrow, *nextrow, *temprow;
-  gint          x1, x2, y1, y2;
+  gint          x1, y1, y2;
   gint          width, height, bpp;
   gint          filtno, y, rowsize, exrowsize, p_update;
 
@@ -913,14 +913,15 @@ nlfilter (GimpDrawable *drawable,
     {
       gimp_preview_get_position (preview, &x1, &y1);
       gimp_preview_get_size (preview, &width, &height);
-      x2 = x1 + width;
       y2 = y1 + height;
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      width = x2 - x1;
-      height = y2 - y1;
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x1, &y1, &width, &height))
+	return;
+
+      y2 = y1 + height;
     }
 
   bpp = drawable->bpp;

@@ -2544,6 +2544,7 @@ init_gdrw (t_GDRW         *gdrw,
   gint32  sel_channel_id;
   gint32  x1, x2, y1, y2;
   gint    offsetx, offsety;
+  gint    w, h;
   gint    sel_offsetx, sel_offsety;
   t_GDRW *sel_gdrw;
   gint32  non_empty;
@@ -2564,8 +2565,12 @@ init_gdrw (t_GDRW         *gdrw,
   /* get offsets within the image */
   gimp_drawable_offsets (drawable->drawable_id, &offsetx, &offsety);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id,
-                             &gdrw->x1, &gdrw->y1, &gdrw->x2, &gdrw->y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &gdrw->x1, &gdrw->y1, &w, &h))
+    return;
+
+  gdrw->x2 = gdrw->x1 + w;
+  gdrw->y2 = gdrw->y1 + h;
 
   gdrw->bpp = drawable->bpp;
   if (gimp_drawable_has_alpha (drawable->drawable_id))

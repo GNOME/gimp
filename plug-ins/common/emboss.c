@@ -353,15 +353,17 @@ emboss (GimpDrawable *drawable,
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x1, &y1, &width, &height))
+	return
 
       /* expand the bounds a little */
       x1 = MAX (0, x1 - evals.depth);
       y1 = MAX (0, y1 - evals.depth);
-      x2 = MIN (drawable->width, x2 + evals.depth);
-      y2 = MIN (drawable->height, y2 + evals.depth);
+      x2 = MIN (drawable->width, x1 + width + evals.depth);
+      y2 = MIN (drawable->height, y1 + height + evals.depth);
 
-      width = x2 - x1;
+      width  = x2 - x1;
       height = y2 - y1;
     }
 

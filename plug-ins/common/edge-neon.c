@@ -254,7 +254,7 @@ neon (GimpDrawable *drawable,
   gdouble       d_p[5], d_m[5];
   gdouble       bd_p[5], bd_m[5];
   gdouble      *val_p, *val_m, *vp, *vm;
-  gint          x1, y1, x2, y2;
+  gint          x, y;
   gint          i, j;
   gint          row, col, b;
   gint          terms;
@@ -267,16 +267,14 @@ neon (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_position (preview, &x, &y);
       gimp_preview_get_size (preview, &width, &height);
-      x2 = x1 + width;
-      y2 = y1 + height;
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      width  = (x2 - x1);
-      height = (y2 - y1);
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x, &y, &width, &height))
+        return;
     }
 
   if (radius < 1.0)
@@ -324,7 +322,7 @@ neon (GimpDrawable *drawable,
       memset (val_p, 0, height * bytes * sizeof (gdouble));
       memset (val_m, 0, height * bytes * sizeof (gdouble));
 
-      gimp_pixel_rgn_get_col (&src_rgn, src, col + x1, y1, (y2 - y1));
+      gimp_pixel_rgn_get_col (&src_rgn, src, col + x, y, height);
 
       sp_p = src;
       sp_m = src + (height - 1) * bytes;
@@ -385,7 +383,7 @@ neon (GimpDrawable *drawable,
         }
       else
         {
-          gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, (y2 - y1));
+          gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x, y, height);
 
           progress += height * radius;
 
@@ -403,7 +401,7 @@ neon (GimpDrawable *drawable,
       memset (val_p, 0, width * bytes * sizeof (gdouble));
       memset (val_m, 0, width * bytes * sizeof (gdouble));
 
-      gimp_pixel_rgn_get_row (&src_rgn, src, x1, row + y1, (x2 - x1));
+      gimp_pixel_rgn_get_row (&src_rgn, src, x, row + y, width);
       if (preview)
         {
           memcpy (src2,
@@ -412,7 +410,7 @@ neon (GimpDrawable *drawable,
         }
       else
         {
-          gimp_pixel_rgn_get_row (&dest_rgn, src2, x1, row + y1, (x2 - x1));
+          gimp_pixel_rgn_get_row (&dest_rgn, src2, x, row + y, width);
         }
 
       sp_p = src;
@@ -475,7 +473,7 @@ neon (GimpDrawable *drawable,
         }
       else
         {
-          gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, (x2 - x1));
+          gimp_pixel_rgn_set_row (&dest_rgn, dest, x, row + y, width);
 
           progress += width * radius;
           if ((row % 20) == 0)
@@ -501,7 +499,7 @@ neon (GimpDrawable *drawable,
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id,
-                            x1, y1, (x2 - x1), (y2 - y1));
+                            x, y, width, height);
     }
   /*  free up buffers  */
   g_free (val_p);

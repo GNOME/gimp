@@ -473,9 +473,12 @@ oilify (GimpDrawable *drawable,
     }
   else
     {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      width  = x2 - x1;
-      height = y2 - y1;
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x1, &y1, &width, &height))
+	return;
+
+      x2 = x1 + width;
+      y2 = y1 + height;
     }
 
   progress = 0;
