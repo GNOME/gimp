@@ -274,21 +274,37 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
 {
   const gchar *icon_name;
   const gchar *help;
+  gboolean     all_channels = (value & PICK_ALL_CHANNELS) != 0;
 
   switch (value & 0xF)
     {
     case PICK_LOW_INPUT:
       icon_name = GIMP_STOCK_COLOR_PICKER_BLACK;
-      help      = _("Pick black point");
+
+      if (all_channels)
+        help = _("Pick black point for all channels");
+      else
+        help = _("Pick black point for the selected channel");
       break;
+
     case PICK_GAMMA:
       icon_name = GIMP_STOCK_COLOR_PICKER_GRAY;
-      help      = _("Pick gray point");
+
+      if (all_channels)
+        help = _("Pick gray point for all channels");
+      else
+        help = _("Pick gray point for the selected channel");
       break;
+
     case PICK_HIGH_INPUT:
       icon_name = GIMP_STOCK_COLOR_PICKER_WHITE;
-      help      = _("Pick white point");
+
+      if (all_channels)
+        help = _("Pick white point for all channels");
+      else
+        help = _("Pick whitw point for the selected channel");
       break;
+
     default:
       return NULL;
     }
@@ -561,7 +577,9 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   button = gtk_button_new_with_mnemonic (_("_Auto"));
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-  gimp_help_set_help_data (button, _("Adjust levels automatically"), NULL);
+  gimp_help_set_help_data (button,
+                           _("Adjust levels for all channels automatically"),
+                           NULL);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
