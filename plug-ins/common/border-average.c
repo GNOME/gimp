@@ -208,7 +208,6 @@ borderaverage (GeglBuffer   *buffer,
                gint32        drawable_id,
                GimpRGB      *result)
 {
-  gint            x1, x2, y1, y2;
   gint            x, y, width, height;
   gint            max;
   guchar          r, g, b;
@@ -216,6 +215,12 @@ borderaverage (GeglBuffer   *buffer,
   gint           *cube;
   gint            i, j, k;
   GeglRectangle   border[4];
+
+  if (! gimp_drawable_mask_intersect (drawable_id, &x, &y, &width, &height))
+    {
+      gimp_rgba_set_uchar (result, 0, 0, 0, 255);
+      return;
+    }
 
   /* allocate and clear the cube before */
   bucket_expo = borderaverage_bucket_exponent;
@@ -233,14 +238,6 @@ borderaverage (GeglBuffer   *buffer,
             }
         }
     }
-
-  gimp_drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
-
-  x = x1;
-  y = y1;
-
-  width  = x2 - x1;
-  height = y2 - y1;
 
   /* Top */
   border[0].x =       x;
@@ -407,13 +404,6 @@ borderaverage_dialog (gint32        image_ID,
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
-
-  {
-    gint x1, x2, y1, y2;
-    gimp_drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
-    width  = x2 - x1;
-    height = y2 - y1;
-  }
 
   /*  set the size (in pixels) that will be treated as 0% and 100%  */
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0,
