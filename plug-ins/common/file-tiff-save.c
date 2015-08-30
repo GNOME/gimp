@@ -382,10 +382,8 @@ run (const gchar      *name,
                   else
                     metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
 
-                  if (tsvals.save_thumbnail)
-                    metadata_flags |= GIMP_METADATA_SAVE_THUMBNAIL;
-                  else
-                    metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+                  /* never save metadata thumbnails for TIFF, see bug #729952 */
+                  metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
                   file = g_file_new_for_path (param[3].data.d_string);
                   gimp_image_metadata_save_finish (image,
@@ -738,6 +736,8 @@ save_image (const gchar  *filename,
   gboolean       invert   = TRUE;
   const guchar   bw_map[] = { 0, 0, 0, 255, 255, 255 };
   const guchar   wb_map[] = { 255, 255, 255, 0, 0, 0 };
+  gint           number_of_sub_IFDs = 1;
+  toff_t         sub_IFDs_offsets[1] = { 0UL };
 
   compression = tsvals.compression;
 
@@ -968,6 +968,7 @@ save_image (const gchar  *filename,
     }
 
   /* Set TIFF parameters. */
+  TIFFSetField (tif, TIFFTAG_SUBIFD, number_of_sub_IFDs, sub_IFDs_offsets);
   TIFFSetField (tif, TIFFTAG_SUBFILETYPE, 0);
   TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, cols);
   TIFFSetField (tif, TIFFTAG_IMAGELENGTH, rows);
@@ -1154,6 +1155,84 @@ save_image (const gchar  *filename,
 
       if ((row % 32) == 0)
         gimp_progress_update ((gdouble) row / (gdouble) rows);
+    }
+
+  TIFFWriteDirectory (tif);
+
+  /* now switch IFD and write thumbnail
+   *
+   * the thumbnail must be saved in a subimage of the image.
+   * otherwise the thumbnail will be saved in a second page of the
+   * same image.
+   *
+   * Exif saves the thumbnail as a second page. To avoid this, the
+   * thumbnail must be saved with the functions of libtiff.
+   */
+  if (tsvals.save_thumbnail)
+    {
+      GdkPixbuf *thumb_pixbuf;
+      guchar    *thumb_pixels;
+      guchar    *buf;
+      gint       image_width;
+      gint       image_height;
+      gint       thumbw;
+      gint       thumbh;
+      gint       x, y;
+
+#define EXIF_THUMBNAIL_SIZE 256
+
+      image_width  = gimp_image_width  (image);
+      image_height = gimp_image_height (image);
+
+      if (image_width > image_height)
+        {
+          thumbw = EXIF_THUMBNAIL_SIZE;
+          thumbh = EXIF_THUMBNAIL_SIZE * image_height / image_width;
+        }
+      else
+        {
+          thumbh = EXIF_THUMBNAIL_SIZE;
+          thumbw = EXIF_THUMBNAIL_SIZE * image_width / image_height;
+        }
+
+      thumb_pixbuf = gimp_image_get_thumbnail (image, thumbw, thumbh,
+                                               GIMP_PIXBUF_KEEP_ALPHA);
+
+      thumb_pixels = gdk_pixbuf_get_pixels (thumb_pixbuf);
+
+      TIFFSetField (tif, TIFFTAG_SUBFILETYPE, FILETYPE_REDUCEDIMAGE);
+      TIFFSetField (tif, TIFFTAG_IMAGEWIDTH, thumbw);
+      TIFFSetField (tif, TIFFTAG_IMAGELENGTH, thumbh);
+      TIFFSetField (tif, TIFFTAG_BITSPERSAMPLE, 8);
+      TIFFSetField (tif, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_RGB);
+      TIFFSetField (tif, TIFFTAG_ROWSPERSTRIP, thumbh);
+      TIFFSetField (tif, TIFFTAG_COMPRESSION, COMPRESSION_NONE);
+      TIFFSetField (tif, TIFFTAG_SAMPLEFORMAT, SAMPLEFORMAT_UINT);
+      TIFFSetField (tif, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
+      TIFFSetField (tif, TIFFTAG_SAMPLESPERPIXEL, 3);
+
+      buf = _TIFFmalloc (thumbw * 3);
+
+      for (y = 0; y < thumbh; y++)
+        {
+          guchar *p = buf;
+
+          for (x = 0; x < thumbw; x++)
+            {
+              *p++ = *thumb_pixels++; /* r */
+              *p++ = *thumb_pixels++; /* g */
+              *p++ = *thumb_pixels++; /* b */
+              *thumb_pixels++;
+            }
+
+          TIFFWriteScanline (tif, buf, y, 0);
+        }
+
+      _TIFFfree (buf);
+
+      TIFFWriteDirectory (tif);
+
+      g_object_unref (thumb_pixbuf);
     }
 
   TIFFFlushData (tif);
