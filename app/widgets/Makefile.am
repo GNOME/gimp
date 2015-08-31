@@ -175,6 +175,8 @@ libappwidgets_a_sources = \
 	gimperrorconsole.h		\
 	gimperrordialog.c		\
 	gimperrordialog.h		\
+	gimpexportdialog.c		\
+	gimpexportdialog.h		\
 	gimpfgbgeditor.c		\
 	gimpfgbgeditor.h		\
 	gimpfgbgview.c			\
@@ -242,6 +244,8 @@ libappwidgets_a_sources = \
 	gimpmessagedialog.h		\
 	gimpnavigationview.c		\
 	gimpnavigationview.h		\
+	gimpopendialog.c		\
+	gimpopendialog.h		\
 	gimpoverlaybox.c		\
 	gimpoverlaybox.h		\
 	gimpoverlaychild.c		\
@@ -294,6 +298,8 @@ libappwidgets_a_sources = \
 	gimprender.h			\
 	gimpsamplepointeditor.c		\
 	gimpsamplepointeditor.h		\
+	gimpsavedialog.c		\
+	gimpsavedialog.h		\
 	gimpscalebutton.c		\
 	gimpscalebutton.h		\
 	gimpselectiondata.c		\

@@ -297,13 +297,6 @@ typedef enum  /*< skip >*/
 
 typedef enum  /*< skip >*/
 {
-  GIMP_FILE_CHOOSER_ACTION_OPEN,
-  GIMP_FILE_CHOOSER_ACTION_SAVE,
-  GIMP_FILE_CHOOSER_ACTION_EXPORT
-} GimpFileChooserAction;
-
-typedef enum  /*< skip >*/
-{
   GIMP_DIALOGS_SHOWN,
   GIMP_DIALOGS_HIDDEN_EXPLICITLY,  /* user used the Tab key to hide dialogs */
   GIMP_DIALOGS_HIDDEN_WITH_DISPLAY /* dialogs are hidden with the display   */
