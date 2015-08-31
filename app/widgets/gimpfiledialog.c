@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -36,97 +37,95 @@
 
 #include "config/gimpguiconfig.h"
 
-#include "file/file-utils.h"
-#include "file/gimp-file.h"
-
 #include "pdb/gimppdb.h"
 
-#include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginprocedure.h"
 
 #include "gimpfiledialog.h"
 #include "gimpfileprocview.h"
-#include "gimphelp-ids.h"
 #include "gimpprogressbox.h"
-#include "gimpview.h"
-#include "gimpviewrendererimagefile.h"
 #include "gimpthumbbox.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
-
 /*  an arbitrary limit to keep the file dialog from becoming too wide  */
 #define MAX_EXTENSIONS  4
-
 
 struct _GimpFileDialogState
 {
   gchar *filter_name;
 };
 
+enum
+{
+  PROP_0,
+  PROP_GIMP,
+  PROP_HELP_ID,
+  PROP_STOCK_ID,
+  PROP_AUTOMATIC_HELP_ID,
+  PROP_AUTOMATIC_LABEL,
+  PROP_FILE_FILTER_LABEL,
+  PROP_FILE_PROCS,
+  PROP_FILE_PROCS_ALL_IMAGES
+};
 
 static void     gimp_file_dialog_progress_iface_init    (GimpProgressInterface *iface);
 
-static void     gimp_file_dialog_dispose                (GObject          *object);
 
-static gboolean gimp_file_dialog_delete_event           (GtkWidget        *widget,
-                                                         GdkEventAny      *event);
-static void     gimp_file_dialog_response               (GtkDialog        *dialog,
-                                                         gint              response_id);
+static void     gimp_file_dialog_set_property           (GObject             *object,
+                                                         guint                property_id,
+                                                         const GValue        *value,
+                                                         GParamSpec          *pspec);
+static void     gimp_file_dialog_get_property           (GObject             *object,
+                                                         guint                property_id,
+                                                         GValue              *value,
+                                                         GParamSpec          *pspec);
+static void     gimp_file_dialog_constructed            (GObject             *object);
+static void     gimp_file_dialog_dispose                (GObject             *object);
+
+static gboolean gimp_file_dialog_delete_event           (GtkWidget           *widget,
+                                                         GdkEventAny         *event);
+static void     gimp_file_dialog_response               (GtkDialog           *dialog,
+                                                         gint                 response_id);
 static GimpProgress *
-                gimp_file_dialog_progress_start         (GimpProgress     *progress,
-                                                         gboolean          cancellable,
-                                                         const gchar      *message);
-static void     gimp_file_dialog_progress_end           (GimpProgress     *progress);
-static gboolean gimp_file_dialog_progress_is_active     (GimpProgress     *progress);
-static void     gimp_file_dialog_progress_set_text      (GimpProgress     *progress,
-                                                         const gchar      *message);
-static void     gimp_file_dialog_progress_set_value     (GimpProgress     *progress,
-                                                         gdouble           percentage);
-static gdouble  gimp_file_dialog_progress_get_value     (GimpProgress     *progress);
-static void     gimp_file_dialog_progress_pulse         (GimpProgress     *progress);
-static guint32  gimp_file_dialog_progress_get_window_id (GimpProgress     *progress);
+                gimp_file_dialog_progress_start         (GimpProgress        *progress,
+                                                         gboolean             cancellable,
+                                                         const gchar         *message);
+static void     gimp_file_dialog_progress_end           (GimpProgress        *progress);
+static gboolean gimp_file_dialog_progress_is_active     (GimpProgress        *progress);
+static void     gimp_file_dialog_progress_set_text      (GimpProgress        *progress,
+                                                         const gchar         *message);
+static void     gimp_file_dialog_progress_set_value     (GimpProgress        *progress,
+                                                         gdouble              percentage);
+static gdouble  gimp_file_dialog_progress_get_value     (GimpProgress        *progress);
+static void     gimp_file_dialog_progress_pulse         (GimpProgress        *progress);
+static guint32  gimp_file_dialog_progress_get_window_id (GimpProgress        *progress);
 
-static void     gimp_file_dialog_add_user_dir           (GimpFileDialog   *dialog,
-                                                         GUserDirectory    directory);
-static void     gimp_file_dialog_add_preview            (GimpFileDialog   *dialog,
-                                                         Gimp             *gimp);
-static void     gimp_file_dialog_add_filters            (GimpFileDialog   *dialog,
-                                                         Gimp             *gimp,
-                                                         GimpFileChooserAction
-                                                                           action,
-                                                         GSList           *file_procs,
-                                                         GSList           *file_procs_all_images);
-static void     gimp_file_dialog_add_compat_toggle      (GimpFileDialog   *dialog);
-static void     gimp_file_dialog_process_procedure      (GimpPlugInProcedure
-                                                                          *file_proc,
-                                                         GtkFileFilter   **filter_out,
-                                                         GtkFileFilter    *all,
-                                                         GtkFileFilter    *all_savable);
-static void     gimp_file_dialog_add_proc_selection     (GimpFileDialog   *dialog,
-                                                         Gimp             *gimp,
-                                                         GSList           *file_procs,
-                                                         const gchar      *automatic,
-                                                         const gchar      *automatic_help_id);
+static void     gimp_file_dialog_add_user_dir           (GimpFileDialog      *dialog,
+                                                         GUserDirectory       directory);
+static void     gimp_file_dialog_add_preview            (GimpFileDialog      *dialog);
+static void     gimp_file_dialog_add_filters            (GimpFileDialog      *dialog);
+static void     gimp_file_dialog_process_procedure      (GimpPlugInProcedure *file_proc,
+                                                         GtkFileFilter      **filter_out,
+                                                         GtkFileFilter       *all,
+                                                         GtkFileFilter       *all_savable);
+static void     gimp_file_dialog_add_proc_selection     (GimpFileDialog      *dialog);
 
-static void     gimp_file_dialog_selection_changed      (GtkFileChooser   *chooser,
-                                                         GimpFileDialog   *dialog);
-static void     gimp_file_dialog_update_preview         (GtkFileChooser   *chooser,
-                                                         GimpFileDialog   *dialog);
+static void     gimp_file_dialog_selection_changed      (GtkFileChooser      *chooser,
+                                                         GimpFileDialog      *dialog);
+static void     gimp_file_dialog_update_preview         (GtkFileChooser      *chooser,
+                                                         GimpFileDialog      *dialog);
 
-static void     gimp_file_dialog_compat_toggled         (GtkToggleButton  *button,
-                                                         GimpFileDialog   *dialog);
-static void     gimp_file_dialog_proc_changed           (GimpFileProcView *view,
-                                                         GimpFileDialog   *dialog);
+static void     gimp_file_dialog_proc_changed           (GimpFileProcView    *view,
+                                                         GimpFileDialog      *dialog);
 
-static void     gimp_file_dialog_help_func              (const gchar      *help_id,
-                                                         gpointer          help_data);
-static void     gimp_file_dialog_help_clicked           (GtkWidget        *widget,
-                                                         gpointer          dialog);
+static void     gimp_file_dialog_help_func              (const gchar         *help_id,
+                                                         gpointer             help_data);
+static void     gimp_file_dialog_help_clicked           (GtkWidget           *widget,
+                                                         gpointer             dialog);
 
-static gchar  * gimp_file_dialog_pattern_from_extension (const gchar      *extension);
-static GFile  * gimp_file_dialog_get_default_folder     (Gimp             *gimp);
+static gchar  * gimp_file_dialog_pattern_from_extension (const gchar         *extension);
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpFileDialog, gimp_file_dialog,
@@ -144,16 +143,61 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GtkDialogClass *dialog_class = GTK_DIALOG_CLASS (klass);
 
+  object_class->set_property = gimp_file_dialog_set_property;
+  object_class->get_property = gimp_file_dialog_get_property;
+  object_class->constructed  = gimp_file_dialog_constructed;
   object_class->dispose      = gimp_file_dialog_dispose;
 
   widget_class->delete_event = gimp_file_dialog_delete_event;
 
   dialog_class->response     = gimp_file_dialog_response;
+
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp", NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_HELP_ID,
+                                   g_param_spec_string ("help-id", NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_STOCK_ID,
+                                   g_param_spec_string ("stock-id", NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_AUTOMATIC_HELP_ID,
+                                   g_param_spec_string ("automatic-help-id", NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_AUTOMATIC_LABEL,
+                                   g_param_spec_string ("automatic-label", NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_FILE_FILTER_LABEL,
+                                   g_param_spec_string ("file-filter-label", NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_FILE_PROCS,
+                                   g_param_spec_pointer ("file-procs", NULL, NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_FILE_PROCS_ALL_IMAGES,
+                                   g_param_spec_pointer ("file-procs-all-images", NULL, NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
 gimp_file_dialog_init (GimpFileDialog *dialog)
 {
+  dialog->stock_id = GTK_STOCK_OK;
 }
 
 static void
@@ -170,6 +214,133 @@ gimp_file_dialog_progress_iface_init (GimpProgressInterface *iface)
 }
 
 static void
+gimp_file_dialog_set_property (GObject      *object,
+                               guint         property_id,
+                               const GValue *value,
+                               GParamSpec   *pspec)
+{
+  GimpFileDialog        *dialog  = GIMP_FILE_DIALOG (object);
+
+  switch (property_id)
+    {
+    case PROP_GIMP:
+      dialog->gimp = g_value_get_object (value);
+      break;
+    case PROP_HELP_ID:
+      dialog->help_id = g_value_dup_string (value);
+      break;
+    case PROP_STOCK_ID:
+      dialog->stock_id = g_value_dup_string (value);
+      break;
+    case PROP_AUTOMATIC_HELP_ID:
+      dialog->automatic_help_id = g_value_dup_string (value);
+      break;
+    case PROP_AUTOMATIC_LABEL:
+      dialog->automatic_label = g_value_dup_string (value);
+      break;
+    case PROP_FILE_FILTER_LABEL:
+      dialog->file_filter_label = g_value_dup_string (value);
+      break;
+    case PROP_FILE_PROCS:
+      dialog->file_procs = g_value_get_pointer (value);
+      break;
+    case PROP_FILE_PROCS_ALL_IMAGES:
+      dialog->file_procs_all_images = g_value_get_pointer (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_file_dialog_get_property (GObject    *object,
+                               guint       property_id,
+                               GValue     *value,
+                               GParamSpec *pspec)
+{
+  GimpFileDialog        *dialog  = GIMP_FILE_DIALOG (object);
+
+  switch (property_id)
+    {
+    case PROP_GIMP:
+      g_value_set_object (value, dialog->gimp);
+      break;
+    case PROP_HELP_ID:
+      g_value_set_string (value, dialog->help_id);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_file_dialog_constructed (GObject *object)
+{
+  GimpFileDialog *dialog = GIMP_FILE_DIALOG (object);
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                          dialog->stock_id, GTK_RESPONSE_OK,
+                          NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  if (dialog->help_id)
+    {
+      gimp_help_connect (GTK_WIDGET (dialog),
+                         gimp_file_dialog_help_func, dialog->help_id, dialog);
+
+      if (GIMP_GUI_CONFIG (dialog->gimp->config)->show_help_button)
+        {
+          GtkWidget *action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
+          GtkWidget *button      = gtk_button_new_from_stock (GTK_STOCK_HELP);
+
+          gtk_box_pack_end (GTK_BOX (action_area), button, FALSE, TRUE, 0);
+          gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (action_area),
+                                              button, TRUE);
+          gtk_widget_show (button);
+
+          g_object_set_data_full (G_OBJECT (dialog), "gimp-dialog-help-id",
+                                  g_strdup (dialog->help_id),
+                                  (GDestroyNotify) g_free);
+
+          g_signal_connect (button, "clicked",
+                            G_CALLBACK (gimp_file_dialog_help_clicked),
+                            dialog);
+
+          g_object_set_data (G_OBJECT (dialog), "gimp-dialog-help-button", button);
+        }
+    }
+
+  /* All classes derivated from GimpFileDialog should show these. */
+  gimp_file_dialog_add_user_dir (dialog, G_USER_DIRECTORY_PICTURES);
+  gimp_file_dialog_add_user_dir (dialog, G_USER_DIRECTORY_DOCUMENTS);
+
+  gimp_file_dialog_add_preview (dialog);
+  gimp_file_dialog_add_filters (dialog);
+
+  dialog->extra_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog),
+                                     dialog->extra_vbox);
+  gtk_widget_show (dialog->extra_vbox);
+
+  gimp_file_dialog_add_proc_selection (dialog);
+
+  dialog->progress = gimp_progress_box_new ();
+  gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                    dialog->progress, FALSE, FALSE, 0);
+}
+
+static void
 gimp_file_dialog_dispose (GObject *object)
 {
   GimpFileDialog *dialog = GIMP_FILE_DIALOG (object);
@@ -177,6 +348,26 @@ gimp_file_dialog_dispose (GObject *object)
   G_OBJECT_CLASS (parent_class)->dispose (object);
 
   dialog->progress = NULL;
+
+  if (dialog->help_id)
+    g_free (dialog->help_id);
+  dialog->help_id = NULL;
+
+  if (dialog->stock_id)
+    g_free (dialog->stock_id);
+  dialog->stock_id = NULL;
+
+  if (dialog->automatic_help_id)
+    g_free (dialog->automatic_help_id);
+  dialog->automatic_help_id = NULL;
+
+  if (dialog->automatic_label)
+    g_free (dialog->automatic_label);
+  dialog->automatic_label = NULL;
+
+  if (dialog->file_filter_label)
+    g_free (dialog->file_filter_label);
+  dialog->file_filter_label = NULL;
 }
 
 static gboolean
@@ -300,122 +491,15 @@ gimp_file_dialog_progress_get_window_id (GimpProgress *progress)
 
 /*  public functions  */
 
-GtkWidget *
-gimp_file_dialog_new (Gimp                  *gimp,
-                      GimpFileChooserAction  action,
-                      const gchar           *title,
-                      const gchar           *role,
-                      const gchar           *icon_name,
-                      const gchar           *help_id)
+void
+gimp_file_dialog_add_extra_widget (GimpFileDialog *dialog,
+                                   GtkWidget      *widget,
+                                   gboolean        expand,
+                                   gboolean        fill,
+                                   guint           padding)
 {
-  GimpFileDialog       *dialog                = NULL;
-  GSList               *file_procs            = NULL;
-  GSList               *file_procs_all_images = NULL;
-  const gchar          *automatic             = NULL;
-  const gchar          *automatic_help_id     = NULL;
-  GtkFileChooserAction  gtk_action            = 0;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (title != NULL, NULL);
-  g_return_val_if_fail (role != NULL, NULL);
-  g_return_val_if_fail (icon_name != NULL, NULL);
-  g_return_val_if_fail (help_id != NULL, NULL);
-
-  switch (action)
-    {
-    case GIMP_FILE_CHOOSER_ACTION_OPEN:
-      gtk_action            = GTK_FILE_CHOOSER_ACTION_OPEN;
-      file_procs            = gimp->plug_in_manager->load_procs;
-      file_procs_all_images = NULL;
-      automatic             = _("Automatically Detected");
-      automatic_help_id     = GIMP_HELP_FILE_OPEN_BY_EXTENSION;
-      break;
-
-    case GIMP_FILE_CHOOSER_ACTION_SAVE:
-    case GIMP_FILE_CHOOSER_ACTION_EXPORT:
-      gtk_action            = GTK_FILE_CHOOSER_ACTION_SAVE;
-      file_procs            = (action == GIMP_FILE_CHOOSER_ACTION_SAVE ?
-                               gimp->plug_in_manager->save_procs :
-                               gimp->plug_in_manager->export_procs);
-      file_procs_all_images = (action == GIMP_FILE_CHOOSER_ACTION_SAVE ?
-                               gimp->plug_in_manager->export_procs :
-                               gimp->plug_in_manager->save_procs);
-      automatic             = _("By Extension");
-      automatic_help_id     = GIMP_HELP_FILE_SAVE_BY_EXTENSION;
-      break;
-
-    default:
-      g_return_val_if_reached (NULL);
-      return NULL;
-    }
-
-  dialog = g_object_new (GIMP_TYPE_FILE_DIALOG,
-                         "title",                     title,
-                         "role",                      role,
-                         "action",                    gtk_action,
-                         "local-only",                FALSE,
-                         "do-overwrite-confirmation", TRUE,
-                         NULL);
-
-  gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                          icon_name,        GTK_RESPONSE_OK,
-                          NULL);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  gimp_help_connect (GTK_WIDGET (dialog),
-                     gimp_file_dialog_help_func, help_id, dialog);
-
-  if (GIMP_GUI_CONFIG (gimp->config)->show_help_button && help_id)
-    {
-      GtkWidget *action_area = gtk_dialog_get_action_area (GTK_DIALOG (dialog));
-      GtkWidget *button      = gtk_button_new_from_stock (GTK_STOCK_HELP);
-
-      gtk_box_pack_end (GTK_BOX (action_area), button, FALSE, TRUE, 0);
-      gtk_button_box_set_child_secondary (GTK_BUTTON_BOX (action_area),
-                                          button, TRUE);
-      gtk_widget_show (button);
-
-      g_object_set_data_full (G_OBJECT (dialog), "gimp-dialog-help-id",
-                              g_strdup (help_id),
-                              (GDestroyNotify) g_free);
-
-      g_signal_connect (button, "clicked",
-                        G_CALLBACK (gimp_file_dialog_help_clicked),
-                        dialog);
-
-      g_object_set_data (G_OBJECT (dialog), "gimp-dialog-help-button", button);
-    }
-
-  gimp_file_dialog_add_user_dir (dialog, G_USER_DIRECTORY_PICTURES);
-  gimp_file_dialog_add_user_dir (dialog, G_USER_DIRECTORY_DOCUMENTS);
-
-  gimp_file_dialog_add_preview (dialog, gimp);
-
-  gimp_file_dialog_add_filters (dialog, gimp, action,
-                                file_procs,
-                                file_procs_all_images);
-
-  dialog->extra_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog),
-                                     dialog->extra_vbox);
-  gtk_widget_show (dialog->extra_vbox);
-
-  gimp_file_dialog_add_compat_toggle (dialog);
-
-  gimp_file_dialog_add_proc_selection (dialog, gimp, file_procs, automatic,
-                                       automatic_help_id);
-
-  dialog->progress = gimp_progress_box_new ();
-  gtk_box_pack_end (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                    dialog->progress, FALSE, FALSE, 0);
-
-  return GTK_WIDGET (dialog);
+  gtk_box_pack_start (GTK_BOX (dialog->extra_vbox),
+                      widget, expand, fill, padding);
 }
 
 void
@@ -465,259 +549,6 @@ gimp_file_dialog_set_file_proc (GimpFileDialog      *dialog,
   if (file_proc != dialog->file_proc)
     gimp_file_proc_view_set_proc (GIMP_FILE_PROC_VIEW (dialog->proc_view),
                                   file_proc);
-}
-
-void
-gimp_file_dialog_set_open_image (GimpFileDialog *dialog,
-                                 GimpImage      *image,
-                                 gboolean        open_as_layers)
-{
-  g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
-  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
-
-  dialog->image          = image;
-  dialog->open_as_layers = open_as_layers;
-}
-
-void
-gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
-                                 Gimp           *gimp,
-                                 GimpImage      *image,
-                                 gboolean        save_a_copy,
-                                 gboolean        export,
-                                 gboolean        close_after_saving,
-                                 GimpObject     *display)
-{
-  GFile *dir_file  = NULL;
-  GFile *name_file = NULL;
-  GFile *ext_file  = NULL;
-  gchar *basename;
-
-  g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-
-  dialog->image              = image;
-  dialog->save_a_copy        = save_a_copy;
-  dialog->export             = export;
-  dialog->close_after_saving = close_after_saving;
-  dialog->display_to_close   = display;
-
-  gimp_file_dialog_set_file_proc (dialog, NULL);
-
-  if (! export)
-    {
-      gint         rle_version;
-      gint         zlib_version;
-      const gchar *version_string;
-      gchar       *tooltip;
-
-      /*
-       * Priority of default paths for Save:
-       *
-       *   1. Last Save a copy-path (applies only to Save a copy)
-       *   2. Last Save path
-       *   3. Path of source XCF
-       *   4. Path of Import source
-       *   5. Last Save path of any GIMP document
-       *   6. The default path (usually the OS 'Documents' path)
-       */
-
-      if (save_a_copy)
-        dir_file = gimp_image_get_save_a_copy_file (image);
-
-      if (! dir_file)
-        dir_file = gimp_image_get_file (image);
-
-      if (! dir_file)
-        dir_file = g_object_get_data (G_OBJECT (image),
-                                      "gimp-image-source-file");
-
-      if (! dir_file)
-        dir_file = gimp_image_get_imported_file (image);
-
-      if (! dir_file)
-        dir_file = g_object_get_data (G_OBJECT (gimp),
-                                      GIMP_FILE_SAVE_LAST_FILE_KEY);
-
-      if (! dir_file)
-        dir_file = gimp_file_dialog_get_default_folder (gimp);
-
-
-      /* Priority of default basenames for Save:
-       *
-       *   1. Last Save a copy-name (applies only to Save a copy)
-       *   2. Last Save name
-       *   3. Last Export name
-       *   3. The source image path
-       *   3. 'Untitled'
-       */
-
-      if (save_a_copy)
-        name_file = gimp_image_get_save_a_copy_file (image);
-
-      if (! name_file)
-        name_file = gimp_image_get_file (image);
-
-      if (! name_file)
-        name_file = gimp_image_get_exported_file (image);
-
-      if (! name_file)
-        name_file = gimp_image_get_imported_file (image);
-
-      if (! name_file)
-        name_file = gimp_image_get_untitled_file (image);
-
-
-      /* Priority of default type/extension for Save:
-       *
-       *   1. Type of last Save
-       *   2. .xcf (which we don't explicitly append)
-       */
-      ext_file = gimp_image_get_file (image);
-
-      if (ext_file)
-        g_object_ref (ext_file);
-      else
-        ext_file = g_file_new_for_uri ("file:///we/only/care/about/extension.xcf");
-
-      gimp_image_get_xcf_version (image, FALSE, &rle_version,  &version_string);
-      gimp_image_get_xcf_version (image, TRUE,  &zlib_version, NULL);
-
-      if (rle_version == zlib_version)
-        {
-          gtk_widget_set_sensitive (dialog->compat_toggle, FALSE);
-
-          tooltip = g_strdup_printf (_("The image uses features from %s and "
-                                       "cannot be saved for older GIMP "
-                                       "versions."),
-                                     version_string);
-        }
-      else
-        {
-          gtk_widget_set_sensitive (dialog->compat_toggle, TRUE);
-
-          tooltip = g_strdup_printf (_("Disables compression to make the XCF "
-                                       "file readable by %s and later."),
-                                     version_string);
-        }
-
-      gimp_help_set_help_data (dialog->compat_toggle, tooltip, NULL);
-      g_free (tooltip);
-
-      gtk_widget_show (dialog->compat_toggle);
-    }
-  else /* if (export) */
-    {
-      /*
-       * Priority of default paths for Export:
-       *
-       *   1. Last Export path
-       *   2. Path of import source
-       *   3. Path of XCF source
-       *   4. Last path of any save to XCF
-       *   5. Last Export path of any document
-       *   6. The default path (usually the OS 'Documents' path)
-       */
-
-      dir_file = gimp_image_get_exported_file (image);
-
-      if (! dir_file)
-        dir_file = g_object_get_data (G_OBJECT (image),
-                                      "gimp-image-source-file");
-
-      if (! dir_file)
-        dir_file = gimp_image_get_imported_file (image);
-
-      if (! dir_file)
-        dir_file = gimp_image_get_file (image);
-
-      if (! dir_file)
-        dir_file = g_object_get_data (G_OBJECT (gimp),
-                                      GIMP_FILE_SAVE_LAST_FILE_KEY);
-
-      if (! dir_file)
-        dir_file = g_object_get_data (G_OBJECT (gimp),
-                                      GIMP_FILE_EXPORT_LAST_FILE_KEY);
-
-      if (! dir_file)
-        dir_file = gimp_file_dialog_get_default_folder (gimp);
-
-
-      /* Priority of default basenames for Export:
-       *
-       *   1. Last Export name
-       *   3. Save URI
-       *   2. Source file name
-       *   3. 'Untitled'
-       */
-
-      name_file = gimp_image_get_exported_file (image);
-
-      if (! name_file)
-        name_file = gimp_image_get_file (image);
-
-      if (! name_file)
-        name_file = gimp_image_get_imported_file (image);
-
-      if (! name_file)
-        name_file = gimp_image_get_untitled_file (image);
-
-
-      /* Priority of default type/extension for Export:
-       *
-       *   1. Type of last Export
-       *   2. Type of the image Import
-       *   3. Type of latest Export of any document
-       *   4. .png
-       */
-      ext_file = gimp_image_get_exported_file (image);
-
-      if (! ext_file)
-        ext_file = gimp_image_get_imported_file (image);
-
-      if (! ext_file)
-        ext_file = g_object_get_data (G_OBJECT (gimp),
-                                      GIMP_FILE_EXPORT_LAST_FILE_KEY);
-
-      if (ext_file)
-        g_object_ref (ext_file);
-      else
-        ext_file = g_file_new_for_uri ("file:///we/only/care/about/extension.png");
-
-      gtk_widget_hide (dialog->compat_toggle);
-    }
-
-  if (gtk_widget_get_sensitive (dialog->compat_toggle))
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->compat_toggle),
-                                    gimp_image_get_xcf_compat_mode (image));
-
-  if (ext_file)
-    {
-      GFile *tmp_file = file_utils_file_with_new_ext (name_file, ext_file);
-      basename = g_path_get_basename (gimp_file_get_utf8_name (tmp_file));
-      g_object_unref (tmp_file);
-      g_object_unref (ext_file);
-    }
-  else
-    {
-      basename = g_path_get_basename (gimp_file_get_utf8_name (name_file));
-    }
-
-  if (g_file_query_file_type (dir_file, G_FILE_QUERY_INFO_NONE, NULL) ==
-      G_FILE_TYPE_DIRECTORY)
-    {
-      gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
-                                                dir_file, NULL);
-    }
-  else
-    {
-      GFile *parent_file = g_file_get_parent (dir_file);
-      gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
-                                                parent_file, NULL);
-      g_object_unref (parent_file);
-    }
-
-  gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
 }
 
 GimpFileDialogState *
@@ -792,10 +623,9 @@ gimp_file_dialog_add_user_dir (GimpFileDialog *dialog,
 }
 
 static void
-gimp_file_dialog_add_preview (GimpFileDialog *dialog,
-                              Gimp           *gimp)
+gimp_file_dialog_add_preview (GimpFileDialog *dialog)
 {
-  if (gimp->config->thumbnail_size <= 0)
+  if (dialog->gimp->config->thumbnail_size <= 0)
     return;
 
   gtk_file_chooser_set_use_preview_label (GTK_FILE_CHOOSER (dialog), FALSE);
@@ -807,7 +637,7 @@ gimp_file_dialog_add_preview (GimpFileDialog *dialog,
                     G_CALLBACK (gimp_file_dialog_update_preview),
                     dialog);
 
-  dialog->thumb_box = gimp_thumb_box_new (gimp_get_user_context (gimp));
+  dialog->thumb_box = gimp_thumb_box_new (gimp_get_user_context (dialog->gimp));
   gtk_widget_set_sensitive (GTK_WIDGET (dialog->thumb_box), FALSE);
   gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog),
                                        dialog->thumb_box);
@@ -830,11 +660,7 @@ gimp_file_dialog_add_preview (GimpFileDialog *dialog,
  *
  **/
 static void
-gimp_file_dialog_add_filters (GimpFileDialog        *dialog,
-                              Gimp                  *gimp,
-                              GimpFileChooserAction  action,
-                              GSList                *file_procs,
-                              GSList                *file_procs_all_images)
+gimp_file_dialog_add_filters (GimpFileDialog *dialog)
 {
   GtkFileFilter *all;
   GtkFileFilter *all_savable = NULL;
@@ -849,18 +675,15 @@ gimp_file_dialog_add_filters (GimpFileDialog        *dialog,
   gtk_file_filter_set_name (all, _("All images"));
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), all);
 
-  if (file_procs_all_images)
+  if (dialog->file_procs_all_images)
     {
       all_savable = gtk_file_filter_new ();
-      if (action == GIMP_FILE_CHOOSER_ACTION_SAVE)
-        gtk_file_filter_set_name (all_savable, _("All XCF images"));
-      else
-        gtk_file_filter_set_name (all_savable, _("All export images"));
+      gtk_file_filter_set_name (all_savable, dialog->file_filter_label);
       gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), all_savable);
     }
 
   /* Add the normal file procs */
-  for (list = file_procs; list; list = g_slist_next (list))
+  for (list = dialog->file_procs; list; list = g_slist_next (list))
     {
       GimpPlugInProcedure *file_proc = list->data;
       GtkFileFilter       *filter    = NULL;
@@ -879,7 +702,7 @@ gimp_file_dialog_add_filters (GimpFileDialog        *dialog,
   /* Add the "rest" of the file procs only as filters to
    * "All images"
    */
-  for (list = file_procs_all_images; list; list = g_slist_next (list))
+  for (list = dialog->file_procs_all_images; list; list = g_slist_next (list))
     {
       GimpPlugInProcedure *file_proc = list->data;
 
@@ -892,18 +715,6 @@ gimp_file_dialog_add_filters (GimpFileDialog        *dialog,
     gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), all_savable);
   else
     gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), all);
-}
-
-static void
-gimp_file_dialog_add_compat_toggle (GimpFileDialog *dialog)
-{
-  dialog->compat_toggle = gtk_check_button_new_with_label (_("Save this XCF file with maximum compatibility"));
-  gtk_box_pack_start (GTK_BOX (dialog->extra_vbox), dialog->compat_toggle,
-                      FALSE, FALSE, 0);
-
-  g_signal_connect (dialog->compat_toggle, "toggled",
-                    G_CALLBACK (gimp_file_dialog_compat_toggled),
-                    dialog);
 }
 
 /**
@@ -988,17 +799,14 @@ gimp_file_dialog_process_procedure (GimpPlugInProcedure  *file_proc,
 }
 
 static void
-gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog,
-                                     Gimp           *gimp,
-                                     GSList         *file_procs,
-                                     const gchar    *automatic,
-                                     const gchar    *automatic_help_id)
+gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog)
 {
   GtkWidget *scrolled_window;
 
   dialog->proc_expander = gtk_expander_new_with_mnemonic (NULL);
-  gtk_box_pack_start (GTK_BOX (dialog->extra_vbox), dialog->proc_expander,
-                      TRUE, TRUE, 0);
+  gimp_file_dialog_add_extra_widget (dialog,
+                                     dialog->proc_expander,
+                                     TRUE, TRUE, 0);
   gtk_widget_show (dialog->proc_expander);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -1011,8 +819,9 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog,
 
   gtk_widget_set_size_request (scrolled_window, -1, 200);
 
-  dialog->proc_view = gimp_file_proc_view_new (gimp, file_procs, automatic,
-                                               automatic_help_id);
+  dialog->proc_view = gimp_file_proc_view_new (dialog->gimp, dialog->file_procs,
+                                               dialog->automatic_label,
+                                               dialog->automatic_help_id);
   gtk_container_add (GTK_CONTAINER (scrolled_window), dialog->proc_view);
   gtk_widget_show (dialog->proc_view);
 
@@ -1037,13 +846,6 @@ gimp_file_dialog_update_preview (GtkFileChooser *chooser,
 {
   gimp_thumb_box_take_file (GIMP_THUMB_BOX (dialog->thumb_box),
                             gtk_file_chooser_get_preview_file (chooser));
-}
-
-static void
-gimp_file_dialog_compat_toggled (GtkToggleButton *button,
-                                 GimpFileDialog  *dialog)
-{
-  dialog->compat = gtk_toggle_button_get_active (button);
 }
 
 static void
@@ -1203,44 +1005,4 @@ gimp_file_dialog_pattern_from_extension (const gchar *extension)
   *p = '\0';
 
   return pattern;
-}
-
-static GFile *
-gimp_file_dialog_get_default_folder (Gimp *gimp)
-{
-  if (gimp->default_folder)
-    {
-      return gimp->default_folder;
-    }
-  else
-    {
-      GFile *file = g_object_get_data (G_OBJECT (gimp),
-                                       "gimp-documents-folder");
-
-      if (! file)
-        {
-          gchar *path;
-
-          /* Make sure it ends in '/' */
-          path = g_build_path (G_DIR_SEPARATOR_S,
-                               g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
-                               G_DIR_SEPARATOR_S,
-                               NULL);
-
-          /* Paranoia fallback, see bug #722400 */
-          if (! path)
-            path = g_build_path (G_DIR_SEPARATOR_S,
-                                 g_get_home_dir (),
-                                 G_DIR_SEPARATOR_S,
-                                 NULL);
-
-          file = g_file_new_for_path (path);
-          g_free (path);
-
-          g_object_set_data_full (G_OBJECT (gimp), "gimp-documents-folder",
-                                  file, (GDestroyNotify) g_object_unref);
-        }
-
-      return file;
-    }
 }

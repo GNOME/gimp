@@ -129,12 +129,17 @@ typedef struct _GimpPlugInAction             GimpPlugInAction;
 typedef struct _GimpStringAction             GimpStringAction;
 typedef struct _GimpUIManager                GimpUIManager;
 
+/*  file dialogs  */
+
+typedef struct _GimpExportDialog             GimpExportDialog;
+typedef struct _GimpFileDialog               GimpFileDialog;
+typedef struct _GimpOpenDialog               GimpOpenDialog;
+typedef struct _GimpSaveDialog               GimpSaveDialog;
 
 /*  misc dialogs  */
 
 typedef struct _GimpColorDialog              GimpColorDialog;
 typedef struct _GimpErrorDialog              GimpErrorDialog;
-typedef struct _GimpFileDialog               GimpFileDialog;
 typedef struct _GimpMessageDialog            GimpMessageDialog;
 typedef struct _GimpProgressDialog           GimpProgressDialog;
 typedef struct _GimpTextEditor               GimpTextEditor;

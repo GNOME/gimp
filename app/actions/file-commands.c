@@ -46,10 +46,13 @@
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpexportdialog.h"
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
+#include "widgets/gimpopendialog.h"
+#include "widgets/gimpsavedialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
@@ -596,8 +599,8 @@ file_open_dialog_show (Gimp        *gimp,
         gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (dialog),
                                                   gimp->default_folder, NULL);
 
-      gimp_file_dialog_set_open_image (GIMP_FILE_DIALOG (dialog),
-                                       image, open_as_layers);
+      gimp_open_dialog_set_image (GIMP_OPEN_DIALOG (dialog),
+                                  image, open_as_layers);
 
       gtk_window_set_transient_for (GTK_WINDOW (dialog),
                                     GTK_WINDOW (gtk_widget_get_toplevel (parent)));
@@ -649,9 +652,9 @@ file_save_dialog_show (Gimp        *gimp,
     {
       gtk_window_set_title (GTK_WINDOW (dialog), title);
 
-      gimp_file_dialog_set_save_image (GIMP_FILE_DIALOG (dialog),
-                                       gimp, image, save_a_copy, FALSE,
-                                       close_after_saving, GIMP_OBJECT (display));
+      gimp_save_dialog_set_image (GIMP_SAVE_DIALOG (dialog),
+                                  gimp, image, save_a_copy,
+                                  close_after_saving, GIMP_OBJECT (display));
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
@@ -679,8 +682,8 @@ file_save_dialog_response (GtkWidget *dialog,
       basename = g_path_get_basename (gimp_file_get_utf8_name (file));
       g_object_unref (file);
 
-      other = file_export_dialog_show (file_dialog->image->gimp,
-                                       file_dialog->image,
+      other = file_export_dialog_show (GIMP_FILE_DIALOG (file_dialog)->image->gimp,
+                                       GIMP_FILE_DIALOG (file_dialog)->image,
                                        GTK_WIDGET (parent));
 
       gtk_file_chooser_set_current_folder_file (GTK_FILE_CHOOSER (other),
@@ -737,9 +740,8 @@ file_export_dialog_show (Gimp      *gimp,
 
   if (dialog)
     {
-      gimp_file_dialog_set_save_image (GIMP_FILE_DIALOG (dialog),
-                                       gimp, image, FALSE, TRUE,
-                                       FALSE, NULL);
+      gimp_export_dialog_set_image (GIMP_EXPORT_DIALOG (dialog),
+                                    gimp, image);
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
@@ -767,8 +769,8 @@ file_export_dialog_response (GtkWidget *dialog,
       basename = g_path_get_basename (gimp_file_get_utf8_name (file));
       g_object_unref (file);
 
-      other = file_save_dialog_show (file_dialog->image->gimp,
-                                     file_dialog->image,
+      other = file_save_dialog_show (GIMP_FILE_DIALOG (file_dialog)->image->gimp,
+                                     GIMP_FILE_DIALOG (file_dialog)->image,
                                      GTK_WIDGET (parent),
                                      _("Save Image"),
                                      FALSE, FALSE, NULL);

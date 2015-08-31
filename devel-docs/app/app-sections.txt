@@ -13053,7 +13053,6 @@ GimpDeviceValues
 GimpDialogsState
 GimpDndType
 GimpDropType
-GimpFileChooserAction
 GimpHistogramScale
 GimpTabStyle
 GimpTagEntryMode
