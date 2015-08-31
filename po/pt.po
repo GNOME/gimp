@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-08-27 05:36+0000\n"
-"PO-Revision-Date: 2015-08-27 09:51+0100\n"
+"POT-Creation-Date: 2015-08-31 05:35+0000\n"
+"PO-Revision-Date: 2015-08-31 09:51+0100\n"
 "Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
 "Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: Portuguese\n"
@@ -9491,7 +9491,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Ancorar seleção flutuante"
 
-#: ../app/core/gimplayer-floating-sel.c:174 ../app/core/gimplayer.c:814
+#: ../app/core/gimplayer-floating-sel.c:174 ../app/core/gimplayer.c:821
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -9567,13 +9567,13 @@ msgstr "A camada não pode ser mais elevada."
 msgid "Layer cannot be lowered more."
 msgstr "A camada não pode ser mais baixa."
 
-#: ../app/core/gimplayer.c:529 ../app/core/gimplayer.c:1380
+#: ../app/core/gimplayer.c:543 ../app/core/gimplayer.c:1380
 #: ../app/core/gimplayermask.c:259
 #, c-format
 msgid "%s mask"
 msgstr "%s máscara"
 
-#: ../app/core/gimplayer.c:568
+#: ../app/core/gimplayer.c:582
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -9582,17 +9582,17 @@ msgstr ""
 "Seleção flutuante\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1285
+#: ../app/core/gimplayer.c:1283
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Impossível adicionar máscara de camada pois a camada já possui uma."
 
-#: ../app/core/gimplayer.c:1296
+#: ../app/core/gimplayer.c:1294
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Impossível adicionar máscara de camada de dimensões diferentes da camada "
 "especificada."
 
-#: ../app/core/gimplayer.c:1302
+#: ../app/core/gimplayer.c:1300
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Adicionar máscara de camada"
@@ -9627,17 +9627,17 @@ msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Mostrar máscara de camada"
 
-#: ../app/core/gimplayer.c:1840
+#: ../app/core/gimplayer.c:1842
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Adicionar canal alfa"
 
-#: ../app/core/gimplayer.c:1872
+#: ../app/core/gimplayer.c:1874
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Remover canal alfa"
 
-#: ../app/core/gimplayer.c:1892
+#: ../app/core/gimplayer.c:1894
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Camada em tamanho de imagem"
@@ -12474,7 +12474,7 @@ msgstr "Modo Mudar saturação"
 msgid "Overlap"
 msgstr "Sobrepor"
 
-#: ../app/operations/gimplevelsconfig.c:111 ../app/tools/gimplevelstool.c:457
+#: ../app/operations/gimplevelsconfig.c:111 ../app/tools/gimplevelstool.c:473
 msgid "Gamma"
 msgstr "Gama"
 
@@ -13338,166 +13338,166 @@ msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Ruído HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2008 ../app/pdb/plug-in-compat-cmds.c:2068
+#: ../app/pdb/plug-in-compat-cmds.c:2120 ../app/pdb/plug-in-compat-cmds.c:2180
 msgid "Set color profile"
 msgstr "Definir perfil de cor"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2123
+#: ../app/pdb/plug-in-compat-cmds.c:2235
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "Ilusão"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2160
+#: ../app/pdb/plug-in-compat-cmds.c:2272
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Laplace"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2236
+#: ../app/pdb/plug-in-compat-cmds.c:2348
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "Distorção da lente"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2276
+#: ../app/pdb/plug-in-compat-cmds.c:2388
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Mosaico perfeito"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2359 ../app/pdb/plug-in-compat-cmds.c:2443
+#: ../app/pdb/plug-in-compat-cmds.c:2471 ../app/pdb/plug-in-compat-cmds.c:2555
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Movimento desfocado"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2544
+#: ../app/pdb/plug-in-compat-cmds.c:2656
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "Mosaico"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2606
+#: ../app/pdb/plug-in-compat-cmds.c:2718
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "Supernova"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2696
+#: ../app/pdb/plug-in-compat-cmds.c:2808
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Mosaico de papel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2737 ../app/pdb/plug-in-compat-cmds.c:2780
+#: ../app/pdb/plug-in-compat-cmds.c:2849 ../app/pdb/plug-in-compat-cmds.c:2892
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pixelizar"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2831
+#: ../app/pdb/plug-in-compat-cmds.c:2943
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "Plasma"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2885
+#: ../app/pdb/plug-in-compat-cmds.c:2997
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "Coordenadas polares"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2925
+#: ../app/pdb/plug-in-compat-cmds.c:3037
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "Remoção de olhos vermelhos"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2978
+#: ../app/pdb/plug-in-compat-cmds.c:3090
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Remoinho aleatório"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3031
+#: ../app/pdb/plug-in-compat-cmds.c:3143
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Escolha aleatória"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3084
+#: ../app/pdb/plug-in-compat-cmds.c:3196
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Mancha aleatória"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3159
+#: ../app/pdb/plug-in-compat-cmds.c:3271
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "Ruído RGB"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3282
+#: ../app/pdb/plug-in-compat-cmds.c:3394
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Ruído visual"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3326
+#: ../app/pdb/plug-in-compat-cmds.c:3438
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "Semi-achatar"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3369
+#: ../app/pdb/plug-in-compat-cmds.c:3481
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "Deslocar"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3472
+#: ../app/pdb/plug-in-compat-cmds.c:3584
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "Seno"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3520
+#: ../app/pdb/plug-in-compat-cmds.c:3632
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3581
+#: ../app/pdb/plug-in-compat-cmds.c:3693
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Ruído sólido"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3625
+#: ../app/pdb/plug-in-compat-cmds.c:3737
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "Espalhar"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3666
+#: ../app/pdb/plug-in-compat-cmds.c:3778
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Tolerância alfa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3712
+#: ../app/pdb/plug-in-compat-cmds.c:3824
 msgctxt "undo-type"
 msgid "Video"
 msgstr "Vídeo"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3749
+#: ../app/pdb/plug-in-compat-cmds.c:3861
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Inverter valor"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3853
+#: ../app/pdb/plug-in-compat-cmds.c:3965
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "Propagar valor"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3900
+#: ../app/pdb/plug-in-compat-cmds.c:4012
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "Dilatar"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3947
+#: ../app/pdb/plug-in-compat-cmds.c:4059
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "Erodir"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4010
+#: ../app/pdb/plug-in-compat-cmds.c:4122
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "Ondas"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4058
+#: ../app/pdb/plug-in-compat-cmds.c:4170
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "Remoinho e beliscão"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4110
+#: ../app/pdb/plug-in-compat-cmds.c:4222
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Vento"
@@ -14525,11 +14525,11 @@ msgstr "Clique para adicionar pontos de controlo em todos os canais"
 msgid "Click to locate on curve (try Shift, Ctrl)"
 msgstr "Clique para localizar na curva (tente Shift, Ctrl)"
 
-#: ../app/tools/gimpcurvestool.c:417 ../app/tools/gimplevelstool.c:339
+#: ../app/tools/gimpcurvestool.c:417 ../app/tools/gimplevelstool.c:355
 msgid "Cha_nnel:"
 msgstr "Ca_Nal:"
 
-#: ../app/tools/gimpcurvestool.c:443 ../app/tools/gimplevelstool.c:363
+#: ../app/tools/gimpcurvestool.c:443 ../app/tools/gimplevelstool.c:379
 msgid "R_eset Channel"
 msgstr "R_Epor canal"
 
@@ -14537,7 +14537,7 @@ msgstr "R_Epor canal"
 msgid "Curve _type:"
 msgstr "_Tipo de curva:"
 
-#: ../app/tools/gimpcurvestool.c:601 ../app/tools/gimplevelstool.c:625
+#: ../app/tools/gimpcurvestool.c:601 ../app/tools/gimplevelstool.c:643
 msgid "Could not read header: "
 msgstr "Impossível ler cabeçalho: "
 
@@ -15176,46 +15176,65 @@ msgstr "Importar níveis"
 msgid "Export Levels"
 msgstr "Exportar níveis"
 
-#: ../app/tools/gimplevelstool.c:282
-msgid "Pick black point"
-msgstr "Escolha um ponto negro"
+#: ../app/tools/gimplevelstool.c:285
+#| msgid "Click to add control points to all channels"
+msgid "Pick black point for all channels"
+msgstr "Escolha um ponto negro para todos os canais"
 
-#: ../app/tools/gimplevelstool.c:286
-msgid "Pick gray point"
-msgstr "Escolha um ponto cinzento"
+#: ../app/tools/gimplevelstool.c:287
+#| msgid "Click-Drag to move the selected pixels"
+msgid "Pick black point for the selected channel"
+msgstr "Escolha um ponto negro para o canal selecionado"
 
-#: ../app/tools/gimplevelstool.c:290
-msgid "Pick white point"
-msgstr "Escolha um ponto branco"
+#: ../app/tools/gimplevelstool.c:294
+#| msgid "Click to add control points to all channels"
+msgid "Pick gray point for all channels"
+msgstr "Escolha um ponto cinzento para todos os canais"
+
+#: ../app/tools/gimplevelstool.c:296
+#| msgid "Click-Drag to move the selected pixels"
+msgid "Pick gray point for the selected channel"
+msgstr "Escolha um ponto cinzento para o canal selecionado"
+
+#: ../app/tools/gimplevelstool.c:303
+#| msgid "Click to add control points to all channels"
+msgid "Pick white point for all channels"
+msgstr "Escolha um ponto branco para todos os canais"
+
+#: ../app/tools/gimplevelstool.c:305
+#| msgid "Click-Drag to move the selected pixels"
+msgid "Pick whitw point for the selected channel"
+msgstr "Escolha um ponto branco para o canal selecionado"
 
 #. Input levels frame
-#: ../app/tools/gimplevelstool.c:378
+#: ../app/tools/gimplevelstool.c:394
 msgid "Input Levels"
 msgstr "Níveis de entrada"
 
 #. Output levels frame
-#: ../app/tools/gimplevelstool.c:492
+#: ../app/tools/gimplevelstool.c:508
 msgid "Output Levels"
 msgstr "Níveis de saída"
 
 #. all channels frame
-#: ../app/tools/gimplevelstool.c:550
+#: ../app/tools/gimplevelstool.c:566
 msgid "All Channels"
 msgstr "Todos os canais"
 
-#: ../app/tools/gimplevelstool.c:562 ../app/tools/gimpthresholdtool.c:231
+#: ../app/tools/gimplevelstool.c:578 ../app/tools/gimpthresholdtool.c:231
 msgid "_Auto"
 msgstr "_Automático"
 
-#: ../app/tools/gimplevelstool.c:564
-msgid "Adjust levels automatically"
-msgstr "Ajustar níveis automaticamente"
+#: ../app/tools/gimplevelstool.c:581
+#| msgid "Adjust levels automatically"
+msgid "Adjust levels for all channels automatically"
+msgstr "Ajustar níveis para todos os canais automaticamente"
 
-#: ../app/tools/gimplevelstool.c:587
+#: ../app/tools/gimplevelstool.c:605
 msgid "Edit these Settings as Curves"
 msgstr "Editar estas definições como curvas de cores"
 
-#: ../app/tools/gimplevelstool.c:735
+#: ../app/tools/gimplevelstool.c:753
 msgid "Use _old levels file format"
 msgstr "Usar _formato antigo de ficheiro de níveis"
 
@@ -18792,6 +18811,15 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "difuso"
+
+#~ msgid "Pick black point"
+#~ msgstr "Escolha um ponto negro"
+
+#~ msgid "Pick gray point"
+#~ msgstr "Escolha um ponto cinzento"
+
+#~ msgid "Pick white point"
+#~ msgstr "Escolha um ponto branco"
 
 #~ msgid "RGB workspace (%s)"
 #~ msgstr "Espaço de trabalho RGB (%s)"
