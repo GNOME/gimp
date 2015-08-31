@@ -35,7 +35,13 @@
 
 #ifdef G_OS_WIN32
 #include <io.h> /* get_osfhandle */
+
+#ifdef HAVE_EXCHNDL
+#include <time.h>
+#include <exchndl.h>
 #endif
+
+#endif /* G_OS_WIN32 */
 
 #ifndef GIMP_CONSOLE_COMPILATION
 #include <gdk/gdk.h>
@@ -353,6 +359,37 @@ main (int    argc,
       g_free (w_bin_dir);
     g_free (bin_dir);
   }
+
+#ifdef HAVE_EXCHNDL
+  /* Use Dr. Mingw (dumps backtrace on crash) if it is available. */
+  {
+    time_t t;
+    gchar *filename;
+    gchar *dir;
+    gchar *path;
+
+    /* This has to be the non-roaming directory (i.e., the local
+       directory) as backtraces correspond to the binaries on this
+       system. */
+    dir = g_build_filename (g_get_user_data_dir (),
+                            GIMPDIR, GIMP_USER_VERSION, "CrashLog",
+                            NULL);
+    /* Ensure the path exists. */
+    g_mkdir_with_parents (dir, 0700);
+
+    time (&t);
+    filename = g_strdup_printf ("%s-crash-%" G_GUINT64_FORMAT ".txt",
+                                g_get_prgname(), t);
+    path = g_build_filename (dir, filename, NULL);
+    g_free (filename);
+    g_free (dir);
+
+    ExcHndlInit ();
+    ExcHndlSetLogFileNameA (path);
+
+    g_free (path);
+  }
+#endif
 
 #ifndef _WIN64
   {

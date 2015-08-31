@@ -92,6 +92,11 @@ endif
 
 if OS_WIN32
 win32_ldflags = -mwindows -Wl,--tsaware $(WIN32_LARGE_ADDRESS_AWARE)
+
+if HAVE_EXCHNDL
+exchndl = -lexchndl
+endif
+
 else
 libm = -lm
 endif
@@ -186,6 +191,7 @@ gimp_@GIMP_APP_VERSION@_LDADD = \
 	$(GTK_MAC_INTEGRATION_LIBS)	\
 	$(DBUS_GLIB_LIBS)		\
 	$(gimpconsoleldadd)		\
+	$(exchndl)			\
 	$(GIMPRC)
 
 

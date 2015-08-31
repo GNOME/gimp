@@ -785,6 +785,18 @@ PKG_CHECK_MODULES(HARFBUZZ, harfbuzz >= harfbuzz_required_version,,
 PKG_CHECK_MODULES(GEXIV2, gexiv2 >= gexiv2_required_version,,
                  [add_deps_error([gexiv2 >= gexiv2_required_version])])
 
+#####################
+# Check for Dr. Mingw
+#####################
+
+if test "x$platform_win32" = "xyes"; then
+   # Check for Dr. Mingw
+   AC_CHECK_LIB(exchndl, ExcHndlSetLogFileNameA,
+		[AC_DEFINE(HAVE_EXCHNDL, 1, [Define to 1 when Dr. MingW is available])]
+		)
+fi
+AM_CONDITIONAL(HAVE_EXCHNDL, test "x$ac_cv_lib_exchndl_ExcHndlSetLogFileNameA" = "xyes")
+
 ##########################################
 # Check for some special functions we need
 ##########################################

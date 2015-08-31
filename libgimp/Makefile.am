@@ -17,6 +17,10 @@ framework_cocoa = -framework Cocoa
 endif
 
 if OS_WIN32
+if HAVE_EXCHNDL
+exchndl = -lexchndl
+endif
+
 gimp_def = gimp.def
 gimpui_def = gimpui.def
 libgimp_export_symbols = -export-symbols $(srcdir)/gimp.def
@@ -388,6 +392,7 @@ libgimp_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
+	$(exchndl)		\
 	$(CAIRO_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
