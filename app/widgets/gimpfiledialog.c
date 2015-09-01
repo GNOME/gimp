@@ -687,8 +687,9 @@ gimp_file_dialog_set_save_image (GimpFileDialog *dialog,
       gtk_widget_hide (dialog->compat_toggle);
     }
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->compat_toggle),
-                                FALSE);
+  if (gtk_widget_get_sensitive (dialog->compat_toggle))
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->compat_toggle),
+                                    gimp_image_get_xcf_compat_mode (image));
 
   if (ext_file)
     {

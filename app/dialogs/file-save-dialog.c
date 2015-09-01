@@ -754,16 +754,12 @@ file_save_dialog_save_image (GimpProgress        *progress,
       gimp_action_group_set_action_sensitive (list->data, "file-quit", FALSE);
     }
 
-  if (xcf_compat)
-    gimp_image_set_xcf_compat_mode (image, TRUE);
+  gimp_image_set_xcf_compat_mode (image, xcf_compat);
 
   status = file_save (gimp, image, progress, file,
                       save_proc, run_mode,
                       change_saved_state, export_backward, export_forward,
                       &error);
-
-  if (xcf_compat)
-    gimp_image_set_xcf_compat_mode (image, FALSE);
 
   switch (status)
     {

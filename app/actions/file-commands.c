@@ -266,7 +266,8 @@ file_save_cmd_callback (GtkAction *action,
                                                    save_proc,
                                                    GIMP_RUN_WITH_LAST_VALS,
                                                    TRUE, FALSE, FALSE,
-                                                   FALSE, TRUE);
+                                                   gimp_image_get_xcf_compat_mode (image),
+                                                   TRUE);
               break;
             }
 
