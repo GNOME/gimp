@@ -261,12 +261,19 @@ file_save_cmd_callback (GtkAction *action,
 
           if (file && save_proc)
             {
+              gint rle_version;
+              gint zlib_version;
+
+              gimp_image_get_xcf_version (image, FALSE, &rle_version,  NULL);
+              gimp_image_get_xcf_version (image, TRUE,  &zlib_version, NULL);
+
               saved = file_save_dialog_save_image (GIMP_PROGRESS (display),
                                                    gimp, image, file,
                                                    save_proc,
                                                    GIMP_RUN_WITH_LAST_VALS,
                                                    TRUE, FALSE, FALSE,
-                                                   gimp_image_get_xcf_compat_mode (image),
+                                                   gimp_image_get_xcf_compat_mode (image) &&
+                                                   rle_version != zlib_version,
                                                    TRUE);
               break;
             }
