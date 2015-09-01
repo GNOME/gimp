@@ -322,8 +322,8 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   GimpToolOptions  *tool_options = GIMP_TOOL_GET_OPTIONS (image_map_tool);
   GimpLevelsConfig *config       = tool->config;
   GtkListStore     *store;
-  GtkSizeGroup     *label_group;
   GtkWidget        *main_vbox;
+  GtkWidget        *frame_vbox;
   GtkWidget        *vbox;
   GtkWidget        *vbox2;
   GtkWidget        *vbox3;
@@ -331,6 +331,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   GtkWidget        *hbox2;
   GtkWidget        *label;
   GtkWidget        *menu;
+  GtkWidget        *main_frame;
   GtkWidget        *frame;
   GtkWidget        *hbbox;
   GtkWidget        *button;
@@ -344,19 +345,23 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     G_CALLBACK (gimp_levels_tool_export_setup),
                     image_map_tool);
 
-  main_vbox   = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
-  label_group = gimp_image_map_tool_dialog_get_label_group (image_map_tool);
+  main_vbox = gimp_image_map_tool_dialog_get_vbox (image_map_tool);
 
   /*  The option menu for selecting channels  */
+  main_frame = gimp_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (main_vbox), main_frame, TRUE, TRUE, 0);
+  gtk_widget_show (main_frame);
+
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_frame_set_label_widget (GTK_FRAME (main_frame), hbox);
   gtk_widget_show (hbox);
 
   label = gtk_label_new_with_mnemonic (_("Cha_nnel:"));
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
+                             -1);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
-  gtk_size_group_add_widget (label_group, label);
 
   store = gimp_enum_store_new_with_range (GIMP_TYPE_HISTOGRAM_CHANNEL,
                                           GIMP_HISTOGRAM_VALUE,
@@ -390,9 +395,13 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
   gtk_widget_show (menu);
 
+  frame_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_container_add (GTK_CONTAINER (main_frame), frame_vbox);
+  gtk_widget_show (frame_vbox);
+
   /*  Input levels frame  */
   frame = gimp_frame_new (_("Input Levels"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (frame_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
@@ -506,7 +515,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
   /*  Output levels frame  */
   frame = gimp_frame_new (_("Output Levels"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (frame_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 4);
@@ -563,12 +572,12 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
 
 
   /*  all channels frame  */
-  frame = gimp_frame_new (_("All Channels"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  main_frame = gimp_frame_new (_("All Channels"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), main_frame, FALSE, FALSE, 0);
+  gtk_widget_show (main_frame);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_container_add (GTK_CONTAINER (main_frame), hbox);
   gtk_widget_show (hbox);
 
   hbbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
