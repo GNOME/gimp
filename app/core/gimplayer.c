@@ -490,7 +490,7 @@ gimp_layer_update_mode_node (GimpLayer *layer)
 
   mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
 
-  if (layer->show_mask)
+  if (layer->mask && layer->show_mask)
     {
       visible_mode = GIMP_NORMAL_MODE;
       linear       = TRUE;
@@ -1330,7 +1330,7 @@ gimp_layer_add_mask (GimpLayer      *layer,
                                 mode_node,               "aux2");
         }
 
-        gimp_layer_update_mode_node (layer);
+      gimp_layer_update_mode_node (layer);
     }
 
   if (gimp_layer_get_apply_mask (layer) ||
@@ -1648,6 +1648,8 @@ gimp_layer_apply_mask (GimpLayer         *layer,
         {
           gegl_node_disconnect (mode_node, "aux2");
         }
+
+      gimp_layer_update_mode_node (layer);
     }
 
   /*  If applying actually changed the view  */
@@ -1793,7 +1795,7 @@ gimp_layer_set_show_mask (GimpLayer *layer,
                 }
             }
 
-            gimp_layer_update_mode_node (layer);
+          gimp_layer_update_mode_node (layer);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
