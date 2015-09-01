@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-08-31 13:20+0000\n"
-"PO-Revision-Date: 2015-08-31 16:25+0100\n"
+"POT-Creation-Date: 2015-09-01 05:34+0000\n"
+"PO-Revision-Date: 2015-09-01 09:41+0100\n"
 "Last-Translator: Pedro Albuquerque <palbuquerque73@gmail.com>\n"
 "Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: Portuguese\n"
@@ -12042,13 +12042,6 @@ msgstr "Largue aqui os ficheiros para abri-los"
 
 #: ../app/display/gimpdisplayshell-callbacks.c:532
 #, c-format
-#| msgid ""
-#| "<big>Unstable Development Version</big>\n"
-#| "\n"
-#| "<small>commit <tt>%s</tt></small>\n"
-#| "\n"
-#| "<small>Please build latest git master before\n"
-#| "reporting any bugs against this version.</small>"
 msgid ""
 "<big>Unstable Development Version</big>\n"
 "\n"
@@ -15204,7 +15197,8 @@ msgid "Pick white point for all channels"
 msgstr "Escolha um ponto branco para todos os canais"
 
 #: ../app/tools/gimplevelstool.c:305
-msgid "Pick whitw point for the selected channel"
+#| msgid "Pick whitw point for the selected channel"
+msgid "Pick white point for the selected channel"
 msgstr "Escolha um ponto branco para o canal selecionado"
 
 #. Input levels frame
