@@ -302,7 +302,7 @@ gimp_levels_tool_color_picker_new (GimpLevelsTool *tool,
       if (all_channels)
         help = _("Pick white point for all channels");
       else
-        help = _("Pick whitw point for the selected channel");
+        help = _("Pick white point for the selected channel");
       break;
 
     default:
