@@ -52,6 +52,7 @@
 /*  an arbitrary limit to keep the file dialog from becoming too wide  */
 #define MAX_EXTENSIONS  4
 
+typedef struct _GimpFileDialogState GimpFileDialogState;
 struct _GimpFileDialogState
 {
   gchar *filter_name;
@@ -71,7 +72,6 @@ enum
 };
 
 static void     gimp_file_dialog_progress_iface_init    (GimpProgressInterface *iface);
-
 
 static void     gimp_file_dialog_set_property           (GObject             *object,
                                                          guint                property_id,
@@ -128,6 +128,17 @@ static void     gimp_file_dialog_help_clicked           (GtkWidget           *wi
 static gchar  * gimp_file_dialog_pattern_from_extension (const gchar         *extension);
 
 
+static GimpFileDialogState
+              * gimp_file_dialog_get_state              (GimpFileDialog      *dialog);
+static void     gimp_file_dialog_set_state              (GimpFileDialog      *dialog,
+                                                         GimpFileDialogState *state);
+static void     gimp_file_dialog_state_destroy          (GimpFileDialogState *state);
+
+static void     gimp_file_dialog_real_save_state        (GimpFileDialog      *dialog,
+                                                         const gchar         *state_name);
+static void     gimp_file_dialog_real_load_state        (GimpFileDialog      *dialog,
+                                                         const gchar         *state_name);
+
 G_DEFINE_TYPE_WITH_CODE (GimpFileDialog, gimp_file_dialog,
                          GTK_TYPE_FILE_CHOOSER_DIALOG,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
@@ -151,6 +162,9 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
   widget_class->delete_event = gimp_file_dialog_delete_event;
 
   dialog_class->response     = gimp_file_dialog_response;
+
+  klass->save_state          = gimp_file_dialog_real_save_state;
+  klass->load_state          = gimp_file_dialog_real_load_state;
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp", NULL, NULL,
@@ -551,63 +565,23 @@ gimp_file_dialog_set_file_proc (GimpFileDialog      *dialog,
                                   file_proc);
 }
 
-GimpFileDialogState *
-gimp_file_dialog_get_state (GimpFileDialog *dialog)
-{
-  GimpFileDialogState *state;
-  GtkFileFilter       *filter;
-
-  g_return_val_if_fail (GIMP_IS_FILE_DIALOG (dialog), NULL);
-
-  state = g_slice_new0 (GimpFileDialogState);
-
-  filter = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
-
-  if (filter)
-    state->filter_name = g_strdup (gtk_file_filter_get_name (filter));
-
-  return state;
-}
-
 void
-gimp_file_dialog_set_state (GimpFileDialog      *dialog,
-                            GimpFileDialogState *state)
+gimp_file_dialog_save_state (GimpFileDialog *dialog,
+                             const gchar    *state_name)
 {
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
-  g_return_if_fail (state != NULL);
 
-  if (state->filter_name)
-    {
-      GSList *filters;
-      GSList *list;
-
-      filters = gtk_file_chooser_list_filters (GTK_FILE_CHOOSER (dialog));
-
-      for (list = filters; list; list = list->next)
-        {
-          GtkFileFilter *filter = GTK_FILE_FILTER (list->data);
-          const gchar   *name   = gtk_file_filter_get_name (filter);
-
-          if (name && strcmp (state->filter_name, name) == 0)
-            {
-              gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
-              break;
-            }
-        }
-
-      g_slist_free (filters);
-    }
+  GIMP_FILE_DIALOG_GET_CLASS (dialog)->save_state (dialog, state_name);
 }
 
 void
-gimp_file_dialog_state_destroy (GimpFileDialogState *state)
+gimp_file_dialog_load_state (GimpFileDialog *dialog,
+                             const gchar    *state_name)
 {
-  g_return_if_fail (state != NULL);
+  g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
 
-  g_free (state->filter_name);
-  g_slice_free (GimpFileDialogState, state);
+  GIMP_FILE_DIALOG_GET_CLASS (dialog)->load_state (dialog, state_name);
 }
-
 
 /*  private functions  */
 
@@ -1005,4 +979,82 @@ gimp_file_dialog_pattern_from_extension (const gchar *extension)
   *p = '\0';
 
   return pattern;
+}
+
+static GimpFileDialogState *
+gimp_file_dialog_get_state (GimpFileDialog *dialog)
+{
+  GimpFileDialogState *state;
+  GtkFileFilter       *filter;
+
+  g_return_val_if_fail (GIMP_IS_FILE_DIALOG (dialog), NULL);
+
+  state = g_slice_new0 (GimpFileDialogState);
+
+  filter = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
+
+  if (filter)
+    state->filter_name = g_strdup (gtk_file_filter_get_name (filter));
+
+  return state;
+}
+
+static void
+gimp_file_dialog_set_state (GimpFileDialog      *dialog,
+                            GimpFileDialogState *state)
+{
+  g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
+  g_return_if_fail (state != NULL);
+
+  if (state->filter_name)
+    {
+      GSList *filters;
+      GSList *list;
+
+      filters = gtk_file_chooser_list_filters (GTK_FILE_CHOOSER (dialog));
+
+      for (list = filters; list; list = list->next)
+        {
+          GtkFileFilter *filter = GTK_FILE_FILTER (list->data);
+          const gchar   *name   = gtk_file_filter_get_name (filter);
+
+          if (name && strcmp (state->filter_name, name) == 0)
+            {
+              gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
+              break;
+            }
+        }
+
+      g_slist_free (filters);
+    }
+}
+
+static void
+gimp_file_dialog_state_destroy (GimpFileDialogState *state)
+{
+  g_return_if_fail (state != NULL);
+
+  g_free (state->filter_name);
+  g_slice_free (GimpFileDialogState, state);
+}
+
+static void
+gimp_file_dialog_real_save_state (GimpFileDialog *dialog,
+                                  const gchar    *state_name)
+{
+  g_object_set_data_full (G_OBJECT (dialog->gimp), state_name,
+                          gimp_file_dialog_get_state (dialog),
+                          (GDestroyNotify) gimp_file_dialog_state_destroy);
+}
+
+static void
+gimp_file_dialog_real_load_state (GimpFileDialog *dialog,
+                                  const gchar    *state_name)
+{
+  GimpFileDialogState *state;
+
+  state = g_object_get_data (G_OBJECT (dialog->gimp), state_name);
+
+  if (state)
+    gimp_file_dialog_set_state (GIMP_FILE_DIALOG (dialog), state);
 }

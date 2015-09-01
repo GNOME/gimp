@@ -94,25 +94,23 @@ file_save_dialog_new (Gimp     *gimp,
                       gboolean  export)
 {
   GtkWidget           *dialog;
-  GimpFileDialogState *state;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   if (! export)
     {
       dialog = gimp_save_dialog_new (gimp);
 
-      state = g_object_get_data (G_OBJECT (gimp), "gimp-file-save-dialog-state");
+      gimp_file_dialog_load_state (GIMP_FILE_DIALOG (dialog),
+                                   "gimp-file-save-dialog-state");
     }
   else
     {
       dialog = gimp_export_dialog_new (gimp);
 
-      state = g_object_get_data (G_OBJECT (gimp), "gimp-file-export-dialog-state");
+      gimp_file_dialog_load_state (GIMP_FILE_DIALOG (dialog),
+                                   "gimp-file-export-dialog-state");
     }
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  if (state)
-    gimp_file_dialog_set_state (GIMP_FILE_DIALOG (dialog), state);
 
   g_signal_connect (dialog, "confirm-overwrite",
                     G_CALLBACK (file_save_dialog_confirm_overwrite),
@@ -155,15 +153,11 @@ file_save_dialog_response (GtkWidget *save_dialog,
 
   if (GIMP_IS_SAVE_DIALOG (dialog))
     {
-      g_object_set_data_full (G_OBJECT (gimp), "gimp-file-save-dialog-state",
-                              gimp_file_dialog_get_state (dialog),
-                              (GDestroyNotify) gimp_file_dialog_state_destroy);
+      gimp_file_dialog_save_state (dialog, "gimp-file-save-dialog-state");
     }
   else /* GIMP_IS_EXPORT_DIALOG (dialog) */
     {
-      g_object_set_data_full (G_OBJECT (gimp), "gimp-file-export-dialog-state",
-                              gimp_file_dialog_get_state (dialog),
-                              (GDestroyNotify) gimp_file_dialog_state_destroy);
+      gimp_file_dialog_save_state (dialog, "gimp-file-export-dialog-state");
     }
 
   if (response_id != GTK_RESPONSE_OK)

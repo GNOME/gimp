@@ -47,12 +47,31 @@
 #include "gimp-intl.h"
 
 
-static void     gimp_save_dialog_constructed         (GObject         *object);
+typedef struct _GimpSaveDialogState GimpSaveDialogState;
+struct _GimpSaveDialogState
+{
+  gchar    *filter_name;
+  gboolean  compat;
+};
 
-static GFile  * gimp_save_dialog_get_default_folder  (Gimp            *gimp);
-static void     gimp_save_dialog_add_compat_toggle   (GimpSaveDialog  *dialog);
-static void     gimp_save_dialog_compat_toggled      (GtkToggleButton *button,
-                                                      GimpSaveDialog  *dialog);
+
+static void     gimp_save_dialog_constructed         (GObject             *object);
+
+static GFile  * gimp_save_dialog_get_default_folder  (Gimp                *gimp);
+static void     gimp_save_dialog_add_compat_toggle   (GimpSaveDialog      *dialog);
+static void     gimp_save_dialog_compat_toggled      (GtkToggleButton     *button,
+                                                      GimpSaveDialog      *dialog);
+
+static GimpSaveDialogState
+              * gimp_save_dialog_get_state           (GimpSaveDialog      *dialog);
+static void     gimp_save_dialog_set_state           (GimpSaveDialog      *dialog,
+                                                      GimpSaveDialogState *state);
+static void     gimp_save_dialog_state_destroy       (GimpSaveDialogState *state);
+
+static void     gimp_save_dialog_real_save_state     (GimpFileDialog      *dialog,
+                                                      const gchar         *state_name);
+static void     gimp_save_dialog_real_load_state     (GimpFileDialog      *dialog,
+                                                      const gchar         *state_name);
 
 G_DEFINE_TYPE (GimpSaveDialog, gimp_save_dialog,
                GIMP_TYPE_FILE_DIALOG)
@@ -62,9 +81,13 @@ G_DEFINE_TYPE (GimpSaveDialog, gimp_save_dialog,
 static void
 gimp_save_dialog_class_init (GimpSaveDialogClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass        *object_class = G_OBJECT_CLASS (klass);
+  GimpFileDialogClass *fd_class     = GIMP_FILE_DIALOG_CLASS (klass);
 
   object_class->constructed  = gimp_save_dialog_constructed;
+
+  fd_class->save_state       = gimp_save_dialog_real_save_state;
+  fd_class->load_state       = gimp_save_dialog_real_load_state;
 }
 
 static void
@@ -236,9 +259,13 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
 
   gtk_widget_show (dialog->compat_toggle);
 
-  if (gtk_widget_get_sensitive (dialog->compat_toggle))
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->compat_toggle),
-                                    gimp_image_get_xcf_compat_mode (image));
+  /* We set the compatibility mode by default either if the image was
+  * previously saved with the compatibility mode, or if it has never been
+  * saved and the last GimpSaveDialogState had compatibility mode ON. */
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->compat_toggle),
+                                gtk_widget_get_sensitive (dialog->compat_toggle) &&
+                                (gimp_image_get_xcf_compat_mode (image) ||
+                                 (! gimp_image_get_file (image) && dialog->compat)));
 
   if (ext_file)
     {
@@ -330,4 +357,90 @@ gimp_save_dialog_compat_toggled (GtkToggleButton *button,
                                  GimpSaveDialog  *dialog)
 {
   dialog->compat = gtk_toggle_button_get_active (button);
+}
+
+static GimpSaveDialogState *
+gimp_save_dialog_get_state (GimpSaveDialog *dialog)
+{
+  GimpSaveDialogState *state;
+  GtkFileFilter       *filter;
+
+  g_return_val_if_fail (GIMP_IS_SAVE_DIALOG (dialog), NULL);
+
+  state = g_slice_new0 (GimpSaveDialogState);
+
+  filter = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
+
+  if (filter)
+    state->filter_name = g_strdup (gtk_file_filter_get_name (filter));
+
+  state->compat = dialog->compat;
+
+  return state;
+}
+
+static void
+gimp_save_dialog_set_state (GimpSaveDialog      *dialog,
+                            GimpSaveDialogState *state)
+{
+  g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
+  g_return_if_fail (state != NULL);
+
+  if (state->filter_name)
+    {
+      GSList *filters;
+      GSList *list;
+
+      filters = gtk_file_chooser_list_filters (GTK_FILE_CHOOSER (dialog));
+
+      for (list = filters; list; list = list->next)
+        {
+          GtkFileFilter *filter = GTK_FILE_FILTER (list->data);
+          const gchar   *name   = gtk_file_filter_get_name (filter);
+
+          if (name && strcmp (state->filter_name, name) == 0)
+            {
+              gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
+              break;
+            }
+        }
+
+      g_slist_free (filters);
+    }
+
+  dialog->compat = state->compat;
+}
+
+static void
+gimp_save_dialog_state_destroy (GimpSaveDialogState *state)
+{
+  g_return_if_fail (state != NULL);
+
+  g_free (state->filter_name);
+  g_slice_free (GimpSaveDialogState, state);
+}
+
+static void
+gimp_save_dialog_real_save_state (GimpFileDialog *dialog,
+                                  const gchar    *state_name)
+{
+  g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
+
+  g_object_set_data_full (G_OBJECT (dialog->gimp), state_name,
+                          gimp_save_dialog_get_state (GIMP_SAVE_DIALOG (dialog)),
+                          (GDestroyNotify) gimp_save_dialog_state_destroy);
+}
+
+static void
+gimp_save_dialog_real_load_state (GimpFileDialog *dialog,
+                                  const gchar    *state_name)
+{
+  GimpSaveDialogState *state;
+
+  g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
+
+  state = g_object_get_data (G_OBJECT (dialog->gimp), state_name);
+
+  if (state)
+    gimp_save_dialog_set_state (GIMP_SAVE_DIALOG (dialog), state);
 }
