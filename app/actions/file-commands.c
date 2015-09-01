@@ -261,12 +261,19 @@ file_save_cmd_callback (GtkAction *action,
 
           if (file && save_proc)
             {
-              gint rle_version;
-              gint zlib_version;
+              const gchar *version_string;
+              gint         rle_version;
+              gint         zlib_version;
 
-              gimp_image_get_xcf_version (image, FALSE, &rle_version,  NULL);
+              gimp_image_get_xcf_version (image, FALSE, &rle_version,  &version_string);
               gimp_image_get_xcf_version (image, TRUE,  &zlib_version, NULL);
 
+              if (rle_version == zlib_version && gimp_image_get_xcf_compat_mode (image))
+                gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_WARNING,
+                              _("The image uses features from %s and "
+                                "cannot be saved for older GIMP "
+                                "versions."),
+                              version_string);
               saved = file_save_dialog_save_image (GIMP_PROGRESS (display),
                                                    gimp, image, file,
                                                    save_proc,
