@@ -69,12 +69,11 @@ gimp_display_shell_profile_dispose (GimpDisplayShell *shell)
 void
 gimp_display_shell_profile_update (GimpDisplayShell *shell)
 {
-  GimpImage         *image;
-  GimpDisplayConfig *display_config;
-  GimpColorConfig   *config;
-  GimpColorManaged  *managed;
-  const Babl        *src_format;
-  const Babl        *dest_format;
+  GimpImage        *image;
+  GimpColorConfig  *config;
+  GimpColorProfile *src_profile;
+  const Babl       *src_format;
+  const Babl       *dest_format;
 
   gimp_display_shell_profile_dispose (shell);
 
@@ -85,9 +84,9 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
   if (! image)
     return;
 
-  display_config = shell->display->config;
-  config         = GIMP_CORE_CONFIG (display_config)->color_management;
-  managed        = GIMP_COLOR_MANAGED (shell);
+  config = GIMP_CORE_CONFIG (shell->display->config)->color_management;
+
+  src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (shell));
 
   src_format = gimp_babl_format (GIMP_RGB,
                                  gimp_image_get_precision (image),
@@ -108,7 +107,8 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
 
   shell->profile_transform =
     gimp_widget_get_color_transform (gtk_widget_get_toplevel (GTK_WIDGET (shell)),
-                                     managed, config,
+                                     config,
+                                     src_profile,
                                      &src_format,
                                      &dest_format);
 

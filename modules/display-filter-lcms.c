@@ -257,8 +257,9 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
 {
   CdisplayLcms     *lcms   = CDISPLAY_LCMS (display);
   GtkWidget        *widget = NULL;
-  GimpColorManaged *managed;
   GimpColorConfig  *config;
+  GimpColorManaged *managed;
+  GimpColorProfile *src_profile;
 
   if (lcms->transform)
     {
@@ -266,8 +267,8 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       lcms->transform = NULL;
     }
 
-  managed = gimp_color_display_get_managed (display);
   config  = gimp_color_display_get_config (display);
+  managed = gimp_color_display_get_managed (display);
 
   if (! config || ! managed)
     return;
@@ -275,13 +276,17 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
   if (GTK_IS_WIDGET (managed))
     widget = gtk_widget_get_toplevel (GTK_WIDGET (managed));
 
+  src_profile = gimp_color_managed_get_color_profile (managed);
+
   lcms->src_format  = babl_format ("R'G'B'A float");
   lcms->dest_format = babl_format ("R'G'B'A float");
 
   lcms->transform = gimp_widget_get_color_transform (widget,
-                                                     managed, config,
+                                                     config, src_profile,
                                                      &lcms->src_format,
                                                      &lcms->dest_format);
+
+  g_object_unref (src_profile);
 }
 
 static GimpColorProfile *
