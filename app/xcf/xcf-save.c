@@ -337,10 +337,11 @@ xcf_save_image_props (XcfInfo    *info,
                       GimpImage  *image,
                       GError    **error)
 {
-  GimpImagePrivate *private       = GIMP_IMAGE_GET_PRIVATE (image);
-  GimpParasite     *grid_parasite = NULL;
-  GimpParasite     *meta_parasite = NULL;
-  GimpUnit          unit          = gimp_image_get_unit (image);
+  GimpImagePrivate *private         = GIMP_IMAGE_GET_PRIVATE (image);
+  GimpParasite     *grid_parasite   = NULL;
+  GimpParasite     *meta_parasite   = NULL;
+  GimpParasite     *compat_parasite = NULL;
+  GimpUnit          unit            = gimp_image_get_unit (image);
   gdouble           xres;
   gdouble           yres;
 
@@ -410,6 +411,20 @@ xcf_save_image_props (XcfInfo    *info,
         }
     }
 
+  if (gimp_image_get_xcf_compat_mode (image))
+    {
+      gint gimp_version;
+
+      /* Save the GIMP version we are trying to get compatible with.
+       * This specific information is unused as of now though. */
+      gimp_image_get_xcf_version (image, FALSE, &gimp_version, NULL);
+      compat_parasite = gimp_parasite_new ("gimp-compatibility-mode",
+                                           GIMP_PARASITE_PERSISTENT,
+                                           sizeof (gimp_version),
+                                           &gimp_version);
+      gimp_parasite_list_add (private->parasites, compat_parasite);
+    }
+
   if (gimp_parasite_list_length (private->parasites) > 0)
     {
       xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
@@ -430,6 +445,12 @@ xcf_save_image_props (XcfInfo    *info,
       gimp_parasite_free (meta_parasite);
     }
 
+  if (compat_parasite)
+    {
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_name (compat_parasite));
+      gimp_parasite_free (compat_parasite);
+    }
   xcf_check_error (xcf_save_prop (info, image, PROP_END, error));
 
   return TRUE;
