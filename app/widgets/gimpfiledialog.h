@@ -65,10 +65,12 @@ struct _GimpFileDialog
 struct _GimpFileDialogClass
 {
   GtkFileChooserDialogClass  parent_class;
+
+  void (* save_state) (GimpFileDialog *dialog,
+                       const gchar    *state_name);
+  void (* load_state) (GimpFileDialog *dialog,
+                       const gchar    *state_name);
 };
-
-
-typedef struct _GimpFileDialogState GimpFileDialogState;
 
 
 GType       gimp_file_dialog_get_type       (void) G_GNUC_CONST;
@@ -85,10 +87,10 @@ void        gimp_file_dialog_set_sensitive    (GimpFileDialog       *dialog,
 void        gimp_file_dialog_set_file_proc    (GimpFileDialog       *dialog,
                                                GimpPlugInProcedure  *file_proc);
 
-GimpFileDialogState * gimp_file_dialog_get_state     (GimpFileDialog      *dialog);
-void                  gimp_file_dialog_set_state     (GimpFileDialog      *dialog,
-                                                      GimpFileDialogState *state);
-void                  gimp_file_dialog_state_destroy (GimpFileDialogState *state);
+void        gimp_file_dialog_save_state       (GimpFileDialog       *dialog,
+                                               const gchar          *state_name);
+void        gimp_file_dialog_load_state       (GimpFileDialog       *dialog,
+                                               const gchar          *state_name);
 
 
 G_END_DECLS

@@ -69,7 +69,6 @@ GtkWidget *
 file_open_dialog_new (Gimp *gimp)
 {
   GtkWidget           *dialog;
-  GimpFileDialogState *state;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -77,10 +76,8 @@ file_open_dialog_new (Gimp *gimp)
 
   gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
 
-  state = g_object_get_data (G_OBJECT (gimp), "gimp-file-open-dialog-state");
-
-  if (state)
-    gimp_file_dialog_set_state (GIMP_FILE_DIALOG (dialog), state);
+  gimp_file_dialog_load_state (GIMP_FILE_DIALOG (dialog),
+                               "gimp-file-open-dialog-state");
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (file_open_dialog_response),
@@ -102,9 +99,8 @@ file_open_dialog_response (GtkWidget *open_dialog,
   GSList         *list;
   gboolean        success = FALSE;
 
-  g_object_set_data_full (G_OBJECT (gimp), "gimp-file-open-dialog-state",
-                          gimp_file_dialog_get_state (dialog),
-                          (GDestroyNotify) gimp_file_dialog_state_destroy);
+  gimp_file_dialog_save_state (GIMP_FILE_DIALOG (dialog),
+                               "gimp-file-open-dialog-state");
 
   if (response_id != GTK_RESPONSE_OK)
     {
