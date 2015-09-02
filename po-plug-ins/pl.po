@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-29 18:12+0200\n"
-"PO-Revision-Date: 2015-08-29 18:14+0200\n"
+"POT-Creation-Date: 2015-09-02 20:40+0200\n"
+"PO-Revision-Date: 2015-09-02 20:42+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -1569,7 +1569,7 @@ msgstr "Analiza sześcienna kolorów"
 #: ../plug-ins/imagemap/imap_cmd_guides.c:230
 #, c-format
 msgid "Image dimensions: %d × %d"
-msgstr "Wymiary obrazu: %d × %d"
+msgstr "Wymiary obrazu: %d×%d"
 
 #: ../plug-ins/common/color-cube-analyze.c:387
 msgid "No colors"
@@ -4548,7 +4548,7 @@ msgstr "Wyrenderowany plik SVG"
 #: ../plug-ins/common/file-svg.c:549 ../plug-ins/common/file-wmf.c:358
 #, c-format
 msgid "%d × %d"
-msgstr "%d × %d"
+msgstr "%d×%d"
 
 #: ../plug-ins/common/file-svg.c:557
 msgid ""
