@@ -365,7 +365,7 @@ xcf_load_image (Gimp     *gimp,
 
   /* check for a gimp-compatibility-mode parasite */
   parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
-                                       "gimp-xcf-foo");
+                                       "gimp-xcf-compatibility-mode");
   if (parasite)
     {
       GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
