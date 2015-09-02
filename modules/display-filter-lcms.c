@@ -278,15 +278,16 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
 
   src_profile = gimp_color_managed_get_color_profile (managed);
 
-  lcms->src_format  = babl_format ("R'G'B'A float");
-  lcms->dest_format = babl_format ("R'G'B'A float");
+  if (src_profile)
+    {
+      lcms->src_format  = babl_format ("R'G'B'A float");
+      lcms->dest_format = babl_format ("R'G'B'A float");
 
-  lcms->transform = gimp_widget_get_color_transform (widget,
-                                                     config, src_profile,
-                                                     &lcms->src_format,
-                                                     &lcms->dest_format);
-
-  g_object_unref (src_profile);
+      lcms->transform = gimp_widget_get_color_transform (widget,
+                                                         config, src_profile,
+                                                         &lcms->src_format,
+                                                         &lcms->dest_format);
+    }
 }
 
 static GimpColorProfile *
@@ -362,6 +363,9 @@ cdisplay_lcms_update_profile_label (CdisplayLcms *lcms,
   if (strcmp (name, "rgb-profile") == 0)
     {
       profile = gimp_color_managed_get_color_profile (managed);
+
+      if (profile)
+        g_object_ref (profile);
     }
   else if (g_str_has_prefix (name, "display-profile"))
     {

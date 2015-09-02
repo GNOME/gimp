@@ -111,6 +111,4 @@ gimp_image_profile_view_update (GimpImageParasiteView *view)
   profile = gimp_color_managed_get_color_profile (managed);
 
   gimp_color_profile_view_set_profile (profile_view->profile_view, profile);
-
-  g_object_unref (profile);
 }

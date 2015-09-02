@@ -609,14 +609,13 @@ gimp_edit_extract (GimpImage     *image,
                                                  offset_x, offset_y, FALSE);
       g_object_unref (buffer);
 
-      if (GIMP_IS_LAYER (pickable) ||
-          GIMP_IS_IMAGE (pickable))
+      if (GIMP_IS_COLOR_MANAGED (pickable))
         {
           GimpColorProfile *profile =
-            gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+            gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (pickable));
 
-          gimp_buffer_set_color_profile (gimp_buffer, profile);
-          g_object_unref (profile);
+          if (profile)
+            gimp_buffer_set_color_profile (gimp_buffer, profile);
         }
 
       return gimp_buffer;

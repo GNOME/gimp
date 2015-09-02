@@ -153,8 +153,7 @@ gimp_color_managed_get_color_profile (GimpColorManaged *managed)
   if (iface->get_color_profile)
     return iface->get_color_profile (managed);
 
-  /* never return a NULL profile */
-  return gimp_color_profile_new_srgb ();
+  return NULL;
 }
 
 /**

@@ -234,28 +234,23 @@ gimp_layer_new_convert_buffer (GimpLayer         *layer,
   GeglBuffer       *dest_buffer = gimp_drawable_get_buffer (drawable);
   GimpColorProfile *dest_profile;
 
-  if (! src_profile)
-    {
-      gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
-      return;
-    }
-
-  /*  FIXME: this is the wrong check, need something like file import
-   *  conversion config
-   */
-  if (config->mode == GIMP_COLOR_MANAGEMENT_OFF)
-    {
-      gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
-      return;
-    }
-
   dest_profile =
-    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
+
+  if (! src_profile  ||
+      ! dest_profile ||
+
+      /*  FIXME: this is the wrong check, need something like file import
+       *  conversion config
+       */
+      config->mode == GIMP_COLOR_MANAGEMENT_OFF)
+    {
+      gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
+      return;
+    }
 
   gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
                                    dest_buffer, NULL, dest_profile,
                                    GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                    TRUE);
-
-  g_object_unref (dest_profile);
 }

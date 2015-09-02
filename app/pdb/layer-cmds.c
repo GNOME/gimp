@@ -183,8 +183,6 @@ layer_new_from_visible_invoker (GimpProcedure         *procedure,
                                                GIMP_OPACITY_OPAQUE,
                                                GIMP_NORMAL_MODE,
                                                profile);
-
-      g_object_unref (profile);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

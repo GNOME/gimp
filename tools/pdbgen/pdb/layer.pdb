@@ -157,8 +157,6 @@ HELP
                                            GIMP_OPACITY_OPAQUE,
                                            GIMP_NORMAL_MODE,
                                            profile);
-
-  g_object_unref (profile);
 }
 CODE
     );

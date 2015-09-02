@@ -1052,9 +1052,11 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                          gboolean           convert_profile,
                          gboolean           push_undo)
 {
-  GimpLayer  *layer = GIMP_LAYER (drawable);
-  GeglBuffer *src_buffer;
-  GeglBuffer *dest_buffer;
+  GimpLayer        *layer = GIMP_LAYER (drawable);
+  GeglBuffer       *src_buffer;
+  GeglBuffer       *dest_buffer;
+  GimpColorProfile *src_profile  = NULL;
+  GimpColorProfile *dest_profile = NULL;
 
   if (layer_dither_type == 0)
     {
@@ -1086,23 +1088,19 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
 
   if (convert_profile)
     {
-      GimpImage        *src_image = gimp_item_get_image (GIMP_ITEM (layer));
-      GimpColorProfile *src_profile;
-      GimpColorProfile *dest_profile;
-
       src_profile =
-        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (src_image));
+        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
 
       dest_profile =
         gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (dest_image));
+    }
 
+  if (src_profile && dest_profile)
+    {
       gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
                                        dest_buffer, NULL, dest_profile,
                                        GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                        TRUE);
-
-      g_object_unref (src_profile);
-      g_object_unref (dest_profile);
     }
   else
     {

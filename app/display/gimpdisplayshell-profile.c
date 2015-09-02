@@ -88,6 +88,9 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
 
   src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (shell));
 
+  if (! src_profile)
+    return;
+
   src_format = gimp_babl_format (GIMP_RGB,
                                  gimp_image_get_precision (image),
                                  TRUE);

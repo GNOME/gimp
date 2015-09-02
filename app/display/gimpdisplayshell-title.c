@@ -366,6 +366,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   break;
                 }
               /* else fallthru */
+
             case 'w': /* width in pixels */
               i += print (title, title_len, i, "%d",
                           gimp_image_get_width (image));
@@ -388,6 +389,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   break;
                 }
               /* else fallthru */
+
             case 'h': /* height in pixels */
               i += print (title, title_len, i, "%d",
                           gimp_image_get_height (image));
@@ -421,6 +423,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   break;
                 }
               /* else fallthru */
+
             case 'x': /* drawable width in pixels */
               if (drawable)
                 i += print (title, title_len, i, "%d",
@@ -445,6 +448,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                   break;
                 }
               /* else fallthru */
+
             case 'y': /* drawable height in pixels */
               if (drawable)
                 i += print (title, title_len, i, "%d",
@@ -458,28 +462,29 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
                 profile = gimp_color_managed_get_color_profile (managed);
 
-                i += print (title, title_len, i, "%s",
-                            gimp_color_profile_get_label (profile));
-
-                g_object_unref (profile);
+                if (profile)
+                  i += print (title, title_len, i, "%s",
+                              gimp_color_profile_get_label (profile));
               }
               break;
 
             case 'e': /* display's offsets in pixels */
               {
-                gdouble scale = gimp_zoom_model_get_factor (shell->zoom);
+                gdouble scale    = gimp_zoom_model_get_factor (shell->zoom);
                 gdouble offset_x = shell->offset_x / scale;
                 gdouble offset_y = shell->offset_y / scale;
+
                 i += print (title, title_len, i,
-                            scale >= 0.15 ? "%.0fx%.0f" : "%.2fx%.2f", offset_x, offset_y);
+                            scale >= 0.15 ? "%.0fx%.0f" : "%.2fx%.2f",
+                            offset_x, offset_y);
               }
-            break;
+              break;
 
             case 'r': /* view rotation angle in degrees */
               {
                 i += print (title, title_len, i, "%.1f", shell->rotate_angle);
               }
-            break;
+              break;
 
             case '\xc3': /* utf-8 extended char */
               {

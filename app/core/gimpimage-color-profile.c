@@ -358,11 +358,8 @@ gimp_image_convert_color_profile (GimpImage                *image,
 
   src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-  if (gimp_color_profile_is_equal (src_profile, dest_profile))
-    {
-      g_object_unref (src_profile);
-      return TRUE;
-    }
+  if (! src_profile || gimp_color_profile_is_equal (src_profile, dest_profile))
+    return TRUE;
 
   if (progress)
     gimp_progress_start (progress, FALSE,
@@ -401,8 +398,6 @@ gimp_image_convert_color_profile (GimpImage                *image,
 
   if (progress)
     gimp_progress_end (progress);
-
-  g_object_unref (src_profile);
 
   return TRUE;
 }

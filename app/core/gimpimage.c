@@ -1390,10 +1390,10 @@ gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
 
   profile = gimp_image_get_color_profile (image);
 
-  if (! profile)
+  if (! profile && gimp_image_get_base_type (image) != GIMP_INDEXED)
     profile = gimp_image_get_builtin_color_profile (image);
 
-  return g_object_ref (profile);
+  return profile;
 }
 
 static void

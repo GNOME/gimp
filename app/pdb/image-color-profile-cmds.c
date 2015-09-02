@@ -107,17 +107,19 @@ image_get_effective_color_profile_invoker (GimpProcedure         *procedure,
   if (success)
     {
       GimpColorProfile *profile;
-      const guint8     *data;
-      gsize             length;
 
       profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-      data = gimp_color_profile_get_icc_profile (profile, &length);
+      if (profile)
+        {
+          const guint8     *data;
+          gsize             length;
 
-      profile_data = g_memdup (data, length);
-      num_bytes = length;
+          data = gimp_color_profile_get_icc_profile (profile, &length);
 
-      g_object_unref (profile);
+          profile_data = g_memdup (data, length);
+          num_bytes = length;
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -366,7 +368,7 @@ register_image_color_profile_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-get-effective-color-profile",
                                      "Returns the color profile that is used for the image",
-                                     "This procedure returns the color profile that is actually used for this image, which is the profile returned by 'gimp-image-get-color-profile' if the image has a profile assigned, or the default RGB profile from preferences if no profile is assigned to the image. If there is no default RGB profile configured in preferences either, a generated default RGB profile is returned.",
+                                     "This procedure returns the color profile that is actually used for this image, which is the profile returned by 'gimp-image-get-color-profile' if the image has a profile assigned, or a generated default RGB profile. If the image is not RGB or INDEXED, NULL is returned.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2015",

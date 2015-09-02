@@ -1888,12 +1888,12 @@ plug_in_icc_profile_info_invoker (GimpProcedure         *procedure,
 
       profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-      profile_name = g_strdup (gimp_color_profile_get_model (profile));
-      profile_desc = g_strdup (gimp_color_profile_get_description (profile));
-      profile_info = g_strdup (gimp_color_profile_get_summary (profile));
-
-      g_object_unref (profile);
-
+      if (profile)
+        {
+          profile_name = g_strdup (gimp_color_profile_get_model (profile));
+          profile_desc = g_strdup (gimp_color_profile_get_description (profile));
+          profile_info = g_strdup (gimp_color_profile_get_summary (profile));
+        }
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,

@@ -221,8 +221,6 @@ color_profile_dialog_new (GimpImage    *image,
   gtk_container_add (GTK_CONTAINER (frame), label);
   gtk_widget_show (label);
 
-  g_object_unref (src_profile);
-
   frame = gimp_frame_new (convert ? _("Convert to") : _("Assign"));
   gtk_box_pack_start (GTK_BOX (dialog->main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
