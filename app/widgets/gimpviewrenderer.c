@@ -70,6 +70,8 @@ static void      gimp_view_renderer_real_render       (GimpViewRenderer   *rende
 
 static void      gimp_view_renderer_size_changed      (GimpViewRenderer   *renderer,
                                                        GimpViewable       *viewable);
+static void      gimp_view_renderer_profile_changed   (GimpViewRenderer   *renderer,
+                                                       GimpViewable       *viewable);
 
 static void      gimp_view_render_temp_buf_to_surface (GimpViewRenderer   *renderer,
                                                        GtkWidget          *widget,
@@ -351,6 +353,11 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
       g_signal_handlers_disconnect_by_func (renderer->viewable,
                                             G_CALLBACK (gimp_view_renderer_size_changed),
                                             renderer);
+
+      if (GIMP_IS_COLOR_MANAGED (renderer->viewable))
+        g_signal_handlers_disconnect_by_func (renderer->viewable,
+                                              G_CALLBACK (gimp_view_renderer_profile_changed),
+                                              renderer);
     }
 
   renderer->viewable = viewable;
@@ -370,6 +377,12 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
                                 "size-changed",
                                 G_CALLBACK (gimp_view_renderer_size_changed),
                                 renderer);
+
+      if (GIMP_IS_COLOR_MANAGED (renderer->viewable))
+        g_signal_connect_swapped (renderer->viewable,
+                                  "profile-changed",
+                                  G_CALLBACK (gimp_view_renderer_profile_changed),
+                                  renderer);
 
       if (renderer->size != -1)
         gimp_view_renderer_set_size (renderer, renderer->size,
@@ -787,6 +800,15 @@ gimp_view_renderer_size_changed (GimpViewRenderer *renderer,
   if (renderer->size != -1)
     gimp_view_renderer_set_size (renderer, renderer->size,
                                  renderer->border_width);
+
+  gimp_view_renderer_invalidate (renderer);
+}
+
+static void
+gimp_view_renderer_profile_changed (GimpViewRenderer *renderer,
+                                    GimpViewable     *viewable)
+{
+  /* FIXME: kill cached color transform */
 
   gimp_view_renderer_invalidate (renderer);
 }

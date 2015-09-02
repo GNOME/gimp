@@ -60,6 +60,7 @@ GimpItem      * gimp_item_stack_get_parent_by_path  (GimpItemStack *stack,
                                                      gint          *index);
 
 void            gimp_item_stack_invalidate_previews (GimpItemStack *stack);
+void            gimp_item_stack_profile_changed     (GimpItemStack *stack);
 
 
 #endif  /*  __GIMP_ITEM_STACK_H__  */

@@ -78,7 +78,8 @@ enum
 };
 
 
-static void   gimp_layer_pickable_iface_init (GimpPickableInterface *iface);
+static void       gimp_color_managed_iface_init (GimpColorManagedInterface *iface);
+static void       gimp_pickable_iface_init      (GimpPickableInterface     *iface);
 
 static void       gimp_layer_set_property       (GObject            *object,
                                                  guint               property_id,
@@ -183,6 +184,13 @@ static void    gimp_layer_set_buffer            (GimpDrawable       *drawable,
                                                  gint                offset_x,
                                                  gint                offset_y);
 
+static const guint8 *
+               gimp_layer_get_icc_profile       (GimpColorManaged   *managed,
+                                                 gsize              *len);
+static GimpColorProfile *
+               gimp_layer_get_color_profile     (GimpColorManaged   *managed);
+static void    gimp_layer_profile_changed       (GimpColorManaged   *managed);
+
 static gdouble gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
                                                  gint                y);
@@ -196,8 +204,10 @@ static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
+                                                gimp_color_managed_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_layer_pickable_iface_init))
+                                                gimp_pickable_iface_init))
 
 #define parent_class gimp_layer_parent_class
 
@@ -390,7 +400,15 @@ gimp_layer_init (GimpLayer *layer)
 }
 
 static void
-gimp_layer_pickable_iface_init (GimpPickableInterface *iface)
+gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
+{
+  iface->get_icc_profile   = gimp_layer_get_icc_profile;
+  iface->get_color_profile = gimp_layer_get_color_profile;
+  iface->profile_changed   = gimp_layer_profile_changed;
+}
+
+static void
+gimp_pickable_iface_init (GimpPickableInterface *iface)
 {
   iface->get_opacity_at = gimp_layer_get_opacity_at;
 }
@@ -1184,6 +1202,29 @@ gimp_layer_set_buffer (GimpDrawable *drawable,
       if (old_linear != new_linear)
         gimp_layer_update_mode_node (GIMP_LAYER (drawable));
     }
+}
+
+static const guint8 *
+gimp_layer_get_icc_profile (GimpColorManaged *managed,
+                            gsize            *len)
+{
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (managed));
+
+  return gimp_color_managed_get_icc_profile (GIMP_COLOR_MANAGED (image), len);
+}
+
+static GimpColorProfile *
+gimp_layer_get_color_profile (GimpColorManaged *managed)
+{
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (managed));
+
+  return gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+}
+
+static void
+gimp_layer_profile_changed (GimpColorManaged *managed)
+{
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (managed));
 }
 
 static gdouble
