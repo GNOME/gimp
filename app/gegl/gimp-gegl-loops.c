@@ -706,22 +706,17 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
   cmsUInt32Number   flags;
   cmsHTRANSFORM     transform;
 
-  /*  FIXME: we need the unconditional full copy only in two cases:
-   *  - if we return without doing anything
-   *  - if there is an alpha channel, because lcms doesn't copy it
-   */
-  gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
-                    dest_buffer, dest_rect);
-
   src_format  = gegl_buffer_get_format (src_buffer);
   dest_format = gegl_buffer_get_format (dest_buffer);
 
   if ((gimp_babl_format_get_base_type (src_format)  != GIMP_RGB) ||
-      (gimp_babl_format_get_base_type (dest_format) != GIMP_RGB))
-    return;
-
-  if (gimp_color_profile_can_gegl_copy (src_profile, dest_profile))
-    return;
+      (gimp_babl_format_get_base_type (dest_format) != GIMP_RGB) ||
+      gimp_color_profile_can_gegl_copy (src_profile, dest_profile))
+    {
+      gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
+                        dest_buffer, dest_rect);
+      return;
+    }
 
   src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
   dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
@@ -740,24 +735,57 @@ gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
 
   if (transform)
     {
-      GeglBufferIterator *iter;
-
-      iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
-                                       src_format,
-                                       GEGL_ACCESS_READ,
-                                       GEGL_ABYSS_NONE);
-
-      gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
-                                dest_format,
-                                GEGL_ACCESS_WRITE,
-                                GEGL_ABYSS_NONE);
-
-      while (gegl_buffer_iterator_next (iter))
-        {
-          cmsDoTransform (transform,
-                          iter->data[0], iter->data[1], iter->length);
-        }
+      gimp_gegl_convert_color_transform (src_buffer,  src_rect,  src_format,
+                                         dest_buffer, dest_rect, dest_format,
+                                         transform);
 
       cmsDeleteTransform (transform);
+    }
+  else
+    {
+      /* FIXME: no idea if this ever happens */
+      gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
+                        dest_buffer, dest_rect);
+    }
+}
+
+void
+gimp_gegl_convert_color_transform (GeglBuffer          *src_buffer,
+                                   const GeglRectangle *src_rect,
+                                   const Babl          *src_format,
+                                   GeglBuffer          *dest_buffer,
+                                   const GeglRectangle *dest_rect,
+                                   const Babl          *dest_format,
+                                   GimpColorTransform   transform)
+{
+  GeglBufferIterator *iter;
+  gboolean            has_alpha;
+
+  has_alpha = babl_format_has_alpha (dest_format);
+
+  /* make sure the alpha channel is copied too, lcms doesn't copy it */
+  if (has_alpha)
+    gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
+                      dest_buffer, dest_rect);
+
+  iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
+                                   src_format,
+                                   GEGL_ACCESS_READ,
+                                   GEGL_ABYSS_NONE);
+
+  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
+                            dest_format,
+                            /* use READWRITE for alpha surfaces
+                             * because we must use the alpha channel
+                             * that is already copied, see above
+                             */
+                            has_alpha ?
+                            GEGL_ACCESS_READWRITE: GEGL_ACCESS_WRITE,
+                            GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      cmsDoTransform (transform,
+                      iter->data[0], iter->data[1], iter->length);
     }
 }
