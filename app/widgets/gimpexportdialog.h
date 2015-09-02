@@ -38,6 +38,11 @@ typedef struct _GimpExportDialogClass  GimpExportDialogClass;
 struct _GimpExportDialog
 {
   GimpFileDialog       parent_instance;
+
+  GtkWidget           *size_expander;
+  GtkWidget           *resize_vbox;
+  GtkWidget           *size_box;
+  GtkWidget           *interpolation_combo;
 };
 
 struct _GimpExportDialogClass
@@ -48,11 +53,19 @@ struct _GimpExportDialogClass
 
 GType       gimp_export_dialog_get_type         (void) G_GNUC_CONST;
 
-GtkWidget * gimp_export_dialog_new              (Gimp                 *gimp);
+GtkWidget * gimp_export_dialog_new              (Gimp                  *gimp);
 
 void        gimp_export_dialog_set_image        (GimpExportDialog      *dialog,
                                                  Gimp                  *gimp,
                                                  GimpImage             *image);
+void        gimp_export_dialog_get_dimensions   (GimpExportDialog      *dialog,
+                                                 gint                  *width,
+                                                 gint                  *height,
+                                                 GimpUnit              *unit,
+                                                 gdouble               *xresolution,
+                                                 gdouble               *yresolution,
+                                                 GimpUnit              *resolution_unit,
+                                                 GimpInterpolationType *interpolation);
 
 G_END_DECLS
 

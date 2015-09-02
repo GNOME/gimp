@@ -31,7 +31,14 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+
+#include "config/gimpcoreconfig.h"
+
+#include "display/display-types.h"
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "file/file-utils.h"
 #include "file/gimp-file.h"
@@ -43,11 +50,13 @@
 #include "gimpexportdialog.h"
 #include "gimpfiledialog.h"
 #include "gimphelp-ids.h"
+#include "gimpsizebox.h"
 
 #include "gimp-intl.h"
 
 
-static GFile  * gimp_export_dialog_get_default_folder (Gimp *gimp);
+static void     gimp_export_dialog_constructed        (GObject *object);
+static GFile  * gimp_export_dialog_get_default_folder (Gimp    *gimp);
 
 G_DEFINE_TYPE (GimpExportDialog, gimp_export_dialog,
                GIMP_TYPE_FILE_DIALOG)
@@ -57,11 +66,57 @@ G_DEFINE_TYPE (GimpExportDialog, gimp_export_dialog,
 static void
 gimp_export_dialog_class_init (GimpExportDialogClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  object_class->constructed = gimp_export_dialog_constructed;
 }
 
 static void
 gimp_export_dialog_init (GimpExportDialog *dialog)
 {
+}
+
+static void
+gimp_export_dialog_constructed (GObject *object)
+{
+  GimpExportDialog *dialog = GIMP_EXPORT_DIALOG (object);
+  GtkWidget        *frame;
+  GtkWidget        *hbox;
+  GtkWidget        *label;
+
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  dialog->size_expander = gtk_expander_new_with_mnemonic (NULL);
+  gtk_expander_set_label (GTK_EXPANDER (dialog->size_expander),
+                          _("Scale Image for Export"));
+
+  dialog->resize_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (dialog->size_expander), dialog->resize_vbox);
+
+  frame = gimp_frame_new (_("Quality"));
+  gtk_box_pack_end (GTK_BOX (dialog->resize_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new_with_mnemonic (_("I_nterpolation:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  dialog->interpolation_combo = gimp_enum_combo_box_new (GIMP_TYPE_INTERPOLATION_TYPE);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->interpolation_combo);
+  gtk_box_pack_start (GTK_BOX (hbox), dialog->interpolation_combo, FALSE, FALSE, 0);
+  gtk_widget_show (dialog->interpolation_combo);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (dialog->interpolation_combo),
+                                 GIMP_FILE_DIALOG (dialog)->gimp->config->interpolation_type);
+
+  gimp_file_dialog_add_extra_widget (GIMP_FILE_DIALOG (dialog),
+                                     dialog->size_expander,
+                                     FALSE, FALSE, 0);
+  gtk_widget_show (dialog->size_expander);
 }
 
 /*  public functions  */
@@ -99,10 +154,20 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
                               Gimp             *gimp,
                               GimpImage        *image)
 {
-  GFile *dir_file  = NULL;
-  GFile *name_file = NULL;
-  GFile *ext_file  = NULL;
-  gchar *basename;
+  GimpContext           *context = gimp_get_user_context (gimp);
+  GimpDisplay           *display = gimp_context_get_display (context);
+  GFile                 *dir_file  = NULL;
+  GFile                 *name_file = NULL;
+  GFile                 *ext_file  = NULL;
+  gchar                 *basename;
+  gdouble                xres, yres;
+  gint                   export_width;
+  gint                   export_height;
+  GimpUnit               export_unit;
+  gdouble                export_xres;
+  gdouble                export_yres;
+  GimpUnit               export_res_unit;
+  GimpInterpolationType  export_interpolation;
 
   g_return_if_fail (GIMP_IS_EXPORT_DIALOG (dialog));
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -213,6 +278,85 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
     }
 
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
+
+  /* Extra feature for resize-on-export:
+   * I have to destroy and recreate the size box because current code does not
+   * behave well if I just reset properties to other values. */
+  if (dialog->size_box)
+    gtk_widget_destroy (dialog->size_box);
+
+  gimp_image_get_resolution (image, &xres, &yres);
+
+  dialog->size_box = g_object_new (GIMP_TYPE_SIZE_BOX,
+                                   "width",           gimp_image_get_width (image),
+                                   "height",          gimp_image_get_height (image),
+                                   "unit",            (GimpUnit) gimp_display_get_shell (display)->unit,
+                                   "xresolution",     xres,
+                                   "yresolution",     yres,
+                                   "resolution-unit", gimp_image_get_unit (image),
+                                   "keep-aspect",     TRUE,
+                                   "edit-resolution", TRUE,
+                                   NULL);
+  gimp_image_get_export_dimensions (image,
+                                    &export_width,
+                                    &export_height,
+                                    &export_unit,
+                                    &export_xres,
+                                    &export_yres,
+                                    &export_res_unit,
+                                    &export_interpolation);
+
+  if  (export_width != 0 && export_height != 0 &&
+       export_xres  != 0 && export_yres  != 0  &&
+       (export_width != gimp_image_get_width (image)   ||
+        export_height != gimp_image_get_height (image) ||
+        export_xres   != xres || export_yres != yres   ||
+        export_res_unit != gimp_image_get_unit (image)))
+    {
+      /* Some values have been previously set. Keep them! */
+      gimp_size_box_set_size (GIMP_SIZE_BOX (dialog->size_box),
+                              export_width,
+                              export_height,
+                              export_unit);
+      gimp_size_box_set_resolution (GIMP_SIZE_BOX (dialog->size_box),
+                                    export_xres,
+                                    export_yres,
+                                    export_res_unit);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (dialog->interpolation_combo),
+                                     export_interpolation);
+      gtk_expander_set_expanded (GTK_EXPANDER (dialog->size_expander),
+                                 TRUE);
+    }
+  else
+    {
+      gtk_expander_set_expanded (GTK_EXPANDER (dialog->size_expander),
+                                 FALSE);
+    }
+  gtk_box_pack_start (GTK_BOX (dialog->resize_vbox), dialog->size_box,
+                      FALSE, FALSE, 0);
+  gtk_widget_show_all (dialog->resize_vbox);
+}
+
+void
+gimp_export_dialog_get_dimensions (GimpExportDialog      *dialog,
+                                   gint                  *width,
+                                   gint                  *height,
+                                   GimpUnit              *unit,
+                                   gdouble               *xresolution,
+                                   gdouble               *yresolution,
+                                   GimpUnit              *resolution_unit,
+                                   GimpInterpolationType *interpolation)
+{
+  g_object_get (dialog->size_box,
+                "width",           width,
+                "height",          height,
+                "unit",            unit,
+                "xresolution",     xresolution,
+                "yresolution",     yresolution,
+                "resolution-unit", resolution_unit,
+                NULL);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (dialog->interpolation_combo),
+                                 (gint *) interpolation);
 }
 
 /*  private functions  */

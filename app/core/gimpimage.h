@@ -171,6 +171,23 @@ gint            gimp_image_get_xcf_version       (GimpImage          *image,
                                                   gint               *gimp_version,
                                                   const gchar       **version_string);
 
+void            gimp_image_set_export_dimensions (GimpImage             *image,
+                                                  gint                   width,
+                                                  gint                   height,
+                                                  GimpUnit               unit,
+                                                  gdouble                xresolution,
+                                                  gdouble                yresolution,
+                                                  GimpUnit               resolution_unit,
+                                                  GimpInterpolationType  interpolation);
+void            gimp_image_get_export_dimensions (GimpImage             *image,
+                                                  gint                  *width,
+                                                  gint                  *height,
+                                                  GimpUnit              *unit,
+                                                  gdouble               *xresolution,
+                                                  gdouble               *yresolution,
+                                                  GimpUnit              *resolution_unit,
+                                                  GimpInterpolationType *interpolation);
+
 void            gimp_image_set_xcf_compat_mode   (GimpImage          *image,
                                                   gboolean            compat_mode);
 gboolean        gimp_image_get_xcf_compat_mode   (const GimpImage    *image);

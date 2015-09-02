@@ -65,6 +65,14 @@ struct _GimpImagePrivate
   GFile             *save_a_copy_file;      /*  the image's save-a-copy file */
   GFile             *untitled_file;         /*  a file saying "Untitled"     */
 
+  gint               export_width;          /*  width in pixels for export   */
+  gint               export_height;         /*  height in pixels for export  */
+  GimpUnit           export_unit;           /*  width/height display unit    */
+  gdouble            export_xresolution;    /*  x-res in ppi for export      */
+  gdouble            export_yresolution;    /*  y-res in ppi for export      */
+  GimpUnit           export_res_unit;       /*  resolution display unit      */
+  GimpInterpolationType export_interpolation; /* interpolation for export    */
+
   gboolean           xcf_compat_mode;       /*  if possible, save compat XCF */
 
   gint               dirty;                 /*  dirty flag -- # of ops       */

@@ -34,6 +34,8 @@
 #include "core/gimpdocumentlist.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-duplicate.h"
+#include "core/gimpimage-scale.h"
 #include "core/gimpimagefile.h"
 #include "core/gimpparamspecs.h"
 #include "core/gimpprogress.h"
@@ -50,6 +52,9 @@
 #include "gimp-intl.h"
 
 
+static GimpImage * image_duplicate_for_export (GimpImage    *image,
+                                               GimpProgress *progress);
+
 /*  public functions  */
 
 GimpPDBStatusType
@@ -64,6 +69,7 @@ file_save (Gimp                *gimp,
            gboolean             export_forward,
            GError             **error)
 {
+  GimpImage         *export_image = NULL;
   GimpDrawable      *drawable;
   GimpValueArray    *return_vals;
   GimpPDBStatusType  status     = GIMP_PDB_EXECUTION_ERROR;
@@ -90,7 +96,15 @@ file_save (Gimp                *gimp,
   g_object_ref (image);
   g_object_ref (file);
 
-  drawable = gimp_image_get_active_drawable (image);
+  if (export_forward || export_backward)
+    {
+      export_image = image_duplicate_for_export (image, progress);
+      drawable = gimp_image_get_active_drawable (image);
+    }
+  else
+    {
+      drawable = gimp_image_get_active_drawable (image);
+    }
 
   if (! drawable)
     goto out;
@@ -168,7 +182,7 @@ file_save (Gimp                *gimp,
 
   uri = g_file_get_uri (file);
 
-  image_ID    = gimp_image_get_ID (image);
+  image_ID    = gimp_image_get_ID (export_image ? export_image : image);
   drawable_ID = gimp_item_get_ID (GIMP_ITEM (drawable));
 
   return_vals =
@@ -289,6 +303,74 @@ file_save (Gimp                *gimp,
 
   g_free (path);
   g_free (uri);
+  if (export_image)
+    g_object_unref (export_image);
 
   return status;
+}
+
+/*  private functions  */
+
+/*
+ * image_duplicate_scale:
+ *
+ * Returns: NULL if the export dimension are the same as the original,
+ * or a duplicate #GimpImage scaled to the new dimensions otherwise.
+ * The duplicate must be freed with g_object_unref(). */
+static GimpImage *
+image_duplicate_for_export (GimpImage    *image,
+                            GimpProgress *progress)
+{
+  GimpImage             *new_image = NULL;
+  /* Current resolution. */
+  gdouble                current_xres;
+  gdouble                current_yres;
+  /* All export dimensions. */
+  gint                   width;
+  gint                   height;
+  GimpUnit               unit;
+  gdouble                xresolution;
+  gdouble                yresolution;
+  GimpUnit               resolution_unit;
+  GimpInterpolationType  interpolation;
+
+  /* Get current resolution. */
+  gimp_image_get_resolution (image, &current_xres, &current_yres);
+
+  /* Get export dimensions. */
+  gimp_image_get_export_dimensions (image,
+                                    &width,
+                                    &height,
+                                    &unit,
+                                    &xresolution,
+                                    &yresolution,
+                                    &resolution_unit,
+                                    &interpolation);
+  if (width > 0 && height > 0)
+    {
+      if (width           != gimp_image_get_width  (image) ||
+          height          != gimp_image_get_height (image) ||
+          xresolution     != current_xres                  ||
+          yresolution     != current_yres                  ||
+          resolution_unit != gimp_image_get_unit (image))
+        {
+          new_image = gimp_image_duplicate (image);
+
+          gimp_image_set_resolution (new_image, xresolution, yresolution);
+          gimp_image_set_unit (new_image, resolution_unit);
+
+          if (width  != gimp_image_get_width  (image) ||
+              height != gimp_image_get_height (image))
+            {
+              gimp_image_scale (new_image, width, height, interpolation, progress);
+            }
+        }
+    }
+  else
+    {
+      g_warning ("Scale Error: "
+                 "Both width and height must be greater than zero.");
+    }
+
+  return new_image;
 }

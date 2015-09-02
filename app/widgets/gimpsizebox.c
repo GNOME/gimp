@@ -61,7 +61,9 @@ typedef struct _GimpSizeBoxPrivate GimpSizeBoxPrivate;
 struct _GimpSizeBoxPrivate
 {
   GimpSizeEntry   *size_entry;
+  GimpSizeEntry   *resolution_entry;
   GimpChainButton *size_chain;
+  GimpChainButton *resolution_chain;
   GtkWidget       *pixel_label;
   GtkWidget       *res_label;
 };
@@ -263,7 +265,8 @@ gimp_size_box_constructed (GObject *object)
                                     _("_Y resolution:"),
                                     box->yresolution, 1.0,
                                     1, 1, 1, 10);
-
+      priv->resolution_entry = GIMP_SIZE_ENTRY (entry);
+      priv->resolution_chain = GIMP_COORDINATES_CHAINBUTTON (GIMP_SIZE_ENTRY (entry));
 
       gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
       gtk_widget_show (entry);
@@ -420,6 +423,66 @@ gimp_size_box_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+/**
+ * gimp_size_box_set_size:
+ * @width: width in pixels.
+ * @height: height in pixels.
+ * @unit: #GimpUnit for @width and @height display.
+ *
+ * Sets the value for width and height. These are different from the
+ * initial values set through properties (which determined the ratio
+ * and "100%" values for instance).
+ */
+void
+gimp_size_box_set_size (GimpSizeBox *box,
+                        gint         width,
+                        gint         height,
+                        GimpUnit     unit)
+{
+  GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
+
+  /* gimp_size_entry_set_value() depends on the unit. So I set
+   * the pixel unit first since I always want to work with pixels. */
+  gimp_size_entry_set_unit (priv->size_entry, GIMP_UNIT_PIXEL);
+  gimp_size_entry_set_value (priv->size_entry, 0, width);
+  if (gimp_size_entry_get_value (priv->size_entry, 1) != height)
+    {
+      gimp_chain_button_set_active (priv->size_chain,
+                                    FALSE);
+      gimp_size_entry_set_value (priv->size_entry, 1, height);
+    }
+  gimp_size_entry_set_unit (priv->size_entry, unit);
+}
+
+/**
+ * gimp_size_box_set_resolution:
+ * @xres: X-resolution in ppi.
+ * @yres: Y-resolution in ppi.
+ * @unit: #GimpUnit for @xres and @xres display.
+ *
+ * Sets the resolution.
+ */
+void
+gimp_size_box_set_resolution (GimpSizeBox *box,
+                              gdouble      xres,
+                              gdouble      yres,
+                              GimpUnit     unit)
+{
+  GimpSizeBoxPrivate *priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
+
+  g_return_if_fail (box->edit_resolution);
+
+  gimp_size_entry_set_unit (priv->resolution_entry, GIMP_UNIT_INCH);
+  gimp_size_entry_set_value (priv->resolution_entry, 0, xres);
+  if (gimp_size_entry_get_value (priv->resolution_entry, 1) != yres)
+    {
+      gimp_chain_button_set_active (priv->resolution_chain,
+                                    FALSE);
+      gimp_size_entry_set_value (priv->resolution_entry, 1, yres);
+    }
+  gimp_size_entry_set_unit (priv->resolution_entry, unit);
 }
 
 static void

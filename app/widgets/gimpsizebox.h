@@ -58,6 +58,14 @@ struct _GimpSizeBoxClass
 
 GType       gimp_size_box_get_type (void) G_GNUC_CONST;
 
+void        gimp_size_box_set_size (GimpSizeBox *box,
+                                    gint         width,
+                                    gint         height,
+                                    GimpUnit     unit);
+void        gimp_size_box_set_resolution (GimpSizeBox *box,
+                                          gdouble      xres,
+                                          gdouble      yres,
+                                          GimpUnit     unit);
 
 G_END_DECLS
 

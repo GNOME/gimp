@@ -157,7 +157,30 @@ file_save_dialog_response (GtkWidget *save_dialog,
     }
   else /* GIMP_IS_EXPORT_DIALOG (dialog) */
     {
+      GimpExportDialog     *export_dialog = GIMP_EXPORT_DIALOG (dialog);
+      gint                  width = 0.0;
+      gint                  height = 0.0;
+      GimpUnit              unit;
+      gdouble               xresolution = 0.0;
+      gdouble               yresolution = 0.0;
+      GimpUnit              resolution_unit;
+      GimpInterpolationType interpolation;
+
       gimp_file_dialog_save_state (dialog, "gimp-file-export-dialog-state");
+
+      gimp_export_dialog_get_dimensions (export_dialog,
+                                         &width,
+                                         &height,
+                                         &unit,
+                                         &xresolution,
+                                         &yresolution,
+                                         &resolution_unit,
+                                         &interpolation);
+      gimp_image_set_export_dimensions (dialog->image,
+                                        width, height, unit,
+                                        xresolution, yresolution,
+                                        resolution_unit,
+                                        interpolation);
     }
 
   if (response_id != GTK_RESPONSE_OK)

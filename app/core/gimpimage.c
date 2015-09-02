@@ -2365,6 +2365,56 @@ gimp_image_get_xcf_version (GimpImage    *image,
 }
 
 void
+gimp_image_set_export_dimensions (GimpImage             *image,
+                                  gint                   width,
+                                  gint                   height,
+                                  GimpUnit               unit,
+                                  gdouble                xresolution,
+                                  gdouble                yresolution,
+                                  GimpUnit               resolution_unit,
+                                  GimpInterpolationType  interpolation)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  private->export_width          = width;
+  private->export_height         = height;
+  private->export_unit           = unit;
+  private->export_xresolution    = xresolution;
+  private->export_yresolution    = yresolution;
+  private->export_res_unit       = resolution_unit;
+  private->export_interpolation  = interpolation;
+}
+
+void
+gimp_image_get_export_dimensions (GimpImage             *image,
+                                  gint                  *width,
+                                  gint                  *height,
+                                  GimpUnit              *unit,
+                                  gdouble               *xresolution,
+                                  gdouble               *yresolution,
+                                  GimpUnit              *resolution_unit,
+                                  GimpInterpolationType *interpolation)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  *width           = private->export_width;
+  *height          = private->export_height;
+  *unit            = private->export_unit;
+  *xresolution     = private->export_xresolution;
+  *yresolution     = private->export_yresolution;
+  *resolution_unit = private->export_res_unit;
+  *interpolation   = private->export_interpolation;
+}
+
+void
 gimp_image_set_xcf_compat_mode (GimpImage *image,
                                 gboolean   compat_mode)
 {
