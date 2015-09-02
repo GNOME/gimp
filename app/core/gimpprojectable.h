@@ -35,27 +35,26 @@ struct _GimpProjectableInterface
   GTypeInterface base_iface;
 
   /*  signals  */
-  void               (* invalidate)         (GimpProjectable *projectable,
-                                             gint             x,
-                                             gint             y,
-                                             gint             width,
-                                             gint             height);
-  void               (* flush)              (GimpProjectable *projectable,
-                                             gboolean         invalidate_preview);
-  void               (* structure_changed)  (GimpProjectable *projectable);
+  void         (* invalidate)         (GimpProjectable *projectable,
+                                       gint             x,
+                                       gint             y,
+                                       gint             width,
+                                       gint             height);
+  void         (* flush)              (GimpProjectable *projectable,
+                                       gboolean         invalidate_preview);
+  void         (* structure_changed)  (GimpProjectable *projectable);
 
   /*  virtual functions  */
-  GimpImage        * (* get_image)          (GimpProjectable *projectable);
-  const Babl       * (* get_format)         (GimpProjectable *projectable);
-  GimpColorProfile * (* get_color_profile)  (GimpProjectable *projectable);
-  void               (* get_offset)         (GimpProjectable *projectable,
-                                             gint            *x,
-                                             gint            *y);
-  void               (* get_size)           (GimpProjectable *projectable,
-                                             gint            *width,
-                                             gint            *height);
-  GeglNode         * (* get_graph)          (GimpProjectable *projectable);
-  void               (* invalidate_preview) (GimpProjectable *projectable);
+  GimpImage  * (* get_image)          (GimpProjectable *projectable);
+  const Babl * (* get_format)         (GimpProjectable *projectable);
+  void         (* get_offset)         (GimpProjectable *projectable,
+                                       gint            *x,
+                                       gint            *y);
+  void         (* get_size)           (GimpProjectable *projectable,
+                                       gint            *width,
+                                       gint            *height);
+  GeglNode   * (* get_graph)          (GimpProjectable *projectable);
+  void         (* invalidate_preview) (GimpProjectable *projectable);
 };
 
 
@@ -72,8 +71,6 @@ void         gimp_projectable_structure_changed  (GimpProjectable *projectable);
 
 GimpImage  * gimp_projectable_get_image          (GimpProjectable *projectable);
 const Babl * gimp_projectable_get_format         (GimpProjectable *projectable);
-GimpColorProfile
-           * gimp_projectable_get_color_profile  (GimpProjectable *projectable);
 void         gimp_projectable_get_offset         (GimpProjectable *projectable,
                                                   gint            *x,
                                                   gint            *y);

@@ -190,12 +190,8 @@ static void        gimp_image_projectable_flush  (GimpProjectable   *projectable
 static GeglNode   * gimp_image_get_graph         (GimpProjectable   *projectable);
 static GimpImage  * gimp_image_get_image         (GimpProjectable   *projectable);
 static const Babl * gimp_image_get_proj_format   (GimpProjectable   *projectable);
-static GimpColorProfile
-             * gimp_image_get_proj_color_profile (GimpProjectable   *projectable);
 
 static void         gimp_image_pickable_flush    (GimpPickable      *pickable);
-static GimpColorProfile
-         * gimp_image_pickable_get_color_profile (GimpPickable      *pickable);
 static GeglBuffer * gimp_image_get_buffer        (GimpPickable      *pickable);
 static gboolean     gimp_image_get_pixel_at      (GimpPickable      *pickable,
                                                   gint               x,
@@ -646,7 +642,6 @@ gimp_projectable_iface_init (GimpProjectableInterface *iface)
   iface->flush              = gimp_image_projectable_flush;
   iface->get_image          = gimp_image_get_image;
   iface->get_format         = gimp_image_get_proj_format;
-  iface->get_color_profile  = gimp_image_get_proj_color_profile;
   iface->get_size           = (void (*) (GimpProjectable*, gint*, gint*)) gimp_image_get_size;
   iface->get_graph          = gimp_image_get_graph;
   iface->invalidate_preview = (void (*) (GimpProjectable*)) gimp_viewable_invalidate_preview;
@@ -659,7 +654,6 @@ gimp_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_image             = (GimpImage  * (*) (GimpPickable *pickable)) gimp_image_get_image;
   iface->get_format            = (const Babl * (*) (GimpPickable *pickable)) gimp_image_get_proj_format;
   iface->get_format_with_alpha = (const Babl * (*) (GimpPickable *pickable)) gimp_image_get_proj_format;
-  iface->get_color_profile     = gimp_image_pickable_get_color_profile;
   iface->get_buffer            = gimp_image_get_buffer;
   iface->get_pixel_at          = gimp_image_get_pixel_at;
   iface->get_opacity_at        = gimp_image_get_opacity_at;
@@ -1475,26 +1469,12 @@ gimp_image_get_proj_format (GimpProjectable *projectable)
   return NULL;
 }
 
-static GimpColorProfile *
-gimp_image_get_proj_color_profile (GimpProjectable *projectable)
-{
-  return gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (projectable));
-}
-
 static void
 gimp_image_pickable_flush (GimpPickable *pickable)
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (pickable);
 
   return gimp_pickable_flush (GIMP_PICKABLE (private->projection));
-}
-
-static GimpColorProfile *
-gimp_image_pickable_get_color_profile (GimpPickable *pickable)
-{
-  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (pickable);
-
-  return gimp_pickable_get_color_profile (GIMP_PICKABLE (private->projection));
 }
 
 static GeglBuffer *

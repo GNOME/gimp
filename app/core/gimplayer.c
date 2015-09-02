@@ -183,8 +183,6 @@ static void    gimp_layer_set_buffer            (GimpDrawable       *drawable,
                                                  gint                offset_x,
                                                  gint                offset_y);
 
-static GimpColorProfile *
-               gimp_layer_get_color_profile     (GimpPickable       *pickable);
 static gdouble gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
                                                  gint                y);
@@ -394,8 +392,7 @@ gimp_layer_init (GimpLayer *layer)
 static void
 gimp_layer_pickable_iface_init (GimpPickableInterface *iface)
 {
-  iface->get_color_profile = gimp_layer_get_color_profile;
-  iface->get_opacity_at    = gimp_layer_get_opacity_at;
+  iface->get_opacity_at = gimp_layer_get_opacity_at;
 }
 
 static void
@@ -1187,14 +1184,6 @@ gimp_layer_set_buffer (GimpDrawable *drawable,
       if (old_linear != new_linear)
         gimp_layer_update_mode_node (GIMP_LAYER (drawable));
     }
-}
-
-static GimpColorProfile *
-gimp_layer_get_color_profile (GimpPickable *pickable)
-{
-  GimpImage *image = gimp_item_get_image (GIMP_ITEM (pickable));
-
-  return gimp_pickable_get_color_profile (GIMP_PICKABLE (image));
 }
 
 static gdouble
