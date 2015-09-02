@@ -182,6 +182,8 @@ static const guint8 *
                                                   gsize             *len);
 static GimpColorProfile *
       gimp_image_color_managed_get_color_profile (GimpColorManaged  *managed);
+static void
+        gimp_image_color_managed_profile_changed (GimpColorManaged  *managed);
 
 static void        gimp_image_projectable_flush  (GimpProjectable   *projectable,
                                                   gboolean           invalidate_preview);
@@ -635,6 +637,7 @@ gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 {
   iface->get_icc_profile   = gimp_image_color_managed_get_icc_profile;
   iface->get_color_profile = gimp_image_color_managed_get_color_profile;
+  iface->profile_changed   = gimp_image_color_managed_profile_changed;
 }
 
 static void
@@ -823,6 +826,10 @@ gimp_image_constructed (GObject *object)
                            private->layers->container, G_CONNECT_SWAPPED);
   g_signal_connect_object (config, "notify::layer-previews",
                            G_CALLBACK (gimp_viewable_size_changed),
+                           image, G_CONNECT_SWAPPED);
+
+  g_signal_connect_object (config->color_management, "notify",
+                           G_CALLBACK (gimp_color_managed_profile_changed),
                            image, G_CONNECT_SWAPPED);
 
   gimp_container_add (image->gimp->images, GIMP_OBJECT (image));
@@ -1393,6 +1400,16 @@ gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
     profile = gimp_image_get_builtin_color_profile (image);
 
   return g_object_ref (profile);
+}
+
+static void
+gimp_image_color_managed_profile_changed (GimpColorManaged *managed)
+{
+  GimpImage     *image  = GIMP_IMAGE (managed);
+  GimpItemStack *layers = GIMP_ITEM_STACK (gimp_image_get_layers (image));
+
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
+  gimp_item_stack_invalidate_previews (layers);
 }
 
 static void
