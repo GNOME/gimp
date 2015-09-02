@@ -228,7 +228,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
             render_buf_y = (height - view_height) / 2;
         }
 
-      gimp_view_renderer_render_temp_buf (renderer, render_buf,
+      gimp_view_renderer_render_temp_buf (renderer, widget, render_buf,
                                           render_buf_x, render_buf_y,
                                           -1,
                                           GIMP_VIEW_BG_CHECKS,

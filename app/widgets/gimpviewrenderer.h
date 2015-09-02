@@ -141,8 +141,10 @@ void   gimp_view_renderer_draw             (GimpViewRenderer   *renderer,
 /*  protected  */
 
 void   gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
+                                                  GtkWidget        *widget,
                                                   GimpTempBuf      *temp_buf);
 void   gimp_view_renderer_render_temp_buf        (GimpViewRenderer *renderer,
+                                                  GtkWidget        *widget,
                                                   GimpTempBuf      *temp_buf,
                                                   gint              temp_buf_x,
                                                   gint              temp_buf_y,
@@ -150,6 +152,7 @@ void   gimp_view_renderer_render_temp_buf        (GimpViewRenderer *renderer,
                                                   GimpViewBG        inside_bg,
                                                   GimpViewBG        outside_bg);
 void   gimp_view_renderer_render_pixbuf          (GimpViewRenderer *renderer,
+                                                  GtkWidget        *widget,
                                                   GdkPixbuf        *pixbuf);
 void   gimp_view_renderer_render_icon            (GimpViewRenderer *renderer,
                                                   GtkWidget        *widget,

@@ -71,11 +71,8 @@ static void      gimp_view_renderer_real_render       (GimpViewRenderer   *rende
 static void      gimp_view_renderer_size_changed      (GimpViewRenderer   *renderer,
                                                        GimpViewable       *viewable);
 
-static cairo_pattern_t *
-                 gimp_view_renderer_create_background (GimpViewRenderer   *renderer,
-                                                       GtkWidget          *widget);
-
 static void      gimp_view_render_temp_buf_to_surface (GimpViewRenderer   *renderer,
+                                                       GtkWidget          *widget,
                                                        GimpTempBuf        *temp_buf,
                                                        gint                temp_buf_x,
                                                        gint                temp_buf_y,
@@ -85,6 +82,10 @@ static void      gimp_view_render_temp_buf_to_surface (GimpViewRenderer   *rende
                                                        cairo_surface_t    *surface,
                                                        gint                dest_width,
                                                        gint                dest_height);
+
+static cairo_pattern_t *
+                 gimp_view_renderer_create_background (GimpViewRenderer   *renderer,
+                                                       GtkWidget          *widget);
 
 
 
@@ -761,7 +762,7 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                      renderer->height);
   if (pixbuf)
     {
-      gimp_view_renderer_render_pixbuf (renderer, pixbuf);
+      gimp_view_renderer_render_pixbuf (renderer, widget, pixbuf);
       return;
     }
 
@@ -771,7 +772,7 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                         renderer->height);
   if (temp_buf)
     {
-      gimp_view_renderer_render_temp_buf_simple (renderer, temp_buf);
+      gimp_view_renderer_render_temp_buf_simple (renderer, widget, temp_buf);
       return;
     }
 
@@ -795,6 +796,7 @@ gimp_view_renderer_size_changed (GimpViewRenderer *renderer,
 
 void
 gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
+                                           GtkWidget        *widget,
                                            GimpTempBuf      *temp_buf)
 {
   gint temp_buf_x = 0;
@@ -814,7 +816,7 @@ gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
   if (temp_buf_height < renderer->height)
     temp_buf_y = (renderer->height - temp_buf_height) / 2;
 
-  gimp_view_renderer_render_temp_buf (renderer, temp_buf,
+  gimp_view_renderer_render_temp_buf (renderer, widget, temp_buf,
                                       temp_buf_x, temp_buf_y,
                                       -1,
                                       GIMP_VIEW_BG_CHECKS,
@@ -823,6 +825,7 @@ gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
 
 void
 gimp_view_renderer_render_temp_buf (GimpViewRenderer *renderer,
+                                    GtkWidget        *widget,
                                     GimpTempBuf      *temp_buf,
                                     gint              temp_buf_x,
                                     gint              temp_buf_y,
@@ -842,6 +845,7 @@ gimp_view_renderer_render_temp_buf (GimpViewRenderer *renderer,
                                                     renderer->height);
 
   gimp_view_render_temp_buf_to_surface (renderer,
+                                        widget,
                                         temp_buf,
                                         temp_buf_x,
                                         temp_buf_y,
@@ -858,6 +862,7 @@ gimp_view_renderer_render_temp_buf (GimpViewRenderer *renderer,
 
 void
 gimp_view_renderer_render_pixbuf (GimpViewRenderer *renderer,
+                                  GtkWidget        *widget,
                                   GdkPixbuf        *pixbuf)
 {
   if (renderer->surface)
@@ -933,6 +938,7 @@ gimp_view_renderer_render_icon (GimpViewRenderer *renderer,
 
 static void
 gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
+                                      GtkWidget        *widget,
                                       GimpTempBuf      *temp_buf,
                                       gint              temp_buf_x,
                                       gint              temp_buf_y,
