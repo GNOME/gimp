@@ -965,8 +965,28 @@ gimp_color_profile_get_format (const Babl *format,
     {
       linear = FALSE;
     }
+  else if (format == babl_format ("cairo-RGB24"))
+    {
+      *lcms_format = TYPE_RGB_8;
+
+      return babl_format ("R'G'B' u8");
+    }
+  else if (format == babl_format ("cairo-ARGB32"))
+    {
+      *lcms_format = TYPE_RGBA_8;
+
+      return babl_format ("R'G'B'A u8");
+    }
   else
     {
+      g_printerr ("format: %s\n"
+                  "has_alpha = %s\n"
+                  "type = %s\n"
+                  "model = %s\n",
+                  babl_get_name (format),
+                  has_alpha ? "TRUE" : "FALSE",
+                  babl_get_name (type),
+                  babl_get_name (model));
       g_return_val_if_reached (NULL);
     }
 
