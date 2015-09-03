@@ -211,10 +211,6 @@ plug-ins/lighting/lighting-ui.c
 plug-ins/map-object/map-object-apply.c
 plug-ins/map-object/map-object-main.c
 plug-ins/map-object/map-object-ui.c
-plug-ins/maze/maze-algorithms.c
-plug-ins/maze/maze-dialog.c
-plug-ins/maze/maze.c
-plug-ins/maze/maze.h
 plug-ins/pagecurl/pagecurl.c
 plug-ins/print/print-draw-page.c
 plug-ins/print/print-page-layout.c

@@ -2398,6 +2398,73 @@ plug_in_make_seamless_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+plug_in_maze_invoker (GimpProcedure         *procedure,
+                      Gimp                  *gimp,
+                      GimpContext           *context,
+                      GimpProgress          *progress,
+                      const GimpValueArray  *args,
+                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+  gint16 width;
+  gint16 height;
+  guint8 tileable;
+  guint8 algorithm;
+  gint32 seed;
+
+  drawable = gimp_value_get_drawable (gimp_value_array_index (args, 2), gimp);
+  width = g_value_get_int (gimp_value_array_index (args, 3));
+  height = g_value_get_int (gimp_value_array_index (args, 4));
+  tileable = g_value_get_uint (gimp_value_array_index (args, 5));
+  algorithm = g_value_get_uint (gimp_value_array_index (args, 6));
+  seed = g_value_get_int (gimp_value_array_index (args, 7));
+
+  if (success)
+    {
+      if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                     GIMP_PDB_ITEM_CONTENT, error) &&
+          gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+        {
+          GeglNode  *node;
+          GeglColor *fg_color;
+          GeglColor *bg_color;
+          GimpRGB    color;
+
+          gimp_context_get_foreground (context, &color);
+          fg_color = gimp_gegl_color_new (&color);
+
+          gimp_context_get_background (context, &color);
+          bg_color = gimp_gegl_color_new (&color);
+
+          node =  gegl_node_new_child (NULL,
+                                       "operation",      "gegl:maze",
+                                       "x",              width,
+                                       "y",              height,
+                                       "algorithm-type", algorithm,
+                                       "tilable",        tileable,
+                                       "seed",           seed,
+                                       "fg-color",       fg_color,
+                                       "bg-color",       bg_color,
+                                       NULL);
+
+          g_object_unref (fg_color);
+          g_object_unref (bg_color);
+
+          gimp_drawable_apply_operation (drawable, progress,
+                                         C_("undo-type", "Maze"),
+                                        node);
+          g_object_unref (node);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 plug_in_mblur_invoker (GimpProcedure         *procedure,
                        Gimp                  *gimp,
                        GimpContext           *context,
@@ -6449,6 +6516,84 @@ register_plug_in_compat_procs (GimpPDB *pdb)
                                                             "Input drawable",
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-plug-in-maze
+   */
+  procedure = gimp_procedure_new (plug_in_maze_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "plug-in-maze");
+  gimp_procedure_set_static_strings (procedure,
+                                     "plug-in-maze",
+                                     "Draw a labyrinth",
+                                     "Generates a maze using either the depth-first search method or Prim's algorithm. Can make tileable mazes too.",
+                                     "Compatibility procedure. Please see 'gegl:maze' for credits.",
+                                     "Compatibility procedure. Please see 'gegl:maze' for credits.",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("run-mode",
+                                                  "run mode",
+                                                  "The run mode",
+                                                  GIMP_TYPE_RUN_MODE,
+                                                  GIMP_RUN_INTERACTIVE,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image_id ("image",
+                                                         "image",
+                                                         "Input image (unused)",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "Input drawable",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int16 ("width",
+                                                      "width",
+                                                      "Width of the passages",
+                                                      1, 1024, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int16 ("height",
+                                                      "height",
+                                                      "Height of the passages",
+                                                      1, 1024, 1,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("tileable",
+                                                     "tileable",
+                                                     "Tileable maze? (TRUE or FALSE)",
+                                                     0, 1, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int8 ("algorithm",
+                                                     "algorithm",
+                                                     "Generation algorithm (0 = DEPTH FIRST, 1 = PRIM'S ALGORITHM)",
+                                                     0, 1, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int32 ("seed",
+                                                      "seed",
+                                                      "Random Seed",
+                                                      G_MININT32, G_MAXINT32, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int16 ("multiple",
+                                                      "multiple",
+                                                      "Multiple (use 57)",
+                                                      G_MININT16, G_MAXINT16, 0,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_int16 ("offset",
+                                                      "offset",
+                                                      "Offset (use 1)",
+                                                      G_MININT16, G_MAXINT16, 0,
+                                                      GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
