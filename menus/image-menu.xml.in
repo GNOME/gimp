@@ -751,6 +751,7 @@
 	  <menuitem action="filters-checkerboard" />
 	  <menuitem action="filters-diffraction-patterns" />
 	  <menuitem action="filters-grid" />
+	  <menuitem action="filters-maze" />
 	  <menuitem action="filters-sinus" />
 	</menu>
         <separator />
