@@ -61,6 +61,10 @@ struct _GimpViewRenderer
   GdkPixbuf          *pixbuf;
   gchar              *bg_icon_name;
 
+  GimpColorTransform  profile_transform;
+  const Babl         *profile_src_format;
+  const Babl         *profile_dest_format;
+
   gint                size;
   gboolean            needs_render;
   guint               idle_id;
