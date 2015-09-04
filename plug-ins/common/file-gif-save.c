@@ -1157,7 +1157,7 @@ save_dialog (gint32 image_ID)
   gboolean       animation_supported = FALSE;
   gboolean       run;
 
-  gimp_image_get_layers (image_ID, &nlayers);
+  g_free (gimp_image_get_layers (image_ID, &nlayers));
   animation_supported = nlayers > 1;
 
   dialog = gimp_export_dialog_new (_("GIF"), PLUG_IN_BINARY, SAVE_PROC);
