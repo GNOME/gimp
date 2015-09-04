@@ -252,7 +252,10 @@ run (const gchar      *name,
 
               /*  First acquire information with a dialog  */
               if (! save_dialog (image_ID))
-                status = GIMP_PDB_CANCEL;
+                {
+                  gimp_image_delete (sanitized_image_ID);
+                  status = GIMP_PDB_CANCEL;
+                }
               break;
 
             case GIMP_RUN_NONINTERACTIVE:
