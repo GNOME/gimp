@@ -645,7 +645,6 @@ save_resources (FILE   *fd,
   gint32        idActLayer;          /* Id of the active layer */
   guint         nActiveLayer = 0;    /* Number of the active layer */
   gboolean      ActiveLayerPresent;  /* TRUE if there's an active layer */
-  GimpParasite *parasite;
 
   glong         eof_pos;             /* Position for End of file */
   glong         rsc_pos;             /* Position for Lengths of Resources section */
@@ -836,19 +835,27 @@ save_resources (FILE   *fd,
     }
 
   /* --------------- Write ICC profile data ------------------- */
-  parasite = gimp_image_get_parasite (image_id, "icc-profile");
-  if (parasite)
-    {
-      gint32 profile_length = gimp_parasite_data_size (parasite);
+  {
+    GimpColorProfile *profile;
 
-      xfwrite (fd, "8BIM", 4, "imageresources signature");
-      write_gint16 (fd, 0x040f, "0x040f Id");
-      write_gint16 (fd, 0, "Id name"); /* Set to null string (two zeros) */
-      write_gint32 (fd, profile_length, "0x040f resource size");
-      xfwrite (fd, gimp_parasite_data (parasite), profile_length, "ICC profile");
+    profile = gimp_image_get_color_profile (image_id);
 
-      gimp_parasite_free (parasite);
-    }
+    if (profile)
+      {
+        const guint8 *icc_data;
+        gsize         icc_length;
+
+        icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+
+        xfwrite (fd, "8BIM", 4, "imageresources signature");
+        write_gint16 (fd, 0x040f, "0x040f Id");
+        write_gint16 (fd, 0, "Id name"); /* Set to null string (two zeros) */
+        write_gint32 (fd, icc_length, "0x040f resource size");
+        xfwrite (fd, icc_data, icc_length, "ICC profile");
+
+        g_object_unref (profile);
+      }
+  }
 
 
   /* --------------- Write Total Section Length --------------- */

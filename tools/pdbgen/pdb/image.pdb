@@ -483,8 +483,8 @@ HELP
                                        sample_average,
                                        average_radius,
                                        NULL,
-                                       &color,
-                                       NULL);
+                                       NULL,
+                                       &color);
     }
 }
 CODE

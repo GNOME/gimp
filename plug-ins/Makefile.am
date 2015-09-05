@@ -52,7 +52,6 @@ SUBDIRS = \
 	imagemap		\
 	lighting		\
 	map-object		\
-	maze			\
 	metainfo		\
 	pagecurl		\
 	$(print)		\

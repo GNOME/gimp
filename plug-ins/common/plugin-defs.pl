@@ -72,7 +72,6 @@
     'hot' => { ui => 1 },
     'iptc' => { ui => 1, libs => 'GEXIV2_LIBS', cflags => 'GEXIV2_CFLAGS' },
     'jigsaw' => { ui => 1 },
-    'lcms' => { ui => 1, gegl => 1 },
     'mail' => { ui => 1, optional => 1 },
     'max-rgb' => { ui => 1 },
     'newsprint' => { ui => 1 },

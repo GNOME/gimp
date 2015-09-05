@@ -165,9 +165,6 @@ static void   gimp_display_shell_ants_speed_notify_handler  (GObject          *c
 static void   gimp_display_shell_quality_notify_handler     (GObject          *config,
                                                              GParamSpec       *param_spec,
                                                              GimpDisplayShell *shell);
-static void   gimp_display_shell_color_config_notify_handler(GObject          *config,
-                                                             GParamSpec       *param_spec,
-                                                             GimpDisplayShell *shell);
 
 
 /*  public functions  */
@@ -360,11 +357,6 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_quality_notify_handler),
                     shell);
 
-  g_signal_connect (GIMP_CORE_CONFIG (shell->display->config)->color_management,
-                    "notify",
-                    G_CALLBACK (gimp_display_shell_color_config_notify_handler),
-                    shell);
-
   gimp_display_shell_invalidate_preview_handler (image, shell);
   gimp_display_shell_quick_mask_changed_handler (image, shell);
   gimp_display_shell_profile_changed_handler    (GIMP_COLOR_MANAGED (image),
@@ -394,10 +386,6 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
 
   gimp_canvas_layer_boundary_set_layer (GIMP_CANVAS_LAYER_BOUNDARY (shell->layer_boundary),
                                         NULL);
-
-  g_signal_handlers_disconnect_by_func (GIMP_CORE_CONFIG (shell->display->config)->color_management,
-                                        gimp_display_shell_color_config_notify_handler,
-                                        shell);
 
   g_signal_handlers_disconnect_by_func (shell->display->config,
                                         gimp_display_shell_quality_notify_handler,
@@ -1071,14 +1059,5 @@ gimp_display_shell_quality_notify_handler (GObject          *config,
                                            GParamSpec       *param_spec,
                                            GimpDisplayShell *shell)
 {
-  gimp_display_shell_expose_full (shell);
-}
-
-static void
-gimp_display_shell_color_config_notify_handler (GObject          *config,
-                                                GParamSpec       *param_spec,
-                                                GimpDisplayShell *shell)
-{
-  gimp_display_shell_profile_update (shell);
   gimp_display_shell_expose_full (shell);
 }

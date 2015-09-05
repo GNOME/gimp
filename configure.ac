@@ -212,6 +212,11 @@ AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
                    [The prefix for our gettext translation domains.])
 
+# work around intltool-update issues during 'make distcheck'
+AS_IF([test "x$0" != "x./configure"], [
+        AC_SUBST([INTLTOOL_UPDATE], [/bin/true])
+])
+
 # Determine a C compiler to use
 AC_PROG_CC
 AM_PROG_CC_C_O
@@ -2307,7 +2312,6 @@ plug-ins/imagemap/images/Makefile
 plug-ins/lighting/Makefile
 plug-ins/lighting/images/Makefile
 plug-ins/map-object/Makefile
-plug-ins/maze/Makefile
 plug-ins/metainfo/Makefile
 plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile

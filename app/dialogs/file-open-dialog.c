@@ -40,6 +40,7 @@
 
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpopendialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "file-open-dialog.h"
@@ -68,22 +69,15 @@ GtkWidget *
 file_open_dialog_new (Gimp *gimp)
 {
   GtkWidget           *dialog;
-  GimpFileDialogState *state;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  dialog = gimp_file_dialog_new (gimp,
-                                 GIMP_FILE_CHOOSER_ACTION_OPEN,
-                                 _("Open Image"), "gimp-file-open",
-                                 GTK_STOCK_OPEN,
-                                 GIMP_HELP_FILE_OPEN);
+  dialog = gimp_open_dialog_new (gimp);
 
   gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
 
-  state = g_object_get_data (G_OBJECT (gimp), "gimp-file-open-dialog-state");
-
-  if (state)
-    gimp_file_dialog_set_state (GIMP_FILE_DIALOG (dialog), state);
+  gimp_file_dialog_load_state (GIMP_FILE_DIALOG (dialog),
+                               "gimp-file-open-dialog-state");
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (file_open_dialog_response),
@@ -105,9 +99,8 @@ file_open_dialog_response (GtkWidget *open_dialog,
   GSList         *list;
   gboolean        success = FALSE;
 
-  g_object_set_data_full (G_OBJECT (gimp), "gimp-file-open-dialog-state",
-                          gimp_file_dialog_get_state (dialog),
-                          (GDestroyNotify) gimp_file_dialog_state_destroy);
+  gimp_file_dialog_save_state (GIMP_FILE_DIALOG (dialog),
+                               "gimp-file-open-dialog-state");
 
   if (response_id != GTK_RESPONSE_OK)
     {
@@ -132,27 +125,27 @@ file_open_dialog_response (GtkWidget *open_dialog,
    * will pull the image window it was invoked from on top of all the
    * new opened image windows, and we don't want that to happen.
    */
-  if (! dialog->open_as_layers)
+  if (! GIMP_OPEN_DIALOG (dialog)->open_as_layers)
     gtk_window_set_transient_for (GTK_WINDOW (open_dialog), NULL);
 
   for (list = files; list; list = g_slist_next (list))
     {
       GFile *file = list->data;
 
-      if (dialog->open_as_layers)
+      if (GIMP_OPEN_DIALOG (dialog)->open_as_layers)
         {
-          if (! dialog->image)
+          if (! GIMP_FILE_DIALOG (dialog)->image)
             {
-              dialog->image = file_open_dialog_open_image (open_dialog,
+              GIMP_FILE_DIALOG (dialog)->image = file_open_dialog_open_image (open_dialog,
                                                            gimp,
                                                            file,
                                                            dialog->file_proc);
 
-              if (dialog->image)
+              if (GIMP_FILE_DIALOG (dialog)->image)
                 success = TRUE;
             }
           else if (file_open_dialog_open_layers (open_dialog,
-                                                 dialog->image,
+                                                 GIMP_FILE_DIALOG (dialog)->image,
                                                  file,
                                                  dialog->file_proc))
             {
@@ -181,8 +174,8 @@ file_open_dialog_response (GtkWidget *open_dialog,
 
   if (success)
     {
-      if (dialog->open_as_layers && dialog->image)
-        gimp_image_flush (dialog->image);
+      if (GIMP_OPEN_DIALOG (dialog)->open_as_layers && GIMP_FILE_DIALOG (dialog)->image)
+        gimp_image_flush (GIMP_FILE_DIALOG (dialog)->image);
 
       gtk_widget_destroy (open_dialog);
     }

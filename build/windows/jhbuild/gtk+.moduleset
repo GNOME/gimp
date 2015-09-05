@@ -123,9 +123,9 @@
 </autotools>
 
 <autotools id="libxml2" autogen-sh="configure">
-	<branch version="2.9.1" repo="xmlsoft.org"
-			module="libxml2/libxml2-2.9.1.tar.gz"
-			hash="sha256:fd3c64cb66f2c4ea27e934d275904d92cec494a8e8405613780cbc8a71680fdb">
+	<branch version="2.9.2" repo="xmlsoft.org"
+			module="libxml2/libxml2-2.9.2.tar.gz"
+			hash="sha256:5178c30b151d044aefb1b08bf54c3003a0ac55c59c866763997529d60770d5bc">
 	</branch>
 	<dependencies>
 		<dep package="iconv"/>

@@ -31,6 +31,8 @@
 
 #include "gimpcolorprofileview.h"
 
+#include "libgimp/libgimp-intl.h"
+
 
 struct _GimpColorProfileViewPrivate
 {
@@ -76,11 +78,16 @@ gimp_color_profile_view_constructed (GObject *object)
 
   buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (object));
 
-  gtk_text_buffer_create_tag (buffer, "strong",
+  gtk_text_buffer_create_tag (buffer, "text",
+                              NULL);
+  gtk_text_buffer_create_tag (buffer, "title",
                               "weight", PANGO_WEIGHT_BOLD,
                               "scale",  PANGO_SCALE_LARGE,
                               NULL);
-  gtk_text_buffer_create_tag (buffer, "emphasis",
+  gtk_text_buffer_create_tag (buffer, "header",
+                              "weight", PANGO_WEIGHT_BOLD,
+                              NULL);
+  gtk_text_buffer_create_tag (buffer, "error",
                               "style",  PANGO_STYLE_OBLIQUE,
                               NULL);
 
@@ -136,26 +143,53 @@ gimp_color_profile_view_set_profile (GimpColorProfileView *view,
   if (view->priv->profile)
     {
       GtkTextIter  iter;
-      const gchar *label;
-      const gchar *summary;
+      const gchar *text;
 
       g_object_ref (view->priv->profile);
 
       gtk_text_buffer_get_start_iter (buffer, &iter);
 
-      label   = gimp_color_profile_get_label (profile);
-      summary = gimp_color_profile_get_summary (profile);
-
-      if (label && strlen (label))
+      text = gimp_color_profile_get_label (profile);
+      if (text && strlen (text))
         {
           gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
-                                                    label, -1,
-                                                    "strong", NULL);
+                                                    text, -1,
+                                                    "title", NULL);
           gtk_text_buffer_insert (buffer, &iter, "\n", 1);
         }
 
-      if (summary)
-        gtk_text_buffer_insert (buffer, &iter, summary, -1);
+      text = gimp_color_profile_get_model (profile);
+      if (text && strlen (text))
+        {
+          gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
+                                                    text, -1,
+                                                    "text", NULL);
+          gtk_text_buffer_insert (buffer, &iter, "\n", 1);
+        }
+
+      text = gimp_color_profile_get_manufacturer (profile);
+      if (text && strlen (text))
+        {
+          gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
+                                                    _("Manufacturer: "), -1,
+                                                    "header", NULL);
+          gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
+                                                    text, -1,
+                                                    "text", NULL);
+          gtk_text_buffer_insert (buffer, &iter, "\n", 1);
+        }
+
+      text = gimp_color_profile_get_copyright (profile);
+      if (text && strlen (text))
+        {
+          gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
+                                                    _("Copyright: "), -1,
+                                                    "header", NULL);
+          gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
+                                                    text, -1,
+                                                    "text", NULL);
+          gtk_text_buffer_insert (buffer, &iter, "\n", 1);
+        }
     }
 }
 
@@ -177,5 +211,5 @@ gimp_color_profile_view_set_error (GimpColorProfileView *view,
 
   gtk_text_buffer_insert_with_tags_by_name (buffer, &iter,
                                             message, -1,
-                                            "emphasis", NULL);
+                                            "error", NULL);
 }

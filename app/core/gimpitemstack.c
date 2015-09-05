@@ -22,8 +22,11 @@
 
 #include <string.h>
 
+#include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
+
+#include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
 
@@ -302,7 +305,7 @@ gimp_item_stack_get_parent_by_path (GimpItemStack *stack,
 }
 
 static void
-gimp_item_stack_invalidate_preview (GimpViewable *viewable)
+gimp_item_stack_viewable_invalidate_previews (GimpViewable *viewable)
 {
   GimpContainer *children = gimp_viewable_get_children (viewable);
 
@@ -318,6 +321,28 @@ gimp_item_stack_invalidate_previews (GimpItemStack *stack)
   g_return_if_fail (GIMP_IS_ITEM_STACK (stack));
 
   gimp_container_foreach (GIMP_CONTAINER (stack),
-                          (GFunc) gimp_item_stack_invalidate_preview,
+                          (GFunc) gimp_item_stack_viewable_invalidate_previews,
+                          NULL);
+}
+
+static void
+gimp_item_stack_viewable_profile_changed (GimpViewable *viewable)
+{
+  GimpContainer *children = gimp_viewable_get_children (viewable);
+
+  if (children)
+    gimp_item_stack_profile_changed (GIMP_ITEM_STACK (children));
+
+  if (GIMP_IS_COLOR_MANAGED (viewable))
+    gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (viewable));
+}
+
+void
+gimp_item_stack_profile_changed (GimpItemStack *stack)
+{
+  g_return_if_fail (GIMP_IS_ITEM_STACK (stack));
+
+  gimp_container_foreach (GIMP_CONTAINER (stack),
+                          (GFunc) gimp_item_stack_viewable_profile_changed,
                           NULL);
 }

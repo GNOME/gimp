@@ -54,8 +54,6 @@ HELP
 
       profile_data = g_memdup (data, length);
       num_bytes = length;
-
-      g_object_unref (profile);
     }
 }
 CODE
@@ -69,9 +67,8 @@ sub image_get_effective_color_profile {
 This procedure returns the color profile that is actually used for
 this image, which is the profile returned by
 gimp_image_get_color_profile() if the image has a profile assigned, or
-the default RGB profile from preferences if no profile is assigned to
-the image. If there is no default RGB profile configured in
-preferences either, a generated default RGB profile is returned.
+a generated default RGB profile. If the image is not RGB or INDEXED,
+NULL is returned.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -92,17 +89,19 @@ HELP
         code => <<'CODE'
 {
   GimpColorProfile *profile;
-  const guint8     *data;
-  gsize             length;
 
   profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-  data = gimp_color_profile_get_icc_profile (profile, &length);
+  if (profile)
+    {
+      const guint8     *data;
+      gsize             length;
 
-  profile_data = g_memdup (data, length);
-  num_bytes = length;
+      data = gimp_color_profile_get_icc_profile (profile, &length);
 
-  g_object_unref (profile);
+      profile_data = g_memdup (data, length);
+      num_bytes = length;
+    }
 }
 CODE
     );

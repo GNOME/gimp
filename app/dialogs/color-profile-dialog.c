@@ -39,10 +39,12 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-color-profile.h"
+#include "core/gimpimage-undo.h"
 #include "core/gimpprogress.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
+#include "widgets/gimpwidgets-constructors.h"
 
 #include "color-profile-dialog.h"
 
@@ -54,6 +56,7 @@ typedef struct
   GtkWidget                *dialog;
   GtkWidget                *main_vbox;
   GtkWidget                *combo;
+  GtkWidget                *dest_view;
 
   GimpImage                *image;
   GimpProgress             *progress;
@@ -73,6 +76,8 @@ static ProfileDialog * color_profile_dialog_new      (GimpImage     *image,
 static GtkWidget     * color_profile_combo_box_new   (ProfileDialog *dialog);
 static void            color_profile_dialog_response (GtkWidget     *widget,
                                                       gint           response_id,
+                                                      ProfileDialog *dialog);
+static void            color_profile_dest_changed    (GtkWidget     *combo,
                                                       ProfileDialog *dialog);
 static void            color_profile_dialog_free     (ProfileDialog *dialog);
 
@@ -123,6 +128,8 @@ color_profile_dialog_new (GimpImage    *image,
 {
   ProfileDialog    *dialog;
   GtkWidget        *frame;
+  GtkWidget        *vbox;
+  GtkWidget        *expander;
   GtkWidget        *label;
   GimpColorProfile *src_profile;
 
@@ -210,20 +217,35 @@ color_profile_dialog_new (GimpImage    *image,
 
   src_profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-  label = gtk_label_new (gimp_color_profile_get_label (src_profile));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  label = gimp_color_profile_label_new (src_profile);
   gtk_container_add (GTK_CONTAINER (frame), label);
   gtk_widget_show (label);
-
-  g_object_unref (src_profile);
 
   frame = gimp_frame_new (convert ? _("Convert to") : _("Assign"));
   gtk_box_pack_start (GTK_BOX (dialog->main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
   dialog->combo = color_profile_combo_box_new (dialog);
-  gtk_container_add (GTK_CONTAINER (frame), dialog->combo);
+  gtk_box_pack_start (GTK_BOX (vbox), dialog->combo, FALSE, FALSE, 0);
   gtk_widget_show (dialog->combo);
+
+  expander = gtk_expander_new_with_mnemonic (_("Profile _details"));
+  gtk_box_pack_start (GTK_BOX (vbox), expander, FALSE, FALSE, 0);
+  gtk_widget_show (expander);
+
+  dialog->dest_view = gimp_color_profile_view_new ();
+  gtk_container_add (GTK_CONTAINER (expander), dialog->dest_view);
+  gtk_widget_show (dialog->dest_view);
+
+  g_signal_connect (dialog->combo, "changed",
+                    G_CALLBACK (color_profile_dest_changed),
+                    dialog);
+
+  color_profile_dest_changed (dialog->combo, dialog);
 
   if (convert)
     {
@@ -275,10 +297,9 @@ color_profile_combo_box_new (ProfileDialog *dialog)
   GtkWidget        *combo;
   GtkWidget        *chooser;
   gchar            *history;
+  GimpColorProfile *profile;
   gchar            *label;
-  GFile            *rgb_file = NULL;
-  GimpColorProfile *profile  = NULL;
-  GError           *error    = NULL;
+  GError           *error = NULL;
 
   chooser = gimp_color_profile_chooser_dialog_new (_("Select destination profile"));
 
@@ -286,11 +307,32 @@ color_profile_combo_box_new (ProfileDialog *dialog)
   combo = gimp_color_profile_combo_box_new (chooser, history);
   g_free (history);
 
+  profile = gimp_image_get_builtin_color_profile (dialog->image);
+
+  label = g_strdup_printf (_("Built-in RGB (%s)"),
+                           gimp_color_profile_get_label (profile));
+
+  gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                         NULL, label);
+
+  g_free (label);
+
   profile = gimp_color_config_get_rgb_color_profile (dialog->config, &error);
 
   if (profile)
     {
-      rgb_file = g_file_new_for_path (dialog->config->rgb_profile);
+      GFile *file = g_file_new_for_path (dialog->config->rgb_profile);
+
+      label = g_strdup_printf (_("Preferred RGB (%s)"),
+                               gimp_color_profile_get_label (profile));
+
+      g_object_unref (profile);
+
+      gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                             file, label);
+
+      g_object_unref (file);
+      g_free (label);
     }
   else if (error)
     {
@@ -299,22 +341,6 @@ color_profile_combo_box_new (ProfileDialog *dialog)
                     "%s", error->message);
       g_clear_error (&error);
     }
-
-  if (! profile)
-    profile = gimp_image_get_builtin_color_profile (dialog->image);
-
-  label = g_strdup_printf (_("RGB workspace (%s)"),
-                           gimp_color_profile_get_label (profile));
-
-  g_object_unref (profile);
-
-  gimp_color_profile_combo_box_add_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                         rgb_file, label);
-
-  if (rgb_file)
-    g_object_unref (rgb_file);
-
-  g_free (label);
 
   gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
                                                 NULL, NULL);
@@ -348,20 +374,8 @@ color_profile_dialog_response (GtkWidget     *widget,
         }
       else
         {
-          dest_profile = gimp_color_config_get_rgb_color_profile (dialog->config,
-                                                                  &error);
-
-          if (! dest_profile)
-            {
-              if (error)
-                {
-                  success = FALSE;
-                }
-              else
-                {
-                  dest_profile = gimp_image_get_builtin_color_profile (dialog->image);
-                }
-            }
+          dest_profile = gimp_image_get_builtin_color_profile (dialog->image);
+          g_object_ref (dest_profile);
         }
 
       if (success)
@@ -394,9 +408,22 @@ color_profile_dialog_response (GtkWidget     *widget,
             }
           else
             {
+              gimp_image_undo_group_start (dialog->image,
+                                           GIMP_UNDO_GROUP_PARASITE_ATTACH,
+                                           _("Assign color profile"));
+
               success = gimp_image_set_color_profile (dialog->image,
                                                       dest_profile,
                                                       &error);
+
+              /*  omg...  */
+              if (success)
+                gimp_image_parasite_detach (dialog->image, "icc-profile-name");
+
+              gimp_image_undo_group_end (dialog->image);
+
+              if (! success)
+                gimp_image_undo (dialog->image);
             }
 
           if (success)
@@ -416,6 +443,41 @@ color_profile_dialog_response (GtkWidget     *widget,
                     GIMP_MESSAGE_ERROR,
                     "%s", error->message);
       g_clear_error (&error);
+    }
+}
+
+static void
+color_profile_dest_changed (GtkWidget     *combo,
+                            ProfileDialog *dialog)
+{
+  GimpColorProfile *dest_profile = NULL;
+  GFile            *file;
+  GError           *error        = NULL;
+
+  file = gimp_color_profile_combo_box_get_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (combo));
+
+  if (file)
+    {
+      dest_profile = gimp_color_profile_new_from_file (file, &error);
+      g_object_unref (file);
+    }
+  else
+    {
+      dest_profile = gimp_image_get_builtin_color_profile (dialog->image);
+      g_object_ref (dest_profile);
+    }
+
+  if (! dest_profile)
+    {
+      gimp_color_profile_view_set_error (GIMP_COLOR_PROFILE_VIEW (dialog->dest_view),
+                                         error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      gimp_color_profile_view_set_profile (GIMP_COLOR_PROFILE_VIEW (dialog->dest_view),
+                                           dest_profile);
+      g_object_unref (dest_profile);
     }
 }
 

@@ -85,8 +85,8 @@ static void       gimp_curves_tool_color_picked   (GimpColorTool        *color_t
                                                    gdouble               x,
                                                    gdouble               y,
                                                    const Babl           *sample_format,
-                                                   const GimpRGB        *color,
-                                                   gint                  color_index);
+                                                   gpointer              pixel,
+                                                   const GimpRGB        *color);
 static GeglNode * gimp_curves_tool_get_operation  (GimpImageMapTool     *image_map_tool,
                                                    GObject             **config,
                                                    gchar               **undo_desc);
@@ -335,8 +335,8 @@ gimp_curves_tool_color_picked (GimpColorTool      *color_tool,
                                gdouble             x,
                                gdouble             y,
                                const Babl         *sample_format,
-                               const GimpRGB      *color,
-                               gint                color_index)
+                               gpointer            pixel,
+                               const GimpRGB      *color)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (color_tool);
   GimpDrawable   *drawable;

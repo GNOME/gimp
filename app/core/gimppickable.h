@@ -76,8 +76,8 @@ gboolean        gimp_pickable_pick_color            (GimpPickable *pickable,
                                                      gint          y,
                                                      gboolean      sample_average,
                                                      gdouble       average_radius,
-                                                     GimpRGB      *color,
-                                                     gint         *color_index);
+                                                     gpointer      pixel,
+                                                     GimpRGB      *color);
 
 
 #endif  /* __GIMP_PICKABLE_H__ */

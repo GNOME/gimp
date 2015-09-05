@@ -8,14 +8,14 @@
 # Artur Polaczyński <artie@kmfms.com>, 1999, 2000.
 # Hubert Stachurski <hubi@forest.sggw.waw.pl>, 2008.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011.
-# Aviary.pl <gnomepl@aviary.pl>, 2011.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2015.
+# Aviary.pl <gnomepl@aviary.pl>, 2011-2015.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-28 02:25+0100\n"
-"PO-Revision-Date: 2011-12-28 02:27+0100\n"
+"POT-Creation-Date: 2015-08-29 18:17+0200\n"
+"PO-Revision-Date: 2015-08-29 18:18+0200\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "Language: pl\n"
@@ -40,27 +40,27 @@ msgstr "Wystąpił błąd podczas uruchamiania %s"
 msgid "_More Information"
 msgstr "_Więcej informacji"
 
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:527 ../plug-ins/pygimp/gimpfu.py:539
+#: ../plug-ins/pygimp/gimpfu.py:545
 msgid "No"
 msgstr "Nie"
 
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:537 ../plug-ins/pygimp/gimpfu.py:545
 msgid "Yes"
 msgstr "Tak"
 
-#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:598 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Wybór pliku Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:607
+#: ../plug-ins/pygimp/gimpfu.py:644
 msgid "Python-Fu Folder Selection"
 msgstr "Wybór katalogu Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:696
+#: ../plug-ins/pygimp/gimpfu.py:733
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr "Błąd wprowadzania dla \"%s\""
+msgstr "Błąd wprowadzania dla „%s”"
 
 #: ../plug-ins/pygimp/gimpui.py:176
 msgid "Python-Fu Color Selection"
@@ -120,7 +120,7 @@ msgstr "Dodaje warstwę mgły"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "_Fog..."
-msgstr "_Mgła..."
+msgstr "_Mgła…"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:66
 msgid "_Layer name"
@@ -148,7 +148,7 @@ msgstr "Przesuwa kolory w palecie "
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:49
 msgid "_Offset Palette..."
-msgstr "_Przesuń paletę..."
+msgstr "_Przesuń paletę…"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
@@ -167,7 +167,7 @@ msgstr "Porządkuje kolory w palecie"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
 msgid "_Sort Palette..."
-msgstr "_Uporządkuj paletę..."
+msgstr "_Uporządkuj paletę…"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
 msgid "Color _model"
@@ -228,7 +228,7 @@ msgstr "Obcina obraz wzdłuż prowadnic, tworzy obrazy i fragmenty tabel HTML "
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:431
 msgid "_Slice..."
-msgstr "_Przytnij..."
+msgstr "_Przytnij…"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Path for HTML export"
@@ -260,7 +260,7 @@ msgstr "Odstęp między elementami tablicy"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:445
 msgid "Javascript for onmouseover and clicked"
-msgstr "JavaScript dla zdarzeń onmouseover i clicked"
+msgstr "JavaScript dla zdarzeń „onmouseover” i „clicked”"
 
 #. table caps are table cells on the edge of the table
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:448
@@ -273,7 +273,7 @@ msgstr "Konsola języka Python"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:60
 msgid "_Browse..."
-msgstr "_Przeglądaj..."
+msgstr "_Przeglądaj…"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:138
 msgid "Python Procedure Browser"
@@ -282,12 +282,12 @@ msgstr "Przeglądarka procedur języka Python"
 #: ../plug-ins/pygimp/plug-ins/python-console.py:167
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Nie można otworzyć \"%s\" do zapisania: %s"
+msgstr "Nie można otworzyć „%s” do zapisania: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:182
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr "Nie można zapisać do \"%s\": %s"
+msgstr "Nie można zapisać do „%s”: %s"
 
 #: ../plug-ins/pygimp/plug-ins/python-console.py:190
 msgid "Save Python-Fu Console Output"
@@ -307,7 +307,7 @@ msgstr "Rzuca cień na warstwę i opcjonalnie krawędź"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:65
 msgid "_Drop Shadow and Bevel..."
-msgstr "_Rzuć cień i krawędź..."
+msgstr "_Rzuć cień i krawędź…"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 msgid "_Shadow blur"
@@ -331,22 +331,22 @@ msgstr "Przesunięcie _X cienia"
 msgid "Drop shadow _Y displacement"
 msgstr "Przesunięcie _Y cienia"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:76
 msgid "Create a new brush with characters from a text sequence"
 msgstr "Tworzy nowy pędzel za pomocą znaków z tekstu"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:82
 msgid "New Brush from _Text..."
-msgstr "Nowy pędzel z _tekstu..."
+msgstr "Nowy pędzel z _tekstu…"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
 msgid "Font"
 msgstr "Czcionka"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
 msgid "Pixel Size"
 msgstr "Rozmiar piksela"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
+#: ../plug-ins/pygimp/plug-ins/text-brush.py:87
 msgid "Text"
 msgstr "Tekst"

@@ -219,6 +219,11 @@ static const GimpStringActionEntry filters_actions[] =
     "gegl:lens-flare",
     NULL /* FIXME GIMP_HELP_FILTER_LENS_FLARE */ },
 
+  { "filters-maze", GIMP_STOCK_GEGL,
+    NC_("filters-action", "_Maze..."), NULL, NULL,
+    "gegl:maze",
+    NULL /* FIXME GIMP_HELP_FILTER_MAZE */ },
+
   { "filters-mono-mixer", GIMP_STOCK_GEGL,
     NC_("filters-action", "Mono Mixer..."), NULL, NULL,
     "gegl:mono-mixer",
@@ -531,6 +536,7 @@ filters_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("filters-kaleidoscope",            writable);
   SET_SENSITIVE ("filters-lens-distortion",         writable);
   SET_SENSITIVE ("filters-lens-flare",              writable);
+  SET_SENSITIVE ("filters-maze",                    writable);
   SET_SENSITIVE ("filters-mono-mixer",              writable && !gray);
   SET_SENSITIVE ("filters-mosaic",                  writable);
   SET_SENSITIVE ("filters-motion-blur-circular",    writable);

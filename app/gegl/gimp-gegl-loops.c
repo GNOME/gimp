@@ -20,9 +20,14 @@
 
 #include "config.h"
 
+#include <lcms2.h>
+
+#include <cairo.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gegl.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "gimp-gegl-types.h"
 
@@ -616,5 +621,171 @@ gimp_gegl_replace (GeglBuffer          *top_buffer,
           mask   += 1;
           dest   += 4;
         }
+    }
+}
+
+void
+gimp_gegl_index_to_mask (GeglBuffer          *indexed_buffer,
+                         const GeglRectangle *indexed_rect,
+                         const Babl          *indexed_format,
+                         GeglBuffer          *mask_buffer,
+                         const GeglRectangle *mask_rect,
+                         gint                 index)
+{
+  GeglBufferIterator *iter;
+
+  iter = gegl_buffer_iterator_new (indexed_buffer, indexed_rect, 0,
+                                   indexed_format,
+                                   GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+
+  gegl_buffer_iterator_add (iter, mask_buffer, mask_rect, 0,
+                            babl_format ("Y float"),
+                            GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      const guchar *indexed = iter->data[0];
+      gfloat       *mask    = iter->data[1];
+      gint          count   = iter->length;
+
+      while (count--)
+        {
+          if (*indexed == index)
+            *mask = 1.0;
+          else
+            *mask = 0.0;
+
+          indexed++;
+          mask++;
+        }
+    }
+}
+
+static gboolean
+gimp_color_profile_can_gegl_copy (GimpColorProfile *src_profile,
+                                  GimpColorProfile *dest_profile)
+{
+  static GimpColorProfile *srgb_profile       = NULL;
+  static GimpColorProfile *linear_rgb_profile = NULL;
+
+  if (gimp_color_profile_is_equal (src_profile, dest_profile))
+    return TRUE;
+
+  if (! srgb_profile)
+    {
+      srgb_profile       = gimp_color_profile_new_srgb ();
+      linear_rgb_profile = gimp_color_profile_new_linear_rgb ();
+    }
+
+  if ((gimp_color_profile_is_equal (src_profile, srgb_profile) ||
+       gimp_color_profile_is_equal (src_profile, linear_rgb_profile))
+      &&
+      (gimp_color_profile_is_equal (dest_profile, srgb_profile) ||
+       gimp_color_profile_is_equal (dest_profile, linear_rgb_profile)))
+    return TRUE;
+
+  return FALSE;
+}
+
+void
+gimp_gegl_convert_color_profile (GeglBuffer               *src_buffer,
+                                 const GeglRectangle      *src_rect,
+                                 GimpColorProfile         *src_profile,
+                                 GeglBuffer               *dest_buffer,
+                                 const GeglRectangle      *dest_rect,
+                                 GimpColorProfile         *dest_profile,
+                                 GimpColorRenderingIntent  intent,
+                                 gboolean                  bpc)
+{
+  const Babl       *src_format;
+  const Babl       *dest_format;
+  cmsHPROFILE       src_lcms;
+  cmsHPROFILE       dest_lcms;
+  cmsUInt32Number   lcms_src_format;
+  cmsUInt32Number   lcms_dest_format;
+  cmsUInt32Number   flags;
+  cmsHTRANSFORM     transform;
+
+  src_format  = gegl_buffer_get_format (src_buffer);
+  dest_format = gegl_buffer_get_format (dest_buffer);
+
+  if ((gimp_babl_format_get_base_type (src_format)  != GIMP_RGB) ||
+      (gimp_babl_format_get_base_type (dest_format) != GIMP_RGB) ||
+      gimp_color_profile_can_gegl_copy (src_profile, dest_profile))
+    {
+      gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
+                        dest_buffer, dest_rect);
+      return;
+    }
+
+  src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
+  dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
+
+  src_format  = gimp_color_profile_get_format (src_format,  &lcms_src_format);
+  dest_format = gimp_color_profile_get_format (dest_format, &lcms_dest_format);
+
+  flags = cmsFLAGS_NOOPTIMIZE;
+
+  if (bpc)
+    flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
+
+  transform = cmsCreateTransform (src_lcms,  lcms_src_format,
+                                  dest_lcms, lcms_dest_format,
+                                  intent, flags);
+
+  if (transform)
+    {
+      gimp_gegl_convert_color_transform (src_buffer,  src_rect,  src_format,
+                                         dest_buffer, dest_rect, dest_format,
+                                         transform);
+
+      cmsDeleteTransform (transform);
+    }
+  else
+    {
+      /* FIXME: no idea if this ever happens */
+      gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
+                        dest_buffer, dest_rect);
+    }
+}
+
+void
+gimp_gegl_convert_color_transform (GeglBuffer          *src_buffer,
+                                   const GeglRectangle *src_rect,
+                                   const Babl          *src_format,
+                                   GeglBuffer          *dest_buffer,
+                                   const GeglRectangle *dest_rect,
+                                   const Babl          *dest_format,
+                                   GimpColorTransform   transform)
+{
+  GeglBufferIterator *iter;
+  gboolean            has_alpha;
+
+  has_alpha = babl_format_has_alpha (dest_format);
+
+  /* make sure the alpha channel is copied too, lcms doesn't copy it */
+  if (has_alpha)
+    gegl_buffer_copy (src_buffer,  src_rect, GEGL_ABYSS_NONE,
+                      dest_buffer, dest_rect);
+
+  iter = gegl_buffer_iterator_new (src_buffer, src_rect, 0,
+                                   src_format,
+                                   GEGL_ACCESS_READ,
+                                   GEGL_ABYSS_NONE);
+
+  gegl_buffer_iterator_add (iter, dest_buffer, dest_rect, 0,
+                            dest_format,
+                            /* use READWRITE for alpha surfaces
+                             * because we must use the alpha channel
+                             * that is already copied, see above
+                             */
+                            has_alpha ?
+                            GEGL_ACCESS_READWRITE: GEGL_ACCESS_WRITE,
+                            GEGL_ABYSS_NONE);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      cmsDoTransform (transform,
+                      iter->data[0], iter->data[1], iter->length);
     }
 }

@@ -150,6 +150,7 @@
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_ASSIGN      "gimp-image-color-profile-assign"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_CONVERT     "gimp-image-color-profile-convert"
 #define GIMP_HELP_IMAGE_COLOR_PROFILE_DISCARD     "gimp-image-color-profile-discard"
+#define GIMP_HELP_IMAGE_COLOR_PROFILE_IMPORT      "gimp-image-color-profile-import"
 #define GIMP_HELP_IMAGE_GRID                      "gimp-image-grid"
 #define GIMP_HELP_IMAGE_PROPERTIES                "gimp-image-properties"
 
@@ -503,6 +504,10 @@
 #define GIMP_HELP_INDEXED_PALETTE_DIALOG          "gimp-indexed-palette-dialog"
 #define GIMP_HELP_INDEXED_PALETTE_EDIT            "gimp-indexed-palette-edit"
 #define GIMP_HELP_INDEXED_PALETTE_ADD             "gimp-indexed-palette-add"
+#define GIMP_HELP_INDEXED_PALETTE_SELECTION_REPLACE "gimp-indexed-palette-selection-replace"
+#define GIMP_HELP_INDEXED_PALETTE_SELECTION_ADD   "gimp-indexed-palette-selection-add"
+#define GIMP_HELP_INDEXED_PALETTE_SELECTION_SUBTRACT "gimp-indexed-palette-selection-subtract"
+#define GIMP_HELP_INDEXED_PALETTE_SELECTION_INTERSECT "gimp-indexed-palette-selection-intersect"
 
 #define GIMP_HELP_POINTER_INFO_DIALOG             "gimp-pointer-info-dialog"
 #define GIMP_HELP_POINTER_INFO_SAMPLE_MERGED      "gimp-pointer-info-sample-merged"

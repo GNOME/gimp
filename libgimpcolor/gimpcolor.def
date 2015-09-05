@@ -38,6 +38,7 @@ EXPORTS
 	gimp_color_profile_is_cmyk
 	gimp_color_profile_is_equal
 	gimp_color_profile_is_rgb
+	gimp_color_profile_new_adobe_rgb
 	gimp_color_profile_new_from_file
 	gimp_color_profile_new_from_icc_profile
 	gimp_color_profile_new_from_lcms_profile

@@ -25,6 +25,7 @@
 #include "actions-types.h"
 
 #include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
 
@@ -66,6 +67,32 @@ static const GimpEnumActionEntry colormap_add_color_actions[] =
     GIMP_HELP_INDEXED_PALETTE_ADD }
 };
 
+static const GimpEnumActionEntry colormap_to_selection_actions[] =
+{
+  { "colormap-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
+    NC_("colormap-action", "_Select this Color"), NULL,
+    NC_("colormap-action", "Select all pixels with this color"),
+    GIMP_CHANNEL_OP_REPLACE, FALSE,
+    GIMP_HELP_INDEXED_PALETTE_SELECTION_REPLACE },
+
+  { "colormap-selection-add", GIMP_STOCK_SELECTION_ADD,
+    NC_("colormap-action", "_Add to Selection"), NULL,
+    NC_("colormap-action", "Add all pixels with this color to the current selection"),
+    GIMP_CHANNEL_OP_ADD, FALSE,
+    GIMP_HELP_INDEXED_PALETTE_SELECTION_ADD },
+
+  { "colormap-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
+    NC_("colormap-action", "_Subtract from Selection"), NULL,
+    NC_("colormap-action", "Subtract all pixels with this color from the current selection"),
+    GIMP_CHANNEL_OP_SUBTRACT, FALSE,
+    GIMP_HELP_INDEXED_PALETTE_SELECTION_SUBTRACT },
+
+  { "colormap-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
+    NC_("colormap-action", "_Intersect with Selection"), NULL,
+    NC_("colormap-action", "Intersect all pixels with this color with the current selection"),
+    GIMP_CHANNEL_OP_INTERSECT, FALSE,
+    GIMP_HELP_INDEXED_PALETTE_SELECTION_INTERSECT }
+};
 
 void
 colormap_actions_setup (GimpActionGroup *group)
@@ -78,23 +105,36 @@ colormap_actions_setup (GimpActionGroup *group)
                                       colormap_add_color_actions,
                                       G_N_ELEMENTS (colormap_add_color_actions),
                                       G_CALLBACK (colormap_add_color_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group, "colormap-action",
+                                      colormap_to_selection_actions,
+                                      G_N_ELEMENTS (colormap_to_selection_actions),
+                                      G_CALLBACK (colormap_to_selection_cmd_callback));
 }
 
 void
 colormap_actions_update (GimpActionGroup *group,
                          gpointer         data)
 {
-  GimpImage   *image      = action_data_get_image (data);
-  GimpContext *context    = action_data_get_context (data);
-  gboolean     indexed    = FALSE;
-  gint         num_colors = 0;
+  GimpImage   *image            = action_data_get_image (data);
+  GimpContext *context          = action_data_get_context (data);
+  gboolean     indexed          = FALSE;
+  gboolean     drawable_indexed = FALSE;
+  gint         num_colors       = 0;
   GimpRGB      fg;
   GimpRGB      bg;
 
   if (image)
     {
-      indexed    = (gimp_image_get_base_type (image) == GIMP_INDEXED);
-      num_colors = gimp_image_get_colormap_size (image);
+      indexed = (gimp_image_get_base_type (image) == GIMP_INDEXED);
+
+      if (indexed)
+        {
+          GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+
+          num_colors       = gimp_image_get_colormap_size (image);
+          drawable_indexed = gimp_drawable_is_indexed (drawable);
+        }
     }
 
   if (context)
@@ -109,14 +149,24 @@ colormap_actions_update (GimpActionGroup *group,
         gimp_action_group_set_action_color (group, action, color, FALSE);
 
   SET_SENSITIVE ("colormap-edit-color",
-                 image && indexed && num_colors > 0);
+                 indexed && num_colors > 0);
+
   SET_SENSITIVE ("colormap-add-color-from-fg",
-                 image && indexed && num_colors < 256);
+                 indexed && num_colors < 256);
   SET_SENSITIVE ("colormap-add-color-from-bg",
-                 image && indexed && num_colors < 256);
+                 indexed && num_colors < 256);
 
   SET_COLOR ("colormap-add-color-from-fg", context ? &fg : NULL);
   SET_COLOR ("colormap-add-color-from-bg", context ? &bg : NULL);
+
+  SET_SENSITIVE ("colormap-selection-replace",
+                 drawable_indexed && num_colors > 0);
+  SET_SENSITIVE ("colormap-selection-add",
+                 drawable_indexed && num_colors > 0);
+  SET_SENSITIVE ("colormap-selection-subtract",
+                 drawable_indexed && num_colors > 0);
+  SET_SENSITIVE ("colormap-selection-intersect",
+                 drawable_indexed && num_colors > 0);
 
 #undef SET_SENSITIVE
 #undef SET_COLOR

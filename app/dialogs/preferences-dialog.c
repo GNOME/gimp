@@ -2374,7 +2374,7 @@ prefs_dialog_new (Gimp       *gimp,
     }
     profiles[] =
     {
-      { N_("_RGB profile:"),
+      { N_("Preferred _RGB profile:"),
         N_("Select RGB Color Profile"),     "rgb-profile"     },
       { N_("_CMYK profile:"),
         N_("Select CMYK Color Profile"),    "cmyk-profile"    },

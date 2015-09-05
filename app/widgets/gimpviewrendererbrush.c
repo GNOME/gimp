@@ -116,7 +116,7 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
 
   if (renderer->is_popup)
     {
-      gimp_view_renderer_render_temp_buf (renderer, temp_buf,
+      gimp_view_renderer_render_temp_buf (renderer, widget, temp_buf,
                                           temp_buf_x, temp_buf_y,
                                           -1,
                                           GIMP_VIEW_BG_WHITE,
@@ -126,6 +126,7 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
 
       if (GIMP_IS_BRUSH_PIPE (renderer->viewable))
         {
+          renderbrush->widget = widget;
           renderbrush->pipe_animation_index = 0;
           renderbrush->pipe_timeout_id =
             g_timeout_add (300, gimp_view_renderer_brush_render_timeout,
@@ -135,7 +136,7 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
       return;
     }
 
-  gimp_view_renderer_render_temp_buf (renderer, temp_buf,
+  gimp_view_renderer_render_temp_buf (renderer, widget, temp_buf,
                                       temp_buf_x, temp_buf_y,
                                       -1,
                                       GIMP_VIEW_BG_WHITE,
@@ -189,7 +190,7 @@ gimp_view_renderer_brush_render_timeout (gpointer data)
   if (temp_buf_height < renderer->height)
     temp_buf_y = (renderer->height - temp_buf_height) / 2;
 
-  gimp_view_renderer_render_temp_buf (renderer, temp_buf,
+  gimp_view_renderer_render_temp_buf (renderer, renderbrush->widget, temp_buf,
                                       temp_buf_x, temp_buf_y,
                                       -1,
                                       GIMP_VIEW_BG_WHITE,

@@ -531,10 +531,10 @@ gimp_display_shell_canvas_draw_drop_zone (GimpDisplayShell *shell,
     short_hash = g_strdup (version + strlen (version) - 7);
     msg = g_strdup_printf (_("<big>Unstable Development Version</big>\n\n"
                              "<small>commit <tt>%s</tt></small>\n\n"
-                             "<small>Please build latest "
-                             "git master before\n"
-                             "reporting any bugs against "
-                             "this version.</small>"), short_hash);
+                             "<small>Please test bugs against "
+                             "latest git master branch\n"
+                             "before reporting them.</small>"),
+                             short_hash);
     pango_layout_set_markup (layout, msg, -1);
     g_free (msg);
     g_free (short_hash);

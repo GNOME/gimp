@@ -65,6 +65,7 @@ gimp_gui_init (Gimp *gimp)
   gimp->gui.recent_list_add_file   = NULL;
   gimp->gui.recent_list_load       = NULL;
   gimp->gui.get_mount_operation    = NULL;
+  gimp->gui.query_profile_policy   = NULL;
 }
 
 void
@@ -505,4 +506,23 @@ gimp_get_mount_operation (Gimp         *gimp,
     return gimp->gui.get_mount_operation (gimp, progress);
 
   return g_mount_operation_new ();
+}
+
+GimpColorProfilePolicy
+gimp_query_profile_policy (Gimp              *gimp,
+                           GimpImage         *image,
+                           GimpContext       *context,
+                           GimpColorProfile **dest_profile,
+                           gboolean          *dont_ask)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_COLOR_PROFILE_POLICY_KEEP);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_COLOR_PROFILE_POLICY_KEEP);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_COLOR_PROFILE_POLICY_KEEP);
+  g_return_val_if_fail (dest_profile != NULL, GIMP_COLOR_PROFILE_POLICY_KEEP);
+
+  if (gimp->gui.query_profile_policy)
+    return gimp->gui.query_profile_policy (gimp, image, context,
+                                           dest_profile, dont_ask);
+
+  return GIMP_COLOR_PROFILE_POLICY_KEEP;
 }

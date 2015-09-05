@@ -154,6 +154,7 @@ static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     GimpPrecision      new_precision,
                                                     gint               layer_dither_type,
                                                     gint               mask_dither_type,
+                                                    gboolean           convert_profile,
                                                     gboolean           push_undo);
 
 static GeglBuffer * gimp_drawable_real_get_buffer  (GimpDrawable      *drawable);
@@ -789,21 +790,16 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  GimpPrecision      new_precision,
                                  gint               layer_dither_type,
                                  gint               mask_dither_type,
+                                 gboolean           convert_type,
                                  gboolean           push_undo)
 {
   GeglBuffer *dest_buffer;
-  const Babl *format;
-
-  format = gimp_image_get_format (dest_image,
-                                  new_base_type,
-                                  new_precision,
-                                  gimp_drawable_has_alpha (drawable));
 
   dest_buffer =
     gegl_buffer_new (GEGL_RECTANGLE (0, 0,
                                      gimp_item_get_width  (GIMP_ITEM (drawable)),
                                      gimp_item_get_height (GIMP_ITEM (drawable))),
-                     format);
+                     new_format);
 
   gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL, GEGL_ABYSS_NONE,
                     dest_buffer, NULL);
@@ -1262,6 +1258,7 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                             GimpPrecision      new_precision,
                             gint               layer_dither_type,
                             gint               mask_dither_type,
+                            gboolean           convert_profile,
                             gboolean           push_undo)
 {
   const Babl *new_format;
@@ -1269,7 +1266,8 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (GIMP_IS_IMAGE (dest_image));
   g_return_if_fail (new_base_type != gimp_drawable_get_base_type (drawable) ||
-                    new_precision != gimp_drawable_get_precision (drawable));
+                    new_precision != gimp_drawable_get_precision (drawable) ||
+                    convert_profile);
 
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
@@ -1285,6 +1283,7 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                                                     new_precision,
                                                     layer_dither_type,
                                                     mask_dither_type,
+                                                    convert_profile,
                                                     push_undo);
 }
 

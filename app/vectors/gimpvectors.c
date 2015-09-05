@@ -77,7 +77,8 @@ static gboolean   gimp_vectors_bounds        (GimpItem          *item,
 static GimpItem * gimp_vectors_duplicate     (GimpItem          *item,
                                               GType              new_type);
 static void       gimp_vectors_convert       (GimpItem          *item,
-                                              GimpImage         *dest_image);
+                                              GimpImage         *dest_image,
+                                              GType              old_type);
 static void       gimp_vectors_translate     (GimpItem          *item,
                                               gint               offset_x,
                                               gint               offset_y,
@@ -411,13 +412,14 @@ gimp_vectors_duplicate (GimpItem *item,
 
 static void
 gimp_vectors_convert (GimpItem  *item,
-                      GimpImage *dest_image)
+                      GimpImage *dest_image,
+                      GType      old_type)
 {
   gimp_item_set_size (item,
                       gimp_image_get_width  (dest_image),
                       gimp_image_get_height (dest_image));
 
-  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image);
+  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image, old_type);
 }
 
 static void

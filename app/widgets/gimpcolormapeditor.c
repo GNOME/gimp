@@ -222,8 +222,15 @@ static void
 gimp_colormap_editor_constructed (GObject *object)
 {
   GimpColormapEditor *editor = GIMP_COLORMAP_EDITOR (object);
+  GdkModifierType     extend_mask;
+  GdkModifierType     modify_mask;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  extend_mask = gtk_widget_get_modifier_mask (GTK_WIDGET (object),
+                                              GDK_MODIFIER_INTENT_EXTEND_SELECTION);
+  modify_mask = gtk_widget_get_modifier_mask (GTK_WIDGET (object),
+                                              GDK_MODIFIER_INTENT_MODIFY_SELECTION);
 
   gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap",
                                  "colormap-edit-color",
@@ -233,6 +240,16 @@ gimp_colormap_editor_constructed (GObject *object)
                                  "colormap-add-color-from-fg",
                                  "colormap-add-color-from-bg",
                                  gimp_get_toggle_behavior_mask (),
+                                 NULL);
+
+  gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap",
+                                 "colormap-selection-replace",
+                                 "colormap-selection-add",
+                                 extend_mask,
+                                 "colormap-selection-subtract",
+                                 modify_mask,
+                                 "colormap-selection-intersect",
+                                 extend_mask | modify_mask,
                                  NULL);
 }
 

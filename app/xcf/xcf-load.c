@@ -379,6 +379,17 @@ xcf_load_image (Gimp     *gimp,
                                  gimp_parasite_name (parasite));
     }
 
+  /* check for a gimp-compatibility-mode parasite */
+  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+                                       "gimp-xcf-compatibility-mode");
+  if (parasite)
+    {
+      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+      gimp_image_set_xcf_compat_mode (image, TRUE);
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_name (parasite));
+    }
   xcf_progress_update (info);
 
   while (TRUE)

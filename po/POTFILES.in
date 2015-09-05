@@ -180,6 +180,7 @@ app/dialogs/about-dialog.c
 app/dialogs/action-search-dialog.c
 app/dialogs/channel-options-dialog.c
 app/dialogs/color-profile-dialog.c
+app/dialogs/color-profile-import-dialog.c
 app/dialogs/convert-precision-dialog.c
 app/dialogs/convert-type-dialog.c
 app/dialogs/data-delete-dialog.c
@@ -326,7 +327,6 @@ app/plug-in/gimppluginprocedure.c
 app/plug-in/gimppluginprocframe.c
 app/plug-in/gimptemporaryprocedure.c
 app/plug-in/plug-in-enums.c
-app/plug-in/plug-in-icc-profile.c
 app/plug-in/plug-in-rc.c
 
 app/text/gimpfont.c
@@ -476,6 +476,7 @@ app/widgets/gimpdynamicsoutputeditor.c
 app/widgets/gimpeditor.c
 app/widgets/gimperrorconsole.c
 app/widgets/gimperrordialog.c
+app/widgets/gimpexportdialog.c
 app/widgets/gimpfiledialog.c
 app/widgets/gimpfileprocview.c
 app/widgets/gimpfilleditor.c
@@ -492,6 +493,7 @@ app/widgets/gimplanguagestore-parser.c
 app/widgets/gimplayertreeview.c
 app/widgets/gimpmenudock.c
 app/widgets/gimpmessagebox.c
+app/widgets/gimpopendialog.c
 app/widgets/gimpoverlaydialog.c
 app/widgets/gimppaletteeditor.c
 app/widgets/gimppanedbox.c
@@ -501,6 +503,7 @@ app/widgets/gimpprogressdialog.c
 app/widgets/gimppropgui-constructors.c
 app/widgets/gimppropgui.c
 app/widgets/gimppropwidgets.c
+app/widgets/gimpsavedialog.c
 app/widgets/gimpselectiondata.c
 app/widgets/gimpselectioneditor.c
 app/widgets/gimpsettingsbox.c

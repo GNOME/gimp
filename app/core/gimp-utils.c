@@ -781,7 +781,7 @@ gimp_create_image_from_buffer (Gimp        *gimp,
                                            image_name,
                                            GIMP_OPACITY_OPAQUE,
                                            GIMP_NORMAL_MODE,
-                                           NULL, 0 /* same image */);
+                                           NULL /* same image */);
   gimp_image_add_layer (image, layer, NULL, -1, FALSE);
 
   gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0, NULL, 0);

@@ -64,6 +64,7 @@
   PSD_LPRP_PROTECT        "lspf"        -       * Protected setting (PS6) *
   PSD_LPRP_COLOR          "lclr"        -       * Sheet color setting (PS6) *
   PSD_LPRP_REF_POINT      "fxrp"        -       * Reference point (PS6) *
+  PSD_LPRP_VERSION        "lyvr"     Loaded     * Layer version (PS7) *
 
   * Vector mask *
   PSD_LMSK_VMASK          "vmsk"        -       * Vector mask setting (PS6) *
@@ -178,6 +179,11 @@ static gint     load_resource_lrfx    (const PSDlayerres     *res_a,
 				       FILE                  *f,
 				       GError               **error);
 
+static gint     load_resource_lyvr    (const PSDlayerres     *res_a,
+				       PSDlayer              *lyr_a,
+				       FILE                  *f,
+				       GError               **error);
+
 /* Public Functions */
 gint
 get_layer_resource_header (PSDlayerres  *res_a,
@@ -261,6 +267,9 @@ load_layer_resource (PSDlayerres  *res_a,
 
       else if (memcmp (res_a->key, PSD_LFX_FX, 4) == 0)
 	load_resource_lrfx (res_a, lyr_a, f, error);
+
+      else if (memcmp (res_a->key, PSD_LPRP_VERSION, 4) == 0)
+	load_resource_lyvr (res_a, lyr_a, f, error);
       else
         load_resource_unknown (res_a, lyr_a, f, error);
     }
@@ -811,4 +820,30 @@ load_resource_lrfx (const PSDlayerres  *res_a,
     }
 
   return 0;
+}
+
+static gint
+load_resource_lyvr (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    FILE               *f,
+                    GError            **error)
+{
+  gint32    version;
+  if (fread (&version, 4, 1, f) < 1)
+    {
+      psd_set_error (feof (f), errno, error);
+      return -1;
+    }
+  version = GINT32_FROM_BE(version);
+
+  /* minimum value is 70 according to specs but there's no reason to
+   * stop the loading
+   */
+  if (version < 70)
+    {
+      g_message ('Invalid version layer');
+    }
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: Version effects", res_a->key);
+
 }

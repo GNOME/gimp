@@ -363,6 +363,17 @@ main (int    argc,
       (*p_SetProcessDEPPolicy) (PROCESS_DEP_ENABLE|PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION);
   }
 #endif
+
+  /* Group all our windows together on the taskbar */
+  {
+    typedef HRESULT (WINAPI *t_SetCurrentProcessExplicitAppUserModelID) (PCWSTR lpPathName);
+    t_SetCurrentProcessExplicitAppUserModelID p_SetCurrentProcessExplicitAppUserModelID;
+
+    p_SetCurrentProcessExplicitAppUserModelID = GetProcAddress (GetModuleHandle ("shell32.dll"),
+                                                                "SetCurrentProcessExplicitAppUserModelID");
+    if (p_SetCurrentProcessExplicitAppUserModelID)
+      (*p_SetCurrentProcessExplicitAppUserModelID) (L"gimp.GimpApplication");
+  }
 #endif
 
 #ifdef GIMP_UNSTABLE

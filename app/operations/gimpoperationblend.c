@@ -810,6 +810,10 @@ gradient_render_pixel (gdouble   x,
   RenderBlendData *rbd = render_data;
   gdouble          factor;
 
+  /*  we want to calculate the color at the pixel's center  */
+  x += 0.5;
+  y += 0.5;
+
   /* Calculate blending factor */
 
   switch (rbd->gradient_type)

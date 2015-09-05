@@ -71,7 +71,6 @@ guillotine_RC = guillotine.rc.o
 hot_RC = hot.rc.o
 iptc_RC = iptc.rc.o
 jigsaw_RC = jigsaw.rc.o
-lcms_RC = lcms.rc.o
 mail_RC = mail.rc.o
 max_rgb_RC = max-rgb.rc.o
 newsprint_RC = newsprint.rc.o

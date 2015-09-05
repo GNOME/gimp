@@ -307,6 +307,17 @@ gimp_main (const GimpPlugInInfo *info,
   }
 #endif
 
+  /* Group all our windows together on the taskbar */
+  {
+    typedef HRESULT (WINAPI *t_SetCurrentProcessExplicitAppUserModelID) (PCWSTR lpPathName);
+    t_SetCurrentProcessExplicitAppUserModelID p_SetCurrentProcessExplicitAppUserModelID;
+
+    p_SetCurrentProcessExplicitAppUserModelID = GetProcAddress (GetModuleHandle ("shell32.dll"),
+                                                                "SetCurrentProcessExplicitAppUserModelID");
+    if (p_SetCurrentProcessExplicitAppUserModelID)
+      (*p_SetCurrentProcessExplicitAppUserModelID) (L"gimp.GimpApplication");
+  }
+
   /* Check for exe file name with spaces in the path having been split up
    * by buggy NT C runtime, or something. I don't know why this happens
    * on NT (including w2k), but not on w95/98.

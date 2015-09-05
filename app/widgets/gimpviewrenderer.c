@@ -23,6 +23,8 @@
 
 #include <string.h>
 
+#include <lcms2.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 
@@ -33,8 +35,15 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "gegl/gimp-gegl-loops.h"
+
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
+#include "core/gimppickable.h"
 #include "core/gimptempbuf.h"
 #include "core/gimpviewable.h"
 
@@ -70,12 +79,11 @@ static void      gimp_view_renderer_real_render       (GimpViewRenderer   *rende
 
 static void      gimp_view_renderer_size_changed      (GimpViewRenderer   *renderer,
                                                        GimpViewable       *viewable);
-
-static cairo_pattern_t *
-                 gimp_view_renderer_create_background (GimpViewRenderer   *renderer,
-                                                       GtkWidget          *widget);
+static void      gimp_view_renderer_profile_changed   (GimpViewRenderer   *renderer,
+                                                       GimpViewable       *viewable);
 
 static void      gimp_view_render_temp_buf_to_surface (GimpViewRenderer   *renderer,
+                                                       GtkWidget          *widget,
                                                        GimpTempBuf        *temp_buf,
                                                        gint                temp_buf_x,
                                                        gint                temp_buf_y,
@@ -86,6 +94,15 @@ static void      gimp_view_render_temp_buf_to_surface (GimpViewRenderer   *rende
                                                        gint                dest_width,
                                                        gint                dest_height);
 
+static cairo_pattern_t *
+                 gimp_view_renderer_create_background (GimpViewRenderer   *renderer,
+                                                       GtkWidget          *widget);
+
+static void      gimp_view_renderer_transform_create  (GimpViewRenderer   *renderer,
+                                                       GtkWidget          *widget,
+                                                       GeglBuffer         *src_buffer,
+                                                       GeglBuffer         *dest_buffer);
+static void      gimp_view_renderer_transform_free    (GimpViewRenderer   *renderer);
 
 
 G_DEFINE_TYPE (GimpViewRenderer, gimp_view_renderer, G_TYPE_OBJECT)
@@ -337,6 +354,8 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
       renderer->pixbuf = NULL;
     }
 
+  gimp_view_renderer_transform_free (renderer);
+
   if (renderer->viewable)
     {
       g_object_weak_unref (G_OBJECT (renderer->viewable),
@@ -350,6 +369,11 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
       g_signal_handlers_disconnect_by_func (renderer->viewable,
                                             G_CALLBACK (gimp_view_renderer_size_changed),
                                             renderer);
+
+      if (GIMP_IS_COLOR_MANAGED (renderer->viewable))
+        g_signal_handlers_disconnect_by_func (renderer->viewable,
+                                              G_CALLBACK (gimp_view_renderer_profile_changed),
+                                              renderer);
     }
 
   renderer->viewable = viewable;
@@ -369,6 +393,12 @@ gimp_view_renderer_set_viewable (GimpViewRenderer *renderer,
                                 "size-changed",
                                 G_CALLBACK (gimp_view_renderer_size_changed),
                                 renderer);
+
+      if (GIMP_IS_COLOR_MANAGED (renderer->viewable))
+        g_signal_connect_swapped (renderer->viewable,
+                                  "profile-changed",
+                                  G_CALLBACK (gimp_view_renderer_profile_changed),
+                                  renderer);
 
       if (renderer->size != -1)
         gimp_view_renderer_set_size (renderer, renderer->size,
@@ -761,7 +791,7 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                      renderer->height);
   if (pixbuf)
     {
-      gimp_view_renderer_render_pixbuf (renderer, pixbuf);
+      gimp_view_renderer_render_pixbuf (renderer, widget, pixbuf);
       return;
     }
 
@@ -771,7 +801,7 @@ gimp_view_renderer_real_render (GimpViewRenderer *renderer,
                                         renderer->height);
   if (temp_buf)
     {
-      gimp_view_renderer_render_temp_buf_simple (renderer, temp_buf);
+      gimp_view_renderer_render_temp_buf_simple (renderer, widget, temp_buf);
       return;
     }
 
@@ -790,11 +820,20 @@ gimp_view_renderer_size_changed (GimpViewRenderer *renderer,
   gimp_view_renderer_invalidate (renderer);
 }
 
+static void
+gimp_view_renderer_profile_changed (GimpViewRenderer *renderer,
+                                    GimpViewable     *viewable)
+{
+  gimp_view_renderer_transform_free (renderer);
+  gimp_view_renderer_invalidate (renderer);
+}
+
 
 /*  protected functions  */
 
 void
 gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
+                                           GtkWidget        *widget,
                                            GimpTempBuf      *temp_buf)
 {
   gint temp_buf_x = 0;
@@ -814,7 +853,7 @@ gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
   if (temp_buf_height < renderer->height)
     temp_buf_y = (renderer->height - temp_buf_height) / 2;
 
-  gimp_view_renderer_render_temp_buf (renderer, temp_buf,
+  gimp_view_renderer_render_temp_buf (renderer, widget, temp_buf,
                                       temp_buf_x, temp_buf_y,
                                       -1,
                                       GIMP_VIEW_BG_CHECKS,
@@ -823,6 +862,7 @@ gimp_view_renderer_render_temp_buf_simple (GimpViewRenderer *renderer,
 
 void
 gimp_view_renderer_render_temp_buf (GimpViewRenderer *renderer,
+                                    GtkWidget        *widget,
                                     GimpTempBuf      *temp_buf,
                                     gint              temp_buf_x,
                                     gint              temp_buf_y,
@@ -842,6 +882,7 @@ gimp_view_renderer_render_temp_buf (GimpViewRenderer *renderer,
                                                     renderer->height);
 
   gimp_view_render_temp_buf_to_surface (renderer,
+                                        widget,
                                         temp_buf,
                                         temp_buf_x,
                                         temp_buf_y,
@@ -858,6 +899,7 @@ gimp_view_renderer_render_temp_buf (GimpViewRenderer *renderer,
 
 void
 gimp_view_renderer_render_pixbuf (GimpViewRenderer *renderer,
+                                  GtkWidget        *widget,
                                   GdkPixbuf        *pixbuf)
 {
   if (renderer->surface)
@@ -933,6 +975,7 @@ gimp_view_renderer_render_icon (GimpViewRenderer *renderer,
 
 static void
 gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
+                                      GtkWidget        *widget,
                                       GimpTempBuf      *temp_buf,
                                       gint              temp_buf_x,
                                       gint              temp_buf_y,
@@ -1036,13 +1079,32 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       src_buffer  = gimp_temp_buf_create_buffer (temp_buf);
       dest_buffer = gimp_cairo_surface_create_buffer (alpha_surface);
 
-      gegl_buffer_copy (src_buffer,
-                        GEGL_RECTANGLE (x - temp_buf_x,
-                                        y - temp_buf_y,
-                                        width, height),
-                        GEGL_ABYSS_NONE,
-                        dest_buffer,
-                        GEGL_RECTANGLE (0, 0, 0, 0));
+      if (! renderer->profile_transform)
+        gimp_view_renderer_transform_create (renderer, widget,
+                                             src_buffer, dest_buffer);
+
+      if (renderer->profile_transform)
+        {
+          gimp_gegl_convert_color_transform (src_buffer,
+                                             GEGL_RECTANGLE (x - temp_buf_x,
+                                                             y - temp_buf_y,
+                                                             width, height),
+                                             renderer->profile_src_format,
+                                             dest_buffer,
+                                             GEGL_RECTANGLE (0, 0, 0, 0),
+                                             renderer->profile_dest_format,
+                                             renderer->profile_transform);
+        }
+      else
+        {
+          gegl_buffer_copy (src_buffer,
+                            GEGL_RECTANGLE (x - temp_buf_x,
+                                            y - temp_buf_y,
+                                            width, height),
+                            GEGL_ABYSS_NONE,
+                            dest_buffer,
+                            GEGL_RECTANGLE (0, 0, 0, 0));
+        }
 
       g_object_unref (src_buffer);
       g_object_unref (dest_buffer);
@@ -1066,13 +1128,32 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
       src_buffer  = gimp_temp_buf_create_buffer (temp_buf);
       dest_buffer = gimp_cairo_surface_create_buffer (surface);
 
-      gegl_buffer_copy (src_buffer,
-                        GEGL_RECTANGLE (x - temp_buf_x,
-                                        y - temp_buf_y,
-                                        width, height),
-                        GEGL_ABYSS_NONE,
-                        dest_buffer,
-                        GEGL_RECTANGLE (x, y, 0, 0));
+      if (! renderer->profile_transform)
+        gimp_view_renderer_transform_create (renderer, widget,
+                                             src_buffer, dest_buffer);
+
+      if (renderer->profile_transform)
+        {
+          gimp_gegl_convert_color_transform (src_buffer,
+                                             GEGL_RECTANGLE (x - temp_buf_x,
+                                                             y - temp_buf_y,
+                                                             width, height),
+                                             renderer->profile_src_format,
+                                             dest_buffer,
+                                             GEGL_RECTANGLE (x, y, 0, 0),
+                                             renderer->profile_dest_format,
+                                             renderer->profile_transform);
+        }
+      else
+        {
+          gegl_buffer_copy (src_buffer,
+                            GEGL_RECTANGLE (x - temp_buf_x,
+                                            y - temp_buf_y,
+                                            width, height),
+                            GEGL_ABYSS_NONE,
+                            dest_buffer,
+                            GEGL_RECTANGLE (x, y, 0, 0));
+        }
 
       g_object_unref (src_buffer);
       g_object_unref (dest_buffer);
@@ -1167,4 +1248,47 @@ gimp_view_renderer_create_background (GimpViewRenderer *renderer,
     }
 
   return pattern;
+}
+
+static void
+gimp_view_renderer_transform_create (GimpViewRenderer *renderer,
+                                     GtkWidget        *widget,
+                                     GeglBuffer       *src_buffer,
+                                     GeglBuffer       *dest_buffer)
+{
+  if (GIMP_IS_COLOR_MANAGED (renderer->viewable))
+    {
+      GimpColorManaged *managed  = GIMP_COLOR_MANAGED (renderer->viewable);
+      GimpPickable     *pickable = GIMP_PICKABLE (renderer->viewable);
+      GimpColorProfile *profile;
+
+      profile = gimp_color_managed_get_color_profile (managed);
+
+      if (profile)
+        {
+          GimpImage       *image  = gimp_pickable_get_image (pickable);
+          GimpColorConfig *config = image->gimp->config->color_management;
+
+          renderer->profile_src_format  = gegl_buffer_get_format (src_buffer);
+          renderer->profile_dest_format = gegl_buffer_get_format (dest_buffer);
+
+          renderer->profile_transform =
+            gimp_widget_get_color_transform (widget, config,
+                                             profile,
+                                             &renderer->profile_src_format,
+                                             &renderer->profile_dest_format);
+        }
+    }
+}
+
+static void
+gimp_view_renderer_transform_free (GimpViewRenderer *renderer)
+{
+  if (renderer->profile_transform)
+    {
+      cmsDeleteTransform (renderer->profile_transform);
+      renderer->profile_transform   = NULL;
+      renderer->profile_src_format  = NULL;
+      renderer->profile_dest_format = NULL;
+    }
 }

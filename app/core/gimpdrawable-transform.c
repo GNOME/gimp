@@ -963,7 +963,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
                                          gimp_drawable_get_format_with_alpha (drawable),
                                          _("Transformation"),
                                          GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
-                                         NULL, 0 /* same image */);
+                                         NULL /* same image */);
 
       gimp_item_set_offset (GIMP_ITEM (layer), offset_x, offset_y);
 

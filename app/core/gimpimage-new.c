@@ -193,12 +193,8 @@ gimp_image_new_from_drawable (Gimp         *gimp,
 
   if (GIMP_IS_LAYER (drawable))
     {
-      const guint8 *icc_data;
-      gsize         icc_len;
-
-      icc_data = gimp_image_get_icc_profile (image, &icc_len);
-      if (icc_data)
-        gimp_image_set_icc_profile (new_image, icc_data, icc_len, NULL);
+      GimpColorProfile *profile = gimp_image_get_color_profile (image);
+      gimp_image_set_color_profile (new_image, profile, NULL);
 
       new_type = G_TYPE_FROM_INSTANCE (drawable);
     }
@@ -279,12 +275,11 @@ gimp_image_new_from_buffer (Gimp       *gimp,
                             GimpImage  *invoke,
                             GimpBuffer *paste)
 {
-  GimpImage    *image;
-  GimpLayer    *layer;
-  const Babl   *format;
-  gboolean      has_alpha;
-  const guint8 *icc_data;
-  gsize         icc_len;
+  GimpImage        *image;
+  GimpLayer        *layer;
+  const Babl       *format;
+  gboolean          has_alpha;
+  GimpColorProfile *profile;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (invoke == NULL || GIMP_IS_IMAGE (invoke), NULL);
@@ -312,9 +307,9 @@ gimp_image_new_from_buffer (Gimp       *gimp,
       gimp_image_set_unit (image, gimp_image_get_unit (invoke));
     }
 
-  icc_data = gimp_buffer_get_icc_profile (paste, &icc_len);
-  if (icc_data)
-    gimp_image_set_icc_profile (image, icc_data, icc_len, NULL);
+  profile = gimp_buffer_get_color_profile (paste);
+  if (profile)
+    gimp_image_set_color_profile (image, profile, NULL);
 
   layer = gimp_layer_new_from_buffer (paste, image,
                                       gimp_image_get_layer_format (image,

@@ -75,7 +75,6 @@ plug-ins/common/grid.c
 plug-ins/common/guillotine.c
 plug-ins/common/hot.c
 plug-ins/common/jigsaw.c
-plug-ins/common/lcms.c
 plug-ins/common/mail.c
 plug-ins/common/max-rgb.c
 plug-ins/common/newsprint.c
@@ -213,10 +212,6 @@ plug-ins/lighting/lighting-ui.c
 plug-ins/map-object/map-object-apply.c
 plug-ins/map-object/map-object-main.c
 plug-ins/map-object/map-object-ui.c
-plug-ins/maze/maze-algorithms.c
-plug-ins/maze/maze-dialog.c
-plug-ins/maze/maze.c
-plug-ins/maze/maze.h
 plug-ins/metainfo/interface.c
 plug-ins/metainfo/page-administration.c
 plug-ins/metainfo/page-rights.c

@@ -37,15 +37,7 @@
 #define PLUG_IN_BINARY                  "file-psd"
 #define PLUG_IN_ROLE                    "gimp-file-psd"
 
-#define DECODE_XMP_PROC                 "plug-in-metadata-decode-xmp"
-
 #define GIMP_PARASITE_COMMENT           "gimp-comment"
-#define GIMP_PARASITE_ICC_PROFILE       "icc-profile"
-#define GIMP_PARASITE_EXIF              "exif-data"
-#define GIMP_PARASITE_IPTC              "iptc-data"
-
-#define METADATA_PARASITE               "gimp-metadata"
-#define METADATA_MARKER                 "GIMP_XMP_1"
 
 #define PSD_PARASITE_DUOTONE_DATA       "psd-duotone-data"
 
@@ -103,6 +95,7 @@
 #define PSD_LPRP_PROTECT        "lspf"          /* Protected setting (PS6) */
 #define PSD_LPRP_COLOR          "lclr"          /* Sheet color setting (PS6) */
 #define PSD_LPRP_REF_POINT      "fxrp"          /* Reference point (PS6) */
+#define PSD_LPRP_VERSION        "lyvr"          /* Layer version (PS7) */
 
 /* Vector mask */
 #define PSD_LMSK_VMASK          "vmsk"          /* Vector mask setting (PS6) */

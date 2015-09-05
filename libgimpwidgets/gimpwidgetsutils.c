@@ -480,13 +480,12 @@ get_display_profile (GtkWidget       *widget,
 
 GimpColorTransform
 gimp_widget_get_color_transform (GtkWidget         *widget,
-                                 GimpColorManaged  *managed,
                                  GimpColorConfig   *config,
+                                 GimpColorProfile  *src_profile,
                                  const Babl       **src_format,
                                  const Babl       **dest_format)
 {
   GimpColorTransform  transform     = NULL;
-  GimpColorProfile   *src_profile   = NULL;
   GimpColorProfile   *dest_profile  = NULL;
   GimpColorProfile   *proof_profile = NULL;
   cmsHPROFILE         src_lcms;
@@ -496,7 +495,7 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
   cmsUInt16Number     alarmCodes[cmsMAXCHANNELS] = { 0, };
 
   g_return_val_if_fail (widget == NULL || GTK_IS_WIDGET (widget), NULL);
-  g_return_val_if_fail (GIMP_IS_COLOR_MANAGED (managed), NULL);
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (src_profile), NULL);
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
   g_return_val_if_fail (src_format != NULL, NULL);
   g_return_val_if_fail (dest_format != NULL, NULL);
@@ -511,7 +510,6 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
       /*  fallthru  */
 
     case GIMP_COLOR_MANAGEMENT_DISPLAY:
-      src_profile  = gimp_color_managed_get_color_profile (managed);
       dest_profile = get_display_profile (widget, config);
       break;
     }
@@ -573,7 +571,6 @@ gimp_widget_get_color_transform (GtkWidget         *widget,
                                       display_flags);
     }
 
-  g_object_unref (src_profile);
   g_object_unref (dest_profile);
 
   return transform;

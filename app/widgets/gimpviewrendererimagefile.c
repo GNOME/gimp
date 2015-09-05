@@ -84,7 +84,7 @@ gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
 
   if (pixbuf)
     {
-      gimp_view_renderer_render_pixbuf (renderer, pixbuf);
+      gimp_view_renderer_render_pixbuf (renderer, widget, pixbuf);
       g_object_unref (pixbuf);
     }
   else

@@ -67,6 +67,8 @@ GType              gimp_color_profile_get_type              (void) G_GNUC_CONST;
 GimpColorProfile * gimp_color_profile_new_srgb              (void);
 GimpColorProfile * gimp_color_profile_new_linear_rgb        (void);
 
+GimpColorProfile * gimp_color_profile_new_adobe_rgb         (void);
+
 GimpColorProfile * gimp_color_profile_new_from_file         (GFile             *file,
                                                              GError           **error);
 

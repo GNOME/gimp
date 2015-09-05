@@ -59,8 +59,9 @@ static void     run               (const gchar      *name,
 static gint32   load_image        (const gchar      *filename,
                                    gint32           *layer_ID,
                                    GError          **error);
-static void     load_icc_profile  (jas_image_t      *jas_image,
-                                   gint              image_ID);
+static gboolean load_icc_profile  (jas_image_t      *jas_image,
+                                   gint              image_ID,
+                                   GError          **error);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -436,7 +437,7 @@ load_image (const gchar  *filename,
                        NULL, pixels, GEGL_AUTO_ROWSTRIDE);
     }
 
-  load_icc_profile (image, image_ID);
+  load_icc_profile (image, image_ID, NULL);
 
   jas_matrix_destroy (matrix);
   free (pixels);
@@ -451,28 +452,29 @@ load_image (const gchar  *filename,
   return image_ID;
 }
 
-static void
-load_icc_profile (jas_image_t *jas_image,
-                  gint         image_ID)
+static gboolean
+load_icc_profile (jas_image_t  *jas_image,
+                  gint          image_ID,
+                  GError      **error)
 {
-  jas_cmprof_t  *cm_prof;
-  jas_iccprof_t *jas_icc;
-  jas_stream_t  *stream;
-  guint32        profile_size;
-  guchar        *jas_iccile;
-  GimpParasite  *parasite;
+  jas_cmprof_t     *cm_prof;
+  jas_iccprof_t    *jas_icc;
+  jas_stream_t     *stream;
+  guint32           profile_size;
+  guchar           *jas_iccile;
+  GimpColorProfile *profile;
 
   cm_prof = jas_image_cmprof (jas_image);
   if (!cm_prof)
-    return;
+    return FALSE;
 
   jas_icc = jas_iccprof_createfromcmprof (cm_prof);
   if (!jas_icc)
-    return;
+    return FALSE;
 
   stream = jas_stream_memopen (NULL, -1);
   if (!stream)
-    return;
+    return FALSE;
 
   jas_iccprof_save (jas_icc, stream);
 
@@ -482,14 +484,20 @@ load_icc_profile (jas_image_t *jas_image,
   jas_iccile = g_malloc (profile_size);
   jas_stream_read (stream, jas_iccile, profile_size);
 
-  parasite = gimp_parasite_new ("icc-profile",
-                                GIMP_PARASITE_PERSISTENT |
-                                GIMP_PARASITE_UNDOABLE,
-                                profile_size, jas_iccile);
-  gimp_image_attach_parasite (image_ID, parasite);
-  gimp_parasite_free (parasite);
-
-  g_free (jas_iccile);
   jas_stream_close (stream);
   jas_iccprof_destroy (jas_icc);
+
+  profile = gimp_color_profile_new_from_icc_profile (jas_iccile, profile_size,
+                                                     error);
+  g_free (jas_iccile);
+
+  if (profile)
+    {
+      gimp_image_set_color_profile (image_ID, profile);
+      g_object_unref (profile);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }

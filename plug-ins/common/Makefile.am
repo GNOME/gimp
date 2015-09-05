@@ -117,7 +117,6 @@ libexec_PROGRAMS = \
 	hot \
 	iptc	\
 	jigsaw \
-	lcms \
 	$(MAIL) \
 	max-rgb \
 	newsprint \
@@ -1469,24 +1468,6 @@ jigsaw_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(jigsaw_RC)
-
-lcms_SOURCES = \
-	lcms.c
-
-lcms_LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimpmodule)	\
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GTK_LIBS)		\
-	$(GEGL_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)		\
-	$(lcms_RC)
 
 mail_SOURCES = \
 	mail.c

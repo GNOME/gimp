@@ -142,13 +142,12 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPickable *pickable = GIMP_PICKABLE (image);
-  const guint8 *icc_data;
-  gsize         icc_len;
+  GimpPickable     *pickable = GIMP_PICKABLE (image);
+  GimpColorProfile *profile;
 
   gimp_pickable_flush (pickable);
 
-  icc_data = gimp_image_get_icc_profile (image, &icc_len);
+  profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
   layer = gimp_layer_new_from_gegl_buffer (gimp_pickable_get_buffer (pickable),
                                            dest_image,
@@ -157,7 +156,7 @@ HELP
                                            name,
                                            GIMP_OPACITY_OPAQUE,
                                            GIMP_NORMAL_MODE,
-                                           icc_data, icc_len);
+                                           profile);
 }
 CODE
     );
@@ -1195,7 +1194,9 @@ CODE
     );
 }
 
-@headers = qw("libgimpbase/gimpbase.h"
+@headers = qw(<cairo.h>
+              "libgimpbase/gimpbase.h"
+              "libgimpcolor/gimpcolor.h"
               "core/gimp.h"
               "core/gimpimage-color-profile.h"
               "core/gimpimage-undo.h"

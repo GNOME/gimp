@@ -1784,12 +1784,12 @@ HELP
 
   profile = gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
 
-  profile_name = g_strdup (gimp_color_profile_get_model (profile));
-  profile_desc = g_strdup (gimp_color_profile_get_description (profile));
-  profile_info = g_strdup (gimp_color_profile_get_summary (profile));
-
-  g_object_unref (profile);
-
+  if (profile)
+    {
+      profile_name = g_strdup (gimp_color_profile_get_model (profile));
+      profile_desc = g_strdup (gimp_color_profile_get_description (profile));
+      profile_info = g_strdup (gimp_color_profile_get_summary (profile));
+    }
 }
 CODE
     );
@@ -1841,6 +1841,133 @@ HELP
         }
       else
         success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_icc_profile_apply {
+    $blurb = "Apply a color profile on the image";
+
+    $help = <<'HELP';
+This procedure transform from the image's color profile (or the
+default RGB profile if none is set) to the given ICC color
+profile. Only RGB color profiles are accepted. The profile is then set
+on the image using the 'icc-profile' "parasite.
+HELP
+
+    &neo_pdb_misc;
+    $date = '2015';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+        { name => 'image', type => 'image',
+          desc => 'Input image' },
+        { name => 'profile', type => 'string',
+          desc => 'Filename of an ICC color profile', allow_non_utf8 => 1 },
+        { name => 'intent', type => 'enum GimpColorRenderingIntent',
+          desc => 'Rendering intent' },
+        { name => 'bpc', type => 'boolean',
+          desc => 'Black point compensation' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
+    {
+      GFile            *file = NULL;
+      GimpColorProfile *p    = NULL;
+
+      if (profile)
+        file = g_file_new_for_path (profile);
+      else if (image->gimp->config->color_management->rgb_profile)
+        file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
+
+      if (file)
+        {
+          p = gimp_color_profile_new_from_file (file, error);
+
+          if (! p)
+	    success = FALSE;
+
+          g_object_unref (file);
+	}
+
+      if (success)
+        {
+          if (! p)
+            p = gimp_image_get_builtin_color_profile (image);
+
+          success = gimp_image_convert_color_profile (image, p, intent, bpc,
+                                                      progress, error);
+	}
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_icc_profile_apply_rgb {
+    $blurb = "Apply default RGB color profile on the image";
+
+    $help = <<'HELP';
+This procedure transform from the image's color profile (or the
+default RGB profile if none is set) to the configured default RGB
+color profile.  The profile is then set on the image using the
+'icc-profile' parasite.  If no RGB color profile is configured, sRGB
+is assumed and the parasite is unset.
+HELP
+
+    &neo_pdb_misc;
+    $date = '2015';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+        { name => 'image', type => 'image',
+          desc => 'Input image' },
+        { name => 'intent', type => 'enum GimpColorRenderingIntent',
+          desc => 'Rendering intent' },
+        { name => 'bpc', type => 'boolean',
+          desc => 'Black point compensation' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (gimp_pdb_image_is_not_base_type (image, GIMP_GRAY, error))
+    {
+      GFile            *file = NULL;
+      GimpColorProfile *p    = NULL;
+
+      if (image->gimp->config->color_management->rgb_profile)
+        file = g_file_new_for_path (image->gimp->config->color_management->rgb_profile);
+
+      if (file)
+        {
+          p = gimp_color_profile_new_from_file (file, error);
+
+          if (! p)
+	    success = FALSE;
+
+          g_object_unref (file);
+	}
+
+      if (success)
+        {
+          if (! p)
+            p = gimp_image_get_builtin_color_profile (image);
+
+         success = gimp_image_convert_color_profile (image, p, intent, bpc,
+                                                     progress, error);
+	}
     }
   else
     success = FALSE;
@@ -2202,6 +2329,84 @@ HELP
       gimp_drawable_apply_operation (drawable, progress,
                                      C_("undo-type", "Tile Seamless"),
                                      node);
+      g_object_unref (node);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub plug_in_maze {
+    $blurb = 'Draw a labyrinth';
+
+    $help = <<'HELP';
+Generates a maze using either the depth-first search method or Prim's
+algorithm.  Can make tileable mazes too.
+HELP
+
+    &std_pdb_compat('gegl:maze');
+    $date = '2015';
+
+    @inargs = (
+	{ name => 'run_mode', type => 'enum GimpRunMode', dead => 1,
+	  desc => 'The run mode' },
+	{ name => 'image', type => 'image', dead => 1,
+	  desc => 'Input image (unused)' },
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'Input drawable' },
+	{ name => 'width', type => '1 <= int16 <= 1024',
+	  desc => 'Width of the passages' },
+	{ name => 'height', type => '1 <= int16 <= 1024',
+	  desc => 'Height of the passages' },
+	{ name => 'tileable', type => '0 <= int8 <= 1',
+	  desc => 'Tileable maze? (TRUE or FALSE)' },
+	{ name => 'algorithm', type => '0 <= int8 <= 1',
+	  desc => 'Generation algorithm (0 = DEPTH FIRST, 1 = PRIM\'S ALGORITHM)' },
+	{ name => 'seed', type => 'int32',
+	  desc => 'Random Seed' },
+	{ name => 'multiple', type => 'int16', dead => 1,
+	  desc => 'Multiple (use 57)' },
+	{ name => 'offset', type => 'int16', dead => 1,
+	  desc => 'Offset (use 1)' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  if (gimp_pdb_item_is_attached (GIMP_ITEM (drawable), NULL,
+                                 GIMP_PDB_ITEM_CONTENT, error) &&
+      gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
+    {
+      GeglNode  *node;
+      GeglColor *fg_color;
+      GeglColor *bg_color;
+      GimpRGB    color;
+
+      gimp_context_get_foreground (context, &color);
+      fg_color = gimp_gegl_color_new (&color);
+
+      gimp_context_get_background (context, &color);
+      bg_color = gimp_gegl_color_new (&color);
+
+      node =  gegl_node_new_child (NULL,
+                                   "operation",      "gegl:maze",
+                                   "x",              width,
+                                   "y",              height,
+                                   "algorithm-type", algorithm,
+                                   "tilable",        tileable,
+                                   "seed",           seed,
+                                   "fg-color",       fg_color,
+                                   "bg-color",       bg_color,
+                                   NULL);
+
+      g_object_unref (fg_color);
+      g_object_unref (bg_color);
+
+      gimp_drawable_apply_operation (drawable, progress,
+                                     C_("undo-type", "Maze"),
+                                    node);
       g_object_unref (node);
     }
   else
@@ -4644,12 +4849,15 @@ CODE
             plug_in_hsv_noise
             plug_in_icc_profile_info
             plug_in_icc_profile_file_info
+            plug_in_icc_profile_apply
+            plug_in_icc_profile_apply_rgb
             plug_in_icc_profile_set
             plug_in_icc_profile_set_rgb
             plug_in_illusion
             plug_in_laplace
             plug_in_lens_distortion
             plug_in_make_seamless
+            plug_in_maze
             plug_in_mblur
             plug_in_mblur_inward
             plug_in_mosaic

@@ -145,7 +145,7 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
             component_index =
               gimp_image_get_component_index (image, rendererimage->channel);
 
-          gimp_view_renderer_render_temp_buf (renderer, render_buf,
+          gimp_view_renderer_render_temp_buf (renderer, widget, render_buf,
                                               render_buf_x, render_buf_y,
                                               component_index,
                                               GIMP_VIEW_BG_CHECKS,

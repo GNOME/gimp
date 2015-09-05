@@ -133,7 +133,8 @@ static gboolean   gimp_item_real_bounds             (GimpItem       *item,
 static GimpItem * gimp_item_real_duplicate          (GimpItem       *item,
                                                      GType           new_type);
 static void       gimp_item_real_convert            (GimpItem       *item,
-                                                     GimpImage      *dest_image);
+                                                     GimpImage      *dest_image,
+                                                     GType           old_type);
 static gboolean   gimp_item_real_rename             (GimpItem       *item,
                                                      const gchar    *new_name,
                                                      const gchar    *undo_desc,
@@ -583,7 +584,8 @@ gimp_item_real_duplicate (GimpItem *item,
 
 static void
 gimp_item_real_convert (GimpItem  *item,
-                        GimpImage *dest_image)
+                        GimpImage *dest_image,
+                        GType      old_type)
 {
   gimp_item_set_image (item, dest_image);
 }
@@ -990,16 +992,19 @@ gimp_item_convert (GimpItem  *item,
                    GType      new_type)
 {
   GimpItem *new_item;
+  GType     old_type;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (GET_PRIVATE (item)->image), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (g_type_is_a (new_type, GIMP_TYPE_ITEM), NULL);
 
+  old_type = G_TYPE_FROM_INSTANCE (item);
+
   new_item = gimp_item_duplicate (item, new_type);
 
   if (new_item)
-    GIMP_ITEM_GET_CLASS (new_item)->convert (new_item, dest_image);
+    GIMP_ITEM_GET_CLASS (new_item)->convert (new_item, dest_image, old_type);
 
   return new_item;
 }

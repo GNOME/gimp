@@ -28,6 +28,8 @@ libappdialogs_a_sources = \
 	channel-options-dialog.h	\
 	color-profile-dialog.c		\
 	color-profile-dialog.h		\
+	color-profile-import-dialog.c	\
+	color-profile-import-dialog.h	\
 	convert-precision-dialog.c	\
 	convert-precision-dialog.h	\
 	convert-type-dialog.c		\

@@ -22,9 +22,16 @@
 #include <gegl.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
+#include "config/gimpcoreconfig.h"
+
+#include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-loops.h"
+
+#include "gimp.h"
 #include "gimpbuffer.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
@@ -33,9 +40,10 @@
 
 /*  local function prototypes  */
 
-static void   gimp_layer_new_convert_profile (GimpLayer    *layer,
-                                              const guint8 *icc_data,
-                                              gsize         icc_length);
+static void   gimp_layer_new_convert_buffer (GimpLayer         *layer,
+                                             GeglBuffer        *src_buffer,
+                                             GimpColorProfile  *src_profile,
+                                             GError           **error);
 
 
 /*  public functions  */
@@ -92,19 +100,14 @@ gimp_layer_new_from_buffer (GimpBuffer           *buffer,
                             gdouble               opacity,
                             GimpLayerModeEffects  mode)
 {
-  const guint8 *icc_data;
-  gsize         icc_len;
-
   g_return_val_if_fail (GIMP_IS_BUFFER (buffer), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (format != NULL, NULL);
 
-  icc_data = gimp_buffer_get_icc_profile (buffer, &icc_len);
-
   return gimp_layer_new_from_gegl_buffer (gimp_buffer_get_buffer (buffer),
                                           dest_image, format,
                                           name, opacity, mode,
-                                          icc_data, icc_len);
+                                          gimp_buffer_get_color_profile (buffer));
 }
 
 /**
@@ -129,16 +132,15 @@ gimp_layer_new_from_gegl_buffer (GeglBuffer           *buffer,
                                  const gchar          *name,
                                  gdouble               opacity,
                                  GimpLayerModeEffects  mode,
-                                 const guint8         *buffer_icc_data,
-                                 gsize                 buffer_icc_length)
+                                 GimpColorProfile     *buffer_profile)
 {
-  GimpLayer  *layer;
-  GeglBuffer *dest;
+  GimpLayer *layer;
 
   g_return_val_if_fail (GEGL_IS_BUFFER (buffer), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (format != NULL, NULL);
-  g_return_val_if_fail (buffer_icc_data != NULL || buffer_icc_length == 0, NULL);
+  g_return_val_if_fail (buffer_profile == NULL ||
+                        GIMP_IS_COLOR_PROFILE (buffer_profile), NULL);
 
   /*  do *not* use the buffer's format because this function gets
    *  buffers of any format passed, and converts them
@@ -149,11 +151,7 @@ gimp_layer_new_from_gegl_buffer (GeglBuffer           *buffer,
                           format,
                           name, opacity, mode);
 
-  dest = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-  gegl_buffer_copy (buffer, NULL, GEGL_ABYSS_NONE, dest, NULL);
-
-  if (buffer_icc_data)
-    gimp_layer_new_convert_profile (layer, buffer_icc_data, buffer_icc_length);
+  gimp_layer_new_convert_buffer (layer, buffer, buffer_profile, NULL);
 
   return layer;
 }
@@ -181,36 +179,42 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
                             gdouble               opacity,
                             GimpLayerModeEffects  mode)
 {
-  GeglBuffer *buffer;
-  GimpLayer  *layer;
-  gint        width;
-  gint        height;
-  guint8     *icc_data;
-  gsize       icc_len;
+  GimpLayer        *layer;
+  GeglBuffer       *buffer;
+  guint8           *icc_data;
+  gsize             icc_len;
+  GimpColorProfile *profile = NULL;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (dest_image), NULL);
   g_return_val_if_fail (format != NULL, NULL);
 
-  width  = gdk_pixbuf_get_width (pixbuf);
-  height = gdk_pixbuf_get_height (pixbuf);
-
-  layer = gimp_layer_new (dest_image, width, height,
+  layer = gimp_layer_new (dest_image,
+                          gdk_pixbuf_get_width  (pixbuf),
+                          gdk_pixbuf_get_height (pixbuf),
                           format, name, opacity, mode);
 
-  buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
-
-  gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
-                   gimp_pixbuf_get_format (pixbuf),
-                   gdk_pixbuf_get_pixels (pixbuf),
-                   gdk_pixbuf_get_rowstride (pixbuf));
+  buffer = gimp_pixbuf_create_buffer (pixbuf);
 
   icc_data = gimp_pixbuf_get_icc_profile (pixbuf, &icc_len);
   if (icc_data)
     {
-      gimp_layer_new_convert_profile (layer, icc_data, icc_len);
+      profile = gimp_color_profile_new_from_icc_profile (icc_data, icc_len,
+                                                         NULL);
       g_free (icc_data);
     }
+
+  if (! profile && gdk_pixbuf_get_colorspace (pixbuf) == GDK_COLORSPACE_RGB)
+    {
+      profile = gimp_color_profile_new_srgb ();
+    }
+
+  gimp_layer_new_convert_buffer (layer, buffer, profile, NULL);
+
+  if (profile)
+    g_object_unref (profile);
+
+  g_object_unref (buffer);
 
   return layer;
 }
@@ -219,9 +223,34 @@ gimp_layer_new_from_pixbuf (GdkPixbuf            *pixbuf,
 /*  private functions  */
 
 static void
-gimp_layer_new_convert_profile (GimpLayer    *layer,
-                                const guint8 *icc_data,
-                                gsize         icc_length)
+gimp_layer_new_convert_buffer (GimpLayer         *layer,
+                               GeglBuffer        *src_buffer,
+                               GimpColorProfile  *src_profile,
+                               GError           **error)
 {
-  /* FIXME implement */
+  GimpDrawable     *drawable    = GIMP_DRAWABLE (layer);
+  GimpImage        *image       = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpColorConfig  *config      = image->gimp->config->color_management;
+  GeglBuffer       *dest_buffer = gimp_drawable_get_buffer (drawable);
+  GimpColorProfile *dest_profile;
+
+  dest_profile =
+    gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
+
+  if (! src_profile  ||
+      ! dest_profile ||
+
+      /*  FIXME: this is the wrong check, need something like file import
+       *  conversion config
+       */
+      config->mode == GIMP_COLOR_MANAGEMENT_OFF)
+    {
+      gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
+      return;
+    }
+
+  gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
+                                   dest_buffer, NULL, dest_profile,
+                                   GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                   TRUE);
 }

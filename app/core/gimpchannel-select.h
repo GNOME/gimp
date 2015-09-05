@@ -147,6 +147,13 @@ void   gimp_channel_select_by_color     (GimpChannel         *channel,
                                          gboolean             feather,
                                          gdouble              feather_radius_x,
                                          gdouble              feather_radius_y);
+void   gimp_channel_select_by_index     (GimpChannel         *channel,
+                                         GimpDrawable        *drawable,
+                                         gint                 index,
+                                         GimpChannelOps       op,
+                                         gboolean             feather,
+                                         gdouble              feather_radius_x,
+                                         gdouble              feather_radius_y);
 
 
 #endif  /*  __GIMP_CHANNEL_SELECT_H__  */

@@ -26,13 +26,18 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
+#include "config/gimpcoreconfig.h" /* FIXME profile convert config */
+
 #include "gegl/gimp-gegl-apply-operation.h"
+#include "gegl/gimp-gegl-loops.h"
 #include "gegl/gimp-gegl-nodes.h"
 
+#include "gimp.h" /* FIXME profile convert config */
 #include "gimpboundary.h"
 #include "gimpchannel-select.h"
 #include "gimpcontext.h"
@@ -73,7 +78,8 @@ enum
 };
 
 
-static void   gimp_layer_pickable_iface_init (GimpPickableInterface *iface);
+static void       gimp_color_managed_iface_init (GimpColorManagedInterface *iface);
+static void       gimp_pickable_iface_init      (GimpPickableInterface     *iface);
 
 static void       gimp_layer_set_property       (GObject            *object,
                                                  guint               property_id,
@@ -105,7 +111,8 @@ static GimpItemTree * gimp_layer_get_tree       (GimpItem           *item);
 static GimpItem * gimp_layer_duplicate          (GimpItem           *item,
                                                  GType               new_type);
 static void       gimp_layer_convert            (GimpItem           *item,
-                                                 GimpImage          *dest_image);
+                                                 GimpImage          *dest_image,
+                                                 GType               old_type);
 static gboolean   gimp_layer_rename             (GimpItem           *item,
                                                  const gchar        *new_name,
                                                  const gchar        *undo_desc,
@@ -163,6 +170,7 @@ static void    gimp_layer_convert_type          (GimpDrawable       *drawable,
                                                  GimpPrecision       new_precision,
                                                  gint                layer_dither_type,
                                                  gint                mask_dither_type,
+                                                 gboolean            convert_type,
                                                  gboolean            push_undo);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
@@ -175,6 +183,13 @@ static void    gimp_layer_set_buffer            (GimpDrawable       *drawable,
                                                  GeglBuffer         *buffer,
                                                  gint                offset_x,
                                                  gint                offset_y);
+
+static const guint8 *
+               gimp_layer_get_icc_profile       (GimpColorManaged   *managed,
+                                                 gsize              *len);
+static GimpColorProfile *
+               gimp_layer_get_color_profile     (GimpColorManaged   *managed);
+static void    gimp_layer_profile_changed       (GimpColorManaged   *managed);
 
 static gdouble gimp_layer_get_opacity_at        (GimpPickable       *pickable,
                                                  gint                x,
@@ -189,8 +204,10 @@ static void       gimp_layer_layer_mask_update  (GimpDrawable       *layer_mask,
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
+                                                gimp_color_managed_iface_init)
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PICKABLE,
-                                                gimp_layer_pickable_iface_init))
+                                                gimp_pickable_iface_init))
 
 #define parent_class gimp_layer_parent_class
 
@@ -383,7 +400,15 @@ gimp_layer_init (GimpLayer *layer)
 }
 
 static void
-gimp_layer_pickable_iface_init (GimpPickableInterface *iface)
+gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
+{
+  iface->get_icc_profile   = gimp_layer_get_icc_profile;
+  iface->get_color_profile = gimp_layer_get_color_profile;
+  iface->profile_changed   = gimp_layer_profile_changed;
+}
+
+static void
+gimp_pickable_iface_init (GimpPickableInterface *iface)
 {
   iface->get_opacity_at = gimp_layer_get_opacity_at;
 }
@@ -474,14 +499,37 @@ gimp_layer_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static GimpLayerModeEffects
-gimp_layer_get_visible_mode (GimpLayer *layer)
+static void
+gimp_layer_update_mode_node (GimpLayer *layer)
 {
-  if (layer->mode != GIMP_DISSOLVE_MODE &&
-      gimp_filter_get_is_last_node (GIMP_FILTER (layer)))
-    return GIMP_NORMAL_MODE;
+  GeglNode             *mode_node;
+  GimpLayerModeEffects  visible_mode;
+  gboolean              linear;
 
-  return layer->mode;
+  mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
+
+  if (layer->mask && layer->show_mask)
+    {
+      visible_mode = GIMP_NORMAL_MODE;
+      linear       = TRUE;
+    }
+  else
+    {
+      if (layer->mode != GIMP_DISSOLVE_MODE &&
+          gimp_filter_get_is_last_node (GIMP_FILTER (layer)))
+        {
+          visible_mode = GIMP_NORMAL_MODE;
+        }
+      else
+        {
+          visible_mode = layer->mode;
+        }
+
+      linear = gimp_drawable_get_linear (GIMP_DRAWABLE (layer));
+    }
+
+  gimp_gegl_mode_node_set_mode (mode_node, visible_mode, linear);
+  gimp_gegl_mode_node_set_opacity (mode_node, layer->opacity);
 }
 
 static void
@@ -491,21 +539,12 @@ gimp_layer_notify (GObject    *object,
   if (! strcmp (pspec->name, "is-last-node") &&
       gimp_filter_peek_node (GIMP_FILTER (object)))
     {
-      GimpLayer *layer = GIMP_LAYER (object);
-      GeglNode  *mode_node;
-      gboolean   linear;
+      gimp_layer_update_mode_node (GIMP_LAYER (object));
 
-      mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
-      linear    = gimp_drawable_get_linear (GIMP_DRAWABLE (layer));
-
-      gimp_gegl_mode_node_set_mode (mode_node,
-                                    gimp_layer_get_visible_mode (layer),
-                                    linear);
-
-      gimp_drawable_update (GIMP_DRAWABLE (layer),
+      gimp_drawable_update (GIMP_DRAWABLE (object),
                             0, 0,
-                            gimp_item_get_width  (GIMP_ITEM (layer)),
-                            gimp_item_get_height (GIMP_ITEM (layer)));
+                            gimp_item_get_width  (GIMP_ITEM (object)),
+                            gimp_item_get_height (GIMP_ITEM (object)));
     }
 }
 
@@ -574,7 +613,6 @@ gimp_layer_get_node (GimpFilter *filter)
   GeglNode     *node;
   GeglNode     *source;
   GeglNode     *mode_node;
-  gboolean      linear;
   gboolean      source_node_hijacked = FALSE;
 
   node = GIMP_FILTER_CLASS (parent_class)->get_node (filter);
@@ -598,13 +636,7 @@ gimp_layer_get_node (GimpFilter *filter)
    * the layer and its mask
    */
   mode_node = gimp_drawable_get_mode_node (drawable);
-  linear    = gimp_drawable_get_linear (drawable);
-
-  gimp_gegl_mode_node_set_mode (mode_node,
-                                gimp_layer_get_visible_mode (layer),
-                                linear);
-  gimp_gegl_mode_node_set_opacity (mode_node,
-                                   layer->opacity);
+  gimp_layer_update_mode_node (layer);
 
   /* the layer's offset node */
   layer->layer_offset_node = gegl_node_new_child (node,
@@ -753,14 +785,18 @@ gimp_layer_duplicate (GimpItem *item,
 
 static void
 gimp_layer_convert (GimpItem  *item,
-                    GimpImage *dest_image)
+                    GimpImage *dest_image,
+                    GType      old_type)
 {
   GimpLayer         *layer    = GIMP_LAYER (item);
   GimpDrawable      *drawable = GIMP_DRAWABLE (item);
+  GimpImage         *image    = gimp_item_get_image (GIMP_ITEM (layer));
+  GimpColorConfig   *config   = image->gimp->config->color_management;
   GimpImageBaseType  old_base_type;
   GimpImageBaseType  new_base_type;
   GimpPrecision      old_precision;
   GimpPrecision      new_precision;
+  gboolean           convert_profile;
 
   old_base_type = gimp_drawable_get_base_type (drawable);
   new_base_type = gimp_image_get_base_type (dest_image);
@@ -768,19 +804,27 @@ gimp_layer_convert (GimpItem  *item,
   old_precision = gimp_drawable_get_precision (drawable);
   new_precision = gimp_image_get_precision (dest_image);
 
+  convert_profile = (g_type_is_a (old_type, GIMP_TYPE_LAYER) &&
+                     /*  FIXME: this is the wrong check, need
+                      *  something like file import conversion config
+                      */
+                     (config->mode != GIMP_COLOR_MANAGEMENT_OFF));
+
   if (old_base_type != new_base_type ||
-      old_precision != new_precision)
+      old_precision != new_precision ||
+      convert_profile)
     {
       gimp_drawable_convert_type (drawable, dest_image,
                                   new_base_type, new_precision,
                                   0, 0,
+                                  convert_profile,
                                   FALSE);
     }
 
   if (layer->mask)
     gimp_item_set_image (GIMP_ITEM (layer->mask), dest_image);
 
-  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image);
+  GIMP_ITEM_CLASS (parent_class)->convert (item, dest_image, old_type);
 }
 
 static gboolean
@@ -1015,10 +1059,36 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                          GimpPrecision      new_precision,
                          gint               layer_dither_type,
                          gint               mask_dither_type,
+                         gboolean           convert_profile,
                          gboolean           push_undo)
 {
-  GimpLayer  *layer = GIMP_LAYER (drawable);
-  GeglBuffer *dest_buffer;
+  GimpLayer        *layer = GIMP_LAYER (drawable);
+  GeglBuffer       *src_buffer;
+  GeglBuffer       *dest_buffer;
+  GimpColorProfile *src_profile  = NULL;
+  GimpColorProfile *dest_profile = NULL;
+
+  if (layer_dither_type == 0)
+    {
+      src_buffer = g_object_ref (gimp_drawable_get_buffer (drawable));
+    }
+  else
+    {
+      gint bits;
+
+      src_buffer =
+        gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                         gimp_item_get_width  (GIMP_ITEM (drawable)),
+                                         gimp_item_get_height (GIMP_ITEM (drawable))),
+                         gimp_drawable_get_format (drawable));
+
+      bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
+              babl_format_get_n_components (new_format));
+
+      gimp_gegl_apply_color_reduction (gimp_drawable_get_buffer (drawable),
+                                       NULL, NULL,
+                                       src_buffer, bits, layer_dither_type);
+    }
 
   dest_buffer =
     gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -1026,25 +1096,30 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                                      gimp_item_get_height (GIMP_ITEM (drawable))),
                      new_format);
 
-  if (layer_dither_type == 0)
+  if (convert_profile)
     {
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
-                        GEGL_ABYSS_NONE,
-                        dest_buffer, NULL);
+      src_profile =
+        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (layer));
+
+      dest_profile =
+        gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (dest_image));
+    }
+
+  if (src_profile && dest_profile)
+    {
+      gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
+                                       dest_buffer, NULL, dest_profile,
+                                       GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                       TRUE);
     }
   else
     {
-      gint bits;
-
-      bits = (babl_format_get_bytes_per_pixel (new_format) * 8 /
-              babl_format_get_n_components (new_format));
-
-      gimp_gegl_apply_color_reduction (gimp_drawable_get_buffer (drawable),
-                                       NULL, NULL,
-                                       dest_buffer, bits, layer_dither_type);
+      gegl_buffer_copy (src_buffer, NULL, GEGL_ABYSS_NONE, dest_buffer, NULL);
     }
 
   gimp_drawable_set_buffer (drawable, push_undo, NULL, dest_buffer);
+
+  g_object_unref (src_buffer);
   g_object_unref (dest_buffer);
 
   if (layer->mask &&
@@ -1053,6 +1128,7 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
       gimp_drawable_convert_type (GIMP_DRAWABLE (layer->mask), dest_image,
                                   GIMP_GRAY, new_precision,
                                   layer_dither_type, mask_dither_type,
+                                  convert_profile,
                                   push_undo);
     }
 }
@@ -1132,17 +1208,31 @@ gimp_layer_set_buffer (GimpDrawable *drawable,
       gboolean new_linear = gimp_drawable_get_linear (drawable);
 
       if (old_linear != new_linear)
-        {
-          GimpLayer *layer = GIMP_LAYER (drawable);
-          GeglNode  *mode_node;
-
-          mode_node = gimp_drawable_get_mode_node (drawable);
-
-          gimp_gegl_mode_node_set_mode (mode_node,
-                                        gimp_layer_get_visible_mode (layer),
-                                        new_linear);
-        }
+        gimp_layer_update_mode_node (GIMP_LAYER (drawable));
     }
+}
+
+static const guint8 *
+gimp_layer_get_icc_profile (GimpColorManaged *managed,
+                            gsize            *len)
+{
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (managed));
+
+  return gimp_color_managed_get_icc_profile (GIMP_COLOR_MANAGED (image), len);
+}
+
+static GimpColorProfile *
+gimp_layer_get_color_profile (GimpColorManaged *managed)
+{
+  GimpImage *image = gimp_item_get_image (GIMP_ITEM (managed));
+
+  return gimp_color_managed_get_color_profile (GIMP_COLOR_MANAGED (image));
+}
+
+static void
+gimp_layer_profile_changed (GimpColorManaged *managed)
+{
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (managed));
 }
 
 static gdouble
@@ -1288,6 +1378,8 @@ gimp_layer_add_mask (GimpLayer      *layer,
           gegl_node_connect_to (layer->mask_offset_node, "output",
                                 mode_node,               "aux2");
         }
+
+      gimp_layer_update_mode_node (layer);
     }
 
   if (gimp_layer_get_apply_mask (layer) ||
@@ -1605,6 +1697,8 @@ gimp_layer_apply_mask (GimpLayer         *layer,
         {
           gegl_node_disconnect (mode_node, "aux2");
         }
+
+      gimp_layer_update_mode_node (layer);
     }
 
   /*  If applying actually changed the view  */
@@ -1749,6 +1843,8 @@ gimp_layer_set_show_mask (GimpLayer *layer,
                                         mode_node,               "aux2");
                 }
             }
+
+          gimp_layer_update_mode_node (layer);
         }
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
@@ -1929,13 +2025,7 @@ gimp_layer_set_opacity (GimpLayer *layer,
       g_object_notify (G_OBJECT (layer), "opacity");
 
       if (gimp_filter_peek_node (GIMP_FILTER (layer)))
-        {
-          GeglNode *mode_node;
-
-          mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
-
-          gimp_gegl_mode_node_set_opacity (mode_node, layer->opacity);
-        }
+        gimp_layer_update_mode_node (layer);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,
@@ -1974,17 +2064,7 @@ gimp_layer_set_mode (GimpLayer            *layer,
       g_object_notify (G_OBJECT (layer), "mode");
 
       if (gimp_filter_peek_node (GIMP_FILTER (layer)))
-        {
-          GeglNode *mode_node;
-          gboolean  linear;
-
-          mode_node = gimp_drawable_get_mode_node (GIMP_DRAWABLE (layer));
-          linear    = gimp_drawable_get_linear (GIMP_DRAWABLE (layer));
-
-          gimp_gegl_mode_node_set_mode (mode_node,
-                                        gimp_layer_get_visible_mode (layer),
-                                        linear);
-        }
+        gimp_layer_update_mode_node (layer);
 
       gimp_drawable_update (GIMP_DRAWABLE (layer),
                             0, 0,

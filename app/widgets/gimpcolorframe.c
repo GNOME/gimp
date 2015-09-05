@@ -409,37 +409,42 @@ gimp_color_frame_set_has_color_area (GimpColorFrame *frame,
 
 /**
  * gimp_color_frame_set_color:
- * @frame:         The #GimpColorFrame.
- * @sample_format: The format of the #GimpDrawable or #GimpImage the @color
- *                 was picked from.
- * @color:         The @color to set.
- * @color_index:   The @color's index. This value is ignored unless
- *                 @sample_format is an indexed format.
+ * @frame:          The #GimpColorFrame.
+ * @sample_average: The set @color is the result of averaging
+ * @sample_format:  The format of the #GimpDrawable or #GimpImage the @color
+ *                  was picked from.
+ * @pixel:          The raw pixel in @sample_format.
+ * @color:          The @color to set.
  *
- * Sets the color sample to display in the #GimpColorFrame.
+ * Sets the color sample to display in the #GimpColorFrame. if
+ * @sample_average is %TRUE, @pixel represents the sample at the
+ * center of the average area and will not be displayed.
  **/
 void
 gimp_color_frame_set_color (GimpColorFrame *frame,
+                            gboolean        sample_average,
                             const Babl     *sample_format,
-                            const GimpRGB  *color,
-                            gint            color_index)
+                            gpointer        pixel,
+                            const GimpRGB  *color)
 {
   g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
   g_return_if_fail (color != NULL);
 
-  if (frame->sample_valid                   &&
-      frame->sample_format == sample_format &&
-      frame->color_index == color_index     &&
+  if (frame->sample_valid                     &&
+      frame->sample_average == sample_average &&
+      frame->sample_format == sample_format   &&
       gimp_rgba_distance (&frame->color, color) < 0.0001)
     {
       frame->color = *color;
       return;
     }
 
-  frame->sample_valid  = TRUE;
-  frame->sample_format = sample_format;
-  frame->color         = *color;
-  frame->color_index   = color_index;
+  frame->sample_valid   = TRUE;
+  frame->sample_average = sample_average;
+  frame->sample_format  = sample_format;
+  frame->color          = *color;
+
+  memcpy (frame->pixel, pixel, babl_format_get_bytes_per_pixel (sample_format));
 
   gimp_color_frame_update (frame);
 }
@@ -549,7 +554,19 @@ gimp_color_frame_update (GimpColorFrame *frame)
                 break;
               }
 
-            gimp_rgba_get_pixel (&frame->color, print_format, print_pixel);
+            if (frame->sample_average)
+              {
+                /* FIXME: this is broken: can't use the averaged sRGB GimpRGB
+                 * value for displaying pixel values when color management
+                 * is enabled
+                 */
+                gimp_rgba_get_pixel (&frame->color, print_format, print_pixel);
+              }
+            else
+              {
+                babl_process (babl_fish (frame->sample_format, print_format),
+                              frame->pixel, print_pixel, 1);
+              }
 
             values = gimp_babl_print_pixel (print_format, print_pixel);
           }
@@ -584,9 +601,8 @@ gimp_color_frame_update (GimpColorFrame *frame)
 
                     g_free (tmp);
 
-                    /* color_index will be -1 for an averaged sample */
-                    if (frame->color_index >= 0)
-                      values[4] = g_strdup_printf ("%d", frame->color_index);
+                    if (! frame->sample_average)
+                      values[4] = g_strdup_printf ("%d", frame->pixel[0]);
                   }
               }
           }

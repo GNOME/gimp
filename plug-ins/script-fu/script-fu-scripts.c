@@ -609,12 +609,16 @@ script_fu_load_directory (GFile *directory)
         {
           GFileType file_type = g_file_info_get_file_type (info);
 
-         if (file_type == G_FILE_TYPE_REGULAR &&
-             ! g_file_info_get_is_hidden (info))
+          if ((file_type == G_FILE_TYPE_REGULAR ||
+               file_type == G_FILE_TYPE_DIRECTORY) &&
+              ! g_file_info_get_is_hidden (info))
             {
               GFile *child = g_file_enumerator_get_child (enumerator, info);
 
-              script_fu_load_script (child);
+              if (file_type == G_FILE_TYPE_DIRECTORY)
+                script_fu_load_directory (child);
+              else
+                script_fu_load_script (child);
 
               g_object_unref (child);
             }

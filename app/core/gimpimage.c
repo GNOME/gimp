@@ -182,6 +182,8 @@ static const guint8 *
                                                   gsize             *len);
 static GimpColorProfile *
       gimp_image_color_managed_get_color_profile (GimpColorManaged  *managed);
+static void
+        gimp_image_color_managed_profile_changed (GimpColorManaged  *managed);
 
 static void        gimp_image_projectable_flush  (GimpProjectable   *projectable,
                                                   gboolean           invalidate_preview);
@@ -631,6 +633,7 @@ gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 {
   iface->get_icc_profile   = gimp_image_color_managed_get_icc_profile;
   iface->get_color_profile = gimp_image_color_managed_get_color_profile;
+  iface->profile_changed   = gimp_image_color_managed_profile_changed;
 }
 
 static void
@@ -819,6 +822,10 @@ gimp_image_constructed (GObject *object)
                            G_CALLBACK (gimp_viewable_size_changed),
                            image, G_CONNECT_SWAPPED);
 
+  g_signal_connect_object (config->color_management, "notify",
+                           G_CALLBACK (gimp_color_managed_profile_changed),
+                           image, G_CONNECT_SWAPPED);
+
   gimp_container_add (image->gimp->images, GIMP_OBJECT (image));
 }
 
@@ -961,6 +968,12 @@ gimp_image_finalize (GObject *object)
 
   if (private->colormap)
     gimp_image_colormap_free (image);
+
+  if (private->color_profile)
+    {
+      g_object_unref (private->color_profile);
+      private->color_profile = NULL;
+    }
 
   if (private->metadata)
     {
@@ -1379,17 +1392,20 @@ gimp_image_color_managed_get_color_profile (GimpColorManaged *managed)
 
   profile = gimp_image_get_color_profile (image);
 
-  if (! profile)
-    {
-      GimpColorConfig *config = image->gimp->config->color_management;
-
-      profile = gimp_color_config_get_rgb_color_profile (config, NULL);
-    }
-
-  if (! profile)
+  if (! profile && gimp_image_get_base_type (image) != GIMP_INDEXED)
     profile = gimp_image_get_builtin_color_profile (image);
 
   return profile;
+}
+
+static void
+gimp_image_color_managed_profile_changed (GimpColorManaged *managed)
+{
+  GimpImage     *image  = GIMP_IMAGE (managed);
+  GimpItemStack *layers = GIMP_ITEM_STACK (gimp_image_get_layers (image));
+
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
+  gimp_item_stack_profile_changed (layers);
 }
 
 static void
@@ -3296,7 +3312,7 @@ gimp_image_parasite_validate (GimpImage           *image,
 
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     {
-      return gimp_image_validate_icc_parasite (image, parasite, error);
+      return gimp_image_validate_icc_parasite (image, parasite, NULL, error);
     }
 
   return TRUE;
@@ -3306,10 +3322,34 @@ void
 gimp_image_parasite_attach (GimpImage          *image,
                             const GimpParasite *parasite)
 {
-  GimpParasite  copy;
+  GimpImagePrivate *private;
+  GimpParasite      copy;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (parasite != NULL);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  /*  this is so ugly and is only for the PDB  */
+  if (strcmp (gimp_parasite_name (parasite), GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
+    {
+      GimpColorProfile *profile;
+      GimpColorProfile *builtin;
+
+      profile =
+        gimp_color_profile_new_from_icc_profile (gimp_parasite_data (parasite),
+                                                 gimp_parasite_data_size (parasite),
+                                                 NULL);
+      builtin = gimp_image_get_builtin_color_profile (image);
+
+      if (gimp_color_profile_is_equal (profile, builtin))
+        {
+          gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME);
+          g_object_unref (profile);
+        }
+
+      g_object_unref (profile);
+    }
 
   /*  make a temporary copy of the GimpParasite struct because
    *  gimp_parasite_shift_parent() changes it
@@ -3330,7 +3370,7 @@ gimp_image_parasite_attach (GimpImage          *image,
    *  Now we simply attach the parasite without pushing an undo. That way
    *  it's undoable but does not block the undo system.   --Sven
    */
-  gimp_parasite_list_add (GIMP_IMAGE_GET_PRIVATE (image)->parasites, &copy);
+  gimp_parasite_list_add (private->parasites, &copy);
 
   if (gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_PARENT))
     {
@@ -3342,7 +3382,7 @@ gimp_image_parasite_attach (GimpImage          *image,
                  gimp_parasite_name (parasite));
 
   if (strcmp (gimp_parasite_name (parasite), GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
-    gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+    _gimp_image_update_color_profile (image, parasite);
 }
 
 void
@@ -3371,7 +3411,7 @@ gimp_image_parasite_detach (GimpImage   *image,
                  name);
 
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
-    gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+    _gimp_image_update_color_profile (image, NULL);
 }
 
 

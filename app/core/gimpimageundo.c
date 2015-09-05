@@ -24,7 +24,6 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
@@ -489,7 +488,7 @@ gimp_image_undo_pop (GimpUndo            *undo,
         name = parasite ? parasite->name : image_undo->parasite_name;
 
         if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
-          gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+          _gimp_image_update_color_profile (image, parasite);
 
         if (parasite)
           gimp_parasite_free (parasite);

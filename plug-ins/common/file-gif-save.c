@@ -252,7 +252,10 @@ run (const gchar      *name,
 
               /*  First acquire information with a dialog  */
               if (! save_dialog (image_ID))
-                status = GIMP_PDB_CANCEL;
+                {
+                  gimp_image_delete (sanitized_image_ID);
+                  status = GIMP_PDB_CANCEL;
+                }
               break;
 
             case GIMP_RUN_NONINTERACTIVE:
@@ -287,39 +290,39 @@ run (const gchar      *name,
             }
         }
 
-      /* Create an exportable image based on the export options */
-      switch (run_mode)
-        {
-        case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
-          {
-            GimpExportCapabilities capabilities =
-              GIMP_EXPORT_CAN_HANDLE_INDEXED |
-              GIMP_EXPORT_CAN_HANDLE_GRAY |
-              GIMP_EXPORT_CAN_HANDLE_ALPHA;
-
-            if (gsvals.as_animation)
-              capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
-
-            export = gimp_export_image (&image_ID, &drawable_ID, "GIF",
-                                        capabilities);
-
-            if (export == GIMP_EXPORT_CANCEL)
-              {
-                values[0].data.d_status = GIMP_PDB_CANCEL;
-                if (sanitized_image_ID)
-                  gimp_image_delete (sanitized_image_ID);
-                return;
-              }
-          }
-          break;
-        default:
-          break;
-        }
-
-      /* Write the image to file */
       if (status == GIMP_PDB_SUCCESS)
         {
+          /* Create an exportable image based on the export options */
+          switch (run_mode)
+            {
+            case GIMP_RUN_INTERACTIVE:
+            case GIMP_RUN_WITH_LAST_VALS:
+                {
+                  GimpExportCapabilities capabilities =
+                    GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                    GIMP_EXPORT_CAN_HANDLE_GRAY |
+                    GIMP_EXPORT_CAN_HANDLE_ALPHA;
+
+                  if (gsvals.as_animation)
+                    capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
+
+                  export = gimp_export_image (&image_ID, &drawable_ID, "GIF",
+                                              capabilities);
+
+                  if (export == GIMP_EXPORT_CANCEL)
+                    {
+                      values[0].data.d_status = GIMP_PDB_CANCEL;
+                      if (sanitized_image_ID)
+                        gimp_image_delete (sanitized_image_ID);
+                      return;
+                    }
+                }
+              break;
+            default:
+              break;
+            }
+
+          /* Write the image to file */
           if (save_image (param[3].data.d_string,
                           image_ID, drawable_ID, orig_image_ID,
                           &error))
@@ -1157,7 +1160,7 @@ save_dialog (gint32 image_ID)
   gboolean       animation_supported = FALSE;
   gboolean       run;
 
-  gimp_image_get_layers (image_ID, &nlayers);
+  g_free (gimp_image_get_layers (image_ID, &nlayers));
   animation_supported = nlayers > 1;
 
   dialog = gimp_export_dialog_new (_("GIF"), PLUG_IN_BINARY, SAVE_PROC);

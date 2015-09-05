@@ -377,14 +377,11 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   if (! config)
     goto out;
 
-  rgb_profile  = gimp_color_config_get_rgb_color_profile (config, NULL);
   cmyk_profile = gimp_color_config_get_cmyk_color_profile (config, NULL);
-
-  if (! rgb_profile)
-    rgb_profile = gimp_color_profile_new_srgb ();
-
   if (! cmyk_profile)
     goto out;
+
+  rgb_profile = gimp_color_profile_new_srgb ();
 
   text = g_strdup_printf (_("Profile: %s"),
                           gimp_color_profile_get_label (cmyk_profile));

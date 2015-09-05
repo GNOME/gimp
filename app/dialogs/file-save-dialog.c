@@ -40,10 +40,11 @@
 #include "file/gimp-file.h"
 
 #include "widgets/gimpactiongroup.h"
-#include "widgets/gimpfiledialog.h"
+#include "widgets/gimpexportdialog.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
+#include "widgets/gimpsavedialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -93,33 +94,23 @@ file_save_dialog_new (Gimp     *gimp,
                       gboolean  export)
 {
   GtkWidget           *dialog;
-  GimpFileDialogState *state;
-
-  if (! export)
-    {
-      dialog = gimp_file_dialog_new (gimp,
-                                     GIMP_FILE_CHOOSER_ACTION_SAVE,
-                                     _("Save Image"), "gimp-file-save",
-                                     GTK_STOCK_SAVE,
-                                     GIMP_HELP_FILE_SAVE);
-
-      state = g_object_get_data (G_OBJECT (gimp), "gimp-file-save-dialog-state");
-    }
-  else
-    {
-      dialog = gimp_file_dialog_new (gimp,
-                                     GIMP_FILE_CHOOSER_ACTION_EXPORT,
-                                     _("Export Image"), "gimp-file-export",
-                                     _("_Export"),
-                                     GIMP_HELP_FILE_EXPORT_AS);
-
-      state = g_object_get_data (G_OBJECT (gimp), "gimp-file-export-dialog-state");
-    }
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  if (state)
-    gimp_file_dialog_set_state (GIMP_FILE_DIALOG (dialog), state);
+  if (! export)
+    {
+      dialog = gimp_save_dialog_new (gimp);
+
+      gimp_file_dialog_load_state (GIMP_FILE_DIALOG (dialog),
+                                   "gimp-file-save-dialog-state");
+    }
+  else
+    {
+      dialog = gimp_export_dialog_new (gimp);
+
+      gimp_file_dialog_load_state (GIMP_FILE_DIALOG (dialog),
+                                   "gimp-file-export-dialog-state");
+    }
 
   g_signal_connect (dialog, "confirm-overwrite",
                     G_CALLBACK (file_save_dialog_confirm_overwrite),
@@ -160,17 +151,13 @@ file_save_dialog_response (GtkWidget *save_dialog,
   gchar               *basename;
   GimpPlugInProcedure *save_proc;
 
-  if (! dialog->export)
+  if (GIMP_IS_SAVE_DIALOG (dialog))
     {
-      g_object_set_data_full (G_OBJECT (gimp), "gimp-file-save-dialog-state",
-                              gimp_file_dialog_get_state (dialog),
-                              (GDestroyNotify) gimp_file_dialog_state_destroy);
+      gimp_file_dialog_save_state (dialog, "gimp-file-save-dialog-state");
     }
-  else
+  else /* GIMP_IS_EXPORT_DIALOG (dialog) */
     {
-      g_object_set_data_full (G_OBJECT (gimp), "gimp-file-export-dialog-state",
-                              gimp_file_dialog_get_state (dialog),
-                              (GDestroyNotify) gimp_file_dialog_state_destroy);
+      gimp_file_dialog_save_state (dialog, "gimp-file-export-dialog-state");
     }
 
   if (response_id != GTK_RESPONSE_OK)
@@ -199,10 +186,12 @@ file_save_dialog_response (GtkWidget *save_dialog,
                                        file,
                                        save_proc,
                                        GIMP_RUN_INTERACTIVE,
-                                       ! dialog->save_a_copy && ! dialog->export,
+                                       GIMP_IS_SAVE_DIALOG (dialog) &&
+                                       ! GIMP_SAVE_DIALOG (dialog)->save_a_copy,
                                        FALSE,
-                                       dialog->export,
-                                       ! dialog->export && dialog->compat,
+                                       GIMP_IS_EXPORT_DIALOG (dialog),
+                                       GIMP_IS_SAVE_DIALOG (dialog) &&
+                                       GIMP_SAVE_DIALOG (dialog)->compat,
                                        FALSE))
         {
           /* Save was successful, now store the URI in a couple of
@@ -210,30 +199,37 @@ file_save_dialog_response (GtkWidget *save_dialog,
            * save. Lower-level URI management is handled in
            * file_save()
            */
-          if (dialog->save_a_copy)
-            gimp_image_set_save_a_copy_file (dialog->image, file);
+          if (GIMP_IS_SAVE_DIALOG (dialog))
+            {
+              GimpSaveDialog *save_dialog = GIMP_SAVE_DIALOG (dialog);
 
-          if (! dialog->export)
-            g_object_set_data_full (G_OBJECT (dialog->image->gimp),
-                                    GIMP_FILE_SAVE_LAST_FILE_KEY,
-                                    g_object_ref (file),
-                                    (GDestroyNotify) g_object_unref);
+              if (save_dialog->save_a_copy)
+                gimp_image_set_save_a_copy_file (dialog->image, file);
+
+              g_object_set_data_full (G_OBJECT (dialog->image->gimp),
+                                      GIMP_FILE_SAVE_LAST_FILE_KEY,
+                                      g_object_ref (file),
+                                      (GDestroyNotify) g_object_unref);
+            }
           else
-            g_object_set_data_full (G_OBJECT (dialog->image->gimp),
-                                    GIMP_FILE_EXPORT_LAST_FILE_KEY,
-                                    g_object_ref (file),
-                                    (GDestroyNotify) g_object_unref);
+            {
+              g_object_set_data_full (G_OBJECT (dialog->image->gimp),
+                                      GIMP_FILE_EXPORT_LAST_FILE_KEY,
+                                      g_object_ref (file),
+                                      (GDestroyNotify) g_object_unref);
+            }
 
           /*  make sure the menus are updated with the keys we've just set  */
           gimp_image_flush (dialog->image);
 
           /* Handle close-after-saving */
-          if (dialog->close_after_saving && dialog->display_to_close)
+          if (GIMP_IS_SAVE_DIALOG (dialog)                  &&
+              GIMP_SAVE_DIALOG (dialog)->close_after_saving &&
+              GIMP_SAVE_DIALOG (dialog)->display_to_close)
             {
-              GimpDisplay *display = GIMP_DISPLAY (dialog->display_to_close);
+              GimpDisplay *display = GIMP_DISPLAY (GIMP_SAVE_DIALOG (dialog)->display_to_close);
 
-              if (display &&
-                  ! gimp_image_is_dirty (gimp_display_get_image (display)))
+              if (! gimp_image_is_dirty (gimp_display_get_image (display)))
                 {
                   gimp_display_close (display);
                 }
@@ -324,7 +320,7 @@ file_save_dialog_check_file (GtkWidget            *save_dialog,
 
           GIMP_LOG (SAVE_DIALOG, "basename has no '.', trying to add extension");
 
-          if (! save_proc && ! dialog->export)
+          if (! save_proc && GIMP_IS_SAVE_DIALOG (dialog))
             {
               ext = "xcf";
             }
@@ -554,7 +550,7 @@ static GSList *
 file_save_dialog_get_procs (GimpFileDialog *dialog,
                             Gimp           *gimp)
 {
-  return (! dialog->export ?
+  return (GIMP_IS_SAVE_DIALOG (dialog) ?
           gimp->plug_in_manager->save_procs :
           gimp->plug_in_manager->export_procs);
 }
@@ -581,7 +577,7 @@ file_save_dialog_switch_dialogs (GimpFileDialog *file_dialog,
   file = g_file_new_for_uri (basename);
 
   proc_in_other_group =
-    file_procedure_find (file_dialog->export ?
+    file_procedure_find (GIMP_IS_EXPORT_DIALOG (file_dialog) ?
                          gimp->plug_in_manager->save_procs :
                          gimp->plug_in_manager->export_procs,
                          file, NULL);
@@ -595,7 +591,7 @@ file_save_dialog_switch_dialogs (GimpFileDialog *file_dialog,
       const gchar *message;
       const gchar *link;
 
-      if (file_dialog->export)
+      if (GIMP_IS_EXPORT_DIALOG (file_dialog))
         {
           primary = _("The given filename cannot be used for exporting");
           message = _("You can use this dialog to export to various file formats. "
@@ -627,7 +623,9 @@ file_save_dialog_switch_dialogs (GimpFileDialog *file_dialog,
       gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
                                  "%s", message);
 
-      if (! file_dialog->save_a_copy && ! file_dialog->close_after_saving)
+      if (GIMP_IS_EXPORT_DIALOG (file_dialog) ||
+          (! GIMP_SAVE_DIALOG (file_dialog)->save_a_copy &&
+          ! GIMP_SAVE_DIALOG (file_dialog)->close_after_saving))
         {
           GtkWidget *label;
           gchar     *markup;
@@ -754,16 +752,12 @@ file_save_dialog_save_image (GimpProgress        *progress,
       gimp_action_group_set_action_sensitive (list->data, "file-quit", FALSE);
     }
 
-  if (xcf_compat)
-    gimp_image_set_xcf_compat_mode (image, TRUE);
+  gimp_image_set_xcf_compat_mode (image, xcf_compat);
 
   status = file_save (gimp, image, progress, file,
                       save_proc, run_mode,
                       change_saved_state, export_backward, export_forward,
                       &error);
-
-  if (xcf_compat)
-    gimp_image_set_xcf_compat_mode (image, FALSE);
 
   switch (status)
     {
