@@ -41,7 +41,8 @@ enum
 };
 
 
-static void     gimp_popup_map          (GtkWidget      *widget);
+static gboolean gimp_popup_map_event    (GtkWidget      *widget,
+                                         GdkEventAny    *event);
 static gboolean gimp_popup_button_press (GtkWidget      *widget,
                                          GdkEventButton *bevent);
 static gboolean gimp_popup_key_press    (GtkWidget      *widget,
@@ -82,7 +83,7 @@ gimp_popup_class_init (GimpPopupClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  widget_class->map                = gimp_popup_map;
+  widget_class->map_event          = gimp_popup_map_event;
   widget_class->button_press_event = gimp_popup_button_press;
   widget_class->key_press_event    = gimp_popup_key_press;
 
@@ -133,10 +134,11 @@ gimp_popup_grab_broken_event (GtkWidget          *widget,
   return FALSE;
 }
 
-static void
-gimp_popup_map (GtkWidget *widget)
+static gboolean
+gimp_popup_map_event (GtkWidget                 *widget,
+                      G_GNUC_UNUSED GdkEventAny *event)
 {
-  GTK_WIDGET_CLASS (parent_class)->map (widget);
+  GTK_WIDGET_CLASS (parent_class)->map_event (widget, event);
 
   /*  grab with owner_events == TRUE so the popup's widgets can
    *  receive events. we filter away events outside this toplevel
@@ -159,7 +161,7 @@ gimp_popup_map (GtkWidget *widget)
                             G_CALLBACK (gimp_popup_grab_broken_event),
                             widget);
 
-          return;
+          return FALSE;
         }
       else
         {
@@ -172,6 +174,7 @@ gimp_popup_map (GtkWidget *widget)
    *  around uncloseable.
    */
   g_signal_emit (widget, popup_signals[CANCEL], 0);
+  return FALSE;
 }
 
 static gboolean
