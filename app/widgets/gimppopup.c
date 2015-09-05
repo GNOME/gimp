@@ -147,10 +147,10 @@ gimp_popup_map_event (GtkWidget                 *widget,
   if (gdk_pointer_grab (gtk_widget_get_window (widget), TRUE,
                         GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
                         GDK_POINTER_MOTION_MASK,
-                        NULL, NULL, GDK_CURRENT_TIME) == 0)
+                        NULL, NULL, GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
     {
       if (gdk_keyboard_grab (gtk_widget_get_window (widget), TRUE,
-                             GDK_CURRENT_TIME) == 0)
+                             GDK_CURRENT_TIME) == GDK_GRAB_SUCCESS)
         {
           gtk_grab_add (widget);
 
