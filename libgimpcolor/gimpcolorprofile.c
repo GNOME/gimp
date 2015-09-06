@@ -930,8 +930,8 @@ gimp_color_profile_new_adobe_rgb (void)
  * used instead of the passed @format, which usually is the same as
  * @format, unless lcms doesn't support @format.
  *
- * Note that this function currently only supports RGB, RGBA, R'G'B' and
- * R'G'B'A formats.
+ * Note that this function currently only supports RGB, RGBA, R'G'B',
+ * R'G'B'A and the cairo-RGB24 and cairo-ARGB32 formats.
  *
  * Return value: the #Babl format to be used instead of @format, or %NULL
  *               is the passed @format is not supported at all.
@@ -955,17 +955,7 @@ gimp_color_profile_get_format (const Babl *format,
   type      = babl_format_get_type (format, 0);
   model     = babl_format_get_model (format);
 
-  if (model == babl_model ("RGB") ||
-      model == babl_model ("RGBA"))
-    {
-      linear = TRUE;
-    }
-  else if (model == babl_model ("R'G'B'") ||
-           model == babl_model ("R'G'B'A"))
-    {
-      linear = FALSE;
-    }
-  else if (format == babl_format ("cairo-RGB24"))
+  if (format == babl_format ("cairo-RGB24"))
     {
       *lcms_format = TYPE_RGB_8;
 
@@ -976,6 +966,16 @@ gimp_color_profile_get_format (const Babl *format,
       *lcms_format = TYPE_RGBA_8;
 
       return babl_format ("R'G'B'A u8");
+    }
+  else if (model == babl_model ("RGB") ||
+           model == babl_model ("RGBA"))
+    {
+      linear = TRUE;
+    }
+  else if (model == babl_model ("R'G'B'") ||
+           model == babl_model ("R'G'B'A"))
+    {
+      linear = FALSE;
     }
   else
     {
