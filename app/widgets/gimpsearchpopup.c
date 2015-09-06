@@ -58,14 +58,14 @@ enum
     PROP_CALLBACK_DATA
 };
 
+static gint window_height = 0;
+
 struct _GimpSearchPopupPrivate
 {
   Gimp                    *gimp;
   GtkWidget               *keyword_entry;
   GtkWidget               *results_list;
   GtkWidget               *list_view;
-
-  gint                     window_height;
 
   GimpSearchPopupCallback  build_results;
   gpointer                 build_results_data;
@@ -82,6 +82,9 @@ static void       gimp_search_popup_get_property        (GObject            *obj
                                                          GValue             *value,
                                                          GParamSpec         *pspec);
 
+/* GtkWidget handlers */
+static void       gimp_search_popup_size_allocate        (GtkWidget         *widget,
+                                                          GtkAllocation     *allocation);
 /* GimpPopup handlers */
 static void       gimp_search_popup_confirm              (GimpPopup *popup);
 
@@ -99,10 +102,6 @@ static gboolean   results_list_on_key_press_event        (GtkWidget         *wid
 static void       results_list_on_row_activated          (GtkTreeView       *treeview,
                                                           GtkTreePath       *path,
                                                           GtkTreeViewColumn *col,
-                                                          GimpSearchPopup   *popup);
-/* Signal handlers on the popup */
-static gboolean   gimp_search_popup_on_configured        (GtkWindow         *window,
-                                                          GdkEvent          *event,
                                                           GimpSearchPopup   *popup);
 /* Utils */
 static void       gimp_search_popup_run_selected         (GimpSearchPopup   *popup);
@@ -123,14 +122,17 @@ static void
 gimp_search_popup_class_init (GimpSearchPopupClass *klass)
 {
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GimpPopupClass *popup_class = GIMP_POPUP_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GimpPopupClass *popup_class  = GIMP_POPUP_CLASS (klass);
   GtkBindingSet  *binding_set;
 
-  object_class->constructed  = gimp_search_popup_constructed;
-  object_class->set_property = gimp_search_popup_set_property;
-  object_class->get_property = gimp_search_popup_get_property;
+  object_class->constructed   = gimp_search_popup_constructed;
+  object_class->set_property  = gimp_search_popup_set_property;
+  object_class->get_property  = gimp_search_popup_get_property;
 
-  popup_class->confirm       = gimp_search_popup_confirm;
+  widget_class->size_allocate = gimp_search_popup_size_allocate;
+
+  popup_class->confirm        = gimp_search_popup_confirm;
 
   /**
    * GimpSearchPopup:gimp:
@@ -386,11 +388,10 @@ gimp_search_popup_constructed (GObject *object)
                     G_CALLBACK (results_list_on_row_activated),
                     popup);
 
-  g_signal_connect (popup, "configure-event",
-                    G_CALLBACK (gimp_search_popup_on_configured),
-                    popup);
-
-  popup->priv->window_height = gdk_screen_get_height (screen) / 2;
+  /* Default size of the search popup showing the result list is half
+   * the screen. */
+  if (window_height == 0)
+    window_height = gdk_screen_get_height (screen) / 2;
 }
 
 static void
@@ -442,6 +443,27 @@ gimp_search_popup_get_property (GObject      *object,
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+}
+
+void
+gimp_search_popup_size_allocate (GtkWidget     *widget,
+                                 GtkAllocation *allocation)
+{
+  GimpSearchPopup *popup = GIMP_SEARCH_POPUP (widget);
+
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget,
+                                                  allocation);
+
+  if (gtk_widget_get_visible (widget) &&
+      gtk_widget_get_visible (popup->priv->list_view))
+    {
+      GdkScreen *screen = gdk_screen_get_default ();
+
+      /* I save the window height when results are shown so that resizes
+       * by the user are saved accross searches. */
+      window_height = MAX (gdk_screen_get_height (screen) / 4,
+                           allocation->height);
     }
 }
 
@@ -501,7 +523,7 @@ keyword_entry_on_key_release_event (GtkWidget       *widget,
   if (strcmp (entry_text, "") != 0)
     {
       gtk_window_resize (GTK_WINDOW (popup),
-                         width, popup->priv->window_height);
+                         width, window_height);
       gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (tree_view)));
       gtk_widget_show_all (popup->priv->list_view);
       popup->priv->build_results (popup, entry_text,
@@ -512,7 +534,7 @@ keyword_entry_on_key_release_event (GtkWidget       *widget,
   else if (strcmp (entry_text, "") == 0 && (event->keyval == GDK_KEY_Down))
     {
       gtk_window_resize (GTK_WINDOW (popup),
-                         width, popup->priv->window_height);
+                         width, window_height);
       gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (tree_view)));
       gtk_widget_show_all (popup->priv->list_view);
       popup->priv->build_results (popup, NULL,
@@ -623,21 +645,6 @@ results_list_on_row_activated (GtkTreeView       *treeview,
                                GimpSearchPopup   *popup)
 {
   gimp_search_popup_run_selected (popup);
-}
-
-static gboolean
-gimp_search_popup_on_configured (GtkWindow       *window,
-                                 GdkEvent        *event,
-                                 GimpSearchPopup *popup)
-{
-  if (gtk_widget_get_visible (GTK_WIDGET (window)) &&
-      gtk_widget_get_visible (popup->priv->list_view))
-    {
-      gtk_window_get_size (GTK_WINDOW (popup),
-                           NULL, &popup->priv->window_height);
-    }
-
-  return FALSE;
 }
 
 static void
