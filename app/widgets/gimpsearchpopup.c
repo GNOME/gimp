@@ -576,10 +576,11 @@ results_list_on_key_press_event (GtkWidget       *widget,
                                  GimpSearchPopup *popup)
 {
   /* These keys are already managed by key bindings. */
-  g_return_if_fail (kevent->keyval != GDK_KEY_Escape   &&
-                    kevent->keyval != GDK_KEY_Return   &&
-                    kevent->keyval != GDK_KEY_KP_Enter &&
-                    kevent->keyval != GDK_KEY_ISO_Enter);
+  g_return_val_if_fail (kevent->keyval != GDK_KEY_Escape   &&
+                        kevent->keyval != GDK_KEY_Return   &&
+                        kevent->keyval != GDK_KEY_KP_Enter &&
+                        kevent->keyval != GDK_KEY_ISO_Enter,
+                        FALSE);
 
   switch (kevent->keyval)
     {
