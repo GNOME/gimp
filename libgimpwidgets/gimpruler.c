@@ -95,7 +95,6 @@ static const struct
 
 
 static void          gimp_ruler_dispose              (GObject        *object);
-static void          gimp_ruler_finalize             (GObject        *object);
 static void          gimp_ruler_set_property         (GObject        *object,
                                                       guint           prop_id,
                                                       const GValue   *value,
@@ -145,7 +144,6 @@ gimp_ruler_class_init (GimpRulerClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->dispose             = gimp_ruler_dispose;
-  object_class->finalize            = gimp_ruler_finalize;
   object_class->set_property        = gimp_ruler_set_property;
   object_class->get_property        = gimp_ruler_get_property;
 
@@ -263,22 +261,13 @@ gimp_ruler_dispose (GObject *object)
   while (priv->track_widgets)
     gimp_ruler_remove_track_widget (ruler, priv->track_widgets->data);
 
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
-gimp_ruler_finalize (GObject *object)
-{
-  GimpRuler        *ruler = GIMP_RULER (object);
-  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
-
   if (priv->pos_redraw_idle_id)
     {
       g_source_remove (priv->pos_redraw_idle_id);
       priv->pos_redraw_idle_id = 0;
     }
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
