@@ -34,11 +34,11 @@
  * GimpSearchPopupCallback:
  * @popup:  the #GimpSearchPopup to operate on.
  * @search: the text searched.
- * 
+ *
  * Callback used by @popup to fill in its result list.
  * It should make use of gimp_search_popup_add_result() to fill in
  * results.
- */ 
+ */
 typedef struct _GimpSearchPopup           GimpSearchPopup;
 typedef struct _GimpSearchPopupClass      GimpSearchPopupClass;
 typedef struct _GimpSearchPopupPrivate    GimpSearchPopupPrivate;
