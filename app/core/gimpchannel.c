@@ -950,7 +950,7 @@ static GimpComponentMask
 gimp_channel_get_active_mask (const GimpDrawable *drawable)
 {
   /*  Return all, because that skips the component mask op when painting  */
-  return GIMP_COMPONENT_ALL;
+  return GIMP_COMPONENT_MASK_ALL;
 }
 
 static void

@@ -59,7 +59,7 @@ gimp_applicator_init (GimpApplicator *applicator)
 {
   applicator->opacity    = 1.0;
   applicator->paint_mode = GIMP_NORMAL_MODE;
-  applicator->affect     = GIMP_COMPONENT_ALL;
+  applicator->affect     = GIMP_COMPONENT_MASK_ALL;
 }
 
 static void

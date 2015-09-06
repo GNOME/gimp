@@ -190,7 +190,7 @@ gimp_mybrush_motion (GimpPaintCore    *paint_core,
 
   mypaint_brush_set_base_value (mybrush->private->brush,
                                 MYPAINT_BRUSH_SETTING_LOCK_ALPHA,
-                                (active_mask & GIMP_COMPONENT_ALPHA) ?
+                                (active_mask & GIMP_COMPONENT_MASK_ALPHA) ?
                                 FALSE : TRUE);
 
   gimp_context_get_foreground (context, &fg);

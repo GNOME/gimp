@@ -1537,7 +1537,7 @@ gimp_image_get_graph (GimpProjectable *projectable)
   gegl_node_connect_to (layers_node,   "output",
                         channels_node, "input");
 
-  mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_ALL;
+  mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_MASK_ALL;
 
   private->visible_mask =
     gegl_node_new_child (private->graph,
@@ -2728,18 +2728,18 @@ gimp_image_get_active_mask (const GimpImage *image)
   switch (gimp_image_get_base_type (image))
     {
     case GIMP_RGB:
-      mask |= (private->active[RED])   ? GIMP_COMPONENT_RED   : 0;
-      mask |= (private->active[GREEN]) ? GIMP_COMPONENT_GREEN : 0;
-      mask |= (private->active[BLUE])  ? GIMP_COMPONENT_BLUE  : 0;
-      mask |= (private->active[ALPHA]) ? GIMP_COMPONENT_ALPHA : 0;
+      mask |= (private->active[RED])   ? GIMP_COMPONENT_MASK_RED   : 0;
+      mask |= (private->active[GREEN]) ? GIMP_COMPONENT_MASK_GREEN : 0;
+      mask |= (private->active[BLUE])  ? GIMP_COMPONENT_MASK_BLUE  : 0;
+      mask |= (private->active[ALPHA]) ? GIMP_COMPONENT_MASK_ALPHA : 0;
       break;
 
     case GIMP_GRAY:
     case GIMP_INDEXED:
-      mask |= (private->active[GRAY])    ? GIMP_COMPONENT_RED   : 0;
-      mask |= (private->active[GRAY])    ? GIMP_COMPONENT_GREEN : 0;
-      mask |= (private->active[GRAY])    ? GIMP_COMPONENT_BLUE  : 0;
-      mask |= (private->active[ALPHA_G]) ? GIMP_COMPONENT_ALPHA : 0;
+      mask |= (private->active[GRAY])    ? GIMP_COMPONENT_MASK_RED   : 0;
+      mask |= (private->active[GRAY])    ? GIMP_COMPONENT_MASK_GREEN : 0;
+      mask |= (private->active[GRAY])    ? GIMP_COMPONENT_MASK_BLUE  : 0;
+      mask |= (private->active[ALPHA_G]) ? GIMP_COMPONENT_MASK_ALPHA : 0;
       break;
     }
 
@@ -2768,7 +2768,7 @@ gimp_image_set_component_visible (GimpImage       *image,
         {
           GimpComponentMask mask;
 
-          mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_ALL;
+          mask = ~gimp_image_get_visible_mask (image) & GIMP_COMPONENT_MASK_ALL;
 
           gegl_node_set (private->visible_mask,
                          "mask", mask,
@@ -2831,18 +2831,18 @@ gimp_image_get_visible_mask (const GimpImage *image)
   switch (gimp_image_get_base_type (image))
     {
     case GIMP_RGB:
-      mask |= (private->visible[RED])   ? GIMP_COMPONENT_RED   : 0;
-      mask |= (private->visible[GREEN]) ? GIMP_COMPONENT_GREEN : 0;
-      mask |= (private->visible[BLUE])  ? GIMP_COMPONENT_BLUE  : 0;
-      mask |= (private->visible[ALPHA]) ? GIMP_COMPONENT_ALPHA : 0;
+      mask |= (private->visible[RED])   ? GIMP_COMPONENT_MASK_RED   : 0;
+      mask |= (private->visible[GREEN]) ? GIMP_COMPONENT_MASK_GREEN : 0;
+      mask |= (private->visible[BLUE])  ? GIMP_COMPONENT_MASK_BLUE  : 0;
+      mask |= (private->visible[ALPHA]) ? GIMP_COMPONENT_MASK_ALPHA : 0;
       break;
 
     case GIMP_GRAY:
     case GIMP_INDEXED:
-      mask |= (private->visible[GRAY])  ? GIMP_COMPONENT_RED   : 0;
-      mask |= (private->visible[GRAY])  ? GIMP_COMPONENT_GREEN : 0;
-      mask |= (private->visible[GRAY])  ? GIMP_COMPONENT_BLUE  : 0;
-      mask |= (private->visible[ALPHA]) ? GIMP_COMPONENT_ALPHA : 0;
+      mask |= (private->visible[GRAY])  ? GIMP_COMPONENT_MASK_RED   : 0;
+      mask |= (private->visible[GRAY])  ? GIMP_COMPONENT_MASK_GREEN : 0;
+      mask |= (private->visible[GRAY])  ? GIMP_COMPONENT_MASK_BLUE  : 0;
+      mask |= (private->visible[ALPHA]) ? GIMP_COMPONENT_MASK_ALPHA : 0;
       break;
     }
 

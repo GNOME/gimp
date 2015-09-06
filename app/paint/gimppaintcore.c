@@ -454,7 +454,7 @@ gimp_paint_core_start (GimpPaintCore     *core,
         }
 
       /* Allocate the scratch buffer if there's a component mask */
-      if (gimp_drawable_get_active_mask (drawable) != GIMP_COMPONENT_ALL)
+      if (gimp_drawable_get_active_mask (drawable) != GIMP_COMPONENT_MASK_ALL)
         {
           const Babl *format;
 
