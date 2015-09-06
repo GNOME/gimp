@@ -370,10 +370,6 @@ gimp_image_convert_color_profile (GimpImage                *image,
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_IMAGE_CONVERT,
                                _("Color profile conversion"));
 
-  gimp_image_set_color_profile (image, dest_profile, NULL);
-  /*  omg...  */
-  gimp_image_parasite_detach (image, "icc-profile-name");
-
   switch (gimp_image_get_base_type (image))
     {
     case GIMP_RGB:
@@ -393,6 +389,10 @@ gimp_image_convert_color_profile (GimpImage                *image,
                                           progress);
       break;
     }
+
+  gimp_image_set_color_profile (image, dest_profile, NULL);
+  /*  omg...  */
+  gimp_image_parasite_detach (image, "icc-profile-name");
 
   gimp_image_undo_group_end (image);
 
