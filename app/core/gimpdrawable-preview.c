@@ -97,6 +97,8 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
   GeglBuffer  *buffer;
   GimpTempBuf *preview;
   gdouble      scale;
+  gint         scaled_x;
+  gint         scaled_y;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (src_x >= 0, NULL);
@@ -121,11 +123,14 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
   preview = gimp_temp_buf_new (dest_width, dest_height,
                                gimp_drawable_get_preview_format (drawable));
 
-  scale = MIN ((gdouble) dest_width  / (gdouble) gegl_buffer_get_width  (buffer),
-               (gdouble) dest_height / (gdouble) gegl_buffer_get_height (buffer));
+  scale = MIN ((gdouble) dest_width  / (gdouble) src_width,
+               (gdouble) dest_height / (gdouble) src_height);
+
+  scaled_x = RINT ((gdouble) src_x * scale);
+  scaled_y = RINT ((gdouble) src_y * scale);
 
   gegl_buffer_get (buffer,
-                   GEGL_RECTANGLE (src_x, src_y, dest_width, dest_height),
+                   GEGL_RECTANGLE (scaled_x, scaled_y, dest_width, dest_height),
                    scale,
                    gimp_temp_buf_get_format (preview),
                    gimp_temp_buf_get_data (preview),
