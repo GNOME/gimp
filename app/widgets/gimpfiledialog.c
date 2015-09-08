@@ -635,7 +635,7 @@ gimp_file_dialog_set_file_proc (GimpFileDialog      *dialog,
 GFile *
 gimp_file_dialog_get_default_folder (GimpFileDialog *dialog)
 {
-  g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
+  g_return_val_if_fail (GIMP_IS_FILE_DIALOG (dialog), NULL);
 
   GIMP_FILE_DIALOG_GET_CLASS (dialog)->get_default_folder (dialog);
 }
