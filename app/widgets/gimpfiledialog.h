@@ -66,31 +66,35 @@ struct _GimpFileDialogClass
 {
   GtkFileChooserDialogClass  parent_class;
 
-  void (* save_state) (GimpFileDialog *dialog,
-                       const gchar    *state_name);
-  void (* load_state) (GimpFileDialog *dialog,
-                       const gchar    *state_name);
+  GFile * ( *get_default_folder) (GimpFileDialog *dialog);
+
+  void    (* save_state)         (GimpFileDialog *dialog,
+                                  const gchar    *state_name);
+  void    (* load_state)         (GimpFileDialog *dialog,
+                                  const gchar    *state_name);
 };
 
 
-GType       gimp_file_dialog_get_type       (void) G_GNUC_CONST;
+GType       gimp_file_dialog_get_type           (void) G_GNUC_CONST;
 
-void        gimp_file_dialog_add_extra_widget (GimpFileDialog       *dialog,
-                                               GtkWidget            *widget,
-                                               gboolean              expand,
-                                               gboolean              fill,
-                                               guint                 padding);
+void        gimp_file_dialog_add_extra_widget   (GimpFileDialog       *dialog,
+                                                 GtkWidget            *widget,
+                                                 gboolean              expand,
+                                                 gboolean              fill,
+                                                 guint                 padding);
 
-void        gimp_file_dialog_set_sensitive    (GimpFileDialog       *dialog,
-                                               gboolean              sensitive);
+void        gimp_file_dialog_set_sensitive      (GimpFileDialog       *dialog,
+                                                 gboolean              sensitive);
 
-void        gimp_file_dialog_set_file_proc    (GimpFileDialog       *dialog,
-                                               GimpPlugInProcedure  *file_proc);
+void        gimp_file_dialog_set_file_proc      (GimpFileDialog       *dialog,
+                                                 GimpPlugInProcedure  *file_proc);
 
-void        gimp_file_dialog_save_state       (GimpFileDialog       *dialog,
-                                               const gchar          *state_name);
-void        gimp_file_dialog_load_state       (GimpFileDialog       *dialog,
-                                               const gchar          *state_name);
+GFile     * gimp_file_dialog_get_default_folder (GimpFileDialog       *dialog);
+
+void        gimp_file_dialog_save_state         (GimpFileDialog       *dialog,
+                                                 const gchar          *state_name);
+void        gimp_file_dialog_load_state         (GimpFileDialog       *dialog,
+                                                 const gchar          *state_name);
 
 
 G_END_DECLS

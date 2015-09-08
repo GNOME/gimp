@@ -62,7 +62,6 @@ static void     gimp_save_dialog_save_state          (GimpFileDialog      *dialo
 static void     gimp_save_dialog_load_state          (GimpFileDialog      *dialog,
                                                       const gchar         *state_name);
 
-static GFile  * gimp_save_dialog_get_default_folder  (Gimp                *gimp);
 static void     gimp_save_dialog_add_compat_toggle   (GimpSaveDialog      *dialog);
 static void     gimp_save_dialog_compat_toggled      (GtkToggleButton     *button,
                                                       GimpSaveDialog      *dialog);
@@ -173,24 +172,27 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
                             gboolean        close_after_saving,
                             GimpObject     *display)
 {
-  GFile       *dir_file  = NULL;
-  GFile       *name_file = NULL;
-  GFile       *ext_file  = NULL;
-  gchar       *basename;
-  const gchar *version_string;
-  gint         rle_version;
-  gint         zlib_version;
-  gchar       *tooltip;
+  GimpFileDialog *file_dialog;
+  GFile          *dir_file  = NULL;
+  GFile          *name_file = NULL;
+  GFile          *ext_file  = NULL;
+  gchar          *basename;
+  const gchar    *version_string;
+  gint            rle_version;
+  gint            zlib_version;
+  gchar          *tooltip;
 
   g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  GIMP_FILE_DIALOG (dialog)->image = image;
+  file_dialog = GIMP_FILE_DIALOG (dialog);
+
+  file_dialog->image = image;
   dialog->save_a_copy              = save_a_copy;
   dialog->close_after_saving       = close_after_saving;
   dialog->display_to_close         = display;
 
-  gimp_file_dialog_set_file_proc (GIMP_FILE_DIALOG (dialog), NULL);
+  gimp_file_dialog_set_file_proc (file_dialog, NULL);
 
   /*
    * Priority of default paths for Save:
@@ -221,7 +223,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
                                   GIMP_FILE_SAVE_LAST_FILE_KEY);
 
   if (! dir_file)
-    dir_file = gimp_save_dialog_get_default_folder (gimp);
+    dir_file = gimp_file_dialog_get_default_folder (file_dialog);
 
 
   /* Priority of default basenames for Save:
@@ -325,46 +327,6 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
 }
 
 /*  private functions  */
-
-static GFile *
-gimp_save_dialog_get_default_folder (Gimp *gimp)
-{
-  if (gimp->default_folder)
-    {
-      return gimp->default_folder;
-    }
-  else
-    {
-      GFile *file = g_object_get_data (G_OBJECT (gimp),
-                                       "gimp-documents-folder");
-
-      if (! file)
-        {
-          gchar *path;
-
-          /* Make sure it ends in '/' */
-          path = g_build_path (G_DIR_SEPARATOR_S,
-                               g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
-                               G_DIR_SEPARATOR_S,
-                               NULL);
-
-          /* Paranoia fallback, see bug #722400 */
-          if (! path)
-            path = g_build_path (G_DIR_SEPARATOR_S,
-                                 g_get_home_dir (),
-                                 G_DIR_SEPARATOR_S,
-                                 NULL);
-
-          file = g_file_new_for_path (path);
-          g_free (path);
-
-          g_object_set_data_full (G_OBJECT (gimp), "gimp-documents-folder",
-                                  file, (GDestroyNotify) g_object_unref);
-        }
-
-      return file;
-    }
-}
 
 static void
 gimp_save_dialog_add_compat_toggle (GimpSaveDialog *dialog)

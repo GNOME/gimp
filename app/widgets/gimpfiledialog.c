@@ -71,73 +71,74 @@ enum
   PROP_FILE_PROCS_ALL_IMAGES
 };
 
-static void     gimp_file_dialog_progress_iface_init    (GimpProgressInterface *iface);
+static void     gimp_file_dialog_progress_iface_init     (GimpProgressInterface *iface);
 
-static void     gimp_file_dialog_set_property           (GObject             *object,
-                                                         guint                property_id,
-                                                         const GValue        *value,
-                                                         GParamSpec          *pspec);
-static void     gimp_file_dialog_get_property           (GObject             *object,
-                                                         guint                property_id,
-                                                         GValue              *value,
-                                                         GParamSpec          *pspec);
-static void     gimp_file_dialog_constructed            (GObject             *object);
-static void     gimp_file_dialog_dispose                (GObject             *object);
+static void     gimp_file_dialog_set_property            (GObject             *object,
+                                                          guint                property_id,
+                                                          const GValue        *value,
+                                                          GParamSpec          *pspec);
+static void     gimp_file_dialog_get_property            (GObject             *object,
+                                                          guint                property_id,
+                                                          GValue              *value,
+                                                          GParamSpec          *pspec);
+static void     gimp_file_dialog_constructed             (GObject             *object);
+static void     gimp_file_dialog_dispose                 (GObject             *object);
 
-static gboolean gimp_file_dialog_delete_event           (GtkWidget           *widget,
-                                                         GdkEventAny         *event);
-static void     gimp_file_dialog_response               (GtkDialog           *dialog,
-                                                         gint                 response_id);
+static gboolean gimp_file_dialog_delete_event            (GtkWidget           *widget,
+                                                          GdkEventAny         *event);
+static void     gimp_file_dialog_response                (GtkDialog           *dialog,
+                                                          gint                 response_id);
 static GimpProgress *
-                gimp_file_dialog_progress_start         (GimpProgress        *progress,
-                                                         gboolean             cancellable,
-                                                         const gchar         *message);
-static void     gimp_file_dialog_progress_end           (GimpProgress        *progress);
-static gboolean gimp_file_dialog_progress_is_active     (GimpProgress        *progress);
-static void     gimp_file_dialog_progress_set_text      (GimpProgress        *progress,
-                                                         const gchar         *message);
-static void     gimp_file_dialog_progress_set_value     (GimpProgress        *progress,
-                                                         gdouble              percentage);
-static gdouble  gimp_file_dialog_progress_get_value     (GimpProgress        *progress);
-static void     gimp_file_dialog_progress_pulse         (GimpProgress        *progress);
-static guint32  gimp_file_dialog_progress_get_window_id (GimpProgress        *progress);
+                gimp_file_dialog_progress_start          (GimpProgress        *progress,
+                                                          gboolean             cancellable,
+                                                          const gchar         *message);
+static void     gimp_file_dialog_progress_end            (GimpProgress        *progress);
+static gboolean gimp_file_dialog_progress_is_active      (GimpProgress        *progress);
+static void     gimp_file_dialog_progress_set_text       (GimpProgress        *progress,
+                                                          const gchar         *message);
+static void     gimp_file_dialog_progress_set_value      (GimpProgress        *progress,
+                                                          gdouble              percentage);
+static gdouble  gimp_file_dialog_progress_get_value      (GimpProgress        *progress);
+static void     gimp_file_dialog_progress_pulse          (GimpProgress        *progress);
+static guint32  gimp_file_dialog_progress_get_window_id  (GimpProgress        *progress);
 
-static void     gimp_file_dialog_add_user_dir           (GimpFileDialog      *dialog,
-                                                         GUserDirectory       directory);
-static void     gimp_file_dialog_add_preview            (GimpFileDialog      *dialog);
-static void     gimp_file_dialog_add_filters            (GimpFileDialog      *dialog);
-static void     gimp_file_dialog_process_procedure      (GimpPlugInProcedure *file_proc,
-                                                         GtkFileFilter      **filter_out,
-                                                         GtkFileFilter       *all,
-                                                         GtkFileFilter       *all_savable);
-static void     gimp_file_dialog_add_proc_selection     (GimpFileDialog      *dialog);
+static void     gimp_file_dialog_add_user_dir            (GimpFileDialog      *dialog,
+                                                          GUserDirectory       directory);
+static void     gimp_file_dialog_add_preview             (GimpFileDialog      *dialog);
+static void     gimp_file_dialog_add_filters             (GimpFileDialog      *dialog);
+static void     gimp_file_dialog_process_procedure       (GimpPlugInProcedure *file_proc,
+                                                          GtkFileFilter      **filter_out,
+                                                          GtkFileFilter       *all,
+                                                          GtkFileFilter       *all_savable);
+static void     gimp_file_dialog_add_proc_selection      (GimpFileDialog      *dialog);
 
-static void     gimp_file_dialog_selection_changed      (GtkFileChooser      *chooser,
-                                                         GimpFileDialog      *dialog);
-static void     gimp_file_dialog_update_preview         (GtkFileChooser      *chooser,
-                                                         GimpFileDialog      *dialog);
+static void     gimp_file_dialog_selection_changed       (GtkFileChooser      *chooser,
+                                                          GimpFileDialog      *dialog);
+static void     gimp_file_dialog_update_preview          (GtkFileChooser      *chooser,
+                                                          GimpFileDialog      *dialog);
 
-static void     gimp_file_dialog_proc_changed           (GimpFileProcView    *view,
-                                                         GimpFileDialog      *dialog);
+static void     gimp_file_dialog_proc_changed            (GimpFileProcView    *view,
+                                                          GimpFileDialog      *dialog);
 
-static void     gimp_file_dialog_help_func              (const gchar         *help_id,
-                                                         gpointer             help_data);
-static void     gimp_file_dialog_help_clicked           (GtkWidget           *widget,
-                                                         gpointer             dialog);
+static void     gimp_file_dialog_help_func               (const gchar         *help_id,
+                                                          gpointer             help_data);
+static void     gimp_file_dialog_help_clicked            (GtkWidget           *widget,
+                                                          gpointer             dialog);
 
-static gchar  * gimp_file_dialog_pattern_from_extension (const gchar         *extension);
+static gchar  * gimp_file_dialog_pattern_from_extension  (const gchar         *extension);
 
 
 static GimpFileDialogState
-              * gimp_file_dialog_get_state              (GimpFileDialog      *dialog);
-static void     gimp_file_dialog_set_state              (GimpFileDialog      *dialog,
-                                                         GimpFileDialogState *state);
-static void     gimp_file_dialog_state_destroy          (GimpFileDialogState *state);
+              * gimp_file_dialog_get_state               (GimpFileDialog      *dialog);
+static void     gimp_file_dialog_set_state               (GimpFileDialog      *dialog,
+                                                          GimpFileDialogState *state);
+static void     gimp_file_dialog_state_destroy           (GimpFileDialogState *state);
 
-static void     gimp_file_dialog_real_save_state        (GimpFileDialog      *dialog,
-                                                         const gchar         *state_name);
-static void     gimp_file_dialog_real_load_state        (GimpFileDialog      *dialog,
-                                                         const gchar         *state_name);
+static GFile  * gimp_file_dialog_real_get_default_folder (GimpFileDialog      *dialog);
+static void     gimp_file_dialog_real_save_state         (GimpFileDialog      *dialog,
+                                                          const gchar         *state_name);
+static void     gimp_file_dialog_real_load_state         (GimpFileDialog      *dialog,
+                                                          const gchar         *state_name);
 
 G_DEFINE_TYPE_WITH_CODE (GimpFileDialog, gimp_file_dialog,
                          GTK_TYPE_FILE_CHOOSER_DIALOG,
@@ -163,6 +164,7 @@ gimp_file_dialog_class_init (GimpFileDialogClass *klass)
 
   dialog_class->response     = gimp_file_dialog_response;
 
+  klass->get_default_folder  = gimp_file_dialog_real_get_default_folder;
   klass->save_state          = gimp_file_dialog_real_save_state;
   klass->load_state          = gimp_file_dialog_real_load_state;
 
@@ -563,6 +565,14 @@ gimp_file_dialog_set_file_proc (GimpFileDialog      *dialog,
   if (file_proc != dialog->file_proc)
     gimp_file_proc_view_set_proc (GIMP_FILE_PROC_VIEW (dialog->proc_view),
                                   file_proc);
+}
+
+GFile *
+gimp_file_dialog_get_default_folder (GimpFileDialog *dialog)
+{
+  g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
+
+  GIMP_FILE_DIALOG_GET_CLASS (dialog)->get_default_folder (dialog);
 }
 
 void
@@ -1036,6 +1046,49 @@ gimp_file_dialog_state_destroy (GimpFileDialogState *state)
 
   g_free (state->filter_name);
   g_slice_free (GimpFileDialogState, state);
+}
+
+static GFile *
+gimp_file_dialog_real_get_default_folder (GimpFileDialog *dialog)
+{
+  GFile *file = NULL;
+
+  if (dialog->gimp->default_folder)
+    {
+      file = dialog->gimp->default_folder;
+    }
+  else
+    {
+      /* The default folder is "Documents" for all file dialogs.
+       * Children can reimplement this. */
+      file = g_object_get_data (G_OBJECT (dialog->gimp),
+                                "gimp-documents-folder");
+
+      if (! file)
+        {
+          gchar *path;
+
+          /* Make sure it ends in '/' */
+          path = g_build_path (G_DIR_SEPARATOR_S,
+                               g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
+                               G_DIR_SEPARATOR_S,
+                               NULL);
+
+          /* Paranoia fallback, see bug #722400 */
+          if (! path)
+            path = g_build_path (G_DIR_SEPARATOR_S,
+                                 g_get_home_dir (),
+                                 G_DIR_SEPARATOR_S,
+                                 NULL);
+
+          file = g_file_new_for_path (path);
+          g_free (path);
+
+          g_object_set_data_full (G_OBJECT (dialog->gimp), "gimp-documents-folder",
+                                  file, (GDestroyNotify) g_object_unref);
+        }
+    }
+  return file;
 }
 
 static void
