@@ -475,8 +475,8 @@ user_install_mkdir_with_parents (GimpUserInstall *install,
 /* The regexp pattern of all options changed from menurc of GIMP 2.8.
  * Add any pattern that we want to recognize for replacement in the menurc of
  * the next release*/
-#define MENURC_OVER20_UPDATE_PATTERN "\"<Actions>/file/file-export-to\"         |" \
-                                     "\"<Actions>/file/file-export\"            |" \
+#define MENURC_OVER20_UPDATE_PATTERN "\"<Actions>/file/file-export-to\""         "|" \
+                                     "\"<Actions>/file/file-export\""            "|" \
                                      "\"<Actions>/tools/tools-value-[1-4]-.*\""
 
 /**
