@@ -785,7 +785,17 @@ gimp_tool_gui_update_shell (GimpToolGui *gui)
 {
   GimpToolGuiPrivate *private = GET_PRIVATE (gui);
 
-  if (! private->overlay)
+  if (private->overlay)
+    {
+      if (gtk_widget_get_parent (private->dialog))
+        {
+          gimp_tool_gui_hide (gui);
+
+          if (private->shell)
+            gimp_tool_gui_show (gui);
+        }
+    }
+  else
     {
       gimp_tool_dialog_set_shell (GIMP_TOOL_DIALOG (private->dialog),
                                   private->shell);
