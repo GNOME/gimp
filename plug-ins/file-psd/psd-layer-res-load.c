@@ -854,10 +854,10 @@ load_resource_lyvr (const PSDlayerres  *res_a,
    */
   if (version < 70)
     {
-      g_message ('Invalid version layer');
+      g_message ("Invalid version layer");
     }
 
-
+  return 0;
 }
 
 static gint
@@ -881,4 +881,6 @@ load_resource_lnsr (const PSDlayerres  *res_a,
    * moreover lnsr info is encoded in MacRoman, see
    * https://bugzilla.gnome.org/show_bug.cgi?id=753986#c4
    */
+
+  return 0;
 }
