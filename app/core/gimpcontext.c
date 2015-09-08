@@ -734,8 +734,8 @@ gimp_context_init (GimpContext *context)
 
   context->parent          = NULL;
 
-  context->defined_props   = GIMP_CONTEXT_ALL_PROPS_MASK;
-  context->serialize_props = GIMP_CONTEXT_ALL_PROPS_MASK;
+  context->defined_props   = GIMP_CONTEXT_PROP_MASK_ALL;
+  context->serialize_props = GIMP_CONTEXT_PROP_MASK_ALL;
 
   context->image           = NULL;
   context->display         = NULL;
@@ -1465,7 +1465,7 @@ gimp_context_new (Gimp        *gimp,
       context->defined_props = template->defined_props;
 
       gimp_context_copy_properties (template, context,
-                                    GIMP_CONTEXT_ALL_PROPS_MASK);
+                                    GIMP_CONTEXT_PROP_MASK_ALL);
     }
 
   return context;
@@ -1518,7 +1518,7 @@ gimp_context_set_parent (GimpContext *context,
       /*  copy all undefined properties from the new parent  */
       gimp_context_copy_properties (parent, context,
                                     ~context->defined_props &
-                                    GIMP_CONTEXT_ALL_PROPS_MASK);
+                                    GIMP_CONTEXT_PROP_MASK_ALL);
 
       g_signal_connect_object (parent, "notify",
                                G_CALLBACK (gimp_context_parent_notify),
@@ -1538,8 +1538,8 @@ gimp_context_define_property (GimpContext         *context,
   GimpContextPropMask mask;
 
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail ((prop >= GIMP_CONTEXT_FIRST_PROP) &&
-                    (prop <= GIMP_CONTEXT_LAST_PROP));
+  g_return_if_fail ((prop >= GIMP_CONTEXT_PROP_FIRST) &&
+                    (prop <= GIMP_CONTEXT_PROP_LAST));
 
   mask = (1 << prop);
 
@@ -1580,7 +1580,7 @@ gimp_context_define_properties (GimpContext         *context,
 
   g_return_if_fail (GIMP_IS_CONTEXT (context));
 
-  for (prop = GIMP_CONTEXT_FIRST_PROP; prop <= GIMP_CONTEXT_LAST_PROP; prop++)
+  for (prop = GIMP_CONTEXT_PROP_FIRST; prop <= GIMP_CONTEXT_PROP_LAST; prop++)
     if ((1 << prop) & prop_mask)
       gimp_context_define_property (context, prop, defined);
 }
@@ -1620,8 +1620,8 @@ gimp_context_copy_property (GimpContext         *src,
 
   g_return_if_fail (GIMP_IS_CONTEXT (src));
   g_return_if_fail (GIMP_IS_CONTEXT (dest));
-  g_return_if_fail ((prop >= GIMP_CONTEXT_FIRST_PROP) &&
-                    (prop <= GIMP_CONTEXT_LAST_PROP));
+  g_return_if_fail ((prop >= GIMP_CONTEXT_PROP_FIRST) &&
+                    (prop <= GIMP_CONTEXT_PROP_LAST));
 
   switch (prop)
     {
@@ -1756,7 +1756,7 @@ gimp_context_copy_properties (GimpContext         *src,
   g_return_if_fail (GIMP_IS_CONTEXT (src));
   g_return_if_fail (GIMP_IS_CONTEXT (dest));
 
-  for (prop = GIMP_CONTEXT_FIRST_PROP; prop <= GIMP_CONTEXT_LAST_PROP; prop++)
+  for (prop = GIMP_CONTEXT_PROP_FIRST; prop <= GIMP_CONTEXT_PROP_LAST; prop++)
     if ((1 << prop) & prop_mask)
       gimp_context_copy_property (src, dest, prop);
 }
@@ -1771,7 +1771,7 @@ gimp_context_type_to_property (GType type)
 {
   GimpContextPropType prop;
 
-  for (prop = GIMP_CONTEXT_FIRST_PROP; prop <= GIMP_CONTEXT_LAST_PROP; prop++)
+  for (prop = GIMP_CONTEXT_PROP_FIRST; prop <= GIMP_CONTEXT_PROP_LAST; prop++)
     {
       if (g_type_is_a (type, gimp_context_prop_types[prop]))
         return prop;
@@ -1785,7 +1785,7 @@ gimp_context_type_to_prop_name (GType type)
 {
   GimpContextPropType prop;
 
-  for (prop = GIMP_CONTEXT_FIRST_PROP; prop <= GIMP_CONTEXT_LAST_PROP; prop++)
+  for (prop = GIMP_CONTEXT_PROP_FIRST; prop <= GIMP_CONTEXT_PROP_LAST; prop++)
     {
       if (g_type_is_a (type, gimp_context_prop_types[prop]))
         return gimp_context_prop_names[prop];
@@ -1799,7 +1799,7 @@ gimp_context_type_to_signal_name (GType type)
 {
   GimpContextPropType prop;
 
-  for (prop = GIMP_CONTEXT_FIRST_PROP; prop <= GIMP_CONTEXT_LAST_PROP; prop++)
+  for (prop = GIMP_CONTEXT_PROP_FIRST; prop <= GIMP_CONTEXT_PROP_LAST; prop++)
     {
       if (g_type_is_a (type, gimp_context_prop_types[prop]))
         return g_signal_name (gimp_context_signals[prop]);

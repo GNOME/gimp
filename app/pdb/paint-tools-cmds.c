@@ -70,7 +70,7 @@ paint_tools_stroke (Gimp              *gimp,
    *  from the current context
    */
   gimp_context_define_properties (GIMP_CONTEXT (options),
-                                  GIMP_CONTEXT_PAINT_PROPS_MASK,
+                                  GIMP_CONTEXT_PROP_MASK_PAINT,
                                   FALSE);
   gimp_context_set_parent (GIMP_CONTEXT (options), context);
 

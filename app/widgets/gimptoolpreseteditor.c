@@ -303,19 +303,26 @@ gimp_tool_preset_editor_sync_data (GimpToolPresetEditor *editor)
     gimp_context_get_serialize_properties (GIMP_CONTEXT (preset->tool_options));
 
   gtk_widget_set_sensitive (priv->fg_bg_toggle,
-                            (serialize_props & GIMP_CONTEXT_FOREGROUND_MASK) != 0);
+                            (serialize_props &
+                             GIMP_CONTEXT_PROP_MASK_FOREGROUND) != 0);
   gtk_widget_set_sensitive (priv->brush_toggle,
-                            (serialize_props & GIMP_CONTEXT_BRUSH_MASK) != 0);
+                            (serialize_props &
+                             GIMP_CONTEXT_PROP_MASK_BRUSH) != 0);
   gtk_widget_set_sensitive (priv->dynamics_toggle,
-                            (serialize_props & GIMP_CONTEXT_DYNAMICS_MASK) != 0);
+                            (serialize_props &
+                             GIMP_CONTEXT_PROP_MASK_DYNAMICS) != 0);
   gtk_widget_set_sensitive (priv->gradient_toggle,
-                            (serialize_props & GIMP_CONTEXT_GRADIENT_MASK) != 0);
+                            (serialize_props &
+                             GIMP_CONTEXT_PROP_MASK_GRADIENT) != 0);
   gtk_widget_set_sensitive (priv->pattern_toggle,
-                            (serialize_props & GIMP_CONTEXT_PATTERN_MASK) != 0);
+                            (serialize_props &
+                             GIMP_CONTEXT_PROP_MASK_PATTERN) != 0);
   gtk_widget_set_sensitive (priv->palette_toggle,
-                            (serialize_props & GIMP_CONTEXT_PALETTE_MASK) != 0);
+                            (serialize_props &
+                             GIMP_CONTEXT_PROP_MASK_PALETTE) != 0);
   gtk_widget_set_sensitive (priv->font_toggle,
-                            (serialize_props & GIMP_CONTEXT_FONT_MASK) != 0);
+                            (serialize_props &
+                             GIMP_CONTEXT_PROP_MASK_FONT) != 0);
  }
 
 static void

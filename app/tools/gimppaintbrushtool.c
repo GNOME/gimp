@@ -46,7 +46,7 @@ gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_TYPE_PAINT_OPTIONS,
                 gimp_paint_options_gui,
                 GIMP_PAINT_OPTIONS_CONTEXT_MASK |
-                GIMP_CONTEXT_GRADIENT_MASK,
+                GIMP_CONTEXT_PROP_MASK_GRADIENT,
                 "gimp-paintbrush-tool",
                 _("Paintbrush"),
                 _("Paintbrush Tool: Paint smooth strokes using a brush"),

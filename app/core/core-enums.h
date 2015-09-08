@@ -579,9 +579,9 @@ typedef enum  /*< pdb-skip >*/
 
 typedef enum  /*< pdb-skip, skip >*/
 {
-  GIMP_CONTEXT_FIRST_PROP       =  2,
+  GIMP_CONTEXT_PROP_FIRST       =  2,
 
-  GIMP_CONTEXT_PROP_IMAGE       =  GIMP_CONTEXT_FIRST_PROP,
+  GIMP_CONTEXT_PROP_IMAGE       =  GIMP_CONTEXT_PROP_FIRST,
   GIMP_CONTEXT_PROP_DISPLAY     =  3,
   GIMP_CONTEXT_PROP_TOOL        =  4,
   GIMP_CONTEXT_PROP_PAINT_INFO  =  5,
@@ -600,50 +600,51 @@ typedef enum  /*< pdb-skip, skip >*/
   GIMP_CONTEXT_PROP_IMAGEFILE   = 18,
   GIMP_CONTEXT_PROP_TEMPLATE    = 19,
 
-  GIMP_CONTEXT_LAST_PROP        = GIMP_CONTEXT_PROP_TEMPLATE
+  GIMP_CONTEXT_PROP_LAST        = GIMP_CONTEXT_PROP_TEMPLATE
 } GimpContextPropType;
 
 
 typedef enum  /*< pdb-skip, skip >*/
 {
-  GIMP_CONTEXT_IMAGE_MASK       = 1 <<  2,
-  GIMP_CONTEXT_DISPLAY_MASK     = 1 <<  3,
-  GIMP_CONTEXT_TOOL_MASK        = 1 <<  4,
-  GIMP_CONTEXT_PAINT_INFO_MASK  = 1 <<  5,
-  GIMP_CONTEXT_FOREGROUND_MASK  = 1 <<  6,
-  GIMP_CONTEXT_BACKGROUND_MASK  = 1 <<  7,
-  GIMP_CONTEXT_OPACITY_MASK     = 1 <<  8,
-  GIMP_CONTEXT_PAINT_MODE_MASK  = 1 <<  9,
-  GIMP_CONTEXT_BRUSH_MASK       = 1 << 10,
-  GIMP_CONTEXT_DYNAMICS_MASK    = 1 << 11,
-  GIMP_CONTEXT_PATTERN_MASK     = 1 << 12,
-  GIMP_CONTEXT_GRADIENT_MASK    = 1 << 13,
-  GIMP_CONTEXT_PALETTE_MASK     = 1 << 14,
-  GIMP_CONTEXT_TOOL_PRESET_MASK = 1 << 15,
-  GIMP_CONTEXT_FONT_MASK        = 1 << 16,
-  GIMP_CONTEXT_BUFFER_MASK      = 1 << 17,
-  GIMP_CONTEXT_IMAGEFILE_MASK   = 1 << 18,
-  GIMP_CONTEXT_TEMPLATE_MASK    = 1 << 19,
+  GIMP_CONTEXT_PROP_MASK_IMAGE       = 1 <<  2,
+  GIMP_CONTEXT_PROP_MASK_DISPLAY     = 1 <<  3,
+  GIMP_CONTEXT_PROP_MASK_TOOL        = 1 <<  4,
+  GIMP_CONTEXT_PROP_MASK_PAINT_INFO  = 1 <<  5,
+  GIMP_CONTEXT_PROP_MASK_FOREGROUND  = 1 <<  6,
+  GIMP_CONTEXT_PROP_MASK_BACKGROUND  = 1 <<  7,
+  GIMP_CONTEXT_PROP_MASK_OPACITY     = 1 <<  8,
+  GIMP_CONTEXT_PROP_MASK_PAINT_MODE  = 1 <<  9,
+  GIMP_CONTEXT_PROP_MASK_BRUSH       = 1 << 10,
+  GIMP_CONTEXT_PROP_MASK_DYNAMICS    = 1 << 11,
+  GIMP_CONTEXT_PROP_MASK_PATTERN     = 1 << 12,
+  GIMP_CONTEXT_PROP_MASK_GRADIENT    = 1 << 13,
+  GIMP_CONTEXT_PROP_MASK_PALETTE     = 1 << 14,
+  GIMP_CONTEXT_PROP_MASK_TOOL_PRESET = 1 << 15,
+  GIMP_CONTEXT_PROP_MASK_FONT        = 1 << 16,
+  GIMP_CONTEXT_PROP_MASK_BUFFER      = 1 << 17,
+  GIMP_CONTEXT_PROP_MASK_IMAGEFILE   = 1 << 18,
+  GIMP_CONTEXT_PROP_MASK_TEMPLATE    = 1 << 19,
 
   /*  aliases  */
-  GIMP_CONTEXT_PAINT_PROPS_MASK = (GIMP_CONTEXT_FOREGROUND_MASK |
-                                   GIMP_CONTEXT_BACKGROUND_MASK |
-                                   GIMP_CONTEXT_OPACITY_MASK    |
-                                   GIMP_CONTEXT_PAINT_MODE_MASK |
-                                   GIMP_CONTEXT_BRUSH_MASK      |
-                                   GIMP_CONTEXT_DYNAMICS_MASK   |
-                                   GIMP_CONTEXT_PATTERN_MASK    |
-                                   GIMP_CONTEXT_GRADIENT_MASK),
-  GIMP_CONTEXT_ALL_PROPS_MASK   = (GIMP_CONTEXT_IMAGE_MASK      |
-                                   GIMP_CONTEXT_DISPLAY_MASK    |
-                                   GIMP_CONTEXT_TOOL_MASK       |
-                                   GIMP_CONTEXT_PAINT_INFO_MASK |
-                                   GIMP_CONTEXT_PALETTE_MASK    |
-                                   GIMP_CONTEXT_FONT_MASK       |
-                                   GIMP_CONTEXT_BUFFER_MASK     |
-                                   GIMP_CONTEXT_IMAGEFILE_MASK  |
-                                   GIMP_CONTEXT_TEMPLATE_MASK   |
-                                   GIMP_CONTEXT_PAINT_PROPS_MASK)
+  GIMP_CONTEXT_PROP_MASK_PAINT = (GIMP_CONTEXT_PROP_MASK_FOREGROUND |
+                                  GIMP_CONTEXT_PROP_MASK_BACKGROUND |
+                                  GIMP_CONTEXT_PROP_MASK_OPACITY    |
+                                  GIMP_CONTEXT_PROP_MASK_PAINT_MODE |
+                                  GIMP_CONTEXT_PROP_MASK_BRUSH      |
+                                  GIMP_CONTEXT_PROP_MASK_DYNAMICS   |
+                                  GIMP_CONTEXT_PROP_MASK_PATTERN    |
+                                  GIMP_CONTEXT_PROP_MASK_GRADIENT),
+
+  GIMP_CONTEXT_PROP_MASK_ALL   = (GIMP_CONTEXT_PROP_MASK_IMAGE      |
+                                  GIMP_CONTEXT_PROP_MASK_DISPLAY    |
+                                  GIMP_CONTEXT_PROP_MASK_TOOL       |
+                                  GIMP_CONTEXT_PROP_MASK_PAINT_INFO |
+                                  GIMP_CONTEXT_PROP_MASK_PALETTE    |
+                                  GIMP_CONTEXT_PROP_MASK_FONT       |
+                                  GIMP_CONTEXT_PROP_MASK_BUFFER     |
+                                  GIMP_CONTEXT_PROP_MASK_IMAGEFILE  |
+                                  GIMP_CONTEXT_PROP_MASK_TEMPLATE   |
+                                  GIMP_CONTEXT_PROP_MASK_PAINT)
 } GimpContextPropMask;
 
 
