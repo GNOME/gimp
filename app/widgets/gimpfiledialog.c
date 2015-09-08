@@ -88,6 +88,12 @@ static gboolean gimp_file_dialog_delete_event            (GtkWidget           *w
                                                           GdkEventAny         *event);
 static void     gimp_file_dialog_response                (GtkDialog           *dialog,
                                                           gint                 response_id);
+static GFile  * gimp_file_dialog_real_get_default_folder (GimpFileDialog      *dialog);
+static void     gimp_file_dialog_real_save_state         (GimpFileDialog      *dialog,
+                                                          const gchar         *state_name);
+static void     gimp_file_dialog_real_load_state         (GimpFileDialog      *dialog,
+                                                          const gchar         *state_name);
+
 static GimpProgress *
                 gimp_file_dialog_progress_start          (GimpProgress        *progress,
                                                           gboolean             cancellable,
@@ -134,11 +140,6 @@ static void     gimp_file_dialog_set_state               (GimpFileDialog      *d
                                                           GimpFileDialogState *state);
 static void     gimp_file_dialog_state_destroy           (GimpFileDialogState *state);
 
-static GFile  * gimp_file_dialog_real_get_default_folder (GimpFileDialog      *dialog);
-static void     gimp_file_dialog_real_save_state         (GimpFileDialog      *dialog,
-                                                          const gchar         *state_name);
-static void     gimp_file_dialog_real_load_state         (GimpFileDialog      *dialog,
-                                                          const gchar         *state_name);
 
 G_DEFINE_TYPE_WITH_CODE (GimpFileDialog, gimp_file_dialog,
                          GTK_TYPE_FILE_CHOOSER_DIALOG,
@@ -410,6 +411,70 @@ gimp_file_dialog_response (GtkDialog *dialog,
           gimp_progress_cancel (GIMP_PROGRESS (dialog));
         }
     }
+}
+
+static GFile *
+gimp_file_dialog_real_get_default_folder (GimpFileDialog *dialog)
+{
+  GFile *file = NULL;
+
+  if (dialog->gimp->default_folder)
+    {
+      file = dialog->gimp->default_folder;
+    }
+  else
+    {
+      /* The default folder is "Documents" for all file dialogs.
+       * Children can reimplement this. */
+      file = g_object_get_data (G_OBJECT (dialog->gimp),
+                                "gimp-documents-folder");
+
+      if (! file)
+        {
+          gchar *path;
+
+          /* Make sure it ends in '/' */
+          path = g_build_path (G_DIR_SEPARATOR_S,
+                               g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
+                               G_DIR_SEPARATOR_S,
+                               NULL);
+
+          /* Paranoia fallback, see bug #722400 */
+          if (! path)
+            path = g_build_path (G_DIR_SEPARATOR_S,
+                                 g_get_home_dir (),
+                                 G_DIR_SEPARATOR_S,
+                                 NULL);
+
+          file = g_file_new_for_path (path);
+          g_free (path);
+
+          g_object_set_data_full (G_OBJECT (dialog->gimp), "gimp-documents-folder",
+                                  file, (GDestroyNotify) g_object_unref);
+        }
+    }
+  return file;
+}
+
+static void
+gimp_file_dialog_real_save_state (GimpFileDialog *dialog,
+                                  const gchar    *state_name)
+{
+  g_object_set_data_full (G_OBJECT (dialog->gimp), state_name,
+                          gimp_file_dialog_get_state (dialog),
+                          (GDestroyNotify) gimp_file_dialog_state_destroy);
+}
+
+static void
+gimp_file_dialog_real_load_state (GimpFileDialog *dialog,
+                                  const gchar    *state_name)
+{
+  GimpFileDialogState *state;
+
+  state = g_object_get_data (G_OBJECT (dialog->gimp), state_name);
+
+  if (state)
+    gimp_file_dialog_set_state (GIMP_FILE_DIALOG (dialog), state);
 }
 
 static GimpProgress *
@@ -1046,68 +1111,4 @@ gimp_file_dialog_state_destroy (GimpFileDialogState *state)
 
   g_free (state->filter_name);
   g_slice_free (GimpFileDialogState, state);
-}
-
-static GFile *
-gimp_file_dialog_real_get_default_folder (GimpFileDialog *dialog)
-{
-  GFile *file = NULL;
-
-  if (dialog->gimp->default_folder)
-    {
-      file = dialog->gimp->default_folder;
-    }
-  else
-    {
-      /* The default folder is "Documents" for all file dialogs.
-       * Children can reimplement this. */
-      file = g_object_get_data (G_OBJECT (dialog->gimp),
-                                "gimp-documents-folder");
-
-      if (! file)
-        {
-          gchar *path;
-
-          /* Make sure it ends in '/' */
-          path = g_build_path (G_DIR_SEPARATOR_S,
-                               g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
-                               G_DIR_SEPARATOR_S,
-                               NULL);
-
-          /* Paranoia fallback, see bug #722400 */
-          if (! path)
-            path = g_build_path (G_DIR_SEPARATOR_S,
-                                 g_get_home_dir (),
-                                 G_DIR_SEPARATOR_S,
-                                 NULL);
-
-          file = g_file_new_for_path (path);
-          g_free (path);
-
-          g_object_set_data_full (G_OBJECT (dialog->gimp), "gimp-documents-folder",
-                                  file, (GDestroyNotify) g_object_unref);
-        }
-    }
-  return file;
-}
-
-static void
-gimp_file_dialog_real_save_state (GimpFileDialog *dialog,
-                                  const gchar    *state_name)
-{
-  g_object_set_data_full (G_OBJECT (dialog->gimp), state_name,
-                          gimp_file_dialog_get_state (dialog),
-                          (GDestroyNotify) gimp_file_dialog_state_destroy);
-}
-
-static void
-gimp_file_dialog_real_load_state (GimpFileDialog *dialog,
-                                  const gchar    *state_name)
-{
-  GimpFileDialogState *state;
-
-  state = g_object_get_data (G_OBJECT (dialog->gimp), state_name);
-
-  if (state)
-    gimp_file_dialog_set_state (GIMP_FILE_DIALOG (dialog), state);
 }
