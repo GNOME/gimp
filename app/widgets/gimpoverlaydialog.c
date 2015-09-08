@@ -225,7 +225,7 @@ gimp_overlay_dialog_constructed (GObject *object)
   gtk_box_pack_end (GTK_BOX (dialog->header), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gimp_help_set_help_data (dialog->close_button,
+  gimp_help_set_help_data (dialog->detach_button,
                            _("Detach dialog from canvas"), NULL);
 
   image = gtk_image_new_from_icon_name (GIMP_STOCK_MENU_LEFT,
