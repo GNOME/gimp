@@ -49,14 +49,9 @@
 
 #include "gimp-intl.h"
 
+
 /*  an arbitrary limit to keep the file dialog from becoming too wide  */
 #define MAX_EXTENSIONS  4
-
-typedef struct _GimpFileDialogState GimpFileDialogState;
-struct _GimpFileDialogState
-{
-  gchar *filter_name;
-};
 
 enum
 {
@@ -70,6 +65,14 @@ enum
   PROP_FILE_PROCS,
   PROP_FILE_PROCS_ALL_IMAGES
 };
+
+typedef struct _GimpFileDialogState GimpFileDialogState;
+
+struct _GimpFileDialogState
+{
+  gchar *filter_name;
+};
+
 
 static void     gimp_file_dialog_progress_iface_init     (GimpProgressInterface *iface);
 
@@ -139,6 +142,7 @@ static GimpFileDialogState
 static void     gimp_file_dialog_set_state               (GimpFileDialog      *dialog,
                                                           GimpFileDialogState *state);
 static void     gimp_file_dialog_state_destroy           (GimpFileDialogState *state);
+
 
 
 G_DEFINE_TYPE_WITH_CODE (GimpFileDialog, gimp_file_dialog,
@@ -637,7 +641,7 @@ gimp_file_dialog_get_default_folder (GimpFileDialog *dialog)
 {
   g_return_val_if_fail (GIMP_IS_FILE_DIALOG (dialog), NULL);
 
-  GIMP_FILE_DIALOG_GET_CLASS (dialog)->get_default_folder (dialog);
+  return GIMP_FILE_DIALOG_GET_CLASS (dialog)->get_default_folder (dialog);
 }
 
 void
@@ -657,6 +661,7 @@ gimp_file_dialog_load_state (GimpFileDialog *dialog,
 
   GIMP_FILE_DIALOG_GET_CLASS (dialog)->load_state (dialog, state_name);
 }
+
 
 /*  private functions  */
 

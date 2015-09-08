@@ -48,6 +48,7 @@
 
 
 typedef struct _GimpSaveDialogState GimpSaveDialogState;
+
 struct _GimpSaveDialogState
 {
   gchar    *filter_name;
@@ -102,7 +103,8 @@ gimp_save_dialog_constructed (GObject *object)
   GimpSaveDialog *dialog = GIMP_SAVE_DIALOG (object);
 
   /* GimpFileDialog's constructed() is doing a few initialization
-   * common to all file dialogs. */
+   * common to all file dialogs.
+   */
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_save_dialog_add_compat_toggle (dialog);
@@ -112,8 +114,6 @@ static void
 gimp_save_dialog_save_state (GimpFileDialog *dialog,
                              const gchar    *state_name)
 {
-  g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
-
   g_object_set_data_full (G_OBJECT (dialog->gimp), state_name,
                           gimp_save_dialog_get_state (GIMP_SAVE_DIALOG (dialog)),
                           (GDestroyNotify) gimp_save_dialog_state_destroy);
@@ -124,8 +124,6 @@ gimp_save_dialog_load_state (GimpFileDialog *dialog,
                              const gchar    *state_name)
 {
   GimpSaveDialogState *state;
-
-  g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
 
   state = g_object_get_data (G_OBJECT (dialog->gimp), state_name);
 
@@ -187,10 +185,10 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
 
   file_dialog = GIMP_FILE_DIALOG (dialog);
 
-  file_dialog->image = image;
-  dialog->save_a_copy              = save_a_copy;
-  dialog->close_after_saving       = close_after_saving;
-  dialog->display_to_close         = display;
+  file_dialog->image         = image;
+  dialog->save_a_copy        = save_a_copy;
+  dialog->close_after_saving = close_after_saving;
+  dialog->display_to_close   = display;
 
   gimp_file_dialog_set_file_proc (file_dialog, NULL);
 
@@ -326,6 +324,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
 }
 
+
 /*  private functions  */
 
 static void
@@ -355,8 +354,6 @@ gimp_save_dialog_get_state (GimpSaveDialog *dialog)
   GimpSaveDialogState *state;
   GtkFileFilter       *filter;
 
-  g_return_val_if_fail (GIMP_IS_SAVE_DIALOG (dialog), NULL);
-
   state = g_slice_new0 (GimpSaveDialogState);
 
   filter = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
@@ -373,9 +370,6 @@ static void
 gimp_save_dialog_set_state (GimpSaveDialog      *dialog,
                             GimpSaveDialogState *state)
 {
-  g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
-  g_return_if_fail (state != NULL);
-
   if (state->filter_name)
     {
       GSList *filters;
@@ -404,8 +398,6 @@ gimp_save_dialog_set_state (GimpSaveDialog      *dialog,
 static void
 gimp_save_dialog_state_destroy (GimpSaveDialogState *state)
 {
-  g_return_if_fail (state != NULL);
-
   g_free (state->filter_name);
   g_slice_free (GimpSaveDialogState, state);
 }

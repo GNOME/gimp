@@ -66,7 +66,7 @@ struct _GimpFileDialogClass
 {
   GtkFileChooserDialogClass  parent_class;
 
-  GFile * ( *get_default_folder) (GimpFileDialog *dialog);
+  GFile * (* get_default_folder) (GimpFileDialog *dialog);
 
   void    (* save_state)         (GimpFileDialog *dialog,
                                   const gchar    *state_name);

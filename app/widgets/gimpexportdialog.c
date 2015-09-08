@@ -52,6 +52,7 @@ G_DEFINE_TYPE (GimpExportDialog, gimp_export_dialog,
 
 #define parent_class gimp_export_dialog_parent_class
 
+
 static void
 gimp_export_dialog_class_init (GimpExportDialogClass *klass)
 {
@@ -61,6 +62,7 @@ static void
 gimp_export_dialog_init (GimpExportDialog *dialog)
 {
 }
+
 
 /*  public functions  */
 
@@ -215,5 +217,3 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
 
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
 }
-
-/*  private functions  */
