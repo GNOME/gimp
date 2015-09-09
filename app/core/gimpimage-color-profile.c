@@ -349,7 +349,7 @@ gimp_image_convert_color_profile (GimpImage                *image,
   GimpColorProfile *src_profile;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (dest_profile != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (dest_profile), FALSE);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
