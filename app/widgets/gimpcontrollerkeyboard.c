@@ -21,6 +21,7 @@
 #include "config.h"
 
 #include <gegl.h>
+#undef GDK_MULTIHEAD_SAFE /* for gdk_keymap_get_default() */
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -190,7 +191,8 @@ gimp_controller_keyboard_init (GimpControllerKeyboard *keyboard)
 
   if (! event_names_initialized)
     {
-      gint i;
+      GdkKeymap *keymap = gdk_keymap_get_default ();
+      gint       i;
 
       for (i = 0; i < G_N_ELEMENTS (keyboard_events); i++)
         {
@@ -200,6 +202,7 @@ gimp_controller_keyboard_init (GimpControllerKeyboard *keyboard)
             {
               gtk_accelerator_parse (kevent->modifier_string, NULL,
                                      &kevent->modifiers);
+              gdk_keymap_map_virtual_modifiers (keymap, &kevent->modifiers);
             }
 
           if (kevent->modifiers != 0)

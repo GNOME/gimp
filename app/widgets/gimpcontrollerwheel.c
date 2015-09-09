@@ -21,6 +21,7 @@
 #include "config.h"
 
 #include <gegl.h>
+#undef GDK_MULTIHEAD_SAFE /* for gdk_keymap_get_default() */
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -189,7 +190,8 @@ gimp_controller_wheel_init (GimpControllerWheel *wheel)
 
   if (! events_initialized)
     {
-      gint i;
+      GdkKeymap *keymap = gdk_keymap_get_default ();
+      gint       i;
 
       for (i = 0; i < G_N_ELEMENTS (wheel_events); i++)
         {
@@ -199,6 +201,7 @@ gimp_controller_wheel_init (GimpControllerWheel *wheel)
             {
               gtk_accelerator_parse (wevent->modifier_string, NULL,
                                      &wevent->modifiers);
+              gdk_keymap_map_virtual_modifiers (keymap, &wevent->modifiers);
             }
 
           if (wevent->modifiers != 0)
