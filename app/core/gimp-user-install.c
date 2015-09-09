@@ -534,6 +534,33 @@ user_update_menurc_over20 (const GMatchInfo *matched_value,
   return FALSE;
 }
 
+#define CONTROLLERRC_UPDATE_PATTERN "\\(map \"(scroll|cursor)-[^\"]*\\bcontrol\\b[^\"]*\""
+
+static gboolean
+user_update_controllerrc (const GMatchInfo *matched_value,
+                          GString          *new_value,
+                          gpointer          data)
+{
+  gchar  *original;
+  gchar  *replacement;
+  GRegex *regexp = NULL;
+
+  /* No need of a complicated pattern here.
+   * CONTROLLERRC_UPDATE_PATTERN took care of it first.
+   */
+  regexp   = g_regex_new ("\\bcontrol\\b", 0, 0, NULL);
+  original = g_match_info_fetch (matched_value, 0);
+
+  replacement = g_regex_replace (regexp, original, -1, 0,
+                                 "primary", 0, NULL);
+  g_string_append (new_value, replacement);
+
+  g_free (original);
+  g_free (replacement);
+  g_regex_unref (regexp);
+
+  return FALSE;
+}
 static gboolean
 user_install_dir_copy (GimpUserInstall *install,
                        const gchar     *source,
@@ -670,11 +697,12 @@ user_install_migrate_files (GimpUserInstall *install)
   while ((basename = g_dir_read_name (dir)) != NULL)
     {
       gchar *source = g_build_filename (install->old_dir, basename, NULL);
-      const gchar* update_pattern = NULL;
-      GRegexEvalCallback update_callback = NULL;
 
       if (g_file_test (source, G_FILE_TEST_IS_REGULAR))
         {
+          const gchar        *update_pattern = NULL;
+          GRegexEvalCallback  update_callback = NULL;
+
           /*  skip these files for all old versions  */
           if (strcmp (basename, "documents") == 0      ||
               g_str_has_prefix (basename, "gimpswap.") ||
@@ -684,8 +712,7 @@ user_install_migrate_files (GimpUserInstall *install)
             {
               goto next_file;
             }
-
-          if (strcmp (basename, "menurc") == 0)
+          else if (strcmp (basename, "menurc") == 0)
             {
               switch (install->old_minor)
                 {
@@ -694,10 +721,15 @@ user_install_migrate_files (GimpUserInstall *install)
                   goto next_file;
                   break;
                 default:
-                  update_pattern = MENURC_OVER20_UPDATE_PATTERN;
+                  update_pattern  = MENURC_OVER20_UPDATE_PATTERN;
                   update_callback = user_update_menurc_over20;
                   break;
                 }
+            }
+          else if (strcmp (basename, "controllerrc") == 0)
+            {
+              update_pattern  = CONTROLLERRC_UPDATE_PATTERN;
+              update_callback = user_update_controllerrc;
             }
 
           g_snprintf (dest, sizeof (dest), "%s%c%s",
