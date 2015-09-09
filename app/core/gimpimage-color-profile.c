@@ -465,14 +465,9 @@ gimp_image_import_color_profile (GimpImage    *image,
           intent = config->display_intent;
           bpc    = (intent == GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
 
-          gimp_image_undo_disable (image);
-
           gimp_image_convert_color_profile (image, dest_profile,
                                             intent, bpc,
                                             progress, NULL);
-
-          gimp_image_clean_all (image);
-          gimp_image_undo_enable (image);
 
           g_object_unref (dest_profile);
         }

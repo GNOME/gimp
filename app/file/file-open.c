@@ -215,8 +215,6 @@ file_open_image (Gimp                *gimp,
     {
       if (image)
         {
-          file_open_sanitize_image (image, as_new);
-
           /* Only set the load procedure if it hasn't already been set. */
           if (! gimp_image_get_load_proc (image))
             gimp_image_set_load_proc (image, file_proc);
@@ -249,6 +247,8 @@ file_open_image (Gimp                *gimp,
 
   if (image)
     {
+      gimp_image_undo_disable (image);
+
       gimp_image_import_color_profile (image, context, progress,
                                        run_mode == GIMP_RUN_INTERACTIVE ?
                                        TRUE : FALSE);
@@ -261,6 +261,9 @@ file_open_image (Gimp                *gimp,
           /* We shall treat this file as an Untitled file */
           gimp_image_set_file (image, NULL);
         }
+
+      /* Enables undo again */
+      file_open_sanitize_image (image, as_new);
     }
 
   return image;
@@ -724,22 +727,8 @@ file_open_sanitize_image (GimpImage *image,
    */
   gimp_image_clean_all (image);
 
-#if 0
-  /* XXX this is not needed any longer, remove it when sure */
-
-  /* make sure the entire projection is properly constructed, because
-   * load plug-ins are not required to call gimp_drawable_update() or
-   * anything.
-   */
-  gimp_image_invalidate (image,
-                         0, 0,
-                         gimp_image_get_width  (image),
-                         gimp_image_get_height (image));
+  /* Make sure all image states are up-to-date */
   gimp_image_flush (image);
-
-  /* same for drawable previews */
-  gimp_image_invalidate_previews (image);
-#endif
 }
 
 /* Converts items from one image to another */
