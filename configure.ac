@@ -440,8 +440,10 @@ CFLAGS="$CFLAGS $extra_warnings"
 # -Wreturn-type warns on forgotten return on non-void functions,
 # but not of g_return_if_fail() on non-void functions.
 # -Wsystem-headers is needed for that.
-GIMP_DETECT_CFLAGS(extra_warnings, '-Wsystem-headers')
-CFLAGS="$CFLAGS $extra_warnings"
+# Unfortunately it pulls tons of warnings on some systems.
+# So we comment out for now.
+# GIMP_DETECT_CFLAGS(extra_warnings, '-Wsystem-headers')
+# CFLAGS="$CFLAGS $extra_warnings"
 
 # Extra optimization flags for super performance
 GIMP_DETECT_CFLAGS(extra_warnings, '--omg-optimized')
