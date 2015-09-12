@@ -926,7 +926,7 @@ gimp_dnd_data_source_remove (GimpDndType  data_type,
                                         "gimp-dnd-drag-connected"));
 
   if (! drag_connected)
-    return;
+    return FALSE;
 
   dnd_data = dnd_data_defs + data_type;
 
