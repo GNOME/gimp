@@ -1265,9 +1265,6 @@ load_image (const gchar        *filename,
                                   layer_offset_x_pixel, layer_offset_y_pixel);
         }
 
-      if (ilayer > 0 && ! alpha)
-        gimp_layer_add_alpha (layer);
-
       gimp_image_insert_layer (image, layer, -1, -1);
 
       if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
