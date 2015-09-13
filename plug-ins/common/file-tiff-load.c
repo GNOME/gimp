@@ -1331,7 +1331,7 @@ load_rgba (TIFF        *tif,
 #if G_BYTE_ORDER != G_LITTLE_ENDIAN
       /* Make sure our channels are in the right order */
       guint32 row_start = row * image_width;
-      guint32 row_end   = row_start + image_wigth;
+      guint32 row_end   = row_start + image_width;
       guint32 i;
 
       for (i = row_start; i < row_end; i++)
@@ -1340,7 +1340,7 @@ load_rgba (TIFF        *tif,
 
       gegl_buffer_set (channel[0].buffer,
                        GEGL_RECTANGLE (0, image_height - row - 1,
-                                       image_height, 1),
+                                       image_width, 1),
                        0, channel[0].format,
                        ((guchar *) buffer) + row * image_width * 4,
                        GEGL_AUTO_ROWSTRIDE);
