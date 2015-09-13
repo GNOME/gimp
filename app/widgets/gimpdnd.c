@@ -913,19 +913,20 @@ gimp_dnd_data_source_add (GimpDndType  data_type,
     }
 }
 
-static void
+static gboolean
 gimp_dnd_data_source_remove (GimpDndType  data_type,
                              GtkWidget   *widget)
 {
   const GimpDndDataDef *dnd_data;
   gboolean              drag_connected;
+  gboolean              list_changed = FALSE;
 
   drag_connected =
     GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                         "gimp-dnd-drag-connected"));
 
   if (! drag_connected)
-    return;
+    return FALSE;
 
   dnd_data = dnd_data_defs + data_type;
 
@@ -973,10 +974,22 @@ gimp_dnd_data_source_remove (GimpDndType  data_type,
 
           gtk_target_table_free (targets, n_targets);
 
-          gtk_drag_source_set_target_list (widget, new_list);
+          if (g_list_length (target_list->list) !=
+              g_list_length (new_list->list))
+            {
+              list_changed = TRUE;
+
+              if (new_list->list)
+                gtk_drag_source_set_target_list (widget, new_list);
+              else
+                gtk_drag_source_set_target_list (widget, NULL);
+            }
+
           gtk_target_list_unref (new_list);
         }
     }
+
+  return list_changed;
 }
 
 static void
@@ -1991,9 +2004,7 @@ gimp_dnd_viewable_source_remove (GtkWidget *widget,
   if (dnd_type == GIMP_DND_TYPE_NONE)
     return FALSE;
 
-  gimp_dnd_data_source_remove (dnd_type, widget);
-
-  return TRUE;
+  return gimp_dnd_data_source_remove (dnd_type, widget);
 }
 
 gboolean

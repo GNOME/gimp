@@ -33,8 +33,6 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
-#include "pdb/gimppdb.h"
-
 #include "plug-in/gimppluginmanager.h"
 
 #include "gimpfiledialog.h"
@@ -49,6 +47,7 @@ G_DEFINE_TYPE (GimpOpenDialog, gimp_open_dialog,
 
 #define parent_class gimp_open_dialog_parent_class
 
+
 static void
 gimp_open_dialog_class_init (GimpOpenDialogClass *klass)
 {
@@ -58,6 +57,7 @@ static void
 gimp_open_dialog_init (GimpOpenDialog *dialog)
 {
 }
+
 
 /*  public functions  */
 
@@ -100,5 +100,3 @@ gimp_open_dialog_set_image (GimpOpenDialog *dialog,
   GIMP_FILE_DIALOG (dialog)->image = image;
   dialog->open_as_layers           = open_as_layers;
 }
-
-/*  private functions  */

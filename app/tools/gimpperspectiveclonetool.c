@@ -128,7 +128,7 @@ gimp_perspective_clone_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_TYPE_PERSPECTIVE_CLONE_OPTIONS,
                 gimp_perspective_clone_options_gui,
                 GIMP_PAINT_OPTIONS_CONTEXT_MASK |
-                GIMP_CONTEXT_PATTERN_MASK,
+                GIMP_CONTEXT_PROP_MASK_PATTERN,
                 "gimp-perspective-clone-tool",
                 _("Perspective Clone"),
                 _("Perspective Clone Tool: Clone from an image source "

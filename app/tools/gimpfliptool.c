@@ -79,7 +79,7 @@ gimp_flip_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_FLIP_TOOL,
                 GIMP_TYPE_FLIP_OPTIONS,
                 gimp_flip_options_gui,
-                GIMP_CONTEXT_BACKGROUND_MASK,
+                GIMP_CONTEXT_PROP_MASK_BACKGROUND,
                 "gimp-flip-tool",
                 _("Flip"),
                 _("Flip Tool: "

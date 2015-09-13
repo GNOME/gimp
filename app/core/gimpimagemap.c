@@ -499,7 +499,7 @@ gimp_image_map_sync_affect (GimpImageMap *image_map)
        *  when finally merged (see bug #699279)
        */
       if (! gimp_drawable_has_alpha (image_map->drawable))
-        active_mask &= ~GIMP_COMPONENT_ALPHA;
+        active_mask &= ~GIMP_COMPONENT_MASK_ALPHA;
 
       gimp_applicator_set_affect (image_map->applicator, active_mask);
     }

@@ -53,10 +53,10 @@ gimp_ink_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_INK_TOOL,
                 GIMP_TYPE_INK_OPTIONS,
                 gimp_ink_options_gui,
-                GIMP_CONTEXT_FOREGROUND_MASK |
-                GIMP_CONTEXT_BACKGROUND_MASK |
-                GIMP_CONTEXT_OPACITY_MASK    |
-                GIMP_CONTEXT_PAINT_MODE_MASK,
+                GIMP_CONTEXT_PROP_MASK_FOREGROUND |
+                GIMP_CONTEXT_PROP_MASK_BACKGROUND |
+                GIMP_CONTEXT_PROP_MASK_OPACITY    |
+                GIMP_CONTEXT_PROP_MASK_PAINT_MODE,
                 "gimp-ink-tool",
                 _("Ink"),
                 _("Ink Tool: Calligraphy-style painting"),

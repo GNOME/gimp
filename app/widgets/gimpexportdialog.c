@@ -47,12 +47,11 @@
 #include "gimp-intl.h"
 
 
-static GFile  * gimp_export_dialog_get_default_folder (Gimp *gimp);
-
 G_DEFINE_TYPE (GimpExportDialog, gimp_export_dialog,
                GIMP_TYPE_FILE_DIALOG)
 
 #define parent_class gimp_export_dialog_parent_class
+
 
 static void
 gimp_export_dialog_class_init (GimpExportDialogClass *klass)
@@ -63,6 +62,7 @@ static void
 gimp_export_dialog_init (GimpExportDialog *dialog)
 {
 }
+
 
 /*  public functions  */
 
@@ -99,17 +99,20 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
                               Gimp             *gimp,
                               GimpImage        *image)
 {
-  GFile *dir_file  = NULL;
-  GFile *name_file = NULL;
-  GFile *ext_file  = NULL;
-  gchar *basename;
+  GimpFileDialog *file_dialog;
+  GFile          *dir_file  = NULL;
+  GFile          *name_file = NULL;
+  GFile          *ext_file  = NULL;
+  gchar          *basename;
 
   g_return_if_fail (GIMP_IS_EXPORT_DIALOG (dialog));
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  GIMP_FILE_DIALOG (dialog)->image = image;
+  file_dialog = GIMP_FILE_DIALOG (dialog);
 
-  gimp_file_dialog_set_file_proc (GIMP_FILE_DIALOG (dialog), NULL);
+  file_dialog->image = image;
+
+  gimp_file_dialog_set_file_proc (file_dialog, NULL);
 
   /*
    * Priority of default paths for Export:
@@ -143,7 +146,7 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
                                   GIMP_FILE_EXPORT_LAST_FILE_KEY);
 
   if (! dir_file)
-    dir_file = gimp_export_dialog_get_default_folder (gimp);
+    dir_file = gimp_file_dialog_get_default_folder (file_dialog);
 
   /* Priority of default basenames for Export:
    *
@@ -213,46 +216,4 @@ gimp_export_dialog_set_image (GimpExportDialog *dialog,
     }
 
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
-}
-
-/*  private functions  */
-
-static GFile *
-gimp_export_dialog_get_default_folder (Gimp *gimp)
-{
-  if (gimp->default_folder)
-    {
-      return gimp->default_folder;
-    }
-  else
-    {
-      GFile *file = g_object_get_data (G_OBJECT (gimp),
-                                       "gimp-documents-folder");
-
-      if (! file)
-        {
-          gchar *path;
-
-          /* Make sure it ends in '/' */
-          path = g_build_path (G_DIR_SEPARATOR_S,
-                               g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
-                               G_DIR_SEPARATOR_S,
-                               NULL);
-
-          /* Paranoia fallback, see bug #722400 */
-          if (! path)
-            path = g_build_path (G_DIR_SEPARATOR_S,
-                                 g_get_home_dir (),
-                                 G_DIR_SEPARATOR_S,
-                                 NULL);
-
-          file = g_file_new_for_path (path);
-          g_free (path);
-
-          g_object_set_data_full (G_OBJECT (gimp), "gimp-documents-folder",
-                                  file, (GDestroyNotify) g_object_unref);
-        }
-
-      return file;
-    }
 }

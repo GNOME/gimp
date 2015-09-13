@@ -106,8 +106,8 @@ gimp_operation_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_OPERATION_TOOL,
                 GIMP_TYPE_COLOR_OPTIONS,
                 gimp_color_options_gui,
-                GIMP_CONTEXT_FOREGROUND_MASK |
-                GIMP_CONTEXT_BACKGROUND_MASK,
+                GIMP_CONTEXT_PROP_MASK_FOREGROUND |
+                GIMP_CONTEXT_PROP_MASK_BACKGROUND,
                 "gimp-operation-tool",
                 _("GEGL Operation"),
                 _("Operation Tool: Use an arbitrary GEGL operation"),

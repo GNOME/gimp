@@ -90,7 +90,7 @@ gimp_operation_mask_components_class_init (GimpOperationMaskComponentsClass *kla
                                                        "Mask",
                                                        "The component mask",
                                                        GIMP_TYPE_COMPONENT_MASK,
-                                                       GIMP_COMPONENT_ALL,
+                                                       GIMP_COMPONENT_MASK_ALL,
                                                        G_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT));
 }
@@ -181,7 +181,7 @@ gimp_operation_mask_components_parent_process (GeglOperation        *operation,
 
       return TRUE;
     }
-  else if (self->mask == GIMP_COMPONENT_ALL)
+  else if (self->mask == GIMP_COMPONENT_MASK_ALL)
     {
       GObject *aux = gegl_operation_context_get_object (context, "aux");
 
@@ -216,10 +216,10 @@ gimp_operation_mask_components_process (GeglOperation       *operation,
 
   while (samples--)
     {
-      dest[RED]   = (mask & GIMP_COMPONENT_RED)   ? aux[RED]   : src[RED];
-      dest[GREEN] = (mask & GIMP_COMPONENT_GREEN) ? aux[GREEN] : src[GREEN];
-      dest[BLUE]  = (mask & GIMP_COMPONENT_BLUE)  ? aux[BLUE]  : src[BLUE];
-      dest[ALPHA] = (mask & GIMP_COMPONENT_ALPHA) ? aux[ALPHA] : src[ALPHA];
+      dest[RED]   = (mask & GIMP_COMPONENT_MASK_RED)   ? aux[RED]   : src[RED];
+      dest[GREEN] = (mask & GIMP_COMPONENT_MASK_GREEN) ? aux[GREEN] : src[GREEN];
+      dest[BLUE]  = (mask & GIMP_COMPONENT_MASK_BLUE)  ? aux[BLUE]  : src[BLUE];
+      dest[ALPHA] = (mask & GIMP_COMPONENT_MASK_ALPHA) ? aux[ALPHA] : src[ALPHA];
 
       src += 4;
 

@@ -10,7 +10,9 @@
 
   <xsl:template name="recent-contributor">
     <xsl:param name="role" />
-    <xsl:apply-templates select="dc:contributor[contains(@role, $role) and number(@last-active) >= 2.8]" />
+    <xsl:apply-templates select="dc:contributor[contains(@role, $role) and
+                                 number(@last-active) >= 2             and
+                                 number(substring-after(@last-active, &quot;.&quot;)) >= 8]" />
   </xsl:template>
 
   <xsl:template match="/dc:gimp-authors">

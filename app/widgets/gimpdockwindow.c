@@ -343,9 +343,9 @@ gimp_dock_window_constructed (GObject *object)
                                 dock_window);
 
   gimp_context_define_properties (dock_window->p->context,
-                                  GIMP_CONTEXT_ALL_PROPS_MASK &
-                                  ~(GIMP_CONTEXT_IMAGE_MASK |
-                                    GIMP_CONTEXT_DISPLAY_MASK),
+                                  GIMP_CONTEXT_PROP_MASK_ALL &
+                                  ~(GIMP_CONTEXT_PROP_MASK_IMAGE |
+                                    GIMP_CONTEXT_PROP_MASK_DISPLAY),
                                   FALSE);
   gimp_context_set_parent (dock_window->p->context,
                            factory_context);
@@ -1087,8 +1087,8 @@ gimp_dock_window_auto_clicked (GtkWidget *widget,
     {
       gimp_context_copy_properties (gimp_dialog_factory_get_context (dock_window->p->dialog_factory),
                                     dock_window->p->context,
-                                    GIMP_CONTEXT_DISPLAY_MASK |
-                                    GIMP_CONTEXT_IMAGE_MASK);
+                                    GIMP_CONTEXT_PROP_MASK_DISPLAY |
+                                    GIMP_CONTEXT_PROP_MASK_IMAGE);
     }
 }
 

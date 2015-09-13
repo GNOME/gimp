@@ -50,14 +50,14 @@
 
 /*  local function prototypes  */
 
-static void       file_open_dialog_response    (GtkWidget           *open_dialog,
+static void       file_open_dialog_response    (GtkWidget           *dialog,
                                                 gint                 response_id,
                                                 Gimp                *gimp);
-static GimpImage *file_open_dialog_open_image  (GtkWidget           *open_dialog,
+static GimpImage *file_open_dialog_open_image  (GtkWidget           *dialog,
                                                 Gimp                *gimp,
                                                 GFile               *file,
                                                 GimpPlugInProcedure *load_proc);
-static gboolean   file_open_dialog_open_layers (GtkWidget           *open_dialog,
+static gboolean   file_open_dialog_open_layers (GtkWidget           *dialog,
                                                 GimpImage           *image,
                                                 GFile               *file,
                                                 GimpPlugInProcedure *load_proc);
@@ -90,11 +90,12 @@ file_open_dialog_new (Gimp *gimp)
 /*  private functions  */
 
 static void
-file_open_dialog_response (GtkWidget *open_dialog,
+file_open_dialog_response (GtkWidget *dialog,
                            gint       response_id,
                            Gimp      *gimp)
 {
-  GimpFileDialog *dialog  = GIMP_FILE_DIALOG (open_dialog);
+  GimpFileDialog *file_dialog = GIMP_FILE_DIALOG (dialog);
+  GimpOpenDialog *open_dialog = GIMP_OPEN_DIALOG (dialog);
   GSList         *files;
   GSList         *list;
   gboolean        success = FALSE;
@@ -104,20 +105,20 @@ file_open_dialog_response (GtkWidget *open_dialog,
 
   if (response_id != GTK_RESPONSE_OK)
     {
-      if (! dialog->busy)
-        gtk_widget_destroy (open_dialog);
+      if (! file_dialog->busy)
+        gtk_widget_destroy (dialog);
 
       return;
     }
 
-  files = gtk_file_chooser_get_files (GTK_FILE_CHOOSER (open_dialog));
+  files = gtk_file_chooser_get_files (GTK_FILE_CHOOSER (dialog));
 
   if (files)
     g_object_set_data_full (G_OBJECT (gimp), GIMP_FILE_OPEN_LAST_FILE_KEY,
                             g_object_ref (files->data),
                             (GDestroyNotify) g_object_unref);
 
-  gimp_file_dialog_set_sensitive (dialog, FALSE);
+  gimp_file_dialog_set_sensitive (file_dialog, FALSE);
 
   /* When we are going to open new image windows, unset the transient
    * window. We don't need it since we will use gdk_window_raise() to
@@ -125,70 +126,70 @@ file_open_dialog_response (GtkWidget *open_dialog,
    * will pull the image window it was invoked from on top of all the
    * new opened image windows, and we don't want that to happen.
    */
-  if (! GIMP_OPEN_DIALOG (dialog)->open_as_layers)
-    gtk_window_set_transient_for (GTK_WINDOW (open_dialog), NULL);
+  if (! open_dialog->open_as_layers)
+    gtk_window_set_transient_for (GTK_WINDOW (dialog), NULL);
 
   for (list = files; list; list = g_slist_next (list))
     {
       GFile *file = list->data;
 
-      if (GIMP_OPEN_DIALOG (dialog)->open_as_layers)
+      if (open_dialog->open_as_layers)
         {
-          if (! GIMP_FILE_DIALOG (dialog)->image)
+          if (! file_dialog->image)
             {
-              GIMP_FILE_DIALOG (dialog)->image = file_open_dialog_open_image (open_dialog,
-                                                           gimp,
-                                                           file,
-                                                           dialog->file_proc);
+              file_dialog->image = file_open_dialog_open_image (dialog,
+                                                                gimp,
+                                                                file,
+                                                                file_dialog->file_proc);
 
-              if (GIMP_FILE_DIALOG (dialog)->image)
+              if (file_dialog->image)
                 success = TRUE;
             }
-          else if (file_open_dialog_open_layers (open_dialog,
-                                                 GIMP_FILE_DIALOG (dialog)->image,
+          else if (file_open_dialog_open_layers (dialog,
+                                                 file_dialog->image,
                                                  file,
-                                                 dialog->file_proc))
+                                                 file_dialog->file_proc))
             {
               success = TRUE;
             }
         }
       else
         {
-          if (file_open_dialog_open_image (open_dialog,
+          if (file_open_dialog_open_image (dialog,
                                            gimp,
                                            file,
-                                           dialog->file_proc))
+                                           file_dialog->file_proc))
             {
               success = TRUE;
 
               /* Make the dialog stay on top of all images we open if
                * we open say 10 at once
                */
-              gdk_window_raise (gtk_widget_get_window (open_dialog));
+              gdk_window_raise (gtk_widget_get_window (dialog));
             }
         }
 
-      if (dialog->canceled)
+      if (file_dialog->canceled)
         break;
     }
 
   if (success)
     {
-      if (GIMP_OPEN_DIALOG (dialog)->open_as_layers && GIMP_FILE_DIALOG (dialog)->image)
-        gimp_image_flush (GIMP_FILE_DIALOG (dialog)->image);
+      if (open_dialog->open_as_layers && file_dialog->image)
+        gimp_image_flush (file_dialog->image);
 
-      gtk_widget_destroy (open_dialog);
+      gtk_widget_destroy (dialog);
     }
   else
     {
-      gimp_file_dialog_set_sensitive (dialog, TRUE);
+      gimp_file_dialog_set_sensitive (file_dialog, TRUE);
     }
 
   g_slist_free_full (files, (GDestroyNotify) g_object_unref);
 }
 
 static GimpImage *
-file_open_dialog_open_image (GtkWidget           *open_dialog,
+file_open_dialog_open_image (GtkWidget           *dialog,
                              Gimp                *gimp,
                              GFile               *file,
                              GimpPlugInProcedure *load_proc)
@@ -199,16 +200,16 @@ file_open_dialog_open_image (GtkWidget           *open_dialog,
 
   image = file_open_with_proc_and_display (gimp,
                                            gimp_get_user_context (gimp),
-                                           GIMP_PROGRESS (open_dialog),
+                                           GIMP_PROGRESS (dialog),
                                            file, file, FALSE,
                                            load_proc,
-                                           G_OBJECT (gtk_widget_get_screen (open_dialog)),
-                                           gimp_widget_get_monitor (open_dialog),
+                                           G_OBJECT (gtk_widget_get_screen (dialog)),
+                                           gimp_widget_get_monitor (dialog),
                                            &status, &error);
 
   if (! image && status != GIMP_PDB_CANCEL)
     {
-      gimp_message (gimp, G_OBJECT (open_dialog), GIMP_MESSAGE_ERROR,
+      gimp_message (gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
                     _("Opening '%s' failed:\n\n%s"),
                     gimp_file_get_utf8_name (file), error->message);
       g_clear_error (&error);
@@ -218,7 +219,7 @@ file_open_dialog_open_image (GtkWidget           *open_dialog,
 }
 
 static gboolean
-file_open_dialog_open_layers (GtkWidget           *open_dialog,
+file_open_dialog_open_layers (GtkWidget           *dialog,
                               GimpImage           *image,
                               GFile               *file,
                               GimpPlugInProcedure *load_proc)
@@ -229,7 +230,7 @@ file_open_dialog_open_layers (GtkWidget           *open_dialog,
 
   new_layers = file_open_layers (image->gimp,
                                  gimp_get_user_context (image->gimp),
-                                 GIMP_PROGRESS (open_dialog),
+                                 GIMP_PROGRESS (dialog),
                                  image, FALSE,
                                  file, GIMP_RUN_INTERACTIVE, load_proc,
                                  &status, &error);
@@ -249,7 +250,7 @@ file_open_dialog_open_layers (GtkWidget           *open_dialog,
     }
   else if (status != GIMP_PDB_CANCEL)
     {
-      gimp_message (image->gimp, G_OBJECT (open_dialog), GIMP_MESSAGE_ERROR,
+      gimp_message (image->gimp, G_OBJECT (dialog), GIMP_MESSAGE_ERROR,
                     _("Opening '%s' failed:\n\n%s"),
                     gimp_file_get_utf8_name (file), error->message);
       g_clear_error (&error);

@@ -341,7 +341,7 @@ gimp_pdb_context_new (Gimp        *gimp,
   if (set_parent)
     {
       gimp_context_define_properties (GIMP_CONTEXT (context),
-                                      GIMP_CONTEXT_ALL_PROPS_MASK, FALSE);
+                                      GIMP_CONTEXT_PROP_MASK_ALL, FALSE);
       gimp_context_set_parent (GIMP_CONTEXT (context), parent);
 
       for (list = gimp_get_paint_info_iter (gimp);

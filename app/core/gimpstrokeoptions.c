@@ -415,8 +415,8 @@ gimp_stroke_options_new (Gimp        *gimp,
   if (use_context_color)
     {
       gimp_context_define_properties (GIMP_CONTEXT (options),
-                                      GIMP_CONTEXT_FOREGROUND_MASK |
-                                      GIMP_CONTEXT_PATTERN_MASK,
+                                      GIMP_CONTEXT_PROP_MASK_FOREGROUND |
+                                      GIMP_CONTEXT_PROP_MASK_PATTERN,
                                       FALSE);
 
       gimp_context_set_parent (GIMP_CONTEXT (options), context);
@@ -574,7 +574,7 @@ gimp_stroke_options_prepare (GimpStrokeOptions *options,
              *  from the passed context
              */
             gimp_context_define_properties (GIMP_CONTEXT (paint_options),
-                                            GIMP_CONTEXT_PAINT_PROPS_MASK,
+                                            GIMP_CONTEXT_PROP_MASK_PAINT,
                                             FALSE);
             gimp_context_set_parent (GIMP_CONTEXT (paint_options), context);
 
@@ -589,21 +589,21 @@ gimp_stroke_options_prepare (GimpStrokeOptions *options,
               gimp_config_duplicate (GIMP_CONFIG (paint_info->paint_options));
 
             /*  FG and BG are always shared between all tools  */
-            global_props |= GIMP_CONTEXT_FOREGROUND_MASK;
-            global_props |= GIMP_CONTEXT_BACKGROUND_MASK;
+            global_props |= GIMP_CONTEXT_PROP_MASK_FOREGROUND;
+            global_props |= GIMP_CONTEXT_PROP_MASK_BACKGROUND;
 
             if (config->global_brush)
-              global_props |= GIMP_CONTEXT_BRUSH_MASK;
+              global_props |= GIMP_CONTEXT_PROP_MASK_BRUSH;
             if (config->global_dynamics)
-              global_props |= GIMP_CONTEXT_DYNAMICS_MASK;
+              global_props |= GIMP_CONTEXT_PROP_MASK_DYNAMICS;
             if (config->global_pattern)
-              global_props |= GIMP_CONTEXT_PATTERN_MASK;
+              global_props |= GIMP_CONTEXT_PROP_MASK_PATTERN;
             if (config->global_palette)
-              global_props |= GIMP_CONTEXT_PALETTE_MASK;
+              global_props |= GIMP_CONTEXT_PROP_MASK_PALETTE;
             if (config->global_gradient)
-              global_props |= GIMP_CONTEXT_GRADIENT_MASK;
+              global_props |= GIMP_CONTEXT_PROP_MASK_GRADIENT;
             if (config->global_font)
-              global_props |= GIMP_CONTEXT_FONT_MASK;
+              global_props |= GIMP_CONTEXT_PROP_MASK_FONT;
 
             gimp_context_copy_properties (context,
                                           GIMP_CONTEXT (paint_options),

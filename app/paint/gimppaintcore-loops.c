@@ -395,7 +395,7 @@ mask_components_onto (GeglBuffer        *src_buffer,
                             iterator_format,
                             GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
 
-  while (gegl_buffer_iterator_next(iter))
+  while (gegl_buffer_iterator_next (iter))
     {
       gfloat *dest    = (gfloat *)iter->data[0];
       gfloat *src     = (gfloat *)iter->data[1];
@@ -404,10 +404,10 @@ mask_components_onto (GeglBuffer        *src_buffer,
 
       while (samples--)
         {
-          dest[RED]   = (mask & GIMP_COMPONENT_RED)   ? aux[RED]   : src[RED];
-          dest[GREEN] = (mask & GIMP_COMPONENT_GREEN) ? aux[GREEN] : src[GREEN];
-          dest[BLUE]  = (mask & GIMP_COMPONENT_BLUE)  ? aux[BLUE]  : src[BLUE];
-          dest[ALPHA] = (mask & GIMP_COMPONENT_ALPHA) ? aux[ALPHA] : src[ALPHA];
+          dest[RED]   = (mask & GIMP_COMPONENT_MASK_RED)   ? aux[RED]   : src[RED];
+          dest[GREEN] = (mask & GIMP_COMPONENT_MASK_GREEN) ? aux[GREEN] : src[GREEN];
+          dest[BLUE]  = (mask & GIMP_COMPONENT_MASK_BLUE)  ? aux[BLUE]  : src[BLUE];
+          dest[ALPHA] = (mask & GIMP_COMPONENT_MASK_ALPHA) ? aux[ALPHA] : src[ALPHA];
 
           src  += 4;
           aux  += 4;

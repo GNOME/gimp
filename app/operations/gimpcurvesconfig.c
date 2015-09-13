@@ -379,7 +379,7 @@ gimp_curves_config_new_spline (gint32         channel,
   gimp_data_freeze (GIMP_DATA (curve));
 
   gimp_curve_set_curve_type (curve, GIMP_CURVE_SMOOTH);
-  gimp_curve_set_n_samples (curve, n_points);
+  gimp_curve_set_n_points (curve, n_points);
 
   /*  unset the last point  */
   gimp_curve_set_point (curve, curve->n_points - 1, -1.0, -1.0);

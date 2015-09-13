@@ -1130,17 +1130,11 @@ write_pixel_data (FILE   *fd,
 {
   GeglBuffer   *buffer = gimp_drawable_get_buffer (drawableID);
   const Babl   *format;
-  if (gimp_item_is_channel(drawableID)) {
-    format = get_channel_format(drawableID);
-  }
-  else {
-    format = get_pixel_format (drawableID);
-  }
-  gint32        tile_height = gimp_tile_height();
+  gint32        tile_height = gimp_tile_height ();
   gint32        height = gegl_buffer_get_height (buffer);
   gint32        width  = gegl_buffer_get_width (buffer);
-  gint32        bytes = babl_format_get_bytes_per_pixel (format);
-  gint32        colors = bytes;       /* fixed up down below */
+  gint32        bytes;
+  gint32        colors;
   gint32        y;
   gint32        len;                  /* Length of compressed data */
   gint16       *LengthsTable;         /* Lengths of every compressed row */
@@ -1152,15 +1146,24 @@ write_pixel_data (FILE   *fd,
   IFDBG printf (" Function: write_pixel_data, drw %d, lto %d\n",
                 drawableID, ltable_offset);
 
-  if ( gimp_drawable_has_alpha  (drawableID) &&
-      !gimp_drawable_is_indexed (drawableID))
-    colors -= 1;
+  if (gimp_item_is_channel (drawableID))
+    format = get_channel_format (drawableID);
+  else
+    format = get_pixel_format (drawableID);
+
+   bytes = babl_format_get_bytes_per_pixel (format);
+
+   colors = bytes;
+
+   if (gimp_drawable_has_alpha  (drawableID) &&
+       ! gimp_drawable_is_indexed (drawableID))
+     colors -= 1;
 
   LengthsTable = g_new (gint16, height);
   rledata = g_new (guchar, (MIN (height, tile_height) *
                             (width + 10 + (width / 100))));
 
-  data = g_new (guchar, MIN(height, tile_height) * width * bytes);
+  data = g_new (guchar, MIN (height, tile_height) * width * bytes);
 
   for (i = 0; i < bytes; i++)
     {

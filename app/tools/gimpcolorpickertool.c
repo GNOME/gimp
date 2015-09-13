@@ -44,6 +44,7 @@
 /*  local function prototypes  */
 
 static void   gimp_color_picker_tool_constructed   (GObject             *object);
+static void   gimp_color_picker_tool_dispose       (GObject             *object);
 
 static void   gimp_color_picker_tool_control       (GimpTool            *tool,
                                                     GimpToolAction       action,
@@ -91,7 +92,8 @@ gimp_color_picker_tool_register (GimpToolRegisterCallback  callback,
   (* callback) (GIMP_TYPE_COLOR_PICKER_TOOL,
                 GIMP_TYPE_COLOR_PICKER_OPTIONS,
                 gimp_color_picker_options_gui,
-                GIMP_CONTEXT_FOREGROUND_MASK | GIMP_CONTEXT_BACKGROUND_MASK,
+                GIMP_CONTEXT_PROP_MASK_FOREGROUND |
+                GIMP_CONTEXT_PROP_MASK_BACKGROUND,
                 "gimp-color-picker-tool",
                 _("Color Picker"),
                 _("Color Picker Tool: Set colors from image pixels"),
@@ -109,6 +111,7 @@ gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass)
   GimpColorToolClass *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
 
   object_class->constructed = gimp_color_picker_tool_constructed;
+  object_class->dispose     = gimp_color_picker_tool_dispose;
 
   tool_class->control       = gimp_color_picker_tool_control;
   tool_class->modifier_key  = gimp_color_picker_tool_modifier_key;
@@ -137,6 +140,24 @@ gimp_color_picker_tool_constructed (GObject *object)
 }
 
 static void
+gimp_color_picker_tool_dispose (GObject *object)
+{
+  GimpColorPickerTool *picker_tool = GIMP_COLOR_PICKER_TOOL (object);
+
+  if (picker_tool->gui)
+    {
+      g_object_unref (picker_tool->gui);
+
+      picker_tool->gui          = NULL;
+      picker_tool->color_area   = NULL;
+      picker_tool->color_frame1 = NULL;
+      picker_tool->color_frame2 = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_color_picker_tool_control (GimpTool       *tool,
                                 GimpToolAction  action,
                                 GimpDisplay    *display)
@@ -151,14 +172,7 @@ gimp_color_picker_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_HALT:
       if (picker_tool->gui)
-        {
-          g_object_unref (picker_tool->gui);
-
-          picker_tool->gui          = NULL;
-          picker_tool->color_area   = NULL;
-          picker_tool->color_frame1 = NULL;
-          picker_tool->color_frame2 = NULL;
-        }
+        gimp_tool_gui_hide (picker_tool->gui);
       break;
 
     case GIMP_TOOL_ACTION_COMMIT:

@@ -184,6 +184,11 @@ static gint     load_resource_lyvr    (const PSDlayerres     *res_a,
 				       FILE                  *f,
 				       GError               **error);
 
+static gint     load_resource_lnsr    (const PSDlayerres     *res_a,
+				       PSDlayer              *lyr_a,
+				       FILE                  *f,
+				       GError               **error);
+
 /* Public Functions */
 gint
 get_layer_resource_header (PSDlayerres  *res_a,
@@ -270,6 +275,10 @@ load_layer_resource (PSDlayerres  *res_a,
 
       else if (memcmp (res_a->key, PSD_LPRP_VERSION, 4) == 0)
 	load_resource_lyvr (res_a, lyr_a, f, error);
+
+      else if (memcmp (res_a->key, PSD_LPRP_SOURCE, 4) == 0)
+	load_resource_lnsr (res_a, lyr_a, f, error);
+
       else
         load_resource_unknown (res_a, lyr_a, f, error);
     }
@@ -828,7 +837,11 @@ load_resource_lyvr (const PSDlayerres  *res_a,
                     FILE               *f,
                     GError            **error)
 {
-  gint32    version;
+  gint32 version;
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: layer version",
+                    res_a->key);
+
   if (fread (&version, 4, 1, f) < 1)
     {
       psd_set_error (feof (f), errno, error);
@@ -841,9 +854,33 @@ load_resource_lyvr (const PSDlayerres  *res_a,
    */
   if (version < 70)
     {
-      g_message ('Invalid version layer');
+      g_message ("Invalid version layer");
     }
 
-  IFDBG(2) g_debug ("Process layer resource block %.4s: Version effects", res_a->key);
+  return 0;
+}
 
+static gint
+load_resource_lnsr (const PSDlayerres  *res_a,
+                    PSDlayer           *lyr_a,
+                    FILE               *f,
+                    GError            **error)
+{
+  gchar layername[4];
+
+  IFDBG(2) g_debug ("Process layer resource block %.4s: layer source name",
+                    res_a->key);
+
+  if (fread (&layername, 4, 1, f) < 1)
+    {
+      psd_set_error (feof (f), errno, error);
+      return -1;
+    }
+
+  /* nowadays psd files, layer name are encoded in unicode, cf "luni"
+   * moreover lnsr info is encoded in MacRoman, see
+   * https://bugzilla.gnome.org/show_bug.cgi?id=753986#c4
+   */
+
+  return 0;
 }

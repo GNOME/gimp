@@ -663,6 +663,117 @@ gimp_color_profile_set_tag (cmsHPROFILE      profile,
   cmsMLUfree (mlu);
 }
 
+static gboolean
+gimp_color_profile_get_rgb_matrix_colorants (GimpColorProfile *profile,
+                                             GimpMatrix3      *matrix)
+{
+  cmsHPROFILE  lcms_profile;
+  cmsCIEXYZ   *red;
+  cmsCIEXYZ   *green;
+  cmsCIEXYZ   *blue;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), FALSE);
+
+  lcms_profile = profile->priv->lcms_profile;
+
+  red   = cmsReadTag (lcms_profile, cmsSigRedColorantTag);
+  green = cmsReadTag (lcms_profile, cmsSigGreenColorantTag);
+  blue  = cmsReadTag (lcms_profile, cmsSigBlueColorantTag);
+
+  if (red && green && blue)
+    {
+      if (matrix)
+        {
+          matrix->coeff[0][0] = red->X;
+          matrix->coeff[0][1] = red->Y;
+          matrix->coeff[0][2] = red->Z;
+
+          matrix->coeff[1][0] = green->X;
+          matrix->coeff[1][1] = green->Y;
+          matrix->coeff[1][2] = green->Z;
+
+          matrix->coeff[2][0] = blue->X;
+          matrix->coeff[2][1] = blue->X;
+          matrix->coeff[2][2] = blue->X;
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+static GimpColorProfile *
+gimp_color_profile_new_foobar (GimpColorProfile *profile)
+{
+  /* Make the target RGB working space.  Until the ICC allows other
+   * illuminants, and corresponding LCMS code has been added, use the
+   * D50 color space reference white and illuminant.
+   */
+  GimpColorProfile *new_profile;
+  cmsHPROFILE       target_profile;
+  cmsToneCurve     *gamma100[3];
+  GimpMatrix3       matrix;
+  cmsCIEXYZ         red;
+  cmsCIEXYZ         green;
+  cmsCIEXYZ         blue;
+  cmsCIEXYZ         D50 = { 0.96420288, 1.00000000, 0.82490540 };
+
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
+
+  if (! gimp_color_profile_get_rgb_matrix_colorants (profile, &matrix))
+    return NULL;
+
+  red.X = matrix.coeff[0][0];
+  red.Y = matrix.coeff[0][1];
+  red.Z = matrix.coeff[0][2];
+
+  green.X = matrix.coeff[1][0];
+  green.Y = matrix.coeff[1][1];
+  green.Z = matrix.coeff[1][2];
+
+  blue.X = matrix.coeff[2][0];
+  blue.Y = matrix.coeff[2][1];
+  blue.Z = matrix.coeff[2][2];
+
+  target_profile = cmsCreateProfilePlaceholder (0);
+
+  gamma100[0] = gamma100[1] = gamma100[2] = cmsBuildGamma (NULL, 1.00);
+
+  cmsSetProfileVersion (target_profile, 4.3);
+  cmsSetDeviceClass (target_profile, cmsSigDisplayClass);
+  cmsSetColorSpace (target_profile, cmsSigRgbData);
+  cmsSetPCS (target_profile, cmsSigXYZData);
+  cmsWriteTag (target_profile, cmsSigMediaWhitePointTag, &D50);
+  cmsWriteTag (target_profile, cmsSigRedColorantTag,   &red);
+  cmsWriteTag (target_profile, cmsSigGreenColorantTag, &green);
+  cmsWriteTag (target_profile, cmsSigBlueColorantTag,  &blue);
+
+  cmsFreeToneCurve (gamma100[0]);
+
+  /* I made this profile with the linear gamma TRC, just so it would be
+   * a little different from the GIMP sRGB profile. There's a way to
+   * only have one copy of the TRC in the profile, but I haven't figured
+   * out how to avoid writing three separate but identical curves.
+   */
+  cmsWriteTag (target_profile, cmsSigRedTRCTag,   gamma100[0]);
+  cmsWriteTag (target_profile, cmsSigGreenTRCTag, gamma100[0]);
+  cmsWriteTag (target_profile, cmsSigBlueTRCTag,  gamma100[0]);
+
+  gimp_color_profile_set_tag (profile, cmsSigCopyrightTag,
+                              "Copyright 2015 by GIMP, Creative Commons Attribution-ShareAlike 3.0 Unported License (https://creativecommons.org/licenses/by-sa/3.0/legalcode).");
+  gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
+                              "GIMP user working space with linear gamma TRC.");
+  gimp_color_profile_set_tag (profile, cmsSigDeviceMfgDescTag,
+                              "GIMP");
+
+  new_profile = gimp_color_profile_new_from_lcms_profile (target_profile, NULL);
+
+  cmsCloseProfile (target_profile);
+
+  return new_profile;
+}
+
 static cmsHPROFILE *
 gimp_color_profile_new_srgb_internal (void)
 {
@@ -760,6 +871,34 @@ gimp_color_profile_new_srgb (void)
       profile = gimp_color_profile_new_from_lcms_profile (lcms_profile, NULL);
 
       cmsCloseProfile (lcms_profile);
+
+#if 0
+      /* for testing the code to get the colorants and make a new profile */
+      {
+        GimpMatrix3 matrix;
+
+        if (gimp_color_profile_get_rgb_matrix_colorants (profile, &matrix))
+          {
+            GimpColorProfile *test;
+
+            g_printerr ("Profile Red colorant XYZ: %1.8f, %1.8f, %1.8f \n",
+                        matrix.coeff[0][0],
+                        matrix.coeff[0][1],
+                        matrix.coeff[0][2]);
+            g_printerr ("Profile Green colorant XYZ: %1.8f, %1.8f, %1.8f \n",
+                        matrix.coeff[1][0],
+                        matrix.coeff[1][1],
+                        matrix.coeff[1][2]);
+            g_printerr ("Profile Blue colorant XYZ: %1.8f, %1.8f, %1.8f \n",
+                        matrix.coeff[2][0],
+                        matrix.coeff[2][1],
+                        matrix.coeff[2][2]);
+
+            test = gimp_color_profile_new_foobar (profile);
+            g_object_unref (test);
+          }
+      }
+#endif
     }
 
   data = gimp_color_profile_get_icc_profile (profile, &length);
@@ -930,8 +1069,8 @@ gimp_color_profile_new_adobe_rgb (void)
  * used instead of the passed @format, which usually is the same as
  * @format, unless lcms doesn't support @format.
  *
- * Note that this function currently only supports RGB, RGBA, R'G'B' and
- * R'G'B'A formats.
+ * Note that this function currently only supports RGB, RGBA, R'G'B',
+ * R'G'B'A and the cairo-RGB24 and cairo-ARGB32 formats.
  *
  * Return value: the #Babl format to be used instead of @format, or %NULL
  *               is the passed @format is not supported at all.
@@ -955,17 +1094,7 @@ gimp_color_profile_get_format (const Babl *format,
   type      = babl_format_get_type (format, 0);
   model     = babl_format_get_model (format);
 
-  if (model == babl_model ("RGB") ||
-      model == babl_model ("RGBA"))
-    {
-      linear = TRUE;
-    }
-  else if (model == babl_model ("R'G'B'") ||
-           model == babl_model ("R'G'B'A"))
-    {
-      linear = FALSE;
-    }
-  else if (format == babl_format ("cairo-RGB24"))
+  if (format == babl_format ("cairo-RGB24"))
     {
       *lcms_format = TYPE_RGB_8;
 
@@ -976,6 +1105,16 @@ gimp_color_profile_get_format (const Babl *format,
       *lcms_format = TYPE_RGBA_8;
 
       return babl_format ("R'G'B'A u8");
+    }
+  else if (model == babl_model ("RGB") ||
+           model == babl_model ("RGBA"))
+    {
+      linear = TRUE;
+    }
+  else if (model == babl_model ("R'G'B'") ||
+           model == babl_model ("R'G'B'A"))
+    {
+      linear = FALSE;
     }
   else
     {

@@ -46,7 +46,7 @@ gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
                 GIMP_TYPE_PENCIL_OPTIONS,
                 gimp_paint_options_gui,
                 GIMP_PAINT_OPTIONS_CONTEXT_MASK |
-                GIMP_CONTEXT_GRADIENT_MASK,
+                GIMP_CONTEXT_PROP_MASK_GRADIENT,
                 "gimp-pencil-tool",
                 _("Pencil"),
                 _("Pencil Tool: Hard edge painting using a brush"),

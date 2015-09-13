@@ -302,6 +302,8 @@ libappwidgets_a_sources = \
 	gimpsavedialog.h		\
 	gimpscalebutton.c		\
 	gimpscalebutton.h		\
+	gimpsearchpopup.c		\
+	gimpsearchpopup.h		\
 	gimpselectiondata.c		\
 	gimpselectiondata.h		\
 	gimpselectioneditor.c		\

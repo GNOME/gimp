@@ -1183,7 +1183,7 @@ gimp_layer_get_active_mask (const GimpDrawable *drawable)
   GimpComponentMask  mask  = gimp_image_get_active_mask (image);
 
   if (gimp_drawable_has_alpha (drawable) && layer->lock_alpha)
-    mask &= ~GIMP_COMPONENT_ALPHA;
+    mask &= ~GIMP_COMPONENT_MASK_ALPHA;
 
   return mask;
 }

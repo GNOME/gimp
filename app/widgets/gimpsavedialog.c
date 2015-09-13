@@ -48,6 +48,7 @@
 
 
 typedef struct _GimpSaveDialogState GimpSaveDialogState;
+
 struct _GimpSaveDialogState
 {
   gchar    *filter_name;
@@ -57,7 +58,11 @@ struct _GimpSaveDialogState
 
 static void     gimp_save_dialog_constructed         (GObject             *object);
 
-static GFile  * gimp_save_dialog_get_default_folder  (Gimp                *gimp);
+static void     gimp_save_dialog_save_state          (GimpFileDialog      *dialog,
+                                                      const gchar         *state_name);
+static void     gimp_save_dialog_load_state          (GimpFileDialog      *dialog,
+                                                      const gchar         *state_name);
+
 static void     gimp_save_dialog_add_compat_toggle   (GimpSaveDialog      *dialog);
 static void     gimp_save_dialog_compat_toggled      (GtkToggleButton     *button,
                                                       GimpSaveDialog      *dialog);
@@ -68,15 +73,12 @@ static void     gimp_save_dialog_set_state           (GimpSaveDialog      *dialo
                                                       GimpSaveDialogState *state);
 static void     gimp_save_dialog_state_destroy       (GimpSaveDialogState *state);
 
-static void     gimp_save_dialog_real_save_state     (GimpFileDialog      *dialog,
-                                                      const gchar         *state_name);
-static void     gimp_save_dialog_real_load_state     (GimpFileDialog      *dialog,
-                                                      const gchar         *state_name);
 
 G_DEFINE_TYPE (GimpSaveDialog, gimp_save_dialog,
                GIMP_TYPE_FILE_DIALOG)
 
 #define parent_class gimp_save_dialog_parent_class
+
 
 static void
 gimp_save_dialog_class_init (GimpSaveDialogClass *klass)
@@ -84,10 +86,10 @@ gimp_save_dialog_class_init (GimpSaveDialogClass *klass)
   GObjectClass        *object_class = G_OBJECT_CLASS (klass);
   GimpFileDialogClass *fd_class     = GIMP_FILE_DIALOG_CLASS (klass);
 
-  object_class->constructed  = gimp_save_dialog_constructed;
+  object_class->constructed = gimp_save_dialog_constructed;
 
-  fd_class->save_state       = gimp_save_dialog_real_save_state;
-  fd_class->load_state       = gimp_save_dialog_real_load_state;
+  fd_class->save_state      = gimp_save_dialog_save_state;
+  fd_class->load_state      = gimp_save_dialog_load_state;
 }
 
 static void
@@ -101,11 +103,34 @@ gimp_save_dialog_constructed (GObject *object)
   GimpSaveDialog *dialog = GIMP_SAVE_DIALOG (object);
 
   /* GimpFileDialog's constructed() is doing a few initialization
-   * common to all file dialogs. */
+   * common to all file dialogs.
+   */
   G_OBJECT_CLASS (parent_class)->constructed (object);
 
   gimp_save_dialog_add_compat_toggle (dialog);
 }
+
+static void
+gimp_save_dialog_save_state (GimpFileDialog *dialog,
+                             const gchar    *state_name)
+{
+  g_object_set_data_full (G_OBJECT (dialog->gimp), state_name,
+                          gimp_save_dialog_get_state (GIMP_SAVE_DIALOG (dialog)),
+                          (GDestroyNotify) gimp_save_dialog_state_destroy);
+}
+
+static void
+gimp_save_dialog_load_state (GimpFileDialog *dialog,
+                             const gchar    *state_name)
+{
+  GimpSaveDialogState *state;
+
+  state = g_object_get_data (G_OBJECT (dialog->gimp), state_name);
+
+  if (state)
+    gimp_save_dialog_set_state (GIMP_SAVE_DIALOG (dialog), state);
+}
+
 
 /*  public functions  */
 
@@ -145,24 +170,27 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
                             gboolean        close_after_saving,
                             GimpObject     *display)
 {
-  GFile       *dir_file  = NULL;
-  GFile       *name_file = NULL;
-  GFile       *ext_file  = NULL;
-  gchar       *basename;
-  const gchar *version_string;
-  gint         rle_version;
-  gint         zlib_version;
-  gchar       *tooltip;
+  GimpFileDialog *file_dialog;
+  GFile          *dir_file  = NULL;
+  GFile          *name_file = NULL;
+  GFile          *ext_file  = NULL;
+  gchar          *basename;
+  const gchar    *version_string;
+  gint            rle_version;
+  gint            zlib_version;
+  gchar          *tooltip;
 
   g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  GIMP_FILE_DIALOG (dialog)->image = image;
-  dialog->save_a_copy              = save_a_copy;
-  dialog->close_after_saving       = close_after_saving;
-  dialog->display_to_close         = display;
+  file_dialog = GIMP_FILE_DIALOG (dialog);
 
-  gimp_file_dialog_set_file_proc (GIMP_FILE_DIALOG (dialog), NULL);
+  file_dialog->image         = image;
+  dialog->save_a_copy        = save_a_copy;
+  dialog->close_after_saving = close_after_saving;
+  dialog->display_to_close   = display;
+
+  gimp_file_dialog_set_file_proc (file_dialog, NULL);
 
   /*
    * Priority of default paths for Save:
@@ -193,7 +221,7 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
                                   GIMP_FILE_SAVE_LAST_FILE_KEY);
 
   if (! dir_file)
-    dir_file = gimp_save_dialog_get_default_folder (gimp);
+    dir_file = gimp_file_dialog_get_default_folder (file_dialog);
 
 
   /* Priority of default basenames for Save:
@@ -296,47 +324,8 @@ gimp_save_dialog_set_image (GimpSaveDialog *dialog,
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), basename);
 }
 
+
 /*  private functions  */
-
-static GFile *
-gimp_save_dialog_get_default_folder (Gimp *gimp)
-{
-  if (gimp->default_folder)
-    {
-      return gimp->default_folder;
-    }
-  else
-    {
-      GFile *file = g_object_get_data (G_OBJECT (gimp),
-                                       "gimp-documents-folder");
-
-      if (! file)
-        {
-          gchar *path;
-
-          /* Make sure it ends in '/' */
-          path = g_build_path (G_DIR_SEPARATOR_S,
-                               g_get_user_special_dir (G_USER_DIRECTORY_DOCUMENTS),
-                               G_DIR_SEPARATOR_S,
-                               NULL);
-
-          /* Paranoia fallback, see bug #722400 */
-          if (! path)
-            path = g_build_path (G_DIR_SEPARATOR_S,
-                                 g_get_home_dir (),
-                                 G_DIR_SEPARATOR_S,
-                                 NULL);
-
-          file = g_file_new_for_path (path);
-          g_free (path);
-
-          g_object_set_data_full (G_OBJECT (gimp), "gimp-documents-folder",
-                                  file, (GDestroyNotify) g_object_unref);
-        }
-
-      return file;
-    }
-}
 
 static void
 gimp_save_dialog_add_compat_toggle (GimpSaveDialog *dialog)
@@ -365,8 +354,6 @@ gimp_save_dialog_get_state (GimpSaveDialog *dialog)
   GimpSaveDialogState *state;
   GtkFileFilter       *filter;
 
-  g_return_val_if_fail (GIMP_IS_SAVE_DIALOG (dialog), NULL);
-
   state = g_slice_new0 (GimpSaveDialogState);
 
   filter = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
@@ -383,9 +370,6 @@ static void
 gimp_save_dialog_set_state (GimpSaveDialog      *dialog,
                             GimpSaveDialogState *state)
 {
-  g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
-  g_return_if_fail (state != NULL);
-
   if (state->filter_name)
     {
       GSList *filters;
@@ -414,33 +398,6 @@ gimp_save_dialog_set_state (GimpSaveDialog      *dialog,
 static void
 gimp_save_dialog_state_destroy (GimpSaveDialogState *state)
 {
-  g_return_if_fail (state != NULL);
-
   g_free (state->filter_name);
   g_slice_free (GimpSaveDialogState, state);
-}
-
-static void
-gimp_save_dialog_real_save_state (GimpFileDialog *dialog,
-                                  const gchar    *state_name)
-{
-  g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
-
-  g_object_set_data_full (G_OBJECT (dialog->gimp), state_name,
-                          gimp_save_dialog_get_state (GIMP_SAVE_DIALOG (dialog)),
-                          (GDestroyNotify) gimp_save_dialog_state_destroy);
-}
-
-static void
-gimp_save_dialog_real_load_state (GimpFileDialog *dialog,
-                                  const gchar    *state_name)
-{
-  GimpSaveDialogState *state;
-
-  g_return_if_fail (GIMP_IS_SAVE_DIALOG (dialog));
-
-  state = g_object_get_data (G_OBJECT (dialog->gimp), state_name);
-
-  if (state)
-    gimp_save_dialog_set_state (GIMP_SAVE_DIALOG (dialog), state);
 }
