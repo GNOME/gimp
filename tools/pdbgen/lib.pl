@@ -273,10 +273,9 @@ CODE
 		my $arg = $arg_types{$type};
 		my $var;
 	    
-		my $ch = ""; my $cf = ""; my $numvarplus = "";
-		if ($type =~ /stringarray/) {
-		    $numvarplus = ' + 1';
-		}
+		my $ch = "";
+		my $cf = "";
+
 		if ($type =~ /^string(array)?/) {
 		    $ch = 'g_strdup (';
 		    $cf = ')';
@@ -321,9 +320,23 @@ CODE
 		    my $numvar = '*' . $_->{array}->{name};
 		    $numvar = "num_$_->{name}" if exists $_->{array}->{no_lib};
 
-		    $return_marshal .= <<NEW . (($ch || $cf) ? <<CP1 : <<CP2);
+		    $return_marshal .= <<NUMVAR;
       $numvar = return_vals[$numpos].data.d_$numtype;
-      $var = g_new ($datatype, $numvar$numvarplus);
+NUMVAR
+
+                    if ($type =~ /stringarray/) {
+                        $return_marshal .= <<CP;
+      if ($numvar > 0)
+        {
+          $var = g_new0 ($datatype, $numvar + 1);
+          for (i = 0; i < $numvar; i++)
+            $dh$_->{name}$df\[i] = ${ch}return_vals[$argc].data.d_$type\[i]${cf};
+        }
+CP
+	            }
+                    else {
+                        $return_marshal .= <<NEW . (($ch || $cf) ? <<CP1 : <<CP2);
+      $var = g_new ($datatype, $numvar);
 NEW
       for (i = 0; i < $numvar; i++)
         $dh$_->{name}$df\[i] = ${ch}return_vals[$argc].data.d_$type\[i]${cf};
@@ -332,11 +345,7 @@ CP1
               return_vals[$argc].data.d_$type,
               $numvar * sizeof ($datatype));
 CP2
-                    if ($type =~ /stringarray/) {
-			$return_marshal .= <<FINISH
-      $dh$_->{name}$df\[i] = NULL;
-FINISH
-		    }
+                    }
 		    $out->{headers} = "#include <string.h>\n" unless ($ch || $cf);
                 }
 		else {

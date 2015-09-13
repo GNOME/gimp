@@ -97,10 +97,12 @@ gimp_gradients_get_list (const gchar *filter,
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_gradients = return_vals[1].data.d_int32;
-      gradient_list = g_new (gchar *, *num_gradients + 1);
-      for (i = 0; i < *num_gradients; i++)
-        gradient_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
-      gradient_list[i] = NULL;
+      if (*num_gradients > 0)
+        {
+          gradient_list = g_new0 (gchar *, *num_gradients + 1);
+          for (i = 0; i < *num_gradients; i++)
+            gradient_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+        }
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);
