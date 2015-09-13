@@ -475,6 +475,7 @@ load_dialog (TIFF              *tif,
 
   /* Page Selector */
   selector = gimp_page_selector_new ();
+  gtk_widget_set_size_request (selector, 300, 200);
   gtk_box_pack_start (GTK_BOX (vbox), selector, TRUE, TRUE, 0);
 
   gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector),
@@ -1140,7 +1141,7 @@ load_image (const gchar        *filename,
 
       if (extra > 0 && !worst_case)
         {
-          /* Add alpha channels as appropriate */
+          /* Add extra channels as appropriate */
           for (i = 1; i <= extra; ++i)
             {
               channel[i].ID = gimp_channel_new (image, _("TIFF Channel"),
@@ -1148,8 +1149,9 @@ load_image (const gchar        *filename,
                                                 100.0, &color);
               gimp_image_insert_channel (image, channel[i].ID, -1, 0);
               channel[i].buffer = gimp_drawable_get_buffer (channel[i].ID);
-              channel[i].format = babl_format_new (babl_model ("A"),
+              channel[i].format = babl_format_new (babl_model ("Y'"),
                                                    type,
+                                                   babl_component ("Y'"),
                                                    NULL);
             }
         }
