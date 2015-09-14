@@ -394,7 +394,8 @@ gimp_zoom_preview_style_set (GtkWidget *widget,
 
   gtk_widget_style_get (widget, "size", &size, NULL);
 
-  if (_gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
+  if (_gimp_drawable_preview_get_bounds (drawable->drawable_id,
+                                         &x1, &y1, &x2, &y2))
     {
       width  = x2 - x1;
       height = y2 - y1;
@@ -557,7 +558,8 @@ gimp_zoom_preview_draw_thumb (GimpPreview     *preview,
   GimpDrawable           *drawable = priv->drawable;
 
   if (drawable)
-    _gimp_drawable_preview_area_draw_thumb (area, drawable, width, height);
+    _gimp_drawable_preview_area_draw_thumb (area, drawable->drawable_id,
+                                            width, height);
 }
 
 static void

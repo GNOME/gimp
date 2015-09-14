@@ -285,12 +285,13 @@ gimp_drawable_preview_draw_thumb (GimpPreview     *preview,
   GimpDrawable        *drawable         = drawable_preview->drawable;
 
   if (drawable)
-    _gimp_drawable_preview_area_draw_thumb (area, drawable, width, height);
+    _gimp_drawable_preview_area_draw_thumb (area, drawable->drawable_id,
+                                            width, height);
 }
 
 void
 _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
-                                        GimpDrawable    *drawable,
+                                        gint32           drawable_ID,
                                         gint             width,
                                         gint             height)
 {
@@ -301,17 +302,18 @@ _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
   gint    nav_width, nav_height;
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
-  g_return_if_fail (drawable != NULL);
+  g_return_if_fail (gimp_item_is_valid (drawable_ID));
+  g_return_if_fail (gimp_item_is_drawable (drawable_ID));
 
-  if (_gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
+  if (_gimp_drawable_preview_get_bounds (drawable_ID, &x1, &y1, &x2, &y2))
     {
       width  = x2 - x1;
       height = y2 - y1;
     }
   else
     {
-      width  = gimp_drawable_width  (drawable->drawable_id);
-      height = gimp_drawable_height (drawable->drawable_id);
+      width  = gimp_drawable_width  (drawable_ID);
+      height = gimp_drawable_height (drawable_ID);
     }
 
   if (width > height)
@@ -325,16 +327,16 @@ _gimp_drawable_preview_area_draw_thumb (GimpPreviewArea *area,
       nav_width  = (width * nav_height) / height;
     }
 
-  if (_gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2))
+  if (_gimp_drawable_preview_get_bounds (drawable_ID, &x1, &y1, &x2, &y2))
     {
-      buffer = gimp_drawable_get_sub_thumbnail_data (drawable->drawable_id,
+      buffer = gimp_drawable_get_sub_thumbnail_data (drawable_ID,
                                                      x1, y1, x2 - x1, y2 - y1,
                                                      &nav_width, &nav_height,
                                                      &bpp);
     }
   else
     {
-      buffer = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+      buffer = gimp_drawable_get_thumbnail_data (drawable_ID,
                                                  &nav_width, &nav_height,
                                                  &bpp);
     }
@@ -479,7 +481,7 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
 
   drawable_preview->drawable = drawable;
 
-  _gimp_drawable_preview_get_bounds (drawable, &x1, &y1, &x2, &y2);
+  _gimp_drawable_preview_get_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   gimp_preview_set_bounds (preview, x1, y1, x2, y2);
 
@@ -501,11 +503,11 @@ gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
 #define MIN3(a, b, c)  (MIN (MIN ((a), (b)), (c)))
 
 gboolean
-_gimp_drawable_preview_get_bounds (GimpDrawable *drawable,
-                                   gint         *xmin,
-                                   gint         *ymin,
-                                   gint         *xmax,
-                                   gint         *ymax)
+_gimp_drawable_preview_get_bounds (gint32  drawable_ID,
+                                   gint   *xmin,
+                                   gint   *ymin,
+                                   gint   *xmax,
+                                   gint   *ymax)
 {
   gint     width;
   gint     height;
@@ -515,15 +517,15 @@ _gimp_drawable_preview_get_bounds (GimpDrawable *drawable,
   gint     x2, y2;
   gboolean retval;
 
-  g_return_val_if_fail (drawable != NULL, FALSE);
+  g_return_val_if_fail (gimp_item_is_valid (drawable_ID), FALSE);
+  g_return_val_if_fail (gimp_item_is_drawable (drawable_ID), FALSE);
 
-  width  = gimp_drawable_width (drawable->drawable_id);
-  height = gimp_drawable_height (drawable->drawable_id);
+  width  = gimp_drawable_width (drawable_ID);
+  height = gimp_drawable_height (drawable_ID);
 
-  retval = gimp_drawable_mask_bounds (drawable->drawable_id,
-                                      &x1, &y1, &x2, &y2);
+  retval = gimp_drawable_mask_bounds (drawable_ID, &x1, &y1, &x2, &y2);
 
-  gimp_drawable_offsets (drawable->drawable_id, &offset_x, &offset_y);
+  gimp_drawable_offsets (drawable_ID, &offset_x, &offset_y);
 
   *xmin = MAX3 (x1 - SELECTION_BORDER, 0, - offset_x);
   *ymin = MAX3 (y1 - SELECTION_BORDER, 0, - offset_y);
