@@ -76,9 +76,12 @@ EXPORTS
 	gimp_window_set_transient
 	gimp_window_set_transient_for_display
 	gimp_zoom_preview_get_drawable
+	gimp_zoom_preview_get_drawable_id
 	gimp_zoom_preview_get_factor
 	gimp_zoom_preview_get_model
 	gimp_zoom_preview_get_source
 	gimp_zoom_preview_get_type
 	gimp_zoom_preview_new
+	gimp_zoom_preview_new_from_drawable
 	gimp_zoom_preview_new_with_model
+	gimp_zoom_preview_new_with_model_from_drawable
