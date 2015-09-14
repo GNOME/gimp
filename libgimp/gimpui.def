@@ -82,6 +82,6 @@ EXPORTS
 	gimp_zoom_preview_get_source
 	gimp_zoom_preview_get_type
 	gimp_zoom_preview_new
-	gimp_zoom_preview_new_from_drawable
+	gimp_zoom_preview_new_from_drawable_id
 	gimp_zoom_preview_new_with_model
-	gimp_zoom_preview_new_with_model_from_drawable
+	gimp_zoom_preview_new_with_model_from_drawable_id
