@@ -1308,26 +1308,20 @@ pygimp_parasite_list(PyObject *self)
 {
     gint num_parasites;
     gchar **parasites;
+    PyObject *ret;
+    gint i;
 
     parasites = gimp_get_parasite_list (&num_parasites);
 
-    if (parasites) {
-        PyObject *ret;
-        gint i;
+    ret = PyTuple_New(num_parasites);
 
-        ret = PyTuple_New(num_parasites);
-
-        for (i = 0; i < num_parasites; i++) {
-            PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
-            g_free(parasites[i]);
-        }
-
-        g_free(parasites);
-        return ret;
+    for (i = 0; i < num_parasites; i++) {
+        PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
+        g_free(parasites[i]);
     }
 
-    PyErr_SetString(pygimp_error, "could not list parasites");
-    return NULL;
+    g_free(parasites);
+    return ret;
 }
 
 static PyObject *

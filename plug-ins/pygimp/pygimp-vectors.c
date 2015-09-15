@@ -697,26 +697,20 @@ vectors_parasite_list(PyGimpVectors *self)
 {
     gint num_parasites;
     gchar **parasites;
+    PyObject *ret;
+    gint i;
 
     parasites = gimp_item_get_parasite_list(self->ID, &num_parasites);
-    if (parasites) {
-        PyObject *ret;
-        gint i;
 
-        ret = PyTuple_New(num_parasites);
+    ret = PyTuple_New(num_parasites);
 
-        for (i = 0; i < num_parasites; i++) {
-            PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
-            g_free(parasites[i]);
-        }
-
-        g_free(parasites);
-        return ret;
+    for (i = 0; i < num_parasites; i++) {
+        PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
+        g_free(parasites[i]);
     }
 
-    PyErr_Format(pygimp_error, "could not list parasites on vectors (ID %d)",
-                 self->ID);
-    return NULL;
+    g_free(parasites);
+    return ret;
 }
 
 static PyMethodDef vectors_methods[] = {
