@@ -1,6 +1,7 @@
 EXPORTS
 	gimp_aspect_preview_get_type
 	gimp_aspect_preview_new
+	gimp_aspect_preview_new_from_drawable_id
 	gimp_brush_select_button_get_brush
 	gimp_brush_select_button_get_type
 	gimp_brush_select_button_new
