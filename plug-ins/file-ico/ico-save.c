@@ -767,6 +767,8 @@ ico_write_icon (FILE   *fp,
   guint32           *palette32 = NULL;
   gint               palette_len = 0;
 
+  guint8             alpha_threshold;
+
   D(("Creating data structures for icon %i ------------------------\n",
      num_icon));
 
@@ -814,6 +816,17 @@ ico_write_icon (FILE   *fp,
   /* Create and_map. It's padded out to 32 bits per line: */
   and_map = ico_alloc_map (width, height, 1, &and_len);
 
+  /* 32-bit bitmaps have an alpha channel as well as a mask. Any partially or
+   * fully opaque pixel should have an opaque mask (some ICO code in Windows
+   * draws pixels as black if they have a transparent mask but a non-transparent
+   * alpha value).
+   *
+   * For bitmaps without an alpha channel, we use the normal threshold to build
+   * the mask, so that the mask is as close as possible to the original alpha
+   * channel.
+   */
+  alpha_threshold = header.bpp < 32 ? ICO_ALPHA_THRESHOLD : 0;
+
   for (y = 0; y < height; y++)
     for (x = 0; x < width; x++)
       {
@@ -821,7 +834,7 @@ ico_write_icon (FILE   *fp,
 
         ico_set_bit_in_data (and_map, width,
                              (height - y -1) * width + x,
-                             (pixel[3] > ICO_ALPHA_THRESHOLD ? 0 : 1));
+                             (pixel[3] > alpha_threshold ? 0 : 1));
       }
 
   xor_map = ico_alloc_map (width, height, header.bpp, &xor_len);
