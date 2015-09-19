@@ -391,6 +391,21 @@ gimp_tool_gui_get_vbox (GimpToolGui *gui)
   return GET_PRIVATE (gui)->vbox;
 }
 
+gboolean
+gimp_tool_gui_get_visible (GimpToolGui *gui)
+{
+  GimpToolGuiPrivate *private;
+
+  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+
+  private = GET_PRIVATE (gui);
+
+  if (private->overlay)
+    return gtk_widget_get_parent (private->dialog) != NULL;
+  else
+    return gtk_widget_get_visible (private->dialog);
+}
+
 void
 gimp_tool_gui_show (GimpToolGui *gui)
 {

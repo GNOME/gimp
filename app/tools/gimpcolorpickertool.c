@@ -303,10 +303,14 @@ gimp_color_picker_tool_picked (GimpColorTool      *color_tool,
   if (options->use_info_window && ! picker_tool->gui)
     gimp_color_picker_tool_info_create (picker_tool);
 
-  if (picker_tool->gui)
-    gimp_color_picker_tool_info_update (picker_tool,
-                                        GIMP_COLOR_OPTIONS (options)->sample_average,
-                                        sample_format, pixel, color);
+  if (picker_tool->gui &&
+      (options->use_info_window ||
+       gimp_tool_gui_get_visible (picker_tool->gui)))
+    {
+      gimp_color_picker_tool_info_update (picker_tool,
+                                          GIMP_COLOR_OPTIONS (options)->sample_average,
+                                          sample_format, pixel, color);
+    }
 
   GIMP_COLOR_TOOL_CLASS (parent_class)->picked (color_tool, pick_state,
                                                 x, y,
