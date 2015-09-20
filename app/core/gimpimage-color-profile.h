@@ -69,9 +69,16 @@ void                 gimp_image_import_color_profile   (GimpImage           *ima
                                                         GimpProgress        *progress,
                                                         gboolean             interactive);
 
+void                 gimp_image_color_profile_pixel_to_srgb
+                                                       (GimpImage           *image,
+                                                        const Babl          *pixel_format,
+                                                        gpointer             pixel,
+                                                        GimpRGB             *color);
 
-/*  internal API, to be called only from the icc-profile parasite setters  */
 
+/*  internal API, to be called only from gimpimage.c  */
+
+void                 _gimp_image_free_color_profile    (GimpImage           *image);
 void                 _gimp_image_update_color_profile  (GimpImage           *image,
                                                         const GimpParasite  *icc_parasite);
 

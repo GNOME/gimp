@@ -604,12 +604,49 @@ gimp_image_convert_profile_indexed (GimpImage                *image,
   g_free (cmap);
 }
 
+void
+gimp_image_color_profile_pixel_to_srgb (GimpImage  *image,
+                                        const Babl *pixel_format,
+                                        gpointer    pixel,
+                                        GimpRGB    *color)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (private->transform_to_srgb)
+    {
+      guchar srgb_pixel[32];
+
+      /* for the alpha channel */
+      gimp_rgba_set_pixel (color, pixel_format, pixel);
+
+      if (pixel_format == private->transform_layer_format)
+        {
+          cmsDoTransform (private->transform_to_srgb, pixel, srgb_pixel, 1);
+        }
+      else
+        {
+          guchar src_pixel[32];
+
+          babl_process (babl_fish (pixel_format,
+                                   private->transform_layer_format),
+                        pixel, src_pixel, 1);
+
+          cmsDoTransform (private->transform_to_srgb, src_pixel, srgb_pixel, 1);
+        }
+
+      gimp_rgb_set_pixel (color, private->transform_srgb_format, srgb_pixel);
+    }
+  else
+    {
+      gimp_rgba_set_pixel (color, pixel_format, pixel);
+    }
+}
+
 
 /*  internal API  */
 
 void
-_gimp_image_update_color_profile (GimpImage          *image,
-                                  const GimpParasite *icc_parasite)
+_gimp_image_free_color_profile (GimpImage *image)
 {
   GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
 
@@ -619,12 +656,77 @@ _gimp_image_update_color_profile (GimpImage          *image,
       private->color_profile = NULL;
     }
 
+  if (private->transform_to_srgb)
+    {
+      cmsDeleteTransform (private->transform_to_srgb);
+      private->transform_to_srgb = NULL;
+    }
+
+  if (private->transform_from_srgb)
+    {
+      cmsDeleteTransform (private->transform_from_srgb);
+      private->transform_from_srgb = NULL;
+    }
+}
+
+void
+_gimp_image_update_color_profile (GimpImage          *image,
+                                  const GimpParasite *icc_parasite)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  _gimp_image_free_color_profile (image);
+
   if (icc_parasite)
     {
       private->color_profile =
         gimp_color_profile_new_from_icc_profile (gimp_parasite_data (icc_parasite),
                                                  gimp_parasite_data_size (icc_parasite),
                                                  NULL);
+
+      if (private->color_profile)
+        {
+          GimpColorProfile *srgb_profile;
+          cmsHPROFILE       image_lcms;
+          cmsHPROFILE       srgb_lcms;
+          cmsUInt32Number   image_lcms_format;
+          cmsUInt32Number   srgb_lcms_format;
+          cmsUInt32Number   flags;
+
+          srgb_profile = gimp_color_profile_new_srgb ();
+
+          image_lcms = gimp_color_profile_get_lcms_profile (private->color_profile);
+          srgb_lcms  = gimp_color_profile_get_lcms_profile (srgb_profile);
+
+          private->transform_layer_format = gimp_image_get_layer_format (image,
+                                                                         TRUE);
+          private->transform_srgb_format  = babl_format ("R'G'B'A double");
+
+          private->transform_layer_format =
+            gimp_color_profile_get_format (private->transform_layer_format,
+                                           &image_lcms_format);
+
+          private->transform_srgb_format =
+            gimp_color_profile_get_format (private->transform_srgb_format,
+                                           &srgb_lcms_format);
+
+          flags = cmsFLAGS_NOOPTIMIZE;
+          flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
+
+          private->transform_to_srgb =
+            cmsCreateTransform (image_lcms, image_lcms_format,
+                                srgb_lcms,  srgb_lcms_format,
+                                GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                flags);
+
+          private->transform_from_srgb =
+            cmsCreateTransform (srgb_lcms,  srgb_lcms_format,
+                                image_lcms, image_lcms_format,
+                                GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                flags);
+
+          g_object_unref (srgb_profile);
+        }
     }
 
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));

@@ -974,10 +974,7 @@ gimp_image_finalize (GObject *object)
     gimp_image_colormap_free (image);
 
   if (private->color_profile)
-    {
-      g_object_unref (private->color_profile);
-      private->color_profile = NULL;
-    }
+    _gimp_image_free_color_profile (image);
 
   if (private->metadata)
     {
