@@ -170,6 +170,76 @@ struct _EXRLoader
     return has_alpha_ ? 1 : 0;
   }
 
+  cmsHPROFILE readICCProfile() const {
+    Chromaticities chromaticities;
+    float whiteLuminance = 1.0;
+
+    cmsHPROFILE profile = NULL;
+
+    if (hasChromaticities (file_.header ()))
+      chromaticities = Imf::chromaticities (file_.header ());
+    else
+      return NULL;
+
+    if (Imf::hasWhiteLuminance (file_.header ()))
+      whiteLuminance = Imf::whiteLuminance (file_.header ());
+    else
+      return NULL;
+
+#if 0
+    std::cout << "hasChromaticities: "
+              << hasChromaticities (file_.header ())
+              << std::endl;
+    std::cout << "hasWhiteLuminance: "
+              << hasWhiteLuminance (file_.header ())
+              << std::endl;
+    std::cout << chromaticities.red << std::endl;
+    std::cout << chromaticities.green << std::endl;
+    std::cout << chromaticities.blue << std::endl;
+    std::cout << chromaticities.white << std::endl;
+    std::cout << std::endl;
+#endif
+
+    // TODO: maybe factor this out into libgimpcolor/gimpcolorprofile.h ?
+    cmsCIExyY whitePoint = { chromaticities.white.x,
+                             chromaticities.white.y,
+                             whiteLuminance };
+    cmsCIExyYTRIPLE CameraPrimaries = { { chromaticities.red.x,
+                                          chromaticities.red.y,
+                                          whiteLuminance },
+                                        { chromaticities.green.x,
+                                          chromaticities.green.y,
+                                          whiteLuminance },
+                                        { chromaticities.blue.x,
+                                          chromaticities.blue.y,
+                                          whiteLuminance } };
+
+    double Parameters[2] = { 1.0, 0.0 };
+    cmsToneCurve *Gamma[3];
+    Gamma[0] = Gamma[1] = Gamma[2] = cmsBuildParametricToneCurve(0,
+                                                                 1,
+                                                                 Parameters);
+    profile = cmsCreateRGBProfile (&whitePoint, &CameraPrimaries, Gamma);
+    cmsFreeToneCurve (Gamma[0]);
+    if (profile == NULL) return NULL;
+
+    cmsSetProfileVersion (profile, 2.1);
+    cmsMLU *mlu0 = cmsMLUalloc (NULL, 1);
+    cmsMLUsetASCII (mlu0, "en", "US", "(GIMP internal)");
+    cmsMLU *mlu1 = cmsMLUalloc(NULL, 1);
+    cmsMLUsetASCII (mlu1, "en", "US", "color profile from EXR chromaticities");
+    cmsMLU *mlu2 = cmsMLUalloc(NULL, 1);
+    cmsMLUsetASCII (mlu2, "en", "US", "color profile from EXR chromaticities");
+    cmsWriteTag (profile, cmsSigDeviceMfgDescTag, mlu0);
+    cmsWriteTag (profile, cmsSigDeviceModelDescTag, mlu1);
+    cmsWriteTag (profile, cmsSigProfileDescriptionTag, mlu2);
+    cmsMLUfree (mlu0);
+    cmsMLUfree (mlu1);
+    cmsMLUfree (mlu2);
+
+    return profile;
+  }
+
   size_t refcount_;
   InputFile file_;
   const Box2i data_window_;
@@ -288,4 +358,10 @@ exr_loader_read_pixel_row (EXRLoader *loader,
     }
 
   return retval;
+}
+
+cmsHPROFILE
+exr_loader_icc_read_profile (EXRLoader *loader)
+{
+  return loader->readICCProfile ();
 }

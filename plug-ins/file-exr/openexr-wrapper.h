@@ -8,6 +8,8 @@
 extern "C" {
 #endif
 
+#include <lcms2.h>
+
 /* This is fully opaque on purpose, as the calling C code must not be
  * exposed to more than this.
  */
@@ -53,6 +55,9 @@ exr_loader_read_pixel_row (EXRLoader *loader,
                            char *pixels,
                            int bpp,
                            int row);
+
+cmsHPROFILE
+exr_loader_icc_read_profile (EXRLoader *loader);
 
 #ifdef __cplusplus
 }

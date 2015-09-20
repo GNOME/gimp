@@ -280,6 +280,27 @@ load_image (const gchar  *filename,
       gimp_progress_update ((gdouble) begin / (gdouble) height);
     }
 
+  // try to load an icc profile.
+  // this will be generated on the fly if chromaticities are given
+  if (image_type == GIMP_RGB)
+    {
+      cmsHPROFILE       lcms_profile = NULL;
+      GimpColorProfile *profile      = NULL;
+
+      lcms_profile = exr_loader_icc_read_profile (loader);
+      if (lcms_profile)
+        {
+          profile = gimp_color_profile_new_from_lcms_profile (lcms_profile,
+                                                              NULL);
+          if (profile)
+            {
+              gimp_image_set_color_profile (image, profile);
+              g_object_unref (profile);
+            }
+          cmsCloseProfile (lcms_profile);
+        }
+    }
+
   gimp_progress_update (1.0);
 
   status = image;
