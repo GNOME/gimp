@@ -170,7 +170,7 @@ struct _EXRLoader
     return has_alpha_ ? 1 : 0;
   }
 
-  cmsHPROFILE readICCProfile() const {
+  cmsHPROFILE getICCProfile() const {
     Chromaticities chromaticities;
     float whiteLuminance = 1.0;
 
@@ -340,6 +340,12 @@ exr_loader_has_alpha (EXRLoader *loader)
   return loader->hasAlpha();
 }
 
+cmsHPROFILE
+exr_loader_get_icc_profile (EXRLoader *loader)
+{
+  return loader->getICCProfile ();
+}
+
 int
 exr_loader_read_pixel_row (EXRLoader *loader,
                            char *pixels,
@@ -358,10 +364,4 @@ exr_loader_read_pixel_row (EXRLoader *loader,
     }
 
   return retval;
-}
-
-cmsHPROFILE
-exr_loader_icc_read_profile (EXRLoader *loader)
-{
-  return loader->readICCProfile ();
 }

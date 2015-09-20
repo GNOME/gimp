@@ -50,14 +50,14 @@ exr_loader_get_image_type (EXRLoader *loader);
 int
 exr_loader_has_alpha (EXRLoader *loader);
 
+cmsHPROFILE
+exr_loader_get_icc_profile (EXRLoader *loader);
+
 int
 exr_loader_read_pixel_row (EXRLoader *loader,
                            char *pixels,
                            int bpp,
                            int row);
-
-cmsHPROFILE
-exr_loader_icc_read_profile (EXRLoader *loader);
 
 #ifdef __cplusplus
 }
