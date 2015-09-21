@@ -235,7 +235,8 @@ drawlens (GimpDrawable *drawable,
   gint           x1, y1, x2, y2;
   guchar        *src, *dest;
   gint           i, col;
-  gfloat         regionwidth, regionheight, dx, dy, xsqr, ysqr;
+  glong          regionwidth, regionheight;
+  gfloat         dx, dy, xsqr, ysqr;
   gfloat         a, b, c, asqr, bsqr, csqr, x, y;
   glong          pixelpos, pos;
   GimpRGB        background;
