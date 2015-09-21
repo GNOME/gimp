@@ -159,11 +159,12 @@ static void       gimp_layer_to_selection       (GimpItem           *item,
                                                  gdouble             feather_radius_x,
                                                  gdouble             feather_radius_y);
 
-static gint64  gimp_layer_estimate_memsize      (const GimpDrawable *drawable,
+static void       gimp_layer_alpha_changed      (GimpDrawable       *drawable);
+static gint64     gimp_layer_estimate_memsize   (const GimpDrawable *drawable,
                                                  GimpComponentType   component_type,
                                                  gint                width,
                                                  gint                height);
-static void    gimp_layer_convert_type          (GimpDrawable       *drawable,
+static void       gimp_layer_convert_type       (GimpDrawable       *drawable,
                                                  GimpImage          *dest_image,
                                                  const Babl         *new_format,
                                                  GimpImageBaseType   new_base_type,
@@ -333,6 +334,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   item_class->raise_failed            = _("Layer cannot be raised higher.");
   item_class->lower_failed            = _("Layer cannot be lowered more.");
 
+  drawable_class->alpha_changed         = gimp_layer_alpha_changed;
   drawable_class->estimate_memsize      = gimp_layer_estimate_memsize;
   drawable_class->convert_type          = gimp_layer_convert_type;
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
@@ -1019,6 +1021,19 @@ gimp_layer_to_selection (GimpItem       *item,
                              GIMP_DRAWABLE (layer),
                              op,
                              feather, feather_radius_x, feather_radius_y);
+}
+
+static void
+gimp_layer_alpha_changed (GimpDrawable *drawable)
+{
+  if (GIMP_DRAWABLE_CLASS (parent_class)->alpha_changed)
+    GIMP_DRAWABLE_CLASS (parent_class)->alpha_changed (drawable);
+
+  /* When we add/remove alpha, whatever cached color transforms in
+   * view renderers need to be recreated because they cache the wrong
+   * lcms formats. See bug 478528.
+   */
+  gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (drawable));
 }
 
 static gint64
