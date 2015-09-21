@@ -173,8 +173,12 @@ static void      type_combo_callback    (GimpIntComboBox *combo,
 #define CPN_CMY_Y {"yellow", N_("_Yellow:"), NULL, 0.0, 1.0, TRUE}
 
 #define CPN_LAB_L {"CIE L", N_("_L:"), NULL, 0.0, 100.0, TRUE}
-#define CPN_LAB_A {"CIE a", N_("_A:"), NULL, -128.0, 127.0, TRUE}
-#define CPN_LAB_B {"CIE b", N_("_B:"), NULL, -128.0, 127.0, TRUE}
+#define CPN_LAB_A {"CIE a", N_("_A:"), NULL, -127.5, 127.5, TRUE}
+#define CPN_LAB_B {"CIE b", N_("_B:"), NULL, -127.5, 127.5, TRUE}
+
+#define CPN_LCH_L {"CIE L", N_("_L"), NULL, 0.0, 100.0, TRUE}
+#define CPN_LCH_C {"CIE C(ab)", N_("_C"), NULL, 0.0, 200.0, TRUE}
+#define CPN_LCH_H {"CIE H(ab)", N_("_H"), NULL, 0.0, 360.0, TRUE}
 
 #define CPN_YCBCR_Y  {"Y'", N_("_Luma y470:"), NULL, 0.0, 1.0, TRUE}
 #define CPN_YCBCR_CB {"Cb", N_("_Blueness cb470:"), NULL, -0.5, 0.5, TRUE}
@@ -237,6 +241,13 @@ static COMPOSE_DSC compose_dsc[] =
       CPN_LAB_A,
       CPN_LAB_B },
     "lab-compose" },
+
+  { "CIE LCH(ab)",
+    N_("LCH"), 3,
+    { CPN_LCH_L,
+      CPN_LCH_C,
+      CPN_LCH_H },
+    "lch-compose" },
 
   { "Y'CbCr",
     N_("YCbCr_ITU_R470"), 3,

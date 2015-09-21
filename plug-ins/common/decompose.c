@@ -121,7 +121,8 @@ static void      transfer_registration_color (GeglBuffer          *src,
                                               gint                 count);
 static void      cpn_affine_transform_clamp  (GeglBuffer          *buffer,
                                               gdouble              min,
-                                              gdouble              max);
+                                              gdouble              max,
+                                              gboolean             clamp);
 static void      copy_n_components           (GeglBuffer          *src,
                                               GeglBuffer         **dst,
                                               EXTRACT              ext);
@@ -159,8 +160,12 @@ static gchar   * generate_filename           (guint32              image_ID,
 #define CPN_CMY_Y {"yellow", N_("yellow"), 0.0, 1.0, TRUE}
 
 #define CPN_LAB_L {"CIE L", N_("L"), 0.0, 100.0, TRUE}
-#define CPN_LAB_A {"CIE a", N_("A"), -128.0, 127.0, TRUE}
-#define CPN_LAB_B {"CIE b", N_("B"), -128.0, 127.0, TRUE}
+#define CPN_LAB_A {"CIE a", N_("A"), -127.5, 127.5, TRUE}
+#define CPN_LAB_B {"CIE b", N_("B"), -127.5, 127.5, TRUE}
+
+#define CPN_LCH_L {"CIE L", N_("L"), 0.0, 100.0, TRUE}
+#define CPN_LCH_C {"CIE C(ab)", N_("C"), 0.0, 200.0, TRUE}
+#define CPN_LCH_H {"CIE H(ab)", N_("H"), 0.0, 360.0, TRUE}
 
 #define CPN_YCBCR_Y  {"Y'", N_("luma-y470"), 0.0, 1.0, TRUE}
 #define CPN_YCBCR_CB {"Cb", N_("blueness-cb470"), -0.5, 0.5, TRUE}
@@ -201,6 +206,8 @@ static const EXTRACT extract[] =
     { N_("Yellow_K"),  "CMYK", FALSE, 1, FALSE, {CPN_CMYK_Y} },
 
     { N_("LAB"), "CIE Lab", TRUE, 3, FALSE, {CPN_LAB_L, CPN_LAB_A, CPN_LAB_B} },
+
+    { N_("LCH"), "CIE LCH(ab)", TRUE, 3, FALSE, {CPN_LCH_L, CPN_LCH_C, CPN_LCH_H} },
 
     { N_("YCbCr_ITU_R470"),     "Y'CbCr", TRUE, 3, FALSE, { CPN_YCBCR_Y, CPN_YCBCR_CB, CPN_YCBCR_CR} },
     { N_("YCbCr_ITU_R470_256"), "Y'CbCr", TRUE, 3, TRUE,  { CPN_YCBCR_Y, CPN_YCBCR_CB, CPN_YCBCR_CR} },
@@ -672,12 +679,12 @@ transfer_registration_color (GeglBuffer  *src,
 static void
 cpn_affine_transform_clamp (GeglBuffer  *buffer,
                             gdouble      min,
-                            gdouble      max)
+                            gdouble      max,
+                            gboolean     clamp)
 {
   GeglBufferIterator *gi;
-
-  gdouble scale = 1.0 / (max - min);
-  gdouble offset = - min;
+  gdouble             scale  = 1.0 / (max - min);
+  gdouble             offset = - min;
 
   /* We want to scale values linearly, regardless of the format of the buffer */
   gegl_buffer_set_format (buffer, babl_format ("Y double"));
@@ -692,9 +699,19 @@ cpn_affine_transform_clamp (GeglBuffer  *buffer,
 
       data = (double*) gi->data[0];
 
-      for (k = 0; k < gi->length; k++)
+      if (clamp)
         {
-          data[k] = CLAMP ((data[k] + offset) * scale, 0.0, 1.0);
+          for (k = 0; k < gi->length; k++)
+            {
+              data[k] = CLAMP ((data[k] + offset) * scale, 0.0, 1.0);
+            }
+        }
+      else
+        {
+          for (k = 0; k < gi->length; k++)
+            {
+              data[k] = (data[k] + offset) * scale;
+            }
         }
     }
 }
@@ -747,8 +764,14 @@ copy_one_component (GeglBuffer      *src,
   gegl_buffer_set_format (temp, component_format);
   gegl_buffer_copy (src, NULL, GEGL_ABYSS_NONE, temp, NULL);
 
-  if (component.range_min != 0.0 || component.range_max != 1.0 || clamp)
-    cpn_affine_transform_clamp (temp, component.range_min, component.range_max);
+  if (component.range_min != 0.0 ||
+      component.range_max != 1.0 ||
+      clamp)
+    {
+      cpn_affine_transform_clamp (temp,
+                                  component.range_min, component.range_max,
+                                  clamp);
+    }
 
   /* This is our new "Y(') double" component buffer */
   gegl_buffer_set_format (temp, NULL);
