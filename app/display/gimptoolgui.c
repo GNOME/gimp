@@ -396,7 +396,7 @@ gimp_tool_gui_get_visible (GimpToolGui *gui)
 {
   GimpToolGuiPrivate *private;
 
-  g_return_if_fail (GIMP_IS_TOOL_GUI (gui));
+  g_return_val_if_fail (GIMP_IS_TOOL_GUI (gui), FALSE);
 
   private = GET_PRIVATE (gui);
 
