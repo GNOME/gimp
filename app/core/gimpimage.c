@@ -3342,10 +3342,7 @@ gimp_image_parasite_attach (GimpImage          *image,
       builtin = gimp_image_get_builtin_color_profile (image);
 
       if (gimp_color_profile_is_equal (profile, builtin))
-        {
-          gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME);
-          g_object_unref (profile);
-        }
+        gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME);
 
       g_object_unref (profile);
     }
