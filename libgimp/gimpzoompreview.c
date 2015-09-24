@@ -883,7 +883,7 @@ gimp_zoom_preview_new_with_model (GimpDrawable  *drawable,
 gint32
 gimp_zoom_preview_get_drawable_id (GimpZoomPreview *preview)
 {
-  g_return_val_if_fail (GIMP_IS_ZOOM_PREVIEW (preview), NULL);
+  g_return_val_if_fail (GIMP_IS_ZOOM_PREVIEW (preview), -1);
 
   return GIMP_ZOOM_PREVIEW_GET_PRIVATE (preview)->drawable_ID;
 }

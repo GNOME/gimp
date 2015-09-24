@@ -79,7 +79,7 @@ gimp_image_set_color_profile (gint32            image_ID,
   gint          length = 0;
 
   g_return_val_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile),
-                        NULL);
+                        FALSE);
 
   if (profile)
     {
@@ -158,7 +158,7 @@ gimp_image_convert_color_profile (gint32                     image_ID,
   gint          length = 0;
 
   g_return_val_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile),
-                        NULL);
+                        FALSE);
 
   if (profile)
     {

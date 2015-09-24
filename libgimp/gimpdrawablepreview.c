@@ -645,7 +645,7 @@ gimp_drawable_preview_new_from_drawable_id (gint32 drawable_ID)
 gint32
 gimp_drawable_preview_get_drawable_id (GimpDrawablePreview *preview)
 {
-  g_return_val_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview), -1);
 
   return GIMP_DRAWABLE_PREVIEW_GET_PRIVATE (preview)->drawable_ID;
 }
