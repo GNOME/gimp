@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpmetadata.h
+ * gimpimagemetadata.h
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -22,8 +22,8 @@
 #error "Only <libgimp/gimpui.h> can be included directly."
 #endif
 
-#ifndef __LIBGIMP_GIMP_METADATA_H__
-#define __LIBGIMP_GIMP_METADATA_H__
+#ifndef __GIMP_IMAGE_METADATA_H__
+#define __GIMP_IMAGE_METADATA_H__
 
 G_BEGIN_DECLS
 
@@ -51,11 +51,11 @@ gboolean       gimp_image_metadata_save_finish  (gint32                 image_ID
                                                  GError               **error);
 
 
-/* this is experimental API, so be finished for 2.10 */
+/* this is experimental API, to be finished for 2.10 */
 
 gint32       gimp_image_metadata_load_thumbnail (GFile                 *file,
                                                  GError               **error);
 
 G_END_DECLS
 
-#endif /* ___LIBGIMP_GIMP_METADATA_H__ */
+#endif /* __GIMP_IMAGE_METADATA_H__ */

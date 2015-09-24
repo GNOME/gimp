@@ -284,12 +284,12 @@ libgimpui_sources = \
 	gimpgradientselectbutton.h	\
 	gimpimagecombobox.c		\
 	gimpimagecombobox.h		\
+	gimpimagemetadata.c		\
+	gimpimagemetadata.h		\
 	gimpitemcombobox.c		\
 	gimpitemcombobox.h		\
 	gimpmenu.c			\
 	gimpmenu.h			\
-	gimpmetadata.c			\
-	gimpmetadata.h			\
 	gimppalettemenu.c		\
 	gimppalettemenu.h		\
 	gimppaletteselectbutton.c	\
@@ -362,9 +362,9 @@ gimpinclude_HEADERS = \
 	gimpgradientmenu.h		\
 	gimpgradientselectbutton.h	\
 	gimpimagecombobox.h		\
+	gimpimagemetadata.h		\
 	gimpitemcombobox.h		\
 	gimpmenu.h			\
-	gimpmetadata.h			\
 	gimppalettemenu.h		\
 	gimppaletteselectbutton.h	\
 	gimppatternmenu.h		\

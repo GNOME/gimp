@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpmetadata.c
+ * gimpimagemetadata.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,7 +27,7 @@
 
 #include "gimp.h"
 #include "gimpui.h"
-#include "gimpmetadata.h"
+#include "gimpimagemetadata.h"
 
 #include "libgimp-intl.h"
 
