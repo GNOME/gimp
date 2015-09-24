@@ -3323,14 +3323,17 @@ gimp_image_parasite_attach (GimpImage          *image,
 {
   GimpImagePrivate *private;
   GimpParasite      copy;
+  const gchar      *name;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (parasite != NULL);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
+  name = gimp_parasite_name (parasite);
+
   /*  this is so ugly and is only for the PDB  */
-  if (strcmp (gimp_parasite_name (parasite), GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
+  if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     {
       GimpColorProfile *profile;
       GimpColorProfile *builtin;
@@ -3375,9 +3378,9 @@ gimp_image_parasite_attach (GimpImage          *image,
     }
 
   g_signal_emit (image, gimp_image_signals[PARASITE_ATTACHED], 0,
-                 gimp_parasite_name (parasite));
+                 name);
 
-  if (strcmp (gimp_parasite_name (parasite), GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
+  if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     _gimp_image_update_color_profile (image, parasite);
 }
 
