@@ -10780,7 +10780,7 @@ msgstr ""
 #.
 #: ../app/gui/gui.c:208
 msgid "default:LTR"
-msgstr "預設：左到右"
+msgstr "default:LTR"
 
 #. initialize the document history
 #: ../app/gui/gui.c:433
