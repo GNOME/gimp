@@ -11015,7 +11015,7 @@ msgstr "Rellenar la posición original de la jaula con un color sencillo"
 #.
 #: ../app/gui/gui.c:207
 msgid "default:LTR"
-msgstr "predeterminado:LTR"
+msgstr "default:LTR"
 
 #. initialize the document history
 #: ../app/gui/gui.c:438
