@@ -8495,7 +8495,7 @@ msgstr "Puuri esialgse asukoha täitmine ühtlase värviga"
 #. * check the widget directions again.
 #.
 msgid "default:LTR"
-msgstr "LTR"
+msgstr "default:LTR"
 
 #. initialize the document history
 msgid "Documents"
