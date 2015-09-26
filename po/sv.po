@@ -10734,7 +10734,7 @@ msgstr "Fyll burens ursprungliga läge med en vanlig färg"
 #.
 #: ../app/gui/gui.c:208
 msgid "default:LTR"
-msgstr "standard:LTR"
+msgstr "default:LTR"
 
 #. initialize the document history
 #: ../app/gui/gui.c:433
