@@ -13015,7 +13015,7 @@ msgstr "Umbral B/N"
 #.
 #: ../app/gui/gui.c:209
 msgid "default:LTR"
-msgstr "predeterminado:LTR"
+msgstr "default:LTR"
 
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
