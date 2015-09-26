@@ -10979,7 +10979,7 @@ msgstr "Replenar a posición orichinal d'a xaula con una color sencilla"
 #.
 #: ../app/gui/gui.c:207
 msgid "default:LTR"
-msgstr "predeterminau:LTR"
+msgstr "default:LTR"
 
 #. initialize the document history
 #: ../app/gui/gui.c:438
