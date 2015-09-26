@@ -10907,7 +10907,7 @@ msgstr "Заповнити початкові позиції клітки про
 #.
 #: ../app/gui/gui.c:208
 msgid "default:LTR"
-msgstr "типово:LTR"
+msgstr "default:LTR"
 
 #. initialize the document history
 #: ../app/gui/gui.c:433
