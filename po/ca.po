@@ -11001,7 +11001,7 @@ msgstr "Omple la posició original de la regió contenidora amb un sol color"
 #.
 #: ../app/gui/gui.c:207
 msgid "default:LTR"
-msgstr "per defecte: LTR"
+msgstr "default:LTR"
 
 #. initialize the document history
 #: ../app/gui/gui.c:438
