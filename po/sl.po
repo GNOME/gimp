@@ -10829,7 +10829,7 @@ msgstr "Zapolni izvorni položaj kletke z enakomerno barvo"
 #.
 #: ../app/gui/gui.c:207
 msgid "default:LTR"
-msgstr "privzeto:L->D"
+msgstr "default:LTR"
 
 #. initialize the document history
 #: ../app/gui/gui.c:438
