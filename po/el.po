@@ -11091,7 +11091,7 @@ msgstr "Γέμισμα της αρχικής τοποθεσίας του κλω�
 #.
 #: ../app/gui/gui.c:207
 msgid "default:LTR"
-msgstr "προεπιλογή:LTR"
+msgstr "default:LTR"
 
 #. initialize the document history
 #: ../app/gui/gui.c:438
