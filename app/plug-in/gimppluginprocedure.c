@@ -974,7 +974,7 @@ gimp_plug_in_procedure_handle_return_values (GimpPlugInProcedure *proc,
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
   g_return_if_fail (return_vals != NULL);
 
-  if (! gimp_value_array_length (return_vals) > 0 ||
+  if (gimp_value_array_length (return_vals) == 0 ||
       G_VALUE_TYPE (gimp_value_array_index (return_vals, 0)) !=
       GIMP_TYPE_PDB_STATUS_TYPE)
     {
