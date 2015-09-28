@@ -34,17 +34,17 @@
 
 
 static gboolean  gimp_unique_dbus_open  (const gchar **filenames,
-					 gboolean      as_new);
+                                         gboolean      as_new);
 #ifdef G_OS_WIN32
 static gboolean  gimp_unique_win32_open (const gchar **filenames,
-					 gboolean      as_new);
+                                         gboolean      as_new);
 #endif
 static gboolean  gimp_unique_dbus_batch_run (const gchar  *batch_interpreter,
                                              const gchar **batch_commands);
 
 gboolean
 gimp_unique_open (const gchar **filenames,
-		  gboolean      as_new)
+                  gboolean      as_new)
 {
 #ifdef G_OS_WIN32
   return gimp_unique_win32_open (filenames, as_new);
@@ -68,7 +68,7 @@ gimp_unique_batch_run (const gchar  *batch_interpreter,
 
 static gboolean
 gimp_unique_dbus_open (const gchar **filenames,
-		       gboolean      as_new)
+                       gboolean      as_new)
 {
 #ifndef GIMP_CONSOLE_COMPILATION
 
@@ -166,7 +166,7 @@ gimp_unique_dbus_open (const gchar **filenames,
 
 static gboolean
 gimp_unique_win32_open (const gchar **filenames,
-			gboolean      as_new)
+                        gboolean      as_new)
 {
 #ifndef GIMP_CONSOLE_COMPILATION
 
@@ -174,7 +174,7 @@ gimp_unique_win32_open (const gchar **filenames,
 #include "gui/gui-unique.h"
 
   HWND  window_handle = FindWindowW (GIMP_UNIQUE_WIN32_WINDOW_CLASS,
-				     GIMP_UNIQUE_WIN32_WINDOW_NAME);
+                                     GIMP_UNIQUE_WIN32_WINDOW_NAME);
 
   if (window_handle)
     {
