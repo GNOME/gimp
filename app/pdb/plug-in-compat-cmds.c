@@ -335,7 +335,7 @@ gaussian_blur (GimpDrawable  *drawable,
       GeglNode *node;
 
       node = gegl_node_new_child (NULL,
-                                  "operation",    "gegl:gaussian-blur-iir",
+                                  "operation",    "gegl:gaussian-blur",
                                   "std-dev-x",    horizontal * 0.32,
                                   "std-dev-y",    vertical   * 0.32,
 				  "abyss-policy", 1,
