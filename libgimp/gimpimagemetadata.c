@@ -177,28 +177,93 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
 
   if (flags & GIMP_METADATA_LOAD_COLORSPACE)
     {
-      gchar *value;
+      GimpColorProfile *profile = gimp_image_get_color_profile (image_ID);
 
-      value = gexiv2_metadata_get_tag_interpreted_string (metadata,
-                                                          "Exif.Iop.InteroperabilityIndex");
-
-      if (! g_strcmp0 (value, "R03"))
+      /* only look for colorspace information from metadata if the
+       * image didn't contain an embedded color profile
+       *
+       * the logic here was mostly taken from darktable and libkexiv2
+       */
+      if (! profile)
         {
-          GimpColorProfile *profile = gimp_image_get_color_profile (image_ID);
+          glong colorspace = -1;
 
-          if (! profile)
+          if (gexiv2_metadata_has_tag (metadata,
+                                       "Exif.Photo.ColorSpace"))
             {
-              /* honor the R03 InteroperabilityIndex only if the
-               * image didn't contain an ICC profile
-               */
-              profile = gimp_color_profile_new_adobe_rgb ();
-              gimp_image_set_color_profile (image_ID, profile);
+              colorspace = gexiv2_metadata_get_tag_long (metadata,
+                                                         "Exif.Photo.ColorSpace");
+            }
+          else if (gexiv2_metadata_has_tag (metadata,
+                                            "Xmp.exif.ColorSpace"))
+            {
+              colorspace = gexiv2_metadata_get_tag_long (metadata,
+                                                         "Xmp.exif.ColorSpace");
             }
 
-          g_object_unref (profile);
+          if (colorspace == 0x01)
+            {
+              /* sRGB, a NULL profile will do the right thing  */
+            }
+          else if (colorspace == 0x02)
+            {
+              profile = gimp_color_profile_new_adobe_rgb ();
+            }
+          else if (colorspace == 0xffff)
+            {
+              gchar *iop_index;
+
+              iop_index = gexiv2_metadata_get_tag_string (metadata,
+                                                          "Exif.Iop.InteroperabilityIndex");
+
+              if (! g_strcmp0 (iop_index, "R03"))
+                {
+                  profile = gimp_color_profile_new_adobe_rgb ();
+                }
+              else if (! g_strcmp0 (iop_index, "R98"))
+                {
+                  /* sRGB, a NULL profile will do the right thing  */
+                }
+
+              g_free (iop_index);
+            }
+          else if (gexiv2_metadata_has_tag (metadata,
+                                            "Exif.Nikon3.ColorSpace"))
+            {
+              colorspace = gexiv2_metadata_get_tag_long (metadata,
+                                                         "Exif.Nikon3.ColorSpace");
+
+              if (colorspace == 0x01)
+                {
+                  /* sRGB, a NULL profile will do the right thing  */
+                }
+              else if (colorspace == 0x02)
+                {
+                  profile = gimp_color_profile_new_adobe_rgb ();
+                }
+            }
+          else if (gexiv2_metadata_has_tag (metadata,
+                                            "Exif.Canon.ColorSpace"))
+            {
+              colorspace = gexiv2_metadata_get_tag_long (metadata,
+                                                         "Exif.Canon.ColorSpace");
+
+              if (colorspace == 0x01)
+                {
+                  /* sRGB, a NULL profile will do the right thing  */
+                }
+              else if (colorspace == 0x02)
+                {
+                  profile = gimp_color_profile_new_adobe_rgb ();
+                }
+            }
+
+          if (profile)
+            gimp_image_set_color_profile (image_ID, profile);
         }
 
-      g_free (value);
+      if (profile)
+        g_object_unref (profile);
     }
 
   gimp_image_set_metadata (image_ID, metadata);
