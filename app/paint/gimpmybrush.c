@@ -39,6 +39,7 @@
 #include "config/gimpguiconfig.h" /* playground */
 
 #include "core/gimp.h"
+#include "core/gimp-palettes.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
@@ -123,38 +124,47 @@ gimp_mybrush_paint (GimpPaintCore    *paint_core,
   switch (paint_state)
     {
     case GIMP_PAINT_STATE_INIT:
-      mybrush->private->surface = mypaint_gegl_tiled_surface_new ();
-
-      buffer = mypaint_gegl_tiled_surface_get_buffer (mybrush->private->surface);
-      buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
-                                                gimp_item_get_width (GIMP_ITEM (drawable)),
-                                                gimp_item_get_height (GIMP_ITEM (drawable))),
-                                gegl_buffer_get_format (buffer));
-      gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
-                        GEGL_ABYSS_NONE,
-                        buffer, NULL);
-      mypaint_gegl_tiled_surface_set_buffer (mybrush->private->surface, buffer);
-      g_object_unref (buffer);
-
-      mybrush->private->brush = mypaint_brush_new ();
-      mypaint_brush_from_defaults (mybrush->private->brush);
-
-      if (options->mybrush)
         {
-          gchar *string;
-          gsize  length;
+          GimpContext *context = GIMP_CONTEXT (paint_options);
+          GimpRGB      foreground;
 
-          if (g_file_get_contents (options->mybrush,
-                                   &string, &length, NULL))
+          gimp_context_get_foreground (context, &foreground);
+          gimp_palettes_add_color_history (context->gimp,
+                                           &foreground);
+
+          mybrush->private->surface = mypaint_gegl_tiled_surface_new ();
+
+          buffer = mypaint_gegl_tiled_surface_get_buffer (mybrush->private->surface);
+          buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
+                                                    gimp_item_get_width (GIMP_ITEM (drawable)),
+                                                    gimp_item_get_height (GIMP_ITEM (drawable))),
+                                    gegl_buffer_get_format (buffer));
+          gegl_buffer_copy (gimp_drawable_get_buffer (drawable), NULL,
+                            GEGL_ABYSS_NONE,
+                            buffer, NULL);
+          mypaint_gegl_tiled_surface_set_buffer (mybrush->private->surface, buffer);
+          g_object_unref (buffer);
+
+          mybrush->private->brush = mypaint_brush_new ();
+          mypaint_brush_from_defaults (mybrush->private->brush);
+
+          if (options->mybrush)
             {
-              if (! mypaint_brush_from_string (mybrush->private->brush, string))
-                g_printerr ("Failed to deserialize MyPaint brush\n");
+              gchar *string;
+              gsize  length;
 
-              g_free (string);
+              if (g_file_get_contents (options->mybrush,
+                                       &string, &length, NULL))
+                {
+                  if (! mypaint_brush_from_string (mybrush->private->brush, string))
+                    g_printerr ("Failed to deserialize MyPaint brush\n");
+
+                  g_free (string);
+                }
             }
-        }
 
-      mypaint_brush_new_stroke (mybrush->private->brush);
+          mypaint_brush_new_stroke (mybrush->private->brush);
+        }
       break;
 
     case GIMP_PAINT_STATE_MOTION:
