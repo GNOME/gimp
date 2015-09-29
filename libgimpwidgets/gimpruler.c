@@ -1259,9 +1259,6 @@ gimp_ruler_get_pos_rect (GimpRuler *ruler,
       rect.y = ROUND ((position - lower) * increment) + (border.top + border.bottom - rect.height) / 2 - 1;
     }
 
-  rect.x += allocation.x;
-  rect.y += allocation.y;
-
   return rect;
 }
 
@@ -1283,10 +1280,13 @@ gimp_ruler_queue_pos_redraw (GimpRuler *ruler)
 {
   GimpRulerPrivate  *priv = GIMP_RULER_GET_PRIVATE (ruler);
   const GdkRectangle rect = gimp_ruler_get_pos_rect (ruler, priv->position);
+  GtkAllocation      allocation;
+
+  gtk_widget_get_allocation (GTK_WIDGET(ruler), &allocation);
 
   gtk_widget_queue_draw_area (GTK_WIDGET (ruler),
-                              rect.x,
-                              rect.y,
+                              rect.x + allocation.x,
+                              rect.y + allocation.y,
                               rect.width,
                               rect.height);
 
@@ -1294,8 +1294,8 @@ gimp_ruler_queue_pos_redraw (GimpRuler *ruler)
       priv->last_pos_rect.height != 0)
     {
       gtk_widget_queue_draw_area (GTK_WIDGET (ruler),
-                                  priv->last_pos_rect.x,
-                                  priv->last_pos_rect.y,
+                                  priv->last_pos_rect.x + allocation.x,
+                                  priv->last_pos_rect.y + allocation.y,
                                   priv->last_pos_rect.width,
                                   priv->last_pos_rect.height);
 
