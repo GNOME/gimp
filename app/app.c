@@ -48,6 +48,7 @@
 #include "gegl/gimp-gegl.h"
 
 #include "core/gimp.h"
+#include "core/gimp-batch.h"
 #include "core/gimp-user-install.h"
 
 #include "file/file-open.h"
@@ -59,7 +60,6 @@
 #endif
 
 #include "app.h"
-#include "batch.h"
 #include "errors.h"
 #include "units.h"
 #include "language.h"
@@ -301,7 +301,7 @@ app_run (const gchar         *full_prog_name,
     }
 
   if (run_loop)
-    batch_run (gimp, batch_interpreter, batch_commands);
+    gimp_batch_run (gimp, batch_interpreter, batch_commands);
 
   if (run_loop)
     {

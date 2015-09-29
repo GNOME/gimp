@@ -27,18 +27,13 @@
 #include "gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-batch.h"
 #include "core/gimpcontainer.h"
 
 #include "file/file-open.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
-
-/* Dirty hack since we are not supposed to include batch.h
- * from an app/ subdir. DBus is a special case. */
-#define GIMP_APP_GLUE_COMPILATION
-#include "batch.h"
-#undef  GIMP_APP_GLUE_COMPILATION
 
 #include "gimpdbusservice.h"
 
@@ -349,8 +344,8 @@ gimp_dbus_service_process_idle (GimpDBusService *service)
         {
           const gchar *commands[2] = {data->command, 0};
 
-          batch_run (service->gimp, data->interpreter,
-                     commands);
+          gimp_batch_run (service->gimp, data->interpreter,
+                          commands);
         }
 
       gimp_dbus_service_idle_data_free (data);
