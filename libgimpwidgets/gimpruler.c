@@ -983,8 +983,14 @@ static gboolean
 gimp_ruler_draw (GtkWidget *widget,
                  cairo_t   *cr)
 {
-  GimpRuler        *ruler = GIMP_RULER (widget);
-  GimpRulerPrivate *priv  = GIMP_RULER_GET_PRIVATE (ruler);
+  GimpRuler        *ruler   = GIMP_RULER (widget);
+  GimpRulerPrivate *priv    = GIMP_RULER_GET_PRIVATE (ruler);
+  GtkStyleContext  *context = gtk_widget_get_style_context (widget);
+  GtkAllocation     allocation;
+
+  gtk_widget_get_allocation (widget, &allocation);
+  gtk_render_background (context, cr, 0, 0, allocation.width, allocation.height);
+  gtk_render_frame (context, cr, 0, 0, allocation.width, allocation.height);
 
   if (! priv->backing_store_valid)
     gimp_ruler_draw_ticks (ruler);
@@ -1050,8 +1056,9 @@ gimp_ruler_draw_ticks (GimpRuler *ruler)
 
   cr = cairo_create (priv->backing_store);
 
-  gtk_render_background (context, cr, 0, 0, allocation.width, allocation.height);
-  gtk_render_frame (context, cr, 0, 0, allocation.width, allocation.height);
+  cairo_set_operator (cr, CAIRO_OPERATOR_CLEAR);
+  cairo_paint (cr);
+  cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
 
   gtk_style_context_get_color (context, gtk_widget_get_state_flags (widget),
                                &color);
@@ -1375,7 +1382,7 @@ gimp_ruler_make_pixmap (GimpRuler *ruler)
 
   priv->backing_store =
     gdk_window_create_similar_surface (gtk_widget_get_window (widget),
-                                       CAIRO_CONTENT_COLOR,
+                                       CAIRO_CONTENT_COLOR_ALPHA,
                                        allocation.width,
                                        allocation.height);
 
