@@ -98,20 +98,25 @@ gimp_paintbrush_paint (GimpPaintCore    *paint_core,
           GimpContext   *context = GIMP_CONTEXT (paint_options);
           GimpBrushCore *brush_core = GIMP_BRUSH_CORE (paint_core);
           GimpDynamics  *dynamics;
+          GimpRGB        color;
 
           dynamics = gimp_context_get_dynamics (GIMP_CONTEXT (paint_options));
 
-          if (! gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_COLOR) &&
-              (! brush_core->brush || ! gimp_brush_get_pixmap (brush_core->brush)))
+          if (gimp_dynamics_is_output_enabled (dynamics, GIMP_DYNAMICS_OUTPUT_COLOR))
             {
-              /* We don't save gradient color history and
-               * pixmap brushes have no color to save.
-               */
-              GimpRGB foreground;
+              /* Getting colors from a gradient. */
+              GimpGradient *gradient = gimp_context_get_gradient (context);
 
-              gimp_context_get_foreground (context, &foreground);
-              gimp_palettes_add_color_history (context->gimp,
-                                               &foreground);
+              gimp_gradient_get_color_at (gradient, context, NULL, 0.0, FALSE, &color);
+              gimp_palettes_add_color_history (context->gimp, &color);
+              gimp_gradient_get_color_at (gradient, context, NULL, 1.0, FALSE, &color);
+              gimp_palettes_add_color_history (context->gimp, &color);
+            }
+          else if (! brush_core->brush || ! gimp_brush_get_pixmap (brush_core->brush))
+            {
+              /* We don't save color history for pixmap brushes. */
+              gimp_context_get_foreground (context, &color);
+              gimp_palettes_add_color_history (context->gimp, &color);
             }
         }
       break;
