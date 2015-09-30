@@ -856,7 +856,7 @@ gimp_metadata_get_resolution (GimpMetadata *metadata,
  * @unit:     The image's unit
  *
  * Sets Exif.Image.XResolution, Exif.Image.YResolution and
- * Exif.Image.ResolutionUnit @metadata.
+ * Exif.Image.ResolutionUnit of @metadata.
  *
  * Since: 2.10
  */
@@ -901,6 +901,175 @@ gimp_metadata_set_resolution (GimpMetadata *metadata,
 
   g_snprintf (buffer, sizeof (buffer), "%d", exif_unit);
   gexiv2_metadata_set_tag_string (metadata, "Exif.Image.ResolutionUnit", buffer);
+}
+
+/**
+ * gimp_metadata_get_colorspace:
+ * @metadata: A #GimpMetadata instance.
+ *
+ * Returns values based on Exif.Photo.ColorSpace, Xmp.exif.ColorSpace,
+ * Exif.Iop.InteroperabilityIndex, Exif.Nikon3.ColorSpace,
+ * Exif.Canon.ColorSpace of @metadata.
+ *
+ * Return value: The colorspace specified by above tags.
+ *
+ * Since: 2.10
+ */
+GimpMetadataColorspace
+gimp_metadata_get_colorspace (GimpMetadata *metadata)
+{
+  glong colorspace = -1;
+
+  g_return_val_if_fail (GEXIV2_IS_METADATA (metadata),
+                        GIMP_METADATA_COLORSPACE_UNSPECIFIED);
+
+  /*  the logic here was mostly taken from darktable and libkexiv2  */
+
+  if (gexiv2_metadata_has_tag (metadata, "Exif.Photo.ColorSpace"))
+    {
+      colorspace = gexiv2_metadata_get_tag_long (metadata,
+                                                 "Exif.Photo.ColorSpace");
+    }
+  else if (gexiv2_metadata_has_tag (metadata, "Xmp.exif.ColorSpace"))
+    {
+      colorspace = gexiv2_metadata_get_tag_long (metadata,
+                                                 "Xmp.exif.ColorSpace");
+    }
+
+  if (colorspace == 0x01)
+    {
+      return GIMP_METADATA_COLORSPACE_SRGB;
+    }
+  else if (colorspace == 0x02)
+    {
+      return GIMP_METADATA_COLORSPACE_ADOBERGB;
+    }
+  else if (colorspace == 0xffff)
+    {
+      gchar *iop_index;
+
+      iop_index = gexiv2_metadata_get_tag_string (metadata,
+                                                  "Exif.Iop.InteroperabilityIndex");
+
+      if (! g_strcmp0 (iop_index, "R03"))
+        {
+          g_free (iop_index);
+
+          return GIMP_METADATA_COLORSPACE_ADOBERGB;
+        }
+      else if (! g_strcmp0 (iop_index, "R98"))
+        {
+          g_free (iop_index);
+
+          return GIMP_METADATA_COLORSPACE_SRGB;
+        }
+
+      g_free (iop_index);
+
+      return GIMP_METADATA_COLORSPACE_UNCALIBRATED;
+    }
+  else if (gexiv2_metadata_has_tag (metadata, "Exif.Nikon3.ColorSpace"))
+    {
+      colorspace = gexiv2_metadata_get_tag_long (metadata,
+                                                 "Exif.Nikon3.ColorSpace");
+
+      if (colorspace == 0x01)
+        {
+          return GIMP_METADATA_COLORSPACE_SRGB;
+        }
+      else if (colorspace == 0x02)
+        {
+          return GIMP_METADATA_COLORSPACE_ADOBERGB;
+        }
+    }
+  else if (gexiv2_metadata_has_tag (metadata, "Exif.Canon.ColorSpace"))
+    {
+      colorspace = gexiv2_metadata_get_tag_long (metadata,
+                                                 "Exif.Canon.ColorSpace");
+
+      if (colorspace == 0x01)
+        {
+          return GIMP_METADATA_COLORSPACE_SRGB;
+        }
+      else if (colorspace == 0x02)
+        {
+          return GIMP_METADATA_COLORSPACE_ADOBERGB;
+        }
+    }
+
+  return GIMP_METADATA_COLORSPACE_UNSPECIFIED;
+}
+
+/**
+ * gimp_metadata_set_colorspace:
+ * @metadata:   A #GimpMetadata instance.
+ * @colorspace: The color space.
+ *
+ * Sets Exif.Photo.ColorSpace, Xmp.exif.ColorSpace,
+ * Exif.Iop.InteroperabilityIndex, Exif.Nikon3.ColorSpace,
+ * Exif.Canon.ColorSpace of @metadata.
+ *
+ * Since: 2.10
+ */
+void
+gimp_metadata_set_colorspace (GimpMetadata           *metadata,
+                              GimpMetadataColorspace  colorspace)
+{
+  g_return_if_fail (GEXIV2_IS_METADATA (metadata));
+
+  switch (colorspace)
+    {
+    case GIMP_METADATA_COLORSPACE_UNSPECIFIED:
+      gexiv2_metadata_clear_tag (metadata, "Exif.Photo.ColorSpace");
+      gexiv2_metadata_clear_tag (metadata, "Xmp.exif.ColorSpace");
+      gexiv2_metadata_clear_tag (metadata, "Exif.Iop.InteroperabilityIndex");
+      gexiv2_metadata_clear_tag (metadata, "Exif.Nikon3.ColorSpace");
+      gexiv2_metadata_clear_tag (metadata, "Exif.Canon.ColorSpace");
+      break;
+
+    case GIMP_METADATA_COLORSPACE_UNCALIBRATED:
+      gexiv2_metadata_set_tag_long (metadata, "Exif.Photo.ColorSpace", 0xffff);
+      if (gexiv2_metadata_has_tag (metadata, "Xmp.exif.ColorSpace"))
+        gexiv2_metadata_set_tag_long (metadata, "Xmp.exif.ColorSpace", 0xffff);
+      gexiv2_metadata_clear_tag (metadata, "Exif.Iop.InteroperabilityIndex");
+      gexiv2_metadata_clear_tag (metadata, "Exif.Nikon3.ColorSpace");
+      gexiv2_metadata_clear_tag (metadata, "Exif.Canon.ColorSpace");
+      break;
+
+    case GIMP_METADATA_COLORSPACE_SRGB:
+      gexiv2_metadata_set_tag_long (metadata, "Exif.Photo.ColorSpace", 0x01);
+
+      if (gexiv2_metadata_has_tag (metadata, "Xmp.exif.ColorSpace"))
+        gexiv2_metadata_set_tag_long (metadata, "Xmp.exif.ColorSpace", 0x01);
+
+      if (gexiv2_metadata_has_tag (metadata, "Exif.Iop.InteroperabilityIndex"))
+        gexiv2_metadata_set_tag_string (metadata,
+                                        "Exif.Iop.InteroperabilityIndex", "R98");
+
+      if (gexiv2_metadata_has_tag (metadata, "Exif.Nikon3.ColorSpace"))
+        gexiv2_metadata_set_tag_long (metadata, "Exif.Nikon3.ColorSpace", 0x01);
+
+      if (gexiv2_metadata_has_tag (metadata, "Exif.Canon.ColorSpace"))
+        gexiv2_metadata_set_tag_long (metadata, "Exif.Canon.ColorSpace", 0x01);
+      break;
+
+    case GIMP_METADATA_COLORSPACE_ADOBERGB:
+      gexiv2_metadata_set_tag_long (metadata, "Exif.Photo.ColorSpace", 0x02);
+
+      if (gexiv2_metadata_has_tag (metadata, "Xmp.exif.ColorSpace"))
+        gexiv2_metadata_set_tag_long (metadata, "Xmp.exif.ColorSpace", 0x02);
+
+      if (gexiv2_metadata_has_tag (metadata, "Exif.Iop.InteroperabilityIndex"))
+        gexiv2_metadata_set_tag_string (metadata,
+                                        "Exif.Iop.InteroperabilityIndex", "R03");
+
+      if (gexiv2_metadata_has_tag (metadata, "Exif.Nikon3.ColorSpace"))
+        gexiv2_metadata_set_tag_long (metadata, "Exif.Nikon3.ColorSpace", 0x02);
+
+      if (gexiv2_metadata_has_tag (metadata, "Exif.Canon.ColorSpace"))
+        gexiv2_metadata_set_tag_long (metadata, "Exif.Canon.ColorSpace", 0x02);
+      break;
+    }
 }
 
 /**
@@ -993,7 +1162,6 @@ gimp_metadata_add (GimpMetadata *src,
           g_strfreev (exif_data);
         }
     }
-
 
   if (gexiv2_metadata_get_supports_xmp (src) &&
       gexiv2_metadata_get_supports_xmp (dest))

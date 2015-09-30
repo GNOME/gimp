@@ -181,81 +181,24 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
 
       /* only look for colorspace information from metadata if the
        * image didn't contain an embedded color profile
-       *
-       * the logic here was mostly taken from darktable and libkexiv2
        */
       if (! profile)
         {
-          glong colorspace = -1;
+          GimpMetadataColorspace colorspace;
 
-          if (gexiv2_metadata_has_tag (metadata,
-                                       "Exif.Photo.ColorSpace"))
-            {
-              colorspace = gexiv2_metadata_get_tag_long (metadata,
-                                                         "Exif.Photo.ColorSpace");
-            }
-          else if (gexiv2_metadata_has_tag (metadata,
-                                            "Xmp.exif.ColorSpace"))
-            {
-              colorspace = gexiv2_metadata_get_tag_long (metadata,
-                                                         "Xmp.exif.ColorSpace");
-            }
+          colorspace = gimp_metadata_get_colorspace (metadata);
 
-          if (colorspace == 0x01)
+          switch (colorspace)
             {
-              /* sRGB, a NULL profile will do the right thing  */
-            }
-          else if (colorspace == 0x02)
-            {
+            case GIMP_METADATA_COLORSPACE_UNSPECIFIED:
+            case GIMP_METADATA_COLORSPACE_UNCALIBRATED:
+            case GIMP_METADATA_COLORSPACE_SRGB:
+              /* use sRGB, a NULL profile will do the right thing  */
+              break;
+
+            case GIMP_METADATA_COLORSPACE_ADOBERGB:
               profile = gimp_color_profile_new_adobe_rgb ();
-            }
-          else if (colorspace == 0xffff)
-            {
-              gchar *iop_index;
-
-              iop_index = gexiv2_metadata_get_tag_string (metadata,
-                                                          "Exif.Iop.InteroperabilityIndex");
-
-              if (! g_strcmp0 (iop_index, "R03"))
-                {
-                  profile = gimp_color_profile_new_adobe_rgb ();
-                }
-              else if (! g_strcmp0 (iop_index, "R98"))
-                {
-                  /* sRGB, a NULL profile will do the right thing  */
-                }
-
-              g_free (iop_index);
-            }
-          else if (gexiv2_metadata_has_tag (metadata,
-                                            "Exif.Nikon3.ColorSpace"))
-            {
-              colorspace = gexiv2_metadata_get_tag_long (metadata,
-                                                         "Exif.Nikon3.ColorSpace");
-
-              if (colorspace == 0x01)
-                {
-                  /* sRGB, a NULL profile will do the right thing  */
-                }
-              else if (colorspace == 0x02)
-                {
-                  profile = gimp_color_profile_new_adobe_rgb ();
-                }
-            }
-          else if (gexiv2_metadata_has_tag (metadata,
-                                            "Exif.Canon.ColorSpace"))
-            {
-              colorspace = gexiv2_metadata_get_tag_long (metadata,
-                                                         "Exif.Canon.ColorSpace");
-
-              if (colorspace == 0x01)
-                {
-                  /* sRGB, a NULL profile will do the right thing  */
-                }
-              else if (colorspace == 0x02)
-                {
-                  profile = gimp_color_profile_new_adobe_rgb ();
-                }
+              break;
             }
 
           if (profile)
