@@ -179,7 +179,7 @@ run (const gchar      *name,
   gimp_drawable_mask_bounds (drawable->drawable_id,
                              &selection.x1, &selection.y1,
                              &selection.x2, &selection.y2);
-  selection.width    = selection.x2 - selection.y1;
+  selection.width    = selection.x2 - selection.x1;
   selection.height   = selection.y2 - selection.y1;
   selection.center_x = selection.x1 + (gdouble) selection.width / 2.0;
   selection.center_y = selection.y1 + (gdouble) selection.height / 2.0;
@@ -456,8 +456,14 @@ filter (GimpDrawable *drawable)
   gdouble scale_x, scale_y;
   gdouble cx, cy;
   gdouble px, py;
+  gint h_percent;
 
   gimp_progress_init (_("Fractal Trace"));
+
+  if (selection.width == 0 || selection.height == 0)
+    return;
+
+  h_percent = selection.height / 100;
 
   scale_x = (parameters.x2 - parameters.x1) / selection.width;
   scale_y = (parameters.y2 - parameters.y1) / selection.height;
@@ -503,7 +509,7 @@ filter (GimpDrawable *drawable)
           pixels_set (x, y, &pixel);
         }
 
-      if (((y - selection.y1) % (selection.height / 100)) == 0)
+      if (h_percent == 0 || ((y - selection.y1) % h_percent) == 0)
         gimp_progress_update ((gdouble) (y-selection.y1) / selection.height);
     }
 
