@@ -114,6 +114,8 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), G_N_ELEMENTS (return_vals),
                           args, return_vals);
+
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Info");
 }
 
 /* main function */
@@ -183,7 +185,7 @@ analyze (GimpDrawable *drawable)
   GimpPixelRgn  srcPR;
   guchar       *src_row, *cmap;
   gint          x, y, numcol;
-  gint          x1, y1, x2, y2;
+  gint          x1, y1, x2, y2, w, h;
   guchar        r, g, b;
   gint          a;
   guchar        idx;
@@ -197,7 +199,11 @@ analyze (GimpDrawable *drawable)
 
   gimp_progress_init (_("Colorcube Analysis"));
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id, &x1, &y1, &w, &h))
+    return;
+
+  x2 = x1 + w;
+  y2 = y1 + h;
 
   /*
    * Get the size of the input image (this will/must be the same
@@ -233,7 +239,7 @@ analyze (GimpDrawable *drawable)
       if (has_sel)
         gimp_pixel_rgn_get_row (&selPR, sel, x1 + ofsx, y + ofsy, (x2 - x1));
 
-      for (x = 0; x < x2 - x1; x++)
+      for (x = 0; x < w; x++)
         {
           /* Start with full opacity.  */
           a = 255;
@@ -494,4 +500,3 @@ fillPreview (GtkWidget *preview)
 
   g_free (image);
 }
-
