@@ -51,7 +51,7 @@ enum
 };
 
 /* entry point to gimppickbutton-{default,quartz}.c */
-extern void       gimp_pick_button_clicked       (GtkButton      *gtk_button);
+extern void       _gimp_pick_button_clicked      (GtkButton      *gtk_button);
 
 
 static void       gimp_pick_button_dispose       (GObject        *object);
@@ -88,7 +88,7 @@ gimp_pick_button_class_init (GimpPickButtonClass* klass)
 
   object_class->dispose = gimp_pick_button_dispose;
 
-  button_class->clicked = gimp_pick_button_clicked;
+  button_class->clicked = _gimp_pick_button_clicked;
 
   klass->color_picked   = NULL;
 }

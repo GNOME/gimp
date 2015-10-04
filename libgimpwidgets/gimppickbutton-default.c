@@ -54,7 +54,7 @@ static void       gimp_pick_button_pick          (GdkScreen      *screen,
                                                   GimpPickButton *button);
 
 
-void              gimp_pick_button_clicked       (GtkButton      *gtk_button);
+void              _gimp_pick_button_clicked      (GtkButton      *gtk_button);
 
 static GdkCursor *
 make_cursor (GdkDisplay *display)
@@ -225,7 +225,7 @@ gimp_pick_button_pick (GdkScreen      *screen,
 
 /* entry point to this file, called from gimppickbutton.c */
 void
-gimp_pick_button_clicked (GtkButton *gtk_button)
+_gimp_pick_button_clicked (GtkButton *gtk_button)
 {
   GimpPickButton *button = GIMP_PICK_BUTTON (gtk_button);
   GtkWidget      *widget;

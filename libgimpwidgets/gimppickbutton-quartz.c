@@ -34,7 +34,7 @@
 #endif
 
 
-void              gimp_pick_button_clicked       (GtkButton      *gtk_button);
+void              _gimp_pick_button_clicked      (GtkButton      *gtk_button);
 
 
 @interface GimpPickWindowController : NSObject
@@ -400,7 +400,7 @@ void              gimp_pick_button_clicked       (GtkButton      *gtk_button);
 
 /* entrypoint to this file, called from gimppickbutton.c */
 void
-gimp_pick_button_clicked (GtkButton *gtk_button)
+_gimp_pick_button_clicked (GtkButton *gtk_button)
 {
   GimpPickButton           *button = GIMP_PICK_BUTTON (gtk_button);
   GimpPickWindowController *controller;
