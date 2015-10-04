@@ -1946,6 +1946,7 @@ if test "x$platform_osx" != xno &&
   fi
 fi
 
+AM_CONDITIONAL(PLATFORM_OSX_QUARTZ, test "x$gtk_mac_integration_ok" = xyes)
 
 ####################################
 # Check for Mac OS X TWAIN framework

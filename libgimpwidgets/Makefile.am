@@ -286,7 +286,7 @@ EXTRA_DIST = \
 #
 
 
-if PLATFORM_OSX
+if PLATFORM_OSX_QUARTZ
 libgimpwidgets_sources += gimppickbutton-quartz.c
 AM_CPPFLAGS += "-xobjective-c"
 else
