@@ -50,11 +50,14 @@ enum
   LAST_SIGNAL
 };
 
-/* entry point to gimppickbutton-{default,quartz}.c */
-extern void       _gimp_pick_button_clicked      (GtkButton      *gtk_button);
-
+/* entry points to gimppickbutton-{default,quartz}.c */
+void              _gimp_pick_button_default_pick (GimpPickButton *button);
+void              _gimp_pick_button_quartz_pick  (GimpPickButton *button);
 
 static void       gimp_pick_button_dispose       (GObject        *object);
+
+static void       gimp_pick_button_clicked       (GtkButton      *button);
+
 
 G_DEFINE_TYPE (GimpPickButton, gimp_pick_button, GTK_TYPE_BUTTON)
 
@@ -88,7 +91,7 @@ gimp_pick_button_class_init (GimpPickButtonClass* klass)
 
   object_class->dispose = gimp_pick_button_dispose;
 
-  button_class->clicked = _gimp_pick_button_clicked;
+  button_class->clicked = gimp_pick_button_clicked;
 
   klass->color_picked   = NULL;
 }
@@ -127,6 +130,16 @@ gimp_pick_button_dispose (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_pick_button_clicked (GtkButton *button)
+{
+#ifdef GDK_WINDOWING_QUARTZ
+  _gimp_pick_button_quartz_pick (GIMP_PICK_BUTTON (button));
+#else
+  _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button));
+#endif
 }
 
 

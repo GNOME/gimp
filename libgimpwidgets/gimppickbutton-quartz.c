@@ -34,7 +34,7 @@
 #endif
 
 
-void              _gimp_pick_button_clicked      (GtkButton      *gtk_button);
+void   _gimp_pick_button_quartz_pick (GimpPickButton *button);
 
 
 @interface GimpPickWindowController : NSObject
@@ -398,11 +398,10 @@ void              _gimp_pick_button_clicked      (GtkButton      *gtk_button);
 }
 @end
 
-/* entrypoint to this file, called from gimppickbutton.c */
+/* entry point to this file, called from gimppickbutton.c */
 void
-_gimp_pick_button_clicked (GtkButton *gtk_button)
+_gimp_pick_button_quartz_pick (GimpPickButton *button)
 {
-  GimpPickButton           *button = GIMP_PICK_BUTTON (gtk_button);
   GimpPickWindowController *controller;
   NSAutoreleasePool        *pool;
 
