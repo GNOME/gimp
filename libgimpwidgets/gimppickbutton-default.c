@@ -35,6 +35,7 @@
 
 #include "libgimp/libgimp-intl.h"
 
+
 static gboolean   gimp_pick_button_mouse_press   (GtkWidget      *invisible,
                                                   GdkEventButton *event,
                                                   GimpPickButton *button);
@@ -53,8 +54,8 @@ static void       gimp_pick_button_pick          (GdkScreen      *screen,
                                                   gint            y_root,
                                                   GimpPickButton *button);
 
-
 void              _gimp_pick_button_clicked      (GtkButton      *gtk_button);
+
 
 static GdkCursor *
 make_cursor (GdkDisplay *display)
@@ -220,7 +221,7 @@ gimp_pick_button_pick (GdkScreen      *screen,
 
   gimp_rgba_set_uchar (&rgb, color[0], color[1], color[2], 255);
 
-  g_signal_emit_by_name (button, "color-picked", 0, &rgb);
+  g_signal_emit_by_name (button, "color-picked", &rgb);
 }
 
 /* entry point to this file, called from gimppickbutton.c */
