@@ -918,7 +918,7 @@ gimp_metadata_set_resolution (GimpMetadata *metadata,
 GimpMetadataColorspace
 gimp_metadata_get_colorspace (GimpMetadata *metadata)
 {
-  glong colorspace = -1;
+  glong exif_cs = -1;
 
   g_return_val_if_fail (GEXIV2_IS_METADATA (metadata),
                         GIMP_METADATA_COLORSPACE_UNSPECIFIED);
@@ -927,74 +927,84 @@ gimp_metadata_get_colorspace (GimpMetadata *metadata)
 
   if (gexiv2_metadata_has_tag (metadata, "Exif.Photo.ColorSpace"))
     {
-      colorspace = gexiv2_metadata_get_tag_long (metadata,
-                                                 "Exif.Photo.ColorSpace");
+      exif_cs = gexiv2_metadata_get_tag_long (metadata,
+                                              "Exif.Photo.ColorSpace");
     }
   else if (gexiv2_metadata_has_tag (metadata, "Xmp.exif.ColorSpace"))
     {
-      colorspace = gexiv2_metadata_get_tag_long (metadata,
-                                                 "Xmp.exif.ColorSpace");
+      exif_cs = gexiv2_metadata_get_tag_long (metadata,
+                                              "Xmp.exif.ColorSpace");
     }
 
-  if (colorspace == 0x01)
+  if (exif_cs == 0x01)
     {
       return GIMP_METADATA_COLORSPACE_SRGB;
     }
-  else if (colorspace == 0x02)
+  else if (exif_cs == 0x02)
     {
       return GIMP_METADATA_COLORSPACE_ADOBERGB;
     }
-  else if (colorspace == 0xffff)
+  else
     {
-      gchar *iop_index;
-
-      iop_index = gexiv2_metadata_get_tag_string (metadata,
-                                                  "Exif.Iop.InteroperabilityIndex");
-
-      if (! g_strcmp0 (iop_index, "R03"))
+      if (exif_cs == 0xffff)
         {
+          gchar *iop_index;
+
+          iop_index = gexiv2_metadata_get_tag_string (metadata,
+                                                      "Exif.Iop.InteroperabilityIndex");
+
+          if (! g_strcmp0 (iop_index, "R03"))
+            {
+              g_free (iop_index);
+
+              return GIMP_METADATA_COLORSPACE_ADOBERGB;
+            }
+          else if (! g_strcmp0 (iop_index, "R98"))
+            {
+              g_free (iop_index);
+
+              return GIMP_METADATA_COLORSPACE_SRGB;
+            }
+
           g_free (iop_index);
-
-          return GIMP_METADATA_COLORSPACE_ADOBERGB;
         }
-      else if (! g_strcmp0 (iop_index, "R98"))
+
+      if (gexiv2_metadata_has_tag (metadata, "Exif.Nikon3.ColorSpace"))
         {
-          g_free (iop_index);
+          glong nikon_cs;
 
-          return GIMP_METADATA_COLORSPACE_SRGB;
+          nikon_cs = gexiv2_metadata_get_tag_long (metadata,
+                                                   "Exif.Nikon3.ColorSpace");
+
+          if (nikon_cs == 0x01)
+            {
+              return GIMP_METADATA_COLORSPACE_SRGB;
+            }
+          else if (nikon_cs == 0x02)
+            {
+              return GIMP_METADATA_COLORSPACE_ADOBERGB;
+            }
         }
 
-      g_free (iop_index);
-
-      return GIMP_METADATA_COLORSPACE_UNCALIBRATED;
-    }
-  else if (gexiv2_metadata_has_tag (metadata, "Exif.Nikon3.ColorSpace"))
-    {
-      colorspace = gexiv2_metadata_get_tag_long (metadata,
-                                                 "Exif.Nikon3.ColorSpace");
-
-      if (colorspace == 0x01)
+      if (gexiv2_metadata_has_tag (metadata, "Exif.Canon.ColorSpace"))
         {
-          return GIMP_METADATA_COLORSPACE_SRGB;
-        }
-      else if (colorspace == 0x02)
-        {
-          return GIMP_METADATA_COLORSPACE_ADOBERGB;
-        }
-    }
-  else if (gexiv2_metadata_has_tag (metadata, "Exif.Canon.ColorSpace"))
-    {
-      colorspace = gexiv2_metadata_get_tag_long (metadata,
-                                                 "Exif.Canon.ColorSpace");
+          glong canon_cs;
 
-      if (colorspace == 0x01)
-        {
-          return GIMP_METADATA_COLORSPACE_SRGB;
+          canon_cs = gexiv2_metadata_get_tag_long (metadata,
+                                                   "Exif.Canon.ColorSpace");
+
+          if (canon_cs == 0x01)
+            {
+              return GIMP_METADATA_COLORSPACE_SRGB;
+            }
+          else if (canon_cs == 0x02)
+            {
+              return GIMP_METADATA_COLORSPACE_ADOBERGB;
+            }
         }
-      else if (colorspace == 0x02)
-        {
-          return GIMP_METADATA_COLORSPACE_ADOBERGB;
-        }
+
+      if (exif_cs == 0xffff)
+        return GIMP_METADATA_COLORSPACE_UNCALIBRATED;
     }
 
   return GIMP_METADATA_COLORSPACE_UNSPECIFIED;
