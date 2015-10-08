@@ -114,7 +114,7 @@ struct _GimpColorSelect
   GtkWidget           *xy_color;
   GtkWidget           *z_color;
 
-  gint                 pos[3];
+  gdouble              pos[3];
 
   ColorSelectFillType  z_color_fill;
   ColorSelectFillType  xy_color_fill;
@@ -489,35 +489,35 @@ gimp_color_select_update_values (GimpColorSelect *select)
   switch (select->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      selector->rgb.b = select->pos[0] / 255.0;
-      selector->rgb.g = select->pos[1] / 255.0;
-      selector->rgb.r = select->pos[2] / 255.0;
+      selector->rgb.b = select->pos[0];
+      selector->rgb.g = select->pos[1];
+      selector->rgb.r = select->pos[2];
       break;
     case COLOR_SELECT_GREEN:
-      selector->rgb.b = select->pos[0] / 255.0;
-      selector->rgb.r = select->pos[1] / 255.0;
-      selector->rgb.g = select->pos[2] / 255.0;
+      selector->rgb.b = select->pos[0];
+      selector->rgb.r = select->pos[1];
+      selector->rgb.g = select->pos[2];
       break;
     case COLOR_SELECT_BLUE:
-      selector->rgb.g = select->pos[0] / 255.0;
-      selector->rgb.r = select->pos[1] / 255.0;
-      selector->rgb.b = select->pos[2] / 255.0;
+      selector->rgb.g = select->pos[0];
+      selector->rgb.r = select->pos[1];
+      selector->rgb.b = select->pos[2];
       break;
 
     case COLOR_SELECT_HUE:
-      selector->hsv.v = select->pos[0] / 255.0;
-      selector->hsv.s = select->pos[1] / 255.0;
-      selector->hsv.h = select->pos[2] / 255.0;
+      selector->hsv.v = select->pos[0];
+      selector->hsv.s = select->pos[1];
+      selector->hsv.h = select->pos[2];
       break;
     case COLOR_SELECT_SATURATION:
-      selector->hsv.v = select->pos[0] / 255.0;
-      selector->hsv.h = select->pos[1] / 255.0;
-      selector->hsv.s = select->pos[2] / 255.0;
+      selector->hsv.v = select->pos[0];
+      selector->hsv.h = select->pos[1];
+      selector->hsv.s = select->pos[2];
       break;
     case COLOR_SELECT_VALUE:
-      selector->hsv.s = select->pos[0] / 255.0;
-      selector->hsv.h = select->pos[1] / 255.0;
-      selector->hsv.v = select->pos[2] / 255.0;
+      selector->hsv.s = select->pos[0];
+      selector->hsv.h = select->pos[1];
+      selector->hsv.v = select->pos[2];
       break;
 
     default:
@@ -551,35 +551,35 @@ gimp_color_select_update_pos (GimpColorSelect *select)
   switch (select->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      select->pos[0] = ROUND (selector->rgb.b * 255.0);
-      select->pos[1] = ROUND (selector->rgb.g * 255.0);
-      select->pos[2] = ROUND (selector->rgb.r * 255.0);
+      select->pos[0] = CLAMP (selector->rgb.b, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->rgb.g, 0.0, 1.0);
+      select->pos[2] = CLAMP (selector->rgb.r, 0.0, 1.0);
       break;
     case COLOR_SELECT_GREEN:
-      select->pos[0] = ROUND (selector->rgb.b * 255.0);
-      select->pos[1] = ROUND (selector->rgb.r * 255.0);
-      select->pos[2] = ROUND (selector->rgb.g * 255.0);
+      select->pos[0] = CLAMP (selector->rgb.b, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->rgb.r, 0.0, 1.0);
+      select->pos[2] = CLAMP (selector->rgb.g, 0.0, 1.0);
       break;
     case COLOR_SELECT_BLUE:
-      select->pos[0] = ROUND (selector->rgb.g * 255.0);
-      select->pos[1] = ROUND (selector->rgb.r * 255.0);
-      select->pos[2] = ROUND (selector->rgb.b * 255.0);
+      select->pos[0] = CLAMP (selector->rgb.g, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->rgb.r, 0.0, 1.0);
+      select->pos[2] = CLAMP (selector->rgb.b, 0.0, 1.0);
       break;
 
     case COLOR_SELECT_HUE:
-      select->pos[0] = ROUND (selector->hsv.v * 255.0);
-      select->pos[1] = ROUND (selector->hsv.s * 255.0);
-      select->pos[2] = ROUND (selector->hsv.h * 255.0);
+      select->pos[0] = CLAMP (selector->hsv.v, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->hsv.s, 0.0, 1.0);
+      select->pos[2] = CLAMP (selector->hsv.h, 0.0, 1.0);
       break;
     case COLOR_SELECT_SATURATION:
-      select->pos[0] = ROUND (selector->hsv.v * 255.0);
-      select->pos[1] = ROUND (selector->hsv.h * 255.0);
-      select->pos[2] = ROUND (selector->hsv.s * 255.0);
+      select->pos[0] = CLAMP (selector->hsv.v, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->hsv.h, 0.0, 1.0);
+      select->pos[2] = CLAMP (selector->hsv.s, 0.0, 1.0);
       break;
     case COLOR_SELECT_VALUE:
-      select->pos[0] = ROUND (selector->hsv.s * 255.0);
-      select->pos[1] = ROUND (selector->hsv.h * 255.0);
-      select->pos[2] = ROUND (selector->hsv.v * 255.0);
+      select->pos[0] = CLAMP (selector->hsv.s, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->hsv.h, 0.0, 1.0);
+      select->pos[2] = CLAMP (selector->hsv.v, 0.0, 1.0);
       break;
 
     default:
@@ -630,8 +630,8 @@ gimp_color_select_xy_expose (GtkWidget       *widget,
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
 
-  x = ((allocation.width - 1) * select->pos[0]) / 255;
-  y = (allocation.height - 1) - ((allocation.height - 1) * select->pos[1]) / 255;
+  x = (allocation.width  - 1) * select->pos[0];
+  y = (allocation.height - 1) - (allocation.height - 1) * select->pos[1];
 
   cairo_move_to (cr, 0,                y + 0.5);
   cairo_line_to (cr, allocation.width, y + 0.5);
@@ -658,7 +658,7 @@ gimp_color_select_xy_events (GtkWidget       *widget,
                              GimpColorSelect *select)
 {
   GtkAllocation allocation;
-  gint          x, y;
+  gdouble       x, y;
 
   switch (event->type)
     {
@@ -712,12 +712,12 @@ gimp_color_select_xy_events (GtkWidget       *widget,
 
   if (allocation.width > 1 && allocation.height > 1)
     {
-      select->pos[0] = (x * 255) / (allocation.width - 1);
-      select->pos[1] = 255 - (y * 255) / (allocation.height - 1);
+      select->pos[0] = x  / (allocation.width - 1);
+      select->pos[1] = 1.0 - y / (allocation.height - 1);
     }
 
-  select->pos[0] = CLAMP (select->pos[0], 0, 255);
-  select->pos[1] = CLAMP (select->pos[1], 0, 255);
+  select->pos[0] = CLAMP (select->pos[0], 0.0, 1.0);
+  select->pos[1] = CLAMP (select->pos[1], 0.0, 1.0);
 
   gtk_widget_queue_draw (select->xy_color);
 
@@ -752,7 +752,7 @@ gimp_color_select_z_expose (GtkWidget       *widget,
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
 
-  y = (allocation.height - 1) - ((allocation.height - 1) * select->pos[2]) / 255;
+  y = (allocation.height - 1) - (allocation.height - 1) * select->pos[2];
 
   cairo_move_to (cr, 0,                y + 0.5);
   cairo_line_to (cr, allocation.width, y + 0.5);
@@ -776,7 +776,7 @@ gimp_color_select_z_events (GtkWidget       *widget,
                             GimpColorSelect *select)
 {
   GtkAllocation allocation;
-  gint          z;
+  gdouble       z;
 
   switch (event->type)
     {
@@ -826,9 +826,9 @@ gimp_color_select_z_events (GtkWidget       *widget,
   gtk_widget_get_allocation (select->z_color, &allocation);
 
   if (allocation.height > 1)
-    select->pos[2] = 255 - (z * 255) / (allocation.height - 1);
+    select->pos[2] = 1.0 - z / (allocation.height - 1);
 
-  select->pos[2] = CLAMP (select->pos[2], 0, 255);
+  select->pos[2] = CLAMP (select->pos[2], 0.0, 1.0);
 
   gtk_widget_queue_draw (select->z_color);
 
