@@ -69,7 +69,8 @@ static void      sel_gauss        (GimpDrawable     *drawable,
                                    gdouble           radius,
                                    gint              maxdelta);
 static gboolean  sel_gauss_dialog (GimpDrawable     *drawable);
-static void      preview_update   (GimpPreview      *preview);
+static void      preview_update   (GimpPreview      *preview,
+                                   GimpDrawable     *drawable);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -257,7 +258,7 @@ sel_gauss_dialog (GimpDrawable *drawable)
 
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (preview_update),
-                    NULL);
+                    drawable);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -789,9 +790,9 @@ sel_gauss (GimpDrawable *drawable,
 }
 
 static void
-preview_update (GimpPreview *preview)
+preview_update (GimpPreview  *preview,
+                GimpDrawable *drawable)
 {
-  GimpDrawable  *drawable;
   glong          bytes;
   gint           x, y;
   guchar        *render_buffer;  /* Buffer to hold rendered image */
@@ -806,8 +807,6 @@ preview_update (GimpPreview *preview)
   gdouble       radius;
 
   /* Get drawable info */
-  drawable =
-    gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
   bytes = drawable->bpp;
 
   /*
