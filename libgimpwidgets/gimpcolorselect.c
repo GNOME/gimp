@@ -852,7 +852,7 @@ gimp_color_select_image_fill (GtkWidget           *preview,
 
   gtk_widget_get_allocation (preview, &allocation);
 
-  csf.buffer = g_alloca (csf.width * 3);
+  csf.buffer = g_alloca (allocation.width * 3);
   csf.width  = allocation.width;
   csf.height = allocation.height;
   csf.hsv    = *hsv;
