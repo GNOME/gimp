@@ -489,34 +489,34 @@ gimp_color_select_update_values (GimpColorSelect *select)
   switch (select->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      selector->rgb.b = select->pos[0];
-      selector->rgb.g = select->pos[1];
+      selector->rgb.g = select->pos[0];
+      selector->rgb.b = select->pos[1];
       selector->rgb.r = select->pos[2];
       break;
     case COLOR_SELECT_GREEN:
-      selector->rgb.b = select->pos[0];
-      selector->rgb.r = select->pos[1];
+      selector->rgb.r = select->pos[0];
+      selector->rgb.b = select->pos[1];
       selector->rgb.g = select->pos[2];
       break;
     case COLOR_SELECT_BLUE:
-      selector->rgb.g = select->pos[0];
-      selector->rgb.r = select->pos[1];
+      selector->rgb.r = select->pos[0];
+      selector->rgb.g = select->pos[1];
       selector->rgb.b = select->pos[2];
       break;
 
     case COLOR_SELECT_HUE:
-      selector->hsv.v = select->pos[0];
-      selector->hsv.s = select->pos[1];
+      selector->hsv.s = select->pos[0];
+      selector->hsv.v = select->pos[1];
       selector->hsv.h = select->pos[2];
       break;
     case COLOR_SELECT_SATURATION:
-      selector->hsv.v = select->pos[0];
-      selector->hsv.h = select->pos[1];
+      selector->hsv.h = select->pos[0];
+      selector->hsv.v = select->pos[1];
       selector->hsv.s = select->pos[2];
       break;
     case COLOR_SELECT_VALUE:
-      selector->hsv.s = select->pos[0];
-      selector->hsv.h = select->pos[1];
+      selector->hsv.h = select->pos[0];
+      selector->hsv.s = select->pos[1];
       selector->hsv.v = select->pos[2];
       break;
 
@@ -551,34 +551,34 @@ gimp_color_select_update_pos (GimpColorSelect *select)
   switch (select->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      select->pos[0] = CLAMP (selector->rgb.b, 0.0, 1.0);
-      select->pos[1] = CLAMP (selector->rgb.g, 0.0, 1.0);
+      select->pos[0] = CLAMP (selector->rgb.g, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->rgb.b, 0.0, 1.0);
       select->pos[2] = CLAMP (selector->rgb.r, 0.0, 1.0);
       break;
     case COLOR_SELECT_GREEN:
-      select->pos[0] = CLAMP (selector->rgb.b, 0.0, 1.0);
-      select->pos[1] = CLAMP (selector->rgb.r, 0.0, 1.0);
+      select->pos[0] = CLAMP (selector->rgb.r, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->rgb.b, 0.0, 1.0);
       select->pos[2] = CLAMP (selector->rgb.g, 0.0, 1.0);
       break;
     case COLOR_SELECT_BLUE:
-      select->pos[0] = CLAMP (selector->rgb.g, 0.0, 1.0);
-      select->pos[1] = CLAMP (selector->rgb.r, 0.0, 1.0);
+      select->pos[0] = CLAMP (selector->rgb.r, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->rgb.g, 0.0, 1.0);
       select->pos[2] = CLAMP (selector->rgb.b, 0.0, 1.0);
       break;
 
     case COLOR_SELECT_HUE:
-      select->pos[0] = CLAMP (selector->hsv.v, 0.0, 1.0);
-      select->pos[1] = CLAMP (selector->hsv.s, 0.0, 1.0);
+      select->pos[0] = CLAMP (selector->hsv.s, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->hsv.v, 0.0, 1.0);
       select->pos[2] = CLAMP (selector->hsv.h, 0.0, 1.0);
       break;
     case COLOR_SELECT_SATURATION:
-      select->pos[0] = CLAMP (selector->hsv.v, 0.0, 1.0);
-      select->pos[1] = CLAMP (selector->hsv.h, 0.0, 1.0);
+      select->pos[0] = CLAMP (selector->hsv.h, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->hsv.v, 0.0, 1.0);
       select->pos[2] = CLAMP (selector->hsv.s, 0.0, 1.0);
       break;
     case COLOR_SELECT_VALUE:
-      select->pos[0] = CLAMP (selector->hsv.s, 0.0, 1.0);
-      select->pos[1] = CLAMP (selector->hsv.h, 0.0, 1.0);
+      select->pos[0] = CLAMP (selector->hsv.h, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->hsv.s, 0.0, 1.0);
       select->pos[2] = CLAMP (selector->hsv.v, 0.0, 1.0);
       break;
 
@@ -1024,13 +1024,63 @@ static void
 color_select_update_red_green (ColorSelectFill *csf)
 {
   guchar *p = csf->buffer;
-  gint    i, r, b;
-  gfloat  g, dg;
+  gint    i, g, b;
+  gfloat  r, dr;
 
   b = ROUND (csf->rgb.b * 255.0);
 
-  r = (csf->height - csf->y + 1) * 255 / csf->height;
-  r = CLAMP (r, 0, 255);
+  g = (csf->height - csf->y + 1) * 255 / csf->height;
+  g = CLAMP (g, 0, 255);
+
+  r = 0;
+  dr = 255.0 / csf->width;
+
+  for (i = 0; i < csf->width; i++)
+    {
+      *p++ = r;
+      *p++ = g;
+      *p++ = b;
+
+      r += dr;
+    }
+}
+
+static void
+color_select_update_red_blue (ColorSelectFill *csf)
+{
+  guchar *p = csf->buffer;
+  gint    i, g, b;
+  gfloat  r, dr;
+
+  g = ROUND (csf->rgb.g * 255.0);
+
+  b = (csf->height - csf->y + 1) * 255 / csf->height;
+  b = CLAMP (b, 0, 255);
+
+  r = 0;
+  dr = 255.0 / csf->width;
+
+  for (i = 0; i < csf->width; i++)
+    {
+      *p++ = r;
+      *p++ = g;
+      *p++ = b;
+
+      r += dr;
+    }
+}
+
+static void
+color_select_update_green_blue (ColorSelectFill *csf)
+{
+  guchar *p = csf->buffer;
+  gint    i, r, b;
+  gfloat  g, dg;
+
+  r = ROUND (csf->rgb.r * 255.0);
+
+  b = (csf->height - csf->y + 1) * 255 / csf->height;
+  b = CLAMP (b, 0, 255);
 
   g = 0;
   dg = 255.0 / csf->width;
@@ -1046,136 +1096,61 @@ color_select_update_red_green (ColorSelectFill *csf)
 }
 
 static void
-color_select_update_red_blue (ColorSelectFill *csf)
-{
-  guchar *p = csf->buffer;
-  gint    i, r, g;
-  gfloat  b, db;
-
-  g = ROUND (csf->rgb.g * 255.0);
-
-  r = (csf->height - csf->y + 1) * 255 / csf->height;
-  r = CLAMP (r, 0, 255);
-
-  b = 0;
-  db = 255.0 / csf->width;
-
-  for (i = 0; i < csf->width; i++)
-    {
-      *p++ = r;
-      *p++ = g;
-      *p++ = b;
-
-      b += db;
-    }
-}
-
-static void
-color_select_update_green_blue (ColorSelectFill *csf)
-{
-  guchar *p = csf->buffer;
-  gint    i, g, r;
-  gfloat  b, db;
-
-  r = ROUND (csf->rgb.r * 255.0);
-
-  g = (csf->height - csf->y + 1) * 255 / csf->height;
-  g = CLAMP (g, 0, 255);
-
-  b = 0;
-  db = 255.0 / csf->width;
-
-  for (i = 0; i < csf->width; i++)
-    {
-      *p++ = r;
-      *p++ = g;
-      *p++ = b;
-
-      b += db;
-    }
-}
-
-static void
 color_select_update_hue_saturation (ColorSelectFill *csf)
 {
   guchar *p = csf->buffer;
-  gfloat  h, v, s, ds;
+  gfloat  h, dh, s, v;
   gint    f;
   gint    i;
 
-  h = 360 - (csf->y * 360 / csf->height);
-  h = CLAMP (h, 0, 359);
-
-  h /= 60;
-  f = (h - (int) h) * 255;
-
-  s = 0;
-  ds = 1.0 / csf->width;
-
   v = csf->hsv.v;
 
-  switch ((int) h)
+  s = (gfloat) csf->y / csf->height;
+  s = CLAMP (s, 0.0, 1.0);
+  s = 1.0 - s;
+
+  h = 0;
+  dh = 360.0 / csf->width;
+
+  for (i = 0; i < csf->width; i++)
     {
-    case 0:
-      for (i = 0; i < csf->width; i++)
+      f = ((h / 60) - (int) (h / 60)) * 255;
+
+      switch ((int) (h / 60))
         {
+        case 0:
           *p++ = v * 255;
           *p++ = v * (255 - (s * (255 - f)));
           *p++ = v * 255 * (1 - s);
-
-          s += ds;
-        }
-      break;
-    case 1:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 1:
           *p++ = v * (255 - s * f);
           *p++ = v * 255;
           *p++ = v * 255 * (1 - s);
-
-          s += ds;
-        }
-      break;
-    case 2:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 2:
           *p++ = v * 255 * (1 - s);
           *p++ = v *255;
           *p++ = v * (255 - (s * (255 - f)));
-
-          s += ds;
-        }
-      break;
-    case 3:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 3:
           *p++ = v * 255 * (1 - s);
           *p++ = v * (255 - s * f);
           *p++ = v * 255;
-
-          s += ds;
-        }
-      break;
-    case 4:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 4:
           *p++ = v * (255 - (s * (255 - f)));
           *p++ = v * (255 * (1 - s));
           *p++ = v * 255;
-
-          s += ds;
-        }
-      break;
-    case 5:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 5:
           *p++ = v * 255;
           *p++ = v * 255 * (1 - s);
           *p++ = v * (255 - s * f);
-
-          s += ds;
+          break;
         }
-      break;
+
+      h += dh;
     }
 }
 
@@ -1183,83 +1158,58 @@ static void
 color_select_update_hue_value (ColorSelectFill *csf)
 {
   guchar *p = csf->buffer;
-  gfloat  h, v, dv, s;
+  gfloat  h, dh, s, v;
   gint    f;
   gint    i;
 
-  h = 360 - (csf->y * 360 / csf->height);
-  h = CLAMP (h, 0, 359);
-
-  h /= 60;
-  f = (h - (int) h) * 255;
-
-  v = 0;
-  dv = 1.0 / csf->width;
-
   s = csf->hsv.s;
 
-  switch ((int) h)
+  v = (gfloat) csf->y / csf->height;
+  v = CLAMP (v, 0.0, 1.0);
+  v = 1.0 - v;
+
+  h = 0;
+  dh = 360.0 / csf->width;
+
+  for (i = 0; i < csf->width; i++)
     {
-    case 0:
-      for (i = 0; i < csf->width; i++)
+      f = ((h / 60) - (int) (h / 60)) * 255;
+
+      switch ((int) (h / 60))
         {
+        case 0:
           *p++ = v * 255;
           *p++ = v * (255 - (s * (255 - f)));
           *p++ = v * 255 * (1 - s);
-
-          v += dv;
-        }
-      break;
-    case 1:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 1:
           *p++ = v * (255 - s * f);
           *p++ = v * 255;
           *p++ = v * 255 * (1 - s);
-
-          v += dv;
-        }
-      break;
-    case 2:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 2:
           *p++ = v * 255 * (1 - s);
           *p++ = v *255;
           *p++ = v * (255 - (s * (255 - f)));
-
-          v += dv;
-        }
-      break;
-    case 3:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 3:
           *p++ = v * 255 * (1 - s);
           *p++ = v * (255 - s * f);
           *p++ = v * 255;
-
-          v += dv;
-        }
-      break;
-    case 4:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 4:
           *p++ = v * (255 - (s * (255 - f)));
           *p++ = v * (255 * (1 - s));
           *p++ = v * 255;
-
-          v += dv;
-        }
-      break;
-    case 5:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 5:
           *p++ = v * 255;
           *p++ = v * 255 * (1 - s);
           *p++ = v * (255 - s * f);
-
-          v += dv;
+          break;
         }
-      break;
+
+      h += dh;
     }
 }
 
@@ -1267,14 +1217,9 @@ static void
 color_select_update_saturation_value (ColorSelectFill *csf)
 {
   guchar *p = csf->buffer;
-  gfloat  h, v, dv, s;
+  gfloat  h, s, ds, v;
   gint    f;
   gint    i;
-
-  s = (gfloat) csf->y / csf->height;
-  s = CLAMP (s, 0.0, 1.0);
-
-  s = 1 - s;
 
   h = (gfloat) csf->hsv.h * 360.0;
   if (h >= 360)
@@ -1282,8 +1227,12 @@ color_select_update_saturation_value (ColorSelectFill *csf)
   h /= 60;
   f = (h - (gint) h) * 255;
 
-  v = 0;
-  dv = 1.0 / csf->width;
+  v = (gfloat) csf->y / csf->height;
+  v = CLAMP (v, 0.0, 1.0);
+  v = 1.0 - v;
+
+  s = 0;
+  ds = 1.0 / csf->width;
 
   switch ((gint) h)
     {
@@ -1294,7 +1243,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
           *p++ = v * (255 - (s * (255 - f)));
           *p++ = v * 255 * (1 - s);
 
-          v += dv;
+          s += ds;
         }
       break;
     case 1:
@@ -1304,7 +1253,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
           *p++ = v * 255;
           *p++ = v * 255 * (1 - s);
 
-          v += dv;
+          s += ds;
         }
       break;
     case 2:
@@ -1314,7 +1263,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
           *p++ = v *255;
           *p++ = v * (255 - (s * (255 - f)));
 
-          v += dv;
+          s += ds;
         }
       break;
     case 3:
@@ -1324,7 +1273,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
           *p++ = v * (255 - s * f);
           *p++ = v * 255;
 
-          v += dv;
+          s += ds;
         }
       break;
     case 4:
@@ -1334,7 +1283,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
           *p++ = v * (255 * (1 - s));
           *p++ = v * 255;
 
-          v += dv;
+          s += ds;
         }
       break;
     case 5:
@@ -1344,7 +1293,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
           *p++ = v * 255 * (1 - s);
           *p++ = v * (255 - s * f);
 
-          v += dv;
+          s += ds;
         }
       break;
     }
