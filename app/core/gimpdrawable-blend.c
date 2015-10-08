@@ -34,7 +34,6 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
-#include "gimp-palettes.h"
 #include "gimp-utils.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -184,7 +183,6 @@ gimp_drawable_blend (GimpDrawable         *drawable,
 {
   GimpImage  *image;
   GeglBuffer *buffer;
-  GimpRGB     color;
   gint        x, y, width, height;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -199,12 +197,6 @@ gimp_drawable_blend (GimpDrawable         *drawable,
     return;
 
   gimp_set_busy (image->gimp);
-
-  /* Let's save the first and last color of a gradient. */
-  gimp_gradient_get_color_at (gradient, context, NULL, 0.0, FALSE, &color);
-  gimp_palettes_add_color_history (context->gimp, &color);
-  gimp_gradient_get_color_at (gradient, context, NULL, 1.0, FALSE, &color);
-  gimp_palettes_add_color_history (context->gimp, &color);
 
   /*  Always create an alpha temp buf (for generality) */
   buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0, width, height),
