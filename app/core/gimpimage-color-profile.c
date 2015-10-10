@@ -47,6 +47,7 @@
 #include "gimpimage-private.h"
 #include "gimpimage-undo.h"
 #include "gimpprogress.h"
+#include "gimpsubprogress.h"
 
 #include "gimp-intl.h"
 
@@ -487,18 +488,21 @@ gimp_image_convert_profile_rgb (GimpImage                *image,
 {
   GList *layers;
   GList *list;
-  gint   n_drawables;
-  gint   nth_drawable;
+  gint   n_drawables  = 0;
+  gint   nth_drawable = 0;
 
   layers = gimp_image_get_layer_list (image);
 
-  n_drawables = g_list_length (layers);
-
-  for (list = layers, nth_drawable = 0;
-       list;
-       list = g_list_next (list), nth_drawable++)
+  for (list = layers; list; list = g_list_next (list))
     {
-      GimpDrawable    *drawable = list->data;
+      if (! gimp_viewable_get_children (list->data))
+        n_drawables++;
+    }
+
+  for (list = layers; list; list = g_list_next (list))
+    {
+      GimpDrawable    *drawable     = list->data;
+      GimpProgress    *sub_progress = NULL;
       cmsHPROFILE      src_lcms;
       cmsHPROFILE      dest_lcms;
       const Babl      *iter_format;
@@ -508,6 +512,15 @@ gimp_image_convert_profile_rgb (GimpImage                *image,
 
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
         continue;
+
+      if (progress)
+        {
+          sub_progress = gimp_sub_progress_new (progress);
+          gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
+                                      nth_drawable, n_drawables);
+        }
+
+      nth_drawable++;
 
       src_lcms  = gimp_color_profile_get_lcms_profile (src_profile);
       dest_lcms = gimp_color_profile_get_lcms_profile (dest_profile);
@@ -529,6 +542,8 @@ gimp_image_convert_profile_rgb (GimpImage                *image,
         {
           GeglBuffer         *buffer;
           GeglBufferIterator *iter;
+          gint                total_pixels;
+          gint                done_pixels = 0;
 
           buffer = gimp_drawable_get_buffer (drawable);
 
@@ -542,10 +557,20 @@ gimp_image_convert_profile_rgb (GimpImage                *image,
                                            GEGL_ACCESS_READWRITE,
                                            GEGL_ABYSS_NONE);
 
+          total_pixels = (gegl_buffer_get_width  (buffer) *
+                          gegl_buffer_get_height (buffer));
+
           while (gegl_buffer_iterator_next (iter))
             {
               cmsDoTransform (transform,
                               iter->data[0], iter->data[0], iter->length);
+
+              done_pixels += iter->roi[0].width * iter->roi[0].height;
+
+              if (sub_progress)
+                gimp_progress_set_value (sub_progress,
+                                         (gdouble) done_pixels /
+                                         (gdouble) total_pixels);
             }
 
           gimp_drawable_update (drawable, 0, 0,
@@ -555,9 +580,11 @@ gimp_image_convert_profile_rgb (GimpImage                *image,
           cmsDeleteTransform (transform);
         }
 
-      if (progress)
-        gimp_progress_set_value (progress,
-                                 (gdouble) nth_drawable / (gdouble) n_drawables);
+      if (sub_progress)
+        {
+          gimp_progress_set_value (sub_progress, 1.0);
+          g_object_unref (sub_progress);
+        }
     }
 
   g_list_free (layers);
