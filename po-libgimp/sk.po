@@ -6,39 +6,40 @@
 # Richard Popeliš <riki357@gmail.com>, 2011.
 # Peter Mráz <etkinator@gmail.com>, 2012.
 # Pavol Klačanský <pavol@klacansky.com>, 2013
+# Dušan Kazik <prescott66@gmail.com>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-06-06 05:43+0000\n"
-"PO-Revision-Date: 2015-06-06 14:44+0100\n"
-"Last-Translator: Peter Mráz <etkinator@gmail.com>\n"
+"POT-Creation-Date: 2015-10-11 17:56+0000\n"
+"PO-Revision-Date: 2015-10-11 20:27+0200\n"
+"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak <gnome-sk-list@gnome.org>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
-"X-Generator: Poedit 1.8.1\n"
+"X-Generator: Poedit 1.8.5\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1156
+#: ../libgimp/gimp.c:1167
 msgid "success"
 msgstr "úspech"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1160
+#: ../libgimp/gimp.c:1171
 msgid "execution error"
 msgstr "chyba pri vykonávaní"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1164
+#: ../libgimp/gimp.c:1175
 msgid "calling error"
 msgstr "chyba pri volaní"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1168
+#: ../libgimp/gimp.c:1179
 msgid "cancelled"
 msgstr "zrušené"
 
@@ -236,16 +237,45 @@ msgstr "Exportovať obrázok ako "
 msgid "Font Selection"
 msgstr "Výber písma"
 
-# Názov aktuálne vybraného písma
-# PM: Myslím že v takom prípade by sme to nemali asi prekladať
-#: ../libgimp/gimpfontselectbutton.c:154
-msgid "Sans"
-msgstr "Sans"
-
 # titulok dialógového okna
 #: ../libgimp/gimpgradientselectbutton.c:157
 msgid "Gradient Selection"
 msgstr "Výber prechodu"
+
+# ActionEntry
+#: ../libgimp/gimpimagemetadata.c:605
+msgid "Background"
+msgstr "Pozadie"
+
+#: ../libgimp/gimpimagemetadata.c:796
+#, c-format
+msgid "Rotate %s?"
+msgstr "Otočiť %s?"
+
+# DK:otočenie
+#: ../libgimp/gimpimagemetadata.c:802
+msgid "_Keep Original"
+msgstr "_Zachovať pôvodné"
+
+#: ../libgimp/gimpimagemetadata.c:844
+msgid "Original"
+msgstr "Pôvodné"
+
+#: ../libgimp/gimpimagemetadata.c:860
+msgid "Rotated"
+msgstr "Otočený"
+
+#: ../libgimp/gimpimagemetadata.c:878
+msgid "This image contains Exif orientation metadata."
+msgstr "Tento obrázok obsahuje Exif metaúdaje o otočení."
+
+#: ../libgimp/gimpimagemetadata.c:896
+msgid "Would you like to rotate the image?"
+msgstr "Chcete otočiť obrázok?"
+
+#: ../libgimp/gimpimagemetadata.c:908
+msgid "_Don't ask me again"
+msgstr "Nepýtať s_a znovu"
 
 # 1. položka menu
 # 2. zoznam
@@ -257,41 +287,6 @@ msgstr "Výber prechodu"
 #: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:251
 msgid "(Empty)"
 msgstr "(Prázdne)"
-
-# ActionEntry
-#: ../libgimp/gimpmetadata.c:571
-msgid "Background"
-msgstr "Pozadie"
-
-#: ../libgimp/gimpmetadata.c:762
-#, c-format
-msgid "Rotate %s?"
-msgstr "Otočiť %s?"
-
-# DK:otočenie
-#: ../libgimp/gimpmetadata.c:768
-msgid "_Keep Original"
-msgstr "_Zachovať pôvodné"
-
-#: ../libgimp/gimpmetadata.c:810
-msgid "Original"
-msgstr "Pôvodné"
-
-#: ../libgimp/gimpmetadata.c:826
-msgid "Rotated"
-msgstr "Otočený"
-
-#: ../libgimp/gimpmetadata.c:844
-msgid "This image contains Exif orientation metadata."
-msgstr "Tento obrázok obsahuje Exif metaúdaje o otočení."
-
-#: ../libgimp/gimpmetadata.c:862
-msgid "Would you like to rotate the image?"
-msgstr "Chcete otočiť obrázok?"
-
-#: ../libgimp/gimpmetadata.c:874
-msgid "_Don't ask me again"
-msgstr "Nepýtať s_a znovu"
 
 # titulok dialógového okna
 #: ../libgimp/gimppaletteselectbutton.c:139
@@ -1321,22 +1316,38 @@ msgstr ""
 msgid "Calling ShowItems failed: "
 msgstr ""
 
-#: ../libgimpcolor/gimpcolorprofile.c:152
+#: ../libgimpcolor/gimpcolorprofile.c:234
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "„%s“ sa nezdá byť profilom farieb ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:186
+#: ../libgimpcolor/gimpcolorprofile.c:280
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Údaje sa nezdajú byť profilom farieb ICC"
 
-#: ../libgimpcolor/gimpcolorprofile.c:231
+#: ../libgimpcolor/gimpcolorprofile.c:337
 msgid "Could not save color profile to memory"
 msgstr "Nepodarilo sa uložiť profil farieb do pamäte"
 
-#: ../libgimpcolor/gimpcolorprofile.c:375
+#: ../libgimpcolor/gimpcolorprofile.c:524
 msgid "(unnamed profile)"
 msgstr "(profil bez názvu)"
+
+#: ../libgimpcolor/gimpcolorprofile.c:566
+#, c-format
+#| msgid "Profile: %s"
+msgid "Model: %s"
+msgstr "Model: %s"
+
+#: ../libgimpcolor/gimpcolorprofile.c:575
+#, c-format
+msgid "Manufacturer: %s"
+msgstr "Výrobca: %s"
+
+#: ../libgimpcolor/gimpcolorprofile.c:584
+#, c-format
+msgid "Copyright: %s"
+msgstr "Autorské práva: %s"
 
 #. *
 #. * SECTION: gimpcolorconfig
@@ -1350,63 +1361,62 @@ msgid "Mode of operation for color management."
 msgstr "Režim činnosti pre správu farieb."
 
 # tooltip
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:57
 msgid "The color profile of your (primary) monitor."
 msgstr "Profil farieb vášho (hlavného) monitora."
 
 # tooltip
-#: ../libgimpconfig/gimpcolorconfig.c:58
+#: ../libgimpconfig/gimpcolorconfig.c:60
 msgid "When enabled, GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
 msgstr "Ak je povolené, GIMP sa pokúsi použiť profil farieb displeja zo systému okien. Nakonfigurovaný profil monitora je potom použitý len v prípade neúspechu."
 
-# tooltip
-#: ../libgimpconfig/gimpcolorconfig.c:62
-msgid "The default RGB working space color profile."
-msgstr "Predvolený profil farieb pracovného priestoru RGB."
+#: ../libgimpconfig/gimpcolorconfig.c:65
+msgid "The preferred RGB working space color profile. It will be offered next to the built-in RGB profile when a color profile can be chosen."
+msgstr ""
 
 # tooltip
-#: ../libgimpconfig/gimpcolorconfig.c:64
+#: ../libgimpconfig/gimpcolorconfig.c:69
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "Profil farieb CMYK používaný na konverziu medzi RGB a CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:66
+#: ../libgimpconfig/gimpcolorconfig.c:72
 msgid "The color profile to use for soft proofing from your image's color space to some other color space, including soft proofing to a printer or other output device profile. "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:70
+#: ../libgimpconfig/gimpcolorconfig.c:77
 msgid ""
 "How colors are converted from your image's color space to your display device. Relative colorimetric is usually the best choice. Unless you use a LUT monitor profile (most monitor profiles "
 "are matrix), choosing perceptual intent really gives you relative colorimetric."
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:75
+#: ../libgimpconfig/gimpcolorconfig.c:84
 msgid "Do use black point compensation (unless you know you have a reason not to). "
 msgstr ""
 
-#: ../libgimpconfig/gimpcolorconfig.c:77
+#: ../libgimpconfig/gimpcolorconfig.c:88
 msgid "How colors are converted from your image's color space to the output simulation device (usually your monitor). Try them all and choose what looks the best. "
 msgstr "Ako sú konvertované farby z farebného priestoru vášho obrázku do výstupného simulovaného zariadenia (obvykle vášho monitoru). Skúste všetky a zvoľte, ktorý vyzerá najlepšie. "
 
-#: ../libgimpconfig/gimpcolorconfig.c:81
+#: ../libgimpconfig/gimpcolorconfig.c:93
 msgid "Try with and without black point compensation and choose what looks best. "
 msgstr "Skúste s a bez kompenzácie čierneho bodu a zvoľte, čo vyzerá lepšie. "
 
 # tooltip
-#: ../libgimpconfig/gimpcolorconfig.c:84
+#: ../libgimpconfig/gimpcolorconfig.c:97
 msgid "When enabled, the print simulation will mark colors which can not be represented in the target color space."
 msgstr "Keď je povolené, simulácia tlačenia vyznačí farby, ktoré nemôžu byť reprezentované v určenom priestore farieb."
 
 # tooltip
-#: ../libgimpconfig/gimpcolorconfig.c:87
+#: ../libgimpconfig/gimpcolorconfig.c:101
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Farba využívaná na označenie farieb, ktoré sú mimo farebného rozsahu."
 
-#: ../libgimpconfig/gimpcolorconfig.c:394 ../libgimpconfig/gimpcolorconfig.c:497
+#: ../libgimpconfig/gimpcolorconfig.c:408 ../libgimpconfig/gimpcolorconfig.c:511
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Farebný profil „%s“ nie je farebným priestorom RGB."
 
-#: ../libgimpconfig/gimpcolorconfig.c:425 ../libgimpconfig/gimpcolorconfig.c:538
+#: ../libgimpconfig/gimpcolorconfig.c:439 ../libgimpconfig/gimpcolorconfig.c:552
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Farebný profil „%s“ nie je farebným priestorom CMYK."
@@ -1483,7 +1493,7 @@ msgid "while parsing token '%s': %s"
 msgstr "počas analyzovania tokenu „%s“: %s"
 
 #: ../libgimpconfig/gimpconfig-iface.c:658 ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:734 ../libgimpconfig/gimpscanner.c:816
-#: ../libgimpwidgets/gimpcolorprofilestore.c:655
+#: ../libgimpwidgets/gimpcolorprofilestore.c:703
 msgid "fatal parse error"
 msgstr "závažná chyba pri analýze"
 
@@ -1597,21 +1607,21 @@ msgid "_White"
 msgstr "_Biela"
 
 # file filter name
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:105
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:104
 msgid "All files (*.*)"
 msgstr "Všetky súbory (*.*)"
 
 # file filter name
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:110
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:109
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profil farieb ICC (*.icc, *.icm)"
 
 # treeview column
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:219 ../libgimpwidgets/gimppatheditor.c:248
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:216 ../libgimpwidgets/gimppatheditor.c:248
 msgid "Folder"
 msgstr "Priečinok"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:224
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:221
 msgid "Not a regular file."
 msgstr "Nie je bežný súbor."
 
@@ -1621,10 +1631,18 @@ msgid "Select color profile from disk..."
 msgstr "Vybrať profil farieb z disku…"
 
 # profil farieb
-#: ../libgimpwidgets/gimpcolorprofilestore.c:279
+#: ../libgimpwidgets/gimpcolorprofilestore.c:317
 msgctxt "profile"
 msgid "None"
 msgstr "Žiadny"
+
+#: ../libgimpwidgets/gimpcolorprofileview.c:174
+msgid "Manufacturer: "
+msgstr "Výrobca: "
+
+#: ../libgimpwidgets/gimpcolorprofileview.c:186
+msgid "Copyright: "
+msgstr "Autorské práva: "
 
 # selector_class name
 #: ../libgimpwidgets/gimpcolorscales.c:109
@@ -1740,7 +1758,7 @@ msgid "Writable"
 msgstr "Zapisovateľný"
 
 # tooltip
-#: ../libgimpwidgets/gimppickbutton.c:131
+#: ../libgimpwidgets/gimppickbutton.c:110
 msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
 msgstr "Farbu vyberiete tak, že kliknete na pipetu a potom kliknete na želanú farbu kdekoľvek na obrazovke."
 
@@ -2049,7 +2067,7 @@ msgstr "Čierna"
 msgid "Profile: (none)"
 msgstr "Profil: (žiadny)"
 
-#: ../modules/color-selector-cmyk.c:392
+#: ../modules/color-selector-cmyk.c:386
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
@@ -2486,7 +2504,7 @@ msgid "Print simulation profile:"
 msgstr "Profil tlačovej simulácie:"
 
 # profil
-#: ../modules/display-filter-lcms.c:381
+#: ../modules/display-filter-lcms.c:390
 msgid "None"
 msgstr "Žiadny"
 
@@ -2499,21 +2517,30 @@ msgid "Color Proof"
 msgstr "Odskúšanie farieb"
 
 # dialog title
-#: ../modules/display-filter-proof.c:289
+#: ../modules/display-filter-proof.c:296
 msgid "Choose an ICC Color Profile"
 msgstr "Zvoľte profil farieb ICC"
 
-#: ../modules/display-filter-proof.c:304
+#: ../modules/display-filter-proof.c:316
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/display-filter-proof.c:310
+#: ../modules/display-filter-proof.c:322
 msgid "_Intent:"
 msgstr "Úče_l:"
 
-#: ../modules/display-filter-proof.c:315
+#: ../modules/display-filter-proof.c:327
 msgid "_Black Point Compensation"
 msgstr "Kompenzácia čierneho _bodu"
+
+# Názov aktuálne vybraného písma
+# PM: Myslím že v takom prípade by sme to nemali asi prekladať
+#~ msgid "Sans"
+#~ msgstr "Sans"
+
+# tooltip
+#~ msgid "The default RGB working space color profile."
+#~ msgstr "Predvolený profil farieb pracovného priestoru RGB."
 
 # voľba pri ukladaní
 # PM: do jednej vrstvy by bolo inak a zlúčenie merge je iná operácia ako flatten
