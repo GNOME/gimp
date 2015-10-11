@@ -22,8 +22,8 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-15 17:37+0000\n"
-"PO-Revision-Date: 2015-09-15 20:58+0300\n"
+"POT-Creation-Date: 2015-10-11 05:55+0000\n"
+"PO-Revision-Date: 2015-10-11 17:21+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -120,16 +120,6 @@ msgstr ""
 "\n"
 "Tämän ohjelman mukana pitäisi tulla kopio GPL lisenssistä; jos näin ei ole, "
 "katso http://www.gnu.org/licenses/."
-
-#: ../app/batch.c:76
-#, c-format
-msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr "Polkutulkkia ei määritelty, käytetään oletusta '%s'.\n"
-
-#: ../app/batch.c:94 ../app/batch.c:112
-#, c-format
-msgid "The batch interpreter '%s' is not available. Batch mode disabled."
-msgstr "Komentojonotulkkia '%s' ei löydy. Komentojono tila ei käytettävissä."
 
 #: ../app/main.c:150
 msgid "Show version information and exit"
@@ -245,16 +235,16 @@ msgstr ""
 msgid "Another GIMP instance is already running."
 msgstr "Toinen Gimp-istunto on jo käynnissä."
 
-#: ../app/main.c:569
+#: ../app/main.c:572
 msgid "GIMP output. Type any character to close this window."
 msgstr "Gimpin tuloste. Sulje tämä ikkuna kirjoittamalla mitä tahansa."
 
-#: ../app/main.c:570
+#: ../app/main.c:573
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Sulje ikkuna kirjoittamalla jotain tähän ikkunaan)\n"
 
-#: ../app/main.c:587
+#: ../app/main.c:590
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Gimpin tuloste. Voit pienentää ikkunan, mutta älä sulje sitä."
 
@@ -378,8 +368,6 @@ msgid "File"
 msgstr "Tiedosto"
 
 #: ../app/actions/actions.c:163
-#| msgctxt "plug-in-action"
-#| msgid "Filte_rs"
 msgid "Filters"
 msgstr "Suodattimet"
 
@@ -567,7 +555,6 @@ msgid "Copy brush file location to clipboard"
 msgstr "Kopioi sivellintiedoston sijainti leikepöydälle"
 
 #: ../app/actions/brushes-actions.c:71
-#| msgid "Module Manager"
 msgctxt "brushes-action"
 msgid "Show in _File Manager"
 msgstr "Näytä _tiedostonhallinnassa"
@@ -668,7 +655,7 @@ msgstr "_Muokkaa kanavan ominaisuuksia..."
 #: ../app/actions/channels-actions.c:49
 msgctxt "channels-action"
 msgid "Edit the channel's name, color and opacity"
-msgstr "Muokkaa kanavan nimeä, väriä ja läpinäkyvyyttä"
+msgstr "Muokkaa kanavan nimeä, väriä ja peittokykyä"
 
 #: ../app/actions/channels-actions.c:54
 msgctxt "channels-action"
@@ -806,7 +793,7 @@ msgstr "Muokkaa kanavan väriä"
 #: ../app/actions/channels-commands.c:91
 #: ../app/actions/channels-commands.c:123
 msgid "_Fill opacity:"
-msgstr "_Täytön läpinäkyvyys:"
+msgstr "_Täytön peittokyky:"
 
 #: ../app/actions/channels-commands.c:116 ../app/core/gimpchannel.c:278
 #: ../app/widgets/gimpchanneltreeview.c:333
@@ -871,7 +858,6 @@ msgid "Add current background color"
 msgstr "Lisää nykyinen taustaväri"
 
 #: ../app/actions/colormap-actions.c:73
-#| msgid "Select Color"
 msgctxt "colormap-action"
 msgid "_Select this Color"
 msgstr "_Valitse tämä väri"
@@ -885,8 +871,6 @@ msgid "Select all pixels with this color"
 msgstr "Valitse samanvärisiä alueita"
 
 #: ../app/actions/colormap-actions.c:79
-#| msgctxt "channels-action"
-#| msgid "_Add to Selection"
 msgctxt "colormap-action"
 msgid "_Add to Selection"
 msgstr "_Lisää valintaan"
@@ -900,8 +884,6 @@ msgid "Add all pixels with this color to the current selection"
 msgstr "Lisää tämä kanava nykyiseen valintaan"
 
 #: ../app/actions/colormap-actions.c:85
-#| msgctxt "channels-action"
-#| msgid "_Subtract from Selection"
 msgctxt "colormap-action"
 msgid "_Subtract from Selection"
 msgstr "_Vähennä valinnasta"
@@ -952,7 +934,7 @@ msgstr "_Värit"
 #: ../app/actions/context-actions.c:51
 msgctxt "context-action"
 msgid "_Opacity"
-msgstr "_Läpinäkyvyys"
+msgstr "_Peittokyky"
 
 #: ../app/actions/context-actions.c:53
 msgctxt "context-action"
@@ -1094,8 +1076,8 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:114
 #: ../app/actions/tool-options-commands.c:74
-#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1905
-#: ../app/core/gimppalette.c:399 ../app/core/gimppalette-import.c:208
+#: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1902
+#: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:90
 msgid "Untitled"
@@ -1700,7 +1682,6 @@ msgid "Copy image location to clipboard"
 msgstr "Kopioi kuvan sijainti leikepöydälle"
 
 #: ../app/actions/documents-actions.c:70
-#| msgid "Module Manager"
 msgctxt "documents-action"
 msgid "Show in _File Manager"
 msgstr "Näytä _tiedostonhallinnassa"
@@ -2004,7 +1985,6 @@ msgid "Copy dynamics file location to clipboard"
 msgstr "Kopioi dynamiikkatiedoston sijainti leikepöydälle"
 
 #: ../app/actions/dynamics-actions.c:65
-#| msgid "Module Manager"
 msgctxt "dynamics-action"
 msgid "Show in _File Manager"
 msgstr "Näytä _tiedostonhallinnassa"
@@ -2135,7 +2115,7 @@ msgstr "_Häivytä..."
 #: ../app/actions/edit-actions.c:107
 msgctxt "edit-action"
 msgid "Modify paint mode and opacity of the last pixel manipulation"
-msgstr "Muokkaa viimeisimmän pikselimuokkauksen maalaustilaa ja läpinäkyvyyttä"
+msgstr "Muokkaa viimeisimmän pikselimuokkauksen maalaustilaa ja peittokykyä"
 
 #: ../app/actions/edit-actions.c:112
 msgctxt "edit-action"
@@ -2520,8 +2500,6 @@ msgid "Close all opened images"
 msgstr "Sulje kaikki avatut kuvat"
 
 #: ../app/actions/file-actions.c:112
-#| msgctxt "documents-action"
-#| msgid "Copy Image _Location"
 msgctxt "file-action"
 msgid "Copy _Image Location"
 msgstr "Kopioi kuvan _sijainti"
@@ -2535,7 +2513,6 @@ msgid "Copy image file location to clipboard"
 msgstr "Kopioi kuvan sijainti leikepöydälle"
 
 #: ../app/actions/file-actions.c:118
-#| msgid "Module Manager"
 msgctxt "file-action"
 msgid "Show in _File Manager"
 msgstr "Näytä _tiedostonhallinnassa"
@@ -3638,7 +3615,6 @@ msgid "Copy gradient file location to clipboard"
 msgstr "Kopioi liukuväritiedoston sijainti leikepöydälle"
 
 #: ../app/actions/gradients-actions.c:66
-#| msgid "Module Manager"
 msgctxt "gradients-action"
 msgid "Show in _File Manager"
 msgstr "Näytä _tiedostonhallinnassa"
@@ -3739,7 +3715,6 @@ msgid "_Precision"
 msgstr "_Edellinen vihje"
 
 #: ../app/actions/image-actions.c:60
-#| msgid "Color Management"
 msgctxt "image-action"
 msgid "_Color Management"
 msgstr "V_ärin hallinta"
@@ -3797,14 +3772,11 @@ msgid "Create a new image"
 msgstr "Luo uusi kuva"
 
 #: ../app/actions/image-actions.c:78
-#| msgid "Color Profile"
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
 msgstr "_Määritä väriprofiili..."
 
 #: ../app/actions/image-actions.c:79
-#| msgctxt "view-action"
-#| msgid "Create another view on this image"
 msgctxt "image-action"
 msgid "Set a color profile on the image"
 msgstr "Aseta väriprofiili kuvaan"
@@ -3829,8 +3801,6 @@ msgid "_Discard Color Profile"
 msgstr "Väriprofiili"
 
 #: ../app/actions/image-actions.c:91
-#| msgctxt "view-action"
-#| msgid "Display the image's color sample points"
 msgctxt "image-action"
 msgid "Remove the image's color profile"
 msgstr "Poista tämän kuvan väriprofiili"
@@ -4333,7 +4303,7 @@ msgstr "_Ominaisuudet"
 #: ../app/actions/layers-actions.c:65
 msgctxt "layers-action"
 msgid "_Opacity"
-msgstr "_Läpinäkyvyys"
+msgstr "_Peittokyky"
 
 #: ../app/actions/layers-actions.c:67
 msgctxt "layers-action"
@@ -4391,8 +4361,6 @@ msgid "Create a new layer from what is visible in this image"
 msgstr "Luo kuvassa näkyvästä osasta uusi taso"
 
 #: ../app/actions/layers-actions.c:101
-#| msgctxt "layers-action"
-#| msgid "New Layer _Group..."
 msgctxt "layers-action"
 msgid "New Layer _Group"
 msgstr "Uusi taso_ryhmä"
@@ -4819,7 +4787,7 @@ msgstr "Tason ominaisuudet"
 msgid "Edit Layer Attributes"
 msgstr "Muokkaa tason ominaisuuksia"
 
-#: ../app/actions/layers-commands.c:257 ../app/core/gimplayer.c:319
+#: ../app/actions/layers-commands.c:257 ../app/core/gimplayer.c:320
 msgid "Layer"
 msgstr "Taso"
 
@@ -5006,7 +4974,6 @@ msgid "Copy palette file location to clipboard"
 msgstr "Kopioi palettitiedoston sijainti leikepöydälle"
 
 #: ../app/actions/palettes-actions.c:78
-#| msgid "Module Manager"
 msgctxt "palettes-action"
 msgid "Show in _File Manager"
 msgstr "Näytä _tiedostonhallinnassa"
@@ -5319,7 +5286,7 @@ msgstr "Pikamaskin valikko"
 #: ../app/actions/quick-mask-actions.c:47
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
-msgstr "_Määritä väri ja läpinäkyvyys..."
+msgstr "_Määritä väri ja peittokyky..."
 
 #: ../app/actions/quick-mask-actions.c:55
 msgctxt "quick-mask-action"
@@ -5355,7 +5322,7 @@ msgstr "Muokkaa pikamaskin väriä"
 
 #: ../app/actions/quick-mask-commands.c:111
 msgid "_Mask opacity:"
-msgstr "_Maskin läpinäkyvyys:"
+msgstr "_Maskin peittokyky:"
 
 #: ../app/actions/sample-points-actions.c:40
 msgctxt "sample-points-action"
@@ -6313,8 +6280,6 @@ msgid "Restore the previous zoom level"
 msgstr "Palaa aikaisemmalle zoomaustasolle"
 
 #: ../app/actions/view-actions.c:108
-#| msgctxt "view-zoom-action"
-#| msgid "Othe_r..."
 msgctxt "view-action"
 msgid "Othe_r..."
 msgstr "_Muu..."
@@ -8415,7 +8380,7 @@ msgstr "Aseta tason tila"
 #: ../app/core/core-enums.c:987
 msgctxt "undo-type"
 msgid "Set layer opacity"
-msgstr "Aseta tason läpinäkyvyys"
+msgstr "Aseta tason peittokyky"
 
 #: ../app/core/core-enums.c:988
 msgctxt "undo-type"
@@ -8543,7 +8508,7 @@ msgstr "Muunna RGB-väriavaruuteen"
 #: ../app/core/core-enums.c:1195
 msgctxt "dynamics-output-type"
 msgid "Opacity"
-msgstr "Läpinäkyvyys"
+msgstr "Peittokyky"
 
 #: ../app/core/core-enums.c:1196
 msgctxt "dynamics-output-type"
@@ -8648,6 +8613,16 @@ msgstr "Moduulit"
 #: ../app/core/gimp.c:1088
 msgid "Updating tag cache"
 msgstr "Päivitetään merkintävälimuistia"
+
+#: ../app/core/gimp-batch.c:75
+#, c-format
+msgid "No batch interpreter specified, using the default '%s'.\n"
+msgstr "Polkutulkkia ei määritelty, käytetään oletusta '%s'.\n"
+
+#: ../app/core/gimp-batch.c:93 ../app/core/gimp-batch.c:111
+#, c-format
+msgid "The batch interpreter '%s' is not available. Batch mode disabled."
+msgstr "Komentojonotulkkia '%s' ei löydy. Komentojono tila ei käytettävissä."
 
 #: ../app/core/gimp-contexts.c:153 ../app/core/gimptooloptions.c:370
 #: ../app/gui/session.c:427 ../app/menus/menus.c:459
@@ -8943,7 +8918,7 @@ msgctxt "undo-type"
 msgid "Rounded Rectangle Select"
 msgstr "Pyöristetty suorakulmiovalinta"
 
-#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:327
+#: ../app/core/gimpchannel-select.c:440 ../app/core/gimplayer.c:328
 msgctxt "undo-type"
 msgid "Alpha to Selection"
 msgstr "Alfa valinnaksi"
@@ -9102,7 +9077,7 @@ msgstr "Aseta kanavan väri"
 #: ../app/core/gimpchannel.c:1749
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
-msgstr "Aseta kanavan läpinäkyvyys"
+msgstr "Aseta kanavan peittokyky"
 
 #: ../app/core/gimpchannel.c:1846 ../app/core/gimpselection.c:158
 msgid "Selection Mask"
@@ -9111,7 +9086,7 @@ msgstr "Valintamaski"
 #: ../app/core/gimpcontext.c:656 ../app/tools/gimppaintoptions-gui.c:131
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:287
 msgid "Opacity"
-msgstr "Läpinäkyvyys"
+msgstr "Peittokyky"
 
 #: ../app/core/gimpcontext.c:664
 msgid "Paint Mode"
@@ -9119,13 +9094,11 @@ msgstr "Maalaustila"
 
 #: ../app/core/gimpdata.c:537 ../app/core/gimpdata.c:545
 #, c-format
-#| msgid "Error reading '%s': %s"
 msgid "Error saving '%s': "
 msgstr "Virhe tallennettaessa '%s': "
 
 #: ../app/core/gimpdata.c:551
 #, c-format
-#| msgid "Error running '%s'"
 msgid "Error saving '%s'"
 msgstr "Virhe tallennettaessa '%s'"
 
@@ -9174,13 +9147,11 @@ msgstr "Kirjoitettavissa olevaa tietokansiota ei ole määritelty."
 
 #: ../app/core/gimpdatafactory.c:921
 #, c-format
-#| msgid "Error reading '%s': %s"
 msgid "Error loading '%s': "
 msgstr "Virhe tallennettaessa '%s': "
 
 #: ../app/core/gimpdatafactory.c:927
 #, c-format
-#| msgid "Error reading '%s': %s"
 msgid "Error loading '%s'"
 msgstr "Virhe tallennettaessa '%s'"
 
@@ -9220,7 +9191,7 @@ msgstr ""
 msgid "Blending"
 msgstr "Sekoitus"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:245
+#: ../app/core/gimpdrawable-bucket-fill.c:249
 msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Ämpäritäyttö"
@@ -9269,7 +9240,7 @@ msgctxt "undo-type"
 msgid "Rotate"
 msgstr "Kierrä"
 
-#: ../app/core/gimpdrawable-transform.c:951 ../app/core/gimplayer.c:326
+#: ../app/core/gimpdrawable-transform.c:951 ../app/core/gimplayer.c:327
 msgctxt "undo-type"
 msgid "Transform Layer"
 msgstr "Käännä taso"
@@ -9401,69 +9372,69 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Käännä tasoryhmää"
 
-#: ../app/core/gimpimage.c:2157
+#: ../app/core/gimpimage.c:2154
 msgid " (exported)"
 msgstr " (viety)"
 
-#: ../app/core/gimpimage.c:2161
+#: ../app/core/gimpimage.c:2158
 msgid " (overwritten)"
 msgstr " (korvattu)"
 
-#: ../app/core/gimpimage.c:2170
+#: ../app/core/gimpimage.c:2167
 msgid " (imported)"
 msgstr " (tuotu)"
 
-#: ../app/core/gimpimage.c:2401
+#: ../app/core/gimpimage.c:2398
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Vaihda kuvan tarkkuutta"
 
-#: ../app/core/gimpimage.c:2453
+#: ../app/core/gimpimage.c:2450
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Vaihda kuvan yksiköt"
 
-#: ../app/core/gimpimage.c:3366
+#: ../app/core/gimpimage.c:3363
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Lisää kuvaan parasiitti"
 
-#: ../app/core/gimpimage.c:3407
+#: ../app/core/gimpimage.c:3404
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Poista kuvasta parasiitti"
 
-#: ../app/core/gimpimage.c:4116
+#: ../app/core/gimpimage.c:4113
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Lisää taso"
 
-#: ../app/core/gimpimage.c:4166 ../app/core/gimpimage.c:4186
+#: ../app/core/gimpimage.c:4163 ../app/core/gimpimage.c:4183
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Poista taso"
 
-#: ../app/core/gimpimage.c:4180
+#: ../app/core/gimpimage.c:4177
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Poista kelluva valinta"
 
-#: ../app/core/gimpimage.c:4345
+#: ../app/core/gimpimage.c:4342
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Lisää kanava"
 
-#: ../app/core/gimpimage.c:4383 ../app/core/gimpimage.c:4396
+#: ../app/core/gimpimage.c:4380 ../app/core/gimpimage.c:4393
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Poista kanava"
 
-#: ../app/core/gimpimage.c:4450
+#: ../app/core/gimpimage.c:4447
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Lisää polku"
 
-#: ../app/core/gimpimage.c:4481
+#: ../app/core/gimpimage.c:4478
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Poista polku"
@@ -9473,36 +9444,36 @@ msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Järjestä objektit"
 
-#: ../app/core/gimpimage-color-profile.c:86
+#: ../app/core/gimpimage-color-profile.c:87
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
 
-#: ../app/core/gimpimage-color-profile.c:95
+#: ../app/core/gimpimage-color-profile.c:96
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
 msgstr ""
 
-#: ../app/core/gimpimage-color-profile.c:152
+#: ../app/core/gimpimage-color-profile.c:153
 msgid "ICC profile validation failed: "
 msgstr ""
 
-#: ../app/core/gimpimage-color-profile.c:248
+#: ../app/core/gimpimage-color-profile.c:249
 msgid ""
 "ICC profile validation failed: Cannot attach a color profile to a GRAY image"
 msgstr ""
 
-#: ../app/core/gimpimage-color-profile.c:256
+#: ../app/core/gimpimage-color-profile.c:257
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 
-#: ../app/core/gimpimage-color-profile.c:366
+#: ../app/core/gimpimage-color-profile.c:367
 #, fuzzy, c-format
 #| msgid "Revert '%s' to '%s'?"
 msgid "Converting from '%s' to '%s'"
 msgstr "Palautetaanko '%s' -> '%s'?"
 
-#: ../app/core/gimpimage-color-profile.c:371
+#: ../app/core/gimpimage-color-profile.c:372
 #, fuzzy
 #| msgid "Color Profile"
 msgid "Color profile conversion"
@@ -9856,7 +9827,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Ankkuroi kelluva valinta"
 
-#: ../app/core/gimplayer-floating-sel.c:174 ../app/core/gimplayer.c:839
+#: ../app/core/gimplayer-floating-sel.c:174 ../app/core/gimplayer.c:841
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -9869,76 +9840,76 @@ msgctxt "undo-type"
 msgid "Floating Selection to Layer"
 msgstr "Kelluva valinta tasoon"
 
-#: ../app/core/gimplayer.c:320
+#: ../app/core/gimplayer.c:321
 msgctxt "undo-type"
 msgid "Rename Layer"
 msgstr "Nimeä taso uudelleen"
 
-#: ../app/core/gimplayer.c:321
+#: ../app/core/gimplayer.c:322
 msgctxt "undo-type"
 msgid "Move Layer"
 msgstr "Siirrä taso"
 
-#: ../app/core/gimplayer.c:322
+#: ../app/core/gimplayer.c:323
 msgctxt "undo-type"
 msgid "Scale Layer"
 msgstr "Skaalaa tasoa"
 
-#: ../app/core/gimplayer.c:323
+#: ../app/core/gimplayer.c:324
 msgctxt "undo-type"
 msgid "Resize Layer"
 msgstr "Muuta tason kokoa"
 
-#: ../app/core/gimplayer.c:324
+#: ../app/core/gimplayer.c:325
 msgctxt "undo-type"
 msgid "Flip Layer"
 msgstr "Peilaa taso"
 
-#: ../app/core/gimplayer.c:325
+#: ../app/core/gimplayer.c:326
 msgctxt "undo-type"
 msgid "Rotate Layer"
 msgstr "Kierrä tasoa"
 
-#: ../app/core/gimplayer.c:328
+#: ../app/core/gimplayer.c:329
 msgctxt "undo-type"
 msgid "Reorder Layer"
 msgstr "Järjestä taso uudelleen"
 
-#: ../app/core/gimplayer.c:329
+#: ../app/core/gimplayer.c:330
 msgctxt "undo-type"
 msgid "Raise Layer"
 msgstr "Nosta taso"
 
-#: ../app/core/gimplayer.c:330
+#: ../app/core/gimplayer.c:331
 msgctxt "undo-type"
 msgid "Raise Layer to Top"
 msgstr "Nosta taso ylimmäksi"
 
-#: ../app/core/gimplayer.c:331
+#: ../app/core/gimplayer.c:332
 msgctxt "undo-type"
 msgid "Lower Layer"
 msgstr "Laske taso"
 
-#: ../app/core/gimplayer.c:332
+#: ../app/core/gimplayer.c:333
 msgctxt "undo-type"
 msgid "Lower Layer to Bottom"
 msgstr "Laske taso alimmaiseksi"
 
-#: ../app/core/gimplayer.c:333
+#: ../app/core/gimplayer.c:334
 msgid "Layer cannot be raised higher."
 msgstr "Tasoa ei voi nostaa ylemmäksi."
 
-#: ../app/core/gimplayer.c:334
+#: ../app/core/gimplayer.c:335
 msgid "Layer cannot be lowered more."
 msgstr "Tasoa ei voi laskea enempää."
 
-#: ../app/core/gimplayer.c:561 ../app/core/gimplayer.c:1419
+#: ../app/core/gimplayer.c:563 ../app/core/gimplayer.c:1434
 #: ../app/core/gimplayermask.c:259
 #, c-format
 msgid "%s mask"
 msgstr "%s maski"
 
-#: ../app/core/gimplayer.c:600
+#: ../app/core/gimplayer.c:602
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -9947,60 +9918,60 @@ msgstr ""
 "Kelluva valinta\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1322
+#: ../app/core/gimplayer.c:1337
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Maskin lisäys ei onnistu koska tasolla on jo maski."
 
-#: ../app/core/gimplayer.c:1333
+#: ../app/core/gimplayer.c:1348
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Maskin lisäys tasoon, joka on eri kokoinen ei onnistu."
 
-#: ../app/core/gimplayer.c:1339
+#: ../app/core/gimplayer.c:1354
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Lisää tasomaski"
 
-#: ../app/core/gimplayer.c:1470
+#: ../app/core/gimplayer.c:1485
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Siirrä alfa maskiin"
 
-#: ../app/core/gimplayer.c:1621
+#: ../app/core/gimplayer.c:1636
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Sovella tasomaskia"
 
-#: ../app/core/gimplayer.c:1622
+#: ../app/core/gimplayer.c:1637
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Poista tasomaski"
 
-#: ../app/core/gimplayer.c:1727
+#: ../app/core/gimplayer.c:1742
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Tasomaski päälle"
 
-#: ../app/core/gimplayer.c:1728
+#: ../app/core/gimplayer.c:1743
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Tasomaski pois päältä"
 
-#: ../app/core/gimplayer.c:1807
+#: ../app/core/gimplayer.c:1822
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Näytä tasomaski"
 
-#: ../app/core/gimplayer.c:1883
+#: ../app/core/gimplayer.c:1898
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Lisää alfakanava"
 
-#: ../app/core/gimplayer.c:1915
+#: ../app/core/gimplayer.c:1930
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Poista alfakanava"
 
-#: ../app/core/gimplayer.c:1935
+#: ../app/core/gimplayer.c:1950
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Taso kuvan kokoiseksi"
@@ -10096,7 +10067,7 @@ msgstr "Ei voitu lukea otsaketta tiedostosta \"%s\". %s"
 msgid "Premature end of file."
 msgstr ""
 
-#: ../app/core/gimppalettemru.c:120 ../app/core/gimppalettemru.c:246
+#: ../app/core/gimppalettemru.c:120 ../app/core/gimppalettemru.c:254
 #, fuzzy
 #| msgid "History"
 msgid "History Color"
@@ -10450,7 +10421,6 @@ msgid "Converting to '%s'"
 msgstr "Muunna  indeksoiduiksi väreiksi"
 
 #: ../app/dialogs/color-profile-dialog.c:413
-#| msgid "Color Profile"
 msgid "Assign color profile"
 msgstr "Määritä väriprofiili"
 
@@ -10517,13 +10487,10 @@ msgid "Dithering"
 msgstr "Sekoitus"
 
 #: ../app/dialogs/convert-precision-dialog.c:197
-#| msgctxt "dialogs-action"
-#| msgid "_Layers"
 msgid "_Layers:"
 msgstr "_Tasot:"
 
 #: ../app/dialogs/convert-precision-dialog.c:219
-#| msgid "Text Layer"
 msgid "_Text Layers:"
 msgstr "T_ekstitasot:"
 
@@ -10533,7 +10500,6 @@ msgid "Dithering text layers will make them uneditable"
 msgstr ""
 
 #: ../app/dialogs/convert-precision-dialog.c:245
-#| msgid "Channel _name:"
 msgid "_Channels and Masks:"
 msgstr "Ka_navat ja maskit:"
 
@@ -10675,7 +10641,7 @@ msgstr "_Tila:"
 
 #: ../app/dialogs/fade-dialog.c:162
 msgid "_Opacity:"
-msgstr "_Läpinäkyvyys:"
+msgstr "_Peittokyky:"
 
 #: ../app/dialogs/file-open-dialog.c:245
 msgid "Open layers"
@@ -10961,7 +10927,6 @@ msgid "%1$s   %2$s   %3$s"
 msgstr ""
 
 #: ../app/dialogs/lebl-dialog.c:132
-#| msgid "Press %s to quit."
 msgid "Press 'q' to quit"
 msgstr "Paina 'q' lopettaaksesi."
 
@@ -11665,7 +11630,6 @@ msgid "Resize window on image _size change"
 msgstr "Muuta ikkunan kokoa kun kuvan koko muuttuu"
 
 #: ../app/dialogs/preferences-dialog.c:2016
-#| msgid "Show active _image"
 msgid "Show entire image"
 msgstr "Näytä koko kuva"
 
@@ -12774,8 +12738,6 @@ msgstr "Osoitteessa on virheellinen merkkijono"
 #: ../app/gegl/gimp-babl.c:265 ../app/gegl/gimp-babl.c:266
 #: ../app/gegl/gimp-babl.c:267 ../app/gegl/gimp-babl.c:268
 #: ../app/gegl/gimp-babl.c:269 ../app/gegl/gimp-babl.c:270
-#| msgctxt "histogram-channel"
-#| msgid "RGB"
 msgid "RGB"
 msgstr "RGB"
 
@@ -12883,12 +12845,10 @@ msgid ""
 msgstr "Väännä häkkiä vääntääksesi kuvaa"
 
 #: ../app/operations/gimpbrightnesscontrastconfig.c:82
-#| msgid "_Brightness:"
 msgid "Brightness"
 msgstr "Kirkkaus"
 
 #: ../app/operations/gimpbrightnesscontrastconfig.c:87
-#| msgid "Con_trast:"
 msgid "Contrast"
 msgstr "Kontrasti"
 
@@ -12923,21 +12883,16 @@ msgstr "Säilytä valoisuus"
 
 #: ../app/operations/gimpcolorizeconfig.c:85
 #: ../app/operations/gimphuesaturationconfig.c:100
-#| msgctxt "layer-mode-effects"
-#| msgid "Hue"
 msgid "Hue"
 msgstr "Sävy"
 
 #: ../app/operations/gimpcolorizeconfig.c:90
 #: ../app/operations/gimphuesaturationconfig.c:105
-#| msgctxt "layer-mode-effects"
-#| msgid "Saturation"
 msgid "Saturation"
 msgstr "Kylläisyys"
 
 #: ../app/operations/gimpcolorizeconfig.c:95
 #: ../app/operations/gimphuesaturationconfig.c:110
-#| msgid "_Lightness:"
 msgid "Lightness"
 msgstr "Valoisuus"
 
@@ -13099,7 +13054,7 @@ msgstr "Konvoluutio"
 msgid "Dodge/Burn"
 msgstr "Varjosta/lisävalota"
 
-#: ../app/paint/gimperaser.c:61 ../app/tools/gimperasertool.c:66
+#: ../app/paint/gimperaser.c:62 ../app/tools/gimperasertool.c:66
 msgid "Eraser"
 msgstr "Pyyhekumi"
 
@@ -13111,7 +13066,7 @@ msgstr "Paranna"
 msgid "Healing does not operate on indexed layers."
 msgstr "Parannus ei toimi indeksoiduilla tasoilla."
 
-#: ../app/paint/gimpink.c:99 ../app/tools/gimpinktool.c:61
+#: ../app/paint/gimpink.c:100 ../app/tools/gimpinktool.c:61
 msgid "Ink"
 msgstr "Mustekynä"
 
@@ -13127,7 +13082,7 @@ msgstr "Mustekynän pisaran kuvasuhde"
 msgid "Ink Blob Angle"
 msgstr "Mustekynän pisaran kulma"
 
-#: ../app/paint/gimpmybrush.c:89
+#: ../app/paint/gimpmybrush.c:90
 #, fuzzy
 #| msgid "Airbrush"
 msgid "Mybrush"
@@ -13141,7 +13096,7 @@ msgstr "Ruisku"
 msgid "Radius"
 msgstr "Säde"
 
-#: ../app/paint/gimppaintbrush.c:65 ../app/tools/gimppaintbrushtool.c:51
+#: ../app/paint/gimppaintbrush.c:66 ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Sivellin"
 
@@ -13729,24 +13684,24 @@ msgctxt "undo-type"
 msgid "Displace"
 msgstr "Näyttö"
 
-#: ../app/pdb/plug-in-compat-cmds.c:346
+#: ../app/pdb/plug-in-compat-cmds.c:347
 msgctxt "undo-type"
 msgid "Gaussian Blur"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:411
+#: ../app/pdb/plug-in-compat-cmds.c:412
 msgctxt "undo-type"
 msgid "Alien Map"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:448
+#: ../app/pdb/plug-in-compat-cmds.c:449
 #, fuzzy
 #| msgid "Antialiasing"
 msgctxt "undo-type"
 msgid "Antialias"
 msgstr "Antialiasointi"
 
-#: ../app/pdb/plug-in-compat-cmds.c:491
+#: ../app/pdb/plug-in-compat-cmds.c:492
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Apply layer mask"
@@ -13754,7 +13709,7 @@ msgctxt "undo-type"
 msgid "Apply Canvas"
 msgstr "Sovella tasomaskia"
 
-#: ../app/pdb/plug-in-compat-cmds.c:551
+#: ../app/pdb/plug-in-compat-cmds.c:552
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Apply Layer Mask"
@@ -13762,32 +13717,32 @@ msgctxt "undo-type"
 msgid "Apply Lens"
 msgstr "Sovella tasomaskia"
 
-#: ../app/pdb/plug-in-compat-cmds.c:598
+#: ../app/pdb/plug-in-compat-cmds.c:599
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Crop image"
 msgid "Autocrop image"
 msgstr "Rajaa kuva"
 
-#: ../app/pdb/plug-in-compat-cmds.c:663
+#: ../app/pdb/plug-in-compat-cmds.c:664
 #, fuzzy
 #| msgid "Drop layers"
 msgid "Autocrop layer"
 msgstr "Pudota tasot"
 
-#: ../app/pdb/plug-in-compat-cmds.c:709
+#: ../app/pdb/plug-in-compat-cmds.c:710
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:863
+#: ../app/pdb/plug-in-compat-cmds.c:864
 #, fuzzy
 #| msgid "Con_trast:"
 msgctxt "undo-type"
 msgid "Stretch Contrast"
 msgstr "K_ontrasti:"
 
-#: ../app/pdb/plug-in-compat-cmds.c:943
+#: ../app/pdb/plug-in-compat-cmds.c:944
 #, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Channels Menu"
@@ -13795,7 +13750,7 @@ msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "Kanavavalikko"
 
-#: ../app/pdb/plug-in-compat-cmds.c:987
+#: ../app/pdb/plug-in-compat-cmds.c:988
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Add Color to Colormap"
@@ -13803,36 +13758,36 @@ msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "Lisää väri värikarttaan"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1033
+#: ../app/pdb/plug-in-compat-cmds.c:1034
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:1041
+#: ../app/pdb/plug-in-compat-cmds.c:1042
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:1113
+#: ../app/pdb/plug-in-compat-cmds.c:1114
 #, fuzzy
 #| msgid "Transformation Matrix"
 msgctxt "undo-type"
 msgid "Convolution Matrix"
 msgstr "Muunnosmatriisi"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1175
+#: ../app/pdb/plug-in-compat-cmds.c:1176
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:1220
+#: ../app/pdb/plug-in-compat-cmds.c:1221
 #, fuzzy
 #| msgid "Interface"
 msgctxt "undo-type"
 msgid "Deinterlace"
 msgstr "Käyttöliittymä"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1299
+#: ../app/pdb/plug-in-compat-cmds.c:1300
 #, fuzzy
 #| msgctxt "patterns-action"
 #| msgid "D_uplicate Pattern"
@@ -13840,17 +13795,17 @@ msgctxt "undo-type"
 msgid "Diffraction Patterns"
 msgstr "K_ahdenna kuvio"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1454
+#: ../app/pdb/plug-in-compat-cmds.c:1455
 msgctxt "undo-type"
 msgid "Edge"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:1498
+#: ../app/pdb/plug-in-compat-cmds.c:1499
 msgctxt "undo-type"
 msgid "Engrave"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:1571
+#: ../app/pdb/plug-in-compat-cmds.c:1572
 #, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Color Balance"
@@ -13858,17 +13813,17 @@ msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "Väritasapaino"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1619
+#: ../app/pdb/plug-in-compat-cmds.c:1620
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:1803
+#: ../app/pdb/plug-in-compat-cmds.c:1804
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:1856
+#: ../app/pdb/plug-in-compat-cmds.c:1857
 #, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Noise"
@@ -13876,18 +13831,18 @@ msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "Kohi_na"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2120 ../app/pdb/plug-in-compat-cmds.c:2180
+#: ../app/pdb/plug-in-compat-cmds.c:2121 ../app/pdb/plug-in-compat-cmds.c:2181
 #, fuzzy
 #| msgid "Color Profile"
 msgid "Set color profile"
 msgstr "Väriprofiili"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2235
+#: ../app/pdb/plug-in-compat-cmds.c:2236
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:2272
+#: ../app/pdb/plug-in-compat-cmds.c:2273
 #, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Replace"
@@ -13895,46 +13850,46 @@ msgctxt "undo-type"
 msgid "Laplace"
 msgstr "Korvaa"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2348
+#: ../app/pdb/plug-in-compat-cmds.c:2349
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:2388
+#: ../app/pdb/plug-in-compat-cmds.c:2389
 #, fuzzy
 #| msgid "File Name:"
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "Tiedostonimi:"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2455
+#: ../app/pdb/plug-in-compat-cmds.c:2456
 msgctxt "undo-type"
 msgid "Maze"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:2538 ../app/pdb/plug-in-compat-cmds.c:2622
+#: ../app/pdb/plug-in-compat-cmds.c:2539 ../app/pdb/plug-in-compat-cmds.c:2623
 #, fuzzy
 #| msgid "Motion only"
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "Vain liike"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2723
+#: ../app/pdb/plug-in-compat-cmds.c:2724
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:2785
+#: ../app/pdb/plug-in-compat-cmds.c:2786
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:2875
+#: ../app/pdb/plug-in-compat-cmds.c:2876
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:2916 ../app/pdb/plug-in-compat-cmds.c:2959
+#: ../app/pdb/plug-in-compat-cmds.c:2917 ../app/pdb/plug-in-compat-cmds.c:2960
 #, fuzzy
 #| msgctxt "color-frame-mode"
 #| msgid "Pixel"
@@ -13942,43 +13897,43 @@ msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "Pikseliä"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3010
+#: ../app/pdb/plug-in-compat-cmds.c:3011
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:3064
+#: ../app/pdb/plug-in-compat-cmds.c:3065
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:3104
+#: ../app/pdb/plug-in-compat-cmds.c:3105
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:3157
+#: ../app/pdb/plug-in-compat-cmds.c:3158
 #, fuzzy
 #| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "Satunnainen"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3210
+#: ../app/pdb/plug-in-compat-cmds.c:3211
 #, fuzzy
 #| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "Satunnainen"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3263
+#: ../app/pdb/plug-in-compat-cmds.c:3264
 #, fuzzy
 #| msgid "Random"
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "Satunnainen"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3338
+#: ../app/pdb/plug-in-compat-cmds.c:3339
 #, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Noise"
@@ -13986,7 +13941,7 @@ msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "Kohi_na"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3461
+#: ../app/pdb/plug-in-compat-cmds.c:3462
 #, fuzzy
 #| msgctxt "plug-in-action"
 #| msgid "_Noise"
@@ -13994,17 +13949,17 @@ msgctxt "undo-type"
 msgid "Noisify"
 msgstr "Kohi_na"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3505
+#: ../app/pdb/plug-in-compat-cmds.c:3506
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:3548
+#: ../app/pdb/plug-in-compat-cmds.c:3549
 msgctxt "undo-type"
 msgid "Shift"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:3651
+#: ../app/pdb/plug-in-compat-cmds.c:3652
 #, fuzzy
 #| msgctxt "gradient-editor-blending"
 #| msgid "_Sinusoidal"
@@ -14012,12 +13967,12 @@ msgctxt "undo-type"
 msgid "Sinus"
 msgstr "_Sinimuotoinen"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3699
+#: ../app/pdb/plug-in-compat-cmds.c:3700
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:3760
+#: ../app/pdb/plug-in-compat-cmds.c:3761
 #, fuzzy
 #| msgctxt "fill-style"
 #| msgid "Solid color"
@@ -14025,56 +13980,56 @@ msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "Yhtenäinen väri"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3804
+#: ../app/pdb/plug-in-compat-cmds.c:3805
 msgctxt "undo-type"
 msgid "Spread"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:3845
+#: ../app/pdb/plug-in-compat-cmds.c:3846
 #, fuzzy
 #| msgid "Threshold"
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "Raja-arvo"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3891
+#: ../app/pdb/plug-in-compat-cmds.c:3892
 msgctxt "undo-type"
 msgid "Video"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:3928
+#: ../app/pdb/plug-in-compat-cmds.c:3929
 #, fuzzy
 #| msgid "Invert"
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "Käänteinen"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4032
+#: ../app/pdb/plug-in-compat-cmds.c:4033
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:4079
+#: ../app/pdb/plug-in-compat-cmds.c:4080
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:4126
+#: ../app/pdb/plug-in-compat-cmds.c:4127
 msgctxt "undo-type"
 msgid "Erode"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:4189
+#: ../app/pdb/plug-in-compat-cmds.c:4190
 msgctxt "undo-type"
 msgid "Waves"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:4237
+#: ../app/pdb/plug-in-compat-cmds.c:4238
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr ""
 
-#: ../app/pdb/plug-in-compat-cmds.c:4289
+#: ../app/pdb/plug-in-compat-cmds.c:4290
 #, fuzzy
 #| msgid "Windows"
 msgctxt "undo-type"
@@ -14601,12 +14556,10 @@ msgid "Export Brightness-Contrast settings"
 msgstr "Vie kirkkaus- ja kontrastiasetukset"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:253
-#| msgid "_Brightness:"
 msgid "_Brightness"
 msgstr "_Kirkkaus"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:261
-#| msgid "Con_trast:"
 msgid "_Contrast"
 msgstr "K_ontrasti"
 
@@ -14879,19 +14832,16 @@ msgstr "Valitse väri"
 
 #: ../app/tools/gimpcolorizetool.c:174
 #: ../app/tools/gimphuesaturationtool.c:303
-#| msgid "_Hue:"
 msgid "_Hue"
 msgstr "S_ävy"
 
 #: ../app/tools/gimpcolorizetool.c:181
 #: ../app/tools/gimphuesaturationtool.c:317
-#| msgid "_Saturation:"
 msgid "_Saturation"
 msgstr "Vä_rikylläisyys"
 
 #: ../app/tools/gimpcolorizetool.c:188
 #: ../app/tools/gimphuesaturationtool.c:310
-#| msgid "_Lightness:"
 msgid "_Lightness"
 msgstr "_Valoisuus"
 
@@ -14902,7 +14852,6 @@ msgid "Colorize Color"
 msgstr "Väritä"
 
 #: ../app/tools/gimpcolorizetool.c:211
-#| msgid "Color Picker Tool: Set colors from image pixels"
 msgid "Pick color from image"
 msgstr "Poimi väri kuvasta"
 
@@ -14967,7 +14916,7 @@ msgstr "Valitse taustaväri napsauttamalla jotain kuvaa"
 msgid "Click in any image to add the color to the palette"
 msgstr "Valitse mitä tahansa kuvaa lisätäksesi sen värin palettiin"
 
-#: ../app/tools/gimpcolorpickertool.c:332
+#: ../app/tools/gimpcolorpickertool.c:336
 msgid "Color Picker Information"
 msgstr "Värin poimintatiedot"
 
@@ -18475,7 +18424,7 @@ msgstr "HSV (%0.1f, %0.3f, %0.1f)"
 #: ../app/widgets/gimpgradienteditor.c:962
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "Kirkkaus: %0.1f    Läpinäkyvyys: %0.1f"
+msgstr "Kirkkaus: %0.1f    Peittokyky: %0.1f"
 
 #: ../app/widgets/gimpgradienteditor.c:994
 #, c-format
@@ -18645,14 +18594,10 @@ msgid "From Named Icons..."
 msgstr "_Kopioi nimellä..."
 
 #: ../app/widgets/gimpiconpicker.c:263
-#| msgctxt "documents-action"
-#| msgid "Copy image location to clipboard"
 msgid "Copy Icon to Clipboard"
 msgstr "Kopioi kuvake leikepöydälle"
 
 #: ../app/widgets/gimpiconpicker.c:272
-#| msgctxt "edit-action"
-#| msgid "Paste the content of the clipboard"
 msgid "Paste Icon from Clipboard"
 msgstr "Liitä kuvake leikepöydältä"
 
@@ -19590,7 +19535,7 @@ msgid ""
 "XMP data could not be migrated: %s"
 msgstr ""
 
-#: ../app/xcf/xcf-load.c:534
+#: ../app/xcf/xcf-load.c:535
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -19598,7 +19543,7 @@ msgstr ""
 "XCF-tiedosto on vioittunut! Siitä on ladattu niin paljon kuin voitiin, mutta "
 "se ei ole kokonainen."
 
-#: ../app/xcf/xcf-load.c:545
+#: ../app/xcf/xcf-load.c:546
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -19606,7 +19551,7 @@ msgstr ""
 "Tämä XCF-tiedosto on vioittunut! Siitä ei voitu lukea edes osittaista "
 "kuvatietoa."
 
-#: ../app/xcf/xcf-load.c:637
+#: ../app/xcf/xcf-load.c:638
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
