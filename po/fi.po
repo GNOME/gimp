@@ -15,15 +15,15 @@
 # Timo Jyrinki <timo.jyrinki@iki.fi>, 2008, 2012.
 # Janne Peltonen <peltzi@gimp-suomi.org>, 2012.
 # Lasse Liehu <lasse.liehu@gmail.com>, 2014.
-# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2014.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2014, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2014-11-07 06:14+0000\n"
-"PO-Revision-Date: 2014-09-10 10:24+0300\n"
+"POT-Creation-Date: 2015-10-11 05:51+0000\n"
+"PO-Revision-Date: 2015-10-11 17:16+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <gnome-fi-laatu@lists.sourceforge.net>\n"
 "Language: fi\n"
@@ -196,11 +196,11 @@ msgstr "Tulosta gimprc-tiedosto, jossa on kaikki oletusarvot"
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Tulosta järjestetty lista vanhentuneista proseduureista PDB:ssä"
 
-#: ../app/main.c:399
+#: ../app/main.c:433
 msgid "[FILE|URI...]"
 msgstr "[TIEDOSTO|URI...]"
 
-#: ../app/main.c:421
+#: ../app/main.c:455
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -208,20 +208,20 @@ msgstr ""
 "GIMP ei voi käynnistää graafista käyttöliittymää.\n"
 "Varmista, että ympäristö on asetettu oikein."
 
-#: ../app/main.c:440
+#: ../app/main.c:474
 msgid "Another GIMP instance is already running."
 msgstr "Toinen Gimp-istunto on jo käynnissä."
 
-#: ../app/main.c:512
+#: ../app/main.c:546
 msgid "GIMP output. Type any character to close this window."
 msgstr "Gimpin tuloste. Sulje tämä ikkuna kirjoittamalla mitä tahansa."
 
-#: ../app/main.c:513
+#: ../app/main.c:547
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Sulje ikkuna kirjoittamalla jotain tähän ikkunaan)\n"
 
-#: ../app/main.c:530
+#: ../app/main.c:564
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Gimpin tuloste. Voit pienentää ikkunan, mutta älä sulje sitä."
 
@@ -441,7 +441,7 @@ msgid "Text Editor"
 msgstr "Tekstimuokkain"
 
 #: ../app/actions/actions.c:223 ../app/dialogs/dialogs.c:298
-#: ../app/dialogs/preferences-dialog.c:1861 ../app/gui/gui.c:436
+#: ../app/dialogs/preferences-dialog.c:1861 ../app/gui/gui.c:441
 msgid "Tool Options"
 msgstr "Työkaluasetukset"
 
@@ -617,7 +617,7 @@ msgstr "_Muokkaa kanavan ominaisuuksia..."
 #: ../app/actions/channels-actions.c:49
 msgctxt "channels-action"
 msgid "Edit the channel's name, color and opacity"
-msgstr "Muokkaa kanavan nimeä, väriä ja läpinäkyvyyttä"
+msgstr "Muokkaa kanavan nimeä, väriä ja peittokykyä"
 
 #: ../app/actions/channels-actions.c:54
 msgctxt "channels-action"
@@ -755,7 +755,7 @@ msgstr "Muokkaa kanavan väriä"
 #: ../app/actions/channels-commands.c:91
 #: ../app/actions/channels-commands.c:123
 msgid "_Fill opacity:"
-msgstr "_Täytön läpinäkyvyys:"
+msgstr "_Täytön peittokyky:"
 
 #: ../app/actions/channels-commands.c:116 ../app/core/gimpchannel.c:272
 #: ../app/widgets/gimpchanneltreeview.c:331
@@ -851,7 +851,7 @@ msgstr "_Värit"
 #: ../app/actions/context-actions.c:50
 msgctxt "context-action"
 msgid "_Opacity"
-msgstr "_Läpinäkyvyys"
+msgstr "_Peittokyky"
 
 #: ../app/actions/context-actions.c:52
 msgctxt "context-action"
@@ -974,13 +974,13 @@ msgid "Use the composite color of all visible layers"
 msgstr "Koosta näyte kaikilta näkyviltä tasoilta"
 
 #: ../app/actions/data-commands.c:89 ../app/actions/documents-commands.c:344
-#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:232
-#: ../app/dialogs/file-open-dialog.c:277
+#: ../app/actions/file-commands.c:201 ../app/dialogs/file-open-dialog.c:220
+#: ../app/dialogs/file-open-dialog.c:265
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:592
 #: ../app/widgets/gimplayertreeview.c:736 ../app/widgets/gimptoolbox-dnd.c:168
-#: ../app/widgets/gimptoolbox.c:818
+#: ../app/widgets/gimptoolbox.c:817
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1361,7 +1361,7 @@ msgid "_About"
 msgstr "_Tietoja"
 
 #: ../app/actions/dialogs-actions.c:333
-#: ../app/dialogs/preferences-dialog.c:1951 ../app/widgets/gimptoolbox.c:540
+#: ../app/dialogs/preferences-dialog.c:1951 ../app/widgets/gimptoolbox.c:539
 msgid "Toolbox"
 msgstr "Työkalupakki"
 
@@ -1934,7 +1934,7 @@ msgstr "_Häivytä..."
 #: ../app/actions/edit-actions.c:105
 msgctxt "edit-action"
 msgid "Modify paint mode and opacity of the last pixel manipulation"
-msgstr "Muokkaa viimeisimmän pikselimuokkauksen maalaustilaa ja läpinäkyvyyttä"
+msgstr "Muokkaa viimeisimmän pikselimuokkauksen maalaustilaa ja peittokykyä"
 
 #: ../app/actions/edit-actions.c:110
 msgctxt "edit-action"
@@ -3327,7 +3327,7 @@ msgstr "_Ominaisuudet"
 #: ../app/actions/layers-actions.c:65
 msgctxt "layers-action"
 msgid "_Opacity"
-msgstr "_Läpinäkyvyys"
+msgstr "_Peittokyky"
 
 #: ../app/actions/layers-actions.c:67
 msgctxt "layers-action"
@@ -4232,7 +4232,7 @@ msgstr "Pikamaskin valikko"
 #: ../app/actions/quick-mask-actions.c:47
 msgctxt "quick-mask-action"
 msgid "_Configure Color and Opacity..."
-msgstr "_Määritä väri ja läpinäkyvyys..."
+msgstr "_Määritä väri ja peittokyky..."
 
 #: ../app/actions/quick-mask-actions.c:55
 msgctxt "quick-mask-action"
@@ -4268,7 +4268,7 @@ msgstr "Muokkaa pikamaskin väriä"
 
 #: ../app/actions/quick-mask-commands.c:111
 msgid "_Mask opacity:"
-msgstr "_Maskin läpinäkyvyys:"
+msgstr "_Maskin peittokyky:"
 
 #: ../app/actions/sample-points-actions.c:39
 msgctxt "sample-points-action"
@@ -7082,7 +7082,7 @@ msgstr "Aseta tason tila"
 #: ../app/core/core-enums.c:889
 msgctxt "undo-type"
 msgid "Set layer opacity"
-msgstr "Aseta tason läpinäkyvyys"
+msgstr "Aseta tason peittokyky"
 
 #: ../app/core/core-enums.c:890
 msgctxt "undo-type"
@@ -7237,7 +7237,7 @@ msgstr "Muunna RGB-väriavaruuteen"
 #: ../app/core/core-enums.c:1292
 msgctxt "dynamics-output-type"
 msgid "Opacity"
-msgstr "Läpinäkyvyys"
+msgstr "Peittokyky"
 
 #: ../app/core/core-enums.c:1293
 msgctxt "dynamics-output-type"
@@ -7761,7 +7761,7 @@ msgstr "Aseta kanavan väri"
 #: ../app/core/gimpchannel.c:1829
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
-msgstr "Aseta kanavan läpinäkyvyys"
+msgstr "Aseta kanavan peittokyky"
 
 #: ../app/core/gimpchannel.c:1937 ../app/core/gimpselection.c:154
 msgid "Selection Mask"
@@ -7770,7 +7770,7 @@ msgstr "Valintamaski"
 #: ../app/core/gimpcontext.c:639 ../app/tools/gimppaintoptions-gui.c:109
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:284
 msgid "Opacity"
-msgstr "Läpinäkyvyys"
+msgstr "Peittokyky"
 
 #: ../app/core/gimpcontext.c:647
 msgid "Paint Mode"
@@ -7781,8 +7781,8 @@ msgstr "Maalaustila"
 msgid "Could not delete '%s': %s"
 msgstr "Tiedoston '%s' poistaminen epäonnistui: %s"
 
-#: ../app/core/gimpdatafactory.c:428 ../app/core/gimpdatafactory.c:457
-#: ../app/core/gimpdatafactory.c:623 ../app/core/gimpdatafactory.c:645
+#: ../app/core/gimpdatafactory.c:445 ../app/core/gimpdatafactory.c:470
+#: ../app/core/gimpdatafactory.c:637 ../app/core/gimpdatafactory.c:659
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -7793,17 +7793,17 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:537 ../app/core/gimpdatafactory.c:540
+#: ../app/core/gimpdatafactory.c:551 ../app/core/gimpdatafactory.c:554
 #: ../app/core/gimpitem.c:495 ../app/core/gimpitem.c:498
 msgid "copy"
 msgstr "kopio"
 
-#: ../app/core/gimpdatafactory.c:549 ../app/core/gimpitem.c:507
+#: ../app/core/gimpdatafactory.c:563 ../app/core/gimpitem.c:507
 #, c-format
 msgid "%s copy"
 msgstr "%s kopio"
 
-#: ../app/core/gimpdatafactory.c:742
+#: ../app/core/gimpdatafactory.c:756
 #, c-format
 msgid ""
 "You have a writable data folder configured (%s), but this folder does not "
@@ -7811,7 +7811,7 @@ msgid ""
 "dialog's 'Folders' section."
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:763
+#: ../app/core/gimpdatafactory.c:777
 #, c-format
 msgid ""
 "You have a writable data folder configured, but this folder is not part of "
@@ -7819,12 +7819,12 @@ msgid ""
 "fix it in the Preferences dialog's 'Folders' section."
 msgstr ""
 
-#: ../app/core/gimpdatafactory.c:773
+#: ../app/core/gimpdatafactory.c:787
 #, c-format
 msgid "You don't have any writable data folder configured."
 msgstr "Kirjoitettavissa olevaa tietokansiota ei ole määritelty."
 
-#: ../app/core/gimpdatafactory.c:941
+#: ../app/core/gimpdatafactory.c:955
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -8176,17 +8176,17 @@ msgctxt "undo-type"
 msgid "Translate Items"
 msgstr "Käännä kohteet"
 
-#: ../app/core/gimpimage-item-list.c:78
+#: ../app/core/gimpimage-item-list.c:79
 msgctxt "undo-type"
 msgid "Flip Items"
 msgstr "Peilaa kohteet"
 
-#: ../app/core/gimpimage-item-list.c:105
+#: ../app/core/gimpimage-item-list.c:108 ../app/core/gimpitem-linked.c:125
 msgctxt "undo-type"
 msgid "Rotate Items"
 msgstr "Kierrä kohteet"
 
-#: ../app/core/gimpimage-item-list.c:135
+#: ../app/core/gimpimage-item-list.c:140
 msgctxt "undo-type"
 msgid "Transform Items"
 msgstr "Käännä kohteet"
@@ -8499,7 +8499,7 @@ msgstr "Tasoa ei voi nostaa ylemmäksi."
 msgid "Layer cannot be lowered more."
 msgstr "Tasoa ei voi laskea enempää."
 
-#: ../app/core/gimplayer.c:450 ../app/core/gimplayer.c:1528
+#: ../app/core/gimplayer.c:450 ../app/core/gimplayer.c:1529
 #: ../app/core/gimplayermask.c:236
 #, c-format
 msgid "%s mask"
@@ -8514,45 +8514,45 @@ msgstr ""
 "Kelluva valinta\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1448
+#: ../app/core/gimplayer.c:1449
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Maskin lisäys ei onnistu koska tasolla on jo maski."
 
-#: ../app/core/gimplayer.c:1459
+#: ../app/core/gimplayer.c:1460
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Maskin lisäys tasoon, joka on eri kokoinen ei onnistu."
 
-#: ../app/core/gimplayer.c:1465
+#: ../app/core/gimplayer.c:1466
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Lisää tasomaski"
 
-#: ../app/core/gimplayer.c:1583
+#: ../app/core/gimplayer.c:1584
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Siirrä alfa maskiin"
 
-#: ../app/core/gimplayer.c:1753
+#: ../app/core/gimplayer.c:1754
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Sovella tasomaskia"
 
-#: ../app/core/gimplayer.c:1754
+#: ../app/core/gimplayer.c:1755
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Poista tasomaski"
 
-#: ../app/core/gimplayer.c:1873
+#: ../app/core/gimplayer.c:1874
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Lisää alfakanava"
 
-#: ../app/core/gimplayer.c:1927
+#: ../app/core/gimplayer.c:1928
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Poista alfakanava"
 
-#: ../app/core/gimplayer.c:1947
+#: ../app/core/gimplayer.c:1948
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Taso kuvan kokoiseksi"
@@ -9027,9 +9027,9 @@ msgstr "_Tila:"
 
 #: ../app/dialogs/fade-dialog.c:162
 msgid "_Opacity:"
-msgstr "_Läpinäkyvyys:"
+msgstr "_Peittokyky:"
 
-#: ../app/dialogs/file-open-dialog.c:266
+#: ../app/dialogs/file-open-dialog.c:254
 msgid "Open layers"
 msgstr "Avaa tasot"
 
@@ -9049,7 +9049,7 @@ msgstr "Vie kuva"
 msgid "_Export"
 msgstr "_Vie"
 
-#: ../app/dialogs/file-save-dialog.c:458
+#: ../app/dialogs/file-save-dialog.c:454
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -9059,47 +9059,47 @@ msgstr ""
 "pääteosasta. Anna tiedoston pääteosa, joka vastaa valittua tiedostomuotoa "
 "tai älä anna tiedoston pääteosaa lainkaan."
 
-#: ../app/dialogs/file-save-dialog.c:605
+#: ../app/dialogs/file-save-dialog.c:601
 msgid "The given filename cannot be used for exporting"
 msgstr "Annettua tiedostonimeä ei voi käyttää vietäessä"
 
-#: ../app/dialogs/file-save-dialog.c:606
+#: ../app/dialogs/file-save-dialog.c:602
 msgid ""
 "You can use this dialog to export to various file formats. If you want to "
 "save the image to the GIMP XCF format, use File→Save instead."
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:609
+#: ../app/dialogs/file-save-dialog.c:605
 #, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the layers dialog"
 msgid "Take me to the Save dialog"
 msgstr "Avaa tasoikkuna"
 
-#: ../app/dialogs/file-save-dialog.c:613
+#: ../app/dialogs/file-save-dialog.c:609
 #, fuzzy
 #| msgid "The given filename does not have any known file extension."
 msgid "The given filename cannot be used for saving"
 msgstr "Annetussa tiedostonimessä ei ole mitään tunnettua pääteosaa."
 
-#: ../app/dialogs/file-save-dialog.c:614
+#: ../app/dialogs/file-save-dialog.c:610
 msgid ""
 "You can use this dialog to save to the GIMP XCF format. Use File→Export to "
 "export to other file formats."
 msgstr ""
 
-#: ../app/dialogs/file-save-dialog.c:616
+#: ../app/dialogs/file-save-dialog.c:612
 #, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the paths dialog"
 msgid "Take me to the Export dialog"
 msgstr "Avaa polkuikkuna"
 
-#: ../app/dialogs/file-save-dialog.c:619 ../app/dialogs/file-save-dialog.c:694
+#: ../app/dialogs/file-save-dialog.c:615 ../app/dialogs/file-save-dialog.c:690
 msgid "Extension Mismatch"
 msgstr "Laajennoksen sopimattomuus"
 
-#: ../app/dialogs/file-save-dialog.c:678
+#: ../app/dialogs/file-save-dialog.c:674
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -9107,19 +9107,19 @@ msgstr ""
 "Annetussa tiedostonimessä ei ole tunnettua pääteosaa. Anna tunnettu "
 "tiedoston pääteosa tai valitse se luettelosta."
 
-#: ../app/dialogs/file-save-dialog.c:710
+#: ../app/dialogs/file-save-dialog.c:706
 msgid "The given file extension does not match the chosen file type."
 msgstr "Annettu tiedoston pääteosa ei vastaa valittua tiedostotyyppiä."
 
-#: ../app/dialogs/file-save-dialog.c:714
+#: ../app/dialogs/file-save-dialog.c:710
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Haluatko tallentaa tämän kuvan kuitenkin tällä nimellä?"
 
-#: ../app/dialogs/file-save-dialog.c:776
+#: ../app/dialogs/file-save-dialog.c:772
 msgid "Saving canceled"
 msgstr "Tallennus peruttiin"
 
-#: ../app/dialogs/file-save-dialog.c:784 ../app/widgets/gimpdnd-xds.c:186
+#: ../app/dialogs/file-save-dialog.c:780 ../app/widgets/gimpdnd-xds.c:186
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -10703,7 +10703,7 @@ msgstr "Tasoryhmien pikseleitä ei voi muokata."
 #: ../app/display/gimpdisplayshell-dnd.c:471 ../app/tools/gimpblendtool.c:180
 #: ../app/tools/gimpbucketfilltool.c:143 ../app/tools/gimpcroptool.c:325
 #: ../app/tools/gimpimagemaptool.c:287 ../app/tools/gimppainttool.c:266
-#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1466
+#: ../app/tools/gimpselectiontool.c:432 ../app/tools/gimptransformtool.c:1481
 msgid "The active layer's pixels are locked."
 msgstr "Aktiivisen tason pikselit on lukittu."
 
@@ -10766,7 +10766,7 @@ msgstr "(muokkaamaton)"
 
 #: ../app/display/gimpdisplayshell-title.c:338
 #: ../app/display/gimpdisplayshell-title.c:351
-#: ../app/widgets/gimpactiongroup.c:860
+#: ../app/widgets/gimpactiongroup.c:884
 msgid "(none)"
 msgstr "(tyhjä)"
 
@@ -10775,30 +10775,30 @@ msgstr "(tyhjä)"
 msgid "Cancel <i>%s</i>"
 msgstr "Peru <i>%s</i>"
 
-#: ../app/file/file-open.c:136 ../app/file/file-save.c:115
+#: ../app/file/file-open.c:129 ../app/file/file-save.c:115
 msgid "Not a regular file"
 msgstr "Ei ole tavallinen tiedosto"
 
-#: ../app/file/file-open.c:188
+#: ../app/file/file-open.c:191
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Liitännäinen %s palautti arvon SUCCESS, mutta ei kuvaa"
 
-#: ../app/file/file-open.c:199
+#: ../app/file/file-open.c:202
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "Liitännäinen %s ei voinut avata kuvaa"
 
-#: ../app/file/file-open.c:530
+#: ../app/file/file-open.c:533
 msgid "Image doesn't contain any layers"
 msgstr "Kuvassa ei ole yhtään tasoa"
 
-#: ../app/file/file-open.c:590
+#: ../app/file/file-open.c:593
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Tiedoston '%s' avaaminen epäonnistui: %s"
 
-#: ../app/file/file-open.c:700
+#: ../app/file/file-open.c:703
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -10865,18 +10865,17 @@ msgstr "Täytä värillä"
 msgid "Fill the original position of the cage with a plain color"
 msgstr "Täytä häkin alkuperäinen sijainti värillä"
 
-#. Normally this should have been taken care of during command line
-#. * parsing as a post-parse hook of gtk_get_option_group(), using the
-#. * system locales.
-#. * But user config may have overriden the language, therefore we must
-#. * check the widget directions again.
+#. TRANSLATORS: there is no need to translate this in GIMP. This uses
+#. * "gtk20" domain as a special trick to determine language direction,
+#. * but xgettext extracts it anyway mistakenly into GIMP po files.
+#. * Leave an empty string as translation. It does not matter.
 #.
-#: ../app/gui/gui.c:208
+#: ../app/gui/gui.c:207
 msgid "default:LTR"
 msgstr ""
 
 #. initialize the document history
-#: ../app/gui/gui.c:433
+#: ../app/gui/gui.c:438
 msgid "Documents"
 msgstr "Asiakirjat"
 
@@ -11389,10 +11388,6 @@ msgstr ""
 msgid "Free Select"
 msgstr "Vapaa valinta"
 
-#: ../app/pdb/layer-cmds.c:475 ../app/pdb/layer-cmds.c:513
-msgid "Move Layer"
-msgstr "Siirrä taso"
-
 #: ../app/pdb/text-layer-cmds.c:91
 #, c-format
 msgid "Failed to create text layer"
@@ -11599,7 +11594,7 @@ msgstr ""
 "Iske siat lekalla keltaiseksi!\n"
 "ABCabc XYZxyz åäöÅÄÖàášü€"
 
-#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1408
+#: ../app/text/gimptext-compat.c:105 ../app/tools/gimptexttool.c:1415
 msgid "Add Text Layer"
 msgstr "Lisää tekstitaso"
 
@@ -12010,7 +12005,7 @@ msgctxt "command"
 msgid "Select by Color"
 msgstr "Valitse värin mukaan"
 
-#: ../app/tools/gimpcagetool.c:158 ../app/tools/gimpcagetool.c:1123
+#: ../app/tools/gimpcagetool.c:158 ../app/tools/gimpcagetool.c:1128
 msgid "Cage Transform"
 msgstr "Häkkikääntö"
 
@@ -12022,15 +12017,15 @@ msgstr "Häkkikääntö: muunna valintaa häkillä"
 msgid "_Cage Transform"
 msgstr "_Häkkikääntö"
 
-#: ../app/tools/gimpcagetool.c:356
+#: ../app/tools/gimpcagetool.c:357
 msgid "Press ENTER to commit the transform"
 msgstr "Paina Enter toteuttaaksesi käännön"
 
-#: ../app/tools/gimpcagetool.c:1064
+#: ../app/tools/gimpcagetool.c:1069
 msgid "Computing Cage Coefficients"
 msgstr ""
 
-#: ../app/tools/gimpcagetool.c:1241
+#: ../app/tools/gimpcagetool.c:1246
 msgid "Cage transform"
 msgstr "Häkkikääntö"
 
@@ -12362,57 +12357,57 @@ msgstr "Rajaa napsauttamalla tai painamalla Enteriä"
 msgid "There is no active layer to crop."
 msgstr "Ei rajattavaa aktiivista tasoa."
 
-#: ../app/tools/gimpcurvestool.c:143
+#: ../app/tools/gimpcurvestool.c:144
 msgid "Curves"
 msgstr "Käyrät"
 
-#: ../app/tools/gimpcurvestool.c:144
+#: ../app/tools/gimpcurvestool.c:145
 msgid "Curves Tool: Adjust color curves"
 msgstr "Käyrätyökalu: Säädä värikäyriä"
 
-#: ../app/tools/gimpcurvestool.c:145
+#: ../app/tools/gimpcurvestool.c:146
 msgid "_Curves..."
 msgstr "_Käyrät..."
 
-#: ../app/tools/gimpcurvestool.c:171
+#: ../app/tools/gimpcurvestool.c:172
 msgid "Adjust Color Curves"
 msgstr "Säädä värikäyriä"
 
-#: ../app/tools/gimpcurvestool.c:173
+#: ../app/tools/gimpcurvestool.c:174
 msgid "Import Curves"
 msgstr "Tuo käyrät"
 
-#: ../app/tools/gimpcurvestool.c:174
+#: ../app/tools/gimpcurvestool.c:175
 msgid "Export Curves"
 msgstr "Vie käyrät"
 
-#: ../app/tools/gimpcurvestool.c:225
+#: ../app/tools/gimpcurvestool.c:226
 msgid "Curves does not operate on indexed layers."
 msgstr "Käyrät eivät toimi indeksoiduilla tasoilla."
 
-#: ../app/tools/gimpcurvestool.c:333
+#: ../app/tools/gimpcurvestool.c:334
 msgid "Click to add a control point"
 msgstr "Lisää ohjauspiste napsauttamalla"
 
-#: ../app/tools/gimpcurvestool.c:338
+#: ../app/tools/gimpcurvestool.c:339
 msgid "Click to add control points to all channels"
 msgstr "Lisää ohjauspiste kaikkiin kanaviin napsauttamalla"
 
-#: ../app/tools/gimpcurvestool.c:343
+#: ../app/tools/gimpcurvestool.c:344
 msgid "Click to locate on curve (try Shift, Ctrl)"
 msgstr ""
 "Napsauta asettaaksesi sijainnin käyrällä (kokeile myös vaihto- ja Ctrl-"
 "näppäimiä)"
 
-#: ../app/tools/gimpcurvestool.c:456 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:457 ../app/tools/gimplevelstool.c:384
 msgid "Cha_nnel:"
 msgstr "Ka_nava:"
 
-#: ../app/tools/gimpcurvestool.c:482 ../app/tools/gimplevelstool.c:408
+#: ../app/tools/gimpcurvestool.c:483 ../app/tools/gimplevelstool.c:408
 msgid "R_eset Channel"
 msgstr "N_ollaa kanava"
 
-#: ../app/tools/gimpcurvestool.c:576 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:574 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "Käyrän _tyyppi:"
 
@@ -12498,19 +12493,15 @@ msgstr "Alue"
 msgid "Exposure"
 msgstr "Valotus"
 
-#: ../app/tools/gimpeditselectiontool.c:242
-msgid "Move Selection"
-msgstr "Siirrä valinta"
-
-#: ../app/tools/gimpeditselectiontool.c:246
-#: ../app/tools/gimpeditselectiontool.c:1241
-msgid "Move Floating Selection"
-msgstr "Siirrä kelluva valinta"
-
-#: ../app/tools/gimpeditselectiontool.c:455
-#: ../app/tools/gimpeditselectiontool.c:732
+#: ../app/tools/gimpeditselectiontool.c:484
+#: ../app/tools/gimpeditselectiontool.c:670
 msgid "Move: "
 msgstr "Siirrä: "
+
+#: ../app/tools/gimpeditselectiontool.c:982
+#: ../app/tools/gimpeditselectiontool.c:1234
+msgid "Move Floating Selection"
+msgstr "Siirrä kelluva valinta"
 
 #: ../app/tools/gimpellipseselecttool.c:66
 msgid "Ellipse Select"
@@ -13767,19 +13758,19 @@ msgstr "Tekstityökalu: Luo ja muokkaa tekstitasoja"
 msgid "Te_xt"
 msgstr "Teksti"
 
-#: ../app/tools/gimptexttool.c:965
+#: ../app/tools/gimptexttool.c:972
 msgid "Reshape Text Layer"
 msgstr "Muotoile tekstitaso uudelleen"
 
-#: ../app/tools/gimptexttool.c:1519 ../app/tools/gimptexttool.c:1522
+#: ../app/tools/gimptexttool.c:1526 ../app/tools/gimptexttool.c:1529
 msgid "Confirm Text Editing"
 msgstr "Vahvista tekstin muokkaus"
 
-#: ../app/tools/gimptexttool.c:1526
+#: ../app/tools/gimptexttool.c:1533
 msgid "Create _New Layer"
 msgstr "Luo _uusi taso"
 
-#: ../app/tools/gimptexttool.c:1550
+#: ../app/tools/gimptexttool.c:1557
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -13907,15 +13898,21 @@ msgstr "Säilytä alkuperäinen kuvasuhde"
 msgid "Transforming"
 msgstr "Käännetään"
 
-#: ../app/tools/gimptransformtool.c:1465
+#: ../app/tools/gimptransformtool.c:269
+#, fuzzy, c-format
+#| msgid "The given file extension does not match the chosen file type."
+msgid "The selection does not intersect with the layer."
+msgstr "Annettu tiedoston pääteosa ei vastaa valittua tiedostotyyppiä."
+
+#: ../app/tools/gimptransformtool.c:1480
 msgid "There is no layer to transform."
 msgstr "Ei muunnettavaa tasoa."
 
-#: ../app/tools/gimptransformtool.c:1476
+#: ../app/tools/gimptransformtool.c:1491
 msgid "There is no path to transform."
 msgstr "Ei muunnettavaa polkua."
 
-#: ../app/tools/gimptransformtool.c:1477
+#: ../app/tools/gimptransformtool.c:1492
 msgid "The active path's strokes are locked."
 msgstr "Aktiivisen polun piirrot on lukittu."
 
@@ -14280,7 +14277,7 @@ msgstr "Polun tuonti tiedostosta %s epäonnistui: %s"
 msgid "_Search:"
 msgstr "_Etsi:"
 
-#: ../app/widgets/gimpactiongroup.c:857
+#: ../app/widgets/gimpactiongroup.c:881
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -15064,7 +15061,7 @@ msgstr "HSV (%0.1f, %0.3f, %0.1f)"
 #: ../app/widgets/gimpgradienteditor.c:958
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "Kirkkaus: %0.1f    Läpinäkyvyys: %0.1f"
+msgstr "Kirkkaus: %0.1f    Peittokyky: %0.1f"
 
 #: ../app/widgets/gimpgradienteditor.c:989
 #, c-format
@@ -15464,7 +15461,7 @@ msgstr "syötä tunnisteet"
 #. * IMPORTANT: use only one of Unicode terminal punctuation chars.
 #. * http://unicode.org/review/pr-23.html
 #.
-#: ../app/widgets/gimptagentry.c:1734
+#: ../app/widgets/gimptagentry.c:1750
 msgid ","
 msgstr ","
 
@@ -15517,7 +15514,7 @@ msgstr "Attribuutti \"%s\" ei kelpaa <%s> elementtiin tässä kontekstissa"
 msgid "Outermost element in text must be <markup> not <%s>"
 msgstr "Tekstin uloimman elementin on oltava <markup>, ei <%s>"
 
-#: ../app/widgets/gimptextbuffer.c:1454
+#: ../app/widgets/gimptextbuffer.c:1459
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Virheellisiä UTF-8 merkkejä tiedostossa '%s'."
@@ -15584,12 +15581,12 @@ msgstr "Esikats_elu"
 msgid "No selection"
 msgstr "Ei valintaa"
 
-#: ../app/widgets/gimpthumbbox.c:596 ../app/widgets/gimpthumbbox.c:617
+#: ../app/widgets/gimpthumbbox.c:612 ../app/widgets/gimpthumbbox.c:633
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Esikatselukuva %d / %d"
 
-#: ../app/widgets/gimpthumbbox.c:730 ../app/widgets/gimpthumbbox.c:740
+#: ../app/widgets/gimpthumbbox.c:746 ../app/widgets/gimpthumbbox.c:756
 msgid "Creating preview..."
 msgstr "Luodaan esikatselua..."
 
@@ -16000,3 +15997,9 @@ msgstr "Kuvankäsittely"
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Create images and edit photographs"
 msgstr "Luo kuvia ja muokkaa valokuvia"
+
+#~ msgid "Move Layer"
+#~ msgstr "Siirrä taso"
+
+#~ msgid "Move Selection"
+#~ msgstr "Siirrä valinta"
