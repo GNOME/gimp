@@ -3254,7 +3254,7 @@ gimp_context_real_set_tool_preset (GimpContext    *context,
       context->tool_preset_name = NULL;
     }
 
-  /*  disconnect from the old 's signals  */
+  /*  disconnect from the old tool preset's signals  */
   if (context->tool_preset)
     {
       g_signal_handlers_disconnect_by_func (context->tool_preset,
