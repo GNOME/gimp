@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: GIMP 2.6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-09-29 05:53+0000\n"
-"PO-Revision-Date: 2015-10-01 13:43+0200\n"
+"POT-Creation-Date: 2015-10-14 10:33+0000\n"
+"PO-Revision-Date: 2015-10-14 15:01+0200\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
 "Language-Team: српски <gnome-sr@googlegroups.org>\n"
 "Language: sr\n"
@@ -112,16 +112,6 @@ msgstr ""
 "\n"
 "Требали сте да примите примерак Гнуове опште јавне лиценце уз Гимп.  Уколико "
 "нисте, идите на „http://www.gnu.org/licenses/“."
-
-#: ../app/batch.c:76
-#, c-format
-msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr "Није наведен тумач групе, користим основни „%s“.\n"
-
-#: ../app/batch.c:94 ../app/batch.c:112
-#, c-format
-msgid "The batch interpreter '%s' is not available. Batch mode disabled."
-msgstr "Тумач групе „%s“ није доступан. Групни режим је искључен."
 
 #: ../app/main.c:150
 msgid "Show version information and exit"
@@ -858,56 +848,41 @@ msgid "Add current background color"
 msgstr "Додаје боју из текуће позадине"
 
 #: ../app/actions/colormap-actions.c:73
-#| msgid "Select Color"
 msgctxt "colormap-action"
 msgid "_Select this Color"
 msgstr "_Изабери ову боју"
 
 #: ../app/actions/colormap-actions.c:74
-#| msgctxt "tools-action"
-#| msgid "Select regions with similar colors"
 msgctxt "colormap-action"
 msgid "Select all pixels with this color"
 msgstr "Прави избор из целе слике на основу изабране боје пиксела"
 
 #: ../app/actions/colormap-actions.c:79
-#| msgctxt "channels-action"
-#| msgid "_Add to Selection"
 msgctxt "colormap-action"
 msgid "_Add to Selection"
 msgstr "_Додај у избор"
 
 #: ../app/actions/colormap-actions.c:80
-#| msgctxt "channels-action"
-#| msgid "Add this channel to the current selection"
 msgctxt "colormap-action"
 msgid "Add all pixels with this color to the current selection"
 msgstr "Додаје све пикселе ове боје у текући избор"
 
 #: ../app/actions/colormap-actions.c:85
-#| msgctxt "channels-action"
-#| msgid "_Subtract from Selection"
 msgctxt "colormap-action"
 msgid "_Subtract from Selection"
 msgstr "_Избаци из избора"
 
 #: ../app/actions/colormap-actions.c:86
-#| msgctxt "channels-action"
-#| msgid "Subtract this channel from the current selection"
 msgctxt "colormap-action"
 msgid "Subtract all pixels with this color from the current selection"
 msgstr "Уклања све пикселе ове боје из текућег избора"
 
 #: ../app/actions/colormap-actions.c:91
-#| msgctxt "channels-action"
-#| msgid "_Intersect with Selection"
 msgctxt "colormap-action"
 msgid "_Intersect with Selection"
 msgstr "_Пресеци избором"
 
 #: ../app/actions/colormap-actions.c:92
-#| msgctxt "channels-action"
-#| msgid "Intersect this channel with the current selection"
 msgctxt "colormap-action"
 msgid "Intersect all pixels with this color with the current selection"
 msgstr "Прави пресек свих пиксела ове боје са текућим избором"
@@ -1077,7 +1052,7 @@ msgstr ""
 #: ../app/actions/data-commands.c:114
 #: ../app/actions/tool-options-commands.c:74
 #: ../app/core/gimpbrushgenerated-load.c:120 ../app/core/gimpimage.c:1902
-#: ../app/core/gimppalette.c:399 ../app/core/gimppalette-import.c:208
+#: ../app/core/gimppalette.c:451 ../app/core/gimppalette-import.c:208
 #: ../app/core/gimppalette-load.c:186
 #: ../app/dialogs/palette-import-dialog.c:771 ../app/widgets/gimpdnd-xds.c:90
 msgid "Untitled"
@@ -2775,7 +2750,6 @@ msgid "Diffraction Patterns..."
 msgstr "Обрасци преламања..."
 
 #: ../app/actions/filters-actions.c:143
-#| msgid "Display"
 msgctxt "filters-action"
 msgid "Displace..."
 msgstr "Размештање..."
@@ -2856,7 +2830,6 @@ msgid "Lens Flare..."
 msgstr "Одблесак објектива..."
 
 #: ../app/actions/filters-actions.c:223
-#| msgid "_Fade..."
 msgctxt "filters-action"
 msgid "_Maze..."
 msgstr "_Лавиринт..."
@@ -3032,8 +3005,6 @@ msgid "_Glass Tile..."
 msgstr "С_таклена плочица..."
 
 #: ../app/actions/filters-actions.c:398
-#| msgctxt "filters-action"
-#| msgid "_Glass Tile..."
 msgctxt "filters-action"
 msgid "_Paper Tile..."
 msgstr "_Плочице од папира..."
@@ -3587,7 +3558,6 @@ msgid "_Precision"
 msgstr "_Прецизност"
 
 #: ../app/actions/image-actions.c:60
-#| msgid "Color Management"
 msgctxt "image-action"
 msgid "_Color Management"
 msgstr "Управљање _бојама"
@@ -3643,38 +3613,31 @@ msgid "Create a new image"
 msgstr "Отвара нову, празну слику"
 
 #: ../app/actions/image-actions.c:78
-#| msgid "Color Profile"
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
 msgstr "_Додели профил боја..."
 
 #: ../app/actions/image-actions.c:79
-#| msgid "Can't apply color profile to grayscale image (%s)"
 msgctxt "image-action"
 msgid "Set a color profile on the image"
 msgstr "Поставља одређени профил боје на слику"
 
 #: ../app/actions/image-actions.c:84
-#| msgid "Select Monitor Color Profile"
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
 msgstr "Прет_вори у профил боја..."
 
 #: ../app/actions/image-actions.c:85
-#| msgid "Can't apply color profile to grayscale image (%s)"
 msgctxt "image-action"
 msgid "Apply a color profile to the image"
 msgstr "Примењује одређени профил боје на слику"
 
 #: ../app/actions/image-actions.c:90
-#| msgid "Color Profile"
 msgctxt "image-action"
 msgid "_Discard Color Profile"
 msgstr "_Занемари профил боја"
 
 #: ../app/actions/image-actions.c:91
-#| msgctxt "view-action"
-#| msgid "Display the image's color sample points"
 msgctxt "image-action"
 msgid "Remove the image's color profile"
 msgstr "Уклања постојећи профил боје са слику"
@@ -5620,77 +5583,91 @@ msgctxt "tool-preset-editor-action"
 msgid "Edit Active Tool Preset"
 msgstr "Уреди подешавање текућег алата"
 
-#: ../app/actions/tool-presets-actions.c:45
+#: ../app/actions/tool-presets-actions.c:46
 msgctxt "tool-presets-action"
 msgid "Tool Presets Menu"
 msgstr "Изборник подешавања алата"
 
-#: ../app/actions/tool-presets-actions.c:49
+#: ../app/actions/tool-presets-actions.c:50
 msgctxt "tool-presets-action"
 msgid "_New Tool Preset"
 msgstr "_Ново подешавање алата"
 
-#: ../app/actions/tool-presets-actions.c:50
+#: ../app/actions/tool-presets-actions.c:51
 msgctxt "tool-presets-action"
 msgid "Create a new tool preset"
 msgstr "Прави ново подешавање алата"
 
-#: ../app/actions/tool-presets-actions.c:55
+#: ../app/actions/tool-presets-actions.c:56
 msgctxt "tool-presets-action"
 msgid "D_uplicate Tool Preset"
 msgstr "У_двостручи подешавање алата"
 
-#: ../app/actions/tool-presets-actions.c:56
+#: ../app/actions/tool-presets-actions.c:57
 msgctxt "tool-presets-action"
 msgid "Duplicate this tool preset"
 msgstr "Удвостручава подешавање текућег алата"
 
-#: ../app/actions/tool-presets-actions.c:61
+#: ../app/actions/tool-presets-actions.c:62
 msgctxt "tool-presets-action"
 msgid "Copy Tool Preset _Location"
 msgstr "Умножи _место подешавања алата"
 
-#: ../app/actions/tool-presets-actions.c:62
+#: ../app/actions/tool-presets-actions.c:63
 msgctxt "tool-presets-action"
 msgid "Copy tool preset file location to clipboard"
 msgstr "Умножава путању датотеке подешавања алата међу исечке"
 
-#: ../app/actions/tool-presets-actions.c:67
+#: ../app/actions/tool-presets-actions.c:68
 msgctxt "tool-presets-action"
 msgid "Show in _File Manager"
 msgstr "Управник модула"
 
-#: ../app/actions/tool-presets-actions.c:68
+#: ../app/actions/tool-presets-actions.c:69
 msgctxt "tool-presets-action"
 msgid "Show tool preset file location in the file manager"
 msgstr "Приказује датотеку са поставкама алата у управнику датотека"
 
-#: ../app/actions/tool-presets-actions.c:73
+#: ../app/actions/tool-presets-actions.c:74
+#| msgctxt "tool-options-action"
+#| msgid "_Restore Tool Preset"
+msgctxt "tool-presets-action"
+msgid "_Restore Tool Preset"
+msgstr "_Врати подешавање алата"
+
+#: ../app/actions/tool-presets-actions.c:75
+#| msgctxt "tool-presets-action"
+#| msgid "Delete this tool preset"
+msgctxt "tool-presets-action"
+msgid "Restore this tool preset"
+msgstr "Враћа текуће подешавање алата"
+
+#: ../app/actions/tool-presets-actions.c:80
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
 msgstr "О_бриши подешавање алата"
 
-#: ../app/actions/tool-presets-actions.c:74
+#: ../app/actions/tool-presets-actions.c:81
 msgctxt "tool-presets-action"
 msgid "Delete this tool preset"
 msgstr "Брише текуће подешавање алата"
 
-#: ../app/actions/tool-presets-actions.c:79
+#: ../app/actions/tool-presets-actions.c:86
 msgctxt "tool-presets-action"
 msgid "_Refresh Tool Presets"
 msgstr "О_свежи подешавања алата"
 
-#: ../app/actions/tool-presets-actions.c:80
+#: ../app/actions/tool-presets-actions.c:87
 msgctxt "tool-presets-action"
 msgid "Refresh tool presets"
 msgstr "Освежава подешавања алата"
 
-#: ../app/actions/tool-presets-actions.c:88
+#: ../app/actions/tool-presets-actions.c:95
 msgctxt "tool-presets-action"
 msgid "_Edit Tool Preset..."
 msgstr "_Уреди подешавање алата..."
 
-#: ../app/actions/tool-presets-actions.c:89
+#: ../app/actions/tool-presets-actions.c:96
 msgctxt "tool-presets-action"
 msgid "Edit this tool preset"
 msgstr "Уређује подешавање алата"
@@ -6423,15 +6400,11 @@ msgid "Reset the angle of rotation to 0°"
 msgstr "Враћа угао ротације на 0°"
 
 #: ../app/actions/view-actions.c:408
-#| msgctxt "view-action"
-#| msgid "Rotate 90° _clockwise"
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Ротирај за 15° у_десно"
 
 #: ../app/actions/view-actions.c:409
-#| msgctxt "view-action"
-#| msgid "Rotate 90 degrees to the right"
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the right"
 msgstr "Ротира слику за 15 степени удесно"
@@ -6467,15 +6440,11 @@ msgid "Rotate 90 degrees to the left"
 msgstr "Ротира слику за 90 степени улево"
 
 #: ../app/actions/view-actions.c:432
-#| msgctxt "view-action"
-#| msgid "Rotate 90° counter-clock_wise"
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Ротирај за 15° у_лево"
 
 #: ../app/actions/view-actions.c:433
-#| msgctxt "view-action"
-#| msgid "Rotate 90 degrees to the left"
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the left"
 msgstr "Ротира слику за 15 степени улево"
@@ -7523,22 +7492,16 @@ msgid "Hue (HSV)"
 msgstr "Нијанса (ХСВ)"
 
 #: ../app/core/core-enums.c:303
-#| msgctxt "layer-mode-effects"
-#| msgid "Saturation"
 msgctxt "layer-mode-effects"
 msgid "Saturation (HSV)"
 msgstr "Засићеност (ХСВ)"
 
 #: ../app/core/core-enums.c:304
-#| msgctxt "layer-mode-effects"
-#| msgid "Color"
 msgctxt "layer-mode-effects"
 msgid "Color (HSV)"
 msgstr "Боја (ХСВ)"
 
 #: ../app/core/core-enums.c:305
-#| msgctxt "layer-mode-effects"
-#| msgid "Value"
 msgctxt "layer-mode-effects"
 msgid "Value (HSV)"
 msgstr "Вредност (ХСВ)"
@@ -7599,14 +7562,11 @@ msgid "Chroma (LCH)"
 msgstr "Хроминанса (ЛЦХ)"
 
 #: ../app/core/core-enums.c:317
-#| msgctxt "layer-mode-effects"
-#| msgid "Color"
 msgctxt "layer-mode-effects"
 msgid "Color (LCH)"
 msgstr "Боја (ЛЦХ)"
 
 #: ../app/core/core-enums.c:318
-#| msgid "Lightness"
 msgctxt "layer-mode-effects"
 msgid "Lightness (LCH)"
 msgstr "Светлина (ЛЦХ)"
@@ -8354,6 +8314,16 @@ msgstr "Модули"
 msgid "Updating tag cache"
 msgstr "Ажурирам оставу ознака"
 
+#: ../app/core/gimp-batch.c:75
+#, c-format
+msgid "No batch interpreter specified, using the default '%s'.\n"
+msgstr "Није наведен тумач групе, користим основни „%s“.\n"
+
+#: ../app/core/gimp-batch.c:93 ../app/core/gimp-batch.c:111
+#, c-format
+msgid "The batch interpreter '%s' is not available. Batch mode disabled."
+msgstr "Тумач групе „%s“ није доступан. Групни режим је искључен."
+
 #: ../app/core/gimp-contexts.c:153 ../app/core/gimptooloptions.c:370
 #: ../app/gui/session.c:427 ../app/menus/menus.c:459
 #: ../app/widgets/gimpdevices.c:201
@@ -8646,8 +8616,6 @@ msgid "Select by Color"
 msgstr "Избор према боји"
 
 #: ../app/core/gimpchannel-select.c:614
-#| msgctxt "undo-type"
-#| msgid "Select by Color"
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
 msgstr "Избор према индексираној боји"
@@ -8900,7 +8868,7 @@ msgstr "Рачунам мапу растојања"
 msgid "Blending"
 msgstr "Стапање"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:245
+#: ../app/core/gimpdrawable-bucket-fill.c:249
 msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Кантица"
@@ -9143,13 +9111,13 @@ msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Распоред објеката"
 
-#: ../app/core/gimpimage-color-profile.c:86
+#: ../app/core/gimpimage-color-profile.c:87
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
 "Није успела провера исправности ИЦЦ профила: Назив паразита није „icc-"
 "profile“"
 
-#: ../app/core/gimpimage-color-profile.c:95
+#: ../app/core/gimpimage-color-profile.c:96
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
@@ -9157,31 +9125,29 @@ msgstr ""
 "Није успела провера исправности ИЦЦ профила: Заставице паразита нису "
 "(PERSISTENT | UNDOABLE)"
 
-#: ../app/core/gimpimage-color-profile.c:152
+#: ../app/core/gimpimage-color-profile.c:153
 msgid "ICC profile validation failed: "
 msgstr "Није успела провера исправности ИЦЦ профила: "
 
-#: ../app/core/gimpimage-color-profile.c:248
+#: ../app/core/gimpimage-color-profile.c:249
 msgid ""
 "ICC profile validation failed: Cannot attach a color profile to a GRAY image"
 msgstr ""
 "Није успела провера исправности ИЦЦ профила: Не могу да додам профил боје на "
 "црно-белу слику"
 
-#: ../app/core/gimpimage-color-profile.c:256
+#: ../app/core/gimpimage-color-profile.c:257
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "Није успела провера исправности ИЦЦ профила: Профил боје није у РГБ радном "
 "простору"
 
-#: ../app/core/gimpimage-color-profile.c:366
+#: ../app/core/gimpimage-color-profile.c:367
 #, c-format
-#| msgid "Revert '%s' to '%s'?"
 msgid "Converting from '%s' to '%s'"
 msgstr "Претварам из „%s“ у „%s“"
 
-#: ../app/core/gimpimage-color-profile.c:371
-#| msgid "Color Profile"
+#: ../app/core/gimpimage-color-profile.c:372
 msgid "Color profile conversion"
 msgstr "Претварање профила боја"
 
@@ -9751,7 +9717,7 @@ msgstr "Не могу да прочитам заглавље из датотек
 msgid "Premature end of file."
 msgstr "Превремени крај датотеке."
 
-#: ../app/core/gimppalettemru.c:120 ../app/core/gimppalettemru.c:246
+#: ../app/core/gimppalettemru.c:120 ../app/core/gimppalettemru.c:254
 msgid "History Color"
 msgstr "Историјат боја"
 
@@ -9978,7 +9944,6 @@ msgstr "Гимп су омогућили"
 
 #: ../app/dialogs/about-dialog.c:611
 #, c-format
-#| msgid "This is an unstable development release."
 msgid ""
 "This is an unstable development release\n"
 "commit %s"
@@ -9999,45 +9964,34 @@ msgid "Initialize from _selection"
 msgstr "Покрени из _избора"
 
 #: ../app/dialogs/color-profile-dialog.c:163
-#| msgid "Select CMYK Color Profile"
 msgid "Convert to ICC Color Profile"
 msgstr "Претвори у ИЦЦ профил боја"
 
 #: ../app/dialogs/color-profile-dialog.c:166
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to the RGB colorspace"
 msgid "Convert the image to a color profile"
 msgstr "Претвара слику у одређени профил боје"
 
 #: ../app/dialogs/color-profile-dialog.c:180
-#| msgid "Color Profile"
 msgid "Assign ICC Color Profile"
 msgstr "Додели ИЦЦ профил боје"
 
 #: ../app/dialogs/color-profile-dialog.c:183
-#| msgid "Can't apply color profile to grayscale image (%s)"
 msgid "Assign a color profile to the image"
 msgstr "Додељује профил боје слици"
 
 #: ../app/dialogs/color-profile-dialog.c:189
-#| msgctxt "vector-mode"
-#| msgid "Design"
 msgid "_Assign"
 msgstr "_Додели"
 
 #: ../app/dialogs/color-profile-dialog.c:214
-#| msgid "Color Profile"
 msgid "Current Color Profile"
 msgstr "Тренутни профил боје"
 
 #: ../app/dialogs/color-profile-dialog.c:224
-#| msgid "C_onvert"
 msgid "Convert to"
 msgstr "Претвори у"
 
 #: ../app/dialogs/color-profile-dialog.c:224
-#| msgctxt "vector-mode"
-#| msgid "Design"
 msgid "Assign"
 msgstr "Додели"
 
@@ -10046,7 +10000,6 @@ msgid "Profile _details"
 msgstr "Пода_ци о профилу"
 
 #: ../app/dialogs/color-profile-dialog.c:265
-#| msgid "_Display rendering intent:"
 msgid "_Rendering Intent:"
 msgstr "_Намера исцртавања:"
 
@@ -10055,13 +10008,11 @@ msgid "_Black Point Compensation"
 msgstr "_Компензација црне тачке"
 
 #: ../app/dialogs/color-profile-dialog.c:304
-#| msgid "Select Rotation Angle"
 msgid "Select destination profile"
 msgstr "Изаберите циљни профил"
 
 #: ../app/dialogs/color-profile-dialog.c:312
 #, c-format
-#| msgid "Direction  (%s)"
 msgid "Built-in RGB (%s)"
 msgstr "Уграђени РГБ (%s)"
 
@@ -10072,23 +10023,18 @@ msgstr "Пожељнији РГБ (%s)"
 
 #: ../app/dialogs/color-profile-dialog.c:391
 #, c-format
-#| msgid "Convert Image to %s"
 msgid "Converting to '%s'"
 msgstr "Претвори у „%s“"
 
 #: ../app/dialogs/color-profile-dialog.c:413
-#| msgid "Color Profile"
 msgid "Assign color profile"
 msgstr "Додели профил боја"
 
 #: ../app/dialogs/color-profile-import-dialog.c:78
-#| msgctxt "color-profile-policy"
-#| msgid "Convert to RGB workspace"
 msgid "Convert to RGB Working Space?"
 msgstr "Да преведим у РГБ радни простор?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:81
-#| msgid "Import settings from a file"
 msgid "Import the image from a color profile"
 msgstr "Увези слику из профила боје"
 
@@ -10097,7 +10043,6 @@ msgid "Keep"
 msgstr "Задржи садашње"
 
 #: ../app/dialogs/color-profile-import-dialog.c:87
-#| msgid "C_onvert"
 msgid "Convert"
 msgstr "Претвори"
 
@@ -10107,8 +10052,6 @@ msgid "The image '%s' has an embedded color profile"
 msgstr "Слика „%s“ има уграђен профил боја"
 
 #: ../app/dialogs/color-profile-import-dialog.c:115
-#| msgctxt "image-convert-action"
-#| msgid "Convert the image to the RGB colorspace"
 msgid "Convert the image to the RGB working space?"
 msgstr "Да претворим слику у РГБ радни простор?"
 
@@ -10135,7 +10078,7 @@ msgstr "Пре_твори"
 #: ../app/dialogs/convert-type-dialog.c:239
 #: ../app/tools/gimpblendoptions.c:248
 msgid "Dithering"
-msgstr "Мешање боја"
+msgstr "Дизеринг"
 
 #: ../app/dialogs/convert-precision-dialog.c:197
 msgid "_Layers:"
@@ -10148,7 +10091,7 @@ msgstr "_Слој текста"
 #: ../app/dialogs/convert-precision-dialog.c:236
 #: ../app/dialogs/convert-type-dialog.c:289
 msgid "Dithering text layers will make them uneditable"
-msgstr "Мешањем текстуалних слојева ћете онемогућити њихове даље измене"
+msgstr "Дизеринг текстуалних слојева ће онемогућити њихове даље измене"
 
 #: ../app/dialogs/convert-precision-dialog.c:245
 msgid "_Channels and Masks:"
@@ -10176,15 +10119,15 @@ msgstr "У_клони некоришћене боје из мапе боја"
 
 #: ../app/dialogs/convert-type-dialog.c:251
 msgid "Color _dithering:"
-msgstr "Мешање _боја:"
+msgstr "_Дизеринг боја:"
 
 #: ../app/dialogs/convert-type-dialog.c:266
 msgid "Enable dithering of _transparency"
-msgstr "Укључи мешање _провидности"
+msgstr "Укључи дизеринг _провидности"
 
 #: ../app/dialogs/convert-type-dialog.c:278
 msgid "Enable dithering of text layers"
-msgstr "Омогући мешање текстуалних слојева"
+msgstr "Омогући дизеринг текстуалних слојева"
 
 #: ../app/dialogs/convert-type-dialog.c:309
 msgid "Converting to indexed colors"
@@ -11247,7 +11190,6 @@ msgid "Resize window on image _size change"
 msgstr "Промени величину прозора са променом _величине слике"
 
 #: ../app/dialogs/preferences-dialog.c:2016
-#| msgid "Show active _image"
 msgid "Show entire image"
 msgstr "Прикажи целу слику"
 
@@ -11412,7 +11354,6 @@ msgid "Color Management"
 msgstr "Управљање бојама"
 
 #: ../app/dialogs/preferences-dialog.c:2377
-#| msgid "_RGB profile:"
 msgid "Preferred _RGB profile:"
 msgstr "По_жељни РГБ профил:"
 
@@ -11632,17 +11573,14 @@ msgid "Select Tool Preset Folders"
 msgstr "Изаберите фасцикле са подешавањима алата"
 
 #: ../app/dialogs/preferences-dialog.c:2719
-#| msgid "MyPaint Brush"
 msgid "MyPaint Brushes"
 msgstr "Моја четкица"
 
 #: ../app/dialogs/preferences-dialog.c:2719
-#| msgid "_MyPaint Brush tool"
 msgid "MyPaint Brush Folders"
 msgstr "Фасцикла са Мојим четкицама"
 
 #: ../app/dialogs/preferences-dialog.c:2721
-#| msgid "Select Brush Folders"
 msgid "Select MyPaint Brush Folders"
 msgstr "Изаберите фасцикле са четкицама"
 
@@ -12634,7 +12572,7 @@ msgstr "Замотај"
 msgid "Dodge/Burn"
 msgstr "Смакни/спали"
 
-#: ../app/paint/gimperaser.c:61 ../app/tools/gimperasertool.c:66
+#: ../app/paint/gimperaser.c:62 ../app/tools/gimperasertool.c:66
 msgid "Eraser"
 msgstr "Гумица"
 
@@ -12646,7 +12584,7 @@ msgstr "Побољшајте"
 msgid "Healing does not operate on indexed layers."
 msgstr "Побољшавање не ради на индексираним слојевима."
 
-#: ../app/paint/gimpink.c:99 ../app/tools/gimpinktool.c:61
+#: ../app/paint/gimpink.c:100 ../app/tools/gimpinktool.c:61
 msgid "Ink"
 msgstr "Мастило"
 
@@ -12662,7 +12600,7 @@ msgstr "Размера капљице мастила"
 msgid "Ink Blob Angle"
 msgstr "Угао капљице мастила"
 
-#: ../app/paint/gimpmybrush.c:89
+#: ../app/paint/gimpmybrush.c:90
 msgid "Mybrush"
 msgstr "МојаЧеткица"
 
@@ -12674,7 +12612,7 @@ msgstr "МојаЧеткица"
 msgid "Radius"
 msgstr "Полупречник"
 
-#: ../app/paint/gimppaintbrush.c:65 ../app/tools/gimppaintbrushtool.c:51
+#: ../app/paint/gimppaintbrush.c:66 ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
 msgstr "Четкица"
 
@@ -13243,7 +13181,6 @@ msgid "Bump Map"
 msgstr "Испупчење"
 
 #: ../app/pdb/plug-in-compat-cmds.c:313
-#| msgid "Display"
 msgctxt "undo-type"
 msgid "Displace"
 msgstr "Премештање"
@@ -13362,7 +13299,6 @@ msgid "Noise HSV"
 msgstr "ХСВ шум"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2121 ../app/pdb/plug-in-compat-cmds.c:2181
-#| msgid "Color Profile"
 msgid "Set color profile"
 msgstr "Постави профил боја"
 
@@ -13407,8 +13343,6 @@ msgid "Supernova"
 msgstr "Супернова"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2876
-#| msgctxt "undo-type"
-#| msgid "Glass Tile"
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "Плочице од папира"
@@ -13529,7 +13463,6 @@ msgid "Whirl and Pinch"
 msgstr "Увртање и штипање"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4290
-#| msgid "Windows"
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "Ветар"
@@ -14759,7 +14692,6 @@ msgid "Matting engine to use"
 msgstr "Мотор који се користи за исецање"
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
-#| msgid "Number of _processors to use:"
 msgid "Number of downsampled levels to use"
 msgstr "Број умањених нивоа"
 
@@ -14768,7 +14700,6 @@ msgid "Number of levels to perform solving"
 msgstr "Број нивоа за решавање"
 
 #: ../app/tools/gimpforegroundselectoptions.c:124
-#| msgid "Number of animation frames"
 msgid "Number of iterations to perform"
 msgstr "Број понављања"
 
@@ -14928,14 +14859,10 @@ msgid "Add handles and transform the image"
 msgstr "Преображава слику на задатим ручицама"
 
 #: ../app/tools/gimphandletransformoptions.c:171
-#| msgctxt "undo-type"
-#| msgid "Transform Channel"
 msgid "Move transform handles"
 msgstr "Премештање ручица за преображај"
 
 #: ../app/tools/gimphandletransformoptions.c:176
-#| msgctxt "undo-type"
-#| msgid "Remove Parasite from Image"
 msgid "Remove transform handles"
 msgstr "Уклањање ручица за преображај"
 
@@ -15196,32 +15123,26 @@ msgid "Export Levels"
 msgstr "Извезите нивое"
 
 #: ../app/tools/gimplevelstool.c:285
-#| msgid "Click to add control points to all channels"
 msgid "Pick black point for all channels"
 msgstr "Изаберите црну тачку за све канале"
 
 #: ../app/tools/gimplevelstool.c:287
-#| msgid "Click-Drag to move the selected pixels"
 msgid "Pick black point for the selected channel"
 msgstr "Изаберите црну тачку за изабрани канал"
 
 #: ../app/tools/gimplevelstool.c:294
-#| msgid "Click to add control points to all channels"
 msgid "Pick gray point for all channels"
 msgstr "Изаберите сиву тачку за све канале"
 
 #: ../app/tools/gimplevelstool.c:296
-#| msgid "Click-Drag to move the selected pixels"
 msgid "Pick gray point for the selected channel"
 msgstr "Изаберите сиву тачку за изабрани канал"
 
 #: ../app/tools/gimplevelstool.c:303
-#| msgid "Click to add control points to all channels"
 msgid "Pick white point for all channels"
 msgstr "Изаберите белу тачку за све канале"
 
 #: ../app/tools/gimplevelstool.c:305
-#| msgid "Click-Drag to move the selected pixels"
 msgid "Pick white point for the selected channel"
 msgstr "Изаберите белу тачку за изабрани канал"
 
@@ -15245,7 +15166,6 @@ msgid "_Auto"
 msgstr "_Самостално"
 
 #: ../app/tools/gimplevelstool.c:590
-#| msgid "Adjust levels automatically"
 msgid "Adjust levels for all channels automatically"
 msgstr "Покушава да самостално подеси нивое за све канале"
 
@@ -16283,13 +16203,10 @@ msgstr "Задржава изворну размеру слике"
 
 #: ../app/tools/gimptransformoptions.c:480
 #, c-format
-#| msgid "Anti erase  (%s)"
 msgid "Constrain  (%s)"
 msgstr "Ограничење  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:481
-#| msgctxt "tool"
-#| msgid "Move"
 msgid "Move"
 msgstr "Премести"
 
@@ -16345,7 +16262,6 @@ msgstr "Окрет"
 
 #: ../app/tools/gimptransformoptions.c:503
 #, c-format
-#| msgid "Type  (%s)"
 msgid "Snap  (%s)"
 msgstr "Лепи  (%s)"
 
@@ -16355,13 +16271,10 @@ msgid "Snap pivot to corners and center  (%s)"
 msgstr "Лепи окрет на ћошкове и средину  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:505
-#| msgid "Lock:"
 msgid "Lock"
 msgstr "Закључај"
 
 #: ../app/tools/gimptransformoptions.c:506
-#| msgctxt "drawable-action"
-#| msgid "L_ock position of channel"
 msgid "Lock pivot position to canvas"
 msgstr "Закључава место окрета на платну"
 
@@ -16371,7 +16284,6 @@ msgstr "Примењујем преображај"
 
 #: ../app/tools/gimptransformtool.c:290
 #, c-format
-#| msgid "The given file extension does not match the chosen file type."
 msgid "The selection does not intersect with the layer."
 msgstr "Избор се не преклапа са слојем."
 
@@ -16667,15 +16579,11 @@ msgid "Frame"
 msgstr "Кадар"
 
 #: ../app/tools/tools-enums.c:89
-#| msgctxt "transform-handle-mode"
-#| msgid "Transform"
 msgctxt "transform-handle-mode"
 msgid "Add / Transform"
 msgstr "Додај / преобрази"
 
 #: ../app/tools/tools-enums.c:90
-#| msgctxt "tool"
-#| msgid "Move"
 msgctxt "transform-handle-mode"
 msgid "Move"
 msgstr "Премести"
@@ -18767,7 +18675,6 @@ msgstr "Грешка приликом уписа „%s“"
 
 #: ../app/xcf/xcf.c:420
 #, c-format
-#| msgid "Error reading '%s': %s"
 msgid "Error creating '%s': "
 msgstr "Грешка при прављењу „%s“: "
 
