@@ -981,6 +981,15 @@ xcf_load_layer_props (XcfInfo    *info,
           }
           break;
 
+        case PROP_FLOAT_OPACITY:
+          {
+            gfloat opacity;
+
+            info->cp += xcf_read_float (info->input, &opacity, 1);
+            gimp_layer_set_opacity (*layer, opacity, FALSE);
+          }
+          break;
+
         case PROP_VISIBLE:
           {
             gboolean visible;
@@ -1224,6 +1233,15 @@ xcf_load_channel_props (XcfInfo      *info,
 
             info->cp += xcf_read_int32 (info->input, &opacity, 1);
             gimp_channel_set_opacity (*channel, opacity / 255.0, FALSE);
+          }
+          break;
+
+        case PROP_FLOAT_OPACITY:
+          {
+            gfloat opacity;
+
+            info->cp += xcf_read_float (info->input, &opacity, 1);
+            gimp_channel_set_opacity (*channel, opacity, FALSE);
           }
           break;
 
