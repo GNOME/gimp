@@ -39,14 +39,15 @@ static void       run           (const gchar      *name,
                                  gint             *nreturn_vals,
                                  GimpParam       **return_vals);
 
-static gboolean   print         (GOutputStream    *output,
-                                 GError          **error,
-                                 const gchar      *format,
-                                 ...) G_GNUC_PRINTF (3, 0);
 static gboolean   save_image    (GFile            *file,
                                  gint32            image_ID,
                                  gint32            drawable_ID,
                                  GError          **error);
+
+static gboolean   print         (GOutputStream    *output,
+                                 GError          **error,
+                                 const gchar      *format,
+                                 ...) G_GNUC_PRINTF (3, 4);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -164,23 +165,6 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
-}
-
-static gboolean
-print (GOutputStream  *output,
-       GError        **error,
-       const gchar    *format,
-       ...)
-{
-  va_list  args;
-  gboolean success;
-
-  va_start (args, format);
-  success = g_output_stream_vprintf (output, NULL, NULL,
-                                     error, format, args);
-  va_end (args);
-
-  return success;
 }
 
 static gboolean
@@ -429,4 +413,21 @@ save_image (GFile   *file,
   g_object_unref (buffer);
 
   return FALSE;
+}
+
+static gboolean
+print (GOutputStream  *output,
+       GError        **error,
+       const gchar    *format,
+       ...)
+{
+  va_list  args;
+  gboolean success;
+
+  va_start (args, format);
+  success = g_output_stream_vprintf (output, NULL, NULL,
+                                     error, format, args);
+  va_end (args);
+
+  return success;
 }
