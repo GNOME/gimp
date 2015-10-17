@@ -428,6 +428,12 @@ CFLAGS="$CFLAGS $extra_warnings"
 GIMP_DETECT_CFLAGS(extra_warnings, '-Wformat-security')
 CFLAGS="$CFLAGS $extra_warnings"
 
+GIMP_DETECT_CFLAGS(extra_warnings, '-Wlogical-op')
+CFLAGS="$CFLAGS $extra_warnings"
+
+GIMP_DETECT_CFLAGS(extra_warnings, '-Wtype-limits')
+CFLAGS="$CFLAGS $extra_warnings"
+
 GIMP_DETECT_CFLAGS(extra_warnings, '-fno-common')
 CFLAGS="$CFLAGS $extra_warnings"
 
