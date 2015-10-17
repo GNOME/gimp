@@ -259,6 +259,7 @@ choose_format (GeglBuffer          *buffer,
     case GIMP_SELECT_CRITERION_R:
     case GIMP_SELECT_CRITERION_G:
     case GIMP_SELECT_CRITERION_B:
+    case GIMP_SELECT_CRITERION_A:
       format = babl_format ("R'G'B'A float");
       break;
 
@@ -327,6 +328,10 @@ pixel_difference (const gfloat        *col1,
 
         case GIMP_SELECT_CRITERION_B:
           max = fabs (col1[2] - col2[2]);
+          break;
+
+        case GIMP_SELECT_CRITERION_A:
+          max = fabs (col1[3] - col2[3]);
           break;
 
         case GIMP_SELECT_CRITERION_H:

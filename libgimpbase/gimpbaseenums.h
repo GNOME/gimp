@@ -667,7 +667,8 @@ typedef enum
   GIMP_SELECT_CRITERION_B,          /*< desc="Blue"       >*/
   GIMP_SELECT_CRITERION_H,          /*< desc="Hue"        >*/
   GIMP_SELECT_CRITERION_S,          /*< desc="Saturation" >*/
-  GIMP_SELECT_CRITERION_V           /*< desc="Value"      >*/
+  GIMP_SELECT_CRITERION_V,          /*< desc="Value"      >*/
+  GIMP_SELECT_CRITERION_A           /*< desc="Alpha"      >*/
 } GimpSelectCriterion;
 
 

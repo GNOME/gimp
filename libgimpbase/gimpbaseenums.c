@@ -1468,6 +1468,7 @@ gimp_select_criterion_get_type (void)
     { GIMP_SELECT_CRITERION_H, "GIMP_SELECT_CRITERION_H", "h" },
     { GIMP_SELECT_CRITERION_S, "GIMP_SELECT_CRITERION_S", "s" },
     { GIMP_SELECT_CRITERION_V, "GIMP_SELECT_CRITERION_V", "v" },
+    { GIMP_SELECT_CRITERION_A, "GIMP_SELECT_CRITERION_A", "a" },
     { 0, NULL, NULL }
   };
 
@@ -1480,6 +1481,7 @@ gimp_select_criterion_get_type (void)
     { GIMP_SELECT_CRITERION_H, NC_("select-criterion", "Hue"), NULL },
     { GIMP_SELECT_CRITERION_S, NC_("select-criterion", "Saturation"), NULL },
     { GIMP_SELECT_CRITERION_V, NC_("select-criterion", "Value"), NULL },
+    { GIMP_SELECT_CRITERION_A, NC_("select-criterion", "Alpha"), NULL },
     { 0, NULL, NULL }
   };
 
