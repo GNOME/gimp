@@ -578,7 +578,7 @@ gimp_n_point_deformation_tool_button_press (GimpTool            *tool,
                * list of selected control points
                */
 
-              if (! (state & GDK_SHIFT_MASK))
+              if (! (state & gimp_get_extend_selection_mask ()))
                 {
                   /* <SHIFT> isn't pressed, so this isn't a
                    * multiselection - clear the list of selected
@@ -589,7 +589,7 @@ gimp_n_point_deformation_tool_button_press (GimpTool            *tool,
 
               gimp_n_point_deformation_tool_add_cp_to_selection (npd_tool, cp);
             }
-          else if (state & GDK_SHIFT_MASK)
+          else if (state & gimp_get_extend_selection_mask ())
             {
               /* control point is selected and <SHIFT> is pressed -
                * remove control point from selected points
@@ -666,7 +666,7 @@ gimp_n_point_deformation_tool_button_release (GimpTool              *tool,
           gint    y1  = MAX (npd_tool->start_y, npd_tool->cursor_y);
           gint    i;
 
-          if (! (state & GDK_SHIFT_MASK))
+          if (! (state & gimp_get_extend_selection_mask ()))
             {
               /* <SHIFT> isn't pressed, so we want a clear selection */
               gimp_n_point_deformation_tool_clear_selected_points_list (npd_tool);

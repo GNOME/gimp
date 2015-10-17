@@ -22,6 +22,9 @@
 #include "gimpcolortool.h"
 
 
+#define GIMP_PAINT_TOOL_LINE_MASK (gimp_get_extend_selection_mask ())
+
+
 #define GIMP_TYPE_PAINT_TOOL            (gimp_paint_tool_get_type ())
 #define GIMP_PAINT_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAINT_TOOL, GimpPaintTool))
 #define GIMP_PAINT_TOOL_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINT_TOOL, GimpPaintToolClass))

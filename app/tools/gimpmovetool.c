@@ -635,7 +635,7 @@ gimp_move_tool_modifier_key (GimpTool        *tool,
   GimpMoveTool    *move    = GIMP_MOVE_TOOL (tool);
   GimpMoveOptions *options = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
 
-  if (key == GDK_SHIFT_MASK)
+  if (key == gimp_get_extend_selection_mask ())
     {
       g_object_set (options, "move-current", ! options->move_current, NULL);
     }

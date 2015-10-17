@@ -150,9 +150,8 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
   GtkWidget       *button;
   GtkWidget       *frame;
   gchar           *str;
-  GdkModifierType  toggle_mask;
-
-  toggle_mask = gimp_get_toggle_behavior_mask ();
+  GdkModifierType  extend_mask = gimp_get_extend_selection_mask ();
+  GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
 
   /*  the sample merged toggle button  */
   button = gimp_prop_check_button_new (config, "sample-merged",
@@ -171,7 +170,7 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 
   /*  the use_info_window toggle button  */
   str = g_strdup_printf (_("Use info window  (%s)"),
-                         gimp_get_mod_string (GDK_SHIFT_MASK));
+                         gimp_get_mod_string (extend_mask));
   button = gimp_prop_check_button_new (config, "use-info-window", str);
   g_free (str);
 

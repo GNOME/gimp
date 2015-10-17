@@ -417,7 +417,7 @@ gimp_iscissors_tool_button_press (GimpTool            *tool,
     case NO_ACTION:
       iscissors->state = SEED_PLACEMENT;
 
-      if (! (state & GDK_SHIFT_MASK))
+      if (! (state & gimp_get_extend_selection_mask ()))
         find_max_gradient (iscissors, image,
                            &iscissors->x, &iscissors->y);
 
@@ -742,7 +742,7 @@ gimp_iscissors_tool_motion (GimpTool         *tool,
   iscissors->y = RINT (coords->y);
 
   /*  Hold the shift key down to disable the auto-edge snap feature  */
-  if (! (state & GDK_SHIFT_MASK))
+  if (! (state & gimp_get_extend_selection_mask ()))
     find_max_gradient (iscissors, image,
                        &iscissors->x, &iscissors->y);
 
@@ -927,6 +927,7 @@ gimp_iscissors_tool_oper_update (GimpTool         *tool,
 
   if (mouse_over_vertex (iscissors, coords->x, coords->y) > 1)
     {
+      GdkModifierType snap_mask   = gimp_get_extend_selection_mask ();
       GdkModifierType remove_mask = gimp_get_modify_selection_mask ();
 
       if (state & remove_mask)
@@ -939,7 +940,7 @@ gimp_iscissors_tool_oper_update (GimpTool         *tool,
         {
           gchar *status =
             gimp_suggest_modifiers (_("Click-Drag to move this point"),
-                                    (GDK_SHIFT_MASK | remove_mask) & ~state,
+                                    (snap_mask | remove_mask) & ~state,
                                     _("%s: disable auto-snap"),
                                     _("%s: remove this point"),
                                     NULL);
@@ -1003,11 +1004,12 @@ gimp_iscissors_tool_oper_update (GimpTool         *tool,
         case WAITING:
           if (proximity)
             {
-              gchar *status;
+              GdkModifierType  snap_mask = gimp_get_extend_selection_mask ();
+              gchar           *status;
 
               status = gimp_suggest_modifiers (_("Click or Click-Drag to add a"
                                                  " point"),
-                                               GDK_SHIFT_MASK & ~state,
+                                               snap_mask & ~state,
                                                _("%s: disable auto-snap"),
                                                NULL, NULL);
               gimp_tool_replace_status (tool, display, "%s", status);

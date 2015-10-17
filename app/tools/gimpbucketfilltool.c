@@ -268,7 +268,7 @@ gimp_bucket_fill_tool_modifier_key (GimpTool        *tool,
           break;
         }
     }
-  else if (key == GDK_SHIFT_MASK)
+  else if (key == gimp_get_extend_selection_mask ())
     {
       g_object_set (options, "fill-selection", ! options->fill_selection, NULL);
     }

@@ -179,11 +179,12 @@ gimp_source_tool_button_press (GimpTool            *tool,
   GimpPaintTool  *paint_tool  = GIMP_PAINT_TOOL (tool);
   GimpSourceTool *source_tool = GIMP_SOURCE_TOOL (tool);
   GimpSourceCore *source      = GIMP_SOURCE_CORE (paint_tool->core);
+  GdkModifierType extend_mask = gimp_get_extend_selection_mask ();
   GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  if ((state & (toggle_mask | GDK_SHIFT_MASK)) == toggle_mask)
+  if ((state & (toggle_mask | extend_mask)) == toggle_mask)
     {
       source->set_source = TRUE;
 
@@ -275,9 +276,10 @@ gimp_source_tool_cursor_update (GimpTool         *tool,
   if (gimp_source_core_use_source (GIMP_SOURCE_CORE (paint_tool->core),
                                    options))
     {
+      GdkModifierType extend_mask = gimp_get_extend_selection_mask ();
       GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
 
-      if ((state & (toggle_mask | GDK_SHIFT_MASK)) == toggle_mask)
+      if ((state & (toggle_mask | extend_mask)) == toggle_mask)
         {
           cursor = GIMP_CURSOR_CROSSHAIR_SMALL;
         }

@@ -223,6 +223,7 @@ gimp_measure_tool_button_press (GimpTool            *tool,
        */
       if (measure->point != -1)
         {
+          GdkModifierType extend_mask = gimp_get_extend_selection_mask ();
           GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
 
           if (state & (toggle_mask | GDK_MOD1_MASK))
@@ -267,7 +268,7 @@ gimp_measure_tool_button_press (GimpTool            *tool,
             }
           else
             {
-              if (state & GDK_SHIFT_MASK)
+              if (state & extend_mask)
                 measure->function = ADDING;
               else
                 measure->function = MOVING;
@@ -550,6 +551,7 @@ gimp_measure_tool_oper_update (GimpTool         *tool,
           if (gimp_canvas_item_hit (measure->handles[i],
                                     coords->x, coords->y))
             {
+              GdkModifierType extend_mask = gimp_get_extend_selection_mask ();
               GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
 
               point = i;
@@ -590,7 +592,7 @@ gimp_measure_tool_oper_update (GimpTool         *tool,
                   break;
                 }
 
-              if ((state & GDK_SHIFT_MASK)
+              if ((state & extend_mask)
                   && ! ((i == 0) && (measure->num_points == 3)))
                 {
                   status = gimp_suggest_modifiers (_("Click-Drag to add a "
@@ -602,11 +604,11 @@ gimp_measure_tool_oper_update (GimpTool         *tool,
               else
                 {
                   if ((i == 0) && (measure->num_points == 3))
-                    state |= GDK_SHIFT_MASK;
+                    state |= extend_mask;
                   status = gimp_suggest_modifiers (_("Click-Drag to move this "
                                                      "point"),
-                                                   (GDK_SHIFT_MASK |
-                                                    toggle_mask    |
+                                                   (extend_mask |
+                                                    toggle_mask |
                                                     GDK_MOD1_MASK) & ~state,
                                                    NULL, NULL, NULL);
                 }
@@ -673,6 +675,7 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
     {
       if (measure->point != -1)
         {
+          GdkModifierType extend_mask = gimp_get_extend_selection_mask ();
           GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
 
           if (state & toggle_mask)
@@ -686,7 +689,7 @@ gimp_measure_tool_cursor_update (GimpTool         *tool,
             {
               cursor = GIMP_CURSOR_SIDE_RIGHT;
             }
-          else if ((state & GDK_SHIFT_MASK) &&
+          else if ((state & extend_mask) &&
                    ! ((measure->point == 0) &&
                       (measure->num_points == 3)))
             {
