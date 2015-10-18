@@ -236,13 +236,13 @@ void            gimp_item_flip               (GimpItem           *item,
                                               GimpContext        *context,
                                               GimpOrientationType flip_type,
                                               gdouble             axis,
-                                              gboolean            flip_result);
+                                              gboolean            clip_result);
 void            gimp_item_rotate             (GimpItem           *item,
                                               GimpContext        *context,
                                               GimpRotationType    rotate_type,
                                               gdouble             center_x,
                                               gdouble             center_y,
-                                              gboolean            flip_result);
+                                              gboolean            clip_result);
 void            gimp_item_transform          (GimpItem           *item,
                                               GimpContext        *context,
                                               const GimpMatrix3  *matrix,
