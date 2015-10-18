@@ -704,7 +704,8 @@ gimp_color_profile_get_rgb_matrix_colorants (GimpColorProfile *profile,
 }
 
 static GimpColorProfile *
-gimp_color_profile_new_foobar (GimpColorProfile *profile)
+gimp_color_profile_new_from_profile (GimpColorProfile *profile,
+                                     gboolean          linear)
 {
   /* Make the target RGB working space.  Until the ICC allows other
    * illuminants, and corresponding LCMS code has been added, use the
@@ -712,17 +713,20 @@ gimp_color_profile_new_foobar (GimpColorProfile *profile)
    */
   GimpColorProfile *new_profile;
   cmsHPROFILE       target_profile;
-  cmsToneCurve     *gamma100[3];
   GimpMatrix3       matrix;
   cmsCIEXYZ         red;
   cmsCIEXYZ         green;
   cmsCIEXYZ         blue;
-  cmsCIEXYZ         D50 = { 0.96420288, 1.00000000, 0.82490540 };
+  cmsCIEXYZ        *whitepoint;
+  cmsToneCurve     *curve;
 
   g_return_val_if_fail (GIMP_IS_COLOR_PROFILE (profile), NULL);
 
   if (! gimp_color_profile_get_rgb_matrix_colorants (profile, &matrix))
     return NULL;
+
+  whitepoint = cmsReadTag (profile->priv->lcms_profile,
+                           cmsSigMediaWhitePointTag);
 
   red.X = matrix.coeff[0][0];
   red.Y = matrix.coeff[0][1];
@@ -738,34 +742,47 @@ gimp_color_profile_new_foobar (GimpColorProfile *profile)
 
   target_profile = cmsCreateProfilePlaceholder (0);
 
-  gamma100[0] = gamma100[1] = gamma100[2] = cmsBuildGamma (NULL, 1.00);
-
   cmsSetProfileVersion (target_profile, 4.3);
   cmsSetDeviceClass (target_profile, cmsSigDisplayClass);
   cmsSetColorSpace (target_profile, cmsSigRgbData);
   cmsSetPCS (target_profile, cmsSigXYZData);
-  cmsWriteTag (target_profile, cmsSigMediaWhitePointTag, &D50);
+
+  cmsWriteTag (target_profile, cmsSigMediaWhitePointTag, whitepoint);
+
   cmsWriteTag (target_profile, cmsSigRedColorantTag,   &red);
   cmsWriteTag (target_profile, cmsSigGreenColorantTag, &green);
   cmsWriteTag (target_profile, cmsSigBlueColorantTag,  &blue);
 
-  cmsFreeToneCurve (gamma100[0]);
+  if (linear)
+    {
+      /* linear light */
+      curve = cmsBuildGamma (NULL, 1.00);
 
-  /* I made this profile with the linear gamma TRC, just so it would be
-   * a little different from the GIMP sRGB profile. There's a way to
-   * only have one copy of the TRC in the profile, but I haven't figured
-   * out how to avoid writing three separate but identical curves.
-   */
-  cmsWriteTag (target_profile, cmsSigRedTRCTag,   gamma100[0]);
-  cmsWriteTag (target_profile, cmsSigGreenTRCTag, gamma100[0]);
-  cmsWriteTag (target_profile, cmsSigBlueTRCTag,  gamma100[0]);
+      gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
+                                  "GIMP generated with linear gamma TRC");
+    }
+  else
+    {
+      cmsFloat64Number srgb_parameters[5] =
+        { 2.4, 1.0 / 1.055,  0.055 / 1.055, 1.0 / 12.92, 0.04045 };
 
-  gimp_color_profile_set_tag (profile, cmsSigCopyrightTag,
-                              "Copyright 2015 by GIMP, Creative Commons Attribution-ShareAlike 3.0 Unported License (https://creativecommons.org/licenses/by-sa/3.0/legalcode).");
-  gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
-                              "GIMP user working space with linear gamma TRC.");
+      /* sRGB curve */
+      curve = cmsBuildParametricToneCurve (NULL, 4, srgb_parameters);
+
+      gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
+                                  "GIMP generated with sRGB gamma TRC");
+    }
+
+  cmsWriteTag (target_profile, cmsSigRedTRCTag,   curve);
+  cmsWriteTag (target_profile, cmsSigGreenTRCTag, curve);
+  cmsWriteTag (target_profile, cmsSigBlueTRCTag,  curve);
+
+  cmsFreeToneCurve (curve);
+
   gimp_color_profile_set_tag (profile, cmsSigDeviceMfgDescTag,
                               "GIMP");
+  gimp_color_profile_set_tag (profile, cmsSigCopyrightTag,
+                              "Public Domain");
 
   new_profile = gimp_color_profile_new_from_lcms_profile (target_profile, NULL);
 
@@ -778,30 +795,36 @@ static cmsHPROFILE *
 gimp_color_profile_new_srgb_internal (void)
 {
   cmsHPROFILE profile;
-  cmsCIExyY   d65_srgb_specs = { 0.3127, 0.3290, 1.0 };
 
-  cmsCIExyYTRIPLE srgb_primaries_pre_quantized =
+  /* white point is D65 from the sRGB specs */
+  cmsCIExyY whitepoint = { 0.3127, 0.3290, 1.0 };
+
+  /* primaries are ITU‐R BT.709‐5 (xYY), which are also the primaries
+   * from the sRGB specs, modified to properly account for hexadecimal
+   * quantization during the profile making process.
+   */
+  cmsCIExyYTRIPLE primaries =
     {
-      { 0.639998686, 0.330010138, 1.0 },
-      { 0.300003784, 0.600003357, 1.0 },
-      { 0.150002046, 0.059997204, 1.0 }
+      /* R { 0.6400, 0.3300, 1.0 }, */
+      /* G { 0.3000, 0.6000, 1.0 }, */
+      /* B { 0.1500, 0.0600, 1.0 }  */
+      /* R */ { 0.639998686, 0.330010138, 1.0 },
+      /* G */ { 0.300003784, 0.600003357, 1.0 },
+      /* B */ { 0.150002046, 0.059997204, 1.0 }
     };
 
   cmsFloat64Number srgb_parameters[5] =
     { 2.4, 1.0 / 1.055,  0.055 / 1.055, 1.0 / 12.92, 0.04045 };
 
-  cmsToneCurve *srgb_parametric_curve =
-    cmsBuildParametricToneCurve (NULL, 4, srgb_parameters);
+  cmsToneCurve *curve[3];
 
-  cmsToneCurve *tone_curve[3];
+  /* sRGB curve */
+  curve[0] = curve[1] = curve[2] = cmsBuildParametricToneCurve (NULL, 4,
+                                                                srgb_parameters);
 
-  tone_curve[0] = tone_curve[1] = tone_curve[2] = srgb_parametric_curve;
+  profile = cmsCreateRGBProfile (&whitepoint, &primaries, curve);
 
-  profile = cmsCreateRGBProfile (&d65_srgb_specs,
-                                 &srgb_primaries_pre_quantized,
-                                 tone_curve);
-
-  cmsFreeToneCurve (srgb_parametric_curve);
+  cmsFreeToneCurve (curve[0]);
 
   gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
                               "GIMP built-in sRGB");
@@ -928,14 +951,14 @@ gimp_color_profile_new_linear_rgb_internal (void)
       /* B */ { 0.150002046, 0.059997204, 1.0 }
     };
 
+  cmsToneCurve *curve[3];
+
   /* linear light */
-  cmsToneCurve *linear[3];
+  curve[0] = curve[1] = curve[2] = cmsBuildGamma (NULL, 1.0);
 
-  linear[0] = linear[1] = linear[2] = cmsBuildGamma (NULL, 1.0);
+  profile = cmsCreateRGBProfile (&whitepoint, &primaries, curve);
 
-  /* create the profile, cleanup, and return */
-  profile = cmsCreateRGBProfile (&whitepoint, &primaries, linear);
-  cmsFreeToneCurve (linear[0]);
+  cmsFreeToneCurve (curve[0]);
 
   gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
                               "GIMP built-in Linear RGB");
@@ -985,7 +1008,9 @@ static cmsHPROFILE *
 gimp_color_profile_new_adobe_rgb_internal (void)
 {
   cmsHPROFILE profile;
-  cmsCIExyY   d65_srgb_specs = { 0.3127, 0.3290, 1.0 };
+
+  /* white point is D65 from the sRGB specs */
+  cmsCIExyY whitepoint = { 0.3127, 0.3290, 1.0 };
 
   /* AdobeRGB1998 and sRGB have the same white point.
    *
@@ -993,28 +1018,27 @@ gimp_color_profile_new_adobe_rgb_internal (void)
    * hexadecimal rounding these primaries don't make a profile that
    * matches the original.
    *
-   *  cmsCIExyYTRIPLE adobe_primaries = {
+   *  cmsCIExyYTRIPLE primaries = {
    *    { 0.6400, 0.3300, 1.0 },
    *    { 0.2100, 0.7100, 1.0 },
    *    { 0.1500, 0.0600, 1.0 }
    *  };
    */
-  cmsCIExyYTRIPLE adobe_compatible_primaries_prequantized =
+  cmsCIExyYTRIPLE primaries =
     {
-      {0.639996511, 0.329996864, 1.0},
-      {0.210005295, 0.710004866, 1.0},
-      {0.149997606, 0.060003644, 1.0}
+      { 0.639996511, 0.329996864, 1.0 },
+      { 0.210005295, 0.710004866, 1.0 },
+      { 0.149997606, 0.060003644, 1.0 }
     };
 
-  cmsToneCurve *tone_curve[3];
-  cmsToneCurve *gamma22[3];
+  cmsToneCurve *curve[3];
 
-  gamma22[0] = gamma22[1] = gamma22[2] = cmsBuildGamma (NULL, 2.19921875);
-  tone_curve[0] = tone_curve[1] = tone_curve[2] = gamma22[0];
+  /* gamma 2.2 */
+  curve[0] = curve[1] = curve[2] = cmsBuildGamma (NULL, 2.19921875);
 
-  profile = cmsCreateRGBProfile (&d65_srgb_specs,
-                                 &adobe_compatible_primaries_prequantized,
-                                 tone_curve);
+  profile = cmsCreateRGBProfile (&whitepoint, &primaries, curve);
+
+  cmsFreeToneCurve (curve[0]);
 
   gimp_color_profile_set_tag (profile, cmsSigProfileDescriptionTag,
                               "Compatible with Adobe RGB (1998)");
