@@ -1093,7 +1093,8 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
                                              dest_buffer,
                                              GEGL_RECTANGLE (0, 0, 0, 0),
                                              renderer->profile_dest_format,
-                                             renderer->profile_transform);
+                                             renderer->profile_transform,
+                                             NULL);
         }
       else
         {
@@ -1142,7 +1143,8 @@ gimp_view_render_temp_buf_to_surface (GimpViewRenderer *renderer,
                                              dest_buffer,
                                              GEGL_RECTANGLE (x, y, 0, 0),
                                              renderer->profile_dest_format,
-                                             renderer->profile_transform);
+                                             renderer->profile_transform,
+                                             NULL);
         }
       else
         {

@@ -1115,7 +1115,7 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
       gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
                                        dest_buffer, NULL, dest_profile,
                                        GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                       TRUE);
+                                       TRUE, NULL);
     }
   else
     {
