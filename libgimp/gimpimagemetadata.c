@@ -185,13 +185,6 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
               gimp_image_set_unit (image_ID, unit);
             }
         }
-
-      gimp_image_set_attributes (image_ID, attributes);
-      if (layer_ID > 0)
-        {
-          gimp_item_set_attributes (layer_ID, attributes);
-        }
-
     }
 
   if (flags & GIMP_METADATA_LOAD_COLORSPACE)
@@ -199,27 +192,21 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
       GimpColorProfile *profile = gimp_image_get_color_profile (image_ID);
       GimpAttribute *attribute = NULL;
 
-      attribute = gimp_attributes_get_attribute (attributes, "Exif.Iop.InteroperabilityIndex");
-      if (attribute)
-         value = gimp_attribute_get_string (attribute);
-      value = gexiv2_metadata_get_tag_interpreted_string (metadata,
-                                                          "Exif.Iop.InteroperabilityIndex");
-
-      if (! g_strcmp0 (value, "R03"))
+      if (! profile)
         {
-          GimpMetadataColorspace colorspace;
+          GimpAttributesColorspace colorspace;
 
-          colorspace = gimp_metadata_get_colorspace (metadata);
+          colorspace = gimp_attributes_get_colorspace (attributes);
 
           switch (colorspace)
             {
-            case GIMP_METADATA_COLORSPACE_UNSPECIFIED:
-            case GIMP_METADATA_COLORSPACE_UNCALIBRATED:
-            case GIMP_METADATA_COLORSPACE_SRGB:
+            case GIMP_ATTRIBUTES_COLORSPACE_UNSPECIFIED:
+            case GIMP_ATTRIBUTES_COLORSPACE_UNCALIBRATED:
+            case GIMP_ATTRIBUTES_COLORSPACE_SRGB:
               /* use sRGB, a NULL profile will do the right thing  */
               break;
 
-            case GIMP_METADATA_COLORSPACE_ADOBERGB:
+            case GIMP_ATTRIBUTES_COLORSPACE_ADOBERGB:
               profile = gimp_color_profile_new_adobe_rgb ();
               break;
             }
@@ -232,7 +219,13 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
         g_object_unref (profile);
     }
 
-      g_object_unref (attributes);
+    gimp_image_set_attributes (image_ID, attributes);
+    if (layer_ID > 0)
+      {
+        gimp_item_set_attributes (layer_ID, attributes);
+      }
+
+    g_object_unref (attributes);
 }
 
 /**
@@ -242,7 +235,7 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
  * @suggested_flags: Suggested default values for the @flags passed to
  *                   gimp_image_metadata_save_finish()
  *
- * Gets the image metadata for saving it using
+ * Gets the image attributes for saving using
  * gimp_image_metadata_save_finish().
  *
  * The @suggested_flags are determined from what kind of metadata
@@ -250,7 +243,7 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
  * value for GIMP_METADATA_SAVE_THUMBNAIL is determined by whether
  * there was a thumbnail in the previously imported image.
  *
- * Returns: The image's metadata, prepared for saving.
+ * Returns: The image's attributes, prepared for saving.
  *
  * Since: 2.10
  */

@@ -25,23 +25,35 @@
 
 G_BEGIN_DECLS
 
-gboolean               gimp_attributes_get_resolution            (GimpAttributes *attributes,
-                                                                  gdouble        *xres,
-                                                                  gdouble        *yres,
-                                                                  GimpUnit       *unit);
+typedef enum
+{
+  GIMP_ATTRIBUTES_COLORSPACE_UNSPECIFIED,
+  GIMP_ATTRIBUTES_COLORSPACE_UNCALIBRATED,
+  GIMP_ATTRIBUTES_COLORSPACE_SRGB,
+  GIMP_ATTRIBUTES_COLORSPACE_ADOBERGB
+} GimpAttributesColorspace;
 
-void                   gimp_attributes_set_resolution            (GimpAttributes *attributes,
-                                                                  gdouble         xres,
-                                                                  gdouble         yres,
-                                                                  GimpUnit        unit);
+gboolean                 gimp_attributes_get_resolution            (GimpAttributes           *attributes,
+                                                                    gdouble                  *xres,
+                                                                    gdouble                  *yres,
+                                                                    GimpUnit                 *unit);
 
-void                   gimp_attributes_set_bits_per_sample       (GimpAttributes *attributes,
-                                                                  gint            bps);
+void                     gimp_attributes_set_resolution            (GimpAttributes           *attributes,
+                                                                    gdouble                   xres,
+                                                                    gdouble                   yres,
+                                                                    GimpUnit                  unit);
 
-void                   gimp_attributes_set_pixel_size            (GimpAttributes *attributes,
-                                                                  gint            width,
-                                                                  gint            height);
+void                     gimp_attributes_set_bits_per_sample       (GimpAttributes           *attributes,
+                                                                    gint                      bps);
 
+void                     gimp_attributes_set_pixel_size            (GimpAttributes           *attributes,
+                                                                    gint                      width,
+                                                                    gint                      height);
+
+GimpAttributesColorspace gimp_attributes_get_colorspace            (GimpAttributes           *attributes);
+
+void                     gimp_attributes_set_colorspace            (GimpAttributes           *attributes,
+                                                                    GimpAttributesColorspace  colorspace);
 G_END_DECLS
 
 #endif

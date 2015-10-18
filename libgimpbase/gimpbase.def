@@ -29,6 +29,7 @@ EXPORTS
 	gimp_attributes_duplicate
 	gimp_attributes_from_metadata
 	gimp_attributes_get_attribute
+	gimp_attributes_get_colorspace
 	gimp_attributes_get_resolution
 	gimp_attributes_get_table
 	gimp_attributes_has_tag_type
@@ -41,6 +42,7 @@ EXPORTS
 	gimp_attributes_has_attribute
 	gimp_attributes_serialize
 	gimp_attributes_set_bits_per_sample
+	gimp_attributes_set_colorspace
 	gimp_attributes_set_pixel_size
 	gimp_attributes_set_resolution
 	gimp_attributes_size
@@ -112,8 +114,6 @@ EXPORTS
 	gimp_memsize_to_string
 	gimp_merge_type_get_type
 	gimp_message_handler_type_get_type
-	gimp_metadata_deserialize
-	gimp_metadata_duplicate
 	gimp_metadata_get_colorspace
 	gimp_metadata_get_resolution
 	gimp_metadata_is_tag_supported

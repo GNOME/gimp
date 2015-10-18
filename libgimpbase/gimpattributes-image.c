@@ -280,3 +280,192 @@ gimp_attributes_set_pixel_size (GimpAttributes *attributes,
   g_snprintf (buffer, sizeof (buffer), "%d", height);
   gimp_attributes_new_attribute (attributes, "Exif.Image.ImageLength", buffer, TYPE_LONG);
 }
+
+/**
+ * gimp_metadata_get_colorspace:
+ * @attributes: Ab #GimpAttributes instance.
+ *
+ * Returns values based on Exif.Photo.ColorSpace, Xmp.exif.ColorSpace,
+ * Exif.Iop.InteroperabilityIndex, Exif.Nikon3.ColorSpace,
+ * Exif.Canon.ColorSpace of @metadata.
+ *
+ * Return value: The colorspace specified by above tags.
+ *
+ * Since: 2.10
+ */
+GimpAttributesColorspace
+gimp_attributes_get_colorspace (GimpAttributes *attributes)
+{
+  glong          exif_cs   = -1;
+  GimpAttribute *attribute = NULL;
+  GValue         val;
+
+  g_return_val_if_fail (GIMP_IS_ATTRIBUTES (attributes),
+                        GIMP_ATTRIBUTES_COLORSPACE_UNSPECIFIED);
+
+  /*  the logic here was mostly taken from darktable and libkexiv2  */
+
+  attribute = gimp_attributes_get_attribute (attributes, "Exif.Photo.ColorSpace");
+  if ( ! attribute)
+    {
+      attribute = gimp_attributes_get_attribute (attributes, "Xmp.exif.ColorSpace");
+    }
+
+  if (attribute)
+    {
+      if (gimp_attribute_get_value_type (attribute) == TYPE_LONG || gimp_attribute_get_value_type (attribute) == TYPE_SLONG)
+        {
+          val = gimp_attribute_get_value (attribute);
+          exif_cs = g_value_get_long (&val);
+        }
+    }
+
+  if (exif_cs == 0x01)
+    {
+      return GIMP_ATTRIBUTES_COLORSPACE_SRGB;
+    }
+  else if (exif_cs == 0x02)
+    {
+      return GIMP_ATTRIBUTES_COLORSPACE_ADOBERGB;
+    }
+  else
+    {
+      if (exif_cs == 0xffff)
+        {
+          gchar *iop_index;
+
+          attribute = gimp_attributes_get_attribute (attributes, "Exif.Iop.InteroperabilityIndex");
+          if (attribute)
+            iop_index = gimp_attribute_get_string (attribute);
+
+          if (! g_strcmp0 (iop_index, "R03"))
+            {
+              g_free (iop_index);
+
+              return GIMP_ATTRIBUTES_COLORSPACE_ADOBERGB;
+            }
+          else if (! g_strcmp0 (iop_index, "R98"))
+            {
+              g_free (iop_index);
+
+              return GIMP_ATTRIBUTES_COLORSPACE_SRGB;
+            }
+
+          g_free (iop_index);
+        }
+
+      attribute = gimp_attributes_get_attribute (attributes, "Exif.Nikon3.ColorSpace");
+      if (attribute)
+        {
+          if (gimp_attribute_get_value_type (attribute) == TYPE_LONG || gimp_attribute_get_value_type (attribute) == TYPE_SLONG)
+            {
+              glong nikon_cs;
+
+              val = gimp_attribute_get_value (attribute);
+              nikon_cs = g_value_get_long (&val);
+
+              if (nikon_cs == 0x01)
+                {
+                  return GIMP_ATTRIBUTES_COLORSPACE_SRGB;
+                }
+              else if (nikon_cs == 0x02)
+                {
+                  return GIMP_ATTRIBUTES_COLORSPACE_ADOBERGB;
+                }
+            }
+        }
+
+      attribute = gimp_attributes_get_attribute (attributes, "Exif.Canon.ColorSpace");
+      if (attribute)
+        {
+          if (gimp_attribute_get_value_type (attribute) == TYPE_LONG || gimp_attribute_get_value_type (attribute) == TYPE_SLONG)
+            {
+              glong canon_cs;
+
+              val = gimp_attribute_get_value (attribute);
+              canon_cs = g_value_get_long (&val);
+
+              if (canon_cs == 0x01)
+                {
+                  return GIMP_ATTRIBUTES_COLORSPACE_SRGB;
+                }
+              else if (canon_cs == 0x02)
+                {
+                  return GIMP_ATTRIBUTES_COLORSPACE_ADOBERGB;
+                }
+            }
+        }
+
+      if (exif_cs == 0xffff)
+        return GIMP_ATTRIBUTES_COLORSPACE_UNCALIBRATED;
+    }
+
+  return GIMP_ATTRIBUTES_COLORSPACE_UNSPECIFIED;
+}
+
+/**
+ * gimp_metadata_set_colorspace:
+ * @metadata:   A #GimpMetadata instance.
+ * @colorspace: The color space.
+ *
+ * Sets Exif.Photo.ColorSpace, Xmp.exif.ColorSpace,
+ * Exif.Iop.InteroperabilityIndex, Exif.Nikon3.ColorSpace,
+ * Exif.Canon.ColorSpace of @metadata.
+ *
+ * Since: 2.10
+ */
+void
+gimp_attributes_set_colorspace (GimpAttributes           *attributes,
+                                GimpAttributesColorspace  colorspace)
+{
+  g_return_if_fail (GIMP_IS_ATTRIBUTES (attributes));
+
+  gimp_attributes_remove_attribute (attributes, "Exif.Photo.ColorSpace");
+  gimp_attributes_remove_attribute (attributes, "Xmp.exif.ColorSpace");
+  gimp_attributes_remove_attribute (attributes, "Exif.Iop.InteroperabilityIndex");
+
+  switch (colorspace)
+    {
+    case GIMP_ATTRIBUTES_COLORSPACE_UNSPECIFIED:
+      gimp_attributes_remove_attribute (attributes, "Exif.Nikon3.ColorSpace");
+      gimp_attributes_remove_attribute (attributes, "Exif.Canon.ColorSpace");
+      break;
+
+    case GIMP_ATTRIBUTES_COLORSPACE_UNCALIBRATED:
+      gimp_attributes_new_attribute (attributes, "Exif.Photo.ColorSpace", "0xffff", TYPE_LONG);
+      gimp_attributes_new_attribute (attributes, "Xmp.exif.ColorSpace", "0xffff", TYPE_LONG);
+      break;
+
+    case GIMP_ATTRIBUTES_COLORSPACE_SRGB:
+      gimp_attributes_new_attribute (attributes, "Exif.Photo.ColorSpace", "0x01", TYPE_LONG);
+      gimp_attributes_new_attribute (attributes, "Xmp.exif.ColorSpace", "0x01", TYPE_LONG);
+      gimp_attributes_new_attribute (attributes, "Exif.Iop.InteroperabilityIndex", "R98", TYPE_ASCII);
+      if (gimp_attributes_has_attribute (attributes, "Exif.Nikon3.ColorSpace"))
+        {
+          gimp_attributes_remove_attribute (attributes, "Exif.Nikon3.ColorSpace");
+          gimp_attributes_new_attribute (attributes, "Exif.Nikon3.ColorSpace", "0x01", TYPE_LONG);
+        }
+      if (gimp_attributes_has_attribute (attributes, "Exif.Canon.ColorSpace"))
+        {
+          gimp_attributes_remove_attribute (attributes, "Exif.Canon.ColorSpace");
+          gimp_attributes_new_attribute (attributes, "Exif.Canon.ColorSpace", "0x01", TYPE_LONG);
+        }
+      break;
+
+    case GIMP_ATTRIBUTES_COLORSPACE_ADOBERGB:
+      gimp_attributes_new_attribute (attributes, "Exif.Photo.ColorSpace", "0x02", TYPE_LONG);
+      gimp_attributes_new_attribute (attributes, "Xmp.exif.ColorSpace", "0x02", TYPE_LONG);
+      gimp_attributes_new_attribute (attributes, "Exif.Iop.InteroperabilityIndex", "R03", TYPE_ASCII);
+      if (gimp_attributes_has_attribute (attributes, "Exif.Nikon3.ColorSpace"))
+        {
+          gimp_attributes_remove_attribute (attributes, "Exif.Nikon3.ColorSpace");
+          gimp_attributes_new_attribute (attributes, "Exif.Nikon3.ColorSpace", "0x02", TYPE_LONG);
+        }
+      if (gimp_attributes_has_attribute (attributes, "Exif.Canon.ColorSpace"))
+        {
+          gimp_attributes_remove_attribute (attributes, "Exif.Canon.ColorSpace");
+          gimp_attributes_new_attribute (attributes, "Exif.Canon.ColorSpace", "0x02", TYPE_LONG);
+        }
+      break;
+    }
+}
