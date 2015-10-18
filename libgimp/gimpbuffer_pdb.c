@@ -68,10 +68,12 @@ gimp_buffers_get_list (const gchar *filter,
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_buffers = return_vals[1].data.d_int32;
-      buffer_list = g_new (gchar *, *num_buffers + 1);
-      for (i = 0; i < *num_buffers; i++)
-        buffer_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
-      buffer_list[i] = NULL;
+      if (*num_buffers > 0)
+        {
+          buffer_list = g_new0 (gchar *, *num_buffers + 1);
+          for (i = 0; i < *num_buffers; i++)
+            buffer_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+        }
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

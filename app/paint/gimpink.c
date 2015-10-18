@@ -28,6 +28,7 @@
 
 #include "gegl/gimp-gegl-utils.h"
 
+#include "core/gimp-palettes.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
@@ -153,34 +154,41 @@ gimp_ink_paint (GimpPaintCore    *paint_core,
 
   switch (paint_state)
     {
-
     case GIMP_PAINT_STATE_INIT:
-
-      if (coords->x == last_coords.x &&
-          coords->y == last_coords.y)
         {
-          /*  start with new blobs if we're not interpolating  */
+          GimpContext *context = GIMP_CONTEXT (paint_options);
+          GimpRGB      foreground;
 
-          if (ink->start_blob)
+          gimp_context_get_foreground (context, &foreground);
+          gimp_palettes_add_color_history (context->gimp,
+                                           &foreground);
+
+          if (coords->x == last_coords.x &&
+              coords->y == last_coords.y)
             {
-              g_free (ink->start_blob);
-              ink->start_blob = NULL;
-            }
+              /*  start with new blobs if we're not interpolating  */
 
-          if (ink->last_blob)
+              if (ink->start_blob)
+                {
+                  g_free (ink->start_blob);
+                  ink->start_blob = NULL;
+                }
+
+              if (ink->last_blob)
+                {
+                  g_free (ink->last_blob);
+                  ink->last_blob = NULL;
+                }
+            }
+          else if (ink->last_blob)
             {
-              g_free (ink->last_blob);
-              ink->last_blob = NULL;
+              /*  save the start blob of the line for undo otherwise  */
+
+              if (ink->start_blob)
+                g_free (ink->start_blob);
+
+              ink->start_blob = gimp_blob_duplicate (ink->last_blob);
             }
-        }
-      else if (ink->last_blob)
-        {
-          /*  save the start blob of the line for undo otherwise  */
-
-          if (ink->start_blob)
-            g_free (ink->start_blob);
-
-          ink->start_blob = gimp_blob_duplicate (ink->last_blob);
         }
       break;
 

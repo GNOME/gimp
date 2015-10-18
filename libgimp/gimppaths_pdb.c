@@ -65,10 +65,12 @@ gimp_path_list (gint32  image_ID,
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       *num_paths = return_vals[1].data.d_int32;
-      path_list = g_new (gchar *, *num_paths + 1);
-      for (i = 0; i < *num_paths; i++)
-        path_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
-      path_list[i] = NULL;
+      if (*num_paths > 0)
+        {
+          path_list = g_new0 (gchar *, *num_paths + 1);
+          for (i = 0; i < *num_paths; i++)
+            path_list[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+        }
     }
 
   gimp_destroy_params (return_vals, nreturn_vals);

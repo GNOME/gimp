@@ -28,6 +28,8 @@ libappcore_a_sources = \
 	core-types.h				\
 	gimp.c					\
 	gimp.h					\
+	gimp-batch.c				\
+	gimp-batch.h				\
 	gimp-cairo.c				\
 	gimp-cairo.h				\
 	gimp-contexts.c				\

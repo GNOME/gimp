@@ -108,10 +108,10 @@ gimp_operation_burn_mode_process_pixels (gfloat              *in,
 
           for (b = RED; b < ALPHA; b++)
             {
-              gfloat comp = (1.0 - in[b]) / layer[b];
-              comp = CLAMP (1.0 - comp, 0.0, 1.0);
+              gfloat comp = 1.0 - (1.0 - in[b]) / layer[b];
 
               out[b] = comp * ratio + in[b] * (1.0 - ratio);
+              out[b] = CLAMP (out[b], 0.0, 1.0);
             }
         }
       else

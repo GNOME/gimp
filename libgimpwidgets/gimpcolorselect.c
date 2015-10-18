@@ -114,7 +114,7 @@ struct _GimpColorSelect
   GtkWidget           *xy_color;
   GtkWidget           *z_color;
 
-  gint                 pos[3];
+  gdouble              pos[3];
 
   ColorSelectFillType  z_color_fill;
   ColorSelectFillType  xy_color_fill;
@@ -489,35 +489,35 @@ gimp_color_select_update_values (GimpColorSelect *select)
   switch (select->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      selector->rgb.b = select->pos[0] / 255.0;
-      selector->rgb.g = select->pos[1] / 255.0;
-      selector->rgb.r = select->pos[2] / 255.0;
+      selector->rgb.g = select->pos[0];
+      selector->rgb.b = select->pos[1];
+      selector->rgb.r = select->pos[2];
       break;
     case COLOR_SELECT_GREEN:
-      selector->rgb.b = select->pos[0] / 255.0;
-      selector->rgb.r = select->pos[1] / 255.0;
-      selector->rgb.g = select->pos[2] / 255.0;
+      selector->rgb.r = select->pos[0];
+      selector->rgb.b = select->pos[1];
+      selector->rgb.g = select->pos[2];
       break;
     case COLOR_SELECT_BLUE:
-      selector->rgb.g = select->pos[0] / 255.0;
-      selector->rgb.r = select->pos[1] / 255.0;
-      selector->rgb.b = select->pos[2] / 255.0;
+      selector->rgb.r = select->pos[0];
+      selector->rgb.g = select->pos[1];
+      selector->rgb.b = select->pos[2];
       break;
 
     case COLOR_SELECT_HUE:
-      selector->hsv.v = select->pos[0] / 255.0;
-      selector->hsv.s = select->pos[1] / 255.0;
-      selector->hsv.h = select->pos[2] / 255.0;
+      selector->hsv.s = select->pos[0];
+      selector->hsv.v = select->pos[1];
+      selector->hsv.h = select->pos[2];
       break;
     case COLOR_SELECT_SATURATION:
-      selector->hsv.v = select->pos[0] / 255.0;
-      selector->hsv.h = select->pos[1] / 255.0;
-      selector->hsv.s = select->pos[2] / 255.0;
+      selector->hsv.h = select->pos[0];
+      selector->hsv.v = select->pos[1];
+      selector->hsv.s = select->pos[2];
       break;
     case COLOR_SELECT_VALUE:
-      selector->hsv.s = select->pos[0] / 255.0;
-      selector->hsv.h = select->pos[1] / 255.0;
-      selector->hsv.v = select->pos[2] / 255.0;
+      selector->hsv.h = select->pos[0];
+      selector->hsv.s = select->pos[1];
+      selector->hsv.v = select->pos[2];
       break;
 
     default:
@@ -551,35 +551,35 @@ gimp_color_select_update_pos (GimpColorSelect *select)
   switch (select->z_color_fill)
     {
     case COLOR_SELECT_RED:
-      select->pos[0] = ROUND (selector->rgb.b * 255.0);
-      select->pos[1] = ROUND (selector->rgb.g * 255.0);
-      select->pos[2] = ROUND (selector->rgb.r * 255.0);
+      select->pos[0] = CLAMP (selector->rgb.g, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->rgb.b, 0.0, 1.0);
+      select->pos[2] = CLAMP (selector->rgb.r, 0.0, 1.0);
       break;
     case COLOR_SELECT_GREEN:
-      select->pos[0] = ROUND (selector->rgb.b * 255.0);
-      select->pos[1] = ROUND (selector->rgb.r * 255.0);
-      select->pos[2] = ROUND (selector->rgb.g * 255.0);
+      select->pos[0] = CLAMP (selector->rgb.r, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->rgb.b, 0.0, 1.0);
+      select->pos[2] = CLAMP (selector->rgb.g, 0.0, 1.0);
       break;
     case COLOR_SELECT_BLUE:
-      select->pos[0] = ROUND (selector->rgb.g * 255.0);
-      select->pos[1] = ROUND (selector->rgb.r * 255.0);
-      select->pos[2] = ROUND (selector->rgb.b * 255.0);
+      select->pos[0] = CLAMP (selector->rgb.r, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->rgb.g, 0.0, 1.0);
+      select->pos[2] = CLAMP (selector->rgb.b, 0.0, 1.0);
       break;
 
     case COLOR_SELECT_HUE:
-      select->pos[0] = ROUND (selector->hsv.v * 255.0);
-      select->pos[1] = ROUND (selector->hsv.s * 255.0);
-      select->pos[2] = ROUND (selector->hsv.h * 255.0);
+      select->pos[0] = CLAMP (selector->hsv.s, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->hsv.v, 0.0, 1.0);
+      select->pos[2] = CLAMP (selector->hsv.h, 0.0, 1.0);
       break;
     case COLOR_SELECT_SATURATION:
-      select->pos[0] = ROUND (selector->hsv.v * 255.0);
-      select->pos[1] = ROUND (selector->hsv.h * 255.0);
-      select->pos[2] = ROUND (selector->hsv.s * 255.0);
+      select->pos[0] = CLAMP (selector->hsv.h, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->hsv.v, 0.0, 1.0);
+      select->pos[2] = CLAMP (selector->hsv.s, 0.0, 1.0);
       break;
     case COLOR_SELECT_VALUE:
-      select->pos[0] = ROUND (selector->hsv.s * 255.0);
-      select->pos[1] = ROUND (selector->hsv.h * 255.0);
-      select->pos[2] = ROUND (selector->hsv.v * 255.0);
+      select->pos[0] = CLAMP (selector->hsv.h, 0.0, 1.0);
+      select->pos[1] = CLAMP (selector->hsv.s, 0.0, 1.0);
+      select->pos[2] = CLAMP (selector->hsv.v, 0.0, 1.0);
       break;
 
     default:
@@ -630,8 +630,8 @@ gimp_color_select_xy_expose (GtkWidget       *widget,
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
 
-  x = ((allocation.width - 1) * select->pos[0]) / 255;
-  y = (allocation.height - 1) - ((allocation.height - 1) * select->pos[1]) / 255;
+  x = (allocation.width  - 1) * select->pos[0];
+  y = (allocation.height - 1) - (allocation.height - 1) * select->pos[1];
 
   cairo_move_to (cr, 0,                y + 0.5);
   cairo_line_to (cr, allocation.width, y + 0.5);
@@ -658,7 +658,7 @@ gimp_color_select_xy_events (GtkWidget       *widget,
                              GimpColorSelect *select)
 {
   GtkAllocation allocation;
-  gint          x, y;
+  gdouble       x, y;
 
   switch (event->type)
     {
@@ -712,12 +712,12 @@ gimp_color_select_xy_events (GtkWidget       *widget,
 
   if (allocation.width > 1 && allocation.height > 1)
     {
-      select->pos[0] = (x * 255) / (allocation.width - 1);
-      select->pos[1] = 255 - (y * 255) / (allocation.height - 1);
+      select->pos[0] = x  / (allocation.width - 1);
+      select->pos[1] = 1.0 - y / (allocation.height - 1);
     }
 
-  select->pos[0] = CLAMP (select->pos[0], 0, 255);
-  select->pos[1] = CLAMP (select->pos[1], 0, 255);
+  select->pos[0] = CLAMP (select->pos[0], 0.0, 1.0);
+  select->pos[1] = CLAMP (select->pos[1], 0.0, 1.0);
 
   gtk_widget_queue_draw (select->xy_color);
 
@@ -752,7 +752,7 @@ gimp_color_select_z_expose (GtkWidget       *widget,
   gdk_cairo_region (cr, event->region);
   cairo_clip (cr);
 
-  y = (allocation.height - 1) - ((allocation.height - 1) * select->pos[2]) / 255;
+  y = (allocation.height - 1) - (allocation.height - 1) * select->pos[2];
 
   cairo_move_to (cr, 0,                y + 0.5);
   cairo_line_to (cr, allocation.width, y + 0.5);
@@ -776,7 +776,7 @@ gimp_color_select_z_events (GtkWidget       *widget,
                             GimpColorSelect *select)
 {
   GtkAllocation allocation;
-  gint          z;
+  gdouble       z;
 
   switch (event->type)
     {
@@ -826,9 +826,9 @@ gimp_color_select_z_events (GtkWidget       *widget,
   gtk_widget_get_allocation (select->z_color, &allocation);
 
   if (allocation.height > 1)
-    select->pos[2] = 255 - (z * 255) / (allocation.height - 1);
+    select->pos[2] = 1.0 - z / (allocation.height - 1);
 
-  select->pos[2] = CLAMP (select->pos[2], 0, 255);
+  select->pos[2] = CLAMP (select->pos[2], 0.0, 1.0);
 
   gtk_widget_queue_draw (select->z_color);
 
@@ -852,43 +852,33 @@ gimp_color_select_image_fill (GtkWidget           *preview,
 
   gtk_widget_get_allocation (preview, &allocation);
 
-  csf.update = update_procs[fill_type];
-
+  csf.buffer = g_alloca (allocation.width * 3);
   csf.width  = allocation.width;
   csf.height = allocation.height;
   csf.hsv    = *hsv;
   csf.rgb    = *rgb;
-
-  csf.buffer = g_alloca (csf.width * 3);
+  csf.update = update_procs[fill_type];
 
   for (csf.y = 0; csf.y < csf.height; csf.y++)
     {
-      {
-        if (csf.update)
-          (* csf.update) (&csf);
+      if (csf.update)
+        (* csf.update) (&csf);
 
-        gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                                0, csf.y, csf.width, 1,
-                                GIMP_RGB_IMAGE,
-                                csf.buffer, csf.width * 3);
-      }
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                              0, csf.y, csf.width, 1,
+                              GIMP_RGB_IMAGE,
+                              csf.buffer, csf.width * 3);
     }
 }
 
 static void
 color_select_update_red (ColorSelectFill *csf)
 {
-  guchar *p;
+  guchar *p = csf->buffer;
   gint    i, r;
 
-  p = csf->buffer;
-
   r = (csf->height - csf->y + 1) * 255 / csf->height;
-
-  if (r < 0)
-    r = 0;
-  if (r > 255)
-    r = 255;
+  r = CLAMP (r, 0, 255);
 
   for (i = 0; i < csf->width; i++)
     {
@@ -901,17 +891,11 @@ color_select_update_red (ColorSelectFill *csf)
 static void
 color_select_update_green (ColorSelectFill *csf)
 {
-  guchar *p;
+  guchar *p = csf->buffer;
   gint    i, g;
 
-  p = csf->buffer;
-
   g = (csf->height - csf->y + 1) * 255 / csf->height;
-
-  if (g < 0)
-    g = 0;
-  if (g > 255)
-    g = 255;
+  g = CLAMP (g, 0, 255);
 
   for (i = 0; i < csf->width; i++)
     {
@@ -924,17 +908,11 @@ color_select_update_green (ColorSelectFill *csf)
 static void
 color_select_update_blue (ColorSelectFill *csf)
 {
-  guchar *p;
+  guchar *p = csf->buffer;
   gint    i, b;
 
-  p = csf->buffer;
-
   b = (csf->height - csf->y + 1) * 255 / csf->height;
-
-  if (b < 0)
-    b = 0;
-  if (b > 255)
-    b = 255;
+  b = CLAMP (b, 0, 255);
 
   for (i = 0; i < csf->width; i++)
     {
@@ -947,15 +925,12 @@ color_select_update_blue (ColorSelectFill *csf)
 static void
 color_select_update_hue (ColorSelectFill *csf)
 {
-  guchar *p;
+  guchar *p = csf->buffer;
   gfloat  h, f;
   gint    r, g, b;
   gint    i;
 
-  p = csf->buffer;
-
   h = csf->y * 360.0 / csf->height;
-
   h = CLAMP (360 - h, 0, 360);
 
   h /= 60;
@@ -1008,18 +983,12 @@ color_select_update_hue (ColorSelectFill *csf)
 static void
 color_select_update_saturation (ColorSelectFill *csf)
 {
-  guchar *p;
+  guchar *p = csf->buffer;
   gint    s;
   gint    i;
 
-  p = csf->buffer;
-
   s = csf->y * 255 / csf->height;
-
-  if (s < 0)
-    s = 0;
-  if (s > 255)
-    s = 255;
+  s = CLAMP (s, 0, 255);
 
   s = 255 - s;
 
@@ -1034,18 +1003,12 @@ color_select_update_saturation (ColorSelectFill *csf)
 static void
 color_select_update_value (ColorSelectFill *csf)
 {
-  guchar *p;
+  guchar *p = csf->buffer;
   gint    v;
   gint    i;
 
-  p = csf->buffer;
-
   v = csf->y * 255 / csf->height;
-
-  if (v < 0)
-    v = 0;
-  if (v > 255)
-    v = 255;
+  v = CLAMP (v, 0, 255);
 
   v = 255 - v;
 
@@ -1060,19 +1023,64 @@ color_select_update_value (ColorSelectFill *csf)
 static void
 color_select_update_red_green (ColorSelectFill *csf)
 {
-  guchar *p;
+  guchar *p = csf->buffer;
+  gint    i, g, b;
+  gfloat  r, dr;
+
+  b = ROUND (csf->rgb.b * 255.0);
+
+  g = (csf->height - csf->y + 1) * 255 / csf->height;
+  g = CLAMP (g, 0, 255);
+
+  r = 0;
+  dr = 255.0 / csf->width;
+
+  for (i = 0; i < csf->width; i++)
+    {
+      *p++ = r;
+      *p++ = g;
+      *p++ = b;
+
+      r += dr;
+    }
+}
+
+static void
+color_select_update_red_blue (ColorSelectFill *csf)
+{
+  guchar *p = csf->buffer;
+  gint    i, g, b;
+  gfloat  r, dr;
+
+  g = ROUND (csf->rgb.g * 255.0);
+
+  b = (csf->height - csf->y + 1) * 255 / csf->height;
+  b = CLAMP (b, 0, 255);
+
+  r = 0;
+  dr = 255.0 / csf->width;
+
+  for (i = 0; i < csf->width; i++)
+    {
+      *p++ = r;
+      *p++ = g;
+      *p++ = b;
+
+      r += dr;
+    }
+}
+
+static void
+color_select_update_green_blue (ColorSelectFill *csf)
+{
+  guchar *p = csf->buffer;
   gint    i, r, b;
   gfloat  g, dg;
 
-  p = csf->buffer;
+  r = ROUND (csf->rgb.r * 255.0);
 
-  b = ROUND (csf->rgb.b * 255.0);
-  r = (csf->height - csf->y + 1) * 255 / csf->height;
-
-  if (r < 0)
-    r = 0;
-  if (r > 255)
-    r = 255;
+  b = (csf->height - csf->y + 1) * 255 / csf->height;
+  b = CLAMP (b, 0, 255);
 
   g = 0;
   dg = 255.0 / csf->width;
@@ -1088,263 +1096,130 @@ color_select_update_red_green (ColorSelectFill *csf)
 }
 
 static void
-color_select_update_red_blue (ColorSelectFill *csf)
-{
-  guchar *p;
-  gint    i, r, g;
-  gfloat  b, db;
-
-  p = csf->buffer;
-
-  g = ROUND (csf->rgb.g * 255.0);
-  r = (csf->height - csf->y + 1) * 255 / csf->height;
-
-  if (r < 0)
-    r = 0;
-  if (r > 255)
-    r = 255;
-
-  b = 0;
-  db = 255.0 / csf->width;
-
-  for (i = 0; i < csf->width; i++)
-    {
-      *p++ = r;
-      *p++ = g;
-      *p++ = b;
-
-      b += db;
-    }
-}
-
-static void
-color_select_update_green_blue (ColorSelectFill *csf)
-{
-  guchar *p;
-  gint    i, g, r;
-  gfloat  b, db;
-
-  p = csf->buffer;
-
-  r = ROUND (csf->rgb.r * 255.0);
-  g = (csf->height - csf->y + 1) * 255 / csf->height;
-
-  if (g < 0)
-    g = 0;
-  if (g > 255)
-    g = 255;
-
-  b = 0;
-  db = 255.0 / csf->width;
-
-  for (i = 0; i < csf->width; i++)
-    {
-      *p++ = r;
-      *p++ = g;
-      *p++ = b;
-
-      b += db;
-    }
-}
-
-static void
 color_select_update_hue_saturation (ColorSelectFill *csf)
 {
-  guchar *p;
-  gfloat  h, v, s, ds;
+  guchar *p = csf->buffer;
+  gfloat  h, dh, s, v;
   gint    f;
   gint    i;
 
-  p = csf->buffer;
-
-  h = 360 - (csf->y * 360 / csf->height);
-
-  if (h < 0)
-    h = 0;
-  if (h > 359)
-    h = 359;
-
-  h /= 60;
-  f = (h - (int) h) * 255;
-
-  s = 0;
-  ds = 1.0 / csf->width;
-
   v = csf->hsv.v;
 
-  switch ((int) h)
+  s = (gfloat) csf->y / csf->height;
+  s = CLAMP (s, 0.0, 1.0);
+  s = 1.0 - s;
+
+  h = 0;
+  dh = 360.0 / csf->width;
+
+  for (i = 0; i < csf->width; i++)
     {
-    case 0:
-      for (i = 0; i < csf->width; i++)
+      f = ((h / 60) - (int) (h / 60)) * 255;
+
+      switch ((int) (h / 60))
         {
+        case 0:
           *p++ = v * 255;
           *p++ = v * (255 - (s * (255 - f)));
           *p++ = v * 255 * (1 - s);
-
-          s += ds;
-        }
-      break;
-    case 1:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 1:
           *p++ = v * (255 - s * f);
           *p++ = v * 255;
           *p++ = v * 255 * (1 - s);
-
-          s += ds;
-        }
-      break;
-    case 2:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 2:
           *p++ = v * 255 * (1 - s);
           *p++ = v *255;
           *p++ = v * (255 - (s * (255 - f)));
-
-          s += ds;
-        }
-      break;
-    case 3:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 3:
           *p++ = v * 255 * (1 - s);
           *p++ = v * (255 - s * f);
           *p++ = v * 255;
-
-          s += ds;
-        }
-      break;
-    case 4:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 4:
           *p++ = v * (255 - (s * (255 - f)));
           *p++ = v * (255 * (1 - s));
           *p++ = v * 255;
-
-          s += ds;
-        }
-      break;
-    case 5:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 5:
           *p++ = v * 255;
           *p++ = v * 255 * (1 - s);
           *p++ = v * (255 - s * f);
-
-          s += ds;
+          break;
         }
-      break;
+
+      h += dh;
     }
 }
 
 static void
 color_select_update_hue_value (ColorSelectFill *csf)
 {
-  guchar *p;
-  gfloat  h, v, dv, s;
+  guchar *p = csf->buffer;
+  gfloat  h, dh, s, v;
   gint    f;
   gint    i;
 
-  p = csf->buffer;
-
-  h = 360 - (csf->y * 360 / csf->height);
-
-  if (h < 0)
-    h = 0;
-  if (h > 359)
-    h = 359;
-
-  h /= 60;
-  f = (h - (int) h) * 255;
-
-  v = 0;
-  dv = 1.0 / csf->width;
-
   s = csf->hsv.s;
 
-  switch ((int) h)
+  v = (gfloat) csf->y / csf->height;
+  v = CLAMP (v, 0.0, 1.0);
+  v = 1.0 - v;
+
+  h = 0;
+  dh = 360.0 / csf->width;
+
+  for (i = 0; i < csf->width; i++)
     {
-    case 0:
-      for (i = 0; i < csf->width; i++)
+      f = ((h / 60) - (int) (h / 60)) * 255;
+
+      switch ((int) (h / 60))
         {
+        case 0:
           *p++ = v * 255;
           *p++ = v * (255 - (s * (255 - f)));
           *p++ = v * 255 * (1 - s);
-
-          v += dv;
-        }
-      break;
-    case 1:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 1:
           *p++ = v * (255 - s * f);
           *p++ = v * 255;
           *p++ = v * 255 * (1 - s);
-
-          v += dv;
-        }
-      break;
-    case 2:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 2:
           *p++ = v * 255 * (1 - s);
           *p++ = v *255;
           *p++ = v * (255 - (s * (255 - f)));
-
-          v += dv;
-        }
-      break;
-    case 3:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 3:
           *p++ = v * 255 * (1 - s);
           *p++ = v * (255 - s * f);
           *p++ = v * 255;
-
-          v += dv;
-        }
-      break;
-    case 4:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 4:
           *p++ = v * (255 - (s * (255 - f)));
           *p++ = v * (255 * (1 - s));
           *p++ = v * 255;
-
-          v += dv;
-        }
-      break;
-    case 5:
-      for (i = 0; i < csf->width; i++)
-        {
+          break;
+        case 5:
           *p++ = v * 255;
           *p++ = v * 255 * (1 - s);
           *p++ = v * (255 - s * f);
-
-          v += dv;
+          break;
         }
-      break;
+
+      h += dh;
     }
 }
 
 static void
 color_select_update_saturation_value (ColorSelectFill *csf)
 {
-  guchar *p;
-  gfloat  h, v, dv, s;
+  guchar *p = csf->buffer;
+  gfloat  h, s, ds, v;
   gint    f;
   gint    i;
-
-  p = csf->buffer;
-
-  s = (gfloat) csf->y / csf->height;
-
-  if (s < 0)
-    s = 0;
-  if (s > 1)
-    s = 1;
-
-  s = 1 - s;
 
   h = (gfloat) csf->hsv.h * 360.0;
   if (h >= 360)
@@ -1352,8 +1227,12 @@ color_select_update_saturation_value (ColorSelectFill *csf)
   h /= 60;
   f = (h - (gint) h) * 255;
 
-  v = 0;
-  dv = 1.0 / csf->width;
+  v = (gfloat) csf->y / csf->height;
+  v = CLAMP (v, 0.0, 1.0);
+  v = 1.0 - v;
+
+  s = 0;
+  ds = 1.0 / csf->width;
 
   switch ((gint) h)
     {
@@ -1364,7 +1243,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
           *p++ = v * (255 - (s * (255 - f)));
           *p++ = v * 255 * (1 - s);
 
-          v += dv;
+          s += ds;
         }
       break;
     case 1:
@@ -1374,7 +1253,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
           *p++ = v * 255;
           *p++ = v * 255 * (1 - s);
 
-          v += dv;
+          s += ds;
         }
       break;
     case 2:
@@ -1384,7 +1263,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
           *p++ = v *255;
           *p++ = v * (255 - (s * (255 - f)));
 
-          v += dv;
+          s += ds;
         }
       break;
     case 3:
@@ -1394,7 +1273,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
           *p++ = v * (255 - s * f);
           *p++ = v * 255;
 
-          v += dv;
+          s += ds;
         }
       break;
     case 4:
@@ -1404,7 +1283,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
           *p++ = v * (255 * (1 - s));
           *p++ = v * 255;
 
-          v += dv;
+          s += ds;
         }
       break;
     case 5:
@@ -1414,7 +1293,7 @@ color_select_update_saturation_value (ColorSelectFill *csf)
           *p++ = v * 255 * (1 - s);
           *p++ = v * (255 - s * f);
 
-          v += dv;
+          s += ds;
         }
       break;
     }

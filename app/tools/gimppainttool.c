@@ -634,7 +634,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
       core->cur_coords.x -= off_x;
       core->cur_coords.y -= off_y;
 
-      if (display == tool->display && (state & GDK_SHIFT_MASK))
+      if (display == tool->display && (state & GIMP_PAINT_TOOL_LINE_MASK))
         {
           /*  If shift is down and this is not the first paint stroke,
            *  draw a line.
@@ -703,7 +703,7 @@ gimp_paint_tool_oper_update (GimpTool         *tool,
           /* suggest drawing lines only after the first point is set
            */
           if (display == tool->display)
-            modifiers |= GDK_SHIFT_MASK;
+            modifiers |= GIMP_PAINT_TOOL_LINE_MASK;
 
           status = gimp_suggest_modifiers (paint_tool->status,
                                            modifiers & ~state,

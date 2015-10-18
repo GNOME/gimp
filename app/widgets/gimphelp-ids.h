@@ -433,6 +433,7 @@
 #define GIMP_HELP_TOOL_PRESET_DUPLICATE           "gimp-tool-preset-duplicate"
 #define GIMP_HELP_TOOL_PRESET_COPY_LOCATION       "gimp-tool-preset-copy-location"
 #define GIMP_HELP_TOOL_PRESET_SHOW_IN_FILE_MANAGER "gimp-tool-preset-show-in-file-manager"
+#define GIMP_HELP_TOOL_PRESET_RESTORE             "gimp-tool-preset-restore"
 #define GIMP_HELP_TOOL_PRESET_DELETE              "gimp-tool-preset-delete"
 #define GIMP_HELP_TOOL_PRESET_REFRESH             "gimp-tool-preset-refresh"
 

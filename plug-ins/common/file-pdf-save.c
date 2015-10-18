@@ -156,8 +156,8 @@ typedef enum
 typedef enum
 {
   SMA_RUN_MODE,
-  SMA_IMAGES,
   SMA_COUNT,
+  SMA_IMAGES,
   SMA_VECTORIZE,
   SMA_IGNORE_HIDDEN,
   SMA_APPLY_MASKS,
@@ -298,8 +298,8 @@ query (void)
   static GimpParamDef save_multi_args[] =
   {
     { GIMP_PDB_INT32,      "run-mode",     "Run mode" },
-    { GIMP_PDB_INT32ARRAY, "images",       "Input image for each page (An image can appear more than once)" },
     { GIMP_PDB_INT32,      "count",        "The amount of images entered (This will be the amount of pages). 1 <= count <= MAX_PAGE_COUNT" },
+    { GIMP_PDB_INT32ARRAY, "images",       "Input image for each page (An image can appear more than once)" },
     { GIMP_PDB_INT32,      "vectorize",    "Convert bitmaps to vector graphics where possible. TRUE or FALSE" },
     { GIMP_PDB_INT32,      "ignore-hidden","Omit hidden layers and layers with zero opacity. TRUE or FALSE" },
     { GIMP_PDB_INT32,      "apply-masks",  "Apply layer masks before saving. TRUE or FALSE (Keeping them will not change the output)" },

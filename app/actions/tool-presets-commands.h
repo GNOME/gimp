@@ -15,15 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __UNIQUE_H__
-#define __UNIQUE_H__
+#ifndef __TOOL_PRESETS_COMMANDS_H__
+#define __TOOL_PRESETS_COMMANDS_H__
 
 
-gboolean gimp_unique_open (const gchar **filenames,
-			   gboolean      as_new);
-
-gboolean gimp_unique_batch_run (const gchar  *batch_interpreter,
-                                const gchar **batch_commands);
+void   tool_presets_restore_cmd_callback (GtkAction *action,
+                                          gpointer   data);
 
 
-#endif /* __UNIQUE_H__ */
+#endif /* __TOOL_PRESETS_COMMANDS_H__ */

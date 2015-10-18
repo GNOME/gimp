@@ -954,14 +954,15 @@ gimp_dnd_data_source_remove (GimpDndType  data_type,
         {
           GtkTargetList  *new_list;
           GtkTargetEntry *targets;
-          gint            n_targets;
+          gint            n_targets_old;
+          gint            n_targets_new;
           gint            i;
 
-          targets = gtk_target_table_new_from_list (target_list, &n_targets);
+          targets = gtk_target_table_new_from_list (target_list, &n_targets_old);
 
           new_list = gtk_target_list_new (NULL, 0);
 
-          for (i = 0; i < n_targets; i++)
+          for (i = 0; i < n_targets_old; i++)
             {
               if (targets[i].info != data_type)
                 {
@@ -972,14 +973,16 @@ gimp_dnd_data_source_remove (GimpDndType  data_type,
                 }
             }
 
-          gtk_target_table_free (targets, n_targets);
+          gtk_target_table_free (targets, n_targets_old);
 
-          if (g_list_length (target_list->list) !=
-              g_list_length (new_list->list))
+          targets = gtk_target_table_new_from_list (new_list, &n_targets_new);
+          gtk_target_table_free (targets, n_targets_new);
+
+          if (n_targets_old != n_targets_new)
             {
               list_changed = TRUE;
 
-              if (new_list->list)
+              if (n_targets_new > 0)
                 gtk_drag_source_set_target_list (widget, new_list);
               else
                 gtk_drag_source_set_target_list (widget, NULL);

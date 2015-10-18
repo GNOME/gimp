@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-04-08 22:27+0000\n"
-"PO-Revision-Date: 2015-04-17 20:17+0200\n"
+"POT-Creation-Date: 2015-10-02 05:54+0000\n"
+"PO-Revision-Date: 2015-10-02 11:46+0200\n"
 "Last-Translator: Милош Поповић <gpopac@gmail.com>\n"
 "Language-Team: српски <gnom@prevod.org>\n"
 "Language: sr\n"
@@ -21,25 +21,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Gtranslator 2.91.6\n"
+"X-Generator: Gtranslator 2.91.7\n"
 
 #. procedure executed successfully
-#: ../libgimp/gimp.c:1106
+#: ../libgimp/gimp.c:1167
 msgid "success"
 msgstr "успешно"
 
 #. procedure execution failed
-#: ../libgimp/gimp.c:1110
+#: ../libgimp/gimp.c:1171
 msgid "execution error"
 msgstr "грешка при покретању"
 
 #. procedure called incorrectly
-#: ../libgimp/gimp.c:1114
+#: ../libgimp/gimp.c:1175
 msgid "calling error"
 msgstr "грешка при позивању"
 
 #. procedure execution cancelled
-#: ../libgimp/gimp.c:1118
+#: ../libgimp/gimp.c:1179
 msgid "cancelled"
 msgstr "отказано"
 
@@ -227,13 +227,42 @@ msgstr "Извези слику као "
 msgid "Font Selection"
 msgstr "Избор фонта"
 
-#: ../libgimp/gimpfontselectbutton.c:154
-msgid "Sans"
-msgstr "Безсерифни"
-
 #: ../libgimp/gimpgradientselectbutton.c:157
 msgid "Gradient Selection"
 msgstr "Избор прелива"
+
+#: ../libgimp/gimpimagemetadata.c:605
+msgid "Background"
+msgstr "Позадина"
+
+#: ../libgimp/gimpimagemetadata.c:796
+#, c-format
+msgid "Rotate %s?"
+msgstr "Да ли да ротирам %s?"
+
+#: ../libgimp/gimpimagemetadata.c:802
+msgid "_Keep Original"
+msgstr "_Задржи оригинал"
+
+#: ../libgimp/gimpimagemetadata.c:844
+msgid "Original"
+msgstr "Оригинал"
+
+#: ../libgimp/gimpimagemetadata.c:860
+msgid "Rotated"
+msgstr "Ротирана"
+
+#: ../libgimp/gimpimagemetadata.c:878
+msgid "This image contains Exif orientation metadata."
+msgstr "Ова слика садржи Егзиф податке за ротирање слике."
+
+#: ../libgimp/gimpimagemetadata.c:896
+msgid "Would you like to rotate the image?"
+msgstr "Желите ли да ротирате слику?"
+
+#: ../libgimp/gimpimagemetadata.c:908
+msgid "_Don't ask me again"
+msgstr "Н_е питај ме поново"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
@@ -241,38 +270,6 @@ msgstr "Избор прелива"
 #: ../libgimp/gimpmenu.c:462 ../libgimpwidgets/gimpintstore.c:251
 msgid "(Empty)"
 msgstr "(Празно)"
-
-#: ../libgimp/gimpmetadata.c:571
-msgid "Background"
-msgstr "Позадина"
-
-#: ../libgimp/gimpmetadata.c:762
-msgid "Rotate %s?"
-msgstr "Да ли да ротирам %s?"
-
-#: ../libgimp/gimpmetadata.c:768
-msgid "_Keep Original"
-msgstr "_Задржи оригинал"
-
-#: ../libgimp/gimpmetadata.c:810
-msgid "Original"
-msgstr "Оригинал"
-
-#: ../libgimp/gimpmetadata.c:826
-msgid "Rotated"
-msgstr "Ротирана"
-
-#: ../libgimp/gimpmetadata.c:844
-msgid "This image contains Exif orientation metadata."
-msgstr "Ова слика садржи Егзиф податке за ротирање слике."
-
-#: ../libgimp/gimpmetadata.c:862
-msgid "Would you like to rotate the image?"
-msgstr "Желите ли да ротирате слику?"
-
-#: ../libgimp/gimpmetadata.c:874
-msgid "_Don't ask me again"
-msgstr "Н_е питај ме поново"
 
 #: ../libgimp/gimppaletteselectbutton.c:139
 msgid "Palette Selection"
@@ -1212,21 +1209,39 @@ msgstr "Није успело повезивање на org.freedesktop.FileMana
 msgid "Calling ShowItems failed: "
 msgstr "Није успео позив ShowItems: "
 
-#: ../libgimpcolor/gimplcms.c:132
+#: ../libgimpcolor/gimpcolorprofile.c:234
+#, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "„%s“ не изгледа као ИЦЦ профил боја"
 
-#: ../libgimpcolor/gimplcms.c:153
+#: ../libgimpcolor/gimpcolorprofile.c:280
 msgid "Data does not appear to be an ICC color profile"
 msgstr "Ови подаци не изгледају као ИЦЦ профил боја"
 
-#: ../libgimpcolor/gimplcms.c:184
+#: ../libgimpcolor/gimpcolorprofile.c:337
 msgid "Could not save color profile to memory"
 msgstr "Не могу да сачувам профил боја у меморију"
 
-#: ../libgimpcolor/gimplcms.c:264
+#: ../libgimpcolor/gimpcolorprofile.c:524
 msgid "(unnamed profile)"
 msgstr "(неименовани профил)"
+
+#: ../libgimpcolor/gimpcolorprofile.c:566
+#, c-format
+#| msgid "Profile: %s"
+msgid "Model: %s"
+msgstr "Модел: %s"
+
+#: ../libgimpcolor/gimpcolorprofile.c:575
+#, c-format
+msgid "Manufacturer: %s"
+msgstr "Произвођач: %s"
+
+#: ../libgimpcolor/gimpcolorprofile.c:584
+#, c-format
+#| msgid "Copyright:"
+msgid "Copyright: %s"
+msgstr "Лиценца: %s"
 
 #. *
 #. * SECTION: gimpcolorconfig
@@ -1235,15 +1250,15 @@ msgstr "(неименовани профил)"
 #. *
 #. * Color management settings.
 #. *
-#: ../libgimpconfig/gimpcolorconfig.c:53
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "Mode of operation for color management."
 msgstr "Режим рада са управљањем бојама"
 
-#: ../libgimpconfig/gimpcolorconfig.c:55
+#: ../libgimpconfig/gimpcolorconfig.c:57
 msgid "The color profile of your (primary) monitor."
 msgstr "Профил боја за ваш (примарни) монитор."
 
-#: ../libgimpconfig/gimpcolorconfig.c:57
+#: ../libgimpconfig/gimpcolorconfig.c:60
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -1253,15 +1268,19 @@ msgstr ""
 "управника прозорима.  Подешени профил монитора се тада користи уколико ова "
 "могућност омане."
 
-#: ../libgimpconfig/gimpcolorconfig.c:61
-msgid "The default RGB working space color profile."
-msgstr "Подразумевано профил за РГБ радно окружење."
+#: ../libgimpconfig/gimpcolorconfig.c:65
+msgid ""
+"The preferred RGB working space color profile. It will be offered next to "
+"the built-in RGB profile when a color profile can be chosen."
+msgstr ""
+"Пожељни профил за РГБ радни простор. Он ће бити понуђен заједно са уграђеним "
+"РГБ профилом где год вам програм понуди избор профила."
 
-#: ../libgimpconfig/gimpcolorconfig.c:63
+#: ../libgimpconfig/gimpcolorconfig.c:69
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK профил боја за превођење између РГБ и CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:65
+#: ../libgimpconfig/gimpcolorconfig.c:72
 msgid ""
 "The color profile to use for soft proofing from your image's color space to "
 "some other color space, including soft proofing to a printer or other output "
@@ -1271,7 +1290,7 @@ msgstr ""
 "боја, укључујући приказ слике каква ће бити одштампана на штампачу или "
 "приказана на неком другом уређају."
 
-#: ../libgimpconfig/gimpcolorconfig.c:69
+#: ../libgimpconfig/gimpcolorconfig.c:77
 msgid ""
 "How colors are converted from your image's color space to your display "
 "device. Relative colorimetric is usually the best choice. Unless you use a "
@@ -1284,14 +1303,14 @@ msgstr ""
 "матрице), озбор перцептивног приказа ће вам заправо дати релативни "
 "колориметријски приказ."
 
-#: ../libgimpconfig/gimpcolorconfig.c:74
+#: ../libgimpconfig/gimpcolorconfig.c:84
 msgid ""
 "Do use black point compensation (unless you know you have a reason not to). "
 msgstr ""
 "Користи компензацију црне тачке (осним уколико немате разлога да је не "
 "користите)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:76
+#: ../libgimpconfig/gimpcolorconfig.c:88
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
@@ -1301,14 +1320,14 @@ msgstr ""
 "крајњег уређаја (обично монитора). Испробајте их све и одаберите оно што вам "
 "највише одговара."
 
-#: ../libgimpconfig/gimpcolorconfig.c:80
+#: ../libgimpconfig/gimpcolorconfig.c:93
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
 "Пробајте приказ са и без компензације црне тачке и одаберите оно што вам "
 "највише одговара."
 
-#: ../libgimpconfig/gimpcolorconfig.c:83
+#: ../libgimpconfig/gimpcolorconfig.c:97
 msgid ""
 "When enabled, the print simulation will mark colors which can not be "
 "represented in the target color space."
@@ -1316,9 +1335,23 @@ msgstr ""
 "Уколико укључите ову могућност, опонашање штампе ће означити боје које неће "
 "бити приказане у циљном окружењу боја."
 
-#: ../libgimpconfig/gimpcolorconfig.c:86
+#: ../libgimpconfig/gimpcolorconfig.c:101
 msgid "The color to use for marking colors which are out of gamut."
 msgstr "Боја за означавање боја које се налазе ван гамута."
+
+#: ../libgimpconfig/gimpcolorconfig.c:408
+#: ../libgimpconfig/gimpcolorconfig.c:511
+#, c-format
+#| msgid "Color proof filter using ICC color profile"
+msgid "Color profile '%s' is not for RGB color space."
+msgstr "Профил боје „%s“ није у РГБ радном простору."
+
+#: ../libgimpconfig/gimpcolorconfig.c:439
+#: ../libgimpconfig/gimpcolorconfig.c:552
+#, c-format
+#| msgid "Color proof filter using ICC color profile"
+msgid "Color profile '%s' is not for CMYK color space."
+msgstr "Профил боје „%s“ није у ЦМИК радном простору."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgctxt "color-management-mode"
@@ -1389,7 +1422,7 @@ msgstr "приликом обраде израза „%s“: %s"
 #: ../libgimpconfig/gimpconfig-iface.c:658
 #: ../libgimpconfig/gimpconfig-iface.c:671 ../libgimpconfig/gimpscanner.c:734
 #: ../libgimpconfig/gimpscanner.c:816
-#: ../libgimpwidgets/gimpcolorprofilestore.c:655
+#: ../libgimpwidgets/gimpcolorprofilestore.c:703
 msgid "fatal parse error"
 msgstr "кобна грешка при обради"
 
@@ -1405,10 +1438,13 @@ msgid "Error writing to '%s': %s"
 msgstr "Грешка при упису у „%s“: %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:184
+#, c-format
+#| msgid "Could not create temporary file for '%s': "
 msgid "Could not create temporary file for '%s': "
-msgstr "Не могу да да направим привремену датотеку „%s“: %s"
+msgstr "Не могу да да направим привремену датотеку за „%s“ "
 
 #: ../libgimpconfig/gimpconfigwriter.c:761
+#, c-format
 msgid "Error writing '%s': %s"
 msgstr "Грешка при упису „%s“: %s"
 
@@ -1419,6 +1455,7 @@ msgstr "неисправна UTF-8 реч"
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpscanner.c:606
+#, c-format
 msgid "expected 'yes' or 'no' for boolean token, got '%s'"
 msgstr ""
 "очекиван је одговор типа „да“ или „не“ за логички израз, а добијен је „%s“"
@@ -1452,6 +1489,7 @@ msgid "Not loaded"
 msgstr "Није учитано"
 
 #: ../libgimpthumb/gimpthumb-utils.c:153
+#, c-format
 msgid ""
 "Cannot determine a valid thumbnails directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
@@ -1494,22 +1532,40 @@ msgstr "_Црна"
 msgid "_White"
 msgstr "Б_ела"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:107
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:104
 msgid "All files (*.*)"
 msgstr "Све датотеке (*.*)"
 
-#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:112
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:109
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC профили боја (*.icc, *.icm)"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:216
+#: ../libgimpwidgets/gimppatheditor.c:248
+msgid "Folder"
+msgstr "Директоријум"
+
+#: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:221
+msgid "Not a regular file."
+msgstr "Није уобичајена датотека."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:145
 msgid "Select color profile from disk..."
 msgstr "Изабери профил боја са диска..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:279
+#: ../libgimpwidgets/gimpcolorprofilestore.c:317
 msgctxt "profile"
 msgid "None"
 msgstr "Није изабран"
+
+#: ../libgimpwidgets/gimpcolorprofileview.c:174
+msgid "Manufacturer: "
+msgstr "Произвођач:"
+
+#: ../libgimpwidgets/gimpcolorprofileview.c:186
+#| msgid "Copyright:"
+msgid "Copyright: "
+msgstr "Лиценца:"
 
 #: ../libgimpwidgets/gimpcolorscales.c:109
 msgid "Scales"
@@ -1535,28 +1591,28 @@ msgstr ""
 msgid "HTML _notation:"
 msgstr "ХТМЛ _запис:"
 
-#: ../libgimpwidgets/gimpfileentry.c:146
+#: ../libgimpwidgets/gimpfileentry.c:150
 msgid "Show file location in the file manager"
 msgstr "Приказује путању до датотеке у управнику датотека"
 
-#: ../libgimpwidgets/gimpfileentry.c:220
+#: ../libgimpwidgets/gimpfileentry.c:227
 msgid "Open a file selector to browse your folders"
 msgstr "Отвара изборник датотека за разгледање фасцикли"
 
-#: ../libgimpwidgets/gimpfileentry.c:221
+#: ../libgimpwidgets/gimpfileentry.c:228
 msgid "Open a file selector to browse your files"
 msgstr "Отвара изборник датотека за разгледање датотека"
 
-#: ../libgimpwidgets/gimpfileentry.c:376
+#: ../libgimpwidgets/gimpfileentry.c:395
 #, c-format
 msgid "Can't show file in file manager: %s"
 msgstr "Не могу да прикажем датотеку у управнику датотека: %s"
 
-#: ../libgimpwidgets/gimpfileentry.c:403
+#: ../libgimpwidgets/gimpfileentry.c:422
 msgid "Select Folder"
 msgstr "Изаберите фасциклу"
 
-#: ../libgimpwidgets/gimpfileentry.c:405
+#: ../libgimpwidgets/gimpfileentry.c:424
 msgid "Select File"
 msgstr "Изаберите датотеку"
 
@@ -1617,10 +1673,6 @@ msgstr[3] "Изабрана је %d страница"
 #: ../libgimpwidgets/gimppatheditor.c:239
 msgid "Writable"
 msgstr "Уписиво"
-
-#: ../libgimpwidgets/gimppatheditor.c:248
-msgid "Folder"
-msgstr "Директоријум"
 
 #: ../libgimpwidgets/gimppickbutton.c:131
 msgid ""
@@ -1922,11 +1974,11 @@ msgstr "Жута"
 msgid "Black"
 msgstr "Црна"
 
-#: ../modules/color-selector-cmyk.c:396
+#: ../modules/color-selector-cmyk.c:374
 msgid "Profile: (none)"
 msgstr "Профил: (ни један)"
 
-#: ../modules/color-selector-cmyk.c:411
+#: ../modules/color-selector-cmyk.c:386
 #, c-format
 msgid "Profile: %s"
 msgstr "Профил: %s"
@@ -1984,13 +2036,11 @@ msgstr "Притиснуто је дугме %d"
 msgid "Button %d Release"
 msgstr "Пуштено је дугме %d"
 
-#: ../modules/controller-dx-dinput.c:442
-#: ../modules/controller-linux-input.c:90
+#: ../modules/controller-dx-dinput.c:442 ../modules/controller-linux-input.c:90
 msgid "X Move Left"
 msgstr "Померање лево по X оси"
 
-#: ../modules/controller-dx-dinput.c:445
-#: ../modules/controller-linux-input.c:91
+#: ../modules/controller-dx-dinput.c:445 ../modules/controller-linux-input.c:91
 msgid "X Move Right"
 msgstr "Померање десно по X оси"
 
@@ -2002,13 +2052,11 @@ msgstr "Удаљавање по Y оси"
 msgid "Y Move Near"
 msgstr "Приближавање по Y оси"
 
-#: ../modules/controller-dx-dinput.c:460
-#: ../modules/controller-linux-input.c:94
+#: ../modules/controller-dx-dinput.c:460 ../modules/controller-linux-input.c:94
 msgid "Z Move Up"
 msgstr "Померање горе по Z оси"
 
-#: ../modules/controller-dx-dinput.c:463
-#: ../modules/controller-linux-input.c:95
+#: ../modules/controller-dx-dinput.c:463 ../modules/controller-linux-input.c:95
 msgid "Z Move Down"
 msgstr "Померање доле по Z оси"
 
@@ -2021,8 +2069,7 @@ msgstr "Удаљавање по X оси"
 msgid "X Axis Tilt Near"
 msgstr "Приближавање по X оси"
 
-#: ../modules/controller-dx-dinput.c:478
-#: ../modules/controller-linux-input.c:99
+#: ../modules/controller-dx-dinput.c:478 ../modules/controller-linux-input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Нагиб десно по Y оси"
 
@@ -2353,31 +2400,31 @@ msgstr "Филтер за управљање бојом екрана који к
 msgid "Color Management"
 msgstr "Управљање бојама"
 
-#: ../modules/display-filter-lcms.c:180
-msgid "None"
-msgstr "Ниједан"
-
-#: ../modules/display-filter-lcms.c:201
+#: ../modules/display-filter-lcms.c:184
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr "Овај филтер се подешава унутар Гимпових поставки за управљање бојама."
 
-#: ../modules/display-filter-lcms.c:215
+#: ../modules/display-filter-lcms.c:198
 msgid "Mode of operation:"
 msgstr "Режим радње:"
 
-#: ../modules/display-filter-lcms.c:222
+#: ../modules/display-filter-lcms.c:205
 msgid "Image profile:"
 msgstr "Профил за слику:"
 
-#: ../modules/display-filter-lcms.c:230
+#: ../modules/display-filter-lcms.c:213
 msgid "Monitor profile:"
 msgstr "Профил за монитор"
 
-#: ../modules/display-filter-lcms.c:238
+#: ../modules/display-filter-lcms.c:221
 msgid "Print simulation profile:"
 msgstr "Профил за опонашање штампе:"
+
+#: ../modules/display-filter-lcms.c:390
+msgid "None"
+msgstr "Ниједан"
 
 #: ../modules/display-filter-proof.c:93
 msgid "Color proof filter using ICC color profile"
@@ -2387,21 +2434,27 @@ msgstr "Филтер пробе у боји који користи ICC проф
 msgid "Color Proof"
 msgstr "Проба у боји"
 
-#: ../modules/display-filter-proof.c:289
+#: ../modules/display-filter-proof.c:296
 msgid "Choose an ICC Color Profile"
 msgstr "Изаберите ICC профил боја"
 
-#: ../modules/display-filter-proof.c:304
+#: ../modules/display-filter-proof.c:316
 msgid "_Profile:"
 msgstr "_Профил:"
 
-#: ../modules/display-filter-proof.c:310
+#: ../modules/display-filter-proof.c:322
 msgid "_Intent:"
 msgstr "_Намера:"
 
-#: ../modules/display-filter-proof.c:315
+#: ../modules/display-filter-proof.c:327
 msgid "_Black Point Compensation"
 msgstr "Замена за _црну тачку"
+
+#~ msgid "Sans"
+#~ msgstr "Безсерифни"
+
+#~ msgid "The default RGB working space color profile."
+#~ msgstr "Подразумевано профил за РГБ радно окружење."
 
 #~ msgctxt "icon-type"
 #~ msgid "Stock ID"

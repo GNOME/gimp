@@ -57,8 +57,8 @@ GimpTabStyle      gimp_preview_tab_style_to_icon   (GimpTabStyle          tab_st
 const gchar     * gimp_get_mod_string              (GdkModifierType       modifiers);
 gchar           * gimp_suggest_modifiers           (const gchar          *message,
                                                     GdkModifierType       modifiers,
-                                                    const gchar          *shift_format,
-                                                    const gchar          *control_format,
+                                                    const gchar          *extend_selection_format,
+                                                    const gchar          *toggle_behavior_format,
                                                     const gchar          *alt_format);
 GimpChannelOps    gimp_modifiers_to_channel_op     (GdkModifierType       modifiers);
 GdkModifierType   gimp_replace_virtual_modifiers   (GdkModifierType       modifiers);

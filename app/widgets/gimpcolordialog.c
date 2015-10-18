@@ -221,8 +221,6 @@ gimp_color_dialog_response (GtkDialog *gtk_dialog,
       break;
 
     case GTK_RESPONSE_OK:
-      gimp_color_history_add_clicked (NULL, dialog);
-
       gimp_color_selection_get_color (GIMP_COLOR_SELECTION (dialog->selection),
                                       &color);
 

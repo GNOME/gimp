@@ -273,7 +273,7 @@ photocopy (GimpDrawable *drawable,
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   GimpPixelRgn *pr;
-  gint          width, height;
+  gint          x, y, width, height;
   gint          bytes;
   gboolean      has_alpha;
   guchar       *dest1;
@@ -288,7 +288,6 @@ photocopy (GimpDrawable *drawable,
   gdouble       bd_p2[5], bd_m2[5];
   gdouble      *val_p1, *val_m1, *vp1, *vm1;
   gdouble      *val_p2, *val_m2, *vp2, *vm2;
-  gint          x1, y1;
   gint          i, j;
   gint          row, col;
   gint          terms;
@@ -306,17 +305,14 @@ photocopy (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_position (preview, &x, &y);
       gimp_preview_get_size (preview, &width, &height);
     }
   else
     {
-      gint x2, y2;
-
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-      width  = x2 - x1;
-      height = y2 - y1;
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x, &y, &width, &height))
+        return;
     }
 
   bytes     = drawable->bpp;
@@ -334,14 +330,14 @@ photocopy (GimpDrawable *drawable,
   max_progress = width * height * 3;
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-                       x1, y1, width, height, FALSE, FALSE);
+                       x, y, width, height, FALSE, FALSE);
 
   for (pr = gimp_pixel_rgns_register (1, &src_rgn);
        pr != NULL;
        pr = gimp_pixel_rgns_process (pr))
     {
       guchar *src_ptr  = src_rgn.data;
-      guchar *dest_ptr = dest1 + (src_rgn.y - y1) * width + (src_rgn.x - x1);
+      guchar *dest_ptr = dest1 + (src_rgn.y - y) * width + (src_rgn.x - x);
 
       for (row = 0; row < src_rgn.h; row++)
         {
@@ -529,8 +525,8 @@ photocopy (GimpDrawable *drawable,
   ramp_up   = compute_ramp (dest1, dest2, width * height, 1.0 - pvals.pct_white, 0);
 
   /* Initialize the pixel regions. */
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, width, height,
+  gimp_pixel_rgn_init (&src_rgn, drawable, x, y, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable, x, y, width, height,
                        (preview == NULL), TRUE);
 
   pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
@@ -539,8 +535,8 @@ photocopy (GimpDrawable *drawable,
     {
       guchar  *src_ptr  = src_rgn.data;
       guchar  *dest_ptr = dest_rgn.data;
-      guchar  *blur_ptr = dest1 + (src_rgn.y - y1) * width + (src_rgn.x - x1);
-      guchar  *avg_ptr  = dest2 + (src_rgn.y - y1) * width + (src_rgn.x - x1);
+      guchar  *blur_ptr = dest1 + (src_rgn.y - y) * width + (src_rgn.x - x);
+      guchar  *avg_ptr  = dest2 + (src_rgn.y - y) * width + (src_rgn.x - x);
       gdouble  diff, mult;
       gdouble  lightness = 0.0;
 
@@ -621,7 +617,7 @@ photocopy (GimpDrawable *drawable,
       /*  merge the shadow, update the drawable  */
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+      gimp_drawable_update (drawable->drawable_id, x, y, width, height);
     }
 
   /*  free up buffers  */
@@ -859,7 +855,7 @@ photocopy_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, NULL);
+  preview = gimp_drawable_preview_new_from_drawable_id (drawable->drawable_id);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 

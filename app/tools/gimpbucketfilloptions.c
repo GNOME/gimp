@@ -221,9 +221,8 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   GtkWidget       *scale;
   GtkWidget       *combo;
   gchar           *str;
-  GdkModifierType  toggle_mask;
-
-  toggle_mask = gimp_get_toggle_behavior_mask ();
+  GdkModifierType  extend_mask = gimp_get_extend_selection_mask ();
+  GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
 
   /*  fill type  */
   str = g_strdup_printf (_("Fill Type  (%s)"),
@@ -242,7 +241,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 
   /*  fill selection  */
   str = g_strdup_printf (_("Affected Area  (%s)"),
-                         gimp_get_mod_string (GDK_SHIFT_MASK));
+                         gimp_get_mod_string (extend_mask));
   frame = gimp_prop_boolean_radio_frame_new (config, "fill-selection",
                                              str,
                                              _("Fill whole selection"),

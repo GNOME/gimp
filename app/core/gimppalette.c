@@ -382,6 +382,58 @@ gimp_palette_get_n_colors (GimpPalette *palette)
   return palette->n_colors;
 }
 
+void
+gimp_palette_move_entry (GimpPalette      *palette,
+                         GimpPaletteEntry *entry,
+                         gint              position)
+{
+  GList *list;
+  gint   pos = 0;
+
+  g_return_if_fail (GIMP_IS_PALETTE (palette));
+  g_return_if_fail (entry != NULL);
+
+  if (g_list_find (palette->colors, entry))
+    {
+      pos = entry->position;
+
+      if (entry->position == position)
+        return;
+
+      entry->position = position;
+      palette->colors = g_list_remove (palette->colors,
+                                       entry);
+      palette->colors = g_list_insert (palette->colors,
+                                       entry, position);
+
+      if (pos < position)
+        {
+          for (list = g_list_nth (palette->colors, pos);
+               list && pos < position;
+               list = g_list_next (list))
+            {
+              entry = (GimpPaletteEntry *) list->data;
+
+              entry->position = pos++;
+            }
+        }
+      else
+        {
+          for (list = g_list_nth (palette->colors, position + 1);
+               list && position < pos;
+               list = g_list_next (list))
+            {
+              entry = (GimpPaletteEntry *) list->data;
+
+              entry->position += 1;
+              pos--;
+            }
+        }
+
+      gimp_data_dirty (GIMP_DATA (palette));
+    }
+}
+
 GimpPaletteEntry *
 gimp_palette_add_entry (GimpPalette   *palette,
                         gint           position,

@@ -116,8 +116,13 @@ gimp-color-picker-cursors.gresource.xml: $(CURSOR_IMAGES) Makefile.am
 	  echo '<?xml version="1.0" encoding="UTF-8"?>' > $@; \
 	  echo '<gresources>' >> $@; \
 	  echo '  <gresource prefix="/org/gimp/color-picker-cursors">' >> $@; \
-	  for image in $(CURSOR_IMAGES); do \
+	  for image in $(COLOR_PICKER_IMAGES); do \
 	    echo "    <file preprocess=\"to-pixdata\">$$image</file>" >> $@; \
+	  done; \
+	  echo '  </gresource>' >> $@; \
+	  echo '  <gresource prefix="/org/gimp/color-picker-cursors-raw">' >> $@; \
+	  for image in $(COLOR_PICKER_IMAGES); do \
+	    echo "    <file>$$image</file>" >> $@; \
 	  done; \
 	  echo '  </gresource>' >> $@; \
 	  echo '</gresources>' >> $@ )

@@ -1393,7 +1393,8 @@ gimp_free_select_tool_modifier_key (GimpTool        *tool,
       priv->constrain_angle = ((state & gimp_get_constrain_behavior_mask ()) ?
                                TRUE : FALSE);
 
-      priv->supress_handles = state & GDK_SHIFT_MASK ? TRUE : FALSE;
+      priv->supress_handles = ((state & gimp_get_extend_selection_mask ()) ?
+                               TRUE : FALSE);
 
       gimp_draw_tool_resume (draw_tool);
     }

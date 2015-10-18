@@ -47,8 +47,6 @@ libapp_sources = \
 	about.h			\
 	app.c			\
 	app.h			\
-	batch.c			\
-	batch.h			\
 	errors.c		\
 	errors.h		\
 	language.c		\

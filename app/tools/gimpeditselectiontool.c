@@ -964,11 +964,17 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
   GimpTransformType translate_type;
 
   if (kevent->state & GDK_MOD1_MASK)
-    translate_type = GIMP_TRANSFORM_TYPE_SELECTION;
+    {
+      translate_type = GIMP_TRANSFORM_TYPE_SELECTION;
+    }
   else if (kevent->state & gimp_get_toggle_behavior_mask ())
-    translate_type = GIMP_TRANSFORM_TYPE_PATH;
+    {
+      translate_type = GIMP_TRANSFORM_TYPE_PATH;
+    }
   else
-    translate_type = GIMP_TRANSFORM_TYPE_LAYER;
+    {
+      translate_type = GIMP_TRANSFORM_TYPE_LAYER;
+    }
 
   return gimp_edit_selection_tool_translate (tool, kevent, translate_type,
                                              display);
@@ -980,15 +986,16 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
                                     GimpTransformType  translate_type,
                                     GimpDisplay       *display)
 {
-  gint               inc_x     = 0;
-  gint               inc_y     = 0;
+  gint               inc_x       = 0;
+  gint               inc_y       = 0;
   GimpUndo          *undo;
-  gboolean           push_undo = TRUE;
-  GimpImage         *image     = gimp_display_get_image (display);
-  GimpItem          *item      = NULL;
-  GimpTranslateMode  edit_mode = GIMP_TRANSLATE_MODE_MASK;
-  GimpUndoType       undo_type = GIMP_UNDO_GROUP_MASK;
-  const gchar       *undo_desc = NULL;
+  gboolean           push_undo   = TRUE;
+  GimpImage         *image       = gimp_display_get_image (display);
+  GimpItem          *item        = NULL;
+  GimpTranslateMode  edit_mode   = GIMP_TRANSLATE_MODE_MASK;
+  GimpUndoType       undo_type   = GIMP_UNDO_GROUP_MASK;
+  const gchar       *undo_desc   = NULL;
+  GdkModifierType    extend_mask = gimp_get_extend_selection_mask ();
   gint               velocity;
 
   /* bail out early if it is not an arrow key event */
@@ -1005,43 +1012,43 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
   velocity = MAX (1.0, velocity);
 
   /*  check the event queue for key events with the same modifier mask
-   *  as the current event, allowing only GDK_SHIFT_MASK to vary between
+   *  as the current event, allowing only extend_mask to vary between
    *  them.
    */
   inc_x = process_event_queue_keys (kevent,
                                     GDK_KEY_Left,
-                                    kevent->state | GDK_SHIFT_MASK,
+                                    kevent->state | extend_mask,
                                     -1 * velocity,
 
                                     GDK_KEY_Left,
-                                    kevent->state & ~GDK_SHIFT_MASK,
+                                    kevent->state & ~extend_mask,
                                     -1,
 
                                     GDK_KEY_Right,
-                                    kevent->state | GDK_SHIFT_MASK,
+                                    kevent->state | extend_mask,
                                     1 * velocity,
 
                                     GDK_KEY_Right,
-                                    kevent->state & ~GDK_SHIFT_MASK,
+                                    kevent->state & ~extend_mask,
                                     1,
 
                                     0);
 
   inc_y = process_event_queue_keys (kevent,
                                     GDK_KEY_Up,
-                                    kevent->state | GDK_SHIFT_MASK,
+                                    kevent->state | extend_mask,
                                     -1 * velocity,
 
                                     GDK_KEY_Up,
-                                    kevent->state & ~GDK_SHIFT_MASK,
+                                    kevent->state & ~extend_mask,
                                     -1,
 
                                     GDK_KEY_Down,
-                                    kevent->state | GDK_SHIFT_MASK,
+                                    kevent->state | extend_mask,
                                     1 * velocity,
 
                                     GDK_KEY_Down,
-                                    kevent->state & ~GDK_SHIFT_MASK,
+                                    kevent->state & ~extend_mask,
                                     1,
 
                                     0);

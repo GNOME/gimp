@@ -46,6 +46,7 @@
 #include "core/gimpprojection.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -551,7 +552,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
           {
             /* User clicked on a handle, so we move it */
 
-            if (state & GDK_SHIFT_MASK)
+            if (state & gimp_get_extend_selection_mask ())
               {
                 /* Multiple selection */
 
@@ -595,7 +596,7 @@ gimp_cage_tool_button_press (GimpTool            *tool,
           {
             /* User clicked on a handle, so we move it */
 
-            if (state & GDK_SHIFT_MASK)
+            if (state & gimp_get_extend_selection_mask ())
               {
                 /* Multiple selection */
 
@@ -690,7 +691,7 @@ gimp_cage_tool_button_release (GimpTool              *tool,
                                    abs (ct->selection_start_x - coords->x),
                                    abs (ct->selection_start_y - coords->y) };
 
-            if (state & GDK_SHIFT_MASK)
+            if (state & gimp_get_extend_selection_mask ())
               {
                 gimp_cage_config_select_add_area (ct->config,
                                                   GIMP_CAGE_MODE_CAGE_CHANGE,
@@ -720,7 +721,7 @@ gimp_cage_tool_button_release (GimpTool              *tool,
                                    abs (ct->selection_start_x - coords->x),
                                    abs (ct->selection_start_y - coords->y) };
 
-            if (state & GDK_SHIFT_MASK)
+            if (state & gimp_get_extend_selection_mask ())
               {
                 gimp_cage_config_select_add_area (ct->config,
                                                   GIMP_CAGE_MODE_DEFORM, area);

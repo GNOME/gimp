@@ -109,9 +109,9 @@ gimp_operation_grain_extract_mode_process_pixels (gfloat              *in,
           for (b = RED; b < ALPHA; b++)
             {
               gfloat comp = in[b] - layer[b] + 0.5;
-              comp = CLAMP (comp, 0.0, 1.0);
 
               out[b] = comp * ratio + in[b] * (1.0 - ratio);
+              out[b] = CLAMP (out[b], 0.0, 1.0);
             }
         }
       else

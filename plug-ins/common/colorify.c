@@ -222,7 +222,7 @@ colorify (GimpDrawable *drawable,
       guchar *src;
 
       src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
-                                        &width, &height, &bytes);
+                                          &width, &height, &bytes);
       for (i = 0; i < width * height; i++)
         colorify_func (src + i * bytes, src + i * bytes, bytes, NULL);
 
@@ -272,7 +272,7 @@ colorify_dialog (GimpDrawable *drawable)
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_zoom_preview_new (drawable);
+  preview = gimp_zoom_preview_new_from_drawable_id (drawable->drawable_id);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

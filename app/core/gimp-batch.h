@@ -15,17 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __BATCH_H__
-#define __BATCH_H__
-
-#ifndef GIMP_APP_GLUE_COMPILATION
-#error You must not #include "batch.h" from an app/ subdir
-#endif
+#ifndef __GIMP_BATCH_H__
+#define __GIMP_BATCH_H__
 
 
-void   batch_run (Gimp         *gimp,
-                  const gchar  *batch_interpreter,
-                  const gchar **batch_commands);
+void   gimp_batch_run (Gimp         *gimp,
+                       const gchar  *batch_interpreter,
+                       const gchar **batch_commands);
 
 
-#endif /* __BATCH_H__ */
+#endif /* __GIMP_BATCH_H__ */

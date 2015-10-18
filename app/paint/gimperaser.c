@@ -25,6 +25,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "core/gimp.h"
+#include "core/gimp-palettes.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdynamics.h"
 #include "core/gimpimage.h"
@@ -88,6 +89,22 @@ gimp_eraser_paint (GimpPaintCore    *paint_core,
 {
   switch (paint_state)
     {
+    case GIMP_PAINT_STATE_INIT:
+        {
+          if (! gimp_drawable_has_alpha (drawable))
+            {
+              /* Erasing on a drawable without alpha is equivalent to
+               * drawing with background color. So let's save history. */
+              GimpContext *context = GIMP_CONTEXT (paint_options);
+              GimpRGB      background;
+
+              gimp_context_get_background (context, &background);
+              gimp_palettes_add_color_history (context->gimp,
+                                               &background);
+
+            }
+        }
+      break;
     case GIMP_PAINT_STATE_MOTION:
       gimp_eraser_motion (paint_core, drawable, paint_options, coords);
       break;

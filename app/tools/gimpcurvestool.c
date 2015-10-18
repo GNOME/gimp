@@ -237,7 +237,7 @@ gimp_curves_tool_button_release (GimpTool              *tool,
   GimpCurvesTool   *c_tool = GIMP_CURVES_TOOL (tool);
   GimpCurvesConfig *config = c_tool->config;
 
-  if (state & GDK_SHIFT_MASK)
+  if (state & gimp_get_extend_selection_mask ())
     {
       GimpCurve *curve = config->curve[config->channel];
       gdouble    value = c_tool->picked_color[config->channel];
@@ -300,33 +300,41 @@ gimp_curves_tool_oper_update (GimpTool         *tool,
                               GimpDisplay      *display)
 {
   GimpColorPickMode  mode;
-  const gchar       *status;
+  gchar             *status      = NULL;
+  GdkModifierType    extend_mask = gimp_get_extend_selection_mask ();
+  GdkModifierType    toggle_mask = gimp_get_toggle_behavior_mask ();
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
 
   gimp_tool_pop_status (tool, display);
 
-  if (state & GDK_SHIFT_MASK)
+  if (state & extend_mask)
     {
       mode   = GIMP_COLOR_PICK_MODE_PALETTE;
-      status = _("Click to add a control point");
+      status = g_strdup (_("Click to add a control point"));
     }
-  else if (state & gimp_get_toggle_behavior_mask ())
+  else if (state & toggle_mask)
     {
       mode   = GIMP_COLOR_PICK_MODE_PALETTE;
-      status = _("Click to add control points to all channels");
+      status = g_strdup (_("Click to add control points to all channels"));
     }
   else
     {
       mode   = GIMP_COLOR_PICK_MODE_NONE;
-      status = _("Click to locate on curve (try Shift, Ctrl)");
+      status = gimp_suggest_modifiers (_("Click to locate on curve"),
+                                       (extend_mask | toggle_mask) & ~state,
+                                       _("%s: add control point"),
+                                       _("%s: add control points to all channels"),
+                                       NULL);
     }
 
   GIMP_COLOR_TOOL (tool)->pick_mode = mode;
 
   if (proximity)
     gimp_tool_push_status (tool, display, "%s", status);
+
+  g_free (status);
 }
 
 static void

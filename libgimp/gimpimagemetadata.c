@@ -1,7 +1,7 @@
 /* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-2000 Peter Mattis and Spencer Kimball
  *
- * gimpmetadata.c
+ * gimpimagemetadata.c
  *
  * This library is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -27,7 +27,7 @@
 
 #include "gimp.h"
 #include "gimpui.h"
-#include "gimpmetadata.h"
+#include "gimpimagemetadata.h"
 #include "libgimpbase/gimpbase.h"
 
 #include "libgimp-intl.h"
@@ -196,7 +196,7 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
 
   if (flags & GIMP_METADATA_LOAD_COLORSPACE)
     {
-      gchar *value;
+      GimpColorProfile *profile = gimp_image_get_color_profile (image_ID);
       GimpAttribute *attribute = NULL;
 
       attribute = gimp_attributes_get_attribute (attributes, "Exif.Iop.InteroperabilityIndex");
@@ -207,21 +207,29 @@ gimp_image_metadata_load_finish (gint32                 image_ID,
 
       if (! g_strcmp0 (value, "R03"))
         {
-          GimpColorProfile *profile = gimp_image_get_color_profile (image_ID);
+          GimpMetadataColorspace colorspace;
 
-          if (! profile)
+          colorspace = gimp_metadata_get_colorspace (metadata);
+
+          switch (colorspace)
             {
-              /* honor the R03 InteroperabilityIndex only if the
-               * image didn't contain an ICC profile
-               */
+            case GIMP_METADATA_COLORSPACE_UNSPECIFIED:
+            case GIMP_METADATA_COLORSPACE_UNCALIBRATED:
+            case GIMP_METADATA_COLORSPACE_SRGB:
+              /* use sRGB, a NULL profile will do the right thing  */
+              break;
+
+            case GIMP_METADATA_COLORSPACE_ADOBERGB:
               profile = gimp_color_profile_new_adobe_rgb ();
-              gimp_image_set_color_profile (image_ID, profile);
+              break;
             }
 
-          g_object_unref (profile);
+          if (profile)
+            gimp_image_set_color_profile (image_ID, profile);
         }
 
-      g_free (value);
+      if (profile)
+        g_object_unref (profile);
     }
 
       g_object_unref (attributes);

@@ -26,6 +26,7 @@ AM_CPPFLAGS = \
 	$(GTK_CFLAGS)	  \
 	$(GEGL_CFLAGS)    \
 	$(OPENEXR_CFLAGS) \
+	$(LCMS_CFLAGS) \
 	-I$(includedir)
 
 libexec_PROGRAMS = file-exr
@@ -48,4 +49,5 @@ file_exr_LDADD = \
 	$(GEGL_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
+	$(LCMS_LIBS)		\
 	$(file_exr_RC)

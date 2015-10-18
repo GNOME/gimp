@@ -67,6 +67,10 @@ GimpData         * gimp_palette_get_standard    (GimpContext      *context);
 GList            * gimp_palette_get_colors      (GimpPalette      *palette);
 gint               gimp_palette_get_n_colors    (GimpPalette      *palette);
 
+void               gimp_palette_move_entry      (GimpPalette      *palette,
+                                                 GimpPaletteEntry *entry,
+                                                 gint              position);
+
 GimpPaletteEntry * gimp_palette_add_entry       (GimpPalette      *palette,
                                                  gint              position,
                                                  const gchar      *name,

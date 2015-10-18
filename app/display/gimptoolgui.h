@@ -72,6 +72,7 @@ void          gimp_tool_gui_set_viewable           (GimpToolGui      *gui,
 GtkWidget   * gimp_tool_gui_get_dialog             (GimpToolGui      *gui);
 GtkWidget   * gimp_tool_gui_get_vbox               (GimpToolGui      *gui);
 
+gboolean      gimp_tool_gui_get_visible            (GimpToolGui      *gui);
 void          gimp_tool_gui_show                   (GimpToolGui      *gui);
 void          gimp_tool_gui_hide                   (GimpToolGui      *gui);
 

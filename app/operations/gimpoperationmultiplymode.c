@@ -109,9 +109,8 @@ gimp_operation_multiply_mode_process_pixels (gfloat              *in,
           for (b = RED; b < ALPHA; b++)
             {
               gfloat comp = layer[b] * in[b];
-              comp = CLAMP (comp, 0.0, 1.0);
-
               out[b] = comp * ratio + in[b] * (1.0 - ratio);
+              out[b] = CLAMP (out[b], 0.0, 1.0);
             }
         }
       else

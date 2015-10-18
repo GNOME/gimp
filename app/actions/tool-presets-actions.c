@@ -35,6 +35,7 @@
 #include "actions.h"
 #include "data-commands.h"
 #include "tool-presets-actions.h"
+#include "tool-presets-commands.h"
 
 #include "gimp-intl.h"
 
@@ -68,6 +69,12 @@ static const GimpActionEntry tool_presets_actions[] =
     NC_("tool-presets-action", "Show tool preset file location in the file manager"),
     G_CALLBACK (data_show_in_file_manager_cmd_callback),
     GIMP_HELP_TOOL_PRESET_SHOW_IN_FILE_MANAGER },
+
+  { "tool-presets-restore", "document-revert",
+    NC_("tool-presets-action", "_Restore Tool Preset"), NULL,
+    NC_("tool-presets-action", "Restore this tool preset"),
+    G_CALLBACK (tool_presets_restore_cmd_callback),
+    GIMP_HELP_TOOL_PRESET_RESTORE },
 
   { "tool-presets-delete", "edit-delete",
     NC_("tool-presets-action", "_Delete Tool Preset"), NULL,
@@ -133,6 +140,7 @@ tool_presets_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("tool-presets-duplicate",            tool_preset && GIMP_DATA_GET_CLASS (data)->duplicate);
   SET_SENSITIVE ("tool-presets-copy-location",        file);
   SET_SENSITIVE ("tool-presets-show-in-file-manager", file);
+  SET_SENSITIVE ("tool-presets-restore",              tool_preset);
   SET_SENSITIVE ("tool-presets-delete",               tool_preset && gimp_data_is_deletable (data));
 
 #undef SET_SENSITIVE

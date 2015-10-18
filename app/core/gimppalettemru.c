@@ -241,7 +241,16 @@ gimp_palette_mru_add (GimpPaletteMru *mru,
  doit:
 
   if (found)
-    gimp_palette_delete_entry (palette, found);
-
-  found = gimp_palette_add_entry (palette, 0, _("History Color"), color);
+    {
+      gimp_palette_move_entry (palette, found, 0);
+      /* Even though they are nearly the same color, let's make them exactly
+      * equal. */
+      gimp_palette_set_entry_color (palette,
+                                    0,
+                                    color);
+    }
+  else
+    {
+      gimp_palette_add_entry (palette, 0, _("History Color"), color);
+    }
 }

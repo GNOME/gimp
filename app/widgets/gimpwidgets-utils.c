@@ -552,66 +552,67 @@ gimp_get_mod_string (GdkModifierType modifiers)
 #define BUF_SIZE 100
 /**
  * gimp_suggest_modifiers:
- * @message: initial text for the message
- * @modifiers: bit mask of modifiers that should be suggested
- * @shift_format: optional format string for the Shift modifier
- * @control_format: optional format string for the Ctrl modifier
- * @alt_format: optional format string for the Alt modifier
+ * @message:                 initial text for the message
+ * @modifiers:               bit mask of modifiers that should be suggested
+ * @extend_selection_format: optional format string for the
+ *                           "Extend selection" modifier
+ * @toggle_behavior_format:  optional format string for the
+ *                           "Toggle behavior" modifier
+ * @alt_format:              optional format string for the Alt modifier
  *
  * Utility function to build a message suggesting to use some
  * modifiers for performing different actions (only Shift, Ctrl and
  * Alt are currently supported).  If some of these modifiers are
  * already active, they will not be suggested.  The optional format
- * strings #shift_format, #control_format and #alt_format may be used
- * to describe what the modifier will do.  They must contain a single
- * '%%s' which will be replaced by the name of the modifier.  They
- * can also be %NULL if the modifier name should be left alone.
+ * strings #extend_selection_format, #toggle_behavior_format and
+ * #alt_format may be used to describe what the modifier will do.
+ * They must contain a single '%%s' which will be replaced by the name
+ * of the modifier.  They can also be %NULL if the modifier name
+ * should be left alone.
  *
  * Return value: a newly allocated string containing the message.
  **/
 gchar *
 gimp_suggest_modifiers (const gchar     *message,
                         GdkModifierType  modifiers,
-                        const gchar     *shift_format,
-                        const gchar     *control_format,
+                        const gchar     *extend_selection_format,
+                        const gchar     *toggle_behavior_format,
                         const gchar     *alt_format)
 {
-  gchar     msg_buf[3][BUF_SIZE];
-  gint      num_msgs = 0;
-  gboolean  try      = FALSE;
+  GdkModifierType  extend_mask = gimp_get_extend_selection_mask ();
+  GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
+  gchar            msg_buf[3][BUF_SIZE];
+  gint             num_msgs = 0;
+  gboolean         try      = FALSE;
 
-  if (modifiers & GDK_SHIFT_MASK)
+  if (modifiers & extend_mask)
     {
-      if (shift_format && *shift_format)
+      if (extend_selection_format && *extend_selection_format)
         {
-          g_snprintf (msg_buf[num_msgs], BUF_SIZE, shift_format,
-                      gimp_get_mod_string (GDK_SHIFT_MASK));
+          g_snprintf (msg_buf[num_msgs], BUF_SIZE, extend_selection_format,
+                      gimp_get_mod_string (extend_mask));
         }
       else
         {
           g_strlcpy (msg_buf[num_msgs],
-                     gimp_get_mod_string (GDK_SHIFT_MASK), BUF_SIZE);
+                     gimp_get_mod_string (extend_mask), BUF_SIZE);
           try = TRUE;
         }
 
       num_msgs++;
     }
 
-  /* FIXME: using toggle_behavior_mask is such a hack. The fact that
-   * it happens to do the right thing on all platforms doesn't make it
-   * any better.
-   */
-  if (modifiers & gimp_get_toggle_behavior_mask ())
+  if (modifiers & toggle_mask)
     {
-      if (control_format && *control_format)
+      if (toggle_behavior_format && *toggle_behavior_format)
         {
-          g_snprintf (msg_buf[num_msgs], BUF_SIZE, control_format,
-                      gimp_get_mod_string (gimp_get_toggle_behavior_mask ()));
+          g_snprintf (msg_buf[num_msgs], BUF_SIZE, toggle_behavior_format,
+                      gimp_get_mod_string (toggle_mask));
         }
       else
         {
           g_strlcpy (msg_buf[num_msgs],
-                     gimp_get_mod_string (gimp_get_toggle_behavior_mask ()), BUF_SIZE);
+                     gimp_get_mod_string (toggle_mask), BUF_SIZE);
           try = TRUE;
         }
 

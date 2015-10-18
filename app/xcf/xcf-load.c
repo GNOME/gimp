@@ -379,7 +379,7 @@ xcf_load_image (Gimp     *gimp,
                                  gimp_parasite_name (parasite));
     }
 
-  /* check for a gimp-compatibility-mode parasite */
+  /* check for a gimp-xcf-compatibility-mode parasite */
   parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
                                        "gimp-xcf-compatibility-mode");
   if (parasite)
@@ -390,6 +390,7 @@ xcf_load_image (Gimp     *gimp,
       gimp_parasite_list_remove (private->parasites,
                                  gimp_parasite_name (parasite));
     }
+
   xcf_progress_update (info);
 
   while (TRUE)
@@ -996,6 +997,15 @@ xcf_load_layer_props (XcfInfo    *info,
           }
           break;
 
+        case PROP_FLOAT_OPACITY:
+          {
+            gfloat opacity;
+
+            info->cp += xcf_read_float (info->input, &opacity, 1);
+            gimp_layer_set_opacity (*layer, opacity, FALSE);
+          }
+          break;
+
         case PROP_VISIBLE:
           {
             gboolean visible;
@@ -1239,6 +1249,15 @@ xcf_load_channel_props (XcfInfo      *info,
 
             info->cp += xcf_read_int32 (info->input, &opacity, 1);
             gimp_channel_set_opacity (*channel, opacity / 255.0, FALSE);
+          }
+          break;
+
+        case PROP_FLOAT_OPACITY:
+          {
+            gfloat opacity;
+
+            info->cp += xcf_read_float (info->input, &opacity, 1);
+            gimp_channel_set_opacity (*channel, opacity, FALSE);
           }
           break;
 

@@ -110,6 +110,15 @@ gimp_palettes_get_color_history (Gimp *gimp)
   return g_object_get_data (G_OBJECT (gimp), COLOR_HISTORY_KEY);
 }
 
+void
+gimp_palettes_add_color_history (Gimp    *gimp,
+                                 GimpRGB *color)
+{
+  GimpPalette *history;
+
+  history = gimp_palettes_get_color_history (gimp);
+  gimp_palette_mru_add (GIMP_PALETTE_MRU (history), color);
+}
 
 /*  private functions  */
 

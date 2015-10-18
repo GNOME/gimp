@@ -27,27 +27,27 @@
 
 #include <libgimp/gimpuitypes.h>
 
-#include <libgimp/gimpexport.h>
-#include <libgimp/gimpmenu.h>
-#include <libgimp/gimpmetadata.h>
 #include <libgimp/gimpaspectpreview.h>
-#include <libgimp/gimpdrawablepreview.h>
 #include <libgimp/gimpbrushmenu.h>
+#include <libgimp/gimpbrushselectbutton.h>
+#include <libgimp/gimpdrawablepreview.h>
+#include <libgimp/gimpexport.h>
 #include <libgimp/gimpfontmenu.h>
+#include <libgimp/gimpfontselectbutton.h>
 #include <libgimp/gimpgradientmenu.h>
+#include <libgimp/gimpgradientselectbutton.h>
+#include <libgimp/gimpimagecombobox.h>
+#include <libgimp/gimpimagemetadata.h>
+#include <libgimp/gimpitemcombobox.h>
+#include <libgimp/gimpmenu.h>
 #include <libgimp/gimppalettemenu.h>
+#include <libgimp/gimppaletteselectbutton.h>
 #include <libgimp/gimppatternmenu.h>
+#include <libgimp/gimppatternselectbutton.h>
 #include <libgimp/gimpprocbrowserdialog.h>
 #include <libgimp/gimpprocview.h>
 #include <libgimp/gimpprogressbar.h>
-#include <libgimp/gimpitemcombobox.h>
-#include <libgimp/gimpimagecombobox.h>
 #include <libgimp/gimpselectbutton.h>
-#include <libgimp/gimpbrushselectbutton.h>
-#include <libgimp/gimpfontselectbutton.h>
-#include <libgimp/gimpgradientselectbutton.h>
-#include <libgimp/gimppaletteselectbutton.h>
-#include <libgimp/gimppatternselectbutton.h>
 #include <libgimp/gimpzoompreview.h>
 
 #undef __GIMP_UI_H_INSIDE__

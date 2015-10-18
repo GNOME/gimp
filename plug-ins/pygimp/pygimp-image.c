@@ -725,26 +725,18 @@ img_parasite_list(PyGimpImage *self)
 {
     gint num_parasites;
     gchar **parasites;
+    PyObject *ret;
+    gint i;
 
     parasites = gimp_image_get_parasite_list (self->ID, &num_parasites);
 
-    if (parasites) {
-	PyObject *ret;
-	gint i;
+    ret = PyTuple_New(num_parasites);
 
-	ret = PyTuple_New(num_parasites);
+    for (i = 0; i < num_parasites; i++)
+        PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
 
-	for (i = 0; i < num_parasites; i++) {
-	    PyTuple_SetItem(ret, i, PyString_FromString(parasites[i]));
-	}
-
-	g_strfreev(parasites);
-	return ret;
-    }
-
-    PyErr_Format(pygimp_error, "could not list parasites on image (ID %d)",
-		 self->ID);
-    return NULL;
+    g_strfreev(parasites);
+    return ret;
 }
 
 static PyObject *

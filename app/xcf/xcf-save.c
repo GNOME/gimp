@@ -512,6 +512,8 @@ xcf_save_layer_props (XcfInfo    *info,
 
   xcf_check_error (xcf_save_prop (info, image, PROP_OPACITY, error,
                                   gimp_layer_get_opacity (layer)));
+  xcf_check_error (xcf_save_prop (info, image, PROP_FLOAT_OPACITY, error,
+                                  gimp_layer_get_opacity (layer)));
   xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
                                   gimp_item_get_visible (GIMP_ITEM (layer))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LINKED, error,
@@ -625,6 +627,8 @@ xcf_save_channel_props (XcfInfo      *info,
 
   xcf_check_error (xcf_save_prop (info, image, PROP_OPACITY, error,
                                   gimp_channel_get_opacity (channel)));
+  xcf_check_error (xcf_save_prop (info, image, PROP_FLOAT_OPACITY, error,
+                                  gimp_channel_get_opacity (channel)));
   xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
                                   gimp_item_get_visible (GIMP_ITEM (channel))));
   xcf_check_error (xcf_save_prop (info, image, PROP_LINKED, error,
@@ -732,6 +736,19 @@ xcf_save_prop (XcfInfo    *info,
         xcf_write_prop_type_check_error (info, prop_type);
         xcf_write_int32_check_error (info, &size, 1);
         xcf_write_int32_check_error (info, &uint_opacity, 1);
+      }
+      break;
+
+    case PROP_FLOAT_OPACITY:
+      {
+        gfloat opacity;
+
+        opacity = va_arg (args, gdouble);
+        size = 4;
+
+        xcf_write_prop_type_check_error (info, prop_type);
+        xcf_write_int32_check_error (info, &size, 1);
+        xcf_write_float_check_error (info, &opacity, 1);
       }
       break;
 

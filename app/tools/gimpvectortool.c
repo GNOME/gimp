@@ -61,7 +61,7 @@
 #include "gimp-intl.h"
 
 
-#define TOGGLE_MASK  GDK_SHIFT_MASK
+#define TOGGLE_MASK  gimp_get_extend_selection_mask ()
 #define MOVE_MASK    GDK_MOD1_MASK
 #define INSDEL_MASK  gimp_get_toggle_behavior_mask ()
 
@@ -815,7 +815,7 @@ gimp_vector_tool_key_press (GimpTool     *tool,
 
   shell = gimp_display_get_shell (draw_tool->display);
 
-  if (kevent->state & GDK_SHIFT_MASK)
+  if (kevent->state & gimp_get_extend_selection_mask ())
     pixels = 10.0;
 
   if (kevent->state & gimp_get_toggle_behavior_mask ())
@@ -1198,8 +1198,10 @@ gimp_vector_tool_status_update (GimpTool        *tool,
 
   if (proximity)
     {
-      const gchar *status      = NULL;
-      gboolean     free_status = FALSE;
+      GdkModifierType  extend_mask = gimp_get_extend_selection_mask ();
+      GdkModifierType  toggle_mask = gimp_get_toggle_behavior_mask ();
+      const gchar     *status      = NULL;
+      gboolean         free_status = FALSE;
 
       switch (vector_tool->function)
         {
@@ -1218,7 +1220,7 @@ gimp_vector_tool_status_update (GimpTool        *tool,
         case VECTORS_ADD_ANCHOR:
           status = gimp_suggest_modifiers (_("Click or Click-Drag to create "
                                              "a new anchor"),
-                                           GDK_SHIFT_MASK & ~state,
+                                           extend_mask & ~state,
                                            NULL, NULL, NULL);
           free_status = TRUE;
           break;
@@ -1226,8 +1228,6 @@ gimp_vector_tool_status_update (GimpTool        *tool,
         case VECTORS_MOVE_ANCHOR:
           if (options->edit_mode != GIMP_VECTOR_MODE_EDIT)
             {
-              GdkModifierType toggle_mask = gimp_get_toggle_behavior_mask ();
-
               status = gimp_suggest_modifiers (_("Click-Drag to move the "
                                                  "anchor around"),
                                                toggle_mask & ~state,
@@ -1247,14 +1247,14 @@ gimp_vector_tool_status_update (GimpTool        *tool,
             {
               status = gimp_suggest_modifiers (_("Click-Drag to move the "
                                                  "handle around"),
-                                               GDK_SHIFT_MASK & ~state,
+                                               extend_mask & ~state,
                                                NULL, NULL, NULL);
             }
           else
             {
               status = gimp_suggest_modifiers (_("Click-Drag to move the "
                                                  "handles around symmetrically"),
-                                               GDK_SHIFT_MASK & ~state,
+                                               extend_mask & ~state,
                                                NULL, NULL, NULL);
             }
           free_status = TRUE;
@@ -1264,12 +1264,12 @@ gimp_vector_tool_status_update (GimpTool        *tool,
           if (GIMP_VECTOR_TOOL_GET_OPTIONS (tool)->polygonal)
             status = gimp_suggest_modifiers (_("Click-Drag to move the "
                                                "anchors around"),
-                                             GDK_SHIFT_MASK & ~state,
+                                             extend_mask & ~state,
                                              NULL, NULL, NULL);
           else
             status = gimp_suggest_modifiers (_("Click-Drag to change the "
                                                "shape of the curve"),
-                                             GDK_SHIFT_MASK & ~state,
+                                             extend_mask & ~state,
                                              _("%s: symmetrical"), NULL, NULL);
           free_status = TRUE;
           break;
@@ -1277,7 +1277,7 @@ gimp_vector_tool_status_update (GimpTool        *tool,
         case VECTORS_MOVE_STROKE:
           status = gimp_suggest_modifiers (_("Click-Drag to move the "
                                              "component around"),
-                                           GDK_SHIFT_MASK & ~state,
+                                           extend_mask & ~state,
                                            NULL, NULL, NULL);
           free_status = TRUE;
           break;
@@ -1289,7 +1289,7 @@ gimp_vector_tool_status_update (GimpTool        *tool,
         case VECTORS_INSERT_ANCHOR:
           status = gimp_suggest_modifiers (_("Click-Drag to insert an anchor "
                                              "on the path"),
-                                           GDK_SHIFT_MASK & ~state,
+                                           extend_mask & ~state,
                                            NULL, NULL, NULL);
           free_status = TRUE;
           break;

@@ -33,6 +33,7 @@
 #include "gegl/gimp-gegl-utils.h"
 
 #include "gimp.h"
+#include "gimp-palettes.h"
 #include "gimp-utils.h"
 #include "gimpchannel-combine.h"
 #include "gimpcontext.h"
@@ -76,8 +77,8 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
                            gdouble               y,
                            GError              **error)
 {
-  GimpRGB      color;
   GimpPattern *pattern;
+  GimpRGB      color;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
@@ -86,6 +87,9 @@ gimp_drawable_bucket_fill (GimpDrawable         *drawable,
 
   if (! gimp_get_fill_params (context, fill_type, &color, &pattern, error))
     return FALSE;
+
+  gimp_palettes_add_color_history (context->gimp,
+                                   &color);
 
   gimp_drawable_bucket_fill_internal (drawable,
                                       fill_type,

@@ -131,23 +131,26 @@ enum
 };
 
 
-static void   gimp_paint_options_config_iface_init (GimpConfigInterface *config_iface);
+static void         gimp_paint_options_config_iface_init (GimpConfigInterface *config_iface);
 
-static void   gimp_paint_options_dispose           (GObject      *object);
-static void   gimp_paint_options_finalize          (GObject      *object);
-static void   gimp_paint_options_set_property      (GObject      *object,
-                                                    guint         property_id,
-                                                    const GValue *value,
-                                                    GParamSpec   *pspec);
-static void   gimp_paint_options_get_property      (GObject      *object,
-                                                    guint         property_id,
-                                                    GValue       *value,
-                                                    GParamSpec   *pspec);
+static void         gimp_paint_options_dispose           (GObject      *object);
+static void         gimp_paint_options_finalize          (GObject      *object);
+static void         gimp_paint_options_set_property      (GObject      *object,
+                                                          guint         property_id,
+                                                          const GValue *value,
+                                                          GParamSpec   *pspec);
+static void         gimp_paint_options_get_property      (GObject      *object,
+                                                          guint         property_id,
+                                                          GValue       *value,
+                                                          GParamSpec   *pspec);
 
-static GimpConfig * gimp_paint_options_duplicate   (GimpConfig   *config);
+static GimpConfig * gimp_paint_options_duplicate         (GimpConfig   *config);
+static gboolean     gimp_paint_options_copy              (GimpConfig   *src,
+                                                          GimpConfig   *dest,
+                                                          GParamFlags   flags);
 
-static void   gimp_paint_options_brush_changed     (GimpContext  *context,
-                                                    GimpBrush    *brush);
+static void         gimp_paint_options_brush_changed     (GimpContext  *context,
+                                                          GimpBrush    *brush);
 
 
 
@@ -376,6 +379,7 @@ gimp_paint_options_config_iface_init (GimpConfigInterface *config_iface)
     parent_config_iface = g_type_default_interface_peek (GIMP_TYPE_CONFIG);
 
   config_iface->duplicate = gimp_paint_options_duplicate;
+  config_iface->copy      = gimp_paint_options_copy;
 }
 
 static void
@@ -757,6 +761,33 @@ gimp_paint_options_duplicate (GimpConfig *config)
                 NULL);
 
   return GIMP_CONFIG (new_options);
+}
+
+static gboolean
+gimp_paint_options_copy (GimpConfig  *src,
+                         GimpConfig  *dest,
+                         GParamFlags  flags)
+{
+  if (parent_config_iface->copy (src, dest, flags))
+    {
+      GimpPaintOptions *options = GIMP_PAINT_OPTIONS (src);
+
+      /*  after copying, copy those properties again which might have
+       *  changed by setting the brush on dest, see
+       *  gimp_paint_options_brush_changed().
+       */
+      g_object_set (dest,
+                    "brush-size",         options->brush_size,
+                    "brush-aspect-ratio", options->brush_aspect_ratio,
+                    "brush-angle",        options->brush_angle,
+                    "brush-spacing",      options->brush_spacing,
+                    "brush-hardness",     options->brush_hardness,
+                    NULL);
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 static void

@@ -25,12 +25,11 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core/core-types.h"
+#include "core-types.h"
 
-#include "core/gimp.h"
-#include "core/gimpparamspecs.h"
-
-#include "batch.h"
+#include "gimp.h"
+#include "gimp-batch.h"
+#include "gimpparamspecs.h"
 
 #include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
@@ -41,19 +40,19 @@
 #define BATCH_DEFAULT_EVAL_PROC   "plug-in-script-fu-eval"
 
 
-static void  batch_exit_after_callback (Gimp          *gimp) G_GNUC_NORETURN;
+static void  gimp_batch_exit_after_callback (Gimp          *gimp) G_GNUC_NORETURN;
 
-static void  batch_run_cmd             (Gimp          *gimp,
-                                        const gchar   *proc_name,
-                                        GimpProcedure *procedure,
-                                        GimpRunMode    run_mode,
-                                        const gchar   *cmd);
+static void  gimp_batch_run_cmd             (Gimp          *gimp,
+                                             const gchar   *proc_name,
+                                             GimpProcedure *procedure,
+                                             GimpRunMode    run_mode,
+                                             const gchar   *cmd);
 
 
 void
-batch_run (Gimp         *gimp,
-           const gchar  *batch_interpreter,
-           const gchar **batch_commands)
+gimp_batch_run (Gimp         *gimp,
+                const gchar  *batch_interpreter,
+                const gchar **batch_commands)
 {
   gulong  exit_id;
 
@@ -61,7 +60,7 @@ batch_run (Gimp         *gimp,
     return;
 
   exit_id = g_signal_connect_after (gimp, "exit",
-                                    G_CALLBACK (batch_exit_after_callback),
+                                    G_CALLBACK (gimp_batch_exit_after_callback),
                                     NULL);
 
   if (! batch_interpreter)
@@ -88,8 +87,8 @@ batch_run (Gimp         *gimp,
                                                             proc_name);
 
       if (procedure)
-        batch_run_cmd (gimp, proc_name, procedure,
-                       GIMP_RUN_NONINTERACTIVE, NULL);
+        gimp_batch_run_cmd (gimp, proc_name, procedure,
+                            GIMP_RUN_NONINTERACTIVE, NULL);
       else
         g_message (_("The batch interpreter '%s' is not available. "
                      "Batch mode disabled."), proc_name);
@@ -104,8 +103,8 @@ batch_run (Gimp         *gimp,
           gint i;
 
           for (i = 0; batch_commands[i]; i++)
-            batch_run_cmd (gimp, batch_interpreter, eval_proc,
-                           GIMP_RUN_NONINTERACTIVE, batch_commands[i]);
+            gimp_batch_run_cmd (gimp, batch_interpreter, eval_proc,
+                                GIMP_RUN_NONINTERACTIVE, batch_commands[i]);
         }
       else
         {
@@ -125,7 +124,7 @@ batch_run (Gimp         *gimp,
  * and gimp would hang forever.
  */
 static void
-batch_exit_after_callback (Gimp *gimp)
+gimp_batch_exit_after_callback (Gimp *gimp)
 {
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
@@ -136,11 +135,11 @@ batch_exit_after_callback (Gimp *gimp)
 }
 
 static void
-batch_run_cmd (Gimp          *gimp,
-               const gchar   *proc_name,
-               GimpProcedure *procedure,
-               GimpRunMode    run_mode,
-               const gchar   *cmd)
+gimp_batch_run_cmd (Gimp          *gimp,
+                    const gchar   *proc_name,
+                    GimpProcedure *procedure,
+                    GimpRunMode    run_mode,
+                    const gchar   *cmd)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;

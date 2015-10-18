@@ -1242,7 +1242,7 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
 
   gimp_draw_tool_pause (draw_tool);
 
-  if (key == GDK_SHIFT_MASK)
+  if (key == gimp_get_extend_selection_mask ())
     {
       /* Here we want to handle manualy when to update the rectangle, so we
        * don't want gimp_rectangle_tool_options_notify to do anything.
@@ -1462,7 +1462,7 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
     }
 
   /*  If the shift key is down, move by an accelerated increment  */
-  if (kevent->state & GDK_SHIFT_MASK)
+  if (kevent->state & gimp_get_extend_selection_mask ())
     {
       dx *= ARROW_VELOCITY;
       dy *= ARROW_VELOCITY;

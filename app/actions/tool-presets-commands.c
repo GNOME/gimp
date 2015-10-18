@@ -15,15 +15,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __UNIQUE_H__
-#define __UNIQUE_H__
+#include "config.h"
+
+#include <gegl.h>
+#include <gtk/gtk.h>
+
+#include "libgimpwidgets/gimpwidgets.h"
+
+#include "actions-types.h"
+
+#include "core/gimpcontext.h"
+
+#include "widgets/gimpcontainereditor.h"
+#include "widgets/gimpcontainerview.h"
+
+#include "tool-presets-commands.h"
 
 
-gboolean gimp_unique_open (const gchar **filenames,
-			   gboolean      as_new);
+/*  public functions  */
 
-gboolean gimp_unique_batch_run (const gchar  *batch_interpreter,
-                                const gchar **batch_commands);
+void
+tool_presets_restore_cmd_callback (GtkAction *action,
+                                   gpointer   data)
+{
+  GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
+  GimpContext         *context;
+  GimpToolPreset *preset;
 
+  context = gimp_container_view_get_context (editor->view);
 
-#endif /* __UNIQUE_H__ */
+  preset = gimp_context_get_tool_preset (context);
+
+  if (preset)
+    gimp_context_tool_preset_changed (context);
+}

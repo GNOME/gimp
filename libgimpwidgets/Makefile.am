@@ -281,6 +281,18 @@ EXTRA_DIST = \
 	gimpwidgets.def			\
 	$(libgimpwidgets_extra_sources)
 
+#
+# platform-dependent source files
+#
+
+
+if PLATFORM_OSX_QUARTZ
+libgimpwidgets_sources += gimppickbutton-quartz.c
+AM_CPPFLAGS += "-xobjective-c"
+else
+libgimpwidgets_sources += gimppickbutton-default.c
+endif
+
 
 #
 # rules to generate built sources
