@@ -51,8 +51,8 @@
 
 static void      gimp_display_shell_scale_to             (GimpDisplayShell *shell,
                                                           gdouble           scale,
-                                                          gint              viewport_x,
-                                                          gint              viewport_y);
+                                                          gdouble           viewport_x,
+                                                          gdouble           viewport_y);
 
 static gboolean  gimp_display_shell_scale_image_starts_to_fit
                                                          (GimpDisplayShell *shell,
@@ -76,8 +76,8 @@ static void      gimp_display_shell_scale_get_image_center_viewport
 static void      gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
                                                           gdouble           new_scale,
                                                           gdouble           current_scale,
-                                                          gint             *x,
-                                                          gint             *y,
+                                                          gdouble          *x,
+                                                          gdouble          *y,
                                                           GimpZoomFocus     zoom_focus);
 
 
@@ -412,7 +412,6 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
                           gdouble           new_scale,
                           GimpZoomFocus     zoom_focus)
 {
-  gint    x, y;
   gdouble current_scale;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -448,6 +447,7 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
           gboolean zoom_focus_almost_centered_vert;
           gboolean image_center_almost_centered_horiz;
           gboolean image_center_almost_centered_vert;
+          gdouble  x, y;
           gint     image_center_x;
           gint     image_center_y;
 
@@ -889,12 +889,12 @@ gimp_display_shell_push_zoom_focus_pointer_pos (GimpDisplayShell *shell,
 static void
 gimp_display_shell_scale_to (GimpDisplayShell *shell,
                              gdouble           scale,
-                             gint              viewport_x,
-                             gint              viewport_y)
+                             gdouble           viewport_x,
+                             gdouble           viewport_y)
 {
   gdouble scale_x, scale_y;
   gdouble image_focus_x, image_focus_y;
-  gint    target_offset_x, target_offset_y;
+  gdouble target_offset_x, target_offset_y;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -1041,8 +1041,8 @@ static void
 gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
                                          gdouble           new_scale,
                                          gdouble           current_scale,
-                                         gint             *x,
-                                         gint             *y,
+                                         gdouble          *x,
+                                         gdouble          *y,
                                          GimpZoomFocus     zoom_focus)
 {
   GimpZoomFocus real_zoom_focus = zoom_focus;
@@ -1060,7 +1060,7 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
     GtkWidget *window;
     gboolean   event_looks_sane;
     gboolean   cursor_within_canvas;
-    gint       canvas_pointer_x, canvas_pointer_y;
+    gdouble    canvas_pointer_x, canvas_pointer_y;
 
     window = GTK_WIDGET (gimp_display_shell_get_window (shell));
 
@@ -1086,9 +1086,12 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
 
     if (g_queue_peek_head (shell->zoom_focus_pointer_queue) == NULL)
       {
-        gtk_widget_get_pointer (shell->canvas,
-                                &canvas_pointer_x,
-                                &canvas_pointer_y);
+        gint px, py;
+
+        gtk_widget_get_pointer (shell->canvas, &px, &py);
+
+        canvas_pointer_x = px;
+        canvas_pointer_y = py;
       }
     else
       {
@@ -1104,7 +1107,6 @@ gimp_display_shell_scale_get_zoom_focus (GimpDisplayShell *shell,
                            canvas_pointer_y >= 0 &&
                            canvas_pointer_x <  shell->disp_width &&
                            canvas_pointer_y <  shell->disp_height;
-
 
     if (event_looks_sane && cursor_within_canvas)
       {
