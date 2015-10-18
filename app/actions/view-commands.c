@@ -135,6 +135,25 @@ view_zoom_fill_cmd_callback (GtkAction *action,
 }
 
 void
+view_zoom_selection_cmd_callback (GtkAction *action,
+                                  gpointer   data)
+{
+  GimpDisplay *display;
+  GimpImage   *image;
+  gint         x, y, width, height;
+  return_if_no_display (display, data);
+  return_if_no_image (image, data);
+
+  gimp_item_bounds (GIMP_ITEM (gimp_image_get_mask (image)),
+                    &x, &y, &width, &height);
+
+  gimp_display_shell_scale_to_rectangle (gimp_display_get_shell (display),
+                                         GIMP_ZOOM_IN,
+                                         x, y, width, height,
+                                         FALSE);
+}
+
+void
 view_zoom_revert_cmd_callback (GtkAction *action,
                                gpointer   data)
 {

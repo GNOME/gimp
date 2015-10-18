@@ -86,6 +86,7 @@
 #define GIMP_HELP_VIEW_ZOOM_100                   "gimp-view-zoom-100"
 #define GIMP_HELP_VIEW_ZOOM_FIT_IN                "gimp-view-zoom-fit-in"
 #define GIMP_HELP_VIEW_ZOOM_FILL                  "gimp-view-zoom-fill"
+#define GIMP_HELP_VIEW_ZOOM_SELECTION             "gimp-view-zoom-selection"
 #define GIMP_HELP_VIEW_ZOOM_OTHER                 "gimp-view-zoom-other"
 #define GIMP_HELP_VIEW_ROTATE_RESET               "gimp-view-rotate-reset"
 #define GIMP_HELP_VIEW_ROTATE_15                  "gimp-view-rotate-15"

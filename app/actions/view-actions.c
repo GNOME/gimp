@@ -98,6 +98,12 @@ static const GimpActionEntry view_actions[] =
     G_CALLBACK (view_zoom_fill_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FILL },
 
+  { "view-zoom-selection", "gimp-selection",
+    NC_("view-action", "Zoom to _Selection"), NULL,
+    NC_("view-action", "Adjust the zoom ratio so that the selection fills the window"),
+    G_CALLBACK (view_zoom_selection_cmd_callback),
+    GIMP_HELP_VIEW_ZOOM_SELECTION },
+
   { "view-zoom-revert", NULL,
     NC_("view-action", "Re_vert Zoom"), "grave",
     NC_("view-action", "Restore the previous zoom level"),
@@ -692,6 +698,7 @@ view_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("view-zoom-fit-in",     image);
   SET_SENSITIVE ("view-zoom-fill",       image);
+  SET_SENSITIVE ("view-zoom-selection",  image);
   SET_SENSITIVE ("view-zoom-revert",     image);
 
   SET_SENSITIVE ("view-zoom-16-1",       image);
