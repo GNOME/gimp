@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-10-17 05:49+0000\n"
-"PO-Revision-Date: 2015-10-17 07:55+0100\n"
+"POT-Creation-Date: 2015-10-19 05:53+0000\n"
+"PO-Revision-Date: 2015-10-19 07:08+0100\n"
 "Last-Translator: Pedro Albuquerque <palbuquerque73o@gmail.com>\n"
 "Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: Portuguese\n"
@@ -5648,15 +5648,11 @@ msgstr ""
 "de ficheiros"
 
 #: ../app/actions/tool-presets-actions.c:74
-#| msgctxt "tool-options-action"
-#| msgid "_Restore Tool Preset"
 msgctxt "tool-presets-action"
 msgid "_Restore Tool Preset"
 msgstr "_Restaurar predefinições da ferramenta"
 
 #: ../app/actions/tool-presets-actions.c:75
-#| msgctxt "tool-presets-action"
-#| msgid "Delete this tool preset"
 msgctxt "tool-presets-action"
 msgid "Restore this tool preset"
 msgstr "Restaurar estas predefinições da ferramenta"
@@ -6070,484 +6066,498 @@ msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "Ajusta o fator de ampliação de forma a que seja usada toda a janela"
 
 #: ../app/actions/view-actions.c:102
+#| msgctxt "image-action"
+#| msgid "_Crop to Selection"
+msgctxt "view-action"
+msgid "Zoom to _Selection"
+msgstr "_Ampliar à seleção"
+
+#: ../app/actions/view-actions.c:103
+#| msgctxt "view-action"
+#| msgid "Adjust the zoom ratio so that the entire window is used"
+msgctxt "view-action"
+msgid "Adjust the zoom ratio so that the selection fills the window"
+msgstr "Ajusta o fator de ampliação para que a seleção preencha a janela"
+
+#: ../app/actions/view-actions.c:108
 msgctxt "view-action"
 msgid "Re_vert Zoom"
 msgstr "Re_Verter ampliação"
 
-#: ../app/actions/view-actions.c:103
+#: ../app/actions/view-actions.c:109
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
 msgstr "Restaura o nível de ampliação anterior"
 
-#: ../app/actions/view-actions.c:108
+#: ../app/actions/view-actions.c:114
 msgctxt "view-action"
 msgid "Othe_r..."
 msgstr "Out_Ro..."
 
-#: ../app/actions/view-actions.c:109
+#: ../app/actions/view-actions.c:115
 msgctxt "view-action"
 msgid "Set a custom rotation angle"
 msgstr "Define um ângulo de rotação personalizado"
 
-#: ../app/actions/view-actions.c:114
+#: ../app/actions/view-actions.c:120
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr "Janela de na_Vegação"
 
-#: ../app/actions/view-actions.c:115
+#: ../app/actions/view-actions.c:121
 msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "Mostrar uma miniatura de navegação da imagem"
 
-#: ../app/actions/view-actions.c:120
+#: ../app/actions/view-actions.c:126
 msgctxt "view-action"
 msgid "Display _Filters..."
 msgstr "_Filtros de apresentação..."
 
-#: ../app/actions/view-actions.c:121
+#: ../app/actions/view-actions.c:127
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
 msgstr "Configurar os filtros aplicados a esta vista"
 
-#: ../app/actions/view-actions.c:126
+#: ../app/actions/view-actions.c:132
 msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "Encolher a _Janela"
 
-#: ../app/actions/view-actions.c:127
+#: ../app/actions/view-actions.c:133
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
 msgstr "Reduz o tamanho da janela para se ajustar às dimensões da imagem"
 
-#: ../app/actions/view-actions.c:132
+#: ../app/actions/view-actions.c:138
 msgctxt "view-action"
 msgid "_Open Display..."
 msgstr "_Abrir monitor..."
 
-#: ../app/actions/view-actions.c:133
+#: ../app/actions/view-actions.c:139
 msgctxt "view-action"
 msgid "Connect to another display"
 msgstr "Ligar a outro monitor"
 
-#: ../app/actions/view-actions.c:141
+#: ../app/actions/view-actions.c:147
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "_Ponto por ponto"
 
-#: ../app/actions/view-actions.c:142
+#: ../app/actions/view-actions.c:148
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr "Um pixel no ecrã representa um pixel na imagem"
 
-#: ../app/actions/view-actions.c:148
+#: ../app/actions/view-actions.c:154
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr "_Mostrar seleção"
 
-#: ../app/actions/view-actions.c:149
+#: ../app/actions/view-actions.c:155
 msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "Mostrar o contorno da seleção"
 
-#: ../app/actions/view-actions.c:155
+#: ../app/actions/view-actions.c:161
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
 msgstr "Mostrar _Limite da camada"
 
-#: ../app/actions/view-actions.c:156
+#: ../app/actions/view-actions.c:162
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
 msgstr "Desenha um contorno à volta da camada ativa"
 
-#: ../app/actions/view-actions.c:162
+#: ../app/actions/view-actions.c:168
 msgctxt "view-action"
 msgid "Show _Guides"
 msgstr "Mostrar _Guias"
 
-#: ../app/actions/view-actions.c:163
+#: ../app/actions/view-actions.c:169
 msgctxt "view-action"
 msgid "Display the image's guides"
 msgstr "Mostrar as guias da imagem"
 
-#: ../app/actions/view-actions.c:169
+#: ../app/actions/view-actions.c:175
 msgctxt "view-action"
 msgid "S_how Grid"
 msgstr "Mostrar _Grelha"
 
-#: ../app/actions/view-actions.c:170
+#: ../app/actions/view-actions.c:176
 msgctxt "view-action"
 msgid "Display the image's grid"
 msgstr "Mostrar a grelha de imagem"
 
-#: ../app/actions/view-actions.c:176
+#: ../app/actions/view-actions.c:182
 msgctxt "view-action"
 msgid "Show Sample Points"
 msgstr "Mostrar pontos de amostragem"
 
-#: ../app/actions/view-actions.c:177
+#: ../app/actions/view-actions.c:183
 msgctxt "view-action"
 msgid "Display the image's color sample points"
 msgstr "Mostrar os pontos de amostragem de cores da imagem"
 
-#: ../app/actions/view-actions.c:183
+#: ../app/actions/view-actions.c:189
 msgctxt "view-action"
 msgid "Sn_ap to Guides"
 msgstr "_Atrair às guias"
 
-#: ../app/actions/view-actions.c:184
+#: ../app/actions/view-actions.c:190
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "As operações das ferramentas são atraídas pelas guias"
 
-#: ../app/actions/view-actions.c:190
+#: ../app/actions/view-actions.c:196
 msgctxt "view-action"
 msgid "Sna_p to Grid"
 msgstr "Atrair à _Grelha"
 
-#: ../app/actions/view-actions.c:191
+#: ../app/actions/view-actions.c:197
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "As operações das ferramentas são atraídas pelas grelhas"
 
-#: ../app/actions/view-actions.c:197
+#: ../app/actions/view-actions.c:203
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
 msgstr "Atrair às _Margens da tela"
 
-#: ../app/actions/view-actions.c:198
+#: ../app/actions/view-actions.c:204
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "As operações das ferramentas são atraídas pelas margens da tela"
 
-#: ../app/actions/view-actions.c:204
+#: ../app/actions/view-actions.c:210
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
 msgstr "Atrair ao _Caminho ativo"
 
-#: ../app/actions/view-actions.c:205
+#: ../app/actions/view-actions.c:211
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "As operações das ferramentas são atraídas pelo caminho ativo"
 
-#: ../app/actions/view-actions.c:211
+#: ../app/actions/view-actions.c:217
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr "Mostrar barra de _Menus"
 
-#: ../app/actions/view-actions.c:212
+#: ../app/actions/view-actions.c:218
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "Mostrar a barra de menus desta janela"
 
-#: ../app/actions/view-actions.c:218
+#: ../app/actions/view-actions.c:224
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr "Mostrar rég_Uas"
 
-#: ../app/actions/view-actions.c:219
+#: ../app/actions/view-actions.c:225
 msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "Mostrar as réguas desta janela"
 
-#: ../app/actions/view-actions.c:225
+#: ../app/actions/view-actions.c:231
 msgctxt "view-action"
 msgid "Show Scroll_bars"
 msgstr "Mostrar _Barras de rolamento"
 
-#: ../app/actions/view-actions.c:226
+#: ../app/actions/view-actions.c:232
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "Mostrar as barras de rolamento desta janela"
 
-#: ../app/actions/view-actions.c:232
+#: ../app/actions/view-actions.c:238
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr "Mostrar barra de es_Tado"
 
-#: ../app/actions/view-actions.c:233
+#: ../app/actions/view-actions.c:239
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Mostrar a barra de estado desta janela"
 
-#: ../app/actions/view-actions.c:239
+#: ../app/actions/view-actions.c:245
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "_Ecrã completo"
 
-#: ../app/actions/view-actions.c:240
+#: ../app/actions/view-actions.c:246
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Ativa/desativa a vista de ecrã completo"
 
-#: ../app/actions/view-actions.c:264
+#: ../app/actions/view-actions.c:270
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "_Reduzir"
 
-#: ../app/actions/view-actions.c:265 ../app/actions/view-actions.c:277
+#: ../app/actions/view-actions.c:271 ../app/actions/view-actions.c:283
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Reduzir a ampliação"
 
-#: ../app/actions/view-actions.c:270
+#: ../app/actions/view-actions.c:276
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "_Ampliar"
 
-#: ../app/actions/view-actions.c:271 ../app/actions/view-actions.c:283
+#: ../app/actions/view-actions.c:277 ../app/actions/view-actions.c:289
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Aumentar a ampliação"
 
-#: ../app/actions/view-actions.c:276
+#: ../app/actions/view-actions.c:282
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "Reduzir"
 
-#: ../app/actions/view-actions.c:282
+#: ../app/actions/view-actions.c:288
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Ampliar"
 
-#: ../app/actions/view-actions.c:301 ../app/actions/view-actions.c:307
+#: ../app/actions/view-actions.c:307 ../app/actions/view-actions.c:313
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: ../app/actions/view-actions.c:302 ../app/actions/view-actions.c:308
+#: ../app/actions/view-actions.c:308 ../app/actions/view-actions.c:314
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Ampliação 16:1"
 
-#: ../app/actions/view-actions.c:313 ../app/actions/view-actions.c:319
+#: ../app/actions/view-actions.c:319 ../app/actions/view-actions.c:325
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: ../app/actions/view-actions.c:314 ../app/actions/view-actions.c:320
+#: ../app/actions/view-actions.c:320 ../app/actions/view-actions.c:326
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Ampliação 8:1"
 
-#: ../app/actions/view-actions.c:325 ../app/actions/view-actions.c:331
+#: ../app/actions/view-actions.c:331 ../app/actions/view-actions.c:337
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: ../app/actions/view-actions.c:326 ../app/actions/view-actions.c:332
+#: ../app/actions/view-actions.c:332 ../app/actions/view-actions.c:338
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Ampliação 4:1"
 
-#: ../app/actions/view-actions.c:337 ../app/actions/view-actions.c:343
+#: ../app/actions/view-actions.c:343 ../app/actions/view-actions.c:349
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: ../app/actions/view-actions.c:338 ../app/actions/view-actions.c:344
+#: ../app/actions/view-actions.c:344 ../app/actions/view-actions.c:350
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Ampliação 2:1"
 
-#: ../app/actions/view-actions.c:349 ../app/actions/view-actions.c:355
+#: ../app/actions/view-actions.c:355 ../app/actions/view-actions.c:361
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: ../app/actions/view-actions.c:350 ../app/actions/view-actions.c:356
+#: ../app/actions/view-actions.c:356 ../app/actions/view-actions.c:362
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Ampliação 1:1"
 
-#: ../app/actions/view-actions.c:361
+#: ../app/actions/view-actions.c:367
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: ../app/actions/view-actions.c:362
+#: ../app/actions/view-actions.c:368
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Ampliação 1:2"
 
-#: ../app/actions/view-actions.c:367
+#: ../app/actions/view-actions.c:373
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: ../app/actions/view-actions.c:368
+#: ../app/actions/view-actions.c:374
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Ampliação 1:4"
 
-#: ../app/actions/view-actions.c:373
+#: ../app/actions/view-actions.c:379
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: ../app/actions/view-actions.c:374
+#: ../app/actions/view-actions.c:380
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Ampliação 1:8"
 
-#: ../app/actions/view-actions.c:379
+#: ../app/actions/view-actions.c:385
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: ../app/actions/view-actions.c:380
+#: ../app/actions/view-actions.c:386
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Ampliação 1:16"
 
-#: ../app/actions/view-actions.c:385
+#: ../app/actions/view-actions.c:391
 msgctxt "view-zoom-action"
 msgid "Othe_r..."
 msgstr "Out_Ro..."
 
-#: ../app/actions/view-actions.c:386
+#: ../app/actions/view-actions.c:392
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Define um fator de ampliação personalizado"
 
-#: ../app/actions/view-actions.c:399
+#: ../app/actions/view-actions.c:405
 msgctxt "view-action"
 msgid "_Reset to 0°"
 msgstr "_Repor a 0º"
 
-#: ../app/actions/view-actions.c:400
+#: ../app/actions/view-actions.c:406
 msgctxt "view-action"
 msgid "Reset the angle of rotation to 0°"
 msgstr "Repor o ângulo de rotação a 0º"
 
-#: ../app/actions/view-actions.c:408
+#: ../app/actions/view-actions.c:414
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Rodar 15º para a _direita"
 
-#: ../app/actions/view-actions.c:409
+#: ../app/actions/view-actions.c:415
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the right"
 msgstr "Rodar 15 graus para a direita"
 
-#: ../app/actions/view-actions.c:414
+#: ../app/actions/view-actions.c:420
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Rodar 90º para a _direita"
 
-#: ../app/actions/view-actions.c:415
+#: ../app/actions/view-actions.c:421
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the right"
 msgstr "Rodar 90 graus para a direita"
 
-#: ../app/actions/view-actions.c:420
+#: ../app/actions/view-actions.c:426
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Rodar _180º"
 
-#: ../app/actions/view-actions.c:421
+#: ../app/actions/view-actions.c:427
 msgctxt "view-action"
 msgid "Turn upside-down"
 msgstr "Virar de cima para baixo"
 
-#: ../app/actions/view-actions.c:426
+#: ../app/actions/view-actions.c:432
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Rodar 90º para a esquerda"
 
-#: ../app/actions/view-actions.c:427
+#: ../app/actions/view-actions.c:433
 msgctxt "view-action"
 msgid "Rotate 90 degrees to the left"
 msgstr "Rodar 90 graus para a esquerda"
 
-#: ../app/actions/view-actions.c:432
+#: ../app/actions/view-actions.c:438
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Rodar 15º para a esquerda"
 
-#: ../app/actions/view-actions.c:433
+#: ../app/actions/view-actions.c:439
 msgctxt "view-action"
 msgid "Rotate 15 degrees to the left"
 msgstr "Rodar 15 graus para a esquerda"
 
-#: ../app/actions/view-actions.c:441
+#: ../app/actions/view-actions.c:447
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "Do _Tema"
 
-#: ../app/actions/view-actions.c:442
+#: ../app/actions/view-actions.c:448
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Usar a cor de fundo do tema atual"
 
-#: ../app/actions/view-actions.c:447
+#: ../app/actions/view-actions.c:453
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "_Padrão com cor clara"
 
-#: ../app/actions/view-actions.c:448
+#: ../app/actions/view-actions.c:454
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Usar um padrão de cor clara no fundo da janela"
 
-#: ../app/actions/view-actions.c:453
+#: ../app/actions/view-actions.c:459
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "_Padrão com cor escura"
 
-#: ../app/actions/view-actions.c:454
+#: ../app/actions/view-actions.c:460
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Usar um padrão de cor escura no fundo da janela"
 
-#: ../app/actions/view-actions.c:459
+#: ../app/actions/view-actions.c:465
 msgctxt "view-padding-color"
 msgid "Select _Custom Color..."
 msgstr "Selecionar _Cor personalizada..."
 
-#: ../app/actions/view-actions.c:460
+#: ../app/actions/view-actions.c:466
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Usar uma cor arbitrária"
 
-#: ../app/actions/view-actions.c:465
+#: ../app/actions/view-actions.c:471
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Como nas _Preferências"
 
-#: ../app/actions/view-actions.c:467
+#: ../app/actions/view-actions.c:473
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "Repor cor de espaço para a que está definida nas preferências"
 
-#: ../app/actions/view-actions.c:672
+#: ../app/actions/view-actions.c:678
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "Re_Verter ampliação (%d%%)"
 
-#: ../app/actions/view-actions.c:680
+#: ../app/actions/view-actions.c:686
 msgid "Re_vert Zoom"
 msgstr "Re_Verter a ampliação"
 
-#: ../app/actions/view-actions.c:839
+#: ../app/actions/view-actions.c:846
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "Out_Ro (%s)..."
 
-#: ../app/actions/view-actions.c:848
+#: ../app/actions/view-actions.c:855
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Ampliação (%s)"
 
-#: ../app/actions/view-actions.c:864
+#: ../app/actions/view-actions.c:871
 #, c-format
 msgid "_Rotate (%d°)"
 msgstr "_Rodar (%d°)"
 
-#: ../app/actions/view-commands.c:663
+#: ../app/actions/view-commands.c:682
 msgid "Set Canvas Padding Color"
 msgstr "Definir cor de espaço da tela"
 
-#: ../app/actions/view-commands.c:665
+#: ../app/actions/view-commands.c:684
 msgid "Set Custom Canvas Padding Color"
 msgstr "Definir cor personalizada para o espaço da tela"
 
@@ -9150,12 +9160,12 @@ msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Dispor objetos"
 
-#: ../app/core/gimpimage-color-profile.c:87
+#: ../app/core/gimpimage-color-profile.c:88
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
 "Validação de perfil ICC falhou: o nome do parasita não é \"icc-profile\""
 
-#: ../app/core/gimpimage-color-profile.c:96
+#: ../app/core/gimpimage-color-profile.c:97
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
@@ -9163,29 +9173,29 @@ msgstr ""
 "Validação de perfil ICC falhou: as bandeiras do parasita não são (PERSISTENT "
 "| UNDOABLE)"
 
-#: ../app/core/gimpimage-color-profile.c:153
+#: ../app/core/gimpimage-color-profile.c:154
 msgid "ICC profile validation failed: "
 msgstr "Validação de perfil ICC falhou: "
 
-#: ../app/core/gimpimage-color-profile.c:249
+#: ../app/core/gimpimage-color-profile.c:250
 msgid ""
 "ICC profile validation failed: Cannot attach a color profile to a GRAY image"
 msgstr ""
 "Validação de perfil ICC falhou: impossível anexar um perfil de cor a uma "
 "imagem CINZENTA"
 
-#: ../app/core/gimpimage-color-profile.c:257
+#: ../app/core/gimpimage-color-profile.c:258
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "Validação de perfil ICC falhou: o perfil de cor não é para o espaço de cor "
 "RGB"
 
-#: ../app/core/gimpimage-color-profile.c:367
+#: ../app/core/gimpimage-color-profile.c:368
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "A converter \"%s\" para \"%s\""
 
-#: ../app/core/gimpimage-color-profile.c:372
+#: ../app/core/gimpimage-color-profile.c:373
 msgid "Color profile conversion"
 msgstr "Conversão de perfil de cores"
 
@@ -10550,12 +10560,12 @@ msgstr "_Nome da camada:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:142
-#: ../app/tools/gimpmeasuretool.c:1134
+#: ../app/tools/gimpmeasuretool.c:1137
 msgid "Width:"
 msgstr "Largura:"
 
 #: ../app/dialogs/layer-options-dialog.c:148
-#: ../app/tools/gimpmeasuretool.c:1162
+#: ../app/tools/gimpmeasuretool.c:1165
 msgid "Height:"
 msgstr "Altura:"
 
@@ -12213,7 +12223,7 @@ msgid "Select Rotation Angle"
 msgstr "Selecionar ângulo de rotação"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:154
-#: ../app/tools/gimpmeasuretool.c:1106
+#: ../app/tools/gimpmeasuretool.c:1109
 msgid "Angle:"
 msgstr "Ângulo:"
 
@@ -12826,7 +12836,7 @@ msgid "Hue-Saturation"
 msgstr "Matiz-Saturação"
 
 #: ../app/pdb/color-cmds.c:765 ../app/tools/gimpblendoptions.c:269
-#: ../app/tools/gimpbucketfilloptions.c:285
+#: ../app/tools/gimpbucketfilloptions.c:284
 #: ../app/tools/gimpregionselectoptions.c:232
 #: ../app/tools/gimpthresholdtool.c:88
 msgid "Threshold"
@@ -14075,41 +14085,41 @@ msgid "Criterion used for determining color similarity"
 msgstr "Critério usado para determinar similaridade de cor"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:229
+#: ../app/tools/gimpbucketfilloptions.c:228
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Tipo de enchimento (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:244
+#: ../app/tools/gimpbucketfilloptions.c:243
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Área afetada (%s)"
 
-#: ../app/tools/gimpbucketfilloptions.c:248
+#: ../app/tools/gimpbucketfilloptions.c:247
 msgid "Fill whole selection"
 msgstr "Encher toda a seleção"
 
-#: ../app/tools/gimpbucketfilloptions.c:249
+#: ../app/tools/gimpbucketfilloptions.c:248
 msgid "Fill similar colors"
 msgstr "Encher cores similares"
 
-#: ../app/tools/gimpbucketfilloptions.c:258
+#: ../app/tools/gimpbucketfilloptions.c:257
 msgid "Finding Similar Colors"
 msgstr "A procurar cores similares"
 
-#: ../app/tools/gimpbucketfilloptions.c:273
+#: ../app/tools/gimpbucketfilloptions.c:272
 msgid "Fill transparent areas"
 msgstr "Encher áreas transparentes"
 
-#: ../app/tools/gimpbucketfilloptions.c:279
+#: ../app/tools/gimpbucketfilloptions.c:278
 #: ../app/tools/gimpcloneoptions-gui.c:80
-#: ../app/tools/gimpcolorpickeroptions.c:159 ../app/tools/gimphealtool.c:99
+#: ../app/tools/gimpcolorpickeroptions.c:158 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpregionselectoptions.c:226
 msgid "Sample merged"
 msgstr "Amostra unida"
 
-#: ../app/tools/gimpbucketfilloptions.c:292
+#: ../app/tools/gimpbucketfilloptions.c:291
 msgid "Fill by"
 msgstr "Encher com"
 
@@ -14153,27 +14163,27 @@ msgstr ""
 "Encher a posição original\n"
 "da gaiola com uma cor"
 
-#: ../app/tools/gimpcagetool.c:159 ../app/tools/gimpcagetool.c:1178
+#: ../app/tools/gimpcagetool.c:160 ../app/tools/gimpcagetool.c:1179
 msgid "Cage Transform"
 msgstr "Transformar com gaiola"
 
-#: ../app/tools/gimpcagetool.c:160
+#: ../app/tools/gimpcagetool.c:161
 msgid "Cage Transform: Deform a selection with a cage"
 msgstr "Transformar com gaiola: deformar uma seleção com uma gaiola"
 
-#: ../app/tools/gimpcagetool.c:161
+#: ../app/tools/gimpcagetool.c:162
 msgid "_Cage Transform"
 msgstr "Transformar _Com gaiola"
 
-#: ../app/tools/gimpcagetool.c:314 ../app/tools/gimpwarptool.c:313
+#: ../app/tools/gimpcagetool.c:315 ../app/tools/gimpwarptool.c:313
 msgid "Press ENTER to commit the transform"
 msgstr "Prima Enter para aceitar a transformação"
 
-#: ../app/tools/gimpcagetool.c:1081
+#: ../app/tools/gimpcagetool.c:1082
 msgid "Computing Cage Coefficients"
 msgstr "A calcular coeficientes da gaiola"
 
-#: ../app/tools/gimpcagetool.c:1229
+#: ../app/tools/gimpcagetool.c:1230
 msgid "Cage transform"
 msgstr "Transformar com gaiola"
 
@@ -14361,13 +14371,13 @@ msgstr ""
 "modelos de cor"
 
 #. the pick FG/BG frame
-#: ../app/tools/gimpcolorpickeroptions.c:164
+#: ../app/tools/gimpcolorpickeroptions.c:163
 #, c-format
 msgid "Pick Mode  (%s)"
 msgstr "Modo de escolha (%s)"
 
 #. the use_info_window toggle button
-#: ../app/tools/gimpcolorpickeroptions.c:173
+#: ../app/tools/gimpcolorpickeroptions.c:172
 #, c-format
 msgid "Use info window  (%s)"
 msgstr "Usar janela de informações (%s)"
@@ -14433,39 +14443,39 @@ msgstr ""
 msgid "Bl_ur / Sharpen"
 msgstr "Desfocar/Ag_Uçar"
 
-#: ../app/tools/gimpconvolvetool.c:182
+#: ../app/tools/gimpconvolvetool.c:181
 msgid "Click to blur"
 msgstr "Clique para desfocar"
 
-#: ../app/tools/gimpconvolvetool.c:183
+#: ../app/tools/gimpconvolvetool.c:182
 msgid "Click to blur the line"
 msgstr "Clique para desfocar a linha"
 
-#: ../app/tools/gimpconvolvetool.c:184
+#: ../app/tools/gimpconvolvetool.c:183
 #, c-format
 msgid "%s to sharpen"
 msgstr "%s para aguçar"
 
-#: ../app/tools/gimpconvolvetool.c:188
+#: ../app/tools/gimpconvolvetool.c:187
 msgid "Click to sharpen"
 msgstr "Clique para aguçar"
 
-#: ../app/tools/gimpconvolvetool.c:189
+#: ../app/tools/gimpconvolvetool.c:188
 msgid "Click to sharpen the line"
 msgstr "Clique para aguçar a linha"
 
-#: ../app/tools/gimpconvolvetool.c:190
+#: ../app/tools/gimpconvolvetool.c:189
 #, c-format
 msgid "%s to blur"
 msgstr "%s para desfocar"
 
 #. the type radio box
-#: ../app/tools/gimpconvolvetool.c:214
+#: ../app/tools/gimpconvolvetool.c:213
 #, c-format
 msgid "Convolve Type  (%s)"
 msgstr "Tipo de torção (%s)"
 
-#: ../app/tools/gimpconvolvetool.c:226
+#: ../app/tools/gimpconvolvetool.c:225
 msgctxt "convolve-tool"
 msgid "Rate"
 msgstr "Taxa"
@@ -14537,35 +14547,48 @@ msgstr "Importar curvas de cores"
 msgid "Export Curves"
 msgstr "Exportar curvas de cores"
 
-#: ../app/tools/gimpcurvestool.c:313
+#: ../app/tools/gimpcurvestool.c:315
 msgid "Click to add a control point"
 msgstr "Clique para adicionar um ponto de controlo"
 
-#: ../app/tools/gimpcurvestool.c:318
+#: ../app/tools/gimpcurvestool.c:320
 msgid "Click to add control points to all channels"
 msgstr "Clique para adicionar pontos de controlo em todos os canais"
 
-#: ../app/tools/gimpcurvestool.c:323
-msgid "Click to locate on curve (try Shift, Ctrl)"
-msgstr "Clique para localizar na curva (tente Shift, Ctrl)"
+#: ../app/tools/gimpcurvestool.c:325
+#| msgid "Click to close the curve"
+msgid "Click to locate on curve"
+msgstr "Clique para localizar na curva"
 
-#: ../app/tools/gimpcurvestool.c:417 ../app/tools/gimplevelstool.c:359
+#: ../app/tools/gimpcurvestool.c:327
+#, c-format
+#| msgid "Click to add a control point"
+msgid "%s: add control point"
+msgstr "%s: adicionar ponto de controlo"
+
+#: ../app/tools/gimpcurvestool.c:328
+#, c-format
+#| msgid "Click to add control points to all channels"
+msgid "%s: add control points to all channels"
+msgstr "%s: adicionar pontos de controlo a todos os canais"
+
+#: ../app/tools/gimpcurvestool.c:425 ../app/tools/gimplevelstool.c:359
 msgid "Cha_nnel:"
 msgstr "Ca_Nal:"
 
-#: ../app/tools/gimpcurvestool.c:443 ../app/tools/gimplevelstool.c:384
+#: ../app/tools/gimpcurvestool.c:451 ../app/tools/gimplevelstool.c:384
 msgid "R_eset Channel"
 msgstr "R_Epor canal"
 
-#: ../app/tools/gimpcurvestool.c:534 ../app/widgets/gimpdeviceinfoeditor.c:461
+#: ../app/tools/gimpcurvestool.c:542 ../app/widgets/gimpdeviceinfoeditor.c:461
 msgid "Curve _type:"
 msgstr "_Tipo de curva:"
 
-#: ../app/tools/gimpcurvestool.c:601 ../app/tools/gimplevelstool.c:652
+#: ../app/tools/gimpcurvestool.c:609 ../app/tools/gimplevelstool.c:652
 msgid "Could not read header: "
 msgstr "Impossível ler cabeçalho: "
 
-#: ../app/tools/gimpcurvestool.c:641
+#: ../app/tools/gimpcurvestool.c:649
 msgid "Use _old curves file format"
 msgstr "Usar format_O antigo de ficheiro de curvas de cores"
 
@@ -14603,44 +14626,44 @@ msgstr ""
 msgid "Dod_ge / Burn"
 msgstr "_Subexposição/Sobrexposição"
 
-#: ../app/tools/gimpdodgeburntool.c:189
+#: ../app/tools/gimpdodgeburntool.c:188
 msgid "Click to dodge"
 msgstr "Clique para subexpor"
 
-#: ../app/tools/gimpdodgeburntool.c:190
+#: ../app/tools/gimpdodgeburntool.c:189
 msgid "Click to dodge the line"
 msgstr "Clique para subexpor a linha"
 
-#: ../app/tools/gimpdodgeburntool.c:191
+#: ../app/tools/gimpdodgeburntool.c:190
 #, c-format
 msgid "%s to burn"
 msgstr "%s para sobrexpor"
 
-#: ../app/tools/gimpdodgeburntool.c:195
+#: ../app/tools/gimpdodgeburntool.c:194
 msgid "Click to burn"
 msgstr "Clicar para sobrexpor"
 
-#: ../app/tools/gimpdodgeburntool.c:196
+#: ../app/tools/gimpdodgeburntool.c:195
 msgid "Click to burn the line"
 msgstr "Clique para sobrexpor a linha"
 
-#: ../app/tools/gimpdodgeburntool.c:197
+#: ../app/tools/gimpdodgeburntool.c:196
 #, c-format
 msgid "%s to dodge"
 msgstr "%s para subexpor"
 
 #. the type (dodge or burn)
-#: ../app/tools/gimpdodgeburntool.c:221
+#: ../app/tools/gimpdodgeburntool.c:220
 #, c-format
 msgid "Type  (%s)"
 msgstr "Tipo (%s)"
 
 #. mode (highlights, midtones, or shadows)
-#: ../app/tools/gimpdodgeburntool.c:232
+#: ../app/tools/gimpdodgeburntool.c:231
 msgid "Range"
 msgstr "Intervalo"
 
-#: ../app/tools/gimpdodgeburntool.c:238
+#: ../app/tools/gimpdodgeburntool.c:237
 msgid "Exposure"
 msgstr "Exposição"
 
@@ -14650,7 +14673,7 @@ msgid "Move: "
 msgstr "Mover: "
 
 #: ../app/tools/gimpeditselectiontool.c:849
-#: ../app/tools/gimpeditselectiontool.c:1101
+#: ../app/tools/gimpeditselectiontool.c:1108
 msgid "Move Floating Selection"
 msgstr "Mover seleção flutuante"
 
@@ -14885,7 +14908,7 @@ msgstr ""
 "Clicar e arrastar adiciona um segmento livre, clicar adiciona um segmento "
 "poligonal"
 
-#: ../app/tools/gimpfreeselecttool.c:1567
+#: ../app/tools/gimpfreeselecttool.c:1568
 msgctxt "command"
 msgid "Free Select"
 msgstr "Seleção livre"
@@ -15142,45 +15165,45 @@ msgstr ""
 msgid "Intelligent _Scissors"
 msgstr "_Tesoura inteligente"
 
-#: ../app/tools/gimpiscissorstool.c:935
+#: ../app/tools/gimpiscissorstool.c:936
 msgid "Click to remove this point"
 msgstr "Clique para remover este ponto"
 
-#: ../app/tools/gimpiscissorstool.c:941 ../app/tools/gimpmeasuretool.c:606
+#: ../app/tools/gimpiscissorstool.c:942 ../app/tools/gimpmeasuretool.c:608
 msgid "Click-Drag to move this point"
 msgstr "Clique e arraste para mover este ponto"
 
-#: ../app/tools/gimpiscissorstool.c:943 ../app/tools/gimpiscissorstool.c:1011
+#: ../app/tools/gimpiscissorstool.c:944 ../app/tools/gimpiscissorstool.c:1013
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: desativar atração automática"
 
-#: ../app/tools/gimpiscissorstool.c:944
+#: ../app/tools/gimpiscissorstool.c:945
 #, c-format
 msgid "%s: remove this point"
 msgstr "%s: remover este ponto"
 
-#: ../app/tools/gimpiscissorstool.c:964
+#: ../app/tools/gimpiscissorstool.c:965
 msgid "Click to close the curve"
 msgstr "Clique para fechar a curva"
 
-#: ../app/tools/gimpiscissorstool.c:970
+#: ../app/tools/gimpiscissorstool.c:971
 msgid "Click to add a point on this segment"
 msgstr "Clique para adicionar um ponto neste segmento"
 
-#: ../app/tools/gimpiscissorstool.c:983
+#: ../app/tools/gimpiscissorstool.c:984
 msgid "Click or press Enter to convert to a selection"
 msgstr "Clique ou prima Enter para converter em seleção"
 
-#: ../app/tools/gimpiscissorstool.c:993
+#: ../app/tools/gimpiscissorstool.c:994
 msgid "Press Enter to convert to a selection"
 msgstr "Prima Enter para converter em seleção"
 
-#: ../app/tools/gimpiscissorstool.c:1008
+#: ../app/tools/gimpiscissorstool.c:1010
 msgid "Click or Click-Drag to add a point"
 msgstr "Clique ou clique e arraste para adicionar um ponto"
 
-#: ../app/tools/gimpiscissorstool.c:1131 ../app/tools/gimpiscissorstool.c:1143
+#: ../app/tools/gimpiscissorstool.c:1133 ../app/tools/gimpiscissorstool.c:1145
 msgid "Modify Scissors Curve"
 msgstr "Modificar curva da Tesoura"
 
@@ -15305,45 +15328,45 @@ msgstr "Ferramenta Medida: mede distâncias e ângulos"
 msgid "_Measure"
 msgstr "_Medida"
 
-#: ../app/tools/gimpmeasuretool.c:250
+#: ../app/tools/gimpmeasuretool.c:251
 msgid "Add Guides"
 msgstr "Adicionar guias"
 
-#: ../app/tools/gimpmeasuretool.c:316
+#: ../app/tools/gimpmeasuretool.c:317
 msgid "Drag to create a line"
 msgstr "Arraste para criar uma linha"
 
-#: ../app/tools/gimpmeasuretool.c:561
+#: ../app/tools/gimpmeasuretool.c:563
 msgid "Click to place vertical and horizontal guides"
 msgstr "Clique para colocar guias verticais e horizontais"
 
-#: ../app/tools/gimpmeasuretool.c:569
+#: ../app/tools/gimpmeasuretool.c:571
 msgid "Click to place a horizontal guide"
 msgstr "Clique para colocar uma guia horizontal"
 
-#: ../app/tools/gimpmeasuretool.c:583
+#: ../app/tools/gimpmeasuretool.c:585
 msgid "Click to place a vertical guide"
 msgstr "Clique para colocar uma guia vertical"
 
-#: ../app/tools/gimpmeasuretool.c:596
+#: ../app/tools/gimpmeasuretool.c:598
 msgid "Click-Drag to add a new point"
 msgstr "Clique e arraste para adicionar um novo ponto"
 
-#: ../app/tools/gimpmeasuretool.c:625
+#: ../app/tools/gimpmeasuretool.c:627
 msgid "Click-Drag to move all points"
 msgstr "Clique e arraste para mover todos os pontos"
 
-#: ../app/tools/gimpmeasuretool.c:940 ../app/tools/gimpmeasuretool.c:1089
-#: ../app/tools/gimpmeasuretool.c:1145 ../app/tools/gimpmeasuretool.c:1173
+#: ../app/tools/gimpmeasuretool.c:943 ../app/tools/gimpmeasuretool.c:1092
+#: ../app/tools/gimpmeasuretool.c:1148 ../app/tools/gimpmeasuretool.c:1176
 #: ../app/tools/gimppainttool.c:664
 msgid "pixels"
 msgstr "pixels"
 
-#: ../app/tools/gimpmeasuretool.c:1054
+#: ../app/tools/gimpmeasuretool.c:1057
 msgid "Measure Distances and Angles"
 msgstr "Medir distâncias e ângulos"
 
-#: ../app/tools/gimpmeasuretool.c:1078
+#: ../app/tools/gimpmeasuretool.c:1081
 msgid "Distance:"
 msgstr "Distância:"
 
@@ -15371,8 +15394,7 @@ msgstr "Mover o caminho ativo"
 msgid "Move:"
 msgstr "Mover:"
 
-#. tool toggle
-#: ../app/tools/gimpmoveoptions.c:188
+#: ../app/tools/gimpmoveoptions.c:189
 #, c-format
 msgid "Tool Toggle  (%s)"
 msgstr "Alternar ferramenta (%s)"
@@ -15680,7 +15702,7 @@ msgstr ""
 msgid "_Perspective Clone"
 msgstr "Clonar em _Perspetiva"
 
-#: ../app/tools/gimpperspectiveclonetool.c:673
+#: ../app/tools/gimpperspectiveclonetool.c:675
 msgid "Ctrl-Click to set a clone source"
 msgstr "Ctrl-Clique para definir uma origem de clone"
 
@@ -16517,19 +16539,19 @@ msgstr "Eliminar segmento"
 msgid "Move Anchors"
 msgstr "Mover âncoras"
 
-#: ../app/tools/gimpvectortool.c:1207
+#: ../app/tools/gimpvectortool.c:1209
 msgid "Click to pick path to edit"
 msgstr "Clique para escolher caminho a editar"
 
-#: ../app/tools/gimpvectortool.c:1211
+#: ../app/tools/gimpvectortool.c:1213
 msgid "Click to create a new path"
 msgstr "Clique para criar um novo caminho"
 
-#: ../app/tools/gimpvectortool.c:1215
+#: ../app/tools/gimpvectortool.c:1217
 msgid "Click to create a new component of the path"
 msgstr "Clique para criar um novo componente do caminho"
 
-#: ../app/tools/gimpvectortool.c:1219
+#: ../app/tools/gimpvectortool.c:1221
 msgid "Click or Click-Drag to create a new anchor"
 msgstr "Clique ou clique e arraste para criar uma nova âncora"
 
@@ -18595,22 +18617,22 @@ msgstr "Abrir o diálogo de seleção de paleta"
 msgid "Open the font selection dialog"
 msgstr "Abrir o diálogo de seleção de letra"
 
-#: ../app/widgets/gimpwidgets-utils.c:645
+#: ../app/widgets/gimpwidgets-utils.c:646
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (tente %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:645
+#: ../app/widgets/gimpwidgets-utils.c:646
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:649
+#: ../app/widgets/gimpwidgets-utils.c:650
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (tente %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:653
+#: ../app/widgets/gimpwidgets-utils.c:654
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (tente %s, %s, %s)"
@@ -18828,6 +18850,9 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "difuso"
+
+#~ msgid "Click to locate on curve (try Shift, Ctrl)"
+#~ msgstr "Clique para localizar na curva (tente Shift, Ctrl)"
 
 #~ msgid "Pick black point"
 #~ msgstr "Escolha um ponto negro"
