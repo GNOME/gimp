@@ -121,7 +121,7 @@ gimp_image_convert_precision (GimpImage     *image,
   /*  Push the image precision to the stack  */
   gimp_image_undo_push_image_precision (image, NULL);
 
-  old_profile = gimp_image_get_color_profile (image);
+  old_profile = NULL; /* FIXME bug 751553 gimp_image_get_color_profile (image); */
   old_format  = gimp_image_get_layer_format (image, FALSE);
 
   /*  Set the new precision  */
