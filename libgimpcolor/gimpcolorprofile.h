@@ -69,6 +69,11 @@ GimpColorProfile * gimp_color_profile_new_linear_rgb        (void);
 
 GimpColorProfile * gimp_color_profile_new_adobe_rgb         (void);
 
+GimpColorProfile *
+       gimp_color_profile_new_srgb_gamma_from_color_profile (GimpColorProfile  *profile);
+GimpColorProfile *
+       gimp_color_profile_new_linear_rgb_from_color_profile (GimpColorProfile  *profile);
+
 GimpColorProfile * gimp_color_profile_new_from_file         (GFile             *file,
                                                              GError           **error);
 
