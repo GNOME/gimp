@@ -693,8 +693,8 @@ gimp_color_profile_get_rgb_matrix_colorants (GimpColorProfile *profile,
           matrix->coeff[1][2] = green->Z;
 
           matrix->coeff[2][0] = blue->X;
-          matrix->coeff[2][1] = blue->X;
-          matrix->coeff[2][2] = blue->X;
+          matrix->coeff[2][1] = blue->Y;
+          matrix->coeff[2][2] = blue->Z;
         }
 
       return TRUE;
