@@ -155,7 +155,8 @@ static void       gimp_drawable_real_convert_type  (GimpDrawable      *drawable,
                                                     gint               layer_dither_type,
                                                     gint               mask_dither_type,
                                                     gboolean           convert_profile,
-                                                    gboolean           push_undo);
+                                                    gboolean           push_undo,
+                                                    GimpProgress      *progress);
 
 static GeglBuffer * gimp_drawable_real_get_buffer  (GimpDrawable      *drawable);
 static void       gimp_drawable_real_set_buffer    (GimpDrawable      *drawable,
@@ -791,7 +792,8 @@ gimp_drawable_real_convert_type (GimpDrawable      *drawable,
                                  gint               layer_dither_type,
                                  gint               mask_dither_type,
                                  gboolean           convert_type,
-                                 gboolean           push_undo)
+                                 gboolean           push_undo,
+                                 GimpProgress      *progress)
 {
   GeglBuffer *dest_buffer;
 
@@ -1259,7 +1261,8 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                             gint               layer_dither_type,
                             gint               mask_dither_type,
                             gboolean           convert_profile,
-                            gboolean           push_undo)
+                            gboolean           push_undo,
+                            GimpProgress      *progress)
 {
   const Babl *new_format;
 
@@ -1268,6 +1271,7 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
   g_return_if_fail (new_base_type != gimp_drawable_get_base_type (drawable) ||
                     new_precision != gimp_drawable_get_precision (drawable) ||
                     convert_profile);
+  g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
   if (! gimp_item_is_attached (GIMP_ITEM (drawable)))
     push_undo = FALSE;
@@ -1284,7 +1288,11 @@ gimp_drawable_convert_type (GimpDrawable      *drawable,
                                                     layer_dither_type,
                                                     mask_dither_type,
                                                     convert_profile,
-                                                    push_undo);
+                                                    push_undo,
+                                                    progress);
+
+  if (progress)
+    gimp_progress_set_value (progress, 1.0);
 }
 
 void

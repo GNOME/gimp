@@ -69,7 +69,8 @@ struct _GimpDrawableClass
                                            gint                  layer_dither_type,
                                            gint                  mask_dither_type,
                                            gboolean              convert_profile,
-                                           gboolean              push_undo);
+                                           gboolean              push_undo,
+                                           GimpProgress         *progress);
   void          (* apply_buffer)          (GimpDrawable         *drawable,
                                            GeglBuffer           *buffer,
                                            const GeglRectangle  *buffer_region,
@@ -146,7 +147,8 @@ void            gimp_drawable_convert_type       (GimpDrawable       *drawable,
                                                   gint                layer_dither_type,
                                                   gint                mask_dither_type,
                                                   gboolean            convert_profile,
-                                                  gboolean            push_undo);
+                                                  gboolean            push_undo,
+                                                  GimpProgress       *progress);
 
 void            gimp_drawable_apply_buffer       (GimpDrawable        *drawable,
                                                   GeglBuffer          *buffer,

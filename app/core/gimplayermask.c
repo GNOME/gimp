@@ -57,7 +57,8 @@ static void            gimp_layer_mask_convert_type       (GimpDrawable      *dr
                                                            gint               layer_dither_type,
                                                            gint               mask_dither_type,
                                                            gboolean           convert_profile,
-                                                           gboolean           push_undo);
+                                                           gboolean           push_undo,
+                                                           GimpProgress      *progress);
 
 
 G_DEFINE_TYPE (GimpLayerMask, gimp_layer_mask, GIMP_TYPE_CHANNEL)
@@ -170,7 +171,8 @@ gimp_layer_mask_convert_type (GimpDrawable      *drawable,
                               gint               layer_dither_type,
                               gint               mask_dither_type,
                               gboolean           convert_profile,
-                              gboolean           push_undo)
+                              gboolean           push_undo,
+                              GimpProgress      *progress)
 {
   new_format = gimp_babl_mask_format (new_precision);
 
@@ -181,7 +183,8 @@ gimp_layer_mask_convert_type (GimpDrawable      *drawable,
                                                     layer_dither_type,
                                                     mask_dither_type,
                                                     convert_profile,
-                                                    push_undo);
+                                                    push_undo,
+                                                    progress);
 }
 
 GimpLayerMask *

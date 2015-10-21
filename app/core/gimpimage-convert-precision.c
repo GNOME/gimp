@@ -37,6 +37,7 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpprogress.h"
+#include "gimpsubprogress.h"
 
 #include "text/gimptextlayer.h"
 
@@ -56,7 +57,8 @@ gimp_image_convert_precision (GimpImage     *image,
   const Babl       *new_format;
   GList            *all_drawables;
   GList            *list;
-  const gchar      *undo_desc = NULL;
+  const gchar      *undo_desc    = NULL;
+  GimpProgress     *sub_progress = NULL;
   gint              nth_drawable, n_drawables;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -69,6 +71,9 @@ gimp_image_convert_precision (GimpImage     *image,
                                  gimp_image_get_channel_list (image));
 
   n_drawables = g_list_length (all_drawables) + 1 /* + selection */;
+
+  if (progress)
+    sub_progress = gimp_sub_progress_new (progress);
 
   switch (precision)
     {
@@ -141,17 +146,17 @@ gimp_image_convert_precision (GimpImage     *image,
       else
         dither_type = layer_dither_type;
 
+      if (sub_progress)
+        gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
+                                    nth_drawable, n_drawables);
+
       gimp_drawable_convert_type (drawable, image,
                                   gimp_drawable_get_base_type (drawable),
                                   precision,
                                   dither_type,
                                   mask_dither_type,
                                   old_profile != NULL,
-                                  TRUE);
-
-      if (progress)
-        gimp_progress_set_value (progress,
-                                 (gdouble) nth_drawable / (gdouble) n_drawables);
+                                  TRUE, sub_progress);
     }
 
   g_list_free (all_drawables);
@@ -187,6 +192,10 @@ gimp_image_convert_precision (GimpImage     *image,
     GimpChannel *mask = gimp_image_get_mask (image);
     GeglBuffer  *buffer;
 
+    if (sub_progress)
+      gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
+                                  nth_drawable, n_drawables);
+
     gimp_image_undo_push_mask_precision (image, NULL, mask);
 
     buffer = gegl_buffer_new (GEGL_RECTANGLE (0, 0,
@@ -203,15 +212,17 @@ gimp_image_convert_precision (GimpImage     *image,
 
     nth_drawable++;
 
-    if (progress)
-      gimp_progress_set_value (progress,
-                               (gdouble) nth_drawable / (gdouble) n_drawables);
+    if (sub_progress)
+      gimp_progress_set_value (sub_progress, 1.0);
   }
 
   gimp_image_undo_group_end (image);
 
   gimp_image_precision_changed (image);
   g_object_thaw_notify (G_OBJECT (image));
+
+  if (sub_progress)
+    g_object_unref (sub_progress);
 
   if (progress)
     gimp_progress_end (progress);

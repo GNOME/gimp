@@ -174,7 +174,8 @@ static void       gimp_layer_convert_type       (GimpDrawable       *drawable,
                                                  gint                layer_dither_type,
                                                  gint                mask_dither_type,
                                                  gboolean            convert_type,
-                                                 gboolean            push_undo);
+                                                 gboolean            push_undo,
+                                                 GimpProgress       *progress);
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
@@ -812,7 +813,7 @@ gimp_layer_convert (GimpItem  *item,
                                   new_base_type, new_precision,
                                   0, 0,
                                   convert_profile,
-                                  FALSE);
+                                  FALSE, NULL);
     }
 
   if (layer->mask)
@@ -1067,7 +1068,8 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                          gint               layer_dither_type,
                          gint               mask_dither_type,
                          gboolean           convert_profile,
-                         gboolean           push_undo)
+                         gboolean           push_undo,
+                         GimpProgress      *progress)
 {
   GimpLayer        *layer = GIMP_LAYER (drawable);
   GeglBuffer       *src_buffer;
@@ -1161,7 +1163,7 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
       gimp_gegl_convert_color_profile (src_buffer,  NULL, src_profile,
                                        dest_buffer, NULL, dest_profile,
                                        GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                       TRUE, NULL);
+                                       TRUE, progress);
     }
   else
     {
@@ -1183,7 +1185,7 @@ gimp_layer_convert_type (GimpDrawable      *drawable,
                                   GIMP_GRAY, new_precision,
                                   layer_dither_type, mask_dither_type,
                                   convert_profile,
-                                  push_undo);
+                                  push_undo, NULL);
     }
 }
 
