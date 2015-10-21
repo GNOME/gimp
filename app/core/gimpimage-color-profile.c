@@ -517,6 +517,11 @@ gimp_image_convert_profile_rgb (GimpImage                *image,
 
       nth_drawable++;
 
+      gimp_drawable_push_undo (drawable, NULL, NULL,
+                               0, 0,
+                               gimp_item_get_width  (GIMP_ITEM (drawable)),
+                               gimp_item_get_height (GIMP_ITEM (drawable)));
+
       gimp_gegl_convert_color_profile (gimp_drawable_get_buffer (drawable),
                                        NULL,
                                        src_profile,
