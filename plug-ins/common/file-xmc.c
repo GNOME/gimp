@@ -123,8 +123,8 @@
 #define CURSOR_DEFAULT_DELAY    50
 #define CURSOR_MINIMUM_DELAY    5
 
-#define div_255(x) (((x) + 0x80 + (((x) + 0x80) >> 8)) >> 8)
-#define READ32(f, e) read32 ((f), (e)); if (*(e)) return -1;
+#define div_255(x)       (((x) + 0x80 + (((x) + 0x80) >> 8)) >> 8)
+#define READ32(f, e)     read32 ((f), (e)); if (*(e)) return -1;
 #define DISPLAY_DIGIT(x) ((x) > 100) ? 3 : ((x) > 10) ? 2 : 1
 
 /*
@@ -744,14 +744,14 @@ load_image (const gchar  *filename,
       /* set color to each pixel */
       for (j = 0; j < width * height; j++)
         {
-          tmppixel[j] = separate_alpha (imagesp->images[i]->pixels[j]) ;
+          tmppixel[j] = separate_alpha (imagesp->images[i]->pixels[j]);
         }
 
       /* set pixel */
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0, width, height), 0,
                        NULL, tmppixel, GEGL_AUTO_ROWSTRIDE);
 
-      gimp_progress_update ( (i + 1) / imagesp->nimage);
+      gimp_progress_update ((i + 1) / imagesp->nimage);
 
       g_object_unref (buffer);
     }
@@ -862,12 +862,17 @@ load_thumbnail (const gchar *filename,
     {
       /* read entry type */
       type = READ32 (fp, error)
-      if (type != XCURSOR_IMAGE_TYPE) /* not a image */
-      /* skip rest of this content */
-        fseek (fp, 8, SEEK_CUR);
+      if (type != XCURSOR_IMAGE_TYPE)
+        {
+          /* not a image */
 
+          /* skip rest of this content */
+          fseek (fp, 8, SEEK_CUR);
+        }
       else
-        {/* this content is image */
+        {
+          /* this content is image */
+
           size = READ32 (fp, error)
           positions[*thumb_num_layers] = READ32 (fp, error)
           /* is this image is more preferred than selected before? */
@@ -928,6 +933,7 @@ load_thumbnail (const gchar *filename,
                    gimp_filename_to_utf8 (filename));
       return -1;
     }
+
   if (*thumb_height > MAX_LOAD_DIMENSION)
     {
       g_set_error (error, 0, 0,
@@ -988,8 +994,9 @@ static guint32
 read32 (FILE    *f,
         GError **error)
 {
-  guchar p[4];
+  guchar  p[4];
   guint32 ret;
+
   if (fread (p, 1, 4, f) != 4)
     {
       g_set_error (error, 0, 0, _("A read error occurred."));
@@ -1005,6 +1012,7 @@ read32 (FILE    *f,
 #else
   g_return_val_if_rearched ();
 #endif
+
   return ret;
 }
 
@@ -1014,7 +1022,6 @@ static gboolean
 save_dialog (const gint32     image_ID,
              GimpParamRegion *hotspotRange)
 {
-  gint x1, x2, y1, y2;
   GtkWidget      *dialog;
   GtkWidget      *frame;
   GtkWidget      *table;
@@ -1025,6 +1032,7 @@ save_dialog (const gint32     image_ID,
   GtkWidget      *label;
   GtkTextBuffer  *textbuffer;
   GValue          val = {0,};
+  gint            x1, x2, y1, y2;
   gboolean        run;
 
   g_value_init (&val, G_TYPE_DOUBLE);
@@ -1802,9 +1810,10 @@ separate_alpha (guint32 pixel)
     return 0;
 
   /* resume separate alpha data. */
-  red = CLAMP0255(red * 255 / alpha);
-  blue = CLAMP0255(blue * 255 / alpha);
-  green = CLAMP0255(green * 255 / alpha);
+  red   = MIN (red   * 255 / alpha, 255);
+  blue  = MIN (blue  * 255 / alpha, 255);
+  green = MIN (green * 255 / alpha, 255);
+
   retval = red + (green<<8) + (blue<<16) + (alpha<<24);
 
 #if G_BYTE_ORDER != G_LITTLE_ENDIAN
@@ -1824,17 +1833,18 @@ premultiply_alpha (guint32 pixel)
   pixel = GUINT32_TO_LE(pixel);
 #endif
 
-  red = pixel & 0xff;
-  green = (pixel>>8) & 0xff;
-  blue = (pixel>>16) & 0xff;
-  alpha = (pixel>>24) & 0xff;
+  red   = pixel         & 0xff;
+  green = (pixel >>  8) & 0xff;
+  blue  = (pixel >> 16) & 0xff;
+  alpha = (pixel >> 24) & 0xff;
 
   /* premultiply alpha
      (see "premultiply_data" function at line 154 of xcursorgen.c) */
-  red = div_255 (red * alpha);
+  red   = div_255 (red   * alpha);
   green = div_255 (green * alpha);
-  blue = div_255 (blue * alpha);
-  retval = blue + (green<<8) + (red<<16) + (alpha<<24);
+  blue  = div_255 (blue  * alpha);
+
+  retval = blue + (green << 8) + (red << 16) + (alpha << 24);
 
 #if G_BYTE_ORDER != G_LITTLE_ENDIAN
   pixel = GUINT32_FROM_LE(pixel);
