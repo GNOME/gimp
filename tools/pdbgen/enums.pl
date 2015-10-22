@@ -129,11 +129,12 @@ package Gimp::CodeGen::enums;
     GimpDesaturateMode =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
-	  symbols => [ qw(GIMP_DESATURATE_LIGHTNESS
-			  GIMP_DESATURATE_LUMINOSITY GIMP_DESATURATE_AVERAGE) ],
+	  symbols => [ qw(GIMP_DESATURATE_LIGHTNESS GIMP_DESATURATE_LUMA
+			  GIMP_DESATURATE_AVERAGE GIMP_DESATURATE_LUMINANCE) ],
 	  mapping => { GIMP_DESATURATE_LIGHTNESS => '0',
-		       GIMP_DESATURATE_LUMINOSITY => '1',
-		       GIMP_DESATURATE_AVERAGE => '2' }
+		       GIMP_DESATURATE_LUMA => '1',
+		       GIMP_DESATURATE_AVERAGE => '2',
+		       GIMP_DESATURATE_LUMINANCE => '3' }
 	},
     GimpDodgeBurnType =>
 	{ contig => 1,

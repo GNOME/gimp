@@ -233,8 +233,13 @@ GType gimp_desaturate_mode_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_DESATURATE_LIGHTNESS,   /*< desc="Lightness"  >*/
-  GIMP_DESATURATE_LUMINOSITY,  /*< desc="Luminosity" >*/
-  GIMP_DESATURATE_AVERAGE      /*< desc="Average"    >*/
+  GIMP_DESATURATE_LUMA,        /*< desc="Luma"       >*/
+  GIMP_DESATURATE_AVERAGE,     /*< desc="Average"    >*/
+  GIMP_DESATURATE_LUMINANCE,   /*< desc="Luminance"  >*/
+
+#ifndef GIMP_DISABLE_DEPRECATED
+  GIMP_DESATURATE_LUMINOSITY = GIMP_DESATURATE_LUMA /*< skip, pdb-skip >*/
+#endif /* GIMP_DISABLE_DEPRECATED */
 } GimpDesaturateMode;
 
 

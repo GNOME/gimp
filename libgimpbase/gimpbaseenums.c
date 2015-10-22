@@ -426,16 +426,18 @@ gimp_desaturate_mode_get_type (void)
   static const GEnumValue values[] =
   {
     { GIMP_DESATURATE_LIGHTNESS, "GIMP_DESATURATE_LIGHTNESS", "lightness" },
-    { GIMP_DESATURATE_LUMINOSITY, "GIMP_DESATURATE_LUMINOSITY", "luminosity" },
+    { GIMP_DESATURATE_LUMA, "GIMP_DESATURATE_LUMA", "luma" },
     { GIMP_DESATURATE_AVERAGE, "GIMP_DESATURATE_AVERAGE", "average" },
+    { GIMP_DESATURATE_LUMINANCE, "GIMP_DESATURATE_LUMINANCE", "luminance" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
     { GIMP_DESATURATE_LIGHTNESS, NC_("desaturate-mode", "Lightness"), NULL },
-    { GIMP_DESATURATE_LUMINOSITY, NC_("desaturate-mode", "Luminosity"), NULL },
+    { GIMP_DESATURATE_LUMA, NC_("desaturate-mode", "Luma"), NULL },
     { GIMP_DESATURATE_AVERAGE, NC_("desaturate-mode", "Average"), NULL },
+    { GIMP_DESATURATE_LUMINANCE, NC_("desaturate-mode", "Luminance"), NULL },
     { 0, NULL, NULL }
   };
 

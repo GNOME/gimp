@@ -153,6 +153,9 @@ add_compat_enums(PyObject *m)
     PyModule_AddIntConstant(m, "HIGHLIGHTS",
                             GIMP_TRANSFER_HIGHLIGHTS);
 
+    PyModule_AddIntConstant(m, "DESATURATE_LUMINOSITY",
+                            GIMP_DESATURATE_LUMA);
+
     PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_RGB",
                             GIMP_EXPORT_CAN_HANDLE_RGB);
     PyModule_AddIntConstant(m, "EXPORT_CAN_HANDLE_GRAY",
