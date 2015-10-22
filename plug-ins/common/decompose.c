@@ -147,7 +147,7 @@ static gchar   * generate_filename           (guint32              image_ID,
 
 #define CPN_HSL_H {"hue", N_("hue"), 0.0, 1.0, TRUE}
 #define CPN_HSL_S {"saturation", N_("saturation"), 0.0, 1.0, TRUE}
-#define CPN_HSL_L {"lightness", N_("value"), 0.0, 1.0, TRUE}
+#define CPN_HSL_L {"lightness", N_("lightness"), 0.0, 1.0, TRUE}
 
 #define CPN_CMYK_C {"cyan", N_("cyan-k"), 0.0, 1.0, TRUE}
 #define CPN_CMYK_M {"magenta", N_("magenta-k"), 0.0, 1.0, TRUE}
