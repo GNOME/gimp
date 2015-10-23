@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-10-19 05:55+0000\n"
-"PO-Revision-Date: 2015-10-19 07:10+0100\n"
+"POT-Creation-Date: 2015-10-23 05:54+0000\n"
+"PO-Revision-Date: 2015-10-23 19:09+0100\n"
 "Last-Translator: Pedro Albuquerque <palbuquerque73o@gmail.com>\n"
 "Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: Portuguese\n"
@@ -479,7 +479,7 @@ msgstr "A adicionar tabuleiro de xadrez"
 msgid "Checkerboard"
 msgstr "Tabuleiro de xadrez"
 
-#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1152
+#: ../plug-ins/common/checkerboard.c:413 ../plug-ins/common/file-xmc.c:1160
 #: ../plug-ins/gimpressionist/sizemap.c:510
 msgid "_Size:"
 msgstr "_Tamanho:"
@@ -906,7 +906,7 @@ msgstr "Gravar parâmetros do explorador CML."
 #: ../plug-ins/common/file-png.c:1494 ../plug-ins/common/file-raw-data.c:785
 #: ../plug-ins/common/file-raw-data.c:813 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-tiff-save.c:965
-#: ../plug-ins/common/file-xmc.c:1465
+#: ../plug-ins/common/file-xmc.c:1473
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:326 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:748 ../plug-ins/file-ico/ico-save.c:1079
@@ -1579,9 +1579,14 @@ msgstr "matiz"
 msgid "saturation"
 msgstr "saturação"
 
-#: ../plug-ins/common/decompose.c:146 ../plug-ins/common/decompose.c:150
+#: ../plug-ins/common/decompose.c:146
 msgid "value"
 msgstr "valor"
+
+#: ../plug-ins/common/decompose.c:150
+#| msgid "Lightness"
+msgid "lightness"
+msgstr "luminosidade"
 
 #: ../plug-ins/common/decompose.c:152
 msgid "cyan-k"
@@ -2105,7 +2110,7 @@ msgstr "\"%s\": EOF ou erro ao ler dados da paleta"
 #: ../plug-ins/common/file-png.c:1487 ../plug-ins/common/file-pnm.c:1206
 #: ../plug-ins/common/file-ps.c:1265 ../plug-ins/common/file-sunras.c:602
 #: ../plug-ins/common/file-tga.c:1198 ../plug-ins/common/file-tiff-save.c:758
-#: ../plug-ins/common/file-xbm.c:1033 ../plug-ins/common/file-xmc.c:1454
+#: ../plug-ins/common/file-xbm.c:1033 ../plug-ins/common/file-xmc.c:1462
 #: ../plug-ins/common/file-xpm.c:660 ../plug-ins/common/file-xwd.c:652
 #: ../plug-ins/file-bmp/bmp-write.c:318 ../plug-ins/file-fits/fits.c:473
 #: ../plug-ins/file-fli/fli-gimp.c:716 ../plug-ins/file-ico/ico-save.c:1073
@@ -3901,7 +3906,7 @@ msgstr "Comentário:"
 msgid "_Write hot spot values"
 msgstr "_Escrever valores ponto quente"
 
-#: ../plug-ins/common/file-xbm.c:1319 ../plug-ins/common/file-xmc.c:1064
+#: ../plug-ins/common/file-xbm.c:1319 ../plug-ins/common/file-xmc.c:1072
 msgid "Hot spot _X:"
 msgstr "Ponto quente _X:"
 
@@ -3923,7 +3928,7 @@ msgid "_Mask file extension:"
 msgstr "Extensão do ficheiro _Máscara:"
 
 #: ../plug-ins/common/file-xmc.c:335 ../plug-ins/common/file-xmc.c:373
-#: ../plug-ins/common/file-xmc.c:1031
+#: ../plug-ins/common/file-xmc.c:1039
 msgid "X11 Mouse Cursor"
 msgstr "Cursor de rato X11"
 
@@ -3952,22 +3957,22 @@ msgstr "A moldura %d de \"%s\" é demasiado larga para o cursor X."
 msgid "Frame %d of '%s' is too high for an X cursor."
 msgstr "A moldura %d de \"%s\" é demasiado alta para o cursor X."
 
-#: ../plug-ins/common/file-xmc.c:887
+#: ../plug-ins/common/file-xmc.c:892
 #, c-format
 msgid "there is no image chunk in \"%s\"."
 msgstr "não existe um bocado da imagem em \"%s\"."
 
-#: ../plug-ins/common/file-xmc.c:927
+#: ../plug-ins/common/file-xmc.c:932
 #, c-format
 msgid "'%s' is too wide for an X cursor."
 msgstr "\"%s\" é demasiado larga para o cursor X."
 
-#: ../plug-ins/common/file-xmc.c:934
+#: ../plug-ins/common/file-xmc.c:940
 #, c-format
 msgid "'%s' is too high for an X cursor."
 msgstr "\"%s\" é demasiado alta para o cursor X."
 
-#: ../plug-ins/common/file-xmc.c:995
+#: ../plug-ins/common/file-xmc.c:1002
 #, c-format
 msgid "A read error occurred."
 msgstr "Ocorreu um erro de leitura."
@@ -3975,25 +3980,25 @@ msgstr "Ocorreu um erro de leitura."
 #.
 #. * parameter settings
 #.
-#: ../plug-ins/common/file-xmc.c:1037
+#: ../plug-ins/common/file-xmc.c:1045
 msgid "XMC Options"
 msgstr "Opções XMC"
 
-#: ../plug-ins/common/file-xmc.c:1072
+#: ../plug-ins/common/file-xmc.c:1080
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Insira a coordenada X do ponto quente. A origem é o canto superior esquerdo."
 
-#: ../plug-ins/common/file-xmc.c:1095
+#: ../plug-ins/common/file-xmc.c:1103
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
 msgstr ""
 "Insira a coordenada Y do ponto quente. A origem é o canto superior esquerdo."
 
-#: ../plug-ins/common/file-xmc.c:1104
+#: ../plug-ins/common/file-xmc.c:1112
 msgid "_Auto-Crop all frames."
 msgstr "_Recortar automaticamente todas as molduras."
 
-#: ../plug-ins/common/file-xmc.c:1117
+#: ../plug-ins/common/file-xmc.c:1125
 msgid ""
 "Remove the empty borders of all frames.\n"
 "This reduces the file size and may fix the problem that some large cursors "
@@ -4006,7 +4011,7 @@ msgstr ""
 "Desmarque esta opção se planear editar o cursor exportado com outros "
 "programas."
 
-#: ../plug-ins/common/file-xmc.c:1140
+#: ../plug-ins/common/file-xmc.c:1148
 msgid ""
 "Choose the nominal size of frames.\n"
 "If you don't have plans to make multi-sized cursor, or you have no idea, "
@@ -4025,59 +4030,59 @@ msgstr ""
 "animação e qual a sequência  usada baseada no valor de \"gtk-cursor-theme-"
 "size\"."
 
-#: ../plug-ins/common/file-xmc.c:1157
+#: ../plug-ins/common/file-xmc.c:1165
 msgid "_Use this value only for a frame which size is not specified."
 msgstr ""
 "_Usar este valor só para uma moldura que não tenha o tamanho especificado. "
 
-#: ../plug-ins/common/file-xmc.c:1160
+#: ../plug-ins/common/file-xmc.c:1168
 msgid "_Replace the size of all frames even if it is specified."
 msgstr ""
 "_Substituir o tamanho de todas as molduras mesmo que esteja especificado."
 
-#: ../plug-ins/common/file-xmc.c:1176
+#: ../plug-ins/common/file-xmc.c:1184
 msgid "_Delay:"
 msgstr "_Atraso:"
 
-#: ../plug-ins/common/file-xmc.c:1181
+#: ../plug-ins/common/file-xmc.c:1189
 msgid "Enter time span in milliseconds in which each frame is rendered."
 msgstr "Digite a duração em milissegundos para o desenho de cada fotograma."
 
-#: ../plug-ins/common/file-xmc.c:1209
+#: ../plug-ins/common/file-xmc.c:1217
 msgid "_Use this value only for a frame which delay is not specified."
 msgstr "_Use este valor apenas para uma moldura sem o atraso especificado."
 
-#: ../plug-ins/common/file-xmc.c:1212
+#: ../plug-ins/common/file-xmc.c:1220
 msgid "_Replace the delay of all frames even if it is specified."
 msgstr ""
 "_Substituir o atraso de todas as molduras mesmo quando estiver especificado."
 
-#: ../plug-ins/common/file-xmc.c:1237
+#: ../plug-ins/common/file-xmc.c:1245
 msgid ""
 "The part of copyright information that exceeded 65535 characters was removed."
 msgstr ""
 "A parte da informação de copyright que excede os 65535 caracteres foi "
 "removida."
 
-#: ../plug-ins/common/file-xmc.c:1247
+#: ../plug-ins/common/file-xmc.c:1255
 msgid "Enter copyright information."
 msgstr "Insira as informações de direitos de autor."
 
-#: ../plug-ins/common/file-xmc.c:1249
+#: ../plug-ins/common/file-xmc.c:1257
 msgid "_Copyright:"
 msgstr "_Direitos de autor:"
 
-#: ../plug-ins/common/file-xmc.c:1265
+#: ../plug-ins/common/file-xmc.c:1273
 msgid ""
 "The part of license information that exceeded 65535 characters was removed."
 msgstr ""
 "A parte da informação da licença que excede os 65535 caracteres foi removida."
 
-#: ../plug-ins/common/file-xmc.c:1275
+#: ../plug-ins/common/file-xmc.c:1283
 msgid "Enter license information."
 msgstr "Insira a informação da licença."
 
-#: ../plug-ins/common/file-xmc.c:1277
+#: ../plug-ins/common/file-xmc.c:1285
 msgid "_License:"
 msgstr "_Licença:"
 
@@ -4086,37 +4091,37 @@ msgstr "_Licença:"
 #.
 #. We use gtk_text_view for "Other" while "Copyright" & "License" is entered
 #. * in gtk_entry because We want allow '\n' for "Other".
-#: ../plug-ins/common/file-xmc.c:1284
+#: ../plug-ins/common/file-xmc.c:1292
 msgid "_Other:"
 msgstr "_Outras:"
 
-#: ../plug-ins/common/file-xmc.c:1318
+#: ../plug-ins/common/file-xmc.c:1326
 msgid "Enter other comment if you want."
 msgstr "Insira outros comentários que pretenda incluir."
 
-#: ../plug-ins/common/file-xmc.c:1370
+#: ../plug-ins/common/file-xmc.c:1378
 #, c-format
 msgid "Comment is limited to %d characters."
 msgstr "O comentário está limitado a %d caracteres."
 
-#: ../plug-ins/common/file-xmc.c:1520
+#: ../plug-ins/common/file-xmc.c:1528
 #, c-format
 msgid "Frame '%s' is too wide. Please reduce to no more than %dpx."
 msgstr ""
 "A moldura \"%s\" é demasiado larga. Por favor reduza para não mais que %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1529
+#: ../plug-ins/common/file-xmc.c:1537
 #, c-format
 msgid "Frame '%s' is too high. Please reduce to no more than %dpx."
 msgstr ""
 "A moldura \"%s\" é demasiado alta. Por favor reduza para não mais que %dpx."
 
-#: ../plug-ins/common/file-xmc.c:1538
+#: ../plug-ins/common/file-xmc.c:1546
 #, c-format
 msgid "Width and/or height of frame '%s' is zero!"
 msgstr "A largura e/ou altura da moldura \"%s\" é zero!"
 
-#: ../plug-ins/common/file-xmc.c:1577
+#: ../plug-ins/common/file-xmc.c:1585
 #, c-format
 msgid ""
 "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
@@ -4128,7 +4133,7 @@ msgstr ""
 "Tente mudar a posição do ponto quente, a geometria da camada ou grave sem "
 "recorte automático."
 
-#: ../plug-ins/common/file-xmc.c:1740
+#: ../plug-ins/common/file-xmc.c:1748
 #, c-format
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
@@ -4139,7 +4144,7 @@ msgstr ""
 "largura ou altura é mais que %ipx.\n"
 "Isto vai atravancar o ecrã em alguns ambientes."
 
-#: ../plug-ins/common/file-xmc.c:1747
+#: ../plug-ins/common/file-xmc.c:1755
 msgid ""
 "Your cursor was successfully saved but it contains one or more frames whose "
 "nominal size is not supported by GNOME settings.\n"
@@ -4152,7 +4157,7 @@ msgstr ""
 "todas as molduras...\" no diálogo Gravar. Senão o seu cursor poderá não "
 "aparecer nas definições do GNOME."
 
-#: ../plug-ins/common/file-xmc.c:1982
+#: ../plug-ins/common/file-xmc.c:1992
 #, c-format
 msgid ""
 "The parasite \"%s\" is too long for an X cursor comment. It was cut off to "
@@ -4162,7 +4167,7 @@ msgstr ""
 "cortado para caber."
 
 #. translators: the %i is *always* 8 here
-#: ../plug-ins/common/file-xmc.c:2185
+#: ../plug-ins/common/file-xmc.c:2195
 #, c-format
 msgid ""
 "Sorry, this plug-in cannot handle a cursor which contains over %i different "
@@ -4243,13 +4248,11 @@ msgstr "Impossível gravar imagens com canais alfa."
 
 #: ../plug-ins/common/file-xwd.c:659
 #, c-format
-#| msgid "Could not open '%s' for writing: %s"
 msgid "Could not open '%s' for writing: "
 msgstr "Impossível abrir \"%s\" para escrita: "
 
 #: ../plug-ins/common/file-xwd.c:686
 #, c-format
-#| msgid "Error while reading '%s': %s"
 msgid "Error saving '%s': "
 msgstr "Erro ao gravar \"%s\": "
 
