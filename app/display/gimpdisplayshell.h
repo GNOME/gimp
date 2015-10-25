@@ -126,7 +126,8 @@ struct _GimpDisplayShell
   gchar             *title;            /*  current title                      */
   gchar             *status;           /*  current default statusbar content  */
 
-  gint               icon_size;        /*  size of the icon pixmap            */
+  gint               icon_size;        /*  size of the icon pixbuf            */
+  gint               icon_size_small;  /*  size of the icon's wilber pixbuf   */
   guint              icon_idle_id;     /*  ID of the idle-function            */
   GdkPixbuf         *icon;             /*  icon                               */
 

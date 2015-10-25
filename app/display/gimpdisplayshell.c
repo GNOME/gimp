@@ -328,7 +328,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   gimp_display_shell_items_init (shell);
 
-  shell->icon_size  = 64;
+  shell->icon_size       = 128;
+  shell->icon_size_small = 96;
 
   shell->cursor_handedness = GIMP_HANDEDNESS_RIGHT;
   shell->current_cursor    = (GimpCursorType) -1;
