@@ -224,10 +224,9 @@ static DecoVals decovals =
   FALSE     /* use registration color */
 };
 
-static GimpRunMode run_mode;
-
 
 MAIN ()
+
 
 static void
 query (void)
@@ -312,6 +311,7 @@ run (const gchar      *name,
 {
   static GimpParam  values[MAX_EXTRACT_IMAGES + 1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpRunMode       run_mode;
   gint32            num_images;
   gint32            image_ID_extract[MAX_EXTRACT_IMAGES];
   gint32            layer_ID_extract[MAX_EXTRACT_IMAGES];
@@ -897,7 +897,9 @@ decompose_dialog (void)
 
 /* Build a filename like <imagename>-<channel>.<extension> */
 gchar *
-generate_filename (guint32 image_ID, guint colorspace, guint channel)
+generate_filename (guint32 image_ID,
+                   guint   colorspace,
+                   guint   channel)
 {
   /* Build a filename like <imagename>-<channel>.<extension> */
   gchar   *fname;
@@ -912,9 +914,11 @@ generate_filename (guint32 image_ID, guint colorspace, guint channel)
 
       while (extension >= fname)
         {
-          if (*extension == '.') break;
+          if (*extension == '.')
+            break;
           extension--;
         }
+
       if (extension >= fname)
         {
           *(extension++) = '\0';
@@ -942,6 +946,8 @@ generate_filename (guint32 image_ID, guint colorspace, guint channel)
     {
       filename = g_strdup (gettext (extract[colorspace].component[channel].channel_name));
     }
+
   g_free (fname);
+
   return filename;
 }
