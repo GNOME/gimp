@@ -464,19 +464,24 @@ icons64_DATA = \
 	64/gimp-user-manual.png		\
 	64/gimp-warning.png		\
 	64/gimp-wilber-eek.png		\
-	64/gimp-wilber.png
+	64/gimp-wilber.png		\
+	64/gimp-wilber-outline.png
 
 icons96_DATA = \
-	96/gimp-wilber.png
+	96/gimp-wilber.png		\
+	96/gimp-wilber-outline.png
 
 icons128_DATA = \
-	128/gimp-wilber.png
+	128/gimp-wilber.png		\
+	128/gimp-wilber-outline.png
 
 icons192_DATA = \
-	192/gimp-wilber.png
+	192/gimp-wilber.png		\
+	192/gimp-wilber-outline.png
 
 icons256_DATA = \
-	256/gimp-wilber.png
+	256/gimp-wilber.png		\
+	256/gimp-wilber-outline.png
 
 
 ## Compiled-in icons for both the core and libgimpwidgets
