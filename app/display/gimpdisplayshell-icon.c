@@ -115,8 +115,7 @@ gimp_display_shell_icon_update_idle (gpointer data)
 
       gdk_pixbuf_copy_area (pixbuf, 0, 0, width, height,
                             icon,
-                            (shell->icon_size - width)  / 2,
-                            (shell->icon_size - height) / 2);
+                            0, shell->icon_size - height);
 
       pixbuf = gimp_widget_load_icon (GTK_WIDGET (shell), "gimp-wilber",
                                       shell->icon_size_small);
