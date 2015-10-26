@@ -106,7 +106,7 @@ brushdmenuselect (GtkWidget *widget,
   gint          bpp;
   gint          x, y;
   ppm_t        *p;
-  gint          x1, y1, x2, y2;
+  gint          x1, y1, w, h;
   gint          row;
   GimpDrawable *drawable;
   gint          rowstride;
@@ -132,46 +132,50 @@ brushdmenuselect (GtkWidget *widget,
 
   drawable = gimp_drawable_get (id);
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id, &x1, &y1, &w, &h))
+    return;
 
   bpp = gimp_drawable_bpp (drawable->drawable_id);
 
   ppm_kill (&brushppm);
-  ppm_new (&brushppm, x2 - x1, y2 - y1);
+  ppm_new (&brushppm, w, h);
   p = &brushppm;
 
   rowstride = p->width * 3;
 
-  src_row = g_new (guchar, (x2 - x1) * bpp);
+  src_row = g_new (guchar, w * bpp);
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-                       0, 0, x2 - x1, y2 - y1,
-                       FALSE, FALSE);
+                       0, 0, w, h, FALSE, FALSE);
 
   if (bpp == 3)
     { /* RGB */
-      int bpr = (x2 - x1) * 3;
+      gint bpr = w * 3;
+      gint y2 = y1 + h;
 
       for (row = 0, y = y1; y < y2; row++, y++)
         {
-          gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
+          gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, w);
           memcpy (p->col + row*rowstride, src_row, bpr);
         }
     }
   else
     { /* RGBA (bpp > 3) GrayA (bpp == 2) or Gray */
       gboolean is_gray = ((bpp > 3) ? TRUE : FALSE);
+      gint y2 = y1 + h;
 
       for (row = 0, y = y1; y < y2; row++, y++)
         {
           guchar *tmprow = p->col + row * rowstride;
           guchar *tmprow_ptr;
+	  gint x2 = x1 + w;
 
-          gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, (x2 - x1));
+
+          gimp_pixel_rgn_get_row (&src_rgn, src_row, x1, y, w);
           src = src_row;
           tmprow_ptr = tmprow;
           /* Possible micro-optimization here:
-           * src_end = src + src_rgn.bpp * (x2-x1);
+           * src_end = src + src_rgn.bpp * w);
            * for ( ; src < src_end ; src += src_rgn.bpp)
            */
           for (x = x1; x < x2; x++)

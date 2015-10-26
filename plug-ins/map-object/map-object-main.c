@@ -251,8 +251,8 @@ run (const gchar      *name,
       case GIMP_RUN_WITH_LAST_VALS:
         gimp_get_data (PLUG_IN_PROC, &mapvals);
         check_drawables (drawable);
-        image_setup (drawable, FALSE);
-        compute_image ();
+        if (image_setup (drawable, FALSE))
+          compute_image ();
         break;
 
       case GIMP_RUN_NONINTERACTIVE:
@@ -309,8 +309,8 @@ run (const gchar      *name,
               mapvals.cylindermap_id[i] = param[47+i].data.d_drawable;
 
             check_drawables (drawable);
-            image_setup (drawable, FALSE);
-            compute_image ();
+            if (image_setup (drawable, FALSE))
+              compute_image ();
           }
         break;
     }

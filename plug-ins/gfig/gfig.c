@@ -98,7 +98,7 @@ gdouble       org_scale_x_factor, org_scale_y_factor;
 
 
 /* Stuff for the preview bit */
-static gint  sel_x1, sel_y1, sel_x2, sel_y2;
+static gint  sel_x, sel_y;
 static gint  sel_width, sel_height;
 gint         preview_width, preview_height;
 gdouble      scale_x_factor, scale_y_factor;
@@ -178,12 +178,14 @@ run (const gchar      *name,
   if (! gimp_selection_is_empty (gfig_context->image_id))
     gimp_selection_none (gfig_context->image_id);
 
-  gimp_drawable_mask_bounds (drawable_id,
-                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  if (! gimp_drawable_mask_intersect (drawable_id, &sel_x, &sel_y,
+                                      &sel_width, &sel_height))
+    {
+      gimp_context_pop ();
 
-  sel_width  = sel_x2 - sel_x1;
-  sel_height = sel_y2 - sel_y1;
-
+      gimp_image_undo_group_end (gfig_context->image_id);
+      return;
+    }
 
   /* Calculate preview size */
 

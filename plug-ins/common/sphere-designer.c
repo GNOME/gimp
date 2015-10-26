@@ -2948,8 +2948,8 @@ realrender (GimpDrawable *drawable)
   gint          x, y;
   ray           r;
   GimpVector4   rcol;
-  gint          tx, ty;
-  gint          x1, y1, x2, y2;
+  gint          width, height;
+  gint          x1, y1;
   guchar       *dest;
   gint          bpp;
   GimpPixelRgn  pr, dpr;
@@ -2960,6 +2960,10 @@ realrender (GimpDrawable *drawable)
   r.v1.z = -10.0;
   r.v2.z = 0.0;
 
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &x1, &y1, &width, &height))
+    return;
+
   gimp_pixel_rgn_init (&pr, drawable, 0, 0,
                        gimp_drawable_width (drawable->drawable_id),
                        gimp_drawable_height (drawable->drawable_id), FALSE,
@@ -2968,23 +2972,19 @@ realrender (GimpDrawable *drawable)
                        gimp_drawable_width (drawable->drawable_id),
                        gimp_drawable_height (drawable->drawable_id), TRUE,
                        TRUE);
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   bpp = gimp_drawable_bpp (drawable->drawable_id);
-  buffer = g_malloc ((x2 - x1) * 4);
-  ibuffer = g_malloc ((x2 - x1) * 4);
-
-  tx = x2 - x1;
-  ty = y2 - y1;
+  buffer = g_malloc (width * 4);
+  ibuffer = g_malloc (width * 4);
 
   gimp_progress_init (_("Rendering sphere"));
 
-  for (y = 0; y < ty; y++)
+  for (y = 0; y < height; y++)
     {
       dest = buffer;
-      for (x = 0; x < tx; x++)
+      for (x = 0; x < width; x++)
         {
-          r.v1.x = r.v2.x = 8.1 * (x / (float) (tx - 1) - 0.5);
-          r.v1.y = r.v2.y = 8.1 * (y / (float) (ty - 1) - 0.5);
+          r.v1.x = r.v2.x = 8.1 * (x / (float) (width - 1) - 0.5);
+          r.v1.y = r.v2.y = 8.1 * (y / (float) (height - 1) - 0.5);
 
           traceray (&r, &rcol, 10, 1.0);
           dest[0] = pixelval (255 * rcol.x);
@@ -2993,8 +2993,8 @@ realrender (GimpDrawable *drawable)
           dest[3] = pixelval (255 * rcol.w);
           dest += 4;
         }
-      gimp_pixel_rgn_get_row (&pr, ibuffer, x1, y1 + y, x2 - x1);
-      for (x = 0; x < (x2 - x1); x++)
+      gimp_pixel_rgn_get_row (&pr, ibuffer, x1, y1 + y, width);
+      for (x = 0; x < width; x++)
         {
           gint   k, dx = x * 4, sx = x * bpp;
           gfloat a     = buffer[dx + 3] / 255.0;
@@ -3005,15 +3005,15 @@ realrender (GimpDrawable *drawable)
                 buffer[dx + k] * a + ibuffer[sx + k] * (1.0 - a);
             }
         }
-      gimp_pixel_rgn_set_row (&dpr, ibuffer, x1, y1 + y, x2 - x1);
-      gimp_progress_update ((gdouble) y / (gdouble) ty);
+      gimp_pixel_rgn_set_row (&dpr, ibuffer, x1, y1 + y, width);
+      gimp_progress_update ((gdouble) y / (gdouble) height);
     }
   gimp_progress_update (1.0);
   g_free (buffer);
   g_free (ibuffer);
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
 }
 
 static void

@@ -96,6 +96,9 @@ compute_preview (gint x,
 
   init_compute ();
 
+  if (! preview_surface)
+    return;
+
   p1 = int_to_pos (x, y);
   p2 = int_to_pos (x + w, y + h);
 

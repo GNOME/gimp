@@ -282,7 +282,7 @@ typedef struct
 {
   gint is_color;
   gint has_alpha;
-  gint x1, y1, x2, y2;          /* mask bounds */
+  gint x, y, w, h;          /* mask bounds */
   gint tile_width, tile_height;
   /* these values don't belong to drawable, though. */
 } DrawableInfo;
@@ -850,8 +850,11 @@ plugin_run (const gchar      *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   dinfo.is_color  = gimp_drawable_is_rgb (drawable->drawable_id);
   dinfo.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  gimp_drawable_mask_bounds (drawable->drawable_id, &dinfo.x1, &dinfo.y1,
-                             &dinfo.x2, &dinfo.y2);
+
+  if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                      &dinfo.x, &dinfo.y, &dinfo.w, &dinfo.h))
+    return;
+
   dinfo.tile_width = gimp_tile_width ();
   dinfo.tile_height = gimp_tile_height ();
 
@@ -1007,8 +1010,8 @@ plugin_do (void)
   calc_deinit ();
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, dinfo.x1, dinfo.y1,
-                        (dinfo.x2 - dinfo.x1), (dinfo.y2 - dinfo.y1));
+  gimp_drawable_update (drawable->drawable_id, dinfo.x, dinfo.y,
+                        dinfo.w, dinfo.h);
 }
 
 /* these routines should be almost rewritten anyway */
@@ -1018,19 +1021,16 @@ plugin_do_non_asupsample (void)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   gpointer      pr;
-  gint          width, height;
   gint          progress, max_progress;
 
-  width  = dinfo.x2 - dinfo.x1;
-  height = dinfo.y2 - dinfo.y1;
 
   progress = 0;
-  max_progress = width * height;
+  max_progress = dinfo.w * dinfo.h;
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-                       dinfo.x1, dinfo.y1, width, height, FALSE, FALSE);
+                       dinfo.x, dinfo.y, dinfo.w, dinfo.h, FALSE, FALSE);
   gimp_pixel_rgn_init (&dest_rgn, drawable,
-                       dinfo.x1, dinfo.y1, width, height, TRUE, TRUE);
+                       dinfo.x, dinfo.y, dinfo.w, dinfo.h, TRUE, TRUE);
 
   for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
        pr != NULL; pr = gimp_pixel_rgns_process (pr))
@@ -1093,8 +1093,8 @@ plugin_do_asupsample (void)
 
   tk_write = gimp_pixel_fetcher_new (drawable, TRUE);
 
-  gimp_adaptive_supersample_area (dinfo.x1, dinfo.y1,
-                                  dinfo.x2 - 1, dinfo.y2 - 1,
+  gimp_adaptive_supersample_area (dinfo.x, dinfo.y,
+                                  dinfo.x + dinfo.w - 1, dinfo.y + dinfo.h - 1,
                                   pvals.asupsample_max_depth,
                                   pvals.asupsample_threshold,
                                   plugin_render_func,
