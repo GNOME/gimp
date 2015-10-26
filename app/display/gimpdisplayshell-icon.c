@@ -127,7 +127,7 @@ gimp_display_shell_icon_update_idle (gpointer data)
       gdk_pixbuf_composite (pixbuf, icon,
                             shell->icon_size - width, 0,
                             width, height,
-                            0.0, 0.0, 1.0, 1.0,
+                            shell->icon_size - width, 0.0, 1.0, 1.0,
                             GDK_INTERP_NEAREST, 255);
       g_object_unref (pixbuf);
     }
