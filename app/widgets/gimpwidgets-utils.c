@@ -1264,6 +1264,26 @@ gimp_widget_flush_expose (GtkWidget *widget)
   gdk_flush ();
 }
 
+gboolean
+gimp_widget_get_fully_opaque (GtkWidget *widget)
+{
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), FALSE);
+
+  return g_object_get_data (G_OBJECT (widget),
+                            "gimp-widget-fully-opaque") != NULL;
+}
+
+void
+gimp_widget_set_fully_opaque (GtkWidget *widget,
+                              gboolean   fully_opaque)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  return g_object_set_data (G_OBJECT (widget),
+                            "gimp-widget-fully-opaque",
+                            GINT_TO_POINTER (fully_opaque));
+}
+
 static gboolean
 gimp_print_event_free (gpointer data)
 {

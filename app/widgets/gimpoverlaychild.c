@@ -31,6 +31,7 @@
 
 #include "gimpoverlaybox.h"
 #include "gimpoverlaychild.h"
+#include "gimpwidgets-utils.h"
 
 
 /*  local function prototypes  */
@@ -302,6 +303,42 @@ gimp_overlay_child_size_allocate (GimpOverlayBox   *box,
   gimp_overlay_child_invalidate (box, child);
 }
 
+static void
+gimp_overlay_child_clip_fully_opaque (GimpOverlayChild *child,
+                                      GtkContainer     *container,
+                                      cairo_t          *cr)
+{
+  GList *children;
+  GList *list;
+
+  children = gtk_container_get_children (container);
+
+  for (list = children; list; list = g_list_next (list))
+    {
+      GtkWidget *widget = list->data;
+
+      if (gimp_widget_get_fully_opaque (widget))
+        {
+          GtkAllocation allocation;
+          gint          x, y;
+
+          gtk_widget_get_allocation (widget, &allocation);
+          gtk_widget_translate_coordinates (widget, child->widget,
+                                            0, 0, &x, &y);
+
+          cairo_rectangle (cr, x, y, allocation.width, allocation.height);
+        }
+      else if (GTK_IS_CONTAINER (widget))
+        {
+          gimp_overlay_child_clip_fully_opaque (child,
+                                                GTK_CONTAINER (widget),
+                                                cr);
+        }
+    }
+
+  g_list_free (children);
+}
+
 gboolean
 gimp_overlay_child_expose (GimpOverlayBox   *box,
                            GimpOverlayChild *child,
@@ -341,6 +378,13 @@ gimp_overlay_child_expose (GimpOverlayBox   *box,
           cairo_transform (cr, &child->matrix);
           gdk_cairo_set_source_pixmap (cr, pixmap, 0, 0);
           cairo_paint_with_alpha (cr, child->opacity);
+
+          gimp_overlay_child_clip_fully_opaque (child,
+                                                GTK_CONTAINER (child->widget),
+                                                cr);
+          cairo_clip (cr);
+          cairo_paint (cr);
+
           cairo_destroy (cr);
         }
     }

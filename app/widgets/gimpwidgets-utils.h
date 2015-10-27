@@ -97,11 +97,15 @@ GtkWidget       * gimp_dock_with_window_new        (GimpDialogFactory    *factor
                                                     GdkScreen            *screen,
                                                     gint                  monitor,
                                                     gboolean              toolbox);
-GtkWidget *       gimp_tools_get_tool_options_gui  (GimpToolOptions      *tool_options);
+GtkWidget       * gimp_tools_get_tool_options_gui  (GimpToolOptions      *tool_options);
 void              gimp_tools_set_tool_options_gui  (GimpToolOptions      *tool_options,
                                                     GtkWidget            *widget);
 
 void              gimp_widget_flush_expose         (GtkWidget            *widget);
+
+gboolean          gimp_widget_get_fully_opaque     (GtkWidget            *widget);
+void              gimp_widget_set_fully_opaque     (GtkWidget            *widget,
+                                                    gboolean              fully_opaque);
 
 const gchar     * gimp_print_event                 (const GdkEvent       *event);
 
