@@ -355,7 +355,7 @@ gimp_overlay_box_add_child (GimpOverlayBox *box,
   g_return_if_fail (GIMP_IS_OVERLAY_BOX (box));
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  child = gimp_overlay_child_new (box, widget, xalign, yalign, 0.0, 0.7);
+  child = gimp_overlay_child_new (box, widget, xalign, yalign, 0.0, 0.85);
 
   box->children = g_list_append (box->children, child);
 }
