@@ -503,7 +503,7 @@ EXTRA_DIST = \
 	$(icons32_DATA)		\
 	$(icons48_DATA)		\
 	$(icons64_DATA)		\
-	$(icons92_DATA)		\
+	$(icons96_DATA)		\
 	$(icons128_DATA)	\
 	$(icons192_DATA)	\
 	$(icons256_DATA)
