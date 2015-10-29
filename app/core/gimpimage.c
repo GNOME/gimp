@@ -2281,6 +2281,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
                             gint         *gimp_version,
                             const gchar **version_string)
 {
+  GList *layers;
   GList *list;
   gint   version = 0;  /* default to oldest */
 
@@ -2288,9 +2289,9 @@ gimp_image_get_xcf_version (GimpImage    *image,
   if (gimp_image_get_colormap (image))
     version = 1;
 
-  for (list = gimp_image_get_layer_iter (image);
-       list && version < 3;
-       list = g_list_next (list))
+  layers = gimp_image_get_layer_list (image);
+
+  for (list = layers; list; list = g_list_next (list))
     {
       GimpLayer *layer = GIMP_LAYER (list->data);
 
@@ -2317,6 +2318,8 @@ gimp_image_get_xcf_version (GimpImage    *image,
       if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
         version = MAX (3, version);
     }
+
+  g_list_free (layers);
 
   /* need version 6 for new metadata */
   if (gimp_image_get_metadata (image))
