@@ -172,7 +172,7 @@ static gboolean  save_image                (const gchar      *filename,
                                             GError          **error);
 
 static gboolean  save_dialog               (const gint32      image_ID,
-                                            GimpParamRegion  *hotspotRange);
+                                            GeglRectangle    *hotspotRange);
 
 static void      comment_entry_callback    (GtkWidget        *widget,
                                             gchar           **commentp);
@@ -181,7 +181,7 @@ static void      text_view_callback        (GtkTextBuffer    *buffer,
                                             gchar           **commentp);
 
 static gboolean  load_default_hotspot      (const gint32      image_ID,
-                                            GimpParamRegion  *hotspotRange);
+                                            GeglRectangle    *hotspotRange);
 
 static inline guint32   separate_alpha     (guint32           pixel);
 
@@ -213,16 +213,16 @@ static gchar    *make_framename            (guint32            size,
                                             guint              indent,
                                             GError           **errorp);
 
-static void      get_cropped_region        (GimpParamRegion   *retrun_rgn,
+static void      get_cropped_region        (GeglRectangle     *retrun_rgn,
                                             GeglBuffer        *buffer);
 
 static inline gboolean pix_is_opaque       (guint32            pix);
 
-static GimpParamRegion *get_intersection_of_frames (gint32     image_ID);
+static GeglRectangle * get_intersection_of_frames (gint32      image_ID);
 
 static gboolean   pix_in_region            (gint32             x,
                                             gint32             y,
-                                            GimpParamRegion   *xmcrp);
+                                            GeglRectangle     *xmcrp);
 
 static void find_hotspots_and_dimensions   (XcursorImages     *xcIs,
                                             gint32            *xhot,
@@ -398,7 +398,7 @@ run (const gchar      *name,
   gint32            drawable_ID;
   gint32            orig_image_ID;
   GimpExportReturn  export = GIMP_EXPORT_CANCEL;
-  GimpParamRegion  *hotspotRange = NULL;
+  GeglRectangle    *hotspotRange = NULL;
   gint32            width, height;
   gint32            num_layers;
   GError           *error = NULL;
@@ -1019,8 +1019,8 @@ read32 (FILE    *f,
 /* 'save_dialog ()'
  */
 static gboolean
-save_dialog (const gint32     image_ID,
-             GimpParamRegion *hotspotRange)
+save_dialog (const gint32   image_ID,
+             GeglRectangle *hotspotRange)
 {
   GtkWidget      *dialog;
   GtkWidget      *frame;
@@ -1395,8 +1395,8 @@ text_view_callback (GtkTextBuffer  *buffer,
  * Set default hotspot based on hotspotRange.
 **/
 static gboolean
-load_default_hotspot (const gint32     image_ID,
-                      GimpParamRegion *hotspotRange)
+load_default_hotspot (const gint32   image_ID,
+                      GeglRectangle *hotspotRange)
 {
 
   g_return_val_if_fail (hotspotRange, FALSE);
@@ -1444,7 +1444,7 @@ save_image (const gchar *filename,
   gint32          *orig_layers;            /* Array of layer of orig_image */
   gint             nlayers;                /* Number of layers */
   gchar           *framename;              /* framename of a layer */
-  GimpParamRegion  save_rgn;               /* region to save */
+  GeglRectangle    save_rgn;               /* region to save */
   gint             layer_xoffset, layer_yoffset;
   /* temporary buffer which store pixel data (guchar * bpp = guint32) */
   guint32          pixelbuf[SQR(MAX_SAVE_DIMENSION)];
@@ -2214,8 +2214,8 @@ make_framename (guint32   size,
 /* Get the region which is maintained when auto-crop.
  */
 static void
-get_cropped_region (GimpParamRegion *return_rgn,
-                    GeglBuffer      *buffer)
+get_cropped_region (GeglRectangle *return_rgn,
+                    GeglBuffer    *buffer)
 {
   gint        width  = gegl_buffer_get_width  (buffer);
   gint        height = gegl_buffer_get_height (buffer);
@@ -2341,16 +2341,16 @@ pix_is_opaque (guint32 pix)
  * if the intersection is empty return NULL.
  * don't forget to g_free returned pointer later.
  */
-static GimpParamRegion *
+static GeglRectangle *
 get_intersection_of_frames (gint32 image_ID)
 {
-  GimpParamRegion *iregion;
-  gint             i;
-  gint32           x1 = G_MININT32, x2 = G_MAXINT32;
-  gint32           y1 = G_MININT32, y2 = G_MAXINT32;
-  gint32           x_off, y_off;
-  gint             nlayers;
-  gint            *layers;
+  GeglRectangle *iregion;
+  gint           i;
+  gint32         x1 = G_MININT32, x2 = G_MAXINT32;
+  gint32         y1 = G_MININT32, y2 = G_MAXINT32;
+  gint32         x_off, y_off;
+  gint           nlayers;
+  gint          *layers;
 
   g_return_val_if_fail (image_ID != -1, FALSE);
 
@@ -2371,7 +2371,7 @@ get_intersection_of_frames (gint32 image_ID)
     return NULL;
 
   /* OK intersection exists. */
-  iregion = g_new (GimpParamRegion, 1);
+  iregion = g_new (GeglRectangle, 1);
   iregion->x = x1;
   iregion->y = y1;
   iregion->width = x2 - x1 + 1;
@@ -2383,9 +2383,9 @@ get_intersection_of_frames (gint32 image_ID)
 /* If (x,y) is in xmcrp, return TRUE.
  */
 static gboolean
-pix_in_region (gint32 x,
-               gint32 y,
-               GimpParamRegion *xmcrp)
+pix_in_region (gint32         x,
+               gint32         y,
+               GeglRectangle *xmcrp)
 {
   g_return_val_if_fail (xmcrp, FALSE);
 
