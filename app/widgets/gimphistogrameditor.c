@@ -460,6 +460,7 @@ gimp_histogram_editor_channel_valid (GimpHistogramEditor  *editor,
         case GIMP_HISTOGRAM_RED:
         case GIMP_HISTOGRAM_GREEN:
         case GIMP_HISTOGRAM_BLUE:
+        case GIMP_HISTOGRAM_LUMINANCE:
         case GIMP_HISTOGRAM_RGB:
           return gimp_drawable_is_rgb (editor->drawable);
 

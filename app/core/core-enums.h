@@ -138,12 +138,13 @@ GType gimp_histogram_channel_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_HISTOGRAM_VALUE = 0,  /*< desc="Value" >*/
-  GIMP_HISTOGRAM_RED   = 1,  /*< desc="Red"   >*/
-  GIMP_HISTOGRAM_GREEN = 2,  /*< desc="Green" >*/
-  GIMP_HISTOGRAM_BLUE  = 3,  /*< desc="Blue"  >*/
-  GIMP_HISTOGRAM_ALPHA = 4,  /*< desc="Alpha" >*/
-  GIMP_HISTOGRAM_RGB   = 5   /*< desc="RGB", pdb-skip >*/
+  GIMP_HISTOGRAM_VALUE     = 0,  /*< desc="Value"         >*/
+  GIMP_HISTOGRAM_RED       = 1,  /*< desc="Red"           >*/
+  GIMP_HISTOGRAM_GREEN     = 2,  /*< desc="Green"         >*/
+  GIMP_HISTOGRAM_BLUE      = 3,  /*< desc="Blue"          >*/
+  GIMP_HISTOGRAM_ALPHA     = 4,  /*< desc="Alpha"         >*/
+  GIMP_HISTOGRAM_LUMINANCE = 5,  /*< desc="Luminance"     >*/
+  GIMP_HISTOGRAM_RGB       = 6   /*< desc="RGB", pdb-skip >*/
 } GimpHistogramChannel;
 
 

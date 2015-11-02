@@ -714,6 +714,7 @@ gimp_curves_tool_update_channel (GimpCurvesTool *tool)
     case GIMP_HISTOGRAM_VALUE:
     case GIMP_HISTOGRAM_ALPHA:
     case GIMP_HISTOGRAM_RGB:
+    case GIMP_HISTOGRAM_LUMINANCE:
       gimp_curve_get_uchar (curve, sizeof (r), r);
 
       gimp_color_bar_set_buffers (GIMP_COLOR_BAR (tool->xrange),
@@ -836,6 +837,9 @@ curves_menu_sensitivity (gint      value,
       return gimp_drawable_has_alpha (drawable);
 
     case GIMP_HISTOGRAM_RGB:
+      return FALSE;
+
+    case GIMP_HISTOGRAM_LUMINANCE:
       return FALSE;
     }
 

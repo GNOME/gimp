@@ -665,12 +665,13 @@ package Gimp::CodeGen::enums;
 	  header => 'core/core-enums.h',
 	  symbols => [ qw(GIMP_HISTOGRAM_VALUE GIMP_HISTOGRAM_RED
 			  GIMP_HISTOGRAM_GREEN GIMP_HISTOGRAM_BLUE
-			  GIMP_HISTOGRAM_ALPHA) ],
+			  GIMP_HISTOGRAM_ALPHA GIMP_HISTOGRAM_LUMINANCE) ],
 	  mapping => { GIMP_HISTOGRAM_VALUE => '0',
 		       GIMP_HISTOGRAM_RED => '1',
 		       GIMP_HISTOGRAM_GREEN => '2',
 		       GIMP_HISTOGRAM_BLUE => '3',
-		       GIMP_HISTOGRAM_ALPHA => '4' }
+		       GIMP_HISTOGRAM_ALPHA => '4',
+		       GIMP_HISTOGRAM_LUMINANCE => '5' }
 	},
     GimpLayerModeEffects =>
 	{ contig => 1,

@@ -20,10 +20,12 @@
 #include "config.h"
 
 #include <string.h>
-
+#include <cairo.h>
 #include <gegl.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
 
@@ -88,7 +90,7 @@ gimp_histogram_class_init (GimpHistogramClass *klass)
 
   g_object_class_install_property (object_class, PROP_N_CHANNELS,
                                    g_param_spec_int ("n-channels", NULL, NULL,
-                                                     0, 5, 0,
+                                                     0, 6, 0,
                                                      GIMP_PARAM_READABLE));
 
   g_object_class_install_property (object_class, PROP_N_BINS,
@@ -333,6 +335,7 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
       const gfloat *data   = iter->data[0];
       gint          length = iter->length;
       gfloat        max;
+      gfloat        luminance;
 
       if (mask)
         {
@@ -377,8 +380,10 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 
                   max = MAX (data[0], data[1]);
                   max = MAX (data[2], max);
-
                   VALUE (0, max) += masked;
+
+                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  VALUE (4, luminance) += masked;
 
                   data += n_components;
                   mask_data += 1;
@@ -398,8 +403,10 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 
                   max = MAX (data[0], data[1]);
                   max = MAX (data[2], max);
-
                   VALUE (0, max) += weight * masked;
+
+                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  VALUE (5, luminance) += weight * masked;
 
                   data += n_components;
                   mask_data += 1;
@@ -441,8 +448,10 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 
                   max = MAX (data[0], data[1]);
                   max = MAX (data[2], max);
-
                   VALUE (0, max) += 1.0;
+
+                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  VALUE (4, luminance) += 1.0;
 
                   data += n_components;
                 }
@@ -460,8 +469,10 @@ gimp_histogram_calculate (GimpHistogram       *histogram,
 
                   max = MAX (data[0], data[1]);
                   max = MAX (data[2], max);
-
                   VALUE (0, max) += weight;
+
+                  luminance = GIMP_RGB_LUMINANCE (data[0], data[1], data[2]);
+                  VALUE (5, luminance) += weight;
 
                   data += n_components;
                 }
@@ -515,8 +526,11 @@ gimp_histogram_get_maximum (GimpHistogram        *histogram,
   priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 4 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
+  /*  the luminance channel is in slot 4  */
+  else if (priv->n_channels == 5 && channel == GIMP_HISTOGRAM_LUMINANCE)
+    channel = 4;
 
   if (! priv->values ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= priv->n_channels))
@@ -554,8 +568,11 @@ gimp_histogram_get_value (GimpHistogram        *histogram,
   priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 4 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
+  /*  the luminance channel is in slot 4  */
+  else if (priv->n_channels == 5 && channel == GIMP_HISTOGRAM_LUMINANCE)
+    channel = 4;
 
   if (! priv->values ||
       bin < 0 || bin >= priv->n_bins ||
@@ -584,7 +601,7 @@ gimp_histogram_get_component (GimpHistogram *histogram,
 {
   g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0.0);
 
-  if (histogram->priv->n_channels > 3)
+  if (histogram->priv->n_channels > 4)
     component++;
 
   return gimp_histogram_get_value (histogram, component, bin);
@@ -595,7 +612,7 @@ gimp_histogram_n_channels (GimpHistogram *histogram)
 {
   g_return_val_if_fail (GIMP_IS_HISTOGRAM (histogram), 0);
 
-  return histogram->priv->n_channels - 1;
+  return histogram->priv->n_channels - 2;
 }
 
 gint
@@ -621,8 +638,11 @@ gimp_histogram_get_count (GimpHistogram        *histogram,
   priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 4 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
+  /*  the luminance channel is in slot 4  */
+  else if (priv->n_channels == 5 && channel == GIMP_HISTOGRAM_LUMINANCE)
+    channel = 4;
 
   if (channel == GIMP_HISTOGRAM_RGB)
     return (gimp_histogram_get_count (histogram,
@@ -662,12 +682,15 @@ gimp_histogram_get_mean (GimpHistogram        *histogram,
   priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 4 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
+  /*  the luminance channel is in slot 4  */
+  else if (priv->n_channels == 5 && channel == GIMP_HISTOGRAM_LUMINANCE)
+    channel = 4;
 
   if (! priv->values ||
       start > end ||
-      (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 4) ||
+      (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 5) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= priv->n_channels))
     return 0.0;
 
@@ -719,12 +742,15 @@ gimp_histogram_get_median (GimpHistogram         *histogram,
   priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 4 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
+  /*  the luminance channel is in slot 4  */
+  else if (priv->n_channels == 5 && channel == GIMP_HISTOGRAM_LUMINANCE)
+    channel = 4;
 
   if (! priv->values ||
       start > end ||
-      (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 4) ||
+      (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 5) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= priv->n_channels))
     return 0.0;
 
@@ -788,12 +814,15 @@ gimp_histogram_get_threshold (GimpHistogram        *histogram,
   priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 4 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
+  /*  the luminance channel is in slot 4  */
+  else if (priv->n_channels == 5 && channel == GIMP_HISTOGRAM_LUMINANCE)
+    channel = 4;
 
   if (! priv->values ||
       start > end ||
-      (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 4) ||
+      (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 5) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= priv->n_channels))
     return 0;
 
@@ -876,12 +905,15 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
   priv = histogram->priv;
 
   /*  the gray alpha channel is in slot 1  */
-  if (priv->n_channels == 3 && channel == GIMP_HISTOGRAM_ALPHA)
+  if (priv->n_channels == 4 && channel == GIMP_HISTOGRAM_ALPHA)
     channel = 1;
+  /*  the luminance channel is in slot 4  */
+  else if (priv->n_channels == 5 && channel == GIMP_HISTOGRAM_LUMINANCE)
+    channel = 4;
 
   if (! priv->values ||
       start > end ||
-      (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 4) ||
+      (channel == GIMP_HISTOGRAM_RGB && priv->n_channels < 5) ||
       (channel != GIMP_HISTOGRAM_RGB && channel >= priv->n_channels))
     return 0.0;
 
@@ -922,14 +954,14 @@ gimp_histogram_alloc_values (GimpHistogram *histogram,
 {
   GimpHistogramPrivate *priv = histogram->priv;
 
-  if (n_components + 1 != priv->n_channels ||
+  if (n_components + 2 != priv->n_channels ||
       n_bins           != priv->n_bins)
     {
       gimp_histogram_clear_values (histogram);
 
-      if (n_components + 1 != priv->n_channels)
+      if (n_components + 2 != priv->n_channels)
         {
-          priv->n_channels = n_components + 1;
+          priv->n_channels = n_components + 2;
 
           g_object_notify (G_OBJECT (histogram), "n-channels");
         }
