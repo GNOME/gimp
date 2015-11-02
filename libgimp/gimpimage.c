@@ -165,7 +165,7 @@ gimp_image_set_metadata (gint32        image_ID,
  * @image_ID:   The image.
  * @num_colors: Number of colors in the colormap array.
  *
- * This procedure is deprecated! Use gimp_image_get_colormap() instead.
+ * Deprecated: Use gimp_image_get_colormap() instead.
  *
  * Returns: The image's colormap.
  */
@@ -182,7 +182,7 @@ gimp_image_get_cmap (gint32  image_ID,
  * @cmap:       The new colormap values.
  * @num_colors: Number of colors in the colormap array.
  *
- * This procedure is deprecated! Use gimp_image_set_colormap() instead.
+ * Deprecated: Use gimp_image_set_colormap() instead.
  *
  * Returns: TRUE on success.
  */
