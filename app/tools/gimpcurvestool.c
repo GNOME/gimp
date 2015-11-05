@@ -65,6 +65,7 @@
 
 /*  local function prototypes  */
 
+static void       gimp_curves_tool_constructed    (GObject              *object);
 static void       gimp_curves_tool_finalize       (GObject              *object);
 
 static gboolean   gimp_curves_tool_initialize     (GimpTool             *tool,
@@ -160,6 +161,7 @@ gimp_curves_tool_class_init (GimpCurvesToolClass *klass)
   GimpColorToolClass    *color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
   GimpImageMapToolClass *im_tool_class    = GIMP_IMAGE_MAP_TOOL_CLASS (klass);
 
+  object_class->constructed          = gimp_curves_tool_constructed;
   object_class->finalize             = gimp_curves_tool_finalize;
 
   tool_class->initialize             = gimp_curves_tool_initialize;
@@ -198,6 +200,17 @@ gimp_curves_tool_init (GimpCurvesTool *tool)
 }
 
 static void
+gimp_curves_tool_constructed (GObject *object)
+{
+  G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  /*  always pick colors  */
+  gimp_color_tool_enable (GIMP_COLOR_TOOL (object),
+                          GIMP_COLOR_TOOL_GET_OPTIONS (object));
+
+}
+
+static void
 gimp_curves_tool_finalize (GObject *object)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (object);
@@ -233,10 +246,6 @@ gimp_curves_tool_initialize (GimpTool     *tool,
     {
       return FALSE;
     }
-
-  /*  always pick colors  */
-  gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
-                          GIMP_COLOR_TOOL_GET_OPTIONS (tool));
 
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (c_tool->channel_menu),
                                       curves_menu_sensitivity, drawable, NULL);
