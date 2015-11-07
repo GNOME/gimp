@@ -87,6 +87,7 @@ struct _GimpCursorViewPriv
 
 static void   gimp_cursor_view_docked_iface_init     (GimpDockedInterface *iface);
 
+static void   gimp_cursor_view_dispose               (GObject             *object);
 static void   gimp_cursor_view_set_property          (GObject             *object,
                                                       guint                property_id,
                                                       const GValue        *value,
@@ -146,6 +147,7 @@ gimp_cursor_view_class_init (GimpCursorViewClass* klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->dispose      = gimp_cursor_view_dispose;
   object_class->get_property = gimp_cursor_view_get_property;
   object_class->set_property = gimp_cursor_view_set_property;
 
@@ -344,6 +346,17 @@ gimp_cursor_view_docked_iface_init (GimpDockedInterface *iface)
 }
 
 static void
+gimp_cursor_view_dispose (GObject *object)
+{
+  GimpCursorView *view = GIMP_CURSOR_VIEW (object);
+
+  if (view->priv->context)
+    gimp_docked_set_context (GIMP_DOCKED (view), NULL);
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
 gimp_cursor_view_set_property (GObject      *object,
                                guint         property_id,
                                const GValue *value,
@@ -510,6 +523,9 @@ gimp_cursor_view_set_context (GimpDocked  *docked,
   GimpDisplay    *display = NULL;
   GimpImage      *image   = NULL;
 
+  if (context == view->priv->context)
+    return;
+
   if (view->priv->context)
     {
       g_signal_handlers_disconnect_by_func (view->priv->context,
@@ -518,12 +534,16 @@ gimp_cursor_view_set_context (GimpDocked  *docked,
       g_signal_handlers_disconnect_by_func (view->priv->context,
                                             gimp_cursor_view_image_changed,
                                             view);
+
+      g_object_unref (view->priv->context);
     }
 
   view->priv->context = context;
 
   if (view->priv->context)
     {
+      g_object_ref (view->priv->context);
+
       g_signal_connect_swapped (view->priv->context, "display-changed",
                                 G_CALLBACK (gimp_cursor_view_diplay_changed),
                                 view);
@@ -536,12 +556,8 @@ gimp_cursor_view_set_context (GimpDocked  *docked,
       image   = gimp_context_get_image (context);
     }
 
-  gimp_cursor_view_diplay_changed (view,
-                                   display,
-                                   view->priv->context);
-  gimp_cursor_view_image_changed (view,
-                                  image,
-                                  view->priv->context);
+  gimp_cursor_view_diplay_changed (view, display, view->priv->context);
+  gimp_cursor_view_image_changed (view, image, view->priv->context);
 }
 
 static void
