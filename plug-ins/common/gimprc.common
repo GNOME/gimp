@@ -81,7 +81,6 @@ procedure_browser_RC = procedure-browser.rc.o
 qbist_RC = qbist.rc.o
 ripple_RC = ripple.rc.o
 sample_colorize_RC = sample-colorize.rc.o
-screenshot_RC = screenshot.rc.o
 sharpen_RC = sharpen.rc.o
 smooth_palette_RC = smooth-palette.rc.o
 softglow_RC = softglow.rc.o

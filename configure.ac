@@ -1906,11 +1906,9 @@ AM_CONDITIONAL(BUILD_SCRIPT_FU, test "x$with_script_fu" != "xno")
 
 if test "x$os_win32" = xno; then
   MAIL='mail$(EXEEXT)'
-  SCREENSHOT='screenshot$(EXEEXT)'
 fi
 
 AC_SUBST(MAIL)
-AC_SUBST(SCREENSHOT)
 
 
 ####################
@@ -2333,6 +2331,7 @@ plug-ins/pagecurl/Makefile
 plug-ins/print/Makefile
 plug-ins/pygimp/Makefile
 plug-ins/pygimp/plug-ins/Makefile
+plug-ins/screenshot/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/ftx/Makefile
 plug-ins/script-fu/scripts/Makefile

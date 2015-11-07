@@ -82,7 +82,6 @@
     'qbist' => { ui => 1 },
     'ripple' => { ui => 1 },
     'sample-colorize' => { ui => 1 },
-    'screenshot' => { ui => 1, optional => 1, libs => 'SCREENSHOT_LIBS', cflags => 'XFIXES_CFLAGS', gegl => 1 },
     'sharpen' => { ui => 1 },
     'smooth-palette' => { ui => 1 },
     'softglow' => { ui => 1 },
