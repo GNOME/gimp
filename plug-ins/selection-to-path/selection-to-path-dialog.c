@@ -99,8 +99,8 @@ dialog_create_selection_area (SELVALS *sels)
                               sels->align_threshold,
                               0.2, 2.0, 0.1, 0.1, 2,
                               TRUE, 0, 0,
-                              _("If two endpoints are closer than this,"
-				"they are made to be equal."), NULL);
+                              _("If two endpoints are closer than this, "
+                                "they are made to be equal."), NULL);
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &sels->align_threshold);
