@@ -56,7 +56,7 @@
 ScreenshotCapabilities
 screenshot_osx_get_capabilities (void)
 {
-  return (SCREENSHOT_CAN_SHOOT_DECORATIONS ||
+  return (SCREENSHOT_CAN_SHOOT_DECORATIONS |
           SCREENSHOT_CAN_SHOOT_POINTER);
 }
 
@@ -110,7 +110,7 @@ screenshot_osx_shoot (ScreenshotValues *shootvals,
 
   *image_ID = gimp_file_load (GIMP_RUN_NONINTERACTIVE,
                               "/tmp/screenshot.png", "/tmp/screenshot.png");
-  gimp_image_set_filename (image, "screenshot.png");
+  gimp_image_set_filename (*image_ID, "screenshot.png");
 
   return GIMP_PDB_SUCCESS;
 }
