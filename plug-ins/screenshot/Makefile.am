@@ -48,4 +48,9 @@ libexec_PROGRAMS = screenshot
 EXTRA_PROGRAMS = screenshot
 
 screenshot_SOURCES = \
-	screenshot.c
+	screenshot.c		\
+	screenshot.h		\
+	screenshot-osx.c	\
+	screenshot-osx.h	\
+	screenshot-x11.c	\
+	screenshot-x11.h

@@ -215,6 +215,7 @@ plug-ins/print/print-draw-page.c
 plug-ins/print/print-page-layout.c
 plug-ins/print/print.c
 plug-ins/screenshot/screenshot.c
+plug-ins/screenshot/screenshot-x11.c
 plug-ins/selection-to-path/pxl-outline.c
 plug-ins/selection-to-path/selection-to-path.c
 plug-ins/selection-to-path/selection-to-path-dialog.c
