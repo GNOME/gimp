@@ -91,7 +91,8 @@ static void      unsharp_mask        (GimpDrawable   *drawable,
                                       gdouble         amount);
 
 static gboolean  unsharp_mask_dialog (GimpDrawable   *drawable);
-static void      preview_update      (GimpPreview    *preview);
+static void      preview_update      (GimpPreview    *preview,
+                                      GimpDrawable   *drawable);
 
 
 /* create a few globals, set default values */
@@ -859,7 +860,7 @@ unsharp_mask_dialog (GimpDrawable *drawable)
 
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (preview_update),
-                    NULL);
+                    drawable);
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
@@ -917,9 +918,9 @@ unsharp_mask_dialog (GimpDrawable *drawable)
 }
 
 static void
-preview_update (GimpPreview *preview)
+preview_update (GimpPreview  *preview,
+                GimpDrawable *drawable)
 {
-  GimpDrawable *drawable;
   gint          x1, x2;
   gint          y1, y2;
   gint          x, y;
@@ -927,9 +928,6 @@ preview_update (GimpPreview *preview)
   gint          border;
   GimpPixelRgn  srcPR;
   GimpPixelRgn  destPR;
-
-  drawable =
-    gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
 
   gimp_pixel_rgn_init (&srcPR, drawable,
                        0, 0, drawable->width, drawable->height, FALSE, FALSE);
