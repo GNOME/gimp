@@ -74,9 +74,9 @@ static gboolean   gimp_idle_help          (GimpIdleHelp  *idle_help);
 static void       gimp_idle_help_free     (GimpIdleHelp  *idle_help);
 
 static gboolean   gimp_help_browser       (Gimp          *gimp,
-					   GimpProgress  *progress);
+                                           GimpProgress  *progress);
 static void       gimp_help_browser_error (Gimp          *gimp,
-					   GimpProgress  *progress,
+                                           GimpProgress  *progress,
                                            const gchar   *title,
                                            const gchar   *primary,
                                            const gchar   *text);
@@ -268,7 +268,7 @@ gimp_idle_help_free (GimpIdleHelp *idle_help)
 
 static gboolean
 gimp_help_browser (Gimp         *gimp,
-		   GimpProgress *progress)
+                   GimpProgress *progress)
 {
   static gboolean  busy = FALSE;
   GimpProcedure   *procedure;
@@ -300,8 +300,8 @@ gimp_help_browser (Gimp         *gimp,
                                    _("The GIMP help browser is not available."),
                                    _("The GIMP help browser plug-in appears "
                                      "to be missing from your installation. "
-				     "You may instead use the web browser "
-				     "for reading the help pages."));
+                                     "You may instead use the web browser "
+                                     "for reading the help pages."));
           busy = FALSE;
 
           return FALSE;
@@ -360,7 +360,7 @@ gimp_help_browser (Gimp         *gimp,
 
 static void
 gimp_help_browser_error (Gimp         *gimp,
-			 GimpProgress *progress,
+                         GimpProgress *progress,
                          const gchar  *title,
                          const gchar  *primary,
                          const gchar  *text)
@@ -368,13 +368,13 @@ gimp_help_browser_error (Gimp         *gimp,
   GtkWidget *dialog;
 
   dialog = gimp_message_dialog_new (title, GIMP_STOCK_USER_MANUAL,
-				    NULL, 0,
-				    NULL, NULL,
+                                    NULL, 0,
+                                    NULL, NULL,
 
-				    GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
-				    _("Use _Web Browser"), GTK_RESPONSE_OK,
+                                    GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
+                                    _("Use _Web Browser"), GTK_RESPONSE_OK,
 
-				    NULL);
+                                    NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
