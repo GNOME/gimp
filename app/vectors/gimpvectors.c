@@ -632,13 +632,13 @@ gimp_vectors_stroke (GimpItem           *item,
 
   switch (gimp_stroke_options_get_method (stroke_options))
     {
-    case GIMP_STROKE_METHOD_LIBART:
+    case GIMP_STROKE_LINE:
       retval = gimp_drawable_stroke_vectors (drawable,
                                              stroke_options,
                                              vectors, push_undo, error);
       break;
 
-    case GIMP_STROKE_METHOD_PAINT_CORE:
+    case GIMP_STROKE_PAINT_METHOD:
       {
         GimpPaintInfo    *paint_info;
         GimpPaintCore    *core;

@@ -345,7 +345,7 @@ path_stroke_current_invoker (GimpProcedure         *procedure,
 
           options = gimp_stroke_options_new (gimp, context, TRUE);
           g_object_set (options,
-                        "method", GIMP_STROKE_METHOD_PAINT_CORE,
+                        "method", GIMP_STROKE_PAINT_METHOD,
                         NULL);
 
           paint_options =

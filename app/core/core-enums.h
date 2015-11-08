@@ -235,17 +235,6 @@ typedef enum  /*< pdb-skip >*/
 } GimpFillStyle;
 
 
-#define GIMP_TYPE_STROKE_METHOD (gimp_stroke_method_get_type ())
-
-GType gimp_stroke_method_get_type (void) G_GNUC_CONST;
-
-typedef enum  /*< pdb-skip >*/
-{
-  GIMP_STROKE_METHOD_LIBART,     /*< desc="Stroke line"              >*/
-  GIMP_STROKE_METHOD_PAINT_CORE  /*< desc="Stroke with a paint tool" >*/
-} GimpStrokeMethod;
-
-
 #define GIMP_TYPE_JOIN_STYLE (gimp_join_style_get_type ())
 
 GType gimp_join_style_get_type (void) G_GNUC_CONST;

@@ -700,6 +700,17 @@ typedef enum
 } GimpStackTraceMode;
 
 
+#define GIMP_TYPE_STROKE_METHOD (gimp_stroke_method_get_type ())
+
+GType gimp_stroke_method_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_STROKE_LINE,         /*< desc="Stroke line"              >*/
+  GIMP_STROKE_PAINT_METHOD  /*< desc="Stroke with a paint tool" >*/
+} GimpStrokeMethod;
+
+
 #define GIMP_TYPE_TEXT_DIRECTION (gimp_text_direction_get_type ())
 
 GType gimp_text_direction_get_type (void) G_GNUC_CONST;

@@ -154,7 +154,7 @@ gimp_stroke_options_class_init (GimpStrokeOptionsClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_METHOD,
                                  "method", NULL,
                                  GIMP_TYPE_STROKE_METHOD,
-                                 GIMP_STROKE_METHOD_LIBART,
+                                 GIMP_STROKE_LINE,
                                  GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_WIDTH,
@@ -429,7 +429,7 @@ GimpStrokeMethod
 gimp_stroke_options_get_method (GimpStrokeOptions *options)
 {
   g_return_val_if_fail (GIMP_IS_STROKE_OPTIONS (options),
-                        GIMP_STROKE_METHOD_LIBART);
+                        GIMP_STROKE_LINE);
 
   return GET_PRIVATE (options)->method;
 }
@@ -559,10 +559,10 @@ gimp_stroke_options_prepare (GimpStrokeOptions *options,
 
   switch (private->method)
     {
-    case GIMP_STROKE_METHOD_LIBART:
+    case GIMP_STROKE_LINE:
       break;
 
-    case GIMP_STROKE_METHOD_PAINT_CORE:
+    case GIMP_STROKE_PAINT_METHOD:
       {
         GimpPaintInfo *paint_info = GIMP_CONTEXT (options)->paint_info;
 

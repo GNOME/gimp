@@ -510,6 +510,13 @@ package Gimp::CodeGen::enums;
 		       GIMP_STACK_TRACE_QUERY => '1',
 		       GIMP_STACK_TRACE_ALWAYS => '2' }
 	},
+    GimpStrokeMethod =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_STROKE_LINE GIMP_STROKE_PAINT_METHOD) ],
+	  mapping => { GIMP_STROKE_LINE => '0',
+		       GIMP_STROKE_PAINT_METHOD => '1' }
+	},
     GimpTextDirection =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',

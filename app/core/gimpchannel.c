@@ -829,7 +829,7 @@ gimp_channel_stroke (GimpItem           *item,
 
   switch (gimp_stroke_options_get_method (stroke_options))
     {
-    case GIMP_STROKE_METHOD_LIBART:
+    case GIMP_STROKE_LINE:
       gimp_drawable_stroke_boundary (drawable,
                                      stroke_options,
                                      segs_in, n_segs_in,
@@ -838,7 +838,7 @@ gimp_channel_stroke (GimpItem           *item,
       retval = TRUE;
       break;
 
-    case GIMP_STROKE_METHOD_PAINT_CORE:
+    case GIMP_STROKE_PAINT_METHOD:
       {
         GimpPaintInfo    *paint_info;
         GimpPaintCore    *core;

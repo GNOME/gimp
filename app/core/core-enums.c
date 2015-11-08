@@ -483,35 +483,6 @@ gimp_fill_style_get_type (void)
 }
 
 GType
-gimp_stroke_method_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_STROKE_METHOD_LIBART, "GIMP_STROKE_METHOD_LIBART", "libart" },
-    { GIMP_STROKE_METHOD_PAINT_CORE, "GIMP_STROKE_METHOD_PAINT_CORE", "paint-core" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_STROKE_METHOD_LIBART, NC_("stroke-method", "Stroke line"), NULL },
-    { GIMP_STROKE_METHOD_PAINT_CORE, NC_("stroke-method", "Stroke with a paint tool"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (G_UNLIKELY (! type))
-    {
-      type = g_enum_register_static ("GimpStrokeMethod", values);
-      gimp_type_set_translation_context (type, "stroke-method");
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_join_style_get_type (void)
 {
   static const GEnumValue values[] =
