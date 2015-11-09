@@ -58,6 +58,8 @@ enum
 };
 
 
+static void   gimp_pdb_context_iface_init   (GimpConfigInterface *iface);
+
 static void   gimp_pdb_context_constructed  (GObject      *object);
 static void   gimp_pdb_context_finalize     (GObject      *object);
 static void   gimp_pdb_context_set_property (GObject      *object,
@@ -69,10 +71,16 @@ static void   gimp_pdb_context_get_property (GObject      *object,
                                              GValue       *value,
                                              GParamSpec   *pspec);
 
+static void   gimp_pdb_context_reset        (GimpConfig   *config);
 
-G_DEFINE_TYPE (GimpPDBContext, gimp_pdb_context, GIMP_TYPE_CONTEXT)
+
+G_DEFINE_TYPE_WITH_CODE (GimpPDBContext, gimp_pdb_context, GIMP_TYPE_CONTEXT,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_CONFIG,
+                                                gimp_pdb_context_iface_init))
 
 #define parent_class gimp_pdb_context_parent_class
+
+static GimpConfigInterface *parent_config_iface = NULL;
 
 
 static void
@@ -144,6 +152,17 @@ gimp_pdb_context_class_init (GimpPDBContextClass *klass)
                                  GIMP_TYPE_TRANSFORM_RESIZE,
                                  GIMP_TRANSFORM_RESIZE_ADJUST,
                                  GIMP_PARAM_STATIC_STRINGS);
+}
+
+static void
+gimp_pdb_context_iface_init (GimpConfigInterface *iface)
+{
+  parent_config_iface = g_type_interface_peek_parent (iface);
+
+  if (! parent_config_iface)
+    parent_config_iface = g_type_default_interface_peek (GIMP_TYPE_CONFIG);
+
+  iface->reset = gimp_pdb_context_reset;
 }
 
 static void
@@ -339,6 +358,31 @@ gimp_pdb_context_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_pdb_context_reset (GimpConfig *config)
+{
+  GimpPDBContext *context = GIMP_PDB_CONTEXT (config);
+  GList          *list;
+
+  for (list = GIMP_LIST (context->paint_options_list)->list;
+       list;
+       list = g_list_next (list))
+    {
+      gimp_config_reset (list->data);
+    }
+
+  gimp_config_reset (GIMP_CONFIG (context->stroke_options));
+
+  /* preserve the traditional PDB default */
+  g_object_set (context->stroke_options,
+                "method", GIMP_STROKE_PAINT_METHOD,
+                NULL);
+
+  parent_config_iface->reset (config);
+
+  g_object_notify (G_OBJECT (context), "antialias");
 }
 
 GimpContext *
