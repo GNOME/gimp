@@ -147,6 +147,38 @@ gimp_bucket_fill_mode_get_type (void)
 }
 
 GType
+gimp_cap_style_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_CAP_BUTT, "GIMP_CAP_BUTT", "butt" },
+    { GIMP_CAP_ROUND, "GIMP_CAP_ROUND", "round" },
+    { GIMP_CAP_SQUARE, "GIMP_CAP_SQUARE", "square" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_CAP_BUTT, NC_("cap-style", "Butt"), NULL },
+    { GIMP_CAP_ROUND, NC_("cap-style", "Round"), NULL },
+    { GIMP_CAP_SQUARE, NC_("cap-style", "Square"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpCapStyle", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "cap-style");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_channel_ops_get_type (void)
 {
   static const GEnumValue values[] =
@@ -906,6 +938,38 @@ gimp_interpolation_type_get_type (void)
       type = g_enum_register_static ("GimpInterpolationType", values);
       gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
       gimp_type_set_translation_context (type, "interpolation-type");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_join_style_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_JOIN_MITER, "GIMP_JOIN_MITER", "miter" },
+    { GIMP_JOIN_ROUND, "GIMP_JOIN_ROUND", "round" },
+    { GIMP_JOIN_BEVEL, "GIMP_JOIN_BEVEL", "bevel" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_JOIN_MITER, NC_("join-style", "Miter"), NULL },
+    { GIMP_JOIN_ROUND, NC_("join-style", "Round"), NULL },
+    { GIMP_JOIN_BEVEL, NC_("join-style", "Bevel"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpJoinStyle", values);
+      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");
+      gimp_type_set_translation_context (type, "join-style");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

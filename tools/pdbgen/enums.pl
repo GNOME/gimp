@@ -63,6 +63,14 @@ package Gimp::CodeGen::enums;
 		       GIMP_BUCKET_FILL_BG => '1',
 		       GIMP_BUCKET_FILL_PATTERN => '2' }
 	},
+    GimpCapStyle =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_CAP_BUTT GIMP_CAP_ROUND GIMP_CAP_SQUARE) ],
+	  mapping => { GIMP_CAP_BUTT => '0',
+		       GIMP_CAP_ROUND => '1',
+		       GIMP_CAP_SQUARE => '2' }
+	},
     GimpChannelOps =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
@@ -290,6 +298,14 @@ package Gimp::CodeGen::enums;
 		       GIMP_INTERPOLATION_CUBIC => '2',
 		       GIMP_INTERPOLATION_NOHALO => '3',
 		       GIMP_INTERPOLATION_LOHALO => '4' }
+	},
+    GimpJoinStyle =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_JOIN_MITER GIMP_JOIN_ROUND GIMP_JOIN_BEVEL) ],
+	  mapping => { GIMP_JOIN_MITER => '0',
+		       GIMP_JOIN_ROUND => '1',
+		       GIMP_JOIN_BEVEL => '2' }
 	},
     GimpMaskApplyMode =>
 	{ contig => 1,

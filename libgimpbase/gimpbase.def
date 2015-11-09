@@ -6,6 +6,7 @@ EXPORTS
 	gimp_brush_generated_shape_get_type
 	gimp_bucket_fill_mode_get_type
 	gimp_canonicalize_identifier
+	gimp_cap_style_get_type
 	gimp_channel_ops_get_type
 	gimp_channel_type_get_type
 	gimp_check_size_get_type
@@ -57,6 +58,7 @@ EXPORTS
 	gimp_ink_blob_type_get_type
 	gimp_installation_directory
 	gimp_interpolation_type_get_type
+	gimp_join_style_get_type
 	gimp_locale_directory
 	gimp_locale_directory_file
 	gimp_major_version
@@ -134,8 +136,8 @@ EXPORTS
 	gimp_signal_private
 	gimp_size_type_get_type
 	gimp_stack_trace_mode_get_type
-	gimp_stroke_method_get_type
 	gimp_strip_uline
+	gimp_stroke_method_get_type
 	gimp_sysconf_directory
 	gimp_sysconf_directory_file
 	gimp_text_direction_get_type

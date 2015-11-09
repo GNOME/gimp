@@ -110,6 +110,18 @@ typedef enum
 } GimpBucketFillMode;
 
 
+#define GIMP_TYPE_CAP_STYLE (gimp_cap_style_get_type ())
+
+GType gimp_cap_style_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_CAP_BUTT,   /*< desc="Butt"   >*/
+  GIMP_CAP_ROUND,  /*< desc="Round"  >*/
+  GIMP_CAP_SQUARE  /*< desc="Square" >*/
+} GimpCapStyle;
+
+
 #define GIMP_TYPE_CHANNEL_OPS (gimp_channel_ops_get_type ())
 
 GType gimp_channel_ops_get_type (void) G_GNUC_CONST;
@@ -439,6 +451,18 @@ typedef enum
   GIMP_INTERPOLATION_LANCZOS = GIMP_INTERPOLATION_NOHALO /*< skip, pdb-skip >*/
 #endif /* GIMP_DISABLE_DEPRECATED */
 } GimpInterpolationType;
+
+
+#define GIMP_TYPE_JOIN_STYLE (gimp_join_style_get_type ())
+
+GType gimp_join_style_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_JOIN_MITER,  /*< desc="Miter" >*/
+  GIMP_JOIN_ROUND,  /*< desc="Round" >*/
+  GIMP_JOIN_BEVEL   /*< desc="Bevel" >*/
+} GimpJoinStyle;
 
 
 #define GIMP_TYPE_MASK_APPLY_MODE (gimp_mask_apply_mode_get_type ())
