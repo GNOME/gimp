@@ -246,6 +246,69 @@ gimp_context_set_paint_method (const gchar *name)
 }
 
 /**
+ * gimp_context_get_stroke_method:
+ *
+ * Retrieve the currently active stroke method.
+ *
+ * This procedure returns the currently active stroke method.
+ *
+ * Returns: The active stroke method.
+ *
+ * Since: 2.10
+ **/
+GimpStrokeMethod
+gimp_context_get_stroke_method (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpStrokeMethod stroke_method = 0;
+
+  return_vals = gimp_run_procedure ("gimp-context-get-stroke-method",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    stroke_method = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return stroke_method;
+}
+
+/**
+ * gimp_context_set_stroke_method:
+ * @stroke_method: The new stroke method.
+ *
+ * Set the specified stroke method as the active stroke method.
+ *
+ * This procedure set the specified stroke method as the active stroke
+ * method. The new method will be used in all subsequent stroke
+ * operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_context_set_stroke_method (GimpStrokeMethod stroke_method)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-context-set-stroke-method",
+                                    &nreturn_vals,
+                                    GIMP_PDB_INT32, stroke_method,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_foreground:
  * @foreground: The foreground color.
  *

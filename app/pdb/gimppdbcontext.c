@@ -31,6 +31,7 @@
 #include "core/gimp.h"
 #include "core/gimplist.h"
 #include "core/gimppaintinfo.h"
+#include "core/gimpstrokeoptions.h"
 
 #include "paint/gimpbrushcore.h"
 #include "paint/gimppaintoptions.h"
@@ -155,11 +156,25 @@ gimp_pdb_context_init (GimpPDBContext *context)
 static void
 gimp_pdb_context_constructed (GObject *object)
 {
+  GimpPDBContext        *context = GIMP_PDB_CONTEXT (object);
   GimpInterpolationType  interpolation;
   gint                   threshold;
   GParamSpec            *pspec;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
+
+  context->stroke_options = gimp_stroke_options_new (GIMP_CONTEXT (context)->gimp,
+                                                     GIMP_CONTEXT (context),
+                                                     TRUE);
+
+  /* preserve the traditional PDB default */
+  g_object_set (context->stroke_options,
+                "method", GIMP_STROKE_PAINT_METHOD,
+                NULL);
+
+  g_object_bind_property (G_OBJECT (context),                 "antialias",
+                          G_OBJECT (context->stroke_options), "antialias",
+                          G_BINDING_SYNC_CREATE);
 
   /* get default interpolation from gimprc */
 
@@ -195,6 +210,12 @@ gimp_pdb_context_finalize (GObject *object)
     {
       g_object_unref (context->paint_options_list);
       context->paint_options_list = NULL;
+    }
+
+  if (context->stroke_options)
+    {
+      g_object_unref (context->stroke_options);
+      context->stroke_options = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -403,4 +424,12 @@ gimp_pdb_context_get_brush_options (GimpPDBContext *context)
     }
 
   return g_list_reverse (brush_options);
+}
+
+GimpStrokeOptions *
+gimp_pdb_context_get_stroke_options (GimpPDBContext *context)
+{
+  g_return_val_if_fail (GIMP_IS_PDB_CONTEXT (context), NULL);
+
+  return context->stroke_options;
 }

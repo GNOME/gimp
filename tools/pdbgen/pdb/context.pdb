@@ -184,6 +184,63 @@ CODE
     );
 }
 
+sub context_get_stroke_method {
+    $blurb = 'Retrieve the currently active stroke method.';
+
+    $help = <<'HELP';
+This procedure returns the currently active stroke method.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @outargs = (
+	{ name  => 'stroke_method', type  => 'enum GimpStrokeMethod',
+	  desc  => 'The active stroke method' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "method", &stroke_method,
+		NULL);
+}
+CODE
+    );
+}
+
+sub context_set_stroke_method {
+    $blurb = 'Set the specified stroke method as the active stroke method.';
+
+    $help = <<'HELP';
+This procedure set the specified stroke method as the active stroke
+method. The new method will be used in all subsequent stroke
+operations.
+HELP
+
+    &mitch_pdb_misc('2015', '2.10');
+
+    @inargs = (
+        { name => 'stroke_method', type => 'enum GimpStrokeMethod',
+          desc => 'The new stroke method' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_set (options,
+                "method", stroke_method,
+		NULL);
+}
+CODE
+    );
+}
 
 sub context_get_foreground {
     $blurb = "Get the current GIMP foreground color.";
@@ -2430,6 +2487,7 @@ CODE
 @procs = qw(context_push context_pop context_set_defaults
             context_list_paint_methods
             context_get_paint_method context_set_paint_method
+            context_get_stroke_method context_set_stroke_method
             context_get_foreground context_set_foreground
             context_get_background context_set_background
             context_set_default_colors

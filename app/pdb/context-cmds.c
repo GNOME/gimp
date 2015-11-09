@@ -180,6 +180,57 @@ context_set_paint_method_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+context_get_stroke_method_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  GimpValueArray *return_vals;
+  gint32 stroke_method = 0;
+
+  GimpStrokeOptions *options =
+    gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+  g_object_get (options,
+                "method", &stroke_method,
+                NULL);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE, NULL);
+  g_value_set_enum (gimp_value_array_index (return_vals, 1), stroke_method);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_set_stroke_method_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  gboolean success = TRUE;
+  gint32 stroke_method;
+
+  stroke_method = g_value_get_enum (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpStrokeOptions *options =
+        gimp_pdb_context_get_stroke_options (GIMP_PDB_CONTEXT (context));
+
+      g_object_set (options,
+                    "method", stroke_method,
+                    NULL);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 context_get_foreground_invoker (GimpProcedure         *procedure,
                                 Gimp                  *gimp,
                                 GimpContext           *context,
@@ -2369,6 +2420,54 @@ register_context_procs (GimpPDB *pdb)
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-get-stroke-method
+   */
+  procedure = gimp_procedure_new (context_get_stroke_method_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-get-stroke-method");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-get-stroke-method",
+                                     "Retrieve the currently active stroke method.",
+                                     "This procedure returns the currently active stroke method.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("stroke-method",
+                                                      "stroke method",
+                                                      "The active stroke method",
+                                                      GIMP_TYPE_STROKE_METHOD,
+                                                      GIMP_STROKE_LINE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-set-stroke-method
+   */
+  procedure = gimp_procedure_new (context_set_stroke_method_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-set-stroke-method");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-set-stroke-method",
+                                     "Set the specified stroke method as the active stroke method.",
+                                     "This procedure set the specified stroke method as the active stroke method. The new method will be used in all subsequent stroke operations.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2015",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("stroke-method",
+                                                  "stroke method",
+                                                  "The new stroke method",
+                                                  GIMP_TYPE_STROKE_METHOD,
+                                                  GIMP_STROKE_LINE,
+                                                  GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
