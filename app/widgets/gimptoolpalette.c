@@ -447,6 +447,7 @@ gimp_tool_palette_initialize_tools (GimpToolPalette *palette)
             gimp_help_set_help_data (GTK_WIDGET (item),
                                      tool_info->help, tool_info->help_id);
         }
+      gtk_widget_set_can_focus (gtk_bin_get_child (GTK_BIN (item)), FALSE);
     }
 
   /* We only need to initialize tools once */
