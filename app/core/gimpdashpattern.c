@@ -251,11 +251,7 @@ gimp_dash_pattern_from_value_array (GimpValueArray *value_array)
 GimpValueArray *
 gimp_dash_pattern_to_value_array (GArray *pattern)
 {
-  if (pattern == NULL || pattern->len == 0)
-    {
-      return NULL;
-    }
-  else
+  if (pattern != NULL && pattern->len > 0)
     {
       GimpValueArray *value_array = gimp_value_array_new (pattern->len);
       GValue          item        = { 0, };
@@ -273,6 +269,63 @@ gimp_dash_pattern_to_value_array (GArray *pattern)
 
       return value_array;
     }
+
+  return NULL;
+}
+
+GArray *
+gimp_dash_pattern_from_double_array (gint           n_dashes,
+                                     const gdouble *dashes)
+{
+  if (n_dashes > 0 && dashes != NULL)
+    {
+      GArray *pattern;
+      gint    i;
+
+      pattern = g_array_new (FALSE, FALSE, sizeof (gdouble));
+
+      for (i = 0; i < n_dashes; i++)
+        {
+	  if (dashes[i] >= 0.0)
+	    {
+              g_array_append_val (pattern, dashes[i]);
+	    }
+	  else
+	    {
+	      g_array_free (pattern, TRUE);
+	      return NULL;
+	    }
+	}
+
+      return pattern;
+    }
+
+  return NULL;
+}
+
+gdouble *
+gimp_dash_pattern_to_double_array (GArray *pattern,
+                                   gint   *n_dashes)
+{
+  if (pattern != NULL && pattern->len > 0)
+    {
+      gdouble *dashes;
+      gint     i;
+
+      dashes = g_new0 (gdouble, pattern->len);
+
+      for (i = 0; i < pattern->len; i++)
+        {
+          dashes[i] = g_array_index (pattern, gdouble, i);
+        }
+
+      if (n_dashes)
+        *n_dashes = pattern->len;
+
+      return dashes;
+    }
+
+  return NULL;
 }
 
 GArray *
