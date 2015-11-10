@@ -51,6 +51,22 @@ gdouble                gimp_context_get_opacity                (void);
 gboolean               gimp_context_set_opacity                (gdouble                   opacity);
 GimpLayerModeEffects   gimp_context_get_paint_mode             (void);
 gboolean               gimp_context_set_paint_mode             (GimpLayerModeEffects      paint_mode);
+gdouble                gimp_context_get_line_width             (void);
+gboolean               gimp_context_set_line_width             (gdouble                   line_width);
+GimpUnit               gimp_context_get_line_width_unit        (void);
+gboolean               gimp_context_set_line_width_unit        (GimpUnit                  line_width_unit);
+GimpCapStyle           gimp_context_get_line_cap_style         (void);
+gboolean               gimp_context_set_line_cap_style         (GimpCapStyle              cap_style);
+GimpJoinStyle          gimp_context_get_line_join_style        (void);
+gboolean               gimp_context_set_line_join_style        (GimpJoinStyle             join_style);
+gdouble                gimp_context_get_line_miter_limit       (void);
+gboolean               gimp_context_set_line_miter_limit       (gdouble                   miter_limit);
+gdouble                gimp_context_get_line_dash_offset       (void);
+gboolean               gimp_context_set_line_dash_offset       (gdouble                   dash_offset);
+gboolean               gimp_context_get_line_dash_pattern      (gint                     *num_dashes,
+                                                                gdouble                 **dashes);
+gboolean               gimp_context_set_line_dash_pattern      (gint                      num_dashes,
+                                                                const gdouble            *dashes);
 gchar*                 gimp_context_get_brush                  (void);
 gboolean               gimp_context_set_brush                  (const gchar              *name);
 gdouble                gimp_context_get_brush_size             (void);
