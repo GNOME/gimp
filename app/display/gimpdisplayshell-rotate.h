@@ -19,6 +19,10 @@
 #define __GIMP_DISPLAY_SHELL_ROTATE_H__
 
 
+void   gimp_display_shell_flip                    (GimpDisplayShell *shell,
+                                                   gboolean          flip_horizontally,
+                                                   gboolean          flip_vertically);
+
 void   gimp_display_shell_rotate                  (GimpDisplayShell *shell,
                                                    gdouble           delta);
 void   gimp_display_shell_rotate_to               (GimpDisplayShell *shell,

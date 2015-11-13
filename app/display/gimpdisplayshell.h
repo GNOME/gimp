@@ -67,6 +67,8 @@ struct _GimpDisplayShell
   gdouble            scale_x;          /*  horizontal scale factor            */
   gdouble            scale_y;          /*  vertical scale factor              */
 
+  gboolean           flip_horizontally;
+  gboolean           flip_vertically;
   gdouble            rotate_angle;
   cairo_matrix_t    *rotate_transform;
   cairo_matrix_t    *rotate_untransform;

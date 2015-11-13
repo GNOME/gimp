@@ -50,6 +50,11 @@ void   view_scroll_vertical_cmd_callback       (GtkAction *action,
                                                 gint       value,
                                                 gpointer   data);
 
+void   view_flip_horizontally_cmd_callback     (GtkAction *action,
+                                                gpointer   data);
+void   view_flip_vertically_cmd_callback       (GtkAction *action,
+                                                gpointer   data);
+
 void   view_rotate_absolute_cmd_callback       (GtkAction *action,
                                                 gint       value,
                                                 gpointer   data);

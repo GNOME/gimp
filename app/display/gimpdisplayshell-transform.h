@@ -61,8 +61,8 @@ void  gimp_display_shell_zoom_segments        (const GimpDisplayShell *shell,
                                                gdouble                 offset_y);
 
 
-/*  rotate: functions to transform from unrotated but zoomed display
- *  space to rotated display space and back
+/*  rotate: functions to transform from unrotated and unflipped but
+ *  zoomed display space to rotated and filpped display space and back
  */
 
 void  gimp_display_shell_rotate_coords        (const GimpDisplayShell *shell,
@@ -114,8 +114,9 @@ void  gimp_display_shell_unrotate_bounds      (GimpDisplayShell       *shell,
                                                gdouble                *ny2);
 
 
-/*  transform: functions to transform from image space to rotated display
- *  space and back, taking into account scroll offset, scale, and rotation
+/*  transform: functions to transform from image space to rotated
+ *  display space and back, taking into account scroll offset, scale,
+ *  rotation and flipping
  */
 
 void  gimp_display_shell_transform_coords     (const GimpDisplayShell *shell,

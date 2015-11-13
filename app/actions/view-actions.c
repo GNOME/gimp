@@ -68,7 +68,7 @@ static const GimpActionEntry view_actions[] =
 {
   { "view-menu",                NULL, NC_("view-action", "_View")          },
   { "view-zoom-menu",           NULL, NC_("view-action", "_Zoom")          },
-  { "view-rotate-menu",         NULL, NC_("view-action", "_Rotate")        },
+  { "view-rotate-menu",         NULL, NC_("view-action", "_Flip & Rotate") },
   { "view-padding-color-menu",  NULL, NC_("view-action", "_Padding Color") },
   { "view-move-to-screen-menu", GIMP_STOCK_MOVE_TO_SCREEN,
     NC_("view-action", "Move to Screen"), NULL, NULL, NULL,
@@ -394,6 +394,21 @@ static const GimpRadioActionEntry view_zoom_explicit_actions[] =
     GIMP_HELP_VIEW_ZOOM_OTHER }
 };
 
+static const GimpToggleActionEntry view_flip_actions[] =
+{
+  { "view-flip-horizontally", GIMP_STOCK_FLIP_HORIZONTAL,
+    NC_("view-action", "Flip Horizontally"), NULL, NULL,
+    G_CALLBACK (view_flip_horizontally_cmd_callback),
+    FALSE,
+    GIMP_HELP_VIEW_FLIP },
+
+  { "view-flip-vertically", GIMP_STOCK_FLIP_VERTICAL,
+    NC_("view-action", "Flip Vertically"), NULL, NULL,
+    G_CALLBACK (view_flip_vertically_cmd_callback),
+    FALSE,
+    GIMP_HELP_VIEW_FLIP }
+};
+
 static const GimpEnumActionEntry view_rotate_absolute_actions[] =
 {
   { "view-rotate-set-absolute", NULL,
@@ -402,8 +417,9 @@ static const GimpEnumActionEntry view_rotate_absolute_actions[] =
     NULL },
 
   { "view-rotate-reset", GIMP_STOCK_RESET,
-    NC_("view-action", "_Reset to 0°"), "exclam",
-    NC_("view-action", "Reset the angle of rotation to 0°"),
+    NC_("view-action", "_Reset Flip & Rotate"), "exclam",
+    NC_("view-action",
+        "Reset flipping to unflipped and the angle of rotation to 0°"),
     GIMP_ACTION_SELECT_SET_TO_DEFAULT, FALSE,
     GIMP_HELP_VIEW_ROTATE_RESET },
 };
@@ -577,6 +593,10 @@ view_actions_setup (GimpActionGroup *group)
                                        10000,
                                        G_CALLBACK (view_zoom_explicit_cmd_callback));
 
+  gimp_action_group_add_toggle_actions (group, "view-action",
+                                        view_flip_actions,
+                                        G_N_ELEMENTS (view_flip_actions));
+
   gimp_action_group_add_enum_actions (group, "view-action",
                                       view_rotate_absolute_actions,
                                       G_N_ELEMENTS (view_rotate_absolute_actions),
@@ -633,13 +653,15 @@ void
 view_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpDisplay        *display        = action_data_get_display (data);
-  GimpImage          *image          = NULL;
-  GimpDisplayShell   *shell          = NULL;
-  GimpDisplayOptions *options        = NULL;
-  gchar              *label          = NULL;
-  gboolean            fullscreen     = FALSE;
-  gboolean            revert_enabled = FALSE;   /* able to revert zoom? */
+  GimpDisplay        *display           = action_data_get_display (data);
+  GimpImage          *image             = NULL;
+  GimpDisplayShell   *shell             = NULL;
+  GimpDisplayOptions *options           = NULL;
+  gchar              *label             = NULL;
+  gboolean            fullscreen        = FALSE;
+  gboolean            revert_enabled    = FALSE;   /* able to revert zoom? */
+  gboolean            flip_horizontally = FALSE;
+  gboolean            flip_vertically   = FALSE;
 
   if (display)
     {
@@ -657,6 +679,9 @@ view_actions_update (GimpActionGroup *group,
                  shell->no_image_options);
 
       revert_enabled = gimp_display_shell_scale_can_revert (shell);
+
+      flip_horizontally = shell->flip_horizontally;
+      flip_vertically   = shell->flip_vertically;
     }
 
 #define SET_ACTIVE(action,condition) \
@@ -686,44 +711,50 @@ view_actions_update (GimpActionGroup *group,
                                           _("Re_vert Zoom"));
     }
 
-  SET_SENSITIVE ("view-zoom",            image);
-  SET_SENSITIVE ("view-zoom-minimum",    image);
-  SET_SENSITIVE ("view-zoom-maximum",    image);
-  SET_SENSITIVE ("view-zoom-in",         image);
-  SET_SENSITIVE ("view-zoom-in-accel",   image);
-  SET_SENSITIVE ("view-zoom-in-skip",    image);
-  SET_SENSITIVE ("view-zoom-out",        image);
-  SET_SENSITIVE ("view-zoom-out-accel",  image);
-  SET_SENSITIVE ("view-zoom-out-skip",   image);
+  SET_SENSITIVE ("view-zoom",              image);
+  SET_SENSITIVE ("view-zoom-minimum",      image);
+  SET_SENSITIVE ("view-zoom-maximum",      image);
+  SET_SENSITIVE ("view-zoom-in",           image);
+  SET_SENSITIVE ("view-zoom-in-accel",     image);
+  SET_SENSITIVE ("view-zoom-in-skip",      image);
+  SET_SENSITIVE ("view-zoom-out",          image);
+  SET_SENSITIVE ("view-zoom-out-accel",    image);
+  SET_SENSITIVE ("view-zoom-out-skip",     image);
 
-  SET_SENSITIVE ("view-zoom-fit-in",     image);
-  SET_SENSITIVE ("view-zoom-fill",       image);
-  SET_SENSITIVE ("view-zoom-selection",  image);
-  SET_SENSITIVE ("view-zoom-revert",     image);
+  SET_SENSITIVE ("view-zoom-fit-in",       image);
+  SET_SENSITIVE ("view-zoom-fill",         image);
+  SET_SENSITIVE ("view-zoom-selection",    image);
+  SET_SENSITIVE ("view-zoom-revert",       image);
 
-  SET_SENSITIVE ("view-zoom-16-1",       image);
-  SET_SENSITIVE ("view-zoom-16-1-accel", image);
-  SET_SENSITIVE ("view-zoom-8-1",        image);
-  SET_SENSITIVE ("view-zoom-8-1-accel",  image);
-  SET_SENSITIVE ("view-zoom-4-1",        image);
-  SET_SENSITIVE ("view-zoom-4-1-accel",  image);
-  SET_SENSITIVE ("view-zoom-2-1",        image);
-  SET_SENSITIVE ("view-zoom-2-1-accel",  image);
-  SET_SENSITIVE ("view-zoom-1-1",        image);
-  SET_SENSITIVE ("view-zoom-1-1-accel",  image);
-  SET_SENSITIVE ("view-zoom-1-2",        image);
-  SET_SENSITIVE ("view-zoom-1-4",        image);
-  SET_SENSITIVE ("view-zoom-1-8",        image);
-  SET_SENSITIVE ("view-zoom-1-16",       image);
-  SET_SENSITIVE ("view-zoom-other",      image);
+  SET_SENSITIVE ("view-zoom-16-1",         image);
+  SET_SENSITIVE ("view-zoom-16-1-accel",   image);
+  SET_SENSITIVE ("view-zoom-8-1",          image);
+  SET_SENSITIVE ("view-zoom-8-1-accel",    image);
+  SET_SENSITIVE ("view-zoom-4-1",          image);
+  SET_SENSITIVE ("view-zoom-4-1-accel",    image);
+  SET_SENSITIVE ("view-zoom-2-1",          image);
+  SET_SENSITIVE ("view-zoom-2-1-accel",    image);
+  SET_SENSITIVE ("view-zoom-1-1",          image);
+  SET_SENSITIVE ("view-zoom-1-1-accel",    image);
+  SET_SENSITIVE ("view-zoom-1-2",          image);
+  SET_SENSITIVE ("view-zoom-1-4",          image);
+  SET_SENSITIVE ("view-zoom-1-8",          image);
+  SET_SENSITIVE ("view-zoom-1-16",         image);
+  SET_SENSITIVE ("view-zoom-other",        image);
 
-  SET_SENSITIVE ("view-rotate-reset",    image);
-  SET_SENSITIVE ("view-rotate-15",       image);
-  SET_SENSITIVE ("view-rotate-345",      image);
-  SET_SENSITIVE ("view-rotate-90",       image);
-  SET_SENSITIVE ("view-rotate-180",      image);
-  SET_SENSITIVE ("view-rotate-270",      image);
-  SET_SENSITIVE ("view-rotate-other",    image);
+  SET_SENSITIVE ("view-flip-horizontally", image);
+  SET_ACTIVE    ("view-flip-horizontally", flip_horizontally);
+
+  SET_SENSITIVE ("view-flip-vertically",   image);
+  SET_ACTIVE    ("view-flip-vertically",   flip_vertically);
+
+  SET_SENSITIVE ("view-rotate-reset",      image);
+  SET_SENSITIVE ("view-rotate-15",         image);
+  SET_SENSITIVE ("view-rotate-345",        image);
+  SET_SENSITIVE ("view-rotate-90",         image);
+  SET_SENSITIVE ("view-rotate-180",        image);
+  SET_SENSITIVE ("view-rotate-270",        image);
+  SET_SENSITIVE ("view-rotate-other",      image);
 
   if (image)
     {
@@ -866,9 +897,32 @@ static void
 view_actions_set_rotate (GimpActionGroup  *group,
                          GimpDisplayShell *shell)
 {
-  gchar *label;
+  const gchar *flip;
+  gchar       *label;
 
-  label = g_strdup_printf (_("_Rotate (%d°)"), (gint) shell->rotate_angle);
+  if (shell->flip_horizontally &&
+      shell->flip_vertically)
+    {
+      /* please preserve the trailing space */
+      flip = _("(H+V) ");
+    }
+  else if (shell->flip_horizontally)
+    {
+      /* please preserve the trailing space */
+      flip = _("(H) ");
+    }
+  else if (shell->flip_vertically)
+    {
+      /* please preserve the trailing space */
+      flip = _("(V) ");
+    }
+  else
+    {
+      flip = "";
+    }
+
+  label = g_strdup_printf (_("_Flip %s& Rotate (%d°)"),
+                           flip, (gint) shell->rotate_angle);
   gimp_action_group_set_action_label (group, "view-rotate-menu", label);
   g_free (label);
 }
