@@ -11,11 +11,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=gimp&keywords=I18N+L10N&component=general\n"
-"POT-Creation-Date: 2015-10-23 05:54+0000\n"
-"PO-Revision-Date: 2015-10-23 19:09+0100\n"
-"Last-Translator: Pedro Albuquerque <palbuquerque73o@gmail.com>\n"
+"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=gimp&keywords=I18N+L10N&component=general\n"
+"POT-Creation-Date: 2015-11-14 07:12+0000\n"
+"PO-Revision-Date: 2015-11-14 08:36+0000\n"
+"Last-Translator: <>\n"
 "Language-Team: Português <palbuquerque73@gmail.com>\n"
 "Language: Portuguese\n"
 "MIME-Version: 1.0\n"
@@ -26,6 +25,8 @@ msgstr ""
 "X-Poedit-Country: PORTUGAL\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Gtranslator 2.91.6\n"
+"X-Language: pt_PT\n"
+"X-Source-Language: C\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -33,7 +34,7 @@ msgstr "Alinhar todas as camadas visíveis desta imagem"
 
 #: ../plug-ins/common/align-layers.c:163
 msgid "Align Visi_ble Layers..."
-msgstr "A_linhar camadas visíveis"
+msgstr "A_linhar camadas visíveis..."
 
 #: ../plug-ins/common/align-layers.c:207
 msgid "There are not enough layers to align."
@@ -340,17 +341,16 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-jp2-load.c:395 ../plug-ins/common/file-pcx.c:437
 #: ../plug-ins/common/file-pcx.c:443 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1014 ../plug-ins/common/file-pnm.c:669
-#: ../plug-ins/common/file-raw-data.c:970
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1092
-#: ../plug-ins/common/file-tiff-load.c:1135 ../plug-ins/common/file-xbm.c:904
-#: ../plug-ins/common/film.c:745 ../plug-ins/common/smooth-palette.c:255
-#: ../plug-ins/common/tile.c:262 ../plug-ins/file-bmp/bmp-read.c:699
-#: ../plug-ins/file-exr/file-exr.c:245 ../plug-ins/file-faxg3/faxg3.c:525
-#: ../plug-ins/file-fits/fits.c:529 ../plug-ins/file-jpeg/jpeg-load.c:239
+#: ../plug-ins/common/file-raw-data.c:970 ../plug-ins/common/file-sunras.c:1049
+#: ../plug-ins/common/file-tga.c:1092 ../plug-ins/common/file-tiff-load.c:1135
+#: ../plug-ins/common/file-xbm.c:904 ../plug-ins/common/film.c:745
+#: ../plug-ins/common/smooth-palette.c:255 ../plug-ins/common/tile.c:262
+#: ../plug-ins/file-bmp/bmp-read.c:699 ../plug-ins/file-exr/file-exr.c:245
+#: ../plug-ins/file-faxg3/faxg3.c:525 ../plug-ins/file-fits/fits.c:529
+#: ../plug-ins/file-jpeg/jpeg-load.c:239
 #: ../plug-ins/file-psd/psd-image-res-load.c:1033
 #: ../plug-ins/file-psd/psd-load.c:1767 ../plug-ins/file-sgi/sgi.c:411
-#: ../plug-ins/gfig/gfig-dialog.c:1319
-#: ../plug-ins/gimpressionist/general.c:139
+#: ../plug-ins/gfig/gfig-dialog.c:1319 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:252 ../plug-ins/twain/twain.c:567
 #: ../plug-ins/win-snap/winsnap.c:1162
 msgid "Background"
@@ -376,7 +376,7 @@ msgstr "Desfocar simples e rápidamente mas não muito forte"
 msgid "_Blur"
 msgstr "_Desfocar"
 
-#: ../plug-ins/common/blur.c:175 ../plug-ins/common/unsharp-mask.c:588
+#: ../plug-ins/common/blur.c:175 ../plug-ins/common/unsharp-mask.c:589
 msgid "Blurring"
 msgstr "A desfocar"
 
@@ -386,7 +386,7 @@ msgstr "Desfocar pixels vizinhos, mas só em áreas de baixo contraste"
 
 #: ../plug-ins/common/blur-gauss-selective.c:116
 msgid "_Selective Gaussian Blur..."
-msgstr "_Gaussiana desfocada seletiva"
+msgstr "_Gaussiana desfocada seletiva..."
 
 #: ../plug-ins/common/blur-gauss-selective.c:196
 #: ../plug-ins/common/blur-gauss-selective.c:233
@@ -395,7 +395,7 @@ msgstr "Gaussiana desfocada seletiva"
 
 #: ../plug-ins/common/blur-gauss-selective.c:212
 #: ../plug-ins/common/cartoon.c:232 ../plug-ins/common/edge-dog.c:269
-#: ../plug-ins/common/edge-neon.c:228 ../plug-ins/common/photocopy.c:244
+#: ../plug-ins/common/edge-neon.c:229 ../plug-ins/common/photocopy.c:244
 #: ../plug-ins/common/softglow.c:224
 #: ../plug-ins/gradient-flare/gradient-flare.c:966
 msgid "Cannot operate on indexed color images."
@@ -696,8 +696,7 @@ msgstr "Saturação"
 #: ../plug-ins/common/cml-explorer.c:302 ../plug-ins/common/cml-explorer.c:310
 #: ../plug-ins/common/decompose.c:186
 #: ../plug-ins/gimpressionist/orientation.c:155
-#: ../plug-ins/gimpressionist/size.c:158
-#: ../plug-ins/ui/plug-in-metadata.ui.h:2
+#: ../plug-ins/gimpressionist/size.c:158 ../plug-ins/ui/plug-in-metadata.ui.h:2
 msgid "Value"
 msgstr "Valor"
 
@@ -802,8 +801,7 @@ msgstr "Copiar definições"
 msgid "Source channel:"
 msgstr "Canal de origem:"
 
-#: ../plug-ins/common/cml-explorer.c:1459
-#: ../plug-ins/common/cml-explorer.c:1507
+#: ../plug-ins/common/cml-explorer.c:1459 ../plug-ins/common/cml-explorer.c:1507
 msgid "Destination channel:"
 msgstr "Canal de destino:"
 
@@ -821,7 +819,7 @@ msgstr "Ficheiro do canal de origem:"
 
 #: ../plug-ins/common/cml-explorer.c:1513
 msgid "_Misc Ops."
-msgstr "_Operações variadas"
+msgstr "_Operações variadas."
 
 #: ../plug-ins/common/cml-explorer.c:1572
 msgid "Function type:"
@@ -897,7 +895,7 @@ msgstr "Aviso: a origem e o destino são o mesmo canal."
 
 #: ../plug-ins/common/cml-explorer.c:1979
 msgid "Save CML Explorer Parameters"
-msgstr "Gravar parâmetros do explorador CML."
+msgstr "Gravar parâmetros do explorador CML"
 
 #: ../plug-ins/common/cml-explorer.c:2035 ../plug-ins/common/curve-bend.c:839
 #: ../plug-ins/common/file-dicom.c:1370 ../plug-ins/common/file-gif-save.c:833
@@ -906,8 +904,7 @@ msgstr "Gravar parâmetros do explorador CML."
 #: ../plug-ins/common/file-png.c:1494 ../plug-ins/common/file-raw-data.c:785
 #: ../plug-ins/common/file-raw-data.c:813 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1204 ../plug-ins/common/file-tiff-save.c:965
-#: ../plug-ins/common/file-xmc.c:1473
-#: ../plug-ins/common/sphere-designer.c:2121
+#: ../plug-ins/common/file-xmc.c:1473 ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-write.c:326 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:748 ../plug-ins/file-ico/ico-save.c:1079
 #: ../plug-ins/file-jpeg/jpeg-save.c:328 ../plug-ins/file-psd/psd-save.c:1523
@@ -926,7 +923,7 @@ msgstr "Os parâmetros foram gravados em \"%s\""
 
 #: ../plug-ins/common/cml-explorer.c:2112
 msgid "Load CML Explorer Parameters"
-msgstr "Carregar parâmetros do explorador CML."
+msgstr "Carregar parâmetros do explorador CML"
 
 #: ../plug-ins/common/cml-explorer.c:2208 ../plug-ins/common/curve-bend.c:891
 #: ../plug-ins/common/file-cel.c:297 ../plug-ins/common/file-cel.c:348
@@ -951,8 +948,7 @@ msgstr "Carregar parâmetros do explorador CML."
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1865
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:923
 #: ../plug-ins/gfig/gfig.c:424 ../plug-ins/help/gimphelplocale.c:222
-#: ../plug-ins/help/gimphelplocale.c:238
-#: ../plug-ins/lighting/lighting-ui.c:1367
+#: ../plug-ins/help/gimphelplocale.c:238 ../plug-ins/lighting/lighting-ui.c:1367
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossível abrir \"%s\" para leitura: %s"
@@ -1274,7 +1270,7 @@ msgstr "Impossível obter camadas para a imagem %d"
 
 #: ../plug-ins/common/compose.c:599
 msgid "Composing"
-msgstr "A compor..."
+msgstr "A compor"
 
 #: ../plug-ins/common/compose.c:834 ../plug-ins/common/compose.c:1304
 msgid "At least one image is needed to compose"
@@ -1312,7 +1308,7 @@ msgstr "Compor canais"
 
 #: ../plug-ins/common/compose.c:1094 ../plug-ins/common/decompose.c:825
 msgid "Color _model:"
-msgstr "_Modelo de cores"
+msgstr "_Modelo de cores:"
 
 #. Channel representation table
 #: ../plug-ins/common/compose.c:1126
@@ -1327,14 +1323,13 @@ msgstr "Valor da máscara"
 msgid "Stretch brightness values to cover the full range"
 msgstr "Esticar os valores do brilho para cobrir todo o intervalo"
 
-#: ../plug-ins/common/contrast-normalize.c:91
-#: ../plug-ins/common/edge-dog.c:362
+#: ../plug-ins/common/contrast-normalize.c:91 ../plug-ins/common/edge-dog.c:362
 msgid "_Normalize"
 msgstr "_Normalizar"
 
 #: ../plug-ins/common/contrast-normalize.c:123
 msgid "Normalizing"
-msgstr "A normalizar..."
+msgstr "A normalizar"
 
 #: ../plug-ins/common/contrast-retinex.c:156
 msgid "Enhance contrast using the Retinex method"
@@ -1584,7 +1579,6 @@ msgid "value"
 msgstr "valor"
 
 #: ../plug-ins/common/decompose.c:150
-#| msgid "Lightness"
 msgid "lightness"
 msgstr "luminosidade"
 
@@ -1710,11 +1704,11 @@ msgstr "Magenta_K"
 msgid "Yellow_K"
 msgstr "Amarelo_K"
 
-#: ../plug-ins/common/decompose.c:270 ../plug-ins/common/decompose.c:284
+#: ../plug-ins/common/decompose.c:269 ../plug-ins/common/decompose.c:283
 msgid "Decompose an image into separate colorspace components"
 msgstr "Decompor a imagem em componentes de espaço de cor separados"
 
-#: ../plug-ins/common/decompose.c:276 ../plug-ins/common/decompose.c:294
+#: ../plug-ins/common/decompose.c:275 ../plug-ins/common/decompose.c:293
 msgid "_Decompose..."
 msgstr "_Decompor..."
 
@@ -1724,7 +1718,7 @@ msgstr "A decompor"
 
 #: ../plug-ins/common/decompose.c:489
 msgid "Image not suitable for this decomposition"
-msgstr "Imagem não adequada para decomposição."
+msgstr "Imagem não adequada para decomposição"
 
 #: ../plug-ins/common/decompose.c:790
 msgid "Decompose"
@@ -1783,8 +1777,7 @@ msgstr "Origem 2:"
 msgid "O_verlap:"
 msgstr "_Sobreposição:"
 
-#: ../plug-ins/common/depth-merge.c:775
-#: ../plug-ins/common/file-raw-data.c:1432
+#: ../plug-ins/common/depth-merge.c:775 ../plug-ins/common/file-raw-data.c:1432
 msgid "O_ffset:"
 msgstr "_Desvio:"
 
@@ -1806,7 +1799,7 @@ msgstr "Remover _Pontos destoantes..."
 
 #: ../plug-ins/common/despeckle.c:441 ../plug-ins/common/despeckle.c:872
 msgid "Despeckle"
-msgstr "A remover pontos destoantes..."
+msgstr "A remover pontos destoantes"
 
 #: ../plug-ins/common/despeckle.c:471
 msgid "Median"
@@ -1820,8 +1813,8 @@ msgstr "_Adaptativa"
 msgid "R_ecursive"
 msgstr "R_Ecursiva"
 
-#: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:735
-#: ../plug-ins/common/nl-filter.c:1091 ../plug-ins/common/unsharp-mask.c:871
+#: ../plug-ins/common/despeckle.c:510 ../plug-ins/common/edge-neon.c:736
+#: ../plug-ins/common/nl-filter.c:1091 ../plug-ins/common/unsharp-mask.c:872
 #: ../plug-ins/gradient-flare/gradient-flare.c:2757
 #: ../plug-ins/imagemap/imap_circle.c:275
 msgid "_Radius:"
@@ -1845,7 +1838,7 @@ msgstr "_Suprimir riscas..."
 
 #: ../plug-ins/common/destripe.c:270
 msgid "Destriping"
-msgstr "A suprimir riscas..."
+msgstr "A suprimir riscas"
 
 #: ../plug-ins/common/destripe.c:440
 msgid "Destripe"
@@ -1893,25 +1886,25 @@ msgstr "R_Aio 2:"
 msgid "_Invert"
 msgstr "_Inverter"
 
-#: ../plug-ins/common/edge-neon.c:134
+#: ../plug-ins/common/edge-neon.c:135
 msgid "Simulate the glowing boundary of a neon light"
 msgstr "Simular o halo brilhante de uma luz de néon"
 
-#: ../plug-ins/common/edge-neon.c:139
+#: ../plug-ins/common/edge-neon.c:140
 msgid "_Neon..."
 msgstr "_Néon..."
 
-#: ../plug-ins/common/edge-neon.c:211
+#: ../plug-ins/common/edge-neon.c:212
 msgid "Neon"
 msgstr "Néon"
 
-#: ../plug-ins/common/edge-neon.c:697
+#: ../plug-ins/common/edge-neon.c:698
 msgid "Neon Detection"
 msgstr "Deteção néon"
 
-#: ../plug-ins/common/edge-neon.c:750 ../plug-ins/common/unsharp-mask.c:884
+#: ../plug-ins/common/edge-neon.c:751 ../plug-ins/common/unsharp-mask.c:885
 msgid "_Amount:"
-msgstr "_Quantidade"
+msgstr "_Quantidade:"
 
 #: ../plug-ins/common/emboss.c:125
 msgid "Simulate an image created by embossing"
@@ -2286,8 +2279,7 @@ msgid "Could not open '%s'"
 msgstr "Impossível abrir \"%s\""
 
 #: ../plug-ins/common/file-gif-load.c:148
-#: ../plug-ins/common/file-gif-save.c:171
-#: ../plug-ins/common/file-gif-save.c:190
+#: ../plug-ins/common/file-gif-save.c:171 ../plug-ins/common/file-gif-save.c:190
 msgid "GIF image"
 msgstr "Imagem GIF"
 
@@ -2887,13 +2879,11 @@ msgstr "Contorno inferior fora dos limites (tem de ser < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Falha ao escrever no ficheiro \"%s\": %s"
 
-#: ../plug-ins/common/file-pdf-load.c:300
-#: ../plug-ins/common/file-pdf-save.c:319
+#: ../plug-ins/common/file-pdf-load.c:300 ../plug-ins/common/file-pdf-save.c:319
 msgid "Portable Document Format"
 msgstr "PDF (Formato de Documento Portátil)"
 
-#: ../plug-ins/common/file-pdf-load.c:545
-#: ../plug-ins/common/file-pdf-load.c:564
+#: ../plug-ins/common/file-pdf-load.c:545 ../plug-ins/common/file-pdf-load.c:564
 #, c-format
 msgid "Could not load '%s': %s"
 msgstr "Impossível carregar \"%s\": %s"
@@ -2966,23 +2956,19 @@ msgstr ""
 "Certifique-se que inseriu um nome de ficheiro válido e que a localização "
 "selecionada não é só de leitura!"
 
-#: ../plug-ins/common/file-pdf-save.c:854
-#: ../plug-ins/common/file-pdf-save.c:976
+#: ../plug-ins/common/file-pdf-save.c:854 ../plug-ins/common/file-pdf-save.c:976
 msgid "Omit hidden layers and layers with zero opacity"
 msgstr "Omitir camadas ocultas e camadas com opacidade 0"
 
-#: ../plug-ins/common/file-pdf-save.c:859
-#: ../plug-ins/common/file-pdf-save.c:981
+#: ../plug-ins/common/file-pdf-save.c:859 ../plug-ins/common/file-pdf-save.c:981
 msgid "Convert bitmaps to vector graphics where possible"
 msgstr "Converter mapas de bits para gráficos vetoriais sempre que possível"
 
-#: ../plug-ins/common/file-pdf-save.c:864
-#: ../plug-ins/common/file-pdf-save.c:986
+#: ../plug-ins/common/file-pdf-save.c:864 ../plug-ins/common/file-pdf-save.c:986
 msgid "Apply layer masks before saving"
 msgstr "Aplicar máscaras de camada antes de gravar"
 
-#: ../plug-ins/common/file-pdf-save.c:868
-#: ../plug-ins/common/file-pdf-save.c:990
+#: ../plug-ins/common/file-pdf-save.c:868 ../plug-ins/common/file-pdf-save.c:990
 msgid "Keeping the masks will not change the output"
 msgstr "Manter as máscaras não altera o resultado"
 
@@ -3168,7 +3154,7 @@ msgstr "Fator de escala falso."
 
 #: ../plug-ins/common/file-pnm.c:646
 msgid "Unsupported scale factor."
-msgstr "Fator de escala não suportado"
+msgstr "Fator de escala não suportado."
 
 #: ../plug-ins/common/file-pnm.c:656
 msgid "Unsupported maximum value."
@@ -3267,8 +3253,7 @@ msgstr "Cinzento"
 
 #: ../plug-ins/common/file-ps.c:3562 ../plug-ins/common/file-xpm.c:480
 #: ../plug-ins/gimpressionist/color.c:65
-#: ../plug-ins/gimpressionist/general.c:169
-#: ../plug-ins/imagemap/imap_menu.c:211
+#: ../plug-ins/gimpressionist/general.c:169 ../plug-ins/imagemap/imap_menu.c:211
 msgid "Color"
 msgstr "Cor"
 
@@ -3340,8 +3325,7 @@ msgid "_Millimeter"
 msgstr "_Milímetro"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3774
-#: ../plug-ins/map-object/map-object-ui.c:989
+#: ../plug-ins/common/file-ps.c:3774 ../plug-ins/map-object/map-object-ui.c:989
 msgid "Rotation"
 msgstr "Rotação"
 
@@ -3392,8 +3376,7 @@ msgstr "RLE"
 msgid "LZ77"
 msgstr "LZ77"
 
-#: ../plug-ins/common/file-raw-data.c:200
-#: ../plug-ins/common/file-raw-data.c:215
+#: ../plug-ins/common/file-raw-data.c:200 ../plug-ins/common/file-raw-data.c:215
 msgid "Raw image data"
 msgstr "Dados de imagem Raw"
 
@@ -3547,7 +3530,7 @@ msgid ""
 "Image width is larger than GIMP can handle"
 msgstr ""
 "\"%s\":\n"
-"A largura da imagem é maior do que o GIMP pode gerir."
+"A largura da imagem é maior do que o GIMP pode gerir"
 
 #: ../plug-ins/common/file-sunras.c:518 ../plug-ins/common/file-xbm.c:848
 #: ../plug-ins/common/file-xwd.c:540
@@ -3567,7 +3550,7 @@ msgid ""
 "Image height is larger than GIMP can handle"
 msgstr ""
 "\"%s\":\n"
-"A altura da imagem é maior do que o GIMP pode gerir."
+"A altura da imagem é maior do que o GIMP pode gerir"
 
 #: ../plug-ins/common/file-sunras.c:562
 msgid "This image depth is not supported"
@@ -3675,7 +3658,7 @@ msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importar elementos de caminho do SVG para que possam ser utilizados no GIMP "
-"com a ferramenta Caminhos."
+"com a ferramenta Caminhos"
 
 #: ../plug-ins/common/file-svg.c:950
 msgid "Merge imported paths"
@@ -4018,8 +4001,8 @@ msgid ""
 "leave it \"32px\".\n"
 "Nominal size has no relation with the actual size (width or height).\n"
 "It is only used to determine which frame depends on which animation "
-"sequence, and which sequence is used based on the value of \"gtk-cursor-"
-"theme-size\"."
+"sequence, and which sequence is used based on the value of "
+"\"gtk-cursor-theme-size\"."
 msgstr ""
 "Escolha o tamanho nominal dos molduras.\n"
 "Se não tiver planos para criar um cursor multitamanho ou se não fizer ideia "
@@ -4027,8 +4010,8 @@ msgstr ""
 "O tamanho nominal não tem nenhuma relação com o tamanho real (largura ou "
 "altura).\n"
 "Só é usado para determinar qual das molduras depende de qual sequência de "
-"animação e qual a sequência  usada baseada no valor de \"gtk-cursor-theme-"
-"size\"."
+"animação e qual a sequência  usada baseada no valor de "
+"\"gtk-cursor-theme-size\"."
 
 #: ../plug-ins/common/file-xmc.c:1165
 msgid "_Use this value only for a frame which size is not specified."
@@ -4125,11 +4108,11 @@ msgstr "A largura e/ou altura da moldura \"%s\" é zero!"
 #, c-format
 msgid ""
 "Cannot save the cursor because the hot spot is not on frame '%s'.\n"
-"Try to change the hot spot position, layer geometry or save without auto-"
-"crop."
+"Try to change the hot spot position, layer geometry or save without "
+"auto-crop."
 msgstr ""
-"Impossível gravar o cursor porque o ponto quente não está na moldura \"%s"
-"\".\n"
+"Impossível gravar o cursor porque o ponto quente não está na moldura "
+"\"%s\".\n"
 "Tente mudar a posição do ponto quente, a geometria da camada ou grave sem "
 "recorte automático."
 
@@ -4561,8 +4544,7 @@ msgstr "Transformar a imagem com o fractal Mandelbrot"
 msgid "_Fractal Trace..."
 msgstr "Rastreio _Fractal..."
 
-#: ../plug-ins/common/fractal-trace.c:461
-#: ../plug-ins/common/fractal-trace.c:697
+#: ../plug-ins/common/fractal-trace.c:461 ../plug-ins/common/fractal-trace.c:697
 msgid "Fractal Trace"
 msgstr "Rastreio fractal"
 
@@ -4697,7 +4679,7 @@ msgstr "Retalhar a imagem em subimagens usando guias"
 
 #: ../plug-ins/common/guillotine.c:81
 msgid "_Guillotine"
-msgstr "_Guilhotina..."
+msgstr "_Guilhotina"
 
 #: ../plug-ins/common/guillotine.c:119
 msgid "Guillotine"
@@ -4873,7 +4855,7 @@ msgstr "Só funciona com desenhos RGB."
 
 #: ../plug-ins/common/max-rgb.c:232
 msgid "Max RGB"
-msgstr "RGB Máx."
+msgstr "RGB máximo"
 
 #: ../plug-ins/common/max-rgb.c:257
 msgid "Maximum RGB Value"
@@ -4996,7 +4978,7 @@ msgstr "Ecrã"
 
 #: ../plug-ins/common/newsprint.c:1310
 msgid "B_lack pullout (%):"
-msgstr "_Percentagem de preto (%)"
+msgstr "_Percentagem de preto (%):"
 
 #: ../plug-ins/common/newsprint.c:1332
 msgid "Separate to:"
@@ -5120,7 +5102,7 @@ msgstr "_Fotocópia..."
 msgid "Photocopy"
 msgstr "Fotocópia"
 
-#: ../plug-ins/common/photocopy.c:888 ../plug-ins/common/sharpen.c:507
+#: ../plug-ins/common/photocopy.c:888 ../plug-ins/common/sharpen.c:508
 #: ../plug-ins/common/softglow.c:699
 msgid "_Sharpness:"
 msgstr "_Agudeza:"
@@ -5374,104 +5356,22 @@ msgstr "Análise da amostra"
 msgid "Remap colorized"
 msgstr "Remapear colorido"
 
-#: ../plug-ins/common/screenshot.c:250
-msgid "Create an image from an area of the screen"
-msgstr "Criar uma nova imagem com a \"fotografia\" de uma área do ecrã"
-
-#: ../plug-ins/common/screenshot.c:272
-msgid "_Screenshot..."
-msgstr "_Captura de ecrã..."
-
-#: ../plug-ins/common/screenshot.c:453
-msgid "Error selecting the window"
-msgstr "Erro ao selecionar a janela"
-
-#: ../plug-ins/common/screenshot.c:821
-msgid "Importing screenshot"
-msgstr "A importar a captura de ecrã"
-
-#: ../plug-ins/common/screenshot.c:847 ../plug-ins/common/screenshot.c:1215
-msgid "Screenshot"
-msgstr "Captura de ecrã"
-
-#: ../plug-ins/common/screenshot.c:888
-msgid "Mouse Pointer"
-msgstr "Ponteiro do rato"
-
-#: ../plug-ins/common/screenshot.c:1025
-msgid "Specified window not found"
-msgstr "A janela especificada não foi encontrada"
-
-#: ../plug-ins/common/screenshot.c:1224
-msgid "S_nap"
-msgstr "_Capturar"
-
-#: ../plug-ins/common/screenshot.c:1254
-msgid "After the delay, the screenshot is taken."
-msgstr "Depois do atraso, é tirada uma fotografia ao ecrã."
-
-#: ../plug-ins/common/screenshot.c:1256
-msgid ""
-"After the delay, drag your mouse to select the region for the screenshot."
-msgstr ""
-"Depois do atraso, arraste o rato para selecionar a região a incluir na "
-"captura de ecrã."
-
-#: ../plug-ins/common/screenshot.c:1259
-msgid "At the end of the delay, click in a window to snap it."
-msgstr "No fim do atraso, clique na janela para a capturar."
-
-#. Area
-#: ../plug-ins/common/screenshot.c:1265
-msgid "Area"
-msgstr "Área"
-
-#: ../plug-ins/common/screenshot.c:1276
-msgid "Take a screenshot of a single _window"
-msgstr "Capturar o ecrã de uma única _Janela"
-
-#: ../plug-ins/common/screenshot.c:1295
-msgid "Include window _decoration"
-msgstr "Incluir as _Decorações da janela"
-
-#: ../plug-ins/common/screenshot.c:1315
-msgid "Take a screenshot of the entire _screen"
-msgstr "Capturar numa imagem todo o _Ecrã"
-
-#: ../plug-ins/common/screenshot.c:1334
-msgid "Include _mouse pointer"
-msgstr "Incluir o _Ponteiro do rato"
-
-#: ../plug-ins/common/screenshot.c:1355
-msgid "Select a _region to grab"
-msgstr "Selecionar uma _Região a capturar"
-
-#. Delay
-#: ../plug-ins/common/screenshot.c:1370
-msgid "Delay"
-msgstr "Atraso"
-
-#. this is the unit label of a spinbutton
-#: ../plug-ins/common/screenshot.c:1395
-msgid "seconds"
-msgstr "segundos"
-
-#: ../plug-ins/common/sharpen.c:111
+#: ../plug-ins/common/sharpen.c:112
 msgid "Make image sharper (less powerful than Unsharp Mask)"
 msgstr "Tornar a imagem mais aguçada (menos poderoso que a máscara Aguçar)"
 
-#: ../plug-ins/common/sharpen.c:118
+#: ../plug-ins/common/sharpen.c:119
 msgid "_Sharpen..."
 msgstr "_Aguçar..."
 
 #.
 #. * Let the user know what we're doing...
 #.
-#: ../plug-ins/common/sharpen.c:301
+#: ../plug-ins/common/sharpen.c:302
 msgid "Sharpening"
 msgstr "A aguçar"
 
-#: ../plug-ins/common/sharpen.c:471
+#: ../plug-ins/common/sharpen.c:472
 msgid "Sharpen"
 msgstr "Aguçar"
 
@@ -5615,7 +5515,7 @@ msgstr "_Preservar luminosidade"
 
 #: ../plug-ins/common/sparkle.c:506
 msgid "Should the luminosity be preserved?"
-msgstr "Preservar ou não a luminosidade original dos pontos brilhantes"
+msgstr "Quer preservar a luminosidade?"
 
 #: ../plug-ins/common/sparkle.c:515
 msgid "In_verse"
@@ -5872,8 +5772,7 @@ msgstr "Pequenos mosaicos"
 
 #. Area for buttons etc
 #. Flip
-#: ../plug-ins/common/tile-small.c:419
-#: ../plug-ins/ifs-compose/ifs-compose.c:596
+#: ../plug-ins/common/tile-small.c:419 ../plug-ins/ifs-compose/ifs-compose.c:596
 msgid "Flip"
 msgstr "Inverter"
 
@@ -5990,11 +5889,11 @@ msgstr "A forma plural do nome da unidade."
 
 #: ../plug-ins/common/unit-editor.c:121
 msgid "Create a new unit from scratch"
-msgstr "Criar uma nova unidade de raiz."
+msgstr "Criar uma nova unidade de raiz"
 
 #: ../plug-ins/common/unit-editor.c:127
 msgid "Create a new unit using the currently selected unit as template"
-msgstr "Criar uma nova unidade, tendo como modelo a que estiver selecionada."
+msgstr "Criar uma nova unidade, tendo como modelo a que estiver selecionada"
 
 #: ../plug-ins/common/unit-editor.c:145
 msgid "Create or alter units used in GIMP"
@@ -6048,23 +5947,23 @@ msgstr "Por favor, preencha todos os campos de texto."
 msgid "Unit Editor"
 msgstr "Editor de unidades de medida"
 
-#: ../plug-ins/common/unsharp-mask.c:131
+#: ../plug-ins/common/unsharp-mask.c:132
 msgid "The most widely useful method for sharpening an image"
 msgstr "O método mais usado para aguçar uma imagem"
 
-#: ../plug-ins/common/unsharp-mask.c:141
+#: ../plug-ins/common/unsharp-mask.c:142
 msgid "_Unsharp Mask..."
 msgstr "_Máscara Remover aguçar..."
 
-#: ../plug-ins/common/unsharp-mask.c:690
+#: ../plug-ins/common/unsharp-mask.c:691
 msgid "Merging"
 msgstr "A unir"
 
-#: ../plug-ins/common/unsharp-mask.c:834
+#: ../plug-ins/common/unsharp-mask.c:835
 msgid "Unsharp Mask"
 msgstr "Máscara Remover aguçar"
 
-#: ../plug-ins/common/unsharp-mask.c:897
+#: ../plug-ins/common/unsharp-mask.c:898
 #: ../plug-ins/imagemap/imap_preferences.c:455
 #: ../plug-ins/map-object/map-object-ui.c:539
 msgid "_Threshold:"
@@ -6810,8 +6709,7 @@ msgstr "Imagem JPEG"
 msgid "Export Preview"
 msgstr "Exportar antevisão"
 
-#: ../plug-ins/file-psd/psd-load.c:219
-#: ../plug-ins/file-psd/psd-thumb-load.c:130
+#: ../plug-ins/file-psd/psd-load.c:219 ../plug-ins/file-psd/psd-thumb-load.c:130
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Erro ao carregar ficheiro PSD: %s"
@@ -7458,11 +7356,11 @@ msgstr "Como especificado acima"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1137
 msgid ""
-"Create a color-map with the options you specified above (color density/"
-"function). The result is visible in the preview image"
+"Create a color-map with the options you specified above (color "
+"density/function). The result is visible in the preview image"
 msgstr ""
-"Cria um mapa de cores com as opções especificadas acima (densidade de cor/"
-"função). O resultado é visível na antevisão."
+"Cria um mapa de cores com as opções especificadas acima (densidade de "
+"cor/função). O resultado é visível na antevisão."
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1147
 msgid "Apply active gradient to final image"
@@ -7764,8 +7662,7 @@ msgstr "Mostrar pontos de controlo"
 msgid "Max undo:"
 msgstr "Desfazer máximo:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1318
-#: ../plug-ins/gimpressionist/general.c:184
+#: ../plug-ins/gfig/gfig-dialog.c:1318 ../plug-ins/gimpressionist/general.c:184
 msgid "Transparent"
 msgstr "Transparente"
 
@@ -7956,13 +7853,11 @@ msgstr "Proporção:"
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Especifica a proporção do pincel"
 
-#: ../plug-ins/gimpressionist/brush.c:608
-#: ../plug-ins/gimpressionist/paper.c:205
+#: ../plug-ins/gimpressionist/brush.c:608 ../plug-ins/gimpressionist/paper.c:205
 msgid "Relief:"
 msgstr "Relevo:"
 
-#: ../plug-ins/gimpressionist/brush.c:612
-#: ../plug-ins/gimpressionist/paper.c:209
+#: ../plug-ins/gimpressionist/brush.c:612 ../plug-ins/gimpressionist/paper.c:209
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr ""
 "Especifica a quantidade de relevo a ser aplicada à imagem (em percentagem)"
@@ -8612,7 +8507,7 @@ msgstr "_Gravar cor do fundo"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:4
 msgid "Save layer o_ffset"
-msgstr "Gravar desvio da _Camada:"
+msgstr "Gravar desvio da _Camada"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:5
 msgid "Save _resolution"
@@ -8870,7 +8765,7 @@ msgstr "At_Ualização automática da antevisão"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2464
 msgid "'Default' is created."
-msgstr "Foi criado um \"predefinido\""
+msgstr "Foi criado um \"predefinido\"."
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2465
 msgid "Default"
@@ -9087,8 +8982,7 @@ msgstr "Semente aleatória:"
 msgid "_Second Flares"
 msgstr "Cintilações _Secundárias"
 
-#: ../plug-ins/help-browser/dialog.c:180
-#: ../plug-ins/help-browser/dialog.c:1107
+#: ../plug-ins/help-browser/dialog.c:180 ../plug-ins/help-browser/dialog.c:1107
 msgid "GIMP Help Browser"
 msgstr "Navegador da ajuda GIMP"
 
@@ -9165,7 +9059,7 @@ msgstr "_Seguinte"
 #: ../plug-ins/help/gimphelpdomain.c:180
 #, c-format
 msgid "The help pages for '%s' are not available."
-msgstr "As páginas de ajuda sobre \"%s\" não estão disponíveis"
+msgstr "As páginas de ajuda sobre \"%s\" não estão disponíveis."
 
 #: ../plug-ins/help/gimphelpdomain.c:186
 msgid "The GIMP user manual is not available."
@@ -9370,7 +9264,7 @@ msgstr "Falha ao abrir"
 #: ../plug-ins/ifs-compose/ifs-compose.c:2486
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
-msgstr "O ficheiro \"%s\" não parece ser um ficheiro de fractal IFS"
+msgstr "O ficheiro \"%s\" não parece ser um ficheiro de fractal IFS."
 
 #: ../plug-ins/ifs-compose/ifs-compose.c:2526
 msgid "Save as IFS Fractal file"
@@ -9403,8 +9297,7 @@ msgstr "Centro _x:"
 #: ../plug-ins/imagemap/imap_circle.c:266
 #: ../plug-ins/imagemap/imap_circle.c:273
 #: ../plug-ins/imagemap/imap_circle.c:279 ../plug-ins/imagemap/imap_grid.c:249
-#: ../plug-ins/imagemap/imap_grid.c:255
-#: ../plug-ins/imagemap/imap_polygon.c:502
+#: ../plug-ins/imagemap/imap_grid.c:255 ../plug-ins/imagemap/imap_polygon.c:502
 #: ../plug-ins/imagemap/imap_polygon.c:510
 #: ../plug-ins/imagemap/imap_rectangle.c:390
 #: ../plug-ins/imagemap/imap_rectangle.c:397
@@ -9572,8 +9465,7 @@ msgstr "Mover para a frente"
 msgid "Move Up"
 msgstr "Mover acima"
 
-#: ../plug-ins/imagemap/imap_cmd_paste.c:50
-#: ../plug-ins/imagemap/imap_menu.c:159
+#: ../plug-ins/imagemap/imap_cmd_paste.c:50 ../plug-ins/imagemap/imap_menu.c:159
 msgid "Paste"
 msgstr "Colar"
 
@@ -9659,11 +9551,11 @@ msgstr "Ligação relati_Va"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:278
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
-msgstr "_Nome/ID da moldura alvo (opcional - só para FRAMES):"
+msgstr "_Nome/ID da moldura alvo (opcional - só para FRAMES)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:281
 msgid "ALT te_xt: (optional)"
-msgstr "_Texto alternativo (opcional):"
+msgstr "_Texto alternativo (opcional)"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:284
 msgid "_Link"
@@ -9732,11 +9624,11 @@ msgstr "Granularidade da grelha"
 
 #: ../plug-ins/imagemap/imap_grid.c:245
 msgid "_Width"
-msgstr "_Largura:"
+msgstr "_Largura"
 
 #: ../plug-ins/imagemap/imap_grid.c:251
 msgid "_Height"
-msgstr "_Altura:"
+msgstr "_Altura"
 
 #: ../plug-ins/imagemap/imap_grid.c:265
 msgid "Grid Offset"
@@ -9762,8 +9654,7 @@ msgstr "Criar um novo mapa de imagem clicável"
 msgid "_Image Map..."
 msgstr "Mapa de _Imagem..."
 
-#: ../plug-ins/imagemap/imap_main.c:484
-#: ../plug-ins/imagemap/imap_settings.c:169
+#: ../plug-ins/imagemap/imap_main.c:484 ../plug-ins/imagemap/imap_settings.c:169
 msgid "<Untitled>"
 msgstr "<sem-nome>"
 
@@ -10844,12 +10735,95 @@ msgstr "Ocorreu um erro ao tentar imprimir:"
 
 #: ../plug-ins/print/print.c:400
 msgid "Printing"
-msgstr "A imprimir..."
+msgstr "A imprimir"
+
+#: ../plug-ins/screenshot/screenshot.c:200
+msgid "Create an image from an area of the screen"
+msgstr "Criar uma nova imagem com a \"fotografia\" de uma área do ecrã"
+
+#: ../plug-ins/screenshot/screenshot.c:222
+msgid "_Screenshot..."
+msgstr "_Captura de ecrã..."
+
+#: ../plug-ins/screenshot/screenshot.c:424
+#: ../plug-ins/screenshot/screenshot-x11.c:442
+msgid "Screenshot"
+msgstr "Captura de ecrã"
+
+#: ../plug-ins/screenshot/screenshot.c:433
+msgid "S_nap"
+msgstr "_Capturar"
+
+#: ../plug-ins/screenshot/screenshot.c:463
+msgid "After the delay, the screenshot is taken."
+msgstr "Depois do atraso, é tirada uma fotografia ao ecrã."
+
+#: ../plug-ins/screenshot/screenshot.c:465
+msgid ""
+"After the delay, drag your mouse to select the region for the screenshot."
+msgstr ""
+"Depois do atraso, arraste o rato para selecionar a região a incluir na "
+"captura de ecrã."
+
+#: ../plug-ins/screenshot/screenshot.c:468
+msgid "At the end of the delay, click in a window to snap it."
+msgstr "No fim do atraso, clique na janela para a capturar."
+
+#. Area
+#: ../plug-ins/screenshot/screenshot.c:474
+msgid "Area"
+msgstr "Área"
+
+#: ../plug-ins/screenshot/screenshot.c:485
+msgid "Take a screenshot of a single _window"
+msgstr "Capturar o ecrã de uma única _Janela"
+
+#: ../plug-ins/screenshot/screenshot.c:505
+msgid "Include window _decoration"
+msgstr "Incluir as _Decorações da janela"
+
+#: ../plug-ins/screenshot/screenshot.c:525
+msgid "Take a screenshot of the entire _screen"
+msgstr "Capturar numa imagem todo o _Ecrã"
+
+#: ../plug-ins/screenshot/screenshot.c:545
+msgid "Include _mouse pointer"
+msgstr "Incluir o _Ponteiro do rato"
+
+#: ../plug-ins/screenshot/screenshot.c:565
+msgid "Select a _region to grab"
+msgstr "Selecionar uma _Região a capturar"
+
+#. Delay
+#: ../plug-ins/screenshot/screenshot.c:580
+msgid "Delay"
+msgstr "Atraso"
+
+#. this is the unit label of a spinbutton
+#: ../plug-ins/screenshot/screenshot.c:605
+msgid "seconds"
+msgstr "segundos"
+
+#: ../plug-ins/screenshot/screenshot-x11.c:98
+msgid "Error selecting the window"
+msgstr "Erro ao selecionar a janela"
+
+#: ../plug-ins/screenshot/screenshot-x11.c:416
+msgid "Importing screenshot"
+msgstr "A importar a captura de ecrã"
+
+#: ../plug-ins/screenshot/screenshot-x11.c:483
+msgid "Mouse Pointer"
+msgstr "Ponteiro do rato"
+
+#: ../plug-ins/screenshot/screenshot-x11.c:619
+msgid "Specified window not found"
+msgstr "A janela especificada não foi encontrada"
 
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: ../plug-ins/selection-to-path/pxl-outline.c:81
 msgid "Selection to Path"
-msgstr "Seleção em caminho..."
+msgstr "Seleção em caminho"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:186
 msgid "No selection to convert"
@@ -10864,7 +10838,8 @@ msgid "Align Threshold:"
 msgstr "Tolerância de alinhamento:"
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:102
-msgid "If two endpoints are closer than this,they are made to be equal."
+#| msgid "If two endpoints are closer than this,they are made to be equal."
+msgid "If two endpoints are closer than this, they are made to be equal."
 msgstr ""
 "Se dois pontos de finalização estiverem mais próximos que isto, serão "
 "tornados iguais."
@@ -11036,8 +11011,8 @@ msgid ""
 "doing it. Amount of error at which it is pointless to reparameterize."
 msgstr ""
 "Se a re-parametrização não melhorar o ajuste com esta percentagem, parar de "
-"o fazer. A quantidade de erro para a qual já não há motivo para re-"
-"parametrizar."
+"o fazer. A quantidade de erro para a qual já não há motivo para "
+"re-parametrizar."
 
 #: ../plug-ins/selection-to-path/selection-to-path-dialog.c:313
 msgid "Reparametrize Threshold:"
@@ -11047,13 +11022,13 @@ msgstr "Tolerância de re-parametrização:"
 msgid ""
 "Amount of error at which it is pointless to reparameterize.  This happens, "
 "for example, when we are trying to fit the outline of the outside of an `O' "
-"with a single spline.  The initial fit is not good enough for the Newton-"
-"Raphson iteration to improve it.  It may be that it would be better to "
-"detect the cases where we didn't find any corners."
+"with a single spline.  The initial fit is not good enough for the "
+"Newton-Raphson iteration to improve it.  It may be that it would be better "
+"to detect the cases where we didn't find any corners."
 msgstr ""
 "Quantidade de erro para a qual já não há motivo para re-parametrizar. Isto "
-"acontece, por exemplo, quando tentamos ajustar o contorno exterior de um \"O"
-"\" com uma simples curva. O ajuste inicial não é bom o suficiente para a "
+"acontece, por exemplo, quando tentamos ajustar o contorno exterior de um "
+"\"O\" com uma simples curva. O ajuste inicial não é bom o suficiente para a "
 "iteração de Newton-Raphson o melhorarem. Pode ser que seja melhor detetar "
 "casos onde não encontramos cantos."
 
@@ -11293,12 +11268,10 @@ msgstr "Não foi capturado nada"
 #~ msgid "Context"
 #~ msgstr "Contexto"
 
-#~| msgid "From:"
 #~ msgctxt "color-range"
 #~ msgid "From:"
 #~ msgstr "De:"
 
-#~| msgid "To:"
 #~ msgctxt "color-range"
 #~ msgid "To:"
 #~ msgstr "A:"
@@ -11788,7 +11761,6 @@ msgstr "Não foi capturado nada"
 #~ msgid "Color Profile Information"
 #~ msgstr "Informação do Perfil de Cor"
 
-#~| msgid "Default RGB working space"
 #~ msgid "Default GIMP RGB working space"
 #~ msgstr "Espaço de cor RGB do GIMP por omissão"
 
@@ -12301,7 +12273,6 @@ msgstr "Não foi capturado nada"
 #~ msgid "Downloading %s of image data"
 #~ msgstr "A transferir %s dados de imagem"
 
-#~| msgid "Opening '%s' for reading resulted in HTTP response code: %d"
 #~ msgid "Opening '%s' for reading resulted in %s response code: %ld"
 #~ msgstr "Ao abrir '%s' para leitura resultou em %s código de resposta: %ld"
 
@@ -12325,31 +12296,24 @@ msgstr "Não foi capturado nada"
 #~ msgid "URI"
 #~ msgstr "URI"
 
-#~| msgid "Failed to save PPM file '%s': %s"
 #~ msgid "Failed to save to temporary file '%s'"
 #~ msgstr "Falha ao guardar fpara o ficheiro temporário %s"
 
-#~| msgid "No compression"
 #~ msgid "no compression"
 #~ msgstr "sem compressão"
 
-#~| msgid "_LZW"
 #~ msgid "LZW"
 #~ msgstr "LZW"
 
-#~| msgid "_Pack Bits"
 #~ msgid "PackBits"
 #~ msgstr "PackBits"
 
-#~| msgid "_Deflate"
 #~ msgid "Deflate"
 #~ msgstr "Esvaziar"
 
-#~| msgid "CCITT Group _3 fax"
 #~ msgid "CCITT Group 3 fax"
 #~ msgstr "Fax CCITT Grupo _3"
 
-#~| msgid "Compression"
 #~ msgid "<b>Compression</b>"
 #~ msgstr "<b>Compressão</b>"
 
